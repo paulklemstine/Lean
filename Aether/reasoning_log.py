@@ -29,6 +29,8 @@ from typing import Any, Dict, List, Optional
 class ReasoningLog:
     """Per-project progress trace."""
 
+    MAX_LOGS = 100  # Keep at most 100 logs, prune oldest
+
     def __init__(self, workspace: Path, project_id: str, job_id: str = ""):
         self.workspace = workspace
         self.project_id = project_id
@@ -39,6 +41,8 @@ class ReasoningLog:
         self._id = job_id or project_id
         self._log_path = self.logs_dir / f"{self._id}.json"
         self._data: Dict[str, Any] = self._load()
+        # Lazy cleanup of old logs (only when creating a new one)
+        self._cleanup_old_logs()
 
     def _load(self) -> Dict[str, Any]:
         if self._log_path.exists():
@@ -66,6 +70,23 @@ class ReasoningLog:
             encoding="utf-8",
         )
 
+    def _cleanup_old_logs(self) -> None:
+        """Remove oldest logs if total exceeds MAX_LOGS."""
+        try:
+            all_logs = list(self.logs_dir.glob("*.json"))
+            if len(all_logs) > self.MAX_LOGS:
+                # Sort by modification time, oldest first
+                all_logs.sort(key=lambda p: p.stat().st_mtime)
+                # Delete the oldest excess
+                n_to_delete = len(all_logs) - self.MAX_LOGS
+                for log in all_logs[:n_to_delete]:
+                    try:
+                        log.unlink()
+                    except OSError:
+                        pass
+        except Exception:
+            pass  # Don't break on cleanup errors
+
     def record_submission(self, prompt: str = "", domain: str = "") -> None:
         """Mark the project as submitted. Captures metadata at submission time."""
         self._data["submitted_at"] = datetime.now(timezone.utc).isoformat()[:19]
@@ -82,6 +103,9 @@ class ReasoningLog:
         if self._data.get("submitted_at"):
             try:
                 start = datetime.fromisoformat(self._data["submitted_at"])
+                # If the parsed datetime is naive, assume UTC
+                if start.tzinfo is None:
+                    start = start.replace(tzinfo=timezone.utc)
                 elapsed = (now - start).total_seconds()
             except (ValueError, TypeError):
                 elapsed = 0.0

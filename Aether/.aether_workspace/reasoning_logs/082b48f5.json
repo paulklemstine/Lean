@@ -1,0 +1,22 @@
+{
+  "checkpoints": [
+    {
+      "elapsed_seconds": 0.7,
+      "percent_complete": 0.0,
+      "status": "SUBMITTED",
+      "timestamp": "2026-06-04T18:19:58"
+    }
+  ],
+  "completed_at": "",
+  "domain": "Tropical",
+  "error": "",
+  "final_percent": 0.0,
+  "final_status": "",
+  "has_files": false,
+  "job_id": "082b48f5",
+  "project_id": "88240bc6-de34-421b-b054-bee3e986d6a3",
+  "prompt_length": 23873,
+  "stages": [],
+  "submitted_at": "2026-06-04T18:19:58",
+  "total_duration_seconds": 0.0
+}

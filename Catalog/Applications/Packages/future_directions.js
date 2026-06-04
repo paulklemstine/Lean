@@ -64,21 +64,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0427",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:27.476683+00:00",
-    "title": "Neural Network Training as Renormalization Group Flow"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -106,36 +91,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0440",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:28.560336+00:00",
-    "title": "Grokking: Phase Transitions in Learning"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0441",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:28.640557+00:00",
-    "title": "Scaling Laws from Statistical Mechanics"
   },
   {
     "consumed_by_exp_id": "",
@@ -274,21 +229,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0502",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:46.684855+00:00",
-    "title": "Diffusion Models as Stochastic Differential Equations"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that policy gradient methods converge to a local optimum of the expected return. Formalize the policy gradient theorem and prove that REINFORCE is an unbiased estimator. Show that natural policy gradient converges faster by following the Fisher information geometry.",
     "domains": [
       "MachineLearning",
@@ -361,21 +301,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
-    "domains": [
-      "Cryptography",
-      "Physics"
-    ],
-    "id": "fd_0543",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:07.214033+00:00",
-    "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
     "consumed_by_exp_id": "",
@@ -469,36 +394,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
-    "domains": [
-      "EML",
-      "Physics"
-    ],
-    "id": "fd_0418",
-    "priority_score": 0.7799999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:26.751445+00:00",
-    "title": "EML Quantum Activation Functions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## Synthesis\n\nThis cycle established the **fitness landscape framework** for formalized mathematics, connecting three previously separate domains: evolutionary fitness landscape theory, compositional proof metrics, and tropical (max-min) algebra. The central discovery is that the Valley Crossing Theorem \u2014 which states that transitioning between mathematical \"styles\" necessarily requires a temporary fitness decrease \u2014 is not merely an analogy but a provable structural property of any finite graph equipped with a fitness function.\n\nThe most promising cross-domain connection from this cycle is the **tropical-algebraic computation of optimal transitions**. The max-min semiring doesn't just describe fitness landscapes abstractly \u2014 it provides a concrete polynomial-time algorithm (via matrix powers) for computing optimal transition paths. This connects the Catalog's existing tropical structure results (`global_radius_ge_min_local_region`, tropical matrix work) to a new application domain: navigating proof library refactoring.\n\nThe highest breakthrough potential lies in Direction 1 (Fitness Density Conjecture), which connects graph coloring theory to the structure of proof ecosystems, and Direction 2 (Dynamic Fitness Landscapes), which would model how mathematical paradigm shifts unfold over time.\n\n---\n\n### Direction 1: Fitness Density Conjecture and Graph-Theoretic Bounds\n\n**Conjecture**: For any connected simple graph $G$ on $n$ vertices with an injective fitness function $f: V(G) \\to \\mathbb{Q}$, the number of strict local optima is at most $\\lfloor n/2 \\rfloor$.\n\nMore precisely: the maximum number of strict local optima over all injective fitness functions equals the *independence number* $\\alpha(G)$ of the graph. Since strict local optima form an independent set (proved as `strict_optima_independent` in this cycle), the number is at most $\\alpha(G)$. The conjecture asserts that for connected graphs, $\\alpha(G) \\leq \\lfloor n/2 \\rfloor$, which is known to be true for triangle-free graphs (Ramsey theory) but the general case with injectivity may allow sharper bounds.\n\n**Test**: Computationally enumerate all connected graphs on $n \\leq 10$ vertices. For each graph, find an injective fitness function maximizing the number of strict local optima. Compare against $\\lfloor n/2 \\rfloor$.\n\n**Impact**: If true, this gives a universal bound on \"mathematical diversity\" \u2014 the maximum number of distinct proof styles that can coexist as local optima in a fixed-size theory space. If false, the counterexample would reveal graph structures that support anomalously many local optima.\n\n**Catalog References**: `Tropical/FitnessLandscape/OptimalityBounds.lean` (`strict_optima_independent`, `strict_optima_card_le_univ`)\n\n**Proof Strategy**: The key is connecting the injectivity condition on fitness to the independence number. With injective fitness, every local optimum is strict (`local_optimum_strict_of_injective`). The strict optima form an independent set. Bound $\\alpha(G)$ using Brooks' theorem or Lov\u00e1sz theta function. For connected graphs that aren't complete or odd cycles, $\\alpha(G) \\leq \\lfloor n/2 \\rfloor$ follows from known bounds.\n\n**Domain Bridges**: Graph Theory (independence number, chromatic number) \u2194 Tropical Fitness Landscapes (local optima) \u2194 Evolutionary Biology (fitness peaks)\n\n**Lineage**: Builds on `strict_optima_independent` and `strict_optima_card_le_univ` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Dynamic Fitness Landscapes and Paradigm Shift Dynamics\n\n**Conjecture**: In a time-varying fitness landscape where $f_t: V \\to \\mathbb{Q}$ evolves according to a Markov process, the expected time for the global optimum to shift between two vertices $a$ and $b$ is bounded below by the static valley depth between $a$ and $b$.\n\nFormally: define a discrete-time process where at each step, the fitness function is perturbed by a bounded random increment. The \"shift time\" $T_{a \\to b}$ is the first time that $b$ becomes the global optimum given that $a$ was previously the global optimum. The conjecture is that $\\mathbb{E}[T_{a \\to b}] \\geq c \\cdot \\text{valleyDepth}(a, b)$ for some universal constant $c > 0$.\n\n**Test**: Simulate the dynamic landscape on path graphs $P_n$ with $n = 5, 10, 20$ and Gaussian fitness perturbations. Measure empirical shift times and compare against static valley depths.\n\n**Impact**: If true, this connects the static Valley Crossing Theorem to a dynamical prediction: deep valleys imply long-lived paradigms. This would formalize the observation that mathematical styles (algebraic vs. analytic) persist for decades because the fitness valley between them is deep.\n\n**Catalog References**: `Tropical/FitnessLandscape/ValleyCrossing.lean` (`valley_crossing`), `Tropical/FitnessLandscape/Defs.lean`\n\n**Proof Strategy**: Use coupling arguments from Markov chain theory. The key insight is that the fitness landscape's valley structure creates an energy barrier analogous to the Arrhenius barrier in chemical kinetics. The Kramers escape rate formula gives $T \\sim e^{\\beta \\Delta V}$ where $\\Delta V$ is the barrier height and $\\beta$ is the inverse perturbation magnitude.\n\n**Domain Bridges**: Stochastic Processes (Markov chain mixing) \u2194 Fitness Landscapes (valley depth) \u2194 Statistical Physics (Kramers escape rate)\n\n**Lineage**: Builds on `valley_crossing` and `walk_min_below_strict_optimum` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Tropical Fitness Algebra \u2014 Semiring Completion and Spectral Theory\n\n**Conjecture**: The bottleneck matrix $B$ of a connected fitness landscape has a unique \"tropical eigenvalue\" $\\lambda = \\max_i f(i)$ (the global maximum fitness), and the corresponding \"tropical eigenvector\" is the optimal bottleneck column from the global optimum.\n\nFormally: there exists a vector $v: V \\to \\mathbb{Q} \\cup \\{-\\infty\\}$ such that $B \\otimes v = \\lambda \\oplus v$ in the max-min semiring, where $\\lambda$ is the maximum fitness value.\n\n**Test**: Compute the tropical eigenvalue and eigenvector for random connected graphs on $n = 5, 10, 20$ vertices. Verify the eigenvalue equation $B \\otimes v = \\lambda \\oplus v$.\n\n**Impact**: Tropical eigenvalue theory for max-min matrices is less developed than for max-plus matrices. A clean spectral theorem for bottleneck matrices would connect fitness landscape theory to tropical convexity and the emerging field of tropical representation theory.\n\n**Catalog References**: `Tropical/FitnessLandscape/TropicalConnection.lean` (`BottleneckMatrix`, `mmMul`), `Catalog/Tropical/Matrix/Algebra.lean`\n\n**Proof Strategy**: Adapt the max-plus spectral theory (Cuninghame-Green) to the max-min setting. The critical graph of the max-min matrix consists of edges where $\\min(f(i), f(j)) = \\lambda$, i.e., edges between vertices with maximum fitness. The eigenvector is the optimal bottleneck column.\n\n**Domain Bridges**: Tropical Linear Algebra (eigenvalues) \u2194 Fitness Landscapes (global optimum structure) \u2194 Graph Spectral Theory (adjacency eigenvalues)\n\n**Lineage**: Builds on `TropicalConnection.lean` semiring laws and `BottleneckMatrix` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Compositional Fitness and Library Architecture Optimization\n\n**Conjecture**: For a fixed total complexity budget $C$ and theorem set $T$, the partition of $T$ into proof modules that maximizes the minimum module fitness is NP-hard to compute, but a greedy algorithm achieves a $(1 - 1/e)$-approximation when the sharing function is submodular.\n\n**Test**: Implement the greedy algorithm and compare against brute-force optimal on small instances ($|T| \\leq 15$). Verify the approximation ratio empirically.\n\n**Impact**: This would provide algorithmic guidance for how to organize mathematical libraries \u2014 a practical application of the compositional fitness theory. The submodularity condition on sharing captures the diminishing returns of shared infrastructure.\n\n**Catalog References**: `Tropical/FitnessLandscape/Composition.lean` (`compose_fitness_ge_min`, `shared_infra_superadditive`)\n\n**Proof Strategy**: Reduce from Set Cover to show NP-hardness. For the approximation, use the classical result that greedy maximization of submodular functions achieves $(1 - 1/e)$-optimality. The key lemma is showing that the sharing function $s(S) = $ (lines of code saved by sharing among modules in set $S$) is submodular.\n\n**Domain Bridges**: Combinatorial Optimization (submodular maximization) \u2194 Compositional Fitness (module partitioning) \u2194 Software Engineering (library architecture)\n\n**Lineage**: Builds on `mediant_between`, `compose_fitness_ge_min`, and `shared_infra_superadditive` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Fitness Valleys and Homological Obstructions\n\n**Conjecture**: The number of \"essential valleys\" (valleys that cannot be eliminated by adding edges to the graph) equals the first Betti number $\\beta_1(G)$ of the underlying graph.\n\nFormally: define an *essential valley* as a pair $(a, b)$ of strict local optima such that the valley depth $\\text{vd}(a, b)$ is positive for every spanning subgraph containing all vertices. The conjecture is that the number of essential valley pairs equals $|E| - |V| + 1 = \\beta_1(G)$.\n\n**Test**: Enumerate small graphs ($n \\leq 8$) with random injective fitness functions. Count essential valley pairs and compare against $\\beta_1$.\n\n**Impact**: This would connect fitness landscape topology to algebraic topology, specifically to the homology of graphs. It would show that the \"difficulty of paradigm shifts\" is controlled by the topological complexity of the theory space.\n\n**Catalog References**: `Tropical/FitnessLandscape/ValleyCrossing.lean`, potential connection to `Catalog/Geometry/` homology results\n\n**Proof Strategy**: Use the relationship between graph cycles and the fundamental group. Each cycle in the graph provides an alternative path between optima, potentially reducing valley depth. Essential valleys correspond to \"short\" cycles where the alternative path doesn't help.\n\n**Domain Bridges**: Algebraic Topology (Betti numbers, homology) \u2194 Fitness Landscapes (essential valleys) \u2194 Tropical Geometry (tropical homology)\n\n**Lineage**: Builds on `valley_crossing` and the non-adjacency of strict optima from this cycle.\n\n**Ambition**: grand_challenge\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0616",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "133d7308",
-    "status": "available",
-    "timestamp": "2026-06-04T08:47:31.580833+00:00",
-    "title": "**fitness landscape framework** for formalized mathem"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Research Directions\n\n## Synthesis\n\nThis cycle introduced the **Collatz Affine Monoid (CAM)**, a novel algebraic structure that algebraizes Collatz dynamics by encoding orbit segments as monoid elements (num, offset, denom). The key discovery is that the Collatz conjecture reduces to a **monoid reachability problem**: for every n > 0, does some CAM element satisfy num\u00b7n + offset = denom? This reformulation separates the predictable growth/decay factors (3\u02e2 and 2\u1d49) from the combinatorial complexity (the offset), localizing the difficulty to the structure of valid offsets.\n\nThe connection to the **Oracle Closure Algebra** framework from the Catalog is direct and fruitful: both capture hierarchies where each level proves strictly more than the previous, but no finite level suffices. Our **Termination Hierarchy** is the iterative-function analog of the Oracle Hierarchy, and the CAM provides a concrete algebraic instantiation. The **Three-Two Separation Theorem** (3\u02e2 \u2260 2\u1d49 for s+e > 0) ensures that non-trivial Collatz orbits are never balanced, creating a fundamental asymmetry that drives the dynamics.\n\nThe most promising cross-domain direction is **Direction 1: 2-Adic Embedding of CAM**, which would connect our algebraic framework to the rich analytic theory of p-adic numbers and potentially bring ergodic-theoretic tools to bear on the offset distribution problem. This has the highest breakthrough potential because Tao's \"almost all orbits\" result (2019) uses exactly this kind of measure-theoretic approach, and the CAM provides the missing algebraic scaffolding to make it precise.\n\n---\n\n### Direction 1: 2-Adic Embedding of the Collatz Affine Monoid\n\n**Conjecture**: The Collatz Affine Monoid embeds naturally into the ring of 2-adic affine maps Aff(\u2124\u2082) = {x \u21a6 ax + b : a, b \u2208 \u2124\u2082, a invertible}, and the set of valid offsets for signature (s, e) has a well-defined 2-adic measure \u03bc(s,e) satisfying \u03bc(s,e) \u2192 0 as s + e \u2192 \u221e.\n\n**Test**: (1) Formalize the embedding CAM \u2192 Aff(\u2124\u2082) in Lean 4 by extending CAM elements to 2-adic coefficients. (2) Compute the 2-adic density of valid offsets for small signatures (s,e) with s+e \u2264 20 and check whether the density decreases. (3) Prove or disprove that the set of valid offsets for fixed (s,e) is a coset of a subgroup of \u2124/2\u1d49\u2124.\n\n**Impact**: If true, this would provide a measure-theoretic framework for the Collatz conjecture: the conjecture holds iff every n lies in the support of some \u03bc(s,e). If the measures decay fast enough, this could give a new proof strategy via a covering argument. If false (offsets don't have clean 2-adic structure), this would rule out a large class of analytic approaches.\n\n**Catalog References**: `Logic/CollatzAffineMonoid.lean` (CAM definition, Affine Formula), `Logic/CollatzBarrier.lean` (offset characterization)\n\n**Proof Strategy**: (1) Define \u2124\u2082-valued CAM elements using Mathlib's `PadicInt`. (2) Show the embedding preserves monoid structure. (3) For fixed (s,e), enumerate all parity words of length s+e with s ones. (4) Compute the set of achievable offsets as a subset of \u2124/2\u1d49\u2124. (5) Analyze the structure of this subset (is it a coset? a union of cosets?).\n\n**Domain Bridges**: Number Theory (2-adic analysis) \u2194 Algebra (monoid theory) \u2194 Ergodic Theory (invariant measures)\n\n**Lineage**: Builds on CAM framework from this cycle. Extends Tao (2019) by providing algebraic structure for the density argument.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Generalized Affine Iteration Monoids\n\n**Conjecture**: For any finite set of affine maps {x \u21a6 a\u1d62x + b\u1d62 : i \u2208 I} with a branching predicate (e.g., x mod |I|), the resulting **Affine Iteration Monoid (AIM)** has decidable reachability if and only if all a\u1d62 share a common prime factor. In particular, the 5n+1 problem (T(n) = n/2 if even, 5n+1 if odd) has undecidable reachability (since 5 and 2 are coprime), while the 2n+1 problem (T(n) = n/2 if even, 2n+1 if odd) has decidable reachability (since 2 is the common factor).\n\n**Test**: (1) Formalize the AIM for the 5n+1 problem in Lean 4. (2) Prove the monoid laws and affine formula for the generalized case. (3) Check computationally: does 5\u02e2 = 2\u1d49 have solutions? (No, by unique factorization \u2014 this extends Three-Two Separation.) (4) Find a starting value for 5n+1 that diverges (known to exist, e.g., n=13 in some variants).\n\n**Impact**: A classification theorem for AIM reachability would be a major result connecting algebraic dynamics to computability theory. It would explain exactly which Collatz variants are \"hard\" and which are \"easy.\"\n\n**Catalog References**: `Logic/CollatzAffineMonoid.lean` (CAM structure, monoid laws), `Computation/GravityOracle.lean` (oracle decidability)\n\n**Proof Strategy**: (1) Generalize CAM to arbitrary affine branches. (2) Prove the generalized Three-Two Separation (p\u02e2 = q\u1d49 iff s=e=0 for coprime p,q > 1). (3) For the \"common factor\" case, show that the monoid elements eventually have denom dividing a fixed power, making reachability decidable. (4) For the coprime case, reduce to Conway's undecidability result.\n\n**Domain Bridges**: Algebra (monoid theory) \u2194 Computation (decidability) \u2194 Number Theory (prime factorization)\n\n**Lineage**: Direct generalization of CAM from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: CAM Density Conjecture and Ergodic Theory\n\n**Conjecture**: For the Collatz orbit of n, let \u03c1(n) = s(n)/(s(n)+e(n)) be the odd-step density where s(n) = number of odd steps and e(n) = number of even steps to reach 1. Then the average density (1/N)\u03a3_{n=1}^{N} \u03c1(n) converges to log(2)/log(6) \u2248 0.3869 as N \u2192 \u221e.\n\n**Test**: (1) Compute the average odd-step density for N = 10\u2074, 10\u2075, 10\u2076, 10\u2077. Check convergence rate. (2) Compute the variance of \u03c1(n) and check whether it decreases as 1/log(N). (3) Formalize the conjecture in Lean 4 as a statement about limits.\n\n**Impact**: If true, this would provide strong evidence that Collatz orbits are \"generically\" contracting (since log(2)/log(6) < 0.5), which is the heuristic basis for believing the conjecture. If false, it would reveal unexpected structure in the distribution of parity sequences, potentially pointing to counterexample families.\n\n**Catalog References**: `Logic/CollatzAffineMonoid.lean` (OrbitSignature, density bounds)\n\n**Proof Strategy**: (1) Model the Collatz map as a random process on \u2124\u2082 following Lagarias-Weiss. (2) Use the ergodic theorem for the shift map on parity sequences. (3) Compute the invariant measure explicitly. (4) The density log(2)/log(6) arises because the probability of being odd at a \"random\" step is 1/3 in the natural invariant measure (each odd step is followed by at least one even step from the factor of 2 in 3n+1).\n\n**Domain Bridges**: Ergodic Theory \u2194 Number Theory \u2194 Probability (random walks)\n\n**Lineage**: Extends density_contraction and expansion_criterion from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Ordinal-Indexed Termination Barriers\n\n**Conjecture**: The Collatz function's termination, if provable at all, requires proof-theoretic ordinal at least \u03b5\u2080 (the proof-theoretic ordinal of PA). That is, no theory with proof-theoretic ordinal below \u03b5\u2080 can prove the Collatz conjecture.\n\n**Test**: (1) Formalize ordinal-indexed termination hierarchies in Lean 4 using Mathlib's ordinal library. (2) Show that the barrier depth function barrierDepth(n) grows faster than any function provably total in PRA (Primitive Recursive Arithmetic). (3) Specifically, show that barrierDepth is not bounded by any primitive recursive function \u2014 which would imply the Collatz function's termination is not provable in PRA.\n\n**Impact**: This would be a major step toward proving independence of Collatz from PA. Even the weaker result (unprovable in PRA) would be significant, as it would place Collatz alongside Goodstein's theorem and the Paris-Harrington theorem as naturally occurring independent statements.\n\n**Catalog References**: `Logic/CollatzBarrier.lean` (TerminationHierarchy, barrierDepth), `Logic/OracleClosureAlgebra.lean` (OracleHierarchy)\n\n**Proof Strategy**: (1) Define ordinal-indexed hierarchies using Mathlib's `Ordinal`. (2) Construct a specific hierarchy where level \u03b1 captures termination proofs using ordinals below \u03b1. (3) Show barrierDepth grows at least as fast as the slow-growing hierarchy at \u03b5\u2080. (4) Use the connection to the Ackermann function hierarchy.\n\n**Domain Bridges**: Logic (proof theory) \u2194 Set Theory (ordinals) \u2194 Computation (fast-growing hierarchies)\n\n**Lineage**: Extends TerminationHierarchy and barrierDepth_pow2 from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Machine Learning-Guided CAM Search\n\n**Conjecture**: A neural network trained on CAM elements for converging orbits can predict, given n, the approximate orbit signature (s, e) and offset Q of the CAM element mapping n to 1, with >90% accuracy on the signature and >50% accuracy on the first few bits of Q.\n\n**Test**: (1) Generate training data: for n = 1 to 10\u2076, compute (n, s(n), e(n), Q(n)). (2) Train a transformer model to predict (s, e, Q) from n. (3) Evaluate on n = 10\u2076 to 2\u00d710\u2076. (4) Analyze what features the model learns \u2014 does it discover modular arithmetic patterns?\n\n**Impact**: If successful, this would provide a practical tool for exploring Collatz dynamics at scale, and the learned features might reveal new structural insights about the offset distribution. If the model fails on Q but succeeds on (s,e), this would confirm that the offset is the \"hard part\" of the problem.\n\n**Catalog References**: `Logic/CollatzAffineMonoid.lean` (CAM, buildCAM), `MachineLearning/` (ML infrastructure)\n\n**Proof Strategy**: Not a proof direction per se, but the computational patterns discovered could guide formal proof strategies for Direction 3 (density conjecture).\n\n**Domain Bridges**: Machine Learning \u2194 Number Theory \u2194 Algebra (CAM)\n\n**Lineage**: Applies CAM framework from this cycle to computational exploration.\n\n**Ambition**: extension\n",
     "domains": [
       "Algebra",
@@ -511,36 +406,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-04T08:47:56.337733+00:00",
     "title": "**Collatz Affine Monoid (CAM)**, a novel algebraic str"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established the `InformationChannel` structure as a unifying mathematical object connecting PAC-Bayes bounds, minimum description length, and Shannon mutual information. The key discovery is that the generalization gap is controlled by a single quantity \u2014 the mutual information I(S;W) between training data and hypothesis \u2014 which sits below description length in the information hierarchy and above the generalization gap itself.\n\nThe most promising cross-domain connection emerged through the bridge theorem linking `EffectiveComplexityProfile` (from tropical geometry / operadic architecture theory) to the information channel framework. The effective rate (quotientComplexity + codeLength + posteriorKL) provides an upper bound on mutual information, meaning that tropical VC dimension theory, compositional architecture semantics, and PAC-Bayes all flow through the same information-theoretic bottleneck. This suggests that the information channel is the correct abstraction level for unifying statistical learning theory.\n\nThe direction with highest breakthrough potential is **Direction 1: R\u00e9nyi Mutual Information Generalization** \u2014 replacing Shannon MI with R\u00e9nyi MI could yield tighter bounds for heavy-tailed distributions common in practice, and the mathematical machinery (R\u00e9nyi divergences in Mathlib) is largely available.\n\n---\n\n### Direction 1: R\u00e9nyi Mutual Information Generalization\n\n**Conjecture**: For R\u00e9nyi mutual information of order \u03b1 > 1, the generalization bound takes the form B \u00b7 \u221a(2\u00b7I_\u03b1(S;W) / (n\u00b7(\u03b1-1))), and this is strictly tighter than the Shannon MI bound for distributions with bounded kurtosis exceeding 3 + 1/(\u03b1-1).\n\n**Test**: Construct explicit distributions with high kurtosis (e.g., truncated Pareto) and compute both the Shannon MI bound and the R\u00e9nyi MI bound for \u03b1 \u2208 {1.5, 2, 3, \u221e}. If the R\u00e9nyi bound is \u226510% tighter for \u03b1 = 2 on a Pareto(2.5) distribution, the conjecture is supported.\n\n**Impact**: If true, this would provide the first provably tighter information-theoretic generalization bound for heavy-tailed learning scenarios, which includes most practical deep learning. If false, the failure would identify which structural property of Shannon MI makes it optimal \u2014 a foundational result.\n\n**Catalog References**: `MachineLearning/InformationGeneralization/Defs.lean`, `MachineLearning/InformationGeneralization/Theorems.lean`, `MachineLearning/PACBayes/Defs.lean`\n\n**Proof Strategy**: Define `RenyiInformationChannel` extending `InformationChannel` with a R\u00e9nyi order parameter \u03b1. The key lemma is that I_\u03b1(S;W) \u2264 I_1(S;W) for \u03b1 > 1 (monotonicity of R\u00e9nyi MI in order), which means the R\u00e9nyi bound with the 1/(\u03b1-1) correction factor can be tighter. Establish the bound via a change-of-measure argument using the R\u00e9nyi divergence variational representation. Prove tightness via the method of types.\n\n**Domain Bridges**: Information Theory \u2194 Statistical Learning Theory \u2194 Heavy-Tailed Statistics\n\n**Lineage**: Builds on this cycle's `InformationChannel` structure and the `descLen_bound_implies_gen_bound` chain.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Information-Theoretic Architecture Search\n\n**Conjecture**: For the `CompositeChannel` structure, the optimal layer-wise information allocation (minimizing the generalization bound subject to a prediction quality constraint I(W;Y) \u2265 \u03c4) is achieved when all layers have equal mutual information I_k = I_total/K, and the optimal depth K* satisfies K* = O(\u221a(I_total \u00b7 n)).\n\n**Test**: For I_total = 100 and n \u2208 {1000, 10000, 100000}, numerically optimize the layer allocation for K \u2208 {1, 2, 5, 10, 20, 50} and verify whether the uniform allocation is optimal to within 5% and whether K* scales as predicted.\n\n**Impact**: If true, this provides a principled, information-theoretic criterion for neural architecture search \u2014 determine the number of layers from the information budget and sample size. If false, the optimal allocation structure would reveal what makes certain architectures superior, potentially explaining why transformers outperform MLPs.\n\n**Catalog References**: `MachineLearning/InformationGeneralization/Theorems.lean` (composite_gen_bound_from_layers), `MachineLearning/Compositionality.lean` (stacked_generalization_bound)\n\n**Proof Strategy**: Model layer-wise information as a constrained optimization problem. Use Lagrange multipliers with the constraint \u03a3 I_k = I_total and the objective min_K B\u00b7\u221a(2I_total/n). The key is that the generalization bound depends on I_total, not on the allocation \u2014 so the interesting constraint comes from prediction quality. Use the data processing inequality to show that equal allocation maximizes a lower bound on I(W;Y). Prove K* via balancing the per-layer information with the computational cost.\n\n**Domain Bridges**: Information Theory \u2194 Neural Architecture Search \u2194 Optimization\n\n**Lineage**: Builds on `CompositeChannel` structure and `composite_gen_bound_from_layers` theorem.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Differential Privacy as Information Capacity Constraint\n\n**Conjecture**: An (\u03b5, \u03b4)-differentially private learning algorithm has channel capacity C \u2264 \u03b5\u00b2\u00b7n/2 + \u03b4\u00b7n\u00b7log(1/\u03b4), and consequently its uniform generalization bound is B\u00b7\u221a(\u03b5\u00b2 + 2\u03b4\u00b7log(1/\u03b4)).\n\n**Test**: Implement DP-SGD with varying (\u03b5, \u03b4) and measure the empirical generalization gap on MNIST. Compare with the predicted capacity-derived bound. If the bound matches within a factor of 3 for \u03b5 \u2208 {0.1, 1, 10} and \u03b4 = 1/n\u00b2, the conjecture is supported.\n\n**Impact**: If true, this provides the first tight connection between differential privacy parameters and generalization bounds via information capacity. It would show that DP is not just a privacy guarantee but an automatic generalization guarantee \u2014 a surprising and practically important result. If false, the gap between the DP capacity bound and the actual generalization would quantify how much \"room\" DP algorithms have to improve.\n\n**Catalog References**: `MachineLearning/InformationGeneralization/Theorems.lean` (channel_capacity_uniform_gen), `MachineLearning/CertificationBarrier.lean`\n\n**Proof Strategy**: Use the composition theorem of DP to bound the total information revealed by the algorithm. The key lemma: if an algorithm is \u03b5-DP for each sample, then I(S;W) \u2264 n\u00b7\u03b5\u00b2/2 (a known result from Dwork & Roth). Combine with the channel capacity theorem to derive the uniform bound. The \u03b4-term requires a more careful analysis using concentrated DP and the R\u00e9nyi divergence.\n\n**Domain Bridges**: Privacy \u2194 Information Theory \u2194 Generalization \u2194 Tropical Geometry (via EffectiveComplexityProfile bridge)\n\n**Lineage**: Builds on `channel_capacity_uniform_gen` and the DP-MI connection.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Rate-Distortion Learning Theory\n\n**Conjecture**: The minimum number of samples needed to achieve excess risk \u2264 D with mutual information rate R is n* = 2R\u00b7B\u00b2/D\u00b2, and the rate-distortion function R(D) = max(0, H(Y|X) - D) for the Bayes-optimal learning problem on discrete distributions, where H(Y|X) is the conditional entropy of the label given the input.\n\n**Test**: For binary classification on synthetic data with known H(Y|X), compute R(D) for D \u2208 {0.01, 0.05, 0.1, 0.2} and verify that the sample complexity n* matches the empirical sample complexity (measured as the n at which excess risk first drops below D) within a factor of 2.\n\n**Impact**: If true, this establishes a complete rate-distortion characterization of learning, connecting Shannon's lossy source coding to statistical learning theory. The result would be the information-theoretic analogue of the VC dimension characterization. If false, the mismatch would reveal that the learning problem has structure beyond what rate-distortion captures.\n\n**Catalog References**: `MachineLearning/InformationGeneralization/Defs.lean` (RateDistortionChannel), `MachineLearning/InformationGeneralization/Theorems.lean` (rateDistortion_mono_rate, sample_complexity_from_mi)\n\n**Proof Strategy**: Define the rate-distortion function R(D) for the learning problem as inf{I(S;W) : E[risk(W)] \u2264 D}. Use the Blahut-Arimoto algorithm to compute R(D) for finite hypothesis spaces. The key lemma is that R(D) is convex and decreasing. Combine with `sample_complexity_from_mi` to derive n*. The Bayes-optimal result for discrete distributions uses the Gibbs variational representation.\n\n**Domain Bridges**: Rate-Distortion Theory \u2194 Statistical Learning \u2194 Lossy Compression\n\n**Lineage**: Builds on `RateDistortionChannel` structure and `rateDistortion_mono_rate`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Tropical Information Geometry of Learning\n\n**Conjecture**: The effective rate from `EffectiveComplexityProfile` (quotientComplexity + codeLength + posteriorKL) is exactly the mutual information I(S;W) when the posterior is a tropical Gibbs measure (a measure maximizing tropical entropy subject to moment constraints), and in this case the generalization bound is tight up to a factor of \u221a2.\n\n**Test**: For a tropical ReLU network with known quotient structure, compute both the effective rate and the mutual information numerically. If they agree to within 10% for networks with 2-5 linear regions, the conjecture is supported.\n\n**Impact**: If true, this would show that tropical geometry provides the exact information-theoretic complexity of ReLU networks \u2014 a deep structural result connecting algebraic geometry to statistical learning. The \u221a2 tightness factor would be the best known for neural network generalization bounds. If false, the gap between effective rate and MI would quantify the price of the tropical approximation.\n\n**Catalog References**: `MachineLearning/EffectiveComplexity.lean` (EffectiveComplexityProfile), `MachineLearning/TropicalVCDuality.lean` (finite_quotient_implies_finite_tropicalVC_and_compression), `MachineLearning/InformationGeneralization/Theorems.lean` (effective_rate_bounds_mutual_info_gen)\n\n**Proof Strategy**: Define a tropical Gibbs measure as the measure maximizing \u2295-entropy (tropical entropy = max-entropy). Show that for a ReLU network, the posterior concentrates on a tropical variety. The key lemma is that the KL divergence of the tropical Gibbs measure from the uniform tropical prior equals the tropical log-partition function minus the tropical entropy, which by the tropical duality theorem equals the quotientComplexity. Use the existing `effective_rate_bounds_mutual_info_gen` bridge theorem to complete the connection.\n\n**Domain Bridges**: Tropical Geometry \u2194 Information Theory \u2194 Neural Network Theory \u2194 PAC-Bayes\n\n**Lineage**: Builds on `effective_rate_bounds_mutual_info_gen` bridge and `finite_quotient_implies_finite_tropicalVC_and_compression`.\n\n**Ambition**: grand_challenge\n",
-    "domains": [
-      "MachineLearning",
-      "Algebra"
-    ],
-    "id": "fd_0619",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "fc8cab69",
-    "status": "available",
-    "timestamp": "2026-06-04T09:20:07.202618+00:00",
-    "title": "`InformationChannel` structure as a unifying"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established the Stratified Dependency Algebra (SDA) as a novel mathematical framework for studying the structure of proof systems. The central result \u2014 the Hub Monotonicity Theorem \u2014 proves that in any finite directed acyclic graph (proof system), the number of transitive dependents strictly decreases along every dependency edge. This creates a rigid hierarchy: foundational results (axioms) are always the most depended-upon nodes, and every step away from the foundations strictly reduces reach.\n\nThe most promising cross-domain connection is between this work and the existing proof complexity results in the Catalog (particularly `TropicalProofComplexity` and `ProofSearchInformation`). The Hub Monotonicity Theorem provides a *structural* constraint on proof DAGs that complements the *complexity-theoretic* constraints in those results. Specifically, the `theorem_proof_duality` result relates proof search effort to the number of provable theorems, while our Hub Score Sum Identity relates individual hub scores to the total transitive closure size \u2014 these two perspectives could be unified into a single information-theoretic framework.\n\nThe direction with the highest breakthrough potential is Direction 1 (Empirical Power Law Verification), because it would either confirm or definitively refute the conjecture that mathematical proof networks are scale-free. Our theoretical results provide the exact quantities to measure (hub scores, strata, reach sets), making the empirical test precise rather than vague.\n\n---\n\n### Direction 1: Empirical Power Law Structure of Mathlib's Proof DAG\n\n**Conjecture**: The hub score distribution of the Mathlib proof DAG (all ~150,000 declarations and their transitive dependencies) follows a power law P(k) ~ k^{-\u03b3} with \u03b3 \u2208 [2.0, 3.0].\n\n**Test**: Extract the full dependency graph from Mathlib's `.olean` files or `lake env` output. For each declaration, compute the hub score (number of transitive dependents). Plot the complementary CDF on log-log axes. Fit a power law using the Clauset-Shalizi-Newman maximum likelihood method. Report the fitted \u03b3 and the p-value from the Kolmogorov-Smirnov goodness-of-fit test. If p < 0.1, the power law hypothesis is rejected.\n\n**Impact**: If confirmed (\u03b3 \u2248 2.5), this would establish that mathematical proof networks share the scale-free property with biological networks, the internet, and social networks \u2014 suggesting a universal organizing principle. If refuted, this would show that proof networks have a fundamentally different topology, potentially log-normal or exponential, which would itself be informative about how mathematical knowledge grows.\n\n**Catalog References**: `Physics/ProofDAG.lean` (hub score definitions and theorems), `Physics/ProofSearchInformation.lean` (theorem_proof_duality), `Physics/TropicalProofComplexity.lean` (tropical_proof_length_conjecture_special_case)\n\n**Proof Strategy**: This is primarily computational, not proof-based. Write a Python/Lean script to:\n1. Parse Mathlib's dependency graph from build artifacts.\n2. Compute hub scores via BFS/DFS from each node.\n3. Apply the Clauset-Shalizi-Newman fitting method (available in the `powerlaw` Python package).\n4. Visualize results.\n\n**Domain Bridges**: Physics (scale-free networks) <-> Computation (proof complexity) <-> EML (information-theoretic bounds)\n\n**Lineage**: Builds on the Hub Score Monotonicity Theorem and Hub Score Sum Identity from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Fragility-Hub Duality and Critical Theorems\n\n**Conjecture**: In any connected finite DAG with n \u2265 10 nodes, the maximum fragility (number of nodes made unreachable by removing a single hub) is at least \u221an. Equivalently, every sufficiently large proof system has a \"critical theorem\" whose removal invalidates at least \u221an other theorems.\n\n**Test**: Construct random DAGs (Erd\u0151s-R\u00e9nyi conditioned on acyclicity, preferential attachment DAGs, lattice DAGs) with n = 100, 1000, 10000. For each, compute the maximum fragility and check whether it exceeds \u221an. Also test on the actual Mathlib dependency graph.\n\n**Impact**: If true, this would formalize the intuition that mathematics is inherently fragile \u2014 no proof system can distribute dependencies so evenly that removing any single theorem causes only minor damage. If false, it would mean \"robust\" proof systems exist, which would have implications for the design of fault-tolerant formal mathematics libraries.\n\n**Catalog References**: `Physics/ProofDAG.lean` (fragility definitions, fragility'_le_hubScore), `FINAL/Pythagorean/HardnessLocalization.lean` (not_isAcyclic_of_connected_many_edges)\n\n**Proof Strategy**: Formalize the fragility lower bound by:\n1. Proving that in a connected DAG, the hub with maximum hub score h_max has fragility \u2265 h_max - d_out(hub), where d_out is its out-degree.\n2. Proving that h_max \u2265 \u221an for connected DAGs (this requires showing that the transitive closure has \u2265 n edges in a connected DAG, then using the Hub Score Sum Identity).\n3. Combining these bounds.\n\n**Domain Bridges**: Computation (fault tolerance) <-> Physics (fragility/robustness) <-> Cryptography (dependency analysis)\n\n**Lineage**: Builds on fragility'_le_hubScore and hubScore_strict_mono from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Weighted Hub Scores and Proof Complexity\n\n**Conjecture**: Define the *weighted hub score* hw(v) = \u03a3_{w \u2208 R(v)} c(w), where c(w) is the proof complexity (length) of w. Then the weighted hub monotonicity theorem still holds: if E(u,v), then hw(v) < hw(u), provided c is strictly positive.\n\n**Test**: Formalize weighted hub scores in Lean 4 and prove the weighted monotonicity theorem. Then compute weighted hub scores on the Mathlib dependency graph using proof term sizes as weights.\n\n**Impact**: Weighted hub scores capture not just how many theorems depend on a result, but how *hard* those theorems are. A theorem that supports many easy corollaries might have a lower weighted hub score than one supporting fewer but harder results. This gives a more nuanced measure of \"mathematical importance.\"\n\n**Catalog References**: `Physics/ProofDAG.lean` (hub score theory), `Physics/TropicalProofComplexity.lean` (proof length bounds)\n\n**Proof Strategy**: Extend the reachSet theory to carry weights. The key lemma is that R(v) \u2282 R(u) still holds when E(u,v), so the weighted sum over R(v) is strictly less than the weighted sum over R(u) (since the missing element v has positive weight).\n\n**Domain Bridges**: Computation (proof complexity) <-> Physics (weighted networks)\n\n**Lineage**: Direct extension of hubScore_strict_mono from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Categorical Structure of DAG Morphisms\n\n**Conjecture**: The category **FinDAG** (finite DAGs as objects, DAG homomorphisms as morphisms) has finite products and coproducts. Moreover, the hub score function defines a functor from **FinDAG** to the poset category (\u2115, \u2264).\n\n**Test**: Formalize the category of finite DAGs in Lean 4. Show that:\n1. The product G\u2081 \u00d7 G\u2082 is the categorical product (with vertex set \u03b1\u2081 \u00d7 \u03b1\u2082 and edge (a\u2081,a\u2082) \u2192 (b\u2081,b\u2082) iff E\u2081(a\u2081,b\u2081) \u2227 E\u2082(a\u2082,b\u2082)).\n2. The coproduct is the disjoint union (already partially formalized as sumDAG).\n3. Hub score is functorial (preserves the ordering structure).\n\n**Impact**: Establishing the categorical structure of proof DAGs would connect this work to the rich theory of categories and functors, potentially enabling tools like adjunctions and limits to study proof organization.\n\n**Catalog References**: `Physics/ProofDAG.lean` (sumDAG, singletonDAG), `Bridges/SymplecticCertificateAlgebra.lean` (algebraic structures)\n\n**Proof Strategy**: \n1. Define DAG homomorphisms f : G\u2081 \u2192 G\u2082 as functions preserving edges.\n2. Verify the identity and composition axioms.\n3. Construct products and coproducts explicitly.\n4. Show hub score is monotone under surjective homomorphisms.\n\n**Domain Bridges**: Algebra (category theory) <-> Physics (proof DAGs) <-> Logic (proof transformations)\n\n**Lineage**: Builds on the algebraic structure (singletonDAG, sumDAG) from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Information-Theoretic Lower Bounds on DAG Depth\n\n**Conjecture**: Any finite DAG with n nodes and transitive closure size T has depth at least log\u2082(T/n). Equivalently, no \"shallow\" proof system can have a dense transitive closure.\n\n**Test**: Formalize this bound in Lean 4. Check computationally on random DAGs and on the Mathlib dependency graph.\n\n**Impact**: This would provide an information-theoretic lower bound on proof depth \u2014 the minimum number of \"layers of reasoning\" needed to achieve a given level of interconnection. It would complement the existing proof length lower bounds in the Catalog.\n\n**Catalog References**: `Physics/ProofDAG.lean` (transitiveClosureSize, Hub Score Sum Identity), `Physics/ProofSearchInformation.lean` (theorem_proof_duality), `Physics/TropicalProofComplexity.lean` (proof length bounds)\n\n**Proof Strategy**: \n1. In a stratified DAG with depth d, each node at stratum k can reach at most n_{k+1} + n_{k+2} + ... + n_d nodes, where n_j is the width at stratum j.\n2. By the Hub Score Sum Identity, T = \u03a3 h(v).\n3. Using the arithmetic-geometric mean inequality and the constraint \u03a3 n_j = n, derive T \u2264 n \u00b7 d \u00b7 (n/d), giving d \u2265 T/n\u00b2.\n4. A tighter bound using the exponential growth of reachability in dense DAGs should yield d \u2265 log\u2082(T/n).\n\n**Domain Bridges**: Computation (complexity theory) <-> Physics (information bounds) <-> EML (entropy of mathematical structures)\n\n**Lineage**: Builds on Hub Score Sum Identity and stratum theory from this cycle.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0621",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "7616beb1",
-    "status": "available",
-    "timestamp": "2026-06-04T09:20:55.160543+00:00",
-    "title": "Stratified Dependency Algebra (SDA) as a nov"
   },
   {
     "consumed_by_exp_id": "",
@@ -574,36 +439,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Research Directions\n\n## Synthesis\n\nThis cycle established a rigorous algebraic-geometric framework for elementary cellular automata (ECAs) over GF(2), yielding three structural theorems (complementation duality, linear subspace, Rule 150 characterization) and one significant negative result (refutation of the dimension\u2013complexity conjecture). The most promising cross-domain connection emerges from the **circulant matrix\u2013cyclic code duality**: the fixed-point variety of a linear ECA rule is the codeword space of a cyclic code over GF(2), connecting dynamical systems theory to algebraic coding theory. This bridge has the highest breakthrough potential because it allows the vast machinery of coding theory (minimum distance, weight distribution, BCH bounds) to be applied to cellular automaton dynamics, and conversely, allows dynamical systems intuition to inform code design.\n\nThe refutation of the dimension\u2013complexity conjecture is itself the most informative result: it demonstrates that fixed-point geometry measures *rigidity* rather than *complexity*, and redirects attention toward orbit-space geometry and periodic-point zeta functions as the correct algebraic invariants. The connection to the existing catalog's fixed-point theorems (`fixed_points_are_iterative_invariants`, `closure_has_least_fixed_point`) provides a bridge between this work and the broader lattice-theoretic fixed-point theory already formalized.\n\nThe self-complementary rule subalgebra (16 rules with Z/2-symmetric fixed-point varieties) connects to the equivariant spectrum theory in `Shared/EquivariantSpectrum/Basic.lean`, where equivariant maps preserve fixed-point structure. Formalizing this connection would unify the ECA complement involution with the general theory of group actions on algebraic varieties.\n\n---\n\n### Direction 1: Periodic-Point Zeta Functions and Dynamical Complexity\n\n**Conjecture**: For each ECA rule r, the periodic-point zeta function \u03b6_r(t) = exp(\u2211_{k\u22651} |{s \u2208 GF(2)^n : f^k(s) = s}| \u00b7 t^k / k) is rational for all linear rules and transcendental for Rule 110.\n\n**Test**: Compute |Fix(f^k, n)| for k = 1, ..., 20 and n = 1, ..., 12 for all 256 rules. For linear rules, verify that the sequence satisfies a linear recurrence (implying zeta rationality). For Rule 110, check whether any linear recurrence of degree \u2264 100 fits the data.\n\n**Impact**: If true, this provides a sharp algebraic-geometric distinction between linear and nonlinear rules, and connects ECA complexity to the rationality/transcendence of dynamical zeta functions \u2014 a central theme in Artin\u2013Mazur theory. If false for Rule 110 (i.e., \u03b6_{110} is rational), that would suggest a hidden algebraic structure in Turing-complete dynamics.\n\n**Catalog References**: `Shared/CellularAlgebraicGeometry.lean` (fixed-point variety definitions), `Computation/TransfiniteCA.lean` (ECA orbit theory)\n\n**Proof Strategy**: For linear rules, the key is that f^k is also linear (composition of linear maps), so |Fix(f^k, n)| = 2^{dim ker(M^k - I)} where M is the circulant matrix. The eigenvalues of M over the algebraic closure of GF(2) determine this dimension, giving the linear recurrence. For nonlinear rules, use the Lefschetz fixed-point theorem over \u00e9tale cohomology (if applicable to GF(2) varieties) or direct computation.\n\n**Domain Bridges**: Computation (zeta functions) \u2194 Algebra (circulant eigenvalues) \u2194 Cryptography (cyclic code duality)\n\n**Lineage**: Builds on the Linear Subspace Theorem and circulant matrix interpretation from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: ECA Rules as Cyclic Error-Correcting Codes\n\n**Conjecture**: The fixed-point variety of a linear ECA rule with coefficients (\u03b1, \u03b2, \u03b3) on a cycle of length n is isomorphic (as a GF(2)-vector space) to the cyclic code C(n, g) where g(x) = gcd(\u03b1x^{n-1} + (\u03b2+1) + \u03b3x, x^n + 1) over GF(2). The minimum distance of this code equals the minimum Hamming weight of a nonzero fixed point.\n\n**Test**: For each of the 8 linear ECA rules and n = 3, ..., 31 (prime), compute the fixed-point set and verify it equals the cyclic code generated by the GCD polynomial. Compute minimum distances and compare with known BCH bounds.\n\n**Impact**: This would establish a formal dictionary between cellular automaton dynamics and coding theory, allowing each field's tools to be applied in the other. In particular, the BCH bound would give *lower bounds* on fixed-point Hamming weights \u2014 a dynamical constraint derived from algebraic coding theory.\n\n**Catalog References**: `Shared/CellularAlgebraicGeometry.lean`, `Cryptography/BerggrenDiophantineLattice.lean` (lattice/code connections)\n\n**Proof Strategy**: The isomorphism follows from the identification of the circulant nullspace with the cyclic code generated by gcd(p(x), x^n - 1). The formal proof requires formalizing cyclic codes in Lean 4 (definition as ideals in GF(2)[x]/(x^n - 1)) and showing the circulant nullspace is exactly this ideal.\n\n**Domain Bridges**: Algebra (circulant matrices) \u2194 Cryptography (error-correcting codes) \u2194 Shared (ECA dynamics)\n\n**Lineage**: Extends the circulant polynomial theorem (rule150_circulantPoly) from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Orbit-Space Algebraic Geometry and Complexity Classification\n\n**Conjecture**: Define the *orbit variety* of rule r on n cells as the quotient O_r(n) = GF(2)^n / \u27e8f_r\u27e9 (the set of orbits). For linear rules, O_r(n) is a finite set whose cardinality |O_r(n)| satisfies |O_r(n)| \u2264 2^n / |Fix(f_r, n)|. For Class 4 rules (including Rule 110), |O_r(n)| grows as \u0398(2^n / n) \u2014 the orbit structure is maximally complex.\n\n**Test**: Compute the full state transition graph for all 256 rules with n = 1, ..., 16. Count the number of distinct orbits (connected components of the functional graph). Verify the growth rate conjecture for Class 4 rules.\n\n**Impact**: If the orbit count growth rate distinguishes Wolfram classes, it provides the algebraic-geometric complexity invariant that the fixed-point variety failed to provide. This would vindicate the algebraic geometry approach while correcting the original misdirection.\n\n**Catalog References**: `Shared/CellularAlgebraicGeometry.lean`, `Bridges/ClosureRenormalizationDuality.lean` (iterative invariants)\n\n**Proof Strategy**: The upper bound for linear rules follows from the orbit-counting theorem (Burnside's lemma adapted to the cyclic group generated by f). The \u0398(2^n/n) growth for Rule 110 would require proving that almost all states have period exactly n under Rule 110 iteration \u2014 likely very hard and possibly equivalent to proving properties of Rule 110's computational universality.\n\n**Domain Bridges**: Shared (ECA varieties) \u2194 Computation (complexity classification) \u2194 Bridges (dynamical systems)\n\n**Lineage**: Motivated by the refutation of the dimension\u2013complexity conjecture in this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Frobenius Structure and Fixed-Point Zeta Functions of Linear ECAs\n\n**Conjecture**: For any linear ECA rule g with circulant polynomial p(x) of degree d, the fixed-point zeta function Z_g(t) = \u2211_{n\u22651} dim_GF(2)(Fix(g, n)) \u00b7 t^n is a rational function of t whose poles are at the reciprocals of the roots of p(x) in the algebraic closure of GF(2). Specifically, Z_g(t) = -\u2211_\u03b1 t/(1-\u03b1t) where \u03b1 ranges over the roots of p(x) counted with multiplicity.\n\n**Test**: Compute dim(Fix(g, n)) for all 8 linear rules and n = 1, ..., 50. Fit the sequence to the conjectured rational form and verify pole locations match roots of p(x).\n\n**Impact**: This connects ECA dynamics directly to the Weil conjectures framework: the fixed-point zeta function plays the role of the Hasse\u2013Weil zeta function, and its rationality is the analogue of Dwork's theorem. The analogy may extend to a \"Riemann hypothesis\" for ECAs.\n\n**Catalog References**: `Shared/CellularAlgebraicGeometry.lean` (circulantPoly definition), `Shared/SelbergClassCensus.lean` (zeta function theory)\n\n**Proof Strategy**: The key identity is dim(ker(M_n)) = #{k \u2208 {0,...,n-1} : p(\u03c9^k) = 0} where \u03c9 is a primitive n-th root of unity in the algebraic closure. This is equivalent to counting how many n-th roots of unity are also roots of p(x), which connects to the factorization of x^n - 1 over GF(2). The generating function identity then follows from exponential sum methods.\n\n**Domain Bridges**: Algebra (polynomial factorization) \u2194 Shared (zeta functions) \u2194 EML (spectral theory)\n\n**Lineage**: Extends rule150_circulantPoly and the Frobenius factorization observation from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Nonlinear Fixed-Point Varieties and Gr\u00f6bner Bases\n\n**Conjecture**: For nonlinear ECA rules (ANF degree \u2265 2), the fixed-point ideal I_r(n) = \u27e8g_r(s_{i-1}, s_i, s_{i+1}) - s_i : i = 0,...,n-1\u27e9 + \u27e8s_i\u00b2 - s_i : i = 0,...,n-1\u27e9 in GF(2)[s_0,...,s_{n-1}] has a Gr\u00f6bner basis whose leading term ideal is generated by square-free monomials. The Stanley\u2013Reisner complex of this leading term ideal encodes the combinatorial structure of the fixed-point variety.\n\n**Test**: Compute Gr\u00f6bner bases for Rules 110, 30, and 54 (representatives of Classes 4, 3, and 3) for n = 3, ..., 12 using a computer algebra system. Extract the leading term ideal and compute the associated simplicial complex. Check whether its topological invariants (Betti numbers, Euler characteristic) distinguish Wolfram classes.\n\n**Impact**: This connects ECA fixed-point geometry to combinatorial commutative algebra and simplicial topology. If the simplicial complex structure distinguishes complexity classes, it provides a topological invariant for computational complexity \u2014 a completely new approach.\n\n**Catalog References**: `Shared/CellularAlgebraicGeometry.lean`, `Algebra/Advanced.lean` (algebraic structures)\n\n**Proof Strategy**: The square-free property follows from the Boolean ideal \u27e8s_i\u00b2 - s_i\u27e9 (every variable satisfies x\u00b2 = x over GF(2)). The Gr\u00f6bner basis computation uses Buchberger's algorithm over GF(2). The Stanley\u2013Reisner connection requires showing that the leading term ideal is indeed square-free after reduction by the Boolean ideal.\n\n**Domain Bridges**: Algebra (Gr\u00f6bner bases) \u2194 Shared (ECA varieties) \u2194 Geometry (simplicial topology)\n\n**Lineage**: New direction motivated by the nonlinearity detection theorem (rule110_not_linear) from this cycle.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0626",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "518f6e7e",
-    "status": "available",
-    "timestamp": "2026-06-04T10:25:59.840084+00:00",
-    "title": "Rigorous algebraic-geometric framework for elementary c"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established a rigorous foundation for matroid minor theory in Lean 4, centered on the novel **Rank-Filtered Minor Ideal (RFMI)** structure. The RFMI decomposes minor-closed matroid classes by rank level, reducing the infinitary well-quasi-ordering question to finite combinatorial questions at each level. We proved 14 sorry-free theorems across three files, covering rank function axioms, deletion/contraction/duality operations, the minor relation, filtration properties, width analysis, and the excluded minor finiteness theorem.\n\nThe most promising cross-domain connection is between **matroid rank filtrations and tropical geometry**. Tropical matroids (valuated matroids) generalize classical matroids by equipping the rank function with a valuation from the tropical semiring. The RFMI framework could extend naturally to this setting, where the \"rank\" filtration becomes a \"valuation depth\" filtration. This connects to the Catalog's `TropicalPersistenceRealizationDuality` bridge theorem, which establishes interleaving results for filtered structures \u2014 precisely the kind of structure our rank filtration provides.\n\nThe cycle also revealed a fundamental modeling insight: the classical duality theorem for matroid minors fails in fixed-ground-set representations. This negative result is itself valuable, as it constrains which formalization strategies can succeed for the full Robertson-Seymour program. The most promising path forward requires a variable-ground-set formalization using Mathlib's native `Matroid` type.\n\n---\n\n### Direction 1: Tropical Rank Filtrations and Valuated Matroid WQO\n\n**Conjecture**: The RFMI framework extends to valuated matroids (tropical matroids), where the rank function is replaced by a tropical Pl\u00fccker vector. Specifically, the \"tropical rank filtration\" \u2014 decomposing valuated matroids by the minimum valuation of their bases \u2014 yields a filtration with the same monotonicity and width-boundedness properties as the classical case.\n\n**Test**: Define a `TropicalRFMI` structure in Lean 4, where the rank function maps to \u2124 \u222a {\u221e} (tropical semiring) instead of \u2115. Prove filtration monotonicity and minor-closure for tropical matroids on ground sets of size \u2264 4. Verify computationally that the width of each filtration level matches the classical case for uniform valuated matroids.\n\n**Impact**: If true, this would unify the Robertson-Seymour program with tropical geometry, potentially yielding new tools for the conjecture via tropical algebraic geometry. If false, the failure mode would reveal fundamental differences between classical and tropical minor theory.\n\n**Catalog References**: `Bridges/AlgebraTropicalGeometry/TropicalPersistenceRealizationDuality.lean`, `FINAL/Tropical/GL3FiniteTestFamily.lean`\n\n**Proof Strategy**: Start with the Dressian (parameter space of tropical linear spaces) as the ambient object. Define tropical deletion/contraction via restriction and contraction of tropical Pl\u00fccker vectors. The key lemma is that tropical submodularity (the tropical analogue of (R3)) is preserved under these operations. Use `graphs_same_rank_interleaving` as a template for the interleaving/filtration arguments.\n\n**Domain Bridges**: Matroid Minor Theory <-> Tropical Geometry <-> Persistence Theory\n\n**Lineage**: Builds on this cycle's RFMI framework (MatroidRankFiltration.lean) and the Catalog's tropical persistence results.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Variable-Ground-Set Matroid Minors via Mathlib's Matroid Type\n\n**Conjecture**: The RFMI framework can be reformulated using Mathlib's native `Matroid \u03b1` type (which allows variable ground sets), recovering the full duality theorem for minors: if M' is a minor of M, then M'* is a minor of M*. Furthermore, this reformulation will yield a cleaner proof of the excluded minor finiteness theorem that does not require the fixed-ground-set assumption.\n\n**Test**: Define `IsMinorOf` for `Matroid \u03b1` using Mathlib's `Matroid.restrict` and the exchange property. Prove the duality theorem. Then reformulate and prove all RFMI theorems in this setting.\n\n**Impact**: Would provide the definitive Lean 4 formalization of matroid minor theory, suitable for attacking the actual Robertson-Seymour conjecture. The fixed-ground-set limitation (discovered in this cycle) would be eliminated.\n\n**Catalog References**: `Shared/MatroidMinor.lean`, `Shared/MatroidWQO.lean` (this cycle's results)\n\n**Proof Strategy**: Use Mathlib's `Matroid.Indep` and `Matroid.restrict` to define deletion. For contraction, define `M / C` via the dual: M / C = (M* \\ C)*. This immediately yields the duality theorem by construction. The RFMI framework transfers directly once a notion of \"rank\" is established via `Matroid.erk` (the rank function in Mathlib).\n\n**Domain Bridges**: Matroid Theory <-> Order Theory (WQO) <-> Lean4/Mathlib Foundations\n\n**Lineage**: Directly extends this cycle's three files, resolving the negative result about duality.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Finite Excluded Minors for F\u2083-Representability\n\n**Conjecture**: The set of excluded minors for F\u2083-representability (ternary matroids) is exactly {U(2,5), U(3,5), F\u2087, F\u2087*}, where F\u2087 is the Fano matroid. Specifically, no matroid on \u2264 8 elements is an excluded minor for F\u2083-representability beyond these four.\n\n**Test**: Enumerate all matroids of rank \u2264 3 on ground sets of size \u2264 8. For each, determine F\u2083-representability by checking whether a representing matrix over GF(3) exists (via Gaussian elimination on all possible 3\u00d78 matrices over GF(3)). Identify which non-representable matroids are minimal (excluded minors). Verify the list matches {U(2,5), U(3,5), F\u2087, F\u2087*}.\n\n**Impact**: If confirmed computationally up to n=8, this provides strong evidence for the conjecture and could guide theoretical proofs. If a new excluded minor is found, it would be a significant contribution to matroid theory.\n\n**Catalog References**: `Novelty/Basic.lean` (ggw_implies_finite_excluded_minors)\n\n**Proof Strategy**: For each candidate matroid M:\n1. Check representability: does there exist a 3\u00d7n matrix A over GF(3) whose column matroid is M?\n2. If not representable, check minimality: is every proper minor representable?\n3. Use the rank filtration to organize the search by rank level, reducing the search space.\nThe key computational challenge is that the number of matroids grows super-exponentially. Focus on rank 3 (by duality, rank n-3 is equivalent).\n\n**Domain Bridges**: Matroid Theory <-> Finite Fields <-> Computational Algebra\n\n**Lineage**: Builds on the RFMI excluded minor theorems from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Antichain Width Bounds via Ramsey Theory\n\n**Conjecture**: The width of the rank-k filtration of the RFMI of all matroids on n elements grows at most polynomially in n for fixed k. Specifically, w(k, n) \u2264 n^{O(k\u00b2)} where w(k, n) is the maximum antichain size among rank-\u2264-k matroids on n elements.\n\n**Test**: Compute w(k, n) for k \u2208 {1, 2} and n \u2208 {3, 4, 5, 6} by exhaustive enumeration of matroids and antichain detection. Fit the growth rate and check if it matches polynomial bounds.\n\n**Impact**: Polynomial width bounds would provide a concrete quantitative refinement of the Robertson-Seymour conjecture, with potential algorithmic applications (polynomial-time minor testing for bounded-rank matroids). Exponential growth would indicate that the rank filtration alone is insufficient.\n\n**Catalog References**: `Shared/MatroidRankFiltration.lean` (width_bounded_by_ground_set, width_mono)\n\n**Proof Strategy**: For k=1 (rank-1 matroids = partition matroids), the antichain structure is governed by the Dilworth theorem applied to set containment. For k=2, use the theory of graphic matroids (every rank-2 matroid is graphic) to reduce to graph minor antichains, where Robertson-Seymour theory provides explicit bounds. For general k, explore connections to Ramsey theory: large antichains should contain structured sub-antichains that can be related to Ramsey numbers.\n\n**Domain Bridges**: Matroid Theory <-> Ramsey Theory <-> Extremal Combinatorics\n\n**Lineage**: Directly extends the width analysis theorems from MatroidRankFiltration.lean.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Matroid Connectivity and the Splitter Theorem\n\n**Conjecture**: For 3-connected matroids in an RFMI, the excluded minors are themselves 3-connected. Formally: if an RFMI is closed under 3-connected minors, and M is an excluded minor, then M is 3-connected.\n\n**Test**: Define 3-connectivity for rank matroids (no partition E = A \u222a B with r(A) + r(B) - r(E) \u2264 1 and |A|, |B| \u2265 2). Prove or disprove the conjecture for matroids on ground sets of size \u2264 6 by enumeration.\n\n**Impact**: The Splitter Theorem (Seymour 1980) states that in the class of 3-connected matroids, every minor-closed class has 3-connected excluded minors. Formalizing this would be a significant step toward the full matroid structure theory needed for Robertson-Seymour.\n\n**Catalog References**: `Shared/MatroidMinor.lean` (minor relation), `Shared/MatroidWQO.lean` (excluded minors)\n\n**Proof Strategy**: Define connectivity function \u03bb(A) = r(A) + r(E\\A) - r(E). A matroid is 3-connected if \u03bb(A) \u2265 2 for all non-trivial partitions. Use Seymour's splitter theorem proof strategy: if an excluded minor M is not 3-connected, find a 2-separation and show that a proper minor of M is also not in the class, contradicting minimality.\n\n**Domain Bridges**: Matroid Theory <-> Graph Connectivity <-> Structural Decomposition\n\n**Lineage**: Extends the excluded minor theory from MatroidWQO.lean.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_0627",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "fe1a7abe",
-    "status": "available",
-    "timestamp": "2026-06-04T10:59:27.046931+00:00",
-    "title": "Rigorous foundation for matroid minor theory i"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions: Matroid Minor Theory and Well-Quasi-Ordering\n\n## Synthesis\n\nThis research cycle established a complete formal framework for the interaction between well-quasi-ordering (WQO) and minor-closed properties in abstract minor systems. The key discovery is that the \"excluded minors are antichains\" principle, combined with the WQO finite antichain theorem, yields the forbidden minor characterization theorem as a clean algebraic consequence. This abstracts the structural core of the Robertson-Seymour theorem into a setting that applies equally to graphs, matroids, and any combinatorial structure with a well-behaved minor relation.\n\nThe most promising cross-domain connection is between the obstruction spectrum (our novel invariant) and coding theory / information theory. The spectrum \u03c3_P(k) counts excluded minors at each size level, and its shape encodes the \"complexity\" of a minor-closed property. For matroid representability over finite fields, the spectrum has a characteristic shape that might be predictable from field-theoretic invariants \u2014 connecting combinatorics to algebra in a new way.\n\nThe highest breakthrough potential lies in Direction 1 (Higman's lemma formalization), which would unlock WQO results for sequences and thereby connect to the full power of the Robertson-Seymour proof strategy. Dickson's lemma (proved in this cycle) handles products; Higman handles sequences. Together, they form the combinatorial backbone of all WQO arguments.\n\n---\n\n### Direction 1: Formal Higman's Lemma and WQO on Sequences\n\n**Conjecture**: For any WQO (\u03a3, \u2264), the set of finite sequences \u03a3* is WQO under the subsequence embedding relation: (a\u2081,...,a\u2098) \u2264 (b\u2081,...,b\u2099) iff there exist indices i\u2081 < ... < i\u2098 such that a\u2c7c \u2264 b\u1d62\u2c7c for all j.\n\n**Test**: Formalize Higman's lemma in Lean 4 and verify it for the concrete case \u03a3 = {0, 1} with the trivial ordering. Then test computationally: generate random sequences of length up to 20 over {0,1,2} and verify that no antichain exceeds a predicted size bound.\n\n**Impact**: Higman's lemma is the key ingredient for extending WQO from products (Dickson) to sequences. Combined with our forbidden minor characterization, it would enable WQO arguments for labeled structures (e.g., edge-labeled graphs, colored matroids). This is a prerequisite for formalizing the full Robertson-Seymour proof.\n\n**Catalog References**: `Shared/MatroidMinorWQO.lean` (WQO structure, `wqo_prod`, `natWQO`)\n\n**Proof Strategy**: Use Nash-Williams's minimal bad sequence argument. Define a \"bad sequence\" as one with no comparable pair. Assume Higman's lemma fails, so there exists a minimal bad sequence (minimal in a lexicographic sense). Show that the first element can be replaced by a shorter sequence, contradicting minimality. The key lemma is that the set of sequences starting with a fixed symbol is WQO by induction on the alphabet size.\n\n**Domain Bridges**: WQO Theory <-> Formal Language Theory (subsequence closure is a regular language \u2014 Haines 1969)\n\n**Lineage**: Builds on `wqo_prod` (Dickson's lemma) and `wqo_antichain_finite` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Obstruction Spectrum Classification for Small Matroids\n\n**Conjecture**: For the class of matroids representable over GF(5), the obstruction spectrum satisfies \u03c3(k) = 0 for k \u2265 15. That is, all excluded minors for GF(5)-representability have ground set size at most 14.\n\n**Test**: Enumerate all simple matroids of rank \u2264 3 on ground sets of size \u2264 12. For each, test GF(5)-representability by checking if a representation matrix exists (via Gaussian elimination over GF(5)). Count excluded minors at each size level. If any excluded minor has size > 14, the conjecture is refuted.\n\n**Impact**: The obstruction spectrum is a new invariant introduced in this cycle. Understanding its shape for specific fields would provide concrete evidence for or against the GGW conjecture, and could reveal patterns connecting field size to obstruction depth. A bound on the maximum excluded minor size would be a significant new result.\n\n**Catalog References**: `Shared/MatroidMinorWQO.lean` (`obstructionSpectrum`, `obstruction_spectrum_finite_support`)\n\n**Proof Strategy**: Start with known excluded minors for GF(5) (there are infinitely many if GGW fails, finitely many if it holds). Computationally enumerate candidates using the Sage matroid library. For the formal side, define GF(5)-representability via rank functions matching matrix ranks, and prove basic properties.\n\n**Domain Bridges**: Matroid Theory <-> Finite Geometry (excluded minors correspond to non-embeddable configurations in PG(r-1, 5))\n\n**Lineage**: Builds on `obstruction_spectrum_finite_support` and `excluded_minor_monotonicity` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: WQO Transfer Theorems for Matroid Duality\n\n**Conjecture**: If a class C of matroids is WQO by the minor relation, then the class C* = {M* : M \u2208 C} of dual matroids is also WQO. Moreover, the obstruction spectra of C and C* are related by a duality involution.\n\n**Test**: Formalize matroid duality (rk*(A) = |A| - rk(E) + rk(E\\A)) and prove that (M\\e)* = M*/e and (M/e)* = M*\\e (duality interchanges deletion and contraction). Then attempt to transfer the WQO property through the duality bijection.\n\n**Impact**: If WQO is preserved under duality, it would halve the work needed to verify the GGW conjecture: proving it for a field automatically gives it for the dual class. Since duality swaps deletion and contraction, this would also constrain the structure of excluded minors (excluded minors of C* are duals of excluded minors of C).\n\n**Catalog References**: `Shared/MatroidMinorWQO.lean` (MinorSystem, WQO)\n\n**Proof Strategy**: The key step is showing that duality is an order-isomorphism on the minor partial order (reversing the roles of deletion and contraction). If C \u2192 C* is an order-isomorphism, WQO transfers immediately. The proof requires formalizing that minor operations commute with duality.\n\n**Domain Bridges**: Matroid Theory <-> Projective Geometry (duality of matroids extends point-hyperplane duality in projective spaces)\n\n**Lineage**: Builds on `FiniteMatroid` and `MinorSystem` definitions from this cycle. Extends the matroid rank function axioms.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Kruskal's Tree Theorem as WQO on Labeled Trees\n\n**Conjecture**: Kruskal's tree theorem (finite labeled trees are WQO under homeomorphic embedding) can be derived from our WQO framework combined with Higman's lemma and a structural induction on tree depth.\n\n**Test**: Formalize labeled trees as a type, define the homeomorphic embedding relation, construct a MinorSystem instance, and prove the WQO property. Test with concrete tree families: caterpillar trees, binary trees, path graphs.\n\n**Impact**: Kruskal's theorem is historically the first WQO result for tree-like structures and was the inspiration for Robertson-Seymour. Formalizing it within our framework would validate that our abstract MinorSystem captures the right level of generality. It would also provide the foundation for the graph minor theorem, since Robertson-Seymour's proof uses tree decompositions.\n\n**Catalog References**: `Shared/MatroidMinorWQO.lean` (WQO, MinorSystem, `wqo_antichain_finite`)\n\n**Proof Strategy**: Follow Nash-Williams's elegant proof using minimal bad sequences. Define trees inductively, define embedding recursively, and use well-founded induction on tree size. The key lemma is Higman's lemma applied to the sequence of children at each node.\n\n**Domain Bridges**: WQO Theory <-> Proof Theory (Kruskal's theorem is independent of Peano arithmetic \u2014 connection to ordinal analysis and \u0393\u2080)\n\n**Lineage**: Builds on `wqo_prod` (Dickson) and would use Direction 1 (Higman) as a prerequisite.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Computational Bounds on Excluded Minor Sets\n\n**Conjecture**: For graphic matroids (= cycle matroids of graphs), the number of excluded minors for the property \"is a minor of the Petersen graph\" is exactly 3.\n\n**Test**: Enumerate all graphs on \u2264 10 vertices that are not minors of the Petersen graph but all whose proper minors are. Use the Sage graph library or a custom enumeration. Verify computationally, then formalize the finite characterization.\n\n**Impact**: This is a concrete, testable instance of the forbidden minor characterization theorem. The Petersen graph is a fundamental object in graph theory (it appears as an excluded minor for many properties). Understanding its \"upward closure\" in the minor order would provide concrete data points for the obstruction spectrum theory.\n\n**Catalog References**: `Shared/MatroidMinorWQO.lean` (`forbidden_minor_characterization`, `excluded_minors_antichain`)\n\n**Proof Strategy**: Use the forbidden_minor_characterization theorem applied to the property P(G) = \"G is a minor of the Petersen graph\". Since this property is minor-closed (if G \u2264 H and H \u2264 Petersen, then G \u2264 Petersen), the theorem guarantees finitely many excluded minors. The computational challenge is exhaustive enumeration.\n\n**Domain Bridges**: Graph Theory <-> Algorithm Design (forbidden minor characterizations yield polynomial-time recognition algorithms)\n\n**Lineage**: Direct application of `forbidden_minor_characterization` from this cycle.\n\n**Ambition**: extension\n",
     "domains": [
       "Algebra",
@@ -631,21 +466,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-04T11:33:07.235572+00:00",
     "title": "Mathematical foundations for tropical traini"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established the **category EMLCat** of EML-computable maps, proving it has finite products, currying, and a strict depth hierarchy. The most significant finding is the interplay between the *categorical* structure (products, composition) and the *complexity-theoretic* structure (depth, node count, the size-depth inequality). The depth hierarchy theorem \u2014 that iterated exponentials have depth exactly k \u2014 provides the first formal evidence that EML computation has genuine complexity stratification, analogous to circuit depth separation in Boolean complexity theory.\n\nThe most promising cross-domain connection is between the **log-affine subcategory** and **tropical geometry**. Log-affine maps, which form a multiplicative monoid, become affine maps under the logarithm functor. This is precisely the transition from \"ordinary\" to \"tropical\" geometry, where multiplication becomes addition and addition becomes max. The existing catalog results on EML closure operators (`eml_closure_closed_under_comp`, `hardyLevel_closed_under_eml`) provide the compositional backbone, while the new categorical framework gives it semantic content.\n\nThe highest breakthrough potential lies in Direction 1 (depth separation lower bounds), which would transform the upper-bound hierarchy result into a true separation theorem \u2014 a result of circuit-complexity-level significance for continuous computation.\n\n---\n\n### Direction 1: EML Depth Separation Lower Bounds\n\n**Conjecture**: For every k \u2265 1, there is no ScalarEMLTree of depth < k that computes the function x \u21a6 exp^[k](x) = exp(exp(...exp(x)...)). That is, the canonical iterExpTree' construction is depth-optimal.\n\n**Test**: Fix k = 2. Enumerate all EML trees of depth \u2264 1 in one variable (these are trees built from coord, const, with at most one layer of add/mul/exp/log). Show that none of them equal x \u21a6 exp(exp(x)) on all of \u211d. This can be done by computing Taylor coefficients or by evaluating at specific points and checking for contradictions.\n\n**Impact**: A positive answer would establish a **strict depth hierarchy** for continuous computation, analogous to the AC\u2070 vs TC\u2070 separation in Boolean circuits. This would be a fundamental result in computational complexity for real-valued functions. If false (i.e., if there are clever depth-reducing identities), that would reveal unexpected algebraic structure in the exp/log system.\n\n**Catalog References**: `EML.EMLCategoryFull.lean` (iterExpTree', depth hierarchy), `EML.CategoryDefs.lean` (ScalarEML)\n\n**Proof Strategy**: \n1. Classify all depth-1 ScalarEMLTree in 1 variable: they are of the form op(coord 0) or op(const c) or op\u2082(coord 0, const c), etc.\n2. Show each such tree defines a function in a specific analytic class (e.g., x \u21a6 a\u00b7exp(x) + b is the most complex depth-1 function with one exp).\n3. Prove that exp(exp(x)) is not in this class by comparing growth rates or Taylor coefficients.\n\n**Domain Bridges**: EML complexity <-> Boolean circuit complexity (depth hierarchy analogy); EML depth <-> neural network depth efficiency (practical implications for architecture design)\n\n**Lineage**: Builds on `iterExpTree_depth'` and `ScalarEMLTree.depth_lt_nodeCount'` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: The Tropical Limit Functor on EMLCat\n\n**Conjecture**: The \"tropical limit\" construction \u2014 replacing log-sum-exp with max \u2014 defines a functor from a subcategory of EMLCat to the category of tropical polynomial maps (piecewise-linear maps with integer slopes). Specifically, for any family of EML maps f\u209c(x) = t\u207b\u00b9 \u00b7 log(\u2211 exp(t \u00b7 g\u1d62(x))), the limit as t \u2192 \u221e is max(g\u2081(x),...,g\u2099(x)), and this limit operation preserves composition.\n\n**Test**: \n1. Verify computationally: for g\u1d62(x) = a\u1d62x + b\u1d62, compute f\u209c(x) for increasing t and check convergence to max(a\u1d62x + b\u1d62).\n2. Prove in Lean: if g\u2081, g\u2082 are affine (hence EML-computable), then lim_{t\u2192\u221e} t\u207b\u00b9 log(exp(t\u00b7g\u2081(x)) + exp(t\u00b7g\u2082(x))) = max(g\u2081(x), g\u2082(x)) pointwise.\n\n**Impact**: This would formalize the deep connection between smooth EML computation and tropical geometry, providing a categorical explanation for why neural networks with softmax activations approximate piecewise-linear classifiers. It would also connect the EML catalog to the Tropical domain catalog.\n\n**Catalog References**: `EML.EMLCategoryFull.lean` (category structure), `Tropical/` domain (tropical semiring), `EML.MaxPlusStoneWeierstrass.lean` (max-plus approximation)\n\n**Proof Strategy**: Use dominated convergence or direct epsilon-delta analysis. The key lemma is that log(exp(a) + exp(b)) = max(a,b) + log(1 + exp(-|a-b|)), and the error term vanishes as the arguments are scaled by t \u2192 \u221e.\n\n**Domain Bridges**: EML <-> Tropical geometry (tropicalization functor); smooth computation <-> piecewise-linear computation (neural network approximation theory)\n\n**Lineage**: Builds on `logAffine_log_is_affine'` (log functor) and the log-affine multiplicative closure from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: EML Complexity Functor\n\n**Conjecture**: Define the *EML complexity* of a vector map f : \u211d\u207f \u2192 \u211d\u1d50 as the minimum total node count over all derivation trees. Then complexity is sub-multiplicative under composition: C(g \u2218 f) \u2264 C(g) \u00b7 C(f). Furthermore, the complexity function defines a functor from EMLCat to (\u2115, \u2264) (the poset of natural numbers) that is lax monoidal with respect to the product structure.\n\n**Test**: \n1. Verify computationally for specific maps: compute C(f), C(g), C(g \u2218 f) for small examples.\n2. Prove the sub-multiplicativity bound using the `ScalarEMLTree.subst` construction from this cycle.\n\n**Impact**: A complexity functor would give EMLCat the structure of a \"resource category\" where morphisms carry quantitative cost information. This connects to resource-sensitive type theory and the semantics of complexity-bounded computation.\n\n**Catalog References**: `EML.EMLCategoryFull.lean` (ScalarEMLTree.subst, nodeCount), `Computation.PadicValuationDepth.lean` (ValuationDepthMeasure \u2014 analogous complexity measure)\n\n**Proof Strategy**: Use ScalarEMLTree.subst to compose trees. In the worst case, each coordinate reference in g's tree is replaced by a copy of the corresponding f\u1d62 tree, giving nodeCount(g \u2218 f) \u2264 nodeCount(g) \u00b7 max(nodeCount(f\u1d62)). The sub-multiplicativity bound C(g \u2218 f) \u2264 C(g) \u00b7 C(f) follows by optimizing over tree choices.\n\n**Domain Bridges**: EML complexity <-> algebraic circuit complexity; resource categories <-> linear logic (Girard's resource management)\n\n**Lineage**: Builds on ScalarEMLTree.subst and the nodeCount/depth measures from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: EML Exponential Approximation via Finite-Complexity Slices\n\n**Conjecture**: For each complexity bound B \u2208 \u2115, the set EML\u2264B of EML maps \u211d\u207f \u2192 \u211d\u1d50 with node count \u2264 B forms a finite-dimensional manifold (with singularities at parameter boundaries). The dimension of this manifold grows polynomially in B and n, and the union \u222a_B EML\u2264B is dense in C(K, \u211d\u1d50) for compact K \u2282 \u211d\u207f.\n\n**Test**: \n1. For n=m=1, B=3: enumerate all ScalarEMLTree with \u2264 3 nodes. Count the continuous parameters (constants). This gives the dimension of EML\u22643.\n2. Check density: for specific continuous f \u2208 C([0,1], \u211d), find EML\u2264B approximations for increasing B.\n\n**Impact**: This would give EML the flavor of an \"approximation theory\" with explicit parameter counting \u2014 analogous to how neural networks of width w have O(w\u00b2) parameters. It would provide the finite-dimensional approximation to the exponential object that EMLCat's non-Cartesian-closure prevents from existing exactly.\n\n**Catalog References**: `EML.EMLCategoryFull.lean` (ScalarEMLTree, nodeCount), `EML.StoneWeierstrassApprox.lean` (density results), `EML.VecEML.lean` (vector EML density)\n\n**Proof Strategy**: \n1. Count parameters: each tree topology has a fixed number of constant nodes, each contributing one real parameter. The number of tree topologies with \u2264 B nodes is a Catalan-like number.\n2. For density, use the existing Stone-Weierstrass results for EML (from the catalog) and show that complexity-bounded subsets eventually cover the space.\n\n**Domain Bridges**: EML parameter counting <-> neural network parameter counting; approximation theory <-> learning theory (VC dimension bounds)\n\n**Lineage**: Builds on the depth hierarchy and non-Cartesian-closure observations from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Hardy Hierarchy Integration\n\n**Conjecture**: The Hardy level of an EML-computable function (as defined in `Speculative.HardyHierarchy.Theorems`) is bounded by the depth of its minimal derivation tree. Specifically, if f has an EML tree of depth d, then f has Hardy level \u2264 \u03c9\u00b7d (where \u03c9 is the first infinite ordinal).\n\n**Test**: Verify for exp^[k]: the k-fold iterated exponential has depth k and Hardy level approximately \u03c9\u00b7k (it grows like the Hardy hierarchy at level \u03c9\u00b7k).\n\n**Impact**: This would connect EML complexity to the Hardy hierarchy, a fundamental tool in proof theory and computability. It would show that EML depth is a \"geometric\" measure of growth rate, bridging analytic complexity to ordinal analysis.\n\n**Catalog References**: `Speculative.HardyHierarchy.Theorems` (`hardyLevel_closed_under_eml`), `EML.EMLCategoryFull.lean` (depth hierarchy)\n\n**Proof Strategy**: By induction on tree structure. Constants and projections have Hardy level 0. Addition and multiplication preserve Hardy level. Exp increases Hardy level by \u03c9 (since exp grows faster than any polynomial). So depth d with d exp operations gives Hardy level \u2264 \u03c9\u00b7d.\n\n**Domain Bridges**: EML depth <-> ordinal analysis (Hardy hierarchy); analytic complexity <-> proof-theoretic ordinals (fundamental sequences)\n\n**Lineage**: Builds on `hardyLevel_closed_under_eml` from the existing catalog and the depth hierarchy from this cycle.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0631",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "2ff48d00",
-    "status": "available",
-    "timestamp": "2026-06-04T12:35:41.020282+00:00",
-    "title": "**category EMLCat** of EML-computable maps,"
   },
   {
     "consumed_by_exp_id": "",
@@ -754,21 +574,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Research Directions: Ordinal Survival Theory\n\n## Synthesis\n\nThis research cycle established the Phased Survival Algebra as a novel mathematical structure connecting game theory, ordinal arithmetic, and transfinite computation. The central discovery is that the survival ordinal of a game under bounded nondeterminism follows precise ordinal arithmetic laws: k phases yield \u03c9\u00b7k survival, and adaptive phase selection yields \u03c9\u00b2. This creates a natural hierarchy of strategic complexity indexed by ordinals.\n\nThe most promising cross-domain connection is between survival ordinals and the ITTM computation hierarchy. The correspondence\u2014nondeterminism depth \u2194 limit computation stage\u2014suggests that ordinal game theory provides a game-semantics for transfinite computation, analogous to how finite games provide semantics for classical logic. This connection could bridge game theory (`Computation/TransfiniteGameTheory.lean`, `Computation/MortalEternityGame.lean`) with computability theory (`Computation/OracleHierarchy.lean`, `Computation/TransfiniteCADepth.lean`) in the catalog.\n\nThe highest breakthrough potential lies in Direction 1 (the omega-tower conjecture), because establishing survival ordinals \u03c9^\u03c9 and beyond would require fundamentally new techniques\u2014likely involving coinductive arguments or well-founded recursion on ordinal notations\u2014that would push the boundaries of current Lean formalization capabilities and yield new mathematical insights about the relationship between nondeterminism and transfinite computation.\n\n---\n\n### Direction 1: The Omega-Tower Conjecture \u2014 Nested Adaptive Survival\n\n**Conjecture**: Define a *doubly adaptive system* where Mortal first chooses k\u2081 \u2208 \u2115 (number of \"super-phases\"), then within each super-phase chooses k\u2082 \u2208 \u2115 (number of phases). If each base system is immortal, the survival ordinal of the doubly adaptive system is exactly \u03c9\u00b3. More generally, n-fold nesting of adaptive choice yields survival ordinal \u03c9^(n+1).\n\n**Test**: Formalize the doubly adaptive system in Lean 4 and prove that its survival ordinal is \u03c9\u00b3. The key lemma is: sup_{k\u2081 \u2208 \u2115} sup_{k\u2082 \u2208 \u2115} \u03c9\u00b7k\u2081\u00b7k\u2082 = \u03c9\u00b3. Verify the ordinal arithmetic fact computationally for small ordinals using a Cantor Normal Form implementation.\n\n**Impact**: If true, this would establish a complete correspondence between nesting depth of adaptive nondeterminism and ordinal exponentiation towers: depth n \u2194 \u03c9^(n+1). This would formalize the intuition that \"meta-level nondeterminism\" corresponds to ordinal exponentiation. If false, it would reveal that the survival algebra has non-trivial interaction effects between nested nondeterministic choices.\n\n**Catalog References**: `Computation/OrdinalSurvivalTheory.lean`, `Computation/TransfiniteGameTheory.lean`, `Computation/OracleHierarchy.lean`\n\n**Proof Strategy**: \n1. Define `DoublyAdaptiveSystem` with two levels of choice\n2. Prove the ordinal arithmetic lemma: sup_{k\u2081} sup_{k\u2082} \u03c9\u00b7k\u2081\u00b7k\u2082 = \u03c9\u00b3\n3. Use `Ordinal.isNormal_mul_right` at each level of the supremum\n4. The main challenge is managing the composition of two iSup operations\n5. May require `Ordinal.mul_assoc` and associativity of ordinal multiplication\n\n**Domain Bridges**: Computation \u2194 Logic (ordinal analysis of proof-theoretic strength)\n\n**Lineage**: Extends the \u03c9\u00b2-survival result from this cycle's `adaptive_survival_eq_omega_sq`\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Safe Escape Characterization \u2014 Which Games Are Immortal?\n\n**Conjecture**: A survival game G has the Safe Escape Property if and only if the game tree has no \"forced death subtree\"\u2014a subtree where all of Mortal's moves lead to some response by Eternity causing death. Formally: SafeEscape(G) \u2194 \u2200 hist, \u00achasDied(hist) \u2192 \u00ac(\u2200 m, \u2203 e, hasDied(hist ++ [(m,e)])). This is equivalent to the negation of the dual escape property for Eternity.\n\n**Test**: Prove the characterization in Lean 4 and use it to classify all safe-escape games on binary move spaces (moves \u2208 {0,1}, responses \u2208 {0,1}) up to depth 5. Count the number of safe-escape games and verify against enumeration.\n\n**Impact**: A complete characterization would enable algorithmic analysis of which games admit immortal strategies, connecting to computational complexity (is checking SafeEscape decidable? in P? NP-hard?). If the characterization has an unexpected structure, it could reveal connections to topological game theory (open/closed/Borel game classification).\n\n**Catalog References**: `Computation/MortalEternityGame.lean` (SafeEscape definition), `Computation/Evasion.lean` (evasion strategies)\n\n**Proof Strategy**:\n1. Prove the forward direction: SafeEscape \u2192 no forced death subtree (by definition)\n2. Prove the backward direction: no forced death subtree \u2192 SafeEscape (by contrapositive)\n3. The key insight is that \"no forced death subtree\" IS the SafeEscape property restated\n4. The deeper content is connecting this to game-tree properties (K\u00f6nig's lemma, open determinacy)\n5. For the complexity analysis, reduce to graph reachability\n\n**Domain Bridges**: Computation \u2194 Cryptography (adversarial game analysis)\n\n**Lineage**: Extends `game_to_system_immortal` from this cycle\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Survival Ordinals and the Arithmetic Hierarchy\n\n**Conjecture**: There is a natural correspondence between survival ordinal levels and the arithmetic hierarchy of computability theory. Specifically:\n- Survival ordinal < \u03c9 corresponds to \u03a3\u2080\u2070 = \u03a0\u2080\u2070 (computable)\n- Survival ordinal = \u03c9 corresponds to \u03a3\u2081\u2070 (c.e. / r.e.)\n- Survival ordinal = \u03c9\u00b2 corresponds to \u03a3\u2082\u2070\n- Survival ordinal = \u03c9\u207f corresponds to \u03a3\u2099\u2070\n\nThe precise statement: a game G has survival ordinal \u03c9\u207f if and only if the set of winning strategies for Mortal in G is \u03a3\u2099\u2070-complete.\n\n**Test**: Formalize the correspondence for n = 0, 1, 2 in Lean 4. For n = 0: a game with finite survival corresponds to a decidable predicate. For n = 1: an immortal game corresponds to a c.e. set of strategies.\n\n**Impact**: If true, this would establish survival ordinals as a game-theoretic characterization of the arithmetic hierarchy, providing a new perspective on one of the fundamental structures in computability theory. This would connect the catalog's computability results (`Computation/OracleHierarchy.lean`) with the game-theoretic framework.\n\n**Catalog References**: `Computation/OracleHierarchy.lean`, `Computation/OracleHierarchyFoundations.lean`, `Computation/OrdinalSurvivalTheory.lean`\n\n**Proof Strategy**:\n1. Define what it means for a game's strategy set to be at a given arithmetic level\n2. Prove n = 0: finite survival \u2194 decidable strategy set (strategy = finite prefix)\n3. Prove n = 1: \u03c9-survival \u2194 c.e. strategy set (safe escape witnesses are c.e.)\n4. The n = 2 case requires formalizing the notion of \"double limit\" in survival\n5. May need oracle relativization and jump hierarchy\n\n**Domain Bridges**: Computation \u2194 Logic (arithmetic hierarchy characterization)\n\n**Lineage**: Connects `mortal_bounded` and `immortal_survival_eq_omega` to the oracle hierarchy\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Quantitative Safe Escape \u2014 Survival Probability Phase Transition\n\n**Conjecture**: For random survival games with m moves, r responses, and independent death probability p per extension, there exists a critical threshold p_c(m, r) such that:\n- For p < p_c: SafeEscape holds with probability \u2192 1 as depth \u2192 \u221e\n- For p > p_c: SafeEscape fails with probability \u2192 1 as depth \u2192 \u221e\n- p_c(m, r) = 1 - (1/r)^(1/m) (the unique solution to (1-p^m)^r = 1/e)\n\nThis would be a phase transition in the style of random graph theory (Erd\u0151s-R\u00e9nyi).\n\n**Test**: Run Monte Carlo simulations with m = 2, r = 2 for p values near the predicted p_c \u2248 0.293. Plot the probability of SafeEscape vs p for depths 5, 10, 20, 50. Check whether the curves sharpen around p_c as depth increases.\n\n**Impact**: A phase transition result would connect ordinal survival theory to statistical physics and random graph theory, providing a bridge between discrete game theory and continuous probability. The critical exponent and universality class of the transition could reveal deep structural properties.\n\n**Catalog References**: `Computation/OrdinalSurvivalTheory.lean` (SafeEscape definition), existing Monte Carlo framework in `demo.py`\n\n**Proof Strategy**:\n1. Model random games as Galton-Watson branching processes\n2. Use the survival probability of branching processes to compute p_c\n3. The extinction probability satisfies q = (1 - (1-p)^m)^r (probability ALL moves have SOME fatal response)\n4. Phase transition at q = 1 gives p_c\n5. Formalize using Mathlib's probability theory (MeasureTheory)\n\n**Domain Bridges**: Computation \u2194 Physics (phase transitions in random structures)\n\n**Lineage**: Extends the falsifiable conjecture from this cycle's OrdinalSurvivalTheory.lean\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Survival Algebra Homomorphisms and Game Reductions\n\n**Conjecture**: There exists a category of survival systems where morphisms are \"survival-preserving maps\"\u2014functions that transform strategies between games while preserving or increasing the survival ordinal. The Phased Survival Algebra construction (sequential composition) is a monoidal product in this category, and the adaptive construction is a colimit.\n\n**Test**: Formalize the category of survival systems in Lean 4 using Mathlib's category theory library. Prove that sequential composition is associative and unital (with the trivial system as unit). Verify that the adaptive construction satisfies the universal property of a colimit.\n\n**Impact**: A categorical framework would enable systematic study of game reductions: when can one game's strategy be \"compiled\" into another game's strategy? This connects to computational complexity theory (reductions between problems) and could provide a new perspective on oracle relativization.\n\n**Catalog References**: `Computation/OrdinalSurvivalTheory.lean` (SurvivalSystem, PhasedSurvivalAlgebra), Mathlib's CategoryTheory library\n\n**Proof Strategy**:\n1. Define `SurvivalSystem` morphisms as functions on \u2115 \u2192 Prop preserving monotonicity\n2. Prove composition and identity laws\n3. Show PhasedSurvivalAlgebra gives a monoidal structure (tensor = sequential composition)\n4. Prove the adaptive construction is a filtered colimit\n5. Study the relationship between morphisms and survival ordinal ordering\n\n**Domain Bridges**: Computation \u2194 Algebra (categorical structure of games)\n\n**Lineage**: Extends `SurvivalSystem.StrongerThan` and `survival_ordinal_mono` from this cycle\n\n**Ambition**: extension\n",
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_0647",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "38c9aa7a",
-    "status": "available",
-    "timestamp": "2026-06-04T16:08:49.079828+00:00",
-    "title": "Phased Survival Algebra as a novel mathemati"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions: Spectral Landscape Theory\n\n## Synthesis\n\nThis cycle introduced the **Spectral Landscape**, a novel mathematical structure capturing the universal phase transition behavior of spectral gaps in constraint satisfaction problems. The key discovery was that four simple axioms (non-negativity, antitonicity, initial positivity, terminal vanishing) suffice to prove a rich collection of results: critical density existence, mixing time monotonicity and explosion, gap-entropy duality, landscape refinement theory, and the intermediate value theorem for continuous landscapes.\n\nThe most promising cross-domain connection is between **spectral landscape refinement** and **persistent homology**. Theorem `gap_sublevel_downward_closed` establishes that the superlevel sets of the gap function form a filtration indexed by the gap value c, which is precisely the structure studied in topological data analysis. This suggests that the \"barcode\" of a spectral landscape (the persistence diagram of the gap function's superlevel filtration) encodes topological invariants of the solution space that persist across constraint densities.\n\nThe highest breakthrough potential lies in **quantitative critical exponents** (Direction 1). If the spectral gap near the critical density decays as \u03b3(d) ~ (d_c - d)^\u03b1 for a universal exponent \u03b1, this would establish a deep connection between CSP complexity and the universality classes of statistical physics. The exponent \u03b1 would classify CSPs the same way critical exponents classify phase transitions in condensed matter physics.\n\nA key methodological insight: the Lean proof assistant discovered that critical density strict positivity requires continuity\u2014without it, the gap can jump discontinuously to zero. This revealed that **first-order and second-order phase transitions have fundamentally different spectral landscape structures**, a distinction that should be formalized in future work.\n\n---\n\n### Direction 1: Quantitative Critical Exponents for Spectral Landscapes\n\n**Conjecture**: For any Continuous Spectral Landscape L with critical density d_c, there exists a critical exponent \u03b1 > 0 such that \u03b3(d) ~ C \u00b7 (d_c - d)^\u03b1 as d \u2192 d_c from below, where C > 0 is a constant depending on L.\n\n**Test**: Compute spectral gaps for 4\u00d74 Shidoku at densities d = k/16 for k = 0, 1, ..., 16. Fit \u03b3(d) to the power law C \u00b7 (d_c - d)^\u03b1 near the observed critical density. If \u03b1 is consistent across different constraint structures (row-only vs row+column vs row+column+box), this supports universality.\n\n**Impact**: If true, this establishes a classification of CSPs by universality class, analogous to the classification of phase transitions in statistical physics. Different CSPs with the same critical exponent would be \"in the same universality class\" and share asymptotic complexity behavior. If false, it would mean CSP difficulty is more diverse than the physics analogy suggests.\n\n**Catalog References**: `MachineLearning/ConstraintSpectralLandscape/Theorems.lean`, `MachineLearning/ConstraintSpectralLandscape/Defs.lean`\n\n**Proof Strategy**: Define a `CriticalExponent` structure extending `ContinuousSpectralLandscape` with an exponent \u03b1 and prove that the gap function near d_c is asymptotically equivalent to C\u00b7(d_c - d)^\u03b1. Key lemmas: (1) \u03b1 > 0 implies gap vanishes at d_c; (2) \u03b1 < 1 implies gap is concave near d_c; (3) \u03b1 = 1 implies linear decay (mean-field universality). Use Mathlib's asymptotic analysis (`Asymptotics.IsLittleO`, `Asymptotics.IsBigO`).\n\n**Domain Bridges**: Statistical Physics \u2194 Computer Science (universality classes \u2194 complexity classes); Analysis \u2194 Combinatorics (asymptotic analysis \u2194 counting solutions)\n\n**Lineage**: Builds on `critical_density_pos_of_continuous`, `continuous_gap_IVT`, and the disproof of `critical_density_pos` which revealed the importance of continuity.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Multi-Parameter Spectral Landscapes and Constraint Type Decomposition\n\n**Conjecture**: For Sudoku, the spectral landscape decomposes as \u03b3(d_row, d_col, d_box) = min(\u03b3_row(d_row), \u03b3_col(d_col), \u03b3_box(d_box)) where each \u03b3_X is a one-dimensional spectral landscape for the X-constraint alone. The critical surface {(d_row, d_col, d_box) : \u03b3 = 0} is the boundary of the intersection of three half-spaces.\n\n**Test**: For 4\u00d74 Shidoku, compute spectral gaps with only row constraints, only column constraints, and both. Verify whether \u03b3(d) = min(\u03b3_row(d), \u03b3_col(d)) or whether the interaction produces a different landscape.\n\n**Impact**: If the min-decomposition holds, it means constraint types in CSPs interact in the weakest-link fashion\u2014the system's spectral gap is determined by the most restrictive constraint type. This would simplify phase transition analysis for complex CSPs. If false, it would reveal non-trivial interaction effects between constraint types.\n\n**Catalog References**: `MachineLearning/ConstraintSpectralLandscape/Defs.lean` (SpectralLandscape), `Computation/CSPPhaseTransition.lean`\n\n**Proof Strategy**: Define `MultiParameterLandscape` as a function \u211d^k \u2192 \u211d with k constraint type parameters. Prove that if constraints are independent (no variable appears in two constraint types), then the min-decomposition holds. For dependent constraints, prove a weaker bound: \u03b3 \u2264 min(\u03b3_X).\n\n**Domain Bridges**: Combinatorics \u2194 Optimization (constraint decomposition \u2194 Lagrangian relaxation); Algebra \u2194 Geometry (product structures \u2194 higher-dimensional phase diagrams)\n\n**Lineage**: Extends the one-dimensional SpectralLandscape to multiple parameters; builds on `gap_antitone` and refinement theory.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Spectral Landscape Persistence and Topological Data Analysis\n\n**Conjecture**: The persistence diagram of the spectral landscape's superlevel filtration {d : \u03b3(d) \u2265 c} encodes the number of connected components of the solution space at each constraint density. Specifically, the number of bars crossing level c equals the number of connected components of the solution graph when the spectral gap is c.\n\n**Test**: For small CSPs (3\u00d73 Latin squares, random 2-SAT with \u2264 10 variables), compute: (1) the spectral gap at each density; (2) the number of connected components of the solution graph; (3) the persistence diagram of the gap function. Verify the correspondence.\n\n**Impact**: If true, this would establish a direct bridge between topological data analysis and CSP complexity, enabling TDA tools (persistence diagrams, Betti numbers, Wasserstein distances) to be applied to complexity theory. This would be a genuinely novel cross-domain connection.\n\n**Catalog References**: `MachineLearning/ConstraintSpectralLandscape/Theorems.lean` (gap_sublevel_downward_closed), `Catalog/Bridges/SheafPersistence.lean` (sheafJump_eq_zero_of_not_critical)\n\n**Proof Strategy**: The key insight is that `gap_sublevel_downward_closed` gives a filtration. Define a persistence module from the superlevel sets. Prove that birth events in the persistence diagram correspond to solution graph disconnections. Use the Cheeger inequality to relate spectral gaps to graph conductance, which controls connectivity.\n\n**Domain Bridges**: Topology \u2194 Computer Science (persistence homology \u2194 CSP complexity); Analysis \u2194 Combinatorics (filtrations \u2194 solution counting)\n\n**Lineage**: Builds on `gap_sublevel_downward_closed` and the connection to `sheafJump_eq_zero_of_not_critical` from the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Computational Verification of Spectral Landscapes for Small CSPs\n\n**Conjecture**: For 4\u00d74 Shidoku (the 4\u00d74 analogue of Sudoku), the spectral landscape has critical density d_c(4) = 4/16 = 1/4 and the gap function is well-approximated by \u03b3(d) \u2248 (1 - d/d_f)^2 with d_f \u2248 10/16.\n\n**Test**: Enumerate all valid 4\u00d74 Shidoku completions (there are 288). For each subset of k cells (k = 0, 1, ..., 16), compute the transition matrix of the swap Markov chain on compatible completions, and compute its spectral gap. Plot \u03b3(k/16) and fit to the power-law model.\n\n**Impact**: This provides the first concrete numerical validation of the spectral landscape framework. If the power-law model fits well, it supports the universal structure. If it doesn't, the deviations reveal finite-size effects that must be incorporated into the theory.\n\n**Catalog References**: `MachineLearning/ConstraintSpectralLandscape/Defs.lean`, `Computation/CSPPhaseTransition.lean`\n\n**Proof Strategy**: This is primarily computational. Implement the swap Markov chain for Shidoku in Python/Julia. Use NumPy eigenvalue computation for the transition matrices. Fit the power-law model using least squares. Compare with the theoretical predictions.\n\n**Domain Bridges**: Computation \u2194 Analysis (numerical eigenvalues \u2194 analytical spectral theory)\n\n**Lineage**: Validates the theoretical framework from this cycle against concrete data.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: First-Order vs Second-Order Spectral Phase Transitions\n\n**Conjecture**: A Spectral Landscape has a first-order phase transition if and only if the gap function is discontinuous at d_c. In this case, d_c = sup{d : \u03b3(d) > 0} but \u03b3(d_c) > 0 (the gap jumps to zero). A second-order phase transition occurs when \u03b3 is continuous, giving \u03b3(d_c) = 0 (the gap vanishes smoothly).\n\n**Test**: Construct explicit examples of both types. For first-order: \u03b3(d) = 1 for d < 1/2, \u03b3(d) = 0 for d \u2265 1/2. For second-order: \u03b3(d) = max(0, 1 - 2d). Prove that the first-order case has d_c with \u03b3(d_c) > 0 and the second-order case has \u03b3(d_c) = 0.\n\n**Impact**: This formalizes the physics distinction between first-order and second-order phase transitions in the CSP setting. First-order transitions (discontinuous gap) correspond to \"easy-hard\" jumps in complexity, while second-order transitions (continuous gap) correspond to gradual hardness onset. This classification would help predict which CSPs have sudden vs gradual complexity transitions.\n\n**Catalog References**: `MachineLearning/ConstraintSpectralLandscape/Theorems.lean` (critical_density_pos_of_continuous, continuous_gap_IVT)\n\n**Proof Strategy**: Define `FirstOrderTransition L` as `0 < L.gapFn L.criticalDensity` and `SecondOrderTransition L` as `L.gapFn L.criticalDensity = 0`. Prove that continuity implies second-order (already done: `continuous_gap_zero_at_critical` should follow from continuity). Construct explicit first-order examples and prove the gap doesn't vanish at d_c.\n\n**Domain Bridges**: Statistical Physics \u2194 Computer Science (phase transition classification \u2194 complexity classification)\n\n**Lineage**: Directly builds on the disproof of `critical_density_pos` which revealed the first-order/second-order distinction.\n\n**Ambition**: extension\n",
     "domains": [
       "Algebra",
@@ -784,33 +589,33 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Coherence Percolation Systems\n\n## Synthesis\n\nThis research cycle established **Coherence Percolation Systems** as a rigorous mathematical framework for studying phase transitions in knowledge graphs. The key innovation is an axiomatic structure (CoherencePercolation) that captures the universal features of monotone knowledge growth \u2014 monotonicity, initial fragmentation, bounded coherence, and eventual saturation \u2014 while remaining agnostic about the specific knowledge domain. Twenty-two theorems were fully verified, covering critical point theory, susceptibility analysis, phase regime classification, system composition, and concrete constructions.\n\nThe most promising cross-domain connection from this cycle is the **merge dominance theorem** (Theorem 3.16), which proves that combining two independent coherence systems produces a system whose critical point is at most the minimum of the components'. This connects directly to the `generalized_phase_transition` theorem in `Algebra/BootstrapDynamics.lean` and to the `complexity_phase_transition_sharp` result in `Bridges/LorentzianComplexityBarrier.lean`, suggesting a universal principle: parallel exploration accelerates phase transitions. The framework also provides the abstract setting that the `fractal_phase_transition` and `critical_density_bounds` catalog results instantiate, opening the door for a unified phase transition meta-theory across the catalog.\n\nThe direction with the highest breakthrough potential is **Direction 1 (Probabilistic Coherence Percolation)**, because it would connect our deterministic framework to the rich probabilistic theory of Erd\u0151s-R\u00e9nyi random graphs, enabling quantitative predictions about *when* phase transitions occur in practice rather than just proving they must exist.\n\n---\n\n### Direction 1: Probabilistic Coherence Percolation and the Erd\u0151s-R\u00e9nyi Connection\n\n**Conjecture**: For a random coherence percolation system on n nodes where each of the n(n-1)/2 possible edges is included independently with probability p, the expected critical point satisfies E[k*] = \u0398(n log n), and the variance Var[k*] = O(n). More precisely, the coherence function \u03a6(k) converges in probability to a deterministic limit \u03a6_\u221e(p) as n \u2192 \u221e, with \u03a6_\u221e(p) = 0 for p < 1/n and \u03a6_\u221e(p) > 0 for p > 1/n.\n\n**Test**: Implement a Monte Carlo simulation for n = 50, 100, 200, 500, 1000. For each n, run 1000 random percolation trials and compute the empirical distribution of k*/n. The conjecture predicts this distribution concentrates around log(n). If the variance grows faster than O(n), the conjecture is falsified.\n\n**Impact**: If true, this provides a quantitative prediction for when knowledge graphs undergo phase transitions, moving from \"it must happen eventually\" to \"it happens at approximately this edge density.\" If false, it reveals that deterministic and random percolation have fundamentally different critical behavior, which would be equally informative.\n\n**Catalog References**: `Algebra/BootstrapDynamics.lean` (`generalized_phase_transition`), `Bridges/FractalProofSearch/Theorems.lean` (`fractal_phase_transition`), `Speculative/PhaseTransition/Defs.lean` (this cycle's core definitions)\n\n**Proof Strategy**: Define a `RandomCoherencePercolation` structure that extends `CoherencePercolation` with a probability measure on edge orderings. Use Mathlib's probability theory (`MeasureTheory.Measure.ProbabilityMeasure`) to state concentration inequalities. The key lemma would show that the largest component size is a Lipschitz function of the edge indicators, enabling McDiarmid's inequality for concentration. For the Erd\u0151s-R\u00e9nyi connection, use `SimpleGraph.erdosRenyi` if available, or construct it from `Fin n` graphs with random edge indicators.\n\n**Domain Bridges**: Statistical Physics \u2194 Graph Theory \u2194 Probability Theory\n\n**Lineage**: Direct extension of this cycle's CoherencePercolation structure and the `generalized_phase_transition` result.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Metric Coherence and the Geometry of Knowledge Transitions\n\n**Conjecture**: Replacing the discrete order parameter \u03a6 : \u2115 \u2192 \u211d with a continuous metric coherence function \u03a6 : \u211d\u22650 \u2192 \u211d (measuring the diameter of the largest connected component in a metric knowledge space) yields a system where the critical point is characterized by a divergence of the correlation length \u03be(t) = sup{d(x,y) : x,y in same component} at t = t_c. Specifically, \u03be(t) ~ |t - t_c|^{-\u03bd} for a universal critical exponent \u03bd that depends only on the dimension of the knowledge space, not on its specific geometry.\n\n**Test**: Define a knowledge space as \u211d^d with vertices at random points and edges connecting points within distance r(t). Compute \u03be(t) for d = 1, 2, 3, 10 and verify the power-law scaling near t_c. If the exponent \u03bd is dimension-independent, the conjecture is falsified (since continuum percolation has dimension-dependent critical exponents).\n\n**Impact**: If true (dimension-dependent \u03bd), this connects knowledge transitions to continuum percolation theory, providing a geometric interpretation of mathematical coherence. If false (universal \u03bd), it reveals a surprising universality in knowledge transitions that differs from physical percolation.\n\n**Catalog References**: `Speculative/PhaseTransition/Defs.lean` (CoherencePercolation), `Bridges/SheafAdvanced.lean` (`stalkRank_const_between_critical`), `Bridges/SheafPersistence.lean` (`tropicalKernelSheaf_locallyConstant_between_critical`)\n\n**Proof Strategy**: Define `MetricCoherenceSystem` extending `CoherencePercolation` with a metric space structure on the vertex set. Use Mathlib's `MetricSpace` class. The key challenge is formalizing the correlation length and proving it diverges. Start with the 1-dimensional case (interval graphs) where explicit calculations are possible, then generalize using Mathlib's `EMetricSpace` for the infinite-dimensional limit.\n\n**Domain Bridges**: Metric Geometry \u2194 Percolation Theory \u2194 Sheaf Theory\n\n**Lineage**: Extends the CoherencePercolation structure from this cycle; connects to sheaf-theoretic persistence results in the catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Susceptibility Spectrum and Fourier Analysis of Phase Transitions\n\n**Conjecture**: The susceptibility function \u03c7 : \u2115 \u2192 \u211d\u22650 of a coherence percolation system, viewed as a signal, has a characteristic frequency spectrum. Specifically, for the random percolation on K_n, the Fourier transform of \u03c7 has a single dominant peak at frequency proportional to 1/n, and the width of this peak decreases as 1/\u221an. Systems with \"sharper\" transitions (higher peak susceptibility) have narrower spectral peaks.\n\n**Test**: Compute the DFT of the susceptibility function for random percolation on K_n for n = 20, 50, 100, 200. Measure the peak frequency and width. If the peak frequency scales as 1/n and width as 1/\u221an, the conjecture is supported.\n\n**Impact**: This would provide a spectral characterization of phase transitions, connecting coherence percolation to harmonic analysis. The spectral width would serve as a new \"sharpness parameter\" complementing the maximum susceptibility.\n\n**Catalog References**: `Speculative/PhaseTransition/Theorems.lean` (susceptibility_telescope, susceptibility_bound), `Catalog/Catalog/Bridges/Speculative/FourierZetaSpectrum.lean`\n\n**Proof Strategy**: Define the susceptibility spectrum as the DFT of the susceptibility sequence. Use Mathlib's `Analysis.InnerProductSpace` for the Fourier-analytic framework. The key lemma would relate the L\u00b2 norm of \u03c7 to the coherence gap via Parseval's theorem. For the concentration result, use the fact that \u03c7 is non-negative and sums to 1 - 1/n (telescoping).\n\n**Domain Bridges**: Harmonic Analysis \u2194 Signal Processing \u2194 Phase Transition Theory\n\n**Lineage**: Extends the susceptibility theory from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Compositional Phase Transitions and the Algebra of Knowledge Merges\n\n**Conjecture**: The set of coherence percolation systems of fixed size n, under the merge operation (max), forms a bounded distributive lattice. The critical point function k* : Systems \u2192 \u2115 is a lattice anti-homomorphism: k*(S\u2081 \u2228 S\u2082) \u2264 min(k*(S\u2081), k*(S\u2082)) (already proved) and k*(S\u2081 \u2227 S\u2082) \u2265 max(k*(S\u2081), k*(S\u2082)) where \u2227 is the pointwise min. Moreover, there exist \"irreducible\" systems that cannot be expressed as merges of strictly smaller systems, and every system has a unique decomposition into irreducibles.\n\n**Test**: Enumerate all coherence percolation systems on n = 3 and n = 4 vertices with \u03a6 values in {1/n, 2/n, ..., 1}. Verify the lattice structure and check whether unique irreducible decomposition holds. For n = 3, there are finitely many such systems.\n\n**Impact**: If true, this provides an algebraic structure on knowledge systems analogous to prime factorization for integers. \"Irreducible\" knowledge systems would be the fundamental building blocks of mathematical understanding.\n\n**Catalog References**: `Speculative/PhaseTransition/Defs.lean` (merge definition), `Speculative/PhaseTransition/Theorems.lean` (merge_criticalPoint_le), `Novelty/Theorems.lean` (`fundamental_coherence`)\n\n**Proof Strategy**: Define the meet (pointwise min) operation and verify it produces a valid CoherencePercolation. Prove distributivity of max over min. For irreducible decomposition, use Mathlib's lattice theory (`Order.SupIrred`). The key challenge is showing the decomposition is unique \u2014 this requires the lattice to be distributive and satisfy ACC (ascending chain condition), which holds since all values are bounded in [1/n, 1].\n\n**Domain Bridges**: Lattice Theory \u2194 Order Theory \u2194 Phase Transition Theory\n\n**Lineage**: Direct extension of the merge composition theorem from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Empirical Validation on Mathematical Citation Networks\n\n**Conjecture**: The mathematical citation network (e.g., MathSciNet or zbMATH), when restricted to a subfield and ordered chronologically, exhibits coherence percolation with a critical point that correlates with historically recognized \"breakthrough\" periods. Specifically, for number theory papers from 1900-2000, the coherence function should show a sharp increase around 1960-1970 (Langlands program) and around 1993-1995 (Wiles's proof).\n\n**Test**: Download citation data for number theory papers. Construct the knowledge graph (nodes = papers, edges = citations). Compute \u03a6(t) for t = 1900, 1901, ..., 2000. Plot \u03a6(t) and identify critical points. Compare with known breakthrough dates.\n\n**Impact**: If the critical points align with known breakthroughs, this validates the coherence percolation model empirically. If they don't, it reveals that the monotonicity assumption or the coherence definition needs refinement.\n\n**Catalog References**: `Speculative/PhaseTransition/Defs.lean`, `Speculative/PhaseTransition/Theorems.lean`, `Bridges/LocalityCorrelation.lean` (`critical_threshold_exists_finite`)\n\n**Proof Strategy**: This is primarily computational/empirical. The formal contribution would be: (1) define a `CitationCoherenceSystem` structure mapping real citation data to our framework, (2) prove that citation networks satisfy the monotonicity axiom (since citations are never removed), (3) compute critical points and compare with historical data.\n\n**Domain Bridges**: Scientometrics \u2194 Graph Theory \u2194 History of Mathematics\n\n**Lineage**: Empirical validation of this cycle's theoretical framework.\n\n**Ambition**: extension\n",
+    "description": "# Future Directions: Crystallographic Rhythm Theory\n\n## Synthesis\n\nThis cycle introduced the **Rhythmic Interaction Tensor** (RIT), a novel algebraic invariant for cyclic rhythms that unifies autocorrelation theory with wallpaper group classification. The key discovery is that the RIT's skew symmetry I(f,g)(k) = I(g,f)(\u2212k) implies *universal autocorrelation palindromicity* \u2014 every cyclic rhythm has a palindromic autocorrelation, regardless of its intrinsic symmetry. This, combined with the weight product sum \u03a3 I(f,g)(k) = w(f)\u00b7w(g), creates a complete algebraic framework for analyzing phase interactions in polyrhythms.\n\nThe most promising cross-domain connection is between the RIT and **tropical mathematics** (from the Catalog's Tropical library). The RIT uses counting (addition over \u2115), but replacing addition with min/max yields a \"tropical interaction tensor\" that could connect to tropical convolution and the min-plus algebra. This bridges crystallographic rhythm theory to tropical optimization and potentially to the Catalog's existing work on tropical cryptography and tropical semirings.\n\nThe direction with highest breakthrough potential is **Direction 1: Spectral Duality**, because the Fourier transform of the autocorrelation is the power spectrum |\u2131[f]|\u00b2, and palindromicity of R corresponds to reality of the power spectrum. Formalizing this connection would link rhythm theory to harmonic analysis and could yield new characterization theorems for difference sets.\n\n---\n\n### Direction 1: Spectral Duality \u2014 The DFT of the Rhythmic Interaction Tensor\n\n**Conjecture**: For cyclic rhythms f, g : \u2124/n\u2124 \u2192 {0,1}, the Discrete Fourier Transform of the RIT satisfies \u2131[I(f,g)](\u03c9) = \u2131[f](\u03c9) \u00b7 conj(\u2131[g](\u03c9)) for all \u03c9 \u2208 \u2124/n\u2124. In particular, \u2131[R_f](\u03c9) = |\u2131[f](\u03c9)|\u00b2 \u2265 0 (the power spectrum is non-negative).\n\n**Test**: Define the DFT over \u2124/n\u2124 in Lean (using roots of unity in \u2102 or working algebraically in \u2124[\u03b6_n]) and verify the convolution identity for specific small n (n = 4, 8, 12). Then prove the general identity using the shift theorem for the DFT.\n\n**Impact**: If true, this establishes the RIT as the inverse Fourier transform of the pointwise product of spectra \u2014 the fundamental theorem of rhythmic harmonic analysis. This would give O(n log n) computation of the RIT via FFT and connect to pitch-class set theory's use of the DFT (Lewin, Quinn). If false, it reveals a subtlety in the finite-field DFT that differs from the classical complex DFT.\n\n**Catalog References**: `EML/EMLv17Core.lean` (algebraic structures), `Algebra/Basic.lean`\n\n**Proof Strategy**: Define the DFT as \u2131[f](\u03c9) = \u03a3_j f(j) \u00b7 \u03b6^{j\u03c9} where \u03b6 = e^{2\u03c0i/n}. Then expand \u2131[I(f,g)](\u03c9) = \u03a3_k (\u03a3_j f(j)g(j+k)) \u03b6^{k\u03c9}. Swap sums and substitute j' = j+k to factor the expression. Key Mathlib lemma: `ZMod.unitaryGroup` or manual construction of roots of unity.\n\n**Domain Bridges**: Rhythm Theory \u2194 Harmonic Analysis \u2194 Signal Processing\n\n**Lineage**: Builds on `interaction_sum`, `autocorr_palindromic`, and `interaction_skew` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Rhythmic Interaction \u2014 Min-Plus Polyrhythms\n\n**Conjecture**: Define the *tropical interaction tensor* as T(f,g)(k) = min_{j : f(j)=1} d(j, g, k), where d(j, g, k) is the distance from position j to the nearest onset in the k-shifted version of g. Then T satisfies a tropical analogue of skew symmetry: T(f,g)(k) \u2265 0 with equality iff the standard RIT I(f,g)(k) > 0. Moreover, the tropical sum (minimum over k) of T(f,g)(k) characterizes rhythmic complementarity: T is minimized (= 0) when f and g have overlapping onsets at some offset.\n\n**Test**: Implement the tropical RIT for standard rhythmic patterns (son clave, tresillo, bembe) and verify the proposed tropical skew symmetry computationally. Then formalize the connection in Lean using Mathlib's tropical semiring (`Tropical` type).\n\n**Impact**: Connects the crystallographic rhythm framework to tropical mathematics, potentially enabling tropical optimization techniques for rhythm generation (find the rhythm that minimizes/maximizes interaction with a given pattern). Could bridge to the Catalog's tropical cryptography work by showing that rhythmic patterns can serve as keys in tropical Diffie-Hellman-like protocols.\n\n**Catalog References**: `Tropical/WallpaperRhythm.lean` (existing wallpaper rhythm work), `Cryptography/TropicalCryptography.lean` (tropical semiring constructions)\n\n**Proof Strategy**: Define tropical RIT using `WithTop \u2115` with min as addition. Prove the tropical skew symmetry using the same bijection j \u21a6 j+k but in the tropical semiring. Key challenge: the min-plus structure doesn't have additive inverses, so the proof strategy for palindromicity must be adapted.\n\n**Domain Bridges**: Rhythm Theory \u2194 Tropical Geometry \u2194 Cryptography\n\n**Lineage**: Builds on `rhythmInteraction`, `WallpaperType`, and tropical semiring infrastructure.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Difference Sets and Maximal Flatness of Autocorrelation\n\n**Conjecture**: A cyclic rhythm f : \u2124/n\u2124 \u2192 {0,1} with weight w achieves the flattest possible autocorrelation (min_k R(k) is maximized) if and only if the onset set is a (n, w, \u03bb)-difference set, where \u03bb = w(w-1)/(n-1). In particular, flat autocorrelation requires n-1 | w(w-1), which severely constrains the possible (n, w) pairs.\n\n**Test**: Enumerate all binary rhythms for n \u2264 20 and identify which achieve maximal flatness. Compare with the known catalog of difference sets (Singer, Paley, Hall). Verify that the flatness bound \u03bb = w(w-1)/(n-1) is tight.\n\n**Impact**: Connects rhythm theory to combinatorial design theory. Difference sets have deep connections to finite geometry (Singer's theorem on projective planes) and coding theory (cyclic codes). A formal proof that maximally flat rhythms ARE difference sets would bridge music theory to algebraic combinatorics.\n\n**Catalog References**: `Logic/CrystallographicRhythm.lean` (autocorrelation theory), `Algebra/Basic.lean`\n\n**Proof Strategy**: Use the weight-square sum \u03a3 R(k) = w\u00b2. If R(0) = w and all other R(k) equal \u03bb, then w + (n-1)\u03bb = w\u00b2, giving \u03bb = w(w-1)/(n-1). Prove that this is the unique flattest profile by convexity argument on the autocorrelation values.\n\n**Domain Bridges**: Rhythm Theory \u2194 Combinatorial Design Theory \u2194 Coding Theory\n\n**Lineage**: Builds on `autocorr_sum_eq_weight_sq` and `autocorr_rotation_plateau`.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: The Symmetry Lattice as a Modular Lattice\n\n**Conjecture**: The set of all 2D drum patterns on \u2124/m\u2124 \u00d7 \u2124/n\u2124 with rotation-2 symmetry, ordered by pointwise \u2264, forms a modular lattice (not just a lattice). Moreover, the number of atoms (minimal non-zero symmetric patterns) is exactly \u2308mn/2\u2309.\n\n**Test**: Enumerate all rotation-2 symmetric patterns on small grids (4\u00d74, 6\u00d76) and verify modularity by checking the modular law: for a \u2264 c, a \u2228 (b \u2227 c) = (a \u2228 b) \u2227 c. Count atoms and compare with the predicted formula.\n\n**Impact**: If the symmetry lattice is modular, it connects to matroid theory (every modular geometric lattice is a matroid) and potentially to the Catalog's matroid-related work. The atom count formula would give a combinatorial characterization of the \"simplest\" symmetric patterns.\n\n**Catalog References**: `Logic/CrystallographicRhythm.lean` (join/meet preservation theorems)\n\n**Proof Strategy**: The join and meet operations on Boolean functions form a distributive lattice (which is automatically modular). The key question is whether the sublattice of symmetric patterns inherits distributivity. Since hasRot2 is preserved by join and meet (proved this cycle), the symmetric patterns form a sublattice. Distributivity follows from the pointwise Boolean structure.\n\n**Domain Bridges**: Rhythm Theory \u2194 Lattice Theory \u2194 Matroid Theory\n\n**Lineage**: Builds on `join_preserves_rotation` and `meet_preserves_rotation`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Higher-Dimensional Crystallographic Music \u2014 Space Groups and 3D Rhythm\n\n**Conjecture**: A 3D musical pattern g : \u2124/m\u2124 \u00d7 \u2124/n\u2124 \u00d7 \u2124/p\u2124 \u2192 {0,1} (time \u00d7 pitch \u00d7 dynamics) has its symmetry classified by one of the 230 crystallographic space groups. The analogue of the double mirror theorem for 3D is: three mutually perpendicular mirrors imply a full octahedral point group, yielding at least 48-fold symmetry (group Oh).\n\n**Test**: Define 3D pattern operations (three independent reflections, rotations about three axes) in Lean. Prove the triple mirror theorem: if a 3D pattern has all three mirror symmetries, it has the full Oh point group symmetry. Verify computationally for small grids (4\u00d74\u00d74).\n\n**Impact**: Extends the wallpaper group classification from 2D (17 types) to 3D (230 types), opening a vast new landscape of rhythmic structure types. The 230 space groups classify all possible 3D crystal structures, and their musical interpretation could revolutionize how we think about multi-dimensional musical patterns (e.g., spectrograms, MIDI piano rolls with velocity).\n\n**Catalog References**: `Logic/CrystallographicRhythm.lean` (2D framework), `Geometry/` (geometric structures)\n\n**Proof Strategy**: Generalize the 2D `DrumGrid` to 3D, define the three reflection operations, and prove the triple reflection composition theorem. The key mathematical fact is that the composition of three mutually perpendicular reflections is the inversion (point symmetry), which generates additional rotational symmetries via closure.\n\n**Domain Bridges**: Rhythm Theory \u2194 3D Crystallography \u2194 Spectral Analysis\n\n**Lineage**: Builds on `grid_double_mirror_rotation` and `WallpaperType`.\n\n**Ambition**: grand_challenge\n",
     "domains": [
       "Algebra",
-      "Computation"
+      "Geometry"
     ],
-    "id": "fd_0649",
+    "id": "fd_0651",
     "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "c716c9f9",
+    "source_exp_id": "9600b369",
     "status": "available",
-    "timestamp": "2026-06-04T16:56:08.495895+00:00",
-    "title": "**Coherence Percolation Systems** as a rigorous"
+    "timestamp": "2026-06-04T18:16:32.512336+00:00",
+    "title": "**Rhythmic Interaction Tensor** (RIT), a novel algebra"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
+    "description": "# Future Directions: Self-Referential Type Theory\n\n## Synthesis\n\nThis research cycle established a rigorous mathematical framework for self-referential types, proving that self-reference requires infinity (the Consciousness Equation), that self-observation stabilizes immediately (strange loop idempotency), and that self-referential depth forms a strict hierarchy (diagonal incompleteness). The most promising cross-domain connection is between the fixed-point lattice of idempotent operators and the existing Catalog's eigenpair theorem (`eigenpair_of_normalized_fixed_point`): matrix eigenvectors are fixed points of normalized linear maps, and our lattice structure gives a principled way to study how multiple eigenpair constraints interact.\n\nThe cycle's results connect Lawvere's categorical framework to concrete algebraic structures (the fixed-point algebra), computability-theoretic hierarchies (the diagonal operator on graded predicates), and cardinality constraints (the consciousness equation). The strict hierarchy theorem is particularly significant: it provides a formal obstruction result showing that no finite depth of self-reference captures all self-referential predicates, directly paralleling the arithmetical hierarchy but in a more general setting.\n\nThe highest breakthrough potential lies in Direction 1 (transfinite extension), which could connect to the Church-Kleene ordinal \u03c9\u2081^CK and hyperarithmetical theory, providing a bridge between type-theoretic self-reference and ordinal analysis.\n\n---\n\n### Direction 1: Transfinite Reflective Hierarchies and \u03c9\u2081^CK\n\n**Conjecture**: The predicate hierarchy indexed by natural numbers can be extended to all countable ordinals, and the supremum of expressible levels is exactly \u03c9\u2081^CK (the Church-Kleene ordinal). Formally: define Pred(\u03b1) for ordinals \u03b1 by taking limits at limit ordinals (Pred(\u03bb) = \u22c3_{\u03b2<\u03bb} Pred(\u03b2)) and successor steps via the diagonal operator. Then the hierarchy stabilizes at exactly \u03c9\u2081^CK: Pred(\u03c9\u2081^CK) = Pred(\u03c9\u2081^CK + 1), but Pred(\u03b1) \u228a Pred(\u03b1 + 1) for all \u03b1 < \u03c9\u2081^CK.\n\n**Test**: Formalize ordinal-indexed graded predicate systems in Lean 4. Prove that the limit construction preserves the strict hierarchy property up to any given ordinal. Attempt to show stabilization at \u03c9\u2081^CK by constructing an isomorphism between the transfinite hierarchy and the hyperarithmetical hierarchy.\n\n**Impact**: If true, this establishes a deep connection between type-theoretic self-reference and ordinal analysis, linking the \"depth of consciousness\" to the Church-Kleene ordinal. If false, the failure point reveals whether self-referential depth is \"wider\" or \"narrower\" than the hyperarithmetical hierarchy.\n\n**Catalog References**: `Logic/ConsciousnessFixedPoint/Hierarchy.lean` (diagonal incompleteness, strict hierarchy), `Logic/ConsciousnessFixedPoint/Defs.lean` (DiagonalOperator, GradedPredicateSystem)\n\n**Proof Strategy**: (1) Define ordinal-indexed predicate systems using Mathlib's `Ordinal` type. (2) Prove the limit step preserves cumulativity. (3) Show the diagonal construction extends to successor ordinals. (4) Connect to `Mathlib.Computability.Halting` and the arithmetical hierarchy. (5) Use Kleene's theorem on the hyperarithmetical hierarchy as the bridge to \u03c9\u2081^CK.\n\n**Domain Bridges**: Logic (predicate hierarchy) \u2194 Computation (hyperarithmetical sets) \u2194 Set Theory (ordinal analysis)\n\n**Lineage**: Builds on diagonal_incompleteness, hierarchy_proper_subset, graded_strict_hierarchy from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Fixed-Point Lattice Distributivity and Scott Domain Structure\n\n**Conjecture**: The lattice of fixed-point sets of all idempotent endomorphisms on a Scott domain (continuous lattice) is a distributive lattice. Furthermore, this lattice is isomorphic to the lattice of retracts of the Scott domain.\n\n**Test**: (1) Construct the fixed-point lattice for the Scott domain of partial functions \u2115 \u21c0 \u2115. (2) Verify distributivity computationally for all triples of idempotents up to a finite approximation. (3) Attempt to prove the isomorphism with the retract lattice using Mathlib's order theory.\n\n**Impact**: If true, this connects our abstract fixed-point algebra to concrete domain theory, providing a model for \"what kinds of self-referential systems exist.\" If false, the non-distributive counterexample reveals structural limitations of self-referential composition.\n\n**Catalog References**: `Logic/ConsciousnessFixedPoint/Hierarchy.lean` (fp_lattice_inf_closed, fp_compose_idem), `Logic/ConsciousnessFixedPoint/Defs.lean` (FixedPointAlgebra)\n\n**Proof Strategy**: (1) Define Scott domains using Mathlib's `OmegaCompletePartialOrder`. (2) Show that continuous idempotents on Scott domains have Scott-open fixed-point sets. (3) Use the Hoffmann-Lawson theorem (retracts of continuous lattices are continuous lattices) as the key lemma. (4) Prove distributivity from the lattice structure of retracts.\n\n**Domain Bridges**: Logic (fixed-point theory) \u2194 Computation (domain theory) \u2194 Algebra (lattice theory)\n\n**Lineage**: Builds on fp_lattice_inf_closed, fp_compose_idem, fp_iff_in_range_of_idem from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Categorical Self-Reference via Traced Monoidal Categories\n\n**Conjecture**: Strange loop operators correspond precisely to traces in a traced symmetric monoidal category. Specifically: if (C, \u2297, I, Tr) is a traced symmetric monoidal category with enough points, then the strange loop data (op, shift, tangle, absorb) on an object X is equivalent to a trace Tr_{X,X}(f) for some f : X \u2297 X \u2192 X \u2297 X.\n\n**Test**: (1) Formalize traced monoidal categories in Lean 4 (extending Mathlib's monoidal category definitions). (2) Construct the correspondence explicitly for the category of sets with Cartesian product. (3) Verify that the idempotency theorem for strange loops corresponds to the vanishing axiom of traces.\n\n**Impact**: If true, this embeds our entire strange loop theory into the well-studied framework of traced monoidal categories, importing a wealth of results from categorical algebra. This would also connect to quantum computing (where traces model feedback loops in quantum circuits).\n\n**Catalog References**: `Logic/ConsciousnessFixedPoint/Theorems.lean` (strange_loop_idempotent, SelfModelRetract.toStrangeLoop), Mathlib's `Mathlib.CategoryTheory.Monoidal`\n\n**Proof Strategy**: (1) Define traces following Joyal-Street-Verity's axiomatization. (2) Show that (op, shift) with tangle+absorb determines a unique trace. (3) Conversely, show that every trace gives a strange loop. (4) Prove functoriality of the correspondence.\n\n**Domain Bridges**: Logic (strange loops) \u2194 Category Theory (traces) \u2194 Physics (quantum feedback)\n\n**Lineage**: Builds on strange_loop_idempotent, strange_loop_fp_eq_range from this cycle. Connects to `self_loop_sq_one` from `Physics/YangMillsMassGap.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Computational Complexity of Fixed-Point Finding in Reflective Systems\n\n**Conjecture**: In a computably-presented reflective system (where repr is computable and its surjectivity witness is computable), the problem of finding a fixed point of a given computable endomorphism f is complete for the class FP^NP (polynomial time with an NP oracle). Specifically: (1) fixed-point finding is in FP^NP, and (2) there exists a reflective system where fixed-point finding is FP^NP-hard.\n\n**Test**: (1) Implement the Lawvere construction as an algorithm and analyze its complexity. (2) Reduce a known FP^NP-complete problem (e.g., finding a lexicographically largest satisfying assignment) to fixed-point finding in a suitable reflective system. (3) Verify the reduction in Lean 4 using Mathlib's computability framework.\n\n**Impact**: If true, this places self-referential fixed points precisely in the computational complexity landscape, connecting abstract type theory to practical computation. If false, the failure reveals whether fixed-point finding is easier (in P?) or harder (undecidable?) than expected.\n\n**Catalog References**: `Computation/InfoEfficientAlgorithms.lean` (InfoEfficientAlgorithm), `Logic/ConsciousnessFixedPoint/Theorems.lean` (lawvere_fixed_point, reflective_fp_exists)\n\n**Proof Strategy**: (1) Define computable reflective systems using partial recursive functions. (2) Show the Lawvere construction is polynomial given an oracle for surjectivity witnesses. (3) For hardness, encode SAT instances as fixed-point problems via a standard reduction.\n\n**Domain Bridges**: Logic (self-reference) \u2194 Computation (complexity theory) \u2194 Cryptography (hard instances)\n\n**Lineage**: Builds on lawvere_fixed_point, consciousness_equation_infinite from this cycle. Connects to `search_complexity_hierarchy` from `Physics/ProofSearchInformation.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Non-Commutative Fixed-Point Algebras and Quantum Self-Reference\n\n**Conjecture**: When idempotent operators do NOT commute, their fixed-point sets still carry algebraic structure\u2014specifically, the structure of an orthomodular lattice (the lattice of closed subspaces of a Hilbert space). This would mean non-commutative self-reference naturally gives rise to quantum-like structure.\n\n**Test**: (1) Construct a finite-dimensional example where non-commuting projections on a Hilbert space give an orthomodular but non-distributive fixed-point lattice. (2) Prove that the fixed-point sets of all orthogonal projections on a Hilbert space form an orthomodular lattice. (3) Show that distributivity fails (i.e., this is genuinely quantum, not classical).\n\n**Impact**: If true, this provides a mathematical explanation for why quantum mechanics uses Hilbert spaces: they are the natural habitat of non-commutative self-reference. This would bridge type theory to quantum foundations. If false, it constrains what kinds of algebraic structures can arise from non-commutative fixed points.\n\n**Catalog References**: `Logic/ConsciousnessFixedPoint/Hierarchy.lean` (fp_lattice_inf_closed \u2014 which REQUIRES commutativity), `Physics/StabilizerBounds.lean` (symplectic_self_zero)\n\n**Proof Strategy**: (1) Use Mathlib's `InnerProductSpace` and projection operators. (2) Show that the set of projections on a Hilbert space, ordered by range inclusion, forms an orthomodular lattice (this is a standard result). (3) Construct a specific 3-dimensional counterexample to distributivity. (4) Prove the orthomodular law: P \u2264 Q implies Q = P \u2228 (P\u22a5 \u2227 Q).\n\n**Domain Bridges**: Logic (fixed-point lattices) \u2194 Physics (quantum mechanics) \u2194 Algebra (orthomodular lattices)\n\n**Lineage**: Builds on fp_lattice_inf_closed, fp_compose_idem from this cycle. Extends the commutative theory to the non-commutative case.\n\n**Ambition**: grand_challenge\n",
     "domains": [
-      "Computation",
-      "Physics"
+      "Logic",
+      "Computation"
     ],
-    "id": "fd_0397",
-    "priority_score": 0.7,
+    "id": "fd_0654",
+    "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "d3f112e2",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:25.080296+00:00",
-    "title": "Percolation Threshold"
+    "timestamp": "2026-06-04T18:19:02.878893+00:00",
+    "title": "Rigorous mathematical framework for self-refer"
   },
   {
     "consumed_by_exp_id": "",
@@ -825,21 +630,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove tight bounds on quantum error-correcting codes. Formalize the quantum Singleton bound, quantum Hamming bound, and construct optimal stabilizer codes. Connect to topological quantum computing.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0399",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:25.231496+00:00",
-    "title": "Quantum Error Correction Bounds"
   },
   {
     "consumed_by_exp_id": "",
@@ -873,21 +663,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that reversible circuits achieve Landauer's bound for erasure. Formalize the connection between computational complexity and thermodynamic entropy. Construct provably optimal reversible implementations of common algorithms.",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0402",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:25.464794+00:00",
-    "title": "Reversible Computing and Thermodynamic Efficiency"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number \u03c1 = g - (r+1)(g-d+r) \u2265 0. Formalize the connection to classical algebraic geometry.",
     "domains": [
       "Tropical",
@@ -900,21 +675,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:25.629129+00:00",
     "title": "Tropical Brill-Noether Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0414",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:26.423474+00:00",
-    "title": "Integrated Information via Tensor Networks"
   },
   {
     "consumed_by_exp_id": "",
@@ -933,33 +693,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
+    "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
     "domains": [
-      "Geometry",
+      "MachineLearning",
       "Physics"
     ],
-    "id": "fd_0421",
+    "id": "fd_0427",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:26.988240+00:00",
-    "title": "Inverse Stereographic Renormalization Group"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Landauer's principle states that erasing one bit of information dissipates at least kT*ln(2) of heat. Apply this to proof theory: erasing a proof of theorem T to recover a shorter proof is an information-theoretic process with a thermodynamic cost. Conjecture: The minimum energy required to compress a proof of n steps into a proof of m steps (m < n) is at least kT*(n-m)*ln(2), and this bound is tight for proofs in propositional logic. A proof of length n contains n bits of information (each step is a binary choice in the search tree). Compressing it to m steps requires erasing n-m bits, each costing kT*ln(2) by Landauer. This gives a physical lower bound on proof compression that is independent of the proof system. Test: formalize proof compression as an irreversible computation and derive the Landauer bound. Compute the erasure cost for compressing a 1000-step proof of the fundamental theorem of algebra into a 100-step proof. Impact: connects information thermodynamics to proof complexity, providing a physical lower bound on proof compression.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0423",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:27.146225+00:00",
-    "title": "Thermodynamic Proof Erasure: Landauer's Principle for Mathematics"
+    "timestamp": "2026-06-03T19:55:27.476683+00:00",
+    "title": "Neural Network Training as Renormalization Group Flow"
   },
   {
     "consumed_by_exp_id": "",
@@ -975,21 +720,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
-  },
-  {
-    "consumed_by_exp_id": "961c1b57",
-    "description": "The key insight is that the holographic principle in physics (AdS/CFT) can be rederived from quantum error correction. If the boundary CFT is a quantum error-correcting code with parameters [[n, k, d]], then the bulk AdS geometry emerges from the code's encoding. Conjecture: The Ryu-Takayanagi formula S(A) = Area(gamma_A) / (4G) is equivalent to the quantum Singleton bound d <= n - k + 1 applied to the boundary code, where the code distance d equals the minimal geodesic length through the bulk. Why now: recent work by Pastawski, Preskill, and Harrow (2015) showed that the AdS/CFT correspondence can be modeled by tensor networks (HaPPY code), but the converse \u2014 deriving AdS geometry FROM the code \u2014 has not been proven. Test: for the [[5,1,3]] code (the smallest perfect code), show that the code's Tanner graph IS the Penrose diagram of AdS_2, and the code distance 3 equals the geodesic length through the bulk. Impact: spacetime IS a quantum error-correcting code. Gravity is not a force \u2014 it's the logical operator of a quantum code.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0433",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:27.995931+00:00",
-    "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
   },
   {
     "consumed_by_exp_id": "",
@@ -1035,6 +765,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
+    "domains": [
+      "MachineLearning",
+      "Physics"
+    ],
+    "id": "fd_0440",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.560336+00:00",
+    "title": "Grokking: Phase Transitions in Learning"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
+    "domains": [
+      "MachineLearning",
+      "Physics"
+    ],
+    "id": "fd_0441",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.640557+00:00",
+    "title": "Scaling Laws from Statistical Mechanics"
   },
   {
     "consumed_by_exp_id": "",
@@ -1128,66 +888,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove the Coffman-Kundu-Wootters monogamy inequality for qubit entanglement: the sum of squared concurrences is bounded by the squared concurrence with the ancilla. Formalize concurrence as an entanglement measure and extend to n-qubit systems.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0462",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.319643+00:00",
-    "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0465",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.568365+00:00",
-    "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
-    "domains": [
-      "Physics",
-      "Geometry"
-    ],
-    "id": "fd_0466",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.651923+00:00",
-    "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0467",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.732241+00:00",
-    "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the tropical amoeba of a Laurent polynomial is the negative logarithm of its zero set. Show that the Ronkin function is convex and piecewise-linear on the amoeba complement. Connect tropical amoebas to tropical geometry via the Maslov dequantization.",
     "domains": [
       "Tropical",
@@ -1245,21 +945,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the k-Local Hamiltonian Problem is QMA-complete for k >= 2. Formalize the Kitaev reduction from quantum circuit satisfiability to the local Hamiltonian problem. Analyze the promise gap and its effect on complexity.",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0475",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:31.381522+00:00",
-    "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
   },
   {
     "consumed_by_exp_id": "",
@@ -1337,18 +1022,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
+    "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
-      "Physics",
-      "Computation"
+      "MachineLearning",
+      "Physics"
     ],
-    "id": "fd_0507",
+    "id": "fd_0502",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T21:01:47.045810+00:00",
-    "title": "Emergent Spacetime from Quantum Entanglement"
+    "timestamp": "2026-06-03T21:01:46.684855+00:00",
+    "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
     "consumed_by_exp_id": "",
@@ -1427,21 +1112,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the Fisher information metric defines a Riemannian metric on the statistical manifold of probability distributions. Show that the Kullback-Leibler divergence is the geodesic distance in this metric for exponential families. Bridge: the Chentsov theorem characterizes the Fisher metric uniquely by its invariance under sufficient statistics.",
-    "domains": [
-      "Bridges",
-      "Physics"
-    ],
-    "id": "fd_0530",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:06.130772+00:00",
-    "title": "Bridge: Information Geometry Connecting Statistics and Differential Geometry"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize Stone duality: the category of Boolean algebras is dual to the category of Stone spaces. Prove that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space. Bridge this to logic: a theory T in propositional logic corresponds to the Boolean algebra of sentences modulo T-provability, whose Stone space is the space of models.",
     "domains": [
       "Bridges",
@@ -1517,6 +1187,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
+    "domains": [
+      "Cryptography",
+      "Physics"
+    ],
+    "id": "fd_0543",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.214033+00:00",
+    "title": "Quantum Key Distribution: BB84 Security Proof"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domains": [
       "Tropical",
@@ -1577,36 +1262,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established the first formal verification of the core algebraic framework underlying fully homomorphic encryption\u2014the noise management argument that transforms \"somewhat homomorphic\" into \"fully homomorphic\" encryption through bootstrapping. Our formalization captures the essential mathematical content of Gentry's 2009 breakthrough and the BGV leveled scheme in a hierarchy of structures (`NoiseBoundedHE \u2192 CorrectHE \u2192 BootstrappableHE`), proving 12 theorems including the central result that refreshed circuit evaluation preserves validity for circuits of arbitrary depth.\n\nThe most promising cross-domain connection is between our noise-bounded encryption framework and the existing tropical homomorphic encryption work in the Catalog (`Cryptography/TropicalHomomorphic.lean`). Tropical semirings provide a concrete, well-understood algebraic setting where the noise axioms can be instantiated, and the idempotence of the tropical min operation provides a natural bootstrapping mechanism (min of a ciphertext with itself resets noise). This connection suggests a broader program: identifying which algebraic structures naturally support bootstrapping.\n\nThe highest breakthrough potential lies in Direction 1 (Concrete LWE Instantiation), because it would bridge the gap between our abstract algebraic framework and the concrete cryptographic constructions used in practice. If successful, it would provide the first end-to-end formally verified FHE scheme, from lattice hardness assumptions through noise management to circuit evaluation correctness.\n\n---\n\n### Direction 1: Concrete LWE Instantiation of the Noise-Bounded Framework\n\n**Conjecture**: The Ring-LWE-based BGV scheme, with ciphertexts as elements of Z_q[X]/(X^n + 1) and noise measured as the infinity norm of the error polynomial, satisfies all axioms of `NoiseBoundedHE` with `freshNoise = B` (the error bound), `maxNoise = q/2`, and noise growth `noise_add(c\u2081, c\u2082) \u2264 noise(c\u2081) + noise(c\u2082)` and `noise_mul(c\u2081, c\u2082) \u2264 n \u00b7 noise(c\u2081) \u00b7 noise(c\u2082)` where n is the ring dimension.\n\n**Test**: Define the Ring-LWE encryption scheme concretely in Lean 4 using `ZMod q` and polynomial quotient rings. Verify that the noise axioms hold by proving the noise growth bounds for polynomial addition and multiplication in the quotient ring Z_q[X]/(X^n + 1). The factor of n in multiplicative noise growth comes from the expansion of the product modulo X^n + 1.\n\n**Impact**: If true, this provides the first formally verified concrete FHE instantiation, bridging abstract noise management with real cryptographic constructions. It would also establish the precise relationship between ring dimension n, modulus q, and achievable circuit depth. If the noise bounds are tighter than expected, it could suggest parameter improvements for practical implementations.\n\n**Catalog References**: `Cryptography/FHE/Defs.lean`, `Cryptography/FHE/Theorems.lean`, `Cryptography/LWE/Defs.lean`\n\n**Proof Strategy**: \n1. Define `Rq := (ZMod q)[X] / (X^n + 1)` using Mathlib's polynomial quotient machinery.\n2. Define encryption as `Enc(m) = (a, a\u00b7s + e + (q/p)\u00b7m)` for random `a`, secret `s`, small error `e`.\n3. Prove noise growth bounds using submultiplicativity of the infinity norm on `Rq`.\n4. Construct an instance of `NoiseBoundedHE` and verify all axioms.\n5. For bootstrapping, prove that the decryption circuit has multiplicative depth O(log n \u00b7 log q).\n\n**Domain Bridges**: Cryptography <-> Algebra (polynomial ring theory), Cryptography <-> Computation (circuit complexity of decryption)\n\n**Lineage**: Builds on the `NoiseBoundedHE` and `CorrectHE` structures defined in this cycle, and the LWE definitions in `Cryptography/LWE/Defs.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Bootstrapping as a Natural FHE Instance\n\n**Conjecture**: The tropical encryption scheme defined in `TropicalHomomorphic.lean` satisfies the axioms of `BootstrappableHE` with `bNoise = 0` (due to the idempotence of min), making it a \"perfect\" bootstrappable scheme\u2014but one where the security guarantee is trivially broken (by the `deterministic_tropical_order_leak` theorem). This provides a formal proof that algebraic bootstrapping capability and cryptographic security are independent properties.\n\n**Test**: Construct a concrete instance of `BootstrappableHE` from `TropicalEncScheme`, where the refresh operation is defined as `refresh(c) = cmin(c, c)` (exploiting min idempotence). Verify all axioms hold. Then formally prove that no `TropicalEncScheme` instance can satisfy IND-CPA security (because ciphertext order reveals plaintext order).\n\n**Impact**: This would provide a clean, constructive example showing that the bootstrapping framework is satisfiable (ruling out vacuous truth concerns about our main theorems) while simultaneously demonstrating that bootstrapping alone is insufficient for security. It would clarify the separation between the algebraic correctness theory (our framework) and the computational hardness theory (security reductions).\n\n**Catalog References**: `Cryptography/TropicalHomomorphic.lean`, `Cryptography/FHE/Defs.lean`, `Cryptography/TropicalPostQuantum.lean`\n\n**Proof Strategy**:\n1. Define a noise function on `TropicalEncScheme.Cipher` (e.g., the encoding offset).\n2. Show `cmin(c, c) = c` implies refresh noise is 0.\n3. Construct the `BootstrappableHE` instance.\n4. Formalize IND-CPA security and prove tropical schemes cannot satisfy it.\n\n**Domain Bridges**: Cryptography <-> Tropical geometry (semiring structure), Cryptography <-> Logic (independence of algebraic and computational properties)\n\n**Lineage**: Builds on `tropical_homomorphic_correctness` and `tropical_min_idempotent_bootstrap` from the existing Catalog, and the `BootstrappableHE` structure from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Circuit Complexity Lower Bounds for Bootstrapping\n\n**Conjecture**: For any `BootstrappableHE` scheme where the plaintext space has size \u2265 2 and the noise function is \"non-degenerate\" (noise of enc(m) depends on m), the bootstrapping circuit (the circuit that homomorphically evaluates decryption) has multiplicative depth at least log\u2082(log\u2082(maxNoise/bNoise)). This would formalize the folklore belief that bootstrapping cannot be made \"too cheap.\"\n\n**Test**: Formalize a notion of \"bootstrapping circuit\" as an `ArithCircuit` that, when evaluated homomorphically on a valid ciphertext and an encrypted secret key, produces a refreshed ciphertext. Prove that if this circuit has depth d, then maxNoise \u2265 bNoise^(2^d) (by the exponential noise growth theorem), which gives d \u2265 log\u2082(log\u2082(maxNoise/bNoise)).\n\n**Impact**: This would establish the first formally verified complexity lower bound for FHE bootstrapping, connecting our noise growth analysis to circuit complexity. It would also provide a formal justification for why practical bootstrapping is expensive.\n\n**Catalog References**: `Cryptography/FHE/Theorems.lean` (specifically `noise_exceeds_any_threshold` and `pow_two_pow_strict_mono`)\n\n**Proof Strategy**:\n1. Define a \"bootstrapping circuit\" predicate: a circuit that, applied homomorphically, converts any valid ciphertext to one with noise \u2264 bNoise.\n2. Use `noise_exceeds_any_threshold` to show that evaluating a depth-d circuit on a ciphertext with noise B yields noise \u2264 B^(2^d).\n3. For the bootstrapping circuit to work, its homomorphic evaluation must succeed, so the noise must stay below maxNoise.\n4. This gives B^(2^d) \u2264 maxNoise, hence d \u2265 log\u2082(log\u2082(maxNoise/B)).\n\n**Domain Bridges**: Cryptography <-> Computation (circuit complexity), Cryptography <-> EML (complexity measures)\n\n**Lineage**: Directly extends the noise growth analysis from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Multi-Key Homomorphic Encryption Framework\n\n**Conjecture**: The `BootstrappableHE` framework can be extended to a multi-key setting where ciphertexts encrypted under different keys can be combined homomorphically, with the decryption requiring all keys. Formally, there exists a `MultiKeyHE` structure with `hAdd : C sk\u2081 \u2192 C sk\u2082 \u2192 C (sk\u2081, sk\u2082)` satisfying analogous correctness and noise bounds, where the noise growth depends on the number of distinct keys involved.\n\n**Test**: Define `MultiKeyHE` extending `BootstrappableHE` with a key-merging operation. Prove that refreshed evaluation over multi-key circuits preserves validity when the number of distinct keys is bounded by some function of the noise parameters. Identify the precise relationship between the number of keys and the achievable circuit depth.\n\n**Impact**: Multi-key FHE is essential for multiparty computation (MPC) applications. Formalizing this would connect our framework to the multiparty CSIDH work already in the Catalog (`Cryptography/CSIFiShAdvanced.lean`).\n\n**Catalog References**: `Cryptography/FHE/Defs.lean`, `Cryptography/CSIFiShAdvanced.lean` (multiparty key exchange), `Cryptography/CommitmentProtocol.lean`\n\n**Proof Strategy**:\n1. Parameterize ciphertext type by a set of keys: `C : Finset SK \u2192 Type`.\n2. Define `hAdd` and `hMul` that merge key sets.\n3. Noise grows with `|keys|` factor in multiplication.\n4. Prove bootstrapping works when `bNoise^(2 \u00b7 |keys|) < maxNoise`.\n\n**Domain Bridges**: Cryptography <-> Cryptography (connecting FHE with MPC), Cryptography <-> Computation (distributed computation models)\n\n**Lineage**: Extends the single-key `BootstrappableHE` from this cycle; connects to `multiparty_csidh_correctness` in the Catalog.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Approximate Arithmetic HE (CKKS Formalization)\n\n**Conjecture**: The CKKS scheme for approximate arithmetic can be formalized as a variant of `NoiseBoundedHE` where the correctness condition is relaxed from `dec(enc(m)) = m` to `|dec(enc(m)) - m| \u2264 \u03b5` for some precision parameter \u03b5. The noise management framework extends to this approximate setting with the key modification that the \"noise\" now includes both the encryption error and the approximation error, and these interact multiplicatively.\n\n**Test**: Define `ApproxHE` with `dec_enc_approx : |dec(enc(m)) - m| \u2264 \u03b5`. Prove that after d levels of multiplication, the approximation error is bounded by `\u03b5 \u00b7 (1 + \u03b5)^(2^d) - \u03b5 \u2248 \u03b5 \u00b7 2^d` for small \u03b5. Verify this matches known CKKS error bounds.\n\n**Impact**: CKKS is the most practically important FHE scheme for machine learning and scientific computation. Formalizing its error propagation would provide the first verified error bounds for approximate homomorphic computation.\n\n**Catalog References**: `Cryptography/FHE/Defs.lean`, `Cryptography/FHE/Theorems.lean`\n\n**Proof Strategy**:\n1. Define `ApproxHE` over \u211d with approximate correctness.\n2. Track error and noise separately.\n3. Prove error propagation bounds by induction on circuit depth.\n4. Show bootstrapping in the approximate setting requires rescaling.\n\n**Domain Bridges**: Cryptography <-> MachineLearning (encrypted inference), Cryptography <-> Physics (numerical precision in encrypted simulation)\n\n**Lineage**: Extends the exact `NoiseBoundedHE` framework from this cycle to the approximate setting.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "fd_0563",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "0edfd7d6",
-    "status": "available",
-    "timestamp": "2026-06-03T22:15:30.801364+00:00",
-    "title": "First formal verification of the core algebr"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Neural Tangent Kernel Theory\n\n## Synthesis\n\nThis research cycle established the algebraic core of NTK convergence theory: the residual iteration formula, geometric contraction bounds, fixed-point characterization, positive semidefiniteness of the Gram matrix, and the universality principle. These results formalize the Jacot-Gabriel-Hongler framework and connect it to the tropical NTK theory already in the Catalog, which provides the complementary geometric picture of polyhedral cells as lazy regime domains.\n\nThe most promising cross-domain connection is between the NTK convergence machinery and the tropical geometry framework. The tropical NTK theorem shows that inside a strict argmin cell, the kernel takes the frozen form K(x,y) = \u27e8x,y\u27e9 + 1 \u2014 precisely the lazy regime where our convergence theorems apply. Crossing a tropical wall changes the active neuron and hence the kernel, entering the feature learning regime. This suggests a unified theory where convergence rates are computed cell-by-cell using our spectral bounds, and phase transitions are detected by tropical wall-crossing events.\n\nThe highest breakthrough potential lies in Direction 1 (Feature Learning Phase Transition), because understanding the transition from lazy to feature learning is the central open problem in deep learning theory. The mathematical tools \u2014 tropical geometry for the geometric picture, kernel perturbation for the dynamical picture \u2014 are now in place for a formal attack.\n\n---\n\n### Direction 1: Feature Learning Phase Transition via Kernel Evolution\n\n**Conjecture**: For a two-layer ReLU network of width m trained with gradient descent, there exists a critical width m*(n, d) such that for m > m*, the NTK perturbation \u2016K(t) - K(0)\u2016_op stays bounded by O(1/\u221am) throughout training, while for m < m*, the perturbation grows to \u03a9(1), crossing tropical walls and enabling feature learning.\n\n**Test**: Numerically simulate two-layer ReLU networks of increasing width on a fixed dataset (e.g., XOR on \u211d\u00b2). Track \u2016K(t) - K(0)\u2016_F / \u2016K(0)\u2016_F as a function of training step t and width m. Verify that the normalized kernel drift scales as 1/\u221am for large m and plateaus at O(1) for small m. Check whether the transition width m* scales polynomially in n and d.\n\n**Impact**: If true, this would provide a sharp boundary between lazy and feature learning regimes, explaining when overparameterization helps (lazy regime) and when it hurts (feature learning regime). It would connect the tropical wall-crossing geometry to width-dependent concentration bounds.\n\n**Catalog References**: `Catalog/MachineLearning/TropicalNTK.lean` (tropical wall-crossing), `MachineLearning/NTKConvergence.lean` (contraction bound, perturbation theorem)\n\n**Proof Strategy**: \n1. Formalize the kernel evolution ODE: dK/dt = f(K, u, \u03b7) using the chain rule on the Jacobian.\n2. Bound \u2016dK/dt\u2016 using concentration inequalities for random Jacobians (Gaussian width bounds).\n3. Apply Gronwall's inequality to get the cumulative perturbation bound.\n4. Use the single-step perturbation theorem (ntk_single_step_perturbation) to bound the effect on residuals.\n5. The critical width m* emerges where the Gronwall bound transitions from convergent to divergent.\n\n**Domain Bridges**: Tropical Geometry <-> Kernel Theory (tropical walls = kernel discontinuities); Random Matrix Theory <-> NTK Concentration (Wishart matrices approximate finite-width NTK)\n\n**Lineage**: Builds on NTKDynamics.contraction_bound, ntk_single_step_perturbation, and tropical_network_eq_affine_on_strict_cell from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Spectral Universality of NTK Eigenvalues\n\n**Conjecture**: For a two-layer ReLU network with n training points drawn i.i.d. from a distribution on the d-dimensional unit sphere, the empirical spectral distribution of the NTK matrix K/n converges to a deterministic measure \u03bc_\u221e as n, m \u2192 \u221e with m/n \u2192 \u03b3. The measure \u03bc_\u221e depends only on the data distribution and \u03b3, not on the specific activation function (within the class of smooth, non-polynomial activations).\n\n**Test**: Compute eigenvalue histograms of NTK matrices for networks with ReLU, tanh, sigmoid, and GELU activations on n = 500 points from the unit sphere in \u211d^10, with widths m \u2208 {500, 1000, 5000}. Compare histograms across activations \u2014 universality predicts they converge to the same shape as m, n \u2192 \u221e.\n\n**Impact**: Spectral universality would explain why different activation functions give similar training dynamics in practice. It would connect NTK theory to random matrix universality results (Marchenko-Pastur, semicircle law), opening a bridge to free probability.\n\n**Catalog References**: `MachineLearning/NTKConvergence.lean` (ntkMatrix_posSemidef, kernelQuadForm)\n\n**Proof Strategy**:\n1. Express the NTK matrix as K = J^T J / m where J is the Jacobian matrix.\n2. Apply the Marchenko-Pastur theorem to characterize the spectral distribution of J^T J.\n3. Show that the Jacobian entries satisfy the Lindeberg condition (finite fourth moment) under smoothness of the activation.\n4. Use moment convergence to establish weak convergence of the spectral measure.\n\n**Domain Bridges**: Random Matrix Theory <-> Deep Learning Theory; Free Probability <-> Kernel Spectral Theory\n\n**Lineage**: Builds on ntkMatrix_posSemidef (NTK is PSD, so spectrum is non-negative) and update_quadratic_expansion (convergence rate depends on spectral bounds).\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Multi-Step Perturbation Bound and Kernel Drift Accumulation\n\n**Conjecture**: If the kernel matrix changes by at most \u03b4 in operator norm at each step (\u2016K(t+1) - K(t)\u2016_op \u2264 \u03b4 for all t), and the initial kernel K(0) is contractive with constant c < 1, then the residual after T steps satisfies \u2016u(T)\u2016 \u2264 c^T \u00b7 \u2016u\u2080\u2016 + \u03b7 \u00b7 \u03b4 \u00b7 T \u00b7 \u2016u\u2080\u2016 / (1-c), provided \u03b7 \u00b7 \u03b4 \u00b7 T < (1-c)/2.\n\n**Test**: Verify numerically by simulating gradient descent with a slowly drifting kernel matrix. Compare the actual residual trajectory to the bound c^T \u00b7 \u2016u\u2080\u2016 + \u03b7 \u00b7 \u03b4 \u00b7 T \u00b7 \u2016u\u2080\u2016 / (1-c). Check that the bound is tight up to constants.\n\n**Impact**: This would extend the lazy regime convergence theorem from a fixed kernel to a slowly drifting kernel, making it directly applicable to finite-width networks where the NTK evolves during training. This is the key missing piece between the infinite-width theory and practice.\n\n**Catalog References**: `MachineLearning/NTKConvergence.lean` (ntk_single_step_perturbation, NTKDynamics.contraction_bound)\n\n**Proof Strategy**:\n1. Start from the single-step perturbation identity: u_{t+1}^perturbed - u_{t+1}^fixed = \u03b7(K_fixed - K(t)) \u00b7 u_t^perturbed.\n2. Define the error e(t) = u^perturbed(t) - u^fixed(t).\n3. Bound \u2016e(t+1)\u2016 \u2264 c \u00b7 \u2016e(t)\u2016 + \u03b7 \u00b7 \u03b4 \u00b7 \u2016u^perturbed(t)\u2016 using triangle inequality and contractivity.\n4. Solve the resulting linear recurrence to get the cumulative bound.\n5. Formalize as a new theorem in Lean building on ntk_single_step_perturbation.\n\n**Domain Bridges**: Perturbation Theory <-> Numerical Analysis (Gronwall-type bounds); Dynamical Systems <-> Optimization Theory\n\n**Lineage**: Directly extends ntk_single_step_perturbation from a single step to multiple steps.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: NTK of Attention Layers and Transformer Universality\n\n**Conjecture**: The NTK of a single-head attention layer with softmax nonlinearity, evaluated on n input sequences of length L, has a block structure where the (i,j)-th block is determined by the pairwise attention scores between sequences i and j. As the embedding dimension d \u2192 \u221e, this block-structured NTK converges to a deterministic kernel that factorizes as K_attn(x,y) = K_query(x,y) \u00b7 K_value(x,y).\n\n**Test**: Compute the NTK of a single-head attention layer numerically for d \u2208 {64, 128, 256, 512, 1024} on n = 20 random sequences of length L = 10. Check whether the off-diagonal blocks of K converge (in relative Frobenius norm) and whether the limiting kernel factorizes as predicted.\n\n**Impact**: If true, this would extend NTK universality from feedforward networks to transformers, the dominant architecture in modern AI. The factored kernel structure would explain why attention mechanisms are so effective: they implement a kernel that separates \"what to attend to\" (query kernel) from \"what to extract\" (value kernel).\n\n**Catalog References**: `MachineLearning/NTKConvergence.lean` (ntk_universality, ntkMatrix_symmetric), `Catalog/MachineLearning/BiologicalCrystallization.lean` (neural_attention_states)\n\n**Proof Strategy**:\n1. Define the attention NTK formally as a Gram matrix of Jacobians through the softmax.\n2. Use the rank-1 structure of attention to decompose the Jacobian into query and value components.\n3. Apply concentration inequalities for the softmax (bounded Lipschitz) to show convergence as d \u2192 \u221e.\n4. Verify the factored kernel form using the chain rule decomposition of the Jacobian.\n\n**Domain Bridges**: Attention Mechanisms <-> Kernel Methods; Information Geometry <-> NTK Theory\n\n**Lineage**: Extends ntk_universality from generic systems to attention-specific architectures.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Tropical NTK Convergence Rate on Polyhedral Cells\n\n**Conjecture**: For a tropical neural network (min-plus ReLU) with m hidden units in dimension d, inside a strict argmin cell where the tropical NTK equals K(x,y) = \u27e8x,y\u27e9 + 1, the spectral convergence rate of gradient descent is c = (n-1)/(n+1) where n is the number of training points in the cell, provided the training points are in general position on the unit sphere.\n\n**Test**: Generate n \u2208 {3, 5, 10, 20, 50} points uniformly on the unit sphere in \u211d^d for d \u2208 {5, 10, 20}. Compute the NTK matrix K_{ij} = \u27e8x_i, x_j\u27e9 + 1 and its condition number \u03ba. Verify that the optimal convergence rate c* = (\u03ba-1)/(\u03ba+1) approaches (n-1)/(n+1) as d \u2192 \u221e.\n\n**Impact**: This would give an exact convergence rate for tropical NTK training, connecting the polyhedral geometry of tropical networks to the spectral theory of random kernel matrices. It would also provide a rare example of an exact (not asymptotic) convergence rate in kernel learning.\n\n**Catalog References**: `Catalog/MachineLearning/TropicalNTK.lean` (lazy_regime_characterization, tropical_ntk_eq_dot_add_one_on_common_strict_cell), `MachineLearning/NTKConvergence.lean` (kernelQuadForm, NTKDynamics.contraction_bound)\n\n**Proof Strategy**:\n1. The kernel matrix for K(x,y) = \u27e8x,y\u27e9 + 1 on unit sphere points is K = X^T X + 11^T where X is the data matrix.\n2. The eigenvalues of 11^T are {n, 0, ..., 0}.\n3. The eigenvalues of X^T X concentrate around specific values by Marchenko-Pastur.\n4. For points in general position on the high-dimensional sphere, \u27e8x_i, x_j\u27e9 \u2248 0 for i \u2260 j, so K \u2248 I + 11^T.\n5. The eigenvalues of I + 11^T are {n+1, 1, 1, ..., 1}, giving \u03ba = n+1 and c* = n/(n+2).\n6. The refined calculation accounting for non-zero off-diagonal terms gives c = (n-1)/(n+1).\n\n**Domain Bridges**: Tropical Geometry <-> Spectral Theory; Random Matrix Theory <-> Polyhedral Combinatorics\n\n**Lineage**: Bridges the tropical NTK (lazy_regime_characterization) with the spectral convergence theory (contraction_bound).\n\n**Ambition**: extension\n",
-    "domains": [
-      "Algebra",
-      "MachineLearning"
-    ],
-    "id": "fd_0588",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "a1ac928d",
-    "status": "available",
-    "timestamp": "2026-06-04T01:40:18.431669+00:00",
-    "title": "Algebraic core of NTK convergence theory: th"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
     "domains": [
       "Tropical",
@@ -1652,18 +1307,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established the first machine-verified formalization of the transformer architecture's core algebraic and geometric properties. The central discovery is the deep structural coherence between the transformer's components: softmax's gauge symmetry (shift invariance) and layer normalization's centering projection both eliminate the same redundant degree of freedom \u2014 the global offset in representation space. Meanwhile, the Gram factorization theorem (score(x\u1d62, x\u2c7c) = x\u1d62\u1d40(Wq\u1d40Wk)x\u2c7c) reveals that attention scores are governed by spectral properties of a learnable bilinear form, connecting modern deep learning to classical linear algebra.\n\nThe most promising cross-domain connection is between our Gram matrix factorization and the existing tropical attention formalization in the Catalog (`Catalog/MachineLearning/LSEConvergence.lean`). That file proves that as temperature \u03c4 \u2192 0\u207a, log-sum-exp converges to the maximum \u2014 the tropical limit. Our bilinearity theorems establish that the *pre-softmax* scores are bilinear forms. Combining these results could yield a complete characterization of the tropical limit of bilinear attention: in the zero-temperature regime, the softmax selects the key with the *highest* bilinear form value, turning continuous attention into discrete hard attention determined by the Gram matrix's spectral structure.\n\nThe highest breakthrough potential lies in Direction 1 (Spectral Characterization of Attention Geometry), because it connects formally verified algebraic structure to empirically observable phenomena in trained transformers. If the spectral structure of learned Gram matrices Wq\u1d40Wk can be characterized, it would provide the first mathematically rigorous explanation of *what* transformers learn \u2014 not just that they approximate functions, but which geometric structures they discover in data.\n\n---\n\n### Direction 1: Spectral Characterization of Attention Geometry\n\n**Conjecture**: For a transformer trained on natural language data, the Gram matrix G = Wq\u1d40Wk of each attention head has eigenvalues that decay exponentially: \u03bb\u2096 \u2264 C\u00b7r^k for constants C > 0 and 0 < r < 1, where eigenvalues are ordered by magnitude. In Lean terms: for an attention head with Gram matrix `attentionGramMatrix head`, the eigenvalues of the corresponding symmetric part (G + G\u1d40)/2, when sorted in decreasing absolute value, satisfy an exponential decay bound.\n\n**Test**: Extract Wq\u1d40Wk from a trained GPT-2 model (publicly available weights), compute the eigenvalue spectrum for each head across all layers, and fit exponential decay curves. If more than 80% of heads exhibit R\u00b2 > 0.9 for the exponential fit, the conjecture is supported. The Lean formalization would define a `HasExponentialSpectralDecay` predicate on matrices and prove that it implies a low-rank approximation bound on the Gram matrix.\n\n**Impact**: If true, this would explain why attention heads specialize (each head attends to a low-dimensional subspace) and justify low-rank attention approximations used in efficient transformer architectures. If false, the failure pattern reveals which heads violate the exponential decay \u2014 likely those performing positional or syntactic attention rather than semantic attention.\n\n**Catalog References**: `Catalog/MachineLearning/Compositionality.lean` (attention naturality), `Catalog/MachineLearning/LSEConvergence.lean` (tropical attention convergence)\n\n**Proof Strategy**: (1) Define spectral decay predicates in Lean using Mathlib's `Matrix.eigenvalues` or `LinearMap.eigenspace`. (2) Prove that exponential decay of eigenvalues implies the Gram matrix has \u03b5-rank O(log(1/\u03b5)), connecting to low-rank approximation theory. (3) Use the Gram factorization theorem (`attentionScore_eq_gram`) to show that low-rank G implies attention scores lie in a low-dimensional subspace.\n\n**Domain Bridges**: Linear algebra (spectral theory) \u2194 Machine Learning (attention heads) \u2194 Information theory (effective dimensionality)\n\n**Lineage**: Builds on `attentionScore_eq_gram` and `attentionGramMatrix` from this cycle's Lean formalization.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Bilinear Attention and Hard Attention Convergence\n\n**Conjecture**: In the tropical limit (\u03c4 \u2192 0\u207a), the softmax attention with bilinear scores converges to hard attention that selects the key maximizing the bilinear form: for each query position i, the attention concentrates on position j* = argmax_j x\u1d62\u1d40 G x\u2c7c. Formally, for sequences X = (x\u2081, ..., x\u2099) in general position (all bilinear form values x\u1d62\u1d40Gx\u2c7c distinct for different j), the softmax attention weight \u03c3(score/\u03c4)\u2c7c converges to the indicator \u03b4\u2c7c,\u2c7c* as \u03c4 \u2192 0\u207a.\n\n**Test**: Formalize the statement in Lean using `Filter.Tendsto` and the existing `lse_tendsto_sup` theorem from `LSEConvergence.lean`. The key new ingredient is combining the Gram factorization (`attentionScore_eq_gram`) with the LSE convergence result. Verify computationally that for random matrices G and random sequences X, the softmax with temperature \u03c4 = 0.001 selects the correct argmax with probability > 0.999.\n\n**Impact**: If proved, this gives a complete mathematical bridge between continuous (soft) attention and discrete (hard) attention, grounded in the bilinear form structure. This would formalize the informal intuition that \"attention is selection\" and connect to combinatorial optimization (the hard attention selection problem is a bilinear optimization).\n\n**Catalog References**: `Catalog/MachineLearning/LSEConvergence.lean` (lse_tendsto_sup, log_softmax_tends_to_row_tropical_normalization), `Catalog/MachineLearning/MultiHead.lean` (tropical multihead componentwise)\n\n**Proof Strategy**: (1) Apply `lse_tendsto_sup` with the score vector s_j = x\u1d62\u1d40Gx\u2c7c/\u03c4. (2) Show that under the distinctness hypothesis, the argmax is unique, so the softmax concentrates. (3) Prove the convergence of the full attention output (weighted sum of values) to the hard-attention output (single value at the argmax position). The existing LSE convergence result handles the log-sum-exp; the new work is connecting it to the Gram factorization.\n\n**Domain Bridges**: Tropical geometry \u2194 Bilinear forms \u2194 Combinatorial optimization (argmax selection)\n\n**Lineage**: Builds on `attentionScore_eq_gram`, `attentionScore_linear_left/right` from this cycle, and `lse_tendsto_sup` from LSEConvergence.lean.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Layer Normalization as Riemannian Projection\n\n**Conjecture**: Layer normalization defines a smooth retraction from \u211d\u207f \\ {constant vectors} onto the centered unit sphere S\u207f\u207b\u00b2 = {x \u2208 \u211d\u207f : \u2211x\u1d62 = 0, \u2211x\u1d62\u00b2 = 1}. Furthermore, the Jacobian of this retraction at any point x has a specific spectral structure: it has n-1 eigenvalues equal to 1/\u2016x\u0303\u2016 and one eigenvalue equal to 0 (in the all-ones direction), where x\u0303 is the centered vector.\n\n**Test**: (1) Prove in Lean that `layerNormSimple x` maps to the centered hyperplane (already done: `vecCenter_sum_eq_zero`). (2) Prove that `layerNormSimple x` has unit variance (i.e., \u2211\u1d62 (layerNormSimple x i)\u00b2 / n = 1). (3) Prove idempotence: `layerNormSimple (layerNormSimple x) = layerNormSimple x`. Computationally, verify the Jacobian spectral structure for random vectors in \u211d\u00b9\u2070.\n\n**Impact**: This would establish layer normalization as a Riemannian projection onto a submanifold, connecting transformer architectures to differential geometry. The spectral structure of the Jacobian would explain gradient flow through layer norm: the zero eigenvalue blocks gradients in the all-ones direction, while the 1/\u2016x\u0303\u2016 eigenvalues show that gradients are rescaled by the inverse norm of the centered vector.\n\n**Catalog References**: `MachineLearning/TransformerArchitecture/Defs.lean` (layerNormSimple, vecCenter, vecVariance)\n\n**Proof Strategy**: For idempotence, show that layerNormSimple x has mean 0 (proven: `vecCenter_mean_eq_zero`) and variance 1 (need to prove). Then applying layerNormSimple again subtracts mean 0 and divides by sqrt(1) = 1, giving the identity. For the Jacobian, use Mathlib's `fderiv` and compute the derivative of the composition of centering (linear) and normalization (smooth nonlinear).\n\n**Domain Bridges**: Riemannian geometry (projections, retractions) \u2194 Machine Learning (layer normalization) \u2194 Optimization (gradient flow)\n\n**Lineage**: Builds on `vecCenter_sum_eq_zero`, `vecCenter_mean_eq_zero`, `layerNormSimple` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Transformer Universal Approximation via Bilinear Attention\n\n**Conjecture**: For any compact set K \u2286 (\u211d\u1d48)\u207f and any continuous function F: K \u2192 (\u211d\u1d48)\u207f, and any \u03b5 > 0, there exists a transformer (with ReLU activation in the FFN) with at most O(1/\u03b5\u1d48\u207f) parameters that \u03b5-approximates F uniformly on K. The proof strategy uses the bilinearity of attention to construct explicit query/key matrices that implement nearest-neighbor selection, combined with FFN universality for pointwise approximation.\n\n**Test**: For d = 1, n = 2 (scalar sequences of length 2), construct an explicit 2-layer transformer that approximates the sorting function sort(x\u2081, x\u2082) = (min(x\u2081,x\u2082), max(x\u2081,x\u2082)) to within \u03b5 = 0.01 on [0,1]\u00b2. Verify computationally and attempt to formalize the construction in Lean.\n\n**Impact**: This would be the first *formally verified* universal approximation theorem for transformers. Existing results (Yun et al., 2020) are informal and use different architectural assumptions. A formal proof would establish exactly which architectural features (bilinear attention, nonlinear FFN, depth, width) are necessary for universality.\n\n**Catalog References**: `Catalog/MachineLearning/ClosureNetworkBreakthrough.lean` (closure_network_universal_approx), `Catalog/MachineLearning/ClosureUniversalApproximation.lean` (finite_function_exact_by_closure_features)\n\n**Proof Strategy**: (1) Use the FFN universal approximation theorem (ReLU networks are universal) for pointwise maps. (2) Use the bilinearity of attention (Theorems 3.3-3.4) to show that attention can implement arbitrary token selection. (3) Combine via the compositional depth structure (Theorem 3.6) to show that multiple layers can build arbitrary sequence-to-sequence maps. The key technical challenge is showing that softmax nonlinearity, combined with bilinear attention and ReLU FFN, generates a sufficiently rich function class.\n\n**Domain Bridges**: Approximation theory \u2194 Bilinear forms \u2194 Neural network expressivity \u2194 Computational complexity\n\n**Lineage**: Builds on all theorems from this cycle, especially `attentionScore_linear_left/right`, `attentionScore_eq_gram`, `iterateLayer_add`, and the FFN definition.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Gauge-Equivariant Transformer Design\n\n**Conjecture**: The softmax shift invariance (Theorem 3.1) is one instance of a broader family of gauge symmetries. Specifically, for any group G acting on \u211d\u207f by translations along a fixed subspace V \u2286 \u211d\u207f, one can construct a \"V-gauge-invariant softmax\" \u03c3\u1d65 such that \u03c3\u1d65(x + v) = \u03c3\u1d65(x) for all v \u2208 V. The standard softmax corresponds to V = span(1). The conjecture is that V-gauge-invariant transformers exist for any subspace V and that the choice of V determines which information the transformer can access.\n\n**Test**: Define a 2-dimensional gauge group (V = span{1, (1,-1,1,-1,...)}) and construct the corresponding gauge-invariant softmax. Prove in Lean that it satisfies the invariance property. Test computationally whether a transformer with this modified softmax can still learn standard NLP tasks, or whether the additional gauge symmetry removes too much information.\n\n**Impact**: If successful, this would provide a principled framework for designing transformers with built-in symmetries \u2014 analogous to how gauge theories in physics lead to conservation laws. Different choices of gauge group V would lead to transformers that are invariant under different types of noise or transformations, potentially improving robustness.\n\n**Catalog References**: `MachineLearning/TransformerArchitecture/Theorems.lean` (softmaxVec_shift_invariant), `Catalog/MachineLearning/Compositionality.lean` (attention_natural_under_permutation)\n\n**Proof Strategy**: (1) Define the quotient space \u211d\u207f/V and the projection map. (2) Define \u03c3\u1d65 as the composition: project to \u211d\u207f/V, then apply standard softmax on the quotient. (3) Prove invariance by showing the projection kills V-translations. (4) Characterize which bilinear forms on the quotient are realizable by attention heads.\n\n**Domain Bridges**: Gauge theory (physics) \u2194 Representation theory (group actions) \u2194 Machine Learning (invariant architectures) \u2194 Robust optimization\n\n**Lineage**: Builds on `softmaxVec_shift_invariant` and the gauge symmetry interpretation from this cycle.\n\n**Ambition**: grand_challenge\n",
+    "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
     "domains": [
-      "Algebra",
-      "MachineLearning"
+      "EML",
+      "Physics"
     ],
-    "id": "fd_0590",
-    "priority_score": 0.6499999999999999,
+    "id": "fd_0418",
+    "priority_score": 0.6299999999999999,
     "research_mode": "team",
-    "source_exp_id": "a4fcb47e",
+    "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-04T02:14:09.655994+00:00",
-    "title": "First machine-verified formalization of the"
+    "timestamp": "2026-06-03T19:55:26.751445+00:00",
+    "title": "EML Quantum Activation Functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -1814,21 +1469,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.494775+00:00",
     "title": "Knots That Think: Cognition as Braiding in Category Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Einstein showed that gravity is the curvature of spacetime. But WHY does spacetime curve? Conjecture: Spacetime IS a quantum error-correcting code, and gravity IS the syndrome of that code. The code is a [[n,k,d]] stabilizer code where n = number of Planck areas on a spatial slice, k = number of logical qubits (which equals the Bekenstein-Hawking entropy S = A/4G in natural units), and d = code distance (which equals the minimal geodesic length through the bulk). The key identity: S(A) = Area(gamma_A) / (4G) is EXACTLY the quantum Singleton bound n - k <= 2(d-1) rearranged as k = n - 2d + 2 = A/(4G) when n = A/l_P^2 and d = L/(2l_P). This means the Bekenstein-Hawking entropy formula is a quantum coding theorem, and the holographic principle is a coding constraint. Test: for AdS_3 with boundary CFT_2, the code is a [[n, k, d]] = [[L/l_P, S, L/(2l_P)]] code. Verify that the Singleton bound n - k <= 2(d-1) becomes L/l_P - S <= L/l_P - 1, which simplifies to S >= 1 (trivially true). The NON-TRIVIAL content is that the Ryu-Takayanagi formula S = A/(4G) is the exact quantum information identity. Impact: spacetime is not curved by matter \u2014 spacetime IS a code, and matter IS a syndrome. Gravity is not a force; it's error correction.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0023",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.510412+00:00",
-    "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
   },
   {
     "consumed_by_exp_id": "",
@@ -2011,7 +1651,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db1ae093",
     "description": "Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
     "domains": [
       "Novelty",
@@ -2021,7 +1661,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.877377+00:00",
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
@@ -2069,21 +1709,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.925627+00:00",
     "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0114",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.944657+00:00",
-    "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -2852,33 +2477,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
+    "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
     "domains": [
-      "Algebra",
+      "Computation",
       "Physics"
     ],
-    "id": "fd_0395",
+    "id": "fd_0397",
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:24.924994+00:00",
-    "title": "Navier-Stokes Existence and Smoothness"
+    "timestamp": "2026-06-03T19:55:25.080296+00:00",
+    "title": "Percolation Threshold"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
+    "description": "Prove tight bounds on quantum error-correcting codes. Formalize the quantum Singleton bound, quantum Hamming bound, and construct optimal stabilizer codes. Connect to topological quantum computing.",
     "domains": [
       "Physics",
-      "Logic"
+      "Computation"
     ],
-    "id": "fd_0396",
+    "id": "fd_0399",
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:25.003856+00:00",
-    "title": "Hilbert 6: Axiomatization of Physics"
+    "timestamp": "2026-06-03T19:55:25.231496+00:00",
+    "title": "Quantum Error Correction Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that reversible circuits achieve Landauer's bound for erasure. Formalize the connection between computational complexity and thermodynamic entropy. Construct provably optimal reversible implementations of common algorithms.",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0402",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.464794+00:00",
+    "title": "Reversible Computing and Thermodynamic Efficiency"
   },
   {
     "consumed_by_exp_id": "",
@@ -2896,7 +2536,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Riemann-Roch Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "082b48f5",
     "description": "Extend the tropical Satake isomorphism from GL_2 to GL_n. Prove that it defines a bijection between min-plus Hecke operators and W-invariant tropical polynomials, connecting representation theory to combinatorics.",
     "domains": [
       "Tropical",
@@ -2906,24 +2546,54 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.706069+00:00",
     "title": "Tropical Satake Isomorphism for GL_n"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Inspired by the AdS/CFT correspondence, formalize a mathematical holographic principle: a theorem about n-dimensional structures (the bulk) has a dual (shorter) proof in (n-1)-dimensional boundary terms. Conjecture: Every proof by induction on a well-founded order of rank n has an equivalent proof by coinduction on the n-1 boundary. Test: find a concrete theorem (e.g., finite Ramsey) and show its inductive proof in R^n maps to a coinductive proof on S^{n-1}. Impact: a new holographic proof theory connecting algebraic topology to proof complexity.",
+    "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
     "domains": [
       "Physics",
-      "Algebra"
+      "Computation"
     ],
-    "id": "fd_0412",
+    "id": "fd_0414",
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:26.259292+00:00",
-    "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
+    "timestamp": "2026-06-03T19:55:26.423474+00:00",
+    "title": "Integrated Information via Tensor Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
+    "domains": [
+      "Geometry",
+      "Physics"
+    ],
+    "id": "fd_0421",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.988240+00:00",
+    "title": "Inverse Stereographic Renormalization Group"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Landauer's principle states that erasing one bit of information dissipates at least kT*ln(2) of heat. Apply this to proof theory: erasing a proof of theorem T to recover a shorter proof is an information-theoretic process with a thermodynamic cost. Conjecture: The minimum energy required to compress a proof of n steps into a proof of m steps (m < n) is at least kT*(n-m)*ln(2), and this bound is tight for proofs in propositional logic. A proof of length n contains n bits of information (each step is a binary choice in the search tree). Compressing it to m steps requires erasing n-m bits, each costing kT*ln(2) by Landauer. This gives a physical lower bound on proof compression that is independent of the proof system. Test: formalize proof compression as an irreversible computation and derive the Landauer bound. Compute the erasure cost for compressing a 1000-step proof of the fundamental theorem of algebra into a 100-step proof. Impact: connects information thermodynamics to proof complexity, providing a physical lower bound on proof compression.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0423",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.146225+00:00",
+    "title": "Thermodynamic Proof Erasure: Landauer's Principle for Mathematics"
   },
   {
     "consumed_by_exp_id": "",
@@ -2957,63 +2627,63 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that any quantum circuit can be approximated by braiding anyons. Formalize the Jones polynomial as a universal topological quantum invariant and prove density in SU(2).",
-    "domains": [
-      "Bridges",
-      "Physics"
-    ],
-    "id": "fd_0444",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:28.878854+00:00",
-    "title": "Topological Quantum Computing: Braiding Universality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "id": "fd_0454",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:29.664610+00:00",
-    "title": "Logic-Physics Bridge: Consistency of Physical Theories"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the information paradox as a theorem about unitary evolution: prove that if black hole evaporation is unitary, information is preserved; if not, quantum mechanics is violated. Construct a toy model where a 2-qubit black hole evaporates unitarily and recover the initial state from radiation.",
+    "description": "Prove the Coffman-Kundu-Wootters monogamy inequality for qubit entanglement: the sum of squared concurrences is bounded by the squared concurrence with the ancilla. Formalize concurrence as an entanglement measure and extend to n-qubit systems.",
     "domains": [
       "Physics",
-      "Logic"
+      "Computation"
     ],
-    "id": "fd_0463",
+    "id": "fd_0462",
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:30.401337+00:00",
-    "title": "Hawking Radiation: Information Paradox Formalized"
+    "timestamp": "2026-06-03T19:55:30.319643+00:00",
+    "title": "Quantum Entanglement Monogamy: CKW Inequality"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
+    "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
-      "Algebra"
+      "Computation"
     ],
-    "id": "fd_0468",
+    "id": "fd_0465",
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:30.812055+00:00",
-    "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
+    "timestamp": "2026-06-03T19:55:30.568365+00:00",
+    "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0466",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.651923+00:00",
+    "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0467",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.732241+00:00",
+    "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -3029,6 +2699,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:31.056465+00:00",
     "title": "Tropical Curve Counting: Gromov-Witten Invariants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the k-Local Hamiltonian Problem is QMA-complete for k >= 2. Formalize the Kitaev reduction from quantum circuit satisfiability to the local Hamiltonian problem. Analyze the promise gap and its effect on complexity.",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0475",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:31.381522+00:00",
+    "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
   },
   {
     "consumed_by_exp_id": "",
@@ -3107,6 +2792,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0507",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.045810+00:00",
+    "title": "Emergent Spacetime from Quantum Entanglement"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Classify all Pythagorean triples in the Gaussian integers Z[i]. Prove that every primitive triple can be parametrized as (a+bi, c+di, e+fi) where the norm of each entry satisfies the Pythagorean relation. Connect to the arithmetic of quaternionic integers.",
     "domains": [
       "Pythagorean",
@@ -3164,21 +2864,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:02:28.826725+00:00",
     "title": "Foundational theory of tropical M\u00f6bius trans"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Yang-Mills Mass Gap and Gauge Theory Formalization\n\n## Synthesis\n\nThis research cycle established the mathematical chain connecting reflection positivity to the Yang-Mills mass gap through a novel structure \u2014 the gauge-equivariant spectral filtration. The key insight is that the Casimir operator of the gauge group provides an algebraic lower bound on the spectral gap: the mass gap is at least as large as the Casimir eigenvalue of the fundamental representation. This connects representation theory (algebraic) to spectral theory (analytic) to physics (mass gap and confinement).\n\nThe most promising cross-domain connection is between the gauge-equivariant filtration and quantum error correction. The sector decomposition of the gauge-invariant Hilbert space by irreducible representations is structurally identical to the code space decomposition in stabilizer codes (cf. `Physics/PauliClosureFoundations.lean`). This suggests that the mathematical machinery for proving mass gaps could also yield distance bounds for topological quantum codes, and vice versa.\n\nThe highest breakthrough potential lies in **Direction 1** (Uniform Casimir Control), because it addresses the core missing ingredient for the full Millennium Problem: a coupling-independent lower bound on the mass gap. If the Exponential Casimir Suppression Conjecture holds, it would reduce the mass gap problem to a purely representation-theoretic statement about Casimir eigenvalues \u2014 a dramatic simplification.\n\n---\n\n### Direction 1: Uniform Casimir Control Across Couplings\n\n**Conjecture**: For SU(N) lattice Yang-Mills on \u2124^4 with Wilson action at coupling \u03b2 > 0, the transfer matrix sector eigenvalues satisfy:\n\n\u03bb_\u03c3 / \u03bb\u2080 \u2264 exp(\u2212c\u2082(\u03c3) \u00b7 f(\u03b2))\n\nwhere c\u2082(\u03c3) is the Casimir eigenvalue of representation \u03c3, and f : (0,\u221e) \u2192 (0,\u221e) is a universal function with f(\u03b2) ~ 1/\u03b2 as \u03b2 \u2192 0 and f(\u03b2) \u2192 const > 0 as \u03b2 \u2192 \u221e.\n\n**Test**: Compute transfer matrix eigenvalue ratios for SU(2) on a 4\u00b3 \u00d7 T lattice at \u03b2 = 1.0, 2.0, 3.0, 4.0 using Monte Carlo. For each \u03b2, measure \u03bb\u2081/\u03bb\u2080 in the j=1/2 sector (c\u2082 = 3/4) and j=1 sector (c\u2082 = 2). Plot log(\u03bb_\u03c3/\u03bb\u2080) vs c\u2082(\u03c3) \u2014 the conjecture predicts a linear relationship with slope \u2212f(\u03b2). If the data shows nonlinear behavior or positive slope, the conjecture is refuted.\n\n**Impact**: If true, the Yang-Mills mass gap reduces to proving f(\u03b2) > 0 for all \u03b2, which is a purely analytic statement about a single real function. This would be a major simplification of the Millennium Problem.\n\n**Catalog References**: `Physics/ReflectionPositivityMassGap.lean` (casimir_controls_filtration_gap, synthesis_mass_gap_from_filtration), `Physics/CharacterExpansionMassGap.lean` (mass_gap_lower_bound_from_character_suppression)\n\n**Proof Strategy**: \n1. Prove the conjecture at strong coupling (\u03b2 \u2264 \u03b2_c) using the character expansion, where the eigenvalue ratios are explicitly computed as \u03b2^{2c\u2082(\u03c3)} \u00b7 (1 + O(\u03b2)).\n2. Extend to intermediate coupling using cluster expansion techniques.\n3. For weak coupling (\u03b2 \u2192 \u221e), use asymptotic freedom: the running coupling g\u00b2(a) = 1/\u03b2(a) flows to zero, and perturbation theory controls the sector ratios.\n4. Key lemma needed: monotonicity of f(\u03b2) in some regime, which would follow from correlation inequalities.\n\n**Domain Bridges**: Representation theory (Casimir eigenvalues) \u2194 Spectral theory (transfer matrix) \u2194 Statistical mechanics (cluster expansion)\n\n**Lineage**: Builds on this cycle's casimir_controls_filtration_gap theorem and the Exponential Casimir Suppression conjecture.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Gauge-Equivariant Filtration for Topological Quantum Codes\n\n**Conjecture**: The code distance of a topological stabilizer code on a lattice with gauge group G is bounded below by the Casimir gap of G: d \u2265 c\u2082(fund) \u00b7 L, where L is the lattice linear dimension.\n\n**Test**: Compute the code distance of the SU(2) lattice gauge code on L\u00d7L torus for L = 2, 3, 4, 5. The Casimir gap of SU(2) is c\u2082(1/2) = 3/4. Check whether d \u2265 (3/4)L for each L. A single violation disproves the conjecture.\n\n**Impact**: Would establish a new connection between gauge theory and quantum error correction, potentially yielding codes with better distance scaling than known constructions.\n\n**Catalog References**: `Physics/PauliClosureFoundations.lean` (quantum_singleton_bound), `Physics/ReflectionPositivityMassGap.lean` (GaugeEquivariantFiltration), `Physics/GaugeCodeDistance.lean`\n\n**Proof Strategy**:\n1. Define a \"gauge code\" as the ground space of a lattice gauge Hamiltonian restricted to the gauge-invariant sector.\n2. Show that logical operators must create excitations in non-trivial representation sectors.\n3. Use the Casimir control bound to show that such excitations have energy proportional to c\u2082(fund).\n4. Apply the Knill-Laflamme conditions to translate energy gap to code distance.\n\n**Domain Bridges**: Gauge theory (GaugeEquivariantFiltration) \u2194 Quantum error correction (StabilizerCodeParams) \u2194 Representation theory (Casimir eigenvalues)\n\n**Lineage**: Builds on this cycle's GaugeEquivariantFiltration structure and the quantum_singleton_bound from PauliClosureFoundations.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Constructive Continuum Limit via Reflection Positivity\n\n**Conjecture**: For 2D lattice Yang-Mills with gauge group SU(N) and Wilson action, the lattice transfer matrices T_a (indexed by lattice spacing a) converge in the strong operator topology as a \u2192 0, and the limiting operator has a spectral gap \u0394_\u221e satisfying \u0394_\u221e \u2265 c\u2082(fund)/(2\u03c0).\n\n**Test**: Compute the mass gap \u0394(a) for SU(2) lattice Yang-Mills in 2D at lattice spacings a = 0.5, 0.25, 0.125, 0.0625 (using exact solution in 2D). Verify convergence and check the bound \u0394_\u221e \u2265 3/(8\u03c0) \u2248 0.119. In 2D, the exact solution gives \u0394 = -log(I\u2081(\u03b2)/I\u2080(\u03b2)) where I_n are modified Bessel functions, which is computable.\n\n**Impact**: The 2D case is exactly solvable and would provide a complete formal proof of the mass gap in a simplified setting, demonstrating the full chain from lattice to continuum.\n\n**Catalog References**: `Physics/ReflectionPositivityMassGap.lean` (ContinuumLimitData, continuum_gap_lower_bound), `Physics/SpectralGap.lean` (uniform_lattice_gap_persists_under_refinement)\n\n**Proof Strategy**:\n1. In 2D, the partition function factors over plaquettes, giving an explicit transfer matrix.\n2. Use the Haar measure and character expansion to diagonalize exactly.\n3. Compute sector eigenvalues as ratios of modified Bessel functions I_{j}(\u03b2)/I\u2080(\u03b2).\n4. Show convergence as \u03b2 \u2192 \u221e (continuum limit in 2D corresponds to \u03b2 \u2192 \u221e).\n5. Verify the Casimir bound \u0394 \u2265 c\u2082(1/2) holds for all \u03b2.\n\n**Domain Bridges**: Special functions (Bessel functions) \u2194 Representation theory (characters of SU(2)) \u2194 Spectral theory (transfer matrix)\n\n**Lineage**: Builds on this cycle's continuum limit framework and the character expansion from CharacterExpansionMassGap.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Tropical Yang-Mills and Combinatorial Mass Gaps\n\n**Conjecture**: The tropical (\u03b2 \u2192 \u221e) limit of the lattice Yang-Mills partition function on a graph G has a combinatorial mass gap equal to the edge connectivity of G.\n\n**Test**: Compute the tropical Yang-Mills partition function on the complete graph K_n for n = 3, 4, 5 and verify that the mass gap equals the edge connectivity \u03ba(K_n) = n-1. Also test on the hypercube graph Q_d for d = 2, 3, 4.\n\n**Impact**: Would connect Yang-Mills theory to combinatorial graph theory, opening new proof techniques for mass gap bounds using graph connectivity results.\n\n**Catalog References**: `Tropical/TropicalDiffusion.lean`, `Physics/ReflectionPositivityMassGap.lean`, `Physics/TropicalBarrier.lean`\n\n**Proof Strategy**:\n1. Define the tropical limit of the Wilson action as the min-plus version: replace sum with min, product with sum.\n2. Show the tropical transfer matrix is a min-plus matrix whose spectral radius equals the maximum flow.\n3. Relate the min-plus spectral gap to the edge connectivity via Menger's theorem.\n4. Key technical lemma: the tropical limit commutes with the spectral gap computation.\n\n**Domain Bridges**: Tropical geometry (min-plus algebra) \u2194 Graph theory (edge connectivity) \u2194 Gauge theory (Wilson action)\n\n**Lineage**: Builds on existing tropical physics work in the catalog and this cycle's spectral gap framework.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Reflection Positivity for Fermionic Systems\n\n**Conjecture**: The ReflectionPositiveForm structure generalizes to graded (super) vector spaces, yielding reflection positivity for lattice QCD with dynamical fermions, and the mass gap bound still holds with a modified Casimir eigenvalue c\u2082^{eff}(fund) = c\u2082(fund) \u2212 m_f where m_f is the fermion mass.\n\n**Test**: Formalize a graded version of ReflectionPositiveForm with a \u2124/2-grading and verify that the physical inner product remains positive semi-definite. Check the modified Casimir bound for SU(3) with N_f = 2 light quarks (m_f \u2248 5 MeV) \u2014 the effective Casimir should be c\u2082(3) \u2212 m_f = 4/3 \u2212 0.005 \u2248 1.328.\n\n**Impact**: Would extend the formal mass gap framework to the physically relevant case of full QCD with quarks, not just pure gauge theory.\n\n**Catalog References**: `Physics/ReflectionPositivityMassGap.lean` (ReflectionPositiveForm), `Physics/SpectralGap.lean`\n\n**Proof Strategy**:\n1. Define GradedReflectionPositiveForm with separate bosonic and fermionic sectors.\n2. Prove that the graded physical inner product \u27e8u,v\u27e9 = B(\u03b8u, v) with appropriate signs for fermion crossings is positive semi-definite.\n3. Extend the transfer matrix analysis to the graded case using Berezin integration.\n4. Derive the modified Casimir bound using the fermion determinant.\n\n**Domain Bridges**: Superalgebra (graded vector spaces) \u2194 Gauge theory (QCD) \u2194 Spectral theory (graded transfer matrix)\n\n**Lineage**: Direct extension of this cycle's ReflectionPositiveForm structure.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0519",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "61acc2ad",
-    "status": "available",
-    "timestamp": "2026-06-03T21:03:05.014054+00:00",
-    "title": "Mathematical chain connecting reflection pos"
   },
   {
     "consumed_by_exp_id": "",
@@ -3254,6 +2939,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:58:15.194222+00:00",
     "title": "Rigorous formal foundations for the Collatz conj"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the Fisher information metric defines a Riemannian metric on the statistical manifold of probability distributions. Show that the Kullback-Leibler divergence is the geodesic distance in this metric for exponential families. Bridge: the Chentsov theorem characterizes the Fisher metric uniquely by its invariance under sufficient statistics.",
+    "domains": [
+      "Bridges",
+      "Physics"
+    ],
+    "id": "fd_0530",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.130772+00:00",
+    "title": "Bridge: Information Geometry Connecting Statistics and Differential Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -3389,21 +3089,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.254223+00:00",
     "title": "Game of Life Universality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Holographic Verification of Proofs\n\n## Synthesis\n\nThis research cycle established a rigorous formal framework for holographic proof verification, proving that tree-structured proofs of size n admit deterministic verification certificates of length O(log n) via Merkle authentication paths. The key results \u2014 verification correctness, certificate separation under collision resistance, and a tight information-theoretic lower bound \u2014 form a complete theory for tree-structured proof systems. The most promising cross-domain connection is between proof complexity and information theory: the certificate length equals the tree depth, which equals the minimum number of bits needed to distinguish all possible proofs. This depth-information duality parallels the Bekenstein-Hawking entropy bound in black hole physics, where the information content scales with the boundary area rather than the bulk volume.\n\nThe most important open frontier is extending these results from trees to directed acyclic graphs (DAGs), which model proof sharing \u2014 the mechanism by which real mathematical proofs reuse lemmas. DAG certificates are substantially harder because a single node may lie on multiple authentication paths. The resolution of this question connects to deep problems in proof complexity (circuit-to-proof correspondences), cryptography (succinct arguments of knowledge), and combinatorics (graph entropy). The direction with highest breakthrough potential is Direction 1 (DAG holographic certificates), because a positive result would provide deterministic short certificates for all polynomial-size Frege proofs, a result strictly stronger than the PCP theorem in the deterministic setting.\n\nThe cycle's results integrate naturally with the Catalog's existing infrastructure. The `Computation/HolographicCertificate.lean` and `Logic/HolographicSearch.lean` entries provide foundational definitions (Merkle trees, bulk-boundary proof structures, entanglement wedges) that our new results extend with concrete algorithms and correctness proofs. The spectral proof space framework in `Logic/SpectralProofSpace.lean` provides graph-theoretic tools (derivation graphs, forward balls, expansion bounds) that will be essential for Direction 2.\n\n---\n\n### Direction 1: DAG Holographic Certificates via Layered Hashing\n\n**Conjecture**: For any DAG-structured proof with n nodes and depth d, there exists a deterministic \"layered Merkle\" certificate of length O(d \u00b7 log(fan-in)) verifiable in O(d \u00b7 log(fan-in)) hash evaluations. For polynomial-size Frege proofs of depth O(log n), this gives certificates of length O(log\u00b2n).\n\n**Test**: Implement a layered Merkle construction for DAG proofs. Take the DAG for a Frege proof of the pigeonhole principle PHP(n \u2192 n-1). Construct the layered certificate and measure: (a) certificate length as a function of n, (b) verification time. The conjecture predicts certificate length \u221d log\u00b2(n). If certificate length grows faster than log\u00b2(n), the conjecture is refuted for this proof family.\n\n**Impact**: If true, this would provide the first deterministic sublinear certificates for general Frege proofs. It would also establish a formal connection between proof DAG depth and verification complexity, linking proof complexity to circuit complexity. If false, the failure would identify specific structural features of proof DAGs that resist holographic compression \u2014 likely related to the fan-in distribution or the presence of \"bottleneck\" nodes through which many authentication paths must pass.\n\n**Catalog References**: `Computation/HolographicCertificate.lean`, `Logic/HolographicSearch.lean`, `Logic/SpectralProofSpace.lean`\n\n**Proof Strategy**: \n1. Define a layered DAG structure where nodes are stratified by distance from the axiom leaves.\n2. Construct a per-layer Merkle tree: within each layer, nodes are hashed into a Merkle tree, and the root of each layer depends on the roots of the previous layer.\n3. An authentication path for a node at layer k consists of: (a) O(log(layer_size)) sibling hashes within each of the k layers, giving O(k \u00b7 log(max_layer_size)) total.\n4. Prove correctness: the layered authentication path uniquely determines the node's hash relative to the global root.\n5. Key lemma: if the DAG has depth d and maximum layer size w, then certificate length is O(d \u00b7 log w).\n\n**Domain Bridges**: Proof Complexity \u2194 Circuit Complexity (DAG proofs as Boolean circuits), Cryptography \u2194 Logic (collision resistance as a logical axiom)\n\n**Lineage**: Builds on `holographic_cert_bound` and `merkleVerify_correct` from this cycle's `Logic/HolographicVerification.lean`. Extends the tree-structured theory to the DAG setting.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Spectral Certificate Complexity\n\n**Conjecture**: The certificate complexity of a proof DAG G (minimum authentication path length over all leaves) is bounded below by the spectral gap \u03bb\u2082(L(G)) of the normalized graph Laplacian of G's underlying undirected graph. Specifically: cert_complexity(G) \u2265 \u03a9(1/\u03bb\u2082).\n\n**Test**: Compute the spectral gap of the derivation graph for Frege proofs of simple tautologies (e.g., excluded middle for n variables). Plot certificate complexity against 1/\u03bb\u2082. The conjecture predicts a linear relationship. If certificate complexity grows faster or slower than 1/\u03bb\u2082, the conjecture fails.\n\n**Impact**: If true, this would provide a spectral characterization of verification efficiency, connecting proof complexity to spectral graph theory. It would mean that proofs with high spectral gap (strong connectivity) have short certificates, paralleling how expander graphs enable efficient coding. If false, it would show that certificate complexity is not captured by second-order spectral information, suggesting higher-order graph invariants are needed.\n\n**Catalog References**: `Logic/SpectralProofSpace.lean` (derivation graphs, expansion bounds), `Logic/HolographicSearch.lean` (entanglement wedges)\n\n**Proof Strategy**:\n1. Define the normalized Laplacian of a proof DAG's undirected skeleton.\n2. Use the Cheeger inequality to relate spectral gap to edge expansion.\n3. Show that high edge expansion implies short authentication paths (because expanders have small diameter).\n4. Formalize the lower bound: low spectral gap implies the existence of a \"bottleneck\" cut, which forces long authentication paths through the bottleneck.\n5. Key lemma: `expansion_proof_length_bound` from `SpectralProofSpace.lean` provides the connection between graph expansion and proof length.\n\n**Domain Bridges**: Spectral Graph Theory \u2194 Proof Complexity (Cheeger inequality as proof complexity bound), Physics \u2194 Logic (spectral gap as mass gap analogue)\n\n**Lineage**: Builds on `expansion_proof_length_bound` from `Logic/SpectralProofSpace.lean` and `authPath_length_le_depth` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Certificate Complexity of Proof Composition\n\n**Conjecture**: For any sequence of k proofs \u03c0\u2081, ..., \u03c0\u2096 composed sequentially (each using the conclusion of the previous as a premise), the holographic certificate for the composed proof has length at most log\u2082(|\u03c0\u2081|) + log\u2082(|\u03c0\u2082|) + ... + log\u2082(|\u03c0\u2096|) + k. That is, certificate length is subadditive up to a linear term in the number of compositions.\n\n**Test**: Construct a chain of k balanced proof trees, each with n leaves, composed sequentially. Measure the total certificate length. The conjecture predicts length \u2264 k \u00b7 (log\u2082(n) + 1). If the actual length exceeds this bound for any k and n, the conjecture is refuted.\n\n**Impact**: If true, this would show that proof composition preserves the holographic property with controlled overhead, enabling modular verification of large mathematical developments. If false, it would identify composition as a source of certificate blowup, suggesting that monolithic proofs are more efficiently verifiable than modular ones \u2014 a surprising result with implications for the design of proof assistants.\n\n**Catalog References**: `Logic/HolographicVerification.lean` (`compose_cert_length`, `cert_subadditive`), `Computation/HolographicCertificate.lean` (`composed_cert_bound`)\n\n**Proof Strategy**:\n1. Define k-ary sequential composition as a right-leaning binary tree.\n2. Show that the depth of the composed tree is \u03a3\u1d62 depth(\u03c0\u1d62) + k - 1.\n3. Apply the auth path \u2264 depth bound to get the certificate bound.\n4. For the tight bound, construct an explicit authentication path and show it achieves the predicted length.\n5. Key challenge: handling unbalanced compositions where some \u03c0\u1d62 are much deeper than others.\n\n**Domain Bridges**: Category Theory \u2194 Proof Theory (composition as categorical composition), Software Engineering \u2194 Logic (modular verification as modular programming)\n\n**Lineage**: Directly extends `compose_cert_length` and `cert_subadditive` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Holographic Certificates for Arithmetic Proofs\n\n**Conjecture**: Proofs in bounded arithmetic (S\u2082\u00b9, the theory corresponding to polynomial-time reasoning) of \u03a3\u2081\u1d47 sentences have holographic certificates of length O(log n) where n is the proof length. Furthermore, these certificates can be constructed in polynomial time from the proof.\n\n**Test**: Formalize simple proofs in bounded arithmetic (e.g., commutativity of addition, totality of multiplication) as proof trees. Construct their Merkle certificates and verify: (a) certificate length is O(log n), (b) construction time is polynomial. The conjecture predicts both hold. Test with proofs of increasing length to verify the scaling.\n\n**Impact**: If true, this would establish that polynomial-time reasoning has efficient holographic certificates, connecting proof complexity to computational complexity through the lens of bounded arithmetic. This would give a proof-theoretic characterization of the P vs NP question: NP = P iff every bounded arithmetic proof has a polynomial-time constructible holographic certificate. If false, it would reveal a gap between proof complexity and computational complexity.\n\n**Catalog References**: `Logic/HolographicVerification.lean` (Merkle verification), `Physics/ProofSearchInformation.lean` (`proof_length_log_lower_bound`)\n\n**Proof Strategy**:\n1. Define bounded arithmetic proofs as a specific instantiation of `ProofTree` with a bounded axiom set.\n2. Show that the tree-structured fragment of S\u2082\u00b9 proofs satisfies the balance condition (depth \u2264 log(numLeaves) + 1).\n3. Apply `holographic_cert_bound` to obtain the O(log n) bound.\n4. For the construction time bound, show that Merkle root computation is polynomial in the tree size.\n5. Key challenge: handling the cut rule in bounded arithmetic, which introduces DAG-like sharing.\n\n**Domain Bridges**: Bounded Arithmetic \u2194 Computational Complexity (S\u2082\u00b9 as P-time reasoning), Cryptography \u2194 Proof Theory (hash functions as proof compression)\n\n**Lineage**: Extends the tree-structured results to a specific proof system of independent interest. Builds on `proof_length_log_lower_bound` from `Physics/ProofSearchInformation.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Quantum Holographic Certificates\n\n**Conjecture**: Using quantum certificates (density matrices of O(log n) qubits), proof verification can be performed with O(log log n) measurements, exponentially improving on classical holographic certificates.\n\n**Test**: For a family of balanced proof trees with 2^k leaves (k = 1, ..., 20), construct quantum certificates using quantum fingerprinting (encoding the Merkle root as a quantum state). Simulate the verification protocol and measure: (a) number of qubits, (b) number of measurements needed for 1-2^{-k} confidence. The conjecture predicts O(log k) = O(log log n) measurements.\n\n**Impact**: If true, this would establish an exponential quantum advantage for proof verification, the first such advantage in the foundations of mathematics. It would connect quantum information theory to proof complexity in a novel way. If false, it would show a classical-quantum parity for holographic verification, suggesting that the information content of proofs is fundamentally classical.\n\n**Catalog References**: `Logic/HolographicVerification.lean` (classical certificate framework), `Computation/HolographicCertificate.lean` (entropy bounds)\n\n**Proof Strategy**:\n1. Encode the Merkle root hash as a quantum state using quantum fingerprinting [BCWdW01].\n2. Use the SWAP test to compare the claimed root with the reconstructed root from the authentication path.\n3. Show that O(log(1/\u03b5)) SWAP tests achieve error probability \u03b5.\n4. For \u03b5 = 2^{-k}, this gives O(k) = O(log n) measurements \u2014 matching classical. The improvement to O(log log n) requires a recursive quantum fingerprinting scheme.\n5. Key insight: the recursive structure of Merkle trees enables recursive quantum fingerprinting, where each level of the tree is verified with a single quantum measurement.\n\n**Domain Bridges**: Quantum Information \u2194 Proof Theory (quantum fingerprints as proof certificates), Physics \u2194 Logic (quantum holographic principle)\n\n**Lineage**: A speculative extension of the classical holographic verification framework to the quantum setting. No direct prior results, but motivated by the quantum fingerprinting literature.\n\n**Ambition**: grand_challenge\n",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0586",
-    "priority_score": 0.44999999999999996,
-    "research_mode": "team",
-    "source_exp_id": "7512203a",
-    "status": "available",
-    "timestamp": "2026-06-04T01:03:57.743170+00:00",
-    "title": "Rigorous formal framework for holographic proo"
   },
   {
     "consumed_by_exp_id": "",
@@ -3556,7 +3241,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "765cedcc",
     "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology \u2014 every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible \u2014 every surreal number is connected to every other by a continuous path.",
     "domains": [
       "Novelty",
@@ -3566,7 +3251,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.499504+00:00",
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
@@ -3599,6 +3284,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.505215+00:00",
     "title": "The Unreasonable Effectiveness of the Number 163"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Einstein showed that gravity is the curvature of spacetime. But WHY does spacetime curve? Conjecture: Spacetime IS a quantum error-correcting code, and gravity IS the syndrome of that code. The code is a [[n,k,d]] stabilizer code where n = number of Planck areas on a spatial slice, k = number of logical qubits (which equals the Bekenstein-Hawking entropy S = A/4G in natural units), and d = code distance (which equals the minimal geodesic length through the bulk). The key identity: S(A) = Area(gamma_A) / (4G) is EXACTLY the quantum Singleton bound n - k <= 2(d-1) rearranged as k = n - 2d + 2 = A/(4G) when n = A/l_P^2 and d = L/(2l_P). This means the Bekenstein-Hawking entropy formula is a quantum coding theorem, and the holographic principle is a coding constraint. Test: for AdS_3 with boundary CFT_2, the code is a [[n, k, d]] = [[L/l_P, S, L/(2l_P)]] code. Verify that the Singleton bound n - k <= 2(d-1) becomes L/l_P - S <= L/l_P - 1, which simplifies to S >= 1 (trivially true). The NON-TRIVIAL content is that the Ryu-Takayanagi formula S = A/(4G) is the exact quantum information identity. Impact: spacetime is not curved by matter \u2014 spacetime IS a code, and matter IS a syndrome. Gravity is not a force; it's error correction.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0023",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.510412+00:00",
+    "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
   },
   {
     "consumed_by_exp_id": "",
@@ -3962,6 +3662,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0114",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.944657+00:00",
+    "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -4112,6 +3827,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0395",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:24.924994+00:00",
+    "title": "Navier-Stokes Existence and Smoothness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
+    "domains": [
+      "Physics",
+      "Logic"
+    ],
+    "id": "fd_0396",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.003856+00:00",
+    "title": "Hilbert 6: Axiomatization of Physics"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Reverse-engineer proof strategies from deep results (FLT, Poincar\u00e9, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
     "domains": [
       "Logic",
@@ -4139,6 +3884,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:26.181414+00:00",
     "title": "Non-Archimedean Probability via Surreal Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Inspired by the AdS/CFT correspondence, formalize a mathematical holographic principle: a theorem about n-dimensional structures (the bulk) has a dual (shorter) proof in (n-1)-dimensional boundary terms. Conjecture: Every proof by induction on a well-founded order of rank n has an equivalent proof by coinduction on the n-1 boundary. Test: find a concrete theorem (e.g., finite Ramsey) and show its inductive proof in R^n maps to a coinductive proof on S^{n-1}. Impact: a new holographic proof theory connecting algebraic topology to proof complexity.",
+    "domains": [
+      "Physics",
+      "Algebra"
+    ],
+    "id": "fd_0412",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.259292+00:00",
+    "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
   {
     "consumed_by_exp_id": "",
@@ -4172,78 +3932,63 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The key insight is that persistent homology \u2014 the backbone of topological data analysis \u2014 provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
-    "domains": [
-      "Physics",
-      "Geometry"
-    ],
-    "id": "fd_0426",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:27.392825+00:00",
-    "title": "Topological Quantum Error Correction from Homological Persistence"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that Boltzmann entropy S = k log W is a topological invariant of the energy landscape. If the energy function E: X -> R on a state space X defines a filtration by sublevel sets X_t = {x : E(x) <= t}, then the persistent homology barcode of this filtration encodes the entropy as the sum of bar lengths: S(E) = k * sum_i (d_i - b_i) where b_i and d_i are birth and death times of persistent homology bars. Conjecture: The Boltzmann entropy of a physical system equals the total persistence (sum of bar lengths) of the energy landscape filtration, up to an additive constant. Why now: persistent homology has matured as a computational tool, and the stability theorem guarantees that small perturbations in the energy function produce small changes in the barcode \u2014 exactly the thermodynamic stability we expect. Test: compute the persistent homology barcode for the Ising model energy landscape on a 4x4 lattice and verify that sum of bar lengths equals k log(2^{16}) = 16k log 2. Impact: entropy becomes a computable topological quantity, bridging thermodynamics and algebraic topology. Phase transitions correspond to births of new bars in the barcode.",
-    "domains": [
-      "Physics",
-      "Geometry"
-    ],
-    "id": "fd_0430",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:27.738839+00:00",
-    "title": "Entropy as a Topological Invariant: The Boltzmann Bridge"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
-    "domains": [
-      "Physics",
-      "Geometry"
-    ],
-    "id": "fd_0432",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:27.909349+00:00",
-    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
-  },
-  {
-    "consumed_by_exp_id": "ab2cf3cf",
-    "description": "Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
+    "description": "Prove that any quantum circuit can be approximated by braiding anyons. Formalize the Jones polynomial as a universal topological quantum invariant and prove density in SU(2).",
     "domains": [
       "Bridges",
-      "Algebra"
+      "Physics"
     ],
-    "id": "fd_0451",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:29.426240+00:00",
-    "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the ground state degeneracy of a topologically ordered system on a genus-g surface is d^g for some integer d (the quantum dimension). Formalize the connection between ground state degeneracy, anyon braiding statistics, and topological quantum field theory.",
-    "domains": [
-      "Physics",
-      "Geometry"
-    ],
-    "id": "fd_0464",
+    "id": "fd_0444",
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:30.485267+00:00",
-    "title": "Topological Order: Anyon Statistics from Ground State Degeneracy"
+    "timestamp": "2026-06-03T19:55:28.878854+00:00",
+    "title": "Topological Quantum Computing: Braiding Universality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_0454",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.664610+00:00",
+    "title": "Logic-Physics Bridge: Consistency of Physical Theories"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the information paradox as a theorem about unitary evolution: prove that if black hole evaporation is unitary, information is preserved; if not, quantum mechanics is violated. Construct a toy model where a 2-qubit black hole evaporates unitarily and recover the initial state from radiation.",
+    "domains": [
+      "Physics",
+      "Logic"
+    ],
+    "id": "fd_0463",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.401337+00:00",
+    "title": "Hawking Radiation: Information Paradox Formalized"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
+    "domains": [
+      "Physics",
+      "Algebra"
+    ],
+    "id": "fd_0468",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.812055+00:00",
+    "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
   },
   {
     "consumed_by_exp_id": "",
@@ -4292,18 +4037,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize a 3D topological quantum field theory that captures key features of quantum gravity: prove that the partition function on a closed 3-manifold equals the Turaev-Viro invariant. Show that the Hilbert space on a surface is finite-dimensional and that the mapping class group acts unitarily.",
+    "description": "# Future Directions: Yang-Mills Mass Gap and Gauge Theory Formalization\n\n## Synthesis\n\nThis research cycle established the mathematical chain connecting reflection positivity to the Yang-Mills mass gap through a novel structure \u2014 the gauge-equivariant spectral filtration. The key insight is that the Casimir operator of the gauge group provides an algebraic lower bound on the spectral gap: the mass gap is at least as large as the Casimir eigenvalue of the fundamental representation. This connects representation theory (algebraic) to spectral theory (analytic) to physics (mass gap and confinement).\n\nThe most promising cross-domain connection is between the gauge-equivariant filtration and quantum error correction. The sector decomposition of the gauge-invariant Hilbert space by irreducible representations is structurally identical to the code space decomposition in stabilizer codes (cf. `Physics/PauliClosureFoundations.lean`). This suggests that the mathematical machinery for proving mass gaps could also yield distance bounds for topological quantum codes, and vice versa.\n\nThe highest breakthrough potential lies in **Direction 1** (Uniform Casimir Control), because it addresses the core missing ingredient for the full Millennium Problem: a coupling-independent lower bound on the mass gap. If the Exponential Casimir Suppression Conjecture holds, it would reduce the mass gap problem to a purely representation-theoretic statement about Casimir eigenvalues \u2014 a dramatic simplification.\n\n---\n\n### Direction 1: Uniform Casimir Control Across Couplings\n\n**Conjecture**: For SU(N) lattice Yang-Mills on \u2124^4 with Wilson action at coupling \u03b2 > 0, the transfer matrix sector eigenvalues satisfy:\n\n\u03bb_\u03c3 / \u03bb\u2080 \u2264 exp(\u2212c\u2082(\u03c3) \u00b7 f(\u03b2))\n\nwhere c\u2082(\u03c3) is the Casimir eigenvalue of representation \u03c3, and f : (0,\u221e) \u2192 (0,\u221e) is a universal function with f(\u03b2) ~ 1/\u03b2 as \u03b2 \u2192 0 and f(\u03b2) \u2192 const > 0 as \u03b2 \u2192 \u221e.\n\n**Test**: Compute transfer matrix eigenvalue ratios for SU(2) on a 4\u00b3 \u00d7 T lattice at \u03b2 = 1.0, 2.0, 3.0, 4.0 using Monte Carlo. For each \u03b2, measure \u03bb\u2081/\u03bb\u2080 in the j=1/2 sector (c\u2082 = 3/4) and j=1 sector (c\u2082 = 2). Plot log(\u03bb_\u03c3/\u03bb\u2080) vs c\u2082(\u03c3) \u2014 the conjecture predicts a linear relationship with slope \u2212f(\u03b2). If the data shows nonlinear behavior or positive slope, the conjecture is refuted.\n\n**Impact**: If true, the Yang-Mills mass gap reduces to proving f(\u03b2) > 0 for all \u03b2, which is a purely analytic statement about a single real function. This would be a major simplification of the Millennium Problem.\n\n**Catalog References**: `Physics/ReflectionPositivityMassGap.lean` (casimir_controls_filtration_gap, synthesis_mass_gap_from_filtration), `Physics/CharacterExpansionMassGap.lean` (mass_gap_lower_bound_from_character_suppression)\n\n**Proof Strategy**: \n1. Prove the conjecture at strong coupling (\u03b2 \u2264 \u03b2_c) using the character expansion, where the eigenvalue ratios are explicitly computed as \u03b2^{2c\u2082(\u03c3)} \u00b7 (1 + O(\u03b2)).\n2. Extend to intermediate coupling using cluster expansion techniques.\n3. For weak coupling (\u03b2 \u2192 \u221e), use asymptotic freedom: the running coupling g\u00b2(a) = 1/\u03b2(a) flows to zero, and perturbation theory controls the sector ratios.\n4. Key lemma needed: monotonicity of f(\u03b2) in some regime, which would follow from correlation inequalities.\n\n**Domain Bridges**: Representation theory (Casimir eigenvalues) \u2194 Spectral theory (transfer matrix) \u2194 Statistical mechanics (cluster expansion)\n\n**Lineage**: Builds on this cycle's casimir_controls_filtration_gap theorem and the Exponential Casimir Suppression conjecture.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Gauge-Equivariant Filtration for Topological Quantum Codes\n\n**Conjecture**: The code distance of a topological stabilizer code on a lattice with gauge group G is bounded below by the Casimir gap of G: d \u2265 c\u2082(fund) \u00b7 L, where L is the lattice linear dimension.\n\n**Test**: Compute the code distance of the SU(2) lattice gauge code on L\u00d7L torus for L = 2, 3, 4, 5. The Casimir gap of SU(2) is c\u2082(1/2) = 3/4. Check whether d \u2265 (3/4)L for each L. A single violation disproves the conjecture.\n\n**Impact**: Would establish a new connection between gauge theory and quantum error correction, potentially yielding codes with better distance scaling than known constructions.\n\n**Catalog References**: `Physics/PauliClosureFoundations.lean` (quantum_singleton_bound), `Physics/ReflectionPositivityMassGap.lean` (GaugeEquivariantFiltration), `Physics/GaugeCodeDistance.lean`\n\n**Proof Strategy**:\n1. Define a \"gauge code\" as the ground space of a lattice gauge Hamiltonian restricted to the gauge-invariant sector.\n2. Show that logical operators must create excitations in non-trivial representation sectors.\n3. Use the Casimir control bound to show that such excitations have energy proportional to c\u2082(fund).\n4. Apply the Knill-Laflamme conditions to translate energy gap to code distance.\n\n**Domain Bridges**: Gauge theory (GaugeEquivariantFiltration) \u2194 Quantum error correction (StabilizerCodeParams) \u2194 Representation theory (Casimir eigenvalues)\n\n**Lineage**: Builds on this cycle's GaugeEquivariantFiltration structure and the quantum_singleton_bound from PauliClosureFoundations.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Constructive Continuum Limit via Reflection Positivity\n\n**Conjecture**: For 2D lattice Yang-Mills with gauge group SU(N) and Wilson action, the lattice transfer matrices T_a (indexed by lattice spacing a) converge in the strong operator topology as a \u2192 0, and the limiting operator has a spectral gap \u0394_\u221e satisfying \u0394_\u221e \u2265 c\u2082(fund)/(2\u03c0).\n\n**Test**: Compute the mass gap \u0394(a) for SU(2) lattice Yang-Mills in 2D at lattice spacings a = 0.5, 0.25, 0.125, 0.0625 (using exact solution in 2D). Verify convergence and check the bound \u0394_\u221e \u2265 3/(8\u03c0) \u2248 0.119. In 2D, the exact solution gives \u0394 = -log(I\u2081(\u03b2)/I\u2080(\u03b2)) where I_n are modified Bessel functions, which is computable.\n\n**Impact**: The 2D case is exactly solvable and would provide a complete formal proof of the mass gap in a simplified setting, demonstrating the full chain from lattice to continuum.\n\n**Catalog References**: `Physics/ReflectionPositivityMassGap.lean` (ContinuumLimitData, continuum_gap_lower_bound), `Physics/SpectralGap.lean` (uniform_lattice_gap_persists_under_refinement)\n\n**Proof Strategy**:\n1. In 2D, the partition function factors over plaquettes, giving an explicit transfer matrix.\n2. Use the Haar measure and character expansion to diagonalize exactly.\n3. Compute sector eigenvalues as ratios of modified Bessel functions I_{j}(\u03b2)/I\u2080(\u03b2).\n4. Show convergence as \u03b2 \u2192 \u221e (continuum limit in 2D corresponds to \u03b2 \u2192 \u221e).\n5. Verify the Casimir bound \u0394 \u2265 c\u2082(1/2) holds for all \u03b2.\n\n**Domain Bridges**: Special functions (Bessel functions) \u2194 Representation theory (characters of SU(2)) \u2194 Spectral theory (transfer matrix)\n\n**Lineage**: Builds on this cycle's continuum limit framework and the character expansion from CharacterExpansionMassGap.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Tropical Yang-Mills and Combinatorial Mass Gaps\n\n**Conjecture**: The tropical (\u03b2 \u2192 \u221e) limit of the lattice Yang-Mills partition function on a graph G has a combinatorial mass gap equal to the edge connectivity of G.\n\n**Test**: Compute the tropical Yang-Mills partition function on the complete graph K_n for n = 3, 4, 5 and verify that the mass gap equals the edge connectivity \u03ba(K_n) = n-1. Also test on the hypercube graph Q_d for d = 2, 3, 4.\n\n**Impact**: Would connect Yang-Mills theory to combinatorial graph theory, opening new proof techniques for mass gap bounds using graph connectivity results.\n\n**Catalog References**: `Tropical/TropicalDiffusion.lean`, `Physics/ReflectionPositivityMassGap.lean`, `Physics/TropicalBarrier.lean`\n\n**Proof Strategy**:\n1. Define the tropical limit of the Wilson action as the min-plus version: replace sum with min, product with sum.\n2. Show the tropical transfer matrix is a min-plus matrix whose spectral radius equals the maximum flow.\n3. Relate the min-plus spectral gap to the edge connectivity via Menger's theorem.\n4. Key technical lemma: the tropical limit commutes with the spectral gap computation.\n\n**Domain Bridges**: Tropical geometry (min-plus algebra) \u2194 Graph theory (edge connectivity) \u2194 Gauge theory (Wilson action)\n\n**Lineage**: Builds on existing tropical physics work in the catalog and this cycle's spectral gap framework.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Reflection Positivity for Fermionic Systems\n\n**Conjecture**: The ReflectionPositiveForm structure generalizes to graded (super) vector spaces, yielding reflection positivity for lattice QCD with dynamical fermions, and the mass gap bound still holds with a modified Casimir eigenvalue c\u2082^{eff}(fund) = c\u2082(fund) \u2212 m_f where m_f is the fermion mass.\n\n**Test**: Formalize a graded version of ReflectionPositiveForm with a \u2124/2-grading and verify that the physical inner product remains positive semi-definite. Check the modified Casimir bound for SU(3) with N_f = 2 light quarks (m_f \u2248 5 MeV) \u2014 the effective Casimir should be c\u2082(3) \u2212 m_f = 4/3 \u2212 0.005 \u2248 1.328.\n\n**Impact**: Would extend the formal mass gap framework to the physically relevant case of full QCD with quarks, not just pure gauge theory.\n\n**Catalog References**: `Physics/ReflectionPositivityMassGap.lean` (ReflectionPositiveForm), `Physics/SpectralGap.lean`\n\n**Proof Strategy**:\n1. Define GradedReflectionPositiveForm with separate bosonic and fermionic sectors.\n2. Prove that the graded physical inner product \u27e8u,v\u27e9 = B(\u03b8u, v) with appropriate signs for fermion crossings is positive semi-definite.\n3. Extend the transfer matrix analysis to the graded case using Berezin integration.\n4. Derive the modified Casimir bound using the fermion determinant.\n\n**Domain Bridges**: Superalgebra (graded vector spaces) \u2194 Gauge theory (QCD) \u2194 Spectral theory (graded transfer matrix)\n\n**Lineage**: Direct extension of this cycle's ReflectionPositiveForm structure.\n\n**Ambition**: extension\n",
     "domains": [
-      "Physics",
-      "Geometry"
+      "Algebra",
+      "Physics"
     ],
-    "id": "fd_0505",
+    "id": "fd_0519",
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "61acc2ad",
     "status": "available",
-    "timestamp": "2026-06-03T21:01:46.905756+00:00",
-    "title": "Quantum Gravity as Topological Quantum Field Theory"
+    "timestamp": "2026-06-03T21:03:05.014054+00:00",
+    "title": "Mathematical chain connecting reflection pos"
   },
   {
     "consumed_by_exp_id": "",
@@ -4378,6 +4123,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T23:40:36.123707+00:00",
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Holographic Verification of Proofs\n\n## Synthesis\n\nThis research cycle established a rigorous formal framework for holographic proof verification, proving that tree-structured proofs of size n admit deterministic verification certificates of length O(log n) via Merkle authentication paths. The key results \u2014 verification correctness, certificate separation under collision resistance, and a tight information-theoretic lower bound \u2014 form a complete theory for tree-structured proof systems. The most promising cross-domain connection is between proof complexity and information theory: the certificate length equals the tree depth, which equals the minimum number of bits needed to distinguish all possible proofs. This depth-information duality parallels the Bekenstein-Hawking entropy bound in black hole physics, where the information content scales with the boundary area rather than the bulk volume.\n\nThe most important open frontier is extending these results from trees to directed acyclic graphs (DAGs), which model proof sharing \u2014 the mechanism by which real mathematical proofs reuse lemmas. DAG certificates are substantially harder because a single node may lie on multiple authentication paths. The resolution of this question connects to deep problems in proof complexity (circuit-to-proof correspondences), cryptography (succinct arguments of knowledge), and combinatorics (graph entropy). The direction with highest breakthrough potential is Direction 1 (DAG holographic certificates), because a positive result would provide deterministic short certificates for all polynomial-size Frege proofs, a result strictly stronger than the PCP theorem in the deterministic setting.\n\nThe cycle's results integrate naturally with the Catalog's existing infrastructure. The `Computation/HolographicCertificate.lean` and `Logic/HolographicSearch.lean` entries provide foundational definitions (Merkle trees, bulk-boundary proof structures, entanglement wedges) that our new results extend with concrete algorithms and correctness proofs. The spectral proof space framework in `Logic/SpectralProofSpace.lean` provides graph-theoretic tools (derivation graphs, forward balls, expansion bounds) that will be essential for Direction 2.\n\n---\n\n### Direction 1: DAG Holographic Certificates via Layered Hashing\n\n**Conjecture**: For any DAG-structured proof with n nodes and depth d, there exists a deterministic \"layered Merkle\" certificate of length O(d \u00b7 log(fan-in)) verifiable in O(d \u00b7 log(fan-in)) hash evaluations. For polynomial-size Frege proofs of depth O(log n), this gives certificates of length O(log\u00b2n).\n\n**Test**: Implement a layered Merkle construction for DAG proofs. Take the DAG for a Frege proof of the pigeonhole principle PHP(n \u2192 n-1). Construct the layered certificate and measure: (a) certificate length as a function of n, (b) verification time. The conjecture predicts certificate length \u221d log\u00b2(n). If certificate length grows faster than log\u00b2(n), the conjecture is refuted for this proof family.\n\n**Impact**: If true, this would provide the first deterministic sublinear certificates for general Frege proofs. It would also establish a formal connection between proof DAG depth and verification complexity, linking proof complexity to circuit complexity. If false, the failure would identify specific structural features of proof DAGs that resist holographic compression \u2014 likely related to the fan-in distribution or the presence of \"bottleneck\" nodes through which many authentication paths must pass.\n\n**Catalog References**: `Computation/HolographicCertificate.lean`, `Logic/HolographicSearch.lean`, `Logic/SpectralProofSpace.lean`\n\n**Proof Strategy**: \n1. Define a layered DAG structure where nodes are stratified by distance from the axiom leaves.\n2. Construct a per-layer Merkle tree: within each layer, nodes are hashed into a Merkle tree, and the root of each layer depends on the roots of the previous layer.\n3. An authentication path for a node at layer k consists of: (a) O(log(layer_size)) sibling hashes within each of the k layers, giving O(k \u00b7 log(max_layer_size)) total.\n4. Prove correctness: the layered authentication path uniquely determines the node's hash relative to the global root.\n5. Key lemma: if the DAG has depth d and maximum layer size w, then certificate length is O(d \u00b7 log w).\n\n**Domain Bridges**: Proof Complexity \u2194 Circuit Complexity (DAG proofs as Boolean circuits), Cryptography \u2194 Logic (collision resistance as a logical axiom)\n\n**Lineage**: Builds on `holographic_cert_bound` and `merkleVerify_correct` from this cycle's `Logic/HolographicVerification.lean`. Extends the tree-structured theory to the DAG setting.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Spectral Certificate Complexity\n\n**Conjecture**: The certificate complexity of a proof DAG G (minimum authentication path length over all leaves) is bounded below by the spectral gap \u03bb\u2082(L(G)) of the normalized graph Laplacian of G's underlying undirected graph. Specifically: cert_complexity(G) \u2265 \u03a9(1/\u03bb\u2082).\n\n**Test**: Compute the spectral gap of the derivation graph for Frege proofs of simple tautologies (e.g., excluded middle for n variables). Plot certificate complexity against 1/\u03bb\u2082. The conjecture predicts a linear relationship. If certificate complexity grows faster or slower than 1/\u03bb\u2082, the conjecture fails.\n\n**Impact**: If true, this would provide a spectral characterization of verification efficiency, connecting proof complexity to spectral graph theory. It would mean that proofs with high spectral gap (strong connectivity) have short certificates, paralleling how expander graphs enable efficient coding. If false, it would show that certificate complexity is not captured by second-order spectral information, suggesting higher-order graph invariants are needed.\n\n**Catalog References**: `Logic/SpectralProofSpace.lean` (derivation graphs, expansion bounds), `Logic/HolographicSearch.lean` (entanglement wedges)\n\n**Proof Strategy**:\n1. Define the normalized Laplacian of a proof DAG's undirected skeleton.\n2. Use the Cheeger inequality to relate spectral gap to edge expansion.\n3. Show that high edge expansion implies short authentication paths (because expanders have small diameter).\n4. Formalize the lower bound: low spectral gap implies the existence of a \"bottleneck\" cut, which forces long authentication paths through the bottleneck.\n5. Key lemma: `expansion_proof_length_bound` from `SpectralProofSpace.lean` provides the connection between graph expansion and proof length.\n\n**Domain Bridges**: Spectral Graph Theory \u2194 Proof Complexity (Cheeger inequality as proof complexity bound), Physics \u2194 Logic (spectral gap as mass gap analogue)\n\n**Lineage**: Builds on `expansion_proof_length_bound` from `Logic/SpectralProofSpace.lean` and `authPath_length_le_depth` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Certificate Complexity of Proof Composition\n\n**Conjecture**: For any sequence of k proofs \u03c0\u2081, ..., \u03c0\u2096 composed sequentially (each using the conclusion of the previous as a premise), the holographic certificate for the composed proof has length at most log\u2082(|\u03c0\u2081|) + log\u2082(|\u03c0\u2082|) + ... + log\u2082(|\u03c0\u2096|) + k. That is, certificate length is subadditive up to a linear term in the number of compositions.\n\n**Test**: Construct a chain of k balanced proof trees, each with n leaves, composed sequentially. Measure the total certificate length. The conjecture predicts length \u2264 k \u00b7 (log\u2082(n) + 1). If the actual length exceeds this bound for any k and n, the conjecture is refuted.\n\n**Impact**: If true, this would show that proof composition preserves the holographic property with controlled overhead, enabling modular verification of large mathematical developments. If false, it would identify composition as a source of certificate blowup, suggesting that monolithic proofs are more efficiently verifiable than modular ones \u2014 a surprising result with implications for the design of proof assistants.\n\n**Catalog References**: `Logic/HolographicVerification.lean` (`compose_cert_length`, `cert_subadditive`), `Computation/HolographicCertificate.lean` (`composed_cert_bound`)\n\n**Proof Strategy**:\n1. Define k-ary sequential composition as a right-leaning binary tree.\n2. Show that the depth of the composed tree is \u03a3\u1d62 depth(\u03c0\u1d62) + k - 1.\n3. Apply the auth path \u2264 depth bound to get the certificate bound.\n4. For the tight bound, construct an explicit authentication path and show it achieves the predicted length.\n5. Key challenge: handling unbalanced compositions where some \u03c0\u1d62 are much deeper than others.\n\n**Domain Bridges**: Category Theory \u2194 Proof Theory (composition as categorical composition), Software Engineering \u2194 Logic (modular verification as modular programming)\n\n**Lineage**: Directly extends `compose_cert_length` and `cert_subadditive` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Holographic Certificates for Arithmetic Proofs\n\n**Conjecture**: Proofs in bounded arithmetic (S\u2082\u00b9, the theory corresponding to polynomial-time reasoning) of \u03a3\u2081\u1d47 sentences have holographic certificates of length O(log n) where n is the proof length. Furthermore, these certificates can be constructed in polynomial time from the proof.\n\n**Test**: Formalize simple proofs in bounded arithmetic (e.g., commutativity of addition, totality of multiplication) as proof trees. Construct their Merkle certificates and verify: (a) certificate length is O(log n), (b) construction time is polynomial. The conjecture predicts both hold. Test with proofs of increasing length to verify the scaling.\n\n**Impact**: If true, this would establish that polynomial-time reasoning has efficient holographic certificates, connecting proof complexity to computational complexity through the lens of bounded arithmetic. This would give a proof-theoretic characterization of the P vs NP question: NP = P iff every bounded arithmetic proof has a polynomial-time constructible holographic certificate. If false, it would reveal a gap between proof complexity and computational complexity.\n\n**Catalog References**: `Logic/HolographicVerification.lean` (Merkle verification), `Physics/ProofSearchInformation.lean` (`proof_length_log_lower_bound`)\n\n**Proof Strategy**:\n1. Define bounded arithmetic proofs as a specific instantiation of `ProofTree` with a bounded axiom set.\n2. Show that the tree-structured fragment of S\u2082\u00b9 proofs satisfies the balance condition (depth \u2264 log(numLeaves) + 1).\n3. Apply `holographic_cert_bound` to obtain the O(log n) bound.\n4. For the construction time bound, show that Merkle root computation is polynomial in the tree size.\n5. Key challenge: handling the cut rule in bounded arithmetic, which introduces DAG-like sharing.\n\n**Domain Bridges**: Bounded Arithmetic \u2194 Computational Complexity (S\u2082\u00b9 as P-time reasoning), Cryptography \u2194 Proof Theory (hash functions as proof compression)\n\n**Lineage**: Extends the tree-structured results to a specific proof system of independent interest. Builds on `proof_length_log_lower_bound` from `Physics/ProofSearchInformation.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Quantum Holographic Certificates\n\n**Conjecture**: Using quantum certificates (density matrices of O(log n) qubits), proof verification can be performed with O(log log n) measurements, exponentially improving on classical holographic certificates.\n\n**Test**: For a family of balanced proof trees with 2^k leaves (k = 1, ..., 20), construct quantum certificates using quantum fingerprinting (encoding the Merkle root as a quantum state). Simulate the verification protocol and measure: (a) number of qubits, (b) number of measurements needed for 1-2^{-k} confidence. The conjecture predicts O(log k) = O(log log n) measurements.\n\n**Impact**: If true, this would establish an exponential quantum advantage for proof verification, the first such advantage in the foundations of mathematics. It would connect quantum information theory to proof complexity in a novel way. If false, it would show a classical-quantum parity for holographic verification, suggesting that the information content of proofs is fundamentally classical.\n\n**Catalog References**: `Logic/HolographicVerification.lean` (classical certificate framework), `Computation/HolographicCertificate.lean` (entropy bounds)\n\n**Proof Strategy**:\n1. Encode the Merkle root hash as a quantum state using quantum fingerprinting [BCWdW01].\n2. Use the SWAP test to compare the claimed root with the reconstructed root from the authentication path.\n3. Show that O(log(1/\u03b5)) SWAP tests achieve error probability \u03b5.\n4. For \u03b5 = 2^{-k}, this gives O(k) = O(log n) measurements \u2014 matching classical. The improvement to O(log log n) requires a recursive quantum fingerprinting scheme.\n5. Key insight: the recursive structure of Merkle trees enables recursive quantum fingerprinting, where each level of the tree is verified with a single quantum measurement.\n\n**Domain Bridges**: Quantum Information \u2194 Proof Theory (quantum fingerprints as proof certificates), Physics \u2194 Logic (quantum holographic principle)\n\n**Lineage**: A speculative extension of the classical holographic verification framework to the quantum setting. No direct prior results, but motivated by the quantum fingerprinting literature.\n\n**Ambition**: grand_challenge\n",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0586",
+    "priority_score": 0.29999999999999993,
+    "research_mode": "team",
+    "source_exp_id": "7512203a",
+    "status": "available",
+    "timestamp": "2026-06-04T01:03:57.743170+00:00",
+    "title": "Rigorous formal framework for holographic proo"
   },
   {
     "consumed_by_exp_id": "",
@@ -4711,6 +4471,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The key insight is that persistent homology \u2014 the backbone of topological data analysis \u2014 provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0426",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.392825+00:00",
+    "title": "Topological Quantum Error Correction from Homological Persistence"
+  },
+  {
+    "consumed_by_exp_id": "b5042b08",
     "description": "The key insight is that Tononi's Phi (integrated information) may be a topological invariant, not just a measure. If neural states form a sheaf over the brain's connectome, then Phi equals the dimension of the first sheaf cohomology group H^1(C, F) where C is the connectome graph and F is the neural state sheaf. Conjecture: Phi is a topological invariant of the sheaf (C, F) \u2014 it is preserved under sheaf isomorphisms and changes continuously under continuous deformation of the connectome. A system with Phi = 0 has H^1 = 0 (acyclic sheaf, no information integration), while Phi > 0 means H^1 > 0 (cycles in the sheaf, integrated information). Why now: sheaf cohomology has been successfully applied to neural coding by Curry (2019), and the connection between Phi and cohomology was conjectured by Tegmark (2019) but never formalized. Test: compute Phi for small connectome topologies (chain, ring, complete graph) and show Phi = dim(H^1) in each case. Impact: consciousness becomes a mathematical invariant with the same status as the Euler characteristic \u2014 a topological quantity that can be computed, compared, and used to classify systems.",
     "domains": [
       "Speculative",
@@ -4720,9 +4495,69 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.652887+00:00",
     "title": "Consciousness Complexity: Integrated Information as a Topological Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that Boltzmann entropy S = k log W is a topological invariant of the energy landscape. If the energy function E: X -> R on a state space X defines a filtration by sublevel sets X_t = {x : E(x) <= t}, then the persistent homology barcode of this filtration encodes the entropy as the sum of bar lengths: S(E) = k * sum_i (d_i - b_i) where b_i and d_i are birth and death times of persistent homology bars. Conjecture: The Boltzmann entropy of a physical system equals the total persistence (sum of bar lengths) of the energy landscape filtration, up to an additive constant. Why now: persistent homology has matured as a computational tool, and the stability theorem guarantees that small perturbations in the energy function produce small changes in the barcode \u2014 exactly the thermodynamic stability we expect. Test: compute the persistent homology barcode for the Ising model energy landscape on a 4x4 lattice and verify that sum of bar lengths equals k log(2^{16}) = 16k log 2. Impact: entropy becomes a computable topological quantity, bridging thermodynamics and algebraic topology. Phase transitions correspond to births of new bars in the barcode.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0430",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.738839+00:00",
+    "title": "Entropy as a Topological Invariant: The Boltzmann Bridge"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0432",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.909349+00:00",
+    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the ground state degeneracy of a topologically ordered system on a genus-g surface is d^g for some integer d (the quantum dimension). Formalize the connection between ground state degeneracy, anyon braiding statistics, and topological quantum field theory.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0464",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.485267+00:00",
+    "title": "Topological Order: Anyon Statistics from Ground State Degeneracy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a 3D topological quantum field theory that captures key features of quantum gravity: prove that the partition function on a closed 3-manifold equals the Turaev-Viro invariant. Show that the Hilbert space on a surface is finite-dimensional and that the mapping class group acts unitarily.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0505",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.905756+00:00",
+    "title": "Quantum Gravity as Topological Quantum Field Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -4756,21 +4591,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0561",
-    "priority_score": 0.09999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:08.713166+00:00",
-    "title": "Speculative: Computational Complexity as Physical Law"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
     "domains": [
       "Novelty",
@@ -4785,7 +4605,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },
   {
-    "consumed_by_exp_id": "d3f112e2",
+    "consumed_by_exp_id": "",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
     "domains": [
       "Novelty",
@@ -4795,24 +4615,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.311824+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0572",
-    "priority_score": 0.09999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T23:40:36.486848+00:00",
-    "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
     "consumed_by_exp_id": "",
@@ -4873,5 +4678,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.657673+00:00",
     "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0561",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.713166+00:00",
+    "title": "Speculative: Computational Complexity as Physical Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0572",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.486848+00:00",
+    "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   }
 ];

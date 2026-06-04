@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d3f112e2",
     "filename": "speculative_consciousness_as_fixed_points_of_recur.json",
     "pkg_num": 364,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.24864,
     "title": "Fixed Points of Self-Referential Type Operations: Consciousness Equation, Strange Loop Idempotency, and the Diagonal Hierarchy"
   },
   {
@@ -11686,8 +11686,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "speculative_consciousness_as_fixed_points_of_recur",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.24864,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Fixed Points of Self-Referential Type Operations: Consciousness Equation, Strange Loop Idempotency, and the Diagonal Hierarchy"
     }

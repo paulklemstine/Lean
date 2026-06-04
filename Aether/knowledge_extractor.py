@@ -759,7 +759,9 @@ Research mode: {concept.research_mode}
                         pass
                     completed.append(job)
                 elif status == "RUNNING":
-                    # Stall detection: if project has been at 0% for >10 min, warn
+                    # Stall detection: warn if a project is RUNNING for too long.
+                    # Note: Aristotle SDK doesn't expose percent_complete (always 0),
+                    # so we use elapsed time as the sole signal.
                     try:
                         rlog = ReasoningLog(self.workspace, pid, job.job_id)
                         summary = rlog.get_summary()
@@ -767,11 +769,9 @@ Research mode: {concept.research_mode}
                             checkpoints = rlog._data["checkpoints"]
                             first = checkpoints[0]
                             last = checkpoints[-1]
-                            if (last["percent_complete"] == 0
-                                and last["elapsed_seconds"] - first["elapsed_seconds"] > 600):
-                                print(f"[Poll] {pid[:8]} STALL WARNING: at 0% for {last['elapsed_seconds']/60:.0f}min")
-                            elif last["percent_complete"] == first["percent_complete"] and last["elapsed_seconds"] - first["elapsed_seconds"] > 1200:
-                                print(f"[Poll] {pid[:8]} STALL WARNING: at {last['percent_complete']:.0f}% for {last['elapsed_seconds']/60:.0f}min")
+                            elapsed = last["elapsed_seconds"] - first["elapsed_seconds"]
+                            if elapsed > 5400:  # 90 minutes RUNNING is a stall
+                                print(f"[Poll] {pid[:8]} STALL WARNING: RUNNING for {elapsed/60:.0f}min")
                     except Exception:
                         pass
                     print(f"[Poll] {pid[:8]} in progress (RUNNING, {percent:.0f}%)")
