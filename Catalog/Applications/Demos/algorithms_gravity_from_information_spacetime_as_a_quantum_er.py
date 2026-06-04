@@ -1,263 +1,250 @@
-#!/usr/bin/env python3
 """
-Algorithms for Holographic Gravity Codes
+Algorithms for Gravitational Code Geometry
 
-Type-hinted implementations of the key algorithms:
-1. Holographic code construction
-2. Singleton bound verification
-3. Syndrome computation and weight calculation
-4. Greedy entanglement wedge reconstruction
-5. Page curve computation
-6. Holographic entropy cone checking
+Type-hinted implementations of the core algorithms from the
+Einstein Decomposition Theorem framework.
 """
-
-from dataclasses import dataclass
-from typing import List, Tuple, Dict, Optional, Set, FrozenSet
+from typing import Callable, Dict, FrozenSet, List, Optional, Set, Tuple
+import itertools
 import math
 
-
-@dataclass(frozen=True)
-class HolographicCodeParams:
-    """Parameters for a holographic code [[n, k, d]]."""
-    n: int  # boundary qubits
-    k: int  # logical qubits
-    d: int  # code distance
+# Type aliases
+SetFn = Callable[[FrozenSet[int]], float]
 
 
-def verify_singleton_bound(params: HolographicCodeParams) -> bool:
-    """Check if code parameters satisfy the quantum Singleton bound: k + 2d ≤ n + 2."""
-    return params.k + 2 * params.d <= params.n + 2
-
-
-def is_saturated(params: HolographicCodeParams) -> bool:
-    """Check if the code saturates the Singleton bound (MDS-like)."""
-    return params.k + 2 * params.d == params.n + 2
-
-
-def code_rate(params: HolographicCodeParams) -> float:
-    """Compute the code rate k/n."""
-    return params.k / params.n if params.n > 0 else 0.0
-
-
-def redundancy(params: HolographicCodeParams) -> int:
-    """Compute the redundancy n - k."""
-    return params.n - params.k
-
-
-def erasure_capacity(params: HolographicCodeParams) -> int:
-    """Maximum number of erasures the code can correct: d - 1."""
-    return params.d - 1
-
-
-def construct_ads3_code(m: int) -> HolographicCodeParams:
-    """Construct AdS₃ code parameters: [[6m, 4m+2, m]]."""
-    return HolographicCodeParams(n=6*m, k=4*m+2, d=m)
-
-
-def construct_from_planck_params(
-    area_planck: int, geodesic_planck: int
-) -> Optional[HolographicCodeParams]:
-    """Construct holographic code from spacetime parameters.
-
+def powerset(ground: Set[int]) -> List[FrozenSet[int]]:
+    """Generate all subsets of a ground set as frozensets.
+    
     Args:
-        area_planck: A/ℓ_P² (must be divisible by 4)
-        geodesic_planck: L/ℓ_P (must be even)
-
+        ground: The ground set of integers.
+        
     Returns:
-        HolographicCodeParams or None if constraints not met.
+        List of all subsets as frozensets, ordered by size.
     """
-    if area_planck % 4 != 0 or geodesic_planck % 2 != 0:
-        return None
-    n = area_planck
-    k = area_planck // 4
-    d = geodesic_planck // 2
-    params = HolographicCodeParams(n=n, k=k, d=d)
-    if not verify_singleton_bound(params):
-        return None
-    return params
+    items = sorted(ground)
+    result: List[FrozenSet[int]] = []
+    for r in range(len(items) + 1):
+        for combo in itertools.combinations(items, r):
+            result.append(frozenset(combo))
+    return result
 
 
-# --- Syndrome Computation ---
-
-@dataclass
-class Syndrome:
-    """A syndrome measurement for a holographic code."""
-    bits: List[bool]
-
-    @property
-    def weight(self) -> int:
-        """Number of true (non-trivial) syndrome bits."""
-        return sum(self.bits)
-
-    @property
-    def is_flat(self) -> bool:
-        """Whether the syndrome indicates flat spacetime (all false)."""
-        return self.weight == 0
-
-
-def compute_syndrome(
-    error_pattern: List[int], parity_check: List[List[int]]
-) -> Syndrome:
-    """Compute the syndrome of an error pattern given a parity-check matrix.
-
+def compute_defect(f: SetFn, X: FrozenSet[int], Y: FrozenSet[int]) -> float:
+    """Compute the syndrome defect (discrete curvature).
+    
+    defect(f, X, Y) = f(X) + f(Y) - f(X ∩ Y) - f(X ∪ Y)
+    
     Args:
-        error_pattern: Binary error vector (0s and 1s)
-        parity_check: Binary parity-check matrix (list of rows)
-
+        f: Set function mapping frozensets to reals.
+        X, Y: Input sets.
+        
     Returns:
-        Syndrome with bits = H · e (mod 2)
+        The defect value. Non-negative for submodular f.
     """
-    bits = []
-    for row in parity_check:
-        dot = sum(r * e for r, e in zip(row, error_pattern)) % 2
-        bits.append(bool(dot))
-    return Syndrome(bits=bits)
+    return f(X) + f(Y) - f(X & Y) - f(X | Y)
 
 
-# --- Greedy Entanglement Wedge Reconstruction ---
-
-def greedy_wedge_assignment(
-    n: int, region_sizes: List[int]
-) -> Dict[int, int]:
-    """Greedy entanglement wedge reconstruction algorithm.
-
-    Assigns bulk points to boundary regions. Each region of size s
-    can reconstruct min(s, n-s) bulk points.
-
+def einstein_decomposition(
+    S: SetFn,
+    ground: Set[int]
+) -> Tuple[SetFn, SetFn, bool]:
+    """Compute the optimal Einstein decomposition S = T + L.
+    
+    Finds the modular function L that best approximates S,
+    then sets T = S - L. The modular function is determined by
+    the singleton values: L(X) = Σ_{x∈X} L({x}) where L({x}) = S({x}).
+    
     Args:
-        n: Total boundary size
-        region_sizes: Size of each boundary region (must sum to n)
-
+        S: Entropy functional (should be submodular).
+        ground: The ground set.
+        
     Returns:
-        Dictionary mapping region index to number of assigned bulk points
+        Tuple (T, L, valid) where:
+        - T: Matter entropy (S - L)
+        - L: Vacuum entropy (modular approximation)
+        - valid: Whether the decomposition gives valid CodeSpacetime
     """
-    assert sum(region_sizes) == n, "Region sizes must sum to n"
-    assignment: Dict[int, int] = {}
-    for i, s in enumerate(region_sizes):
-        assignment[i] = min(s, n - s)
-    return assignment
+    # Modular function determined by singletons
+    singleton_vals: Dict[int, float] = {}
+    for x in ground:
+        singleton_vals[x] = S(frozenset({x}))
+    
+    def L(X: FrozenSet[int]) -> float:
+        return sum(singleton_vals.get(x, 0.0) for x in X)
+    
+    def T(X: FrozenSet[int]) -> float:
+        return S(X) - L(X)
+    
+    # Verify T(∅) = 0
+    valid = abs(T(frozenset())) < 1e-10
+    
+    return T, L, valid
 
 
-def total_reconstruction_capacity(n: int, region_sizes: List[int]) -> int:
-    """Total number of reconstructable bulk points."""
-    assignment = greedy_wedge_assignment(n, region_sizes)
-    return sum(assignment.values())
-
-
-# --- Page Curve ---
-
-def page_curve(n: int) -> List[int]:
-    """Compute the discrete Page curve for n qubits.
-
-    Returns S(m) = min(m, n-m) for m = 0, 1, ..., n.
+def compute_curvature_tensor(
+    f: SetFn,
+    ground: Set[int]
+) -> Dict[Tuple[FrozenSet[int], FrozenSet[int]], float]:
+    """Compute the full curvature tensor (all pairwise defects).
+    
+    Args:
+        f: Set function.
+        ground: Ground set.
+        
+    Returns:
+        Dictionary mapping (X, Y) pairs to defect values.
     """
-    return [min(m, n - m) for m in range(n + 1)]
+    subsets = powerset(ground)
+    tensor: Dict[Tuple[FrozenSet[int], FrozenSet[int]], float] = {}
+    for X in subsets:
+        for Y in subsets:
+            tensor[(X, Y)] = compute_defect(f, X, Y)
+    return tensor
 
 
-def page_time(n: int) -> int:
-    """The Page time: when entropy is maximized."""
-    return n // 2
-
-
-# --- Holographic Entropy Cone ---
-
-@dataclass
-class ThreePartyEntropy:
-    """Entropy vector for a 3-party system."""
-    S_A: float
-    S_B: float
-    S_C: float
-    S_AB: float
-    S_AC: float
-    S_BC: float
-
-
-def check_subadditivity(E: ThreePartyEntropy) -> Tuple[bool, str]:
-    """Check all subadditivity constraints."""
-    checks = [
-        (E.S_AB <= E.S_A + E.S_B, "S(AB) ≤ S(A) + S(B)"),
-        (E.S_AC <= E.S_A + E.S_C, "S(AC) ≤ S(A) + S(C)"),
-        (E.S_BC <= E.S_B + E.S_C, "S(BC) ≤ S(B) + S(C)"),
-    ]
-    all_pass = all(c[0] for c in checks)
-    report = "\n".join(f"  {'✓' if ok else '✗'} {msg}" for ok, msg in checks)
-    return all_pass, report
-
-
-def check_ssa(E: ThreePartyEntropy) -> Tuple[bool, str]:
-    """Check strong subadditivity constraints."""
-    checks = [
-        (E.S_A + E.S_BC <= E.S_AB + E.S_AC + 1e-10,
-         "S(A) + S(BC) ≤ S(AB) + S(AC)"),
-        (E.S_B + E.S_AC <= E.S_AB + E.S_BC + 1e-10,
-         "S(B) + S(AC) ≤ S(AB) + S(BC)"),
-    ]
-    all_pass = all(c[0] for c in checks)
-    report = "\n".join(f"  {'✓' if ok else '✗'} {msg}" for ok, msg in checks)
-    return all_pass, report
-
-
-def check_ssa_rigidity(E: ThreePartyEntropy) -> Tuple[bool, str]:
-    """Check SSA rigidity constraints."""
-    checks = [
-        (E.S_A <= E.S_AB + E.S_AC - E.S_BC + 1e-10,
-         "S(A) ≤ S(AB) + S(AC) - S(BC)"),
-        (E.S_B <= E.S_AB + E.S_BC - E.S_AC + 1e-10,
-         "S(B) ≤ S(AB) + S(BC) - S(AC)"),
-        (E.S_A + E.S_B <= 2 * E.S_AB + 1e-10,
-         "S(A) + S(B) ≤ 2·S(AB)"),
-    ]
-    all_pass = all(c[0] for c in checks)
-    report = "\n".join(f"  {'✓' if ok else '✗'} {msg}" for ok, msg in checks)
-    return all_pass, report
-
-
-def mutual_information(E: ThreePartyEntropy, party1: str, party2: str) -> float:
-    """Compute mutual information I(X:Y) = S(X) + S(Y) - S(XY)."""
-    entropies = {
-        'A': E.S_A, 'B': E.S_B, 'C': E.S_C,
-        'AB': E.S_AB, 'AC': E.S_AC, 'BC': E.S_BC
-    }
-    S_X = entropies[party1]
-    S_Y = entropies[party2]
-    joint_key = ''.join(sorted(set(party1 + party2)))
-    S_XY = entropies.get(joint_key, S_X + S_Y)  # fallback to SA if needed
-    return S_X + S_Y - S_XY
-
-
-# --- Rate Convergence Analysis ---
-
-def rate_convergence_analysis(max_m: int = 100) -> List[Tuple[int, float, float]]:
-    """Analyze rate convergence for AdS₃ code family.
-
-    Returns list of (m, rate, error_bound) tuples.
+def total_curvature(f: SetFn, ground: Set[int]) -> float:
+    """Compute total curvature (sum of all defects).
+    
+    Args:
+        f: Set function (submodular for non-negative result).
+        ground: Ground set.
+        
+    Returns:
+        Sum of defect(f, X, Y) over all pairs (X, Y).
     """
-    results = []
-    for m in range(1, max_m + 1):
-        params = construct_ads3_code(m)
-        rate = code_rate(params)
-        error = abs(rate - 2/3)
-        bound = 1 / (3 * m)
-        assert error <= bound + 1e-15, f"Bound violated at m={m}"
-        results.append((m, rate, bound))
-    return results
+    subsets = powerset(ground)
+    return sum(compute_defect(f, X, Y) for X in subsets for Y in subsets)
+
+
+def compute_mutual_info(
+    f: SetFn, X: FrozenSet[int], Y: FrozenSet[int]
+) -> float:
+    """Compute mutual information I(X:Y) = f(X) + f(Y) - f(X ∪ Y).
+    
+    Args:
+        f: Set function.
+        X, Y: Disjoint sets for physical interpretation.
+        
+    Returns:
+        Mutual information value.
+    """
+    return f(X) + f(Y) - f(X | Y)
+
+
+def compute_tripartite_info(
+    f: SetFn,
+    X: FrozenSet[int],
+    Y: FrozenSet[int],
+    Z: FrozenSet[int]
+) -> float:
+    """Compute tripartite information I₃(X,Y,Z).
+    
+    I₃ = f(X) + f(Y) + f(Z) - f(X∪Y) - f(X∪Z) - f(Y∪Z) + f(X∪Y∪Z)
+    
+    Args:
+        f: Set function.
+        X, Y, Z: Three sets.
+        
+    Returns:
+        Tripartite information. Can be negative for quantum systems.
+    """
+    return (f(X) + f(Y) + f(Z)
+            - f(X | Y) - f(X | Z) - f(Y | Z)
+            + f(X | Y | Z))
+
+
+def verify_submodularity(f: SetFn, ground: Set[int], tol: float = 1e-10) -> Tuple[bool, float]:
+    """Check if f is submodular and return the minimum defect.
+    
+    Args:
+        f: Set function to check.
+        ground: Ground set.
+        tol: Numerical tolerance.
+        
+    Returns:
+        Tuple (is_submodular, min_defect).
+    """
+    subsets = powerset(ground)
+    min_defect = float('inf')
+    for X in subsets:
+        for Y in subsets:
+            d = compute_defect(f, X, Y)
+            min_defect = min(min_defect, d)
+    return min_defect >= -tol, min_defect
+
+
+def verify_modularity(f: SetFn, ground: Set[int], tol: float = 1e-10) -> Tuple[bool, float]:
+    """Check if f is modular and return the maximum |defect|.
+    
+    Args:
+        f: Set function to check.
+        ground: Ground set.
+        tol: Numerical tolerance.
+        
+    Returns:
+        Tuple (is_modular, max_abs_defect).
+    """
+    subsets = powerset(ground)
+    max_abs_defect = 0.0
+    for X in subsets:
+        for Y in subsets:
+            d = abs(compute_defect(f, X, Y))
+            max_abs_defect = max(max_abs_defect, d)
+    return max_abs_defect <= tol, max_abs_defect
+
+
+def binding_energy_analysis(
+    f: SetFn,
+    ground: Set[int]
+) -> List[Dict]:
+    """Analyze binding energies between all disjoint pairs.
+    
+    Args:
+        f: Set function (should be submodular for non-negative binding).
+        ground: Ground set.
+        
+    Returns:
+        List of dicts with X, Y, binding_energy for each disjoint pair.
+    """
+    subsets = powerset(ground)
+    results: List[Dict] = []
+    for X in subsets:
+        for Y in subsets:
+            if X & Y:
+                continue  # Skip non-disjoint
+            if not X or not Y:
+                continue  # Skip empty
+            be = compute_mutual_info(f, X, Y)
+            results.append({
+                "X": set(X),
+                "Y": set(Y),
+                "binding_energy": be,
+                "normalized": be / (len(X) * len(Y)) if len(X) * len(Y) > 0 else 0
+            })
+    return sorted(results, key=lambda r: -r["binding_energy"])
 
 
 if __name__ == "__main__":
-    # Quick verification
-    print("AdS₃ code family verification:")
-    for m in [1, 5, 10, 50, 100]:
-        params = construct_ads3_code(m)
-        print(f"  m={m:3d}: [[{params.n}, {params.k}, {params.d}]], "
-              f"rate={code_rate(params):.6f}, "
-              f"saturated={is_saturated(params)}, "
-              f"erasure_cap={erasure_capacity(params)}")
-
-    print("\nPage curve (n=10):", page_curve(10))
-    print(f"Page time (n=10): {page_time(10)}")
-
-    print("\nEntropy cone check:")
-    E = ThreePartyEntropy(S_A=1.0, S_B=1.0, S_C=0.5,
-                          S_AB=1.5, S_AC=1.2, S_BC=1.3)
-    ok, report = check_ssa_rigidity(E)
-    print(report)
+    # Quick demonstration
+    ground = {1, 2, 3}
+    
+    # Cardinality spacetime
+    S = lambda X: len(X) ** 2
+    T, L, valid = einstein_decomposition(S, ground)
+    
+    print("Einstein Decomposition of S(X) = |X|²:")
+    print(f"  Valid: {valid}")
+    print(f"  S({{1,2,3}}) = {S(frozenset(ground))}")
+    print(f"  T({{1,2,3}}) = {T(frozenset(ground))}")
+    print(f"  L({{1,2,3}}) = {L(frozenset(ground))}")
+    
+    is_sub, min_d = verify_submodularity(S, ground)
+    print(f"  S submodular: {is_sub} (min defect = {min_d})")
+    
+    is_mod, max_d = verify_modularity(L, ground)
+    print(f"  L modular: {is_mod} (max |defect| = {max_d})")
+    
+    print(f"  Total curvature: {total_curvature(S, ground):.2f}")
+    
+    bindings = binding_energy_analysis(S, ground)
+    print(f"  Top binding: {bindings[0]}")

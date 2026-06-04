@@ -1,372 +1,395 @@
-#!/usr/bin/env python3
 """
-Holographic Gravity Codes: Numerical Demonstrations
+Gravitational Code Geometry: Demonstration Script
 
-Demonstrates the key results:
-1. Quantum Singleton bound verification
-2. AdS₃ code family rate convergence
-3. Page curve computation
-4. Syndrome weight distribution
-5. Holographic entropy cone constraints
+Demonstrates the Einstein Decomposition Theorem and related concepts
+using concrete numerical examples on small finite sets.
 """
+import itertools
+from typing import Callable, Dict, FrozenSet, List, Tuple
 
-from dataclasses import dataclass
-from typing import List, Tuple
+# Type aliases
+SetFn = Callable[[FrozenSet[int]], float]
+
+def powerset(ground: set) -> List[FrozenSet[int]]:
+    """Return all subsets of ground as frozensets."""
+    result = []
+    items = sorted(ground)
+    for r in range(len(items) + 1):
+        for combo in itertools.combinations(items, r):
+            result.append(frozenset(combo))
+    return result
+
+def defect(f: SetFn, X: FrozenSet[int], Y: FrozenSet[int]) -> float:
+    """Compute the syndrome defect (discrete curvature)."""
+    return f(X) + f(Y) - f(X & Y) - f(X | Y)
+
+def is_modular(f: SetFn, ground: set, tol: float = 1e-10) -> bool:
+    """Check if f is modular on the powerset of ground."""
+    subsets = powerset(ground)
+    for X in subsets:
+        for Y in subsets:
+            if abs(defect(f, X, Y)) > tol:
+                return False
+    return True
+
+def is_submodular(f: SetFn, ground: set, tol: float = 1e-10) -> bool:
+    """Check if f is submodular on the powerset of ground."""
+    subsets = powerset(ground)
+    for X in subsets:
+        for Y in subsets:
+            if defect(f, X, Y) < -tol:
+                return False
+    return True
+
+def mutual_info(f: SetFn, X: FrozenSet[int], Y: FrozenSet[int]) -> float:
+    """Compute mutual information I(X:Y)."""
+    return f(X) + f(Y) - f(X | Y)
+
+def tripartite_info(f: SetFn, X: FrozenSet[int], Y: FrozenSet[int], Z: FrozenSet[int]) -> float:
+    """Compute tripartite information I_3(X,Y,Z)."""
+    return (f(X) + f(Y) + f(Z)
+            - f(X | Y) - f(X | Z) - f(Y | Z)
+            + f(X | Y | Z))
+
+def verify_einstein_decomposition(S: SetFn, T: SetFn, L: SetFn, ground: set) -> Dict:
+    """Verify the Einstein decomposition S = T + L with L modular."""
+    subsets = powerset(ground)
+    
+    # Check decomposition S = T + L
+    decomp_ok = True
+    max_decomp_error = 0.0
+    for X in subsets:
+        err = abs(S(X) - T(X) - L(X))
+        max_decomp_error = max(max_decomp_error, err)
+        if err > 1e-10:
+            decomp_ok = False
+    
+    # Check L is modular
+    l_modular = is_modular(L, ground)
+    
+    # Check Einstein equation: defect(S) = defect(T)
+    einstein_ok = True
+    max_einstein_error = 0.0
+    for X in subsets:
+        for Y in subsets:
+            err = abs(defect(S, X, Y) - defect(T, X, Y))
+            max_einstein_error = max(max_einstein_error, err)
+            if err > 1e-10:
+                einstein_ok = False
+    
+    return {
+        "decomposition_holds": decomp_ok,
+        "max_decomposition_error": max_decomp_error,
+        "vacuum_modular": l_modular,
+        "einstein_equation_holds": einstein_ok,
+        "max_einstein_error": max_einstein_error,
+        "S_submodular": is_submodular(S, ground),
+        "T_submodular": is_submodular(T, ground),
+    }
+
+# ============================================================
+# Example 1: Cardinality Spacetime
+# S(X) = |X|^2, T(X) = |X|^2 - |X|, L(X) = |X|
+# ============================================================
+print("=" * 60)
+print("EXAMPLE 1: Cardinality Spacetime")
+print("S(X) = |X|², T(X) = |X|² - |X|, L(X) = |X|")
+print("=" * 60)
+
+ground = {1, 2, 3, 4}
+
+S_card = lambda X: len(X) ** 2
+T_card = lambda X: len(X) ** 2 - len(X)
+L_card = lambda X: len(X)
+
+result = verify_einstein_decomposition(S_card, T_card, L_card, ground)
+for k, v in result.items():
+    print(f"  {k}: {v}")
+
+# Show some defects
+print("\nCurvature values (defect):")
+for a, b in [(frozenset({1}), frozenset({2})),
+             (frozenset({1, 2}), frozenset({3, 4})),
+             (frozenset({1}), frozenset({1, 2, 3}))]:
+    d = defect(S_card, a, b)
+    print(f"  defect(S, {set(a)}, {set(b)}) = {d}")
+    print(f"  defect(T, {set(a)}, {set(b)}) = {defect(T_card, a, b)}")
+
+# ============================================================
+# Example 2: Flat Spacetime
+# S(X) = L(X) = |X|, T(X) = 0
+# ============================================================
+print("\n" + "=" * 60)
+print("EXAMPLE 2: Flat Spacetime (L = cardinality, T = 0)")
+print("=" * 60)
+
+S_flat = lambda X: len(X)
+T_flat = lambda X: 0
+L_flat = lambda X: len(X)
+
+result = verify_einstein_decomposition(S_flat, T_flat, L_flat, ground)
+for k, v in result.items():
+    print(f"  {k}: {v}")
+
+# ============================================================
+# Example 3: Mutual Information and Binding Energy
+# ============================================================
+print("\n" + "=" * 60)
+print("EXAMPLE 3: Mutual Information (Binding Energy)")
+print("=" * 60)
+
+A = frozenset({1, 2})
+B = frozenset({3, 4})
+C = frozenset({1})
+
+print(f"  I(A:B) = {mutual_info(S_card, A, B):.2f}  (A={set(A)}, B={set(B)})")
+print(f"  I(A:C) = {mutual_info(S_card, A, C):.2f}  (A={set(A)}, C={set(C)})")
+print(f"  I_3(A,B,C) = {tripartite_info(S_card, A, B, C):.2f}")
+
+print("\n  For flat spacetime:")
+print(f"  I(A:B) = {mutual_info(S_flat, A, B):.2f}")
+
+# ============================================================
+# Example 4: Conjecture Test - Modular Approximation
+# ============================================================
+print("\n" + "=" * 60)
+print("EXAMPLE 4: Modular Approximation Quality")
+print("=" * 60)
+
+import random
+random.seed(42)
+
+def random_submodular(ground: set) -> SetFn:
+    """Generate a random submodular function using weight of max coverage."""
+    weights = {i: random.random() for i in ground}
+    def f(X: FrozenSet[int]) -> float:
+        if not X:
+            return 0.0
+        return sum(weights[i] for i in X) ** 0.5  # concave composition → submodular
+    return f
+
+for trial in range(3):
+    f = random_submodular(ground)
+    assert is_submodular(f, ground), "Generated function is not submodular!"
+    
+    # Best modular approximation: L(X) = sum of f({i}) for i in X
+    def L_approx(X: FrozenSet[int], _f=f) -> float:
+        return sum(_f(frozenset({i})) for i in X)
+    
+    T_approx = lambda X, _f=f, _L=L_approx: _f(X) - _L(X)
+    
+    result = verify_einstein_decomposition(f, T_approx, L_approx, ground)
+    max_defect = max(abs(defect(f, X, Y)) 
+                     for X in powerset(ground) for Y in powerset(ground))
+    print(f"  Trial {trial + 1}: L modular = {result['vacuum_modular']}, "
+          f"Einstein OK = {result['einstein_equation_holds']}, "
+          f"max |defect| = {max_defect:.4f}")
+
+# ============================================================
+# Example 5: Pure Matter vs Mixed Spacetime
+# ============================================================
+print("\n" + "=" * 60)
+print("EXAMPLE 5: Pure Matter vs Mixed")
+print("=" * 60)
+
+# Pure matter: S = T, L = 0
+print("Pure matter (L=0):")
+T_pure = lambda X: len(X) ** 2
+L_zero = lambda X: 0
+result = verify_einstein_decomposition(T_pure, T_pure, L_zero, ground)
+print(f"  Einstein OK: {result['einstein_equation_holds']}")
+print(f"  Total curvature = {sum(defect(T_pure, X, Y) for X in powerset(ground) for Y in powerset(ground)):.2f}")
+
+# Mixed: S = |X|^2 + |X|
+print("\nMixed (L = |X|):")
+S_mixed = lambda X: len(X) ** 2 + len(X)
+result = verify_einstein_decomposition(S_mixed, T_pure, L_card, ground)
+print(f"  Einstein OK: {result['einstein_equation_holds']}")
+
+print("\n" + "=" * 60)
+print("All demonstrations completed successfully.")
+print("=" * 60)
+
+
+"""
+Visualization: Curvature Heatmap for Code Spacetimes
+
+Generates a heatmap of syndrome defect (curvature) values
+for all pairs of subsets of a ground set.
+"""
+import itertools
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from typing import FrozenSet, List
+
+
+def powerset(ground: set) -> List[FrozenSet[int]]:
+    items = sorted(ground)
+    result = []
+    for r in range(len(items) + 1):
+        for combo in itertools.combinations(items, r):
+            result.append(frozenset(combo))
+    return result
+
+
+def defect(f, X: FrozenSet[int], Y: FrozenSet[int]) -> float:
+    return f(X) + f(Y) - f(X & Y) - f(X | Y)
+
+
+def set_label(s: FrozenSet[int]) -> str:
+    if not s:
+        return "∅"
+    return "{" + ",".join(str(x) for x in sorted(s)) + "}"
+
+
+def plot_curvature_heatmap(ground: set, S, title: str, filename: str):
+    subsets = powerset(ground)
+    n = len(subsets)
+    matrix = np.zeros((n, n))
+    
+    for i, X in enumerate(subsets):
+        for j, Y in enumerate(subsets):
+            matrix[i, j] = defect(S, X, Y)
+    
+    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
+    im = ax.imshow(matrix, cmap='RdYlBu_r', aspect='equal')
+    
+    labels = [set_label(s) for s in subsets]
+    ax.set_xticks(range(n))
+    ax.set_yticks(range(n))
+    ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=7)
+    ax.set_yticklabels(labels, fontsize=7)
+    
+    ax.set_title(title, fontsize=14, fontweight='bold')
+    ax.set_xlabel("Region Y", fontsize=11)
+    ax.set_ylabel("Region X", fontsize=11)
+    
+    cbar = plt.colorbar(im, ax=ax, label='Defect (Curvature)')
+    
+    plt.tight_layout()
+    plt.savefig(filename, dpi=150, bbox_inches='tight')
+    plt.close()
+    print(f"Saved: {filename}")
+
+
+# Generate plots
+ground = {1, 2, 3}
+
+# Cardinality spacetime: S(X) = |X|^2
+S_card = lambda X: len(X) ** 2
+plot_curvature_heatmap(ground, S_card, 
+    "Curvature Heatmap: S(X) = |X|² (Cardinality Spacetime)",
+    "curvature_cardinality.png")
+
+# Flat spacetime: S(X) = |X|
+S_flat = lambda X: float(len(X))
+plot_curvature_heatmap(ground, S_flat,
+    "Curvature Heatmap: S(X) = |X| (Flat Spacetime)",
+    "curvature_flat.png")
+
+# Submodular: S(X) = sqrt(|X|)
 import math
+S_sqrt = lambda X: math.sqrt(len(X))
+plot_curvature_heatmap(ground, S_sqrt,
+    "Curvature Heatmap: S(X) = √|X| (Square Root Spacetime)",
+    "curvature_sqrt.png")
+
+print("\nAll curvature heatmaps generated.")
 
 
-@dataclass
-class HolographicCode:
-    """A holographic code [[n, k, d]] with quantum Singleton bound."""
-    n: int  # boundary qubits
-    k: int  # logical qubits
-    d: int  # code distance
+"""
+Visualization: Einstein Decomposition S = T + L
 
-    def __post_init__(self):
-        assert self.n > 0, "n must be positive"
-        assert self.k >= 0, "k must be non-negative"
-        assert self.d > 0, "d must be positive"
-        assert self.k <= self.n, "k must be ≤ n"
-        assert self.k + 2 * self.d <= self.n + 2, "Singleton bound violated"
-
-    @property
-    def is_saturated(self) -> bool:
-        return self.k + 2 * self.d == self.n + 2
-
-    @property
-    def rate(self) -> float:
-        return self.k / self.n
-
-    @property
-    def redundancy(self) -> int:
-        return self.n - self.k
-
-    @property
-    def erasure_capacity(self) -> int:
-        return self.d - 1
-
-
-def ads3_code(m: int) -> HolographicCode:
-    """Construct the AdS₃ holographic code for scale parameter m."""
-    assert m > 0
-    return HolographicCode(n=6*m, k=4*m+2, d=m)
-
-
-def page_entropy(n: int, m: int) -> int:
-    """Discrete Page curve: entanglement entropy of m out of n qubits."""
-    return min(m, n - m)
-
-
-def syndrome_weight_distribution(m: int, num_samples: int = 10000) -> dict:
-    """Simulate random syndromes and compute weight distribution."""
-    import random
-    weights = {}
-    for _ in range(num_samples):
-        bits = [random.choice([True, False]) for _ in range(m)]
-        w = sum(bits)
-        weights[w] = weights.get(w, 0) + 1
-    return {k: v/num_samples for k, v in sorted(weights.items())}
-
-
-def verify_singleton_bound(codes: List[HolographicCode]) -> None:
-    """Verify the quantum Singleton bound for a list of codes."""
-    print("=" * 60)
-    print("QUANTUM SINGLETON BOUND VERIFICATION")
-    print("=" * 60)
-    print(f"{'n':>6} {'k':>6} {'d':>6} {'k+2d':>8} {'n+2':>8} {'Sat?':>6} {'Rate':>8}")
-    print("-" * 60)
-    for C in codes:
-        print(f"{C.n:>6} {C.k:>6} {C.d:>6} {C.k+2*C.d:>8} {C.n+2:>8} "
-              f"{'YES' if C.is_saturated else 'NO':>6} {C.rate:>8.4f}")
-
-
-def demo_ads3_convergence(max_m: int = 20) -> None:
-    """Demonstrate rate convergence for AdS₃ codes."""
-    print("\n" + "=" * 60)
-    print("AdS₃ CODE FAMILY: RATE CONVERGENCE TO 2/3")
-    print("=" * 60)
-    print(f"{'m':>4} {'n':>6} {'k':>6} {'d':>4} {'Rate':>10} {'|Rate-2/3|':>12} {'Bound 1/3m':>12}")
-    print("-" * 60)
-    for m in range(1, max_m + 1):
-        C = ads3_code(m)
-        rate = C.rate
-        error = abs(rate - 2/3)
-        bound = 1 / (3 * m)
-        assert error <= bound + 1e-15, f"Bound violated at m={m}"
-        print(f"{m:>4} {C.n:>6} {C.k:>6} {C.d:>4} {rate:>10.6f} {error:>12.8f} {bound:>12.8f}")
-    print(f"\nLimit rate: 2/3 = {2/3:.10f}")
-
-
-def demo_page_curve(n: int = 20) -> None:
-    """Demonstrate the Page curve for n qubits."""
-    print("\n" + "=" * 60)
-    print(f"PAGE CURVE (n = {n} qubits)")
-    print("=" * 60)
-    print(f"{'m':>4} {'S(m)':>6} {'S(n-m)':>8} {'Bar':>30}")
-    print("-" * 60)
-    for m in range(n + 1):
-        s = page_entropy(n, m)
-        s2 = page_entropy(n, n - m)
-        assert s == s2, "Page curve symmetry violated"
-        bar = "█" * s
-        print(f"{m:>4} {s:>6} {s2:>8}  {bar}")
-
-
-def demo_bulk_reconstruction() -> None:
-    """Demonstrate bulk reconstruction theorem."""
-    print("\n" + "=" * 60)
-    print("BULK RECONSTRUCTION: ERASURE TOLERANCE")
-    print("=" * 60)
-    C = ads3_code(5)
-    print(f"AdS₃ code: [[{C.n}, {C.k}, {C.d}]]")
-    print(f"Erasure capacity: d-1 = {C.erasure_capacity}")
-    print(f"\n{'Erasures':>10} {'Remaining':>10} {'k ≤ n-e?':>10} {'Recoverable?':>14}")
-    print("-" * 50)
-    for e in range(C.d + 2):
-        remaining = C.n - e
-        recoverable = C.k <= remaining
-        print(f"{e:>10} {remaining:>10} {'YES' if recoverable else 'NO':>10} "
-              f"{'✓ Full recovery' if e < C.d else '✗ Possible loss':>14}")
-
-
-def demo_three_party_holographic() -> None:
-    """Demonstrate 3-party holographic entropy constraints."""
-    print("\n" + "=" * 60)
-    print("3-PARTY HOLOGRAPHIC ENTROPY CONSTRAINTS")
-    print("=" * 60)
-
-    # Example: Bell pair shared between A-B, with C uncorrelated
-    S_A, S_B, S_C = 1.0, 1.0, 0.5
-    S_AB, S_AC, S_BC = 1.5, 1.2, 1.3
-
-    # Verify constraints
-    print(f"Entropies: S(A)={S_A}, S(B)={S_B}, S(C)={S_C}")
-    print(f"           S(AB)={S_AB}, S(AC)={S_AC}, S(BC)={S_BC}")
-    print()
-
-    checks = [
-        ("Subadditivity AB", S_AB <= S_A + S_B),
-        ("Subadditivity AC", S_AC <= S_A + S_C),
-        ("Subadditivity BC", S_BC <= S_B + S_C),
-        ("SSA rigidity A", S_A <= S_AB + S_AC - S_BC),
-        ("SSA rigidity B", S_B <= S_AB + S_BC - S_AC),
-        ("Sum bound", S_A + S_B <= 2 * S_AB),
-    ]
-
-    for name, ok in checks:
-        print(f"  {name:25s}: {'✓ PASS' if ok else '✗ FAIL'}")
-
-    # Mutual information
-    I_AB = S_A + S_B - S_AB
-    I_AC = S_A + S_C - S_AC
-    I_BC = S_B + S_C - S_BC
-    print(f"\nMutual information:")
-    print(f"  I(A:B) = {I_AB:.4f} ≥ 0: {'✓' if I_AB >= 0 else '✗'}")
-    print(f"  I(A:C) = {I_AC:.4f} ≥ 0: {'✓' if I_AC >= 0 else '✗'}")
-    print(f"  I(B:C) = {I_BC:.4f} ≥ 0: {'✓' if I_BC >= 0 else '✗'}")
-
-
-def demo_bekenstein_hawking() -> None:
-    """Demonstrate Bekenstein-Hawking as Singleton bound."""
-    print("\n" + "=" * 60)
-    print("BEKENSTEIN-HAWKING = SINGLETON BOUND")
-    print("=" * 60)
-    print("\nFor a saturated code: k = n + 2 - 2d")
-    print("Bekenstein-Hawking: S = A/(4G) where A = n·ℓ_P², S = k, L = 2d·ℓ_P")
-    print()
-    print(f"{'A/ℓ²':>8} {'L/ℓ':>6} {'S=A/4':>6} {'d=L/2':>6} {'k=n-2d+2':>10} {'Match?':>8}")
-    print("-" * 50)
-    for area in [8, 16, 24, 32, 40, 48, 100, 200]:
-        for geod in [2, 4, 6]:
-            if area // 4 + 2 * (geod // 2) <= area + 2:
-                bh_entropy = area // 4
-                dist = geod // 2
-                singleton_k = area - 2 * dist + 2
-                match = (bh_entropy == singleton_k)
-                if area <= 48 or geod == 2:
-                    print(f"{area:>8} {geod:>6} {bh_entropy:>6} {dist:>6} {singleton_k:>10} "
-                          f"{'✓' if match else '✗':>8}")
-
-
-if __name__ == "__main__":
-    # Demo 1: Singleton bound verification
-    codes = [ads3_code(m) for m in range(1, 11)]
-    verify_singleton_bound(codes)
-
-    # Demo 2: Rate convergence
-    demo_ads3_convergence()
-
-    # Demo 3: Page curve
-    demo_page_curve()
-
-    # Demo 4: Bulk reconstruction
-    demo_bulk_reconstruction()
-
-    # Demo 5: 3-party entropy
-    demo_three_party_holographic()
-
-    # Demo 6: BH = Singleton
-    demo_bekenstein_hawking()
-
-    print("\n" + "=" * 60)
-    print("ALL DEMONSTRATIONS COMPLETE")
-    print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""Visualization: Holographic entropy cone constraints."""
-import matplotlib.pyplot as plt
+Shows how entropy decomposes into matter (T) and vacuum (L) components
+for different spacetime models.
+"""
+import itertools
 import numpy as np
-
-def plot_entropy_cone():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # 2D slice of entropy cone: I(A:B) vs I(A:C)
-    ax = axes[0]
-    # Quantum cone: I(A:B) ≥ 0, I(A:C) ≥ 0
-    x = np.linspace(0, 2, 100)
-    y = np.linspace(0, 2, 100)
-    X, Y = np.meshgrid(x, y)
-
-    # Quantum cone boundary (just non-negativity)
-    ax.fill_between([0, 2], 0, 2, alpha=0.15, color='blue', label='Quantum cone')
-
-    # Holographic cone: I(A:B) + I(A:C) ≤ I(A:BC)
-    # For visualization, assume I(A:BC) = 1.5
-    I_ABC = 1.5
-    ax.fill_between(x, 0, np.clip(I_ABC - x, 0, None), alpha=0.3,
-                    color='orange', label=f'Holographic cone ($I(A:BC)={I_ABC}$)')
-    ax.plot(x, np.clip(I_ABC - x, 0, None), 'r-', linewidth=2)
-
-    ax.set_xlabel('$I(A:B)$')
-    ax.set_ylabel('$I(A:C)$')
-    ax.set_title('Entropy Cones: Holographic ⊂ Quantum')
-    ax.legend()
-    ax.set_xlim(0, 2)
-    ax.set_ylim(0, 2)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-
-    # Syndrome weight distribution for different m
-    ax = axes[1]
-    for m in [5, 10, 20]:
-        k_vals = np.arange(0, m+1)
-        # Binomial distribution (random syndrome)
-        from math import comb
-        probs = np.array([comb(m, k) for k in k_vals]) / 2**m
-        ax.plot(k_vals / m, probs, 'o-', markersize=3, label=f'$m={m}$')
-
-    ax.set_xlabel('Normalized syndrome weight $w/m$')
-    ax.set_ylabel('Probability')
-    ax.set_title('Syndrome Weight Distribution\n(Random Errors → Curved Spacetime)')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('viz_entropy_cone.png', dpi=150, bbox_inches='tight')
-    plt.show()
-
-if __name__ == '__main__':
-    plot_entropy_cone()
-
-
-#!/usr/bin/env python3
-"""Visualization: Page curve and holographic entropy."""
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import numpy as np
+from typing import FrozenSet, List
 
-def plot_page_curve():
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-    # Page curve for different n
-    ax = axes[0]
-    for n in [10, 20, 40, 80]:
-        ms = np.arange(0, n+1)
-        S = np.minimum(ms, n - ms)
-        ax.plot(ms/n, S/(n/2), '-', linewidth=2, label=f'$n={n}$')
-    ax.set_xlabel('Subsystem fraction $m/n$')
-    ax.set_ylabel('Normalized entropy $S/(n/2)$')
-    ax.set_title('Page Curve: $S(m) = \\min(m, n-m)$')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+def powerset(ground: set) -> List[FrozenSet[int]]:
+    items = sorted(ground)
+    result = []
+    for r in range(len(items) + 1):
+        for combo in itertools.combinations(items, r):
+            result.append(frozenset(combo))
+    return result
 
-    # Singleton bound regions
-    ax = axes[1]
-    n_vals = np.arange(1, 51)
-    for d in [1, 2, 5, 10]:
-        k_max = np.maximum(n_vals + 2 - 2*d, 0)
-        ax.plot(n_vals, k_max, '-', linewidth=2, label=f'$d={d}$')
-    ax.fill_between(n_vals, 0, n_vals, alpha=0.1, color='gray')
-    ax.set_xlabel('Boundary size $n$')
-    ax.set_ylabel('Max logical qubits $k$')
-    ax.set_title('Quantum Singleton Bound: $k \\leq n + 2 - 2d$')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
 
-    # AdS3 code parameters
-    ax = axes[2]
-    ms = np.arange(1, 21)
-    ns = 6 * ms
-    ks = 4 * ms + 2
-    ds = ms
-    redundancies = ns - ks
+def set_label(s: FrozenSet[int]) -> str:
+    if not s:
+        return "∅"
+    return "{" + ",".join(str(x) for x in sorted(s)) + "}"
 
-    ax.plot(ms, ns, 's-', label='$n = 6m$', markersize=4)
-    ax.plot(ms, ks, 'o-', label='$k = 4m+2$', markersize=4)
-    ax.plot(ms, ds, '^-', label='$d = m$', markersize=4)
-    ax.plot(ms, redundancies, 'v-', label='$n-k = 2m-2$', markersize=4)
-    ax.set_xlabel('Scale parameter $m$')
-    ax.set_ylabel('Code parameter')
-    ax.set_title('AdS₃ Code Parameters')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
 
+def plot_decomposition(ground: set, S, T, L, title: str, filename: str):
+    subsets = powerset(ground)
+    n = len(subsets)
+    
+    s_vals = [S(X) for X in subsets]
+    t_vals = [T(X) for X in subsets]
+    l_vals = [L(X) for X in subsets]
+    
+    labels = [set_label(s) for s in subsets]
+    x = np.arange(n)
+    width = 0.25
+    
+    fig, axes = plt.subplots(2, 1, figsize=(12, 10))
+    
+    # Top: Bar chart of S, T, L
+    ax1 = axes[0]
+    ax1.bar(x - width, s_vals, width, label='S (total entropy)', color='#2196F3', alpha=0.8)
+    ax1.bar(x, t_vals, width, label='T (matter)', color='#F44336', alpha=0.8)
+    ax1.bar(x + width, l_vals, width, label='L (vacuum)', color='#4CAF50', alpha=0.8)
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(labels, rotation=45, ha='right', fontsize=7)
+    ax1.set_ylabel('Value', fontsize=11)
+    ax1.set_title(f'{title}\nEinstein Decomposition: S = T + L', fontsize=13, fontweight='bold')
+    ax1.legend(fontsize=10)
+    ax1.grid(axis='y', alpha=0.3)
+    
+    # Bottom: Stacked bar showing T + L = S
+    ax2 = axes[1]
+    ax2.bar(x, l_vals, width=0.6, label='L (vacuum/flat)', color='#4CAF50', alpha=0.8)
+    ax2.bar(x, t_vals, width=0.6, bottom=l_vals, label='T (matter/curved)', color='#F44336', alpha=0.8)
+    ax2.scatter(x, s_vals, color='blue', zorder=5, s=30, label='S (total)')
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(labels, rotation=45, ha='right', fontsize=7)
+    ax2.set_ylabel('Value', fontsize=11)
+    ax2.set_title('Stacked Decomposition: S = T + L', fontsize=12)
+    ax2.legend(fontsize=10)
+    ax2.grid(axis='y', alpha=0.3)
+    
     plt.tight_layout()
-    plt.savefig('viz_page_curve.png', dpi=150, bbox_inches='tight')
-    plt.show()
-
-if __name__ == '__main__':
-    plot_page_curve()
+    plt.savefig(filename, dpi=150, bbox_inches='tight')
+    plt.close()
+    print(f"Saved: {filename}")
 
 
-#!/usr/bin/env python3
-"""Visualization: AdS₃ code rate convergence to 2/3."""
-import matplotlib.pyplot as plt
-import numpy as np
+# Generate plots
+ground = {1, 2, 3, 4}
 
-def plot_rate_convergence():
-    ms = np.arange(1, 51)
-    rates = (4 * ms + 2) / (6 * ms)
-    bounds_upper = 2/3 + 1/(3 * ms)
-    bounds_lower = 2/3 - 1/(3 * ms)
+# Cardinality spacetime
+S1 = lambda X: len(X) ** 2
+T1 = lambda X: len(X) ** 2 - len(X)
+L1 = lambda X: float(len(X))
+plot_decomposition(ground, S1, T1, L1,
+    "Cardinality Spacetime: S(X) = |X|²",
+    "decomposition_cardinality.png")
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+# Logarithmic spacetime: S(X) = |X| * log(1 + |X|)
+import math
+S2 = lambda X: len(X) * math.log(1 + len(X)) if X else 0.0
+L2 = lambda X: float(len(X)) * math.log(2) if X else 0.0
+T2 = lambda X: S2(X) - L2(X)
+plot_decomposition(ground, S2, T2, L2,
+    "Logarithmic Spacetime: S(X) = |X|·log(1+|X|)",
+    "decomposition_logarithmic.png")
 
-    # Rate convergence
-    ax1.plot(ms, rates, 'b-o', markersize=3, label=r'Rate $k/n = (4m+2)/(6m)$')
-    ax1.axhline(y=2/3, color='r', linestyle='--', label=r'Limit $2/3$')
-    ax1.fill_between(ms, bounds_lower, bounds_upper, alpha=0.2, color='orange',
-                     label=r'$2/3 \pm 1/(3m)$ bound')
-    ax1.set_xlabel('Scale parameter $m$')
-    ax1.set_ylabel('Code rate $k/n$')
-    ax1.set_title('AdS₃ Holographic Code Rate Convergence')
-    ax1.legend()
-    ax1.set_ylim(0.5, 0.85)
-    ax1.grid(True, alpha=0.3)
-
-    # Error decay
-    errors = np.abs(rates - 2/3)
-    ax2.semilogy(ms, errors, 'b-o', markersize=3, label=r'$|k/n - 2/3|$')
-    ax2.semilogy(ms, 1/(3*ms), 'r--', label=r'$1/(3m)$ bound')
-    ax2.set_xlabel('Scale parameter $m$')
-    ax2.set_ylabel('Rate error (log scale)')
-    ax2.set_title('Rate Error Decay')
-    ax2.legend()
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('viz_rate_convergence.png', dpi=150, bbox_inches='tight')
-    plt.show()
-
-if __name__ == '__main__':
-    plot_rate_convergence()
+print("\nAll decomposition plots generated.")
