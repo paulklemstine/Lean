@@ -168,7 +168,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Entropy Power Inequality: Sharp Version"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "73ee1523",
     "description": "Prove that the Fisher information metric on a statistical manifold satisfies the axioms of a Riemannian metric. Construct explicit connections between the Fisher metric and the Kullback-Leibler divergence. Bridge statistical inference to differential geometry.",
     "domains": [
       "Bridges",
@@ -178,7 +178,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.281925+00:00",
     "title": "Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
   },
@@ -273,7 +273,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Neural Tangent Kernel: Convergence of Gradient Descent"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "196b4f49",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
       "MachineLearning",
@@ -283,12 +283,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3f0a829b",
     "description": "Prove that policy gradient methods converge to a local optimum of the expected return. Formalize the policy gradient theorem and prove that REINFORCE is an unbiased estimator. Show that natural policy gradient converges faster by following the Fisher information geometry.",
     "domains": [
       "MachineLearning",
@@ -298,7 +298,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.834984+00:00",
     "title": "Reinforcement Learning: Convergence of Policy Gradient Methods"
   },
@@ -423,7 +423,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d72a42ae",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
@@ -433,7 +433,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -1128,7 +1128,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Three fundamental results about the multiplicati"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4605a9a",
     "description": "# Future Research Directions: Gap Automaton Spectral Theory\n\n## Synthesis\n\nThis research cycle established the Walk-Matrix Correspondence \u2014 the fundamental theorem connecting combinatorial walk counting in directed multigraphs to matrix powers \u2014 and applied it to gap automata from prime sieve theory. We proved nine theorems forming a complete algebraic toolkit: walk-matrix correspondence, walk decomposition, closed walk-trace identity, entrywise monotonicity of multiplication and powers, self-loop growth bounds, alphabet monotonicity, walk growth monotonicity, and word growth at zero.\n\nThe most promising cross-domain connection is between the **entrywise matrix lattice** and the **hierarchy of prime sieves**. The entrywise ordering on \u2115-valued matrices, which we proved is preserved under multiplication and exponentiation, provides a rigorous framework for comparing gap automata at different sieve depths and alphabet sizes. This creates a monotone functor from the poset of (sieve depth, alphabet size) pairs to the poset of transfer matrices, with entropy as a monotone invariant. This connects to the Catalog's existing tropical spectral theory (`FINAL/Tropical/SpectralTheory.lean`) and Perron-Frobenius infrastructure (`FINAL/Tropical/PerronFrobenius.lean`).\n\nDirection 1 has the highest breakthrough potential because formalizing the Perron-Frobenius eigenvalue bound for \u2115-valued matrices would unlock the entropy computation and connect the combinatorial walk-counting framework to the analytic theory of spectral radii. Direction 2 would provide the first rigorous comparison between gap automata at different sieve depths, potentially yielding new constraints on prime gap distributions.\n\n---\n\n### Direction 1: Perron-Frobenius Eigenvalue and Entropy Computation for Gap Automata\n\n**Conjecture**: For any irreducible nonneg integer matrix A of dimension d with spectral radius \u03c1, the word growth function W(k) = \u2211_{s,t} (A^k)(s,t) satisfies \u03c1^k \u2264 W(k) \u2264 d\u00b2 \u00b7 \u03c1^k for all k \u2265 1. Consequently, the topological entropy h = lim (1/k) log W(k) = log \u03c1.\n\n**Test**: For the sieve-6 transfer matrix [[1,2],[2,1]] with \u03c1 = 3, verify computationally that W(k)/3^k \u2208 [1, 4] for k = 1, ..., 20. Then attempt to formalize the upper bound using the Perron-Frobenius theorem for \u2115-valued matrices.\n\n**Impact**: This would provide a complete formal proof that the topological entropy of a gap automaton equals the log of its spectral radius, connecting walk counting (combinatorics) to eigenvalue theory (analysis). It would also yield computable entropy values for any sieve depth.\n\n**Catalog References**: `FINAL/Tropical/PerronFrobenius.lean` (tropical Perron-Frobenius), `FINAL/Tropical/SpectralTheory.lean` (spectral bounds), `Tropical/GapAutomatonSpectral.lean` (walk-matrix correspondence from this cycle)\n\n**Proof Strategy**: \n1. Formalize the Gelfand formula: \u03c1(A) = lim_{k\u2192\u221e} \u2016A^k\u2016^{1/k} for operator norms.\n2. Use the entrywise bound: max entry of A^k \u2264 \u03c1^k \u00b7 polynomial(k).\n3. Show W(k) \u2264 d\u00b2 \u00b7 (max entry of A^k) for the upper bound.\n4. Use diagonal_pow_lower_bound for the lower bound.\n5. Conclude h = log \u03c1 by the squeeze theorem.\n\n**Domain Bridges**: Combinatorics (walk counting) \u2194 Analysis (spectral radius) \u2194 Dynamical Systems (topological entropy)\n\n**Lineage**: Builds on `walkCount_eq_pow`, `diagonal_pow_lower_bound`, and `totalWalks_ge_trace` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Spectral Gap Monotonicity Across Sieve Depths\n\n**Conjecture**: Let S_k = {2, 3, ..., p_k} be the first k primes, m_k = \u220f S_k the primorial, and T_k the transfer matrix of the gap automaton with modulus m_k and alphabet \u03a3_k = {2, 4, ..., 2p_{k+1}}. Then the spectral gap \u0394_k = \u03bb\u2081(T_k) - |\u03bb\u2082(T_k)| is strictly increasing in k.\n\n**Test**: \n- k=1 (sieve {2}, m=2): T = [1] restricted to admissible, \u0394\u2081 = 0.\n- k=2 (sieve {2,3}, m=6): T = [[1,2],[2,1]], eigenvalues 3, -1, \u0394\u2082 = 4.\n- k=3 (sieve {2,3,5}, m=30): Compute T\u2083 (8\u00d78 matrix on admissible residues mod 30), find eigenvalues, compute \u0394\u2083.\n- Verify \u0394\u2081 < \u0394\u2082 < \u0394\u2083.\n\n**Impact**: If true, deeper sieves produce more rapidly mixing gap sequences. This would imply that the prime gap distribution becomes \"more random\" (in the spectral sense) as we sieve deeper \u2014 a quantitative form of the heuristic that \"primes behave like random numbers coprime to small primes.\"\n\n**Catalog References**: `FINAL/Tropical/MixingTheory.lean` (mixing from spectral gap), `Tropical/GapAutomatonSpectral.lean` (walk-matrix and monotonicity)\n\n**Proof Strategy**:\n1. Compute T_k for k = 1, 2, 3, 4 using the explicit residue class arithmetic.\n2. Verify the conjecture computationally for small k.\n3. For a theoretical proof, analyze the block structure of T_k: when passing from k to k+1, the state space grows by a factor of p_{k+1} - 1 (Chinese Remainder Theorem), and the alphabet gains new elements. Relate \u0394_{k+1} to \u0394_k via the tensor product / Kronecker structure.\n\n**Domain Bridges**: Number Theory (sieve hierarchy) \u2194 Linear Algebra (spectral gap) \u2194 Ergodic Theory (mixing rates)\n\n**Lineage**: Builds on `gapSFT_alphabet_mono`, `entrywiseLe_pow_of_entrywiseLe`, and the sieve-6 concrete results from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Tropical Transfer Matrix and Max-Plus Entropy\n\n**Conjecture**: The tropical (max-plus) analogue of the transfer matrix T^\u2295, defined by T^\u2295(s,t) = max{log g : g \u2208 alphabet, (s+g) mod d = t}, has tropical spectral radius \u03c1^\u2295 = max cycle mean in the state graph, and this satisfies \u03c1^\u2295 \u2264 log \u03c1(T) where \u03c1(T) is the classical spectral radius.\n\n**Test**: For the sieve-6 automaton with alphabet {2,4,6,8,10}:\n- Classical: \u03c1 = 3, log \u03c1 \u2248 1.099\n- Tropical: T^\u2295 = [[log 6, log 10], [log 8, log 6]], \u03c1^\u2295 = max cycle mean\n- Compute \u03c1^\u2295 and verify \u03c1^\u2295 \u2264 log 3.\n\n**Impact**: Would establish a formal bridge between classical and tropical spectral theory for gap automata, connecting to the existing tropical machinery in the Catalog.\n\n**Catalog References**: `FINAL/Tropical/SpectralTheory.lean`, `FINAL/Tropical/PerronFrobenius.lean`, `FINAL/Tropical/MarkovTropicalBridge.lean`\n\n**Proof Strategy**: \n1. Define the tropical transfer matrix using max-plus operations.\n2. Compute the tropical eigenvalue as the maximum cycle mean (Karp's theorem).\n3. Use the AM-GM inequality to relate tropical and classical spectral radii.\n\n**Domain Bridges**: Tropical Geometry (max-plus algebra) \u2194 Classical Spectral Theory \u2194 Number Theory (sieve automata)\n\n**Lineage**: Builds on the transfer matrix formalism from this cycle and the tropical spectral infrastructure in the Catalog.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Transfer Matrix Factorization via Chinese Remainder Theorem\n\n**Conjecture**: The transfer matrix T_k for sieve depth k (modulus m_k = \u220f_{i=1}^k p_i) decomposes as a tensor product: T_k \u2245 T_{k-1} \u2297 L_k, where L_k is a p_k \u00d7 p_k matrix encoding the local constraints from the prime p_k. The spectral radius satisfies \u03c1(T_k) = \u03c1(T_{k-1}) \u00b7 \u03c1(L_k).\n\n**Test**: For k = 3 (adding prime 5 to the {2,3}-sieve):\n- T\u2082 is 2\u00d72 (admissible states mod 6: {1,5})\n- L\u2083 should be 4\u00d74 (admissible residues mod 5: {1,2,3,4})\n- Check if T\u2083 \u2245 T\u2082 \u2297 L\u2083 as a 8\u00d78 matrix\n\n**Impact**: A tensor factorization would reduce the spectral analysis of deep sieves to the analysis of small local factors, making the entropy computable in closed form for arbitrary sieve depth.\n\n**Catalog References**: `Tropical/GapAutomatonSpectral.lean`, `FINAL/Tropical/SpectralTheory.lean`\n\n**Proof Strategy**:\n1. Use the Chinese Remainder Theorem to decompose Fin m_k \u2245 Fin m_{k-1} \u00d7 Fin p_k.\n2. Show the admissibility predicate factors: admissible(s) \u2194 admissible_{k-1}(s mod m_{k-1}) \u2227 admissible_k(s mod p_k).\n3. Show the transition function respects the factorization.\n4. Conclude the transfer matrix is the Kronecker product (possibly after reindexing).\n\n**Domain Bridges**: Algebra (CRT, tensor products) \u2194 Number Theory (primorial factorization) \u2194 Linear Algebra (Kronecker eigenvalues)\n\n**Lineage**: Builds on the GapSFT structure and transfer matrix from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Admissible Tuple Counting via Walk Theory\n\n**Conjecture**: The number of admissible k-tuples (in the Hardy-Littlewood sense) with entries in [0, N] and mutual differences in a gap alphabet \u03a3 is asymptotically C \u00b7 N \u00b7 \u03c1(T)^{k-1} as N \u2192 \u221e, where C is a computable constant depending on the sieve depth and \u03c1(T) is the spectral radius of the gap automaton's transfer matrix.\n\n**Test**: For the sieve-6 automaton with alphabet {2, 4, 6}:\n- Count admissible 3-tuples with entries in [0, 100].\n- Verify the count \u2248 C \u00b7 100 \u00b7 \u03c1\u00b2 for some constant C.\n\n**Impact**: Would connect the gap automaton framework to the Hardy-Littlewood singular series, providing a new spectral interpretation of the classical prime tuple conjectures.\n\n**Catalog References**: `Tropical/GapAutomatonSpectral.lean` (walk counting), `MachineLearning/PrimeGapFramework.lean` (gap density)\n\n**Proof Strategy**:\n1. Model admissible k-tuples as walks of length k-1 in the gap automaton.\n2. Use the walk-matrix correspondence to count walks.\n3. Sum over starting positions in [0, N] to get the asymptotic formula.\n4. Identify C with the left Perron-Frobenius eigenvector components.\n\n**Domain Bridges**: Number Theory (Hardy-Littlewood conjectures) \u2194 Combinatorics (walk counting) \u2194 Analysis (asymptotic enumeration)\n\n**Lineage**: Builds on `walkCount_eq_pow` and the GapSFT framework from this cycle.\n\n**Ambition**: grand_challenge\n",
     "domains": [
       "Pythagorean",
@@ -1138,7 +1138,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "f850bfff",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T05:44:10.064934+00:00",
     "title": "Walk-Matrix Correspondence \u2014 the fundamental"
   },
@@ -1681,7 +1681,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "c44581af",
+    "consumed_by_exp_id": "",
     "description": "The EML operator class (finite compositions of exp, log, +, *) has remarkable closure properties. Conjecture: The class of EML functions is closed under differentiation, and the derivative of any EML function of composition depth d is an EML function of composition depth at most d+1. Moreover, the derivative has a canonical EML chain rule form: (exp(h) * log(g))' = exp(h) * log(g) * (h' + g'/g). This factorization is the key structural insight: the derivative of an EML function factors through the original function itself, multiplied by a simple expression involving only the inner functions and their derivatives. This is stronger than the general Leibniz rule because the EML structure forces the derivative into a canonical form. For depth-d EML functions, the derivative can be written recursively as f' = f * (h'_1 + g'_1/g_1) where each h'_i and g'_i are depth-(d-1) EML functions. Test: compute the 3rd derivative of f(x) = exp(x^2) * log(x+1) and verify it can be written as an EML expression. Impact: establishes that EML functions form a differential algebra, enabling automatic EML differentiation for verified numerical computation.",
     "domains": [
       "EML",
@@ -1691,7 +1691,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.918546+00:00",
     "title": "EML Differential Calculus: Chain Rules for exp-log Compositions"
   },
@@ -2416,7 +2416,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hypergraph Ramsey Theory: Beyond Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e4d1fca",
     "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
     "domains": [
       "Novelty",
@@ -2426,7 +2426,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.834465+00:00",
     "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
   },
@@ -3781,7 +3781,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "701c22de",
     "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology \u2014 their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
     "domains": [
       "Novelty",
@@ -3791,7 +3791,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.617168+00:00",
     "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
@@ -4111,7 +4111,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
   {
-    "consumed_by_exp_id": "4e959d5b",
+    "consumed_by_exp_id": "",
     "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
     "domains": [
       "Novelty",
@@ -4121,7 +4121,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:31.018128+00:00",
     "title": "Counterfactual Number Theory: What If Primes Were Random?"
   },
@@ -4590,7 +4590,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
   },
   {
-    "consumed_by_exp_id": "c716c9f9",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
     "domains": [
       "Novelty"
@@ -4599,7 +4599,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.31999999999999984,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.629188+00:00",
     "title": "Speculative: Mathematics as a Phase Transition"
   },
@@ -4889,7 +4889,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rigorous topological foundation for modeling c"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2c81594e",
     "description": "# Future Directions: Dream Logic and Paraconsistent Reasoning\n\n## Synthesis\n\nThis research cycle established a formal bridge between paraconsistent logic (Belnap's four-valued bilattice), non-monotonic reasoning (closed-world assumption), and pre-topological geometry (dream spaces). The key discovery is that the failure of the principle of explosion in Belnap's logic has a precise geometric counterpart: dream spaces strictly generalize topological spaces by dropping the arbitrary union axiom, and this axiom failure corresponds exactly to the inability to combine infinitely many locally consistent observations into a globally consistent picture.\n\nThe most promising cross-domain connection is between dream spaces and the tropical semiring structures already formalized in the Catalog (`FINAL/Tropical/Closure.lean`, `FINAL/Tropical/ProductAutomaton.lean`). Tropical semirings replace (\u00d7, +) with (min, +), and this \"min\" operation shares a key property with dream spaces: it respects finite operations but can fail under infinite limits. A potential \"tropical dream space\" could unify both frameworks, where the min-plus algebra provides the numerical backbone and dream space geometry provides the logical structure.\n\nThe Separation Theorem (singleton dream space is not topological) and the Non-Explosion Theorem (Belnap's `both` sustains contradiction without collapse) are independently interesting, but their synthesis \u2014 that paraconsistency IS non-topologicity \u2014 is the core insight. Future cycles should explore whether this correspondence extends to richer paraconsistent logics (LP, FDE, relevance logics) and whether the resulting geometric structures have computable invariants.\n\n---\n\n### Direction 1: Tropical Dream Bilattices\n\n**Conjecture**: The tropical semiring (\u211d \u222a {\u221e}, min, +) can be extended to a four-valued bilattice structure analogous to BelnapVal, where the \"Both\" value corresponds to competing tropical paths and the dream space of consistent valuations is non-topological when the underlying graph has cycles.\n\n**Test**: Formalize a tropical BelnapVal with values {\u22a5, min-path, max-path, \u22a4} over a weighted directed graph with 4 vertices and 6 edges. Verify computationally that the dream space of consistent shortest-path assignments is not topological by finding a family of locally consistent path assignments whose union is globally inconsistent.\n\n**Impact**: If true, this would provide the first connection between tropical geometry and paraconsistent logic, potentially yielding new algorithms for shortest-path computation in networks with conflicting weight information. If false, the failure would reveal structural differences between the \"min\" of tropical semirings and the \"meet\" of bilattices that could inform tropical algebraic geometry.\n\n**Catalog References**: `FINAL/Tropical/Closure.lean` (tropical semiring closure), `FINAL/Tropical/ProductAutomaton.lean` (recognizable sets closed under tropical addition), `Logic/DreamLogic/Belnap.lean` (BelnapVal bilattice)\n\n**Proof Strategy**: Define TropicalBelnapVal as a product of tropical semiring elements with Belnap truth values. Prove that the knowledge ordering lifts to a lattice structure on pairs (tropical value, Belnap value). Construct the dream space of consistent assignments and prove non-topologicity by finding a union failure analogous to the even-singletons argument.\n\n**Domain Bridges**: Tropical Geometry <-> Paraconsistent Logic <-> Pre-Topological Spaces\n\n**Lineage**: Builds on this cycle's BelnapVal formalization and the Catalog's tropical semiring infrastructure.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Sheaves on Dream Spaces and Gluing Obstructions\n\n**Conjecture**: There exists a natural notion of \"dream presheaf\" on a dream space (a functor from the opposite category of open sets to a category of values) that satisfies a weakened gluing axiom: gluing succeeds for finite covers but can fail for infinite covers. The failure of gluing is classified by a cohomological invariant (a \"dream cohomology group\") that measures the degree of non-topologicity.\n\n**Test**: Compute the dream cohomology of the singleton dream space on \u2115 from this cycle. If the cohomology is trivial, the conjecture's classification claim is falsified. If nontrivial, compute it for the singleton dream space on Fin n for increasing n and check whether it stabilizes.\n\n**Impact**: A working dream cohomology theory would provide invariants distinguishing different dream spaces up to dream-morphism equivalence, analogous to how singular cohomology distinguishes topological spaces up to homotopy equivalence. This could have applications in distributed databases (measuring the \"contradiction content\" of a merged knowledge base).\n\n**Catalog References**: `Logic/DreamLogic/DreamSpace.lean` (dream space definition, morphisms, separation theorem)\n\n**Proof Strategy**: Define DreamPresheaf as a functor from the opposite poset of open sets (ordered by inclusion) to Set. State the gluing axiom parameterized by cover cardinality. Prove gluing holds for finite covers using the inter_mem axiom. Construct a counterexample to infinite gluing using the even-singletons family. Define the obstruction as the kernel of the natural gluing map.\n\n**Domain Bridges**: Algebraic Topology <-> Dream Logic <-> Category Theory\n\n**Lineage**: Extends this cycle's DreamMorphism category and Separation Theorem.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Belnap Logic and Argumentation Frameworks\n\n**Conjecture**: Every abstract argumentation framework (in the sense of Dung, 1995) with n arguments can be faithfully represented by a Belnap valuation on n propositions, where the \"Both\" value corresponds to arguments that are both attacked and supported, and the grounded extension corresponds to the unique minimal fixpoint under the knowledge ordering.\n\n**Test**: Enumerate all argumentation frameworks on 3 arguments (there are 2^(3\u00d73) = 512 possible attack relations). For each, compute the grounded extension classically and via the proposed Belnap encoding. Check agreement.\n\n**Impact**: If true, this would embed Dung's argumentation theory into Belnap's bilattice framework, inheriting all the structural theorems we proved (non-explosion, De Morgan, distributivity). If false for some framework, the counterexample would identify limitations of four-valued logic for capturing attack/support dynamics.\n\n**Catalog References**: `Logic/DreamLogic/Belnap.lean` (BelnapVal, kjoin, kmeet, designated), `Catalog/Geometry/ArgumentationTopology.lean` (if exists)\n\n**Proof Strategy**: Define an encoding function from argumentation frameworks to Belnap valuations. Prove that the characteristic function of an argumentation framework commutes with kjoin. Show the grounded extension equals the least fixpoint of iterated kjoin application starting from `neither`. Use the lattice properties of BelnapVal (which we proved) to establish existence and uniqueness of this fixpoint.\n\n**Domain Bridges**: Argumentation Theory <-> Paraconsistent Logic <-> Fixed Point Theory\n\n**Lineage**: Builds on this cycle's BelnapVal lattice structure and kjoin_is_lub theorem.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Decidability of Dream Space Isomorphism\n\n**Conjecture**: The isomorphism problem for finite dream spaces (given two dream spaces on Fin n, are they isomorphic via a dream morphism?) is in P for n \u2264 10 but becomes coNP-hard for general n.\n\n**Test**: Implement a brute-force isomorphism checker for dream spaces on Fin n. Run it for n = 2, 3, 4, 5 and catalog the number of non-isomorphic dream spaces. Compare with the number of non-isomorphic topological spaces on the same sets (a known sequence). If the dream space count grows significantly faster, this supports the hardness conjecture.\n\n**Impact**: If the isomorphism problem is hard, dream spaces are a natural source of hard combinatorial problems, potentially useful in cryptographic constructions or computational complexity lower bounds. If easy (in P for all n), this would suggest dream spaces have hidden structural regularity that could be exploited algorithmically.\n\n**Catalog References**: `Logic/DreamLogic/DreamSpace.lean` (dream space definition, dream morphisms)\n\n**Proof Strategy**: For the P upper bound at small n, use canonical form algorithms. For the coNP-hardness, attempt a reduction from graph isomorphism (embed a graph G into a dream space where isomorphism of dream spaces implies isomorphism of graphs). The key observation is that dream spaces generalize intersection-closed set families, whose isomorphism is known to be hard.\n\n**Domain Bridges**: Computational Complexity <-> Dream Logic <-> Combinatorics\n\n**Lineage**: Extends this cycle's DreamMorphism category structure.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Multi-Valued Dream Spaces and Continuous Paraconsistency\n\n**Conjecture**: Replacing BelnapVal's discrete four values with the unit square [0,1]\u00b2 (where the x-axis represents \"degree of truth\" and y-axis represents \"degree of falsity\") yields a continuous paraconsistent logic whose dream spaces are exactly the regular pre-topological spaces (those where every finite intersection of \"open\" fuzzy sets is \"open\").\n\n**Test**: Define ContinuousBelnapVal = [0,1]\u00b2 with designated region = {(x,y) | x \u2265 0.5}. Verify that the continuous analog of the Non-Explosion Theorem holds: there exist points (x,y) with x \u2265 0.5 \u2227 y \u2265 0.5 (contradictory but designated) while points with x < 0.5 exist (not designated). Then construct the dream space of continuous valuations and check non-topologicity.\n\n**Impact**: If true, this would connect Belnap's discrete four-valued logic to fuzzy logic and continuous model theory, providing a geometric unification. The regular pre-topological space characterization would be a novel mathematical result with potential applications in fuzzy control systems and approximate reasoning.\n\n**Catalog References**: `Logic/DreamLogic/Belnap.lean` (BelnapVal, designated, non_explosion), `Logic/DreamLogic/DreamSpace.lean` (DreamSpace, IsTopological)\n\n**Proof Strategy**: Define ContinuousBelnapVal as a subtype of \u211d \u00d7 \u211d. Define continuous analogs of tconj, tdisj, neg using min/max operations. Prove the continuous Non-Explosion Theorem. Define the dream space of continuous valuations using sub-level sets. Prove non-topologicity by finding a family of \"open\" fuzzy sets whose union's sub-level set is not \"open.\"\n\n**Domain Bridges**: Fuzzy Logic <-> Paraconsistent Logic <-> Continuous Geometry <-> Pre-Topological Spaces\n\n**Lineage**: Direct generalization of this cycle's discrete BelnapVal to continuous domain.\n\n**Ambition**: extension\n",
     "domains": [
       "Algebra",
@@ -4899,7 +4899,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "ac271f1e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T05:44:48.647271+00:00",
     "title": "Formal bridge between paraconsistent logic (Be"
   },
@@ -4949,7 +4949,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce15cb4d",
     "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
     "domains": [
       "Novelty",
@@ -4959,7 +4959,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.713166+00:00",
     "title": "Speculative: Computational Complexity as Physical Law"
   },
@@ -5039,7 +5039,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Topological Data Analysis of Theorem Networks"
   },
   {
-    "consumed_by_exp_id": "c0b7fa4f",
+    "consumed_by_exp_id": "",
     "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
     "domains": [
       "Novelty",
@@ -5049,7 +5049,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.923091+00:00",
     "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
   },
