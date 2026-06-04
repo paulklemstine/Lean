@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e993c5ba",
     "filename": "tropical_cryptography_min_plus_diffie_hellman.json",
     "pkg_num": 343,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.69584,
     "title": "Tropical Min-Plus Diffie-Hellman: Centralizer Submonoids and Security Boundaries"
   },
   {
@@ -11077,8 +11077,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "tropical_cryptography_min_plus_diffie_hellman",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.69584,
+      "quality": "partial",
       "shape": "dodecahedron",
       "title": "Tropical Min-Plus Diffie-Hellman: Centralizer Submonoids and Security Boundaries"
     }

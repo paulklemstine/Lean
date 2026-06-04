@@ -662,21 +662,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curve Counting: Gromov-Witten Invariants"
   },
   {
-    "consumed_by_exp_id": "e993c5ba",
-    "description": "Construct a Diffie-Hellman key exchange over the tropical semiring (min-plus algebra). Prove that the tropical matrix product problem is NP-hard for matrices over the min-plus semiring. Analyze security against known tropical cryptanalysis techniques.",
-    "domains": [
-      "Tropical",
-      "Cryptography"
-    ],
-    "id": "fd_0474",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:31.304139+00:00",
-    "title": "Tropical Cryptography: Min-Plus Diffie-Hellman"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius. Formalize the connection between graph spectra and function Lipschitz constants.",
     "domains": [
@@ -3032,6 +3017,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Centralizer Cryptography\n\n## Synthesis\n\nThis research cycle established the **tropical centralizer sub-semiring** as a novel algebraic structure and proved it serves as a sound platform for Diffie-Hellman-style key exchange. The key discovery is that the centralizer of a tropical matrix is closed under BOTH tropical addition (min) and multiplication (ordinary +) \u2014 a purely tropical phenomenon that doesn't hold for centralizers in arbitrary non-commutative semirings. This sub-semiring structure creates a richer secret space than previously known, but also introduces new attack surfaces that must be analyzed.\n\nThe security analysis revealed a clear hierarchy: scalar matrices (zero security) \u2192 rank-1 matrices (low security, polynomial-time DLP) \u2192 generic matrices (conjecturally exponential security). The critical open problem is quantifying the **centralizer gap** \u2014 the ratio between the centralizer size and the full matrix space \u2014 for generic matrices. Computational experiments show exponential decay in the centralizer fraction as dimension grows, but a rigorous proof remains elusive.\n\nThe most promising cross-domain connection is between tropical centralizer structure and **NP-hardness of tropical factorization** (established in `TropicalNPHardness.lean`). If the Tropical Centralizer Decomposition Problem (TCDP) can be reduced to tropical factorization, this would provide the first provable hardness guarantee for a tropical cryptographic protocol.\n\n---\n\n### Direction 1: Centralizer Gap Quantification via Tropical Rank Theory\n\n**Conjecture**: For a generic n\u00d7n tropical matrix G with entries independently and uniformly distributed in {0, 1, ..., B} where B \u2265 n, the expected centralizer size satisfies E[|C(G) \u2229 {0,...,B}^{n\u00d7n}|] \u2264 (B+1)^{cn} for some absolute constant c \u2264 3.\n\n**Test**: Compute exact centralizer sizes for n = 2, 3, 4 with B = 2, 3 using exhaustive enumeration. Fit the exponent: if |C(G)| \u2248 (B+1)^{\u03b1n}, estimate \u03b1. If \u03b1 > 3 for any n \u2264 4, the conjecture is refuted.\n\n**Impact**: If true, this establishes that TCKE has at least (B+1)^{n\u00b2 - cn} = exponential security gap, making it a viable post-quantum candidate. If false, it identifies a structural weakness requiring protocol modification.\n\n**Catalog References**: `Cryptography/TropicalMinPlusDH.lean` (centralizer_proper_of_nonscalar, key_space_centralizer_gap), `Cryptography/TropicalNPHardness.lean` (boolFact_iff_tropFact)\n\n**Proof Strategy**: \n1. Establish that commuting with G imposes n\u00b2 linear constraints (over the tropical semiring) on the entries of M.\n2. Show that for generic G, these constraints are \"independent\" in the tropical sense \u2014 the tropical rank of the constraint system is n\u00b2 - O(n).\n3. Count solutions of a tropical linear system of rank r: at most (B+1)^{n\u00b2 - r} solutions.\nThe main technical challenge is defining and computing tropical rank for the specific constraint system M\u2297G = G\u2297M.\n\n**Domain Bridges**: Tropical geometry (tropical rank) \u2194 Cryptography (centralizer gap) \u2194 Combinatorics (counting solutions)\n\n**Lineage**: Builds on `centralizer_proper_of_nonscalar` and `key_space_centralizer_gap` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: TCDP Hardness via Reduction from Tropical Factorization\n\n**Conjecture**: The Tropical Centralizer Decomposition Problem (given G and P = A\u2297G where A \u2208 C(G), recover A) is NP-hard for n \u2265 3.\n\n**Test**: Construct an explicit polynomial-time reduction from the tropical matrix factorization problem (known NP-complete by `boolFact_iff_tropFact`) to the TCDP. Alternatively, show that solving TCDP for a specific family of generators G encodes a known NP-hard problem.\n\n**Impact**: This would be the FIRST provable hardness guarantee for any tropical cryptographic protocol, elevating tropical cryptography from \"plausibly hard\" to \"provably hard (assuming P \u2260 NP).\"\n\n**Catalog References**: `Cryptography/TropicalNPHardness.lean` (boolFact_iff_tropFact, tropFact_NPComplete_relative), `Cryptography/TropicalMinPlusDH.lean` (TropCentralizer, tcke_comm_correctness)\n\n**Proof Strategy**:\n1. Given a tropical factorization instance (find A, B with A\u2297B = M), construct a generator G such that the factorization is equivalent to finding A \u2208 C(G) with A\u2297G = P for some P derived from M.\n2. The key insight: if G is the \"block extension\" [[I, M], [0, I]], then centralizer elements encode factorizations of M.\n3. Formalize the reduction in Lean 4, building on the existing NP-completeness proof.\n\n**Domain Bridges**: Complexity theory (NP-hardness) \u2194 Tropical algebra (factorization) \u2194 Cryptography (TCDP)\n\n**Lineage**: Builds on `boolFact_iff_tropFact` from TropicalNPHardness.lean and TCKE from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Tropical Centralizer Lattice Structure\n\n**Conjecture**: For a fixed generator G, the set of all sub-semirings of C(G) forms a complete lattice under inclusion, and the lattice structure encodes the \"difficulty spectrum\" of TCDP instances \u2014 generators whose centralizer lattices are \"tall\" (many nested sub-semirings) yield harder TCDP instances.\n\n**Test**: For n = 2, 3, compute the lattice of sub-semirings of C(G) for several generators G. Check if the lattice height correlates with brute-force TCDP solution time.\n\n**Impact**: Would provide a structural criterion for selecting cryptographically strong generators, replacing heuristic parameter selection with provable guarantees.\n\n**Catalog References**: `Cryptography/TropicalMinPlusDH.lean` (tropCentralizerSubsemiring, centralizer_add_closed)\n\n**Proof Strategy**:\n1. Prove that arbitrary intersections of sub-semirings of C(G) are sub-semirings (closure under arbitrary meet).\n2. Prove that the join of two sub-semirings (generated sub-semiring) is well-defined.\n3. Establish the lattice structure formally in Lean 4.\n4. Compute the lattice for small examples and correlate with TCDP hardness.\n\n**Domain Bridges**: Lattice theory \u2194 Tropical algebra \u2194 Cryptographic security\n\n**Lineage**: Builds on tropCentralizerSubsemiring from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Tropical Idempotent Closure and Kleene Star Attacks\n\n**Conjecture**: For tropical matrices with all entries non-negative and at least one zero diagonal entry, the Kleene star A* = I \u2295 A \u2295 A\u00b2 \u2295 A\u00b3 \u2295 ... converges in at most n steps, and the resulting matrix A* encodes all-pairs shortest paths. When A* exists and is easily computable, it provides a polynomial-time attack on TCKE with generator A.\n\n**Test**: For random 4\u00d74 non-negative tropical matrices, compute A, A\u00b2, ..., A^n and check if the sequence stabilizes (A^k = A^{k+1} for some k \u2264 n). Verify that stabilization enables TCDP solution.\n\n**Impact**: Identifies a large class of generators that are INSECURE for TCKE, refining the security boundary beyond the rank-1 case.\n\n**Catalog References**: `Cryptography/TropicalMinPlusDH.lean` (idempotent_power_stable, IsTropIdempotent)\n\n**Proof Strategy**:\n1. Prove that for non-negative matrices, the sequence I, A, A\u00b2, ... is eventually idempotent (A^n is idempotent).\n2. Prove that idempotent generators make TCDP trivial (the centralizer can be characterized explicitly).\n3. This extends `idempotent_power_stable` from the current cycle to a full stabilization theorem.\n\n**Domain Bridges**: Graph theory (all-pairs shortest paths) \u2194 Tropical algebra (Kleene star) \u2194 Cryptography (attack)\n\n**Lineage**: Builds on idempotent_power_stable and IsTropIdempotent from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Non-Commutative Tropical Signatures via Commutator Structure\n\n**Conjecture**: The tropical commutator [A, B] = A\u2297B \u2295 B\u2297A can be used to construct a signature scheme: the \"commutator gap\" \u2016A\u2297B - [A,B]\u2016 (measured entry-wise) is a one-way function of (A, B).\n\n**Test**: For random 3\u00d73 tropical matrices, compute the commutator and measure the gap. Check if recovering (A, B) from ([A,B], A\u2297B) is computationally hard by exhaustive search for small parameters.\n\n**Impact**: Would yield the first tropical digital signature scheme, complementing the key exchange protocol.\n\n**Catalog References**: `Cryptography/TropicalMinPlusDH.lean` (tropCommutator, commutator_le_left, commutator_comm)\n\n**Proof Strategy**:\n1. Define the \"commutator gap\" formally as a tropical matrix.\n2. Prove structural properties: the gap is zero iff A and B commute.\n3. Show that the gap function is hard to invert by connecting to tropical system-solving.\n4. Design and formalize the signature protocol.\n\n**Domain Bridges**: Non-commutative algebra (commutators) \u2194 Cryptography (signatures) \u2194 Complexity (one-way functions)\n\n**Lineage**: Builds on tropCommutator and commutator theorems from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0609",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e993c5ba",
+    "status": "available",
+    "timestamp": "2026-06-04T06:40:45.783529+00:00",
+    "title": "**tropical centralizer sub-semiring** as a n"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domains": [
       "Novelty",
@@ -3346,7 +3346,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
   {
-    "consumed_by_exp_id": "032fc0ca",
+    "consumed_by_exp_id": "",
     "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
     "domains": [
       "Novelty",
@@ -3356,7 +3356,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.728070+00:00",
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
@@ -4799,7 +4799,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "133d7308",
     "description": "Treat Lean 4's type checker as an 'environment' and formalized mathematics as 'organisms' adapting to it. Define fitness: f(M) = (number of theorems proved by M) / (lines of code in M). Prove: the fitness landscape has local optima corresponding to 'mathematical styles' (algebraic, analytic, combinatorial). Conjecture: Mathlib is a global fitness maximum for the set of theories expressible in CIC. Show: migrating a proof from one local optimum to another requires crossing a 'fitness valley' of temporarily decreased fitness.",
     "domains": [
       "Novelty",
@@ -4809,7 +4809,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:37.096925+00:00",
     "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
   },

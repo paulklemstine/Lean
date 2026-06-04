@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T06:09:04.898417+00:00",
+  "last_updated": "2026-06-04T06:40:47.413993+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -1632,6 +1632,40 @@
       "theorem_count": 4,
       "timestamp": "2026-06-04T06:09:04.843169+00:00",
       "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4226,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 2,
+      "domain": "Cryptography",
+      "duration_seconds": 3933.779547929764,
+      "end_time": 1780555217.3778105,
+      "files_integrated": 5,
+      "job_id": "e993c5ba",
+      "outcome_quality": 0.69584,
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8191,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7139,
+        "novelty": 0.95,
+        "proof_depth": 0.6127,
+        "usefulness": 0.8064
+      },
+      "quality_score": 0.69584,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780551283.5982625,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T06:40:47.356117+00:00",
+      "title": "Tropical Cryptography: Min-Plus Diffie-Hellman"
     }
   ]
 }
