@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "032fc0ca",
     "filename": "the_hodge_conjecture_for_neural_networks_algebraic.json",
     "pkg_num": 346,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.26824000000000003,
     "title": "The Graded Sign Poset: Algebraic Cycles and Topological Bounds for Neural Network Decision Surfaces"
   },
   {
@@ -11164,8 +11164,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_hodge_conjecture_for_neural_networks_algebraic",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.26824000000000003,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "The Graded Sign Poset: Algebraic Cycles and Topological Bounds for Neural Network Decision Surfaces"
     }
