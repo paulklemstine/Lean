@@ -1,207 +1,238 @@
 #!/usr/bin/env python3
 """
-Algorithms for Matroid Minor Theory
+Algorithms for Matroid Minor Theory and WQO
 
-Type-hinted implementations of key algorithms for:
-1. Rank function computation and validation
-2. Matroid deletion and contraction
-3. Minor relation testing
-4. Rank filtration decomposition
-5. Antichain detection in the minor order
+Type-hinted implementations of the core algorithms from the research.
 """
 
-from typing import Dict, FrozenSet, Set, List, Tuple, Optional
-import itertools
+from typing import (Callable, Dict, FrozenSet, Generic, List, Optional,
+                     Protocol, Set, Tuple, TypeVar)
+from dataclasses import dataclass
+from itertools import combinations
 
-# Type aliases
-Element = int
-Subset = FrozenSet[Element]
-RankFunction = Dict[Subset, int]
-
-
-def all_subsets(ground: FrozenSet[Element]) -> List[Subset]:
-    """Generate all subsets of a ground set."""
-    elements = sorted(ground)
-    result: List[Subset] = []
-    for i in range(len(elements) + 1):
-        for combo in itertools.combinations(elements, i):
-            result.append(frozenset(combo))
-    return result
+T = TypeVar('T')
 
 
-def validate_rank_function(ground: FrozenSet[Element], r: RankFunction) -> bool:
+@dataclass(frozen=True)
+class RankMatroid:
+    """A finite matroid represented by its ground set and rank function."""
+    ground_set: FrozenSet[int]
+    _rank_values: Dict[FrozenSet[int], int]
+
+    def rank(self, A: FrozenSet[int]) -> int:
+        """Return the rank of subset A."""
+        return self._rank_values.get(A, 0)
+
+    @property
+    def full_rank(self) -> int:
+        return self.rank(self.ground_set)
+
+    @property
+    def size(self) -> int:
+        return len(self.ground_set)
+
+
+def matroid_delete(M: RankMatroid, e: int) -> RankMatroid:
     """
-    Validate that r satisfies the matroid rank axioms:
-    (R1) 0 ≤ r(A) ≤ |A|
-    (R2) A ⊆ B ⟹ r(A) ≤ r(B)  (monotonicity)
-    (R3) r(A∪B) + r(A∩B) ≤ r(A) + r(B)  (submodularity)
+    Deletion: M \\ e
+    Remove element e from the ground set; rank function restricted to E \\ {e}.
+
+    Time complexity: O(2^|E|)
     """
-    subsets = all_subsets(ground)
-    # R1: boundedness
-    for s in subsets:
-        if not (0 <= r[s] <= len(s)):
-            return False
-    # R2: monotonicity
-    for a in subsets:
-        for b in subsets:
-            if a <= b and r[a] > r[b]:
-                return False
-    # R3: submodularity
-    for a in subsets:
-        for b in subsets:
-            if r[a | b] + r[a & b] > r[a] + r[b]:
-                return False
-    return True
+    new_E = M.ground_set - {e}
+    new_rank: Dict[FrozenSet[int], int] = {}
+    for size in range(len(new_E) + 1):
+        for subset in combinations(sorted(new_E), size):
+            fs = frozenset(subset)
+            new_rank[fs] = M.rank(fs)
+    return RankMatroid(new_E, new_rank)
 
 
-def compute_deletion(ground: FrozenSet[Element], r: RankFunction,
-                     d: FrozenSet[Element]) -> Tuple[FrozenSet[Element], RankFunction]:
+def matroid_contract(M: RankMatroid, e: int) -> RankMatroid:
     """
-    Compute M \ D: deletion of elements D from matroid M.
-    r_{M\D}(A) = r_M(A) for A ⊆ E \ D.
+    Contraction: M / e
+    Contract element e; rank_{M/e}(A) = rank_M(A ∪ {e}) - rank_M({e}).
 
-    Returns: (new_ground_set, new_rank_function)
+    Time complexity: O(2^|E|)
     """
-    new_ground = ground - d
-    new_r: RankFunction = {}
-    for s in all_subsets(new_ground):
-        new_r[s] = r[s]
-    return new_ground, new_r
+    new_E = M.ground_set - {e}
+    re = M.rank(frozenset({e}))
+    new_rank: Dict[FrozenSet[int], int] = {}
+    for size in range(len(new_E) + 1):
+        for subset in combinations(sorted(new_E), size):
+            fs = frozenset(subset)
+            new_rank[fs] = M.rank(fs | {e}) - re
+    return RankMatroid(new_E, new_rank)
 
 
-def compute_contraction(ground: FrozenSet[Element], r: RankFunction,
-                        c: FrozenSet[Element]) -> Tuple[FrozenSet[Element], RankFunction]:
+def uniform_matroid(r: int, n: int) -> RankMatroid:
     """
-    Compute M / C: contraction of elements C from matroid M.
-    r_{M/C}(A) = r_M(A ∪ C) - r_M(C) for A ⊆ E \ C.
-
-    Returns: (new_ground_set, new_rank_function)
+    Construct the uniform matroid U_{r,n}.
+    rank(A) = min(|A|, r) for all A.
     """
-    new_ground = ground - c
-    r_c = r[c]
-    new_r: RankFunction = {}
-    for s in all_subsets(new_ground):
-        new_r[s] = r[s | c] - r_c
-    return new_ground, new_r
-
-
-def compute_dual(ground: FrozenSet[Element], r: RankFunction) -> RankFunction:
-    """
-    Compute the dual matroid M*.
-    r*(A) = |A| + r(E \ A) - r(E)
-    """
-    r_E = r[ground]
-    dual_r: RankFunction = {}
-    for s in all_subsets(ground):
-        complement = ground - s
-        dual_r[s] = len(s) + r[complement] - r_E
-    return dual_r
+    ground_set = frozenset(range(n))
+    rank_values: Dict[FrozenSet[int], int] = {}
+    for size in range(n + 1):
+        for subset in combinations(range(n), size):
+            fs = frozenset(subset)
+            rank_values[fs] = min(len(fs), r)
+    return RankMatroid(ground_set, rank_values)
 
 
-def find_minor_witness(
-    target_ground: FrozenSet[Element], target_r: RankFunction,
-    source_ground: FrozenSet[Element], source_r: RankFunction
-) -> Optional[Tuple[FrozenSet[Element], FrozenSet[Element]]]:
+def is_minor(M1: RankMatroid, M2: RankMatroid) -> bool:
     """
-    Find C, D such that target = source / C \ D, if they exist.
-    Returns (C, D) or None.
+    Check if M1 is a minor of M2 (brute force).
+    Tries all sequences of deletions and contractions.
+
+    Time complexity: O(|E2|! · 2^|E2|) — exponential, for small instances only.
     """
-    elements = sorted(source_ground)
-    for c_size in range(len(elements) + 1):
-        for c_combo in itertools.combinations(elements, c_size):
-            c = frozenset(c_combo)
-            remaining = source_ground - c
-            contracted_ground, contracted_r = compute_contraction(source_ground, source_r, c)
-            for d_size in range(len(list(remaining)) + 1):
-                for d_combo in itertools.combinations(sorted(remaining), d_size):
-                    d = frozenset(d_combo)
-                    minor_ground, minor_r = compute_deletion(contracted_ground, contracted_r, d)
-                    if minor_ground == target_ground:
-                        if all(minor_r[s] == target_r[s]
-                               for s in all_subsets(target_ground)):
-                            return c, d
+    if M1.size > M2.size:
+        return False
+    if M1.size == M2.size:
+        return _are_isomorphic(M1, M2)
+    for e in M2.ground_set:
+        if is_minor(M1, matroid_delete(M2, e)):
+            return True
+        if is_minor(M1, matroid_contract(M2, e)):
+            return True
+    return False
+
+
+def _are_isomorphic(M1: RankMatroid, M2: RankMatroid) -> bool:
+    """Check if two matroids are isomorphic (brute force permutation check)."""
+    if M1.size != M2.size:
+        return False
+    from itertools import permutations
+    elts1 = sorted(M1.ground_set)
+    elts2 = sorted(M2.ground_set)
+    for perm in permutations(elts2):
+        mapping = dict(zip(elts1, perm))
+        if all(M2.rank(frozenset(mapping[x] for x in fs)) == M1.rank(fs)
+               for fs in M1._rank_values):
+            return True
+    return False
+
+
+def find_excluded_minors(
+    matroids: List[RankMatroid],
+    property_fn: Callable[[RankMatroid], bool]
+) -> List[RankMatroid]:
+    """
+    Find excluded minors for a minor-closed property among a list of matroids.
+
+    An excluded minor is a matroid M such that:
+    - property_fn(M) is False
+    - For all proper minors M' of M, property_fn(M') is True
+
+    Algorithm:
+    1. Filter to matroids failing the property
+    2. For each, check if all single-element deletions/contractions satisfy the property
+    3. Return those that pass the check
+
+    Time complexity: O(n · |E| · T_property) where T_property is the cost of property_fn
+    """
+    excluded: List[RankMatroid] = []
+    for M in matroids:
+        if property_fn(M):
+            continue
+        # Check if all proper minors satisfy the property
+        is_excluded = True
+        for e in M.ground_set:
+            if not property_fn(matroid_delete(M, e)):
+                is_excluded = False
+                break
+            if not property_fn(matroid_contract(M, e)):
+                is_excluded = False
+                break
+        if is_excluded:
+            excluded.append(M)
+    return excluded
+
+
+def obstruction_spectrum(
+    excluded_minors: List[RankMatroid]
+) -> Dict[int, int]:
+    """
+    Compute the obstruction spectrum: σ(k) = number of excluded minors of size k.
+
+    Under WQO, this function has finite support.
+    """
+    spectrum: Dict[int, int] = {}
+    for M in excluded_minors:
+        k = M.size
+        spectrum[k] = spectrum.get(k, 0) + 1
+    return dict(sorted(spectrum.items()))
+
+
+def verify_wqo_sequence(
+    sequence: List[RankMatroid],
+    le_fn: Callable[[RankMatroid, RankMatroid], bool]
+) -> Optional[Tuple[int, int]]:
+    """
+    Verify the WQO property for a finite sequence: find i < j with seq[i] ≤ seq[j].
+
+    Returns the pair (i, j) if found, None otherwise.
+    For a true WQO, any sufficiently long sequence will have such a pair.
+    """
+    for i in range(len(sequence)):
+        for j in range(i + 1, len(sequence)):
+            if le_fn(sequence[i], sequence[j]):
+                return (i, j)
     return None
 
 
-def rank_filtration(
-    matroids: List[Tuple[FrozenSet[Element], RankFunction]]
-) -> Dict[int, List[int]]:
+def dickson_product_check(
+    seq: List[Tuple[int, int]]
+) -> Optional[Tuple[int, int]]:
     """
-    Decompose a list of matroids by rank level.
-    Returns: {rank: [indices into matroids list]}
+    Verify Dickson's lemma for a sequence of pairs: find i < j with
+    seq[i][0] ≤ seq[j][0] and seq[i][1] ≤ seq[j][1].
+
+    Dickson's lemma guarantees this exists for any infinite sequence.
     """
-    filtration: Dict[int, List[int]] = {}
-    for i, (ground, r) in enumerate(matroids):
-        rank = r[ground]
-        if rank not in filtration:
-            filtration[rank] = []
-        filtration[rank].append(i)
-    return filtration
+    for i in range(len(seq)):
+        for j in range(i + 1, len(seq)):
+            if seq[i][0] <= seq[j][0] and seq[i][1] <= seq[j][1]:
+                return (i, j)
+    return None
 
 
-def find_antichains(
-    matroids: List[Tuple[FrozenSet[Element], RankFunction]]
-) -> List[List[int]]:
+def gf_matrix_rank(matrix: List[List[int]], p: int) -> int:
     """
-    Find maximal antichains in the minor order.
-    Uses a greedy approach — not guaranteed optimal but finds all pairwise-incomparable sets.
+    Compute the rank of a matrix over GF(p) using Gaussian elimination.
+
+    Pseudocode:
+    1. For each column, find a nonzero pivot in the remaining rows.
+    2. Swap the pivot row into position and scale to make the pivot 1.
+    3. Eliminate all other entries in the column.
+    4. The rank is the number of pivots found.
     """
-    n = len(matroids)
-    # Build comparability matrix
-    comparable = [[False] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            if i != j:
-                result = find_minor_witness(
-                    matroids[i][0], matroids[i][1],
-                    matroids[j][0], matroids[j][1])
-                if result is not None:
-                    comparable[i][j] = True
-
-    # Find all maximal antichains using backtracking
-    antichains: List[List[int]] = []
-
-    def backtrack(start: int, current: List[int]) -> None:
-        is_maximal = True
-        for i in range(start, n):
-            if all(not comparable[i][j] and not comparable[j][i]
-                   for j in current):
-                is_maximal = False
-                backtrack(i + 1, current + [i])
-        if is_maximal and len(current) > 0:
-            antichains.append(current[:])
-
-    backtrack(0, [])
-    return antichains
+    if not matrix or not matrix[0]:
+        return 0
+    m, n = len(matrix), len(matrix[0])
+    mat = [row[:] for row in matrix]
+    rank = 0
+    for col in range(n):
+        pivot = next((r for r in range(rank, m) if mat[r][col] % p != 0), None)
+        if pivot is None:
+            continue
+        mat[rank], mat[pivot] = mat[pivot], mat[rank]
+        inv = pow(mat[rank][col], p - 2, p)
+        mat[rank] = [(x * inv) % p for x in mat[rank]]
+        for row in range(m):
+            if row != rank and mat[row][col] % p != 0:
+                factor = mat[row][col]
+                mat[row] = [(mat[row][j] - factor * mat[rank][j]) % p for j in range(n)]
+        rank += 1
+    return rank
 
 
-def uniform_matroid(n: int, k: int) -> Tuple[FrozenSet[Element], RankFunction]:
-    """Create the uniform matroid U(k,n)."""
-    ground = frozenset(range(n))
-    r: RankFunction = {}
-    for s in all_subsets(ground):
-        r[s] = min(len(s), k)
-    return ground, r
-
-
-# Quick test
 if __name__ == "__main__":
-    g, r = uniform_matroid(4, 2)
-    assert validate_rank_function(g, r)
-    print("U(2,4) validated")
+    # Quick test
+    u23 = uniform_matroid(2, 3)
+    u24 = uniform_matroid(2, 4)
+    print(f"U_{{2,3}} is a minor of U_{{2,4}}: {is_minor(u23, u24)}")
+    print(f"U_{{2,4}} is a minor of U_{{2,3}}: {is_minor(u24, u23)}")
 
-    g_del, r_del = compute_deletion(g, r, frozenset({3}))
-    assert validate_rank_function(g_del, r_del)
-    print("U(2,4) \\ {3} validated")
-
-    g_con, r_con = compute_contraction(g, r, frozenset({0}))
-    assert validate_rank_function(g_con, r_con)
-    print("U(2,4) / {0} validated")
-
-    r_dual = compute_dual(g, r)
-    assert validate_rank_function(g, r_dual)
-    print("U(2,4)* validated")
-
-    w = find_minor_witness(*uniform_matroid(3, 2), *uniform_matroid(4, 2))
-    print(f"U(2,3) ≤ U(2,4) via C={w[0] if w else 'N/A'}, D={w[1] if w else 'N/A'}")
-    print("All algorithms validated.")
+    spec = obstruction_spectrum([u24])
+    print(f"Obstruction spectrum: {spec}")

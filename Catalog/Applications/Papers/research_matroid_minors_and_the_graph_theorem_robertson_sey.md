@@ -1,178 +1,185 @@
-# Rank-Filtered Minor Ideals: A Framework for the Robertson-Seymour Conjecture for Matroids
+# Matroid Minors and Well-Quasi-Ordering: A Formal Framework for the Robertson-Seymour Paradigm
 
 ## Abstract
 
-We introduce **Rank-Filtered Minor Ideals (RFMIs)**, a novel mathematical structure that provides a systematic framework for studying the Robertson-Seymour conjecture for representable matroids. An RFMI is a minor-closed collection of matroids equipped with a natural filtration by rank, where the *width* (maximum antichain size) at each filtration level controls the existence of finite forbidden minor characterizations.
-
-We formalize matroid theory from first principles using rank functions on finite ground sets, define deletion, contraction, duality, and the minor relation, and prove that: (1) the rank of a minor never exceeds the rank of the parent matroid; (2) each filtration level of an RFMI is itself minor-closed; (3) the filtration width is monotone and uniformly bounded on finite ground sets; (4) well-quasi-ordering of the minor relation implies finite width at all levels; and (5) WQO combined with the antichain property yields finite forbidden minor characterizations. All results are machine-verified in Lean 4 with Mathlib.
-
-We also identify a negative result: the classical duality theorem for minors ("the dual of a minor is a minor of the dual") fails in fixed-ground-set representations, revealing a fundamental modeling tension for the Robertson-Seymour program.
+We develop a formal framework for studying matroid minor theory within the well-quasi-ordering (WQO) paradigm. Our main contributions are: (1) a complete formalization of abstract minor systems with size-graded partial orders; (2) a proof that excluded minors form antichains, leading to the fundamental theorem that WQO implies finitely many excluded minors for any minor-closed property; (3) a forbidden minor characterization theorem showing that every minor-closed property in a WQO class is determined by a finite forbidden set; (4) a novel "obstruction spectrum" invariant that fingerprints minor-closed properties by counting excluded minors at each size level; (5) a formal proof of Dickson's lemma (products of WQOs are WQOs); and (6) structural results including monotonicity of excluded minor counts under property inclusion. All results have been formalized and mechanically verified, with no unproven assumptions.
 
 ## 1. Introduction
 
-The Robertson-Seymour theorem [RS04] states that the set of finite graphs, ordered by the minor relation, forms a well-quasi-order (WQO). This deep structural result implies that any minor-closed graph property is characterized by a finite set of forbidden minors — a consequence of profound algorithmic significance.
+The Robertson-Seymour theorem [RS04] states that finite graphs are well-quasi-ordered by the minor relation: any infinite sequence of graphs contains a pair where one is a minor of the other. This deep theorem, proved over two decades in a series of 23 papers, has profound consequences for structural graph theory and algorithm design.
 
-Matroids, introduced by Whitney [Whi35], generalize both graphs and linear independence. A natural question, raised by Robertson and Seymour themselves, is whether their theorem extends to representable matroids: for a fixed finite field F_q, is the class of F_q-representable matroids WQO under the matroid minor relation?
+The Geelen-Gerards-Whittle (GGW) conjecture extends this to matroid theory: for any finite field 𝔽_q, the class of 𝔽_q-representable matroids is well-quasi-ordered by the matroid minor relation. This conjecture would unify graph minor theory with matroid theory, since graphic matroids correspond to 𝔽₂-representable matroids.
 
-This conjecture is known to fail for general matroids (via infinite antichains of non-representable matroids [BDHK18]), but remains open for all finite fields. Geelen, Gerards, and Whittle [GGW14] announced a proof for F_q-representable matroids, though the complete details have not yet appeared.
+In this paper, we develop an abstract framework that captures the essential structure underlying both the Robertson-Seymour theorem and the GGW conjecture. Our framework is based on "minor systems" — partial orders equipped with a size function satisfying the descending chain condition for the strict part of the ordering. Within this framework, we prove the key structural theorems that connect WQO to forbidden minor characterizations.
 
-In this paper, we introduce a structured approach to the problem via **Rank-Filtered Minor Ideals**: minor-closed collections of matroids decomposed by rank. This framework:
+### 1.1 Main Results
 
-- Reduces the WQO question to finite combinatorial questions at each rank level,
-- Provides explicit computable bounds on antichain sizes,
-- Is fully formalized in Lean 4, yielding machine-verified proofs.
+**Theorem (Excluded Minors are Antichains).** In a minor system with antisymmetry, if m₁ and m₂ are both excluded minors for a minor-closed property P, and m₁ ≤ m₂, then m₁ = m₂.
+
+**Theorem (WQO ⟹ Finite Excluded Minors).** If a class C is well-quasi-ordered by the minor relation, then every minor-closed property P has finitely many excluded minors within C.
+
+**Theorem (Forbidden Minor Characterization).** If C is WQO and minor-closed, then every minor-closed property P is completely characterized by a finite set F of forbidden minors: an element m ∈ C fails P if and only if some element of F is a minor of m.
+
+**Theorem (Dickson's Lemma for WQO).** The product of two well-quasi-orders is a well-quasi-order under componentwise ordering.
+
+**Theorem (Obstruction Spectrum Finiteness).** The obstruction spectrum of a minor-closed property in a WQO class has finite support.
+
+**Theorem (Excluded Minor Monotonicity).** If P ⊆ Q are minor-closed, then every excluded minor of Q contains an excluded minor of P.
 
 ## 2. Definitions
 
-### 2.1 Rank Matroids
+### 2.1 Finite Matroids
 
-**Definition 2.1** (RankMatroid). A *rank matroid* on ground set {0, 1, ..., n-1} is a function r : 2^E → ℕ satisfying:
-- (R1) **Boundedness**: 0 ≤ r(A) ≤ |A| for all A ⊆ E
-- (R2) **Monotonicity**: A ⊆ B implies r(A) ≤ r(B)
-- (R3) **Submodularity**: r(A ∪ B) + r(A ∩ B) ≤ r(A) + r(B)
+We define a finite matroid M on a ground set E via a rank function rk : 2^E → ℕ satisfying:
+- (R1) rk(∅) = 0
+- (R2) rk(A) ≤ |A| for all A ⊆ E
+- (R3) A ⊆ B ⟹ rk(A) ≤ rk(B) (monotonicity)
+- (R4) rk(A ∪ B) + rk(A ∩ B) ≤ rk(A) + rk(B) (submodularity)
 
-The *rank* of the matroid is r(E).
+From these axioms, we derive:
+- **Unit increase**: rk(A ∪ {e}) ≤ rk(A) + 1
+- **Monotonicity corollary**: rk(A) ≤ rk(A ∪ {e})
+- **Loop property**: If e is a loop (rk({e}) = 0), then rk(A ∪ {e}) = rk(A)
 
-### 2.2 Deletion and Contraction
+### 2.2 Well-Quasi-Ordering
 
-**Definition 2.2** (Deletion). For D ⊆ E, the *deletion* M \ D has rank function r_{M\D}(A) = r_M(A \ D).
+A **well-quasi-order** (WQO) on a set α is a pair (α, ≤) where ≤ is reflexive and transitive, and every infinite sequence f : ℕ → α contains a pair i < j with f(i) ≤ f(j).
 
-**Definition 2.3** (Contraction). For C ⊆ E, the *contraction* M / C has rank function r_{M/C}(A) = r_M((A \ C) ∪ C) - r_M(C).
+Key property: **In a WQO, every antichain is finite.** An antichain is a set where no two distinct elements are comparable.
 
-**Theorem 2.4**. Both deletion and contraction produce valid rank matroids. The contraction rank function satisfies all three axioms (R1)-(R3).
+### 2.3 Minor Systems
 
-*Proof.* For contraction:
-- (R1): By submodularity, r((A\C) ∪ C) ≤ r(A\C) + r(C), so r((A\C) ∪ C) - r(C) ≤ r(A\C) ≤ |A\C| ≤ |A|.
-- (R2): If A ⊆ B, then (A\C) ∪ C ⊆ (B\C) ∪ C, so monotonicity of r gives the result.
-- (R3): Using the identities ((A∪B)\C) ∪ C = ((A\C) ∪ C) ∪ ((B\C) ∪ C) and ((A∩B)\C) ∪ C = ((A\C) ∪ C) ∩ ((B\C) ∪ C), the result follows from M's submodularity and Nat subtraction arithmetic.
+A **minor system** is a tuple (M, ≤, size) where:
+- (M, ≤) is a partial order (reflexive, transitive, antisymmetric)
+- size : M → ℕ
+- If a ≤ b and a ≠ b, then size(a) < size(b)
 
-All proofs are machine-verified. □
+This captures the essential properties of the matroid minor relation: it is a partial order, and proper minors are strictly smaller.
 
-### 2.3 Duality
+### 2.4 Minor-Closed Properties
 
-**Definition 2.5** (Dual). The *dual* M* has rank function r*(A) = |A| + r(E \ A) - r(E).
+A property P : M → Prop is **minor-closed** if a ≤ b and P(b) implies P(a). The **excluded minors** for P are the elements m with ¬P(m) such that all proper minors of m satisfy P.
 
-**Theorem 2.6**. The dual rank function satisfies axioms (R1)-(R3).
+### 2.5 The Obstruction Spectrum (Novel)
 
-*Proof.* The key identity for (R1) is r(E\A) ≤ r(E) by monotonicity. For (R2), the critical step uses: r(E\A) ≤ r(E\B) + |B\A| when A ⊆ B, which follows from submodularity applied to (E\B) and (B\A). For (R3), the result reduces to submodularity of r on complements combined with inclusion-exclusion for cardinalities. □
+For a minor system (M, ≤, size), class C ⊆ M, and minor-closed property P, the **obstruction spectrum** is:
 
-### 2.4 Minor Relation
+σ(k) = |{m ∈ C ∩ Excl(P) : size(m) = k}|
 
-**Definition 2.7**. M' is a *minor* of M (written M' ≤_m M) if there exist disjoint sets C, D ⊆ E with M'.rankFn = (M/C\D).rankFn.
+This counts excluded minors at each size level. Under WQO, σ has finite support.
 
-**Theorem 2.8**. The minor relation is reflexive. Deletion and contraction are special cases.
+## 3. Main Theorems
 
-## 3. Rank-Filtered Minor Ideals
+### 3.1 Excluded Minors Form Antichains
 
-### 3.1 Definition
+**Theorem 3.1.** Let (M, ≤, size) be a minor system and P a minor-closed property. If m₁, m₂ ∈ Excl(P) and m₁ ≤ m₂, then m₁ = m₂.
 
-**Definition 3.1** (RFMI). A *Rank-Filtered Minor Ideal* on ground set of size n is a pair (P, {F_k}_{k≥0}) where:
-- P : RankMatroid n → Prop is a membership predicate
-- P is minor-closed: P(M) ∧ M' ≤_m M → P(M')
-- F_k = {M : P(M) ∧ rank(M) ≤ k} is the *rank filtration*
+*Proof sketch.* If m₁ ≠ m₂, then m₁ is a proper minor of m₂. Since m₂ ∈ Excl(P), all proper minors of m₂ satisfy P, so P(m₁). But m₁ ∈ Excl(P) means ¬P(m₁). Contradiction. □
 
-**Definition 3.2** (Width). The *width* of F_k is:
+### 3.2 WQO Implies Finite Excluded Minors
 
-w(k) = sup{|S| : S ⊆ F_k is an antichain under ≤_m}
+**Theorem 3.2.** If C is WQO, then {m ∈ C : m ∈ Excl(P)} is finite for any minor-closed P.
 
-**Definition 3.3** (Finite Width). An RFMI has *finite width* if w(k) < ∞ for all k.
+*Proof sketch.* By Theorem 3.1, the excluded minors in C form an antichain in the minor relation restricted to C. If this antichain were infinite, we could extract an injective sequence f : ℕ → C of excluded minors. By the WQO property, there exist i < j with f(i) ≤ f(j). By Theorem 3.1, f(i) = f(j), contradicting injectivity. □
 
-### 3.2 Excluded Minors
+### 3.3 Every Non-Member Contains an Excluded Minor
 
-**Definition 3.4**. M is an *excluded minor* for RFMI (P, {F_k}) if ¬P(M) and every proper minor of M satisfies P.
+**Theorem 3.3.** For any minor-closed P and element m with ¬P(m), there exists n ∈ Excl(P) with n ≤ m.
 
-## 4. Main Results
+*Proof sketch.* By strong induction on size(m). If all proper minors of m satisfy P, then m ∈ Excl(P) and we're done. Otherwise, there exists a proper minor a of m with ¬P(a). Since size(a) < size(m), by induction there exists n ∈ Excl(P) with n ≤ a ≤ m. □
 
-### 4.1 Filtration Properties
+### 3.4 Forbidden Minor Characterization
 
-**Theorem 4.1** (Monotonicity). F_k ⊆ F_{k+1} for all k.
+**Theorem 3.4.** If C is WQO and minor-closed, and P is minor-closed, then there exists a finite set F such that:
+1. Every element of F is an excluded minor for P.
+2. For all m ∈ C: ¬P(m) ↔ ∃ n ∈ F, n ≤ m.
 
-**Theorem 4.2** (Stabilization). F_n = {M : P(M)} — the filtration stabilizes at the ground set size.
+*Proof sketch.* Let F = (Excl(P) ∩ C).toFinset, which is finite by Theorem 3.2. Part 1 is immediate. For part 2, the forward direction uses Theorem 3.3 plus the hypothesis that C is minor-closed (so the excluded minor stays in C). The backward direction uses minor-closedness of P: if n ≤ m and ¬P(n), then ¬P(m) (contrapositive of minor-closedness). □
 
-**Theorem 4.3** (Minor Closure). Each F_k is minor-closed: if M ∈ F_k and M' ≤_m M, then M' ∈ F_k.
+### 3.5 Dickson's Lemma
 
-*Proof.* By monotonicity of rank under minors: rank(M') ≤ rank(M) ≤ k. □
+**Theorem 3.5.** If (α, ≤_α) and (β, ≤_β) are WQOs, then (α × β, ≤) is a WQO under (a₁,b₁) ≤ (a₂,b₂) iff a₁ ≤_α a₂ and b₁ ≤_β b₂.
 
-### 4.2 Width Analysis
+*Proof sketch.* Given f : ℕ → α × β, extract a subsequence where the first components are non-decreasing (using a Ramsey-type argument for WQOs), then apply the WQO property to the second components of this subsequence. □
 
-**Theorem 4.4** (Width Monotonicity). w(k) ≤ w(k+1) for all k.
+### 3.6 Structural Theorems
 
-**Theorem 4.5** (Width Boundedness). For any RFMI on ground set of size n, there exists a uniform bound B such that every antichain in F_k has at most B elements.
+**Theorem 3.6 (Closure properties).** Minor-closed classes are closed under finite union and intersection.
 
-*Proof.* Elements of an antichain must have distinct rank functions (otherwise, equal rank functions imply the minor relation holds by reflexivity). The number of valid rank functions on Fin n is finite (bounded by the product of {0,...,|A|} over all subsets A), providing the bound. □
+**Theorem 3.7 (Sandwich theorem).** If P ⊆ Q are both minor-closed and C is WQO, then {m ∈ C : m ∈ Excl(P) ∧ Q(m)} is finite.
 
-**Theorem 4.6** (WQO ⟹ Finite Width). If the minor relation is WQO on the carrier of the RFMI, then the RFMI has finite width.
+**Theorem 3.8 (Excluded minor monotonicity).** If P ⊆ Q are minor-closed, then every excluded minor of Q contains an excluded minor of P.
 
-### 4.3 The Excluded Minor Finiteness Theorem
+**Theorem 3.9 (Obstruction spectrum finiteness).** Under WQO, the obstruction spectrum has finite support.
 
-**Theorem 4.7** (Main). If the minor relation on matroids of ground set size n is WQO, and the excluded minors of an RFMI form an antichain, then the set of excluded minors is finite.
+## 4. Applications
 
-*Proof.* Direct application of IsAntichain.finite_of_wellQuasiOrdered from Mathlib. □
+### 4.1 The Robertson-Seymour Theorem
 
-### 4.4 Duality
+The Robertson-Seymour theorem is the special case where M = {isomorphism classes of graphs}, ≤ = graph minor relation, size = |V(G)|, and C = M. Our Theorem 3.4 then gives: every minor-closed graph property is characterized by a finite forbidden minor set.
 
-**Theorem 4.8** (Dual Closure of Excluded Minors). If a minor-closed class is also closed under duality, then the dual of every excluded minor is also an excluded minor.
+### 4.2 The GGW Conjecture
 
-*Proof.* The proof establishes the dual involution r**(A) = r(A) by explicit computation, then uses the duality closure hypothesis to transfer the excluded minor property. □
+The GGW conjecture states that for any finite field 𝔽_q, the class of 𝔽_q-representable matroids is WQO. Our framework shows that if this conjecture is true, then:
+- Every minor-closed property of 𝔽_q-representable matroids has finitely many excluded minors.
+- The obstruction spectrum for each such property has finite support.
+- The excluded minor monotonicity principle applies.
 
-**Negative Result 4.9**. The statement "M' ≤_m M ⟹ M'* ≤_m M*" is *false* in the fixed-ground-set model. This is because our representation requires both matroids to live on the same Fin n ground set, while the classical result requires working with matroids on different ground sets.
+Known excluded minors for representability:
+- 𝔽₂: U₂,₄ (1 excluded minor)
+- 𝔽₃: U₂,₅, U₃,₅, F₇, F₇* (4 excluded minors)
+- 𝔽₄: 7 excluded minors (Geelen-Gerards-Kapoor 2000)
 
-## 5. Computational Results
+### 4.3 Algorithmic Consequences
 
-### 5.1 Matroid Enumeration by Rank
+For any minor-closed property P in a WQO class with known excluded minors F₁, ..., Fk:
+- **Recognition**: Testing if M has property P reduces to checking if any Fᵢ is a minor of M.
+- **Complexity**: For graphs, this can be done in O(n³) time for fixed k (Robertson-Seymour).
 
-| Ground set size n | Total matroids | Rank 0 | Rank 1 | Rank 2 | Rank 3 |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-| 1 | 2 | 1 | 1 | — | — |
-| 2 | 5 | 1 | 3 | 1 | — |
-| 3 | 16 | 1 | 7 | 7 | 1 |
+## 5. The Obstruction Spectrum: A New Invariant
 
-The palindromic distribution (e.g., 1,7,7,1 for n=3) reflects matroid duality: U(k,n)* = U(n-k,n), and this symmetry extends to all matroids.
+The obstruction spectrum σ_P : ℕ → ℕ defined by σ_P(k) = |{m ∈ Excl(P) : size(m) = k}| provides a new lens for studying minor-closed properties.
 
-### 5.2 Minor Relation on Small Matroids
+**Properties:**
+1. σ_P has finite support under WQO (Theorem 3.9).
+2. Σ_k σ_P(k) = |Excl(P)| (the total number of excluded minors).
+3. If P ⊆ Q, the spectrum of P "dominates" that of Q in a precise sense (via Theorem 3.8).
 
-For uniform matroids: U(k,m) ≤_m U(k,n) whenever m ≤ n (by deletion). U(k-1,n-1) ≤_m U(k,n) (by contraction). These relations generate a rich minor order even on small ground sets.
+**Example spectra:**
+- Planarity (graphs): σ(5) = 2 (K₅ and K₃,₃), all others 0.
+- 𝔽₂-representability (matroids): σ(4) = 1 (U₂,₄), all others 0.
+- 𝔽₃-representability (matroids): σ(5) = 2 (U₂,₅, U₃,₅), σ(7) = 2 (F₇, F₇*), all others 0.
 
 ## 6. Discussion
 
-### 6.1 Modeling Considerations
+### 6.1 The Antisymmetry Requirement
 
-Our choice to model matroids on a fixed ground set Fin n has both advantages and limitations. The advantage is that it enables finite combinatorial reasoning and clean formalization. The limitation, revealed by Negative Result 4.9, is that some classical matroid-theoretic identities require working with matroids on varying ground sets.
+Our framework requires the minor relation to be antisymmetric (a partial order, not just a preorder). This is natural when working with isomorphism classes of matroids, but it's a genuine requirement: without antisymmetry, the excluded minors can form equivalence classes rather than antichains, and finiteness can fail.
 
-An alternative approach would model matroids on arbitrary finite types with explicit embeddings for the minor relation. This would recover the full generality of matroid minor theory at the cost of more complex type-theoretic machinery.
+### 6.2 The Minor-Closure Hypothesis
 
-### 6.2 Connection to Robertson-Seymour
+The forbidden minor characterization (Theorem 3.4) requires the ambient class C to be minor-closed. This is because `contains_excluded_minor` produces an excluded minor that might lie outside C if C is not minor-closed. For the GGW conjecture, this is satisfied: representability over a fixed field is preserved under taking minors.
 
-The RFMI framework provides a concrete strategy for attacking the Robertson-Seymour conjecture for representable matroids:
+### 6.3 Relation to Existing Work
 
-1. **Step 1**: For each rank level k, establish WQO of F_q-representable matroids of rank ≤ k.
-2. **Step 2**: Use the transfer theorem to lift level-by-level WQO to the full class.
-3. **Step 3**: Apply Theorem 4.7 to conclude finite excluded minors.
-
-This reduction is non-trivial: it transforms the infinitary statement "every infinite sequence contains a comparable pair" into countably many finite statements about bounded-rank matroids.
-
-### 6.3 Connection to Existing Results
-
-Our formalization builds on and connects to:
-- Mathlib's `WellQuasiOrdered` and `IsAntichain` theories
-- Mathlib's `Matroid` structure (exchange property axiomatization)
-- The existing `ggw_implies_finite_excluded_minors` theorem in the Catalog
+Our framework abstracts the structural core of the Robertson-Seymour theory into a clean algebraic setting. The key insight is that the interaction between WQO and minor-closedness produces a finite basis theorem that is independent of the specific combinatorial content (graphs, matroids, etc.).
 
 ## 7. Future Work
 
-1. **Tropical minor theory**: Extend the RFMI framework to valuated matroids, connecting to tropical geometry.
-2. **Algorithmic applications**: Implement polynomial-time minor testing for F_q-representable matroids.
-3. **Variable ground sets**: Reformulate the theory with matroids on varying ground sets to recover full duality.
-4. **Concrete excluded minors**: Enumerate excluded minors for F_3-representability using the rank filtration.
+1. **Formalize matroid deletion and contraction** and verify that they produce a valid minor system.
+2. **Formalize the dual matroid** and prove that duality commutes with minors.
+3. **Connect to Mathlib's matroid theory** (Matroid.Minor).
+4. **Explore the obstruction spectrum** as a tool for distinguishing minor-closed properties.
+5. **Formalize Higman's lemma** and use it to construct WQOs on sequences.
 
 ## References
 
-[RS04] N. Robertson, P. Seymour. *Graph Minors. XX. Wagner's conjecture.* J. Combin. Theory Ser. B, 92:325-357, 2004.
+[GGW06] J. Geelen, B. Gerards, G. Whittle. "Towards a matroid-minor structure theory." Combinatorics, Complexity, and Chance, Oxford, 2007.
 
-[Whi35] H. Whitney. *On the abstract properties of linear dependence.* Amer. J. Math., 57:509-533, 1935.
+[RS04] N. Robertson, P. Seymour. "Graph Minors. XX. Wagner's conjecture." J. Combin. Theory Ser. B, 2004.
 
-[GGW14] J. Geelen, B. Gerards, G. Whittle. *Solving Rota's conjecture.* Notices Amer. Math. Soc., 61:736-743, 2014.
+[Oxl11] J. Oxley. "Matroid Theory." Oxford University Press, 2nd edition, 2011.
 
-[Oxl11] J. Oxley. *Matroid Theory.* Oxford University Press, 2nd edition, 2011.
+[Hig52] G. Higman. "Ordering by divisibility in abstract algebras." Proc. London Math. Soc., 1952.
 
-[BDHK18] T. Brylawski, D. Dhar, P. Hanlon, L. Kauffman. *Matroid Theory and Its Applications.* Springer, 2018.
+[Dic13] L.E. Dickson. "Finiteness of the odd perfect and primitive abundant numbers with n distinct prime factors." Amer. J. Math., 1913.
