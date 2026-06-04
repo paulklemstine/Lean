@@ -40,6 +40,26 @@
       "theorem_count": 6,
       "timestamp": "2026-06-04T04:32:04",
       "title": "Fundamental algebraic-topological bridge: **th"
+    },
+    {
+      "cycle_id": "17d2f5c5",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle introduced the Accuracy-Parameterized Elimination Game (APEG), a novel mathematical structure for analyzing social deduction games like Werewolf/",
+      "quality_score": 0.48656,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T05:33:32",
+      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+    },
+    {
+      "cycle_id": "af7ecea0",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions: Gravity from Information\n\n## Synthesis\n\nThis research cycle established the **Einstein Decomposition Theorem**: every entropy functional S on a discrete code spacetime splits as S",
+      "quality_score": 0.46576,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T05:33:56",
+      "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
     }
   ],
   "entries": [
@@ -85,7 +105,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-04T04:32:04",
+  "last_updated": "2026-06-04T05:33:56",
   "open_questions": [],
   "research_threads": {
     "Bridges": [
@@ -94,6 +114,12 @@
         "quality": 0.6876800000000001,
         "theorems": 36,
         "title": "Bridge: Noncommutative Geometry as a Generalization of Topology"
+      },
+      {
+        "cycle_id": "af7ecea0",
+        "quality": 0.46576,
+        "theorems": 5,
+        "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
       }
     ],
     "EML": [
@@ -110,6 +136,14 @@
         "quality": 0.50264,
         "theorems": 6,
         "title": "Fundamental algebraic-topological bridge: **th"
+      }
+    ],
+    "Pythagorean": [
+      {
+        "cycle_id": "17d2f5c5",
+        "quality": 0.48656,
+        "theorems": 5,
+        "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
       }
     ],
     "Shared": [

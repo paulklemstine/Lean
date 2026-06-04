@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T04:32:04.580014+00:00",
+  "last_updated": "2026-06-04T05:34:23.289258+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -12,7 +12,6 @@
       "files_integrated": 6,
       "job_id": "2d96e4e9",
       "outcome_quality": 0.7264934979757085,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.83,
@@ -46,7 +45,6 @@
       "files_integrated": 6,
       "job_id": "748fe9ae",
       "outcome_quality": 0.709014,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.86,
@@ -80,7 +78,6 @@
       "files_integrated": 6,
       "job_id": "a6bafcf7",
       "outcome_quality": 0.6979460000000001,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.92,
@@ -114,7 +111,6 @@
       "files_integrated": 6,
       "job_id": "61acc2ad",
       "outcome_quality": 0.7351783898305084,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.92,
@@ -148,7 +144,6 @@
       "files_integrated": 7,
       "job_id": "261658b1",
       "outcome_quality": 0.7386323529411765,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.92,
@@ -182,7 +177,6 @@
       "files_integrated": 6,
       "job_id": "9c099a66",
       "outcome_quality": 0.7535647272727273,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -216,7 +210,6 @@
       "files_integrated": 6,
       "job_id": "69f411ed",
       "outcome_quality": 0.0,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.86,
@@ -250,7 +243,6 @@
       "files_integrated": 6,
       "job_id": "e6f6fb5e",
       "outcome_quality": 0.77544,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.92,
@@ -284,7 +276,6 @@
       "files_integrated": 6,
       "job_id": "f3d7f1ed",
       "outcome_quality": 0.0,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.86,
@@ -318,7 +309,6 @@
       "files_integrated": 6,
       "job_id": "0734a5d4",
       "outcome_quality": 0.70133,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.86,
@@ -352,7 +342,6 @@
       "files_integrated": 6,
       "job_id": "c376d672",
       "outcome_quality": 0.0,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.92,
@@ -386,7 +375,6 @@
       "files_integrated": 7,
       "job_id": "0edfd7d6",
       "outcome_quality": 0.7495142857142858,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.89,
@@ -420,7 +408,6 @@
       "files_integrated": 5,
       "job_id": "a2cd9c3a",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.83,
@@ -454,7 +441,6 @@
       "files_integrated": 7,
       "job_id": "8e98d9f6",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.89,
@@ -488,7 +474,6 @@
       "files_integrated": 6,
       "job_id": "965e6ada",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.68,
         "applications": 0.86,
@@ -522,7 +507,6 @@
       "files_integrated": 6,
       "job_id": "b85a7e02",
       "outcome_quality": 0.77047,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.92,
@@ -556,7 +540,6 @@
       "files_integrated": 6,
       "job_id": "b081a92c",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.56,
         "applications": 0.92,
@@ -590,7 +573,6 @@
       "files_integrated": 6,
       "job_id": "43e568b9",
       "outcome_quality": 0.7350323529411764,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -624,7 +606,6 @@
       "files_integrated": 6,
       "job_id": "59ade4e7",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.86,
@@ -658,7 +639,6 @@
       "files_integrated": 6,
       "job_id": "cb07c7c3",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.92,
@@ -692,7 +672,6 @@
       "files_integrated": 6,
       "job_id": "3fec357d",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.83,
@@ -726,7 +705,6 @@
       "files_integrated": 6,
       "job_id": "27b649f9",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -760,7 +738,6 @@
       "files_integrated": 6,
       "job_id": "f41a76e0",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.86,
@@ -794,7 +771,6 @@
       "files_integrated": 5,
       "job_id": "7512203a",
       "outcome_quality": 0.7442731707317074,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.92,
@@ -828,7 +804,6 @@
       "files_integrated": 5,
       "job_id": "0b87bf2b",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.68,
         "applications": 0.92,
@@ -862,7 +837,6 @@
       "files_integrated": 6,
       "job_id": "a1ac928d",
       "outcome_quality": 0.7167103846153846,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.89,
@@ -896,7 +870,6 @@
       "files_integrated": 7,
       "job_id": "ff44a12a",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.89,
@@ -930,7 +903,6 @@
       "files_integrated": 7,
       "job_id": "a4fcb47e",
       "outcome_quality": 0.7226453964194373,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.92,
@@ -964,7 +936,6 @@
       "files_integrated": 7,
       "job_id": "899a7388",
       "outcome_quality": 0.7546084320557491,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.92,
@@ -998,7 +969,6 @@
       "files_integrated": 5,
       "job_id": "b18c0c25",
       "outcome_quality": 0.7294626728110598,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.92,
@@ -1032,7 +1002,6 @@
       "files_integrated": 8,
       "job_id": "ad6b3e03",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -1066,7 +1035,6 @@
       "files_integrated": 6,
       "job_id": "9d1a0bce",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.74,
         "applications": 0.92,
@@ -1101,7 +1069,6 @@
       "files_integrated": 7,
       "job_id": "f11ca07c",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.6799999999999999,
         "applications": 0.92,
@@ -1134,7 +1101,6 @@
       "files_integrated": 0,
       "job_id": "771b94c8",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.92,
@@ -1169,7 +1135,6 @@
       "files_integrated": 6,
       "job_id": "10ffedb6",
       "outcome_quality": 0.6876800000000001,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.92,
@@ -1204,7 +1169,6 @@
       "files_integrated": 5,
       "job_id": "4369a151",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.86,
@@ -1239,7 +1203,6 @@
       "files_integrated": 5,
       "job_id": "73eaf48b",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.86,
@@ -1274,7 +1237,6 @@
       "files_integrated": 0,
       "job_id": "73fe1d36",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.92,
@@ -1309,7 +1271,6 @@
       "files_integrated": 5,
       "job_id": "23b2bc09",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.56,
         "applications": 0.92,
@@ -1344,7 +1305,6 @@
       "files_integrated": 5,
       "job_id": "15dd528a",
       "outcome_quality": 0.36056,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -1379,7 +1339,6 @@
       "files_integrated": 5,
       "job_id": "9fb780aa",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.92,
@@ -1414,7 +1373,6 @@
       "files_integrated": 5,
       "job_id": "9b922fe2",
       "outcome_quality": 0.50264,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.86,
@@ -1436,6 +1394,142 @@
       "theorem_count": 6,
       "timestamp": "2026-06-04T04:32:04.547561+00:00",
       "title": "Fundamental algebraic-topological bridge: **th"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7898,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 1,
+      "domain": "EML",
+      "duration_seconds": 9310.68356871605,
+      "end_time": 1780551162.5677412,
+      "files_integrated": 0,
+      "job_id": "d346de32",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 0.88,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8103,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7217,
+        "novelty": 0.9461,
+        "proof_depth": 0.6255,
+        "usefulness": 0.8127
+      },
+      "quality_score": 0.1292,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780541851.8841724,
+      "strategy_count": 187,
+      "theorem_count": 50,
+      "timestamp": "2026-06-04T05:34:23.041839+00:00",
+      "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4861,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 2,
+      "domain": "Pythagorean",
+      "duration_seconds": 7862.762220859528,
+      "end_time": 1780551162.9134295,
+      "files_integrated": 5,
+      "job_id": "17d2f5c5",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 0.82,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8451,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.872,
+        "novelty": 0.89,
+        "proof_depth": 0.8642,
+        "usefulness": 0.8821
+      },
+      "quality_score": 0.48656,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780543300.1512086,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T05:34:23.106999+00:00",
+      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4875,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 1,
+      "domain": "Bridges",
+      "duration_seconds": 6471.72726392746,
+      "end_time": 1780551163.1499574,
+      "files_integrated": 5,
+      "job_id": "af7ecea0",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 0.62,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.882,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9454,
+        "novelty": 0.95,
+        "proof_depth": 0.9435,
+        "usefulness": 0.9717
+      },
+      "quality_score": 0.46576,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780544691.4226935,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T05:34:23.168016+00:00",
+      "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5485,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 3,
+      "domain": "Geometry",
+      "duration_seconds": 4117.675446271896,
+      "end_time": 1780551163.9308732,
+      "files_integrated": 5,
+      "job_id": "17efa794",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 0.76,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6905,
+        "cross_domain": 1.0,
+        "grade": "substantial",
+        "importance": 0.4739,
+        "novelty": 0.95,
+        "proof_depth": 0.2698,
+        "usefulness": 0.6349
+      },
+      "quality_score": 0.24944,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780547046.255427,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T05:34:23.227197+00:00",
+      "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
     }
   ]
 }
