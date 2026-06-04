@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2498 of the highest-quality
+A curated collection of 2499 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2498
+Total files: 2499
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -2176,6 +2176,7 @@ import FINAL.Pythagorean.TropicalMConvexity
 import FINAL.Pythagorean.TropicalMarkov
 import FINAL.Pythagorean.TropicalPAdicBerggren
 import FINAL.Pythagorean.TropicalPhaseTransition
+import FINAL.Pythagorean.TropicalRhythmBridge
 import FINAL.Pythagorean.TropicalShadowDuality
 import FINAL.Pythagorean.TropicalShadows
 import FINAL.Pythagorean.TropicalSpectralMatroid

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d2ecfa59",
     "filename": "aboriginal_kinship_as_group_theory_dreamtime_algeb.json",
     "pkg_num": 370,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.42016,
     "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
   },
   {
@@ -11881,8 +11881,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "aboriginal_kinship_as_group_theory_dreamtime_algeb",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.42016,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
     }

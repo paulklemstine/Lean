@@ -1,0 +1,22 @@
+{
+  "checkpoints": [
+    {
+      "elapsed_seconds": 0.4,
+      "percent_complete": 0.0,
+      "status": "SUBMITTED",
+      "timestamp": "2026-06-04T22:54:14"
+    }
+  ],
+  "completed_at": "",
+  "domain": "Physics",
+  "error": "",
+  "final_percent": 0.0,
+  "final_status": "",
+  "has_files": false,
+  "job_id": "c53a9916",
+  "project_id": "7e28f8d7-6aad-4ea3-82ce-b695305f71e8",
+  "prompt_length": 24911,
+  "stages": [],
+  "submitted_at": "2026-06-04T22:54:14",
+  "total_duration_seconds": 0.0
+}
