@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0b87bf2b",
     "filename": "counterfactual_number_theory_what_if_primes_were_r.json",
     "pkg_num": 333,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7221893822393821,
     "title": "Counterfactual Number Theory: What If Primes Were Random?"
   },
   {
@@ -10773,8 +10773,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "counterfactual_number_theory_what_if_primes_were_r",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7221893822393821,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Counterfactual Number Theory: What If Primes Were Random?"
     }
