@@ -338,3 +338,128 @@ class CycleAnalytics:
                     "count": len(scores),
                 })
         return sorted(declining, key=lambda x: x["delta"])
+
+    def generate_digest(self, last_n: int = 20) -> Dict[str, Any]:
+        """Generate a discovery digest summarizing recent research activity.
+
+        Returns a dict with:
+          - top_cycles: best quality cycles in last_n
+          - domain_summary: per-domain stats
+          - breakthroughs: cycles with quality >= 0.8
+          - trends: quality direction per domain (improving/declining/stable)
+          - total_cycles, avg_quality, avg_duration
+        """
+        recent = self.records[-last_n:] if len(self.records) > last_n else self.records
+        if not recent:
+            return {"total_cycles": 0, "digest": "No cycles recorded yet."}
+
+        qualities = [r.quality_score for r in recent if r.quality_score > 0]
+        durations = [r.duration_seconds for r in recent if r.duration_seconds > 0]
+
+        # Top cycles by quality
+        scored = sorted([r for r in recent if r.quality_score > 0],
+                         key=lambda r: r.quality_score, reverse=True)[:5]
+
+        # Domain summary
+        from collections import defaultdict
+        domain_data = defaultdict(list)
+        for r in recent:
+            if r.domain and r.quality_score > 0:
+                domain_data[r.domain].append(r.quality_score)
+
+        # Trends per domain
+        declining = self.detect_quality_decay(window=5, threshold=-0.05)
+        declining_domains = {d["domain"] for d in declining}
+        improving_domains = set()
+        for dom, scores in domain_data.items():
+            if len(scores) >= 3:
+                first_half = scores[:len(scores)//2]
+                second_half = scores[len(scores)//2:]
+                if first_half and second_half:
+                    if sum(second_half)/len(second_half) > sum(first_half)/len(first_half) + 0.03:
+                        improving_domains.add(dom)
+
+        # Breakthroughs
+        breakthroughs = [r for r in recent if r.quality_score >= 0.8]
+
+        return {
+            "total_cycles": len(self.records),
+            "recent_cycles": len(recent),
+            "avg_quality": round(sum(qualities) / len(qualities), 3) if qualities else 0.0,
+            "avg_duration_minutes": round(sum(durations) / len(durations) / 60, 1) if durations else 0,
+            "top_cycles": [
+                {"domain": r.domain, "quality": round(r.quality_score, 3),
+                 "theorems": r.theorem_count, "title": r.title[:60]}
+                for r in scored
+            ],
+            "domain_summary": {
+                dom: {"count": len(scores), "avg_quality": round(sum(scores)/len(scores), 3)}
+                for dom, scores in domain_data.items()
+            },
+            "breakthroughs": [
+                {"domain": r.domain, "quality": round(r.quality_score, 3),
+                 "theorems": r.theorem_count, "title": r.title[:60]}
+                for r in breakthroughs
+            ],
+            "trends": {
+                "improving": sorted(list(improving_domains)),
+                "declining": sorted(list(declining_domains)),
+                "stable": sorted([d for d in domain_data
+                                 if d not in improving_domains and d not in declining_domains]),
+            },
+        }
+
+    def get_domain_correlations(self, min_cycles: int = 2) -> List[Dict[str, Any]]:
+        """Find domain pairs that tend to produce quality together.
+
+        For each pair of domains that co-occur in cycles (via multi-domain
+        directions), compute the correlation of their quality scores.
+
+        Returns list of {domain_a, domain_b, correlation, co_occurrences}.
+        """
+        from itertools import combinations
+        # Group cycles by their timestamp (same cycle = multi-domain direction)
+        domain_scores = defaultdict(list)
+        for r in self.records:
+            if r.domain and r.quality_score > 0:
+                domain_scores[r.domain].append(r.quality_score)
+
+        # For pairs: compute Pearson-like correlation
+        # We need cycles where both domains appear
+        cycles_by_time = defaultdict(dict)
+        for r in self.records:
+            if r.domain and r.quality_score > 0:
+                cycles_by_time[r.start_time or r.timestamp][r.domain] = r.quality_score
+
+        correlations = []
+        domains = sorted(domain_scores.keys())
+        for i, dom_a in enumerate(domains):
+            for dom_b in domains[i+1:]:
+                # Find cycles where both domains appear
+                shared = []
+                scores_a = []
+                scores_b = []
+                for time_key, domain_map in cycles_by_time.items():
+                    if dom_a in domain_map and dom_b in domain_map:
+                        shared.append(time_key)
+                        scores_a.append(domain_map[dom_a])
+                        scores_b.append(domain_map[dom_b])
+
+                if len(shared) >= min_cycles:
+                    # Compute correlation
+                    n = len(shared)
+                    mean_a = sum(scores_a) / n
+                    mean_b = sum(scores_b) / n
+                    cov = sum((a - mean_a) * (b - mean_b) for a, b in zip(scores_a, scores_b)) / n
+                    var_a = sum((a - mean_a) ** 2 for a in scores_a) / n
+                    var_b = sum((b - mean_b) ** 2 for b in scores_b) / n
+                    if var_a > 0 and var_b > 0:
+                        corr = cov / (var_a ** 0.5 * var_b ** 0.5)
+                        correlations.append({
+                            "domain_a": dom_a,
+                            "domain_b": dom_b,
+                            "correlation": round(corr, 3),
+                            "co_occurrences": n,
+                        })
+
+        return sorted(correlations, key=lambda x: abs(x["correlation"]), reverse=True)

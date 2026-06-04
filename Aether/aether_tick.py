@@ -176,6 +176,31 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         print(f"[Tick] Integrated {job.job_id[:8]}: score={job.quality_score:.3f}, "
               f"files={job.files_integrated}, theorems={job.theorem_count}")
 
+        # ── Breakthrough highlighting: tag high-quality packages ──
+        if job.quality_score >= 0.8:
+            print(f"[🌟 BREAKTHROUGH] {job.job_id[:8]}: score={job.quality_score:.3f} — "
+                  f"breakthrough detected, tagging package")
+            try:
+                import json as json_mod
+                # Find the package JSON for this job
+                pkg_dir = extractor.workspace / "projects" / job.job_id[:8]
+                if not pkg_dir.exists():
+                    # Search in Catalog for the package
+                    for pkg_file in extractor.catalog_root.rglob("*.json"):
+                        if job.job_id[:8] in pkg_file.name or (hasattr(job, 'concept') and
+                            hasattr(job.concept, 'title') and
+                            job.concept.title[:30].replace(' ', '_').lower() in pkg_file.name.lower()):
+                            try:
+                                pkg_data = json_mod.loads(pkg_file.read_text())
+                                pkg_data["breakthrough"] = True
+                                pkg_data["breakthrough_score"] = job.quality_score
+                                pkg_file.write_text(json_mod.dumps(pkg_data, indent=2, sort_keys=True))
+                                print(f"[🌟 BREAKTHROUGH] Tagged {pkg_file.name}")
+                            except Exception:
+                                pass
+            except Exception as e:
+                print(f"[🌟] Breakthrough tagging failed: {e}")
+
     # Prune completed/failed/integrated/rejected jobs from inflight to prevent unbounded growth
     stale_keys = [pid for pid, j in extractor.inflight.items()
                   if j.status in ("completed", "failed", "integrated", "rejected")]
@@ -282,6 +307,30 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
                 print(f"[Duration] Avg cycle: {avg_mins:.1f}m across {len(with_dur)} cycles")
     except Exception as e:
         print(f"[Duration] Cycle duration analytics failed: {e}")
+
+    # ── Discovery digest: summarize recent research activity ──
+    try:
+        from cycle_analytics import CycleAnalytics
+        ca = CycleAnalytics(extractor.workspace)
+        digest = ca.generate_digest(last_n=20)
+        if digest.get("total_cycles", 0) > 0:
+            print(f"[Digest] Cycles: {digest['total_cycles']} total, "
+                  f"{digest['recent_cycles']} recent, "
+                  f"avg Q={digest['avg_quality']:.3f}, "
+                  f"avg duration={digest['avg_duration_minutes']:.1f}m")
+            if digest.get("breakthroughs"):
+                for bt in digest["breakthroughs"][:3]:
+                    print(f"[🌟 BREAKTHROUGH] Q={bt['quality']:.3f} {bt['domain']}: {bt['title']}")
+            if digest.get("trends", {}).get("improving"):
+                print(f"[📈 Improving] {', '.join(digest['trends']['improving'])}")
+            if digest.get("trends", {}).get("declining"):
+                print(f"[📉 Declining] {', '.join(digest['trends']['declining'])}")
+            top = digest.get("top_cycles", [])[:3]
+            if top:
+                top_strs = [f"{t['domain']}:{t['quality']:.2f}" for t in top]
+                print(f"[Top] Best recent: {'; '.join(top_strs)}")
+    except Exception as e:
+        print(f"[Digest] Discovery digest failed: {e}")
 
     # ── Self-healing: auto-retry failed jobs with modified prompt ──
     # Find recently failed jobs and retry them once with a simpler research mode

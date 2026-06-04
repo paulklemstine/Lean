@@ -72,6 +72,7 @@
     <div class="header">
         <h1>⚡ Aether Research Dashboard</h1>
         <div class="nav">
+            <input type="text" id="search-input" placeholder="Search directions..." style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px 8px;border-radius:4px;font-size:0.85rem;width:200px">
             <a href="index.html">← Graph View</a>
             <span class="refresh" id="refresh-info">Loading...</span>
         </div>
@@ -86,6 +87,11 @@
                 <div><div class="stat-value" id="completed">—</div><div class="stat-label">Completed</div></div>
                 <div><div class="stat-value" id="pruned">—</div><div class="stat-label">Pruned</div></div>
             </div>
+        </div>
+        <!-- Search Results -->
+        <div class="card full-width" id="search-results-card" style="display:none">
+            <h2>🔍 Search Results <span id="search-count" style="font-size:0.75rem;color:var(--dim)"></span></h2>
+            <div id="search-results" style="max-height:300px;overflow-y:auto;font-size:0.85rem"></div>
         </div>
         <!-- Quality -->
         <div class="card">
@@ -157,6 +163,13 @@
             <canvas id="quality-chart" width="800" height="300" style="width:100%;max-height:300px"></canvas>
             <div id="chart-legend" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;font-size:0.75rem;color:var(--dim)"></div>
         </div>
+        <!-- Cross-Domain Correlation -->
+        <div class="card">
+            <h2>🔗 Cross-Domain Correlation</h2>
+            <div id="correlation-list" style="max-height:200px;overflow-y:auto;font-size:0.78rem;">
+                <div class="no-data">Waiting for correlation data...</div>
+            </div>
+        </div>
     </div>
     <script>
     const COLORS = {
@@ -165,6 +178,7 @@
         'Cryptography':'#a855f7','Bridges':'#14b8a6','Applications':'#6366f1','EML':'#eab308',
         'MachineLearning':'#22d3ee','Shared':'#94a3b8','Speculative':'#fb923c'
     };
+    let allDirections = []; // Global for search
     function badgeClass(d){d=(d||'').toLowerCase();if(d.includes('algebra'))return'tag-info';if(d.includes('geometry'))return'tag-success';if(d.includes('computation'))return'tag-warning';if(d.includes('novelty'))return'tag-accent';if(d.includes('logic'))return'tag-info';if(d.includes('physics'))return'tag-success';if(d.includes('tropical'))return'tag-warning';return'tag-info';}
 
     function sparkline(values, color='#00d4ff', w=60, h=20) {
@@ -190,6 +204,7 @@
             if (fdR && fdR.ok) {
                 const fdD = await fdR.json();
                 const dirs = Array.isArray(fdD) ? fdD : (fdD.directions || []);
+                allDirections = dirs; // Store for search
                 const avail = dirs.filter(d => d.status === 'available');
                 const infl = dirs.filter(d => d.status === 'in_progress');
                 const comp = dirs.filter(d => d.status === 'completed');
@@ -440,11 +455,70 @@
                     legendEl.innerHTML = legendH;
                 }
             }
+            // Cross-domain correlation
+            if (anR && anR.ok) {
+                const anData = await anR.json();
+                const recs = anData.records || [];
+                // Compute simple co-occurrence correlation
+                const domainScores = {};
+                recs.forEach(r => {
+                    if (r.domain && r.quality_score > 0) {
+                        if (!domainScores[r.domain]) domainScores[r.domain] = [];
+                        domainScores[r.domain].push(r.quality_score);
+                    }
+                });
+                const domains = Object.keys(domainScores).sort();
+                let corrH = '';
+                if (domains.length >= 2) {
+                    // For each pair, compute avg quality similarity
+                    for (let i = 0; i < domains.length; i++) {
+                        for (let j = i + 1; j < domains.length; j++) {
+                            const a = domainScores[domains[i]];
+                            const b = domainScores[domains[j]];
+                            if (a.length >= 1 && b.length >= 1) {
+                                const avgA = a.reduce((s,v)=>s+v,0)/a.length;
+                                const avgB = b.reduce((s,v)=>s+v,0)/b.length;
+                                const diff = Math.abs(avgA - avgB);
+                                const label = diff < 0.05 ? '🟢' : diff < 0.15 ? '🟡' : '🔴';
+                                if (diff < 0.15) {
+                                    corrH += `<div style="display:flex;justify-content:space-between;padding:2px 0"><span>${label} ${domains[i]} ↔ ${domains[j]}</span><span style="color:var(--dim)">${diff < 0.05 ? 'strong' : 'moderate'} (Δ=${diff.toFixed(3)})</span></div>`;
+                                }
+                            }
+                        }
+                    }
+                }
+                document.getElementById('correlation-list').innerHTML = corrH || '<div class="no-data">Need more data per domain</div>';
+            }
             document.getElementById('refresh-info').textContent = `Updated ${new Date().toLocaleTimeString()} · 60s refresh`;
         } catch(e) { console.error(e); document.getElementById('refresh-info').textContent = `Error: ${e.message}`; }
     }
     loadData();
     setInterval(loadData, 60000);
+    // Search handler
+    document.getElementById('search-input').addEventListener('input', function(e) {
+        const q = e.target.value.toLowerCase().trim();
+        const card = document.getElementById('search-results-card');
+        const results = document.getElementById('search-results');
+        if (!q) { card.style.display = 'none'; return; }
+        card.style.display = '';
+        const matches = allDirections.filter(d =>
+            (d.title||'').toLowerCase().includes(q) ||
+            (d.domains||[]).join(' ').toLowerCase().includes(q) ||
+            (d.status||'').toLowerCase().includes(q)
+        ).slice(0, 30);
+        document.getElementById('search-count').textContent = `(${matches.length} of ${allDirections.length})`;
+        let html = '';
+        matches.forEach(d => {
+            const dom = (d.domains||[])[0]||'?';
+            const color = COLORS[dom]||'#64748b';
+            html += `<div style="display:flex;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid var(--border);align-items:center">
+                <span class="badge" style="background:${color}20;color:${color}">${dom}</span>
+                <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.85rem">${(d.title||'').substring(0,70)}</span>
+                <span style="font-size:0.7rem;color:var(--dim)">${d.status||'?'} ${d.priority_score?'Q:'+d.priority_score.toFixed(2):''}</span>
+            </div>`;
+        });
+        results.innerHTML = html || '<div class="no-data">No matches found</div>';
+    });
     </script>
 </body>
 </html>
