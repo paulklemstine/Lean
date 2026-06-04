@@ -1,61 +1,30 @@
 #!/usr/bin/env python3
 """
-Holographic Primes: Core Algorithms
+Holographic Spectral Algebra — Core Algorithms
 
-Type-hinted implementations of the mathematical structures from the
-holographic prime correspondence.
+Type-hinted implementations of the spectral decomposition algorithms
+for prime factorizations, including:
+- Prime factorization (trial division)
+- Spectral weight, entropy, defect, interaction computations
+- Depth filtration enumeration
+- Holographic reconstruction verification
 """
 
-from typing import List, Dict, Tuple, Optional
 import math
+from typing import Dict, List, Set, Tuple, Optional
+from functools import reduce
+from operator import mul
 
 
-def sieve_of_eratosthenes(n: int) -> List[int]:
-    """Return all primes up to n using the Sieve of Eratosthenes.
-
-    Time complexity: O(n log log n)
-    Space complexity: O(n)
+def prime_factorization(n: int) -> Dict[int, int]:
     """
-    if n < 2:
-        return []
-    is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i * i, n + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, n + 1) if is_prime[i]]
+    Compute the prime factorization of n.
 
+    Returns a dictionary mapping each prime factor to its multiplicity.
+    For n ≤ 1, returns empty dict.
 
-def p_adic_valuation(p: int, n: int) -> int:
-    """Compute the p-adic valuation v_p(n).
-
-    The p-adic valuation is the largest k such that p^k divides n.
-    In the holographic dictionary, this is the "depth" of n in the
-    p-adic bulk geometry.
-
-    Args:
-        p: A prime number (p >= 2)
-        n: A positive integer
-
-    Returns:
-        The p-adic valuation of n
-    """
-    if n == 0 or p < 2:
-        return 0
-    k = 0
-    while n % p == 0:
-        k += 1
-        n //= p
-    return k
-
-
-def factorization(n: int) -> Dict[int, int]:
-    """Compute the prime factorization of n.
-
-    Returns a dictionary mapping primes to their exponents.
-    In holographic terms, this maps each prime (boundary site)
-    to the depth of n in that prime's bulk.
+    Algorithm: Trial division up to √n.
+    Complexity: O(√n)
     """
     if n <= 1:
         return {}
@@ -71,152 +40,182 @@ def factorization(n: int) -> Dict[int, int]:
     return factors
 
 
-def total_holographic_weight(n: int) -> int:
-    """Compute the total holographic weight Ω(n).
-
-    The total weight is the sum of p-adic valuations across all primes
-    dividing n. This equals the number of prime factors counted with
-    multiplicity.
-
-    In the holographic dictionary, this measures the "total bulk depth"
-    of n — how deep it sits across all prime sectors simultaneously.
+def spectral_weight(n: int) -> int:
     """
-    return sum(factorization(n).values())
+    Compute the spectral weight Ω(n) = Σ_p v_p(n).
 
+    This is the total number of prime factors counted with multiplicity.
+    In the holographic dictionary, this is the "total bulk depth."
 
-def euler_product_partial(s: float, N: int) -> float:
-    """Compute the partial Euler product ∏_{p≤N} (1 - p^{-s})^{-1}.
-
-    This is the "holographic partition function" truncated to primes ≤ N.
-    As N → ∞, it converges to ζ(s) for Re(s) > 1.
-
-    Args:
-        s: The complex frequency parameter (real part > 1)
-        N: Upper bound for primes in the product
-
-    Returns:
-        The partial Euler product value
+    Properties:
+    - Ω(1) = 0
+    - Ω(p) = 1 for prime p
+    - Ω(a·b) = Ω(a) + Ω(b) (completely additive)
+    - Ω(n) ≤ log₂(n)
     """
-    product = 1.0
-    for p in sieve_of_eratosthenes(N):
-        product /= (1.0 - p ** (-s))
-    return product
+    return sum(prime_factorization(n).values())
+
+
+def distinct_prime_count(n: int) -> int:
+    """
+    Compute ω(n) = number of distinct prime factors.
+
+    In the holographic dictionary, this is the number of
+    "active boundary sectors."
+    """
+    return len(prime_factorization(n))
+
+
+def spectral_entropy(n: int) -> float:
+    """
+    Compute the spectral entropy S(n) = Σ_p v_p(n) · log(p).
+
+    By the Holographic Reconstruction Theorem, S(n) = log(n) for n ≥ 1.
+    The reconstruction decomposes the "bulk observable" log(n) into
+    contributions from each "boundary sector" (prime).
+    """
+    return sum(k * math.log(p) for p, k in prime_factorization(n).items())
+
+
+def holographic_defect(n: int) -> int:
+    """
+    Compute the holographic defect δ(n) = Ω(n) - ω(n).
+
+    Measures the departure from squarefreeness:
+    - δ(n) = 0 iff n is squarefree
+    - δ(n) > 0 iff n has a repeated prime factor
+
+    In the holographic dictionary, this is the "information loss"
+    when projecting from full bulk spectrum to boundary support.
+    """
+    f = prime_factorization(n)
+    return sum(f.values()) - len(f)
+
+
+def spectral_interaction(n: int) -> int:
+    """
+    Compute the spectral interaction energy
+    I(n) = Ω(n)² - Σ_p v_p(n)².
+
+    This equals 2 · Σ_{p<q} v_p(n) · v_q(n), measuring
+    cross-prime correlations.
+
+    Properties:
+    - I(n) = 0 for prime powers (spectrally pure)
+    - I(n) > 0 for multi-prime composites
+    - I(n) = 2·Σ_{p<q} v_p·v_q (bilinear in the spectrum)
+    """
+    f = prime_factorization(n)
+    omega = sum(f.values())
+    sum_sq = sum(k ** 2 for k in f.values())
+    return omega ** 2 - sum_sq
+
+
+def depth_filtration(p: int, k: int, N: int) -> List[int]:
+    """
+    Enumerate F_k(p) ∩ [1, N]: all n ∈ [1, N] with v_p(n) ≥ k.
+
+    The depth filtration layers form a decreasing chain:
+    F_0 ⊇ F_1 ⊇ F_2 ⊇ ...
+
+    Properties:
+    - F_0(p) = ℕ (everything)
+    - F_k(p) = {multiples of p^k}
+    - F_k × F_j → F_{k+j} under multiplication
+    """
+    pk = p ** k
+    return [n for n in range(pk, N + 1, pk)]
+
+
+def spectral_decomposition(n: int) -> Dict[str, object]:
+    """
+    Compute the full spectral decomposition of n.
+
+    Returns a dictionary with all holographic invariants:
+    - factorization: prime factorization
+    - weight: Ω(n)
+    - distinct: ω(n)
+    - defect: δ(n)
+    - entropy: S(n)
+    - interaction: I(n)
+    - is_squarefree: whether δ(n) = 0
+    - reconstruction_error: |S(n) - log(n)|
+    """
+    f = prime_factorization(n)
+    omega = sum(f.values())
+    omega_distinct = len(f)
+    entropy = sum(k * math.log(p) for p, k in f.items())
+    log_n = math.log(n) if n >= 1 else 0.0
+    sum_sq = sum(k ** 2 for k in f.values())
+
+    return {
+        "n": n,
+        "factorization": f,
+        "weight": omega,
+        "distinct": omega_distinct,
+        "defect": omega - omega_distinct,
+        "entropy": entropy,
+        "interaction": omega ** 2 - sum_sq,
+        "is_squarefree": all(v <= 1 for v in f.values()),
+        "reconstruction_error": abs(entropy - log_n),
+    }
+
+
+def verify_holographic_reconstruction(N: int) -> Tuple[bool, float]:
+    """
+    Verify the Holographic Reconstruction Theorem S(n) = log(n)
+    for all n in [1, N].
+
+    Returns (all_passed, max_error).
+    """
+    max_error = 0.0
+    all_passed = True
+    for n in range(1, N + 1):
+        S = spectral_entropy(n)
+        log_n = math.log(n)
+        error = abs(S - log_n)
+        max_error = max(max_error, error)
+        if error > 1e-10:
+            all_passed = False
+    return all_passed, max_error
+
+
+def spectral_concentration(n: int) -> Optional[float]:
+    """
+    Compute the spectral concentration C(n) = max_p v_p(n) / Ω(n).
+
+    This measures how "focused" the spectrum is on a single prime:
+    - C = 1 for prime powers (maximally concentrated)
+    - C → 1/k as n approaches a product of k equal-multiplicity primes
+    - C is undefined (None) for n = 1
+    """
+    f = prime_factorization(n)
+    if not f:
+        return None
+    omega = sum(f.values())
+    max_v = max(f.values())
+    return max_v / omega
 
 
 def chebyshev_theta(n: int) -> float:
-    """Compute the Chebyshev theta function θ(n) = Σ_{p≤n} log(p).
-
-    In the holographic dictionary, θ(n) is the "boundary area" —
-    the total information content of the boundary theory up to
-    energy scale n.
-
-    The Prime Number Theorem is equivalent to θ(n) ~ n.
     """
-    return sum(math.log(p) for p in sieve_of_eratosthenes(n))
+    Compute the Chebyshev θ function: θ(n) = Σ_{p ≤ n, p prime} log(p).
 
-
-def chebyshev_psi(n: int) -> float:
-    """Compute the Chebyshev psi function ψ(n) = Σ_{p^k≤n} log(p).
-
-    ψ counts prime powers weighted by log. It's more natural from the
-    holographic perspective because it includes contributions from all
-    depths in the bulk (not just depth 1).
+    In the holographic framework, θ(n) = S(primorial(n)),
+    where primorial(n) = ∏_{p ≤ n} p.
     """
-    total = 0.0
-    for p in sieve_of_eratosthenes(n):
-        pk = p
-        while pk <= n:
-            total += math.log(p)
-            pk *= p
-    return total
-
-
-def prime_partition_function(beta: float, N: int) -> float:
-    """Compute the prime partition function Z(β) = ∏_p (1 - e^{-β log p})^{-1}.
-
-    This is the "thermal partition function" of the holographic system
-    at inverse temperature β. Setting β = s gives Z(s) = ζ(s).
-
-    Args:
-        beta: Inverse temperature parameter (> 0)
-        N: Upper bound for primes
-
-    Returns:
-        The partition function value
-    """
-    product = 1.0
-    for p in sieve_of_eratosthenes(N):
-        boltzmann = math.exp(-beta * math.log(p))
-        product /= (1.0 - boltzmann)
-    return product
-
-
-def holographic_entropy(n: int) -> float:
-    """Compute the holographic entropy S(n) = log(n) - Σ_p v_p(n) log(p) / Ω(n).
-
-    This measures the "disorder" in the prime decomposition of n.
-    Numbers with few large prime factors have low entropy;
-    numbers with many small prime factors have high entropy.
-    """
-    if n <= 1:
-        return 0.0
-    facts = factorization(n)
-    omega = sum(facts.values())
-    if omega == 0:
-        return 0.0
-    weighted_sum = sum(v * math.log(p) for p, v in facts.items())
-    return math.log(n) - weighted_sum / omega
-
-
-def boundary_projection(n: int, p: int) -> int:
-    """Project n onto the boundary at prime p: n ↦ n mod p.
-
-    This is the holographic projection from the bulk (ℤ) to the
-    boundary (ℤ/pℤ).
-    """
-    return n % p
-
-
-def holographic_distance(a: int, b: int, p: int) -> int:
-    """Compute the holographic distance between a and b at prime p.
-
-    d_p(a, b) = v_p(a - b), the p-adic valuation of the difference.
-    Two numbers are "close" in the p-adic bulk if their difference
-    is highly divisible by p.
-    """
-    if a == b:
-        return float('inf')  # type: ignore
-    return p_adic_valuation(p, abs(a - b))
-
-
-def euler_factor_denominator(p: int, s: int) -> int:
-    """Compute the Euler factor denominator p^s - 1.
-
-    For p ≥ 2 and s ≥ 1, this is always positive,
-    ensuring the partition function is well-defined.
-    """
-    return p ** s - 1
-
-
-def partial_primorial(n: int) -> int:
-    """Compute the primorial n# = product of primes ≤ n.
-
-    This equals the partial Euler product at s=1.
-    """
-    result = 1
-    for p in sieve_of_eratosthenes(n):
-        result *= p
-    return result
+    return sum(math.log(p) for p in range(2, n + 1) if all(p % d != 0 for d in range(2, int(p**0.5) + 1)))
 
 
 if __name__ == "__main__":
-    # Quick sanity checks
-    print("Primes up to 30:", sieve_of_eratosthenes(30))
-    print("v_2(12) =", p_adic_valuation(2, 12))  # Should be 2
-    print("v_3(12) =", p_adic_valuation(3, 12))  # Should be 1
-    print("Ω(12) =", total_holographic_weight(12))  # Should be 3
-    print("θ(100) =", chebyshev_theta(100))
-    print("ψ(100) =", chebyshev_psi(100))
-    print("Z(2, 100) =", prime_partition_function(2.0, 100))
-    print("ζ(2) exact =", math.pi**2 / 6)
-    print("Primorial 10# =", partial_primorial(10))  # 2*3*5*7 = 210
+    # Run verification
+    passed, max_err = verify_holographic_reconstruction(10000)
+    print(f"Holographic Reconstruction verified for n ∈ [1, 10000]: {passed}")
+    print(f"Maximum numerical error: {max_err:.2e}")
+
+    # Show some decompositions
+    print("\nSpectral Decompositions:")
+    for n in [12, 30, 60, 360, 2520]:
+        d = spectral_decomposition(n)
+        print(f"  n={n}: Ω={d['weight']}, ω={d['distinct']}, δ={d['defect']}, "
+              f"I={d['interaction']}, sqfree={d['is_squarefree']}")
