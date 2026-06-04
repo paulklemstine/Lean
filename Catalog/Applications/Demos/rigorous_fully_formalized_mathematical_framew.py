@@ -1,521 +1,367 @@
 #!/usr/bin/env python3
 """
-Transfinite Proof Refinement Systems — Numerical Demonstrations
+Multi-Objective Refinement Systems — Demonstration
 
-Demonstrates the key theorems:
-1. Non-increasing ordinal sequences stabilize
-2. Optimizer fixed-point convergence
-3. Lyapunov certificate verification
-4. Chain length bounds
-5. Composition of optimizers
+Numerical examples illustrating the main theorems:
+1. Pareto dominance and chain bounds
+2. Componentwise convergence of a Pareto optimizer
+3. Collapse information loss
+4. Weighted analysis
+5. Product construction
 """
 
-from typing import Callable, List, Tuple, Optional
+from typing import Tuple, List
+import random
+
+# Inline all needed functions to keep this self-contained
+ComplexityVector = Tuple[int, ...]
 
 
-def demo_nat_sequence_stabilization():
-    """
-    Demo 1: Non-increasing sequences stabilize.
-    Even with large initial values, the stabilization step N is bounded.
-    """
-    print("=" * 60)
-    print("Demo 1: Non-Increasing Sequence Stabilization")
-    print("=" * 60)
-
-    # Example 1: Linear decrease then stabilize
-    def seq1(n: int) -> int:
-        return max(0, 100 - n)
-
-    # Example 2: Halving decrease
-    def seq2(n: int) -> int:
-        val = 1000
-        for _ in range(n):
-            val = val // 2
-        return val
-
-    # Example 3: Fibonacci-like decrease
-    def seq3(n: int) -> int:
-        if n == 0: return 50
-        if n == 1: return 48
-        vals = [50, 48]
-        for i in range(2, n + 1):
-            vals.append(max(0, vals[-1] - (vals[-2] - vals[-1])))
-        return vals[-1]
-
-    for name, seq in [("Linear", seq1), ("Halving", seq2), ("Fibonacci-like", seq3)]:
-        # Find stabilization point
-        N = 0
-        for i in range(1000):
-            if all(seq(j) == seq(i) for j in range(i, min(i + 20, 1000))):
-                N = i
-                break
-        values = [seq(i) for i in range(min(N + 5, 20))]
-        print(f"\n  {name} sequence: {values}...")
-        print(f"  Stabilizes at N = {N}, value = {seq(N)}")
-        print(f"  Initial value: {seq(0)}, ratio N/initial = {N / max(1, seq(0)):.2f}")
+def pareto_dominates(x: ComplexityVector, y: ComplexityVector) -> bool:
+    return all(xi <= yi for xi, yi in zip(x, y)) and any(xi < yi for xi, yi in zip(x, y))
 
 
-def demo_optimizer_convergence():
-    """
-    Demo 2: Optimizer fixed-point convergence.
-    Simulates different optimizers on proof-like objects.
-    """
-    print("\n" + "=" * 60)
-    print("Demo 2: Optimizer Fixed-Point Convergence")
-    print("=" * 60)
-
-    # Proof state = (theorem_id, complexity)
-    # Optimizer reduces complexity
-
-    def greedy_optimizer(state: Tuple[int, int]) -> Tuple[int, int]:
-        """Reduces complexity by 1 each step."""
-        thm, c = state
-        return (thm, max(0, c - 1))
-
-    def halving_optimizer(state: Tuple[int, int]) -> Tuple[int, int]:
-        """Halves complexity each step."""
-        thm, c = state
-        return (thm, c // 2)
-
-    def sqrt_optimizer(state: Tuple[int, int]) -> Tuple[int, int]:
-        """Reduces to integer square root."""
-        thm, c = state
-        new_c = int(c ** 0.5)
-        return (thm, min(new_c, c))  # Ensure non-increasing
-
-    initial_states = [(0, 100), (1, 1000), (2, 10000)]
-
-    for name, opt in [("Greedy (-1)", greedy_optimizer),
-                       ("Halving (÷2)", halving_optimizer),
-                       ("Sqrt (√)", sqrt_optimizer)]:
-        print(f"\n  Optimizer: {name}")
-        for thm, c0 in initial_states:
-            state = (thm, c0)
-            steps = 0
-            trajectory = [c0]
-            while True:
-                new_state = opt(state)
-                steps += 1
-                trajectory.append(new_state[1])
-                if new_state[1] == state[1]:
-                    break
-                state = new_state
-                if steps > 10000:
-                    break
-            print(f"    Initial complexity {c0}: stabilized at step {steps}, "
-                  f"final complexity {state[1]}")
-            if len(trajectory) <= 15:
-                print(f"    Trajectory: {trajectory}")
-            else:
-                print(f"    Trajectory: {trajectory[:8]}...{trajectory[-3:]}")
+def total_complexity(x: ComplexityVector) -> int:
+    return sum(x)
 
 
-def demo_lyapunov_certificate():
-    """
-    Demo 3: Lyapunov certificate verification.
-    Shows how a potential function certifies convergence.
-    """
-    print("\n" + "=" * 60)
-    print("Demo 3: Lyapunov Certificate Verification")
-    print("=" * 60)
+def weighted_total(x: ComplexityVector, weights: Tuple[int, ...]) -> int:
+    return sum(w * c for w, c in zip(weights, x))
 
-    # System: complexity = state value
-    # Optimizer: halving
-    # Potential: V(x) = 2*x (strictly decreases when complexity changes)
 
-    def complexity(x: int) -> int:
-        return x
+def compute_pareto_frontier(points: List[ComplexityVector]) -> List[ComplexityVector]:
+    return [p for p in points if not any(pareto_dominates(q, p) for q in points)]
 
-    def optimize(x: int) -> int:
-        return x // 2
 
-    def potential(x: int) -> int:
-        return 2 * x
+def main():
+    print("=" * 70)
+    print("MULTI-OBJECTIVE REFINEMENT SYSTEMS — DEMONSTRATION")
+    print("=" * 70)
 
-    print("\n  Verifying Lyapunov certificate V(x) = 2x for halving optimizer:")
-    print(f"  {'Step':>4} {'State':>8} {'C(state)':>10} {'V(state)':>10} {'ΔC':>6} {'ΔV':>6}")
-    print("  " + "-" * 50)
+    # --- Example 1: Pareto Dominance ---
+    print("\n1. PARETO DOMINANCE")
+    print("-" * 40)
+    a, b, c = (2, 3, 1), (3, 4, 2), (1, 5, 0)
+    print(f"  a = {a}, b = {b}, c = {c}")
+    print(f"  a dominates b? {pareto_dominates(a, b)}  (yes: 2≤3, 3≤4, 1≤2, all ≤ and some <)")
+    print(f"  a dominates c? {pareto_dominates(a, c)}  (no: a[1]=3 but c[1]=5, so a[1] > c[1])")
+    print(f"  c dominates a? {pareto_dominates(c, a)}  (no: c[1]=5 > a[1]=3)")
+    print(f"  → a and c are Pareto-INCOMPARABLE")
 
-    x = 1000
-    for step in range(20):
-        x_new = optimize(x)
-        c_old, c_new = complexity(x), complexity(x_new)
-        v_old, v_new = potential(x), potential(x_new)
-        dc = c_new - c_old
-        dv = v_new - v_old
-        print(f"  {step:4d} {x:8d} {c_old:10d} {v_old:10d} {dc:6d} {dv:6d}")
-        if x_new == x:
-            print(f"\n  Fixed point reached at step {step}!")
+    # --- Example 2: Chain Length Bound ---
+    print("\n2. CHAIN LENGTH BOUND")
+    print("-" * 40)
+    chain = [(5, 4, 3), (4, 4, 3), (4, 3, 3), (4, 3, 2), (3, 3, 2), (3, 2, 2), (3, 2, 1)]
+    print(f"  Chain: {' → '.join(str(x) for x in chain)}")
+    chain_len = len(chain) - 1
+    init_total = total_complexity(chain[0])
+    print(f"  Chain length: {chain_len}")
+    print(f"  Total complexity of initial element: {init_total}")
+    print(f"  Theorem: chain_length ≤ total_complexity → {chain_len} ≤ {init_total} ✓")
+    valid = all(pareto_dominates(chain[i + 1], chain[i]) for i in range(len(chain) - 1))
+    print(f"  Valid Pareto chain? {valid}")
+
+    # --- Example 3: Componentwise Convergence ---
+    print("\n3. COMPONENTWISE CONVERGENCE")
+    print("-" * 40)
+
+    def optimizer_step(x: ComplexityVector) -> ComplexityVector:
+        """Reduce the largest component by 1, leave others unchanged."""
+        lst = list(x)
+        if max(lst) > 0:
+            idx = lst.index(max(lst))
+            lst[idx] -= 1
+        return tuple(lst)
+
+    x0 = (5, 3, 4)
+    orbit = [x0]
+    current = x0
+    for _ in range(20):
+        nxt = optimizer_step(current)
+        if nxt == current:
             break
-        x = x_new
+        orbit.append(nxt)
+        current = nxt
 
-    # Verify certificate properties
-    print("\n  Certificate properties verified:")
-    test_passed = True
-    for x in range(1, 100):
-        x_new = optimize(x)
-        # Non-increasing
-        if potential(x_new) > potential(x):
-            print(f"    FAIL: V not non-increasing at x={x}")
-            test_passed = False
-        # Strict decrease when complexity changes
-        if complexity(x_new) != complexity(x) and potential(x_new) >= potential(x):
-            print(f"    FAIL: V not strictly decreasing at x={x}")
-            test_passed = False
-    if test_passed:
-        print("    ✓ V is non-increasing under optimization")
-        print("    ✓ V strictly decreases when complexity changes")
+    print(f"  Starting point: {x0}")
+    print(f"  Optimizer: reduce largest component by 1")
+    print(f"  Orbit:")
+    for i, pt in enumerate(orbit):
+        print(f"    step {i}: {pt}  total={total_complexity(pt)}")
+    print(f"  Converged after {len(orbit) - 1} steps to {orbit[-1]}")
+    print(f"  All components stable? {orbit[-1] == optimizer_step(orbit[-1])} ✓")
 
+    # --- Example 4: Collapse Information Loss ---
+    print("\n4. COLLAPSE INFORMATION LOSS")
+    print("-" * 40)
+    points = [(2, 0), (0, 3), (1, 1)]
+    print(f"  Points: {points}")
+    print(f"  Totals: {[total_complexity(p) for p in points]}")
+    x, y = (2, 0), (0, 3)
+    print(f"\n  x = {x} (total {total_complexity(x)})")
+    print(f"  y = {y} (total {total_complexity(y)})")
+    print(f"  total(x) < total(y)? {total_complexity(x) < total_complexity(y)} → collapsed says x dominates y")
+    print(f"  x Pareto-dominates y? {pareto_dominates(x, y)} → x[0]=2 > y[0]=0, FAILS!")
+    print(f"  → Collapse creates FALSE ranking between incomparable elements")
 
-def demo_chain_length_bound():
-    """
-    Demo 4: Chain length bound verification.
-    Shows that chain length ≤ initial complexity.
-    """
-    print("\n" + "=" * 60)
-    print("Demo 4: Chain Length Bound")
-    print("=" * 60)
+    # --- Example 5: Pareto Frontier ---
+    print("\n5. PARETO FRONTIER (ANTICHAIN)")
+    print("-" * 40)
+    random.seed(42)
+    points = [(random.randint(0, 10), random.randint(0, 10)) for _ in range(20)]
+    frontier = compute_pareto_frontier(points)
+    print(f"  20 random 2D points, frontier has {len(frontier)} points:")
+    for p in sorted(frontier):
+        print(f"    {p}")
+    # Verify antichain property
+    is_antichain = all(
+        not pareto_dominates(a, b)
+        for a in frontier
+        for b in frontier
+        if a != b
+    )
+    print(f"  Antichain property verified? {is_antichain} ✓")
 
-    for n in [5, 10, 20, 50]:
-        # Linear system: Prf = {0, ..., n}, complexity(i) = n - i
-        chain = list(range(n + 1))
-        complexities = [n - i for i in chain]
-        # Verify chain is valid
-        valid = all(complexities[i + 1] < complexities[i] for i in range(n))
-        print(f"\n  n = {n}: chain length = {n}, initial complexity = {complexities[0]}")
-        print(f"  Bound satisfied: {n} ≤ {complexities[0]} → {n <= complexities[0]}")
-        print(f"  Chain valid (strict decrease): {valid}")
-        if n <= 10:
-            print(f"  Complexities: {complexities}")
+    # --- Example 6: Weighted Analysis ---
+    print("\n6. WEIGHTED CHAIN BOUND")
+    print("-" * 40)
+    chain = [(3, 5), (2, 5), (2, 4), (1, 4), (1, 3), (0, 3), (0, 2), (0, 1), (0, 0)]
+    w1 = (1, 1)
+    w2 = (2, 1)
+    w3 = (1, 3)
+    chain_len = len(chain) - 1
+    print(f"  Chain of length {chain_len}: {chain[0]} → ... → {chain[-1]}")
+    print(f"  Unweighted bound (w=(1,1)): {weighted_total(chain[0], w1)} ≥ {chain_len} ✓")
+    print(f"  Weighted bound   (w=(2,1)): {weighted_total(chain[0], w2)} ≥ {chain_len} ✓")
+    print(f"  Weighted bound   (w=(1,3)): {weighted_total(chain[0], w3)} ≥ {chain_len} ✓")
 
+    # --- Example 7: Product Construction ---
+    print("\n7. PRODUCT CONSTRUCTION")
+    print("-" * 40)
+    x1 = (3, 2)  # System 1: 2 objectives
+    x2 = (4,)    # System 2: 1 objective
+    product = x1 + x2  # Combined: 3 objectives
+    print(f"  System 1: x1 = {x1}, total = {total_complexity(x1)}")
+    print(f"  System 2: x2 = {x2}, total = {total_complexity(x2)}")
+    print(f"  Product:  (x1, x2) = {product}, total = {total_complexity(product)}")
+    print(f"  Additivity: {total_complexity(x1)} + {total_complexity(x2)} = {total_complexity(product)} ✓")
 
-def demo_composition():
-    """
-    Demo 5: Composition of optimizers.
-    Shows that composed optimizers converge faster.
-    """
-    print("\n" + "=" * 60)
-    print("Demo 5: Composition of Optimizers")
-    print("=" * 60)
+    # --- Example 8: Strict Decrease Count ---
+    print("\n8. STRICT DECREASE COUNT")
+    print("-" * 40)
+    seq = [10, 10, 9, 9, 9, 7, 7, 5, 5, 5, 5, 3, 3, 3, 2, 2, 1, 1, 1, 1, 0, 0]
+    strict_decreases = sum(1 for i in range(len(seq) - 1) if seq[i + 1] < seq[i])
+    print(f"  Non-increasing sequence: {seq[:10]}...")
+    print(f"  Initial value: {seq[0]}")
+    print(f"  Number of strict decreases: {strict_decreases}")
+    print(f"  Theorem: strict_decreases ≤ f(0) → {strict_decreases} ≤ {seq[0]} ✓")
 
-    def opt1(x: int) -> int:
-        """Remove trailing zero bits."""
-        if x == 0: return 0
-        while x > 0 and x % 2 == 0:
-            x //= 2
-        return x
-
-    def opt2(x: int) -> int:
-        """Subtract 1 if odd and > 0."""
-        if x > 0 and x % 2 == 1:
-            return x - 1
-        return x
-
-    def composed(x: int) -> int:
-        return opt1(opt2(x))
-
-    initial = 1000
-    for name, opt in [("Opt1 (remove trailing zeros)", opt1),
-                       ("Opt2 (subtract 1 if odd)", opt2),
-                       ("Composed (opt1 ∘ opt2)", composed)]:
-        x = initial
-        steps = 0
-        while True:
-            x_new = opt(x)
-            steps += 1
-            if x_new == x:
-                break
-            x = x_new
-            if steps > 10000:
-                break
-        print(f"\n  {name}:")
-        print(f"    Initial: {initial}, Final: {x}, Steps: {steps}")
-
-
-def demo_ordinal_gap():
-    """
-    Demo 6: Ordinal gap — finite case verification.
-    For each n, construct a system achieving the bound.
-    """
-    print("\n" + "=" * 60)
-    print("Demo 6: Ordinal Gap (Finite Case)")
-    print("=" * 60)
-
-    for n in range(1, 11):
-        # Linear system achieves chain length = n with complexity = n
-        max_chain = n
-        initial_complexity = n
-        gap = initial_complexity - max_chain  # Should be 0 for linear systems
-        print(f"  n = {n:2d}: max chain = {max_chain}, "
-              f"initial complexity = {initial_complexity}, gap = {gap}")
-
-    print("\n  For ω (transfinite): no ℕ-indexed chain can have length ω")
-    print("  This is the fundamental finite-transfinite asymmetry")
+    print("\n" + "=" * 70)
+    print("All demonstrations completed successfully.")
+    print("=" * 70)
 
 
 if __name__ == "__main__":
-    demo_nat_sequence_stabilization()
-    demo_optimizer_convergence()
-    demo_lyapunov_certificate()
-    demo_chain_length_bound()
-    demo_composition()
-    demo_ordinal_gap()
-
-    print("\n" + "=" * 60)
-    print("All demonstrations complete.")
-    print("=" * 60)
+    main()
 
 
 #!/usr/bin/env python3
-"""
-Visualization: Optimizer Convergence Trajectories
-
-Shows how different optimizers converge to fixed points,
-demonstrating the ω-Step Theorem.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
+"""Visualization: Collapse information loss — comparing Pareto order vs total order."""
 import matplotlib.pyplot as plt
 import numpy as np
+import random
 
+def pareto_dominates(x, y):
+    return all(xi <= yi for xi, yi in zip(x, y)) and any(xi < yi for xi, yi in zip(x, y))
 
-def halving_optimizer(x: int) -> int:
-    return x // 2
+random.seed(123)
+points = [(random.randint(0, 10), random.randint(0, 10)) for _ in range(30)]
 
-def greedy_optimizer(x: int) -> int:
-    return max(0, x - 1)
+# Find pairs where total order disagrees with Pareto order
+false_rankings = []
+true_rankings = []
+for i, x in enumerate(points):
+    for j, y in enumerate(points):
+        if i >= j:
+            continue
+        tx, ty = sum(x), sum(y)
+        if tx < ty:
+            if pareto_dominates(x, y):
+                true_rankings.append((x, y))
+            else:
+                false_rankings.append((x, y))
+        elif ty < tx:
+            if pareto_dominates(y, x):
+                true_rankings.append((y, x))
+            else:
+                false_rankings.append((y, x))
 
-def sqrt_optimizer(x: int) -> int:
-    return int(x ** 0.5)
+fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 
-def log_optimizer(x: int) -> int:
-    if x <= 1:
-        return 0
-    return max(0, int(np.log2(x)))
+# Left: show some true rankings
+ax = axes[0]
+ax.set_title('Collapse PRESERVES Dominance\n(Pareto agrees with total order)', fontsize=13, color='green')
+for x, y in true_rankings[:5]:
+    ax.annotate('', xy=x, xytext=y,
+                arrowprops=dict(arrowstyle='->', color='green', lw=2))
+    ax.scatter(*x, c='green', s=80, zorder=3, edgecolors='darkgreen')
+    ax.scatter(*y, c='lightgreen', s=80, zorder=3, edgecolors='green')
+    ax.annotate(f't={sum(x)}', xy=x, xytext=(x[0]+0.3, x[1]+0.3), fontsize=8)
+    ax.annotate(f't={sum(y)}', xy=y, xytext=(y[0]+0.3, y[1]+0.3), fontsize=8)
+ax.set_xlabel('Objective 1')
+ax.set_ylabel('Objective 2')
+ax.grid(True, alpha=0.3)
+ax.set_xlim(-1, 12)
+ax.set_ylim(-1, 12)
 
-def get_trajectory(optimizer, initial, max_steps=200):
-    trajectory = [initial]
-    x = initial
-    for _ in range(max_steps):
-        x_new = optimizer(x)
-        trajectory.append(x_new)
-        if x_new == x:
-            break
-        x = x_new
-    return trajectory
+# Right: show false rankings
+ax = axes[1]
+ax.set_title('Collapse CREATES False Rankings\n(Total order disagrees with Pareto)', fontsize=13, color='red')
+for x, y in false_rankings[:5]:
+    ax.annotate('', xy=x, xytext=y,
+                arrowprops=dict(arrowstyle='->', color='red', lw=2, linestyle='dashed'))
+    ax.scatter(*x, c='red', s=80, zorder=3, edgecolors='darkred')
+    ax.scatter(*y, c='lightsalmon', s=80, zorder=3, edgecolors='red')
+    ax.annotate(f't={sum(x)}', xy=x, xytext=(x[0]+0.3, x[1]+0.3), fontsize=8)
+    ax.annotate(f't={sum(y)}', xy=y, xytext=(y[0]+0.3, y[1]+0.3), fontsize=8)
+ax.set_xlabel('Objective 1')
+ax.set_ylabel('Objective 2')
+ax.grid(True, alpha=0.3)
+ax.set_xlim(-1, 12)
+ax.set_ylim(-1, 12)
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-fig.suptitle('Optimizer Convergence Trajectories\n(ω-Step Theorem: All Must Stabilize)',
-             fontsize=14, fontweight='bold')
-
-initial = 1000
-optimizers = [
-    ("Greedy (−1)", greedy_optimizer),
-    ("Halving (÷2)", halving_optimizer),
-    ("Square Root (√)", sqrt_optimizer),
-    ("Logarithmic (log₂)", log_optimizer),
-]
-
-colors = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6']
-
-for idx, ((name, opt), color) in enumerate(zip(optimizers, colors)):
-    ax = axes[idx // 2][idx % 2]
-    traj = get_trajectory(opt, initial)
-    steps = list(range(len(traj)))
-
-    ax.plot(steps, traj, '-o', color=color, markersize=3, linewidth=1.5, label=name)
-    ax.axhline(y=traj[-1], color='gray', linestyle='--', alpha=0.5, label=f'Fixed point = {traj[-1]}')
-
-    # Mark stabilization point
-    stab = len(traj) - 1
-    for i in range(len(traj) - 1):
-        if traj[i] == traj[-1]:
-            stab = i
-            break
-    ax.axvline(x=stab, color='orange', linestyle=':', alpha=0.7, label=f'N = {stab}')
-
-    ax.set_xlabel('Iteration Step')
-    ax.set_ylabel('Complexity')
-    ax.set_title(f'{name} (N = {stab} steps)')
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
-
+fig.suptitle('The Collapse Information-Loss Theorem', fontsize=16, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig('convergence_trajectories.png', dpi=150, bbox_inches='tight')
-print("Saved: convergence_trajectories.png")
-
-# Second figure: multiple initial values
-fig2, ax2 = plt.subplots(figsize=(12, 6))
-for initial_val in [100, 500, 1000, 5000, 10000]:
-    traj = get_trajectory(halving_optimizer, initial_val, max_steps=30)
-    ax2.plot(range(len(traj)), traj, '-o', markersize=4,
-             label=f'Initial = {initial_val}')
-
-ax2.set_xlabel('Iteration Step', fontsize=12)
-ax2.set_ylabel('Complexity', fontsize=12)
-ax2.set_title('Halving Optimizer: Convergence from Different Initial Values', fontsize=14)
-ax2.legend()
-ax2.grid(True, alpha=0.3)
-ax2.set_yscale('log')
-
-plt.tight_layout()
-plt.savefig('convergence_initial_values.png', dpi=150, bbox_inches='tight')
-print("Saved: convergence_initial_values.png")
+plt.savefig('collapse_info_loss.png', dpi=150, bbox_inches='tight')
+plt.show()
+print("Saved collapse_info_loss.png")
 
 
 #!/usr/bin/env python3
-"""
-Visualization: Lyapunov Certificate for Optimizer Convergence
-
-Shows how the Lyapunov potential tracks and certifies convergence.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
+"""Visualization: Componentwise convergence of a Pareto optimizer."""
 import matplotlib.pyplot as plt
 import numpy as np
 
+def optimizer_step(x):
+    """Reduce the largest component by 1."""
+    lst = list(x)
+    if max(lst) > 0:
+        idx = lst.index(max(lst))
+        lst[idx] -= 1
+    return tuple(lst)
 
-def optimizer(x: int) -> int:
-    """Halving optimizer."""
-    return x // 2
-
-def complexity(x: int) -> int:
-    return x
-
-def lyapunov_potential(x: int) -> int:
-    """V(x) = 2x — a valid Lyapunov certificate for the halving optimizer."""
-    return 2 * x
-
-# Generate trajectory
-x = 500
-steps_data = []
-for step in range(30):
-    x_new = optimizer(x)
-    c_old, c_new = complexity(x), complexity(x_new)
-    v_old, v_new = lyapunov_potential(x), lyapunov_potential(x_new)
-    steps_data.append({
-        'step': step,
-        'state': x,
-        'complexity': c_old,
-        'potential': v_old,
-        'dc': c_new - c_old,
-        'dv': v_new - v_old,
-    })
-    if x_new == x:
-        steps_data.append({
-            'step': step + 1,
-            'state': x_new,
-            'complexity': c_new,
-            'potential': v_new,
-            'dc': 0,
-            'dv': 0,
-        })
+# Run optimizer
+x0 = (8, 5, 6)
+orbit = [x0]
+current = x0
+for _ in range(30):
+    nxt = optimizer_step(current)
+    if nxt == current:
         break
-    x = x_new
+    orbit.append(nxt)
+    current = nxt
 
-fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(12, 12), sharex=True)
-fig.suptitle('Lyapunov Convergence Certificate\nBoth Complexity and Potential Must Stabilize',
-             fontsize=14, fontweight='bold')
+steps = list(range(len(orbit)))
+c1 = [x[0] for x in orbit]
+c2 = [x[1] for x in orbit]
+c3 = [x[2] for x in orbit]
+total = [sum(x) for x in orbit]
 
-steps = [d['step'] for d in steps_data]
-complexities = [d['complexity'] for d in steps_data]
-potentials = [d['potential'] for d in steps_data]
-dc_vals = [d['dc'] for d in steps_data]
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
 
-# Plot 1: Complexity
-ax1.plot(steps, complexities, 'o-', color='#e74c3c', linewidth=2, markersize=6)
-ax1.fill_between(steps, complexities, alpha=0.2, color='#e74c3c')
-ax1.set_ylabel('Complexity C(p)', fontsize=12)
-ax1.set_title('Complexity Trajectory', fontsize=12)
+# Top: individual components
+ax1.plot(steps, c1, 'o-', color='#e74c3c', label='Objective 1', markersize=5)
+ax1.plot(steps, c2, 's-', color='#3498db', label='Objective 2', markersize=5)
+ax1.plot(steps, c3, '^-', color='#2ecc71', label='Objective 3', markersize=5)
+ax1.set_ylabel('Component Value', fontsize=12)
+ax1.set_title('Componentwise Convergence: All Components Stabilize Simultaneously', fontsize=14)
+ax1.legend(fontsize=11)
 ax1.grid(True, alpha=0.3)
+ax1.axhline(y=0, color='gray', linestyle=':', alpha=0.5)
 
-# Plot 2: Lyapunov potential
-ax2.plot(steps, potentials, 's-', color='#3498db', linewidth=2, markersize=6)
-ax2.fill_between(steps, potentials, alpha=0.2, color='#3498db')
-ax2.set_ylabel('Potential V(p)', fontsize=12)
-ax2.set_title('Lyapunov Potential (V = 2C)', fontsize=12)
+# Bottom: total complexity
+ax2.plot(steps, total, 'D-', color='#9b59b6', label='Total Complexity', markersize=6, linewidth=2)
+ax2.fill_between(steps, total, alpha=0.1, color='#9b59b6')
+ax2.set_xlabel('Optimization Step', fontsize=12)
+ax2.set_ylabel('Total Complexity', fontsize=12)
+ax2.set_title('Total Complexity: Strictly Decreasing, Bounds Chain Length', fontsize=14)
+ax2.legend(fontsize=11)
 ax2.grid(True, alpha=0.3)
 
-# Plot 3: Changes
-ax3.bar(steps, dc_vals, color=['#e74c3c' if d < 0 else '#2ecc71' for d in dc_vals],
-        alpha=0.7, label='ΔC')
-ax3.axhline(y=0, color='black', linewidth=0.5)
-ax3.set_xlabel('Iteration Step', fontsize=12)
-ax3.set_ylabel('Change in Complexity', fontsize=12)
-ax3.set_title('Complexity Change per Step (negative = improvement)', fontsize=12)
-ax3.grid(True, alpha=0.3)
+# Annotate
+ax2.annotate(f'Initial total = {total[0]}', xy=(0, total[0]),
+             xytext=(3, total[0] - 1), fontsize=10,
+             arrowprops=dict(arrowstyle='->', color='gray'))
+ax2.annotate(f'Final total = {total[-1]}', xy=(steps[-1], total[-1]),
+             xytext=(steps[-1] - 4, total[-1] + 3), fontsize=10,
+             arrowprops=dict(arrowstyle='->', color='gray'))
 
 plt.tight_layout()
-plt.savefig('lyapunov_certificate.png', dpi=150, bbox_inches='tight')
-print("Saved: lyapunov_certificate.png")
+plt.savefig('convergence.png', dpi=150, bbox_inches='tight')
+plt.show()
+print("Saved convergence.png")
 
 
 #!/usr/bin/env python3
-"""
-Visualization: Ordinal Refinement Chains and the Finite-Transfinite Gap
-
-Shows chain length bounds and the gap between finite and transfinite ordinals.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
+"""Visualization: 2D Pareto Frontier with dominated region."""
 import matplotlib.pyplot as plt
 import numpy as np
+import random
 
+def pareto_dominates(x, y):
+    return all(xi <= yi for xi, yi in zip(x, y)) and any(xi < yi for xi, yi in zip(x, y))
 
-# Figure 1: Chain length vs initial complexity for the linear system
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-fig.suptitle('Ordinal Refinement Chain Analysis', fontsize=14, fontweight='bold')
+def compute_pareto_frontier(points):
+    return [p for p in points if not any(pareto_dominates(q, p) for q in points)]
 
-ns = list(range(1, 21))
-chain_lengths = ns  # Linear system achieves exact bound
-complexities = ns  # Initial complexity = n
+random.seed(42)
+np.random.seed(42)
+points = [(random.randint(0, 20), random.randint(0, 20)) for _ in range(50)]
+frontier = compute_pareto_frontier(points)
+non_frontier = [p for p in points if p not in frontier]
 
-ax1.plot(complexities, chain_lengths, 'o-', color='#e74c3c', linewidth=2, markersize=8,
-         label='Achieved (linear system)')
-ax1.plot(complexities, complexities, '--', color='gray', alpha=0.5, label='Bound: length ≤ complexity')
-ax1.fill_between(complexities, chain_lengths, complexities, alpha=0.1, color='#3498db',
-                  label='Unreachable region')
-ax1.set_xlabel('Initial Complexity', fontsize=12)
-ax1.set_ylabel('Maximum Chain Length', fontsize=12)
-ax1.set_title('Chain Length Bound (Finite Ordinals)', fontsize=12)
-ax1.legend()
-ax1.grid(True, alpha=0.3)
+fig, ax = plt.subplots(1, 1, figsize=(10, 8))
 
-# Figure 2: Ordinal complexity levels (schematic)
-levels = ['0', '1', '2', '...', 'n', '...', 'ω', 'ω+1', '...', 'ω·2', '...', 'ω²']
-y_positions = [0, 1, 2, 3.5, 5, 6.5, 8, 9, 10, 11.5, 13, 15]
-colors = ['#2ecc71'] * 6 + ['#e74c3c'] * 6
-sizes = [200] * 6 + [300] * 6
+# Plot non-frontier points
+if non_frontier:
+    ax.scatter([p[0] for p in non_frontier], [p[1] for p in non_frontier],
+               c='lightgray', s=60, zorder=2, label='Dominated', edgecolors='gray')
 
-for y, label, color, size in zip(y_positions, levels, colors, sizes):
-    ax2.scatter([0], [y], s=size, c=color, zorder=5, edgecolors='black', linewidth=1)
-    ax2.annotate(label, (0.3, y), fontsize=11, va='center')
+# Plot frontier points
+frontier_sorted = sorted(frontier, key=lambda p: p[0])
+ax.scatter([p[0] for p in frontier_sorted], [p[1] for p in frontier_sorted],
+           c='red', s=120, zorder=3, label='Pareto Frontier', edgecolors='darkred', linewidths=1.5)
 
-# Add bracket for finite ordinals
-ax2.annotate('', xy=(-0.5, 0), xytext=(-0.5, 6.5),
-             arrowprops=dict(arrowstyle='<->', color='#2ecc71', lw=2))
-ax2.text(-1.2, 3, 'Finite\nordinals\n(ℕ-chains\npossible)', fontsize=9,
-         color='#2ecc71', ha='center', va='center')
+# Draw staircase showing the frontier boundary
+if frontier_sorted:
+    xs = [p[0] for p in frontier_sorted]
+    ys = [p[1] for p in frontier_sorted]
+    stair_x = [0]
+    stair_y = [max(ys) + 2]
+    for x, y in frontier_sorted:
+        stair_x.extend([x, x])
+        stair_y.extend([stair_y[-1], y])
+    stair_x.append(max(xs) + 2)
+    stair_y.append(stair_y[-1])
+    ax.plot(stair_x, stair_y, 'r--', alpha=0.5, linewidth=1.5)
+    ax.fill_between(stair_x, stair_y, max(ys) + 3, alpha=0.05, color='red')
 
-# Add bracket for transfinite ordinals
-ax2.annotate('', xy=(-0.5, 8), xytext=(-0.5, 15),
-             arrowprops=dict(arrowstyle='<->', color='#e74c3c', lw=2))
-ax2.text(-1.2, 11.5, 'Transfinite\nordinals\n(no ℕ-chain\nof this length)', fontsize=9,
-         color='#e74c3c', ha='center', va='center')
+ax.set_xlabel('Objective 1 (complexity)', fontsize=12)
+ax.set_ylabel('Objective 2 (complexity)', fontsize=12)
+ax.set_title('Pareto Frontier: No Frontier Point Dominates Another (Antichain)', fontsize=14)
+ax.legend(fontsize=11)
+ax.set_xlim(-1, 22)
+ax.set_ylim(-1, 22)
+ax.grid(True, alpha=0.3)
+ax.set_aspect('equal')
 
-# Gap line
-ax2.axhline(y=7.2, color='orange', linewidth=2, linestyle='--')
-ax2.text(0.8, 7.2, '← FINITE-TRANSFINITE GAP', fontsize=10, color='orange',
-         va='center', fontweight='bold')
-
-ax2.set_xlim(-2, 3)
-ax2.set_ylim(-1, 16)
-ax2.set_title('The Ordinal Hierarchy\nand the Finite-Transfinite Gap', fontsize=12)
-ax2.axis('off')
+# Annotate
+ax.annotate('Dominated region\n(above frontier)', xy=(15, 18), fontsize=10,
+            ha='center', color='gray', style='italic')
+ax.annotate('Pareto frontier\n(antichain)', xy=(frontier_sorted[0][0] + 1, frontier_sorted[0][1] - 2),
+            fontsize=10, ha='center', color='red', fontweight='bold')
 
 plt.tight_layout()
-plt.savefig('ordinal_chains.png', dpi=150, bbox_inches='tight')
-print("Saved: ordinal_chains.png")
+plt.savefig('pareto_frontier.png', dpi=150, bbox_inches='tight')
+plt.show()
+print("Saved pareto_frontier.png")

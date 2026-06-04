@@ -1,296 +1,196 @@
-#!/usr/bin/env python3
 """
-Algorithms for Transfinite Proof Refinement Systems
+Multi-Objective Refinement Systems (MORS) — Algorithms
 
-Type-hinted implementations of the core algorithms from the theory.
+Type-hinted implementations of the core MORS algorithms:
+1. Pareto dominance checking
+2. Pareto frontier computation
+3. Multi-objective optimizer simulation
+4. Weighted chain bound computation
 """
 
-from typing import TypeVar, Generic, Callable, Optional, Tuple, List, Protocol
-from dataclasses import dataclass
-from abc import ABC, abstractmethod
-
-T = TypeVar('T')  # Theorem type
-P = TypeVar('P')  # Proof type
+from typing import List, Tuple, Callable, Optional, Set
+import itertools
 
 
-class RefinementSystem(Generic[T, P]):
+# --- Core Types ---
+
+ComplexityVector = Tuple[int, ...]  # k-dimensional complexity vector
+
+
+def pareto_dominates(x: ComplexityVector, y: ComplexityVector) -> bool:
+    """Check if x Pareto-dominates y: x[i] <= y[i] for all i, x[j] < y[j] for some j."""
+    if len(x) != len(y):
+        raise ValueError("Vectors must have same dimension")
+    all_le = all(xi <= yi for xi, yi in zip(x, y))
+    some_lt = any(xi < yi for xi, yi in zip(x, y))
+    return all_le and some_lt
+
+
+def total_complexity(x: ComplexityVector) -> int:
+    """Sum of all components."""
+    return sum(x)
+
+
+def weighted_total(x: ComplexityVector, weights: Tuple[int, ...]) -> int:
+    """Weighted sum of components."""
+    return sum(w * c for w, c in zip(weights, x))
+
+
+# --- Pareto Frontier ---
+
+def compute_pareto_frontier(
+    points: List[ComplexityVector],
+) -> List[ComplexityVector]:
     """
-    A proof refinement system with ordinal-valued complexity.
+    Compute the Pareto frontier: all points not dominated by any other.
 
-    In practice, we use int for complexity (representing finite ordinals).
-    For true ordinal values, see OrdinalValue.
+    Time complexity: O(n^2 * k) where n = len(points), k = dimension.
+
+    Returns list of Pareto-optimal points.
     """
-    def __init__(
-        self,
-        proves: Callable[[P], T],
-        complexity: Callable[[P], int],
-    ):
-        self.proves = proves
-        self.complexity = complexity
-
-    def is_refinement(self, p_new: P, p_old: P) -> bool:
-        """Check if p_new refines p_old."""
-        return (self.proves(p_new) == self.proves(p_old) and
-                self.complexity(p_new) < self.complexity(p_old))
-
-    def is_minimal(self, p: P, candidates: List[P]) -> bool:
-        """Check if p is minimal among candidates."""
-        return not any(self.is_refinement(q, p) for q in candidates)
+    frontier: List[ComplexityVector] = []
+    for p in points:
+        dominated = False
+        for q in points:
+            if pareto_dominates(q, p):
+                dominated = True
+                break
+        if not dominated:
+            frontier.append(p)
+    return frontier
 
 
-class Optimizer(Generic[P]):
+def compute_pareto_frontier_fast(
+    points: List[ComplexityVector],
+) -> List[ComplexityVector]:
     """
-    A proof optimizer: preserves theorems, never increases complexity.
+    Compute Pareto frontier using incremental filtering (Kung et al. style).
+
+    For each new point, remove dominated points from the current frontier
+    and add the new point if not dominated.
+
+    Average case: much faster than O(n^2) for random inputs.
     """
-    def __init__(self, optimize: Callable[[P], P]):
-        self._optimize = optimize
-
-    def optimize(self, p: P) -> P:
-        return self._optimize(p)
-
-    def iterate(self, n: int, p: P) -> P:
-        """Apply optimizer n times."""
-        result = p
-        for _ in range(n):
-            result = self.optimize(result)
-        return result
+    frontier: List[ComplexityVector] = []
+    for p in points:
+        # Check if p is dominated by any frontier point
+        if any(pareto_dominates(q, p) for q in frontier):
+            continue
+        # Remove frontier points dominated by p
+        frontier = [q for q in frontier if not pareto_dominates(p, q)]
+        frontier.append(p)
+    return frontier
 
 
-@dataclass
-class OrdinalValue:
+# --- Multi-Objective Optimizer Simulation ---
+
+def simulate_pareto_optimizer(
+    initial: ComplexityVector,
+    step: Callable[[ComplexityVector], ComplexityVector],
+    max_steps: int = 10000,
+) -> List[ComplexityVector]:
     """
-    Representation of ordinals below ω^ω using Cantor normal form.
+    Simulate a Pareto optimizer, recording the orbit.
 
-    An ordinal in CNF is ω^(k-1) * coeffs[k-1] + ... + ω * coeffs[1] + coeffs[0]
-    where coeffs[i] are natural numbers.
+    The step function must satisfy:
+      step(x)[i] <= x[i] for all i (componentwise non-increasing)
+
+    Returns the orbit [x, step(x), step^2(x), ...] until convergence or max_steps.
     """
-    coeffs: List[int]  # coeffs[i] is the coefficient of ω^i
-
-    def __post_init__(self):
-        # Remove trailing zeros
-        while len(self.coeffs) > 1 and self.coeffs[-1] == 0:
-            self.coeffs.pop()
-
-    @staticmethod
-    def from_nat(n: int) -> 'OrdinalValue':
-        """Create ordinal from natural number."""
-        return OrdinalValue([n])
-
-    @staticmethod
-    def omega(power: int = 1, coeff: int = 1) -> 'OrdinalValue':
-        """Create ω^power * coeff."""
-        coeffs = [0] * (power + 1)
-        coeffs[power] = coeff
-        return OrdinalValue(coeffs)
-
-    def __lt__(self, other: 'OrdinalValue') -> bool:
-        max_len = max(len(self.coeffs), len(other.coeffs))
-        for i in range(max_len - 1, -1, -1):
-            a = self.coeffs[i] if i < len(self.coeffs) else 0
-            b = other.coeffs[i] if i < len(other.coeffs) else 0
-            if a < b:
-                return True
-            if a > b:
-                return False
-        return False
-
-    def __le__(self, other: 'OrdinalValue') -> bool:
-        return self == other or self < other
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, OrdinalValue):
-            return NotImplemented
-        max_len = max(len(self.coeffs), len(other.coeffs))
-        for i in range(max_len):
-            a = self.coeffs[i] if i < len(self.coeffs) else 0
-            b = other.coeffs[i] if i < len(other.coeffs) else 0
-            if a != b:
-                return False
-        return True
-
-    def __repr__(self) -> str:
-        if all(c == 0 for c in self.coeffs):
-            return "0"
-        terms = []
-        for i in range(len(self.coeffs) - 1, -1, -1):
-            if self.coeffs[i] == 0:
-                continue
-            if i == 0:
-                terms.append(str(self.coeffs[i]))
-            elif i == 1:
-                if self.coeffs[i] == 1:
-                    terms.append("ω")
-                else:
-                    terms.append(f"ω·{self.coeffs[i]}")
-            else:
-                if self.coeffs[i] == 1:
-                    terms.append(f"ω^{i}")
-                else:
-                    terms.append(f"ω^{i}·{self.coeffs[i]}")
-        return " + ".join(terms) if terms else "0"
-
-    def __hash__(self) -> int:
-        return hash(tuple(self.coeffs))
+    orbit: List[ComplexityVector] = [initial]
+    current = initial
+    for _ in range(max_steps):
+        next_val = step(current)
+        # Verify componentwise non-increase
+        assert all(
+            ni <= ci for ni, ci in zip(next_val, current)
+        ), f"Step function increased a component: {current} -> {next_val}"
+        if next_val == current:
+            break
+        orbit.append(next_val)
+        current = next_val
+    return orbit
 
 
-def find_fixed_point(
-    optimizer: Callable[[P], P],
-    complexity: Callable[[P], int],
-    initial: P,
-    max_steps: int = 100000,
-) -> Tuple[P, int, List[int]]:
+# --- Chain Analysis ---
+
+def verify_pareto_chain(chain: List[ComplexityVector]) -> bool:
+    """Verify that a sequence forms a valid Pareto refinement chain."""
+    for i in range(len(chain) - 1):
+        if not pareto_dominates(chain[i + 1], chain[i]):
+            return False
+    return True
+
+
+def chain_independence_dimension(chain: List[ComplexityVector]) -> int:
     """
-    Find the fixed point of an optimizer.
-
-    Returns:
-        (fixed_point, num_steps, complexity_trajectory)
-
-    Guaranteed to terminate by the ω-Step Theorem when complexity
-    is well-ordered and the optimizer is non-increasing.
+    Count the number of objectives that are ever strictly improved along the chain.
     """
-    p = initial
-    trajectory: List[int] = [complexity(p)]
-    steps = 0
-
-    while steps < max_steps:
-        p_new = optimizer(p)
-        c_new = complexity(p_new)
-        trajectory.append(c_new)
-        steps += 1
-
-        if c_new == trajectory[-2]:  # Complexity stabilized
-            # Check if it stays stable for a few more steps
-            stable = True
-            for _ in range(min(5, max_steps - steps)):
-                p_check = optimizer(p_new)
-                if complexity(p_check) != c_new:
-                    stable = False
-                    break
-                p_new = p_check
-            if stable:
-                return p_new, steps, trajectory
-
-        p = p_new
-
-    return p, steps, trajectory
+    if len(chain) < 2:
+        return 0
+    k = len(chain[0])
+    improved: Set[int] = set()
+    for i in range(len(chain) - 1):
+        for j in range(k):
+            if chain[i + 1][j] < chain[i][j]:
+                improved.add(j)
+    return len(improved)
 
 
-def verify_lyapunov_certificate(
-    optimizer: Callable[[P], P],
-    complexity: Callable[[P], int],
-    potential: Callable[[P], int],
-    test_points: List[P],
-) -> Tuple[bool, Optional[str]]:
+# --- Weighted Analysis ---
+
+def optimal_weights_for_chain(
+    chain: List[ComplexityVector],
+) -> Tuple[int, ...]:
     """
-    Verify that a potential function is a valid Lyapunov certificate.
+    Find positive integer weights that minimize the weighted chain bound.
 
-    Returns:
-        (is_valid, error_message)
+    The weighted bound is: len(chain)-1 <= sum(w[i] * chain[0][i]).
+    We want to minimize this bound (i.e., concentrate weight on small components).
+
+    Heuristic: assign weight inversely proportional to initial component value.
     """
-    for p in test_points:
-        p_new = optimizer(p)
-
-        # Check non-increasing
-        if potential(p_new) > potential(p):
-            return False, f"Potential increased at {p}: V({p})={potential(p)} -> V({p_new})={potential(p_new)}"
-
-        # Check strict decrease when complexity changes
-        if complexity(p_new) != complexity(p) and potential(p_new) >= potential(p):
-            return False, (f"Potential did not strictly decrease when complexity changed at {p}: "
-                          f"C={complexity(p)}->{complexity(p_new)}, V={potential(p)}->{potential(p_new)}")
-
-    return True, None
+    initial = chain[0]
+    k = len(initial)
+    if all(c == 0 for c in initial):
+        return tuple(1 for _ in range(k))
+    # Assign weight inversely proportional to component value (minimum 1)
+    max_val = max(initial) + 1
+    weights = tuple(max(1, max_val - c) for c in initial)
+    return weights
 
 
-def compose_optimizers(
-    opt1: Callable[[P], P],
-    opt2: Callable[[P], P],
-) -> Callable[[P], P]:
-    """Compose two optimizers: apply opt2 first, then opt1."""
-    def composed(p: P) -> P:
-        return opt1(opt2(p))
-    return composed
+# --- Collapse Analysis ---
 
-
-def max_chain_length(
-    system: RefinementSystem[T, P],
-    start: P,
-    candidates: List[P],
-) -> Tuple[int, List[P]]:
+def collapse_information_loss(
+    points: List[ComplexityVector],
+) -> List[Tuple[ComplexityVector, ComplexityVector]]:
     """
-    Find the maximum refinement chain length from start.
+    Find pairs where the collapsed (total complexity) order disagrees
+    with the Pareto order.
 
-    Uses DFS to find the longest chain of strict refinements.
-    Returns (length, chain).
+    Returns pairs (x, y) where total(x) < total(y) but x does NOT
+    Pareto-dominate y.
     """
-    best_chain: List[P] = [start]
-    best_length = 0
-
-    def dfs(current: P, chain: List[P], depth: int):
-        nonlocal best_chain, best_length
-
-        if depth > best_length:
-            best_length = depth
-            best_chain = chain.copy()
-
-        for candidate in candidates:
-            if system.is_refinement(candidate, current):
-                chain.append(candidate)
-                dfs(candidate, chain, depth + 1)
-                chain.pop()
-
-    dfs(start, [start], 0)
-    return best_length, best_chain
-
-
-def ordinal_optimizer_demo():
-    """
-    Demonstrate the ordinal optimizer with Cantor normal form ordinals.
-    """
-    print("Ordinal Optimizer Demo")
-    print("=" * 50)
-
-    # System with ordinal complexity ω·a + b
-    # Optimizer: decrease b by 1, or if b=0, decrease a by 1 and set b=10
-    def optimizer(state: Tuple[int, int]) -> Tuple[int, int]:
-        a, b = state
-        if b > 0:
-            return (a, b - 1)
-        elif a > 0:
-            return (a - 1, 10)
-        else:
-            return (0, 0)
-
-    def complexity_ordinal(state: Tuple[int, int]) -> OrdinalValue:
-        a, b = state
-        return OrdinalValue([b, a])
-
-    initial = (3, 5)
-    state = initial
-    steps = 0
-    print(f"  Initial state: {initial}, complexity: {complexity_ordinal(initial)}")
-
-    while state != (0, 0) and steps < 100:
-        state = optimizer(state)
-        steps += 1
-        if steps <= 10 or state == (0, 0):
-            print(f"  Step {steps:3d}: state = {state}, complexity = {complexity_ordinal(state)}")
-        elif steps == 11:
-            print(f"  ...")
-
-    print(f"  Total steps: {steps}")
-    print(f"  Predicted bound (from CNF coefficients): {3 + 5} + intermediate resets")
-    print()
+    mismatches: List[Tuple[ComplexityVector, ComplexityVector]] = []
+    for x, y in itertools.combinations(points, 2):
+        tx, ty = total_complexity(x), total_complexity(y)
+        if tx < ty and not pareto_dominates(x, y):
+            mismatches.append((x, y))
+        elif ty < tx and not pareto_dominates(y, x):
+            mismatches.append((y, x))
+    return mismatches
 
 
 if __name__ == "__main__":
-    ordinal_optimizer_demo()
+    # Quick self-test
+    assert pareto_dominates((1, 2), (2, 3))
+    assert not pareto_dominates((1, 3), (2, 2))
 
-    # Quick test of find_fixed_point
-    result, steps, traj = find_fixed_point(
-        optimizer=lambda x: x // 2,
-        complexity=lambda x: x,
-        initial=1024,
-    )
-    print(f"Halving optimizer: 1024 -> {result} in {steps} steps")
-    print(f"Trajectory: {traj}")
+    frontier = compute_pareto_frontier([(3, 1), (1, 3), (2, 2), (4, 4)])
+    print(f"Pareto frontier of [(3,1),(1,3),(2,2),(4,4)]: {frontier}")
+
+    print("All self-tests passed.")
+"""
+
+"""

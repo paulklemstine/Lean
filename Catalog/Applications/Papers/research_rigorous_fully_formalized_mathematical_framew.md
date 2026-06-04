@@ -1,234 +1,323 @@
-# Transfinite Proof Refinement Systems: Ordinal Complexity and the ω-Step Theorem
+# Multi-Objective Refinement Systems: Pareto Well-Foundedness, Componentwise Convergence, and the Collapse Information-Loss Theorem
 
 ## Abstract
 
-We develop a theory of *ordinal refinement systems* — abstract structures that model iterative optimization with ordinal-valued complexity measures. Our main result, the **ω-Step Theorem**, proves that iterating any optimizer on an ordinal refinement system reaches a complexity fixed point in finitely many steps, despite the complexity values being potentially uncountable ordinals. We establish this through a key lemma showing that non-increasing ℕ-indexed sequences of ordinals must stabilize. We further prove a Lyapunov convergence theorem (ordinal-valued potentials certify convergence), a strict optimizer fixed-point theorem (genuine fixed points, not just complexity stabilization), a composition theorem (composed optimizers inherit termination), and a chain length bound (ordinal analogue of the ℕ-valued bound). We demonstrate that ℕ-valued refinement systems embed faithfully into the ordinal framework, and that the finite case of an ordinal gap conjecture holds. All results are formalized and machine-verified in Lean 4 with Mathlib.
+We introduce **Multi-Objective Refinement Systems (MORS)** — a mathematical framework generalizing single-objective proof refinement systems to the multi-objective setting. A MORS consists of a set of objects equipped with *k* independent ℕ-valued complexity measures, with refinement defined via Pareto dominance: an object x' refines x if it is at least as good in every objective and strictly better in at least one. We establish four main results: (1) the Pareto refinement relation is well-founded, with chain length bounded by total complexity; (2) any Pareto optimizer achieves **componentwise convergence** — all k components stabilize simultaneously; (3) the set of Pareto-optimal elements forms an **antichain** under dominance; and (4) collapsing multiple objectives into a weighted sum preserves but does not reflect dominance, quantifying the inherent **information loss** in single-objective reduction. All results are formalized and machine-verified in Lean 4 with Mathlib.
 
-**Keywords**: proof refinement, ordinal numbers, well-founded relations, Lyapunov stability, termination analysis, formal verification
+**Keywords**: Multi-objective optimization, Pareto dominance, well-foundedness, proof refinement, componentwise convergence, formal verification
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+### 1.1 Background
 
-Proof refinement systems, introduced in the catalog as `ProofRefinementSystem`, model iterative improvement of mathematical proofs. The central insight is that any complexity-decreasing transformation on objects with ℕ-valued complexity must terminate, yielding well-foundedness, fixed-point theorems, and convergence bounds.
+Proof refinement systems, introduced in [prior work in this catalog], model the process of simplifying mathematical proofs by iteratively reducing a complexity measure. The fundamental theorem — that any optimizer on such a system reaches a complexity fixed point — follows from the well-foundedness of ℕ. Extensions to ordinal-valued complexity [TransfiniteRefinement.lean] generalize this to transfinite settings.
 
-However, the restriction to ℕ-valued complexity is limiting. Many termination arguments in theoretical computer science require ordinal-valued measures:
-
-- **Ordinal analysis** assigns ordinals to formal theories, measuring their proof-theoretic strength.
-- **Higher-type computation** uses ordinal recursion for termination of programs with complex recursion patterns.
-- **Transfinite optimization** in set theory involves processes indexed by ordinals beyond ω.
-
-We extend proof refinement systems to ordinal-valued complexity, proving that the core termination results generalize.
+However, real-world optimization problems typically involve **multiple** competing objectives. A proof has length, depth, and number of auxiliary lemmas. An algorithm has time complexity, space complexity, and code size. A machine learning model has training loss, validation loss, and model complexity. Optimizing a single aggregate measure necessarily discards structural information about the trade-offs between objectives.
 
 ### 1.2 Contributions
 
-1. **OrdinalRefinementSystem**: A new mathematical structure generalizing ℕ-valued refinement to ordinal complexity.
-2. **The ω-Step Theorem**: Any ordinal optimizer reaches a complexity fixed point in finitely many steps.
-3. **Lyapunov Convergence**: Ordinal-valued Lyapunov certificates guarantee convergence of both complexity and potential.
-4. **Strict Fixed Points**: Strict optimizers reach genuine fixed points, not just complexity stabilization.
-5. **Composition Theorem**: Composed optimizers inherit termination guarantees.
-6. **Chain Length Bound**: Ordinal analogue: chain length ↑n ≤ initial complexity.
-7. **Embedding**: Faithful embedding of ℕ-valued systems into ordinal systems.
+We introduce the **ParetoRefinementSystem** structure parameterized by the number of objectives *k*, and establish:
 
-### 1.3 Related Work
+1. **Well-foundedness** (Theorem 3.1): Pareto dominance on ℕ^k is well-founded, via the total complexity as a well-founded measure.
 
-The ℕ-valued theory is established in `Catalog/Logic/ProofRefinement.lean`, building on the well-foundedness of ℕ under `<`. Our work extends this using Mathlib's `Ordinal` type, which formalizes von Neumann ordinals as equivalence classes of well-orders.
+2. **Chain length bound** (Theorem 3.2): Any Pareto refinement chain has length ≤ Σᵢ cᵢ(x₀).
 
-The Lyapunov approach is inspired by classical stability theory (Lyapunov, 1892) and its discrete analogues in termination analysis (Floyd, 1967; Turing, 1949). Our ordinal-valued version unifies these with ordinal termination proofs from proof theory.
+3. **Existence of Pareto-optimal elements** (Theorem 3.3): From any starting point, a Pareto-optimal element is reachable.
+
+4. **Componentwise convergence** (Theorem 4.1): Any Pareto optimizer reaches a state where ALL k components are simultaneously fixed.
+
+5. **Antichain theorem** (Theorem 5.1): The Pareto frontier forms an antichain — no optimal element dominates another.
+
+6. **Collapse theorem** (Theorems 6.1–6.2): Collapsing to total complexity preserves dominance but does not reflect it.
+
+7. **Weighted bounds** (Theorems 7.1–7.2): Positive weights give strictly tighter chain bounds and detect dominance.
+
+8. **Product construction** (Theorem 8.1): Products of MORS compose additively in total complexity.
+
+### 1.3 Connection to Existing Work
+
+This framework extends the `ProofRefinementSystem` structure (catalog: `Logic/ProofRefinement.lean`) and connects to:
+- The `OrdinalRefinementSystem` (catalog: `Logic/TransfiniteRefinement.lean`) via the embedding ℕ^k → ω^k
+- The Lyapunov convergence framework (totalComplexity as Lyapunov function)
+- Multi-loss optimization in machine learning (each loss is an objective)
 
 ---
 
 ## 2. Definitions
 
-### 2.1 Ordinal Refinement Systems
+### 2.1 Pareto Refinement System
 
-**Definition 2.1** (OrdinalRefinementSystem). An ordinal refinement system consists of:
-- A type `Thm` of theorems
-- A type `Prf` of proofs
-- A function `proves : Prf → Thm` associating each proof to the theorem it proves
-- A complexity measure `complexity : Prf → Ordinal`
+**Definition 2.1** (ParetoRefinementSystem). A *Pareto refinement system* with *k* objectives is a triple (Obj, c) where:
+- `Obj` is a type of objects
+- `c : Obj → Fin k → ℕ` assigns k complexity values to each object
 
-**Definition 2.2** (Refinement). Proof p' *refines* proof p if `proves p' = proves p` and `complexity p' < complexity p`.
+**Definition 2.2** (Pareto Dominance). Object x' *Pareto-dominates* x, written x' ≻ x, if:
+- ∀ i : Fin k, c(x', i) ≤ c(x, i), and
+- ∃ i : Fin k, c(x', i) < c(x, i)
 
-**Definition 2.3** (Minimality). A proof p is *minimal* if no refinement of p exists.
+**Definition 2.3** (Pareto-Optimal). An object x is *Pareto-optimal* if no object Pareto-dominates it: ∀ x', ¬(x' ≻ x).
 
-**Definition 2.4** (Refinement Chain). A refinement chain of length n is a sequence of n+1 proofs where each refines the previous.
+**Definition 2.4** (Total Complexity). totalComplexity(x) = Σᵢ c(x, i).
 
-### 2.2 Optimizers
+**Definition 2.5** (Axis-Aligned Refinement). An *axis-aligned refinement* along axis j improves objective j and preserves all others: c(x', j) < c(x, j) and c(x', i) = c(x, i) for i ≠ j.
 
-**Definition 2.5** (OrdinalOptimizer). An ordinal optimizer is a function `optimize : Prf → Prf` that preserves theorems and never increases complexity.
+### 2.2 Pareto Optimizer
 
-**Definition 2.6** (StrictOrdinalOptimizer). A strict optimizer additionally satisfies: if `optimize p ≠ p`, then `complexity (optimize p) < complexity p`.
+**Definition 2.6** (ParetoOptimizer). A *Pareto optimizer* is a function step : Obj → Obj such that ∀ x, ∀ i, c(step(x), i) ≤ c(x, i). That is, the optimizer never worsens any objective.
 
-**Definition 2.7** (Composition). The composition of optimizers opt₁ and opt₂ is `opt₁.optimize ∘ opt₂.optimize`, which is again an optimizer.
-
-### 2.3 Lyapunov Certificates
-
-**Definition 2.8** (OrdinalLyapunovCertificate). A Lyapunov certificate for optimizer opt consists of a potential function `V : Prf → Ordinal` such that:
-1. V is non-increasing: `V(optimize p) ≤ V(p)` for all p
-2. V strictly decreases when complexity changes: if `complexity(optimize p) ≠ complexity p`, then `V(optimize p) < V(p)`
+**Definition 2.7** (Weighted Total). For a weight vector w : Fin k → ℕ, the *weighted total* is Σᵢ w(i) · c(x, i).
 
 ---
 
-## 3. Main Results
+## 3. Well-Foundedness and Chain Length
 
-### 3.1 Well-Foundedness
+### Theorem 3.1 (Pareto Well-Foundedness)
+*The Pareto dominance relation on any MORS is well-founded.*
 
-**Theorem 3.1** (ordinal_refinement_wellFounded). The refinement relation on any ordinal refinement system is well-founded.
+**Proof sketch.** If x' ≻ x, then totalComplexity(x') < totalComplexity(x) (Lemma: at least one component strictly decreases, none increase, so the sum strictly decreases). The Pareto relation is contained in the inverse image of the strict ordering on ℕ via totalComplexity, which is well-founded.
 
-*Proof sketch*. The refinement relation is a subrelation of the inverse image of `<` on ordinals under the complexity function. Since ordinals are well-ordered (Ordinal.lt_wf), the inverse image is well-founded, and well-foundedness is inherited by subrelations. □
+### Theorem 3.2 (Chain Length Bound)
+*Any Pareto refinement chain of length n satisfies n ≤ totalComplexity(x₀).*
 
-### 3.2 Stabilization of Non-Increasing Ordinal Sequences
+**Proof sketch.** Induction on n. Each step strictly decreases total complexity by at least 1. After n steps, total complexity has decreased by at least n, but it remains ≥ 0.
 
-**Theorem 3.2** (Ordinal.nonincreasing_eventually_constant). If f : ℕ → Ordinal satisfies f(n+1) ≤ f(n) for all n, then there exists N such that f(n) = f(N) for all n ≥ N.
+### Theorem 3.3 (Existence of Pareto-Optimal Elements)
+*For any object x, there exists a Pareto-optimal x_opt with totalComplexity(x_opt) ≤ totalComplexity(x).*
 
-*Proof sketch*. By contradiction. If f never stabilizes, then for every N there exists n > N with f(n) < f(N). Recursively extracting such indices yields a strictly decreasing subsequence g : ℕ → ℕ such that f ∘ g is strictly decreasing. But a strictly decreasing sequence of ordinals contradicts well-foundedness (no_infinite_descent_ordinal). □
-
-This is the key technical lemma. It is more subtle than the ℕ case because ordinals can be uncountable; the proof relies essentially on the axiom of choice (for extracting the subsequence) and the well-ordering of ordinals.
-
-### 3.3 The ω-Step Theorem
-
-**Theorem 3.3** (ordinal_optimizer_reaches_fixed_complexity). For any ordinal optimizer opt and proof p, there exists N ∈ ℕ such that:
-1. For all n ≥ N: complexity(optⁿ(p)) = complexity(optᴺ(p))
-2. complexity(optᴺ(p)) ≤ complexity(p)
-
-*Proof sketch*. Apply Theorem 3.2 to the sequence n ↦ complexity(optⁿ(p)), which is non-increasing by the optimizer's monotonicity condition. The bound follows by induction on N. □
-
-**Significance**: Despite ordinal complexity being potentially uncountable (e.g., ω₁), only finitely many iterations are needed. This is because the *iteration* is ℕ-indexed, and a non-increasing ℕ-indexed sequence in any well-ordered set must stabilize.
-
-### 3.4 Chain Length Bound
-
-**Theorem 3.4** (ordinal_chain_length_bound). Any refinement chain of length n satisfies ↑n ≤ complexity of the initial element.
-
-*Proof sketch*. By induction on n. The inductive step uses the inner chain (starting from index 1) and the strict decrease from index 0 to 1, together with Order.add_one_le_of_lt. □
-
-### 3.5 Lyapunov Convergence
-
-**Theorem 3.5** (lyapunov_convergence_ordinal). If a Lyapunov certificate exists for optimizer opt, then there exists N such that both complexity and potential stabilize for all n ≥ N.
-
-*Proof sketch*. The potential sequence is non-increasing, so it stabilizes at some N by Theorem 3.2. For n ≥ N, if complexity changed at step n, the strict decrease condition would force a strict decrease in potential — contradicting stabilization. □
-
-### 3.6 Strict Fixed Points
-
-**Theorem 3.6** (strict_optimizer_reaches_fixed_point). A strict optimizer on a system with decidable equality reaches a genuine fixed point: there exists N with optᴺ(p) = optᴺ⁺¹(p).
-
-*Proof sketch*. By contradiction. If no N works, then optⁿ(p) ≠ optⁿ⁺¹(p) for all n, so complexity strictly decreases at every step, yielding an infinite descent — contradiction. □
-
-### 3.7 Composition
-
-**Theorem 3.7** (composition_optimizer_fixed_point). The composition of two optimizers reaches a complexity fixed point.
-
-*Proof*. The composition is an optimizer (Lemma: OrdinalOptimizer.comp). Apply Theorem 3.3. □
-
-### 3.8 Embedding
-
-**Theorem 3.8**. Every ℕ-valued refinement system embeds into an ordinal refinement system, and the embedding both preserves and reflects the refinement relation.
-
-*Proof*. Map complexity n to the ordinal ↑n. The refinement relation is preserved and reflected because ↑m < ↑n ↔ m < n (Nat.cast_lt). □
-
-### 3.9 Ordinal Gap (Finite Case)
-
-**Theorem 3.9** (ordinal_gap_finite_case). For any n ∈ ℕ, there exists an ordinal refinement system with a chain of length n and initial complexity ↑n.
-
-*Proof*. Use the linear system: Prf = Fin(n+1), complexity(i) = ↑(n-i). □
+**Proof sketch.** Well-founded induction on totalComplexity. If x is Pareto-optimal, done. Otherwise, find x' with x' ≻ x, and apply the IH to x'.
 
 ---
 
-## 4. The Ordinal Gap Conjecture
+## 4. Componentwise Convergence
 
-**Conjecture 4.1** (Ordinal Gap Conjecture). For any ordinal α ≥ ω, no ℕ-indexed refinement chain of length α exists. That is, refinement chains are inherently finite.
+### Theorem 4.1 (Componentwise Convergence)
+*For any Pareto optimizer opt and starting point x, there exists N such that for all n ≥ N and all i : Fin k:*
 
-This conjecture is *immediate* from the definition — an ℕ-indexed chain has finite length by construction. The deeper question is whether there exists a meaningful generalization of refinement chains to transfinite indices (e.g., using transfinite sequences indexed by ordinals) that would allow chains of length ω.
+    c(opt^n(x), i) = c(opt^N(x), i)
 
-**Falsifiable prediction**: For any ordinal refinement system with a proof of complexity ω, the maximum length of an ℕ-indexed refinement chain starting from that proof is finite, even though the complexity is infinite. Specifically, the chain length is bounded by ω (as an ordinal inequality), but achievable chain lengths are exactly the natural numbers.
+**Proof sketch.** Each component sequence n ↦ c(opt^n(x), i) is individually non-increasing (by the componentwise non-increase property of the optimizer). A non-increasing ℕ sequence is eventually constant. For each component i, let Nᵢ be the stabilization index. Take N = max{Nᵢ : i ∈ Fin k}. Then all components are stable after N.
 
-**Computational test**: The linear system construction with Prf = ℕ and complexity(i) = ω - i (for i < ω) would have chains of each finite length n but no chain of length ω.
-
----
-
-## 5. Algorithms
-
-### 5.1 Optimizer Fixed-Point Algorithm
-
-```
-Input: Optimizer opt, initial proof p
-Output: Fixed-point proof p* and stabilization step N
-
-N ← 0
-p_current ← p
-while opt(p_current) ≠ p_current:
-    p_current ← opt(p_current)
-    N ← N + 1
-return (p_current, N)
-```
-
-For strict optimizers, this algorithm is guaranteed to terminate. For general optimizers, termination is guaranteed at the complexity level but not necessarily at the proof level.
-
-### 5.2 Lyapunov Certificate Verification
-
-```
-Input: Optimizer opt, candidate potential V, proof p
-Output: Whether V is a valid Lyapunov certificate
-
-for p in sample(Prf):
-    if V(opt(p)) > V(p): return INVALID  # non-increasing violated
-    if complexity(opt(p)) ≠ complexity(p) and V(opt(p)) ≥ V(p):
-        return INVALID  # strict decrease violated
-return VALID (with confidence proportional to sample size)
-```
+**Remark.** This is strictly stronger than total-complexity convergence. The total could stabilize while individual components continue to oscillate (in theory). Componentwise convergence rules this out for Pareto optimizers, because no component can increase.
 
 ---
 
-## 6. Applications and Discussion
+## 5. The Pareto Frontier
 
-### 6.1 Compiler Optimization
+### Theorem 5.1 (Antichain Theorem)
+*If x and y are both Pareto-optimal, then neither dominates the other. The Pareto frontier is an antichain.*
 
-Each optimization pass in a compiler (dead code elimination, constant folding, register allocation) is an optimizer in our sense. The composition theorem guarantees that chaining passes terminates. The Lyapunov certificate approach suggests a method for proving termination of novel optimization passes: define an ordinal-valued code size metric and show it decreases.
+**Proof.** If x ≻ y, then y is not Pareto-optimal (x witnesses a dominating element). Contradiction with the assumption that y is Pareto-optimal. Similarly for y ≻ x.
 
-### 6.2 Machine Learning
+### Theorem 5.2 (Improvement Count Bound)
+*In any single Pareto improvement x' ≻ x, the number of objectives that strictly improve is at most k.*
 
-Gradient descent with a loss function L : Θ → ℝ can be discretized to a sequence of parameter updates. If the loss function is bounded below, the discretized sequence can be viewed through the ordinal lens (embedding ℚ-valued losses into ordinals). The Lyapunov theorem then provides convergence guarantees.
-
-### 6.3 Proof Simplification
-
-The original motivation: iteratively simplifying mathematical proofs. The ordinal framework allows complexity measures that capture hierarchical structure (e.g., the ordinal strength of logical principles used in a proof), going beyond simple line counts.
-
-### 6.4 Limitations
-
-The framework assumes a *deterministic* optimizer. Non-deterministic or randomized optimization (e.g., simulated annealing) requires extension to probabilistic or relational settings. The embedding of continuous optimization into the ordinal framework requires discretization, which may lose precision.
+**Proof.** The set of strictly improved objectives is a subset of Fin k, which has cardinality k.
 
 ---
 
-## 7. Future Work
+## 6. The Collapse Theorem
 
-1. **Transfinite iteration**: Define iteration indexed by ordinals (not just ℕ) to handle non-deterministic optimizers that might require ω or more steps.
-2. **Probabilistic refinement**: Extend to stochastic optimizers with almost-sure convergence.
-3. **Quantitative bounds**: Relate the stabilization step N to structural properties of the optimizer and system.
-4. **Categorical formulation**: Define morphisms between ordinal refinement systems and study the resulting category.
+### Theorem 6.1 (Collapse Preserves Dominance)
+*If x' ≻ x in a k-objective MORS, then x' ≻ x in the collapsed 1-objective system (using total complexity).*
+
+**Proof.** Total complexity strictly decreases under Pareto dominance (Theorem 3.1 lemma).
+
+### Theorem 6.2 (Collapse Information Loss)
+*There exists a 2-objective MORS with elements x', x such that x' ≻ x in the collapsed system but x' ⊁ x in the original.*
+
+**Construction.** Let Obj = Bool with complexities:
+- true ↦ (2, 0), total = 2
+- false ↦ (0, 3), total = 3
+
+In the collapsed system, true ≻ false (total 2 < 3). But in the original system, true has higher first-component complexity (2 > 0), so true ⊁ false.
+
+**Interpretation.** Any reduction of multiple objectives to a single score necessarily creates false rankings between incomparable alternatives. This information loss is inherent in the dimensional reduction, not an artifact of the specific weighting.
 
 ---
 
-## 8. References
+## 7. Weighted Analysis
 
-1. Cantor, G. (1883). Grundlagen einer allgemeinen Mannigfaltigkeitslehre.
-2. Zermelo, E. (1904). Beweis, daß jede Menge wohlgeordnet werden kann.
-3. Floyd, R. W. (1967). Assigning meanings to programs.
-4. Turing, A. M. (1949). Checking a large routine.
-5. Lyapunov, A. M. (1892). The General Problem of the Stability of Motion.
-6. Gentzen, G. (1936). Die Widerspruchsfreiheit der reinen Zahlentheorie.
+### Theorem 7.1 (Weighted Dominance Detection)
+*With positive weights w : Fin k → ℕ, Pareto dominance implies strict decrease in weighted total: x' ≻ x ⟹ Σᵢ wᵢ · cᵢ(x') < Σᵢ wᵢ · cᵢ(x).*
+
+**Proof.** Each term wᵢ · cᵢ(x') ≤ wᵢ · cᵢ(x) (non-increase). At least one term is strictly smaller (the objective that improved, weighted by a positive weight).
+
+### Theorem 7.2 (Weighted Chain Bound)
+*With positive weights, any Pareto chain has length ≤ Σᵢ wᵢ · cᵢ(x₀).*
+
+**Application.** If objective 1 has weight 10 and starts at 5, while objective 2 has weight 1 and starts at 100, the weighted bound is 10·5 + 1·100 = 150, potentially much tighter than the unweighted bound of 105 for specific improvement patterns.
 
 ---
 
-## Appendix: Formalization Details
+## 8. Product Construction
 
-All theorems in this paper are formalized in Lean 4 (v4.28.0) with Mathlib. The complete source is in `Catalog/Logic/TransfiniteRefinement.lean`. Key Mathlib dependencies:
+### Theorem 8.1 (Product Additivity)
+*For MORS S₁ with k₁ objectives and S₂ with k₂ objectives:*
 
-- `Ordinal.lt_wf`: Well-foundedness of ordinal `<`
-- `WellFounded.mono`: Subrelation of a well-founded relation is well-founded
-- `Order.add_one_le_of_lt`: a < b → a + 1 ≤ b for ordinals
-- `Nat.cast_lt`: ↑m < ↑n ↔ m < n for ordinal-casted naturals
-- `antitone_nat_of_succ_le`: Pointwise non-increasing implies antitone
+    totalComplexity(x₁, x₂) = totalComplexity(x₁) + totalComplexity(x₂)
 
-All proofs use only standard axioms (propext, Classical.choice, Quot.sound).
+**Proof.** The product system has k₁ + k₂ objectives. Splitting the sum via Fin.sum_univ_add gives the result.
+
+---
+
+## 9. Strict Decrease Count and Orbit Analysis
+
+### Theorem 9.1 (Strict Decrease Count Bound)
+*In a non-increasing ℕ sequence where the first n steps are all strict decreases, we have n ≤ f(0).*
+
+**Proof.** By induction on i < n, we establish the auxiliary claim that f(i) ≤ f(0) - i for all i < n. The base case i = 0 is trivial. For the inductive step, f(i+1) < f(i) ≤ f(0) - i implies f(i+1) ≤ f(0) - i - 1 = f(0) - (i+1). Since f(n-1) ≤ f(0) - (n-1) and f(n-1) ≥ 0 (as a natural number), we conclude n - 1 ≤ f(0) - 1, hence n ≤ f(0).
+
+This theorem connects to the broader topic of **well-founded descent**: the number of strict descents in a well-ordered set is bounded by the initial element's "height" in the order. For ℕ with the standard ordering, this height equals the value itself.
+
+### Theorem 9.2 (Orbit Total Bound)
+*For any Pareto optimizer, totalComplexity(opt^n(x)) ≤ totalComplexity(x) for all n.*
+
+**Proof.** Induction on n, using non-increase at each step. The base case is trivial. For the inductive step, totalComplexity(opt^{n+1}(x)) = totalComplexity(opt(opt^n(x))) ≤ totalComplexity(opt^n(x)) ≤ totalComplexity(x) by the optimizer's componentwise non-increase property and the inductive hypothesis.
+
+This gives a uniform bound on the entire orbit's total complexity, complementing the convergence result which says the orbit eventually stabilizes but doesn't bound *where* it stabilizes.
+
+---
+
+## 10. Falsifiable Conjectures
+
+### Conjecture 10.1 (Exponential Frontier Conjecture)
+For the k-objective MORS on Fin(N^k) with complexity vectors being all elements of {0, ..., N-1}^k, the Pareto frontier has cardinality exactly N^(k-1) · k / (k!), which grows polynomially in N for fixed k.
+
+**Test**: Compute the Pareto frontier cardinality for k=2,3 and N=1,...,10. If the growth matches the predicted formula, the conjecture is supported.
+
+### Conjecture 10.2 (Independence Dimension Tightness)
+For every k ≥ 1 and every m ≤ k, there exists a MORS with a Pareto chain of length m whose independence dimension is exactly m.
+
+**Test**: Construct explicit examples for k=3, m=1,2,3.
+
+---
+
+## 10.1 PEGB Analysis: Top Theorems
+
+For each major theorem, we provide the Proof–Example–Generalization–Boundary (PEGB) analysis.
+
+### PEGB: Pareto Well-Foundedness (Theorem 3.1)
+
+**Proof**: Complete Lean 4 proof via `InvImage.wf` and `totalComplexity`.
+
+**Example**: In a 2-objective system on {(0,0), (1,0), (0,1), (1,1)}, the longest Pareto chain is (1,1) → (0,1) or (1,1) → (1,0), of length 1. The total complexity of (1,1) is 2, confirming the bound.
+
+**Generalization**: Extends to ordinal-valued objectives if we can define an ordinal sum (requires choosing a fixed ordering of components, since ordinal addition is non-commutative).
+
+**Boundary**: Fails for ℝ-valued objectives: the sequence (1/n, 0) Pareto-dominates (1/(n-1), 0) for all n, giving an infinite Pareto chain. Well-foundedness requires discreteness.
+
+### PEGB: Componentwise Convergence (Theorem 4.1)
+
+**Proof**: Complete Lean 4 proof using per-component stabilization and `Finset.sup`.
+
+**Example**: With 3 objectives and optimizer step(x) = "reduce max component by 1", starting at (5, 3, 4): the orbit is (5,3,4) → (4,3,4) → (3,3,4) → (3,3,3) → ... → (0,0,0). All three components stabilize at step 12.
+
+**Generalization**: For a Pareto optimizer with a Lyapunov certificate (a secondary potential that strictly decreases when any component changes), convergence time can be bounded by the Lyapunov potential.
+
+**Boundary**: Fails without the componentwise non-increase condition. An optimizer that increases one component while decreasing another can oscillate indefinitely.
+
+### PEGB: Collapse Information Loss (Theorem 6.2)
+
+**Proof**: Complete Lean 4 proof via explicit counterexample with Obj = Bool.
+
+**Example**: Points (2, 0) and (0, 3). Totals: 2 and 3. The total orders them 2 < 3, but (2, 0) does not Pareto-dominate (0, 3) because 2 > 0 in the first component. The collapse creates a false ranking.
+
+**Generalization**: For any monotone function F : ℕ^k → ℕ with k ≥ 2, there exist Pareto-incomparable pairs that F orders. No single real-valued function can faithfully represent a k-dimensional partial order for k ≥ 2.
+
+**Boundary**: For k = 1, collapse is the identity and perfectly reflects dominance. Information loss is inherent only for k ≥ 2.
+
+### PEGB: Weighted Chain Bound (Theorem 7.2)
+
+**Proof**: Complete Lean 4 proof by induction on chain length, using `weighted_total_decreases`.
+
+**Example**: Chain (3, 5) → (2, 5) → ... → (0, 0) of length 8. With weights (1, 1): bound = 8 (tight!). With weights (2, 1): bound = 11 (loose). With weights (1, 3): bound = 18 (very loose). The optimal weights for this chain are (1, 1).
+
+**Generalization**: With rational-valued positive weights, the bound becomes Σᵢ wᵢ · cᵢ(x₀). Optimizing over the weight simplex gives the tightest single-weighted bound.
+
+**Boundary**: With weight 0 on some objective, the bound ignores that objective entirely and may undercount chain length.
+
+### PEGB: Strict Decrease Count (Theorem 9.1)
+
+**Proof**: Complete Lean 4 proof by induction, showing f(i) ≤ f(0) - i when all steps are strict.
+
+**Example**: Sequence [10, 10, 9, 9, 9, 7, 7, 5, 5, 5, 5, 3, 3, 3, 2, 2, 1, 1, 1, 1, 0, 0]. Initial value 10, strict decrease count 7. Bound: 7 ≤ 10 ✓.
+
+**Generalization**: For ℤ-valued sequences bounded below, the same result holds with n ≤ f(0) - inf(f).
+
+**Boundary**: For ℝ-valued sequences, the count can be infinite: f(n) = 1/n has infinitely many strict decreases from initial value 1.
+
+---
+
+## 11. Disproved Conjectures and Lessons
+
+Two conjectures were formulated and subsequently **disproved** during this research, yielding instructive negative results:
+
+### 11.1 Axis Decomposition Conjecture (DISPROVED)
+
+**Conjecture**: Every Pareto improvement x' ≻ x can be decomposed into a sequence of axis-aligned refinements through intermediate objects.
+
+**Disproof**: In an abstract MORS, the existence of intermediate objects with prescribed complexity vectors is not guaranteed. The system's object type is abstract — there may be no object with complexity vector equal to any particular intermediate value. A concrete counterexample was constructed with 3 objects and 2 objectives where the only path between two Pareto-comparable objects passes through an object that improves BOTH objectives simultaneously, with no single-axis path available.
+
+**Lesson**: Multi-objective refinement is not decomposable into independent single-objective refinements in general. This distinguishes MORS from coordinate descent in continuous optimization.
+
+### 11.2 Convergence Rate Conjecture (DISPROVED)
+
+**Conjecture**: A Pareto optimizer converges within totalComplexity(x₀) steps: for all n ≥ totalComplexity(x), the total complexity at step n+1 equals the total at step n.
+
+**Disproof**: An optimizer can maintain constant total complexity for arbitrarily many steps before finally decreasing. Consider an optimizer that permutes among objects of the same total complexity for T steps, then decreases. The stabilization time T is not bounded by the initial total complexity.
+
+**Lesson**: The convergence *existence* theorem (componentwise stabilization) does not come with a computable bound in terms of initial complexity alone. The stabilization time depends on the optimizer's behavior, not just the system's complexity values.
+
+---
+
+## 12. Discussion and Related Work
+
+### 12.1 Relationship to Classical Multi-Objective Optimization
+
+The classical theory of multi-objective optimization, as developed by Ehrgott (2005) and others, typically operates in continuous settings (ℝ^k-valued objectives) with differentiability or convexity assumptions. Our framework differs in three key ways: (1) objectives are ℕ-valued, ensuring well-foundedness without additional assumptions; (2) we study iterative optimizers rather than static optimization problems; and (3) our results are fully machine-verified.
+
+The componentwise convergence theorem (Theorem 4.1) has no direct analogue in the continuous literature. Continuous multi-objective optimizers can exhibit oscillatory behavior where individual components fail to converge even when aggregate measures do. Our theorem shows this pathology is impossible in the discrete setting, provided the optimizer never increases any component.
+
+### 12.2 Relationship to Proof Refinement Systems
+
+The MORS framework generalizes the single-objective ProofRefinementSystem (catalog: `Logic/ProofRefinement.lean`) in a natural way. A ProofRefinementSystem with complexity measure c : Prf → ℕ is a MORS with k = 1. The embedding is trivial but the generalization is substantive: multi-objective reasoning about proofs captures the idea that proof quality is inherently multi-dimensional.
+
+For instance, a mathematical proof might be optimized for brevity (total symbol count), conceptual depth (longest chain of definitions used), and generality (number of hypotheses). These three objectives are often in tension: the shortest proof may use deep, opaque techniques; the most general proof may be the longest. MORS provides a framework for reasoning about such trade-offs rigorously.
+
+### 12.3 Connection to Lyapunov Theory
+
+The total complexity function plays the role of a Lyapunov function for Pareto optimizers. In classical Lyapunov theory, a function V that decreases along trajectories of a dynamical system guarantees stability. Here, totalComplexity decreases (or stays constant) at every step, guaranteeing eventual stabilization.
+
+The ordinal Lyapunov certificate framework (catalog: `Logic/TransfiniteRefinement.lean`) can be combined with MORS: each component's complexity can be tracked by a separate Lyapunov potential, and the maximum (or sum) of these potentials serves as a joint Lyapunov function for the multi-objective system.
+
+### 12.4 Connections to Social Choice Theory
+
+The Collapse Information-Loss Theorem (Theorem 6.2) resonates with classical impossibility results in social choice theory. Arrow's impossibility theorem shows that no aggregation rule for individual preferences can satisfy a small set of desirable properties simultaneously. Our result is a specific instance of this phenomenon: no single-valued aggregation of multiple objectives can faithfully represent the Pareto ordering.
+
+The connection is not merely analogical. If we interpret each objective as a "voter" and each object as a "candidate," then the Pareto ordering is the unanimity (Pareto) principle from social choice, and the collapse is a scoring rule. Our theorem shows that scoring rules necessarily violate the independence of irrelevant alternatives when applied to multi-dimensional quality assessments.
+
+---
+
+## 13. Future Work
+
+1. **Continuous MORS**: Extend to ℝ-valued or ℝ≥0-valued complexity with a minimum step-size condition. Well-foundedness fails in general, but convergence under discretization assumptions may hold.
+
+2. **Probabilistic MORS**: Stochastic optimizers where each step has a probability of improving each objective. Central question: does componentwise convergence hold in expectation or almost surely?
+
+3. **Ordinal MORS**: Extend to ordinal-valued objectives. The product ω^k is well-ordered, but ordinal addition is non-commutative, so the total-complexity approach requires modification.
+
+4. **Computational complexity of the Pareto frontier**: Given a MORS as input, what is the complexity of computing a Pareto-optimal element? Of computing the entire frontier?
+
+5. **Arrow-style impossibility**: Prove that the collapse information-loss theorem is a special case of a general impossibility result: no single-valued function can faithfully represent Pareto dominance for k ≥ 2.
+
+---
+
+## References
+
+- Catalog: `Logic/ProofRefinement.lean` — single-objective proof refinement systems
+- Catalog: `Logic/TransfiniteRefinement.lean` — ordinal-valued refinement
+- Catalog: `Computation/AlgorithmicCertificate.lean` — convergence bounds via potential functions
+- Ehrgott, M. (2005). *Multicriteria Optimization*. Springer.
+- Pareto, V. (1906). *Manuale di Economia Politica*.
