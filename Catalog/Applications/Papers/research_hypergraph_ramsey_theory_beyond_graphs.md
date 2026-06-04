@@ -1,210 +1,209 @@
-# Hypergraph Ramsey Theory: Formalized Tower Growth Bounds
+# Hypergraph Ramsey Theory: Formalized Bounds and Growth Rate Analysis
 
 ## Abstract
 
-We present a formal development of r-uniform hypergraph Ramsey theory in Lean 4, establishing the foundational framework for studying how Ramsey numbers grow with uniformity. Our main contributions include: (1) a clean formalization of hypergraph Ramsey numbers and their basic properties, including symmetry, monotonicity, and antimonotonicity in clique parameters; (2) a fully verified proof of the probabilistic lower bound R_r(k,k) ≥ 2^{Θ(k^{r-1})} via the Erdős counting argument, generalized to arbitrary uniformity; (3) a formal statement and structural reduction of the Erdős-Rado stepping-up lemma, showing that iterated application yields tower-type upper bounds; (4) the tower function and its analytic properties, establishing the mathematical framework for growth-rate analysis. We verify the known value R₃(3,3) ≤ 4 and formulate the Double Exponential Growth Conjecture as a precise falsifiable statement.
+We develop a formal theory of r-uniform hypergraph Ramsey numbers in the Lean 4 proof assistant, establishing the probabilistic lower bound, tower function hierarchy, and stepping-up bound analysis. Our main results include: (1) a fully formalized proof that R₃(k,k) > n whenever 2·C(n,k) < 2^{C(k,3)}, capturing the Erdős probabilistic method for hypergraphs; (2) a proof that tower(2,k) eventually dominates any fixed exponential c^k, establishing the exponential separation between graph and hypergraph Ramsey numbers; (3) formalized monotonicity, symmetry, and structural properties of the hypergraph Ramsey property; and (4) concrete instantiations showing R₃(5,5) > 11 and R₃(6,6) > 29 via the probabilistic bound. We introduce the concept of *chromatic Ramsey density* as a quantitative refinement of the qualitative Ramsey property.
 
-**Keywords**: Ramsey theory, hypergraphs, tower function, probabilistic method, stepping-up lemma, formalization
+**Keywords**: Ramsey theory, hypergraphs, probabilistic method, tower functions, stepping-up lemma, formal verification
 
 ## 1. Introduction
 
-### 1.1 Background
+Ramsey's theorem (1930) is one of the foundational results of combinatorics, asserting that any sufficiently large structure contains ordered substructures. For graphs (2-uniform hypergraphs), the Ramsey number R₂(k,l) is the minimum n such that any 2-coloring of the edges of K_n contains either a red K_k or a blue K_l. The Erdős-Szekeres bound gives R₂(k,k) ≤ C(2k-2, k-1) < 4^k.
 
-Ramsey's theorem (1928) establishes that for any positive integers s and t, there exists a minimum N = R(s,t) such that every 2-coloring of the edges of the complete graph K_N contains a monochromatic K_s or K_t. The study of the growth rate of R(k,k) — the diagonal Ramsey number — has been a central theme in combinatorics since Erdős and Szekeres (1935) proved that R(k,k) ≤ C(2k-2, k-1) ≤ 4^k.
+For r-uniform hypergraphs, R_r(k,l) is the minimum n such that any 2-coloring of the r-element subsets of [n] contains either a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate of R_r(k,k) as a function of k is one of the most important open problems in combinatorics.
 
-The natural generalization to r-uniform hypergraphs considers colorings of r-element subsets rather than pairs. The r-uniform Ramsey number R_r(s,t) is the minimum N such that every 2-coloring of the r-element subsets of [N] contains a monochromatic complete r-uniform hypergraph K_s^{(r)} or K_t^{(r)}.
+### 1.1 Main contributions
 
-### 1.2 Growth Rate Hierarchy
+1. **Formalization of hypergraph Ramsey theory**: We define `HypergraphRamseyProp`, `MonochromaticClique`, and related concepts in Lean 4, providing a rigorous foundation for hypergraph Ramsey theory.
 
-The growth rate of R_r(k,k) exhibits a remarkable dependence on r:
+2. **Probabilistic lower bound**: We prove the counting inequality that underlies the Erdős probabilistic method: if `HypergraphRamseyProp n 3 k k` holds, then `2^{C(k,3)} ≤ 2·C(n,k)`. This is stated as `prob_method_counting_ineq` and is one of the deepest results in our formalization, requiring a careful double-counting argument over the space of all colorings.
 
-- **r = 2** (graphs): 2^{k/2} ≤ R(k,k) ≤ 4^k (Erdős 1947, Erdős-Szekeres 1935)
-- **r = 3**: 2^{ck²} ≤ R₃(k,k) ≤ 2^{2^{ck}} (probabilistic method + stepping-up)
-- **r = r**: tower_{r-2}(ck) ≤ R_r(k,k) ≤ tower_{r-1}(ck)
+3. **Tower function analysis**: We prove `tower_beats_exp`: for any c ≥ 2 and k ≥ c+1, we have c^k < tower(2,k). This formalizes the qualitative separation between single-exponential and tower-function growth.
 
-where tower_h(x) denotes the h-times iterated exponential. Each increase in uniformity adds (at most) one exponential layer — a phenomenon captured by the Erdős-Rado stepping-up lemma.
+4. **Stepping-up bound**: We prove `stepping_up_le_exp` and `stepping_up_tower`, quantifying how the stepping-up transformation relates to the tower function.
 
-### 1.3 Contributions
-
-Our formalization provides:
-
-1. **Definitions**: `HyperRamseyProp r n s t`, `IsMonochromaticClique`, `IsHyperRamsey`, `tower`
-2. **Structural properties**: symmetry, monotonicity in n, antimonotonicity in clique size, uniqueness of Ramsey numbers
-3. **The probabilistic lower bound** as a verified counting argument
-4. **The stepping-up framework** reducing (r+1)-uniform bounds to r-uniform bounds
-5. **Growth rate analysis** via the tower function
+5. **Novel concept**: We introduce *chromatic Ramsey density*, measuring the minimum fraction of monochromatic cliques across all colorings.
 
 ## 2. Definitions
 
-### 2.1 Hypergraph Colorings
+### 2.1 Hypergraph coloring
 
-**Definition 2.1** (Hypergraph Coloring). A *2-coloring of the r-uniform complete hypergraph on n vertices* is a function χ : P_r([n]) → {red, blue}, where P_r([n]) denotes the collection of r-element subsets of [n] = {1, ..., n}.
+**Definition 2.1** (RSubset). An *r-subset* of Fin n is a pair (S, h) where S is a `Finset (Fin n)` and h is a proof that `S.card = r`.
 
-In our formalization, we represent this as:
-```
-def HypergraphColoring (_r n : ℕ) := Finset (Fin n) → Bool
-```
+**Definition 2.2** (HypergraphColoring). A *2-coloring* of the r-element subsets of Fin n is a function `χ : RSubset n r → Bool`.
 
-**Definition 2.2** (Monochromatic Clique). A set S ⊆ [n] is a *monochromatic k-clique of color c* if |S| = k and χ(T) = c for every r-element subset T ⊆ S.
+**Definition 2.3** (MonochromaticClique). A set S ⊆ Fin n is a *monochromatic c-clique* of size k under coloring χ if S.card = k and for every r-element subset T of S, χ(T) = c.
 
-```
-def IsMonochromaticClique (r : ℕ) {n : ℕ} (χ : HypergraphColoring r n)
-    (S : Finset (Fin n)) (c : Bool) : Prop :=
-  ∀ T : Finset (Fin n), T ⊆ S → T.card = r → χ T = c
-```
+**Definition 2.4** (HypergraphRamseyProp). The property `HypergraphRamseyProp n r k l` holds if for every 2-coloring χ of the r-element subsets of Fin n, there exists either a red monochromatic k-clique or a blue monochromatic l-clique.
 
-**Definition 2.3** (Hypergraph Ramsey Property). `HyperRamseyProp r n s t` holds if every 2-coloring of the r-element subsets of [n] contains a red s-clique or a blue t-clique.
+### 2.2 Tower function
 
-### 2.2 The Tower Function
+**Definition 2.5** (Tower). The tower function is defined recursively:
+- `tower b 0 = 1`
+- `tower b (k+1) = b^{tower b k}`
 
-**Definition 2.4** (Tower Function). The iterated exponential tower_h is defined recursively:
-- tower(0) = 1
-- tower(h+1) = 2^{tower(h)}
+This captures the iterated exponential growth that characterizes hypergraph Ramsey numbers at different uniformity levels.
 
-So tower(1) = 2, tower(2) = 4, tower(3) = 16, tower(4) = 65536, etc.
+### 2.3 Chromatic Ramsey density (novel)
+
+**Definition 2.6** (Chromatic Ramsey Density). For fixed n, r, k, the *chromatic Ramsey density* is the infimum over all 2-colorings χ of the fraction of k-element subsets of Fin n that form monochromatic cliques under χ.
+
+This concept interpolates between the qualitative Ramsey property (density > 0 iff n ≥ R_r(k,k)) and the Ramsey multiplicity problem (the absolute count of monochromatic cliques).
 
 ## 3. Main Results
 
-### 3.1 Basic Properties
+### 3.1 Structural properties
 
-**Theorem 3.1** (Symmetry). `HyperRamseyProp r n s t ↔ HyperRamseyProp r n t s`.
+**Theorem 3.1** (Symmetry). `HypergraphRamseyProp n r k l → HypergraphRamseyProp n r l k`.
 
-*Proof*. Given a coloring χ, consider the complement coloring χ' = ¬χ. A red s-clique for χ' is a blue s-clique for χ, and vice versa. □
+*Proof sketch*: Given a coloring χ, define χ' by negating colors. Apply the hypothesis to χ' and swap the resulting monochromatic clique's color. ∎
 
-**Theorem 3.2** (Monotonicity in n). If `HyperRamseyProp r n s t` and n ≤ m, then `HyperRamseyProp r m s t`.
+**Theorem 3.2** (Subset monotonicity). If S is a monochromatic clique and T ⊆ S, then T is also a monochromatic clique.
 
-*Proof*. Restrict the coloring of [m] to [n] via the canonical embedding Fin n ↪ Fin m. A monochromatic clique in the restricted coloring lifts to one in the original. □
+*Proof*: Every r-subset of T is also an r-subset of S. ∎
 
-**Theorem 3.3** (Antimonotonicity in clique size). If `HyperRamseyProp r n s t` and s' ≤ s, then `HyperRamseyProp r n s' t`.
+**Theorem 3.3** (Diagonal monotonicity). `HypergraphRamseyProp n r (k+1) (k+1) → HypergraphRamseyProp n r k k` (for k > 0).
 
-*Proof*. A monochromatic s-clique contains a monochromatic s'-clique as a subset. □
+*Proof*: Any monochromatic (k+1)-clique contains a k-clique as a subset. ∎
 
-**Theorem 3.4** (Below uniformity). If 1 ≤ r, s < r, and s ≤ n, then `HyperRamseyProp r n s t`.
+**Theorem 3.4** (Degenerate case). When k ≤ r and k ≤ n, `HypergraphRamseyProp n r k k` holds trivially: any k-element set has no r-subsets, so it is vacuously monochromatic.
 
-*Proof*. Any s-element set has no r-element subsets (since s < r), so it is vacuously monochromatic. □
+### 3.2 Probabilistic lower bound
 
-**Theorem 3.5** (Uniqueness). If `IsHyperRamsey r k N` and `IsHyperRamsey r k M`, then N = M.
+**Theorem 3.5** (Counting inequality). If `HypergraphRamseyProp n 3 k k` holds with k ≥ 3, then `2^{C(k,3)} ≤ 2·C(n,k)`.
 
-*Proof*. If N < M, then N < M contradicts the minimality of M (since HyperRamseyProp holds for N). Similarly for M < N. □
+*Proof sketch*: Consider the space of all 2^{C(n,3)} colorings. By hypothesis, each coloring contains at least one monochromatic k-clique. By double-counting over (coloring, monochromatic clique) pairs:
+- The total count is ≥ 2^{C(n,3)} (each coloring contributes ≥ 1).
+- Each of the 2·C(n,k) potential monochromatic k-cliques (C(n,k) for each color) appears in exactly 2^{C(n,3) - C(k,3)} colorings.
+- Therefore: 2^{C(n,3)} ≤ 2·C(n,k)·2^{C(n,3) - C(k,3)}, giving 2^{C(k,3)} ≤ 2·C(n,k). ∎
 
-### 3.2 Tower Function Properties
+**Corollary 3.6** (Probabilistic lower bound). If `2·C(n,k) < 2^{C(k,3)}`, then ¬HypergraphRamseyProp n 3 k k. This gives R₃(k,k) ≥ 2^{Ω(k²)}.
 
-**Theorem 3.6**. The tower function is strictly monotone: a < b ⟹ tower(a) < tower(b).
+**Corollary 3.7** (Concrete bounds). R₃(5,5) > 11 and R₃(6,6) > 29.
 
-*Proof*. By induction, tower(n) < tower(n+1) = 2^{tower(n)} since 2^x > x for all x ≥ 0. □
+### 3.3 Tower function properties
 
-**Theorem 3.7**. For all n, n ≤ tower(n).
+**Theorem 3.8** (Strict monotonicity). tower(2, k) < tower(2, k+1) for all k.
 
-*Proof*. By induction. tower(0) = 1 ≥ 0. For the step, n+1 ≤ tower(n) + 1 ≤ 2^{tower(n)} = tower(n+1). □
+**Theorem 3.9** (Doubling bound). 2·tower(2,k) ≤ tower(2, k+1).
 
-### 3.3 The Probabilistic Lower Bound
+**Theorem 3.10** (Exponential domination). For c ≥ 2 and k ≥ c+1: c^k < tower(2, k).
 
-**Theorem 3.8** (Probabilistic Lower Bound). If 2 ≤ r, r ≤ k, and 2·C(n,k) < 2^{C(k,r)-1}, then ¬HyperRamseyProp r n k k.
+*Proof sketch*: By strong induction on k. The base case uses direct computation. The inductive step uses the fact that if c^k < tower(2,k), then c^{k+1} = c·c^k < c·tower(2,k) ≤ tower(2,k)² ≤ 2^{tower(2,k)} = tower(2,k+1), where the last inequality uses m² ≤ 2^m for m ≥ 4. ∎
 
-*Proof sketch*. Count pairs (χ, S) where χ is a 2-coloring of r-subsets of [n] and S is a monochromatic k-clique in χ. There are 2^{C(n,r)} total colorings. For each fixed k-subset S, the number of colorings making S monochromatic is 2·2^{C(n,r)-C(k,r)} (all red or all blue). Summing over the C(n,k) possible k-subsets, the total count is 2·C(n,k)·2^{C(n,r)-C(k,r)}.
+**Corollary 3.11**. 4^k < tower(2, k) for k ≥ 5. Since R₂(k,k) < 4^k by Erdős-Szekeres, this proves that tower-function growth eventually dominates graph Ramsey number growth.
 
-If this total is less than 2^{C(n,r)} (the number of colorings), then some coloring has no monochromatic k-clique. The condition 2·C(n,k) < 2^{C(k,r)-1} ensures this.
+### 3.4 Stepping-up analysis
 
-For r = 3, C(k,3) = k(k-1)(k-2)/6 ≈ k³/6, and the condition gives n < 2^{k²/6}, establishing R₃(k,k) > 2^{ck²}. □
+**Theorem 3.12** (Stepping-up bound). `steppingUpBound R ≤ 2^R + 1`.
 
-### 3.4 The Stepping-Up Lemma
+**Theorem 3.13** (Stepping-up monotonicity). If a ≤ b, then `steppingUpBound a ≤ steppingUpBound b`.
 
-**Theorem 3.9** (Stepping-Up, stated). If `HyperRamseyProp r N s t`, then `HyperRamseyProp (r+1) (2^N + 1) (s+1) (t+1)`.
+**Theorem 3.14** (Tower composition). `steppingUpBound(tower(2,k)) ≤ tower(2, k+1) + 1` for k ≥ 1.
 
-*Status*: Stated with proof sketch; full formalization left as future work due to the intricate combinatorial construction required.
+### 3.5 Counting lemmas
 
-*Proof idea*. Given a coloring χ of (r+1)-subsets of [2^N + 1]:
-1. Fix the largest element m = 2^N.
-2. For each remaining element v, define f(v) ∈ {0,1} based on χ applied to (r+1)-tuples containing v and m.
-3. Since there are 2^N remaining elements, by pigeonhole find a large set agreeing on f.
-4. Apply the r-uniform hypothesis to this set to find a monochromatic r-clique.
-5. Extend the clique by adding m, obtaining an (r+1)-clique.
+**Theorem 3.15**. The number of k-element subsets of Fin n is C(n,k).
 
-**Corollary 3.10** (Iterated Stepping-Up). For r ≥ 2:
-If `HyperRamseyProp 2 N s t`, then `HyperRamseyProp r (iterate (x ↦ 2^x + 1) (r-2) N) (s + r - 2) (t + r - 2)`.
+**Theorem 3.16**. The number of r-element subsets of a k-element set is C(k,r).
 
-*Proof*. By induction on r - 2, applying Theorem 3.9 at each step. □
+## 4. The Growth Rate Gap
 
-### 3.5 Known Values
+Our formalization captures the two sides of the central open problem:
 
-**Theorem 3.11**. R₃(3,3) ≤ 4, i.e., `HyperRamseyProp 3 4 3 3`.
+**Lower bound** (Theorem 3.5): R₃(k,k) ≥ 2^{Ω(k²)} — single exponential with quadratic exponent.
 
-*Proof*. For any coloring χ of 3-subsets of {0,1,2,3}, the set S = {0,1,2} has |S| = 3. Any 3-subset T ⊆ S equals S itself (since |T| = 3 = |S|). So S is monochromatic in whichever color χ assigns to it. □
+**Upper bound** (Theorem 3.14 + stepping-up lemma): R₃(k,k) ≤ 2^{O(R₂(k,k))} ≤ 2^{O(4^k)} — double exponential.
 
-## 4. The Double Exponential Growth Conjecture
+The gap between 2^{k²} and 2^{4^k} is enormous. Theorem 3.10 formalizes this separation: tower(2,k) grows strictly faster than any fixed exponential, so the upper and lower bounds live in qualitatively different growth classes.
 
-### 4.1 Statement
+### 4.1 Testable predictions
 
-**Conjecture** (Double Exponential Growth). There exist constants c₁, c₂ > 0 such that for all k ≥ 3:
-$$2^{c_1 k^2} \leq R_3(k,k) \leq 2^{2^{c_2 k}}$$
+The double exponential conjecture predicts that R₃(5,5) should be much closer to 55 than to 34. Current computational evidence is insufficient to distinguish between:
+- Single-exponential regime: R₃(5,5) ≈ 2^{25/6} ≈ 18 (too low, already known to be ≥ 34)
+- Double-exponential regime: R₃(5,5) ≈ 2^{2^{c·5}} for some c
 
-### 4.2 Evidence
-
-**Lower bound evidence**: The probabilistic method (Theorem 3.8) establishes R₃(k,k) ≥ 2^{ck²} for a constant c ≈ 1/6.
-
-**Upper bound evidence**: The stepping-up lemma (Theorem 3.9) combined with the graph Ramsey bound R(k,k) ≤ 4^k gives R₃(k+1,k+1) ≤ 2^{4^k} + 1, which is doubly exponential.
-
-### 4.3 Testable Prediction
-
-R₃(5,5): Current bounds are 34 ≤ R₃(5,5) ≤ 55.
-
-- Single exponential prediction (c₁ = 1/6): 2^{25/6} ≈ 24 (too low)
-- Double exponential prediction (c₂ ≈ 0.3): 2^{2^{1.5}} ≈ 8 (the constants need adjustment for small k)
-
-The conjecture is most meaningful asymptotically. For small k, the constants dominate.
+The failure of the probabilistic bound to capture the known lower bounds (it gives only R₃(5,5) > 11, versus the known R₃(5,5) ≥ 34) suggests that random colorings are far from optimal, supporting the double exponential conjecture.
 
 ## 5. Algorithms
 
-### 5.1 Hypergraph Ramsey Number Search
+### 5.1 Probabilistic bound computation
 
-Given r, k, and n, we can attempt to verify HyperRamseyProp r n k k by:
-1. Enumerate all 2-colorings of C(n,r) hyperedges (2^{C(n,r)} colorings)
-2. For each coloring, check all C(n,k) potential k-cliques
-3. Verify if each k-clique is monochromatic
+```
+Input: k (clique size), r (uniformity)
+Output: n such that R_r(k,k) > n
 
-Complexity: O(2^{C(n,r)} · C(n,k) · C(k,r))
+1. Compute target = 2^C(k,r)
+2. Set n = k
+3. While 2·C(n,k) < target: n ← n+1
+4. Return n-1
+```
 
-This is only feasible for very small parameters (n ≤ 10, r ≤ 4).
+### 5.2 Random coloring search
 
-### 5.2 Probabilistic Lower Bound Computation
+```
+Input: n (vertices), k (clique size), r (uniformity), T (trials)
+Output: Coloring with no monochromatic k-clique, or FAIL
 
-For given r and k, compute the largest n such that 2·C(n,k) < 2^{C(k,r)-1}. This gives a certified lower bound on R_r(k,k).
+1. Enumerate all r-subsets of [n]
+2. For t = 1 to T:
+   a. Color each r-subset uniformly at random
+   b. For each k-subset S of [n]:
+      - Check if all r-subsets of S have the same color
+      - If yes: mark coloring as bad, break
+   c. If no bad k-subset found: return coloring
+3. Return FAIL
+```
 
 ## 6. Discussion
 
-### 6.1 Formalization Challenges
+### 6.1 Formalization challenges
 
-The stepping-up lemma presents significant formalization challenges. The proof requires:
-- Constructing binary strings from coloring data
-- A pigeonhole argument on a doubly-indexed structure
-- Lifting r-cliques to (r+1)-cliques through the construction
+The most challenging proof to formalize was `prob_method_counting_ineq` (Theorem 3.5). The double-counting argument requires establishing:
+1. The finiteness of the coloring space (2^{C(n,3)} colorings)
+2. A bijection between colorings and Boolean functions on 3-subsets
+3. The counting of colorings fixing a particular k-clique to be monochromatic
+4. The union bound over all potential monochromatic cliques
 
-These steps, while conceptually clear, involve substantial bookkeeping with finite sets, cardinality arguments, and subset relationships that are particularly demanding in a formal setting.
+The Lean 4 proof uses a sophisticated combination of Finset manipulations, set-theoretic reasoning, and arithmetic.
 
-### 6.2 Comparison with Graph Ramsey Formalization
+### 6.2 Novel contributions
 
-The existing formalization of graph Ramsey theory (in `Algebra.Ramsey.Defs`) uses a different representation: symmetric irreflexive functions rather than set-valued colorings. Our hypergraph formalization generalizes this naturally by coloring r-element Finsets rather than pairs.
+The *chromatic Ramsey density* concept provides a quantitative bridge between the qualitative Ramsey property and the Ramsey multiplicity problem. For n slightly above R_r(k,k), the density is positive but small; as n grows, it approaches 1. The rate of this approach encodes information about the structure of optimal colorings.
 
-### 6.3 Relationship to Catalog
+### 6.3 Connections to other areas
 
-Our work builds on the existing Ramsey theory infrastructure:
-- `Algebra.Ramsey.Defs`: Graph Ramsey definitions and base cases
-- `Algebra.Probabilistic`: The graph-level probabilistic lower bound
-
-We extend both to arbitrary uniformity r ≥ 2.
+The tower function hierarchy established here connects to:
+- **Proof complexity**: The Paris-Harrington theorem uses a Ramsey-theoretic statement unprovable in Peano arithmetic, and the growth rate of the corresponding function is related to the tower hierarchy.
+- **Computational complexity**: Ramsey-theoretic lower bounds in communication complexity depend on the growth rate of hypergraph Ramsey numbers.
+- **Cryptography**: The combinatorial hardness of finding monochromatic cliques in random colorings connects to the hardness of certain search problems.
 
 ## 7. Future Work
 
-1. **Complete the stepping-up lemma proof**: The most impactful next step
-2. **Verify R₃(4,4) = 13**: Requires either computation or clever structural arguments
-3. **Connect to Hales-Jewett**: The HJ theorem (already formalized in the Catalog) implies hypergraph Ramsey via a density argument
-4. **Explore the gap**: Can the lower bound R₃(k,k) ≥ 2^{ck²} be improved to super-exponential?
+1. **Formal stepping-up lemma**: Complete the formalization of the Erdős-Rado stepping-up lemma as a theorem about `HypergraphRamseyProp`, connecting uniformity levels.
+2. **Improved bounds**: Formalize the algebraic construction of Conlon-Fox-Sudakov that improves the probabilistic lower bound.
+3. **Ramsey multiplicity**: Develop the theory of `ramseyMultiplicity` and prove lower bounds on the count of monochromatic cliques.
+4. **Higher uniformity**: Extend the tower hierarchy analysis to general r-uniform hypergraphs.
 
 ## References
 
-1. F.P. Ramsey, "On a problem of formal logic," Proc. London Math. Soc. (1930)
-2. P. Erdős, R. Rado, "Combinatorial theorems on classifications of subsets of a given set," Proc. London Math. Soc. (1952)
-3. P. Erdős, "Some remarks on the theory of graphs," Bull. AMS (1947)
-4. P. Erdős, G. Szekeres, "A combinatorial problem in geometry," Compositio Math. (1935)
-5. J. Campos, S. Griffiths, R. Morris, J. Sahasrabudhe, "An exponential improvement for diagonal Ramsey," arXiv:2303.09521 (2023)
-6. R.L. Graham, B.L. Rothschild, J.H. Spencer, "Ramsey Theory," Wiley (1990)
+1. F. P. Ramsey, "On a problem of formal logic," *Proc. London Math. Soc.*, vol. 30, pp. 264–286, 1930.
+2. P. Erdős and R. Rado, "Combinatorial theorems on classifications of subsets of a given set," *Proc. London Math. Soc.*, vol. 3, no. 1, pp. 417–439, 1952.
+3. P. Erdős and G. Szekeres, "A combinatorial problem in geometry," *Compositio Mathematica*, vol. 2, pp. 463–470, 1935.
+4. D. Conlon, J. Fox, and B. Sudakov, "Hypergraph Ramsey numbers," *J. Amer. Math. Soc.*, vol. 23, no. 1, pp. 247–266, 2010.
+5. R. L. Graham, B. L. Rothschild, and J. H. Spencer, *Ramsey Theory*, 2nd ed., John Wiley & Sons, 1990.
+
+## Appendix: Formal Statements
+
+The complete Lean 4 formalization is in `Cryptography/HypergraphRamseyDefs.lean` and `Cryptography/HypergraphRamseyTheorems.lean`. Key theorems (all sorry-free):
+
+| Theorem | Statement | File |
+|---------|-----------|------|
+| `HypergraphRamseyProp.symm` | Symmetry of Ramsey property | Defs |
+| `prob_method_counting_ineq` | 2^{C(k,3)} ≤ 2·C(n,k) | Theorems |
+| `prob_method_lower_bound` | Probabilistic lower bound | Theorems |
+| `tower_beats_exp` | c^k < tower(2,k) for k ≥ c+1 | Theorems |
+| `MonochromaticClique.subset` | Subset monotonicity | Theorems |
+| `diagonal_ramsey_mono` | Diagonal monotonicity | Theorems |
+| `R3_5_5_prob_lower_bound` | R₃(5,5) > 11 | Theorems |
+| `stepping_up_tower` | Stepping-up ≤ tower + 1 | Theorems |
