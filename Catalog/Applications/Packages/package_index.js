@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4e959d5b",
     "filename": "counterfactual_number_theory_what_if_primes_were_r.json",
     "pkg_num": 361,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.26256,
     "title": "Counterfactual Number Theory: Product Collisions and the UFD Boundary in Generalized Prime Systems"
   },
   {
@@ -11599,8 +11599,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "counterfactual_number_theory_what_if_primes_were_r",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.26256,
+      "quality": "partial",
       "shape": "triangular_prism",
       "title": "Counterfactual Number Theory: Product Collisions and the UFD Boundary in Generalized Prime Systems"
     }
