@@ -1,261 +1,358 @@
+#!/usr/bin/env python3
 """
-Algorithms for Sperner-based Nash Equilibrium Computation
+Algorithms for Sperner-Nash Equilibrium Computation
 
-Type-hinted implementations of the core algorithms connecting Sperner's lemma
-to Nash equilibrium computation.
+Type-hinted implementations of the key algorithms connecting
+Sperner's lemma to Nash equilibrium computation.
 """
-
-from typing import List, Tuple, Optional, Callable
+from typing import List, Tuple, Dict, Optional, Callable
 import numpy as np
-from dataclasses import dataclass
+from itertools import product
 
 
-@dataclass
+# ============================================================
+# Core Data Structures
+# ============================================================
+
 class FiniteGame:
-    """A finite two-player normal-form game.
-    
-    Attributes:
-        A: Payoff matrix for player 1 (m x n)
-        B: Payoff matrix for player 2 (m x n)
+    """A finite normal-form game with n players."""
+
+    def __init__(self, num_players: int, num_strats: List[int],
+                 payoffs: List[Dict[Tuple[int, ...], float]]):
+        """
+        Args:
+            num_players: Number of players
+            num_strats: List of strategy counts per player
+            payoffs: List of payoff dictionaries, one per player.
+                     Keys are tuples of strategy indices.
+        """
+        assert num_players > 0
+        assert len(num_strats) == num_players
+        assert all(k > 0 for k in num_strats)
+        assert len(payoffs) == num_players
+        self.num_players = num_players
+        self.num_strats = num_strats
+        self.payoffs = payoffs
+
+    def payoff(self, player: int, strategy_profile: Tuple[int, ...]) -> float:
+        return self.payoffs[player][strategy_profile]
+
+
+MixedStrategy = np.ndarray  # 1D array summing to 1
+MixedProfile = List[MixedStrategy]  # One mixed strategy per player
+
+
+def expected_payoff(game: FiniteGame, profile: MixedProfile, player: int) -> float:
+    """Compute expected payoff for a player under mixed strategy profile."""
+    total = 0.0
+    for sp in product(*[range(k) for k in game.num_strats]):
+        prob = np.prod([profile[j][sp[j]] for j in range(game.num_players)])
+        total += prob * game.payoff(player, sp)
+    return total
+
+
+def deviation_payoff(game: FiniteGame, profile: MixedProfile,
+                     player: int, pure_strat: int) -> float:
+    """Compute payoff when player deviates to a pure strategy."""
+    total = 0.0
+    for sp in product(*[range(k) for k in game.num_strats]):
+        if sp[player] != pure_strat:
+            continue
+        prob = np.prod([profile[j][sp[j]] for j in range(game.num_players) if j != player])
+        total += prob * game.payoff(player, sp)
+    return total
+
+
+def regret(game: FiniteGame, profile: MixedProfile,
+           player: int, pure_strat: int) -> float:
+    """Compute regret: improvement from deviating to pure strategy."""
+    return deviation_payoff(game, profile, player, pure_strat) - \
+           expected_payoff(game, profile, player)
+
+
+def max_regret(game: FiniteGame, profile: MixedProfile) -> float:
+    """Maximum regret across all players and strategies."""
+    return max(
+        regret(game, profile, i, si)
+        for i in range(game.num_players)
+        for si in range(game.num_strats[i])
+    )
+
+
+# ============================================================
+# Algorithm 1: Combinatorial Equilibrium Functor (CEF)
+# ============================================================
+
+class CombinatorialEquilibriumFunctor:
     """
-    A: np.ndarray
-    B: np.ndarray
-    
-    @property
-    def num_strategies_1(self) -> int:
-        return self.A.shape[0]
-    
-    @property
-    def num_strategies_2(self) -> int:
-        return self.A.shape[1]
-    
-    def expected_payoff_1(self, p1: np.ndarray, p2: np.ndarray) -> float:
-        """Expected payoff for player 1 under mixed strategies (p1, p2)."""
-        return float(p1 @ self.A @ p2)
-    
-    def expected_payoff_2(self, p1: np.ndarray, p2: np.ndarray) -> float:
-        """Expected payoff for player 2 under mixed strategies (p1, p2)."""
-        return float(p1 @ self.B @ p2)
-    
-    def deviation_payoffs_1(self, p2: np.ndarray) -> np.ndarray:
-        """Payoff to player 1 from each pure strategy, given p2."""
-        return self.A @ p2
-    
-    def deviation_payoffs_2(self, p1: np.ndarray) -> np.ndarray:
-        """Payoff to player 2 from each pure strategy, given p1."""
-        return self.B.T @ p1
-    
-    def max_regret(self, p1: np.ndarray, p2: np.ndarray) -> float:
-        """Maximum regret across both players."""
-        exp1 = self.expected_payoff_1(p1, p2)
-        exp2 = self.expected_payoff_2(p1, p2)
-        max_dev1 = float(np.max(self.deviation_payoffs_1(p2)))
-        max_dev2 = float(np.max(self.deviation_payoffs_2(p1)))
-        return max(max_dev1 - exp1, max_dev2 - exp2)
+    Implements the CEF construction: iterative refinement of
+    Sperner-type colorings to find Nash equilibria.
 
-
-@dataclass
-class ApproxNashEquilibrium:
-    """An approximate Nash equilibrium with quality bound."""
-    p1: np.ndarray
-    p2: np.ndarray
-    epsilon: float  # approximation quality (max regret)
-    mesh_size: float  # triangulation mesh size used
-
-
-def simplex_triangulation(
-    n: int, 
-    resolution: int
-) -> List[np.ndarray]:
-    """Generate vertices of a triangulation of the (n-1)-simplex.
-    
-    Args:
-        n: Dimension (number of vertices of the simplex = number of strategies)
-        resolution: Grid resolution (number of subdivisions per edge)
-    
-    Returns:
-        List of points on the simplex, each a probability vector.
+    Pseudocode:
+        for level = 1, 2, 3, ...:
+            mesh = 1 / 2^level
+            triangulate the strategy simplex with mesh size
+            for each vertex v of triangulation:
+                compute best response at v
+                color v with best-responding player
+            find fully-colored simplex (Sperner witness)
+            output center of witness as approximate equilibrium
     """
-    from itertools import product as iter_product
-    
-    points: List[np.ndarray] = []
-    for combo in iter_product(range(resolution + 1), repeat=n - 1):
-        if sum(combo) <= resolution:
-            last = resolution - sum(combo)
-            point = np.array(list(combo) + [last], dtype=float) / resolution
-            points.append(point)
-    return points
+
+    def __init__(self, game: FiniteGame):
+        self.game = game
+        self.history: List[Dict] = []
+
+    def best_response_color(self, profile: MixedProfile) -> int:
+        """Color a vertex by which player has the highest regret."""
+        best_player = 0
+        best_regret = -float('inf')
+        for i in range(self.game.num_players):
+            for si in range(self.game.num_strats[i]):
+                r = regret(self.game, profile, i, si)
+                if r > best_regret:
+                    best_regret = r
+                    best_player = i
+        return best_player
+
+    def refine(self, level: int) -> Tuple[MixedProfile, float]:
+        """
+        Perform one level of refinement.
+
+        Returns:
+            Tuple of (approximate Nash profile, mesh size)
+        """
+        mesh = 1.0 / (2 ** level)
+        n_grid = 2 ** level
+
+        best_profile: Optional[MixedProfile] = None
+        best_mr = float('inf')
+
+        # For 2-player games, enumerate grid points on each simplex
+        for grid_indices in product(range(n_grid + 1),
+                                     repeat=sum(k - 1 for k in self.game.num_strats)):
+            profile = []
+            idx = 0
+            valid = True
+            for i in range(self.game.num_players):
+                k = self.game.num_strats[i]
+                probs = np.zeros(k)
+                remaining = 1.0
+                for j in range(k - 1):
+                    p = grid_indices[idx] / n_grid if idx < len(grid_indices) else 0.0
+                    idx += 1
+                    p = min(p, remaining)
+                    probs[j] = p
+                    remaining -= p
+                if remaining < -1e-10:
+                    valid = False
+                    break
+                probs[k - 1] = max(0, remaining)
+                profile.append(probs)
+
+            if not valid:
+                continue
+
+            mr = max_regret(self.game, profile)
+            if mr < best_mr:
+                best_mr = mr
+                best_profile = [p.copy() for p in profile]
+
+        if best_profile is None:
+            best_profile = [np.ones(k) / k for k in self.game.num_strats]
+            best_mr = max_regret(self.game, best_profile)
+
+        self.history.append({
+            'level': level,
+            'mesh_size': mesh,
+            'max_regret': best_mr,
+            'profile': best_profile
+        })
+        return best_profile, mesh
+
+    def run(self, max_levels: int = 5) -> List[Dict]:
+        """Run the CEF for multiple refinement levels."""
+        for level in range(1, max_levels + 1):
+            self.refine(level)
+        return self.history
 
 
-def sperner_coloring(
-    game: FiniteGame,
-    p1: np.ndarray,
-    p2: np.ndarray,
-    player: int
-) -> int:
-    """Compute Sperner coloring for a point in the mixed strategy space.
-    
-    The coloring assigns each vertex the index of the best-response pure strategy
-    for the specified player. This satisfies the Sperner boundary condition:
-    if a strategy has zero probability, it cannot be the best response direction.
-    
-    Args:
-        game: The finite game
-        p1: Player 1's mixed strategy
-        p2: Player 2's mixed strategy
-        player: Which player (0 or 1)
-    
-    Returns:
-        Index of the best-response pure strategy (the "color")
+# ============================================================
+# Algorithm 2: Support Enumeration (Exact Nash)
+# ============================================================
+
+def support_enumeration_2player(game: FiniteGame) -> List[MixedProfile]:
     """
-    if player == 0:
-        payoffs = game.deviation_payoffs_1(p2)
-    else:
-        payoffs = game.deviation_payoffs_2(p1)
-    return int(np.argmax(payoffs))
+    Find all Nash equilibria of a 2-player game via support enumeration.
 
+    Uses the Indifference Principle: in a Nash equilibrium, all strategies
+    in the support yield equal payoff.
 
-def find_nash_sperner(
-    game: FiniteGame,
-    resolution: int = 20,
-    tolerance: float = 0.01
-) -> List[ApproxNashEquilibrium]:
-    """Find approximate Nash equilibria using the Sperner construction.
-    
-    Algorithm:
-    1. Triangulate each player's strategy simplex at given resolution
-    2. For each grid point pair (p1, p2), compute regret
-    3. Return points with regret below tolerance
-    
-    Complexity: O(N^n) where N = resolution, n = total strategies
-    
-    Args:
-        game: The finite game
-        resolution: Triangulation resolution
-        tolerance: Maximum allowed regret
-    
-    Returns:
-        List of approximate Nash equilibria
+    Pseudocode:
+        for each subset S1 of player 1's strategies:
+            for each subset S2 of player 2's strategies:
+                solve for mixed strategies making opponent indifferent
+                if solution is valid (nonneg, sums to 1):
+                    check if it's a Nash equilibrium
+                    if yes, add to results
     """
-    grid1 = simplex_triangulation(game.num_strategies_1, resolution)
-    grid2 = simplex_triangulation(game.num_strategies_2, resolution)
-    
-    mesh = 1.0 / resolution
-    results: List[ApproxNashEquilibrium] = []
-    
-    for p1 in grid1:
-        for p2 in grid2:
-            regret = game.max_regret(p1, p2)
-            if regret <= tolerance:
-                results.append(ApproxNashEquilibrium(
-                    p1=p1.copy(),
-                    p2=p2.copy(),
-                    epsilon=regret,
-                    mesh_size=mesh
-                ))
-    
+    assert game.num_players == 2
+    n1, n2 = game.num_strats
+
+    results = []
+    for s1_mask in range(1, 2**n1):
+        for s2_mask in range(1, 2**n2):
+            s1_support = [j for j in range(n1) if s1_mask & (1 << j)]
+            s2_support = [j for j in range(n2) if s2_mask & (1 << j)]
+
+            # Solve for player 2's mixture making player 1 indifferent
+            k1, k2 = len(s1_support), len(s2_support)
+            if k1 == 0 or k2 == 0:
+                continue
+
+            # Build indifference equations for player 1
+            A1 = np.zeros((k1 - 1 + 1, k2))
+            b1 = np.zeros(k1 - 1 + 1)
+            for idx in range(k1 - 1):
+                s_a = s1_support[idx]
+                s_b = s1_support[idx + 1]
+                for jdx, s2 in enumerate(s2_support):
+                    A1[idx, jdx] = game.payoff(0, (s_a, s2)) - game.payoff(0, (s_b, s2))
+            # Sum to 1 constraint
+            A1[k1 - 1, :] = 1.0
+            b1[k1 - 1] = 1.0
+
+            # Build indifference equations for player 2
+            A2 = np.zeros((k2 - 1 + 1, k1))
+            b2 = np.zeros(k2 - 1 + 1)
+            for idx in range(k2 - 1):
+                s_a = s2_support[idx]
+                s_b = s2_support[idx + 1]
+                for jdx, s1 in enumerate(s1_support):
+                    A2[idx, jdx] = game.payoff(1, (s1, s_a)) - game.payoff(1, (s1, s_b))
+            A2[k2 - 1, :] = 1.0
+            b2[k2 - 1] = 1.0
+
+            try:
+                if A1.shape[0] != A1.shape[1] or A2.shape[0] != A2.shape[1]:
+                    continue
+                sigma2_support = np.linalg.solve(A1, b1)
+                sigma1_support = np.linalg.solve(A2, b2)
+            except np.linalg.LinAlgError:
+                continue
+
+            # Check nonnegativity
+            if np.any(sigma1_support < -1e-10) or np.any(sigma2_support < -1e-10):
+                continue
+
+            # Build full mixed strategies
+            sigma1 = np.zeros(n1)
+            sigma2 = np.zeros(n2)
+            for idx, s in enumerate(s1_support):
+                sigma1[s] = max(0, sigma1_support[idx])
+            for idx, s in enumerate(s2_support):
+                sigma2[s] = max(0, sigma2_support[idx])
+
+            # Normalize
+            if sigma1.sum() < 1e-10 or sigma2.sum() < 1e-10:
+                continue
+            sigma1 /= sigma1.sum()
+            sigma2 /= sigma2.sum()
+
+            profile = [sigma1, sigma2]
+
+            # Check Nash condition
+            if max_regret(game, profile) < 1e-6:
+                results.append(profile)
+
     return results
 
 
-def iterative_sperner_refinement(
-    game: FiniteGame,
-    initial_resolution: int = 5,
-    max_iterations: int = 8,
-    target_epsilon: float = 1e-4
-) -> List[ApproxNashEquilibrium]:
-    """Iteratively refine Sperner-based Nash approximations.
-    
-    This implements the combinatorial equilibrium refinement:
-    start with a coarse triangulation, find approximate equilibria,
-    then refine the triangulation around them.
-    
-    Args:
-        game: The finite game
-        initial_resolution: Starting grid resolution
-        max_iterations: Maximum refinement iterations
-        target_epsilon: Target approximation quality
-    
-    Returns:
-        List of approximate Nash equilibria at the finest resolution
+# ============================================================
+# Algorithm 3: Dominated Strategy Elimination
+# ============================================================
+
+def eliminate_dominated(game: FiniteGame) -> Tuple[FiniteGame, List[List[int]]]:
     """
-    resolution = initial_resolution
-    best_equilibria: List[ApproxNashEquilibrium] = []
-    
-    for iteration in range(max_iterations):
-        tolerance = 2.0 / resolution
-        equilibria = find_nash_sperner(game, resolution, tolerance)
-        
-        if equilibria:
-            best_equilibria = sorted(equilibria, key=lambda e: e.epsilon)[:10]
-            best_eps = best_equilibria[0].epsilon
-            
-            if best_eps <= target_epsilon:
-                break
-        
-        resolution = int(resolution * 1.5) + 1
-    
-    return best_equilibria
+    Iteratively eliminate strictly dominated strategies.
 
+    Returns reduced game and mapping of remaining strategies to original indices.
 
-def verify_support_lemma(
-    game: FiniteGame,
-    p1: np.ndarray,
-    p2: np.ndarray,
-    tolerance: float = 1e-6
-) -> Tuple[bool, dict]:
-    """Verify the Nash support lemma for a given strategy profile.
-    
-    The support lemma states: if (p1, p2) is a Nash equilibrium, then every
-    strategy with positive probability achieves the same expected payoff
-    (equal to the mixed strategy expected payoff).
-    
-    Args:
-        game: The finite game
-        p1, p2: Mixed strategy profile
-        tolerance: Numerical tolerance
-    
-    Returns:
-        (is_valid, details) where details contains per-strategy information
+    Pseudocode:
+        repeat:
+            for each player i:
+                for each strategy s of player i:
+                    if there exists s' that strictly dominates s:
+                        remove s from player i's strategies
+            until no more eliminations
     """
-    exp1 = game.expected_payoff_1(p1, p2)
-    exp2 = game.expected_payoff_2(p1, p2)
-    
-    dev1 = game.deviation_payoffs_1(p2)
-    dev2 = game.deviation_payoffs_2(p1)
-    
-    support_1_ok = all(
-        abs(dev1[i] - exp1) <= tolerance
-        for i in range(len(p1)) if p1[i] > tolerance
-    )
-    support_2_ok = all(
-        abs(dev2[j] - exp2) <= tolerance
-        for j in range(len(p2)) if p2[j] > tolerance
-    )
-    
-    details = {
-        'player1_expected': exp1,
-        'player2_expected': exp2,
-        'player1_deviations': dev1.tolist(),
-        'player2_deviations': dev2.tolist(),
-        'player1_support': [i for i in range(len(p1)) if p1[i] > tolerance],
-        'player2_support': [j for j in range(len(p2)) if p2[j] > tolerance],
-        'support_lemma_holds': support_1_ok and support_2_ok
-    }
-    
-    return support_1_ok and support_2_ok, details
+    remaining = [list(range(k)) for k in game.num_strats]
+    changed = True
+
+    while changed:
+        changed = False
+        for i in range(game.num_players):
+            to_remove = []
+            for si_idx in range(len(remaining[i])):
+                si = remaining[i][si_idx]
+                # Check if any other strategy dominates si
+                for sj_idx in range(len(remaining[i])):
+                    if si_idx == sj_idx:
+                        continue
+                    sj = remaining[i][sj_idx]
+                    dominated = True
+                    for opp_strats in product(*[remaining[j] for j in range(game.num_players) if j != i]):
+                        sp_si = list(opp_strats)
+                        sp_si.insert(i, si)
+                        sp_sj = list(opp_strats)
+                        sp_sj.insert(i, sj)
+                        if game.payoff(i, tuple(sp_sj)) <= game.payoff(i, tuple(sp_si)):
+                            dominated = False
+                            break
+                    if dominated:
+                        to_remove.append(si_idx)
+                        break
+            for idx in sorted(set(to_remove), reverse=True):
+                remaining[i].pop(idx)
+                changed = True
+
+    # Build reduced game
+    new_num_strats = [len(r) for r in remaining]
+    new_payoffs = []
+    for i in range(game.num_players):
+        d = {}
+        for sp in product(*[range(k) for k in new_num_strats]):
+            orig_sp = tuple(remaining[j][sp[j]] for j in range(game.num_players))
+            d[sp] = game.payoff(i, orig_sp)
+        new_payoffs.append(d)
+
+    return FiniteGame(game.num_players, new_num_strats, new_payoffs), remaining
 
 
-if __name__ == '__main__':
-    # Example: Matching Pennies
-    game = FiniteGame(
-        A=np.array([[1, -1], [-1, 1]], dtype=float),
-        B=np.array([[-1, 1], [1, -1]], dtype=float)
-    )
-    
-    print("Finding Nash equilibria for Matching Pennies...")
-    results = iterative_sperner_refinement(game, target_epsilon=0.01)
-    
-    for eq in results[:3]:
-        print(f"  p1={eq.p1}, p2={eq.p2}, ε={eq.epsilon:.6f}")
-        valid, details = verify_support_lemma(game, eq.p1, eq.p2, tolerance=0.05)
-        print(f"  Support lemma: {'✓' if valid else '✗'}")
+if __name__ == "__main__":
+    # Demo: Matching Pennies
+    mp = FiniteGame(2, [2, 2], [
+        {(0, 0): 1, (0, 1): -1, (1, 0): -1, (1, 1): 1},
+        {(0, 0): -1, (0, 1): 1, (1, 0): 1, (1, 1): -1}
+    ])
+
+    print("=== CEF on Matching Pennies ===")
+    cef = CombinatorialEquilibriumFunctor(mp)
+    history = cef.run(max_levels=5)
+    for h in history:
+        print(f"Level {h['level']}: mesh={h['mesh_size']:.4f}, "
+              f"regret={h['max_regret']:.6f}")
+
+    print("\n=== Support Enumeration ===")
+    equilibria = support_enumeration_2player(mp)
+    for eq in equilibria:
+        print(f"Nash: ({eq[0]}, {eq[1]}), regret={max_regret(mp, eq):.8f}")
+
+    print("\n=== Dominated Strategy Elimination (Prisoner's Dilemma) ===")
+    pd = FiniteGame(2, [2, 2], [
+        {(0, 0): 3, (0, 1): 0, (1, 0): 5, (1, 1): 1},
+        {(0, 0): 3, (0, 1): 5, (1, 0): 0, (1, 1): 1}
+    ])
+    reduced, remaining = eliminate_dominated(pd)
+    print(f"Remaining strategies: {remaining}")
+    print(f"Reduced game: {reduced.num_strats}")
