@@ -1,257 +1,219 @@
-# Sheaf Cohomology of Meme Propagation: A Topological Theory of Viral Information
+# Viral Information Topology: Sheaf Cohomology of Meme Propagation on Social Networks
 
 ## Abstract
 
-We develop a rigorous mathematical framework for meme propagation over social networks using graph sheaf cohomology. By modeling a meme as a section of a sheaf over the social network graph, we establish that the zeroth cohomology group H⁰ characterizes interpretation diversity (its dimension equals the number of connected components), while the first cohomology group H¹ measures transmission barriers. We introduce **mutation sheaves**—a novel generalization where edge transformations model semantic drift during transmission—and prove a holonomy-theoretic obstruction result. We establish a **virality-barrier duality** theorem showing that super-viral memes cannot improve fitness by proportional expansion, and prove a **spectral-cohomological bridge** connecting the graph Laplacian kernel to H⁰. All main results are formally verified in the Lean 4 proof assistant with the Mathlib library.
+We develop a mathematical framework for meme propagation over social networks using cellular sheaf cohomology on graphs. A meme is modeled as a section of a sheaf over the network graph, where vertices represent individuals or communities and edges represent communication channels. The zeroth cohomology group H⁰ measures the space of consistent meme interpretations (polysemy), while the first cohomology H¹ measures propagation obstructions. We prove five main results: (1) the **Walk Telescope Theorem**, establishing that consistent sections propagate faithfully along graph walks; (2) the **Monodromy Obstruction Theorem**, showing that twisted sheaves with non-trivial monodromy around cycles admit no nonzero global sections; (3) the **Spectral-Cohomological Bridge**, proving that H⁰ of the constant sheaf equals the kernel of the graph Laplacian; (4) the **Equilibrium Theorem**, showing that consistent sections are exactly the fixed points of diffusion dynamics; and (5) the **H⁰ Monotonicity Theorem**, establishing that adding edges can only decrease the space of consistent sections. We state a falsifiable conjecture connecting the Erdős-Rényi connectivity threshold to a phase transition in meme polysemy. All results are formally verified in Lean 4 with Mathlib.
 
-**Keywords**: Sheaf cohomology, graph theory, information propagation, meme theory, spectral graph theory, mutation sheaves, Lean 4
+**Keywords**: sheaf cohomology, graph theory, meme propagation, social networks, spectral graph theory, monodromy, information topology
+
+---
 
 ## 1. Introduction
 
-The study of information propagation over networks has traditionally relied on epidemiological models (SIR/SIS) or influence maximization frameworks. These models capture *whether* information spreads but not *how it changes* during transmission. Real cultural information—memes, narratives, slogans—undergoes semantic transformation as it crosses community boundaries, a phenomenon that existing models largely ignore.
+The propagation of information through social networks is a central problem in computational social science, epidemiology, and marketing. Classical models—SIR, Bass diffusion, threshold models—treat information as a scalar quantity that either is or is not adopted by each individual. These models capture *extent* of propagation but miss a crucial phenomenon: **meaning transformation**. A meme that means "scientific breakthrough" in an academic community may mean "health tip" in a wellness community and "government conspiracy" in a conspiracy community. The meme spreads precisely *because* it accommodates multiple interpretations.
 
-We propose a fundamentally different approach: modeling memes as sections of sheaves over social network graphs. This framework, originating in algebraic geometry and algebraic topology, naturally captures both the local character of information (what a meme means to an individual) and the global consistency conditions required for propagation.
+We propose that the correct mathematical framework for this phenomenon is **cellular sheaf cohomology on graphs**. A cellular sheaf on a graph G = (V, E) assigns a vector space (the *stalk*) to each vertex and each edge, with *restriction maps* connecting them. The zeroth cohomology H⁰(G, F) of a sheaf F measures the space of *global sections*—assignments of values to all vertices that are compatible across all edges. The first cohomology H¹(G, F) measures the *obstruction* to extending local sections to global ones.
 
-### 1.1 Main Contributions
+In our framework:
+- **H⁰ dimension** = number of independent meme interpretations (polysemy)
+- **H¹ dimension** = number of independent propagation barriers
+- **Virality** ≈ dim H⁰ / (1 + dim H¹)
 
-1. **Formalization of graph sheaf cohomology for meme propagation** (§2-3)
-2. **Component-Section Isomorphism**: dim H⁰ = number of connected components (§4)
-3. **Mutation sheaves**: novel definition modeling semantic drift (§5)
-4. **Virality-barrier duality theorem** (§6)
-5. **Spectral-cohomological bridge**: Laplacian kernel ≅ H⁰ (§7)
-6. **Complete formal verification** in Lean 4/Mathlib (§8)
+The most viral memes have H¹ = 0 (no barriers) and large dim H⁰ (many interpretations). This is the polysemy-virality hypothesis.
+
+### 1.1 Related Work
+
+Sheaves on graphs were introduced by Shepard [1] and developed extensively by Curry [2] and Ghrist-Hansen [3]. Robinson [4] connected cellular sheaves to signal processing on networks. Our contribution is the application to information propagation with a focus on the monodromy obstruction and the spectral-cohomological bridge.
+
+Graph-based information diffusion has been studied through spectral methods [5], gossip algorithms [6], and opinion dynamics [7]. Our work unifies these through the sheaf-theoretic lens.
 
 ## 2. Definitions
 
 ### 2.1 Consistent Sections
 
-**Definition 2.1** (Consistent Section). Let G = (V, E) be a simple graph and R a ring. A function f : V → R is a *consistent section* of the constant sheaf over G if for all adjacent vertices u, v ∈ V:
+**Definition 2.1** (Consistent Section). Let G = (V, E) be a simple graph and R a type. A function f : V → R is a *consistent section* of the constant R-sheaf on G if for all adjacent vertices u, v ∈ V:
 
 f(u) = f(v)
 
 The set of consistent sections is denoted H⁰(G, R).
 
-**Proposition 2.2**. For a commutative semiring R, H⁰(G, R) is a submodule of the R-module V → R.
-
-*Proof*. Closure under addition: if f(u) = f(v) and g(u) = g(v), then (f+g)(u) = (f+g)(v). Closure under scalar multiplication: if f(u) = f(v), then (c·f)(u) = c·f(u) = c·f(v) = (c·f)(v). The zero function is consistent trivially. □
+**Definition 2.2** (H⁰ Submodule). When R is a commutative semiring, H⁰(G, R) forms a submodule of the function space V → R. This is the *zeroth cohomology submodule*.
 
 ### 2.2 Coboundary Map
 
-**Definition 2.3** (Coboundary Map). For a graph G on Fin(n) with oriented edge set E, the coboundary map δ : (Fin(n) → k) →ₗ (E → k) is defined by:
+**Definition 2.3** (Coboundary Operator). For a graph G with decidable adjacency, the coboundary operator δ : (V → ℚ) → (V × V → ℚ) is:
 
-δ(f)(e) = f(tgt(e)) - f(src(e))
+δ(f)(u, v) = f(v) − f(u) if G.Adj(u, v), else 0
 
-**Proposition 2.4**. ker(δ) consists exactly of sections constant on each oriented edge:
+The consistent sections are exactly ker(δ): we proved H⁰(G, ℚ) = ker(δ).
 
-δ(f) = 0 ⟺ ∀ e ∈ E, f(src(e)) = f(tgt(e))
+### 2.3 Twisted Meme Sheaf
 
-### 2.3 Meme Sheaf Structure
+**Definition 2.4** (Twisted Meme Sheaf). A twisted meme sheaf S on a graph G with vertices Fin n consists of:
+- A twist function τ : Fin n → Fin n → ℚ
+- Non-degeneracy: τ(i, j) ≠ 0 for all edges (i, j)
+- Reciprocity: τ(i, j) · τ(j, i) = 1 for all edges (i, j)
 
-**Definition 2.5** (MemeSheaf). A meme sheaf over (V, G) assigns:
-- To each vertex v, an interpretation dimension vertexDim(v) ∈ ℕ
-- To each edge (u,v), a compatibility dimension edgeDim(u,v) ∈ ℕ
-- Subject to: edgeDim is symmetric, zero on non-edges, and bounded by vertex dimensions.
+**Definition 2.5** (Twisted Consistency). A function f : Fin n → ℚ is twisted-consistent if for all adjacent i, j:
 
-**Definition 2.6** (Meme Fitness). The fitness of a meme with H⁰-dimension h₀ and H¹-dimension h₁ is:
+f(j) = τ(i, j) · f(i)
 
-fitness(h₀, h₁) = h₀ / (1 + h₁)
+When all twists are 1 (the *constant sheaf*), twisted consistency reduces to ordinary consistency.
 
-## 3. The Walk Propagation Lemma
+### 2.4 Monodromy
 
-**Theorem 3.1** (Walk Propagation). If f is a consistent section and w is a walk from u to v in G, then f(u) = f(v).
+**Definition 2.6** (Walk Monodromy). The monodromy of a twisted sheaf S along a walk w is the product of twist factors along the walk's darts:
 
-*Proof*. By induction on the walk structure. Base case (nil walk): u = v, so f(u) = f(v). Inductive step: if w = (u, x) :: w' where (u,x) is an edge and w' is a walk from x to v, then f(u) = f(x) by consistency, and f(x) = f(v) by the inductive hypothesis. □
+mon(S, w) = ∏_{d ∈ darts(w)} τ(d.src, d.tgt)
+
+### 2.5 Graph Laplacian
+
+**Definition 2.7** (Graph Laplacian). For a graph G on Fin n, the Laplacian L is the n × n integer matrix:
+
+L(i, j) = deg(i) if i = j; −1 if adj(i, j); 0 otherwise
+
+### 2.6 Virality Index
+
+**Definition 2.8** (Virality Index). For a meme sheaf with total interpretation capacity n and H¹ dimension h₁:
+
+V(n, h₁) = n / (1 + h₁)
+
+## 3. Main Results
+
+### 3.1 Walk Telescope Theorem
+
+**Theorem 3.1** (Walk Telescope). If f is a consistent section and w is a walk from u to v in G, then f(u) = f(v).
+
+*Proof sketch*. By induction on the walk structure. The base case (nil walk) is trivial. For a cons walk u → x ⟶ v, consistency gives f(u) = f(x), and the inductive hypothesis gives f(x) = f(v). □
 
 **Corollary 3.2**. On a connected graph, every consistent section is constant.
 
-## 4. The Component-Section Isomorphism
+### 3.2 Polysemy-Connectivity Duality
 
-**Theorem 4.1** (Component-Section Correspondence). A section f : V → R is consistent if and only if it factors through the connected component map:
+**Theorem 3.3** (Indicator Sections). For any set S ⊆ V that is upward-closed under adjacency (if u ∈ S and u ~ v then v ∈ S), the indicator function 1_S is a consistent ℤ-section.
 
-f ∈ H⁰(G, R) ⟺ ∃ φ : π₀(G) → R, f = φ ∘ connectedComponentMk
+**Theorem 3.4** (Separating Sections). If u and v are in different connected components, there exists a consistent section f with f(u) ≠ f(v).
 
-*Proof sketch*. (⇐) If f = φ ∘ π, then for adjacent u, v, since they share a component, π(u) = π(v), giving f(u) = f(v). (⇒) Define φ(c) = f(c.out) where c.out is a representative. For any v with π(v) = c, there is a walk from c.out to v, so f(v) = f(c.out) = φ(c) by Theorem 3.1. □
+These two results establish that **dim H⁰ equals the number of connected components** for the constant sheaf over ℤ. Each component contributes one independent consistent section.
 
-**Corollary 4.2**. The component lift map φ ↦ φ ∘ π is injective, establishing:
+### 3.3 Monodromy Obstruction Theorem
 
-dim H⁰(G, k) = |π₀(G)| = number of connected components
+**Theorem 3.5** (Monodromy Transport). For a twisted-consistent section f and walk w from u to v:
 
-**Theorem 4.3** (Monotonicity). If G ≤ H (H has more edges), then H⁰(H, R) ⊆ H⁰(G, R). Adding communication channels restricts the space of consistent interpretations.
+f(v) = mon(S, w) · f(u)
 
-## 5. Mutation Sheaves
+*Proof sketch*. Induction on the walk. At each step, the twisted consistency condition f(x) = τ(u, x) · f(u) introduces one factor. The product telescopes. □
 
-### 5.1 Definition
+**Theorem 3.6** (Monodromy Obstruction). If a closed walk w from u to u has monodromy mon(S, w) ≠ 1, then every twisted-consistent section satisfies f(u) = 0.
 
-**Definition 5.1** (Mutation Sheaf). A mutation sheaf over (V, G, R) assigns to each ordered pair (u,v) a mutation map μ_{u,v} : R → R satisfying:
-1. **Non-edge identity**: ¬G.Adj(u,v) ⟹ μ_{u,v} = id
-2. **Invertibility**: G.Adj(u,v) ⟹ μ_{v,u} ∘ μ_{u,v} = id
+*Proof*. By Theorem 3.5, f(u) = mon(S, w) · f(u). Thus (mon(S, w) − 1) · f(u) = 0. Since ℚ has no zero divisors and mon(S, w) ≠ 1, we conclude f(u) = 0. □
 
-A section f is *mutation-consistent* if f(v) = μ_{u,v}(f(u)) for all edges (u,v).
+**Theorem 3.7** (Global Vanishing). On a connected graph with a cycle carrying non-trivial monodromy, the only twisted-consistent section is the zero function.
 
-The trivial mutation sheaf (all μ = id) recovers the constant sheaf.
+*Proof*. By Theorem 3.6, f(u) = 0 at the base vertex. For any other vertex v, connectivity provides a walk from u to v. By Theorem 3.5, f(v) = mon(S, w') · 0 = 0. □
 
-### 5.2 Linear Mutation Sheaves
+**Remark**. This result has a beautiful interpretation: a meme whose meaning "rotates" as it travels around a social cycle cannot sustain any coherent interpretation. It is the sheaf-theoretic analog of the Bohr-Sommerfeld quantization condition in physics.
 
-**Definition 5.2** (Linear Mutation Sheaf). A linear mutation sheaf assigns a nonzero weight w(u,v) ∈ k* to each edge, with w(u,v) · w(v,u) = 1.
+### 3.4 Spectral-Cohomological Bridge
 
-Mutation consistency becomes: f(v) = w(u,v) · f(u).
+**Theorem 3.8** (Forward Bridge). If f is a consistent section, then Lf = 0 (f is in the kernel of the Laplacian).
 
-**Theorem 5.3** (Mutation Determination). If f and g are mutation-consistent sections of a linear mutation sheaf with f(u) = g(u) at some vertex u, then f(v) = g(v) for all v reachable from u.
+*Proof sketch*. Row i of Lf computes deg(i)·f(i) − Σ_{j~i} f(j). Since f is consistent, each f(j) = f(i), so the sum equals deg(i)·f(i), and the row value is 0. □
 
-*Proof*. By induction on the walk from u to v. At each step, f(next) = w · f(current) = w · g(current) = g(next). □
+**Theorem 3.9** (Reverse Bridge). If Lf = 0, then f is a consistent section.
 
-This is the sheaf-theoretic analogue of analytic continuation: local data plus sheaf structure determines the global section.
+*Proof sketch*. Consider the quadratic form f^T L f = Σ_{i~j} (f(i) − f(j))². If Lf = 0, then f^T L f = 0. Since each term is a non-negative integer squared, all terms vanish: f(i) = f(j) for all edges. □
 
-## 6. Virality-Barrier Duality
+**Corollary 3.10**. H⁰(G, ℤ) = ker(L). The sheaf-cohomological and spectral characterizations agree exactly.
 
-### 6.1 Fitness Properties
+### 3.5 H⁰ Monotonicity
 
-**Theorem 6.1**. Fitness is maximized when H¹ = 0:
+**Theorem 3.11** (Edge Monotonicity). If G ≤ H (G is a subgraph of H), then H⁰(H, R) ⊆ H⁰(G, R).
 
-∀ h₁, fitness(h₀, h₁) ≤ fitness(h₀, 0) = h₀
+**Corollary 3.12** (Extremal Duality). The complete graph has the smallest H⁰ (dimension 1 on a connected graph), and the empty graph has the largest (dimension |V|).
 
-**Theorem 6.2** (Virality-Barrier Duality). For a super-viral meme (h₀ > 1 + h₁, i.e., fitness > 1), proportional expansion strictly decreases fitness:
+### 3.6 Equilibrium Theorem
 
-h₀ > 1 + h₁ ∧ k > 0 ⟹ fitness(h₀ + k, h₁ + k) < fitness(h₀, h₁)
+**Theorem 3.13** (Propagation Equilibrium). A consistent section is a fixed point of the propagation dynamics (each vertex averages its neighbors' values).
 
-*Proof*. Cross-multiplying the inequality (h₀+k)/(1+h₁+k) < h₀/(1+h₁): we need (h₀+k)(1+h₁) < h₀(1+h₁+k), which expands to k(1+h₁) < k·h₀, i.e., 1+h₁ < h₀. □
+*Proof sketch*. At vertex i with neighbors N(i), all f(j) = f(i) for j ∈ N(i). The average is f(i). □
 
-**Interpretation**: A meme that has already achieved high fitness cannot improve by expanding into new communities if each expansion introduces proportional barriers. This explains why highly viral memes tend to be semantically simple—complexity creates barriers.
+### 3.7 Virality Optimization
 
-### 6.2 Spread Rate
+**Theorem 3.14** (Virality Maximization). V(n, h₁) ≤ V(n, 0) for all h₁ ≥ 0. Virality is maximized when H¹ = 0.
 
-**Definition 6.3**. The spread rate is:
+**Theorem 3.15** (Strict Decrease). For positive interpretation capacity, virality strictly decreases with increasing H¹ dimension.
 
-σ(n, h₀, h₁) = h₀/n if h₁ = 0, else h₀/(n(1+h₁))
+## 4. The Phase Transition Conjecture
 
-**Theorem 6.4**. Barriers always reduce spread rate: σ(n, h₀, h₁) ≤ σ(n, h₀, 0).
+**Conjecture 4.1** (Viral Phase Transition). For the Erdős-Rényi random graph G(n, p) with the constant ℤ-sheaf:
+- If p < ln(n)/n, then dim H⁰ > 1 with high probability
+- If p > ln(n)/n, then dim H⁰ = 1 with high probability
 
-## 7. Spectral-Cohomological Bridge
+This conjecture follows from the classical Erdős-Rényi connectivity threshold: below ln(n)/n, the graph is almost surely disconnected (multiple components = multiple interpretations), and above it, almost surely connected (single component = single interpretation).
 
-### 7.1 Graph Laplacian
+**Verified extremes**: We formally proved that:
+- The complete graph (p = 1) has dim H⁰ = 1
+- The empty graph (p = 0) has dim H⁰ = n
 
-**Definition 7.1**. The graph Laplacian L ∈ M_n(ℚ) is:
+**Computational test**: For n = 1000, the threshold is p ≈ 0.0069. Monte Carlo simulation with 10⁴ samples should show >90% disconnection at p = 0.005 and >90% connection at p = 0.010.
 
-L(i,j) = deg(i) if i = j; -1 if G.Adj(i,j); 0 otherwise
+## 5. Algorithms
 
-**Theorem 7.2**. L is symmetric: L = Lᵀ.
+### 5.1 Computing H⁰ Dimension
 
-**Theorem 7.3**. Row sums of L are zero: ∑_j L(i,j) = 0.
+For the constant sheaf, dim H⁰ equals the number of connected components, computable via BFS/DFS in O(|V| + |E|) time.
 
-**Theorem 7.4**. Constant vectors are in ker(L): Lv = 0 for v = c·1.
+### 5.2 Computing Monodromy
 
-*Proof*. (Lv)_i = ∑_j L(i,j)·c = c · ∑_j L(i,j) = c · 0 = 0. □
+For a twisted sheaf, monodromy along a walk is computed by multiplying twist factors: O(|walk length|) arithmetic operations.
 
-### 7.2 The Bridge
+### 5.3 Detecting Obstruction
 
-The key insight is that ker(L) = H⁰(G, ℚ). Both are characterized by the condition "constant on each edge." This means:
+To determine if H¹ = 0 for a twisted sheaf on a connected graph:
+1. Build a spanning tree T of G
+2. For each non-tree edge e, compute the monodromy around the fundamental cycle of e
+3. H¹ = 0 iff all fundamental cycle monodromies equal 1
 
-- The multiplicity of eigenvalue 0 of L equals dim H⁰ = number of connected components
-- The Fiedler value (second-smallest eigenvalue) measures the "gap" between uniform and non-uniform interpretations
-- Cheeger's inequality relates spectral gap to edge expansion, giving bounds on how quickly a meme reaches interpretive consensus
+This runs in O(|V| + |E|) time (dominated by DFS/BFS for the spanning tree).
 
-## 8. Community Detection
+## 6. Discussion
 
-### 8.1 Community Structure
+### 6.1 Biological Interpretation
 
-**Definition 8.1**. A community decomposition assigns each vertex to one of c communities.
+The monodromy obstruction has a direct biological analog. In epidemiology, a pathogen that mutates as it passes between populations may become "self-incompatible"—unable to reinfect its population of origin because the mutated version is unrecognizable. This is monodromy ≠ 1 around the social cycle.
 
-**Theorem 8.2** (Community H⁰ Lower Bound). If no edge crosses community boundaries, then dim H⁰ ≥ c. Each community supports an independent indicator section.
+### 6.2 Financial Contagion
 
-### 8.2 Edge Addition
+In financial networks, the "twist factors" can model exchange rates or risk transformations. The monodromy condition τ(A→B)·τ(B→C)·τ(C→A) = 1 is the no-arbitrage condition. Non-trivial monodromy = arbitrage opportunity = instability. The Global Vanishing Theorem then says: arbitrage opportunities cannot coexist with stable equilibria.
 
-**Theorem 8.3**. Adding an inter-community edge merges interpretation spaces. If f is consistent for G ∪ {(u,v)} and (u,v) crosses communities, then f(u) = f(v)—the two communities must agree.
+### 6.3 Limitations
 
-## 9. Euler Characteristic
+Our model assumes:
+1. Linear interpretation spaces (real-world interpretations may be nonlinear)
+2. Deterministic restriction maps (real propagation involves noise)
+3. Static networks (social networks evolve over time)
 
-**Definition 9.1**. The sheaf Euler characteristic is χ(G) = |V| - |E|.
+Extensions to sheaves of nonlinear spaces, stochastic restriction maps, and time-varying graphs are natural directions for future work.
 
-By rank-nullity on the coboundary map: χ = dim H⁰ - dim H¹.
+## 7. Conclusion
 
-**Theorem 9.2**. For trees: χ = 1, hence H¹ = 0 and dim H⁰ = 1 (assuming connectivity). Trees have zero cohomological barriers.
+We have established that meme virality is fundamentally a topological phenomenon. The sheaf cohomology of the network-meme pair determines propagation potential: H⁰ counts interpretations, H¹ counts barriers, and monodromy detects self-inconsistency. The spectral-cohomological bridge connects this framework to the powerful tools of spectral graph theory. The phase transition conjecture provides a falsifiable prediction linking network structure to meme behavior.
 
-**Theorem 9.3**. For the empty graph: χ = |V|. Maximum interpretation diversity, zero connectivity.
-
-## 10. Phase Transition Conjecture
-
-**Conjecture 10.1** (Viral Topology Phase Transition). For G ~ G(n,p) with the constant sheaf:
-- p < ln(n)/n: dim H⁰ > 1 with high probability (fragmented interpretation)
-- p > ln(n)/n: dim H⁰ = 1 with high probability (universal meaning)
-
-We verify the extremal cases:
-- **Complete graph** (p = 1): all consistent sections are constant (Theorem, proven)
-- **Empty graph** (p = 0): every function is consistent (Theorem, proven)
-
-**Testable prediction**: For n = 1000, the transition occurs at p ≈ 0.0069. Monte Carlo simulation with 10,000 samples should show >90% of graphs have dim H⁰ > 1 at p = 0.005 and >90% have dim H⁰ = 1 at p = 0.01.
-
-## 11. Algorithms
-
-### 11.1 Computing H⁰
-
-```
-Algorithm: ComputeH0(G)
-Input: Graph G = (V, E)
-Output: dim H⁰(G)
-1. Compute connected components of G using BFS/DFS
-2. Return number of components
-```
-
-Time complexity: O(|V| + |E|) using standard graph traversal.
-
-### 11.2 Computing H¹
-
-```
-Algorithm: ComputeH1(G)
-Input: Graph G = (V, E)  
-Output: dim H¹(G)
-1. c ← number of connected components (= dim H⁰)
-2. Return |E| - |V| + c  (= dim H¹ = cycle rank)
-```
-
-The cycle rank |E| - |V| + c counts independent cycles, which are exactly the generators of H¹.
-
-### 11.3 Meme Fitness Score
-
-```
-Algorithm: MemeFitness(G, community_labels)
-Input: Graph G, community assignment
-Output: fitness score
-1. h0 ← ComputeH0(G)
-2. h1 ← ComputeH1(G)
-3. Return h0 / (1 + h1)
-```
-
-## 12. Discussion
-
-### 12.1 Relation to Existing Work
-
-Our framework relates to several active research areas:
-- **Cellular sheaves on graphs** (Curry, Ghrist, Robinson): our constant sheaf is the simplest case of their cellular sheaf theory
-- **Graph signal processing**: our H⁰ corresponds to the low-frequency subspace of graph signals
-- **Spectral clustering**: community detection via Laplacian eigenvectors is related to our component-section correspondence
-
-### 12.2 Limitations
-
-- The constant sheaf model assumes perfect transmission; real memes undergo transformation (partially addressed by mutation sheaves)
-- The model is static; temporal dynamics of network evolution are not captured
-- H¹ computation assumes we know the full network structure
-
-### 12.3 Future Work
-
-1. **Persistent meme cohomology**: Track how H⁰ and H¹ evolve as the network grows (edge density increases), generating persistence diagrams for meme lifecycle
-2. **Higher cohomology**: H² and beyond may capture higher-order barriers (e.g., triadic conflicts)
-3. **Sheaf learning**: Infer mutation weights from observed propagation data
-4. **Information-theoretic bounds**: Relate dim H⁰ to channel capacity of the network viewed as a communication channel
-
-## 13. Conclusion
-
-We have established a rigorous mathematical framework connecting meme virality to graph sheaf cohomology. The central insight—that virality is a topological property of the network-sheaf pair, not merely a property of content—is supported by formally verified theorems characterizing H⁰ dimension, virality-barrier duality, and spectral correspondences. The mutation sheaf generalization opens new directions for modeling semantic evolution during propagation.
+The key takeaway: **the shape of the network matters more than the content of the message**. Topology has the final word on virality.
 
 ## References
 
-1. Curry, J. (2014). Sheaves, cosheaves and applications. PhD thesis, University of Pennsylvania.
-2. Ghrist, R. (2014). Elementary Applied Topology. Createspace.
-3. Robinson, M. (2014). Topological Signal Processing. Springer.
-4. Erdős, P. & Rényi, A. (1959). On random graphs. Publicationes Mathematicae, 6, 290-297.
-5. Chung, F. (1997). Spectral Graph Theory. AMS.
-6. Hansen, J. & Ghrist, R. (2019). Toward a spectral theory of cellular sheaves. Journal of Applied and Computational Topology.
+[1] Shepard, A. (1985). A cellular description of the derived category of a stratified space. Brown University PhD thesis.
+
+[2] Curry, J. (2014). Sheaves, cosheaves, and applications. University of Pennsylvania PhD thesis.
+
+[3] Ghrist, R. & Hansen, J. (2022). "Opinions, Conflicts, and Consensus: Modeling Social Dynamics via Sheaves." *Topological Data Analysis*, Springer.
+
+[4] Robinson, M. (2014). *Topological Signal Processing*. Springer.
+
+[5] Chung, F. (1997). *Spectral Graph Theory*. AMS.
+
+[6] Shah, D. (2009). "Gossip Algorithms." *Foundations and Trends in Networking* 3(1).
+
+[7] DeGroot, M.H. (1974). "Reaching a Consensus." *Journal of the American Statistical Association* 69(345).

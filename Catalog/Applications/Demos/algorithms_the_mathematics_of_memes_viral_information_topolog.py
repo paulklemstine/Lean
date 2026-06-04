@@ -1,280 +1,277 @@
 """
-Algorithms for Sheaf Cohomology of Meme Propagation
+Viral Information Topology: Core Algorithms
 
-Implementations of H⁰, H¹ computation, meme fitness scoring,
-mutation sheaf propagation, and Laplacian spectral analysis.
+Type-hinted implementations of sheaf cohomology computations on graphs.
 """
 
 from typing import Dict, List, Optional, Set, Tuple
 import numpy as np
+from collections import defaultdict, deque
 
 
-def compute_connected_components(n: int, edges: List[Tuple[int, int]]) -> List[Set[int]]:
-    """Compute connected components using union-find.
+class Graph:
+    """Simple undirected graph with integer vertices."""
 
-    Args:
-        n: Number of vertices (labeled 0..n-1)
-        edges: List of (u, v) edges
+    def __init__(self, n: int, edges: List[Tuple[int, int]]):
+        self.n = n
+        self.adj: Dict[int, Set[int]] = defaultdict(set)
+        self.edges = []
+        for u, v in edges:
+            if u != v:
+                self.adj[u].add(v)
+                self.adj[v].add(u)
+                self.edges.append((min(u, v), max(u, v)))
+        self.edges = list(set(self.edges))
 
-    Returns:
-        List of sets, each set is a connected component
+    def neighbors(self, v: int) -> Set[int]:
+        return self.adj[v]
+
+    def degree(self, v: int) -> int:
+        return len(self.adj[v])
+
+
+class TwistedSheaf:
+    """Twisted meme sheaf: each directed edge (i,j) carries a twist factor."""
+
+    def __init__(self, graph: Graph, twists: Dict[Tuple[int, int], float]):
+        self.graph = graph
+        self.twists = twists
+
+    @classmethod
+    def constant(cls, graph: Graph) -> "TwistedSheaf":
+        """The constant sheaf: all twists are 1."""
+        twists = {}
+        for u, v in graph.edges:
+            twists[(u, v)] = 1.0
+            twists[(v, u)] = 1.0
+        return cls(graph, twists)
+
+    def twist(self, u: int, v: int) -> float:
+        return self.twists.get((u, v), 1.0)
+
+
+def connected_components(g: Graph) -> List[Set[int]]:
+    """Compute connected components via BFS. O(V + E)."""
+    visited: Set[int] = set()
+    components: List[Set[int]] = []
+
+    for v in range(g.n):
+        if v not in visited:
+            component: Set[int] = set()
+            queue = deque([v])
+            while queue:
+                u = queue.popleft()
+                if u in visited:
+                    continue
+                visited.add(u)
+                component.add(u)
+                for w in g.neighbors(u):
+                    if w not in visited:
+                        queue.append(w)
+            components.append(component)
+
+    return components
+
+
+def h0_dimension(g: Graph) -> int:
+    """Compute dim H⁰ for the constant sheaf.
+
+    For the constant sheaf, dim H⁰ = number of connected components.
+    This is O(V + E) via BFS.
     """
-    parent = list(range(n))
-    rank = [0] * n
-
-    def find(x: int) -> int:
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-
-    def union(x: int, y: int) -> None:
-        rx, ry = find(x), find(y)
-        if rx == ry:
-            return
-        if rank[rx] < rank[ry]:
-            rx, ry = ry, rx
-        parent[ry] = rx
-        if rank[rx] == rank[ry]:
-            rank[rx] += 1
-
-    for u, v in edges:
-        union(u, v)
-
-    components: Dict[int, Set[int]] = {}
-    for i in range(n):
-        root = find(i)
-        if root not in components:
-            components[root] = set()
-        components[root].add(i)
-
-    return list(components.values())
+    return len(connected_components(g))
 
 
-def compute_h0(n: int, edges: List[Tuple[int, int]]) -> int:
-    """Compute dim H⁰(G, k) = number of connected components.
+def coboundary_matrix(g: Graph) -> np.ndarray:
+    """Build the coboundary matrix δ: ℝ^V → ℝ^E.
 
-    Time complexity: O(n + |E|) via union-find.
+    δ(f)(e) = f(tgt(e)) - f(src(e)) for each oriented edge e.
+    Orient edges as (min, max).
 
-    Args:
-        n: Number of vertices
-        edges: Edge list
-
-    Returns:
-        Dimension of H⁰
+    Returns matrix of shape (|E|, |V|).
     """
-    return len(compute_connected_components(n, edges))
+    m = len(g.edges)
+    delta = np.zeros((m, g.n))
+    for idx, (u, v) in enumerate(g.edges):
+        delta[idx, u] = -1.0
+        delta[idx, v] = 1.0
+    return delta
 
 
-def compute_h1(n: int, edges: List[Tuple[int, int]]) -> int:
-    """Compute dim H¹(G, k) = cycle rank = |E| - |V| + c.
+def graph_laplacian(g: Graph) -> np.ndarray:
+    """Build the graph Laplacian L = δᵀδ.
 
-    The cycle rank counts independent cycles in the graph.
-    Each cycle creates a potential transmission barrier.
+    L(i,j) = deg(i) if i=j, -1 if adj(i,j), 0 otherwise.
 
-    Args:
-        n: Number of vertices
-        edges: Edge list (undirected, each edge listed once)
-
-    Returns:
-        Dimension of H¹
+    Returns matrix of shape (|V|, |V|).
     """
-    c = compute_h0(n, edges)
-    return len(edges) - n + c
-
-
-def meme_fitness(h0: int, h1: int) -> float:
-    """Compute meme fitness score.
-
-    fitness = h0 / (1 + h1)
-
-    Higher fitness = more viral. Maximized when h1 = 0 (no barriers).
-
-    Args:
-        h0: Dimension of H⁰ (interpretation diversity)
-        h1: Dimension of H¹ (transmission barriers)
-
-    Returns:
-        Fitness score
-    """
-    return h0 / (1 + h1)
-
-
-def spread_rate(n: int, h0: int, h1: int) -> float:
-    """Compute meme spread rate.
-
-    Args:
-        n: Number of vertices
-        h0: H⁰ dimension
-        h1: H¹ dimension
-
-    Returns:
-        Spread rate in [0, 1]
-    """
-    if n == 0:
-        return 0.0
-    if h1 == 0:
-        return h0 / n
-    return h0 / (n * (1 + h1))
-
-
-def graph_laplacian(n: int, edges: List[Tuple[int, int]]) -> np.ndarray:
-    """Compute the graph Laplacian matrix.
-
-    L(i,j) = degree(i) if i == j
-           = -1 if (i,j) is an edge
-           = 0 otherwise
-
-    Args:
-        n: Number of vertices
-        edges: Edge list
-
-    Returns:
-        n×n Laplacian matrix
-    """
-    L = np.zeros((n, n))
-    for u, v in edges:
-        L[u, v] -= 1
-        L[v, u] -= 1
-        L[u, u] += 1
-        L[v, v] += 1
+    L = np.zeros((g.n, g.n))
+    for i in range(g.n):
+        L[i, i] = g.degree(i)
+        for j in g.neighbors(i):
+            L[i, j] = -1.0
     return L
 
 
-def laplacian_spectrum(n: int, edges: List[Tuple[int, int]]) -> np.ndarray:
-    """Compute eigenvalues of the graph Laplacian.
+def h0_via_laplacian(g: Graph, tol: float = 1e-10) -> int:
+    """Compute dim H⁰ via nullity of the Laplacian.
 
-    The number of zero eigenvalues equals dim H⁰.
-    The smallest nonzero eigenvalue (Fiedler value) measures
-    algebraic connectivity.
-
-    Args:
-        n: Number of vertices
-        edges: Edge list
-
-    Returns:
-        Sorted array of eigenvalues
+    This demonstrates the Spectral-Cohomological Bridge:
+    dim H⁰ = dim ker(L) = multiplicity of eigenvalue 0.
     """
-    L = graph_laplacian(n, edges)
+    L = graph_laplacian(g)
     eigenvalues = np.linalg.eigvalsh(L)
-    return np.sort(eigenvalues)
+    return int(np.sum(np.abs(eigenvalues) < tol))
 
 
-class MutationSheaf:
-    """Linear mutation sheaf over a graph.
+def h1_dimension(g: Graph) -> int:
+    """Compute dim H¹ for the constant sheaf.
 
-    Each edge (u,v) carries a weight w(u,v) such that
-    consistent sections satisfy f(v) = w(u,v) * f(u).
+    By rank-nullity: dim H¹ = |E| - rank(δ) = |E| - (|V| - dim H⁰)
+                    = |E| - |V| + dim H⁰ = cycle rank + dim H⁰ - dim H⁰
+                    = |E| - |V| + (number of components)
+    This is the cycle rank (first Betti number).
     """
+    num_components = h0_dimension(g)
+    return len(g.edges) - g.n + num_components
 
-    def __init__(self, n: int, edges: List[Tuple[int, int]],
-                 weights: Optional[Dict[Tuple[int, int], float]] = None):
-        self.n = n
-        self.edges = edges
-        self.adj: Dict[int, List[int]] = {i: [] for i in range(n)}
-        for u, v in edges:
-            self.adj[u].append(v)
-            self.adj[v].append(u)
 
-        self.weights: Dict[Tuple[int, int], float] = {}
-        if weights is None:
-            for u, v in edges:
-                self.weights[(u, v)] = 1.0
-                self.weights[(v, u)] = 1.0
-        else:
-            for (u, v), w in weights.items():
-                self.weights[(u, v)] = w
-                if w != 0:
-                    self.weights[(v, u)] = 1.0 / w
+def euler_characteristic(g: Graph) -> int:
+    """Compute χ = |V| - |E| = dim H⁰ - dim H¹."""
+    return g.n - len(g.edges)
 
-    def propagate_from(self, seed: int, seed_value: float = 1.0) -> Dict[int, float]:
-        """Propagate a consistent section from a seed vertex.
 
-        Uses BFS to compute the unique consistent section with f(seed) = seed_value.
+def virality_index(total_interp: int, h1_dim: int) -> float:
+    """Compute the virality index: total_interp / (1 + h1_dim)."""
+    return total_interp / (1 + h1_dim)
 
-        Args:
-            seed: Starting vertex
-            seed_value: Value at seed
 
-        Returns:
-            Dict mapping reachable vertices to their values
-        """
-        values: Dict[int, float] = {seed: seed_value}
-        queue = [seed]
-        visited = {seed}
+def walk_monodromy(sheaf: TwistedSheaf, walk: List[int]) -> float:
+    """Compute the monodromy of a twisted sheaf along a walk.
 
+    walk is a list of vertices [v0, v1, ..., vk].
+    Monodromy = product of twist(vi, vi+1) for i = 0, ..., k-1.
+    """
+    mono = 1.0
+    for i in range(len(walk) - 1):
+        mono *= sheaf.twist(walk[i], walk[i + 1])
+    return mono
+
+
+def spanning_tree_dfs(g: Graph, root: int = 0) -> Tuple[List[Tuple[int, int]], List[Tuple[int, int]]]:
+    """DFS spanning tree. Returns (tree_edges, non_tree_edges)."""
+    visited: Set[int] = set()
+    tree_edges: List[Tuple[int, int]] = []
+    stack = [root]
+    parent: Dict[int, int] = {root: -1}
+
+    while stack:
+        v = stack.pop()
+        if v in visited:
+            continue
+        visited.add(v)
+        if parent[v] != -1:
+            tree_edges.append((min(parent[v], v), max(parent[v], v)))
+        for w in g.neighbors(v):
+            if w not in visited:
+                parent[w] = v
+                stack.append(w)
+
+    tree_edge_set = set(tree_edges)
+    non_tree = [e for e in g.edges if e not in tree_edge_set]
+    return tree_edges, non_tree
+
+
+def fundamental_cycle_monodromies(g: Graph, sheaf: TwistedSheaf) -> List[float]:
+    """Compute monodromy around each fundamental cycle.
+
+    For each non-tree edge, find the fundamental cycle via the spanning tree
+    and compute its monodromy. O(V + E) total.
+    """
+    tree_edges, non_tree_edges = spanning_tree_dfs(g)
+
+    # Build tree adjacency for path finding
+    tree_adj: Dict[int, Set[int]] = defaultdict(set)
+    for u, v in tree_edges:
+        tree_adj[u].add(v)
+        tree_adj[v].add(u)
+
+    def tree_path(start: int, end: int) -> List[int]:
+        """BFS path in tree."""
+        parent: Dict[int, int] = {start: -1}
+        queue = deque([start])
         while queue:
-            u = queue.pop(0)
-            for v in self.adj[u]:
-                if v not in visited:
-                    w = self.weights.get((u, v), 1.0)
-                    values[v] = w * values[u]
-                    visited.add(v)
-                    queue.append(v)
+            v = queue.popleft()
+            if v == end:
+                path = []
+                while v != -1:
+                    path.append(v)
+                    v = parent[v]
+                return path[::-1]
+            for w in tree_adj[v]:
+                if w not in parent:
+                    parent[w] = v
+                    queue.append(w)
+        return []
 
-        return values
+    monodromies = []
+    for u, v in non_tree_edges:
+        # Fundamental cycle: tree path u -> v, then edge v -> u
+        path = tree_path(u, v)
+        path.append(u)  # Close the cycle
+        mono = walk_monodromy(sheaf, path)
+        monodromies.append(mono)
 
-    def check_holonomy(self, cycle: List[int]) -> float:
-        """Compute the holonomy around a cycle.
-
-        Returns the product of weights around the cycle.
-        Holonomy = 1 means no obstruction; ≠ 1 means H¹ contribution.
-
-        Args:
-            cycle: List of vertices forming a cycle (last connects to first)
-
-        Returns:
-            Holonomy value (product of edge weights around cycle)
-        """
-        holonomy = 1.0
-        for i in range(len(cycle)):
-            u = cycle[i]
-            v = cycle[(i + 1) % len(cycle)]
-            holonomy *= self.weights.get((u, v), 1.0)
-        return holonomy
+    return monodromies
 
 
-def euler_characteristic(n: int, edges: List[Tuple[int, int]]) -> int:
-    """Compute the sheaf Euler characteristic χ = |V| - |E|.
-
-    By rank-nullity: χ = dim H⁰ - dim H¹.
-
-    Args:
-        n: Number of vertices
-        edges: Edge list
-
-    Returns:
-        Euler characteristic
-    """
-    return n - len(edges)
+def is_flat(g: Graph, sheaf: TwistedSheaf, tol: float = 1e-10) -> bool:
+    """Check if a twisted sheaf is flat (all monodromies = 1)."""
+    monos = fundamental_cycle_monodromies(g, sheaf)
+    return all(abs(m - 1.0) < tol for m in monos)
 
 
-def community_fitness(n: int, edges: List[Tuple[int, int]],
-                      communities: List[int]) -> Dict[str, float]:
-    """Analyze meme fitness with respect to community structure.
+def propagation_step(g: Graph, f: np.ndarray) -> np.ndarray:
+    """One step of meme propagation: each vertex averages neighbors."""
+    result = np.copy(f)
+    for v in range(g.n):
+        nbrs = list(g.neighbors(v))
+        if nbrs:
+            result[v] = np.mean(f[list(nbrs)])
+    return result
 
-    Args:
-        n: Number of vertices
-        edges: Edge list
-        communities: Community label for each vertex
 
-    Returns:
-        Dict with h0, h1, fitness, spread_rate, euler_char, and analysis
-    """
-    h0 = compute_h0(n, edges)
-    h1 = compute_h1(n, edges)
+def propagation_equilibrium(g: Graph, f0: np.ndarray,
+                             max_steps: int = 1000,
+                             tol: float = 1e-10) -> Tuple[np.ndarray, int]:
+    """Run propagation to equilibrium. Returns (equilibrium, steps)."""
+    f = np.copy(f0)
+    for step in range(max_steps):
+        f_new = propagation_step(g, f)
+        if np.max(np.abs(f_new - f)) < tol:
+            return f_new, step + 1
+        f = f_new
+    return f, max_steps
 
-    num_communities = len(set(communities))
-    inter_edges = sum(1 for u, v in edges if communities[u] != communities[v])
-    intra_edges = len(edges) - inter_edges
 
-    return {
-        "h0_dim": h0,
-        "h1_dim": h1,
-        "fitness": meme_fitness(h0, h1),
-        "spread_rate": spread_rate(n, h0, h1),
-        "euler_char": euler_characteristic(n, edges),
-        "num_communities": num_communities,
-        "inter_community_edges": inter_edges,
-        "intra_community_edges": intra_edges,
-    }
+def erdos_renyi(n: int, p: float, seed: Optional[int] = None) -> Graph:
+    """Generate an Erdős-Rényi random graph G(n, p)."""
+    rng = np.random.default_rng(seed)
+    edges = []
+    for i in range(n):
+        for j in range(i + 1, n):
+            if rng.random() < p:
+                edges.append((i, j))
+    return Graph(n, edges)
+
+
+if __name__ == "__main__":
+    # Quick demo
+    g = Graph(6, [(0, 1), (1, 2), (2, 0), (3, 4), (4, 5)])
+    print(f"Graph: {g.n} vertices, {len(g.edges)} edges")
+    print(f"Connected components: {len(connected_components(g))}")
+    print(f"dim H⁰ = {h0_dimension(g)}")
+    print(f"dim H¹ = {h1_dimension(g)}")
+    print(f"χ = {euler_characteristic(g)}")
+    print(f"dim H⁰ (Laplacian) = {h0_via_laplacian(g)}")
+    print(f"Virality index = {virality_index(g.n, h1_dimension(g)):.4f}")
