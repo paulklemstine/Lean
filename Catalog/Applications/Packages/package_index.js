@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0c08b2ae",
     "filename": "speculative_topological_quantum_error_correction_f.json",
     "pkg_num": 354,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.32280000000000003,
     "title": "Systolic Quantum Error Correction: Chain Complexes, Code Distance, and the Genus-Distance Scaling Law"
   },
   {
@@ -11396,8 +11396,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "speculative_topological_quantum_error_correction_f",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.32280000000000003,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Systolic Quantum Error Correction: Chain Complexes, Code Distance, and the Genus-Distance Scaling Law"
     }

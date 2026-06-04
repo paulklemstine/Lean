@@ -180,6 +180,26 @@
       "theorem_count": 5,
       "timestamp": "2026-06-04T12:37:08",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "cycle_id": "854de7e7",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tropical Min-Plus Encryption\n\n## Synthesis\n\nThis research cycle established rigorous foundations for tropical (min-plus) cryptography by introducing the **Tropical Permanent** as",
+      "quality_score": 0.39144,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-04T13:09:39",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+    },
+    {
+      "cycle_id": "0c08b2ae",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Systolic Quantum Error Correction\n\n## Synthesis\n\nThis research cycle established the **Systolic Code** framework, proving that F₂ chain complexes canonically produce CSS quantum c",
+      "quality_score": 0.32280000000000003,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T13:10:05",
+      "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
     }
   ],
   "entries": [
@@ -225,7 +245,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-04T12:37:08",
+  "last_updated": "2026-06-04T13:10:05",
   "open_questions": [],
   "research_threads": {
     "Applications": [
@@ -240,6 +260,18 @@
         "quality": 0.40456000000000003,
         "theorems": 5,
         "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+      },
+      {
+        "cycle_id": "854de7e7",
+        "quality": 0.39144,
+        "theorems": 4,
+        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+      },
+      {
+        "cycle_id": "0c08b2ae",
+        "quality": 0.32280000000000003,
+        "theorems": 5,
+        "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
       }
     ],
     "Bridges": [

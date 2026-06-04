@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T12:37:08.711970+00:00",
+  "last_updated": "2026-06-04T13:10:05.651749+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -2550,6 +2550,74 @@
       "theorem_count": 5,
       "timestamp": "2026-06-04T12:37:08.651553+00:00",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4651,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 31,
+      "domain": "Applications",
+      "duration_seconds": 7677.617933511734,
+      "end_time": 1780578550.9738698,
+      "files_integrated": 5,
+      "job_id": "854de7e7",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8186,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7127,
+        "novelty": 0.95,
+        "proof_depth": 0.611,
+        "usefulness": 0.8055
+      },
+      "quality_score": 0.39144,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780570873.3559363,
+      "strategy_count": 187,
+      "theorem_count": 4,
+      "timestamp": "2026-06-04T13:10:05.532087+00:00",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6385,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 33,
+      "domain": "Applications",
+      "duration_seconds": 5742.997420310974,
+      "end_time": 1780578551.2890244,
+      "files_integrated": 5,
+      "job_id": "0c08b2ae",
+      "outcome_quality": 0.32280000000000003,
+      "quality_breakdown": {
+        "actionability": 0.8,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7875,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.6873,
+        "novelty": 0.95,
+        "proof_depth": 0.5747,
+        "usefulness": 0.7874
+      },
+      "quality_score": 0.32280000000000003,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780572808.291604,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T13:10:05.595357+00:00",
+      "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
     }
   ]
 }
