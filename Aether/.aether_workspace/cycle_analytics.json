@@ -1,8 +1,8 @@
-Removed 2 zero-quality records, 32 remaining
 {
-  "last_updated": "2026-06-04T02:44:38.349270+00:00",
+  "last_updated": "2026-06-04T02:57:08.712171+00:00",
   "records": [
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 0,
       "bridge_count": 0,
       "cycle_n": 4,
@@ -35,6 +35,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Tropical Convexity and Helly Theorem"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 0,
       "bridge_count": 0,
       "cycle_n": 5,
@@ -67,6 +68,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Rigorous framework for **reflective oracle hie"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 0,
       "bridge_count": 0,
       "cycle_n": 6,
@@ -99,6 +101,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Inverse Stereographic Tropical Lift"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 0,
       "bridge_count": 0,
       "cycle_n": 7,
@@ -131,6 +134,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Yang-Mills Mass Gap"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 0,
       "bridge_count": 0,
       "cycle_n": 2,
@@ -163,6 +167,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Tropical Intersection Theory"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 0,
       "bridge_count": 0,
       "cycle_n": 3,
@@ -195,6 +200,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Quantum-Classical Bridge: de Finetti Theorem for Quantum States"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 0,
       "bridge_count": 0,
       "cycle_n": 8,
@@ -227,6 +233,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 0,
       "bridge_count": 0,
       "cycle_n": 1,
@@ -259,6 +266,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Homotopy Type Theory to HoTT Bridge: Univalent Foundations for Proof Transfer"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 0,
       "bridge_count": 0,
       "cycle_n": 11,
@@ -291,6 +299,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 0,
       "bridge_count": 0,
       "cycle_n": 1,
@@ -323,6 +332,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Musical Counterpoint as Constraint Satisfaction"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 0,
       "bridge_count": 0,
       "cycle_n": 3,
@@ -355,6 +365,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 1,
       "bridge_count": 13,
       "cycle_n": 2,
@@ -387,6 +398,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Homomorphic Encryption: Computing on Encrypted Data"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 1,
       "bridge_count": 13,
       "cycle_n": 4,
@@ -419,6 +431,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 1,
       "bridge_count": 13,
       "cycle_n": 12,
@@ -451,6 +464,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 1,
       "bridge_count": 13,
       "cycle_n": 1,
@@ -483,6 +497,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 1,
       "bridge_count": 13,
       "cycle_n": 2,
@@ -515,6 +530,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Isogeny-Based Cryptography: Supersingular Isogeny Diffie-Hellman"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 1,
       "bridge_count": 13,
       "cycle_n": 3,
@@ -547,6 +563,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 1,
@@ -579,6 +596,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Taxicab Number Generalizations: Hardy-Ramanujan Numbers"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 3,
@@ -611,6 +629,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 1,
@@ -643,6 +662,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 4,
@@ -675,6 +695,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 1,
@@ -707,6 +728,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 2,
@@ -739,6 +761,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 2,
@@ -771,6 +794,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "AdS/CFT for Proof Theory: Holographic Verification"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 4,
@@ -803,6 +827,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Counterfactual Number Theory: What If Primes Were Random?"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 1,
@@ -835,6 +860,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Neural Tangent Kernel: Convergence"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 3,
@@ -867,6 +893,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Causal Loops in Category Theory: When Composition Loops Back"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 1,
@@ -899,6 +926,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Attention is All You Need: Formalizing Transformer Architecture"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 2,
@@ -931,6 +959,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Rigorous bridge between Arrow's impossibility"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 3,
@@ -963,6 +992,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Code-Based Cryptography: McEliece Security on the Binary Goppa Code"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 4,
@@ -995,6 +1025,7 @@ Removed 2 zero-quality records, 32 remaining
       "title": "Hypergraph Ramsey Theory: Beyond Graphs"
     },
     {
+      "adversarial_delta": 0.0,
       "barrier_count": 370,
       "bridge_count": 13,
       "cycle_n": 6,
@@ -1025,6 +1056,38 @@ Removed 2 zero-quality records, 32 remaining
       "theorem_count": 26,
       "timestamp": "2026-06-04T02:44:38.307941+00:00",
       "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.8527,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 5,
+      "domain": "MachineLearning",
+      "duration_seconds": 6487.450308799744,
+      "end_time": 1780541690.240912,
+      "files_integrated": 7,
+      "job_id": "f11ca07c",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 0.6799999999999999,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "cross_domain": 1.0,
+        "importance": 0.8934798807749627,
+        "novelty": 0.9318181818181819,
+        "proof_depth": 0.8770491803278688,
+        "usefulness": 0.9385245901639344
+      },
+      "quality_score": 0.3176,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780535202.7906032,
+      "strategy_count": 187,
+      "theorem_count": 23,
+      "timestamp": "2026-06-04T02:57:08.678197+00:00",
+      "title": "Cellular Automata at the Ordinals: Transfinite Computation"
     }
   ]
 }

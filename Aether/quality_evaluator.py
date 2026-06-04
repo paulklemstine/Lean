@@ -670,3 +670,188 @@ class QualityEvaluator:
     def should_move_on(self, score: QualityScore) -> bool:
         """Should we skip this topic and move to something else?"""
         return score.composite < 0.25
+
+    # ── Adversarial Quality Judging ─────────────────────────────────
+
+    def adversarial_evaluate(
+        self,
+        lean_source: str,
+        concept_title: str = "",
+        concept_description: str = "",
+        primary_score: Optional[QualityScore] = None,
+        disagreement_threshold: float = 0.2,
+    ) -> Dict[str, Any]:
+        """Run an adversarial second opinion on quality, with tiebreaker if needed.
+
+        A second LLM is prompted as a skeptical critic to independently grade
+        the output. If the two judges disagree by more than `disagreement_threshold`,
+        a third tiebreaker LLM is called.
+
+        Returns dict with:
+          - adjudicated_score: float (0-1) — the final quality score
+          - primary_composite: float — the primary evaluator's composite
+          - adversarial_composite: float — the critic's composite
+          - tiebreaker_composite: float or None — tiebreaker's composite (if called)
+          - agreement: str — "agree", "disagree", or "tiebreak"
+          - delta: float — absolute difference between primary and adversarial
+        """
+        if not self.pi_agent:
+            return {
+                "adjudicated_score": primary_score.composite if primary_score else 0.5,
+                "primary_composite": primary_score.composite if primary_score else 0.5,
+                "adversarial_composite": None,
+                "tiebreaker_composite": None,
+                "agreement": "no_pi_agent",
+                "delta": 0.0,
+            }
+
+        # Step 1: Run adversarial critic
+        adversarial_result = self._run_adversarial_critic(
+            lean_source, concept_title, concept_description
+        )
+        adversarial_composite = adversarial_result.get("composite", 0.5)
+        primary_composite = primary_score.composite if primary_score else 0.5
+        delta = abs(primary_composite - adversarial_composite)
+
+        # Step 2: Check disagreement
+        if delta <= disagreement_threshold:
+            # Judges agree — average them
+            adjudicated = (primary_composite + adversarial_composite) / 2
+            return {
+                "adjudicated_score": round(adjudicated, 4),
+                "primary_composite": round(primary_composite, 4),
+                "adversarial_composite": round(adversarial_composite, 4),
+                "tiebreaker_composite": None,
+                "agreement": "agree",
+                "delta": round(delta, 4),
+            }
+
+        # Step 3: Disagreement — call tiebreaker
+        tiebreaker_result = self._run_tiebreaker(
+            lean_source, concept_title, concept_description,
+            primary_composite, adversarial_composite,
+        )
+        tiebreaker_composite = tiebreaker_result.get("composite", 0.5)
+
+        # Adjudicate: use the tiebreaker's score, weighted toward whichever
+        # judge the tiebreaker is closer to
+        if abs(tiebreaker_composite - primary_composite) < abs(tiebreaker_composite - adversarial_composite):
+            # Tiebreaker agrees more with primary
+            adjudicated = 0.5 * primary_composite + 0.3 * adversarial_composite + 0.2 * tiebreaker_composite
+        else:
+            # Tiebreaker agrees more with adversarial (critic)
+            adjudicated = 0.3 * primary_composite + 0.5 * adversarial_composite + 0.2 * tiebreaker_composite
+
+        print(f"[Adversarial] DISAGREE: primary={primary_composite:.3f} critic={adversarial_composite:.3f} "
+              f"tiebreak={tiebreaker_composite:.3f} → adjudicated={adjudicated:.3f}")
+
+        return {
+            "adjudicated_score": round(adjudicated, 4),
+            "primary_composite": round(primary_composite, 4),
+            "adversarial_composite": round(adversarial_composite, 4),
+            "tiebreaker_composite": round(tiebreaker_composite, 4),
+            "agreement": "tiebreak",
+            "delta": round(delta, 4),
+        }
+
+    def _run_adversarial_critic(
+        self, lean_source: str, concept_title: str, concept_description: str
+    ) -> Dict[str, float]:
+        """Run a skeptical second LLM evaluation as an adversarial judge.
+
+        The critic is prompted to find flaws, overstatements, and triviality.
+        Returns a quality assessment dict with 'composite' and per-axis scores.
+        """
+        system_prompt = (
+            "You are a SKEPTICAL mathematical quality critic. Your job is to find flaws "
+            "in research output, NOT to be generous. Apply these principles:\n\n"
+            "- If a proof could be a standard homework exercise, score it 0.1-0.2\n"
+            "- If a 'theorem' is just a wrapper around a definition, score it 0.1-0.2\n"
+            "- If the novelty is overstated (standard results repackaged), penalize heavily\n"
+            "- If the cross-domain connection is superficial (just naming both domains), penalize\n"
+            "- If the importance is inflated (no one outside the subfield would care), penalize\n"
+            "- ONLY give high scores (0.7+) for results that would impress a research mathematician\n\n"
+            "Score on 9 axes, all 0.0-1.0. Respond with ONLY JSON:\n"
+            '{"proof_depth": 0.0, "novelty": 0.0, "cross_domain": 0.0, '
+            '"artifact_richness": 0.0, "actionability": 0.0, "importance": 0.0, '
+            '"usefulness": 0.0, "applications": 0.0, "catalog_anchoring": 0.0}'
+        )
+
+        user_prompt = (
+            f"Critically evaluate: \"{concept_title}\"\n"
+            f"Description: {concept_description[:500]}\n\n"
+            f"Lean source (first 1500 chars):\n{lean_source[:1500]}\n\n"
+            "Be harsh but fair. What is genuinely new here? What is repackaged known material?"
+        )
+
+        try:
+            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=60)
+            json_match = re.search(r'\{[^{}]*\}', raw, re.DOTALL)
+            if json_match:
+                data = json.loads(json_match.group())
+                # Build a QualityScore from the critic's assessment
+                qs = QualityScore(
+                    proof_depth=max(0, min(1, float(data.get("proof_depth", 0.5)))),
+                    novelty=max(0, min(1, float(data.get("novelty", 0.5)))),
+                    cross_domain=max(0, min(1, float(data.get("cross_domain", 0.5)))),
+                    artifact_richness=max(0, min(1, float(data.get("artifact_richness", 0.5)))),
+                    actionability=max(0, min(1, float(data.get("actionability", 0.5)))),
+                    importance=max(0, min(1, float(data.get("importance", 0.5)))),
+                    usefulness=max(0, min(1, float(data.get("usefulness", 0.5)))),
+                    applications=max(0, min(1, float(data.get("applications", 0.5)))),
+                    catalog_anchoring=max(0, min(1, float(data.get("catalog_anchoring", 0.5)))),
+                )
+                return {"composite": qs.composite, "breakdown": qs.to_dict()}
+        except Exception as e:
+            print(f"[Adversarial] Critic evaluation failed: {e}")
+
+        return {"composite": 0.5}  # neutral fallback
+
+    def _run_tiebreaker(
+        self, lean_source: str, concept_title: str, concept_description: str,
+        primary_score: float, adversarial_score: float,
+    ) -> Dict[str, float]:
+        """Run a third LLM as a tiebreaker when primary and adversarial judges disagree.
+
+        The tiebreaker sees both scores and is asked to independently evaluate
+        without being influenced by either.
+        """
+        system_prompt = (
+            "You are a neutral mathematical quality arbiter. Two evaluators disagreed on a "
+            "research output's quality. One gave it a score of "
+            f"{primary_score:.2f}, the other gave it {adversarial_score:.2f}.\n\n"
+            "You must independently assess the quality. Do NOT simply split the difference. "
+            "Apply your own honest judgment.\n\n"
+            "Score on 9 axes, all 0.0-1.0. Respond with ONLY JSON:\n"
+            '{"proof_depth": 0.0, "novelty": 0.0, "cross_domain": 0.0, '
+            '"artifact_richness": 0.0, "actionability": 0.0, "importance": 0.0, '
+            '"usefulness": 0.0, "applications": 0.0, "catalog_anchoring": 0.0}'
+        )
+
+        user_prompt = (
+            f"Research: \"{concept_title}\"\n"
+            f"Description: {concept_description[:500]}\n\n"
+            f"Lean source (first 1500 chars):\n{lean_source[:1500]}"
+        )
+
+        try:
+            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=60)
+            json_match = re.search(r'\{[^{}]*\}', raw, re.DOTALL)
+            if json_match:
+                data = json.loads(json_match.group())
+                qs = QualityScore(
+                    proof_depth=max(0, min(1, float(data.get("proof_depth", 0.5)))),
+                    novelty=max(0, min(1, float(data.get("novelty", 0.5)))),
+                    cross_domain=max(0, min(1, float(data.get("cross_domain", 0.5)))),
+                    artifact_richness=max(0, min(1, float(data.get("artifact_richness", 0.5)))),
+                    actionability=max(0, min(1, float(data.get("actionability", 0.5)))),
+                    importance=max(0, min(1, float(data.get("importance", 0.5)))),
+                    usefulness=max(0, min(1, float(data.get("usefulness", 0.5)))),
+                    applications=max(0, min(1, float(data.get("applications", 0.5)))),
+                    catalog_anchoring=max(0, min(1, float(data.get("catalog_anchoring", 0.5)))),
+                )
+                return {"composite": qs.composite, "breakdown": qs.to_dict()}
+        except Exception as e:
+            print(f"[Adversarial] Tiebreaker failed: {e}")
+
+        return {"composite": (primary_score + adversarial_score) / 2}

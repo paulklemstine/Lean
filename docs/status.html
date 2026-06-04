@@ -493,7 +493,21 @@
         } catch(e) { console.error(e); document.getElementById('refresh-info').textContent = `Error: ${e.message}`; }
     }
     loadData();
-    setInterval(loadData, 60000);
+    // Live update: poll lightweight last_update.json every 5s,
+    // only do full data reload when the timestamp changes
+    let lastUpdateTs = '';
+    setInterval(async () => {
+        try {
+            const resp = await fetch('aether_status/last_update.json', {cache:'no-store'});
+            if (resp.ok) {
+                const data = await resp.json();
+                if (data.timestamp && data.timestamp !== lastUpdateTs) {
+                    lastUpdateTs = data.timestamp;
+                    loadData();  // full reload on change
+                }
+            }
+        } catch(e) {}  // ignore errors for lightweight poll
+    }, 5000);
     // Search handler
     document.getElementById('search-input').addEventListener('input', function(e) {
         const q = e.target.value.toLowerCase().trim();

@@ -84,6 +84,7 @@ class ResearchJob:
     integrated_paths: list = None  # Paths of files written to Catalog (relative to repo root)
     error_message: Optional[str] = None
     source_exp_ids: list = None  # exp_ids of parent experiments whose future directions inspired this one
+    adversarial_result: Optional[Dict] = None  # Adversarial judging metadata
 
 
 class KnowledgeExtractor:
@@ -1109,6 +1110,37 @@ Research mode: {concept.research_mode}
             concept_domains = getattr(job.concept, 'domains', []) if job.concept else []
             composite = qscore.composite_with_domains(domains=concept_domains) if hasattr(qscore, 'composite_with_domains') else qscore.composite
             job.quality_score = 0.3 * heuristic_score + 0.7 * composite
+
+            # ── Adversarial quality judging ──
+            # Second LLM evaluates as a skeptical critic; if they disagree,
+            # a third tiebreaker adjudicates.
+            if self.pi_agent and hasattr(qeval, 'adversarial_evaluate'):
+                try:
+                    adversarial_result = qeval.adversarial_evaluate(
+                        lean_source=compact_lean,
+                        concept_title=job.concept.title,
+                        concept_description=job.concept.concept_description,
+                        primary_score=qscore,
+                        disagreement_threshold=0.2,
+                    )
+                    adj_score = adversarial_result.get("adjudicated_score", composite)
+                    agreement = adversarial_result.get("agreement", "unknown")
+                    adv_composite = adversarial_result.get("adversarial_composite")
+                    delta = adversarial_result.get("delta", 0.0)
+
+                    if agreement == "agree":
+                        # Judges agree — blend adjudicated score with heuristic
+                        job.quality_score = 0.3 * heuristic_score + 0.7 * adj_score
+                    elif agreement in ("tiebreak", "disagree"):
+                        # Disagreement resolved — weight the adjudicated score more
+                        job.quality_score = 0.2 * heuristic_score + 0.8 * adj_score
+
+                    # Store adversarial metadata
+                    job.adversarial_result = adversarial_result
+                    print(f"[Adversarial] {agreement}: primary={adv_composite:.3f if adv_composite else '?'} "
+                          f"adjudicated={adj_score:.3f} delta={delta:.3f}")
+                except Exception as ae:
+                    print(f"[Adversarial] Failed (using primary only): {ae}")
         except Exception as e:
             print(f"[Evaluate] Warning: QualityEvaluator failed, using heuristic only: {e}")
             job.quality_score = heuristic_score

@@ -37,6 +37,9 @@ class CycleRecord:
     novelty_score: Optional[float] = None
     outcome_quality: float = 0.0
     files_integrated: int = 0
+    failed: bool = False  # True if cycle produced no output (0 files, 0 theorems)
+    adversarial_agreement: str = ""  # "agree", "tiebreak", "disagree", or "" (not run)
+    adversarial_delta: float = 0.0   # delta between primary and adversarial scores
     barrier_count: int = 0
     strategy_count: int = 0
     bridge_count: int = 0
@@ -44,8 +47,10 @@ class CycleRecord:
 
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)
-        # Remove None values for cleanliness
-        return {k: v for k, v in d.items() if v is not None and v != ""}
+        # Remove None values and empty strings for cleanliness
+        # Keep boolean fields (failed) even if False
+        return {k: v for k, v in d.items()
+                if v is not None and v != "" and not (k == "failed" and v is False)}
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> "CycleRecord":
@@ -89,6 +94,11 @@ class CycleAnalytics:
         """Keep only the most recent MAX_RECORDS."""
         if len(self.records) > self.MAX_RECORDS:
             self.records = self.records[-self.MAX_RECORDS:]
+
+    @property
+    def successful_records(self) -> List[CycleRecord]:
+        """Return only non-failed records for analytics."""
+        return [r for r in self.records if not r.failed]
 
     def record_cycle(self, job, insight_extractor=None) -> None:
         """Record analytics for a completed cycle.
@@ -165,12 +175,22 @@ class CycleAnalytics:
         except Exception:
             pass
 
+        # Mark as failed if cycle produced no output
+        if record.files_integrated == 0 and record.theorem_count == 0:
+            record.failed = True
+
+        # Adversarial judging metadata
+        adv = getattr(job, "adversarial_result", None)
+        if adv and isinstance(adv, dict):
+            record.adversarial_agreement = adv.get("agreement", "")
+            record.adversarial_delta = adv.get("delta", 0.0)
+
         self.records.append(record)
         self._save()
 
     def get_summary(self, last_n: int = 50) -> Dict[str, Any]:
         """Get summary statistics for the last N cycles."""
-        recent = self.records[-last_n:]
+        recent = self.successful_records[-last_n:]
         if not recent:
             return {
                 "total_cycles": 0,
@@ -204,7 +224,7 @@ class CycleAnalytics:
 
     def get_quality_trend(self, last_n: int = 20) -> List[Dict[str, Any]]:
         """Get quality scores over the last N cycles for trend display."""
-        recent = self.records[-last_n:]
+        recent = self.successful_records[-last_n:]
         return [
             {"cycle": r.cycle_n, "quality": r.quality_score, "domain": r.domain}
             for r in recent
@@ -214,7 +234,7 @@ class CycleAnalytics:
         """Get per-domain statistics."""
         from collections import defaultdict
         domain_data = defaultdict(list)
-        for r in self.records:
+        for r in self.successful_records:
             if r.domain:
                 domain_data[r.domain].append(r)
 
@@ -239,7 +259,7 @@ class CycleAnalytics:
         """
         from collections import defaultdict
         domain_data = defaultdict(list)
-        recent = self.records[-last_n:] if len(self.records) > last_n else self.records
+        recent = self.successful_records[-last_n:] if len(self.successful_records) > last_n else self.successful_records
         for r in recent:
             if r.domain and r.quality_score > 0:
                 domain_data[r.domain].append({
@@ -254,7 +274,7 @@ class CycleAnalytics:
 
     def get_sorry_density_trend(self, last_n: int = 50) -> List[Dict[str, Any]]:
         """Get sorry density trend over recent cycles for dashboard chart."""
-        recent = self.records[-last_n:] if len(self.records) > last_n else self.records
+        recent = self.successful_records[-last_n:] if len(self.successful_records) > last_n else self.successful_records
         return [
             {"cycle": r.cycle_n, "sorry_density": r.sorry_density, "domain": r.domain}
             for r in recent
@@ -262,7 +282,7 @@ class CycleAnalytics:
 
     def get_breakthroughs(self, threshold: float = 0.8) -> List[CycleRecord]:
         """Return cycles with quality_score above threshold (breakthroughs)."""
-        return [r for r in self.records if r.quality_score >= threshold]
+        return [r for r in self.successful_records if r.quality_score >= threshold]
 
     def get_direction_funnel(self) -> Dict[str, Any]:
         """Compute direction funnel metrics: seeded vs organic, conversion rates.
@@ -299,9 +319,9 @@ class CycleAnalytics:
         except Exception:
             # Fallback: just cycle records
             return {
-                "total_cycles": len(self.records),
-                "avg_quality": sum(r.quality_score for r in self.records if r.quality_score > 0) / max(
-                    sum(1 for r in self.records if r.quality_score > 0), 1
+                "total_cycles": len(self.successful_records),
+                "avg_quality": sum(r.quality_score for r in self.successful_records if r.quality_score > 0) / max(
+                    sum(1 for r in self.successful_records if r.quality_score > 0), 1
                 ),
             }
 
@@ -316,7 +336,7 @@ class CycleAnalytics:
         """
         from collections import defaultdict
         domain_data = defaultdict(list)
-        for r in self.records:
+        for r in self.successful_records:
             if r.domain and r.quality_score > 0:
                 domain_data[r.domain].append(r.quality_score)
 
@@ -349,7 +369,7 @@ class CycleAnalytics:
           - trends: quality direction per domain (improving/declining/stable)
           - total_cycles, avg_quality, avg_duration
         """
-        recent = self.records[-last_n:] if len(self.records) > last_n else self.records
+        recent = self.successful_records[-last_n:] if len(self.successful_records) > last_n else self.successful_records
         if not recent:
             return {"total_cycles": 0, "digest": "No cycles recorded yet."}
 
@@ -420,14 +440,14 @@ class CycleAnalytics:
         from itertools import combinations
         # Group cycles by their timestamp (same cycle = multi-domain direction)
         domain_scores = defaultdict(list)
-        for r in self.records:
+        for r in self.successful_records:
             if r.domain and r.quality_score > 0:
                 domain_scores[r.domain].append(r.quality_score)
 
         # For pairs: compute Pearson-like correlation
         # We need cycles where both domains appear
         cycles_by_time = defaultdict(dict)
-        for r in self.records:
+        for r in self.successful_records:
             if r.domain and r.quality_score > 0:
                 cycles_by_time[r.start_time or r.timestamp][r.domain] = r.quality_score
 

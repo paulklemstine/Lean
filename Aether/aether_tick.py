@@ -39,6 +39,23 @@ from knowledge_extractor import KnowledgeExtractor
 REPO_ROOT = Path(__file__).parent.parent
 PACKAGES_DIR = REPO_ROOT / "Catalog" / "Applications" / "Packages"
 
+
+def _signal_dashboard_update(job_id: str = "", action: str = "update") -> None:
+    """Write a lightweight last_update.json so the live dashboard polls refresh."""
+    try:
+        import json as _json
+        status_dir = REPO_ROOT / "docs" / "aether_status"
+        status_dir.mkdir(parents=True, exist_ok=True)
+        (status_dir / "last_update.json").write_text(
+            _json.dumps({
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "action": action,
+                "job_id": job_id,
+            })
+        )
+    except Exception:
+        pass  # non-critical
+
 # Watchdog: set to True if core files changed after git pull
 _core_files_changed = False
 
@@ -175,6 +192,9 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         extractor.commit(job)
         print(f"[Tick] Integrated {job.job_id[:8]}: score={job.quality_score:.3f}, "
               f"files={job.files_integrated}, theorems={job.theorem_count}")
+
+        # Signal live dashboard update
+        _signal_dashboard_update(job.job_id[:8], "cycle_integrated")
 
         # ── Breakthrough highlighting: tag high-quality packages ──
         if job.quality_score >= 0.8:
@@ -382,6 +402,7 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
                 if job.project_id:
                     extractor.inflight[job.project_id] = job
                     print(f"[Tick] Dispatched {job.project_id[:8]}: {job.concept.title[:60]}")
+                    _signal_dashboard_update(job.project_id[:8], "dispatched")
                 else:
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
@@ -397,6 +418,7 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
                 if job.project_id:
                     extractor.inflight[job.project_id] = job
                     print(f"[Tick] Dispatched [NOVELTY] {job.project_id[:8]}: {job.concept.title[:60]}")
+                    _signal_dashboard_update(job.project_id[:8], "dispatched_novelty")
                 else:
                     extractor._release_direction(job)
                     # Fallback: try any available direction if no novelty direction found
@@ -466,6 +488,11 @@ def rebuild_commit_push() -> bool:
             if src.exists():
                 import shutil
                 shutil.copy2(src, status_dir / status_file)
+        # Write lightweight last_update.json for live dashboard polling
+        import json as _json
+        (status_dir / "last_update.json").write_text(
+            _json.dumps({"timestamp": datetime.now(timezone.utc).isoformat(), "action": "tick_complete"})
+        )
     except Exception as e:
         print(f"[Tick] status sync error: {e}")
 
@@ -668,6 +695,13 @@ def start_docs_server(port: int = 8000) -> None:
     class QuietHandler(http.server.SimpleHTTPRequestHandler):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, directory=str(docs_dir), **kwargs)
+
+        def end_headers(self):
+            # Disable caching so dashboard always shows fresh data
+            self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+            self.send_header("Pragma", "no-cache")
+            self.send_header("Expires", "0")
+            super().end_headers()
 
         def log_message(self, format, *args):
             # Only log page requests, not every asset fetch or 404

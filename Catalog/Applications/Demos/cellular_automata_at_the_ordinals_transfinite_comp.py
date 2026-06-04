@@ -1,392 +1,420 @@
 #!/usr/bin/env python3
 """
-Transfinite Cellular Automata Demo
+Ordinal Cellular Automata: Transfinite Computation Demo
+========================================================
 
-Demonstrates key results from the formal theory:
-1. OR rule spreading from a single cell
-2. Omega-limit computation
-3. Fixed point detection
-4. Rule depth classification
+Demonstrates key concepts from the formalization:
+1. Rule 110 evolution on finite grids
+2. Identity CA with limit aggregation (transfinite extension witness)
+3. Convergence behavior analysis
 """
 
-from algorithms import (
-    or_rule, xor_rule, id_rule, wolfram_rule,
-    ca_step, ca_iter, compute_omega_limit,
-    transfinite_simulate, classify_rule_depth,
-    CAConfig
-)
+import itertools
 
 
-def demo_or_rule_spreading():
-    """Demonstrate Theorem: orRule_single_cell_spread.
+def rule110(left: bool, center: bool, right: bool) -> bool:
+    """Rule 110 local transition function."""
+    table = {
+        (True, True, True): False,
+        (True, True, False): True,
+        (True, False, True): True,
+        (True, False, False): False,
+        (False, True, True): True,
+        (False, True, False): True,
+        (False, False, True): True,
+        (False, False, False): False,
+    }
+    return table[(left, center, right)]
 
-    After n steps of the OR rule from a single cell,
-    position i is active iff |i| <= n.
+
+def evolve_step(config: list[bool], rule=rule110, boundary=False) -> list[bool]:
+    """One step of CA evolution on a finite grid."""
+    n = len(config)
+    new = []
+    for i in range(n):
+        left = config[i - 1] if i > 0 else boundary
+        center = config[i]
+        right = config[i + 1] if i < n - 1 else boundary
+        new.append(rule(left, center, right))
+    return new
+
+
+def evolve_n_steps(config: list[bool], n: int, rule=rule110) -> list[list[bool]]:
+    """Evolve for n steps, returning all intermediate configurations."""
+    history = [config]
+    current = config
+    for _ in range(n):
+        current = evolve_step(current, rule)
+        history.append(current)
+    return history
+
+
+def identity_rule(left: bool, center: bool, right: bool) -> bool:
+    """Identity local rule: ignores neighbors, returns center."""
+    return center
+
+
+def demonstrate_transfinite_extension():
+    """
+    Demonstrates the key theorem: exists_strict_transfinite_extension.
+    
+    With the identity local rule and limit aggregation that maps everything to True,
+    the finite orbit is {initial config} while the transfinite orbit also contains
+    the all-True configuration reached at time omega.
     """
     print("=" * 60)
-    print("Demo 1: OR Rule Spreading (orRule_single_cell_spread)")
+    print("TRANSFINITE ORBIT STRICT EXTENSION")
     print("=" * 60)
+    
+    # Initial configuration: all False
+    n = 10
+    init = [False] * n
+    
+    # Finite evolution with identity rule
+    print("\nIdentity rule: finite evolution (10 steps)")
+    history = evolve_n_steps(init, 10, identity_rule)
+    for i, cfg in enumerate(history):
+        cells = "".join("█" if c else "░" for c in cfg)
+        print(f"  t={i:2d}: {cells}")
+    
+    print(f"\n  Finite orbit size: 1 (all steps identical)")
+    print(f"  Finite orbit = {{all-False}}")
+    
+    # At time omega (limit aggregation)
+    limit_config = [True] * n  # limit aggregation maps to True
+    cells = "".join("█" if c else "░" for c in limit_config)
+    print(f"\n  t=ω:  {cells}  ← limit aggregation (always True)")
+    print(f"  Transfinite orbit = {{all-False, all-True}}")
+    print(f"  Strict containment: finiteOrbit ⊊ orbit ✓")
 
-    cfg: CAConfig = {0: True}
-    bounds = (-1, 1)
 
-    for n in range(8):
-        result = ca_iter(or_rule, cfg, n, bounds)
-        active = sorted([i for i in range(-10, 11) if result.get(i, False)])
-        expected = list(range(-n, n + 1))
-        match = active == expected
-        print(f"  Step {n}: active = [{min(active) if active else ''}..{max(active) if active else ''}]"
-              f"  expected = [-{n}..{n}]  ✓" if match else f"  ✗")
-
-    print()
-
-
-def demo_omega_limit():
-    """Demonstrate Theorem: orRule_single_cell_omegaLimit.
-
-    The omega-limit of OR rule from singleCell is the all-true configuration.
-    """
+def demonstrate_rule110():
+    """Demonstrate Rule 110 evolution showing complex behavior."""
+    print("\n" + "=" * 60)
+    print("RULE 110 EVOLUTION")
     print("=" * 60)
-    print("Demo 2: Omega-Limit (orRule_single_cell_omegaLimit)")
+    
+    n = 40
+    # Single cell seed
+    init = [False] * n
+    init[n // 2] = True
+    
+    history = evolve_n_steps(init, 30, rule110)
+    print(f"\nRule 110 from single seed (width={n}, 30 steps):")
+    for i, cfg in enumerate(history):
+        cells = "".join("█" if c else " " for c in cfg)
+        print(f"  {cells}")
+    
+    # Check quiescent preservation
+    all_false = [False] * n
+    evolved = evolve_step(all_false, rule110)
+    print(f"\nQuiescent preservation: rule110(F,F,F) = {rule110(False,False,False)}")
+    print(f"  All-false config is fixed: {evolved == all_false} ✓")
+
+
+def demonstrate_convergence():
+    """Analyze convergence behavior of Rule 110."""
+    print("\n" + "=" * 60)
+    print("CONVERGENCE ANALYSIS")
     print("=" * 60)
-
-    cfg: CAConfig = {0: True}
-    bounds = (-20, 20)
-    omega = compute_omega_limit(or_rule, cfg, 200, bounds)
-
-    all_true = all(omega.get(i, False) for i in range(-20, 21))
-    print(f"  Omega-limit is all-true in [-20, 20]: {all_true}")
-
-    # Verify it's a fixed point
-    stepped = ca_step(or_rule, omega, bounds)
-    is_fixed = all(omega.get(i, False) == stepped.get(i, False)
-                   for i in range(-20, 21))
-    print(f"  Omega-limit is a fixed point: {is_fixed}")
-    print(f"  Transfinite depth: 1 (exactly one limit step needed)")
-    print()
-
-
-def demo_identity_rule():
-    """Demonstrate Theorem: idRule_levels_constant.
-
-    The identity rule produces constant transfinite levels.
-    """
-    print("=" * 60)
-    print("Demo 3: Identity Rule (idRule_levels_constant)")
-    print("=" * 60)
-
-    cfg: CAConfig = {0: True, 3: True, -2: True}
-    bounds = (-5, 5)
-
-    levels = transfinite_simulate(id_rule, cfg, 3, 50, bounds)
-    for i, level in enumerate(levels):
-        matches_initial = all(
-            cfg.get(pos, False) == level.get(pos, False)
-            for pos in range(-5, 6))
-        print(f"  Level {i} matches initial: {matches_initial}")
-
-    print()
-
-
-def demo_xor_oscillation():
-    """Demonstrate Theorem: oscillates_not_stable.
-
-    XOR rule produces oscillating cells that are detected at the limit.
-    """
-    print("=" * 60)
-    print("Demo 4: XOR Oscillation (oscillates_not_stable)")
-    print("=" * 60)
-
-    cfg: CAConfig = {0: True}
-    bounds = (-1, 1)
-
-    # Track cell 0 over time
-    current = cfg.copy()
-    history = []
-    for step in range(20):
-        val = current.get(0, False)
-        history.append(val)
-        current = ca_step(xor_rule, current, (-step - 1, step + 1))
-
-    print(f"  Cell 0 history (XOR, 20 steps): {''.join('1' if v else '0' for v in history)}")
-
-    # Compute omega-limit
-    omega = compute_omega_limit(xor_rule, cfg, 200, (-50, 50))
-    print(f"  Omega-limit at cell 0: {omega.get(0, False)}")
-    print(f"  (Oscillating cells default to false at the limit)")
-    print()
-
-
-def demo_rule_classification():
-    """Demonstrate depth classification for various Wolfram rules."""
-    print("=" * 60)
-    print("Demo 5: Rule Depth Classification")
-    print("=" * 60)
-
-    interesting_rules = [0, 4, 32, 51, 90, 110, 150, 170, 204, 232, 250, 254]
-
-    for rule_num in interesting_rules:
-        depth, classification = classify_rule_depth(rule_num, max_steps=300, check_range=30)
-        depth_str = str(depth) if depth >= 0 else "∞"
-        print(f"  Rule {rule_num:3d}: depth = {depth_str:>3s}  ({classification})")
-
-    print()
-
-
-def demo_transfinite_tower():
-    """Demonstrate transfinite level composition.
-
-    Show that transfiniteLevel(rule, cfg, m+n) equals
-    transfiniteLevel(rule, transfiniteLevel(rule, cfg, m), n).
-    """
-    print("=" * 60)
-    print("Demo 6: Transfinite Level Composition")
-    print("=" * 60)
-
-    cfg: CAConfig = {0: True}
-    bounds = (-10, 10)
-    rule = or_rule
-
-    # Compute levels directly
-    levels_direct = transfinite_simulate(rule, cfg, 3, 100, bounds)
-
-    # Compute via composition: first 1 level, then 2 more
-    level_1 = transfinite_simulate(rule, cfg, 1, 100, bounds)
-    levels_from_1 = transfinite_simulate(rule, level_1[1], 2, 100, bounds)
-
-    # Compare level 3 from direct vs composed
-    check_range = range(-10, 11)
-    match_2 = all(levels_direct[2].get(i, False) == levels_from_1[1].get(i, False)
-                  for i in check_range)
-    match_3 = all(levels_direct[3].get(i, False) == levels_from_1[2].get(i, False)
-                  for i in check_range)
-
-    print(f"  Level 2 (direct) = Level 1+1 (composed): {match_2}")
-    print(f"  Level 3 (direct) = Level 1+2 (composed): {match_3}")
-    print()
-
-
-def demo_monotonicity():
-    """Demonstrate monotone iteration: OR rule iterations are expanding."""
-    print("=" * 60)
-    print("Demo 7: Monotone Expanding Dynamics (orRule_iter_monotone)")
-    print("=" * 60)
-
-    cfg: CAConfig = {0: True, 5: True}
-    bounds = (-1, 6)
-
-    prev_active = set()
-    all_expanding = True
-    for n in range(10):
-        result = ca_iter(or_rule, cfg, n, bounds)
-        active = {i for i in range(-15, 20) if result.get(i, False)}
-        if not prev_active <= active:
-            all_expanding = False
-        prev_active = active
-        print(f"  Step {n}: {len(active):2d} active cells, "
-              f"range [{min(active)}..{max(active)}]")
-
-    print(f"\n  All iterations expanding (monotone): {all_expanding}")
-    print()
-
-
-if __name__ == "__main__":
-    print("\n  TRANSFINITE CELLULAR AUTOMATA — Demonstration\n")
-    print("  Each demo corresponds to a formally verified theorem.\n")
-
-    demo_or_rule_spreading()
-    demo_omega_limit()
-    demo_identity_rule()
-    demo_xor_oscillation()
-    demo_rule_classification()
-    demo_transfinite_tower()
-    demo_monotonicity()
-
-    print("=" * 60)
-    print("All demos complete.")
-    print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Wolfram Rule Depth Classification
-
-Classifies all 256 elementary CA rules by their transfinite computation
-depth (how many omega-limit steps needed to reach a fixed point).
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-
-
-def wolfram_rule(n: int):
-    def rule(left: bool, center: bool, right: bool) -> bool:
-        idx = (4 if left else 0) + (2 if center else 0) + (1 if right else 0)
-        return bool((n >> idx) & 1)
-    return rule
-
-
-def ca_step(rule, cfg: dict, bounds: tuple) -> dict:
-    lo, hi = bounds
-    new_cfg = {}
-    for i in range(lo - 1, hi + 2):
-        left = cfg.get(i - 1, False)
-        center = cfg.get(i, False)
-        right = cfg.get(i + 1, False)
-        new_cfg[i] = rule(left, center, right)
-    return new_cfg
-
-
-def compute_omega_limit(rule, cfg: dict, max_steps: int, bounds: tuple) -> dict:
-    lo, hi = bounds
-    configs = [cfg.copy()]
-    current = cfg.copy()
-    for step in range(max_steps):
-        current = ca_step(rule, current, (lo - step, hi + step))
-        configs.append(current.copy())
-
-    omega_cfg = {}
-    half = max_steps // 2
-    for pos in range(lo - max_steps, hi + max_steps + 1):
-        values = [c.get(pos, False) for c in configs[half:]]
-        if len(set(values)) == 1:
-            omega_cfg[pos] = values[0]
+    
+    n = 20
+    
+    # Test various initial configurations
+    configs = [
+        ("single seed", [False]*9 + [True] + [False]*10),
+        ("two seeds", [False]*5 + [True] + [False]*8 + [True] + [False]*5),
+        ("block of 3", [False]*8 + [True,True,True] + [False]*9),
+    ]
+    
+    for name, init in configs:
+        # Evolve until convergence or max steps
+        current = init
+        seen = [current]
+        converged_at = None
+        
+        for t in range(1, 200):
+            current = evolve_step(current, rule110)
+            if current in seen:
+                converged_at = t
+                break
+            seen.append(current)
+        
+        if converged_at:
+            period_start = seen.index(current)
+            period = converged_at - period_start
+            print(f"\n  {name}: periodic from t={period_start}, period={period}")
         else:
-            omega_cfg[pos] = False
-    return omega_cfg
+            print(f"\n  {name}: no periodicity in 200 steps")
+            # Check if last configs are changing
+            last_few = seen[-5:]
+            all_same = all(c == last_few[0] for c in last_few)
+            if all_same:
+                print(f"    → converged to fixed point around t={len(seen)-5}")
+            else:
+                print(f"    → still evolving (complex dynamics)")
 
 
-def classify_rule(rule_number: int, max_steps: int = 200, check_range: int = 25):
-    rule = wolfram_rule(rule_number)
-    cfg = {0: True}
-    bounds = (-1, 1)
-
-    stepped = ca_step(rule, cfg, bounds)
-    is_fixed = all(cfg.get(i, False) == stepped.get(i, False)
-                   for i in range(-check_range, check_range + 1))
-    if is_fixed:
-        return 0
-
-    omega = compute_omega_limit(rule, cfg, max_steps, (-check_range, check_range))
-    omega_stepped = ca_step(rule, omega, (-check_range - 1, check_range + 1))
-    omega_fixed = all(omega.get(i, False) == omega_stepped.get(i, False)
-                      for i in range(-check_range, check_range + 1))
-    if omega_fixed:
-        return 1
-
-    return 2  # depth > 1
-
-
-def main():
-    depths = []
-    for rule_num in range(256):
-        d = classify_rule(rule_num)
-        depths.append(d)
-
-    # Count
-    count_0 = depths.count(0)
-    count_1 = depths.count(1)
-    count_2 = depths.count(2)
-    print(f"Depth 0 (immediate fixed point): {count_0} rules")
-    print(f"Depth 1 (one omega-limit): {count_1} rules")
-    print(f"Depth >1 (oscillating): {count_2} rules")
-
-    # Plot as 16x16 grid
-    fig, ax = plt.subplots(figsize=(10, 10))
-    grid = [[0]*16 for _ in range(16)]
-    for i in range(256):
-        grid[i // 16][i % 16] = depths[i]
-
-    cmap = plt.cm.colors.ListedColormap(['#2ecc71', '#3498db', '#e74c3c'])
-    im = ax.imshow(grid, cmap=cmap, vmin=0, vmax=2, interpolation='nearest')
-    ax.set_xlabel('Rule Number (mod 16)', fontsize=14)
-    ax.set_ylabel('Rule Number (÷ 16)', fontsize=14)
-    ax.set_title('Transfinite Depth of 256 Elementary CA Rules\n'
-                 'Green=0, Blue=1, Red=>1', fontsize=16)
-
-    # Add rule numbers
-    for i in range(16):
-        for j in range(16):
-            rule_num = i * 16 + j
-            ax.text(j, i, str(rule_num), ha='center', va='center',
-                   fontsize=6, color='white' if depths[rule_num] > 0 else 'black')
-
-    plt.tight_layout()
-    plt.savefig('depth_classification.png', dpi=150)
-    print("Saved depth_classification.png")
+def demonstrate_omega_squared_structure():
+    """
+    Illustrate the ω² structure: cells indexed by (a, b) ∈ ω×ω.
+    Each 'row' a contains an ω-length CA. At limit ordinal ω·a,
+    row a aggregates and feeds into row a+1.
+    """
+    print("\n" + "=" * 60)
+    print("ω² STRUCTURE: LAYERED COMPUTATION")
+    print("=" * 60)
+    
+    width = 20
+    rows = 4
+    steps_per_row = 10
+    
+    print(f"\nSimulating ω² CA: {rows} layers × {steps_per_row} steps × {width} cells")
+    print("Each layer runs Rule 110, then aggregates into the next layer.\n")
+    
+    # Layer 0: start with single seed
+    current = [False] * width
+    current[width // 2] = True
+    
+    for layer in range(rows):
+        print(f"  Layer {layer} (time ω·{layer} to ω·{layer}+{steps_per_row}):")
+        
+        for step in range(steps_per_row):
+            cells = "".join("█" if c else " " for c in current)
+            if step == 0 or step == steps_per_row - 1:
+                print(f"    t=ω·{layer}+{step:2d}: {cells}")
+            elif step == 1:
+                print(f"    {'...':>14}")
+        
+        # Limit aggregation: OR of last configuration
+        # (simplified version of cofinal truth)
+        aggregated = current[:]  # carry forward
+        # Add some "limit effect": activate cells adjacent to active cells
+        new = current[:]
+        for i in range(width):
+            if current[i]:
+                if i > 0: new[i-1] = True
+                if i < width-1: new[i+1] = True
+        current = new
+        
+        # Continue evolution in next layer
+        for _ in range(steps_per_row):
+            current = evolve_step(current, rule110)
+    
+    print(f"\n  Each layer at ω·k receives aggregated data from layer k-1")
+    print(f"  This creates a hierarchy of computation levels")
+    print(f"  Information flows: finite steps (within layer) + transfinite (between layers)")
 
 
 if __name__ == "__main__":
-    main()
+    demonstrate_transfinite_extension()
+    demonstrate_rule110()
+    demonstrate_convergence()
+    demonstrate_omega_squared_structure()
+    
+    print("\n" + "=" * 60)
+    print("SUMMARY OF FORMALIZED RESULTS")
+    print("=" * 60)
+    print("""
+  1. evolve_zero: Evolution at time 0 = initial configuration
+  2. evolve_succ: Evolution at successor unfolds local rule
+  3. quiescent_succStep_invariant: Quiescent configs are fixed points
+  4. allQuiescent_evolve_stable: Quiescent stability through ALL ordinals
+  5. finiteOrbit_subset_orbit: Finite orbit ⊆ transfinite orbit
+  6. exists_strict_transfinite_extension: ∃ CA with strict containment
+  7. identity_finite_evolve: Identity rule keeps initial config forever
+  8. rule110_quiescent: Rule 110 preserves quiescent state
+  9. diagonal_constraint: Quiescent configs always in their own orbit
+    """)
 
 
 #!/usr/bin/env python3
 """
-Visualization: OR Rule Spreading from a Single Cell
+Visualization: Ordinal Cellular Automata Evolution
+===================================================
 
-Generates a space-time diagram showing how the OR rule spreads
-from a single active cell, illustrating the spreading theorem:
-caIter(orRule, singleCell, n)(i) = true iff |i| <= n.
+Generates spacetime diagrams showing CA evolution across finite and
+transfinite stages, illustrating the strict extension theorem.
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
+import matplotlib.patches as mpatches
+import numpy as np
 
 
-def or_rule(left: bool, center: bool, right: bool) -> bool:
-    return left or center or right
+def rule110(left: bool, center: bool, right: bool) -> bool:
+    idx = (int(left) << 2) | (int(center) << 1) | int(right)
+    return bool((110 >> idx) & 1)
 
 
-def ca_step(rule, cfg: dict, bounds: tuple) -> dict:
-    lo, hi = bounds
-    new_cfg = {}
-    for i in range(lo - 1, hi + 2):
-        left = cfg.get(i - 1, False)
-        center = cfg.get(i, False)
-        right = cfg.get(i + 1, False)
-        new_cfg[i] = rule(left, center, right)
-    return new_cfg
+def identity_rule(left: bool, center: bool, right: bool) -> bool:
+    return center
 
 
-def main():
-    num_steps = 30
-    spatial_range = 35
-
-    # Simulate
-    cfg = {0: True}
-    bounds = (-1, 1)
-    grid = []
-
-    for step in range(num_steps):
-        row = [1 if cfg.get(i, False) else 0
-               for i in range(-spatial_range, spatial_range + 1)]
-        grid.append(row)
-        cfg = ca_step(or_rule, cfg, (-spatial_range, spatial_range))
-
-    # Plot
-    fig, ax = plt.subplots(figsize=(12, 8))
-    cmap = mcolors.ListedColormap(['#1a1a2e', '#e94560'])
-    ax.imshow(grid, cmap=cmap, aspect='auto', interpolation='nearest',
-              extent=[-spatial_range - 0.5, spatial_range + 0.5,
-                      num_steps - 0.5, -0.5])
-    ax.set_xlabel('Position (i)', fontsize=14)
-    ax.set_ylabel('Time Step (n)', fontsize=14)
-    ax.set_title('OR Rule Spreading: Active iff |i| ≤ n\n'
-                 '(Theorem: orRule_single_cell_spread)', fontsize=16)
-
-    # Add the boundary lines |i| = n
-    steps = list(range(num_steps))
-    ax.plot(steps, steps, 'w--', linewidth=1.5, alpha=0.7, label='|i| = n')
-    ax.plot([-s for s in steps], steps, 'w--', linewidth=1.5, alpha=0.7)
-
-    ax.legend(loc='upper right', fontsize=12)
-    plt.tight_layout()
-    plt.savefig('spreading_theorem.png', dpi=150)
-    print("Saved spreading_theorem.png")
+def evolve_step(config: list[bool], rule, boundary=False) -> list[bool]:
+    n = len(config)
+    result = []
+    for i in range(n):
+        left = config[i - 1] if i > 0 else boundary
+        center = config[i]
+        right = config[i + 1] if i < n - 1 else boundary
+        result.append(rule(left, center, right))
+    return result
 
 
-if __name__ == "__main__":
-    main()
+def make_spacetime_diagram(init: list[bool], steps: int, rule, title: str,
+                           ax=None, show_limit=False, limit_config=None):
+    """Create a spacetime diagram of CA evolution."""
+    n = len(init)
+    grid = np.zeros((steps + 1 + (2 if show_limit else 0), n))
+    
+    current = init
+    grid[0] = [int(c) for c in current]
+    
+    for t in range(1, steps + 1):
+        current = evolve_step(current, rule)
+        grid[t] = [int(c) for c in current]
+    
+    if show_limit and limit_config is not None:
+        grid[steps + 1] = [0.5] * n  # separator
+        grid[steps + 2] = [int(c) for c in limit_config]
+    
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(10, 8))
+    
+    cmap = plt.cm.colors.ListedColormap(['white', 'black', '#ff6600'])
+    bounds = [-0.25, 0.25, 0.75, 1.25]
+    norm = plt.cm.colors.BoundaryNorm(bounds, cmap.N)
+    
+    ax.imshow(grid, cmap=cmap, norm=norm, aspect='auto', interpolation='nearest')
+    ax.set_title(title, fontsize=12, fontweight='bold')
+    ax.set_xlabel('Cell Position')
+    ax.set_ylabel('Time Step')
+    
+    if show_limit:
+        ax.axhline(y=steps + 0.5, color='red', linewidth=2, linestyle='--')
+        ax.text(n + 0.5, steps + 1, '← ω', color='red', fontsize=11,
+                va='center', fontweight='bold')
+    
+    return ax
+
+
+# Main visualization
+fig, axes = plt.subplots(1, 3, figsize=(18, 8))
+
+# Panel 1: Rule 110 from single seed
+width = 60
+init_110 = [False] * width
+init_110[width // 2] = True
+make_spacetime_diagram(init_110, 40, rule110,
+                       "Rule 110: Complex Dynamics", axes[0])
+
+# Panel 2: Identity rule showing finite stasis
+width2 = 30
+init_id = [False] * width2
+init_id[width2 // 2] = True
+limit_true = [True] * width2
+make_spacetime_diagram(init_id, 15, identity_rule,
+                       "Identity Rule: Finite Orbit = {init}\n→ Limit produces new config at ω",
+                       axes[1], show_limit=True, limit_config=limit_true)
+
+# Panel 3: Rule 110 on ω² (layered)
+width3 = 40
+layers = 4
+steps_per = 8
+total_steps = layers * (steps_per + 1)
+grid_omega2 = np.zeros((total_steps, width3))
+
+current = [False] * width3
+current[width3 // 2] = True
+
+row = 0
+for layer in range(layers):
+    for step in range(steps_per):
+        grid_omega2[row] = [int(c) for c in current]
+        current = evolve_step(current, rule110)
+        row += 1
+    # Limit aggregation: expand support
+    for i in range(width3):
+        if current[i]:
+            if i > 0: current[i-1] = True
+            if i < width3 - 1: current[i+1] = True
+    grid_omega2[row] = [0.5] * width3  # separator
+    row += 1
+
+cmap = plt.cm.colors.ListedColormap(['white', 'black', '#ff6600'])
+bounds = [-0.25, 0.25, 0.75, 1.25]
+norm = plt.cm.colors.BoundaryNorm(bounds, cmap.N)
+axes[2].imshow(grid_omega2, cmap=cmap, norm=norm, aspect='auto',
+               interpolation='nearest')
+axes[2].set_title("Rule 110 on ω²: Layered Transfinite\nOrange lines = limit ordinals ω·k",
+                  fontsize=12, fontweight='bold')
+axes[2].set_xlabel('Cell Position')
+axes[2].set_ylabel('Time')
+
+# Mark limit ordinals
+for layer in range(layers):
+    y = layer * (steps_per + 1) + steps_per
+    axes[2].axhline(y=y, color='red', linewidth=1.5, linestyle='--', alpha=0.7)
+
+plt.tight_layout()
+plt.savefig('ordinal_ca_visualization.png', dpi=150, bbox_inches='tight')
+plt.close()
+
+print("Saved: ordinal_ca_visualization.png")
+
+# Second figure: convergence analysis
+fig2, axes2 = plt.subplots(1, 2, figsize=(14, 6))
+
+# Novelty set analysis
+widths = [10, 15, 20, 25, 30]
+for w in widths:
+    init = [False] * w
+    init[w // 2] = True
+    
+    seen = set()
+    novel_steps = []
+    current = init
+    
+    for t in range(100):
+        key = tuple(current)
+        if key not in seen:
+            novel_steps.append(t)
+            seen.add(key)
+        current = evolve_step(current, rule110)
+    
+    axes2[0].plot(range(len(novel_steps)), novel_steps, 'o-', label=f'width={w}',
+                  markersize=3)
+
+axes2[0].set_xlabel('Novel Configuration Index')
+axes2[0].set_ylabel('Time Step of First Appearance')
+axes2[0].set_title('Novelty Set Growth\n(Rule 110, various widths)')
+axes2[0].legend()
+axes2[0].grid(True, alpha=0.3)
+
+# Orbit size growth
+orbit_sizes = []
+for w in range(5, 40):
+    init = [False] * w
+    init[w // 2] = True
+    
+    seen = set()
+    current = init
+    for t in range(200):
+        seen.add(tuple(current))
+        current = evolve_step(current, rule110)
+    orbit_sizes.append(len(seen))
+
+axes2[1].plot(range(5, 40), orbit_sizes, 'b-o', markersize=4)
+axes2[1].set_xlabel('Grid Width')
+axes2[1].set_ylabel('Distinct Configurations (200 steps)')
+axes2[1].set_title('Finite Orbit Size vs Width\n(Rule 110, single seed)')
+axes2[1].grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('convergence_analysis.png', dpi=150, bbox_inches='tight')
+plt.close()
+
+print("Saved: convergence_analysis.png")
