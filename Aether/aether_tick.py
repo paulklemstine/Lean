@@ -196,6 +196,66 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         # Signal live dashboard update
         _signal_dashboard_update(job.job_id[:8], "cycle_integrated")
 
+        # Record in research journal
+        try:
+            from research_journal import ResearchJournal
+            journal = ResearchJournal(Path(__file__).parent / ".aether_workspace")
+            journal.record_cycle(job, quality_score=job.quality_score)
+        except Exception as e:
+            print(f"[Journal] Recording failed: {e}")
+
+        # ── Breakthrough push: auto-generate follow-up direction for promising cycles ──
+        if job.quality_score >= 0.75 and job.theorem_count >= 5:
+            print(f"[Push] Q={job.quality_score:.3f} — generating follow-up to push toward breakthrough")
+            try:
+                from research_memory import FutureDirectionsManager
+                fd_mgr = FutureDirectionsManager(Path(__file__).parent / ".aether_workspace")
+                follow_up_title = f"Deepening: {job.concept.title[:80]}"
+                follow_up_desc = (
+                    f"Building on cycle {job.job_id[:8]} (Q={job.quality_score:.3f}), "
+                    f"which proved {job.theorem_count} theorems in {job.concept.domain}. "
+                    f"Go DEEPER: prove the strongest remaining conjecture, close open sorries, "
+                    f"or extend the core result to a more general setting. "
+                    f"Original direction: {job.concept.concept_description[:300]}"
+                )
+                fd_mgr.add_direction(fd_mgr.Direction(
+                    title=follow_up_title,
+                    description=follow_up_desc,
+                    domains=[job.concept.domain] if job.concept.domain else [],
+                    priority_score=min(0.95, job.quality_score + 0.1),  # Slightly higher than parent
+                    source_exp_id=job.job_id,
+                    source_path=job.concept.title[:80],
+                ))
+                print(f"[Push] Added follow-up direction: {follow_up_title[:60]}")
+            except Exception as e:
+                print(f"[Push] Follow-up direction failed: {e}")
+
+        # ── Proof convergence: auto-generate sorry-fill directions ──
+        if job.sorry_count > 0 and job.quality_score >= 0.4:
+            print(f"[SorryFill] {job.sorry_count} sorries in {job.job_id[:8]} — generating fill direction")
+            try:
+                from research_memory import FutureDirectionsManager
+                fd_mgr = FutureDirectionsManager(Path(__file__).parent / ".aether_workspace")
+                fill_title = f"Close Proofs: {job.concept.title[:70]}"
+                fill_desc = (
+                    f"Cycle {job.job_id[:8]} (Q={job.quality_score:.3f}) proved "
+                    f"{job.theorem_count} theorems in {job.concept.domain} but left "
+                    f"{job.sorry_count} `sorry` placeholders. Fill them with complete proofs. "
+                    f"Focus on the most important theorems first. "
+                    f"Original: {job.concept.concept_description[:200]}"
+                )
+                fd_mgr.add_direction(fd_mgr.Direction(
+                    title=fill_title,
+                    description=fill_desc,
+                    domains=[job.concept.domain] if job.concept.domain else [],
+                    priority_score=min(0.85, job.quality_score + 0.05),
+                    source_exp_id=job.job_id,
+                    source_path=job.concept.title[:80],
+                ))
+                print(f"[SorryFill] Added direction: {fill_title[:60]}")
+            except Exception as e:
+                print(f"[SorryFill] Direction failed: {e}")
+
         # ── Breakthrough highlighting: tag high-quality packages ──
         if job.quality_score >= 0.8:
             print(f"[🌟 BREAKTHROUGH] {job.job_id[:8]}: score={job.quality_score:.3f} — "
@@ -297,6 +357,30 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         for d in declining:
             print(f"[⚠️ Decay] {d['domain']}: recent_avg={d['recent_avg']:.3f} "
                   f"prior_avg={d['prior_avg']:.3f} delta={d['delta']:.3f} (n={d['count']})")
+            # Auto-inject reset direction for severely declining domains
+            if d['delta'] < -0.15 and d['count'] >= 6:
+                print(f"[🔄 Reset] Injecting fresh seed for declining domain: {d['domain']}")
+                try:
+                    from research_memory import FutureDirectionsManager
+                    fd_mgr = FutureDirectionsManager(extractor.workspace)
+                    reset_title = f"[Reset] Fresh approach in {d['domain']}"
+                    reset_desc = (
+                        f"Domain {d['domain']} has declined by {abs(d['delta']):.3f} over recent cycles "
+                        f"(recent avg={d['recent_avg']:.3f} vs prior={d['prior_avg']:.3f}). "
+                        f"Take a completely fresh approach — different proof techniques, "
+                        f"new definitions, or a different subfield within this domain. "
+                        f"Avoid repeating approaches that have been producing diminishing returns."
+                    )
+                    fd_mgr.add_direction(fd_mgr.Direction(
+                        title=reset_title,
+                        description=reset_desc,
+                        domains=[d['domain']],
+                        priority_score=0.85,  # High priority to break the pattern
+                        source_exp_id="auto_reset",
+                        source_path=f"quality_regression_{d['domain']}",
+                    ))
+                except Exception as re_err:
+                    print(f"[Reset] Failed: {re_err}")
             # Adaptive: cycle_analytics quality data is now merged into
             # recent_domain_quality in discover(), which feeds select_direction_weighted()
         # Log current domain quality weights from analytics

@@ -145,6 +145,10 @@ class KnowledgeExtractor:
             catalog_analyzer=self.catalog_analyzer,
         )
 
+        # Research journal: cross-cycle memory
+        from research_journal import ResearchJournal
+        self.research_journal = ResearchJournal(self.workspace)
+
         # ArXiv miner for fresh ideas pipeline
         arxiv_cfg = self.config.get("arxiv", {})
         if arxiv_cfg.get("enabled", False):
@@ -482,6 +486,7 @@ class KnowledgeExtractor:
             recent_successes=[{'concept_title': r.concept_title, 'domain': r.domain, 'quality': r.proof_quality} for r in self.memory._cache[-3:]],
             theorem_context=theorem_context,
             insight_extractor=self.insight_extractor,
+            research_journal=self.research_journal if hasattr(self, 'research_journal') else None,
         )
 
         # AUGMENT the prompt to explicitly request ALL deliverables

@@ -1633,6 +1633,7 @@ class PiAgentClient:
         recent_failures: Optional[List[Dict]] = None,
         theorem_context: str = "",
         insight_extractor=None,
+        research_journal=None,
     ) -> str:
         """Write a streamlined Aristotle prompt (5-10K chars).
 
@@ -1647,13 +1648,36 @@ class PiAgentClient:
         _math_framing = (concept.mathematical_framing or "")[:1000]
 
         # Build focused catalog context (specific theorem signatures)
+        # For weak domains (avg_Q < 0.65), boost with more theorems and guidance
         focused_context = ""
+        weak_domain_hint = ""
         if self.catalog_analyzer:
+            max_thms = 15
+            # Check if this domain is underperforming
+            domain_is_weak = False
+            try:
+                from cycle_analytics import CycleAnalytics
+                ca = CycleAnalytics(Path(__file__).parent / ".aether_workspace")
+                domain_stats = ca.get_domain_stats()
+                if concept.domain in domain_stats:
+                    avg_q = domain_stats[concept.domain].get("avg_quality", 1.0)
+                    if avg_q < 0.65:
+                        domain_is_weak = True
+                        max_thms = 25  # Boost: more catalog examples
+            except Exception:
+                pass
             focused_context = self.catalog_analyzer.build_focused_context(
                 domain=concept.domain,
                 concept_description=_concept_desc,
-                max_theorems=15,
+                max_theorems=max_thms,
             )
+            if domain_is_weak:
+                weak_domain_hint = (
+                    "\n⚠️ **Domain Focus**: This domain has historically produced lower-quality results. "
+                    "Prioritize DEEP, GENUINELY NOVEL theorems over breadth. "
+                    "Avoid trivial wrappers, definition-only results, or repackaging known facts. "
+                    "Every theorem must represent real mathematical progress.\n"
+                )
 
         # Build reference section (limited to 5 most relevant files, preferring FINAL and deep proofs)
         ref_section = ""
@@ -1769,6 +1793,16 @@ class PiAgentClient:
         else:
             catalog_section = "\nNo specific files referenced. Use Mathlib and general knowledge.\n"
 
+        # Research journal — cross-cycle memory
+        journal_section = ""
+        if research_journal:
+            journal_summary = research_journal.build_journal_summary(
+                domain=concept.domain,
+                max_chars=2000,
+            )
+            if journal_summary and len(journal_summary) > 50:
+                journal_section = f"\n{journal_summary}\n"
+
         direct_prompt = textwrap.dedent(f"""\
             ## Assignment: {concept.title}
 
@@ -1817,7 +1851,9 @@ class PiAgentClient:
 
             ### Existing Verified Theorems
             {focused_context}
+            {weak_domain_hint}
             {theorem_section}
+            {journal_section}
             {guardrails_section}
             {strategy_hints_section}
             {catalog_section}

@@ -733,17 +733,22 @@ class QualityEvaluator:
         )
         tiebreaker_composite = tiebreaker_result.get("composite", 0.5)
 
-        # Adjudicate: use the tiebreaker's score, weighted toward whichever
-        # judge the tiebreaker is closer to
-        if abs(tiebreaker_composite - primary_composite) < abs(tiebreaker_composite - adversarial_composite):
-            # Tiebreaker agrees more with primary
-            adjudicated = 0.5 * primary_composite + 0.3 * adversarial_composite + 0.2 * tiebreaker_composite
-        else:
-            # Tiebreaker agrees more with adversarial (critic)
-            adjudicated = 0.3 * primary_composite + 0.5 * adversarial_composite + 0.2 * tiebreaker_composite
+        # Two-of-three voting: whichever side 2 of 3 judges agree with wins.
+        # Compare tiebreaker distance to each judge to determine majority.
+        dist_primary = abs(tiebreaker_composite - primary_composite)
+        dist_adversarial = abs(tiebreaker_composite - adversarial_composite)
 
-        print(f"[Adversarial] DISAGREE: primary={primary_composite:.3f} critic={adversarial_composite:.3f} "
-              f"tiebreak={tiebreaker_composite:.3f} → adjudicated={adjudicated:.3f}")
+        if dist_primary <= dist_adversarial:
+            # Tiebreaker agrees more with primary → primary + tiebreaker majority
+            adjudicated = (primary_composite + tiebreaker_composite) / 2
+            winner = "primary"
+        else:
+            # Tiebreaker agrees more with adversarial → adversarial + tiebreaker majority
+            adjudicated = (adversarial_composite + tiebreaker_composite) / 2
+            winner = "adversarial"
+
+        print(f"[Adversarial] VOTE: primary={primary_composite:.3f} critic={adversarial_composite:.3f} "
+              f"tiebreak={tiebreaker_composite:.3f} → winner={winner} adjudicated={adjudicated:.3f}")
 
         return {
             "adjudicated_score": round(adjudicated, 4),
@@ -751,6 +756,7 @@ class QualityEvaluator:
             "adversarial_composite": round(adversarial_composite, 4),
             "tiebreaker_composite": round(tiebreaker_composite, 4),
             "agreement": "tiebreak",
+            "winner": winner,
             "delta": round(delta, 4),
         }
 
