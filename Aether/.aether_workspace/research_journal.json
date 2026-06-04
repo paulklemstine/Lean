@@ -200,6 +200,26 @@
       "theorem_count": 5,
       "timestamp": "2026-06-04T13:10:05",
       "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
+    },
+    {
+      "cycle_id": "2d3d7c8e",
+      "domain": "Applications",
+      "key_insight": "# Future Research Directions\n\n## Synthesis\n\nThis cycle established the **Divisor Energy Functional** as a bridge between chip-firing theory and spectral graph theory. The key discovery is that the ene",
+      "quality_score": 0.36296000000000006,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T13:42:39",
+      "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+    },
+    {
+      "cycle_id": "ee20fdf1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tropical Gradient Descent Theory\n\n## Synthesis\n\nThis cycle established the **Tropical Gradient Descent System (TropGDS)** as a novel mathematical framework for analyzing optimizat",
+      "quality_score": 0.4568,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-04T13:43:32",
+      "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
     }
   ],
   "entries": [
@@ -245,7 +265,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-04T13:10:05",
+  "last_updated": "2026-06-04T13:43:32",
   "open_questions": [],
   "research_threads": {
     "Applications": [
@@ -272,6 +292,18 @@
         "quality": 0.32280000000000003,
         "theorems": 5,
         "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
+      },
+      {
+        "cycle_id": "2d3d7c8e",
+        "quality": 0.36296000000000006,
+        "theorems": 5,
+        "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+      },
+      {
+        "cycle_id": "ee20fdf1",
+        "quality": 0.4568,
+        "theorems": 6,
+        "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
       }
     ],
     "Bridges": [

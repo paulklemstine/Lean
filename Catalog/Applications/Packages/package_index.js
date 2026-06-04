@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ee20fdf1",
     "filename": "eml_learning_theory_gradient_descent_convergence_i.json",
     "pkg_num": 355,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4568,
     "title": "Tropical Gradient Descent: Finite-Step Convergence on Piecewise-Linear Loss Landscapes"
   },
   {
@@ -11425,8 +11425,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "eml_learning_theory_gradient_descent_convergence_i",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4568,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Tropical Gradient Descent: Finite-Step Convergence on Piecewise-Linear Loss Landscapes"
     }
