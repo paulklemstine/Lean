@@ -58,6 +58,7 @@ class QualityScore:
     usefulness: float = 0.0
     applications: float = 0.0
     catalog_anchoring: float = 0.0
+    pegb_compliance: float = 0.0  # 0-1 score for PEGB structural requirement
 
     # Default weights (direction-driven weights override these)
     _BASE_WEIGHTS = {
@@ -202,6 +203,24 @@ class QualityEvaluator:
 
         # Local evaluations (free)
         score.proof_depth = self._eval_proof_depth(lean_source)
+
+        # PEGB compliance check: if a cycle claims 5+ theorems but lacks
+        # explicit examples/generalizations/boundaries, penalize proof_depth
+        # (forces compliance with the structural requirement)
+        theorem_count = lean_source.count("theorem ") + lean_source.count("lemma ")
+        if theorem_count >= 5:
+            pegb_score = self._eval_pegb_compliance(lean_source)
+            if pegb_score < 0.5:
+                # Less than 2 of 4 PEGB elements present — penalize hard
+                score.proof_depth = score.proof_depth * 0.3
+            elif pegb_score < 0.75:
+                # Some elements missing — moderate penalty
+                score.proof_depth = score.proof_depth * 0.7
+            # pegb_score >= 0.75: full credit
+            score.pegb_compliance = pegb_score
+        else:
+            score.pegb_compliance = self._eval_pegb_compliance(lean_source)
+
         score.novelty = self._eval_novelty(lean_source, concept_title, existing_titles)
         score.cross_domain = self._eval_cross_domain(lean_source)
         score.artifact_richness = self._eval_artifacts(result_dir, result_fields)
@@ -407,6 +426,89 @@ class QualityEvaluator:
         ) - sorry_penalty - hypothesis_proof_penalty - hypothesis_reuse_penalty
 
         return max(0.0, min(1.0, depth))
+
+    def _eval_pegb_compliance(self, lean_source: str) -> float:
+        """Check if the cycle satisfies PEGB structural requirements.
+
+        PEGB = Proof + Example + Generalization + Boundary for each major theorem.
+        This is a heuristic check (not perfect) that detects whether the cycle
+        includes examples, generalizations, and boundary/limit-case analysis.
+
+        Returns a 0-1 compliance score:
+        - 0.0: no PEGB elements detected
+        - 0.3-0.5: only some elements (e.g. P+E but no G+B)
+        - 0.7-0.9: most elements present
+        - 1.0: all four elements clearly present
+
+        Patterns detected:
+        - P (proof): actual proof tactics (always present in non-empty source)
+        - E (example): "example", "instance", "specific", "concrete", numerical values
+        - G (generalization): "generaliz", "extension", "broader", "one-level-up"
+        - B (boundary): "counterexample", "boundary", "limit", "where X fails", "necessary"
+        """
+        if not lean_source or len(lean_source) < 100:
+            return 0.0
+
+        score = 0.0
+
+        # E: example detection
+        example_patterns = [
+            r'\bexample\s*[:=]',
+            r'\binstance\s*[:(]',
+            r'#check\s+',  # Lean 4 #check command verifies examples
+            r'#eval\s+',   # Lean 4 #eval command
+            r'#reduce\s+',
+            r'\bfor\s+\w+\s*:=',  # "for x := ..." example instantiation
+        ]
+        example_count = sum(
+            1 for pat in example_patterns
+            for _ in re.finditer(pat, lean_source, re.IGNORECASE)
+        )
+        if example_count >= 1:
+            score += 0.25
+
+        # G: generalization detection
+        generalization_patterns = [
+            r'\bgeneraliz',
+            r'\bextension\b',
+            r'\bgeneraliz\w*\b',
+            r'\bbroader\b',
+            r'\bmore general\b',
+            r'\bone-level-up\b',
+            r'\babstract\b',
+        ]
+        generalization_count = sum(
+            1 for pat in generalization_patterns
+            for _ in re.finditer(pat, lean_source, re.IGNORECASE)
+        )
+        if generalization_count >= 1:
+            score += 0.25
+
+        # B: boundary / counterexample detection
+        boundary_patterns = [
+            r'\bcounterexample\b',
+            r'\bcounter-example\b',
+            r'\bboundary\b',
+            r'\bwhere\s+\w+\s+(fails|breaks|doesn\'t hold)',
+            r'\bnecessary condition',
+            r'\blimiting case',
+            r'\blimit case',
+            r'\bedge case',
+            r'\bnot\s+\w+\s+(commute|hold|generalize)',  # negation
+        ]
+        boundary_count = sum(
+            1 for pat in boundary_patterns
+            for _ in re.finditer(pat, lean_source, re.IGNORECASE)
+        )
+        if boundary_count >= 1:
+            score += 0.25
+
+        # P: proof is always present (non-empty source) — give baseline 0.25
+        # but require non-trivial proof tactics
+        if re.search(r'\b(?:theorem|lemma|def)\s+\w+', lean_source):
+            score += 0.25
+
+        return min(1.0, score)
 
     def _eval_novelty(self, lean_source: str, title: str,
                       existing_titles: Optional[set] = None) -> float:

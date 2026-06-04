@@ -1758,6 +1758,15 @@ class PiAgentClient:
                Voiculescu defining free probability. The structure is the contribution.
                The theorems are the evidence that the structure is useful.
 
+               **Critical constraint**: A "novel mathematical structure" must be a
+               genuine mathematical object — a formal construction with a precise
+               definition, ideally with operations or axioms. **Mathematics of X** where
+               X is a real-world phenomenon (memes, dreams, consciousness, art, music,
+               jokes, social networks) is NOT a mathematical structure unless you
+               formalize X as a precise mathematical object first and then prove
+               theorems about THAT object. If you can't formalize X rigorously, pick a
+               different X — choose a topic where the math comes naturally.
+
             3. **PEGB for every major theorem** (Proof + Example + Generalization + Boundary):
                For each of your top 3-5 theorems, you MUST produce all four:
                - **P**roof: A complete, non-trivial Lean 4 proof

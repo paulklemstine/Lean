@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T04:23:25.957091+00:00",
+  "last_updated": "2026-06-04T04:32:04.580014+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -1360,6 +1360,40 @@
       "theorem_count": 6,
       "timestamp": "2026-06-04T04:23:25.893995+00:00",
       "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3847,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 1,
+      "domain": "Geometry",
+      "duration_seconds": 4254.4554352760315,
+      "end_time": 1780547468.9118485,
+      "files_integrated": 5,
+      "job_id": "9b922fe2",
+      "outcome_quality": 0.50264,
+      "quality_breakdown": {
+        "actionability": 0.76,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8062,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.8141,
+        "novelty": 0.77,
+        "proof_depth": 0.833,
+        "usefulness": 0.8665
+      },
+      "quality_score": 0.50264,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780543214.4564133,
+      "strategy_count": 187,
+      "theorem_count": 6,
+      "timestamp": "2026-06-04T04:32:04.547561+00:00",
+      "title": "Fundamental algebraic-topological bridge: **th"
     }
   ]
 }

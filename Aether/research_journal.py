@@ -161,23 +161,18 @@ class ResearchJournal:
     def build_journal_summary(self, domain: str = "", max_chars: int = None) -> str:
         """Build a compact summary of Aether's accumulated research for the prompt.
 
-        This gives each new cycle context about what Aether has already
-        discovered — conceptual insights and research threads, not just
-        catalog theorems.
+        Two-tier output:
+        - BREAKTHROUGHS (Q≥0.7): the highest-quality work, with key theorems
+        - CYCLE LOG (Q≥0.3): all recent cycles, for "what was Aether doing"
         """
         max_chars = max_chars or self.MAX_SUMMARY_CHARS
         lines = ["## Aether Research Journal", ""]
 
-        # Recent key findings
-        entries = self._data.get("entries", [])
-        recent_high = sorted(
-            [e for e in entries if e.get("quality_score", 0) >= 0.7],
-            key=lambda e: e.get("quality_score", 0),
-            reverse=True,
-        )[:8]
-        if recent_high:
-            lines.append("### Recent High-Quality Cycles")
-            for e in recent_high:
+        # Tier 1: Breakthroughs — the best of the best
+        breakthroughs = self._data.get("breakthroughs", [])
+        if breakthroughs:
+            lines.append("### Breakthroughs (Q≥0.7)")
+            for e in sorted(breakthroughs, key=lambda e: e.get("quality_score", 0), reverse=True)[:8]:
                 q = e.get("quality_score", 0)
                 d = e.get("domain", "?")
                 t = e.get("title", "?")[:60]
@@ -185,15 +180,25 @@ class ResearchJournal:
                 lines.append(f"- Q={q:.2f} [{d}] {t} ({thms} theorems)")
             lines.append("")
 
-        # Domain research threads (prefer current domain)
+        # Tier 2: Recent cycles from log (last 5, mixed quality for context)
+        log = self._data.get("cycle_log", [])
+        recent_log = sorted(log, key=lambda e: e.get("timestamp", ""), reverse=True)[:5]
+        if recent_log:
+            lines.append("### Recent Activity")
+            for e in recent_log:
+                q = e.get("quality_score", 0)
+                d = e.get("domain", "?")
+                t = e.get("title", "?")[:50]
+                lines.append(f"- Q={q:.2f} [{d}] {t}")
+            lines.append("")
+
+        # Domain research threads
         threads = self._data.get("research_threads", {})
         if threads:
             lines.append("### Active Research Threads")
-            # Show current domain first
             if domain and domain in threads:
                 for t in threads[domain][-3:]:
                     lines.append(f"- [{domain}] {t.get('title','?')[:50]} Q={t.get('quality',0):.2f}")
-            # Then other domains (1 each)
             for dom, dom_threads in sorted(threads.items()):
                 if dom == domain:
                     continue
@@ -202,7 +207,7 @@ class ResearchJournal:
                     lines.append(f"- [{dom}] {latest.get('title','?')[:50]} Q={latest.get('quality',0):.2f}")
             lines.append("")
 
-        # Key theorems
+        # Key theorems (from breakthroughs only)
         key_theorems = self._data.get("key_theorems", [])
         if key_theorems:
             lines.append("### Key Theorems Discovered")
@@ -225,7 +230,8 @@ class ResearchJournal:
 
     def stats(self) -> Dict[str, int]:
         return {
-            "entries": len(self._data.get("entries", [])),
+            "breakthroughs": len(self._data.get("breakthroughs", [])),
+            "cycle_log": len(self._data.get("cycle_log", [])),
             "key_theorems": len(self._data.get("key_theorems", [])),
             "open_questions": len(self._data.get("open_questions", [])),
             "active_threads": sum(len(v) for v in self._data.get("research_threads", {}).values()),
