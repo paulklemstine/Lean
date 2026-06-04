@@ -77,7 +77,7 @@ LOWER_TO_CATALOG_DIR = {
     "bridges": "Bridges",
     "computation": "Computation",
     "cryptography": "Cryptography",
-    "eml": "EML",
+    "eml": "Applications",  # EML merged into Applied super-domain
     "geometry": "Geometry",
     "logic": "Logic",
     "machinelearning": "MachineLearning",
@@ -102,7 +102,7 @@ LOWER_TO_CATALOG_DIR = {
     "tropical_robustness": "MachineLearning",
     "dilithium_security": "Cryptography",
     "berggren_optimized": "Pythagorean",
-    "eml_approximation": "EML",
+    "eml_approximation": "Applications",  # EML merged into Applied
     "spb_crypto": "Cryptography",
     "idempotent_optimization_deep": "Tropical",
     "neural proof mining": "MachineLearning",
@@ -111,7 +111,7 @@ LOWER_TO_CATALOG_DIR = {
     "categorical neural networks": "MachineLearning",
     "quantum pythagoras": "Cryptography",
     "temporal computation": "Computation",
-    "eml cosmology": "EML",
+    "eml cosmology": "Applications",  # EML merged into Applied
     # Common LLM-produced domain aliases -> Catalog domains
     "number_theory": "Algebra", "numbertheory": "Algebra",
     "number theory": "Algebra",
@@ -268,6 +268,9 @@ def normalize_domain(domain: str) -> str:
 
     # Direct match with DOMAIN_DIRS (already correct case)
     if domain in DOMAIN_DIRS:
+        # EML is deprecated — route to Applications
+        if domain == "EML":
+            return "Applications"
         return domain
 
     # Check the mapping
@@ -278,6 +281,8 @@ def normalize_domain(domain: str) -> str:
     # Try title case as last resort
     title_cased = domain.title().replace("_", "")
     if title_cased in DOMAIN_DIRS:
+        if title_cased == "EML":
+            return "Applications"
         return title_cased
 
     return "Speculative"

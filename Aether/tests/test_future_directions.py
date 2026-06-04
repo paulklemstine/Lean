@@ -1157,12 +1157,15 @@ class TestDomainRebalance:
         assert normalize_domain("Complexity") == "Computation"
 
     def test_normalize_domain_valid_passthrough(self):
-        """Valid Catalog domain names should pass through unchanged."""
+        """Valid Catalog domain names should pass through unchanged.
+        EML is the exception: it has been merged into the Applied super-domain."""
         from output_organizer import normalize_domain
-        for domain in ["Algebra", "Bridges", "Computation", "Cryptography", "EML",
+        for domain in ["Algebra", "Bridges", "Computation", "Cryptography",
                        "Geometry", "Logic", "MachineLearning", "Physics",
                        "Pythagorean", "Speculative", "Tropical"]:
             assert normalize_domain(domain) == domain
+        # EML is deprecated — must map to Applications
+        assert normalize_domain("EML") == "Applications"
 
     def test_normalize_domain_empty_to_speculative(self):
         """Empty string should still default to Speculative."""
@@ -1170,10 +1173,11 @@ class TestDomainRebalance:
         assert normalize_domain("") == "Speculative"
 
     def test_infer_domains_returns_catalog_valid_names(self):
-        """_infer_domains should return domain names that are valid Catalog directories."""
+        """_infer_domains should return domain names that are valid Catalog directories.
+        EML has been merged into Applications — accept either."""
         from research_memory import FutureDirectionsManager
         valid_domains = {"Algebra", "Bridges", "Computation", "Cryptography", "EML",
-                         "Geometry", "Logic", "MachineLearning", "Physics",
+                         "Applications", "Geometry", "Logic", "MachineLearning", "Physics",
                          "Pythagorean", "Speculative", "Tropical"}
 
         # Test with various texts
