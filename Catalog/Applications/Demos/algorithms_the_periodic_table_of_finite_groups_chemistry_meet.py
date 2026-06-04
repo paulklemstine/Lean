@@ -1,54 +1,88 @@
+#!/usr/bin/env python3
 """
-Algorithms for the Periodic Table of Finite Groups
+Algorithms for the Periodic Table of Finite Groups.
 
-Type-hinted implementations of the core algorithms used in
-the group classification system.
+Type-hinted implementations of the core algorithms used in the
+group-theoretic periodic table classification.
 """
 
-from typing import Dict, List, Optional, Tuple
+from typing import List, Tuple, Dict, Optional
 from dataclasses import dataclass
+from math import gcd, factorial
+from collections import Counter
 from enum import Enum
 
 
-class GroupFamily(Enum):
-    """Chemical family classification for finite groups."""
-    NOBLE_GAS = "noble_gas"           # Cyclic groups
-    ALKALI_METAL = "alkali_metal"     # Nilpotent non-abelian (p-groups)
-    ALKALINE_EARTH = "alkaline_earth" # Solvable non-nilpotent
-    TRANSITION_METAL = "transition_metal"  # Non-abelian simple
-    HALOGEN = "halogen"               # Symmetric groups
+# ============================================================
+# Core Types
+# ============================================================
+
+class ChemicalSeries(Enum):
+    """Chemical series classification for finite groups."""
+    VACUUM = "Vacuum"           # Trivial group
+    NOBLE_GAS = "Noble Gas"     # Cyclic groups
+    ALKALINE_EARTH = "Alkaline Earth"  # Abelian non-cyclic
+    ALKALI_METAL = "Alkali Metal"      # Nilpotent non-abelian
+    COMPOUND = "Compound"       # Solvable non-nilpotent
+    RADIOACTIVE = "Radioactive" # Non-solvable
 
 
 @dataclass
-class GroupPeriodicEntry:
-    """A periodic table entry for a finite group."""
-    order: int
-    family: GroupFamily
-    solvability_depth: Optional[int]
-    valence: int  # Number of minimal normal subgroups
+class ReactivityProfile:
+    """Chemical fingerprint of a finite group.
+
+    Captures the center-commutator interaction that determines
+    a group's 'chemical type' in the periodic table analogy.
+    """
+    name: str
+    group_order: int
     center_order: int
+    commutator_order: int
+    duality_defect: int  # |Z(G) ∩ [G,G]|
     is_solvable: bool
     is_nilpotent: bool
-    is_abelian: bool
-    spectrum: List[int]
+    nilpotency_class: int
+    derived_depth: int
 
-    def __repr__(self) -> str:
-        return (f"GroupEntry(|G|={self.order}, family={self.family.value}, "
-                f"depth={self.solvability_depth}, valence={self.valence})")
+    @property
+    def abelian_defect(self) -> int:
+        """|G|/|Z(G)| — measures non-commutativity."""
+        return self.group_order // self.center_order
 
+    @property
+    def join_order(self) -> int:
+        """|Z(G)·[G,G]| = |Z|·|[G,G]|/|Z∩[G,G]|."""
+        return (self.center_order * self.commutator_order) // self.duality_defect
+
+    @property
+    def duality_ratio(self) -> float:
+        """ρ(G) = |Z(G)·[G,G]|/|G| — coverage ratio."""
+        return self.join_order / self.group_order
+
+    @property
+    def chemical_series(self) -> ChemicalSeries:
+        """Classify group into chemical series."""
+        if self.group_order == 1:
+            return ChemicalSeries.VACUUM
+        if self.center_order == self.group_order:
+            return ChemicalSeries.NOBLE_GAS  # Abelian
+        if self.is_nilpotent:
+            return ChemicalSeries.ALKALI_METAL
+        if self.is_solvable:
+            return ChemicalSeries.COMPOUND
+        return ChemicalSeries.RADIOACTIVE
+
+
+# ============================================================
+# Number-Theoretic Utilities
+# ============================================================
 
 def prime_factorization(n: int) -> Dict[int, int]:
-    """
-    Compute the prime factorization of n.
+    """Return prime factorization as {prime: exponent} dict.
 
-    Algorithm: Trial division up to sqrt(n).
-    Time complexity: O(sqrt(n)).
-
-    Returns:
-        Dictionary mapping primes to their exponents.
+    Algorithm: Trial division up to √n.
+    Time complexity: O(√n).
     """
-    if n <= 0:
-        raise ValueError(f"Expected positive integer, got {n}")
     factors: Dict[int, int] = {}
     d = 2
     while d * d <= n:
@@ -61,171 +95,202 @@ def prime_factorization(n: int) -> Dict[int, int]:
     return factors
 
 
-def omega(n: int) -> int:
-    """
-    Compute Ω(n), the number of prime factors with multiplicity.
+def omega_big(n: int) -> int:
+    """Ω(n) — number of prime factors with multiplicity.
 
-    This is the upper bound for the solvability depth of any
-    solvable group of order n (Quantitative Periodic Law).
+    This is the 'atomic weight' in the periodic table analogy.
+    The quantitative periodic law states: derivedDepth(G) ≤ Ω(|G|).
     """
     return sum(prime_factorization(n).values())
 
 
-def classify_group_family(
-    order: int,
-    is_abelian: bool,
-    is_nilpotent: bool,
-    is_solvable: bool,
-    is_simple: bool
-) -> GroupFamily:
+def omega_small(n: int) -> int:
+    """ω(n) — number of distinct prime divisors.
+
+    This determines the 'valence' of cyclic groups with squarefree order.
     """
-    Classify a finite group into its chemical family.
+    return len(prime_factorization(n))
+
+
+def euler_totient(n: int) -> int:
+    """Euler's totient φ(n) = |Aut(ℤ/nℤ)|.
+
+    For prime p: φ(p) = p-1, giving automorphism density (p-1)/p.
+    """
+    result = n
+    p = 2
+    temp = n
+    while p * p <= temp:
+        if temp % p == 0:
+            while temp % p == 0:
+                temp //= p
+            result -= result // p
+        p += 1
+    if temp > 1:
+        result -= result // temp
+    return result
+
+
+# ============================================================
+# Group Classification Algorithms
+# ============================================================
+
+def classify_group(profile: ReactivityProfile) -> Dict[str, any]:
+    """Classify a group and compute all periodic table invariants.
+
+    Returns a dictionary with:
+    - chemical_series: The group's chemical family
+    - abelian_defect: |G|/|Z(G)|
+    - omega: Ω(|G|) — upper bound on derived depth
+    - duality_ratio: coverage of center-commutator join
+    - periodic_law_satisfied: whether derivedDepth ≤ Ω(|G|)
+    """
+    o = omega_big(profile.group_order)
+    return {
+        'chemical_series': profile.chemical_series.value,
+        'abelian_defect': profile.abelian_defect,
+        'omega': o,
+        'duality_ratio': profile.duality_ratio,
+        'periodic_law_satisfied': profile.derived_depth <= o,
+        'aut_density': euler_totient(profile.group_order) / profile.group_order
+            if profile.center_order == profile.group_order else None,
+    }
+
+
+def product_profile(
+    g1: ReactivityProfile,
+    g2: ReactivityProfile,
+    name: Optional[str] = None
+) -> ReactivityProfile:
+    """Compute reactivity profile of G₁ × G₂.
+
+    Uses the proven multiplicativity theorems:
+    - |Z(G×H)| = |Z(G)|·|Z(H)|  (center_card_prod)
+    - |[G×H,G×H]| = |[G,G]|·|[H,H]|  (commutator_card_prod)
+    - abelianDefect(G×H) = abelianDefect(G)·abelianDefect(H)
+    - derivedDepth(G×H) = max(derivedDepth(G), derivedDepth(H))
+    """
+    return ReactivityProfile(
+        name=name or f"{g1.name}×{g2.name}",
+        group_order=g1.group_order * g2.group_order,
+        center_order=g1.center_order * g2.center_order,
+        commutator_order=g1.commutator_order * g2.commutator_order,
+        duality_defect=g1.duality_defect * g2.duality_defect,
+        is_solvable=g1.is_solvable and g2.is_solvable,
+        is_nilpotent=g1.is_nilpotent and g2.is_nilpotent,
+        nilpotency_class=max(g1.nilpotency_class, g2.nilpotency_class),
+        derived_depth=max(g1.derived_depth, g2.derived_depth),
+    )
+
+
+def build_periodic_table(
+    profiles: List[ReactivityProfile]
+) -> Dict[str, List[ReactivityProfile]]:
+    """Organize groups into a periodic table by chemical series.
 
     Algorithm:
-    1. If cyclic/abelian → Noble Gas
-    2. If nilpotent but not abelian → Alkali Metal
-    3. If solvable but not nilpotent → Alkaline Earth
-    4. If simple non-abelian → Transition Metal
-    5. If symmetric-like → Halogen
+    1. Classify each group by its chemical series
+    2. Within each series, sort by group order (atomic number)
+    3. Return a dictionary mapping series names to sorted lists
 
     Pseudocode:
-        if is_abelian: return NOBLE_GAS
-        if is_nilpotent: return ALKALI_METAL
-        if is_simple and not is_abelian: return TRANSITION_METAL
-        if is_solvable: return ALKALINE_EARTH
-        return HALOGEN
+        table = {}
+        for each group G:
+            series = classify(G)
+            table[series].append(G)
+        for each series in table:
+            sort table[series] by order
+        return table
     """
-    if is_abelian:
-        return GroupFamily.NOBLE_GAS
-    if is_simple and not is_abelian:
-        return GroupFamily.TRANSITION_METAL
-    if is_nilpotent:
-        return GroupFamily.ALKALI_METAL
-    if is_solvable:
-        return GroupFamily.ALKALINE_EARTH
-    return GroupFamily.HALOGEN
+    table: Dict[str, List[ReactivityProfile]] = {}
+    for p in profiles:
+        series = p.chemical_series.value
+        if series not in table:
+            table[series] = []
+        table[series].append(p)
 
+    for series in table:
+        table[series].sort(key=lambda p: p.group_order)
 
-def compute_solvability_spectrum(
-    derived_series_orders: List[int]
-) -> List[int]:
-    """
-    Compute the solvability spectrum from the derived series orders.
-
-    The spectrum is σ_G(n) = |D_n(G)| / |D_{n+1}(G)| for each level.
-
-    Algorithm:
-        spectrum = []
-        for i in range(len(orders) - 1):
-            spectrum.append(orders[i] // orders[i+1])
-        return spectrum
-
-    Theorem (proved in Lean 4):
-        Each entry σ_G(n) > 1 for n < solDepth(G).
-    """
-    spectrum: List[int] = []
-    for i in range(len(derived_series_orders) - 1):
-        if derived_series_orders[i + 1] == 0:
-            break
-        ratio = derived_series_orders[i] // derived_series_orders[i + 1]
-        spectrum.append(ratio)
-    return spectrum
-
-
-def predict_depth_bound(order: int) -> int:
-    """
-    Predict the maximum solvability depth for groups of the given order.
-
-    By the Quantitative Periodic Law (proved in the catalog for the
-    existing PeriodicTableGroups file), the depth is bounded by Ω(n).
-
-    Returns:
-        Upper bound on solvability depth.
-    """
-    return omega(order)
-
-
-def is_all_nilpotent_order(n: int) -> bool:
-    """
-    Check if all groups of order n are nilpotent.
-
-    Theorem: All groups of order p^k are nilpotent (p-groups).
-    Theorem: A group of squarefree order with coprime-ordered
-    cyclic Sylow subgroups is cyclic (hence nilpotent).
-    """
-    factors = prime_factorization(n)
-    # All p-groups are nilpotent
-    if len(factors) == 1:
-        return True
-    # For general orders, non-nilpotent groups can exist
-    return False
-
-
-def build_periodic_table(max_order: int = 100) -> List[Dict]:
-    """
-    Build a periodic table of group orders with predicted properties.
-
-    For each order n ≤ max_order, compute:
-    - Prime factorization
-    - Ω(n) (depth bound)
-    - Whether all groups of that order are nilpotent
-    - Family tendency
-
-    Returns:
-        List of dictionaries with group-order-level information.
-    """
-    table = []
-    for n in range(1, max_order + 1):
-        factors = prime_factorization(n)
-        entry = {
-            "order": n,
-            "factorization": factors,
-            "omega": omega(n),
-            "all_nilpotent": is_all_nilpotent_order(n),
-            "is_prime": len(factors) == 1 and list(factors.values())[0] == 1,
-            "is_prime_power": len(factors) == 1,
-            "depth_bound": predict_depth_bound(n),
-        }
-        table.append(entry)
     return table
 
 
-# Known group data for small orders (for demonstration)
-KNOWN_GROUPS: List[GroupPeriodicEntry] = [
-    GroupPeriodicEntry(1, GroupFamily.NOBLE_GAS, 0, 0, 1, True, True, True, []),
-    GroupPeriodicEntry(2, GroupFamily.NOBLE_GAS, 1, 1, 2, True, True, True, [2]),
-    GroupPeriodicEntry(3, GroupFamily.NOBLE_GAS, 1, 1, 3, True, True, True, [3]),
-    GroupPeriodicEntry(4, GroupFamily.NOBLE_GAS, 1, 1, 4, True, True, True, [4]),  # Z/4Z
-    GroupPeriodicEntry(4, GroupFamily.NOBLE_GAS, 1, 1, 4, True, True, True, [4]),  # Z/2×Z/2
-    GroupPeriodicEntry(5, GroupFamily.NOBLE_GAS, 1, 1, 5, True, True, True, [5]),
-    GroupPeriodicEntry(6, GroupFamily.NOBLE_GAS, 1, 1, 6, True, True, True, [6]),  # Z/6
-    GroupPeriodicEntry(6, GroupFamily.ALKALINE_EARTH, 2, 2, 1, True, False, False, [2, 3]),  # S_3
-    GroupPeriodicEntry(8, GroupFamily.ALKALI_METAL, 2, 1, 2, True, True, False, [2, 2]),  # D_4
-    GroupPeriodicEntry(8, GroupFamily.ALKALI_METAL, 2, 1, 2, True, True, False, [2, 2]),  # Q_8
-    GroupPeriodicEntry(12, GroupFamily.ALKALINE_EARTH, 2, 1, 1, True, False, False, [3, 4]),  # A_4
-    GroupPeriodicEntry(24, GroupFamily.ALKALINE_EARTH, 3, 1, 1, True, False, False, [2, 3, 4]),  # S_4
-    GroupPeriodicEntry(60, GroupFamily.TRANSITION_METAL, None, 1, 1, False, False, False, []),  # A_5
-]
+def verify_periodic_law(profiles: List[ReactivityProfile]) -> Tuple[int, int]:
+    """Verify quantitative periodic law for a list of profiles.
 
+    Returns (passed, total) counts.
+    The law states: derivedDepth(G) ≤ Ω(|G|) for solvable groups.
+    """
+    passed = 0
+    total = 0
+    for p in profiles:
+        if p.is_solvable and p.group_order > 1:
+            total += 1
+            if p.derived_depth <= omega_big(p.group_order):
+                passed += 1
+    return passed, total
+
+
+# ============================================================
+# Automorphism Density Analysis
+# ============================================================
+
+def automorphism_density_sequence(
+    max_prime: int = 1000
+) -> List[Tuple[int, float]]:
+    """Compute automorphism density (p-1)/p for primes up to max_prime.
+
+    The sequence converges to 1 (noble gas inertness in the limit).
+    """
+    result = []
+    for n in range(2, max_prime + 1):
+        if all(n % d != 0 for d in range(2, int(n**0.5) + 1)):
+            result.append((n, (n - 1) / n))
+    return result
+
+
+# ============================================================
+# Main Demo
+# ============================================================
 
 if __name__ == "__main__":
-    print("Periodic Table of Finite Groups — Algorithm Demo")
-    print("=" * 60)
+    # Build profiles for small groups
+    profiles = [
+        ReactivityProfile("Z_1", 1, 1, 1, 1, True, True, 0, 0),
+        ReactivityProfile("Z_2", 2, 2, 1, 1, True, True, 1, 1),
+        ReactivityProfile("Z_3", 3, 3, 1, 1, True, True, 1, 1),
+        ReactivityProfile("Z_4", 4, 4, 1, 1, True, True, 1, 1),
+        ReactivityProfile("Z_2²", 4, 4, 1, 1, True, True, 1, 1),
+        ReactivityProfile("Z_5", 5, 5, 1, 1, True, True, 1, 1),
+        ReactivityProfile("S_3", 6, 1, 3, 1, True, False, 0, 2),
+        ReactivityProfile("Z_6", 6, 6, 1, 1, True, True, 1, 1),
+        ReactivityProfile("D_4", 8, 2, 2, 2, True, True, 2, 2),
+        ReactivityProfile("Q_8", 8, 2, 2, 2, True, True, 2, 2),
+        ReactivityProfile("A_4", 12, 1, 4, 1, True, False, 0, 3),
+        ReactivityProfile("S_4", 24, 1, 12, 1, True, False, 0, 3),
+        ReactivityProfile("A_5", 60, 1, 60, 1, False, False, 0, 0),
+    ]
 
-    table = build_periodic_table(100)
-    nilpotent_orders = [e["order"] for e in table if e["all_nilpotent"]]
-    non_nilpotent_capable = [e["order"] for e in table if not e["all_nilpotent"]]
+    # Build and display periodic table
+    table = build_periodic_table(profiles)
+    for series, groups in table.items():
+        print(f"\n{series}:")
+        for g in groups:
+            info = classify_group(g)
+            print(f"  {g.name:8s}  |G|={g.group_order:4d}  "
+                  f"defect={info['abelian_defect']:3d}  "
+                  f"Ω={info['omega']:2d}  "
+                  f"ρ={info['duality_ratio']:.3f}")
 
-    print(f"\nOrders where ALL groups are nilpotent (prime powers):")
-    print(f"  {nilpotent_orders[:20]}...")
+    # Verify periodic law
+    passed, total = verify_periodic_law(profiles)
+    print(f"\nQuantitative Periodic Law: {passed}/{total} solvable groups verified")
 
-    print(f"\nOrders where non-nilpotent groups can exist:")
-    print(f"  {non_nilpotent_capable[:20]}...")
-
-    print(f"\nKnown groups in the database:")
-    for g in KNOWN_GROUPS:
-        print(f"  {g}")
-
-    print(f"\nDepth bounds (Ω function):")
-    for n in [6, 12, 24, 30, 60, 120, 360]:
-        print(f"  Ω({n}) = {omega(n)} (max possible depth for order {n})")
+    # Product multiplicativity demo
+    s3 = profiles[6]  # S_3
+    z2 = profiles[1]  # Z_2
+    prod = product_profile(s3, z2)
+    print(f"\nProduct: defect({s3.name})={s3.abelian_defect}, "
+          f"defect({z2.name})={z2.abelian_defect}, "
+          f"defect({prod.name})={prod.abelian_defect} "
+          f"= {s3.abelian_defect}×{z2.abelian_defect}")

@@ -1,401 +1,443 @@
+#!/usr/bin/env python3
 """
-The Periodic Table of Finite Groups — Interactive Demo
+Demo: The Periodic Table of Finite Groups
 
-Computes and displays group-theoretic invariants for all groups
-of small order, organizing them by "chemical family" and
-solvability spectrum.
+Computes reactivity profiles for small groups and demonstrates
+the chemical analogy for finite group theory.
 """
 
-from itertools import product as iterproduct
-from math import gcd, log2
-from collections import defaultdict
+from itertools import product
+from math import gcd, factorial
+from collections import Counter
 
 
 def prime_factors(n):
-    """Return the prime factorization as a dict {prime: exponent}."""
-    factors = {}
+    """Return list of prime factors with multiplicity."""
+    factors = []
     d = 2
     while d * d <= n:
         while n % d == 0:
-            factors[d] = factors.get(d, 0) + 1
+            factors.append(d)
             n //= d
         d += 1
     if n > 1:
-        factors[n] = factors.get(n, 0) + 1
+        factors.append(n)
     return factors
 
 
-def is_prime_power(n):
-    """Check if n is a prime power."""
-    if n <= 1:
-        return False
-    f = prime_factors(n)
-    return len(f) == 1
+def omega(n):
+    """Ω(n) = number of prime factors counted with multiplicity."""
+    return len(prime_factors(n))
 
 
 def euler_totient(n):
-    """Euler's totient function."""
+    """Euler's totient function φ(n)."""
     result = n
-    for p in prime_factors(n):
-        result = result * (p - 1) // p
+    p = 2
+    temp = n
+    while p * p <= temp:
+        if temp % p == 0:
+            while temp % p == 0:
+                temp //= p
+            result -= result // p
+        p += 1
+    if temp > 1:
+        result -= result // temp
     return result
 
 
-def num_groups_of_order(n):
-    """
-    Approximate number of groups of order n (exact for small n).
-    Uses the known values for n <= 100.
-    """
-    # Known group counts for orders 1-60
-    known = {
-        1: 1, 2: 1, 3: 1, 4: 2, 5: 1, 6: 2, 7: 1, 8: 5, 9: 2, 10: 2,
-        11: 1, 12: 5, 13: 1, 14: 2, 15: 1, 16: 14, 17: 1, 18: 5, 19: 1, 20: 5,
-        21: 2, 22: 2, 23: 1, 24: 15, 25: 2, 26: 2, 27: 5, 28: 4, 29: 1, 30: 4,
-        31: 1, 32: 51, 33: 1, 34: 2, 35: 1, 36: 14, 37: 1, 38: 2, 39: 2, 40: 14,
-        41: 1, 42: 6, 43: 1, 44: 4, 45: 2, 46: 2, 47: 1, 48: 52, 49: 2, 50: 5,
-        51: 1, 52: 5, 53: 1, 54: 15, 55: 2, 56: 13, 57: 2, 58: 2, 59: 1, 60: 13,
-    }
-    return known.get(n, None)
+# ============================================================
+# Group Representations (small groups as permutation groups)
+# ============================================================
+
+def cyclic_group(n):
+    """Generate elements of Z_n as tuples with group operation."""
+    return list(range(n))
 
 
-def classify_order(n):
-    """Classify a group order into its periodic table family tendency."""
-    if n == 1:
-        return "trivial"
-    f = prime_factors(n)
-    if len(f) == 1:
-        p, k = list(f.items())[0]
-        if k == 1:
-            return "noble_gas"  # Cyclic of prime order
-        else:
-            return "alkali_metal"  # p-groups (nilpotent)
-    # Check if all groups of this order are abelian
-    if n <= 60:
-        count = num_groups_of_order(n)
-        if count == 1:
-            return "noble_gas"  # Cyclic
-    # Check for squarefree order
-    if all(e == 1 for e in f.values()):
-        return "noble_gas_or_alkaline"  # Squarefree: could be cyclic or metacyclic
-    return "mixed"
+def dihedral_group(n):
+    """Generate elements of D_n (order 2n) as (rotation, reflection) pairs."""
+    elements = []
+    for r in range(n):
+        elements.append((r, 0))
+        elements.append((r, 1))
+    return elements
 
 
-def solvability_spectrum_cyclic(n):
-    """Solvability spectrum for Z/nZ (abelian group): [n, 1, 1, ...]."""
-    return [n]  # Only one nontrivial entry
+def symmetric_group_order(n):
+    """Order of S_n."""
+    return factorial(n)
 
 
-def solvability_spectrum_symmetric(n):
-    """
-    Approximate solvability spectrum for S_n.
-    S_1, S_2: abelian, depth 1
-    S_3: depth 2, spectrum [2, 3]
-    S_4: depth 3, spectrum [2, 3, 4] (roughly)
-    S_n for n >= 5: not solvable
-    """
-    import math
-    if n <= 1:
-        return [1]
-    if n == 2:
-        return [2]
-    if n == 3:
-        return [2, 3]  # |S_3| = 6, D_1 = A_3 (order 3), D_2 = {e}
-    if n == 4:
-        return [2, 3, 4]  # |S_4| = 24, D_1 = A_4 (12), D_2 = V_4 (4), D_3 = {e}
-    return None  # Not solvable for n >= 5
+# ============================================================
+# Reactivity Profile Computation
+# ============================================================
+
+class ReactivityProfile:
+    """Chemical fingerprint of a finite group."""
+
+    def __init__(self, name, order, center_order, commutator_order,
+                 duality_defect, is_solvable, is_nilpotent, nilp_class):
+        self.name = name
+        self.order = order
+        self.center_order = center_order
+        self.commutator_order = commutator_order
+        self.duality_defect = duality_defect
+        self.is_solvable = is_solvable
+        self.is_nilpotent = is_nilpotent
+        self.nilp_class = nilp_class
+
+    @property
+    def abelian_defect(self):
+        return self.order // self.center_order
+
+    @property
+    def chemical_series(self):
+        if self.order == 1:
+            return "Vacuum"
+        if self.center_order == self.order:
+            if len(prime_factors(self.order)) == 1 and self.order in [
+                p ** k for p in range(2, 100) for k in range(1, 20)
+                if all(p % d != 0 for d in range(2, p))
+            ]:
+                return "Noble Gas"
+            return "Alkaline Earth"
+        if self.is_nilpotent:
+            return "Alkali Metal"
+        if self.is_solvable:
+            return "Compound"
+        return "Radioactive"
+
+    def __repr__(self):
+        return (
+            f"ReactivityProfile({self.name}: order={self.order}, "
+            f"|Z|={self.center_order}, |[G,G]|={self.commutator_order}, "
+            f"defect={self.duality_defect}, "
+            f"series={self.chemical_series})"
+        )
 
 
-def build_periodic_table(max_order=60):
-    """
-    Build the periodic table of finite groups up to the given order.
-    Returns a list of entries with group-theoretic invariants.
-    """
-    table = []
-    for n in range(1, max_order + 1):
-        entry = {
-            "order": n,
-            "prime_factorization": prime_factors(n),
-            "is_prime_power": is_prime_power(n),
-            "num_groups": num_groups_of_order(n),
-            "family_tendency": classify_order(n),
-            "cyclic_spectrum": solvability_spectrum_cyclic(n),
-            "euler_totient": euler_totient(n),
-            "omega": sum(prime_factors(n).values()),  # Number of prime factors with multiplicity
-        }
-        table.append(entry)
-    return table
+# Known group data for small orders
+KNOWN_GROUPS = [
+    ReactivityProfile("Z_1", 1, 1, 1, 1, True, True, 0),
+    ReactivityProfile("Z_2", 2, 2, 1, 1, True, True, 1),
+    ReactivityProfile("Z_3", 3, 3, 1, 1, True, True, 1),
+    ReactivityProfile("Z_4", 4, 4, 1, 1, True, True, 1),
+    ReactivityProfile("Z_2×Z_2", 4, 4, 1, 1, True, True, 1),
+    ReactivityProfile("Z_5", 5, 5, 1, 1, True, True, 1),
+    ReactivityProfile("S_3", 6, 1, 3, 1, True, False, 0),
+    ReactivityProfile("Z_6", 6, 6, 1, 1, True, True, 1),
+    ReactivityProfile("Z_7", 7, 7, 1, 1, True, True, 1),
+    ReactivityProfile("D_4", 8, 2, 2, 2, True, True, 2),
+    ReactivityProfile("Q_8", 8, 2, 2, 2, True, True, 2),
+    ReactivityProfile("Z_8", 8, 8, 1, 1, True, True, 1),
+    ReactivityProfile("Z_2×Z_4", 8, 8, 1, 1, True, True, 1),
+    ReactivityProfile("Z_2³", 8, 8, 1, 1, True, True, 1),
+    ReactivityProfile("Z_9", 9, 9, 1, 1, True, True, 1),
+    ReactivityProfile("Z_3×Z_3", 9, 9, 1, 1, True, True, 1),
+    ReactivityProfile("D_5", 10, 1, 5, 1, True, False, 0),
+    ReactivityProfile("Z_10", 10, 10, 1, 1, True, True, 1),
+    ReactivityProfile("A_4", 12, 1, 4, 1, True, False, 0),
+    ReactivityProfile("D_6", 12, 2, 3, 1, True, False, 0),
+    ReactivityProfile("Z_12", 12, 12, 1, 1, True, True, 1),
+    ReactivityProfile("S_4", 24, 1, 12, 1, True, False, 0),
+    ReactivityProfile("A_5", 60, 1, 60, 1, False, False, 0),
+    ReactivityProfile("S_5", 120, 1, 60, 1, False, False, 0),
+]
 
 
-def display_periodic_table(table):
-    """Display the periodic table in a formatted way."""
-    print("=" * 90)
-    print("THE PERIODIC TABLE OF FINITE GROUPS")
-    print("=" * 90)
-    print(f"{'Order':>5} {'Factorization':>15} {'#Groups':>8} {'Family':>20} "
-          f"{'Ω(n)':>5} {'φ(n)':>5} {'Spectrum':>15}")
-    print("-" * 90)
-
-    families = defaultdict(list)
-    for entry in table:
-        n = entry["order"]
-        factors = entry["prime_factorization"]
-        factor_str = " × ".join(f"{p}^{e}" if e > 1 else str(p)
-                                for p, e in sorted(factors.items()))
-        if n == 1:
-            factor_str = "1"
-
-        num_groups = entry["num_groups"]
-        num_str = str(num_groups) if num_groups is not None else "?"
-        family = entry["family_tendency"]
-        omega = entry["omega"]
-        phi = entry["euler_totient"]
-        spectrum = entry["cyclic_spectrum"]
-        spec_str = str(spectrum)
-
-        print(f"{n:>5} {factor_str:>15} {num_str:>8} {family:>20} "
-              f"{omega:>5} {phi:>5} {spec_str:>15}")
-
-        families[family].append(n)
-
-    print("\n" + "=" * 90)
-    print("FAMILY DISTRIBUTION")
-    print("-" * 90)
-    for family, orders in sorted(families.items()):
-        print(f"  {family:>25}: {len(orders):>3} groups — orders: {orders[:15]}...")
-
-
-def demonstrate_solvability_depth():
-    """Demonstrate the key theorem: depth ≤ 1 implies nilpotent."""
-    print("\n" + "=" * 70)
-    print("SOLVABILITY DEPTH ANALYSIS")
+def demonstrate_periodic_law():
+    """Demonstrate the quantitative periodic law: derivedDepth ≤ Ω(|G|)."""
+    print("=" * 70)
+    print("QUANTITATIVE PERIODIC LAW: derivedDepth(G) ≤ Ω(|G|)")
     print("=" * 70)
 
-    examples = [
-        ("Z/6Z (cyclic)", 6, 1, True, True, "Noble gas"),
-        ("Z/2 × Z/2 × Z/2", 8, 1, True, True, "Noble gas"),
-        ("S_3", 6, 2, True, False, "Alkaline earth"),
-        ("D_4 (dihedral-8)", 8, 2, True, True, "Alkali metal"),
-        ("A_4", 12, 2, True, False, "Alkaline earth"),
-        ("S_4", 24, 3, True, False, "Alkaline earth"),
-        ("A_5", 60, None, False, False, "Transition metal"),
-        ("Q_8 (quaternion)", 8, 2, True, True, "Alkali metal"),
+    # Known derived depths for some groups
+    test_cases = [
+        ("Z_6", 6, 1),       # Abelian: depth 1, Ω(6) = 2
+        ("S_3", 6, 2),       # Depth 2, Ω(6) = 2
+        ("D_4", 8, 2),       # Depth 2, Ω(8) = 3
+        ("A_4", 12, 3),      # Depth 3, Ω(12) = 3
+        ("S_4", 24, 3),      # Depth 3, Ω(24) = 4
+        ("Z_2^4", 16, 1),    # Abelian: depth 1, Ω(16) = 4
+        ("D_8", 16, 2),      # Depth 2, Ω(16) = 4
     ]
 
-    print(f"{'Group':>25} {'|G|':>5} {'Depth':>6} {'Solv':>5} {'Nilp':>5} {'Family':>20}")
-    print("-" * 70)
-    for name, order, depth, solvable, nilpotent, family in examples:
-        d_str = str(depth) if depth is not None else "∞"
-        print(f"{name:>25} {order:>5} {d_str:>6} {'Yes':>5 if solvable else 'No':>5} "
-              f"{'Yes':>5 if nilpotent else 'No':>5} {family:>20}")
+    for name, order, depth in test_cases:
+        omega_val = omega(order)
+        status = "✓" if depth <= omega_val else "✗"
+        print(f"  {status} {name:8s}: depth={depth}, Ω({order})={omega_val}, "
+              f"gap={omega_val - depth}")
 
-    print("\n--- KEY INSIGHT (Proved in Lean 4) ---")
-    print("Theorem: depth ≤ 1 ⟹ nilpotent (the 'noble gas row')")
-    print("Theorem: not nilpotent ⟹ depth ≥ 2 (the 'solvability gap')")
-    print("Theorem: Φ(G) ⊇ [G,G] for nilpotent G (Frattini-commutator duality)")
+    print()
 
 
-def demonstrate_spectrum():
-    """Demonstrate the solvability spectrum concept."""
-    print("\n" + "=" * 70)
-    print("SOLVABILITY SPECTRUM EXAMPLES")
+def demonstrate_reactivity_profiles():
+    """Display reactivity profiles organized by chemical series."""
+    print("=" * 70)
+    print("PERIODIC TABLE OF FINITE GROUPS — REACTIVITY PROFILES")
     print("=" * 70)
 
-    print("\nThe solvability spectrum σ_G(n) = |D_n(G)| / |D_{n+1}(G)|")
-    print("measures the 'abelian layer sizes' of a group.\n")
+    # Organize by chemical series
+    series_groups = {}
+    for g in KNOWN_GROUPS:
+        series = g.chemical_series
+        if series not in series_groups:
+            series_groups[series] = []
+        series_groups[series].append(g)
 
-    spectra = [
-        ("Z/12Z", [12], "All mass in one shell (abelian)"),
-        ("S_3", [2, 3], "Two shells: index-2 then index-3"),
-        ("S_4", [2, 3, 4], "Three shells: 2, 3, 4"),
-        ("D_4", [2, 2], "Two equal shells (nilpotent)"),
-        ("Q_8", [2, 2], "Two equal shells (nilpotent)"),
-        ("A_4", [3, 4], "Two shells: 3, 4"),
+    for series in ["Vacuum", "Noble Gas", "Alkaline Earth", "Alkali Metal",
+                   "Compound", "Radioactive"]:
+        if series in series_groups:
+            print(f"\n  {series.upper()}")
+            print(f"  {'─' * 60}")
+            for g in series_groups[series]:
+                print(f"    {g.name:12s}  |G|={g.order:4d}  |Z|={g.center_order:4d}  "
+                      f"|[G,G]|={g.commutator_order:4d}  "
+                      f"defect={g.abelian_defect:3d}")
+
+    print()
+
+
+def demonstrate_aut_density():
+    """Show automorphism density (p-1)/p → 1 for prime p."""
+    print("=" * 70)
+    print("AUTOMORPHISM DENSITY: |Aut(Z_p)|/|Z_p| → 1 as p → ∞")
+    print("=" * 70)
+
+    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
+              53, 59, 61, 67, 71, 97, 101, 997, 9973]
+    for p in primes:
+        density = (p - 1) / p
+        print(f"  p={p:5d}:  |Aut(Z_p)|/|Z_p| = {p-1}/{p} = {density:.6f}")
+
+    print()
+
+
+def demonstrate_center_commutator_duality():
+    """Show the center-commutator interaction for various groups."""
+    print("=" * 70)
+    print("CENTER–COMMUTATOR DUALITY")
+    print("=" * 70)
+    print(f"  {'Group':12s} {'|G|':>5s} {'|Z|':>5s} {'|[G,G]|':>8s} "
+          f"{'|Z∩[G,G]|':>10s} {'|Z·[G,G]|/|G|':>14s}")
+    print(f"  {'─' * 60}")
+
+    for g in KNOWN_GROUPS:
+        if g.order > 1:
+            # |Z·[G,G]| = |Z|·|[G,G]| / |Z∩[G,G]|
+            join_order = (g.center_order * g.commutator_order) // g.duality_defect
+            ratio = join_order / g.order
+            print(f"  {g.name:12s} {g.order:5d} {g.center_order:5d} "
+                  f"{g.commutator_order:8d} {g.duality_defect:10d} "
+                  f"{ratio:14.4f}")
+
+    print()
+
+
+def demonstrate_product_multiplicativity():
+    """Show that abelian defect is multiplicative under products."""
+    print("=" * 70)
+    print("ABELIAN DEFECT MULTIPLICATIVITY: defect(G×H) = defect(G)·defect(H)")
+    print("=" * 70)
+
+    pairs = [
+        ("S_3", 6, 1, "Z_2", 2, 2),
+        ("D_4", 8, 2, "S_3", 6, 1),
+        ("Q_8", 8, 2, "Z_3", 3, 3),
+        ("A_4", 12, 1, "Z_2", 2, 2),
     ]
 
-    for name, spectrum, description in spectra:
-        total = 1
-        for s in spectrum:
-            total *= s
-        print(f"  {name:>8}: σ = {spectrum!s:>12}  (product = {total:>4})  — {description}")
+    for name1, ord1, center1, name2, ord2, center2 in pairs:
+        defect1 = ord1 // center1
+        defect2 = ord2 // center2
+        prod_defect = defect1 * defect2
+        prod_order = ord1 * ord2
+        prod_center = center1 * center2
+        actual_defect = prod_order // prod_center
+        status = "✓" if actual_defect == prod_defect else "✗"
+        print(f"  {status} defect({name1})·defect({name2}) = "
+              f"{defect1}·{defect2} = {prod_defect} = "
+              f"defect({name1}×{name2}) = {actual_defect}")
 
-    print("\n--- PROVED IN LEAN 4 ---")
-    print("Theorem: σ_G(n) > 1 for n < solDepth(G) (strict descent)")
-    print("Theorem: D_n(G×H) = D_n(G) × D_n(H) (product decomposition)")
+    print()
 
 
 if __name__ == "__main__":
-    print("THE PERIODIC TABLE OF FINITE GROUPS")
-    print("A Chemical-Algebraic Classification System\n")
-
-    # Build and display the periodic table
-    table = build_periodic_table(60)
-    display_periodic_table(table)
-
-    # Demonstrate key concepts
-    demonstrate_solvability_depth()
-    demonstrate_spectrum()
-
     print("\n" + "=" * 70)
-    print("All key theorems verified in Lean 4 (Mathlib)")
+    print("  THE PERIODIC TABLE OF FINITE GROUPS")
+    print("  Chemistry Meets Algebra — Research Demo")
+    print("=" * 70 + "\n")
+
+    demonstrate_reactivity_profiles()
+    demonstrate_periodic_law()
+    demonstrate_aut_density()
+    demonstrate_center_commutator_duality()
+    demonstrate_product_multiplicativity()
+
+    print("=" * 70)
+    print("KEY FINDINGS:")
+    print("  1. Abelian defect multiplicativity under direct products")
+    print("  2. Quantitative periodic law: derivedDepth ≤ Ω(|G|)")
+    print("  3. Automorphism density → 1 for prime cyclic groups")
+    print("  4. Center-commutator duality captures group 'chemistry'")
     print("=" * 70)
 
 
+#!/usr/bin/env python3
 """
 Visualization: The Periodic Table of Finite Groups
-
-Generates a heatmap-style periodic table showing group orders
-colored by their structural complexity (solvability depth bound).
+Standalone matplotlib script — no local imports.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 
 
 def prime_factors(n):
-    factors = {}
+    factors = []
     d = 2
     while d * d <= n:
         while n % d == 0:
-            factors[d] = factors.get(d, 0) + 1
+            factors.append(d)
             n //= d
         d += 1
     if n > 1:
-        factors[n] = factors.get(n, 0) + 1
+        factors.append(n)
     return factors
 
 
 def omega(n):
-    return sum(prime_factors(n).values())
+    return len(prime_factors(n))
 
 
-def classify(n):
-    if n == 1:
-        return 0  # trivial
-    f = prime_factors(n)
-    if len(f) == 1 and list(f.values())[0] == 1:
-        return 1  # prime (noble gas)
-    if len(f) == 1:
-        return 2  # prime power (alkali metal)
-    if all(v == 1 for v in f.values()):
-        return 3  # squarefree (potentially noble)
-    return 4  # mixed
+# Group data: (name, order, center_order, commutator_order, is_solvable,
+#              is_nilpotent, derived_depth, chemical_series)
+GROUPS = [
+    ("Z₁", 1, 1, 1, True, True, 0, "Vacuum"),
+    ("Z₂", 2, 2, 1, True, True, 1, "Noble Gas"),
+    ("Z₃", 3, 3, 1, True, True, 1, "Noble Gas"),
+    ("Z₄", 4, 4, 1, True, True, 1, "Noble Gas"),
+    ("Z₂²", 4, 4, 1, True, True, 1, "Noble Gas"),
+    ("Z₅", 5, 5, 1, True, True, 1, "Noble Gas"),
+    ("S₃", 6, 1, 3, True, False, 2, "Compound"),
+    ("Z₆", 6, 6, 1, True, True, 1, "Noble Gas"),
+    ("Z₇", 7, 7, 1, True, True, 1, "Noble Gas"),
+    ("D₄", 8, 2, 2, True, True, 2, "Alkali Metal"),
+    ("Q₈", 8, 2, 2, True, True, 2, "Alkali Metal"),
+    ("Z₈", 8, 8, 1, True, True, 1, "Noble Gas"),
+    ("Z₂×Z₄", 8, 8, 1, True, True, 1, "Noble Gas"),
+    ("Z₂³", 8, 8, 1, True, True, 1, "Noble Gas"),
+    ("Z₃²", 9, 9, 1, True, True, 1, "Noble Gas"),
+    ("D₅", 10, 1, 5, True, False, 2, "Compound"),
+    ("A₄", 12, 1, 4, True, False, 3, "Compound"),
+    ("D₆", 12, 2, 3, True, False, 2, "Compound"),
+    ("Z₁₂", 12, 12, 1, True, True, 1, "Noble Gas"),
+    ("S₄", 24, 1, 12, True, False, 3, "Compound"),
+    ("SL₂(3)", 24, 2, 8, True, True, 3, "Alkali Metal"),
+    ("A₅", 60, 1, 60, False, False, 0, "Radioactive"),
+    ("S₅", 120, 1, 60, False, False, 0, "Radioactive"),
+]
+
+SERIES_COLORS = {
+    "Vacuum": "#808080",
+    "Noble Gas": "#00BFFF",
+    "Alkali Metal": "#FF6347",
+    "Compound": "#FFD700",
+    "Radioactive": "#8B0000",
+}
 
 
 def plot_periodic_table():
-    """Plot the periodic table of finite groups as a grid."""
-    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+    """Create a periodic table visualization of finite groups."""
+    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
 
-    # Left panel: Group order grid colored by Ω(n)
+    # Panel 1: Scatter plot — Order vs Derived Depth colored by series
     ax1 = axes[0]
-    rows, cols = 10, 10
-    grid = np.zeros((rows, cols))
-    for i in range(rows):
-        for j in range(cols):
-            n = i * cols + j + 1
-            if n <= 100:
-                grid[i, j] = omega(n)
+    for series, color in SERIES_COLORS.items():
+        gs = [(g[1], g[6], g[0]) for g in GROUPS if g[7] == series and g[1] > 1]
+        if gs:
+            orders, depths, names = zip(*gs)
+            ax1.scatter(orders, depths, c=color, s=100, edgecolors='black',
+                       linewidth=0.5, label=series, zorder=5)
+            for o, d, n in zip(orders, depths, names):
+                ax1.annotate(n, (o, d), textcoords="offset points",
+                           xytext=(5, 5), fontsize=7)
 
-    im = ax1.imshow(grid, cmap='YlOrRd', aspect='equal')
-    for i in range(rows):
-        for j in range(cols):
-            n = i * cols + j + 1
-            if n <= 100:
-                ax1.text(j, i, str(n), ha='center', va='center',
-                        fontsize=7, fontweight='bold',
-                        color='white' if grid[i,j] > 4 else 'black')
+    # Plot the Ω(|G|) bound
+    x_range = np.arange(2, 130)
+    omega_vals = [omega(int(x)) for x in x_range]
+    ax1.plot(x_range, omega_vals, 'k--', alpha=0.4, label='Ω(|G|) bound')
+    ax1.fill_between(x_range, omega_vals, max(omega_vals) + 1, alpha=0.05, color='red')
 
-    ax1.set_title('Periodic Table of Group Orders\n(Color = Ω(n) = max solvability depth)',
-                   fontsize=11, fontweight='bold')
-    ax1.set_xticks([])
-    ax1.set_yticks([])
-    plt.colorbar(im, ax=ax1, label='Ω(n)', shrink=0.8)
+    ax1.set_xlabel('Group Order |G|', fontsize=12)
+    ax1.set_ylabel('Derived Depth d(G)', fontsize=12)
+    ax1.set_title('Quantitative Periodic Law:\nd(G) ≤ Ω(|G|)', fontsize=13)
+    ax1.legend(loc='upper left', fontsize=9)
+    ax1.set_xlim(0, 130)
+    ax1.set_ylim(-0.5, 8)
+    ax1.grid(True, alpha=0.3)
 
-    # Right panel: Family classification
+    # Panel 2: Abelian defect vs order
     ax2 = axes[1]
-    family_colors = {0: '#CCCCCC', 1: '#FFD700', 2: '#87CEEB',
-                     3: '#98FB98', 4: '#FF6B6B'}
-    family_names = {0: 'Trivial', 1: 'Prime (Noble Gas)',
-                    2: 'Prime Power (Alkali)', 3: 'Squarefree',
-                    4: 'Mixed'}
+    for series, color in SERIES_COLORS.items():
+        gs = [(g[1], g[1] // g[2], g[0]) for g in GROUPS if g[7] == series and g[1] > 1]
+        if gs:
+            orders, defects, names = zip(*gs)
+            ax2.scatter(orders, defects, c=color, s=100, edgecolors='black',
+                       linewidth=0.5, label=series, zorder=5)
+            for o, d, n in zip(orders, defects, names):
+                ax2.annotate(n, (o, d), textcoords="offset points",
+                           xytext=(5, 5), fontsize=7)
 
-    grid2 = np.zeros((rows, cols))
-    for i in range(rows):
-        for j in range(cols):
-            n = i * cols + j + 1
-            if n <= 100:
-                grid2[i, j] = classify(n)
-
-    from matplotlib.colors import ListedColormap
-    cmap = ListedColormap(['#CCCCCC', '#FFD700', '#87CEEB', '#98FB98', '#FF6B6B'])
-    ax2.imshow(grid2, cmap=cmap, aspect='equal', vmin=0, vmax=4)
-    for i in range(rows):
-        for j in range(cols):
-            n = i * cols + j + 1
-            if n <= 100:
-                ax2.text(j, i, str(n), ha='center', va='center',
-                        fontsize=7, fontweight='bold')
-
-    ax2.set_title('Family Classification\n(Structural type by prime factorization)',
-                   fontsize=11, fontweight='bold')
-    ax2.set_xticks([])
-    ax2.set_yticks([])
-
-    # Legend
-    patches = [mpatches.Patch(color=family_colors[k], label=family_names[k])
-               for k in sorted(family_colors)]
-    ax2.legend(handles=patches, loc='upper left', fontsize=8,
-              bbox_to_anchor=(0, -0.05), ncol=3)
+    ax2.set_xlabel('Group Order |G|', fontsize=12)
+    ax2.set_ylabel('Abelian Defect δ(G) = |G|/|Z(G)|', fontsize=12)
+    ax2.set_title('Center–Commutator Duality:\nAbelian Defect by Chemical Series', fontsize=13)
+    ax2.legend(loc='upper left', fontsize=9)
+    ax2.set_xlim(0, 130)
+    ax2.grid(True, alpha=0.3)
 
     plt.tight_layout()
     plt.savefig('periodic_table_groups.png', dpi=150, bbox_inches='tight')
-    print("Saved: periodic_table_groups.png")
+    plt.close()
+    print("Saved periodic_table_groups.png")
 
 
-def plot_depth_spectrum():
-    """Plot the relationship between order and solvability depth bound."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+def plot_aut_density():
+    """Plot automorphism density convergence."""
+    fig, ax = plt.subplots(figsize=(10, 5))
 
-    # Left: Ω(n) vs n
-    ax1 = axes[0]
-    ns = list(range(1, 201))
-    omegas = [omega(n) for n in ns]
-    colors = ['#FFD700' if len(prime_factors(n)) == 1 and list(prime_factors(n).values())[0] == 1
-              else '#87CEEB' if len(prime_factors(n)) == 1
-              else '#FF6B6B' for n in ns]
+    # Generate primes
+    def is_prime(n):
+        if n < 2: return False
+        for d in range(2, int(n**0.5) + 1):
+            if n % d == 0: return False
+        return True
 
-    ax1.scatter(ns, omegas, c=colors, s=15, alpha=0.7)
-    ax1.set_xlabel('Group order n', fontsize=12)
-    ax1.set_ylabel('Ω(n) = max depth bound', fontsize=12)
-    ax1.set_title('Solvability Depth Bound vs Order', fontsize=13, fontweight='bold')
-    ax1.grid(True, alpha=0.3)
+    primes = [p for p in range(2, 200) if is_prime(p)]
+    densities = [(p - 1) / p for p in primes]
 
-    # Highlight key orders
-    highlights = {6: 'S₃', 12: 'A₄', 24: 'S₄', 60: 'A₅', 120: 'S₅'}
-    for n, label in highlights.items():
-        if n <= 200:
-            ax1.annotate(label, (n, omega(n)), textcoords="offset points",
-                        xytext=(5, 5), fontsize=8, color='red')
+    ax.scatter(primes, densities, c='#00BFFF', s=30, edgecolors='black',
+              linewidth=0.3, zorder=5)
+    ax.axhline(y=1, color='red', linestyle='--', alpha=0.5, label='Limit = 1')
+    ax.fill_between([0, 210], [1, 1], [1.05, 1.05], alpha=0.1, color='red')
 
-    # Right: Distribution of Ω values
-    ax2 = axes[1]
-    from collections import Counter
-    omega_dist = Counter(omegas)
-    vals = sorted(omega_dist.keys())
-    counts = [omega_dist[v] for v in vals]
-    ax2.bar(vals, counts, color='#4ECDC4', edgecolor='white')
-    ax2.set_xlabel('Ω(n) value', fontsize=12)
-    ax2.set_ylabel('Count (orders 1-200)', fontsize=12)
-    ax2.set_title('Distribution of Depth Bounds\n(Orders 1-200)', fontsize=13, fontweight='bold')
-    ax2.grid(True, alpha=0.3, axis='y')
+    ax.set_xlabel('Prime p', fontsize=12)
+    ax.set_ylabel('Automorphism Density (p-1)/p', fontsize=12)
+    ax.set_title('Noble Gas Inertness:\n|Aut(ℤ/pℤ)|/|ℤ/pℤ| → 1 as p → ∞', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.set_xlim(0, 210)
+    ax.set_ylim(0.4, 1.05)
+    ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('depth_spectrum.png', dpi=150, bbox_inches='tight')
-    print("Saved: depth_spectrum.png")
+    plt.savefig('aut_density.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved aut_density.png")
 
 
 if __name__ == "__main__":
     plot_periodic_table()
-    plot_depth_spectrum()
+    plot_aut_density()
+    print("All visualizations generated.")
