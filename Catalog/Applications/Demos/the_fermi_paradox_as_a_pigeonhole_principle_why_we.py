@@ -1,333 +1,358 @@
 #!/usr/bin/env python3
 """
-Demo: The Fermi Paradox as a Pigeonhole Principle
+Sparse Occupation Theory — Numerical Demonstrations
 
-Numerical demonstrations of the Great Filter Theorem, temporal pigeonhole,
-and Drake equation sensitivity analysis.
+Demonstrates the mathematical framework connecting the Fermi Paradox
+to the anti-pigeonhole principle via Sparse Occupation Systems.
 """
 
 import math
-import random
+from typing import NamedTuple
 
-def drake_equation(R_star: float, f_p: float, n_e: float,
-                   f_l: float, f_i: float, f_c: float, L: float) -> float:
-    """Compute the Drake equation N = R* × f_p × n_e × f_l × f_i × f_c × L."""
-    return R_star * f_p * n_e * f_l * f_i * f_c * L
 
-def great_filter_bound(product: float, n_filters: int) -> float:
-    """Compute the Great Filter bound: at least one filter ≤ product^(1/n)."""
-    if product <= 0:
-        return 0.0
-    return product ** (1.0 / n_filters)
+class DrakeSystem(NamedTuple):
+    """Drake equation parameters."""
+    R_star: float    # Star formation rate (per year)
+    f_p: float       # Fraction with planets
+    n_e: float       # Habitable planets per star
+    f_l: float       # Fraction developing life
+    f_i: float       # Fraction developing intelligence
+    f_c: float       # Fraction developing technology
+    L: float         # Longevity of civilization (years)
 
-def temporal_overlap_probability(N: int, L: float, T: float) -> float:
-    """Probability that at least 2 of N civilizations overlap in time.
-    Each lasts L years in a timeline of T years (birthday paradox analog)."""
-    if N <= 1 or L <= 0 or T <= 0:
-        return 0.0
-    # Probability of NO overlap (birthday paradox):
-    p_no_overlap = 1.0
-    for k in range(1, N):
-        p_no_overlap *= max(0, 1 - k * L / T)
-    return 1 - p_no_overlap
+    def per_star_prob(self) -> float:
+        """Per-star probability (product of all factors, normalized)."""
+        return self.f_p * self.n_e * self.f_l * self.f_i * self.f_c
 
-def filter_chain_decay(base: float, p: float, n: int) -> float:
-    """Expected civilizations with n filters each at probability p."""
-    return base * (p ** n)
+    def expected_civs(self, galaxy_lifetime: float = 1.0) -> float:
+        """Expected number of simultaneously detectable civilizations."""
+        return self.R_star * self.per_star_prob() * self.L
 
-def main():
+    def factors(self) -> list[float]:
+        """All multiplicative factors."""
+        return [self.f_p, self.n_e, self.f_l, self.f_i, self.f_c]
+
+
+class SparseOccupation(NamedTuple):
+    """Sparse Occupation System."""
+    num_slots: int
+    occ_prob: float
+
+    def expected_occ(self) -> float:
+        return self.num_slots * self.occ_prob
+
+    def silence_prob(self) -> float:
+        return (1 - self.occ_prob) ** self.num_slots
+
+    def contact_prob(self) -> float:
+        return 1 - self.silence_prob()
+
+    def is_sparse(self) -> bool:
+        return self.expected_occ() < 1
+
+    def bernoulli_lower_bound(self) -> float:
+        """Lower bound on silence prob: 1 - np."""
+        return max(0, 1 - self.expected_occ())
+
+
+def demo_drake_estimates():
+    """Compare pessimistic and optimistic Drake estimates."""
     print("=" * 70)
-    print("THE FERMI PARADOX AS A PIGEONHOLE PRINCIPLE")
-    print("Numerical Demonstrations")
+    print("DEMO 1: Drake Equation Parameter Sweep")
     print("=" * 70)
 
-    # === Demo 1: Drake Equation Scenarios ===
-    print("\n" + "─" * 70)
-    print("DEMO 1: Drake Equation Under Three Scenarios")
-    print("─" * 70)
+    pessimistic = DrakeSystem(
+        R_star=1.5, f_p=0.5, n_e=0.01, f_l=0.01, f_i=0.01, f_c=0.01, L=100
+    )
+    moderate = DrakeSystem(
+        R_star=2.0, f_p=0.8, n_e=0.1, f_l=0.1, f_i=0.1, f_c=0.1, L=10000
+    )
+    optimistic = DrakeSystem(
+        R_star=3.0, f_p=1.0, n_e=0.4, f_l=1.0, f_i=0.5, f_c=0.5, L=1e9
+    )
 
-    scenarios = {
-        "Optimistic": (3.0, 1.0, 0.4, 1.0, 0.5, 0.5, 1e9),
-        "Moderate":   (1.5, 0.5, 0.1, 0.1, 0.1, 0.1, 1e4),
-        "Pessimistic": (1.5, 0.5, 0.01, 0.01, 0.01, 0.01, 100),
+    for name, drake in [("Pessimistic", pessimistic), ("Moderate", moderate),
+                        ("Optimistic", optimistic)]:
+        N = drake.expected_civs()
+        psp = drake.per_star_prob()
+        print(f"\n{name} estimate:")
+        print(f"  Per-star prob: {psp:.2e}")
+        print(f"  Expected civs: {N:.2e}")
+        print(f"  Sparse regime: {'YES' if N < 1 else 'NO'}")
+        if N < 1:
+            print(f"  Silence prob ≥ {1 - N:.10f}")
+
+
+def demo_bottleneck():
+    """Demonstrate the bottleneck theorem."""
+    print("\n" + "=" * 70)
+    print("DEMO 2: Bottleneck Theorem")
+    print("=" * 70)
+
+    n_planets = 10**10  # ~10 billion habitable planets
+    threshold = 1.0 / n_planets
+    print(f"\nWith {n_planets:.0e} habitable planets:")
+    print(f"Bottleneck threshold: any factor < {threshold:.2e} => silence")
+
+    # Show how each factor being small forces silence
+    factors = {
+        "f_l (life)": [1e-5, 1e-10, 1e-15, 1e-20],
+        "f_i (intelligence)": [1e-5, 1e-10, 1e-15, 1e-20],
+        "f_c (technology)": [1e-5, 1e-10, 1e-15, 1e-20],
     }
 
-    for name, params in scenarios.items():
-        N = drake_equation(*params)
-        print(f"\n  {name} scenario:")
-        print(f"    R* = {params[0]}, f_p = {params[1]}, n_e = {params[2]}")
-        print(f"    f_l = {params[3]}, f_i = {params[4]}, f_c = {params[5]}, L = {params[6]:.0e}")
-        print(f"    N (Milky Way) = {N:.3e}")
-        if N < 1:
-            print(f"    → Fewer than 1 civilization expected in our galaxy!")
+    for factor_name, values in factors.items():
+        print(f"\n  {factor_name}:")
+        for v in values:
+            is_bottleneck = v < threshold
+            print(f"    {v:.0e} -> bottleneck: {is_bottleneck}")
 
-    # === Demo 2: Great Filter Theorem ===
-    print("\n" + "─" * 70)
-    print("DEMO 2: Great Filter Theorem")
-    print("─" * 70)
 
-    for n in [7, 10, 15]:
-        for log_product in [-7, -15, -22]:
-            product = 10 ** log_product
-            bound = great_filter_bound(product, n)
-            print(f"  n = {n:2d} filters, product = 10^{log_product:3d}"
-                  f"  →  Great Filter bound: {bound:.3e}")
-
-    # === Demo 3: Temporal Pigeonhole ===
-    print("\n" + "─" * 70)
-    print("DEMO 3: Temporal Overlap Probability")
-    print("─" * 70)
-
-    T_galaxy = 1.3e10  # years
-    print(f"  Galaxy age: {T_galaxy:.1e} years")
-    for N_civ in [2, 5, 10, 100]:
-        for L_civ in [1e3, 1e4, 1e5, 1e6]:
-            p_overlap = temporal_overlap_probability(N_civ, L_civ, T_galaxy)
-            coverage = N_civ * L_civ / T_galaxy * 100
-            print(f"    N = {N_civ:3d}, L = {L_civ:.0e} yr"
-                  f"  →  P(overlap) = {p_overlap:.6f}"
-                  f"  coverage = {coverage:.4f}%")
-
-    # === Demo 4: Filter Chain Exponential Decay ===
-    print("\n" + "─" * 70)
-    print("DEMO 4: Filter Chain Exponential Decay")
-    print("─" * 70)
-
-    base = 1e10  # habitable planets
-    print(f"  Base count: {base:.0e} habitable planets")
-    for p in [0.5, 0.1, 0.01]:
-        print(f"\n  Filter probability p = {p}:")
-        for n in range(1, 16):
-            E = filter_chain_decay(base, p, n)
-            status = "  ← ALONE" if E < 1 else ""
-            print(f"    n = {n:2d} filters: E = {E:.3e}{status}")
-
-    # === Demo 5: Monte Carlo Validation ===
-    print("\n" + "─" * 70)
-    print("DEMO 5: Monte Carlo — Great Filter Always Exists")
-    print("─" * 70)
-
-    n_trials = 100000
-    n_filters = 7
-    target_product = 1e-10
-
-    min_filter_values = []
-    random.seed(42)
-
-    for _ in range(n_trials):
-        # Generate random filters that multiply to approximately target_product
-        log_target = math.log(target_product)
-        # Random partition of log_target among n_filters
-        cuts = sorted([random.uniform(0, 1) for _ in range(n_filters - 1)])
-        cuts = [0] + cuts + [1]
-        log_filters = [log_target * (cuts[i+1] - cuts[i]) for i in range(n_filters)]
-        filters = [math.exp(lf) for lf in log_filters]
-        min_filter_values.append(min(filters))
-
-    theoretical_bound = target_product ** (1.0 / n_filters)
-    empirical_fraction = sum(1 for m in min_filter_values if m <= theoretical_bound) / n_trials
-
-    print(f"  Trials: {n_trials}")
-    print(f"  Filters: {n_filters}")
-    print(f"  Target product: {target_product:.0e}")
-    print(f"  Theoretical bound (product^(1/n)): {theoretical_bound:.6f}")
-    print(f"  Fraction with min ≤ bound: {empirical_fraction:.4f}")
-    print(f"  (Should be 1.0000 by the Great Filter Theorem)")
-
-    avg_min = sum(min_filter_values) / len(min_filter_values)
-    print(f"  Average minimum filter value: {avg_min:.6f}")
-
+def demo_silence_probability():
+    """Demonstrate silence probability calculations."""
     print("\n" + "=" * 70)
-    print("CONCLUSION: The Fermi paradox is mathematics, not mystery.")
+    print("DEMO 3: Silence Probability vs Expected Occupancy")
     print("=" * 70)
 
+    print(f"\n{'λ (expected)':<15} {'P(silence)':<15} {'P(contact)':<15} "
+          f"{'Bernoulli LB':<15} {'Sparse?':<10}")
+    print("-" * 70)
+
+    lambdas = [0.001, 0.01, 0.1, 0.5, 1.0, 2.0, 5.0, 10.0]
+    n = 10**6  # large n for Poisson approximation
+
+    for lam in lambdas:
+        p = lam / n
+        s = SparseOccupation(n, p)
+        poisson_silence = math.exp(-lam)  # Poisson limit
+
+        print(f"{lam:<15.3f} {s.silence_prob():<15.6f} {s.contact_prob():<15.6f} "
+              f"{s.bernoulli_lower_bound():<15.6f} {'YES' if s.is_sparse() else 'NO':<10}")
+
+
+def demo_birthday_bound():
+    """Demonstrate the birthday/anti-pigeonhole bound."""
+    print("\n" + "=" * 70)
+    print("DEMO 4: Birthday Problem (Quantitative Anti-Pigeonhole)")
+    print("=" * 70)
+
+    n = 365  # slots
+    print(f"\n  Slots (n={n}):")
+    print(f"  {'k (items)':<12} {'P(no collision)':<20} {'P(collision)':<20}")
+    print("  " + "-" * 50)
+
+    for k in [2, 5, 10, 15, 20, 23, 30, 50]:
+        prob = 1.0
+        for i in range(k):
+            prob *= (1 - i / n)
+        print(f"  {k:<12} {prob:<20.6f} {1-prob:<20.6f}")
+
+
+def demo_critical_threshold():
+    """Compute the critical Drake factor for uniform factors."""
+    print("\n" + "=" * 70)
+    print("DEMO 5: Critical Threshold (Falsifiable Conjecture)")
+    print("=" * 70)
+
+    k = 7  # Drake factors
+    n = 10**10  # habitable planets
+
+    f_c = n ** (-1.0 / k)
+    print(f"\n  For k={k} identical factors and n={n:.0e} planets:")
+    print(f"  Critical factor f_c = n^(-1/k) = {f_c:.6f}")
+    print(f"  Verification: n × f_c^k = {n * f_c**k:.6f} (should be ≈ 1)")
+    print(f"\n  Interpretation: if the geometric mean of Drake factors")
+    print(f"  exceeds {f_c:.4f} (~{f_c*100:.2f}%), we expect ≥ 1 civilization.")
+    print(f"  Our silence constrains the geometric mean below this threshold.")
+
+
+def demo_monotonicity():
+    """Demonstrate monotonicity of silence probability."""
+    print("\n" + "=" * 70)
+    print("DEMO 6: Monotonicity of Silence")
+    print("=" * 70)
+
+    p = 0.001
+    print(f"\n  Fixed p = {p}:")
+    print(f"  {'n (slots)':<12} {'Silence prob':<15} {'Expected occ':<15}")
+    print("  " + "-" * 40)
+    for n in [10, 100, 500, 1000, 5000, 10000]:
+        s = SparseOccupation(n, p)
+        print(f"  {n:<12} {s.silence_prob():<15.6f} {s.expected_occ():<15.3f}")
+
+    n = 1000
+    print(f"\n  Fixed n = {n}:")
+    print(f"  {'p (prob)':<12} {'Silence prob':<15} {'Expected occ':<15}")
+    print("  " + "-" * 40)
+    for p in [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05]:
+        s = SparseOccupation(n, p)
+        print(f"  {p:<12.4f} {s.silence_prob():<15.6f} {s.expected_occ():<15.3f}")
+
+
 if __name__ == "__main__":
-    main()
+    demo_drake_estimates()
+    demo_bottleneck()
+    demo_silence_probability()
+    demo_birthday_bound()
+    demo_critical_threshold()
+    demo_monotonicity()
+    print("\n" + "=" * 70)
+    print("All demonstrations complete.")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
-"""Visualization: Exponential Decay of Expected Civilizations with Filter Count."""
+"""
+Visualization: Drake Factor Heatmap
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
+Shows how the expected number of civilizations varies as a function
+of two Drake factors, with the silence boundary (N=1) highlighted.
+"""
 
-def main():
-    base_count = 1e10  # habitable planets
-    filter_probs = [0.5, 0.1, 0.01, 0.001]
-    n_range = np.arange(1, 21)
+import math
+
+def plot_drake_heatmap():
+    """Generate the Drake factor heatmap."""
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+        import numpy as np
+    except ImportError:
+        print("matplotlib/numpy not available, skipping plot")
+        return
+
+    # Fix all factors except f_l (life) and f_i (intelligence)
+    R_star = 2.0
+    f_p = 0.8
+    n_e = 0.1
+    f_c = 0.1
+    L = 10000  # years
+
+    # Create grid
+    f_l_range = np.logspace(-6, 0, 200)
+    f_i_range = np.logspace(-6, 0, 200)
+    F_L, F_I = np.meshgrid(f_l_range, f_i_range)
+
+    # Compute expected civilizations
+    N = R_star * f_p * n_e * F_L * F_I * f_c * L
+
+    fig, ax = plt.subplots(figsize=(10, 8))
+
+    # Heatmap
+    im = ax.pcolormesh(f_l_range, f_i_range, np.log10(N),
+                       cmap='RdYlBu_r', shading='auto', vmin=-6, vmax=6)
+    plt.colorbar(im, ax=ax, label='$\\log_{10}(N)$ expected civilizations')
+
+    # Silence boundary N = 1
+    ax.contour(f_l_range, f_i_range, N, levels=[1],
+               colors='white', linewidths=3, linestyles='--')
+    ax.contour(f_l_range, f_i_range, N, levels=[0.01, 0.1, 10, 100],
+               colors='gray', linewidths=1, linestyles=':')
+
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.set_xlabel('$f_\\ell$ (probability of life)', fontsize=12)
+    ax.set_ylabel('$f_i$ (probability of intelligence)', fontsize=12)
+    ax.set_title(f'Drake Equation: Silence Region\n'
+                 f'($R_*$={R_star}, $f_p$={f_p}, $n_e$={n_e}, '
+                 f'$f_c$={f_c}, L={L}yr)', fontsize=14)
+
+    # Annotate regions
+    ax.text(1e-5, 1e-1, 'SILENCE\n(N < 1)', fontsize=14,
+            color='white', ha='center', va='center', fontweight='bold')
+    ax.text(1e-1, 1e-1, 'CONTACT\n(N > 1)', fontsize=14,
+            color='black', ha='center', va='center', fontweight='bold')
+
+    plt.tight_layout()
+    plt.savefig('drake_heatmap.png', dpi=150, bbox_inches='tight')
+    print("Saved drake_heatmap.png")
+
+
+if __name__ == "__main__":
+    plot_drake_heatmap()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: The Silence Landscape
+
+Shows the silence probability as a function of expected occupancy λ = np,
+comparing the exact value, Bernoulli bound, and Poisson approximation.
+"""
+
+import math
+
+def compute_silence_data():
+    """Compute silence probability curves."""
+    n = 10000  # large n for smooth curves
+    lambdas = []
+    exact_vals = []
+    bernoulli_vals = []
+    poisson_vals = []
+
+    for i in range(1, 1001):
+        lam = i * 0.01  # λ from 0.01 to 10
+        p = lam / n
+        if p > 1:
+            break
+        lambdas.append(lam)
+        exact_vals.append((1 - p) ** n)
+        bernoulli_vals.append(max(0, 1 - lam))
+        poisson_vals.append(math.exp(-lam))
+
+    return lambdas, exact_vals, bernoulli_vals, poisson_vals
+
+
+def plot_silence_landscape():
+    """Generate the silence landscape plot."""
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print("matplotlib not available, skipping plot")
+        return
+
+    lambdas, exact, bernoulli, poisson = compute_silence_data()
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Left: log-scale expected civilizations
-    for p in filter_probs:
-        E = base_count * p ** n_range
-        ax1.semilogy(n_range, E, 'o-', label=f'p = {p}', markersize=4)
-
-    ax1.axhline(y=1, color='red', linestyle='--', linewidth=2, label='E = 1 (alone)')
-    ax1.set_xlabel('Number of Filters (n)', fontsize=12)
-    ax1.set_ylabel('Expected Civilizations E', fontsize=12)
-    ax1.set_title('Filter Chain Exponential Decay', fontsize=14)
+    # Left: Silence probability
+    ax1.plot(lambdas, exact, 'b-', linewidth=2, label='Exact: $(1-\\lambda/n)^n$')
+    ax1.plot(lambdas, poisson, 'r--', linewidth=2, label='Poisson: $e^{-\\lambda}$')
+    ax1.plot(lambdas, bernoulli, 'g:', linewidth=2, label='Bernoulli: $1-\\lambda$')
+    ax1.axvline(x=1, color='gray', linestyle='--', alpha=0.5, label='$\\lambda = 1$ (threshold)')
+    ax1.axhline(y=0.5, color='gray', linestyle=':', alpha=0.3)
+    ax1.set_xlabel('Expected Occupancy $\\lambda = np$', fontsize=12)
+    ax1.set_ylabel('Silence Probability $P(\\text{silence})$', fontsize=12)
+    ax1.set_title('The Silence Landscape', fontsize=14)
     ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-    ax1.set_xlim(1, 20)
+    ax1.set_xlim(0, 5)
+    ax1.set_ylim(0, 1)
+    ax1.fill_between(lambdas, 0, [e if l < 1 else 0 for l, e in zip(lambdas, exact)],
+                     alpha=0.1, color='blue', label='Sparse regime')
 
-    # Right: Great Filter bound
-    products = np.logspace(-30, -1, 100)
-    for n in [3, 5, 7, 10, 15]:
-        bounds = products ** (1.0 / n)
-        ax2.loglog(products, bounds, '-', label=f'n = {n} filters', linewidth=2)
+    # Right: Contact probability (complement)
+    contact_exact = [1 - e for e in exact]
+    contact_poisson = [1 - p for p in poisson]
+    contact_markov = [min(1, l) for l in lambdas]
 
-    ax2.set_xlabel('Product of Filters (∏ fᵢ)', fontsize=12)
-    ax2.set_ylabel('Great Filter Bound (max of min filter)', fontsize=12)
-    ax2.set_title('Great Filter Theorem: Minimum Filter Bound', fontsize=14)
+    ax2.plot(lambdas, contact_exact, 'b-', linewidth=2, label='Exact: $1-(1-\\lambda/n)^n$')
+    ax2.plot(lambdas, contact_poisson, 'r--', linewidth=2, label='Poisson: $1-e^{-\\lambda}$')
+    ax2.plot(lambdas, contact_markov, 'g:', linewidth=2, label='Markov bound: $\\min(1, \\lambda)$')
+    ax2.axvline(x=1, color='gray', linestyle='--', alpha=0.5)
+    ax2.set_xlabel('Expected Occupancy $\\lambda = np$', fontsize=12)
+    ax2.set_ylabel('Contact Probability $P(\\text{contact})$', fontsize=12)
+    ax2.set_title('The Contact Probability', fontsize=14)
     ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
+    ax2.set_xlim(0, 5)
+    ax2.set_ylim(0, 1)
 
     plt.tight_layout()
-    plt.savefig('viz_drake_decay.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_drake_decay.png")
+    plt.savefig('silence_landscape.png', dpi=150, bbox_inches='tight')
+    print("Saved silence_landscape.png")
+
 
 if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""Visualization: Monte Carlo Drake Equation — Distribution of Expected Civilizations."""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-def main():
-    np.random.seed(42)
-    n_samples = 200000
-    base_count = 1e10
-    n_filters = 7
-
-    # Sample filters uniformly from (0.001, 1.0)
-    filters = np.random.uniform(0.001, 1.0, size=(n_samples, n_filters))
-    log_products = np.sum(np.log10(filters), axis=1)
-    log_E = np.log10(base_count) + log_products
-
-    min_filters = np.min(filters, axis=1)
-    theoretical_bounds = 10 ** (log_products / n_filters)
-
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-    # Top-left: Distribution of log10(E)
-    ax = axes[0, 0]
-    ax.hist(log_E, bins=100, density=True, alpha=0.7, color='steelblue')
-    ax.axvline(x=0, color='red', linestyle='--', linewidth=2, label='E = 1 (alone)')
-    prob_alone = np.mean(log_E < 0)
-    ax.set_xlabel('log₁₀(Expected Civilizations)', fontsize=11)
-    ax.set_ylabel('Density', fontsize=11)
-    ax.set_title(f'Drake Equation Distribution  —  P(alone) = {prob_alone:.1%}', fontsize=12)
-    ax.legend(fontsize=10)
-
-    # Top-right: Min filter vs theoretical bound
-    ax = axes[0, 1]
-    mask = np.random.choice(n_samples, 2000, replace=False)
-    ax.scatter(theoretical_bounds[mask], min_filters[mask], alpha=0.3, s=5, color='steelblue')
-    lim = [1e-4, 1.1]
-    ax.plot(lim, lim, 'r--', linewidth=2, label='min = bound')
-    ax.set_xscale('log')
-    ax.set_yscale('log')
-    ax.set_xlabel('Theoretical Bound (∏fᵢ)^(1/n)', fontsize=11)
-    ax.set_ylabel('Actual Minimum Filter', fontsize=11)
-    ax.set_title('Great Filter Theorem: min ≤ bound always holds', fontsize=12)
-    ax.legend(fontsize=10)
-
-    # Bottom-left: Expected civilizations vs number of filters
-    ax = axes[1, 0]
-    for p_label, p_lo, p_hi in [("Wide: U(0.001,1)", 0.001, 1.0),
-                                  ("Medium: U(0.01,0.5)", 0.01, 0.5),
-                                  ("Narrow: U(0.05,0.2)", 0.05, 0.2)]:
-        medians = []
-        ns = range(3, 16)
-        for n in ns:
-            f = np.random.uniform(p_lo, p_hi, size=(10000, n))
-            lp = np.sum(np.log10(f), axis=1)
-            le = np.log10(base_count) + lp
-            medians.append(np.median(le))
-        ax.plot(list(ns), medians, 'o-', label=p_label, markersize=5)
-
-    ax.axhline(y=0, color='red', linestyle='--', linewidth=2)
-    ax.set_xlabel('Number of Filters', fontsize=11)
-    ax.set_ylabel('Median log₁₀(E)', fontsize=11)
-    ax.set_title('Exponential Decay: More Filters → Fewer Civilizations', fontsize=12)
-    ax.legend(fontsize=10)
-
-    # Bottom-right: Which filter is the Great Filter?
-    ax = axes[1, 1]
-    great_filter_indices = np.argmin(filters, axis=1)
-    counts = np.bincount(great_filter_indices, minlength=n_filters)
-    ax.bar(range(n_filters), counts / n_samples * 100, color='steelblue', alpha=0.8)
-    ax.set_xlabel('Filter Index', fontsize=11)
-    ax.set_ylabel('Frequency as Great Filter (%)', fontsize=11)
-    ax.set_title('Which Filter Is the Great Filter? (Uniform priors)', fontsize=12)
-    ax.axhline(y=100/n_filters, color='red', linestyle='--', label=f'Expected: {100/n_filters:.1f}%')
-    ax.legend(fontsize=10)
-
-    plt.tight_layout()
-    plt.savefig('viz_monte_carlo.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_monte_carlo.png")
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""Visualization: Temporal Pigeonhole — Civilization Coverage Over Cosmic Time."""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-def main():
-    np.random.seed(42)
-
-    T = 13000  # million-year epochs
-    scenarios = [
-        ("5 civilizations, L=10 Myr", 5, 10),
-        ("20 civilizations, L=10 Myr", 20, 10),
-        ("100 civilizations, L=10 Myr", 100, 10),
-        ("100 civilizations, L=100 Myr", 100, 100),
-    ]
-
-    fig, axes = plt.subplots(len(scenarios), 1, figsize=(14, 10), sharex=True)
-
-    for ax, (title, N, L) in zip(axes, scenarios):
-        starts = np.random.randint(0, T - L, size=N)
-        coverage = np.zeros(T)
-        for s in starts:
-            coverage[s:s+L] = 1
-
-        frac = np.sum(coverage) / T * 100
-
-        time = np.arange(T) / 1000  # in billions of years
-        ax.fill_between(time, 0, coverage, alpha=0.6, color='steelblue')
-        ax.set_ylabel('Occupied', fontsize=10)
-        ax.set_title(f'{title}  —  Coverage: {frac:.2f}%', fontsize=11)
-        ax.set_ylim(-0.1, 1.3)
-        ax.set_yticks([0, 1])
-        ax.set_yticklabels(['Empty', 'Civilization'])
-
-        # Mark "now"
-        now = 13.0
-        ax.axvline(x=now, color='red', linestyle='--', alpha=0.7)
-        ax.text(now + 0.05, 1.1, 'Now', color='red', fontsize=9)
-
-    axes[-1].set_xlabel('Cosmic Time (billions of years)', fontsize=12)
-
-    fig.suptitle('Temporal Pigeonhole: Most of Cosmic History Is Empty',
-                 fontsize=14, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    plt.savefig('viz_temporal_pigeonhole.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_temporal_pigeonhole.png")
-
-if __name__ == "__main__":
-    main()
+    plot_silence_landscape()

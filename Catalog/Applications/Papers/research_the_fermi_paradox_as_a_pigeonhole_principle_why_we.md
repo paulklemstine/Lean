@@ -1,157 +1,237 @@
-# The Fermi Paradox as a Pigeonhole Principle: Formal Foundations for the Great Filter
+# Sparse Occupation Theory and the Anti-Pigeonhole Resolution of the Fermi Paradox
 
 ## Abstract
 
-We present a formal mathematical framework for analyzing the Fermi paradox through the lens of the pigeonhole principle and elementary probability bounds. We introduce the **Drake Filter Model**, a parametric structure capturing the Drake equation as a base count of candidate sites passed through a chain of independent filter probabilities. Within this framework, we prove three main results: (1) the **Great Filter Theorem**, showing that if the product of n filter probabilities is less than c^n, at least one filter must be less than c — establishing the mathematical inevitability of a "Great Filter"; (2) a **Temporal Pigeonhole** result, proving that when civilizations are fewer than time epochs, at least one epoch must be empty; and (3) a **Filter Chain Bound**, demonstrating that the expected number of civilizations decays exponentially with the number of filter steps. We additionally prove a **Contact Window Sparsity** theorem showing that when total civilization-years are less than cosmic time, temporal gaps in coverage are guaranteed. All results have been formally verified.
+We introduce **Sparse Occupation Systems**, a mathematical framework for reasoning about the regime where the classical pigeonhole principle yields no information — the case of far fewer occupants than slots. We formalize the Drake equation as a product of probability factors over a finite index set, prove a bottleneck theorem showing that any single sufficiently small factor forces the entire system into the sparse regime, and establish the Bernoulli silence bound showing that in this regime, the probability of zero detections is at least 1 - np. We prove monotonicity of the silence probability in both the number of slots and the occupation probability, establish that the silence region in Drake parameter space is a downward-closed set, and give a quantitative anti-pigeonhole bound for the birthday problem. All results are formalized and machine-verified in Lean 4 with Mathlib.
 
-**Keywords**: Fermi paradox, Drake equation, pigeonhole principle, Great Filter, existential risk
+**Keywords**: Fermi paradox, pigeonhole principle, sparse occupation, Drake equation, Bernoulli inequality, astrobiology
 
 ## 1. Introduction
 
-The Fermi paradox — the apparent contradiction between the high probability of extraterrestrial civilizations and the lack of evidence for them — has generated extensive literature across astrophysics, philosophy, and astrobiology [1, 2, 3]. Proposed resolutions range from the "Zoo Hypothesis" to self-destruction scenarios to the "Dark Forest" theory.
+The Fermi paradox [1] asks why, given the apparent abundance of habitable environments in the observable universe, we observe no evidence of extraterrestrial technological civilizations. Proposed resolutions span a wide range, from the "Great Filter" hypothesis [2] to the "Dark Forest" theory [3] to self-destruction scenarios [4].
 
-We argue that the paradox admits a purely mathematical resolution grounded in two classical combinatorial principles: the pigeonhole principle and the monotonicity of finite products. Our approach formalizes the Drake equation not as a numerical estimate but as a *mathematical structure* — a product of filters applied to a base count — and derives rigorous consequences from this structure.
+We argue that no exotic resolution is necessary. The paradox dissolves under straightforward probabilistic analysis once we recognize that the relevant regime is the *anti-pigeonhole* regime: when expected occupancy falls below 1, silence is the generic outcome.
 
-### 1.1 Contributions
+Our contribution is threefold:
+1. We introduce the **Sparse Occupation System** (SOS) as a formal mathematical structure capturing the essential features of this regime.
+2. We prove a suite of theorems characterizing the behavior of SOS, including the Markov silence bound, Bernoulli silence bound, bottleneck theorem, and monotonicity properties.
+3. We formalize the connection between the Drake equation and SOS, showing that the Fermi paradox is a direct consequence of the anti-pigeonhole principle.
 
-1. **DrakeFilterModel**: A novel mathematical structure formalizing the Drake equation as a parametric filter chain (Definition 2.1).
-2. **Great Filter Theorem**: A pigeonhole-type result for multiplicative structures (Theorem 3.2).
-3. **Temporal Pigeonhole**: Application of the classical pigeonhole principle to civilization timelines (Theorem 4.1).
-4. **Filter Chain Bound**: Exponential decay of expected civilizations with filter count (Theorem 5.1).
-5. **Contact Window Sparsity**: Guaranteed temporal gaps when civilization-years are scarce (Theorem 6.1).
+## 2. Definitions
 
-All results have been formally verified using the Lean 4 theorem prover with the Mathlib library.
+### 2.1 Drake System
 
-## 2. The Drake Filter Model
+**Definition 2.1** (Drake System). A *Drake system of order k* consists of:
+- A function $f : \{1, \ldots, k\} \to [0, 1]$ assigning a probability factor to each stage of the civilization cascade.
 
-### Definition 2.1 (Drake Filter Model)
+The **per-star probability** is $p^* = \prod_{i=1}^{k} f(i)$.
 
-A **Drake Filter Model** of arity n consists of:
-- A function `filters : Fin n → ℝ` with each `filters(i) ∈ (0, 1]`
-- A positive real `base_count > 0`
+The **expected number of civilizations** given $n$ candidate sites is $N = n \cdot p^*$.
 
-The **expected number of civilizations** is defined as:
+In the standard Drake equation, $k = 7$ with factors: star formation rate $R_*$ (normalized), planetary fraction $f_p$, habitable planets per star $n_e$, life fraction $f_\ell$, intelligence fraction $f_i$, technology fraction $f_c$, and normalized longevity $L/T$.
 
-$$E = \text{base\_count} \times \prod_{i=0}^{n-1} \text{filters}(i)$$
+### 2.2 Sparse Occupation System
 
-### Proposition 2.2 (Positivity)
-For any Drake Filter Model D, E(D) > 0.
+**Definition 2.2** (Sparse Occupation System). A *sparse occupation system* consists of:
+- $n \in \mathbb{N}$: the number of slots (habitable planets)
+- $p \in [0, 1]$: the probability of occupation per slot
+- The **expected occupancy** $\lambda = np$
+- The **silence probability** $S = (1-p)^n$
+- The **contact probability** $C = 1 - (1-p)^n$
 
-*Proof.* The base count is positive and each filter is positive, so their product is positive. □
+The system is in the **sparse regime** when $\lambda < 1$.
 
-### Proposition 2.3 (Base Count Bound)
-For any Drake Filter Model D, E(D) ≤ base_count.
+## 3. Main Results
 
-*Proof.* Since each filter is in (0, 1], their product is at most 1, hence E(D) = base_count × ∏ filters ≤ base_count × 1 = base_count. □
+### 3.1 Basic Properties
 
-### Remark 2.4
-The classical Drake equation parameters map to our model as follows: the base count incorporates the star formation rate and the number of candidate habitable planets, while the filters correspond to the conditional probabilities of life → intelligence → technology → detection.
+**Theorem 3.1** (Silence-Contact Duality). $S + C = 1$.
 
-## 3. The Great Filter Theorem
+*Proof.* Immediate from the definitions: $S + C = (1-p)^n + (1 - (1-p)^n) = 1$. □
 
-### Theorem 3.1 (Product Lower Bound)
-Let f : Fin n → ℝ and c ≥ 0. If f(i) ≥ c for all i, then ∏ f(i) ≥ c^n.
+### 3.2 The Markov Silence Bound
 
-*Proof.* By induction on n. The base case n = 0 gives the empty product 1 ≥ c^0 = 1. For the inductive step, we factor the product and apply the inductive hypothesis to the first n-1 factors, then multiply by the bound on the nth factor. More directly, this follows from the monotonicity of finite products: replacing each f(i) with the smaller value c can only decrease the product. □
+**Theorem 3.2** (Markov Silence Bound). For any sparse occupation system, $C \leq \lambda = np$.
 
-### Theorem 3.2 (Great Filter Theorem — Pigeonhole for Products)
-Let f : Fin n → ℝ and c ≥ 0. If ∏ f(i) < c^n, then ∃ i such that f(i) < c.
+This is the probabilistic anti-pigeonhole inequality: the probability of at least one occupation is bounded above by the expected occupancy.
 
-*Proof.* By contrapositive. If f(i) ≥ c for all i, then by Theorem 3.1, ∏ f(i) ≥ c^n, contradicting the hypothesis. □
+*Proof.* We need $(1-p)^n \geq 1 - np$, which is Bernoulli's inequality for $x = -p \geq -1$:
+$(1 + x)^n \geq 1 + nx$ for $x \geq -1$ and $n \in \mathbb{N}$.
 
-### Corollary 3.3 (Drake Great Filter)
-If E(D) < base_count × c^n, then some filter is less than c.
+The formal proof invokes the Mathlib lemma `one_add_mul_le_pow`. □
 
-*Proof.* Since E(D) = base_count × ∏ filters and base_count > 0, the hypothesis implies ∏ filters < c^n. Apply Theorem 3.2. □
+**Corollary 3.3.** In the sparse regime ($\lambda < 1$), we have $C < 1$, i.e., silence has strictly positive probability.
 
-### Discussion
-The Great Filter Theorem establishes that a "Great Filter" — at least one extraordinarily restrictive step — is a mathematical *certainty* whenever the Drake equation yields a small expected count. The theorem does not identify which filter is the Great Filter; it merely guarantees that at least one exists.
+### 3.3 The Bernoulli Silence Bound
 
-For the Drake equation with n = 7 parameters, if the overall probability per habitable planet is less than 10⁻²², then at least one filter must be less than (10⁻²²)^(1/7) ≈ 7.2 × 10⁻⁴. This is a rigorous lower bound on the severity of the Great Filter.
+**Theorem 3.4** (Bernoulli Silence Bound). $S = (1-p)^n \geq 1 - np = 1 - \lambda$.
 
-## 4. Temporal Pigeonhole
+This provides a tight lower bound on the silence probability. In the sparse regime ($\lambda < 1$), silence probability exceeds $1 - \lambda > 0$.
 
-### Theorem 4.1 (Temporal Pigeonhole)
-If N < T and f : Fin N → Fin T is any function mapping civilizations to time epochs, then there exists t ∈ Fin T such that f(i) ≠ t for all i.
+*Proof.* Direct application of Bernoulli's inequality. □
 
-*Proof.* Since |Fin N| = N < T = |Fin T|, the function f cannot be surjective. Hence there exists t not in the range of f. □
+### 3.4 The Bottleneck Theorem
 
-### Interpretation
-If the total number of civilizations that have ever existed in a galaxy (N) is less than the number of distinct time epochs (T), then at least one epoch has no civilization. With current estimates suggesting N is very small (possibly less than 10) and T on the order of 10⁴ (million-year epochs over 13 billion years), most epochs are guaranteed to be empty.
+**Theorem 3.5** (Bottleneck). For a Drake system of order $k$ with factors $f_1, \ldots, f_k \in [0,1]$, if any single factor $f_j \leq \varepsilon$, then $p^* \leq \varepsilon$.
 
-## 5. Filter Chain Exponential Decay
+*Proof.* Factor the product as $p^* = f_j \cdot \prod_{i \neq j} f_i$. Since each $f_i \in [0,1]$, the remaining product is at most 1. Therefore $p^* \leq f_j \leq \varepsilon$. □
 
-### Theorem 5.1 (Filter Chain Bound)
-If each filter satisfies filters(i) ≤ p for some p ≥ 0, then E(D) ≤ base_count × p^n.
+**Corollary 3.6** (Single Bottleneck Sufficiency). If $f_j < 1/n$ for any index $j$, then $n \cdot p^* < 1$ and the system is in the sparse regime.
 
-*Proof.* Since each filter is nonneg (being positive) and at most p, the product of filters is at most p^n by monotonicity of finite products. Multiply by base_count. □
+This is the mathematical formalization of the "Great Filter" argument: any single sufficiently improbable step in the Drake cascade forces cosmic silence.
 
-### Theorem 5.2 (Filter Extension Monotonicity)
-For any Drake Filter Model D and any p ∈ (0, 1], E(D) × p ≤ E(D).
+### 3.5 Monotonicity
 
-*Proof.* Since E(D) > 0 and p ≤ 1, we have E(D) × p ≤ E(D) × 1 = E(D). □
+**Theorem 3.7** (Slot Monotonicity). For fixed $p$, the silence probability $S(n) = (1-p)^n$ is non-increasing in $n$.
 
-### Discussion
-These results quantify the exponential sensitivity of the Drake equation. With n = 7 filters each at probability 0.1, the expected count is base_count × 10⁻⁷. Adding three more filters at the same probability drops it to base_count × 10⁻¹⁰ — a thousandfold decrease per additional filter.
+*Proof.* Since $0 \leq 1-p \leq 1$, we have $(1-p)^{n_2} \leq (1-p)^{n_1}$ whenever $n_1 \leq n_2$ by the monotonicity of power functions with base in $[0,1]$. □
 
-This exponential sensitivity suggests that **model uncertainty** in the number of relevant filters is itself a major source of uncertainty in the Drake equation. Even if we are confident about the values of known filters, unknown or unconsidered filters could dramatically reduce the expected count.
+**Theorem 3.8** (Probability Monotonicity). For fixed $n$, the silence probability $S(p) = (1-p)^n$ is non-increasing in $p$.
 
-## 6. Contact Window Sparsity
+*Proof.* If $p_1 \leq p_2$, then $1 - p_2 \leq 1 - p_1$, and since both are in $[0,1]$, $(1-p_2)^n \leq (1-p_1)^n$. □
 
-### Theorem 6.1 (Contact Window Gap)
-If N civilizations each occupy at most L consecutive time slots out of T total, and N × L < T, then there exists a time slot not covered by any civilization.
+### 3.6 The Silence Region
 
-*Proof.* By contradiction. If every time slot t ∈ {0, ..., T-1} is covered by some civilization i (meaning starts(i) ≤ t < starts(i) + L), then the union of all civilization intervals covers all T slots. But the total coverage is at most N × L (each civilization covers at most L slots). Since N × L < T, we have a contradiction: T slots cannot be covered by less than T units of coverage. □
+**Definition 3.9** (Silence Region). The *silence region* in Drake parameter space is:
+$$\mathcal{S}_n = \{(f_1, \ldots, f_k) \in [0,1]^k : n \cdot \prod_{i=1}^k f_i < 1\}$$
 
-### Interpretation
-This theorem formalizes the intuition that brief civilizations spread across cosmic time inevitably leave temporal gaps. If 100 civilizations each last 10,000 years in a galaxy with a 13-billion-year history, the total coverage is 10⁶ years out of 1.3 × 10¹⁰ — less than 0.01%. The theorem guarantees that at least 99.99% of cosmic history has no civilization present.
+**Theorem 3.10** (Downward Closure). The silence region is a downset: if $(f_1, \ldots, f_k) \in \mathcal{S}_n$ and $g_i \leq f_i$ for all $i$, then $(g_1, \ldots, g_k) \in \mathcal{S}_n$.
+
+*Proof.* $n \cdot \prod g_i \leq n \cdot \prod f_i < 1$, since $\prod g_i \leq \prod f_i$ by the componentwise product inequality (each factor is nonneg and bounded). □
+
+### 3.7 The Anti-Pigeonhole Principle
+
+**Theorem 3.11** (Deterministic Pigeonhole, Contrapositive). If $f: A \to B$ is injective, then $|A| \leq |B|$. Equivalently, if $|B| < |A|$, then $f$ is not injective.
+
+**Theorem 3.12** (Birthday Bound). The probability of no collision when placing $k$ items into $n$ slots uniformly at random is:
+$$P(\text{no collision}) = \prod_{i=0}^{k-1} \left(1 - \frac{i}{n}\right) \leq 1$$
+
+This is the quantitative anti-pigeonhole: when $k \ll \sqrt{n}$, collisions are unlikely.
+
+## 4. The Drake Equation: A Numerical Analysis
+
+### 4.1 Parameter Estimates
+
+Using current astronomical data and generous estimates:
+
+| Factor | Symbol | Optimistic | Pessimistic |
+|--------|--------|-----------|-------------|
+| Star formation rate | $R_*$ | 3/yr | 1.5/yr |
+| Planetary fraction | $f_p$ | 1.0 | 0.5 |
+| Habitable per star | $n_e$ | 0.4 | 0.01 |
+| Life fraction | $f_\ell$ | 1.0 | 0.01 |
+| Intelligence fraction | $f_i$ | 0.5 | 0.01 |
+| Technology fraction | $f_c$ | 0.5 | 0.01 |
+| Longevity (years) | $L$ | 10⁹ | 100 |
+
+### 4.2 Results
+
+**Pessimistic estimate**: $N = 1.5 \times 0.5 \times 0.01 \times 0.01 \times 0.01 \times 0.01 \times 100 = 7.5 \times 10^{-7}$
+
+This is deep in the sparse regime. The silence probability exceeds $1 - 7.5 \times 10^{-7} > 0.9999993$.
+
+**Optimistic estimate**: $N = 3 \times 1.0 \times 0.4 \times 1.0 \times 0.5 \times 0.5 \times 10^9 = 3 \times 10^8$
+
+Only in the extreme optimistic case does the expected number exceed 1.
+
+### 4.3 The Key Insight
+
+The range of estimates spans 15 orders of magnitude ($10^{-7}$ to $10^8$). The geometric mean is approximately $10^{0.5} \approx 3$. But the distribution is heavily skewed toward small values because the uncertain factors ($f_\ell, f_i, f_c$) have log-uniform uncertainty distributions that place most probability mass on small values [5].
+
+When Sandberg, Drexler, and Ord [5] performed a careful analysis using log-uniform distributions for the uncertain parameters, they found $P(N < 1) \approx 0.38$ — a substantial probability that we are alone even with generous assumptions.
+
+## 5. PEGB Analysis
+
+### 5.1 Bottleneck Theorem
+
+- **Proof**: Complete formal proof in Lean 4 (see `FermiPigeonhole.lean`).
+- **Example**: With $k = 7$ Drake factors and $n = 10^{10}$ habitable planets, if any single factor is below $10^{-10}$, silence follows.
+- **Generalization**: The bottleneck theorem generalizes to any product of factors in an arbitrary ordered semiring with the appropriate boundedness conditions.
+- **Boundary**: The theorem requires all factors to be in $[0,1]$. If factors can exceed 1 (e.g., if $n_e > 1$ habitable planets per star), the bottleneck bound fails — one must account for compensating factors.
+
+### 5.2 Bernoulli Silence Bound
+
+- **Proof**: Via Bernoulli's inequality, formalized using `one_add_mul_le_pow`.
+- **Example**: With $n = 10^{10}$ and $p = 10^{-11}$, we get $\lambda = 0.1$, so $S \geq 0.9$.
+- **Generalization**: For non-identical occupation probabilities $p_i$, the bound generalizes to $S = \prod(1-p_i) \geq 1 - \sum p_i$ (union bound).
+- **Boundary**: The bound is tight only when $\lambda \ll 1$. As $\lambda \to 1$, the true silence probability $(1-p)^n \to e^{-1} \approx 0.368$ while the bound gives $\geq 0$.
+
+### 5.3 Silence Downward Closure
+
+- **Proof**: Product monotonicity in each factor.
+- **Example**: If $(0.5, 0.01, 0.01)$ produces silence, then so does $(0.3, 0.005, 0.01)$.
+- **Generalization**: The silence region forms a sublattice of the product lattice $[0,1]^k$ — it is closed under meets (componentwise min).
+- **Boundary**: The complement (contact region) is *not* downward-closed — it is an upset.
+
+## 6. Algorithms
+
+### 6.1 Drake Calculator
+
+```
+INPUT: factors f_1, ..., f_k; number of sites n
+OUTPUT: expected civilizations, silence probability, contact probability
+
+1. p* ← product(f_1, ..., f_k)
+2. λ ← n * p*
+3. S ← (1 - p*)^n
+4. C ← 1 - S
+5. RETURN (λ, S, C)
+```
+
+### 6.2 Bottleneck Detector
+
+```
+INPUT: factors f_1, ..., f_k; number of sites n
+OUTPUT: bottleneck factor index, threshold
+
+1. FOR i = 1 TO k:
+2.   IF f_i < 1/n:
+3.     RETURN (i, f_i)
+4. RETURN "No single bottleneck — silence requires joint effect"
+```
 
 ## 7. Falsifiable Conjecture
 
-### Conjecture 7.1 (Critical Filter Threshold)
-For any Drake model with n ≥ 7 filters where all filters are in (0, 1] and the product of all filters is less than c^n, at least one filter is less than c.
+**Conjecture (Uniform Silence Threshold)**: For a Drake system with $k$ identical factors $f$ and $n$ sites, the critical factor value $f_c$ at which $n \cdot f^k = 1$ satisfies $f_c = n^{-1/k}$. For the Milky Way ($n \approx 10^{10}$, $k = 7$), this gives $f_c \approx 10^{-10/7} \approx 0.069$.
 
-This is a direct consequence of the Great Filter Theorem (Theorem 3.2) and is therefore not a conjecture but a theorem. The interesting empirical question is: **which filter is the Great Filter?**
+**Test**: Verify computationally that $10^{10} \times 0.069^7 \approx 1$. This predicts that if each Drake factor exceeds roughly 7%, the galaxy should contain at least one civilization — and our silence constrains the geometric mean of Drake factors to be below this threshold.
 
-### Computational Test
-We can evaluate the Drake equation with various parameter distributions:
+## 8. Cross-Connections
 
-| Scenario | R* | f_p | n_e | f_l | f_i | f_c | L | N (Milky Way) |
-|----------|-----|-----|-----|-----|-----|-----|-----|---------------|
-| Optimistic | 3 | 1 | 0.4 | 1 | 0.5 | 0.5 | 10⁹ | 1.5 × 10⁸ |
-| Moderate | 1.5 | 0.5 | 0.1 | 0.1 | 0.1 | 0.1 | 10⁴ | 0.75 |
-| Pessimistic | 1.5 | 0.5 | 0.01 | 0.01 | 0.01 | 0.01 | 100 | 7.5 × 10⁻⁷ |
+### 8.1 Connection to Catalog: barrier_from_pigeonhole
 
-The moderate scenario already yields fewer than one civilization per galaxy. The pessimistic scenario yields fewer than one per million galaxies.
+Our work directly extends the `barrier_from_pigeonhole` theorem from the Cryptography catalog. That theorem establishes the mathematical core of pigeonhole-based obstruction results. Our contribution is the *inverse direction*: instead of using pigeonhole to prove collisions must exist, we use anti-pigeonhole to prove that silence is expected when occupancy is sparse.
 
-## 8. Related Work
+### 8.2 Connection to Poisson Approximation
 
-Our approach is most closely related to the work of Sandberg, Drexler, and Ord [3], who argued that the Fermi paradox dissolves when parameter uncertainties are properly propagated through the Drake equation. Their key insight — that products of uncertain small numbers can be much smaller than products of expected values — aligns with our Filter Chain Bound.
+In the limit $n \to \infty$, $p \to 0$ with $np = \lambda$ fixed, the binomial distribution $\text{Bin}(n, p)$ converges to $\text{Poisson}(\lambda)$. The silence probability converges to $e^{-\lambda}$. This connects our framework to the theory of rare events and Poisson processes.
 
-The Great Filter concept originates with Hanson [2], who argued qualitatively that at least one step in the development of technological civilization must be extraordinarily improbable. Our Great Filter Theorem (Theorem 3.2) provides a formal, quantitative version of this argument.
+## 9. Discussion
 
-The temporal pigeonhole argument relates to the work of Carter [4] on the anthropic principle, which observes that our existence provides no evidence about the probability of life elsewhere.
+The resolution of the Fermi paradox we propose is not new in spirit — the observation that the Drake equation can yield $N < 1$ has been made before [5, 6]. Our contribution is the *mathematical framework* that makes this observation precise and general:
 
-## 9. Future Work
+1. The **Sparse Occupation System** provides a clean abstraction separating the probabilistic structure from the astronomical parameters.
+2. The **bottleneck theorem** shows that a single sufficiently small factor is sufficient for silence, regardless of the other factors.
+3. The **downward closure** of the silence region shows that silence is robust under parameter perturbation in the pessimistic direction.
+4. The formal verification ensures that these results are not merely plausible arguments but mathematical theorems.
 
-1. **Bayesian Drake models**: Extend the framework to handle uncertain parameters using probability distributions over filter values, and derive posterior bounds on individual filters.
+## 10. Future Work
 
-2. **Correlated filters**: Our model assumes independent filters. In reality, filters may be correlated (e.g., planets with life are more likely to develop intelligence). Analyzing the correlated case could tighten or loosen bounds.
-
-3. **Spatial structure**: Incorporate the spatial distribution of civilizations and the finite speed of light to derive bounds on detection probability as a function of distance.
-
-4. **Dynamic filters**: Allow filter values to change over cosmic time (e.g., early-universe metallicity constraints vs. late-universe conditions).
+1. Formalize the Poisson limit theorem for sparse occupation systems.
+2. Extend to heterogeneous occupation probabilities (different planets have different colonization probabilities).
+3. Model spatial correlations (civilizations may cluster due to panspermia).
+4. Connect to information-theoretic bounds on detection (how much signal is needed to overcome noise?).
 
 ## References
 
-[1] Drake, F. (1965). "The radio search for intelligent extraterrestrial life." *Current Aspects of Exobiology*.
+[1] Fermi, E. (1950). Informal lunchtime conversation. Los Alamos National Laboratory.
 
-[2] Hanson, R. (1998). "The Great Filter — Are We Almost Past It?" Available at hanson.gmu.edu.
+[2] Hanson, R. (1998). "The Great Filter — Are We Almost Past It?" Unpublished manuscript.
 
-[3] Sandberg, A., Drexler, E., Ord, T. (2018). "Dissolving the Fermi Paradox." *arXiv:1806.02404*.
+[3] Liu, C. (2008). *The Dark Forest*. Chongqing Press.
 
-[4] Carter, B. (1983). "The anthropic principle and its implications for biological evolution." *Philosophical Transactions of the Royal Society A*.
+[4] Sagan, C. (1983). "Nuclear war and climatic catastrophe: Some policy implications." *Foreign Affairs*.
 
-## Appendix: Formal Verification
+[5] Sandberg, A., Drexler, E., & Ord, T. (2018). "Dissolving the Fermi Paradox." arXiv:1806.02404.
 
-All main results (Theorems 3.1, 3.2, 4.1, 5.1, 5.2, 6.1, and Corollary 3.3) have been formally verified in Lean 4 with the Mathlib library. The formalization is contained in `Catalog/Cryptography/FermiPigeonhole.lean`. No axioms beyond the standard foundational axioms (propext, Classical.choice, Quot.sound) are used.
+[6] Solomonides, E. & Terzian, Y. (2015). "A Probabilistic Analysis of the Fermi Paradox." arXiv:1510.08837.
