@@ -370,6 +370,26 @@
       "theorem_count": 5,
       "timestamp": "2026-06-04T19:40:21",
       "title": "Tropical Satake Isomorphism for GL_n"
+    },
+    {
+      "cycle_id": "db1ae093",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Infinite Chess on the Hilbert Board\n\n## Synthesis\n\nThis research cycle established a formal theory of chess on the d-dimensional infinite board ℤ^d (the \"Hilbert Board\"), proving",
+      "quality_score": 0.4152,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-04T22:17:47",
+      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
+    },
+    {
+      "cycle_id": "56ca4434",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Non-Well-Founded Proof Systems\n\n## Synthesis\n\nThis research cycle established the **circularity gap** — the lattice-theoretic space between the least and greatest fixed points of",
+      "quality_score": 0.358,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-04T22:18:35",
+      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
     }
   ],
   "entries": [
@@ -415,16 +435,18 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-04T19:40:21",
+  "last_updated": "2026-06-04T22:18:35",
   "open_questions": [],
   "research_threads": {
-    "Applications": [
+    "Algebra": [
       {
-        "cycle_id": "0c08b2ae",
-        "quality": 0.32280000000000003,
-        "theorems": 5,
-        "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
-      },
+        "cycle_id": "56ca4434",
+        "quality": 0.358,
+        "theorems": 6,
+        "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+      }
+    ],
+    "Applications": [
       {
         "cycle_id": "2d3d7c8e",
         "quality": 0.36296000000000006,
@@ -478,6 +500,12 @@
         "quality": 0.35784000000000005,
         "theorems": 5,
         "title": "Infinite Games Against Death: Immortality Strategies"
+      },
+      {
+        "cycle_id": "db1ae093",
+        "quality": 0.4152,
+        "theorems": 6,
+        "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
       }
     ],
     "Bridges": [

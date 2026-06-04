@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "56ca4434",
     "filename": "non_well_founded_proofs_proofs_that_reference_them.json",
     "pkg_num": 368,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.358,
     "title": "Non-Well-Founded Proof Systems: Self-Referential Proofs as Fixed Points"
   },
   {
@@ -11809,8 +11809,8 @@ window.PACKAGE_GRAPH = {
       "hue": 112,
       "id": "non_well_founded_proofs_proofs_that_reference_them",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.358,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Non-Well-Founded Proof Systems: Self-Referential Proofs as Fixed Points"
     }
