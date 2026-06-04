@@ -1,351 +1,421 @@
 """
 Demo: Causal Loops in Category Theory
 
-Demonstrates the key mathematical results:
-1. Associator defect computation
-2. Pentagon obstruction
-3. Twisted composition
-4. Defect accumulation
-5. Causal loop rotation invariance
+Demonstrates the key concepts from the research:
+1. Almost-monoid construction and verification
+2. Pentagon coherence checking
+3. Binary tree reassociation
+4. Associahedron structure
 """
 
 from algorithms import (
-    assoc_defect, sub_defect, twisted_comp, twisted_defect,
-    pentagon_check, iter_sub_left, iter_sub_right, catalan,
-    is_loop, rotate, defect_scan, pentagon_scan, find_causal_operations
+    AlmostMonoid, BinTree, LEAF,
+    left_assoc, right_assoc, all_trees,
+    catalan, check_pentagon_coherence,
+    make_strict_monoid, verify_all_theorems
 )
 
 
-def demo_associator_defect():
-    """Demonstrate that subtraction's defect is exactly -2c."""
+def demo_binary_trees():
+    """Show all parenthesizations for small n."""
     print("=" * 60)
-    print("DEMO 1: Associator Defect for Subtraction")
+    print("BINARY TREES AND PARENTHESIZATIONS")
     print("=" * 60)
-    print()
-    print("Theorem: AssocDefect(sub, a, b, c) = -2c")
-    print("Verification across random values:")
-    print()
 
-    import random
-    random.seed(42)
-    all_match = True
-    for _ in range(20):
-        a, b, c = random.randint(-100, 100), random.randint(-100, 100), random.randint(-100, 100)
-        d = sub_defect(a, b, c)
-        expected = -2 * c
-        match = "✓" if d == expected else "✗"
-        if d != expected:
-            all_match = False
-        print(f"  a={a:4d}, b={b:4d}, c={c:4d}  →  defect={d:6d}  expected={expected:6d}  {match}")
-
-    print(f"\nAll match: {all_match}")
-    print()
+    for n in range(1, 6):
+        trees = all_trees(n)
+        print(f"\nn = {n}: {len(trees)} parenthesization(s) (C({n-1}) = {catalan(n-1)})")
+        for i, t in enumerate(trees):
+            marker = ""
+            if t == left_assoc(n):
+                marker = " ← left-associated"
+            elif t == right_assoc(n):
+                marker = " ← right-associated"
+            print(f"  {i+1}. {t}{marker}")
 
 
-def demo_causal_dependence():
-    """Show that the defect depends ONLY on c."""
+def demo_almost_monoid():
+    """Demonstrate almost-monoid construction."""
+    print("\n" + "=" * 60)
+    print("ALMOST-MONOID EXAMPLES")
     print("=" * 60)
-    print("DEMO 2: Causal Dependence — Defect Depends Only on c")
-    print("=" * 60)
-    print()
 
-    c = 7
-    defects = set()
-    for a in range(-5, 6):
-        for b in range(-5, 6):
-            defects.add(sub_defect(a, b, c))
+    # Z/3Z under addition
+    n = 3
+    z3_mul = lambda a, b: (a + b) % n
+    z3 = make_strict_monoid(n, z3_mul, 0)
 
-    print(f"For c = {c}, defect values across all a,b in [-5,5]: {defects}")
-    print(f"Unique value: {defects.pop()} (expected: {-2*c})")
-    print()
+    print(f"\nZ/{n}Z under addition:")
+    print(f"  Identity element: {z3.one}")
+    print(f"  Operation table:")
+    for a in range(n):
+        row = [z3.mul(a, b) for b in range(n)]
+        print(f"    {a}: {row}")
+    print(f"  Is strict: {z3.is_strict()}")
+    print(f"  Satisfies identity: {z3.verify_identity()}")
+    print(f"  Satisfies controlled assoc: {z3.verify_controlled_assoc()}")
+    print(f"  Pentagon coherent: {check_pentagon_coherence(z3)}")
+    print(f"  Total defect: {z3.total_defect()}")
 
 
 def demo_pentagon():
-    """Demonstrate the pentagon obstruction."""
+    """Demonstrate the pentagon identity."""
+    print("\n" + "=" * 60)
+    print("THE PENTAGON IDENTITY")
     print("=" * 60)
-    print("DEMO 3: Pentagon Obstruction for Subtraction")
-    print("=" * 60)
-    print()
-    print("Pentagon defect = LHS - RHS of pentagon identity")
-    print("Theorem: pentagon_defect(a,b,c,d) = -4d")
-    print()
 
-    sub = lambda a, b: a - b
-    for d in range(-5, 6):
-        p = pentagon_check(sub, 3, 7, -2, d)
-        expected = -4 * d
-        match = "✓" if p == expected else "✗"
-        print(f"  d={d:3d}  →  pentagon_defect={p:6d}  expected={expected:6d}  {match}")
-    print()
+    # Show the 5 parenthesizations of 4 elements
+    trees4 = all_trees(4)
+    print(f"\n5 parenthesizations of a·b·c·d (|trees| = {len(trees4)}):")
+    labels = ['a', 'b', 'c', 'd']
 
+    def label_tree(t: BinTree, idx: list) -> str:
+        if t.is_leaf:
+            return labels[idx[0]]
+            idx[0] += 1  # noqa
+        left_str = label_tree(t.left, idx)
+        right_str = label_tree(t.right, idx)
+        return f"({left_str}·{right_str})"
 
-def demo_twisted_composition():
-    """Show the twisted composition and its properties."""
-    print("=" * 60)
-    print("DEMO 4: Twisted Composition on ℤ × ℤ")
-    print("=" * 60)
-    print()
+    for i, t in enumerate(trees4):
+        idx = [0]
+        def label(tree, start=[0]):
+            if tree.is_leaf:
+                l = labels[start[0]]
+                start[0] += 1
+                return l
+            return f"({label(tree.left, start)}·{label(tree.right, start)})"
+        print(f"  {i+1}. {label(t)}")
 
-    # Right identity
-    p = (3, 5)
-    print(f"Right identity: TwistedComp({p}, (0,0)) = {twisted_comp(p, (0, 0))}")
+    print("\nPentagon coherence asserts: going around the pentagon")
+    print("of reassociations always returns to the starting point.")
+    print("This is verified computationally for Z/nZ (n=2,3,4):")
 
-    # NOT left identity
-    print(f"Not left identity: TwistedComp((0,0), {p}) = {twisted_comp((0, 0), p)} ≠ {p}")
-
-    # Non-associativity
-    q, r = (1, 2), (4, 3)
-    lhs = twisted_comp(twisted_comp(p, q), r)
-    rhs = twisted_comp(p, twisted_comp(q, r))
-    print(f"\n(p∘q)∘r = {lhs}")
-    print(f"p∘(q∘r) = {rhs}")
-    print(f"Defect  = {(lhs[0]-rhs[0], lhs[1]-rhs[1])}")
-    print(f"Expected defect = (0, {-2*r[1]})")
-    print()
-
-
-def demo_accumulation():
-    """Show how non-associativity accumulates."""
-    print("=" * 60)
-    print("DEMO 5: Defect Accumulation in Iterated Subtraction")
-    print("=" * 60)
-    print()
-
-    for n in range(2, 8):
-        lst = list(range(1, n + 1))
-        left = iter_sub_left(lst)
-        right = iter_sub_right(lst)
-        diff = left - right
-        print(f"  {lst}: left={left:6d}, right={right:6d}, defect={diff:6d}")
-    print()
+    for n in [2, 3, 4]:
+        zn = make_strict_monoid(n, lambda a, b, n=n: (a + b) % n, 0)
+        ok = check_pentagon_coherence(zn)
+        print(f"  Z/{n}Z: {'✓ coherent' if ok else '✗ NOT coherent'}")
 
 
 def demo_catalan():
-    """Show Catalan numbers as coherence dimensions."""
+    """Demonstrate Catalan numbers."""
+    print("\n" + "=" * 60)
+    print("CATALAN NUMBERS AND ASSOCIAHEDRA")
     print("=" * 60)
-    print("DEMO 6: Coherence Dimensions (Catalan Numbers)")
-    print("=" * 60)
+
+    print("\nC(n) = number of binary trees with n+1 leaves")
+    print("     = number of vertices of associahedron K_{n+2}")
     print()
-    print("  n | C(n) | # parenthesizations of n+1 elements")
-    print("  --+------+--------------------------------------")
-    for n in range(12):
-        c = catalan(n)
-        print(f"  {n:2d} | {c:6d} | {'*' * min(c, 50)}")
-    print()
+    print("n  | C(n) | Trees | Polytope")
+    print("---|------|-------|----------")
+    polytopes = ["point", "interval", "pentagon", "3D assocahedron",
+                 "4D assocahedron", "5D assocahedron"]
+    for n in range(6):
+        trees = all_trees(n + 1)
+        poly = polytopes[n] if n < len(polytopes) else f"{n}D"
+        print(f"{n}  | {catalan(n):4d} | {len(trees):5d} | K_{n+2} = {poly}")
 
 
-def demo_loop_rotation():
-    """Demonstrate loop rotation invariance."""
+def demo_defect():
+    """Demonstrate associator defect."""
+    print("\n" + "=" * 60)
+    print("ASSOCIATOR DEFECT ANALYSIS")
     print("=" * 60)
-    print("DEMO 7: Loop Rotation Invariance")
+
+    # Create a non-trivial almost-monoid on {0, 1}
+    # XOR is associative, so the strict version has zero defect
+    xor_am = make_strict_monoid(2, lambda a, b: a ^ b, 0)
+    print(f"\nXOR on {{0,1}}:")
+    print(f"  Is strict: {xor_am.is_strict()}")
+    print(f"  Total defect: {xor_am.total_defect()}")
+
+    # Show defect table
+    print(f"  Defect table δ(a,b,c):")
+    for a in range(2):
+        for b in range(2):
+            for c in range(2):
+                d = xor_am.defect(a, b, c)
+                print(f"    δ({a},{b},{c}) = {d}")
+
+
+def demo_verification():
+    """Run all computational verifications."""
+    print("\n" + "=" * 60)
+    print("COMPUTATIONAL VERIFICATION OF THEOREMS")
     print("=" * 60)
-    print()
 
-    loop = [3, -1, 2, -4]  # sums to 0
-    print(f"Original loop: {loop}, sum = {sum(loop)}")
-    for k in range(len(loop)):
-        rotated = rotate(loop, k)
-        print(f"  Rotation by {k}: {rotated}, sum = {sum(rotated)}, is_loop = {is_loop(rotated)}")
-    print()
+    results = verify_all_theorems()
+    all_ok = True
+    for name, passed in results.items():
+        status = "✓" if passed else "✗"
+        if not passed:
+            all_ok = False
+        print(f"  {status} {name}")
 
-    # Non-loop
-    non_loop = [3, -1, 2, -3]
-    print(f"Non-loop: {non_loop}, sum = {sum(non_loop)}")
-    for k in range(len(non_loop)):
-        rotated = rotate(non_loop, k)
-        print(f"  Rotation by {k}: {rotated}, sum = {sum(rotated)}, is_loop = {is_loop(rotated)}")
-    print()
-
-
-def demo_causal_ops():
-    """Find causal operations modulo small numbers."""
-    print("=" * 60)
-    print("DEMO 8: Causal Operations (mod n)")
-    print("=" * 60)
-    print()
-    for n in [3, 5, 7]:
-        causal = find_causal_operations(n)
-        print(f"  mod {n}: {len(causal)} causal linear ops (α,β): {causal}")
-    print()
+    print(f"\n{'All verifications passed!' if all_ok else 'SOME VERIFICATIONS FAILED!'}")
 
 
 if __name__ == "__main__":
-    demo_associator_defect()
-    demo_causal_dependence()
+    demo_binary_trees()
+    demo_almost_monoid()
     demo_pentagon()
-    demo_twisted_composition()
-    demo_accumulation()
     demo_catalan()
-    demo_loop_rotation()
-    demo_causal_ops()
+    demo_defect()
+    demo_verification()
 
 
 """
-Visualization: Defect Accumulation and Catalan Growth
+Visualization: The Associahedron and Reassociation Graphs
 
-Shows how non-associativity accumulates with sequence length,
-and the super-exponential growth of coherence dimensions.
+Generates visualizations of:
+1. Binary tree parenthesizations
+2. The associahedron K4 (pentagon) and K5
+3. Catalan number growth
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 import numpy as np
-from functools import reduce
+from typing import List, Tuple, Optional
+from dataclasses import dataclass
 
 
-def iter_sub_left(lst):
-    if not lst:
-        return 0
-    return reduce(lambda a, b: a - b, lst)
+@dataclass(frozen=True)
+class BinTree:
+    left: Optional['BinTree'] = None
+    right: Optional['BinTree'] = None
+
+    @property
+    def is_leaf(self) -> bool:
+        return self.left is None
+
+    @property
+    def leaf_count(self) -> int:
+        if self.is_leaf:
+            return 1
+        return self.left.leaf_count + self.right.leaf_count
+
+    def label(self, symbols: list, idx: list = None) -> str:
+        if idx is None:
+            idx = [0]
+        if self.is_leaf:
+            s = symbols[idx[0]] if idx[0] < len(symbols) else f"x{idx[0]}"
+            idx[0] += 1
+            return s
+        return f"({self.label(symbols, idx)}·{self.label(symbols, idx)})"
 
 
-def iter_sub_right(lst):
-    if not lst:
-        return 0
-    if len(lst) == 1:
-        return lst[0]
-    return lst[0] - iter_sub_right(lst[1:])
+LEAF = BinTree()
 
 
-def catalan(n):
+def all_trees(n: int) -> List[BinTree]:
     if n <= 0:
+        return []
+    if n == 1:
+        return [LEAF]
+    result = []
+    for k in range(1, n):
+        for left in all_trees(k):
+            for right in all_trees(n - k):
+                result.append(BinTree(left, right))
+    return result
+
+
+def catalan(n: int) -> int:
+    if n <= 1:
         return 1
-    c = 1
-    for i in range(n):
-        c = c * 2 * (2 * i + 1) // (i + 2)
-    return c
+    return sum(catalan(k) * catalan(n - 1 - k) for k in range(n))
 
 
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+def trees_adjacent(t1: BinTree, t2: BinTree) -> bool:
+    """Check if t1 and t2 differ by exactly one associator step."""
+    if t1 == t2:
+        return False
+    if t1.is_leaf or t2.is_leaf:
+        return False
 
-    # Plot 1: Defect accumulation for constant sequences
-    ns = list(range(2, 15))
-    for val in [1, 2, 3, 5]:
-        defects = []
-        for n in ns:
-            lst = [10] + [val] * (n - 1)
-            d = abs(iter_sub_left(lst) - iter_sub_right(lst))
-            defects.append(d)
-        axes[0].plot(ns, defects, 'o-', label=f'val={val}')
+    # Direct rotation: (a·b)·c <-> a·(b·c)
+    if (not t1.is_leaf and not t1.left.is_leaf and
+        t2.left == t1.left.left and
+        not t2.right.is_leaf and
+        t2.right.left == t1.left.right and
+        t2.right.right == t1.right):
+        return True
+    if (not t2.is_leaf and not t2.left.is_leaf and
+        t1.left == t2.left.left and
+        not t1.right.is_leaf and
+        t1.right.left == t2.left.right and
+        t1.right.right == t2.right):
+        return True
 
-    axes[0].set_xlabel('Sequence length n')
-    axes[0].set_ylabel('|Left - Right| association defect')
-    axes[0].set_title('Defect Accumulation vs Sequence Length')
-    axes[0].legend()
-    axes[0].grid(True, alpha=0.3)
-    axes[0].set_yscale('log')
+    # Rotation in left subtree
+    if t1.right == t2.right and trees_adjacent(t1.left, t2.left):
+        return True
+    # Rotation in right subtree
+    if t1.left == t2.left and trees_adjacent(t1.right, t2.right):
+        return True
 
-    # Plot 2: Catalan numbers vs exponentials
-    ns2 = list(range(0, 15))
-    catalans = [catalan(n) for n in ns2]
-    twos = [2**n for n in ns2]
-    threes = [3**n for n in ns2]
+    return False
 
-    axes[1].semilogy(ns2, catalans, 'bo-', linewidth=2, label='Catalan C(n)')
-    axes[1].semilogy(ns2, twos, 'r--', label='2^n')
-    axes[1].semilogy(ns2, threes, 'g--', label='3^n')
-    axes[1].set_xlabel('n')
-    axes[1].set_ylabel('Value (log scale)')
-    axes[1].set_title('Catalan Numbers: Super-exponential Growth')
-    axes[1].legend()
-    axes[1].grid(True, alpha=0.3)
 
-    # Plot 3: Left vs Right association for [1, 2, ..., n]
-    ns3 = list(range(2, 12))
-    lefts = [iter_sub_left(list(range(1, n+1))) for n in ns3]
-    rights = [iter_sub_right(list(range(1, n+1))) for n in ns3]
+def plot_associahedron():
+    """Plot the associahedron K4 (pentagon) and K5."""
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 
-    axes[2].plot(ns3, lefts, 'bs-', label='Left-associated')
-    axes[2].plot(ns3, rights, 'r^-', label='Right-associated')
-    axes[2].fill_between(ns3,
-                         [min(l, r) for l, r in zip(lefts, rights)],
-                         [max(l, r) for l, r in zip(lefts, rights)],
-                         alpha=0.2, color='purple', label='Defect gap')
-    axes[2].set_xlabel('n')
-    axes[2].set_ylabel('Result of [1,2,...,n] subtraction')
-    axes[2].set_title('Left vs Right Association: [1, 2, ..., n]')
-    axes[2].legend()
-    axes[2].grid(True, alpha=0.3)
+    # K4: Pentagon (5 vertices)
+    ax = axes[0]
+    trees4 = all_trees(4)
+    n4 = len(trees4)
+    symbols = ['a', 'b', 'c', 'd']
+
+    # Pentagon layout
+    angles = [np.pi/2 + 2*np.pi*i/5 for i in range(5)]
+    positions = [(1.8*np.cos(a), 1.8*np.sin(a)) for a in angles]
+
+    # Draw edges
+    for i in range(n4):
+        for j in range(i+1, n4):
+            if trees_adjacent(trees4[i], trees4[j]):
+                ax.plot([positions[i][0], positions[j][0]],
+                       [positions[i][1], positions[j][1]],
+                       'b-', linewidth=2, alpha=0.6)
+
+    # Draw vertices
+    for i, (x, y) in enumerate(positions):
+        ax.plot(x, y, 'o', markersize=15, color='#2196F3', zorder=5)
+        label = trees4[i].label(symbols)
+        ax.annotate(label, (x, y), textcoords="offset points",
+                   xytext=(0, 20), ha='center', fontsize=8,
+                   fontweight='bold',
+                   bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
+
+    ax.set_title('Associahedron K₄ (Pentagon)\n5 parenthesizations of a·b·c·d',
+                fontsize=13, fontweight='bold')
+    ax.set_xlim(-3, 3)
+    ax.set_ylim(-2.5, 3)
+    ax.set_aspect('equal')
+    ax.axis('off')
+
+    # K5 graph (14 vertices)
+    ax = axes[1]
+    trees5 = all_trees(5)
+    n5 = len(trees5)
+    symbols5 = ['a', 'b', 'c', 'd', 'e']
+
+    # Circular layout
+    angles5 = [2*np.pi*i/n5 for i in range(n5)]
+    positions5 = [(3*np.cos(a), 3*np.sin(a)) for a in angles5]
+
+    # Draw edges
+    for i in range(n5):
+        for j in range(i+1, n5):
+            if trees_adjacent(trees5[i], trees5[j]):
+                ax.plot([positions5[i][0], positions5[j][0]],
+                       [positions5[i][1], positions5[j][1]],
+                       'b-', linewidth=1, alpha=0.4)
+
+    # Draw vertices
+    for i, (x, y) in enumerate(positions5):
+        ax.plot(x, y, 'o', markersize=8, color='#E91E63', zorder=5)
+
+    ax.set_title(f'Associahedron K₅ Graph\n{n5} parenthesizations of a·b·c·d·e',
+                fontsize=13, fontweight='bold')
+    ax.set_xlim(-4.5, 4.5)
+    ax.set_ylim(-4.5, 4.5)
+    ax.set_aspect('equal')
+    ax.axis('off')
 
     plt.tight_layout()
-    plt.savefig('accumulation_visualization.png', dpi=150, bbox_inches='tight')
+    plt.savefig('associahedron.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved accumulation_visualization.png")
+    print("Saved: associahedron.png")
+
+
+def plot_catalan_growth():
+    """Plot Catalan number growth."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+    ns = list(range(12))
+    cats = [catalan(n) for n in ns]
+
+    ax1.bar(ns, cats, color='#4CAF50', alpha=0.8, edgecolor='#2E7D32')
+    ax1.set_xlabel('n', fontsize=12)
+    ax1.set_ylabel('C(n)', fontsize=12)
+    ax1.set_title('Catalan Numbers C(n)', fontsize=14, fontweight='bold')
+    ax1.set_yscale('log')
+    for i, c in enumerate(cats):
+        ax1.annotate(str(c), (i, c), textcoords="offset points",
+                    xytext=(0, 5), ha='center', fontsize=8)
+
+    # Asymptotic comparison
+    ns_cont = np.linspace(1, 11, 100)
+    asymp = 4**ns_cont / (ns_cont**(1.5) * np.sqrt(np.pi))
+    ax2.semilogy(ns[1:], cats[1:], 'o-', color='#2196F3', label='C(n)', markersize=8)
+    ax2.semilogy(ns_cont, asymp, '--', color='#FF5722',
+                label=r'$4^n / (n^{3/2}\sqrt{\pi})$', linewidth=2)
+    ax2.set_xlabel('n', fontsize=12)
+    ax2.set_ylabel('Value (log scale)', fontsize=12)
+    ax2.set_title('Catalan Numbers vs Asymptotic Formula', fontsize=14, fontweight='bold')
+    ax2.legend(fontsize=11)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('catalan_growth.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: catalan_growth.png")
+
+
+def plot_defect_heatmap():
+    """Plot associator defect as a heatmap for various operations."""
+    fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+
+    operations = [
+        ("Addition mod 3", lambda a, b: (a + b) % 3),
+        ("Multiplication mod 3", lambda a, b: (a * b) % 3),
+        ("Max", lambda a, b: max(a, b)),
+    ]
+
+    for ax, (name, op) in zip(axes, operations):
+        n = 3
+        # Check if it has an identity
+        identity = None
+        for e in range(n):
+            if all(op(e, a) == a and op(a, e) == a for a in range(n)):
+                identity = e
+                break
+
+        if identity is None:
+            ax.set_title(f'{name}\n(no identity)')
+            ax.axis('off')
+            continue
+
+        # Compute defect: is op associative on each triple?
+        defects = np.zeros((n, n*n))
+        labels_y = [str(a) for a in range(n)]
+        labels_x = [f"({b},{c})" for b in range(n) for c in range(n)]
+
+        for a in range(n):
+            for idx, (b, c) in enumerate((b, c) for b in range(n) for c in range(n)):
+                lhs = op(op(a, b), c)
+                rhs = op(a, op(b, c))
+                defects[a, idx] = 0 if lhs == rhs else 1
+
+        im = ax.imshow(defects, cmap='RdYlGn_r', vmin=0, vmax=1, aspect='auto')
+        ax.set_title(f'{name}\nAssociativity failure map', fontsize=11, fontweight='bold')
+        ax.set_ylabel('a')
+        ax.set_xlabel('(b, c)')
+        ax.set_yticks(range(n))
+        ax.set_yticklabels(labels_y)
+
+    plt.tight_layout()
+    plt.savefig('defect_heatmap.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: defect_heatmap.png")
 
 
 if __name__ == "__main__":
-    main()
-
-
-"""
-Visualization: Associator Defect Heatmap
-
-Shows the associator defect for subtraction as a function of (a, c),
-demonstrating that the defect depends only on c (horizontal bands).
-"""
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def assoc_defect_sub(a: int, b: int, c: int) -> int:
-    return (a - b) - c - (a - (b - c))
-
-
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-    # Plot 1: Defect as function of (a, c) with fixed b
-    b = 0
-    a_range = np.arange(-20, 21)
-    c_range = np.arange(-20, 21)
-    A, C = np.meshgrid(a_range, c_range)
-    D = np.vectorize(lambda a, c: assoc_defect_sub(a, b, c))(A, C)
-
-    im1 = axes[0].imshow(D, extent=[-20, 20, -20, 20], aspect='auto',
-                          cmap='RdBu_r', origin='lower')
-    axes[0].set_xlabel('a')
-    axes[0].set_ylabel('c')
-    axes[0].set_title(f'AssocDefect(sub, a, {b}, c)\n= -2c (horizontal bands)')
-    plt.colorbar(im1, ax=axes[0], label='Defect')
-
-    # Plot 2: Defect vs c for different a values
-    c_vals = np.arange(-20, 21)
-    for a in [-10, -5, 0, 5, 10]:
-        defects = [assoc_defect_sub(a, 0, c) for c in c_vals]
-        axes[1].plot(c_vals, defects, label=f'a={a}', alpha=0.7)
-    axes[1].plot(c_vals, -2 * c_vals, 'k--', linewidth=2, label='-2c (theory)')
-    axes[1].set_xlabel('c')
-    axes[1].set_ylabel('Defect')
-    axes[1].set_title('Defect vs c (all curves overlap = causal)')
-    axes[1].legend()
-    axes[1].grid(True, alpha=0.3)
-
-    # Plot 3: Pentagon defect
-    d_vals = np.arange(-20, 21)
-    pentagon_defects = []
-    for d in d_vals:
-        sub = lambda x, y: x - y
-        lhs = (assoc_defect_sub(1, 2, 3) +
-               assoc_defect_sub(1, 2 - 3, d) +
-               assoc_defect_sub(2, 3, d))
-        rhs = (assoc_defect_sub(1 - 2, 3, d) +
-               assoc_defect_sub(1, 2, 3 - d))
-        pentagon_defects.append(lhs - rhs)
-
-    axes[2].plot(d_vals, pentagon_defects, 'b-', linewidth=2, label='Pentagon defect')
-    axes[2].plot(d_vals, -4 * d_vals, 'r--', linewidth=2, label='-4d (theory)')
-    axes[2].set_xlabel('d')
-    axes[2].set_ylabel('Pentagon Defect')
-    axes[2].set_title('Pentagon Obstruction = -4d')
-    axes[2].legend()
-    axes[2].grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('defect_visualization.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved defect_visualization.png")
-
-
-if __name__ == "__main__":
-    main()
+    plot_associahedron()
+    plot_catalan_growth()
+    plot_defect_heatmap()

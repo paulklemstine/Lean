@@ -1,180 +1,336 @@
 """
-Algorithms for computing associator defects, pentagon obstructions,
-and causal loop properties in non-associative algebraic structures.
+Algorithms for Almost-Monoids and Controlled Associativity Failure.
 
-All functions are type-hinted and self-contained.
+This module implements the core algorithms from the research:
+1. Almost-monoid construction and verification
+2. Pentagon coherence checking
+3. Binary tree reassociation path finding
+4. Catalan number computation
+5. Associator defect analysis
 """
 
-from typing import Callable, List, Tuple, Optional
-from functools import reduce
+from typing import Callable, Dict, List, Optional, Tuple, Set
+from dataclasses import dataclass
+from itertools import product as cartesian_product
+from functools import lru_cache
 
 
-def assoc_defect(op: Callable[[int, int], int], a: int, b: int, c: int) -> int:
-    """Compute the associator defect of a binary operation at (a, b, c).
+# --- Binary Trees (Parenthesizations) ---
 
-    Returns op(op(a,b), c) - op(a, op(b,c)).
-    Zero iff op is associative at this triple.
-    """
-    return op(op(a, b), c) - op(a, op(b, c))
+@dataclass(frozen=True)
+class BinTree:
+    """A binary tree representing a parenthesization."""
+    left: Optional['BinTree'] = None
+    right: Optional['BinTree'] = None
 
+    @property
+    def is_leaf(self) -> bool:
+        return self.left is None and self.right is None
 
-def sub_defect(a: int, b: int, c: int) -> int:
-    """Associator defect for subtraction. Always equals -2*c."""
-    return assoc_defect(lambda x, y: x - y, a, b, c)
+    @property
+    def leaf_count(self) -> int:
+        if self.is_leaf:
+            return 1
+        return self.left.leaf_count + self.right.leaf_count
 
-
-def twisted_comp(p: Tuple[int, int], q: Tuple[int, int]) -> Tuple[int, int]:
-    """Twisted composition: add first components, subtract second."""
-    return (p[0] + q[0], p[1] - q[1])
-
-
-def twisted_defect(p: Tuple[int, int], q: Tuple[int, int],
-                   r: Tuple[int, int]) -> Tuple[int, int]:
-    """Associator defect for twisted composition."""
-    lhs = twisted_comp(twisted_comp(p, q), r)
-    rhs = twisted_comp(p, twisted_comp(q, r))
-    return (lhs[0] - rhs[0], lhs[1] - rhs[1])
+    def __repr__(self) -> str:
+        if self.is_leaf:
+            return "·"
+        return f"({self.left} ∘ {self.right})"
 
 
-def pentagon_check(op: Callable[[int, int], int],
-                   a: int, b: int, c: int, d: int) -> int:
-    """Check the pentagon condition. Returns LHS - RHS.
-    Zero iff the pentagon condition holds at (a,b,c,d)."""
-    lhs = (assoc_defect(op, a, b, c) +
-           assoc_defect(op, a, op(b, c), d) +
-           assoc_defect(op, b, c, d))
-    rhs = (assoc_defect(op, op(a, b), c, d) +
-           assoc_defect(op, a, b, op(c, d)))
-    return lhs - rhs
+LEAF = BinTree()
 
 
-def iter_sub_left(lst: List[int]) -> int:
-    """Left-associated iterated subtraction: (...((a1 - a2) - a3) ... - an)."""
-    if not lst:
-        return 0
-    return reduce(lambda a, b: a - b, lst)
+def left_assoc(n: int) -> BinTree:
+    """Construct the left-associated tree with n leaves."""
+    if n <= 1:
+        return LEAF
+    result = LEAF
+    for _ in range(n - 1):
+        result = BinTree(result, LEAF)
+    return result
 
 
-def iter_sub_right(lst: List[int]) -> int:
-    """Right-associated iterated subtraction: a1 - (a2 - (a3 - ... - an))."""
-    if not lst:
-        return 0
-    if len(lst) == 1:
-        return lst[0]
-    return lst[0] - iter_sub_right(lst[1:])
+def right_assoc(n: int) -> BinTree:
+    """Construct the right-associated tree with n leaves."""
+    if n <= 1:
+        return LEAF
+    result = LEAF
+    for _ in range(n - 1):
+        result = BinTree(LEAF, result)
+    return result
 
 
-def catalan(n: int) -> int:
-    """Compute the nth Catalan number."""
+def all_trees(n: int) -> List[BinTree]:
+    """Generate all binary trees with n leaves (Catalan number many)."""
     if n <= 0:
+        return []
+    if n == 1:
+        return [LEAF]
+    result: List[BinTree] = []
+    for k in range(1, n):
+        for left in all_trees(k):
+            for right in all_trees(n - k):
+                result.append(BinTree(left, right))
+    return result
+
+
+@lru_cache(maxsize=100)
+def catalan(n: int) -> int:
+    """Compute the n-th Catalan number C(n)."""
+    if n <= 1:
         return 1
-    c = 1
-    for i in range(n):
-        c = c * 2 * (2 * i + 1) // (i + 2)
-    return c
+    return sum(catalan(k) * catalan(n - 1 - k) for k in range(n))
 
 
-def coherence_dimension(n: int) -> int:
-    """Number of independent coherence conditions at level n.
-    Equals the nth Catalan number (number of binary trees with n+1 leaves)."""
-    return catalan(n)
+# --- Almost-Monoid ---
 
+@dataclass
+class AlmostMonoid:
+    """An almost-monoid on a finite set {0, 1, ..., n-1}.
 
-def is_loop(path: List[int]) -> bool:
-    """Check if a list of integers forms an additive loop (sums to 0)."""
-    return sum(path) == 0
-
-
-def rotate(lst: List[int], n: int) -> List[int]:
-    """Rotate a list by n positions."""
-    if not lst:
-        return lst
-    n = n % len(lst)
-    return lst[n:] + lst[:n]
-
-
-def defect_scan(op: Callable[[int, int], int],
-                values: List[int]) -> List[int]:
-    """Compute the associator defect at each position in a list of values.
-
-    For a list [a1, ..., an], returns [defect(a1,a2,a3), defect(a2,a3,a4), ...].
+    Attributes:
+        n: Size of the underlying set.
+        mul: Binary operation (i, j) -> k.
+        one: Identity element.
+        associator: Map (a, b, c) -> permutation of {0..n-1}.
     """
-    if len(values) < 3:
-        return []
-    return [assoc_defect(op, values[i], values[i+1], values[i+2])
-            for i in range(len(values) - 2)]
+    n: int
+    mul: Callable[[int, int], int]
+    one: int
+    associator: Callable[[int, int, int, int], int]
+
+    def verify_identity(self) -> bool:
+        """Check left and right identity axioms."""
+        for a in range(self.n):
+            if self.mul(self.one, a) != a:
+                return False
+            if self.mul(a, self.one) != a:
+                return False
+        return True
+
+    def verify_controlled_assoc(self) -> bool:
+        """Check controlled associativity: (a*b)*c = α(a,b,c)(a*(b*c))."""
+        for a in range(self.n):
+            for b in range(self.n):
+                for c in range(self.n):
+                    lhs = self.mul(self.mul(a, b), c)
+                    rhs = self.associator(a, b, c, self.mul(a, self.mul(b, c)))
+                    if lhs != rhs:
+                        return False
+        return True
+
+    def verify_bijective(self) -> bool:
+        """Check that associator(a,b,c) is a bijection for each triple."""
+        for a in range(self.n):
+            for b in range(self.n):
+                for c in range(self.n):
+                    image = set()
+                    for x in range(self.n):
+                        image.add(self.associator(a, b, c, x))
+                    if len(image) != self.n:
+                        return False
+        return True
+
+    def is_strict(self) -> bool:
+        """Check if all associators are the identity."""
+        for a in range(self.n):
+            for b in range(self.n):
+                for c in range(self.n):
+                    for x in range(self.n):
+                        if self.associator(a, b, c, x) != x:
+                            return False
+        return True
+
+    def defect(self, a: int, b: int, c: int) -> int:
+        """Compute the associator defect for triple (a, b, c)."""
+        x = self.mul(a, self.mul(b, c))
+        return 0 if self.associator(a, b, c, x) == x else 1
+
+    def total_defect(self) -> int:
+        """Sum of defects over all triples."""
+        return sum(
+            self.defect(a, b, c)
+            for a in range(self.n)
+            for b in range(self.n)
+            for c in range(self.n)
+        )
 
 
-def pentagon_scan(op: Callable[[int, int], int],
-                  values: List[int]) -> List[int]:
-    """Compute the pentagon defect at each 4-element window."""
-    if len(values) < 4:
-        return []
-    return [pentagon_check(op, values[i], values[i+1], values[i+2], values[i+3])
-            for i in range(len(values) - 3)]
+def check_pentagon_coherence(am: AlmostMonoid) -> bool:
+    """Verify pentagon coherence: α(a,b,cd)(α(ab,c,d)(x)) = α(a,bc,d)(α(a,b,c)(x))
+    for all a, b, c, d, x."""
+    n = am.n
+    for a in range(n):
+        for b in range(n):
+            for c in range(n):
+                for d in range(n):
+                    cd = am.mul(c, d)
+                    ab = am.mul(a, b)
+                    bc = am.mul(b, c)
+                    for x in range(n):
+                        lhs = am.associator(a, b, cd,
+                                            am.associator(ab, c, d, x))
+                        rhs = am.associator(a, bc, d,
+                                            am.associator(a, b, c, x))
+                        if lhs != rhs:
+                            return False
+    return True
 
 
-def find_causal_operations(modulus: int) -> List[Tuple[int, ...]]:
-    """Find all binary operations on Z/modulus that have causal defects.
+def make_strict_monoid(n: int, mul: Callable[[int, int], int], one: int) -> AlmostMonoid:
+    """Create a strict almost-monoid from a genuine monoid operation."""
+    return AlmostMonoid(
+        n=n,
+        mul=mul,
+        one=one,
+        associator=lambda a, b, c, x: x  # identity
+    )
 
-    A causal defect depends only on c (the third argument).
-    Returns list of operation tables (as tuples) that are causal.
-    """
-    results = []
-    # For small modulus, enumerate all linear operations op(a,b) = α*a + β*b mod n
-    for alpha in range(modulus):
-        for beta in range(modulus):
-            op = lambda a, b, al=alpha, be=beta: (al * a + be * b) % modulus
-            is_causal = True
-            # Check if defect depends only on c
-            for c in range(modulus):
-                defect_val = None
-                for a in range(modulus):
-                    for b in range(modulus):
-                        d = assoc_defect(op, a, b, c) % modulus
-                        if defect_val is None:
-                            defect_val = d
-                        elif d != defect_val:
-                            is_causal = False
-                            break
-                    if not is_causal:
-                        break
-                if not is_causal:
+
+# --- Reassociation Path Finding ---
+
+def find_rotations_to_left(tree: BinTree) -> List[Tuple[BinTree, BinTree]]:
+    """Find a sequence of left rotations transforming tree to left-associated form.
+    Returns list of (before, after) pairs."""
+    steps: List[Tuple[BinTree, BinTree]] = []
+    current = tree
+
+    def needs_rotation(t: BinTree) -> bool:
+        if t.is_leaf:
+            return False
+        if not t.right.is_leaf:
+            return True
+        return needs_rotation(t.left)
+
+    while needs_rotation(current):
+        # Find rightmost non-leaf right child and rotate
+        if not current.is_leaf and not current.right.is_leaf:
+            # Rotate: node(a, node(b, c)) -> node(node(a, b), c)
+            a, bc = current.left, current.right
+            b, c = bc.left, bc.right
+            new = BinTree(BinTree(a, b), c)
+            steps.append((current, new))
+            current = new
+        elif not current.is_leaf:
+            # Recurse into left subtree
+            left_steps = find_rotations_to_left(current.left)
+            for before, after in left_steps:
+                old = BinTree(before, current.right)
+                new = BinTree(after, current.right)
+                steps.append((old, new))
+            current = BinTree(left_steps[-1][1] if left_steps else current.left,
+                              current.right)
+
+    return steps
+
+
+def reassociation_path(t1: BinTree, t2: BinTree) -> List[Tuple[BinTree, str, BinTree]]:
+    """Find a path of reassociation steps from t1 to t2.
+    Returns list of (from, direction, to) triples."""
+    # Simple approach: both to left-associated, then reverse second path
+    path1 = find_rotations_to_left(t1)
+    path2 = find_rotations_to_left(t2)
+
+    forward = [(b, "→", a) for b, a in path1]
+    backward = [(a, "←", b) for b, a in reversed(path2)]
+
+    return forward + backward
+
+
+# --- Enumeration ---
+
+def enumerate_almost_monoids_on_bool() -> List[AlmostMonoid]:
+    """Enumerate all almost-monoids on {0, 1} (Bool)."""
+    results: List[AlmostMonoid] = []
+
+    # There are 2^4 = 16 possible binary operations on {0,1}
+    for op_bits in range(16):
+        mul = lambda a, b, bits=op_bits: (bits >> (a * 2 + b)) & 1
+
+        for one in range(2):
+            # Check identity axioms
+            ok = True
+            for a in range(2):
+                if mul(one, a) != a or mul(a, one) != a:
+                    ok = False
                     break
-            if is_causal:
-                results.append((alpha, beta))
+            if not ok:
+                continue
+
+            # For each triple (a,b,c), determine what the associator must do
+            # (a*b)*c = α(a,b,c)(a*(b*c))
+            # So α(a,b,c) must map a*(b*c) ↦ (a*b)*c
+            # And α can be any bijection extending this constraint
+
+            # For {0,1}, a bijection is either id or swap
+            # α(a,b,c) must map x₀ = a*(b*c) to y₀ = (a*b)*c
+            # If x₀ = y₀, α can be id or swap
+            # If x₀ ≠ y₀, α must be swap
+
+            for assoc_bits in range(256):  # 2^8 choices for 8 triples
+                def make_assoc(bits: int):
+                    def assoc(a: int, b: int, c: int, x: int) -> int:
+                        triple_idx = a * 4 + b * 2 + c
+                        use_swap = (bits >> triple_idx) & 1
+                        if use_swap:
+                            return 1 - x
+                        return x
+                    return assoc
+
+                am = AlmostMonoid(2, mul, one, make_assoc(assoc_bits))
+                if am.verify_controlled_assoc() and am.verify_bijective():
+                    results.append(am)
+
+    return results
+
+
+# --- Main verification ---
+
+def verify_all_theorems() -> Dict[str, bool]:
+    """Verify key theorems computationally on small examples."""
+    results: Dict[str, bool] = {}
+
+    # Theorem 1: Z/2Z under addition is a strict almost-monoid
+    z2_mul = lambda a, b: (a + b) % 2
+    z2 = make_strict_monoid(2, z2_mul, 0)
+    results["Z2_is_strict_almost_monoid"] = (
+        z2.verify_identity() and
+        z2.verify_controlled_assoc() and
+        z2.verify_bijective() and
+        z2.is_strict()
+    )
+
+    # Theorem 2: Strict implies pentagon
+    results["strict_implies_pentagon"] = check_pentagon_coherence(z2)
+
+    # Tree leaf count preservation
+    for n in range(1, 6):
+        la = left_assoc(n)
+        ra = right_assoc(n)
+        results[f"left_assoc_{n}_count"] = (la.leaf_count == n)
+        results[f"right_assoc_{n}_count"] = (ra.leaf_count == n)
+
+    # Catalan numbers
+    expected_catalan = [1, 1, 2, 5, 14, 42, 132]
+    for i, expected in enumerate(expected_catalan):
+        results[f"catalan_{i}"] = (catalan(i) == expected)
+
+    # Number of trees
+    for n in range(1, 7):
+        trees = all_trees(n)
+        results[f"tree_count_{n}"] = (len(trees) == catalan(n - 1))
+
     return results
 
 
 if __name__ == "__main__":
-    # Demonstrate key algorithms
-    sub = lambda a, b: a - b
+    results = verify_all_theorems()
+    print("=== Computational Verification ===")
+    for name, passed in results.items():
+        status = "✓" if passed else "✗"
+        print(f"  {status} {name}")
 
-    print("=== Associator Defect for Subtraction ===")
-    for c in range(-3, 4):
-        d = sub_defect(0, 0, c)
-        print(f"  defect(0, 0, {c}) = {d} (expected {-2*c})")
-
-    print("\n=== Twisted Composition Defect ===")
-    for r2 in range(-2, 3):
-        d = twisted_defect((1, 2), (3, 4), (5, r2))
-        print(f"  twisted_defect((1,2), (3,4), (5,{r2})) = {d}")
-
-    print("\n=== Pentagon Check for Subtraction ===")
-    for d in range(-3, 4):
-        p = pentagon_check(sub, 1, 2, 3, d)
-        print(f"  pentagon(1, 2, 3, {d}) = {p} (expected {-4*d})")
-
-    print("\n=== Defect Accumulation ===")
-    lst = [10, 3, 5, 2]
-    print(f"  Left-associated: {iter_sub_left(lst)}")
-    print(f"  Right-associated: {iter_sub_right(lst)}")
-    print(f"  Defect: {iter_sub_left(lst) - iter_sub_right(lst)}")
-
-    print("\n=== Catalan Numbers (Coherence Dimensions) ===")
-    for n in range(10):
-        print(f"  C({n}) = {catalan(n)}")
-
-    print("\n=== Causal Operations mod 5 ===")
-    causal = find_causal_operations(5)
-    print(f"  Found {len(causal)} causal linear ops: {causal}")
+    all_passed = all(results.values())
+    print(f"\n{'All tests passed!' if all_passed else 'Some tests FAILED!'}")
