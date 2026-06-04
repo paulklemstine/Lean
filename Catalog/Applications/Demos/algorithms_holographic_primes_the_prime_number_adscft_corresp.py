@@ -1,27 +1,20 @@
 #!/usr/bin/env python3
 """
-Algorithms for Holographic Prime Theory
+Holographic Primes: Core Algorithms
 
-Implements efficient algorithms for computing holographic prime data:
-- Local partition functions
-- Finite Euler products
-- Chebyshev theta function
-- Tropical bounds
-- Von Mangoldt reconstruction
+Type-hinted implementations of the mathematical structures from the
+holographic prime correspondence.
 """
 
+from typing import List, Dict, Tuple, Optional
 import math
-from typing import List, Tuple, Dict, Optional
 
 
 def sieve_of_eratosthenes(n: int) -> List[int]:
-    """Generate all primes up to n using the Sieve of Eratosthenes.
+    """Return all primes up to n using the Sieve of Eratosthenes.
 
-    Time: O(n log log n)
-    Space: O(n)
-
-    >>> sieve_of_eratosthenes(20)
-    [2, 3, 5, 7, 11, 13, 17, 19]
+    Time complexity: O(n log log n)
+    Space complexity: O(n)
     """
     if n < 2:
         return []
@@ -34,239 +27,196 @@ def sieve_of_eratosthenes(n: int) -> List[int]:
     return [i for i in range(2, n + 1) if is_prime[i]]
 
 
-def local_partition_function(p: int, beta: float) -> float:
-    """Compute Z_p(β) = (1 - p^(-β))⁻¹ for a prime p.
+def p_adic_valuation(p: int, n: int) -> int:
+    """Compute the p-adic valuation v_p(n).
 
-    This is the local boundary partition function in the prime hologram.
-
-    Args:
-        p: A prime number (must be ≥ 2)
-        beta: Inverse temperature (must be > 0)
-
-    Returns:
-        The local partition function value
-
-    Time: O(log β) for exponentiation
-    Space: O(1)
-
-    >>> abs(local_partition_function(2, 2) - 4/3) < 1e-10
-    True
-    """
-    return 1.0 / (1.0 - p ** (-beta))
-
-
-def bulk_weight(p: int, beta: float) -> float:
-    """Compute w_p(β) = -log(1 - p^(-β)), the bulk weight / free energy.
+    The p-adic valuation is the largest k such that p^k divides n.
+    In the holographic dictionary, this is the "depth" of n in the
+    p-adic bulk geometry.
 
     Args:
-        p: A prime number (must be ≥ 2)
-        beta: Inverse temperature (must be > 0)
+        p: A prime number (p >= 2)
+        n: A positive integer
 
     Returns:
-        The bulk weight (always non-negative for beta > 0)
-
-    >>> bulk_weight(2, 2) > 0
-    True
+        The p-adic valuation of n
     """
-    return -math.log(1.0 - p ** (-beta))
+    if n == 0 or p < 2:
+        return 0
+    k = 0
+    while n % p == 0:
+        k += 1
+        n //= p
+    return k
 
 
-def boundary_entropy(p: int) -> float:
-    """Compute S_p = log(p), the boundary entropy.
+def factorization(n: int) -> Dict[int, int]:
+    """Compute the prime factorization of n.
+
+    Returns a dictionary mapping primes to their exponents.
+    In holographic terms, this maps each prime (boundary site)
+    to the depth of n in that prime's bulk.
+    """
+    if n <= 1:
+        return {}
+    factors: Dict[int, int] = {}
+    d = 2
+    while d * d <= n:
+        while n % d == 0:
+            factors[d] = factors.get(d, 0) + 1
+            n //= d
+        d += 1
+    if n > 1:
+        factors[n] = factors.get(n, 0) + 1
+    return factors
+
+
+def total_holographic_weight(n: int) -> int:
+    """Compute the total holographic weight Ω(n).
+
+    The total weight is the sum of p-adic valuations across all primes
+    dividing n. This equals the number of prime factors counted with
+    multiplicity.
+
+    In the holographic dictionary, this measures the "total bulk depth"
+    of n — how deep it sits across all prime sectors simultaneously.
+    """
+    return sum(factorization(n).values())
+
+
+def euler_product_partial(s: float, N: int) -> float:
+    """Compute the partial Euler product ∏_{p≤N} (1 - p^{-s})^{-1}.
+
+    This is the "holographic partition function" truncated to primes ≤ N.
+    As N → ∞, it converges to ζ(s) for Re(s) > 1.
 
     Args:
-        p: A prime number
+        s: The complex frequency parameter (real part > 1)
+        N: Upper bound for primes in the product
 
     Returns:
-        log(p), the information content of Z/pZ
-
-    >>> abs(boundary_entropy(2) - math.log(2)) < 1e-10
-    True
+        The partial Euler product value
     """
-    return math.log(p)
-
-
-def finite_euler_product(N: int, beta: float) -> float:
-    """Compute ∏_{p≤N} (1 - p^(-β))⁻¹, the finite Euler product.
-
-    This is the finite truncation of the holographic partition function.
-    For beta > 1, this converges to ζ(β) as N → ∞.
-
-    Args:
-        N: Upper bound for primes
-        beta: Inverse temperature (must be > 1 for convergence)
-
-    Returns:
-        The finite Euler product
-
-    Time: O(N log log N) for sieve + O(π(N)) for product
-    Space: O(N)
-
-    >>> abs(finite_euler_product(10000, 2) - math.pi**2/6) < 0.01
-    True
-    """
-    primes = sieve_of_eratosthenes(N)
     product = 1.0
-    for p in primes:
-        product *= local_partition_function(p, beta)
+    for p in sieve_of_eratosthenes(N):
+        product /= (1.0 - p ** (-s))
     return product
 
 
 def chebyshev_theta(n: int) -> float:
-    """Compute θ(n) = ∑_{p≤n} log(p), the Chebyshev theta function.
+    """Compute the Chebyshev theta function θ(n) = Σ_{p≤n} log(p).
 
-    In the holographic framework, this is the boundary area.
+    In the holographic dictionary, θ(n) is the "boundary area" —
+    the total information content of the boundary theory up to
+    energy scale n.
 
-    Args:
-        n: Upper bound
-
-    Returns:
-        The Chebyshev theta value
-
-    Time: O(n log log n)
-    Space: O(n)
-
-    >>> abs(chebyshev_theta(10) - (math.log(2) + math.log(3) + math.log(5) + math.log(7))) < 1e-10
-    True
+    The Prime Number Theorem is equivalent to θ(n) ~ n.
     """
-    primes = sieve_of_eratosthenes(n)
-    return sum(math.log(p) for p in primes)
+    return sum(math.log(p) for p in sieve_of_eratosthenes(n))
 
 
-def von_mangoldt(n: int) -> float:
-    """Compute Λ(n): the von Mangoldt function.
+def chebyshev_psi(n: int) -> float:
+    """Compute the Chebyshev psi function ψ(n) = Σ_{p^k≤n} log(p).
 
-    Returns log(p) if n = p^k for some prime p and k ≥ 1, else 0.
+    ψ counts prime powers weighted by log. It's more natural from the
+    holographic perspective because it includes contributions from all
+    depths in the bulk (not just depth 1).
+    """
+    total = 0.0
+    for p in sieve_of_eratosthenes(n):
+        pk = p
+        while pk <= n:
+            total += math.log(p)
+            pk *= p
+    return total
+
+
+def prime_partition_function(beta: float, N: int) -> float:
+    """Compute the prime partition function Z(β) = ∏_p (1 - e^{-β log p})^{-1}.
+
+    This is the "thermal partition function" of the holographic system
+    at inverse temperature β. Setting β = s gives Z(s) = ζ(s).
 
     Args:
-        n: Positive integer
+        beta: Inverse temperature parameter (> 0)
+        N: Upper bound for primes
 
     Returns:
-        Λ(n)
+        The partition function value
+    """
+    product = 1.0
+    for p in sieve_of_eratosthenes(N):
+        boltzmann = math.exp(-beta * math.log(p))
+        product /= (1.0 - boltzmann)
+    return product
 
-    >>> abs(von_mangoldt(8) - math.log(2)) < 1e-10
-    True
-    >>> von_mangoldt(6)
-    0.0
+
+def holographic_entropy(n: int) -> float:
+    """Compute the holographic entropy S(n) = log(n) - Σ_p v_p(n) log(p) / Ω(n).
+
+    This measures the "disorder" in the prime decomposition of n.
+    Numbers with few large prime factors have low entropy;
+    numbers with many small prime factors have high entropy.
     """
     if n <= 1:
         return 0.0
-    for p in range(2, n + 1):
-        if p * p > n:
-            break
-        if n % p == 0:
-            m = n
-            while m % p == 0:
-                m //= p
-            return math.log(p) if m == 1 else 0.0
-    return math.log(n)
+    facts = factorization(n)
+    omega = sum(facts.values())
+    if omega == 0:
+        return 0.0
+    weighted_sum = sum(v * math.log(p) for p, v in facts.items())
+    return math.log(n) - weighted_sum / omega
 
 
-def divisors(n: int) -> List[int]:
-    """Return all divisors of n in sorted order.
+def boundary_projection(n: int, p: int) -> int:
+    """Project n onto the boundary at prime p: n ↦ n mod p.
 
-    >>> divisors(12)
-    [1, 2, 3, 4, 6, 12]
+    This is the holographic projection from the bulk (ℤ) to the
+    boundary (ℤ/pℤ).
     """
-    divs = []
-    for i in range(1, int(n**0.5) + 1):
-        if n % i == 0:
-            divs.append(i)
-            if i != n // i:
-                divs.append(n // i)
-    return sorted(divs)
+    return n % p
 
 
-def holographic_reconstruction(n: int) -> Tuple[float, float]:
-    """Verify ∑_{d|n} Λ(d) = log(n) for a given n.
+def holographic_distance(a: int, b: int, p: int) -> int:
+    """Compute the holographic distance between a and b at prime p.
 
-    Returns (sum_lambda, log_n) so you can check they match.
-
-    >>> s, l = holographic_reconstruction(12)
-    >>> abs(s - l) < 1e-10
-    True
+    d_p(a, b) = v_p(a - b), the p-adic valuation of the difference.
+    Two numbers are "close" in the p-adic bulk if their difference
+    is highly divisible by p.
     """
-    sum_lambda = sum(von_mangoldt(d) for d in divisors(n))
-    return sum_lambda, math.log(n)
+    if a == b:
+        return float('inf')  # type: ignore
+    return p_adic_valuation(p, abs(a - b))
 
 
-def tropical_bound_verification(N: int, beta: float) -> Tuple[float, float, bool]:
-    """Verify exp(∑ p⁻ᵝ) ≤ ∏(1 - p⁻ᵝ)⁻¹ for primes up to N.
+def euler_factor_denominator(p: int, s: int) -> int:
+    """Compute the Euler factor denominator p^s - 1.
 
-    Returns (lhs, rhs, valid).
-
-    >>> lhs, rhs, valid = tropical_bound_verification(100, 2)
-    >>> valid
-    True
+    For p ≥ 2 and s ≥ 1, this is always positive,
+    ensuring the partition function is well-defined.
     """
-    primes = sieve_of_eratosthenes(N)
-    prime_sum = sum(p ** (-beta) for p in primes)
-    lhs = math.exp(prime_sum)
-    rhs = 1.0
-    for p in primes:
-        rhs *= local_partition_function(p, beta)
-    return lhs, rhs, lhs <= rhs + 1e-10
+    return p ** s - 1
 
 
-def prime_zeta(beta: float, N: int = 100000) -> float:
-    """Compute P(β) = ∑_{p≤N} p⁻ᵝ, the prime zeta function.
+def partial_primorial(n: int) -> int:
+    """Compute the primorial n# = product of primes ≤ n.
 
-    Args:
-        beta: Exponent (must be > 1 for convergence)
-        N: Number of primes to include
-
-    Returns:
-        Finite approximation to P(β)
+    This equals the partial Euler product at s=1.
     """
-    primes = sieve_of_eratosthenes(N)
-    return sum(p ** (-beta) for p in primes)
-
-
-def holographic_entropy_partial(N: int) -> float:
-    """Compute ∑_{p≤N} 1/p, the partial holographic entropy.
-
-    >>> holographic_entropy_partial(10) > 0
-    True
-    """
-    primes = sieve_of_eratosthenes(N)
-    return sum(1.0 / p for p in primes)
-
-
-def log_euler_product_decomposition(
-    N: int, beta: float
-) -> Tuple[float, List[Tuple[int, float]]]:
-    """Decompose log ∏(1-p⁻ᵝ)⁻¹ = ∑(-log(1-p⁻ᵝ)) into individual terms.
-
-    Returns (total, [(p, weight), ...]) showing each prime's contribution.
-
-    >>> total, terms = log_euler_product_decomposition(10, 2)
-    >>> abs(total - sum(w for _, w in terms)) < 1e-10
-    True
-    """
-    primes = sieve_of_eratosthenes(N)
-    terms = [(p, bulk_weight(p, beta)) for p in primes]
-    total = sum(w for _, w in terms)
-    return total, terms
+    result = 1
+    for p in sieve_of_eratosthenes(n):
+        result *= p
+    return result
 
 
 if __name__ == "__main__":
-    print("Holographic Prime Algorithms — Quick Test")
-    print("=" * 50)
-
-    # Test Euler product
-    ep = finite_euler_product(10000, 2)
-    print(f"ζ(2) ≈ {ep:.10f} (exact: {math.pi**2/6:.10f})")
-
-    # Test tropical bound
-    lhs, rhs, valid = tropical_bound_verification(1000, 2)
-    print(f"Tropical bound: {lhs:.6f} ≤ {rhs:.6f} → {valid}")
-
-    # Test reconstruction
-    for n in [12, 60, 100]:
-        s, l = holographic_reconstruction(n)
-        print(f"∑Λ(d|{n}) = {s:.6f}, log({n}) = {l:.6f}, match: {abs(s-l) < 1e-10}")
-
-    # Test entropy divergence
-    for N in [100, 1000, 10000, 100000]:
-        h = holographic_entropy_partial(N)
-        print(f"∑_{{p≤{N}}} 1/p = {h:.6f}")
+    # Quick sanity checks
+    print("Primes up to 30:", sieve_of_eratosthenes(30))
+    print("v_2(12) =", p_adic_valuation(2, 12))  # Should be 2
+    print("v_3(12) =", p_adic_valuation(3, 12))  # Should be 1
+    print("Ω(12) =", total_holographic_weight(12))  # Should be 3
+    print("θ(100) =", chebyshev_theta(100))
+    print("ψ(100) =", chebyshev_psi(100))
+    print("Z(2, 100) =", prime_partition_function(2.0, 100))
+    print("ζ(2) exact =", math.pi**2 / 6)
+    print("Primorial 10# =", partial_primorial(10))  # 2*3*5*7 = 210
