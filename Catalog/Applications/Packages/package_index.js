@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3a0d8a59",
     "filename": "topological_quantum_compiling_braid_groups_as_univ.json",
     "pkg_num": 357,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.392,
     "title": "Fusion Systems, Fibonacci Anyons, and Quantum Braid Universality"
   },
   {
@@ -11483,8 +11483,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "topological_quantum_compiling_braid_groups_as_univ",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.392,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Fusion Systems, Fibonacci Anyons, and Quantum Braid Universality"
     }
