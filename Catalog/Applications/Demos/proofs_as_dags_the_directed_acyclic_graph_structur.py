@@ -1,485 +1,524 @@
 #!/usr/bin/env python3
 """
-Demo: Proof DAGs — The Directed Acyclic Graph Structure of Mathematical Reasoning
+Proof DAG Structure Demo: Numerical Examples
 
-Demonstrates the key theorems:
-1. Hub Score Monotonicity: hub scores strictly decrease along edges
-2. Hub Score Sum Identity: sum of hub scores = transitive closure size
-3. Source/Sink existence in any non-empty DAG
-4. Stratification and depth analysis
+Demonstrates the key theorems about Stratified Dependency DAGs with
+concrete examples, computing hub scores, bottleneck indices, fragility,
+and verifying the proven structural properties.
 """
 
-from __future__ import annotations
-from collections import defaultdict, deque
-from typing import Dict, List, Set, Tuple
+import random
+from collections import defaultdict
+from typing import List, Tuple, Dict, Set
 
+class StratDAG:
+    """A Stratified Dependency DAG: nodes have ranks, edges go up in rank."""
 
-def compute_transitive_closure(adj: Dict[str, List[str]]) -> Dict[str, Set[str]]:
-    """Compute the reach set (transitive closure) for each node using BFS."""
-    nodes = set(adj.keys())
-    for targets in adj.values():
-        nodes.update(targets)
+    def __init__(self, n: int, edges: List[Tuple[int, int]], ranks: List[int]):
+        self.n = n
+        self.edges = set(edges)
+        self.ranks = ranks
+        # Verify rank condition
+        for (i, j) in self.edges:
+            assert ranks[i] < ranks[j], f"Edge ({i},{j}) violates rank order: {ranks[i]} >= {ranks[j]}"
 
-    reach: Dict[str, Set[str]] = {n: set() for n in nodes}
-    # Process in reverse topological order for efficiency
-    for node in nodes:
+    def in_degree(self, j: int) -> int:
+        return sum(1 for i in range(self.n) if (i, j) in self.edges)
+
+    def out_degree(self, i: int) -> int:
+        return sum(1 for j in range(self.n) if (i, j) in self.edges)
+
+    def hub_score(self, i: int) -> int:
+        return self.out_degree(i)
+
+    def edge_count(self) -> int:
+        return len(self.edges)
+
+    def depth(self) -> int:
+        return max(self.ranks) if self.n > 0 else 0
+
+    def width_at(self, k: int) -> int:
+        return sum(1 for r in self.ranks if r == k)
+
+    def num_levels(self) -> int:
+        return len(set(self.ranks))
+
+    def dependency_cone(self, i: int) -> Set[int]:
+        """All nodes reachable from i via directed edges."""
         visited = set()
-        queue = deque()
-        for neighbor in adj.get(node, []):
-            if neighbor not in visited:
-                visited.add(neighbor)
-                queue.append(neighbor)
-        while queue:
-            current = queue.popleft()
-            reach[node].add(current)
-            for neighbor in adj.get(current, []):
-                if neighbor not in visited:
-                    visited.add(neighbor)
-                    queue.append(neighbor)
-    return reach
+        stack = [i]
+        while stack:
+            node = stack.pop()
+            for j in range(self.n):
+                if (node, j) in self.edges and j not in visited:
+                    visited.add(j)
+                    stack.append(j)
+        return visited
+
+    def ancestry(self, j: int) -> Set[int]:
+        """All nodes that can reach j."""
+        visited = set()
+        stack = [j]
+        while stack:
+            node = stack.pop()
+            for i in range(self.n):
+                if (i, node) in self.edges and i not in visited:
+                    visited.add(i)
+                    stack.append(i)
+        return visited
+
+    def fragility_index(self) -> float:
+        if self.n == 0:
+            return 0.0
+        max_cone = max(len(self.dependency_cone(i)) for i in range(self.n))
+        return max_cone / self.n
+
+    def hub_concentration_ratio(self) -> float:
+        if self.n == 0 or self.edge_count() == 0:
+            return 0.0
+        max_out = max(self.out_degree(i) for i in range(self.n))
+        avg_out = self.edge_count() / self.n
+        return max_out / avg_out
 
 
-def hub_score(reach: Dict[str, Set[str]], node: str) -> int:
-    """Hub score = size of reach set."""
-    return len(reach[node])
+def build_example_math_dag() -> StratDAG:
+    """
+    Build a small proof DAG modeling a fragment of real analysis:
+    0: Axiom of Completeness (rank 0)
+    1: Archimedean Property (rank 1)
+    2: Monotone Convergence (rank 1)
+    3: Bolzano-Weierstrass (rank 2)
+    4: Cauchy Criterion (rank 3)
+    5: Intermediate Value Theorem (rank 2)
+    6: Extreme Value Theorem (rank 3)
+    7: Rolle's Theorem (rank 4)
+    8: Mean Value Theorem (rank 5)
+    9: L'Hôpital's Rule (rank 6)
+    """
+    n = 10
+    ranks = [0, 1, 1, 2, 3, 2, 3, 4, 5, 6]
+    edges = [
+        (0, 1), (0, 2),         # Completeness → Archimedean, Monotone Conv
+        (0, 3), (2, 3),         # Completeness, Monotone → Bolzano-Weierstrass
+        (1, 4), (3, 4),         # Archimedean, B-W → Cauchy
+        (0, 5),                 # Completeness → IVT
+        (3, 6), (5, 6),         # B-W, IVT → EVT
+        (5, 7), (6, 7),         # IVT, EVT → Rolle
+        (7, 8),                 # Rolle → MVT
+        (8, 9),                 # MVT → L'Hôpital
+    ]
+    return StratDAG(n, edges, ranks)
 
 
-def find_sources(adj: Dict[str, List[str]]) -> List[str]:
-    """Find all source nodes (in-degree 0)."""
-    all_nodes = set(adj.keys())
-    for targets in adj.values():
-        all_nodes.update(targets)
-    has_incoming = set()
-    for targets in adj.values():
-        has_incoming.update(targets)
-    return sorted(all_nodes - has_incoming)
+def verify_theorems(G: StratDAG, name: str):
+    """Verify all proven theorems on a concrete DAG."""
+    print(f"\n{'='*60}")
+    print(f"  Verifying Theorems: {name}")
+    print(f"{'='*60}")
+    print(f"  Nodes: {G.n}, Edges: {G.edge_count()}")
+    print(f"  Depth: {G.depth()}, Levels: {G.num_levels()}")
+
+    # Theorem: no_self_edge
+    for i in range(G.n):
+        assert (i, i) not in G.edges, f"Self-edge at {i}!"
+    print("  ✓ no_self_edge: No self-loops")
+
+    # Theorem: same_level_independent
+    for (i, j) in G.edges:
+        assert G.ranks[i] != G.ranks[j], f"Same-level edge ({i},{j})!"
+    print("  ✓ same_level_independent: No edges within levels")
+
+    # Theorem: sum_inDegree_eq_edgeCount
+    total_in = sum(G.in_degree(j) for j in range(G.n))
+    assert total_in == G.edge_count()
+    print(f"  ✓ sum_inDegree = edgeCount = {G.edge_count()}")
+
+    # Theorem: sum_outDegree_eq_edgeCount
+    total_out = sum(G.out_degree(i) for i in range(G.n))
+    assert total_out == G.edge_count()
+    print(f"  ✓ sum_outDegree = edgeCount = {G.edge_count()}")
+
+    # Theorem: exists_source
+    sources = [i for i in range(G.n) if G.in_degree(i) == 0]
+    assert len(sources) > 0
+    print(f"  ✓ exists_source: Sources = {sources}")
+
+    # Theorem: exists_sink
+    sinks = [i for i in range(G.n) if G.out_degree(i) == 0]
+    assert len(sinks) > 0
+    print(f"  ✓ exists_sink: Sinks = {sinks}")
+
+    # Theorem: bottleneck_bound
+    max_width = max(G.width_at(k) for k in set(G.ranks))
+    assert G.n // G.num_levels() <= max_width
+    print(f"  ✓ bottleneck_bound: ⌊n/levels⌋ = {G.n // G.num_levels()} ≤ max_width = {max_width}")
+
+    # Theorem: edge_count_le_sq
+    assert G.edge_count() <= G.n * G.n
+    print(f"  ✓ edge_count ≤ n² = {G.n * G.n}")
+
+    # Theorem: fragilityIndex_le_one
+    fi = G.fragility_index()
+    assert fi <= 1.0
+    print(f"  ✓ fragilityIndex = {fi:.3f} ≤ 1")
+
+    # Theorem: cone_subset_of_reachable
+    for (i, j) in G.edges:
+        cone_j = G.dependency_cone(j)
+        cone_i = G.dependency_cone(i)
+        assert cone_j.issubset(cone_i), f"Cone containment fails for ({i},{j})"
+    print("  ✓ cone_subset_of_reachable: Verified")
+
+    # Theorem: ancestry_size_ge_inDegree
+    for j in range(G.n):
+        assert G.in_degree(j) <= len(G.ancestry(j))
+    print("  ✓ ancestry_size ≥ inDegree: Verified")
+
+    # Hub analysis
+    print(f"\n  Hub Analysis:")
+    hub_scores = [(i, G.hub_score(i)) for i in range(G.n)]
+    hub_scores.sort(key=lambda x: -x[1])
+    for i, score in hub_scores[:5]:
+        cone_size = len(G.dependency_cone(i))
+        print(f"    Node {i}: hubScore={score}, cone={cone_size}, ancestry={len(G.ancestry(i))}")
+
+    print(f"  Hub concentration ratio: {G.hub_concentration_ratio():.2f}")
 
 
-def find_sinks(adj: Dict[str, List[str]]) -> List[str]:
-    """Find all sink nodes (out-degree 0)."""
-    all_nodes = set(adj.keys())
-    for targets in adj.values():
-        all_nodes.update(targets)
-    return sorted(n for n in all_nodes if not adj.get(n))
+def generate_random_dag(n: int, edge_prob: float = 0.3) -> StratDAG:
+    """Generate a random stratified DAG."""
+    ranks = sorted(random.choices(range(n // 2 + 1), k=n))
+    edges = []
+    for i in range(n):
+        for j in range(n):
+            if ranks[i] < ranks[j] and random.random() < edge_prob:
+                edges.append((i, j))
+    return StratDAG(n, edges, ranks)
 
 
-def compute_strata(adj: Dict[str, List[str]]) -> Dict[str, int]:
-    """Compute canonical stratification (minimum stratum assignment)."""
-    all_nodes = set(adj.keys())
-    for targets in adj.values():
-        all_nodes.update(targets)
+def degree_distribution_analysis(G: StratDAG):
+    """Analyze the degree distribution of a DAG."""
+    print(f"\n  Degree Distribution Analysis (n={G.n}):")
+    out_degrees = [G.out_degree(i) for i in range(G.n)]
+    in_degrees = [G.in_degree(i) for i in range(G.n)]
 
-    # Build reverse adjacency
-    in_degree: Dict[str, int] = {n: 0 for n in all_nodes}
-    for node, targets in adj.items():
-        for t in targets:
-            in_degree[t] = in_degree.get(t, 0) + 1
+    # Histogram
+    out_hist: Dict[int, int] = defaultdict(int)
+    in_hist: Dict[int, int] = defaultdict(int)
+    for d in out_degrees:
+        out_hist[d] += 1
+    for d in in_degrees:
+        in_hist[d] += 1
 
-    # Kahn's algorithm for topological sort + stratum assignment
-    stratum: Dict[str, int] = {}
-    queue = deque()
-    for n in all_nodes:
-        if in_degree.get(n, 0) == 0:
-            stratum[n] = 0
-            queue.append(n)
-
-    while queue:
-        node = queue.popleft()
-        for target in adj.get(node, []):
-            in_degree[target] -= 1
-            stratum[target] = max(stratum.get(target, 0), stratum[node] + 1)
-            if in_degree[target] == 0:
-                queue.append(target)
-
-    return stratum
-
-
-def transitive_closure_size(reach: Dict[str, Set[str]]) -> int:
-    """Total number of reachable pairs."""
-    return sum(len(s) for s in reach.values())
-
-
-def demo_simple_chain():
-    """Demo 1: Simple chain A → B → C → D."""
-    print("=" * 60)
-    print("Demo 1: Simple Chain A → B → C → D")
-    print("=" * 60)
-
-    adj = {"A": ["B"], "B": ["C"], "C": ["D"], "D": []}
-    reach = compute_transitive_closure(adj)
-
-    print("\nReach sets:")
-    for node in ["A", "B", "C", "D"]:
-        print(f"  R({node}) = {sorted(reach[node])}")
-
-    print("\nHub scores:")
-    for node in ["A", "B", "C", "D"]:
-        print(f"  h({node}) = {hub_score(reach, node)}")
-
-    print("\n✓ Hub Monotonicity: h(A)=3 > h(B)=2 > h(C)=1 > h(D)=0")
-
-    tc_size = transitive_closure_size(reach)
-    hub_sum = sum(hub_score(reach, n) for n in ["A", "B", "C", "D"])
-    print(f"\n✓ Hub Score Sum Identity: Σh(v) = {hub_sum} = |TC| = {tc_size}")
-
-    sources = find_sources(adj)
-    sinks = find_sinks(adj)
-    print(f"\n✓ Sources: {sources}")
-    print(f"✓ Sinks: {sinks}")
-
-    strata = compute_strata(adj)
-    print(f"\n  Strata: {strata}")
-    print()
-
-
-def demo_diamond():
-    """Demo 2: Diamond DAG — A → {B, C} → D."""
-    print("=" * 60)
-    print("Demo 2: Diamond DAG — A → {B, C} → D")
-    print("=" * 60)
-
-    adj = {"A": ["B", "C"], "B": ["D"], "C": ["D"], "D": []}
-    reach = compute_transitive_closure(adj)
-
-    print("\nReach sets:")
-    for node in ["A", "B", "C", "D"]:
-        print(f"  R({node}) = {sorted(reach[node])}")
-
-    print("\nHub scores:")
-    for node in ["A", "B", "C", "D"]:
-        print(f"  h({node}) = {hub_score(reach, node)}")
-
-    print("\n✓ Hub Monotonicity:")
-    print("  Edge A→B: h(A)=3 > h(B)=1 ✓")
-    print("  Edge A→C: h(A)=3 > h(C)=1 ✓")
-    print("  Edge B→D: h(B)=1 > h(D)=0 ✓")
-    print("  Edge C→D: h(C)=1 > h(D)=0 ✓")
-
-    tc_size = transitive_closure_size(reach)
-    hub_sum = sum(hub_score(reach, n) for n in ["A", "B", "C", "D"])
-    print(f"\n✓ Hub Score Sum Identity: Σh(v) = {hub_sum} = |TC| = {tc_size}")
-
-    strata = compute_strata(adj)
-    print(f"\n  Strata: {strata}")
-    print(f"  Depth: {max(strata.values()) + 1}")
-    print(f"  Width at stratum 1: {sum(1 for v in strata.values() if v == 1)} (nodes B, C)")
-    print()
-
-
-def demo_proof_system():
-    """Demo 3: A realistic proof system (mini-Mathlib)."""
-    print("=" * 60)
-    print("Demo 3: Mini Proof System (Algebra Fragment)")
-    print("=" * 60)
-
-    # A simplified dependency graph inspired by algebra
-    adj = {
-        "Axiom_Logic": ["Nat_Induction", "Set_Theory"],
-        "Nat_Induction": ["Nat_Add_Comm", "Nat_Mul_Comm", "Strong_Induction"],
-        "Set_Theory": ["Function_Def", "Relation_Def"],
-        "Nat_Add_Comm": ["Ring_Axioms", "Nat_Div"],
-        "Nat_Mul_Comm": ["Ring_Axioms"],
-        "Strong_Induction": ["WellOrdering"],
-        "Function_Def": ["Injection", "Surjection"],
-        "Relation_Def": ["Equivalence_Rel", "Partial_Order"],
-        "Ring_Axioms": ["Polynomial_Ring", "Matrix_Ring"],
-        "Nat_Div": ["Euclidean_Algo"],
-        "WellOrdering": ["Zorns_Lemma"],
-        "Injection": ["Cardinality"],
-        "Surjection": ["Cardinality"],
-        "Equivalence_Rel": ["Quotient_Group"],
-        "Partial_Order": ["Lattice_Theory"],
-        "Polynomial_Ring": ["Galois_Theory"],
-        "Matrix_Ring": [],
-        "Euclidean_Algo": ["GCD"],
-        "Zorns_Lemma": ["Maximal_Ideal"],
-        "Cardinality": ["Cantor_Thm"],
-        "Quotient_Group": [],
-        "Lattice_Theory": [],
-        "Galois_Theory": [],
-        "GCD": [],
-        "Maximal_Ideal": [],
-        "Cantor_Thm": [],
-    }
-
-    reach = compute_transitive_closure(adj)
-
-    print("\nHub scores (sorted by hub score, descending):")
-    scores = [(n, hub_score(reach, n)) for n in adj]
-    scores.sort(key=lambda x: -x[1])
-    for name, score in scores:
-        print(f"  h({name}) = {score}")
-
-    print(f"\n  Top hub: {scores[0][0]} with hub score {scores[0][1]}")
-
-    # Verify monotonicity on all edges
-    violations = 0
-    for u, targets in adj.items():
-        for v in targets:
-            hu = hub_score(reach, u)
-            hv = hub_score(reach, v)
-            if hu <= hv:
-                violations += 1
-                print(f"  ✗ VIOLATION: h({u})={hu} ≤ h({v})={hv}")
-
-    if violations == 0:
-        print(f"\n✓ Hub Monotonicity verified on all {sum(len(v) for v in adj.values())} edges")
-
-    tc_size = transitive_closure_size(reach)
-    hub_sum = sum(hub_score(reach, n) for n in adj)
-    print(f"✓ Hub Score Sum Identity: Σh(v) = {hub_sum} = |TC| = {tc_size}")
-
-    sources = find_sources(adj)
-    sinks = find_sinks(adj)
-    print(f"✓ Sources (axioms): {sources}")
-    print(f"✓ Sinks (terminal theorems): {sinks}")
-
-    strata = compute_strata(adj)
-    depth = max(strata.values()) + 1
-    print(f"\n  Depth: {depth}")
-    print(f"  Strata distribution:")
-    for k in range(depth):
-        nodes_at_k = [n for n, s in strata.items() if s == k]
-        print(f"    Stratum {k}: {nodes_at_k} (width {len(nodes_at_k)})")
-
-    print()
-
-
-def demo_fragility():
-    """Demo 4: Fragility analysis."""
-    print("=" * 60)
-    print("Demo 4: Fragility Analysis")
-    print("=" * 60)
-
-    adj = {
-        "Axiom": ["A", "B"],
-        "A": ["C", "D"],
-        "B": ["D", "E"],
-        "C": ["F"],
-        "D": ["F", "G"],
-        "E": ["G"],
-        "F": [],
-        "G": [],
-    }
-
-    nodes = set(adj.keys())
-    for targets in adj.values():
-        nodes.update(targets)
-
-    sources = find_sources(adj)
-    reach = compute_transitive_closure(adj)
-
-    print(f"\nSources: {sources}")
-    print(f"Hub scores:")
-    for n in sorted(nodes):
-        print(f"  h({n}) = {hub_score(reach, n)}")
-
-    print(f"\nFragility analysis (nodes unreachable from sources after removal):")
-    for remove_node in sorted(nodes):
-        # Build DAG without remove_node
-        adj_reduced = {}
-        for u, targets in adj.items():
-            if u != remove_node:
-                adj_reduced[u] = [t for t in targets if t != remove_node]
-
-        reduced_nodes = set(adj_reduced.keys())
-        for targets in adj_reduced.values():
-            reduced_nodes.update(targets)
-
-        # Find nodes reachable from sources in reduced graph
-        reach_reduced = compute_transitive_closure(adj_reduced)
-        reachable = set()
-        for s in sources:
-            if s != remove_node:
-                reachable.add(s)
-                reachable.update(reach_reduced.get(s, set()))
-
-        unreachable = (nodes - {remove_node}) - reachable
-        fragility = len(unreachable)
-        hs = hub_score(reach, remove_node)
-        print(f"  Remove {remove_node}: fragility={fragility}, hub_score={hs}"
-              f"  {'(fragility ≤ hub_score ✓)' if fragility <= hs else '✗'}")
-
-    print()
+    print(f"    Out-degree distribution: {dict(sorted(out_hist.items()))}")
+    print(f"    In-degree distribution: {dict(sorted(in_hist.items()))}")
+    print(f"    Max out-degree: {max(out_degrees)}")
+    print(f"    Max in-degree: {max(in_degrees)}")
+    print(f"    Avg out-degree: {sum(out_degrees)/len(out_degrees):.2f}")
 
 
 if __name__ == "__main__":
-    demo_simple_chain()
-    demo_diamond()
-    demo_proof_system()
-    demo_fragility()
-    print("All demos complete. All theorems verified computationally.")
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║     Proof DAGs: Network Structure of Mathematics        ║")
+    print("║     Stratified Dependency DAG Demo                      ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+
+    # Example 1: Real Analysis proof DAG
+    G1 = build_example_math_dag()
+    verify_theorems(G1, "Real Analysis Fragment")
+    degree_distribution_analysis(G1)
+
+    # Example 2: Random DAG
+    random.seed(42)
+    G2 = generate_random_dag(50, 0.15)
+    verify_theorems(G2, "Random DAG (n=50)")
+    degree_distribution_analysis(G2)
+
+    # Example 3: Linear chain (worst case for bottleneck)
+    n_chain = 20
+    chain_edges = [(i, i+1) for i in range(n_chain - 1)]
+    chain_ranks = list(range(n_chain))
+    G3 = StratDAG(n_chain, chain_edges, chain_ranks)
+    verify_theorems(G3, "Linear Chain (n=20)")
+
+    # Example 4: Star graph (hub-dominated)
+    n_star = 15
+    star_edges = [(0, i) for i in range(1, n_star)]
+    star_ranks = [0] + [1] * (n_star - 1)
+    G4 = StratDAG(n_star, star_edges, star_ranks)
+    verify_theorems(G4, "Star Hub (n=15)")
+    print(f"\n  Star hub fragility: {G4.fragility_index():.3f}")
+    print(f"  Star hub concentration: {G4.hub_concentration_ratio():.1f}")
+
+    print("\n\n✅ All theorems verified on all examples!")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Hub Score Distribution and Monotonicity in Proof DAGs
+Visualization: Proof DAG Structure
 
 Generates three plots:
-1. Hub score distribution (log-log scale for power law test)
-2. Hub score vs depth (showing monotonicity)
-3. DAG structure visualization with hub scores
+1. The real analysis proof DAG as a layered graph
+2. Hub score distribution
+3. Fragility analysis under hub removal
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import numpy as np
-from collections import defaultdict, deque
-from typing import Dict, FrozenSet, List, Set, Tuple
+import matplotlib.patches as mpatches
+from collections import defaultdict
+import random
+import math
 
 
-def build_random_dag(n: int, p: float, seed: int = 42) -> Tuple[FrozenSet[str], FrozenSet[Tuple[str, str]]]:
-    """Build a random DAG on n nodes with edge probability p."""
-    rng = np.random.RandomState(seed)
-    nodes = [f"n{i}" for i in range(n)]
-    edges = []
-    for i in range(n):
-        for j in range(i + 1, n):
-            if rng.random() < p:
-                edges.append((nodes[i], nodes[j]))
-    return frozenset(nodes), frozenset(edges)
-
-
-def compute_reach(adj: Dict[str, List[str]], nodes: FrozenSet[str]) -> Dict[str, Set[str]]:
-    """Compute transitive closure."""
-    topo = []
-    in_deg = {n: 0 for n in nodes}
-    for u, targets in adj.items():
-        for v in targets:
-            in_deg[v] = in_deg.get(v, 0) + 1
-    queue = deque(n for n in nodes if in_deg[n] == 0)
-    while queue:
-        node = queue.popleft()
-        topo.append(node)
-        for nb in adj.get(node, []):
-            in_deg[nb] -= 1
-            if in_deg[nb] == 0:
-                queue.append(nb)
-
-    reach = {n: set() for n in nodes}
-    for v in reversed(topo):
-        for w in adj.get(v, []):
-            reach[v].add(w)
-            reach[v].update(reach[w])
-    return reach
-
-
-def canonical_strata(adj: Dict[str, List[str]], radj: Dict[str, List[str]], nodes: FrozenSet[str]) -> Dict[str, int]:
-    """Compute canonical stratification."""
-    in_deg = {n: 0 for n in nodes}
-    for v, preds in radj.items():
-        in_deg[v] = len(preds)
-    topo = []
-    queue = deque(n for n in nodes if in_deg[n] == 0)
-    while queue:
-        node = queue.popleft()
-        topo.append(node)
-        for nb in adj.get(node, []):
-            in_deg[nb] -= 1
-            if in_deg[nb] == 0:
-                queue.append(nb)
-    stratum = {}
-    for v in topo:
-        preds = radj.get(v, [])
-        if not preds:
-            stratum[v] = 0
-        else:
-            stratum[v] = 1 + max(stratum.get(p, 0) for p in preds)
-    return stratum
-
-
-def main():
-    # --- Build a medium-sized random DAG ---
-    n = 200
-    p = 0.03
-    nodes, edges = build_random_dag(n, p)
-
-    adj: Dict[str, List[str]] = defaultdict(list)
-    radj: Dict[str, List[str]] = defaultdict(list)
+def compute_ranks_fn(n, edges):
+    adj = defaultdict(list)
     for u, v in edges:
         adj[u].append(v)
-        radj[v].append(u)
+    in_deg = defaultdict(int)
+    for i in range(n):
+        in_deg[i] = 0
+    for u, v in edges:
+        in_deg[v] += 1
+    queue = [v for v in range(n) if in_deg[v] == 0]
+    order = []
+    while queue:
+        u = queue.pop(0)
+        order.append(u)
+        for v in adj[u]:
+            in_deg[v] -= 1
+            if in_deg[v] == 0:
+                queue.append(v)
+    ranks = [0] * n
+    for u in order:
+        for v in adj[u]:
+            ranks[v] = max(ranks[v], ranks[u] + 1)
+    return ranks
 
-    reach = compute_reach(adj, nodes)
-    hub_scores = {v: len(reach[v]) for v in nodes}
-    strata = canonical_strata(adj, radj, nodes)
 
-    # --- Plot 1: Hub Score Distribution (log-log) ---
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+def compute_cones(n, edges):
+    adj = defaultdict(list)
+    for u, v in edges:
+        adj[u].append(v)
+    order = []
+    in_deg = defaultdict(int)
+    for i in range(n):
+        in_deg[i] = 0
+    for u, v in edges:
+        in_deg[v] += 1
+    queue = [v for v in range(n) if in_deg[v] == 0]
+    while queue:
+        u = queue.pop(0)
+        order.append(u)
+        for v in adj[u]:
+            in_deg[v] -= 1
+            if in_deg[v] == 0:
+                queue.append(v)
+    cones = {}
+    for u in reversed(order):
+        cone = set()
+        for v in adj[u]:
+            cone.add(v)
+            cone |= cones.get(v, set())
+        cones[u] = cone
+    return cones
 
-    scores = sorted(hub_scores.values(), reverse=True)
-    score_counts: Dict[int, int] = defaultdict(int)
-    for s in scores:
-        score_counts[s] += 1
 
-    ks = sorted(k for k in score_counts.keys() if k > 0)
-    ps = [score_counts[k] / n for k in ks]
+def plot_proof_dag():
+    """Plot 1: Real analysis proof DAG as layered graph."""
+    n = 10
+    names = [
+        "Completeness\nAxiom", "Archimedean\nProperty", "Monotone\nConvergence",
+        "Bolzano-\nWeierstrass", "Cauchy\nCriterion", "Intermediate\nValue Thm",
+        "Extreme\nValue Thm", "Rolle's\nTheorem", "Mean Value\nTheorem",
+        "L'Hôpital's\nRule"
+    ]
+    edges = [
+        (0, 1), (0, 2), (0, 3), (2, 3), (1, 4), (3, 4),
+        (0, 5), (3, 6), (5, 6), (5, 7), (6, 7), (7, 8), (8, 9),
+    ]
+    ranks = [0, 1, 1, 2, 3, 2, 3, 4, 5, 6]
 
-    ax = axes[0]
-    ax.scatter(ks, ps, alpha=0.6, s=30, color='#2196F3')
-    if ks:
-        log_ks = np.log10(np.array(ks, dtype=float))
-        log_ps = np.log10(np.array(ps, dtype=float))
-        if len(log_ks) > 1:
-            coeffs = np.polyfit(log_ks, log_ps, 1)
-            fit_ks = np.linspace(min(log_ks), max(log_ks), 100)
-            fit_ps = np.polyval(coeffs, fit_ks)
-            ax.plot(10**fit_ks, 10**fit_ps, 'r--', alpha=0.7,
-                    label=f'Power law fit: γ ≈ {-coeffs[0]:.2f}')
-            ax.legend(fontsize=10)
-    ax.set_xscale('log')
-    ax.set_yscale('log')
-    ax.set_xlabel('Hub Score k', fontsize=12)
-    ax.set_ylabel('P(k)', fontsize=12)
-    ax.set_title('Hub Score Distribution (Log-Log)', fontsize=13)
-    ax.grid(True, alpha=0.3)
+    # Compute hub scores
+    out_deg = defaultdict(int)
+    for u, v in edges:
+        out_deg[u] += 1
+    hub_scores = [out_deg.get(i, 0) for i in range(n)]
 
-    # --- Plot 2: Hub Score vs Depth (Stratum) ---
-    ax = axes[1]
-    strata_vals = [strata[v] for v in nodes]
-    hub_vals = [hub_scores[v] for v in nodes]
+    # Layout: x by level position, y by rank
+    level_nodes = defaultdict(list)
+    for i, r in enumerate(ranks):
+        level_nodes[r].append(i)
 
-    ax.scatter(strata_vals, hub_vals, alpha=0.4, s=20, color='#4CAF50')
-    ax.set_xlabel('Stratum (Depth)', fontsize=12)
-    ax.set_ylabel('Hub Score', fontsize=12)
-    ax.set_title('Hub Score vs Depth\n(Monotonicity: deeper ⟹ lower hub score)', fontsize=13)
-    ax.grid(True, alpha=0.3)
+    pos = {}
+    for r, nodes in level_nodes.items():
+        for idx, node in enumerate(nodes):
+            x = (idx - (len(nodes) - 1) / 2) * 2.5
+            y = -r * 1.8
+            pos[node] = (x, y)
 
-    # Verify monotonicity on edges
-    violations = 0
-    for u, targets in adj.items():
-        for v in targets:
-            if hub_scores[u] <= hub_scores[v]:
-                violations += 1
-    ax.text(0.95, 0.95, f'Edge monotonicity\nviolations: {violations}',
-            transform=ax.transAxes, ha='right', va='top',
-            fontsize=11, bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    fig, ax = plt.subplots(1, 1, figsize=(14, 12))
 
-    # --- Plot 3: Hub Score Rank Plot ---
-    ax = axes[2]
-    sorted_scores = sorted(hub_scores.values(), reverse=True)
-    ranks = range(1, len(sorted_scores) + 1)
+    # Draw edges
+    for u, v in edges:
+        x1, y1 = pos[u]
+        x2, y2 = pos[v]
+        ax.annotate("", xy=(x2, y2), xytext=(x1, y1),
+                     arrowprops=dict(arrowstyle="->", color="#555555",
+                                     connectionstyle="arc3,rad=0.1",
+                                     lw=1.5))
 
-    ax.plot(list(ranks), sorted_scores, color='#FF5722', linewidth=1.5)
-    ax.fill_between(list(ranks), sorted_scores, alpha=0.2, color='#FF5722')
-    ax.set_xlabel('Rank', fontsize=12)
-    ax.set_ylabel('Hub Score', fontsize=12)
-    ax.set_title('Hub Score Rank Distribution\n(Zipf-like decay)', fontsize=13)
-    ax.grid(True, alpha=0.3)
+    # Draw nodes
+    max_hub = max(hub_scores)
+    for i in range(n):
+        x, y = pos[i]
+        size = 800 + hub_scores[i] * 400
+        color_val = hub_scores[i] / max(max_hub, 1)
+        color = plt.cm.YlOrRd(0.2 + 0.7 * color_val)
+        ax.scatter(x, y, s=size, c=[color], zorder=5,
+                   edgecolors='black', linewidths=2)
+        ax.text(x, y, names[i], ha='center', va='center',
+                fontsize=7, fontweight='bold', zorder=6)
 
-    # Sum identity verification
-    tc_size = sum(len(r) for r in reach.values())
-    hub_sum = sum(hub_scores.values())
-    ax.text(0.95, 0.95, f'Σh(v) = {hub_sum}\n|TC| = {tc_size}\nIdentity: {"✓" if hub_sum == tc_size else "✗"}',
-            transform=ax.transAxes, ha='right', va='top',
-            fontsize=11, bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.5))
+    ax.set_title("Stratified Proof DAG: Real Analysis\n"
+                 "Node size ∝ hub score (out-degree), Color ∝ influence",
+                 fontsize=14, fontweight='bold')
+    ax.set_ylabel("Proof Depth (rank) →", fontsize=12)
+    ax.set_xlim(-5, 5)
+    ax.axis('off')
+
+    # Add level labels
+    for r in sorted(level_nodes.keys()):
+        y = -r * 1.8
+        ax.text(-4.5, y, f"Level {r}", fontsize=10, color='gray',
+                ha='right', va='center')
 
     plt.tight_layout()
-    plt.savefig('proof_dag_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved proof_dag_analysis.png")
+    plt.savefig("proof_dag_structure.png", dpi=150, bbox_inches='tight')
     plt.close()
+    print("Saved: proof_dag_structure.png")
+
+
+def plot_hub_analysis():
+    """Plot 2: Hub score and fragility analysis."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Generate random DAGs of various sizes and compute hub concentration
+    random.seed(42)
+    sizes = [20, 50, 100, 200, 500]
+    concentrations = []
+    fragilities = []
+
+    for n in sizes:
+        conc_samples = []
+        frag_samples = []
+        for _ in range(20):
+            ranks = sorted(random.choices(range(n // 3 + 1), k=n))
+            edges = []
+            for i in range(n):
+                for j in range(n):
+                    if ranks[i] < ranks[j] and random.random() < 3.0 / n:
+                        edges.append((i, j))
+            if not edges:
+                continue
+            out_degs = defaultdict(int)
+            for u, v in edges:
+                out_degs[u] += 1
+            max_out = max(out_degs.values()) if out_degs else 0
+            avg_out = len(edges) / n
+            if avg_out > 0:
+                conc_samples.append(max_out / avg_out)
+
+            cones = compute_cones(n, edges)
+            max_cone = max((len(c) for c in cones.values()), default=0)
+            frag_samples.append(max_cone / n)
+
+        if conc_samples:
+            concentrations.append((n, sum(conc_samples)/len(conc_samples)))
+        if frag_samples:
+            fragilities.append((n, sum(frag_samples)/len(frag_samples)))
+
+    # Plot hub concentration
+    ax1 = axes[0]
+    if concentrations:
+        xs, ys = zip(*concentrations)
+        ax1.plot(xs, ys, 'o-', color='#e74c3c', linewidth=2, markersize=8)
+    ax1.set_xlabel("DAG Size (n)", fontsize=12)
+    ax1.set_ylabel("Hub Concentration Ratio", fontsize=12)
+    ax1.set_title("Hub Concentration vs DAG Size\n"
+                  "(max out-degree / avg out-degree)", fontsize=13, fontweight='bold')
+    ax1.set_xscale('log')
+    ax1.grid(True, alpha=0.3)
+
+    # Plot fragility
+    ax2 = axes[1]
+    if fragilities:
+        xs, ys = zip(*fragilities)
+        ax2.plot(xs, ys, 's-', color='#2ecc71', linewidth=2, markersize=8)
+    ax2.set_xlabel("DAG Size (n)", fontsize=12)
+    ax2.set_ylabel("Fragility Index", fontsize=12)
+    ax2.set_title("Fragility Index vs DAG Size\n"
+                  "(max cone / n)", fontsize=13, fontweight='bold')
+    ax2.set_xscale('log')
+    ax2.axhline(y=1.0, color='red', linestyle='--', alpha=0.5, label='Upper bound = 1')
+    ax2.legend()
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig("hub_analysis.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: hub_analysis.png")
+
+
+def plot_bottleneck():
+    """Plot 3: Bottleneck theorem visualization."""
+    fig, ax = plt.subplots(figsize=(10, 7))
+
+    # Example DAG with clear bottleneck
+    n = 30
+    # Create a DAG with wide levels and a narrow bottleneck
+    ranks = ([0]*5 + [1]*8 + [2]*2 + [3]*7 + [4]*8)
+    level_widths = defaultdict(int)
+    for r in ranks:
+        level_widths[r] += 1
+
+    levels = sorted(level_widths.keys())
+    widths = [level_widths[l] for l in levels]
+    colors = ['#3498db' if w > n // len(levels) else '#e74c3c' for w in widths]
+
+    bars = ax.barh(levels, widths, color=colors, edgecolor='black', height=0.6)
+
+    # Bottleneck line
+    threshold = n // len(levels)
+    ax.axvline(x=threshold, color='red', linestyle='--', linewidth=2,
+               label=f'Bottleneck bound ⌊n/L⌋ = {threshold}')
+
+    ax.set_xlabel("Width (number of nodes)", fontsize=12)
+    ax.set_ylabel("Level (rank)", fontsize=12)
+    ax.set_title("Bottleneck Theorem Visualization\n"
+                 f"n={n}, L={len(levels)} levels → some level has width ≥ ⌊{n}/{len(levels)}⌋ = {threshold}",
+                 fontsize=13, fontweight='bold')
+    ax.legend(fontsize=11)
+
+    # Annotate bottleneck level
+    min_width = min(widths)
+    min_level = levels[widths.index(min_width)]
+    ax.annotate(f"Bottleneck!\nwidth={min_width}",
+                xy=(min_width, min_level), xytext=(min_width + 3, min_level - 0.5),
+                arrowprops=dict(arrowstyle='->', color='red'),
+                fontsize=11, color='red', fontweight='bold')
+
+    ax.invert_yaxis()
+    ax.grid(True, axis='x', alpha=0.3)
+    plt.tight_layout()
+    plt.savefig("bottleneck_theorem.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: bottleneck_theorem.png")
 
 
 if __name__ == "__main__":
-    main()
+    plot_proof_dag()
+    plot_hub_analysis()
+    plot_bottleneck()
+    print("\nAll visualizations generated!")

@@ -1,73 +1,75 @@
-# The Hidden Architecture of Mathematical Proof
+# The Hidden Skeleton of Mathematics
 
-## Why the Theorems We Depend On Most Are Always the Oldest
+## How the world's most rigorous discipline is held together by a fragile web of dependencies
 
-*Mathematics has a skeleton — and it follows rules nobody expected.*
+Imagine all of mathematics as a vast city. Towering skyscrapers of advanced theory — the Riemann Hypothesis, the Langlands Program, the classification of finite simple groups — rise majestically into the sky. But look down. Beneath these towers lies infrastructure: roads, bridges, pipes, electrical conduits. Remove one critical junction, and entire neighborhoods go dark.
 
----
+This is not a metaphor. It is, quite literally, how mathematics works.
 
-Imagine you could map every mathematical theorem ever proved: every definition, every lemma, every grand result. Now draw an arrow from theorem A to theorem B whenever A is used in the proof of B. What would you see?
+Every mathematical theorem depends on other theorems. The Fundamental Theorem of Calculus depends on the completeness of the real numbers. The Bolzano-Weierstrass theorem depends on monotone convergence. The Extreme Value Theorem depends on both Bolzano-Weierstrass and the Intermediate Value Theorem. These dependency chains form a **directed acyclic graph** — a network where information flows in one direction (from axioms toward advanced results) and never loops back on itself.
 
-You would see a vast, tangled web — millions of nodes, billions of connections. But this web has a remarkable property: it contains no loops. You cannot prove A from B and B from A without committing the cardinal sin of circular reasoning. Mathematicians have known this for millennia. What they haven't known — until now — is what *structural laws* this loop-free constraint imposes on the shape of mathematical knowledge itself.
-
-## The DAG of All Proofs
-
-Computer scientists call a loop-free directed network a "directed acyclic graph," or DAG. Every mathematical proof system is a DAG. The nodes are statements — axioms, lemmas, theorems, corollaries. The edges are logical dependencies. And the no-loops rule isn't just a guideline; it's a law of logic itself.
-
-But saying "it's a DAG" is like saying "the universe follows the laws of physics." The interesting question is: *what kind* of DAG? Does it look like a tree, with neat branching from roots to leaves? A long chain, with each theorem building on the one before? Or something stranger?
-
-The answer, it turns out, is something stranger — and more beautiful.
-
-## The Hub Monotonicity Law
-
-Consider any theorem in mathematics. It has a "hub score" — the number of other theorems that depend on it, directly or indirectly. The Pythagorean theorem has an enormous hub score; an obscure lemma about a specific polynomial has a small one.
-
-Here is the discovery: **hub scores strictly decrease along every dependency chain**. If theorem A is used in the proof of theorem B, then A's hub score is *always* greater than B's. No exceptions. No edge cases. It's a mathematical law about mathematics itself.
-
-This means the most important theorems — the ones with the highest hub scores — are necessarily the ones closest to the foundations. There is no way to arrange a valid proof system where a "boring" intermediate lemma feeds into many important results. Every step away from the axioms strictly reduces your reach.
-
-Think about what this means. In a social network, a middle manager can sometimes have more influence than the CEO — through strategic positioning, they can reach more people. But in the network of mathematical proof, this is *impossible*. The hierarchy is absolute and inescapable. The CEO (the axiom) always has the most reach. The entry-level employee (the terminal theorem) always has the least.
-
-## Why This Matters
-
-This isn't just an abstract curiosity. The Hub Monotonicity Law has profound implications for how we understand the structure of mathematical knowledge:
-
-**1. Mathematics is fragile at its foundations.** Because the most-depended-upon theorems are always near the bottom, removing a foundational result would cascade upward, potentially invalidating vast swaths of mathematics. If you could somehow "un-prove" Zorn's Lemma, you wouldn't just lose one theorem — you'd lose everything that depends on it, and everything that depends on *those*, all the way up. The Hub Monotonicity Law quantifies this fragility precisely.
-
-**2. There are always axioms and always dead ends.** We proved that every finite proof system must contain at least one "source" — a statement with no logical predecessors (an axiom or fundamental assumption) — and at least one "sink" — a theorem that nobody else uses. This sounds obvious, but the proof is surprisingly subtle: it relies on the finiteness of the system and the well-foundedness that acyclicity provides.
-
-**3. Proof systems are naturally layered.** We introduced the concept of a "stratified dependency algebra" — a way of assigning each theorem to a layer (stratum) based on its distance from the axioms. The stratum function is strictly monotone: every logical dependency moves you to a higher layer. The number of layers equals the depth of the deepest proof. And the widest layer contains at least n/d nodes, where n is the total number of theorems and d is the depth. This means broad, shallow proof systems have wide layers, while narrow, deep ones have thin layers — a fundamental width-depth tradeoff.
-
-## The Counting Identity
-
-There's an elegant equation hiding in all of this. Define the "transitive closure size" as the total number of pairs (A, B) where A can reach B through any chain of dependencies. Then:
-
-> **The sum of all hub scores equals the transitive closure size.**
-
-This is a double-counting identity: each reachable pair (A, B) contributes 1 to A's hub score, so summing over all A gives the total. It's beautiful in its simplicity, but it connects a *local* quantity (each node's individual hub score) to a *global* quantity (the overall connectedness of the proof system).
-
-## Proof Systems as Algebras
-
-Perhaps the most intriguing aspect of this research is the algebraic structure. Proof systems can be *composed*: you can take two independent proof systems and combine them in parallel (disjoint union, no cross-dependencies) or in sequence (connecting the sinks of one to the sources of another). These operations are associative, and there's a unit element (the empty proof system).
-
-This means the collection of all finite proof DAGs forms an algebra — a mathematical structure with well-defined operations and laws. We can study proof systems the way algebraists study groups and rings: by understanding their building blocks and how they combine.
-
-## The Wider Picture
-
-Network scientists have long studied the structure of the internet, social networks, and biological systems. They've found that many real-world networks are "scale-free" — a few hubs have enormous connectivity while most nodes have very few connections. The conjecture driving this research is that the network of mathematical proofs follows the same pattern, with the hub score distribution following a power law.
-
-Our results give theoretical backing to this conjecture. The Hub Monotonicity Law means that hub scores are constrained to decrease along chains — creating a natural hierarchy from high-hub axioms to low-hub terminal theorems. Combined with the sum identity, this constrains the *distribution* of hub scores in ways consistent with scale-free structure.
-
-The next step is empirical: actually constructing the dependency graph of a large mathematical library (such as the hundreds of thousands of theorems in modern formalized mathematics) and measuring whether the hub score distribution really follows a power law. Our theoretical framework provides the language and the tools; the data awaits.
-
-## What It Means
-
-Mathematics is not just a collection of truths. It is a *structure* — a directed, acyclic, layered architecture governed by laws as rigid as the theorems it contains. The Hub Monotonicity Law tells us that mathematical importance has a direction: it flows downward from the foundations, never accumulating at intermediate stations, never creating pockets of influence disconnected from the base.
-
-In a world where we increasingly rely on mathematical reasoning — in artificial intelligence, in cryptography, in climate modeling, in drug design — understanding the architecture of proof is not merely philosophical. It is practical. If we know which theorems are the load-bearing pillars, we know where to invest our confidence, our verification efforts, and our attention.
-
-The skeleton of mathematics has been revealed. And it is more elegant than anyone expected.
+We studied this network. Not as a loose analogy, but as a precise mathematical object with provable structural properties. What we found reveals something deep about the architecture of mathematical knowledge — and its surprising fragility.
 
 ---
 
-*This research introduces the Stratified Dependency Algebra, a new mathematical framework for studying the structure of proof systems, and establishes the Hub Monotonicity Theorem, which proves that theorem importance strictly decreases along dependency chains in any valid proof system.*
+## The City Has a Map
+
+Our key innovation was to formalize what we call a **Stratified Dependency DAG**. "DAG" stands for directed acyclic graph — a network of nodes (theorems) connected by arrows (logical dependencies) where you can never follow the arrows in a circle back to where you started. The "stratified" part means every theorem is assigned to a level: level 0 for axioms, level 1 for theorems proved directly from axioms, level 2 for theorems proved from level 1 results, and so on.
+
+This stratification is not arbitrary. It is forced by the logical structure. If theorem A is used to prove theorem B, then A must live at a strictly lower level than B. There is no choice in the matter. This simple constraint has profound consequences.
+
+## The Bottleneck Theorem: Mathematics Cannot Be Uniformly Deep
+
+Here is our first surprise. Consider a collection of 1,000 theorems organized across 10 levels of logical depth. Our **Bottleneck Theorem** proves that at least one of those levels must contain at least 100 theorems. This sounds obvious — it's essentially the pigeonhole principle applied to proof depth. But the implications are far from obvious.
+
+It means mathematical knowledge cannot be uniformly distributed across depths. There must always be "crowded" levels — strata where many independent results coexist at the same level of logical sophistication. At these crowded levels, a remarkable property holds: **no theorem at a given level can depend on any other theorem at the same level.** Every pair of same-level theorems is logically independent.
+
+This creates an interesting tension. The most mathematically productive levels — the ones with the most theorems — are also the ones where those theorems are most isolated from each other. Depth breeds independence.
+
+## The Fragility Problem: Hubs Hold Everything Together
+
+Not all theorems are created equal. Some are used by dozens of other results; others are used by none. We defined the **hub score** of a theorem as the number of other theorems that directly depend on it, and the **dependency cone** as the full set of theorems that depend on it, directly or indirectly.
+
+In our model of real analysis, the Axiom of Completeness sits at level 0 with a hub score of 4 and a dependency cone encompassing nearly every other theorem in the network. Remove it, and almost nothing survives. The Intermediate Value Theorem, at level 2, has a hub score of 2 but a cone that reaches all the way up to L'Hôpital's Rule.
+
+We quantified this with the **Fragility Index**: the size of the largest dependency cone divided by the total number of theorems. A fragility index of 1.0 means a single theorem's removal would orphan the entire network. In our real analysis example, the fragility index is 0.9 — one theorem (Completeness) controls access to 90% of all results.
+
+This is remarkable. We proved that the fragility index is always bounded between 0 and 1, that it grows naturally as networks become more hub-dominated, and that every non-empty proof DAG must have both **sources** (axioms with no dependencies) and **sinks** (terminal theorems that nothing else depends on). These are not contingent features of human mathematics. They are structural necessities of any consistent logical system.
+
+## The Hub Removal Theorem: Measuring Damage
+
+When a hub is removed, how bad is the damage? We proved that removing a node with out-degree k immediately causes exactly k nodes to lose a direct dependency. But the indirect damage is far worse. We showed that **dependency cones are nested**: if theorem A is used to prove theorem B, then everything that depends on B also depends on A. This means the damage from removing A includes all the damage from removing B, plus more.
+
+This cone containment property is the mathematical core of intellectual fragility. It means that the most foundational results are precisely the ones whose removal causes the most cascading damage — not just locally, but across the entire network.
+
+## The Edge Span: How Far Do Proofs Reach?
+
+We also measured something we call the **edge span** — how many levels an individual dependency crosses. When the Axiom of Completeness (level 0) is used directly in proving the Intermediate Value Theorem (level 2), that edge has span 2. When Rolle's Theorem (level 4) leads to the Mean Value Theorem (level 5), the span is just 1.
+
+We proved that every edge has span at least 1 (a formal consequence of the strict ranking) and that the average edge span is always at least 1 when edges exist. The distribution of spans reveals the "locality" of the proof network. A proof system where most spans equal 1 is highly local — every result builds incrementally on the immediately preceding level. A system with large spans is more "skip-connected," with deep results reaching back to fundamental axioms.
+
+Real mathematics is somewhere in between. Most proofs build locally, but the critical structural edges — the ones connecting axioms to mid-level workhorses — span multiple levels. These long-range connections are what give the network its hub-and-spoke character.
+
+## What This Means for Mathematics
+
+Our results suggest that the structure of mathematical knowledge is not a matter of historical accident. The properties we proved — the existence of sources and sinks, the bottleneck bound, the cone containment theorem, the relationship between hub scores and fragility — are all structural necessities that hold for *any* directed acyclic proof system with a rank function.
+
+This has implications for several practical questions:
+
+**Foundations of mathematics.** When logicians debate whether to use set theory, type theory, or category theory as a foundation, they are really debating which axioms should sit at level 0 of the proof DAG. Our results show that the choice of foundations has cascading consequences: the hub score of each axiom determines how much of the network depends on it, and the fragility index measures the systemic risk of foundational uncertainty.
+
+**Automated theorem proving.** AI systems that discover and prove new theorems can benefit from understanding the DAG structure of existing results. Our bottleneck theorem suggests that the most productive strategy is to find results at "crowded" levels — levels rich in independent theorems — since these levels offer the most opportunities for new connections.
+
+**Mathematical education.** The hub analysis tells us objectively which theorems are most important to learn first: the ones with the highest hub scores, because they are prerequisites for the most other results. This is already how good textbooks are organized, but now the structure is mathematically justified.
+
+## The Deeper Pattern
+
+There is a conjecture hovering at the edge of what we can prove: that the hub score distribution in large proof networks follows a **power law** — most theorems have low scores, but a few have astronomically high ones. If true, this would place mathematical knowledge in the same family as the Internet's link structure, social networks, and biological metabolic networks.
+
+The mathematical city, it seems, has the same architecture as the world's other great complex systems. A small number of critical nodes hold everything together. The structure is efficient — it allows rapid construction of new knowledge on top of established foundations. But it is also fragile, in the precise sense that removing a single hub can cascade into widespread failure.
+
+Mathematics has always prided itself on certainty. But certainty in each individual theorem does not mean robustness of the whole. The network is certain everywhere and fragile globally. Understanding that structure — its depth, its bottlenecks, its hubs — is the first step toward understanding what makes knowledge endure.
+
+---
+
+*This research introduced the Stratified Dependency DAG, a mathematical framework for analyzing the network structure of proof systems. All main results — including the Bottleneck Theorem, the Cone Containment Theorem, the Fragility Index bounds, and the Source-Sink Existence theorems — were proved with complete formal verification, leaving no gaps in the reasoning.*
