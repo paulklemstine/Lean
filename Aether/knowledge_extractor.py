@@ -85,6 +85,7 @@ class ResearchJob:
     error_message: Optional[str] = None
     source_exp_ids: list = None  # exp_ids of parent experiments whose future directions inspired this one
     adversarial_result: Optional[Dict] = None  # Adversarial judging metadata
+    prompt_version: str = "v1"  # Which prompt version was used: v1, v2, v3
 
 
 class KnowledgeExtractor:
@@ -494,8 +495,9 @@ class KnowledgeExtractor:
         # the complete artifact set: Lean + demo + paper
         augmented_prompt = self._augment_prompt_with_deliverables(base_prompt, job.concept)
         job.prompt = augmented_prompt
+        job.prompt_version = "v3"  # Track which prompt version was used
 
-        print(f"[Dispatch] prompt length: {len(augmented_prompt)} chars")
+        print(f"[Dispatch] prompt length: {len(augmented_prompt)} chars ({job.prompt_version})")
 
         if dry_run:
             print(f"[Dry Run] Would dispatch to Aristotle:")
