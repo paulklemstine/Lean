@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T03:51:50.133903+00:00",
+  "last_updated": "2026-06-04T04:23:25.957091+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -1292,6 +1292,74 @@
       "theorem_count": 5,
       "timestamp": "2026-06-04T03:51:50.084286+00:00",
       "title": "The Mathematics of Memes: Viral Information Topology"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6571,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 2,
+      "domain": "Shared",
+      "duration_seconds": 3696.182476758957,
+      "end_time": 1780546939.7385912,
+      "files_integrated": 5,
+      "job_id": "15dd528a",
+      "outcome_quality": 0.36056,
+      "quality_breakdown": {
+        "actionability": 0.76,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8921,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9364,
+        "novelty": 0.95,
+        "proof_depth": 0.9306,
+        "usefulness": 0.9653
+      },
+      "quality_score": 0.36056,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780543243.5561144,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T04:23:25.827812+00:00",
+      "title": "EML Information Geometry: Fisher Information of exp-log Models"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6994,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 1,
+      "domain": "Speculative",
+      "duration_seconds": 3666.088280916214,
+      "end_time": 1780546939.944412,
+      "files_integrated": 5,
+      "job_id": "9fb780aa",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 0.62,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8824,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9463,
+        "novelty": 0.95,
+        "proof_depth": 0.9447,
+        "usefulness": 0.9724
+      },
+      "quality_score": 0.25560000000000005,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780543273.856131,
+      "strategy_count": 187,
+      "theorem_count": 6,
+      "timestamp": "2026-06-04T04:23:25.893995+00:00",
+      "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
     }
   ]
 }

@@ -7,6 +7,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // Package data cache: filename -> data
     if (!window.Aether.packageCache) window.Aether.packageCache = {};
 
+    // URL hash routing: #pkg=filename  →  load that package
+    // Listen for back/forward navigation
+    window.addEventListener('hashchange', () => {
+        const m = window.location.hash.match(/^#pkg=(.+)$/);
+        if (m) {
+            const filename = decodeURIComponent(m[1]);
+            // Only reload if it's a different package
+            if (!window.Aether.currentPackage || window.Aether.currentPackageFilename !== filename) {
+                if (window.loadPackage) window.loadPackage(filename);
+            }
+        }
+    });
+
+    // On page load: if hash contains #pkg=..., load it
+    const initialMatch = window.location.hash.match(/^#pkg=(.+)$/);
+    if (initialMatch) {
+        const filename = decodeURIComponent(initialMatch[1]);
+        // Wait for the script to be fully loaded, then load
+        const tryLoad = () => {
+            if (window.loadPackage) {
+                window.loadPackage(filename);
+            } else {
+                setTimeout(tryLoad, 50);
+            }
+        };
+        tryLoad();
+    }
+
     // Tab switching
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -19,10 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.loadPackage = async function(filename) {
+        // Update URL hash so the package has a shareable link
+        const newHash = '#pkg=' + encodeURIComponent(filename);
+        if (window.location.hash !== newHash) {
+            // Use replaceState to avoid creating a history entry for every click
+            history.replaceState(null, '', newHash);
+        }
+
         // Check cache first
         if (window.Aether.packageCache[filename]) {
             const data = window.Aether.packageCache[filename];
             window.Aether.currentPackage = data; delete data._vizImages;
+            window.Aether.currentPackageFilename = filename;
             renderPackage(data, filename);
             welcomeScreen.classList.add('hidden');
             packageView.classList.remove('hidden');
@@ -48,6 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (timeEl) timeEl.style.display = 'none';
         const zipBtn = document.getElementById('lean-download-zip');
         if (zipBtn) zipBtn.style.display = 'none';
+        const copyBtn = document.getElementById('copy-link-btn');
+        if (copyBtn) copyBtn.style.display = 'none';
 
         try {
             const resp = await fetch(filename);
@@ -55,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await resp.json();
             window.Aether.packageCache[filename] = data;
             window.Aether.currentPackage = data; delete data._vizImages;
+            window.Aether.currentPackageFilename = filename;
             renderPackage(data, filename);
 
             renderMathInElement(document.getElementById('package-view'), {
@@ -98,6 +137,36 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show the download zip button in the header once package is loaded
         const zipBtn = document.getElementById('lean-download-zip');
         if (zipBtn) zipBtn.style.display = 'inline-flex';
+
+        // Show the copy-link button and wire it up
+        const copyLinkBtn = document.getElementById('copy-link-btn');
+        if (copyLinkBtn) {
+            copyLinkBtn.style.display = 'inline-flex';
+            copyLinkBtn.onclick = async () => {
+                const url = window.location.href;
+                try {
+                    await navigator.clipboard.writeText(url);
+                    const orig = copyLinkBtn.innerHTML;
+                    copyLinkBtn.innerHTML = '✓ Copied!';
+                    setTimeout(() => { copyLinkBtn.innerHTML = orig; }, 1500);
+                } catch (err) {
+                    // Fallback: use a temporary input
+                    const tmp = document.createElement('input');
+                    tmp.value = url;
+                    document.body.appendChild(tmp);
+                    tmp.select();
+                    try {
+                        document.execCommand('copy');
+                        copyLinkBtn.innerHTML = '✓ Copied!';
+                        setTimeout(() => { copyLinkBtn.innerHTML = '🔗 Copy Link'; }, 1500);
+                    } catch (e) {
+                        copyLinkBtn.innerHTML = '✗ Failed';
+                        setTimeout(() => { copyLinkBtn.innerHTML = '🔗 Copy Link'; }, 1500);
+                    }
+                    document.body.removeChild(tmp);
+                }
+            };
+        }
 
         // Article
         const articleDiv = document.getElementById('content-article');

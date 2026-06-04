@@ -34,13 +34,23 @@ class ResearchJournal:
     def _load(self) -> Dict[str, Any]:
         if self.journal_file.exists():
             try:
-                return json.loads(self.journal_file.read_text(encoding="utf-8"))
+                data = json.loads(self.journal_file.read_text(encoding="utf-8"))
+                # Migrate old format to new two-tier format
+                if "breakthroughs" not in data:
+                    data["breakthroughs"] = []
+                if "cycle_log" not in data:
+                    # Old 'entries' becomes the general log
+                    data["cycle_log"] = data.get("entries", [])
+                if "entries" in data and "cycle_log" not in data:
+                    data["cycle_log"] = data.pop("entries")
+                return data
             except (json.JSONDecodeError, OSError):
                 pass
         return {
-            "entries": [],  # List of journal entries
-            "key_theorems": [],  # Best theorems across all cycles
-            "open_questions": [],  # Unfinished work / sorries
+            "breakthroughs": [],  # Q≥0.7: genuinely outstanding cycles
+            "cycle_log": [],      # All cycles regardless of score (for context)
+            "key_theorems": [],   # Best theorems across all cycles
+            "open_questions": [], # Unfinished work / sorries
             "research_threads": {},  # domain -> list of thread summaries
             "last_updated": "",
         }
@@ -48,7 +58,8 @@ class ResearchJournal:
     def _save(self) -> None:
         self.workspace.mkdir(parents=True, exist_ok=True)
         # Cap list sizes
-        self._data["entries"] = self._data["entries"][-self.MAX_ENTRIES:]
+        self._data["breakthroughs"] = self._data["breakthroughs"][-50:]  # Higher bar, smaller cap
+        self._data["cycle_log"] = self._data["cycle_log"][-200:]        # Larger cap for context
         self._data["key_theorems"] = self._data["key_theorems"][-50:]
         self._data["open_questions"] = self._data["open_questions"][-30:]
         self._data["last_updated"] = datetime.now(timezone.utc).isoformat()[:19]
@@ -58,9 +69,14 @@ class ResearchJournal:
         )
 
     def record_cycle(self, job, quality_score: float = 0.0) -> None:
-        """Record key findings from a completed cycle into the journal."""
+        """Record key findings from a completed cycle into the journal.
+
+        Two-tier structure:
+        - cycle_log: every cycle (Q≥0.3) for cross-cycle context
+        - breakthroughs: only Q≥0.7 cycles, for "what was genuinely great"
+        """
         if not job or quality_score < 0.3:
-            return  # Don't journal low-quality cycles
+            return  # Don't even log very low-quality cycles
 
         concept = getattr(job, "concept", None)
         domain = ""
@@ -73,7 +89,7 @@ class ResearchJournal:
             if isinstance(concept, dict):
                 title = concept.get("title", "")
 
-        # Journal entry
+        # Build entry once, used for both tiers
         entry = {
             "cycle_id": getattr(job, "job_id", "")[:8],
             "domain": domain,
@@ -82,39 +98,41 @@ class ResearchJournal:
             "theorem_count": getattr(job, "theorem_count", 0),
             "sorry_count": getattr(job, "sorry_count", 0),
             "timestamp": datetime.now(timezone.utc).isoformat()[:19],
-            "key_insight": "",  # Filled below if possible
+            "key_insight": "",
         }
 
-        # Extract key insight from future directions (if the cycle produced any)
+        # Extract key insight from future directions
         fd_text = getattr(job, "result_future_directions", "") or ""
         if fd_text:
-            # Take first 200 chars of future directions as the insight
             entry["key_insight"] = fd_text[:200].strip()
 
-        self._data["entries"].append(entry)
+        # ALWAYS log to cycle_log (cross-cycle context)
+        self._data["cycle_log"].append(entry)
 
-        # Record key theorems for high-quality cycles
-        if quality_score >= 0.7 and getattr(job, "theorem_count", 0) >= 5:
+        # Only log to breakthroughs for genuinely great work
+        if quality_score >= 0.7:
+            self._data["breakthroughs"].append(entry)
+
+            # Capture key theorems from breakthrough cycles
             lean_code = getattr(job, "result_lean", "") or ""
-            # Extract top theorem names
-            import re
-            theorems = re.findall(r'(?:theorem|lemma)\s+(\w+)', lean_code[:5000])
-            for thm in theorems[:3]:  # Top 3 theorems from this cycle
-                self._data["key_theorems"].append({
-                    "name": thm,
-                    "domain": domain,
-                    "quality": quality_score,
-                    "cycle_id": getattr(job, "job_id", "")[:8],
-                })
+            if lean_code and getattr(job, "theorem_count", 0) >= 5:
+                import re
+                theorems = re.findall(r'(?:theorem|lemma)\s+(\w+)', lean_code[:5000])
+                for thm in theorems[:3]:  # Top 3 theorems from this cycle
+                    self._data["key_theorems"].append({
+                        "name": thm,
+                        "domain": domain,
+                        "quality": quality_score,
+                        "cycle_id": getattr(job, "job_id", "")[:8],
+                    })
 
-        # Track open questions (sorries)
+        # Track open questions (sorries) — for any cycle
         sorry_count = getattr(job, "sorry_count", 0)
         if sorry_count > 0:
             lean_code = getattr(job, "result_lean", "") or ""
             sorry_lines = []
             for line in lean_code.split('\n'):
                 if 'sorry' in line.lower():
-                    # Get the theorem name from context
                     sorry_lines.append(line.strip()[:100])
                     if len(sorry_lines) >= 3:
                         break
@@ -136,7 +154,6 @@ class ResearchJournal:
                 "theorems": getattr(job, "theorem_count", 0),
                 "cycle_id": getattr(job, "job_id", "")[:8],
             })
-            # Keep only last 10 entries per domain
             threads[domain] = domain_threads[-10:]
 
         self._save()

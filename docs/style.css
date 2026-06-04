@@ -357,6 +357,19 @@ body {
     transition: all 0.3s ease;
 }
 
+.nav-item-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-item-link:focus {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
 .nav-item:hover .nav-item-title {
     background: linear-gradient(90deg, #ff4466, #ffcc22, #44ff88, #22ccff, #8844ff);
     background-size: 300% 100%;

@@ -179,21 +179,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const pkgNum = pkg.pkg_num || '';
             li.innerHTML = `
-                <div class="nav-item-title">${pkgNum ? pkgNum + '. ' : ''}${pkg.title || 'Untitled Research'}</div>
-                ${qs != null ? `<div class="nav-item-score" data-quality="${quality}">
-                    <div class="score-bar"><div class="score-bar-fill" style="width:${scorePct}%;background:${scoreColor}"></div></div>
-                    <span class="score-label" style="color:${scoreColor}">${scorePct}%</span>
-                </div>` : ''}
-                <div class="nav-item-meta">
-                    <span>${pkg.domain || 'General'}</span>
-                    <span class="nav-item-datetime">${dateStr}${timeStr ? `<br><span class="nav-item-time">${timeStr}</span>` : ''}</span>
-                </div>
+                <a class="nav-item-link" href="#pkg=${encodeURIComponent(pkg.filename)}" data-filename="${pkg.filename}">
+                    <div class="nav-item-title">${pkgNum ? pkgNum + '. ' : ''}${pkg.title || 'Untitled Research'}</div>
+                    ${qs != null ? `<div class="nav-item-score" data-quality="${quality}">
+                        <div class="score-bar"><div class="score-bar-fill" style="width:${scorePct}%;background:${scoreColor}"></div></div>
+                        <span class="score-label" style="color:${scoreColor}">${scorePct}%</span>
+                    </div>` : ''}
+                    <div class="nav-item-meta">
+                        <span>${pkg.domain || 'General'}</span>
+                        <span class="nav-item-datetime">${dateStr}${timeStr ? `<br><span class="nav-item-time">${timeStr}</span>` : ''}</span>
+                    </div>
+                </a>
             `;
 
-            li.addEventListener('click', () => {
+            li.addEventListener('click', (e) => {
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 li.classList.add('active');
-                window.loadPackage(pkg.filename);
+                // The <a> inside the <li> has href="#pkg=...", so the browser
+                // will update the hash automatically. The hashchange listener
+                // in packages.js will call loadPackage. We still need to call
+                // it directly to handle the case where the hash doesn't change
+                // (clicking the same package twice, or after replaceState).
+                if (window.loadPackage) window.loadPackage(pkg.filename);
                 if (window.innerWidth <= 768) window.closeSidebar();
             });
 
