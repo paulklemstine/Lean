@@ -769,14 +769,23 @@ class QualityEvaluator:
         Returns a quality assessment dict with 'composite' and per-axis scores.
         """
         system_prompt = (
-            "You are a SKEPTICAL mathematical quality critic. Your job is to find flaws "
-            "in research output, NOT to be generous. Apply these principles:\n\n"
-            "- If a proof could be a standard homework exercise, score it 0.1-0.2\n"
-            "- If a 'theorem' is just a wrapper around a definition, score it 0.1-0.2\n"
-            "- If the novelty is overstated (standard results repackaged), penalize heavily\n"
-            "- If the cross-domain connection is superficial (just naming both domains), penalize\n"
-            "- If the importance is inflated (no one outside the subfield would care), penalize\n"
-            "- ONLY give high scores (0.7+) for results that would impress a research mathematician\n\n"
+            "You are a FAIR mathematical quality critic. Your job is to identify both "
+            "genuine value and genuine flaws. Be neither a fan nor a hater.\n\n"
+            "Score the value of WHAT IS THERE, not what's missing. Reward genuine insight "
+            "even in partial results. Apply these calibration principles:\n\n"
+            "- 0.0-0.2: Trivial, wrapper, or repackaged standard results\n"
+            "- 0.3-0.4: A partial result with at least 1 genuinely novel theorem. "
+            "Don't punish incomplete coverage of the original goal — value what was achieved.\n"
+            "- 0.5-0.6: Solid mathematical work with multiple non-trivial results\n"
+            "- 0.7-0.85: Substantial contribution that advances a research area\n"
+            "- 0.85-1.0: Breakthrough-level — would impress research mathematicians\n\n"
+            "Apply these checks:\n"
+            "- If a proof is a standard exercise: 0.1-0.2\n"
+            "- If a 'theorem' is just a definition wrapper: 0.1-0.2\n"
+            "- If there's at least 1 novel non-trivial theorem, MINIMUM is 0.35 even "
+            "if other parts are weak\n"
+            "- Cross-domain connection should be evaluated on substance, not naming\n"
+            "- Importance: ask 'would a math researcher in a different subfield care?'\n\n"
             "Score on 9 axes, all 0.0-1.0. Respond with ONLY JSON:\n"
             '{"proof_depth": 0.0, "novelty": 0.0, "cross_domain": 0.0, '
             '"artifact_richness": 0.0, "actionability": 0.0, "importance": 0.0, '
@@ -787,7 +796,8 @@ class QualityEvaluator:
             f"Critically evaluate: \"{concept_title}\"\n"
             f"Description: {concept_description[:500]}\n\n"
             f"Lean source (first 1500 chars):\n{lean_source[:1500]}\n\n"
-            "Be harsh but fair. What is genuinely new here? What is repackaged known material?"
+            "Identify what is genuinely new here. Identify what is repackaged known "
+            "material. Score the value of what was actually achieved."
         )
 
         try:

@@ -4,1011 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0000",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.486497+00:00",
-    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0004",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.490561+00:00",
-    "title": "The Library of Babel: Combinatorics of the Universal Library"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0005",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.491025+00:00",
-    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0006",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.491505+00:00",
-    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0007",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.492042+00:00",
-    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0009",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.493320+00:00",
-    "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0011",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.494775+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0012",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.495596+00:00",
-    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0013",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.496525+00:00",
-    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology \u2014 every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible \u2014 every surreal number is connected to every other by a continuous path.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0016",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.499504+00:00",
-    "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait \u2014 the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are \u2014 and how far we are from proving things about them.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0018",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.502441+00:00",
-    "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... \u2014 just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number \u2014 the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic \u2014 it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0020",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.505215+00:00",
-    "title": "The Unreasonable Effectiveness of the Number 163"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0024",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.512076+00:00",
-    "title": "The Mathematics of Memes: Viral Information Topology"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) \u2014 expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look \u2014 the mathematical realization of a universe that is simultaneously expanding and contracting.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0025",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.514276+00:00",
-    "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0030",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.525722+00:00",
-    "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' \u2014 bulbs at angles 1/q where q is prime \u2014 have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization \u2014 every bulb encodes number-theoretic information about its period.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0032",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.530929+00:00",
-    "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0034",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.536490+00:00",
-    "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0041",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.557538+00:00",
-    "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction: given a 3-SAT formula with n variables and m clauses, construct a jigsaw puzzle with N = 2n + m + 2 pieces where the only valid assembly corresponds to a satisfying assignment. Variable pieces: each variable x_i has two pieces (TRUE and FALSE), one with a tab and one with a blank on the assignment edge. Only one can be placed (mutual exclusion via complementary edges). Clause pieces: each clause C_j is a piece that has three input edges (one per literal) and one output edge. The piece fits only if at least one input edge is connected to a TRUE literal piece. The top-left corner and bottom-right corner enforce the boundary. Test: construct the reduction explicitly for a small 3-SAT instance (e.g., (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3)) and verify the puzzle has a solution iff the formula is satisfiable. Impact: jigsaw puzzles are NP-complete, so the satisfying snap you feel when completing a puzzle is literally the same as solving a hard computational problem.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0043",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.564171+00:00",
-    "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Fermi paradox asks: if intelligent life is common, where is everyone? The pigeonhole principle answers: if there are more pigeons than holes, at least one hole contains more than one pigeon. Apply this to the cosmos: there are approximately 10^22 stars in the observable universe (pigeons) and approximately 10^10 habitable-zone planets (holes). By the pigeonhole principle, at least one habitable planet contains at least 10^12 stars' worth of interest... wait, that's the wrong way around. Correct: there are ~10^10 habitable planets (pigeons) and ~4.5 billion years of time (holes). By the pigeonhole principle, at least one time period of one year contains at least 2 habitable planets developing intelligence. But we observe zero contacts. Conjecture: The resolution is that intelligent life is NOT common \u2014 the expected number of technological civilizations in the observable universe is less than 1. More precisely: if we model the Drake equation with honest probability estimates, P(technological civilization per habitable planet) < 10^{-10}, making the expected number of civilizations < 10^0 = 1. The Fermi paradox is not a paradox at all \u2014 it is the pigeonhole principle correctly predicting that with very few pigeons (civilizations) and very many holes (planets + time), most holes are empty. Test: compute the Drake equation with conservative estimates and verify that E[civilizations] < 1. Impact: we are alone because probability says so. The universe is mostly empty because that's what the math predicts.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0045",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.571054+00:00",
-    "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0048",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.581649+00:00",
-    "title": "The Aperiodic Monotile: One Shape to Tile Them All"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a scale-free structure: the in-degree distribution follows a power law P(k) ~ k^{-gamma} with gamma \u2248 2.5. This means most theorems are proved from a small number of foundational results (the 'hubs'), and there are exponentially many theorems that depend on these hubs. The top 10 hub theorems in mathematics are: (1) Zorn's Lemma, (2) The Intermediate Value Theorem, (3) The Fundamental Theorem of Calculus, (4) The Sylow Theorems, (5) The Baire Category Theorem, (6) Hahn-Banach Theorem, (7) Urysohn's Lemma, (8) The Pigeonhole Principle, (9) Induction, (10) The Law of Excluded Middle. Conjecture: removing any of the top 10 hubs disconnects the proof DAG into at least 2 large components, each containing more than 10% of all theorems. This means mathematics is fragile: removing one foundational theorem makes many other theorems unprovable. Test: construct the proof DAG from Lean 4's Mathlib (all proofs and their dependencies), compute the in-degree distribution, and verify the power law. Impact: mathematics is a scale-free network, and its most important theorems are its most connected nodes \u2014 the hubs that hold the entire structure together.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0049",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.585396+00:00",
-    "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0050",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.589354+00:00",
-    "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0051",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.593085+00:00",
-    "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology \u2014 their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0057",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.617168+00:00",
-    "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal \u2014 they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0059",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.626049+00:00",
-    "title": "The Category Theory of Jokes: Universal Properties of Humor"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Anyon braiding in topological quantum computing gives unitary matrices from the braid group B_n. The Jones representation rho_k: B_n -> U((k-1)(n-1)+1) at root of unity e^{2*pi*i/k} is conjectured to be universal for quantum computation when k >= 3 and n >= 4. Conjecture: the set of all braids in B_4 under the Jones representation at k=5 generates a dense subgroup of SU(3). More precisely, the image rho_5(B_4) is an infinite subgroup of SU(3) that is not contained in any proper closed subgroup. This means that topological quantum computing with Fibonacci anyons (k=5) is universal: any unitary in SU(3) can be approximated to arbitrary precision by braiding 4 anyons. The key: the Jones representation at k=5 gives 3x3 matrices, and the braid generators sigma_1, sigma_2, sigma_3 generate a dense subgroup of SU(3). Test: compute the Jones representation at k=5 for B_4, verify that sigma_1 * sigma_2 * sigma_3 has infinite order, and check that the group generated by sigma_1, sigma_2, sigma_3 is dense in SU(3) by the Solovay-Kitaev theorem. Impact: braiding anyons is universal for quantum computation. The braid group B_4 at k=5 is a quantum gate set.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0063",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.643460+00:00",
-    "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every CSS code is equivalent to a cohomology computation on a simplicial complex, and vice versa. Specifically, given a simplicial complex K, the CSS code with C_1 = Z_1(K, F_2) (1-cycles) and C_2 = B_1(K, F_2) (1-boundaries) encodes dim(H_1(K, F_2)) logical qubits with distance d = min(length of shortest non-trivial cycle, length of shortest non-trivial cocycle). This is the homological quantum error-correcting code HQECC(K). The distance d equals the systole of K (the length of the shortest non-contractible cycle). Conjecture: for the hypercube Q_n (n-dimensional cube graph), the HQECC encodes 1 qubit with distance d = 2^{n/2} (achieving the quantum Singleton bound). Test: construct HQECC for Q_4, Q_6, Q_8 and verify the parameters. Impact: quantum error correction is cohomology. Every simplicial complex gives a quantum code, and the code parameters are topological invariants.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0065",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.657673+00:00",
-    "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Robertson-Seymour theorem states that the set of finite graphs is well-quasi-ordered by the minor relation: any infinite sequence of graphs contains two where one is a minor of the other. This implies that any minor-closed graph property is characterized by a finite set of forbidden minors. Conjecture: the same theorem holds for representable matroids over any finite field. Specifically, for any finite field F_q, the set of F_q-representable matroids is well-quasi-ordered by the matroid minor relation. This would generalize the Robertson-Seymour theorem from graphs (F_2-representable matroids) to all finite fields. The conjecture is known to fail for general matroids (by the existence of infinite antichains of non-representable matroids), but for F_q-representable matroids with q <= 3, it is open. Conjecture: for F_3 (ternary matroids), the set of excluded minors for representability is finite. The current known excluded minors for F_3 are: the Fano matroid F_7, its dual F_7*, and the non-Pappus matroid. Test: enumerate ternary matroids of rank 3 on 9 elements, verify that all but the known excluded minors are F_3-representable. Impact: Robertson-Seymour for matroids would unify graph minor theory and matroid theory under a single well-quasi-ordering theorem.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0067",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.667149+00:00",
-    "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0069",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.676713+00:00",
-    "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0070",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.681497+00:00",
-    "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA rules of radius r on alphabet A is a group under composition, isomorphic to a subgroup of S_{|A|^{2r+1}}. Specifically, the reversibility group G(r, A) is the subgroup of S_{|A|^{2r+1}} generated by the local rules of all reversible CAs of radius r. Conjecture: for binary CAs (A = {0, 1}) with radius r, G(r, {0, 1}) = S_{2^{2r+1}} for r >= 2. This means that any permutation of the 2^{2r+1} possible local neighborhoods can be achieved by composing reversible CA rules. For r = 1 (elementary CAs), G(1, {0, 1}) is a proper subgroup of S_8, and its structure is related to the 256 elementary CA rules. Conjecture: G(1, {0, 1}) has order 8! / 4 = 10080, consisting of the permutations that commute with the shift operator. Test: enumerate all 256 elementary CA rules, identify the reversible ones (Rule 15, 51, 85, 170, 204, 240), compute the group generated by their local rules, and verify the structure. Impact: reversible CAs form a group whose structure determines the landscape of reversible computation.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0071",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.686157+00:00",
-    "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Arrow's impossibility theorem states that no ranked voting system can be fair (Pareto efficient, non-dictatorial, and independent of irrelevant alternatives). The Borsuk-Ulam theorem states that every continuous function f: S^n -> R^n maps some pair of antipodal points to the same value: f(x) = f(-x). Conjecture: Arrow's theorem is a corollary of Borsuk-Ulam. Specifically, define the 'preference sphere' S^{n-1} as the set of all preference profiles over n alternatives, where antipodal points represent opposite preferences (x prefers A > B > C, -x prefers C > B > A). Define f: S^{n-1} -> R^{n-1} by f(x) = (social_preference(x)_1, ..., social_preference(x)_{n-1}). By Borsuk-Ulam, there exists x such that f(x) = f(-x), meaning the social preference for profile x equals the social preference for profile -x. This contradicts Pareto efficiency (if all voters prefer A to B, the social preference should prefer A to B). Therefore, no continuous voting function satisfies all of Arrow's axioms. Conjecture: this proof generalizes: any social choice function on n alternatives is either discontinuous or dictatorial. Test: formalize the Borsuk-Ulam proof of Arrow's theorem in Lean 4. Impact: social choice theory is topology. Arrow's impossibility is a topological theorem about spheres.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0072",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.691072+00:00",
-    "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0073",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.695662+00:00",
-    "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elusive. Conjecture: the Collatz conjecture is independent of Peano Arithmetic (PA). That is, PA can neither prove nor refute the statement 'for all n, the Collatz sequence starting at n eventually reaches 1'. This would mean the conjecture is TRUE (in the standard model) but UNPROVABLE in PA. The argument: the Collatz map is a Diophantine function that grows faster than any provably total computable function in PA. Specifically, the halting problem for Collatz (does the orbit of n reach 1?) is at least as hard as the consistency of PA, which by Godel's second incompleteness theorem is unprovable in PA. Conjecture: the Collatz conjecture is equivalent to Con(PA) over a weak base theory, meaning that if PA is consistent, then PA does not prove Collatz. Test: formalize the equivalence between Collatz and Con(PA) in Lean 4. Show that a counterexample to Collatz (an n whose orbit diverges or cycles) would imply not-Con(PA). Impact: Collatz might be the simplest true-but-unprovable statement in arithmetic \u2014 a concrete example of Godel's incompleteness.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0074",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.700907+00:00",
-    "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0076",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.711975+00:00",
-    "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0079",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.728070+00:00",
-    "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "An automatic sequence is one generated by a deterministic finite automaton (DFA). The Thue-Morse sequence 01101001... is 2-automatic. The Rudin-Shapiro sequence is 2-automatic. The paperfolding sequence is 2-automatic. Conjecture: a sequence (a_n) is k-automatic iff its generating function G(x) = sum a_n x^n is algebraic over Q(x) of degree at most k. This is known (Christol's theorem): a formal power series over F_k is algebraic iff its coefficient sequence is k-automatic. But Christol's theorem only works over finite fields. For sequences over Z (or Q), the conjecture is: a sequence (a_n) over Z is k-automatic iff it satisfies a linear recurrence with polynomial coefficients of degree at most k-1 in n. Conjecture: the halting problem for k-automatic sequences is decidable: given a DFA that generates (a_n), it is decidable whether there exists n such that a_n = 0 (the 'zero in sequence' problem). This is TRUE for k-automatic sequences (by the pumping lemma: if the DFA accepts any string, it accepts an infinite number, so a_n = 0 infinitely often). But for morphic sequences (generalizations of automatic sequences), the problem is open. Conjecture: the zero-in-sequence problem for morphic sequences is decidable. Test: implement the decidability algorithm for k-automatic sequences and verify on 100 test sequences. Impact: automatic sequences have decidable halting problems. The boundary between decidability and undecidability in sequence theory is the boundary between automatic and morphic.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0080",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.733493+00:00",
-    "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "An argumentation framework AF = (A, R) consists of a set of arguments A and an attack relation R subset A x A. The preferred extensions of AF are the maximal admissible sets (subsets S of A that defend themselves against all attacks and are maximal with this property). Conjecture: the preferred extensions of AF form a simplicial complex K(AF) on the vertex set A. The homology groups H_n(K(AF)) measure the 'holes' in the argumentation structure. H_0 measures the number of connected components (independent debate threads). H_1 measures circular arguments (cycles where each argument attacks the next, and the last attacks the first). H_2 measures 'spheres' of arguments (3D cycles where arguments form a spherical shell). Conjecture: for any argumentation framework, the Euler characteristic chi(K(AF)) = |A| - |R| + sum_{n>=2} (-1)^n * dim(H_n) equals |preferred extensions| - |grounded extension size|. This connects the topology of the argument to its semantics. Test: construct K(AF) for 100 argumentation frameworks from debate transcripts, compute homology groups, and verify the Euler characteristic formula. Impact: arguments have topology. Circular arguments are 1-holes, and 3D argument spheres are 2-holes. The shape of a debate is a topological invariant.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0081",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.739014+00:00",
-    "title": "The Topology of Argumentation: Why Debates Have Holes"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A Sudoku puzzle is a constraint satisfaction problem on a 9x9 grid. The 'spectral gap' of a Sudoku puzzle is the gap between the two largest eigenvalues of the transition matrix of the Markov chain that randomly swaps two compatible entries. The spectral gap determines the mixing time: the number of swaps needed to generate a uniformly random solution. Conjecture: the spectral gap of a Sudoku puzzle undergoes a phase transition at the critical density d_c = 17/81 (the density of the minimal number of clues, 17, divided by 81). For puzzles with fewer than 17 clues, the spectral gap is large (the Markov chain mixes quickly, meaning there are many solutions). For puzzles with exactly 17 clues, the spectral gap is minimal (the chain mixes slowly, meaning solutions are hard to find). For puzzles with more than 30 clues, the spectral gap is zero (the chain is reducible, meaning the puzzle has a unique solution and no swaps are possible). Conjecture: the spectral gap lambda_1 - lambda_2 of the Sudoku Markov chain satisfies: lambda_1 - lambda_2 > epsilon for d < 17/81 (many solutions, fast mixing), lambda_1 - lambda_2 ~ 0 for d ~ 17/81 (critical point, slow mixing), and the chain is absorbing for d > 30/81 (unique solution, no mixing). Test: compute the spectral gap for Sudoku puzzles with varying numbers of clues and verify the phase transition. Impact: Sudoku has a spectral gap phase transition. The hardness of the puzzle is determined by the gap, not by the number of clues.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0083",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.750240+00:00",
-    "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A ReLU network f: R -> R with L layers of width w is a piecewise linear function with at most w^L pieces. By the universal approximation theorem, such networks can approximate any continuous function. But HOW WELL can they approximate specific constants? Conjecture: a ReLU network with L layers of width w can approximate pi to within epsilon using O(w * L * log(1/epsilon)) parameters. More precisely, there exists a ReLU network f with L = O(log(log(1/epsilon))) layers and w = O(log(1/epsilon)) width such that |f(1) - pi| < epsilon. This is because pi can be computed by the Leibniz formula pi/4 = 1 - 1/3 + 1/5 - ..., and a ReLU network can implement the partial sums. The number of terms needed is O(1/epsilon), and each term can be computed by a constant-depth ReLU subnetwork. The depth needed is O(log(1/epsilon)) for the sum and O(log(log(1/epsilon))) for the individual terms. Conjecture: the approximation rate for rational numbers by ReLU networks is O(1/(w^L)), matching the piecewise linear structure. For irrational numbers like pi, the rate is O(1/(w * L * 2^L)), which is slower but still exponential in depth. Test: construct ReLU networks that approximate pi, e, and sqrt(2) and measure the approximation error as a function of network size. Impact: ReLU networks approximate constants at a rate determined by their depth and width. Pi requires O(log(log(1/epsilon))) depth.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0084",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.755927+00:00",
-    "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0085",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.761503+00:00",
-    "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0088",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.782446+00:00",
-    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The information content of a Lean 4 proof is the number of bits needed to specify the proof among all possible proofs of the same theorem. For a theorem T with proof P, the information content is I(P) = -log_2(P(proof of T has length |P|)). Conjecture: the expected information content of a proof of a theorem with statement length n is I(n) = Theta(n * log(n)). This means that proofs are typically longer than their statements by a factor of log(n), matching the known results on proof complexity. Moreover, the search problem (finding a proof given the theorem) has time complexity 2^{I(n)} = 2^{Theta(n * log(n))}, which matches the complexity of brute-force search over all proofs of length n * log(n). Conjecture: proof search in Lean 4 is EXPTIME-hard, and the average-case complexity of finding a proof of a random theorem of length n is 2^{Theta(n)} (exponential in n, not n*log(n), because most random theorems are unprovable). Test: measure the length of Lean 4 proofs vs theorem statement length for 1000 theorems in Mathlib and verify I(n) ~ n * log(n). Impact: proof search has fundamental information-theoretic limits. Finding a proof is exponentially harder than verifying one.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0091",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.801778+00:00",
-    "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0092",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.807837+00:00",
-    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0093",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.814374+00:00",
-    "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0094",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.820858+00:00",
-    "title": "Hypergraph Ramsey Theory: Beyond Graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0095",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.827686+00:00",
-    "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0096",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.834465+00:00",
-    "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0098",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.846057+00:00",
-    "title": "Isomorphisms of Meaning: When Structures Collide"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0099",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.852132+00:00",
-    "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0102",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.870934+00:00",
-    "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0103",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.877377+00:00",
-    "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connect to Infinite Time Turing Machines and ordinal computation.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0104",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.883358+00:00",
-    "title": "Cellular Automata at the Ordinals: Transfinite Computation"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own G\u00f6del sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0105",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.889380+00:00",
-    "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0110",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.919138+00:00",
-    "title": "Self-Modifying Code That Cannot Be Stopped"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL. Formalize the connection to non-associative division algebras and Hall triple systems.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0111",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.925627+00:00",
-    "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0116",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.958310+00:00",
-    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize retrocausal mathematical structures where implications can flow backward in time. Prove that in a retrocausal Heyting algebra, the law of excluded middle fails but a temporal excluded middle holds. Connect to the CPT theorem in QFT and prove that any retrocausal logic must be intuitionistic.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0122",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.994131+00:00",
-    "title": "Retrocausal Mathematics: Where Effects Precede Causes"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic in favor of a paraconsistent logic with a nontrivial inconsistency-tolerant truth predicate. Show this system proves its own soundness.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0124",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:31.006174+00:00",
-    "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0126",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:31.018128+00:00",
-    "title": "Counterfactual Number Theory: What If Primes Were Random?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0127",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:31.024124+00:00",
-    "title": "Borges' Library of Babel: Combinatorics of Everything"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0128",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:31.030197+00:00",
-    "title": "Aleph-1 Surface: Geometry Between Dimensions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0130",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:31.042804+00:00",
-    "title": "Zombies and Qualia: Mathematics of Subjective Experience"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0134",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:31.067326+00:00",
-    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0135",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:31.073799+00:00",
-    "title": "Infinite Games Against Death: Immortality Strategies"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0138",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:31.092242+00:00",
-    "title": "Causal Loops in Category Theory: When Composition Loops Back"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Research Directions: Monstrous Moonshine and Beyond\n\n## Synthesis\n\nThis research cycle established the algebraic foundations of monstrous moonshine in a formally verified setting, proving that character orthogonality alone constrains McKay-Thompson series in powerful ways. Three key theorems were proved: the Burnside dimension identity linking squared representation dimensions to group order, the multiplicity recovery theorem showing McKay-Thompson series determine all graded multiplicities, and the moonshine inner product identity computing cross-grade representation overlaps. These results are purely algebraic\u2014they hold for any finite group with a graded module structure, not just the Monster.\n\nThe most promising cross-domain connection from this cycle is the bridge between **character theory** (finite group algebra) and **formal power series** (analytic number theory). Our MoonshineDatum structure captures precisely the algebraic content needed for moonshine, stripping away the analytic/modular aspects. This creates a clean interface: future work can extend either the algebraic side (vertex algebras, Lie algebras) or the analytic side (modularity, q-expansion convergence) independently, connecting through this shared formalism. The inner product identity (Theorem 3.4 in the paper) is particularly promising for computational applications, as it provides a quadratic consistency check on McKay-Thompson data.\n\nThe highest breakthrough potential lies in Direction 1 (Vertex Algebra Formalization), because vertex algebras are the mathematical structure that *explains* why moonshine exists, yet they remain largely unformalized. A working formalization would enable machine-verified proofs of moonshine-type results for other groups, potentially leading to discoveries in umbral moonshine.\n\n---\n\n### Direction 1: Vertex Algebra Formalization for Moonshine\n\n**Conjecture**: A vertex algebra structure on a graded module V = \u2295 V\u2099 with Monster action automatically implies that the McKay-Thompson series T_g(q) = \u03a3 tr(g|V\u2099)q\u207f is a modular function of genus zero for a specific congruence subgroup \u0393_g \u2282 SL(2, \u211d), provided V satisfies the \"C\u2082-cofiniteness\" condition.\n\n**Test**: Formalize the axioms of a vertex operator algebra (VOA) in Lean 4: state space V, vacuum vector |0\u27e9, conformal vector \u03c9, vertex operators Y(v,z) = \u03a3 v\u2099z\u207b\u207f\u207b\u00b9 satisfying locality, and the Virasoro algebra relations [L\u2098, L\u2099] = (m-n)L\u2098\u208a\u2099 + (c/12)(m\u00b3-m)\u03b4\u2098\u208a\u2099,\u2080. Define \"holomorphic VOA\" (V\u2080 = \u2102, no negative grades). Prove that for a holomorphic VOA of central charge 24 with Monster symmetry, the graded dimension generating function satisfies j(q) - 744. If the VOA axioms are insufficient to derive modularity, this failure identifies exactly which additional structure (e.g., rationality, regularity) is needed.\n\n**Impact**: Vertex algebras are the \"explanation\" for moonshine, but they have never been formalized in a proof assistant. Success would open the door to machine-verified proofs of Borcherds' theorem and enable systematic exploration of new moonshine phenomena.\n\n**Catalog References**: `Physics/MonstrousMoonshine.lean` (CharacterTable, MoonshineDatum structures)\n\n**Proof Strategy**: \n1. Define a `VertexAlgebra` structure in Lean 4 with fields for the state space, vertex operators, vacuum, and conformal vector.\n2. State the Jacobi identity for vertex operators as an axiom.\n3. Define the Virasoro algebra action from the conformal vector.\n4. Prove that grading by L\u2080-eigenvalue is compatible with the vertex algebra structure.\n5. Define \"holomorphic VOA\" and prove that the graded trace is an SL(2,\u2124)-invariant function (Zhu's theorem).\n\n**Domain Bridges**: Algebra (representation theory) \u2194 Physics (conformal field theory) \u2194 Number Theory (modular forms)\n\n**Lineage**: Builds on CharacterTable and MoonshineDatum from this cycle's Physics/MonstrousMoonshine.lean.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Computational Moonshine \u2014 Recovering Monster Representations from McKay-Thompson Data\n\n**Conjecture**: Using the multiplicity recovery theorem with the known 194 McKay-Thompson series of the Monster, the multiplicities mult(\u03c1\u1d62, V\u2099) can be computed exactly for all 194 irreducible representations \u03c1\u1d62 and all grades n \u2264 1000, and these multiplicities are all non-negative integers (providing a computational proof of the consistency of the moonshine module construction up to grade 1000).\n\n**Test**: Implement the multiplicity recovery algorithm: mult(i, n) = (1/|M|) \u03a3\u2c7c |C_j| \u03c7\u1d62(g\u2c7c) a\u2099(g\u2c7c) using the Monster's character table (194 \u00d7 194 rational integer matrix, available from the ATLAS of Finite Groups) and the McKay-Thompson coefficients a\u2099(g\u2c7c) (computable from the known Hauptmoduls for each conjugacy class). Verify that all 194 \u00d7 1000 = 194,000 computed multiplicities are non-negative integers. If any are negative or non-integral, this would indicate an error in the published character table or McKay-Thompson series data.\n\n**Impact**: This would be the most extensive computational verification of monstrous moonshine ever performed, and would provide concrete data for testing further conjectures about the growth rate and distribution of multiplicities.\n\n**Catalog References**: `Physics/MonstrousMoonshine.lean` (multiplicity_recovery theorem)\n\n**Proof Strategy**: \n1. Obtain the Monster character table from the ATLAS (or GAP computational algebra system).\n2. Compute McKay-Thompson series coefficients using the known Hauptmodul expressions (e.g., T_{2A}(q) = (\u03b7(q)/\u03b7(q\u00b2))\u00b2\u2074 + 24, etc.).\n3. Apply the multiplicity formula for each (i, n) pair.\n4. Verify non-negativity and integrality.\n5. Analyze the growth rate of max_i mult(i, n) as n \u2192 \u221e and compare with theoretical predictions from the Rademacher-type formulas.\n\n**Domain Bridges**: Algebra (character tables) \u2194 Computation (exact arithmetic) \u2194 Number Theory (modular forms, eta products)\n\n**Lineage**: Direct application of multiplicity_recovery theorem from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Trace Dominance and the Moonshine Bound\n\n**Conjecture**: For any finite group G with a faithful graded representation V = \u2295 V\u2099 (where each V\u2099 is finite-dimensional), the trace dominance property |tr(g|V\u2099)| \u2264 dim(V\u2099) holds for all g \u2208 G and all n. Moreover, equality |tr(g|V\u2099)| = dim(V\u2099) holds if and only if g acts as a scalar on V\u2099.\n\n**Test**: The first part (|tr(g|V)| \u2264 dim(V) for finite-dimensional representations) follows from the triangle inequality: if \u03c1(g) has eigenvalues \u03bb\u2081, ..., \u03bb_d with |\u03bb\u1d62| = 1, then |\u03a3 \u03bb\u1d62| \u2264 d. Formalize this in Lean 4 using Mathlib's linear algebra library. For the equality characterization, show that |\u03a3 \u03bb\u1d62| = d implies all \u03bb\u1d62 are equal. Test computationally for the Monster: for each of the 194 conjugacy classes g and grades n = 1, ..., 100, compute |tr(g|V\u2099)|/dim(V\u2099) and plot the distribution.\n\n**Impact**: This would establish the trace dominance conjecture as a theorem (not just a conjecture) and provide a universal bound on McKay-Thompson coefficients. The equality characterization identifies which group elements act \"coherently\" on each graded piece.\n\n**Catalog References**: `Physics/MonstrousMoonshine.lean` (MoonshineDatum.traceDominance definition)\n\n**Proof Strategy**: \n1. In Lean 4, define a finite-dimensional representation \u03c1 : G \u2192 GL(V) over \u2102.\n2. Use the spectral theorem: \u03c1(g) is diagonalizable (since g has finite order) with eigenvalues that are roots of unity.\n3. Apply the triangle inequality: |tr(\u03c1(g))| = |\u03a3 \u03bb\u1d62| \u2264 \u03a3 |\u03bb\u1d62| = dim(V).\n4. For the equality case, use the strict triangle inequality: equality in |\u03a3 \u03bb\u1d62| \u2264 \u03a3 |\u03bb\u1d62| holds iff all \u03bb\u1d62 have the same argument, i.e., \u03bb\u1d62 = \u03b6 for some root of unity \u03b6, meaning g acts as scalar multiplication by \u03b6.\n\n**Domain Bridges**: Algebra (representation theory, spectral theory) \u2194 Analysis (triangle inequality) \u2194 Physics (MonstrousMoonshine.lean)\n\n**Lineage**: Extends the traceDominance definition from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Supersingular Primes and the Ogg\u2013Monster Connection\n\n**Conjecture**: The 15 prime divisors of |M| (the supersingular primes: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 47, 59, 71) are exactly the primes p for which the modular curve X\u2080\u207a(p) = X\u2080(p)/w_p has genus zero, where w_p is the Atkin-Lehner involution. Equivalently, they are the primes p such that the function field of X\u2080\u207a(p) is generated by a single function (a Hauptmodul).\n\n**Test**: For each prime p \u2264 100, compute the genus of X\u2080\u207a(p) using the formula:\ngenus(X\u2080\u207a(p)) = (1/2)\u00b7genus(X\u2080(p)) + (1/4)\u00b7(1 - (-1/p)) - (something involving class numbers)\nwhere genus(X\u2080(p)) is given by a standard formula involving p. Verify that genus(X\u2080\u207a(p)) = 0 if and only if p \u2208 {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 47, 59, 71}. Then formalize the genus computation in Lean 4, proving the characterization for each specific prime.\n\n**Impact**: Ogg's observation (1975) predates the proof that the Monster exists. A formalized proof that the supersingular primes = genus-zero primes for X\u2080\u207a(p) would be a significant contribution to formal mathematics, and would sharpen the question of *why* these primes divide |M|.\n\n**Catalog References**: `Physics/MonstrousMoonshine.lean` (supersingularPrimes, monsterOrder)\n\n**Proof Strategy**: \n1. Define the modular curve X\u2080(N) as the quotient of the upper half-plane by \u0393\u2080(N).\n2. Implement the genus formula for X\u2080(N): g = 1 + \u03bc/12 - \u03bd\u2082/4 - \u03bd\u2083/3 - \u03bd_\u221e/2 where \u03bc = [SL(2,\u2124):\u0393\u2080(N)], \u03bd\u2082 counts elliptic points of order 2, \u03bd\u2083 of order 3, and \u03bd_\u221e counts cusps.\n3. Define the Atkin-Lehner involution w_p and compute genus(X\u2080\u207a(p)) via the Riemann-Hurwitz formula.\n4. For each prime p \u2264 71, verify the genus computation.\n5. Prove that for p = 73 (the next prime), genus(X\u2080\u207a(73)) > 0.\n\n**Domain Bridges**: Number Theory (modular curves, genus formulas) \u2194 Algebra (Monster group order) \u2194 Geometry (Riemann surfaces)\n\n**Lineage**: Extends the supersingularPrimes definition from this cycle; connects to Ogg's original observation.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Moonshine for Other Sporadic Groups (Umbral Moonshine Framework)\n\n**Conjecture**: The MoonshineDatum framework from this cycle can be extended to capture *umbral moonshine*: for each of the 23 Niemeier lattices N (even unimodular lattices in 24 dimensions, excluding the Leech lattice), the automorphism group Aut(N) gives rise to a moonshine datum where the McKay-Thompson series are *mock modular forms* rather than modular functions. The multiplicity recovery theorem (Theorem 3.3) still applies, but the graded multiplicities may involve virtual representations (negative multiplicities) at finite grades.\n\n**Test**: Take the simplest case: the A\u2081\u00b2\u2074 Niemeier lattice, whose relevant group is a quotient of the Mathieu group M\u2082\u2084. Compute the first 50 multiplicities using the Mathieu moonshine McKay-Thompson series (which are mock modular forms of weight 1/2) and verify that they are non-negative integers. Compare with the known decomposition from Cheng-Duncan-Harvey.\n\n**Impact**: Umbral moonshine is the major extension of monstrous moonshine discovered in 2012-2014. Formalizing its algebraic structure would unify monstrous and umbral moonshine in a single framework, potentially revealing new moonshine phenomena for other groups.\n\n**Catalog References**: `Physics/MonstrousMoonshine.lean` (MoonshineDatum, multiplicity_recovery)\n\n**Proof Strategy**: \n1. Define `UmbralMoonshineDatum` extending MoonshineDatum with a \"shadow\" function connecting mock modular forms to genuine modular forms.\n2. Prove that the multiplicity recovery theorem extends to the umbral setting (the algebra is identical; only the analytic properties of the series change).\n3. Implement the Mathieu moonshine McKay-Thompson series computationally and verify multiplicities.\n4. Investigate whether the inner product identity (Theorem 3.4) has an umbral analogue involving the shadow.\n\n**Domain Bridges**: Algebra (sporadic groups, lattice theory) \u2194 Number Theory (mock modular forms) \u2194 Physics (K3 surfaces, string compactifications)\n\n**Lineage**: Generalizes the MoonshineDatum framework from this cycle to the umbral setting.\n\n**Ambition**: extension\n",
     "domains": [
       "Algebra",
@@ -2010,21 +1005,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:25.706069+00:00",
     "title": "Tropical Satake Isomorphism for GL_n"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "id": "fd_0408",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:25.938639+00:00",
-    "title": "Certified Novelty Detection for Theorem Provers"
   },
   {
     "consumed_by_exp_id": "",
@@ -3587,21 +2567,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes from higher-genus surfaces achieve distance O(sqrt(g)) where g is the genus.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0562",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:08.802713+00:00",
-    "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established the first formal verification of the core algebraic framework underlying fully homomorphic encryption\u2014the noise management argument that transforms \"somewhat homomorphic\" into \"fully homomorphic\" encryption through bootstrapping. Our formalization captures the essential mathematical content of Gentry's 2009 breakthrough and the BGV leveled scheme in a hierarchy of structures (`NoiseBoundedHE \u2192 CorrectHE \u2192 BootstrappableHE`), proving 12 theorems including the central result that refreshed circuit evaluation preserves validity for circuits of arbitrary depth.\n\nThe most promising cross-domain connection is between our noise-bounded encryption framework and the existing tropical homomorphic encryption work in the Catalog (`Cryptography/TropicalHomomorphic.lean`). Tropical semirings provide a concrete, well-understood algebraic setting where the noise axioms can be instantiated, and the idempotence of the tropical min operation provides a natural bootstrapping mechanism (min of a ciphertext with itself resets noise). This connection suggests a broader program: identifying which algebraic structures naturally support bootstrapping.\n\nThe highest breakthrough potential lies in Direction 1 (Concrete LWE Instantiation), because it would bridge the gap between our abstract algebraic framework and the concrete cryptographic constructions used in practice. If successful, it would provide the first end-to-end formally verified FHE scheme, from lattice hardness assumptions through noise management to circuit evaluation correctness.\n\n---\n\n### Direction 1: Concrete LWE Instantiation of the Noise-Bounded Framework\n\n**Conjecture**: The Ring-LWE-based BGV scheme, with ciphertexts as elements of Z_q[X]/(X^n + 1) and noise measured as the infinity norm of the error polynomial, satisfies all axioms of `NoiseBoundedHE` with `freshNoise = B` (the error bound), `maxNoise = q/2`, and noise growth `noise_add(c\u2081, c\u2082) \u2264 noise(c\u2081) + noise(c\u2082)` and `noise_mul(c\u2081, c\u2082) \u2264 n \u00b7 noise(c\u2081) \u00b7 noise(c\u2082)` where n is the ring dimension.\n\n**Test**: Define the Ring-LWE encryption scheme concretely in Lean 4 using `ZMod q` and polynomial quotient rings. Verify that the noise axioms hold by proving the noise growth bounds for polynomial addition and multiplication in the quotient ring Z_q[X]/(X^n + 1). The factor of n in multiplicative noise growth comes from the expansion of the product modulo X^n + 1.\n\n**Impact**: If true, this provides the first formally verified concrete FHE instantiation, bridging abstract noise management with real cryptographic constructions. It would also establish the precise relationship between ring dimension n, modulus q, and achievable circuit depth. If the noise bounds are tighter than expected, it could suggest parameter improvements for practical implementations.\n\n**Catalog References**: `Cryptography/FHE/Defs.lean`, `Cryptography/FHE/Theorems.lean`, `Cryptography/LWE/Defs.lean`\n\n**Proof Strategy**: \n1. Define `Rq := (ZMod q)[X] / (X^n + 1)` using Mathlib's polynomial quotient machinery.\n2. Define encryption as `Enc(m) = (a, a\u00b7s + e + (q/p)\u00b7m)` for random `a`, secret `s`, small error `e`.\n3. Prove noise growth bounds using submultiplicativity of the infinity norm on `Rq`.\n4. Construct an instance of `NoiseBoundedHE` and verify all axioms.\n5. For bootstrapping, prove that the decryption circuit has multiplicative depth O(log n \u00b7 log q).\n\n**Domain Bridges**: Cryptography <-> Algebra (polynomial ring theory), Cryptography <-> Computation (circuit complexity of decryption)\n\n**Lineage**: Builds on the `NoiseBoundedHE` and `CorrectHE` structures defined in this cycle, and the LWE definitions in `Cryptography/LWE/Defs.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Bootstrapping as a Natural FHE Instance\n\n**Conjecture**: The tropical encryption scheme defined in `TropicalHomomorphic.lean` satisfies the axioms of `BootstrappableHE` with `bNoise = 0` (due to the idempotence of min), making it a \"perfect\" bootstrappable scheme\u2014but one where the security guarantee is trivially broken (by the `deterministic_tropical_order_leak` theorem). This provides a formal proof that algebraic bootstrapping capability and cryptographic security are independent properties.\n\n**Test**: Construct a concrete instance of `BootstrappableHE` from `TropicalEncScheme`, where the refresh operation is defined as `refresh(c) = cmin(c, c)` (exploiting min idempotence). Verify all axioms hold. Then formally prove that no `TropicalEncScheme` instance can satisfy IND-CPA security (because ciphertext order reveals plaintext order).\n\n**Impact**: This would provide a clean, constructive example showing that the bootstrapping framework is satisfiable (ruling out vacuous truth concerns about our main theorems) while simultaneously demonstrating that bootstrapping alone is insufficient for security. It would clarify the separation between the algebraic correctness theory (our framework) and the computational hardness theory (security reductions).\n\n**Catalog References**: `Cryptography/TropicalHomomorphic.lean`, `Cryptography/FHE/Defs.lean`, `Cryptography/TropicalPostQuantum.lean`\n\n**Proof Strategy**:\n1. Define a noise function on `TropicalEncScheme.Cipher` (e.g., the encoding offset).\n2. Show `cmin(c, c) = c` implies refresh noise is 0.\n3. Construct the `BootstrappableHE` instance.\n4. Formalize IND-CPA security and prove tropical schemes cannot satisfy it.\n\n**Domain Bridges**: Cryptography <-> Tropical geometry (semiring structure), Cryptography <-> Logic (independence of algebraic and computational properties)\n\n**Lineage**: Builds on `tropical_homomorphic_correctness` and `tropical_min_idempotent_bootstrap` from the existing Catalog, and the `BootstrappableHE` structure from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Circuit Complexity Lower Bounds for Bootstrapping\n\n**Conjecture**: For any `BootstrappableHE` scheme where the plaintext space has size \u2265 2 and the noise function is \"non-degenerate\" (noise of enc(m) depends on m), the bootstrapping circuit (the circuit that homomorphically evaluates decryption) has multiplicative depth at least log\u2082(log\u2082(maxNoise/bNoise)). This would formalize the folklore belief that bootstrapping cannot be made \"too cheap.\"\n\n**Test**: Formalize a notion of \"bootstrapping circuit\" as an `ArithCircuit` that, when evaluated homomorphically on a valid ciphertext and an encrypted secret key, produces a refreshed ciphertext. Prove that if this circuit has depth d, then maxNoise \u2265 bNoise^(2^d) (by the exponential noise growth theorem), which gives d \u2265 log\u2082(log\u2082(maxNoise/bNoise)).\n\n**Impact**: This would establish the first formally verified complexity lower bound for FHE bootstrapping, connecting our noise growth analysis to circuit complexity. It would also provide a formal justification for why practical bootstrapping is expensive.\n\n**Catalog References**: `Cryptography/FHE/Theorems.lean` (specifically `noise_exceeds_any_threshold` and `pow_two_pow_strict_mono`)\n\n**Proof Strategy**:\n1. Define a \"bootstrapping circuit\" predicate: a circuit that, applied homomorphically, converts any valid ciphertext to one with noise \u2264 bNoise.\n2. Use `noise_exceeds_any_threshold` to show that evaluating a depth-d circuit on a ciphertext with noise B yields noise \u2264 B^(2^d).\n3. For the bootstrapping circuit to work, its homomorphic evaluation must succeed, so the noise must stay below maxNoise.\n4. This gives B^(2^d) \u2264 maxNoise, hence d \u2265 log\u2082(log\u2082(maxNoise/B)).\n\n**Domain Bridges**: Cryptography <-> Computation (circuit complexity), Cryptography <-> EML (complexity measures)\n\n**Lineage**: Directly extends the noise growth analysis from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Multi-Key Homomorphic Encryption Framework\n\n**Conjecture**: The `BootstrappableHE` framework can be extended to a multi-key setting where ciphertexts encrypted under different keys can be combined homomorphically, with the decryption requiring all keys. Formally, there exists a `MultiKeyHE` structure with `hAdd : C sk\u2081 \u2192 C sk\u2082 \u2192 C (sk\u2081, sk\u2082)` satisfying analogous correctness and noise bounds, where the noise growth depends on the number of distinct keys involved.\n\n**Test**: Define `MultiKeyHE` extending `BootstrappableHE` with a key-merging operation. Prove that refreshed evaluation over multi-key circuits preserves validity when the number of distinct keys is bounded by some function of the noise parameters. Identify the precise relationship between the number of keys and the achievable circuit depth.\n\n**Impact**: Multi-key FHE is essential for multiparty computation (MPC) applications. Formalizing this would connect our framework to the multiparty CSIDH work already in the Catalog (`Cryptography/CSIFiShAdvanced.lean`).\n\n**Catalog References**: `Cryptography/FHE/Defs.lean`, `Cryptography/CSIFiShAdvanced.lean` (multiparty key exchange), `Cryptography/CommitmentProtocol.lean`\n\n**Proof Strategy**:\n1. Parameterize ciphertext type by a set of keys: `C : Finset SK \u2192 Type`.\n2. Define `hAdd` and `hMul` that merge key sets.\n3. Noise grows with `|keys|` factor in multiplication.\n4. Prove bootstrapping works when `bNoise^(2 \u00b7 |keys|) < maxNoise`.\n\n**Domain Bridges**: Cryptography <-> Cryptography (connecting FHE with MPC), Cryptography <-> Computation (distributed computation models)\n\n**Lineage**: Extends the single-key `BootstrappableHE` from this cycle; connects to `multiparty_csidh_correctness` in the Catalog.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Approximate Arithmetic HE (CKKS Formalization)\n\n**Conjecture**: The CKKS scheme for approximate arithmetic can be formalized as a variant of `NoiseBoundedHE` where the correctness condition is relaxed from `dec(enc(m)) = m` to `|dec(enc(m)) - m| \u2264 \u03b5` for some precision parameter \u03b5. The noise management framework extends to this approximate setting with the key modification that the \"noise\" now includes both the encryption error and the approximation error, and these interact multiplicatively.\n\n**Test**: Define `ApproxHE` with `dec_enc_approx : |dec(enc(m)) - m| \u2264 \u03b5`. Prove that after d levels of multiplication, the approximation error is bounded by `\u03b5 \u00b7 (1 + \u03b5)^(2^d) - \u03b5 \u2248 \u03b5 \u00b7 2^d` for small \u03b5. Verify this matches known CKKS error bounds.\n\n**Impact**: CKKS is the most practically important FHE scheme for machine learning and scientific computation. Formalizing its error propagation would provide the first verified error bounds for approximate homomorphic computation.\n\n**Catalog References**: `Cryptography/FHE/Defs.lean`, `Cryptography/FHE/Theorems.lean`\n\n**Proof Strategy**:\n1. Define `ApproxHE` over \u211d with approximate correctness.\n2. Track error and noise separately.\n3. Prove error propagation bounds by induction on circuit depth.\n4. Show bootstrapping in the approximate setting requires rescaling.\n\n**Domain Bridges**: Cryptography <-> MachineLearning (encrypted inference), Cryptography <-> Physics (numerical precision in encrypted simulation)\n\n**Lineage**: Extends the exact `NoiseBoundedHE` framework from this cycle to the approximate setting.\n\n**Ambition**: extension\n",
     "domains": [
       "Cryptography",
@@ -3674,141 +2639,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T23:23:43.101673+00:00",
     "title": "Rigorous algebraic foundation for SIDH key exc"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0569",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T23:40:36.221954+00:00",
-    "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0570",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T23:40:36.311824+00:00",
-    "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
-    "domains": [
-      "Novelty",
-      "Pythagorean"
-    ],
-    "id": "fd_0571",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T23:40:36.398905+00:00",
-    "title": "Speculative: Number Theory as Music Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(\u03c0) = K(\u03c0) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is \u0398(2^n).",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0573",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T23:40:36.577793+00:00",
-    "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0574",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T23:40:36.662181+00:00",
-    "title": "Speculative: Category Theory as the DNA of Mathematics"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
-    "domains": [
-      "Novelty",
-      "MachineLearning"
-    ],
-    "id": "fd_0575",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T23:40:36.748677+00:00",
-    "title": "Speculative: Topological Data Analysis of Theorem Networks"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
-    "domains": [
-      "Novelty",
-      "Pythagorean"
-    ],
-    "id": "fd_0576",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T23:40:36.838633+00:00",
-    "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0577",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T23:40:36.923091+00:00",
-    "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Treat Lean 4's type checker as an 'environment' and formalized mathematics as 'organisms' adapting to it. Define fitness: f(M) = (number of theorems proved by M) / (lines of code in M). Prove: the fitness landscape has local optima corresponding to 'mathematical styles' (algebraic, analytic, combinatorial). Conjecture: Mathlib is a global fitness maximum for the set of theories expressible in CIC. Show: migrating a proof from one local optimum to another requires crossing a 'fitness valley' of temporarily decreased fitness.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0579",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T23:40:37.096925+00:00",
-    "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
   },
   {
     "consumed_by_exp_id": "",
@@ -3932,21 +2762,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n \u2192 T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
-    "domains": [
-      "Novelty",
-      "Tropical"
-    ],
-    "id": "fd_0578",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T23:40:37.009964+00:00",
-    "title": "Speculative: Tropical Mathematics of Social Choice"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established the first machine-verified formalization of the transformer architecture's core algebraic and geometric properties. The central discovery is the deep structural coherence between the transformer's components: softmax's gauge symmetry (shift invariance) and layer normalization's centering projection both eliminate the same redundant degree of freedom \u2014 the global offset in representation space. Meanwhile, the Gram factorization theorem (score(x\u1d62, x\u2c7c) = x\u1d62\u1d40(Wq\u1d40Wk)x\u2c7c) reveals that attention scores are governed by spectral properties of a learnable bilinear form, connecting modern deep learning to classical linear algebra.\n\nThe most promising cross-domain connection is between our Gram matrix factorization and the existing tropical attention formalization in the Catalog (`Catalog/MachineLearning/LSEConvergence.lean`). That file proves that as temperature \u03c4 \u2192 0\u207a, log-sum-exp converges to the maximum \u2014 the tropical limit. Our bilinearity theorems establish that the *pre-softmax* scores are bilinear forms. Combining these results could yield a complete characterization of the tropical limit of bilinear attention: in the zero-temperature regime, the softmax selects the key with the *highest* bilinear form value, turning continuous attention into discrete hard attention determined by the Gram matrix's spectral structure.\n\nThe highest breakthrough potential lies in Direction 1 (Spectral Characterization of Attention Geometry), because it connects formally verified algebraic structure to empirically observable phenomena in trained transformers. If the spectral structure of learned Gram matrices Wq\u1d40Wk can be characterized, it would provide the first mathematically rigorous explanation of *what* transformers learn \u2014 not just that they approximate functions, but which geometric structures they discover in data.\n\n---\n\n### Direction 1: Spectral Characterization of Attention Geometry\n\n**Conjecture**: For a transformer trained on natural language data, the Gram matrix G = Wq\u1d40Wk of each attention head has eigenvalues that decay exponentially: \u03bb\u2096 \u2264 C\u00b7r^k for constants C > 0 and 0 < r < 1, where eigenvalues are ordered by magnitude. In Lean terms: for an attention head with Gram matrix `attentionGramMatrix head`, the eigenvalues of the corresponding symmetric part (G + G\u1d40)/2, when sorted in decreasing absolute value, satisfy an exponential decay bound.\n\n**Test**: Extract Wq\u1d40Wk from a trained GPT-2 model (publicly available weights), compute the eigenvalue spectrum for each head across all layers, and fit exponential decay curves. If more than 80% of heads exhibit R\u00b2 > 0.9 for the exponential fit, the conjecture is supported. The Lean formalization would define a `HasExponentialSpectralDecay` predicate on matrices and prove that it implies a low-rank approximation bound on the Gram matrix.\n\n**Impact**: If true, this would explain why attention heads specialize (each head attends to a low-dimensional subspace) and justify low-rank attention approximations used in efficient transformer architectures. If false, the failure pattern reveals which heads violate the exponential decay \u2014 likely those performing positional or syntactic attention rather than semantic attention.\n\n**Catalog References**: `Catalog/MachineLearning/Compositionality.lean` (attention naturality), `Catalog/MachineLearning/LSEConvergence.lean` (tropical attention convergence)\n\n**Proof Strategy**: (1) Define spectral decay predicates in Lean using Mathlib's `Matrix.eigenvalues` or `LinearMap.eigenspace`. (2) Prove that exponential decay of eigenvalues implies the Gram matrix has \u03b5-rank O(log(1/\u03b5)), connecting to low-rank approximation theory. (3) Use the Gram factorization theorem (`attentionScore_eq_gram`) to show that low-rank G implies attention scores lie in a low-dimensional subspace.\n\n**Domain Bridges**: Linear algebra (spectral theory) \u2194 Machine Learning (attention heads) \u2194 Information theory (effective dimensionality)\n\n**Lineage**: Builds on `attentionScore_eq_gram` and `attentionGramMatrix` from this cycle's Lean formalization.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Bilinear Attention and Hard Attention Convergence\n\n**Conjecture**: In the tropical limit (\u03c4 \u2192 0\u207a), the softmax attention with bilinear scores converges to hard attention that selects the key maximizing the bilinear form: for each query position i, the attention concentrates on position j* = argmax_j x\u1d62\u1d40 G x\u2c7c. Formally, for sequences X = (x\u2081, ..., x\u2099) in general position (all bilinear form values x\u1d62\u1d40Gx\u2c7c distinct for different j), the softmax attention weight \u03c3(score/\u03c4)\u2c7c converges to the indicator \u03b4\u2c7c,\u2c7c* as \u03c4 \u2192 0\u207a.\n\n**Test**: Formalize the statement in Lean using `Filter.Tendsto` and the existing `lse_tendsto_sup` theorem from `LSEConvergence.lean`. The key new ingredient is combining the Gram factorization (`attentionScore_eq_gram`) with the LSE convergence result. Verify computationally that for random matrices G and random sequences X, the softmax with temperature \u03c4 = 0.001 selects the correct argmax with probability > 0.999.\n\n**Impact**: If proved, this gives a complete mathematical bridge between continuous (soft) attention and discrete (hard) attention, grounded in the bilinear form structure. This would formalize the informal intuition that \"attention is selection\" and connect to combinatorial optimization (the hard attention selection problem is a bilinear optimization).\n\n**Catalog References**: `Catalog/MachineLearning/LSEConvergence.lean` (lse_tendsto_sup, log_softmax_tends_to_row_tropical_normalization), `Catalog/MachineLearning/MultiHead.lean` (tropical multihead componentwise)\n\n**Proof Strategy**: (1) Apply `lse_tendsto_sup` with the score vector s_j = x\u1d62\u1d40Gx\u2c7c/\u03c4. (2) Show that under the distinctness hypothesis, the argmax is unique, so the softmax concentrates. (3) Prove the convergence of the full attention output (weighted sum of values) to the hard-attention output (single value at the argmax position). The existing LSE convergence result handles the log-sum-exp; the new work is connecting it to the Gram factorization.\n\n**Domain Bridges**: Tropical geometry \u2194 Bilinear forms \u2194 Combinatorial optimization (argmax selection)\n\n**Lineage**: Builds on `attentionScore_eq_gram`, `attentionScore_linear_left/right` from this cycle, and `lse_tendsto_sup` from LSEConvergence.lean.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Layer Normalization as Riemannian Projection\n\n**Conjecture**: Layer normalization defines a smooth retraction from \u211d\u207f \\ {constant vectors} onto the centered unit sphere S\u207f\u207b\u00b2 = {x \u2208 \u211d\u207f : \u2211x\u1d62 = 0, \u2211x\u1d62\u00b2 = 1}. Furthermore, the Jacobian of this retraction at any point x has a specific spectral structure: it has n-1 eigenvalues equal to 1/\u2016x\u0303\u2016 and one eigenvalue equal to 0 (in the all-ones direction), where x\u0303 is the centered vector.\n\n**Test**: (1) Prove in Lean that `layerNormSimple x` maps to the centered hyperplane (already done: `vecCenter_sum_eq_zero`). (2) Prove that `layerNormSimple x` has unit variance (i.e., \u2211\u1d62 (layerNormSimple x i)\u00b2 / n = 1). (3) Prove idempotence: `layerNormSimple (layerNormSimple x) = layerNormSimple x`. Computationally, verify the Jacobian spectral structure for random vectors in \u211d\u00b9\u2070.\n\n**Impact**: This would establish layer normalization as a Riemannian projection onto a submanifold, connecting transformer architectures to differential geometry. The spectral structure of the Jacobian would explain gradient flow through layer norm: the zero eigenvalue blocks gradients in the all-ones direction, while the 1/\u2016x\u0303\u2016 eigenvalues show that gradients are rescaled by the inverse norm of the centered vector.\n\n**Catalog References**: `MachineLearning/TransformerArchitecture/Defs.lean` (layerNormSimple, vecCenter, vecVariance)\n\n**Proof Strategy**: For idempotence, show that layerNormSimple x has mean 0 (proven: `vecCenter_mean_eq_zero`) and variance 1 (need to prove). Then applying layerNormSimple again subtracts mean 0 and divides by sqrt(1) = 1, giving the identity. For the Jacobian, use Mathlib's `fderiv` and compute the derivative of the composition of centering (linear) and normalization (smooth nonlinear).\n\n**Domain Bridges**: Riemannian geometry (projections, retractions) \u2194 Machine Learning (layer normalization) \u2194 Optimization (gradient flow)\n\n**Lineage**: Builds on `vecCenter_sum_eq_zero`, `vecCenter_mean_eq_zero`, `layerNormSimple` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Transformer Universal Approximation via Bilinear Attention\n\n**Conjecture**: For any compact set K \u2286 (\u211d\u1d48)\u207f and any continuous function F: K \u2192 (\u211d\u1d48)\u207f, and any \u03b5 > 0, there exists a transformer (with ReLU activation in the FFN) with at most O(1/\u03b5\u1d48\u207f) parameters that \u03b5-approximates F uniformly on K. The proof strategy uses the bilinearity of attention to construct explicit query/key matrices that implement nearest-neighbor selection, combined with FFN universality for pointwise approximation.\n\n**Test**: For d = 1, n = 2 (scalar sequences of length 2), construct an explicit 2-layer transformer that approximates the sorting function sort(x\u2081, x\u2082) = (min(x\u2081,x\u2082), max(x\u2081,x\u2082)) to within \u03b5 = 0.01 on [0,1]\u00b2. Verify computationally and attempt to formalize the construction in Lean.\n\n**Impact**: This would be the first *formally verified* universal approximation theorem for transformers. Existing results (Yun et al., 2020) are informal and use different architectural assumptions. A formal proof would establish exactly which architectural features (bilinear attention, nonlinear FFN, depth, width) are necessary for universality.\n\n**Catalog References**: `Catalog/MachineLearning/ClosureNetworkBreakthrough.lean` (closure_network_universal_approx), `Catalog/MachineLearning/ClosureUniversalApproximation.lean` (finite_function_exact_by_closure_features)\n\n**Proof Strategy**: (1) Use the FFN universal approximation theorem (ReLU networks are universal) for pointwise maps. (2) Use the bilinearity of attention (Theorems 3.3-3.4) to show that attention can implement arbitrary token selection. (3) Combine via the compositional depth structure (Theorem 3.6) to show that multiple layers can build arbitrary sequence-to-sequence maps. The key technical challenge is showing that softmax nonlinearity, combined with bilinear attention and ReLU FFN, generates a sufficiently rich function class.\n\n**Domain Bridges**: Approximation theory \u2194 Bilinear forms \u2194 Neural network expressivity \u2194 Computational complexity\n\n**Lineage**: Builds on all theorems from this cycle, especially `attentionScore_linear_left/right`, `attentionScore_eq_gram`, `iterateLayer_add`, and the FFN definition.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Gauge-Equivariant Transformer Design\n\n**Conjecture**: The softmax shift invariance (Theorem 3.1) is one instance of a broader family of gauge symmetries. Specifically, for any group G acting on \u211d\u207f by translations along a fixed subspace V \u2286 \u211d\u207f, one can construct a \"V-gauge-invariant softmax\" \u03c3\u1d65 such that \u03c3\u1d65(x + v) = \u03c3\u1d65(x) for all v \u2208 V. The standard softmax corresponds to V = span(1). The conjecture is that V-gauge-invariant transformers exist for any subspace V and that the choice of V determines which information the transformer can access.\n\n**Test**: Define a 2-dimensional gauge group (V = span{1, (1,-1,1,-1,...)}) and construct the corresponding gauge-invariant softmax. Prove in Lean that it satisfies the invariance property. Test computationally whether a transformer with this modified softmax can still learn standard NLP tasks, or whether the additional gauge symmetry removes too much information.\n\n**Impact**: If successful, this would provide a principled framework for designing transformers with built-in symmetries \u2014 analogous to how gauge theories in physics lead to conservation laws. Different choices of gauge group V would lead to transformers that are invariant under different types of noise or transformations, potentially improving robustness.\n\n**Catalog References**: `MachineLearning/TransformerArchitecture/Theorems.lean` (softmaxVec_shift_invariant), `Catalog/MachineLearning/Compositionality.lean` (attention_natural_under_permutation)\n\n**Proof Strategy**: (1) Define the quotient space \u211d\u207f/V and the projection map. (2) Define \u03c3\u1d65 as the composition: project to \u211d\u207f/V, then apply standard softmax on the quotient. (3) Prove invariance by showing the projection kills V-translations. (4) Characterize which bilinear forms on the quotient are realizable by attention heads.\n\n**Domain Bridges**: Gauge theory (physics) \u2194 Representation theory (group actions) \u2194 Machine Learning (invariant architectures) \u2194 Robust optimization\n\n**Lineage**: Builds on `softmaxVec_shift_invariant` and the gauge symmetry interpretation from this cycle.\n\n**Ambition**: grand_challenge\n",
     "domains": [
       "Algebra",
@@ -3992,61 +2807,1008 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
+    "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domains": [
-      "Novelty"
+      "Novelty",
+      "Logic"
     ],
-    "id": "fd_0568",
-    "priority_score": 0.9299999999999999,
+    "id": "fd_0000",
+    "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T23:40:36.123707+00:00",
-    "title": "Speculative: Mathematics as an Evolving Ecosystem"
+    "timestamp": "2026-06-01T12:30:30.486497+00:00",
+    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
+    "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
-      "Novelty"
+      "Novelty",
+      "Algebra"
     ],
-    "id": "fd_0560",
-    "priority_score": 0.9199999999999999,
+    "id": "fd_0004",
+    "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T22:10:08.629188+00:00",
-    "title": "Speculative: Mathematics as a Phase Transition"
+    "timestamp": "2026-06-01T12:30:30.490561+00:00",
+    "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
-    "consumed_by_exp_id": "af7ecea0",
-    "description": "Einstein showed that gravity is the curvature of spacetime. But WHY does spacetime curve? Conjecture: Spacetime IS a quantum error-correcting code, and gravity IS the syndrome of that code. The code is a [[n,k,d]] stabilizer code where n = number of Planck areas on a spatial slice, k = number of logical qubits (which equals the Bekenstein-Hawking entropy S = A/4G in natural units), and d = code distance (which equals the minimal geodesic length through the bulk). The key identity: S(A) = Area(gamma_A) / (4G) is EXACTLY the quantum Singleton bound n - k <= 2(d-1) rearranged as k = n - 2d + 2 = A/(4G) when n = A/l_P^2 and d = L/(2l_P). This means the Bekenstein-Hawking entropy formula is a quantum coding theorem, and the holographic principle is a coding constraint. Test: for AdS_3 with boundary CFT_2, the code is a [[n, k, d]] = [[L/l_P, S, L/(2l_P)]] code. Verify that the Singleton bound n - k <= 2(d-1) becomes L/l_P - S <= L/l_P - 1, which simplifies to S >= 1 (trivially true). The NON-TRIVIAL content is that the Ryu-Takayanagi formula S = A/(4G) is the exact quantum information identity. Impact: spacetime is not curved by matter \u2014 spacetime IS a code, and matter IS a syndrome. Gravity is not a force; it's error correction.",
+    "consumed_by_exp_id": "",
+    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
-      "Physics"
+      "Geometry"
     ],
-    "id": "fd_0023",
+    "id": "fd_0005",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.491025+00:00",
+    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0006",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.491505+00:00",
+    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0007",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.492042+00:00",
+    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0009",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.493320+00:00",
+    "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0011",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.494775+00:00",
+    "title": "Knots That Think: Cognition as Braiding in Category Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0012",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.495596+00:00",
+    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0013",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.496525+00:00",
+    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology \u2014 every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible \u2014 every surreal number is connected to every other by a continuous path.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0016",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.499504+00:00",
+    "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait \u2014 the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are \u2014 and how far we are from proving things about them.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0018",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.502441+00:00",
+    "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... \u2014 just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number \u2014 the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic \u2014 it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0020",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.505215+00:00",
+    "title": "The Unreasonable Effectiveness of the Number 163"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0024",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.512076+00:00",
+    "title": "The Mathematics of Memes: Viral Information Topology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) \u2014 expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look \u2014 the mathematical realization of a universe that is simultaneously expanding and contracting.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0025",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.514276+00:00",
+    "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0030",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.525722+00:00",
+    "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' \u2014 bulbs at angles 1/q where q is prime \u2014 have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization \u2014 every bulb encodes number-theoretic information about its period.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0032",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.530929+00:00",
+    "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0034",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.536490+00:00",
+    "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0041",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.557538+00:00",
+    "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction: given a 3-SAT formula with n variables and m clauses, construct a jigsaw puzzle with N = 2n + m + 2 pieces where the only valid assembly corresponds to a satisfying assignment. Variable pieces: each variable x_i has two pieces (TRUE and FALSE), one with a tab and one with a blank on the assignment edge. Only one can be placed (mutual exclusion via complementary edges). Clause pieces: each clause C_j is a piece that has three input edges (one per literal) and one output edge. The piece fits only if at least one input edge is connected to a TRUE literal piece. The top-left corner and bottom-right corner enforce the boundary. Test: construct the reduction explicitly for a small 3-SAT instance (e.g., (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3)) and verify the puzzle has a solution iff the formula is satisfiable. Impact: jigsaw puzzles are NP-complete, so the satisfying snap you feel when completing a puzzle is literally the same as solving a hard computational problem.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0043",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.564171+00:00",
+    "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Fermi paradox asks: if intelligent life is common, where is everyone? The pigeonhole principle answers: if there are more pigeons than holes, at least one hole contains more than one pigeon. Apply this to the cosmos: there are approximately 10^22 stars in the observable universe (pigeons) and approximately 10^10 habitable-zone planets (holes). By the pigeonhole principle, at least one habitable planet contains at least 10^12 stars' worth of interest... wait, that's the wrong way around. Correct: there are ~10^10 habitable planets (pigeons) and ~4.5 billion years of time (holes). By the pigeonhole principle, at least one time period of one year contains at least 2 habitable planets developing intelligence. But we observe zero contacts. Conjecture: The resolution is that intelligent life is NOT common \u2014 the expected number of technological civilizations in the observable universe is less than 1. More precisely: if we model the Drake equation with honest probability estimates, P(technological civilization per habitable planet) < 10^{-10}, making the expected number of civilizations < 10^0 = 1. The Fermi paradox is not a paradox at all \u2014 it is the pigeonhole principle correctly predicting that with very few pigeons (civilizations) and very many holes (planets + time), most holes are empty. Test: compute the Drake equation with conservative estimates and verify that E[civilizations] < 1. Impact: we are alone because probability says so. The universe is mostly empty because that's what the math predicts.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0045",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.571054+00:00",
+    "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0048",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.581649+00:00",
+    "title": "The Aperiodic Monotile: One Shape to Tile Them All"
+  },
+  {
+    "consumed_by_exp_id": "a463f880",
+    "description": "Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a scale-free structure: the in-degree distribution follows a power law P(k) ~ k^{-gamma} with gamma \u2248 2.5. This means most theorems are proved from a small number of foundational results (the 'hubs'), and there are exponentially many theorems that depend on these hubs. The top 10 hub theorems in mathematics are: (1) Zorn's Lemma, (2) The Intermediate Value Theorem, (3) The Fundamental Theorem of Calculus, (4) The Sylow Theorems, (5) The Baire Category Theorem, (6) Hahn-Banach Theorem, (7) Urysohn's Lemma, (8) The Pigeonhole Principle, (9) Induction, (10) The Law of Excluded Middle. Conjecture: removing any of the top 10 hubs disconnects the proof DAG into at least 2 large components, each containing more than 10% of all theorems. This means mathematics is fragile: removing one foundational theorem makes many other theorems unprovable. Test: construct the proof DAG from Lean 4's Mathlib (all proofs and their dependencies), compute the in-degree distribution, and verify the power law. Impact: mathematics is a scale-free network, and its most important theorems are its most connected nodes \u2014 the hubs that hold the entire structure together.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0049",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.510412+00:00",
-    "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
+    "timestamp": "2026-06-01T12:30:30.585396+00:00",
+    "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
+    "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
     "domains": [
       "Novelty",
-      "Physics"
+      "Algebra"
     ],
-    "id": "fd_0114",
+    "id": "fd_0050",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-01T12:30:30.944657+00:00",
-    "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
+    "timestamp": "2026-06-01T12:30:30.589354+00:00",
+    "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0051",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.593085+00:00",
+    "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology \u2014 their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0057",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.617168+00:00",
+    "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal \u2014 they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0059",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.626049+00:00",
+    "title": "The Category Theory of Jokes: Universal Properties of Humor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Anyon braiding in topological quantum computing gives unitary matrices from the braid group B_n. The Jones representation rho_k: B_n -> U((k-1)(n-1)+1) at root of unity e^{2*pi*i/k} is conjectured to be universal for quantum computation when k >= 3 and n >= 4. Conjecture: the set of all braids in B_4 under the Jones representation at k=5 generates a dense subgroup of SU(3). More precisely, the image rho_5(B_4) is an infinite subgroup of SU(3) that is not contained in any proper closed subgroup. This means that topological quantum computing with Fibonacci anyons (k=5) is universal: any unitary in SU(3) can be approximated to arbitrary precision by braiding 4 anyons. The key: the Jones representation at k=5 gives 3x3 matrices, and the braid generators sigma_1, sigma_2, sigma_3 generate a dense subgroup of SU(3). Test: compute the Jones representation at k=5 for B_4, verify that sigma_1 * sigma_2 * sigma_3 has infinite order, and check that the group generated by sigma_1, sigma_2, sigma_3 is dense in SU(3) by the Solovay-Kitaev theorem. Impact: braiding anyons is universal for quantum computation. The braid group B_4 at k=5 is a quantum gate set.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0063",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.643460+00:00",
+    "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every CSS code is equivalent to a cohomology computation on a simplicial complex, and vice versa. Specifically, given a simplicial complex K, the CSS code with C_1 = Z_1(K, F_2) (1-cycles) and C_2 = B_1(K, F_2) (1-boundaries) encodes dim(H_1(K, F_2)) logical qubits with distance d = min(length of shortest non-trivial cycle, length of shortest non-trivial cocycle). This is the homological quantum error-correcting code HQECC(K). The distance d equals the systole of K (the length of the shortest non-contractible cycle). Conjecture: for the hypercube Q_n (n-dimensional cube graph), the HQECC encodes 1 qubit with distance d = 2^{n/2} (achieving the quantum Singleton bound). Test: construct HQECC for Q_4, Q_6, Q_8 and verify the parameters. Impact: quantum error correction is cohomology. Every simplicial complex gives a quantum code, and the code parameters are topological invariants.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0065",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.657673+00:00",
+    "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Robertson-Seymour theorem states that the set of finite graphs is well-quasi-ordered by the minor relation: any infinite sequence of graphs contains two where one is a minor of the other. This implies that any minor-closed graph property is characterized by a finite set of forbidden minors. Conjecture: the same theorem holds for representable matroids over any finite field. Specifically, for any finite field F_q, the set of F_q-representable matroids is well-quasi-ordered by the matroid minor relation. This would generalize the Robertson-Seymour theorem from graphs (F_2-representable matroids) to all finite fields. The conjecture is known to fail for general matroids (by the existence of infinite antichains of non-representable matroids), but for F_q-representable matroids with q <= 3, it is open. Conjecture: for F_3 (ternary matroids), the set of excluded minors for representability is finite. The current known excluded minors for F_3 are: the Fano matroid F_7, its dual F_7*, and the non-Pappus matroid. Test: enumerate ternary matroids of rank 3 on 9 elements, verify that all but the known excluded minors are F_3-representable. Impact: Robertson-Seymour for matroids would unify graph minor theory and matroid theory under a single well-quasi-ordering theorem.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0067",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.667149+00:00",
+    "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0069",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.676713+00:00",
+    "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0070",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.681497+00:00",
+    "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA rules of radius r on alphabet A is a group under composition, isomorphic to a subgroup of S_{|A|^{2r+1}}. Specifically, the reversibility group G(r, A) is the subgroup of S_{|A|^{2r+1}} generated by the local rules of all reversible CAs of radius r. Conjecture: for binary CAs (A = {0, 1}) with radius r, G(r, {0, 1}) = S_{2^{2r+1}} for r >= 2. This means that any permutation of the 2^{2r+1} possible local neighborhoods can be achieved by composing reversible CA rules. For r = 1 (elementary CAs), G(1, {0, 1}) is a proper subgroup of S_8, and its structure is related to the 256 elementary CA rules. Conjecture: G(1, {0, 1}) has order 8! / 4 = 10080, consisting of the permutations that commute with the shift operator. Test: enumerate all 256 elementary CA rules, identify the reversible ones (Rule 15, 51, 85, 170, 204, 240), compute the group generated by their local rules, and verify the structure. Impact: reversible CAs form a group whose structure determines the landscape of reversible computation.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0071",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.686157+00:00",
+    "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Arrow's impossibility theorem states that no ranked voting system can be fair (Pareto efficient, non-dictatorial, and independent of irrelevant alternatives). The Borsuk-Ulam theorem states that every continuous function f: S^n -> R^n maps some pair of antipodal points to the same value: f(x) = f(-x). Conjecture: Arrow's theorem is a corollary of Borsuk-Ulam. Specifically, define the 'preference sphere' S^{n-1} as the set of all preference profiles over n alternatives, where antipodal points represent opposite preferences (x prefers A > B > C, -x prefers C > B > A). Define f: S^{n-1} -> R^{n-1} by f(x) = (social_preference(x)_1, ..., social_preference(x)_{n-1}). By Borsuk-Ulam, there exists x such that f(x) = f(-x), meaning the social preference for profile x equals the social preference for profile -x. This contradicts Pareto efficiency (if all voters prefer A to B, the social preference should prefer A to B). Therefore, no continuous voting function satisfies all of Arrow's axioms. Conjecture: this proof generalizes: any social choice function on n alternatives is either discontinuous or dictatorial. Test: formalize the Borsuk-Ulam proof of Arrow's theorem in Lean 4. Impact: social choice theory is topology. Arrow's impossibility is a topological theorem about spheres.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0072",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.691072+00:00",
+    "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0073",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.695662+00:00",
+    "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elusive. Conjecture: the Collatz conjecture is independent of Peano Arithmetic (PA). That is, PA can neither prove nor refute the statement 'for all n, the Collatz sequence starting at n eventually reaches 1'. This would mean the conjecture is TRUE (in the standard model) but UNPROVABLE in PA. The argument: the Collatz map is a Diophantine function that grows faster than any provably total computable function in PA. Specifically, the halting problem for Collatz (does the orbit of n reach 1?) is at least as hard as the consistency of PA, which by Godel's second incompleteness theorem is unprovable in PA. Conjecture: the Collatz conjecture is equivalent to Con(PA) over a weak base theory, meaning that if PA is consistent, then PA does not prove Collatz. Test: formalize the equivalence between Collatz and Con(PA) in Lean 4. Show that a counterexample to Collatz (an n whose orbit diverges or cycles) would imply not-Con(PA). Impact: Collatz might be the simplest true-but-unprovable statement in arithmetic \u2014 a concrete example of Godel's incompleteness.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0074",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.700907+00:00",
+    "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0076",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.711975+00:00",
+    "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0079",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.728070+00:00",
+    "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "An automatic sequence is one generated by a deterministic finite automaton (DFA). The Thue-Morse sequence 01101001... is 2-automatic. The Rudin-Shapiro sequence is 2-automatic. The paperfolding sequence is 2-automatic. Conjecture: a sequence (a_n) is k-automatic iff its generating function G(x) = sum a_n x^n is algebraic over Q(x) of degree at most k. This is known (Christol's theorem): a formal power series over F_k is algebraic iff its coefficient sequence is k-automatic. But Christol's theorem only works over finite fields. For sequences over Z (or Q), the conjecture is: a sequence (a_n) over Z is k-automatic iff it satisfies a linear recurrence with polynomial coefficients of degree at most k-1 in n. Conjecture: the halting problem for k-automatic sequences is decidable: given a DFA that generates (a_n), it is decidable whether there exists n such that a_n = 0 (the 'zero in sequence' problem). This is TRUE for k-automatic sequences (by the pumping lemma: if the DFA accepts any string, it accepts an infinite number, so a_n = 0 infinitely often). But for morphic sequences (generalizations of automatic sequences), the problem is open. Conjecture: the zero-in-sequence problem for morphic sequences is decidable. Test: implement the decidability algorithm for k-automatic sequences and verify on 100 test sequences. Impact: automatic sequences have decidable halting problems. The boundary between decidability and undecidability in sequence theory is the boundary between automatic and morphic.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0080",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.733493+00:00",
+    "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "An argumentation framework AF = (A, R) consists of a set of arguments A and an attack relation R subset A x A. The preferred extensions of AF are the maximal admissible sets (subsets S of A that defend themselves against all attacks and are maximal with this property). Conjecture: the preferred extensions of AF form a simplicial complex K(AF) on the vertex set A. The homology groups H_n(K(AF)) measure the 'holes' in the argumentation structure. H_0 measures the number of connected components (independent debate threads). H_1 measures circular arguments (cycles where each argument attacks the next, and the last attacks the first). H_2 measures 'spheres' of arguments (3D cycles where arguments form a spherical shell). Conjecture: for any argumentation framework, the Euler characteristic chi(K(AF)) = |A| - |R| + sum_{n>=2} (-1)^n * dim(H_n) equals |preferred extensions| - |grounded extension size|. This connects the topology of the argument to its semantics. Test: construct K(AF) for 100 argumentation frameworks from debate transcripts, compute homology groups, and verify the Euler characteristic formula. Impact: arguments have topology. Circular arguments are 1-holes, and 3D argument spheres are 2-holes. The shape of a debate is a topological invariant.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0081",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.739014+00:00",
+    "title": "The Topology of Argumentation: Why Debates Have Holes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A Sudoku puzzle is a constraint satisfaction problem on a 9x9 grid. The 'spectral gap' of a Sudoku puzzle is the gap between the two largest eigenvalues of the transition matrix of the Markov chain that randomly swaps two compatible entries. The spectral gap determines the mixing time: the number of swaps needed to generate a uniformly random solution. Conjecture: the spectral gap of a Sudoku puzzle undergoes a phase transition at the critical density d_c = 17/81 (the density of the minimal number of clues, 17, divided by 81). For puzzles with fewer than 17 clues, the spectral gap is large (the Markov chain mixes quickly, meaning there are many solutions). For puzzles with exactly 17 clues, the spectral gap is minimal (the chain mixes slowly, meaning solutions are hard to find). For puzzles with more than 30 clues, the spectral gap is zero (the chain is reducible, meaning the puzzle has a unique solution and no swaps are possible). Conjecture: the spectral gap lambda_1 - lambda_2 of the Sudoku Markov chain satisfies: lambda_1 - lambda_2 > epsilon for d < 17/81 (many solutions, fast mixing), lambda_1 - lambda_2 ~ 0 for d ~ 17/81 (critical point, slow mixing), and the chain is absorbing for d > 30/81 (unique solution, no mixing). Test: compute the spectral gap for Sudoku puzzles with varying numbers of clues and verify the phase transition. Impact: Sudoku has a spectral gap phase transition. The hardness of the puzzle is determined by the gap, not by the number of clues.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0083",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.750240+00:00",
+    "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A ReLU network f: R -> R with L layers of width w is a piecewise linear function with at most w^L pieces. By the universal approximation theorem, such networks can approximate any continuous function. But HOW WELL can they approximate specific constants? Conjecture: a ReLU network with L layers of width w can approximate pi to within epsilon using O(w * L * log(1/epsilon)) parameters. More precisely, there exists a ReLU network f with L = O(log(log(1/epsilon))) layers and w = O(log(1/epsilon)) width such that |f(1) - pi| < epsilon. This is because pi can be computed by the Leibniz formula pi/4 = 1 - 1/3 + 1/5 - ..., and a ReLU network can implement the partial sums. The number of terms needed is O(1/epsilon), and each term can be computed by a constant-depth ReLU subnetwork. The depth needed is O(log(1/epsilon)) for the sum and O(log(log(1/epsilon))) for the individual terms. Conjecture: the approximation rate for rational numbers by ReLU networks is O(1/(w^L)), matching the piecewise linear structure. For irrational numbers like pi, the rate is O(1/(w * L * 2^L)), which is slower but still exponential in depth. Test: construct ReLU networks that approximate pi, e, and sqrt(2) and measure the approximation error as a function of network size. Impact: ReLU networks approximate constants at a rate determined by their depth and width. Pi requires O(log(log(1/epsilon))) depth.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0084",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.755927+00:00",
+    "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0085",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.761503+00:00",
+    "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0088",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.782446+00:00",
+    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The information content of a Lean 4 proof is the number of bits needed to specify the proof among all possible proofs of the same theorem. For a theorem T with proof P, the information content is I(P) = -log_2(P(proof of T has length |P|)). Conjecture: the expected information content of a proof of a theorem with statement length n is I(n) = Theta(n * log(n)). This means that proofs are typically longer than their statements by a factor of log(n), matching the known results on proof complexity. Moreover, the search problem (finding a proof given the theorem) has time complexity 2^{I(n)} = 2^{Theta(n * log(n))}, which matches the complexity of brute-force search over all proofs of length n * log(n). Conjecture: proof search in Lean 4 is EXPTIME-hard, and the average-case complexity of finding a proof of a random theorem of length n is 2^{Theta(n)} (exponential in n, not n*log(n), because most random theorems are unprovable). Test: measure the length of Lean 4 proofs vs theorem statement length for 1000 theorems in Mathlib and verify I(n) ~ n * log(n). Impact: proof search has fundamental information-theoretic limits. Finding a proof is exponentially harder than verifying one.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0091",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.801778+00:00",
+    "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0092",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.807837+00:00",
+    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0093",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.814374+00:00",
+    "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0094",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.820858+00:00",
+    "title": "Hypergraph Ramsey Theory: Beyond Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0095",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.827686+00:00",
+    "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0096",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.834465+00:00",
+    "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0098",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.846057+00:00",
+    "title": "Isomorphisms of Meaning: When Structures Collide"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0099",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.852132+00:00",
+    "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0102",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.870934+00:00",
+    "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0103",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.877377+00:00",
+    "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connect to Infinite Time Turing Machines and ordinal computation.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0104",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.883358+00:00",
+    "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own G\u00f6del sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0105",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.889380+00:00",
+    "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0110",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.919138+00:00",
+    "title": "Self-Modifying Code That Cannot Be Stopped"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL. Formalize the connection to non-associative division algebras and Hall triple systems.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0111",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.925627+00:00",
+    "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0116",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.958310+00:00",
+    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize retrocausal mathematical structures where implications can flow backward in time. Prove that in a retrocausal Heyting algebra, the law of excluded middle fails but a temporal excluded middle holds. Connect to the CPT theorem in QFT and prove that any retrocausal logic must be intuitionistic.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0122",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.994131+00:00",
+    "title": "Retrocausal Mathematics: Where Effects Precede Causes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic in favor of a paraconsistent logic with a nontrivial inconsistency-tolerant truth predicate. Show this system proves its own soundness.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0124",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:31.006174+00:00",
+    "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0126",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:31.018128+00:00",
+    "title": "Counterfactual Number Theory: What If Primes Were Random?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0127",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:31.024124+00:00",
+    "title": "Borges' Library of Babel: Combinatorics of Everything"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0128",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:31.030197+00:00",
+    "title": "Aleph-1 Surface: Geometry Between Dimensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0130",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:31.042804+00:00",
+    "title": "Zombies and Qualia: Mathematics of Subjective Experience"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0134",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:31.067326+00:00",
+    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0135",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:31.073799+00:00",
+    "title": "Infinite Games Against Death: Immortality Strategies"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0138",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:31.092242+00:00",
+    "title": "Causal Loops in Category Theory: When Composition Loops Back"
   },
   {
     "consumed_by_exp_id": "",
@@ -4122,6 +3884,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:25.464794+00:00",
     "title": "Reversible Computing and Thermodynamic Efficiency"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_0408",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.938639+00:00",
+    "title": "Certified Novelty Detection for Theorem Provers"
   },
   {
     "consumed_by_exp_id": "",
@@ -4530,33 +4307,153 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
+    "description": "Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes from higher-genus surfaces achieve distance O(sqrt(g)) where g is the genus.",
     "domains": [
       "Novelty",
-      "Physics"
+      "Cryptography"
     ],
-    "id": "fd_0561",
+    "id": "fd_0562",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T22:10:08.713166+00:00",
-    "title": "Speculative: Computational Complexity as Physical Law"
+    "timestamp": "2026-06-03T22:10:08.802713+00:00",
+    "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
+    "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
     "domains": [
       "Novelty",
-      "Physics"
+      "Logic"
     ],
-    "id": "fd_0572",
+    "id": "fd_0569",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T23:40:36.486848+00:00",
-    "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
+    "timestamp": "2026-06-03T23:40:36.221954+00:00",
+    "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0570",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.311824+00:00",
+    "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
+    "domains": [
+      "Novelty",
+      "Pythagorean"
+    ],
+    "id": "fd_0571",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.398905+00:00",
+    "title": "Speculative: Number Theory as Music Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(\u03c0) = K(\u03c0) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is \u0398(2^n).",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0573",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.577793+00:00",
+    "title": "Speculative: Proof Complexity and Thermodynamic Cost"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0574",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.662181+00:00",
+    "title": "Speculative: Category Theory as the DNA of Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
+    "domains": [
+      "Novelty",
+      "MachineLearning"
+    ],
+    "id": "fd_0575",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.748677+00:00",
+    "title": "Speculative: Topological Data Analysis of Theorem Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
+    "domains": [
+      "Novelty",
+      "Pythagorean"
+    ],
+    "id": "fd_0576",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.838633+00:00",
+    "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0577",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.923091+00:00",
+    "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Treat Lean 4's type checker as an 'environment' and formalized mathematics as 'organisms' adapting to it. Define fitness: f(M) = (number of theorems proved by M) / (lines of code in M). Prove: the fitness landscape has local optima corresponding to 'mathematical styles' (algebraic, analytic, combinatorial). Conjecture: Mathlib is a global fitness maximum for the set of theories expressible in CIC. Show: migrating a proof from one local optimum to another requires crossing a 'fitness valley' of temporarily decreased fitness.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0579",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:37.096925+00:00",
+    "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
   },
   {
     "consumed_by_exp_id": "",
@@ -4620,6 +4517,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n \u2192 T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
+    "domains": [
+      "Novelty",
+      "Tropical"
+    ],
+    "id": "fd_0578",
+    "priority_score": 0.7999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:37.009964+00:00",
+    "title": "Speculative: Tropical Mathematics of Social Choice"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
     "domains": [
       "EML",
@@ -4632,6 +4544,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:26.751445+00:00",
     "title": "EML Quantum Activation Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0568",
+    "priority_score": 0.7799999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.123707+00:00",
+    "title": "Speculative: Mathematics as an Evolving Ecosystem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0560",
+    "priority_score": 0.7699999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.629188+00:00",
+    "title": "Speculative: Mathematics as a Phase Transition"
   },
   {
     "consumed_by_exp_id": "",
@@ -4722,6 +4662,81 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-04T03:19:24.020616+00:00",
     "title": "Formal bridge between Collatz dynamics, comput"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Viral Information Topology\n\n## Synthesis\n\nThis research cycle established the mathematical foundations of meme propagation via sheaf cohomology on graphs. The key discovery is the **Monodromy Obstruction Theorem**: when a meme's meaning \"rotates\" non-trivially around a social cycle (i.e., the product of twist factors along a closed walk is not 1), the meme collapses\u2014no nonzero coherent interpretation can exist at any vertex on the cycle. On connected networks, this extends to global vanishing. This result connects algebraic topology (monodromy of flat connections) to social dynamics (meme coherence), creating a genuine cross-domain bridge.\n\nThe **Spectral-Cohomological Bridge**\u2014proving that H\u2070 of the constant sheaf equals the kernel of the graph Laplacian, and vice versa\u2014is the most promising cross-domain connection. It means that spectral graph theory's computational tools (eigenvalue algorithms, Cheeger inequality, spectral clustering) directly compute cohomological invariants of meme propagation. Conversely, sheaf-theoretic concepts (monodromy, obstruction classes, twisted coefficients) provide new interpretations for spectral phenomena. This bridge has the highest breakthrough potential because it connects a mature computational toolkit (spectral methods) to a rich conceptual framework (sheaf theory).\n\nThe **Phase Transition Conjecture** (dim H\u2070 transitions from >1 to 1 at the Erd\u0151s-R\u00e9nyi connectivity threshold) remains unproved but is computationally verifiable. The **Equilibrium Theorem** (consistent sections = diffusion fixed points) bridges static topology to dynamics, suggesting that sheaf cohomology governs the long-term behavior of information dynamics.\n\n---\n\n### Direction 1: Higher Sheaf Cohomology and Simplicial Social Networks\n\n**Conjecture**: For a simplicial complex K modeling higher-order social interactions (not just pairwise edges but group conversations as triangles, etc.), the second cohomology H\u00b2(K, F) of a cellular sheaf F measures *higher-order obstruction* to meme coherence: obstructions that cannot be detected by examining any single cycle but only appear when multiple cycles interact.\n\n**Test**: Construct a simplicial complex from a real social network dataset (e.g., email-Eu-core with 1005 nodes). Compute H\u2070, H\u00b9, H\u00b2 for the constant sheaf using Smith normal form on the boundary matrices. Compare: does H\u00b2 correlate with known \"echo chamber\" structures?\n\n**Impact**: If H\u00b2 captures higher-order echo chambers, this opens a new topological tool for social network analysis that goes beyond pairwise connectivity. If H\u00b2 is always trivial for real-world networks, that constrains the topological complexity of social structures.\n\n**Catalog References**: `Novelty/ViralSheafCohomology.lean` (H\u2070 submodule, monodromy), `Bridges/HomologicalDeepLearning.lean` (data processing bound)\n\n**Proof Strategy**: Define the simplicial cochain complex C\u2070 \u2192 C\u00b9 \u2192 C\u00b2 with appropriate coboundary maps. Prove \u03b4\u2081 \u2218 \u03b4\u2080 = 0 (chain complex property). Then H\u00b2 = ker(\u03b4\u2082)/im(\u03b4\u2081). The key lemma: \u03b4\u00b2 = 0 follows from the boundary-of-a-boundary-is-zero principle.\n\n**Domain Bridges**: Algebraic Topology (simplicial cohomology) \u2194 Network Science (community detection) \u2194 Computation (Smith normal form algorithms)\n\n**Lineage**: Extends the H\u2070 and monodromy results from this cycle to higher cohomological degrees.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Stochastic Sheaves and Noisy Propagation\n\n**Conjecture**: For a stochastic sheaf\u2014where each edge's restriction map is a random matrix M_e drawn from a distribution with mean \u03bc_e and variance \u03c3\u00b2_e\u2014the expected dimension of H\u2070 satisfies:\n\nE[dim H\u2070] \u2264 dim H\u2070(G, \u03bc) + C \u00b7 \u03a3_e \u03c3\u00b2_e\n\nwhere H\u2070(G, \u03bc) is the cohomology of the mean sheaf and C is a constant depending on the graph's cycle rank. Noise can only *increase* the expected number of interpretations (by \"fuzzing out\" consistency conditions).\n\n**Test**: For random graphs G(50, 0.3) with Gaussian-distributed twist factors (mean 1, variance \u03c3\u00b2), compute H\u2070 dimension by numerical linear algebra (kernel of the coboundary matrix). Plot E[dim H\u2070] vs \u03c3\u00b2 over 10\u2074 trials. Verify monotone increase.\n\n**Impact**: If confirmed, this provides a quantitative bound on how noise affects meme coherence\u2014relevant to misinformation spread where messages are imperfectly transmitted. If refuted, the counterexample reveals that noise can sometimes *improve* coherence (a surprising and publishable result).\n\n**Catalog References**: `Novelty/ViralSheafCohomology.lean` (TwistedMemeSheaf, monodromy), `FINAL/Bridges/HomologicalDeepLearning.lean` (data processing bound)\n\n**Proof Strategy**: Model the stochastic coboundary as a perturbation of the deterministic one. Use Weyl's inequality for singular value perturbation to bound the change in kernel dimension. The key challenge is controlling how small perturbations of the restriction maps affect the rank of the coboundary matrix.\n\n**Domain Bridges**: Probability Theory (random matrix theory) \u2194 Algebraic Topology (sheaf cohomology) \u2194 Information Theory (noisy channels)\n\n**Lineage**: Extends TwistedMemeSheaf from deterministic to stochastic setting.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Monodromy Classification of Viral Patterns\n\n**Conjecture**: For a connected graph G with cycle rank \u03b2\u2081, the monodromy representation \u03c1: \u03c0\u2081(G) \u2192 \u211a* of a twisted meme sheaf is completely determined by \u03b2\u2081 twist values (one per fundamental cycle). The sheaf has nonzero global sections if and only if all \u03b2\u2081 fundamental monodromies equal 1 (the sheaf is \"flat\").\n\n**Test**: For random graphs G(30, 0.5) with random twist factors, compute: (a) fundamental cycle monodromies via DFS spanning tree, (b) dimension of H\u2070 by kernel computation. Verify that H\u2070 \u2260 0 \u27fa all fundamental monodromies = 1 over 10\u00b3 trials.\n\n**Impact**: This would give a complete classification of which twisted sheaves admit global sections, analogous to the classification of flat bundles in differential geometry. It would provide an O(|E|) algorithm for deciding meme viability.\n\n**Catalog References**: `Novelty/ViralSheafCohomology.lean` (walkMonodromy, monodromy_obstruction, twisted_global_vanishing)\n\n**Proof Strategy**: Use the Global Vanishing Theorem (already proved) for the forward direction. For the reverse, construct a global section on the spanning tree by \"parallel transport\" from a chosen root (setting f(root) = 1 and f(v) = product of twists along tree path). The flatness condition ensures this extends consistently to all non-tree edges.\n\n**Domain Bridges**: Algebraic Topology (fundamental group, flat connections) \u2194 Graph Theory (cycle rank, spanning trees) \u2194 Social Network Analysis (meme viability)\n\n**Lineage**: Builds directly on monodromy_obstruction and twisted_global_vanishing from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Sheaf-Theoretic Community Detection\n\n**Conjecture**: Given a graph G with unknown community structure, the dimension of H\u2070 for the constant sheaf equals the number of connected components (proved this cycle). More interestingly: for a family of \"softened\" sheaves F\u03b5 where restriction maps are (1-\u03b5)-contractions rather than identities, dim H\u2070(G, F\u03b5) counts the number of \"\u03b5-communities\"\u2014groups of vertices that are cohomologically indistinguishable at resolution \u03b5.\n\n**Test**: Apply to the Zachary Karate Club network (34 nodes, 78 edges). Compute dim H\u2070(G, F\u03b5) for \u03b5 \u2208 {0, 0.1, 0.2, ..., 1.0}. Compare the resulting \"resolution curve\" with standard community detection (Louvain, spectral clustering). Does the sheaf-theoretic method recover the known 2-community split at some \u03b5?\n\n**Impact**: If successful, this gives a mathematically principled, parameter-free community detection method grounded in cohomology theory rather than heuristics. The resolution parameter \u03b5 plays the role of the Morse function in persistent homology, giving a \"persistence diagram\" of communities.\n\n**Catalog References**: `Novelty/ViralSheafCohomology.lean` (H0Submodule, h0_monotone_edges), `Bridges/AlgebraEMLClosureComputation.lean` (FilteredClosureSystem)\n\n**Proof Strategy**: Define contraction sheaves with restriction maps r_e : \u211a \u2192 \u211a, r(x) = (1-\u03b5)x. Compute the coboundary matrix, which becomes a weighted Laplacian. Show that dim ker = number of \u03b5-connected components, where vertices are \u03b5-connected if every path between them has total contraction > threshold.\n\n**Domain Bridges**: Algebraic Topology (sheaf cohomology) \u2194 Data Science (community detection) \u2194 Topological Data Analysis (persistent homology)\n\n**Lineage**: Extends constant sheaf results to parameterized families of sheaves.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Financial No-Arbitrage as Sheaf Flatness\n\n**Conjecture**: In a financial network where vertices are currencies and edge twist factors are exchange rates, the no-arbitrage condition is equivalent to the twisted meme sheaf being flat (all monodromies = 1). The Monodromy Obstruction Theorem then proves: arbitrage opportunities cannot coexist with stable equilibrium prices.\n\n**Test**: Use daily forex data (USD, EUR, GBP, JPY, CHF, AUD) to construct a 6-vertex complete graph with twist factors = exchange rates. Compute monodromies of all 3-cycles (C(6,3) = 20 triangles). Measure deviation from 1 and correlate with market volatility.\n\n**Impact**: This reframes no-arbitrage theory through sheaf cohomology, connecting mathematical finance to algebraic topology. The monodromy deviation from 1 becomes a \"topological volatility index\" measuring market stress.\n\n**Catalog References**: `Novelty/ViralSheafCohomology.lean` (TwistedMemeSheaf, monodromy_obstruction, twisted_global_vanishing), `Cryptography/BerggrenDiophantineLattice.lean` (lorentzForm)\n\n**Proof Strategy**: Model exchange rates as twist factors \u03c4(i,j) = rate(i\u2192j). The reciprocity condition \u03c4(i,j)\u00b7\u03c4(j,i) = 1 is the bid-ask identity (in the frictionless case). No-arbitrage = all cycle monodromies equal 1 = sheaf flatness. The Global Vanishing Theorem then gives: if any cycle has monodromy \u2260 1, no stable price vector exists.\n\n**Domain Bridges**: Mathematical Finance (no-arbitrage theory) \u2194 Algebraic Topology (flat sheaves, monodromy) \u2194 Social Networks (information propagation)\n\n**Lineage**: Applies the monodromy obstruction framework from this cycle to financial networks.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0599",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "23b2bc09",
+    "status": "available",
+    "timestamp": "2026-06-04T03:50:30.062028+00:00",
+    "title": "Mathematical foundations of meme propagation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Einstein showed that gravity is the curvature of spacetime. But WHY does spacetime curve? Conjecture: Spacetime IS a quantum error-correcting code, and gravity IS the syndrome of that code. The code is a [[n,k,d]] stabilizer code where n = number of Planck areas on a spatial slice, k = number of logical qubits (which equals the Bekenstein-Hawking entropy S = A/4G in natural units), and d = code distance (which equals the minimal geodesic length through the bulk). The key identity: S(A) = Area(gamma_A) / (4G) is EXACTLY the quantum Singleton bound n - k <= 2(d-1) rearranged as k = n - 2d + 2 = A/(4G) when n = A/l_P^2 and d = L/(2l_P). This means the Bekenstein-Hawking entropy formula is a quantum coding theorem, and the holographic principle is a coding constraint. Test: for AdS_3 with boundary CFT_2, the code is a [[n, k, d]] = [[L/l_P, S, L/(2l_P)]] code. Verify that the Singleton bound n - k <= 2(d-1) becomes L/l_P - S <= L/l_P - 1, which simplifies to S >= 1 (trivially true). The NON-TRIVIAL content is that the Ryu-Takayanagi formula S = A/(4G) is the exact quantum information identity. Impact: spacetime is not curved by matter \u2014 spacetime IS a code, and matter IS a syndrome. Gravity is not a force; it's error correction.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0023",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.510412+00:00",
+    "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0114",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.944657+00:00",
+    "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0561",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.713166+00:00",
+    "title": "Speculative: Computational Complexity as Physical Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0572",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.486848+00:00",
+    "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
     "consumed_by_exp_id": "",
