@@ -588,7 +588,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formal framework for r-uniform hypergraph Rams"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e48095ef",
     "description": "# Future Directions: Birthday-Stratified Surreal Arithmetic\n\n## Synthesis\n\nThis research cycle formally verified the **Birthday\u2013Denomination Principle** and established a complete filtered ring structure on the dyadic rationals indexed by surreal birthday. The central discovery is that the birthday filtration F_n = {q \u2208 \u211a : q.den | 2\u207f} satisfies three key closure properties: non-Archimedean addition (F_m + F_n \u2286 F_{max(m,n)}), subadditive multiplication (F_m \u00b7 F_n \u2286 F_{m+n}), and monotonicity. These properties were proved using the 2-adic valuation padicValNat(2, q.den) and Mathlib's factorization infrastructure, yielding the ultrametric triangle inequality for the birthday distance d(a,b) = \u03bd\u2082(den(a-b)). The proofs use only standard axioms (propext, Classical.choice, Quot.sound).\n\nThe most significant cross-domain connection is the **tropical homomorphism**: the birthday valuation maps rational addition to tropical max and rational multiplication to tropical sum, making it a ring homomorphism from (\u211a_dyadic, +, \u00d7) to the tropical semiring (\u2115, max, +). This connects to the Catalog's tropical infrastructure (`Bridges/TropicalProofValuationDuality.lean`, `Bridges/TropicalSeparationClassifier.lean`) and suggests that tropical algebraic geometry techniques can be applied to analyze game complexity. The non-Archimedean computation framework in `Computation/PadicValuationDepth.lean` also aligns directly with our birthday distance.\n\nThe highest breakthrough potential lies in Direction 1 (the Multiplication Defect Conjecture), which would precisely quantify the gap between the birthday bound for multiplication and the actual birthday of a product. If true, it would establish a deep relationship between numerator structure and birthday depth that has implications for computational complexity of game evaluation. Direction 2 (extending to transfinite birthdays) would connect our finitary results to the full surreal number system.\n\n---\n\n### Direction 1: The Multiplication Defect Conjecture\n\n**Conjecture**: For dyadic rationals a = p/2^m and b = q/2^n (in lowest terms, p and q odd), the multiplication defect \u03b4(a,b) := (m + n) \u2212 \u03bd\u2082(den(a\u00b7b)) equals exactly \u03bd\u2082(|p\u00b7q|), the 2-adic valuation of the product of the numerators.\n\nFormally: for all a, b \u2208 \u211a with a.den = 2^m and b.den = 2^n (m = padicValNat(2, a.den), n = padicValNat(2, b.den)), we have:\n  (padicValNat(2, a.den) + padicValNat(2, b.den)) - padicValNat(2, (a*b).den) = padicValNat(2, (a.num * b.num).natAbs)\n\n**Test**: Compute \u03b4(a,b) and \u03bd\u2082(|a.num \u00b7 b.num|) for all dyadic rationals a, b with denominators \u2264 2\u2076 and |numerator| \u2264 100. Any mismatch falsifies the conjecture. Current evidence: verified for all pairs with denominator \u2264 2\u2074.\n\n**Impact**: If true, this gives a complete characterization of when multiplication preserves birthday level vs. when it drops. It would imply that the birthday filtration's multiplicative structure is entirely determined by the 2-adic structure of the numerators \u2014 connecting additive combinatorics (numerator sums) to multiplicative number theory (valuation factorization). If false, the specific counterexample would reveal unexpected cancellation patterns in rational multiplication.\n\n**Catalog References**: `Computation/PadicValuationDepth.lean` (ValuationDepthMeasure), `Bridges/NonArchimedeanComputation.lean` (valuation_depth_strict_hierarchy)\n\n**Proof Strategy**: \n1. Express a\u00b7b in terms of (p\u00b7q)/(2^(m+n)) and analyze the reduction to lowest terms.\n2. The denominator of a\u00b7b equals 2^(m+n) / gcd(p\u00b7q, 2^(m+n)) = 2^(m+n-\u03bd\u2082(|p\u00b7q|)).\n3. Show that padicValNat(2, den(a\u00b7b)) = m + n - \u03bd\u2082(|p\u00b7q|) using properties of reduced fractions.\n4. Key lemma needed: Rat.mul_den in terms of numerator-denominator interaction.\n\n**Domain Bridges**: Combinatorial game theory (birthday depth) \u2194 p-adic number theory (valuation factorization) \u2194 Tropical geometry (defect as tropical distance)\n\n**Lineage**: Builds on birthday_denomination_principle, dyadicVal_mul_le_add, and the filtered ring structure from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 2: Transfinite Birthday Isomorphism No_\u03c9 \u2245 \u2124[1/2]\n\n**Conjecture**: There exists an ordered ring isomorphism between the surreal numbers with birthday < \u03c9 (the first infinite ordinal) and the dyadic rationals \u2124[1/2], preserving the birthday filtration: a surreal number x with birthday n corresponds to a dyadic rational with denominator dividing 2^n.\n\nFormally in Lean terms: there exists an OrderRingIso between {x : Surreal | \u2203 n : \u2115, x.birthday < Ordinal.omega} (with appropriate subring structure) and {q : \u211a | \u2203 k : \u2115, q.den = 2^k} (the dyadic rationals as a subring of \u211a).\n\n**Test**: \n1. Verify that Mathlib's Surreal type has sufficient API to state this (check PGame.birthday, Surreal.mk, etc.).\n2. Construct explicit maps in both directions for surreals of birthday \u2264 3 and verify they are order-preserving and ring-homomorphic.\n3. Verify the map sends PGame.mk (left options) (right options) to the correct dyadic rational via the simplicity rule.\n\n**Impact**: This would be the first machine-verified proof of a foundational result in combinatorial game theory. It would establish that the surreal number construction, which appears infinitary and set-theoretic, produces in its finite stages an object that is completely characterized by elementary number theory. It would also validate that our birthday filtration captures the exact structure of the game-theoretic construction.\n\n**Catalog References**: `Bridges/SurrealArithmetic.lean` (PGame.BornBy, IsDyadicRational), `Bridges/SurrealTopologyInfinity.lean` (SurrealLikeOrder)\n\n**Proof Strategy**:\n1. Define the map \u03a6: Surreal_\u03c9 \u2192 \u2124[1/2] recursively using the simplicity rule: \u03a6({L|R}) is the simplest dyadic rational strictly between sup(\u03a6(L)) and inf(\u03a6(R)).\n2. Prove \u03a6 is well-defined using the birthday-denomination principle.\n3. Prove \u03a6 is order-preserving by induction on birthday.\n4. Prove \u03a6 is a ring homomorphism by showing it respects surreal addition and multiplication.\n5. Prove surjectivity by constructing, for each dyadic rational, the corresponding PGame.\n6. Key challenge: Mathlib's Surreal type uses quotient by equivalence, so explicit computation requires careful handling of representatives.\n\n**Domain Bridges**: Set theory (PGame inductive type) \u2194 Number theory (dyadic rationals) \u2194 Algebra (ordered ring isomorphism)\n\n**Lineage**: Builds on birthday_denomination_principle, den_is_pow2_of_mem_filtration, and the BirthdayFiltration infrastructure from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: p-Adic Birthday Filtrations for Arbitrary Primes\n\n**Conjecture**: For any prime p, define the p-adic birthday filtration F^p_n = {q \u2208 \u211a : q.den | p^n}. Then:\n1. F^p forms a filtered ring with non-Archimedean addition: F^p_m + F^p_n \u2286 F^p_{max(m,n)}.\n2. F^p has subadditive multiplication: F^p_m \u00b7 F^p_n \u2286 F^p_{m+n}.\n3. For distinct primes p, q, the filtrations F^p and F^q are \"independent\": F^p_m \u2229 F^q_n = \u2124 for m, n > 0.\n\n**Test**: Verify properties (1)-(3) for p = 3 by constructing explicit examples and checking filtration membership. For independence (3), verify that 1/6 \u2209 F^2_1 \u2229 F^3_1 (since den(1/6) = 6 = 2\u00b73, it divides neither 2\u00b9 nor 3\u00b9).\n\n**Impact**: Generalizing from p = 2 to arbitrary primes would connect the birthday filtration to the full adelic structure of \u211a. The product of all p-adic birthday filtrations would recover the complete arithmetic of \u211a via the Chinese Remainder Theorem. This would provide a \"game-theoretic decomposition\" of rational arithmetic into prime components.\n\n**Catalog References**: `Computation/PadicValuationDepth.lean`, `Bridges/NonArchimedeanComputation.lean`\n\n**Proof Strategy**:\n1. Generalize BirthdayFiltration to take a prime p as parameter.\n2. The proofs for properties (1) and (2) should carry over almost verbatim, replacing 2 with p.\n3. For independence (3), use the Chinese Remainder Theorem: if q.den | p^m and q.den | q^n with gcd(p,q)=1, then q.den | gcd(p^m, q^n) = 1.\n4. Define the \"adelic birthday\" as the tuple (\u03bd\u2082(q), \u03bd\u2083(q), \u03bd\u2085(q), ...) and study its properties.\n\n**Domain Bridges**: Number theory (p-adic valuations, adeles) \u2194 Game theory (generalized birthday hierarchies) \u2194 Algebra (Chinese Remainder Theorem)\n\n**Lineage**: Direct generalization of the birthday filtration infrastructure from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Tropical Newton Polytopes of Birthday Filtrations\n\n**Conjecture**: The birthday filtration on \u2124[1/2] can be interpreted as a tropical variety in the sense of tropical algebraic geometry. Specifically, the \"birthday Newton polytope\" of a polynomial f(x) = \u03a3 a\u1d62x\u2071 with dyadic coefficients is the convex hull of {(i, \u03bd\u2082(a\u1d62)) : a\u1d62 \u2260 0} in \u211d\u00b2, and the tropical roots of f are determined by the slopes of this polytope.\n\n**Test**: Compute the birthday Newton polytope for f(x) = (1/2)x\u00b2 + (3/4)x + 1 and verify that its slopes predict the 2-adic valuations of the roots (if they are dyadic). The polytope vertices are (0, 0), (1, 2), (2, 1), giving slopes -2 and 1, predicting roots with 2-adic valuations 2 and -1.\n\n**Impact**: This would establish a direct bridge between tropical algebraic geometry and combinatorial game theory, opening a new perspective on game polynomials (the generating functions that encode game values). It would also connect to the Catalog's tropical infrastructure, potentially enabling tropical methods for analyzing game complexity.\n\n**Catalog References**: `Bridges/TropicalProofValuationDuality.lean` (tropical_proof_valuation_duality), `Bridges/TropicalSeparationClassifier.lean` (exists_tropical_separator_with_margin), `Bridges/PositiveTemperatureTropical.lean`\n\n**Proof Strategy**:\n1. Define the birthday Newton polytope using Mathlib's convex hull infrastructure.\n2. State and prove the tropical Eisenstein criterion: if the birthday Newton polytope has a single slope, the polynomial is irreducible over \u2124[1/2].\n3. Connect to the classical Newton polygon theorem for p-adic fields.\n4. The key technical challenge is formalizing the relationship between tropical roots and 2-adic roots.\n\n**Domain Bridges**: Tropical geometry (Newton polytopes, tropical varieties) \u2194 p-adic analysis (Newton polygon theorem) \u2194 Game theory (birthday filtration of game polynomials)\n\n**Lineage**: Builds on the tropical homomorphism property (\u03bd\u2082 maps + to max, \u00d7 to +) established in this cycle.\n\n**Ambition**: grand_challenge\n",
     "domains": [
       "Algebra",
@@ -598,7 +598,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "a74a9300",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T00:33:00.989359+00:00",
     "title": "This research cycle formally verified the **Birthday\u2013Denomination Principle** an"
   },
@@ -1292,7 +1292,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "af741782",
     "description": "Formalize the p-adic Langlands correspondence for GL\u2082(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
     "domains": [
       "Bridges",
@@ -1302,7 +1302,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.128786+00:00",
     "title": "p-adic Langlands for GL\u2082(Q_p)"
   },
@@ -1532,7 +1532,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Foundational formal theory of tropical conve"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a26c8a31",
     "description": "Prove tighter generalization bounds for deep neural networks. Formalize PAC-Bayes bounds, compression-based bounds, and connect network architecture to sample complexity. Establish when overparameterized networks provably generalize.",
     "domains": [
       "MachineLearning",
@@ -1542,7 +1542,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:44.806170+00:00",
     "title": "Machine Learning Generalization Bounds"
   },
@@ -1651,7 +1651,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Neural Network Expressiveness: Depth vs Width"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb85b827",
     "description": "Define the category EML_Comp where objects are R^n and morphisms are functions computable by finite EML compositions (exp, log, +, *, constants). Conjecture: EML_Comp is a Cartesian closed category with natural numbers object R (the reals). Test: prove closure under composition (trivial), products (pairing), and exponentials (currying via EML parameter sharing). Impact: puts EML computation on firm categorical foundations.",
     "domains": [
       "EML",
@@ -1661,7 +1661,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.615655+00:00",
     "title": "EML Category: The Category of EML-Computable Maps"
   },
@@ -2071,7 +2071,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rigorous formal foundations for the Collatz conj"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f9324b47",
     "description": "Formalize the Yoneda lemma as a bridge connecting any mathematical structure to its representable functors. Prove that the Yoneda embedding is fully faithful. Show how this bridges algebra (modules = additive functors), topology (sheaves = local functors), and logic (toposes = categorical semantics). Prove that every Grothendieck topos is a bounded lattice with a universal property.",
     "domains": [
       "Bridges",
@@ -2081,7 +2081,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:05.876172+00:00",
     "title": "Bridge: Category Theory as Universal Language for Mathematics"
   },
@@ -2836,7 +2836,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e22ead6",
     "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait \u2014 the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are \u2014 and how far we are from proving things about them.",
     "domains": [
       "Novelty",
@@ -2846,12 +2846,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.502441+00:00",
     "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "088662ec",
     "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... \u2014 just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number \u2014 the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic \u2014 it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
     "domains": [
       "Novelty",
@@ -2861,7 +2861,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.505215+00:00",
     "title": "The Unreasonable Effectiveness of the Number 163"
   },
@@ -3451,7 +3451,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "79577642",
     "description": "Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
     "domains": [
       "Novelty",
@@ -3461,7 +3461,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.870934+00:00",
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
@@ -3931,7 +3931,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Entropy as a Topological Invariant: The Boltzmann Bridge"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07ac9aab",
     "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
     "domains": [
       "Physics",
@@ -3941,7 +3941,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.909349+00:00",
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
   },
@@ -4681,7 +4681,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
   },
   {
-    "consumed_by_exp_id": "6c603a50",
+    "consumed_by_exp_id": "",
     "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n \u2192 T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
     "domains": [
       "Novelty",
@@ -4691,7 +4691,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.6499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:37.009964+00:00",
     "title": "Speculative: Tropical Mathematics of Social Choice"
   },
