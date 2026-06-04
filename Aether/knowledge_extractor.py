@@ -1142,7 +1142,8 @@ Research mode: {concept.research_mode}
 
                     # Store adversarial metadata
                     job.adversarial_result = adversarial_result
-                    print(f"[Adversarial] {agreement}: primary={adv_composite:.3f if adv_composite else '?'} "
+                    primary_str = f"{adv_composite:.3f}" if adv_composite is not None else "?"
+                    print(f"[Adversarial] {agreement}: primary={primary_str} "
                           f"adjudicated={adj_score:.3f} delta={delta:.3f}")
                 except Exception as ae:
                     print(f"[Adversarial] Failed (using primary only): {ae}")
@@ -1215,6 +1216,19 @@ Research mode: {concept.research_mode}
             print(f"[Integrate] REJECTED: score too low ({job.quality_score:.3f})")
             job.status = "rejected"
             return job
+
+        # SALVAGE MODE: For mid-quality cycles (0.15-0.7) with multiple theorems,
+        # don't integrate everything — ask the LLM to identify the best individual
+        # theorems and only integrate those. A weak package may still contain gems.
+        if 0.15 <= job.quality_score < 0.7 and job.theorem_count >= 5:
+            print(f"[Salvage] Q={job.quality_score:.3f} in salvage range — extracting best theorems")
+            salvaged_lean = self._salvage_best_theorems(job)
+            if salvaged_lean:
+                job.result_lean = salvaged_lean
+                job.theorem_count = salvaged_lean.count("theorem ") + salvaged_lean.count("lemma ")
+                print(f"[Salvage] Extracted {job.theorem_count} best theorems from low-quality package")
+            else:
+                print(f"[Salvage] No salvageable theorems found — proceeding with full package")
 
         has_any_content = any([
             job.result_lean, job.result_demo, job.result_paper,
@@ -1612,6 +1626,103 @@ Research mode: {concept.research_mode}
     @staticmethod
     def _lean_contains_sorry(content: str) -> bool:
         return bool(re.search(r'(?<![A-Za-z0-9_])sorry(?![A-Za-z0-9_])', content))
+
+    def _salvage_best_theorems(self, job) -> Optional[str]:
+        """For mid-quality cycles, identify and extract the best individual theorems.
+
+        A weak package may still contain 2-3 genuinely good theorems. We use the LLM
+        to identify which theorems in the package are mathematically substantive
+        (non-trivial, well-stated, properly proved) and extract only those.
+
+        Returns the filtered Lean source, or None if salvage fails.
+        """
+        if not job.result_lean or not self.pi_agent:
+            return None
+
+        # Extract individual theorem blocks
+        import re
+        # Match theorem/lemma blocks: from "theorem" or "lemma" to the next "end" or blank line
+        # Use a greedy capture: theorem NAME ... := by ... (multi-line, ends with end or "by ... sorry")
+        # Simple approach: find each theorem/lemma declaration and its proof
+        blocks = []
+        lines = job.result_lean.split('\n')
+        current_block = []
+        in_proof = False
+        brace_depth = 0
+
+        for line in lines:
+            if re.match(r'^\s*(?:theorem|lemma|nonrec theorem|protected theorem|private theorem|example)\s+\w+', line):
+                if current_block:
+                    blocks.append('\n'.join(current_block))
+                current_block = [line]
+                in_proof = True
+                brace_depth = line.count('{') - line.count('}')
+            elif in_proof:
+                current_block.append(line)
+                brace_depth += line.count('{') - line.count('}')
+                # Block ends at "end" keyword at depth 0, or at the next theorem
+                if brace_depth <= 0 and (line.strip() == 'end' or line.strip() == ''):
+                    if 'end' in line:
+                        in_proof = False
+                        blocks.append('\n'.join(current_block))
+                        current_block = []
+                    elif not current_block[-2:]:  # blank line
+                        pass
+
+        if current_block:
+            blocks.append('\n'.join(current_block))
+
+        if len(blocks) < 2:
+            return None  # Nothing to salvage
+
+        # Ask LLM to pick the best blocks
+        try:
+            block_summaries = []
+            for i, b in enumerate(blocks[:30]):  # cap at 30
+                first_line = b.split('\n')[0][:120]
+                block_summaries.append(f"{i+1}. {first_line}")
+
+            system = (
+                "You are a mathematical quality assessor. Select the BEST theorems from "
+                "a research package that has received an overall low quality score. "
+                "The package may still contain 2-5 genuinely valuable theorems. "
+                "Choose theorems that are: non-trivial, well-defined, properly proved, "
+                "and represent real mathematical insight. "
+                "Avoid: trivial, definition-only, wrapper, or repeated theorems."
+            )
+            user = (
+                f"Concept: {job.concept.title}\n"
+                f"Package quality: {job.quality_score:.3f} (overall low)\n"
+                f"Total theorem blocks: {len(blocks)}\n\n"
+                f"Theorem blocks:\n" + "\n".join(block_summaries) + "\n\n"
+                "Return JSON: {\"keep\": [list of 1-based indices of best theorems]}"
+            )
+
+            raw = self.pi_agent._call_ollama(system, user, timeout=30)
+            import json as _json
+            json_match = re.search(r'\{[^}]+\}', raw, re.DOTALL)
+            if not json_match:
+                return None
+            data = _json.loads(json_match.group())
+            keep_indices = data.get("keep", [])
+
+            if not keep_indices or not isinstance(keep_indices, list):
+                return None
+
+            # Extract the selected blocks
+            selected = []
+            for idx in keep_indices:
+                if isinstance(idx, int) and 1 <= idx <= len(blocks):
+                    selected.append(blocks[idx - 1])
+
+            if not selected:
+                return None
+
+            return '\n\n'.join(selected) + '\n'
+
+        except Exception as e:
+            print(f"[Salvage] LLM salvage failed: {e}")
+            return None
 
     @staticmethod
     def _domain_from_path(path: str) -> str:

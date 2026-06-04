@@ -1,236 +1,210 @@
+/-
+# Fiber Graph Theorems
+
+Core theorems about fiber graphs in Hamming spaces, including the
+Bridge Duality Theorem, fiber partition properties, and connectivity criteria.
+-/
 import Mathlib
-import Novelty.CausalLoops.Defs
+import Novelty.FiberGraph.Defs
 
-/-!
-# Theorems on Causal Loops and Controlled Associativity Failure
+open Finset BigOperators Function
 
-## Main Results
+namespace FiberGraph
 
-1. Every monoid is an almost-monoid with trivial associator.
-2. Strict almost-monoids satisfy pentagon coherence.
-3. The fundamental coherence theorem: pentagon ⟹ all reassociation paths agree.
-4. Associator defect vanishes for strict almost-monoids.
-5. The reassociation graph is connected (trees with same leaf count).
-6. Products of almost-monoids preserve coherence.
-7. Associator bijectivity consequences.
-8. Coherent loops are self-correcting in the strict case.
--/
+variable {n q : ℕ} {G : Type*} [AddCommGroup G] [DecidableEq G] [DecidableEq (Fin q)]
 
-open Function
-
-/-! ## Theorem 1: Every Monoid is an Almost-Monoid -/
+/-! ## Score Decomposition -/
 
 /-
-Every monoid gives rise to an almost-monoid with the identity as associator.
-This shows that almost-monoids genuinely generalize monoids.
+The score of a modified configuration decomposes as the original score
+    plus the score delta at the modified position.
 -/
-theorem strict_monoid_is_almost_monoid (M : Type*) [Monoid M] :
-    ∃ A : AlmostMonoid M, A.IsStrict := by
-  fconstructor;
-  use ( · * · );
-  exact 1;
-  exact fun a b c x => x;
-  exacts [ fun _ _ _ => Function.bijective_id, fun _ => one_mul _, fun _ => mul_one _, fun _ _ _ => mul_assoc _ _ _, fun _ _ _ => rfl ]
+theorem score_modify (w : WeightSystem n q G) (x : Config n q) (i : Fin n) (a : Fin q) :
+    additiveScore w (modify x i a) = additiveScore w x + scoreDelta w i (x i) a := by
+  unfold additiveScore scoreDelta modify;
+  rw [ Finset.sum_eq_add_sum_diff_singleton ( Finset.mem_univ i ) ];
+  rw [ Finset.sum_congr rfl fun j hj => by rw [ Function.update_of_ne ( by aesop ) ] ] ; simp +decide [ add_comm, add_left_comm, add_assoc ];
+  abel1
 
-/-! ## Theorem 2: Strict Almost-Monoids Satisfy Pentagon Coherence -/
+/-! ## Bridge Duality -/
 
 /-
-If the associator is the identity, the pentagon coherence condition holds
-trivially. This is a sanity check: strict monoids are coherent.
--/
-theorem strict_implies_pentagon {M : Type*} (A : AlmostMonoid M)
-    (hs : A.IsStrict) : PentagonCoherent A := by
-  intro a b c d x;
-  rw [ hs, hs, hs, hs ]
+**Bridge Duality Theorem**: For two configurations with equal additive score
+    that differ at exactly two positions i and j, the existence of a score-preserving
+    bridge through position i is equivalent to a bridge through position j.
 
-/-! ## Theorem 3: Associator Defect Properties -/
+    This is the central result: fiber disconnection in additive scoring is not
+    a local phenomenon at one position, but a global constraint linking all
+    differing positions symmetrically.
+-/
+theorem bridge_duality (w : WeightSystem n q G) (x y : Config n q)
+    (i j : Fin n) (hij : i ≠ j)
+    (hdiff : diffPositions x y = {i, j})
+    (hscore : additiveScore w x = additiveScore w y) :
+    bridgeThrough w x y i ↔ bridgeThrough w x y j := by
+  constructor <;> rintro ⟨ z, hz₁, hz₂, hz₃ ⟩;
+  · -- By score_modify, additiveScore w z = additiveScore w x + scoreDelta w i (x i) (y i). So bridgeThrough w x y i ↔ scoreDelta w i (x i) (y i) = 0 ↔ w i (y i) = w i (x i).
+    have h_score_delta_i : w i (y i) = w i (x i) := by
+      have h_score_delta_i : additiveScore w z = additiveScore w x + (w i (z i) - w i (x i)) := by
+        convert score_modify w x i ( z i ) using 1;
+        exact congr_arg _ ( funext fun k => if hk : k = i then hk.symm ▸ by simp +decide [ modify ] else hz₁ k hk ▸ by simp +decide [ modify, hk ] );
+      grind +locals;
+    refine' ⟨ Function.update x j ( y j ), _, _, _ ⟩ <;> simp_all +decide [ Finset.ext_iff ];
+    convert score_modify w x j ( y j ) using 1;
+    simp +decide [ scoreDelta, hscore ];
+    have h_score_delta_j : ∑ k ∈ Finset.univ \ {i, j}, w k (x k) = ∑ k ∈ Finset.univ \ {i, j}, w k (y k) := by
+      exact Finset.sum_congr rfl fun k hk => by specialize hdiff k; unfold diffPositions at hdiff; aesop;
+    simp_all +decide [ Finset.sum_pair hij, additiveScore ];
+  · -- By definition of `scoreDelta`, we know that `scoreDelta w j (x j) (y j) = 0`.
+    have h_scoreDelta_j : scoreDelta w j (x j) (y j) = 0 := by
+      have h_scoreDelta_j : additiveScore w z = additiveScore w x + scoreDelta w j (x j) (z j) := by
+        convert score_modify w x j ( z j ) using 1;
+        congr ; ext k ; by_cases hk : k = j <;> simp +decide [ * ];
+        · simp +decide [ modify ];
+        · unfold modify; aesop;
+      aesop;
+    -- By definition of `scoreDelta`, we know that `scoreDelta w i (x i) (y i) = 0`.
+    have h_scoreDelta_i : scoreDelta w i (x i) (y i) = 0 := by
+      unfold scoreDelta at *; simp_all +decide [ Finset.ext_iff, diffPositions ] ;
+      have h_scoreDelta_i : ∑ k ∈ Finset.univ \ {i, j}, w k (x k) = ∑ k ∈ Finset.univ \ {i, j}, w k (y k) := by
+        exact Finset.sum_congr rfl fun k hk => by specialize hdiff k; aesop;
+      simp_all +decide [ additiveScore, Finset.sum_sub_distrib, sub_eq_zero ];
+    refine' ⟨ Function.update x i ( y i ), _, _, _ ⟩ <;> simp_all +decide [ Function.update_apply ];
+    convert score_modify w x i ( y i ) using 1;
+    rw [ hscore, h_scoreDelta_i, add_zero ]
+
+/-! ## Fiber Partition -/
 
 /-
-In a strict almost-monoid, the defect is always zero.
+Fibers are pairwise disjoint: no configuration belongs to two distinct fibers.
 -/
-theorem defect_zero_of_strict {M : Type*} [DecidableEq M]
-    (A : AlmostMonoid M) (hs : A.IsStrict) :
-    ∀ a b c, A.defect a b c = 0 := by
-  intro a b c;
-  unfold AlmostMonoid.defect;
-  simp +decide [ hs a b c ]
-
-/-! ## Theorem 4: Strict is genuinely associative -/
+omit [DecidableEq G] [DecidableEq (Fin q)] in
+theorem fiber_disjoint (w : WeightSystem n q G) (v₁ v₂ : G) (hne : v₁ ≠ v₂) :
+    Disjoint (fiber w v₁) (fiber w v₂) := by
+  exact Set.disjoint_left.mpr fun x hx₁ hx₂ => hne <| hx₁.symm.trans hx₂
 
 /-
-A key property of strict almost-monoids: the controlled associativity
-axiom reduces to genuine associativity.
+Score modification is self-inverse: modifying position i twice returns to original.
 -/
-theorem strict_is_assoc {M : Type*} (A : AlmostMonoid M)
-    (hs : A.IsStrict) (a b c : M) :
-    A.mul (A.mul a b) c = A.mul a (A.mul b c) := by
-  rw [ A.controlled_assoc, hs a b c ] ; rfl
+omit [DecidableEq G] [DecidableEq (Fin q)] in
+theorem modify_modify_cancel (x : Config n q) (i : Fin n) (a : Fin q) :
+    modify (modify x i a) i (x i) = x := by
+  unfold modify; aesop;
 
-/-! ## Theorem 5: The Fundamental Coherence Theorem -/
+/-! ## Score Delta Algebra -/
 
 /-
-**The Fundamental Coherence Theorem**: When pentagon coherence holds,
-the composition of associators for adjacent triples commutes. This means
-that the order in which we apply reassociation steps doesn't matter —
-the "causal loop" of reassociations always closes consistently.
+Score deltas are antisymmetric: δ(a→b) = -δ(b→a).
 -/
-theorem fundamental_coherence {M : Type*} (A : AlmostMonoid M)
-    (hP : PentagonCoherent A) (a b c d x : M) :
-    A.associator a b (A.mul c d) (A.associator (A.mul a b) c d x) =
-    A.associator a (A.mul b c) d (A.associator a b c x) := by
-  exact hP a b c d x
-
-/-! ## Theorem 6: Tree Adjacency Preserves Leaf Count -/
+omit [DecidableEq G] [DecidableEq (Fin q)] in
+theorem scoreDelta_antisymm (w : WeightSystem n q G) (i : Fin n) (a b : Fin q) :
+    scoreDelta w i a b = -scoreDelta w i b a := by
+  unfold scoreDelta; abel1;
 
 /-
-A single associator step preserves the number of leaves. This is
-fundamental: reassociation changes parenthesization but not the elements
-being combined.
+Score deltas are additive: δ(a→c) = δ(a→b) + δ(b→c).
 -/
-theorem treeAdj_preserves_leafCount {t₁ t₂ : BinTree}
-    (h : TreeAdj t₁ t₂) : t₁.leafCount = t₂.leafCount := by
-  induction h;
-  · exact Nat.add_assoc _ _ _;
-  · simp_all +arith +decide [ BinTree.leafCount ];
-  · unfold BinTree.leafCount; aesop;
+omit [DecidableEq G] [DecidableEq (Fin q)] in
+theorem scoreDelta_add (w : WeightSystem n q G) (i : Fin n) (a b c : Fin q) :
+    scoreDelta w i a c = scoreDelta w i a b + scoreDelta w i b c := by
+  unfold scoreDelta; abel
 
 /-
-Connected trees have the same leaf count.
+The identity delta is zero.
 -/
-theorem treeConnected_preserves_leafCount {t₁ t₂ : BinTree}
-    (h : TreeConnected t₁ t₂) : t₁.leafCount = t₂.leafCount := by
-  induction h;
-  · rfl;
-  · exact Eq.trans ( treeAdj_preserves_leafCount ‹_› ) ‹_›;
-  · exact Eq.trans ( Eq.symm ( treeAdj_preserves_leafCount ‹_› ) ) ‹_›
+omit [DecidableEq G] [DecidableEq (Fin q)] in
+theorem scoreDelta_self (w : WeightSystem n q G) (i : Fin n) (a : Fin q) :
+    scoreDelta w i a a = 0 := by
+  exact sub_self _
 
-/-! ## Theorem 7: Left and Right Associations are Connected -/
+/-! ## Bridge Characterization -/
 
 /-
-For 3 leaves, the left-associated tree `(a·b)·c` is adjacent to
-the right-associated tree `a·(b·c)`.
+Fiber adjacency is symmetric.
 -/
-theorem three_leaf_adj :
-    TreeAdj (leftAssoc 3) (rightAssoc 3) := by
-  constructor
+omit [DecidableEq G] [DecidableEq (Fin q)] in
+theorem fiberAdj_symm (w : WeightSystem n q G) (x y : Config n q) :
+    fiberAdj w x y → fiberAdj w y x := by
+  unfold fiberAdj;
+  simp +contextual [ hammingAdj, eq_comm ]
 
 /-
-For 3 leaves, left and right associations are connected.
+The modify operation preserves scores when the delta is zero.
 -/
-theorem three_leaf_connected :
-    TreeConnected (leftAssoc 3) (rightAssoc 3) := by
-  exact .step ( three_leaf_adj ) ( .refl _ )
+theorem modify_preserves_score (w : WeightSystem n q G) (x : Config n q)
+    (i : Fin n) (a : Fin q) (h : w i a = w i (x i)) :
+    additiveScore w (modify x i a) = additiveScore w x := by
+  -- Apply the score modification theorem and then use h to replace the delta with zero.
+  rw [score_modify, scoreDelta]
+  simp [h]
 
-/-! ## Theorem 8: Product of Almost-Monoids -/
+/-! ## Fiber Expansion -/
+
+/-- Weight system is position-separating: at each position, distinct symbols
+    have distinct weights. -/
+def PositionSeparating (w : WeightSystem n q G) : Prop :=
+  ∀ i : Fin n, Function.Injective (w i)
 
 /-
-The product of two almost-monoids is an almost-monoid. The associator
-of the product operates componentwise.
+For a position-separating weight system, if two configurations agree at all
+    positions except i, they have the same score iff they are identical.
 -/
-theorem almost_monoid_product {M N : Type*}
-    (A : AlmostMonoid M) (B : AlmostMonoid N) :
-    ∃ C : AlmostMonoid (M × N),
-      C.mul = fun p q => (A.mul p.1 q.1, B.mul p.2 q.2) := by
-  -- Define the product almost-monoid C with the componentwise operations.
-  use ⟨fun p q => (A.mul p.1 q.1, B.mul p.2 q.2), (A.one, B.one), fun a b c x => (A.associator a.1 b.1 c.1 x.1, B.associator a.2 b.2 c.2 x.2), by
-    exact fun a b c => ( A.associator_bij a.1 b.1 c.1 ).prodMap ( B.associator_bij a.2 b.2 c.2 ), by
-    simp +decide [ A.one_mul, B.one_mul ], by
-    simp +decide [ A.mul_one, B.mul_one ], by
-    simp +decide [ A.controlled_assoc, B.controlled_assoc ]⟩
+omit [DecidableEq G] [DecidableEq (Fin q)] in
+theorem eq_of_agree_except_one_same_score
+    (w : WeightSystem n q G) (hsep : PositionSeparating w)
+    (x y : Config n q) (i : Fin n)
+    (hagree : ∀ k : Fin n, k ≠ i → x k = y k)
+    (hscore : additiveScore w x = additiveScore w y) :
+    x = y := by
+  -- Since x and y agree at all positions except possibly i, their scores differ by w i (x i) vs w i (y i).
+  have hscore_diff : ∑ k ∈ Finset.univ.erase i, w k (x k) = ∑ k ∈ Finset.univ.erase i, w k (y k) := by
+    exact Finset.sum_congr rfl fun k hk => by aesop;
+  unfold additiveScore at hscore; simp_all +decide ;
+  exact funext fun k => if hk : k = i then hk.symm ▸ hsep i hscore_diff else hagree k hk
 
-/-! ## Theorem 9: Associator Injectivity -/
+/-! ## Hamming Distance -/
+
+/-- Hamming distance between two configurations. -/
+noncomputable def hammingDist (x y : Config n q) : ℕ :=
+  (diffPositions x y).card
 
 /-
-The associator, being a bijection, is in particular injective.
+Hamming distance is symmetric.
 -/
-theorem associator_injective {M : Type*} (A : AlmostMonoid M)
-    (a b c : M) : Injective (A.associator a b c) := by
-  exact A.associator_bij a b c |>.1
+theorem hammingDist_symm (x y : Config n q) :
+    hammingDist x y = hammingDist y x := by
+  unfold hammingDist;
+  unfold diffPositions; congr; ext; aesop;
 
 /-
-The associator is surjective.
+Hamming distance is zero iff configurations are equal.
 -/
-theorem associator_surjective {M : Type*} (A : AlmostMonoid M)
-    (a b c : M) : Surjective (A.associator a b c) := by
-  exact A.associator_bij a b c |>.2
+theorem hammingDist_eq_zero_iff (x y : Config n q) :
+    hammingDist x y = 0 ↔ x = y := by
+  simp +decide [ hammingDist, diffPositions ];
+  exact ⟨ fun h => funext h, fun h => h ▸ fun _ => rfl ⟩
 
-/-! ## Theorem 10: Coherent Loops Close -/
+/-! ## Connectivity via Weight Overlap -/
+
+/-- Weight overlap at position i: symbol a has a "match" if there exists
+    another symbol b with the same weight. -/
+def hasWeightMatch (w : WeightSystem n q G) (i : Fin n) (a : Fin q) : Prop :=
+  ∃ b : Fin q, b ≠ a ∧ w i b = w i a
 
 /-
-**Coherent Loop Closure**: In a strict almost-monoid, applying the
-associator twice returns to the start. This captures the "causal loop"
-phenomenon: the correction introduced by non-associativity is
-self-correcting in the strict case.
+**Score Swap Lemma**: If positions i and j have matching weights for
+    the relevant symbols, then modifying at both positions with weight-preserving
+    symbols preserves the score.
 -/
-theorem coherent_loop_closure {M : Type*} (A : AlmostMonoid M)
-    (hs : A.IsStrict) (a b c x : M) :
-    A.associator a b c (A.associator a b c x) = x := by
-  simp +decide [ hs a b c ]
-
-/-! ## Theorem 11: Reassociation Preserves Tree Structure -/
-
-/-
-Left association always produces a tree with the expected leaf count.
--/
-theorem leftAssoc_leafCount (n : ℕ) (hn : n ≥ 1) :
-    (leftAssoc n).leafCount = n := by
-  rcases n with ( _ | _ | _ | _ | n ) <;> simp_all +arith +decide [ BinTree.leafCount ];
-  induction n <;> simp_all +arith +decide [ BinTree.leafCount, leftAssoc ]
-
-/-
-Right association always produces a tree with the expected leaf count.
--/
-theorem rightAssoc_leafCount (n : ℕ) (hn : n ≥ 1) :
-    (rightAssoc n).leafCount = n := by
-  -- We can prove this by induction on $n$.
-  induction' n with n ih;
-  · contradiction;
-  · rcases n with ( _ | n ) <;> simp_all +arith +decide;
-    exact show 1 + ( rightAssoc ( n + 1 ) |> BinTree.leafCount ) = n + 2 from by linarith;
-
-/-! ## Theorem 12: Pentagon Coherence is Preserved by Products -/
-
-/-
-If two almost-monoids satisfy pentagon coherence, so does their product.
-Coherence is compositional: it's preserved by the natural algebraic
-constructions.
--/
-theorem pentagon_preserved_by_product {M N : Type*}
-    (A : AlmostMonoid M) (B : AlmostMonoid N)
-    (hA : PentagonCoherent A) (hB : PentagonCoherent B)
-    (C : AlmostMonoid (M × N))
-    (hC_mul : C.mul = fun p q => (A.mul p.1 q.1, B.mul p.2 q.2))
-    (hC_assoc : C.associator = fun p q r x =>
-      (A.associator p.1 q.1 r.1 x.1, B.associator p.2 q.2 r.2 x.2)) :
-    PentagonCoherent C := by
-  unfold PentagonCoherent at *;
+omit [DecidableEq G] [DecidableEq (Fin q)] in
+theorem score_swap_via_matches
+    (w : WeightSystem n q G) (x : Config n q)
+    (i j : Fin n) (_hij : i ≠ j)
+    (ai : Fin q) (aj : Fin q)
+    (hmi : w i ai = w i (x i))
+    (hmj : w j aj = w j (x j)) :
+    additiveScore w (modify (modify x i ai) j aj) = additiveScore w x := by
+  unfold additiveScore modify at *;
   grind
 
-/-! ## Theorem 13: Strict Almost-Monoids Have Trivial Defect Everywhere -/
-
-/-
-An almost-monoid with everywhere-zero defect has identity associator
-on all right-associated products.
--/
-theorem zero_defect_identity_on_products {M : Type*} [DecidableEq M]
-    (A : AlmostMonoid M) (hd : ∀ a b c, A.defect a b c = 0) (a b c : M) :
-    A.associator a b c (A.mul a (A.mul b c)) = A.mul a (A.mul b c) := by
-  convert hd a b c using 1;
-  unfold AlmostMonoid.defect; aesop;
-
-/-! ## Conjecture: Associator Rigidity -/
-
-/-- **Conjecture (Associator Rigidity)**: For a finite almost-monoid on a set
-of size n ≥ 3, if the associator is not the identity on any triple, then
-the pentagon identity forces the associator to be non-trivial on at least
-n triples.
-
-**Testable prediction**: For `Fin 3`, construct all almost-monoids with
-exactly one non-trivial associator triple and check whether any satisfy
-the pentagon identity. The conjecture predicts none will. -/
-def associatorRigidityConjecture : Prop :=
-  ∀ (n : ℕ) (_hn : n ≥ 3) (A : AlmostMonoid (Fin n)),
-    PentagonCoherent A →
-    (∃ a b c, A.associator a b c ≠ id) →
-    (Finset.univ.filter (fun t : Fin n × Fin n × Fin n =>
       A.associator t.1 t.2.1 t.2.2 ≠ id)).card ≥ n

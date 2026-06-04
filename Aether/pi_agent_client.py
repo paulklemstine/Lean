@@ -1734,6 +1734,8 @@ class PiAgentClient:
         mode_line = mode_brief.get(concept.research_mode, mode_brief["prove"])
 
         # Depth Requirements: reject trivial mathematics
+        # PIVOT: Focus on defining novel mathematical structures, not solving open problems.
+        # New math > solving existing puzzles. Each theorem requires PEGB scaffolding.
         depth_requirements = textwrap.dedent("""\
             ## Depth Requirements (MANDATORY — WORLD-CLASS STANDARD)
 
@@ -1744,26 +1746,38 @@ class PiAgentClient:
                `norm_num`, or `rfl` unless the statement itself is genuinely important.
                If the only proof tactic is enumeration, the theorem is not worth formalizing.
 
-            2. **At least 5 theorems that demonstrate genuine mathematical insight**:
-               Your file must contain at least 5 theorems where removing any key step
-               would cause the proof to fail. At least 2 of these must be results that
-               a graduate student would find surprising or non-obvious. Depth is measured
-               by insight, not tactic count. A result is "deep" if someone reading it
-               would need to think before seeing why it's true.
+            2. **DEFINE a novel mathematical structure** (CORE REQUIREMENT): Your cycle
+               must introduce at least one NEW mathematical object — a structure, a
+               construction, a notion, a category, an operator — that does not already
+               exist in the Catalog or in standard references. This is the seed of new
+               mathematics. The definition must be substantial (not a one-liner renaming
+               of a known concept) and must come with at least 3 theorems that PROVE
+               non-obvious properties of the new structure.
 
-            3. **Novel definitions with mathematical substance**: Define at least one new
-               mathematical structure or concept that does not already exist in the Catalog.
-               The definition must come with at least one non-trivial theorem ABOUT the
-               structure (not just "this exists"). Check the catalog references to confirm novelty.
+               Think like Grothendieck defining schemes, or Rota defining matroids, or
+               Voiculescu defining free probability. The structure is the contribution.
+               The theorems are the evidence that the structure is useful.
+
+            3. **PEGB for every major theorem** (Proof + Example + Generalization + Boundary):
+               For each of your top 3-5 theorems, you MUST produce all four:
+               - **P**roof: A complete, non-trivial Lean 4 proof
+               - **E**xample: A concrete worked example (specific instance, computed values,
+                 or a small case that illustrates the theorem)
+               - **G**eneralization: A one-level-up generalization (the same theorem in a
+                 broader or more abstract setting — what is the natural next step?)
+               - **B**oundary: A counterexample or limit-case analysis (where does the
+                 theorem BREAK DOWN? What are the necessary conditions?)
+
+               A theorem without PEGB is a one-off. A theorem WITH PEGB is a research
+               program. We are building research programs, not collecting isolated facts.
 
             4. **Conjecture with testable prediction**: State at least one falsifiable
                conjecture with a clear computational test that could disprove it.
 
-            5. **PROVE SOMETHING THAT MATTERS**: At least one theorem should connect two
-               previously disconnected areas, generalize a classical result, or settle a
-               concrete open question. "We formalized X" is not enough — we need "we
-               discovered/proved/generalized X". The result should be the kind that would
-               appear in a research paper, not a textbook exercise.
+            5. **Cross-connection**: At least one theorem should genuinely connect to
+               or build upon an existing catalog result. Generic new math that doesn't
+               talk to anything is not a breakthrough — it's a hobby. The new structure
+               should illuminate something that already exists.
         """)
 
         # Build the streamlined prompt
