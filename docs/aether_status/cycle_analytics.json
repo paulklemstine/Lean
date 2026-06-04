@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T11:00:15.145640+00:00",
+  "last_updated": "2026-06-04T11:33:08.740012+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -2346,6 +2346,74 @@
       "theorem_count": 20,
       "timestamp": "2026-06-04T11:00:15.090128+00:00",
       "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5848,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 22,
+      "domain": "Shared",
+      "duration_seconds": 7821.131383419037,
+      "end_time": 1780572734.697413,
+      "files_integrated": 5,
+      "job_id": "23ba7201",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 0.62,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7968,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7499,
+        "novelty": 0.95,
+        "proof_depth": 0.6641,
+        "usefulness": 0.8321
+      },
+      "quality_score": 0.24984,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780564913.5660295,
+      "strategy_count": 187,
+      "theorem_count": 4,
+      "timestamp": "2026-06-04T11:33:08.617577+00:00",
+      "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5594,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 23,
+      "domain": "Applications",
+      "duration_seconds": 5900.605035543442,
+      "end_time": 1780572734.9586394,
+      "files_integrated": 5,
+      "job_id": "66a5790e",
+      "outcome_quality": 0.378,
+      "quality_breakdown": {
+        "actionability": 0.56,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7894,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7466,
+        "novelty": 0.95,
+        "proof_depth": 0.6594,
+        "usefulness": 0.8297
+      },
+      "quality_score": 0.378,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780566834.3536038,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T11:33:08.684507+00:00",
+      "title": "EML Training Dynamics as Tropical Gradient Flow"
     }
   ]
 }

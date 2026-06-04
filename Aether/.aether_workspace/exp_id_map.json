@@ -1692,5 +1692,7 @@
   "f41a2045": "eml_algebraic_independence_transcendence_results.json",
   "518f6e7e": "cellular_automata_as_algebraic_geometry_wolframs_r.json",
   "fe1a7abe": "matroid_minors_and_the_graph_theorem_robertson_sey.json",
-  "b91fb248": "non_desarguesian_worlds_geometry_without_desargues.json"
+  "b91fb248": "non_desarguesian_worlds_geometry_without_desargues.json",
+  "23ba7201": "matroid_minors_and_the_graph_theorem_robertson_sey.json",
+  "66a5790e": "eml_training_dynamics_as_tropical_gradient_flow.json"
 }

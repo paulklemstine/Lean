@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "66a5790e",
     "filename": "eml_training_dynamics_as_tropical_gradient_flow.json",
     "pkg_num": 351,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.378,
     "title": "Tropical Gradient Flow: Training Dynamics in the Maslov Dequantization Limit"
   },
   {
@@ -11309,8 +11309,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "eml_training_dynamics_as_tropical_gradient_flow",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.378,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Tropical Gradient Flow: Training Dynamics in the Maslov Dequantization Limit"
     }
