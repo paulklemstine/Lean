@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a1ac928d",
     "filename": "neural_tangent_kernel_convergence.json",
     "pkg_num": 334,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7167103846153846,
     "title": "Neural Tangent Kernel: Convergence in the Lazy Regime"
   },
   {
@@ -10802,8 +10802,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "neural_tangent_kernel_convergence",
       "primary_domain": "MachineLearning",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7167103846153846,
+      "quality": "substantial",
       "shape": "sphere_rings",
       "title": "Neural Tangent Kernel: Convergence in the Lazy Regime"
     }
