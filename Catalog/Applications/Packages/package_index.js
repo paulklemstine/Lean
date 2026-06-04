@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "991ed574",
     "filename": "speculative_number_theory_as_music_theory.json",
     "pkg_num": 345,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.21336,
     "title": "Spectral Arithmetic: Harmonic Weight and Prime Consonance"
   },
   {
@@ -11135,8 +11135,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "speculative_number_theory_as_music_theory",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.21336,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Spectral Arithmetic: Harmonic Weight and Prime Consonance"
     }
