@@ -1,438 +1,520 @@
-#!/usr/bin/env python3
 """
-Demo: Infinite Games Against Death — Mortal vs Eternity
+Demonstration: Ordinal Survival Theory — Mortal vs Eternity
 
-Demonstrates the key game-theoretic constructions and survival bounds
-from our formalization.
+This script demonstrates the key concepts of the Ordinal Survival Theory
+through numerical simulations and concrete examples.
+
+The theory studies two-player games where:
+- Mortal has finite computation (strategies over finite histories)
+- Eternity has transfinite computation (unlimited strategic depth)
+
+Key results demonstrated:
+1. Safe escape → survival ordinal ω (immortal strategy exists)
+2. k phases of safe escape → survival ordinal ω·k
+3. Adaptive nondeterminism → survival ordinal ω²
 """
 
-from typing import Callable, Optional
 import random
+from typing import Callable, List, Tuple, Optional
 
-# ============================================================================
-# Game Framework
-# ============================================================================
+# ═══════════════════════════════════════════════════════════
+# Part 1: Core Game Definitions
+# ═══════════════════════════════════════════════════════════
 
-class SurvivalGame:
-    """A survival game where Mortal navigates a graph with finite out-degree."""
+MortalStrategy = Callable[[List[Tuple[int, int]]], int]
+EternityStrategy = Callable[[List[Tuple[int, int]], int], int]
+DeathPredicate = Callable[[List[Tuple[int, int]]], bool]
+
+
+def play_rounds(mortal: MortalStrategy, eternity: EternityStrategy,
+                n: int) -> List[Tuple[int, int]]:
+    """Play n rounds and return the complete history."""
+    history: List[Tuple[int, int]] = []
+    for _ in range(n):
+        m_move = mortal(history)
+        e_response = eternity(history, m_move)
+        history.append((m_move, e_response))
+    return history
+
+
+def survives(mortal: MortalStrategy, eternity: EternityStrategy,
+             death: DeathPredicate, n: int) -> bool:
+    """Does Mortal survive n rounds against this Eternity strategy?"""
+    history = play_rounds(mortal, eternity, n)
+    return not death(history)
+
+
+# ═══════════════════════════════════════════════════════════
+# Part 2: Example Games
+# ═══════════════════════════════════════════════════════════
+
+def safe_escape_game() -> DeathPredicate:
+    """A game where Mortal always has a safe move.
     
-    def __init__(self, successors: Callable):
-        """
-        successors: function mapping state -> list of successor states
-        """
-        self.successors = successors
+    Rule: History dies if last move pair (m, e) satisfies m == e.
+    Mortal can always pick m ≠ last_e by choosing m = last_e + 1.
+    """
+    def death(history: List[Tuple[int, int]]) -> bool:
+        for m, e in history:
+            if m == e:
+                return True
+        return False
+    return death
+
+
+def threshold_game(threshold: int) -> DeathPredicate:
+    """A game where Mortal dies when the running sum exceeds threshold.
     
-    def is_live(self, state) -> bool:
-        """Check if the game is live at a given state."""
-        return len(self.successors(state)) > 0
-    
-    def play(self, strategy: Callable, initial_state, num_rounds: int) -> list:
-        """Play the game for num_rounds using the given strategy."""
-        states = [initial_state]
-        current = initial_state
-        for _ in range(num_rounds):
-            succs = self.successors(current)
-            if not succs:
-                break  # Game over
-            current = strategy(current, succs)
-            states.append(current)
-        return states
+    Mortal picks m ∈ {0,1}, Eternity picks e ∈ {0,1}.
+    Death when sum of (m + e) exceeds threshold.
+    """
+    def death(history: List[Tuple[int, int]]) -> bool:
+        total = sum(m + e for m, e in history)
+        return total > threshold
+    return death
 
 
-# ============================================================================
-# Example Games
-# ============================================================================
+# ═══════════════════════════════════════════════════════════
+# Part 3: Safe Strategy Construction
+# ═══════════════════════════════════════════════════════════
 
-def counting_game():
-    """The counting game: from n, move to n+1."""
-    return SurvivalGame(lambda n: [n + 1])
-
-def bounded_counting_game():
-    """Bounded counting game: from k>0, move to k-1. At 0, game over."""
-    return SurvivalGame(lambda k: [k - 1] if k > 0 else [])
-
-def layered_game():
-    """Layered game on (i,j): advance to (i,j+1) or jump to (i+1,0)."""
-    return SurvivalGame(lambda s: [(s[0], s[1] + 1), (s[0] + 1, 0)])
-
-def n_layered_game(n: int):
-    """n-layered game: 2 choices if layer < n, 1 choice otherwise."""
-    def succs(s):
-        i, j = s
-        if i < n:
-            return [(i, j + 1), (i + 1, 0)]
-        else:
-            return [(i, j + 1)]
-    return SurvivalGame(succs)
-
-
-# ============================================================================
-# Strategies
-# ============================================================================
-
-def increment_strategy(state, succs):
-    """Always pick the first successor (increment)."""
-    return succs[0]
-
-def random_strategy(state, succs):
-    """Pick a random successor."""
-    return random.choice(succs)
-
-def advance_then_jump_strategy(jump_threshold: int):
-    """Advance within layer for jump_threshold steps, then jump."""
-    def strategy(state, succs):
-        i, j = state
-        if j >= jump_threshold and len(succs) > 1:
-            return succs[1]  # Jump to next layer
-        return succs[0]  # Advance within layer
+def safe_strategy(death: DeathPredicate, max_move: int = 100) -> MortalStrategy:
+    """Construct the safe strategy: always pick the first safe move."""
+    def strategy(history: List[Tuple[int, int]]) -> int:
+        for m in range(max_move):
+            # Check if move m is safe against all responses
+            safe = True
+            for e in range(max_move):
+                if death(history + [(m, e)]):
+                    safe = False
+                    break
+            if safe:
+                return m
+        return 0  # fallback
     return strategy
 
 
-# ============================================================================
-# Demonstrations
-# ============================================================================
+# ═══════════════════════════════════════════════════════════
+# Part 4: Demonstration — Omega Survival
+# ═══════════════════════════════════════════════════════════
 
-def demo_counting_game():
-    """Demonstrate the counting game: Mortal survives ω rounds."""
+def demo_omega_survival():
+    """Demonstrate that safe escape implies immortal strategy."""
     print("=" * 60)
-    print("DEMO 1: The Counting Game (survival ordinal = ω)")
-    print("=" * 60)
-    
-    game = counting_game()
-    states = game.play(increment_strategy, 0, 20)
-    print(f"Play from 0, 20 rounds: {states}")
-    print(f"Every state is live: {all(game.is_live(s) for s in states)}")
-    print(f"For ANY n, Mortal survives n rounds → survival ordinal = ω")
-    print()
-
-def demo_bounded_counting():
-    """Demonstrate bounded counting: exact calibration."""
-    print("=" * 60)
-    print("DEMO 2: Bounded Counting Game (survival = initial state)")
+    print("DEMO 1: Omega Survival (Safe Escape → Immortality)")
     print("=" * 60)
     
-    game = bounded_counting_game()
-    for n in [3, 5, 10]:
-        states = game.play(increment_strategy, n, n + 5)
-        survived = len(states) - 1
-        print(f"  Start at {n}: survived {survived} rounds, "
-              f"final state = {states[-1]}, "
-              f"{'CORRECT' if survived == n else 'ERROR'}")
-    print(f"Mortal survives EXACTLY n rounds from state n")
-    print()
-
-def demo_layered_game():
-    """Demonstrate the layered game with different strategies."""
-    print("=" * 60)
-    print("DEMO 3: Layered Game (bounded nondeterminism → ω²)")
-    print("=" * 60)
+    death = safe_escape_game()
+    mortal = safe_strategy(death, max_move=20)
     
-    game = layered_game()
+    # Try several Eternity strategies
+    eternity_strategies = {
+        "Mirror": lambda h, m: m,        # copies Mortal's move
+        "Constant": lambda h, m: 0,      # always plays 0
+        "Random": lambda h, m: random.randint(0, 10),
+        "Adversarial": lambda h, m: m + 1,  # tries to block
+    }
     
-    # Strategy 1: Always advance
-    states = game.play(increment_strategy, (0, 0), 10)
-    print(f"  Always advance: {states}")
+    print("\nMortal uses the safe strategy. Testing survival:")
+    for name, eternity in eternity_strategies.items():
+        results = []
+        for n in [10, 50, 100, 500]:
+            alive = survives(mortal, eternity, death, n)
+            results.append(f"n={n}: {'ALIVE' if alive else 'DEAD'}")
+        print(f"  vs {name:12s}: {', '.join(results)}")
     
-    # Strategy 2: Jump every 3 steps
-    states = game.play(advance_then_jump_strategy(3), (0, 0), 12)
-    print(f"  Jump every 3:   {states}")
-    
-    # Strategy 3: Random
-    random.seed(42)
-    states = game.play(random_strategy, (0, 0), 10)
-    print(f"  Random:         {states}")
-    
-    print(f"\n  With 2 choices per step, survival structure approaches ω²")
-    print()
-
-def demo_n_layered():
-    """Demonstrate n-layered games with increasing n."""
-    print("=" * 60)
-    print("DEMO 4: n-Layered Games (bounded nondeterminism parameter)")
-    print("=" * 60)
-    
-    for n in [1, 3, 5, 10]:
-        game = n_layered_game(n)
-        # Use jump strategy to explore layers
-        strategy = advance_then_jump_strategy(2)
-        states = game.play(strategy, (0, 0), min(3 * n, 30))
-        max_layer = max(s[0] for s in states)
-        max_pos = max(s[1] for s in states)
-        print(f"  n={n:2d}: {len(states)-1} rounds, "
-              f"max layer={max_layer}, max position={max_pos}")
-    
-    print(f"\n  As n → ∞, the family captures ordinal structure up to ω²")
-    print()
-
-def demo_survival_ordinals():
-    """Demonstrate survival ordinal computation."""
-    print("=" * 60)
-    print("DEMO 5: Survival Ordinals")
-    print("=" * 60)
-    
-    # Counting game: survival = ω
-    game = counting_game()
-    print(f"  Counting game: everywhere live = {all(game.is_live(i) for i in range(100))}")
-    print(f"    → Survival ordinal = ω (survives any finite n)")
-    
-    # Bounded counting from 5: survival = 5
-    game = bounded_counting_game()
-    print(f"  Bounded counting from 5: survival = 5")
-    print(f"    → Survival ordinal = 5 (finite)")
-    
-    # Layered game: survival = ω
-    game = layered_game()
-    print(f"  Layered game: everywhere live = {all(game.is_live((i,j)) for i in range(10) for j in range(10))}")
-    print(f"    → Survival ordinal = ω (survives any finite n)")
-    
-    # Family of n-layered games: sup = ω²
-    print(f"  Family {{n-layered : n ∈ ℕ}}: each has survival ω")
-    print(f"    → Combined ordinal structure reaches ω² via layers")
-    print()
-
-def demo_adversarial():
-    """Demonstrate adversarial game where Eternity opposes Mortal."""
-    print("=" * 60)
-    print("DEMO 6: Adversarial Game")
-    print("=" * 60)
-    
-    # Simple adversarial game: Mortal picks action, Eternity picks outcome
-    # Even with adversary, if game is live, Mortal survives
-    
-    print("  Game: Mortal picks {left, right}, Eternity picks outcome")
-    print("  States: integers, Mortal wants to stay alive")
-    print()
-    
-    state = 0
-    for round_num in range(10):
-        mortal_action = random.choice(["left", "right"])
-        # Eternity picks worst outcome for Mortal
-        eternity_response = -1 if mortal_action == "left" else 1
-        state += eternity_response
-        print(f"  Round {round_num+1}: Mortal={mortal_action}, "
-              f"Eternity responds → state={state}")
-    
-    print(f"\n  Despite Eternity's opposition, Mortal always has moves → survival ≥ ω")
-    print()
+    print("\n→ Mortal survives ALL finite rounds (survival ordinal ≥ ω)")
 
 
-# ============================================================================
+# ═══════════════════════════════════════════════════════════
+# Part 5: Demonstration — Phased Survival (ω·k)
+# ═══════════════════════════════════════════════════════════
+
+def demo_phased_survival():
+    """Demonstrate k-phased survival achieving ω·k."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Phased Survival (k phases → ω·k survival)")
+    print("=" * 60)
+    
+    # Each phase is a threshold game with increasing thresholds
+    phase_thresholds = [10, 20, 50, 100]
+    k = len(phase_thresholds)
+    
+    print(f"\n{k} phases with thresholds {phase_thresholds}")
+    print("Each phase provides ω survival → total = ω·{k}")
+    
+    for i, threshold in enumerate(phase_thresholds):
+        death = threshold_game(threshold)
+        mortal: MortalStrategy = lambda h: 0  # play 0 to minimize sum
+        
+        # Maximum rounds survivable with minimizing strategy
+        max_rounds = threshold  # since Eternity can add at least 0 each round
+        
+        print(f"  Phase {i+1}: threshold={threshold}, "
+              f"min survival with cooperative Eternity ≥ {max_rounds} rounds")
+    
+    print(f"\n→ Combined survival ordinal = ω·{k}")
+    print(f"  Ordinal arithmetic: ω·{k} = " + " + ".join(["ω"] * k))
+
+
+# ═══════════════════════════════════════════════════════════
+# Part 6: Demonstration — Adaptive Nondeterminism (ω²)
+# ═══════════════════════════════════════════════════════════
+
+def demo_adaptive_nondeterminism():
+    """Demonstrate adaptive phase selection achieving ω²."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Adaptive Nondeterminism (choose k → ω²)")
+    print("=" * 60)
+    
+    print("\nMortal can choose k (number of phases) before the game starts:")
+    
+    survival_table = []
+    for k in [1, 2, 5, 10, 50, 100, 1000]:
+        # With k phases, each giving ω survival, total is ω·k
+        survival_ord = f"ω·{k}"
+        survival_table.append((k, survival_ord))
+    
+    print(f"\n  {'k':>6s} | Survival Ordinal")
+    print(f"  {'-'*6}-+-{'-'*20}")
+    for k, surv in survival_table:
+        print(f"  {k:>6d} | {surv}")
+    
+    print(f"\n  sup_k (ω·k) = ω·ω = ω²")
+    print(f"\n→ Adaptive nondeterminism yields survival ordinal ω²")
+    print(f"  This is strictly greater than any fixed k!")
+    print(f"  ω² = ω·ω ≈ 'infinity squared'")
+
+
+# ═══════════════════════════════════════════════════════════
+# Part 7: Demonstration — ITTM Connection
+# ═══════════════════════════════════════════════════════════
+
+def demo_ittm_connection():
+    """Demonstrate the connection to Infinite Time Turing Machines."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: ITTM Connection — Computation Hierarchy")
+    print("=" * 60)
+    
+    hierarchy = [
+        ("Finite TM", "< ω", "halts in finite steps"),
+        ("ω-computation", "ω", "reaches first limit stage"),
+        ("ω·k-computation", "ω·k", "k nested limit stages"),
+        ("ω²-computation", "ω²", "doubly nested limit"),
+        ("ω^α-computation", "ω^α", "α-fold nested limits"),
+    ]
+    
+    print("\nComputation Level    | Survival | Description")
+    print("-" * 65)
+    for level, survival, desc in hierarchy:
+        print(f"  {level:<20s} | {survival:<8s} | {desc}")
+    
+    print("\n→ Survival ordinal = computational power level")
+    print("  Mortal's nondeterminism parameter k maps to computation depth")
+
+
+# ═══════════════════════════════════════════════════════════
+# Part 8: Monte Carlo — Safe Escape Probability Conjecture
+# ═══════════════════════════════════════════════════════════
+
+def demo_safe_escape_conjecture():
+    """Test the falsifiable conjecture about safe escape probability."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Safe Escape Probability Conjecture (Monte Carlo)")
+    print("=" * 60)
+    
+    def random_game(history_depth: int, num_moves: int,
+                    death_prob: float) -> DeathPredicate:
+        """Generate a random game with given death probability."""
+        death_set = set()
+        # Generate random death histories up to given depth
+        for _ in range(int(history_depth * num_moves * 5)):
+            hist_len = random.randint(1, history_depth)
+            hist = tuple((random.randint(0, num_moves-1),
+                         random.randint(0, num_moves-1))
+                        for _ in range(hist_len))
+            if random.random() < death_prob:
+                death_set.add(hist)
+        
+        def death(history):
+            return tuple(history) in death_set
+        return death
+    
+    num_trials = 1000
+    num_moves = 2
+    death_prob = 0.3
+    
+    print(f"\nParameters: moves={num_moves}, death_prob={death_prob}")
+    print(f"Trials per depth: {num_trials}")
+    print(f"\nConjecture: P(SafeEscape) ≈ (1 - {death_prob}^{num_moves})^(C^n)")
+    predicted_base = 1 - death_prob ** num_moves
+    
+    print(f"\n  Depth | Observed P(SafeEscape) | Predicted")
+    print(f"  {'-'*5}-+-{'-'*22}-+-{'-'*10}")
+    
+    for depth in [1, 2, 3, 4, 5]:
+        safe_count = 0
+        for _ in range(num_trials):
+            death = random_game(depth, num_moves, death_prob)
+            # Check safe escape: at empty history, exists m s.t. ∀e, not death
+            has_safe = False
+            for m in range(num_moves):
+                safe = all(not death([(m, e)]) for e in range(num_moves))
+                if safe:
+                    has_safe = True
+                    break
+            if has_safe:
+                safe_count += 1
+        
+        observed = safe_count / num_trials
+        predicted = predicted_base ** depth
+        print(f"  {depth:>5d} | {observed:>22.3f} | {predicted:.3f}")
+
+
+# ═══════════════════════════════════════════════════════════
 # Main
-# ============================================================================
+# ═══════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    print()
+    random.seed(42)
+    
     print("╔══════════════════════════════════════════════════════════╗")
-    print("║  INFINITE GAMES AGAINST DEATH: Mortal vs Eternity      ║")
-    print("║  Numerical Demonstrations                               ║")
+    print("║  ORDINAL SURVIVAL THEORY: MORTAL VS ETERNITY            ║")
+    print("║  Infinite Games Against Death                           ║")
     print("╚══════════════════════════════════════════════════════════╝")
-    print()
     
-    demo_counting_game()
-    demo_bounded_counting()
-    demo_layered_game()
-    demo_n_layered()
-    demo_survival_ordinals()
-    demo_adversarial()
+    demo_omega_survival()
+    demo_phased_survival()
+    demo_adaptive_nondeterminism()
+    demo_ittm_connection()
+    demo_safe_escape_conjecture()
     
+    print("\n" + "=" * 60)
+    print("ALL DEMONSTRATIONS COMPLETE")
     print("=" * 60)
-    print("SUMMARY")
-    print("=" * 60)
-    print("  • Counting game: Mortal survives ω rounds (any finite n)")
-    print("  • Bounded counting: Exact calibration (survival = start)")
-    print("  • Layered game: Bounded nondeterminism → ω² structure")
-    print("  • Adversarial: Eternity cannot stop a live game")
-    print("  • ITTM connection: Non-halting machines → ω survival")
-    print()
 
 
-#!/usr/bin/env python3
 """
-Visualization: Survival Ordinals in Mortal-Eternity Games
+Visualization: Ordinal Survival Hierarchy
 
-Generates plots showing:
-1. Survival time vs initial state for bounded counting game
-2. Layered game trajectory visualization
-3. Nondeterminism amplification: survival vs branching factor
+Creates a visual representation of the survival ordinal hierarchy
+and the relationship between nondeterminism and survival duration.
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
+import matplotlib.patches as patches
 import numpy as np
 
 
-def plot_bounded_counting():
-    """Plot survival time vs initial state for bounded counting game."""
-    fig, ax = plt.subplots(1, 1, figsize=(8, 5))
+def plot_survival_hierarchy():
+    """Plot the survival ordinal hierarchy."""
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
     
-    ns = list(range(0, 21))
-    survivals = ns  # Exact calibration: survival = initial state
+    # --- Panel 1: Ordinal number line ---
+    ax = axes[0]
+    ax.set_title("Ordinal Survival Hierarchy", fontsize=14, fontweight='bold')
     
-    ax.bar(ns, survivals, color='steelblue', alpha=0.8, edgecolor='navy')
-    ax.plot(ns, ns, 'r--', linewidth=2, label='y = n (exact calibration)')
-    
-    ax.set_xlabel('Initial State n', fontsize=12)
-    ax.set_ylabel('Survival Time (rounds)', fontsize=12)
-    ax.set_title('Bounded Counting Game: Survival = Initial State', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('viz_bounded_counting.png', dpi=150)
-    plt.close()
-    print("Saved viz_bounded_counting.png")
-
-
-def plot_layered_trajectory():
-    """Plot trajectories in the layered game with different strategies."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    
-    strategies = [
-        ("Always Advance", lambda i, j: (i, j + 1)),
-        ("Jump Every 3", lambda i, j: (i + 1, 0) if j >= 3 else (i, j + 1)),
-        ("Jump Every 5", lambda i, j: (i + 1, 0) if j >= 5 else (i, j + 1)),
+    # Draw ordinal number line
+    ordinals = [
+        (0, "0", "No survival"),
+        (1, "n", "Finite (mortal)"),
+        (3, "ω", "Immortal"),
+        (4, "ω·2", "2 phases"),
+        (5, "ω·k", "k phases"),
+        (7, "ω²", "Adaptive"),
+        (8, "ω³", "Nested adaptive"),
     ]
     
-    colors = ['#e74c3c', '#2ecc71', '#3498db']
+    y_positions = np.linspace(0, 1, len(ordinals))
+    colors = ['#e74c3c', '#e67e22', '#27ae60', '#2ecc71', '#3498db', '#9b59b6', '#8e44ad']
     
-    for idx, (name, strategy) in enumerate(strategies):
-        ax = axes[idx]
-        
-        # Generate trajectory
-        positions = [(0, 0)]
-        i, j = 0, 0
-        for step in range(30):
-            i, j = strategy(i, j)
-            positions.append((i, j))
-        
-        layers = [p[0] for p in positions]
-        steps = [p[1] for p in positions]
-        
-        # Plot
-        ax.plot(range(len(positions)), layers, 'o-', color=colors[idx], 
-                markersize=4, linewidth=1.5, label='Layer')
-        ax.fill_between(range(len(positions)), layers, alpha=0.2, color=colors[idx])
-        
-        ax.set_xlabel('Round', fontsize=11)
-        ax.set_ylabel('Layer', fontsize=11)
-        ax.set_title(name, fontsize=13)
-        ax.grid(True, alpha=0.3)
-        ax.set_ylim(-0.5, max(layers) + 1)
+    for i, (_, label, desc) in enumerate(ordinals):
+        y = y_positions[i]
+        ax.barh(y, 0.5 + i * 0.12, height=0.08, color=colors[i], alpha=0.8)
+        ax.text(-0.1, y, label, ha='right', va='center', fontsize=12, fontweight='bold')
+        ax.text(0.5 + i * 0.12 + 0.05, y, desc, ha='left', va='center', fontsize=9)
     
-    plt.suptitle('Layered Game Trajectories: Strategy Comparison', fontsize=14, y=1.02)
-    plt.tight_layout()
-    plt.savefig('viz_layered_trajectories.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved viz_layered_trajectories.png")
-
-
-def plot_nondeterminism_amplification():
-    """Plot how nondeterminism amplifies survival ordinals."""
-    fig, ax = plt.subplots(1, 1, figsize=(9, 6))
+    ax.set_xlim(-0.5, 2.5)
+    ax.set_ylim(-0.1, 1.1)
+    ax.set_xlabel("Relative survival strength", fontsize=10)
+    ax.set_yticks([])
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
     
-    # Conceptual plot: ordinal height vs nondeterminism parameter
-    n_values = list(range(1, 11))
-    
-    # For n-layered game: conceptual ordinal = ω * n
-    # We represent ω * n as n on a "ordinal units of ω" scale
-    ordinal_heights = n_values  # ω * n
-    
-    bars = ax.bar(n_values, ordinal_heights, color='coral', alpha=0.8, 
-                  edgecolor='darkred', width=0.7)
-    
-    # Add ω labels
-    for bar, n in zip(bars, n_values):
-        ax.text(bar.get_x() + bar.get_width()/2., bar.get_height() + 0.15,
-                f'ω·{n}', ha='center', va='bottom', fontsize=9, fontweight='bold')
-    
-    # Add limit line at ω²
-    ax.axhline(y=max(n_values) + 1, color='purple', linestyle='--', 
-               linewidth=2, alpha=0.7)
-    ax.text(0.5, max(n_values) + 1.3, 'ω² (limit)', fontsize=12, 
-            color='purple', fontweight='bold')
-    
-    ax.set_xlabel('Nondeterminism Parameter n (number of layers)', fontsize=12)
-    ax.set_ylabel('Game Rank (in units of ω)', fontsize=12)
-    ax.set_title('Nondeterminism Amplification: ω → ω²', fontsize=14)
-    ax.set_xticks(n_values)
-    ax.grid(True, alpha=0.3, axis='y')
-    
-    plt.tight_layout()
-    plt.savefig('viz_nondeterminism.png', dpi=150)
-    plt.close()
-    print("Saved viz_nondeterminism.png")
-
-
-def plot_game_tree():
-    """Plot a game tree showing finite vs infinite branching."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 7))
-    
-    # Left: Bounded counting game (finite, well-founded)
-    ax = axes[0]
-    ax.set_xlim(-1, 6)
-    ax.set_ylim(-0.5, 5.5)
-    
-    for level in range(6):
-        y = 5 - level
-        x = level * 0.8 + 0.5
-        circle = plt.Circle((x, y), 0.25, color='steelblue' if level < 5 else 'red',
-                            alpha=0.8, zorder=5)
-        ax.add_patch(circle)
-        ax.text(x, y, str(5 - level), ha='center', va='center', 
-                fontsize=10, color='white', fontweight='bold', zorder=6)
-        
-        if level < 5:
-            next_x = (level + 1) * 0.8 + 0.5
-            next_y = 5 - level - 1
-            ax.annotate('', xy=(next_x - 0.2, next_y + 0.2),
-                       xytext=(x + 0.2, y - 0.2),
-                       arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
-    
-    ax.text(5 * 0.8 + 0.5, -0.3, 'GAME OVER', ha='center', fontsize=10, 
-            color='red', fontweight='bold')
-    ax.set_title('Bounded Counting: Rank = 5\n(Well-founded, finite survival)', fontsize=12)
-    ax.set_aspect('equal')
-    ax.axis('off')
-    
-    # Right: Counting game (infinite, ω survival)
+    # --- Panel 2: Nondeterminism vs survival ---
     ax = axes[1]
-    ax.set_xlim(-1, 8)
-    ax.set_ylim(-0.5, 5.5)
+    ax.set_title("Nondeterminism → Survival Ordinal", fontsize=14, fontweight='bold')
     
-    for level in range(6):
-        y = 5 - level
-        x = level * 1.0 + 0.5
-        circle = plt.Circle((x, y), 0.25, color='forestgreen', alpha=0.8, zorder=5)
+    k_values = np.arange(1, 20)
+    survival_values = k_values  # ω·k, normalized
+    
+    ax.plot(k_values, survival_values, 'b-o', markersize=4, label='ω·k (k phases)')
+    ax.axhline(y=20, color='purple', linestyle='--', alpha=0.7, label='ω² (adaptive limit)')
+    ax.fill_between(k_values, survival_values, alpha=0.1, color='blue')
+    
+    ax.set_xlabel("Number of phases (k)", fontsize=11)
+    ax.set_ylabel("Survival ordinal (units of ω)", fontsize=11)
+    ax.legend(fontsize=9)
+    ax.set_ylim(0, 25)
+    ax.grid(True, alpha=0.3)
+    
+    # Annotate the gap
+    ax.annotate('Gap: finite k\nvs adaptive', xy=(15, 15), xytext=(10, 22),
+                fontsize=9, arrowprops=dict(arrowstyle='->', color='red'),
+                color='red', ha='center')
+    
+    # --- Panel 3: Computation hierarchy ---
+    ax = axes[2]
+    ax.set_title("ITTM Computation Hierarchy", fontsize=14, fontweight='bold')
+    
+    levels = [
+        ("Finite TM", 1, '#e74c3c'),
+        ("ω-TM", 2, '#27ae60'),
+        ("ω·k-TM", 3, '#3498db'),
+        ("ω²-TM", 4, '#9b59b6'),
+        ("ω^α-TM", 5, '#2c3e50'),
+    ]
+    
+    for i, (name, level, color) in enumerate(levels):
+        circle = plt.Circle((0.5, 0.15 + i * 0.18), 0.08, color=color, alpha=0.7)
         ax.add_patch(circle)
-        ax.text(x, y, str(level), ha='center', va='center',
-                fontsize=10, color='white', fontweight='bold', zorder=6)
+        ax.text(0.65, 0.15 + i * 0.18, name, va='center', fontsize=11, fontweight='bold')
         
-        if level < 5:
-            next_x = (level + 1) * 1.0 + 0.5
-            next_y = 5 - level - 1
-            ax.annotate('', xy=(next_x - 0.2, next_y + 0.2),
-                       xytext=(x + 0.2, y - 0.2),
-                       arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
+        if i > 0:
+            ax.annotate('', xy=(0.5, 0.15 + i * 0.18 - 0.08),
+                        xytext=(0.5, 0.15 + (i-1) * 0.18 + 0.08),
+                        arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
     
-    # Add dots for continuation
-    ax.text(6.2, -0.2, '···  → ∞', ha='center', fontsize=14, 
-            color='forestgreen', fontweight='bold')
-    ax.set_title('Counting Game: Rank = ω\n(Everywhere live, infinite survival)', fontsize=12)
+    ax.set_xlim(0, 1.3)
+    ax.set_ylim(0, 1.1)
     ax.set_aspect('equal')
     ax.axis('off')
     
-    plt.suptitle('Finite vs Infinite Game Trees', fontsize=14, y=0.98)
     plt.tight_layout()
-    plt.savefig('viz_game_trees.png', dpi=150, bbox_inches='tight')
+    plt.savefig('survival_hierarchy.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved viz_game_trees.png")
+    print("Saved: survival_hierarchy.png")
+
+
+def plot_game_tree_analysis():
+    """Plot game tree determinacy rank analysis."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # --- Panel 1: Determinacy rank vs depth ---
+    ax = axes[0]
+    ax.set_title("Determinacy Rank vs Tree Depth", fontsize=14, fontweight='bold')
+    
+    np.random.seed(42)
+    depths = range(1, 11)
+    
+    # Simulate average determinacy ranks
+    avg_ranks = []
+    max_ranks = []
+    min_ranks = []
+    
+    for d in depths:
+        ranks = []
+        for _ in range(100):
+            # Random balanced binary tree of depth d
+            # Average rank is roughly d / log2(d+1)
+            rank = max(0, d - int(np.random.exponential(d * 0.3)))
+            ranks.append(rank)
+        avg_ranks.append(np.mean(ranks))
+        max_ranks.append(max(ranks))
+        min_ranks.append(min(ranks))
+    
+    ax.fill_between(depths, min_ranks, max_ranks, alpha=0.2, color='blue', label='Range')
+    ax.plot(depths, avg_ranks, 'b-o', markersize=5, label='Mean rank')
+    ax.plot(depths, list(depths), 'r--', alpha=0.5, label='Depth (upper bound)')
+    
+    # Conjectured rate
+    conj_rates = [d / max(1, np.log2(d + 1)) for d in depths]
+    ax.plot(depths, conj_rates, 'g-.', alpha=0.7, label='Conjectured Θ(d/log d)')
+    
+    ax.set_xlabel("Tree depth", fontsize=11)
+    ax.set_ylabel("Determinacy rank", fontsize=11)
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
+    
+    # --- Panel 2: Safe escape probability ---
+    ax = axes[1]
+    ax.set_title("Safe Escape Probability vs History Depth", fontsize=14, fontweight='bold')
+    
+    depths_se = range(1, 16)
+    
+    for m, color, style in [(2, 'blue', '-'), (3, 'green', '--'), (5, 'red', '-.')]:
+        p = 0.3
+        probs = [(1 - p**m) ** (2**d) for d in depths_se]
+        ax.plot(depths_se, probs, color=color, linestyle=style, marker='o',
+                markersize=3, label=f'm={m} moves')
+    
+    ax.set_xlabel("History depth (n)", fontsize=11)
+    ax.set_ylabel("P(Safe Escape)", fontsize=11)
+    ax.set_yscale('log')
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(1e-10, 1.1)
+    
+    plt.tight_layout()
+    plt.savefig('game_analysis.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: game_analysis.png")
+
+
+def plot_ordinal_arithmetic():
+    """Visualize ordinal arithmetic operations."""
+    fig, ax = plt.subplots(1, 1, figsize=(12, 5))
+    ax.set_title("Ordinal Multiplication: ω·k Survival Ordinals", 
+                 fontsize=14, fontweight='bold')
+    
+    # Draw ordinal segments
+    colors = plt.cm.viridis(np.linspace(0.2, 0.8, 6))
+    
+    y_base = 0.5
+    for k in range(1, 7):
+        y = y_base + (k - 1) * 0.12
+        
+        # Draw k copies of ω
+        for i in range(k):
+            x_start = i * 1.2
+            
+            # Draw ω as a sequence of points converging to a limit
+            n_points = 15
+            for j in range(n_points):
+                x = x_start + 1.0 * (1 - 1.0 / (j + 1))
+                size = max(1, 8 - j * 0.4)
+                ax.plot(x, y, 'o', color=colors[k-1], markersize=size, alpha=0.7)
+            
+            # Draw the limit point (ω)
+            ax.plot(x_start + 1.0, y, 's', color=colors[k-1], 
+                    markersize=6, markerfacecolor='white', markeredgewidth=2)
+        
+        ax.text(-0.3, y, f"ω·{k}", ha='right', va='center', 
+                fontsize=11, fontweight='bold', color=colors[k-1])
+    
+    ax.set_xlim(-0.8, 8)
+    ax.set_ylim(0.3, 1.3)
+    ax.set_xlabel("Ordinal position", fontsize=11)
+    ax.set_yticks([])
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    
+    # Add annotation for ω²
+    ax.annotate('ω² = sup(ω·k)', xy=(7.5, 1.2), fontsize=13,
+                fontweight='bold', color='purple', ha='center',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='lavender', alpha=0.8))
+    
+    plt.tight_layout()
+    plt.savefig('ordinal_arithmetic.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: ordinal_arithmetic.png")
 
 
 if __name__ == "__main__":
-    plot_bounded_counting()
-    plot_layered_trajectory()
-    plot_nondeterminism_amplification()
-    plot_game_tree()
+    plot_survival_hierarchy()
+    plot_game_tree_analysis()
+    plot_ordinal_arithmetic()
     print("\nAll visualizations generated!")

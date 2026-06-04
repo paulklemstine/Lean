@@ -1,324 +1,391 @@
-#!/usr/bin/env python3
 """
-Algorithms for Infinite Games Against Death
+Algorithms for Ordinal Survival Theory
 
-Type-hinted implementations of the core algorithms from the Mortal-Eternity
-game framework.
+Type-hinted implementations of the core algorithms from the
+Ordinal Survival Theory framework.
 """
 
-from typing import TypeVar, Generic, Callable, List, Optional, Tuple, Set
+from typing import Callable, List, Tuple, Optional, Dict, Any
 from dataclasses import dataclass
 from enum import Enum
 import math
 
-S = TypeVar('S')
-A = TypeVar('A')
 
-# ============================================================================
-# Core Data Structures
-# ============================================================================
+# ═══════════════════════════════════════════════════════════
+# Type definitions
+# ═══════════════════════════════════════════════════════════
 
-@dataclass
-class SurvivalGame(Generic[S]):
-    """A survival game with finite out-degree at each state."""
-    successors: Callable[[S], List[S]]
-    
-    def is_live(self, state: S) -> bool:
-        """Check if state has available moves."""
-        return len(self.successors(state)) > 0
-    
-    def is_everywhere_live(self, states: List[S]) -> bool:
-        """Check liveness over a collection of states."""
-        return all(self.is_live(s) for s in states)
+History = List[Tuple[int, int]]
+MortalStrategy = Callable[[History], int]
+EternityStrategy = Callable[[History, int], int]
+DeathPredicate = Callable[[History], bool]
 
 
-@dataclass
-class AdversarialGame(Generic[S, A]):
-    """An adversarial game between Mortal (finite moves) and Eternity."""
-    mortal_moves: Callable[[S], List[A]]
-    eternity_response: Callable[[S, A], List[S]]
-    
-    def is_live(self, state: S) -> bool:
-        """Check if Mortal has available moves."""
-        return len(self.mortal_moves(state)) > 0
+# ═══════════════════════════════════════════════════════════
+# Ordinal Arithmetic (finite representation)
+# ═══════════════════════════════════════════════════════════
 
-
-class OrdinalType(Enum):
-    """Representation of small ordinals for game rank computation."""
-    FINITE = "finite"
-    OMEGA = "omega"
-    OMEGA_SQUARED = "omega_squared"
-    OMEGA_CUBED = "omega_cubed"
-
-
-@dataclass
+@dataclass(frozen=True)
 class Ordinal:
-    """Simple ordinal representation: a * ω² + b * ω + c."""
-    omega_sq_coeff: int  # coefficient of ω²
-    omega_coeff: int     # coefficient of ω
-    finite_part: int     # finite part
+    """Cantor Normal Form representation of ordinals below ε₀.
+    
+    Represents ordinals in the form ω^a₁·c₁ + ω^a₂·c₂ + ... 
+    where a₁ > a₂ > ... and cᵢ are positive naturals.
+    """
+    terms: Tuple[Tuple['Ordinal', int], ...]  # ((exponent, coefficient), ...)
+    
+    @staticmethod
+    def zero() -> 'Ordinal':
+        return Ordinal(())
     
     @staticmethod
     def finite(n: int) -> 'Ordinal':
-        return Ordinal(0, 0, n)
+        """Create a finite ordinal."""
+        if n == 0:
+            return Ordinal.zero()
+        return Ordinal(((Ordinal.zero(), n),))
     
     @staticmethod
     def omega() -> 'Ordinal':
-        return Ordinal(0, 1, 0)
+        """ω = omega"""
+        return Ordinal(((Ordinal.finite(1), 1),))
     
     @staticmethod
-    def omega_times(n: int) -> 'Ordinal':
-        return Ordinal(0, n, 0)
+    def omega_times(k: int) -> 'Ordinal':
+        """ω · k"""
+        if k == 0:
+            return Ordinal.zero()
+        return Ordinal(((Ordinal.finite(1), k),))
     
     @staticmethod
     def omega_squared() -> 'Ordinal':
-        return Ordinal(1, 0, 0)
+        """ω²"""
+        return Ordinal(((Ordinal.finite(2), 1),))
+    
+    @staticmethod
+    def omega_power(n: int) -> 'Ordinal':
+        """ω^n"""
+        return Ordinal(((Ordinal.finite(n), 1),))
+    
+    def is_zero(self) -> bool:
+        return len(self.terms) == 0
+    
+    def is_finite(self) -> bool:
+        return self.is_zero() or (
+            len(self.terms) == 1 and self.terms[0][0].is_zero()
+        )
+    
+    def to_nat(self) -> Optional[int]:
+        """Convert to natural number if finite."""
+        if self.is_zero():
+            return 0
+        if self.is_finite():
+            return self.terms[0][1]
+        return None
     
     def __str__(self) -> str:
+        if self.is_zero():
+            return "0"
         parts = []
-        if self.omega_sq_coeff > 0:
-            parts.append(f"{self.omega_sq_coeff}·ω²" if self.omega_sq_coeff > 1 else "ω²")
-        if self.omega_coeff > 0:
-            parts.append(f"{self.omega_coeff}·ω" if self.omega_coeff > 1 else "ω")
-        if self.finite_part > 0 or not parts:
-            parts.append(str(self.finite_part))
+        for exp, coeff in self.terms:
+            if exp.is_zero():
+                parts.append(str(coeff))
+            elif exp == Ordinal.finite(1):
+                parts.append(f"ω·{coeff}" if coeff > 1 else "ω")
+            elif exp == Ordinal.finite(2):
+                parts.append(f"ω²·{coeff}" if coeff > 1 else "ω²")
+            else:
+                parts.append(f"ω^{exp}·{coeff}" if coeff > 1 else f"ω^{exp}")
         return " + ".join(parts)
     
-    def __le__(self, other: 'Ordinal') -> bool:
-        return (self.omega_sq_coeff, self.omega_coeff, self.finite_part) <= \
-               (other.omega_sq_coeff, other.omega_coeff, other.finite_part)
-    
     def __lt__(self, other: 'Ordinal') -> bool:
-        return (self.omega_sq_coeff, self.omega_coeff, self.finite_part) < \
-               (other.omega_sq_coeff, other.omega_coeff, other.finite_part)
+        """Lexicographic comparison."""
+        for i in range(max(len(self.terms), len(other.terms))):
+            if i >= len(self.terms):
+                return True  # self ran out first
+            if i >= len(other.terms):
+                return False
+            if self.terms[i] != other.terms[i]:
+                s_exp, s_coeff = self.terms[i]
+                o_exp, o_coeff = other.terms[i]
+                if s_exp != o_exp:
+                    return s_exp < o_exp
+                return s_coeff < o_coeff
+        return False
 
 
-# ============================================================================
-# Core Algorithms
-# ============================================================================
+# ═══════════════════════════════════════════════════════════
+# Algorithm 1: Safe Strategy Construction
+# ═══════════════════════════════════════════════════════════
 
-def compute_survival_time(
-    game: SurvivalGame[S],
-    strategy: Callable[[S, List[S]], S],
-    initial: S,
-    max_rounds: int = 1000
-) -> int:
-    """
-    Compute how many rounds Mortal survives with a given strategy.
+def construct_safe_strategy(
+    death: DeathPredicate,
+    move_space: int = 100,
+    response_space: int = 100
+) -> MortalStrategy:
+    """Construct the safe strategy for a survival game.
     
-    Algorithm: Iterate the play sequence until the game is no longer live
-    or max_rounds is reached.
-    
-    Time: O(max_rounds * T_successors)
-    Space: O(1) (not storing full history)
-    """
-    current = initial
-    for round_num in range(max_rounds):
-        succs = game.successors(current)
-        if not succs:
-            return round_num
-        current = strategy(current, succs)
-    return max_rounds
-
-
-def find_optimal_strategy_bounded(
-    game: SurvivalGame[S],
-    initial: S,
-    max_depth: int = 10
-) -> Tuple[int, List[S]]:
-    """
-    Find the strategy that maximizes survival time (for bounded games).
-    
-    Algorithm: DFS/BFS exploration of the game tree up to max_depth.
-    Returns (survival_time, optimal_play_sequence).
-    
-    Time: O(b^d) where b = max branching, d = max_depth
-    Space: O(d) for the recursion stack
-    """
-    def dfs(state: S, depth: int) -> Tuple[int, List[S]]:
-        if depth >= max_depth:
-            return (depth, [state])
+    Algorithm (Safe Strategy Construction):
+        Input: Death predicate D, move space M, response space R
+        Output: Strategy σ : History → Move
         
-        succs = game.successors(state)
-        if not succs:
-            return (depth, [state])
-        
-        best_time = -1
-        best_path: List[S] = []
-        
-        for s in succs:
-            time, path = dfs(s, depth + 1)
-            if time > best_time:
-                best_time = time
-                best_path = [state] + path
-        
-        return (best_time, best_path)
+        For each history h:
+            For each move m ∈ M:
+                If ∀ e ∈ R: ¬D(h ++ [(m, e)]):
+                    Return m
+            Return 0 (fallback — should not be reached if SafeEscape holds)
     
-    return dfs(initial, 0)
+    Time complexity: O(|M| · |R|) per move
+    Space complexity: O(|history|) for storing the current history
+    
+    Correctness: If SafeEscape holds, then for every alive history h,
+    there exists m such that ∀e, ¬D(h ++ [(m,e)]). The strategy finds
+    this m by exhaustive search. By induction, the strategy maintains
+    survival at every round (Omega Survival Theorem).
+    """
+    def strategy(history: History) -> int:
+        for m in range(move_space):
+            safe = True
+            for e in range(response_space):
+                if death(history + [(m, e)]):
+                    safe = False
+                    break
+            if safe:
+                return m
+        return 0
+    return strategy
 
 
-def compute_game_rank_wf(
-    game: SurvivalGame[S],
-    initial: S,
-    visited: Optional[Set] = None,
+# ═══════════════════════════════════════════════════════════
+# Algorithm 2: Survival Ordinal Computation
+# ═══════════════════════════════════════════════════════════
+
+def compute_survival_ordinal(
+    death: DeathPredicate,
+    move_space: int = 10,
+    response_space: int = 10,
     max_depth: int = 100
 ) -> Ordinal:
-    """
-    Compute the well-founded game rank (for terminating games).
+    """Compute (approximate) the survival ordinal of a game.
     
-    Algorithm: Recursive computation of rank = max(rank(s') + 1)
-    over all successors s'. Uses memoization via visited set.
-    
-    Precondition: Game must be well-founded (no infinite plays).
-    
-    Time: O(|reachable states|)
-    Space: O(|reachable states|)
-    """
-    if visited is None:
-        visited = set()
-    
-    state_key = str(initial)
-    if state_key in visited:
-        return Ordinal.finite(0)  # Cycle detected, treat as terminal
-    
-    succs = game.successors(initial)
-    if not succs:
-        return Ordinal.finite(0)
-    
-    visited.add(state_key)
-    max_rank = Ordinal.finite(0)
-    
-    for s in succs:
-        if max_depth <= 0:
-            break
-        child_rank = compute_game_rank_wf(game, s, visited, max_depth - 1)
-        successor_rank = Ordinal(
-            child_rank.omega_sq_coeff,
-            child_rank.omega_coeff,
-            child_rank.finite_part + 1
-        )
-        if max_rank < successor_rank:
-            max_rank = successor_rank
-    
-    visited.discard(state_key)
-    return max_rank
-
-
-def classify_survival_ordinal(
-    game: SurvivalGame[S],
-    test_states: List[S],
-    max_test: int = 100
-) -> str:
-    """
-    Heuristically classify the survival ordinal of a game.
-    
-    Algorithm: Test liveness at sampled states and measure survival
-    with a greedy strategy. Returns a string classification.
-    
-    This is a heuristic — formal classification requires proof.
-    """
-    # Check if everywhere live on test states
-    all_live = all(game.is_live(s) for s in test_states)
-    
-    if not all_live:
-        # Find max survival
-        def greedy(state, succs):
-            return succs[0]
-        max_surv = max(
-            compute_survival_time(game, greedy, s, max_test)
-            for s in test_states
-        )
-        return f"finite (≤ {max_surv})"
-    
-    # Check if nondeterministic (multiple choices)
-    branching = [len(game.successors(s)) for s in test_states]
-    max_branch = max(branching)
-    
-    if max_branch == 1:
-        return "ω (deterministic, everywhere live)"
-    elif max_branch == 2:
-        return "≥ ω, structure suggests ω·k for some k"
-    else:
-        return f"≥ ω, branching factor {max_branch} suggests higher ordinal"
-
-
-def layered_strategy(
-    state: Tuple[int, int],
-    succs: List[Tuple[int, int]],
-    steps_per_layer: int = 5
-) -> Tuple[int, int]:
-    """
-    Optimal strategy for the layered game: advance within layer for
-    `steps_per_layer` steps, then jump to next layer.
-    
-    This strategy achieves survival ordinal ω·(n_layers + 1).
-    """
-    _, j = state
-    if j >= steps_per_layer and len(succs) > 1:
-        return succs[1]  # Jump: (i+1, 0)
-    return succs[0]  # Advance: (i, j+1)
-
-
-def simulate_ittm_game(
-    num_states: int,
-    transition: Callable[[int, bool], Tuple[int, bool, int]],
-    initial_tape: List[bool],
-    max_steps: int = 10000
-) -> Tuple[int, bool]:
-    """
-    Simulate an ITTM-like game: Mortal provides initial tape,
-    machine runs until halting or max_steps.
-    
-    transition(state, tape_symbol) -> (new_state, write_symbol, head_move)
-    where head_move is +1 (right) or -1 (left)
-    
-    Returns (steps_survived, halted).
-    """
-    tape = dict(enumerate(initial_tape))
-    head = 0
-    state = 0
-    halt_state = num_states  # Convention: state = num_states means halt
-    
-    for step in range(max_steps):
-        if state >= num_states:
-            return (step, True)
+    Algorithm (Survival Ordinal Approximation):
+        Input: Death predicate D, search bounds
+        Output: Lower bound on survival ordinal
         
-        symbol = tape.get(head, False)
-        new_state, write, move = transition(state, symbol)
-        tape[head] = write
-        head = max(0, head + move)
-        state = new_state
+        1. Check SafeEscape at empty history
+        2. If SafeEscape holds at all reachable histories up to depth max_depth:
+           Return ω (immortal)
+        3. Otherwise: Return max finite survival depth
     
-    return (max_steps, False)
+    This is necessarily approximate since the true ordinal may be infinite.
+    """
+    strategy = construct_safe_strategy(death, move_space, response_space)
+    
+    # Check survival up to max_depth rounds
+    has_safe_escape = True
+    max_survived = 0
+    
+    for n in range(max_depth):
+        # Try the safe strategy against the worst-case response
+        survived_this_round = True
+        for e_strategy_id in range(min(response_space, 5)):
+            eternity: EternityStrategy = lambda h, m, eid=e_strategy_id: eid
+            history = []
+            alive = True
+            for step in range(n + 1):
+                m_move = strategy(history)
+                e_response = eternity(history, m_move)
+                history.append((m_move, e_response))
+                if death(history):
+                    alive = False
+                    break
+            if not alive:
+                survived_this_round = False
+                break
+        
+        if survived_this_round:
+            max_survived = n + 1
+        else:
+            has_safe_escape = False
+            break
+    
+    if has_safe_escape:
+        return Ordinal.omega()
+    return Ordinal.finite(max_survived)
 
 
-# ============================================================================
-# Main demonstration
-# ============================================================================
+# ═══════════════════════════════════════════════════════════
+# Algorithm 3: Phased Survival Computation
+# ═══════════════════════════════════════════════════════════
+
+@dataclass
+class PhasedSurvivalResult:
+    """Result of phased survival analysis."""
+    num_phases: int
+    phase_ordinals: List[Ordinal]
+    combined_ordinal: Ordinal
+    is_all_immortal: bool
+
+
+def compute_phased_survival(
+    games: List[DeathPredicate],
+    move_space: int = 10,
+    response_space: int = 10
+) -> PhasedSurvivalResult:
+    """Compute the combined survival ordinal of a phased system.
+    
+    Algorithm (Phased Survival):
+        Input: List of k death predicates [D₁, ..., Dₖ]
+        Output: Combined survival ordinal
+        
+        1. For each phase i, compute survival ordinal αᵢ
+        2. If all αᵢ = ω: combined = ω · k
+        3. Otherwise: combined = α₁ + α₂ + ... + αₖ (ordinal sum)
+    """
+    k = len(games)
+    phase_ordinals = []
+    all_immortal = True
+    
+    for death in games:
+        alpha = compute_survival_ordinal(death, move_space, response_space)
+        phase_ordinals.append(alpha)
+        if alpha != Ordinal.omega():
+            all_immortal = False
+    
+    if all_immortal:
+        combined = Ordinal.omega_times(k)
+    else:
+        # Sum of finite ordinals
+        total = sum(a.to_nat() or 0 for a in phase_ordinals)
+        combined = Ordinal.finite(total)
+    
+    return PhasedSurvivalResult(
+        num_phases=k,
+        phase_ordinals=phase_ordinals,
+        combined_ordinal=combined,
+        is_all_immortal=all_immortal
+    )
+
+
+# ═══════════════════════════════════════════════════════════
+# Algorithm 4: Adaptive Nondeterminism
+# ═══════════════════════════════════════════════════════════
+
+def adaptive_survival_bound(
+    game_factory: Callable[[int], List[DeathPredicate]],
+    max_k: int = 20
+) -> Ordinal:
+    """Compute adaptive survival bound.
+    
+    Algorithm (Adaptive Survival):
+        Input: Factory that creates k-phase game systems
+        Output: Adaptive survival ordinal
+        
+        1. For k = 1, 2, ..., max_k:
+           a. Create k-phase system
+           b. Compute phased survival ordinal
+        2. If all systems achieve ω·k:
+           Return ω² (adaptive nondeterminism achieves omega-squared)
+        3. Otherwise: Return max achieved ordinal
+    """
+    all_achieve_omega_k = True
+    max_ordinal = Ordinal.zero()
+    
+    for k in range(1, max_k + 1):
+        games = game_factory(k)
+        result = compute_phased_survival(games)
+        
+        if not result.is_all_immortal:
+            all_achieve_omega_k = False
+        
+        # Track maximum
+        if result.combined_ordinal > max_ordinal:  # type: ignore
+            max_ordinal = result.combined_ordinal
+    
+    if all_achieve_omega_k:
+        return Ordinal.omega_squared()
+    return max_ordinal
+
+
+# ═══════════════════════════════════════════════════════════
+# Algorithm 5: Game Tree Minimax with Determinacy Rank
+# ═══════════════════════════════════════════════════════════
+
+@dataclass
+class GameTreeNode:
+    """A finite game tree node."""
+    is_leaf: bool = False
+    winner: Optional[bool] = None  # True = Player I wins
+    is_player_I: bool = True       # Whose turn?
+    children: Optional[List['GameTreeNode']] = None
+    
+    @staticmethod
+    def leaf(winner: bool) -> 'GameTreeNode':
+        return GameTreeNode(is_leaf=True, winner=winner)
+    
+    @staticmethod
+    def internal(is_player_I: bool, children: List['GameTreeNode']) -> 'GameTreeNode':
+        return GameTreeNode(is_leaf=False, is_player_I=is_player_I, children=children)
+
+
+def minimax_value(node: GameTreeNode) -> bool:
+    """Compute the minimax value of a game tree (Zermelo's theorem)."""
+    if node.is_leaf:
+        return node.winner or False
+    
+    assert node.children is not None
+    child_values = [minimax_value(c) for c in node.children]
+    
+    if node.is_player_I:
+        return any(child_values)  # Player I picks best
+    else:
+        return all(child_values)  # Player II picks best
+
+
+def determinacy_rank(node: GameTreeNode) -> int:
+    """Compute the determinacy rank: depth of strategic analysis needed."""
+    if node.is_leaf:
+        return 0
+    
+    assert node.children is not None
+    child_ranks = [determinacy_rank(c) for c in node.children]
+    val = minimax_value(node)
+    
+    if node.is_player_I:
+        if val:  # Player I wins — use minimum rank among winning children
+            winning_ranks = [r for c, r in zip(node.children, child_ranks)
+                           if minimax_value(c)]
+            return min(winning_ranks) if winning_ranks else max(child_ranks) + 1
+        else:  # Player II wins — must check all children
+            return max(child_ranks) + 1
+    else:
+        if not val:  # Player II wins — use minimum rank among winning children
+            winning_ranks = [r for c, r in zip(node.children, child_ranks)
+                           if not minimax_value(c)]
+            return min(winning_ranks) if winning_ranks else max(child_ranks) + 1
+        else:  # Player I wins — must check all children
+            return max(child_ranks) + 1
+
 
 if __name__ == "__main__":
-    print("=== Algorithms for Infinite Games Against Death ===\n")
+    # Demo: Ordinal arithmetic
+    print("Ordinal Arithmetic Examples:")
+    print(f"  ω     = {Ordinal.omega()}")
+    print(f"  ω·3   = {Ordinal.omega_times(3)}")
+    print(f"  ω²    = {Ordinal.omega_squared()}")
+    print(f"  ω^3   = {Ordinal.omega_power(3)}")
     
-    # Bounded counting game rank
-    bcg = SurvivalGame(lambda k: [k - 1] if k > 0 else [])
-    for n in [3, 5, 10]:
-        rank = compute_game_rank_wf(bcg, n)
-        print(f"Bounded counting game rank from {n}: {rank}")
-    
-    print()
-    
-    # Counting game classification
-    cg = SurvivalGame(lambda n: [n + 1])
-    cls = classify_survival_ordinal(cg, list(range(20)))
-    print(f"Counting game classification: {cls}")
-    
-    # Layered game classification  
-    lg = SurvivalGame(lambda s: [(s[0], s[1] + 1), (s[0] + 1, 0)])
-    cls = classify_survival_ordinal(lg, [(i, j) for i in range(5) for j in range(5)])
-    print(f"Layered game classification: {cls}")
-    
-    print()
-    
-    # Optimal play in bounded counting
-    time, path = find_optimal_strategy_bounded(bcg, 5, max_depth=20)
-    print(f"Optimal play in bounded counting from 5: {path} (survived {time - 1} rounds)")
+    # Demo: Game tree analysis
+    print("\nGame Tree Analysis:")
+    tree = GameTreeNode.internal(True, [
+        GameTreeNode.internal(False, [
+            GameTreeNode.leaf(True),
+            GameTreeNode.leaf(False)
+        ]),
+        GameTreeNode.internal(False, [
+            GameTreeNode.leaf(False),
+            GameTreeNode.leaf(True)
+        ])
+    ])
+    print(f"  Minimax value: {'Player I wins' if minimax_value(tree) else 'Player II wins'}")
+    print(f"  Determinacy rank: {determinacy_rank(tree)}")
