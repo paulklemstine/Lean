@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "303278ac",
     "filename": "rigorous_fully_formalized_mathematical_framew.json",
     "pkg_num": 343,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.48544,
     "title": "Multi-Objective Refinement Systems: Pareto Well-Foundedness, Componentwise Convergence, and the Collapse Information-Loss Theorem"
   },
   {
@@ -11077,8 +11077,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "rigorous_fully_formalized_mathematical_framew",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.48544,
+      "quality": "partial",
       "shape": "cube",
       "title": "Multi-Objective Refinement Systems: Pareto Well-Foundedness, Componentwise Convergence, and the Collapse Information-Loss Theorem"
     }
