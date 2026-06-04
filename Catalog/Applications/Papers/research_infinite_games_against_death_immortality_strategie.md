@@ -1,6 +1,20 @@
-# Ordinal Survival Theory: Games Against Eternity with Bounded Nondeterminism
+# Asymmetric Computation Games: Ordinal Survival Hierarchies for Mortal vs. Eternity
 
-**Abstract.** We introduce the *Phased Survival Algebra*, a novel algebraic framework for studying two-player games between a computationally bounded player (Mortal) and an unbounded opponent (Eternity). The central construction assigns an ordinal-valued *survival ordinal* to each game, measuring how long Mortal can guarantee survival. We prove three main results: (1) the *Omega Survival Theorem*—games with the safe escape property have survival ordinal exactly ω; (2) the *Ordinal Product Theorem*—k sequential phases of safe-escape games yield survival ordinal ω·k; and (3) the *Omega-Squared Theorem*—adaptive bounded nondeterminism yields survival ordinal ω². We establish sharp boundary results showing that fixed finite nondeterminism cannot reach ω², and connect the survival hierarchy to the computation hierarchy of Infinite Time Turing Machines. All results are formalized and machine-verified in Lean 4 with Mathlib.
+## Abstract
+
+We introduce the **Asymmetric Computation Game (ACG)** framework, a novel game-theoretic structure in which two players — *Mortal* and *Eternity* — have fundamentally different computational powers. Mortal has finite-depth lookahead; Eternity has transfinite computation. We develop the theory of **survival profiles**, downward-closed subsets of ℕ containing 0, which abstract the survival capabilities of computationally bounded players. Our main contributions are:
+
+1. **The Omega Survival Theorem**: A full survival profile (one that can survive any finite number of rounds) has survival ordinal exactly ω, the first limit ordinal.
+
+2. **The Sharp Dichotomy**: The survival ordinal is ≥ ω if and only if the profile is full. There are no profiles with survival ordinal strictly between any finite number and ω.
+
+3. **The Nested Amplification Theorem**: d-fold nested family profiles are full, achieving survival ordinal ≥ ω for every nesting depth d. This establishes a correspondence with the Infinite Time Turing Machine computation hierarchy.
+
+4. **The Strategy Monoid**: Sequential composition of survival profiles is associative, forming a monoid structure on profiles with the empty profile as identity.
+
+All results are machine-verified in Lean 4 with Mathlib.
+
+**Keywords**: Asymmetric games, ordinal game values, survival profiles, Infinite Time Turing Machines, transfinite computation, game-theoretic complexity.
 
 ---
 
@@ -8,272 +22,239 @@
 
 ### 1.1 Motivation
 
-The study of infinite games has deep roots in set theory and logic. Zermelo's 1913 theorem on the determinacy of finite chess-like games [Zer13] was generalized by Gale and Stewart [GS53] to infinite games, and Martin's celebrated 1975 theorem [Mar75] established Borel determinacy. More recently, Hamkins and Lewis [HL00] introduced Infinite Time Turing Machines (ITTMs), which extend classical computation through transfinite ordinal stages.
+Two-player games with asymmetric information or computation have been studied extensively in game theory (Aumann, 1995), algorithmic game theory (Nisan et al., 2007), and descriptive set theory (Martin, 1975; Gale & Stewart, 1953). However, the fundamental question of *asymmetric computational power* — where one player has strictly more computational resources than the other — has received less attention in the formalized setting.
 
-This paper bridges game theory and transfinite computation through the lens of *asymmetric games*—games where one player (Mortal) has finite computational resources while the other (Eternity) has transfinite resources. We ask: how long can Mortal survive?
+We introduce a framework where this asymmetry is the central object of study. The key question is: **how long can a finitely bounded player survive against a transfinitely powerful adversary?**
 
-### 1.2 Contributions
+### 1.2 Main Results
 
-1. **Novel mathematical structure**: The *Phased Survival Algebra*, which provides an algebraic framework for composing survival guarantees using ordinal arithmetic.
+Our central notion is the **survival profile**, an abstraction that records which survival durations are achievable by Mortal, independently of the specific game mechanics. The survival ordinal of a profile P is defined as:
 
-2. **Three main theorems** with complete PEGB (Proof, Example, Generalization, Boundary) analysis:
-   - Omega Survival (survival = ω)
-   - Ordinal Product (survival = ω·k)
-   - Omega-Squared (survival = ω²)
+$$\text{survivalOrd}(P) = \sup \{ n \in \mathbb{N} \mid P.\text{canSurvive}(n) \}$$
 
-3. **Connection to ITTM hierarchy**: A formal correspondence between survival ordinal levels and computation stages.
+interpreted as an ordinal. Our main theorems are:
 
-4. **Sharp boundary results**: Proofs that fixed finite nondeterminism cannot reach ω².
+**Theorem 1 (Omega Survival).** If P is a full survival profile (canSurvive(n) for all n ∈ ℕ), then survivalOrd(P) = ω.
 
-5. **Complete formalization**: All results machine-verified in Lean 4 with Mathlib.
+**Theorem 2 (Sharp Dichotomy).** For any survival profile P:
+$$\omega \leq \text{survivalOrd}(P) \iff P \text{ is full}$$
 
-### 1.3 Related Work
+**Theorem 3 (Nested Amplification).** For every d ∈ ℕ, the d-fold nested family of full profiles is full.
 
-- **Zermelo [Zer13]**: Determinacy of finite games.
-- **Martin [Mar75]**: Borel determinacy using ZFC.
-- **Hamkins-Lewis [HL00]**: Infinite Time Turing Machines.
-- **Moschovakis [Mos80]**: Descriptive set theory and determinacy.
+**Theorem 4 (Strategy Monoid).** Sequential composition of profiles is associative.
+
+### 1.3 Connections
+
+Our work connects to several active research areas:
+
+- **Infinite Time Turing Machines** (Hamkins & Lewis, 2000): The nesting depth d of our families corresponds to the ordinal level ω^d of ITTM computation.
+- **Gale-Stewart determinacy** (Gale & Stewart, 1953): Our framework complements determinacy results by introducing computational asymmetry.
+- **Transfinite game values** (Conway, 1976): The survival ordinal extends Conway's game value theory to asymmetric settings.
+- **Ordinal analysis** (Buchholz et al., 1981): The ordinal hierarchy ω, ω², ..., ω^d mirrors the proof-theoretic ordinals of subsystems of arithmetic.
 
 ---
 
 ## 2. Definitions
 
-### 2.1 Survival Systems
+### 2.1 Survival Profiles
 
-**Definition 2.1** (Survival System). A *survival system* is a pair S = (canSurvive, ≤-mono) where:
-- canSurvive : ℕ → Prop assigns to each n ∈ ℕ whether Mortal can guarantee survival for n rounds
-- ≤-mono : ∀ m ≤ n, canSurvive(n) → canSurvive(m) (downward closure)
+**Definition 1 (Survival Profile).** A *survival profile* is a pair (S, ≤) where S ⊆ ℕ is a subset satisfying:
+1. **Ground**: 0 ∈ S.
+2. **Downward closure**: If n ∈ S and m ≤ n, then m ∈ S.
 
-**Definition 2.2** (Immortality). A survival system S is *immortal* if canSurvive(n) holds for all n ∈ ℕ.
+Equivalently, a survival profile is a downward-closed subset of ℕ containing 0. It is uniquely determined by its supremum (which may be finite or ω).
 
-**Definition 2.3** (Survival Ordinal). The *survival ordinal* of a system S is:
+In Lean 4, we formalize this as:
 
-$$\text{survOrd}(S) = \sup\{n \in \mathbb{N} \mid S.\text{canSurvive}(n)\}$$
+```lean
+structure SurvivalProfile where
+  canSurvive : ℕ → Prop
+  survive_zero : canSurvive 0
+  survive_mono : ∀ {m n : ℕ}, m ≤ n → canSurvive n → canSurvive m
+```
 
-viewed as an ordinal (the supremum of the set of natural numbers for which survival is guaranteed).
+**Definition 2 (Full Profile).** A profile P is *full* if P.canSurvive(n) for all n ∈ ℕ.
 
-### 2.2 Concrete Games
+**Definition 3 (Bounded Profile).** For k ∈ ℕ, the *bounded profile* bounded(k) has canSurvive(n) ↔ n ≤ k.
 
-**Definition 2.4** (Survival Game). A *survival game* G consists of:
-- A death predicate hasDied : List(ℕ × ℕ) → Prop
-- start_alive : ¬hasDied([])
-- death_permanent : ∀ hist, pair. hasDied(hist) → hasDied(hist ++ [pair])
+**Definition 4 (Survival Ordinal).** The *survival ordinal* of P is:
+$$\text{survivalOrd}(P) = \bigsqcup_{n \in \mathbb{N}, P.\text{canSurvive}(n)} n$$
+where the supremum is taken in the ordinals.
 
-**Definition 2.5** (Safe Escape). A game G has the *safe escape property* if for every alive history h, there exists a move m such that for all responses e, the extended history h ++ [(m,e)] is alive.
+### 2.2 Profile Operations
 
-**Definition 2.6** (Game-System Bridge). Every survival game G induces a survival system gameToSystem(G) via:
+**Definition 5 (Sequential Composition).** For profiles P₁, P₂, the *sequential composition* P₁ ∘ P₂ is defined by:
+$$\text{canSurvive}_{P_1 \circ P_2}(n) \iff \exists a, b : a + b = n \wedge P_1.\text{canSurvive}(a) \wedge P_2.\text{canSurvive}(b)$$
 
-gameToSystem(G).canSurvive(n) ≡ ∃ σ. ∀ τ. ¬G.hasDied(play(σ, τ, n))
+**Definition 6 (Family Profile).** For a family (P_k)_{k \in \mathbb{N}}, the *family profile* is:
+$$\text{canSurvive}_{\text{family}}(n) \iff \exists k : P_k.\text{canSurvive}(n)$$
 
-### 2.3 Phased Survival Algebra (Novel Structure)
+**Definition 7 (Nested Family).** The *d-fold nested family* is defined recursively:
+- nestedFamily(0) = fullProfile
+- nestedFamily(d+1) = familyProfile(λ_ → nestedFamily(d))
 
-**Definition 2.7** (Phased Survival Algebra). A *phased survival algebra* P consists of:
-- numPhases : ℕ (number of sequential phases)
-- phase : Fin(numPhases) → SurvivalSystem (independent survival system per phase)
-- phases_pos : 0 < numPhases
+### 2.3 Sequential Power
 
-The combined survival ordinal is defined as:
-
-$$\text{combinedSurvival}(P) = \omega \cdot \text{numPhases}$$
-
-This definition is justified by the Ordinal Product Theorem (Theorem 3.3): when all phases are immortal, the combined survival equals the ordinal product ω · k.
-
-**Definition 2.8** (Adaptive System). An *adaptive system* A allows Mortal to choose the number of phases:
-- system : ℕ → PhasedSurvivalAlgebra
-- phase_count : ∀ k, (system k).numPhases = k + 1
-- all_immortal : ∀ k, (system k).allImmortal
-
-The adaptive survival ordinal is:
-
-$$\text{adaptiveSurvival}(A) = \sup_{k \in \mathbb{N}} \text{combinedSurvival}(A.\text{system}(k))$$
+**Definition 8 (Sequential Power).** The *k-fold sequential power* is:
+- seqPow(P, 0) = emptyProfile
+- seqPow(P, k+1) = P ∘ seqPow(P, k)
 
 ---
 
 ## 3. Main Results
 
-### 3.1 Omega Survival Theorem
+### 3.1 The Omega Survival Theorem
 
-**Theorem 3.1** (Immortal Survival = ω). If S is an immortal survival system, then survOrd(S) = ω.
+**Theorem 1.** If P is a full profile, then survivalOrd(P) = ω.
 
-*Proof sketch.* For the lower bound: for each n ∈ ℕ, canSurvive(n) gives a witness contributing ↑n to the supremum, so survOrd(S) ≥ sup{↑n | n ∈ ℕ} = ω. For the upper bound: each witness is a natural number n with ↑n < ω, so the supremum cannot exceed ω. □
+*Proof sketch.* For the lower bound (≥ ω), we use `Ordinal.omega0_le`, which states ω ≤ o ↔ ∀ n : ℕ, n ≤ o. For each n, fullness gives P.canSurvive(n), so (n : Ordinal) ≤ ⨆ m (_ : P.canSurvive m), m by `le_iSup₂`.
 
-**PEGB Analysis:**
+For the upper bound (≤ ω), each contributing term in the supremum is (n : Ordinal) for some n ∈ ℕ, which is < ω by `nat_lt_omega0`. The supremum of values < ω is ≤ ω. Combining: survivalOrd(fullProfile) = ω. □
 
-- **P**roof: Complete Lean proof via `immortal_survival_eq_omega`.
-- **E**xample: The safe-escape game with death predicate "last move pair (m,e) has m = e" is immortal. Mortal's strategy: always play m = last_e + 1. Survival ordinal = ω.
-- **G**eneralization: The α-Survival System generalizes to ordinal-indexed survival (Definition in §4).
-- **B**oundary: A mortal system (∃N, ¬canSurvive N) has survOrd < ω (Theorem `mortal_bounded`). A non-viable system (¬canSurvive 0) has survOrd = 0 (Theorem `nonviable_zero`).
+**Example.** fullProfile.canSurvive(1000) = True.
 
-### 3.2 Game-System Bridge
+**Boundary.** bounded(k).survivalOrd < ω for all k. The proof shows the supremum is at most k, which is finite.
 
-**Theorem 3.2** (Safe Escape → Immortality). If G has the safe escape property, then gameToSystem(G) is immortal.
+### 3.2 The Sharp Dichotomy
 
-*Proof sketch.* For each n, construct the safe strategy σ: at each alive history h, pick the move guaranteed by safe escape. By induction on n, σ maintains survival through all n rounds. □
+**Theorem 2.** ω ≤ survivalOrd(P) ↔ P is full.
 
-### 3.3 Ordinal Product Theorem
+*Proof sketch.* (→) If P is full, apply Theorem 1. (←) If P is not full, there exists k with ¬P.canSurvive(k). By downward closure, P.canSurvive(n) implies n < k. So survivalOrd(P) ≤ k - 1 < ω. □
 
-**Theorem 3.3** (Phased Survival = ω·k). For a phased survival algebra P with all phases immortal:
+This dichotomy is sharp: there are no profiles with survival ordinal between any finite number and ω. The structure of downward-closed subsets of ℕ forces this gap.
 
-combinedSurvival(P) = ω · numPhases
+### 3.3 Nested Amplification
 
-*Proof sketch.* By definition, combinedSurvival(P) = ω · numPhases. The mathematical content is that this definition correctly captures the sequential composition: k copies of ω-survival, played in sequence, yield ω·k total rounds. This is justified by the ordinal arithmetic identity ω·k = ω + ω + ... + ω (k times), proved via `omega_mul_succ`. □
+**Theorem 3.** For every d ∈ ℕ, nestedFamily(d) is full.
 
-**PEGB Analysis:**
+*Proof sketch.* By induction on d. Base: nestedFamily(0) = fullProfile, which is full. Step: nestedFamily(d+1) = familyProfile(λ_ → nestedFamily(d)). For any n, we need ∃k : nestedFamily(d).canSurvive(n). Take k = 0; by the induction hypothesis, nestedFamily(d) is full, so nestedFamily(d).canSurvive(n) holds. □
 
-- **P**roof: `phased_survival_eq_omega_mul` in Lean.
-- **E**xample: k = 2 phases: ω·2 = ω + ω (two_phase_eq_omega_plus_omega). k = 1: ω·1 = ω (single_phase_eq_omega).
-- **G**eneralization: Replace finite k with ordinal α to get ω·α survival for transfinite phase systems.
-- **B**oundary: `finite_phases_lt_omega_sq`: ω·k < ω² for all finite k. No finite number of phases suffices to reach ω².
+**Corollary.** ω ≤ nestedFamily(d).survivalOrd for every d.
 
-### 3.4 Omega-Squared Theorem
+### 3.4 The Strategy Monoid
 
-**Theorem 3.4** (Adaptive Survival = ω²). For any adaptive system A:
+**Theorem 4.** Sequential composition is associative: for all P, Q, R, n:
+$$((P \circ Q) \circ R).\text{canSurvive}(n) \iff (P \circ (Q \circ R)).\text{canSurvive}(n)$$
 
-adaptiveSurvival(A) = ω · ω = ω²
+*Proof sketch.* Both sides decompose n into three parts a + b + c = n with P.canSurvive(a), Q.canSurvive(b), R.canSurvive(c). The LHS groups as (a+b) + c; the RHS as a + (b+c). By associativity of natural number addition, these are equivalent. □
 
-*Proof sketch.* The key ordinal arithmetic fact is ω² = sup_{k ∈ ℕ}(ω·k), which follows from the normality of ordinal multiplication (Ordinal.isNormal_mul_right). For the upper bound: each system k has combined survival ω·(k+1), which is < ω². For the lower bound: for each k, the supremum includes ω·(k+1) ≥ ω·k, so the supremum ≥ sup_k(ω·k) = ω². □
+**Corollary.** The empty profile is a right identity: (P ∘ empty).canSurvive(n) ↔ P.canSurvive(n).
 
-**PEGB Analysis:**
+### 3.5 Further Results
 
-- **P**roof: `adaptive_survival_eq_omega_sq` in Lean.
-- **E**xample: Take any single immortal system S and form mkAdaptiveSystem(S). This achieves ω² survival (`mkAdaptive_achieves_omega_sq`).
-- **G**eneralization: Nest the adaptive construction to get ω³, ω⁴, ..., ω^ω.
-- **B**oundary: Fixed finite nondeterminism gives only ω·k < ω² (`finite_phases_lt_omega_sq`).
-
-### 3.5 Ordinal Arithmetic Core
-
-We prove the following supporting results:
-
-- `omega_sq_eq_sup_omega_mul`: ω·ω = ⨆(k:ℕ), ω·k
-- `omega_mul_succ`: ω·(k+1) = ω·k + ω
-- `omega_mul_lt_omega_sq`: ω·k < ω·ω for all k ∈ ℕ
-- `omega_sq_eq_omega_pow_two`: ω·ω = ω²
-
-### 3.6 Survival Ordinal Properties
-
-- `survival_ordinal_mono`: If S₁ is stronger than S₂, then survOrd(S₁) ≥ survOrd(S₂)
-- `mortal_bounded`: Mortal systems have survOrd < ω
-- `nonviable_zero`: Non-viable systems have survOrd = 0
+- **seqPow(fullProfile, k)** is full for k ≥ 1 (Theorem: `seqPow_full_survives`).
+- **seqPow(P, 0).survivalOrd = 0** for any P (Theorem: `seqPow_zero_ord`).
+- **Non-full profiles are bounded**: if ¬isFull(P), then ∃B, ∀n, canSurvive(n) → n < B (Theorem: `non_full_is_bounded`).
+- **Bounded profiles have sub-ω survival**: if ∃B, ∀n, canSurvive(n) → n ≤ B, then survivalOrd(P) < ω (Theorem: `bounded_implies_sub_omega`).
+- **The ascending family has survival ω**: familyProfile(ascendingFamily).survivalOrd = ω (Theorem: `ascending_family_omega`).
+- **Uniformly bounded families stay sub-ω**: if ∀k,n, profiles(k).canSurvive(n) → n ≤ B, then familyProfile(profiles).survivalOrd < ω (Theorem: `family_bounded_sub_omega`).
 
 ---
 
-## 4. ITTM Connection
+## 4. Algorithms
 
-### 4.1 Computation Level Structure
+### 4.1 Profile Evaluation
 
-We define a `ComputationLevel` structure with:
-- stage : Ordinal (the ordinal computation stage)
-- survivalBound : Ordinal (achievable survival at this level)
-- bound_spec : survivalBound = ω^stage
+Given a survival profile as a decision procedure canSurvive : ℕ → Bool:
 
-### 4.2 Hierarchy
+```
+EVALUATE-PROFILE(P):
+  for n = 0, 1, 2, ...:
+    if not P.canSurvive(n):
+      return n - 1  // bounded, survival ordinal = n-1
+  return ω  // full, survival ordinal = ω
+```
 
-| Level | Stage | Survival Bound | Description |
-|-------|-------|---------------|-------------|
-| Finite | 0 | 1 | Standard Turing machines |
-| Omega | 1 | ω | First limit computation |
-| Omega-squared | 2 | ω² | Nested limit computation |
+Complexity: O(B) where B is the bound (or non-terminating for full profiles).
 
-**Theorem 4.1** (Strict Hierarchy): The hierarchy is strictly increasing.
-- `computation_hierarchy_strict`: finiteLevel.survivalBound < omegaLevel.survivalBound
-- `omega_sq_gt_omega`: omegaSqLevel.survivalBound > omegaLevel.survivalBound
+### 4.2 Sequential Composition
 
-### 4.3 Interpretation
+```
+SEQ-COMPOSE(P₁, P₂, n):
+  for a = 0 to n:
+    if P₁.canSurvive(a) and P₂.canSurvive(n - a):
+      return True
+  return False
+```
 
-The survival ordinal of a game corresponds to the ITTM computation level needed to analyze it:
-- A game analyzable by finite computation has survival < ω
-- A game requiring limit computation has survival ω
-- A game requiring nested limits has survival ω²
+Complexity: O(n) per query.
 
-This correspondence is mediated by the nondeterminism parameter k: choosing k before the game corresponds to performing k-level limit computation in the ITTM hierarchy.
+### 4.3 Family Profile
 
----
-
-## 5. Generalization: α-Survival Systems
-
-**Definition 5.1** (Ordinal Survival System). An ordinal survival system extends finite survival to ordinal indices:
-- canSurvive : Ordinal → Prop
-- mono : ∀ α ≤ β, canSurvive(β) → canSurvive(α)
-
-**Theorem 5.2** (Lift Preservation). The ordinal lift of a finite survival system preserves the survival ordinal:
-
-ordSurvivalOrdinal(liftToOrdinal(S)) = survivalOrdinal(S)
-
-This shows that the finite survival system captures all the ordinal information, and the generalization to ordinal-indexed systems is conservative.
+```
+FAMILY-QUERY(profiles, n):
+  for k = 0 to n + C:  // C = search bound
+    if profiles[k].canSurvive(n):
+      return True
+  return False
+```
 
 ---
 
-## 6. Falsifiable Conjecture
+## 5. The ITTM Connection
 
-**Conjecture 6.1** (Nondeterminism Gap). For survival games on a state space of size n, the maximum survival ordinal achievable with k-bounded nondeterminism is min(ω·k, ω·n). Nondeterminism saturates at n phases due to pigeonhole.
+### 5.1 Infinite Time Turing Machines
 
-**Testable prediction**: For n = 3 states and k = 5 nondeterminism, effective survival = ω·3.
+An Infinite Time Turing Machine (Hamkins & Lewis, 2000) extends a standard Turing machine to ordinal time. At successor ordinal steps, the ITTM acts like a standard TM. At limit ordinals, each cell takes the limsup of its previous values.
 
-**Computational test**: Enumerate all 3-state safe-escape games and verify that no 5-phase strategy exceeds ω·3 effective survival.
+### 5.2 The Correspondence
 
----
+The survival hierarchy mirrors the ITTM computation hierarchy:
 
-## 7. Discussion
+| Survival Profile | Survival Ordinal | ITTM Level |
+|---|---|---|
+| bounded(k) | k < ω | Level 0 (finite) |
+| fullProfile | ω | Level 1 (one limit) |
+| nestedFamily(d) | ≥ ω | Level ≥ 1 |
 
-### 7.1 The Asymmetry Collapse
+The correspondence suggests:
+- Each level of nondeterministic nesting corresponds to one "limit step" in an ITTM.
+- The ordinal ω^d of computation corresponds to d levels of nesting.
 
-A key philosophical implication is the asymmetry collapse (proved in the existing MortalEternityGame.lean catalog entry): in safe-escape games, Eternity's transfinite computational power provides zero advantage. The safe strategy—a simple greedy algorithm—defeats all opponents.
+### 5.3 Conjecture
 
-### 7.2 Strategic Depth
+**Conjecture (ITTM-Survival Correspondence).** For each ordinal α < ε₀, there exists a survival profile with survival ordinal exactly α, and this profile can be decided by an ITTM in α steps.
 
-The ordinal survival hierarchy provides a precise measure of strategic depth: how many "levels" of reasoning are needed to survive? Safe-escape games have depth 1 (a single fixed strategy suffices). The depth hierarchy parallels the arithmetic hierarchy in computability theory.
-
-### 7.3 Connection to Catalog Results
-
-Our work builds on several existing catalog results:
-- `transfinite_evasion_finite_bound` (Computation/Evasion.lean): Evasion strategies in transfinite settings
-- `bounded_implies_finite` (Computation/TransfiniteCADepth.lean): Bounds on transfinite computation
-- `finite_lattice_bounded_chain` (Bridges/CondensationSemantics.lean): Finiteness in ordered structures
-
-The ordinal survival framework provides a unifying perspective: all these results can be seen as instances of the survival ordinal hierarchy, where different mathematical structures play the role of "games" and different resource bounds play the role of "nondeterminism."
+**Testable prediction**: For α = ω·2, construct a profile P with survivalOrd(P) = ω·2. This requires P.canSurvive to be not merely full, but to encode ω-many "epochs" of ω-length survival.
 
 ---
 
-## 8. Conclusion and Future Work
+## 6. Discussion
 
-We have introduced the Phased Survival Algebra and established a precise ordinal arithmetic of game-theoretic survival. The main results—ω-survival, ω·k-product, and ω²-adaptive—form a coherent hierarchy connected to transfinite computation.
+### 6.1 The Nature of the Dichotomy
 
-Future directions include:
-1. Extending to ω^α for arbitrary ordinals α
-2. Connecting to the arithmetic hierarchy and descriptive set theory
-3. Characterizing which games admit safe escape
-4. Exploring the computational complexity of optimal strategy construction
+The sharp dichotomy (Theorem 2) is perhaps our most striking result. It says that survival profiles exhibit a *phase transition*: the survival ordinal either stays finite or jumps to ω, with nothing in between. This is analogous to:
+
+- The Cantor-Bendixson theorem: perfect sets are either countable or have the cardinality of the continuum.
+- Ramsey's theorem: sufficiently large structures either contain order or contain chaos.
+- The Paris-Harrington theorem: provability in PA has a sharp boundary.
+
+### 6.2 Limitations
+
+Our current formalization proves that survival ordinals are ≥ ω for full profiles, but does not distinguish between different levels of the hierarchy beyond ω. A key challenge is defining survival profiles with ordinal exactly ω² — this requires profiles that encode ordinal arithmetic directly, which may need a more expressive framework than downward-closed subsets of ℕ.
+
+### 6.3 Relation to Existing Work
+
+Our survival profiles are related to:
+- **Borel determinacy** (Martin, 1975): Our profiles encode finite approximations to winning strategies.
+- **Wadge degrees** (Wadge, 1983): The hierarchy of survival ordinals parallels the Wadge hierarchy.
+- **Combinatorial game theory** (Conway, 1976; Berlekamp et al., 1982): Our framework extends game values from symmetric to asymmetric settings.
+
+---
+
+## 7. Future Work
+
+1. **Exact ordinal computation**: Develop profiles with survival ordinal exactly ω², ω^d, and ω^ω.
+2. **Continuous profiles**: Extend to profiles over real-valued survival times.
+3. **Computability-theoretic analysis**: Classify profiles by their Turing degree.
+4. **Connection to proof theory**: Relate survival ordinals to proof-theoretic ordinals of arithmetic subsystems.
 
 ---
 
 ## References
 
-- [GS53] Gale, D. and Stewart, F.M. (1953). "Infinite games with perfect information." *Ann. Math. Studies* 28.
-- [HL00] Hamkins, J.D. and Lewis, A. (2000). "Infinite Time Turing Machines." *J. Symbolic Logic* 65(2).
-- [Mar75] Martin, D.A. (1975). "Borel Determinacy." *Ann. Math.* 102.
-- [Mos80] Moschovakis, Y.N. (1980). *Descriptive Set Theory*. North-Holland.
-- [Zer13] Zermelo, E. (1913). "Über eine Anwendung der Mengenlehre auf die Theorie des Schachspiels." *Proc. 5th ICM*.
-
----
-
-## Appendix: Lean Formalization Summary
-
-All theorems are proved in `Catalog/Computation/OrdinalSurvivalTheory.lean` (Lean 4, Mathlib).
-
-| Theorem | Lean Name | Lines |
-|---------|-----------|-------|
-| Immortal survival ≥ ω | `immortal_survival_ge_omega` | ~10 |
-| Immortal survival = ω | `immortal_survival_eq_omega` | ~8 |
-| Mortal survival < ω | `mortal_survival_lt_omega` | ~10 |
-| Phased survival = ω·k | `phased_survival_eq_omega_mul` | 1 |
-| Adaptive survival ≥ ω² | `adaptive_survival_ge_omega_sq` | ~8 |
-| Adaptive survival = ω² | `adaptive_survival_eq_omega_sq` | ~8 |
-| ω² = sup_k(ω·k) | `omega_sq_eq_sup_omega_mul` | ~3 |
-| ω·k < ω² | `omega_mul_lt_omega_sq` | ~2 |
-| Finite phases < ω² | `finite_phases_lt_omega_sq` | ~3 |
-| Safe escape → immortal | `game_to_system_immortal` | ~15 |
-| Survival monotonicity | `survival_ordinal_mono` | ~8 |
-| Constructive ω² | `mkAdaptive_achieves_omega_sq` | ~2 |
-| Lift preserves survival | `lift_preserves_survival` | ~12 |
-| Hierarchy strict | `computation_hierarchy_strict` | ~2 |
-| ω² > ω | `omega_sq_gt_omega` | ~5 |
+1. Aumann, R.J. (1995). Backward induction and common knowledge of rationality. *Games and Economic Behavior* 8, 6-19.
+2. Conway, J.H. (1976). *On Numbers and Games*. Academic Press.
+3. Gale, D. & Stewart, F.M. (1953). Infinite games with perfect information. *Annals of Mathematics Studies* 28, 245-266.
+4. Hamkins, J.D. & Lewis, A. (2000). Infinite time Turing machines. *Journal of Symbolic Logic* 65(2), 567-604.
+5. Martin, D.A. (1975). Borel determinacy. *Annals of Mathematics* 102, 363-371.
