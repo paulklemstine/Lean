@@ -1,375 +1,261 @@
 #!/usr/bin/env python3
 """
-Non-Well-Founded Proof Algorithms
+Algorithms for Non-Well-Founded Proof Systems
 
-Implements the core algorithms from the research:
-1. NWF Proof Tree construction and validation
-2. Kleene fixed-point iteration for proof operators
-3. Tropical proof height computation
-4. Self-reference depth analysis
-5. Proof tree minimization
-
-All algorithms correspond to formally verified theorems in Lean 4.
+Type-hinted implementations of the core algorithms for computing
+circularity gaps, classifying propositions, and analyzing proof systems.
 """
 
 from __future__ import annotations
-from dataclasses import dataclass, field
-from enum import Enum, auto
-from typing import Optional, Callable, Iterator
-import math
+from dataclasses import dataclass
+from typing import Callable, FrozenSet, Iterator, List, Optional, Set, Tuple
 
 
-# ============================================================
-# Core Data Structures
-# ============================================================
-
-class NodeType(Enum):
-    """Types of nodes in a non-well-founded proof tree."""
-    AXIOM = auto()
-    MODUS_PONENS = auto()
-    SELF_REF = auto()
-    BOTTOM = auto()
+# Type aliases
+PropSet = FrozenSet[int]
+DeriveFn = Callable[[PropSet], PropSet]
 
 
-@dataclass
-class ProofTree:
+@dataclass(frozen=True)
+class ProofSystem:
+    """A proof system over finite propositions.
+
+    Attributes:
+        universe: The set of all propositions.
+        derive: Monotone derivation operator.
     """
-    Non-well-founded proof tree.
+    universe: PropSet
+    derive: DeriveFn
 
-    A proof tree where nodes can reference the conclusion being proved,
-    creating circular dependencies resolved through fixed-point semantics.
-
-    Corresponds to the Lean 4 type `NWFProofTree`.
-    """
-    node_type: NodeType
-    conclusion: Optional[int] = None
-    premise: Optional[int] = None
-    children: tuple['ProofTree', ...] = ()
-
-    @staticmethod
-    def axiom_(p: int) -> 'ProofTree':
-        """Create an axiom node proving proposition p."""
-        return ProofTree(NodeType.AXIOM, conclusion=p)
-
-    @staticmethod
-    def modus_ponens(imp_proof: 'ProofTree', arg_proof: 'ProofTree',
-                     premise: int, conclusion: int) -> 'ProofTree':
-        """Create a modus ponens node: from (P → Q) and P, derive Q."""
-        return ProofTree(NodeType.MODUS_PONENS, conclusion=conclusion,
-                        premise=premise, children=(imp_proof, arg_proof))
-
-    @staticmethod
-    def self_ref(p: int, inner: 'ProofTree') -> 'ProofTree':
-        """Create a self-referential node that assumes its own conclusion."""
-        return ProofTree(NodeType.SELF_REF, conclusion=p, children=(inner,))
-
-    @staticmethod
-    def bottom() -> 'ProofTree':
-        """Create an invalid/undefined proof node."""
-        return ProofTree(NodeType.BOTTOM)
-
-
-# ============================================================
-# Algorithm 1: Ordinal Height Computation
-# ============================================================
-
-def ordinal_height(tree: ProofTree) -> int:
-    """
-    Compute the ordinal height of a proof tree.
-
-    Time complexity: O(n) where n is the number of nodes.
-    Space complexity: O(d) where d is the depth (stack frames).
-
-    Corresponds to `proofOrdinalHeight` in Lean 4.
-
-    >>> ordinal_height(ProofTree.axiom_(1))
-    0
-    >>> ordinal_height(ProofTree.self_ref(1, ProofTree.axiom_(1)))
-    1
-    """
-    if tree.node_type == NodeType.AXIOM:
-        return 0
-    elif tree.node_type == NodeType.MODUS_PONENS:
-        h1 = ordinal_height(tree.children[0])
-        h2 = ordinal_height(tree.children[1])
-        return max(h1, h2) + 1
-    elif tree.node_type == NodeType.SELF_REF:
-        return ordinal_height(tree.children[0]) + 1
-    else:  # BOTTOM
-        return 0
-
-
-# ============================================================
-# Algorithm 2: Validity Check
-# ============================================================
-
-def is_valid_nwf(tree: ProofTree) -> bool:
-    """
-    Check if a proof tree is a valid non-well-founded proof.
-
-    Time complexity: O(n) where n is the number of nodes.
-
-    Corresponds to `IsValidNWF` in Lean 4.
-
-    >>> is_valid_nwf(ProofTree.self_ref(1, ProofTree.axiom_(1)))
-    True
-    >>> is_valid_nwf(ProofTree.self_ref(1, ProofTree.bottom()))
-    False
-    """
-    if tree.node_type == NodeType.AXIOM:
+    def verify_monotonicity(self, sample_size: int = 100) -> bool:
+        """Spot-check monotonicity: S ⊆ T → derive(S) ⊆ derive(T)."""
+        import random
+        elems = sorted(self.universe)
+        for _ in range(sample_size):
+            k1 = random.randint(0, len(elems))
+            k2 = random.randint(k1, len(elems))
+            s = frozenset(random.sample(elems, k1))
+            t = s | frozenset(random.sample(elems, min(k2, len(elems))))
+            if not self.derive(s) <= self.derive(t):
+                return False
         return True
-    elif tree.node_type == NodeType.MODUS_PONENS:
-        t1, t2 = tree.children
-        return (t1.conclusion == tree.premise and
-                t2.conclusion == tree.conclusion and
-                is_valid_nwf(t1) and is_valid_nwf(t2))
-    elif tree.node_type == NodeType.SELF_REF:
-        inner = tree.children[0]
-        return inner.conclusion == tree.conclusion and is_valid_nwf(inner)
-    else:
-        return False
 
 
-# ============================================================
-# Algorithm 3: Self-Reference Depth
-# ============================================================
-
-def self_ref_depth(tree: ProofTree) -> int:
-    """
-    Compute the self-reference depth of a proof tree.
-
-    This measures how many nested levels of self-reference exist.
-    Proved to be bounded by structural depth (selfRefDepth_le_depth).
-
-    Time complexity: O(n)
-
-    >>> self_ref_depth(ProofTree.axiom_(1))
-    0
-    >>> self_ref_depth(ProofTree.self_ref(1, ProofTree.axiom_(1)))
-    1
-    """
-    if tree.node_type in (NodeType.AXIOM, NodeType.BOTTOM):
-        return 0
-    elif tree.node_type == NodeType.MODUS_PONENS:
-        return max(self_ref_depth(c) for c in tree.children)
-    elif tree.node_type == NodeType.SELF_REF:
-        return 1 + self_ref_depth(tree.children[0])
-    return 0
+@dataclass(frozen=True)
+class CircularityAnalysis:
+    """Complete analysis of a proof system's circularity structure."""
+    lfp: PropSet
+    gfp: PropSet
+    gap: PropSet
+    safe_elements: PropSet
+    self_referential_elements: PropSet
+    lfp_depth: dict[int, int]  # element -> iteration step when it entered lfp
+    gfp_depth: dict[int, int]  # element -> iteration step when it left gfp approx
 
 
-# ============================================================
-# Algorithm 4: Kleene Fixed-Point Iteration
-# ============================================================
-
-ProofApprox = dict[int, int]
-
-
-def kleene_iterate(
-    step: Callable[[ProofApprox], ProofApprox],
-    num_props: int,
-    max_iterations: int = 100,
-) -> tuple[ProofApprox, int]:
-    """
-    Compute the Kleene fixed point of a proof operator.
-
-    Starting from the bottom element (all zeros), repeatedly apply
-    the step function until stabilization.
-
-    Time complexity: O(max_iterations × cost(step))
-    Space complexity: O(num_props)
-
-    Corresponds to `kleeneIterate` and `nwf_fixed_point_existence` in Lean 4.
-
-    Args:
-        step: Monotone proof operator
-        num_props: Number of propositions
-        max_iterations: Maximum iterations before declaring non-convergence
+def compute_lfp(derive: DeriveFn, universe: PropSet,
+                max_iter: int = 1000) -> Tuple[PropSet, List[PropSet]]:
+    """Compute the least fixed point by ascending Kleene iteration.
 
     Returns:
-        Tuple of (fixed point approximation, number of iterations)
+        (lfp, trace) where trace[i] = derive^i(∅).
     """
-    approx: ProofApprox = {p: 0 for p in range(num_props)}
+    trace: List[PropSet] = [frozenset()]
+    current = frozenset()
+    for _ in range(max_iter):
+        next_val = derive(current)
+        trace.append(next_val)
+        if next_val == current:
+            return current, trace
+        current = next_val
+    return current, trace
 
-    for i in range(max_iterations):
-        new_approx = step(approx)
-        if new_approx == approx:
-            return approx, i + 1
-        approx = new_approx
 
-    return approx, max_iterations
+def compute_gfp(derive: DeriveFn, universe: PropSet,
+                max_iter: int = 1000) -> Tuple[PropSet, List[PropSet]]:
+    """Compute the greatest fixed point by descending Kleene iteration.
+
+    Returns:
+        (gfp, trace) where trace[i] = derive^i(universe).
+    """
+    trace: List[PropSet] = [universe]
+    current = universe
+    for _ in range(max_iter):
+        next_val = derive(current)
+        trace.append(next_val)
+        if next_val == current:
+            return current, trace
+        current = next_val
+    return current, trace
+
+
+def compute_circularity_gap(ps: ProofSystem) -> Tuple[PropSet, PropSet, PropSet]:
+    """Compute the circularity gap.
+
+    Returns:
+        (gap, lfp, gfp) where gap = gfp \\ lfp.
+    """
+    lfp, _ = compute_lfp(ps.derive, ps.universe)
+    gfp, _ = compute_gfp(ps.derive, ps.universe)
+    return gfp - lfp, lfp, gfp
+
+
+def classify_element(derive: DeriveFn, a: int,
+                      universe: PropSet) -> Tuple[bool, bool]:
+    """Classify an element as safe and/or self-referential.
+
+    Returns:
+        (is_safe, is_self_referential)
+    """
+    # Check safety: a ∈ derive(S) → a ∈ S for all S ⊆ universe
+    is_safe = True
+    for mask in range(1 << len(universe)):
+        elems = sorted(universe)
+        s = frozenset(elems[i] for i in range(len(elems)) if mask & (1 << i))
+        if a in derive(s) and a not in s:
+            is_safe = False
+            break
+
+    # Check self-referentiality
+    is_selfref = is_safe and (a in derive(frozenset([a])))
+    return is_safe, is_selfref
+
+
+def full_analysis(ps: ProofSystem) -> CircularityAnalysis:
+    """Perform complete circularity analysis of a proof system.
+
+    Computes lfp, gfp, gap, safety classification, and depth measures.
+    """
+    lfp, lfp_trace = compute_lfp(ps.derive, ps.universe)
+    gfp, gfp_trace = compute_gfp(ps.derive, ps.universe)
+    gap = gfp - lfp
+
+    # Classify elements
+    safe = set()
+    selfref = set()
+    for a in ps.universe:
+        s, sr = classify_element(ps.derive, a, ps.universe)
+        if s:
+            safe.add(a)
+        if sr:
+            selfref.add(a)
+
+    # Compute lfp depth (when element first appears in ascending sequence)
+    lfp_depth: dict[int, int] = {}
+    for a in lfp:
+        for i, step in enumerate(lfp_trace):
+            if a in step:
+                lfp_depth[a] = i
+                break
+
+    # Compute gfp depth (when element first disappears in descending sequence)
+    gfp_depth: dict[int, int] = {}
+    for a in ps.universe - gfp:
+        for i, step in enumerate(gfp_trace):
+            if a not in step:
+                gfp_depth[a] = i
+                break
+
+    return CircularityAnalysis(
+        lfp=lfp,
+        gfp=gfp,
+        gap=gap,
+        safe_elements=frozenset(safe),
+        self_referential_elements=frozenset(selfref),
+        lfp_depth=lfp_depth,
+        gfp_depth=gfp_depth,
+    )
+
+
+def find_post_fixed_points(ps: ProofSystem) -> List[PropSet]:
+    """Find all post-fixed points (self-consistent theories).
+
+    For small universes only (exponential in |universe|).
+    """
+    elems = sorted(ps.universe)
+    result: List[PropSet] = []
+    for mask in range(1 << len(elems)):
+        s = frozenset(elems[i] for i in range(len(elems)) if mask & (1 << i))
+        if s <= ps.derive(s):
+            result.append(s)
+    return result
+
+
+def verify_union_closure(ps: ProofSystem,
+                         post_fixed: List[PropSet]) -> bool:
+    """Verify that post-fixed points are closed under union (Theorem 7)."""
+    for i, s1 in enumerate(post_fixed):
+        for s2 in post_fixed[i + 1:]:
+            union = s1 | s2
+            if not union <= ps.derive(union):
+                return False
+    return True
 
 
 # ============================================================
-# Algorithm 5: Tropical Proof Height Operations
+# Factory functions for common proof systems
 # ============================================================
 
-INF = float('inf')
+def identity_system(n: int) -> ProofSystem:
+    """Create the identity proof system on {0, ..., n-1}."""
+    universe = frozenset(range(n))
+    return ProofSystem(universe=universe, derive=lambda s: s)
 
 
-def tropical_add(a: float, b: float) -> float:
-    """
-    Tropical addition: take the minimum (shortest proof).
-
-    Corresponds to `TropicalProofHeight.tropAdd`.
-
-    >>> tropical_add(3, 5)
-    3
-    >>> tropical_add(2, float('inf'))
-    2
-    """
-    return min(a, b)
+def constant_system(n: int, axioms: PropSet) -> ProofSystem:
+    """Create a constant proof system."""
+    universe = frozenset(range(n))
+    return ProofSystem(universe=universe, derive=lambda s: axioms)
 
 
-def tropical_mul(a: float, b: float) -> float:
-    """
-    Tropical multiplication: add heights (compose proofs).
-
-    Corresponds to `TropicalProofHeight.tropMul`.
-
-    >>> tropical_mul(3, 5)
-    8
-    >>> tropical_mul(0, 7)
-    7
-    """
-    return a + b
+def union_axiom_system(n: int, axioms: PropSet) -> ProofSystem:
+    """Create a union-axiom proof system."""
+    universe = frozenset(range(n))
+    return ProofSystem(universe=universe, derive=lambda s: s | axioms)
 
 
-def tropical_proof_distance(
-    heights_a: list[float],
-    heights_b: list[float],
-) -> float:
-    """
-    Compute the tropical distance between two proof height vectors.
-
-    This measures how different two proof systems are in terms of
-    the shortest proofs they can produce for each proposition.
-
-    Time complexity: O(n) where n = len(heights)
-    """
-    assert len(heights_a) == len(heights_b)
-    max_diff = 0.0
-    for a, b in zip(heights_a, heights_b):
-        if a == INF and b == INF:
-            continue
-        if a == INF or b == INF:
-            return INF
-        max_diff = max(max_diff, abs(a - b))
-    return max_diff
-
-
-# ============================================================
-# Algorithm 6: Proof Tree Enumeration
-# ============================================================
-
-def enumerate_proof_trees(
-    props: list[int],
-    max_depth: int,
-    allow_self_ref: bool = True,
-) -> Iterator[ProofTree]:
-    """
-    Enumerate all proof trees up to a given depth.
-
-    Used for testing conjectures about NWF proofs computationally.
-
-    Time complexity: Exponential in max_depth (unavoidable)
-    """
-    if max_depth == 0:
-        for p in props:
-            yield ProofTree.axiom_(p)
-        yield ProofTree.bottom()
-        return
-
-    # All trees of smaller depth
-    for tree in enumerate_proof_trees(props, max_depth - 1, allow_self_ref):
-        yield tree
-
-    # New trees at this depth
-    subtrees = list(enumerate_proof_trees(props, max_depth - 1, allow_self_ref))
-
-    # Modus ponens combinations
-    for t1 in subtrees:
-        for t2 in subtrees:
-            for p in props:
-                for q in props:
-                    yield ProofTree.modus_ponens(t1, t2, p, q)
-
-    # Self-referential trees
-    if allow_self_ref:
-        for p in props:
-            for inner in subtrees:
-                yield ProofTree.self_ref(p, inner)
-
-
-# ============================================================
-# Algorithm 7: Conjecture Testing
-# ============================================================
-
-def test_self_ref_eliminability(max_depth: int = 3) -> dict:
-    """
-    Test the Self-Reference Eliminability Conjecture:
-    Can every valid NWF proof of depth d be replaced by one of depth d-1?
-
-    Returns statistics about the conjecture's status.
-    """
-    props = [0, 1, 2]
-    results = {
-        "tested_trees": 0,
-        "valid_self_ref": 0,
-        "eliminable": 0,
-        "counterexamples": [],
-    }
-
-    # Build catalog of valid trees by self-ref depth
-    valid_by_conclusion: dict[int, list[ProofTree]] = {}
-    for tree in enumerate_proof_trees(props, max_depth):
-        results["tested_trees"] += 1
-        if is_valid_nwf(tree):
-            conc = tree.conclusion
-            if conc is not None:
-                valid_by_conclusion.setdefault(conc, []).append(tree)
-
-    # Check eliminability
-    for tree in enumerate_proof_trees(props, max_depth):
-        if not is_valid_nwf(tree):
-            continue
-        srd = self_ref_depth(tree)
-        if srd == 0:
-            continue
-        results["valid_self_ref"] += 1
-
-        # Can we find a valid tree with same conclusion but lower self-ref depth?
-        conc = tree.conclusion
-        found_lower = False
-        if conc in valid_by_conclusion:
-            for alt in valid_by_conclusion[conc]:
-                if self_ref_depth(alt) < srd:
-                    found_lower = True
-                    break
-
-        if found_lower:
-            results["eliminable"] += 1
-        else:
-            results["counterexamples"].append({
-                "tree": str(tree),
-                "conclusion": conc,
-                "self_ref_depth": srd,
-            })
-
-    return results
+def induction_system(n: int) -> ProofSystem:
+    """Create an induction-like system: 0 is axiom, x → x+1."""
+    universe = frozenset(range(n))
+    def derive(s: PropSet) -> PropSet:
+        result = s | frozenset([0])
+        for x in s:
+            if x + 1 < n:
+                result = result | frozenset([x + 1])
+        return result
+    return ProofSystem(universe=universe, derive=derive)
 
 
 if __name__ == "__main__":
-    import doctest
-    doctest.testmod()
+    # Quick self-test
+    ps = identity_system(5)
+    analysis = full_analysis(ps)
+    print(f"Identity system (n=5):")
+    print(f"  lfp = {sorted(analysis.lfp)}")
+    print(f"  gfp = {sorted(analysis.gfp)}")
+    print(f"  gap = {sorted(analysis.gap)}")
+    print(f"  safe = {sorted(analysis.safe_elements)}")
+    print(f"  self-ref = {sorted(analysis.self_referential_elements)}")
+    assert analysis.gap == ps.universe
+    assert analysis.safe_elements == ps.universe
+    assert analysis.self_referential_elements == ps.universe
+    print("  ✓ All assertions passed")
 
-    print("=== Self-Reference Eliminability Conjecture Test ===")
-    results = test_self_ref_eliminability(max_depth=2)
-    print(f"Trees tested: {results['tested_trees']}")
-    print(f"Valid self-referential: {results['valid_self_ref']}")
-    print(f"Eliminable: {results['eliminable']}")
-    print(f"Counterexamples: {len(results['counterexamples'])}")
-    if results['counterexamples']:
-        print("First counterexample:")
-        print(f"  {results['counterexamples'][0]}")
-    else:
-        print("No counterexamples found — conjecture holds for tested depth!")
+    ps2 = constant_system(5, frozenset([0, 1]))
+    analysis2 = full_analysis(ps2)
+    print(f"\nConstant system (n=5, axioms={{0,1}}):")
+    print(f"  lfp = {sorted(analysis2.lfp)}")
+    print(f"  gfp = {sorted(analysis2.gfp)}")
+    print(f"  gap = {sorted(analysis2.gap)}")
+    assert len(analysis2.gap) == 0
+    print("  ✓ Gap is empty (as expected)")
+
+    ps3 = induction_system(8)
+    analysis3 = full_analysis(ps3)
+    print(f"\nInduction system (n=8):")
+    print(f"  lfp = {sorted(analysis3.lfp)}")
+    print(f"  gfp = {sorted(analysis3.gfp)}")
+    print(f"  gap = {sorted(analysis3.gap)}")
+    print(f"  lfp_depth = {analysis3.lfp_depth}")
+    assert len(analysis3.gap) == 0
+    print("  ✓ Gap is empty (complete induction)")
