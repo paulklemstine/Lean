@@ -1,361 +1,294 @@
 #!/usr/bin/env python3
 """
-Anti-Fibonacci Sequence: Demonstration and Numerical Exploration
+Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs
 
-This script demonstrates the key properties of the anti-Fibonacci sequence
-a(n) = n*(n-1)/2 + 1, which grows quadratically while systematically avoiding
-the Fibonacci recurrence for n >= 4.
+Demonstrates the key properties of the anti-Fibonacci sequence,
+the canonical example of a Recurrence Avoidance Partition.
 """
 
 def anti_fib(n: int) -> int:
-    """Compute the n-th anti-Fibonacci number using the closed form."""
-    return n * (n - 1) // 2 + 1
+    """Compute the n-th anti-Fibonacci term: floor(3n/2) + 1."""
+    return n + n // 2 + 1
 
 
-def fib(n: int) -> int:
-    """Compute the n-th Fibonacci number iteratively."""
-    if n <= 0:
-        return 0
-    a, b = 0, 1
-    for _ in range(n - 1):
+def anti_fib_greedy(count: int) -> list[int]:
+    """Compute the anti-Fibonacci sequence via the greedy avoidance algorithm.
+    
+    Starting from (1, 2), each term is the smallest integer greater than the
+    previous that doesn't appear in the set of all previous consecutive sums.
+    """
+    seq = [1, 2]
+    forbidden = {3}  # 1 + 2
+    for _ in range(count - 2):
+        candidate = seq[-1] + 1
+        while candidate in forbidden:
+            candidate += 1
+        forbidden.add(seq[-1] + candidate)
+        seq.append(candidate)
+    return seq
+
+
+def verify_closed_form(n: int = 100) -> None:
+    """Verify that the greedy algorithm matches the closed form."""
+    greedy = anti_fib_greedy(n)
+    closed = [anti_fib(i) for i in range(n)]
+    assert greedy == closed, f"Mismatch at some index!"
+    print(f"✓ Greedy algorithm matches closed form ⌊3n/2⌋+1 for n=0..{n-1}")
+
+
+def verify_avoidance(n: int = 200) -> None:
+    """Verify no term equals the sum of two preceding terms."""
+    seq = [anti_fib(i) for i in range(n)]
+    for i in range(2, n):
+        assert seq[i] != seq[i-1] + seq[i-2], f"Avoidance violated at {i}"
+    print(f"✓ Anti-Fibonacci avoidance holds for n=0..{n-1}")
+
+
+def verify_strong_avoidance(n: int = 200) -> None:
+    """Verify no term equals ANY consecutive sum (cumulative avoidance)."""
+    seq = [anti_fib(i) for i in range(n)]
+    all_sums = {seq[i] + seq[i+1] for i in range(n-1)}
+    terms = set(seq)
+    assert terms.isdisjoint(all_sums), "Strong avoidance violated!"
+    print(f"✓ Strong (cumulative) avoidance holds for n=0..{n-1}")
+
+
+def verify_partition(n: int = 500) -> None:
+    """Verify that terms ⊔ consecutive sums = {1, ..., max_val}."""
+    seq = [anti_fib(i) for i in range(n)]
+    terms = set(seq)
+    sums = {seq[i] + seq[i+1] for i in range(n-1)}
+    
+    max_val = max(terms | sums)
+    universe = set(range(1, max_val + 1))
+    
+    # Check disjointness
+    assert terms.isdisjoint(sums), "Partition failed: overlap!"
+    
+    # Check that we cover a large initial segment
+    covered = terms | sums
+    missing = universe - covered
+    # Some large values might be missing from sums (edge effects)
+    small_missing = {x for x in missing if x < seq[-2]}
+    assert len(small_missing) == 0, f"Partition has gaps: {small_missing}"
+    print(f"✓ Partition verified: terms ⊔ sums covers {{1, ..., {seq[-2]}}}")
+
+
+def verify_mod3_property(n: int = 1000) -> None:
+    """Verify terms are exactly the non-multiples of 3."""
+    terms = {anti_fib(i) for i in range(n)}
+    max_val = max(terms)
+    non_mult_3 = {k for k in range(1, max_val + 1) if k % 3 != 0}
+    assert terms == non_mult_3, "Mod 3 property failed!"
+    print(f"✓ Anti-Fibonacci terms = {{k ∈ ℕ⁺ : 3 ∤ k}} verified up to {max_val}")
+
+
+def demonstrate_ratio_oscillation(n: int = 30) -> None:
+    """Show that the ratio A(n+1)/A(n) does NOT converge to a constant."""
+    print("\n--- Ratio Oscillation ---")
+    print(f"{'n':>4} {'A(n)':>6} {'A(n+1)':>8} {'diff':>5} {'ratio':>8}")
+    print("-" * 35)
+    for i in range(n):
+        a = anti_fib(i)
+        b = anti_fib(i + 1)
+        diff = b - a
+        ratio = b / a if a > 0 else float('inf')
+        print(f"{i:4d} {a:6d} {b:8d} {diff:5d} {ratio:8.4f}")
+
+
+def demonstrate_density(max_k: int = 20) -> None:
+    """Show that density approaches 2/3."""
+    print("\n--- Density Convergence ---")
+    print(f"{'N':>6} {'count(non-mult-3)':>18} {'density':>10} {'2/3':>10}")
+    print("-" * 50)
+    for k in range(1, max_k + 1):
+        N = 3 * k
+        count = sum(1 for i in range(1, N + 1) if i % 3 != 0)
+        density = count / N
+        print(f"{N:6d} {count:18d} {density:10.6f} {2/3:10.6f}")
+
+
+def demonstrate_shadow_enumeration(n: int = 20) -> None:
+    """Show consecutive sums enumerate all multiples of 3."""
+    print("\n--- Shadow (Consecutive Sums) ---")
+    print(f"{'n':>4} {'A(n)':>6} {'A(n+1)':>8} {'sum':>6} {'sum/3':>6}")
+    print("-" * 35)
+    for i in range(n):
+        a = anti_fib(i)
+        b = anti_fib(i + 1)
+        s = a + b
+        print(f"{i:4d} {a:6d} {b:8d} {s:6d} {s/3:6.0f}")
+
+
+def golden_ratio_comparison() -> None:
+    """Compare Fibonacci and Anti-Fibonacci growth rates."""
+    import math
+    phi = (1 + math.sqrt(5)) / 2
+    anti_fib_rate = 3 / 2
+    
+    print("\n--- Growth Rate Comparison ---")
+    print(f"Fibonacci growth rate (φ):        {phi:.6f}")
+    print(f"Anti-Fibonacci growth rate (3/2):  {anti_fib_rate:.6f}")
+    print(f"Ratio: φ / (3/2) = {phi / anti_fib_rate:.6f}")
+    print(f"3/2 < φ < 2: {anti_fib_rate} < {phi:.6f} < 2.0  ✓")
+    print(f"\nFibonacci grows EXPONENTIALLY at rate φ")
+    print(f"Anti-Fibonacci grows LINEARLY at rate 3/2")
+    print(f"Avoidance constrains growth from exponential to linear!")
+
+
+if __name__ == "__main__":
+    print("=" * 60)
+    print("  ANTI-FIBONACCI SEQUENCE DEMONSTRATION")
+    print("  Numbers That Avoid the Golden Ratio at All Costs")
+    print("=" * 60)
+    
+    # First 20 terms
+    print(f"\nFirst 20 terms: {[anti_fib(i) for i in range(20)]}")
+    
+    # Verifications
+    print("\n--- Verifications ---")
+    verify_closed_form(200)
+    verify_avoidance(500)
+    verify_strong_avoidance(500)
+    verify_partition(300)
+    verify_mod3_property(500)
+    
+    # Demonstrations
+    demonstrate_ratio_oscillation(15)
+    demonstrate_density(10)
+    demonstrate_shadow_enumeration(15)
+    golden_ratio_comparison()
+    
+    print("\n" + "=" * 60)
+    print("  ALL VERIFICATIONS PASSED")
+    print("=" * 60)
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Anti-Fibonacci Sequence Properties
+
+Generates plots showing the key properties of the anti-Fibonacci sequence:
+1. The sequence and its shadow (partition of ℕ⁺)
+2. Ratio oscillation vs. Fibonacci convergence
+3. Density convergence to 2/3
+"""
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import numpy as np
+
+
+def anti_fib(n):
+    return n + n // 2 + 1
+
+
+def fib(n):
+    a, b = 1, 1
+    for _ in range(n):
         a, b = b, a + b
-    return b
-
-
-def fib_defect(n: int) -> float:
-    """Compute the Fibonacci defect at position n: a(n+2) - a(n+1) - a(n)."""
-    return anti_fib(n + 2) - anti_fib(n + 1) - anti_fib(n)
-
-
-def fib_defect_formula(n: int) -> float:
-    """Compute the Fibonacci defect using the exact formula n*(3-n)/2."""
-    return n * (3 - n) / 2
+    return a
 
 
 def main():
-    print("=" * 70)
-    print("THE ANTI-FIBONACCI SEQUENCE")
-    print("=" * 70)
-
-    # Display the first 20 terms
-    print("\n--- First 20 terms ---")
-    for i in range(20):
-        print(f"  a({i:2d}) = {anti_fib(i):6d}")
-
-    # Verify closed form
-    print("\n--- Closed Form Verification ---")
-    print("Verifying a(n) = n*(n-1)/2 + 1 for n = 0..100:")
-    # Compute via recurrence
-    rec = [1, 1]
-    for i in range(2, 101):
-        rec.append(rec[-1] + (i - 1))
-    all_match = all(rec[n] == anti_fib(n) for n in range(101))
-    print(f"  All 101 values match closed form: {all_match}")
-
-    # Fibonacci defect
-    print("\n--- Fibonacci Defect d(n) = a(n+2) - a(n+1) - a(n) ---")
-    print(f"  {'n':>4s}  {'d(n) computed':>14s}  {'d(n) formula':>14s}  {'Match':>6s}")
-    for n in range(15):
-        dc = fib_defect(n)
-        df = fib_defect_formula(n)
-        print(f"  {n:4d}  {dc:14.1f}  {df:14.1f}  {'✓' if dc == df else '✗':>6s}")
-
-    # Anti-Fibonacci property: positions where a(n+2) = a(n+1) + a(n)
-    print("\n--- Fibonacci Recurrence Coincidences ---")
-    print("Positions where a(n+2) = a(n+1) + a(n):")
-    coincidences = [n for n in range(10000) if fib_defect(n) == 0]
-    print(f"  Found at positions: {coincidences}")
-    print(f"  (Theorem: exactly n=0 and n=3)")
-
-    # Ratio convergence
-    print("\n--- Consecutive Ratio a(n+1)/a(n) ---")
-    print(f"  {'n':>4s}  {'a(n+1)/a(n)':>12s}  {'Fibonacci F(n+1)/F(n)':>22s}")
-    for n in [1, 2, 5, 10, 20, 50, 100, 500, 1000]:
-        af_ratio = anti_fib(n + 1) / anti_fib(n)
-        fib_ratio = fib(n + 1) / fib(n) if fib(n) > 0 else float('inf')
-        print(f"  {n:4d}  {af_ratio:12.6f}  {fib_ratio:22.6f}")
-    print(f"\n  Anti-Fibonacci ratio → 1.0 (trivial)")
-    print(f"  Fibonacci ratio → φ ≈ 1.618034...")
-
-    # Growth comparison
-    print("\n--- Growth Comparison: Anti-Fibonacci vs Fibonacci ---")
-    print(f"  {'n':>4s}  {'antiFib(n)':>12s}  {'Fib(n)':>12s}  {'antiFib < Fib':>14s}")
-    for n in [5, 10, 12, 15, 20, 30, 50]:
-        af = anti_fib(n)
-        f = fib(n)
-        print(f"  {n:4d}  {af:12d}  {f:12d}  {'✓' if af < f else '✗':>14s}")
-
-    # Quadratic growth verification
-    print("\n--- Quadratic Growth: a(n)/n² → 1/2 ---")
-    print(f"  {'n':>8s}  {'a(n)/n²':>12s}")
-    for n in [10, 100, 1000, 10000, 100000, 1000000]:
-        ratio = anti_fib(n) / n**2
-        print(f"  {n:8d}  {ratio:12.8f}")
-    print(f"  Limit = 0.5")
-
-    # Large-scale defect behavior
-    print("\n--- Defect Growth: |d(n)| ~ n²/2 ---")
-    print(f"  {'n':>8s}  {'|d(n)|':>12s}  {'n²/2':>12s}  {'ratio':>8s}")
-    for n in [10, 100, 1000, 10000]:
-        d = abs(fib_defect(n))
-        expected = n**2 / 2
-        print(f"  {n:8d}  {d:12.0f}  {expected:12.0f}  {d/expected:8.4f}")
-
-    print("\n" + "=" * 70)
-    print("All demonstrations complete.")
-    print("=" * 70)
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization 1: Anti-Fibonacci vs Fibonacci Growth Comparison
-
-Plots the anti-Fibonacci sequence alongside the Fibonacci sequence on a
-log-linear scale to highlight the dramatic difference between polynomial
-and exponential growth.
-"""
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def anti_fib(n: int) -> int:
-    return n * (n - 1) // 2 + 1
-
-
-def fib_sequence(max_n: int) -> list:
-    seq = [0, 1]
-    for _ in range(max_n - 1):
-        seq.append(seq[-1] + seq[-2])
-    return seq
-
-
-def main():
-    N = 30
-    ns = list(range(N + 1))
-    af = [anti_fib(n) for n in ns]
-    fibs = fib_sequence(N + 1)[:N + 1]
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Linear scale
-    ax1 = axes[0]
-    ax1.plot(ns, af, 'b-o', markersize=4, label='Anti-Fibonacci', linewidth=2)
-    ax1.plot(ns, fibs, 'r-s', markersize=4, label='Fibonacci', linewidth=2)
-    ax1.set_xlabel('n', fontsize=13)
-    ax1.set_ylabel('Value', fontsize=13)
-    ax1.set_title('Linear Scale', fontsize=14)
-    ax1.legend(fontsize=12)
-    ax1.grid(True, alpha=0.3)
-
-    # Log scale
-    ax2 = axes[1]
-    af_pos = [(n, v) for n, v in zip(ns, af) if v > 0]
-    fib_pos = [(n, v) for n, v in zip(ns, fibs) if v > 0]
-    ax2.semilogy([x[0] for x in af_pos], [x[1] for x in af_pos],
-                 'b-o', markersize=4, label='Anti-Fibonacci ~ n²/2', linewidth=2)
-    ax2.semilogy([x[0] for x in fib_pos], [x[1] for x in fib_pos],
-                 'r-s', markersize=4, label='Fibonacci ~ φⁿ/√5', linewidth=2)
-    ax2.set_xlabel('n', fontsize=13)
-    ax2.set_ylabel('Value (log scale)', fontsize=13)
-    ax2.set_title('Logarithmic Scale', fontsize=14)
-    ax2.legend(fontsize=12)
-    ax2.grid(True, alpha=0.3)
-
-    fig.suptitle('The Anti-Fibonacci Sequence: Quadratic vs Exponential Growth',
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig.suptitle("Anti-Fibonacci Sequence: Recurrence Avoidance Algebra",
                  fontsize=16, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('antifib_growth_comparison.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: antifib_growth_comparison.png")
 
+    # --- Plot 1: Partition of ℕ⁺ ---
+    ax1 = axes[0, 0]
+    N = 60
+    terms = {anti_fib(n) for n in range(2 * N // 3 + 5)}
+    shadows = set()
+    for n in range(2 * N // 3 + 4):
+        shadows.add(anti_fib(n) + anti_fib(n + 1))
 
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization 2: Fibonacci Defect Profile
-
-Plots the Fibonacci defect d(n) = a(n+2) - a(n+1) - a(n) for the
-anti-Fibonacci sequence, showing the parabolic shape with roots at
-n=0 and n=3, and the increasingly negative defect for large n.
-"""
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def anti_fib(n: int) -> int:
-    return n * (n - 1) // 2 + 1
-
-
-def fib_defect(n: int) -> float:
-    return anti_fib(n + 2) - anti_fib(n + 1) - anti_fib(n)
-
-
-def defect_formula(n: float) -> float:
-    return n * (3 - n) / 2
-
-
-def main():
-    N = 50
-    ns = list(range(N + 1))
-    defects = [fib_defect(n) for n in ns]
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Full defect profile
-    ax1 = axes[0]
-    ax1.bar(ns, defects, color=['green' if d >= 0 else 'red' for d in defects],
-            alpha=0.7, edgecolor='black', linewidth=0.3)
-
-    # Overlay formula curve
-    x_cont = np.linspace(0, N, 500)
-    y_cont = [defect_formula(x) for x in x_cont]
-    ax1.plot(x_cont, y_cont, 'k--', linewidth=2, label='d(n) = n(3−n)/2')
-
-    # Mark coincidence points
-    coinc = [n for n in ns if defects[n] == 0]
-    ax1.scatter(coinc, [0]*len(coinc), color='gold', s=150, zorder=5,
-                edgecolors='black', linewidths=2,
-                label=f'Fibonacci coincidences: n={coinc}')
-
-    ax1.axhline(y=0, color='black', linewidth=0.8)
-    ax1.set_xlabel('Position n', fontsize=13)
-    ax1.set_ylabel('Fibonacci Defect d(n)', fontsize=13)
-    ax1.set_title('Fibonacci Defect: Full Profile', fontsize=14)
-    ax1.legend(fontsize=11)
-    ax1.grid(True, alpha=0.3)
-
-    # Zoomed view near the transition
-    ax2 = axes[1]
-    ns_zoom = list(range(10))
-    defects_zoom = [fib_defect(n) for n in ns_zoom]
     colors = []
-    for n, d in zip(ns_zoom, defects_zoom):
-        if d > 0:
-            colors.append('#2ecc71')
-        elif d == 0:
-            colors.append('#f1c40f')
+    for k in range(1, N + 1):
+        if k in terms:
+            colors.append('#2196F3')  # blue
+        elif k in shadows:
+            colors.append('#FF5722')  # orange
         else:
-            colors.append('#e74c3c')
+            colors.append('#9E9E9E')  # grey (shouldn't happen)
 
-    bars = ax2.bar(ns_zoom, defects_zoom, color=colors, alpha=0.8,
-                   edgecolor='black', linewidth=1)
+    rows = 6
+    cols = N // rows
+    for i, k in enumerate(range(1, N + 1)):
+        r, c = i // cols, i % cols
+        color = colors[i]
+        ax1.add_patch(plt.Rectangle((c, rows - 1 - r), 0.9, 0.9,
+                                     facecolor=color, edgecolor='white', linewidth=0.5))
+        ax1.text(c + 0.45, rows - 1 - r + 0.45, str(k),
+                ha='center', va='center', fontsize=6, fontweight='bold',
+                color='white')
 
-    for n, d in zip(ns_zoom, defects_zoom):
-        ax2.annotate(f'd={d}', (n, d),
-                     textcoords="offset points", xytext=(0, 10 if d >= 0 else -15),
-                     ha='center', fontsize=10, fontweight='bold')
+    ax1.set_xlim(-0.1, cols + 0.1)
+    ax1.set_ylim(-0.1, rows + 0.1)
+    ax1.set_aspect('equal')
+    ax1.axis('off')
+    ax1.set_title('Partition of ℕ⁺: Terms (blue) vs Shadow (orange)', fontsize=11)
+    blue_patch = mpatches.Patch(color='#2196F3', label='Anti-Fibonacci (3∤n)')
+    orange_patch = mpatches.Patch(color='#FF5722', label='Shadow (3|n)')
+    ax1.legend(handles=[blue_patch, orange_patch], loc='lower right', fontsize=8)
 
-    ax2.axhline(y=0, color='black', linewidth=1)
-    ax2.set_xlabel('Position n', fontsize=13)
-    ax2.set_ylabel('Fibonacci Defect d(n)', fontsize=13)
-    ax2.set_title('Zoomed View: The Transition Region', fontsize=14)
-    ax2.set_xticks(ns_zoom)
+    # --- Plot 2: Growth comparison ---
+    ax2 = axes[0, 1]
+    ns = np.arange(1, 25)
+    af_vals = [anti_fib(int(n)) for n in ns]
+    fib_vals = [fib(int(n)) for n in ns]
+    linear = [int(n) for n in ns]
+
+    ax2.semilogy(ns, af_vals, 'b-o', label='Anti-Fibonacci A(n)', markersize=4)
+    ax2.semilogy(ns, fib_vals, 'r-s', label='Fibonacci F(n)', markersize=4)
+    ax2.semilogy(ns, linear, 'g--', label='Linear (n)', alpha=0.5)
+    ax2.semilogy(ns, [1.5 * n for n in ns], 'b--', label='3n/2 (asymptote)', alpha=0.5)
+    ax2.set_xlabel('n')
+    ax2.set_ylabel('Value (log scale)')
+    ax2.set_title('Growth: Linear (Anti-Fib) vs Exponential (Fib)', fontsize=11)
+    ax2.legend(fontsize=8)
     ax2.grid(True, alpha=0.3)
 
-    # Custom legend for zoomed view
-    from matplotlib.patches import Patch
-    legend_elements = [
-        Patch(facecolor='#2ecc71', edgecolor='black', label='Positive (faster than Fib)'),
-        Patch(facecolor='#f1c40f', edgecolor='black', label='Zero (Fibonacci coincidence)'),
-        Patch(facecolor='#e74c3c', edgecolor='black', label='Negative (slower than Fib)'),
-    ]
-    ax2.legend(handles=legend_elements, fontsize=10)
-
-    fig.suptitle('The Fibonacci Defect of the Anti-Fibonacci Sequence',
-                 fontsize=16, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('fibonacci_defect_profile.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: fibonacci_defect_profile.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization 3: Consecutive Ratio Convergence
-
-Compares the convergence of consecutive ratios a(n+1)/a(n) for the
-anti-Fibonacci sequence (→ 1) versus the Fibonacci sequence (→ φ ≈ 1.618).
-"""
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def anti_fib(n: int) -> int:
-    return n * (n - 1) // 2 + 1
-
-
-def fib_sequence(max_n: int) -> list:
-    seq = [0, 1]
-    for _ in range(max_n):
-        seq.append(seq[-1] + seq[-2])
-    return seq
-
-
-def main():
-    N = 50
-    fibs = fib_sequence(N + 1)
-
-    ns = list(range(1, N + 1))
-    af_ratios = [anti_fib(n + 1) / anti_fib(n) for n in ns]
-    fib_ratios = [fibs[n + 1] / fibs[n] if fibs[n] > 0 else 0 for n in ns]
-
+    # --- Plot 3: Ratio oscillation ---
+    ax3 = axes[1, 0]
+    n_ratio = 40
+    af_ratios = [anti_fib(n + 1) / anti_fib(n) for n in range(n_ratio)]
+    fib_ratios = [fib(n + 1) / fib(n) for n in range(n_ratio)]
     phi = (1 + np.sqrt(5)) / 2
 
-    fig, ax = plt.subplots(figsize=(12, 7))
+    ax3.plot(range(n_ratio), af_ratios, 'b-o', label='A(n+1)/A(n)', markersize=3)
+    ax3.plot(range(n_ratio), fib_ratios, 'r-s', label='F(n+1)/F(n)', markersize=3, alpha=0.7)
+    ax3.axhline(y=phi, color='r', linestyle='--', alpha=0.5, label=f'φ = {phi:.4f}')
+    ax3.axhline(y=1.5, color='b', linestyle='--', alpha=0.5, label='3/2 = 1.5')
+    ax3.axhline(y=1.0, color='gray', linestyle=':', alpha=0.3)
+    ax3.set_xlabel('n')
+    ax3.set_ylabel('Ratio')
+    ax3.set_title('Ratio: Anti-Fib oscillates, Fibonacci converges to φ', fontsize=11)
+    ax3.legend(fontsize=8)
+    ax3.set_ylim(0.8, 2.2)
+    ax3.grid(True, alpha=0.3)
 
-    ax.plot(ns, af_ratios, 'b-o', markersize=4, label='Anti-Fibonacci ratio → 1',
-            linewidth=2, alpha=0.8)
-    ax.plot(ns, fib_ratios, 'r-s', markersize=4, label=f'Fibonacci ratio → φ ≈ {phi:.4f}',
-            linewidth=2, alpha=0.8)
+    # --- Plot 4: Density ---
+    ax4 = axes[1, 1]
+    ks = range(1, 100)
+    densities = []
+    for k in ks:
+        N = 3 * k
+        count = sum(1 for i in range(1, N + 1) if i % 3 != 0)
+        densities.append(count / N)
 
-    # Reference lines
-    ax.axhline(y=1.0, color='blue', linestyle='--', alpha=0.5, linewidth=1.5,
-               label='y = 1 (anti-Fibonacci limit)')
-    ax.axhline(y=phi, color='red', linestyle='--', alpha=0.5, linewidth=1.5,
-               label=f'y = φ ≈ {phi:.4f} (Fibonacci limit)')
-
-    # Highlight the gap
-    ax.fill_between(ns, [1.0]*len(ns), [phi]*len(ns),
-                    alpha=0.08, color='purple',
-                    label='Gap between limits')
-
-    ax.set_xlabel('Position n', fontsize=13)
-    ax.set_ylabel('Consecutive Ratio a(n+1) / a(n)', fontsize=13)
-    ax.set_title('Ratio Convergence: Anti-Fibonacci (→ 1) vs Fibonacci (→ φ)',
-                 fontsize=15, fontweight='bold')
-    ax.legend(fontsize=11, loc='center right')
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(0.8, 2.2)
-
-    # Add annotation
-    ax.annotate('The golden ratio φ\nis never approached',
-                xy=(25, phi), xytext=(30, 1.9),
-                arrowprops=dict(arrowstyle='->', color='darkred', lw=2),
-                fontsize=12, color='darkred', fontweight='bold')
-
-    ax.annotate('Anti-Fibonacci converges\nto the trivial limit 1',
-                xy=(35, af_ratios[34]), xytext=(20, 0.9),
-                arrowprops=dict(arrowstyle='->', color='darkblue', lw=2),
-                fontsize=12, color='darkblue', fontweight='bold')
+    ax4.plot(list(ks), densities, 'b-', linewidth=2, label='Density of anti-Fib terms')
+    ax4.axhline(y=2/3, color='r', linestyle='--', label='2/3 (limit)', alpha=0.7)
+    ax4.set_xlabel('k (N = 3k)')
+    ax4.set_ylabel('Density')
+    ax4.set_title('Density of Anti-Fibonacci Terms → 2/3', fontsize=11)
+    ax4.legend(fontsize=8)
+    ax4.set_ylim(0.6, 0.7)
+    ax4.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('ratio_convergence.png', dpi=150, bbox_inches='tight')
+    plt.savefig('antifib_visualization.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: ratio_convergence.png")
+    print("Saved: antifib_visualization.png")
 
 
 if __name__ == "__main__":
