@@ -1731,6 +1731,7 @@ class PiAgentClient:
         theorem_context: str = "",
         insight_extractor=None,
         research_journal=None,
+        prompt_version: Optional[str] = None,
     ) -> str:
         """Write a streamlined Aristotle prompt (5-10K chars).
 
