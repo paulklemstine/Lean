@@ -1,322 +1,288 @@
 #!/usr/bin/env python3
 """
-Algorithms for Sudoku Spectral Gap Analysis
+Algorithms for Spectral Gap Analysis of Constraint Satisfaction Problems
+========================================================================
 
-Implements the core algorithms for computing spectral gaps, mixing times,
-and phase transitions in constraint satisfaction problems.
+Type-hinted implementations of the core algorithms from the
+Constraint Spectral Landscape framework.
 """
 
-import numpy as np
-from typing import List, Tuple, Optional, Dict
 from dataclasses import dataclass
+from typing import Callable, Optional, List, Tuple
+from enum import Enum
+import math
+
+
+class PhaseRegime(Enum):
+    """Classification of constraint density regimes."""
+    SUBCRITICAL = "subcritical"     # Many solutions, fast mixing
+    CRITICAL = "critical"           # Phase transition, slow mixing
+    SUPERCRITICAL = "supercritical" # Unique/no solution, frozen
 
 
 @dataclass
-class SpectralGapResult:
-    """Result of a spectral gap computation."""
-    gap: float
-    eigenvalues: np.ndarray
-    mixing_time: float
-    phase: str
-    num_solutions: int
-
-
-@dataclass
-class PhaseTransitionPoint:
-    """Data point in the phase transition curve."""
-    num_clues: int
-    density: float
-    num_solutions: int
-    spectral_gap: float
-    mixing_time: float
-    phase: str
-
-
-def latin_square_solver(n: int, clues: Dict[Tuple[int, int], int] = None) -> List[np.ndarray]:
-    """Enumerate all Latin squares of size n satisfying given clues.
-
-    Algorithm: Backtracking with constraint propagation.
-    Time complexity: O(n! ^ n) worst case, much better with pruning.
-    Space complexity: O(n^2) per solution stored.
-
-    Args:
-        n: Size of the Latin square
-        clues: Dictionary mapping (row, col) to required value
-
-    Returns:
-        List of all valid n×n Latin squares matching the clues
+class SpectralLandscape:
     """
-    if clues is None:
-        clues = {}
-
-    solutions = []
-
-    def is_valid(grid: np.ndarray, row: int, col: int, val: int) -> bool:
-        """Check if placing val at (row, col) maintains Latin square property."""
-        if val in grid[row, :col]:
-            return False
-        for r in range(row):
-            if grid[r, col] == val:
+    A spectral landscape: gap function satisfying:
+    - gap_fn(d) >= 0 for all d
+    - gap_fn is antitone (non-increasing)
+    - gap_fn(0) > 0
+    - gap_fn(1) = 0
+    """
+    gap_fn: Callable[[float], float]
+    
+    def gap(self, d: float) -> float:
+        """Evaluate the spectral gap at density d."""
+        return max(0.0, self.gap_fn(d))
+    
+    def critical_density(self, tol: float = 1e-10) -> float:
+        """Compute critical density: sup{d | gap(d) > 0} via binary search."""
+        lo, hi = 0.0, 1.0
+        for _ in range(100):
+            mid = (lo + hi) / 2
+            if self.gap(mid) > tol:
+                lo = mid
+            else:
+                hi = mid
+        return (lo + hi) / 2
+    
+    def is_valid(self, n_samples: int = 1000) -> bool:
+        """Verify landscape axioms numerically."""
+        ds = [i / n_samples for i in range(n_samples + 1)]
+        # Non-negativity
+        for d in ds:
+            if self.gap_fn(d) < -1e-10:
                 return False
+        # Antitonicity
+        for i in range(len(ds) - 1):
+            if self.gap_fn(ds[i+1]) > self.gap_fn(ds[i]) + 1e-10:
+                return False
+        # Positive at zero
+        if self.gap_fn(0) <= 0:
+            return False
+        # Zero at one
+        if abs(self.gap_fn(1)) > 1e-10:
+            return False
         return True
-
-    def solve(grid: np.ndarray, pos: int):
-        """Backtracking solver."""
-        if pos == n * n:
-            solutions.append(grid.copy())
-            return
-
-        row, col = pos // n, pos % n
-
-        if (row, col) in clues:
-            val = clues[(row, col)]
-            if is_valid(grid, row, col, val):
-                grid[row, col] = val
-                solve(grid, pos + 1)
-                grid[row, col] = 0
-            return
-
-        for val in range(1, n + 1):
-            if is_valid(grid, row, col, val):
-                grid[row, col] = val
-                solve(grid, pos + 1)
-                grid[row, col] = 0
-
-    grid = np.zeros((n, n), dtype=int)
-    solve(grid, 0)
-    return solutions
+    
+    def refines(self, other: 'SpectralLandscape', n_samples: int = 1000) -> bool:
+        """Check if self refines other: gap_self(d) <= gap_other(d) for all d."""
+        ds = [i / n_samples for i in range(n_samples + 1)]
+        return all(self.gap(d) <= other.gap(d) + 1e-10 for d in ds)
 
 
-def build_adjacency_matrix(solutions: List[np.ndarray]) -> np.ndarray:
-    """Build the adjacency matrix of the swap graph.
+@dataclass
+class MixingProfile:
+    """Mixing profile: landscape + state space parameters."""
+    landscape: SpectralLandscape
+    state_space_size: int
+    tolerance: float
+    
+    def mixing_time(self, d: float) -> float:
+        """Compute mixing time bound at density d."""
+        gap = self.landscape.gap(d)
+        if gap <= 0:
+            return float('inf')
+        log_factor = math.log(self.state_space_size) + math.log(1 / self.tolerance)
+        return (1 / gap) * log_factor
 
-    Two solutions are adjacent if they differ by exactly one row-swap
-    (two entries in the same row exchanged).
 
-    Algorithm: Pairwise comparison with early termination.
-    Time complexity: O(m^2 * n^2) where m = |solutions|
-    Space complexity: O(m^2)
+@dataclass
+class GapEntropyPair:
+    """Joint gap-entropy data at a specific density."""
+    density: float
+    gap: float
+    log_solutions: float
+    
+    @property
+    def mixing_rate(self) -> float:
+        """Information mixing rate: gap * log(solutions)."""
+        return self.gap * self.log_solutions
+    
+    def verify_bound(self) -> bool:
+        """Verify mixing_rate <= log_solutions."""
+        return self.mixing_rate <= self.log_solutions + 1e-10
 
-    Args:
-        solutions: List of Latin squares
 
-    Returns:
-        Adjacency matrix
+# === Core Algorithms ===
+
+def find_critical_density(
+    gap_fn: Callable[[float], float],
+    tol: float = 1e-12
+) -> float:
     """
-    m = len(solutions)
-    adj = np.zeros((m, m), dtype=int)
-
-    for i in range(m):
-        for j in range(i + 1, m):
-            diff = solutions[i] != solutions[j]
-            if np.sum(diff) == 2:
-                positions = np.argwhere(diff)
-                if positions[0][0] == positions[1][0]:
-                    adj[i][j] = 1
-                    adj[j][i] = 1
-
-    return adj
-
-
-def adjacency_to_stochastic(adj: np.ndarray) -> np.ndarray:
-    """Convert adjacency matrix to row-stochastic transition matrix.
-
-    Each row is normalized to sum to 1. Isolated vertices get self-loops.
-
-    Args:
-        adj: Adjacency matrix
-
-    Returns:
-        Row-stochastic transition matrix
+    Algorithm 1: Binary Search for Critical Density
+    
+    Find d_c = sup{d : gap(d) > 0} using binary search.
+    
+    Pseudocode:
+        lo, hi = 0, 1
+        while hi - lo > tol:
+            mid = (lo + hi) / 2
+            if gap(mid) > 0: lo = mid
+            else: hi = mid
+        return (lo + hi) / 2
     """
-    m = adj.shape[0]
-    P = np.zeros((m, m))
-
-    for i in range(m):
-        degree = np.sum(adj[i])
-        if degree > 0:
-            P[i] = adj[i] / degree
+    lo, hi = 0.0, 1.0
+    while hi - lo > tol:
+        mid = (lo + hi) / 2
+        if gap_fn(mid) > tol:
+            lo = mid
         else:
-            P[i, i] = 1.0
+            hi = mid
+    return (lo + hi) / 2
 
-    return P
 
-
-def compute_spectral_data(P: np.ndarray) -> SpectralGapResult:
-    """Compute full spectral data of a stochastic matrix.
-
-    Algorithm: Direct eigenvalue computation via numpy.
-    Time complexity: O(m^3) for m×m matrix
-    Space complexity: O(m^2)
-
-    Args:
-        P: Row-stochastic matrix
-
-    Returns:
-        SpectralGapResult with gap, eigenvalues, mixing time, and phase
+def compute_phase_diagram(
+    gap_fn: Callable[[float], float],
+    critical_density: float,
+    frozen_density: float,
+    n_points: int = 100
+) -> List[Tuple[float, float, PhaseRegime]]:
     """
-    m = P.shape[0]
-
-    if m <= 1:
-        return SpectralGapResult(
-            gap=0.0,
-            eigenvalues=np.array([1.0]) if m == 1 else np.array([]),
-            mixing_time=0.0,
-            phase="trivial",
-            num_solutions=m
-        )
-
-    eigenvalues = np.sort(np.abs(np.linalg.eigvals(P)))[::-1]
-    gap = float(1.0 - eigenvalues[1]) if len(eigenvalues) >= 2 else 0.0
-    gap = max(gap, 0.0)  # Numerical stability
-
-    epsilon = 0.25
-    if gap > 1e-10:
-        mixing_time = (1.0 / gap) * (np.log(m) + np.log(1.0 / epsilon))
-    else:
-        mixing_time = float('inf')
-
-    # Phase classification
-    if gap > 0.1:
-        phase = "underconstrained"
-    elif gap > 1e-6:
-        phase = "critical"
-    else:
-        phase = "overconstrained"
-
-    return SpectralGapResult(
-        gap=gap,
-        eigenvalues=eigenvalues,
-        mixing_time=mixing_time,
-        phase=phase,
-        num_solutions=m
-    )
-
-
-def analyze_phase_transition(n: int, max_clues: Optional[int] = None) -> List[PhaseTransitionPoint]:
-    """Analyze the phase transition by varying the number of clues.
-
-    For each number of clues k = 0, 1, ..., max_clues:
-    1. Generate random clue configurations
-    2. Count solutions
-    3. Compute spectral gap of the swap chain
-    4. Classify the phase
-
-    Algorithm: Exhaustive enumeration for small n, sampling for larger n.
-    Time complexity: O(n! ^ n * C(n^2, k)) per clue count k
-    Space complexity: O(n! ^ n)
-
-    Args:
-        n: Size of the Latin square
-        max_clues: Maximum number of clues to try (default: n^2)
-
-    Returns:
-        List of PhaseTransitionPoint for each clue count
+    Algorithm 2: Phase Diagram Computation
+    
+    Compute (density, gap, phase) triples across the density range.
+    
+    Pseudocode:
+        for d in linspace(0, 1, n):
+            gap = gap_fn(d)
+            phase = classify(d, d_c, d_f)
+            yield (d, gap, phase)
     """
-    if max_clues is None:
-        max_clues = n * n
-
-    total_cells = n * n
-    all_solutions = latin_square_solver(n)
-    results = []
-
-    # For k=0 (no clues)
-    P = adjacency_to_stochastic(build_adjacency_matrix(all_solutions))
-    spec = compute_spectral_data(P)
-    results.append(PhaseTransitionPoint(
-        num_clues=0,
-        density=0.0,
-        num_solutions=len(all_solutions),
-        spectral_gap=spec.gap,
-        mixing_time=spec.mixing_time,
-        phase=spec.phase
-    ))
-
-    # For k > 0, use the first solution as the "answer" and add clues from it
-    if len(all_solutions) > 0:
-        answer = all_solutions[0]
-
-        for k in range(1, min(max_clues + 1, total_cells + 1)):
-            # Place clues at the first k positions
-            clues = {}
-            for pos in range(k):
-                r, c = pos // n, pos % n
-                clues[(r, c)] = int(answer[r, c])
-
-            compatible = latin_square_solver(n, clues)
-            density = k / total_cells
-
-            if len(compatible) > 1:
-                P = adjacency_to_stochastic(build_adjacency_matrix(compatible))
-                spec = compute_spectral_data(P)
-            elif len(compatible) == 1:
-                spec = SpectralGapResult(0.0, np.array([1.0]), 0.0, "overconstrained", 1)
-            else:
-                spec = SpectralGapResult(0.0, np.array([]), float('inf'), "infeasible", 0)
-
-            # Phase classification by density
-            if density < 17 / 81:
-                phase = "underconstrained"
-            elif density < 30 / 81:
-                phase = "critical"
-            else:
-                phase = "overconstrained"
-
-            results.append(PhaseTransitionPoint(
-                num_clues=k,
-                density=density,
-                num_solutions=len(compatible),
-                spectral_gap=spec.gap,
-                mixing_time=spec.mixing_time,
-                phase=phase
-            ))
-
+    results: List[Tuple[float, float, PhaseRegime]] = []
+    for i in range(n_points + 1):
+        d = i / n_points
+        gap = max(0.0, gap_fn(d))
+        if d < critical_density:
+            phase = PhaseRegime.SUBCRITICAL
+        elif d < frozen_density:
+            phase = PhaseRegime.CRITICAL
+        else:
+            phase = PhaseRegime.SUPERCRITICAL
+        results.append((d, gap, phase))
     return results
 
 
-def contraction_sequence(gap: float, steps: int, initial_error: float = 1.0) -> List[float]:
-    """Compute the L2 contraction sequence for given spectral gap.
-
-    Theorem: After t steps, error ≤ (1-γ)^t × initial_error.
-
-    Args:
-        gap: Spectral gap value
-        steps: Number of steps to compute
-        initial_error: Initial L2 error
-
-    Returns:
-        List of error bounds at each step
+def mixing_time_landscape(
+    gap_fn: Callable[[float], float],
+    n_states: int,
+    epsilon: float,
+    n_points: int = 100
+) -> List[Tuple[float, float]]:
     """
-    factor = 1.0 - gap
-    return [factor ** t * initial_error for t in range(steps + 1)]
-
-
-def shannon_entropy(probs: np.ndarray) -> float:
-    """Compute Shannon entropy of a probability distribution.
-
-    H(p) = -Σ p_i log(p_i)
-
-    Args:
-        probs: Probability distribution (non-negative, sums to 1)
-
-    Returns:
-        Shannon entropy in nats
+    Algorithm 3: Mixing Time Landscape
+    
+    Compute mixing time as a function of density.
+    
+    Pseudocode:
+        C = log(n) + log(1/eps)
+        for d in linspace(0, 1, n_points):
+            gap = gap_fn(d)
+            t_mix = C / gap if gap > 0 else infinity
+            yield (d, t_mix)
     """
-    probs = probs[probs > 0]  # Filter out zeros
-    return -np.sum(probs * np.log(probs))
+    C = math.log(n_states) + math.log(1 / epsilon)
+    results: List[Tuple[float, float]] = []
+    for i in range(n_points + 1):
+        d = i / n_points
+        gap = max(0.0, gap_fn(d))
+        t_mix = C / gap if gap > 1e-15 else float('inf')
+        results.append((d, t_mix))
+    return results
+
+
+def verify_ivt(
+    gap_fn: Callable[[float], float],
+    n_targets: int = 50
+) -> List[Tuple[float, float, float]]:
+    """
+    Algorithm 4: IVT Verification
+    
+    For each target value y in [0, gap(0)], find d with gap(d) ≈ y.
+    
+    Pseudocode:
+        gap0 = gap_fn(0)
+        for y in linspace(0, gap0, n):
+            d = binary_search(gap_fn, y)
+            error = |gap_fn(d) - y|
+            yield (y, d, error)
+    """
+    gap0 = gap_fn(0)
+    results: List[Tuple[float, float, float]] = []
+    for i in range(n_targets + 1):
+        y = i * gap0 / n_targets
+        # Binary search: gap is decreasing
+        lo, hi = 0.0, 1.0
+        for _ in range(100):
+            mid = (lo + hi) / 2
+            if gap_fn(mid) > y:
+                lo = mid
+            else:
+                hi = mid
+        d_found = (lo + hi) / 2
+        error = abs(gap_fn(d_found) - y)
+        results.append((y, d_found, error))
+    return results
+
+
+def spectral_refinement_chain(
+    landscapes: List[SpectralLandscape]
+) -> List[Tuple[int, int, bool]]:
+    """
+    Algorithm 5: Refinement Chain Verification
+    
+    Verify that a sequence of landscapes forms a refinement chain.
+    
+    Pseudocode:
+        for i, j in pairs:
+            is_refinement = all(L[j].gap(d) <= L[i].gap(d) for d)
+            yield (i, j, is_refinement)
+    """
+    results: List[Tuple[int, int, bool]] = []
+    for i in range(len(landscapes)):
+        for j in range(i + 1, len(landscapes)):
+            is_ref = landscapes[j].refines(landscapes[i])
+            results.append((i, j, is_ref))
+    return results
+
+
+# === Factory Functions for Common Landscapes ===
+
+def sudoku_landscape(alpha: float = 2.0) -> SpectralLandscape:
+    """Create a Sudoku spectral landscape with power-law decay."""
+    df = 30 / 81  # frozen density
+    return SpectralLandscape(
+        gap_fn=lambda d: max(0.0, (1 - d / df) ** alpha) if d < df else 0.0
+    )
+
+def latin_square_landscape(n: int) -> SpectralLandscape:
+    """Create a Latin square spectral landscape for n×n grids."""
+    df = 1 - 1 / n  # approximate frozen density
+    return SpectralLandscape(
+        gap_fn=lambda d, _df=df: max(0.0, (1 - d / _df) ** 2) if d < _df else 0.0
+    )
+
+def random_ksat_landscape(k: int = 3) -> SpectralLandscape:
+    """Create a random k-SAT spectral landscape."""
+    # Critical density for k-SAT: approximately 2^k * ln(2) - (1 + ln(2))/2
+    dc = 2**k * math.log(2) - (1 + math.log(2)) / 2
+    # Normalized to [0,1]
+    dc_norm = min(dc / (10 * dc), 0.9)
+    return SpectralLandscape(
+        gap_fn=lambda d, _dc=dc_norm: max(0.0, 1 - (d / _dc) ** 2) if d < _dc else 0.0
+    )
 
 
 if __name__ == "__main__":
-    print("Spectral Gap Phase Transition Analysis")
-    print("=" * 50)
-
-    for n in [3, 4]:
-        print(f"\n--- {n}×{n} Latin Squares ---")
-        results = analyze_phase_transition(n, max_clues=n*n)
-
-        for pt in results:
-            gap_str = f"{pt.spectral_gap:.4f}" if pt.spectral_gap > 0 else "0.0000"
-            mt_str = f"{pt.mixing_time:.1f}" if pt.mixing_time < float('inf') else "∞"
-            print(f"  k={pt.num_clues:>2}, d={pt.density:.3f}, "
-                  f"|S|={pt.num_solutions:>4}, γ={gap_str}, "
-                  f"T_mix={mt_str:>8}, phase={pt.phase}")
+    # Quick demo
+    L = sudoku_landscape()
+    print(f"Sudoku landscape valid: {L.is_valid()}")
+    print(f"Critical density: {L.critical_density():.6f}")
+    print(f"Expected: {30/81:.6f}")
+    
+    profile = MixingProfile(L, state_space_size=int(6.67e21), tolerance=0.01)
+    print(f"\nMixing time at d=0: {profile.mixing_time(0):.1f}")
+    print(f"Mixing time at d=0.2: {profile.mixing_time(0.2):.1f}")
+    print(f"Mixing time at d=0.35: {profile.mixing_time(0.35):.1f}")
+    print(f"Mixing time at d=0.37: {profile.mixing_time(0.37)}")
