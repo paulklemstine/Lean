@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4eb1539a",
     "filename": "sperners_lemma_implies_nash_equilibria_combinatori.json",
     "pkg_num": 356,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.32480000000000003,
     "title": "Combinatorial Equilibrium Functors: Bridging Sperner's Lemma and Nash's Theorem"
   },
   {
@@ -11454,8 +11454,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.32480000000000003,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Combinatorial Equilibrium Functors: Bridging Sperner's Lemma and Nash's Theorem"
     }
