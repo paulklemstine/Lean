@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "518f6e7e",
     "filename": "cellular_automata_as_algebraic_geometry_wolframs_r.json",
     "pkg_num": 350,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.43279999999999996,
     "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
@@ -11280,8 +11280,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "cellular_automata_as_algebraic_geometry_wolframs_r",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.43279999999999996,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }

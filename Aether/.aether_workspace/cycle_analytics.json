@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T09:53:32.819577+00:00",
+  "last_updated": "2026-06-04T10:26:01.118373+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -2176,6 +2176,74 @@
       "theorem_count": 5,
       "timestamp": "2026-06-04T09:53:32.786764+00:00",
       "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4603,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 20,
+      "domain": "Applications",
+      "duration_seconds": 3833.568151950836,
+      "end_time": 1780568709.0236356,
+      "files_integrated": 5,
+      "job_id": "f41a2045",
+      "outcome_quality": 0.25464,
+      "quality_breakdown": {
+        "actionability": 0.88,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6443,
+        "cross_domain": 0.85,
+        "grade": "substantial",
+        "importance": 0.4124,
+        "novelty": 0.95,
+        "proof_depth": 0.182,
+        "usefulness": 0.516
+      },
+      "quality_score": 0.25464,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780564875.4554837,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T10:26:01.043032+00:00",
+      "title": "EML Algebraic Independence: Transcendence Results"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.345,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 21,
+      "domain": "Shared",
+      "duration_seconds": 3815.266767501831,
+      "end_time": 1780568709.351565,
+      "files_integrated": 5,
+      "job_id": "518f6e7e",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.699,
+        "cross_domain": 1.0,
+        "grade": "substantial",
+        "importance": 0.5529,
+        "novelty": 0.95,
+        "proof_depth": 0.3828,
+        "usefulness": 0.6914
+      },
+      "quality_score": 0.43279999999999996,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780564894.0847974,
+      "strategy_count": 187,
+      "theorem_count": 40,
+      "timestamp": "2026-06-04T10:26:01.084795+00:00",
+      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }
   ]
 }
