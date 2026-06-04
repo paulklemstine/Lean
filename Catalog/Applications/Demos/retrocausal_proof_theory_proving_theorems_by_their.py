@@ -1,525 +1,345 @@
-#!/usr/bin/env python3
 """
 Retrocausal Proof Theory: Interactive Demo
 
-Demonstrates the core concepts:
-1. Consequence narrowing on a concrete example
-2. Unique survivor detection
-3. Compression conjecture testing
-4. Self-certifying proposition identification
-5. Adaptive consequence selection
+Demonstrates the key concepts of retrocausal proof theory with
+concrete examples and numerical experiments.
 """
 
-import numpy as np
 from algorithms import (
-    HypothesisSpace, ConsequenceOracle,
-    candidates_consistent_with, retrocausal_search,
-    adaptive_consequence_selection, test_compression_conjecture,
-    is_consequence_stable, is_self_certifying,
-    compression_factor, proof_search_reduction
+    ConsequenceSystem,
+    retrocausal_search,
+    generate_random_system,
+    find_discrimination_chain,
+    measure_compression_statistics,
 )
+import random
 
 
-def demo_basic_narrowing():
-    """Demo 1: Basic consequence narrowing on a small example."""
+def demo_example_system():
+    """Demo 1: The canonical 3-element consequence system."""
     print("=" * 60)
-    print("DEMO 1: Consequence Narrowing")
+    print("DEMO 1: Canonical 3-Element Consequence System")
     print("=" * 60)
-    
-    # 5 hypotheses, 4 worlds, 3 consequences
-    hs = HypothesisSpace(
-        n=5, m=4,
-        eval=np.array([
-            [True,  True,  False, False],  # H0: true in worlds 0,1
-            [False, True,  True,  False],  # H1: true in worlds 1,2
-            [True,  False, True,  False],  # H2: true in worlds 0,2
-            [False, False, True,  True ],  # H3: true in worlds 2,3
-            [True,  True,  True,  False],  # H4: true in worlds 0,1,2
-        ])
+
+    system = ConsequenceSystem(
+        propositions=frozenset({0, 1, 2}),
+        provable=frozenset({0, 1}),
+        consequences={
+            0: frozenset({0, 1}),
+            1: frozenset({1}),
+            2: frozenset(),
+        },
+        complexity={0: 1, 1: 1, 2: 1},
     )
-    
-    co = ConsequenceOracle(
-        k=3, m=4,
-        test=np.array([
-            [True,  True,  False, True ],  # C0: true in worlds 0,1,3
-            [True,  False, True,  True ],  # C1: true in worlds 0,2,3
-            [False, True,  True,  True ],  # C2: true in worlds 1,2,3
-        ])
+
+    print("\nUniverse: {0, 1, 2}")
+    print("Provable: {0, 1}")
+    print()
+
+    for p in [0, 1, 2]:
+        cons = sorted(system.consequences[p])
+        stable = system.is_stable(p)
+        sep = system.is_separated(p)
+        maximal = system.is_consequence_maximal(p)
+        print(f"  Prop {p}: consequences={cons}, stable={stable}, "
+              f"separated={sep}, maximal={maximal}")
+
+    print("\n--- Retrocausal Search for Proposition 0 ---")
+    candidates, verifs, history = retrocausal_search(system, 0)
+    for i, (v, c) in enumerate(zip(verifs, history[1:])):
+        prev = history[i]
+        print(f"  Step {i+1}: Verify consequence {v}")
+        print(f"    Compression: {prev:.3f} → {c:.3f}")
+
+    print(f"  Final candidates: {sorted(candidates)}")
+    print(f"  Result: {'UNIQUE' if len(candidates) == 1 else 'AMBIGUOUS'}")
+
+
+def demo_larger_system():
+    """Demo 2: A larger system showing exponential compression."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: 10-Element System with Exponential Compression")
+    print("=" * 60)
+
+    # Create a system where each prop has a unique binary signature
+    n = 10
+    propositions = frozenset(range(n))
+
+    # Each proposition p has consequences = {q : bit q of p is 1}
+    # This gives injective consequences (each prop has unique set)
+    consequences = {}
+    for p in range(n):
+        cons = frozenset(q for q in range(4) if (p >> q) & 1)
+        consequences[p] = cons
+
+    provable = frozenset(range(4))  # All "bit" propositions are provable
+
+    system = ConsequenceSystem(
+        propositions=propositions,
+        provable=provable,
+        consequences=consequences,
+        complexity={p: 1 for p in range(n)},
     )
-    
-    print("\nHypothesis Space (eval[h,w]):")
-    for h in range(hs.n):
-        worlds = [w for w in range(hs.m) if hs.eval[h, w]]
-        print(f"  H{h}: holds in worlds {worlds}")
-    
-    print("\nConsequence Oracle (test[c,w]):")
-    for c in range(co.k):
-        worlds = [w for w in range(co.m) if co.test[c, w]]
-        print(f"  C{c}: holds in worlds {worlds}")
-    
-    # Show progressive narrowing
-    print("\nProgressive Narrowing:")
-    for num_consequences in range(co.k + 1):
-        consequences = set(range(num_consequences))
-        candidates = candidates_consistent_with(hs, co, consequences)
-        print(f"  After {num_consequences} consequences: "
-              f"candidates = {sorted(candidates)} "
-              f"(|C| = {len(candidates)})")
-    
+
+    print(f"\nUniverse size: {n}")
+    print(f"Consequence 'bits': {sorted(provable)}")
     print()
 
+    for p in range(n):
+        cons = sorted(system.consequences[p])
+        print(f"  Prop {p}: consequences={cons} (binary={p:04b})")
 
-def demo_unique_survivor():
-    """Demo 2: Unique survivor detection."""
-    print("=" * 60)
-    print("DEMO 2: Unique Survivor Detection")
-    print("=" * 60)
-    
-    np.random.seed(42)
-    n, m, k = 20, 10, 8
-    hs = HypothesisSpace.random(n, m, density=0.3)
-    co = ConsequenceOracle.random(k, m, density=0.6)
-    
-    consequences = list(range(k))
-    candidates, steps = retrocausal_search(hs, co, consequences)
-    
-    print(f"\nHypothesis space: {n} candidates, {m} worlds, {k} consequences")
-    print(f"Search terminated after {steps} consequence verifications")
-    print(f"Surviving candidates: {sorted(candidates)}")
-    
-    if len(candidates) == 1:
-        print(f"✓ UNIQUE SURVIVOR: H{list(candidates)[0]}")
-    elif len(candidates) == 0:
-        print("✗ INCONSISTENT: No candidates survive")
-    else:
-        print(f"◇ {len(candidates)} candidates remain — more consequences needed")
-    
-    # Show reduction
-    reduction = proof_search_reduction(hs, co, set(consequences))
-    print(f"Proof search reduction: {reduction}/{n} candidates eliminated "
-          f"({100*reduction/n:.1f}%)")
-    print()
+    # Search for proposition 7 (binary 0111, consequences = {0, 1, 2})
+    target = 7
+    print(f"\n--- Retrocausal Search for Proposition {target} ---")
+    candidates, verifs, history = retrocausal_search(system, target)
+    for i, (v, c) in enumerate(zip(verifs, history[1:])):
+        prev = history[i]
+        cand = system.candidates_for(frozenset(verifs[:i+1]))
+        print(f"  Step {i+1}: Verify consequence {v}")
+        print(f"    Candidates: {len(cand)}/{n} "
+              f"(compression: {prev:.2f} → {c:.2f})")
+
+    print(f"  Final candidates: {sorted(candidates)}")
 
 
-def demo_compression_conjecture():
-    """Demo 3: Test the compression conjecture."""
+def demo_compression_statistics():
+    """Demo 3: Statistical analysis of compression across random systems."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Compression Statistics (100 random systems)")
     print("=" * 60)
-    print("DEMO 3: Compression Conjecture Testing")
-    print("=" * 60)
-    
-    np.random.seed(123)
-    
-    configs = [
-        (100, 3, 20),
-        (100, 5, 20),
-        (100, 7, 20),
-        (200, 5, 30),
-        (200, 8, 30),
-    ]
-    
-    print(f"\n{'n':>6} {'k':>4} {'m':>4} {'bound':>6} {'mean':>8} "
-          f"{'max':>6} {'holds%':>8}")
-    print("-" * 50)
-    
-    for n, k, m in configs:
-        result = test_compression_conjecture(n, k, m, trials=500)
-        print(f"{n:>6} {k:>4} {m:>4} {result['theoretical_bound']:>6} "
-              f"{result['mean_survivors']:>8.2f} {result['max_survivors']:>6} "
-              f"{result['conjecture_holds_pct']:>7.1f}%")
-    
-    print()
+
+    for density in [0.1, 0.3, 0.5]:
+        stats = measure_compression_statistics(
+            n_trials=100,
+            system_size=30,
+            consequence_density=density,
+        )
+        print(f"\n  Consequence density = {density}")
+        print(f"    Avg final compression ratio: {stats['avg_final_compression']:.4f}")
+        print(f"    Avg discrimination chain length: {stats['avg_chain_length']:.1f}")
+        print(f"    Separation rate: {stats['separation_rate']:.4f}")
+        print(f"    Stability rate: {stats['stability_rate']:.4f}")
 
 
-def demo_self_certifying():
-    """Demo 4: Self-certifying proposition identification."""
+def demo_discrimination_chain():
+    """Demo 4: Finding and analyzing discrimination chains."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Discrimination Chain Analysis")
     print("=" * 60)
-    print("DEMO 4: Self-Certifying Propositions")
+
+    system = generate_random_system(20, consequence_density=0.25, seed=42)
+
+    print(f"\nSystem: {len(system.propositions)} propositions")
+    print(f"Provable: {len(system.provable)}")
+
+    chain = find_discrimination_chain(
+        system, frozenset(), list(system.propositions)
+    )
+    print(f"Maximal discrimination chain length: {len(chain)}")
+
+    # Show compression at each step
+    observed = set()
+    for i, q in enumerate(chain[:10]):  # Show first 10 steps
+        observed.add(q)
+        cands = system.candidates_for(frozenset(observed))
+        ratio = len(cands) / len(system.propositions)
+        print(f"  Step {i+1}: Add consequence {q}, "
+              f"candidates={len(cands)}, ratio={ratio:.3f}")
+
+
+def demo_separation_vs_stability():
+    """Demo 5: Exploring the gap between stability and provability."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Stability vs. Provability Gap")
     print("=" * 60)
-    
-    np.random.seed(77)
-    n, m, k = 8, 6, 5
-    hs = HypothesisSpace.random(n, m, density=0.3)
-    co = ConsequenceOracle.random(k, m, density=0.5)
-    
-    print(f"\nHypothesis space: {n} candidates, {m} worlds, {k} consequences")
-    print()
-    
-    for target in range(n):
-        result = is_self_certifying(hs, co, target)
-        if result is not None:
-            print(f"  H{target}: SELF-CERTIFYING via consequences {sorted(result)}")
+
+    # System where all propositions are stable but some are unprovable
+    system = ConsequenceSystem(
+        propositions=frozenset(range(5)),
+        provable=frozenset({0, 1}),
+        consequences={
+            0: frozenset({0}),
+            1: frozenset({1}),
+            2: frozenset(),  # Empty consequences → vacuously stable
+            3: frozenset(),
+            4: frozenset({0, 1}),  # Consequences are provable
+        },
+        complexity={p: p + 1 for p in range(5)},
+    )
+
+    print("\n  Prop | Provable | Stable | Status")
+    print("  " + "-" * 40)
+    for p in range(5):
+        prov = p in system.provable
+        stable = system.is_stable(p)
+        if prov and stable:
+            status = "Provable & Stable ✓"
+        elif stable and not prov:
+            status = "Stable but UNPROVABLE ⚠"
+        elif prov and not stable:
+            status = "Provable but UNSTABLE ✗"
         else:
-            all_cons = candidates_consistent_with(hs, co, set(range(k)))
-            if target in all_cons:
-                print(f"  H{target}: not self-certifying "
-                      f"(ambiguous with {sorted(all_cons - {target})})")
-            else:
-                print(f"  H{target}: eliminated by consequences")
-    
-    print()
+            status = "Neither"
+        print(f"    {p}  |  {str(prov):5s}   | {str(stable):5s}  | {status}")
+
+    stable_count = sum(1 for p in range(5) if system.is_stable(p))
+    provable_count = len(system.provable)
+    print(f"\n  Stable: {stable_count}/5, Provable: {provable_count}/5")
+    print("  Gap demonstrates Theorem 3.2: stability ⇏ provability")
 
 
-def demo_adaptive_selection():
-    """Demo 5: Adaptive consequence selection."""
-    print("=" * 60)
-    print("DEMO 5: Adaptive Consequence Selection")
-    print("=" * 60)
-    
-    np.random.seed(99)
-    n, m, k = 50, 15, 10
-    hs = HypothesisSpace.random(n, m, density=0.3)
-    co = ConsequenceOracle.random(k, m, density=0.5)
-    
-    # Compare random order vs adaptive
-    random_order = list(range(k))
-    _, random_steps = retrocausal_search(hs, co, random_order)
-    
-    adaptive_order = adaptive_consequence_selection(hs, co, set(range(k)))
-    _, adaptive_steps = retrocausal_search(hs, co, adaptive_order)
-    
-    print(f"\nHypothesis space: {n} candidates, {m} worlds, {k} consequences")
-    print(f"Random order:   {random_steps} steps to convergence")
-    print(f"Adaptive order: {adaptive_steps} steps to convergence")
-    print(f"Adaptive order selected: {adaptive_order}")
-    
-    # Show narrowing profile
-    print("\nNarrowing profile (adaptive):")
-    candidates = set(range(n))
-    for i, c in enumerate(adaptive_order):
-        candidates = {h for h in candidates
-                      if all(True for _ in [1]  # dummy
-                             if np.all(~hs.eval[h] | co.test[c]))}
-        # Recompute properly
-        new_candidates = set()
-        for h in candidates:
-            h_worlds = hs.eval[h]
-            c_worlds = co.test[c]
-            if np.all(~h_worlds | c_worlds):
-                new_candidates.add(h)
-        candidates = new_candidates
-        print(f"  After C{c}: {len(candidates)} candidates remain")
+if __name__ == "__main__":
+    demo_example_system()
+    demo_larger_system()
+    demo_compression_statistics()
+    demo_discrimination_chain()
+    demo_separation_vs_stability()
+    print("\n" + "=" * 60)
+    print("All demos complete.")
+
+
+"""
+Visualization: Retrocausal Compression Ratio
+
+Plots the compression ratio as a function of the number of
+verified consequences, demonstrating exponential narrowing
+of the search space.
+"""
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+import random
+
+
+def generate_random_system(n, consequence_density=0.3, provable_fraction=0.5, seed=None):
+    if seed is not None:
+        random.seed(seed)
+    propositions = list(range(n))
+    provable = set(random.sample(propositions, int(n * provable_fraction)))
+    consequences = {}
+    for p in propositions:
+        consequences[p] = frozenset(
+            q for q in propositions if random.random() < consequence_density
+        )
+    return propositions, provable, consequences
+
+
+def candidates_for(propositions, consequences, observed):
+    observed_set = frozenset(observed)
+    return [p for p in propositions if observed_set.issubset(consequences.get(p, frozenset()))]
+
+
+def discrimination_power(propositions, consequences, candidates, q):
+    return sum(1 for p in candidates if q not in consequences.get(p, frozenset()))
+
+
+def retrocausal_search(propositions, consequences, target, n):
+    target_cons = list(consequences.get(target, frozenset()))
+    observed = set()
+    candidates = list(propositions)
+    history = [len(candidates) / n]
+
+    for _ in range(len(target_cons)):
+        remaining = [q for q in target_cons if q not in observed]
+        if not remaining:
+            break
+        best_q = max(remaining,
+                     key=lambda q: discrimination_power(propositions, consequences, candidates, q))
+        observed.add(best_q)
+        candidates = candidates_for(propositions, consequences, observed)
+        history.append(len(candidates) / n)
         if len(candidates) <= 1:
             break
-    
-    print()
+
+    return history
 
 
-def demo_stability():
-    """Demo 6: Consequence stability detection."""
-    print("=" * 60)
-    print("DEMO 6: Consequence Stability")
-    print("=" * 60)
-    
-    np.random.seed(55)
-    n, m, k = 10, 8, 6
-    hs = HypothesisSpace.random(n, m, density=0.3)
-    co = ConsequenceOracle.random(k, m, density=0.5)
-    
-    print(f"\nHypothesis space: {n} candidates, {m} worlds, {k} consequences")
-    
-    # Check stability at each subset size
-    for size in range(k + 1):
-        verified = set(range(size))
-        candidates = candidates_consistent_with(hs, co, verified)
-        stable = is_consequence_stable(hs, co, verified)
-        status = "STABLE ✓" if stable else "not stable"
-        print(f"  {size} consequences: {len(candidates)} candidates — {status}")
-    
-    print()
-
-
-if __name__ == "__main__":
-    print("\n" + "═" * 60)
-    print("   RETROCAUSAL PROOF THEORY — DEMONSTRATION SUITE")
-    print("═" * 60 + "\n")
-    
-    demo_basic_narrowing()
-    demo_unique_survivor()
-    demo_compression_conjecture()
-    demo_self_certifying()
-    demo_adaptive_selection()
-    demo_stability()
-    
-    print("═" * 60)
-    print("   All demos completed successfully.")
-    print("═" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Compression Conjecture Testing
-
-Tests the retrocausal compression conjecture across different
-parameter settings and visualizes the distribution of survivor counts.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use('Agg')
-
-
-def random_hypothesis_space(n, m, density=0.5):
-    return np.random.random((n, m)) < density
-
-
-def random_consequence_oracle(k, m, density=0.5):
-    return np.random.random((k, m)) < density
-
-
-def count_survivors(hs, co):
-    n, m = hs.shape
-    k = co.shape[0]
-    count = 0
-    for h in range(n):
-        consistent = True
-        for c in range(k):
-            if not bool(np.all(~hs[h] | co[c])):
-                consistent = False
-                break
-        if consistent:
-            count += 1
-    return count
-
-
-def main():
-    np.random.seed(123)
-    fig, axes = plt.subplots(2, 3, figsize=(16, 10))
-    
-    configs = [
-        (100, 3, 20), (100, 5, 20), (100, 7, 20),
-        (200, 5, 30), (200, 8, 30), (500, 10, 40),
-    ]
-    
-    for ax, (n, k, m) in zip(axes.flat, configs):
-        survivors = []
-        trials = 500
-        for _ in range(trials):
-            hs = random_hypothesis_space(n, m)
-            co = random_consequence_oracle(k, m)
-            survivors.append(count_survivors(hs, co))
-        
-        bound = n // (2 ** k) + 1
-        mean_s = np.mean(survivors)
-        violations = sum(1 for s in survivors if s > bound)
-        
-        ax.hist(survivors, bins=max(20, max(survivors) - min(survivors) + 1),
-                color='#2196F3', alpha=0.7, edgecolor='white')
-        ax.axvline(bound, color='#F44336', linewidth=2, linestyle='--',
-                   label=f'Bound: {bound}')
-        ax.axvline(mean_s, color='#4CAF50', linewidth=2, linestyle=':',
-                   label=f'Mean: {mean_s:.1f}')
-        
-        ax.set_title(f'n={n}, k={k}, m={m}\n'
-                     f'Violations: {violations}/{trials} '
-                     f'({100*violations/trials:.1f}%)')
-        ax.set_xlabel('Surviving Candidates')
-        ax.set_ylabel('Frequency')
-        ax.legend(fontsize=8)
-        ax.grid(True, alpha=0.3)
-    
-    plt.suptitle('Compression Conjecture: Distribution of Survivor Counts',
-                 fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('compression_conjecture.png', dpi=150, bbox_inches='tight')
-    print("Saved: compression_conjecture.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Idempotent Collapse Bridge
-
-Demonstrates the connection between consequence filtering and
-idempotent oracle dynamics from Dynamical Proof Complexity.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use('Agg')
-
-
-def random_hypothesis_space(n, m, density=0.5):
-    return np.random.random((n, m)) < density
-
-
-def random_consequence_oracle(k, m, density=0.5):
-    return np.random.random((k, m)) < density
-
-
-def consequence_update(hs, co, c, candidates):
-    """Apply consequence c to filter candidates."""
-    result = set()
-    for h in candidates:
-        if bool(np.all(~hs[h] | co[c])):
-            result.add(h)
-    return result
-
-
-def main():
-    np.random.seed(42)
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-    
-    # Demo 1: Idempotence verification
-    ax = axes[0]
-    n, m, k = 100, 20, 10
-    hs = random_hypothesis_space(n, m)
-    co = random_consequence_oracle(k, m)
-    
-    sizes_once = []
-    sizes_twice = []
-    candidates_full = set(range(n))
-    for c in range(k):
-        after_once = consequence_update(hs, co, c, candidates_full)
-        after_twice = consequence_update(hs, co, c, after_once)
-        sizes_once.append(len(after_once))
-        sizes_twice.append(len(after_twice))
-    
-    x = range(k)
-    ax.bar([i - 0.15 for i in x], sizes_once, 0.3, color='#2196F3',
-           label='After 1 application', alpha=0.8)
-    ax.bar([i + 0.15 for i in x], sizes_twice, 0.3, color='#F44336',
-           label='After 2 applications', alpha=0.8)
-    ax.set_xlabel('Consequence Index')
-    ax.set_ylabel('Candidate Set Size')
-    ax.set_title('Idempotence: f(f(X)) = f(X)')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    # Demo 2: Stabilization depth
-    ax = axes[1]
-    trials = 50
-    stabilization_depths = []
-    for _ in range(trials):
-        hs_r = random_hypothesis_space(n, m)
-        co_r = random_consequence_oracle(k, m)
-        cands = set(range(n))
-        depth = 0
-        for c in range(k):
-            new_cands = consequence_update(hs_r, co_r, c, cands)
-            if new_cands == cands:
-                break
-            cands = new_cands
-            depth += 1
-        stabilization_depths.append(depth)
-    
-    ax.hist(stabilization_depths, bins=range(k + 2), color='#4CAF50',
-            alpha=0.7, edgecolor='white')
-    ax.set_xlabel('Stabilization Depth')
-    ax.set_ylabel('Frequency')
-    ax.set_title(f'Stabilization Depth Distribution\n(n={n}, k={k}, {trials} trials)')
-    ax.grid(True, alpha=0.3)
-    
-    # Demo 3: Contraction visualization
-    ax = axes[2]
-    hs3 = random_hypothesis_space(50, 15)
-    co3 = random_consequence_oracle(8, 15)
-    
-    sizes = [50]
-    cands = set(range(50))
-    for c in range(8):
-        cands = consequence_update(hs3, co3, c, cands)
-        sizes.append(len(cands))
-    
-    colors = plt.cm.RdYlGn(np.linspace(0.2, 0.8, len(sizes)))
-    ax.bar(range(len(sizes)), sizes, color=colors, edgecolor='white')
-    ax.set_xlabel('After Consequence #')
-    ax.set_ylabel('Candidate Set Size')
-    ax.set_title('Contraction: Monotone Narrowing')
-    ax.set_xticks(range(len(sizes)))
-    ax.set_xticklabels(['init'] + [str(i) for i in range(8)])
-    ax.grid(True, alpha=0.3)
-    
-    plt.suptitle('Bridge to Dynamical Proof Complexity: Idempotent Oracle Collapse',
-                 fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('idempotent_collapse.png', dpi=150, bbox_inches='tight')
-    print("Saved: idempotent_collapse.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Consequence Narrowing Profile
-
-Shows how the candidate set shrinks as consequences are verified,
-demonstrating the monotonic narrowing property.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use('Agg')
-
-
-def random_hypothesis_space(n, m, density=0.5):
-    return np.random.random((n, m)) < density
-
-
-def random_consequence_oracle(k, m, density=0.5):
-    return np.random.random((k, m)) < density
-
-
-def is_consistent(hs_row, co_row):
-    return bool(np.all(~hs_row | co_row))
-
-
-def compute_narrowing_profile(hs, co):
-    n, m = hs.shape
-    k = co.shape[0]
-    profile = [n]
-    candidates = set(range(n))
-    for c in range(k):
-        candidates = {h for h in candidates if is_consistent(hs[h], co[c])}
-        profile.append(len(candidates))
-    return profile
-
-
-def main():
-    np.random.seed(42)
+def plot_compression_curves():
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    
-    configs = [
-        (50, 20, 8, "Small (n=50, k=8)"),
-        (200, 30, 12, "Medium (n=200, k=12)"),
-        (1000, 50, 15, "Large (n=1000, k=15)"),
-    ]
-    
-    for ax, (n, m, k, title) in zip(axes, configs):
+
+    # Panel 1: Single system compression curve
+    ax = axes[0]
+    n = 50
+    props, prov, cons = generate_random_system(n, 0.3, 0.5, seed=42)
+    target = random.Random(42).choice(props)
+    history = retrocausal_search(props, cons, target, n)
+
+    ax.plot(range(len(history)), history, 'b-o', markersize=4, linewidth=2)
+    ax.axhline(y=1/n, color='r', linestyle='--', alpha=0.5, label='Optimal (1/N)')
+    ax.set_xlabel('Number of Verified Consequences', fontsize=12)
+    ax.set_ylabel('Compression Ratio', fontsize=12)
+    ax.set_title('Retrocausal Compression\n(Single System, N=50)', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.set_ylim(-0.05, 1.05)
+    ax.grid(True, alpha=0.3)
+
+    # Panel 2: Average compression across densities
+    ax = axes[1]
+    densities = [0.1, 0.2, 0.3, 0.4, 0.5]
+    colors = plt.cm.viridis(np.linspace(0.2, 0.8, len(densities)))
+
+    for density, color in zip(densities, colors):
+        avg_histories = []
+        max_len = 0
         for trial in range(20):
-            hs = random_hypothesis_space(n, m)
-            co = random_consequence_oracle(k, m)
-            profile = compute_narrowing_profile(hs, co)
-            alpha = 0.3 if trial > 0 else 1.0
-            color = '#2196F3' if trial > 0 else '#F44336'
-            ax.plot(range(k + 1), profile, '-o', markersize=3,
-                    alpha=alpha, color=color, linewidth=1)
-        
-        # Theoretical bound
-        theoretical = [n / (2 ** c) for c in range(k + 1)]
-        ax.plot(range(k + 1), theoretical, '--', color='#4CAF50',
-                linewidth=2, label='n/2^k bound')
-        
-        ax.set_xlabel('Consequences Verified')
-        ax.set_ylabel('Surviving Candidates')
-        ax.set_title(title)
-        ax.set_yscale('log')
-        ax.legend()
-        ax.grid(True, alpha=0.3)
-    
-    plt.suptitle('Retrocausal Narrowing: Candidate Set Shrinks with Consequence Verification',
-                 fontsize=14, fontweight='bold')
+            props, prov, cons = generate_random_system(30, density, 0.5, seed=trial*100)
+            target = random.Random(trial).choice(props)
+            h = retrocausal_search(props, cons, target, 30)
+            avg_histories.append(h)
+            max_len = max(max_len, len(h))
+
+        # Pad and average
+        padded = []
+        for h in avg_histories:
+            padded.append(h + [h[-1]] * (max_len - len(h)))
+        avg = np.mean(padded, axis=0)
+        ax.plot(range(len(avg)), avg, '-o', color=color, markersize=3,
+                linewidth=1.5, label=f'density={density}')
+
+    ax.set_xlabel('Verification Steps', fontsize=12)
+    ax.set_ylabel('Avg Compression Ratio', fontsize=12)
+    ax.set_title('Compression vs Consequence Density\n(Averaged over 20 trials)', fontsize=13)
+    ax.legend(fontsize=9)
+    ax.set_ylim(-0.05, 1.05)
+    ax.grid(True, alpha=0.3)
+
+    # Panel 3: Separation rate vs density
+    ax = axes[2]
+    sep_rates = []
+    stab_rates = []
+    test_densities = np.linspace(0.05, 0.7, 15)
+
+    for d in test_densities:
+        sep = 0
+        stab = 0
+        total = 0
+        for trial in range(30):
+            props, prov, cons = generate_random_system(20, d, 0.5, seed=trial*200)
+            for p in props:
+                total += 1
+                p_cons = cons.get(p, frozenset())
+                if all(cons.get(q, frozenset()) != p_cons for q in props if q != p):
+                    sep += 1
+                if all(q in prov for q in p_cons):
+                    stab += 1
+        sep_rates.append(sep / total)
+        stab_rates.append(stab / total)
+
+    ax.plot(test_densities, sep_rates, 'b-s', markersize=4, linewidth=2, label='Separation rate')
+    ax.plot(test_densities, stab_rates, 'r-^', markersize=4, linewidth=2, label='Stability rate')
+    ax.set_xlabel('Consequence Density', fontsize=12)
+    ax.set_ylabel('Rate', fontsize=12)
+    ax.set_title('Separation & Stability\nvs Consequence Density', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.set_ylim(-0.05, 1.05)
+    ax.grid(True, alpha=0.3)
+
     plt.tight_layout()
-    plt.savefig('narrowing_profile.png', dpi=150, bbox_inches='tight')
-    print("Saved: narrowing_profile.png")
+    plt.savefig('retrocausal_compression.png', dpi=150, bbox_inches='tight')
+    print("Saved: retrocausal_compression.png")
 
 
 if __name__ == "__main__":
-    main()
+    plot_compression_curves()
