@@ -526,3 +526,89 @@ class CycleAnalytics:
                         })
 
         return sorted(correlations, key=lambda x: abs(x["correlation"]), reverse=True)
+
+    def get_reasoning_log_stats(self) -> Dict[str, Any]:
+        """Aggregate statistics from per-project reasoning logs.
+
+        Reasoning logs are JSON files in .aether_workspace/reasoning_logs/
+        that capture observable progress traces (status, percent_complete,
+        elapsed time) for each Aristotle project.
+
+        Returns summary stats: total projects, avg duration, completion
+        rate, avg checkpoints per project, and stall metrics.
+        """
+        logs_dir = self.workspace / "reasoning_logs"
+        if not logs_dir.exists():
+            return {
+                "total_projects": 0,
+                "completed_projects": 0,
+                "failed_projects": 0,
+                "completion_rate": 0.0,
+                "avg_duration_seconds": 0.0,
+                "avg_checkpoints_per_project": 0.0,
+                "total_stalls": 0,
+                "avg_stall_seconds": 0.0,
+            }
+
+        log_files = list(logs_dir.glob("*.json"))
+        if not log_files:
+            return {
+                "total_projects": 0,
+                "completed_projects": 0,
+                "failed_projects": 0,
+                "completion_rate": 0.0,
+                "avg_duration_seconds": 0.0,
+                "avg_checkpoints_per_project": 0.0,
+                "total_stalls": 0,
+                "avg_stall_seconds": 0.0,
+            }
+
+        completed = 0
+        failed = 0
+        durations = []
+        checkpoint_counts = []
+        total_stalls = 0
+        stall_durations = []
+
+        for path in log_files:
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError):
+                continue
+
+            final_status = data.get("final_status", "")
+            if "IDLE" in final_status and data.get("has_files", False):
+                completed += 1
+            elif final_status == "FAILED":
+                failed += 1
+            duration = data.get("total_duration_seconds", 0) or 0
+            if duration > 0:
+                durations.append(duration)
+
+            checkpoints = data.get("checkpoints", [])
+            checkpoint_counts.append(len(checkpoints))
+
+            # Detect stalls
+            for i in range(1, len(checkpoints)):
+                prev, curr = checkpoints[i-1], checkpoints[i]
+                if (curr.get("percent_complete", 0) == prev.get("percent_complete", 0)
+                    and curr.get("elapsed_seconds", 0) - prev.get("elapsed_seconds", 0) > 60):
+                    total_stalls += 1
+                    stall_durations.append(
+                        curr.get("elapsed_seconds", 0) - prev.get("elapsed_seconds", 0)
+                    )
+
+        n = len(log_files)
+        return {
+            "total_projects": n,
+            "completed_projects": completed,
+            "failed_projects": failed,
+            "completion_rate": round(completed / n, 3) if n > 0 else 0.0,
+            "avg_duration_seconds": round(sum(durations) / len(durations), 1) if durations else 0.0,
+            "avg_duration_minutes": round(sum(durations) / len(durations) / 60, 1) if durations else 0.0,
+            "max_duration_minutes": round(max(durations) / 60, 1) if durations else 0.0,
+            "min_duration_minutes": round(min(durations) / 60, 1) if durations else 0.0,
+            "avg_checkpoints_per_project": round(sum(checkpoint_counts) / n, 1) if n > 0 else 0.0,
+            "total_stalls": total_stalls,
+            "avg_stall_seconds": round(sum(stall_durations) / len(stall_durations), 0) if stall_durations else 0.0,
+        }

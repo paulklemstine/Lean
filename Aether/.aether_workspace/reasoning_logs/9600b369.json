@@ -1,0 +1,22 @@
+{
+  "checkpoints": [
+    {
+      "elapsed_seconds": 0.0,
+      "percent_complete": 0.0,
+      "status": "SUBMITTED",
+      "timestamp": "2026-06-04T16:09:21"
+    }
+  ],
+  "completed_at": "",
+  "domain": "Logic",
+  "error": "",
+  "final_percent": 0.0,
+  "final_status": "",
+  "has_files": false,
+  "job_id": "9600b369",
+  "project_id": "b6cc04c0-93d1-460a-b884-8a014bc573a2",
+  "prompt_length": 26596,
+  "stages": [],
+  "submitted_at": "2026-06-04T16:09:21",
+  "total_duration_seconds": 0.0
+}

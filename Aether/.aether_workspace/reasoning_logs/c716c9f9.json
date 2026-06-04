@@ -1,0 +1,20 @@
+{
+  "checkpoints": [
+    {
+      "elapsed_seconds": 0.0,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-04T16:08:20"
+    }
+  ],
+  "completed_at": "",
+  "error": "",
+  "final_percent": 0.0,
+  "final_status": "",
+  "has_files": false,
+  "job_id": "c716c9f9",
+  "project_id": "d20cdb94-a6e6-4e60-bfd8-0fd82f4956ed",
+  "stages": [],
+  "submitted_at": "",
+  "total_duration_seconds": 0.0
+}

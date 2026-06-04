@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T16:01:33.033496+00:00",
+  "last_updated": "2026-06-04T16:09:01.496007+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -3103,6 +3103,41 @@
       "theorem_count": 8,
       "timestamp": "2026-06-04T16:01:32.969529+00:00",
       "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7173,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 46,
+      "domain": "Applications",
+      "duration_seconds": 4719.104358911514,
+      "end_time": 1780589300.273504,
+      "files_integrated": 5,
+      "job_id": "38c9aa7a",
+      "outcome_quality": 0.0,
+      "prompt_version": "v1",
+      "quality_breakdown": {
+        "actionability": 0.82,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8773,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.9379,
+        "novelty": 0.9429,
+        "proof_depth": 0.9358,
+        "usefulness": 0.9179
+      },
+      "quality_score": 0.35784000000000005,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780584581.169145,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T16:09:01.436263+00:00",
+      "title": "Infinite Games Against Death: Immortality Strategies"
     }
   ]
 }
