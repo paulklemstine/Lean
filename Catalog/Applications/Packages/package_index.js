@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "34c5f1d3",
     "filename": "infinite_games_against_death_immortality_strategie.json",
     "pkg_num": 364,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.33376000000000006,
     "title": "Infinite Games Against Death: Ordinal Survival in Asymmetric Computation Games"
   },
   {
@@ -11686,8 +11686,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "infinite_games_against_death_immortality_strategie",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.33376000000000006,
+      "quality": "partial",
       "shape": "triangular_prism",
       "title": "Infinite Games Against Death: Ordinal Survival in Asymmetric Computation Games"
     }

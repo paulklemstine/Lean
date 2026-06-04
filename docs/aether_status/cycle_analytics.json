@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T18:19:14.264288+00:00",
+  "last_updated": "2026-06-04T18:22:12.521988+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -3383,6 +3383,41 @@
       "theorem_count": 5,
       "timestamp": "2026-06-04T18:19:14.189113+00:00",
       "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5905,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 2,
+      "domain": "Pythagorean",
+      "duration_seconds": 8316.646606445312,
+      "end_time": 1780597255.757104,
+      "files_integrated": 5,
+      "job_id": "34c5f1d3",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.8,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8845,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.9339,
+        "novelty": 0.95,
+        "proof_depth": 0.927,
+        "usefulness": 0.9385
+      },
+      "quality_score": 0.33376000000000006,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780588939.1104975,
+      "strategy_count": 187,
+      "theorem_count": 4,
+      "timestamp": "2026-06-04T18:22:12.481657+00:00",
+      "title": "Infinite Games Against Death: Immortality Strategies"
     }
   ]
 }
