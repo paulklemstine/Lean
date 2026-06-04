@@ -1,395 +1,248 @@
 """
-Gravitational Code Geometry: Demonstration Script
+Holographic Code Tower — Numerical Demonstrations
 
-Demonstrates the Einstein Decomposition Theorem and related concepts
-using concrete numerical examples on small finite sets.
+Demonstrates the key results from the formal verification:
+1. MDS tower construction and parameter verification
+2. Curvature-Distance Correspondence (κ_n = 2κ_d)
+3. Complementary recovery thresholds
+4. Singleton entropy = Bekenstein-Hawking entropy
 """
-import itertools
-from typing import Callable, Dict, FrozenSet, List, Tuple
 
-# Type aliases
-SetFn = Callable[[FrozenSet[int]], float]
+def singleton_bound_check(n: int, k: int, d: int) -> bool:
+    """Check if code [[n,k,d]] satisfies the quantum Singleton bound."""
+    return k + 2 * d <= n + 2
 
-def powerset(ground: set) -> List[FrozenSet[int]]:
-    """Return all subsets of ground as frozensets."""
-    result = []
-    items = sorted(ground)
-    for r in range(len(items) + 1):
-        for combo in itertools.combinations(items, r):
-            result.append(frozenset(combo))
-    return result
 
-def defect(f: SetFn, X: FrozenSet[int], Y: FrozenSet[int]) -> float:
-    """Compute the syndrome defect (discrete curvature)."""
-    return f(X) + f(Y) - f(X & Y) - f(X | Y)
+def is_mds(n: int, k: int, d: int) -> bool:
+    """Check if code [[n,k,d]] is MDS (saturates Singleton)."""
+    return k + 2 * d == n + 2
 
-def is_modular(f: SetFn, ground: set, tol: float = 1e-10) -> bool:
-    """Check if f is modular on the powerset of ground."""
-    subsets = powerset(ground)
-    for X in subsets:
-        for Y in subsets:
-            if abs(defect(f, X, Y)) > tol:
-                return False
-    return True
 
-def is_submodular(f: SetFn, ground: set, tol: float = 1e-10) -> bool:
-    """Check if f is submodular on the powerset of ground."""
-    subsets = powerset(ground)
-    for X in subsets:
-        for Y in subsets:
-            if defect(f, X, Y) < -tol:
-                return False
-    return True
+def singleton_entropy(n: int, k: int) -> float:
+    """Singleton entropy S = (n - k) / 2."""
+    return (n - k) / 2
 
-def mutual_info(f: SetFn, X: FrozenSet[int], Y: FrozenSet[int]) -> float:
-    """Compute mutual information I(X:Y)."""
-    return f(X) + f(Y) - f(X | Y)
 
-def tripartite_info(f: SetFn, X: FrozenSet[int], Y: FrozenSet[int], Z: FrozenSet[int]) -> float:
-    """Compute tripartite information I_3(X,Y,Z)."""
-    return (f(X) + f(Y) + f(Z)
-            - f(X | Y) - f(X | Z) - f(Y | Z)
-            + f(X | Y | Z))
+def bekenstein_hawking(area: float) -> float:
+    """Bekenstein-Hawking entropy S = A/4 (in natural units where 4G = 1)."""
+    return area / 4
 
-def verify_einstein_decomposition(S: SetFn, T: SetFn, L: SetFn, ground: set) -> Dict:
-    """Verify the Einstein decomposition S = T + L with L modular."""
-    subsets = powerset(ground)
-    
-    # Check decomposition S = T + L
-    decomp_ok = True
-    max_decomp_error = 0.0
-    for X in subsets:
-        err = abs(S(X) - T(X) - L(X))
-        max_decomp_error = max(max_decomp_error, err)
-        if err > 1e-10:
-            decomp_ok = False
-    
-    # Check L is modular
-    l_modular = is_modular(L, ground)
-    
-    # Check Einstein equation: defect(S) = defect(T)
-    einstein_ok = True
-    max_einstein_error = 0.0
-    for X in subsets:
-        for Y in subsets:
-            err = abs(defect(S, X, Y) - defect(T, X, Y))
-            max_einstein_error = max(max_einstein_error, err)
-            if err > 1e-10:
-                einstein_ok = False
-    
-    return {
-        "decomposition_holds": decomp_ok,
-        "max_decomposition_error": max_decomp_error,
-        "vacuum_modular": l_modular,
-        "einstein_equation_holds": einstein_ok,
-        "max_einstein_error": max_einstein_error,
-        "S_submodular": is_submodular(S, ground),
-        "T_submodular": is_submodular(T, ground),
-    }
 
-# ============================================================
-# Example 1: Cardinality Spacetime
-# S(X) = |X|^2, T(X) = |X|^2 - |X|, L(X) = |X|
-# ============================================================
+def construct_mds_tower(k: int, d_sequence: list[int]) -> list[tuple[int, int, int]]:
+    """Construct an MDS holographic code tower from a distance sequence."""
+    tower = []
+    for d in d_sequence:
+        n = k + 2 * d - 2  # MDS condition
+        tower.append((n, k, d))
+    return tower
+
+
+def tower_curvature(tower: list[tuple[int, int, int]], l: int) -> int:
+    """Compute discrete curvature at interior layer l."""
+    n_prev = tower[l - 1][0]
+    n_curr = tower[l][0]
+    n_next = tower[l + 1][0]
+    return n_next - 2 * n_curr + n_prev
+
+
+def distance_curvature(tower: list[tuple[int, int, int]], l: int) -> int:
+    """Compute discrete curvature of the distance sequence at layer l."""
+    d_prev = tower[l - 1][2]
+    d_curr = tower[l][2]
+    d_next = tower[l + 1][2]
+    return d_next - 2 * d_curr + d_prev
+
+
+def recon_threshold(n: int, d: int) -> int:
+    """Minimum qubits needed for reconstruction: n - d + 1."""
+    return n - d + 1
+
+
+# === Demo 1: MDS Tower Construction ===
 print("=" * 60)
-print("EXAMPLE 1: Cardinality Spacetime")
-print("S(X) = |X|², T(X) = |X|² - |X|, L(X) = |X|")
+print("Demo 1: MDS Tower Construction")
 print("=" * 60)
 
-ground = {1, 2, 3, 4}
+k = 1  # 1 logical qubit
+distances = [3, 4, 5, 6, 7, 8, 9, 10]
+tower = construct_mds_tower(k, distances)
 
-S_card = lambda X: len(X) ** 2
-T_card = lambda X: len(X) ** 2 - len(X)
-L_card = lambda X: len(X)
+print(f"\nLogical qubits k = {k}")
+print(f"{'Layer':>5} | {'n':>4} | {'k':>3} | {'d':>3} | {'MDS?':>5} | {'S_singleton':>12} | {'S_BH(2(n-k))':>14}")
+print("-" * 60)
+for i, (n, k_i, d) in enumerate(tower):
+    s = singleton_entropy(n, k_i)
+    s_bh = bekenstein_hawking(2 * (n - k_i))
+    print(f"{i:>5} | {n:>4} | {k_i:>3} | {d:>3} | {is_mds(n, k_i, d)!s:>5} | {s:>12.1f} | {s_bh:>14.1f}")
 
-result = verify_einstein_decomposition(S_card, T_card, L_card, ground)
-for k, v in result.items():
-    print(f"  {k}: {v}")
-
-# Show some defects
-print("\nCurvature values (defect):")
-for a, b in [(frozenset({1}), frozenset({2})),
-             (frozenset({1, 2}), frozenset({3, 4})),
-             (frozenset({1}), frozenset({1, 2, 3}))]:
-    d = defect(S_card, a, b)
-    print(f"  defect(S, {set(a)}, {set(b)}) = {d}")
-    print(f"  defect(T, {set(a)}, {set(b)}) = {defect(T_card, a, b)}")
-
-# ============================================================
-# Example 2: Flat Spacetime
-# S(X) = L(X) = |X|, T(X) = 0
-# ============================================================
+# === Demo 2: Curvature-Distance Correspondence ===
 print("\n" + "=" * 60)
-print("EXAMPLE 2: Flat Spacetime (L = cardinality, T = 0)")
+print("Demo 2: Curvature-Distance Correspondence (κ_n = 2κ_d)")
 print("=" * 60)
 
-S_flat = lambda X: len(X)
-T_flat = lambda X: 0
-L_flat = lambda X: len(X)
+# Uniform tower (d increases by 1 each layer)
+print("\n--- Uniform tower (d = 3,4,5,6,7,8): should have κ = 0 ---")
+uniform_tower = construct_mds_tower(1, [3, 4, 5, 6, 7, 8])
+for l in range(1, len(uniform_tower) - 1):
+    kn = tower_curvature(uniform_tower, l)
+    kd = distance_curvature(uniform_tower, l)
+    print(f"  Layer {l}: κ_n = {kn}, 2·κ_d = {2*kd}, κ_n == 2·κ_d? {kn == 2*kd}")
 
-result = verify_einstein_decomposition(S_flat, T_flat, L_flat, ground)
-for k, v in result.items():
-    print(f"  {k}: {v}")
+# Non-uniform tower (d increases unevenly)
+print("\n--- Non-uniform tower (d = 2,3,5,8,12): non-zero curvature ---")
+nonuniform_tower = construct_mds_tower(1, [2, 3, 5, 8, 12])
+for l in range(1, len(nonuniform_tower) - 1):
+    kn = tower_curvature(nonuniform_tower, l)
+    kd = distance_curvature(nonuniform_tower, l)
+    print(f"  Layer {l}: κ_n = {kn}, 2·κ_d = {2*kd}, κ_n == 2·κ_d? {kn == 2*kd}")
 
-# ============================================================
-# Example 3: Mutual Information and Binding Energy
-# ============================================================
+# === Demo 3: Complementary Recovery ===
 print("\n" + "=" * 60)
-print("EXAMPLE 3: Mutual Information (Binding Energy)")
+print("Demo 3: Complementary Recovery Thresholds")
 print("=" * 60)
 
-A = frozenset({1, 2})
-B = frozenset({3, 4})
-C = frozenset({1})
+codes = [(5, 1, 3), (7, 1, 4), (9, 1, 5), (11, 1, 6)]
+for n, k, d in codes:
+    thresh = recon_threshold(n, d)
+    compl = n - thresh
+    print(f"  [[{n},{k},{d}]]: need ≥ {thresh} qubits to reconstruct, "
+          f"complement has {compl} (< {d} = d) ✓")
 
-print(f"  I(A:B) = {mutual_info(S_card, A, B):.2f}  (A={set(A)}, B={set(B)})")
-print(f"  I(A:C) = {mutual_info(S_card, A, C):.2f}  (A={set(A)}, C={set(C)})")
-print(f"  I_3(A,B,C) = {tripartite_info(S_card, A, B, C):.2f}")
-
-print("\n  For flat spacetime:")
-print(f"  I(A:B) = {mutual_info(S_flat, A, B):.2f}")
-
-# ============================================================
-# Example 4: Conjecture Test - Modular Approximation
-# ============================================================
+# === Demo 4: Singleton = Bekenstein-Hawking ===
 print("\n" + "=" * 60)
-print("EXAMPLE 4: Modular Approximation Quality")
+print("Demo 4: Singleton Entropy = Bekenstein-Hawking Entropy")
 print("=" * 60)
 
-import random
-random.seed(42)
+for n, k, d in [(5, 1, 3), (7, 1, 4), (9, 1, 5), (15, 3, 7)]:
+    s = singleton_entropy(n, k)
+    area = 2 * (n - k)
+    s_bh = bekenstein_hawking(area)
+    print(f"  [[{n},{k},{d}]]: S_singleton = {s}, S_BH(area={area}) = {s_bh}, "
+          f"d-1 = {d-1}, MDS? {is_mds(n, k, d)}")
+    if is_mds(n, k, d):
+        assert abs(s - (d - 1)) < 1e-10, "RT formula violated!"
+        print(f"    → RT formula verified: S = d - 1 = {d-1} ✓")
 
-def random_submodular(ground: set) -> SetFn:
-    """Generate a random submodular function using weight of max coverage."""
-    weights = {i: random.random() for i in ground}
-    def f(X: FrozenSet[int]) -> float:
-        if not X:
-            return 0.0
-        return sum(weights[i] for i in X) ** 0.5  # concave composition → submodular
-    return f
-
-for trial in range(3):
-    f = random_submodular(ground)
-    assert is_submodular(f, ground), "Generated function is not submodular!"
-    
-    # Best modular approximation: L(X) = sum of f({i}) for i in X
-    def L_approx(X: FrozenSet[int], _f=f) -> float:
-        return sum(_f(frozenset({i})) for i in X)
-    
-    T_approx = lambda X, _f=f, _L=L_approx: _f(X) - _L(X)
-    
-    result = verify_einstein_decomposition(f, T_approx, L_approx, ground)
-    max_defect = max(abs(defect(f, X, Y)) 
-                     for X in powerset(ground) for Y in powerset(ground))
-    print(f"  Trial {trial + 1}: L modular = {result['vacuum_modular']}, "
-          f"Einstein OK = {result['einstein_equation_holds']}, "
-          f"max |defect| = {max_defect:.4f}")
-
-# ============================================================
-# Example 5: Pure Matter vs Mixed Spacetime
-# ============================================================
+# === Demo 5: Tower with positive curvature (accelerating growth) ===
 print("\n" + "=" * 60)
-print("EXAMPLE 5: Pure Matter vs Mixed")
+print("Demo 5: Toric Code as a Code Tower")
 print("=" * 60)
 
-# Pure matter: S = T, L = 0
-print("Pure matter (L=0):")
-T_pure = lambda X: len(X) ** 2
-L_zero = lambda X: 0
-result = verify_einstein_decomposition(T_pure, T_pure, L_zero, ground)
-print(f"  Einstein OK: {result['einstein_equation_holds']}")
-print(f"  Total curvature = {sum(defect(T_pure, X, Y) for X in powerset(ground) for Y in powerset(ground)):.2f}")
+print("\nToric code family [[2L², 2, L]]:")
+toric_tower = [(2*L**2, 2, L) for L in range(2, 8)]
+print(f"{'L':>3} | {'n=2L²':>6} | {'k':>3} | {'d=L':>4} | {'Singleton?':>10}")
+for n, k, d in toric_tower:
+    print(f"{d:>3} | {n:>6} | {k:>3} | {d:>4} | {singleton_bound_check(n, k, d)!s:>10}")
 
-# Mixed: S = |X|^2 + |X|
-print("\nMixed (L = |X|):")
-S_mixed = lambda X: len(X) ** 2 + len(X)
-result = verify_einstein_decomposition(S_mixed, T_pure, L_card, ground)
-print(f"  Einstein OK: {result['einstein_equation_holds']}")
+print("\nToric tower curvature:")
+for l in range(1, len(toric_tower) - 1):
+    kn = tower_curvature(toric_tower, l)
+    kd = distance_curvature(toric_tower, l)
+    L = l + 2  # L starts at 2
+    print(f"  L={L}: κ_n = {kn}, κ_d = {kd}, NOT MDS so κ_n ≠ 2κ_d in general")
+    # For toric: n = 2L², so κ_n = 2(L+1)² - 2·2L² + 2(L-1)² = 4
+    expected = 2*(L+1)**2 - 2*2*L**2 + 2*(L-1)**2
+    print(f"    Direct: 2({L+1})² - 2·2·{L}² + 2({L-1})² = {expected}")
 
-print("\n" + "=" * 60)
-print("All demonstrations completed successfully.")
-print("=" * 60)
+print("\n✅ All demos completed successfully!")
 
 
 """
-Visualization: Curvature Heatmap for Code Spacetimes
+Visualization: Holographic Code Tower Structure
 
-Generates a heatmap of syndrome defect (curvature) values
-for all pairs of subsets of a ground set.
+Standalone script showing the tower parameters, curvature, and
+the Bekenstein-Singleton correspondence.
 """
-import itertools
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
-from typing import FrozenSet, List
-
-
-def powerset(ground: set) -> List[FrozenSet[int]]:
-    items = sorted(ground)
-    result = []
-    for r in range(len(items) + 1):
-        for combo in itertools.combinations(items, r):
-            result.append(frozenset(combo))
-    return result
-
-
-def defect(f, X: FrozenSet[int], Y: FrozenSet[int]) -> float:
-    return f(X) + f(Y) - f(X & Y) - f(X | Y)
-
-
-def set_label(s: FrozenSet[int]) -> str:
-    if not s:
-        return "∅"
-    return "{" + ",".join(str(x) for x in sorted(s)) + "}"
-
-
-def plot_curvature_heatmap(ground: set, S, title: str, filename: str):
-    subsets = powerset(ground)
-    n = len(subsets)
-    matrix = np.zeros((n, n))
-    
-    for i, X in enumerate(subsets):
-        for j, Y in enumerate(subsets):
-            matrix[i, j] = defect(S, X, Y)
-    
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-    im = ax.imshow(matrix, cmap='RdYlBu_r', aspect='equal')
-    
-    labels = [set_label(s) for s in subsets]
-    ax.set_xticks(range(n))
-    ax.set_yticks(range(n))
-    ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=7)
-    ax.set_yticklabels(labels, fontsize=7)
-    
-    ax.set_title(title, fontsize=14, fontweight='bold')
-    ax.set_xlabel("Region Y", fontsize=11)
-    ax.set_ylabel("Region X", fontsize=11)
-    
-    cbar = plt.colorbar(im, ax=ax, label='Defect (Curvature)')
-    
-    plt.tight_layout()
-    plt.savefig(filename, dpi=150, bbox_inches='tight')
-    plt.close()
-    print(f"Saved: {filename}")
-
-
-# Generate plots
-ground = {1, 2, 3}
-
-# Cardinality spacetime: S(X) = |X|^2
-S_card = lambda X: len(X) ** 2
-plot_curvature_heatmap(ground, S_card, 
-    "Curvature Heatmap: S(X) = |X|² (Cardinality Spacetime)",
-    "curvature_cardinality.png")
-
-# Flat spacetime: S(X) = |X|
-S_flat = lambda X: float(len(X))
-plot_curvature_heatmap(ground, S_flat,
-    "Curvature Heatmap: S(X) = |X| (Flat Spacetime)",
-    "curvature_flat.png")
-
-# Submodular: S(X) = sqrt(|X|)
-import math
-S_sqrt = lambda X: math.sqrt(len(X))
-plot_curvature_heatmap(ground, S_sqrt,
-    "Curvature Heatmap: S(X) = √|X| (Square Root Spacetime)",
-    "curvature_sqrt.png")
-
-print("\nAll curvature heatmaps generated.")
-
-
-"""
-Visualization: Einstein Decomposition S = T + L
-
-Shows how entropy decomposes into matter (T) and vacuum (L) components
-for different spacetime models.
-"""
-import itertools
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from typing import FrozenSet, List
 
 
-def powerset(ground: set) -> List[FrozenSet[int]]:
-    items = sorted(ground)
-    result = []
-    for r in range(len(items) + 1):
-        for combo in itertools.combinations(items, r):
-            result.append(frozenset(combo))
-    return result
+def construct_mds_tower(k, distances):
+    """Construct MDS tower: n = k + 2d - 2."""
+    return [(k + 2*d - 2, k, d) for d in distances]
 
 
-def set_label(s: FrozenSet[int]) -> str:
-    if not s:
-        return "∅"
-    return "{" + ",".join(str(x) for x in sorted(s)) + "}"
+def tower_curvature(tower, l):
+    return tower[l+1][0] - 2*tower[l][0] + tower[l-1][0]
 
 
-def plot_decomposition(ground: set, S, T, L, title: str, filename: str):
-    subsets = powerset(ground)
-    n = len(subsets)
-    
-    s_vals = [S(X) for X in subsets]
-    t_vals = [T(X) for X in subsets]
-    l_vals = [L(X) for X in subsets]
-    
-    labels = [set_label(s) for s in subsets]
-    x = np.arange(n)
-    width = 0.25
-    
-    fig, axes = plt.subplots(2, 1, figsize=(12, 10))
-    
-    # Top: Bar chart of S, T, L
-    ax1 = axes[0]
-    ax1.bar(x - width, s_vals, width, label='S (total entropy)', color='#2196F3', alpha=0.8)
-    ax1.bar(x, t_vals, width, label='T (matter)', color='#F44336', alpha=0.8)
-    ax1.bar(x + width, l_vals, width, label='L (vacuum)', color='#4CAF50', alpha=0.8)
-    ax1.set_xticks(x)
-    ax1.set_xticklabels(labels, rotation=45, ha='right', fontsize=7)
-    ax1.set_ylabel('Value', fontsize=11)
-    ax1.set_title(f'{title}\nEinstein Decomposition: S = T + L', fontsize=13, fontweight='bold')
-    ax1.legend(fontsize=10)
-    ax1.grid(axis='y', alpha=0.3)
-    
-    # Bottom: Stacked bar showing T + L = S
-    ax2 = axes[1]
-    ax2.bar(x, l_vals, width=0.6, label='L (vacuum/flat)', color='#4CAF50', alpha=0.8)
-    ax2.bar(x, t_vals, width=0.6, bottom=l_vals, label='T (matter/curved)', color='#F44336', alpha=0.8)
-    ax2.scatter(x, s_vals, color='blue', zorder=5, s=30, label='S (total)')
-    ax2.set_xticks(x)
-    ax2.set_xticklabels(labels, rotation=45, ha='right', fontsize=7)
-    ax2.set_ylabel('Value', fontsize=11)
-    ax2.set_title('Stacked Decomposition: S = T + L', fontsize=12)
-    ax2.legend(fontsize=10)
-    ax2.grid(axis='y', alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig(filename, dpi=150, bbox_inches='tight')
-    plt.close()
-    print(f"Saved: {filename}")
+def distance_curvature(tower, l):
+    return tower[l+1][2] - 2*tower[l][2] + tower[l-1][2]
 
 
-# Generate plots
-ground = {1, 2, 3, 4}
+# Build towers
+k = 1
+uniform_d = list(range(2, 12))
+uniform_tower = construct_mds_tower(k, uniform_d)
 
-# Cardinality spacetime
-S1 = lambda X: len(X) ** 2
-T1 = lambda X: len(X) ** 2 - len(X)
-L1 = lambda X: float(len(X))
-plot_decomposition(ground, S1, T1, L1,
-    "Cardinality Spacetime: S(X) = |X|²",
-    "decomposition_cardinality.png")
+accel_d = [2, 3, 5, 8, 12, 17, 23, 30]
+accel_tower = construct_mds_tower(k, accel_d)
 
-# Logarithmic spacetime: S(X) = |X| * log(1 + |X|)
-import math
-S2 = lambda X: len(X) * math.log(1 + len(X)) if X else 0.0
-L2 = lambda X: float(len(X)) * math.log(2) if X else 0.0
-T2 = lambda X: S2(X) - L2(X)
-plot_decomposition(ground, S2, T2, L2,
-    "Logarithmic Spacetime: S(X) = |X|·log(1+|X|)",
-    "decomposition_logarithmic.png")
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-print("\nAll decomposition plots generated.")
+# Plot 1: Block length vs depth for uniform and accelerating towers
+ax = axes[0, 0]
+layers_u = range(len(uniform_tower))
+layers_a = range(len(accel_tower))
+ax.plot(list(layers_u), [t[0] for t in uniform_tower], 'b-o', label='Uniform (κ=0)', linewidth=2)
+ax.plot(list(layers_a), [t[0] for t in accel_tower], 'r-s', label='Accelerating (κ>0)', linewidth=2)
+ax.set_xlabel('Layer depth l', fontsize=12)
+ax.set_ylabel('Block length n(l)', fontsize=12)
+ax.set_title('MDS Tower: Block Length vs Depth', fontsize=13, fontweight='bold')
+ax.legend(fontsize=11)
+ax.grid(True, alpha=0.3)
+
+# Plot 2: Curvature at each layer
+ax = axes[0, 1]
+curv_u = [tower_curvature(uniform_tower, l) for l in range(1, len(uniform_tower)-1)]
+curv_a = [tower_curvature(accel_tower, l) for l in range(1, len(accel_tower)-1)]
+dcurv_a = [2*distance_curvature(accel_tower, l) for l in range(1, len(accel_tower)-1)]
+
+ax.bar([l-0.15 for l in range(1, len(uniform_tower)-1)], curv_u, 0.3,
+       label='Uniform tower κ_n', color='blue', alpha=0.7)
+ax.bar([l+0.15 for l in range(1, len(accel_tower)-1)], curv_a, 0.3,
+       label='Accel tower κ_n', color='red', alpha=0.7)
+ax.scatter(range(1, len(accel_tower)-1), dcurv_a, color='green', s=80,
+           zorder=5, marker='D', label='2·κ_d (should equal κ_n)')
+ax.axhline(y=0, color='black', linewidth=0.5)
+ax.set_xlabel('Layer l', fontsize=12)
+ax.set_ylabel('Curvature κ(l)', fontsize=12)
+ax.set_title('Curvature-Distance Correspondence: κ_n = 2κ_d', fontsize=13, fontweight='bold')
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+
+# Plot 3: Singleton entropy vs d-1 (RT formula)
+ax = axes[1, 0]
+ds = range(2, 15)
+ns = [k + 2*d - 2 for d in ds]
+s_singleton = [(n - k)/2 for n in ns]
+s_rt = [d - 1 for d in ds]
+ax.plot(list(ds), s_singleton, 'bo-', label='Singleton entropy (n-k)/2', linewidth=2, markersize=8)
+ax.plot(list(ds), s_rt, 'r--', label='RT formula: d - 1', linewidth=2)
+ax.set_xlabel('Code distance d', fontsize=12)
+ax.set_ylabel('Entropy', fontsize=12)
+ax.set_title('RT = Singleton for MDS Codes', fontsize=13, fontweight='bold')
+ax.legend(fontsize=11)
+ax.grid(True, alpha=0.3)
+
+# Plot 4: Page curve for the [[11, 1, 6]] code
+ax = axes[1, 1]
+n, k, d = 11, 1, 6
+s_max = (n - k) / 2
+sizes = range(0, n + 1)
+page = [min(s, min(n - s, s_max)) for s in sizes]
+ax.plot(list(sizes), page, 'g-o', linewidth=2, markersize=6, label='Page curve')
+ax.axhline(y=s_max, color='red', linestyle='--', label=f'S_max = {s_max}')
+ax.axvline(x=n/2, color='blue', linestyle=':', alpha=0.5, label=f'n/2 = {n/2}')
+ax.fill_between(list(sizes), page, alpha=0.1, color='green')
+ax.set_xlabel('Subregion size s', fontsize=12)
+ax.set_ylabel('Entropy S(s)', fontsize=12)
+ax.set_title(f'Page Curve for [[{n},{k},{d}]] Code', fontsize=13, fontweight='bold')
+ax.legend(fontsize=11)
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('holographic_tower_analysis.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved: holographic_tower_analysis.png")

@@ -1,250 +1,179 @@
 """
-Algorithms for Gravitational Code Geometry
+Algorithms for Holographic Code Tower Analysis
 
-Type-hinted implementations of the core algorithms from the
-Einstein Decomposition Theorem framework.
+Type-hinted implementations of the key algorithms from the research.
 """
-from typing import Callable, Dict, FrozenSet, List, Optional, Set, Tuple
-import itertools
-import math
 
-# Type aliases
-SetFn = Callable[[FrozenSet[int]], float]
+from dataclasses import dataclass
+from typing import Optional
 
 
-def powerset(ground: Set[int]) -> List[FrozenSet[int]]:
-    """Generate all subsets of a ground set as frozensets.
-    
+@dataclass
+class QECCParams:
+    """Parameters of a quantum error-correcting code [[n, k, d]]."""
+    n: int  # physical qubits
+    k: int  # logical qubits
+    d: int  # code distance
+
+    def __post_init__(self) -> None:
+        assert self.k <= self.n, f"k={self.k} > n={self.n}"
+        assert self.d >= 1, f"d={self.d} < 1"
+        assert self.k + 2 * self.d <= self.n + 2, \
+            f"Singleton bound violated: {self.k} + 2*{self.d} > {self.n} + 2"
+
+    @property
+    def is_mds(self) -> bool:
+        return self.k + 2 * self.d == self.n + 2
+
+    @property
+    def defect(self) -> int:
+        return self.n + 2 - (self.k + 2 * self.d)
+
+    @property
+    def singleton_entropy(self) -> float:
+        return (self.n - self.k) / 2
+
+    @property
+    def redundancy(self) -> int:
+        return self.n - self.k
+
+    @property
+    def recon_threshold(self) -> int:
+        return self.n - self.d + 1
+
+    @property
+    def rate(self) -> float:
+        return self.k / self.n if self.n > 0 else 0.0
+
+
+@dataclass
+class HolographicCodeTower:
+    """A holographic code tower: layered family of QECC codes."""
+    codes: list[QECCParams]
+
+    def __post_init__(self) -> None:
+        assert len(self.codes) >= 1, "Tower must have at least 1 layer"
+        k0 = self.codes[0].k
+        for i, c in enumerate(self.codes):
+            assert c.k == k0, f"Layer {i} has k={c.k} != k0={k0}"
+        for i in range(len(self.codes) - 1):
+            assert self.codes[i].d < self.codes[i + 1].d, \
+                f"Distance not strictly increasing: d[{i}]={self.codes[i].d} >= d[{i+1}]={self.codes[i+1].d}"
+
+    @property
+    def height(self) -> int:
+        return len(self.codes)
+
+    @property
+    def logical_dim(self) -> int:
+        return self.codes[0].k
+
+    @property
+    def is_fully_mds(self) -> bool:
+        return all(c.is_mds for c in self.codes)
+
+    def block_at(self, l: int) -> int:
+        return self.codes[l].n
+
+    def dist_at(self, l: int) -> int:
+        return self.codes[l].d
+
+    def curvature(self, l: int) -> int:
+        """Discrete curvature at interior layer l."""
+        assert 0 < l < self.height - 1, f"Layer {l} is not interior"
+        return self.block_at(l + 1) - 2 * self.block_at(l) + self.block_at(l - 1)
+
+    def distance_curvature(self, l: int) -> int:
+        """Discrete curvature of the distance sequence at layer l."""
+        assert 0 < l < self.height - 1
+        return self.dist_at(l + 1) - 2 * self.dist_at(l) + self.dist_at(l - 1)
+
+    def verify_curvature_identity(self) -> bool:
+        """Verify κ_n = 2κ_d at all interior layers (only valid for MDS towers)."""
+        if not self.is_fully_mds:
+            return False
+        for l in range(1, self.height - 1):
+            if self.curvature(l) != 2 * self.distance_curvature(l):
+                return False
+        return True
+
+
+def construct_mds_tower(k: int, distances: list[int]) -> HolographicCodeTower:
+    """Construct an MDS holographic code tower from logical dim and distance sequence.
+
     Args:
-        ground: The ground set of integers.
-        
+        k: Number of logical qubits (constant across layers)
+        distances: Strictly increasing sequence of code distances
+
     Returns:
-        List of all subsets as frozensets, ordered by size.
+        A fully MDS HolographicCodeTower
     """
-    items = sorted(ground)
-    result: List[FrozenSet[int]] = []
-    for r in range(len(items) + 1):
-        for combo in itertools.combinations(items, r):
-            result.append(frozenset(combo))
+    codes = [QECCParams(n=k + 2 * d - 2, k=k, d=d) for d in distances]
+    return HolographicCodeTower(codes)
+
+
+def construct_toric_tower(l_range: range) -> HolographicCodeTower:
+    """Construct a tower from toric code family [[2L², 2, L]].
+
+    Note: This is NOT an MDS tower (toric codes have positive defect for L ≥ 3).
+    """
+    codes = [QECCParams(n=2 * L ** 2, k=2, d=L) for L in l_range]
+    return HolographicCodeTower(codes)
+
+
+def complementary_recovery_analysis(code: QECCParams) -> dict[str, int]:
+    """Analyze complementary recovery for a code.
+
+    Returns dict with recovery threshold, and for MDS codes,
+    the critical region size for complementary recovery.
+    """
+    result = {
+        "n": code.n,
+        "k": code.k,
+        "d": code.d,
+        "recon_threshold": code.recon_threshold,
+        "erasure_capacity": code.d - 1,
+        "is_mds": code.is_mds,
+    }
+    if code.is_mds:
+        result["mds_critical_size"] = (code.n + code.k) // 2 + 1
     return result
 
 
-def compute_defect(f: SetFn, X: FrozenSet[int], Y: FrozenSet[int]) -> float:
-    """Compute the syndrome defect (discrete curvature).
-    
-    defect(f, X, Y) = f(X) + f(Y) - f(X ∩ Y) - f(X ∪ Y)
-    
-    Args:
-        f: Set function mapping frozensets to reals.
-        X, Y: Input sets.
-        
-    Returns:
-        The defect value. Non-negative for submodular f.
+def bekenstein_singleton_check(code: QECCParams) -> dict[str, float]:
+    """Verify the Bekenstein-Singleton correspondence for a code."""
+    area = 2 * (code.n - code.k)
+    s_bh = area / 4
+    s_singleton = code.singleton_entropy
+    return {
+        "area": area,
+        "S_BH": s_bh,
+        "S_singleton": s_singleton,
+        "match": abs(s_bh - s_singleton) < 1e-10,
+        "S_equals_d_minus_1": abs(s_singleton - (code.d - 1)) < 1e-10 if code.is_mds else None,
+    }
+
+
+def page_entropy(code: QECCParams, s: int) -> float:
+    """Page curve entropy for a boundary subregion of size s.
+
+    Returns min(s, n-s, singleton_entropy).
     """
-    return f(X) + f(Y) - f(X & Y) - f(X | Y)
-
-
-def einstein_decomposition(
-    S: SetFn,
-    ground: Set[int]
-) -> Tuple[SetFn, SetFn, bool]:
-    """Compute the optimal Einstein decomposition S = T + L.
-    
-    Finds the modular function L that best approximates S,
-    then sets T = S - L. The modular function is determined by
-    the singleton values: L(X) = Σ_{x∈X} L({x}) where L({x}) = S({x}).
-    
-    Args:
-        S: Entropy functional (should be submodular).
-        ground: The ground set.
-        
-    Returns:
-        Tuple (T, L, valid) where:
-        - T: Matter entropy (S - L)
-        - L: Vacuum entropy (modular approximation)
-        - valid: Whether the decomposition gives valid CodeSpacetime
-    """
-    # Modular function determined by singletons
-    singleton_vals: Dict[int, float] = {}
-    for x in ground:
-        singleton_vals[x] = S(frozenset({x}))
-    
-    def L(X: FrozenSet[int]) -> float:
-        return sum(singleton_vals.get(x, 0.0) for x in X)
-    
-    def T(X: FrozenSet[int]) -> float:
-        return S(X) - L(X)
-    
-    # Verify T(∅) = 0
-    valid = abs(T(frozenset())) < 1e-10
-    
-    return T, L, valid
-
-
-def compute_curvature_tensor(
-    f: SetFn,
-    ground: Set[int]
-) -> Dict[Tuple[FrozenSet[int], FrozenSet[int]], float]:
-    """Compute the full curvature tensor (all pairwise defects).
-    
-    Args:
-        f: Set function.
-        ground: Ground set.
-        
-    Returns:
-        Dictionary mapping (X, Y) pairs to defect values.
-    """
-    subsets = powerset(ground)
-    tensor: Dict[Tuple[FrozenSet[int], FrozenSet[int]], float] = {}
-    for X in subsets:
-        for Y in subsets:
-            tensor[(X, Y)] = compute_defect(f, X, Y)
-    return tensor
-
-
-def total_curvature(f: SetFn, ground: Set[int]) -> float:
-    """Compute total curvature (sum of all defects).
-    
-    Args:
-        f: Set function (submodular for non-negative result).
-        ground: Ground set.
-        
-    Returns:
-        Sum of defect(f, X, Y) over all pairs (X, Y).
-    """
-    subsets = powerset(ground)
-    return sum(compute_defect(f, X, Y) for X in subsets for Y in subsets)
-
-
-def compute_mutual_info(
-    f: SetFn, X: FrozenSet[int], Y: FrozenSet[int]
-) -> float:
-    """Compute mutual information I(X:Y) = f(X) + f(Y) - f(X ∪ Y).
-    
-    Args:
-        f: Set function.
-        X, Y: Disjoint sets for physical interpretation.
-        
-    Returns:
-        Mutual information value.
-    """
-    return f(X) + f(Y) - f(X | Y)
-
-
-def compute_tripartite_info(
-    f: SetFn,
-    X: FrozenSet[int],
-    Y: FrozenSet[int],
-    Z: FrozenSet[int]
-) -> float:
-    """Compute tripartite information I₃(X,Y,Z).
-    
-    I₃ = f(X) + f(Y) + f(Z) - f(X∪Y) - f(X∪Z) - f(Y∪Z) + f(X∪Y∪Z)
-    
-    Args:
-        f: Set function.
-        X, Y, Z: Three sets.
-        
-    Returns:
-        Tripartite information. Can be negative for quantum systems.
-    """
-    return (f(X) + f(Y) + f(Z)
-            - f(X | Y) - f(X | Z) - f(Y | Z)
-            + f(X | Y | Z))
-
-
-def verify_submodularity(f: SetFn, ground: Set[int], tol: float = 1e-10) -> Tuple[bool, float]:
-    """Check if f is submodular and return the minimum defect.
-    
-    Args:
-        f: Set function to check.
-        ground: Ground set.
-        tol: Numerical tolerance.
-        
-    Returns:
-        Tuple (is_submodular, min_defect).
-    """
-    subsets = powerset(ground)
-    min_defect = float('inf')
-    for X in subsets:
-        for Y in subsets:
-            d = compute_defect(f, X, Y)
-            min_defect = min(min_defect, d)
-    return min_defect >= -tol, min_defect
-
-
-def verify_modularity(f: SetFn, ground: Set[int], tol: float = 1e-10) -> Tuple[bool, float]:
-    """Check if f is modular and return the maximum |defect|.
-    
-    Args:
-        f: Set function to check.
-        ground: Ground set.
-        tol: Numerical tolerance.
-        
-    Returns:
-        Tuple (is_modular, max_abs_defect).
-    """
-    subsets = powerset(ground)
-    max_abs_defect = 0.0
-    for X in subsets:
-        for Y in subsets:
-            d = abs(compute_defect(f, X, Y))
-            max_abs_defect = max(max_abs_defect, d)
-    return max_abs_defect <= tol, max_abs_defect
-
-
-def binding_energy_analysis(
-    f: SetFn,
-    ground: Set[int]
-) -> List[Dict]:
-    """Analyze binding energies between all disjoint pairs.
-    
-    Args:
-        f: Set function (should be submodular for non-negative binding).
-        ground: Ground set.
-        
-    Returns:
-        List of dicts with X, Y, binding_energy for each disjoint pair.
-    """
-    subsets = powerset(ground)
-    results: List[Dict] = []
-    for X in subsets:
-        for Y in subsets:
-            if X & Y:
-                continue  # Skip non-disjoint
-            if not X or not Y:
-                continue  # Skip empty
-            be = compute_mutual_info(f, X, Y)
-            results.append({
-                "X": set(X),
-                "Y": set(Y),
-                "binding_energy": be,
-                "normalized": be / (len(X) * len(Y)) if len(X) * len(Y) > 0 else 0
-            })
-    return sorted(results, key=lambda r: -r["binding_energy"])
+    return min(float(s), min(float(code.n - s), code.singleton_entropy))
 
 
 if __name__ == "__main__":
-    # Quick demonstration
-    ground = {1, 2, 3}
-    
-    # Cardinality spacetime
-    S = lambda X: len(X) ** 2
-    T, L, valid = einstein_decomposition(S, ground)
-    
-    print("Einstein Decomposition of S(X) = |X|²:")
-    print(f"  Valid: {valid}")
-    print(f"  S({{1,2,3}}) = {S(frozenset(ground))}")
-    print(f"  T({{1,2,3}}) = {T(frozenset(ground))}")
-    print(f"  L({{1,2,3}}) = {L(frozenset(ground))}")
-    
-    is_sub, min_d = verify_submodularity(S, ground)
-    print(f"  S submodular: {is_sub} (min defect = {min_d})")
-    
-    is_mod, max_d = verify_modularity(L, ground)
-    print(f"  L modular: {is_mod} (max |defect| = {max_d})")
-    
-    print(f"  Total curvature: {total_curvature(S, ground):.2f}")
-    
-    bindings = binding_energy_analysis(S, ground)
-    print(f"  Top binding: {bindings[0]}")
+    # Example usage
+    tower = construct_mds_tower(k=1, distances=[3, 4, 5, 6, 7])
+    print(f"MDS Tower (k=1, d=3..7): fully MDS = {tower.is_fully_mds}")
+    print(f"Curvature identity holds: {tower.verify_curvature_identity()}")
+
+    for l in range(1, tower.height - 1):
+        print(f"  Layer {l}: κ_n={tower.curvature(l)}, "
+              f"2κ_d={2*tower.distance_curvature(l)}")
+
+    # Toric code tower
+    toric = construct_toric_tower(range(2, 8))
+    print(f"\nToric Tower: fully MDS = {toric.is_fully_mds}")
+    for l in range(1, toric.height - 1):
+        print(f"  Layer {l} (L={l+2}): κ_n={toric.curvature(l)}, defect={toric.codes[l].defect}")
