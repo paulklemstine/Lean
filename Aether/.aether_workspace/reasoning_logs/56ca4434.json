@@ -1,0 +1,22 @@
+{
+  "checkpoints": [
+    {
+      "elapsed_seconds": 1.0,
+      "percent_complete": 0.0,
+      "status": "SUBMITTED",
+      "timestamp": "2026-06-04T19:41:01"
+    }
+  ],
+  "completed_at": "",
+  "domain": "Algebra",
+  "error": "",
+  "final_percent": 0.0,
+  "final_status": "",
+  "has_files": false,
+  "job_id": "56ca4434",
+  "project_id": "278d0bba-8c19-45c8-bc4d-1fff062a903e",
+  "prompt_length": 24532,
+  "stages": [],
+  "submitted_at": "2026-06-04T19:41:01",
+  "total_duration_seconds": 0.0
+}

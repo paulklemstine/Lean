@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T19:01:57.053868+00:00",
+  "last_updated": "2026-06-04T19:40:21.982691+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -3488,6 +3488,76 @@
       "theorem_count": 5,
       "timestamp": "2026-06-04T19:01:57.007949+00:00",
       "title": "Gap Transition System \u2014 a finite-state autom"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4442,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 1,
+      "domain": "Novelty",
+      "duration_seconds": 4784.486980438232,
+      "end_time": 1780601960.9347053,
+      "files_integrated": 5,
+      "job_id": "b5042b08",
+      "outcome_quality": 0.56624,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6832,
+        "cross_domain": 1.0,
+        "grade": "substantial",
+        "importance": 0.4019,
+        "novelty": 0.95,
+        "proof_depth": 0.167,
+        "usefulness": 0.5835
+      },
+      "quality_score": 0.56624,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780597176.4477248,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T19:40:21.861025+00:00",
+      "title": "Consciousness Complexity: Integrated Information as a Topological Invariant"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4369,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 2,
+      "domain": "Tropical",
+      "duration_seconds": 4762.544292926788,
+      "end_time": 1780601961.290796,
+      "files_integrated": 5,
+      "job_id": "082b48f5",
+      "outcome_quality": 0.50544,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.56,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8439,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.875,
+        "novelty": 0.9278,
+        "proof_depth": 0.8523,
+        "usefulness": 0.9262
+      },
+      "quality_score": 0.50544,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780597198.746503,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T19:40:21.925079+00:00",
+      "title": "Tropical Satake Isomorphism for GL_n"
     }
   ]
 }
