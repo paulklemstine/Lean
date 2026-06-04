@@ -60,6 +60,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-04T05:33:56",
       "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
+    },
+    {
+      "cycle_id": "6c603a50",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Research Directions\n\n## Synthesis\n\nThis cycle introduced **Tropical Social Welfare Functions (TropSWF)** — max-plus linear maps parameterized by voter weight vectors — and proved the **Tropic",
+      "quality_score": 0.37240000000000006,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T06:08:40",
+      "title": "Speculative: Tropical Mathematics of Social Choice"
     }
   ],
   "entries": [
@@ -105,7 +115,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-04T05:33:56",
+  "last_updated": "2026-06-04T06:08:40",
   "open_questions": [],
   "research_threads": {
     "Bridges": [
@@ -144,6 +154,12 @@
         "quality": 0.48656,
         "theorems": 5,
         "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+      },
+      {
+        "cycle_id": "6c603a50",
+        "quality": 0.37240000000000006,
+        "theorems": 5,
+        "title": "Speculative: Tropical Mathematics of Social Choice"
       }
     ],
     "Shared": [
