@@ -1,327 +1,258 @@
 #!/usr/bin/env python3
 """
-EML Category Algorithms
-========================
-Implementations of the core algorithms from the EML category theory:
-1. Log-affine normalization (verified in LogAffineNormal.lean)
-2. Expression depth and size analysis
-3. Composition of EML maps in log-affine normal form
-4. Random EML expression generation for testing
+algorithms.py — EML Category: Core Algorithms
+
+Type-hinted implementations of the key constructions in the EML category.
 """
 
-import math
-import random
+from __future__ import annotations
 from dataclasses import dataclass
-from typing import List, Tuple, Optional, Dict
+from typing import Callable, List, Optional, Tuple, Union
+import numpy as np
 
 
 # ============================================================
-# Core Data Types
+# 1. ScalarEMLTree: Explicit derivation trees
 # ============================================================
 
-class PosEMLExpr:
-    """Abstract base for multiplicative positive EML expressions."""
+@dataclass
+class EMLTree:
+    """Base class for EML derivation tree nodes."""
     pass
 
 @dataclass
-class Coord(PosEMLExpr):
-    """Coordinate projection x_i."""
-    i: int
-    def __repr__(self): return f"x[{self.i}]"
+class Coord(EMLTree):
+    """Coordinate projection: x ↦ x[i]"""
+    index: int
 
 @dataclass
-class PosConst(PosEMLExpr):
-    """Positive constant c > 0."""
-    c: float
-    def __repr__(self): return f"{self.c:.4g}"
+class Const(EMLTree):
+    """Constant: x ↦ c"""
+    value: float
 
 @dataclass
-class Mul(PosEMLExpr):
-    """Product e1 * e2."""
-    e1: PosEMLExpr
-    e2: PosEMLExpr
-    def __repr__(self): return f"({self.e1} * {self.e2})"
+class Add(EMLTree):
+    """Addition: x ↦ left(x) + right(x)"""
+    left: EMLTree
+    right: EMLTree
 
 @dataclass
-class RPow(PosEMLExpr):
-    """Real power e^r."""
-    e: PosEMLExpr
-    r: float
-    def __repr__(self): return f"({self.e})^{self.r:.4g}"
-
+class Mul(EMLTree):
+    """Multiplication: x ↦ left(x) * right(x)"""
+    left: EMLTree
+    right: EMLTree
 
 @dataclass
-class LogAffineForm:
-    """
-    Log-affine normal form: exp(sum_i w[i] * log(x[i]) + c).
+class Exp(EMLTree):
+    """Exponential: x ↦ exp(child(x))"""
+    child: EMLTree
 
-    This represents a weighted geometric monomial:
-    prod_i x[i]^w[i] * exp(c)
-    """
-    weights: List[float]
-    constant: float
-    dim: int
-
-    def evaluate(self, x: List[float]) -> float:
-        """Evaluate on a positive vector."""
-        assert len(x) == self.dim
-        return math.exp(
-            sum(self.weights[i] * math.log(x[i]) for i in range(self.dim))
-            + self.constant
-        )
-
-    def __repr__(self):
-        terms = []
-        for i, w in enumerate(self.weights):
-            if abs(w) > 1e-12:
-                terms.append(f"{w:.4g}·log(x[{i}])")
-        c_str = f" + {self.constant:.4g}" if abs(self.constant) > 1e-12 else ""
-        return f"exp({' + '.join(terms) if terms else '0'}{c_str})"
+@dataclass
+class Log(EMLTree):
+    """Logarithm: x ↦ log(child(x))"""
+    child: EMLTree
 
 
-# ============================================================
-# Algorithm 1: Log-Affine Normalization
-# ============================================================
-
-def normalize(expr: PosEMLExpr, dim: int) -> LogAffineForm:
-    """
-    Normalize a multiplicative positive EML expression to log-affine form.
-
-    This is the verified algorithm from LogAffineNormal.lean:
-    - Coord(i) → weights = e_i, c = 0
-    - PosConst(c) → weights = 0, c = log(c)
-    - Mul(e1, e2) → weights = w1 + w2, c = c1 + c2
-    - RPow(e, r) → weights = r * w, c = r * c
-
-    Time complexity: O(n * |expr|) where n = dim, |expr| = expression size
-    Space complexity: O(n * depth(expr)) for the recursion stack
-
-    Args:
-        expr: A multiplicative positive EML expression
-        dim: Input dimension
-
-    Returns:
-        LogAffineForm equivalent to the expression
-    """
-    if isinstance(expr, Coord):
-        w = [0.0] * dim
-        w[expr.i] = 1.0
-        return LogAffineForm(w, 0.0, dim)
-
-    elif isinstance(expr, PosConst):
-        return LogAffineForm([0.0] * dim, math.log(expr.c), dim)
-
-    elif isinstance(expr, Mul):
-        f1 = normalize(expr.e1, dim)
-        f2 = normalize(expr.e2, dim)
-        return LogAffineForm(
-            [f1.weights[i] + f2.weights[i] for i in range(dim)],
-            f1.constant + f2.constant,
-            dim
-        )
-
-    elif isinstance(expr, RPow):
-        f = normalize(expr.e, dim)
-        return LogAffineForm(
-            [expr.r * w for w in f.weights],
-            expr.r * f.constant,
-            dim
-        )
-
+def evaluate(tree: EMLTree, x: np.ndarray) -> float:
+    """Evaluate an EML derivation tree at input vector x."""
+    if isinstance(tree, Coord):
+        return float(x[tree.index])
+    elif isinstance(tree, Const):
+        return tree.value
+    elif isinstance(tree, Add):
+        return evaluate(tree.left, x) + evaluate(tree.right, x)
+    elif isinstance(tree, Mul):
+        return evaluate(tree.left, x) * evaluate(tree.right, x)
+    elif isinstance(tree, Exp):
+        return float(np.exp(evaluate(tree.child, x)))
+    elif isinstance(tree, Log):
+        return float(np.log(evaluate(tree.child, x)))
     else:
-        raise ValueError(f"Unknown expression type: {type(expr)}")
+        raise ValueError(f"Unknown tree type: {type(tree)}")
 
 
-# ============================================================
-# Algorithm 2: Composition of Log-Affine Maps
-# ============================================================
-
-def compose_log_affine(
-    outer: LogAffineForm,
-    inners: List[LogAffineForm]
-) -> LogAffineForm:
-    """
-    Compose a scalar log-affine map with a vector of log-affine maps.
-
-    Given outer: R^m -> R with form exp(sum_j v[j] * log(y[j]) + d)
-    and inners: R^n -> R^m with inner[j] = exp(sum_i w_j[i] * log(x[i]) + c_j),
-
-    the composition is:
-    outer(inner(x)) = exp(sum_j v[j] * (sum_i w_j[i]*log(x[i]) + c_j) + d)
-                     = exp(sum_i (sum_j v[j]*w_j[i]) * log(x[i]) + (sum_j v[j]*c_j + d))
-
-    This shows that composition of log-affine maps is log-affine,
-    which is the content of vecEMLComp_comp restricted to the multiplicative fragment.
-
-    Time complexity: O(n * m)
-    """
-    assert len(inners) == outer.dim, "Dimension mismatch"
-    n = inners[0].dim if inners else 0
-
-    # Compute composed weights: w'[i] = sum_j v[j] * w_j[i]
-    new_weights = [0.0] * n
-    for j in range(outer.dim):
-        for i in range(n):
-            new_weights[i] += outer.weights[j] * inners[j].weights[i]
-
-    # Compute composed constant: c' = sum_j v[j] * c_j + d
-    new_constant = outer.constant
-    for j in range(outer.dim):
-        new_constant += outer.weights[j] * inners[j].constant
-
-    return LogAffineForm(new_weights, new_constant, n)
-
-
-# ============================================================
-# Algorithm 3: Random Expression Generation
-# ============================================================
-
-def random_pos_eml(dim: int, max_depth: int = 4) -> PosEMLExpr:
-    """
-    Generate a random multiplicative positive EML expression.
-
-    Used for testing the normalization theorem:
-    for any generated expression, evaluate(expr, x) should equal
-    normalize(expr, dim).evaluate(x) for all positive x.
-    """
-    if max_depth <= 0 or random.random() < 0.3:
-        # Base case: coordinate or constant
-        if random.random() < 0.6:
-            return Coord(random.randint(0, dim - 1))
-        else:
-            return PosConst(random.uniform(0.1, 10.0))
-    else:
-        choice = random.random()
-        if choice < 0.5:
-            return Mul(
-                random_pos_eml(dim, max_depth - 1),
-                random_pos_eml(dim, max_depth - 1)
-            )
-        else:
-            return RPow(
-                random_pos_eml(dim, max_depth - 1),
-                random.uniform(-3.0, 3.0)
-            )
-
-
-def evaluate_expr(expr: PosEMLExpr, x: List[float]) -> float:
-    """Direct evaluation of a PosEMLExpr."""
-    if isinstance(expr, Coord):
-        return x[expr.i]
-    elif isinstance(expr, PosConst):
-        return expr.c
-    elif isinstance(expr, Mul):
-        return evaluate_expr(expr.e1, x) * evaluate_expr(expr.e2, x)
-    elif isinstance(expr, RPow):
-        return evaluate_expr(expr.e, x) ** expr.r
-    else:
-        raise ValueError(f"Unknown: {type(expr)}")
-
-
-# ============================================================
-# Algorithm 4: Expression Analysis
-# ============================================================
-
-def expr_depth(expr: PosEMLExpr) -> int:
-    """Compute the depth of an expression tree."""
-    if isinstance(expr, (Coord, PosConst)):
-        return 0
-    elif isinstance(expr, Mul):
-        return 1 + max(expr_depth(expr.e1), expr_depth(expr.e2))
-    elif isinstance(expr, RPow):
-        return 1 + expr_depth(expr.e)
-    return 0
-
-def expr_size(expr: PosEMLExpr) -> int:
-    """Compute the number of nodes in an expression tree."""
-    if isinstance(expr, (Coord, PosConst)):
+def node_count(tree: EMLTree) -> int:
+    """Count total nodes in the derivation tree."""
+    if isinstance(tree, (Coord, Const)):
         return 1
-    elif isinstance(expr, Mul):
-        return 1 + expr_size(expr.e1) + expr_size(expr.e2)
-    elif isinstance(expr, RPow):
-        return 1 + expr_size(expr.e)
-    return 1
+    elif isinstance(tree, (Add, Mul)):
+        return node_count(tree.left) + node_count(tree.right) + 1
+    elif isinstance(tree, (Exp, Log)):
+        return node_count(tree.child) + 1
+    else:
+        raise ValueError(f"Unknown tree type: {type(tree)}")
+
+
+def depth(tree: EMLTree) -> int:
+    """Compute depth (height) of the derivation tree."""
+    if isinstance(tree, (Coord, Const)):
+        return 0
+    elif isinstance(tree, (Add, Mul)):
+        return max(depth(tree.left), depth(tree.right)) + 1
+    elif isinstance(tree, (Exp, Log)):
+        return depth(tree.child) + 1
+    else:
+        raise ValueError(f"Unknown tree type: {type(tree)}")
 
 
 # ============================================================
-# Verification tests
+# 2. Category operations
 # ============================================================
 
-def test_normalization(num_tests: int = 100, dim: int = 3):
+def identity_tree(n: int) -> List[EMLTree]:
+    """Identity morphism: n trees, each projecting one coordinate."""
+    return [Coord(i) for i in range(n)]
+
+
+def compose_trees(
+    outer: List[EMLTree],
+    inner: List[EMLTree],
+    n_input: int
+) -> List[EMLTree]:
     """
-    Empirically verify the normalization theorem:
-    for random expressions, direct evaluation matches normal form evaluation.
+    Compose EML vector maps at the tree level.
+    outer: m trees in k variables (the g map)
+    inner: k trees in n variables (the f map)
+    Result: m trees in n variables (g ∘ f)
+
+    Uses substitution: replace each Coord(i) in outer with inner[i].
     """
-    print(f"Testing normalization on {num_tests} random expressions (dim={dim})...")
-    max_error = 0.0
-    for trial in range(num_tests):
-        expr = random_pos_eml(dim, max_depth=4)
-        nf = normalize(expr, dim)
-        x = [random.uniform(0.1, 5.0) for _ in range(dim)]
+    def substitute(tree: EMLTree) -> EMLTree:
+        if isinstance(tree, Coord):
+            return inner[tree.index]
+        elif isinstance(tree, Const):
+            return tree
+        elif isinstance(tree, Add):
+            return Add(substitute(tree.left), substitute(tree.right))
+        elif isinstance(tree, Mul):
+            return Mul(substitute(tree.left), substitute(tree.right))
+        elif isinstance(tree, Exp):
+            return Exp(substitute(tree.child))
+        elif isinstance(tree, Log):
+            return Log(substitute(tree.child))
+        else:
+            raise ValueError(f"Unknown tree type: {type(tree)}")
 
-        direct = evaluate_expr(expr, x)
-        normal = nf.evaluate(x)
-
-        if direct > 0 and normal > 0:
-            # Use relative error in log space for numerical stability
-            err = abs(math.log(direct) - math.log(normal))
-            max_error = max(max_error, err)
-
-    print(f"  Max log-space error: {max_error:.2e}")
-    print(f"  Status: {'PASS' if max_error < 1e-8 else 'FAIL'}")
-    return max_error < 1e-8
+    return [substitute(t) for t in outer]
 
 
-def test_composition(num_tests: int = 50, dim: int = 3):
+def pair_trees(
+    f_trees: List[EMLTree],
+    g_trees: List[EMLTree]
+) -> List[EMLTree]:
+    """Pairing: concatenate output trees to form the product map."""
+    return f_trees + g_trees
+
+
+def curry_trees(
+    trees: List[EMLTree],
+    theta: np.ndarray,
+    p: int
+) -> List[EMLTree]:
     """
-    Test that composition of log-affine maps produces correct results.
+    Curry: fix the first p inputs to constants theta[0..p-1].
+    Remaining variables are shifted: Coord(p+j) -> Coord(j).
     """
-    print(f"Testing composition on {num_tests} random pairs (dim={dim})...")
-    max_error = 0.0
-    for _ in range(num_tests):
-        m = random.randint(1, 4)
-        # Random outer function R^m -> R
-        outer = LogAffineForm(
-            [random.uniform(-2, 2) for _ in range(m)],
-            random.uniform(-1, 1), m
+    def fix_params(tree: EMLTree) -> EMLTree:
+        if isinstance(tree, Coord):
+            if tree.index < p:
+                return Const(float(theta[tree.index]))
+            else:
+                return Coord(tree.index - p)
+        elif isinstance(tree, Const):
+            return tree
+        elif isinstance(tree, Add):
+            return Add(fix_params(tree.left), fix_params(tree.right))
+        elif isinstance(tree, Mul):
+            return Mul(fix_params(tree.left), fix_params(tree.right))
+        elif isinstance(tree, Exp):
+            return Exp(fix_params(tree.child))
+        elif isinstance(tree, Log):
+            return Log(fix_params(tree.child))
+        else:
+            raise ValueError(f"Unknown tree type: {type(tree)}")
+
+    return [fix_params(t) for t in trees]
+
+
+# ============================================================
+# 3. Iterated exponential construction
+# ============================================================
+
+def iter_exp_tree(k: int) -> EMLTree:
+    """Build the k-fold iterated exponential tree."""
+    tree: EMLTree = Coord(0)
+    for _ in range(k):
+        tree = Exp(tree)
+    return tree
+
+
+# ============================================================
+# 4. Log-affine map algebra
+# ============================================================
+
+@dataclass
+class LogAffineMap:
+    """A log-affine map f(x) = exp(sum_i w_i * log(x_i) + c)."""
+    weights: np.ndarray
+    offset: float
+
+    def evaluate(self, x: np.ndarray) -> float:
+        """Evaluate on positive vector x."""
+        assert np.all(x > 0), "Input must be strictly positive"
+        return float(np.exp(np.sum(self.weights * np.log(x)) + self.offset))
+
+    def log_coords(self, x: np.ndarray) -> float:
+        """Value in log coordinates: sum_i w_i * log(x_i) + c"""
+        return float(np.sum(self.weights * np.log(x)) + self.offset)
+
+    def __mul__(self, other: LogAffineMap) -> LogAffineMap:
+        """Multiplication closure: (f*g)(x) has weights w1+w2, offset c1+c2."""
+        return LogAffineMap(
+            weights=self.weights + other.weights,
+            offset=self.offset + other.offset
         )
-        # Random inner functions R^dim -> R, one per coordinate
-        inners = [
-            LogAffineForm(
-                [random.uniform(-2, 2) for _ in range(dim)],
-                random.uniform(-1, 1), dim
-            ) for _ in range(m)
-        ]
 
-        composed = compose_log_affine(outer, inners)
-        x = [random.uniform(0.1, 5.0) for _ in range(dim)]
 
-        # Direct: outer(inner1(x), ..., innerm(x))
-        inner_vals = [f.evaluate(x) for f in inners]
-        direct = outer.evaluate(inner_vals)
-        normal = composed.evaluate(x)
-
-        if direct > 0 and normal > 0:
-            err = abs(math.log(direct) - math.log(normal))
-            max_error = max(max_error, err)
-
-    print(f"  Max log-space error: {max_error:.2e}")
-    print(f"  Status: {'PASS' if max_error < 1e-8 else 'FAIL'}")
-    return max_error < 1e-8
-
+# ============================================================
+# 5. Demonstration
+# ============================================================
 
 if __name__ == "__main__":
-    print("EML Category Algorithms — Verification Tests")
-    print("=" * 60)
-    print()
+    print("=== EML Tree Algebra ===")
 
-    random.seed(42)
-    ok1 = test_normalization()
-    print()
-    ok2 = test_composition()
-    print()
+    # Build: eml(x0, x1) = exp(x0) - log(x1)
+    eml_tree = Add(Exp(Coord(0)), Mul(Const(-1.0), Log(Coord(1))))
+    x = np.array([1.0, 2.0])
+    print(f"eml({x[0]}, {x[1]}) = {evaluate(eml_tree, x):.6f}")
+    print(f"  node_count = {node_count(eml_tree)}")
+    print(f"  depth = {depth(eml_tree)}")
 
-    if ok1 and ok2:
-        print("All tests PASSED.")
-    else:
-        print("Some tests FAILED.")
+    print("\n=== Iterated Exponential Hierarchy ===")
+    for k in range(6):
+        t = iter_exp_tree(k)
+        print(f"  exp^[{k}]: depth={depth(t)}, nodes={node_count(t)}, "
+              f"value at 0.1 = {evaluate(t, np.array([0.1])):.6f}")
+
+    print("\n=== Composition ===")
+    # f: R^2 -> R^2, f(x) = (exp(x0), x0 + x1)
+    f_trees = [Exp(Coord(0)), Add(Coord(0), Coord(1))]
+    # g: R^2 -> R^1, g(y) = y0 * y1
+    g_trees = [Mul(Coord(0), Coord(1))]
+    # g ∘ f: R^2 -> R^1
+    gf_trees = compose_trees(g_trees, f_trees, 2)
+    x = np.array([1.0, 2.0])
+    print(f"  g(f({x})) = {evaluate(gf_trees[0], x):.6f}")
+    print(f"  Expected exp(1)*(1+2) = {np.exp(1)*3:.6f}")
+    print(f"  Composed tree nodes: {node_count(gf_trees[0])}")
+
+    print("\n=== Log-Affine Algebra ===")
+    f = LogAffineMap(np.array([2.0, 0.5]), 1.0)
+    g = LogAffineMap(np.array([-1.0, 3.0]), 0.0)
+    fg = f * g
+    x = np.array([2.0, 3.0])
+    print(f"  f(x) = {f.evaluate(x):.6f}")
+    print(f"  g(x) = {g.evaluate(x):.6f}")
+    print(f"  (f*g)(x) = {fg.evaluate(x):.6f}")
+    print(f"  f(x)*g(x) = {f.evaluate(x) * g.evaluate(x):.6f}")
+    print(f"  In log coords: f -> {f.log_coords(x):.4f}, g -> {g.log_coords(x):.4f}")
