@@ -1,319 +1,348 @@
+#!/usr/bin/env python3
 """
-Surreal Topology Demonstrations
+Surreal Topology Demo: Numerical Exploration of Order Gaps and Connectedness
 
-Demonstrates the key mathematical concepts from the surreal topology research:
-1. Dedekind gaps in the rationals (showing disconnection)
-2. Linear path parametrization of intervals
-3. Tameness verification for real numbers
-4. Cofinality sequences
+Demonstrates the key results:
+1. The √2 Dedekind cut in ℚ (concrete order gap)
+2. The "bounded ℕ" gap in non-Archimedean fields
+3. Visualization of gap convergence sequences
 """
 
-import math
+from fractions import Fraction
+from typing import List, Tuple
 
 
-def demonstrate_rational_gap():
-    """Demonstrate a Dedekind gap in the rationals at sqrt(2).
+def sqrt_two_cut(q: Fraction) -> bool:
+    """Test if q is in the √2 Dedekind cut: q < 0 or (q >= 0 and q² < 2)."""
+    return q < 0 or (q >= 0 and q * q < 2)
+
+
+def sqrt_two_cut_no_max_witness(q: Fraction) -> Fraction:
+    """Given q in the √2 cut with q >= 0, find q' > q still in the cut.
     
-    The rationals Q have a gap at sqrt(2): the sets 
-    L = {q in Q : q < sqrt(2)} and U = {q in Q : q > sqrt(2)}
-    form a Dedekind gap (L has no max, U has no min).
+    Uses the formula q' = (2q + 2)/(q + 2).
+    Then q'² = 4(q+1)²/(q+2)² < 2 iff 2(q+1)² < (q+2)² iff q² < 2.
     """
+    if q < 0:
+        return q / 2  # Closer to 0, still negative
+    return (2 * q + 2) / (q + 2)
+
+
+def sqrt_two_cut_no_min_witness(q: Fraction) -> Fraction:
+    """Given q in the complement (q >= 0, q² >= 2), find q' < q still in complement.
+    
+    Uses the formula q' = (q² + 2)/(2q).
+    Then q'² = (q² + 2)²/(4q²) >= 2 iff (q² + 2)² >= 8q² iff (q² - 2)² >= 0.
+    """
+    return (q * q + 2) / (2 * q)
+
+
+def demonstrate_sqrt2_gap():
+    """Demonstrate the √2 Dedekind cut gap in ℚ."""
     print("=" * 60)
-    print("1. DEDEKIND GAP IN THE RATIONALS AT sqrt(2)")
+    print("DEMO 1: The √2 Dedekind Gap in ℚ")
     print("=" * 60)
-    
-    sqrt2 = math.sqrt(2)
-    print(f"\nsqrt(2) ≈ {sqrt2:.15f}")
-    
-    # Show that L has no maximum: for any rational q < sqrt(2),
-    # there exists a rational q' with q < q' < sqrt(2)
-    print("\nShowing L = {q ∈ Q : q < √2} has no maximum:")
-    q = 1.0  # Start with q = 1
-    for i in range(8):
-        q_next = (q + sqrt2) / 2  # Midpoint (rational approx)
-        print(f"  q = {q:.10f} < q' = {q_next:.10f} < √2 = {sqrt2:.10f}")
-        q = q_next
-    
-    # Show U has no minimum similarly
-    print("\nShowing U = {q ∈ Q : q > √2} has no minimum:")
-    q = 2.0
-    for i in range(8):
-        q_next = (q + sqrt2) / 2
-        print(f"  √2 = {sqrt2:.10f} < q' = {q_next:.10f} < q = {q:.10f}")
-        q = q_next
-    
-    print("\n→ This gap makes Q DISCONNECTED in the order topology.")
-    print("  L and U are both open sets that partition Q.")
-
-
-def demonstrate_linear_path():
-    """Demonstrate the linear path t ↦ (1-t)*a + t*b mapping [0,1] to [a,b]."""
-    print("\n" + "=" * 60)
-    print("2. LINEAR PATH PARAMETRIZATION")
-    print("=" * 60)
-    
-    a, b = 3.0, 7.0
-    print(f"\nLinear path from a={a} to b={b}: f(t) = (1-t)·{a} + t·{b}")
-    print(f"  f(0) = {(1-0)*a + 0*b} = a ✓")
-    print(f"  f(1) = {(1-1)*a + 1*b} = b ✓")
-    
-    print("\nPath values (monotone increasing):")
-    for t in [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]:
-        val = (1 - t) * a + t * b
-        bar = "█" * int(val * 3)
-        print(f"  t = {t:.1f} → f(t) = {val:.1f}  {bar}")
-    
-    print(f"\n→ f is continuous, monotone, and f([0,1]) = [{a}, {b}]")
-    print("  This proves ℝ is path-connected.")
-
-
-def demonstrate_tameness():
-    """Demonstrate that all points of ℝ are tame."""
-    print("\n" + "=" * 60)
-    print("3. TAMENESS OF REAL NUMBERS")
-    print("=" * 60)
-    
-    x = math.pi
-    print(f"\nPoint x = π ≈ {x:.10f}")
-    
-    # Left cofinal sequence: x - 1/(n+1)
-    print("\nLeft cofinal sequence: a_n = x - 1/(n+1)")
-    for n in range(10):
-        a_n = x - 1.0 / (n + 1)
-        print(f"  a_{n} = {a_n:.10f} < π")
-    print("  ... → π from below")
-    
-    # Right coinitial sequence: x + 1/(n+1)
-    print("\nRight coinitial sequence: b_n = x + 1/(n+1)")
-    for n in range(10):
-        b_n = x + 1.0 / (n + 1)
-        print(f"  b_{n} = {b_n:.10f} > π")
-    print("  ... → π from above")
-    
-    # Verify cofinality property
-    y = x - 0.001  # A point just below π
-    print(f"\nCofinality check: y = {y:.10f} < π")
-    for n in range(1000):
-        if x - 1.0 / (n + 1) >= y:
-            print(f"  Found a_{n} = {x - 1.0/(n+1):.10f} ≥ y ✓")
-            break
-    
-    print("\n→ π is TAME: it has countable cofinality from both sides.")
-    print("  Therefore 𝓝(π) is countably generated (first-countable).")
-
-
-def demonstrate_cofinality_spectrum():
-    """Demonstrate the cofinality spectrum concept."""
-    print("\n" + "=" * 60)
-    print("4. COFINALITY SPECTRUM")
-    print("=" * 60)
-    
-    print("\nIn ℝ: every point has cofinality (ℵ₀, ℵ₀) — all points are tame.")
-    print("In the surreals No:")
-    print("  • Finite surreals: cofinality (ℵ₀, ℵ₀) — tame, like ℝ")
-    print("  • ω (first infinite ordinal): cofinality (ℵ₀, ?) — ")
-    print("    approachable from below by 0, 1, 2, ...")
-    print("  • ω₁ (first uncountable ordinal): cofinality (ℵ₁, ?) — ")
-    print("    NOT approachable from below by any countable sequence!")
-    print("  • 1/ω (first infinitesimal): lies in a gap")
     print()
-    print("The cofinality spectrum classifies points into:")
-    print("  TAME = (ℵ₀, ℵ₀) → first-countable neighborhoods")
-    print("  WILD = (κ, λ) with κ or λ > ℵ₀ → non-first-countable")
+    
+    # Starting from below
+    q = Fraction(1)
+    print("Approaching √2 from below (inside the cut):")
+    for i in range(8):
+        q_float = float(q)
+        q_sq = float(q * q)
+        print(f"  q = {q} ≈ {q_float:.10f}, q² = {q_sq:.10f}, in cut: {sqrt_two_cut(q)}")
+        q = sqrt_two_cut_no_max_witness(q)
+    
     print()
-    print("Key Theorem: A dense linear order is CONNECTED iff")
-    print("             it has NO Dedekind gaps.")
-    print("             This is equivalent to Dedekind completeness")
-    print("             for dense orders without endpoints.")
+    
+    # Starting from above
+    q = Fraction(2)
+    print("Approaching √2 from above (outside the cut):")
+    for i in range(8):
+        q_float = float(q)
+        q_sq = float(q * q)
+        print(f"  q = {q} ≈ {q_float:.10f}, q² = {q_sq:.10f}, in cut: {sqrt_two_cut(q)}")
+        q = sqrt_two_cut_no_min_witness(q)
+    
+    print()
+    print(f"  √2 ≈ {2**0.5:.10f}")
+    print()
+    print("Key observation: The sequences converge to √2 from both sides,")
+    print("but √2 ∉ ℚ, so the gap is never filled. This disconnects ℚ.")
+
+
+def demonstrate_bounded_nat_gap():
+    """Demonstrate the gap created by bounded natural numbers."""
+    print()
+    print("=" * 60)
+    print("DEMO 2: The Bounded-ℕ Gap (Non-Archimedean Field)")
+    print("=" * 60)
+    print()
+    
+    print("In a non-Archimedean field F, there exists ω > n for all n ∈ ℕ.")
+    print("The set L = {x ∈ F | ∃ n, x < n} creates an order gap.")
+    print()
+    print("Simulating with a toy model: F = ℚ(ε) where ε is infinitesimal.")
+    print()
+    
+    # Model: pairs (a, b) representing a + b·ω where ω is infinite
+    # Order: lexicographic on (b, a) — ω dominates
+    class InfElement:
+        def __init__(self, real_part: Fraction, inf_part: Fraction):
+            self.r = real_part
+            self.i = inf_part
+        
+        def __repr__(self):
+            if self.i == 0:
+                return f"{self.r}"
+            elif self.r == 0:
+                return f"{self.i}·ω"
+            else:
+                return f"{self.r} + {self.i}·ω"
+        
+        def is_finite(self) -> bool:
+            """Is this element bounded by some natural number?"""
+            return self.i == 0 or self.i < 0
+    
+    examples = [
+        InfElement(Fraction(0), Fraction(0)),
+        InfElement(Fraction(42), Fraction(0)),
+        InfElement(Fraction(1000000), Fraction(0)),
+        InfElement(Fraction(0), Fraction(1)),       # ω
+        InfElement(Fraction(-5), Fraction(1)),      # ω - 5
+        InfElement(Fraction(0), Fraction(1, 2)),    # ω/2
+        InfElement(Fraction(0), Fraction(2)),        # 2ω
+    ]
+    
+    print("Elements and their classification:")
+    for e in examples:
+        side = "FINITE (in L)" if e.is_finite() else "INFINITE (in Lᶜ)"
+        print(f"  {str(e):>20s}  →  {side}")
+    
+    print()
+    print("The gap between L (finite) and Lᶜ (infinite) cannot be filled:")
+    print("  - L has no maximum: if x is finite, so is x + 1")
+    print("  - Lᶜ has no minimum: if x is infinite, so is x - 1")
+    print("  - This gap disconnects the field!")
+
+
+def demonstrate_rigidity():
+    """Demonstrate the uniqueness of ℝ among ordered fields."""
+    print()
+    print("=" * 60)
+    print("DEMO 3: Archimedean Rigidity — Why ℝ Is Unique")
+    print("=" * 60)
+    print()
+    
+    fields = [
+        ("ℚ (rationals)", True, False, False, "Gap at √2 (and every irrational)"),
+        ("ℝ (reals)", True, True, True, "THE unique connected ordered field"),
+        ("ℚ(√2)", True, False, False, "Gap at ∛2, π, etc."),
+        ("Algebraic reals", True, False, False, "Gap at π, e, etc."),
+        ("Hyperreals *ℝ", False, True, False, "Gap between finite and infinite"),
+        ("Surreals No", False, True, False, "Gaps at every ordinal birthday"),
+        ("Levi-Civita field", False, True, False, "Gap between finite and infinite"),
+        ("Laurent series ℝ((x))", False, True, False, "Gap between finite and infinite"),
+    ]
+    
+    print(f"{'Field':<25s} {'Arch?':>6s} {'Complete?':>10s} {'Connected?':>11s}  Reason")
+    print("-" * 85)
+    for name, arch, complete, connected, reason in fields:
+        a = "✓" if arch else "✗"
+        c = "✓" if complete else "✗"
+        conn = "✓" if connected else "✗"
+        print(f"  {name:<23s} {a:>6s} {c:>10s} {conn:>11s}  {reason}")
+    
+    print()
+    print("Theorem (proved): Connected → Archimedean")
+    print("Theorem (classical): Archimedean + Dedekind complete ↔ ≅ ℝ")
+    print("Therefore: ℝ is the UNIQUE connected ordered field.")
+
+
+if __name__ == "__main__":
+    demonstrate_sqrt2_gap()
+    demonstrate_bounded_nat_gap()
+    demonstrate_rigidity()
+
+
+#!/usr/bin/env python3
+"""Visualization: Topology of ordered fields — connected vs disconnected."""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import numpy as np
+
+
+def draw_number_line(ax, y, label, gaps=None, color='steelblue', label_fontsize=11):
+    """Draw a number line with optional gaps."""
+    x_range = (-3, 3)
+    
+    if gaps is None:
+        gaps = []
+    
+    # Sort gaps
+    gaps = sorted(gaps)
+    
+    # Draw segments between gaps
+    segments = []
+    prev = x_range[0]
+    for g in gaps:
+        if prev < g - 0.02:
+            segments.append((prev, g - 0.02))
+        prev = g + 0.02
+    if prev < x_range[1]:
+        segments.append((prev, x_range[1]))
+    
+    for (a, b) in segments:
+        ax.plot([a, b], [y, y], color=color, linewidth=4, solid_capstyle='round')
+    
+    # Draw gap markers
+    for g in gaps:
+        ax.plot(g, y, 'o', color='red', markersize=8, markerfacecolor='white',
+                markeredgewidth=2, zorder=5)
+    
+    # Label
+    ax.text(-3.8, y, label, fontsize=label_fontsize, ha='right', va='center',
+            fontweight='bold')
 
 
 def main():
-    """Run all demonstrations."""
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║     SURREAL TOPOLOGY: The Shape of Infinite Numbers     ║")
-    print("╚══════════════════════════════════════════════════════════╝")
+    fig, ax = plt.subplots(1, 1, figsize=(14, 7))
     
-    demonstrate_rational_gap()
-    demonstrate_linear_path()
-    demonstrate_tameness()
-    demonstrate_cofinality_spectrum()
+    sqrt2 = np.sqrt(2)
+    sqrt3 = np.sqrt(3)
+    pi_val = np.pi - 3  # Shifted for visibility
     
-    print("\n" + "=" * 60)
-    print("SUMMARY OF VERIFIED RESULTS")
-    print("=" * 60)
-    print("1. Dedekind gaps ⟹ disconnected order topology")
-    print("2. Conditionally complete + dense ⟹ connected")
-    print("3. Conditionally complete + dense ⟹ no gaps")
-    print("4. Tame points ⟹ countably generated neighborhoods")
-    print("5. All points of ℝ are tame")
-    print("6. Linear paths parametrize intervals: f([0,1]) = [a,b]")
-    print("7. ℝ is path-connected via linear interpolation")
+    # ℝ: connected, no gaps
+    draw_number_line(ax, 5, 'ℝ (reals)', gaps=[], color='#2196F3')
+    ax.text(3.3, 5, '✓ Connected', fontsize=10, color='green', fontweight='bold', va='center')
+    
+    # ℚ: many gaps (at irrationals)
+    irrational_gaps = [sqrt2 - 1.5, sqrt3 - 1.5, np.e - 2.5, 0.3, -0.7, 1.8, -1.5, 2.3]
+    draw_number_line(ax, 3.5, 'ℚ (rationals)', gaps=irrational_gaps, color='#FF9800')
+    ax.text(3.3, 3.5, '✗ Disconnected', fontsize=10, color='red', fontweight='bold', va='center')
+    ax.annotate('√2 gap', xy=(sqrt2 - 1.5, 3.5), xytext=(sqrt2 - 1.5, 4.2),
+               fontsize=8, ha='center', arrowprops=dict(arrowstyle='->', color='red'))
+    
+    # Hyperreals: gap at infinity boundary
+    draw_number_line(ax, 2, '*ℝ (hyperreals)', gaps=[1.5], color='#9C27B0')
+    ax.text(3.3, 2, '✗ Disconnected', fontsize=10, color='red', fontweight='bold', va='center')
+    ax.annotate('finite/infinite\nboundary', xy=(1.5, 2), xytext=(1.5, 1.0),
+               fontsize=8, ha='center', arrowprops=dict(arrowstyle='->', color='red'))
+    ax.text(-1, 2.3, 'finite', fontsize=8, ha='center', color='#9C27B0', style='italic')
+    ax.text(2.3, 2.3, 'infinite', fontsize=8, ha='center', color='#9C27B0', style='italic')
+    
+    # Surreals: many gaps
+    surreal_gaps = [-2, -1, 0, 0.7, 1.5, 2.2, -0.5, 0.3]
+    draw_number_line(ax, 0.5, 'No (surreals)', gaps=surreal_gaps, color='#F44336')
+    ax.text(3.3, 0.5, '✗ Disconnected', fontsize=10, color='red', fontweight='bold', va='center')
+    ax.text(0, -0.3, 'gaps at every ordinal birthday', fontsize=8, ha='center',
+            color='#F44336', style='italic')
+    
+    # Title and formatting
+    ax.set_title('Topology of Ordered Fields: Only ℝ Is Connected',
+                fontsize=16, fontweight='bold', pad=20)
+    ax.set_xlim(-4.5, 5.5)
+    ax.set_ylim(-1, 6.5)
+    ax.set_axis_off()
+    
+    # Legend box
+    legend_text = (
+        "Theorem: An ordered field is connected\n"
+        "in its order topology iff it is Archimedean\n"
+        "and Dedekind complete — i.e., iff it is ℝ."
+    )
+    ax.text(0, 6.2, legend_text, fontsize=10, ha='center', va='top',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='lightyellow',
+                     edgecolor='gray', alpha=0.9))
+    
+    # Gap legend
+    ax.plot([], [], 'o', color='red', markersize=8, markerfacecolor='white',
+            markeredgewidth=2, label='Order gap (Dedekind cut)')
+    ax.legend(loc='lower right', fontsize=9)
+    
+    plt.tight_layout()
+    plt.savefig('field_topology_comparison.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: field_topology_comparison.png")
 
 
 if __name__ == "__main__":
     main()
 
 
-"""
-Visualization: Dedekind Gaps and Connectedness in Ordered Spaces
+#!/usr/bin/env python3
+"""Visualization: The √2 Dedekind Gap in ℚ — converging sequences."""
 
-Generates a figure showing:
-1. A Dedekind gap in the rationals at sqrt(2)
-2. The clopen partition created by the gap
-3. Linear path parametrization of an interval
-"""
-
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
+import matplotlib.patches as patches
 import numpy as np
+from fractions import Fraction
 
 
-def plot_dedekind_gap():
-    """Plot the Dedekind gap at sqrt(2) in the rationals."""
-    fig, axes = plt.subplots(3, 1, figsize=(12, 10))
+def lower_cut_iterate(q: Fraction) -> Fraction:
+    return (2 * q + 2) / (q + 2)
+
+def upper_cut_iterate(q: Fraction) -> Fraction:
+    return (q * q + 2) / (2 * q)
+
+def main():
+    # Generate convergence sequences
+    n_steps = 12
+    lower = [Fraction(1)]
+    upper = [Fraction(2)]
+    for _ in range(n_steps):
+        lower.append(lower_cut_iterate(lower[-1]))
+        upper.append(upper_cut_iterate(upper[-1]))
     
-    # Panel 1: Dedekind gap at sqrt(2)
-    ax = axes[0]
-    ax.set_title("Dedekind Gap in ℚ at √2 ≈ 1.4142...", fontsize=14, fontweight='bold')
-    
+    lower_f = [float(q) for q in lower]
+    upper_f = [float(q) for q in upper]
     sqrt2 = np.sqrt(2)
     
-    # Plot rational points colored by which side of the gap they're on
-    rationals_lower = [q/10 for q in range(-20, 15) if q/10 < sqrt2]
-    rationals_upper = [q/10 for q in range(15, 40) if q/10 > sqrt2]
+    fig, axes = plt.subplots(2, 1, figsize=(12, 8), gridspec_kw={'height_ratios': [2, 1]})
     
-    ax.scatter(rationals_lower, [0]*len(rationals_lower), c='blue', s=30, 
-               zorder=5, label='L = {q ∈ ℚ : q < √2}')
-    ax.scatter(rationals_upper, [0]*len(rationals_upper), c='red', s=30, 
-               zorder=5, label='U = {q ∈ ℚ : q > √2}')
+    # Top plot: convergence to √2
+    ax1 = axes[0]
+    steps = list(range(len(lower_f)))
+    ax1.plot(steps, lower_f, 'b.-', markersize=8, label='Lower sequence (q² < 2)', linewidth=1.5)
+    ax1.plot(steps, upper_f, 'r.-', markersize=8, label='Upper sequence (q² ≥ 2)', linewidth=1.5)
+    ax1.axhline(y=sqrt2, color='green', linestyle='--', linewidth=2, alpha=0.7, label=f'√2 ≈ {sqrt2:.6f}')
     
-    # Mark the gap
-    ax.axvline(x=sqrt2, color='green', linestyle='--', linewidth=2, 
-               label=f'Gap at √2 ≈ {sqrt2:.4f}')
-    ax.annotate('GAP', xy=(sqrt2, 0), xytext=(sqrt2, 0.3),
-                fontsize=16, fontweight='bold', color='green',
-                ha='center', arrowprops=dict(arrowstyle='->', color='green'))
+    # Shade the gap region
+    ax1.fill_between(steps, lower_f, upper_f, alpha=0.15, color='purple', label='Gap (unfilled in ℚ)')
     
-    ax.set_xlim(-2.5, 4)
-    ax.set_ylim(-0.5, 0.5)
-    ax.set_yticks([])
-    ax.legend(loc='upper left', fontsize=10)
-    ax.set_xlabel('ℚ (rational number line)')
+    ax1.set_xlabel('Iteration', fontsize=12)
+    ax1.set_ylabel('Value', fontsize=12)
+    ax1.set_title('The √2 Dedekind Gap: Sequences Converging to an Irrational', fontsize=14, fontweight='bold')
+    ax1.legend(fontsize=10, loc='upper right')
+    ax1.grid(True, alpha=0.3)
     
-    # Add clopen labels
-    ax.fill_between([-2.5, sqrt2-0.01], -0.15, 0.15, alpha=0.15, color='blue')
-    ax.fill_between([sqrt2+0.01, 4], -0.15, 0.15, alpha=0.15, color='red')
-    ax.text(-1, -0.35, 'OPEN & CLOSED', fontsize=10, color='blue', ha='center')
-    ax.text(3, -0.35, 'OPEN & CLOSED', fontsize=10, color='red', ha='center')
+    # Bottom plot: gap width (log scale)
+    ax2 = axes[1]
+    gaps = [upper_f[i] - lower_f[i] for i in range(len(lower_f))]
+    ax2.semilogy(steps, gaps, 'purple', marker='s', markersize=6, linewidth=1.5, label='Gap width')
+    ax2.set_xlabel('Iteration', fontsize=12)
+    ax2.set_ylabel('Gap Width (log scale)', fontsize=12)
+    ax2.set_title('Quadratic Convergence: The Gap Shrinks but Never Closes in ℚ', fontsize=13)
+    ax2.legend(fontsize=10)
+    ax2.grid(True, alpha=0.3)
     
-    # Panel 2: ℝ fills the gap — connected
-    ax = axes[1]
-    ax.set_title("ℝ Fills All Gaps → Connected (No Clopen Partition)", 
-                 fontsize=14, fontweight='bold')
-    
-    x = np.linspace(-2.5, 4, 1000)
-    ax.plot(x, np.zeros_like(x), 'purple', linewidth=3)
-    ax.scatter([sqrt2], [0], c='green', s=100, zorder=5, marker='*',
-               label=f'√2 ∈ ℝ fills the gap')
-    ax.fill_between(x, -0.15, 0.15, alpha=0.1, color='purple')
-    
-    ax.set_xlim(-2.5, 4)
-    ax.set_ylim(-0.5, 0.5)
-    ax.set_yticks([])
-    ax.legend(loc='upper left', fontsize=10)
-    ax.set_xlabel('ℝ (real number line) — no gaps, CONNECTED')
-    ax.text(0.5, -0.35, 'One connected piece — no nontrivial clopen sets', 
-            fontsize=10, color='purple', ha='center')
-    
-    # Panel 3: Linear path
-    ax = axes[2]
-    ax.set_title("Linear Path: f(t) = (1-t)·a + t·b maps [0,1] → [a,b]", 
-                 fontsize=14, fontweight='bold')
-    
-    a_val, b_val = 2.0, 6.0
-    t = np.linspace(0, 1, 100)
-    f_t = (1 - t) * a_val + t * b_val
-    
-    ax.plot(t, f_t, 'darkgreen', linewidth=3, label='f(t) = (1-t)·2 + t·6')
-    ax.scatter([0, 1], [a_val, b_val], c='red', s=100, zorder=5)
-    ax.annotate(f'f(0) = a = {a_val}', xy=(0, a_val), xytext=(0.1, a_val-0.5),
-                fontsize=11, arrowprops=dict(arrowstyle='->'))
-    ax.annotate(f'f(1) = b = {b_val}', xy=(1, b_val), xytext=(0.7, b_val+0.5),
-                fontsize=11, arrowprops=dict(arrowstyle='->'))
-    
-    # Show monotonicity
-    ax.fill_between(t, a_val, f_t, alpha=0.1, color='green')
-    ax.set_xlabel('Parameter t ∈ [0, 1]')
-    ax.set_ylabel('f(t)')
-    ax.legend(fontsize=10)
-    ax.text(0.5, 3, 'Monotone ↗ (since a ≤ b)\nContinuous\nSurjective onto [a,b]',
-            fontsize=10, ha='center', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
-    
-    plt.tight_layout()
-    plt.savefig('surreal_topology_gaps.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: surreal_topology_gaps.png")
-
-
-def plot_cofinality_spectrum():
-    """Plot the cofinality spectrum concept."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-    ax.set_title("Cofinality Spectrum: Tame vs Wild Points", 
-                 fontsize=14, fontweight='bold')
-    
-    # Draw the number line with different point types
-    x_tame = np.linspace(-3, 3, 20)
-    ax.scatter(x_tame, np.zeros_like(x_tame), c='blue', s=40, zorder=5,
-               label='Tame (ℵ₀, ℵ₀) — like ℝ')
-    
-    # Mark some "wild" points
-    wild_points = [4, 5, 6]
-    ax.scatter(wild_points, [0]*3, c='red', s=80, marker='D', zorder=5,
-               label='Wild (ℵ₁, ℵ₀) — surreal-like')
-    
-    # Draw convergent sequences for a tame point
-    x0 = 1.0
-    n_terms = 8
-    left_seq = [x0 - 1/(n+1) for n in range(n_terms)]
-    right_seq = [x0 + 1/(n+1) for n in range(n_terms)]
-    
-    for i, (l, r) in enumerate(zip(left_seq, right_seq)):
-        alpha = 0.3 + 0.7 * i / n_terms
-        ax.plot([l, l], [-0.05, 0.05], 'b-', alpha=alpha)
-        ax.plot([r, r], [-0.05, 0.05], 'b-', alpha=alpha)
-    
-    ax.annotate('Tame: sequences\nconverge from both sides', 
-                xy=(x0, 0), xytext=(x0, 0.4),
+    # Add annotation
+    ax2.annotate('Gap → 0 but √2 ∉ ℚ\n⟹ ℚ is disconnected',
+                xy=(8, gaps[8]), xytext=(4, gaps[2]),
                 fontsize=10, ha='center',
-                arrowprops=dict(arrowstyle='->', color='blue'))
-    
-    # Show that wild point can't be approached
-    ax.annotate('Wild: NO countable\nsequence converges\nfrom left', 
-                xy=(4, 0), xytext=(4.5, 0.4),
-                fontsize=10, ha='center', color='red',
-                arrowprops=dict(arrowstyle='->', color='red'))
-    
-    ax.set_xlim(-4, 7.5)
-    ax.set_ylim(-0.6, 0.8)
-    ax.set_yticks([])
-    ax.axhline(y=0, color='gray', linewidth=0.5)
-    ax.legend(loc='upper left', fontsize=10)
-    ax.set_xlabel('Ordered space α')
-    
-    # Add theorem box
-    textstr = ('Theorem: Tame ⟹ 𝓝(x) countably generated\n'
-               'Theorem: All points of ℝ are tame\n'
-               'Conjecture: Cofinality pair is a complete local invariant')
-    props = dict(boxstyle='round', facecolor='lightyellow', alpha=0.8)
-    ax.text(0.98, 0.95, textstr, transform=ax.transAxes, fontsize=9,
-            verticalalignment='top', horizontalalignment='right', bbox=props)
+                arrowprops=dict(arrowstyle='->', color='purple'),
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
     
     plt.tight_layout()
-    plt.savefig('cofinality_spectrum.png', dpi=150, bbox_inches='tight')
+    plt.savefig('sqrt2_gap_visualization.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: cofinality_spectrum.png")
+    print("Saved: sqrt2_gap_visualization.png")
 
 
 if __name__ == "__main__":
-    plot_dedekind_gap()
-    plot_cofinality_spectrum()
+    main()
