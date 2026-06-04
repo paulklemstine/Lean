@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T13:43:32.522351+00:00",
+  "last_updated": "2026-06-04T14:15:59.937498+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -2686,6 +2686,74 @@
       "theorem_count": 6,
       "timestamp": "2026-06-04T13:43:32.464262+00:00",
       "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6134,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 35,
+      "domain": "Applications",
+      "duration_seconds": 5856.38835978508,
+      "end_time": 1780582504.0946605,
+      "files_integrated": 5,
+      "job_id": "a8359d5c",
+      "outcome_quality": 0.31720000000000004,
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8244,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.726,
+        "novelty": 0.95,
+        "proof_depth": 0.63,
+        "usefulness": 0.815
+      },
+      "quality_score": 0.31720000000000004,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780576647.7063007,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T14:15:59.816275+00:00",
+      "title": "EML Neural Network Expressiveness: Depth vs Width"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5692,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 39,
+      "domain": "Applications",
+      "duration_seconds": 3880.7457814216614,
+      "end_time": 1780582505.1731339,
+      "files_integrated": 5,
+      "job_id": "a82a0b88",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 0.74,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7562,
+        "cross_domain": 0.85,
+        "grade": "world_class",
+        "importance": 0.7013,
+        "novelty": 0.95,
+        "proof_depth": 0.5948,
+        "usefulness": 0.7224
+      },
+      "quality_score": 0.30224000000000006,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780578624.4273524,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T14:15:59.881055+00:00",
+      "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
     }
   ]
 }

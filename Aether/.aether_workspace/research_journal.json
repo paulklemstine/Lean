@@ -220,6 +220,26 @@
       "theorem_count": 6,
       "timestamp": "2026-06-04T13:43:32",
       "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+    },
+    {
+      "cycle_id": "a8359d5c",
+      "domain": "Applications",
+      "key_insight": "# Future Research Directions: EML Neural Network Expressiveness\n\n## Synthesis\n\nThis research cycle established the **EML Approximation Spectrum** as a novel mathematical object for analyzing depth-wid",
+      "quality_score": 0.31720000000000004,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T14:15:34",
+      "title": "EML Neural Network Expressiveness: Depth vs Width"
+    },
+    {
+      "cycle_id": "a82a0b88",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle established the **Cascade Filter** as a novel mathematical structure for analyzing sequential probability reduction. The key insight is that the",
+      "quality_score": 0.30224000000000006,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T14:15:59",
+      "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
     }
   ],
   "entries": [
@@ -265,7 +285,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-04T13:43:32",
+  "last_updated": "2026-06-04T14:15:59",
   "open_questions": [],
   "research_threads": {
     "Applications": [
@@ -304,6 +324,18 @@
         "quality": 0.4568,
         "theorems": 6,
         "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+      },
+      {
+        "cycle_id": "a8359d5c",
+        "quality": 0.31720000000000004,
+        "theorems": 5,
+        "title": "EML Neural Network Expressiveness: Depth vs Width"
+      },
+      {
+        "cycle_id": "a82a0b88",
+        "quality": 0.30224000000000006,
+        "theorems": 5,
+        "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
       }
     ],
     "Bridges": [
