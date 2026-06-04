@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "8a468fe4",
     "filename": "paradoxes_as_theorems_liar_berry_and_russell_made_.json",
     "pkg_num": 349,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.26439999999999997,
     "title": "Coherent Paradox Systems: Paradoxes as Theorems in Paraconsistent Logic"
   },
   {
@@ -11251,8 +11251,8 @@ window.PACKAGE_GRAPH = {
       "hue": 101,
       "id": "paradoxes_as_theorems_liar_berry_and_russell_made_",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.26439999999999997,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Coherent Paradox Systems: Paradoxes as Theorems in Paraconsistent Logic"
     }
