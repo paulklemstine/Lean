@@ -1,213 +1,458 @@
 #!/usr/bin/env python3
 """
-demo.py — Numerical demonstrations of neural network decision surface geometry.
+Neural Hodge Theory: Demonstration of Decision Surface Topology
 
-Computes Zaslavsky bounds, Hodge ranks, and region counts for various
-ReLU network architectures.
+This script demonstrates the key mathematical structures and bounds
+from the Graded Sign Poset theory applied to ReLU neural networks.
 """
 
-import math
-from typing import List, Tuple
+import numpy as np
+from itertools import product
+from math import comb, factorial
+from typing import List, Tuple, Dict
 
+# ============================================================
+# Core Definitions
+# ============================================================
 
-def choose(n: int, k: int) -> int:
-    """Binomial coefficient C(n, k)."""
-    if k < 0 or k > n:
-        return 0
-    return math.comb(n, k)
+class TriSign:
+    """Three-valued sign type: {+1, 0, -1}"""
+    POS = 1
+    ZERO = 0
+    NEG = -1
 
+def sign_vector(point: np.ndarray, normals: np.ndarray, offsets: np.ndarray) -> Tuple[int, ...]:
+    """Compute the sign vector of a point relative to hyperplanes.
+    
+    Each hyperplane is defined by normal · x + offset = 0.
+    Returns tuple of {+1, 0, -1} values.
+    """
+    values = normals @ point + offsets
+    return tuple(int(np.sign(v)) if abs(v) > 1e-10 else 0 for v in values)
 
-def max_regions(n: int, d: int) -> int:
-    """Zaslavsky bound: max regions from n hyperplanes in R^d."""
-    return sum(choose(n, k) for k in range(d + 1))
+def rank(sv: Tuple[int, ...]) -> int:
+    """Rank of a sign vector = number of nonzero entries."""
+    return sum(1 for s in sv if s != 0)
 
+def is_face(tau: Tuple[int, ...], sigma: Tuple[int, ...]) -> bool:
+    """Check if tau ≤ sigma in the face partial order."""
+    return all(t == 0 or t == s for t, s in zip(tau, sigma))
 
-def deep_region_bound(d: int, w: int, L: int) -> int:
-    """Montufar et al. bound for L-layer width-w network in R^d."""
-    return max_regions(w, d) * (2 ** w) ** max(0, L - 1)
+def faces_of(sigma: Tuple[int, ...]) -> List[Tuple[int, ...]]:
+    """Enumerate all faces of sigma."""
+    m = len(sigma)
+    faces = []
+    for bits in product([True, False], repeat=m):
+        face = tuple(sigma[i] if bits[i] and sigma[i] != 0 else 0 for i in range(m))
+        if is_face(face, sigma):
+            faces.append(face)
+    return list(set(faces))
 
+# ============================================================
+# Zaslavsky Bound
+# ============================================================
 
-def hodge_rank(widths: List[int], p: int, q: int) -> int:
-    """Conjectured Hodge rank h^{p,q} for a network architecture."""
-    if len(widths) < 2:
-        return 0
-    w1 = widths[0]
-    wL = widths[-1] if len(widths) >= 3 else widths[0]
-    return choose(w1, p) * choose(wL, q)
+def zaslavsky_bound(w: int, n: int) -> int:
+    """Upper bound on regions from w hyperplanes in R^n."""
+    return sum(comb(w, k) for k in range(n + 1))
 
+def network_region_bound(input_dim: int, widths: List[int]) -> int:
+    """Product Zaslavsky bound for a multi-layer ReLU network."""
+    bound = 1
+    for w in widths:
+        bound *= zaslavsky_bound(w, input_dim)
+    return bound
 
-def arrangement_face_bound(n: int, d: int, k: int) -> int:
-    """Upper bound on k-faces of n hyperplanes in R^d."""
-    return choose(n, d - k) * choose(d, k)
+# ============================================================
+# Demo 1: Sign Vector Face Lattice
+# ============================================================
 
+def demo_face_lattice():
+    """Demonstrate the face lattice of sign vectors."""
+    print("=" * 60)
+    print("Demo 1: Sign Vector Face Lattice")
+    print("=" * 60)
+    
+    # Full sign vector in R^3 with 3 hyperplanes
+    sigma = (1, -1, 1)
+    faces = faces_of(sigma)
+    
+    print(f"\nSign vector σ = {sigma} (rank {rank(sigma)})")
+    print(f"Number of faces: {len(faces)} = 2^{rank(sigma)} = {2**rank(sigma)}")
+    print("\nFaces by rank:")
+    for r in range(rank(sigma) + 1):
+        r_faces = [f for f in faces if rank(f) == r]
+        print(f"  Rank {r}: {r_faces}")
+    
+    # Verify face count formula
+    for m in range(1, 6):
+        full_sv = tuple([1] * m)
+        n_faces = len(faces_of(full_sv))
+        expected = 2 ** m
+        assert n_faces == expected, f"Face count mismatch for m={m}"
+        print(f"\n✓ Verified: |faces(+1^{m})| = 2^{m} = {expected}")
 
-def euler_characteristic(face_counts: List[int]) -> int:
-    """Euler characteristic from face counts."""
-    return sum((-1) ** i * f for i, f in enumerate(face_counts))
+# ============================================================
+# Demo 2: Zaslavsky Bound and Network Architecture
+# ============================================================
 
+def demo_zaslavsky():
+    """Demonstrate Zaslavsky bounds for network architectures."""
+    print("\n" + "=" * 60)
+    print("Demo 2: Zaslavsky Bound and Network Architecture")
+    print("=" * 60)
+    
+    architectures = [
+        ("Simple (2→4→1)", 2, [4]),
+        ("Deep (2→4→4→1)", 2, [4, 4]),
+        ("Wide (2→8→1)", 2, [8]),
+        ("Very Deep (2→4→4→4→1)", 2, [4, 4, 4]),
+        ("High-dim (10→20→1)", 10, [20]),
+    ]
+    
+    print(f"\n{'Architecture':<25} {'Region Bound':<15} {'2^neurons':<15} {'Ratio':<10}")
+    print("-" * 65)
+    for name, n, widths in architectures:
+        bound = network_region_bound(n, widths)
+        total_neurons = sum(widths)
+        pow_bound = 2 ** total_neurons
+        ratio = bound / pow_bound if pow_bound > 0 else 0
+        print(f"{name:<25} {bound:<15} {pow_bound:<15} {ratio:.4f}")
 
-def relu(x: float) -> float:
-    """The ReLU function."""
-    return max(0.0, x)
+# ============================================================
+# Demo 3: Depth Amplification
+# ============================================================
 
+def demo_depth_amplification():
+    """Show how depth exponentially increases decision surface complexity."""
+    print("\n" + "=" * 60)
+    print("Demo 3: Depth Amplification")
+    print("=" * 60)
+    
+    n = 2  # input dimension
+    w = 4  # width per layer
+    
+    print(f"\nInput dim n={n}, Width w={w}")
+    print(f"\n{'Depth L':<10} {'Region Bound':<20} {'(2^w)^L':<20} {'Ratio'}")
+    print("-" * 60)
+    for L in range(1, 8):
+        bound = network_region_bound(n, [w] * L)
+        depth_bound = (2 ** w) ** L
+        ratio = bound / depth_bound
+        print(f"{L:<10} {bound:<20} {depth_bound:<20} {ratio:.6f}")
 
-# ==================== Demonstrations ====================
+# ============================================================
+# Demo 4: Sign Vector Counting
+# ============================================================
 
-print("=" * 60)
-print("NEURAL NETWORK DECISION SURFACE GEOMETRY")
-print("=" * 60)
+def demo_signvec_counting():
+    """Verify the sign vector counting formula."""
+    print("\n" + "=" * 60)
+    print("Demo 4: Sign Vector Counting")
+    print("=" * 60)
+    
+    for m in range(1, 6):
+        total = 3 ** m
+        print(f"\nm = {m}: Total sign vectors = 3^{m} = {total}")
+        
+        for k in range(m + 1):
+            expected = comb(m, k) * (2 ** k)
+            print(f"  Rank {k}: C({m},{k}) · 2^{k} = {expected}")
+        
+        total_check = sum(comb(m, k) * (2 ** k) for k in range(m + 1))
+        assert total_check == total, f"Sum mismatch for m={m}"
+        print(f"  ✓ Sum = {total_check} = 3^{m}")
 
-# Demo 1: Zaslavsky bounds
-print("\n--- Zaslavsky Region Bounds ---")
-print(f"{'Hyperplanes':>12} {'Dim':>4} {'Regions':>10}")
-print("-" * 30)
-for n in [0, 1, 2, 3, 5, 10]:
-    for d in [1, 2, 3]:
-        print(f"{n:>12} {d:>4} {max_regions(n, d):>10}")
+# ============================================================
+# Demo 5: Euler Characteristic
+# ============================================================
 
-# Demo 2: Deep network bounds
-print("\n--- Deep Network Region Bounds (Montufar et al.) ---")
-print(f"{'(d,w,L)':>15} {'Bound':>15}")
-print("-" * 35)
-for d, w, L in [(2, 3, 1), (2, 3, 2), (2, 3, 3), (2, 5, 2),
-                 (3, 4, 2), (10, 10, 3)]:
-    bound = deep_region_bound(d, w, L)
-    print(f"({d},{w},{L}){' ' * (10 - len(f'({d},{w},{L})'))} {bound:>15,}")
+def demo_euler():
+    """Compute Euler characteristic of complete sign arrangements."""
+    print("\n" + "=" * 60)
+    print("Demo 5: Complete GSP Euler Characteristic")
+    print("=" * 60)
+    
+    for m in range(1, 10):
+        euler = sum((-1)**k * comb(m, k) * (2**k) for k in range(m + 1))
+        expected = (-1)**m
+        print(f"  m={m}: Σ(-1)^k C(m,k)·2^k = {euler:>5} = (-1)^{m} ✓" 
+              if euler == expected else f"  m={m}: MISMATCH!")
 
-# Demo 3: Hodge ranks
-print("\n--- Hodge Rank Bounds h^{p,q} ---")
-for arch_name, widths in [("[2,3,1]", [2, 3, 1]),
-                           ("[3,5,1]", [3, 5, 1]),
-                           ("[2,4,3,1]", [2, 4, 3, 1]),
-                           ("[10,20,1]", [10, 20, 1])]:
-    print(f"\nArchitecture {arch_name}:")
-    max_p = min(widths[0], 4)
-    max_q = min(widths[-1], 4)
-    for p in range(max_p + 1):
-        for q in range(max_q + 1):
-            h = hodge_rank(widths, p, q)
-            if h > 0:
-                print(f"  h^{{{p},{q}}} = {h}")
+# ============================================================
+# Demo 6: Hodge Number Bounds
+# ============================================================
 
-# Demo 4: Face bounds
-print("\n--- Arrangement Face Bounds ---")
-d = 3
-print(f"In R^{d} with varying hyperplanes:")
-for n in [3, 5, 10, 20]:
-    print(f"  n={n}: ", end="")
-    for k in range(d):
-        bound = arrangement_face_bound(n, d, k)
-        print(f"f_{k}≤{bound}  ", end="")
-    print()
+def demo_hodge_bounds():
+    """Compute Hodge number bounds for various architectures."""
+    print("\n" + "=" * 60)
+    print("Demo 6: Hodge Number Bounds")
+    print("=" * 60)
+    
+    architectures = [
+        ("2→4→4→1", 2, [4, 4]),
+        ("3→8→8→1", 3, [8, 8]),
+        ("2→4→6→4→1", 2, [4, 6, 4]),
+    ]
+    
+    for name, n, widths in architectures:
+        w1, wL = widths[0], widths[-1]
+        print(f"\nArchitecture: {name}")
+        print(f"  w₁={w1}, wₗ={wL}")
+        print(f"  {'(p,q)':<10} {'C(w₁,p)·C(wₗ,q)':<20} {'2^w₁·2^wₗ':<15}")
+        print(f"  {'-'*45}")
+        for p in range(min(w1, n) + 1):
+            for q in range(min(wL, n) + 1):
+                hodge = comb(w1, p) * comb(wL, q)
+                upper = 2**w1 * 2**wL
+                print(f"  ({p},{q}){'':<6} {hodge:<20} {upper:<15}")
 
-# Demo 5: Euler characteristics
-print("\n--- Euler Characteristics ---")
-examples = [
-    ("5 points", [5]),
-    ("Triangle (3v, 3e)", [3, 3]),
-    ("Cube skeleton (8v, 12e, 6f)", [8, 12, 6]),
-    ("Tetrahedron (4v, 6e, 4f)", [4, 6, 4]),
-]
-for name, faces in examples:
-    chi = euler_characteristic(faces)
-    print(f"  {name}: χ = {chi}")
+# ============================================================
+# Demo 7: ReLU Decision Surface Visualization Data
+# ============================================================
 
-# Demo 6: ReLU idempotence verification
-print("\n--- ReLU Properties Verification ---")
-import random
-random.seed(42)
-test_values = [random.uniform(-10, 10) for _ in range(1000)]
-print(f"  Idempotence: relu(relu(x)) == relu(x) for all 1000 samples: "
-      f"{all(relu(relu(x)) == relu(x) for x in test_values)}")
-print(f"  Nonnegativity: relu(x) >= 0 for all 1000 samples: "
-      f"{all(relu(x) >= 0 for x in test_values)}")
-lip_pairs = [(random.uniform(-10, 10), random.uniform(-10, 10))
-             for _ in range(1000)]
-print(f"  1-Lipschitz: |relu(x)-relu(y)| <= |x-y| for all 1000 pairs: "
-      f"{all(abs(relu(x) - relu(y)) <= abs(x - y) + 1e-15 for x, y in lip_pairs)}")
-print(f"  Half-abs decomposition: relu(x) == (x+|x|)/2 for all samples: "
-      f"{all(abs(relu(x) - (x + abs(x))/2) < 1e-15 for x in test_values)}")
+def demo_relu_surface():
+    """Generate data for a simple ReLU network decision surface."""
+    print("\n" + "=" * 60)
+    print("Demo 7: 2D ReLU Network Decision Surface")
+    print("=" * 60)
+    
+    np.random.seed(42)
+    
+    # Simple 2→3→1 network
+    W1 = np.array([[1.0, 0.5], [-0.3, 1.2], [0.8, -0.9]])
+    b1 = np.array([0.1, -0.5, 0.3])
+    W2 = np.array([[1.0, -1.5, 0.8]])
+    b2 = np.array([-0.2])
+    
+    def relu(x):
+        return np.maximum(x, 0)
+    
+    def network(x):
+        h = relu(W1 @ x + b1)
+        return (W2 @ h + b2)[0]
+    
+    # Count sign changes along grid
+    grid_size = 100
+    x_range = np.linspace(-3, 3, grid_size)
+    y_range = np.linspace(-3, 3, grid_size)
+    
+    sign_changes = 0
+    for i in range(grid_size - 1):
+        for j in range(grid_size - 1):
+            vals = [
+                network(np.array([x_range[i], y_range[j]])),
+                network(np.array([x_range[i+1], y_range[j]])),
+                network(np.array([x_range[i], y_range[j+1]])),
+                network(np.array([x_range[i+1], y_range[j+1]])),
+            ]
+            if min(vals) * max(vals) < 0:
+                sign_changes += 1
+    
+    region_bound = zaslavsky_bound(3, 2)
+    print(f"\n  Network: 2→3→1")
+    print(f"  Zaslavsky bound (3 hyperplanes in R²): {region_bound}")
+    print(f"  Grid cells with sign change: {sign_changes}")
+    print(f"  Grid resolution: {grid_size}×{grid_size}")
+
+# ============================================================
+# Main
+# ============================================================
+
+if __name__ == "__main__":
+    print("Neural Hodge Theory: Decision Surface Topology Demonstrations")
+    print("=" * 60)
+    
+    demo_face_lattice()
+    demo_zaslavsky()
+    demo_depth_amplification()
+    demo_signvec_counting()
+    demo_euler()
+    demo_hodge_bounds()
+    demo_relu_surface()
+    
+    print("\n" + "=" * 60)
+    print("All demonstrations complete.")
 
 
 #!/usr/bin/env python3
 """
-visualize_regions.py — Visualization of how ReLU network linear region
-counts grow with depth, width, and input dimension.
+Visualization: ReLU Network Decision Surface and Hyperplane Arrangement
+
+Generates plots showing:
+1. Decision surface of a 2D ReLU network
+2. Hyperplane arrangement and sign regions
+3. Face lattice diagram (Hasse diagram)
 """
 
-import math
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+from math import comb
 
+def relu(x):
+    return np.maximum(x, 0)
 
-def choose(n: int, k: int) -> int:
-    if k < 0 or k > n:
-        return 0
-    return math.comb(n, k)
+def plot_decision_surface():
+    """Plot the decision surface of a simple 2→3→1 ReLU network."""
+    np.random.seed(42)
+    
+    W1 = np.array([[1.0, 0.5], [-0.3, 1.2], [0.8, -0.9]])
+    b1 = np.array([0.1, -0.5, 0.3])
+    W2 = np.array([[1.0, -1.5, 0.8]])
+    b2 = np.array([-0.2])
+    
+    x = np.linspace(-3, 3, 500)
+    y = np.linspace(-3, 3, 500)
+    X, Y = np.meshgrid(x, y)
+    
+    Z = np.zeros_like(X)
+    for i in range(len(x)):
+        for j in range(len(y)):
+            point = np.array([X[j, i], Y[j, i]])
+            h = relu(W1 @ point + b1)
+            Z[j, i] = (W2 @ h + b2)[0]
+    
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+    
+    # Plot 1: Decision surface (zero level set)
+    ax = axes[0]
+    im = ax.contourf(X, Y, Z, levels=50, cmap='RdBu_r', alpha=0.8)
+    ax.contour(X, Y, Z, levels=[0], colors='black', linewidths=2)
+    plt.colorbar(im, ax=ax, label='f(x)')
+    ax.set_title('ReLU Network Output f(x)', fontsize=13)
+    ax.set_xlabel('x₁')
+    ax.set_ylabel('x₂')
+    
+    # Plot hyperplane boundaries
+    for k in range(3):
+        w = W1[k]
+        b = b1[k]
+        if abs(w[1]) > 1e-10:
+            x_line = np.linspace(-3, 3, 100)
+            y_line = -(w[0] * x_line + b) / w[1]
+            mask = (y_line >= -3) & (y_line <= 3)
+            ax.plot(x_line[mask], y_line[mask], '--', alpha=0.5, 
+                    label=f'H_{k+1}', linewidth=1.5)
+    ax.legend(loc='upper right', fontsize=9)
+    
+    # Plot 2: Activation regions
+    ax = axes[1]
+    # Color by activation pattern
+    patterns = np.zeros_like(X)
+    for i in range(len(x)):
+        for j in range(len(y)):
+            point = np.array([X[j, i], Y[j, i]])
+            pre = W1 @ point + b1
+            pattern = sum(2**k for k in range(3) if pre[k] > 0)
+            patterns[j, i] = pattern
+    
+    ax.contourf(X, Y, patterns, levels=np.arange(-0.5, 8.5), cmap='Set3', alpha=0.7)
+    ax.contour(X, Y, Z, levels=[0], colors='black', linewidths=2)
+    for k in range(3):
+        w = W1[k]
+        b = b1[k]
+        if abs(w[1]) > 1e-10:
+            x_line = np.linspace(-3, 3, 100)
+            y_line = -(w[0] * x_line + b) / w[1]
+            mask = (y_line >= -3) & (y_line <= 3)
+            ax.plot(x_line[mask], y_line[mask], 'k--', alpha=0.4, linewidth=1)
+    ax.set_title('Activation Regions (colored)', fontsize=13)
+    ax.set_xlabel('x₁')
+    ax.set_ylabel('x₂')
+    
+    # Plot 3: Zaslavsky bound comparison
+    ax = axes[2]
+    widths = range(1, 20)
+    for n in [2, 3, 5, 10]:
+        bounds = [sum(comb(w, k) for k in range(n + 1)) for w in widths]
+        ax.plot(list(widths), bounds, '-o', markersize=4, label=f'n={n}')
+    
+    pow_bounds = [2**w for w in widths]
+    ax.plot(list(widths), pow_bounds, 'k--', alpha=0.5, label='2^w')
+    ax.set_xlabel('Number of hyperplanes w', fontsize=11)
+    ax.set_ylabel('Max regions', fontsize=11)
+    ax.set_title('Zaslavsky Bound vs 2^w', fontsize=13)
+    ax.set_yscale('log')
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('neural_hodge_visualization.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: neural_hodge_visualization.png")
 
+def plot_depth_amplification():
+    """Show how depth amplifies decision surface complexity."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    
+    # Plot 1: Region bound vs depth
+    ax = axes[0]
+    for w in [3, 4, 5, 8]:
+        n = 2
+        depths = range(1, 8)
+        bounds = []
+        for L in depths:
+            zb = sum(comb(w, k) for k in range(n + 1))
+            bounds.append(zb ** L)
+        ax.semilogy(list(depths), bounds, '-o', markersize=5, label=f'w={w}')
+    
+    ax.set_xlabel('Depth L', fontsize=12)
+    ax.set_ylabel('Region Bound', fontsize=12)
+    ax.set_title('Depth Amplification (n=2)', fontsize=13)
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    
+    # Plot 2: Hodge numbers for 2→w→w→1
+    ax = axes[1]
+    widths_range = range(2, 15)
+    for pq in [(0, 0), (1, 0), (0, 1), (1, 1), (2, 0)]:
+        p, q = pq
+        bounds = [comb(w, p) * comb(w, q) for w in widths_range]
+        ax.plot(list(widths_range), bounds, '-o', markersize=4, 
+                label=f'h^({p},{q})')
+    
+    ax.set_xlabel('Width w', fontsize=12)
+    ax.set_ylabel('Hodge Number Bound', fontsize=12)
+    ax.set_title('Hodge Number Bounds (n→w→w→1)', fontsize=13)
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('depth_amplification.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: depth_amplification.png")
 
-def max_regions(n: int, d: int) -> int:
-    return sum(choose(n, k) for k in range(d + 1))
+def plot_euler_characteristic():
+    """Plot the Euler characteristic formula verification."""
+    fig, ax = plt.subplots(figsize=(8, 5))
+    
+    ms = range(1, 15)
+    euler_vals = []
+    for m in ms:
+        chi = sum((-1)**k * comb(m, k) * 2**k for k in range(m + 1))
+        euler_vals.append(chi)
+    
+    ax.bar(list(ms), euler_vals, color=['#4CAF50' if v > 0 else '#f44336' for v in euler_vals],
+           alpha=0.8, edgecolor='black', linewidth=0.5)
+    ax.axhline(y=0, color='black', linewidth=0.5)
+    ax.set_xlabel('Number of hyperplanes m', fontsize=12)
+    ax.set_ylabel('Euler characteristic χ', fontsize=12)
+    ax.set_title('Complete GSP Euler Characteristic: χ = (-1)^m', fontsize=13)
+    ax.set_xticks(list(ms))
+    
+    # Add formula annotation
+    ax.annotate('χ = Σ (-1)^k · C(m,k) · 2^k = (-1)^m',
+                xy=(7, 0.5), fontsize=11, 
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
+    
+    plt.tight_layout()
+    plt.savefig('euler_characteristic.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: euler_characteristic.png")
 
-
-def deep_region_bound(d: int, w: int, L: int) -> int:
-    return max_regions(w, d) * (2 ** w) ** max(0, L - 1)
-
-
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-# Plot 1: Regions vs number of hyperplanes for different dimensions
-ax1 = axes[0]
-for d in [1, 2, 3, 5]:
-    ns = list(range(0, 21))
-    regions = [max_regions(n, d) for n in ns]
-    ax1.plot(ns, regions, 'o-', label=f'd={d}', markersize=3)
-ax1.set_xlabel('Number of hyperplanes')
-ax1.set_ylabel('Maximum regions')
-ax1.set_title('Zaslavsky Bound: Regions vs Hyperplanes')
-ax1.legend()
-ax1.set_yscale('log')
-ax1.grid(True, alpha=0.3)
-
-# Plot 2: Deep network bounds vs depth
-ax2 = axes[1]
-d = 2
-for w in [3, 5, 8]:
-    layers = list(range(1, 8))
-    bounds = [deep_region_bound(d, w, L) for L in layers]
-    ax2.plot(layers, bounds, 's-', label=f'w={w}', markersize=5)
-ax2.set_xlabel('Number of hidden layers')
-ax2.set_ylabel('Max linear regions')
-ax2.set_title(f'Deep Network Bound (d={d})')
-ax2.legend()
-ax2.set_yscale('log')
-ax2.grid(True, alpha=0.3)
-
-# Plot 3: Hodge rank table heatmap
-ax3 = axes[2]
-widths = [5, 10, 1]
-max_pq = 5
-hodge_table = np.zeros((max_pq + 1, max_pq + 1))
-for p in range(max_pq + 1):
-    for q in range(max_pq + 1):
-        w1 = widths[0]
-        wL = widths[-1]
-        hodge_table[p, q] = choose(w1, p) * choose(wL, q)
-
-im = ax3.imshow(hodge_table, cmap='YlOrRd', aspect='equal',
-                origin='lower')
-ax3.set_xlabel('q')
-ax3.set_ylabel('p')
-ax3.set_title(f'Hodge Rank h^{{p,q}} for {widths}')
-for p in range(max_pq + 1):
-    for q in range(max_pq + 1):
-        val = int(hodge_table[p, q])
-        if val > 0:
-            ax3.text(q, p, str(val), ha='center', va='center',
-                     fontsize=8, color='black' if val < 5 else 'white')
-plt.colorbar(im, ax=ax3, shrink=0.8)
-
-plt.tight_layout()
-plt.savefig('neural_hodge_regions.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved: neural_hodge_regions.png")
+if __name__ == "__main__":
+    plot_decision_surface()
+    plot_depth_amplification()
+    plot_euler_characteristic()
+    print("\nAll visualizations generated.")

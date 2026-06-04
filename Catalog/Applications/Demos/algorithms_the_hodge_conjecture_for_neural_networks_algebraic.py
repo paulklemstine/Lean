@@ -1,212 +1,308 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Core algorithms for analyzing neural network decision surfaces.
+Neural Hodge Theory: Core Algorithms
 
-Type-hinted implementations of:
-1. Zaslavsky region counting
-2. Deep network region bound (Montufar et al.)
-3. Hodge rank computation
-4. Face enumeration for hyperplane arrangements
-5. Euler characteristic computation
+Type-hinted implementations of the mathematical algorithms underlying
+the Graded Sign Poset theory for neural network decision surfaces.
 """
 
-from typing import List, Tuple, Optional
-import math
+from math import comb
+from typing import List, Tuple, Dict, Set, Optional
+from dataclasses import dataclass
+from enum import IntEnum
+from itertools import product
 
 
-def choose(n: int, k: int) -> int:
-    """Binomial coefficient C(n, k).
+class Sign(IntEnum):
+    """Three-valued sign: position relative to a hyperplane."""
+    NEG = -1
+    ZERO = 0
+    POS = 1
 
-    Args:
-        n: Total number of items
-        k: Number to choose
 
-    Returns:
-        C(n, k), or 0 if k < 0 or k > n
+SignVector = Tuple[Sign, ...]
+
+
+@dataclass
+class NetworkArchitecture:
+    """ReLU network architecture specification."""
+    input_dim: int
+    hidden_widths: List[int]
+    
+    @property
+    def depth(self) -> int:
+        return len(self.hidden_widths)
+    
+    @property
+    def total_neurons(self) -> int:
+        return sum(self.hidden_widths)
+
+
+# ============================================================
+# Algorithm 1: Zaslavsky Bound Computation
+# ============================================================
+
+def zaslavsky_bound(num_hyperplanes: int, dimension: int) -> int:
     """
-    if k < 0 or k > n:
-        return 0
-    return math.comb(n, k)
-
-
-def max_regions(n_hyperplanes: int, dimension: int) -> int:
-    """Zaslavsky's bound on regions created by hyperplane arrangement.
-
-    For n hyperplanes in general position in R^d, the maximum number
-    of regions is sum_{k=0}^{d} C(n, k).
-
-    Args:
-        n_hyperplanes: Number of hyperplanes
-        dimension: Ambient dimension
-
-    Returns:
-        Maximum number of regions
+    Compute the Zaslavsky bound: maximum number of regions created by
+    `num_hyperplanes` hyperplanes in general position in R^dimension.
+    
+    Formula: sum_{k=0}^{dimension} C(num_hyperplanes, k)
+    
+    Time complexity: O(dimension)
+    Space complexity: O(1)
     """
-    return sum(choose(n_hyperplanes, k) for k in range(dimension + 1))
+    return sum(comb(num_hyperplanes, k) for k in range(dimension + 1))
 
 
-def deep_region_bound(
-    input_dim: int,
-    hidden_width: int,
-    num_hidden_layers: int,
-) -> int:
-    """Montufar-Pascanu-Cho-Bengio bound on linear regions.
-
-    For a deep ReLU network with L hidden layers, each of width w,
-    operating on R^d input, the number of linear regions is at most:
-        max_regions(w, d) * (2^w)^(L-1)
-
-    Args:
-        input_dim: Input dimension d
-        hidden_width: Width w of each hidden layer
-        num_hidden_layers: Number of hidden layers L
-
-    Returns:
-        Upper bound on the number of linear regions
+def network_region_bound(arch: NetworkArchitecture) -> int:
     """
-    base = max_regions(hidden_width, input_dim)
-    exponent = max(0, num_hidden_layers - 1)
-    return base * (2 ** hidden_width) ** exponent
-
-
-def hodge_rank(widths: List[int], p: int, q: int) -> int:
-    """Conjectured Hodge rank h^{p,q} for a network decision surface.
-
-    For a network with architecture [n, w_1, ..., w_L, 1], the
-    conjectured bound on the Hodge number h^{p,q} of the decision
-    surface is C(w_1, p) * C(w_L, q).
-
-    Args:
-        widths: Layer widths [input, hidden_1, ..., hidden_L, output]
-        p: First Hodge index
-        q: Second Hodge index
-
-    Returns:
-        Conjectured upper bound on h^{p,q}
+    Compute the product Zaslavsky bound for a multi-layer ReLU network.
+    
+    For a network with hidden widths w_1, ..., w_L and input dimension n,
+    the bound is prod_i zaslavsky_bound(w_i, n).
+    
+    This bounds the maximum number of linear regions of the network.
+    
+    Time complexity: O(L * n) where L = depth, n = input_dim
+    Space complexity: O(1)
     """
-    if len(widths) < 2:
-        return 0
-    w1 = widths[0]
-    wL = widths[-1] if len(widths) >= 3 else widths[0]
-    return choose(w1, p) * choose(wL, q)
+    bound = 1
+    for w in arch.hidden_widths:
+        bound *= zaslavsky_bound(w, arch.input_dim)
+    return bound
 
 
-def arrangement_face_bound(
-    n_hyperplanes: int,
-    dimension: int,
-    face_dim: int,
-) -> int:
-    """Upper bound on k-faces of a hyperplane arrangement.
+# ============================================================
+# Algorithm 2: Sign Vector Operations
+# ============================================================
 
-    Args:
-        n_hyperplanes: Number of hyperplanes n
-        dimension: Ambient dimension d
-        face_dim: Dimension k of the faces to count
+def sign_vector_rank(sv: SignVector) -> int:
+    """Number of nonzero entries in a sign vector."""
+    return sum(1 for s in sv if s != Sign.ZERO)
 
-    Returns:
-        Upper bound C(n, d-k) * C(d, k)
+
+def sign_vector_support(sv: SignVector) -> Set[int]:
+    """Indices where the sign vector is nonzero."""
+    return {i for i, s in enumerate(sv) if s != Sign.ZERO}
+
+
+def is_face_of(tau: SignVector, sigma: SignVector) -> bool:
     """
-    return choose(n_hyperplanes, dimension - face_dim) * choose(dimension, face_dim)
-
-
-def euler_characteristic(face_counts: List[int]) -> int:
-    """Compute Euler characteristic from face vector.
-
-    chi = sum_{i=0}^{dim} (-1)^i * f_i
-
-    Args:
-        face_counts: List [f_0, f_1, ..., f_dim] of face counts
-
-    Returns:
-        Euler characteristic
+    Check if tau is a face of sigma in the sign vector poset.
+    tau ≤ sigma iff for all i: tau[i] = 0 or tau[i] = sigma[i].
+    
+    Time complexity: O(m) where m = len(tau)
     """
-    return sum((-1) ** i * f for i, f in enumerate(face_counts))
+    return all(t == Sign.ZERO or t == s for t, s in zip(tau, sigma))
 
 
-def relu(x: float) -> float:
-    """The rectified linear unit function.
-
-    relu(x) = max(0, x) = (x + |x|) / 2
-
-    Args:
-        x: Input value
-
-    Returns:
-        max(0, x)
+def boundary_at(sigma: SignVector, index: int) -> SignVector:
     """
-    return max(0.0, x)
-
-
-def network_complexity_profile(widths: List[int]) -> dict:
-    """Compute complexity profile of a network architecture.
-
-    Args:
-        widths: Layer widths [input, hidden_1, ..., hidden_L, output]
-
-    Returns:
-        Dictionary with complexity metrics
+    Compute the codimension-1 face obtained by setting sigma[index] to zero.
+    
+    Time complexity: O(m)
     """
-    if len(widths) < 2:
-        return {"error": "Need at least 2 layers"}
+    return tuple(Sign.ZERO if i == index else s for i, s in enumerate(sigma))
 
-    input_dim = widths[0]
-    output_dim = widths[-1]
-    hidden_widths = widths[1:-1] if len(widths) > 2 else []
-    num_hidden = len(hidden_widths)
 
-    # Region bound
-    if hidden_widths:
-        w = max(hidden_widths)
-        region_bound = deep_region_bound(input_dim, w, num_hidden)
-    else:
-        region_bound = 1
+def flip_sign_vector(sv: SignVector) -> SignVector:
+    """Negate all entries of a sign vector."""
+    flip_map = {Sign.POS: Sign.NEG, Sign.ZERO: Sign.ZERO, Sign.NEG: Sign.POS}
+    return tuple(flip_map[s] for s in sv)
 
-    # Hodge ranks
-    hodge_table: dict = {}
-    for p in range(min(input_dim + 1, 6)):
-        for q in range(min(output_dim + 1, 6)):
-            h = hodge_rank(widths, p, q)
-            if h > 0:
-                hodge_table[(p, q)] = h
 
-    # Total parameters
-    total_params = sum(
-        widths[i] * widths[i + 1] + widths[i + 1]
-        for i in range(len(widths) - 1)
-    )
+# ============================================================
+# Algorithm 3: Face Enumeration
+# ============================================================
 
-    return {
-        "input_dim": input_dim,
-        "output_dim": output_dim,
-        "hidden_widths": hidden_widths,
-        "num_hidden_layers": num_hidden,
-        "total_parameters": total_params,
-        "max_linear_regions": region_bound,
-        "hodge_ranks": hodge_table,
-        "decision_surface_dim": input_dim - 1 if output_dim == 1 else None,
-    }
+def enumerate_faces(sigma: SignVector) -> List[SignVector]:
+    """
+    Enumerate all faces of a sign vector sigma.
+    
+    Each face is obtained by independently keeping or zeroing
+    each nonzero entry. Returns 2^rank(sigma) faces.
+    
+    Time complexity: O(2^rank * m)
+    Space complexity: O(2^rank * m)
+    """
+    support = sign_vector_support(sigma)
+    m = len(sigma)
+    faces: List[SignVector] = []
+    
+    support_list = sorted(support)
+    r = len(support_list)
+    
+    for bits in product([False, True], repeat=r):
+        face = list(sigma)
+        for j, idx in enumerate(support_list):
+            if not bits[j]:
+                face[idx] = Sign.ZERO
+        faces.append(tuple(Sign(s) for s in face))
+    
+    return faces
 
+
+def count_faces_by_rank(sigma: SignVector) -> Dict[int, int]:
+    """
+    Count faces of sigma grouped by rank.
+    
+    For a sign vector of rank r, the number of faces of rank k is C(r, k).
+    """
+    r = sign_vector_rank(sigma)
+    return {k: comb(r, k) for k in range(r + 1)}
+
+
+# ============================================================
+# Algorithm 4: Graded Sign Poset Construction
+# ============================================================
+
+@dataclass
+class GradedSignPoset:
+    """
+    The Graded Sign Poset: face-closed set of realized sign vectors
+    with the face partial order and rank grading.
+    """
+    num_hyperplanes: int
+    realized: Set[SignVector]
+    
+    @property
+    def card(self) -> int:
+        return len(self.realized)
+    
+    @property
+    def num_regions(self) -> int:
+        return sum(1 for sv in self.realized if sign_vector_rank(sv) == self.num_hyperplanes)
+    
+    def f_vector(self) -> Dict[int, int]:
+        """The f-vector: count of realized sign vectors by rank."""
+        fvec: Dict[int, int] = {}
+        for sv in self.realized:
+            r = sign_vector_rank(sv)
+            fvec[r] = fvec.get(r, 0) + 1
+        return fvec
+    
+    def euler_characteristic(self) -> int:
+        """Euler characteristic from the f-vector."""
+        fvec = self.f_vector()
+        return sum((-1)**k * count for k, count in fvec.items())
+    
+    def is_face_closed(self) -> bool:
+        """Verify the face-closure property."""
+        for sigma in self.realized:
+            for tau in enumerate_faces(sigma):
+                if tau not in self.realized:
+                    return False
+        return True
+
+
+def complete_sign_poset(m: int) -> GradedSignPoset:
+    """
+    Construct the complete Graded Sign Poset with all 3^m sign vectors.
+    This corresponds to a hyperplane arrangement where all sign patterns are realized.
+    
+    Time complexity: O(3^m * m)
+    """
+    realized: Set[SignVector] = set()
+    for pattern in product([Sign.NEG, Sign.ZERO, Sign.POS], repeat=m):
+        realized.add(pattern)
+    return GradedSignPoset(m, realized)
+
+
+# ============================================================
+# Algorithm 5: Hodge Number Bound
+# ============================================================
+
+def hodge_number_bound(arch: NetworkArchitecture, p: int, q: int) -> int:
+    """
+    Compute the (p,q)-Hodge number bound for a network architecture.
+    
+    For a network with ≥ 2 hidden layers with first width w_1 and last width w_L:
+    bound = C(w_1, p) * C(w_L, q) * prod_{middle layers} w_i
+    
+    This bounds the (p,q)-component of the Hodge-like decomposition
+    of the decision surface's homology.
+    """
+    if arch.depth < 2:
+        return 1
+    
+    w1 = arch.hidden_widths[0]
+    wL = arch.hidden_widths[-1]
+    middle_product = 1
+    for w in arch.hidden_widths[1:-1]:
+        middle_product *= w
+    
+    return comb(w1, p) * comb(wL, q) * middle_product
+
+
+def total_hodge_bound(arch: NetworkArchitecture, max_degree: int) -> Dict[Tuple[int, int], int]:
+    """
+    Compute all Hodge number bounds up to a given degree.
+    """
+    bounds: Dict[Tuple[int, int], int] = {}
+    for p in range(max_degree + 1):
+        for q in range(max_degree + 1):
+            bounds[(p, q)] = hodge_number_bound(arch, p, q)
+    return bounds
+
+
+# ============================================================
+# Algorithm 6: Hamming Distance and Adjacency
+# ============================================================
+
+def hamming_distance(p: Tuple[bool, ...], q: Tuple[bool, ...]) -> int:
+    """Hamming distance between two activation patterns."""
+    return sum(1 for a, b in zip(p, q) if a != b)
+
+
+def find_adjacent_patterns(patterns: List[Tuple[bool, ...]]) -> List[Tuple[int, int]]:
+    """
+    Find all pairs of adjacent activation patterns (Hamming distance 1).
+    These correspond to boundaries between linear regions.
+    
+    Time complexity: O(|patterns|^2 * width)
+    """
+    edges = []
+    for i in range(len(patterns)):
+        for j in range(i + 1, len(patterns)):
+            if hamming_distance(patterns[i], patterns[j]) == 1:
+                edges.append((i, j))
+    return edges
+
+
+# ============================================================
+# Main: Run all algorithms with example data
+# ============================================================
 
 if __name__ == "__main__":
-    print("Network Complexity Profiles")
-    print("=" * 50)
-
-    architectures = [
-        [2, 3, 1],
-        [2, 5, 1],
-        [3, 4, 1],
-        [2, 4, 3, 1],
-        [10, 20, 1],
-        [2, 10, 10, 1],
-    ]
-
-    for arch in architectures:
-        profile = network_complexity_profile(arch)
-        print(f"\nArchitecture: {arch}")
-        for key, value in profile.items():
-            if key == "hodge_ranks":
-                print(f"  {key}:")
-                for (p, q), h in sorted(value.items()):
-                    print(f"    h^{{{p},{q}}} = {h}")
-            else:
-                print(f"  {key}: {value}")
+    # Example architecture: 2→4→4→1
+    arch = NetworkArchitecture(input_dim=2, hidden_widths=[4, 4])
+    
+    print("Network Architecture: 2→4→4→1")
+    print(f"  Input dimension: {arch.input_dim}")
+    print(f"  Depth: {arch.depth}")
+    print(f"  Total neurons: {arch.total_neurons}")
+    print(f"  Region bound: {network_region_bound(arch)}")
+    print(f"  2^neurons bound: {2**arch.total_neurons}")
+    
+    print("\nHodge Number Bounds:")
+    for p in range(3):
+        for q in range(3):
+            bound = hodge_number_bound(arch, p, q)
+            print(f"  h^({p},{q}) ≤ {bound}")
+    
+    print("\nComplete Sign Poset (m=3):")
+    gsp = complete_sign_poset(3)
+    print(f"  Total sign vectors: {gsp.card}")
+    print(f"  Regions (full vectors): {gsp.num_regions}")
+    print(f"  f-vector: {gsp.f_vector()}")
+    print(f"  Euler characteristic: {gsp.euler_characteristic()}")
+    print(f"  Face-closed: {gsp.is_face_closed()}")
+    
+    # Verify Euler formula
+    for m in range(1, 7):
+        gsp = complete_sign_poset(m)
+        chi = gsp.euler_characteristic()
+        expected = (-1)**m
+        status = "✓" if chi == expected else "✗"
+        print(f"  m={m}: χ = {chi} = (-1)^{m} {status}")
