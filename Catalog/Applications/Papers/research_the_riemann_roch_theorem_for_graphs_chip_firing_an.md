@@ -1,219 +1,246 @@
-# The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor
+# The Divisor Energy Functional: Connecting Chip-Firing, Spectral Theory, and Baker-Norine
 
 ## Abstract
 
-We present a formal development of the Baker-Norine theory of divisors on finite graphs, establishing the foundational algebraic and combinatorial structures underlying the graph-theoretic Riemann-Roch theorem. Our formalization covers divisors as chip configurations, the graph Laplacian and chip-firing dynamics, the canonical divisor, and the genus of a graph. We prove thirteen theorems, including the canonical divisor degree identity deg(K_G) = 2g − 2, the chip-firing conservation law, the genus formula for complete graphs, and the Riemann-Roch degree identity for the canonical divisor self-pairing. All results are machine-verified, establishing a rigorous foundation for further formalization of the full Baker-Norine Riemann-Roch theorem.
+We introduce the **energy functional** $E_G(D) = \sum_{v \sim w} (D(v) - D(w))^2$ on graph divisors and establish its fundamental properties in the context of Baker-Norine chip-firing theory. We prove that the energy equals twice the Laplacian quadratic form ($E = 2Q$), scales quadratically under scalar multiplication, is invariant under constant shifts, and vanishes precisely on constant divisors. For complete graphs $K_n$, we derive the closed-form expression $E_{K_n}(D) = 2n \sum_v D(v)^2 - 2(\sum_v D(v))^2$ and prove this equals twice the divisor variance. We establish energy bounds for effective divisors (the tight bound $E \leq 2(n-1)(\deg D)^2$) and prove that the energy spectrum — the set of energies achievable within a linear equivalence class — is a well-defined class invariant bounded below by zero. All results are machine-verified in Lean 4 with Mathlib, comprising 19 theorems in the core module and 14 additional theorems in the energy spectrum module, all without sorry.
+
+**Keywords**: chip-firing, Baker-Norine theory, Riemann-Roch for graphs, Laplacian quadratic form, divisor energy, spectral graph theory
 
 ## 1. Introduction
 
-The Riemann-Roch theorem is one of the central results in algebraic geometry, relating the dimension of the space of meromorphic functions on a compact Riemann surface to the topology of the surface. In 2007, Baker and Norine [1] discovered a remarkable graph-theoretic analogue: for a divisor D on a connected graph G,
+The Riemann-Roch theorem for graphs, proved by Baker and Norine [BN07], establishes that for a divisor $D$ on a connected graph $G$ of genus $g$:
 
-$$r(D) - r(K_G - D) = \deg(D) + 1 - g(G)$$
+$$r(D) - r(K_G - D) = \deg(D) + 1 - g$$
 
-where r(D) is the rank of D, K_G is the canonical divisor, and g(G) = |E| − |V| + 1 is the genus (cyclomatic number, first Betti number) of G.
+where $r(D)$ is the rank of $D$, $K_G$ is the canonical divisor, and $g = |E| - |V| + 1$ is the genus. This theorem has deep connections to algebraic geometry, tropical geometry, and combinatorics.
 
-The chip-firing game provides the combinatorial engine: vertices of a graph hold integer numbers of "chips," and firing a vertex v sends one chip along each incident edge. Two divisors are linearly equivalent if one can be obtained from the other by a sequence of firings. This notion of equivalence plays the role of linear equivalence of divisors on algebraic curves.
+While the algebraic aspects of Baker-Norine theory (linear equivalence, the Picard group, divisor rank) have been extensively studied, the *analytic* aspects — particularly the role of the graph Laplacian and potential theory — have received less attention in the chip-firing literature.
 
-Our contribution is a complete formalization of the algebraic infrastructure underlying Baker-Norine theory, with proofs of the key structural identities. This establishes a verified foundation for future work on the full Riemann-Roch theorem and its applications to tropical geometry and coding theory.
+In this paper, we introduce the **divisor energy functional** and establish its properties as a bridge between chip-firing dynamics and spectral graph theory. Our main contributions are:
 
-## 2. Definitions
+1. **The energy-quadratic form identity** (Theorem 3.1): $E_G(D) = 2 \sum_v D(v) \cdot (\Delta D)(v)$
+2. **The complete graph energy formula** (Theorem 4.1): $E_{K_n}(D) = 2n \sum D(v)^2 - 2(\sum D(v))^2$
+3. **The variance interpretation** (Theorem 5.1): $E_{K_n}(D) = 2 \cdot \text{Var}(D)$
+4. **Energy bounds for effective divisors** (Theorem 5.2): $E \leq 2(n-1)(\deg D)^2$
+5. **The energy spectrum as a class invariant** (Theorem 6.1)
 
-### 2.1 Divisors
+All results are formalized and verified in Lean 4 with the Mathlib library.
 
-Let G = (V, E) be a finite graph with vertex set V and edge set E. A **divisor** on G is a formal integer-valued function on V:
+## 2. Definitions and Setup
 
-$$\text{Div}(G) = \{D : V \to \mathbb{Z}\}$$
+### 2.1 Graph Divisors
 
-We think of D(v) as the number of "chips" at vertex v. The **degree** of a divisor is:
+Let $G = (V, E)$ be a finite, connected, simple graph. A **divisor** on $G$ is a function $D: V \to \mathbb{Z}$. The set of all divisors forms the free abelian group $\text{Div}(G) = \mathbb{Z}^V$.
 
-$$\deg(D) = \sum_{v \in V} D(v)$$
+The **degree** of a divisor is $\deg(D) = \sum_{v \in V} D(v)$.
 
-A divisor is **effective** if D(v) ≥ 0 for all v.
+A divisor is **effective** if $D(v) \geq 0$ for all $v$.
 
-### 2.2 The Graph Laplacian and Chip-Firing
+### 2.2 The Canonical Divisor
 
-For a simple graph G, define the **edge weight** between vertices u and w:
+The **canonical divisor** is $K_G(v) = \deg_G(v) - 2$.
 
-$$e(u, w) = \begin{cases} 1 & \text{if } u \sim w \\ 0 & \text{otherwise} \end{cases}$$
+**Proposition 2.1** (Discrete Gauss-Bonnet). $\deg(K_G) = 2g - 2$.
 
-**Chip-firing** at vertex v transforms a divisor D into D' where:
-- D'(v) = D(v) − deg(v)
-- D'(w) = D(w) + e(v, w) for w ≠ v
+*Proof.* $\deg(K_G) = \sum_v (\deg(v) - 2) = 2|E| - 2|V| = 2(|E| - |V| + 1) - 2 = 2g - 2$. □
 
-The **Laplacian vector** Δ_v encodes this transformation: Δ_v(v) = −deg(v) and Δ_v(w) = e(v, w) for w ≠ v.
+### 2.3 The Laplacian and Linear Equivalence
 
-### 2.3 Linear Equivalence
+The **Laplacian** of a function $f: V \to \mathbb{Z}$ is:
+$$(\Delta f)(v) = \sum_{w \sim v} (f(v) - f(w))$$
 
-Two divisors D and D' are **linearly equivalent** (D ~ D') if there exists a function f : V → ℤ such that:
+Two divisors $D_1, D_2$ are **linearly equivalent** ($D_1 \sim D_2$) if $D_2 = D_1 + \Delta f$ for some $f$.
 
-$$D'(w) - D(w) = \sum_{v \in V} f(v) \cdot \Delta_v(w) \quad \forall w$$
+**Proposition 2.2.** Linear equivalence preserves degree: if $D_1 \sim D_2$, then $\deg(D_1) = \deg(D_2)$.
 
-This is equivalent to saying D' − D lies in the image of the graph Laplacian.
+### 2.4 Chip-Firing
 
-### 2.4 The Canonical Divisor and Genus
+**Chip-firing** at vertex $v$ transforms a divisor $D$ to $D' = \text{fire}(D, v)$ where:
+- $D'(v) = D(v) - \deg(v)$
+- $D'(w) = D(w) + 1$ for $w \sim v$
+- $D'(w) = D(w)$ otherwise
 
-The **canonical divisor** K_G assigns to each vertex v the value:
+**Proposition 2.3.** Chip-firing preserves degree and produces linearly equivalent divisors.
 
-$$K_G(v) = \deg_G(v) - 2$$
+## 3. The Energy Functional
 
-The **genus** of G is the cyclomatic number:
+### Definition 3.1
 
-$$g(G) = |E| - |V| + 1$$
+The **energy** of a divisor $D$ on $G$ is:
+$$E_G(D) = \sum_{v \in V} \sum_{w \in N(v)} (D(v) - D(w))^2$$
 
-For connected graphs, this equals the number of independent cycles.
+This sums over directed edges, so each undirected edge contributes twice.
 
-## 3. Main Results
+### Definition 3.2
 
-### 3.1 Chip-Firing Conservation Law
+The **Laplacian quadratic form** is:
+$$Q_G(D) = \sum_{v \in V} D(v) \cdot \sum_{w \in N(v)} (D(v) - D(w))$$
 
-**Theorem 1** (Laplacian Row Sum). *For any vertex v, ∑_w Δ_v(w) = 0.*
+### Theorem 3.1 (Energy-Quadratic Form Identity)
 
-*Proof.* The sum decomposes as Δ_v(v) + ∑_{w≠v} Δ_v(w) = −deg(v) + ∑_{w≠v} e(v,w). Since G is simple and loopless, e(v,v) = 0, so ∑_{w≠v} e(v,w) = ∑_w e(v,w) = |N(v)| = deg(v). The total is 0. □
+$$E_G(D) = 2 \cdot Q_G(D)$$
 
-**Theorem 2** (Chip-Firing Preserves Degree). *For any divisor D and vertex v, deg(fire_v(D)) = deg(D).*
+*Proof sketch.* Expand $(D(v) - D(w))^2 = D(v)^2 - 2D(v)D(w) + D(w)^2$ and use the symmetry of adjacency to show that $\sum_{v,w} D(w)^2 = \sum_{v,w} D(v)^2$. The cross term $\sum_{v,w} D(v)D(w)$ appears with coefficient $-2$ in $E$ and $-1$ in $Q$, giving $E = 2Q$. □
 
-*Proof.* Immediate from Theorem 1: deg(fire_v(D)) = deg(D) + ∑_w Δ_v(w) = deg(D) + 0. □
+### Theorem 3.2 (Energy Properties)
 
-### 3.2 The Canonical Degree Identity
+1. **Non-negativity**: $E_G(D) \geq 0$ with equality iff $D$ is constant on connected components.
+2. **Quadratic scaling**: $E_G(cD) = c^2 \cdot E_G(D)$ for $c \in \mathbb{Z}$.
+3. **Translation invariance**: $E_G(D + c\mathbf{1}) = E_G(D)$ for $c \in \mathbb{Z}$.
+4. **Zero on constants**: $E_G(\mathbf{c}) = 0$.
 
-**Theorem 3** (Canonical Divisor Degree). *For any finite graph G, deg(K_G) = 2g(G) − 2.*
+### Theorem 3.3 (Excess Conservation)
 
-*Proof.* By the handshaking lemma, ∑_v deg(v) = 2|E|. Therefore:
-$$\deg(K_G) = \sum_v (\deg(v) - 2) = 2|E| - 2|V| = 2(|E| - |V| + 1) - 2 = 2g - 2. \quad \square$$
+Define the **excess** at vertex $v$:
+$$\text{exc}(D, v) = D(v) \cdot \deg(v) - \sum_{w \sim v} D(w)$$
 
-This identity mirrors the classical result for algebraic curves, where the degree of the canonical class equals 2g − 2.
+Then $\sum_v \text{exc}(D, v) = 0$.
 
-### 3.3 The Riemann-Roch Degree Identity
+*Proof sketch.* The first sum $\sum_v D(v) \deg(v)$ and the second sum $\sum_v \sum_{w \sim v} D(w) = \sum_w D(w) \deg(w)$ are identical by symmetry of adjacency. □
 
-**Theorem 4** (Riemann-Roch Self-Pairing). *deg(K_G) + 1 − g(G) = g(G) − 1.*
+## 4. Complete Graph Specializations
 
-*Proof.* Substituting Theorem 3: (2g − 2) + 1 − g = g − 1. □
+### 4.1 Vertex Degrees and Genus
 
-This identity captures what happens when we substitute D = K_G into the Riemann-Roch formula r(D) − r(K_G − D) = deg(D) + 1 − g. The right-hand side becomes g − 1, and since K_G − K_G = 0, the formula reads r(K_G) − r(0) = g − 1. For connected graphs with g ≥ 1, r(0) = 0, yielding r(K_G) = g − 1.
+For $K_n$ ($n \geq 2$):
+- $\deg_{K_n}(v) = n - 1$ for all $v$
+- $g(K_n) = \binom{n-1}{2} = (n-1)(n-2)/2$
+- $K_{K_n}(v) = n - 3$ for all $v$ (constant canonical divisor)
+- $\deg(K_{K_n}) = n(n-3) = 2g - 2$ ✓
 
-### 3.4 Complementary Divisor Symmetry
+### Theorem 4.1 (Complete Graph Energy Formula)
 
-**Theorem 5** (Complementary Degree). *For any divisor D, deg(K_G − D) = 2g − 2 − deg(D).*
+For $D$ a divisor on $K_n$ ($n \geq 2$):
+$$E_{K_n}(D) = 2n \sum_{v} D(v)^2 - 2\left(\sum_v D(v)\right)^2$$
 
-This symmetry is at the heart of Baker-Norine: the Riemann-Roch formula relates the rank of D to the rank of its complement K_G − D.
+*Proof sketch.* In $K_n$, the neighbor set of $v$ is $V \setminus \{v\}$. Expanding the energy:
+$$E = \sum_v \sum_{w \neq v} (D(v) - D(w))^2 = \sum_v \sum_{w \neq v} (D(v)^2 - 2D(v)D(w) + D(w)^2)$$
 
-### 3.5 Linear Equivalence Preserves Degree
+The first term gives $(n-1)\sum_v D(v)^2$. The third term gives $(n-1)\sum_v D(v)^2$ by symmetry. The middle term gives $-2\sum_v D(v)(\sum_w D(w) - D(v)) = -2(\sum D)^2 + 2\sum D(v)^2$. Combining: $E = 2n\sum D(v)^2 - 2(\sum D)^2$. □
 
-**Theorem 6**. *If D ~ D', then deg(D) = deg(D').*
+### Theorem 4.2 (Canonical Degree Identity)
 
-*Proof.* Summing D'(w) − D(w) = ∑_v f(v) Δ_v(w) over all w and exchanging summation order:
-$$\deg(D') - \deg(D) = \sum_v f(v) \underbrace{\sum_w \Delta_v(w)}_{=0} = 0. \quad \square$$
+$$\deg(K_{K_n}) = 2 \cdot g(K_n) - 2$$
 
-## 4. Complete Graph Analysis
+This is a special case of the general discrete Gauss-Bonnet identity, verified computationally for all $n \geq 2$.
 
-### 4.1 Degree and Edge Count
+## 5. Energy, Variance, and Bounds
 
-**Theorem 7**. *In K_n (n ≥ 1), every vertex has degree n − 1.*
+### Definition 5.1 (Divisor Variance)
 
-**Theorem 8**. *K_n has n(n−1)/2 edges.*
+$$\text{Var}(D) = n \sum_v D(v)^2 - \left(\sum_v D(v)\right)^2$$
 
-### 4.2 Genus Formula
+### Theorem 5.1 (Energy-Variance Correspondence)
 
-**Theorem 9** (Complete Graph Genus). *For n ≥ 2, g(K_n) = (n−1)(n−2)/2.*
+For $K_n$ ($n \geq 2$): $E_{K_n}(D) = 2 \cdot \text{Var}(D)$.
 
-| n | Vertices | Edges | Genus |
-|---|----------|-------|-------|
-| 2 | 2 | 1 | 0 |
-| 3 | 3 | 3 | 1 |
-| 4 | 4 | 6 | 3 |
-| 5 | 5 | 10 | 6 |
-| 6 | 6 | 15 | 10 |
+### Theorem 5.2 (Variance Characterization)
 
-The genus grows quadratically, reflecting the rapidly increasing number of independent cycles.
+1. $\text{Var}(D) \geq 0$ (Cauchy-Schwarz inequality)
+2. $\text{Var}(D) = 0$ if and only if $D$ is constant
 
-### 4.3 Canonical Divisor of Complete Graphs
+*Proof of (2), forward direction.* If $\text{Var}(D) = 0$, then $E_{K_n}(D) = 0$ (for $n \geq 2$). Since $E = \sum_{v,w \sim v} (D(v) - D(w))^2$ and each term is non-negative, every term must be zero. In $K_n$, every pair is adjacent, so $D(v) = D(w)$ for all $v, w$. □
 
-**Theorem 10** (Uniform Canonical Divisor). *For K_n, K_{K_n}(v) = n − 3 for all v.*
+### Theorem 5.3 (Effective Divisor Energy Bounds)
 
-**Theorem 11** (Complete Graph Canonical Degree). *deg(K_{K_n}) = n(n − 3).*
+For effective $D$ on $K_n$:
 
-The uniformity of the canonical divisor on K_n is a special feature of vertex-transitive graphs. It means every vertex starts with the same "canonical chip count," making K_n a natural testing ground for Riemann-Roch.
+**Crude bound**: $E(D) \leq 2n \cdot (\deg D)^2$
 
-### 4.4 Chip-Firing on Complete Graphs
+**Tight bound**: $E(D) \leq 2(n-1) \cdot (\deg D)^2$
 
-**Theorem 12** (Complete Graph Firing). *On K_n, firing vertex v sends exactly one chip to every other vertex.*
+The tight bound follows from $\sum D(v)^2 \leq (\sum D(v))^2$ for non-negative integers (since cross terms are non-negative). The bound is achieved when all chips are on one vertex: $D = d \cdot \delta_v$ gives $E = 2(n-1)d^2$.
 
-**Theorem 13** (Complete Graph Chip Loss). *On K_n, the fired vertex loses exactly n − 1 chips.*
+## 6. The Energy Spectrum
 
-These results show that chip-firing on K_n has a particularly clean structure: it's a "democratic" redistribution where each neighbor gets exactly one chip.
+### Definition 6.1
 
-## 5. The Full Riemann-Roch Theorem
+The **energy spectrum** of a divisor $D$ on $G$ is:
+$$\sigma(D) = \{E_G(D') : D' \sim D\}$$
 
-The Baker-Norine theorem [1] states:
+### Theorem 6.1 (Energy Spectrum is a Class Invariant)
 
-$$r(D) - r(K_G - D) = \deg(D) + 1 - g(G)$$
+If $D_1 \sim D_2$, then $\sigma(D_1) = \sigma(D_2)$.
 
-where the **rank** r(D) is defined as the largest integer r such that for every effective divisor E of degree r, D − E is linearly equivalent to an effective divisor (with r(D) = −1 if D is not equivalent to any effective divisor).
+*Proof.* Linear equivalence is an equivalence relation. If $e \in \sigma(D_1)$, witnessed by $D_1 \sim D'$, and $D_1 \sim D_2$, then $D_2 \sim D_1 \sim D'$ by symmetry and transitivity, so $e \in \sigma(D_2)$. □
 
-Our formalization establishes all the structural prerequisites for this theorem:
-- The degree map and its properties (additivity, conservation under firing)
-- The canonical divisor and its fundamental degree identity
-- Linear equivalence and its degree-preserving property
-- The complementary divisor degree formula
+### Theorem 6.2 (Energy Spectrum Bounded Below)
 
-What remains is the combinatorial core: proving the existence of the q-reduced divisor (Dhar's burning algorithm) and the rank inequality. These require additional combinatorial machinery including superstable configurations and the theory of G-parking functions.
+$\forall e \in \sigma(D), \ e \geq 0$.
 
-## 6. Connections to Tropical Geometry
+### Theorem 6.3 (Chip-Fire Energy Membership)
 
-The Baker-Norine theorem has deep connections to tropical geometry:
+$E_G(\text{fire}(D, v)) \in \sigma(D)$ for all $v$.
 
-1. **Metric graphs and tropical curves**: A metric graph (graph with edge lengths) is a tropical curve. Divisors on metric graphs generalize divisors on combinatorial graphs, and the Riemann-Roch theorem extends to this setting.
+## 7. The Picard Group
 
-2. **Specialization**: Baker's specialization lemma shows that the rank of a divisor on an algebraic curve can only increase when specializing to a combinatorial graph. This provides a powerful tool for bounding ranks on curves.
+### Definition 7.1
 
-3. **Tropical Jacobians**: The group of divisors modulo linear equivalence (the Jacobian) corresponds to the critical group of the graph, which is isomorphic to the cokernel of the Laplacian matrix.
+A divisor $D$ is **principal** if $D = \Delta f$ for some $f: V \to \mathbb{Z}$.
 
-4. **Kirchhoff's theorem**: The order of the Jacobian (number of spanning trees) connects to the graph Laplacian via Kirchhoff's matrix-tree theorem.
+### Theorem 7.1 (Principal Divisors Form a Subgroup)
 
-## 7. Applications
+1. The zero divisor is principal.
+2. The sum of principal divisors is principal.
+3. The negation of a principal divisor is principal.
+4. Principal divisors have degree zero.
 
-### 7.1 Coding Theory
-Divisor theory on graphs provides bounds for error-correcting codes defined on graphs, analogous to Goppa codes on algebraic curves.
+The **Picard group** (or **Jacobian**) of $G$ is $\text{Pic}^0(G) = \text{Div}^0(G) / \text{Prin}(G)$.
 
-### 7.2 Sandpile Models
-The chip-firing game is equivalent to the abelian sandpile model in statistical physics. Linear equivalence classes correspond to recurrent configurations of the sandpile.
+For $K_n$: $|\text{Pic}^0(K_n)| = n^{n-2}$ (Kirchhoff's matrix-tree theorem / Cayley's formula).
 
-### 7.3 Gonality and Graph Algorithms
-The gonality of a graph (minimum degree of a rank-1 divisor) provides lower bounds for treewidth, with applications to graph algorithms and complexity theory.
+## 8. Algorithms
 
-## 8. Discussion and Future Work
+### 8.1 Energy Computation
 
-### 8.1 Toward the Full Proof
-The main missing ingredient for a complete formalization of Baker-Norine is the rank function and its properties. Key steps include:
-- Formalizing Dhar's burning algorithm for computing q-reduced divisors
-- Proving that every divisor has a unique q-reduced representative
-- Establishing the rank inequality via the duality between effective and non-effective divisors
+**Input**: Graph $G$, divisor $D$
+**Output**: $E_G(D)$
+**Complexity**: $O(|E|)$
 
-### 8.2 Conjectures
+### 8.2 Greedy Energy Descent
 
-**Conjecture 1** (Rank of Canonical Divisor on K_n). For n ≥ 3, r(K_{K_n}) = g(K_n) − 1 = (n−1)(n−2)/2 − 1.
+**Input**: Graph $G$, divisor $D$
+**Output**: A linearly equivalent divisor $D'$ with locally minimal energy
+**Algorithm**: Repeatedly fire the vertex with maximum excess until no vertex has positive excess.
+**Complexity**: Each firing changes the energy; convergence is guaranteed for connected graphs by the theory of q-reduced divisors.
 
-This follows from the general Riemann-Roch theorem combined with r(0) = 0, but a direct combinatorial proof via chip-firing would provide additional insight.
+## 9. Computational Verification
 
-**Conjecture 2** (Effective Threshold). On K_n, a divisor D with deg(D) ≥ g(K_n) = (n−1)(n−2)/2 is always equivalent to an effective divisor. This is the graph-theoretic analogue of the classical result that divisors of degree ≥ g are always effective.
+All theorems are verified in Lean 4 with Mathlib. The formalization comprises:
 
-### 8.3 Extensions
-Natural extensions include:
-- Weighted graphs and multigraphs
-- The tropical Riemann-Roch theorem for metric graphs
-- Connections to matroid theory and the Tutte polynomial
-- Computational aspects: algorithms for rank computation
+**Core module** (`Algebra/ChipFiring/Core.lean`): 19 theorems including:
+- `energy_nonneg`, `energy_zero`, `energy_const`
+- `energy_eq_twice_laplacianQuadForm`
+- `energy_complete_graph` (closed-form for $K_n$)
+- `energy_smul`, `energy_add_const`
+- `canonical_degree`, `genus_complete`, `canonical_complete`
+- `laplacian_degree_zero`, `chipFire_preserves_degree`
+- `linEquiv_refl`, `linEquiv_symm`, `linEquiv_trans`
+- `total_excess_zero`
+
+**Energy spectrum module** (`Algebra/ChipFiring/EnergySpectrum.lean`): 14 theorems including:
+- `energy_mem_spectrum`, `energySpectrum_bdd_below`
+- `linEquiv_energySpectrum`
+- `chipFire_energy_in_spectrum`
+- `principal_degree_zero`, `principal_add`, `principal_neg`, `principal_zero`
+- `sum_sq_le_degree_sq`
+- `energy_effective_upper_bound`, `energy_effective_tight_bound`
+- `energy_complete_eq_variance`
+- `divisorVariance_nonneg`, `divisorVariance_eq_zero_iff`
+
+## 10. Future Directions
+
+1. **Energy spectrum and graph distinguishability**: Can $\sigma(D)$ distinguish non-isomorphic graphs?
+2. **Rank-energy inequality**: Prove $r(D) \leq \sqrt{E_{\min}(D)/(2g)}$ or find a counterexample.
+3. **Tropical curve limits**: Extend the energy functional to metric graphs and tropical curves.
+4. **Algorithmic applications**: Use energy minimization for efficient divisor rank computation.
 
 ## References
 
-[1] M. Baker and S. Norine, "Riemann-Roch and Abel-Jacobi theory on a finite graph," *Advances in Mathematics*, vol. 215, no. 2, pp. 766–788, 2007.
+[BN07] M. Baker, S. Norine. "Riemann-Roch and Abel-Jacobi theory on a finite graph." *Advances in Mathematics* 215 (2007), 766–788.
 
-[2] D. Dhar, "Self-organized critical state of sandpile automaton models," *Physical Review Letters*, vol. 64, no. 14, pp. 1613–1616, 1990.
+[Big99] N. Biggs. "Chip-firing and the critical group of a graph." *Journal of Algebraic Combinatorics* 9 (1999), 25–45.
 
-[3] M. Baker, "Specialization of linear systems from curves to graphs," *Algebra & Number Theory*, vol. 2, no. 6, pp. 613–653, 2008.
+[BJ15] M. Baker, D. Jensen. "Degeneration of linear series from the tropical point of view and applications." *Nonarchimedean and tropical geometry*, Simons Symposia, 2016.
 
-[4] G. Mikhalkin and I. Zharkov, "Tropical curves, their Jacobians and theta functions," *Curves and Abelian Varieties*, Contemporary Mathematics, vol. 465, pp. 203–230, 2008.
-
-[5] S. Corry and D. Perkinson, *Divisors and Sandpiles: An Introduction to Chip-Firing*, American Mathematical Society, 2018.
-
-[6] C. J. Heil, "A sharp Riemann-Roch theorem for graphs," M.Sc. Thesis, 2012.
+[Lor89] D. Lorenzini. "Arithmetical graphs." *Mathematische Annalen* 285 (1989), 481–501.
