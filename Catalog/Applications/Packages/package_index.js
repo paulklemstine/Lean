@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "b91fb248",
     "filename": "non_desarguesian_worlds_geometry_without_desargues.json",
     "pkg_num": 350,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.19384,
     "title": "Non-Desarguesian Worlds: The Desarguesian Defect Spectrum"
   },
   {
@@ -11280,8 +11280,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "non_desarguesian_worlds_geometry_without_desargues",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.19384,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Non-Desarguesian Worlds: The Desarguesian Defect Spectrum"
     }
