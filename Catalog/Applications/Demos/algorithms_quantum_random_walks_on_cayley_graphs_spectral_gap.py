@@ -2,230 +2,212 @@
 """
 Algorithms for Quantum Random Walks on Cayley Graphs
 
-Type-hinted implementations of core algorithms for computing spectral gaps,
-mixing times, and quantum walk dynamics on Cayley graphs.
+Type-hinted implementations of key algorithms from the research.
 """
-
-from typing import List, Tuple, Callable, Optional, Dict, Any
-import numpy as np
-from numpy.typing import NDArray
+import math
+from typing import List, Tuple, Optional
 
 
-def build_cayley_adjacency(
-    elements: List[Any],
-    generators: List[Any],
-    group_op: Callable[[Any, Any], Any]
-) -> NDArray[np.float64]:
+def spectral_gap_cayley(
+    group_order: int,
+    eigenvalues: List[float]
+) -> float:
     """
-    Build the adjacency matrix of the Cayley graph Cay(G, S).
+    Compute the spectral gap of a Cayley graph transition matrix.
+
+    The spectral gap γ = 1 - max_{i≥2} |λ_i| where λ_1 = 1 is the
+    trivial eigenvalue.
 
     Args:
-        elements: List of group elements
-        generators: Symmetric generating set S (must be closed under inverses)
-        group_op: Group operation (g, s) -> g * s
+        group_order: Order of the group |G|.
+        eigenvalues: List of eigenvalues of the transition matrix,
+                     sorted in decreasing order. Must start with 1.0.
 
     Returns:
-        Adjacency matrix A where A[i,j] = 1 iff elements[i]^{-1} * elements[j] in S
+        The spectral gap γ ∈ (0, 1].
     """
-    n = len(elements)
-    idx: Dict[Any, int] = {}
-    for i, g in enumerate(elements):
-        idx[g] = i
-
-    A = np.zeros((n, n), dtype=np.float64)
-    for g in elements:
-        for s in generators:
-            h = group_op(g, s)
-            A[idx[g], idx[h]] = 1.0
-    return A
+    if len(eigenvalues) < 2:
+        return 1.0
+    second_largest = max(abs(ev) for ev in eigenvalues[1:])
+    return 1.0 - second_largest
 
 
-def compute_spectral_gap(A: NDArray[np.float64]) -> Tuple[float, NDArray[np.float64]]:
-    """
-    Compute the spectral gap of the transition matrix P = A/d.
-
-    The spectral gap γ = 1 - max(|λ₂|, |λ_N|) where λ₁ ≥ λ₂ ≥ ... ≥ λ_N
-    are eigenvalues of P.
-
-    Args:
-        A: Adjacency matrix of a regular graph
-
-    Returns:
-        Tuple of (spectral_gap, sorted_eigenvalues)
-    """
-    d = float(A.sum(axis=1)[0])
-    P = A / d
-    eigenvalues = np.sort(np.real(np.linalg.eigvals(P)))[::-1]
-    lambda2_abs = max(abs(eigenvalues[1]), abs(eigenvalues[-1]))
-    gap = 1.0 - lambda2_abs
-    return gap, eigenvalues
-
-
-def classical_mixing_time(
-    P: NDArray[np.float64],
-    epsilon: float = 0.01,
-    max_iter: int = 100000
-) -> int:
-    """
-    Compute classical mixing time by iterating P^t until TV distance < ε.
-
-    The total variation distance is:
-        d_TV(P^t(x,·), π) = (1/2) Σ_y |P^t(x,y) - 1/N|
-
-    Args:
-        P: Transition matrix (row-stochastic)
-        epsilon: Target TV distance
-        max_iter: Maximum iterations
-
-    Returns:
-        Mixing time T such that max_x d_TV(P^T(x,·), π) < ε
-    """
-    n = P.shape[0]
-    uniform = np.ones(n) / n
-
-    for t in range(1, max_iter):
-        # Compute from worst-case starting state
-        max_tv = 0.0
-        for x in range(min(n, 10)):  # Sample starting states
-            state = np.zeros(n)
-            state[x] = 1.0
-            state_t = state @ np.linalg.matrix_power(P, t)
-            tv = 0.5 * np.sum(np.abs(state_t - uniform))
-            max_tv = max(max_tv, tv)
-        if max_tv < epsilon:
-            return t
-    return max_iter
-
-
-def quantum_walk_evolution(
-    H: NDArray[np.float64],
-    t: float,
-    initial_state: int = 0
-) -> NDArray[np.complex128]:
-    """
-    Compute quantum walk state |ψ(t)⟩ = exp(-iHt)|initial⟩.
-
-    Uses eigendecomposition for exact evolution.
-
-    Args:
-        H: Hamiltonian (adjacency matrix of Cayley graph)
-        t: Evolution time
-        initial_state: Index of initial basis state
-
-    Returns:
-        Complex state vector |ψ(t)⟩
-    """
-    eigenvalues, eigenvectors = np.linalg.eigh(H)
-    U = eigenvectors @ np.diag(np.exp(-1j * eigenvalues * t)) @ eigenvectors.conj().T
-    return U[:, initial_state]
-
-
-def quantum_mixing_time(
-    H: NDArray[np.float64],
-    epsilon: float = 0.01,
-    dt: float = 0.1,
-    max_steps: int = 10000
-) -> Tuple[float, List[float]]:
-    """
-    Compute quantum (continuous-time) mixing time.
-
-    The quantum walk mixes at time t if:
-        max_g |P_t(g) - 1/|G|| < ε
-    where P_t(g) = |⟨g|exp(-iHt)|0⟩|².
-
-    Args:
-        H: Hamiltonian matrix
-        epsilon: Target distance to uniform
-        dt: Time step for sampling
-        max_steps: Maximum number of time steps
-
-    Returns:
-        Tuple of (mixing_time, tv_distance_history)
-    """
-    n = H.shape[0]
-    uniform = np.ones(n) / n
-    eigenvalues, eigenvectors = np.linalg.eigh(H)
-
-    tv_history: List[float] = []
-
-    for step in range(1, max_steps):
-        t = step * dt
-        U = eigenvectors @ np.diag(np.exp(-1j * eigenvalues * t)) @ eigenvectors.conj().T
-        state = U[:, 0]
-        probs = np.abs(state) ** 2
-        tv = 0.5 * np.sum(np.abs(probs - uniform))
-        tv_history.append(tv)
-        if tv < epsilon:
-            return t, tv_history
-
-    return max_steps * dt, tv_history
-
-
-def mixing_time_bound(
+def mixing_time_classical(
+    group_order: int,
     spectral_gap: float,
-    n_vertices: int,
     epsilon: float = 0.01
 ) -> float:
     """
-    Compute the theoretical mixing time upper bound.
-
-    T_mix ≤ (1/γ) · log(√N / ε)
-
-    This is the classical spectral gap bound proven in our Lean formalization.
+    Classical mixing time bound: τ = (1/γ) · log(N/ε).
 
     Args:
-        spectral_gap: γ = 1 - |λ₂|
-        n_vertices: Number of vertices N = |G|
-        epsilon: Target mixing accuracy
+        group_order: Number of vertices N = |G|.
+        spectral_gap: The spectral gap γ > 0.
+        epsilon: Target total variation distance.
 
     Returns:
-        Upper bound on mixing time
+        Upper bound on the classical mixing time.
     """
-    if spectral_gap <= 0:
-        return float('inf')
-    return (1.0 / spectral_gap) * np.log(np.sqrt(n_vertices) / epsilon)
+    return (1.0 / spectral_gap) * (math.log(group_order) + math.log(1.0 / epsilon))
 
 
-def quantum_speedup_factor(
+def mixing_time_quantum(
+    group_order: int,
     spectral_gap: float,
-    n_vertices: int
+    epsilon: float = 0.01
 ) -> float:
     """
-    Compute the theoretical quantum speedup factor.
-
-    Classical: T_classical ~ (1/γ) · log(N)
-    Quantum:   T_quantum   ~ (1/√γ) · log(N)
-    Speedup:   T_classical / T_quantum ~ 1/√γ
+    Quantum mixing time bound: τ = (1/√γ) · log(N/ε).
 
     Args:
-        spectral_gap: γ = 1 - |λ₂|
-        n_vertices: Number of vertices
+        group_order: Number of vertices N = |G|.
+        spectral_gap: The spectral gap γ > 0.
+        epsilon: Target total variation distance.
 
     Returns:
-        Speedup factor √(1/γ)
+        Upper bound on the quantum mixing time.
     """
-    if spectral_gap <= 0:
-        return float('inf')
-    return 1.0 / np.sqrt(spectral_gap)
+    return (1.0 / math.sqrt(spectral_gap)) * (math.log(group_order) + math.log(1.0 / epsilon))
+
+
+def quantum_speedup_ratio(spectral_gap: float) -> float:
+    """
+    Quantum speedup factor: √(1/γ).
+
+    This is the ratio of classical to quantum mixing times.
+    Proven in Lean 4 as `quantum_classical_gap_ratio`.
+
+    Args:
+        spectral_gap: The spectral gap γ > 0.
+
+    Returns:
+        The speedup factor √(1/γ).
+    """
+    return math.sqrt(1.0 / spectral_gap)
+
+
+def cyclic_group_spectrum(n: int) -> Tuple[float, float, List[float]]:
+    """
+    Compute the full spectrum of the Cayley graph of Z/nZ with S={1,-1}.
+
+    Eigenvalues: λ_k = cos(2πk/n) for k = 0, 1, ..., n-1.
+    Spectral gap: γ = 1 - cos(2π/n).
+
+    Args:
+        n: Order of the cyclic group (must be ≥ 3).
+
+    Returns:
+        Tuple of (spectral_gap, second_eigenvalue, all_eigenvalues).
+    """
+    eigenvalues = [math.cos(2 * math.pi * k / n) for k in range(n)]
+    eigenvalues.sort(reverse=True)
+    gap = 1.0 - eigenvalues[1]
+    return gap, eigenvalues[1], eigenvalues
+
+
+def complete_graph_spectrum(n: int) -> Tuple[float, float]:
+    """
+    Spectrum of the complete graph K_n.
+
+    Eigenvalues: λ_1 = 1 (multiplicity 1), λ_2 = -1/(n-1) (multiplicity n-1).
+    Spectral gap: γ = 1 - 1/(n-1) = (n-2)/(n-1).
+
+    Args:
+        n: Number of vertices (must be ≥ 3).
+
+    Returns:
+        Tuple of (spectral_gap, second_eigenvalue_magnitude).
+    """
+    second_eval = 1.0 / (n - 1)
+    gap = 1.0 - second_eval
+    return gap, second_eval
+
+
+def is_expander(spectral_gap: float, threshold: float = 0.01) -> bool:
+    """
+    Check if a graph is an expander (spectral gap bounded from below).
+
+    Args:
+        spectral_gap: The spectral gap γ.
+        threshold: Minimum gap for expander classification.
+
+    Returns:
+        True if γ ≥ threshold.
+    """
+    return spectral_gap >= threshold
+
+
+def quantum_advantage_classification(spectral_gap: float) -> str:
+    """
+    Classify the quantum advantage based on spectral gap.
+
+    - γ < 1/4: meaningful quantum advantage (speedup > 2)
+    - γ ≥ 1/4: marginal quantum advantage (speedup ≤ 2)
+
+    Proven in Lean 4 as `quantum_advantage_threshold` and
+    `quantum_advantage_bounded`.
+
+    Args:
+        spectral_gap: The spectral gap γ > 0.
+
+    Returns:
+        Classification string.
+    """
+    if spectral_gap < 0.25:
+        su = quantum_speedup_ratio(spectral_gap)
+        return f"MEANINGFUL (speedup = {su:.2f}x)"
+    else:
+        su = quantum_speedup_ratio(spectral_gap)
+        return f"MARGINAL (speedup = {su:.2f}x)"
+
+
+def exp_decay_bound(gamma: float, t: int) -> float:
+    """
+    Upper bound on geometric decay: (1-γ)^t ≤ exp(-γt).
+
+    Proven in Lean 4 as `exp_decay_bound`.
+
+    Args:
+        gamma: Spectral gap γ ∈ (0, 1].
+        t: Number of steps.
+
+    Returns:
+        The exponential bound exp(-γt).
+    """
+    return math.exp(-gamma * t)
+
+
+def explicit_mixing_steps(
+    group_order: int,
+    spectral_gap: float,
+    epsilon: float = 0.01
+) -> int:
+    """
+    Compute the explicit number of steps for ε-mixing.
+
+    T = ⌈(1/γ) · log(√N/ε)⌉
+
+    Proven in Lean 4 as `explicit_mixing_time`.
+
+    Args:
+        group_order: Number of vertices N.
+        spectral_gap: Spectral gap γ.
+        epsilon: Target TV distance.
+
+    Returns:
+        Number of steps T.
+    """
+    sqrt_N = math.sqrt(group_order)
+    return math.ceil((1.0 / spectral_gap) * math.log(sqrt_N / epsilon))
 
 
 if __name__ == "__main__":
-    # Example: Z_10 with generators {1, 9}
-    n = 10
-    elements = list(range(n))
-    generators = [1, n - 1]
-    group_op = lambda g, s: (g + s) % n
-
-    A = build_cayley_adjacency(elements, generators, group_op)
-    gap, eigs = compute_spectral_gap(A)
-    P = A / A.sum(axis=1)[0]
-
-    t_cl = classical_mixing_time(P)
-    t_bound = mixing_time_bound(gap, n)
-    speedup = quantum_speedup_factor(gap, n)
-
-    print(f"Z_{n} Cayley graph:")
-    print(f"  Spectral gap: {gap:.6f}")
-    print(f"  Classical mixing time: {t_cl}")
-    print(f"  Theoretical bound: {t_bound:.1f}")
-    print(f"  Quantum speedup factor: {speedup:.2f}x")
+    # Demo: cyclic group Z/100Z
+    n = 100
+    gap, second_ev, evals = cyclic_group_spectrum(n)
+    print(f"Z/{n}Z: gap = {gap:.6f}, |λ₂| = {second_ev:.6f}")
+    print(f"  Classical mixing: {mixing_time_classical(n, gap):.1f} steps")
+    print(f"  Quantum mixing:   {mixing_time_quantum(n, gap):.1f} steps")
+    print(f"  Speedup:          {quantum_speedup_ratio(gap):.1f}x")
+    print(f"  Classification:   {quantum_advantage_classification(gap)}")
+    print(f"  Explicit T:       {explicit_mixing_steps(n, gap)} steps")
