@@ -1,299 +1,236 @@
+#!/usr/bin/env python3
 """
-Cognitive Braids: Algorithms for Braid Group Invariants
+Cognitive Braid Algebra — Algorithms
 
-Implements braid word representations, exponent sum computation,
-Jones polynomial approximation via Kauffman bracket, and cognitive
-complexity measures.
+Type-hinted implementations of the core algorithms from the
+Cognitive Braid Algebra formalization.
 """
 
-from typing import List, Tuple
 from dataclasses import dataclass
-import math
-import cmath
+from typing import List, Optional, Tuple
 
 
-@dataclass
+@dataclass(frozen=True)
 class BraidGen:
-    """A braid generator: crossing at strand `idx` with sign (+1 or -1)."""
-    idx: int
-    sign: int  # +1 for positive crossing, -1 for negative
+    """A braid group generator σ_i^ε."""
+    index: int
+    pos: bool
+
+    @property
+    def sign(self) -> int:
+        """Sign: +1 for positive, -1 for negative."""
+        return 1 if self.pos else -1
+
+    @property
+    def inv(self) -> 'BraidGen':
+        """Inverse generator."""
+        return BraidGen(self.index, not self.pos)
 
     def __repr__(self) -> str:
-        s = "" if self.sign == 1 else "⁻¹"
-        return f"σ_{self.idx}{s}"
+        return f"σ{'⁺' if self.pos else '⁻'}({self.index})"
 
 
 BraidWord = List[BraidGen]
 
 
 def exponent_sum(word: BraidWord) -> int:
-    """Compute the exponent sum (algebraic crossing number) of a braid word.
+    """
+    Compute the exponent sum (abelianization) of a braid word.
 
-    This is a braid invariant: it is preserved under all braid relations
-    (cancellation, far commutativity, and the Yang-Baxter relation).
+    This is the image under the unique homomorphism B_n → ℤ
+    sending each generator σ_i to +1.
 
-    Args:
-        word: A list of BraidGen objects.
-
-    Returns:
-        The sum of signs of all generators.
+    Time: O(|word|)
+    Space: O(1)
     """
     return sum(g.sign for g in word)
 
 
-def crossing_number(word: BraidWord) -> int:
-    """The crossing number: total number of crossings."""
-    return len(word)
+def pos_count(word: BraidWord) -> int:
+    """Count positive generators."""
+    return sum(1 for g in word if g.pos)
 
 
-def abs_writhe(word: BraidWord) -> int:
-    """The absolute writhe: |exponent_sum|.
+def neg_count(word: BraidWord) -> int:
+    """Count negative generators."""
+    return sum(1 for g in word if not g.pos)
 
-    This is a lower bound on the crossing number of any equivalent braid.
+
+@dataclass(frozen=True)
+class ComplexityShadow:
     """
-    return abs(exponent_sum(word))
+    The complexity shadow of a braid: (exponent, crossings).
 
-
-def generator_span(word: BraidWord) -> int:
-    """Number of distinct generator indices used."""
-    return len(set(g.idx for g in word))
-
-
-def braid_inverse(word: BraidWord) -> BraidWord:
-    """Compute the inverse of a braid word (reverse and flip signs)."""
-    return [BraidGen(g.idx, -g.sign) for g in reversed(word)]
-
-
-def braid_compose(w1: BraidWord, w2: BraidWord) -> BraidWord:
-    """Compose (concatenate) two braid words."""
-    return w1 + w2
-
-
-def braid_permutation(n: int, word: BraidWord) -> List[int]:
-    """Compute the permutation induced by a braid word on n strands.
-
-    Args:
-        n: Number of strands.
-        word: The braid word.
-
-    Returns:
-        A permutation of [0, 1, ..., n-1].
+    The exponent is the signed crossing count (braid invariant).
+    The crossings is the total unsigned crossing count (word length).
     """
-    perm = list(range(n))
-    for g in word:
-        i = g.idx
-        if 0 <= i < n - 1:
-            perm[i], perm[i + 1] = perm[i + 1], perm[i]
-    return perm
+    exponent: int
+    crossings: int
+
+    @property
+    def realizable(self) -> bool:
+        """
+        Check if this shadow can arise from an actual braid word.
+
+        Theorem: (e, c) is realizable ⟺ |e| ≤ c ∧ (e + c) is even.
+        """
+        return abs(self.exponent) <= self.crossings and \
+               (self.exponent + self.crossings) % 2 == 0
+
+    @property
+    def coherence_ratio(self) -> float:
+        """
+        Coherence ratio |e|/c ∈ [0, 1].
+
+        - 1.0 = maximally coherent (all crossings same direction)
+        - 0.0 = maximally incoherent (equal positive/negative)
+        """
+        if self.crossings == 0:
+            return 0.0
+        return abs(self.exponent) / self.crossings
 
 
-# --- Kauffman Bracket / Jones Polynomial ---
+def shadow(word: BraidWord) -> ComplexityShadow:
+    """Extract the complexity shadow from a braid word."""
+    return ComplexityShadow(exponent_sum(word), len(word))
 
-def kauffman_bracket_naive(crossings: List[Tuple[int, int, int]],
-                           n_strands: int) -> dict:
-    """Compute the Kauffman bracket of a braid closure (naive exponential algorithm).
 
-    Uses the state-sum model: for each crossing, choose A-smoothing or B-smoothing,
-    then compute (-A^2 - A^{-2})^{loops-1} * A^{sum of choices}.
-
-    Args:
-        crossings: List of (strand_i, strand_j, sign) tuples.
-        n_strands: Number of strands.
-
-    Returns:
-        Dictionary mapping powers of A to coefficients.
+def construct_word(target: ComplexityShadow) -> Optional[BraidWord]:
     """
-    n = len(crossings)
-    if n == 0:
-        return {0: 1}
+    Construct a braid word with the given complexity shadow.
 
-    result: dict = {}
+    Returns None if the shadow is not realizable.
 
-    for state in range(2 ** n):
-        # Each bit determines A-smoothing (0) or B-smoothing (1)
-        power = 0
-        # Track strand connections to count loops
-        connections = list(range(2 * n_strands))
+    Algorithm: Use p = (c + e)/2 positive generators and
+    n = (c - e)/2 negative generators (all on strand 0).
 
-        for k, (i, j, sign) in enumerate(crossings):
-            bit = (state >> k) & 1
-            if bit == 0:
-                power += 1  # A-smoothing contributes A
-            else:
-                power -= 1  # B-smoothing contributes A^{-1}
+    Time: O(c)
+    """
+    if not target.realizable:
+        return None
+    p = (target.crossings + target.exponent) // 2
+    n = target.crossings - p
+    return [BraidGen(0, True)] * p + [BraidGen(0, False)] * n
 
-            # Adjust for crossing sign
-            if sign == -1:
-                bit = 1 - bit
 
-        # Count loops (simplified for braid closures)
-        n_loops = 1  # Placeholder: proper loop counting requires planar diagram
+def apply_cancellation(word: BraidWord) -> BraidWord:
+    """
+    Perform one pass of adjacent cancellation.
 
-        # Contribution: A^power * (-A^2 - A^{-2})^{n_loops - 1}
-        if power not in result:
-            result[power] = 0
-        result[power] += 1
+    Removes pairs σ_i σ_i⁻¹ and σ_i⁻¹ σ_i.
+    May need multiple passes for full reduction.
 
+    Time: O(|word|) per pass
+    """
+    if len(word) < 2:
+        return word
+    result: BraidWord = []
+    i = 0
+    while i < len(word):
+        if i + 1 < len(word) and \
+           word[i].index == word[i + 1].index and \
+           word[i].pos != word[i + 1].pos:
+            i += 2  # skip the cancelling pair
+        else:
+            result.append(word[i])
+            i += 1
     return result
 
 
-def jones_polynomial_from_exponent_sum(exp_sum: int, n_crossings: int) -> str:
-    """Approximate Jones polynomial characterization from braid data.
-
-    For specific well-known braids, returns the Jones polynomial.
-    This is a lookup-based method for canonical examples.
-
-    Args:
-        exp_sum: The exponent sum of the braid.
-        n_crossings: The crossing number.
-
-    Returns:
-        String representation of the Jones polynomial.
+def free_reduce(word: BraidWord) -> BraidWord:
     """
-    if n_crossings == 0:
-        return "1"
-    elif exp_sum == 3 and n_crossings == 3:
-        return "-t^{-4} + t^{-3} + t^{-1}"  # Right trefoil
-    elif exp_sum == -3 and n_crossings == 3:
-        return "-t^4 + t^3 + t"  # Left trefoil
-    elif exp_sum == 0 and n_crossings == 4:
-        return "t^2 - t + 1 - t^{-1} + t^{-2}"  # Figure-eight knot
-    else:
-        return f"Unknown (exp_sum={exp_sum}, crossings={n_crossings})"
+    Fully reduce a braid word by repeated cancellation.
 
+    Iterates apply_cancellation until no more cancellations possible.
+    The result is freely reduced (no adjacent inverse pairs).
 
-def quantum_dimension(exp_sum: int, n_crossings: int) -> float:
-    """Compute the quantum dimension (information content) of a braid.
+    Note: This does NOT apply Yang-Baxter or far commutativity.
+    The freely reduced word may not be the shortest representative
+    of its braid equivalence class.
 
-    For known braids, computes log(|V(e^{2πi/3})|) where V is the Jones polynomial.
-
-    Args:
-        exp_sum: The exponent sum.
-        n_crossings: The crossing number.
-
-    Returns:
-        The quantum dimension (information content measure).
+    Time: O(|word|²) worst case
     """
-    t = cmath.exp(2j * cmath.pi / 3)
-
-    if n_crossings == 0:
-        return 0.0  # Trivial: V = 1
-
-    elif exp_sum == 3 and n_crossings == 3:
-        # Right trefoil: V(t) = -t^{-4} + t^{-3} + t^{-1}
-        v = -t**(-4) + t**(-3) + t**(-1)
-        return math.log(abs(v))
-
-    elif exp_sum == 0 and n_crossings == 4:
-        # Figure-eight: V(t) = t^2 - t + 1 - t^{-1} + t^{-2}
-        v = t**2 - t + 1 - t**(-1) + t**(-2)
-        return math.log(abs(v))
-
-    else:
-        # Fallback: use crossing number as complexity proxy
-        return math.log(1 + n_crossings)
+    prev_len = len(word) + 1
+    while len(word) < prev_len:
+        prev_len = len(word)
+        word = apply_cancellation(word)
+    return word
 
 
-# --- Cognitive Braid Types ---
-
-@dataclass
-class CognitiveBraid:
-    """A cognitive braid: neural firing patterns modeled as braid crossings.
-
-    Attributes:
-        n_regions: Number of brain regions (strands).
-        word: The braid word representing the cognitive process.
-        label: Human-readable description of the thought type.
+def partial_exponent_sums(word: BraidWord) -> List[int]:
     """
-    n_regions: int
-    word: BraidWord
-    label: str = ""
+    Compute the running exponent sum at each position.
 
-    def exponent_sum(self) -> int:
-        return exponent_sum(self.word)
+    This is the "trajectory" of the braid through complexity space.
+    The shape of this trajectory contains information about the
+    internal structure of the cognitive process.
 
-    def crossing_number(self) -> int:
-        return crossing_number(self.word)
-
-    def abs_writhe(self) -> int:
-        return abs_writhe(self.word)
-
-    def generator_span(self) -> int:
-        return generator_span(self.word)
-
-    def quantum_dimension(self) -> float:
-        return quantum_dimension(self.exponent_sum(), self.crossing_number())
-
-    def permutation(self) -> List[int]:
-        return braid_permutation(self.n_regions, self.word)
-
-    def compose(self, other: 'CognitiveBraid') -> 'CognitiveBraid':
-        assert self.n_regions == other.n_regions
-        return CognitiveBraid(
-            self.n_regions,
-            braid_compose(self.word, other.word),
-            f"({self.label}) ∘ ({other.label})"
-        )
+    Returns: List of length |word| + 1 (including initial 0)
+    """
+    sums = [0]
+    for g in word:
+        sums.append(sums[-1] + g.sign)
+    return sums
 
 
-# --- Canonical cognitive braids ---
+def entanglement_depth(word: BraidWord) -> int:
+    """
+    Maximum absolute partial exponent sum.
 
-def trivial_braid(n: int = 3) -> CognitiveBraid:
-    """The trivial braid: no crossings, no thinking."""
-    return CognitiveBraid(n, [], "trivial (no thinking)")
-
-
-def linear_reasoning(n: int = 4) -> CognitiveBraid:
-    """Linear sequential reasoning: σ₀ σ₁ σ₂ ... (monotone chain)."""
-    word = [BraidGen(i, 1) for i in range(n - 1)]
-    return CognitiveBraid(n, word, "linear reasoning")
+    Measures the maximum "depth" of entanglement reached during
+    the cognitive process. Higher values indicate more complex
+    intermediate states.
+    """
+    return max(abs(s) for s in partial_exponent_sums(word))
 
 
-def trefoil_insight() -> CognitiveBraid:
-    """Creative insight: the trefoil braid σ₀ σ₁ σ₀."""
-    return CognitiveBraid(3,
-        [BraidGen(0, 1), BraidGen(1, 1), BraidGen(0, 1)],
-        "creative insight (trefoil)")
+def enumerate_shadows(max_crossings: int) -> List[ComplexityShadow]:
+    """
+    Enumerate all realizable complexity shadows up to a given crossing count.
 
-
-def confused_thinking() -> CognitiveBraid:
-    """Confused thinking: the figure-eight braid σ₀ σ₁⁻¹ σ₀ σ₁⁻¹."""
-    return CognitiveBraid(3,
-        [BraidGen(0, 1), BraidGen(1, -1), BraidGen(0, 1), BraidGen(1, -1)],
-        "confused thinking (figure-eight)")
-
-
-def rumination(n: int = 3, k: int = 5) -> CognitiveBraid:
-    """Rumination: repeating the same crossing pattern k times."""
-    word = [BraidGen(0, 1), BraidGen(0, -1)] * k
-    return CognitiveBraid(n, word, f"rumination (k={k})")
-
-
-def deep_insight(n: int = 5) -> CognitiveBraid:
-    """Deep insight: full twist braid (all strands interleave)."""
-    word = []
-    for _ in range(2):
-        for i in range(n - 1):
-            word.append(BraidGen(i, 1))
-    return CognitiveBraid(n, word, "deep insight (full twist)")
+    Returns shadows sorted by (crossings, |exponent|).
+    """
+    result = []
+    for c in range(max_crossings + 1):
+        for e in range(-c, c + 1):
+            s = ComplexityShadow(e, c)
+            if s.realizable:
+                result.append(s)
+    return result
 
 
 if __name__ == "__main__":
-    braids = [
-        trivial_braid(),
-        linear_reasoning(),
-        trefoil_insight(),
-        confused_thinking(),
-        rumination(),
-        deep_insight(),
-    ]
+    # Quick self-test
+    print("Testing algorithms...")
 
-    for b in braids:
-        print(f"\n{b.label}:")
-        print(f"  Word: {b.word}")
-        print(f"  Exponent sum: {b.exponent_sum()}")
-        print(f"  Crossing number: {b.crossing_number()}")
-        print(f"  Abs writhe: {b.abs_writhe()}")
-        print(f"  Generator span: {b.generator_span()}")
-        print(f"  Quantum dimension: {b.quantum_dimension():.4f}")
-        print(f"  Permutation: {b.permutation()}")
+    # Test shadow characterization
+    for c in range(10):
+        for e in range(-c, c + 1):
+            s = ComplexityShadow(e, c)
+            if s.realizable:
+                w = construct_word(s)
+                assert w is not None
+                assert shadow(w) == s, f"Failed for {s}: got {shadow(w)}"
+
+    print("  Shadow characterization: ✓")
+
+    # Test free reduction preserves exponent sum
+    import random
+    random.seed(0)
+    for _ in range(100):
+        n = random.randint(0, 20)
+        w = [BraidGen(random.randint(0, 3), random.choice([True, False]))
+             for _ in range(n)]
+        reduced = free_reduce(w)
+        assert exponent_sum(w) == exponent_sum(reduced)
+    print("  Free reduction preserves exponent sum: ✓")
+
+    # Test parity
+    for _ in range(100):
+        n = random.randint(0, 20)
+        w = [BraidGen(random.randint(0, 3), random.choice([True, False]))
+             for _ in range(n)]
+        assert (exponent_sum(w) + len(w)) % 2 == 0
+    print("  Parity theorem: ✓")
+
+    print("All tests passed!")

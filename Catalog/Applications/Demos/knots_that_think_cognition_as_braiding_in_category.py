@@ -1,331 +1,252 @@
 #!/usr/bin/env python3
 """
-Cognitive Braids: Demonstration Script
+Cognitive Braid Algebra — Interactive Demo
 
-Computes braid invariants for canonical cognitive processes and demonstrates
-the relationship between topological complexity and cognitive quality.
+Demonstrates the key theorems:
+1. Exponent sum is a braid invariant
+2. Complexity shadow characterization
+3. Coherence ratio computation
 """
 
-from algorithms import (
-    CognitiveBraid, BraidGen,
-    trivial_braid, linear_reasoning, trefoil_insight,
-    confused_thinking, rumination, deep_insight,
-    exponent_sum, braid_inverse, braid_compose,
-    braid_permutation, quantum_dimension
-)
-
+from dataclasses import dataclass
+from typing import List, Tuple
 import math
-import cmath
 
 
-def demo_basic_invariants():
-    """Demonstrate basic braid invariants for canonical cognitive braids."""
-    print("=" * 70)
-    print("COGNITIVE BRAIDS: Topological Invariants of Thought")
-    print("=" * 70)
+@dataclass
+class BraidGen:
+    """A braid generator σ_i^ε"""
+    index: int
+    pos: bool  # True = σ_i, False = σ_i⁻¹
 
-    braids = [
-        trivial_braid(),
-        linear_reasoning(4),
-        trefoil_insight(),
-        confused_thinking(),
-        rumination(3, 5),
-        deep_insight(5),
-    ]
+    @property
+    def sign(self) -> int:
+        return 1 if self.pos else -1
 
-    print(f"\n{'Thought Type':<35} {'Exp.Sum':>8} {'Cross#':>7} "
-          f"{'Span':>5} {'Q-Dim':>8} {'Perm':>15}")
-    print("-" * 85)
-
-    for b in braids:
-        print(f"{b.label:<35} {b.exponent_sum():>8} {b.crossing_number():>7} "
-              f"{b.generator_span():>5} {b.quantum_dimension():>8.4f} "
-              f"{str(b.permutation()):>15}")
+    def __repr__(self):
+        sym = "σ" if self.pos else "σ⁻¹"
+        return f"{sym}_{self.index}"
 
 
-def demo_invariance():
-    """Demonstrate that exponent sum is a braid invariant."""
-    print("\n" + "=" * 70)
-    print("INVARIANCE DEMONSTRATION")
-    print("=" * 70)
-
-    # The trefoil braid
-    trefoil = trefoil_insight()
-    print(f"\nOriginal trefoil: {trefoil.word}")
-    print(f"  Exponent sum: {trefoil.exponent_sum()}")
-
-    # Add and cancel σ₀ σ₀⁻¹ (free cancellation)
-    modified = CognitiveBraid(3,
-        [BraidGen(0, 1), BraidGen(0, -1)] + trefoil.word,
-        "trefoil + cancelling pair")
-    print(f"\nWith cancelling pair prepended: {modified.word}")
-    print(f"  Exponent sum: {modified.exponent_sum()}")
-    print(f"  (Same! Free cancellation preserves exponent sum)")
-
-    # Apply far commutativity (not applicable to B_3 with adjacent generators)
-    # Apply braid relation: σ₀ σ₁ σ₀ = σ₁ σ₀ σ₁
-    equivalent = CognitiveBraid(3,
-        [BraidGen(1, 1), BraidGen(0, 1), BraidGen(1, 1)],
-        "trefoil after braid relation")
-    print(f"\nAfter braid relation σ₀σ₁σ₀ → σ₁σ₀σ₁: {equivalent.word}")
-    print(f"  Exponent sum: {equivalent.exponent_sum()}")
-    print(f"  (Same! Braid relation preserves exponent sum)")
+BraidWord = List[BraidGen]
 
 
-def demo_composition():
-    """Demonstrate composition (additivity of writhe)."""
-    print("\n" + "=" * 70)
-    print("COGNITIVE COMPOSITION: Additivity of Information Flow")
-    print("=" * 70)
-
-    t = trefoil_insight()
-    f = confused_thinking()
-
-    composed = t.compose(f)
-    print(f"\nTrefoil writhe: {t.exponent_sum()}")
-    print(f"Figure-eight writhe: {f.exponent_sum()}")
-    print(f"Composed writhe: {composed.exponent_sum()}")
-    print(f"Sum: {t.exponent_sum() + f.exponent_sum()}")
-    print(f"Additive? {composed.exponent_sum() == t.exponent_sum() + f.exponent_sum()}")
+def exponent_sum(w: BraidWord) -> int:
+    """The abelianization map B_n → ℤ"""
+    return sum(g.sign for g in w)
 
 
-def demo_reflection():
-    """Demonstrate that a thought composed with its reflection has zero writhe."""
-    print("\n" + "=" * 70)
-    print("COGNITIVE REFLECTION: Self-Cancellation")
-    print("=" * 70)
-
-    t = trefoil_insight()
-    inv = CognitiveBraid(3, braid_inverse(t.word), "inverse trefoil")
-    composed = CognitiveBraid(3,
-        braid_compose(t.word, inv.word),
-        "trefoil + inverse")
-
-    print(f"\nTrefoil writhe: {t.exponent_sum()}")
-    print(f"Inverse writhe: {exponent_sum(inv.word)}")
-    print(f"Composed writhe: {composed.exponent_sum()}")
-    print(f"Zero? {composed.exponent_sum() == 0}")
-    print("\nInterpretation: A thought composed with its 'reflection' cancels out.")
-    print("This is the topological basis of cognitive self-correction.")
+def pos_count(w: BraidWord) -> int:
+    return sum(1 for g in w if g.pos)
 
 
-def demo_quantum_dimension():
-    """Compute quantum dimensions for cognitive braids."""
-    print("\n" + "=" * 70)
-    print("QUANTUM DIMENSION: Information Content of Thoughts")
-    print("=" * 70)
-
-    t = cmath.exp(2j * cmath.pi / 3)
-
-    # Trivial braid: V = 1
-    print(f"\nTrivial thought:")
-    print(f"  Jones polynomial at e^(2πi/3): V = 1")
-    print(f"  Quantum dimension: Q = log|1| = 0")
-
-    # Right trefoil: V(t) = -t^{-4} + t^{-3} + t^{-1}
-    v_trefoil = -t**(-4) + t**(-3) + t**(-1)
-    print(f"\nCreative insight (trefoil):")
-    print(f"  V(e^(2πi/3)) = {v_trefoil:.4f}")
-    print(f"  |V| = {abs(v_trefoil):.4f}")
-    print(f"  Q = log|V| = {math.log(abs(v_trefoil)):.4f}")
-
-    # Figure-eight: V(t) = t^2 - t + 1 - t^{-1} + t^{-2}
-    v_fig8 = t**2 - t + 1 - t**(-1) + t**(-2)
-    print(f"\nConfused thinking (figure-eight):")
-    print(f"  V(e^(2πi/3)) = {v_fig8:.4f}")
-    print(f"  |V| = {abs(v_fig8):.4f}")
-    print(f"  Q = log|V| = {math.log(abs(v_fig8)):.4f}")
-
-    print(f"\n{'Thought':<25} {'|V(ω)|':>10} {'Q = log|V|':>12}")
-    print("-" * 50)
-    print(f"{'Trivial':.<25} {'1.0000':>10} {'0.0000':>12}")
-    print(f"{'Creative (trefoil)':.<25} {abs(v_trefoil):>10.4f} {math.log(abs(v_trefoil)):>12.4f}")
-    print(f"{'Confused (figure-8)':.<25} {abs(v_fig8):>10.4f} {math.log(abs(v_fig8)):>12.4f}")
+def neg_count(w: BraidWord) -> int:
+    return sum(1 for g in w if not g.pos)
 
 
-def demo_writhe_bound():
-    """Demonstrate that |writhe| ≤ crossing number."""
-    print("\n" + "=" * 70)
-    print("WRITHE BOUND: |exponent sum| ≤ crossing number")
-    print("=" * 70)
+@dataclass
+class ComplexityShadow:
+    """The (exponent, crossings) complexity data of a braid"""
+    exponent: int
+    crossings: int
 
-    import random
-    random.seed(42)
+    @property
+    def realizable(self) -> bool:
+        return abs(self.exponent) <= self.crossings and \
+               (self.exponent + self.crossings) % 2 == 0
 
-    print(f"\n{'Braid':<30} {'|Writhe|':>10} {'Crossings':>10} {'Bound holds?':>12}")
-    print("-" * 65)
-
-    for _ in range(10):
-        n = random.randint(3, 6)
-        length = random.randint(1, 12)
-        word = [BraidGen(random.randint(0, n-2), random.choice([1, -1]))
-                for _ in range(length)]
-        cb = CognitiveBraid(n, word, "random")
-        w = cb.abs_writhe()
-        c = cb.crossing_number()
-        holds = w <= c
-        desc = f"B_{n}, len={length}"
-        print(f"{desc:<30} {w:>10} {c:>10} {'✓' if holds else '✗':>12}")
+    @property
+    def coherence_ratio(self) -> float:
+        if self.crossings == 0:
+            return 0.0
+        return abs(self.exponent) / self.crossings
 
 
-if __name__ == "__main__":
-    demo_basic_invariants()
-    demo_invariance()
-    demo_composition()
-    demo_reflection()
-    demo_quantum_dimension()
-    demo_writhe_bound()
+def shadow(w: BraidWord) -> ComplexityShadow:
+    return ComplexityShadow(exponent_sum(w), len(w))
+
+
+def construct_from_shadow(s: ComplexityShadow) -> BraidWord:
+    """Construct a braid word realizing a given shadow (if realizable)."""
+    assert s.realizable, f"Shadow {s} is not realizable"
+    p = (s.crossings + s.exponent) // 2  # positive count
+    n = s.crossings - p                   # negative count
+    return [BraidGen(0, True)] * p + [BraidGen(0, False)] * n
+
+
+# ─── Demo 1: Exponent Sum Invariance ───
+
+print("=" * 60)
+print("DEMO 1: Exponent Sum is a Braid Invariant")
+print("=" * 60)
+
+# The braid relation: σ₁σ₂σ₁ = σ₂σ₁σ₂
+w1 = [BraidGen(0, True), BraidGen(1, True), BraidGen(0, True)]
+w2 = [BraidGen(1, True), BraidGen(0, True), BraidGen(1, True)]
+print(f"\nWord 1 (σ₀σ₁σ₀):  {w1}")
+print(f"Word 2 (σ₁σ₀σ₁):  {w2}")
+print(f"Exponent sum 1: {exponent_sum(w1)}")
+print(f"Exponent sum 2: {exponent_sum(w2)}")
+print(f"Equal? {exponent_sum(w1) == exponent_sum(w2)} ✓")
+
+# Cancellation: σ₁σ₁⁻¹ = ε
+w3 = [BraidGen(0, True), BraidGen(0, False)]
+w4: BraidWord = []
+print(f"\nWord 3 (σ₀σ₀⁻¹): {w3}")
+print(f"Word 4 (empty):   {w4}")
+print(f"Exponent sum 3: {exponent_sum(w3)}")
+print(f"Exponent sum 4: {exponent_sum(w4)}")
+print(f"Equal? {exponent_sum(w3) == exponent_sum(w4)} ✓")
+
+# ─── Demo 2: Complexity Shadow Characterization ───
+
+print("\n" + "=" * 60)
+print("DEMO 2: Complexity Shadow Characterization")
+print("=" * 60)
+print("\nTheorem: (e, c) is realizable iff |e| ≤ c and e + c is even\n")
+
+test_shadows = [
+    ComplexityShadow(3, 5),   # realizable: |3|≤5, 3+5=8 even
+    ComplexityShadow(2, 5),   # NOT: 2+5=7 odd
+    ComplexityShadow(6, 4),   # NOT: |6|>4
+    ComplexityShadow(0, 4),   # realizable: |0|≤4, 0+4=4 even
+    ComplexityShadow(-3, 7),  # realizable: |-3|≤7, -3+7=4 even
+    ComplexityShadow(0, 0),   # realizable: trivial braid
+]
+
+for s in test_shadows:
+    status = "✓ realizable" if s.realizable else "✗ NOT realizable"
+    reason = f"|{s.exponent}|={'≤' if abs(s.exponent)<=s.crossings else '>'}{s.crossings}, " \
+             f"{s.exponent}+{s.crossings}={s.exponent+s.crossings} ({'even' if (s.exponent+s.crossings)%2==0 else 'odd'})"
+    print(f"  ({s.exponent:+d}, {s.crossings}): {status}  [{reason}]")
+
+# Construct words for realizable shadows
+print("\nConstruction examples:")
+for s in test_shadows:
+    if s.realizable:
+        w = construct_from_shadow(s)
+        print(f"  Shadow ({s.exponent:+d}, {s.crossings}) → word {w}")
+        print(f"    Verify: exponent_sum={exponent_sum(w)}, length={len(w)}")
+
+# ─── Demo 3: Coherence Ratio ───
+
+print("\n" + "=" * 60)
+print("DEMO 3: Coherence Ratio — Measuring Thought Quality")
+print("=" * 60)
+
+cognitive_processes = {
+    "Focused thought (all positive)": [BraidGen(i % 3, True) for i in range(6)],
+    "Creative insight (trefoil)": [BraidGen(0, True), BraidGen(1, True), BraidGen(0, True)],
+    "Confused thinking (balanced)": [BraidGen(0, True), BraidGen(0, False),
+                                     BraidGen(1, True), BraidGen(1, False)],
+    "Linear reasoning (identity)": [],
+    "Mixed process": [BraidGen(0, True), BraidGen(1, True), BraidGen(0, False),
+                      BraidGen(2, True), BraidGen(1, True)],
+}
+
+print(f"\n{'Process':<35} {'|w|':>4} {'Σ':>4} {'|Σ|/|w|':>8} {'Interpretation'}")
+print("-" * 80)
+for name, w in cognitive_processes.items():
+    s = shadow(w)
+    interp = ("trivial" if s.crossings == 0
+              else "maximally coherent" if s.coherence_ratio == 1.0
+              else "maximally incoherent" if s.coherence_ratio == 0.0
+              else f"partially coherent")
+    print(f"  {name:<33} {s.crossings:>4} {s.exponent:>+4} {s.coherence_ratio:>8.3f}   {interp}")
+
+# ─── Demo 4: Parity and Triangle Inequality ───
+
+print("\n" + "=" * 60)
+print("DEMO 4: Parity Theorem Verification")
+print("=" * 60)
+print("\nTheorem: exponentSum(w) + |w| is always even\n")
+
+import random
+random.seed(42)
+for trial in range(8):
+    n = random.randint(0, 10)
+    w = [BraidGen(random.randint(0, 3), random.choice([True, False])) for _ in range(n)]
+    e = exponent_sum(w)
+    print(f"  Random braid (len {n:>2}): e={e:>+3}, e+|w|={e+n:>+3} "
+          f"({'even ✓' if (e+n)%2==0 else 'ODD ✗'}), "
+          f"|e|≤|w|? {abs(e)<=n} ✓")
+
+print("\n" + "=" * 60)
+print("All demos completed successfully!")
+print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Braid Diagrams for Cognitive Processes
+Visualization: Realizable Complexity Shadows
 
-Draws braid diagrams showing how strands (brain regions) interleave
-during different cognitive processes.
+Plots the lattice of realizable (exponent, crossings) pairs,
+showing the triangle inequality and parity constraints.
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 import numpy as np
 
 
-def draw_braid(ax, n_strands, crossings, title="", colors=None):
-    """Draw a braid diagram.
-
-    Args:
-        ax: matplotlib axis.
-        n_strands: Number of strands.
-        crossings: List of (strand_idx, sign) tuples.
-        title: Title for the plot.
-        colors: Optional list of colors for strands.
-    """
-    if colors is None:
-        cmap = plt.cm.Set2
-        colors = [cmap(i / max(n_strands, 1)) for i in range(n_strands)]
-
-    n_levels = len(crossings) + 1
-    strand_positions = np.zeros((n_levels, n_strands))
-
-    # Initialize strand positions
-    for i in range(n_strands):
-        strand_positions[0, i] = i
-
-    # Apply crossings
-    strand_order = list(range(n_strands))
-    for level, (idx, sign) in enumerate(crossings):
-        for i in range(n_strands):
-            strand_positions[level + 1, i] = strand_positions[level, i]
-        if 0 <= idx < n_strands - 1:
-            # Swap strands at idx and idx+1
-            strand_positions[level + 1, idx] = strand_positions[level, idx + 1]
-            strand_positions[level + 1, idx + 1] = strand_positions[level, idx]
-            strand_order[idx], strand_order[idx + 1] = strand_order[idx + 1], strand_order[idx]
-
-    # Track which original strand is at each position
-    strand_identity = list(range(n_strands))
-    current_pos = list(range(n_strands))
-
-    # Draw strands
-    y_positions = np.linspace(0, -n_levels + 1, n_levels)
-
-    # Re-track strand identities for coloring
-    identity_at_pos = [list(range(n_strands))]
-    for level, (idx, sign) in enumerate(crossings):
-        prev = identity_at_pos[-1].copy()
-        if 0 <= idx < n_strands - 1:
-            prev[idx], prev[idx + 1] = prev[idx + 1], prev[idx]
-        identity_at_pos.append(prev)
-
-    for level in range(n_levels - 1):
-        idx, sign = crossings[level]
-        for strand in range(n_strands):
-            x_start = strand
-            # Find where this strand goes
-            next_positions = identity_at_pos[level + 1]
-            curr_positions = identity_at_pos[level]
-
-            original_strand = curr_positions[strand]
-            # Find where original_strand ends up
-            next_strand = next_positions.index(original_strand)
-
-            y_start = y_positions[level]
-            y_end = y_positions[level + 1]
-
-            t = np.linspace(0, 1, 30)
-            x = x_start + (next_strand - x_start) * (3 * t**2 - 2 * t**3)
-            y = y_start + (y_end - y_start) * t
-
-            # Determine line style for over/under crossing
-            is_crossing_strand = (strand == idx or strand == idx + 1) if 0 <= idx < n_strands - 1 else False
-
-            if is_crossing_strand and strand == idx and sign == -1:
-                # Under-crossing: draw with gap
-                ax.plot(x[:12], y[:12], color=colors[original_strand], linewidth=3)
-                ax.plot(x[18:], y[18:], color=colors[original_strand], linewidth=3)
-            elif is_crossing_strand and strand == idx + 1 and sign == 1:
-                ax.plot(x[:12], y[:12], color=colors[original_strand], linewidth=3)
-                ax.plot(x[18:], y[18:], color=colors[original_strand], linewidth=3)
-            else:
-                ax.plot(x, y, color=colors[original_strand], linewidth=3)
-
-    # Crossing symbols
-    for level, (idx, sign) in enumerate(crossings):
-        if 0 <= idx < n_strands - 1:
-            y_mid = (y_positions[level] + y_positions[level + 1]) / 2
-            x_mid = (idx + idx + 1) / 2
-            symbol = "+" if sign == 1 else "−"
-            ax.text(x_mid, y_mid, symbol, fontsize=8, ha='center', va='center',
-                    bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
-
-    # Labels
-    for i in range(n_strands):
-        ax.text(i, 0.3, f"R{i+1}", ha='center', fontsize=9, fontweight='bold')
-        ax.text(i, y_positions[-1] - 0.3, f"R{identity_at_pos[-1][i]+1}",
-                ha='center', fontsize=9, color='gray')
-
-    ax.set_xlim(-0.5, n_strands - 0.5)
-    ax.set_ylim(y_positions[-1] - 0.5, 1)
-    ax.set_aspect('equal')
-    ax.set_title(title, fontsize=12, fontweight='bold')
-    ax.axis('off')
-
-
 def main():
-    fig, axes = plt.subplots(1, 4, figsize=(18, 6))
+    max_c = 15
+    realizable_e = []
+    realizable_c = []
+    unrealizable_e = []
+    unrealizable_c = []
 
-    # Trivial braid (no crossings)
-    ax = axes[0]
-    ax.set_xlim(-0.5, 2.5)
-    ax.set_ylim(-2, 1)
-    for i in range(3):
-        ax.plot([i, i], [0, -1.5], linewidth=3, color=plt.cm.Set2(i/3))
-        ax.text(i, 0.3, f"R{i+1}", ha='center', fontsize=9, fontweight='bold')
-    ax.set_title("Trivial Thought\nWrithe = 0, Q = 0", fontsize=12, fontweight='bold')
+    for c in range(max_c + 1):
+        for e in range(-c, c + 1):
+            if abs(e) <= c and (e + c) % 2 == 0:
+                realizable_e.append(e)
+                realizable_c.append(c)
+            else:
+                unrealizable_e.append(e)
+                unrealizable_c.append(c)
+
+    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
+
+    # Plot unrealizable points
+    ax.scatter(unrealizable_e, unrealizable_c, c='lightgray', s=20,
+               alpha=0.5, label='Not realizable', zorder=1)
+
+    # Plot realizable points colored by coherence ratio
+    coherence = [abs(e) / c if c > 0 else 0
+                 for e, c in zip(realizable_e, realizable_c)]
+    sc = ax.scatter(realizable_e, realizable_c, c=coherence, cmap='RdYlGn_r',
+                    s=40, edgecolors='black', linewidths=0.5,
+                    label='Realizable', zorder=2, vmin=0, vmax=1)
+
+    # Draw boundary lines |e| = c
+    e_line = np.linspace(-max_c, max_c, 100)
+    ax.plot(e_line, np.abs(e_line), 'r--', linewidth=1.5, alpha=0.7,
+            label='Boundary: |e| = c')
+
+    # Mark special points
+    special = {
+        (0, 0): 'Trivial\n(identity)',
+        (3, 3): 'Maximally\ncoherent',
+        (0, 4): 'Balanced\n(confused)',
+    }
+    for (e, c), label in special.items():
+        ax.annotate(label, (e, c), textcoords="offset points",
+                    xytext=(15, 10), fontsize=8,
+                    arrowprops=dict(arrowstyle='->', color='black'))
+
+    plt.colorbar(sc, ax=ax, label='Coherence ratio |e|/c')
+    ax.set_xlabel('Exponent sum (e)', fontsize=12)
+    ax.set_ylabel('Crossing count (c)', fontsize=12)
+    ax.set_title('Complexity Shadow Lattice\n'
+                 'Realizable iff |e| ≤ c and e + c even', fontsize=14)
+    ax.legend(loc='upper left')
     ax.set_aspect('equal')
-    ax.axis('off')
+    ax.grid(True, alpha=0.3)
 
-    # Trefoil braid
-    draw_braid(axes[1], 3,
-               [(0, 1), (1, 1), (0, 1)],
-               "Creative Insight (Trefoil)\nWrithe = 3, Q > 0")
-
-    # Figure-eight braid
-    draw_braid(axes[2], 3,
-               [(0, 1), (1, -1), (0, 1), (1, -1)],
-               "Confused Thinking (Fig-8)\nWrithe = 0, Crossings = 4")
-
-    # Deep insight (full twist)
-    draw_braid(axes[3], 4,
-               [(0, 1), (1, 1), (2, 1), (0, 1), (1, 1), (2, 1)],
-               "Deep Insight (Full Twist)\nWrithe = 6, Span = 3")
-
-    plt.suptitle("Cognitive Braids: Thoughts as Topological Objects",
-                 fontsize=16, fontweight='bold', y=1.02)
     plt.tight_layout()
-    plt.savefig("cognitive_braids.png", dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: cognitive_braids.png")
+    plt.savefig('shadow_lattice.png', dpi=150, bbox_inches='tight')
+    print("Saved shadow_lattice.png")
 
 
 if __name__ == "__main__":
@@ -334,136 +255,87 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: Quantum Dimension of Cognitive Braids
+Visualization: Cognitive Braid Trajectories
 
-Plots the information content (quantum dimension) of various cognitive
-braid types, showing how topological complexity correlates with
-cognitive richness.
+Plots the partial exponent sum trajectory for different types
+of cognitive processes, showing how coherent vs confused thought
+patterns differ in their complexity evolution.
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import cmath
-import math
 
 
-def jones_at_root_of_unity(braid_type):
-    """Compute |V(e^{2πi/3})| for canonical braids.
-
-    Returns (label, abs_v, quantum_dim, exponent_sum, crossing_number).
-    """
-    t = cmath.exp(2j * cmath.pi / 3)
-    results = []
-
-    # Trivial
-    results.append(("Trivial\n(no thought)", 1.0, 0.0, 0, 0))
-
-    # Hopf link (σ₁²)
-    v = -t**(1/2) - t**(5/2)
-    results.append(("Hopf Link\n(simple association)", abs(v), math.log(max(abs(v), 1e-10)), 2, 2))
-
-    # Right trefoil: V(t) = -t^{-4} + t^{-3} + t^{-1}
-    v = -t**(-4) + t**(-3) + t**(-1)
-    results.append(("Trefoil\n(creative insight)", abs(v), math.log(max(abs(v), 1e-10)), 3, 3))
-
-    # Figure-eight: V(t) = t^2 - t + 1 - t^{-1} + t^{-2}
-    v = t**2 - t + 1 - t**(-1) + t**(-2)
-    results.append(("Figure-Eight\n(confused thought)", abs(v), math.log(max(abs(v), 1e-10)), 0, 4))
-
-    # Cinquefoil (5_1 torus knot): V(t) = -t^2 + t + 1 - t^{-1} + t^{-2} + ... (5,2 torus)
-    v = -t**(-10) + t**(-9) - t**(-8) + t**(-7) + t**(-3)
-    results.append(("Cinquefoil\n(deep analysis)", abs(v), math.log(max(abs(v), 1e-10)), 5, 5))
-
-    return results
+def partial_sums(signs):
+    """Compute running partial sums."""
+    sums = [0]
+    for s in signs:
+        sums.append(sums[-1] + s)
+    return sums
 
 
 def main():
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
 
-    data = jones_at_root_of_unity(None)
-    labels = [d[0] for d in data]
-    abs_v = [d[1] for d in data]
-    q_dim = [d[2] for d in data]
-    exp_sums = [d[3] for d in data]
-    crossings = [d[4] for d in data]
+    # Define cognitive process types
+    processes = {
+        'Focused thought\n(all positive, coherence=1.0)': {
+            'signs': [1, 1, 1, 1, 1, 1, 1, 1],
+            'color': '#2ca02c',
+            'ax': axes[0, 0]
+        },
+        'Creative insight\n(trefoil braid, coherence=1.0)': {
+            'signs': [1, 1, 1],
+            'color': '#d62728',
+            'ax': axes[0, 1]
+        },
+        'Confused thinking\n(balanced, coherence=0.0)': {
+            'signs': [1, -1, 1, -1, 1, -1, 1, -1],
+            'color': '#9467bd',
+            'ax': axes[1, 0]
+        },
+        'Mixed process\n(partial coherence=0.6)': {
+            'signs': [1, 1, -1, 1, 1, -1, 1, -1, 1, 1],
+            'color': '#ff7f0e',
+            'ax': axes[1, 1]
+        },
+    }
 
-    colors = ['#2ecc71', '#3498db', '#e74c3c', '#9b59b6', '#f39c12']
+    for title, info in processes.items():
+        signs = info['signs']
+        sums = partial_sums(signs)
+        ax = info['ax']
 
-    # Plot 1: Quantum dimension bar chart
-    ax = axes[0]
-    bars = ax.bar(range(len(labels)), q_dim, color=colors, edgecolor='black', linewidth=0.5)
-    ax.set_xticks(range(len(labels)))
-    ax.set_xticklabels(labels, fontsize=8)
-    ax.set_ylabel("Quantum Dimension Q = log|V(ω)|", fontsize=10)
-    ax.set_title("Information Content of Thoughts", fontsize=12, fontweight='bold')
-    ax.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
-    for i, v in enumerate(q_dim):
-        ax.text(i, v + 0.05, f"{v:.2f}", ha='center', fontsize=9, fontweight='bold')
+        # Plot trajectory
+        ax.plot(range(len(sums)), sums, 'o-', color=info['color'],
+                linewidth=2, markersize=6)
+        ax.fill_between(range(len(sums)), sums, alpha=0.15, color=info['color'])
+        ax.axhline(y=0, color='black', linewidth=0.5, linestyle='-')
 
-    # Plot 2: Exponent sum vs crossing number
-    ax = axes[1]
-    for i in range(len(labels)):
-        ax.scatter(crossings[i], abs(exp_sums[i]), s=200, c=colors[i],
-                  edgecolors='black', linewidth=1, zorder=5)
-        ax.annotate(labels[i].split('\n')[0], (crossings[i], abs(exp_sums[i])),
-                   textcoords="offset points", xytext=(10, 5), fontsize=8)
+        # Annotate
+        e = sum(signs)
+        c = len(signs)
+        cr = abs(e) / c if c > 0 else 0
+        depth = max(abs(s) for s in sums)
 
-    # Draw the bound |writhe| ≤ crossings
-    x_line = np.linspace(0, 6, 100)
-    ax.plot(x_line, x_line, 'r--', alpha=0.5, label="|writhe| ≤ crossings")
-    ax.fill_between(x_line, 0, x_line, alpha=0.1, color='red')
-    ax.set_xlabel("Crossing Number", fontsize=10)
-    ax.set_ylabel("|Exponent Sum| (Absolute Writhe)", fontsize=10)
-    ax.set_title("Writhe Bound Theorem", fontsize=12, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.set_xlim(-0.5, 6)
-    ax.set_ylim(-0.5, 6)
+        ax.set_title(title, fontsize=11, fontweight='bold')
+        ax.set_xlabel('Step')
+        ax.set_ylabel('Partial exponent sum')
+        ax.text(0.02, 0.98,
+                f'e = {e:+d}\nc = {c}\n|e|/c = {cr:.2f}\ndepth = {depth}',
+                transform=ax.transAxes, fontsize=9, verticalalignment='top',
+                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+        ax.grid(True, alpha=0.3)
+        ax.set_xticks(range(len(sums)))
 
-    # Plot 3: Phase diagram at root of unity
-    ax = axes[2]
-    t_vals = np.linspace(0, 2 * np.pi, 200)
-
-    # Plot unit circle
-    ax.plot(np.cos(t_vals), np.sin(t_vals), 'k-', alpha=0.2, linewidth=0.5)
-
-    # Plot Jones polynomial evaluated on unit circle for trefoil
-    for idx, (label, braid_func) in enumerate([
-        ("Trefoil", lambda t: -t**(-4) + t**(-3) + t**(-1)),
-        ("Figure-8", lambda t: t**2 - t + 1 - t**(-1) + t**(-2)),
-    ]):
-        real_parts = []
-        imag_parts = []
-        for angle in t_vals:
-            t = cmath.exp(1j * angle)
-            try:
-                v = braid_func(t)
-                real_parts.append(v.real)
-                imag_parts.append(v.imag)
-            except (ZeroDivisionError, OverflowError):
-                real_parts.append(0)
-                imag_parts.append(0)
-        ax.plot(real_parts, imag_parts, linewidth=2,
-               label=label, color=colors[idx + 2])
-
-    # Mark evaluation point e^{2πi/3}
-    t0 = cmath.exp(2j * cmath.pi / 3)
-    ax.scatter([t0.real], [t0.imag], s=100, c='red', zorder=10, marker='*')
-    ax.annotate("e^{2πi/3}", (t0.real, t0.imag),
-               textcoords="offset points", xytext=(10, -10), fontsize=9, color='red')
-
-    ax.set_xlabel("Re(V)", fontsize=10)
-    ax.set_ylabel("Im(V)", fontsize=10)
-    ax.set_title("Jones Polynomial on Unit Circle", fontsize=12, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-
-    plt.suptitle("Cognitive Braids: Topological Invariants of Thought",
-                fontsize=14, fontweight='bold')
+    plt.suptitle('Cognitive Braid Trajectories\n'
+                 'Partial exponent sums reveal thought structure',
+                 fontsize=14, fontweight='bold')
     plt.tight_layout()
-    plt.savefig("quantum_dimension.png", dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: quantum_dimension.png")
+    plt.savefig('braid_trajectories.png', dpi=150, bbox_inches='tight')
+    print("Saved braid_trajectories.png")
 
 
 if __name__ == "__main__":
