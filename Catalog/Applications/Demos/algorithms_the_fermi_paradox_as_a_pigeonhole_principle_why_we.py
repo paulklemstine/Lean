@@ -1,188 +1,202 @@
 #!/usr/bin/env python3
 """
-Sparse Occupation Theory — Core Algorithms
+algorithms.py — Core algorithms for the Cascade Filter framework.
 
-Type-hinted implementations of the mathematical framework
-for sparse occupation systems and Drake equation analysis.
+Type-hinted implementations of the mathematical structures and algorithms
+developed in the Lean 4 formalization.
 """
 
 from __future__ import annotations
-import math
 from dataclasses import dataclass
+import math
 
 
 @dataclass
-class DrakeSystem:
+class CascadeFilter:
+    """A cascade filter with n independent probability-reducing stages.
+    
+    Attributes:
+        stage_probs: List of per-stage probabilities in [0, 1].
+        base_population: The initial population / base rate.
     """
-    A Drake system of order k with probability factors in [0, 1].
-
-    The per-star probability is the product of all factors.
-    The expected number of civilizations is n * per_star_prob.
-    """
-    factors: list[float]
+    stage_probs: list[float]
+    base_population: float
 
     def __post_init__(self) -> None:
-        for i, f in enumerate(self.factors):
-            assert 0 <= f <= 1, f"Factor {i} = {f} not in [0, 1]"
+        for i, p in enumerate(self.stage_probs):
+            if not (0.0 <= p <= 1.0):
+                raise ValueError(f"Stage {i} probability {p} not in [0, 1]")
+        if self.base_population < 0:
+            raise ValueError(f"Base population {self.base_population} is negative")
 
     @property
-    def k(self) -> int:
-        """Number of factors."""
-        return len(self.factors)
+    def stages(self) -> int:
+        """Number of filter stages."""
+        return len(self.stage_probs)
 
-    def per_star_prob(self) -> float:
-        """Product of all Drake factors."""
+    def throughput(self) -> float:
+        """Product of all stage probabilities (Lean: CascadeFilter.throughput)."""
         result = 1.0
-        for f in self.factors:
-            result *= f
+        for p in self.stage_probs:
+            result *= p
         return result
 
-    def expected_civs(self, n: int | float) -> float:
-        """Expected number of civilizations with n candidate sites."""
-        return n * self.per_star_prob()
+    def expected_survivors(self) -> float:
+        """Expected survivors = base × throughput (Lean: CascadeFilter.expectedSurvivors)."""
+        return self.base_population * self.throughput()
+
+    def cofactor(self, i: int) -> float:
+        """Product of all probabilities except stage i (Lean: CascadeFilter.cofactor)."""
+        result = 1.0
+        for j, p in enumerate(self.stage_probs):
+            if j != i:
+                result *= p
+        return result
 
     def bottleneck_index(self) -> int:
-        """Index of the smallest (bottleneck) factor."""
-        return min(range(self.k), key=lambda i: self.factors[i])
-
-    def bottleneck_value(self) -> float:
-        """Value of the smallest (bottleneck) factor."""
-        return self.factors[self.bottleneck_index()]
-
-    def is_single_bottleneck_sparse(self, n: int | float) -> tuple[bool, int | None]:
+        """Index of the stage with smallest probability (the bottleneck).
+        
+        By the bottleneck_dominates theorem, this stage has the highest
+        cofactor and thus the highest absolute sensitivity.
         """
-        Check if a single factor forces sparsity (factor < 1/n).
-        Returns (is_sparse, bottleneck_index_or_None).
+        return min(range(self.stages), key=lambda i: self.stage_probs[i])
+
+    def sensitivity_ranking(self) -> list[tuple[int, float, float]]:
+        """Return stages sorted by sensitivity (cofactor), highest first.
+        
+        Returns list of (stage_index, probability, cofactor).
         """
-        threshold = 1.0 / n
-        for i, f in enumerate(self.factors):
-            if f < threshold:
-                return True, i
-        return False, None
+        data = [(i, self.stage_probs[i], self.cofactor(i)) for i in range(self.stages)]
+        data.sort(key=lambda x: -x[2])  # Sort by cofactor descending
+        return data
+
+    def silence_threshold(self) -> float | None:
+        """If all stages have same probability p, return the critical p
+        such that expected_survivors = 1. Returns None for non-uniform filters."""
+        if self.stages == 0 or self.base_population <= 0:
+            return None
+        # B * p^n = 1 => p = B^(-1/n)
+        return self.base_population ** (-1.0 / self.stages)
+
+    @staticmethod
+    def uniform(n_stages: int, p: float, base_population: float) -> CascadeFilter:
+        """Create a uniform cascade filter (all stages have same probability)."""
+        return CascadeFilter([p] * n_stages, base_population)
+
+    @staticmethod
+    def critical_stage_count(p: float, base_population: float) -> int:
+        """Minimum number of stages for silence (E[survivors] < 1).
+        
+        n* = ceil(log(B) / log(1/p))
+        """
+        if p <= 0 or p >= 1 or base_population <= 1:
+            return 0
+        return math.ceil(math.log(base_population) / math.log(1 / p))
 
 
 @dataclass
-class SparseOccupation:
+class DrakeParams:
+    """Parameters for the Drake equation."""
+    star_formation: float = 1.5
+    fraction_planets: float = 0.5
+    habitable_planets: float = 0.01
+    fraction_life: float = 0.01
+    fraction_intelligence: float = 0.01
+    fraction_technology: float = 0.01
+    civilization_lifetime: float = 100.0
+
+    def drake_n(self) -> float:
+        """Expected number of detectable civilizations."""
+        return (self.star_formation * self.fraction_planets *
+                self.habitable_planets * self.fraction_life *
+                self.fraction_intelligence * self.fraction_technology *
+                self.civilization_lifetime)
+
+    def to_cascade_filter(self) -> CascadeFilter:
+        """Convert to a CascadeFilter representation.
+        
+        The non-probability factors (star_formation, civilization_lifetime)
+        are absorbed into the base_population.
+        """
+        return CascadeFilter(
+            stage_probs=[
+                self.fraction_planets,
+                self.habitable_planets,
+                self.fraction_life,
+                self.fraction_intelligence,
+                self.fraction_technology,
+            ],
+            base_population=self.star_formation * self.civilization_lifetime
+        )
+
+
+def birthday_collision_probability(k: int, n: int) -> float:
+    """Probability that k items in n slots have at least one collision.
+    
+    Uses the exact formula: P(collision) = 1 - n!/(n^k * (n-k)!)
+    Related to Lean theorem: injection_count
     """
-    A Sparse Occupation System with n slots and occupation probability p.
-
-    Models the regime where expected occupancy np may be < 1 (sparse regime),
-    making silence the likely outcome.
-    """
-    num_slots: int
-    occ_prob: float
-
-    def __post_init__(self) -> None:
-        assert self.num_slots >= 0, "Number of slots must be non-negative"
-        assert 0 <= self.occ_prob <= 1, f"Probability {self.occ_prob} not in [0, 1]"
-
-    def expected_occ(self) -> float:
-        """Expected number of occupied slots: λ = np."""
-        return self.num_slots * self.occ_prob
-
-    def silence_prob(self) -> float:
-        """Silence probability: (1-p)^n."""
-        return (1 - self.occ_prob) ** self.num_slots
-
-    def contact_prob(self) -> float:
-        """Contact probability: 1 - (1-p)^n."""
-        return 1 - self.silence_prob()
-
-    def is_sparse(self) -> bool:
-        """Whether the system is in the sparse regime (λ < 1)."""
-        return self.expected_occ() < 1
-
-    def bernoulli_lower_bound(self) -> float:
-        """Bernoulli lower bound on silence probability: 1 - np."""
-        return 1 - self.expected_occ()
-
-    def poisson_approximation(self) -> float:
-        """Poisson approximation to silence probability: e^{-λ}."""
-        return math.exp(-self.expected_occ())
-
-    @classmethod
-    def from_drake(cls, drake: DrakeSystem, n: int) -> SparseOccupation:
-        """Construct a SparseOccupation from a Drake system with n sites."""
-        return cls(num_slots=n, occ_prob=drake.per_star_prob())
-
-
-def birthday_no_collision_prob(n: int, k: int) -> float:
-    """
-    Probability of no collision when placing k items into n slots.
-
-    P(no collision) = ∏_{i=0}^{k-1} (1 - i/n)
-
-    This is the quantitative anti-pigeonhole: when k << √n,
-    collisions are unlikely.
-    """
-    assert 0 < n, "Number of slots must be positive"
-    assert 0 <= k <= n, f"k={k} must be in [0, n={n}]"
-    prob = 1.0
+    if k > n:
+        return 1.0
+    if k <= 1:
+        return 0.0
+    # Compute P(no collision) = prod_{i=0}^{k-1} (1 - i/n)
+    p_no_collision = 1.0
     for i in range(k):
-        prob *= (1 - i / n)
-    return prob
+        p_no_collision *= (1.0 - i / n)
+    return 1.0 - p_no_collision
 
 
-def critical_drake_factor(n: int | float, k: int) -> float:
+def descending_factorial(n: int, k: int) -> int:
+    """n * (n-1) * ... * (n-k+1)"""
+    result = 1
+    for i in range(k):
+        result *= (n - i)
+    return result
+
+
+# ──────────────────────────────────────────────────────────
+# Monte Carlo silence estimator
+# ──────────────────────────────────────────────────────────
+def monte_carlo_silence_probability(
+    n_factors: int = 7,
+    log_min: float = -6.0,
+    log_max: float = 0.0,
+    base_rate: float = 1.5e10,
+    n_samples: int = 100_000,
+    seed: int = 42,
+) -> float:
+    """Estimate P(N < 1) when each Drake factor is log-uniform on [10^log_min, 10^log_max].
+    
+    Tests the conjecture that silence is the generic outcome for uncertain Drake parameters.
     """
-    Critical value of identical Drake factors for silence threshold.
-
-    If all k factors equal f, silence occurs when n * f^k < 1,
-    i.e., f < n^{-1/k}.
-
-    Returns the critical factor value f_c = n^{-1/k}.
-    """
-    return n ** (-1.0 / k)
-
-
-def silence_region_volume(n: int | float, k: int) -> float:
-    """
-    Volume of the silence region in [0,1]^k.
-
-    The silence region is {f ∈ [0,1]^k : n * ∏f_i < 1}.
-    Its volume relative to [0,1]^k represents the "probability"
-    that random Drake factors produce silence.
-
-    For large n, this volume approaches 1 (most parameter choices
-    lead to silence).
-
-    Computed via integration: Vol = ∫...∫_{∏f_i < 1/n} df_1...df_k
-    = 1 - (1/n) * (log(n))^{k-1} / (k-1)! + higher order terms
-    ≈ 1 for large n.
-    """
-    threshold = 1.0 / n
-    if threshold >= 1:
-        return 0.0  # Everything is in contact region
-
-    # Exact computation for uniform distribution on [0,1]^k:
-    # P(∏ U_i > t) = t * ∑_{j=0}^{k-1} (-log t)^j / j!
-    # P(∏ U_i < t) = 1 - above
-    log_t = -math.log(threshold)  # = log(n)
-    survival = threshold
-    factorial = 1.0
-    power = 1.0
-    total = 0.0
-    for j in range(k):
-        total += power / factorial
-        power *= log_t
-        factorial *= (j + 1)
-    survival *= total
-    return 1 - survival
+    import random
+    rng = random.Random(seed)
+    n_silence = 0
+    for _ in range(n_samples):
+        throughput = 1.0
+        for _ in range(n_factors):
+            throughput *= 10 ** rng.uniform(log_min, log_max)
+        if base_rate * throughput < 1:
+            n_silence += 1
+    return n_silence / n_samples
 
 
 if __name__ == "__main__":
-    # Example usage
-    drake = DrakeSystem([0.5, 0.01, 0.01, 0.01, 0.01])
-    print(f"Drake per-star prob: {drake.per_star_prob():.2e}")
-    print(f"Bottleneck: factor {drake.bottleneck_index()} = {drake.bottleneck_value()}")
+    # Demo: Pessimistic Drake
+    drake = DrakeParams()
+    print(f"Pessimistic Drake N = {drake.drake_n():.2e}")
 
-    n = 10**10
-    sos = SparseOccupation.from_drake(drake, n)
-    print(f"Expected occupancy: {sos.expected_occ():.2e}")
-    print(f"Is sparse: {sos.is_sparse()}")
-    print(f"Silence probability: {sos.silence_prob():.10f}")
-    print(f"Bernoulli lower bound: {sos.bernoulli_lower_bound():.10f}")
-    print(f"Poisson approximation: {sos.poisson_approximation():.10f}")
+    # Demo: Cascade filter
+    cf = drake.to_cascade_filter()
+    print(f"Cascade throughput = {cf.throughput():.2e}")
+    print(f"Expected survivors = {cf.expected_survivors():.2e}")
+    print(f"Bottleneck: stage {cf.bottleneck_index()}")
 
-    print(f"\nCritical Drake factor (k=7, n=1e10): {critical_drake_factor(1e10, 7):.6f}")
-    print(f"Silence region volume (k=7, n=1e10): {silence_region_volume(1e10, 7):.10f}")
+    # Demo: Critical stage count
+    n_star = CascadeFilter.critical_stage_count(0.1, 1e22)
+    print(f"Critical stages for B=10^22, p=0.1: n* = {n_star}")
+
+    # Demo: Monte Carlo
+    p_silence = monte_carlo_silence_probability()
+    print(f"Monte Carlo P(silence): {p_silence:.4f}")

@@ -1,358 +1,271 @@
 #!/usr/bin/env python3
 """
-Sparse Occupation Theory — Numerical Demonstrations
+Cascade Filter Demo: The Mathematics of Cosmic Silence
 
-Demonstrates the mathematical framework connecting the Fermi Paradox
-to the anti-pigeonhole principle via Sparse Occupation Systems.
+Demonstrates the key theorems from the Cascade Filter framework
+applied to the Fermi paradox.
 """
 
 import math
-from typing import NamedTuple
+import random
+
+def cascade_throughput(probs: list[float]) -> float:
+    """Product of all stage probabilities."""
+    result = 1.0
+    for p in probs:
+        result *= p
+    return result
+
+def expected_survivors(base_pop: float, probs: list[float]) -> float:
+    """Expected survivors = base_population × throughput."""
+    return base_pop * cascade_throughput(probs)
+
+def cofactor(probs: list[float], i: int) -> float:
+    """Product of all probabilities EXCEPT stage i."""
+    result = 1.0
+    for j, p in enumerate(probs):
+        if j != i:
+            result *= p
+    return result
+
+def drake_equation(R_star=1.5, f_p=0.5, n_e=0.01, f_l=0.01,
+                   f_i=0.01, f_c=0.01, L=100) -> float:
+    """Drake equation: expected detectable civilizations."""
+    return R_star * f_p * n_e * f_l * f_i * f_c * L
 
 
-class DrakeSystem(NamedTuple):
-    """Drake equation parameters."""
-    R_star: float    # Star formation rate (per year)
-    f_p: float       # Fraction with planets
-    n_e: float       # Habitable planets per star
-    f_l: float       # Fraction developing life
-    f_i: float       # Fraction developing intelligence
-    f_c: float       # Fraction developing technology
-    L: float         # Longevity of civilization (years)
+# ──────────────────────────────────────────────────────────
+# Example 1: Pessimistic Drake Equation
+# ──────────────────────────────────────────────────────────
+print("=" * 60)
+print("EXAMPLE 1: Pessimistic Drake Equation")
+print("=" * 60)
 
-    def per_star_prob(self) -> float:
-        """Per-star probability (product of all factors, normalized)."""
-        return self.f_p * self.n_e * self.f_l * self.f_i * self.f_c
+N = drake_equation()
+print(f"Parameters: R*=1.5, f_p=0.5, n_e=0.01, f_l=0.01, f_i=0.01, f_c=0.01, L=100")
+print(f"Drake N = {N:.2e}")
+print(f"N < 1? {N < 1} ✓ (Theorem: pessimistic_drake_lt_one)")
+print()
 
-    def expected_civs(self, galaxy_lifetime: float = 1.0) -> float:
-        """Expected number of simultaneously detectable civilizations."""
-        return self.R_star * self.per_star_prob() * self.L
+# ──────────────────────────────────────────────────────────
+# Example 2: Cascade Filter Power Bound
+# ──────────────────────────────────────────────────────────
+print("=" * 60)
+print("EXAMPLE 2: Uniform Power Bound (throughput_le_pow)")
+print("=" * 60)
 
-    def factors(self) -> list[float]:
-        """All multiplicative factors."""
-        return [self.f_p, self.n_e, self.f_l, self.f_i, self.f_c]
+for n_stages in [3, 5, 7, 10, 15]:
+    p = 0.1
+    throughput = p ** n_stages
+    print(f"  {n_stages} stages, each p=0.1: throughput ≤ {throughput:.2e}")
 
+print()
+print("With 7 stages (Drake) and p=0.1 each: throughput ≤ 10^{-7}")
+print("This is the 'silence_of_uniform_filter' theorem in action.")
+print()
 
-class SparseOccupation(NamedTuple):
-    """Sparse Occupation System."""
-    num_slots: int
-    occ_prob: float
+# ──────────────────────────────────────────────────────────
+# Example 3: Sensitivity Analysis (bottleneck_dominates)
+# ──────────────────────────────────────────────────────────
+print("=" * 60)
+print("EXAMPLE 3: Sensitivity Analysis — Bottleneck Dominates")
+print("=" * 60)
 
-    def expected_occ(self) -> float:
-        return self.num_slots * self.occ_prob
+probs = [0.5, 0.8, 0.001, 0.3, 0.9, 0.7, 0.6]
+print(f"Stage probabilities: {probs}")
+print(f"Throughput: {cascade_throughput(probs):.6e}")
+print()
+print("Cofactors (sensitivity to each stage):")
+for i in range(len(probs)):
+    c = cofactor(probs, i)
+    print(f"  Stage {i} (p={probs[i]}): cofactor = {c:.6e}")
 
-    def silence_prob(self) -> float:
-        return (1 - self.occ_prob) ** self.num_slots
+bottleneck = min(range(len(probs)), key=lambda i: probs[i])
+print(f"\nBottleneck: stage {bottleneck} (p={probs[bottleneck]})")
+print(f"Bottleneck cofactor: {cofactor(probs, bottleneck):.6e}")
+print(f"This is the LARGEST cofactor — improving the bottleneck helps most.")
+print(f"(Theorem: bottleneck_dominates)")
+print()
 
-    def contact_prob(self) -> float:
-        return 1 - self.silence_prob()
+# ──────────────────────────────────────────────────────────
+# Example 4: Exponential Silence (Phase Transition)
+# ──────────────────────────────────────────────────────────
+print("=" * 60)
+print("EXAMPLE 4: Exponential Silence — Phase Transition")
+print("=" * 60)
 
-    def is_sparse(self) -> bool:
-        return self.expected_occ() < 1
+B = 1e22  # ~number of stars in observable universe
+p = 0.1
+print(f"Base population: B = {B:.0e}")
+print(f"Per-stage probability: p = {p}")
+print()
 
-    def bernoulli_lower_bound(self) -> float:
-        """Lower bound on silence prob: 1 - np."""
-        return max(0, 1 - self.expected_occ())
+for n in range(1, 30):
+    E = B * p**n
+    marker = " ← SILENCE THRESHOLD" if n == 23 else ""
+    if n <= 5 or n >= 20 or abs(n - 23) <= 2:
+        print(f"  n={n:2d}: E[survivors] = {E:.2e}{marker}")
+    elif n == 6:
+        print(f"  ...")
 
+print()
+print(f"Critical stage count n* ≈ log(B)/log(1/p) = {math.log(B)/math.log(1/p):.1f}")
+print(f"With n > n*, silence is guaranteed. (Theorem: exponential_silence)")
+print()
 
-def demo_drake_estimates():
-    """Compare pessimistic and optimistic Drake estimates."""
-    print("=" * 70)
-    print("DEMO 1: Drake Equation Parameter Sweep")
-    print("=" * 70)
+# ──────────────────────────────────────────────────────────
+# Example 5: Monte Carlo — Silence is Generic
+# ──────────────────────────────────────────────────────────
+print("=" * 60)
+print("EXAMPLE 5: Monte Carlo — Log-Uniform Drake Parameters")
+print("=" * 60)
 
-    pessimistic = DrakeSystem(
-        R_star=1.5, f_p=0.5, n_e=0.01, f_l=0.01, f_i=0.01, f_c=0.01, L=100
-    )
-    moderate = DrakeSystem(
-        R_star=2.0, f_p=0.8, n_e=0.1, f_l=0.1, f_i=0.1, f_c=0.1, L=10000
-    )
-    optimistic = DrakeSystem(
-        R_star=3.0, f_p=1.0, n_e=0.4, f_l=1.0, f_i=0.5, f_c=0.5, L=1e9
-    )
+random.seed(42)
+N_SAMPLES = 1_000_000
+n_silence = 0
+n_factors = 7
 
-    for name, drake in [("Pessimistic", pessimistic), ("Moderate", moderate),
-                        ("Optimistic", optimistic)]:
-        N = drake.expected_civs()
-        psp = drake.per_star_prob()
-        print(f"\n{name} estimate:")
-        print(f"  Per-star prob: {psp:.2e}")
-        print(f"  Expected civs: {N:.2e}")
-        print(f"  Sparse regime: {'YES' if N < 1 else 'NO'}")
-        if N < 1:
-            print(f"  Silence prob ≥ {1 - N:.10f}")
+for _ in range(N_SAMPLES):
+    # Draw each Drake factor from log-uniform on [10^-6, 1]
+    factors = [10 ** random.uniform(-6, 0) for _ in range(n_factors)]
+    # Base rate ~ 1.5 (star formation × lifetime normalization)
+    N_val = 1.5 * cascade_throughput(factors) * 1e10  # generous base
+    if N_val < 1:
+        n_silence += 1
 
+p_silence = n_silence / N_SAMPLES
+print(f"Samples: {N_SAMPLES:,}")
+print(f"Fraction with N < 1 (silence): {p_silence:.4f} ({p_silence*100:.2f}%)")
+print(f"Conjecture: P(silence) > 0.99 → {'CONFIRMED' if p_silence > 0.99 else 'REFUTED'}")
+print()
 
-def demo_bottleneck():
-    """Demonstrate the bottleneck theorem."""
-    print("\n" + "=" * 70)
-    print("DEMO 2: Bottleneck Theorem")
-    print("=" * 70)
+# ──────────────────────────────────────────────────────────
+# Example 6: Birthday Bound (Injection Count)
+# ──────────────────────────────────────────────────────────
+print("=" * 60)
+print("EXAMPLE 6: Birthday Bound — Injection Count")
+print("=" * 60)
 
-    n_planets = 10**10  # ~10 billion habitable planets
-    threshold = 1.0 / n_planets
-    print(f"\nWith {n_planets:.0e} habitable planets:")
-    print(f"Bottleneck threshold: any factor < {threshold:.2e} => silence")
+def desc_factorial(n, k):
+    result = 1
+    for i in range(k):
+        result *= (n - i)
+    return result
 
-    # Show how each factor being small forces silence
-    factors = {
-        "f_l (life)": [1e-5, 1e-10, 1e-15, 1e-20],
-        "f_i (intelligence)": [1e-5, 1e-10, 1e-15, 1e-20],
-        "f_c (technology)": [1e-5, 1e-10, 1e-15, 1e-20],
-    }
+for k in [2, 5, 10, 23]:
+    n = 365
+    injections = desc_factorial(n, k)
+    total = n**k
+    p_no_collision = injections / total
+    p_collision = 1 - p_no_collision
+    print(f"  k={k:2d} items in n={n} slots: P(collision) = {p_collision:.4f}")
 
-    for factor_name, values in factors.items():
-        print(f"\n  {factor_name}:")
-        for v in values:
-            is_bottleneck = v < threshold
-            print(f"    {v:.0e} -> bottleneck: {is_bottleneck}")
+print()
+print("(Theorem: injection_count)")
 
+# ──────────────────────────────────────────────────────────
+# Summary
+# ──────────────────────────────────────────────────────────
+print()
+print("=" * 60)
+print("SUMMARY: The Fermi Paradox is Not a Paradox")
+print("=" * 60)
+print("""
+The cascade filter framework shows that cosmic silence is the 
+EXPECTED outcome, not a puzzle requiring exotic explanations:
 
-def demo_silence_probability():
-    """Demonstrate silence probability calculations."""
-    print("\n" + "=" * 70)
-    print("DEMO 3: Silence Probability vs Expected Occupancy")
-    print("=" * 70)
+1. Each Drake factor independently reduces probability (throughput_le_pow)
+2. The bottleneck factor dominates sensitivity (bottleneck_dominates)
+3. Enough stages guarantee silence exponentially (exponential_silence)
+4. Conservative estimates give E[N] < 10^{-6} (pessimistic_drake_lt_one)
+5. Silence is the generic outcome for uncertain parameters (Monte Carlo)
 
-    print(f"\n{'λ (expected)':<15} {'P(silence)':<15} {'P(contact)':<15} "
-          f"{'Bernoulli LB':<15} {'Sparse?':<10}")
-    print("-" * 70)
-
-    lambdas = [0.001, 0.01, 0.1, 0.5, 1.0, 2.0, 5.0, 10.0]
-    n = 10**6  # large n for Poisson approximation
-
-    for lam in lambdas:
-        p = lam / n
-        s = SparseOccupation(n, p)
-        poisson_silence = math.exp(-lam)  # Poisson limit
-
-        print(f"{lam:<15.3f} {s.silence_prob():<15.6f} {s.contact_prob():<15.6f} "
-              f"{s.bernoulli_lower_bound():<15.6f} {'YES' if s.is_sparse() else 'NO':<10}")
-
-
-def demo_birthday_bound():
-    """Demonstrate the birthday/anti-pigeonhole bound."""
-    print("\n" + "=" * 70)
-    print("DEMO 4: Birthday Problem (Quantitative Anti-Pigeonhole)")
-    print("=" * 70)
-
-    n = 365  # slots
-    print(f"\n  Slots (n={n}):")
-    print(f"  {'k (items)':<12} {'P(no collision)':<20} {'P(collision)':<20}")
-    print("  " + "-" * 50)
-
-    for k in [2, 5, 10, 15, 20, 23, 30, 50]:
-        prob = 1.0
-        for i in range(k):
-            prob *= (1 - i / n)
-        print(f"  {k:<12} {prob:<20.6f} {1-prob:<20.6f}")
-
-
-def demo_critical_threshold():
-    """Compute the critical Drake factor for uniform factors."""
-    print("\n" + "=" * 70)
-    print("DEMO 5: Critical Threshold (Falsifiable Conjecture)")
-    print("=" * 70)
-
-    k = 7  # Drake factors
-    n = 10**10  # habitable planets
-
-    f_c = n ** (-1.0 / k)
-    print(f"\n  For k={k} identical factors and n={n:.0e} planets:")
-    print(f"  Critical factor f_c = n^(-1/k) = {f_c:.6f}")
-    print(f"  Verification: n × f_c^k = {n * f_c**k:.6f} (should be ≈ 1)")
-    print(f"\n  Interpretation: if the geometric mean of Drake factors")
-    print(f"  exceeds {f_c:.4f} (~{f_c*100:.2f}%), we expect ≥ 1 civilization.")
-    print(f"  Our silence constrains the geometric mean below this threshold.")
-
-
-def demo_monotonicity():
-    """Demonstrate monotonicity of silence probability."""
-    print("\n" + "=" * 70)
-    print("DEMO 6: Monotonicity of Silence")
-    print("=" * 70)
-
-    p = 0.001
-    print(f"\n  Fixed p = {p}:")
-    print(f"  {'n (slots)':<12} {'Silence prob':<15} {'Expected occ':<15}")
-    print("  " + "-" * 40)
-    for n in [10, 100, 500, 1000, 5000, 10000]:
-        s = SparseOccupation(n, p)
-        print(f"  {n:<12} {s.silence_prob():<15.6f} {s.expected_occ():<15.3f}")
-
-    n = 1000
-    print(f"\n  Fixed n = {n}:")
-    print(f"  {'p (prob)':<12} {'Silence prob':<15} {'Expected occ':<15}")
-    print("  " + "-" * 40)
-    for p in [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05]:
-        s = SparseOccupation(n, p)
-        print(f"  {p:<12.4f} {s.silence_prob():<15.6f} {s.expected_occ():<15.3f}")
-
-
-if __name__ == "__main__":
-    demo_drake_estimates()
-    demo_bottleneck()
-    demo_silence_probability()
-    demo_birthday_bound()
-    demo_critical_threshold()
-    demo_monotonicity()
-    print("\n" + "=" * 70)
-    print("All demonstrations complete.")
-    print("=" * 70)
+The Fermi paradox is the anti-pigeonhole principle in action:
+too few civilizations, too many planets, too much space.
+""")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Drake Factor Heatmap
+Visualization: Cascade Filter Phase Transition
 
-Shows how the expected number of civilizations varies as a function
-of two Drake factors, with the silence boundary (N=1) highlighted.
+Shows how expected survivors decrease exponentially with the number of
+filter stages, illustrating the phase transition from "many civilizations"
+to "cosmic silence."
 """
 
-import math
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
 
-def plot_drake_heatmap():
-    """Generate the Drake factor heatmap."""
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        import numpy as np
-    except ImportError:
-        print("matplotlib/numpy not available, skipping plot")
-        return
+def cascade_expected(B: float, p: float, n_stages: np.ndarray) -> np.ndarray:
+    return B * p ** n_stages
 
-    # Fix all factors except f_l (life) and f_i (intelligence)
-    R_star = 2.0
-    f_p = 0.8
-    n_e = 0.1
-    f_c = 0.1
-    L = 10000  # years
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-    # Create grid
-    f_l_range = np.logspace(-6, 0, 200)
-    f_i_range = np.logspace(-6, 0, 200)
-    F_L, F_I = np.meshgrid(f_l_range, f_i_range)
+# Panel 1: Phase transition for different base populations
+ax = axes[0]
+p = 0.1
+stages = np.arange(0, 30)
+for log_B, color in [(5, '#2196F3'), (10, '#4CAF50'), (15, '#FF9800'), (22, '#F44336')]:
+    B = 10.0 ** log_B
+    E = cascade_expected(B, p, stages)
+    n_star = int(np.ceil(log_B / np.log10(1/p)))
+    ax.semilogy(stages, E, color=color, linewidth=2, label=f'B = 10$^{{{log_B}}}$')
+    ax.axvline(n_star, color=color, linestyle=':', alpha=0.5)
 
-    # Compute expected civilizations
-    N = R_star * f_p * n_e * F_L * F_I * f_c * L
+ax.axhline(1.0, color='black', linestyle='--', linewidth=1, alpha=0.7, label='Silence threshold')
+ax.set_xlabel('Number of filter stages (n)', fontsize=12)
+ax.set_ylabel('Expected survivors E[N]', fontsize=12)
+ax.set_title('Phase Transition to Silence\n(each stage p = 0.1)', fontsize=13)
+ax.legend(fontsize=9)
+ax.set_ylim(1e-10, 1e25)
+ax.grid(True, alpha=0.3)
 
-    fig, ax = plt.subplots(figsize=(10, 8))
+# Panel 2: Sensitivity analysis
+ax = axes[1]
+probs = [0.5, 0.8, 0.001, 0.3, 0.9, 0.7, 0.6]
+labels = ['f_p', 'n_e', 'f_l', 'f_i', 'f_c', 'R*', 'L']
+cofactors = []
+for i in range(len(probs)):
+    c = 1.0
+    for j, p in enumerate(probs):
+        if j != i:
+            c *= p
+    cofactors.append(c)
 
-    # Heatmap
-    im = ax.pcolormesh(f_l_range, f_i_range, np.log10(N),
-                       cmap='RdYlBu_r', shading='auto', vmin=-6, vmax=6)
-    plt.colorbar(im, ax=ax, label='$\\log_{10}(N)$ expected civilizations')
+colors = ['#2196F3'] * len(probs)
+bottleneck = np.argmax(cofactors)
+colors[bottleneck] = '#F44336'
 
-    # Silence boundary N = 1
-    ax.contour(f_l_range, f_i_range, N, levels=[1],
-               colors='white', linewidths=3, linestyles='--')
-    ax.contour(f_l_range, f_i_range, N, levels=[0.01, 0.1, 10, 100],
-               colors='gray', linewidths=1, linestyles=':')
+ax.barh(range(len(probs)), cofactors, color=colors, edgecolor='white', linewidth=0.5)
+ax.set_yticks(range(len(probs)))
+ax.set_yticklabels([f'{labels[i]} (p={probs[i]})' for i in range(len(probs))])
+ax.set_xlabel('Cofactor (sensitivity)', fontsize=12)
+ax.set_title('Sensitivity Dominance\n(red = bottleneck)', fontsize=13)
+ax.set_xscale('log')
+ax.grid(True, alpha=0.3, axis='x')
 
-    ax.set_xscale('log')
-    ax.set_yscale('log')
-    ax.set_xlabel('$f_\\ell$ (probability of life)', fontsize=12)
-    ax.set_ylabel('$f_i$ (probability of intelligence)', fontsize=12)
-    ax.set_title(f'Drake Equation: Silence Region\n'
-                 f'($R_*$={R_star}, $f_p$={f_p}, $n_e$={n_e}, '
-                 f'$f_c$={f_c}, L={L}yr)', fontsize=14)
+# Panel 3: Monte Carlo distribution
+ax = axes[2]
+np.random.seed(42)
+n_samples = 100_000
+n_factors = 7
+log_products = np.zeros(n_samples)
+for _ in range(n_factors):
+    log_products += np.random.uniform(-6, 0, n_samples)
 
-    # Annotate regions
-    ax.text(1e-5, 1e-1, 'SILENCE\n(N < 1)', fontsize=14,
-            color='white', ha='center', va='center', fontweight='bold')
-    ax.text(1e-1, 1e-1, 'CONTACT\n(N > 1)', fontsize=14,
-            color='black', ha='center', va='center', fontweight='bold')
+log_N = np.log10(1.5e10) + log_products
+ax.hist(log_N, bins=100, density=True, color='#673AB7', alpha=0.7, edgecolor='white', linewidth=0.3)
+ax.axvline(0, color='#F44336', linewidth=2, linestyle='--', label='N = 1 (silence threshold)')
+fraction_above = np.mean(log_N > 0)
+ax.set_xlabel('log₁₀(N)', fontsize=12)
+ax.set_ylabel('Density', fontsize=12)
+ax.set_title(f'Distribution of Drake N\n(log-uniform priors, P(N>1) = {fraction_above:.4f})', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
 
-    plt.tight_layout()
-    plt.savefig('drake_heatmap.png', dpi=150, bbox_inches='tight')
-    print("Saved drake_heatmap.png")
-
-
-if __name__ == "__main__":
-    plot_drake_heatmap()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: The Silence Landscape
-
-Shows the silence probability as a function of expected occupancy λ = np,
-comparing the exact value, Bernoulli bound, and Poisson approximation.
-"""
-
-import math
-
-def compute_silence_data():
-    """Compute silence probability curves."""
-    n = 10000  # large n for smooth curves
-    lambdas = []
-    exact_vals = []
-    bernoulli_vals = []
-    poisson_vals = []
-
-    for i in range(1, 1001):
-        lam = i * 0.01  # λ from 0.01 to 10
-        p = lam / n
-        if p > 1:
-            break
-        lambdas.append(lam)
-        exact_vals.append((1 - p) ** n)
-        bernoulli_vals.append(max(0, 1 - lam))
-        poisson_vals.append(math.exp(-lam))
-
-    return lambdas, exact_vals, bernoulli_vals, poisson_vals
-
-
-def plot_silence_landscape():
-    """Generate the silence landscape plot."""
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-    except ImportError:
-        print("matplotlib not available, skipping plot")
-        return
-
-    lambdas, exact, bernoulli, poisson = compute_silence_data()
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: Silence probability
-    ax1.plot(lambdas, exact, 'b-', linewidth=2, label='Exact: $(1-\\lambda/n)^n$')
-    ax1.plot(lambdas, poisson, 'r--', linewidth=2, label='Poisson: $e^{-\\lambda}$')
-    ax1.plot(lambdas, bernoulli, 'g:', linewidth=2, label='Bernoulli: $1-\\lambda$')
-    ax1.axvline(x=1, color='gray', linestyle='--', alpha=0.5, label='$\\lambda = 1$ (threshold)')
-    ax1.axhline(y=0.5, color='gray', linestyle=':', alpha=0.3)
-    ax1.set_xlabel('Expected Occupancy $\\lambda = np$', fontsize=12)
-    ax1.set_ylabel('Silence Probability $P(\\text{silence})$', fontsize=12)
-    ax1.set_title('The Silence Landscape', fontsize=14)
-    ax1.legend(fontsize=10)
-    ax1.set_xlim(0, 5)
-    ax1.set_ylim(0, 1)
-    ax1.fill_between(lambdas, 0, [e if l < 1 else 0 for l, e in zip(lambdas, exact)],
-                     alpha=0.1, color='blue', label='Sparse regime')
-
-    # Right: Contact probability (complement)
-    contact_exact = [1 - e for e in exact]
-    contact_poisson = [1 - p for p in poisson]
-    contact_markov = [min(1, l) for l in lambdas]
-
-    ax2.plot(lambdas, contact_exact, 'b-', linewidth=2, label='Exact: $1-(1-\\lambda/n)^n$')
-    ax2.plot(lambdas, contact_poisson, 'r--', linewidth=2, label='Poisson: $1-e^{-\\lambda}$')
-    ax2.plot(lambdas, contact_markov, 'g:', linewidth=2, label='Markov bound: $\\min(1, \\lambda)$')
-    ax2.axvline(x=1, color='gray', linestyle='--', alpha=0.5)
-    ax2.set_xlabel('Expected Occupancy $\\lambda = np$', fontsize=12)
-    ax2.set_ylabel('Contact Probability $P(\\text{contact})$', fontsize=12)
-    ax2.set_title('The Contact Probability', fontsize=14)
-    ax2.legend(fontsize=10)
-    ax2.set_xlim(0, 5)
-    ax2.set_ylim(0, 1)
-
-    plt.tight_layout()
-    plt.savefig('silence_landscape.png', dpi=150, bbox_inches='tight')
-    print("Saved silence_landscape.png")
-
-
-if __name__ == "__main__":
-    plot_silence_landscape()
+plt.tight_layout()
+plt.savefig('cascade_filter_visualization.png', dpi=150, bbox_inches='tight')
+print("Saved: cascade_filter_visualization.png")
