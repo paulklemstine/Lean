@@ -1,22 +1,19 @@
 #!/usr/bin/env python3
 """
-Algorithms for Counterfactual Number Theory.
+Algorithms for Counterfactual Number Theory
 
-Type-hinted implementations of the core algorithms:
-1. Product collision detection
-2. UFD verification
-3. Collision spectrum computation
-4. Density threshold estimation
+Type-hinted implementations of the key algorithms used in the research.
 """
 
-from collections import defaultdict
-from itertools import combinations_with_replacement
+from typing import Set, List, Tuple, Dict, Optional
 import math
+import random
 
 
-def sieve_of_eratosthenes(n: int) -> list[int]:
-    """Return all primes up to n using the Sieve of Eratosthenes.
-
+def sieve_of_eratosthenes(n: int) -> List[int]:
+    """Standard sieve of Eratosthenes.
+    
+    Returns list of primes up to n.
     Time: O(n log log n), Space: O(n)
     """
     if n < 2:
@@ -30,188 +27,163 @@ def sieve_of_eratosthenes(n: int) -> list[int]:
     return [i for i in range(2, n + 1) if is_prime[i]]
 
 
-def detect_product_collisions(
-    S: set[int],
-) -> dict[int, list[tuple[int, int]]]:
-    """Detect all product collisions in a generalized prime system.
-
-    Algorithm: Enumerate all unordered pairs (a, b) from S with a ≤ b,
-    compute a*b, and group by product value. Any product with ≥ 2
-    representations is a collision.
-
-    Pseudocode:
-        products = {}
-        for each pair (a, b) in S × S with a ≤ b:
-            products[a*b].append((a, b))
-        return {n: pairs for n, pairs in products if len(pairs) > 1}
-
-    Time: O(|S|² log |S|)
-    Space: O(|S|²)
-
+def generate_random_prime_analog(n: int, seed: Optional[int] = None) -> Set[int]:
+    """Generate a random subset of {2,...,N} with density matching π(x)/x.
+    
+    Each integer k is included independently with probability 1/log(k),
+    giving expected count ∑_{k=2}^{N} 1/log(k) ≈ N/log(N) = π(N).
+    
     Args:
-        S: Set of generalized primes (all ≥ 2)
-
+        n: Upper bound
+        seed: Random seed for reproducibility
+        
     Returns:
-        Dictionary mapping product values to lists of factor pairs.
-        Only includes products with ≥ 2 distinct representations.
+        Set of "random primes"
     """
-    products: dict[int, list[tuple[int, int]]] = defaultdict(list)
-    sorted_S = sorted(S)
-    for i, a in enumerate(sorted_S):
-        for b in sorted_S[i:]:
-            products[a * b].append((a, b))
-    return {n: pairs for n, pairs in products.items() if len(pairs) > 1}
+    rng = random.Random(seed)
+    return {k for k in range(2, n + 1) if rng.random() < 1.0 / math.log(k)}
 
 
-def verify_ufd(S: set[int]) -> tuple[bool, str]:
-    """Verify whether a generalized prime system has unique factorization.
+def find_product_collisions(s: Set[int], max_product: int) -> List[Tuple[int, int, int]]:
+    """Find all (a, b, a*b) with a, b, a*b ∈ S and a ≤ b.
+    
+    These are the "multiplicative collisions" that cause UFD collapse.
+    
+    Pseudocode:
+        for each a in S (sorted):
+            for each b in S with b >= a:
+                if a * b > max_product: break
+                if a * b in S: yield (a, b, a*b)
+    
+    Time: O(|S|² · lookup) where lookup is O(1) for hash sets
+    """
+    sorted_s = sorted(x for x in s if x >= 2)
+    collisions: List[Tuple[int, int, int]] = []
+    for i, a in enumerate(sorted_s):
+        for b in sorted_s[i:]:
+            product = a * b
+            if product > max_product:
+                break
+            if product in s:
+                collisions.append((a, b, product))
+    return collisions
 
-    Algorithm: Check for product collisions. If none exist, UFD holds
-    (by our collision theorem).
 
-    Note: This is a sufficient but not complete check — it only detects
-    collisions among pairs. For full UFD verification, one would need
-    to check all multisets, which is undecidable in general for infinite
-    systems. For finite systems, pair collision is sufficient because
-    any collision of multisets of size > 2 can be reduced to pair collisions.
-
+def is_product_free(s: Set[int], bound: int) -> bool:
+    """Check whether S ∩ {2,...,bound} is product-free.
+    
+    A set is product-free if no product of two elements is in the set.
+    The primes are product-free; random sets with prime-like density are not.
+    
     Time: O(|S|²)
     """
-    collisions = detect_product_collisions(S)
-    if not collisions:
-        return True, "No pair collisions detected"
-    else:
-        first_prod = min(collisions.keys())
-        pairs = collisions[first_prod]
-        return (
-            False,
-            f"Collision at {first_prod}: "
-            + " = ".join(f"{a}×{b}" for a, b in pairs),
-        )
+    return len(find_product_collisions(s, bound)) == 0
 
 
-def collision_spectrum(
-    S: set[int], max_product: int | None = None
-) -> dict[int, int]:
-    """Compute the collision spectrum of a generalized prime system.
-
-    The collision spectrum maps each product value to the number of
-    distinct unordered pairs (a, b) from S with a*b = n.
-
-    Algorithm:
-        For each unordered pair (a, b) in S with a ≤ b:
-            spectrum[a*b] += 1
-        Return entries where spectrum[n] > 1
-
-    Time: O(|S|²)
+def count_s_factorizations(n: int, s: Set[int]) -> int:
+    """Count the number of ordered S-factorizations of n.
+    
+    An S-factorization is a list [a₁, ..., aₖ] with all aᵢ ∈ S, aᵢ ≥ 2,
+    and ∏aᵢ = n. We count ordered factorizations (non-decreasing sequences)
+    to get the multiset count.
+    
+    Uses dynamic programming with memoization.
+    
+    Pseudocode:
+        def count(target, min_idx):
+            if target == 1: return 1
+            result = 0
+            for each s_i in S with s_i >= S[min_idx] and s_i | target:
+                result += count(target / s_i, i)
+            return result
+    
+    Time: O(n · |S| · d(n)) where d(n) is the number of divisors
     """
-    if max_product is None:
-        max_product = max(S) ** 2 if S else 0
+    sorted_s = sorted(x for x in s if 2 <= x <= n)
+    memo: Dict[Tuple[int, int], int] = {}
+    
+    def helper(target: int, min_idx: int) -> int:
+        if target == 1:
+            return 1
+        key = (target, min_idx)
+        if key in memo:
+            return memo[key]
+        total = 0
+        for i in range(min_idx, len(sorted_s)):
+            factor = sorted_s[i]
+            if factor > target:
+                break
+            if target % factor == 0:
+                total += helper(target // factor, i)
+        memo[key] = total
+        return total
+    
+    return helper(n, 0)
 
-    spectrum: dict[int, int] = defaultdict(int)
-    sorted_S = sorted(S)
-    for i, a in enumerate(sorted_S):
-        for b in sorted_S[i:]:
-            if a * b <= max_product:
-                spectrum[a * b] += 1
-    return dict(sorted(spectrum.items()))
 
-
-def collision_density_curve(
-    max_N: int, step: int = 5
-) -> list[tuple[int, float, float]]:
-    """Compute collision density for interval systems [2, N].
-
-    Returns list of (N, collision_fraction, prime_ratio) tuples.
-
-    The collision fraction is the proportion of distinct products
-    in [2,N]×[2,N] that have multiple representations.
-
-    prime_ratio = π(N) / √N, showing how prime density exceeds
-    the collision threshold.
+def factorization_entropy(n: int, s: Set[int]) -> float:
+    """Compute the factorization entropy H_S(n) = log₂(#factorizations).
+    
+    For actual primes, H(n) = 0 for all n (unique factorization).
+    For random sets, H(n) > 0 indicates non-unique factorization.
     """
-    primes = set(sieve_of_eratosthenes(max_N))
-    results = []
-
-    for N in range(6, max_N + 1, step):
-        S = set(range(2, N + 1))
-        collisions = detect_product_collisions(S)
-        total_products = len(
-            set(a * b for a in S for b in S if a <= b)
-        )
-        coll_frac = len(collisions) / total_products if total_products else 0
-
-        pi_N = len([p for p in primes if p <= N])
-        sqrt_N = math.sqrt(N)
-        prime_ratio = pi_N / sqrt_N if sqrt_N > 0 else 0
-
-        results.append((N, coll_frac, prime_ratio))
-
-    return results
+    count = count_s_factorizations(n, s)
+    return math.log2(count) if count > 0 else 0.0
 
 
-def estimate_collision_threshold(max_size: int = 200) -> int:
-    """Estimate the minimum |S| for which a random subset S ⊂ [2, N]
-    almost surely has a product collision.
-
-    Uses the birthday paradox heuristic: collisions become likely when
-    |S|² / (2 * N²) ≈ 1, i.e., |S| ≈ N * √2.
-
-    For prime-like density |S| ~ N/ln(N), this happens when
-    N/ln(N) ≈ N * √2, which is never — but the actual threshold
-    is much lower due to multiplicative structure.
+def sumset(a: Set[int]) -> Set[int]:
+    """Compute A + A = {x + y : x, y ∈ A}.
+    
+    Time: O(|A|²)
     """
-    for N in range(6, max_size):
-        S = set(range(2, N + 1))
-        has_collision = len(detect_product_collisions(S)) > 0
-        if has_collision:
-            return N
-    return -1
+    return {x + y for x in a for y in a}
 
 
-def coprimality_classification(
-    max_val: int = 30,
-) -> dict[str, list[tuple[int, int]]]:
-    """Classify two-element systems {p, q} by UFD status.
-
-    Demonstrates that coprimality is the boundary between UFD and non-UFD
-    for two-element generalized prime systems.
+def sumset_card_lower_bound(card_a: int) -> int:
+    """Theoretical lower bound: |A + A| ≥ 2|A| - 1.
+    
+    This is tight for arithmetic progressions.
     """
-    ufd_coprime: list[tuple[int, int]] = []
-    ufd_non_coprime: list[tuple[int, int]] = []
-    non_ufd: list[tuple[int, int]] = []
+    return max(2 * card_a - 1, 0)
 
-    for p in range(2, max_val):
-        for q in range(p + 1, max_val):
-            is_ufd, _ = verify_ufd({p, q})
-            if is_ufd:
-                if math.gcd(p, q) == 1:
-                    ufd_coprime.append((p, q))
-                else:
-                    ufd_non_coprime.append((p, q))
-            else:
-                non_ufd.append((p, q))
 
-    return {
-        "ufd_coprime": ufd_coprime,
-        "ufd_non_coprime": ufd_non_coprime,
-        "non_ufd": non_ufd,
-    }
+def counting_function_error(s: Set[int], x: int) -> float:
+    """Compute π_S(x) - x/log(x), the error in the PNT analog.
+    
+    For actual primes, RH predicts this is O(√x · log x).
+    For random sets, CLT gives fluctuations ~√(x/log x).
+    """
+    pi_s_x = sum(1 for elem in s if elem <= x)
+    return pi_s_x - x / math.log(x) if x >= 2 else 0.0
+
+
+def rh_failure_metric(s: Set[int], x: int) -> float:
+    """Normalized error: |π_S(x) - x/log(x)| / √(x/log(x)).
+    
+    Under RH for actual primes, this is O(√(log x)).
+    For random sets, this is O(1) by CLT.
+    """
+    error = abs(counting_function_error(s, x))
+    normalization = math.sqrt(x / math.log(x)) if x >= 3 else 1.0
+    return error / normalization
 
 
 if __name__ == "__main__":
     # Quick demo
-    print("Product collisions in {2,3,4,5,6}:")
-    collisions = detect_product_collisions({2, 3, 4, 5, 6})
-    for prod, pairs in sorted(collisions.items())[:10]:
-        print(f"  {prod}: {' = '.join(f'{a}×{b}' for a, b in pairs)}")
-
-    print(f"\nCollision threshold: N = {estimate_collision_threshold()}")
-
-    print("\nTwo-element system classification (2-15):")
-    classification = coprimality_classification(16)
-    print(f"  UFD + coprime: {len(classification['ufd_coprime'])} systems")
-    print(f"  UFD + non-coprime: {len(classification['ufd_non_coprime'])} systems")
-    print(f"  Non-UFD: {len(classification['non_ufd'])} systems")
-    if classification['non_ufd'][:5]:
-        print(f"  First non-UFD systems: {classification['non_ufd'][:5]}")
+    N = 1000
+    primes = set(sieve_of_eratosthenes(N))
+    random_set = generate_random_prime_analog(N, seed=42)
+    
+    print(f"N = {N}")
+    print(f"Primes: {len(primes)}, Random: {len(random_set)}")
+    print(f"Primes product-free: {is_product_free(primes, N)}")
+    print(f"Random product-free: {is_product_free(random_set, N)}")
+    
+    collisions = find_product_collisions(random_set, N)
+    print(f"Random collisions: {len(collisions)}")
+    
+    if collisions:
+        a, b, c = collisions[0]
+        print(f"Example: {a} × {b} = {c}, all in S → UFD collapse!")
+        print(f"  Factorization 1: [{c}]")
+        print(f"  Factorization 2: [{a}, {b}]")
