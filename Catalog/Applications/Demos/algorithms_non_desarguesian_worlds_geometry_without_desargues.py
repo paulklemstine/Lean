@@ -1,296 +1,225 @@
 #!/usr/bin/env python3
 """
-Algorithms for Non-Desarguesian Plane Construction and Analysis
+Algorithms for Non-Desarguesian Plane Analysis
 
-Type-hinted implementations of the core algebraic algorithms:
-1. Hall quasifield arithmetic
-2. Nucleus computation
-3. Coordinatized projective plane construction
-4. Collineation group order computation
+Type-hinted implementations of the core algorithms from the research.
 """
 
-from typing import Tuple, List, Set, Dict, Optional
+from __future__ import annotations
+import math
 from dataclasses import dataclass
-from itertools import product
+from typing import Optional
 
 
-# Type aliases
-GF = Tuple[int, int]  # Element of GF(q²) represented as pair over GF(q)
+def is_prime(n: int) -> bool:
+    """Primality test."""
+    if n < 2:
+        return False
+    for i in range(2, int(math.isqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+
+def divisors_of(n: int) -> list[int]:
+    """Return all positive divisors of n."""
+    return sorted(d for d in range(1, n + 1) if n % d == 0)
 
 
 @dataclass
-class QuasifieldConfig:
-    """Configuration for a quasifield over GF(q) × GF(q)."""
-    q: int  # Base field order (must be prime)
-    nonsquare_coeff: int  # Coefficient making x² + nonsquare_coeff irreducible
+class DefectSpectrum:
+    """
+    Desarguesian Defect Spectrum (DDS).
+
+    For a projective plane of order q = p^k coordinated by a nearfield
+    with kernel of order p^d, the DDS encodes:
+    - defect_dim = k/d - 1 (0 iff Desarguesian)
+    - kernel_index = p^(k-d) (1 iff Desarguesian)
+    - non_distributive_count = p^k - p^d (algebraic defect)
+    """
+    p: int
+    k: int
+    d: int
+
+    def __post_init__(self) -> None:
+        assert is_prime(self.p), f"p={self.p} is not prime"
+        assert self.k >= 1, "k must be >= 1"
+        assert self.d >= 1, "d must be >= 1"
+        assert self.d <= self.k, "d must be <= k"
+        assert self.k % self.d == 0, f"d={self.d} must divide k={self.k}"
+
+    @property
+    def order(self) -> int:
+        return self.p ** self.k
+
+    @property
+    def kernel_order(self) -> int:
+        return self.p ** self.d
+
+    @property
+    def defect_dim(self) -> int:
+        return self.k // self.d - 1
+
+    @property
+    def is_desarguesian(self) -> bool:
+        return self.d == self.k
+
+    @property
+    def non_distributive_count(self) -> int:
+        return self.p ** self.k - self.p ** self.d
+
+    @property
+    def kernel_index(self) -> int:
+        return self.p ** (self.k - self.d)
 
 
-def mod(x: int, q: int) -> int:
-    """Reduce mod q to [0, q-1]."""
-    return x % q
+def enumerate_defect_spectra(p: int, k: int) -> list[DefectSpectrum]:
+    """
+    Enumerate all possible defect spectra for a given prime p and exponent k.
 
+    Algorithm: Find all d | k with 1 <= d <= k, construct DDS(p, k, d).
 
-def gf_add(x: GF, y: GF, q: int) -> GF:
-    """Componentwise addition mod q."""
-    return (mod(x[0] + y[0], q), mod(x[1] + y[1], q))
-
-
-def gf_neg(x: GF, q: int) -> GF:
-    """Negation mod q."""
-    return (mod(-x[0], q), mod(-x[1], q))
-
-
-def gf_sub(x: GF, y: GF, q: int) -> GF:
-    """Subtraction mod q."""
-    return gf_add(x, gf_neg(y, q), q)
-
-
-def field_mul(x: GF, y: GF, q: int, alpha_sq: int) -> GF:
-    """Standard field multiplication in GF(q²) = GF(q)[α]/(α² - alpha_sq).
-    (a + bα)(c + dα) = (ac + bd·alpha_sq) + (ad + bc)α"""
-    return (
-        mod(x[0] * y[0] + x[1] * y[1] * alpha_sq, q),
-        mod(x[0] * y[1] + x[1] * y[0], q),
+    Returns spectra sorted by defect dimension (ascending).
+    """
+    assert is_prime(p) and k >= 1
+    return sorted(
+        [DefectSpectrum(p, k, d) for d in divisors_of(k)],
+        key=lambda s: s.defect_dim
     )
 
 
-def frobenius(x: GF, q: int) -> GF:
-    """Frobenius automorphism: σ(a, b) = (a, (q-1)·b) = (a, -b)."""
-    return (x[0], mod((q - 1) * x[1], q))
+def collineation_bound_ratio(q: int) -> float:
+    """
+    Compute PGL(3, q) order / Hall collineation bound.
+
+    For q >= 3, this ratio is always > 1 (our main theorem).
+    """
+    hall = 4 * q**2 * (q - 1)
+    pgl = (q**3 - 1) * (q**3 - q) * (q**3 - q**2)
+    return pgl / hall if hall > 0 else float('inf')
 
 
-def hall_mul(x: GF, y: GF, q: int, alpha_sq: int) -> GF:
-    """Hall multiplication.
-    x ○ y = x · y if y ∈ GF(q), σ(x) · y otherwise."""
-    if y[1] == 0:
-        return (mod(x[0] * y[0], q), mod(x[1] * y[0], q))
+@dataclass
+class MoultonPoint:
+    x: float
+    y: float
+
+
+def moulton_incidence(point: MoultonPoint, slope: float, intercept: float) -> bool:
+    """
+    Check incidence in the Moulton plane.
+
+    In the Moulton plane, lines with negative slope get their slope
+    doubled in the right half-plane (x > 0).
+    """
+    eps = 1e-10
+    if slope >= 0:
+        return abs(point.y - (slope * point.x + intercept)) < eps
+    elif point.x <= 0:
+        return abs(point.y - (slope * point.x + intercept)) < eps
     else:
-        sx = frobenius(x, q)
-        return field_mul(sx, y, q, alpha_sq)
+        return abs(point.y - (2 * slope * point.x + intercept)) < eps
 
 
-def all_elements(q: int) -> List[GF]:
-    """All elements of GF(q) × GF(q)."""
-    return [(a, b) for a in range(q) for b in range(q)]
-
-
-def compute_left_nucleus(q: int, alpha_sq: int) -> List[GF]:
-    """Compute the left nucleus of the Hall quasifield.
-
-    Algorithm: For each element a, check if a ○ (b ○ c) = (a ○ b) ○ c
-    for ALL b, c. If so, a is in the left nucleus.
-
-    Time complexity: O(q^6) — check q² elements against q⁴ pairs.
+def moulton_slope_at(slope: float, x: float) -> float:
     """
-    elements = all_elements(q)
-    nucleus: List[GF] = []
+    The effective slope of a Moulton line at position x.
 
-    for a in elements:
-        in_nuc = True
-        for b in elements:
-            if not in_nuc:
-                break
-            for c in elements:
-                lhs = hall_mul(a, hall_mul(b, c, q, alpha_sq), q, alpha_sq)
-                rhs = hall_mul(hall_mul(a, b, q, alpha_sq), c, q, alpha_sq)
-                if lhs != rhs:
-                    in_nuc = False
-                    break
-        if in_nuc:
-            nucleus.append(a)
-
-    return nucleus
-
-
-def compute_middle_nucleus(q: int, alpha_sq: int) -> List[GF]:
-    """Compute the middle nucleus."""
-    elements = all_elements(q)
-    nucleus: List[GF] = []
-
-    for b in elements:
-        in_nuc = True
-        for a in elements:
-            if not in_nuc:
-                break
-            for c in elements:
-                lhs = hall_mul(a, hall_mul(b, c, q, alpha_sq), q, alpha_sq)
-                rhs = hall_mul(hall_mul(a, b, q, alpha_sq), c, q, alpha_sq)
-                if lhs != rhs:
-                    in_nuc = False
-                    break
-        if in_nuc:
-            nucleus.append(b)
-
-    return nucleus
-
-
-def compute_right_nucleus(q: int, alpha_sq: int) -> List[GF]:
-    """Compute the right nucleus."""
-    elements = all_elements(q)
-    nucleus: List[GF] = []
-
-    for c in elements:
-        in_nuc = True
-        for a in elements:
-            if not in_nuc:
-                break
-            for b in elements:
-                lhs = hall_mul(a, hall_mul(b, c, q, alpha_sq), q, alpha_sq)
-                rhs = hall_mul(hall_mul(a, b, q, alpha_sq), c, q, alpha_sq)
-                if lhs != rhs:
-                    in_nuc = False
-                    break
-        if in_nuc:
-            nucleus.append(c)
-
-    return nucleus
-
-
-def compute_full_nucleus(q: int, alpha_sq: int) -> List[GF]:
-    """Compute the full nucleus (intersection of all three)."""
-    left = set(compute_left_nucleus(q, alpha_sq))
-    mid = set(compute_middle_nucleus(q, alpha_sq))
-    right = set(compute_right_nucleus(q, alpha_sq))
-    return sorted(left & mid & right)
-
-
-def is_right_distributive(q: int, alpha_sq: int) -> bool:
-    """Check if Hall multiplication is right-distributive.
-
-    Verifies: (a + b) ○ c = a ○ c + b ○ c for all a, b, c.
+    This is the 'bending function': negative slopes get doubled
+    for x > 0, creating the non-Desarguesian structure.
     """
-    elements = all_elements(q)
-    for a in elements:
-        for b in elements:
-            for c in elements:
-                lhs = hall_mul(gf_add(a, b, q), c, q, alpha_sq)
-                rhs = gf_add(
-                    hall_mul(a, c, q, alpha_sq),
-                    hall_mul(b, c, q, alpha_sq),
-                    q,
-                )
-                if lhs != rhs:
-                    return False
-    return True
+    if slope >= 0:
+        return slope
+    elif x <= 0:
+        return slope
+    else:
+        return 2 * slope
 
 
-def is_left_distributive(q: int, alpha_sq: int) -> bool:
-    """Check if Hall multiplication is left-distributive.
-
-    Verifies: a ○ (b + c) = a ○ b + a ○ c for all a, b, c.
+def find_moulton_line(P: MoultonPoint, Q: MoultonPoint) -> Optional[tuple[float, float]]:
     """
-    elements = all_elements(q)
-    for a in elements:
-        for b in elements:
-            for c in elements:
-                lhs = hall_mul(a, gf_add(b, c, q), q, alpha_sq)
-                rhs = gf_add(
-                    hall_mul(a, b, q, alpha_sq),
-                    hall_mul(a, c, q, alpha_sq),
-                    q,
-                )
-                if lhs != rhs:
-                    return False
-    return True
+    Find a Moulton line through two distinct points.
 
+    Returns (slope, intercept) or None if vertical.
 
-@dataclass
-class ProjectivePlaneStats:
-    """Statistics of a coordinatized projective plane."""
-    order: int
-    num_points: int
-    num_lines: int
-    is_right_distrib: bool
-    is_left_distrib: bool
-    is_associative: bool
-    left_nucleus_size: int
-    defect: int
-
-
-def analyze_hall_plane(q: int, alpha_sq: int) -> ProjectivePlaneStats:
-    """Full analysis of the Hall plane of order q².
-
-    Pseudocode:
-    1. Compute order = q²
-    2. Count points and lines: n² + n + 1
-    3. Check distributivity
-    4. Find non-associativity witness
-    5. Compute nucleus
-    6. Calculate defect
+    Algorithm:
+    1. If x-coords equal: vertical line (return None)
+    2. If both in left half-plane or both right, or non-negative slope: standard
+    3. If one left, one right with negative slope: solve bent system
     """
-    n = q * q  # order of the plane
-    num_pts = n * n + n + 1
-    elements = all_elements(q)
+    if abs(P.x - Q.x) < 1e-10:
+        return None  # vertical line
 
-    # Check associativity
-    assoc = True
-    for a in elements:
-        if not assoc:
-            break
-        for b in elements:
-            if not assoc:
-                break
-            for c in elements:
-                if hall_mul(hall_mul(a, b, q, alpha_sq), c, q, alpha_sq) != \
-                   hall_mul(a, hall_mul(b, c, q, alpha_sq), q, alpha_sq):
-                    assoc = False
-                    break
+    # Try standard slope
+    m = (Q.y - P.y) / (Q.x - P.x)
+    b = P.y - m * P.x
 
-    left_nuc = compute_left_nucleus(q, alpha_sq)
+    if m >= 0:
+        return (m, b)
 
-    return ProjectivePlaneStats(
-        order=n,
-        num_points=num_pts,
-        num_lines=num_pts,
-        is_right_distrib=is_right_distributive(q, alpha_sq),
-        is_left_distrib=is_left_distributive(q, alpha_sq),
-        is_associative=assoc,
-        left_nucleus_size=len(left_nuc),
-        defect=n - len(left_nuc),
-    )
+    # Negative slope: check if bending affects this line
+    if P.x <= 0 and Q.x <= 0:
+        return (m, b)  # both in left half, standard
 
+    if P.x > 0 and Q.x > 0:
+        # Both in right half: effective slope is 2m
+        m_eff = (Q.y - P.y) / (Q.x - P.x)
+        m_real = m_eff / 2
+        b_real = P.y - 2 * m_real * P.x
+        return (m_real, b_real)
 
-def pgl_order(q: int) -> int:
-    """Order of PGL(3, q)."""
-    return q**3 * (q**3 - 1) * (q**2 - 1)
+    # Mixed: one left, one right
+    if P.x <= 0:
+        left, right = P, Q
+    else:
+        left, right = Q, P
 
-
-def hall_collineation_order(q: int) -> int:
-    """Order of the collineation group of the Hall plane of order q²."""
-    return q**2 * (q**2 - 1) * q * (q - 1)
+    # Solve: left.y = m * left.x + b and right.y = 2m * right.x + b
+    # Subtracting: left.y - right.y = m * left.x - 2m * right.x
+    #            = m * (left.x - 2 * right.x)
+    denom = left.x - 2 * right.x
+    if abs(denom) < 1e-10:
+        return None
+    m = (left.y - right.y) / denom
+    b = left.y - m * left.x
+    return (m, b)
 
 
-def find_nonsquare(q: int) -> int:
-    """Find a non-square element in GF(q) for constructing GF(q²).
-
-    For q = 3: need α² + 1 irreducible, i.e., -1 is not a square.
-    -1 ≡ 2 (mod 3), and 0² = 0, 1² = 1, 2² = 1, so 2 is not a square. Use alpha_sq = 2.
+def classify_plane(p: int, k: int, d: int) -> dict[str, any]:
     """
-    squares = {(x * x) % q for x in range(q)}
-    for a in range(1, q):
-        if a not in squares:
-            return a
-    raise ValueError(f"No non-square found in GF({q}) — q might not be prime")
+    Classify a projective plane by its defect spectrum.
+
+    Returns a dictionary with classification info.
+    """
+    spec = DefectSpectrum(p, k, d)
+    classification = {
+        "order": spec.order,
+        "prime": p,
+        "total_dim": k,
+        "kernel_dim": d,
+        "defect_dim": spec.defect_dim,
+        "type": "Desarguesian (PG)" if spec.is_desarguesian else "Non-Desarguesian",
+        "kernel_order": spec.kernel_order,
+        "non_distributive_elements": spec.non_distributive_count,
+        "kernel_index": spec.kernel_index,
+    }
+
+    if not spec.is_desarguesian:
+        q = spec.kernel_order
+        if q >= 3:
+            classification["collineation_ratio"] = collineation_bound_ratio(q)
+            classification["symmetry_reduction"] = f"{collineation_bound_ratio(q):.1f}x fewer symmetries"
+
+    return classification
 
 
 if __name__ == "__main__":
-    # Analyze the Hall plane of order 9
-    q = 3
-    alpha_sq = find_nonsquare(q)
-    print(f"Using alpha² = {alpha_sq} (non-square in GF({q}))")
-
-    stats = analyze_hall_plane(q, alpha_sq)
-    print(f"\nHall Plane Analysis (q = {q}):")
-    print(f"  Order: {stats.order}")
-    print(f"  Points: {stats.num_points}")
-    print(f"  Lines: {stats.num_lines}")
-    print(f"  Right-distributive: {stats.is_right_distrib}")
-    print(f"  Left-distributive: {stats.is_left_distrib}")
-    print(f"  Associative: {stats.is_associative}")
-    print(f"  Left nucleus size: {stats.left_nucleus_size}")
-    print(f"  Defect: {stats.defect}")
-
-    # Symmetry comparison
-    print(f"\n  PGL(3, {stats.order}) order: {pgl_order(stats.order):,}")
-    print(f"  Hall collineation order: {hall_collineation_order(q):,}")
-    print(f"  Symmetry ratio: {pgl_order(stats.order) / hall_collineation_order(q):,.1f}")
+    # Demo: classify all planes of order 2^6 = 64
+    print("Classification of planes of order 64 = 2^6:")
+    print("-" * 60)
+    for d in divisors_of(6):
+        info = classify_plane(2, 6, d)
+        print(f"\n  d = {d}: {info['type']}")
+        for key, val in info.items():
+            if key != 'type':
+                print(f"    {key}: {val}")

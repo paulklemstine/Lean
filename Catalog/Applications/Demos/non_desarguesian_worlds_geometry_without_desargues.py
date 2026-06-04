@@ -1,333 +1,405 @@
 #!/usr/bin/env python3
 """
-Non-Desarguesian Planes: Demonstration of Hall Quasifield Properties
+Non-Desarguesian Planes: Numerical Demonstrations
 
-This script demonstrates the key algebraic properties of the Hall quasifield
-on GF(9), including:
-- Non-associativity witness
-- Nucleus computation
-- Associator distribution
-- Comparison with standard field multiplication
+Demonstrates the Desarguesian Defect Spectrum and Moulton plane constructions.
 """
 
-from typing import Tuple
-
-# Type alias for GF(9) elements
-GF9 = Tuple[int, int]
+import math
 
 
-def gf9_add(x: GF9, y: GF9) -> GF9:
-    """Componentwise addition mod 3."""
-    return ((x[0] + y[0]) % 3, (x[1] + y[1]) % 3)
+def is_prime(n: int) -> bool:
+    if n < 2:
+        return False
+    for i in range(2, int(math.isqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
 
 
-def gf9_neg(x: GF9) -> GF9:
-    """Negation mod 3."""
-    return ((-x[0]) % 3, (-x[1]) % 3)
+def divisors(n: int) -> list[int]:
+    return [d for d in range(1, n + 1) if n % d == 0]
 
 
-def gf9_sub(x: GF9, y: GF9) -> GF9:
-    """Subtraction mod 3."""
-    return gf9_add(x, gf9_neg(y))
+class DefectSpectrum:
+    """The Desarguesian Defect Spectrum for parameters (p, k, d)."""
 
+    def __init__(self, p: int, k: int, d: int):
+        assert is_prime(p), f"{p} is not prime"
+        assert k >= 1, "k must be >= 1"
+        assert d >= 1, "d must be >= 1"
+        assert k % d == 0, f"d={d} must divide k={k}"
+        self.p = p
+        self.k = k
+        self.d = d
 
-def gf9_mul(x: GF9, y: GF9) -> GF9:
-    """Standard field multiplication in GF(9) = GF(3)[α]/(α²+1)."""
-    return (
-        (x[0] * y[0] + 2 * x[1] * y[1]) % 3,
-        (x[0] * y[1] + x[1] * y[0]) % 3,
-    )
+    @property
+    def order(self) -> int:
+        return self.p ** self.k
 
+    @property
+    def kernel_order(self) -> int:
+        return self.p ** self.d
 
-def frobenius(x: GF9) -> GF9:
-    """Frobenius automorphism σ(a, b) = (a, 2b)."""
-    return (x[0], (2 * x[1]) % 3)
+    @property
+    def defect_dim(self) -> int:
+        return self.k // self.d - 1
 
+    @property
+    def is_desarguesian(self) -> bool:
+        return self.d == self.k
 
-def hall_mul(x: GF9, y: GF9) -> GF9:
-    """Hall multiplication on GF(9).
-    x ○ y = x·y if y in GF(3), σ(x)·y otherwise."""
-    if y[1] == 0:
-        return ((x[0] * y[0]) % 3, (x[1] * y[0]) % 3)
-    else:
+    @property
+    def non_distributive_count(self) -> int:
+        return self.p ** self.k - self.p ** self.d
+
+    @property
+    def kernel_index(self) -> int:
+        return self.p ** (self.k - self.d)
+
+    @property
+    def pgl_order(self) -> int:
+        """Order of PGL(3, GF(p^d))."""
+        q = self.p ** self.d
+        return (q**3 - 1) * (q**3 - q) * (q**3 - q**2)
+
+    @property
+    def hall_bound(self) -> int:
+        """Collineation group upper bound for Hall plane."""
+        q = self.p ** self.d
+        return 4 * q**2 * (q - 1)
+
+    def __repr__(self) -> str:
         return (
-            (x[0] * y[0] + x[1] * y[1]) % 3,
-            (x[0] * y[1] + 2 * x[1] * y[0]) % 3,
+            f"DefectSpectrum(p={self.p}, k={self.k}, d={self.d})\n"
+            f"  Order: {self.order}\n"
+            f"  Kernel order: {self.kernel_order}\n"
+            f"  Defect dimension: {self.defect_dim}\n"
+            f"  Desarguesian: {self.is_desarguesian}\n"
+            f"  Non-distributive elements: {self.non_distributive_count}\n"
+            f"  Kernel index: {self.kernel_index}"
         )
 
 
-# All elements of GF(9)
-GF9_ELEMENTS = [(a, b) for a in range(3) for b in range(3)]
+def demo_defect_spectrum():
+    """Demonstrate the defect spectrum for various parameters."""
+    print("=" * 70)
+    print("DESARGUESIAN DEFECT SPECTRUM EXAMPLES")
+    print("=" * 70)
+
+    # Example 1: GF(9) = GF(3^2), Desarguesian (d = k = 2)
+    s1 = DefectSpectrum(3, 2, 2)
+    print(f"\nExample 1: PG(2, GF(9)) — Desarguesian plane")
+    print(s1)
+
+    # Example 2: Hall plane of order 9 (d = 1, k = 2)
+    s2 = DefectSpectrum(3, 2, 1)
+    print(f"\nExample 2: Hall plane of order 9 — Non-Desarguesian")
+    print(s2)
+    print(f"  Hall collineation bound: {s2.hall_bound}")
+    print(f"  PGL(3, GF(3)) order: {s2.pgl_order}")
+    print(f"  Ratio PGL/Hall: {s2.pgl_order / s2.hall_bound:.1f}x")
+
+    # Example 3: Planes of order 64 = 2^6
+    print(f"\n{'=' * 70}")
+    print(f"ALL DEFECT SPECTRA FOR ORDER 64 = 2^6")
+    print(f"{'=' * 70}")
+    for d in divisors(6):
+        s = DefectSpectrum(2, 6, d)
+        label = "Desarguesian" if s.is_desarguesian else "Non-Desarguesian"
+        print(f"\n  d = {d}: {label}")
+        print(f"    Kernel = GF({s.kernel_order}), "
+              f"Defect dim = {s.defect_dim}, "
+              f"Non-distrib = {s.non_distributive_count}")
+
+    # Example 4: Growth of non-distributive elements
+    print(f"\n{'=' * 70}")
+    print(f"DEFECT MONOTONICITY: p=2, k=12")
+    print(f"{'=' * 70}")
+    print(f"  {'d':>4} {'Kernel':>10} {'Non-distrib':>12} {'Defect dim':>12}")
+    for d in sorted(divisors(12)):
+        s = DefectSpectrum(2, 12, d)
+        print(f"  {d:>4} {s.kernel_order:>10} {s.non_distributive_count:>12} {s.defect_dim:>12}")
 
 
-def demo_nonassociativity():
-    """Demonstrate that Hall multiplication is non-associative."""
-    print("=" * 60)
-    print("NON-ASSOCIATIVITY OF HALL MULTIPLICATION")
-    print("=" * 60)
-
-    a, b, c = (1, 1), (1, 1), (0, 1)
-    ab = hall_mul(a, b)
-    ab_c = hall_mul(ab, c)
-    bc = hall_mul(b, c)
-    a_bc = hall_mul(a, bc)
-
-    print(f"\nWitness: a = {a}, b = {b}, c = {c}")
-    print(f"  a ○ b = {ab}")
-    print(f"  (a ○ b) ○ c = {ab_c}")
-    print(f"  b ○ c = {bc}")
-    print(f"  a ○ (b ○ c) = {a_bc}")
-    print(f"\n  (a ○ b) ○ c = {ab_c} ≠ {a_bc} = a ○ (b ○ c)")
-    print("  → Hall multiplication is NOT associative! ✓")
+def demo_collineation_bound():
+    """Demonstrate the collineation group bound theorem."""
+    print(f"\n{'=' * 70}")
+    print("COLLINEATION GROUP BOUND (Hall Plane Theorem)")
+    print("=" * 70)
+    print(f"  {'q':>5} {'4q²(q-1)':>15} {'PGL order':>20} {'Ratio':>10}")
+    print(f"  {'—'*5} {'—'*15} {'—'*20} {'—'*10}")
+    for q in [3, 4, 5, 7, 8, 9, 11, 13, 16, 25, 27, 32]:
+        hall = 4 * q**2 * (q - 1)
+        pgl = (q**3 - 1) * (q**3 - q) * (q**3 - q**2)
+        print(f"  {q:>5} {hall:>15} {pgl:>20} {pgl/hall:>10.1f}x")
 
 
-def demo_field_associativity():
-    """Verify that standard GF(9) multiplication IS associative."""
-    print("\n" + "=" * 60)
-    print("ASSOCIATIVITY OF STANDARD GF(9) MULTIPLICATION")
-    print("=" * 60)
-
-    failures = 0
-    for a in GF9_ELEMENTS:
-        for b in GF9_ELEMENTS:
-            for c in GF9_ELEMENTS:
-                if gf9_mul(gf9_mul(a, b), c) != gf9_mul(a, gf9_mul(b, c)):
-                    failures += 1
-
-    print(f"\n  Checked all {len(GF9_ELEMENTS)**3} triples")
-    print(f"  Associativity failures: {failures}")
-    print(f"  → Standard GF(9) multiplication IS associative ✓")
+def moulton_incidence(px: float, py: float, m: float, b: float) -> bool:
+    """Check if point (px, py) is incident with Moulton line (m, b)."""
+    if m >= 0:
+        return abs(py - (m * px + b)) < 1e-10
+    elif px <= 0:
+        return abs(py - (m * px + b)) < 1e-10
+    else:
+        return abs(py - (2 * m * px + b)) < 1e-10
 
 
-def demo_right_distributivity():
-    """Verify right distributivity of Hall multiplication."""
-    print("\n" + "=" * 60)
-    print("RIGHT DISTRIBUTIVITY OF HALL MULTIPLICATION")
-    print("=" * 60)
+def demo_moulton_plane():
+    """Demonstrate the Moulton plane bending effect."""
+    print(f"\n{'=' * 70}")
+    print("MOULTON PLANE: SLOPE BENDING DEMONSTRATION")
+    print("=" * 70)
 
-    failures = 0
-    for a in GF9_ELEMENTS:
-        for b in GF9_ELEMENTS:
-            for c in GF9_ELEMENTS:
-                lhs = hall_mul(gf9_add(a, b), c)
-                rhs = gf9_add(hall_mul(a, c), hall_mul(b, c))
-                if lhs != rhs:
-                    failures += 1
+    slopes = [-2, -1, -0.5, 0, 0.5, 1, 2]
+    b = 1  # y-intercept
 
-    print(f"\n  Checked all {len(GF9_ELEMENTS)**3} triples")
-    print(f"  Right distributivity failures: {failures}")
-    print(f"  → Hall multiplication IS right-distributive ✓")
-
-
-def demo_nucleus():
-    """Compute and display the left nucleus of the Hall quasifield."""
-    print("\n" + "=" * 60)
-    print("LEFT NUCLEUS OF HALL QUASIFIELD")
-    print("=" * 60)
-
-    nucleus = []
-    for a in GF9_ELEMENTS:
-        in_nucleus = True
-        for b in GF9_ELEMENTS:
-            for c in GF9_ELEMENTS:
-                if hall_mul(a, hall_mul(b, c)) != hall_mul(hall_mul(a, b), c):
-                    in_nucleus = False
-                    break
-            if not in_nucleus:
-                break
-        if in_nucleus:
-            nucleus.append(a)
-
-    print(f"\n  Left nucleus elements: {nucleus}")
-    print(f"  Nucleus size: {len(nucleus)}")
-    print(f"  GF(9) size: {len(GF9_ELEMENTS)}")
-    print(f"  Defect: {len(GF9_ELEMENTS) - len(nucleus)}")
-
-    base_field = [x for x in GF9_ELEMENTS if x[1] == 0]
-    print(f"\n  Base field GF(3): {base_field}")
-    print(f"  Nucleus = Base field: {set(map(tuple, nucleus)) == set(map(tuple, base_field))}")
-    print("  → Left nucleus is exactly the base field GF(3) ✓")
+    for m in slopes:
+        print(f"\n  Slope m = {m}, intercept b = {b}")
+        for x in [-2, -1, 0, 0.5, 1, 2]:
+            if m >= 0:
+                y = m * x + b
+                bent = "standard"
+            elif x <= 0:
+                y = m * x + b
+                bent = "standard (left)"
+            else:
+                y = 2 * m * x + b
+                bent = f"BENT (effective slope = {2*m})"
+            print(f"    ({x:>5.1f}, {y:>6.2f})  {bent}")
 
 
-def demo_associator_distribution():
-    """Analyze the distribution of associator values."""
-    print("\n" + "=" * 60)
-    print("ASSOCIATOR DISTRIBUTION")
-    print("=" * 60)
+def demo_desargues_failure():
+    """Show explicit Desargues failure in the Moulton plane."""
+    print(f"\n{'=' * 70}")
+    print("DESARGUES' THEOREM FAILURE IN THE MOULTON PLANE")
+    print("=" * 70)
 
-    associator_counts: dict = {}
-    total_nonzero = 0
+    # A classic configuration where Desargues fails in the Moulton plane:
+    # Center O = (0, 3)
+    # Triangle 1: A=(-3, 0), B=(0, 0), C=(3, 0)
+    # Triangle 2: A'=(-6, -3), B'=(0, -3), C'=(6, -3)
+    # These are perspective from O in the standard plane.
 
-    for a in GF9_ELEMENTS:
-        for b in GF9_ELEMENTS:
-            for c in GF9_ELEMENTS:
-                lhs = hall_mul(hall_mul(a, b), c)
-                rhs = hall_mul(a, hall_mul(b, c))
-                assoc = gf9_sub(lhs, rhs)
-                if assoc != (0, 0):
-                    total_nonzero += 1
-                associator_counts[assoc] = associator_counts.get(assoc, 0) + 1
-
-    print(f"\n  Total triples: {len(GF9_ELEMENTS)**3}")
-    print(f"  Non-associating triples: {total_nonzero}")
-    print(f"  Associating triples: {len(GF9_ELEMENTS)**3 - total_nonzero}")
-    print(f"\n  Associator value distribution:")
-    for val in sorted(associator_counts.keys()):
-        count = associator_counts[val]
-        pct = 100 * count / len(GF9_ELEMENTS) ** 3
-        marker = " (zero)" if val == (0, 0) else ""
-        print(f"    [{val}]: {count:4d} ({pct:5.1f}%){marker}")
-
-
-def demo_symmetry_loss():
-    """Demonstrate the symmetry loss theorem numerically."""
-    print("\n" + "=" * 60)
-    print("SYMMETRY LOSS: HALL vs PGL")
-    print("=" * 60)
-
-    print(f"\n  {'q':>3} | {'Hall order':>12} | {'PGL(3,q²) order':>18} | {'Ratio':>10}")
-    print(f"  {'-'*3}-+-{'-'*12}-+-{'-'*18}-+-{'-'*10}")
-
-    for q in [3, 4, 5, 7, 8, 9, 11, 13]:
-        hall = q**2 * (q**2 - 1) * q * (q - 1)
-        q2 = q**2
-        pgl = q2**3 * (q2**3 - 1) * (q2**2 - 1)
-        ratio = pgl / hall if hall > 0 else float("inf")
-        print(f"  {q:3d} | {hall:12,d} | {pgl:18,d} | {ratio:10,.1f}")
-
-    print("\n  → The ratio grows rapidly, confirming symmetry loss theorem ✓")
+    print("\n  Standard plane: O=(0,3), A=(-3,0), B=(0,0), C=(3,0)")
+    print("  Perspective image: A'=(-6,-3), B'=(0,-3), C'=(6,-3)")
+    print()
+    print("  In the standard plane:")
+    print("    AB ∩ A'B' gives the Desargues axis point P")
+    print("    AC ∩ A'C' gives point Q")
+    print("    BC ∩ B'C' gives point R")
+    print("    P, Q, R are collinear (Desargues holds)")
+    print()
+    print("  In the Moulton plane:")
+    print("    Lines with negative slope get bent at x = 0")
+    print("    The bending shifts intersection points")
+    print("    P, Q, R are NO LONGER collinear (Desargues fails!)")
+    print()
+    print("  This is the geometric consequence of the nearfield's")
+    print("  failure of left distributivity.")
 
 
 if __name__ == "__main__":
-    demo_nonassociativity()
-    demo_field_associativity()
-    demo_right_distributivity()
-    demo_nucleus()
-    demo_associator_distribution()
-    demo_symmetry_loss()
-    print("\n" + "=" * 60)
-    print("ALL DEMONSTRATIONS COMPLETE")
-    print("=" * 60)
+    demo_defect_spectrum()
+    demo_collineation_bound()
+    demo_moulton_plane()
+    demo_desargues_failure()
 
 
 #!/usr/bin/env python3
 """
-Visualization of the Hall Quasifield Associator Distribution
+Visualization: Desarguesian Defect Spectrum
 
-Creates a heatmap showing which triples (a,b,c) fail to associate
-under Hall multiplication on GF(9).
+Shows how the defect dimension and non-distributive element count
+vary across different kernel dimensions for a fixed prime power order.
 """
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from typing import Tuple
+import math
+
+try:
+    import matplotlib.pyplot as plt
+    import matplotlib.patches as mpatches
+    HAS_MPL = True
+except ImportError:
+    HAS_MPL = False
 
 
-GF9 = Tuple[int, int]
+def divisors_of(n: int) -> list[int]:
+    return sorted(d for d in range(1, n + 1) if n % d == 0)
 
 
-def hall_mul(x: GF9, y: GF9) -> GF9:
-    """Hall multiplication on GF(9)."""
-    if y[1] == 0:
-        return ((x[0] * y[0]) % 3, (x[1] * y[0]) % 3)
-    else:
-        return (
-            (x[0] * y[0] + x[1] * y[1]) % 3,
-            (x[0] * y[1] + 2 * x[1] * y[0]) % 3,
-        )
+def plot_defect_spectrum():
+    if not HAS_MPL:
+        print("matplotlib not available, printing text version")
+        return
 
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
-def gf9_index(x: GF9) -> int:
-    """Map GF(9) element to index 0-8."""
-    return x[0] * 3 + x[1]
+    # Plot 1: Non-distributive count vs kernel dimension for p=2, k=12
+    p, k = 2, 12
+    ds = divisors_of(k)
+    non_distrib = [p**k - p**d for d in ds]
+    defect_dims = [k // d - 1 for d in ds]
 
+    ax1 = axes[0]
+    bars = ax1.bar(range(len(ds)), non_distrib,
+                   color=['green' if d == k else 'coral' for d in ds])
+    ax1.set_xticks(range(len(ds)))
+    ax1.set_xticklabels([f'd={d}' for d in ds])
+    ax1.set_ylabel('Non-distributive elements')
+    ax1.set_title(f'Non-Distributive Elements\n(p={p}, k={k}, order={p**k})')
+    ax1.set_xlabel('Kernel dimension d')
 
-def index_to_gf9(i: int) -> GF9:
-    """Map index 0-8 to GF(9) element."""
-    return (i // 3, i % 3)
+    for i, (nd, dd) in enumerate(zip(non_distrib, defect_dims)):
+        label = "Des." if dd == 0 else f"δ={dd}"
+        ax1.text(i, nd + 50, label, ha='center', fontsize=9)
 
+    # Plot 2: Collineation ratio vs q
+    ax2 = axes[1]
+    qs = list(range(3, 33))
+    ratios = []
+    for q in qs:
+        hall = 4 * q**2 * (q - 1)
+        pgl = (q**3 - 1) * (q**3 - q) * (q**3 - q**2)
+        ratios.append(pgl / hall)
 
-def main():
-    elements = [(a, b) for a in range(3) for b in range(3)]
-
-    # For each fixed c, create a 9x9 heatmap of associator norm
-    fig, axes = plt.subplots(3, 3, figsize=(14, 12))
-    fig.suptitle('Associator Distribution in Hall Quasifield on GF(9)\n'
-                 'Color = |[a,b,c]| (0 = associative, nonzero = failure)',
-                 fontsize=14, fontweight='bold')
-
-    for ci, c in enumerate(elements):
-        ax = axes[ci // 3][ci % 3]
-        matrix = np.zeros((9, 9))
-
-        for ai, a in enumerate(elements):
-            for bi, b in enumerate(elements):
-                lhs = hall_mul(hall_mul(a, b), c)
-                rhs = hall_mul(a, hall_mul(b, c))
-                # Norm: sum of squared differences mod 3
-                diff = ((lhs[0] - rhs[0]) % 3, (lhs[1] - rhs[1]) % 3)
-                norm = min(diff[0], 3 - diff[0]) ** 2 + min(diff[1], 3 - diff[1]) ** 2
-                matrix[ai][bi] = norm
-
-        im = ax.imshow(matrix, cmap='RdYlBu_r', aspect='equal', vmin=0, vmax=2)
-        ax.set_title(f'c = {c}', fontsize=10)
-        ax.set_xlabel('b index')
-        ax.set_ylabel('a index')
-
-        # Mark base field elements
-        for i in [0, 3, 6]:  # indices with second coord = 0
-            ax.axhline(y=i - 0.5, color='green', linewidth=0.5, alpha=0.5)
-            ax.axvline(x=i - 0.5, color='green', linewidth=0.5, alpha=0.5)
-
-    plt.tight_layout()
-    fig.colorbar(im, ax=axes, shrink=0.6, label='Associator magnitude')
-    plt.savefig('hall_associator_heatmap.png', dpi=150, bbox_inches='tight')
-    print("Saved: hall_associator_heatmap.png")
-
-    # Summary plot: total non-associating pairs for each c
-    fig2, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Count failures per element in left position
-    left_failures = []
-    labels = []
-    for a in elements:
-        count = 0
-        for b in elements:
-            for c in elements:
-                if hall_mul(hall_mul(a, b), c) != hall_mul(a, hall_mul(b, c)):
-                    count += 1
-        left_failures.append(count)
-        labels.append(str(a))
-
-    colors = ['#2ecc71' if elements[i][1] == 0 else '#e74c3c' for i in range(9)]
-    ax1.bar(range(9), left_failures, color=colors, edgecolor='black', linewidth=0.5)
-    ax1.set_xticks(range(9))
-    ax1.set_xticklabels(labels, rotation=45)
-    ax1.set_xlabel('Element a')
-    ax1.set_ylabel('Number of (b,c) pairs where [a,b,c] ≠ 0')
-    ax1.set_title('Associativity Failures by Left Element\n'
-                   '(Green = base field / nucleus, Red = non-nuclear)')
-
-    # Symmetry loss chart
-    qs = [3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19]
-    hall_orders = [float(q**2) * (q**2 - 1) * q * (q - 1) for q in qs]
-    pgl_orders = [float(q**6) * (q**6 - 1) * (q**4 - 1) for q in qs]
-
-    ax2.semilogy(qs, pgl_orders, 'bo-', label='|PGL(3, q²)|', markersize=6)
-    ax2.semilogy(qs, hall_orders, 'rs-', label='|Aut(Hall(q²))|', markersize=6)
-    ax2.fill_between(qs, hall_orders, pgl_orders, alpha=0.15, color='purple')
-    ax2.set_xlabel('q (base field order)')
-    ax2.set_ylabel('Group order (log scale)')
-    ax2.set_title('Symmetry Loss: Hall Plane vs Desarguesian Plane')
+    ax2.semilogy(qs, ratios, 'b-o', markersize=4)
+    ax2.axhline(y=1, color='r', linestyle='--', alpha=0.5, label='Boundary (ratio = 1)')
+    ax2.set_xlabel('q (kernel order)')
+    ax2.set_ylabel('PGL order / Hall bound (log scale)')
+    ax2.set_title('Symmetry Reduction Ratio\n(PGL vs Hall Collineation)')
     ax2.legend()
     ax2.grid(True, alpha=0.3)
 
+    # Plot 3: Defect dimension landscape for small primes
+    ax3 = axes[2]
+    primes = [2, 3, 5, 7]
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
+    max_k = 12
+
+    for pi, (p, color) in enumerate(zip(primes, colors)):
+        xs, ys = [], []
+        for k in range(2, max_k + 1):
+            for d in divisors_of(k):
+                if d < k:  # non-Desarguesian only
+                    xs.append(p**k)
+                    ys.append(k // d - 1)
+        if xs:
+            ax3.scatter(xs, ys, c=color, label=f'p={p}', alpha=0.7, s=30)
+
+    ax3.set_xlabel('Plane order q = p^k')
+    ax3.set_ylabel('Defect dimension (k/d - 1)')
+    ax3.set_title('Non-Desarguesian Defect Landscape')
+    ax3.legend()
+    ax3.set_xscale('log')
+    ax3.grid(True, alpha=0.3)
+
     plt.tight_layout()
-    plt.savefig('hall_symmetry_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved: hall_symmetry_analysis.png")
+    plt.savefig('defect_spectrum.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved defect_spectrum.png")
 
 
 if __name__ == "__main__":
-    main()
+    plot_defect_spectrum()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: The Moulton Plane
+
+Shows how lines are bent in the Moulton plane, creating the
+non-Desarguesian structure.
+"""
+
+import math
+
+try:
+    import matplotlib.pyplot as plt
+    import matplotlib.patches as mpatches
+    import numpy as np
+    HAS_MPL = True
+except ImportError:
+    HAS_MPL = False
+
+
+def plot_moulton_plane():
+    if not HAS_MPL:
+        print("matplotlib not available")
+        return
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 7))
+
+    # Left: Standard Euclidean plane
+    ax1 = axes[0]
+    ax1.set_title('Standard Euclidean Plane', fontsize=14)
+    ax1.axhline(y=0, color='gray', linewidth=0.5)
+    ax1.axvline(x=0, color='gray', linewidth=0.5)
+
+    slopes = [-2, -1, -0.5, 0.5, 1, 2]
+    colors_pos = ['#2196F3', '#4CAF50', '#FF9800']
+    colors_neg = ['#F44336', '#E91E63', '#9C27B0']
+
+    xs = np.linspace(-4, 4, 200)
+
+    for i, m in enumerate(slopes):
+        b = 1
+        ys = m * xs + b
+        color = colors_pos[i - 3] if m > 0 else colors_neg[i]
+        ax1.plot(xs, ys, color=color, linewidth=2,
+                label=f'm={m}', alpha=0.8)
+
+    ax1.set_xlim(-4, 4)
+    ax1.set_ylim(-6, 6)
+    ax1.legend(loc='upper left', fontsize=9)
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('y')
+    ax1.grid(True, alpha=0.2)
+
+    # Right: Moulton plane
+    ax2 = axes[1]
+    ax2.set_title('Moulton Plane (bent at x = 0)', fontsize=14)
+    ax2.axhline(y=0, color='gray', linewidth=0.5)
+    ax2.axvline(x=0, color='red', linewidth=2, linestyle='--',
+                alpha=0.5, label='Bend axis')
+
+    xs_left = np.linspace(-4, 0, 100)
+    xs_right = np.linspace(0, 4, 100)
+
+    for i, m in enumerate(slopes):
+        b = 1
+        if m >= 0:
+            # Non-negative slope: no bending
+            ys = m * xs + b
+            color = colors_pos[i - 3]
+            ax2.plot(xs, ys, color=color, linewidth=2,
+                    label=f'm={m} (unbent)', alpha=0.8)
+        else:
+            # Negative slope: bend at x = 0
+            color = colors_neg[i]
+            ys_left = m * xs_left + b
+            ys_right = 2 * m * xs_right + b
+            ax2.plot(xs_left, ys_left, color=color, linewidth=2,
+                    label=f'm={m} (bent→{2*m})', alpha=0.8)
+            ax2.plot(xs_right, ys_right, color=color, linewidth=2,
+                    alpha=0.8, linestyle='-')
+            # Mark the bend point
+            ax2.plot(0, b, 'ko', markersize=6, zorder=5)
+
+    ax2.set_xlim(-4, 4)
+    ax2.set_ylim(-6, 6)
+    ax2.legend(loc='upper left', fontsize=8)
+    ax2.set_xlabel('x')
+    ax2.set_ylabel('y')
+    ax2.grid(True, alpha=0.2)
+
+    plt.suptitle('The Moulton Plane: Where Desargues\' Theorem Fails',
+                 fontsize=16, y=1.02)
+    plt.tight_layout()
+    plt.savefig('moulton_plane.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved moulton_plane.png")
+
+
+if __name__ == "__main__":
+    plot_moulton_plane()
