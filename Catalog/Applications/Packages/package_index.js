@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c0b7fa4f",
     "filename": "speculative_anti_gravity_mathematics__theorems_tha.json",
     "pkg_num": 359,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.23240000000000002,
     "title": "Gravitational Derivation Systems and the Inevitability of Anti-Gravity Theorems"
   },
   {
@@ -11541,8 +11541,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "speculative_anti_gravity_mathematics__theorems_tha",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.23240000000000002,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Gravitational Derivation Systems and the Inevitability of Anti-Gravity Theorems"
     }

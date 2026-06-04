@@ -262,6 +262,7 @@ class FutureDirection:
     # --- Retry tracking ---
     attempt_count: int = 0                                         # number of times this direction was dispatched
     last_attempt_time: str = ""                                    # ISO timestamp of last dispatch attempt
+    quarantined_until: str = ""                                    # ISO timestamp; if set, exclude from dispatch until then
 
     def to_dict(self) -> dict:
         return {
@@ -289,6 +290,7 @@ class FutureDirection:
             "pruned_at": self.pruned_at,
             "attempt_count": self.attempt_count,
             "last_attempt_time": self.last_attempt_time,
+            "quarantined_until": self.quarantined_until,
         }
 
     @classmethod
@@ -818,8 +820,17 @@ class FutureDirectionsManager:
     def get_available_directions(
         self, limit: int = 10, domain_filter: Optional[str] = None
     ) -> List[FutureDirection]:
-        """Return available directions, optionally filtered by domain, sorted by priority."""
-        available = [d for d in self._directions if d.status == "available"]
+        """Return available directions, optionally filtered by domain, sorted by priority.
+
+        Excludes quarantined directions (those that produced Q<0.3 and have
+        a cooldown active). Auto-cleans expired quarantines on every call.
+        """
+        # Lazy cleanup of expired quarantines
+        self.cleanup_expired_quarantines()
+        available = [
+            d for d in self._directions
+            if d.status == "available" and not self.is_quarantined(d)
+        ]
         if domain_filter:
             available = [d for d in available if domain_filter in d.domains or not d.domains]
         available.sort(key=lambda d: d.priority_score, reverse=True)
@@ -850,7 +861,12 @@ class FutureDirectionsManager:
         domain_filter: only select directions containing this domain
         exclude_domains: exclude directions containing any of these domains
         """
-        available = [d for d in self._directions if d.status == "available"]
+        # Lazy cleanup of expired quarantines
+        self.cleanup_expired_quarantines()
+        available = [
+            d for d in self._directions
+            if d.status == "available" and not self.is_quarantined(d)
+        ]
         if domain_filter:
             available = [d for d in available if domain_filter in d.domains or not d.domains]
         if exclude_domains:
@@ -961,6 +977,54 @@ class FutureDirectionsManager:
             if d.id == direction_id:
                 d.status = "available"
                 d.consumed_by_exp_id = ""
+
+    def quarantine_direction(self, direction_id: str, days: int = 30) -> None:
+        """Quarantine a direction: prevent dispatch for N days.
+
+        Used when a direction produces a very low-quality cycle (Q<0.3).
+        The direction stays in the pool but is excluded from dispatch
+        until the cooldown expires.
+        """
+        from datetime import datetime, timezone, timedelta
+        for d in self._directions:
+            if d.id == direction_id:
+                d.quarantined_until = (
+                    datetime.now(timezone.utc) + timedelta(days=days)
+                ).isoformat()[:19]
+                d.status = "available"  # Keep as available, but skip in select
+                d.consumed_by_exp_id = ""
+                self._save()
+                return
+
+    def is_quarantined(self, direction: "FutureDirection") -> bool:
+        """Check if a direction is currently quarantined."""
+        if not direction.quarantined_until:
+            return False
+        from datetime import datetime, timezone
+        try:
+            until = datetime.fromisoformat(direction.quarantined_until)
+            return datetime.now(timezone.utc) < until
+        except (ValueError, TypeError):
+            return False
+
+    def cleanup_expired_quarantines(self) -> int:
+        """Remove quarantine flag from directions whose cooldown has expired."""
+        from datetime import datetime, timezone
+        cleaned = 0
+        now = datetime.now(timezone.utc)
+        for d in self._directions:
+            if d.quarantined_until:
+                try:
+                    until = datetime.fromisoformat(d.quarantined_until)
+                    if now >= until:
+                        d.quarantined_until = ""
+                        cleaned += 1
+                except (ValueError, TypeError):
+                    d.quarantined_until = ""
+                    cleaned += 1
+        if cleaned > 0:
+            self._save()
+        return cleaned
 
     def recover_stale_directions(self, max_age_hours: int = 24) -> int:
         """Reset in_progress directions older than max_age_hours back to available."""

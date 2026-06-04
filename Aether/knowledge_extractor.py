@@ -454,6 +454,16 @@ class KnowledgeExtractor:
             self.inflight[project_id] = job
             self._save_inflight()
             print(f"[Dispatch] Aristotle project: {project_id}")
+            # Capture reasoning log: submission event
+            try:
+                from reasoning_log import ReasoningLog
+                rlog = ReasoningLog(self.workspace, project_id, job.job_id)
+                rlog.record_submission(
+                    prompt=job.prompt or "",
+                    domain=job.concept.domain if job.concept else "",
+                )
+            except Exception as e:
+                pass  # Don't break dispatch on log errors
         except Exception as e:
             job.status = "failed"
             job.error_message = f"Dispatch failed: {e}"
@@ -676,32 +686,68 @@ Research mode: {concept.research_mode}
     # ==================================================================
 
     async def poll_all(self) -> List[ResearchJob]:
-        """Poll all in-flight jobs and return completed ones."""
+        """Poll all in-flight jobs and return completed ones.
+
+        Also captures reasoning log checkpoints for each project: status,
+        percent_complete, and elapsed time. Saved to .aether_workspace/
+        reasoning_logs/{job_id}.json for later analysis.
+        """
+        from reasoning_log import ReasoningLog
+
         completed = []
         for pid, job in list(self.inflight.items()):
             if job.status in ("completed", "failed", "integrated", "rejected"):
                 completed.append(job)
                 continue
-                
+
             try:
                 result = await self.aristotle.poll_project(pid)
                 status = result.get("status", "unknown")
                 has_files = result.get("has_files", False)
                 is_complete = result.get("complete", False)
+                percent = result.get("percent_complete", 0) or 0
+
+                # Capture reasoning checkpoint
+                try:
+                    rlog = ReasoningLog(self.workspace, pid, job.job_id)
+                    # Only add a checkpoint if the state has changed
+                    last_pct = rlog._data["checkpoints"][-1]["percent_complete"] if rlog._data["checkpoints"] else -1
+                    last_status = rlog._data["checkpoints"][-1]["status"] if rlog._data["checkpoints"] else None
+                    if percent != last_pct or status != last_status:
+                        rlog.add_checkpoint(status=status, percent=percent)
+                except Exception:
+                    pass  # Don't break polling on log errors
 
                 if is_complete or (status == "IDLE" and has_files):
                     print(f"[Poll] {pid[:8]} COMPLETED (status={status}, has_files={has_files})")
                     job.status = "completed"
                     job.complete_time = time.time()
+                    # Final reasoning log entry
+                    try:
+                        rlog = ReasoningLog(self.workspace, pid, job.job_id)
+                        rlog.record_completion(
+                            status=status, percent=percent, has_files=has_files,
+                        )
+                    except Exception:
+                        pass
                     completed.append(job)
                 elif status == "IDLE" and not has_files:
                     print(f"[Poll] {pid[:8]} FAILED (IDLE, no files)")
                     job.status = "failed"
                     job.error_message = "Aristotle status: IDLE with no result files"
                     self.failed_count += 1
+                    # Final reasoning log entry
+                    try:
+                        rlog = ReasoningLog(self.workspace, pid, job.job_id)
+                        rlog.record_completion(
+                            status="FAILED", percent=percent, has_files=False,
+                            error="IDLE with no result files",
+                        )
+                    except Exception:
+                        pass
                     completed.append(job)
                 elif status == "RUNNING":
-                    print(f"[Poll] {pid[:8]} in progress (RUNNING)")
+                    print(f"[Poll] {pid[:8]} in progress (RUNNING, {percent:.0f}%)")
             except Exception as e:
                 print(f"[Poll] {pid[:8]} error: {e}")
 
@@ -1216,6 +1262,8 @@ Research mode: {concept.research_mode}
         """
         if job.quality_score < 0.15:
             print(f"[Integrate] REJECTED: score too low ({job.quality_score:.3f})")
+            # Quarantine the direction for 30 days — don't retry this one
+            self._quarantine_direction_for_job(job, days=30)
             job.status = "rejected"
             return job
 
@@ -1231,6 +1279,11 @@ Research mode: {concept.research_mode}
                 print(f"[Salvage] Extracted {job.theorem_count} best theorems from low-quality package")
             else:
                 print(f"[Salvage] No salvageable theorems found — proceeding with full package")
+
+        # Quarantine: Q<0.3 means the direction itself is producing near-junk
+        # Don't waste compute retrying the same direction for 30 days
+        if job.quality_score < 0.3:
+            self._quarantine_direction_for_job(job, days=30)
 
         has_any_content = any([
             job.result_lean, job.result_demo, job.result_paper,
@@ -2957,6 +3010,24 @@ Research mode: {concept.research_mode}
                     break
         except Exception as e:
             print(f"[Tick] Warning: could not release direction: {e}")
+
+    def _quarantine_direction_for_job(self, job: ResearchJob, days: int = 30) -> None:
+        """Quarantine the direction consumed by this job after a low-quality cycle.
+
+        Prevents the same failing direction from being retried for `days` days.
+        """
+        if not job.job_id:
+            return
+        try:
+            from research_memory import FutureDirectionsManager
+            fd_manager = FutureDirectionsManager(self.workspace)
+            for d in fd_manager._directions:
+                if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
+                    fd_manager.quarantine_direction(d.id, days=days)
+                    print(f"[Quarantine] {d.id} for {days} days (Q={job.quality_score:.3f}): {d.title[:50]}")
+                    break
+        except Exception as e:
+            print(f"[Quarantine] Warning: could not quarantine: {e}")
 
     def _extract_future_directions(self, job: ResearchJob) -> None:
         """Extract future directions from Aristotle's output and mark the consumed direction completed."""

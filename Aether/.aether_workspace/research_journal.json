@@ -270,6 +270,16 @@
       "theorem_count": 4,
       "timestamp": "2026-06-04T15:36:29",
       "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
+    },
+    {
+      "cycle_id": "c44581af",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: EML Differential Algebra\n\n## Synthesis\n\nThis cycle established the **Logarithmic Derivative Algebra** as a novel mathematical structure for EML functions, proving 17 theorems abou",
+      "quality_score": 0.30200000000000005,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-04T16:00:43",
+      "title": "EML Differential Calculus: Chain Rules for exp-log Compositions"
     }
   ],
   "entries": [
@@ -315,16 +325,10 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-04T15:36:29",
+  "last_updated": "2026-06-04T16:00:43",
   "open_questions": [],
   "research_threads": {
     "Applications": [
-      {
-        "cycle_id": "35340a8e",
-        "quality": 0.40456000000000003,
-        "theorems": 5,
-        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-      },
       {
         "cycle_id": "854de7e7",
         "quality": 0.39144,
@@ -378,6 +382,12 @@
         "quality": 0.392,
         "theorems": 4,
         "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
+      },
+      {
+        "cycle_id": "c44581af",
+        "quality": 0.30200000000000005,
+        "theorems": 8,
+        "title": "EML Differential Calculus: Chain Rules for exp-log Compositions"
       }
     ],
     "Bridges": [
