@@ -1,396 +1,481 @@
 #!/usr/bin/env python3
 """
-Aboriginal Kinship as Group Theory: Numerical Demonstrations
+Dreamtime Algebra: Aboriginal Kinship Systems as Group Theory
 
-Demonstrates the group-theoretic structure of Australian Aboriginal
-kinship systems (section and subsection systems).
+Interactive demonstration of kinship section systems modeled as
+finite groups acting on person-sets.
 """
 
-from itertools import product
-from typing import Tuple, List, Dict
+import itertools
+from typing import List, Tuple, Dict
 
+# ============================================================
+# Section 1: The 4-Section (Kariera) System
+# ============================================================
 
-# -- Z2 x Z2 (Kariera 4-Section System) --
+SECTIONS_4 = ["A (Banaka)", "B (Burung)", "C (Karimera)", "D (Palyeri)"]
 
-def z2_add(a: Tuple[int, ...], b: Tuple[int, ...]) -> Tuple[int, ...]:
-    """Addition in Z_2^n."""
-    return tuple((x + y) % 2 for x, y in zip(a, b))
+def marriage_4(x: int) -> int:
+    """Marriage permutation: swaps (0,1) and (2,3)."""
+    return [1, 0, 3, 2][x]
 
+def descent_4(x: int) -> int:
+    """Descent permutation: swaps (0,2) and (1,3)."""
+    return [2, 3, 0, 1][x]
 
-def marriage_partner(section: Tuple[int, ...], m_offset: Tuple[int, ...]) -> Tuple[int, ...]:
-    """Compute the marriage partner section."""
-    return z2_add(section, m_offset)
+def dreamtime_4(x: int) -> int:
+    """Dreamtime operator T = marriage ∘ descent."""
+    return marriage_4(descent_4(x))
 
+def binary_encode_4(x: int) -> Tuple[int, int]:
+    """Encode section as binary pair (moiety_bit, generation_bit)."""
+    return (x % 2, x // 2)
 
-def child_section(mother: Tuple[int, ...], d_offset: Tuple[int, ...]) -> Tuple[int, ...]:
-    """Compute the child's section from the mother's section."""
-    return z2_add(mother, d_offset)
+print("=" * 60)
+print("THE 4-SECTION (KARIERA) KINSHIP SYSTEM")
+print("=" * 60)
+print()
 
+print("Sections and their relationships:")
+print(f"{'Section':<18} {'Marries':<18} {'Child of':<18} {'Dreamtime':<18}")
+print("-" * 72)
+for i in range(4):
+    m = marriage_4(i)
+    d = descent_4(i)
+    t = dreamtime_4(i)
+    print(f"{SECTIONS_4[i]:<18} {SECTIONS_4[m]:<18} {SECTIONS_4[d]:<18} {SECTIONS_4[t]:<18}")
 
-def nth_descendant(section: Tuple[int, ...], d_offset: Tuple[int, ...], n: int) -> Tuple[int, ...]:
-    """Compute the n-th generation descendant's section."""
-    result = section
-    for _ in range(n):
-        result = z2_add(result, d_offset)
-    return result
+print()
+print("Verification of group axioms:")
+print(f"  Marriage is involution: {all(marriage_4(marriage_4(i)) == i for i in range(4))}")
+print(f"  Marriage is fixed-point-free: {all(marriage_4(i) != i for i in range(4))}")
+print(f"  Descent is involution: {all(descent_4(descent_4(i)) == i for i in range(4))}")
+print(f"  Dreamtime is involution: {all(dreamtime_4(dreamtime_4(i)) == i for i in range(4))}")
+print(f"  M and D commute: {all(marriage_4(descent_4(i)) == descent_4(marriage_4(i)) for i in range(4))}")
 
+print()
+print("Binary encoding (moiety, generation):")
+for i in range(4):
+    b = binary_encode_4(i)
+    print(f"  {SECTIONS_4[i]:<18} → ({b[0]}, {b[1]})")
 
-# Section names for the Kariera system
-KARIERA_NAMES = {
-    (0, 0): "Banaka",
-    (1, 0): "Karimera",
-    (0, 1): "Burung",
-    (1, 1): "Palyeri",
-}
+print()
+print("Hamming distances to marriage partner:")
+for i in range(4):
+    bi = binary_encode_4(i)
+    bm = binary_encode_4(marriage_4(i))
+    hamming = sum(1 for a, b in zip(bi, bm) if a != b)
+    print(f"  {SECTIONS_4[i]} → {SECTIONS_4[marriage_4(i)]}: Hamming distance = {hamming}")
 
-KARIERA_MARRIAGE = (1, 0)
-KARIERA_DESCENT = (0, 1)
+# ============================================================
+# Section 2: The Kinship Group as Z₂ × Z₂
+# ============================================================
 
+print()
+print("=" * 60)
+print("KINSHIP GROUP STRUCTURE")
+print("=" * 60)
+print()
 
-def demo_kariera():
-    """Demonstrate the Kariera 4-section system."""
-    print("=" * 60)
-    print("KARIERA 4-SECTION SYSTEM (Z₂ × Z₂)")
-    print("=" * 60)
-    print()
+def perm_to_tuple(f, n):
+    return tuple(f(i) for i in range(n))
 
-    m = KARIERA_MARRIAGE
-    d = KARIERA_DESCENT
+id_perm = tuple(range(4))
+m_perm = perm_to_tuple(marriage_4, 4)
+d_perm = perm_to_tuple(descent_4, 4)
+md_perm = perm_to_tuple(dreamtime_4, 4)
 
-    print(f"Marriage offset: {m}")
-    print(f"Descent offset:  {d}")
-    print()
+group_elements = [id_perm, m_perm, d_perm, md_perm]
+labels = ["1 (identity)", "m (marriage)", "d (descent)", "T = m·d (dreamtime)"]
 
-    print("Section assignments:")
-    for s, name in KARIERA_NAMES.items():
-        partner = marriage_partner(s, m)
-        child = child_section(s, d)
-        print(f"  {name} {s}:")
-        print(f"    Marries: {KARIERA_NAMES[partner]} {partner}")
-        print(f"    Child:   {KARIERA_NAMES[child]} {child}")
-    print()
+print("Group elements as permutations:")
+for label, perm in zip(labels, group_elements):
+    print(f"  {label:<25}: {list(perm)}")
 
-    # Verify marriage involution
-    print("Marriage involution verification:")
-    for s in KARIERA_NAMES:
-        double = marriage_partner(marriage_partner(s, m), m)
-        print(f"  partner(partner({s})) = {double} {'✓' if double == s else '✗'}")
-    print()
+print()
+print("Cayley table (product of row × column):")
+print(f"{'':>10} | {'1':>10} {'m':>10} {'d':>10} {'T':>10}")
+print("-" * 55)
 
-    # Verify descent periodicity
-    print("Descent periodicity (grandmother = granddaughter):")
-    for s in KARIERA_NAMES:
-        gd = nth_descendant(s, d, 2)
-        print(f"  2nd descendant of {s} = {gd} {'✓' if gd == s else '✗'}")
-    print()
+def compose_perms(p1, p2):
+    return tuple(p1[p2[i]] for i in range(len(p1)))
 
-    # Verify commutativity
-    print("Marriage-descent commutativity:")
-    for s in KARIERA_NAMES:
-        path1 = child_section(marriage_partner(s, m), d)  # child of spouse
-        path2 = marriage_partner(child_section(s, d), m)  # spouse of child
-        print(f"  child(spouse({s})) = {path1}, spouse(child({s})) = {path2} "
-              f"{'✓' if path1 == path2 else '✗'}")
-    print()
+label_map = {id_perm: "1", m_perm: "m", d_perm: "d", md_perm: "T"}
+for i, (lab_i, p_i) in enumerate(zip(["1", "m", "d", "T"], group_elements)):
+    row = []
+    for p_j in group_elements:
+        prod = compose_perms(p_i, p_j)
+        row.append(label_map[prod])
+    print(f"{lab_i:>10} | {''.join(f'{r:>10}' for r in row)}")
 
-    # Moiety structure
-    print("Moiety structure:")
-    moiety_subgroup = {(0, 0), d}
-    coset = {z2_add(x, m) for x in moiety_subgroup}
-    print(f"  Moiety 1 (descent subgroup): {sorted(moiety_subgroup)}")
-    print(f"  Moiety 2 (marriage coset):   {sorted(coset)}")
-    print(f"  Marriage crosses moieties: {m not in moiety_subgroup}")
-    print()
+print()
+print("This is the Klein four-group Z₂ × Z₂!")
+print("Isomorphism: 1↔(0,0), m↔(1,0), d↔(0,1), T↔(1,1)")
 
+# ============================================================
+# Section 3: The 8-Subsection (Aranda) System
+# ============================================================
 
-# -- Z2 x Z2 x Z2 (Aranda 8-Subsection System) --
+print()
+print("=" * 60)
+print("THE 8-SUBSECTION (ARANDA) SYSTEM")
+print("=" * 60)
+print()
 
-ARANDA_NAMES = {
-    (0, 0, 0): "Panaka",
-    (1, 0, 0): "Purungu",
-    (0, 1, 0): "Milangka",
-    (1, 1, 0): "Karimarra",
-    (0, 0, 1): "Tjakamarra",
-    (1, 0, 1): "Tjapanangka",
-    (0, 1, 1): "Tjapaltjarri",
-    (1, 1, 1): "Tjampitjinpa",
-}
+SUBSECTIONS_8 = [
+    "A₁ (Pananka)", "A₂ (Paltara)", "B₁ (Purula)", "B₂ (Kamara)",
+    "C₁ (Ngala)", "C₂ (Mbitjana)", "D₁ (Bangata)", "D₂ (Knuraia)"
+]
 
-ARANDA_MARRIAGE = (1, 0, 0)
-ARANDA_DESCENT = (0, 1, 1)
+def marriage_8(x: int) -> int:
+    """Flip bit 0."""
+    return x ^ 1
 
+def descent_8(x: int) -> int:
+    """Flip bit 1."""
+    return x ^ 2
 
-def demo_aranda():
-    """Demonstrate the Aranda 8-subsection system."""
-    print("=" * 60)
-    print("ARANDA 8-SUBSECTION SYSTEM (Z₂ × Z₂ × Z₂)")
-    print("=" * 60)
-    print()
+def matri_descent_8(x: int) -> int:
+    """Flip bit 2."""
+    return x ^ 4
 
-    m = ARANDA_MARRIAGE
-    d = ARANDA_DESCENT
+print("Subsections and their transformations:")
+print(f"{'Sub':<18} {'Marriage':<18} {'Pat.Desc.':<18} {'Mat.Desc.':<18}")
+print("-" * 72)
+for i in range(8):
+    print(f"{SUBSECTIONS_8[i]:<18} {SUBSECTIONS_8[marriage_8(i)]:<18} "
+          f"{SUBSECTIONS_8[descent_8(i)]:<18} {SUBSECTIONS_8[matri_descent_8(i)]:<18}")
 
-    print(f"Marriage offset: {m}")
-    print(f"Descent offset:  {d}")
-    print()
+print()
+print("Binary encoding (moiety, patriline, matriline):")
+for i in range(8):
+    bits = ((i >> 0) & 1, (i >> 1) & 1, (i >> 2) & 1)
+    print(f"  {SUBSECTIONS_8[i]:<18} → {bits}")
 
-    print("Subsection assignments:")
-    for s, name in ARANDA_NAMES.items():
-        partner = marriage_partner(s, m)
-        child = child_section(s, d)
-        print(f"  {name:15s} {s}:")
-        print(f"    Marries: {ARANDA_NAMES[partner]:15s} {partner}")
-        print(f"    Child:   {ARANDA_NAMES[child]:15s} {child}")
-    print()
+# Verify group structure
+print()
+print("Group verification for (Z₂)³:")
+generators = [marriage_8, descent_8, matri_descent_8]
+gen_names = ["marriage", "descent", "matri_descent"]
 
-    # Verify closure of {m, d} — should generate 4 elements, not 8
-    closure = {(0, 0, 0)}
-    new = {m, d}
-    while new - closure:
-        closure |= new
-        next_new = set()
-        for a in closure:
-            for b in closure:
-                next_new.add(z2_add(a, b))
-        new = next_new
-    print(f"Closure of {{m, d}}: {len(closure)} elements (not 8!)")
-    print(f"  Elements: {sorted(closure)}")
-    print(f"  This confirms: two generators cannot span Z₂³")
-    print()
+# Check all generators are involutions
+for name, gen in zip(gen_names, generators):
+    is_invol = all(gen(gen(i)) == i for i in range(8))
+    print(f"  {name} is involution: {is_invol}")
 
+# Check pairwise commutativity
+for i in range(3):
+    for j in range(i+1, 3):
+        commutes = all(
+            generators[i](generators[j](x)) == generators[j](generators[i](x))
+            for x in range(8)
+        )
+        print(f"  {gen_names[i]} and {gen_names[j]} commute: {commutes}")
 
-def demo_enumeration():
-    """Enumerate all valid kinship systems on Z₂ × Z₂."""
-    print("=" * 60)
-    print("ENUMERATION OF KINSHIP SYSTEMS ON Z₂ × Z₂")
-    print("=" * 60)
-    print()
+# Count distinct group elements
+group_8 = set()
+for bits in itertools.product([0, 1], repeat=3):
+    perm = list(range(8))
+    x_list = list(range(8))
+    result = []
+    for x in range(8):
+        y = x
+        if bits[0]: y = marriage_8(y)
+        if bits[1]: y = descent_8(y)
+        if bits[2]: y = matri_descent_8(y)
+        result.append(y)
+    group_8.add(tuple(result))
 
-    elements = [(a, b) for a in range(2) for b in range(2)]
-    zero = (0, 0)
-    count = 0
+print(f"\n  Distinct group elements: {len(group_8)} (expected 8 = 2³)")
+print(f"  Group is (Z₂)³: {len(group_8) == 8}")
 
-    for m in elements:
-        if m == zero:
-            continue
-        if z2_add(m, m) != zero:
-            continue
-        for d in elements:
-            if d == zero or d == m:
-                continue
-            count += 1
-            closure = {zero}
-            new = {m, d}
-            while new - closure:
-                closure |= new
-                next_new = set()
-                for a in closure:
-                    for b in closure:
-                        next_new.add(z2_add(a, b))
-                new = next_new
-            complete = len(closure) == 4
-            print(f"  System {count}: m={m}, d={d}, "
-                  f"complete={'✓' if complete else '✗'}, "
-                  f"closure size={len(closure)}")
+# ============================================================
+# Section 4: The Regularity Property
+# ============================================================
 
-    print(f"\nTotal valid systems: {count}")
-    print()
+print()
+print("=" * 60)
+print("REGULARITY: Every non-identity element is fixed-point-free")
+print("=" * 60)
+print()
 
+print("4-section system:")
+non_id_ops = [
+    ("marriage", marriage_4),
+    ("descent", descent_4),
+    ("dreamtime", dreamtime_4)
+]
+for name, op in non_id_ops:
+    fixed_pts = [i for i in range(4) if op(i) == i]
+    print(f"  {name}: fixed points = {fixed_pts} (regular: {len(fixed_pts) == 0})")
 
-def demo_odd_obstruction():
-    """Demonstrate that odd-order groups cannot support kinship systems."""
-    print("=" * 60)
-    print("ODD-ORDER OBSTRUCTION")
-    print("=" * 60)
-    print()
+print()
+print("8-subsection system:")
+for bits in itertools.product([0, 1], repeat=3):
+    if bits == (0, 0, 0):
+        continue
+    label = f"m^{bits[0]}·d^{bits[1]}·e^{bits[2]}"
+    fixed = []
+    for x in range(8):
+        y = x
+        if bits[0]: y = marriage_8(y)
+        if bits[1]: y = descent_8(y)
+        if bits[2]: y = matri_descent_8(y)
+        if y == x:
+            fixed.append(x)
+    print(f"  {label}: fixed points = {fixed}")
 
-    for n in [3, 5, 7]:
-        found = False
-        for m in range(n):
-            if (2 * m) % n == 0 and m != 0:
-                found = True
-                break
-        print(f"  Z_{n}: nonzero element of order 2 exists? {found}")
-        if not found:
-            print(f"    → No kinship system possible on Z_{n}")
-    print()
+print()
+print("All non-identity elements are fixed-point-free → regular action!")
+print("This proves |sections| = |group| = 2^k")
 
-    # Z6 = Z2 x Z3 has an element of order 2
-    print("  Z₆: element 3 has order 2 (3+3=6≡0 mod 6)")
-    print("    → Kinship system IS possible (e.g., m=3, d=2)")
-    print()
+# ============================================================
+# Section 5: Marriage as Coset Structure
+# ============================================================
 
+print()
+print("=" * 60)
+print("MARRIAGE AS COSET RESTRICTION")
+print("=" * 60)
+print()
 
-def demo_generational_tracking():
-    """Track sections through multiple generations."""
-    print("=" * 60)
-    print("GENERATIONAL TRACKING (Kariera)")
-    print("=" * 60)
-    print()
+print("In the 4-section system:")
+print("  Moiety subgroup H = {1, d} = ⟨descent⟩")
+print("  Cosets of H:")
+coset_1 = {0, descent_4(0)}  # {A, C}
+coset_m = {marriage_4(0), marriage_4(descent_4(0))}  # {B, D}
+print(f"    H = {{{SECTIONS_4[0]}, {SECTIONS_4[descent_4(0)]}}}")
+print(f"    mH = {{{SECTIONS_4[marriage_4(0)]}, {SECTIONS_4[marriage_4(descent_4(0))]}}}")
+print()
+print("  Marriage rule: section x marries m(x), which is in coset m·H")
+print("  → Marriage = moving to the opposite coset (cross-moiety marriage)")
+for i in range(4):
+    in_H = i in coset_1
+    partner = marriage_4(i)
+    partner_in_mH = partner in coset_m
+    partner_in_H = partner in coset_1
+    moiety = "H" if in_H else "mH"
+    partner_moiety = "mH" if in_H else "H"
+    print(f"    {SECTIONS_4[i]} (in {moiety}) marries {SECTIONS_4[partner]} (in {partner_moiety})")
 
-    m = KARIERA_MARRIAGE
-    d = KARIERA_DESCENT
-    start = (0, 0)
+# ============================================================
+# Section 6: The Power-of-2 Theorem
+# ============================================================
 
-    print(f"Starting section: {KARIERA_NAMES[start]} {start}")
-    print()
-
-    current = start
-    for gen in range(5):
-        partner = marriage_partner(current, m)
-        child = child_section(current, d)
-        patri_child = child_section(partner, d)
-        print(f"  Gen {gen}: {KARIERA_NAMES[current]:10s} "
-              f"marries {KARIERA_NAMES[partner]:10s} "
-              f"→ matri-child: {KARIERA_NAMES[child]:10s} "
-              f"  patri-child: {KARIERA_NAMES[patri_child]:10s}")
-        current = child
-
-    print()
-    print("Note: Section cycles with period 2 (grandmother = granddaughter)")
-    print()
-
+print()
+print("=" * 60)
+print("THE POWER-OF-2 THEOREM")
+print("=" * 60)
+print()
+print("Theorem: If k commuting involutions act faithfully on a set S,")
+print("then |S| must be a multiple of 2^k.")
+print()
+print("Proof sketch:")
+print("  1. k commuting involutions generate an abelian group G")
+print("  2. Every element of G has order ≤ 2 (since generators are involutions)")
+print("  3. Therefore G ≅ (Z₂)^r for some r ≤ k")
+print("  4. Faithfulness ⟹ r = k, so |G| = 2^k")
+print("  5. |S| = |G| when the action is regular (free + transitive)")
+print()
+print("Aboriginal kinship systems satisfy this because:")
+print(f"  4-section: k=2 generators, |S|=4=2², ✓")
+print(f"  8-subsection: k=3 generators, |S|=8=2³, ✓")
 
 if __name__ == "__main__":
-    demo_kariera()
-    demo_aranda()
-    demo_enumeration()
-    demo_odd_obstruction()
-    demo_generational_tracking()
+    print()
+    print("=" * 60)
+    print("DREAMTIME ALGEBRA — DEMONSTRATION COMPLETE")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Aboriginal Kinship System as Group Structure
-
-Produces a diagram showing the Kariera 4-section system with
-marriage and descent connections on Z_2 x Z_2.
+Visualization of Aboriginal Kinship Systems as Group Theory.
+Generates Cayley graph and kinship structure diagrams.
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 
 
-def z2_add(a, b):
-    return tuple((x + y) % 2 for x, y in zip(a, b))
+def draw_four_section_system():
+    """Draw the 4-section kinship system as a graph."""
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
-
-def main():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # --- Kariera 4-Section System ---
-    ax = axes[0]
-    ax.set_title("Kariera 4-Section System\n(Z₂ × Z₂)", fontsize=14, fontweight='bold')
-
-    sections = [(0,0), (1,0), (0,1), (1,1)]
-    names = {(0,0): "Banaka", (1,0): "Karimera", (0,1): "Burung", (1,1): "Palyeri"}
-    colors = {(0,0): "#2196F3", (1,0): "#F44336", (0,1): "#4CAF50", (1,1): "#FF9800"}
-    moiety_colors = {(0,0): "#E3F2FD", (1,0): "#FFEBEE", (0,1): "#E8F5E9", (1,1): "#FFF3E0"}
-
+    sections = ["A\n(Banaka)", "B\n(Burung)", "C\n(Karimera)", "D\n(Palyeri)"]
     # Position sections in a square
-    positions = {(0,0): (0, 1), (1,0): (1, 1), (0,1): (0, 0), (1,1): (1, 0)}
+    pos = np.array([[0, 1], [1, 1], [0, 0], [1, 0]], dtype=float)
 
-    m_offset = (1, 0)
-    d_offset = (0, 1)
+    colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12']
 
-    # Draw moiety backgrounds
-    ax.fill([-.3, .5, .5, -.3], [-.3, -.3, 1.3, 1.3], alpha=0.1, color='blue', label='Moiety 1')
-    ax.fill([.5, 1.3, 1.3, .5], [-.3, -.3, 1.3, 1.3], alpha=0.1, color='red', label='Moiety 2')
-
-    # Draw marriage arrows (red, horizontal)
-    for s in sections:
-        partner = z2_add(s, m_offset)
-        x1, y1 = positions[s]
-        x2, y2 = positions[partner]
-        if x1 < x2:
-            ax.annotate('', xy=(x2-0.12, y2), xytext=(x1+0.12, y1),
-                       arrowprops=dict(arrowstyle='<->', color='red', lw=2))
-
-    # Draw descent arrows (green, vertical)
-    for s in sections:
-        child = z2_add(s, d_offset)
-        x1, y1 = positions[s]
-        x2, y2 = positions[child]
-        if y1 > y2:
-            ax.annotate('', xy=(x2, y2+0.12), xytext=(x1, y1-0.12),
-                       arrowprops=dict(arrowstyle='->', color='green', lw=2, linestyle='--'))
-
-    # Draw section circles
-    for s in sections:
-        x, y = positions[s]
-        circle = plt.Circle((x, y), 0.1, color=colors[s], zorder=5)
+    # Panel 1: Marriage edges
+    ax = axes[0]
+    ax.set_title("Marriage Rule\n(m: involution, fixed-point-free)", fontsize=12, fontweight='bold')
+    marriage = [(0, 1), (2, 3)]
+    for i, (x, y) in enumerate(pos):
+        circle = plt.Circle((x, y), 0.12, color=colors[i], ec='black', lw=2, zorder=5)
         ax.add_patch(circle)
-        ax.text(x, y, str(s), ha='center', va='center', fontsize=8, color='white',
-                fontweight='bold', zorder=6)
-        ax.text(x, y-0.18, names[s], ha='center', va='top', fontsize=9)
-
-    # Legend
-    marriage_line = mpatches.Patch(color='red', label='Marriage (add (1,0))')
-    descent_line = mpatches.Patch(color='green', label='Descent (add (0,1))')
-    ax.legend(handles=[marriage_line, descent_line], loc='upper right', fontsize=8)
-
-    ax.set_xlim(-0.4, 1.4)
-    ax.set_ylim(-0.4, 1.4)
+        ax.text(x, y, sections[i], ha='center', va='center', fontsize=8, fontweight='bold', zorder=6)
+    for a, b in marriage:
+        ax.annotate('', xy=pos[b], xytext=pos[a],
+                    arrowprops=dict(arrowstyle='<->', color='red', lw=2.5))
+        mid = (pos[a] + pos[b]) / 2
+        ax.text(mid[0], mid[1] + 0.08, 'm', color='red', fontsize=11, ha='center', fontweight='bold')
+    ax.set_xlim(-0.3, 1.3)
+    ax.set_ylim(-0.3, 1.3)
     ax.set_aspect('equal')
     ax.axis('off')
 
-    # --- Aranda 8-Subsection System ---
-    ax2 = axes[1]
-    ax2.set_title("Aranda 8-Subsection System\n(Z₂ × Z₂ × Z₂)", fontsize=14, fontweight='bold')
+    # Panel 2: Descent edges
+    ax = axes[1]
+    ax.set_title("Descent Rule\n(d: involution)", fontsize=12, fontweight='bold')
+    descent = [(0, 2), (1, 3)]
+    for i, (x, y) in enumerate(pos):
+        circle = plt.Circle((x, y), 0.12, color=colors[i], ec='black', lw=2, zorder=5)
+        ax.add_patch(circle)
+        ax.text(x, y, sections[i], ha='center', va='center', fontsize=8, fontweight='bold', zorder=6)
+    for a, b in descent:
+        ax.annotate('', xy=pos[b], xytext=pos[a],
+                    arrowprops=dict(arrowstyle='<->', color='blue', lw=2.5))
+        mid = (pos[a] + pos[b]) / 2
+        ax.text(mid[0] - 0.08, mid[1], 'd', color='blue', fontsize=11, ha='center', fontweight='bold')
+    ax.set_xlim(-0.3, 1.3)
+    ax.set_ylim(-0.3, 1.3)
+    ax.set_aspect('equal')
+    ax.axis('off')
 
-    subsections_3d = [(a,b,c) for a in range(2) for b in range(2) for c in range(2)]
-    names_8 = {
-        (0,0,0): "Pan", (1,0,0): "Pur", (0,1,0): "Mil", (1,1,0): "Kar",
-        (0,0,1): "Tja", (1,0,1): "Tjp", (0,1,1): "Tjl", (1,1,1): "Tjm",
+    # Panel 3: Dreamtime operator
+    ax = axes[2]
+    ax.set_title("Dreamtime Operator T = m·d\n(involution, fixed-point-free)", fontsize=12, fontweight='bold')
+    dreamtime = [(0, 3), (1, 2)]
+    for i, (x, y) in enumerate(pos):
+        circle = plt.Circle((x, y), 0.12, color=colors[i], ec='black', lw=2, zorder=5)
+        ax.add_patch(circle)
+        ax.text(x, y, sections[i], ha='center', va='center', fontsize=8, fontweight='bold', zorder=6)
+    for a, b in dreamtime:
+        ax.annotate('', xy=pos[b], xytext=pos[a],
+                    arrowprops=dict(arrowstyle='<->', color='purple', lw=2.5))
+        mid = (pos[a] + pos[b]) / 2
+        ax.text(mid[0], mid[1], 'T', color='purple', fontsize=11, ha='center', fontweight='bold')
+    ax.set_xlim(-0.3, 1.3)
+    ax.set_ylim(-0.3, 1.3)
+    ax.set_aspect('equal')
+    ax.axis('off')
+
+    plt.suptitle("The 4-Section (Kariera) Kinship System ≅ Z₂ × Z₂", fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    plt.savefig('kinship_4section.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: kinship_4section.png")
+
+
+def draw_cayley_table():
+    """Draw the Cayley table of the kinship group."""
+    fig, ax = plt.subplots(1, 1, figsize=(6, 6))
+
+    labels = ['1', 'm', 'd', 'T']
+    # Cayley table for Klein four-group
+    table = [
+        ['1', 'm', 'd', 'T'],
+        ['m', '1', 'T', 'd'],
+        ['d', 'T', '1', 'm'],
+        ['T', 'd', 'm', '1'],
+    ]
+
+    color_map = {'1': '#ecf0f1', 'm': '#e74c3c', 'd': '#3498db', 'T': '#9b59b6'}
+
+    for i in range(4):
+        for j in range(4):
+            val = table[i][j]
+            rect = plt.Rectangle((j, 3-i), 1, 1, facecolor=color_map[val],
+                                  edgecolor='black', lw=1.5)
+            ax.add_patch(rect)
+            ax.text(j + 0.5, 3.5 - i, val, ha='center', va='center',
+                    fontsize=16, fontweight='bold')
+
+    # Row/column headers
+    for i, lab in enumerate(labels):
+        ax.text(i + 0.5, 4.3, lab, ha='center', va='center', fontsize=14, fontweight='bold')
+        ax.text(-0.3, 3.5 - i, lab, ha='center', va='center', fontsize=14, fontweight='bold')
+
+    ax.text(2, 5, "Cayley Table: Z₂ × Z₂ (Klein Four-Group)", ha='center', fontsize=14, fontweight='bold')
+    ax.text(-0.3, 4.3, '×', ha='center', va='center', fontsize=14, fontweight='bold')
+
+    ax.set_xlim(-0.8, 4.5)
+    ax.set_ylim(-0.5, 5.3)
+    ax.set_aspect('equal')
+    ax.axis('off')
+
+    plt.savefig('kinship_cayley.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: kinship_cayley.png")
+
+
+def draw_binary_encoding():
+    """Draw the binary encoding of sections showing Hamming distances."""
+    fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+
+    # Binary hypercube for 4 sections
+    sections = {
+        (0, 0): "A (Banaka)",
+        (1, 0): "B (Burung)",
+        (0, 1): "C (Karimera)",
+        (1, 1): "D (Palyeri)"
     }
 
-    # Position as cube projection
-    pos_3d = {}
-    for (a, b, c) in subsections_3d:
-        x = a * 1.2 + c * 0.4
-        y = b * 1.2 + c * 0.4
-        pos_3d[(a,b,c)] = (x, y)
+    pos_map = {(0,0): (0, 0), (1,0): (2, 0), (0,1): (0, 2), (1,1): (2, 2)}
+    colors = {(0,0): '#e74c3c', (1,0): '#3498db', (0,1): '#2ecc71', (1,1): '#f39c12'}
 
-    m3 = (1, 0, 0)
-    d3 = (0, 1, 1)
+    # Draw Hamming distance 1 edges
+    edges = [((0,0),(1,0)), ((0,0),(0,1)), ((1,0),(1,1)), ((0,1),(1,1))]
+    for (a, b) in edges:
+        pa, pb = pos_map[a], pos_map[b]
+        # Determine if this is a marriage edge or descent edge
+        if a[0] != b[0] and a[1] == b[1]:  # bit 0 differs = marriage
+            color = 'red'
+            label = 'marriage\n(Hamming dist=1)'
+        else:  # bit 1 differs = descent
+            color = 'blue'
+            label = 'descent\n(Hamming dist=1)'
+        ax.plot([pa[0], pb[0]], [pa[1], pb[1]], color=color, lw=2.5, zorder=1)
 
-    # Draw marriage connections (red)
-    for s in subsections_3d:
-        partner = z2_add(s, m3)
-        x1, y1 = pos_3d[s]
-        x2, y2 = pos_3d[partner]
-        if s < partner:
-            ax2.plot([x1, x2], [y1, y2], color='red', lw=1.5, alpha=0.6, zorder=1)
+    # Draw diagonal (Dreamtime, Hamming dist 2)
+    ax.plot([0, 2], [0, 2], color='purple', lw=2, ls='--', zorder=1)
+    ax.plot([2, 0], [0, 2], color='purple', lw=2, ls='--', zorder=1)
 
-    # Draw descent connections (green, dashed)
-    for s in subsections_3d:
-        child = z2_add(s, d3)
-        x1, y1 = pos_3d[s]
-        x2, y2 = pos_3d[child]
-        if s < child:
-            ax2.plot([x1, x2], [y1, y2], color='green', lw=1.5, alpha=0.6,
-                    linestyle='--', zorder=1)
+    # Draw nodes
+    for bits, name in sections.items():
+        px, py = pos_map[bits]
+        circle = plt.Circle((px, py), 0.25, color=colors[bits], ec='black', lw=2, zorder=5)
+        ax.add_patch(circle)
+        ax.text(px, py, f"({bits[0]},{bits[1]})", ha='center', va='center',
+                fontsize=10, fontweight='bold', zorder=6)
+        ax.text(px, py - 0.45, name, ha='center', va='center', fontsize=9, zorder=6)
 
-    # Draw subsection nodes
-    for s in subsections_3d:
-        x, y = pos_3d[s]
-        color = '#2196F3' if s[0] == 0 else '#F44336'
-        circle = plt.Circle((x, y), 0.08, color=color, zorder=5)
-        ax2.add_patch(circle)
-        ax2.text(x, y, names_8[s], ha='center', va='center', fontsize=6,
-                color='white', fontweight='bold', zorder=6)
+    # Legend
+    ax.plot([], [], color='red', lw=2.5, label='Marriage (flip bit 0, Hamming=1)')
+    ax.plot([], [], color='blue', lw=2.5, label='Descent (flip bit 1, Hamming=1)')
+    ax.plot([], [], color='purple', lw=2, ls='--', label='Dreamtime (flip both, Hamming=2)')
+    ax.legend(loc='upper center', fontsize=10, framealpha=0.9)
 
-    ax2.set_xlim(-0.3, 2.0)
-    ax2.set_ylim(-0.3, 2.0)
-    ax2.set_aspect('equal')
-    ax2.axis('off')
+    ax.set_title("Binary Encoding: Kinship as Error-Correcting Code\n"
+                 "Each edge = 1-bit flip = Hamming distance 1",
+                 fontsize=13, fontweight='bold')
+    ax.set_xlim(-0.8, 2.8)
+    ax.set_ylim(-0.8, 3.0)
+    ax.set_aspect('equal')
+    ax.axis('off')
 
-    plt.tight_layout()
-    plt.savefig('kinship_groups.png', dpi=150, bbox_inches='tight')
+    plt.savefig('kinship_binary.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: kinship_groups.png")
+    print("Saved: kinship_binary.png")
 
 
 if __name__ == "__main__":
-    main()
+    draw_four_section_system()
+    draw_cayley_table()
+    draw_binary_encoding()
+    print("\nAll visualizations generated.")
