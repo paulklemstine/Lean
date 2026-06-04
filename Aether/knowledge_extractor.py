@@ -673,8 +673,20 @@ Research mode: {concept.research_mode}
                 except Exception as e:
                     last_error = e
                     if attempt < max_retries:
-                        wait = 5 * (attempt + 1)
-                        print(f"[Dispatch] Attempt {attempt+1}/{max_retries+1} failed: {e}, retrying in {wait}s...")
+                        # Rate-limit errors get a much longer backoff (60s)
+                        # Other transient errors get the standard escalating backoff
+                        err_str = str(e).lower()
+                        is_rate_limit = (
+                            "too many requests" in err_str
+                            or "rate limit" in err_str
+                            or "429" in err_str
+                        )
+                        if is_rate_limit:
+                            wait = 60
+                            print(f"[Dispatch] Attempt {attempt+1}/{max_retries+1} RATE-LIMITED: {e}, retrying in {wait}s...")
+                        else:
+                            wait = 5 * (attempt + 1)
+                            print(f"[Dispatch] Attempt {attempt+1}/{max_retries+1} failed: {e}, retrying in {wait}s...")
                         await asyncio.sleep(wait)
         finally:
             api_mod.DEFAULT_TIMEOUT_SECONDS = original_timeout
@@ -747,6 +759,21 @@ Research mode: {concept.research_mode}
                         pass
                     completed.append(job)
                 elif status == "RUNNING":
+                    # Stall detection: if project has been at 0% for >10 min, warn
+                    try:
+                        rlog = ReasoningLog(self.workspace, pid, job.job_id)
+                        summary = rlog.get_summary()
+                        if summary.get("n_checkpoints", 0) >= 2:
+                            checkpoints = rlog._data["checkpoints"]
+                            first = checkpoints[0]
+                            last = checkpoints[-1]
+                            if (last["percent_complete"] == 0
+                                and last["elapsed_seconds"] - first["elapsed_seconds"] > 600):
+                                print(f"[Poll] {pid[:8]} STALL WARNING: at 0% for {last['elapsed_seconds']/60:.0f}min")
+                            elif last["percent_complete"] == first["percent_complete"] and last["elapsed_seconds"] - first["elapsed_seconds"] > 1200:
+                                print(f"[Poll] {pid[:8]} STALL WARNING: at {last['percent_complete']:.0f}% for {last['elapsed_seconds']/60:.0f}min")
+                    except Exception:
+                        pass
                     print(f"[Poll] {pid[:8]} in progress (RUNNING, {percent:.0f}%)")
             except Exception as e:
                 print(f"[Poll] {pid[:8]} error: {e}")

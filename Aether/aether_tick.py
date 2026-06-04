@@ -390,6 +390,17 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
                 if stats.get("avg_quality", 0) > 0:
                     print(f"[Weights] {dom}: avg_quality={stats['avg_quality']:.3f} "
                           f"n={stats.get('count',0)} sorry={stats.get('avg_sorry_density',0)*100:.1f}%")
+        # Reasoning log stats: how is Aristotle actually behaving?
+        try:
+            rlog_stats = ca.get_reasoning_log_stats()
+            if rlog_stats.get("total_projects", 0) > 0:
+                print(f"[Reasoning] {rlog_stats['total_projects']} projects: "
+                      f"{rlog_stats['completion_rate']:.0%} completed, "
+                      f"avg {rlog_stats['avg_duration_minutes']:.1f}min, "
+                      f"{rlog_stats['total_stalls']} stalls, "
+                      f"avg {rlog_stats['avg_checkpoints_per_project']:.1f} checkpoints/project")
+        except Exception:
+            pass
     except Exception as e:
         print(f"[Decay] Quality decay detection failed: {e}")
 
@@ -572,6 +583,16 @@ def rebuild_commit_push() -> bool:
             if src.exists():
                 import shutil
                 shutil.copy2(src, status_dir / status_file)
+        # Write reasoning log stats for dashboard (separate file to keep cycle_analytics small)
+        try:
+            from cycle_analytics import CycleAnalytics
+            ca = CycleAnalytics(workspace)
+            rlog_stats = ca.get_reasoning_log_stats()
+            (status_dir / "reasoning_log_stats.json").write_text(
+                _json.dumps(rlog_stats, indent=2, sort_keys=True)
+            )
+        except Exception:
+            pass
         # Write lightweight last_update.json for live dashboard polling
         import json as _json
         (status_dir / "last_update.json").write_text(
