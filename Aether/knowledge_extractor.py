@@ -311,6 +311,22 @@ class KnowledgeExtractor:
         fd_manager = FutureDirectionsManager(self.workspace)
         recent_domain_quality = fd_manager.get_recent_domain_quality(n=10, memory=self.memory)
 
+        # Merge cycle_analytics quality data for adaptive domain weighting
+        try:
+            from cycle_analytics import CycleAnalytics
+            ca = CycleAnalytics(self.workspace)
+            domain_stats = ca.get_domain_stats()
+            for domain, stats in domain_stats.items():
+                if stats.get("avg_quality", 0) > 0:
+                    # Blend analytics quality with memory quality
+                    # Analytics gets 50% weight if both exist, 100% if only analytics
+                    if domain in recent_domain_quality:
+                        recent_domain_quality[domain] = 0.5 * recent_domain_quality[domain] + 0.5 * stats["avg_quality"]
+                    else:
+                        recent_domain_quality[domain] = stats["avg_quality"]
+        except Exception:
+            pass  # cycle_analytics not available, use memory-only quality
+
         # Try domain-filtered selection first, fall back to any available
         effective_filter = domain_filter or loop_result['domain']
         best_dir = fd_manager.select_direction_weighted(domain_filter=effective_filter, recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer, exclude_domains=exclude_domains)

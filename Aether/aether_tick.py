@@ -252,9 +252,15 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         for d in declining:
             print(f"[⚠️ Decay] {d['domain']}: recent_avg={d['recent_avg']:.3f} "
                   f"prior_avg={d['prior_avg']:.3f} delta={d['delta']:.3f} (n={d['count']})")
-            # Reduce weight of declining domains in future dispatch
-            # This is informational only for now — the direction weighting
-            # already considers quality_score per direction
+            # Adaptive: cycle_analytics quality data is now merged into
+            # recent_domain_quality in discover(), which feeds select_direction_weighted()
+        # Log current domain quality weights from analytics
+        domain_stats = ca.get_domain_stats()
+        if domain_stats:
+            for dom, stats in sorted(domain_stats.items(), key=lambda x: x[1].get("avg_quality", 0)):
+                if stats.get("avg_quality", 0) > 0:
+                    print(f"[Weights] {dom}: avg_quality={stats['avg_quality']:.3f} "
+                          f"n={stats.get('count',0)} sorry={stats.get('avg_sorry_density',0)*100:.1f}%")
     except Exception as e:
         print(f"[Decay] Quality decay detection failed: {e}")
 

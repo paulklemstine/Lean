@@ -151,6 +151,12 @@
                 <div class="no-data">Loading...</div>
             </div>
         </div>
+        <!-- Quality Trend Chart -->
+        <div class="card full-width">
+            <h2>📈 Quality Trend by Domain</h2>
+            <canvas id="quality-chart" width="800" height="300" style="width:100%;max-height:300px"></canvas>
+            <div id="chart-legend" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;font-size:0.75rem;color:var(--dim)"></div>
+        </div>
     </div>
     <script>
     const COLORS = {
@@ -370,6 +376,69 @@
                     <div class="detail">seed: ${seedAvail} · organic: ${organicAvail} · fresh: ${freshAvail}</div>
                 </div>`;
                 document.getElementById('lifecycle').innerHTML = lH;
+            }
+
+            // Quality trend line chart
+            if (anR && anR.ok) {
+                const recs = (await anR.json()).records || [];
+                // Group by domain, collect quality scores with cycle numbers
+                const domainData = {};
+                recs.forEach(r => {
+                    if (r.domain && r.quality_score > 0) {
+                        if (!domainData[r.domain]) domainData[r.domain] = [];
+                        domainData[r.domain].push({cycle: r.cycle_n || domainData[r.domain].length, q: r.quality_score});
+                    }
+                });
+                // Draw chart on canvas
+                const canvas = document.getElementById('quality-chart');
+                if (canvas && Object.keys(domainData).length > 0) {
+                    const ctx = canvas.getContext('2d');
+                    const W = canvas.width, H = canvas.height;
+                    const pad = {l:40, r:10, t:10, b:30};
+                    const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
+                    // Find ranges
+                    let allCycles = [], allQ = [];
+                    Object.values(domainData).forEach(pts => pts.forEach(p => { allCycles.push(p.cycle); allQ.push(p.q); }));
+                    const minC = Math.min(...allCycles), maxC = Math.max(...allCycles);
+                    const minQ = 0, maxQ = Math.max(...allQ, 1);
+                    const domainList = Object.keys(domainData).sort();
+                    // Clear
+                    ctx.fillStyle = '#131a2b'; ctx.fillRect(0, 0, W, H);
+                    // Grid
+                    ctx.strokeStyle = '#1e2d4a'; ctx.lineWidth = 0.5;
+                    for (let q = minQ; q <= maxQ; q += 0.1) {
+                        const y = pad.t + plotH * (1 - (q - minQ) / (maxQ - minQ));
+                        ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
+                    }
+                    // Y axis labels
+                    ctx.fillStyle = '#64748b'; ctx.font = '10px Inter, sans-serif'; ctx.textAlign = 'right';
+                    for (let q = minQ; q <= maxQ; q += 0.2) {
+                        const y = pad.t + plotH * (1 - (q - minQ) / (maxQ - minQ));
+                        ctx.fillText(q.toFixed(1), pad.l - 4, y + 3);
+                    }
+                    // Lines per domain
+                    const legendEl = document.getElementById('chart-legend');
+                    let legendH = '';
+                    domainList.forEach((dom, i) => {
+                        const color = COLORS[dom] || '#64748b';
+                        const pts = domainData[dom];
+                        ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.beginPath();
+                        pts.forEach((p, j) => {
+                            const x = pad.l + (maxC > minC ? (p.cycle - minC) / (maxC - minC) : 0.5) * plotW;
+                            const y = pad.t + plotH * (1 - (p.q - minQ) / (maxQ - minQ));
+                            j === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                        });
+                        ctx.stroke();
+                        // Dots
+                        pts.forEach(p => {
+                            const x = pad.l + (maxC > minC ? (p.cycle - minC) / (maxC - minC) : 0.5) * plotW;
+                            const y = pad.t + plotH * (1 - (p.q - minQ) / (maxQ - minQ));
+                            ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI*2); ctx.fill();
+                        });
+                        legendH += `<span style="color:${color}">● ${dom}</span>`;
+                    });
+                    legendEl.innerHTML = legendH;
+                }
             }
             document.getElementById('refresh-info').textContent = `Updated ${new Date().toLocaleTimeString()} · 60s refresh`;
         } catch(e) { console.error(e); document.getElementById('refresh-info').textContent = `Error: ${e.message}`; }
