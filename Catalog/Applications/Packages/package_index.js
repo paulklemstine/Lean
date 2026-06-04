@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "35340a8e",
     "filename": "vampire_numbers_and_other_numerical_monsters_a_bes.json",
     "pkg_num": 353,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.40456000000000003,
     "title": "Digit-Morphic Factorizations: A Base-b Theory of Arithmetic Creatures"
   },
   {
@@ -11367,8 +11367,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "vampire_numbers_and_other_numerical_monsters_a_bes",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.40456000000000003,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Digit-Morphic Factorizations: A Base-b Theory of Arithmetic Creatures"
     }
