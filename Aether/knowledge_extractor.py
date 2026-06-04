@@ -505,9 +505,29 @@ class KnowledgeExtractor:
         # the complete artifact set: Lean + demo + paper
         augmented_prompt = self._augment_prompt_with_deliverables(base_prompt, job.concept)
         job.prompt = augmented_prompt
-        job.prompt_version = "v3"  # Track which prompt version was used
 
-        print(f"[Dispatch] prompt length: {len(augmented_prompt)} chars ({job.prompt_version})")
+        # A/B test v3 vs v4: alternate based on job_id hash for even distribution
+        import hashlib
+        if job.job_id:
+            v_indicator = int(hashlib.md5(job.job_id.encode()).hexdigest(), 16) % 2
+        else:
+            v_indicator = job.cycle_n % 2
+        job.prompt_version = "v4" if v_indicator == 0 else "v3"
+        # Re-build with the chosen version
+        if job.prompt_version == "v4":
+            base_prompt_v4 = self.pi_agent.write_aristotle_prompt(
+                concept=job.concept,
+                catalog_references=refs,
+                catalog_context=catalog_context,
+                recent_successes=[{'concept_title': r.concept_title, 'domain': r.domain, 'quality': r.proof_quality} for r in self.memory._cache[-3:]],
+                theorem_context=theorem_context,
+                insight_extractor=self.insight_extractor,
+                research_journal=self.research_journal if hasattr(self, 'research_journal') else None,
+                prompt_version="v4",
+            )
+            job.prompt = self._augment_prompt_with_deliverables(base_prompt_v4, job.concept)
+
+        print(f"[Dispatch] prompt length: {len(job.prompt)} chars ({job.prompt_version})")
 
         if dry_run:
             print(f"[Dry Run] Would dispatch to Aristotle:")
@@ -762,6 +782,7 @@ Research mode: {concept.research_mode}
                     # Stall detection: warn if a project is RUNNING for too long.
                     # Note: Aristotle SDK doesn't expose percent_complete (always 0),
                     # so we use elapsed time as the sole signal.
+                    stalled = False
                     try:
                         rlog = ReasoningLog(self.workspace, pid, job.job_id)
                         summary = rlog.get_summary()
@@ -772,9 +793,28 @@ Research mode: {concept.research_mode}
                             elapsed = last["elapsed_seconds"] - first["elapsed_seconds"]
                             if elapsed > 5400:  # 90 minutes RUNNING is a stall
                                 print(f"[Poll] {pid[:8]} STALL WARNING: RUNNING for {elapsed/60:.0f}min")
+                            # Hard cap at 3 hours: force-fail the project
+                            if elapsed > 10800:  # 3 hours
+                                print(f"[Poll] {pid[:8]} HARD CAP: cancelling after {elapsed/60:.0f}min")
+                                job.status = "failed"
+                                job.error_message = f"Cancelled after {elapsed/60:.0f}min (3h cap)"
+                                self.failed_count += 1
+                                # Quarantine the direction
+                                self._quarantine_direction_for_job(job, days=7)
+                                # Record final reasoning log entry
+                                try:
+                                    rlog.record_completion(
+                                        status="TIMEOUT", percent=0, has_files=False,
+                                        error=job.error_message,
+                                    )
+                                except Exception:
+                                    pass
+                                completed.append(job)
+                                stalled = True
                     except Exception:
                         pass
-                    print(f"[Poll] {pid[:8]} in progress (RUNNING, {percent:.0f}%)")
+                    if not stalled:
+                        print(f"[Poll] {pid[:8]} in progress (RUNNING, {percent:.0f}%)")
             except Exception as e:
                 print(f"[Poll] {pid[:8]} error: {e}")
 

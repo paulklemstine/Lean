@@ -1547,6 +1547,103 @@ class PiAgentClient:
     # Dynamic prompt writing
     # ------------------------------------------------------------------
 
+    def _build_v3_depth_requirements(self) -> str:
+        """v3 depth requirements: novel mathematical structures + PEGB."""
+        return textwrap.dedent("""\
+            ## Depth Requirements (MANDATORY — WORLD-CLASS STANDARD)
+
+            Your output must satisfy ALL of these. This is not incremental work.
+            This is the frontier. Act accordingly.
+
+            1. **NO trivial proofs**: Do NOT prove statements by `native_decide`, `decide`,
+               `norm_num`, or `rfl` unless the statement itself is genuinely important.
+               If the only proof tactic is enumeration, the theorem is not worth formalizing.
+
+            2. **DEFINE a novel mathematical structure** (CORE REQUIREMENT): Your cycle
+               must introduce at least one NEW mathematical object — a structure, a
+               construction, a notion, a category, an operator — that does not already
+               exist in the Catalog or in standard references. This is the seed of new
+               mathematics. The definition must be substantial (not a one-liner renaming
+               of a known concept) and must come with at least 3 theorems that PROVE
+               non-obvious properties of the new structure.
+
+               Think like Grothendieck defining schemes, or Rota defining matroids, or
+               Voiculescu defining free probability. The structure is the contribution.
+               The theorems are the evidence that the structure is useful.
+
+               **Critical constraint**: A "novel mathematical structure" must be a
+               genuine mathematical object — a formal construction with a precise
+               definition, ideally with operations or axioms. **Mathematics of X** where
+               X is a real-world phenomenon (memes, dreams, consciousness, art, music,
+               jokes, social networks) is NOT a mathematical structure unless you
+               formalize X as a precise mathematical object first and then prove
+               theorems about THAT object. If you can't formalize X rigorously, pick a
+               different X — choose a topic where the math comes naturally.
+
+            3. **PEGB for every major theorem** (Proof + Example + Generalization + Boundary):
+               For each of your top 3-5 theorems, you MUST produce all four:
+               - **P**roof: A complete, non-trivial Lean 4 proof
+               - **E**xample: A concrete worked example
+               - **G**eneralization: A one-level-up generalization
+               - **B**oundary: A counterexample or limit-case analysis
+
+               A theorem without PEGB is a one-off. A theorem WITH PEGB is a research
+               program. We are building research programs, not collecting isolated facts.
+
+            4. **Conjecture with testable prediction**: State at least one falsifiable
+               conjecture with a clear computational test that could disprove it.
+
+            5. **Cross-connection**: At least one theorem should genuinely connect to
+               or build upon an existing catalog result.
+        """)
+
+    def _build_v4_depth_requirements(self) -> str:
+        """v4 depth requirements: deepen existing catalog results (Cauchy path)."""
+        return textwrap.dedent("""\
+            ## Depth Requirements (MANDATORY — WORLD-CLASS STANDARD)
+
+            Your output must satisfy ALL of these. This is not incremental work.
+            This is the frontier. Act accordingly.
+
+            1. **NO trivial proofs**: Do NOT prove statements by `native_decide`, `decide`,
+               `norm_num`, or `rfl` unless the statement itself is genuinely important.
+               If the only proof tactic is enumeration, the theorem is not worth formalizing.
+
+            2. **DEEPEN an existing catalog result** (CORE REQUIREMENT): Your cycle
+               must take a STRONG, WELL-ESTABLISHED theorem from the Catalog and
+               EXTEND it. Choose ONE of the following:
+               (a) **Generalize** the result to a more abstract or broader setting
+                   (e.g., real numbers → complex, finite groups → topological groups).
+               (b) **Strengthen** the conclusion: drop assumptions, sharpen bounds,
+                   prove a stronger equality where the original was an inequality.
+               (c) **Bridge** to another domain: take a result from domain A and
+                   prove the analog in domain B, showing the deep connection.
+
+               You must produce at least 3 theorems that PROVE non-obvious properties
+               of the generalized/strengthened/bridged result. The contribution is
+               the structural insight that extends what is already known.
+
+               Think like Cauchy generalizing Euler, or Noether extending Hilbert, or
+               Grothendieck's student extending Grothendieck. The contribution is taking
+               a known theorem and showing it's the shadow of a deeper truth.
+
+            3. **PEGB for every major theorem** (Proof + Example + Generalization + Boundary):
+               For each of your top 3-5 theorems, you MUST produce all four:
+               - **P**roof: A complete, non-trivial Lean 4 proof
+               - **E**xample: A concrete worked example showing the extension
+               - **G**eneralization: Why this extension is natural (what's the next level up?)
+               - **B**oundary: Where does the extension break down?
+
+            4. **Cite your sources**: Your ARTICLE.md and RESEARCH_PAPER.md MUST
+               reference the specific catalog results you built upon. Use the
+               references provided in the prompt below.
+
+            5. **Cross-connection**: At least one theorem should build a BRIDGE
+               between the original catalog result and a different mathematical area.
+               The deepening should illuminate something broader, not just be an
+               isolated exercise.
+        """)
+
     def _build_assignment(self, concept: ResearchConcept) -> str:
         """Build a directive assignment section for Aristotle.
 
@@ -1736,75 +1833,13 @@ class PiAgentClient:
         # Depth Requirements: reject trivial mathematics
         # PIVOT: Focus on defining novel mathematical structures, not solving open problems.
         # New math > solving existing puzzles. Each theorem requires PEGB scaffolding.
-        depth_requirements = textwrap.dedent("""\
-            ## Depth Requirements (MANDATORY — WORLD-CLASS STANDARD)
-
-            Your output must satisfy ALL of these. This is not incremental work.
-            This is the frontier. Act accordingly.
-
-            1. **NO trivial proofs**: Do NOT prove statements by `native_decide`, `decide`,
-               `norm_num`, or `rfl` unless the statement itself is genuinely important.
-               If the only proof tactic is enumeration, the theorem is not worth formalizing.
-
-            2. **DEFINE a novel mathematical structure** (CORE REQUIREMENT): Your cycle
-               must introduce at least one NEW mathematical object — a structure, a
-               construction, a notion, a category, an operator — that does not already
-               exist in the Catalog or in standard references. This is the seed of new
-               mathematics. The definition must be substantial (not a one-liner renaming
-               of a known concept) and must come with at least 3 theorems that PROVE
-               non-obvious properties of the new structure.
-
-               Think like Grothendieck defining schemes, or Rota defining matroids, or
-               Voiculescu defining free probability. The structure is the contribution.
-               The theorems are the evidence that the structure is useful.
-
-               **Critical constraint**: A "novel mathematical structure" must be a
-               genuine mathematical object — a formal construction with a precise
-               definition, ideally with operations or axioms. **Mathematics of X** where
-               X is a real-world phenomenon (memes, dreams, consciousness, art, music,
-               jokes, social networks) is NOT a mathematical structure unless you
-               formalize X as a precise mathematical object first and then prove
-               theorems about THAT object. If you can't formalize X rigorously, pick a
-               different X — choose a topic where the math comes naturally.
-
-            3. **PEGB for every major theorem** (Proof + Example + Generalization + Boundary):
-               For each of your top 3-5 theorems, you MUST produce all four:
-               - **P**roof: A complete, non-trivial Lean 4 proof
-               - **E**xample: A concrete worked example (specific instance, computed values,
-                 or a small case that illustrates the theorem)
-               - **G**eneralization: A one-level-up generalization (the same theorem in a
-                 broader or more abstract setting — what is the natural next step?)
-               - **B**oundary: A counterexample or limit-case analysis (where does the
-                 theorem BREAK DOWN? What are the necessary conditions?)
-
-               A theorem without PEGB is a one-off. A theorem WITH PEGB is a research
-               program. We are building research programs, not collecting isolated facts.
-
-               **Worked example of a PEGB-compliant theorem:**
-
-               Suppose you define a "graph of divisibility": for integers n, vertices
-               are positive integers, edges connect m, n iff m | n and n/m is prime.
-               - **P** (Proof): "theorem graph_connected_iff : is_connected (divisibility_graph n) ↔ n > 1"
-                 — connect this to existing graph theory and prove it by induction on n
-               - **E** (Example): "#eval (divisibility_graph 12)" produces {1,2,3,4,6,12} with edges
-                 showing exactly which prime-divisor chains exist; "example small_case : (divisibility_graph 6).adj 1 = [2, 3]"
-               - **G** (Generalization): "theorem generalizes_to_lattice : (divisibility_graph n) is a sublattice of the divisibility lattice" — show the same structure in the broader lattice-theoretic setting
-               - **B** (Boundary): "theorem fails_at_zero : ¬ is_connected (divisibility_graph 0)" and
-                 "theorem fails_at_one : ¬ is_connected (divisibility_graph 1)" — the theorem REQUIRES n > 1; explain why
-                 the structure breaks at 0 and 1
-
-               This is a real research contribution: a new structure (divisibility_graph),
-               a connect theorem to graph theory (P+E), a generalization to lattice theory
-               (G), and a boundary analysis showing where the structure fails (B).
-
-            4. **Conjecture with testable prediction**: State at least one falsifiable
-               conjecture with a clear computational test that could disprove it.
-
-            5. **Cross-connection**: At least one theorem should genuinely connect to
-               or build upon an existing catalog result. Generic new math that doesn't
-               talk to anything is not a breakthrough — it's a hobby. The new structure
-               should illuminate something that already exists.
-        """)
+        # v3: novel structures (Grothendieck path)
+        # v4: deepen existing catalog results (Cauchy path)
+        prompt_version = prompt_version or "v3"
+        if prompt_version == "v4":
+            depth_requirements = self._build_v4_depth_requirements()
+        else:
+            depth_requirements = self._build_v3_depth_requirements()
 
         # Build the streamlined prompt
         lean_section = ""
