@@ -78,6 +78,7 @@ LOWER_TO_CATALOG_DIR = {
     "computation": "Computation",
     "cryptography": "Cryptography",
     "eml": "Applications",  # EML merged into Applied super-domain
+    "speculative": "Novelty",  # Speculative merged into Novelty (philosophy doesn't produce math)
     "geometry": "Geometry",
     "logic": "Logic",
     "machinelearning": "MachineLearning",
@@ -87,7 +88,7 @@ LOWER_TO_CATALOG_DIR = {
     "physics": "Physics",
     "pythagorean": "Pythagorean",
     "shared": "Shared",
-    "speculative": "Speculative",
+    "speculative": "Novelty",  # Speculative merged into Novelty
     "tropical": "Tropical",
     # research_domains.json domain IDs -> Catalog dirs
     "factoring": "Cryptography",
@@ -262,15 +263,19 @@ def normalize_domain(domain: str) -> str:
 
     Handles lowercase, research_domains.json IDs, and concept.domain values.
     Falls back to checking DOMAIN_DIRS directly, then title case.
+    Speculative is merged into Novelty.
     """
     if not domain:
-        return "Speculative"
+        return "Novelty"  # Speculative is gone, default to Novelty
 
     # Direct match with DOMAIN_DIRS (already correct case)
     if domain in DOMAIN_DIRS:
         # EML is deprecated — route to Applications
         if domain == "EML":
             return "Applications"
+        # Speculative is deprecated — route to Novelty
+        if domain == "Speculative":
+            return "Novelty"
         return domain
 
     # Check the mapping
@@ -283,9 +288,11 @@ def normalize_domain(domain: str) -> str:
     if title_cased in DOMAIN_DIRS:
         if title_cased == "EML":
             return "Applications"
+        if title_cased == "Speculative":
+            return "Novelty"  # Speculative merged into Novelty
         return title_cased
 
-    return "Speculative"
+    return "Novelty"  # Default fallback is also Novelty, not Speculative
 
 # Artifact type detection patterns
 ARTIFACT_PATTERNS = {

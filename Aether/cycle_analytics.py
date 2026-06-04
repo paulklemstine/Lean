@@ -38,6 +38,7 @@ class CycleRecord:
     outcome_quality: float = 0.0
     files_integrated: int = 0
     failed: bool = False  # True if cycle produced no output (0 files, 0 theorems)
+    prompt_version: str = "v1"  # "v1" (original) | "v2" (master-class) | "v3" (PEGB+structures)
     adversarial_agreement: str = ""  # "agree", "tiebreak", "disagree", or "" (not run)
     adversarial_delta: float = 0.0   # delta between primary and adversarial scores
     barrier_count: int = 0
@@ -63,6 +64,7 @@ class CycleAnalytics:
     """Persistent store and analysis of per-cycle research metrics."""
 
     MAX_RECORDS = 2000  # Keep at most 2000 records, prune oldest
+    CURRENT_PROMPT_VERSION = "v3"  # PEGB + novel structures + stricter Novelty
 
     def __init__(self, workspace: Path):
         self.workspace = workspace
@@ -179,6 +181,10 @@ class CycleAnalytics:
         if record.files_integrated == 0 and record.theorem_count == 0:
             record.failed = True
 
+        # Tag with current prompt version (or job's version if specified)
+        job_version = getattr(job, "prompt_version", None)
+        record.prompt_version = job_version if job_version else self.CURRENT_PROMPT_VERSION
+
         # Adversarial judging metadata
         adv = getattr(job, "adversarial_result", None)
         if adv and isinstance(adv, dict):
@@ -229,6 +235,43 @@ class CycleAnalytics:
             {"cycle": r.cycle_n, "quality": r.quality_score, "domain": r.domain}
             for r in recent
         ]
+
+    def get_prompt_version_stats(self) -> Dict[str, Dict[str, float]]:
+        """Get quality statistics broken down by prompt version.
+
+        Returns dict mapping version (e.g. "v1", "v2", "v3") to:
+        - count: number of successful cycles
+        - avg_quality: average quality score
+        - best: best cycle quality
+        - recent_count: cycles in last 10
+        - recent_avg: average quality in last 10
+        """
+        from collections import defaultdict
+        per_version = defaultdict(list)
+        recent_per_version = defaultdict(list)
+        sorted_records = sorted(self.successful_records, key=lambda r: r.timestamp or "")
+
+        for r in sorted_records:
+            v = r.prompt_version or "unknown"
+            per_version[v].append(r.quality_score)
+
+        last_10 = sorted_records[-10:]
+        for r in last_10:
+            v = r.prompt_version or "unknown"
+            recent_per_version[v].append(r.quality_score)
+
+        result = {}
+        for v, scores in per_version.items():
+            result[v] = {
+                "count": len(scores),
+                "avg_quality": round(sum(scores) / len(scores), 4) if scores else 0.0,
+                "best": round(max(scores), 4) if scores else 0.0,
+                "recent_count": len(recent_per_version.get(v, [])),
+                "recent_avg": round(
+                    sum(recent_per_version[v]) / len(recent_per_version[v]), 4
+                ) if recent_per_version.get(v) else 0.0,
+            }
+        return result
 
     def get_domain_stats(self) -> Dict[str, Dict[str, float]]:
         """Get per-domain statistics."""
