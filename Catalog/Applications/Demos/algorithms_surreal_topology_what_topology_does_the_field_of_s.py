@@ -1,194 +1,211 @@
 #!/usr/bin/env python3
 """
-Algorithms for Surreal Topology: Order Gap Detection and Archimedean Testing
+algorithms.py — Algorithms for Gap Spectrum Analysis
 
-Implements the key algorithmic ideas from the formal proofs:
-1. Dedekind cut construction for √2 in ℚ
-2. Gap convergence sequences (Newton-like iteration)
-3. Archimedean property testing for number systems
+Type-hinted implementations of the core algorithms used in the
+Gap Spectrum theory of ordered continua.
 """
 
 from fractions import Fraction
-from typing import Callable, List, Optional, Tuple
+from typing import List, Tuple, Optional, Set, Dict
+from dataclasses import dataclass
+import math
 
 
-def dedekind_cut_sqrt2(q: Fraction) -> bool:
-    """Classify a rational number relative to the √2 Dedekind cut.
+@dataclass
+class DedekindGap:
+    """A Dedekind gap in a finite ordered set, specified by its position."""
+    lower_bound: float  # sup of lower cut
+    upper_bound: float  # inf of upper cut
     
-    Returns True if q is in the lower cut (q < 0 or q² < 2).
-    Returns False if q is in the upper cut (q ≥ 0 and q² ≥ 2).
+    @property
+    def width(self) -> float:
+        return self.upper_bound - self.lower_bound
     
-    Time complexity: O(1) arithmetic operations on Fraction.
+    def contains(self, x: float) -> bool:
+        """Check if x falls in this gap."""
+        return self.lower_bound < x < self.upper_bound
+
+
+@dataclass
+class GapSpectrum:
+    """The gap spectrum of a finite ordered set."""
+    gaps: List[DedekindGap]
+    total_points: int
+    
+    @property
+    def gap_count(self) -> int:
+        return len(self.gaps)
+    
+    @property
+    def gap_density(self) -> float:
+        """Ratio of gaps to intervals between consecutive points."""
+        if self.total_points <= 1:
+            return 0.0
+        return self.gap_count / (self.total_points - 1)
+    
+    def is_gap_free(self) -> bool:
+        return self.gap_count == 0
+
+
+def dyadic_approximation(n: int) -> List[Fraction]:
     """
-    if q < 0:
-        return True
-    return q * q < 2
-
-
-def lower_cut_iterate(q: Fraction) -> Fraction:
-    """Given q ≥ 0 with q² < 2, find q' > q with q'² < 2.
+    Generate the day-n dyadic approximation to surreal numbers.
     
-    Formula: q' = (2q + 2)/(q + 2)
+    Returns sorted list of {k/2^n : |k| ≤ 2^n}.
     
-    Correctness: q'² < 2 ⟺ 4(q+1)²/(q+2)² < 2 ⟺ 2(q+1)² < (q+2)²
-                ⟺ 2q² + 4q + 2 < q² + 4q + 4 ⟺ q² < 2 ✓
-    
-    Monotonicity: q' > q ⟺ 2q + 2 > q(q+2) = q² + 2q ⟺ 2 > q² ✓
+    Complexity: O(2^n log 2^n) = O(n · 2^n)
     """
-    return (2 * q + 2) / (q + 2)
+    denom: int = 2 ** n
+    return sorted([Fraction(k, denom) for k in range(-denom, denom + 1)])
 
 
-def upper_cut_iterate(q: Fraction) -> Fraction:
-    """Given q > 0 with q² > 2, find q' < q with q'² > 2.
-    
-    Formula: q' = (q² + 2)/(2q)  [Newton's method step]
-    
-    Correctness: q'² ≥ 2 ⟺ (q²+2)²/(4q²) ≥ 2 ⟺ (q²+2)² ≥ 8q²
-                ⟺ q⁴ + 4q² + 4 ≥ 8q² ⟺ (q²-2)² ≥ 0 ✓ (always)
-    
-    Strict inequality q'² > 2 when q² > 2 (since (q²-2)² > 0).
-    Monotonicity: q' < q ⟺ q²+2 < 2q² ⟺ 2 < q² ✓
+def compute_gap_spectrum(
+    points: List[Fraction],
+    test_irrationals: List[float]
+) -> GapSpectrum:
     """
-    return (q * q + 2) / (2 * q)
-
-
-def converge_to_sqrt2(n_iterations: int = 20) -> Tuple[List[Fraction], List[Fraction]]:
-    """Generate converging sequences from below and above √2.
+    Compute the gap spectrum of a finite ordered set.
     
-    Returns (lower_seq, upper_seq) where:
-    - lower_seq approaches √2 from below (all q² < 2)
-    - upper_seq approaches √2 from above (all q² > 2)
+    Algorithm:
+    1. Sort points (assumed sorted)
+    2. For each consecutive pair (a, b), check if any test irrational falls in (a, b)
+    3. Each such interval with an irrational is a gap
     
-    The gap between consecutive terms shrinks quadratically (Newton's method).
+    Complexity: O(n · m) where n = |points|, m = |test_irrationals|
     """
-    lower: List[Fraction] = [Fraction(1)]
-    upper: List[Fraction] = [Fraction(2)]
-    
-    for _ in range(n_iterations):
-        lower.append(lower_cut_iterate(lower[-1]))
-        upper.append(upper_cut_iterate(upper[-1]))
-    
-    return lower, upper
-
-
-def gap_width_sequence(n_iterations: int = 15) -> List[float]:
-    """Compute the width of the gap at each iteration.
-    
-    Shows quadratic convergence of Newton's method:
-    gap(n+1) ≈ gap(n)² / (2√2)
-    """
-    lower, upper = converge_to_sqrt2(n_iterations)
-    return [float(upper[i] - lower[i]) for i in range(len(lower))]
-
-
-def is_archimedean_test(
-    elements: List[float],
-    positive_unit: float = 1.0,
-    max_multiples: int = 1000
-) -> Tuple[bool, Optional[float]]:
-    """Test the Archimedean property for a finite collection of elements.
-    
-    Checks: for each x in elements, does there exist n such that x ≤ n * positive_unit?
-    
-    Returns (is_archimedean, first_counterexample_or_None).
-    
-    Note: This is always True for finite subsets of ℝ. It becomes meaningful
-    for symbolic/extended number systems.
-    """
-    for x in elements:
-        found = False
-        for n in range(max_multiples + 1):
-            if x <= n * positive_unit:
-                found = True
+    gaps: List[DedekindGap] = []
+    for i in range(len(points) - 1):
+        a, b = float(points[i]), float(points[i + 1])
+        for x in test_irrationals:
+            if a < x < b:
+                gaps.append(DedekindGap(lower_bound=a, upper_bound=b))
                 break
-        if not found:
-            return False, x
-    return True, None
+    return GapSpectrum(gaps=gaps, total_points=len(points))
 
 
-def construct_nat_gap_witness(bound: float) -> dict:
-    """Demonstrate the gap construction from Theorem 3.4.
-    
-    Given a bound b such that n ≤ b for all n (hypothetically),
-    shows the structure of the gap L = {x | ∃n, x < n}.
-    
-    Returns a dictionary describing the gap structure.
+def connected_components_ordered(
+    points: List[Fraction],
+    gaps: GapSpectrum
+) -> List[List[Fraction]]:
     """
-    return {
-        "gap_set_L": "{ x ∈ F | ∃ n : ℕ, x < n }",
-        "gap_complement": "{ x ∈ F | ∀ n : ℕ, n ≤ x }",
-        "L_nonempty_witness": f"0 ∈ L since 0 < 1",
-        "complement_nonempty_witness": f"{bound} ∈ Lᶜ since ∀n, n ≤ {bound}",
-        "L_no_max_proof": "If x < n, then x+1 < n+1, so x+1 ∈ L and x+1 > x",
-        "complement_no_min_proof": "If ∀n, n ≤ y, then ∀n, n+1 ≤ y, so n ≤ y-1, giving y-1 ∈ Lᶜ",
-        "conclusion": "L is an order gap → F is disconnected"
-    }
-
-
-def ordered_field_classification() -> List[dict]:
-    """Classify well-known ordered fields by topological properties.
+    Compute connected components of an ordered set given its gap spectrum.
     
-    Returns a table of ordered fields with their properties.
+    Two points are in the same component iff no gap separates them.
+    
+    Complexity: O(n · g) where n = |points|, g = |gaps|
     """
-    return [
-        {
-            "name": "ℚ (rationals)",
-            "archimedean": True,
-            "dedekind_complete": False,
-            "connected": False,
-            "gap_example": "√2 cut: {q | q < 0 ∨ q² < 2}"
-        },
-        {
-            "name": "ℝ (reals)",
-            "archimedean": True,
-            "dedekind_complete": True,
-            "connected": True,
-            "gap_example": "None (Dedekind complete)"
-        },
-        {
-            "name": "ℚ(√2)",
-            "archimedean": True,
-            "dedekind_complete": False,
-            "connected": False,
-            "gap_example": "∛2 cut"
-        },
-        {
-            "name": "Hyperreals *ℝ",
-            "archimedean": False,
-            "dedekind_complete": False,
-            "connected": False,
-            "gap_example": "Finite/infinite boundary: {x | ∃n, x < n}"
-        },
-        {
-            "name": "Surreals No",
-            "archimedean": False,
-            "dedekind_complete": False,
-            "connected": False,
-            "gap_example": "Gaps at every ordinal birthday"
-        },
+    if not points:
+        return []
+    
+    gap_positions: List[Tuple[float, float]] = [
+        (g.lower_bound, g.upper_bound) for g in gaps.gaps
     ]
+    
+    components: List[List[Fraction]] = [[points[0]]]
+    for i in range(1, len(points)):
+        a, b = float(points[i - 1]), float(points[i])
+        separated = any(a <= lb and ub <= b for lb, ub in gap_positions)
+        if separated:
+            components.append([points[i]])
+        else:
+            components[-1].append(points[i])
+    return components
+
+
+def contraction_homotopy(
+    x: float,
+    t: float
+) -> float:
+    """
+    The contraction homotopy H(x, t) = x · (1 - t).
+    
+    At t=0: H(x, 0) = x (identity)
+    At t=1: H(x, 1) = 0 (constant map to zero)
+    
+    This demonstrates contractibility of ℝ and surreal-like completions.
+    """
+    return x * (1.0 - t)
+
+
+def halving_contraction(
+    x: Fraction,
+    steps: int
+) -> List[Fraction]:
+    """
+    Discrete contraction via repeated halving: x, x/2, x/4, ..., x/2^steps.
+    
+    This is a discrete approximation to the continuous contraction homotopy.
+    Converges to 0 as steps → ∞.
+    """
+    return [x / (2 ** k) for k in range(steps + 1)]
+
+
+def gap_free_check(
+    points: List[Fraction],
+    epsilon: float = 1e-10
+) -> bool:
+    """
+    Check if a finite ordered set is "approximately gap-free" 
+    by verifying no consecutive pair has a gap larger than epsilon.
+    
+    For a truly gap-free (complete) order, gaps can only appear between
+    points, never within them.
+    """
+    for i in range(len(points) - 1):
+        if float(points[i + 1] - points[i]) > epsilon:
+            return False
+    return True
+
+
+def order_isomorphism_map(
+    points: List[Fraction],
+    f: callable
+) -> List[Fraction]:
+    """
+    Apply an order-preserving map to a finite ordered set.
+    
+    Theorem (proved in Lean): order isomorphisms preserve gap-freeness.
+    """
+    return sorted([f(x) for x in points])
+
+
+def convex_open_basis_check(
+    interval: Tuple[Fraction, Fraction],
+    points: List[Fraction]
+) -> bool:
+    """
+    Check if an open interval (a, b) is in the convex open basis.
+    
+    An interval is convex-open iff it is both open and order-convex.
+    Open intervals are always convex-open (proved in Lean as Ioo_mem_convexOpenBasis).
+    """
+    a, b = interval
+    return a < b  # Open intervals (a, b) with a < b are always in the basis
+
+
+def archimedean_embedding_rational(q: Fraction) -> float:
+    """
+    The canonical embedding ℚ → ℝ.
+    
+    Theorem (proved in Lean): Every Archimedean ordered field embeds
+    into ℝ via a strict order-preserving ring homomorphism.
+    """
+    return float(q)
 
 
 if __name__ == "__main__":
-    # Demo: convergence to √2
-    print("Convergence to √2:")
-    lower, upper = converge_to_sqrt2(10)
-    for i in range(min(8, len(lower))):
-        gap = float(upper[i] - lower[i])
-        print(f"  Step {i}: [{float(lower[i]):.15f}, {float(upper[i]):.15f}]  gap = {gap:.2e}")
+    # Quick test
+    day3 = dyadic_approximation(3)
+    sqrt2 = math.sqrt(2)
+    spectrum = compute_gap_spectrum(day3, [sqrt2, -sqrt2])
+    print(f"Day 3: {spectrum.total_points} points, {spectrum.gap_count} gaps")
+    print(f"Gap-free: {spectrum.is_gap_free()}")
+    print(f"Gap density: {spectrum.gap_density:.3f}")
     
-    print()
+    comps = connected_components_ordered(day3, spectrum)
+    print(f"Connected components: {len(comps)}")
     
-    # Demo: gap width convergence
-    print("Gap width (quadratic convergence):")
-    widths = gap_width_sequence(10)
-    for i, w in enumerate(widths[:8]):
-        print(f"  Step {i}: {w:.2e}")
-    
-    print()
-    
-    # Demo: classification table
-    print("Ordered Field Classification:")
-    for f in ordered_field_classification():
-        status = "CONNECTED" if f["connected"] else "DISCONNECTED"
-        print(f"  {f['name']:<20s} Arch={f['archimedean']!s:<6s} Complete={f['dedekind_complete']!s:<6s} → {status}")
+    # Test contraction
+    path = halving_contraction(Fraction(3, 1), 5)
+    print(f"Contraction of 3: {[float(x) for x in path]}")
