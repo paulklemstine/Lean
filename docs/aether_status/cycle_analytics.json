@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T14:49:03.152562+00:00",
+  "last_updated": "2026-06-04T14:58:23.012909+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -12,6 +12,7 @@
       "files_integrated": 6,
       "job_id": "2d96e4e9",
       "outcome_quality": 0.7264934979757085,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.83,
@@ -45,6 +46,7 @@
       "files_integrated": 6,
       "job_id": "748fe9ae",
       "outcome_quality": 0.709014,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.86,
@@ -78,6 +80,7 @@
       "files_integrated": 6,
       "job_id": "a6bafcf7",
       "outcome_quality": 0.6979460000000001,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.92,
@@ -111,6 +114,7 @@
       "files_integrated": 6,
       "job_id": "61acc2ad",
       "outcome_quality": 0.7351783898305084,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.92,
@@ -144,6 +148,7 @@
       "files_integrated": 7,
       "job_id": "261658b1",
       "outcome_quality": 0.7386323529411765,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.92,
@@ -177,6 +182,7 @@
       "files_integrated": 6,
       "job_id": "9c099a66",
       "outcome_quality": 0.7535647272727273,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -210,6 +216,7 @@
       "files_integrated": 6,
       "job_id": "69f411ed",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.86,
@@ -243,6 +250,7 @@
       "files_integrated": 6,
       "job_id": "e6f6fb5e",
       "outcome_quality": 0.77544,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.92,
@@ -276,6 +284,7 @@
       "files_integrated": 6,
       "job_id": "f3d7f1ed",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.86,
@@ -309,6 +318,7 @@
       "files_integrated": 6,
       "job_id": "0734a5d4",
       "outcome_quality": 0.70133,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.86,
@@ -342,6 +352,7 @@
       "files_integrated": 6,
       "job_id": "c376d672",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.92,
@@ -375,6 +386,7 @@
       "files_integrated": 7,
       "job_id": "0edfd7d6",
       "outcome_quality": 0.7495142857142858,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.89,
@@ -408,6 +420,7 @@
       "files_integrated": 5,
       "job_id": "a2cd9c3a",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.83,
@@ -441,6 +454,7 @@
       "files_integrated": 7,
       "job_id": "8e98d9f6",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.89,
@@ -474,6 +488,7 @@
       "files_integrated": 6,
       "job_id": "965e6ada",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.68,
         "applications": 0.86,
@@ -507,6 +522,7 @@
       "files_integrated": 6,
       "job_id": "b85a7e02",
       "outcome_quality": 0.77047,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.92,
@@ -540,6 +556,7 @@
       "files_integrated": 6,
       "job_id": "b081a92c",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.56,
         "applications": 0.92,
@@ -573,6 +590,7 @@
       "files_integrated": 6,
       "job_id": "43e568b9",
       "outcome_quality": 0.7350323529411764,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -606,6 +624,7 @@
       "files_integrated": 6,
       "job_id": "59ade4e7",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.86,
@@ -639,6 +658,7 @@
       "files_integrated": 6,
       "job_id": "cb07c7c3",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.92,
@@ -672,6 +692,7 @@
       "files_integrated": 6,
       "job_id": "3fec357d",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.83,
@@ -705,6 +726,7 @@
       "files_integrated": 6,
       "job_id": "27b649f9",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -738,6 +760,7 @@
       "files_integrated": 6,
       "job_id": "f41a76e0",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.86,
@@ -771,6 +794,7 @@
       "files_integrated": 5,
       "job_id": "7512203a",
       "outcome_quality": 0.7442731707317074,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.92,
@@ -804,6 +828,7 @@
       "files_integrated": 5,
       "job_id": "0b87bf2b",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.68,
         "applications": 0.92,
@@ -837,6 +862,7 @@
       "files_integrated": 6,
       "job_id": "a1ac928d",
       "outcome_quality": 0.7167103846153846,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.89,
@@ -870,6 +896,7 @@
       "files_integrated": 7,
       "job_id": "ff44a12a",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.89,
@@ -903,6 +930,7 @@
       "files_integrated": 7,
       "job_id": "a4fcb47e",
       "outcome_quality": 0.7226453964194373,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.92,
@@ -936,6 +964,7 @@
       "files_integrated": 7,
       "job_id": "899a7388",
       "outcome_quality": 0.7546084320557491,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.92,
@@ -969,6 +998,7 @@
       "files_integrated": 5,
       "job_id": "b18c0c25",
       "outcome_quality": 0.7294626728110598,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.92,
@@ -1002,6 +1032,7 @@
       "files_integrated": 8,
       "job_id": "ad6b3e03",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -1035,6 +1066,7 @@
       "files_integrated": 6,
       "job_id": "9d1a0bce",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.74,
         "applications": 0.92,
@@ -1069,6 +1101,7 @@
       "files_integrated": 7,
       "job_id": "f11ca07c",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.6799999999999999,
         "applications": 0.92,
@@ -1101,6 +1134,7 @@
       "files_integrated": 0,
       "job_id": "771b94c8",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.92,
@@ -1135,6 +1169,7 @@
       "files_integrated": 6,
       "job_id": "10ffedb6",
       "outcome_quality": 0.6876800000000001,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.92,
@@ -1169,6 +1204,7 @@
       "files_integrated": 5,
       "job_id": "4369a151",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.86,
@@ -1203,6 +1239,7 @@
       "files_integrated": 5,
       "job_id": "73eaf48b",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.86,
@@ -1237,6 +1274,7 @@
       "files_integrated": 0,
       "job_id": "73fe1d36",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.92,
@@ -1271,6 +1309,7 @@
       "files_integrated": 5,
       "job_id": "23b2bc09",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.56,
         "applications": 0.92,
@@ -1305,6 +1344,7 @@
       "files_integrated": 5,
       "job_id": "15dd528a",
       "outcome_quality": 0.36056,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -1339,6 +1379,7 @@
       "files_integrated": 5,
       "job_id": "9fb780aa",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.92,
@@ -1373,6 +1414,7 @@
       "files_integrated": 5,
       "job_id": "9b922fe2",
       "outcome_quality": 0.50264,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.86,
@@ -1407,6 +1449,7 @@
       "files_integrated": 0,
       "job_id": "d346de32",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.92,
@@ -1441,6 +1484,7 @@
       "files_integrated": 5,
       "job_id": "17d2f5c5",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.86,
@@ -1475,6 +1519,7 @@
       "files_integrated": 5,
       "job_id": "af7ecea0",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.92,
@@ -1509,6 +1554,7 @@
       "files_integrated": 5,
       "job_id": "17efa794",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -1543,6 +1589,7 @@
       "files_integrated": 5,
       "job_id": "a463f880",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.83,
@@ -1577,6 +1624,7 @@
       "files_integrated": 5,
       "job_id": "6c603a50",
       "outcome_quality": 0.37240000000000006,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.89,
@@ -1611,6 +1659,7 @@
       "files_integrated": 5,
       "job_id": "6945192b",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.68,
         "applications": 0.74,
@@ -1645,6 +1694,7 @@
       "files_integrated": 5,
       "job_id": "e993c5ba",
       "outcome_quality": 0.69584,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.92,
@@ -1679,6 +1729,7 @@
       "files_integrated": 5,
       "job_id": "303278ac",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.86,
@@ -1713,6 +1764,7 @@
       "files_integrated": 5,
       "job_id": "f4e653bc",
       "outcome_quality": 0.29800000000000004,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.89,
@@ -1747,6 +1799,7 @@
       "files_integrated": 5,
       "job_id": "b3e9b7e9",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.86,
@@ -1781,6 +1834,7 @@
       "files_integrated": 5,
       "job_id": "991ed574",
       "outcome_quality": 0.21336,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.7,
         "applications": 0.89,
@@ -1815,6 +1869,7 @@
       "files_integrated": 5,
       "job_id": "79b36d74",
       "outcome_quality": 0.398,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.56,
         "applications": 0.92,
@@ -1849,6 +1904,7 @@
       "files_integrated": 5,
       "job_id": "032fc0ca",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.92,
@@ -1883,6 +1939,7 @@
       "files_integrated": 5,
       "job_id": "133d7308",
       "outcome_quality": 0.2692,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.56,
         "applications": 0.92,
@@ -1917,6 +1974,7 @@
       "files_integrated": 5,
       "job_id": "243c9e14",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.74,
         "applications": 0.92,
@@ -1951,6 +2009,7 @@
       "files_integrated": 5,
       "job_id": "f0de00a5",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.74,
         "applications": 0.92,
@@ -1985,6 +2044,7 @@
       "files_integrated": 5,
       "job_id": "fc8cab69",
       "outcome_quality": 0.5848,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.74,
         "applications": 0.92,
@@ -2019,6 +2079,7 @@
       "files_integrated": 5,
       "job_id": "5e595b66",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.83,
@@ -2053,6 +2114,7 @@
       "files_integrated": 5,
       "job_id": "7616beb1",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.89,
@@ -2087,6 +2149,7 @@
       "files_integrated": 5,
       "job_id": "c7b7bf70",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.92,
@@ -2121,6 +2184,7 @@
       "files_integrated": 5,
       "job_id": "fa86f605",
       "outcome_quality": 0.33776,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -2155,6 +2219,7 @@
       "files_integrated": 5,
       "job_id": "8a468fe4",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.83,
@@ -2189,6 +2254,7 @@
       "files_integrated": 5,
       "job_id": "f41a2045",
       "outcome_quality": 0.25464,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.83,
@@ -2223,6 +2289,7 @@
       "files_integrated": 5,
       "job_id": "518f6e7e",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.92,
@@ -2257,6 +2324,7 @@
       "files_integrated": 6,
       "job_id": "fe1a7abe",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.68,
         "applications": 0.89,
@@ -2291,6 +2359,7 @@
       "files_integrated": 7,
       "job_id": "b91fb248",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.92,
@@ -2325,6 +2394,7 @@
       "files_integrated": 0,
       "job_id": "b81604b3",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.92,
@@ -2359,6 +2429,7 @@
       "files_integrated": 5,
       "job_id": "23ba7201",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.92,
@@ -2393,6 +2464,7 @@
       "files_integrated": 5,
       "job_id": "66a5790e",
       "outcome_quality": 0.378,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.56,
         "applications": 0.92,
@@ -2427,6 +2499,7 @@
       "files_integrated": 5,
       "job_id": "2ff48d00",
       "outcome_quality": 0.29984,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.92,
@@ -2461,6 +2534,7 @@
       "files_integrated": 5,
       "job_id": "b111c2f3",
       "outcome_quality": 0.2904,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.92,
@@ -2495,6 +2569,7 @@
       "files_integrated": 5,
       "job_id": "98d450be",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.89,
@@ -2529,6 +2604,7 @@
       "files_integrated": 5,
       "job_id": "35340a8e",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -2563,6 +2639,7 @@
       "files_integrated": 5,
       "job_id": "854de7e7",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.92,
@@ -2597,6 +2674,7 @@
       "files_integrated": 5,
       "job_id": "0c08b2ae",
       "outcome_quality": 0.32280000000000003,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.92,
@@ -2631,6 +2709,7 @@
       "files_integrated": 5,
       "job_id": "2d3d7c8e",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.68,
         "applications": 0.92,
@@ -2665,6 +2744,7 @@
       "files_integrated": 5,
       "job_id": "ee20fdf1",
       "outcome_quality": 0.4568,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.92,
@@ -2699,6 +2779,7 @@
       "files_integrated": 5,
       "job_id": "a8359d5c",
       "outcome_quality": 0.31720000000000004,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.92,
@@ -2733,6 +2814,7 @@
       "files_integrated": 5,
       "job_id": "a82a0b88",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.74,
         "applications": 0.83,
@@ -2767,6 +2849,7 @@
       "files_integrated": 0,
       "job_id": "025979e3",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_score": 0.0,
       "sorry_count": 0,
       "sorry_density": 0.0,
@@ -2788,6 +2871,7 @@
       "files_integrated": 5,
       "job_id": "f0f815a3",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.89,
@@ -2822,6 +2906,7 @@
       "files_integrated": 5,
       "job_id": "4eb1539a",
       "outcome_quality": 0.0,
+      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.89,
@@ -2843,6 +2928,41 @@
       "theorem_count": 10,
       "timestamp": "2026-06-04T14:49:03.095789+00:00",
       "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1927,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 42,
+      "domain": "Applications",
+      "duration_seconds": 4370.406730413437,
+      "end_time": 1780585021.658728,
+      "files_integrated": 5,
+      "job_id": "328c2e20",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.88,
+        "applications": 0.62,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5657,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.4185,
+        "novelty": 0.83,
+        "proof_depth": 0.2422,
+        "usefulness": 0.3711
+      },
+      "quality_score": 0.47858,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780580651.2519975,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T14:58:22.959964+00:00",
+      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     }
   ]
 }

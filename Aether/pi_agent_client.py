@@ -1780,6 +1780,23 @@ class PiAgentClient:
                A theorem without PEGB is a one-off. A theorem WITH PEGB is a research
                program. We are building research programs, not collecting isolated facts.
 
+               **Worked example of a PEGB-compliant theorem:**
+
+               Suppose you define a "graph of divisibility": for integers n, vertices
+               are positive integers, edges connect m, n iff m | n and n/m is prime.
+               - **P** (Proof): "theorem graph_connected_iff : is_connected (divisibility_graph n) ↔ n > 1"
+                 — connect this to existing graph theory and prove it by induction on n
+               - **E** (Example): "#eval (divisibility_graph 12)" produces {1,2,3,4,6,12} with edges
+                 showing exactly which prime-divisor chains exist; "example small_case : (divisibility_graph 6).adj 1 = [2, 3]"
+               - **G** (Generalization): "theorem generalizes_to_lattice : (divisibility_graph n) is a sublattice of the divisibility lattice" — show the same structure in the broader lattice-theoretic setting
+               - **B** (Boundary): "theorem fails_at_zero : ¬ is_connected (divisibility_graph 0)" and
+                 "theorem fails_at_one : ¬ is_connected (divisibility_graph 1)" — the theorem REQUIRES n > 1; explain why
+                 the structure breaks at 0 and 1
+
+               This is a real research contribution: a new structure (divisibility_graph),
+               a connect theorem to graph theory (P+E), a generalization to lattice theory
+               (G), and a boundary analysis showing where the structure fails (B).
+
             4. **Conjecture with testable prediction**: State at least one falsifiable
                conjecture with a clear computational test that could disprove it.
 

@@ -250,6 +250,16 @@
       "theorem_count": 10,
       "timestamp": "2026-06-04T14:49:02",
       "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
+    },
+    {
+      "cycle_id": "328c2e20",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle discovered that the greedy additive recurrence avoidance sequence starting from (1, 2) has the closed form S(n) = ⌊3n/2⌋ + 1, consisting exactly",
+      "quality_score": 0.47858,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T14:58:22",
+      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     }
   ],
   "entries": [
@@ -295,7 +305,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-04T14:49:02",
+  "last_updated": "2026-06-04T14:58:22",
   "open_questions": [],
   "research_threads": {
     "Applications": [
@@ -352,6 +362,12 @@
         "quality": 0.32480000000000003,
         "theorems": 10,
         "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
+      },
+      {
+        "cycle_id": "328c2e20",
+        "quality": 0.47858,
+        "theorems": 5,
+        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
       }
     ],
     "Bridges": [
