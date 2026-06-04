@@ -100,6 +100,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-04T08:15:38",
       "title": "Tropical Optimization: Linear Programming in the Max-Plus Algebra"
+    },
+    {
+      "cycle_id": "243c9e14",
+      "domain": "Logic",
+      "key_insight": "# Future Research Directions\n\n## Synthesis\n\nThis cycle introduced the **Collatz Affine Monoid (CAM)**, a novel algebraic structure that algebraizes Collatz dynamics by encoding orbit segments as monoi",
+      "quality_score": 0.33640000000000003,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T08:47:57",
+      "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
     }
   ],
   "entries": [
@@ -145,7 +155,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-04T08:15:38",
+  "last_updated": "2026-06-04T08:47:57",
   "open_questions": [],
   "research_threads": {
     "Bridges": [
@@ -192,6 +202,14 @@
         "quality": 0.50264,
         "theorems": 6,
         "title": "Fundamental algebraic-topological bridge: **th"
+      }
+    ],
+    "Logic": [
+      {
+        "cycle_id": "243c9e14",
+        "quality": 0.33640000000000003,
+        "theorems": 5,
+        "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
       }
     ],
     "Pythagorean": [

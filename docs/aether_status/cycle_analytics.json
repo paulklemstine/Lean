@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T08:16:04.531129+00:00",
+  "last_updated": "2026-06-04T08:48:22.154093+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -12,7 +12,6 @@
       "files_integrated": 6,
       "job_id": "2d96e4e9",
       "outcome_quality": 0.7264934979757085,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.83,
@@ -46,7 +45,6 @@
       "files_integrated": 6,
       "job_id": "748fe9ae",
       "outcome_quality": 0.709014,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.86,
@@ -80,7 +78,6 @@
       "files_integrated": 6,
       "job_id": "a6bafcf7",
       "outcome_quality": 0.6979460000000001,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.92,
@@ -114,7 +111,6 @@
       "files_integrated": 6,
       "job_id": "61acc2ad",
       "outcome_quality": 0.7351783898305084,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.92,
@@ -148,7 +144,6 @@
       "files_integrated": 7,
       "job_id": "261658b1",
       "outcome_quality": 0.7386323529411765,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.92,
@@ -182,7 +177,6 @@
       "files_integrated": 6,
       "job_id": "9c099a66",
       "outcome_quality": 0.7535647272727273,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -216,7 +210,6 @@
       "files_integrated": 6,
       "job_id": "69f411ed",
       "outcome_quality": 0.0,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.86,
@@ -250,7 +243,6 @@
       "files_integrated": 6,
       "job_id": "e6f6fb5e",
       "outcome_quality": 0.77544,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.92,
@@ -284,7 +276,6 @@
       "files_integrated": 6,
       "job_id": "f3d7f1ed",
       "outcome_quality": 0.0,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.86,
@@ -318,7 +309,6 @@
       "files_integrated": 6,
       "job_id": "0734a5d4",
       "outcome_quality": 0.70133,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.86,
@@ -352,7 +342,6 @@
       "files_integrated": 6,
       "job_id": "c376d672",
       "outcome_quality": 0.0,
-      "prompt_version": "v1",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.92,
@@ -386,7 +375,6 @@
       "files_integrated": 7,
       "job_id": "0edfd7d6",
       "outcome_quality": 0.7495142857142858,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.89,
@@ -420,7 +408,6 @@
       "files_integrated": 5,
       "job_id": "a2cd9c3a",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.83,
@@ -454,7 +441,6 @@
       "files_integrated": 7,
       "job_id": "8e98d9f6",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.89,
@@ -488,7 +474,6 @@
       "files_integrated": 6,
       "job_id": "965e6ada",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.68,
         "applications": 0.86,
@@ -522,7 +507,6 @@
       "files_integrated": 6,
       "job_id": "b85a7e02",
       "outcome_quality": 0.77047,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.92,
@@ -556,7 +540,6 @@
       "files_integrated": 6,
       "job_id": "b081a92c",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.56,
         "applications": 0.92,
@@ -590,7 +573,6 @@
       "files_integrated": 6,
       "job_id": "43e568b9",
       "outcome_quality": 0.7350323529411764,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -624,7 +606,6 @@
       "files_integrated": 6,
       "job_id": "59ade4e7",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.86,
@@ -658,7 +639,6 @@
       "files_integrated": 6,
       "job_id": "cb07c7c3",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.92,
@@ -692,7 +672,6 @@
       "files_integrated": 6,
       "job_id": "3fec357d",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.83,
@@ -726,7 +705,6 @@
       "files_integrated": 6,
       "job_id": "27b649f9",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -760,7 +738,6 @@
       "files_integrated": 6,
       "job_id": "f41a76e0",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.86,
@@ -794,7 +771,6 @@
       "files_integrated": 5,
       "job_id": "7512203a",
       "outcome_quality": 0.7442731707317074,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.92,
@@ -828,7 +804,6 @@
       "files_integrated": 5,
       "job_id": "0b87bf2b",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.68,
         "applications": 0.92,
@@ -862,7 +837,6 @@
       "files_integrated": 6,
       "job_id": "a1ac928d",
       "outcome_quality": 0.7167103846153846,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.89,
@@ -896,7 +870,6 @@
       "files_integrated": 7,
       "job_id": "ff44a12a",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.89,
@@ -930,7 +903,6 @@
       "files_integrated": 7,
       "job_id": "a4fcb47e",
       "outcome_quality": 0.7226453964194373,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.92,
@@ -964,7 +936,6 @@
       "files_integrated": 7,
       "job_id": "899a7388",
       "outcome_quality": 0.7546084320557491,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.92,
@@ -998,7 +969,6 @@
       "files_integrated": 5,
       "job_id": "b18c0c25",
       "outcome_quality": 0.7294626728110598,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.92,
@@ -1032,7 +1002,6 @@
       "files_integrated": 8,
       "job_id": "ad6b3e03",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -1066,7 +1035,6 @@
       "files_integrated": 6,
       "job_id": "9d1a0bce",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.74,
         "applications": 0.92,
@@ -1101,7 +1069,6 @@
       "files_integrated": 7,
       "job_id": "f11ca07c",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.6799999999999999,
         "applications": 0.92,
@@ -1134,7 +1101,6 @@
       "files_integrated": 0,
       "job_id": "771b94c8",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.92,
@@ -1169,7 +1135,6 @@
       "files_integrated": 6,
       "job_id": "10ffedb6",
       "outcome_quality": 0.6876800000000001,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.92,
@@ -1204,7 +1169,6 @@
       "files_integrated": 5,
       "job_id": "4369a151",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.86,
@@ -1239,7 +1203,6 @@
       "files_integrated": 5,
       "job_id": "73eaf48b",
       "outcome_quality": 0.0,
-      "prompt_version": "v2",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.86,
@@ -1274,7 +1237,6 @@
       "files_integrated": 0,
       "job_id": "73fe1d36",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.94,
         "applications": 0.92,
@@ -1309,7 +1271,6 @@
       "files_integrated": 5,
       "job_id": "23b2bc09",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.56,
         "applications": 0.92,
@@ -1344,7 +1305,6 @@
       "files_integrated": 5,
       "job_id": "15dd528a",
       "outcome_quality": 0.36056,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -1379,7 +1339,6 @@
       "files_integrated": 5,
       "job_id": "9fb780aa",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.92,
@@ -1414,7 +1373,6 @@
       "files_integrated": 5,
       "job_id": "9b922fe2",
       "outcome_quality": 0.50264,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.86,
@@ -1449,7 +1407,6 @@
       "files_integrated": 0,
       "job_id": "d346de32",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.88,
         "applications": 0.92,
@@ -1484,7 +1441,6 @@
       "files_integrated": 5,
       "job_id": "17d2f5c5",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.82,
         "applications": 0.86,
@@ -1519,7 +1475,6 @@
       "files_integrated": 5,
       "job_id": "af7ecea0",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.92,
@@ -1554,7 +1509,6 @@
       "files_integrated": 5,
       "job_id": "17efa794",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.76,
         "applications": 0.92,
@@ -1589,7 +1543,6 @@
       "files_integrated": 5,
       "job_id": "a463f880",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.83,
@@ -1624,7 +1577,6 @@
       "files_integrated": 5,
       "job_id": "6c603a50",
       "outcome_quality": 0.37240000000000006,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.89,
@@ -1659,7 +1611,6 @@
       "files_integrated": 5,
       "job_id": "6945192b",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.68,
         "applications": 0.74,
@@ -1694,7 +1645,6 @@
       "files_integrated": 5,
       "job_id": "e993c5ba",
       "outcome_quality": 0.69584,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.92,
@@ -1729,7 +1679,6 @@
       "files_integrated": 5,
       "job_id": "303278ac",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.62,
         "applications": 0.86,
@@ -1764,7 +1713,6 @@
       "files_integrated": 5,
       "job_id": "f4e653bc",
       "outcome_quality": 0.29800000000000004,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 1.0,
         "applications": 0.89,
@@ -1799,7 +1747,6 @@
       "files_integrated": 5,
       "job_id": "b3e9b7e9",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.5,
         "applications": 0.86,
@@ -1834,7 +1781,6 @@
       "files_integrated": 5,
       "job_id": "991ed574",
       "outcome_quality": 0.21336,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.7,
         "applications": 0.89,
@@ -1869,7 +1815,6 @@
       "files_integrated": 5,
       "job_id": "79b36d74",
       "outcome_quality": 0.398,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.56,
         "applications": 0.92,
@@ -1904,7 +1849,6 @@
       "files_integrated": 5,
       "job_id": "032fc0ca",
       "outcome_quality": 0.0,
-      "prompt_version": "v3",
       "quality_breakdown": {
         "actionability": 0.8,
         "applications": 0.92,
@@ -1926,6 +1870,108 @@
       "theorem_count": 7,
       "timestamp": "2026-06-04T08:16:04.490092+00:00",
       "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7075,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 10,
+      "domain": "Tropical",
+      "duration_seconds": 7550.127274751663,
+      "end_time": 1780562818.648222,
+      "files_integrated": 5,
+      "job_id": "133d7308",
+      "outcome_quality": 0.2692,
+      "quality_breakdown": {
+        "actionability": 0.56,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8695,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9306,
+        "novelty": 0.95,
+        "proof_depth": 0.9222,
+        "usefulness": 0.9611
+      },
+      "quality_score": 0.2692,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780555268.5209472,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T08:48:22.042650+00:00",
+      "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4722,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 11,
+      "domain": "Logic",
+      "duration_seconds": 5690.809729337692,
+      "end_time": 1780562819.0504844,
+      "files_integrated": 5,
+      "job_id": "243c9e14",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 0.74,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6852,
+        "cross_domain": 1.0,
+        "grade": "substantial",
+        "importance": 0.4663,
+        "novelty": 0.95,
+        "proof_depth": 0.259,
+        "usefulness": 0.6295
+      },
+      "quality_score": 0.33640000000000003,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780557128.240755,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T08:48:22.085533+00:00",
+      "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4869,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 13,
+      "domain": "Logic",
+      "duration_seconds": 3745.913903951645,
+      "end_time": 1780562819.971436,
+      "files_integrated": 5,
+      "job_id": "f0de00a5",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 0.74,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6859,
+        "cross_domain": 1.0,
+        "grade": "substantial",
+        "importance": 0.4678,
+        "novelty": 0.95,
+        "proof_depth": 0.2611,
+        "usefulness": 0.6306
+      },
+      "quality_score": 0.26584,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780559074.057532,
+      "strategy_count": 187,
+      "theorem_count": 6,
+      "timestamp": "2026-06-04T08:48:22.120037+00:00",
+      "title": "Knots That Think: Cognition as Braiding in Category Theory"
     }
   ]
 }

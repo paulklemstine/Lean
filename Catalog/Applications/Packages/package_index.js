@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f0de00a5",
     "filename": "knots_that_think_cognition_as_braiding_in_category.json",
     "pkg_num": 347,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.26584,
     "title": "Cognitive Braid Algebra: Invariants, Complexity Shadows, and Coherence"
   },
   {
@@ -11193,8 +11193,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "knots_that_think_cognition_as_braiding_in_category",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.26584,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Cognitive Braid Algebra: Invariants, Complexity Shadows, and Coherence"
     }
