@@ -1,277 +1,180 @@
-# The Periodic Table of Finite Groups: A Chemical Classification Framework
+# The Periodic Table of Finite Groups: A Chemical-Algebraic Classification Framework
 
 ## Abstract
 
-We introduce a systematic framework for classifying finite groups by analogy with Mendeleev's periodic table of chemical elements. Groups are organized into *chemical series* — noble gases (cyclic), alkaline earths (abelian non-cyclic), alkali metals (nilpotent non-abelian), compounds (solvable non-nilpotent), and radioactive elements (non-solvable) — based on their position in the solvability/nilpotency hierarchy. We define structural invariants including the *center-valence* (cardinality of the center), *abelian defect* (ratio of order to center size), and *solvability spectrum* (sizes of derived series terms) that serve as group-theoretic analogues of atomic number, electronegativity, and electron configuration.
-
-We prove several foundational results: (1) center-valence is multiplicative under direct products; (2) a group is abelian iff its center-valence equals its order; (3) the derived series of solvable groups strictly decreases at every step; (4) solvability is preserved under normal extensions; (5) the nilpotency class of a product is the maximum of its components; (6) the nilpotency class is strictly bounded by the group order. All results are machine-verified in Lean 4 using the Mathlib library.
-
-**Keywords**: finite group classification, derived series, nilpotency class, center of a group, solvable groups, Jordan-Hölder theorem
-
----
+We introduce the *solvability spectrum*, a novel invariant for finite solvable groups that decomposes the group order into a sequence of "abelian layer sizes" determined by the derived series. Analogous to an atom's electron shell configuration, the solvability spectrum σ_G : ℕ → ℕ measures the index ratios of consecutive derived subgroups: σ_G(n) = |D_n(G)| / |D_{n+1}(G)|. We develop a systematic classification framework—the "periodic table of finite groups"—that organizes groups by solvability depth (row), family type (column), and spectrum pattern (fingerprint). We prove 13 theorems establishing the structural theory of this framework, including: (1) the solvability gap theorem (non-nilpotent solvable groups have depth ≥ 2), (2) strict descent of the derived series within the depth, (3) positivity of spectrum entries, (4) the Frattini-commutator containment for nilpotent groups, and (5) that nontrivial normal subgroups of nilpotent groups always meet the center. All proofs are formally verified in Lean 4 with Mathlib, relying only on the standard axioms (propext, Classical.choice, Quot.sound).
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The classification of finite groups is one of the central problems in algebra. While the Classification of Finite Simple Groups (CFSG) provides a complete catalog of the "atoms" of group theory, understanding how these atoms combine into the vast landscape of all finite groups remains deeply challenging. For perspective, there are approximately 49 billion groups of order 1024 alone.
 
-The classification of finite groups is one of the grand challenges of algebra. While the Classification of Finite Simple Groups (CFSG) — the "atoms" of group theory — was completed in the late 20th century, the problem of understanding all finite groups remains vast. Groups of order ≤ 2000 number approximately 10¹⁵, with the overwhelming majority being 2-groups of order 1024 (there are 49,487,365,422 groups of order 2¹⁰ alone).
+We propose a structural framework inspired by the periodic table of chemical elements. Just as Mendeleev organized elements by atomic number (row) and chemical behavior (column), we organize finite groups by:
+- **Solvability depth** d(G): the number of steps in the derived series before reaching trivial. This serves as the "period" (row number).
+- **Group family**: a classification by structural type (noble gas, alkali metal, etc.). This serves as the "group" (column).
+- **Solvability spectrum** σ_G: the sequence of quotient sizes at each derived level. This serves as the "electron configuration."
 
-Mendeleev's periodic table succeeded by identifying a small number of structural invariants (atomic number, valence, electron shell structure) that predicted chemical properties. We propose an analogous approach for finite groups, where the structural invariants are:
+### 1.1 Notation
 
-- **Atomic number**: the group order |G|
-- **Center-valence**: |Z(G)|, the cardinality of the center
-- **Abelian defect**: |G|/|Z(G)|, measuring non-commutativity
-- **Solvability spectrum**: the sequence (|G⁽⁰⁾|, |G⁽¹⁾|, ...), recording derived series sizes
-- **Nilpotency class**: the length of the lower central series
+Throughout, G denotes a finite group, D_n(G) = derivedSeries G n the n-th derived subgroup, γ_n(G) = lowerCentralSeries G n the n-th term of the lower central series, and Φ(G) = frattini G the Frattini subgroup. We write |G| for the order (Fintype.card G) and Z(G) for the center (Subgroup.center G).
 
-### 1.2 Chemical Series Classification
+## 2. The Solvability Spectrum
 
-We classify finite groups into seven chemical series:
+**Definition 2.1** (Solvability Depth). For a solvable group G, the *solvability depth* is:
+$$d(G) = \min\{n \in \mathbb{N} : D_n(G) = 1\}$$
 
-| Series | Group Family | Structural Property | Chemical Analogue |
-|--------|-------------|---------------------|-------------------|
-| Vacuum | Trivial {e} | Subsingleton | Empty space |
-| Prime Element | Z/pZ | Simple, cyclic, prime order | Hydrogen/Helium |
-| Noble Gas | Z/nZ (n composite) | Cyclic, abelian | Noble gases |
-| Alkaline Earth | Abelian, non-cyclic | Decomposable abelian | Alkaline earth metals |
-| Alkali Metal | Nilpotent, non-abelian | Nontrivial center, "reactive" | Alkali metals |
-| Compound | Solvable, non-nilpotent | Extension structure | Chemical compounds |
-| Radioactive | Non-solvable | Irreducible complexity | Radioactive elements |
+**Definition 2.2** (Solvability Spectrum). For a finite group G, the *solvability spectrum* at level n is:
+$$\sigma_G(n) = |D_n(G)| / |D_{n+1}(G)|$$
 
-### 1.3 Related Work
+The spectrum captures the "abelian layer sizes" of G: each entry σ_G(n) is the order of the abelian group D_n(G)/D_{n+1}(G) (the n-th abelian factor in the derived series).
 
-The analogy between group theory and chemistry has been noted informally by several authors. Our contribution is to make this analogy precise through formal definitions and machine-verified proofs. The framework connects to:
-
-- The Jordan-Hölder theorem (composition factors as "atoms")
-- Burnside's p^a q^b theorem (two-prime groups are solvable)
-- The Frattini argument and Sylow theory ("spectral analysis" of groups)
-- Derived series and central series as "electron configurations"
-
----
-
-## 2. Definitions
-
-### 2.1 Center-Valence
-
-**Definition 2.1** (Center-Valence). For a finite group G, the *center-valence* is:
-$$v(G) := |Z(G)| = |\{g \in G : \forall h \in G, gh = hg\}|$$
-
-This measures how "commutative" the group is. For abelian groups, v(G) = |G|. For centerless groups (like non-abelian simple groups), v(G) = 1.
-
-### 2.2 Abelian Defect
-
-**Definition 2.2** (Abelian Defect). The *abelian defect* of a finite group G is:
-$$\delta(G) := |G| / v(G)$$
-
-This is the index [G : Z(G)]. For abelian groups, δ(G) = 1. The abelian defect measures the "distance" from being abelian.
-
-### 2.3 Solvability Spectrum
-
-**Definition 2.3** (Solvability Spectrum). The *solvability spectrum* of G is the sequence:
-$$\sigma(G) := (|G^{(0)}|, |G^{(1)}|, |G^{(2)}|, \ldots)$$
-where G^(n) denotes the n-th derived subgroup.
-
-### 2.4 Chemical Stability Index
-
-**Definition 2.4** (Chemical Stability Index). The *stability index* of G is the pair:
-$$\text{SI}(G) := (v(G), |G|)$$
-representing the fraction v(G)/|G| of "stable" (central) elements.
-
-### 2.5 Group Isotopes
-
-**Definition 2.5** (Group Isotopes). Two solvable groups G, H are *isotopes* if they have the same derived length.
-
----
+**Example 2.3**.
+- Z/12Z: σ = (12). One layer (abelian).
+- S₃: σ = (2, 3). Two layers.
+- S₄: σ = (2, 3, 4). Three layers.
+- D₄: σ = (2, 2). Two equal layers (nilpotent).
+- A₄: σ = (3, 4). Two layers.
 
 ## 3. Main Results
 
-### 3.1 Center-Valence Multiplicativity
+### 3.1 Derived–Central Interleaving
 
-**Theorem 3.1** (Center-Valence Product Law). For finite groups G and H:
-$$v(G \times H) = v(G) \cdot v(H)$$
+**Theorem 3.1** (`derived_le_lower_central`). For any group G and n ∈ ℕ:
+$$D_n(G) \leq \gamma_n(G)$$
 
-*Proof sketch.* The center of G × H is Z(G) × Z(H). An element (g,h) commutes with all (g',h') iff g commutes with all g' and h commutes with all h'. The bijection Z(G) × Z(H) → Z(G × H) gives the cardinality equality. ∎
+*Proof sketch*. Induction on n. The base case D_0 = G = γ_0 is trivial. For the inductive step:
+$$D_{n+1} = [D_n, D_n] \leq [\gamma_n, \gamma_n] \leq [\gamma_n, G] = \gamma_{n+1}$$
+using the inductive hypothesis and commutator monotonicity. □
 
-This is the group-theoretic conservation of mass: when groups combine without interaction (direct product), their center-valences multiply independently.
+**Corollary 3.2** (`solDepth_le_nilpotencyClass`). For nilpotent G:
+$$d(G) \leq \text{nilpotencyClass}(G)$$
 
-### 3.2 Full Shell Characterization
+### 3.2 The Solvability Gap Theorem
 
-**Theorem 3.2** (Noble Gas Criterion). A finite group G is abelian if and only if v(G) = |G|.
+**Theorem 3.3** (`solvable_not_nilpotent_depth_ge_two`). If G is finite, solvable, and not nilpotent, then d(G) ≥ 2.
 
-*Proof sketch.* If G is abelian, every element is central, so Z(G) = G. Conversely, if |Z(G)| = |G|, then Z(G) = G by cardinality, so every element is central and G is abelian. ∎
+*Proof sketch*. Contrapositive: if d(G) ≤ 1, then either d(G) = 0 (G is trivial, hence nilpotent) or d(G) = 1 (D₁(G) = 1, so G is abelian, hence nilpotent). □
 
-### 3.3 Nilpotent Center Nontriviality
+**Theorem 3.4** (`depth_le_one_imp_nilpotent`). If G is finite solvable with d(G) ≤ 1, then G is nilpotent.
 
-**Theorem 3.3** (Alkali Metal Theorem). Every nontrivial nilpotent group has a nontrivial center.
+This establishes a "gap" in the periodic table: the first row (depth ≤ 1) consists entirely of nilpotent groups. Non-nilpotent solvable groups appear only from row 2 onwards.
 
-*Proof sketch.* By contraposition: if Z(G) is trivial, then the upper central series stabilizes at ⊥, contradicting the nilpotency assumption that it reaches G. ∎
+### 3.3 Strict Descent and Spectrum Positivity
 
-This theorem says alkali metals always have valence electrons — nilpotent groups always have a nontrivial center that enables extensions.
+**Theorem 3.5** (`derivedSeries_strictMono_lt_solDepth`). For n + 1 ≤ d(G):
+$$D_{n+1}(G) < D_n(G)$$
+(strict inequality as subgroups).
 
-### 3.4 Solvability Extension Theorem
+*Proof sketch*. If D_{n+1} = D_n, then by induction D_m = D_n for all m ≥ n. But D_{d(G)} = 1 while D_n ≠ 1 (since n < d(G)), contradiction. □
 
-**Theorem 3.4** (Chemical Compound Theorem). If N ◁ G with both N and G/N solvable, then G is solvable.
+**Theorem 3.6** (`solvSpectrum_pos`). For finite solvable G and n < d(G):
+$$\sigma_G(n) > 1$$
 
-*Proof sketch.* Let the derived lengths of G/N and N be l and k respectively. Then G^(l) ≤ N (since the image of G^(l) in G/N is trivial), and G^(l+k) ≤ N^(k) = {e}. So G is solvable with derived length at most l + k. ∎
+*Proof sketch*. By Theorem 3.5, |D_n| > |D_{n+1}|. Since D_{n+1} ≤ D_n as subgroups, Lagrange gives |D_{n+1}| | |D_n|. So σ_G(n) = |D_n|/|D_{n+1}| ≥ 2 > 1. □
 
-This is the key structural result: solvable extensions of solvable groups produce solvable groups. The periodic table has no "chemical reactions" that produce radioactive elements from non-radioactive inputs.
+### 3.4 The Frattini–Commutator Duality
 
-### 3.5 Reactivity Product Law
+**Theorem 3.7** (`commutator_le_frattini_of_nilpotent`). For finite nilpotent G:
+$$D_1(G) = [G, G] \leq \Phi(G)$$
 
-**Theorem 3.5** (Reactivity of Products). For nilpotent groups G and H:
-$$\text{class}(G \times H) = \max(\text{class}(G), \text{class}(H))$$
+*Proof sketch*. For each maximal subgroup M of G: since G is nilpotent, M is normal with G/M cyclic of prime order (hence abelian). So [G, G] ≤ ker(G → G/M) = M. Since Φ(G) = ∩{M : M maximal}, we get [G, G] ≤ Φ(G). □
 
-This says the reactivity of a mixture is determined by its most reactive component — the group-theoretic analogue of the chemist's maxim that "the rate-limiting step determines the reaction."
+This is the group-theoretic version of noble gas stability: the "reactive" commutator is shielded within the "inert" Frattini subgroup.
 
-### 3.6 Derived Series Strict Descent
+### 3.5 Nilpotent Groups Meet the Center
 
-**Theorem 3.6** (Spectral Gap Theorem). For a solvable group G, if G^(n+1) ≠ {e}, then G^(n+2) < G^(n+1) (strict containment).
+**Theorem 3.8** (`nilpotent_normal_meets_center`). In a nilpotent group G, every nontrivial normal subgroup N satisfies:
+$$Z(G) \cap N \neq 1$$
 
-*Proof sketch.* G^(n+1) is a solvable group (as a subgroup of the solvable group G). If [G^(n+1), G^(n+1)] = G^(n+1), then G^(n+1) is perfect. But a perfect solvable group is trivial, contradicting G^(n+1) ≠ {e}. ∎
+*Proof sketch*. Consider the upper central series Z_0 = 1 ⊂ Z_1 = Z(G) ⊂ ⋯ ⊂ Z_c = G. There exists a smallest k with Z_k ∩ N ≠ 1. If k ≥ 2, then for x ∈ (Z_k ∩ N) \ Z_{k-1} and any g ∈ G, the commutator [x,g] ∈ Z_{k-1} ∩ N = 1 (by minimality). So x ∈ Z_1, contradicting x ∉ Z_{k-1}. Therefore k = 1. □
 
-### 3.7 Nilpotency Class Bound
+### 3.6 Product Decomposition
 
-**Theorem 3.7** (Shell Count Bound). For a nontrivial nilpotent group G:
-$$\text{class}(G) < |G|$$
+**Theorem 3.9** (`derivedSeries_prod'`). For all n:
+$$D_n(G \times H) = D_n(G) \times D_n(H)$$
 
-*Proof sketch.* The upper central series is strictly increasing: 1 = Z₀(G) < Z₁(G) < ... < Z_c(G) = G. Each cardinality |Z_i(G)| is strictly larger than the previous, giving c + 1 distinct values between 1 and |G|, hence c < |G|. ∎
+*Proof sketch*. Induction using the fact that commutators in a product decompose componentwise: [A × B, C × D] = [A,C] × [B,D]. □
 
-### 3.8 Derived Series Product Decomposition
+### 3.7 Functoriality
 
-**Theorem 3.8** (Spectral Additivity). For any groups G and H:
-$$(G \times H)^{(n)} = G^{(n)} \times H^{(n)}$$
+**Theorem 3.10** (`solDepth_quotient_le`). For normal N ⊴ G:
+$$d(G/N) \leq d(G)$$
 
-*Proof sketch.* Induction on n. The commutator in a product decomposes componentwise: [(g₁,h₁), (g₂,h₂)] = ([g₁,g₂], [h₁,h₂]). ∎
+**Theorem 3.11** (`solDepth_congr`). For isomorphic groups G ≅ H:
+$$d(G) = d(H)$$
 
-### 3.9 Quotient Spectral Compatibility
+**Theorem 3.12** (`derivedSeries_map_surjective`). For surjective f: G → H:
+$$D_n(H) \leq f(D_n(G))$$
 
-**Theorem 3.9** (Spectral Quotient Law). For N ◁ G:
-$$(G/N)^{(n)} = \pi(G^{(n)})$$
-where π: G → G/N is the quotient map.
+### 3.8 Abelian Groups
 
-*Proof sketch.* Induction on n. The quotient map is a surjective homomorphism that commutes with the commutator operation. ∎
+**Theorem 3.13** (`abelian_solDepth_le_one`). For abelian G: d(G) ≤ 1.
 
-### 3.10 Simple Non-Abelian Center Triviality
+**Theorem 3.14** (`abelian_derived_one_eq_bot`). For abelian G: D₁(G) = 1.
 
-**Theorem 3.10** (Radioactive Valence Theorem). Non-abelian simple groups have trivial center.
+### 3.9 Valence Theory
 
-*Proof sketch.* The center is normal. By simplicity, Z(G) = {e} or Z(G) = G. If Z(G) = G, then G is abelian, contradiction. ∎
+**Definition 3.15** (Group Valence). The *group valence* v(G) is the number of minimal normal subgroups of G.
 
----
+**Theorem 3.16** (`simple_group_valence_eq_one`). For nontrivial simple G: v(G) = 1.
 
-## 4. Algorithms
+## 4. The Chemical Classification
 
-### 4.1 Chemical Series Classification Algorithm
+We define five "chemical families" of finite groups:
 
-```
-Input: Multiplication table T of a finite group G of order n
-Output: Chemical series of G
+| Family | Chemical Analogue | Definition | Examples |
+|--------|------------------|------------|----------|
+| Noble Gas | Noble gases | Abelian (commutative) | Z/nZ, (Z/pZ)^k |
+| Alkali Metal | Alkali metals | Nilpotent, not abelian | D₄, Q₈, Heisenberg |
+| Alkaline Earth | Alkaline earths | Solvable, not nilpotent | S₃, A₄, D_n (n odd) |
+| Transition Metal | Transition metals | Simple, not abelian | A₅, PSL(2,7), A_n (n≥5) |
+| Halogen | Halogens | Not solvable, not simple | S₅, GL(2,F_p) |
 
-1. If n = 1, return VACUUM
-2. Compute Z(G) = {g ∈ G : ∀h, T[g][h] = T[h][g]}
-3. If |Z(G)| = n (abelian):
-   a. If ∃g: {g^k : k=0,...,n-1} = G, return NOBLE_GAS (or PRIME if n prime)
-   b. Else return ALKALINE_EARTH
-4. Compute lower central series:
-   L₀ = G, L_{i+1} = [G, Lᵢ]
-   If Lₖ = {e} for some k, return ALKALI_METAL
-5. Compute derived series:
-   D₀ = G, D_{i+1} = [Dᵢ, Dᵢ]
-   If Dₖ = {e} for some k, return COMPOUND
-6. Return RADIOACTIVE
-```
+The **periodic law** we establish: groups within the same family share fundamental structural properties, and the family is determined by a finite number of invariants (solvability, nilpotency, simplicity, abelianness).
 
-### 4.2 Center-Valence Computation
+## 5. Conjectures and Future Directions
 
-Time complexity: O(n²) where n = |G|. Simply iterate over all elements and check commutativity with all others.
+### 5.1 Quantitative Periodic Law
 
-### 4.3 Derived Series Computation
+**Conjecture 5.1**. For finite solvable G with |G| > 1:
+$$d(G) \leq \Omega(|G|)$$
+where Ω(n) is the number of prime factors with multiplicity. This is proved in a companion file in the Catalog.
 
-Time complexity: O(n³ · d) where d is the derived length. Each commutator subgroup computation requires generating all n² commutators and closing under the group operation.
+### 5.2 Spectrum Reconstruction
 
----
+**Conjecture 5.2** (Falsifiable). The solvability spectrum σ_G, together with the composition factor types, determines the isomorphism type of G up to finitely many possibilities.
 
-## 5. Applications
+**Test**: Enumerate all groups of order 72 = 8 × 9 with spectrum (2, 2, 3, 3) and check if they are uniquely determined.
 
-### 5.1 Cryptographic Group Selection
+### 5.3 Chemical Analogy Limits
 
-In cryptographic applications, the chemical classification helps select groups with desired properties:
-- **Noble gases** (cyclic groups) are used for Diffie-Hellman key exchange
-- **Radioactive groups** (non-solvable) resist certain algebraic attacks
-- **Center-valence** determines vulnerability to center-based attacks
+**Conjecture 5.3**. For groups of the same order and same solvability depth, nilpotent and non-nilpotent examples can coexist only when the order has both prime-power and non-prime-power divisor structure.
 
-### 5.2 Crystal Structure Prediction
+**Example**: G = Q₈ × Z/3Z (order 24, nilpotent, depth 2) vs. H = S₃ × Z/4Z (order 24, non-nilpotent, depth 2).
 
-Crystallographic space groups are nilpotent or solvable. The nilpotency class constrains the possible crystal systems:
-- Class 1 (abelian): translation groups of lattices
-- Class 2: non-symmorphic space groups
-- Higher class: complex crystallographic groups
+## 6. Discussion
 
-### 5.3 Error-Correcting Codes
+### 6.1 What the Analogy Captures
 
-Group codes over abelian groups (noble gases) have well-understood minimum distance properties. Non-abelian group codes (compounds, alkali metals) can achieve better parameters in some regimes.
+The chemical analogy succeeds in several key respects:
+1. **Predictive power**: The solvability gap theorem tells us where to expect non-nilpotent groups.
+2. **Structural hierarchy**: The spectrum provides a finer invariant than depth alone.
+3. **Product behavior**: Spectra multiply under products, mirroring how electron configurations combine.
 
----
+### 6.2 Where the Analogy Breaks
 
-## 6. Conjectures and Future Work
+Unlike the periodic table of elements, where atomic number uniquely determines the element:
+1. Many groups share the same order (atomic number is not unique to a group).
+2. The spectrum does not determine the group uniquely.
+3. The "families" are not as cleanly separated—there are groups near the boundaries.
 
-### 6.1 Burnside's p^a q^b Theorem (Formalization Challenge)
+### 6.3 Formal Verification
 
-**Conjecture 6.1**: Every group of order p^a · q^b (p, q prime) is solvable.
+All 13 main theorems are formalized and verified in Lean 4 with Mathlib. The proofs use only the standard axioms (propext, Classical.choice, Quot.sound). This ensures a level of rigor beyond traditional peer review.
 
-This is a proven theorem (Burnside 1904, reproved by Goldschmidt and Bender without character theory for specific cases), but its full formalization requires character theory not yet available in Mathlib. We state it as a formal conjecture and verify it computationally for all groups of order ≤ 1000.
+## 7. References
 
-### 6.2 Derived Length Prediction
-
-**Conjecture 6.2**: For a solvable group G of order n, the derived length satisfies:
-$$dl(G) \leq \log_2(\Omega(n))$$
-where Ω(n) is the number of prime factors of n counted with multiplicity.
-
-**Test**: Compute derived lengths of all solvable groups of order ≤ 200.
-
-### 6.3 Center-Valence Distribution
-
-**Conjecture 6.3**: Among groups of order n, the distribution of center-valences v(G) is concentrated near 1 (most groups have small centers) and n (abelian groups).
-
----
-
-## 7. Discussion
-
-The periodic table analogy for finite groups has both strengths and limitations:
-
-**Strengths**:
-- Provides intuitive vocabulary for group-theoretic concepts
-- Identifies a small number of invariants that capture structural essence
-- Multiplicativity laws parallel chemical conservation laws
-- The hierarchy Abelian ⊂ Nilpotent ⊂ Solvable ⊂ All maps cleanly to chemical stability
-
-**Limitations**:
-- Unlike chemical elements, groups in the same "series" can have vastly different structures
-- The composition factor multiset (group-theoretic "atomic composition") doesn't determine the group up to isomorphism — different groups can have the same composition factors
-- The analogy breaks down for sporadic simple groups, which have no chemical analogue
-
-### 7.1 Comparison with Existing Classifications
-
-The GAP Small Groups Library classifies groups by order and isomorphism class. Our approach is coarser but more structural: we classify by invariants rather than isomorphism type, enabling predictions about groups too large to enumerate.
-
----
-
-## 8. Formal Verification
-
-All main theorems (3.1–3.10) are formally verified in Lean 4 using the Mathlib library. The formal development comprises approximately 500 lines of Lean code organized into three files:
-
-1. `Defs.lean`: Core definitions (chemical series, center-valence, stability index, isotope relation)
-2. `Theorems.lean`: Main structural theorems (center-valence multiplicativity, nilpotency class characterization, solvability extension, derived series spectroscopy)
-3. `Advanced.lean`: Deeper results (Cauchy's theorem, Lagrange's theorem, derived series product decomposition, strict descent, nilpotency class bounds)
-
-The only unproved statement is Burnside's p^a q^b theorem, which requires character theory not yet formalized in Mathlib.
-
----
-
-## 9. References
-
-1. Burnside, W. (1904). On groups of order p^α q^β. *Proc. London Math. Soc.*, 2(1), 388–392.
-2. Jordan, C. (1870). *Traité des substitutions et des équations algébriques*. Gauthier-Villars.
-3. Hölder, O. (1889). Zurückführung einer beliebigen algebraischen Gleichung auf eine Kette von Gleichungen. *Math. Ann.*, 34, 26–56.
-4. Hall, P. (1959). The classification of prime-power groups. *J. Reine Angew. Math.*, 182, 130–141.
-5. Besche, H. U., Eick, B., & O'Brien, E. A. (2002). A millennium project: constructing small groups. *Int. J. Algebra Comput.*, 12(5), 623–644.
+1. Rotman, J.J. *An Introduction to the Theory of Groups*. Springer, 1995.
+2. Robinson, D.J.S. *A Course in the Theory of Groups*. Springer, 1996.
+3. Mathlib. The mathlib4 library. https://leanprover-community.github.io/mathlib4_docs/
+4. Gorenstein, D. *Finite Groups*. Chelsea, 1980.
+5. Burnside, W. *Theory of Groups of Finite Order*. Cambridge, 1911.

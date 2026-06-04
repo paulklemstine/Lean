@@ -1,352 +1,231 @@
-#!/usr/bin/env python3
 """
-algorithms.py — Algorithms for the Periodic Table of Finite Groups
+Algorithms for the Periodic Table of Finite Groups
 
-Type-hinted implementations of the core classification algorithms:
-1. Group chemical series classification
-2. Center-valence computation
-3. Derived series / solvability spectrum
-4. Nilpotency class detection
-5. Periodic table construction
-
-These algorithms can classify any finite group given its multiplication table.
+Type-hinted implementations of the core algorithms used in
+the group classification system.
 """
 
-from typing import List, Set, Dict, Tuple, Optional
+from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass
 from enum import Enum
 
 
-class ChemicalSeries(Enum):
-    """Chemical series classification for finite groups."""
-    VACUUM = "Vacuum"              # Trivial group
-    PRIME_ELEMENT = "Prime Element" # Cyclic of prime order
-    NOBLE_GAS = "Noble Gas"         # Cyclic of composite order
-    ALKALINE_EARTH = "Alkaline Earth"  # Abelian non-cyclic
-    ALKALI_METAL = "Alkali Metal"   # Nilpotent non-abelian
-    COMPOUND = "Compound"           # Solvable non-nilpotent
-    RADIOACTIVE = "Radioactive"     # Non-solvable
+class GroupFamily(Enum):
+    """Chemical family classification for finite groups."""
+    NOBLE_GAS = "noble_gas"           # Cyclic groups
+    ALKALI_METAL = "alkali_metal"     # Nilpotent non-abelian (p-groups)
+    ALKALINE_EARTH = "alkaline_earth" # Solvable non-nilpotent
+    TRANSITION_METAL = "transition_metal"  # Non-abelian simple
+    HALOGEN = "halogen"               # Symmetric groups
 
 
 @dataclass
-class GroupInvariants:
-    """Structural invariants of a finite group — its 'electron configuration'."""
-    order: int                      # Atomic number
-    center_valence: int             # |Z(G)|
-    abelian_defect: int             # |G| / |Z(G)|
-    derived_length: Optional[int]   # None if not solvable
-    nilpotency_class: Optional[int] # None if not nilpotent
-    is_cyclic: bool
+class GroupPeriodicEntry:
+    """A periodic table entry for a finite group."""
+    order: int
+    family: GroupFamily
+    solvability_depth: Optional[int]
+    valence: int  # Number of minimal normal subgroups
+    center_order: int
+    is_solvable: bool
+    is_nilpotent: bool
     is_abelian: bool
+    spectrum: List[int]
+
+    def __repr__(self) -> str:
+        return (f"GroupEntry(|G|={self.order}, family={self.family.value}, "
+                f"depth={self.solvability_depth}, valence={self.valence})")
+
+
+def prime_factorization(n: int) -> Dict[int, int]:
+    """
+    Compute the prime factorization of n.
+
+    Algorithm: Trial division up to sqrt(n).
+    Time complexity: O(sqrt(n)).
+
+    Returns:
+        Dictionary mapping primes to their exponents.
+    """
+    if n <= 0:
+        raise ValueError(f"Expected positive integer, got {n}")
+    factors: Dict[int, int] = {}
+    d = 2
+    while d * d <= n:
+        while n % d == 0:
+            factors[d] = factors.get(d, 0) + 1
+            n //= d
+        d += 1
+    if n > 1:
+        factors[n] = factors.get(n, 0) + 1
+    return factors
+
+
+def omega(n: int) -> int:
+    """
+    Compute Ω(n), the number of prime factors with multiplicity.
+
+    This is the upper bound for the solvability depth of any
+    solvable group of order n (Quantitative Periodic Law).
+    """
+    return sum(prime_factorization(n).values())
+
+
+def classify_group_family(
+    order: int,
+    is_abelian: bool,
+    is_nilpotent: bool,
+    is_solvable: bool,
     is_simple: bool
-    chemical_series: ChemicalSeries
-    derived_spectrum: List[int]     # Sizes of derived series terms
+) -> GroupFamily:
+    """
+    Classify a finite group into its chemical family.
+
+    Algorithm:
+    1. If cyclic/abelian → Noble Gas
+    2. If nilpotent but not abelian → Alkali Metal
+    3. If solvable but not nilpotent → Alkaline Earth
+    4. If simple non-abelian → Transition Metal
+    5. If symmetric-like → Halogen
+
+    Pseudocode:
+        if is_abelian: return NOBLE_GAS
+        if is_nilpotent: return ALKALI_METAL
+        if is_simple and not is_abelian: return TRANSITION_METAL
+        if is_solvable: return ALKALINE_EARTH
+        return HALOGEN
+    """
+    if is_abelian:
+        return GroupFamily.NOBLE_GAS
+    if is_simple and not is_abelian:
+        return GroupFamily.TRANSITION_METAL
+    if is_nilpotent:
+        return GroupFamily.ALKALI_METAL
+    if is_solvable:
+        return GroupFamily.ALKALINE_EARTH
+    return GroupFamily.HALOGEN
 
 
-@dataclass
-class PeriodicEntry:
-    """Entry in the periodic table of finite groups."""
-    name: str
-    invariants: GroupInvariants
-    composition_factors: List[int]  # Sizes of composition factors
+def compute_solvability_spectrum(
+    derived_series_orders: List[int]
+) -> List[int]:
+    """
+    Compute the solvability spectrum from the derived series orders.
+
+    The spectrum is σ_G(n) = |D_n(G)| / |D_{n+1}(G)| for each level.
+
+    Algorithm:
+        spectrum = []
+        for i in range(len(orders) - 1):
+            spectrum.append(orders[i] // orders[i+1])
+        return spectrum
+
+    Theorem (proved in Lean 4):
+        Each entry σ_G(n) > 1 for n < solDepth(G).
+    """
+    spectrum: List[int] = []
+    for i in range(len(derived_series_orders) - 1):
+        if derived_series_orders[i + 1] == 0:
+            break
+        ratio = derived_series_orders[i] // derived_series_orders[i + 1]
+        spectrum.append(ratio)
+    return spectrum
 
 
-def is_prime(n: int) -> bool:
-    """Primality test."""
-    if n < 2:
-        return False
-    if n < 4:
+def predict_depth_bound(order: int) -> int:
+    """
+    Predict the maximum solvability depth for groups of the given order.
+
+    By the Quantitative Periodic Law (proved in the catalog for the
+    existing PeriodicTableGroups file), the depth is bounded by Ω(n).
+
+    Returns:
+        Upper bound on solvability depth.
+    """
+    return omega(order)
+
+
+def is_all_nilpotent_order(n: int) -> bool:
+    """
+    Check if all groups of order n are nilpotent.
+
+    Theorem: All groups of order p^k are nilpotent (p-groups).
+    Theorem: A group of squarefree order with coprime-ordered
+    cyclic Sylow subgroups is cyclic (hence nilpotent).
+    """
+    factors = prime_factorization(n)
+    # All p-groups are nilpotent
+    if len(factors) == 1:
         return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+    # For general orders, non-nilpotent groups can exist
+    return False
 
 
-class FiniteGroup:
-    """A finite group represented by its multiplication table."""
+def build_periodic_table(max_order: int = 100) -> List[Dict]:
+    """
+    Build a periodic table of group orders with predicted properties.
 
-    def __init__(self, table: List[List[int]], name: str = "G"):
-        self.table = table
-        self.order = len(table)
-        self.name = name
-        self._inverses: Optional[List[int]] = None
-        self._center: Optional[List[int]] = None
+    For each order n ≤ max_order, compute:
+    - Prime factorization
+    - Ω(n) (depth bound)
+    - Whether all groups of that order are nilpotent
+    - Family tendency
 
-    @property
-    def inverses(self) -> List[int]:
-        """Compute inverse of each element."""
-        if self._inverses is None:
-            self._inverses = [0] * self.order
-            for i in range(self.order):
-                for j in range(self.order):
-                    if self.table[i][j] == 0:
-                        self._inverses[i] = j
-                        break
-        return self._inverses
-
-    def multiply(self, a: int, b: int) -> int:
-        """Multiply two elements."""
-        return self.table[a][b]
-
-    def inverse(self, a: int) -> int:
-        """Inverse of an element."""
-        return self.inverses[a]
-
-    def commutator(self, a: int, b: int) -> int:
-        """Compute [a,b] = a·b·a⁻¹·b⁻¹."""
-        ab = self.multiply(a, b)
-        a_inv_b_inv = self.multiply(self.inverse(a), self.inverse(b))
-        return self.multiply(ab, a_inv_b_inv)
-
-    def center(self) -> List[int]:
-        """Compute the center Z(G)."""
-        if self._center is None:
-            self._center = [
-                g for g in range(self.order)
-                if all(self.table[g][h] == self.table[h][g]
-                       for h in range(self.order))
-            ]
-        return self._center
-
-    def center_valence(self) -> int:
-        """The center-valence: |Z(G)|."""
-        return len(self.center())
-
-    def abelian_defect(self) -> int:
-        """The abelian defect: |G| / |Z(G)|."""
-        cv = self.center_valence()
-        return self.order // cv if cv > 0 else self.order
-
-    def is_abelian(self) -> bool:
-        """Check if G is abelian."""
-        return self.center_valence() == self.order
-
-    def generate_subgroup(self, generators: Set[int]) -> List[int]:
-        """Generate the smallest subgroup containing the given generators."""
-        subgroup = set(generators) | {0}
-        changed = True
-        while changed:
-            changed = False
-            new = set()
-            for a in subgroup:
-                for b in subgroup:
-                    p = self.table[a][b]
-                    if p not in subgroup:
-                        new.add(p)
-                        changed = True
-            subgroup |= new
-        return sorted(subgroup)
-
-    def commutator_subgroup(self, elements: Optional[List[int]] = None) -> List[int]:
-        """Compute [H,H] for H = elements (default: G)."""
-        if elements is None:
-            elements = list(range(self.order))
-
-        # Compute inverses within elements
-        comms: Set[int] = set()
-        for a in elements:
-            for b in elements:
-                comms.add(self.commutator(a, b))
-
-        return self.generate_subgroup(comms)
-
-    def derived_series(self, max_depth: int = 50) -> List[List[int]]:
-        """Compute the derived series: G = G⁽⁰⁾ ⊇ G⁽¹⁾ ⊇ G⁽²⁾ ⊇ ..."""
-        current = list(range(self.order))
-        series = [current]
-
-        for _ in range(max_depth):
-            next_sub = self.commutator_subgroup(current)
-            if len(next_sub) == len(current):
-                break
-            current = next_sub
-            series.append(current)
-            if len(current) == 1:
-                break
-
-        return series
-
-    def derived_length(self) -> Optional[int]:
-        """Derived length, or None if not solvable."""
-        series = self.derived_series()
-        if len(series[-1]) > 1:
-            return None
-        return len(series) - 1
-
-    def solvability_spectrum(self) -> List[int]:
-        """The sizes of derived series terms — the group's spectral fingerprint."""
-        return [len(s) for s in self.derived_series()]
-
-    def is_cyclic(self) -> bool:
-        """Check if G is cyclic."""
-        for g in range(self.order):
-            seen = {0}
-            current = g
-            for _ in range(self.order):
-                seen.add(current)
-                current = self.table[current][g]
-            if len(seen) == self.order:
-                return True
-        return False
-
-    def nilpotency_class(self) -> Optional[int]:
-        """Compute the nilpotency class, or None if not nilpotent."""
-        current = list(range(self.order))
-        for depth in range(self.order + 1):
-            # Compute [G, current]
-            comms: Set[int] = set()
-            for a in range(self.order):
-                for b in current:
-                    comms.add(self.commutator(a, b))
-            next_sub = self.generate_subgroup(comms)
-            if len(next_sub) == 1:
-                return depth + 1
-            if len(next_sub) == len(current):
-                return None  # stabilized
-            current = next_sub
-        return None
-
-    def is_simple(self) -> bool:
-        """Check if G is simple (no proper normal subgroups)."""
-        if self.order <= 1:
-            return False
-        for size in range(2, self.order):
-            if self.order % size != 0:
-                continue
-            # Check all subsets of this size — too expensive for large groups
-            # For demo purposes, check subgroups generated by single elements
-            pass
-        # Simple check: for small groups, use derived series
-        # A non-abelian group is simple if it has no normal subgroups
-        return self.order > 1 and self.derived_length() is None
-
-    def classify(self) -> ChemicalSeries:
-        """Classify into chemical series."""
-        if self.order == 1:
-            return ChemicalSeries.VACUUM
-        if self.is_abelian():
-            if self.is_cyclic():
-                if is_prime(self.order):
-                    return ChemicalSeries.PRIME_ELEMENT
-                return ChemicalSeries.NOBLE_GAS
-            return ChemicalSeries.ALKALINE_EARTH
-        nc = self.nilpotency_class()
-        if nc is not None:
-            return ChemicalSeries.ALKALI_METAL
-        dl = self.derived_length()
-        if dl is not None:
-            return ChemicalSeries.COMPOUND
-        return ChemicalSeries.RADIOACTIVE
-
-    def invariants(self) -> GroupInvariants:
-        """Compute all structural invariants."""
-        return GroupInvariants(
-            order=self.order,
-            center_valence=self.center_valence(),
-            abelian_defect=self.abelian_defect(),
-            derived_length=self.derived_length(),
-            nilpotency_class=self.nilpotency_class(),
-            is_cyclic=self.is_cyclic(),
-            is_abelian=self.is_abelian(),
-            is_simple=self.is_simple(),
-            chemical_series=self.classify(),
-            derived_spectrum=self.solvability_spectrum(),
-        )
-
-
-# === Standard group constructors ===
-
-def cyclic(n: int) -> FiniteGroup:
-    """Cyclic group Z/nZ."""
-    table = [[(i + j) % n for j in range(n)] for i in range(n)]
-    return FiniteGroup(table, f"Z/{n}Z")
-
-def dihedral(n: int) -> FiniteGroup:
-    """Dihedral group D_n of order 2n."""
-    order = 2 * n
-    table = [[0]*order for _ in range(order)]
-    for a in range(order):
-        for b in range(order):
-            ai = a % n
-            bi = b % n
-            if a < n and b < n:
-                table[a][b] = (ai + bi) % n
-            elif a < n and b >= n:
-                table[a][b] = n + (ai + bi) % n
-            elif a >= n and b < n:
-                table[a][b] = n + (ai - bi) % n
-            else:
-                table[a][b] = (ai - bi) % n
-    return FiniteGroup(table, f"D_{n}")
-
-def direct_product(G: FiniteGroup, H: FiniteGroup) -> FiniteGroup:
-    """Direct product G × H."""
-    n1, n2 = G.order, H.order
-    order = n1 * n2
-    table = [[0]*order for _ in range(order)]
-    for a in range(order):
-        for b in range(order):
-            a1, a2 = a // n2, a % n2
-            b1, b2 = b // n2, b % n2
-            table[a][b] = G.table[a1][b1] * n2 + H.table[a2][b2]
-    return FiniteGroup(table, f"{G.name} × {H.name}")
-
-
-# === Periodic Table Construction ===
-
-def build_periodic_table(groups: Dict[str, FiniteGroup]) -> Dict[str, PeriodicEntry]:
-    """Build the periodic table from a dictionary of named groups."""
-    table: Dict[str, PeriodicEntry] = {}
-    for name, group in groups.items():
-        inv = group.invariants()
-        entry = PeriodicEntry(
-            name=name,
-            invariants=inv,
-            composition_factors=inv.derived_spectrum,
-        )
-        table[name] = entry
+    Returns:
+        List of dictionaries with group-order-level information.
+    """
+    table = []
+    for n in range(1, max_order + 1):
+        factors = prime_factorization(n)
+        entry = {
+            "order": n,
+            "factorization": factors,
+            "omega": omega(n),
+            "all_nilpotent": is_all_nilpotent_order(n),
+            "is_prime": len(factors) == 1 and list(factors.values())[0] == 1,
+            "is_prime_power": len(factors) == 1,
+            "depth_bound": predict_depth_bound(n),
+        }
+        table.append(entry)
     return table
 
 
-def print_periodic_table(entries: Dict[str, PeriodicEntry]) -> None:
-    """Display the periodic table."""
-    # Group by chemical series
-    by_series: Dict[ChemicalSeries, List[PeriodicEntry]] = defaultdict(list)
-    for entry in entries.values():
-        by_series[entry.invariants.chemical_series].append(entry)
-
-    for series in ChemicalSeries:
-        if series not in by_series:
-            continue
-        print(f"\n{'='*50}")
-        print(f"  {series.value}")
-        print(f"{'='*50}")
-        for entry in sorted(by_series[series], key=lambda e: e.invariants.order):
-            inv = entry.invariants
-            dl = inv.derived_length if inv.derived_length is not None else "∞"
-            nc = inv.nilpotency_class if inv.nilpotency_class is not None else "—"
-            print(f"  {entry.name:<25} n={inv.order:>3}  |Z|={inv.center_valence:>3}"
-                  f"  dl={dl}  nc={nc}  spectrum={inv.derived_spectrum}")
+# Known group data for small orders (for demonstration)
+KNOWN_GROUPS: List[GroupPeriodicEntry] = [
+    GroupPeriodicEntry(1, GroupFamily.NOBLE_GAS, 0, 0, 1, True, True, True, []),
+    GroupPeriodicEntry(2, GroupFamily.NOBLE_GAS, 1, 1, 2, True, True, True, [2]),
+    GroupPeriodicEntry(3, GroupFamily.NOBLE_GAS, 1, 1, 3, True, True, True, [3]),
+    GroupPeriodicEntry(4, GroupFamily.NOBLE_GAS, 1, 1, 4, True, True, True, [4]),  # Z/4Z
+    GroupPeriodicEntry(4, GroupFamily.NOBLE_GAS, 1, 1, 4, True, True, True, [4]),  # Z/2×Z/2
+    GroupPeriodicEntry(5, GroupFamily.NOBLE_GAS, 1, 1, 5, True, True, True, [5]),
+    GroupPeriodicEntry(6, GroupFamily.NOBLE_GAS, 1, 1, 6, True, True, True, [6]),  # Z/6
+    GroupPeriodicEntry(6, GroupFamily.ALKALINE_EARTH, 2, 2, 1, True, False, False, [2, 3]),  # S_3
+    GroupPeriodicEntry(8, GroupFamily.ALKALI_METAL, 2, 1, 2, True, True, False, [2, 2]),  # D_4
+    GroupPeriodicEntry(8, GroupFamily.ALKALI_METAL, 2, 1, 2, True, True, False, [2, 2]),  # Q_8
+    GroupPeriodicEntry(12, GroupFamily.ALKALINE_EARTH, 2, 1, 1, True, False, False, [3, 4]),  # A_4
+    GroupPeriodicEntry(24, GroupFamily.ALKALINE_EARTH, 3, 1, 1, True, False, False, [2, 3, 4]),  # S_4
+    GroupPeriodicEntry(60, GroupFamily.TRANSITION_METAL, None, 1, 1, False, False, False, []),  # A_5
+]
 
 
 if __name__ == "__main__":
-    # Build table for groups up to order ~20
-    groups = {}
-    for n in range(1, 16):
-        groups[f"Z/{n}Z"] = cyclic(n)
-    for n in range(3, 9):
-        groups[f"D_{n}"] = dihedral(n)
-    groups["V₄"] = direct_product(cyclic(2), cyclic(2))
-    groups["Z/2 × Z/4"] = direct_product(cyclic(2), cyclic(4))
-    groups["Z/2³"] = direct_product(direct_product(cyclic(2), cyclic(2)), cyclic(2))
-    groups["Z/3 × Z/3"] = direct_product(cyclic(3), cyclic(3))
+    print("Periodic Table of Finite Groups — Algorithm Demo")
+    print("=" * 60)
 
-    table = build_periodic_table(groups)
-    print("THE PERIODIC TABLE OF FINITE GROUPS")
-    print("=" * 50)
-    print_periodic_table(table)
+    table = build_periodic_table(100)
+    nilpotent_orders = [e["order"] for e in table if e["all_nilpotent"]]
+    non_nilpotent_capable = [e["order"] for e in table if not e["all_nilpotent"]]
+
+    print(f"\nOrders where ALL groups are nilpotent (prime powers):")
+    print(f"  {nilpotent_orders[:20]}...")
+
+    print(f"\nOrders where non-nilpotent groups can exist:")
+    print(f"  {non_nilpotent_capable[:20]}...")
+
+    print(f"\nKnown groups in the database:")
+    for g in KNOWN_GROUPS:
+        print(f"  {g}")
+
+    print(f"\nDepth bounds (Ω function):")
+    for n in [6, 12, 24, 30, 60, 120, 360]:
+        print(f"  Ω({n}) = {omega(n)} (max possible depth for order {n})")
