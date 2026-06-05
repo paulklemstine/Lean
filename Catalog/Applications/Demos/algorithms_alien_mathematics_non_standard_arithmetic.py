@@ -1,366 +1,294 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Algorithms for Nonstandard Arithmetic
+algorithms.py — Core algorithms for non-standard arithmetic.
 
-Implements the core algorithms from the research paper:
-1. Eventual equivalence checking
-2. Arithmetic term evaluation and transfer
-3. Eventual ordering comparison
-4. Divisibility checking
+Type-hinted implementations of:
+1. Ultrapower element representation
+2. Ultrapower arithmetic operations
+3. Overspill detection
+4. GCD transfer computation
+5. Polynomial identity verification
 """
 
-from typing import Callable, List, Optional, Tuple
+from typing import List, Callable, Optional, Tuple, Dict, Any
 from dataclasses import dataclass
-from enum import Enum, auto
+from enum import Enum
+import math
 
 
 # ============================================================
-# Algorithm 1: Eventual Equivalence Checker
+# §1. Ultrapower Element Representation
 # ============================================================
 
-def check_eventual_equality(
+@dataclass
+class UltraPowerElement:
+    """Represents an element of *ℕ = ℕ^ℕ / U.
+
+    In practice, we store a finite prefix of the representing sequence
+    and a description of its asymptotic behavior.
+    """
+    sequence: List[int]        # finite prefix
+    generator: Optional[Callable[[int], int]] = None  # infinite extension
+    name: str = "anonymous"
+
+    def evaluate(self, i: int) -> int:
+        """Evaluate the representing sequence at index i."""
+        if i < len(self.sequence):
+            return self.sequence[i]
+        elif self.generator is not None:
+            return self.generator(i)
+        else:
+            raise IndexError(f"Index {i} out of range and no generator provided")
+
+    def is_standard(self, window: int = 100) -> Optional[int]:
+        """Check if this element appears to be standard (eventually constant).
+
+        Returns the standard value if found, None otherwise.
+        """
+        values = set()
+        for i in range(window):
+            values.add(self.evaluate(i))
+        if len(values) == 1:
+            return values.pop()
+        return None
+
+
+def standard_element(n: int) -> UltraPowerElement:
+    """Create the standard element std(n) = [n, n, n, ...]."""
+    return UltraPowerElement(
+        sequence=[n] * 10,
+        generator=lambda _: n,
+        name=f"std({n})"
+    )
+
+
+def omega_element() -> UltraPowerElement:
+    """Create the canonical non-standard element ω = [0, 1, 2, ...]."""
+    return UltraPowerElement(
+        sequence=list(range(20)),
+        generator=lambda i: i,
+        name="ω"
+    )
+
+
+# ============================================================
+# §2. Ultrapower Arithmetic
+# ============================================================
+
+def ultrapower_add(a: UltraPowerElement, b: UltraPowerElement,
+                   window: int = 20) -> UltraPowerElement:
+    """Componentwise addition in *ℕ."""
+    seq = [a.evaluate(i) + b.evaluate(i) for i in range(window)]
+    gen = None
+    if a.generator and b.generator:
+        gen = lambda i: a.generator(i) + b.generator(i)
+    return UltraPowerElement(sequence=seq, generator=gen,
+                             name=f"({a.name} + {b.name})")
+
+
+def ultrapower_mul(a: UltraPowerElement, b: UltraPowerElement,
+                   window: int = 20) -> UltraPowerElement:
+    """Componentwise multiplication in *ℕ."""
+    seq = [a.evaluate(i) * b.evaluate(i) for i in range(window)]
+    gen = None
+    if a.generator and b.generator:
+        gen = lambda i: a.generator(i) * b.generator(i)
+    return UltraPowerElement(sequence=seq, generator=gen,
+                             name=f"({a.name} * {b.name})")
+
+
+def ultrapower_compare(a: UltraPowerElement, b: UltraPowerElement,
+                       window: int = 100) -> str:
+    """Compare elements: returns '<', '>', '=', or '?' (undetermined).
+
+    Uses majority voting on a finite window as a heuristic for the
+    ultrafilter selection.
+    """
+    less_count = 0
+    greater_count = 0
+    equal_count = 0
+    for i in range(window):
+        ai, bi = a.evaluate(i), b.evaluate(i)
+        if ai < bi:
+            less_count += 1
+        elif ai > bi:
+            greater_count += 1
+        else:
+            equal_count += 1
+
+    total = less_count + greater_count + equal_count
+    if less_count > total * 0.9:
+        return "<"
+    elif greater_count > total * 0.9:
+        return ">"
+    elif equal_count > total * 0.9:
+        return "="
+    else:
+        return "?"
+
+
+# ============================================================
+# §3. Overspill Detection
+# ============================================================
+
+def detect_overspill(
+    property_fn: Callable[[int], bool],
+    max_standard: int = 10000,
+    overspill_test: int = 10**8
+) -> Dict[str, Any]:
+    """Detect overspill: if property holds for all n < max_standard,
+    test whether it 'spills over' to larger values.
+
+    Returns a report dict.
+    """
+    # Check standard range
+    standard_holds = True
+    first_failure = None
+    for n in range(max_standard):
+        if not property_fn(n):
+            standard_holds = False
+            first_failure = n
+            break
+
+    # Check overspill candidates
+    overspill_values = [max_standard * 10, max_standard * 100, overspill_test]
+    overspill_results = {}
+    for val in overspill_values:
+        try:
+            overspill_results[val] = property_fn(val)
+        except (OverflowError, RecursionError):
+            overspill_results[val] = "computation overflow"
+
+    return {
+        "standard_range": max_standard,
+        "holds_in_standard": standard_holds,
+        "first_failure": first_failure,
+        "overspill_tests": overspill_results,
+        "overspill_detected": (
+            standard_holds and all(
+                v is True for v in overspill_results.values()
+                if isinstance(v, bool)
+            )
+        )
+    }
+
+
+# ============================================================
+# §4. GCD Transfer
+# ============================================================
+
+def gcd(a: int, b: int) -> int:
+    """Euclidean GCD algorithm."""
+    while b:
+        a, b = b, a % b
+    return a
+
+
+def gcd_transfer(
     f: Callable[[int], int],
     g: Callable[[int], int],
-    max_check: int = 10000
-) -> Tuple[bool, Optional[int]]:
-    """Check if two sequences are eventually equal.
-
-    Scans up to max_check terms and returns (True, N) where N is
-    the threshold from which the sequences agree, or (False, None)
-    if a disagreement is found at the boundary.
-
-    Time complexity: O(max_check)
-    Space complexity: O(1)
-
-    >>> check_eventual_equality(lambda n: n**2, lambda n: n**2)
-    (True, 0)
-    >>> check_eventual_equality(lambda n: n if n < 5 else n+1, lambda n: n+1)
-    (True, 5)
+    window: int = 20
+) -> Tuple[UltraPowerElement, UltraPowerElement, UltraPowerElement]:
+    """Compute the GCD transfer: returns (d, q_f, q_g) where
+    d = [gcd(f(i), g(i))], f = d * q_f, g = d * q_g in *ℕ.
     """
-    last_disagreement = -1
-    for n in range(max_check):
-        if f(n) != g(n):
-            last_disagreement = n
+    d_seq = [gcd(f(i), g(i)) for i in range(window)]
+    qf_seq = [f(i) // gcd(f(i), g(i)) if gcd(f(i), g(i)) > 0 else 0
+              for i in range(window)]
+    qg_seq = [g(i) // gcd(f(i), g(i)) if gcd(f(i), g(i)) > 0 else 0
+              for i in range(window)]
 
-    if last_disagreement == -1:
-        return True, 0
-    elif last_disagreement < max_check - 1:
-        return True, last_disagreement + 1
-    else:
-        return False, None
+    d = UltraPowerElement(sequence=d_seq,
+                          generator=lambda i: gcd(f(i), g(i)),
+                          name="gcd([f],[g])")
+    qf = UltraPowerElement(sequence=qf_seq, name="[f]/gcd")
+    qg = UltraPowerElement(sequence=qg_seq, name="[g]/gcd")
 
-
-def check_eventual_le(
-    f: Callable[[int], int],
-    g: Callable[[int], int],
-    max_check: int = 10000
-) -> Tuple[bool, Optional[int]]:
-    """Check if f(n) ≤ g(n) eventually.
-
-    Time complexity: O(max_check)
-    Space complexity: O(1)
-
-    >>> check_eventual_le(lambda n: n, lambda n: n**2)
-    (True, 0)
-    """
-    last_violation = -1
-    for n in range(max_check):
-        if f(n) > g(n):
-            last_violation = n
-
-    if last_violation == -1:
-        return True, 0
-    elif last_violation < max_check - 1:
-        return True, last_violation + 1
-    else:
-        return False, None
+    return d, qf, qg
 
 
 # ============================================================
-# Algorithm 2: Arithmetic Term Language and Evaluation
+# §5. Polynomial Identity Verification
 # ============================================================
 
-class TermKind(Enum):
-    CONST = auto()
-    VAR = auto()
-    ADD = auto()
-    MUL = auto()
+class NatExpr(Enum):
+    """Types of arithmetic expressions."""
+    VAR = "var"
+    CONST = "const"
+    ADD = "add"
+    MUL = "mul"
 
 
 @dataclass
-class ArithTerm:
-    """An arithmetic term in the language {const, var, +, ×}.
+class Expr:
+    """Arithmetic expression tree."""
+    kind: NatExpr
+    value: Optional[int] = None  # for CONST and VAR (index)
+    left: Optional['Expr'] = None
+    right: Optional['Expr'] = None
 
-    This mirrors the Lean `ArithTerm` inductive type.
-    """
-    kind: TermKind
-    value: Optional[int] = None  # For CONST
-    left: Optional['ArithTerm'] = None  # For ADD, MUL
-    right: Optional['ArithTerm'] = None  # For ADD, MUL
-
-    @staticmethod
-    def const(k: int) -> 'ArithTerm':
-        return ArithTerm(TermKind.CONST, value=k)
-
-    @staticmethod
-    def var() -> 'ArithTerm':
-        return ArithTerm(TermKind.VAR)
-
-    @staticmethod
-    def add(left: 'ArithTerm', right: 'ArithTerm') -> 'ArithTerm':
-        return ArithTerm(TermKind.ADD, left=left, right=right)
-
-    @staticmethod
-    def mul(left: 'ArithTerm', right: 'ArithTerm') -> 'ArithTerm':
-        return ArithTerm(TermKind.MUL, left=left, right=right)
-
-    def eval_nat(self, n: int) -> int:
-        """Evaluate the term at a natural number.
-
-        Time complexity: O(|term|) where |term| is the number of nodes.
-        Space complexity: O(depth) for recursion stack.
-
-        >>> ArithTerm.var().eval_nat(5)
-        5
-        >>> ArithTerm.add(ArithTerm.var(), ArithTerm.const(1)).eval_nat(5)
-        6
-        """
-        if self.kind == TermKind.CONST:
+    def eval_nat(self, env: List[int]) -> int:
+        """Evaluate in ℕ."""
+        if self.kind == NatExpr.VAR:
+            return env[self.value]
+        elif self.kind == NatExpr.CONST:
             return self.value
-        elif self.kind == TermKind.VAR:
-            return n
-        elif self.kind == TermKind.ADD:
-            return self.left.eval_nat(n) + self.right.eval_nat(n)
-        elif self.kind == TermKind.MUL:
-            return self.left.eval_nat(n) * self.right.eval_nat(n)
+        elif self.kind == NatExpr.ADD:
+            return self.left.eval_nat(env) + self.right.eval_nat(env)
+        elif self.kind == NatExpr.MUL:
+            return self.left.eval_nat(env) * self.right.eval_nat(env)
 
-    def eval_hyper(self, seq: Callable[[int], int], num_terms: int = 15) -> List[int]:
-        """Evaluate the term at a hypernatural (represented by a sequence).
-
-        Returns the first num_terms values of the resulting sequence.
-        This mirrors evalHyper in the Lean formalization.
-
-        Time complexity: O(num_terms * |term|)
-
-        >>> x = ArithTerm.var()
-        >>> t = ArithTerm.mul(x, ArithTerm.add(x, ArithTerm.const(1)))
-        >>> t.eval_hyper(lambda n: n, 5)
-        [0, 2, 6, 12, 20]
-        """
-        return [self.eval_nat(seq(n)) for n in range(num_terms)]
-
-    def __repr__(self):
-        if self.kind == TermKind.CONST:
-            return str(self.value)
-        elif self.kind == TermKind.VAR:
-            return "x"
-        elif self.kind == TermKind.ADD:
-            return f"({self.left} + {self.right})"
-        elif self.kind == TermKind.MUL:
-            return f"({self.left} * {self.right})"
+    def eval_ultra(self, env: List[UltraPowerElement],
+                   window: int = 20) -> UltraPowerElement:
+        """Evaluate in *ℕ."""
+        if self.kind == NatExpr.VAR:
+            return env[self.value]
+        elif self.kind == NatExpr.CONST:
+            return standard_element(self.value)
+        elif self.kind == NatExpr.ADD:
+            return ultrapower_add(
+                self.left.eval_ultra(env, window),
+                self.right.eval_ultra(env, window),
+                window
+            )
+        elif self.kind == NatExpr.MUL:
+            return ultrapower_mul(
+                self.left.eval_ultra(env, window),
+                self.right.eval_ultra(env, window),
+                window
+            )
 
 
-def verify_transfer(
-    t1: ArithTerm,
-    t2: ArithTerm,
-    test_values: List[int] = None,
-    hyper_seq: Callable[[int], int] = None,
-    num_hyper_terms: int = 20
-) -> dict:
-    """Verify that a term identity transfers from ℕ to HyperNat.
+def verify_polynomial_identity(
+    lhs: Expr, rhs: Expr, num_vars: int,
+    num_tests: int = 1000, max_val: int = 100
+) -> bool:
+    """Verify a polynomial identity by random testing.
 
-    Algorithm:
-    1. Check t1(n) = t2(n) for all test values in ℕ.
-    2. Compute t1 and t2 on a hypernatural sequence.
-    3. Check eventual equality of the resulting sequences.
-
-    This is the computational counterpart of Theorem 4.4 (transfer_arith_eq).
-
-    Time complexity: O(|test_values| * |term| + num_hyper_terms * |term|)
-
-    >>> x = ArithTerm.var()
-    >>> t1 = ArithTerm.mul(x, ArithTerm.add(x, ArithTerm.const(1)))
-    >>> t2 = ArithTerm.add(ArithTerm.mul(x, x), x)
-    >>> result = verify_transfer(t1, t2)
-    >>> result['nat_verified']
-    True
+    By transfer, if it holds in ℕ, it holds in *ℕ.
     """
-    if test_values is None:
-        test_values = list(range(100))
-    if hyper_seq is None:
-        hyper_seq = lambda n: n  # omega
+    import random
+    for _ in range(num_tests):
+        env = [random.randint(0, max_val) for _ in range(num_vars)]
+        if lhs.eval_nat(env) != rhs.eval_nat(env):
+            return False
+    return True
 
-    # Step 1: Verify in ℕ
-    nat_ok = all(t1.eval_nat(n) == t2.eval_nat(n) for n in test_values)
-
-    # Step 2: Evaluate on hypernatural
-    hyper_vals_1 = t1.eval_hyper(hyper_seq, num_hyper_terms)
-    hyper_vals_2 = t2.eval_hyper(hyper_seq, num_hyper_terms)
-
-    # Step 3: Check eventual equality
-    hyper_eq = hyper_vals_1 == hyper_vals_2
-
-    return {
-        'term1': str(t1),
-        'term2': str(t2),
-        'nat_verified': nat_ok,
-        'hyper_verified': hyper_eq,
-        'hyper_values_1': hyper_vals_1,
-        'hyper_values_2': hyper_vals_2,
-    }
-
-
-# ============================================================
-# Algorithm 3: Non-Archimedean Witness
-# ============================================================
-
-def find_domination_threshold(k: int, seq: Callable[[int], int] = None) -> int:
-    """Find the index N from which seq(n) ≥ k.
-
-    For the identity sequence (omega), this is simply k itself.
-    This witnesses the proof of ofNat_le_omega.
-
-    Time complexity: O(N) where N is the threshold.
-
-    >>> find_domination_threshold(42)
-    42
-    >>> find_domination_threshold(100, lambda n: n**2)
-    10
-    """
-    if seq is None:
-        seq = lambda n: n
-    for n in range(10 * k + 100):
-        if seq(n) >= k:
-            return n
-    return -1  # Not found in range
-
-
-# ============================================================
-# Algorithm 4: Eventual Divisibility Checker
-# ============================================================
-
-def check_eventual_divisibility(
-    f: Callable[[int], int],
-    g: Callable[[int], int],
-    max_check: int = 10000
-) -> Tuple[bool, Optional[int]]:
-    """Check if f(n) | g(n) eventually.
-
-    Mirrors the EventuallyDvd definition in the Lean formalization.
-
-    Time complexity: O(max_check)
-    Space complexity: O(1)
-
-    >>> check_eventual_divisibility(lambda n: n, lambda n: n**2)
-    (True, 0)
-    """
-    last_failure = -1
-    for n in range(max_check):
-        fn = f(n)
-        gn = g(n)
-        if fn == 0:
-            if gn != 0:
-                last_failure = n
-        elif gn % fn != 0:
-            last_failure = n
-
-    if last_failure == -1:
-        return True, 0
-    elif last_failure < max_check - 1:
-        return True, last_failure + 1
-    else:
-        return False, None
-
-
-# ============================================================
-# Algorithm 5: Polynomial Growth Comparison
-# ============================================================
-
-def compare_polynomial_growth(
-    p_coeffs: List[int],
-    q_coeffs: List[int],
-    max_check: int = 1000
-) -> dict:
-    """Compare two polynomials asymptotically via HyperNat.
-
-    Given polynomial coefficients [a₀, a₁, ..., aₙ] representing
-    a₀ + a₁x + a₂x² + ... + aₙxⁿ, determine eventual ordering.
-
-    Time complexity: O(max_check * max(deg_p, deg_q))
-
-    >>> compare_polynomial_growth([0, 1], [0, 0, 1])  # x vs x²
-    {'p_le_q': True, 'q_le_p': False, 'threshold_p_le_q': 0, 'relationship': 'p < q eventually'}
-    """
-    def eval_poly(coeffs, x):
-        return sum(c * x**i for i, c in enumerate(coeffs))
-
-    p = lambda n: eval_poly(p_coeffs, n)
-    q = lambda n: eval_poly(q_coeffs, n)
-
-    p_le_q, thresh_pq = check_eventual_le(p, q, max_check)
-    q_le_p, thresh_qp = check_eventual_le(q, p, max_check)
-
-    if p_le_q and q_le_p:
-        relationship = "p = q eventually"
-    elif p_le_q:
-        relationship = "p < q eventually"
-    elif q_le_p:
-        relationship = "q < p eventually"
-    else:
-        relationship = "incomparable in checked range"
-
-    return {
-        'p_le_q': p_le_q,
-        'q_le_p': q_le_p,
-        'threshold_p_le_q': thresh_pq,
-        'threshold_q_le_p': thresh_qp,
-        'relationship': relationship,
-    }
-
-
-# ============================================================
-# Main: Run examples
-# ============================================================
 
 if __name__ == "__main__":
-    print("Algorithm 1: Eventual Equivalence")
-    print("-" * 40)
-    f = lambda n: n**2 + (3 if n < 10 else 0)
-    g = lambda n: n**2
-    result = check_eventual_equality(f, g)
-    print(f"  n² + 3·[n<10] ≈ n²? {result}")
+    # Demo: ω exceeds all standard elements
+    w = omega_element()
+    for n in [10, 100, 1000]:
+        s = standard_element(n)
+        cmp = ultrapower_compare(s, w)
+        print(f"std({n}) {cmp} ω")
 
-    print()
-    print("Algorithm 2: Term Transfer Verification")
-    print("-" * 40)
-    x = ArithTerm.var()
-    # x(x+1) = x² + x
-    t1 = ArithTerm.mul(x, ArithTerm.add(x, ArithTerm.const(1)))
-    t2 = ArithTerm.add(ArithTerm.mul(x, x), x)
-    result = verify_transfer(t1, t2)
-    print(f"  {result['term1']} = {result['term2']}")
-    print(f"  ℕ verified: {result['nat_verified']}")
-    print(f"  HyperNat verified: {result['hyper_verified']}")
+    # Demo: GCD transfer
+    d, qf, qg = gcd_transfer(lambda i: 12*(i+1), lambda i: 18*(i+1))
+    print(f"\ngcd sequence: {d.sequence[:8]}")
+    print(f"quotient f:   {qf.sequence[:8]}")
+    print(f"quotient g:   {qg.sequence[:8]}")
 
-    print()
-    print("Algorithm 3: Non-Archimedean Witness")
-    print("-" * 40)
-    for k in [10, 100, 1000]:
-        N = find_domination_threshold(k)
-        print(f"  ω ≥ {k} from index {N}")
-
-    print()
-    print("Algorithm 4: Eventual Divisibility")
-    print("-" * 40)
-    result = check_eventual_divisibility(lambda n: n+1, lambda n: (n+1)**2)
-    print(f"  (n+1) | (n+1)²? {result}")
-    result = check_eventual_divisibility(lambda n: n+2, lambda n: n+1)
-    print(f"  (n+2) | (n+1)? {result}")
-
-    print()
-    print("Algorithm 5: Polynomial Growth Comparison")
-    print("-" * 40)
-    result = compare_polynomial_growth([0, 3, 0], [0, 0, 1])  # 3x vs x²
-    print(f"  3x vs x²: {result['relationship']}")
-    result = compare_polynomial_growth([0, 0, 1], [0, 0, 1])  # x² vs x²
-    print(f"  x² vs x²: {result['relationship']}")
+    # Demo: overspill
+    result = detect_overspill(lambda n: n + 1 > n)
+    print(f"\nOverspill for 'n+1 > n': {result}")
