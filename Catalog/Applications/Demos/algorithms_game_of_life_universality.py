@@ -1,321 +1,306 @@
 #!/usr/bin/env python3
 """
-Algorithms for Cellular Automata Simulation Algebra
+Algorithms for Game of Life Simulation and Tropical Threshold Computation
 
-Type-hinted implementations of the key algorithms from the formalization:
-1. SimulationMorphism — the core algebraic structure
-2. SimulationSpectrum — computing the self-simulation spectrum
-3. TagSystemSimulator — 2-tag system dynamics
-4. CA1DSimulator — 1D cellular automaton dynamics
-5. UniversalityChecker — checking simulation relationships
+Type-hinted implementations of the core algorithms from the formalized theory.
 """
 
-from __future__ import annotations
-from typing import (
-    List, Dict, Optional, Callable, TypeVar, Generic, Set, Tuple, Sequence
-)
-from dataclasses import dataclass
-from functools import reduce
-import operator
-
-S = TypeVar('S')
-T = TypeVar('T')
+from typing import List, Tuple, Set, Dict, Callable, Optional
+import numpy as np
 
 
-# =============================================================================
-# Core: Simulation Morphism
-# =============================================================================
+# ============================================================
+# Tropical Threshold Gate
+# ============================================================
 
-@dataclass
-class DynamicalSystem(Generic[S]):
-    """A discrete dynamical system with state type S."""
-    step: Callable[[S], S]
+def tropical_threshold(s: int, lo: int, hi: int) -> int:
+    """
+    Tropical threshold gate.
 
-    def iterate(self, state: S, n: int) -> S:
-        """Apply step function n times."""
-        current = state
-        for _ in range(n):
-            current = self.step(current)
-        return current
+    Returns 1 if lo <= s <= hi, else 0.
+    Implementation uses only min, max (for truncating subtraction), and multiplication.
 
-    def orbit(self, state: S, length: int) -> List[S]:
-        """Compute the orbit prefix of given length."""
-        result = [state]
-        current = state
-        for _ in range(length):
-            current = self.step(current)
-            result.append(current)
-        return result
+    Time complexity: O(1)
+    Space complexity: O(1)
+    """
+    left = min(1, max(0, s + 1 - lo))
+    right = min(1, max(0, hi + 1 - s))
+    return left * right
 
-    def find_period(self, state: S, max_steps: int = 10000) -> Optional[int]:
-        """Find the period of a state, or None if not periodic within max_steps."""
-        seen: Dict[int, int] = {}  # hash -> step
-        current = state
-        for i in range(max_steps):
-            h = hash(str(current))
-            if h in seen and self.iterate(state, seen[h]) == current:
-                return i - seen[h]
-            seen[h] = i
-            current = self.step(current)
+
+def tropical_and(x: int, y: int) -> int:
+    """AND gate via tropical threshold: TT(x+y, 2, 2)."""
+    return tropical_threshold(x + y, 2, 2)
+
+
+def tropical_or(x: int, y: int) -> int:
+    """OR gate via tropical threshold: TT(x+y, 1, 2)."""
+    return tropical_threshold(x + y, 1, 2)
+
+
+def tropical_not(x: int) -> int:
+    """NOT gate via tropical threshold: TT(1-x, 1, 1)."""
+    return tropical_threshold(1 - x, 1, 1)
+
+
+def tropical_nand(x: int, y: int) -> int:
+    """NAND gate via composition of tropical thresholds."""
+    return tropical_threshold(1 - tropical_threshold(x + y, 2, 2), 1, 1)
+
+
+def tropical_xor(x: int, y: int) -> int:
+    """XOR gate via tropical threshold: TT(x+y, 1, 1)."""
+    return tropical_threshold(x + y, 1, 1)
+
+
+# ============================================================
+# Boolean Function Synthesis via Tropical Thresholds
+# ============================================================
+
+def synthesize_boolean_function(
+    truth_table: List[int]
+) -> Callable[[int, int], int]:
+    """
+    Synthesize a tropical threshold implementation of any 2-input Boolean function.
+
+    Args:
+        truth_table: [f(0,0), f(0,1), f(1,0), f(1,1)] where each value is 0 or 1
+
+    Returns:
+        A function g(x, y) -> {0, 1} computing the same function using
+        tropical threshold primitives.
+
+    This implements the functional_completeness theorem constructively.
+    """
+    assert len(truth_table) == 4
+    assert all(v in (0, 1) for v in truth_table)
+
+    c00, c01, c10, c11 = truth_table
+
+    def g(x: int, y: int) -> int:
+        # Interpolation formula using tropical operations
+        # Each term selects the correct truth table entry
+        t00 = c00 * tropical_threshold(x, 0, 0) * tropical_threshold(y, 0, 0)
+        t01 = c01 * tropical_threshold(x, 0, 0) * tropical_threshold(y, 1, 1)
+        t10 = c10 * tropical_threshold(x, 1, 1) * tropical_threshold(y, 0, 0)
+        t11 = c11 * tropical_threshold(x, 1, 1) * tropical_threshold(y, 1, 1)
+        return min(1, t00 + t01 + t10 + t11)
+
+    return g
+
+
+# ============================================================
+# Game of Life on ℤ × ℤ
+# ============================================================
+
+# Moore neighborhood offsets
+MOORE_OFFSETS: List[Tuple[int, int]] = [
+    (-1, -1), (-1, 0), (-1, 1),
+    (0, -1),           (0, 1),
+    (1, -1),  (1, 0),  (1, 1),
+]
+
+
+def neighbor_count(config: Set[Tuple[int, int]], p: Tuple[int, int]) -> int:
+    """Count the live Moore neighbors of cell p."""
+    count = 0
+    for di, dj in MOORE_OFFSETS:
+        if (p[0] + di, p[1] + dj) in config:
+            count += 1
+    return count
+
+
+def gol_step_sparse(config: Set[Tuple[int, int]]) -> Set[Tuple[int, int]]:
+    """
+    One step of the Game of Life using sparse (set-based) representation.
+
+    Time complexity: O(|support| * 8) = O(|support|)
+    Space complexity: O(|support|)
+
+    This is the efficient implementation for finitely-supported configurations.
+    """
+    # Collect all cells that need to be checked (alive cells + their neighbors)
+    candidates: Set[Tuple[int, int]] = set()
+    for p in config:
+        candidates.add(p)
+        for di, dj in MOORE_OFFSETS:
+            candidates.add((p[0] + di, p[1] + dj))
+
+    # Apply the local rule to each candidate
+    new_config: Set[Tuple[int, int]] = set()
+    for p in candidates:
+        n = neighbor_count(config, p)
+        alive = p in config
+        if alive:
+            if n in (2, 3):  # survival
+                new_config.add(p)
+        else:
+            if n == 3:  # birth
+                new_config.add(p)
+
+    return new_config
+
+
+def gol_step_tropical_sparse(config: Set[Tuple[int, int]]) -> Set[Tuple[int, int]]:
+    """
+    GoL step using tropical threshold gates (algebraically equivalent).
+
+    This demonstrates the tropical decomposition theorem:
+    the GoL local rule = alive * TT(n, 2, 3) + (1-alive) * TT(n, 3, 3)
+    """
+    candidates: Set[Tuple[int, int]] = set()
+    for p in config:
+        candidates.add(p)
+        for di, dj in MOORE_OFFSETS:
+            candidates.add((p[0] + di, p[1] + dj))
+
+    new_config: Set[Tuple[int, int]] = set()
+    for p in candidates:
+        n = neighbor_count(config, p)
+        alive = 1 if p in config else 0
+        # Tropical threshold formulation
+        value = alive * tropical_threshold(n, 2, 3) + (1 - alive) * tropical_threshold(n, 3, 3)
+        if value == 1:
+            new_config.add(p)
+
+    return new_config
+
+
+# ============================================================
+# Pattern Analysis
+# ============================================================
+
+def classify_pattern(
+    config: Set[Tuple[int, int]], max_period: int = 100
+) -> Dict[str, object]:
+    """
+    Classify a GoL pattern as still life, oscillator, or spaceship.
+
+    Returns a dict with:
+    - 'type': 'still_life', 'oscillator', 'spaceship', or 'unknown'
+    - 'period': the period (if oscillator or spaceship)
+    - 'velocity': (dx, dy) (if spaceship)
+    """
+    if not config:
+        return {'type': 'still_life', 'period': 1}
+
+    original = frozenset(config)
+    current = set(config)
+
+    for t in range(1, max_period + 1):
+        current = gol_step_sparse(current)
+        current_frozen = frozenset(current)
+
+        if current_frozen == original:
+            if t == 1:
+                return {'type': 'still_life', 'period': 1}
+            else:
+                return {'type': 'oscillator', 'period': t}
+
+        # Check for spaceship (translation)
+        if len(current) == len(config):
+            # Find center of mass shift
+            if current:
+                ox = sum(p[0] for p in config) / len(config)
+                oy = sum(p[1] for p in config) / len(config)
+                cx = sum(p[0] for p in current) / len(current)
+                cy = sum(p[1] for p in current) / len(current)
+                dx, dy = round(cx - ox), round(cy - oy)
+                if dx != 0 or dy != 0:
+                    shifted = frozenset((p[0] - dx, p[1] - dy) for p in current)
+                    if shifted == original:
+                        return {'type': 'spaceship', 'period': t, 'velocity': (dx, dy)}
+
+    return {'type': 'unknown', 'max_period_checked': max_period}
+
+
+def chebyshev_distance(p: Tuple[int, int], q: Tuple[int, int]) -> int:
+    """Chebyshev (L∞) distance between two grid points."""
+    return max(abs(p[0] - q[0]), abs(p[1] - q[1]))
+
+
+def support_bounding_box(
+    config: Set[Tuple[int, int]]
+) -> Optional[Tuple[int, int, int, int]]:
+    """Return (min_row, max_row, min_col, max_col) or None if empty."""
+    if not config:
         return None
+    rows = [p[0] for p in config]
+    cols = [p[1] for p in config]
+    return (min(rows), max(rows), min(cols), max(cols))
 
 
-@dataclass
-class SimulationMorphism(Generic[S, T]):
+# ============================================================
+# Simulation Overhead Computation
+# ============================================================
+
+def turing_simulation_overhead(
+    tm_states: int, tm_symbols: int, tape_length: int
+) -> Dict[str, int]:
     """
-    A simulation morphism from source system to target system.
+    Compute the overhead of simulating a Turing machine using a 2D CA.
 
-    Satisfies: tgt.step^[time_dilation](encode(s)) = encode(src.step(s))
+    Returns bounds on:
+    - cells_per_tape_cell: number of CA cells per TM tape cell
+    - time_per_tm_step: CA steps per TM step
+    - total_ca_cells: total CA cells needed
     """
-    time_dilation: int
-    encode: Callable[[S], T]
-    src_system: DynamicalSystem[S]
-    tgt_system: DynamicalSystem[T]
+    import math
 
-    def verify_equivariance(self, test_states: List[S]) -> bool:
-        """Verify the equivariance condition on test states."""
-        for s in test_states:
-            lhs = self.tgt_system.iterate(self.encode(s), self.time_dilation)
-            rhs = self.encode(self.src_system.step(s))
-            if lhs != rhs:
-                return False
-        return True
+    cells_per_tape_cell = math.ceil(math.log2(max(1, tm_states * tm_symbols)))
+    time_per_tm_step = tape_length  # information must propagate across tape
+    total_ca_cells = tape_length * cells_per_tape_cell
 
-    def verify_iterate(self, state: S, n: int) -> bool:
-        """Verify multi-step equivariance: tgt^[n*d](encode(s)) = encode(src^[n](s))."""
-        lhs = self.tgt_system.iterate(self.encode(state), n * self.time_dilation)
-        rhs = self.encode(self.src_system.iterate(state, n))
-        return lhs == rhs
-
-    @staticmethod
-    def compose(
-        g: SimulationMorphism[T, 'U'],
-        f: SimulationMorphism[S, T]
-    ) -> SimulationMorphism[S, 'U']:
-        """
-        Compose simulation morphisms.
-        Time dilation is multiplicative: d_composed = d_g * d_f.
-        """
-        return SimulationMorphism(
-            time_dilation=g.time_dilation * f.time_dilation,
-            encode=lambda s: g.encode(f.encode(s)),
-            src_system=f.src_system,
-            tgt_system=g.tgt_system,
-        )
-
-    @staticmethod
-    def identity(system: DynamicalSystem[S]) -> SimulationMorphism[S, S]:
-        """The identity simulation morphism (dilation 1)."""
-        return SimulationMorphism(
-            time_dilation=1,
-            encode=lambda s: s,
-            src_system=system,
-            tgt_system=system,
-        )
-
-
-# =============================================================================
-# Simulation Spectrum
-# =============================================================================
-
-def compute_simulation_spectrum(
-    system: DynamicalSystem[S],
-    test_states: List[S],
-    max_dilation: int = 50
-) -> Set[int]:
-    """
-    Compute (an approximation of) the simulation spectrum of a system.
-
-    The simulation spectrum is the set of all time dilations achievable
-    by self-simulation morphisms. We check which dilations d satisfy
-    step^[d] = step (identity encoding) on the test states.
-
-    For the identity encoding, d is in the spectrum iff all test states
-    have period dividing d.
-    """
-    spectrum: Set[int] = {1}  # Identity always works
-
-    # Check each potential dilation
-    for d in range(2, max_dilation + 1):
-        is_valid = True
-        for s in test_states:
-            if system.iterate(s, d) != system.step(s):
-                is_valid = False
-                break
-        if is_valid:
-            spectrum.add(d)
-
-    return spectrum
-
-
-def verify_multiplicative_closure(spectrum: Set[int], bound: int) -> bool:
-    """Verify that the spectrum is closed under multiplication (up to bound)."""
-    for a in spectrum:
-        for b in spectrum:
-            if a * b <= bound and a * b not in spectrum:
-                return False
-    return True
-
-
-# =============================================================================
-# Tag System
-# =============================================================================
-
-@dataclass
-class TagSystem:
-    """
-    A 2-tag system.
-
-    At each step: read first symbol, append its production, delete first 2 symbols.
-    Turing complete by the Cocke-Minsky theorem.
-    """
-    alphabet_size: int
-    productions: Dict[int, List[int]]
-
-    def step(self, word: List[int]) -> Optional[List[int]]:
-        """One step. Returns None if halted (word too short)."""
-        if len(word) < 2:
-            return None
-        first = word[0]
-        rest = word[2:]
-        production = self.productions.get(first, [])
-        return rest + production
-
-    def to_dynamical_system(self) -> DynamicalSystem[Tuple[int, ...]]:
-        """Convert to a DynamicalSystem (using tuples for hashability)."""
-        def step_fn(state: Tuple[int, ...]) -> Tuple[int, ...]:
-            result = self.step(list(state))
-            return tuple(result) if result is not None else ()
-        return DynamicalSystem(step=step_fn)
-
-    def run(self, word: List[int], max_steps: int = 1000) -> List[List[int]]:
-        """Run the tag system, recording trajectory."""
-        trajectory = [word[:]]
-        current = word[:]
-        for _ in range(max_steps):
-            result = self.step(current)
-            if result is None:
-                break
-            trajectory.append(result[:])
-            current = result
-        return trajectory
-
-
-# =============================================================================
-# 1D Cellular Automaton
-# =============================================================================
-
-@dataclass
-class CA1D:
-    """A 1D cellular automaton with periodic boundary conditions."""
-    num_states: int
-    radius: int
-    rule_table: Dict[Tuple[int, ...], int]
-
-    def step(self, config: List[int]) -> List[int]:
-        """Apply the CA rule to the entire configuration."""
-        n = len(config)
-        new_config = []
-        for i in range(n):
-            neighborhood = tuple(
-                config[(i + j - self.radius) % n]
-                for j in range(2 * self.radius + 1)
-            )
-            new_config.append(self.rule_table.get(neighborhood, 0))
-        return new_config
-
-    def to_dynamical_system(self, grid_size: int) -> DynamicalSystem[Tuple[int, ...]]:
-        """Convert to a DynamicalSystem on a fixed grid."""
-        def step_fn(state: Tuple[int, ...]) -> Tuple[int, ...]:
-            return tuple(self.step(list(state)))
-        return DynamicalSystem(step=step_fn)
-
-    @staticmethod
-    def rule110() -> CA1D:
-        """Construct Rule 110."""
-        table = {
-            (1, 1, 1): 0, (1, 1, 0): 1, (1, 0, 1): 1, (1, 0, 0): 0,
-            (0, 1, 1): 1, (0, 1, 0): 1, (0, 0, 1): 1, (0, 0, 0): 0,
-        }
-        return CA1D(num_states=2, radius=1, rule_table=table)
-
-    @staticmethod
-    def from_wolfram_number(rule_number: int) -> CA1D:
-        """Construct an elementary CA from its Wolfram rule number."""
-        table = {}
-        for i in range(8):
-            neighborhood = tuple((i >> (2 - j)) & 1 for j in range(3))
-            table[neighborhood] = (rule_number >> i) & 1
-        return CA1D(num_states=2, radius=1, rule_table=table)
-
-
-# =============================================================================
-# Universality Checker
-# =============================================================================
-
-def check_universality_transfer(
-    morphism_AB: SimulationMorphism,
-    morphism_BC: SimulationMorphism,
-    test_states: List
-) -> Dict[str, any]:
-    """
-    Verify universality transfer: if B simulates A and C simulates B,
-    then C simulates A via composition.
-    """
-    composed = SimulationMorphism.compose(morphism_BC, morphism_AB)
-
-    results = {
-        "dilation_AB": morphism_AB.time_dilation,
-        "dilation_BC": morphism_BC.time_dilation,
-        "dilation_AC": composed.time_dilation,
-        "multiplicative": composed.time_dilation == morphism_AB.time_dilation * morphism_BC.time_dilation,
-        "lower_bound_A": morphism_AB.time_dilation <= composed.time_dilation,
-        "lower_bound_B": morphism_BC.time_dilation <= composed.time_dilation,
-    }
-
-    if test_states:
-        results["equivariance_verified"] = composed.verify_equivariance(test_states)
-
-    return results
-
-
-# =============================================================================
-# Overhead Analysis
-# =============================================================================
-
-def analyze_composition_chain(dilations: List[int]) -> Dict[str, any]:
-    """
-    Analyze a chain of simulation compositions.
-
-    Returns overhead statistics including the total dilation,
-    individual bounds, and growth rate.
-    """
-    total = reduce(operator.mul, dilations, 1)
     return {
-        "individual_dilations": dilations,
-        "total_dilation": total,
-        "chain_length": len(dilations),
-        "geometric_mean": total ** (1.0 / len(dilations)) if dilations else 1.0,
-        "lower_bounds_satisfied": all(d <= total for d in dilations),
-        "growth_rate": f"O({max(dilations)}^{len(dilations)})" if dilations else "O(1)",
+        'cells_per_tape_cell': cells_per_tape_cell,
+        'time_per_tm_step': time_per_tm_step,
+        'total_ca_cells': total_ca_cells,
+        'config_space_size': tm_states * (tm_symbols ** tape_length) * (tape_length + 1),
     }
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    r110 = CA1D.rule110()
-    sys110 = r110.to_dynamical_system(20)
+    # Test tropical gates
+    print("Testing tropical gates...")
+    for x in [0, 1]:
+        for y in [0, 1]:
+            assert tropical_and(x, y) == x * y
+            assert tropical_or(x, y) == max(x, y)
+            assert tropical_nand(x, y) == 1 - x * y
+    for x in [0, 1]:
+        assert tropical_not(x) == 1 - x
+    print("  All gate tests passed ✓")
 
-    # Tag system test
-    ts = TagSystem(
-        alphabet_size=3,
-        productions={0: [1, 2], 1: [0], 2: [0, 0, 0]}
-    )
-    trajectory = ts.run([0, 0, 1, 0, 2], max_steps=10)
-    print(f"Tag system trajectory length: {len(trajectory)}")
+    # Test functional completeness
+    print("Testing functional completeness...")
+    for i in range(16):
+        tt = [(i >> 3) & 1, (i >> 2) & 1, (i >> 1) & 1, i & 1]
+        g = synthesize_boolean_function(tt)
+        for x in [0, 1]:
+            for y in [0, 1]:
+                assert g(x, y) == tt[2*x + y], f"Failed for function {i}: g({x},{y}) = {g(x,y)}, expected {tt[2*x+y]}"
+    print("  All 16 functions synthesized correctly ✓")
 
-    # Composition chain analysis
-    result = analyze_composition_chain([3, 5, 2, 7])
-    print(f"Composition analysis: {result}")
+    # Test pattern classification
+    print("Testing pattern classification...")
+    block = {(0,0), (0,1), (1,0), (1,1)}
+    result = classify_pattern(block)
+    assert result['type'] == 'still_life', f"Block: {result}"
+    print(f"  Block: {result}")
 
-    print("All algorithm tests passed!")
+    blinker = {(0,0), (0,1), (0,2)}
+    result = classify_pattern(blinker)
+    assert result['type'] == 'oscillator' and result['period'] == 2
+    print(f"  Blinker: {result}")
+
+    glider = {(0,1), (1,2), (2,0), (2,1), (2,2)}
+    result = classify_pattern(glider)
+    print(f"  Glider: {result}")
+
+    # Test simulation overhead
+    print("\nSimulation overhead for TM(5 states, 2 symbols, tape 100):")
+    overhead = turing_simulation_overhead(5, 2, 100)
+    for k, v in overhead.items():
+        print(f"  {k}: {v}")
+
+    print("\nAll tests passed ✓")
