@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c4c53775",
     "filename": "speculative_anti_gravity_mathematics__theorems_tha.json",
     "pkg_num": 380,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.20784000000000002,
     "title": "Anti-Gravity Theorems: Weight-Complexity Duality in Theorem Dependency Graphs"
   },
   {
@@ -12171,8 +12171,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "speculative_anti_gravity_mathematics__theorems_tha",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.20784000000000002,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Anti-Gravity Theorems: Weight-Complexity Duality in Theorem Dependency Graphs"
     }

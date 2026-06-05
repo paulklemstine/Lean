@@ -610,6 +610,26 @@
       "theorem_count": 5,
       "timestamp": "2026-06-05T06:49:28",
       "title": "Alien Mathematics: Non-Standard Arithmetic"
+    },
+    {
+      "cycle_id": "dbd7459e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis cycle established a rigorous mathematical framework for analyzing social deduction games through the lens of sequential elimination processes. The key mathemati",
+      "quality_score": 0.3368,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-06-05T07:24:40",
+      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+    },
+    {
+      "cycle_id": "89e44262",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Causal Integration Theory\n\n## Synthesis\n\nThis cycle established a rigorous mathematical framework for integrated information (Φ) as a minimum-cut measure on weighted directed grap",
+      "quality_score": 0.42416,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T07:25:08",
+      "title": "Consciousness as Integrated Information"
     }
   ],
   "entries": [
@@ -655,7 +675,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-05T06:49:28",
+  "last_updated": "2026-06-05T07:25:08",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -667,12 +687,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "a82a0b88",
-        "quality": 0.30224000000000006,
-        "theorems": 5,
-        "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
-      },
       {
         "cycle_id": "4eb1539a",
         "quality": 0.32480000000000003,
@@ -726,6 +740,12 @@
         "quality": 0.3348,
         "theorems": 5,
         "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
+      },
+      {
+        "cycle_id": "dbd7459e",
+        "quality": 0.3368,
+        "theorems": 3,
+        "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
       }
     ],
     "Bridges": [
@@ -898,6 +918,12 @@
         "quality": 0.584,
         "theorems": 5,
         "title": "Alien Mathematics: Non-Standard Arithmetic"
+      },
+      {
+        "cycle_id": "89e44262",
+        "quality": 0.42416,
+        "theorems": 5,
+        "title": "Consciousness as Integrated Information"
       }
     ],
     "Physics": [
