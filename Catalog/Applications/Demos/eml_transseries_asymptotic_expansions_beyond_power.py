@@ -1,240 +1,456 @@
 #!/usr/bin/env python3
 """
-Transseries: Asymptotic Expansions Beyond Power Series — Demonstration
+Transseries Growth Scale: Numerical Demonstrations
 
-This script demonstrates the key results from our transseries formalization:
-1. The exp-log growth hierarchy
-2. Coefficient recovery from asymptotic expansions
-3. The EML function's transseries structure
+Demonstrates the key results from the formalized transseries theory:
+1. Asymptotic dominance hierarchy (exp >> poly >> log)
+2. Growth level classification
+3. EML growth operation
+4. Non-equivalence of growth levels
 """
 
-import numpy as np
+import math
+from typing import Tuple
 
-def demonstrate_growth_hierarchy():
-    """Show that exp >> polynomial >> log in asymptotic growth."""
-    print("=" * 70)
-    print("§1. THE EXP-LOG GROWTH HIERARCHY")
-    print("=" * 70)
-    print()
-    print("Theorem: exp(x) dominates x^n for all n.")
-    print("We compute exp(x)/x^n for increasing x:\n")
-    
-    for n in [1, 2, 5, 10]:
-        print(f"  exp(x) / x^{n}:")
-        for x in [10, 20, 50, 100]:
-            ratio = np.exp(x) / x**n
-            print(f"    x={x:>4}: {ratio:.2e}")
-        print()
-    
-    print("Theorem: x dominates log(x).")
-    print("We compute x/log(x) for increasing x:\n")
-    for x in [10, 100, 1000, 10000, 100000]:
-        ratio = x / np.log(x)
-        print(f"  x={x:>6}: x/log(x) = {ratio:.2f}")
-    print()
-    
-    print("Theorem: exp(exp(x)) dominates exp(x).")
-    print("We compute exp(exp(x))/exp(x) = exp(exp(x)-x) for small x:\n")
-    for x in [1, 2, 3, 4, 5]:
-        ratio = np.exp(np.exp(x) - x)
-        print(f"  x={x}: exp(exp(x))/exp(x) = {ratio:.2e}")
-    print()
+# Growth Level type
+GrowthLevel = Tuple[int, float]  # (depth, exponent)
 
 
-def demonstrate_coefficient_recovery():
-    """Show that transseries coefficients are uniquely recoverable."""
-    print("=" * 70)
-    print("§2. COEFFICIENT RECOVERY FROM ASYMPTOTIC EXPANSIONS")
-    print("=" * 70)
-    print()
-    
-    # The function f(x) = a*exp(x) + b*log(x) + c
-    a, b, c = 3.0, -2.0, 7.0
-    print(f"Ground truth: a={a}, b={b}, c={c}")
-    print(f"Function: f(x) = {a}·exp(x) + ({b})·log(x) + {c}")
-    print()
-    
-    def f(x):
-        return a * np.exp(x) + b * np.log(x) + c
-    
-    # Recover a = lim f(x)/exp(x)
-    print("Step 1: Recover a = lim_{x→∞} f(x)/exp(x)")
-    for x in [5, 10, 20, 50]:
-        recovered_a = f(x) / np.exp(x)
-        print(f"  x={x:>3}: f(x)/exp(x) = {recovered_a:.10f}")
-    print()
-    
-    # Recover b = lim (f(x) - a*exp(x))/log(x)
-    print("Step 2: Recover b = lim_{x→∞} (f(x) - a·exp(x))/log(x)")
-    for x in [10, 100, 1000, 10000]:
-        recovered_b = (f(x) - a * np.exp(x)) / np.log(x)
-        print(f"  x={x:>6}: remainder/log(x) = {recovered_b:.10f}")
-    print()
-    
-    # Recover c = lim (f(x) - a*exp(x) - b*log(x))
-    print("Step 3: Recover c = f(x) - a·exp(x) - b·log(x) (exact for all x)")
-    for x in [1, 10, 100]:
-        recovered_c = f(x) - a * np.exp(x) - b * np.log(x)
-        print(f"  x={x:>4}: remainder = {recovered_c:.10f}")
-    print()
+def growth_level_lt(a: GrowthLevel, b: GrowthLevel) -> bool:
+    """Lexicographic order on growth levels."""
+    if a[0] < b[0]:
+        return True
+    if a[0] == b[0] and a[1] < b[1]:
+        return True
+    return False
 
 
-def demonstrate_eml_transseries():
-    """Show the EML function's transseries structure."""
-    print("=" * 70)
-    print("§3. THE EML FUNCTION AS A TRANSSERIES ELEMENT")
-    print("=" * 70)
-    print()
-    
-    print("eml(x,x) = exp(x) - log(x)")
-    print("Transseries: 1·exp(x) + (-1)·log(x)")
-    print()
-    
-    print("Theorem: eml(x,x) ~ exp(x) as x → ∞")
-    print("Verification: eml(x,x)/exp(x) → 1:\n")
-    for x in [1, 5, 10, 20, 50, 100]:
-        eml_val = np.exp(x) - np.log(x)
-        ratio = eml_val / np.exp(x)
-        print(f"  x={x:>4}: eml(x,x)/exp(x) = {ratio:.15f}")
-    print()
-    
-    print("Hardy field closure: d/dx[eml(x,x)] = exp(x) - 1/x")
-    print("The derivative is again an exp-log expression!\n")
-    for x in [1, 2, 5, 10]:
-        deriv = np.exp(x) - 1/x
-        print(f"  x={x:>3}: eml'(x,x) = exp({x}) - 1/{x} = {deriv:.6f}")
-    print()
+def exp_shift(g: GrowthLevel) -> GrowthLevel:
+    """Exponential shift: raises depth by 1."""
+    return (g[0] + 1, g[1])
 
 
-def demonstrate_uniqueness():
-    """Demonstrate the asymptotic comparison theorem."""
-    print("=" * 70)
-    print("§4. THE ASYMPTOTIC COMPARISON THEOREM")
-    print("=" * 70)
-    print()
-    
-    print("Theorem: If a₁·exp + b₁·log + c₁ = a₂·exp + b₂·log + c₂")
-    print("         as functions, then a₁=a₂, b₁=b₂, c₁=c₂.")
-    print()
-    print("This is the UNIQUENESS of transseries expansion.")
-    print("The monomials {exp(x), log(x), 1} are 'linearly independent'")
-    print("in the asymptotic sense.\n")
-    
-    print("Numerical verification: can we distinguish")
-    print("  f(x) = 2·exp(x) + 3·log(x) + 5")
-    print("  g(x) = 2·exp(x) + 3.001·log(x) + 5 ?")
-    print()
-    
-    for x in [10, 100, 1000, 10000]:
-        f_val = 2 * np.exp(min(x, 700)) + 3 * np.log(x) + 5
-        g_val = 2 * np.exp(min(x, 700)) + 3.001 * np.log(x) + 5
-        diff = g_val - f_val
-        print(f"  x={x:>6}: f(x)-g(x) = {-diff:.6e}  (= -0.001·log(x) = {-0.001*np.log(x):.6e})")
-    print()
-    print("Even tiny coefficient differences are detectable at the right scale!")
+def log_shift(g: GrowthLevel) -> GrowthLevel:
+    """Logarithmic shift: lowers depth by 1."""
+    return (g[0] - 1, g[1])
 
 
-def demonstrate_monomial_cross_terms():
-    """Show that products of transseries elements require new monomials."""
-    print("=" * 70)
-    print("§5. TRANSSERIES ALGEBRA: WHY WE NEED INFINITELY MANY MONOMIALS")
-    print("=" * 70)
-    print()
-    
-    print("(a₁·exp + b₁·log) × (a₂·exp + b₂·log)")
-    print("= a₁a₂·exp² + (a₁b₂+a₂b₁)·exp·log + b₁b₂·log²")
-    print()
-    print("New monomials appear: exp²(x) = exp(2x), exp(x)·log(x)")
-    print("This shows the transseries monoid is NOT finitely generated.\n")
-    
-    a1, b1, a2, b2 = 1, 1, 1, -1
-    print(f"Example: ({a1}·exp + {b1}·log) × ({a2}·exp + ({b2})·log)")
-    print(f"= {a1*a2}·exp² + {a1*b2+a2*b1}·exp·log + ({b1*b2})·log²\n")
-    
-    for x in [1, 2, 5]:
-        product = (np.exp(x) + np.log(x)) * (np.exp(x) - np.log(x))
-        expansion = np.exp(2*x) - np.log(x)**2
-        print(f"  x={x}: product = {product:.6f}, exp²-log² = {expansion:.6f}")
+def eml_growth_op(g1: GrowthLevel, g2: GrowthLevel) -> GrowthLevel:
+    """EML growth level operation."""
+    e = exp_shift(g1)
+    l = log_shift(g2)
+    if e[0] > l[0]:
+        return e
+    elif l[0] > e[0]:
+        return l
+    elif e[1] >= l[1]:
+        return e
+    else:
+        return l
 
 
-if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║     TRANSSERIES: ASYMPTOTIC EXPANSIONS BEYOND POWER SERIES         ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-    
-    demonstrate_growth_hierarchy()
-    demonstrate_coefficient_recovery()
-    demonstrate_eml_transseries()
-    demonstrate_uniqueness()
-    demonstrate_monomial_cross_terms()
-    
-    print("=" * 70)
-    print("All demonstrations complete.")
-    print("These results have been formally verified in Lean 4.")
-    print("=" * 70)
+def eval_transmonomial(g: GrowthLevel, x: float) -> float:
+    """Evaluate the canonical transmonomial at growth level g."""
+    depth, alpha = g
+    if depth == 0:
+        return x ** alpha
+    elif depth == 1:
+        return math.exp(x ** alpha) if x ** alpha < 700 else float('inf')
+    elif depth == 2:
+        inner = math.exp(x) if x < 700 else float('inf')
+        return math.exp(inner) if inner < 700 else float('inf')
+    elif depth == -1:
+        return max(math.log(x), 1e-100) ** alpha if x > 0 else 0
+    elif depth == -2:
+        return max(math.log(max(math.log(x), 1e-100)), 1e-100) ** alpha if x > 1 else 0
+    else:
+        return float('nan')
+
+
+# ============================================================
+# Demo 1: Asymptotic Dominance Hierarchy
+# ============================================================
+print("=" * 60)
+print("DEMO 1: Asymptotic Dominance Hierarchy")
+print("=" * 60)
+print()
+print("Comparing growth rates at increasing x values:")
+print(f"{'x':>10} {'log(x)':>12} {'x':>12} {'x^2':>12} {'exp(x)':>12}")
+print("-" * 60)
+
+for x in [10, 100, 1000, 10000]:
+    log_x = math.log(x)
+    x_val = x
+    x2 = x ** 2
+    exp_x = math.exp(min(x, 700))
+    print(f"{x:10d} {log_x:12.2f} {x_val:12.0f} {x2:12.0f} {exp_x:12.2e}")
+
+print()
+print("Key insight: Each level dominates all lower levels.")
+print("  log(x) << x << x^2 << exp(x)")
+
+# ============================================================
+# Demo 2: Dominance Ratios
+# ============================================================
+print()
+print("=" * 60)
+print("DEMO 2: Dominance Ratios (exp(x) / x^n)")
+print("=" * 60)
+print()
+print("Theorem: exp(x)/x^n → ∞ for any n")
+print(f"{'x':>10} {'exp(x)/x':>15} {'exp(x)/x^2':>15} {'exp(x)/x^5':>15}")
+print("-" * 60)
+
+for x in [5, 10, 20, 50, 100]:
+    r1 = math.exp(x) / x
+    r2 = math.exp(x) / x ** 2
+    r5 = math.exp(x) / x ** 5
+    print(f"{x:10d} {r1:15.2e} {r2:15.2e} {r5:15.2e}")
+
+# ============================================================
+# Demo 3: Poly Dominates Log
+# ============================================================
+print()
+print("=" * 60)
+print("DEMO 3: Polynomial Dominates Logarithm")
+print("=" * 60)
+print()
+print("Theorem: x^α / (log x)^β → ∞ for α, β > 0")
+print(f"{'x':>10} {'x/(log x)':>15} {'√x/(log x)^2':>15} {'x^0.1/log x':>15}")
+print("-" * 60)
+
+for x in [10, 100, 1000, 10000, 100000]:
+    r1 = x / math.log(x)
+    r2 = x ** 0.5 / math.log(x) ** 2
+    r3 = x ** 0.1 / math.log(x)
+    print(f"{x:10d} {r1:15.2f} {r2:15.2f} {r3:15.4f}")
+
+# ============================================================
+# Demo 4: EML Growth Operation
+# ============================================================
+print()
+print("=" * 60)
+print("DEMO 4: EML Growth Operation")
+print("=" * 60)
+print()
+print("Theorem: EML of polynomial-level inputs gives exponential-level output")
+print()
+
+test_cases = [
+    ((0, 1.0), (0, 1.0)),
+    ((0, 2.0), (0, 3.0)),
+    ((1, 1.0), (0, 1.0)),
+    ((0, 1.0), (1, 1.0)),
+    ((-1, 1.0), (0, 1.0)),
+]
+
+for g1, g2 in test_cases:
+    result = eml_growth_op(g1, g2)
+    print(f"  emlGrowthOp({g1}, {g2}) = {result}")
+    print(f"    Input depth: {g1[0]}, Output depth: {result[0]} (raised: {result[0] > g1[0]})")
+
+# ============================================================
+# Demo 5: Growth Level Classification
+# ============================================================
+print()
+print("=" * 60)
+print("DEMO 5: Growth Level Classification")
+print("=" * 60)
+print()
+
+levels = [
+    ((-2, 1.0), "log(log(x))"),
+    ((-1, 1.0), "log(x)"),
+    ((-1, 2.0), "log(x)^2"),
+    ((0, 0.5), "√x"),
+    ((0, 1.0), "x"),
+    ((0, 2.0), "x^2"),
+    ((1, 0.5), "exp(√x)"),
+    ((1, 1.0), "exp(x)"),
+    ((1, 2.0), "exp(x^2)"),
+    ((2, 1.0), "exp(exp(x))"),
+]
+
+print("Growth levels in increasing order:")
+for i, (level, name) in enumerate(levels):
+    x = 10.0
+    val = eval_transmonomial(level, x)
+    print(f"  {i+1:2d}. depth={level[0]:+d}, exp={level[1]:.1f}  →  {name:15s}  value at x=10: {val:.4e}")
+
+print()
+print("Verification of total order:")
+for i in range(len(levels) - 1):
+    a, na = levels[i]
+    b, nb = levels[i + 1]
+    assert growth_level_lt(a, b), f"{na} should be < {nb}"
+    print(f"  {na} < {nb} ✓")
+
+# ============================================================
+# Demo 6: Exp-Log Cancellation
+# ============================================================
+print()
+print("=" * 60)
+print("DEMO 6: Exp-Log Shift Cancellation")
+print("=" * 60)
+print()
+
+g = (3, 2.5)
+print(f"Original: {g}")
+print(f"exp_shift: {exp_shift(g)}")
+print(f"log_shift: {log_shift(g)}")
+print(f"exp_shift ∘ log_shift: {exp_shift(log_shift(g))} (= original ✓)")
+print(f"log_shift ∘ exp_shift: {log_shift(exp_shift(g))} (= original ✓)")
+
+# ============================================================
+# Demo 7: Non-Equivalence Test
+# ============================================================
+print()
+print("=" * 60)
+print("DEMO 7: Exp-Poly Non-Equivalence")
+print("=" * 60)
+print()
+print("Theorem: exp(x) and x^n are NEVER asymptotically equivalent")
+print()
+print("exp(x) / x^n diverges for all n:")
+for n in [1, 2, 5, 10]:
+    print(f"  n = {n}:")
+    for x in [10, 50, 100]:
+        ratio = math.exp(x) / x ** n
+        print(f"    x={x:4d}: exp(x)/x^{n} = {ratio:.4e}")
+
+print()
+print("All ratios → ∞, confirming non-equivalence.")
+print()
+print("=" * 60)
+print("All demonstrations complete.")
+print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: The Exp-Log Growth Hierarchy
+Visualization: EML Growth Level Operation
 
-Shows the fundamental ordering of growth rates:
-exp(exp(x)) >> exp(x) >> x^n >> x >> log(x) >> log(log(x))
+Shows how the EML operation transforms growth levels,
+always raising the depth (exponential wins over logarithm).
 """
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_growth_hierarchy():
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-    
-    # Panel 1: Basic hierarchy on log scale
-    ax = axes[0]
-    x = np.linspace(1.01, 8, 500)
-    ax.semilogy(x, np.exp(x), 'r-', linewidth=2, label='exp(x)')
-    ax.semilogy(x, x**3, 'b-', linewidth=2, label='x³')
-    ax.semilogy(x, x, 'g-', linewidth=2, label='x')
-    ax.semilogy(x, np.log(x), 'm-', linewidth=2, label='log(x)')
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('f(x) (log scale)', fontsize=12)
-    ax.set_title('Growth Hierarchy', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    
-    # Panel 2: Dominance ratios
-    ax = axes[1]
-    x = np.linspace(1.01, 15, 500)
-    ax.plot(x, np.exp(x) / x**3, 'r-', linewidth=2, label='exp(x)/x³ → ∞')
-    ax.plot(x, x / np.log(x), 'b-', linewidth=2, label='x/log(x) → ∞')
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('Ratio', fontsize=12)
-    ax.set_title('Dominance Ratios → ∞', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(0, 200)
-    
-    # Panel 3: EML diagonal
-    ax = axes[2]
-    x = np.linspace(0.1, 5, 500)
-    eml = np.exp(x) - np.log(x)
-    ax.plot(x, eml, 'k-', linewidth=2.5, label='eml(x,x) = exp(x) − log(x)')
-    ax.plot(x, np.exp(x), 'r--', linewidth=1.5, alpha=0.7, label='exp(x)')
-    ax.plot(x, -np.log(x), 'b--', linewidth=1.5, alpha=0.7, label='−log(x)')
-    ax.fill_between(x, np.exp(x), eml, alpha=0.15, color='blue', label='log(x) correction')
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('f(x)', fontsize=12)
-    ax.set_title('EML Transseries: exp − log', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(-3, 50)
-    
-    plt.tight_layout()
-    plt.savefig('growth_hierarchy.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: growth_hierarchy.png")
 
-if __name__ == "__main__":
-    plot_growth_hierarchy()
+def exp_shift(depth, exp):
+    return (depth + 1, exp)
+
+
+def log_shift(depth, exp):
+    return (depth - 1, exp)
+
+
+def eml_growth_op(d1, a1, d2, a2):
+    e_d, e_a = d1 + 1, a1
+    l_d, l_a = d2 - 1, a2
+    if e_d > l_d:
+        return (e_d, e_a)
+    elif l_d > e_d:
+        return (l_d, l_a)
+    elif e_a >= l_a:
+        return (e_d, e_a)
+    else:
+        return (l_d, l_a)
+
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+fig.suptitle('EML Growth Level Operation', fontsize=14, fontweight='bold')
+
+# Panel 1: EML as depth-raising operator
+ax1 = axes[0]
+
+# Show various input pairs and their EML results
+inputs = [
+    ((0, 1.0), (0, 1.0), 'poly, poly'),
+    ((0, 2.0), (0, 0.5), 'x², √x'),
+    ((1, 1.0), (0, 1.0), 'exp, poly'),
+    ((0, 1.0), (1, 1.0), 'poly, exp'),
+    ((-1, 1.0), (-1, 1.0), 'log, log'),
+    ((1, 1.0), (1, 1.0), 'exp, exp'),
+]
+
+y_pos = np.arange(len(inputs))
+input_depths = [i[0][0] for i in inputs]
+output_depths = [eml_growth_op(i[0][0], i[0][1], i[1][0], i[1][1])[0] for i in inputs]
+labels = [i[2] for i in inputs]
+
+bars1 = ax1.barh(y_pos - 0.15, input_depths, 0.3, label='Input g₁ depth', color='steelblue', alpha=0.8)
+bars2 = ax1.barh(y_pos + 0.15, output_depths, 0.3, label='Output depth', color='coral', alpha=0.8)
+
+ax1.set_yticks(y_pos)
+ax1.set_yticklabels(labels)
+ax1.set_xlabel('Depth')
+ax1.set_title('EML Always Raises Depth')
+ax1.legend()
+ax1.axvline(x=0, color='gray', linestyle='--', alpha=0.5)
+ax1.grid(True, alpha=0.3, axis='x')
+
+# Panel 2: EML operation on the growth level grid
+ax2 = axes[1]
+
+# Plot the growth level grid
+for d in range(-2, 4):
+    for a in np.arange(0.5, 3.5, 0.5):
+        ax2.scatter(a, d, color='lightgray', s=30, zorder=1)
+
+# Show specific EML operations with arrows
+operations = [
+    ((0, 1.0), (0, 1.0)),
+    ((0, 2.0), (0, 1.0)),
+    ((1, 1.0), (0, 2.0)),
+    ((-1, 1.0), (0, 1.0)),
+]
+
+colors = ['red', 'blue', 'green', 'purple']
+for (g1, g2), color in zip(operations, colors):
+    result = eml_growth_op(g1[0], g1[1], g2[0], g2[1])
+    
+    # Draw g1 input
+    ax2.scatter(g1[1], g1[0], color=color, s=100, marker='o', zorder=5,
+               edgecolors='black', linewidth=1)
+    # Draw g2 input
+    ax2.scatter(g2[1], g2[0], color=color, s=100, marker='s', zorder=5,
+               edgecolors='black', linewidth=1)
+    # Draw result
+    ax2.scatter(result[1], result[0], color=color, s=200, marker='*', zorder=5,
+               edgecolors='black', linewidth=1)
+    
+    # Arrow from midpoint of inputs to result
+    mid_a = (g1[1] + g2[1]) / 2
+    mid_d = (g1[0] + g2[0]) / 2
+    ax2.annotate('', xy=(result[1], result[0]),
+                xytext=(mid_a, mid_d),
+                arrowprops=dict(arrowstyle='->', color=color, lw=2, alpha=0.6))
+
+ax2.set_xlabel('Exponent α')
+ax2.set_ylabel('Depth d')
+ax2.set_title('EML: Inputs (●,■) → Result (★)')
+ax2.set_yticks(range(-2, 4))
+ax2.grid(True, alpha=0.3)
+
+# Legend
+from matplotlib.lines import Line2D
+legend_elements = [
+    Line2D([0], [0], marker='o', color='w', markerfacecolor='gray', markersize=10, label='Input g₁'),
+    Line2D([0], [0], marker='s', color='w', markerfacecolor='gray', markersize=10, label='Input g₂'),
+    Line2D([0], [0], marker='*', color='w', markerfacecolor='gray', markersize=15, label='EML result'),
+]
+ax2.legend(handles=legend_elements, loc='upper left', fontsize=9)
+
+plt.tight_layout()
+plt.savefig('/workspace/request-project/Applications/eml_operation.png', dpi=150, bbox_inches='tight')
+plt.close()
+
+print("Saved: eml_operation.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: The Transseries Growth Hierarchy
+
+Shows the asymptotic dominance relationships between functions
+at different growth levels.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+
+
+def safe_eval(func, x_array):
+    """Safely evaluate a function, capping at large values."""
+    result = np.zeros_like(x_array)
+    for i, x in enumerate(x_array):
+        try:
+            val = func(x)
+            result[i] = min(val, 1e15)
+        except (OverflowError, ValueError):
+            result[i] = 1e15
+    return result
+
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig.suptitle('Transseries Growth Hierarchy', fontsize=16, fontweight='bold')
+
+# Panel 1: The basic hierarchy (log scale)
+ax1 = axes[0, 0]
+x = np.linspace(1.1, 20, 200)
+ax1.semilogy(x, np.log(x), label='log(x) [depth -1]', linewidth=2, color='blue')
+ax1.semilogy(x, x, label='x [depth 0]', linewidth=2, color='green')
+ax1.semilogy(x, x**2, label='x² [depth 0]', linewidth=2, color='orange')
+ax1.semilogy(x, np.exp(x), label='exp(x) [depth 1]', linewidth=2, color='red')
+ax1.set_xlabel('x')
+ax1.set_ylabel('f(x) [log scale]')
+ax1.set_title('Growth Hierarchy: Depth Separation')
+ax1.legend(fontsize=9)
+ax1.set_ylim(0.1, 1e8)
+ax1.grid(True, alpha=0.3)
+
+# Panel 2: Dominance ratios
+ax2 = axes[0, 1]
+x = np.linspace(2, 30, 200)
+ax2.plot(x, np.exp(x) / x, label='exp(x)/x', linewidth=2, color='red')
+ax2.plot(x, np.exp(x) / x**2, label='exp(x)/x²', linewidth=2, color='orange')
+ax2.plot(x, np.exp(x) / x**5, label='exp(x)/x⁵', linewidth=2, color='green')
+ax2.set_xlabel('x')
+ax2.set_ylabel('Ratio')
+ax2.set_title('Exp Dominates Poly: Ratios → ∞')
+ax2.legend(fontsize=9)
+ax2.set_yscale('log')
+ax2.grid(True, alpha=0.3)
+
+# Panel 3: Depth filtration
+ax3 = axes[1, 0]
+depths = range(-2, 4)
+exponents = [0.5, 1.0, 2.0]
+colors = {-2: 'purple', -1: 'blue', 0: 'green', 1: 'orange', 2: 'red', 3: 'darkred'}
+labels_done = set()
+
+for d in depths:
+    for alpha in exponents:
+        label = f'depth {d}' if d not in labels_done else None
+        labels_done.add(d)
+        ax3.scatter(alpha, d, color=colors[d], s=100, zorder=5, label=label)
+
+ax3.set_xlabel('Exponent α')
+ax3.set_ylabel('Depth d')
+ax3.set_title('Growth Level Grid: ℤ × ℝ')
+ax3.legend(fontsize=8, loc='upper left')
+ax3.set_yticks(list(depths))
+ax3.set_yticklabels([f'{d}' for d in depths])
+ax3.grid(True, alpha=0.3)
+
+# Add arrows showing exp shift
+for d in range(-2, 3):
+    ax3.annotate('', xy=(1.0, d + 0.8), xytext=(1.0, d + 0.2),
+                arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
+
+ax3.text(1.15, 0.5, 'exp↑', fontsize=9, color='gray')
+
+# Panel 4: Poly vs Log dominance
+ax4 = axes[1, 1]
+x = np.linspace(2, 1000, 500)
+ax4.plot(x, x / np.log(x), label='x / log(x)', linewidth=2, color='green')
+ax4.plot(x, np.sqrt(x) / np.log(x)**2, label='√x / (log x)²', linewidth=2, color='blue')
+ax4.plot(x, x**0.1 / np.log(x), label='x^0.1 / log(x)', linewidth=2, color='orange')
+ax4.set_xlabel('x')
+ax4.set_ylabel('Ratio')
+ax4.set_title('Poly Dominates Log: Ratios → ∞')
+ax4.legend(fontsize=9)
+ax4.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('/workspace/request-project/Applications/growth_hierarchy.png', dpi=150, bbox_inches='tight')
+plt.close()
+
+print("Saved: growth_hierarchy.png")
