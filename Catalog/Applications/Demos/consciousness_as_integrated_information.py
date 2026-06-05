@@ -1,565 +1,356 @@
 #!/usr/bin/env python3
 """
-Integrated Information Theory: Numerical Demonstrations
+Integrated Information Theory — Numerical Demonstrations
 
-Demonstrates the key results from the formalization:
-1. Phi computation via minimum cut
-2. Integration Filtration construction
-3. Direct sum and weak interaction bounds
-4. Uniform complete graph analysis
+Demonstrates the key theorems from the IIT formalization:
+1. Superadditivity of Φ
+2. Complete zero-integration characterization  
+3. Linear scaling
+4. Integration defect subadditivity
+5. Exclusion principle
 """
 
-import numpy as np
-from itertools import combinations
+from algorithms import (
+    CausalMechanism, verify_superadditivity, verify_scaling,
+    verify_defect_subadditivity, find_exclusion_maximum, integration_profile
+)
 
 
-def compute_cut_value(weights: np.ndarray, S: set) -> float:
-    """Compute the cut value of subset S in a weighted graph."""
-    n = weights.shape[0]
-    S_complement = set(range(n)) - S
-    total = 0.0
-    for i in S:
-        for j in S_complement:
-            total += weights[i, j]
-    return total
+def print_header(title: str) -> None:
+    print(f"\n{'='*60}")
+    print(f"  {title}")
+    print(f"{'='*60}")
 
 
-def compute_phi(weights: np.ndarray) -> tuple[float, set]:
-    """Compute Phi (minimum cut) over all non-trivial bipartitions.
-    Returns (phi_value, optimal_partition)."""
-    n = weights.shape[0]
-    if n < 2:
-        return 0.0, set()
-
-    best_cut = float('inf')
-    best_S = set()
-
-    # Enumerate all non-trivial subsets (non-empty, not full)
-    for size in range(1, n):
-        for subset in combinations(range(n), size):
-            S = set(subset)
-            cut = compute_cut_value(weights, S)
-            if cut < best_cut:
-                best_cut = cut
-                best_S = S
-
-    return best_cut, best_S
-
-
-def compute_integration_filtration(weights: np.ndarray, thresholds: list[float]) -> dict:
-    """Compute the Integration Filtration at multiple thresholds."""
-    n = weights.shape[0]
-    # Compute subset phi for all subsets of size >= 2
-    subset_phis = {}
-    for size in range(2, n + 1):
-        for subset in combinations(range(n), size):
-            S = frozenset(subset)
-            indices = sorted(S)
-            sub_weights = weights[np.ix_(indices, indices)]
-            phi_val, _ = compute_phi(sub_weights)
-            subset_phis[S] = phi_val
-
-    # Build filtration
-    filtration = {}
-    for tau in thresholds:
-        members = [S for S, phi in subset_phis.items() if phi >= tau]
-        filtration[tau] = members
-
-    return filtration, subset_phis
+def demo_basic_examples() -> None:
+    """Show Φ for basic graph types."""
+    print_header("Basic Examples: Φ for Standard Graph Types")
+    
+    for n in [3, 4, 5, 6]:
+        complete = CausalMechanism.complete(n)
+        path = CausalMechanism.path(n)
+        cycle = CausalMechanism.cycle(n)
+        
+        print(f"\n  n = {n} states:")
+        print(f"    Complete graph: Φ = {complete.phi():.1f}, "
+              f"W = {complete.total_weight():.0f}, "
+              f"efficiency = {complete.efficiency():.3f}")
+        print(f"    Path graph:     Φ = {path.phi():.1f}, "
+              f"W = {path.total_weight():.0f}, "
+              f"efficiency = {path.efficiency():.3f}")
+        print(f"    Cycle graph:    Φ = {cycle.phi():.1f}, "
+              f"W = {cycle.total_weight():.0f}, "
+              f"efficiency = {cycle.efficiency():.3f}")
 
 
-def direct_sum_weights(w1: np.ndarray, w2: np.ndarray) -> np.ndarray:
-    """Construct the direct sum (block diagonal) of two weight matrices."""
-    m, n = w1.shape[0], w2.shape[0]
-    result = np.zeros((m + n, m + n))
-    result[:m, :m] = w1
-    result[m:, m:] = w2
-    return result
+def demo_superadditivity() -> None:
+    """Demonstrate Φ's superadditivity under mechanism addition."""
+    print_header("Theorem: Superadditivity — Φ(M₁+M₂) ≥ Φ(M₁) + Φ(M₂)")
+    
+    # Example 1: Two paths on 4 nodes
+    m1 = CausalMechanism([[0, 1, 0, 0], [1, 0, 0, 0],
+                           [0, 0, 0, 1], [0, 0, 1, 0]])
+    m2 = CausalMechanism([[0, 0, 1, 0], [0, 0, 0, 1],
+                           [1, 0, 0, 0], [0, 1, 0, 0]])
+    
+    result = verify_superadditivity(m1, m2)
+    print(f"\n  Example 1: Complementary connection patterns")
+    print(f"    Φ(M₁) = {result['phi_m1']:.1f}")
+    print(f"    Φ(M₂) = {result['phi_m2']:.1f}")
+    print(f"    Φ(M₁) + Φ(M₂) = {result['phi_sum']:.1f}")
+    print(f"    Φ(M₁ + M₂) = {result['phi_combined']:.1f}")
+    print(f"    Superadditive: {result['superadditive']} "
+          f"(excess = {result['excess']:.1f})")
+    
+    # Example 2: Two random-ish mechanisms
+    m3 = CausalMechanism([[0, 2, 0, 1], [0, 0, 3, 0],
+                           [1, 0, 0, 0], [0, 1, 2, 0]])
+    m4 = CausalMechanism([[0, 0, 1, 2], [3, 0, 0, 1],
+                           [0, 2, 0, 0], [1, 0, 0, 0]])
+    
+    result = verify_superadditivity(m3, m4)
+    print(f"\n  Example 2: Asymmetric mechanisms")
+    print(f"    Φ(M₃) = {result['phi_m1']:.1f}")
+    print(f"    Φ(M₄) = {result['phi_m2']:.1f}")
+    print(f"    Φ(M₃) + Φ(M₄) = {result['phi_sum']:.1f}")
+    print(f"    Φ(M₃ + M₄) = {result['phi_combined']:.1f}")
+    print(f"    Superadditive: {result['superadditive']} "
+          f"(excess = {result['excess']:.1f})")
 
 
-def uniform_interaction_weights(w1: np.ndarray, w2: np.ndarray, epsilon: float) -> np.ndarray:
-    """Construct uniform interaction of two systems with cross-coupling epsilon."""
-    m, n = w1.shape[0], w2.shape[0]
-    result = np.zeros((m + n, m + n))
-    result[:m, :m] = w1
-    result[m:, m:] = w2
-    result[:m, m:] = epsilon
-    result[m:, :m] = epsilon
-    np.fill_diagonal(result, 0)
-    return result
+def demo_disconnection() -> None:
+    """Demonstrate the disconnection theorem: Φ=0 ↔ disconnected."""
+    print_header("Theorem: Φ = 0 ↔ System is Disconnected")
+    
+    # Connected system
+    connected = CausalMechanism.complete(4)
+    print(f"\n  Complete graph (4 nodes): Φ = {connected.phi():.1f}, "
+          f"disconnected = {connected.has_zero_cut()}")
+    
+    # Disconnected system (two isolated pairs)
+    disconnected = CausalMechanism([
+        [0, 1, 0, 0], [1, 0, 0, 0],
+        [0, 0, 0, 1], [0, 0, 1, 0]
+    ])
+    print(f"  Two isolated pairs:       Φ = {disconnected.phi():.1f}, "
+          f"disconnected = {disconnected.has_zero_cut()}")
+    
+    # Weakly connected
+    weak = CausalMechanism([
+        [0, 1, 0.001, 0], [1, 0, 0, 0],
+        [0, 0, 0, 1], [0, 0.001, 1, 0]
+    ])
+    print(f"  Weakly connected:         Φ = {weak.phi():.4f}, "
+          f"disconnected = {weak.has_zero_cut()}")
 
 
-def uniform_complete(n: int, w: float) -> np.ndarray:
-    """Uniform complete graph: all edges have weight w."""
-    return w * (np.ones((n, n)) - np.eye(n))
+def demo_scaling() -> None:
+    """Demonstrate linear scaling: Φ(c·M) = c·Φ(M)."""
+    print_header("Theorem: Linear Scaling — Φ(c·M) = c·Φ(M)")
+    
+    m = CausalMechanism.complete(4, w=1.0)
+    for c in [0.5, 1.0, 2.0, 3.14, 10.0]:
+        result = verify_scaling(c, m)
+        print(f"  c = {c:5.2f}: Φ(M) = {result['phi_m']:.1f}, "
+              f"c·Φ = {result['c_times_phi']:.2f}, "
+              f"Φ(c·M) = {result['phi_scaled']:.2f}, "
+              f"match = {result['matches']}")
 
 
-# ============================================================
-# DEMO 1: Uniform Complete Graph
-# ============================================================
-print("=" * 60)
-print("DEMO 1: Uniform Complete Graph K_n(w)")
-print("=" * 60)
-print()
+def demo_defect() -> None:
+    """Demonstrate integration defect subadditivity."""
+    print_header("Theorem: Defect Subadditivity — D(M₁+M₂) ≤ D(M₁) + D(M₂)")
+    
+    m1 = CausalMechanism.path(5, w=2.0)
+    m2 = CausalMechanism.cycle(5, w=1.0)
+    
+    result = verify_defect_subadditivity(m1, m2)
+    print(f"\n  Path(5, w=2) + Cycle(5, w=1):")
+    print(f"    D(M₁) = {result['defect_m1']:.2f}")
+    print(f"    D(M₂) = {result['defect_m2']:.2f}")
+    print(f"    D(M₁) + D(M₂) = {result['defect_sum']:.2f}")
+    print(f"    D(M₁ + M₂) = {result['defect_combined']:.2f}")
+    print(f"    Subadditive: {result['subadditive']} "
+          f"(savings = {result['savings']:.2f})")
 
-for n in range(2, 7):
-    w = 1.0
-    weights = uniform_complete(n, w)
-    phi, S = compute_phi(weights)
-    expected = w * (n - 1)
-    print(f"  K_{n}(1.0): Φ = {phi:.2f}, expected w·(n-1) = {expected:.2f}, "
-          f"optimal cut = {S}")
 
-print()
-print("  → Theorem verified: Φ(K_n(w)) = w·(n-1)")
-print()
+def demo_exclusion() -> None:
+    """Demonstrate the exclusion principle."""
+    print_header("Theorem: Exclusion — Maximum Φ Exists Among Mechanisms")
+    
+    mechanisms = [
+        CausalMechanism.path(4),
+        CausalMechanism.cycle(4),
+        CausalMechanism.complete(4),
+        CausalMechanism.complete(4, w=0.5),
+    ]
+    names = ["Path(4)", "Cycle(4)", "Complete(4,w=1)", "Complete(4,w=0.5)"]
+    
+    for name, m in zip(names, mechanisms):
+        print(f"  {name:20s}: Φ = {m.phi():.1f}")
+    
+    idx, max_phi = find_exclusion_maximum(mechanisms)
+    print(f"\n  Maximum Φ = {max_phi:.1f} achieved by: {names[idx]}")
+    print(f"  (The 'conscious' grain of description)")
 
-# ============================================================
-# DEMO 2: Disconnected System (Direct Sum)
-# ============================================================
-print("=" * 60)
-print("DEMO 2: Direct Sum (Disconnected Systems)")
-print("=" * 60)
-print()
 
-# Two triangles
-w1 = uniform_complete(3, 2.0)
-w2 = uniform_complete(3, 3.0)
-
-phi1, _ = compute_phi(w1)
-phi2, _ = compute_phi(w2)
-print(f"  System 1 (K_3, w=2): Φ = {phi1:.2f}")
-print(f"  System 2 (K_3, w=3): Φ = {phi2:.2f}")
-
-ds = direct_sum_weights(w1, w2)
-phi_ds, S_ds = compute_phi(ds)
-print(f"  Direct Sum: Φ = {phi_ds:.2f} (should be 0)")
-print(f"  → Theorem verified: Φ(C₁ ⊕ C₂) = 0")
-print()
-
-# ============================================================
-# DEMO 3: Weak Interaction Bound
-# ============================================================
-print("=" * 60)
-print("DEMO 3: Weak Interaction Bound")
-print("=" * 60)
-print()
-
-m, n_size = 3, 3
-for eps in [0.1, 0.5, 1.0, 2.0]:
-    wi = uniform_interaction_weights(w1, w2, eps)
-    phi_wi, _ = compute_phi(wi)
-    bound = eps * m * n_size
-    print(f"  ε = {eps:.1f}: Φ = {phi_wi:.2f}, bound ε·m·n = {bound:.2f}, "
-          f"{'✓' if phi_wi <= bound + 1e-10 else '✗'}")
-
-print()
-print("  → Theorem verified: Φ(C₁ ⊗_ε C₂) ≤ ε·m·n")
-print()
-
-# ============================================================
-# DEMO 4: Integration Filtration
-# ============================================================
-print("=" * 60)
-print("DEMO 4: Integration Filtration")
-print("=" * 60)
-print()
-
-# A 4-node system with varying coupling strengths
-weights_4 = np.array([
-    [0, 5, 1, 0],
-    [5, 0, 1, 0],
-    [1, 1, 0, 4],
-    [0, 0, 4, 0]
-])
-
-thresholds = [0.0, 0.5, 1.0, 2.0, 3.0, 4.0, 5.0]
-filtration, subset_phis = compute_integration_filtration(weights_4, thresholds)
-
-print("  Weight matrix:")
-for row in weights_4:
-    print(f"    {row}")
-print()
-
-print("  Subset Phi values:")
-for S, phi in sorted(subset_phis.items(), key=lambda x: (-x[1], len(x[0]))):
-    print(f"    {set(S)}: Φ = {phi:.2f}")
-print()
-
-print("  Integration Filtration:")
-for tau in thresholds:
-    members = filtration[tau]
-    count = len(members)
-    print(f"    τ = {tau:.1f}: {count} subsystems")
-    if count <= 5:
-        for m in members:
-            print(f"      {set(m)}")
-
-print()
-print("  → Filtration is antitone: higher τ ⟹ fewer subsystems ✓")
-print()
-
-# ============================================================
-# DEMO 5: Phi vs System Size
-# ============================================================
-print("=" * 60)
-print("DEMO 5: Phi Scaling for Random Graphs")
-print("=" * 60)
-print()
-
-np.random.seed(42)
-for n in [3, 4, 5, 6, 7]:
-    # Random symmetric coupling
-    raw = np.random.exponential(1.0, (n, n))
-    weights = (raw + raw.T) / 2
-    np.fill_diagonal(weights, 0)
-
-    phi, S = compute_phi(weights)
-    min_deg = min(sum(weights[i, j] for j in range(n)) for i in range(n))
-    print(f"  n = {n}: Φ = {phi:.2f}, min_degree = {min_deg:.2f}, "
-          f"Φ ≤ min_deg: {'✓' if phi <= min_deg + 1e-10 else '✗'}")
-
-print()
-print("  → Theorem verified: Φ ≤ min weighted degree ✓")
+def demo_profile() -> None:
+    """Show complete integration profile for an interesting mechanism."""
+    print_header("Integration Profile: Brain-like Architecture")
+    
+    # Simulate a small brain-like network:
+    # - 6 neurons in 2 clusters of 3
+    # - Strong within-cluster connections (weight 3)
+    # - Moderate between-cluster connections (weight 1)
+    brain = CausalMechanism([
+        [0, 3, 3, 1, 0, 0],
+        [3, 0, 3, 0, 1, 0],
+        [3, 3, 0, 0, 0, 1],
+        [1, 0, 0, 0, 3, 3],
+        [0, 1, 0, 3, 0, 3],
+        [0, 0, 1, 3, 3, 0],
+    ])
+    
+    profile = integration_profile(brain)
+    print(f"\n  States: {profile['n_states']}")
+    print(f"  Total weight: {profile['total_weight']:.0f}")
+    print(f"  Φ (integrated information): {profile['phi']:.1f}")
+    print(f"  Minimizing partition: {profile['minimizing_partition']} | "
+          f"{profile['complement']}")
+    print(f"  Integration defect: {profile['integration_defect']:.1f}")
+    print(f"  Efficiency (Φ/W): {profile['efficiency']:.3f}")
+    print(f"  Symmetric: {profile['is_symmetric']}")
+    print(f"  Disconnected: {profile['is_disconnected']}")
 
 
 if __name__ == "__main__":
-    print()
-    print("All demonstrations completed successfully.")
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  Integrated Information Theory — Algebraic Foundations  ║")
+    print("║  23 Theorems Formally Verified in Lean 4                ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+    
+    demo_basic_examples()
+    demo_superadditivity()
+    demo_disconnection()
+    demo_scaling()
+    demo_defect()
+    demo_exclusion()
+    demo_profile()
+    
+    print(f"\n{'='*60}")
+    print("  All demonstrations complete.")
+    print(f"{'='*60}")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Integration Filtration as a persistence diagram.
-Shows how subsystems appear/disappear as the integration threshold varies.
-"""
+Visualization: Integration Landscape
 
-import numpy as np
+Shows how Φ varies across graph types and sizes, demonstrating
+the key algebraic properties (superadditivity, scaling, efficiency).
+"""
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 from itertools import combinations
 
 
-def compute_cut_value(weights, S):
-    n = weights.shape[0]
-    complement = set(range(n)) - S
-    return sum(weights[i, j] for i in S for j in complement)
+def cut_weight(weights, subset):
+    n = len(weights)
+    complement = set(range(n)) - subset
+    fw = sum(weights[i][j] for i in subset for j in complement)
+    bw = sum(weights[i][j] for i in complement for j in subset)
+    return fw + bw
 
 
-def compute_phi(weights):
-    n = weights.shape[0]
+def phi(weights):
+    n = len(weights)
     if n < 2:
         return 0.0
     best = float('inf')
     for size in range(1, n):
-        for subset in combinations(range(n), size):
-            cv = compute_cut_value(weights, set(subset))
-            best = min(best, cv)
+        for combo in combinations(range(n), size):
+            cw = cut_weight(weights, set(combo))
+            best = min(best, cw)
     return best
 
 
-def compute_all_subset_phis(weights):
-    n = weights.shape[0]
-    results = {}
-    for size in range(2, n + 1):
-        for subset in combinations(range(n), size):
-            S = frozenset(subset)
-            indices = sorted(S)
-            sub_w = weights[np.ix_(indices, indices)]
-            results[S] = compute_phi(sub_w)
-    return results
+def total_weight(weights):
+    return sum(weights[i][j] for i in range(len(weights)) for j in range(len(weights)))
 
 
-# Example: 5-node system with hierarchical structure
-# Nodes 0,1 are tightly coupled; nodes 2,3,4 form a triangle; weak cross-coupling
-weights = np.array([
-    [0, 8, 1, 0, 0],
-    [8, 0, 1, 0, 0],
-    [1, 1, 0, 5, 5],
-    [0, 0, 5, 0, 5],
-    [0, 0, 5, 5, 0],
-])
-
-subset_phis = compute_all_subset_phis(weights)
-
-# Create persistence diagram
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# Panel 1: Bar chart of subset Phi values
-ax1 = axes[0]
-items = sorted(subset_phis.items(), key=lambda x: -x[1])
-labels = [str(set(s)) for s, _ in items]
-values = [v for _, v in items]
-colors = ['#e74c3c' if len(s) == 2 else '#3498db' if len(s) == 3 else '#2ecc71'
-          for s, _ in items]
-
-bars = ax1.barh(range(len(items)), values, color=colors)
-ax1.set_yticks(range(len(items)))
-ax1.set_yticklabels(labels, fontsize=8)
-ax1.set_xlabel('Φ (Integration)', fontsize=12)
-ax1.set_title('Subset Integration Values', fontsize=14, fontweight='bold')
-ax1.invert_yaxis()
-
-# Legend
-from matplotlib.patches import Patch
-legend_elements = [
-    Patch(facecolor='#e74c3c', label='Pairs (|S|=2)'),
-    Patch(facecolor='#3498db', label='Triples (|S|=3)'),
-    Patch(facecolor='#2ecc71', label='Larger (|S|≥4)')
-]
-ax1.legend(handles=legend_elements, loc='lower right', fontsize=9)
-
-# Panel 2: Filtration size vs threshold
-ax2 = axes[1]
-thresholds = np.linspace(0, max(values) + 0.5, 200)
-counts = []
-for tau in thresholds:
-    count = sum(1 for v in subset_phis.values() if v >= tau)
-    counts.append(count)
-
-ax2.fill_between(thresholds, counts, alpha=0.3, color='#3498db')
-ax2.plot(thresholds, counts, color='#2c3e50', linewidth=2)
-ax2.set_xlabel('Threshold τ', fontsize=12)
-ax2.set_ylabel('|F_τ| (Number of subsystems)', fontsize=12)
-ax2.set_title('Integration Filtration', fontsize=14, fontweight='bold')
-
-# Mark key thresholds
-unique_phis = sorted(set(subset_phis.values()), reverse=True)
-for phi_val in unique_phis[:5]:
-    ax2.axvline(x=phi_val, color='#e74c3c', linestyle='--', alpha=0.5)
-    ax2.annotate(f'τ={phi_val:.1f}', xy=(phi_val, 0.5),
-                xycoords=('data', 'axes fraction'),
-                fontsize=8, color='#e74c3c', rotation=90, va='bottom')
-
-plt.tight_layout()
-plt.savefig('integration_filtration.png', dpi=150, bbox_inches='tight')
-plt.close()
-
-print("Saved: integration_filtration.png")
-print(f"Total subsystems: {len(subset_phis)}")
-print(f"Max Φ: {max(subset_phis.values()):.2f}")
-print(f"Most integrated: {set(max(subset_phis, key=subset_phis.get))}")
+def complete_graph(n, w=1.0):
+    return [[w if i != j else 0.0 for j in range(n)] for i in range(n)]
 
 
-#!/usr/bin/env python3
-"""
-Visualization: Interaction strength vs. integrated information.
-Shows the phase transition from disconnected (Φ=0) to integrated as ε increases.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-from itertools import combinations
+def path_graph(n, w=1.0):
+    g = [[0.0]*n for _ in range(n)]
+    for i in range(n-1):
+        g[i][i+1] = w; g[i+1][i] = w
+    return g
 
 
-def compute_cut_value(weights, S):
-    n = weights.shape[0]
-    complement = set(range(n)) - S
-    return sum(weights[i, j] for i in S for j in complement)
+def cycle_graph(n, w=1.0):
+    g = path_graph(n, w)
+    if n >= 3:
+        g[0][n-1] = w; g[n-1][0] = w
+    return g
 
 
-def compute_phi(weights):
-    n = weights.shape[0]
-    if n < 2:
-        return 0.0
-    best = float('inf')
-    for size in range(1, n):
-        for subset in combinations(range(n), size):
-            cv = compute_cut_value(weights, set(subset))
-            best = min(best, cv)
-    return best
-
-
-def uniform_complete(n, w):
-    return w * (np.ones((n, n)) - np.eye(n))
-
-
-def uniform_interaction_weights(w1, w2, epsilon):
-    m, n = w1.shape[0], w2.shape[0]
-    result = np.zeros((m + n, m + n))
-    result[:m, :m] = w1
-    result[m:, m:] = w2
-    result[:m, m:] = epsilon
-    result[m:, :m] = epsilon
-    np.fill_diagonal(result, 0)
-    return result
-
-
-# Two K_3 systems with internal weight 3, varying cross-coupling ε
-w_internal = 3.0
-m, n = 3, 3
-w1 = uniform_complete(m, w_internal)
-w2 = uniform_complete(n, w_internal)
-
-epsilons = np.linspace(0, 5, 50)
-phis = []
-bounds = []
-
-for eps in epsilons:
-    wi = uniform_interaction_weights(w1, w2, eps)
-    phi = compute_phi(wi)
-    phis.append(phi)
-    bounds.append(eps * m * n)
-
-fig, ax = plt.subplots(figsize=(10, 6))
-
-ax.plot(epsilons, phis, '-', color='#e74c3c', linewidth=2.5, label='Φ(C₁ ⊗_ε C₂)')
-ax.plot(epsilons, bounds, '--', color='#3498db', linewidth=2,
-        label='Upper bound ε·m·n')
-ax.fill_between(epsilons, phis, bounds, alpha=0.1, color='#3498db')
-
-# Mark the phase transition
-# When ε = 0, Φ = 0 (disconnected)
-# When ε is large enough, Φ = internal min-cut of the merged system
-ax.axhline(y=0, color='gray', linestyle='-', alpha=0.3)
-ax.axvline(x=0, color='gray', linestyle='-', alpha=0.3)
-
-# Internal Phi values
-phi1 = compute_phi(w1)
-phi2 = compute_phi(w2)
-ax.axhline(y=phi1, color='#2ecc71', linestyle=':', alpha=0.5,
-           label=f'Φ(C₁) = {phi1:.1f}')
-ax.axhline(y=phi2, color='#9b59b6', linestyle=':', alpha=0.5,
-           label=f'Φ(C₂) = {phi2:.1f}')
-
-ax.set_xlabel('Interaction Strength ε', fontsize=14)
-ax.set_ylabel('Φ (Integrated Information)', fontsize=14)
-ax.set_title('Integration vs. Interaction: How Coupling Creates Consciousness',
-             fontsize=14, fontweight='bold')
-ax.legend(fontsize=11, loc='upper left')
-ax.grid(True, alpha=0.3)
-
-# Annotate key regions
-ax.annotate('Disconnected\n(Φ = 0)',
-           xy=(0.2, 0.5), fontsize=11, color='#7f8c8d',
-           ha='center', va='center')
-ax.annotate('Weakly coupled\n(Φ ≈ ε·m·n)',
-           xy=(1.5, compute_phi(uniform_interaction_weights(w1, w2, 1.5))),
-           fontsize=10, color='#e74c3c',
-           xytext=(2.5, 2), arrowprops=dict(arrowstyle='->', color='#e74c3c'))
-
-plt.tight_layout()
-plt.savefig('interaction_vs_phi.png', dpi=150, bbox_inches='tight')
-plt.close()
-
-print("Saved: interaction_vs_phi.png")
-print(f"\nΦ(C₁) = {phi1:.2f}, Φ(C₂) = {phi2:.2f}")
-print(f"At ε=0: Φ = {phis[0]:.2f} (disconnected)")
-print(f"At ε=5: Φ = {phis[-1]:.2f}")
-print(f"Bound at ε=5: {bounds[-1]:.2f}")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Phi scaling behavior.
-Shows how Phi scales with system size for different graph families.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-from itertools import combinations
-
-
-def compute_cut_value(weights, S):
-    n = weights.shape[0]
-    complement = set(range(n)) - S
-    return sum(weights[i, j] for i in S for j in complement)
-
-
-def compute_phi(weights):
-    n = weights.shape[0]
-    if n < 2:
-        return 0.0
-    best = float('inf')
-    for size in range(1, n):
-        for subset in combinations(range(n), size):
-            cv = compute_cut_value(weights, set(subset))
-            best = min(best, cv)
-    return best
-
-
-def uniform_complete(n, w):
-    return w * (np.ones((n, n)) - np.eye(n))
-
-
-def ring_graph(n, w):
-    """Ring (cycle) graph with weight w."""
-    weights = np.zeros((n, n))
-    for i in range(n):
-        weights[i, (i + 1) % n] = w
-        weights[(i + 1) % n, i] = w
-    return weights
-
-
-def star_graph(n, w):
-    """Star graph: node 0 connected to all others with weight w."""
-    weights = np.zeros((n, n))
+def star_graph(n, w=1.0):
+    g = [[0.0]*n for _ in range(n)]
     for i in range(1, n):
-        weights[0, i] = w
-        weights[i, 0] = w
-    return weights
+        g[0][i] = w; g[i][0] = w
+    return g
 
 
-def random_graph(n, density=0.5, seed=None):
-    """Random Erdős-Rényi-like weighted graph."""
-    rng = np.random.RandomState(seed)
-    weights = np.zeros((n, n))
-    for i in range(n):
-        for j in range(i + 1, n):
-            if rng.random() < density:
-                w = rng.exponential(1.0)
-                weights[i, j] = w
-                weights[j, i] = w
-    return weights
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig.suptitle('Integrated Information Theory: Algebraic Properties of Φ',
+             fontsize=16, fontweight='bold')
 
+# Plot 1: Phi vs n for different graph types
+ax = axes[0, 0]
+ns = range(2, 9)
+for graph_fn, label, marker in [
+    (complete_graph, 'Complete', 'o'),
+    (cycle_graph, 'Cycle', 's'),
+    (path_graph, 'Path', '^'),
+    (star_graph, 'Star', 'D'),
+]:
+    phis = [phi(graph_fn(n)) for n in ns]
+    ax.plot(list(ns), phis, f'-{marker}', label=label, markersize=8, linewidth=2)
+ax.set_xlabel('Number of states (n)', fontsize=12)
+ax.set_ylabel('Φ (integrated information)', fontsize=12)
+ax.set_title('Integration vs System Size', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
 
-sizes = range(2, 10)
-w = 1.0
+# Plot 2: Efficiency Φ/W vs n
+ax = axes[0, 1]
+for graph_fn, label, marker in [
+    (complete_graph, 'Complete', 'o'),
+    (cycle_graph, 'Cycle', 's'),
+    (path_graph, 'Path', '^'),
+    (star_graph, 'Star', 'D'),
+]:
+    effs = []
+    for n in ns:
+        g = graph_fn(n)
+        w = total_weight(g)
+        effs.append(phi(g) / w if w > 0 else 0)
+    ax.plot(list(ns), effs, f'-{marker}', label=label, markersize=8, linewidth=2)
+ax.set_xlabel('Number of states (n)', fontsize=12)
+ax.set_ylabel('Efficiency Φ/W', fontsize=12)
+ax.set_title('Integration Efficiency vs Size', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
 
-phi_complete = []
-phi_ring = []
-phi_star = []
-phi_random = []
+# Plot 3: Superadditivity demonstration
+ax = axes[1, 0]
+ns_super = range(3, 8)
+excesses = []
+phi_sums = []
+phi_combineds = []
+for n in ns_super:
+    m1 = path_graph(n, 1.0)
+    m2 = cycle_graph(n, 1.0)
+    combined = [[m1[i][j] + m2[i][j] for j in range(n)] for i in range(n)]
+    p1, p2, pc = phi(m1), phi(m2), phi(combined)
+    phi_sums.append(p1 + p2)
+    phi_combineds.append(pc)
+    excesses.append(pc - (p1 + p2))
 
-np.random.seed(42)
+x = np.arange(len(list(ns_super)))
+width = 0.35
+bars1 = ax.bar(x - width/2, phi_sums, width, label='Φ(M₁) + Φ(M₂)',
+               color='steelblue', alpha=0.8)
+bars2 = ax.bar(x + width/2, phi_combineds, width, label='Φ(M₁ + M₂)',
+               color='coral', alpha=0.8)
+ax.set_xlabel('Number of states', fontsize=12)
+ax.set_ylabel('Integration value', fontsize=12)
+ax.set_title('Superadditivity: Φ(M₁+M₂) ≥ Φ(M₁)+Φ(M₂)', fontsize=13)
+ax.set_xticks(x)
+ax.set_xticklabels([str(n) for n in ns_super])
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3, axis='y')
 
-for n in sizes:
-    phi_complete.append(compute_phi(uniform_complete(n, w)))
-    phi_ring.append(compute_phi(ring_graph(n, w)))
-    phi_star.append(compute_phi(star_graph(n, w)))
-    phi_random.append(np.mean([compute_phi(random_graph(n, 0.5, seed=42 + i))
-                               for i in range(3)]))
-
-fig, ax = plt.subplots(figsize=(10, 6))
-
-ax.plot(list(sizes), phi_complete, 'o-', color='#e74c3c', linewidth=2,
-        markersize=8, label='Complete K_n(1)')
-ax.plot(list(sizes), phi_ring, 's-', color='#3498db', linewidth=2,
-        markersize=8, label='Ring C_n(1)')
-ax.plot(list(sizes), phi_star, '^-', color='#2ecc71', linewidth=2,
-        markersize=8, label='Star S_n(1)')
-ax.plot(list(sizes), phi_random, 'D-', color='#9b59b6', linewidth=2,
-        markersize=8, label='Random G(n, 0.5)')
-
-# Theoretical lines
-n_arr = np.array(list(sizes))
-ax.plot(n_arr, w * (n_arr - 1), '--', color='#e74c3c', alpha=0.3, label='w·(n-1)')
-ax.axhline(y=2 * w, color='#3498db', linestyle='--', alpha=0.3, label='2w (ring)')
-ax.axhline(y=w, color='#2ecc71', linestyle='--', alpha=0.3, label='w (star)')
-
-ax.set_xlabel('System Size n', fontsize=14)
-ax.set_ylabel('Φ (Integrated Information)', fontsize=14)
-ax.set_title('Phi Scaling: How Integration Grows with System Size', fontsize=14,
-             fontweight='bold')
-ax.legend(fontsize=10, loc='upper left')
+# Plot 4: Scaling
+ax = axes[1, 1]
+base = complete_graph(4, 1.0)
+base_phi = phi(base)
+cs = np.linspace(0, 5, 20)
+scaled_phis = [phi(complete_graph(4, c)) for c in cs]
+theoretical = [c * base_phi for c in cs]
+ax.plot(cs, scaled_phis, 'o', color='coral', markersize=8, label='Φ(c·M) computed',
+        alpha=0.8)
+ax.plot(cs, theoretical, '-', color='steelblue', linewidth=2, label='c·Φ(M) predicted')
+ax.set_xlabel('Scale factor c', fontsize=12)
+ax.set_ylabel('Integrated information', fontsize=12)
+ax.set_title('Linear Scaling: Φ(c·M) = c·Φ(M)', fontsize=13)
+ax.legend(fontsize=10)
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('phi_scaling.png', dpi=150, bbox_inches='tight')
-plt.close()
-
-print("Saved: phi_scaling.png")
-print("\nScaling summary:")
-print(f"  Complete graph: Φ grows linearly as w·(n-1)")
-print(f"  Ring graph: Φ = 2w (constant!) - min cut always severs 2 edges")
-print(f"  Star graph: Φ = w (constant!) - min cut isolates one leaf")
-print(f"  Random graph: Φ grows sub-linearly")
+plt.savefig('phi_landscape.png', dpi=150, bbox_inches='tight')
+print("Saved phi_landscape.png")
