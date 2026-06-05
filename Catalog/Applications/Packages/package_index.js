@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "65ea97d9",
     "filename": "proofs_as_dags_the_directed_acyclic_graph_structur.json",
     "pkg_num": 370,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.33104,
     "title": "Stratified Dependency DAGs: The Network Structure of Mathematical Proof"
   },
   {
@@ -11881,8 +11881,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "proofs_as_dags_the_directed_acyclic_graph_structur",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.33104,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Stratified Dependency DAGs: The Network Structure of Mathematical Proof"
     }
