@@ -1,244 +1,256 @@
-# Non-Computability of Ramanujan Oracles: Cardinality Arguments for Mathematical Intuition
+# Oracle Approximation Theory: Counting Bounds, Deficiency Profiles, and the Limits of Mathematical Intuition
 
 ## Abstract
 
-We formalize the concept of a *Ramanujan oracle* — a function that predicts the truth values of number-theoretic statements with accuracy ≥ 95% on all sufficiently large initial segments — and prove that such oracles are generically non-computable. The proof proceeds via a cardinality/counting argument: we construct an explicit injection (the *sparse embedding*) from the Cantor space ℕ → Bool into the set of Ramanujan oracles, establishing that this set is uncountable. Since the set of computable functions is countable, any countable collection of algorithms misses some Ramanujan oracle. We further prove: (1) the result is robust under arbitrary accuracy thresholds 1 − 1/k for k ≥ 2; (2) the number of accurate oracle behaviors on n inputs grows exponentially as 2^(n/21), connecting to proof-length counting bounds; (3) an oracle hierarchy theorem showing that increasingly accurate oracles require strictly more computational power; and (4) a candidate-exceeding theorem showing that Ramanujan oracles outperform any enumerated collection of computable candidates on positive-density sets of undecidable statements. All results are formalized in Lean 4 with complete, machine-verified proofs.
+We introduce the **Oracle Deficiency Profile**, a novel graded invariant that measures how well a finite collection of Boolean decision procedures approximates the space of all truth assignments on a finite statement set. Working in the Boolean hypercube {0,1}^n equipped with Hamming distance, we prove three main results: (1) the **Oracle Insufficiency Theorem**, showing that when the total Hamming ball coverage of m oracles falls below 2^n, uncovered truth assignments must exist; (2) **antitonicity** of the deficiency profile in both the tolerance parameter and the oracle set; and (3) the **Exponential Gap Theorem**, establishing that at zero tolerance, the deficiency is at least 2^n − m. We also define **Oracle Approximation Towers** — hierarchical structures modeling multi-level approximation — and prove monotonicity of cumulative oracle sets within the hierarchy. All results are formally verified in Lean 4 using the Mathlib library.
 
-**Keywords**: Computability theory, oracle machines, Cantor's theorem, arithmetic hierarchy, mathematical intuition, proof complexity.
+**Keywords:** Oracle approximation, Hamming distance, deficiency profile, Boolean hypercube, counting arguments, formal verification, computability theory
+
+---
 
 ## 1. Introduction
 
-Srinivasa Ramanujan's ability to discover deep mathematical truths without proof — and with remarkable accuracy — has inspired a natural question in computability theory: could there exist a computable function that replicates this ability?
+The phenomenon of mathematical intuition — the ability to correctly assess the truth of statements without formal proof — has fascinated philosophers and mathematicians since antiquity. Ramanujan's remarkable capacity to produce correct (and later verified) number-theoretic identities without rigorous derivation remains one of the most striking examples.
 
-We formalize this question precisely. Fix a truth assignment t : ℕ → Bool representing the actual truth values of an enumeration of number-theoretic statements. A *Ramanujan oracle* is a function o : ℕ → Bool such that for all sufficiently large n, the fraction of correct predictions on the first n statements is at least 95%.
+We propose a formal framework for studying such "oracle-like" behavior. An oracle is modeled as a Boolean function on a finite set of statements, and its accuracy is measured by Hamming distance from the true assignment. The central question: given m oracles with bounded accuracy, what fraction of truth assignments can they collectively approximate?
 
-**Main Theorem** (`ramanujan_oracle_escapes_countable`): For any truth assignment t and any countable set S of oracles, there exists a Ramanujan oracle o ∈ S^c that achieves ≥ 95% accuracy on all initial segments [0, n) for n ≥ 420.
+Our main contribution is the **deficiency profile**, a function D_O : ℕ → ℕ that maps each tolerance level d to the number of truth assignments not covered by any oracle in O at tolerance d. This invariant captures the "approximation gap" between finite decision procedures and the full space of mathematical truths.
 
-Since the set of computable functions forms a countable set, this immediately implies that most Ramanujan oracles are non-computable.
+### 1.1 Related Work
 
-### 1.1 Relationship to Prior Work
+The counting argument underlying our Oracle Insufficiency Theorem is related to classical results in coding theory (sphere-packing bounds, Hamming bound) and information theory (rate-distortion theory). However, our focus on the *deficiency* rather than the *coverage* — and the introduction of the tower hierarchy — appears to be new.
 
-This work builds on two lines from the Aether Catalog:
-
-- **`proof_length_counting_bound`** (Bridges/ProofSearchComplexity.lean): The discrete counting principle that b^n possible proofs of length n cannot cover T > b^n theorems. Our oracle information bound (`accurate_oracle_exponential_lower_bound`) is the dual: 2^(n/21) accurate oracle behaviors cannot be specified by fewer than n/21 bits.
-
-- **`oracle_tower_non_collapse`** (Bridges/UniversalComplexityBarriers.lean): Oracle towers with increasing depth don't collapse. Our `oracle_hierarchy_exists` provides a concrete construction of strictly improving oracle hierarchies, grounding the abstract non-collapse in the arithmetic hierarchy.
+The connection to computability theory is through the observation that computable functions form a countable subset of the space of all oracles, while truth assignments form an uncountable space (in the limit n → ∞). This is related to but distinct from Rice's theorem and the arithmetic hierarchy.
 
 ### 1.2 Contributions
 
-1. **Formalization of Ramanujan oracles** with explicit accuracy parameters and warm-up periods.
-2. **Sparse embedding construction**: An explicit injection from Cantor space into the Ramanujan oracle set.
-3. **Uncountability theorem**: The set of Ramanujan oracles is uncountable for any truth assignment.
-4. **Generalized non-computability**: Robustness for accuracy thresholds 1 − 1/k, k ≥ 2.
-5. **Exponential counting bound**: 2^(n/21) accurate oracle behaviors on n inputs, bridging to proof complexity.
-6. **Oracle hierarchy theorem**: Existence of strictly improving oracle towers.
-7. **Candidate-exceeding theorem**: Ramanujan oracles outperform enumerated candidates on dense undecidable sets.
+1. **Definitions**: Hamming distance and balls on (Fin n → Bool), oracle coverage, deficiency profile, oracle approximation towers.
+2. **Oracle Insufficiency Theorem**: A pigeonhole argument establishing existence of uncovered truth assignments.
+3. **Antitonicity results**: The deficiency profile is antitone in tolerance and in the oracle set.
+4. **Exponential Gap**: At zero tolerance, deficiency ≥ 2^n − |O|.
+5. **Non-Approximability Growth**: For |O| < 2^n, the deficiency at zero tolerance is strictly positive.
+6. **Diagonal Escape**: For any proper subset of oracles, there exists a truth assignment differing from all of them.
+7. **Tower Monotonicity**: Cumulative oracle sets in a tower are monotonically increasing.
+
+All results are formally verified in Lean 4 with the Mathlib library; no sorry statements or non-standard axioms are used.
+
+---
 
 ## 2. Definitions
 
-### 2.1 Core Objects
+### 2.1 Hamming Distance
 
-**Definition 2.1** (Oracle). An oracle is a function o : ℕ → Bool.
+**Definition 2.1** (Hamming Distance). For f, g : Fin n → Bool, the *Hamming distance* is:
 
-**Definition 2.2** (Truth Assignment). A truth assignment is a function t : ℕ → Bool representing the actual truth values of an enumeration of number-theoretic statements.
+    hammingDist(f, g) = |{i ∈ Fin n : f(i) ≠ g(i)}|
 
-**Definition 2.3** (Oracle Errors). For oracle o, truth t, and initial segment size n:
+This counts the number of positions where f and g disagree.
 
-    oracleErrors(o, t, n) = |{i ∈ [0, n) : o(i) ≠ t(i)}|
+**Proposition 2.2.** Hamming distance satisfies:
+- (Self-distance) hammingDist(f, f) = 0
+- (Symmetry) hammingDist(f, g) = hammingDist(g, f)
+- (Boundedness) hammingDist(f, g) ≤ n
 
-**Definition 2.4** (95% Accuracy). Oracle o is 95%-accurate on [0, n) if:
+*Remark.* Hamming distance is also a metric (satisfying the triangle inequality), but we do not need this for our results.
 
-    oracleErrors(o, t, n) × 20 ≤ n
+### 2.2 Hamming Balls
 
-This is equivalent to the error rate being ≤ 5% = 1/20.
+**Definition 2.3** (Hamming Ball). The closed Hamming ball of radius d centered at c is:
 
-**Definition 2.5** (Ramanujan Oracle). Oracle o is a Ramanujan oracle with warm-up N if for all n ≥ N, o is 95%-accurate on [0, n).
+    B(c, d) = {f : Fin n → Bool | hammingDist(c, f) ≤ d}
 
-### 2.2 The Sparse Embedding
+**Proposition 2.4.**
+- (Self-membership) c ∈ B(c, d) for all d ≥ 0
+- (Full radius) B(c, n) = (Fin n → Bool) for all c
+- (Monotonicity) d₁ ≤ d₂ implies B(c, d₁) ⊆ B(c, d₂)
 
-**Definition 2.6** (Sparse Embedding). Given truth t and arbitrary function g : ℕ → Bool:
+### 2.3 Oracle Coverage
 
-    sparseEmbed(t, g)(i) = g(i/21)  if i ≡ 0 (mod 21)
-                         = t(i)      otherwise
+**Definition 2.5** (Oracle Coverage). For a finite set of oracles O ⊆ (Fin n → Bool) and tolerance d:
 
-The spacing 21 is chosen so that errors (at most 1/21 ≈ 4.76% of positions) stay within the 5% budget.
+    Coverage(O, d) = ⋃_{f ∈ O} B(f, d)
 
-### 2.3 Generalized Parameters
+This is the set of truth assignments approximated by at least one oracle at tolerance d.
 
-**Definition 2.7** (Generalized Ramanujan Oracle). For accuracy parameter k ≥ 2, oracle o is a (1 − 1/k)-accurate oracle with warm-up N if for all n ≥ N:
+**Proposition 2.6.** Coverage is monotone in both parameters:
+- d₁ ≤ d₂ implies Coverage(O, d₁) ⊆ Coverage(O, d₂)
+- O₁ ⊆ O₂ implies Coverage(O₁, d) ⊆ Coverage(O₂, d)
 
-    oracleErrors(o, t, n) × k ≤ n
+### 2.4 Oracle Deficiency Profile (Novel)
 
-**Definition 2.8** (Parameterized Sparse Embedding). With spacing k + 1:
+**Definition 2.7** (Deficiency Profile). For oracle set O and tolerance d:
 
-    sparseEmbedK(t, k, g)(i) = g(i/(k+1))  if i ≡ 0 (mod k+1)
-                              = t(i)         otherwise
+    DP(O, d) = |{0,1}^n \ Coverage(O, d)|
+
+This counts truth assignments not approximated by any oracle at tolerance d.
+
+### 2.5 Oracle Approximation Tower (Novel)
+
+**Definition 2.8** (Oracle Approximation Tower). An oracle approximation tower of height k over n-bit truth assignments consists of:
+- A sequence of oracles o₁, ..., oₖ : Fin n → Bool
+- A sequence of tolerances t₁ ≥ t₂ ≥ ... ≥ tₖ (antitone)
+
+The cumulative oracle set at level j is {o₁, ..., oⱼ}, and the coverage at level j uses tolerance tⱼ.
+
+*Interpretation.* Higher levels demand more precision (lower tolerance) but have access to more oracles (cumulative set grows). This models how mathematical intuition refines itself: as one moves from basic pattern recognition to deep structural insight, the demands on accuracy increase even as the toolkit expands.
+
+---
 
 ## 3. Main Results
 
-### 3.1 Injectivity of the Sparse Embedding
+### 3.1 The Oracle Insufficiency Theorem
 
-**Theorem 3.1** (`sparseEmbed_injective`): For any truth assignment t, the map g ↦ sparseEmbed(t, g) is injective.
+**Theorem 3.1** (Oracle Insufficiency). Let O be a finite set of oracles on Fin n → Bool, and let d be a tolerance. If |Coverage(O, d)| < 2^n, then there exists a truth assignment t such that for every oracle f ∈ O, hammingDist(f, t) > d.
 
-*Proof sketch*: If sparseEmbed(t, g₁) = sparseEmbed(t, g₂), then evaluating at i = 21k gives g₁(k) = g₂(k) for all k, since 21k mod 21 = 0. □
+*Proof sketch.* By contrapositive. If every truth assignment t has some oracle f ∈ O with hammingDist(f, t) ≤ d, then every t ∈ Coverage(O, d), so Coverage(O, d) = {0,1}^n, contradicting the cardinality hypothesis.
 
-### 3.2 Accuracy of the Sparse Embedding
+*Significance.* This establishes that when the collective "reach" of a set of oracles (measured by Hamming ball volume) is insufficient to cover the truth space, blind spots necessarily exist. This is the formal version of the claim that no finite collection of mathematical heuristics can correctly approximate all mathematical truths.
 
-**Theorem 3.2** (`sparseEmbed_errors_bound`): For any g, t, n:
+### 3.2 Antitonicity of the Deficiency Profile
 
-    oracleErrors(sparseEmbed(t, g), t, n) ≤ (n + 20) / 21
+**Theorem 3.2** (Tolerance Antitonicity). For oracle set O and d₁ ≤ d₂:
 
-*Proof sketch*: Errors occur only at multiples of 21. The number of multiples of 21 in [0, n) is at most ⌊(n − 1)/21⌋ + 1 ≤ (n + 20)/21. □
+    DP(O, d₂) ≤ DP(O, d₁)
 
-**Theorem 3.3** (`sparseEmbed_is_ramanujan`): For any g and t, sparseEmbed(t, g) is a Ramanujan oracle with warm-up 420.
+*Proof.* Follows from Coverage monotonicity in tolerance and set difference antitonicity.
 
-*Proof sketch*: For n ≥ 420: errors × 20 ≤ (n + 20)/21 × 20. Since (n + 20) × 20 ≤ 21n when n ≥ 400, we get (n + 20)/21 × 20 ≤ n. □
+**Theorem 3.3** (Oracle Antitonicity). For O₁ ⊆ O₂ and any d:
 
-### 3.3 Uncountability
+    DP(O₂, d) ≤ DP(O₁, d)
 
-**Theorem 3.4** (`nat_bool_not_countable`): The Cantor space ℕ → Bool is not countable.
+*Proof.* Follows from Coverage monotonicity in the oracle set.
 
-*Proof*: By Cantor's diagonal argument. If f : ℕ → (ℕ → Bool) were surjective, define d(n) = ¬f(n)(n). Then d ≠ f(n) for all n, contradicting surjectivity. □
+**Theorem 3.4** (Full Tolerance). If O is nonempty, then DP(O, n) = 0.
 
-**Theorem 3.5** (`ramanujan_set_uncountable`): For any truth assignment t, the set of Ramanujan oracles with warm-up 420 is uncountable.
+*Proof.* At tolerance n, each Hamming ball equals the full space (Proposition 2.4), so Coverage(O, n) = {0,1}^n.
 
-*Proof*: The sparse embedding injects ℕ → Bool into the Ramanujan oracle set (Theorems 3.1, 3.3). If the Ramanujan set were countable, its preimage under this injection would be countable, contradicting Theorem 3.4. □
+*Remark.* These three theorems characterize the deficiency profile as an antitone function with a zero at d = n. Together with the exponential gap at d = 0 (Theorem 3.5), they establish a "phase transition" shape: high deficiency at small tolerance, dropping to zero at maximum tolerance.
 
-### 3.4 The Main Non-Computability Theorem
+### 3.3 The Exponential Gap
 
-**Theorem 3.6** (`ramanujan_oracle_escapes_countable`): For any truth assignment t and any countable set S ⊆ (ℕ → Bool), there exists a Ramanujan oracle o ∉ S.
+**Theorem 3.5** (Exponential Gap). For any oracle set O on Fin n → Bool:
 
-*Proof*: If every Ramanujan oracle were in S, the Ramanujan set would be a subset of a countable set, hence countable, contradicting Theorem 3.5. □
+    DP(O, 0) ≥ 2^n − |O|
 
-**Corollary 3.7**: Since the set of computable functions Comp ⊂ (ℕ → Bool) is countable, there exist Ramanujan oracles that are not computable.
+*Proof sketch.* At tolerance 0, the Hamming ball B(f, 0) = {f}. So Coverage(O, 0) ⊆ O, giving |Coverage(O, 0)| ≤ |O|. Therefore DP(O, 0) = 2^n − |Coverage(O, 0)| ≥ 2^n − |O|.
 
-### 3.5 Oracle Diversity
+**Corollary 3.6** (Non-Approximability Growth). If |O| < 2^n, then DP(O, 0) > 0.
 
-**Theorem 3.8** (`ramanujan_oracle_infinite_diversity`): For any oracle o₀, there exists a Ramanujan oracle o that differs from o₀ on infinitely many inputs.
+*Significance.* For any polynomial-size oracle set (|O| = poly(n)), the fraction of uncovered truth assignments at zero tolerance is 1 − poly(n)/2^n → 1 as n → ∞. Almost all truths escape.
 
-*Proof*: Construct o that at every multiple of 21 outputs the opposite of o₀. The set {21k : k ∈ ℕ} is infinite, and o disagrees with o₀ at each such position. The error bound ensures o remains 95%-accurate. □
+### 3.4 Diagonal Escape
 
-### 3.6 Generalized Non-Computability
+**Theorem 3.7** (Diagonal Escape). If O is nonempty and |O| < 2^n, there exists t ∈ {0,1}^n such that f ≠ t for all f ∈ O.
 
-**Theorem 3.9** (`generalized_ramanujan_uncountable`): For any k ≥ 2 and truth t, the set of (1 − 1/k)-accurate oracles with warm-up k(k + 1) is uncountable.
+*Proof.* Since O is a proper subset of the finite set {0,1}^n (as |O| < |{0,1}^n| = 2^n), there exists t ∈ {0,1}^n \ O.
 
-*Proof*: Same structure as Theorem 3.5, using sparseEmbedK with spacing k + 1. The error count is at most (n + k)/(k + 1), and (n + k)/(k + 1) × k ≤ n when n ≥ k². □
+*Remark.* While this result is straightforward, it serves as the base case for a stronger diagonal argument: one can construct t that not only differs from every oracle but *maximally* differs, in the sense of maximizing the minimum Hamming distance to any oracle.
 
-### 3.7 Exponential Counting Bound (Bridge to Proof Complexity)
+### 3.5 Tower Monotonicity
 
-**Theorem 3.10** (`accurate_oracle_exponential_lower_bound`): For n ≥ 21 and any truth t : Fin n → Bool, the number of oracle behaviors on n inputs with error rate ≤ 1/21 is at least 2^(n/21).
+**Theorem 3.8** (Cumulative Oracle Monotonicity). In an Oracle Approximation Tower T, for levels i ≤ j:
 
-*Proof*: Inject (Fin(n/21) → Bool) into the set of accurate behaviors via the sparse embedding restricted to Fin n. This injection has image contained in the accurate set, and |Fin(n/21) → Bool| = 2^(n/21). □
+    CumulativeOracles(T, i) ⊆ CumulativeOracles(T, j)
 
-**Connection to proof_length_counting_bound**: The proof-length bound says b^n proofs of length n can't cover T > b^n theorems. Dually, our result says 2^k oracle descriptions of k bits can't specify all 2^(n/21) accurate oracles when k < n/21. Both are manifestations of the same pigeonhole/entropy principle: the information content of accurate mathematical prediction exceeds any sublinear description length.
+*Proof.* The cumulative set at level i is the image of {levels ≤ i} under the oracle map. Since i ≤ j implies {levels ≤ i} ⊆ {levels ≤ j}, the image is a subset.
 
-### 3.8 Oracle Hierarchy
+---
 
-**Theorem 3.11** (`oracle_hierarchy_exists`): For any truth assignment t with nested infinite "hard" sets hard(0) ⊇ hard(1) ⊇ ⋯ (each infinite), there exists a strictly improving oracle hierarchy where each level is correct outside its hard set.
+## 4. Algorithms
 
-*Proof*: Choose a strictly increasing sequence a₀ < a₁ < a₂ < ⋯ with aₙ ∈ hard(n) (possible since each hard(n) is infinite). Define level(n)(i) = ¬t(i) if i = aₙ, else t(i). At witness aₙ: level(n) is wrong, level(n + 1) is correct (since aₙ ≠ aₙ₊₁). □
+### 4.1 Computing the Deficiency Profile
 
-This models the arithmetic hierarchy: hard(n) represents statements of complexity Σₙ, and the hierarchy of oracles 0, 0′, 0″, ⋯ provides strictly increasing power.
+Given an explicit oracle set O = {f₁, ..., fₘ} and a tolerance d, the deficiency profile can be computed by exhaustive enumeration in O(m · 2^n · n) time: for each of the 2^n truth assignments, check whether any oracle covers it.
 
-### 3.9 Candidate-Exceeding Theorem
+### 4.2 Finding the Maximally Deficient Truth
 
-**Theorem 3.12** (`ramanujan_exceeds_candidates`): If the "undecidable" indices (where all enumerated candidates fail) have density ≥ 10%, then any Ramanujan oracle differs from every candidate on a nonempty set of inputs.
+The "hardest" truth assignment — the one with maximum minimum distance to any oracle — can be found by:
+1. For each truth assignment t ∈ {0,1}^n, compute min_{f ∈ O} hammingDist(f, t)
+2. Return the t maximizing this minimum
 
-*Proof sketch*: The Ramanujan oracle has ≤ 5% errors, while ≥ 10% of inputs are undecidable. On the ≥ 5% of undecidable inputs where the oracle is correct, it must disagree with every candidate (since candidates are wrong on all undecidable inputs). □
+This is equivalent to finding the point in {0,1}^n farthest from a finite set in Hamming metric — a discrete facility location problem.
 
-## 4. PEGB Analysis
+### 4.3 Oracle Coverage Estimation
 
-### 4.1 Main Theorem (`ramanujan_oracle_escapes_countable`)
+For large n where exhaustive computation is infeasible, Monte Carlo estimation of the deficiency profile is possible: sample random truth assignments and estimate the fraction uncovered. The expected uncovered fraction at tolerance d is:
 
-- **Proof**: Complete, 6 lines, using the uncountability of the Ramanujan set and monotonicity of countability under subsets.
-- **Example**: For t = characteristic function of primes, the theorem guarantees a non-computable oracle predicting primality of encoded statements with ≥ 95% accuracy.
-- **Generalization**: Theorem 3.9 extends to any accuracy threshold 1 − 1/k, showing the phenomenon is a continuum property, not specific to 95%.
-- **Boundary**: At 50% accuracy (k = 1), every truth assignment admits the trivial constant oracle as a computable 50%-accurate oracle (or 0%-accurate, depending on truth density). The non-computability kicks in at any threshold strictly above 50%.
+    E[uncovered] = 1 − |Coverage(O,d)|/2^n
 
-### 4.2 Uncountability Theorem (`ramanujan_set_uncountable`)
+---
 
-- **Proof**: Reduction to uncountability of Cantor space via sparse embedding injection.
-- **Example**: The sparse embedding with g(n) = (n mod 2 = 0) produces a specific Ramanujan oracle that alternates at multiples of 21.
-- **Generalization**: The same construction works for any spacing s ≥ 21, producing different families of Ramanujan oracles. For spacing s, the accuracy is 1 − 1/s.
-- **Boundary**: The construction fails for spacing s = 1 (every position is "free," giving no accuracy guarantee). The minimum spacing for 95% accuracy is s = 20 (giving exactly 5% error), though we use s = 21 for a strict inequality.
+## 5. The Ramanujan Oracle Conjecture
 
-### 4.3 Exponential Counting Bound (`accurate_oracle_exponential_lower_bound`)
+We state the following conjecture, motivated by the formal framework:
 
-- **Proof**: Injection from Fin(n/21) → Bool into the subtype of accurate behaviors.
-- **Example**: For n = 210 (= 21 × 10), there are at least 2¹⁰ = 1024 distinct accurate oracle behaviors.
-- **Generalization**: For accuracy 1 − 1/k, the bound becomes 2^(n/(k+1)), giving an accuracy-information tradeoff.
-- **Boundary**: For n < 21, the bound gives 2⁰ = 1, which is trivially true and uninformative.
+**Conjecture 5.1** (Ramanujan Non-Computability). For any computable enumeration of total Boolean functions {f₁, f₂, ...} and any ε < 1/2, there exists N such that for all n ≥ N, the deficiency profile DP({f₁,...,f_n}, ⌊εn⌋) > 0 when evaluated on the space of truth assignments of length n.
 
-## 5. Algorithms
+*Testable prediction.* For any specific enumeration of computable functions (e.g., programs enumerated by length), compute the deficiency profile for small n and verify the deficiency is positive.
 
-### 5.1 Sparse Embedding Algorithm
+This conjecture formalizes the claim that no computable enumeration of decision procedures can achieve even 50%+ accuracy on all truth assignments simultaneously, once the statement space is large enough.
 
-```
-Input: truth assignment t, arbitrary function g, query position i
-Output: oracle prediction
+**Conjecture 5.2** (Jump Correspondence). The deficiency profile at tolerance d of the computable functions corresponds, up to polynomial factors, to the d-th level of the arithmetic hierarchy. Specifically, truth assignments with deficiency ≥ d relative to computable oracles are precisely those whose complexity is at least Σ⁰_d in the arithmetic hierarchy.
 
-function sparseEmbed(t, g, i):
-    if i mod 21 == 0:
-        return g(i / 21)
-    else:
-        return t(i)
-```
+---
 
-Time complexity: O(1) per query.
-Space complexity: O(1) beyond the representation of g.
+## 6. PEGB Analysis
 
-### 5.2 Oracle Accuracy Evaluation
+### 6.1 Oracle Insufficiency Theorem
 
-```
-Input: oracle o, truth t, segment size n
-Output: error count
+- **Proof**: By contrapositive; if all truth assignments are covered, coverage equals the full space, contradicting the cardinality bound.
+- **Example**: For n = 3, with 2 oracles and tolerance 0, the oracles cover at most 2 of the 8 truth assignments, leaving at least 6 uncovered.
+- **Generalization**: Extends to any finite metric space (X, d) with balls B(x, r). If m balls of radius r don't cover X, uncovered points exist. The Boolean hypercube is a special case.
+- **Boundary**: When |O| · |B(f,d)| ≥ 2^n (the Hamming bound is met or exceeded), the theorem's hypothesis fails, and perfect covering codes may exist for specific parameters.
 
-function oracleErrors(o, t, n):
-    count = 0
-    for i in 0..n-1:
-        if o(i) != t(i):
-            count += 1
-    return count
-```
+### 6.2 Exponential Gap Theorem
 
-Time complexity: O(n).
+- **Proof**: At tolerance 0, each ball is a singleton, so coverage ≤ |O|, giving deficiency ≥ 2^n − |O|.
+- **Example**: For n = 10, with 100 oracles at tolerance 0, deficiency ≥ 1024 − 100 = 924. Over 90% of truths escape.
+- **Generalization**: For tolerance d, the gap becomes 2^n − |O| · Σ_{i=0}^{d} C(n,i), where the sum is the Hamming ball volume.
+- **Boundary**: When |O| = 2^n (one oracle per truth assignment), deficiency = 0 at tolerance 0. This requires exponential resources.
 
-## 6. Discussion
+### 6.3 Deficiency Profile Antitonicity
 
-### 6.1 Interpretation
+- **Proof**: Follows from coverage monotonicity and complement antitonicity.
+- **Example**: For a single oracle {f} on n = 4 bits, DP({f}, 0) = 15, DP({f}, 1) = 11, DP({f}, 2) = 5, DP({f}, 3) = 1, DP({f}, 4) = 0.
+- **Generalization**: Any function defined as the complement of a monotone set-valued function is antitone. The deficiency profile is a special case.
+- **Boundary**: Antitonicity does not imply strict antitonicity; the profile can have plateaus where increasing tolerance doesn't help.
 
-The non-computability of Ramanujan oracles has several interpretations:
+---
 
-1. **Computability-theoretic**: No Turing machine can achieve consistently high accuracy on all mathematical statements. This is a cardinality argument, not a complexity argument — it holds regardless of computational resources.
+## 7. Discussion
 
-2. **Information-theoretic**: Accurate mathematical prediction carries Ω(n) bits of irreducible information on n statements, exceeding any sublinear compression.
+### 7.1 Implications for Mathematical Discovery
 
-3. **Philosophical**: If Ramanujan's intuition was "computing" an oracle, it was accessing a non-computable process — something outside the scope of any algorithm.
+The deficiency profile provides a quantitative framework for discussing the "difficulty" of mathematical truths. A truth with high deficiency relative to the current set of known heuristics is, in a precise sense, surprising. Ramanujan's genius may be characterized as having access to oracles with unusually low deficiency in specific mathematical domains.
 
-### 6.2 Connection to the Jump Operator
+### 7.2 Connections to Coding Theory
 
-The oracle hierarchy theorem provides a bridge to the Turing jump operator. In computability theory, the Turing jump 0′ of the empty set is the halting problem. The nth iterate 0⁽ⁿ⁾ can decide Σₙ statements of arithmetic. Our hierarchy models this structure: each level gains the ability to correctly predict one additional "hard" statement.
+The Oracle Insufficiency Theorem is closely related to the sphere-packing bound (or Hamming bound) in coding theory. In coding theory, one asks: how many codewords can be packed into {0,1}^n with minimum Hamming distance d? Our question is dual: how many truth assignments can be "covered" by m centers with balls of radius d?
 
-The conjecture that Ramanujan's intuition corresponds to a jump-like operation is supported by our results: any oracle that handles statements at all levels of the arithmetic hierarchy must transcend every finite jump.
+### 7.3 Connections to Learning Theory
 
-### 6.3 Limitations
+The deficiency profile has natural interpretations in computational learning theory. The oracle set plays the role of a hypothesis class, and the deficiency at tolerance d measures the "approximation error" of the class. The exponential gap is analogous to the fact that a finite hypothesis class cannot approximate all Boolean functions.
 
-Our results establish *generic* non-computability — most Ramanujan oracles are non-computable. They do not rule out the existence of a computable oracle that happens to be highly accurate on a specific (computable) truth assignment. For decidable truth assignments, the identity function (t itself) is a perfect computable oracle. The non-computability is really about the *space of possibilities*, not about any particular oracle-truth pair.
+### 7.4 Limitations
 
-## 7. Future Work
+Our framework is inherently finite-dimensional. The passage to infinite statement spaces (required for a full formalization of arithmetic truth) requires additional machinery from computability theory. The deficiency profile as defined here is a finitary analogue of the computability-theoretic notion of "degrees of unsolvability."
 
-1. **Effective density bounds**: What is the measure of computable functions within the space of accurate oracles, under natural probability measures on Cantor space?
+---
 
-2. **Kolmogorov complexity connection**: Can the information-theoretic bound be sharpened using Kolmogorov complexity to show that Ramanujan oracles have high algorithmic information content?
+## 8. Future Work
 
-3. **Reverse mathematics**: What axiom systems are needed to prove the existence of Ramanujan oracles? The current proof uses classical logic (via Cantor's theorem); does a constructive version exist?
+1. **Hamming ball volume bounds**: Formally prove the explicit formula |B(c,d)| = Σ_{i=0}^{d} C(n,i) and derive the oracle insufficiency theorem's hypothesis as a consequence.
+2. **Connection to the arithmetic hierarchy**: Formalize the correspondence between deficiency levels and levels of the arithmetic hierarchy.
+3. **Probabilistic analysis**: Prove that a random truth assignment has high deficiency relative to any fixed oracle set with high probability.
+4. **Tower coverage analysis**: Establish conditions under which adding a level to an oracle approximation tower strictly decreases the deficiency.
+5. **Asymptotic analysis**: Study the behavior of the deficiency profile in the limit n → ∞ for oracle sets of bounded size.
 
-4. **Oracle-relativized complexity**: How does the computational complexity of mathematical problems change when given access to a Ramanujan oracle?
+---
 
 ## References
 
-1. Cantor, G. (1891). "Über eine elementare Frage der Mannigfaltigkeitslehre." *Jahresbericht der DMV*, 1, 75–78.
-2. Turing, A.M. (1936). "On Computable Numbers, with an Application to the Entscheidungsproblem." *Proc. London Math. Soc.*, 42, 230–265.
-3. Kleene, S.C. (1943). "Recursive predicates and quantifiers." *Trans. AMS*, 53(1), 41–73.
-4. `proof_length_counting_bound` — Bridges/ProofSearchComplexity.lean, Aether Catalog.
-5. `oracle_tower_non_collapse` — Bridges/UniversalComplexityBarriers.lean, Aether Catalog.
+1. Hamming, R. W. "Error Detecting and Error Correcting Codes." Bell System Technical Journal 29.2 (1950): 147-160.
+2. Hardy, G. H. *Ramanujan: Twelve Lectures on Subjects Suggested by His Life and Work.* Cambridge UP, 1940.
+3. Turing, A. M. "On Computable Numbers, with an Application to the Entscheidungsproblem." Proc. London Math. Soc. 2.42 (1937): 230-265.
+4. Soare, R. I. *Recursively Enumerable Sets and Degrees.* Springer, 1987.
+5. MacWilliams, F. J., and N. J. A. Sloane. *The Theory of Error-Correcting Codes.* North-Holland, 1977.
