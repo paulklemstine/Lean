@@ -1,416 +1,331 @@
 #!/usr/bin/env python3
 """
-L-Function Oracle Hierarchy — Core Algorithms
+Oracle Spectral Algebra — Core Algorithms
 
-Implements the algorithmic content of the oracle hierarchy theorems:
-
-1. AdversarialConstructor: builds indistinguishable function pairs
-2. VanishingOrderDetector: finds vanishing order from derivative oracle
-3. FactorExtractor: recovers prime factors from separating invariants
-4. RHUpToChecker: checks RH up to height T from zero certificate data
-
-Each algorithm includes complexity analysis and correctness guarantees
-matching the formally verified theorems.
+Type-hinted implementations of the key algorithms from the
+Oracle Spectral Algebra framework.
 """
 
-import math
-import numpy as np
-from typing import Callable, List, Optional, Tuple, Set
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Callable, List, Tuple, Optional, Dict
+from math import gcd, log, ceil
 
 
-# =============================================================================
-# Algorithm 1: Adversarial Function Pair Constructor
-# =============================================================================
+# ============================================================
+# Data Structures
+# ============================================================
 
 @dataclass
-class AdversarialPair:
-    """A pair of functions agreeing on Q but differing in vanishing at target."""
-    F: Callable[[complex], complex]
-    G: Callable[[complex], complex]
-    query_set: List[complex]
-    target: complex
-    F_at_target: complex
-    G_at_target: complex
+class Jet:
+    """A k-jet at a basepoint: stores k derivative values."""
+    basepoint: complex
+    coeffs: List[complex]
+    
+    @property
+    def depth(self) -> int:
+        return len(self.coeffs)
+    
+    def vanishing_order(self, tol: float = 1e-12) -> int:
+        """Compute the vanishing order (index of first nonzero coefficient)."""
+        for i, c in enumerate(self.coeffs):
+            if abs(c) > tol:
+                return i
+        return self.depth
+    
+    def is_nondegenerate(self, tol: float = 1e-12) -> bool:
+        """Check if at least one coefficient is nonzero."""
+        return any(abs(c) > tol for c in self.coeffs)
+    
+    @classmethod
+    def zero(cls, k: int, s: complex) -> 'Jet':
+        """Create the zero jet of depth k."""
+        return cls(basepoint=s, coeffs=[0.0] * k)
+    
+    @classmethod
+    def from_function(cls, f: Callable[[complex], complex], s: complex, k: int, 
+                      h: float = 1e-8) -> 'Jet':
+        """Numerically compute the k-jet of f at s using finite differences."""
+        coeffs = []
+        for n in range(k):
+            # n-th derivative via finite differences
+            val = 0.0
+            for j in range(n + 1):
+                binom = 1
+                for i in range(j):
+                    binom = binom * (n - i) // (i + 1)
+                sign = (-1) ** (n - j)
+                val += sign * binom * f(s + j * h)
+            val /= h ** n
+            coeffs.append(val)
+        return cls(basepoint=s, coeffs=coeffs)
 
 
-def construct_adversarial_pair(
-    Q: List[complex],
-    target: complex = 1.0 + 0j
-) -> AdversarialPair:
+@dataclass
+class OracleSpectrum:
     """
-    Construct two functions F, G that agree on Q but differ at target.
+    Multi-scale fingerprint of an analytic function.
+    Captures what an L-function oracle observes.
+    """
+    critical_value: complex  # f(1), the critical value
+    zero_counts: Dict[float, int]  # T -> N(T), zero counts by height
+    spectral_weight: int  # arithmetic complexity measure
+    
+    def product(self, other: 'OracleSpectrum') -> 'OracleSpectrum':
+        """
+        Product of two spectra (Rankin-Selberg convolution model).
+        Zero counts add, spectral weights add.
+        """
+        all_heights = set(self.zero_counts.keys()) | set(other.zero_counts.keys())
+        merged_counts = {
+            T: self.zero_counts.get(T, 0) + other.zero_counts.get(T, 0)
+            for T in all_heights
+        }
+        return OracleSpectrum(
+            critical_value=self.critical_value * other.critical_value,
+            zero_counts=merged_counts,
+            spectral_weight=self.spectral_weight + other.spectral_weight,
+        )
+    
+    @classmethod
+    def trivial(cls) -> 'OracleSpectrum':
+        """The trivial spectrum: no zeros, weight 0."""
+        return cls(critical_value=0, zero_counts={}, spectral_weight=0)
 
-    Algorithm:
-        F(z) = ∏_{q ∈ Q} (z - q)    (vanishing polynomial)
-        G(z) = 0                      (zero function)
 
-    Complexity: O(|Q|) per evaluation
-    Correctness: F(q) = G(q) = 0 for all q ∈ Q; F(target) ≠ 0 if target ∉ Q
+@dataclass
+class ZeroCertificate:
+    """
+    A certified list of zeros for a function F in a bounded region.
+    """
+    zeros: List[complex]
+    height_bound: float  # T: the certificate covers |Im(s)| ≤ T
+    
+    def check_regional_rh(self, tol: float = 1e-10) -> Tuple[bool, List[complex]]:
+        """
+        Check Regional RH: are all zeros on the critical line Re(s) = 1/2?
+        
+        Returns (True, []) if all zeros pass, or
+                (False, offenders) with the list of violating zeros.
+        
+        This implements the Zero Certificate Decidability Theorem.
+        """
+        offenders = []
+        for z in self.zeros:
+            if 0 < z.real < 1 and abs(z.imag) <= self.height_bound:
+                if abs(z.real - 0.5) > tol:
+                    offenders.append(z)
+        return (len(offenders) == 0, offenders)
 
+
+# ============================================================
+# Algorithm 1: Oracle-Assisted Factoring
+# ============================================================
+
+def oracle_factor(n: int, character_oracle: Optional[Callable] = None) -> Tuple[int, int]:
+    """
+    Factor n = p * q using character-separating invariants.
+    
+    The Factor Extraction Theorem (Theorem 3.8) guarantees:
+    if a is divisible by p but not q, then gcd(a, n) = p.
+    
+    In practice, the 'character_oracle' would provide character values
+    from L-function evaluations. Here we simulate with a simple search.
+    
     Args:
-        Q: List of query points (must not contain target)
-        target: The point where behavior differs
-
+        n: The number to factor (assumed to be a semiprime p*q)
+        character_oracle: Optional oracle providing separating values
+    
     Returns:
-        AdversarialPair with F(target) ≠ 0 and G(target) = 0
-
-    Raises:
-        ValueError: if target is in Q
+        (p, q) where n = p * q
     """
-    if any(abs(q - target) < 1e-15 for q in Q):
-        raise ValueError(f"target {target} must not be in Q")
-
-    def vanish_poly(z: complex) -> complex:
-        result = 1.0 + 0j
-        for q in Q:
-            result *= (z - q)
-        return result
-
-    F = vanish_poly
-    G = lambda z: 0.0 + 0j
-
-    return AdversarialPair(
-        F=F, G=G,
-        query_set=list(Q),
-        target=target,
-        F_at_target=F(target),
-        G_at_target=G(target)
-    )
+    if character_oracle is not None:
+        # Use the oracle to find a separating invariant
+        a = character_oracle(n)
+        g = gcd(a, n)
+        if 1 < g < n:
+            return (g, n // g)
+    
+    # Fallback: trial search for separating invariant
+    for a in range(2, n):
+        g = gcd(a, n)
+        if 1 < g < n:
+            return (g, n // g)
+    
+    raise ValueError(f"Could not factor {n}")
 
 
-def construct_adversarial_pair_with_order(
-    Q: List[complex],
-    target: complex = 1.0 + 0j,
-    order_F: int = 0,
-    order_G: int = 1
-) -> AdversarialPair:
-    """
-    Construct functions with specified vanishing orders at target,
-    agreeing on Q.
-
-    Algorithm:
-        F(z) = (z - target)^{order_F} · ∏(z - q)
-        G(z) = (z - target)^{order_G} · ∏(z - q)
-
-    Both vanish on Q (due to ∏(z-q) factor), but have different
-    orders of vanishing at target.
-
-    Complexity: O(|Q| + max(order_F, order_G)) per evaluation
-    """
-    if any(abs(q - target) < 1e-15 for q in Q):
-        raise ValueError(f"target {target} must not be in Q")
-
-    def make_fn(order: int) -> Callable[[complex], complex]:
-        def fn(z: complex) -> complex:
-            result = (z - target) ** order
-            for q in Q:
-                result *= (z - q)
-            return result
-        return fn
-
-    F = make_fn(order_F)
-    G = make_fn(order_G)
-
-    return AdversarialPair(
-        F=F, G=G,
-        query_set=list(Q),
-        target=target,
-        F_at_target=F(target),
-        G_at_target=G(target)
-    )
-
-
-# =============================================================================
-# Algorithm 2: Vanishing Order Detector
-# =============================================================================
-
-@dataclass
-class VanishingOrderResult:
-    """Result of vanishing order detection."""
-    order: Optional[int]
-    derivatives: List[complex]
-    first_nonzero_value: Optional[complex]
-    confidence: float
-
+# ============================================================
+# Algorithm 2: Vanishing Order Detection
+# ============================================================
 
 def detect_vanishing_order(
     derivative_oracle: Callable[[int], complex],
-    max_order: int = 100,
-    tolerance: float = 1e-10
-) -> VanishingOrderResult:
+    max_depth: int = 100,
+    tol: float = 1e-12
+) -> int:
     """
-    Detect the vanishing order using a derivative oracle.
-
-    Algorithm:
-        For n = 0, 1, 2, ..., max_order:
-            Query f^(n)(s₀) from oracle
-            If |f^(n)(s₀)| > tolerance:
-                Return n as the vanishing order
-
-    Complexity: O(n*) queries where n* is the vanishing order
-    Correctness: By the uniqueness theorem (derivative_oracle_detects_vanishing_order),
-                 the returned order is the unique vanishing order.
-
+    Detect the vanishing order of a function at a point using
+    a derivative oracle.
+    
+    The Jet Detection Theorem (Theorem 3.2) guarantees:
+    if some derivative of order ≤ k is nonzero, the vanishing
+    order is at most k.
+    
     Args:
-        derivative_oracle: Function n ↦ f^(n)(s₀) returning the n-th derivative
-        max_order: Maximum order to check
-        tolerance: Threshold for considering a value nonzero
-
+        derivative_oracle: f^(n)(s₀) -> complex value
+        max_depth: maximum number of derivatives to check
+        tol: numerical tolerance for "nonzero"
+    
     Returns:
-        VanishingOrderResult with the detected order
+        The vanishing order (index of first nonzero derivative)
     """
-    derivatives = []
-    for n in range(max_order + 1):
-        d_n = derivative_oracle(n)
-        derivatives.append(d_n)
-        if abs(d_n) > tolerance:
-            return VanishingOrderResult(
-                order=n,
-                derivatives=derivatives,
-                first_nonzero_value=d_n,
-                confidence=abs(d_n) / tolerance
-            )
-
-    return VanishingOrderResult(
-        order=None,
-        derivatives=derivatives,
-        first_nonzero_value=None,
-        confidence=0.0
-    )
+    for n in range(max_depth):
+        val = derivative_oracle(n)
+        if abs(val) > tol:
+            return n
+    return max_depth  # All derivatives zero up to max_depth
 
 
-def simulate_derivative_oracle(
-    f: Callable[[complex], complex],
-    s0: complex,
+# ============================================================
+# Algorithm 3: Regional RH Verification
+# ============================================================
+
+def verify_regional_rh(
+    certificate: ZeroCertificate,
+    tol: float = 1e-10
+) -> bool:
+    """
+    Verify Regional RH using a zero certificate.
+    
+    The Zero Certificate Decidability Theorem (Theorem 3.7) states:
+    Regional RH ↔ all certified zeros have Re(z) = 1/2.
+    
+    This reduces an infinite verification to a finite check.
+    
+    Args:
+        certificate: ZeroCertificate containing all zeros up to height T
+        tol: numerical tolerance for critical line check
+    
+    Returns:
+        True if Regional RH holds, False if a violation is found
+    """
+    passed, offenders = certificate.check_regional_rh(tol)
+    if not passed:
+        print(f"  RH VIOLATED: {len(offenders)} zero(s) off critical line")
+        for z in offenders:
+            print(f"    z = {z}, Re(z) = {z.real:.10f}")
+    return passed
+
+
+# ============================================================
+# Algorithm 4: Oracle Filtration Analysis
+# ============================================================
+
+@dataclass
+class OracleAlgebra:
+    """An algebra of functions with oracle-compatible filtration."""
+    functions: List[Callable[[complex], complex]]
+    names: List[str]
+    
+    def compute_filtration(self, s: complex, max_depth: int = 10,
+                           h: float = 1e-6) -> Dict[int, List[str]]:
+        """
+        Compute the filtration levels for all functions in the algebra.
+        
+        F_k = {f | f^(m)(s) = 0 for all m < k}
+        
+        Returns: {k: [names of functions in F_k]}
+        """
+        result: Dict[int, List[str]] = {}
+        
+        for f, name in zip(self.functions, self.names):
+            jet = Jet.from_function(f, s, max_depth, h)
+            order = jet.vanishing_order()
+            for k in range(order + 1):
+                if k not in result:
+                    result[k] = []
+                result[k].append(name)
+        
+        return result
+
+
+# ============================================================
+# Algorithm 5: Query Complexity Analysis
+# ============================================================
+
+def analyze_query_complexity(
+    function_class: List[Callable[[complex], complex]],
+    point: complex,
+    max_queries: int = 20,
     h: float = 1e-6
-) -> Callable[[int], complex]:
+) -> Dict[str, int]:
     """
-    Simulate a derivative oracle using numerical differentiation.
-
-    Uses the Cauchy integral formula discretization:
-        f^(n)(s₀) = n! / (2πi) ∮ f(z)/(z-s₀)^{n+1} dz
-                   ≈ n!/r^n · (1/N) Σ f(s₀ + r·e^{2πik/N}) · e^{-2πink/N}
-
-    Args:
-        f: The function to differentiate
-        s0: The point of evaluation
-        h: Radius for contour integration
+    Analyze the query complexity for vanishing order detection.
+    
+    For each function, determine how many derivative queries are needed
+    to detect its vanishing order at the given point.
+    
+    Returns: {function_index: queries_needed}
     """
-    def oracle(n: int) -> complex:
-        N = max(2 * n + 10, 32)  # number of quadrature points
-        r = h
-        total = 0.0 + 0j
-        for k in range(N):
-            theta = 2 * np.pi * k / N
-            z = s0 + r * np.exp(1j * theta)
-            total += f(z) * np.exp(-1j * n * theta)
-        # f^(n)(s0) = n! * total / (N * r^n)
-        return math.factorial(n) * total / (N * r**n)
-
-    return oracle
+    results: Dict[str, int] = {}
+    
+    for i, f in enumerate(function_class):
+        jet = Jet.from_function(f, point, max_queries, h)
+        order = jet.vanishing_order()
+        queries_needed = order + 1 if order < max_queries else max_queries
+        results[f"f_{i}"] = queries_needed
+    
+    return results
 
 
-# =============================================================================
-# Algorithm 3: Factor Extractor from Separating Invariants
-# =============================================================================
-
-@dataclass
-class FactorResult:
-    """Result of factor extraction."""
-    n: int
-    factor: int
-    cofactor: int
-    separating_invariant: int
-    verified: bool
-
-
-def extract_factor(
-    n: int,
-    separating_invariant: int
-) -> FactorResult:
-    """
-    Extract a nontrivial factor of n using a separating invariant.
-
-    Algorithm:
-        Compute g = gcd(separating_invariant, n)
-        If 1 < g < n, then g is a nontrivial factor.
-
-    Complexity: O(log(n)) via Euclidean algorithm
-    Correctness: By factor_from_separating_invariant, if n = p·q with
-                 p | a and q ∤ a, then gcd(a, n) = p.
-
-    Args:
-        n: The number to factor
-        separating_invariant: Value a with p|a and q∤a for factors p,q of n
-
-    Returns:
-        FactorResult with the extracted factor
-    """
-    g = math.gcd(separating_invariant, n)
-    is_nontrivial = 1 < g < n
-
-    return FactorResult(
-        n=n,
-        factor=g,
-        cofactor=n // g if g > 0 else 0,
-        separating_invariant=separating_invariant,
-        verified=is_nontrivial
-    )
-
-
-def simulate_euler_factor_oracle(
-    n: int,
-    primes_up_to: int = 100
-) -> List[Tuple[int, int]]:
-    """
-    Simulate an Euler factor oracle for a semiprime n = p·q.
-
-    For each small prime ℓ, compute a_ℓ = ℓ + 1 - |E(F_ℓ)| for a random
-    "elliptic curve" (here simulated). The traces a_ℓ mod p and a_ℓ mod q
-    provide separating information.
-
-    This is a simplified model of how real L-function Euler factor data
-    can separate prime components.
-    """
-    traces = []
-    for ell in range(2, primes_up_to + 1):
-        if is_prime(ell):
-            # Simulated trace: in practice, this comes from counting points
-            # on an elliptic curve mod ℓ
-            a_ell = (ell * ell + 1) % n  # toy model
-            traces.append((ell, a_ell))
-    return traces
-
-
-def is_prime(n: int) -> bool:
-    """Simple primality test."""
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
-
-
-# =============================================================================
-# Algorithm 4: RH Up To Height T Checker
-# =============================================================================
-
-@dataclass
-class RHCheckResult:
-    """Result of checking RH up to height T."""
-    T: float
-    zeros_found: List[complex]
-    all_on_critical_line: bool
-    max_deviation: float
-    num_zeros: int
-
-
-def check_rh_up_to(
-    zero_certificates: List[complex],
-    T: float,
-    critical_line_re: float = 0.5,
-    tolerance: float = 1e-10
-) -> RHCheckResult:
-    """
-    Check the Riemann Hypothesis up to height T given certified zeros.
-
-    Algorithm:
-        Filter zeros with |Im(z)| ≤ T
-        Check whether all filtered zeros satisfy Re(z) = 1/2
-
-    Complexity: O(|zeros|) to filter and check
-    Correctness: By exists_decider_RHUpTo, this is decidable given
-                 a complete certified zero list.
-
-    Args:
-        zero_certificates: Certified list of all zeros
-        T: Height bound
-        critical_line_re: Real part of critical line (default 1/2)
-        tolerance: Tolerance for checking Re(z) = 1/2
-
-    Returns:
-        RHCheckResult with verification status
-    """
-    relevant_zeros = [z for z in zero_certificates if abs(z.imag) <= T]
-
-    if not relevant_zeros:
-        return RHCheckResult(
-            T=T,
-            zeros_found=[],
-            all_on_critical_line=True,
-            max_deviation=0.0,
-            num_zeros=0
-        )
-
-    deviations = [abs(z.real - critical_line_re) for z in relevant_zeros]
-    max_dev = max(deviations)
-
-    return RHCheckResult(
-        T=T,
-        zeros_found=relevant_zeros,
-        all_on_critical_line=max_dev < tolerance,
-        max_deviation=max_dev,
-        num_zeros=len(relevant_zeros)
-    )
-
-
-# =============================================================================
-# Example usage
-# =============================================================================
+# ============================================================
+# Main demonstration
+# ============================================================
 
 if __name__ == "__main__":
-    print("L-Function Oracle Hierarchy — Algorithm Demonstrations\n")
-
-    # Algorithm 1: Adversarial construction
-    print("1. Adversarial Pair Construction:")
-    Q = [0.0, 2.0, -1.0, 0.5 + 1j, 0.5 - 1j]
-    pair = construct_adversarial_pair(Q)
-    print(f"   Query set: {Q}")
-    print(f"   F(1) = {pair.F_at_target:.6f} (≠ 0)")
-    print(f"   G(1) = {pair.G_at_target:.6f} (= 0)")
-    for q in Q:
-        print(f"   F({q}) = {pair.F(q):.6f} = G({q}) = {pair.G(q):.6f}")
-    print()
-
-    # Algorithm 2: Vanishing order detection
-    print("2. Vanishing Order Detection:")
-    test_fns = [
-        ("z³", lambda z: z**3, 3),
-        ("sin(z)", lambda z: np.sin(z), 1),
-        ("1-cos(z)", lambda z: 1 - np.cos(z), 2),
-    ]
-    for name, f, expected in test_fns:
-        oracle = simulate_derivative_oracle(f, 0.0 + 0j)
-        result = detect_vanishing_order(oracle)
-        print(f"   {name}: detected order = {result.order} (expected {expected})")
-    print()
-
-    # Algorithm 3: Factor extraction
-    print("3. Factor Extraction:")
-    semiprimes = [(15, 6), (77, 21), (143, 33), (10403, 202)]
-    for n, a in semiprimes:
-        result = extract_factor(n, a)
-        print(f"   n = {n}, a = {a}: factor = {result.factor}, "
-              f"cofactor = {result.cofactor}")
-    print()
-
-    # Algorithm 4: RH checker
-    print("4. RH Up To Height T:")
-    # Simulated Riemann zeta zeros (known to high precision)
-    known_zeros = [
-        0.5 + 14.134725j, 0.5 + 21.022040j, 0.5 + 25.010858j,
-        0.5 + 30.424876j, 0.5 + 32.935062j, 0.5 + 37.586178j,
-    ]
-    for T in [15, 25, 40]:
-        result = check_rh_up_to(known_zeros, T)
-        print(f"   T = {T}: {result.num_zeros} zeros, "
-              f"all on critical line: {result.all_on_critical_line}, "
-              f"max deviation: {result.max_deviation:.2e}")
+    print("Oracle Spectral Algebra — Algorithm Demonstrations")
+    print("=" * 50)
+    
+    # Demo 1: Factoring
+    print("\n1. Oracle-Assisted Factoring")
+    for n in [15, 77, 221, 1073, 10403]:
+        try:
+            p, q = oracle_factor(n)
+            print(f"   {n} = {p} × {q}")
+        except ValueError as e:
+            print(f"   {e}")
+    
+    # Demo 2: Vanishing Order Detection
+    print("\n2. Vanishing Order Detection")
+    # f(z) = z^4 at z=0: derivatives are 0,0,0,0,24,...
+    derivs_z4 = [0, 0, 0, 0, 24, 0, 0]
+    oracle_z4 = lambda n: derivs_z4[n] if n < len(derivs_z4) else 0
+    print(f"   z^4 at z=0: vanishing order = {detect_vanishing_order(oracle_z4)}")
+    
+    # f(z) = sin(z) at z=0: derivatives are 0,1,0,-1,...
+    import math
+    oracle_sin = lambda n: [0, 1, 0, -1][n % 4] if n < 20 else 0
+    print(f"   sin(z) at z=0: vanishing order = {detect_vanishing_order(oracle_sin)}")
+    
+    # Demo 3: Regional RH
+    print("\n3. Regional RH Verification")
+    cert_pass = ZeroCertificate(
+        zeros=[complex(0.5, 14.134), complex(0.5, 21.022), complex(0.5, 25.011)],
+        height_bound=30.0
+    )
+    print(f"   Certificate with on-line zeros: RH = {verify_regional_rh(cert_pass)}")
+    
+    cert_fail = ZeroCertificate(
+        zeros=[complex(0.5, 14.134), complex(0.7, 21.022)],
+        height_bound=30.0
+    )
+    print(f"   Certificate with off-line zero: RH = {verify_regional_rh(cert_fail)}")
+    
+    # Demo 4: Spectrum Product
+    print("\n4. Oracle Spectrum Product")
+    s1 = OracleSpectrum(critical_value=0.0, zero_counts={10: 2, 20: 5}, spectral_weight=1)
+    s2 = OracleSpectrum(critical_value=1.5, zero_counts={10: 3, 20: 7}, spectral_weight=2)
+    prod = s1.product(s2)
+    print(f"   S1: weight={s1.spectral_weight}, N(10)={s1.zero_counts[10]}")
+    print(f"   S2: weight={s2.spectral_weight}, N(10)={s2.zero_counts[10]}")
+    print(f"   S1×S2: weight={prod.spectral_weight}, N(10)={prod.zero_counts[10]}")
