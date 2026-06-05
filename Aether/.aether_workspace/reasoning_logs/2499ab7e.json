@@ -1,0 +1,22 @@
+{
+  "checkpoints": [
+    {
+      "elapsed_seconds": 0.2,
+      "percent_complete": 0.0,
+      "status": "SUBMITTED",
+      "timestamp": "2026-06-05T20:20:02"
+    }
+  ],
+  "completed_at": "",
+  "domain": "Geometry",
+  "error": "",
+  "final_percent": 0.0,
+  "final_status": "",
+  "has_files": false,
+  "job_id": "2499ab7e",
+  "project_id": "3dd3f183-ca60-41b7-b1f9-274ed64c870b",
+  "prompt_length": 22805,
+  "stages": [],
+  "submitted_at": "2026-06-05T20:20:02",
+  "total_duration_seconds": 0.0
+}
