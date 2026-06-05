@@ -880,6 +880,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-05T14:23:39",
       "title": "The Category Theory of Jokes: Universal Properties of Humor"
+    },
+    {
+      "cycle_id": "ecca22c8",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Non-Archimedean Probability Theory\n\n## Synthesis\n\nThis cycle established the foundations of **Graded Probability Measures (GPMs)** — probability distributions enriched with infini",
+      "quality_score": 0.4018400000000001,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-05T14:58:27",
+      "title": "Non-Archimedean Probability via Surreal Numbers"
     }
   ],
   "entries": [
@@ -925,7 +935,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-05T14:23:39",
+  "last_updated": "2026-06-05T14:58:27",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1134,12 +1144,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "63d3cfd9",
-        "quality": 0.35944,
-        "theorems": 5,
-        "title": "Speculative: Category Theory as the DNA of Mathematics"
-      },
-      {
         "cycle_id": "8753eff2",
         "quality": 0.30944,
         "theorems": 4,
@@ -1192,6 +1196,12 @@
         "quality": 0.37160000000000004,
         "theorems": 5,
         "title": "The Category Theory of Jokes: Universal Properties of Humor"
+      },
+      {
+        "cycle_id": "ecca22c8",
+        "quality": 0.4018400000000001,
+        "theorems": 4,
+        "title": "Non-Archimedean Probability via Surreal Numbers"
       }
     ],
     "Physics": [

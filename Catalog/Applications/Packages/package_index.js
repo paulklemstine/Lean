@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "fdf6abd2",
     "filename": "speculative_theorems_as_phase_transitions_in_proof.json",
     "pkg_num": 391,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.24024,
     "title": "Phase Transitions in Proof Space: Order Parameters, Critical Thresholds, and Dimensional Scaling"
   },
   {
@@ -12490,8 +12490,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "speculative_theorems_as_phase_transitions_in_proof",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.24024,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Phase Transitions in Proof Space: Order Parameters, Critical Thresholds, and Dimensional Scaling"
     }
