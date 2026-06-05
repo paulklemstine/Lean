@@ -1030,6 +1030,26 @@
       "theorem_count": 5,
       "timestamp": "2026-06-05T19:56:08",
       "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+    },
+    {
+      "cycle_id": "2cdc87b5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Non-Standard Arithmetic Research\n\n## Synthesis\n\nThis research cycle established a comprehensive formal framework for non-standard arithmetic through ultrafilter combinatorics, cen",
+      "quality_score": 0.54524,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-05T20:31:25",
+      "title": "Alien Mathematics: Non-Standard Arithmetic"
+    },
+    {
+      "cycle_id": "474f6165",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle established a rigorous geometric framework for analyzing king escape on the infinite chessboard ℤ×ℤ. The central contribution — the **Threat Barr",
+      "quality_score": 0.39760000000000006,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T20:31:53",
+      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
     }
   ],
   "entries": [
@@ -1075,7 +1095,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-05T19:56:08",
+  "last_updated": "2026-06-05T20:31:53",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1087,12 +1107,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "13ef8d33",
-        "quality": 0.30584,
-        "theorems": 5,
-        "title": "Speculative: Mathematics as an Evolving Ecosystem"
-      },
       {
         "cycle_id": "b7c356ff",
         "quality": 0.4808,
@@ -1146,6 +1160,12 @@
         "quality": 0.31936,
         "theorems": 5,
         "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+      },
+      {
+        "cycle_id": "474f6165",
+        "quality": 0.39760000000000006,
+        "theorems": 5,
+        "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
       }
     ],
     "Bridges": [
@@ -1284,12 +1304,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ecca22c8",
-        "quality": 0.4018400000000001,
-        "theorems": 4,
-        "title": "Non-Archimedean Probability via Surreal Numbers"
-      },
-      {
         "cycle_id": "ad4d5186",
         "quality": 0.58416,
         "theorems": 4,
@@ -1342,6 +1356,12 @@
         "quality": 0.46008000000000004,
         "theorems": 4,
         "title": "Sonic Mathematics: Counterpoint as Category Theory"
+      },
+      {
+        "cycle_id": "2cdc87b5",
+        "quality": 0.54524,
+        "theorems": 6,
+        "title": "Alien Mathematics: Non-Standard Arithmetic"
       }
     ],
     "Physics": [
