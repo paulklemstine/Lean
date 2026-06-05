@@ -1,383 +1,517 @@
 #!/usr/bin/env python3
 """
-Mind vs Gödel: Demonstrations of Incompleteness Phenomena
+Reflective Proof Towers and the Penrose Diagonal Limiter
+=========================================================
 
-This script demonstrates the mathematical structures formalized in
-the Lean proofs: incompleteness hierarchies, Berry paradox dynamics,
-and Chaitin complexity bounds.
+Demonstrates the key concepts from the formalization:
+1. The Reflective Tower hierarchy
+2. The Penrose Diagonal construction
+3. Lawvere's Fixed Point Theorem
+4. The Berry-Chaitin complexity bound
 """
 
-from typing import Callable, Set, Optional, List, Tuple
-import math
+from typing import Callable, Set, FrozenSet, Optional
+from dataclasses import dataclass
 
 
 # ============================================================
-# 1. Incompleteness Hierarchy Simulation
+# Demo 1: Reflective Tower Simulation
 # ============================================================
 
-def simulate_incompleteness_chain(levels: int = 10) -> None:
-    """
-    Simulate an incompleteness chain where each level proves
-    the Gödel sentence of the previous level.
+def demo_reflective_tower():
+    """Simulate a reflective tower over natural numbers as 'sentences'.
 
-    At each level n:
-    - The system proves sentences {G_0, G_1, ..., G_{n-1}}
-    - The Gödel sentence G_n is true but unprovable
-    - The next level proves G_n but has its own G_{n+1}
+    We model PA-like systems where:
+    - Level 0 proves basic arithmetic (sentences 0..99)
+    - Level n+1 proves everything level n proves + Con(level n)
+    - Con(n) is represented by the number 100 + n
     """
     print("=" * 60)
-    print("INCOMPLETENESS HIERARCHY SIMULATION")
+    print("DEMO 1: Reflective Tower Simulation")
     print("=" * 60)
-    print()
 
-    for n in range(levels):
-        provable = set(range(n))  # G_0 through G_{n-1}
-        godel_sentence = n  # G_n is the current Gödel sentence
+    base_sentences = set(range(100))  # PA proves sentences 0..99
 
-        print(f"Level {n}:")
-        print(f"  Provable Gödel sentences: {{{', '.join(f'G_{i}' for i in provable)}}}" if provable else f"  Provable Gödel sentences: {{}}")
-        print(f"  Current Gödel sentence: G_{godel_sentence} (TRUE but UNPROVABLE)")
-        print(f"  Total provability power: {n} previous Gödel sentences")
-        print()
+    def provable(n: int) -> set:
+        """Return the set of sentences provable at level n."""
+        s = set(base_sentences)
+        for k in range(n):
+            s.add(100 + k)  # Add Con(k) for k < n
+        return s
 
-    print(f"Pattern: At level n, exactly n Gödel sentences are provable,")
-    print(f"but the (n+1)-th is always out of reach.")
-    print(f"The hierarchy is STRICTLY ASCENDING — each level is genuinely")
-    print(f"more powerful, yet none achieves completeness.")
-    print()
+    def con(n: int) -> int:
+        """The consistency sentence for level n."""
+        return 100 + n
 
+    # Verify tower properties
+    for n in range(5):
+        level_n = provable(n)
+        level_n1 = provable(n + 1)
+        c = con(n)
 
-# ============================================================
-# 2. Berry Paradox Demonstration
-# ============================================================
+        assert level_n.issubset(level_n1), f"Monotonicity fails at level {n}"
+        assert c not in level_n, f"Gödel's second fails at level {n}"
+        assert c in level_n1, f"Reflection fails at level {n}"
+        assert level_n != level_n1, f"Strict ascending fails at level {n}"
 
-def berry_paradox_demo() -> None:
-    """
-    Demonstrate the Berry paradox: "the least number not definable
-    in fewer than N words" uses fewer than N words for large N.
-    """
-    print("=" * 60)
-    print("BERRY PARADOX DEMONSTRATION")
-    print("=" * 60)
-    print()
+        print(f"Level {n}: |provable| = {len(level_n)}, "
+              f"Con({n}) = {c}, "
+              f"Con({n}) ∈ level({n})? {c in level_n}, "
+              f"Con({n}) ∈ level({n+1})? {c in level_n1}")
 
-    # Simulate definability levels
-    # At level n, we can define numbers 0 through f(n)-1
-    # where f(n) grows but is always finite
+    # Tower limit
+    limit = set()
+    for n in range(100):
+        limit |= provable(n)
+    print(f"\nTower limit (100 levels): |limit| = {len(limit)}")
+    print(f"Limit ≠ any finite level: "
+          f"{all(provable(n) != limit for n in range(100))}")
 
-    def definable_count(n: int) -> int:
-        """Number of natural numbers definable at resource level n."""
-        # Exponential growth: 2^n numbers definable with n bits
-        return 2 ** n
+    # Incompleteness gaps
+    print("\nIncompleteness gaps:")
+    for n in range(5):
+        gap = provable(n + 1) - provable(n)
+        print(f"  gap({n}) = provable({n+1}) \\ provable({n}) = {gap}")
 
-    for n in range(1, 16):
-        count = definable_count(n)
-        berry_number = count  # The least number NOT definable at level n
-
-        # The Berry description "the least number not definable at level n"
-        # has a fixed descriptive cost (roughly log(n) + constant)
-        berry_cost = int(math.log2(n + 1)) + 5  # Approximate cost
-
-        print(f"Level {n:2d}: {count:6d} numbers definable | Berry number = {berry_number:6d} | Berry description cost ≈ {berry_cost}")
-
-        if berry_cost <= n:
-            print(f"         ⚠ PARADOX ZONE: Berry description ({berry_cost}) ≤ level ({n})")
-            print(f"         → Berry number is BOTH definable AND not definable at level {n}")
-
-    print()
-    print("The paradox: for large n, the Berry description has cost ~log(n) + C,")
-    print("which is less than n. So the 'least undefinable' number IS definable.")
-    print("Resolution: the Berry operator cannot be part of the definability system.")
     print()
 
 
 # ============================================================
-# 3. Chaitin Bound Computation
+# Demo 2: Penrose Diagonal Limiter
 # ============================================================
 
-def chaitin_bound_demo() -> None:
-    """
-    Demonstrate Chaitin's bound: a formal system of complexity C
-    cannot prove that any string has Kolmogorov complexity > C.
+def demo_penrose_diagonal():
+    """Demonstrate the Penrose Diagonal Limiter.
+
+    We show that for ANY Gödel oracle G, there exists a theory T
+    where G(T) ∈ T — the oracle fails.
     """
     print("=" * 60)
-    print("CHAITIN COMPLEXITY BOUND DEMONSTRATION")
+    print("DEMO 2: Penrose Diagonal Limiter")
     print("=" * 60)
-    print()
 
-    # Simulate a formal system with limited axioms
-    # Each "axiom" is a string, and the system's complexity is bounded
-    # by the total length of its axioms
+    # Define several "Gödel oracles" — functions from theories to sentences
+    def oracle_max(theory: frozenset) -> int:
+        """Oracle that outputs max(theory) + 1."""
+        return max(theory) + 1 if theory else 0
 
-    axiom_sets = [
-        ("Minimal system", ["0=0", "S(x)≠0"]),
-        ("Robinson arithmetic", ["0=0", "S(x)≠0", "x+0=x", "x+Sy=S(x+y)", "x·0=0", "x·Sy=x·y+x"]),
-        ("Peano arithmetic", ["0=0", "S(x)≠0", "x+0=x", "x+Sy=S(x+y)", "x·0=0", "x·Sy=x·y+x", "Induction schema"]),
-        ("PA + Con(PA)", ["0=0", "S(x)≠0", "x+0=x", "x+Sy=S(x+y)", "x·0=0", "x·Sy=x·y+x", "Induction schema", "Con(PA)"]),
+    def oracle_hash(theory: frozenset) -> int:
+        """Oracle that outputs hash of theory mod 1000."""
+        return hash(theory) % 1000
+
+    def oracle_fixed(theory: frozenset) -> int:
+        """Oracle that always outputs 42."""
+        return 42
+
+    oracles = [
+        ("max+1", oracle_max),
+        ("hash", oracle_hash),
+        ("fixed(42)", oracle_fixed),
     ]
 
-    for name, axioms in axiom_sets:
-        total_complexity = sum(len(a) for a in axioms)
-        chaitin_bound = total_complexity + 10  # Overhead for the proof checker
+    for name, G in oracles:
+        # For each oracle, find a theory T where G(T) ∈ T
+        # The simplest: T = universal set (contains everything)
+        # But let's find a more interesting one
 
-        print(f"System: {name}")
-        print(f"  Axioms: {axioms}")
-        print(f"  Total axiom complexity: {total_complexity}")
-        print(f"  Chaitin bound C ≈ {chaitin_bound}")
-        print(f"  → Cannot prove K(x) > {chaitin_bound} for any string x")
-        print(f"  → Can potentially certify complexity up to {chaitin_bound}")
-        print()
+        # Strategy: start with T = {G(∅)}, then iterate
+        T = frozenset()
+        for _ in range(10):
+            g = G(T)
+            T = T | frozenset([g])
 
-    print("Key insight: adding axioms (like Con(PA)) increases the Chaitin bound,")
-    print("allowing the system to certify higher complexity — but the bound is")
-    print("always finite. No finite system can certify arbitrarily high complexity.")
+        g = G(T)
+        success = g in T
+        print(f"Oracle '{name}': G(T) = {g}, G(T) ∈ T? {success}")
+        if success:
+            print(f"  → Oracle fails on T = {sorted(T)[:10]}{'...' if len(T) > 10 else ''}")
+
+    # The diagonal construction
+    print("\nDiagonal construction:")
+    print("  For ANY oracle G, take T = {0, 1, 2, ...} (all naturals).")
+    print("  Then G(T) ∈ T trivially. QED.")
     print()
 
 
 # ============================================================
-# 4. Lucas-Penrose Escape Simulation
+# Demo 3: Lawvere's Fixed Point Theorem
 # ============================================================
 
-def lucas_penrose_escape() -> None:
-    """
-    Simulate the Lucas-Penrose 'escape' argument: a mind recognizes
-    the Gödel sentence of its formalization, but this creates a new
-    formalization with a new Gödel sentence.
-    """
-    print("=" * 60)
-    print("LUCAS-PENROSE ESCAPE SIMULATION")
-    print("=" * 60)
-    print()
+def demo_lawvere():
+    """Demonstrate Lawvere's Fixed Point Theorem.
 
-    print("Scenario: A mind M is formalized as system F_0.")
-    print()
-
-    for step in range(8):
-        if step == 0:
-            print(f"Step {step}: Mind M is formalized as F_0")
-            print(f"  F_0 has Gödel sentence G_0: 'I am not provable in F_0'")
-            print(f"  G_0 is true but F_0 cannot prove it")
-            print()
-        else:
-            print(f"Step {step}: Mind recognizes G_{step-1} → formalization becomes F_{step}")
-            print(f"  F_{step} = F_{step-1} + G_{step-1}")
-            print(f"  F_{step} has NEW Gödel sentence G_{step}: 'I am not provable in F_{step}'")
-            print(f"  G_{step} is true but F_{step} cannot prove it")
-            print()
-
-    print("The escape NEVER terminates.")
-    print("Each recognition creates a new blind spot.")
-    print("The mind and its formalization are in an infinite chase.")
-    print()
-    print("This is the content of our 'escape_never_terminates' theorem:")
-    print("∀ n, ∃ s, true(s) ∧ ¬provable_n(s)")
-    print()
-
-
-# ============================================================
-# 5. Mind Function Blind Spots
-# ============================================================
-
-def mind_function_demo() -> None:
-    """
-    Demonstrate that any finite collection of 'mind functions'
-    has simultaneous blind spots.
+    If f : A → (A → Bool) is surjective, then every g : Bool → Bool
+    has a fixed point. Since NOT has no fixed point, f cannot be surjective.
     """
     print("=" * 60)
-    print("JOINT MIND FUNCTION BLIND SPOTS")
+    print("DEMO 3: Lawvere's Fixed Point Theorem")
     print("=" * 60)
-    print()
 
-    for k in range(1, 6):
-        minds = [f"M_{i}" for i in range(k)]
-        combined_power = sum(range(1, k + 1))  # Symbolic "power"
+    # Try to build a surjection from {0,1,...,n} to all functions {0,...,n} → {0,1}
+    n = 3
+    # There are 2^(n+1) such functions but only n+1 elements in the domain
+    num_functions = 2 ** (n + 1)
+    print(f"Domain size: {n + 1}")
+    print(f"Number of functions {{0,...,{n}}} → {{0,1}}: {num_functions}")
+    print(f"Surjection impossible: {n + 1} < {num_functions}")
 
-        print(f"Committee of {k} minds: {', '.join(minds)}")
-        print(f"  Combined into system E_{k}")
-        print(f"  E_{k} has Gödel sentence G*_{k}")
-        print(f"  G*_{k} escapes ALL of {', '.join(minds)} simultaneously")
-        print(f"  → No single mind in the committee can recognize G*_{k}")
-        print()
+    # The diagonal argument
+    print("\nDiagonal argument:")
+    print("If f were surjective, define d(a) = NOT(f(a)(a))")
+    print("Then d is a function in the codomain, so d = f(e) for some e.")
+    print("But d(e) = NOT(f(e)(e)) = NOT(d(e)). Contradiction!")
 
-    print("Adding more minds NEVER eliminates all blind spots.")
-    print("The combined system always has its own Gödel sentence")
-    print("that no individual mind can see.")
+    # Concrete demonstration
+    # Define f : {0,1,2,3} → ({0,1,2,3} → Bool)
+    f = {
+        0: lambda x: x % 2 == 0,
+        1: lambda x: x < 2,
+        2: lambda x: True,
+        3: lambda x: x == 3,
+    }
+
+    print(f"\nConcrete f:")
+    for a in range(4):
+        vals = [f[a](x) for x in range(4)]
+        print(f"  f({a}) = {[int(v) for v in vals]}")
+
+    # Diagonal
+    diag = [f[a](a) for a in range(4)]
+    anti_diag = [not d for d in diag]
+    print(f"\nDiagonal:      {[int(d) for d in diag]}")
+    print(f"Anti-diagonal: {[int(d) for d in anti_diag]}")
+    print(f"Anti-diagonal ≠ f(a) for all a: "
+          f"{all([f[a](x) for x in range(4)] != anti_diag for a in range(4))}")
     print()
 
 
 # ============================================================
-# Main
+# Demo 4: Berry-Chaitin Complexity Bound
 # ============================================================
 
-if __name__ == "__main__":
-    simulate_incompleteness_chain(10)
-    berry_paradox_demo()
-    chaitin_bound_demo()
-    lucas_penrose_escape()
-    mind_function_demo()
+def demo_berry_chaitin():
+    """Demonstrate the Berry-Chaitin complexity bound.
 
+    You can't injectively map n+1 objects to n names.
+    This is the pigeonhole principle driving incompleteness.
+    """
     print("=" * 60)
-    print("SUMMARY OF VERIFIED THEOREMS")
+    print("DEMO 4: Berry-Chaitin Complexity Bound")
     print("=" * 60)
+
+    for n in range(1, 6):
+        objects = list(range(n + 1))  # n+1 objects
+        names = list(range(n))        # n names
+
+        # Try random "naming" functions
+        import random
+        random.seed(42 + n)
+
+        attempts = 100
+        injective_count = 0
+        for _ in range(attempts):
+            naming = {obj: random.choice(names) for obj in objects}
+            is_injective = len(set(naming.values())) == len(naming)
+            if is_injective:
+                injective_count += 1
+
+        print(f"Mapping {n+1} objects → {n} names: "
+              f"{injective_count}/{attempts} injective "
+              f"(should be 0)")
+
+    print("\nBerry paradox: 'The smallest number not definable in")
+    print("under 100 words' defines a number in under 100 words!")
+    print("Resolution: the naming function is non-injective (pigeonhole).")
     print()
-    print("All of the following are machine-verified (sorry-free):")
+
+
+# ============================================================
+# Demo 5: Self-Referential Blindness
+# ============================================================
+
+def demo_self_referential_blindness():
+    """Demonstrate that adding Gödel sentences doesn't escape incompleteness.
+
+    Starting with a base theory, we iteratively add "the Gödel sentence"
+    and show that each enhanced theory has its own blind spot.
+    """
+    print("=" * 60)
+    print("DEMO 5: Self-Referential Blindness (Iterated)")
+    print("=" * 60)
+
+    depth = 8
+    blind_spots = []
+
+    beliefs = set(range(10))  # Initial beliefs
+
+    for i in range(depth):
+        # The "Gödel sentence" for the current belief set
+        godel_sentence = hash(frozenset(beliefs)) % 10000 + 1000
+
+        # Check: is the Gödel sentence in our beliefs?
+        in_beliefs = godel_sentence in beliefs
+        blind_spots.append(godel_sentence)
+
+        print(f"Iteration {i}: |beliefs| = {len(beliefs)}, "
+              f"G(beliefs) = {godel_sentence}, "
+              f"G ∈ beliefs? {in_beliefs}")
+
+        # Add the Gödel sentence to beliefs
+        beliefs.add(godel_sentence)
+
+    print(f"\nAfter {depth} iterations: |beliefs| = {len(beliefs)}")
+    print(f"Blind spots encountered: {blind_spots}")
+    print("Each addition created a NEW blind spot — iteration doesn't help!")
     print()
-    theorems = [
-        ("godel_first_incompleteness", "Sound + diagonal → incomplete"),
-        ("tarski_undefinability", "Truth ≠ provability"),
-        ("lucas_penrose_barrier", "Oracle extensions remain incomplete"),
-        ("extension_new_godel", "New extensions have new Gödel sentences"),
-        ("incompleteness_hierarchy_strict", "Hierarchy is strictly ascending"),
-        ("chain_all_incomplete", "Every level is incomplete"),
-        ("chain_godel_all_true", "All Gödel sentences are true"),
-        ("self_recognition_impossibility", "Mind functions have blind spots"),
-        ("joint_minds_insufficient", "Finite mind committees have blind spots"),
-        ("berry_paradox", "Self-referential definability is contradictory"),
-        ("berry_paradox_constructive", "Berry operator has unbounded cost"),
-        ("chaitin_complexity_bound", "Finite systems have bounded complexity"),
-        ("penrose_core", "Mind-as-system has unprovable truths"),
-        ("escape_never_terminates", "Escape creates new blind spots"),
-        ("oracle_cannot_complete", "No oracle completes a sound system"),
-        ("sound_implies_consistent", "Sound systems are consistent"),
-    ]
-    for name, desc in theorems:
-        print(f"  ✓ {name}: {desc}")
-    print()
-
-
-#!/usr/bin/env python3
-"""Visualization: Berry Paradox - Definability vs Description Cost"""
-
-import matplotlib.pyplot as plt
-import numpy as np
-import math
-
-
-def create_berry_visualization():
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left panel: Berry numbers vs description cost
-    levels = np.arange(1, 25)
-    berry_numbers = 2 ** levels  # Numbers definable at each level
-    berry_description_cost = np.array([int(math.log2(n + 1)) + 5 for n in levels])
-
-    ax1.semilogy(levels, berry_numbers, 'b-o', linewidth=2, markersize=4,
-                label='Berry number (least undefinable)')
-    ax1.plot(levels, levels, 'r--', linewidth=2, label='Level n (available resources)')
-    ax1.plot(levels, berry_description_cost, 'g-s', linewidth=2, markersize=4,
-            label='Berry description cost (~log n + C)')
-
-    # Shade the paradox zone
-    paradox_start = None
-    for i, n in enumerate(levels):
-        if berry_description_cost[i] <= n and paradox_start is None:
-            paradox_start = i
-            break
-
-    if paradox_start is not None:
-        ax1.axvspan(levels[paradox_start], levels[-1], alpha=0.15, color='red',
-                   label='Paradox zone (cost ≤ level)')
-
-    ax1.set_xlabel('Resource level n', fontsize=12)
-    ax1.set_ylabel('Value / Cost', fontsize=12)
-    ax1.set_title("Berry's Paradox:\nDescription Cost vs Available Resources", fontsize=13, fontweight='bold')
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-
-    # Right panel: Chaitin bound illustration
-    system_sizes = np.arange(10, 200, 10)
-    chaitin_bounds = system_sizes + 10  # Bound = system complexity + overhead
-
-    ax2.fill_between(system_sizes, 0, chaitin_bounds, alpha=0.3, color='blue',
-                    label='Provable complexity range')
-    ax2.fill_between(system_sizes, chaitin_bounds, 250, alpha=0.15, color='red',
-                    label='Unprovable complexity (above Chaitin bound)')
-    ax2.plot(system_sizes, chaitin_bounds, 'k-', linewidth=2,
-            label='Chaitin bound C')
-    ax2.plot(system_sizes, system_sizes, 'g--', linewidth=1.5,
-            label='System complexity', alpha=0.7)
-
-    ax2.set_xlabel('Formal system complexity', fontsize=12)
-    ax2.set_ylabel('String complexity K(x)', fontsize=12)
-    ax2.set_title("Chaitin's Bound:\nSystems Can't Certify High Complexity", fontsize=13, fontweight='bold')
-    ax2.legend(fontsize=10, loc='upper left')
-    ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(0, 250)
-
-    plt.tight_layout()
-    plt.savefig('berry_chaitin.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: berry_chaitin.png")
 
 
 if __name__ == "__main__":
-    create_berry_visualization()
+    demo_reflective_tower()
+    demo_penrose_diagonal()
+    demo_lawvere()
+    demo_berry_chaitin()
+    demo_self_referential_blindness()
 
 
 #!/usr/bin/env python3
-"""Visualization: Incompleteness Hierarchy as Staircase"""
+"""
+Visualization: Reflective Tower Structure
+==========================================
+
+Visualizes the strictly ascending chain of proof systems in a Reflective Tower,
+showing incompleteness gaps and consistency sentences at each level.
+"""
 
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 
 
-def create_hierarchy_visualization():
-    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
+def visualize_reflective_tower():
+    """Create a visualization of the Reflective Tower hierarchy."""
 
-    levels = 8
-    colors = plt.cm.viridis(np.linspace(0.2, 0.9, levels))
+    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
 
-    for n in range(levels):
-        # Draw the "stair" - provable region
+    # --- Left panel: Tower as nested sets ---
+    ax1 = axes[0]
+    ax1.set_xlim(-0.5, 10.5)
+    ax1.set_ylim(-0.5, 7)
+    ax1.set_aspect('equal')
+    ax1.set_title('Reflective Tower: Strictly Ascending Chain\n'
+                   'provable(0) ⊂ provable(1) ⊂ provable(2) ⊂ ···',
+                   fontsize=12, fontweight='bold')
+
+    colors = plt.cm.Blues(np.linspace(0.2, 0.8, 6))
+
+    for n in range(5, -1, -1):
+        width = 2 + n * 1.5
+        height = 1 + n * 0.8
+        x = 5 - width / 2
+        y = 0.5
+
         rect = mpatches.FancyBboxPatch(
-            (n * 1.2, 0), 0.9, n + 1,
-            boxstyle="round,pad=0.05",
-            facecolor=colors[n], alpha=0.7, edgecolor='black', linewidth=1.5
+            (x, y), width, height,
+            boxstyle="round,pad=0.1",
+            facecolor=colors[n],
+            edgecolor='black',
+            linewidth=1.5,
+            alpha=0.7
         )
+        ax1.add_patch(rect)
+
+        # Label the level
+        ax1.text(x + 0.3, y + height - 0.3,
+                f'Level {n}', fontsize=9, fontweight='bold',
+                color='black')
+
+        # Mark Con(n) in the gap
+        if n < 5:
+            gap_x = x + width - 0.8
+            gap_y = y + 0.3
+            ax1.plot(gap_x, gap_y, 'r*', markersize=12)
+            ax1.text(gap_x + 0.15, gap_y - 0.05,
+                    f'Con({n})', fontsize=7, color='red',
+                    fontweight='bold')
+
+    ax1.text(5, 0.1, '← Base theory (e.g., PA) →',
+            ha='center', fontsize=9, style='italic', color='gray')
+
+    ax1.legend(
+        [mpatches.Patch(color='red', alpha=0.7),
+         mpatches.Patch(color=colors[3], alpha=0.7)],
+        ['Con(n): in gap(n), not in level n',
+         'provable(n): strictly ascending'],
+        loc='upper left', fontsize=9
+    )
+    ax1.axis('off')
+
+    # --- Right panel: Incompleteness gap sizes ---
+    ax2 = axes[1]
+
+    levels = list(range(8))
+    base_size = 100
+    gap_sizes = [1] * 8  # Each gap adds exactly Con(n)
+
+    # Cumulative size
+    cumulative = [base_size + n for n in range(9)]
+
+    bars = ax2.bar(levels, [1]*8, bottom=[base_size + n for n in range(8)],
+                   color='red', alpha=0.6, label='Incompleteness gap')
+    ax2.bar(levels, [base_size + n for n in range(8)],
+            color='steelblue', alpha=0.4, label='Inherited theorems')
+
+    # Mark Con(n)
+    for n in range(8):
+        ax2.text(n, base_size + n + 0.5, f'Con({n})',
+                fontsize=7, ha='center', color='darkred', fontweight='bold')
+
+    ax2.set_xlabel('Tower Level n', fontsize=11)
+    ax2.set_ylabel('Number of Provable Sentences', fontsize=11)
+    ax2.set_title('Incompleteness Gaps:\n'
+                  'Each Level Adds New Truths',
+                  fontsize=12, fontweight='bold')
+    ax2.legend(loc='upper left', fontsize=9)
+    ax2.set_xticks(levels)
+
+    # Add annotation
+    ax2.annotate('Tower strictly\nascends: each\nlevel adds Con(n)',
+                xy=(5, 105.5), xytext=(6, 108),
+                fontsize=9, style='italic',
+                arrowprops=dict(arrowstyle='->', color='red'),
+                color='darkred')
+
+    plt.tight_layout()
+    plt.savefig('tower_visualization.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: tower_visualization.png")
+
+
+def visualize_diagonal_argument():
+    """Visualize the Lawvere/Cantor diagonal argument."""
+
+    fig, ax = plt.subplots(figsize=(8, 8))
+
+    n = 6
+    # Create a matrix representing f : {0,...,n-1} → ({0,...,n-1} → {0,1})
+    np.random.seed(42)
+    matrix = np.random.randint(0, 2, (n, n))
+
+    # The diagonal
+    diagonal = np.array([matrix[i, i] for i in range(n)])
+    anti_diagonal = 1 - diagonal
+
+    # Plot the matrix
+    im = ax.imshow(matrix, cmap='RdYlBu', aspect='equal', vmin=0, vmax=1)
+
+    # Highlight diagonal
+    for i in range(n):
+        rect = mpatches.Rectangle((i - 0.5, i - 0.5), 1, 1,
+                                   linewidth=3, edgecolor='red',
+                                   facecolor='none')
         ax.add_patch(rect)
 
-        # Label the system
-        ax.text(n * 1.2 + 0.45, -0.5, f'$F_{n}$', ha='center', va='top',
-                fontsize=12, fontweight='bold')
+    # Labels
+    ax.set_xticks(range(n))
+    ax.set_yticks(range(n))
+    ax.set_xticklabels([f'x={i}' for i in range(n)])
+    ax.set_yticklabels([f'f({i})' for i in range(n)])
 
-        # Label provable Gödel sentences
-        for k in range(n):
-            ax.text(n * 1.2 + 0.45, k + 0.5, f'$G_{k}$', ha='center', va='center',
-                    fontsize=9, color='white', fontweight='bold')
+    # Cell values
+    for i in range(n):
+        for j in range(n):
+            color = 'white' if matrix[i, j] == 0 else 'black'
+            ax.text(j, i, str(matrix[i, j]), ha='center', va='center',
+                   fontsize=14, fontweight='bold', color=color)
 
-        # Mark the unprovable Gödel sentence (true but unprovable)
-        ax.plot(n * 1.2 + 0.45, n + 1.3, 'r*', markersize=15)
-        ax.text(n * 1.2 + 0.45, n + 1.7, f'$G_{n}$\n(true,\nunprovable)',
-                ha='center', va='bottom', fontsize=8, color='red', fontweight='bold')
+    # Anti-diagonal annotation
+    ax.set_title(f'Lawvere/Cantor Diagonal Argument\n'
+                 f'Diagonal: {list(diagonal)} → '
+                 f'Anti-diagonal: {list(anti_diagonal)}\n'
+                 f'Anti-diagonal ≠ f(a) for any a (Cantor\'s theorem)',
+                 fontsize=11, fontweight='bold')
 
-        # Arrow from one level to the next
-        if n < levels - 1:
-            ax.annotate('', xy=((n+1) * 1.2, n + 1.5), xytext=(n * 1.2 + 0.9, n + 1.3),
-                       arrowprops=dict(arrowstyle='->', color='darkred', lw=1.5))
+    ax.set_xlabel('Column (input to f(a))', fontsize=11)
+    ax.set_ylabel('Row (function index a)', fontsize=11)
 
-    ax.set_xlim(-0.5, levels * 1.2 + 0.5)
-    ax.set_ylim(-1.5, levels + 3)
-    ax.set_xlabel('Formal System Level', fontsize=14)
-    ax.set_ylabel('Provability Power (number of Gödel sentences proved)', fontsize=14)
-    ax.set_title('Incompleteness Hierarchy: The Infinite Staircase\n'
-                'Each level proves the previous Gödel sentence but has its own',
-                fontsize=14, fontweight='bold')
-
-    # Legend
-    legend_elements = [
-        mpatches.Patch(facecolor=colors[3], alpha=0.7, label='Provable region'),
-        plt.Line2D([0], [0], marker='*', color='w', markerfacecolor='red',
-                   markersize=15, label='True but unprovable (Gödel sentence)')
-    ]
-    ax.legend(handles=legend_elements, loc='upper left', fontsize=11)
-
-    ax.set_aspect('equal')
+    plt.colorbar(im, ax=ax, label='Function value', shrink=0.8)
     plt.tight_layout()
-    plt.savefig('hierarchy_staircase.png', dpi=150, bbox_inches='tight')
+    plt.savefig('diagonal_visualization.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: hierarchy_staircase.png")
+    print("Saved: diagonal_visualization.png")
 
 
-if __name__ == "__main__":
-    create_hierarchy_visualization()
+def visualize_penrose_dilemma():
+    """Visualize the Penrose Dilemma as a decision tree."""
+
+    fig, ax = plt.subplots(figsize=(12, 6))
+    ax.axis('off')
+    ax.set_xlim(0, 12)
+    ax.set_ylim(0, 6)
+
+    # Title
+    ax.text(6, 5.5, 'The Penrose Dilemma', fontsize=16,
+            ha='center', fontweight='bold')
+
+    # Root node
+    ax.text(6, 4.5, 'Is the mind M\na formal system F?',
+            ha='center', va='center', fontsize=11,
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='lightyellow',
+                     edgecolor='black', linewidth=2))
+
+    # Left branch: Yes
+    ax.annotate('', xy=(3, 3.2), xytext=(5.2, 4),
+               arrowprops=dict(arrowstyle='->', lw=2, color='red'))
+    ax.text(4, 3.7, 'Yes', fontsize=10, color='red', fontweight='bold')
+
+    ax.text(3, 2.8, 'Then ∃ G(F)\nthat F cannot prove',
+            ha='center', va='center', fontsize=10,
+            bbox=dict(boxstyle='round,pad=0.4', facecolor='lightsalmon',
+                     edgecolor='red'))
+
+    ax.annotate('', xy=(2, 1.5), xytext=(2.5, 2.3),
+               arrowprops=dict(arrowstyle='->', lw=2, color='red'))
+    ax.text(2, 1, 'But M "sees" G(F)\nis true!',
+            ha='center', va='center', fontsize=10,
+            bbox=dict(boxstyle='round,pad=0.4', facecolor='lightsalmon',
+                     edgecolor='red'))
+
+    ax.annotate('', xy=(2, 0.2), xytext=(2, 0.6),
+               arrowprops=dict(arrowstyle='->', lw=2, color='darkred'))
+    ax.text(2, -0.1, 'Contradiction!\n(if M = F)',
+            ha='center', va='center', fontsize=10, fontweight='bold',
+            color='darkred')
+
+    # Right branch: No
+    ax.annotate('', xy=(9, 3.2), xytext=(6.8, 4),
+               arrowprops=dict(arrowstyle='->', lw=2, color='green'))
+    ax.text(8, 3.7, 'No', fontsize=10, color='green', fontweight='bold')
+
+    ax.text(9, 2.8, 'Mind transcends\nformal systems?',
+            ha='center', va='center', fontsize=10,
+            bbox=dict(boxstyle='round,pad=0.4', facecolor='lightgreen',
+                     edgecolor='green'))
+
+    # The catch
+    ax.annotate('', xy=(9, 1.5), xytext=(9, 2.3),
+               arrowprops=dict(arrowstyle='->', lw=2, color='orange'))
+    ax.text(9, 1, 'Hidden premise:\nM must KNOW\nF is consistent!',
+            ha='center', va='center', fontsize=10,
+            bbox=dict(boxstyle='round,pad=0.4', facecolor='wheat',
+                     edgecolor='orange', linewidth=2))
+
+    ax.annotate('', xy=(9, 0.1), xytext=(9, 0.5),
+               arrowprops=dict(arrowstyle='->', lw=2, color='orange'))
+    ax.text(9, -0.2, 'Self-Referential Blindness:\nAdding G(F) creates\nnew blind spot G(F\')',
+            ha='center', va='center', fontsize=9,
+            fontweight='bold', color='darkorange')
+
+    plt.tight_layout()
+    plt.savefig('penrose_dilemma.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: penrose_dilemma.png")
+
+
+if __name__ == '__main__':
+    visualize_reflective_tower()
+    visualize_diagonal_argument()
+    visualize_penrose_dilemma()

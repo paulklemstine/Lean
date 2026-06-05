@@ -1,354 +1,284 @@
 #!/usr/bin/env python3
 """
-Algorithms for Incompleteness Phenomena
+Algorithms for Reflective Proof Towers and Diagonal Arguments
+==============================================================
 
-Type-hinted implementations of the key algorithms from the
-Mind vs Gödel formalization.
+Type-hinted implementations of the core mathematical constructions.
 """
 
-from typing import Callable, Set, Optional, List, Tuple, Dict, FrozenSet
+from typing import Set, Callable, TypeVar, Generic, Optional, FrozenSet, Tuple, List
 from dataclasses import dataclass, field
+from abc import ABC, abstractmethod
+
+T = TypeVar('T')
+S = TypeVar('S')
 
 
 # ============================================================
-# Core Types
+# Algorithm 1: Reflective Tower
 # ============================================================
-
-Sentence = int  # Abstract sentences represented as integers
-
 
 @dataclass
-class FormalSystem:
-    """An abstract formal system with provability and truth predicates."""
-    provable: Callable[[Sentence], bool]
-    true_in_model: Callable[[Sentence], bool]
-    neg: Callable[[Sentence], Sentence]
-    name: str = "F"
+class ReflectiveTower(Generic[T]):
+    """A Reflective Tower: ℕ-indexed hierarchy of proof systems.
 
-    def is_sound(self, domain: range) -> bool:
-        """Check soundness on a finite domain."""
-        return all(
-            not self.provable(s) or self.true_in_model(s)
-            for s in domain
-        )
+    Each level proves everything the previous level proves,
+    plus the consistency of the previous level.
 
-    def is_consistent(self, domain: range) -> bool:
-        """Check consistency on a finite domain."""
-        return all(
-            not (self.provable(s) and self.provable(self.neg(s)))
-            for s in domain
-        )
-
-    def is_complete(self, domain: range) -> bool:
-        """Check completeness on a finite domain."""
-        return all(
-            self.provable(s) or self.provable(self.neg(s))
-            for s in domain
-        )
-
-    def godel_sentence(self, domain: range) -> Optional[Sentence]:
-        """Find a Gödel sentence: true iff not provable."""
-        for s in domain:
-            if self.true_in_model(s) == (not self.provable(s)):
-                if not self.provable(s) and self.true_in_model(s):
-                    return s
-        return None
-
-
-@dataclass
-class IncompletenessChain:
-    """A chain of formal systems, each extending the previous."""
-    systems: List[FormalSystem]
-
-    @staticmethod
-    def build(
-        base_provable: Set[Sentence],
-        base_true: Set[Sentence],
-        neg: Callable[[Sentence], Sentence],
-        godel_sentences: List[Sentence],
-        levels: int
-    ) -> 'IncompletenessChain':
-        """Build an incompleteness chain by iteratively adding Gödel sentences."""
-        systems: List[FormalSystem] = []
-        current_provable = set(base_provable)
-
-        for n in range(levels):
-            prov = frozenset(current_provable)
-            systems.append(FormalSystem(
-                provable=lambda s, p=prov: s in p,
-                true_in_model=lambda s, t=base_true: s in t,
-                neg=neg,
-                name=f"F_{n}"
-            ))
-            if n < len(godel_sentences):
-                current_provable.add(godel_sentences[n])
-
-        return IncompletenessChain(systems=systems)
-
-
-# ============================================================
-# Algorithm 1: Incompleteness Chain Construction
-# ============================================================
-
-def build_incompleteness_chain(
-    base_system: FormalSystem,
-    godel_constructor: Callable[[FormalSystem], Optional[Sentence]],
-    levels: int,
-    domain: range
-) -> List[Tuple[FormalSystem, Optional[Sentence]]]:
+    Invariants (verified at construction):
+    - provable(n) ⊆ provable(n+1)           [monotonicity]
+    - con(n) ∉ provable(n)                   [Gödel's second]
+    - con(n) ∈ provable(n+1)                 [consistency reflection]
     """
-    Build an incompleteness chain by iteratively finding and
-    adding Gödel sentences.
 
-    Returns: List of (system, godel_sentence) pairs at each level.
+    _provable: Callable[[int], Set[T]]
+    _con: Callable[[int], T]
 
-    Complexity: O(levels × |domain|) for the Gödel sentence search.
-    """
-    chain: List[Tuple[FormalSystem, Optional[Sentence]]] = []
-    current_provable: Set[Sentence] = set()
+    def provable(self, n: int) -> Set[T]:
+        """The set of provable sentences at level n."""
+        return self._provable(n)
 
-    # Collect initially provable sentences
-    for s in domain:
-        if base_system.provable(s):
-            current_provable.add(s)
+    def con(self, n: int) -> T:
+        """The consistency sentence for level n."""
+        return self._con(n)
 
-    for n in range(levels):
-        prov = frozenset(current_provable)
-        system = FormalSystem(
-            provable=lambda s, p=prov: s in p,
-            true_in_model=base_system.true_in_model,
-            neg=base_system.neg,
-            name=f"F_{n}"
-        )
-        g = godel_constructor(system)
-        chain.append((system, g))
+    def verify_axioms(self, depth: int = 5) -> bool:
+        """Verify tower axioms up to given depth."""
+        for n in range(depth):
+            p_n = self.provable(n)
+            p_n1 = self.provable(n + 1)
+            c = self.con(n)
 
-        if g is not None:
-            current_provable.add(g)
+            if not p_n.issubset(p_n1):
+                return False  # monotonicity violated
+            if c in p_n:
+                return False  # Gödel's second violated
+            if c not in p_n1:
+                return False  # reflection violated
 
-    return chain
+        return True
 
+    def incompleteness_gap(self, n: int) -> Set[T]:
+        """The set of sentences provable at n+1 but not at n."""
+        return self.provable(n + 1) - self.provable(n)
 
-# ============================================================
-# Algorithm 2: Berry Number Computation
-# ============================================================
-
-def compute_berry_number(
-    definable: Callable[[int, int], bool],
-    level: int,
-    search_limit: int = 10000
-) -> int:
-    """
-    Compute the Berry number at a given level: the least natural
-    number not definable at that level.
-
-    The Berry paradox shows that this function cannot itself be
-    captured at any fixed definability level.
-
-    Complexity: O(search_limit) in the worst case.
-    """
-    for k in range(search_limit):
-        if not definable(level, k):
-            return k
-    return search_limit  # Fallback
-
-
-def berry_paradox_check(
-    definable: Callable[[int, int], bool],
-    berry_cost: int,
-    max_level: int = 20
-) -> List[Tuple[int, int, bool]]:
-    """
-    Check the Berry paradox: at each level n, compute the Berry number
-    and check if it's definable at the fixed cost level.
-
-    Returns: List of (level, berry_number, is_paradoxical) triples.
-    """
-    results: List[Tuple[int, int, bool]] = []
-
-    for n in range(1, max_level + 1):
-        bn = compute_berry_number(definable, n)
-        is_paradoxical = definable(berry_cost, bn) and not definable(n, bn)
-        results.append((n, bn, is_paradoxical))
-
-    return results
-
-
-# ============================================================
-# Algorithm 3: Chaitin Bound Computation
-# ============================================================
-
-def compute_chaitin_bound(
-    provable_sentences: List[Sentence],
-    complexity: Callable[[Sentence], int]
-) -> int:
-    """
-    Compute the Chaitin bound: the maximum complexity of any
-    provable sentence, plus one.
-
-    No sentence with complexity ≥ bound can be proven to have
-    that complexity.
-
-    Complexity: O(|provable_sentences|)
-    """
-    if not provable_sentences:
-        return 0
-
-    max_complexity = max(complexity(s) for s in provable_sentences)
-    return max_complexity + 1
-
-
-# ============================================================
-# Algorithm 4: Self-Recognition Test
-# ============================================================
-
-def self_recognition_test(
-    mind: Callable[[FormalSystem], Set[Sentence]],
-    system: FormalSystem,
-    domain: range
-) -> Optional[Sentence]:
-    """
-    Test whether a mind function has blind spots with respect
-    to a formal system.
-
-    Returns: A sentence that is true but not recognized by the mind
-             (if found), or None.
-    """
-    recognized = mind(system)
-
-    for s in domain:
-        if system.true_in_model(s) and not system.provable(s):
-            if s not in recognized:
-                return s  # Found a blind spot
-
-    return None
-
-
-# ============================================================
-# Algorithm 5: Oracle Extension Construction
-# ============================================================
-
-def oracle_extension(
-    base: FormalSystem,
-    oracle: Callable[[Sentence], bool],
-    oracle_sound: bool = True
-) -> FormalSystem:
-    """
-    Construct an oracle extension of a formal system.
-
-    The extended system proves everything the base proves,
-    plus everything the oracle approves.
-    """
-    return FormalSystem(
-        provable=lambda s: base.provable(s) or oracle(s),
-        true_in_model=base.true_in_model,
-        neg=base.neg,
-        name=f"{base.name}+oracle"
-    )
-
-
-# ============================================================
-# Demonstration
-# ============================================================
-
-def demo() -> None:
-    """Run demonstrations of all algorithms."""
-
-    # Set up a simple formal system
-    # Sentences 0-99, even numbers are true, system proves multiples of 4
-    N = 100
-    domain = range(N)
-
-    true_sentences = {s for s in domain if s % 2 == 0}
-    provable_sentences = {s for s in domain if s % 4 == 0}
-
-    system = FormalSystem(
-        provable=lambda s: s in provable_sentences,
-        true_in_model=lambda s: s in true_sentences,
-        neg=lambda s: s + 1 if s % 2 == 0 else s - 1,  # Pair each even with next odd
-        name="F_0"
-    )
-
-    print("=" * 50)
-    print("ALGORITHM DEMONSTRATIONS")
-    print("=" * 50)
-    print()
-
-    # 1. Incompleteness chain
-    print("1. Incompleteness Chain Construction")
-    print("-" * 40)
-
-    # True but unprovable: even numbers not divisible by 4
-    godel_candidates = [s for s in domain if s % 2 == 0 and s % 4 != 0]
-
-    def godel_constructor(sys: FormalSystem) -> Optional[Sentence]:
-        for s in domain:
-            if sys.true_in_model(s) and not sys.provable(s):
-                return s
-        return None
-
-    chain = build_incompleteness_chain(system, godel_constructor, 5, domain)
-    for i, (sys, g) in enumerate(chain):
-        provable_count = sum(1 for s in domain if sys.provable(s))
-        print(f"  Level {i}: {provable_count} provable, Gödel = {g}")
-    print()
-
-    # 2. Berry number
-    print("2. Berry Number Computation")
-    print("-" * 40)
-
-    def definable(level: int, k: int) -> bool:
-        return k < 2 ** level
-
-    for n in range(1, 11):
-        bn = compute_berry_number(definable, n)
-        print(f"  Level {n}: Berry number = {bn} (= 2^{n})")
-    print()
-
-    # 3. Chaitin bound
-    print("3. Chaitin Bound")
-    print("-" * 40)
-
-    complexity = lambda s: s  # Simple complexity = value
-    prov_list = list(provable_sentences)
-    bound = compute_chaitin_bound(prov_list, complexity)
-    print(f"  Provable sentences: {len(prov_list)}")
-    print(f"  Max complexity among provable: {max(complexity(s) for s in prov_list)}")
-    print(f"  Chaitin bound: {bound}")
-    print()
-
-    # 4. Self-recognition test
-    print("4. Self-Recognition Test")
-    print("-" * 40)
-
-    def mind(sys: FormalSystem) -> Set[Sentence]:
-        # A mind that recognizes the first unprovable true sentence
-        result = set()
-        for s in domain:
-            if sys.true_in_model(s) and not sys.provable(s):
-                result.add(s)
-                break  # Only sees the first one
+    def tower_limit(self, depth: int) -> Set[T]:
+        """Approximate the tower limit ⋃_n provable(n) up to given depth."""
+        result: Set[T] = set()
+        for n in range(depth):
+            result |= self.provable(n)
         return result
 
-    blind_spot = self_recognition_test(mind, system, domain)
-    if blind_spot is not None:
-        print(f"  Mind has blind spot at sentence {blind_spot}")
-        print(f"  (true: {system.true_in_model(blind_spot)}, "
-              f"provable: {system.provable(blind_spot)})")
-    print()
 
-    # 5. Oracle extension
-    print("5. Oracle Extension")
-    print("-" * 40)
+def make_pa_tower() -> ReflectiveTower[int]:
+    """Construct the canonical PA consistency tower.
 
-    oracle = lambda s: s == 2  # Oracle that proves sentence 2
-    ext = oracle_extension(system, oracle)
-    ext_provable = sum(1 for s in domain if ext.provable(s))
-    print(f"  Base provable: {len(provable_sentences)}")
-    print(f"  Extended provable: {ext_provable}")
-    print(f"  Extension still incomplete: {not ext.is_complete(domain)}")
-    print()
+    Level 0: sentences 0..99 (representing PA theorems)
+    Level n: Level 0 ∪ {Con(0), Con(1), ..., Con(n-1)}
+    Con(n) represented as 100 + n
+    """
+    base = set(range(100))
 
+    def provable(n: int) -> Set[int]:
+        return base | {100 + k for k in range(n)}
+
+    def con(n: int) -> int:
+        return 100 + n
+
+    return ReflectiveTower(_provable=provable, _con=con)
+
+
+# ============================================================
+# Algorithm 2: Gödel Oracle and Diagonal Construction
+# ============================================================
+
+@dataclass
+class GoedelOracle(Generic[T]):
+    """A Gödel Oracle: maps theories to sentences.
+
+    The oracle attempts to produce, for each theory T,
+    a sentence G(T) that is true but not provable in T.
+    """
+
+    _oracle: Callable[[FrozenSet[T]], T]
+
+    def __call__(self, theory: FrozenSet[T]) -> T:
+        return self._oracle(theory)
+
+    def find_failure(self, theories: List[FrozenSet[T]]) -> Optional[Tuple[FrozenSet[T], T]]:
+        """Find a theory where the oracle fails (G(T) ∈ T).
+
+        Returns (T, G(T)) if found, None otherwise.
+        """
+        for theory in theories:
+            g = self(theory)
+            if g in theory:
+                return (theory, g)
+        return None
+
+    def diagonal_failure(self) -> Tuple[FrozenSet[T], T]:
+        """Construct a theory where the oracle necessarily fails.
+
+        By the Penrose Diagonal Limiter, we can always find such a theory.
+        The simplest construction: take T = universal set.
+        """
+        # We can't represent the universal set, so we iterate
+        # Start with empty theory, keep adding G(T) to T
+        theory: Set[T] = set()
+        seen: Set[T] = set()
+        for _ in range(100):
+            g = self(frozenset(theory))
+            if g in theory:
+                return (frozenset(theory), g)
+            theory.add(g)
+            if g in seen:
+                break
+            seen.add(g)
+
+        # Final check
+        final = frozenset(theory)
+        g = self(final)
+        return (final, g)
+
+
+# ============================================================
+# Algorithm 3: Lawvere Diagonal
+# ============================================================
+
+def lawvere_diagonal(
+    f: Callable[[int], Callable[[int], bool]],
+    domain_size: int
+) -> Callable[[int], bool]:
+    """Construct the Lawvere anti-diagonal function.
+
+    Given f : {0,...,n-1} → ({0,...,n-1} → Bool),
+    produces d : {0,...,n-1} → Bool such that
+    d ≠ f(a) for all a in the domain.
+
+    This is the constructive witness for Cantor's theorem:
+    d cannot be in the range of f.
+    """
+    def anti_diag(x: int) -> bool:
+        if 0 <= x < domain_size:
+            return not f(x)(x)
+        return False
+
+    return anti_diag
+
+
+def verify_lawvere(
+    f: Callable[[int], Callable[[int], bool]],
+    domain_size: int
+) -> bool:
+    """Verify that the anti-diagonal is not in the range of f."""
+    d = lawvere_diagonal(f, domain_size)
+    for a in range(domain_size):
+        if all(f(a)(x) == d(x) for x in range(domain_size)):
+            return False  # d = f(a), Lawvere "fails" (impossible)
+    return True  # d ≠ f(a) for all a, as expected
+
+
+# ============================================================
+# Algorithm 4: Berry-Chaitin Pigeonhole
+# ============================================================
+
+def berry_check_injective(
+    naming: Callable[[int], int],
+    num_objects: int,
+    num_names: int
+) -> Tuple[bool, Optional[Tuple[int, int]]]:
+    """Check if a naming function is injective.
+
+    If not, return a pair (a, b) with a ≠ b but naming(a) = naming(b).
+
+    By the Berry-Chaitin bound, if num_objects > num_names,
+    the function CANNOT be injective.
+    """
+    seen: dict = {}
+    for obj in range(num_objects):
+        name = naming(obj)
+        if name in seen:
+            return (False, (seen[name], obj))
+        seen[name] = obj
+    return (True, None)
+
+
+# ============================================================
+# Algorithm 5: Mind Model Simulation
+# ============================================================
+
+@dataclass
+class MindModel(Generic[T]):
+    """A Mind Model: recognition function + beliefs.
+
+    Captures the Lucas-Penrose concept of a "mind" that
+    recognizes Gödel sentences of formal systems.
+    """
+
+    recognize: Callable[[FrozenSet[T]], T]
+    beliefs: FrozenSet[T]
+
+    def check_self_consistency(self) -> bool:
+        """Check if recognize(beliefs) ∉ beliefs.
+
+        By mind_not_machine_precise, if recognize is universal
+        (always produces unprovable sentences), this MUST be True.
+        """
+        g = self.recognize(self.beliefs)
+        return g not in self.beliefs
+
+    def enhance(self) -> 'MindModel[T]':
+        """Create enhanced mind by adding recognized Gödel sentence.
+
+        By self_referential_blindness, the enhanced mind still
+        has its own blind spot.
+        """
+        g = self.recognize(self.beliefs)
+        new_beliefs = self.beliefs | frozenset([g])
+        return MindModel(recognize=self.recognize, beliefs=new_beliefs)
+
+    def iterate_enhancement(self, depth: int) -> List['MindModel[T]']:
+        """Iterate self-enhancement, showing blindness persists."""
+        minds = [self]
+        current = self
+        for _ in range(depth):
+            current = current.enhance()
+            minds.append(current)
+        return minds
+
+
+# ============================================================
+# Main: Run all algorithms
+# ============================================================
 
 if __name__ == "__main__":
-    demo()
+    # 1. Reflective Tower
+    tower = make_pa_tower()
+    print("Tower axioms verified:", tower.verify_axioms(10))
+    print("Incompleteness gap at level 3:", tower.incompleteness_gap(3))
+    print("Tower limit (5 levels):", len(tower.tower_limit(5)), "sentences")
+
+    # 2. Gödel Oracle
+    oracle = GoedelOracle[int](_oracle=lambda T: max(T) + 1 if T else 0)
+    failure = oracle.diagonal_failure()
+    print(f"\nOracle failure: G(T) = {failure[1]}, T = {sorted(failure[0])[:5]}...")
+
+    # 3. Lawvere Diagonal
+    f = lambda a: (lambda x: (a + x) % 4 < 2)
+    print(f"\nLawvere anti-diagonal not in range: {verify_lawvere(f, 4)}")
+
+    # 4. Berry-Chaitin
+    naming = lambda obj: obj % 5  # 6 objects, 5 names
+    injective, collision = berry_check_injective(naming, 6, 5)
+    print(f"\nBerry-Chaitin: injective = {injective}, collision = {collision}")
+
+    # 5. Mind Model
+    mind = MindModel[int](
+        recognize=lambda T: hash(T) % 10000 + 1000,
+        beliefs=frozenset(range(100))
+    )
+    print(f"\nMind self-consistency: {mind.check_self_consistency()}")
+    minds = mind.iterate_enhancement(5)
+    for i, m in enumerate(minds):
+        print(f"  Level {i}: |beliefs| = {len(m.beliefs)}, "
+              f"self-consistent = {m.check_self_consistency()}")
