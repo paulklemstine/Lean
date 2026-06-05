@@ -1,316 +1,259 @@
 #!/usr/bin/env python3
 """
-Algorithms for Non-Standard Arithmetic
+Non-Standard Arithmetic: Core Algorithms
 
-Type-hinted implementations of the key constructions and algorithms
-from the ultrafilter transfer framework.
+Type-hinted implementations of the key algorithmic concepts from the
+formalized non-standard arithmetic theory.
 """
 
 from typing import (
-    TypeVar, Generic, Set, FrozenSet, Callable, Optional,
-    List, Tuple, Dict, Iterator
+    Callable, FrozenSet, Generic, List, Optional, Set, Tuple, TypeVar
 )
 from dataclasses import dataclass
 from functools import reduce
-import math
 
 
 T = TypeVar('T')
-I = TypeVar('I')  # Index type
 
 
-# ============================================================
+# =============================================================================
 # Algorithm 1: Ultrafilter Operations
-# ============================================================
+# =============================================================================
 
 @dataclass
-class SimulatedUltrafilter:
+class UltrafilterApprox:
     """
-    A simulated ultrafilter on a finite index set.
-    
-    For finite sets, every ultrafilter is principal (concentrated at a point).
-    This simulates the combinatorics of ultrafilter membership testing.
-    
+    Finite approximation of an ultrafilter on {0, ..., N-1}.
+
     Pseudocode:
-        INPUT: index set I, focus point j ∈ I
-        MEMBERSHIP TEST(S):
-            RETURN j ∈ S
-        TRANSFER(P):
-            RETURN P(j)
+        ULTRAFILTER-APPROX(N):
+            universe ← {0, ..., N-1}
+            large_sets ← maximal filter on universe
+            RETURN large_sets
+
+    In practice, we use a principal ultrafilter (concentrated at a point)
+    as the approximation, since non-principal ultrafilters on finite sets
+    don't exist.
     """
-    index_set: FrozenSet[int]
-    focus: int  # Principal point
-    
-    def __post_init__(self) -> None:
-        assert self.focus in self.index_set, "Focus must be in index set"
-    
-    def contains(self, subset: FrozenSet[int]) -> bool:
-        """Test if a subset is in the ultrafilter."""
-        return self.focus in subset
-    
-    def transfer_and(self, p_set: FrozenSet[int], q_set: FrozenSet[int]) -> bool:
-        """Transfer conjunction: P ∧ Q is U-large iff both are."""
-        return self.contains(p_set & q_set)
-    
-    def transfer_or(self, p_set: FrozenSet[int], q_set: FrozenSet[int]) -> bool:
-        """Transfer disjunction: P ∨ Q is U-large implies P or Q is."""
-        return self.contains(p_set) or self.contains(q_set)
-    
-    def negation_transfer(self, p_set: FrozenSet[int]) -> bool:
-        """If P is not U-large, then ¬P is U-large."""
-        return not self.contains(p_set)
-    
-    def finite_coloring_pigeonhole(self, coloring: Callable[[int], int],
-                                     k: int) -> int:
-        """Return a color whose class is in the ultrafilter."""
-        return coloring(self.focus)
+    N: int
+    principal_point: int
+
+    def is_large(self, S: FrozenSet[int]) -> bool:
+        """O(1) membership test."""
+        return self.principal_point in S
+
+    def complement(self, S: FrozenSet[int]) -> FrozenSet[int]:
+        """O(N) complement computation."""
+        return frozenset(range(self.N)) - S
+
+    def intersection(self, S1: FrozenSet[int], S2: FrozenSet[int]) -> FrozenSet[int]:
+        """O(min(|S1|, |S2|)) intersection."""
+        return S1 & S2
+
+    def dichotomy(self, S: FrozenSet[int]) -> Tuple[bool, bool]:
+        """
+        Ultrafilter dichotomy: exactly one of S, Sᶜ is large.
+        Returns (S_large, Sc_large).
+        """
+        s_large = self.is_large(S)
+        return (s_large, not s_large)
 
 
-# ============================================================
-# Algorithm 2: Characteristic Zero Detection
-# ============================================================
-
-def char_zero_detection(
-    char_values: List[int],
-    threshold: int
-) -> Dict[str, object]:
-    """
-    Detect characteristic zero emergence in an ultraproduct.
-    
-    Given a sequence of characteristics (e.g., primes p_1, p_2, ...),
-    determine for which N the set {i | char_i > N} is cofinite.
-    
-    Pseudocode:
-        INPUT: char_values[0..n-1], threshold N
-        count = |{i | char_values[i] > N}|
-        RETURN count, is_cofinite (count > n/2 for "most" values)
-    
-    Args:
-        char_values: List of characteristic values
-        threshold: Value N to test against
-    
-    Returns:
-        Dictionary with analysis results
-    """
-    n = len(char_values)
-    exceeding = sum(1 for c in char_values if c > threshold)
-    at_most = n - exceeding
-    
-    return {
-        "total": n,
-        "exceeding_threshold": exceeding,
-        "at_most_threshold": at_most,
-        "fraction_exceeding": exceeding / n if n > 0 else 0,
-        "is_cofinite": at_most < float('inf'),  # Always true for finite
-        "char_zero_emerging": exceeding > at_most,
-    }
-
-
-def generate_prime_characteristics(count: int) -> List[int]:
-    """Generate the first `count` primes as characteristics."""
-    primes: List[int] = []
-    candidate = 2
-    while len(primes) < count:
-        if all(candidate % p != 0 for p in primes):
-            primes.append(candidate)
-        candidate += 1
-    return primes
-
-
-# ============================================================
-# Algorithm 3: Non-Archimedean Hierarchy
-# ============================================================
+# =============================================================================
+# Algorithm 2: Non-Standard Number Arithmetic
+# =============================================================================
 
 @dataclass
-class NonArchimedeanElement:
+class NonstandardNumber:
     """
-    Represents an element of the ultrapower ℕ^I / U.
-    
-    An element is a function I → ℕ modulo the ultrafilter equivalence.
-    For the free ultrafilter on ℕ, the "standard" elements are constants,
-    and "non-standard" elements grow without bound.
-    """
-    representative: Callable[[int], int]
-    name: str
-    
-    def exceeds_constant(self, n: int, sample_size: int = 100) -> float:
-        """Estimate the proportion of indices where the element exceeds n."""
-        count = sum(1 for i in range(2, sample_size + 2)
-                    if self.representative(i) > n)
-        return count / sample_size
-    
-    def compare_with(self, other: 'NonArchimedeanElement',
-                     sample_size: int = 100) -> float:
-        """Estimate proportion where self > other."""
-        count = sum(1 for i in range(2, sample_size + 2)
-                    if self.representative(i) > other.representative(i))
-        return count / sample_size
+    Representation of a non-standard natural number.
 
+    A non-standard number is an equivalence class [f] of sequences
+    f : I → ℕ under the ultrafilter equivalence relation.
 
-def build_power_hierarchy(max_power: int) -> List[NonArchimedeanElement]:
-    """
-    Build the hierarchy of non-standard elements i, i², i³, ...
-    
     Pseudocode:
-        FOR k = 1 TO max_power:
-            DEFINE element_k(i) = i^k
-        RETURN [element_1, ..., element_max_power]
+        NONSTANDARD-ADD([f], [g]):
+            RETURN [i ↦ f(i) + g(i)]
+
+        NONSTANDARD-MUL([f], [g]):
+            RETURN [i ↦ f(i) * g(i)]
+
+        NONSTANDARD-LE([f], [g], U):
+            S ← {i | f(i) ≤ g(i)}
+            RETURN U.is_large(S)
     """
-    elements: List[NonArchimedeanElement] = []
-    for k in range(1, max_power + 1):
-        power = k  # Capture for closure
-        elements.append(NonArchimedeanElement(
-            representative=lambda i, p=power: i ** p,
-            name=f"i^{k}" if k > 1 else "i"
-        ))
-    return elements
+    values: List[int]
+    label: str = ""
+
+    @staticmethod
+    def standard(n: int, length: int = 100) -> 'NonstandardNumber':
+        """Standard embedding: std(n) = [n, n, n, ...]."""
+        return NonstandardNumber([n] * length, f"std({n})")
+
+    @staticmethod
+    def omega(length: int = 100) -> 'NonstandardNumber':
+        """Canonical infinite element: ω = [0, 1, 2, ...]."""
+        return NonstandardNumber(list(range(length)), "ω")
+
+    def add(self, other: 'NonstandardNumber') -> 'NonstandardNumber':
+        """Pointwise addition."""
+        n = min(len(self.values), len(other.values))
+        return NonstandardNumber(
+            [self.values[i] + other.values[i] for i in range(n)],
+            f"({self.label}+{other.label})"
+        )
+
+    def mul(self, other: 'NonstandardNumber') -> 'NonstandardNumber':
+        """Pointwise multiplication."""
+        n = min(len(self.values), len(other.values))
+        return NonstandardNumber(
+            [self.values[i] * other.values[i] for i in range(n)],
+            f"({self.label}×{other.label})"
+        )
+
+    def le_set(self, other: 'NonstandardNumber') -> FrozenSet[int]:
+        """Return {i | self(i) ≤ other(i)}."""
+        n = min(len(self.values), len(other.values))
+        return frozenset(i for i in range(n) if self.values[i] <= other.values[i])
+
+    def is_infinite(self, U: UltrafilterApprox) -> bool:
+        """Check if self exceeds every standard element (approximation)."""
+        N = len(self.values)
+        for n in range(N):
+            s = NonstandardNumber.standard(n, N)
+            le_set = s.le_set(self)
+            if not U.is_large(le_set):
+                return False
+        return True
 
 
-# ============================================================
-# Algorithm 4: Overspill Function Construction
-# ============================================================
+# =============================================================================
+# Algorithm 3: Overspill Detection
+# =============================================================================
 
-def construct_overspill_function(
-    membership: Callable[[int, int], bool],
-    max_index: int
-) -> Callable[[int], int]:
+def overspill_check(
+    P: Callable[[int], bool],
+    N: int,
+    threshold: int = 10
+) -> Tuple[bool, Optional[int]]:
     """
-    Construct the overspill function f(i) = max{n | i ∈ S_n}.
-    
-    Given a decreasing chain S_0 ⊇ S_1 ⊇ ... where membership(i, n)
-    tests if i ∈ S_n, compute f(i) = sup{n | i ∈ S_n}.
-    
+    Check if property P satisfies the overspill condition.
+
     Pseudocode:
-        INPUT: membership test, max search depth
-        FUNCTION f(i):
-            n = 0
-            WHILE membership(i, n+1) AND n < max_index:
-                n = n + 1
-            RETURN n
-    
-    Args:
-        membership: Function (i, n) → bool testing if i ∈ S_n
-        max_index: Maximum search depth
-    
-    Returns:
-        The overspill function f
+        OVERSPILL-CHECK(P, N, threshold):
+            FOR n = 0 TO threshold:
+                tail ← {i ∈ {n,...,N-1} | P(i)}
+                IF tail ≠ {n,...,N-1}:
+                    RETURN (False, n)  // P fails for some i ≥ n
+            RETURN (True, None)  // P holds on all tails → overspill
+
+    Returns (overspills, failure_point).
     """
-    def f(i: int) -> int:
-        n = 0
-        while n < max_index and membership(i, n + 1):
-            n += 1
-        return n
-    return f
+    for n in range(min(threshold, N)):
+        for i in range(n, N):
+            if not P(i):
+                return (False, i)
+    return (True, None)
 
 
-# ============================================================
-# Algorithm 5: Compactness Witness Construction
-# ============================================================
+# =============================================================================
+# Algorithm 4: Transfer Verification
+# =============================================================================
 
-def compactness_witness(
-    constraints: List[Callable[[int], bool]],
-    search_bound: int = 10000
-) -> Optional[int]:
+def verify_transfer(
+    identity: Callable[[int], bool],
+    N: int,
+    U: UltrafilterApprox
+) -> Tuple[bool, FrozenSet[int]]:
     """
-    Search for a witness satisfying a finite conjunction of constraints.
-    
-    This implements the finite satisfiability check: given constraints
-    P_1, ..., P_k, find m such that P_n(m) for all n.
-    
+    Verify that an arithmetic identity transfers to the ultrapower.
+
     Pseudocode:
-        INPUT: constraints P_1, ..., P_k
-        FOR m = 0 TO search_bound:
-            IF ALL(P_n(m) for n in constraints):
-                RETURN m
-        RETURN None
+        VERIFY-TRANSFER(identity, N, U):
+            S ← {i ∈ {0,...,N-1} | identity(i)}
+            RETURN (U.is_large(S), S)
+
+    The identity holds in the ultrapower iff S ∈ U.
     """
-    for m in range(search_bound):
-        if all(p(m) for p in constraints):
-            return m
-    return None
+    S = frozenset(i for i in range(N) if identity(i))
+    return (U.is_large(S), S)
 
 
-def demonstrate_compactness_finite_sat() -> None:
+# =============================================================================
+# Algorithm 5: Integral Domain Check
+# =============================================================================
+
+def integral_domain_transfer(
+    f: List[int],
+    g: List[int],
+    U: UltrafilterApprox
+) -> Tuple[str, FrozenSet[int]]:
     """
-    Demonstrate that {x > n | n ∈ ℕ} has the finite satisfiability property.
-    """
-    print("Compactness: testing finite subsets of {x > n | n ∈ ℕ}")
-    for k in [1, 5, 10, 50]:
-        constraints = [lambda m, n=n: m > n for n in range(k)]
-        witness = compactness_witness(constraints)
-        print(f"  |S| = {k}: witness = {witness}")
+    Check the zero-product property for sequences f, g.
 
-
-# ============================================================
-# Algorithm 6: Division Algorithm Transfer
-# ============================================================
-
-def division_transfer(
-    a_coords: List[int],
-    d_coords: List[int]
-) -> Tuple[List[int], List[int]]:
-    """
-    Compute the coordinatewise division algorithm for ultraproduct elements.
-    
     Pseudocode:
-        INPUT: a = (a_1, ..., a_n), d = (d_1, ..., d_n) with d_i > 0
-        FOR i = 1 TO n:
-            q_i = a_i ÷ d_i  (integer division)
-            r_i = a_i mod d_i
-        RETURN (q_1,...,q_n), (r_1,...,r_n)
+        INTEGRAL-DOMAIN-CHECK(f, g, U):
+            zero_product ← {i | f(i) * g(i) = 0}
+            IF NOT U.is_large(zero_product):
+                RETURN "product nonzero"
+            f_zero ← {i | f(i) = 0}
+            g_zero ← {i | g(i) = 0}
+            IF U.is_large(f_zero):
+                RETURN "[f] = 0"
+            ELIF U.is_large(g_zero):
+                RETURN "[g] = 0"
+            ELSE:
+                RETURN "VIOLATION" // should not happen for domains
     """
-    q_coords = [a // d for a, d in zip(a_coords, d_coords)]
-    r_coords = [a % d for a, d in zip(a_coords, d_coords)]
-    
-    # Verify the identity coordinatewise
-    for i, (a, d, q, r) in enumerate(zip(a_coords, d_coords, q_coords, r_coords)):
-        assert a == d * q + r, f"Division failed at index {i}"
-        assert r < d, f"Remainder not less than divisor at index {i}"
-    
-    return q_coords, r_coords
+    N = min(len(f), len(g))
+    zero_product = frozenset(i for i in range(N) if f[i] * g[i] == 0)
 
+    if not U.is_large(zero_product):
+        return ("product nonzero", zero_product)
+
+    f_zero = frozenset(i for i in range(N) if f[i] == 0)
+    g_zero = frozenset(i for i in range(N) if g[i] == 0)
+
+    if U.is_large(f_zero):
+        return ("[f] = 0", f_zero)
+    elif U.is_large(g_zero):
+        return ("[g] = 0", g_zero)
+    else:
+        return ("VIOLATION", zero_product)
+
+
+# =============================================================================
+# Main demonstration
+# =============================================================================
 
 if __name__ == "__main__":
-    print("=== Non-Standard Arithmetic: Algorithm Demonstrations ===\n")
-    
-    # Ultrafilter operations
-    I = frozenset(range(10))
-    U = SimulatedUltrafilter(I, focus=7)
-    S1 = frozenset({5, 7, 9})
-    S2 = frozenset({7, 8})
-    print(f"Ultrafilter focused at 7:")
-    print(f"  {set(S1)} ∈ U? {U.contains(S1)}")
-    print(f"  {set(S2)} ∈ U? {U.contains(S2)}")
-    print(f"  S1 ∩ S2 ∈ U? {U.transfer_and(S1, S2)}")
-    print()
-    
-    # Characteristic zero detection
-    primes = generate_prime_characteristics(50)
-    for N in [10, 50, 100]:
-        result = char_zero_detection(primes, N)
-        print(f"Char zero detection (N={N}): "
-              f"{result['exceeding_threshold']}/{result['total']} exceed, "
-              f"emerging={result['char_zero_emerging']}")
-    print()
-    
-    # Power hierarchy
-    hierarchy = build_power_hierarchy(4)
-    print("Power hierarchy (fraction exceeding constant 1000):")
-    for elem in hierarchy:
-        frac = elem.exceeds_constant(1000, sample_size=200)
-        print(f"  {elem.name}: {frac:.2%}")
-    print()
-    
-    # Overspill
-    f = construct_overspill_function(lambda i, n: i >= n, max_index=100)
-    print("Overspill function f(i) = max{n | i ≥ n}:")
-    for i in [5, 10, 50, 100]:
-        print(f"  f({i}) = {f(i)}")
-    print()
-    
-    # Division transfer
-    a = [17, 23, 31, 42, 55]
-    d = [5, 7, 4, 6, 8]
-    q, r = division_transfer(a, d)
-    print(f"Division transfer: a={a}, d={d}")
-    print(f"  q={q}, r={r}")
+    N = 50
+    U = UltrafilterApprox(N, principal_point=37)
+
+    print("=== Non-Standard Arithmetic Algorithms ===\n")
+
+    # 1. Ultrafilter dichotomy
+    S = frozenset(range(0, N, 2))  # even numbers
+    s_large, sc_large = U.dichotomy(S)
+    print(f"1. Dichotomy: evens large={s_large}, odds large={sc_large}")
+
+    # 2. Infinite element
+    w = NonstandardNumber.omega(N)
+    print(f"\n2. ω is infinite: {w.is_infinite(U)}")
+
+    # 3. Overspill
+    overspills, fail = overspill_check(lambda n: n * n > 100, N)
+    print(f"\n3. Overspill for n²>100: overspills={overspills}, fail_at={fail}")
+
+    # 4. Transfer verification
+    transfers, agree_set = verify_transfer(
+        lambda i: (i + 1) * (i + 1) == i * i + 2 * i + 1, N, U
+    )
+    print(f"\n4. Transfer (n+1)²=n²+2n+1: holds={transfers}, "
+          f"agree on {len(agree_set)}/{N} indices")
+
+    # 5. Integral domain
+    f_seq = [0 if i % 2 == 0 else i for i in range(N)]
+    g_seq = [i if i % 2 == 0 else 0 for i in range(N)]
+    result, witness = integral_domain_transfer(f_seq, g_seq, U)
+    print(f"\n5. Zero-product: {result}")

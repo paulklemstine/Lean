@@ -1,362 +1,433 @@
 #!/usr/bin/env python3
 """
-Non-Standard Arithmetic: Ultrafilter Transfer and Characteristic Zero Emergence
+Non-Standard Arithmetic: Demonstration of Ultrapower Constructions
 
-Demonstrates the key mathematical ideas from the Lean 4 formalization:
-1. Ultrafilter combinatorics on finite sets
-2. Characteristic zero emergence from finite characteristics
-3. The non-Archimedean hierarchy in ultrapowers
+Demonstrates the key concepts from the formalized theory:
+1. Ultrafilter approximation on finite sets
+2. Non-standard number arithmetic
+3. Overspill principle illustration
+4. Transfer of polynomial identities
 """
 
+from typing import FrozenSet, Set, List, Optional
 import random
-from typing import List, Set, Callable
 
 
-def simulate_ultrafilter_pigeonhole(n_indices: int, n_colors: int, seed: int = 42):
+# =============================================================================
+# 1. Finite Ultrafilter Approximation
+# =============================================================================
+
+class FiniteUltrafilter:
     """
-    Simulate the ultrafilter pigeonhole principle.
-    
-    For any coloring of {0,...,n_indices-1} with n_colors colors,
-    at least one color class must be "large" (in any ultrafilter).
-    We simulate by showing that the largest color class always contains
-    at least ceil(n_indices / n_colors) elements.
+    Approximation of a free ultrafilter on {0, 1, ..., N-1}.
+
+    For finite sets, a free ultrafilter doesn't exist (every ultrafilter on
+    a finite set is principal). We simulate a "pseudo-free" filter by choosing
+    a random "generic" element and declaring sets large if they contain it.
+    This captures the ultrafilter dichotomy property.
     """
-    random.seed(seed)
-    coloring = [random.randint(0, n_colors - 1) for _ in range(n_indices)]
-    
-    # Count color classes
-    classes = {}
-    for i, c in enumerate(coloring):
-        classes.setdefault(c, []).append(i)
-    
-    print(f"=== Ultrafilter Pigeonhole ({n_colors} colors, {n_indices} indices) ===")
-    for color, indices in sorted(classes.items()):
-        print(f"  Color {color}: {len(indices)} elements")
-    
-    largest = max(classes.items(), key=lambda x: len(x[1]))
-    print(f"  Largest class: color {largest[0]} with {len(largest[1])} elements")
-    print(f"  (Lower bound: ceil({n_indices}/{n_colors}) = {(n_indices + n_colors - 1) // n_colors})")
-    print()
+
+    def __init__(self, N: int, seed: int = 42):
+        self.N = N
+        self.universe = frozenset(range(N))
+        # For finite approximation, use a random principal point
+        # (In the limit N → ∞, this approximates freeness)
+        rng = random.Random(seed)
+        self.principal_point = rng.randint(0, N - 1)
+
+    def is_large(self, S: FrozenSet[int]) -> bool:
+        """Check if S is in the ultrafilter."""
+        return self.principal_point in S
+
+    def complement(self, S: FrozenSet[int]) -> FrozenSet[int]:
+        return self.universe - S
+
+    def demonstrate_dichotomy(self):
+        """Show that every set or its complement is large."""
+        print(f"\n=== Ultrafilter Dichotomy (N={self.N}) ===")
+        for _ in range(5):
+            S = frozenset(random.sample(range(self.N), self.N // 2))
+            S_large = self.is_large(S)
+            Sc_large = self.is_large(self.complement(S))
+            print(f"  S={sorted(S)[:5]}..., |S|={len(S)}: "
+                  f"S large={S_large}, Sᶜ large={Sc_large}, "
+                  f"exactly one={S_large != Sc_large}")
 
 
-def demonstrate_characteristic_zero():
+# =============================================================================
+# 2. Non-Standard Number Representation
+# =============================================================================
+
+class NonstandardNat:
     """
-    Demonstrate how characteristic zero emerges from finite characteristics.
-    
-    Key idea: Consider fields Z/p_n Z for primes p_1 < p_2 < ...
-    For any fixed N > 0, only finitely many p_i ≤ N.
-    So {i | p_i > N} is cofinite, hence in any free ultrafilter.
-    Therefore, the ultraproduct has characteristic 0.
+    Representation of a non-standard natural number as a finite
+    truncation of a sequence.
+
+    In the full theory, a non-standard number is an equivalence class
+    [f] where f : I → ℕ. We represent it by its first N values.
     """
-    print("=== Characteristic Zero from Finite Characteristics ===")
-    
-    # Generate first 20 primes
-    primes = []
-    candidate = 2
-    while len(primes) < 20:
-        if all(candidate % p != 0 for p in primes):
-            primes.append(candidate)
-        candidate += 1
-    
-    print(f"  Primes: {primes}")
-    print()
-    
-    # For each N, show how many primes are > N
-    for N in [1, 5, 10, 20, 50]:
-        exceeding = [p for p in primes if p > N]
-        print(f"  N = {N:3d}: {len(exceeding)}/{len(primes)} primes exceed N "
-              f"(cofinite? {len(exceeding) > len(primes) // 2})")
-    
-    print()
-    print("  → As N grows, {i | p_i > N} stays cofinite → in any free ultrafilter")
-    print("  → The ultraproduct has char ≠ N for all N > 0 → char = 0")
-    print()
+
+    def __init__(self, sequence: List[int], name: str = ""):
+        self.sequence = list(sequence)
+        self.name = name
+
+    @staticmethod
+    def standard(n: int, length: int = 20) -> 'NonstandardNat':
+        """The standard embedding: constant sequence."""
+        return NonstandardNat([n] * length, f"std({n})")
+
+    @staticmethod
+    def omega(length: int = 20) -> 'NonstandardNat':
+        """The canonical infinite element: identity sequence."""
+        return NonstandardNat(list(range(length)), "ω")
+
+    def __add__(self, other: 'NonstandardNat') -> 'NonstandardNat':
+        n = min(len(self.sequence), len(other.sequence))
+        return NonstandardNat(
+            [self.sequence[i] + other.sequence[i] for i in range(n)],
+            f"({self.name}+{other.name})"
+        )
+
+    def __mul__(self, other: 'NonstandardNat') -> 'NonstandardNat':
+        n = min(len(self.sequence), len(other.sequence))
+        return NonstandardNat(
+            [self.sequence[i] * other.sequence[i] for i in range(n)],
+            f"({self.name}*{other.name})"
+        )
+
+    def le_on(self, other: 'NonstandardNat') -> Set[int]:
+        """Return the set of indices where self ≤ other."""
+        n = min(len(self.sequence), len(other.sequence))
+        return {i for i in range(n) if self.sequence[i] <= other.sequence[i]}
+
+    def eq_on(self, other: 'NonstandardNat') -> Set[int]:
+        """Return the set of indices where self = other."""
+        n = min(len(self.sequence), len(other.sequence))
+        return {i for i in range(n) if self.sequence[i] == other.sequence[i]}
+
+    def __repr__(self):
+        prefix = self.sequence[:8]
+        return f"{self.name} = [{', '.join(map(str, prefix))}, ...]"
 
 
-def demonstrate_non_archimedean_hierarchy():
-    """
-    Demonstrate the hierarchy of non-standard elements.
-    
-    In the ultrapower, the functions id, id², id³, ... represent
-    elements that are increasingly "infinite":
-    - id(i) = i exceeds every constant for large i
-    - id²(i) = i² exceeds id(i) for i ≥ 2
-    - id^k(i) = i^k exceeds id^(k-1)(i) for i ≥ 2
-    """
-    print("=== Non-Archimedean Hierarchy ===")
-    print("  Comparing growth rates (for i = 2, 3, 5, 10, 100):")
-    print()
-    
-    indices = [2, 3, 5, 10, 100]
-    powers = [1, 2, 3, 4, 5]
-    
-    # Header
-    header = f"  {'i':>6s}" + "".join(f"  {'i^' + str(k):>12s}" for k in powers)
-    print(header)
-    print("  " + "-" * (6 + 14 * len(powers)))
-    
-    for i in indices:
-        row = f"  {i:>6d}"
-        for k in powers:
-            row += f"  {i**k:>12d}"
-        print(row)
-    
-    print()
-    print("  Each column grows strictly faster than the previous")
-    print("  → In the ultrapower, i^k > i^(k-1) > ... > i > n for any standard n")
-    print("  → The ultrapower has infinitely many 'levels of infinity'")
-    print()
+# =============================================================================
+# 3. Demonstrations
+# =============================================================================
 
+def demo_infinite_element():
+    """Demonstrate that ω exceeds every standard element."""
+    print("\n" + "=" * 60)
+    print("THEOREM 1: ω exceeds every standard element")
+    print("=" * 60)
 
-def demonstrate_compactness():
-    """
-    Demonstrate the ultrafilter proof of compactness.
-    
-    Key idea: if every finite subset of constraints is satisfiable,
-    the whole set is satisfiable (via ultrafilter/ultraproduct).
-    """
-    print("=== Compactness via Ultrafilters ===")
-    print()
-    
-    # Example: constraints "x > n" for each n
-    # Every finite subset {x > n1, ..., x > nk} is satisfied by x = max(n1,...,nk) + 1
-    # But no single x satisfies all of them (in standard ℕ)
-    # In the ultraproduct, the diagonal element satisfies all!
-    
-    constraints = list(range(10))
-    print("  Constraints: x > 0, x > 1, x > 2, ..., x > 9, ...")
-    print()
-    
-    for size in [1, 3, 5, 8]:
-        subset = constraints[:size]
-        witness = max(subset) + 1
-        print(f"  Finite subset {{x > {', x > '.join(str(n) for n in subset)}}}")
-        print(f"    → Satisfied by x = {witness}")
-    
-    print()
-    print("  Every finite subset is satisfiable!")
-    print("  → By compactness (via ultrafilter), ∃ ultrafilter U witnessing all constraints")
-    print("  → In the ultraproduct, the diagonal element id(i) = i satisfies all x > n")
-    print()
-
-
-def demonstrate_overspill():
-    """
-    Demonstrate the overspill principle.
-    
-    If S_0 ⊇ S_1 ⊇ S_2 ⊇ ... are all "large" and each element
-    eventually leaves, there exists a function growing to infinity
-    while staying inside the chain.
-    """
-    print("=== Overspill Principle ===")
-    print()
-    
-    # Concrete example: S_n = {i | i ≥ n}
     N = 20
-    print("  Decreasing chain: S_n = {i ∈ ℕ | i ≥ n}")
-    print()
-    
-    for n in [0, 5, 10, 15]:
-        elements = [i for i in range(N) if i >= n]
-        print(f"  S_{n:2d} = {{{', '.join(str(x) for x in elements)}, ...}}")
-    
-    print()
-    print("  Each S_n is cofinite (hence in any free ultrafilter)")
-    print("  Each element i eventually leaves: i ∉ S_{i+1}")
-    print()
-    print("  Overspill function f(i) = i:")
-    print("    - f(i) → ∞ (exceeds every standard bound)")
-    print("    - i ∈ S_{f(i)} = S_i iff i ≥ i ✓")
-    print()
+    w = NonstandardNat.omega(N)
+    print(f"\nω = {w}")
+
+    for n in [3, 10, 15]:
+        s = NonstandardNat.standard(n, N)
+        agree = w.le_on(s)  # indices where ω ≤ std(n)
+        cofinite = set(range(N)) - agree  # indices where ω > std(n)
+        print(f"\n  std({n}) = {s}")
+        print(f"  {{i | ω(i) > {n}}} = {sorted(cofinite)} (size {len(cofinite)}/{N})")
+        print(f"  This set is cofinite → in any free ultrafilter")
 
 
-def demonstrate_transfer():
-    """
-    Demonstrate algebraic transfer through ultraproducts.
-    """
-    print("=== Algebraic Transfer: Division Algorithm ===")
-    print()
-    
-    # Show division algorithm transfers coordinatewise
-    a_vals = [17, 23, 31, 42, 55]
-    d_vals = [5, 7, 4, 6, 8]
-    
-    print("  Division algorithm in each coordinate:")
-    for i, (a, d) in enumerate(zip(a_vals, d_vals)):
-        q, r = divmod(a, d)
-        assert a == d * q + r and r < d
-        print(f"    i={i}: {a} = {d} × {q} + {r}  (r={r} < d={d} ✓)")
-    
-    print()
-    print("  In the ultraproduct:")
-    print(f"    a = ({', '.join(str(x) for x in a_vals)}, ...)")
-    print(f"    d = ({', '.join(str(x) for x in d_vals)}, ...)")
-    print(f"    q = ({', '.join(str(a//d) for a, d in zip(a_vals, d_vals))}, ...)")
-    print(f"    r = ({', '.join(str(a%d) for a, d in zip(a_vals, d_vals))}, ...)")
-    print("    a = d·q + r and r < d hold coordinatewise → hold in ultraproduct!")
-    print()
+def demo_transfer():
+    """Demonstrate transfer of arithmetic identities."""
+    print("\n" + "=" * 60)
+    print("THEOREM 3: Transfer of Arithmetic Identities")
+    print("=" * 60)
+
+    N = 15
+    f = NonstandardNat(list(range(1, N + 1)), "f")
+    g = NonstandardNat([i * i for i in range(N)], "g")
+
+    print(f"\n  f = {f}")
+    print(f"  g = {g}")
+
+    # Commutativity: f + g = g + f
+    fg = f + g
+    gf = g + f
+    agree = fg.eq_on(gf)
+    print(f"\n  f + g = {fg}")
+    print(f"  g + f = {gf}")
+    print(f"  Agree on {len(agree)}/{N} indices (all): commutativity transfers ✓")
+
+    # Commutativity: f * g = g * f
+    fg_mul = f * g
+    gf_mul = g * f
+    agree_mul = fg_mul.eq_on(gf_mul)
+    print(f"\n  f * g = {fg_mul}")
+    print(f"  g * f = {gf_mul}")
+    print(f"  Agree on {len(agree_mul)}/{N} indices (all): mul commutativity transfers ✓")
+
+
+def demo_overspill():
+    """Demonstrate the overspill principle."""
+    print("\n" + "=" * 60)
+    print("THEOREM 2: Overspill Principle")
+    print("=" * 60)
+
+    N = 30
+    print(f"\nProperty P(n) = 'n² > 100'")
+    print(f"P holds for all n ≥ 11 (standard)")
+
+    satisfying = {i for i in range(N) if i * i > 100}
+    print(f"  {{i | P(i)}} = {sorted(satisfying)}")
+    print(f"  This is a cofinite set (missing only {{0,...,10}})")
+    print(f"  → In any free ultrafilter on ℕ")
+    print(f"  → By overspill, P also holds for non-standard numbers")
+
+
+def demo_composites_unbounded():
+    """Demonstrate that composites are unbounded in the ultrapower."""
+    print("\n" + "=" * 60)
+    print("THEOREM 4: Composites are Unbounded")
+    print("=" * 60)
+
+    N = 20
+    f = NonstandardNat.omega(N)
+    print(f"\n  Given: f = {f}")
+
+    # For each i, find a composite > f(i)
+    def next_composite(n):
+        return 4 * (n + 2)  # Always composite: 2 * 2*(n+2)
+
+    g_seq = [next_composite(f.sequence[i]) for i in range(N)]
+    g = NonstandardNat(g_seq, "g")
+    print(f"  Witness: g(i) = 4*(f(i)+2) = {g}")
+
+    exceeds = {i for i in range(N) if f.sequence[i] < g_seq[i]}
+    composite = {i for i in range(N)
+                 if g_seq[i] >= 4 and any(g_seq[i] % d == 0
+                                          for d in range(2, g_seq[i])
+                                          if d * d <= g_seq[i])}
+    print(f"  {{i | f(i) < g(i)}} has size {len(exceeds)}/{N} (all indices)")
+    print(f"  {{i | g(i) composite}} has size {len(composite)}/{N}")
+    print(f"  Both are univ → both in U → [g] is a composite element > [f] ✓")
+
+
+def demo_integral_domain():
+    """Demonstrate integral domain transfer."""
+    print("\n" + "=" * 60)
+    print("THEOREM 5: Integral Domain Transfer")
+    print("=" * 60)
+
+    N = 15
+    # Two sequences with f*g = 0 pointwise
+    f = [0, 3, 0, 5, 0, 7, 0, 9, 0, 11, 0, 13, 0, 15, 0]
+    g = [2, 0, 4, 0, 6, 0, 8, 0, 10, 0, 12, 0, 14, 0, 16]
+
+    product = [f[i] * g[i] for i in range(N)]
+    f_zero = {i for i in range(N) if f[i] == 0}
+    g_zero = {i for i in range(N) if g[i] == 0}
+
+    print(f"\n  f = {f}")
+    print(f"  g = {g}")
+    print(f"  f*g = {product} (all zeros)")
+    print(f"  {{i | f(i)=0}} = {sorted(f_zero)} (size {len(f_zero)})")
+    print(f"  {{i | g(i)=0}} = {sorted(g_zero)} (size {len(g_zero)})")
+    print(f"  Union covers all indices → ultrafilter selects one")
+    print(f"  → [f]=0 or [g]=0 in the ultraproduct ✓")
 
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║  Non-Standard Arithmetic: Demonstrations                    ║")
-    print("║  Ultrafilter Transfer & Characteristic Zero Emergence       ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
-    print()
-    
-    simulate_ultrafilter_pigeonhole(100, 5)
-    demonstrate_characteristic_zero()
-    demonstrate_non_archimedean_hierarchy()
-    demonstrate_compactness()
-    demonstrate_overspill()
-    demonstrate_transfer()
+    print("=" * 60)
+    print("NON-STANDARD ARITHMETIC: ULTRAPOWER DEMONSTRATIONS")
+    print("=" * 60)
+
+    demo_infinite_element()
+    demo_transfer()
+    demo_overspill()
+    demo_composites_unbounded()
+    demo_integral_domain()
+
+    uf = FiniteUltrafilter(20)
+    uf.demonstrate_dichotomy()
+
+    print("\n" + "=" * 60)
+    print("All demonstrations complete.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Non-Archimedean Hierarchy in Ultrapowers
+Visualization: Non-Standard Arithmetic — The Ultrapower Number Line
 
-Shows how the functions i, i², i³, i⁴ grow, demonstrating the
-hierarchy of "infinities" in the ultrapower.
+Shows how the ultrapower ℕ*/U extends ℕ with infinite elements,
+and visualizes the overspill principle.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 
 
-def plot_power_hierarchy():
-    """Plot the power hierarchy i^k for k = 1, 2, 3, 4."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+def plot_ultrapower_number_line():
+    """Visualize the extended number line ℕ ⊂ ℕ*."""
+    fig, axes = plt.subplots(3, 1, figsize=(14, 10))
 
-    # Left: linear scale
+    # Panel 1: Standard vs Non-Standard Number Line
     ax = axes[0]
-    x = np.arange(2, 20)
-    colors = ['#2196F3', '#FF5722', '#4CAF50', '#9C27B0']
-    labels = ['i', 'i²', 'i³', 'i⁴']
+    ax.set_title("The Ultrapower Number Line: ℕ ⊂ ℕ*/U", fontsize=14, fontweight='bold')
 
-    for k, (color, label) in enumerate(zip(colors, labels), 1):
-        ax.plot(x, x**k, 'o-', color=color, label=label,
-                markersize=4, linewidth=2)
+    # Standard part
+    for n in range(11):
+        ax.plot(n, 0, 'bo', markersize=8)
+        ax.annotate(str(n), (n, -0.15), ha='center', fontsize=9)
 
-    ax.set_xlabel('Index i', fontsize=12)
-    ax.set_ylabel('Value', fontsize=12)
-    ax.set_title('Power Hierarchy (Linear Scale)', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.set_yscale('linear')
-    ax.set_ylim(0, 5000)
-    ax.grid(True, alpha=0.3)
+    ax.annotate('...', (11.5, 0), ha='center', fontsize=14)
 
-    # Right: log scale
+    # Gap
+    ax.axvspan(13, 15, alpha=0.1, color='gray')
+    ax.annotate('gap', (14, 0.15), ha='center', fontsize=10, color='gray')
+
+    # Non-standard elements
+    for i, (x, label) in enumerate([(16, 'ω-1'), (17, 'ω'), (18, 'ω+1'),
+                                     (19.5, '2ω'), (21, 'ω²')]):
+        ax.plot(x, 0, 'r*', markersize=12)
+        ax.annotate(label, (x, -0.15), ha='center', fontsize=9, color='red')
+
+    ax.set_xlim(-0.5, 22)
+    ax.set_ylim(-0.4, 0.4)
+    ax.axhline(y=0, color='black', linewidth=0.5)
+    ax.set_yticks([])
+
+    blue_patch = mpatches.Patch(color='blue', label='Standard (finite)')
+    red_patch = mpatches.Patch(color='red', label='Non-standard (infinite)')
+    ax.legend(handles=[blue_patch, red_patch], loc='upper left')
+
+    # Panel 2: ω exceeds every standard element
     ax = axes[1]
-    x = np.arange(2, 50)
-    for k, (color, label) in enumerate(zip(colors, labels), 1):
-        ax.plot(x, x**k, '-', color=color, label=label, linewidth=2)
+    ax.set_title("Theorem 1: ω = [id] exceeds every std(n)", fontsize=14, fontweight='bold')
 
-    ax.set_xlabel('Index i', fontsize=12)
-    ax.set_ylabel('Value (log scale)', fontsize=12)
-    ax.set_title('Power Hierarchy (Log Scale)', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.set_yscale('log')
-    ax.grid(True, alpha=0.3)
-
-    # Add annotation
-    ax.annotate('Each level strictly dominates\nthe previous for i ≥ 2',
-                xy=(30, 30**3), fontsize=10,
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
-
-    plt.suptitle('Non-Archimedean Hierarchy in Ultrapowers',
-                 fontsize=16, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    plt.savefig('viz_hierarchy.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved viz_hierarchy.png")
-
-
-def plot_char_zero_emergence():
-    """Visualize characteristic zero emergence."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    # Generate primes
-    primes = []
-    candidate = 2
-    while len(primes) < 100:
-        if all(candidate % p != 0 for p in primes):
-            primes.append(candidate)
-        candidate += 1
-
-    # For each N, compute fraction of primes > N
-    N_values = range(1, 200)
-    fractions = []
-    for N in N_values:
-        frac = sum(1 for p in primes if p > N) / len(primes)
-        fractions.append(frac)
-
-    ax.plot(list(N_values), fractions, 'b-', linewidth=2)
-    ax.axhline(y=0.5, color='red', linestyle='--', alpha=0.5,
-               label='50% threshold')
-
-    # Mark key points
-    for N_mark in [10, 50, 100]:
-        frac = sum(1 for p in primes if p > N_mark) / len(primes)
-        ax.plot(N_mark, frac, 'ro', markersize=8)
-        ax.annotate(f'N={N_mark}: {frac:.0%}', xy=(N_mark, frac),
-                    xytext=(N_mark+10, frac+0.05), fontsize=9,
-                    arrowprops=dict(arrowstyle='->', color='red'))
-
-    ax.set_xlabel('Threshold N', fontsize=12)
-    ax.set_ylabel('Fraction of primes p > N', fontsize=12)
-    ax.set_title('Characteristic Zero Emergence:\nFraction of primes exceeding each threshold',
-                 fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('viz_char_zero.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved viz_char_zero.png")
-
-
-def plot_overspill_function():
-    """Visualize the overspill function."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    # S_n = {i | i >= n}, overspill function f(i) = i
     N = 30
-    x = np.arange(0, N)
+    indices = np.arange(N)
 
-    # Plot membership regions
-    for n in range(0, 10, 2):
-        ax.fill_between(x, n, 0, where=(x >= n),
-                         alpha=0.1, color=plt.cm.viridis(n/10))
-        ax.axhline(y=n, color=plt.cm.viridis(n/10), alpha=0.3,
-                   linestyle=':', linewidth=1)
-        if n < 8:
-            ax.text(N-1, n+0.3, f'S_{n}', fontsize=9,
-                    color=plt.cm.viridis(n/10))
+    # Plot std(n) for various n
+    for n in [5, 10, 15, 20]:
+        ax.axhline(y=n, color='blue', alpha=0.3, linestyle='--')
+        ax.annotate(f'std({n})', (0.5, n + 0.5), color='blue', fontsize=9)
 
-    # Plot f(i) = i (diagonal)
-    ax.plot(x, x, 'r-', linewidth=3, label='f(i) = i (overspill function)')
-    ax.plot(x, x, 'ro', markersize=4)
+    # Plot ω = id
+    ax.plot(indices, indices, 'r-', linewidth=2, label='ω(i) = i')
 
-    ax.set_xlabel('Index i', fontsize=12)
-    ax.set_ylabel('Level n / f(i)', fontsize=12)
-    ax.set_title('Overspill Principle: f(i) grows while staying in S_{f(i)}',
-                 fontsize=14)
-    ax.legend(fontsize=11)
-    ax.set_xlim(-0.5, N)
-    ax.set_ylim(-0.5, N)
-    ax.grid(True, alpha=0.3)
+    # Shade cofinite region for n=10
+    n_val = 10
+    exceed = indices >= n_val
+    ax.fill_between(indices, 0, indices, where=exceed, alpha=0.15, color='green')
+    ax.annotate(f'{{i | ω(i) ≥ {n_val}}} = cofinite → in U',
+                (20, 5), fontsize=10, color='green',
+                bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
+
+    ax.set_xlabel('Index i')
+    ax.set_ylabel('Value')
+    ax.legend()
+
+    # Panel 3: Overspill Principle
+    ax = axes[2]
+    ax.set_title("Theorem 2: Overspill — Properties Leak from Standard to Non-Standard",
+                 fontsize=14, fontweight='bold')
+
+    N = 40
+    indices = np.arange(N)
+
+    # Property: n² > 100
+    values = indices ** 2
+    threshold = 100
+    satisfies = values > threshold
+
+    ax.bar(indices[satisfies], values[satisfies], color='green', alpha=0.6, label='P(n) = "n² > 100" TRUE')
+    ax.bar(indices[~satisfies], values[~satisfies], color='red', alpha=0.6, label='P(n) FALSE')
+    ax.axhline(y=threshold, color='orange', linewidth=2, linestyle='--', label=f'Threshold = {threshold}')
+
+    # Mark the boundary
+    boundary = int(np.sqrt(threshold)) + 1
+    ax.axvline(x=boundary - 0.5, color='purple', linewidth=2, linestyle=':')
+    ax.annotate(f'n ≥ {boundary}: P always holds\n→ overspills to ℕ*',
+                (boundary + 1, max(values) * 0.7), fontsize=10,
+                bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+
+    ax.set_xlabel('n')
+    ax.set_ylabel('n²')
+    ax.set_ylim(0, max(values) * 1.1)
+    ax.legend(loc='upper left')
 
     plt.tight_layout()
-    plt.savefig('viz_overspill.png', dpi=150, bbox_inches='tight')
+    plt.savefig('ultrapower_visualization.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved viz_overspill.png")
+    print("Saved: ultrapower_visualization.png")
+
+
+def plot_transfer_and_domain():
+    """Visualize transfer of identities and integral domain property."""
+    fig, axes = plt.subplots(2, 1, figsize=(14, 8))
+
+    # Panel 1: Transfer of (a+b)² = a² + 2ab + b²
+    ax = axes[0]
+    ax.set_title("Theorem 3: Transfer of Arithmetic Identities to ℕ*/U",
+                 fontsize=14, fontweight='bold')
+
+    N = 25
+    indices = np.arange(N)
+    a = indices + 1
+    b = indices * 2 + 1
+
+    lhs = (a + b) ** 2
+    rhs = a ** 2 + 2 * a * b + b ** 2
+
+    ax.plot(indices, lhs, 'bo-', markersize=4, label='(a+b)²', alpha=0.7)
+    ax.plot(indices, rhs, 'r+', markersize=8, label='a² + 2ab + b²', alpha=0.7)
+
+    agree = np.array([1 if lhs[i] == rhs[i] else 0 for i in range(N)])
+    ax.annotate(f'Agreement: {sum(agree)}/{N} indices (all)\n'
+                f'→ Identity transfers to ℕ*/U ✓',
+                (N * 0.6, max(lhs) * 0.3), fontsize=11,
+                bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.8))
+
+    ax.set_xlabel('Index i')
+    ax.set_ylabel('Value')
+    ax.legend()
+
+    # Panel 2: Integral Domain Transfer
+    ax = axes[1]
+    ax.set_title("Theorem 5: Integral Domain Transfer — Zero Product Property",
+                 fontsize=14, fontweight='bold')
+
+    N = 20
+    indices = np.arange(N)
+
+    # f(i) = 0 for even i, nonzero for odd
+    f = np.array([0 if i % 2 == 0 else i * 3 + 1 for i in range(N)])
+    g = np.array([i * 2 + 1 if i % 2 == 0 else 0 for i in range(N)])
+    product = f * g
+
+    width = 0.25
+    ax.bar(indices - width, f, width, label='f(i)', color='blue', alpha=0.6)
+    ax.bar(indices, g, width, label='g(i)', color='red', alpha=0.6)
+    ax.bar(indices + width, product, width, label='f(i)·g(i)', color='green', alpha=0.6)
+
+    f_zero = set(i for i in range(N) if f[i] == 0)
+    g_zero = set(i for i in range(N) if g[i] == 0)
+
+    ax.annotate(f'{{i|f(i)=0}} = {sorted(f_zero)}\n'
+                f'{{i|g(i)=0}} = {sorted(g_zero)}\n'
+                f'Union = all indices\n'
+                f'Ultrafilter selects one → [f]=0 or [g]=0',
+                (N * 0.55, max(max(f), max(g)) * 0.5), fontsize=10,
+                bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+
+    ax.set_xlabel('Index i')
+    ax.set_ylabel('Value')
+    ax.legend()
+
+    plt.tight_layout()
+    plt.savefig('transfer_visualization.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: transfer_visualization.png")
 
 
 if __name__ == "__main__":
-    plot_power_hierarchy()
-    plot_char_zero_emergence()
-    plot_overspill_function()
-    print("All visualizations generated.")
+    plot_ultrapower_number_line()
+    plot_transfer_and_domain()
