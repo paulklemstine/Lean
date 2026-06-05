@@ -1,286 +1,235 @@
-# EML Interpolation Theory: Stone-Weierstrass Density and Quantitative Bounds for Exp-Log Networks
+# EML Interpolation Theory: Stone-Weierstrass for Exp-Log Networks
 
 ## Abstract
 
-We develop a formal mathematical theory of function approximation using **EML (Exponential-Multiply-Log) networks** — functions built from finite compositions of exp, log, addition, and multiplication. We introduce three novel mathematical objects: (1) the **EML depth filtration**, a complexity hierarchy indexed by the nesting depth of transcendental operations; (2) the **EML interpolation kernel** K(x,y) = exp(−(log(x/y))²), a positive-definite kernel capturing log-space geometry; and (3) the **EML modulus of continuity**, which measures function regularity in logarithmic coordinates. Our main results, fully formalized in Lean 4, include: the EML subalgebra separates points on compact K ⊂ (0,∞) (hence is dense in C(K,ℝ) by Stone-Weierstrass), the EML kernel satisfies sharp diagonal and off-diagonal bounds, the EML Vandermonde matrix is non-degenerate, and iterated exponential towers require exactly their height in composition depth. These results provide the first rigorous foundation for understanding approximation capabilities of exp-log neural architectures.
+We develop a rigorous mathematical framework for studying the approximation-theoretic properties of networks built from exponentiation, logarithm, multiplication, and addition — the **EML (Exp-Log-Multiply) algebra**. We formalize the EML term algebra as an inductive type with natural complexity measures (width and depth), prove that the log-free fragment generates a subalgebra of C(X, ℝ) that separates points on any compact space admitting an injective continuous coordinate map, and apply the Stone-Weierstrass theorem to establish density. Beyond the existential density result, we prove quantitative separation bounds via the mean value theorem for exp, establish a strict depth hierarchy for iterated exponentials, and completely classify the expressiveness of depth-1, width-1 networks. All results are formalized and verified in the Lean 4 proof assistant with the Mathlib library.
 
-**Keywords**: Stone-Weierstrass theorem, function approximation, EML networks, depth hierarchy, interpolation kernel, formal verification
+**Keywords:** Universal approximation, Stone-Weierstrass theorem, exponential networks, depth hierarchy, formal verification
 
 ---
 
 ## 1. Introduction
 
-The Stone-Weierstrass theorem is one of the cornerstones of analysis, guaranteeing that any continuous function on a compact space can be uniformly approximated by elements of a subalgebra that separates points and contains constants. While the classical theorem is existential — it says nothing about the structure of the approximating functions or the rate of convergence — modern applications demand more: explicit constructions, complexity bounds, and structural insights.
+The universal approximation theorem for neural networks (Cybenko 1989, Hornik et al. 1989) states that feedforward networks with a single hidden layer and sigmoidal activation can approximate any continuous function on a compact set to arbitrary accuracy. While foundational, this result is purely existential — it provides no bounds on the network size required to achieve a given approximation accuracy.
 
-In this paper, we develop these quantitative extensions for a specific and practically important class of functions: those built from exponentials, logarithms, addition, and multiplication. We call these **EML functions** (for Exponential-Multiply-Log). This class is of interest for several reasons:
+Classical approximation theory, by contrast, offers explicit rate bounds. The Jackson theorems give O(n^{-α}) rates for approximating Lipschitz-α functions by degree-n polynomials. The Stone-Weierstrass theorem provides a general sufficient condition for density: a subalgebra of C(X, ℝ) is dense if and only if it separates points (for compact Hausdorff X).
 
-1. **Neural network relevance**: Modern neural architectures routinely employ exp (softmax, attention), log (cross-entropy, normalization), and their compositions.
-2. **Mathematical richness**: The EML algebra is closed under differentiation and integration in a strong sense, unlike polynomial algebras.
-3. **Natural complexity measure**: The depth of exp/log nesting provides a well-defined complexity hierarchy analogous to circuit depth.
+This paper bridges the gap by studying **EML networks** — finite compositions of exp, log, addition, and multiplication. We show that:
 
-### 1.1 Main Contributions
+1. The EML algebra satisfies the hypotheses of Stone-Weierstrass (Theorem 3.1)
+2. Quantitative separation bounds arise from the mean value theorem for exp (Theorem 4.1)
+3. A strict depth hierarchy exists: iterated exponentials require depth proportional to their nesting (Theorem 5.1)
+4. Width-1, depth-1 networks are completely classified (Theorem 5.2)
 
-We introduce three novel mathematical structures and prove their fundamental properties:
+### 1.1 Related Work
 
-**EML Depth Filtration** (Definition 1). We define `EMLTerm`, a recursive type for EML expressions, and the `depth` function measuring the maximum nesting of exp/log operations. The **EML depth algebra** at level d, denoted A_d, consists of all functions representable by terms of depth ≤ d. We prove:
-- The filtration is monotone: d₁ ≤ d₂ implies A_{d₁} ⊆ A_{d₂}
-- Each level is closed under addition and multiplication
-- The union ⋃_d A_d equals the full EML algebra
+The exp-log-multiply framework connects to several research traditions:
 
-**EML Interpolation Kernel** (Definition 2). We define K(x,y) = exp(−(log(x/y))²) and prove:
-- Symmetry: K(x,y) = K(y,x) for positive x,y
-- Diagonal peak: K(x,x) = 1
-- Off-diagonal strict inequality: K(x,y) < 1 for x ≠ y
-- Nonnegativity: K(x,y) ≥ 0
-- Decay estimate: K(x,y) ≥ exp(−δ²) when |log(x) − log(y)| ≤ δ
+- **Analytic complexity theory** (Grigoriev, Karpinski): Studies the circuit complexity of computing analytic functions, where exp and log appear as basic gates.
+- **Pfaffian functions** (Khovanskii): EML functions are a subset of Pfaffian functions, which satisfy finiteness theorems for their zero sets.
+- **Neural network expressiveness** (Telgarsky 2016, Eldan-Shamir 2016): Depth separation results for ReLU networks; our depth hierarchy for EML networks is analogous but uses fundamentally different techniques.
+- **Tropical geometry** (Maclagan-Sturmfels): The log-limit of EML expressions connects to tropical semirings, providing a bridge to combinatorial optimization.
 
-**Stone-Weierstrass Density** (Theorem 1). The EML subalgebra on any compact K = [a,b] with a > 0 separates points and hence is dense in C(K,ℝ). Moreover, for any continuous f and ε > 0, there exists an element of the subalgebra within ε of f in the supremum norm.
+## 2. The EML Term Algebra
 
-All results are fully formalized and machine-verified in Lean 4 with Mathlib.
+### 2.1 Syntax
 
----
+**Definition 2.1 (EML Term).** The set of EML terms is defined inductively:
 
-## 2. Definitions
-
-### 2.1 EML Terms
-
-**Definition 1** (EML Term). An EML term is an element of the inductive type:
 ```
-EMLTerm ::= const(c) | var | exp(t) | log(t) | add(t₁, t₂) | mul(t₁, t₂)
+EMLTerm ::= var | const(c) | add(t₁, t₂) | mul(t₁, t₂) | expOf(t) | logOf(t)
 ```
-where c ∈ ℝ and t, t₁, t₂ are EML terms.
 
-The **evaluation** function `eval : EMLTerm → ℝ → ℝ` is defined recursively:
-- eval(const(c), x) = c
+where c ∈ ℝ is a real constant.
+
+**Definition 2.2 (Log-Free Fragment).** The log-free EML terms `EMLTermLF` omit the `logOf` constructor:
+
+```
+EMLTermLF ::= var | const(c) | add(t₁, t₂) | mul(t₁, t₂) | expOf(t)
+```
+
+### 2.2 Semantics
+
+**Definition 2.3 (Evaluation).** The evaluation function `eval : EMLTermLF → ℝ → ℝ` is defined recursively:
+
 - eval(var, x) = x
-- eval(exp(t), x) = exp(eval(t, x))
-- eval(log(t), x) = log(eval(t, x))
+- eval(const(c), x) = c
 - eval(add(t₁, t₂), x) = eval(t₁, x) + eval(t₂, x)
 - eval(mul(t₁, t₂), x) = eval(t₁, x) · eval(t₂, x)
+- eval(expOf(t), x) = exp(eval(t, x))
 
-**Definition 2** (Composition Depth). The depth function is:
-- depth(const(c)) = depth(var) = 0
-- depth(exp(t)) = depth(log(t)) = depth(t) + 1
-- depth(add(t₁, t₂)) = depth(mul(t₁, t₂)) = max(depth(t₁), depth(t₂))
+### 2.3 Complexity Measures
 
-**Definition 3** (Size). The size counts the number of nodes:
-- size(const(c)) = size(var) = 1
-- size(exp(t)) = size(log(t)) = size(t) + 1
-- size(add(t₁, t₂)) = size(mul(t₁, t₂)) = size(t₁) + size(t₂) + 1
+**Definition 2.4 (Width).** The width of a term counts its leaf nodes:
+- width(var) = width(const(c)) = 1
+- width(add(t₁, t₂)) = width(mul(t₁, t₂)) = width(t₁) + width(t₂)
+- width(expOf(t)) = width(t)
 
-### 2.2 EML Depth Algebra
+**Definition 2.5 (Depth).** The depth measures maximum nesting:
+- depth(var) = depth(const(c)) = 0
+- depth(add(t₁, t₂)) = depth(mul(t₁, t₂)) = max(depth(t₁), depth(t₂)) + 1
+- depth(expOf(t)) = depth(t) + 1
 
-**Definition 4**. The EML depth algebra at level d is:
+**Definition 2.6 (EML Complexity).** The complexity pair of a term t is (width(t), depth(t)), ordered by the product partial order. The **total cost** is width(t) · 2^{depth(t)}.
+
+**Proposition 2.7.** Width is always positive: width(t) ≥ 1 for all terms t.
+
+**Proposition 2.8.** Total cost is monotone in the complexity partial order.
+
+## 3. The EML Stone-Weierstrass Theorem
+
+### 3.1 Continuity
+
+**Theorem 3.0 (Continuity).** Every log-free EML term evaluates to a continuous function ℝ → ℝ.
+
+*Proof.* By structural induction: var is continuous (identity), const is continuous (constant function), add and mul preserve continuity, and exp ∘ f is continuous whenever f is continuous. □
+
+### 3.2 The EML Subalgebra
+
+Let X be a compact Hausdorff topological space and φ : X → ℝ a continuous function (the "coordinate map").
+
+**Definition 3.1.** The **EML function set** through φ is:
 ```
-A_d = { f : ℝ → ℝ | ∃ t : EMLTerm, depth(t) ≤ d ∧ f = eval(t) }
+F_φ = { f ∈ C(X, ℝ) | ∃ t : EMLTermLF, f = t.eval ∘ φ }
 ```
 
-### 2.3 EML Interpolation Kernel
-
-**Definition 5**. The EML interpolation kernel on (0,∞) is:
+**Definition 3.2.** The **EML subalgebra** A_φ is the subalgebra of C(X, ℝ) generated by F_φ:
 ```
-K(x, y) = exp(−(log(x/y))²)
+A_φ = Algebra.adjoin(ℝ, F_φ)
 ```
 
-### 2.4 Log-Diameter
+### 3.3 Point Separation
 
-**Definition 6**. The log-diameter of an interval [a,b] ⊂ (0,∞) is:
+**Theorem 3.1 (EML Separates Points).** If φ : X → ℝ is injective, then A_φ separates points.
+
+*Proof.* Given x₁ ≠ x₂ in X, since φ is injective, φ(x₁) ≠ φ(x₂). The function φ itself is in A_φ (via the term `var`), and φ(x₁) ≠ φ(x₂). □
+
+### 3.4 Density
+
+**Theorem 3.2 (EML Density — Main Theorem).** If φ : X → ℝ is injective, then the topological closure of A_φ equals C(X, ℝ):
 ```
-logDiam(a, b) = log(b) − log(a)
+cl(A_φ) = C(X, ℝ)
 ```
 
-### 2.5 EML Modulus of Continuity
+*Proof.* Immediate from the Stone-Weierstrass theorem (Mathlib: `subalgebra_topologicalClosure_eq_top_of_separatesPoints`) and Theorem 3.1. □
 
-**Definition 7**. The EML modulus of continuity of f on S ⊂ (0,∞) at scale δ is:
+**Corollary 3.3 (Uniform Approximation).** For any f ∈ C(X, ℝ) and ε > 0, there exists g ∈ A_φ with ‖f - g‖ < ε.
+
+**Corollary 3.4 (Interval Density).** EML functions are dense in C([a,b], ℝ) for any compact interval [a,b].
+
+## 4. Quantitative Separation Theory
+
+### 4.1 Exponential Separation Bound
+
+**Theorem 4.1 (Exp Separation Lower Bound).** For all x, y ∈ ℝ with x ≠ y:
 ```
-ω_EML(f, S, δ) = sup{ |f(x) − f(y)| : x,y ∈ S, |log(x) − log(y)| ≤ δ }
+|exp(x) - exp(y)| ≥ |x - y| · exp(min(x, y))
 ```
+
+*Proof.* By the mean value theorem, |exp(x) - exp(y)| = exp(c) · |x - y| for some c between x and y. Since c ≥ min(x, y), exp(c) ≥ exp(min(x, y)). The formal proof in Lean splits into cases x ≤ y and y ≤ x, using the inequality exp(t) ≥ 1 + t and algebraic manipulations. □
+
+**Remark.** This bound is tight when x = y (both sides are 0 in the limit) and captures the fundamental fact that exponential separation grows with the absolute position on the real line.
+
+### 4.2 Polynomial Representation
+
+**Theorem 4.2.** The monomial x^n can be represented by an EML term of width at most max(1, 2n).
+
+*Proof.* The term `emlPower(n)` defined by:
+- emlPower(0) = const(1)
+- emlPower(n+1) = mul(emlPower(n), var)
+
+evaluates to x^n (proved by induction using pow_succ) and has width at most max(1, 2n). □
+
+### 4.3 Horner Form Polynomials
+
+**Theorem 4.3.** Any polynomial ∑ aᵢxⁱ can be represented in Horner form as an EML term `emlPolynomial([a₀, a₁, ..., aₙ])` satisfying:
+```
+eval(emlPolynomial(a :: as), x) = a + x · eval(emlPolynomial(as), x)
+```
+
+## 5. Depth Hierarchy
+
+### 5.1 Iterated Exponentials
+
+**Definition 5.1.** The k-fold iterated exponential:
+- iterExp(0, x) = x
+- iterExp(k+1, x) = exp(iterExp(k, x))
+
+The corresponding EML term `emlIterExp(k)` has depth k and width 1.
+
+**Theorem 5.1 (Strict Monotonicity).** For all k, iterExp(k, ·) is strictly monotone.
+
+*Proof.* By induction: iterExp(0) = id is strictly monotone. If iterExp(k) is strictly monotone, then iterExp(k+1) = exp ∘ iterExp(k) is the composition of two strictly monotone functions. □
+
+### 5.2 Growth Rate Separation
+
+**Theorem 5.2 (Growth Hierarchy).** For all k and M > 0, there exists x₀ such that for all x ≥ x₀:
+```
+iterExp(k+1, x) > M · iterExp(k, x)
+```
+
+*Proof.* Since iterExp(k) → ∞ as x → ∞ (by strict monotonicity and unboundedness), and exp(t)/t → ∞ as t → ∞ (a standard result: `Real.tendsto_exp_div_pow_atTop`), we conclude that exp(iterExp(k, x)) / iterExp(k, x) → ∞. □
+
+**Corollary 5.3.** Each level of the iterated exponential hierarchy is strictly more expressive than the previous one: no finite linear combination of iterExp(k) terms can represent iterExp(k+1).
+
+### 5.3 Depth-1, Width-1 Classification
+
+**Theorem 5.3 (Classification).** Every EMLTermLF of width 1 and depth ≤ 1 computes exactly one of:
+1. A constant c
+2. The identity x ↦ x
+3. The exponential x ↦ exp(x)
+4. A constant exponential x ↦ exp(c)
+
+*Proof.* Width 1 eliminates add and mul (which have width ≥ 2). The remaining possibilities are var (case 2), const(c) (case 1), and expOf(s) where s has width 1 and depth 0. Depth 0 with width 1 forces s = var or s = const(c), giving cases 3 and 4. □
+
+### 5.4 Width-Depth Tradeoff
+
+**Theorem 5.4.** The function exp(exp(x)) has depth 2 and width 1 as an EML term, but any depth-1, width-1 term computes a different function.
+
+This is an immediate corollary of Theorem 5.3: none of the four width-1, depth-1 functions equals exp(exp(x)).
+
+## 6. The EMLComplexity Structure
+
+**Definition 6.1 (EMLComplexity).** An EML complexity pair is a structure `(width : ℕ, depth : ℕ)` equipped with:
+- Product partial order: (w₁, d₁) ≤ (w₂, d₂) ⟺ w₁ ≤ w₂ ∧ d₁ ≤ d₂
+- Total cost: totalCost(w, d) = w · 2^d
+- Monotonicity: totalCost is monotone in the partial order
+
+The total cost captures the intuition that depth provides *exponential* leverage: adding one level of depth can substitute for doubling the width.
+
+## 7. Falsifiable Conjecture
+
+**Conjecture 7.1 (Jackson-type Rate for EML).** For f ∈ Lip_α([0,1]) with Lipschitz constant L, there exists an EMLTermLF of width at most C · (L/ε)^{1/α} and depth at most ⌈1/α⌉ + 1 that approximates f uniformly within ε, where C is an absolute constant.
+
+**Computational Test.** For f(x) = |x - 1/2|^α on [0,1] (which is Lip_α with constant 1), numerically verify that EML networks of the predicted size achieve the predicted accuracy. Specifically:
+- α = 1: width O(1/ε), depth 2 should suffice
+- α = 1/2: width O(1/ε²), depth 3 should suffice
+
+This can be tested numerically by fitting EML networks to these target functions and measuring convergence rates.
+
+## 8. Discussion
+
+### 8.1 Comparison with ReLU Networks
+
+ReLU networks compute piecewise linear functions, whose approximation theory is well-understood (Yarotsky 2017). EML networks compute smooth (in fact, real-analytic) functions when the log-free fragment is used, making them better suited for approximating smooth target functions. The depth hierarchy for EML is based on *growth rate* rather than *oscillation*, which is the mechanism for ReLU depth separation.
+
+### 8.2 Connection to Tropical Geometry
+
+In the limit where multiplication is replaced by addition and addition by max (the "tropicalization" of the semiring), EML expressions become tropical polynomials. The density of tropical max-plus expressions in C(K) (established in the catalog entry `tropical_stone_weierstrass_eml_dense`) provides a parallel density result in the tropical setting. The EML framework thus sits at the intersection of classical analysis and tropical geometry.
+
+### 8.3 Practical Implications
+
+The explicit complexity measures (width, depth, total cost) provide a principled framework for neural architecture search. Rather than searching over architectures by trial and error, the EML complexity theory suggests optimal (width, depth) allocations for a given approximation target.
+
+## 9. References
+
+1. Weierstrass, K. (1885). Über die analytische Darstellbarkeit sogenannter willkürlicher Functionen einer reellen Veränderlichen.
+2. Stone, M.H. (1948). The generalized Weierstrass approximation theorem.
+3. Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function.
+4. Hornik, K., Stinchcombe, M., White, H. (1989). Multilayer feedforward networks are universal approximators.
+5. Telgarsky, M. (2016). Benefits of depth in neural networks. COLT.
+6. Yarotsky, D. (2017). Error bounds for approximations with deep ReLU networks.
 
 ---
 
-## 3. Main Results
-
-### 3.1 Depth Filtration Structure
-
-**Theorem 2** (Monotonicity). If d₁ ≤ d₂ then A_{d₁} ⊆ A_{d₂}.
-
-*Proof*. Immediate from the definition: if depth(t) ≤ d₁ ≤ d₂ then depth(t) ≤ d₂. □
-
-**Theorem 3** (Algebraic Closure). Each A_d is closed under addition and multiplication.
-
-*Proof*. If f = eval(t_f) with depth(t_f) ≤ d and g = eval(t_g) with depth(t_g) ≤ d, then f + g = eval(add(t_f, t_g)) with depth(add(t_f, t_g)) = max(depth(t_f), depth(t_g)) ≤ d. Similarly for multiplication. □
-
-**Theorem 4** (Union). The full EML algebra equals ⋃_d A_d.
-
-*Proof*. The forward inclusion is immediate (take d = depth(t)). The reverse inclusion follows because A_d ⊆ EMLAlgebra for all d. □
-
-### 3.2 Separation and Density
-
-**Theorem 5** (Separation). The EML subalgebra on [a,b] with a > 0 separates points.
-
-*Proof sketch*. The subalgebra Algebra.adjoin ℝ {ι} (where ι is the inclusion map x ↦ x) contains the identity map, which is injective on [a,b]. For any x ≠ y in [a,b], ι(x) = x ≠ y = ι(y), so the subalgebra separates x and y. □
-
-**Theorem 1** (Stone-Weierstrass Density for EML). The EML subalgebra is dense in C([a,b], ℝ) for any 0 < a ≤ b.
-
-*Proof*. By Theorem 5, the subalgebra separates points. By the Stone-Weierstrass theorem (Mathlib's `ContinuousMap.subalgebra_topologicalClosure_eq_top_of_separatesPoints`), its topological closure is all of C([a,b], ℝ). □
-
-**Corollary 1** (Approximation). For any continuous f ∈ C([a,b], ℝ) and ε > 0, there exists g in the EML subalgebra with ‖f − g‖ < ε.
-
-### 3.3 Kernel Properties
-
-**Theorem 6** (Kernel Symmetry). K(x,y) = K(y,x) for all positive x, y.
-
-*Proof*. log(x/y) = −log(y/x), so (log(x/y))² = (log(y/x))², and the result follows from exp being well-defined. □
-
-**Theorem 7** (Diagonal Peak). K(x,x) = 1 for all x > 0.
-
-*Proof*. K(x,x) = exp(−(log(1))²) = exp(0) = 1. □
-
-**Theorem 8** (Off-diagonal Bound). K(x,y) < 1 for all positive x ≠ y.
-
-*Proof*. If x ≠ y then x/y ≠ 1, so log(x/y) ≠ 0, so (log(x/y))² > 0, so −(log(x/y))² < 0, so exp(−(log(x/y))²) < exp(0) = 1. □
-
-**Theorem 9** (Lower Bound). If |log(x) − log(y)| ≤ δ then K(x,y) ≥ exp(−δ²).
-
-*Proof*. We have log(x/y) = log(x) − log(y), so (log(x/y))² ≤ δ², hence −(log(x/y))² ≥ −δ², and exp is monotone. □
-
-### 3.4 Vandermonde Non-degeneracy
-
-**Theorem 10** (EML Vandermonde). Given n distinct positive reals x₁, ..., xₙ, the matrix V with V_{ij} = x_i^j (i,j ∈ {0,...,n-1}) has nonzero determinant.
-
-*Proof*. This is the classical Vandermonde determinant result: det(V) = ∏_{i<j} (x_j − x_i) ≠ 0 when the x_i are distinct. In our Lean formalization, we reduce to Mathlib's `Matrix.det_vandermonde_ne_zero_iff`. □
-
-### 3.5 Depth Hierarchy
-
-**Theorem 11** (Exponential Tower Depth). The iterated exponential tower expTower(n, x) (defined by expTower(0, x) = x, expTower(n+1, x) = exp(expTower(n, x))) can be represented by an EML term of depth exactly n.
-
-*Proof*. By induction: the base case uses `var` (depth 0), and the inductive step wraps in `expOf` (adding 1 to the depth). □
-
-### 3.6 Approximation Bounds
-
-**Theorem 12** (Constant Approximation). For any L-Lipschitz function f on [a,b], the constant EML term g = const(f(a)) has depth 0, size 1, and satisfies |f(x) − g(x)| ≤ L · (b − a) for all x ∈ [a,b].
-
-*Proof*. For x ∈ [a,b], |f(x) − f(a)| ≤ L · |x − a| ≤ L · (b − a). □
-
----
-
-## 4. Algorithms
-
-### 4.1 EML Polynomial Approximation
-
-Given f ∈ C([a,b], ℝ) and degree n, construct the polynomial approximation:
-
-1. Compute Chebyshev nodes: x_k = (a+b)/2 + (b−a)/2 · cos(πk/n) for k = 0,...,n
-2. Evaluate f at nodes: y_k = f(x_k)
-3. Solve for polynomial coefficients via interpolation
-4. Convert polynomial to EML term using Horner's method:
-   p(x) = c₀ + x(c₁ + x(c₂ + ···)) uses only add, mul, const, var (depth 0)
-
-The resulting EML term has depth 0 and size O(n).
-
-### 4.2 EML Kernel Interpolation
-
-Given data points (x₁,y₁), ..., (xₙ,yₙ) with x_i > 0:
-
-1. Build kernel matrix K_{ij} = exp(−(log(x_i/x_j))²/σ²)
-2. Solve K·w = y for weights w
-3. Interpolant: f̂(x) = Σ_i w_i · exp(−(log(x/x_i))²/σ²)
-
-By the Vandermonde non-degeneracy theorem, the kernel matrix is always invertible when the x_i are distinct (for σ → ∞ this reduces to polynomial interpolation).
-
----
-
-## 5. Applications and Examples
-
-### 5.1 Approximation of sin(x) on [0.5, 3]
-
-Using Chebyshev polynomial interpolation (EML depth 0):
-- Degree 3: error ≈ 2.5 × 10⁻²
-- Degree 5: error ≈ 1.8 × 10⁻⁴
-- Degree 8: error ≈ 7.0 × 10⁻⁸
-- Degree 12: error ≈ 3.5 × 10⁻¹³
-
-This demonstrates exponential convergence for analytic functions.
-
-### 5.2 EML Kernel Interpolation of Power Laws
-
-For f(x) = x^{0.7} on [1, 10], EML kernel interpolation with bandwidth σ = 1 achieves:
-- 5 points: error ≈ 4 × 10⁻³
-- 10 points: error ≈ 2 × 10⁻⁵
-- 20 points: error ≈ 3 × 10⁻⁹
-
-The EML kernel is particularly efficient for power-law functions because they are smooth in log-space.
-
-### 5.3 Depth Hierarchy Example
-
-The function exp(exp(x)) requires depth 2. No depth-1 EML term can represent it exactly:
-- Any depth-1 term is a polynomial in exp(x), log(x), x, and constants
-- exp(exp(x)) grows doubly exponentially, which no such polynomial can match
-- On [0, 1]: exp(exp(x)) ranges from e ≈ 2.72 to e^e ≈ 15.15
-
----
-
-## 6. Discussion
-
-### 6.1 Relation to Neural Network Theory
-
-Our results provide theoretical support for the empirical observation that exp-log operations enhance neural network expressiveness. The depth hierarchy (Theorem 11) implies that shallow EML networks cannot represent deeply nested transcendental functions, providing a theoretical justification for deep architectures beyond the standard universal approximation theorems.
-
-### 6.2 The EML Kernel as a Reproducing Kernel
-
-The EML kernel K(x,y) = exp(−(log(x/y))²) is a radial basis function in log-space. It defines a reproducing kernel Hilbert space (RKHS) of functions on (0,∞) that are "smooth in log-space" — functions whose regularity is measured by the EML modulus of continuity. Functions in this RKHS can be approximated efficiently by kernel methods using the EML kernel, with convergence rates controlled by their EML modulus.
-
-### 6.3 Comparison with Classical Results
-
-The classical Weierstrass approximation theorem uses polynomials (EML depth 0). Our Stone-Weierstrass result extends this to the full EML hierarchy. The advantage is that higher-depth EML functions can approximate certain targets more efficiently — exp(exp(x)) requires unbounded polynomial degree but has exact EML depth 2.
-
-### 6.4 Falsifiable Conjecture
-
-**Conjecture** (EML Approximation Rate): For f with EML modulus ω_EML(f, [a,b], δ) ≤ C · δ^α (i.e., Hölder-α in log-space), there exists an EML term of depth 1 and size n approximating f to within C · n^{−α} · (logDiam(a,b))^α.
-
-**Test**: Verify numerically for f(x) = x^α on [1, e] with α = 0.5 and n = 1, 2, ..., 50. The error should decay as n^{−0.5}.
-
----
-
-## 7. Future Work
-
-1. **Quantitative depth separation**: Prove lower bounds on the EML term size needed to approximate depth-(d+1) functions using depth-d terms.
-2. **EML RKHS theory**: Characterize the RKHS associated with the EML kernel and prove embedding theorems relating Sobolev-type spaces in log-coordinates.
-3. **Multi-dimensional extension**: Extend the theory to compact subsets of (0,∞)^n with the product EML kernel.
-4. **Connection to tropical geometry**: The log-space formulation suggests connections to tropical algebraic geometry, where addition becomes max and multiplication becomes addition.
-
----
-
-## 8. References
-
-1. M.H. Stone, "Applications of the Theory of Boolean Rings to General Topology," *Trans. AMS*, 1937.
-2. K. Weierstrass, "Über die analytische Darstellbarkeit sogenannter willkürlicher Functionen einer reellen Veränderlichen," *Sitzungsberichte der Akademie zu Berlin*, 1885.
-3. G. Cybenko, "Approximation by Superpositions of a Sigmoidal Function," *Mathematics of Control, Signals, and Systems*, 1989.
-4. K. Hornik, M. Stinchcombe, H. White, "Multilayer Feedforward Networks are Universal Approximators," *Neural Networks*, 1989.
-
----
-
-## Appendix: Lean 4 Formalization Summary
-
-All main theorems are formalized in `Applications/EMLInterpolation.lean` using Lean 4 with Mathlib. The formalization includes:
-
-| Theorem | Lean name | Lines | Dependencies |
-|---------|-----------|-------|-------------|
-| Depth monotonicity | `EMLDepthAlgebra_mono` | 3 | — |
-| Algebraic closure (add) | `EMLDepthAlgebra_add` | 4 | — |
-| Algebraic closure (mul) | `EMLDepthAlgebra_mul` | 4 | — |
-| Filtration = algebra | `EMLAlgebra_eq_iUnion` | 6 | — |
-| Point separation | `eml_subalgebra_separatesPoints` | 3 | Mathlib |
-| S-W density | `eml_subalgebra_dense` | 3 | Mathlib S-W |
-| Approx existence | `eml_approx_of_continuous` | 4 | S-W density |
-| Kernel symmetry | `emlKernel_symm` | 2 | — |
-| Kernel peak | `emlKernel_max_at_diag` | 2 | — |
-| Kernel off-diag | `emlKernel_lt_one_off_diag` | 3 | — |
-| Kernel nonneg | `emlKernel_nonneg` | 2 | — |
-| Kernel lower bound | `emlKernel_lower_bound` | 2 | — |
-| Vandermonde | `eml_vandermonde_det_ne_zero` | 4 | Mathlib |
-| Tower depth | `expTower_depth` | 5 | — |
-| Constant approx | `eml_const_approx_error` | 4 | — |
-| Log-diam nonneg | `logDiam_nonneg` | 2 | — |
-
-Total: 16 theorems, 0 sorries, all verified by Lean's kernel.
+*All theorems in Sections 2-5 have been formally verified in Lean 4 with Mathlib. The complete formalization is available in the `Applications/` directory.*
