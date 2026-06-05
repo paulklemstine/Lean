@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "63d3cfd9",
     "filename": "speculative_category_theory_as_the_dna_of_mathemat.json",
     "pkg_num": 382,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.35944,
     "title": "Category Theory as the DNA of Mathematics: Theory Genomes, Mutation Distance, and Evolutionary Paths"
   },
   {
@@ -12229,8 +12229,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "speculative_category_theory_as_the_dna_of_mathemat",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.35944,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Category Theory as the DNA of Mathematics: Theory Genomes, Mutation Distance, and Evolutionary Paths"
     }
