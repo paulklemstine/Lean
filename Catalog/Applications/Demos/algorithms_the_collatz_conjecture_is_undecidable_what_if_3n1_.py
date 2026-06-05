@@ -1,289 +1,270 @@
 #!/usr/bin/env python3
 """
-Algorithms for the Collatz Affine Monoid Framework
+Algorithms for Collatz Orbit Analysis
 
-Type-hinted implementations of the core algorithms from the paper.
+Type-hinted implementations of the key algorithms from the research.
 """
 
+from fractions import Fraction
+from typing import List, Optional, Tuple, Dict
 from dataclasses import dataclass
-from typing import Optional
-import math
 
 
-@dataclass(frozen=True)
-class CAMElement:
-    """An element of the Collatz Affine Monoid.
+# =============================================================================
+# Algorithm 1: Affine Representation Computation
+# =============================================================================
 
-    Represents the affine map n ↦ (num * n + offset) / denom,
-    which is the cumulative effect of a Collatz orbit segment.
-
-    Attributes:
-        num: Coefficient of the starting value (always 3^s for valid elements)
-        offset: Additive term determined by the parity interleaving
-        denom: Denominator (always 2^e for valid elements)
+def compute_affine_coefficients(w: List[bool]) -> Tuple[Fraction, Fraction]:
     """
-    num: int
-    offset: int
-    denom: int
+    Compute the slope and intercept of the affine map for parity word w.
+    
+    Algorithm:
+        slope([]) = 1, intercept([]) = 0
+        For b :: rest:
+            If b (odd): slope = 3 * slope(rest), intercept = slope(rest) + intercept(rest)
+            If ¬b (even): slope = slope(rest) / 2, intercept = intercept(rest)
+    
+    Returns (slope, intercept) as exact fractions.
+    
+    Time: O(k) where k = len(w)
+    Space: O(k) for recursion (O(1) with iterative version)
+    """
+    if not w:
+        return Fraction(1), Fraction(0)
+    
+    rest_slope, rest_intercept = compute_affine_coefficients(w[1:])
+    
+    if w[0]:  # odd step
+        return 3 * rest_slope, rest_slope + rest_intercept
+    else:  # even step
+        return rest_slope / 2, rest_intercept
 
-    def eval(self, n: int) -> int:
-        """Evaluate the numerator: num * n + offset."""
-        return self.num * n + self.offset
 
-    def apply(self, n: int) -> float:
-        """Apply the full affine map: (num * n + offset) / denom."""
-        return self.eval(n) / self.denom
+def compute_affine_iterative(w: List[bool]) -> Tuple[Fraction, Fraction]:
+    """
+    Iterative version of affine coefficient computation.
+    
+    Works right-to-left through the word, building up the affine map.
+    
+    Time: O(k), Space: O(1) (excluding arbitrary-precision arithmetic)
+    """
+    slope = Fraction(1)
+    intercept = Fraction(0)
+    
+    for b in reversed(w):
+        if b:  # odd step
+            # New: slope' = 3 * slope, intercept' = slope + intercept
+            intercept = slope + intercept
+            slope = 3 * slope
+        else:  # even step
+            # New: slope' = slope / 2, intercept' = intercept
+            slope = slope / 2
+    
+    return slope, intercept
 
-    def compose(self, other: "CAMElement") -> "CAMElement":
-        """Monoid multiplication: apply self first, then other.
 
-        Corresponds to concatenating Collatz step sequences.
-
-        Algorithm:
-            Given f: n → (f.num*n + f.offset)/f.denom
-            and   g: m → (g.num*m + g.offset)/g.denom
-            Their composition g∘f is:
-                n → (g.num*f.num*n + g.num*f.offset + g.offset*f.denom) / (f.denom*g.denom)
-
-        Time: O(1)
-        Space: O(1)
-        """
-        return CAMElement(
-            num=other.num * self.num,
-            offset=other.num * self.offset + other.offset * self.denom,
-            denom=self.denom * other.denom
-        )
-
-    def maps_to_one(self, n: int) -> bool:
-        """Check if this CAM element maps n to 1: eval(n) == denom."""
-        return self.eval(n) == self.denom
-
-    @property
-    def contraction_ratio(self) -> float:
-        """The growth/contraction ratio: num/denom.
-        
-        If < 1: orbit segment contracts (on average)
-        If > 1: orbit segment expands
-        If = 1: perfectly balanced (only for identity)
-        """
-        return self.num / self.denom
-
-    @staticmethod
-    def identity() -> "CAMElement":
-        return CAMElement(1, 0, 1)
-
-    @staticmethod
-    def even_step() -> "CAMElement":
-        return CAMElement(1, 0, 2)
-
-    @staticmethod
-    def odd_step() -> "CAMElement":
-        return CAMElement(3, 1, 1)
-
+# =============================================================================
+# Algorithm 2: Cycle Candidate Computation
+# =============================================================================
 
 @dataclass
-class OrbitSignature:
-    """Records the key invariants of a Collatz orbit segment.
+class CycleCandidateResult:
+    """Result of cycle candidate analysis for a parity word."""
+    word: List[bool]
+    slope: Fraction
+    intercept: Fraction
+    candidate: Optional[Fraction]
+    is_positive_integer: bool
+    
+    def __repr__(self) -> str:
+        word_str = ''.join('O' if b else 'E' for b in self.word)
+        cand_str = str(self.candidate) if self.candidate else "undefined"
+        return (f"CycleCandidateResult(word={word_str}, slope={self.slope}, "
+                f"intercept={self.intercept}, candidate={cand_str}, "
+                f"is_positive_integer={self.is_positive_integer})")
 
-    Attributes:
-        odd_steps: Number of steps where the value was odd (s)
-        even_steps: Number of steps where the value was even (e)
+
+def analyze_cycle_candidate(w: List[bool]) -> CycleCandidateResult:
     """
-    odd_steps: int
-    even_steps: int
-
-    @property
-    def length(self) -> int:
-        return self.odd_steps + self.even_steps
-
-    @property
-    def growth_factor(self) -> int:
-        """3^s: the multiplicative growth from odd steps."""
-        return 3 ** self.odd_steps
-
-    @property
-    def shrink_factor(self) -> int:
-        """2^e: the multiplicative shrinkage from even steps."""
-        return 2 ** self.even_steps
-
-    @property
-    def is_contracting(self) -> bool:
-        """True if 3^s < 2^e: the orbit shrinks."""
-        return self.growth_factor < self.shrink_factor
-
-    @property
-    def is_expanding(self) -> bool:
-        """True if 3^s > 2^e: the orbit grows."""
-        return self.growth_factor > self.shrink_factor
-
-    @property
-    def odd_density(self) -> float:
-        """Fraction of odd steps: s/(s+e)."""
-        if self.length == 0:
-            return 0.0
-        return self.odd_steps / self.length
-
-    @property
-    def critical_density(self) -> float:
-        """The critical density threshold log(2)/log(6) ≈ 0.3869.
-        
-        Below this: contracting. Above this: expanding.
-        """
-        return math.log(2) / math.log(6)
-
-
-def collatz(n: int) -> int:
-    """The Collatz function: n/2 if even, 3n+1 if odd."""
-    return n // 2 if n % 2 == 0 else 3 * n + 1
-
-
-def collatz_orbit(n: int, max_steps: int = 10000) -> list[int]:
-    """Compute the Collatz orbit of n until reaching 1 or max_steps.
+    Analyze the cycle candidate for a parity word.
     
     Algorithm:
-        Iteratively apply collatz function, collecting values.
-        
-    Time: O(stopping_time(n))
-    Space: O(stopping_time(n))
+        1. Compute slope s and intercept c.
+        2. If s = 1, candidate is undefined (no unique fixed point).
+        3. Otherwise, candidate = c / (1 - s).
+        4. Check if candidate is a positive integer.
+    
+    Time: O(k) for coefficient computation + O(1) for analysis
     """
+    s, c = compute_affine_iterative(w)
+    
+    if s == 1:
+        return CycleCandidateResult(w, s, c, None, False)
+    
+    candidate = c / (1 - s)
+    is_pos_int = candidate > 0 and candidate.denominator == 1
+    
+    return CycleCandidateResult(w, s, c, candidate, is_pos_int)
+
+
+# =============================================================================
+# Algorithm 3: Valid Parity Word Enumeration
+# =============================================================================
+
+def enumerate_valid_words(k: int) -> List[List[bool]]:
+    """
+    Enumerate all valid parity words of length k.
+    
+    A parity word is valid if it contains no two consecutive True values
+    (by the parity exclusion theorem: after an odd Collatz step, the
+    result is always even).
+    
+    The count follows the Fibonacci sequence: F(k+2) valid words of length k.
+    
+    Algorithm: Dynamic programming / recursive enumeration with constraint.
+    
+    Time: O(F(k+2)) ≈ O(φ^k) where φ = golden ratio
+    Space: O(k * F(k+2)) to store all words
+    """
+    if k == 0:
+        return [[]]
+    if k == 1:
+        return [[False], [True]]
+    
+    result: List[List[bool]] = []
+    for w in enumerate_valid_words(k - 1):
+        result.append(w + [False])
+        if not w[-1]:
+            result.append(w + [True])
+    
+    return result
+
+
+def count_valid_words(k: int) -> int:
+    """Count valid parity words of length k without enumerating them.
+    
+    Returns F(k+2) where F is the Fibonacci sequence.
+    Time: O(k), Space: O(1)
+    """
+    if k == 0:
+        return 1
+    a, b = 1, 2  # F(2), F(3)
+    for _ in range(k - 1):
+        a, b = b, a + b
+    return b
+
+
+# =============================================================================
+# Algorithm 4: Systematic Cycle Elimination
+# =============================================================================
+
+def check_no_cycles_up_to(max_length: int) -> Tuple[bool, Optional[CycleCandidateResult]]:
+    """
+    Check that no valid parity word of length ≤ max_length has a positive
+    integer cycle candidate.
+    
+    Algorithm:
+        For each length k from 1 to max_length:
+            For each valid parity word w of length k:
+                If w has at least one odd and one even step (mixed):
+                    Compute cycle candidate
+                    If candidate is a positive integer: return (False, result)
+        Return (True, None)
+    
+    Time: O(sum_{k=1}^{max_length} F(k+2)) ≈ O(φ^{max_length+2})
+    """
+    for k in range(1, max_length + 1):
+        for w in enumerate_valid_words(k):
+            if not any(w) or all(w):
+                continue  # skip pure-even or pure-odd words
+            
+            result = analyze_cycle_candidate(w)
+            if result.is_positive_integer:
+                return False, result
+    
+    return True, None
+
+
+# =============================================================================
+# Algorithm 5: Orbit Complexity Profiling
+# =============================================================================
+
+@dataclass
+class OrbitProfile:
+    """Complete dynamical profile of a Collatz orbit."""
+    start: int
+    orbit: List[int]
+    stopping_time: int
+    peak_value: int
+    odd_count: int
+    even_count: int
+    odd_density: float
+    parity_word: List[bool]
+    affine_slope: Fraction
+    affine_intercept: Fraction
+
+
+def profile_orbit(n: int, max_steps: int = 10000) -> Optional[OrbitProfile]:
+    """
+    Compute the complete dynamical profile of n's Collatz orbit.
+    
+    Returns None if n doesn't reach 1 within max_steps.
+    
+    Time: O(stopping_time)
+    """
+    if n < 1:
+        return None
+    
     orbit = [n]
-    for _ in range(max_steps):
-        n = collatz(n)
-        orbit.append(n)
-        if n == 1:
-            break
-    return orbit
-
-
-def build_cam(n: int, steps: Optional[int] = None) -> CAMElement:
-    """Build the CAM element for the Collatz orbit of n.
+    parities: List[bool] = []
+    val = n
     
-    If steps is None, builds until reaching 1.
+    while val != 1 and len(orbit) < max_steps:
+        parities.append(val % 2 == 1)
+        val = 3 * val + 1 if val % 2 == 1 else val // 2
+        orbit.append(val)
     
-    Algorithm:
-        Starting from identity, at each step compose with
-        even_step or odd_step based on current value's parity.
-        
-    Time: O(steps)
-    Space: O(1) (not counting orbit storage)
-    """
-    cam = CAMElement.identity()
-    current = n
-    step_count = 0
-    while True:
-        if steps is not None and step_count >= steps:
-            break
-        if steps is None and current == 1:
-            break
-        if current % 2 == 0:
-            cam = cam.compose(CAMElement.even_step())
-            current = current // 2
-        else:
-            cam = cam.compose(CAMElement.odd_step())
-            current = 3 * current + 1
-        step_count += 1
-    return cam
-
-
-def compute_signature(n: int, steps: Optional[int] = None) -> OrbitSignature:
-    """Compute the orbit signature (odd_steps, even_steps) for n.
+    if val != 1:
+        return None
     
-    Algorithm:
-        Count parity at each step of the Collatz iteration.
-        
-    Time: O(steps)
-    Space: O(1)
-    """
-    odd_count = 0
-    even_count = 0
-    current = n
-    step_count = 0
-    while True:
-        if steps is not None and step_count >= steps:
-            break
-        if steps is None and current == 1:
-            break
-        if current % 2 == 0:
-            even_count += 1
-            current = current // 2
-        else:
-            odd_count += 1
-            current = 3 * current + 1
-        step_count += 1
-    return OrbitSignature(odd_count, even_count)
-
-
-def verify_affine_formula(n: int, k: int) -> bool:
-    """Verify: collatz^k(n) * cam.denom == cam.num * n + cam.offset.
+    stopping_time = len(orbit) - 1
+    peak = max(orbit)
+    odd_count = sum(1 for b in parities if b)
+    even_count = stopping_time - odd_count
+    odd_density = odd_count / stopping_time if stopping_time > 0 else 0.0
     
-    This is the central theorem of the CAM framework.
+    slope, intercept = compute_affine_iterative(parities)
     
-    Algorithm:
-        1. Compute collatz^k(n) by iteration
-        2. Build the CAM element for k steps
-        3. Check the algebraic identity
-        
-    Time: O(k)
-    Space: O(1)
-    """
-    # Compute collatz^k(n)
-    current = n
-    for _ in range(k):
-        current = collatz(current)
-
-    # Build CAM
-    cam = build_cam(n, k)
-
-    # Verify
-    return current * cam.denom == cam.eval(n)
-
-
-def find_cam_witness(n: int, max_steps: int = 10000) -> Optional[CAMElement]:
-    """Find a CAM element that maps n to 1, if one exists within max_steps.
-    
-    The Collatz conjecture states this always succeeds for n > 0.
-    
-    Algorithm:
-        Build CAM elements incrementally and check maps_to_one condition.
-        
-    Time: O(stopping_time(n)) if converges, O(max_steps) otherwise
-    Space: O(1)
-    """
-    cam = CAMElement.identity()
-    current = n
-    for _ in range(max_steps):
-        if current == 1:
-            return cam
-        if current % 2 == 0:
-            cam = cam.compose(CAMElement.even_step())
-            current = current // 2
-        else:
-            cam = cam.compose(CAMElement.odd_step())
-            current = 3 * current + 1
-    return None
-
-
-def barrier_depth(n: int, max_steps: int = 10000) -> Optional[int]:
-    """Compute the barrier depth: minimum steps to reach 1.
-    
-    Returns None if n doesn't converge within max_steps.
-    
-    Time: O(stopping_time(n))
-    Space: O(1)
-    """
-    current = n
-    for k in range(max_steps):
-        if current == 1:
-            return k
-        current = collatz(current)
-    return None
+    return OrbitProfile(
+        start=n,
+        orbit=orbit,
+        stopping_time=stopping_time,
+        peak_value=peak,
+        odd_count=odd_count,
+        even_count=even_count,
+        odd_density=odd_density,
+        parity_word=parities,
+        affine_slope=slope,
+        affine_intercept=intercept,
+    )
 
 
 if __name__ == "__main__":
-    # Quick test
-    for n in [1, 2, 3, 6, 27]:
-        cam = find_cam_witness(n)
-        sig = compute_signature(n)
-        depth = barrier_depth(n)
-        print(f"n={n}: depth={depth}, sig=({sig.odd_steps},{sig.even_steps}), "
-              f"CAM={cam}, contracting={sig.is_contracting}")
+    # Quick demo
+    print("Affine coefficients for [O, E, O, E]:")
+    w = [True, False, True, False]
+    s, c = compute_affine_iterative(w)
+    print(f"  Slope = {s}, Intercept = {c}")
+    print(f"  Cycle candidate = {c / (1 - s)} = {float(c / (1 - s)):.6f}")
+    
+    print("\nChecking no cycles up to length 20...")
+    ok, counterexample = check_no_cycles_up_to(20)
+    print(f"  No cycles found: {ok}")
+    
+    print("\nOrbit profile for n=27:")
+    p = profile_orbit(27)
+    if p:
+        print(f"  Stopping time: {p.stopping_time}")
+        print(f"  Peak value: {p.peak_value}")
+        print(f"  Odd density: {p.odd_density:.4f}")
+        print(f"  Affine slope: {float(p.affine_slope):.6e}")
