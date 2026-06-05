@@ -1,323 +1,330 @@
 #!/usr/bin/env python3
 """
-EML Differential Algebra — Algorithms
+EML Differential Algebra — Core Algorithms
 
-Implements the EML term algebra with syntactic differentiation,
-evaluation, and related algorithms.
+Type-hinted implementations of the EML Derivation Calculus operations:
+symbolic differentiation, evaluation, simplification, and derivation tower analysis.
 """
 
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Union, Callable
+from typing import Union
 import math
 
 
-# =============================================================================
-# EMLTerm — The EML Term Algebra
-# =============================================================================
+# ============================================================
+# Expression AST
+# ============================================================
 
-class EMLTerm:
-    """Base class for EML term algebra expressions."""
-    
-    def eval(self, x: float) -> float:
-        """Evaluate the term at x."""
-        raise NotImplementedError
-    
-    def sdiff(self) -> 'EMLTerm':
-        """Syntactic differentiation: returns a new EMLTerm."""
-        raise NotImplementedError
-    
-    def size(self) -> int:
-        """Count nodes in the expression tree."""
-        raise NotImplementedError
-    
-    def __repr__(self) -> str:
-        raise NotImplementedError
-
-
-@dataclass
-class Var(EMLTerm):
-    """The identity function x."""
-    def eval(self, x: float) -> float:
-        return x
-    
-    def sdiff(self) -> EMLTerm:
-        return Cst(1.0)
-    
-    def size(self) -> int:
-        return 1
-    
-    def __repr__(self) -> str:
-        return "x"
-
-
-@dataclass
-class Cst(EMLTerm):
-    """A constant c."""
+@dataclass(frozen=True)
+class Cnst:
+    """Constant expression."""
     c: float
-    
-    def eval(self, x: float) -> float:
-        return self.c
-    
-    def sdiff(self) -> EMLTerm:
-        return Cst(0.0)
-    
-    def size(self) -> int:
-        return 1
-    
-    def __repr__(self) -> str:
-        return f"{self.c:.4g}"
+
+@dataclass(frozen=True)
+class Var:
+    """Variable x."""
+    pass
+
+@dataclass(frozen=True)
+class Add:
+    """Pointwise addition."""
+    e1: Expr
+    e2: Expr
+
+@dataclass(frozen=True)
+class Mul:
+    """Pointwise multiplication."""
+    e1: Expr
+    e2: Expr
+
+@dataclass(frozen=True)
+class Neg:
+    """Pointwise negation."""
+    e: Expr
+
+@dataclass(frozen=True)
+class Inv:
+    """Pointwise reciprocal."""
+    e: Expr
+
+@dataclass(frozen=True)
+class Eexp:
+    """Exponential composition."""
+    e: Expr
+
+@dataclass(frozen=True)
+class Elog:
+    """Logarithmic composition."""
+    e: Expr
+
+Expr = Union[Cnst, Var, Add, Mul, Neg, Inv, Eexp, Elog]
 
 
-@dataclass
-class Add(EMLTerm):
-    """Sum of two terms."""
-    t1: EMLTerm
-    t2: EMLTerm
-    
-    def eval(self, x: float) -> float:
-        return self.t1.eval(x) + self.t2.eval(x)
-    
-    def sdiff(self) -> EMLTerm:
-        return Add(self.t1.sdiff(), self.t2.sdiff())
-    
-    def size(self) -> int:
-        return 1 + self.t1.size() + self.t2.size()
-    
-    def __repr__(self) -> str:
-        return f"({self.t1} + {self.t2})"
+# ============================================================
+# Algorithm 1: Symbolic Differentiation
+# ============================================================
+
+def symbolic_differentiate(e: Expr) -> Expr:
+    """
+    Compute the symbolic derivative of an EML expression.
+
+    Implements the standard differentiation rules:
+    - d/dx[c] = 0
+    - d/dx[x] = 1
+    - d/dx[f+g] = f' + g'  (sum rule)
+    - d/dx[f*g] = f'*g + f*g'  (product rule)
+    - d/dx[-f] = -f'
+    - d/dx[1/f] = -f'/f²  (reciprocal rule)
+    - d/dx[exp(f)] = f'*exp(f)  (chain rule)
+    - d/dx[log(f)] = f'/f  (chain rule)
+
+    Returns a new Expr representing the derivative.
+    Time complexity: O(size(e))
+    Space complexity: O(size(e)) for the output (which may be larger)
+    """
+    match e:
+        case Cnst(_):
+            return Cnst(0.0)
+        case Var():
+            return Cnst(1.0)
+        case Add(e1, e2):
+            return Add(symbolic_differentiate(e1), symbolic_differentiate(e2))
+        case Mul(e1, e2):
+            return Add(
+                Mul(symbolic_differentiate(e1), e2),
+                Mul(e1, symbolic_differentiate(e2))
+            )
+        case Neg(inner):
+            return Neg(symbolic_differentiate(inner))
+        case Inv(inner):
+            # d/dx[1/f] = -f' * (1/f)² = -f'/(f²)
+            return Neg(Mul(
+                symbolic_differentiate(inner),
+                Mul(Inv(inner), Inv(inner))
+            ))
+        case Eexp(inner):
+            # d/dx[exp(f)] = f' * exp(f)
+            return Mul(symbolic_differentiate(inner), Eexp(inner))
+        case Elog(inner):
+            # d/dx[log(f)] = f'/f
+            return Mul(symbolic_differentiate(inner), Inv(inner))
+        case _:
+            raise TypeError(f"Unknown expression type: {type(e)}")
 
 
-@dataclass
-class Neg(EMLTerm):
-    """Negation of a term."""
-    t: EMLTerm
-    
-    def eval(self, x: float) -> float:
-        return -self.t.eval(x)
-    
-    def sdiff(self) -> EMLTerm:
-        return Neg(self.t.sdiff())
-    
-    def size(self) -> int:
-        return 1 + self.t.size()
-    
-    def __repr__(self) -> str:
-        return f"(-{self.t})"
+# ============================================================
+# Algorithm 2: Semantic Evaluation
+# ============================================================
+
+def evaluate(e: Expr, x: float) -> float:
+    """
+    Evaluate an EML expression at a given point.
+
+    Time complexity: O(size(e))
+    Raises ValueError for invalid operations (log of non-positive, division by zero).
+    """
+    match e:
+        case Cnst(c):
+            return c
+        case Var():
+            return x
+        case Add(e1, e2):
+            return evaluate(e1, x) + evaluate(e2, x)
+        case Mul(e1, e2):
+            return evaluate(e1, x) * evaluate(e2, x)
+        case Neg(inner):
+            return -evaluate(inner, x)
+        case Inv(inner):
+            val = evaluate(inner, x)
+            if val == 0:
+                raise ValueError("Division by zero in Inv")
+            return 1.0 / val
+        case Eexp(inner):
+            return math.exp(evaluate(inner, x))
+        case Elog(inner):
+            val = evaluate(inner, x)
+            if val <= 0:
+                raise ValueError(f"Log of non-positive value: {val}")
+            return math.log(val)
+        case _:
+            raise TypeError(f"Unknown expression type: {type(e)}")
 
 
-@dataclass
-class Mul(EMLTerm):
-    """Product of two terms (Leibniz rule applies)."""
-    t1: EMLTerm
-    t2: EMLTerm
-    
-    def eval(self, x: float) -> float:
-        return self.t1.eval(x) * self.t2.eval(x)
-    
-    def sdiff(self) -> EMLTerm:
-        # Product rule: (f*g)' = f'*g + f*g'
-        return Add(Mul(self.t1.sdiff(), self.t2), Mul(self.t1, self.t2.sdiff()))
-    
-    def size(self) -> int:
-        return 1 + self.t1.size() + self.t2.size()
-    
-    def __repr__(self) -> str:
-        return f"({self.t1} * {self.t2})"
+# ============================================================
+# Algorithm 3: Expression Simplification
+# ============================================================
+
+def simplify(e: Expr) -> Expr:
+    """
+    Simplify an EML expression by applying algebraic identities:
+    - 0 + e → e, e + 0 → e
+    - 0 * e → 0, e * 0 → 0
+    - 1 * e → e, e * 1 → e
+    - -(-e) → e
+    - neg(0) → 0
+
+    This is a single-pass bottom-up simplification.
+    Time complexity: O(size(e))
+    """
+    match e:
+        case Cnst(_) | Var():
+            return e
+        case Add(e1, e2):
+            s1, s2 = simplify(e1), simplify(e2)
+            if isinstance(s1, Cnst) and s1.c == 0: return s2
+            if isinstance(s2, Cnst) and s2.c == 0: return s1
+            if isinstance(s1, Cnst) and isinstance(s2, Cnst):
+                return Cnst(s1.c + s2.c)
+            return Add(s1, s2)
+        case Mul(e1, e2):
+            s1, s2 = simplify(e1), simplify(e2)
+            if isinstance(s1, Cnst) and s1.c == 0: return Cnst(0.0)
+            if isinstance(s2, Cnst) and s2.c == 0: return Cnst(0.0)
+            if isinstance(s1, Cnst) and s1.c == 1: return s2
+            if isinstance(s2, Cnst) and s2.c == 1: return s1
+            if isinstance(s1, Cnst) and isinstance(s2, Cnst):
+                return Cnst(s1.c * s2.c)
+            return Mul(s1, s2)
+        case Neg(inner):
+            s = simplify(inner)
+            if isinstance(s, Cnst): return Cnst(-s.c)
+            if isinstance(s, Neg): return s.e
+            return Neg(s)
+        case Inv(inner):
+            s = simplify(inner)
+            if isinstance(s, Cnst) and s.c != 0:
+                return Cnst(1.0 / s.c)
+            return Inv(s)
+        case Eexp(inner):
+            return Eexp(simplify(inner))
+        case Elog(inner):
+            return Elog(simplify(inner))
+        case _:
+            return e
 
 
-@dataclass
-class Inv(EMLTerm):
-    """Multiplicative inverse 1/t."""
-    t: EMLTerm
-    
-    def eval(self, x: float) -> float:
-        v = self.t.eval(x)
-        if v == 0:
-            return float('inf')
-        return 1.0 / v
-    
-    def sdiff(self) -> EMLTerm:
-        # (1/f)' = -f'/(f^2)
-        return Neg(Mul(Inv(Mul(self.t, self.t)), self.t.sdiff()))
-    
-    def size(self) -> int:
-        return 1 + self.t.size()
-    
-    def __repr__(self) -> str:
-        return f"(1/{self.t})"
+# ============================================================
+# Algorithm 4: Expression Size Analysis
+# ============================================================
+
+def expr_size(e: Expr) -> int:
+    """Count nodes in an expression tree."""
+    match e:
+        case Cnst(_) | Var():
+            return 1
+        case Add(e1, e2) | Mul(e1, e2):
+            return 1 + expr_size(e1) + expr_size(e2)
+        case Neg(inner) | Inv(inner) | Eexp(inner) | Elog(inner):
+            return 1 + expr_size(inner)
+        case _:
+            raise TypeError(f"Unknown expression type: {type(e)}")
 
 
-@dataclass
-class Comp(EMLTerm):
-    """Composition t1 ∘ t2."""
-    t1: EMLTerm
-    t2: EMLTerm
-    
-    def eval(self, x: float) -> float:
-        return self.t1.eval(self.t2.eval(x))
-    
-    def sdiff(self) -> EMLTerm:
-        # Chain rule: (f∘g)' = (f'∘g) * g'
-        return Mul(Comp(self.t1.sdiff(), self.t2), self.t2.sdiff())
-    
-    def size(self) -> int:
-        return 1 + self.t1.size() + self.t2.size()
-    
-    def __repr__(self) -> str:
-        return f"({self.t1} ∘ {self.t2})"
+# ============================================================
+# Algorithm 5: Derivation Tower
+# ============================================================
 
+def derivation_tower(e: Expr, depth: int, simplify_each: bool = False) -> list[Expr]:
+    """
+    Compute the derivation tower of an expression to a given depth.
 
-@dataclass
-class ExpT(EMLTerm):
-    """The exponential function exp."""
-    def eval(self, x: float) -> float:
-        return math.exp(x)
-    
-    def sdiff(self) -> EMLTerm:
-        # d/dx exp = exp (FIXED POINT!)
-        return ExpT()
-    
-    def size(self) -> int:
-        return 1
-    
-    def __repr__(self) -> str:
-        return "exp"
+    The derivation tower is the sequence [e, sdiff(e), sdiff²(e), ...].
 
-
-@dataclass
-class LogT(EMLTerm):
-    """The natural logarithm log."""
-    def eval(self, x: float) -> float:
-        if x <= 0:
-            return float('-inf')
-        return math.log(x)
-    
-    def sdiff(self) -> EMLTerm:
-        # d/dx log = 1/x = inv(var)
-        return Inv(Var())
-    
-    def size(self) -> int:
-        return 1
-    
-    def __repr__(self) -> str:
-        return "log"
-
-
-# =============================================================================
-# The EML Function
-# =============================================================================
-
-def eml_term(t1: EMLTerm, t2: EMLTerm) -> EMLTerm:
-    """Construct eml(t1, t2) = exp(t1) - log(t2) as an EMLTerm."""
-    return Add(Comp(ExpT(), t1), Neg(Comp(LogT(), t2)))
-
-
-# =============================================================================
-# Algorithms
-# =============================================================================
-
-def syntactic_differentiate(term: EMLTerm, n: int = 1) -> EMLTerm:
-    """Apply syntactic differentiation n times.
-    
-    Algorithm: Recursively apply sdiff.
-    Time complexity: O(3^n * size(term)) — exponential swell.
-    Space complexity: Same as time (tree grows).
-    
     Args:
-        term: An EMLTerm to differentiate.
-        n: Number of times to differentiate.
-    
+        e: The base expression
+        depth: Number of derivatives to compute
+        simplify_each: If True, simplify after each differentiation step
+
     Returns:
-        The n-th syntactic derivative as an EMLTerm.
+        List of expressions [e, sdiff(e), ..., sdiff^depth(e)]
     """
-    result = term
-    for _ in range(n):
-        result = result.sdiff()
-    return result
+    tower: list[Expr] = [e]
+    current = e
+    for _ in range(depth):
+        current = symbolic_differentiate(current)
+        if simplify_each:
+            current = simplify(current)
+        tower.append(current)
+    return tower
 
 
-def verify_derivative(term: EMLTerm, x: float, h: float = 1e-7) -> tuple[float, float, float]:
-    """Verify syntactic differentiation against numerical differentiation.
-    
-    Args:
-        term: An EMLTerm.
-        x: Point at which to evaluate.
-        h: Step size for numerical derivative.
-    
-    Returns:
-        (syntactic_value, numerical_value, absolute_error)
+def tower_size_profile(e: Expr, depth: int, simplify_each: bool = False) -> list[int]:
     """
-    deriv_term = term.sdiff()
-    syntactic_val = deriv_term.eval(x)
-    numerical_val = (term.eval(x + h) - term.eval(x - h)) / (2 * h)
-    return syntactic_val, numerical_val, abs(syntactic_val - numerical_val)
+    Compute the size profile of a derivation tower.
 
-
-def expression_swell(term: EMLTerm, max_derivs: int = 8) -> list[int]:
-    """Measure the expression swell under iterated differentiation.
-    
-    Returns a list of sizes [size(t), size(t'), size(t''), ...].
+    Returns list of sizes [size(e), size(sdiff(e)), ...].
     """
-    sizes = [term.size()]
-    current = term
-    for _ in range(max_derivs):
-        current = current.sdiff()
-        sizes.append(current.size())
-    return sizes
+    tower = derivation_tower(e, depth, simplify_each)
+    return [expr_size(t) for t in tower]
 
 
-def wronskian(f: EMLTerm, g: EMLTerm, x: float) -> float:
-    """Compute the Wronskian W(f, g)(x) = f(x)*g'(x) - f'(x)*g(x)."""
-    f_val = f.eval(x)
-    g_val = g.eval(x)
-    f_deriv_val = f.sdiff().eval(x)
-    g_deriv_val = g.sdiff().eval(x)
-    return f_val * g_deriv_val - f_deriv_val * g_val
+# ============================================================
+# Algorithm 6: Validity Checker
+# ============================================================
+
+def is_valid_at(e: Expr, x: float) -> bool:
+    """
+    Check if an expression is valid at a given point.
+
+    An expression is valid if all Inv and Elog subexpressions
+    have nonzero arguments at x.
+    """
+    match e:
+        case Cnst(_) | Var():
+            return True
+        case Add(e1, e2) | Mul(e1, e2):
+            return is_valid_at(e1, x) and is_valid_at(e2, x)
+        case Neg(inner) | Eexp(inner):
+            return is_valid_at(inner, x)
+        case Inv(inner):
+            return is_valid_at(inner, x) and evaluate(inner, x) != 0
+        case Elog(inner):
+            return is_valid_at(inner, x) and evaluate(inner, x) != 0
+        case _:
+            raise TypeError(f"Unknown expression type: {type(e)}")
 
 
-# =============================================================================
+def has_no_inv_log(e: Expr) -> bool:
+    """Check if an expression is in the inv/log-free fragment."""
+    match e:
+        case Cnst(_) | Var():
+            return True
+        case Add(e1, e2) | Mul(e1, e2):
+            return has_no_inv_log(e1) and has_no_inv_log(e2)
+        case Neg(inner) | Eexp(inner):
+            return has_no_inv_log(inner)
+        case Inv(_) | Elog(_):
+            return False
+        case _:
+            raise TypeError(f"Unknown expression type: {type(e)}")
+
+
+# ============================================================
 # Main
-# =============================================================================
+# ============================================================
 
 if __name__ == "__main__":
-    print("EML Term Algebra with Syntactic Differentiation")
-    print("=" * 50)
-    
-    # Example 1: exp is a fixed point
-    t = ExpT()
-    print(f"\nTerm: {t}")
-    print(f"  sdiff(exp) = {t.sdiff()}")
-    print(f"  exp is a fixed point of differentiation!")
-    
-    # Example 2: x^2 = x * x
-    t2 = Mul(Var(), Var())
-    print(f"\nTerm: {t2}")
-    d = t2.sdiff()
-    print(f"  sdiff(x*x) = {d}")
-    print(f"  eval at x=3: {d.eval(3):.4f} (should be 6.0)")
-    
-    # Example 3: Expression swell
-    print(f"\nExpression swell for x*x:")
-    sizes = expression_swell(t2, 6)
-    for i, s in enumerate(sizes):
-        print(f"  d^{i}/dx^{i}: size = {s}")
-    
-    # Example 4: Wronskian
-    print(f"\nWronskian W(exp, log) at various points:")
-    for x in [0.5, 1.0, 1.5, 2.0]:
-        w = wronskian(ExpT(), LogT(), x)
-        print(f"  W(exp, log)({x:.1f}) = {w:.6f}")
-    
-    # Example 5: Verify derivatives
-    print(f"\nVerification of syntactic vs numerical derivatives:")
-    terms = [
-        ("exp", ExpT()),
-        ("log", LogT()),
-        ("x*x", Mul(Var(), Var())),
-        ("exp(x^2)", Comp(ExpT(), Mul(Var(), Var()))),
-    ]
-    for name, term in terms:
-        syn, num, err = verify_derivative(term, 1.5)
-        print(f"  d/dx({name}) at 1.5: syntactic={syn:.6f}, "
-              f"numerical={num:.6f}, error={err:.2e}")
+    # Example: Verify the exponential fixed point
+    exp_x = Eexp(Var())
+    tower = derivation_tower(exp_x, 5)
+    print("Derivation tower of exp(x) at x=1:")
+    for i, e in enumerate(tower):
+        val = evaluate(e, 1.0)
+        sz = expr_size(e)
+        print(f"  n={i}: eval={val:.6f} (e={math.e:.6f}), size={sz}")
+
+    # Example: Size growth analysis
+    print("\nSize growth profiles:")
+    for name, expr in [("exp(x)", Eexp(Var())),
+                        ("x*x", Mul(Var(), Var())),
+                        ("1/x", Inv(Var()))]:
+        sizes = tower_size_profile(expr, 5)
+        print(f"  {name}: {sizes}")
+
+    # Example: Simplification impact
+    print("\nSimplification impact on exp(x) tower:")
+    raw_sizes = tower_size_profile(Eexp(Var()), 5, simplify_each=False)
+    simp_sizes = tower_size_profile(Eexp(Var()), 5, simplify_each=True)
+    print(f"  Raw:        {raw_sizes}")
+    print(f"  Simplified: {simp_sizes}")
