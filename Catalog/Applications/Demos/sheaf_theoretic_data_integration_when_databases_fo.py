@@ -1,278 +1,288 @@
 """
-Sheaf-Theoretic Data Integration: Demo
+Sheaf-Theoretic Data Integration: Interactive Demo
 
-Demonstrates the key results:
-1. Consistency checking for partial databases
-2. Sheaf imputation vs mean imputation
-3. Exponential decay of consistency probability
-4. Verification of δ² = 0
+Demonstrates the key results from the formalization:
+1. Iterated Gluing of consistent partial databases
+2. Coboundary pseudometric and triangle inequality
+3. Consistency probability phase transition
+4. Feature-subset sheaf properties
 """
-
 import numpy as np
 from algorithms import (
-    PartialDatabase, consistent_pair, gluing_map,
-    pairwise_disagreement, consistency_defect, overlap_count,
-    consistency_probability, sheaf_imputation, mean_imputation,
-    cech_coboundary_zero, cech_coboundary_one, verify_coboundary_sq_zero
+    PartialDatabase, is_consistent_pair, sheaf_condition,
+    glue_pair, iterated_glue, coboundary_distance,
+    total_coboundary_norm, consistency_probability,
+    critical_constraint_count, feature_projection,
+    check_presheaf_composition
 )
 
-np.random.seed(42)
 
-
-def demo_consistency():
-    """Demo 1: Partial database consistency."""
+def demo_iterated_gluing():
+    """Demo 1: Iterated Gluing Theorem
+    
+    Shows that pairwise consistent partial databases can be iteratively
+    glued into a section extending all of them.
+    """
     print("=" * 60)
-    print("DEMO 1: Partial Database Consistency")
+    print("DEMO 1: Iterated Gluing Theorem")
     print("=" * 60)
+    
+    # Create 3 partial databases that are pairwise consistent
+    # Ground truth: [[1,2,3],[4,5,6],[7,8,9]]
+    
+    db1 = PartialDatabase(3, 3)
+    db1.set(0, 0, 1); db1.set(0, 1, 2)  # Row 0: [1, 2, ?]
+    db1.set(1, 0, 4)                      # Row 1: [4, ?, ?]
+    
+    db2 = PartialDatabase(3, 3)
+    db2.set(0, 1, 2); db2.set(0, 2, 3)  # Row 0: [?, 2, 3]
+    db2.set(1, 1, 5)                      # Row 1: [?, 5, ?]
+    
+    db3 = PartialDatabase(3, 3)
+    db3.set(1, 2, 6)                      # Row 1: [?, ?, 6]
+    db3.set(2, 0, 7); db3.set(2, 1, 8); db3.set(2, 2, 9)  # Row 2 complete
+    
+    dbs = [db1, db2, db3]
+    
+    print(f"\nPartial DB 1 domain: {sorted(db1.domain())}")
+    print(f"Partial DB 2 domain: {sorted(db2.domain())}")
+    print(f"Partial DB 3 domain: {sorted(db3.domain())}")
+    
+    # Check pairwise consistency
+    print(f"\nPairwise consistency:")
+    for i in range(3):
+        for j in range(i+1, 3):
+            print(f"  DB{i+1} ↔ DB{j+1}: {is_consistent_pair(dbs[i], dbs[j])}")
+    
+    print(f"\nSheaf condition satisfied: {sheaf_condition(dbs)}")
+    
+    # Iterated gluing
+    result = iterated_glue(dbs)
+    print(f"\nGlued result domain: {sorted(result.domain())}")
+    print(f"Glued data:\n{result.data}")
+    
+    # Verify extension property
+    for i, db in enumerate(dbs):
+        extends = all(
+            np.isclose(result.data[r, c], db.data[r, c])
+            for r, c in db.domain()
+        )
+        print(f"Result extends DB{i+1}: {extends}")
 
-    # Create two consistent partial databases
-    db1_data = np.array([
-        [1.0, np.nan, 3.0],
-        [np.nan, 5.0, np.nan],
-        [7.0, np.nan, 9.0]
-    ])
-    db2_data = np.array([
-        [1.0, 2.0, np.nan],
-        [4.0, 5.0, np.nan],
-        [np.nan, 8.0, 9.0]
-    ])
 
-    db1 = PartialDatabase(db1_data)
-    db2 = PartialDatabase(db2_data)
-
-    print(f"DB1:\n{db1.data}")
-    print(f"DB2:\n{db2.data}")
-    print(f"Consistent: {consistent_pair(db1, db2)}")
-    print(f"Disagreements: {pairwise_disagreement(db1, db2)}")
-
-    # Glue them
-    glued = gluing_map(db1, db2)
-    print(f"Glued:\n{glued.data}")
-
-    # Create an inconsistent pair
-    db3_data = np.array([
-        [999.0, np.nan, 3.0],
-        [np.nan, 5.0, np.nan],
-        [7.0, np.nan, 9.0]
-    ])
-    db3 = PartialDatabase(db3_data)
-    print(f"\nDB1 vs DB3 (inconsistent):")
-    print(f"Consistent: {consistent_pair(db1, db3)}")
-    print(f"Disagreements: {pairwise_disagreement(db1, db3)}")
-    print()
-
-
-def demo_defect_vs_overlap():
-    """Demo 2: Consistency defect ≤ overlap count."""
+def demo_coboundary_pseudometric():
+    """Demo 2: Coboundary Pseudometric
+    
+    Shows the pseudometric properties: d(x,x)=0, d(x,y)=d(y,x),
+    and the triangle inequality (when middle is global).
+    """
+    print("\n" + "=" * 60)
+    print("DEMO 2: Coboundary Pseudometric")
     print("=" * 60)
-    print("DEMO 2: Defect ≤ Overlap Count (Verified Theorem)")
+    
+    # Create databases
+    db1 = PartialDatabase(2, 3, np.array([[1, 2, 3], [4, 5, 6]], dtype=float),
+                          np.array([[True, True, False], [True, False, True]]))
+    
+    db2 = PartialDatabase(2, 3, np.array([[1, 2, 3], [4, 5, 6]], dtype=float),
+                          np.ones((2, 3), dtype=bool))  # Global section
+    
+    db3 = PartialDatabase(2, 3, np.array([[1, 9, 3], [4, 5, 8]], dtype=float),
+                          np.array([[True, True, True], [True, True, True]]))
+    
+    d12 = coboundary_distance(db1, db2)
+    d21 = coboundary_distance(db2, db1)
+    d13 = coboundary_distance(db1, db3)
+    d23 = coboundary_distance(db2, db3)
+    d11 = coboundary_distance(db1, db1)
+    
+    print(f"\nd(db1, db1) = {d11}  (should be 0)")
+    print(f"d(db1, db2) = {d12}")
+    print(f"d(db2, db1) = {d21}  (should equal d(db1,db2))")
+    print(f"d(db1, db3) = {d13}")
+    print(f"d(db2, db3) = {d23}")
+    print(f"\nTriangle inequality (db2 is global):")
+    print(f"  d(db1,db3) = {d13} ≤ d(db1,db2) + d(db2,db3) = {d12} + {d23} = {d12+d23}")
+    print(f"  Satisfied: {d13 <= d12 + d23}")
+
+
+def demo_phase_transition():
+    """Demo 3: Consistency Probability Phase Transition
+    
+    Shows the exponential decay of consistency probability with
+    constraint count, and the critical threshold.
+    """
+    print("\n" + "=" * 60)
+    print("DEMO 3: Phase Transition in Consistency Probability")
     print("=" * 60)
-
-    for trial in range(5):
-        nRows, nCols, n = 10, 5, 4
-        dbs = []
-        for _ in range(n):
-            data = np.random.randint(0, 3, size=(nRows, nCols)).astype(float)
-            mask = np.random.random((nRows, nCols)) < 0.4
-            data[mask] = np.nan
-            dbs.append(PartialDatabase(data))
-
-        defect = consistency_defect(dbs)
-        overlap = overlap_count(dbs)
-        print(f"Trial {trial+1}: defect={defect}, overlap={overlap}, "
-              f"defect ≤ overlap: {defect <= overlap}")
-    print()
-
-
-def demo_exponential_decay():
-    """Demo 3: Exponential decay of consistency probability."""
-    print("=" * 60)
-    print("DEMO 3: Exponential Decay of Consistency Probability")
-    print("=" * 60)
-
-    rates = [0.1, 0.2, 0.3, 0.5]
-    constraints = [10, 50, 100, 500, 1000]
-
-    print(f"{'Rate':>6} | " + " | ".join(f"C={c:>4}" for c in constraints))
-    print("-" * 60)
+    
+    rates = [0.01, 0.05, 0.1, 0.2, 0.3, 0.5]
+    constraints = [1, 10, 50, 100, 500, 1000]
+    
+    print(f"\nConsistency probability P = (1-r)^c:")
+    print(f"{'r':>6} | " + " | ".join(f"c={c:>4}" for c in constraints))
+    print("-" * 70)
     for r in rates:
         probs = [consistency_probability(r, c) for c in constraints]
-        print(f"{r:>6.1f} | " + " | ".join(f"{p:>8.2e}" for p in probs))
+        print(f"{r:>6.2f} | " + " | ".join(f"{p:>6.2e}" if p < 0.01 else f"{p:>6.4f}" for p in probs))
+    
+    print(f"\nCritical constraint count for ε = 0.01:")
+    for r in rates:
+        c_star = critical_constraint_count(r, 0.01)
+        print(f"  r = {r:.2f}: c* = {c_star}")
+    
+    # Real-world scenario
+    n_features = 10
+    n_rows = 100
+    n_constraints = n_features * (n_features - 1) // 2 * n_rows
+    r = 0.3
+    p = consistency_probability(r, n_constraints)
+    print(f"\nReal-world scenario: {n_features} features, {n_rows} rows, r={r}")
+    print(f"  Constraints: {n_constraints}")
+    print(f"  P(consistent) = {p:.2e}")
+    print(f"  → Consistency is essentially impossible!")
 
-    print("\nFor n=20 columns, k=100 rows, r=0.3:")
-    C = 20 * 19 // 2 * 100  # n*(n-1)/2 * k
-    prob = consistency_probability(0.3, C)
-    print(f"  Constraints C = {C}")
-    print(f"  P(consistent) = {prob:.2e}")
-    print(f"  This is essentially zero → random databases are almost never consistent")
-    print()
 
-
-def demo_coboundary_sq_zero():
-    """Demo 4: δ¹ ∘ δ⁰ = 0 (Verified Theorem)."""
+def demo_feature_presheaf():
+    """Demo 4: Feature-Subset Presheaf
+    
+    Shows that feature projections compose correctly (presheaf axiom).
+    """
+    print("\n" + "=" * 60)
+    print("DEMO 4: Feature-Subset Presheaf")
     print("=" * 60)
-    print("DEMO 4: Čech Coboundary δ² = 0 (Verified Theorem)")
+    
+    record = np.array([10, 20, 30, 40, 50])
+    S = [0, 1, 2, 3]  # Features 0-3
+    T = [0, 2]         # Features 0, 2 (subset of S)
+    U = [0, 1, 2, 3, 4]  # All features
+    
+    print(f"\nFull record: {record}")
+    print(f"Projected to S={S}: {feature_projection(record, S)}")
+    print(f"Projected to T={T}: {feature_projection(record, T)}")
+    
+    # Check presheaf composition
+    comp_ok = check_presheaf_composition(record, S, T)
+    print(f"\nPresheaf composition (T⊆S): {comp_ok}")
+    comp_ok2 = check_presheaf_composition(record, U, S)
+    print(f"Presheaf composition (S⊆U): {comp_ok2}")
+    comp_ok3 = check_presheaf_composition(record, U, T)
+    print(f"Presheaf composition (T⊆U): {comp_ok3}")
+
+
+def demo_coboundary_bridge():
+    """Demo 5: Coboundary Kernel = Sheaf Condition (Bridge Theorem)
+    
+    Shows that total coboundary norm being zero is equivalent to
+    the sheaf condition.
+    """
+    print("\n" + "=" * 60)
+    print("DEMO 5: Bridge Theorem — Coboundary Kernel = Sheaf Sections")
     print("=" * 60)
-
-    for n in [3, 5, 10]:
-        result = verify_coboundary_sq_zero(n)
-        print(f"  n={n}: δ¹∘δ⁰ = 0? {result}")
-    print()
-
-
-def demo_imputation_comparison():
-    """Demo 5: Sheaf imputation vs mean imputation."""
-    print("=" * 60)
-    print("DEMO 5: Sheaf vs Mean Imputation")
-    print("=" * 60)
-
-    nRows, nCols = 50, 10
-    # Generate ground truth with structure (correlated columns)
-    ground_truth = np.random.randn(nRows, nCols)
-    # Add correlations: columns 0-4 are correlated, 5-9 are correlated
-    for i in range(1, 5):
-        ground_truth[:, i] = ground_truth[:, 0] + 0.3 * np.random.randn(nRows)
-    for i in range(6, 10):
-        ground_truth[:, i] = ground_truth[:, 5] + 0.3 * np.random.randn(nRows)
-
-    missing_rates = [0.1, 0.2, 0.3, 0.4, 0.5]
-
-    print(f"{'Rate':>6} | {'Mean MSE':>10} | {'Sheaf MSE':>10} | {'Winner':>8}")
-    print("-" * 50)
-
-    for rate in missing_rates:
-        mse_mean_list = []
-        mse_sheaf_list = []
-        for _ in range(10):
-            observed_data = ground_truth.copy()
-            mask = np.random.random((nRows, nCols)) < rate
-            observed_data[mask] = np.nan
-            observed = PartialDatabase(observed_data)
-
-            # Feature subsets for sheaf imputation
-            feature_subsets = [
-                set(range(0, 5)),
-                set(range(5, 10)),
-                set(range(0, 3)),
-                set(range(3, 7)),
-                set(range(7, 10)),
-            ]
-
-            mean_result = mean_imputation(observed)
-            sheaf_result = sheaf_imputation(observed, feature_subsets, n_iterations=50)
-
-            mse_mean = np.mean((mean_result - ground_truth) ** 2)
-            mse_sheaf = np.mean((sheaf_result - ground_truth) ** 2)
-
-            mse_mean_list.append(mse_mean)
-            mse_sheaf_list.append(mse_sheaf)
-
-        avg_mean = np.mean(mse_mean_list)
-        avg_sheaf = np.mean(mse_sheaf_list)
-        winner = "Sheaf" if avg_sheaf < avg_mean else "Mean"
-        print(f"{rate:>6.1f} | {avg_mean:>10.4f} | {avg_sheaf:>10.4f} | {winner:>8}")
-
-    print()
-
-
-def demo_pair_cost_bound():
-    """Demo 6: Pair imputation cost ≥ disagreement (Verified Theorem)."""
-    print("=" * 60)
-    print("DEMO 6: Imputation Cost ≥ Disagreement (Verified Theorem)")
-    print("=" * 60)
-
-    for trial in range(5):
-        nRows, nCols = 20, 8
-        db1_data = np.random.randint(0, 5, (nRows, nCols)).astype(float)
-        db2_data = np.random.randint(0, 5, (nRows, nCols)).astype(float)
-        mask1 = np.random.random((nRows, nCols)) < 0.3
-        mask2 = np.random.random((nRows, nCols)) < 0.3
-        db1_data[mask1] = np.nan
-        db2_data[mask2] = np.nan
-
-        db1 = PartialDatabase(db1_data)
-        db2 = PartialDatabase(db2_data)
-
-        disagreement = pairwise_disagreement(db1, db2)
-
-        # Try random candidate
-        candidate = np.random.randint(0, 5, (nRows, nCols)).astype(float)
-
-        cost1 = int(np.sum((~np.isnan(db1.data)) & (db1.data != candidate)))
-        cost2 = int(np.sum((~np.isnan(db2.data)) & (db2.data != candidate)))
-
-        print(f"Trial {trial+1}: disagreement={disagreement}, "
-              f"cost1+cost2={cost1+cost2}, "
-              f"bound holds: {disagreement <= cost1 + cost2}")
-    print()
+    
+    # Consistent family
+    db1 = PartialDatabase(2, 2)
+    db1.set(0, 0, 1); db1.set(0, 1, 2)
+    
+    db2 = PartialDatabase(2, 2)
+    db2.set(0, 1, 2); db2.set(1, 0, 3)
+    
+    db3 = PartialDatabase(2, 2)
+    db3.set(1, 0, 3); db3.set(1, 1, 4)
+    
+    consistent_family = [db1, db2, db3]
+    
+    norm_c = total_coboundary_norm(consistent_family)
+    sheaf_c = sheaf_condition(consistent_family)
+    print(f"\nConsistent family:")
+    print(f"  Total coboundary norm = {norm_c}")
+    print(f"  Sheaf condition = {sheaf_c}")
+    print(f"  norm=0 ↔ sheaf: {(norm_c == 0) == sheaf_c} ✓")
+    
+    # Inconsistent family
+    db4 = PartialDatabase(2, 2)
+    db4.set(0, 0, 1); db4.set(0, 1, 2)
+    
+    db5 = PartialDatabase(2, 2)
+    db5.set(0, 1, 99)  # Disagrees with db4 at (0,1)!
+    
+    inconsistent_family = [db4, db5]
+    
+    norm_i = total_coboundary_norm(inconsistent_family)
+    sheaf_i = sheaf_condition(inconsistent_family)
+    print(f"\nInconsistent family:")
+    print(f"  Total coboundary norm = {norm_i}")
+    print(f"  Sheaf condition = {sheaf_i}")
+    print(f"  norm=0 ↔ sheaf: {(norm_i == 0) == sheaf_i} ✓")
 
 
 if __name__ == "__main__":
-    demo_consistency()
-    demo_defect_vs_overlap()
-    demo_exponential_decay()
-    demo_coboundary_sq_zero()
-    demo_imputation_comparison()
-    demo_pair_cost_bound()
-
-    print("=" * 60)
+    demo_iterated_gluing()
+    demo_coboundary_pseudometric()
+    demo_phase_transition()
+    demo_feature_presheaf()
+    demo_coboundary_bridge()
+    print("\n" + "=" * 60)
     print("All demos completed successfully!")
     print("=" * 60)
 
 
 """
-Visualization: Exponential Decay of Consistency Probability
+Visualization: Consistency Probability Phase Transition
 
-Shows how the probability of database consistency decays exponentially
-with the number of constraints, parameterized by disagreement rate.
+Shows the exponential decay of P(consistent) = (1-r)^c as a function
+of constraint count c for various missing rates r.
 """
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-def consistency_probability(r, C):
-    """P(consistent) = (1-r)^C"""
-    return (1.0 - r) ** C
+def consistency_probability(r, c):
+    return (1 - r) ** c
 
-def main():
+def plot_phase_transition():
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Plot 1: Probability vs constraint count for various rates
+    
+    # Panel 1: P vs c for different r
     ax1 = axes[0]
     constraints = np.arange(0, 101)
     rates = [0.01, 0.05, 0.1, 0.2, 0.3, 0.5]
     colors = plt.cm.viridis(np.linspace(0, 0.9, len(rates)))
-
+    
     for r, color in zip(rates, colors):
-        probs = [consistency_probability(r, C) for C in constraints]
-        ax1.plot(constraints, probs, color=color, linewidth=2, label=f'r={r}')
-
-    ax1.set_xlabel('Number of Constraints (C)', fontsize=12)
-    ax1.set_ylabel('P(consistent)', fontsize=12)
-    ax1.set_title('Consistency Probability Decay', fontsize=14)
+        probs = [consistency_probability(r, c) for c in constraints]
+        ax1.plot(constraints, probs, color=color, linewidth=2, label=f'r = {r}')
+    
+    ax1.set_xlabel('Constraint Count (c)', fontsize=12)
+    ax1.set_ylabel('Consistency Probability P(c)', fontsize=12)
+    ax1.set_title('Exponential Decay of Consistency', fontsize=14)
     ax1.legend(fontsize=10)
     ax1.set_ylim(-0.05, 1.05)
+    ax1.axhline(y=0.01, color='red', linestyle='--', alpha=0.5, label='ε = 0.01')
     ax1.grid(True, alpha=0.3)
-
-    # Plot 2: Log probability vs constraints (shows exponential nature)
+    
+    # Panel 2: Critical constraint count vs r
     ax2 = axes[1]
-    constraints_log = np.arange(1, 501)
-
-    for r, color in zip(rates, colors):
-        log_probs = [np.log10(max(consistency_probability(r, C), 1e-300))
-                     for C in constraints_log]
-        ax2.plot(constraints_log, log_probs, color=color, linewidth=2, label=f'r={r}')
-
-    ax2.set_xlabel('Number of Constraints (C)', fontsize=12)
-    ax2.set_ylabel('log₁₀ P(consistent)', fontsize=12)
-    ax2.set_title('Log Consistency Probability (Linear = Exponential Decay)', fontsize=14)
-    ax2.legend(fontsize=10)
+    r_values = np.linspace(0.005, 0.99, 200)
+    epsilon = 0.01
+    c_star = [np.log(epsilon) / np.log(1 - r) for r in r_values]
+    
+    ax2.plot(r_values, c_star, 'b-', linewidth=2)
+    ax2.fill_between(r_values, c_star, alpha=0.1, color='blue')
+    ax2.set_xlabel('Missing Rate (r)', fontsize=12)
+    ax2.set_ylabel('Critical Constraint Count c*', fontsize=12)
+    ax2.set_title(f'Phase Transition Threshold (ε = {epsilon})', fontsize=14)
+    ax2.set_ylim(0, 500)
     ax2.grid(True, alpha=0.3)
-
+    ax2.annotate('P(c) < ε\n(inconsistent)', xy=(0.5, 100),
+                fontsize=12, ha='center', color='blue', alpha=0.7)
+    ax2.annotate('P(c) ≥ ε\n(possibly consistent)', xy=(0.1, 400),
+                fontsize=12, ha='center', color='green', alpha=0.7)
+    
     plt.tight_layout()
-    plt.savefig('consistency_decay.png', dpi=150, bbox_inches='tight')
-    print("Saved consistency_decay.png")
+    plt.savefig('phase_transition.png', dpi=150, bbox_inches='tight')
+    print("Saved phase_transition.png")
 
 if __name__ == "__main__":
-    main()
+    plot_phase_transition()

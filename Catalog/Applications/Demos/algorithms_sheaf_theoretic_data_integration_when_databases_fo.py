@@ -1,224 +1,228 @@
 """
 Sheaf-Theoretic Data Integration: Algorithms
 
-Type-hinted implementations of the core algorithms for sheaf-based
-data imputation and consistency analysis.
+Implements the core algorithms from the formalized sheaf-theoretic framework
+for database consistency and imputation.
 """
-
-from typing import Optional, Dict, Tuple, List, Set, Callable
+from typing import Optional, Dict, Tuple, List, Set
 import numpy as np
-from dataclasses import dataclass, field
 
 
-@dataclass
+# ─── Core Data Structures ───────────────────────────────────────────
+
 class PartialDatabase:
-    """A partial database with missing entries (represented as NaN)."""
-    data: np.ndarray  # shape (nRows, nCols), NaN for missing
-    nRows: int = field(init=False)
-    nCols: int = field(init=False)
-
-    def __post_init__(self) -> None:
-        self.nRows, self.nCols = self.data.shape
-
+    """A partial database: a grid of optional values.
+    
+    Represents a database with nRows observations and nCols features,
+    where some entries may be missing (None).
+    """
+    
+    def __init__(self, nRows: int, nCols: int, data: Optional[np.ndarray] = None,
+                 mask: Optional[np.ndarray] = None):
+        self.nRows = nRows
+        self.nCols = nCols
+        if data is not None:
+            self.data = data.copy()
+            self.mask = mask if mask is not None else np.ones((nRows, nCols), dtype=bool)
+        else:
+            self.data = np.zeros((nRows, nCols))
+            self.mask = np.zeros((nRows, nCols), dtype=bool)
+    
+    def get(self, row: int, col: int) -> Optional[float]:
+        """Get value at position, or None if missing."""
+        if self.mask[row, col]:
+            return float(self.data[row, col])
+        return None
+    
+    def set(self, row: int, col: int, value: float) -> None:
+        """Set value at position."""
+        self.data[row, col] = value
+        self.mask[row, col] = True
+    
     def domain(self) -> Set[Tuple[int, int]]:
-        """Return the set of positions with non-missing values."""
-        rows, cols = np.where(~np.isnan(self.data))
-        return {(int(r), int(c)) for r, c in zip(rows, cols)}
-
-    def restrict(self, feature_subset: Set[int]) -> 'PartialDatabase':
-        """Restrict to a subset of columns (features)."""
-        cols = sorted(feature_subset)
-        return PartialDatabase(self.data[:, cols].copy())
+        """Return the set of positions with values."""
+        return {(r, c) for r in range(self.nRows) 
+                for c in range(self.nCols) if self.mask[r, c]}
 
 
-def consistent_pair(db1: PartialDatabase, db2: PartialDatabase) -> bool:
-    """Check if two partial databases agree on their overlap."""
-    assert db1.data.shape == db2.data.shape
-    mask = ~np.isnan(db1.data) & ~np.isnan(db2.data)
-    return bool(np.all(db1.data[mask] == db2.data[mask]))
+# ─── Algorithm 1: Consistency Check ─────────────────────────────────
+
+def is_consistent_pair(db1: PartialDatabase, db2: PartialDatabase,
+                       tol: float = 1e-10) -> bool:
+    """Check if two partial databases are consistent (agree on overlap).
+    
+    Implements the sheaf overlap condition: for every position where
+    both databases have values, the values must be equal.
+    
+    Time complexity: O(nRows * nCols)
+    """
+    assert db1.nRows == db2.nRows and db1.nCols == db2.nCols
+    overlap = db1.mask & db2.mask
+    if not overlap.any():
+        return True
+    return np.allclose(db1.data[overlap], db2.data[overlap], atol=tol)
 
 
-def gluing_map(db1: PartialDatabase, db2: PartialDatabase) -> PartialDatabase:
-    """Glue two partial databases, preferring db1 where both are defined."""
-    result = db1.data.copy()
-    missing_in_1 = np.isnan(result)
-    result[missing_in_1] = db2.data[missing_in_1]
-    return PartialDatabase(result)
+def sheaf_condition(dbs: List[PartialDatabase], tol: float = 1e-10) -> bool:
+    """Check if a family of partial databases satisfies the sheaf condition.
+    
+    The sheaf condition requires pairwise consistency for all pairs.
+    This is the Čech 0-cocycle condition.
+    
+    Time complexity: O(n^2 * nRows * nCols) where n = len(dbs)
+    """
+    for i in range(len(dbs)):
+        for j in range(i + 1, len(dbs)):
+            if not is_consistent_pair(dbs[i], dbs[j], tol):
+                return False
+    return True
 
 
-def pairwise_disagreement(db1: PartialDatabase, db2: PartialDatabase) -> int:
-    """Count positions where both are defined but disagree."""
-    mask = ~np.isnan(db1.data) & ~np.isnan(db2.data)
-    return int(np.sum(db1.data[mask] != db2.data[mask]))
+# ─── Algorithm 2: Gluing ────────────────────────────────────────────
+
+def glue_pair(db1: PartialDatabase, db2: PartialDatabase) -> PartialDatabase:
+    """Glue two partial databases, preferring db1 where both are defined.
+    
+    Implements the GluingMap from the formalization.
+    """
+    result = PartialDatabase(db1.nRows, db1.nCols)
+    result.data = db1.data.copy()
+    result.mask = db1.mask.copy()
+    
+    # Fill in from db2 where db1 is missing
+    fill_mask = ~db1.mask & db2.mask
+    result.data[fill_mask] = db2.data[fill_mask]
+    result.mask[fill_mask] = True
+    
+    return result
 
 
-def consistency_defect(dbs: List[PartialDatabase]) -> int:
-    """Total consistency defect of a family of partial databases."""
+def iterated_glue(dbs: List[PartialDatabase]) -> PartialDatabase:
+    """Iteratively glue a list of partial databases (left fold).
+    
+    By the Iterated Gluing Theorem, if the databases are pairwise
+    consistent, the result extends all of them.
+    
+    Time complexity: O(n * nRows * nCols)
+    """
+    if not dbs:
+        return PartialDatabase(0, 0)
+    
+    result = PartialDatabase(dbs[0].nRows, dbs[0].nCols)
+    for db in dbs:
+        result = glue_pair(result, db)
+    return result
+
+
+# ─── Algorithm 3: Coboundary Distance ───────────────────────────────
+
+def coboundary_distance(db1: PartialDatabase, db2: PartialDatabase,
+                        tol: float = 1e-10) -> int:
+    """Compute the coboundary distance between two partial databases.
+    
+    Counts positions where both are defined but disagree.
+    By the formalized theorem, this is a pseudometric (when the middle
+    element is a global section).
+    """
+    overlap = db1.mask & db2.mask
+    if not overlap.any():
+        return 0
+    return int(np.sum(~np.isclose(db1.data[overlap], db2.data[overlap], atol=tol)))
+
+
+def total_coboundary_norm(dbs: List[PartialDatabase], tol: float = 1e-10) -> int:
+    """Total coboundary norm of a family.
+    
+    By the Bridge Theorem (cobNorm_zero_iff_sheaf), this is zero
+    if and only if the family satisfies the sheaf condition.
+    """
     total = 0
-    for i, db_i in enumerate(dbs):
-        for j, db_j in enumerate(dbs):
-            total += pairwise_disagreement(db_i, db_j)
+    for i in range(len(dbs)):
+        for j in range(len(dbs)):
+            total += coboundary_distance(dbs[i], dbs[j], tol)
     return total
 
 
-def overlap_count(dbs: List[PartialDatabase]) -> int:
-    """Count total pairwise overlapping positions."""
-    total = 0
-    for db_i in dbs:
-        for db_j in dbs:
-            mask = ~np.isnan(db_i.data) & ~np.isnan(db_j.data)
-            total += int(np.sum(mask))
-    return total
+# ─── Algorithm 4: Sheaf Imputation ──────────────────────────────────
 
+def sheaf_imputation(observed: PartialDatabase, 
+                     candidates: List[PartialDatabase]) -> PartialDatabase:
+    """Find the candidate that best extends the observed data.
+    
+    Minimizes the sheaf imputation objective: the number of observed
+    positions where the candidate disagrees with the observation.
+    
+    This implements the sheaf-theoretic approach to missing data:
+    find the closest global section of the data sheaf.
+    """
+    if not candidates:
+        return observed
+    
+    best_candidate = candidates[0]
+    best_distance = coboundary_distance(observed, candidates[0])
+    
+    for candidate in candidates[1:]:
+        d = coboundary_distance(observed, candidate)
+        if d < best_distance:
+            best_distance = d
+            best_candidate = candidate
+    
+    return glue_pair(observed, best_candidate)
+
+
+# ─── Algorithm 5: Consistency Probability ────────────────────────────
 
 def consistency_probability(r: float, constraint_count: int) -> float:
-    """Probability of consistency: (1-r)^C."""
-    return (1.0 - r) ** constraint_count
-
-
-def sheaf_imputation(
-    observed: PartialDatabase,
-    feature_subsets: List[Set[int]],
-    n_iterations: int = 100
-) -> np.ndarray:
+    """Compute (1-r)^c, the probability of consistency.
+    
+    By the Phase Transition Theorem, this drops below any ε > 0
+    once c exceeds -log(ε)/log(1-r).
     """
-    Sheaf-based imputation algorithm.
+    if r <= 0:
+        return 1.0
+    if r >= 1:
+        return 0.0 if constraint_count > 0 else 1.0
+    return (1 - r) ** constraint_count
 
-    Iteratively fills missing values by enforcing consistency across
-    all pairs of feature subsets. This is the discrete analogue of
-    finding the closest global section to the observed partial section.
 
-    Algorithm:
-    1. Initialize missing values with column means.
-    2. For each iteration:
-       a. For each pair of feature subsets (S_i, S_j):
-          - Restrict to S_i ∩ S_j
-          - Average the values from both restrictions
-          - Update the imputed values to enforce consistency
-    3. Return the imputed database.
+def critical_constraint_count(r: float, epsilon: float) -> int:
+    """Find the smallest c such that (1-r)^c < epsilon.
+    
+    This is the phase transition threshold from the formalization.
     """
-    result = observed.data.copy()
-    missing_mask = np.isnan(result)
-
-    # Initialize with column means
-    col_means = np.nanmean(result, axis=0)
-    for c in range(result.shape[1]):
-        result[missing_mask[:, c], c] = col_means[c]
-
-    for iteration in range(n_iterations):
-        old_result = result.copy()
-        for i, S_i in enumerate(feature_subsets):
-            for j, S_j in enumerate(feature_subsets):
-                if i >= j:
-                    continue
-                overlap = S_i & S_j
-                if not overlap:
-                    continue
-                overlap_cols = sorted(overlap)
-                S_i_cols = sorted(S_i)
-                S_j_cols = sorted(S_j)
-
-                # Enforce consistency on overlap
-                for col in overlap_cols:
-                    vals_i = result[:, col].copy()
-                    vals_j = result[:, col].copy()
-                    # Average to enforce consistency
-                    avg = (vals_i + vals_j) / 2.0
-                    result[:, col] = avg
-
-        # Check convergence
-        if np.max(np.abs(result - old_result)) < 1e-10:
-            break
-
-    return result
+    if r <= 0 or r >= 1 or epsilon <= 0:
+        return 0
+    import math
+    return int(math.ceil(math.log(epsilon) / math.log(1 - r)))
 
 
-def mean_imputation(observed: PartialDatabase) -> np.ndarray:
-    """Simple mean imputation: fill missing with column means."""
-    result = observed.data.copy()
-    missing_mask = np.isnan(result)
-    col_means = np.nanmean(result, axis=0)
-    for c in range(result.shape[1]):
-        result[missing_mask[:, c], c] = col_means[c]
-    return result
+# ─── Algorithm 6: Feature-Subset Sheaf ──────────────────────────────
+
+def feature_projection(record: np.ndarray, features: List[int]) -> np.ndarray:
+    """Project a record onto a subset of features.
+    
+    This is the restriction map of the feature presheaf.
+    """
+    return record[features]
 
 
-def knn_imputation(observed: PartialDatabase, k: int = 5) -> np.ndarray:
-    """KNN imputation: fill missing with average of k nearest neighbors."""
-    result = observed.data.copy()
-    missing_mask = np.isnan(result)
-
-    # For each row with missing values
-    for row_idx in range(result.shape[0]):
-        missing_cols = np.where(missing_mask[row_idx])[0]
-        if len(missing_cols) == 0:
-            continue
-
-        # Find k nearest neighbors using non-missing features
-        observed_cols = np.where(~missing_mask[row_idx])[0]
-        if len(observed_cols) == 0:
-            # Fall back to column means
-            col_means = np.nanmean(result, axis=0)
-            result[row_idx, missing_cols] = col_means[missing_cols]
-            continue
-
-        # Compute distances using observed features
-        other_rows = [i for i in range(result.shape[0]) if i != row_idx]
-        distances = []
-        for other in other_rows:
-            shared = observed_cols[~np.isnan(result[other, observed_cols])]
-            if len(shared) == 0:
-                distances.append(float('inf'))
-            else:
-                dist = np.sqrt(np.sum((result[row_idx, shared] - result[other, shared]) ** 2))
-                distances.append(dist)
-
-        # Get k nearest
-        nearest = np.argsort(distances)[:k]
-        nearest_rows = [other_rows[i] for i in nearest if distances[i] < float('inf')]
-
-        if len(nearest_rows) == 0:
-            col_means = np.nanmean(result, axis=0)
-            result[row_idx, missing_cols] = col_means[missing_cols]
-        else:
-            for col in missing_cols:
-                vals = [result[r, col] for r in nearest_rows if not np.isnan(result[r, col])]
-                if vals:
-                    result[row_idx, col] = np.mean(vals)
-                else:
-                    result[row_idx, col] = np.nanmean(result[:, col])
-
-    return result
-
-
-def cech_coboundary_zero(sigma: Dict[int, float]) -> Dict[Tuple[int, int], float]:
-    """Čech coboundary δ⁰: from 0-cochains to 1-cochains."""
-    result = {}
-    keys = list(sigma.keys())
-    for i in keys:
-        for j in keys:
-            result[(i, j)] = sigma[j] - sigma[i]
-    return result
-
-
-def cech_coboundary_one(tau: Dict[Tuple[int, int], float]) -> Dict[Tuple[int, int, int], float]:
-    """Čech coboundary δ¹: from 1-cochains to 2-cochains."""
-    indices = set()
-    for (i, j) in tau:
-        indices.add(i)
-        indices.add(j)
-    result = {}
-    for i in indices:
-        for j in indices:
-            for k in indices:
-                val = tau.get((j, k), 0) - tau.get((i, k), 0) + tau.get((i, j), 0)
-                result[(i, j, k)] = val
-    return result
-
-
-def verify_coboundary_sq_zero(n: int = 5) -> bool:
-    """Verify δ¹ ∘ δ⁰ = 0 on random cochains."""
-    sigma = {i: np.random.randn() for i in range(n)}
-    tau = cech_coboundary_zero(sigma)
-    omega = cech_coboundary_one(tau)
-    return all(abs(v) < 1e-10 for v in omega.values())
+def check_presheaf_composition(record: np.ndarray,
+                                S: List[int], T: List[int]) -> bool:
+    """Verify presheaf functoriality: restriction composes correctly.
+    
+    Checks that projecting onto T ⊆ S gives the same result as
+    projecting directly onto T.
+    """
+    # T must be a subset of S
+    if not set(T).issubset(set(S)):
+        return False
+    
+    # Project onto S first, then restrict to T's positions within S
+    proj_S = feature_projection(record, S)
+    T_in_S = [S.index(t) for t in T]
+    proj_S_then_T = proj_S[T_in_S]
+    
+    # Project directly onto T
+    proj_T = feature_projection(record, T)
+    
+    return np.allclose(proj_S_then_T, proj_T)
