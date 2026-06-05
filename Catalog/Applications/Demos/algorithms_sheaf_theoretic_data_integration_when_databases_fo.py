@@ -1,228 +1,310 @@
+#!/usr/bin/env python3
 """
 Sheaf-Theoretic Data Integration: Algorithms
 
-Implements the core algorithms from the formalized sheaf-theoretic framework
-for database consistency and imputation.
+Type-hinted implementations of the core algorithms from the
+Consistency Nerve framework.
 """
-from typing import Optional, Dict, Tuple, List, Set
+
 import numpy as np
+from typing import Optional, List, Tuple, FrozenSet, Dict, Set
+from itertools import combinations
+from dataclasses import dataclass
 
 
-# ─── Core Data Structures ───────────────────────────────────────────
+# ========================================================
+# Core Data Types
+# ========================================================
 
+@dataclass
 class PartialDatabase:
-    """A partial database: a grid of optional values.
-    
-    Represents a database with nRows observations and nCols features,
-    where some entries may be missing (None).
+    """A partial database with optional entries.
+    Missing entries are represented as None in the data dict."""
+    nR: int
+    nC: int
+    data: Dict[Tuple[int, int], Optional[int]]
+
+    @classmethod
+    def from_array(cls, arr: np.ndarray, missing_val: int = -1) -> 'PartialDatabase':
+        nR, nC = arr.shape
+        data = {}
+        for r in range(nR):
+            for c in range(nC):
+                if arr[r, c] != missing_val:
+                    data[(r, c)] = int(arr[r, c])
+                else:
+                    data[(r, c)] = None
+        return cls(nR=nR, nC=nC, data=data)
+
+    def coverage(self) -> int:
+        return sum(1 for v in self.data.values() if v is not None)
+
+    def total_positions(self) -> int:
+        return self.nR * self.nC
+
+    def is_complete(self) -> bool:
+        return self.coverage() == self.total_positions()
+
+
+# ========================================================
+# Algorithm 1: Pairwise Consistency Check
+# ========================================================
+
+def pairwise_consistency_check(
+    db1: PartialDatabase, db2: PartialDatabase
+) -> Tuple[bool, int]:
     """
-    
-    def __init__(self, nRows: int, nCols: int, data: Optional[np.ndarray] = None,
-                 mask: Optional[np.ndarray] = None):
-        self.nRows = nRows
-        self.nCols = nCols
-        if data is not None:
-            self.data = data.copy()
-            self.mask = mask if mask is not None else np.ones((nRows, nCols), dtype=bool)
+    Check if two partial databases are consistent.
+    Returns (is_consistent, disagreement_count).
+
+    Time complexity: O(nR * nC)
+    Space complexity: O(1)
+    """
+    disagreements = 0
+    for pos in db1.data:
+        v1 = db1.data.get(pos)
+        v2 = db2.data.get(pos)
+        if v1 is not None and v2 is not None and v1 != v2:
+            disagreements += 1
+    return (disagreements == 0, disagreements)
+
+
+# ========================================================
+# Algorithm 2: Consistency Nerve Construction
+# ========================================================
+
+def build_consistency_nerve(
+    databases: List[PartialDatabase]
+) -> List[FrozenSet[int]]:
+    """
+    Build the consistency nerve: the abstract simplicial complex
+    whose faces are pairwise-consistent subfamilies.
+
+    Uses incremental construction: check pairs first (1-skeleton),
+    then build higher faces only from cliques of the 1-skeleton.
+
+    Time complexity: O(n^2 * nR * nC) for 1-skeleton, then
+                     O(2^n) worst case for higher faces
+    """
+    n = len(databases)
+
+    # Build adjacency (1-skeleton)
+    adj: Dict[int, Set[int]] = {i: set() for i in range(n)}
+    for i, j in combinations(range(n), 2):
+        consistent, _ = pairwise_consistency_check(databases[i], databases[j])
+        if consistent:
+            adj[i].add(j)
+            adj[j].add(i)
+
+    # Build all faces using Bron-Kerbosch for maximal cliques
+    faces: List[FrozenSet[int]] = [frozenset()]
+
+    def bron_kerbosch(R: Set[int], P: Set[int], X: Set[int]) -> None:
+        if not P and not X:
+            # R is a maximal clique
+            for k in range(len(R) + 1):
+                for subset in combinations(R, k):
+                    face = frozenset(subset)
+                    if face not in faces_set:
+                        faces.append(face)
+                        faces_set.add(face)
+            return
+        # Choose pivot
+        pivot = max(P | X, key=lambda v: len(adj[v] & P)) if P | X else None
+        if pivot is None:
+            return
+        for v in P - adj.get(pivot, set()):
+            bron_kerbosch(
+                R | {v},
+                P & adj[v],
+                X & adj[v]
+            )
+            P = P - {v}
+            X = X | {v}
+
+    faces_set: Set[FrozenSet[int]] = {frozenset()}
+    bron_kerbosch(set(), set(range(n)), set())
+
+    return sorted(faces, key=lambda f: (len(f), sorted(f)))
+
+
+# ========================================================
+# Algorithm 3: Consistency Rank Computation
+# ========================================================
+
+def compute_consistency_rank(databases: List[PartialDatabase]) -> int:
+    """
+    Compute the consistency rank: the clique number of the
+    consistency graph.
+
+    This equals the maximum cardinality of a pairwise-consistent
+    subfamily.
+    """
+    faces = build_consistency_nerve(databases)
+    return max(len(f) for f in faces)
+
+
+# ========================================================
+# Algorithm 4: Sheaf Gluing
+# ========================================================
+
+def glue_databases(
+    db1: PartialDatabase, db2: PartialDatabase
+) -> PartialDatabase:
+    """
+    Glue two partial databases, preferring db1 where defined.
+
+    Precondition: db1 and db2 should be consistent for
+    the result to be meaningful.
+    """
+    assert db1.nR == db2.nR and db1.nC == db2.nC
+    result_data = {}
+    for pos in db1.data:
+        v1 = db1.data.get(pos)
+        v2 = db2.data.get(pos)
+        if v1 is not None:
+            result_data[pos] = v1
         else:
-            self.data = np.zeros((nRows, nCols))
-            self.mask = np.zeros((nRows, nCols), dtype=bool)
-    
-    def get(self, row: int, col: int) -> Optional[float]:
-        """Get value at position, or None if missing."""
-        if self.mask[row, col]:
-            return float(self.data[row, col])
+            result_data[pos] = v2
+    return PartialDatabase(nR=db1.nR, nC=db1.nC, data=result_data)
+
+
+def iterated_gluing(
+    databases: List[PartialDatabase]
+) -> PartialDatabase:
+    """
+    Iteratively glue a list of databases.
+    Theorem: if all databases are pairwise consistent,
+    the result extends every input.
+    """
+    if not databases:
+        raise ValueError("Cannot glue empty list")
+    result = databases[0]
+    for db in databases[1:]:
+        result = glue_databases(result, db)
+    return result
+
+
+# ========================================================
+# Algorithm 5: Defect Spectrum
+# ========================================================
+
+def compute_defect_spectrum(
+    databases: List[PartialDatabase],
+    max_threshold: int = 20
+) -> List[Tuple[int, int, int]]:
+    """
+    Compute the defect spectrum: for each threshold t,
+    count pairs with disagreement ≤ t.
+
+    Returns: List of (threshold, edge_count, total_pairs)
+    """
+    n = len(databases)
+    total_pairs = n * (n - 1) // 2
+
+    # Precompute all pairwise disagreements
+    disagreements: List[int] = []
+    for i, j in combinations(range(n), 2):
+        _, d = pairwise_consistency_check(databases[i], databases[j])
+        disagreements.append(d)
+
+    spectrum = []
+    for t in range(max_threshold + 1):
+        count = sum(1 for d in disagreements if d <= t)
+        spectrum.append((t, count, total_pairs))
+
+    return spectrum
+
+
+# ========================================================
+# Algorithm 6: Sheaf Imputation
+# ========================================================
+
+def sheaf_imputation(
+    databases: List[PartialDatabase],
+    n_values: int = 10
+) -> Optional[PartialDatabase]:
+    """
+    Sheaf-based imputation: find the largest consistent subfamily,
+    glue them, then fill remaining positions by majority vote.
+
+    This implements the optimization:
+    min_candidate sum_{observed positions} disagreement(candidate, observed)
+    subject to: candidate extends a consistent subfamily
+    """
+    if not databases:
         return None
-    
-    def set(self, row: int, col: int, value: float) -> None:
-        """Set value at position."""
-        self.data[row, col] = value
-        self.mask[row, col] = True
-    
-    def domain(self) -> Set[Tuple[int, int]]:
-        """Return the set of positions with values."""
-        return {(r, c) for r in range(self.nRows) 
-                for c in range(self.nCols) if self.mask[r, c]}
+
+    # Find maximum consistent subfamily (max clique)
+    faces = build_consistency_nerve(databases)
+    max_face = max(faces, key=len)
+
+    if len(max_face) == 0:
+        return databases[0]  # fallback
+
+    # Glue the maximum consistent subfamily
+    consistent_dbs = [databases[i] for i in sorted(max_face)]
+    glued = iterated_gluing(consistent_dbs)
+
+    # Fill remaining by majority vote across all databases
+    nR, nC = glued.nR, glued.nC
+    result_data = dict(glued.data)
+
+    for r in range(nR):
+        for c in range(nC):
+            if result_data.get((r, c)) is None:
+                # Majority vote
+                votes: Dict[int, int] = {}
+                for db in databases:
+                    v = db.data.get((r, c))
+                    if v is not None:
+                        votes[v] = votes.get(v, 0) + 1
+                if votes:
+                    result_data[(r, c)] = max(votes, key=votes.get)
+
+    return PartialDatabase(nR=nR, nC=nC, data=result_data)
 
 
-# ─── Algorithm 1: Consistency Check ─────────────────────────────────
+# ========================================================
+# Algorithm 7: Feature Projection
+# ========================================================
 
-def is_consistent_pair(db1: PartialDatabase, db2: PartialDatabase,
-                       tol: float = 1e-10) -> bool:
-    """Check if two partial databases are consistent (agree on overlap).
-    
-    Implements the sheaf overlap condition: for every position where
-    both databases have values, the values must be equal.
-    
-    Time complexity: O(nRows * nCols)
+def project_to_columns(
+    db: PartialDatabase, columns: List[int]
+) -> PartialDatabase:
     """
-    assert db1.nRows == db2.nRows and db1.nCols == db2.nCols
-    overlap = db1.mask & db2.mask
-    if not overlap.any():
-        return True
-    return np.allclose(db1.data[overlap], db2.data[overlap], atol=tol)
+    Project a partial database to a subset of columns.
 
-
-def sheaf_condition(dbs: List[PartialDatabase], tol: float = 1e-10) -> bool:
-    """Check if a family of partial databases satisfies the sheaf condition.
-    
-    The sheaf condition requires pairwise consistency for all pairs.
-    This is the Čech 0-cocycle condition.
-    
-    Time complexity: O(n^2 * nRows * nCols) where n = len(dbs)
+    Theorem: projection preserves consistency and reduces disagreement.
     """
-    for i in range(len(dbs)):
-        for j in range(i + 1, len(dbs)):
-            if not is_consistent_pair(dbs[i], dbs[j], tol):
-                return False
-    return True
+    col_set = set(columns)
+    new_data = {}
+    for (r, c), v in db.data.items():
+        if c in col_set:
+            new_data[(r, c)] = v
+        else:
+            new_data[(r, c)] = None
+    return PartialDatabase(nR=db.nR, nC=db.nC, data=new_data)
 
 
-# ─── Algorithm 2: Gluing ────────────────────────────────────────────
+if __name__ == "__main__":
+    # Quick test
+    rng = np.random.default_rng(42)
+    gt = rng.integers(0, 5, size=(5, 4))
 
-def glue_pair(db1: PartialDatabase, db2: PartialDatabase) -> PartialDatabase:
-    """Glue two partial databases, preferring db1 where both are defined.
-    
-    Implements the GluingMap from the formalization.
-    """
-    result = PartialDatabase(db1.nRows, db1.nCols)
-    result.data = db1.data.copy()
-    result.mask = db1.mask.copy()
-    
-    # Fill in from db2 where db1 is missing
-    fill_mask = ~db1.mask & db2.mask
-    result.data[fill_mask] = db2.data[fill_mask]
-    result.mask[fill_mask] = True
-    
-    return result
+    dbs = []
+    for i in range(4):
+        arr = gt.copy()
+        mask = rng.random(size=(5, 4)) < 0.3
+        arr[mask] = -1
+        dbs.append(PartialDatabase.from_array(arr))
 
+    rank = compute_consistency_rank(dbs)
+    print(f"Consistency rank: {rank} / {len(dbs)}")
 
-def iterated_glue(dbs: List[PartialDatabase]) -> PartialDatabase:
-    """Iteratively glue a list of partial databases (left fold).
-    
-    By the Iterated Gluing Theorem, if the databases are pairwise
-    consistent, the result extends all of them.
-    
-    Time complexity: O(n * nRows * nCols)
-    """
-    if not dbs:
-        return PartialDatabase(0, 0)
-    
-    result = PartialDatabase(dbs[0].nRows, dbs[0].nCols)
-    for db in dbs:
-        result = glue_pair(result, db)
-    return result
+    glued = iterated_gluing(dbs)
+    print(f"Glued coverage: {glued.coverage()} / {glued.total_positions()}")
 
-
-# ─── Algorithm 3: Coboundary Distance ───────────────────────────────
-
-def coboundary_distance(db1: PartialDatabase, db2: PartialDatabase,
-                        tol: float = 1e-10) -> int:
-    """Compute the coboundary distance between two partial databases.
-    
-    Counts positions where both are defined but disagree.
-    By the formalized theorem, this is a pseudometric (when the middle
-    element is a global section).
-    """
-    overlap = db1.mask & db2.mask
-    if not overlap.any():
-        return 0
-    return int(np.sum(~np.isclose(db1.data[overlap], db2.data[overlap], atol=tol)))
-
-
-def total_coboundary_norm(dbs: List[PartialDatabase], tol: float = 1e-10) -> int:
-    """Total coboundary norm of a family.
-    
-    By the Bridge Theorem (cobNorm_zero_iff_sheaf), this is zero
-    if and only if the family satisfies the sheaf condition.
-    """
-    total = 0
-    for i in range(len(dbs)):
-        for j in range(len(dbs)):
-            total += coboundary_distance(dbs[i], dbs[j], tol)
-    return total
-
-
-# ─── Algorithm 4: Sheaf Imputation ──────────────────────────────────
-
-def sheaf_imputation(observed: PartialDatabase, 
-                     candidates: List[PartialDatabase]) -> PartialDatabase:
-    """Find the candidate that best extends the observed data.
-    
-    Minimizes the sheaf imputation objective: the number of observed
-    positions where the candidate disagrees with the observation.
-    
-    This implements the sheaf-theoretic approach to missing data:
-    find the closest global section of the data sheaf.
-    """
-    if not candidates:
-        return observed
-    
-    best_candidate = candidates[0]
-    best_distance = coboundary_distance(observed, candidates[0])
-    
-    for candidate in candidates[1:]:
-        d = coboundary_distance(observed, candidate)
-        if d < best_distance:
-            best_distance = d
-            best_candidate = candidate
-    
-    return glue_pair(observed, best_candidate)
-
-
-# ─── Algorithm 5: Consistency Probability ────────────────────────────
-
-def consistency_probability(r: float, constraint_count: int) -> float:
-    """Compute (1-r)^c, the probability of consistency.
-    
-    By the Phase Transition Theorem, this drops below any ε > 0
-    once c exceeds -log(ε)/log(1-r).
-    """
-    if r <= 0:
-        return 1.0
-    if r >= 1:
-        return 0.0 if constraint_count > 0 else 1.0
-    return (1 - r) ** constraint_count
-
-
-def critical_constraint_count(r: float, epsilon: float) -> int:
-    """Find the smallest c such that (1-r)^c < epsilon.
-    
-    This is the phase transition threshold from the formalization.
-    """
-    if r <= 0 or r >= 1 or epsilon <= 0:
-        return 0
-    import math
-    return int(math.ceil(math.log(epsilon) / math.log(1 - r)))
-
-
-# ─── Algorithm 6: Feature-Subset Sheaf ──────────────────────────────
-
-def feature_projection(record: np.ndarray, features: List[int]) -> np.ndarray:
-    """Project a record onto a subset of features.
-    
-    This is the restriction map of the feature presheaf.
-    """
-    return record[features]
-
-
-def check_presheaf_composition(record: np.ndarray,
-                                S: List[int], T: List[int]) -> bool:
-    """Verify presheaf functoriality: restriction composes correctly.
-    
-    Checks that projecting onto T ⊆ S gives the same result as
-    projecting directly onto T.
-    """
-    # T must be a subset of S
-    if not set(T).issubset(set(S)):
-        return False
-    
-    # Project onto S first, then restrict to T's positions within S
-    proj_S = feature_projection(record, S)
-    T_in_S = [S.index(t) for t in T]
-    proj_S_then_T = proj_S[T_in_S]
-    
-    # Project directly onto T
-    proj_T = feature_projection(record, T)
-    
-    return np.allclose(proj_S_then_T, proj_T)
+    spectrum = compute_defect_spectrum(dbs, max_threshold=5)
+    for t, count, total in spectrum:
+        print(f"  t={t}: {count}/{total} pairs are t-consistent")
