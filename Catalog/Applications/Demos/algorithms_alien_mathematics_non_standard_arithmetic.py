@@ -1,294 +1,295 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Core algorithms for non-standard arithmetic.
+Non-Standard Arithmetic: Algorithms
 
-Type-hinted implementations of:
-1. Ultrapower element representation
-2. Ultrapower arithmetic operations
-3. Overspill detection
-4. GCD transfer computation
-5. Polynomial identity verification
+Type-hinted implementations of the core algorithms and constructions
+from the non-standard arithmetic formalization.
 """
 
-from typing import List, Callable, Optional, Tuple, Dict, Any
-from dataclasses import dataclass
-from enum import Enum
+from typing import Callable, List, Optional, Set, Tuple
 import math
 
 
 # ============================================================
-# §1. Ultrapower Element Representation
+# Algorithm 1: Infinitesimal Classification
 # ============================================================
 
-@dataclass
-class UltraPowerElement:
-    """Represents an element of *ℕ = ℕ^ℕ / U.
+def classify_element(
+    x: float,
+    max_test_n: int = 10000
+) -> str:
+    """Classify an element as infinitesimal, bounded, or infinite.
 
-    In practice, we store a finite prefix of the representing sequence
-    and a description of its asymptotic behavior.
+    In a computationally bounded setting, we approximate the
+    algebraic definitions:
+    - Infinitesimal: n * |x| < 1 for all n up to max_test_n
+    - Bounded: |x| ≤ max_test_n
+    - Infinite: |x| > max_test_n
+
+    Args:
+        x: Element to classify
+        max_test_n: Maximum natural number to test against
+
+    Returns:
+        Classification string: "infinitesimal", "bounded", or "infinite"
     """
-    sequence: List[int]        # finite prefix
-    generator: Optional[Callable[[int], int]] = None  # infinite extension
-    name: str = "anonymous"
+    abs_x = abs(x)
 
-    def evaluate(self, i: int) -> int:
-        """Evaluate the representing sequence at index i."""
-        if i < len(self.sequence):
-            return self.sequence[i]
-        elif self.generator is not None:
-            return self.generator(i)
-        else:
-            raise IndexError(f"Index {i} out of range and no generator provided")
+    # Check infinitesimal: n * |x| < 1 for all positive n
+    if all(n * abs_x < 1.0 for n in range(1, max_test_n + 1)):
+        return "infinitesimal"
 
-    def is_standard(self, window: int = 100) -> Optional[int]:
-        """Check if this element appears to be standard (eventually constant).
+    # Check bounded: |x| ≤ some natural number
+    if abs_x <= max_test_n:
+        return "bounded"
 
-        Returns the standard value if found, None otherwise.
-        """
-        values = set()
-        for i in range(window):
-            values.add(self.evaluate(i))
-        if len(values) == 1:
-            return values.pop()
-        return None
+    return "infinite"
 
 
-def standard_element(n: int) -> UltraPowerElement:
-    """Create the standard element std(n) = [n, n, n, ...]."""
-    return UltraPowerElement(
-        sequence=[n] * 10,
-        generator=lambda _: n,
-        name=f"std({n})"
-    )
+def verify_ideal_property(
+    bounded_vals: List[float],
+    infinitesimal_vals: List[float],
+    max_n: int = 1000
+) -> List[Tuple[float, float, float, bool]]:
+    """Verify the ideal property: bounded × infinitesimal = infinitesimal.
 
+    Tests that for each pair (b, ε), the product b*ε remains
+    infinitesimal (up to computational bounds).
 
-def omega_element() -> UltraPowerElement:
-    """Create the canonical non-standard element ω = [0, 1, 2, ...]."""
-    return UltraPowerElement(
-        sequence=list(range(20)),
-        generator=lambda i: i,
-        name="ω"
-    )
-
-
-# ============================================================
-# §2. Ultrapower Arithmetic
-# ============================================================
-
-def ultrapower_add(a: UltraPowerElement, b: UltraPowerElement,
-                   window: int = 20) -> UltraPowerElement:
-    """Componentwise addition in *ℕ."""
-    seq = [a.evaluate(i) + b.evaluate(i) for i in range(window)]
-    gen = None
-    if a.generator and b.generator:
-        gen = lambda i: a.generator(i) + b.generator(i)
-    return UltraPowerElement(sequence=seq, generator=gen,
-                             name=f"({a.name} + {b.name})")
-
-
-def ultrapower_mul(a: UltraPowerElement, b: UltraPowerElement,
-                   window: int = 20) -> UltraPowerElement:
-    """Componentwise multiplication in *ℕ."""
-    seq = [a.evaluate(i) * b.evaluate(i) for i in range(window)]
-    gen = None
-    if a.generator and b.generator:
-        gen = lambda i: a.generator(i) * b.generator(i)
-    return UltraPowerElement(sequence=seq, generator=gen,
-                             name=f"({a.name} * {b.name})")
-
-
-def ultrapower_compare(a: UltraPowerElement, b: UltraPowerElement,
-                       window: int = 100) -> str:
-    """Compare elements: returns '<', '>', '=', or '?' (undetermined).
-
-    Uses majority voting on a finite window as a heuristic for the
-    ultrafilter selection.
+    Returns list of (b, eps, product, is_product_infinitesimal).
     """
-    less_count = 0
-    greater_count = 0
-    equal_count = 0
-    for i in range(window):
-        ai, bi = a.evaluate(i), b.evaluate(i)
-        if ai < bi:
-            less_count += 1
-        elif ai > bi:
-            greater_count += 1
-        else:
-            equal_count += 1
-
-    total = less_count + greater_count + equal_count
-    if less_count > total * 0.9:
-        return "<"
-    elif greater_count > total * 0.9:
-        return ">"
-    elif equal_count > total * 0.9:
-        return "="
-    else:
-        return "?"
+    results = []
+    for b in bounded_vals:
+        for eps in infinitesimal_vals:
+            product = b * eps
+            is_inf = all(n * abs(product) < 1.0 for n in range(1, max_n + 1))
+            results.append((b, eps, product, is_inf))
+    return results
 
 
 # ============================================================
-# §3. Overspill Detection
+# Algorithm 2: Ultrafilter Simulation
 # ============================================================
 
-def detect_overspill(
-    property_fn: Callable[[int], bool],
-    max_standard: int = 10000,
-    overspill_test: int = 10**8
-) -> Dict[str, Any]:
-    """Detect overspill: if property holds for all n < max_standard,
-    test whether it 'spills over' to larger values.
+class CofiniteUltrafilter:
+    """Simulates a 'cofinite-like' ultrafilter on finite subsets of ℕ.
 
-    Returns a report dict.
+    A free ultrafilter on ℕ contains all cofinite sets.
+    We simulate this by declaring a set S ⊆ [0, N) to be 'U-large'
+    if its complement in [0, N) has size < threshold.
     """
-    # Check standard range
-    standard_holds = True
-    first_failure = None
-    for n in range(max_standard):
-        if not property_fn(n):
-            standard_holds = False
-            first_failure = n
-            break
 
-    # Check overspill candidates
-    overspill_values = [max_standard * 10, max_standard * 100, overspill_test]
-    overspill_results = {}
-    for val in overspill_values:
-        try:
-            overspill_results[val] = property_fn(val)
-        except (OverflowError, RecursionError):
-            overspill_results[val] = "computation overflow"
+    def __init__(self, universe_size: int = 10000, threshold: float = 0.01):
+        self.N = universe_size
+        self.threshold = threshold
+
+    def is_large(self, s: Set[int]) -> bool:
+        """Check if set S is 'U-large' (complement is small)."""
+        complement_size = sum(1 for i in range(self.N) if i not in s)
+        return complement_size / self.N < self.threshold
+
+    def transfer_and(self, s1: Set[int], s2: Set[int]) -> Tuple[bool, bool, bool]:
+        """Verify conjunction transfer: if S1, S2 ∈ U then S1 ∩ S2 ∈ U."""
+        l1 = self.is_large(s1)
+        l2 = self.is_large(s2)
+        l_inter = self.is_large(s1 & s2)
+        return l1, l2, l_inter
+
+    def transfer_imp(
+        self,
+        prop_p: Callable[[int], bool],
+        prop_q: Callable[[int], bool]
+    ) -> Tuple[bool, bool, bool]:
+        """Verify implication transfer: P ∈ U and (P→Q) ∈ U implies Q ∈ U."""
+        s_p = {i for i in range(self.N) if prop_p(i)}
+        s_pq = {i for i in range(self.N) if not prop_p(i) or prop_q(i)}
+        s_q = {i for i in range(self.N) if prop_q(i)}
+        return self.is_large(s_p), self.is_large(s_pq), self.is_large(s_q)
+
+
+# ============================================================
+# Algorithm 3: Overspill Construction
+# ============================================================
+
+def construct_overflow_function(
+    membership: Callable[[int, int], bool],
+    universe_size: int = 1000,
+    max_chain_depth: int = 100
+) -> List[int]:
+    """Construct the overflow function for a decreasing chain.
+
+    Given a decreasing chain of sets S_n defined by membership(i, n),
+    compute f(i) = max{n | membership(i, n)} for each i.
+
+    This is the computational core of the overspill principle:
+    f represents a 'nonstandard element' in the ultraproduct.
+
+    Args:
+        membership: Function (i, n) → bool indicating i ∈ S_n
+        universe_size: Size of index set
+        max_chain_depth: Maximum chain depth to check
+
+    Returns:
+        List f where f[i] = max{n | i ∈ S_n}
+    """
+    f = []
+    for i in range(universe_size):
+        max_n = 0
+        for n in range(max_chain_depth):
+            if membership(i, n):
+                max_n = n
+            else:
+                break
+        f.append(max_n)
+    return f
+
+
+def verify_overspill(
+    f: List[int],
+    membership: Callable[[int, int], bool],
+    check_depth: int = 50
+) -> dict:
+    """Verify the overspill properties of an overflow function.
+
+    Checks:
+    1. For each n, the set {i | f(i) ≥ n} has high density (should be 'U-large')
+    2. For each i, i ∈ S_{f(i)} (membership at the overflow point)
+
+    Returns dict with verification results.
+    """
+    N = len(f)
+    results = {
+        "overflow_densities": {},
+        "membership_rate": 0.0,
+        "max_overflow": max(f) if f else 0,
+        "mean_overflow": sum(f) / len(f) if f else 0.0,
+    }
+
+    # Check overflow property: {i | f(i) ≥ n} should be large
+    for n in range(0, min(check_depth, max(f) + 1) if f else 0, 5):
+        count = sum(1 for fi in f if fi >= n)
+        results["overflow_densities"][n] = count / N
+
+    # Check membership: i ∈ S_{f(i)}
+    member_count = sum(1 for i, fi in enumerate(f) if membership(i, fi))
+    results["membership_rate"] = member_count / N
+
+    return results
+
+
+# ============================================================
+# Algorithm 4: Non-Archimedean Detector
+# ============================================================
+
+def detect_non_archimedean(
+    abs_fn: Callable[[float], float],
+    test_elements: List[float],
+    max_n: int = 10000
+) -> Tuple[bool, Optional[float]]:
+    """Detect if a valued field is non-Archimedean by finding infinitesimals.
+
+    Given an absolute value function and test elements, searches for
+    a nonzero element x with n * |x| < 1 for all tested n.
+
+    Returns (is_non_archimedean, witness_infinitesimal).
+    """
+    for x in test_elements:
+        if x == 0:
+            continue
+        ax = abs_fn(x)
+        if ax == 0:
+            continue
+        if all(n * ax < 1.0 for n in range(1, max_n + 1)):
+            return True, x
+    return False, None
+
+
+def padic_absolute_value(x: int, p: int) -> float:
+    """Compute the p-adic absolute value |x|_p.
+
+    |x|_p = p^(-v_p(x)) where v_p(x) is the p-adic valuation.
+    """
+    if x == 0:
+        return 0.0
+    val = 0
+    n = abs(x)
+    while n % p == 0:
+        val += 1
+        n //= p
+    return float(p) ** (-val)
+
+
+# ============================================================
+# Algorithm 5: Compositeness Transfer Check
+# ============================================================
+
+def verify_compositeness_transfer(
+    f: Callable[[int], int],
+    a: Callable[[int], int],
+    b: Callable[[int], int],
+    n_indices: int = 10000
+) -> dict:
+    """Verify that a factorization f = a * b transfers compositeness.
+
+    Checks the three conditions of the compositeness transfer theorem:
+    1. f(i) = a(i) * b(i) for 'most' i
+    2. a(i) > 1 for 'most' i
+    3. b(i) > 1 for 'most' i
+    → f(i) is composite for 'most' i
+
+    Returns verification statistics.
+    """
+    fact_count = 0
+    a_gt1_count = 0
+    b_gt1_count = 0
+    composite_count = 0
+
+    for i in range(n_indices):
+        fi, ai, bi = f(i), a(i), b(i)
+        if fi == ai * bi:
+            fact_count += 1
+        if ai > 1:
+            a_gt1_count += 1
+        if bi > 1:
+            b_gt1_count += 1
+        if fi > 1 and not _is_prime_simple(fi):
+            composite_count += 1
 
     return {
-        "standard_range": max_standard,
-        "holds_in_standard": standard_holds,
-        "first_failure": first_failure,
-        "overspill_tests": overspill_results,
-        "overspill_detected": (
-            standard_holds and all(
-                v is True for v in overspill_results.values()
-                if isinstance(v, bool)
-            )
-        )
+        "factorization_density": fact_count / n_indices,
+        "a_gt_1_density": a_gt1_count / n_indices,
+        "b_gt_1_density": b_gt1_count / n_indices,
+        "composite_density": composite_count / n_indices,
     }
 
 
-# ============================================================
-# §4. GCD Transfer
-# ============================================================
-
-def gcd(a: int, b: int) -> int:
-    """Euclidean GCD algorithm."""
-    while b:
-        a, b = b, a % b
-    return a
-
-
-def gcd_transfer(
-    f: Callable[[int], int],
-    g: Callable[[int], int],
-    window: int = 20
-) -> Tuple[UltraPowerElement, UltraPowerElement, UltraPowerElement]:
-    """Compute the GCD transfer: returns (d, q_f, q_g) where
-    d = [gcd(f(i), g(i))], f = d * q_f, g = d * q_g in *ℕ.
-    """
-    d_seq = [gcd(f(i), g(i)) for i in range(window)]
-    qf_seq = [f(i) // gcd(f(i), g(i)) if gcd(f(i), g(i)) > 0 else 0
-              for i in range(window)]
-    qg_seq = [g(i) // gcd(f(i), g(i)) if gcd(f(i), g(i)) > 0 else 0
-              for i in range(window)]
-
-    d = UltraPowerElement(sequence=d_seq,
-                          generator=lambda i: gcd(f(i), g(i)),
-                          name="gcd([f],[g])")
-    qf = UltraPowerElement(sequence=qf_seq, name="[f]/gcd")
-    qg = UltraPowerElement(sequence=qg_seq, name="[g]/gcd")
-
-    return d, qf, qg
-
-
-# ============================================================
-# §5. Polynomial Identity Verification
-# ============================================================
-
-class NatExpr(Enum):
-    """Types of arithmetic expressions."""
-    VAR = "var"
-    CONST = "const"
-    ADD = "add"
-    MUL = "mul"
-
-
-@dataclass
-class Expr:
-    """Arithmetic expression tree."""
-    kind: NatExpr
-    value: Optional[int] = None  # for CONST and VAR (index)
-    left: Optional['Expr'] = None
-    right: Optional['Expr'] = None
-
-    def eval_nat(self, env: List[int]) -> int:
-        """Evaluate in ℕ."""
-        if self.kind == NatExpr.VAR:
-            return env[self.value]
-        elif self.kind == NatExpr.CONST:
-            return self.value
-        elif self.kind == NatExpr.ADD:
-            return self.left.eval_nat(env) + self.right.eval_nat(env)
-        elif self.kind == NatExpr.MUL:
-            return self.left.eval_nat(env) * self.right.eval_nat(env)
-
-    def eval_ultra(self, env: List[UltraPowerElement],
-                   window: int = 20) -> UltraPowerElement:
-        """Evaluate in *ℕ."""
-        if self.kind == NatExpr.VAR:
-            return env[self.value]
-        elif self.kind == NatExpr.CONST:
-            return standard_element(self.value)
-        elif self.kind == NatExpr.ADD:
-            return ultrapower_add(
-                self.left.eval_ultra(env, window),
-                self.right.eval_ultra(env, window),
-                window
-            )
-        elif self.kind == NatExpr.MUL:
-            return ultrapower_mul(
-                self.left.eval_ultra(env, window),
-                self.right.eval_ultra(env, window),
-                window
-            )
-
-
-def verify_polynomial_identity(
-    lhs: Expr, rhs: Expr, num_vars: int,
-    num_tests: int = 1000, max_val: int = 100
-) -> bool:
-    """Verify a polynomial identity by random testing.
-
-    By transfer, if it holds in ℕ, it holds in *ℕ.
-    """
-    import random
-    for _ in range(num_tests):
-        env = [random.randint(0, max_val) for _ in range(num_vars)]
-        if lhs.eval_nat(env) != rhs.eval_nat(env):
+def _is_prime_simple(n: int) -> bool:
+    """Simple primality test."""
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
             return False
+        i += 6
     return True
 
 
 if __name__ == "__main__":
-    # Demo: ω exceeds all standard elements
-    w = omega_element()
-    for n in [10, 100, 1000]:
-        s = standard_element(n)
-        cmp = ultrapower_compare(s, w)
-        print(f"std({n}) {cmp} ω")
+    # Quick self-test
+    print("Classification test:")
+    for x in [0, 1e-10, 5.0, 1e20]:
+        print(f"  {x} -> {classify_element(x)}")
 
-    # Demo: GCD transfer
-    d, qf, qg = gcd_transfer(lambda i: 12*(i+1), lambda i: 18*(i+1))
-    print(f"\ngcd sequence: {d.sequence[:8]}")
-    print(f"quotient f:   {qf.sequence[:8]}")
-    print(f"quotient g:   {qg.sequence[:8]}")
+    print("\nIdeal property test:")
+    results = verify_ideal_property([1.0, 10.0], [1e-10, 1e-20])
+    for b, eps, prod, is_inf in results:
+        print(f"  {b} × {eps:.1e} = {prod:.1e}, infinitesimal: {is_inf}")
 
-    # Demo: overspill
-    result = detect_overspill(lambda n: n + 1 > n)
-    print(f"\nOverspill for 'n+1 > n': {result}")
+    print("\np-adic absolute values (p=5):")
+    for x in [1, 5, 25, 125, 6]:
+        print(f"  |{x}|_5 = {padic_absolute_value(x, 5):.6f}")

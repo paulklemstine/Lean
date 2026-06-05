@@ -1,371 +1,362 @@
 #!/usr/bin/env python3
 """
-demo.py — Numerical demonstrations of non-standard arithmetic concepts.
+Non-Standard Arithmetic: Numerical Demonstrations
 
-Demonstrates:
-1. Ultrafilter partition regularity (simulation)
-2. Overspill principle behavior
-3. GCD transfer through ultrapowers
-4. Non-Archimedean element construction
+Demonstrates key concepts from the formalized theory:
+1. Infinitesimal detection and ideal properties
+2. Ultrafilter simulation and transfer
+3. Overspill visualization
+4. Non-Archimedean characterization
 """
 
-import random
-from typing import List, Tuple, Dict, Callable
-from collections import Counter
+import math
+from typing import Callable, List, Tuple
 
 
-def simulate_ultrafilter_partition(
-    n: int = 100, k: int = 3, num_trials: int = 1000
-) -> Dict[int, float]:
-    """Simulate partition regularity: in random k-colorings of {0,...,n-1},
-    measure the probability that each color class dominates (would be U-large).
+def is_computationally_infinitesimal(x: float, max_n: int = 10000) -> bool:
+    """Test if x is 'computationally infinitesimal' up to bound max_n.
 
-    In a genuine ultrafilter, EXACTLY one class is selected. Here we approximate
-    by counting which class has the largest share.
+    An element x is infinitesimal if n * |x| < 1 for ALL positive n.
+    In ℝ (Archimedean), only 0 is truly infinitesimal.
+    This function checks up to max_n.
     """
-    color_wins = Counter()
-    for _ in range(num_trials):
-        coloring = [random.randint(0, k - 1) for _ in range(n)]
-        counts = Counter(coloring)
-        winner = counts.most_common(1)[0][0]
-        color_wins[winner] += 1
-    return {c: wins / num_trials for c, wins in sorted(color_wins.items())}
+    return all(n * abs(x) < 1.0 for n in range(1, max_n + 1))
 
 
-def demonstrate_overspill(
-    property_fn: Callable[[int], bool], name: str = "P"
-) -> None:
-    """Demonstrate overspill: if P(n) holds for all standard n,
-    it must hold for 'non-standard' (very large) n too.
-
-    We test P on increasingly large values to show it doesn't stop.
-    """
-    print(f"\n--- Overspill Demonstration for {name} ---")
-    test_values = [10, 100, 1000, 10_000, 100_000, 1_000_000]
-    for n in test_values:
-        result = all(property_fn(k) for k in range(n))
-        symbol = "✓" if result else "✗"
-        print(f"  ∀ k < {n:>10,}: {name}(k) holds: {symbol}")
-    print(f"  → By overspill, {name} holds for some non-standard element too!")
-
-
-def gcd_transfer_example() -> None:
-    """Demonstrate GCD transfer: gcd(f(i), g(i)) = d(i) componentwise
-    implies the GCD relation transfers to the ultrapower.
-    """
-    print("\n--- GCD Transfer Demonstration ---")
-    # Define sequences
-    f = lambda i: 12 * (i + 1)  # multiples of 12
-    g = lambda i: 18 * (i + 1)  # multiples of 18
-    d = lambda i: 6 * (i + 1)   # gcd should be 6*(i+1)
-
-    print("  Sequences: f(i) = 12(i+1), g(i) = 18(i+1)")
-    print("  Expected:  gcd(f(i), g(i)) = 6(i+1) for all i")
-    print()
-    for i in range(8):
-        fi, gi, di = f(i), g(i), d(i)
-        actual_gcd = gcd(fi, gi)
-        match = "✓" if actual_gcd == di else "✗"
-        print(f"  i={i}: gcd({fi}, {gi}) = {actual_gcd} = {di} {match}")
-
-    print("\n  In *ℕ: [d] | [f] via quotient q(i) = f(i)/d(i) = 2")
-    print("  In *ℕ: [d] | [g] via quotient q(i) = g(i)/d(i) = 3")
-
-
-def gcd(a: int, b: int) -> int:
-    """Euclidean GCD."""
-    while b:
-        a, b = b, a % b
-    return a
-
-
-def non_archimedean_element() -> None:
-    """Demonstrate that ω = [id] exceeds all standard elements.
-
-    For any N, the set {i | i > N} is cofinite, hence in any
-    non-principal ultrafilter U.
-    """
-    print("\n--- Non-Archimedean Element ω = [id] ---")
-    print("  ω is represented by the sequence (0, 1, 2, 3, ...)")
-    print()
-    for N in [10, 100, 1000, 10**6, 10**9]:
-        cofinite_size = "infinite"
-        print(f"  N = {N:>12,}: |{{i | i > N}}| = {cofinite_size} "
-              f"(cofinite → U-large)")
-    print()
-    print("  Therefore ω > std(N) for ALL standard N.")
-    print("  ω is 'infinitely large' — a non-standard element of *ℕ.")
-
-
-def polynomial_identity_transfer() -> None:
-    """Demonstrate Łoś theorem for term equations.
-
-    The identity (a+b)² = a² + 2ab + b² holds in ℕ,
-    so it must hold in *ℕ.
-    """
-    print("\n--- Polynomial Identity Transfer (Łoś for Terms) ---")
-    print("  Identity: (a + b)² = a² + 2ab + b²")
-    print()
-
-    # Represent as NatExpr and evaluate
-    for a, b in [(3, 5), (7, 11), (100, 200), (0, 42)]:
-        lhs = (a + b) ** 2
-        rhs = a**2 + 2*a*b + b**2
-        match = "✓" if lhs == rhs else "✗"
-        print(f"  a={a}, b={b}: ({a}+{b})² = {lhs} = {a}²+2·{a}·{b}+{b}² = {rhs} {match}")
-
-    print()
-    print("  Since this holds for ALL (a,b) ∈ ℕ², by Łoś's theorem,")
-    print("  it holds for ALL (α,β) ∈ *ℕ², including non-standard α,β.")
-
-
-def main():
+def demo_infinitesimal_algebra():
+    """Demonstrate infinitesimal algebra properties."""
     print("=" * 60)
-    print("NON-STANDARD ARITHMETIC: NUMERICAL DEMONSTRATIONS")
+    print("DEMO 1: Infinitesimal Algebra")
     print("=" * 60)
 
-    # 1. Non-Archimedean element
-    non_archimedean_element()
+    # In ℝ, only 0 is truly infinitesimal
+    test_values = [0.0, 1e-10, 1e-100, 1e-300, 0.001, 1.0]
+    print("\nInfinitesimal test (checking n * |x| < 1 for n up to 10000):")
+    for x in test_values:
+        result = is_computationally_infinitesimal(x)
+        status = "YES" if result else "NO"
+        print(f"  x = {x:>15.2e} -> Infinitesimal up to n=10000? {status}")
 
-    # 2. Polynomial identity transfer
-    polynomial_identity_transfer()
+    # Demonstrate ideal property: bounded * small ≈ small
+    print("\nIdeal property: bounded × (small element) = smaller element")
+    eps = 1e-10
+    bounded_vals = [1.0, 7.0, 100.0, 1000.0]
+    for b in bounded_vals:
+        product = b * eps
+        print(f"  {b:>8.1f} × {eps:.2e} = {product:.2e}")
 
-    # 3. GCD transfer
-    gcd_transfer_example()
+    # Demonstrate reciprocal duality
+    print("\nReciprocal Duality: small ↔ 1/large")
+    for k in range(1, 8):
+        eps = 10 ** (-k)
+        inv_eps = 1.0 / eps
+        print(f"  ε = 10^(-{k}) = {eps:.0e}, "
+              f"ε⁻¹ = {inv_eps:.0e}, "
+              f"ε⁻¹ > n for n ≤ {int(inv_eps) - 1}")
 
-    # 4. Overspill with "every number has a successor"
-    demonstrate_overspill(lambda n: n + 1 > n, "n+1 > n")
 
-    # 5. Overspill with "every number is the sum of four squares"
-    def is_sum_of_four_squares(n: int) -> bool:
-        for a in range(int(n**0.5) + 1):
-            for b in range(int((n - a*a)**0.5) + 1):
-                for c in range(int((n - a*a - b*b)**0.5) + 1):
-                    d2 = n - a*a - b*b - c*c
-                    if d2 >= 0:
-                        d = int(d2**0.5)
-                        if d*d == d2:
-                            return True
-        return False
+def simulate_ultrafilter_vote(
+    property_fns: List[Callable[[int], bool]],
+    n_indices: int = 10000
+) -> List[float]:
+    """Simulate ultrafilter 'voting' on properties.
 
-    demonstrate_overspill(is_sum_of_four_squares, "Lagrange 4-squares")
+    Returns the proportion of indices where each property holds.
+    A free ultrafilter would include a set iff its density is 'large enough'.
+    """
+    proportions = []
+    for fn in property_fns:
+        count = sum(1 for i in range(n_indices) if fn(i))
+        proportions.append(count / n_indices)
+    return proportions
 
-    # 6. Partition regularity simulation
-    print("\n--- Partition Regularity Simulation ---")
-    for k in [2, 3, 5]:
-        probs = simulate_ultrafilter_partition(k=k)
-        print(f"  {k}-coloring: winning probabilities = {probs}")
-    print("  (In a true ultrafilter, exactly one color 'wins' with probability 1)")
 
+def demo_ultrafilter_transfer():
+    """Demonstrate ultrafilter transfer principles."""
     print("\n" + "=" * 60)
-    print("All demonstrations complete.")
+    print("DEMO 2: Ultrafilter Transfer Simulation")
+    print("=" * 60)
+
+    n = 10000
+
+    # Properties to test
+    is_even = lambda i: i % 2 == 0
+    is_positive = lambda i: i > 0
+    is_div_by_3 = lambda i: i % 3 == 0
+    is_composite = lambda i: i > 1 and any(i % d == 0 for d in range(2, min(i, 100)))
+
+    props = [
+        ("Even", is_even),
+        ("Positive", is_positive),
+        ("Divisible by 3", is_div_by_3),
+        ("Composite (checked up to 100)", is_composite),
+    ]
+
+    print(f"\nProperty density over indices 0..{n-1}:")
+    for name, fn in props:
+        density = sum(1 for i in range(n) if fn(i)) / n
+        print(f"  {name:>35s}: {density:.4f}")
+
+    # Transfer of conjunction
+    print("\nTransfer of conjunction (P ∧ Q):")
+    p_and_q = lambda i: is_even(i) and is_div_by_3(i)
+    d_p = sum(1 for i in range(n) if is_even(i)) / n
+    d_q = sum(1 for i in range(n) if is_div_by_3(i)) / n
+    d_pq = sum(1 for i in range(n) if p_and_q(i)) / n
+    print(f"  Density(Even) = {d_p:.4f}")
+    print(f"  Density(Div3) = {d_q:.4f}")
+    print(f"  Density(Even ∧ Div3) = {d_pq:.4f}")
+    print(f"  Expected (independent): {d_p * d_q:.4f}")
+
+    # Binomial identity transfer (always true)
+    print("\nBinomial identity (a+b)² = a² + 2ab + b² (universal transfer):")
+    violations = 0
+    for i in range(n):
+        a, b = i * 7 + 3, i * 13 + 5
+        lhs = (a + b) ** 2
+        rhs = a ** 2 + 2 * a * b + b ** 2
+        if lhs != rhs:
+            violations += 1
+    print(f"  Violations over {n} tests: {violations}")
+    print(f"  → Identity holds universally, transfer is trivial")
+
+
+def demo_overspill():
+    """Demonstrate the overspill principle computationally."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Overspill Principle")
+    print("=" * 60)
+
+    # Simulate decreasing chain S_n = {i | i > n}
+    # Each S_n has cofinite density → "U-large" for free U
+    # The "overflow function" f(i) = i-1 gives f(i) → ∞
+    N = 100
+    print(f"\nDecreasing chain: S_n = {{i ∈ ℕ | i > n}}")
+    for n_val in [0, 5, 10, 50, 90]:
+        count = sum(1 for i in range(N) if i > n_val)
+        print(f"  |S_{n_val} ∩ [0,{N-1}]| = {count}/{N} "
+              f"(density {count/N:.2f})")
+
+    print(f"\nOverflow function f(i) = i - 1:")
+    print(f"  f represents a 'nonstandard' element: f(i) → ∞")
+    print(f"  For each n, {{i | f(i) ≥ n}} = {{i | i ≥ n+1}} is cofinite")
+    for n_val in [0, 10, 50]:
+        count = sum(1 for i in range(N) if (i - 1) >= n_val)
+        print(f"  |{{i | f(i) ≥ {n_val}}} ∩ [0,{N-1}]| = {count}/{N}")
+
+    # Overspill: the diagonal i ∈ S_{f(i)} = S_{i-1} = {j | j > i-1}
+    # i ∈ S_{i-1} iff i > i-1, which is always true for i ≥ 1
+    print(f"\nDiagonal membership: i ∈ S_{{f(i)}} = S_{{i-1}}:")
+    count = sum(1 for i in range(1, N) if i > (i - 1))
+    print(f"  {{i ∈ [1,{N-1}] | i ∈ S_{{i-1}}}} has {count} elements (all!)")
+
+
+def demo_non_archimedean():
+    """Demonstrate the non-Archimedean characterization."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Non-Archimedean Characterization")
+    print("=" * 60)
+
+    # ℝ is Archimedean: for any x, there exists n with n > x
+    print("\nℝ is Archimedean:")
+    for x in [3.14, 1000.0, 1e100]:
+        n = math.ceil(x) + 1
+        print(f"  x = {x:.2e} → n = {n} satisfies n > x")
+
+    # Simulated p-adic: in ℤ_p, |p^k|_p = p^(-k) → 0 as k → ∞
+    # So p is "infinitesimally small" in p-adic metric
+    print("\nSimulated p-adic (p=5): |5^k|_5 = 5^(-k)")
+    p = 5
+    for k in range(1, 8):
+        padic_abs = p ** (-k)
+        is_inf = all(n * padic_abs < 1 for n in range(1, 10000))
+        print(f"  |5^{k}|_5 = 5^(-{k}) = {padic_abs:.2e}, "
+              f"computationally infinitesimal: {is_inf}")
+
+    print("\n  → In ℚ_5, the element 5 is 'small' (|5|_5 = 1/5)")
+    print("  → This means ℚ_5 is non-Archimedean w.r.t. p-adic absolute value")
+    print("  → By our theorem: non-Archimedean ↔ ∃ nonzero infinitesimal")
+
+
+def demo_compositeness_transfer():
+    """Demonstrate compositeness transfer through ultraproducts."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Compositeness Transfer")
+    print("=" * 60)
+
+    # Sequence: f(i) = (i+2) * (i+3) is always composite for i ≥ 0
+    # The factorization transfers through the ultraproduct
+    print("\nSequence f(i) = (i+2)(i+3), a(i) = i+2, b(i) = i+3:")
+    for i in range(8):
+        f_i = (i + 2) * (i + 3)
+        print(f"  i={i}: f={f_i:>4d} = {i+2} × {i+3}, "
+              f"a>{1}: {i+2>1}, b>{1}: {i+3>1}, "
+              f"composite: {not _is_prime(f_i)}")
+
+    print("\n  Since a(i) > 1 and b(i) > 1 for all i ≥ 0,")
+    print("  and f(i) = a(i) * b(i) for all i,")
+    print("  our theorem guarantees: f is composite on a U-large set")
+    print("  (in fact, on ALL of ℕ)")
+
+
+def _is_prime(n: int) -> bool:
+    if n < 2:
+        return False
+    for d in range(2, int(n**0.5) + 1):
+        if n % d == 0:
+            return False
+    return True
 
 
 if __name__ == "__main__":
-    main()
+    demo_infinitesimal_algebra()
+    demo_ultrafilter_transfer()
+    demo_overspill()
+    demo_non_archimedean()
+    demo_compositeness_transfer()
+
+    print("\n" + "=" * 60)
+    print("All demonstrations complete.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-visualize_ultrapower.py — Visualizations of non-standard arithmetic concepts.
+Visualization: Infinitesimal/Bounded/Infinite Layer Structure
 
-Creates three figures:
-1. The ultrapower ordering: standard vs non-standard elements
-2. Overspill principle: how properties "spill over"
-3. GCD transfer: divisibility lattice preservation
+Shows the three-layer decomposition of a non-Archimedean ordered field:
+- Infinitesimal core (green)
+- Bounded ring (blue)
+- Infinite elements (red)
+With reciprocal duality arrows connecting them.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
+import matplotlib.patches as patches
 import numpy as np
 
 
-def plot_ultrapower_ordering():
-    """Visualize the ordering of *ℕ showing standard and non-standard elements."""
-    fig, ax = plt.subplots(1, 1, figsize=(14, 4))
+def create_layer_diagram():
+    """Create the three-layer diagram of a non-Archimedean field."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Standard elements
-    std_positions = np.arange(0, 8)
-    ax.scatter(std_positions, [0]*8, c='blue', s=100, zorder=5, label='Standard elements')
-    for i, pos in enumerate(std_positions):
-        ax.annotate(str(i), (pos, 0), textcoords="offset points",
-                   xytext=(0, 12), ha='center', fontsize=10, color='blue')
+    # Left panel: Nested structure
+    ax1.set_xlim(-5, 5)
+    ax1.set_ylim(-5, 5)
+    ax1.set_aspect('equal')
+    ax1.set_title('Non-Archimedean Field Structure\n'
+                   '(Three Algebraic Layers)', fontsize=13, fontweight='bold')
 
-    # Gap indicator
-    ax.annotate('...', (8.5, 0), fontsize=16, ha='center', va='center', color='gray')
+    # Infinite region (background)
+    infinite_rect = patches.FancyBboxPatch(
+        (-4.5, -4.5), 9, 9, boxstyle="round,pad=0.1",
+        facecolor='#ffcccc', edgecolor='red', linewidth=2, alpha=0.5)
+    ax1.add_patch(infinite_rect)
 
-    # Non-standard elements
-    ns_positions = [10, 11, 12, 13]
-    ns_labels = ['ω', 'ω+1', 'ω+2', 'ω²']
-    colors = ['red', 'orangered', 'orange', 'darkred']
-    ax.scatter(ns_positions, [0]*4, c=colors, s=150, zorder=5,
-              marker='D', label='Non-standard elements')
-    for label, pos, color in zip(ns_labels, ns_positions, colors):
-        ax.annotate(label, (pos, 0), textcoords="offset points",
-                   xytext=(0, 15), ha='center', fontsize=11, color=color, fontweight='bold')
+    # Bounded ring (middle circle)
+    bounded_circle = plt.Circle((0, 0), 3, facecolor='#cce5ff',
+                                 edgecolor='blue', linewidth=2, alpha=0.7)
+    ax1.add_patch(bounded_circle)
 
-    # More gap
-    ax.annotate('...', (14, 0), fontsize=16, ha='center', va='center', color='gray')
+    # Infinitesimal ideal (inner circle)
+    inf_circle = plt.Circle((0, 0), 1, facecolor='#ccffcc',
+                             edgecolor='green', linewidth=2, alpha=0.8)
+    ax1.add_patch(inf_circle)
 
-    # Arrow showing ordering
-    ax.annotate('', xy=(14.5, 0), xytext=(-0.5, 0),
-               arrowprops=dict(arrowstyle='->', color='black', lw=1.5))
+    # Labels
+    ax1.text(0, 0, '0\n(infinitesimal)', ha='center', va='center',
+             fontsize=10, fontweight='bold', color='darkgreen')
+    ax1.text(0, 2, 'Bounded Elements\n(subring)', ha='center', va='center',
+             fontsize=10, fontweight='bold', color='darkblue')
+    ax1.text(0, -2, '±1, ±2, ..., ±n', ha='center', va='center',
+             fontsize=9, color='navy')
+    ax1.text(3.8, 3.8, 'Infinite\nElements', ha='center', va='center',
+             fontsize=10, fontweight='bold', color='darkred')
+    ax1.text(-3.8, -3.8, 'ω, ω², ...', ha='center', va='center',
+             fontsize=9, color='darkred')
 
-    # Bracket for standard part
-    ax.annotate('', xy=(7.5, -0.3), xytext=(-0.5, -0.3),
-               arrowprops=dict(arrowstyle='<->', color='blue', lw=1))
-    ax.text(3.5, -0.5, 'Standard part (ℕ)', ha='center', fontsize=9, color='blue')
+    # Reciprocal duality arrow
+    ax1.annotate('', xy=(0.7, 0.3), xytext=(3.5, 3.5),
+                arrowprops=dict(arrowstyle='->', color='purple', lw=2))
+    ax1.annotate('', xy=(3.5, 3.5), xytext=(0.7, 0.3),
+                arrowprops=dict(arrowstyle='->', color='purple', lw=2,
+                               connectionstyle="arc3,rad=0.3"))
+    ax1.text(2.5, 2.5, 'x ↔ x⁻¹\n(Reciprocal\nDuality)',
+             ha='center', va='center', fontsize=9, color='purple',
+             fontweight='bold', rotation=45)
 
-    # Bracket for non-standard part
-    ax.annotate('', xy=(14, -0.3), xytext=(9.5, -0.3),
-               arrowprops=dict(arrowstyle='<->', color='red', lw=1))
-    ax.text(11.5, -0.5, 'Non-standard part', ha='center', fontsize=9, color='red')
+    ax1.set_xlabel('Elements of F', fontsize=11)
+    ax1.axis('off')
 
-    ax.set_xlim(-1, 15)
-    ax.set_ylim(-0.8, 0.8)
-    ax.set_yticks([])
-    ax.set_xticks([])
-    ax.set_title('The Ultrapower *ℕ: Standard and Non-Standard Elements', fontsize=14)
-    ax.legend(loc='upper left', fontsize=9)
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_visible(False)
+    # Right panel: n * |x| < 1 visualization
+    ax2.set_title('Infinitesimal Test: n · |x| < 1\n'
+                   'for all positive n', fontsize=13, fontweight='bold')
+
+    x_vals = np.logspace(-4, 1, 200)
+    n_vals = [1, 5, 10, 50, 100, 500]
+
+    for n in n_vals:
+        y = n * x_vals
+        ax2.plot(x_vals, y, label=f'n = {n}', alpha=0.7)
+
+    ax2.axhline(y=1, color='red', linestyle='--', linewidth=2, label='Threshold = 1')
+    ax2.fill_between(x_vals, 0, 1, alpha=0.1, color='green')
+
+    ax2.set_xscale('log')
+    ax2.set_yscale('log')
+    ax2.set_xlabel('|x|', fontsize=12)
+    ax2.set_ylabel('n · |x|', fontsize=12)
+    ax2.legend(fontsize=9, loc='upper left')
+    ax2.set_ylim(1e-4, 1e4)
+    ax2.grid(True, alpha=0.3)
+
+    ax2.text(1e-3, 0.3, 'Infinitesimal\nregion', fontsize=11,
+             color='green', fontweight='bold', ha='center')
+    ax2.text(1, 10, 'Bounded but\nnot infinitesimal', fontsize=10,
+             color='blue', ha='center')
 
     plt.tight_layout()
-    plt.savefig('ultrapower_ordering.png', dpi=150, bbox_inches='tight')
+    plt.savefig('viz_infinitesimal_layers.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: ultrapower_ordering.png")
+    print("Saved viz_infinitesimal_layers.png")
 
 
-def plot_overspill():
+def create_overspill_diagram():
     """Visualize the overspill principle."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.set_title('Overspill Principle: Decreasing Chain with Overflow',
+                 fontsize=13, fontweight='bold')
 
-    # Left: Property P holds for all standard n
-    n_values = np.arange(0, 20)
-    p_values = np.ones(20)  # P(n) = True for all n
+    N = 50
+    # S_n = {i | i > n} for n = 0, 5, 10, ...
+    chain_indices = list(range(0, 30, 3))
 
-    ax1.bar(n_values, p_values, color='steelblue', alpha=0.7, edgecolor='navy')
-    ax1.set_xlabel('n (standard)', fontsize=11)
-    ax1.set_ylabel('P(n)', fontsize=11)
-    ax1.set_title('P(n) holds for all standard n', fontsize=12)
-    ax1.set_yticks([0, 1])
-    ax1.set_yticklabels(['False', 'True'])
-    ax1.set_ylim(0, 1.3)
+    for idx, n in enumerate(chain_indices):
+        y = len(chain_indices) - idx
+        members = [i for i in range(N) if i > n]
+        non_members = [i for i in range(N) if i <= n]
 
-    # Right: Overspill shows P must hold for some non-standard element
-    n_extended = np.arange(0, 25)
-    p_extended = np.ones(25)
-    colors = ['steelblue'] * 20 + ['crimson'] * 5
+        ax.scatter(members, [y] * len(members), c='blue', s=10, alpha=0.6)
+        ax.scatter(non_members, [y] * len(non_members), c='lightgray', s=10, alpha=0.3)
+        ax.text(-3, y, f'S_{n}', fontsize=9, ha='right', va='center')
 
-    bars = ax2.bar(n_extended, p_extended, color=colors, alpha=0.7,
-                   edgecolor=['navy'] * 20 + ['darkred'] * 5)
-    ax2.axvline(x=19.5, color='gray', linestyle='--', linewidth=2, label='Standard boundary')
-    ax2.set_xlabel('n', fontsize=11)
-    ax2.set_ylabel('P(n)', fontsize=11)
-    ax2.set_title('Overspill: P "spills over" to non-standard realm', fontsize=12)
-    ax2.set_yticks([0, 1])
-    ax2.set_yticklabels(['False', 'True'])
-    ax2.set_ylim(0, 1.3)
+    # Overflow function line: f(i) = i - 1
+    overflow_x = list(range(1, N))
+    overflow_y = [len(chain_indices) - (i - 1) / 3 for i in overflow_x]
+    ax.plot(overflow_x, overflow_y, 'r-', linewidth=2, alpha=0.7,
+            label='Overflow f(i) = i−1')
 
-    # Legend
-    std_patch = mpatches.Patch(color='steelblue', alpha=0.7, label='Standard')
-    ns_patch = mpatches.Patch(color='crimson', alpha=0.7, label='Non-standard (overspill)')
-    ax2.legend(handles=[std_patch, ns_patch], loc='upper right', fontsize=9)
-
-    # Annotation arrow
-    ax2.annotate('Overspill!', xy=(22, 1.0), xytext=(22, 1.2),
-                fontsize=11, color='crimson', fontweight='bold',
-                arrowprops=dict(arrowstyle='->', color='crimson'),
-                ha='center')
+    ax.set_xlabel('Index i', fontsize=12)
+    ax.set_ylabel('Chain level (decreasing ↑)', fontsize=12)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.2)
 
     plt.tight_layout()
-    plt.savefig('overspill_principle.png', dpi=150, bbox_inches='tight')
+    plt.savefig('viz_overspill.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: overspill_principle.png")
-
-
-def plot_gcd_transfer():
-    """Visualize GCD transfer through the ultrapower."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-    indices = np.arange(1, 16)
-
-    # Sequences
-    f_vals = 12 * indices
-    g_vals = 18 * indices
-    d_vals = 6 * indices
-    qf_vals = f_vals // d_vals  # = 2 for all
-    qg_vals = g_vals // d_vals  # = 3 for all
-
-    # Plot f and g
-    axes[0].plot(indices, f_vals, 'bo-', label='f(i) = 12i', markersize=5)
-    axes[0].plot(indices, g_vals, 'rs-', label='g(i) = 18i', markersize=5)
-    axes[0].plot(indices, d_vals, 'g^-', label='gcd(f,g) = 6i', markersize=5)
-    axes[0].set_xlabel('Index i', fontsize=11)
-    axes[0].set_ylabel('Value', fontsize=11)
-    axes[0].set_title('Component Sequences', fontsize=12)
-    axes[0].legend(fontsize=9)
-    axes[0].grid(True, alpha=0.3)
-
-    # Plot quotients (showing d | f and d | g)
-    axes[1].bar(indices - 0.15, qf_vals, width=0.3, color='steelblue',
-               label='f(i)/d(i) = 2', alpha=0.8)
-    axes[1].bar(indices + 0.15, qg_vals, width=0.3, color='coral',
-               label='g(i)/d(i) = 3', alpha=0.8)
-    axes[1].set_xlabel('Index i', fontsize=11)
-    axes[1].set_ylabel('Quotient', fontsize=11)
-    axes[1].set_title('Divisibility Witnesses', fontsize=12)
-    axes[1].legend(fontsize=9)
-    axes[1].set_ylim(0, 4.5)
-    axes[1].grid(True, alpha=0.3)
-
-    # Divisibility lattice diagram
-    ax3 = axes[2]
-    ax3.set_xlim(-1, 5)
-    ax3.set_ylim(-1, 5)
-
-    # Draw lattice nodes
-    nodes = {
-        '[d]': (2, 0),
-        '[f]': (1, 2),
-        '[g]': (3, 2),
-        '[f·g/d]': (2, 4),
-    }
-
-    for name, (x, y) in nodes.items():
-        circle = plt.Circle((x, y), 0.3, color='lightblue', ec='navy', lw=2)
-        ax3.add_patch(circle)
-        ax3.text(x, y, name, ha='center', va='center', fontsize=9, fontweight='bold')
-
-    # Draw edges (divisibility)
-    ax3.annotate('', xy=(1, 1.7), xytext=(2, 0.3),
-                arrowprops=dict(arrowstyle='->', color='green', lw=2))
-    ax3.annotate('', xy=(3, 1.7), xytext=(2, 0.3),
-                arrowprops=dict(arrowstyle='->', color='green', lw=2))
-    ax3.annotate('', xy=(2, 3.7), xytext=(1, 2.3),
-                arrowprops=dict(arrowstyle='->', color='green', lw=2))
-    ax3.annotate('', xy=(2, 3.7), xytext=(3, 2.3),
-                arrowprops=dict(arrowstyle='->', color='green', lw=2))
-
-    ax3.text(1.2, 1.0, '|', fontsize=14, color='green', fontweight='bold')
-    ax3.text(2.8, 1.0, '|', fontsize=14, color='green', fontweight='bold')
-
-    ax3.set_title('Divisibility in *ℕ\n(GCD Transfer)', fontsize=12)
-    ax3.set_xticks([])
-    ax3.set_yticks([])
-    ax3.set_aspect('equal')
-
-    plt.tight_layout()
-    plt.savefig('gcd_transfer.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: gcd_transfer.png")
+    print("Saved viz_overspill.png")
 
 
 if __name__ == "__main__":
-    plot_ultrapower_ordering()
-    plot_overspill()
-    plot_gcd_transfer()
-    print("\nAll visualizations generated.")
+    create_layer_diagram()
+    create_overspill_diagram()
