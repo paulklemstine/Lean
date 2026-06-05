@@ -1,248 +1,155 @@
 #!/usr/bin/env python3
 """
-Demo: Transfinite-Dimensional Geometry
+Aleph-1 Surface: Numerical Demonstrations
 
-Numerical demonstrations of the key theorems from the
-aleph-1 surface research.
+Demonstrates the cardinal obstructions and Hilbert cube universality
+established in Novelty/AlephOneSurface.lean.
 """
 
-from algorithms import (
-    AbstractSimplicialComplex,
-    complete_complex,
-    void_complex,
-    dimension_chain_values,
-    is_strictly_increasing,
-    chain_distinct_count,
-    embedding_dimension_bound,
-    enumerate_faces,
-    face_count_bound,
-    hilbert_cube_point,
-    hilbert_cube_distance,
-    FINITE, ALEPH_0, ALEPH_1, CONTINUUM,
-    triangulation_possible,
-    embedding_possible,
-)
-from itertools import combinations
 import math
+from fractions import Fraction
 
 
-def demo_simplicial_complexes():
-    """Demonstrate simplicial complex construction and properties."""
+def demo_cardinal_bound():
+    """Demonstrate the cardinal triangulation bound.
+
+    For finite cases, |V| bounds |X| under surjection.
+    Shows that as dimension grows, the required vertex count grows exponentially.
+    """
     print("=" * 60)
-    print("DEMO 1: Simplicial Complex Properties")
+    print("Demo 1: Cardinal Triangulation Bound")
     print("=" * 60)
-    
-    # Complete complex on 4 vertices (tetrahedron)
-    K = complete_complex(4)
-    print(f"\nComplete complex on 4 vertices (tetrahedron):")
-    print(f"  Number of faces: {len(K.faces)}")
-    print(f"  Dimension: {K.dimension()}")
-    print(f"  f-vector: {K.f_vector()}")
-    print(f"  Euler characteristic: {K.euler_characteristic()}")
-    print(f"  Is pure: {K.is_pure()}")
-    
-    # Face count bound
-    for n in range(1, 7):
-        K_n = complete_complex(n)
-        print(f"\n  Fin({n}): faces = {len(K_n.faces)}, "
-              f"bound 2^{n} = {face_count_bound(n)}, "
-              f"max face dim = {K_n.dimension()}")
-    
-    # Void complex
-    V = void_complex(5)
-    print(f"\nVoid complex on 5 vertices:")
-    print(f"  Number of faces: {len(V.faces)}")
-    print(f"  Dimension: {V.dimension()}")
+    print()
+    print("For a simplicial complex triangulating [0,1]^d,")
+    print("the minimum vertex count grows with dimension d:")
+    print()
+    print(f"{'Dim d':>8} | {'Min vertices':>14} | {'Min simplices':>14}")
+    print("-" * 45)
+    for d in range(1, 13):
+        # Minimum vertices for a triangulation of [0,1]^d
+        # Kuhn triangulation: d! simplices, (d+1) choose-like vertices
+        min_vertices = 2 ** d  # hypercube vertices
+        min_simplices = math.factorial(d)  # Kuhn triangulation
+        print(f"{d:>8} | {min_vertices:>14,} | {min_simplices:>14,}")
+
+    print()
+    print("As d → ∞, both grow without bound.")
+    print("At d = ℵ₁ (under CH), no finite count suffices.")
+    print()
 
 
-def demo_face_dimension_bounds():
-    """Demonstrate that face dimension ≤ n for complexes on Fin(n)."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Face Dimension Bounds (Theorem face_dim_le)")
+def demo_linear_embedding_obstruction():
+    """Demonstrate the linear embedding obstruction.
+
+    In ℝ^n, at most n vectors can be linearly independent.
+    A module of rank ℵ₁ has uncountably many independent vectors.
+    """
     print("=" * 60)
-    
-    for n in range(1, 8):
-        faces = enumerate_faces(n)
-        max_card = max(len(f) for f in faces) if faces else 0
-        print(f"  Fin({n}): max face cardinality = {max_card} ≤ {n} ✓")
-
-
-def demo_triangulation_obstruction():
-    """Demonstrate the triangulation obstruction theorem."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Triangulation Obstruction")
-    print("  (Theorem: no_finite_triangulation_of_infinite)")
+    print("Demo 2: Linear Embedding Obstruction")
     print("=" * 60)
-    
-    spaces = [
-        ("Finite set {0,..,9}", FINITE),
-        ("ℕ (countably infinite)", ALEPH_0),
-        ("ℝ (continuum)", CONTINUUM),
-        ("Transfinite manifold (ℵ₁)", ALEPH_1),
-    ]
-    
-    for name, card in spaces:
-        possible = triangulation_possible(card)
-        symbol = "✓" if possible else "✗"
-        print(f"  {name}: finite triangulation {symbol}")
+    print()
+    print("Maximum linearly independent vectors in ℝ^n:")
+    print()
+    print(f"{'Target dim n':>14} | {'Max indep. vectors':>20} | {'Can embed rank-k?':>20}")
+    print("-" * 60)
+    for n in [1, 2, 3, 10, 100, 1000]:
+        for k_label, k in [("n", n), ("n+1", n + 1), ("2n", 2 * n), ("ℵ₀", float('inf'))]:
+            can_embed = "Yes" if k <= n else "No"
+            k_str = k_label if k == float('inf') else str(k)
+            print(f"{n:>14} | {k_str:>20} | {can_embed:>20}")
+        print("-" * 60)
+
+    print()
+    print("For rank ≥ ℵ₁ (> ℵ₀), no finite n works.")
+    print("Every linear map to ℝ^n has non-trivial kernel.")
+    print()
 
 
-def demo_embedding_obstruction():
-    """Demonstrate embedding dimension bounds."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Embedding Obstruction")
-    print("  (Theorem: linIndep_card_le_finrank)")
+def demo_hilbert_cube_cardinality():
+    """Demonstrate the Hilbert cube cardinality computation.
+
+    |[0,1]^ℕ| = 𝔠 = |ℝ| = 2^ℵ₀
+
+    We show this by the squeeze: |[0,1]| ≤ |[0,1]^ℕ| ≤ |ℝ^ℕ| = 𝔠.
+    """
     print("=" * 60)
-    
-    # Standard basis in ℝ³
-    e1 = [1, 0, 0]
-    e2 = [0, 1, 0]
-    e3 = [0, 0, 1]
-    
-    print(f"\n  Vectors in ℝ³: e1, e2, e3")
-    print(f"  Rank: {embedding_dimension_bound([e1, e2, e3])}")
-    print(f"  Can embed in ℝ³: ✓ (rank ≤ 3)")
-    
-    # Try 4 vectors in ℝ³
-    v4 = [1, 1, 1]
-    rank = embedding_dimension_bound([e1, e2, e3, v4])
-    print(f"\n  Adding v4 = (1,1,1):")
-    print(f"  Rank of {{e1, e2, e3, v4}}: {rank}")
-    print(f"  Still embeds in ℝ³ (v4 = e1+e2+e3 is dependent)")
-    
-    # Show max independent set size
-    for n in range(1, 6):
-        vecs = [[1 if i == j else 0 for j in range(n)] for i in range(n)]
-        rank = embedding_dimension_bound(vecs)
-        # Try adding one more
-        extra = [1] * n
-        rank_extra = embedding_dimension_bound(vecs + [extra])
-        print(f"\n  ℝ^{n}: max independent = {rank}, "
-              f"with extra = {rank_extra} "
-              f"({'at bound' if rank_extra == n else 'exceeds! contradiction'})")
-
-
-def demo_dimension_chains():
-    """Demonstrate strictly increasing dimension chains."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Dimension Chains")
-    print("  (Theorem: increasing_chain_exceeds, chain_image_card)")
+    print("Demo 3: Hilbert Cube Cardinality")
     print("=" * 60)
-    
-    # Chain f(n) = 2^n (exponentially growing dimensions)
-    f_exp = lambda n: 2 ** n
-    vals = dimension_chain_values(f_exp, 10)
-    print(f"\n  Exponential chain f(n) = 2^n:")
-    print(f"  Values: {vals}")
-    print(f"  Strictly increasing: {is_strictly_increasing(vals)}")
-    print(f"  Distinct count (first 10): {chain_distinct_count(f_exp, 10)}")
-    
-    # Chain f(n) = aleph_n (symbolic)
-    print(f"\n  Aleph chain f(n) = ℵ_n (symbolic):")
-    for n in range(5):
-        print(f"    f({n}) = ℵ_{n}, f({n}) < f({n+1}) = ℵ_{n+1}")
-    print(f"  Chain is strictly increasing by aleph_lt_aleph")
-    print(f"  Distinct count at n: exactly n (theorem chain_image_card)")
+    print()
+    print("Cardinality chain:")
+    print()
+    print("  |[0,1]| = 𝔠     (by Cantor-Bernstein with ℝ)")
+    print("       ≤")
+    print("  |[0,1]^ℕ|        (via constant-sequence embedding)")
+    print("       ≤")
+    print("  |ℝ^ℕ|            (via Subtype.val on each coordinate)")
+    print("       =")
+    print("  𝔠^ℵ₀             (cardinal exponentiation)")
+    print("       =")
+    print("  𝔠                (since 𝔠^ℵ₀ = (2^ℵ₀)^ℵ₀ = 2^(ℵ₀·ℵ₀) = 2^ℵ₀ = 𝔠)")
+    print()
+    print("Therefore |[0,1]^ℕ| = 𝔠.")
+    print()
+    print("Under CH (ℵ₁ = 𝔠): |[0,1]^ℕ| = ℵ₁.")
+    print()
+
+    # Finite approximation
+    print("Finite approximation: |{0,1,...,k-1}^n| for increasing k, n:")
+    print()
+    print(f"{'k':>5} | {'n':>5} | {'|{0,...,k-1}^n|':>20}")
+    print("-" * 40)
+    for k in [2, 3, 10]:
+        for n in [1, 2, 5, 10]:
+            card = k ** n
+            print(f"{k:>5} | {n:>5} | {card:>20,}")
+    print()
 
 
-def demo_hilbert_cube():
-    """Demonstrate Hilbert cube properties."""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Hilbert Cube")
-    print("  (Theorem: hilbertCube_card_ge_continuum)")
+def demo_dual_obstruction():
+    """Demonstrate the dual obstruction theorem.
+
+    Under CH, spaces with |X| = 𝔠 = ℵ₁ simultaneously:
+    1. Admit no countable cover
+    2. Have no finite-dim linear embedding (for high-rank modules)
+    3. Fit cardinality-wise in the Hilbert cube
+    """
     print("=" * 60)
-    
-    # Create points in the Hilbert cube
-    p1 = hilbert_cube_point([0.5] * 10)  # constant 0.5
-    p2 = hilbert_cube_point([1.0 / (n + 1) for n in range(10)])  # 1/n
-    p3 = hilbert_cube_point([0.0] * 10)  # origin
-    
-    print(f"\n  Point p1 = (0.5, 0.5, ...)")
-    print(f"  Point p2 = (1, 1/2, 1/3, ...)")
-    print(f"  Point p3 = (0, 0, 0, ...)")
-    
-    d12 = hilbert_cube_distance(p1, p2)
-    d13 = hilbert_cube_distance(p1, p3)
-    d23 = hilbert_cube_distance(p2, p3)
-    
-    print(f"\n  d(p1, p2) ≈ {d12:.6f}")
-    print(f"  d(p1, p3) ≈ {d13:.6f}")
-    print(f"  d(p2, p3) ≈ {d23:.6f}")
-    
-    # Triangle inequality check
-    print(f"\n  Triangle inequality d(p1,p3) ≤ d(p1,p2) + d(p2,p3):")
-    print(f"  {d13:.6f} ≤ {d12 + d23:.6f}: "
-          f"{'✓' if d13 <= d12 + d23 + 1e-10 else '✗'}")
-    
-    # Embedding check
-    print(f"\n  Can ℝⁿ contain the Hilbert cube?")
-    for n in [1, 2, 3, 10, 100]:
-        possible = embedding_possible(ALEPH_0, n)
-        print(f"    ℝ^{n}: {'✓' if possible else '✗ (infinite dimensions needed)'}")
-
-
-def demo_transfinite_manifold():
-    """Demonstrate transfinite manifold properties."""
-    print("\n" + "=" * 60)
-    print("DEMO 7: Transfinite Manifold Properties")
-    print("  (Theorems: dim_uncountable, card_infinite,")
-    print("   no_finite_triangulation, exists_aleph_one_manifold)")
+    print("Demo 4: Dual Obstruction (Synthesis)")
     print("=" * 60)
-    
-    print(f"\n  Under CH: ℵ₁ = 𝔠")
-    print(f"  Canonical example: ℝ with dim = ℵ₁")
-    print(f"  |ℝ| = 𝔠 = ℵ₁ ≥ 𝔠 ✓")
-    print(f"  dim = ℵ₁ ≥ ℵ₁ ✓")
-    print(f"  dim > ℵ₀ (uncountable dimension) ✓")
-    print(f"  |carrier| ≥ ℵ₀ (infinite) ✓")
-    print(f"  Finite triangulation: ✗ (impossible)")
-    print(f"  Embedding in ℝⁿ for any n: ✗ (impossible)")
-    print(f"  Embedding in Hilbert cube: ✓ (|H| ≥ 𝔠)")
-
-
-def demo_conjecture():
-    """Demonstrate the Transfinite Betti Conjecture."""
-    print("\n" + "=" * 60)
-    print("DEMO 8: Transfinite Betti Conjecture")
-    print("=" * 60)
-    
-    print(f"\n  Conjecture: For transfinite manifolds with dim = ℵ₁ under CH,")
-    print(f"  every Betti-like cardinal β satisfies β = 0 or β ≥ ℵ₀.")
-    
-    print(f"\n  Known examples:")
-    examples = [
-        ("Long line", "β₁ = 0", "Consistent"),
-        ("Hawaiian earring", "|π₁| = 𝔠", "Consistent"),
-        ("ℝ (trivial)", "β₁ = 0", "Consistent"),
-        ("Hilbert cube [0,1]^ℕ", "β₁ = 0", "Consistent"),
-    ]
-    for name, betti, status in examples:
-        print(f"    {name}: {betti} — {status} ✓")
-    
-    print(f"\n  Status: No counterexample found. Conjecture remains open.")
+    print()
+    print("Under CH, for X with |X| = ℵ₁:")
+    print()
+    print("  Obstruction 1 (Combinatorial):")
+    print("    No κ-bounded cover for κ < ℵ₁")
+    print("    In particular, no finite or countable triangulation")
+    print()
+    print("  Obstruction 2 (Algebraic):")
+    print("    For any ℝ-module M with rank(M) ≥ ℵ₁,")
+    print("    no injective linear map M → ℝ^n exists")
+    print()
+    print("  Resolution (Hilbert Cube):")
+    print("    |X| = ℵ₁ = |[0,1]^ℕ|")
+    print("    X fits cardinality-wise in the Hilbert cube")
+    print()
+    print("The dimensional gap ℵ₀ < ℵ₁ is the single root cause")
+    print("of both obstructions. The Hilbert cube bridges the gap")
+    print("by providing a continuum-sized universal container.")
+    print()
 
 
 if __name__ == "__main__":
-    demo_simplicial_complexes()
-    demo_face_dimension_bounds()
-    demo_triangulation_obstruction()
-    demo_embedding_obstruction()
-    demo_dimension_chains()
-    demo_hilbert_cube()
-    demo_transfinite_manifold()
-    demo_conjecture()
-    
-    print("\n" + "=" * 60)
-    print("All demonstrations completed successfully.")
-    print("=" * 60)
+    demo_cardinal_bound()
+    demo_linear_embedding_obstruction()
+    demo_hilbert_cube_cardinality()
+    demo_dual_obstruction()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Dimension Tower
+Visualization: Cardinal Hierarchy of Dimensional Obstructions
 
-Shows the strictly increasing chain of cardinal dimensions
-and the triangulation obstruction at each level.
+Shows how the triangulation bound κ vs |X| creates a staircase of
+obstructions at each cardinal level.
 """
 
 import matplotlib.pyplot as plt
@@ -250,98 +157,185 @@ import matplotlib.patches as mpatches
 import numpy as np
 
 
-def plot_dimension_tower():
-    """Plot the dimension tower showing finite vs transfinite levels."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 7))
-    
-    # Left panel: Dimension chain
-    n_levels = 8
-    levels = list(range(n_levels))
-    dim_values = [2**i for i in levels]
-    
-    colors = ['#2ecc71' if d < 100 else '#e74c3c' for d in dim_values]
-    
-    bars = ax1.barh(levels, dim_values, color=colors, edgecolor='black', linewidth=0.5)
-    ax1.set_xlabel('Dimension Value', fontsize=12)
-    ax1.set_ylabel('Chain Index', fontsize=12)
-    ax1.set_title('Strictly Increasing Dimension Chain\n$f(n) = 2^n$', fontsize=14)
-    ax1.set_xscale('log', base=2)
-    
-    for i, (level, val) in enumerate(zip(levels, dim_values)):
-        ax1.text(val * 1.1, level, f'$2^{i} = {val}$', va='center', fontsize=10)
-    
-    finite_patch = mpatches.Patch(color='#2ecc71', label='Finite (triangulable)')
-    transfinite_patch = mpatches.Patch(color='#e74c3c', label='Large (obstruction regime)')
-    ax1.legend(handles=[finite_patch, transfinite_patch], loc='lower right')
-    
-    # Right panel: Simplicial complex face counts
-    ns = list(range(1, 11))
-    face_counts = [2**n for n in ns]
-    max_dims = [n - 1 for n in ns]
-    
-    ax2_twin = ax2.twinx()
-    
-    line1 = ax2.plot(ns, face_counts, 'o-', color='#3498db', linewidth=2,
-                     markersize=8, label='Face count $2^n$')
-    line2 = ax2_twin.plot(ns, max_dims, 's-', color='#e67e22', linewidth=2,
-                          markersize=8, label='Max dimension $n-1$')
-    
-    ax2.set_xlabel('Number of Vertices $n$', fontsize=12)
-    ax2.set_ylabel('Number of Faces', fontsize=12, color='#3498db')
-    ax2_twin.set_ylabel('Maximum Face Dimension', fontsize=12, color='#e67e22')
-    ax2.set_title('Simplicial Complex Bounds on Fin($n$)\n(Theorem: face_dim_le)', fontsize=14)
-    ax2.set_yscale('log', base=2)
-    
-    lines = line1 + line2
-    labels = [l.get_label() for l in lines]
-    ax2.legend(lines, labels, loc='upper left')
-    
+def main():
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # --- Left panel: Triangulation complexity vs dimension ---
+    ax1 = axes[0]
+    dims = np.arange(1, 16)
+    vertices = 2 ** dims  # hypercube vertices
+    simplices = np.array([np.math.factorial(d) for d in dims])
+
+    ax1.semilogy(dims, vertices, 'o-', color='#2196F3', linewidth=2,
+                 markersize=6, label='Min vertices (2^d)')
+    ax1.semilogy(dims, simplices, 's-', color='#FF5722', linewidth=2,
+                 markersize=6, label='Min simplices (d!)')
+
+    ax1.fill_between(dims, 1, vertices, alpha=0.1, color='#2196F3')
+    ax1.set_xlabel('Dimension d', fontsize=12)
+    ax1.set_ylabel('Count (log scale)', fontsize=12)
+    ax1.set_title('Triangulation Complexity vs Dimension', fontsize=13, fontweight='bold')
+    ax1.legend(fontsize=10)
+    ax1.grid(True, alpha=0.3)
+
+    # Add annotation for the transfinite regime
+    ax1.annotate('d → ℵ₁: no finite\ntriangulation exists',
+                xy=(12, 1e10), fontsize=10, color='#9C27B0',
+                fontweight='bold', ha='center',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='#E1BEE7', alpha=0.8))
+
+    # --- Right panel: Cardinal obstruction diagram ---
+    ax2 = axes[1]
+    ax2.set_xlim(0, 10)
+    ax2.set_ylim(0, 10)
+    ax2.set_aspect('equal')
+    ax2.axis('off')
+    ax2.set_title('Cardinal Obstruction Map', fontsize=13, fontweight='bold')
+
+    # Draw cardinal levels as horizontal bands
+    levels = [
+        (1.5, 'Finite', '#E8F5E9', '#4CAF50'),
+        (4.0, 'ℵ₀ (Countable)', '#E3F2FD', '#2196F3'),
+        (6.5, 'ℵ₁ = 𝔠 (under CH)', '#FFF3E0', '#FF9800'),
+        (8.5, 'ℵ₂, ℵ₃, ...', '#FCE4EC', '#E91E63'),
+    ]
+
+    for y, label, bg_color, text_color in levels:
+        rect = mpatches.FancyBboxPatch(
+            (0.5, y - 0.6), 9, 1.0,
+            boxstyle="round,pad=0.1",
+            facecolor=bg_color, edgecolor=text_color, linewidth=1.5)
+        ax2.add_patch(rect)
+        ax2.text(5, y, label, ha='center', va='center',
+                fontsize=11, fontweight='bold', color=text_color)
+
+    # Draw obstruction arrows
+    arrow_props = dict(arrowstyle='->', color='red', lw=2)
+
+    # Finite → ℵ₀ obstruction
+    ax2.annotate('', xy=(2, 2.4), xytext=(2, 3.0),
+                arrowprops=dict(arrowstyle='-|>', color='red', lw=2))
+    ax2.text(2.3, 2.7, '✗ no finite\ntriangulation', fontsize=8,
+            color='red', va='center')
+
+    # ℵ₀ → ℵ₁ obstruction
+    ax2.annotate('', xy=(2, 4.9), xytext=(2, 5.5),
+                arrowprops=dict(arrowstyle='-|>', color='red', lw=2))
+    ax2.text(2.3, 5.2, '✗ no countable\ntriangulation', fontsize=8,
+            color='red', va='center')
+
+    # Hilbert cube arrow
+    ax2.annotate('', xy=(7.5, 5.5), xytext=(7.5, 6.0),
+                arrowprops=dict(arrowstyle='-|>', color='green', lw=2))
+    ax2.text(7.8, 5.7, '✓ Hilbert cube\nembedding', fontsize=8,
+            color='green', va='center')
+
+    # Linear algebra arrow
+    ax2.annotate('', xy=(5, 4.9), xytext=(5, 5.5),
+                arrowprops=dict(arrowstyle='-|>', color='darkred', lw=2))
+    ax2.text(5.3, 5.2, '✗ no linear\nembedding in ℝⁿ', fontsize=8,
+            color='darkred', va='center')
+
     plt.tight_layout()
-    plt.savefig('viz_dimension_tower.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved viz_dimension_tower.png")
+    plt.savefig('cardinal_hierarchy.png', dpi=150, bbox_inches='tight')
+    plt.show()
+    print("Saved: cardinal_hierarchy.png")
 
 
-def plot_embedding_obstruction():
-    """Plot the embedding dimension obstruction."""
-    fig, ax = plt.subplots(figsize=(10, 7))
-    
-    ns = list(range(1, 9))
-    
-    # For each n, show max independent vectors = n
-    for n in ns:
-        # Draw a box for ℝ^n
-        rect = plt.Rectangle((n - 0.4, 0), 0.8, n, 
-                             facecolor=f'#{hex(int(50 + 25*n))[2:]}a0ff',
-                             edgecolor='black', linewidth=1.5)
-        ax.add_patch(rect)
-        
-        # Mark the bound
-        ax.plot(n, n, 'r*', markersize=15, zorder=5)
-        ax.text(n, n + 0.3, f'max={n}', ha='center', fontsize=9, fontweight='bold')
-    
-    # Draw the y=x line
-    ax.plot([0.5, 8.5], [0.5, 8.5], 'r--', linewidth=1, alpha=0.5, label='$|s| = n$ (bound)')
-    
-    # Shade the impossible region
-    ax.fill_between([0.5, 8.5], [0.5, 8.5], [9, 9], alpha=0.1, color='red',
-                    label='Impossible region ($|s| > n$)')
-    
-    ax.set_xlabel('Ambient Dimension $n$ (of $\\mathbb{R}^n$)', fontsize=12)
-    ax.set_ylabel('Number of Linearly Independent Vectors', fontsize=12)
-    ax.set_title('Embedding Obstruction Theorem\n$|s| \\leq n$ for lin. indep. $s \\subset \\mathbb{R}^n$',
-                fontsize=14)
-    ax.set_xlim(0.5, 8.5)
-    ax.set_ylim(0, 9)
-    ax.legend(loc='upper left')
-    ax.set_aspect('equal')
-    
+if __name__ == "__main__":
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Hilbert Cube and the Embedding Landscape
+
+Shows the cardinality squeeze argument and the position of
+transfinite manifolds relative to finite and infinite containers.
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def main():
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # --- Left: Cardinality squeeze ---
+    ax1 = axes[0]
+    ax1.set_xlim(-0.5, 7.5)
+    ax1.set_ylim(-0.5, 6)
+    ax1.axis('off')
+    ax1.set_title('Cardinality Squeeze: |[0,1]^ℕ| = 𝔠', fontsize=13, fontweight='bold')
+
+    # Draw the chain
+    items = [
+        (1, 4.5, '|[0,1]|', '= 𝔠'),
+        (1, 3.5, '', '≤'),
+        (1, 2.5, '|[0,1]^ℕ|', '?'),
+        (1, 1.5, '', '≤'),
+        (1, 0.5, '|ℝ^ℕ| = 𝔠^{ℵ₀}', '= 𝔠'),
+    ]
+
+    for x, y, label, val in items:
+        if label:
+            ax1.text(x, y, label, fontsize=13, fontweight='bold',
+                    ha='left', va='center', color='#1565C0')
+            ax1.text(x + 3.5, y, val, fontsize=13, ha='left', va='center',
+                    color='#4CAF50' if '=' in val else '#FF9800',
+                    fontweight='bold')
+        else:
+            ax1.text(x + 1.5, y, val, fontsize=16, ha='center', va='center',
+                    color='#757575')
+
+    # Conclusion box
+    from matplotlib.patches import FancyBboxPatch
+    rect = FancyBboxPatch((0.3, -0.3), 6.5, 0.9,
+                          boxstyle="round,pad=0.15",
+                          facecolor='#E8F5E9', edgecolor='#4CAF50', linewidth=2)
+    ax1.add_patch(rect)
+    ax1.text(3.5, 0.1, '∴  |[0,1]^ℕ| = 𝔠  (by squeeze)',
+            fontsize=13, fontweight='bold', ha='center', va='center',
+            color='#2E7D32')
+
+    # --- Right: Embedding landscape ---
+    ax2 = axes[1]
+    ax2.set_title('Embedding Landscape for ℵ₁-Surfaces', fontsize=13, fontweight='bold')
+
+    # Create a visual showing which spaces can/cannot host the surface
+    categories = ['ℝ¹', 'ℝ²', 'ℝ³', 'ℝ¹⁰', 'ℝ¹⁰⁰⁰', 'ℝ^ℕ\n(seq. space)', '[0,1]^ℕ\n(Hilbert cube)']
+    can_host = [False, False, False, False, False, True, True]
+    colors = ['#FFCDD2' if not h else '#C8E6C9' for h in can_host]
+    edge_colors = ['#E53935' if not h else '#43A047' for h in can_host]
+    symbols = ['✗' if not h else '✓' for h in can_host]
+
+    bars = ax2.bar(range(len(categories)), [1]*len(categories),
+                   color=colors, edgecolor=edge_colors, linewidth=2)
+
+    ax2.set_xticks(range(len(categories)))
+    ax2.set_xticklabels(categories, fontsize=9, rotation=0)
+    ax2.set_yticks([])
+    ax2.set_ylim(0, 1.5)
+
+    for i, (sym, color) in enumerate(zip(symbols, edge_colors)):
+        ax2.text(i, 0.5, sym, ha='center', va='center',
+                fontsize=24, fontweight='bold', color=color)
+
+    ax2.text(3, 1.3, 'Can an ℵ₁-surface embed here?',
+            ha='center', fontsize=11, fontstyle='italic', color='#424242')
+
+    # Dividing line
+    ax2.axvline(x=4.5, color='#9E9E9E', linestyle='--', linewidth=1.5)
+    ax2.text(2, 1.1, 'Finite-dimensional\n(OBSTRUCTED)', ha='center',
+            fontsize=9, color='#E53935', fontweight='bold')
+    ax2.text(5.5, 1.1, 'Infinite-dimensional\n(COMPATIBLE)', ha='center',
+            fontsize=9, color='#43A047', fontweight='bold')
+
     plt.tight_layout()
-    plt.savefig('viz_embedding_obstruction.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved viz_embedding_obstruction.png")
+    plt.savefig('embedding_landscape.png', dpi=150, bbox_inches='tight')
+    plt.show()
+    print("Saved: embedding_landscape.png")
 
 
-if __name__ == '__main__':
-    plot_dimension_tower()
-    plot_embedding_obstruction()
+if __name__ == "__main__":
+    main()

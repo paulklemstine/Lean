@@ -1,240 +1,195 @@
+#!/usr/bin/env python3
 """
-Algorithms for Transfinite-Dimensional Geometry
+Algorithms for Transfinite Surface Analysis
 
 Type-hinted implementations of the key algorithms from the
-aleph-1 surface research.
+Aleph-1 Surface research.
 """
 
-from typing import FrozenSet, Set, List, Tuple, Callable, Optional
-from itertools import combinations
 from dataclasses import dataclass
+from enum import Enum
+from typing import Optional
+import math
 
 
-# ============================================================
-# Abstract Simplicial Complex
-# ============================================================
+class ObstructionType(Enum):
+    """Types of dimensional obstruction."""
+    NONE = "no obstruction"
+    COMBINATORIAL = "combinatorial (triangulation)"
+    ALGEBRAIC = "algebraic (linear embedding)"
+    BOTH = "both combinatorial and algebraic"
+
 
 @dataclass
-class AbstractSimplicialComplex:
-    """An abstract simplicial complex: downward-closed family of finite sets."""
-    vertices: Set[int]
-    faces: Set[FrozenSet[int]]
-
-    def __post_init__(self) -> None:
-        # Ensure downward closure
-        to_add: Set[FrozenSet[int]] = set()
-        for face in self.faces:
-            for k in range(len(face)):
-                for sub in combinations(face, k):
-                    to_add.add(frozenset(sub))
-        self.faces |= to_add
-        self.faces.add(frozenset())  # empty face
-
-    def dimension(self) -> int:
-        """The dimension of the complex (max face size - 1)."""
-        if not self.faces:
-            return -1
-        return max(len(f) for f in self.faces) - 1
-
-    def f_vector(self) -> List[int]:
-        """The f-vector: f[i] = number of i-dimensional faces."""
-        d = self.dimension()
-        result = [0] * (d + 2)  # -1 through d
-        for face in self.faces:
-            result[len(face)] += 1
-        return result
-
-    def is_pure(self) -> bool:
-        """Check if all maximal faces have the same dimension."""
-        maximal = [f for f in self.faces
-                   if not any(f < g for g in self.faces)]
-        if not maximal:
-            return True
-        d = len(maximal[0])
-        return all(len(f) == d for f in maximal)
-
-    def euler_characteristic(self) -> int:
-        """Compute the Euler characteristic sum(-1)^i * f_i."""
-        chi = 0
-        for face in self.faces:
-            if len(face) > 0:  # skip empty face
-                chi += (-1) ** (len(face) - 1)
-        return chi
+class CardinalBound:
+    """Result of a cardinal bound check."""
+    source_card: str  # description of source cardinality
+    target_card: str  # description of target cardinality
+    bound_holds: bool  # True if source ≤ target
+    obstruction: ObstructionType
 
 
-def complete_complex(n: int) -> AbstractSimplicialComplex:
-    """The complete simplicial complex on n vertices (all 2^n subsets)."""
-    vertices = set(range(n))
-    faces: Set[FrozenSet[int]] = set()
-    for k in range(n + 1):
-        for combo in combinations(range(n), k):
-            faces.add(frozenset(combo))
-    return AbstractSimplicialComplex(vertices=vertices, faces=faces)
+def check_triangulation_feasibility(
+    vertex_count: int | str,
+    target_cardinality: int | str,
+) -> CardinalBound:
+    """Check whether a triangulation with given vertex count
+    can cover a space of given cardinality.
 
+    Uses the cardinal triangulation bound: |V| ≥ |X| is necessary.
 
-def void_complex(n: int) -> AbstractSimplicialComplex:
-    """The void complex: only the empty face."""
-    return AbstractSimplicialComplex(
-        vertices=set(range(n)),
-        faces={frozenset()}
+    Args:
+        vertex_count: Number of vertices (int or "aleph0", "aleph1", "continuum")
+        target_cardinality: Cardinality of target space
+
+    Returns:
+        CardinalBound with feasibility result
+    """
+    cardinal_order = {"finite": 0, "aleph0": 1, "aleph1": 2, "continuum": 2}
+
+    def classify(x: int | str) -> tuple[str, int]:
+        if isinstance(x, int):
+            return "finite", 0
+        return str(x), cardinal_order.get(str(x), 3)
+
+    v_class, v_ord = classify(vertex_count)
+    t_class, t_ord = classify(target_cardinality)
+
+    if isinstance(vertex_count, int) and isinstance(target_cardinality, int):
+        feasible = vertex_count >= target_cardinality
+    else:
+        feasible = v_ord >= t_ord
+
+    return CardinalBound(
+        source_card=str(vertex_count),
+        target_card=str(target_cardinality),
+        bound_holds=feasible,
+        obstruction=ObstructionType.NONE if feasible else ObstructionType.COMBINATORIAL,
     )
 
 
-# ============================================================
-# Dimension Chain Analysis
-# ============================================================
+def check_linear_embedding_feasibility(
+    source_rank: int | str,
+    target_dim: int,
+) -> CardinalBound:
+    """Check whether an injective linear map exists from a module
+    of given rank to ℝ^n.
 
-def dimension_chain_values(
-    f: Callable[[int], float],
-    n: int
-) -> List[float]:
-    """Compute the first n values of a dimension chain."""
-    return [f(i) for i in range(n)]
+    Uses the embedding obstruction: rank(M) ≤ dim(N) is necessary.
 
+    Args:
+        source_rank: Rank of source module (int or "aleph0", "aleph1")
+        target_dim: Dimension of target space (finite)
 
-def is_strictly_increasing(values: List[float]) -> bool:
-    """Check if a sequence is strictly increasing."""
-    return all(values[i] < values[i + 1] for i in range(len(values) - 1))
+    Returns:
+        CardinalBound with feasibility result
+    """
+    if isinstance(source_rank, int):
+        feasible = source_rank <= target_dim
+    else:
+        feasible = False  # infinite rank never embeds in finite dim
 
-
-def chain_distinct_count(
-    f: Callable[[int], float],
-    n: int
-) -> int:
-    """Count distinct values in the first n terms of a chain.
-    For a strictly increasing chain, this equals n."""
-    return len(set(f(i) for i in range(n)))
-
-
-# ============================================================
-# Embedding Dimension Computation
-# ============================================================
-
-def embedding_dimension_bound(
-    vectors: List[List[float]],
-    tolerance: float = 1e-10
-) -> int:
-    """Compute the rank of a set of vectors using Gaussian elimination.
-    This gives the minimum embedding dimension."""
-    if not vectors:
-        return 0
-    
-    n = len(vectors)
-    m = len(vectors[0])
-    # Copy into working matrix
-    mat = [row[:] for row in vectors]
-    
-    rank = 0
-    for col in range(m):
-        # Find pivot
-        pivot_row = None
-        for row in range(rank, n):
-            if abs(mat[row][col]) > tolerance:
-                pivot_row = row
-                break
-        if pivot_row is None:
-            continue
-        
-        # Swap rows
-        mat[rank], mat[pivot_row] = mat[pivot_row], mat[rank]
-        
-        # Eliminate below
-        for row in range(rank + 1, n):
-            if abs(mat[row][col]) > tolerance:
-                factor = mat[row][col] / mat[rank][col]
-                for j in range(m):
-                    mat[row][j] -= factor * mat[rank][j]
-        
-        rank += 1
-    
-    return rank
+    return CardinalBound(
+        source_card=str(source_rank),
+        target_card=str(target_dim),
+        bound_holds=feasible,
+        obstruction=ObstructionType.NONE if feasible else ObstructionType.ALGEBRAIC,
+    )
 
 
-# ============================================================
-# Simplicial Complex Face Enumeration
-# ============================================================
+def dual_obstruction_check(
+    space_cardinality: int | str,
+    module_rank: int | str,
+    target_dim: int,
+) -> CardinalBound:
+    """Check both combinatorial and algebraic obstructions simultaneously.
 
-def enumerate_faces(
-    n: int,
-    max_dim: Optional[int] = None
-) -> List[FrozenSet[int]]:
-    """Enumerate all possible faces on Fin(n) up to max_dim.
-    Total count is at most 2^n."""
-    faces: List[FrozenSet[int]] = []
-    upper = n if max_dim is None else min(max_dim + 1, n)
-    for k in range(upper + 1):
-        for combo in combinations(range(n), k):
-            faces.append(frozenset(combo))
-    return faces
+    Args:
+        space_cardinality: Cardinality of the space
+        module_rank: Rank of the module
+        target_dim: Dimension of finite-dimensional target
 
+    Returns:
+        CardinalBound with combined result
+    """
+    tri_check = check_triangulation_feasibility(target_dim, space_cardinality)
+    lin_check = check_linear_embedding_feasibility(module_rank, target_dim)
 
-def face_count_bound(n: int) -> int:
-    """Upper bound on faces in a complex on n vertices: 2^n."""
-    return 2 ** n
+    if not tri_check.bound_holds and not lin_check.bound_holds:
+        obstruction = ObstructionType.BOTH
+    elif not tri_check.bound_holds:
+        obstruction = ObstructionType.COMBINATORIAL
+    elif not lin_check.bound_holds:
+        obstruction = ObstructionType.ALGEBRAIC
+    else:
+        obstruction = ObstructionType.NONE
 
-
-# ============================================================
-# Hilbert Cube Coordinate Projections
-# ============================================================
-
-def hilbert_cube_point(coords: List[float]) -> Callable[[int], float]:
-    """Create a point in the Hilbert cube from a finite list of coordinates.
-    Coordinates beyond the list are set to 0."""
-    def point(n: int) -> float:
-        if n < len(coords):
-            return max(0.0, min(1.0, coords[n]))
-        return 0.0
-    return point
+    return CardinalBound(
+        source_card=f"space={space_cardinality}, rank={module_rank}",
+        target_card=f"dim={target_dim}",
+        bound_holds=(obstruction == ObstructionType.NONE),
+        obstruction=obstruction,
+    )
 
 
-def hilbert_cube_distance(
-    p: Callable[[int], float],
-    q: Callable[[int], float],
-    terms: int = 100
-) -> float:
-    """Approximate distance in the Hilbert cube metric:
-    d(p,q) = sum_n |p(n) - q(n)| / 2^n"""
-    return sum(abs(p(n) - q(n)) / (2 ** n) for n in range(terms))
+def hilbert_cube_cardinality_chain() -> list[tuple[str, str, str]]:
+    """Compute the cardinality chain proving |[0,1]^ℕ| = 𝔠.
+
+    Returns list of (expression, relation, justification) triples.
+    """
+    return [
+        ("|[0,1]|", "= 𝔠", "Cantor-Bernstein with ℝ"),
+        ("|[0,1]|", "≤ |[0,1]^ℕ|", "constant-sequence embedding"),
+        ("|[0,1]^ℕ|", "≤ |ℝ^ℕ|", "Subtype.val injection"),
+        ("|ℝ^ℕ|", "= 𝔠^ℵ₀", "cardinal exponentiation"),
+        ("𝔠^ℵ₀", "= (2^ℵ₀)^ℵ₀", "definition of 𝔠"),
+        ("(2^ℵ₀)^ℵ₀", "= 2^(ℵ₀·ℵ₀)", "cardinal exponentiation rule"),
+        ("2^(ℵ₀·ℵ₀)", "= 2^ℵ₀", "ℵ₀·ℵ₀ = ℵ₀"),
+        ("2^ℵ₀", "= 𝔠", "definition of 𝔠"),
+    ]
 
 
-# ============================================================
-# Cardinal Arithmetic Simulation
-# ============================================================
+def min_triangulation_complexity(dim: int, epsilon: float = 0.1) -> int:
+    """Estimate minimum simplices for ε-triangulation of [0,1]^d.
 
-@dataclass
-class CardinalLevel:
-    """Symbolic representation of cardinal levels for display."""
-    name: str
-    level: int  # 0 = finite, 1 = aleph_0, 2 = aleph_1 = continuum (under CH)
-    
-    def __lt__(self, other: 'CardinalLevel') -> bool:
-        return self.level < other.level
-    
-    def __le__(self, other: 'CardinalLevel') -> bool:
-        return self.level <= other.level
-    
-    def __repr__(self) -> str:
-        return self.name
+    The Kuhn triangulation of [0,1]^d uses d! simplices per unit cube.
+    For ε-refinement, we need ~(1/ε)^d cubes, each with d! simplices.
+
+    Args:
+        dim: Dimension d
+        epsilon: Approximation parameter
+
+    Returns:
+        Estimated minimum simplex count
+    """
+    cubes = math.ceil(1.0 / epsilon) ** dim
+    simplices_per_cube = math.factorial(dim)
+    return cubes * simplices_per_cube
 
 
-FINITE = CardinalLevel("finite", 0)
-ALEPH_0 = CardinalLevel("ℵ₀", 1)
-ALEPH_1 = CardinalLevel("ℵ₁", 2)
-CONTINUUM = CardinalLevel("𝔠", 2)  # Same level as ℵ₁ under CH
+if __name__ == "__main__":
+    # Demo the algorithms
+    print("=== Triangulation Feasibility ===")
+    for v, t in [(10, 5), (5, 10), ("aleph0", "aleph1"), ("aleph0", "aleph0")]:
+        result = check_triangulation_feasibility(v, t)
+        status = "✓ Feasible" if result.bound_holds else f"✗ {result.obstruction.value}"
+        print(f"  |V|={v}, |X|={t}: {status}")
 
+    print("\n=== Linear Embedding Feasibility ===")
+    for r, n in [(3, 5), (10, 3), ("aleph0", 100), ("aleph1", 1000)]:
+        result = check_linear_embedding_feasibility(r, n)
+        status = "✓ Feasible" if result.bound_holds else f"✗ {result.obstruction.value}"
+        print(f"  rank={r}, dim={n}: {status}")
 
-def triangulation_possible(space_cardinal: CardinalLevel) -> bool:
-    """Check if finite triangulation is possible.
-    Only possible for finite spaces."""
-    return space_cardinal.level == 0
+    print("\n=== Dual Obstruction ===")
+    result = dual_obstruction_check("aleph1", "aleph1", 3)
+    print(f"  ℵ₁-space, ℵ₁-rank module, target ℝ³: {result.obstruction.value}")
 
+    print("\n=== Hilbert Cube Cardinality Chain ===")
+    for expr, rel, just in hilbert_cube_cardinality_chain():
+        print(f"  {expr} {rel}  ({just})")
 
-def embedding_possible(
-    space_dim: CardinalLevel,
-    target_dim: int
-) -> bool:
-    """Check if embedding in ℝ^target_dim is possible.
-    Only possible if space dimension ≤ target_dim."""
-    if space_dim.level >= 1:
-        return False  # Infinite dim can't embed in finite
-    return True
+    print("\n=== Triangulation Complexity ===")
+    for d in [1, 2, 3, 5, 10, 20]:
+        n = min_triangulation_complexity(d, 0.1)
+        print(f"  dim={d}, ε=0.1: ≥{n:,} simplices")
