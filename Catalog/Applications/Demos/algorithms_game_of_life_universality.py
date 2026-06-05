@@ -1,298 +1,244 @@
 #!/usr/bin/env python3
 """
-Algorithms for Simulation Morphism Theory and Game of Life
+Game of Life Universality — Core Algorithms
 
-Provides type-hinted implementations of the core mathematical structures
-and algorithms developed in the Lean 4 formalization.
+Type-hinted implementations of the key algorithms from the formalization:
+1. Cellular automaton simulation
+2. Simulation chain composition
+3. Overhead bound computation
+4. GoL pattern analysis
 """
 
-from dataclasses import dataclass, field
-from typing import (
-    TypeVar, Generic, Callable, Set, Tuple, Dict, List, Optional, FrozenSet
-)
-from functools import reduce
-import operator
+from typing import Set, Tuple, Dict, List, Callable, Optional, TypeVar
+from dataclasses import dataclass
+
 
 # ============================================================
-# Core Types
+# Type Aliases
 # ============================================================
 
 Cell = Tuple[int, int]
-GridConfig = FrozenSet[Cell]
+Config = Set[Cell]
+TransitionFn = Callable[[Config], Config]
 
-S = TypeVar('S')
 T = TypeVar('T')
-U = TypeVar('U')
-
-
-MOORE_OFFSETS: List[Cell] = [
-    (-1, -1), (-1, 0), (-1, 1),
-    (0, -1),           (0, 1),
-    (1, -1),  (1, 0),  (1, 1),
-]
 
 
 # ============================================================
-# Discrete Dynamical System
+# Algorithm 1: Generic Cellular Automaton
 # ============================================================
 
-@dataclass(frozen=True)
-class DiscreteDynSys(Generic[S]):
-    """A discrete dynamical system: a step function on a state space."""
-    step: Callable[[S], S]
-
-    def orbit(self, s: S, n: int) -> List[S]:
-        """Compute the orbit of s for n steps."""
-        trajectory = [s]
-        for _ in range(n):
-            s = self.step(s)
-            trajectory.append(s)
-        return trajectory
-
-    def iterate(self, s: S, n: int) -> S:
-        """Apply step n times."""
-        for _ in range(n):
-            s = self.step(s)
-        return s
-
-    def is_fixed_point(self, s: S) -> bool:
-        """Check if s is a fixed point."""
-        return self.step(s) == s
-
-    def find_period(self, s: S, max_steps: int = 10000) -> Optional[int]:
-        """Find the period of s, or None if not found within max_steps."""
-        current = s
-        for i in range(1, max_steps + 1):
+@dataclass
+class CellularAutomaton:
+    """Abstract cellular automaton with a step function."""
+    name: str
+    step: TransitionFn
+    
+    def orbit(self, config: Config, t: int) -> Config:
+        """Compute the orbit (t-step iteration) of a configuration.
+        
+        Corresponds to CellularAutomaton.orbit in the Lean formalization.
+        """
+        current = config
+        for _ in range(t):
             current = self.step(current)
-            if current == s:
-                return i
-        return None
+        return current
 
 
 # ============================================================
-# Simulation Morphism
+# Algorithm 2: Game of Life Step
 # ============================================================
 
-@dataclass(frozen=True)
-class SimMorphism(Generic[S, T]):
-    """A simulation morphism from system A to system B.
-
-    Satisfies:
-    - faithful: B.step^[dilation](encode(s)) = encode(A.step(s))
-    - retract: decode(encode(s)) = s
+def moore_neighbors(cell: Cell) -> List[Cell]:
+    """The 8 Moore neighbors of a cell.
+    
+    Corresponds to mooreNeighbors in the Lean formalization.
     """
-    source: DiscreteDynSys[S]
-    target: DiscreteDynSys[T]
-    encode: Callable[[S], T]
-    decode: Callable[[T], S]
-    dilation: int  # positive
-
-    def verify_faithful(self, s: S) -> bool:
-        """Check faithfulness for a single state."""
-        lhs = self.target.iterate(self.encode(s), self.dilation)
-        rhs = self.encode(self.source.step(s))
-        return lhs == rhs
-
-    def verify_retract(self, s: S) -> bool:
-        """Check retract for a single state."""
-        return self.decode(self.encode(s)) == s
-
-    def faithful_n(self, s: S, n: int) -> bool:
-        """Verify multi-step faithfulness for n steps."""
-        lhs = self.decode(self.target.iterate(self.encode(s), n * self.dilation))
-        rhs = self.source.iterate(s, n)
-        return lhs == rhs
-
-    @staticmethod
-    def identity(sys: DiscreteDynSys[S]) -> 'SimMorphism[S, S]':
-        """The identity simulation morphism."""
-        return SimMorphism(
-            source=sys, target=sys,
-            encode=lambda s: s, decode=lambda s: s,
-            dilation=1
-        )
-
-    def compose(self, other: 'SimMorphism[T, U]') -> 'SimMorphism[S, U]':
-        """Compose with another morphism. Dilation multiplies."""
-        return SimMorphism(
-            source=self.source,
-            target=other.target,
-            encode=lambda s: other.encode(self.encode(s)),
-            decode=lambda t: self.decode(other.decode(t)),
-            dilation=self.dilation * other.dilation
-        )
+    x, y = cell
+    return [
+        (x-1, y-1), (x-1, y), (x-1, y+1),
+        (x, y-1),             (x, y+1),
+        (x+1, y-1), (x+1, y), (x+1, y+1)
+    ]
 
 
-# ============================================================
-# Game of Life
-# ============================================================
-
-def live_neighbor_count(cfg: GridConfig, p: Cell) -> int:
-    """Count live neighbors of cell p."""
-    return sum(1 for dx, dy in MOORE_OFFSETS if (p[0]+dx, p[1]+dy) in cfg)
+def alive_count(config: Config, cell: Cell) -> int:
+    """Count alive neighbors. Corresponds to aliveCount in Lean."""
+    return sum(1 for nb in moore_neighbors(cell) if nb in config)
 
 
-def gol_cell_update(cfg: GridConfig, p: Cell) -> bool:
-    """GoL update rule for a single cell."""
-    n = live_neighbor_count(cfg, p)
-    if p in cfg:
+def gol_transition(config: Config, cell: Cell) -> bool:
+    """GoL transition rule for a single cell.
+    
+    Corresponds to golTransition in the Lean formalization.
+    - Live cell with 2 or 3 neighbors survives
+    - Dead cell with exactly 3 neighbors becomes alive
+    """
+    n = alive_count(config, cell)
+    if cell in config:
         return n in (2, 3)
     else:
         return n == 3
 
 
-def gol_step(cfg: GridConfig) -> GridConfig:
-    """One step of Conway's Game of Life."""
+def gol_step(config: Config) -> Config:
+    """Global GoL step function. Corresponds to golStep in Lean."""
     candidates: Set[Cell] = set()
-    for x, y in cfg:
-        candidates.add((x, y))
-        for dx, dy in MOORE_OFFSETS:
-            candidates.add((x+dx, y+dy))
-    return frozenset(p for p in candidates if gol_cell_update(cfg, p))
-
-
-GoLSystem = DiscreteDynSys[GridConfig](step=gol_step)
-
-
-# ============================================================
-# GoL Patterns
-# ============================================================
-
-def block(corner: Cell = (0, 0)) -> GridConfig:
-    """2x2 block still life."""
-    x, y = corner
-    return frozenset({(x,y), (x+1,y), (x,y+1), (x+1,y+1)})
-
-
-def blinker_h(center: Cell = (0, 0)) -> GridConfig:
-    """Horizontal blinker (period 2)."""
-    x, y = center
-    return frozenset({(x-1,y), (x,y), (x+1,y)})
-
-
-def glider(corner: Cell = (0, 0)) -> GridConfig:
-    """Glider (period 4, translates by (1,1))."""
-    x, y = corner
-    return frozenset({(x+1,y), (x+2,y+1), (x,y+2), (x+1,y+2), (x+2,y+2)})
-
-
-def translate_config(cfg: GridConfig, d: Cell) -> GridConfig:
-    """Translate configuration by offset d."""
-    return frozenset((x+d[0], y+d[1]) for x, y in cfg)
+    for cell in config:
+        candidates.add(cell)
+        for nb in moore_neighbors(cell):
+            candidates.add(nb)
+    
+    return {cell for cell in candidates if gol_transition(config, cell)}
 
 
 # ============================================================
-# Simulation Chain Analysis
+# Algorithm 3: Simulation Chain Composition
 # ============================================================
 
 @dataclass
-class SimChain:
-    """A chain of simulation morphisms with tracked overhead."""
-    layers: List[int]  # dilation of each layer
-
-    @property
-    def depth(self) -> int:
-        return len(self.layers)
-
-    @property
-    def total_dilation(self) -> int:
-        return reduce(operator.mul, self.layers, 1)
-
-    def complexity_bound(self, max_dilation: int) -> int:
-        """Upper bound: max_dilation^depth."""
-        return max_dilation ** self.depth
-
-    def verify_bound(self) -> bool:
-        """Verify that product ≤ max^depth."""
-        if not self.layers:
-            return True
-        d = max(self.layers)
-        return self.total_dilation <= d ** self.depth
-
-
-def dilation_chain_bound(dilations: List[int]) -> Tuple[int, int]:
+class CASimulation:
+    """A simulation of one CA by another.
+    
+    Corresponds to CASimulation in the Lean formalization.
+    The key property is the commuting diagram:
+        ca1.orbit(encode(c), time_factor) = encode(ca2.step(c))
     """
-    Compute the exact dilation and the d^n upper bound.
+    time_factor: int
+    encode: Callable[[Config], Config]
+    source_name: str
+    target_name: str
 
-    Returns (product, d^n) where d = max(dilations), n = len(dilations).
-    Corresponds to theorem dilation_chain_bound.
+
+def compose_simulations(sim1: CASimulation, sim2: CASimulation) -> CASimulation:
+    """Compose two simulations. Corresponds to CASimulation.trans in Lean.
+    
+    If CA₁ simulates CA₂ with factor τ₁, and CA₂ simulates CA₃ with factor τ₂,
+    then CA₁ simulates CA₃ with factor τ₁ × τ₂.
+    
+    This is the key theorem: simulation overhead composes multiplicatively.
     """
-    if not dilations:
-        return (1, 1)
-    d = max(dilations)
-    n = len(dilations)
-    product = reduce(operator.mul, dilations, 1)
-    bound = d ** n
-    return (product, bound)
+    return CASimulation(
+        time_factor=sim1.time_factor * sim2.time_factor,
+        encode=lambda c: sim1.encode(sim2.encode(c)),
+        source_name=sim1.source_name,
+        target_name=sim2.target_name
+    )
+
+
+def simulation_chain_overhead(factors: List[int]) -> int:
+    """Total overhead of a simulation chain.
+    
+    Corresponds to overhead_polynomial_chain in Lean:
+    total = ∏ τᵢ ≤ f^k where f = max(τᵢ) and k = len(factors)
+    """
+    total = 1
+    for f in factors:
+        total *= f
+    return total
+
+
+def overhead_bound(factors: List[int]) -> int:
+    """Upper bound on overhead: max(factors)^len(factors)."""
+    if not factors:
+        return 1
+    return max(factors) ** len(factors)
 
 
 # ============================================================
-# Non-Monotonicity Witness
+# Algorithm 4: GoL Pattern Analysis
 # ============================================================
 
-def find_non_monotonicity_witness() -> Optional[Tuple[GridConfig, GridConfig, Cell]]:
+def is_still_life(config: Config) -> bool:
+    """Check if a configuration is a still life (fixed point).
+    
+    Corresponds to IsStillLife in the Lean formalization.
     """
-    Find a constructive witness that GoL is not monotone.
+    return gol_step(config) == config
 
-    Returns (a, b, p) where a ⊆ b but golStep(a)(p) and not golStep(b)(p).
+
+def find_period(config: Config, max_period: int = 1000) -> Optional[int]:
+    """Find the period of an oscillator (or None if aperiodic within limit).
+    
+    Corresponds to IsOscillator in the Lean formalization.
     """
-    # Disk configuration
-    a = frozenset((x,y) for x in range(-1,2) for y in range(-1,2) if x*x+y*y <= 1)
-    b = a | frozenset({(1, 1)})
-
-    stepped_a = gol_step(a)
-    stepped_b = gol_step(b)
-
-    for p in stepped_a:
-        if p not in stepped_b:
-            return (a, b, p)
+    current = config
+    for t in range(1, max_period + 1):
+        current = gol_step(current)
+        if current == config:
+            return t
     return None
 
 
+def translate_config(config: Config, v: Cell) -> Config:
+    """Translate a configuration by vector v.
+    
+    Corresponds to translateConfig in the Lean formalization.
+    """
+    return {(x + v[0], y + v[1]) for (x, y) in config}
+
+
+def reflect_x(config: Config) -> Config:
+    """Reflect across x-axis. Corresponds to reflectX in Lean."""
+    return {(x, -y) for (x, y) in config}
+
+
+def bounding_box(config: Config) -> Tuple[int, int, int, int]:
+    """Compute the bounding box of a configuration."""
+    if not config:
+        return (0, 0, 0, 0)
+    xs = [p[0] for p in config]
+    ys = [p[1] for p in config]
+    return (min(xs), max(xs), min(ys), max(ys))
+
+
+def population_growth_rate(config: Config, steps: int) -> List[int]:
+    """Track population over time. Related to gol_quadratic_population_principle."""
+    populations = [len(config)]
+    current = config
+    for _ in range(steps):
+        current = gol_step(current)
+        populations.append(len(current))
+    return populations
+
+
 # ============================================================
-# Main
+# Algorithm 5: TM Simulation Overhead Calculator
 # ============================================================
+
+def tm_simulation_overhead(states: int, symbols: int) -> Dict[str, int]:
+    """Compute overhead bounds for simulating a TM in GoL.
+    
+    Corresponds to gol_simulation_overhead in the Lean formalization.
+    
+    Returns time overhead T ≤ k²m² and space overhead S ≤ km.
+    """
+    return {
+        "time_overhead_bound": states ** 2 * symbols ** 2,
+        "space_overhead_bound": states * symbols,
+        "states": states,
+        "symbols": symbols
+    }
+
 
 if __name__ == "__main__":
-    # Verify block is still life
-    b = block()
-    assert GoLSystem.is_fixed_point(b), "Block should be a still life"
-    print("✓ Block is a still life")
-
-    # Verify blinker period
-    bl = blinker_h()
-    period = GoLSystem.find_period(bl)
-    assert period == 2, f"Blinker should have period 2, got {period}"
-    print(f"✓ Blinker has period {period}")
-
-    # Verify glider period (with translation)
-    g = glider()
-    g4 = GoLSystem.iterate(g, 4)
-    assert g4 == translate_config(g, (1, 1)), "Glider should translate (1,1) in 4 steps"
-    print("✓ Glider translates (1,1) in 4 steps")
-
-    # Translation invariance
-    d = (100, -50)
-    cfg = blinker_h()
-    assert gol_step(translate_config(cfg, d)) == translate_config(gol_step(cfg), d)
-    print("✓ Translation invariance verified")
-
-    # Non-monotonicity
-    witness = find_non_monotonicity_witness()
-    assert witness is not None, "Should find non-monotonicity witness"
-    a, b, p = witness
-    print(f"✓ Non-monotonicity witness: cell {p}")
-
-    # Dilation chain bound
-    product, bound = dilation_chain_bound([100, 50, 1000])
-    assert product <= bound
-    print(f"✓ Dilation chain: {product:,} ≤ {bound:,}")
-
-    # Finite support preservation
-    cfg = frozenset({(0,0), (1,0), (-1,1), (0,1), (0,2)})  # R-pentomino
-    for t in range(100):
-        cfg = gol_step(cfg)
-        assert len(cfg) < 10**6, "Support should remain finite"
-    print(f"✓ Finite support preserved over 100 steps (pop={len(cfg)})")
-
-    print("\nAll algorithm tests passed!")
+    # Quick self-test
+    gol = CellularAutomaton("GoL", gol_step)
+    
+    # Test glider
+    glider: Config = {(0, 0), (1, 0), (2, 0), (2, 1), (1, 2)}
+    g4 = gol.orbit(glider, 4)
+    g4_expected = translate_config(glider, (1, -1))
+    assert g4 == g4_expected, f"Glider test failed: {g4} != {g4_expected}"
+    
+    # Test still life
+    block: Config = {(0, 0), (1, 0), (0, 1), (1, 1)}
+    assert is_still_life(block), "Block should be a still life"
+    
+    # Test simulation chain
+    factors = [120, 8, 4, 2]
+    total = simulation_chain_overhead(factors)
+    bound = overhead_bound(factors)
+    assert total <= bound, f"Overhead bound violated: {total} > {bound}"
+    
+    print("All self-tests passed ✓")

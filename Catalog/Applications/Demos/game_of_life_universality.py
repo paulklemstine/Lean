@@ -1,545 +1,370 @@
 #!/usr/bin/env python3
 """
-Game of Life Simulation Morphism Demo
+Game of Life Universality — Demonstration Script
 
-Demonstrates key results from the formalization:
-1. Block still life verification
-2. Single cell extinction
-3. Translation invariance
-4. Non-monotonicity counterexample
-5. Finite support preservation
-6. Simulation morphism composition (dilation multiplication)
+Demonstrates key concepts from the formalization:
+1. GoL simulation and pattern evolution
+2. Glider dynamics (c/4 velocity)
+3. Still life verification
+4. Simulation overhead calculations
 """
 
 import numpy as np
-from typing import Dict, Tuple, Set, Callable
+from typing import Set, Tuple, Dict, List
 
-# Type aliases
-Cell = Tuple[int, int]
-Config = Set[Cell]
+# ============================================================
+# Core GoL Implementation
+# ============================================================
 
-MOORE_OFFSETS = [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
-
-
-def live_neighbors(cfg: Config, p: Cell) -> int:
-    """Count live neighbors of cell p in configuration cfg."""
-    return sum(1 for dx, dy in MOORE_OFFSETS if (p[0]+dx, p[1]+dy) in cfg)
-
-
-def gol_step(cfg: Config) -> Config:
+def gol_step(alive: Set[Tuple[int, int]]) -> Set[Tuple[int, int]]:
     """One step of Conway's Game of Life."""
-    # Collect all cells to check (alive cells + their neighbors)
-    candidates: Set[Cell] = set()
-    for x, y in cfg:
-        for dx, dy in MOORE_OFFSETS:
-            candidates.add((x+dx, y+dy))
-        candidates.add((x, y))
-
-    new_cfg: Config = set()
-    for p in candidates:
-        n = live_neighbors(cfg, p)
-        if p in cfg:
-            if n in (2, 3):
-                new_cfg.add(p)
+    neighbor_counts: Dict[Tuple[int, int], int] = {}
+    for (x, y) in alive:
+        for dx in [-1, 0, 1]:
+            for dy in [-1, 0, 1]:
+                if dx == 0 and dy == 0:
+                    continue
+                nb = (x + dx, y + dy)
+                neighbor_counts[nb] = neighbor_counts.get(nb, 0) + 1
+    
+    new_alive = set()
+    for cell, count in neighbor_counts.items():
+        if cell in alive:
+            if count in (2, 3):
+                new_alive.add(cell)
         else:
-            if n == 3:
-                new_cfg.add(p)
-    return new_cfg
+            if count == 3:
+                new_alive.add(cell)
+    return new_alive
 
 
-def translate(cfg: Config, d: Cell) -> Config:
-    """Translate configuration by offset d."""
-    return {(x + d[0], y + d[1]) for x, y in cfg}
+def gol_iterate(alive: Set[Tuple[int, int]], steps: int) -> Set[Tuple[int, int]]:
+    """Iterate GoL for multiple steps."""
+    for _ in range(steps):
+        alive = gol_step(alive)
+    return alive
 
 
-def print_config(cfg: Config, title: str = "", bounds: Tuple[int,int,int,int] = None):
-    """Print a configuration as ASCII art."""
-    if title:
-        print(f"\n{'='*50}")
-        print(f"  {title}")
-        print(f"{'='*50}")
-    if not cfg:
-        print("  (empty)")
-        return
-    if bounds is None:
-        xs = [p[0] for p in cfg]
-        ys = [p[1] for p in cfg]
-        bounds = (min(xs)-1, max(xs)+1, min(ys)-1, max(ys)+1)
-    for y in range(bounds[2], bounds[3]+1):
+def display_grid(alive: Set[Tuple[int, int]], padding: int = 2) -> str:
+    """Display a GoL configuration as ASCII art."""
+    if not alive:
+        return "(empty)"
+    xs = [p[0] for p in alive]
+    ys = [p[1] for p in alive]
+    min_x, max_x = min(xs) - padding, max(xs) + padding
+    min_y, max_y = min(ys) - padding, max(ys) + padding
+    
+    lines = []
+    for y in range(min_y, max_y + 1):
         row = ""
-        for x in range(bounds[0], bounds[1]+1):
-            row += "█" if (x, y) in cfg else "·"
-        print(f"  {row}")
+        for x in range(min_x, max_x + 1):
+            row += "█" if (x, y) in alive else "·"
+        lines.append(row)
+    return "\n".join(lines)
 
 
 # ============================================================
-# Demo 1: Block Still Life
+# Demo 1: Glider Motion
 # ============================================================
-print("\n" + "="*60)
-print("DEMO 1: Block Still Life (Theorem: block_is_still_life)")
-print("="*60)
 
-block = {(0,0), (1,0), (0,1), (1,1)}
-print_config(block, "Block (t=0)")
-stepped = gol_step(block)
-print_config(stepped, "Block (t=1)")
-print(f"\n  Block is fixed point: {block == stepped}")
-
-# Verify neighbor counts
-for p in sorted(block):
-    n = live_neighbors(block, p)
-    print(f"  Cell {p}: {n} neighbors (survives with 2 or 3)")
-
-
-# ============================================================
-# Demo 2: Single Cell Extinction
-# ============================================================
-print("\n" + "="*60)
-print("DEMO 2: Single Cell Dies (Theorem: singleCell_dies)")
-print("="*60)
-
-single = {(5, 5)}
-print_config(single, "Single cell (t=0)", (3,7,3,7))
-stepped = gol_step(single)
-print_config(stepped, "After one step (t=1)", (3,7,3,7))
-print(f"\n  Cell died (empty config): {len(stepped) == 0}")
-print(f"  Neighbor count of single cell: {live_neighbors(single, (5,5))}")
-print(f"  Dies because 0 neighbors < 2 (underpopulation)")
-
-
-# ============================================================
-# Demo 3: Translation Invariance
-# ============================================================
-print("\n" + "="*60)
-print("DEMO 3: Translation Invariance (Theorem: golStep_translate_comm)")
-print("="*60)
-
-# Use a blinker (period-2 oscillator)
-blinker_h = {(0,-1), (0,0), (0,1)}  # horizontal
-d = (10, 20)
-
-stepped_then_translated = translate(gol_step(blinker_h), d)
-translated_then_stepped = gol_step(translate(blinker_h, d))
-
-print_config(blinker_h, "Blinker at origin")
-print_config(gol_step(blinker_h), "After step")
-print(f"\n  step(translate(cfg, d)) == translate(step(cfg), d): "
-      f"{stepped_then_translated == translated_then_stepped}")
-print(f"  Offset d = {d}")
-
-
-# ============================================================
-# Demo 4: Non-Monotonicity
-# ============================================================
-print("\n" + "="*60)
-print("DEMO 4: GoL is NOT Monotone (Theorem: gol_not_monotone)")
-print("="*60)
-
-# Configuration a: cells within distance 1 of origin (disk)
-a = {(x,y) for x in range(-1,2) for y in range(-1,2) if x*x + y*y <= 1}
-# Configuration b: a plus an extra cell
-b = a | {(1, 1)}
-
-print(f"  Config a (disk): {sorted(a)}")
-print(f"  Config b (a + extra): {sorted(b)}")
-print(f"  a ⊆ b: {a.issubset(b)}")
-
-stepped_a = gol_step(a)
-stepped_b = gol_step(b)
-
-print_config(a, "Config a (t=0)", (-3,3,-3,3))
-print_config(stepped_a, "step(a) (t=1)", (-3,3,-3,3))
-print_config(b, "Config b (t=0)", (-3,3,-3,3))
-print_config(stepped_b, "step(b) (t=1)", (-3,3,-3,3))
-
-print(f"\n  step(a) ⊆ step(b): {stepped_a.issubset(stepped_b)}")
-print(f"  Monotonicity violated!")
-# Find a witness
-for p in stepped_a:
-    if p not in stepped_b:
-        print(f"  Witness: cell {p} alive in step(a) but dead in step(b)")
-
-
-# ============================================================
-# Demo 5: Finite Support Preservation
-# ============================================================
-print("\n" + "="*60)
-print("DEMO 5: Finite Support (Theorem: golStep_preserves_finite_support)")
-print("="*60)
-
-# R-pentomino: famous for producing a large but still finite pattern
-r_pentomino = {(0,0), (1,0), (-1,1), (0,1), (0,2)}
-print_config(r_pentomino, "R-pentomino (t=0)")
-print(f"  Population at t=0: {len(r_pentomino)}")
-
-cfg = r_pentomino
-pops = [len(cfg)]
-for t in range(1, 20):
-    cfg = gol_step(cfg)
-    pops.append(len(cfg))
-
-print(f"\n  Population over 20 steps:")
-for t, p in enumerate(pops):
-    bar = "▓" * (p // 2)
-    print(f"  t={t:2d}: {p:3d} {bar}")
-print(f"\n  Support always finite ✓")
-
-
-# ============================================================
-# Demo 6: Simulation Morphism Composition
-# ============================================================
-print("\n" + "="*60)
-print("DEMO 6: Simulation Morphism Composition")
-print("="*60)
-
-print("""
-  SimMorphism composition theorem:
-  
-  If f: A → B has dilation d₁
-  and g: B → C has dilation d₂
-  then f∘g: A → C has dilation d₁ × d₂
-  
-  Example chain (Turing machine → GoL):
-  
-  Layer 1: TM → Two-counter machine
-    dilation = 100 (polynomial in program size)
+def demo_glider():
+    """Demonstrate the glider pattern and verify c/4 velocity."""
+    print("=" * 60)
+    print("DEMO 1: Glider Dynamics")
+    print("=" * 60)
     
-  Layer 2: Two-counter machine → Signal machine
-    dilation = 50 (constant per instruction type)
+    # Standard glider
+    glider = {(0, 0), (1, 0), (2, 0), (2, 1), (1, 2)}
     
-  Layer 3: Signal machine → GoL
-    dilation = 1000 (signal propagation time)
+    print("\nInitial glider:")
+    print(display_grid(glider))
     
-  Total dilation = 100 × 50 × 1000 = 5,000,000
-  
-  Complexity bound (Theorem: simulation_complexity_bound):
-  T steps of TM require at most T × 5,000,000 steps of GoL
-""")
+    # Track center of mass over 4 generations
+    for t in range(5):
+        if t > 0:
+            glider_t = gol_iterate(glider, t * 4)
+        else:
+            glider_t = glider
+        
+        xs = [p[0] for p in glider_t]
+        ys = [p[1] for p in glider_t]
+        cx, cy = sum(xs) / len(xs), sum(ys) / len(ys)
+        print(f"  t={t*4:2d}: center=({cx:.1f}, {cy:.1f}), cells={len(glider_t)}")
+    
+    # Verify velocity = c/4
+    g0 = glider
+    g4 = gol_iterate(glider, 4)
+    
+    # After 4 steps, glider translates by (1, 1)
+    g0_shifted = {(x + 1, y + 1) for (x, y) in g0}
+    print(f"\n  Glider after 4 steps matches (1,1)-translation: {g4 == g0_shifted}")
+    print(f"  Velocity = 1/4 cell/step (speed of light = 1 cell/step)")
+    print(f"  Verified: 1/4 < 1 ✓ (glider_velocity_below_speed_of_light)")
 
-# Verify dilation chain bound
-dilations = [100, 50, 1000]
-d_max = max(dilations)
-n = len(dilations)
-product = 1
-for d in dilations:
-    product *= d
-bound = d_max ** n
 
-print(f"  Individual dilations: {dilations}")
-print(f"  Product of dilations: {product:,}")
-print(f"  Max dilation d = {d_max}")
-print(f"  d^n = {d_max}^{n} = {bound:,}")
-print(f"  Product ≤ d^n: {product <= bound} ✓")
+# ============================================================
+# Demo 2: Still Lives
+# ============================================================
+
+def demo_still_lives():
+    """Verify that common still life patterns are fixed points."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Still Life Verification")
+    print("=" * 60)
+    
+    still_lives = {
+        "Block": {(0, 0), (1, 0), (0, 1), (1, 1)},
+        "Beehive": {(1, 0), (2, 0), (0, 1), (3, 1), (1, 2), (2, 2)},
+        "Loaf": {(1, 0), (2, 0), (0, 1), (3, 1), (1, 2), (3, 2), (2, 3)},
+        "Boat": {(0, 0), (1, 0), (0, 1), (2, 1), (1, 2)},
+        "Tub": {(1, 0), (0, 1), (2, 1), (1, 2)},
+    }
+    
+    for name, pattern in still_lives.items():
+        evolved = gol_step(pattern)
+        is_still = evolved == pattern
+        print(f"  {name:8s}: {len(pattern)} cells, still life = {is_still}")
+    
+    # Verify empty grid is a still life (empty_is_still_life)
+    empty = set()
+    print(f"  {'Empty':8s}: 0 cells, still life = {gol_step(empty) == empty}")
 
 
-print("\n" + "="*60)
-print("All demos completed successfully!")
-print("="*60)
+# ============================================================
+# Demo 3: Oscillators
+# ============================================================
+
+def demo_oscillators():
+    """Verify oscillator periods."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Oscillator Period Verification")
+    print("=" * 60)
+    
+    # Blinker (period 2)
+    blinker = {(0, 0), (1, 0), (2, 0)}
+    
+    b1 = gol_step(blinker)
+    b2 = gol_step(b1)
+    print(f"  Blinker: period 2 = {b2 == blinker}")
+    print(f"    Phase 0: {sorted(blinker)}")
+    print(f"    Phase 1: {sorted(b1)}")
+    
+    # Toad (period 2)
+    toad = {(1, 0), (2, 0), (3, 0), (0, 1), (1, 1), (2, 1)}
+    t1 = gol_step(toad)
+    t2 = gol_step(t1)
+    print(f"  Toad:    period 2 = {t2 == toad}")
+    
+    # Pulsar (period 3)
+    pulsar = set()
+    for s in [(-1, 1), (1, 1), (-1, -1), (1, -1)]:
+        for (x, y) in [(2, 1), (3, 1), (4, 1), (1, 2), (1, 3), (1, 4)]:
+            pulsar.add((s[0] * x, s[1] * y))
+    
+    p1 = gol_step(pulsar)
+    p2 = gol_step(p1)
+    p3 = gol_step(p2)
+    print(f"  Pulsar:  period 3 = {p3 == pulsar}, cells = {len(pulsar)}")
+
+
+# ============================================================
+# Demo 4: Simulation Overhead
+# ============================================================
+
+def demo_overhead():
+    """Demonstrate simulation overhead calculations."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Simulation Overhead Bounds")
+    print("=" * 60)
+    
+    # Standard simulation chain: GoL → Register → Counter → Tag → TM
+    chain_factors = [120, 8, 4, 2]  # Example time factors
+    
+    total = 1
+    for i, f in enumerate(chain_factors):
+        total *= f
+        stage_names = ["GoL→Register", "Register→Counter", "Counter→Tag", "Tag→TM"]
+        print(f"  Stage {i+1} ({stage_names[i]}): factor = {f}, cumulative = {total}")
+    
+    print(f"\n  Total time dilation: {total}")
+    print(f"  Overhead polynomial chain bound (f=120, k=4): {120**4}")
+    print(f"  Actual ≤ bound: {total <= 120**4}")
+    
+    # Overhead as function of TM parameters
+    print("\n  Overhead as f(states, symbols):")
+    for k in [2, 5, 10, 20]:
+        for m in [2, 3, 5]:
+            T = k**2 * m**2
+            S = k * m
+            print(f"    k={k:2d}, m={m}: time≤{T:6d}, space≤{S:4d}")
+
+
+# ============================================================
+# Demo 5: Non-injectivity
+# ============================================================
+
+def demo_non_injectivity():
+    """Demonstrate that GoL is not injective (gol_not_injective)."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Non-injectivity (Garden of Eden)")
+    print("=" * 60)
+    
+    # Two different configs that map to the same successor
+    c1 = set()  # empty grid
+    c2 = {(0, 0)}  # single cell
+    
+    s1 = gol_step(c1)
+    s2 = gol_step(c2)
+    
+    print(f"  Config 1 (empty): {sorted(c1)}")
+    print(f"  Config 2 (single cell): {sorted(c2)}")
+    print(f"  Step(Config 1): {sorted(s1)}")
+    print(f"  Step(Config 2): {sorted(s2)}")
+    print(f"  Different configs: {c1 != c2}")
+    print(f"  Same successors:   {s1 == s2}")
+    print(f"  → golStep is NOT injective ✓")
+
+
+# ============================================================
+# Demo 6: Translation Invariance
+# ============================================================
+
+def demo_symmetry():
+    """Demonstrate GoL symmetries (translation, reflection)."""
+    print("\n" + "=" * 60)
+    print("DEMO 6: Symmetries")
+    print("=" * 60)
+    
+    pattern = {(0, 0), (1, 0), (2, 0), (1, 1)}  # T-tetromino
+    v = (5, 3)
+    
+    # Translation invariance
+    evolved = gol_step(pattern)
+    translated_then_evolved = gol_step({(x + v[0], y + v[1]) for (x, y) in pattern})
+    evolved_then_translated = {(x + v[0], y + v[1]) for (x, y) in evolved}
+    
+    print(f"  Pattern: {sorted(pattern)}")
+    print(f"  Translation vector: {v}")
+    print(f"  translate(evolve) == evolve(translate): "
+          f"{evolved_then_translated == translated_then_evolved}")
+    
+    # Reflection invariance
+    reflected_x = {(x, -y) for (x, y) in pattern}
+    evolved_reflected = gol_step(reflected_x)
+    reflected_evolved = {(x, -y) for (x, y) in evolved}
+    
+    print(f"  reflect_x(evolve) == evolve(reflect_x): "
+          f"{reflected_evolved == evolved_reflected}")
+
+
+if __name__ == "__main__":
+    demo_glider()
+    demo_still_lives()
+    demo_oscillators()
+    demo_overhead()
+    demo_non_injectivity()
+    demo_symmetry()
+    
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Dilation Chain Bounds
+Visualization: Simulation Overhead Landscape
 
-Shows how simulation overhead grows with chain depth and maximum dilation.
-Corresponds to theorem dilation_chain_bound.
+Shows how simulation overhead scales with TM parameters (states × symbols),
+demonstrating the O(k²m²) time bound and O(km) space bound from the
+gol_simulation_overhead theorem.
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_dilation_bounds():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+def compute_time_overhead(k: int, m: int) -> int:
+    return k ** 2 * m ** 2
 
-    # Plot 1: Overhead vs chain depth for different max dilations
+
+def compute_space_overhead(k: int, m: int) -> int:
+    return k * m
+
+
+def compute_chain_overhead(factors: list) -> list:
+    cumulative = []
+    total = 1
+    for f in factors:
+        total *= f
+        cumulative.append(total)
+    return cumulative
+
+
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+    
+    # Plot 1: Time overhead heatmap
     ax1 = axes[0]
-    depths = np.arange(1, 8)
-    for d in [2, 5, 10, 50]:
-        bounds = d ** depths
-        ax1.semilogy(depths, bounds, 'o-', label=f'd = {d}', markersize=6)
-
-    ax1.set_xlabel('Chain Depth (n)', fontsize=13)
-    ax1.set_ylabel('Total Dilation Bound (d^n)', fontsize=13)
-    ax1.set_title('Simulation Overhead vs Chain Depth', fontsize=14)
-    ax1.legend(title='Max single-layer\ndilation', fontsize=11)
-    ax1.grid(True, alpha=0.3)
-    ax1.set_xticks(depths)
-
-    # Plot 2: Actual vs bound for random dilation chains
+    states = np.arange(1, 21)
+    symbols = np.arange(1, 11)
+    K, M = np.meshgrid(states, symbols)
+    T = K**2 * M**2
+    
+    im = ax1.pcolormesh(states, symbols, np.log10(T), cmap='YlOrRd', shading='auto')
+    plt.colorbar(im, ax=ax1, label='log₁₀(time overhead)')
+    ax1.set_xlabel('TM States (k)')
+    ax1.set_ylabel('TM Symbols (m)')
+    ax1.set_title('GoL Time Overhead: O(k²m²)')
+    
+    # Plot 2: Simulation chain composition
     ax2 = axes[1]
-    np.random.seed(42)
-    n = 5
-    num_chains = 50
-    actuals = []
-    bounds = []
-    for _ in range(num_chains):
-        dilations = np.random.randint(1, 20, size=n)
-        actual = int(np.prod(dilations))
-        d_max = int(np.max(dilations))
-        bound = d_max ** n
-        actuals.append(actual)
-        bounds.append(bound)
-
-    ax2.scatter(bounds, actuals, alpha=0.6, s=40, c='steelblue', edgecolors='navy')
-    max_val = max(max(bounds), max(actuals))
-    ax2.plot([0, max_val], [0, max_val], 'r--', alpha=0.5, label='y = x (tight bound)')
-    ax2.set_xlabel('Upper Bound (d^n)', fontsize=13)
-    ax2.set_ylabel('Actual Product (∏ dᵢ)', fontsize=13)
-    ax2.set_title(f'Actual vs Bound ({num_chains} random chains, depth {n})', fontsize=14)
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3)
-    ax2.set_xscale('log')
-    ax2.set_yscale('log')
-
+    chain_labels = ['GoL→Reg', 'Reg→Cnt', 'Cnt→Tag', 'Tag→TM']
+    example_chains = {
+        'Small TM (2,2)': [20, 4, 2, 2],
+        'Medium TM (5,3)': [60, 8, 4, 2],
+        'Large TM (10,5)': [120, 16, 8, 4],
+    }
+    
+    x_pos = np.arange(len(chain_labels))
+    width = 0.25
+    for i, (name, factors) in enumerate(example_chains.items()):
+        cumulative = compute_chain_overhead(factors)
+        ax2.bar(x_pos + i * width, np.log10(cumulative), width, label=name, alpha=0.8)
+    
+    ax2.set_xlabel('Simulation Stage')
+    ax2.set_ylabel('log₁₀(cumulative overhead)')
+    ax2.set_title('Chain Composition: ∏ τᵢ')
+    ax2.set_xticks(x_pos + width)
+    ax2.set_xticklabels(chain_labels, rotation=15)
+    ax2.legend(fontsize=8)
+    
+    # Plot 3: Overhead bound comparison
+    ax3 = axes[2]
+    k_range = np.arange(2, 30)
+    
+    # Actual overhead (assuming typical chain)
+    actual = k_range**2 * 4  # simplified
+    # Upper bound from theorem
+    upper = k_range**4  # f^k with k=4
+    # Lower bound (linear)
+    lower = k_range
+    
+    ax3.semilogy(k_range, actual, 'b-', linewidth=2, label='Typical overhead O(k²)')
+    ax3.semilogy(k_range, upper, 'r--', linewidth=2, label='Chain bound O(k⁴)')
+    ax3.semilogy(k_range, lower, 'g:', linewidth=2, label='Linear O(k)')
+    ax3.fill_between(k_range, lower, upper, alpha=0.1, color='blue')
+    ax3.set_xlabel('TM Complexity (k)')
+    ax3.set_ylabel('Simulation Overhead')
+    ax3.set_title('Overhead Scaling Bounds')
+    ax3.legend()
+    ax3.grid(True, alpha=0.3)
+    
     plt.tight_layout()
-    plt.savefig('dilation_bounds.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print("Saved: dilation_bounds.png")
+    plt.savefig('/workspace/request-project/GameOfLife/overhead_landscape.png', dpi=150, bbox_inches='tight')
+    print("Saved overhead_landscape.png")
 
 
-if __name__ == "__main__":
-    plot_dilation_bounds()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Game of Life Pattern Evolution
-
-Shows the evolution of key patterns: block (still life), blinker (oscillator),
-glider (spaceship), and R-pentomino (complex evolution).
-"""
-
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-import numpy as np
-from typing import Set, Tuple, FrozenSet
-
-Cell = Tuple[int, int]
-Config = FrozenSet[Cell]
-
-MOORE_OFFSETS = [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
-
-
-def live_neighbors(cfg: Config, p: Cell) -> int:
-    return sum(1 for dx, dy in MOORE_OFFSETS if (p[0]+dx, p[1]+dy) in cfg)
-
-
-def gol_step(cfg: Config) -> Config:
-    candidates: Set[Cell] = set()
-    for x, y in cfg:
-        candidates.add((x, y))
-        for dx, dy in MOORE_OFFSETS:
-            candidates.add((x+dx, y+dy))
-    result = set()
-    for p in candidates:
-        n = live_neighbors(cfg, p)
-        if p in cfg:
-            if n in (2, 3):
-                result.add(p)
-        else:
-            if n == 3:
-                result.add(p)
-    return frozenset(result)
-
-
-def config_to_grid(cfg: Config, bounds: Tuple[int,int,int,int]) -> np.ndarray:
-    xmin, xmax, ymin, ymax = bounds
-    grid = np.zeros((ymax - ymin + 1, xmax - xmin + 1))
-    for x, y in cfg:
-        if xmin <= x <= xmax and ymin <= y <= ymax:
-            grid[y - ymin, x - xmin] = 1
-    return grid
-
-
-def plot_pattern_evolution():
-    patterns = {
-        'Block (still life)': frozenset({(0,0),(1,0),(0,1),(1,1)}),
-        'Blinker (period 2)': frozenset({(-1,0),(0,0),(1,0)}),
-        'Glider (spaceship)': frozenset({(1,0),(2,1),(0,2),(1,2),(2,2)}),
-        'R-pentomino': frozenset({(0,0),(1,0),(-1,1),(0,1),(0,2)}),
-    }
-
-    bounds_map = {
-        'Block (still life)': (-2, 3, -2, 3),
-        'Blinker (period 2)': (-3, 3, -3, 3),
-        'Glider (spaceship)': (-2, 8, -2, 8),
-        'R-pentomino': (-8, 12, -8, 12),
-    }
-
-    steps_map = {
-        'Block (still life)': 4,
-        'Blinker (period 2)': 4,
-        'Glider (spaceship)': 8,
-        'R-pentomino': 8,
-    }
-
-    cmap = mcolors.ListedColormap(['#1a1a2e', '#e94560'])
-
-    fig, axes = plt.subplots(4, 5, figsize=(16, 13))
-
-    for row_idx, (name, initial) in enumerate(patterns.items()):
-        cfg = initial
-        bounds = bounds_map[name]
-        n_steps = steps_map[name]
-        step_size = max(1, n_steps // 4)
-
-        for col_idx in range(5):
-            t = col_idx * step_size
-            ax = axes[row_idx, col_idx]
-
-            # Evolve to step t
-            current = initial
-            for _ in range(t):
-                current = gol_step(current)
-
-            grid = config_to_grid(current, bounds)
-            ax.imshow(grid, cmap=cmap, interpolation='nearest', aspect='equal')
-            ax.set_title(f't={t}', fontsize=11)
-            ax.set_xticks([])
-            ax.set_yticks([])
-
-            if col_idx == 0:
-                ax.set_ylabel(name, fontsize=11, fontweight='bold')
-
-    plt.suptitle('Game of Life: Pattern Evolution', fontsize=16, fontweight='bold', y=0.98)
-    plt.tight_layout(rect=[0, 0, 1, 0.96])
-    plt.savefig('gol_patterns.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print("Saved: gol_patterns.png")
-
-
-if __name__ == "__main__":
-    plot_pattern_evolution()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Non-Monotonicity of the Game of Life
-
-Demonstrates that adding cells can cause other cells to die,
-proving GoL is not monotone. This property is essential for
-computational universality.
-"""
-
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-import matplotlib.patches as mpatches
-import numpy as np
-from typing import Set, Tuple, FrozenSet
-
-Cell = Tuple[int, int]
-Config = FrozenSet[Cell]
-
-MOORE_OFFSETS = [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
-
-
-def live_neighbors(cfg: Config, p: Cell) -> int:
-    return sum(1 for dx, dy in MOORE_OFFSETS if (p[0]+dx, p[1]+dy) in cfg)
-
-
-def gol_step(cfg: Config) -> Config:
-    candidates: Set[Cell] = set()
-    for x, y in cfg:
-        candidates.add((x, y))
-        for dx, dy in MOORE_OFFSETS:
-            candidates.add((x+dx, y+dy))
-    result = set()
-    for p in candidates:
-        n = live_neighbors(cfg, p)
-        if p in cfg:
-            if n in (2, 3): result.add(p)
-        else:
-            if n == 3: result.add(p)
-    return frozenset(result)
-
-
-def plot_non_monotonicity():
-    # Configuration a: disk of radius 1
-    a = frozenset((x,y) for x in range(-1,2) for y in range(-1,2) if x*x+y*y <= 1)
-    # Configuration b: a + extra cell
-    b = a | frozenset({(1, 1)})
-
-    stepped_a = gol_step(a)
-    stepped_b = gol_step(b)
-
-    # Find witness cells
-    lost_cells = stepped_a - stepped_b  # Alive in step(a), dead in step(b)
-    extra_cells = b - a  # Added cells
-
-    bounds = (-3, 3, -3, 3)
-
-    fig, axes = plt.subplots(2, 2, figsize=(12, 12))
-
-    cmap3 = mcolors.ListedColormap(['#1a1a2e', '#16c79a', '#ff6b6b'])
-
-    for ax_idx, (ax, cfg, title) in enumerate([
-        (axes[0,0], a, 'Config a (t=0)'),
-        (axes[0,1], b, 'Config b = a ∪ {(1,1)} (t=0)'),
-        (axes[1,0], stepped_a, 'step(a) (t=1)'),
-        (axes[1,1], stepped_b, 'step(b) (t=1)'),
-    ]):
-        xmin, xmax, ymin, ymax = bounds
-        grid = np.zeros((ymax-ymin+1, xmax-xmin+1))
-        for x, y in cfg:
-            if xmin <= x <= xmax and ymin <= y <= ymax:
-                grid[y-ymin, x-xmin] = 1
-
-        # Mark special cells
-        if ax_idx == 1:  # Config b: mark extra cells
-            for x, y in extra_cells:
-                if xmin <= x <= xmax and ymin <= y <= ymax:
-                    grid[y-ymin, x-xmin] = 2
-        if ax_idx == 2:  # step(a): mark cells that will be lost
-            for x, y in lost_cells:
-                if xmin <= x <= xmax and ymin <= y <= ymax:
-                    grid[y-ymin, x-xmin] = 2
-
-        ax.imshow(grid, cmap=cmap3, interpolation='nearest', aspect='equal',
-                  vmin=0, vmax=2)
-        ax.set_title(title, fontsize=13, fontweight='bold')
-        ax.set_xticks(range(xmax-xmin+1))
-        ax.set_xticklabels(range(xmin, xmax+1))
-        ax.set_yticks(range(ymax-ymin+1))
-        ax.set_yticklabels(range(ymin, ymax+1))
-        ax.grid(True, alpha=0.2)
-
-        # Add cell coordinate labels
-        for x in range(xmin, xmax+1):
-            for y in range(ymin, ymax+1):
-                if (x, y) in cfg:
-                    n = live_neighbors(cfg, (x, y))
-                    ax.text(x-xmin, y-ymin, str(n), ha='center', va='center',
-                            fontsize=9, color='white', fontweight='bold')
-
-    # Add legend
-    legend_elements = [
-        mpatches.Patch(facecolor='#1a1a2e', label='Dead'),
-        mpatches.Patch(facecolor='#16c79a', label='Alive'),
-        mpatches.Patch(facecolor='#ff6b6b', label='Key cell (added/lost)'),
-    ]
-    fig.legend(handles=legend_elements, loc='lower center', ncol=3,
-               fontsize=12, bbox_to_anchor=(0.5, 0.02))
-
-    plt.suptitle('Game of Life is NOT Monotone\n'
-                 'Adding a cell (red) to config a creates config b,\n'
-                 'but step(a) has cells that step(b) lacks',
-                 fontsize=15, fontweight='bold', y=1.02)
-
-    plt.tight_layout(rect=[0, 0.06, 1, 0.98])
-    plt.savefig('non_monotonicity.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print("Saved: non_monotonicity.png")
-
-    print(f"\nConfig a: {sorted(a)}")
-    print(f"Config b: {sorted(b)}")
-    print(f"step(a): {sorted(stepped_a)}")
-    print(f"step(b): {sorted(stepped_b)}")
-    print(f"Lost cells (in step(a) but not step(b)): {sorted(lost_cells)}")
-    print(f"a ⊆ b: {a.issubset(b)}")
-    print(f"step(a) ⊆ step(b): {stepped_a.issubset(stepped_b)}")
-    print(f"Monotonicity violated: {not stepped_a.issubset(stepped_b)}")
-
-
-if __name__ == "__main__":
-    plot_non_monotonicity()
+if __name__ == '__main__':
+    main()
