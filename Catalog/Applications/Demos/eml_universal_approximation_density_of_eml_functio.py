@@ -1,222 +1,274 @@
 #!/usr/bin/env python3
 """
-EML Universal Approximation Demo
+EML Universal Approximation — Demonstration
 
-Demonstrates key results from the EML density and depth hierarchy theorems:
-1. Polynomial (depth-0 EML) approximation of continuous functions
-2. Iterated exponential growth gap
-3. EML Approximation Spectrum computation
+Demonstrates:
+1. EML generators separating points on [0,1]^n
+2. EML approximation of various continuous functions
+3. Depth hierarchy: iterated exponentials at different depths
+4. Width-for-depth tradeoff visualization
 """
 
 import numpy as np
-from typing import Callable, Tuple, List
+from typing import Callable, List, Tuple
 
-# ============================================================
-# 1. EML Primitive
-# ============================================================
+def eml_generator(w: np.ndarray, b: float, x: np.ndarray) -> float:
+    """EML exponential generator: exp(w^T x + b)"""
+    return np.exp(np.dot(w, x) + b)
 
-def eml(x: float, y: float) -> float:
-    """The EML primitive: eml(x, y) = exp(x) - log(y)"""
-    return np.exp(x) - np.log(y)
-
-def eml_recovers_exp(x: float) -> float:
-    """eml(x, 1) = exp(x)"""
-    return eml(x, 1.0)
-
-def eml_recovers_log(y: float) -> float:
-    """1 - eml(0, y) = log(y)"""
-    return 1.0 - eml(0.0, y)
-
-# ============================================================
-# 2. Iterated Exponential and Growth Gap
-# ============================================================
+def eml_sum_approx(weights: List[Tuple[np.ndarray, float, float]],
+                   x: np.ndarray) -> float:
+    """Sum of weighted EML generators: ∑ cᵢ exp(wᵢᵀx + bᵢ)"""
+    return sum(c * eml_generator(w, b, x) for w, b, c in weights)
 
 def iter_exp(n: int, x: float) -> float:
-    """Iterated exponential: iterExp(0, x) = x, iterExp(n+1, x) = exp(iterExp(n, x))"""
+    """Iterated exponential: E_0(x)=x, E_{n+1}(x)=exp(E_n(x))"""
     result = x
     for _ in range(n):
         result = np.exp(result)
     return result
 
-def demonstrate_growth_gap():
-    """Show the super-exponential growth gap: iterExp(n+1, 2) > iterExp(n, 2) + 1"""
-    print("=" * 60)
-    print("ITERATED EXPONENTIAL GROWTH GAP")
-    print("Theorem: iterExp(n+1, 2) > iterExp(n, 2) + 1 for all n")
-    print("=" * 60)
-    
-    for n in range(6):
-        val_n = iter_exp(n, 2.0)
-        val_n1 = iter_exp(n + 1, 2.0)
-        gap = val_n1 - val_n - 1
-        print(f"  n={n}: iterExp({n}, 2) = {val_n:.6g}")
-        print(f"         iterExp({n+1}, 2) = {val_n1:.6g}")
-        print(f"         gap = {gap:.6g} > 0 ✓")
-        print()
-        if val_n1 > 1e100:
-            print("  (values too large to display for higher n)")
-            break
+def eml_chain_leaves(d: int) -> int:
+    """Number of leaves in a depth-d EML chain: 2d+1"""
+    return 2 * d + 1
 
-# ============================================================
-# 3. Polynomial Approximation (Depth-0 EML Density)
-# ============================================================
+def relu_width_for_tower(d: int) -> int:
+    """ReLU width needed for depth-d exponential tower: 2^d"""
+    return 2 ** d
 
-def chebyshev_nodes(n: int, a: float = 0.0, b: float = 1.0) -> np.ndarray:
-    """Chebyshev nodes on [a, b]"""
-    k = np.arange(1, n + 1)
-    nodes = 0.5 * (a + b) + 0.5 * (b - a) * np.cos((2 * k - 1) * np.pi / (2 * n))
-    return np.sort(nodes)
+# === Demo 1: Point Separation ===
+print("=" * 60)
+print("Demo 1: EML Generators Separate Points on [0,1]^2")
+print("=" * 60)
 
-def lagrange_interpolation(nodes: np.ndarray, values: np.ndarray, x: np.ndarray) -> np.ndarray:
-    """Lagrange interpolation polynomial evaluated at x"""
-    n = len(nodes)
-    result = np.zeros_like(x, dtype=float)
-    for i in range(n):
-        term = values[i] * np.ones_like(x)
-        for j in range(n):
-            if i != j:
-                term *= (x - nodes[j]) / (nodes[i] - nodes[j])
-        result += term
-    return result
+x = np.array([0.3, 0.7])
+y = np.array([0.3, 0.5])
 
-def demonstrate_polynomial_density():
-    """Demonstrate Stone-Weierstrass: polynomials approximate any continuous function"""
-    print("=" * 60)
-    print("POLYNOMIAL (DEPTH-0 EML) APPROXIMATION")
-    print("Theorem: ∀ f ∈ C([0,1]), ε > 0, ∃ polynomial p: ‖p - f‖ < ε")
-    print("=" * 60)
-    
-    # Test function: sin(2πx) on [0,1]
-    f = lambda x: np.sin(2 * np.pi * x)
-    x_fine = np.linspace(0, 1, 1000)
-    
-    print("\nApproximating f(x) = sin(2πx) on [0,1]:")
-    for degree in [3, 5, 10, 20]:
-        nodes = chebyshev_nodes(degree + 1)
-        values = f(nodes)
-        p_values = lagrange_interpolation(nodes, values, x_fine)
-        max_error = np.max(np.abs(f(x_fine) - p_values))
-        print(f"  degree {degree:3d}: max error = {max_error:.2e}")
-    
-    # Test function: |x - 0.5| (Lipschitz but not smooth)
-    g = lambda x: np.abs(x - 0.5)
-    print("\nApproximating g(x) = |x - 0.5| on [0,1] (Lipschitz, L=1):")
-    for degree in [5, 10, 20, 50]:
-        nodes = chebyshev_nodes(degree + 1)
-        values = g(nodes)
-        p_values = lagrange_interpolation(nodes, values, x_fine)
-        max_error = np.max(np.abs(g(x_fine) - p_values))
-        print(f"  degree {degree:3d}: max error = {max_error:.2e}")
+# Find separating coordinate
+j = np.argmax(np.abs(x - y))
+w = np.zeros(2)
+w[j] = 1.0
 
-# ============================================================
-# 4. EML Approximation Spectrum
-# ============================================================
+print(f"Point x = {x}")
+print(f"Point y = {y}")
+print(f"Separating coordinate: j = {j}")
+print(f"exp(x_j) = exp({x[j]:.1f}) = {np.exp(x[j]):.6f}")
+print(f"exp(y_j) = exp({y[j]:.1f}) = {np.exp(y[j]):.6f}")
+print(f"Difference: {abs(np.exp(x[j]) - np.exp(y[j])):.6f}")
+print()
 
-def compute_eml_spectrum(f: Callable, a: float, b: float, 
-                         epsilons: List[float]) -> List[int]:
-    """Compute approximate EML spectrum: min polynomial degree for ε-approximation"""
-    spectrum = []
-    x_fine = np.linspace(a, b, 1000)
-    f_values = f(x_fine)
-    
-    for eps in epsilons:
-        for degree in range(1, 200):
-            nodes = chebyshev_nodes(degree + 1, a, b)
-            values = f(nodes)
-            p_values = lagrange_interpolation(nodes, values, x_fine)
-            max_error = np.max(np.abs(f_values - p_values))
-            if max_error < eps:
-                # Tree size ≈ 2*degree + 1 (for polynomial as EML tree)
-                spectrum.append(2 * degree + 1)
-                break
-        else:
-            spectrum.append(-1)  # not achieved
-    
-    return spectrum
+# === Demo 2: Approximating |x - 0.5| on [0,1] ===
+print("=" * 60)
+print("Demo 2: EML Approximation of |x - 0.5| on [0,1]")
+print("=" * 60)
 
-def demonstrate_spectrum():
-    """Demonstrate the EML Approximation Spectrum"""
-    print("=" * 60)
-    print("EML APPROXIMATION SPECTRUM")
-    print("Ψ_f(ε) = minimum EML tree size for ε-approximation")
-    print("=" * 60)
-    
-    epsilons = [1e-1, 1e-2, 1e-3, 1e-4, 1e-5]
-    
-    # Smooth function
-    f1 = lambda x: np.sin(2 * np.pi * x)
-    spec1 = compute_eml_spectrum(f1, 0, 1, epsilons)
-    print("\nf(x) = sin(2πx) (analytic):")
-    for eps, size in zip(epsilons, spec1):
-        print(f"  ε = {eps:.0e}: Ψ = {size}")
-    
-    # Lipschitz function
-    f2 = lambda x: np.abs(x - 0.5)
-    spec2 = compute_eml_spectrum(f2, 0, 1, epsilons)
-    print("\ng(x) = |x - 0.5| (Lipschitz, not C¹):")
-    for eps, size in zip(epsilons, spec2):
-        print(f"  ε = {eps:.0e}: Ψ = {size}")
-    
-    # Highly oscillatory
-    f3 = lambda x: np.sin(20 * np.pi * x)
-    spec3 = compute_eml_spectrum(f3, 0, 1, epsilons)
-    print("\nh(x) = sin(20πx) (analytic, oscillatory):")
-    for eps, size in zip(epsilons, spec3):
-        print(f"  ε = {eps:.0e}: Ψ = {size}")
+target = lambda x: abs(x - 0.5)
+xs = np.linspace(0, 1, 100)
 
-# ============================================================
-# 5. EML Identities Verification
-# ============================================================
+# Simple EML approximation using a few exp generators
+# f(x) ≈ c₀ + c₁ exp(a₁x + b₁) + c₂ exp(a₂x + b₂) + ...
+# Fit by least squares
+from numpy.linalg import lstsq
 
-def demonstrate_eml_identities():
-    """Verify key EML algebraic identities numerically"""
-    print("=" * 60)
-    print("EML ALGEBRAIC IDENTITIES")
-    print("=" * 60)
-    
-    x_vals = [0.5, 1.0, 2.0, 3.0]
-    y_vals = [0.5, 1.0, 2.0, np.e]
-    
-    print("\neml(x, 1) = exp(x):")
-    for x in x_vals:
-        lhs = eml(x, 1.0)
-        rhs = np.exp(x)
-        print(f"  x={x}: eml({x}, 1) = {lhs:.10f}, exp({x}) = {rhs:.10f}, diff = {abs(lhs-rhs):.2e}")
-    
-    print("\n1 - eml(0, y) = log(y):")
-    for y in y_vals:
-        lhs = 1.0 - eml(0.0, y)
-        rhs = np.log(y)
-        print(f"  y={y}: 1 - eml(0, {y}) = {lhs:.10f}, log({y}) = {rhs:.10f}, diff = {abs(lhs-rhs):.2e}")
-    
-    print("\nLegendre: eml(x, exp(y)) = exp(x) - y:")
-    for x in [0.5, 1.0]:
-        for y in [0.5, 1.0, 2.0]:
-            lhs = eml(x, np.exp(y))
-            rhs = np.exp(x) - y
-            print(f"  x={x}, y={y}: lhs = {lhs:.10f}, rhs = {rhs:.10f}, diff = {abs(lhs-rhs):.2e}")
+n_generators = 10
+A = np.zeros((len(xs), n_generators + 1))
+A[:, 0] = 1  # constant term
 
-# ============================================================
-# Main
-# ============================================================
+np.random.seed(42)
+params = []
+for i in range(n_generators):
+    w_i = np.random.uniform(-3, 3)
+    b_i = np.random.uniform(-2, 2)
+    A[:, i + 1] = np.exp(w_i * xs + b_i)
+    params.append((w_i, b_i))
 
-if __name__ == "__main__":
-    print("EML Universal Approximation: Density and Depth Hierarchy")
-    print("=" * 60)
-    print()
-    
-    demonstrate_eml_identities()
-    print()
-    demonstrate_growth_gap()
-    print()
-    demonstrate_polynomial_density()
-    print()
-    demonstrate_spectrum()
-    
-    print("\n" + "=" * 60)
-    print("All demonstrations complete.")
-    print("Key results verified:")
-    print("  ✓ EML recovers exp and log")
-    print("  ✓ Iterated exponentials exhibit super-exponential growth")
-    print("  ✓ Polynomials (depth-0 EML) approximate any continuous function")
-    print("  ✓ Approximation spectrum captures complexity-quality tradeoff")
+target_vals = np.array([target(x) for x in xs])
+coeffs, _, _, _ = lstsq(A, target_vals, rcond=None)
+
+approx_vals = A @ coeffs
+max_error = np.max(np.abs(target_vals - approx_vals))
+
+print(f"Using {n_generators} EML generators")
+print(f"Max approximation error: {max_error:.6f}")
+print(f"Mean approximation error: {np.mean(np.abs(target_vals - approx_vals)):.6f}")
+print()
+
+# === Demo 3: Depth Hierarchy ===
+print("=" * 60)
+print("Demo 3: Iterated Exponential Depth Hierarchy")
+print("=" * 60)
+
+x_val = 0.5
+for n in range(6):
+    val = iter_exp(n, x_val)
+    print(f"E_{n}({x_val}) = {val:.6e}  (requires EML depth {n})")
+print()
+
+# === Demo 4: Width-for-Depth Tradeoff ===
+print("=" * 60)
+print("Demo 4: Width-for-Depth Tradeoff (EML vs ReLU)")
+print("=" * 60)
+
+print(f"{'Depth':>6} | {'EML leaves':>12} | {'ReLU width':>12} | {'Ratio':>10}")
+print("-" * 48)
+for d in range(1, 16):
+    eml_w = eml_chain_leaves(d)
+    relu_w = relu_width_for_tower(d)
+    ratio = relu_w / eml_w
+    print(f"{d:>6} | {eml_w:>12} | {relu_w:>12} | {ratio:>10.1f}")
+print()
+
+# === Demo 5: Lipschitz Bounds ===
+print("=" * 60)
+print("Demo 5: EML Neuron Lipschitz Bounds on [0,1]")
+print("=" * 60)
+
+for w_val, b_val in [(1, 0), (2, 1), (5, 0), (10, -3)]:
+    lip_bound = abs(w_val) * np.exp(abs(w_val) + abs(b_val))
+    # Empirical Lipschitz constant
+    xs_fine = np.linspace(0, 1, 10000)
+    vals = np.exp(w_val * xs_fine + b_val)
+    emp_lip = np.max(np.abs(np.diff(vals)) / np.abs(np.diff(xs_fine)))
+    print(f"exp({w_val}x + {b_val:+d}): "
+          f"Theoretical Lip ≤ {lip_bound:.2f}, "
+          f"Empirical Lip ≈ {emp_lip:.2f}")
+print()
+
+# === Demo 6: Polynomial Bridge ===
+print("=" * 60)
+print("Demo 6: Polynomials Embedded in EML (depth 0)")
+print("=" * 60)
+
+# x^3 - 2x^2 + x + 1 is directly an EML expression
+poly = lambda x: x**3 - 2*x**2 + x + 1
+print("Polynomial p(x) = x³ - 2x² + x + 1")
+print("EML expression: add(mul(mul(var, var), var), add(neg(mul(const(2), mul(var, var))), add(var, const(1))))")
+print()
+for x_test in [0, 0.25, 0.5, 0.75, 1.0]:
+    print(f"  p({x_test}) = {poly(x_test):.6f}")
+print(f"\nPolynomial represented at EML depth 0 (no exp needed)")
+print(f"EML can ALSO represent exp(x) at depth 1 — strictly extending polynomials")
+
+print("\n" + "=" * 60)
+print("All demos completed successfully.")
+print("=" * 60)
+
+
+#!/usr/bin/env python3
+"""
+Visualization: EML Depth-Width Tradeoff
+
+Shows the exponential gap between EML chain leaves (linear) and ReLU width
+(exponential) as a function of depth.
+"""
+
+import numpy as np
+
+try:
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+
+    depths = np.arange(1, 21)
+    eml_leaves = 2 * depths + 1
+    relu_width = 2.0 ** depths
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Left: absolute comparison (log scale)
+    ax1.semilogy(depths, eml_leaves, 'b-o', label='EML chain leaves (2d+1)', markersize=5)
+    ax1.semilogy(depths, relu_width, 'r-s', label='ReLU width (2^d)', markersize=5)
+    ax1.fill_between(depths, eml_leaves, relu_width, alpha=0.2, color='green',
+                     label='EML advantage region')
+    ax1.set_xlabel('Composition Depth d', fontsize=12)
+    ax1.set_ylabel('Parameters / Width', fontsize=12)
+    ax1.set_title('EML vs ReLU: Parameter Efficiency', fontsize=14)
+    ax1.legend(fontsize=10)
+    ax1.grid(True, alpha=0.3)
+    ax1.set_xticks(depths[::2])
+
+    # Right: ratio
+    ratio = relu_width / eml_leaves
+    ax2.semilogy(depths, ratio, 'g-^', markersize=6, linewidth=2)
+    ax2.set_xlabel('Composition Depth d', fontsize=12)
+    ax2.set_ylabel('ReLU Width / EML Leaves', fontsize=12)
+    ax2.set_title('Depth Advantage Ratio (diverges to ∞)', fontsize=14)
+    ax2.grid(True, alpha=0.3)
+    ax2.set_xticks(depths[::2])
+
+    # Annotate key points
+    for d in [5, 10, 15, 20]:
+        idx = d - 1
+        ax2.annotate(f'{ratio[idx]:.0f}x',
+                    xy=(depths[idx], ratio[idx]),
+                    xytext=(5, 10), textcoords='offset points',
+                    fontsize=9, ha='left')
+
+    plt.tight_layout()
+    plt.savefig('depth_tradeoff.png', dpi=150, bbox_inches='tight')
+    print("Saved depth_tradeoff.png")
+
+except ImportError:
+    print("matplotlib not available; skipping visualization")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: EML Approximation of Continuous Functions
+
+Shows how sums of EML generators exp(w*x + b) approximate various
+continuous functions on [0,1].
+"""
+
+import numpy as np
+
+try:
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+
+    def greedy_eml_fit(f, xs, n_gen, seed=42):
+        rng = np.random.default_rng(seed)
+        target = np.array([f(x) for x in xs])
+        A = np.ones((len(xs), n_gen + 1))
+        params = []
+        for i in range(n_gen):
+            w = rng.uniform(-5, 5)
+            b = rng.uniform(-3, 3)
+            A[:, i + 1] = np.exp(w * xs + b)
+            params.append((w, b))
+        coeffs, _, _, _ = np.linalg.lstsq(A, target, rcond=None)
+        return A @ coeffs, np.max(np.abs(target - A @ coeffs))
+
+    xs = np.linspace(0, 1, 500)
+
+    functions = [
+        (lambda x: abs(x - 0.5), '|x - 0.5|'),
+        (lambda x: np.sin(4 * np.pi * x), 'sin(4πx)'),
+        (lambda x: np.where(x < 0.5, 0.0, 1.0), 'step(x - 0.5)'),
+        (lambda x: x * np.sin(10 * x), 'x·sin(10x)'),
+    ]
+
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+    for ax, (f, name) in zip(axes.flat, functions):
+        target = np.array([f(x) for x in xs])
+        
+        for n_gen, color, ls in [(5, 'orange', '--'), (15, 'green', '-.'), (50, 'red', '-')]:
+            approx, err = greedy_eml_fit(f, xs, n_gen)
+            ax.plot(xs, approx, color=color, linestyle=ls, linewidth=1.5,
+                   label=f'N={n_gen} (err={err:.4f})', alpha=0.8)
+        
+        ax.plot(xs, target, 'b-', linewidth=2, label=f'Target: {name}')
+        ax.set_title(f'EML Approximation of {name}', fontsize=12)
+        ax.legend(fontsize=8, loc='best')
+        ax.grid(True, alpha=0.3)
+        ax.set_xlim(0, 1)
+
+    plt.suptitle('EML Universal Approximation on [0,1]', fontsize=14, y=1.02)
+    plt.tight_layout()
+    plt.savefig('eml_approximation.png', dpi=150, bbox_inches='tight')
+    print("Saved eml_approximation.png")
+
+except ImportError:
+    print("matplotlib not available; skipping visualization")
