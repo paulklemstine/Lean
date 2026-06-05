@@ -1,287 +1,198 @@
-# Stratified Self-Reference: Type Theory with Level-Bounded Self-Modification
+# Transfinite Reflective Towers: Self-Referential Specification Dynamics and the GL Bridge
 
 ## Abstract
 
-We develop a formal theory of *stratified self-referential type systems*, where specifications at universe level $n$ can refer to terms at level $n$ but inhabit level $n+1$. This stratification prevents Russell-style paradoxes while enabling controlled self-reference within each level. We prove four main results: (1) paradoxical self-referential predicates are inconsistent for nonempty types; (2) any self-modifying process on stratified specifications must stabilize in finitely many steps; (3) the diagonal argument is blocked across levels, preventing the construction of self-contradictory specifications; and (4) no single level can be self-complete — the Cantor-style anti-diagonal theorem for specification families. We introduce the consistency tower construction, where level $n+1$ proves the consistency of level $n$, and formalize the self-reference depth hierarchy. We conjecture an exponential stratification gap: self-reference depth grows at most linearly with level, even as the type size grows exponentially. All main results are formally verified in Lean 4 with the Mathlib library.
-
-**Keywords**: self-reference, stratified type theory, Gödel incompleteness, diagonal argument, universe levels, specification refinement, fixed-point theorems
-
----
+We develop a formal theory of **transfinite reflective towers** — stratified systems of mathematical specifications where each level can reflect on levels below it but is fundamentally limited in self-reference at its own level. Building on the stratified self-reference framework of `StratifiedSelfReference.lean`, we prove five main results: (1) a **Contractive Collapse Theorem** showing that strictly contractive self-modifiers reach level 0 within a number of steps bounded by the initial level; (2) a **Provability Gap Theorem** establishing that, under Gödelian assumptions, each level of a consistency tower is strictly weaker than the next; (3) a **semantic Löb's theorem** and **second incompleteness theorem** derived from the well-foundedness of the tower's GL frame; (4) an information-theoretic **specification entropy** measure that is provably non-negative and bounded by 1; and (5) a **strengthened diagonal barrier** proving that no enumerable family of specifications can contain its own anti-diagonal. All results are fully formalized in Lean 4 with no `sorry` statements.
 
 ## 1. Introduction
 
-Gödel's incompleteness theorems (1931) establish that any sufficiently strong consistent formal system cannot prove its own consistency. This result applies to single-level systems where self-reference is unrestricted. However, dependent type theories with universe hierarchies — such as the Calculus of Inductive Constructions underlying Lean, Coq, and Agda — naturally stratify self-reference by assigning universe levels to types, with `Type n : Type (n+1)`.
+Gödel's incompleteness theorems (1931) establish that any consistent, recursively axiomatizable theory extending Robinson arithmetic cannot prove its own consistency. This is often summarized as "a system cannot know itself." But this framing obscures a subtlety: a *stratified* system can achieve partial self-knowledge at each level.
 
-We formalize and extend this observation by constructing a theory of *stratified specifications* where:
-- Each specification carries a universe level bounding what it can refer to.
-- Self-modifiers transform specifications while respecting level bounds.
-- The diagonal argument is blocked across levels.
-- Consistency proofs cascade upward through an infinite tower.
+The idea of stratified self-reference has a long history:
+- Russell's type theory (1908) introduced levels to avoid the set-theoretic paradoxes.
+- Tarski's undefinability theorem (1936) showed that truth at level *n* can be defined at level *n+1* but not at level *n*.
+- Feferman's transfinite progressions (1962) showed that iterating consistency statements along ordinals produces increasingly powerful theories.
+- Beklemishev's reflection calculus (2005) algebraized the reflection principles underlying these progressions.
 
-Our contributions are:
+Our contribution is to formalize the dynamics of self-modification within a stratified framework, proving precise convergence results, information-theoretic bounds, and a structural bridge to provability logic (GL).
 
-1. **Formal framework**: The `StratifiedSpec` and `SelfModifier` structures (§2-3), which provide a rigorous setting for studying self-referential specifications with level bounds.
+### 1.1 Catalog Connections
 
-2. **Stabilization theorem** (§4): Any self-modifying process on stratified specifications produces a non-increasing sequence of levels that must eventually stabilize, via a novel application of the monotone convergence principle for ℕ-valued sequences.
+This work extends several results from the existing catalog:
+- **`level_bounded_consistency`** (Logic/StratifiedSelfReference.lean): Our provability gap theorem strengthens this by showing the gap is genuine (not just formal) under Gödelian assumptions.
+- **`diagonal_blocked_across_levels`** (Logic/StratifiedSelfReference.lean): Our Cantor-for-specs and diagonal barrier theorems provide quantitative refinements.
+- **`classical_not_self_sound_with_paradox`** (Logic/ParadoxSelfSoundness.lean): Our second incompleteness theorem for the tower frame gives a semantic counterpart.
+- **`liar_tower_stable`** (Logic/ParadoxInteraction.lean): Our contractive collapse theorem provides conditions under which stability is guaranteed.
 
-3. **Diagonal barrier** (§5): We prove that the standard diagonal argument fails across levels — a predicate that diagonalizes over a level-indexed family necessarily lives at a higher level, preventing paradox within any single level.
+## 2. Definitions
 
-4. **Anti-diagonal theorem** (§6): No level can be self-complete — there is always a predicate not representable at that level, by a Cantor-style argument applied to the specification indexing.
+### 2.1 Level Specifications
 
-5. **Consistency tower** (§7): A construction where each level proves the consistency of the level below, providing an infinite chain of partial consistency proofs.
+A **level specification** on a type α consists of:
+- A natural number `level : ℕ` representing the universe level
+- A predicate `pred : α → Prop` representing the specification content
 
-6. **Exponential stratification gap conjecture** (§8): We conjecture and partially verify that self-reference depth grows linearly with level even as type size grows exponentially.
+### 2.2 Level Modifiers
 
-All results are formally verified in Lean 4 using the Mathlib library, with zero remaining `sorry` statements.
+A **level modifier** on α is a function `modify : LevelSpec α → LevelSpec α` together with a proof that `(modify s).level ≤ s.level` — the level is non-increasing. Iterated modification is defined recursively: `iter 0 s = s` and `iter (n+1) s = modify (iter n s)`.
 
----
+### 2.3 Strict Contractivity
 
-## 2. Stratified Specifications
+A modifier is **strictly contractive** if for any specification with positive level, the modification strictly decreases the level: `0 < s.level → (modify s).level < s.level`.
 
-### 2.1 Basic Definitions
+### 2.4 Provability Towers
 
-**Definition 2.1** (Stratified Specification). A *stratified specification* over a type $\alpha$ consists of:
-- A universe level $\ell \in \mathbb{N}$
-- A predicate $P : \alpha \to \text{Prop}$
+A **provability tower** consists of:
+- A sequence of formal theories `theory : ℕ → FormalTheory`
+- Consistency sentences `lower_con_sentence n : (theory (n+1)).Sentence`
+- Proofs that each level proves the lower consistency: `proves_lower_con n`
+- Embeddings between adjacent levels that preserve provability
 
-We write $\text{StratifiedSpec}(\alpha) = \mathbb{N} \times (\alpha \to \text{Prop})$.
+### 2.5 Specification Entropy
 
-**Definition 2.2** (Refinement). Specification $s_1$ *refines* $s_2$ (written $s_1 \leq s_2$) if:
-1. $s_1.\text{level} \leq s_2.\text{level}$ (level compatibility)
-2. $\forall x,\; s_1.\text{pred}(x) \implies s_2.\text{pred}(x)$ (predicate implication)
-
-**Theorem 2.3** (Preorder). Refinement is reflexive and transitive.
-
-*Proof*. Reflexivity is immediate. Transitivity follows from transitivity of $\leq$ on $\mathbb{N}$ and of logical implication. □
-
-### 2.2 Paradoxical Specifications
-
-**Definition 2.4** (Paradoxical). A specification $s$ is *paradoxical* if $\forall x,\; s.\text{pred}(x) \iff \neg s.\text{pred}(x)$.
-
-**Theorem 2.5** (Paradox implies False). For any nonempty type $\alpha$, no paradoxical specification exists.
-
-*Proof*. Let $x \in \alpha$. From $P(x) \iff \neg P(x)$, we derive: if $P(x)$ holds, then $\neg P(x)$ holds, contradicting $P(x)$. Define $h := \lambda p.\; (P(x) \iff \neg P(x)).\text{mp}(p)(p)$. Then $P(x) \to \bot$, so $\neg P(x)$. But then $(P(x) \iff \neg P(x)).\text{mpr}(h)$ gives $P(x)$, contradiction. □
-
-This is the classical Russell paradox argument, formalized at the specification level.
-
----
-
-## 3. Self-Modifiers
-
-**Definition 3.1** (Self-Modifier). A *self-modifier* on $\alpha$ consists of:
-- A function $\text{modify} : \text{StratifiedSpec}(\alpha) \to \text{StratifiedSpec}(\alpha)$
-- A level bound: $\forall s,\; (\text{modify}(s)).\text{level} \leq s.\text{level}$
-
-The level bound is the key constraint: modifications cannot "jump up" to a higher universe level. This is the formal analogue of the universe hierarchy `Type n : Type (n+1)` in dependent type theory.
-
-**Theorem 3.2** (No Paradox from Self-Modification). For nonempty $\alpha$, no self-modifier can produce a paradoxical specification.
-
-*Proof*. Immediate from Theorem 2.5: paradoxical specifications cannot exist for nonempty types, regardless of how they are produced. □
-
-**Definition 3.3** (Monotone Modifier). A self-modifier is *monotone* if it preserves refinement: $s_1 \leq s_2 \implies \text{modify}(s_1) \leq \text{modify}(s_2)$.
-
----
-
-## 4. Stabilization of Self-Modifying Processes
-
-### 4.1 Iteration
-
-**Definition 4.1** (Iterated Modification). For self-modifier $m$ and specification $s$:
-$$m^0(s) = s, \quad m^{n+1}(s) = m.\text{modify}(m^n(s))$$
-
-**Lemma 4.2** (Non-increasing levels). $m^n(s).\text{level} \leq s.\text{level}$ for all $n$.
-
-*Proof*. By induction: the base case is trivial, and the inductive step uses $m.\text{level\_bound}(m^n(s)) \leq m^n(s).\text{level} \leq s.\text{level}$. □
-
-**Lemma 4.3** (Step-wise monotonicity). $m^{n+1}(s).\text{level} \leq m^n(s).\text{level}$.
-
-*Proof*. Direct from the level bound of $m$. □
-
-### 4.2 Stabilization
-
-**Theorem 4.4** (Stabilization). The level sequence $n \mapsto m^n(s).\text{level}$ eventually stabilizes: there exists $N$ such that $m^n(s).\text{level} = m^N(s).\text{level}$ for all $n \geq N$.
-
-*Proof*. The sequence is antitone (non-increasing) and $\mathbb{N}$-valued, hence bounded below by $0$. By the monotone convergence principle for $\mathbb{N}$-valued antitone sequences (formalized via `tendsto_atTop_ciInf` in Mathlib), the sequence converges to its infimum in the discrete topology on $\mathbb{N}$. Convergence in the discrete topology implies eventual constancy. □
-
-**Remark 4.5**. The stabilization index $N$ is not bounded by $s.\text{level}$ in general. A self-modifier could maintain the same level for many steps before finally decreasing. However, the total number of strict decreases is bounded by $s.\text{level}$.
-
----
-
-## 5. Diagonal Barrier
-
-**Theorem 5.1** (Diagonal Blocked Across Levels). Let $\alpha$ be nonempty and let $(P_n)_{n \in \mathbb{N}}$ be a family of stratified specifications with $P_n.\text{level} = n$. For any $k \in \mathbb{N}$, there is no specification $P_n$ with $P_n.\text{level} = k$ and $\forall x,\; P_n.\text{pred}(x) \iff \neg P_k.\text{pred}(x)$.
-
-*Proof*. Suppose such $n$ exists with $P_n.\text{level} = k$. Since $P_n.\text{level} = n$ by hypothesis, we get $n = k$. Then $\forall x,\; P_k.\text{pred}(x) \iff \neg P_k.\text{pred}(x)$, making $P_k$ paradoxical. This contradicts Theorem 2.5. □
-
-**Interpretation**. The diagonal construction — which builds a predicate differing from $P_n$ for each $n$ — necessarily produces a predicate at a *higher* level than the predicates it diagonalizes over. Within any single level, diagonalization is blocked because it would create a self-contradictory specification.
-
-This is the formal content of why `Type n : Type (n+1)` prevents Girard's paradox while still allowing useful self-reference at each level.
-
----
-
-## 6. Anti-Diagonal Theorem (Cantor for Specifications)
-
-**Definition 6.1** (Self-Completeness). A level $n$ is *self-complete* for a family $(s_k)_{k \in \mathbb{N}}$ if every predicate $P : \alpha \to \text{Prop}$ equals $s_k.\text{pred}$ for some $k$ with $s_k.\text{level} = n$.
-
-**Theorem 6.2** (No Universal Self-Reference). For specifications indexed by $\mathbb{N}$ over $\mathbb{N}$, no level is self-complete.
-
-*Proof*. Fix level $n$ and suppose self-completeness. Define the diagonal predicate $D(x) := \neg s_x.\text{pred}(x)$. By self-completeness, $D = s_k.\text{pred}$ for some $k$ with $s_k.\text{level} = n$. Evaluating at $x = k$: $D(k) = \neg s_k.\text{pred}(k) = \neg D(k)$, a contradiction. □
-
-**Remark 6.3**. This is Cantor's diagonal argument applied to specification families. The key point is that it works for *any* level $n$, showing that the hierarchy of levels is inherently non-collapsible.
-
----
-
-## 7. Consistency Tower
-
-### 7.1 Construction
-
-**Definition 7.1** (Level Theory). A *level theory* at universe level $\ell$ consists of:
-- A type $\text{Sentence}$ of propositions
-- A provability predicate $\text{provable} : \text{Sentence} \to \text{Prop}$
-- A consistency statement $\text{con} \in \text{Sentence}$
-- An axiom: $\text{provable}(\text{con}) \iff \exists s,\; \neg \text{provable}(s)$
-
-**Definition 7.2** (Consistency Tower). A *consistency tower* is a sequence of level theories $(T_n)_{n \in \mathbb{N}}$ where:
-- $T_n.\text{level} = n$
-- For each $n$, $T_{n+1}$ can express and prove the consistency of $T_n$
-
-**Theorem 7.3** (Level-Bounded Consistency). In a consistency tower, $T_{n+1}$ proves the consistency of $T_n$ for every $n$.
-
-**Theorem 7.4** (Strict Level Increase). $(T_{n+1}).\text{level} = (T_n).\text{level} + 1$.
-
-### 7.2 Relation to Gödel's Theorem
-
-Gödel's second incompleteness theorem states that a consistent theory satisfying certain conditions cannot prove its own consistency. Our consistency tower does not violate this because:
-- No single level $T_n$ proves its own consistency.
-- The consistency of $T_n$ is proved at $T_{n+1}$, a strictly stronger theory.
-- The tower as a whole does not constitute a single theory, so Gödel's theorem does not apply to it directly.
-
-This parallels the situation in set theory where ZFC cannot prove its own consistency, but ZFC + "there exists an inaccessible cardinal" can prove the consistency of ZFC.
-
----
-
-## 8. Self-Reference Depth and the Exponential Stratification Gap
-
-### 8.1 Self-Reference Depth
-
-**Definition 8.1**. The *self-reference depth* of a specification $s$ under modifier $m$ is:
-$$\text{depth}(m, s) := s.\text{level} - m^{s.\text{level}}(s).\text{level}$$
-
-This measures how many levels the specification descends through iterated modification.
-
-**Theorem 8.2**. $\text{depth}(m, s) \leq s.\text{level}$.
-
-*Proof*. Immediate from the definition and the fact that levels are non-negative. □
-
-### 8.2 The Conjecture
-
-**Conjecture 8.3** (Exponential Stratification Gap). For any self-modifier on $\text{Fin}(2^n)$:
-$$\text{depth}(m, s) \leq n$$
-
-This asserts that even though the type size grows exponentially ($2^n$ elements at level $n$), the self-reference depth grows only linearly ($\leq n$). If true, it would establish a fundamental gap between the *complexity* of a type system (measured by type size) and its *self-referential capacity* (measured by depth).
-
-**Partial result**: The conjecture holds whenever $s.\text{level} \leq n$.
-
-**Testable prediction**: For each $n \in \{1, 2, \ldots, 10\}$, enumerate all possible self-modifiers on $\text{Fin}(2^n)$ with levels $> n$ and verify that the depth never exceeds $n$.
-
----
-
-## 9. Self-Modifying Proofs
-
-**Definition 9.1**. A *self-modifying proof system* consists of:
-- A spec modifier $m$ (level-bounded)
-- A witness modifier $w : \alpha \to \alpha$
-- Preservation: if $(s, x)$ is a valid proof obligation, so is $(m(s), w(x))$
-
-**Theorem 9.2** (Stability). In a self-modifying proof system, if the initial proof obligation is satisfied, then all iterated obligations are satisfied.
-
-*Proof*. By induction on the number of iterations. The base case is the hypothesis. The inductive step uses the preservation property. □
-
-**Corollary 9.3**. Combined with stabilization (Theorem 4.4), self-modifying proofs converge to a fixed proof obligation that remains valid indefinitely.
-
----
-
-## 10. Algorithms
-
-### 10.1 Self-Modification Iteration
-
+The **specification entropy** of a modifier at a spec is:
 ```
-Algorithm: IterateSelfModifier(modifier, spec, max_steps)
-Input: A level-bounded modifier, initial specification, step limit
-Output: Stabilized specification and number of steps
+specEntropy m s = if s.level = 0 then 0 else (s.level - (m.modify s).level) / s.level
+```
+This measures the fraction of the level consumed by one modification step.
 
-current_spec ← spec
-for i = 1 to max_steps:
-    next_spec ← modifier.modify(current_spec)
-    if next_spec.level == current_spec.level:
-        return (current_spec, i)  // Stabilized
-    current_spec ← next_spec
-return (current_spec, max_steps)  // Hit limit
+## 3. Main Results
+
+### 3.1 Eventual Stabilization (Theorem: `modification_collapse_bound`)
+
+**Statement.** For any level modifier m and specification s, there exists N such that for all n ≥ N, (m.iter n s).level = (m.iter N s).level.
+
+**Proof sketch.** The sequence n ↦ (m.iter n s).level is a non-increasing sequence of natural numbers (by `iter_level_step`). Every such sequence eventually stabilizes, because the range of the sequence is a nonempty subset of ℕ, which has a minimum element. At the index achieving the minimum, the sequence has stabilized.
+
+**PEGB:**
+- **P**roof: Complete in Lean 4 (`modification_collapse_bound`).
+- **E**xample: The identity modifier (modify s = s) stabilizes at N = 0. A modifier that decrements level by 1 (clamping at 0) stabilizes at N = s.level.
+- **G**eneralization: The result extends to any well-ordered set replacing ℕ as the level type, using transfinite induction.
+- **B**oundary: Without the non-increasing condition, the result fails. A modifier that cycles levels (e.g., 0 → 1 → 0 → 1 → ...) would never stabilize.
+
+### 3.2 Contractive Collapse (Theorem: `contractive_reaches_zero`)
+
+**Statement.** If m is strictly contractive, then (m.iter s.level s).level = 0.
+
+**Proof sketch.** We show by induction that (m.iter n s).level ≤ s.level - n. The base case is trivial. For the inductive step, if the current level is positive, strict contractivity gives a strict decrease, consuming one unit of the remaining budget. If the current level is 0, the bound holds trivially. At n = s.level, we get level ≤ 0, hence level = 0.
+
+**PEGB:**
+- **P**roof: Complete in Lean 4 (`contractive_reaches_zero`).
+- **E**xample: On Fin 5 with modify s = ⟨s.level - 1, s.pred⟩, a spec at level 3 reaches 0 in exactly 3 steps.
+- **G**eneralization: Analogous to the Banach contraction mapping theorem in complete metric spaces, this is the discrete version for well-ordered "metric" spaces.
+- **B**oundary: Without strict contractivity (just non-increasing), the level may never reach 0 — the identity modifier keeps any level unchanged forever.
+
+### 3.3 Provability Gap (Theorem: `provability_gap_exists`)
+
+**Statement.** Under the Gödelian assumption that no sentence at level n whose embedding equals the consistency sentence is provable at level n, the tower has a genuine provability gap at level n.
+
+**Proof sketch.** The consistency sentence `lower_con_sentence n` is provable at level n+1 (by the tower axiom). By the Gödelian assumption, its preimage (if any) under embedding is unprovable at level n. This witnesses the gap.
+
+**PEGB:**
+- **P**roof: Complete in Lean 4 (`provability_gap_exists`).
+- **E**xample: In the standard Gödel hierarchy (PA, PA + Con(PA), PA + Con(PA + Con(PA)), ...), Con(PA) is provable in PA + Con(PA) but not in PA.
+- **G**eneralization: The result extends to transfinite towers indexed by ordinals, using transfinite recursion for the embedding.
+- **B**oundary: Without the Gödelian assumption, the gap may not exist — a theory that proves everything (an inconsistent theory) has no gap.
+
+### 3.4 Semantic Löb's Theorem (Theorem: `tower_loeb`)
+
+**Statement.** In the tower frame (worlds = ℕ, accessibility = strict less-than), if □(□φ → φ) holds at world w, then □φ holds at world w.
+
+**Proof sketch.** By contraposition and well-founded induction. If □φ fails at w, there is a minimal v < w where φ fails. By the hypothesis, (□φ → φ) holds at v. If □φ held at v, then φ would hold at v, contradiction. So □φ fails at v, meaning there exists u < v with ¬φ at u. But u < v contradicts the minimality of v.
+
+This is the semantic content of Löb's theorem: provability logic GL is sound for the class of finite transitive frames, and the natural number ordering provides a canonical such frame.
+
+**PEGB:**
+- **P**roof: Complete in Lean 4 (`tower_loeb`).
+- **E**xample: At world 3, if □(□φ → φ) holds, then φ holds at worlds 0, 1, 2.
+- **G**eneralization: Holds for any transitive, converse well-founded frame (GL frame), not just the natural numbers.
+- **B**oundary: Fails without well-foundedness — in a reflexive frame, □(□φ → φ) → □φ is not valid (consider φ = ⊥ at a world accessible to itself).
+
+### 3.5 Second Incompleteness from the Tower (Theorem: `tower_second_incompleteness`)
+
+**Statement.** No world w > 0 in the tower frame can force □(□⊥ → ⊥).
+
+**Proof sketch.** If □(□⊥ → ⊥) held at w, by Löb's theorem we would get □⊥ at w — meaning every v < w forces ⊥. But world 0 is accessible from w (since w > 0) and ⊥ is never forced, contradiction.
+
+**PEGB:**
+- **P**roof: Complete in Lean 4 (`tower_second_incompleteness`).
+- **E**xample: World 1 cannot prove "if ⊥ is provable then ⊥ is true" because that would imply ⊥ at world 0.
+- **G**eneralization: Any non-final world in any GL frame fails to force its own consistency.
+- **B**oundary: At world 0, □(□⊥ → ⊥) is vacuously true (no accessible worlds), which is consistent — 0 trivially proves its own consistency because it has no proof obligations.
+
+### 3.6 Specification Entropy Bounds (Theorems: `specEntropy_nonneg`, `specEntropy_le_one`)
+
+**Statement.** For any level modifier m and spec s, 0 ≤ specEntropy m s ≤ 1.
+
+**Proof sketch.** The numerator (s.level - (m.modify s).level) is non-negative because the modifier is non-increasing. The denominator is s.level > 0 (when level ≠ 0). The ratio is therefore between 0 and s.level/s.level = 1.
+
+### 3.7 Cantor for Specs (Theorem: `cantor_for_specs`)
+
+**Statement.** No ℕ-indexed family of specs can enumerate all predicates at a fixed level.
+
+**Proof sketch.** The diagonal predicate P(k) = ¬(specs k).pred k differs from every member of the family at its own index.
+
+## 4. The GL Bridge
+
+The most significant structural insight of this work is the **GL bridge**: the connection between the algebraic tower structure and Kripke semantics for provability logic.
+
+The tower of consistency theories (PA, PA + Con(PA), ...) naturally forms a GL frame:
+- Worlds are the natural numbers (levels)
+- Accessibility is the reverse ordering: level n+1 can "see" level n
+- Transitivity holds because provability composes
+- Converse well-foundedness holds because ℕ is well-ordered
+
+In this frame, Löb's theorem and the second incompleteness theorem are not independent axioms — they are *consequences* of the frame's well-foundedness. This unifies the proof-theoretic (Gödel) and model-theoretic (Kripke) perspectives on incompleteness.
+
+## 5. Discussion
+
+### 5.1 Self-Modifying Specifications
+
+The contractive collapse theorem shows that self-modifying specifications have a natural "expiry date": after enough iterations, the modification process runs out of level to consume and must stabilize. This provides a formal guarantee that self-referential processes in stratified type theories are well-behaved — they cannot oscillate or diverge.
+
+### 5.2 Information-Theoretic Perspective
+
+Specification entropy provides a quantitative measure of "self-modification potential." The fact that it is bounded by 1 means each step can consume at most the entire remaining level budget. The fact that it is non-negative means modification never increases level. Together, these bounds characterize the feasible space of self-modification dynamics.
+
+### 5.3 Limitations and Future Work
+
+Our tower is indexed by natural numbers. Feferman's work suggests that transfinite ordinal indexing would yield richer structure — particularly, that the ordinal ε₀ plays a distinguished role as the "closure ordinal" of the consistency tower for Peano arithmetic. Formalizing this connection is a natural next step.
+
+## 6. Algorithms
+
+### 6.1 Computing Specification Entropy
+
+```python
+def spec_entropy(level: int, modified_level: int) -> float:
+    if level == 0:
+        return 0.0
+    return (level - modified_level) / level
 ```
 
-### 10.2 Diagonal Barrier Detection
+### 6.2 Simulating Contractive Collapse
 
-```
-Algorithm: CheckDiagonalBarrier(family, diag_level)
-Input: A family of predicates indexed by ℕ, a target level
-Output: Whether the diagonal is blocked
-
-diagonal_pred ← λx. ¬family[diag_level].pred(x)
-for each n where family[n].level == diag_level:
-    if family[n].pred == diagonal_pred:
-        return PARADOX_DETECTED  // Should not happen
-return DIAGONAL_BLOCKED
+```python
+def contractive_collapse(initial_level: int, modifier) -> list[int]:
+    levels = [initial_level]
+    current = initial_level
+    while current > 0:
+        current = modifier(current)
+        levels.append(current)
+    return levels
 ```
 
----
+## 7. References
 
-## 11. Discussion
+1. Gödel, K. (1931). "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I." *Monatshefte für Mathematik und Physik*, 38, 173–198.
+2. Löb, M. H. (1955). "Solution of a problem of Leon Henkin." *Journal of Symbolic Logic*, 20(2), 115–118.
+3. Boolos, G. (1993). *The Logic of Provability*. Cambridge University Press.
+4. Beklemishev, L. D. (2005). "Reflection principles and provability algebras in formal arithmetic." *Russian Mathematical Surveys*, 60(2), 197–268.
+5. Feferman, S. (1962). "Transfinite recursive progressions of axiomatic theories." *Journal of Symbolic Logic*, 27(3), 259–316.
+6. Solovay, R. M. (1976). "Provability interpretations of modal logic." *Israel Journal of Mathematics*, 25, 287–304.
 
-### 11.1 Relation to Existing Work
+## Catalog References
 
-Our framework connects to several established lines of research:
-
-- **Russell's type theory** (1908): The original stratification of sets into types to avoid paradoxes. Our work extends this by adding self-modification capabilities within each level.
-
-- **Tarski's undefinability theorem** (1936): Truth at level $n$ cannot be defined at level $n$. Our diagonal barrier theorem (Theorem 5.1) is a constructive version of this principle.
-
-- **Martin-Löf type theory**: Universe polymorphism with `Type : Type` hierarchy. Our self-modifiers add dynamic specification evolution to this static hierarchy.
-
-- **Homotopy Type Theory**: The univalence axiom equates equivalent types. Our refinement relation provides a weaker but more computationally tractable ordering.
-
-### 11.2 Limitations
-
-- The consistency tower is a semantic construction. We do not construct explicit syntactic theories at each level.
-- The exponential stratification gap conjecture remains open.
-- Self-modifying proofs converge but we do not bound the convergence rate in terms of the level.
-
-### 11.3 Future Directions
-
-1. **Constructive consistency towers**: Build explicit syntactic theories at each level using ordinal analysis.
-2. **Categorical semantics**: Model stratified specs as presheaves on the ordinal category.
-3. **Application to AI alignment**: Self-modifying AI systems with provable stability guarantees.
-4. **Connection to large cardinals**: Consistency strength of the tower relative to large cardinal axioms.
-
----
-
-## 12. Conclusion
-
-We have established that stratified self-reference provides a rigorous framework for studying systems that reason about and modify their own specifications. The key results — stabilization, diagonal barrier, anti-diagonal theorem, and consistency tower — show that level-bounded self-modification is both powerful enough to circumvent Gödel-style limitations (at each individual level) and constrained enough to prevent paradoxes (across levels).
-
-The exponential stratification gap conjecture, if true, would reveal a fundamental asymmetry between the complexity of mathematical structures and the depth of self-reference they support — a new kind of incompleteness that operates not at the logical level but at the structural level.
-
----
-
-## References
-
-1. Gödel, K. (1931). Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I. *Monatshefte für Mathematik und Physik*, 38, 173-198.
-
-2. Russell, B. (1908). Mathematical Logic as Based on the Theory of Types. *American Journal of Mathematics*, 30(3), 222-262.
-
-3. Tarski, A. (1936). Der Wahrheitsbegriff in den formalisierten Sprachen. *Studia Philosophica*, 1, 261-405.
-
-4. Martin-Löf, P. (1984). *Intuitionistic Type Theory*. Bibliopolis.
-
-5. The Univalent Foundations Program. (2013). *Homotopy Type Theory: Univalent Foundations of Mathematics*. Institute for Advanced Study.
-
-6. Mathlib Community. (2024). *Mathlib4*. https://github.com/leanprover-community/mathlib4
+- `Logic/StratifiedSelfReference.lean`: `level_bounded_consistency`, `iterate_level_stabilizes`, `diagonal_blocked_across_levels`, `no_universal_self_ref`, `self_modifying_proof_stable`
+- `Logic/ParadoxSelfSoundness.lean`: `classical_not_self_sound_with_paradox`
+- `Logic/ParadoxInteraction.lean`: `paradox_density_bound`, `liar_tower_stable`
+- `Logic/TangledHierarchies.lean`: GL frames, Löb's theorem (semantic)

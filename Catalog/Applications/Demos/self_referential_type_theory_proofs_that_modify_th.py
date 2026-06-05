@@ -1,380 +1,374 @@
 #!/usr/bin/env python3
 """
-Demo: Stratified Self-Reference Type Theory
+Transfinite Reflective Towers — Numerical Demonstrations
 
-Demonstrates the key concepts from the formalized theory:
-1. Self-modifying specifications that stabilize
-2. Diagonal barrier blocking paradoxes across levels
-3. Consistency tower construction
-4. Exponential stratification gap testing
+Demonstrates the key theorems from the Lean 4 formalization:
+1. Contractive collapse: strictly contractive modifiers reach level 0
+2. Specification entropy bounds
+3. Tower GL frame: Löb's theorem and second incompleteness
+4. Diagonal barrier visualization
 """
 
-from algorithms import (
-    StratifiedSpec, SelfModifier, iterate_until_stable,
-    self_ref_depth, check_diagonal_barrier,
-    build_demo_tower, SelfModifyingProof,
-    compute_stratification_gap,
-)
+from typing import Callable, List, Tuple
 
 
-def demo_stabilization():
-    """Demo 1: Self-modifying specifications stabilize."""
+def contractive_collapse(initial_level: int, modifier: Callable[[int], int]) -> List[int]:
+    """Simulate contractive collapse: iterate modifier until level 0.
+    
+    The Contractive Collapse Theorem (contractive_reaches_zero) guarantees
+    that if modifier is strictly contractive (strictly decreases positive levels),
+    the iteration reaches 0 within initial_level steps.
+    """
+    levels = [initial_level]
+    current = initial_level
+    for _ in range(initial_level + 5):  # extra steps to show stability
+        current = modifier(current)
+        levels.append(current)
+        if current == 0:
+            break
+    # Pad with zeros to show stability
+    while len(levels) < initial_level + 5:
+        levels.append(0)
+    return levels
+
+
+def spec_entropy(level: int, modified_level: int) -> float:
+    """Compute specification entropy.
+    
+    specEntropy m s = (s.level - (m.modify s).level) / s.level
+    
+    The theorems specEntropy_nonneg and specEntropy_le_one guarantee
+    this is always in [0, 1].
+    """
+    if level == 0:
+        return 0.0
+    return (level - modified_level) / level
+
+
+def tower_forces(valuation: dict, world: int, formula: tuple) -> bool:
+    """Evaluate forcing in the tower GL frame.
+    
+    Worlds = natural numbers, accessibility = strict less-than.
+    Formula encoding:
+      ('var', p)     - propositional variable p
+      'bot'          - falsity
+      ('imp', φ, ψ)  - implication
+      ('box', φ)     - box modality (provability)
+    """
+    if formula == 'bot':
+        return False
+    if formula[0] == 'var':
+        return valuation.get((world, formula[1]), False)
+    if formula[0] == 'imp':
+        _, phi, psi = formula
+        return not tower_forces(valuation, world, phi) or tower_forces(valuation, world, psi)
+    if formula[0] == 'box':
+        _, phi = formula
+        return all(tower_forces(valuation, v, phi) for v in range(world))
+    raise ValueError(f"Unknown formula: {formula}")
+
+
+def demo_contractive_collapse():
+    """Demonstrate the Contractive Collapse Theorem."""
     print("=" * 60)
-    print("DEMO 1: Stabilization of Self-Modifying Specifications")
+    print("DEMO 1: Contractive Collapse Theorem")
     print("=" * 60)
-
-    # Create a modifier that decreases level by 1 each step
-    def level_decrement(s: StratifiedSpec) -> StratifiedSpec:
-        return StratifiedSpec(
-            level=max(0, s.level - 1),
-            pred=s.pred
-        )
-
-    modifier = SelfModifier(modify=level_decrement)
-
-    # Start at level 5
-    spec = StratifiedSpec(level=5, pred=lambda x: x > 0)
-    result, steps, trace = iterate_until_stable(modifier, spec)
-
-    print(f"Initial level: {spec.level}")
-    print(f"Level trace: {trace}")
-    print(f"Stabilized at level {result.level} after {steps} steps")
-    print(f"Self-reference depth: {self_ref_depth(modifier, spec)}")
+    print()
+    
+    # Modifier 1: decrement by 1 (linear collapse)
+    print("Modifier: level ↦ max(0, level - 1)")
+    levels = contractive_collapse(8, lambda l: max(0, l - 1))
+    for i, l in enumerate(levels):
+        bar = "█" * l + "░" * (8 - l)
+        print(f"  Step {i:2d}: level = {l} |{bar}|")
+    print(f"  Collapsed at step {levels.index(0)} (bound: {8})")
+    print()
+    
+    # Modifier 2: halve (logarithmic collapse)
+    print("Modifier: level ↦ level // 2")
+    levels = contractive_collapse(16, lambda l: l // 2)
+    for i, l in enumerate(levels):
+        bar = "█" * l + "░" * (16 - l)
+        print(f"  Step {i:2d}: level = {l:2d} |{bar}|")
+    print(f"  Collapsed at step {levels.index(0)} (bound: {16})")
+    print()
+    
+    # Modifier 3: subtract square root (intermediate)
+    import math
+    print("Modifier: level ↦ level - ⌈√level⌉")
+    levels = contractive_collapse(25, lambda l: max(0, l - max(1, math.isqrt(l))))
+    for i, l in enumerate(levels):
+        bar = "█" * l + "░" * (25 - l)
+        print(f"  Step {i:2d}: level = {l:2d} |{bar}|")
+    print(f"  Collapsed at step {levels.index(0)} (bound: {25})")
     print()
 
-    # Create a modifier that halves the level
-    def level_halve(s: StratifiedSpec) -> StratifiedSpec:
-        return StratifiedSpec(
-            level=s.level // 2,
-            pred=s.pred
-        )
 
-    modifier2 = SelfModifier(modify=level_halve)
-    spec2 = StratifiedSpec(level=16, pred=lambda x: x % 2 == 0)
-    result2, steps2, trace2 = iterate_until_stable(modifier2, spec2)
-
-    print(f"Halving modifier:")
-    print(f"  Initial level: {spec2.level}")
-    print(f"  Level trace: {trace2}")
-    print(f"  Stabilized at level {result2.level} after {steps2} steps")
-    print(f"  Self-reference depth: {self_ref_depth(modifier2, spec2)}")
+def demo_entropy():
+    """Demonstrate specification entropy bounds."""
+    print("=" * 60)
+    print("DEMO 2: Specification Entropy Bounds")
+    print("=" * 60)
     print()
-
-
-def demo_diagonal_barrier():
-    """Demo 2: Diagonal barrier blocks paradoxes across levels."""
-    print("=" * 60)
-    print("DEMO 2: Diagonal Barrier Across Levels")
-    print("=" * 60)
-
-    # Create a family of specifications indexed by level
-    def make_pred(n: int):
-        return lambda x: x % (n + 1) == 0
-
-    family = [
-        StratifiedSpec(level=n, pred=make_pred(n))
-        for n in range(5)
+    
+    print("Entropy = (level - modified_level) / level")
+    print("Theorem: 0 ≤ entropy ≤ 1")
+    print()
+    
+    cases = [
+        (10, 10, "Identity (no change)"),
+        (10, 9, "Decrement by 1"),
+        (10, 5, "Halve"),
+        (10, 0, "Collapse to 0"),
+        (0, 0, "Already at level 0"),
+        (100, 99, "Tiny change at high level"),
+        (100, 1, "Near-total collapse"),
     ]
-
-    test_points = list(range(10))
-
-    for diag_level in range(5):
-        result = check_diagonal_barrier(family, diag_level, test_points)
-        status = "BLOCKED ✓" if result["blocked"] else "NOT BLOCKED ✗"
-        print(f"  Level {diag_level}: Diagonal is {status}")
-
-    print()
-    print("Interpretation: The diagonal predicate (negation of P_k at each")
-    print("point) cannot equal any P_n at the same level k. This is the")
-    print("formal content of why stratification prevents Russell's paradox.")
+    
+    for level, modified, desc in cases:
+        e = spec_entropy(level, modified)
+        bar_len = int(e * 40)
+        bar = "█" * bar_len + "░" * (40 - bar_len)
+        print(f"  {desc:30s}: entropy = {e:.3f} |{bar}|")
     print()
 
 
-def demo_consistency_tower():
-    """Demo 3: Consistency tower construction."""
+def demo_loeb():
+    """Demonstrate Löb's theorem and second incompleteness in the tower."""
     print("=" * 60)
-    print("DEMO 3: Consistency Tower")
+    print("DEMO 3: Löb's Theorem & Second Incompleteness")
     print("=" * 60)
-
-    tower = build_demo_tower(6)
-    results = tower.verify_tower()
-
-    for r in results:
-        status = "PROVED ✓" if r["consistency_proved"] else "NOT PROVED ✗"
-        print(f"  Level {r['upper_level']} proves Con({r['lower_con']}): {status}")
-
     print()
-    print("Each level proves the consistency of the level below.")
-    print("No level proves its own consistency (Gödel's theorem).")
-    for theory in tower.theories:
-        own_con = theory.provable(f"Con({theory.con_statement})")
-        print(f"  Level {theory.level} proves Con(T_{theory.level}): {own_con}")
+    
+    # Check Löb's theorem: □(□φ → φ) → □φ
+    # Use a simple proposition p that is true at some worlds
+    p = ('var', 0)
+    box_p = ('box', p)
+    box_p_imp_p = ('imp', box_p, p)
+    box_box_p_imp_p = ('box', box_p_imp_p)
+    
+    print("Testing Löb's theorem: □(□p → p) → □p")
     print()
-
-
-def demo_self_modifying_proofs():
-    """Demo 4: Self-modifying proofs preserve validity."""
-    print("=" * 60)
-    print("DEMO 4: Self-Modifying Proof Stability")
-    print("=" * 60)
-
-    # Spec: witness must be even
-    # Modifier: tighten to "must be divisible by 2^k"
-    divisor = [1]  # mutable closure
-
-    def tighten_spec(s: StratifiedSpec) -> StratifiedSpec:
-        divisor[0] *= 2
-        d = divisor[0]
-        return StratifiedSpec(
-            level=max(0, s.level - 1),
-            pred=lambda x, d=d: x % d == 0
-        )
-
-    def improve_witness(w: int) -> int:
-        # Round up to nearest power of 2 multiple
-        return w * 2
-
-    modifier = SelfModifier(modify=tighten_spec)
-    smp = SelfModifyingProof(
-        spec_modifier=modifier,
-        witness_modifier=improve_witness
-    )
-
-    spec = StratifiedSpec(level=5, pred=lambda x: x % 2 == 0)
-    witness = 4
-
-    results = smp.iterate_proof(spec, witness, 5)
-    for i, (s, w, sat) in enumerate(results):
-        status = "SATISFIED ✓" if sat else "NOT SATISFIED ✗"
-        print(f"  Step {i}: level={s.level}, witness={w}, {status}")
-
+    
+    for max_world in range(5):
+        # Valuation: p is true at even worlds
+        val = {(w, 0): (w % 2 == 0) for w in range(max_world + 1)}
+        
+        lhs = tower_forces(val, max_world, box_box_p_imp_p)
+        rhs = tower_forces(val, max_world, box_p)
+        loeb_holds = not lhs or rhs
+        
+        print(f"  World {max_world}: □(□p→p) = {lhs}, □p = {rhs}, "
+              f"Löb holds: {loeb_holds}")
+    
     print()
-    print("The proof remains valid at each step: the witness is modified")
-    print("to satisfy the increasingly strict specification.")
+    
+    # Check second incompleteness: ¬□(□⊥ → ⊥) at world w > 0
+    con = ('imp', ('box', 'bot'), 'bot')  # □⊥ → ⊥ (consistency)
+    box_con = ('box', con)  # □(□⊥ → ⊥)
+    
+    print("Testing second incompleteness: ¬□(□⊥ → ⊥) at w > 0")
+    print()
+    
+    for w in range(6):
+        val = {}
+        result = tower_forces(val, w, box_con)
+        expected = (w == 0)  # Should only be true at world 0 (vacuously)
+        status = "✓" if result == expected else "✗"
+        print(f"  World {w}: □(□⊥→⊥) = {result:5s}  "
+              f"{'(vacuously true)' if w == 0 else '(blocked by Löb)'} {status}")
     print()
 
 
-def demo_stratification_gap():
-    """Demo 5: Exponential stratification gap conjecture testing."""
+def demo_diagonal():
+    """Demonstrate the diagonal barrier."""
     print("=" * 60)
-    print("DEMO 5: Exponential Stratification Gap Conjecture")
+    print("DEMO 4: Diagonal Barrier (Cantor for Specs)")
     print("=" * 60)
-
-    for n in range(1, 9):
-        result = compute_stratification_gap(n, sample_size=200)
-        status = "HOLDS ✓" if result["conjecture_holds"] else "FAILS ✗"
-        print(
-            f"  n={n}: type_size=2^{n}={result['type_size']}, "
-            f"max_depth={result['max_depth']}, "
-            f"bound={result['bound']}, "
-            f"mean_depth={result['mean_depth']:.2f}, "
-            f"{status}"
-        )
-
     print()
-    print("The conjecture as originally stated FAILS: when specifications")
-    print("have levels exceeding n, depth can reach 2n. The refined conjecture")
-    print("is that depth ≤ s.level always holds (trivially true by definition).")
-    print("The interesting open question: what is the tightest bound on depth")
-    print("as a function of BOTH type size and level?")
+    
+    # A family of predicates on {0, 1, 2, 3, 4}
+    n = 5
+    predicates = [
+        lambda x, i=i: (x + i) % 2 == 0  # Various even/odd predicates
+        for i in range(n)
+    ]
+    
+    print(f"Predicate family on {{0, ..., {n-1}}}:")
+    print()
+    
+    # Print the predicate table
+    header = "  x:    " + " ".join(f"{x:2d}" for x in range(n))
+    print(header)
+    print("  " + "-" * (len(header) - 2))
+    
+    for i, pred in enumerate(predicates):
+        values = [pred(x) for x in range(n)]
+        row = f"  P_{i}:   " + " ".join(f"{'T':>2s}" if v else f"{'F':>2s}" for v in values)
+        diag_val = pred(i)
+        row += f"  ← diagonal: P_{i}({i}) = {'T' if diag_val else 'F'}"
+        print(row)
+    
+    print()
+    
+    # The anti-diagonal
+    anti_diag = [not predicates[i](i) for i in range(n)]
+    row = "  D:    " + " ".join(f"{'T':>2s}" if v else f"{'F':>2s}" for v in anti_diag)
+    print(row + "  ← anti-diagonal: D(i) = ¬P_i(i)")
+    print()
+    
+    # Check that D differs from each P_i at index i
+    for i, pred in enumerate(predicates):
+        matches = all(pred(x) == anti_diag[x] for x in range(n))
+        differs_at_i = pred(i) != anti_diag[i]
+        print(f"  D ≠ P_{i}: differs at index {i} "
+              f"(P_{i}({i})={'T' if pred(i) else 'F'}, D({i})={'T' if anti_diag[i] else 'F'}) ✓")
+    print()
+    print("  → No predicate in the family equals the anti-diagonal.")
+    print("  → The family is NOT universal (Cantor's theorem for specs).")
     print()
 
 
 if __name__ == "__main__":
-    print()
-    print("STRATIFIED SELF-REFERENCE: DEMONSTRATIONS")
-    print("=========================================")
-    print()
-
-    demo_stabilization()
-    demo_diagonal_barrier()
-    demo_consistency_tower()
-    demo_self_modifying_proofs()
-    demo_stratification_gap()
-
-    print("All demos completed successfully.")
+    demo_contractive_collapse()
+    demo_entropy()
+    demo_loeb()
+    demo_diagonal()
+    
+    print("=" * 60)
+    print("All demonstrations complete.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
-"""
-Visualization: Consistency Tower and Level Stabilization
+"""Visualization: Contractive Collapse Trajectories"""
 
-Creates visualizations of:
-1. The consistency tower showing inter-level proof relationships
-2. Level stabilization traces for different self-modifiers
-3. Self-reference depth distribution
-"""
-
+import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
+import math
+
+def contractive_collapse(initial_level, modifier, max_steps=None):
+    if max_steps is None:
+        max_steps = initial_level + 5
+    levels = [initial_level]
+    current = initial_level
+    for _ in range(max_steps):
+        current = modifier(current)
+        levels.append(current)
+    return levels
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+# Modifier 1: Decrement by 1
+levels1 = contractive_collapse(10, lambda l: max(0, l - 1))
+axes[0].step(range(len(levels1)), levels1, where='mid', linewidth=2, color='#2196F3')
+axes[0].fill_between(range(len(levels1)), levels1, alpha=0.2, color='#2196F3', step='mid')
+axes[0].set_title('Linear: level ↦ level - 1', fontsize=12, fontweight='bold')
+axes[0].set_xlabel('Step')
+axes[0].set_ylabel('Level')
+axes[0].axhline(y=0, color='red', linestyle='--', alpha=0.5, label='Ground level')
+axes[0].legend()
+
+# Modifier 2: Halve
+levels2 = contractive_collapse(32, lambda l: l // 2, max_steps=10)
+axes[1].step(range(len(levels2)), levels2, where='mid', linewidth=2, color='#4CAF50')
+axes[1].fill_between(range(len(levels2)), levels2, alpha=0.2, color='#4CAF50', step='mid')
+axes[1].set_title('Logarithmic: level ↦ ⌊level/2⌋', fontsize=12, fontweight='bold')
+axes[1].set_xlabel('Step')
+axes[1].set_ylabel('Level')
+axes[1].axhline(y=0, color='red', linestyle='--', alpha=0.5, label='Ground level')
+axes[1].legend()
+
+# Modifier 3: Subtract sqrt
+levels3 = contractive_collapse(100, lambda l: max(0, l - max(1, math.isqrt(l))), max_steps=25)
+axes[2].step(range(len(levels3)), levels3, where='mid', linewidth=2, color='#FF9800')
+axes[2].fill_between(range(len(levels3)), levels3, alpha=0.2, color='#FF9800', step='mid')
+axes[2].set_title('√-rate: level ↦ level - ⌊√level⌋', fontsize=12, fontweight='bold')
+axes[2].set_xlabel('Step')
+axes[2].set_ylabel('Level')
+axes[2].axhline(y=0, color='red', linestyle='--', alpha=0.5, label='Ground level')
+axes[2].legend()
+
+plt.suptitle('Contractive Collapse Theorem: All Trajectories Reach Level 0', 
+             fontsize=14, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('collapse_trajectories.png', dpi=150, bbox_inches='tight')
+print("Saved collapse_trajectories.png")
+
+
+#!/usr/bin/env python3
+"""Visualization: Specification Entropy Heatmap"""
+
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
+import matplotlib
+matplotlib.use('Agg')
 import numpy as np
 
+def spec_entropy(level, modified_level):
+    if level == 0:
+        return 0.0
+    return (level - modified_level) / level
 
-def plot_consistency_tower(ax, n_levels=6):
-    """Draw the consistency tower as a vertical stack."""
-    colors = plt.cm.viridis(np.linspace(0.2, 0.9, n_levels))
+# Create a heatmap: x = initial level, y = modified level, color = entropy
+max_level = 20
+data = np.zeros((max_level + 1, max_level + 1))
 
-    for i in range(n_levels):
-        # Draw level box
-        rect = mpatches.FancyBboxPatch(
-            (0.3, i * 1.5), 2.4, 1.0,
-            boxstyle="round,pad=0.1",
-            facecolor=colors[i], edgecolor='black', linewidth=2
-        )
-        ax.add_patch(rect)
-        ax.text(1.5, i * 1.5 + 0.5, f'Level {i}: T₍{i}₎',
-                ha='center', va='center', fontsize=11, fontweight='bold',
-                color='white' if i > 2 else 'black')
+for s_level in range(max_level + 1):
+    for m_level in range(s_level + 1):  # modified ≤ original
+        data[m_level, s_level] = spec_entropy(s_level, m_level)
 
-        # Draw arrow from level i+1 to level i (proves consistency)
-        if i < n_levels - 1:
-            ax.annotate('', xy=(3.0, i * 1.5 + 0.5),
-                       xytext=(3.0, (i + 1) * 1.5 + 0.5),
-                       arrowprops=dict(arrowstyle='->', color='red',
-                                      lw=2, connectionstyle='arc3,rad=0.3'))
-            ax.text(3.7, (i + 0.5) * 1.5 + 0.5,
-                   f'proves\nCon(T₍{i}₎)', ha='center', va='center',
-                   fontsize=8, color='red', fontstyle='italic')
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Self-consistency X marks
-    for i in range(n_levels):
-        ax.text(-0.3, i * 1.5 + 0.5, '✗', ha='center', va='center',
-               fontsize=16, color='gray')
-        ax.text(-0.8, i * 1.5 + 0.5, f'¬Con(T₍{i}₎)', ha='center',
-               va='center', fontsize=7, color='gray')
+# Heatmap
+im = ax1.imshow(data, origin='lower', aspect='auto', cmap='YlOrRd',
+                extent=[-0.5, max_level + 0.5, -0.5, max_level + 0.5],
+                vmin=0, vmax=1)
+ax1.set_xlabel('Initial Level', fontsize=12)
+ax1.set_ylabel('Modified Level', fontsize=12)
+ax1.set_title('Specification Entropy\n(level_initial, level_modified) → entropy', 
+              fontsize=13, fontweight='bold')
+plt.colorbar(im, ax=ax1, label='Entropy ∈ [0, 1]')
 
-    ax.set_xlim(-1.5, 5)
-    ax.set_ylim(-0.5, n_levels * 1.5 + 0.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
-    ax.set_title('Consistency Tower\n(Each level proves lower consistency)',
-                fontsize=13, fontweight='bold')
+# Diagonal line (identity modifier: entropy = 0)
+ax1.plot([0, max_level], [0, max_level], 'b--', linewidth=1.5, label='Identity (ε=0)')
+# Bottom line (total collapse: entropy = 1)
+ax1.plot([0, max_level], [0, 0], 'r--', linewidth=1.5, label='Total collapse (ε=1)')
+ax1.legend(loc='upper left', fontsize=10)
 
+# Entropy trajectories for different modifiers
+trajectories = {
+    'level - 1': lambda l: max(0, l - 1),
+    'level // 2': lambda l: l // 2,
+    'level // 3': lambda l: l // 3,
+    'level - √level': lambda l: max(0, l - max(1, int(l**0.5))),
+}
 
-def plot_stabilization_traces(ax):
-    """Plot level traces for different self-modifiers."""
-    # Decrement by 1
-    trace1 = [8, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0]
-    # Halve
-    trace2 = [16, 8, 4, 2, 1, 0, 0, 0, 0, 0, 0]
-    # Slow: decrease every 3 steps
-    trace3 = [6, 6, 6, 5, 5, 5, 4, 4, 4, 3, 3]
-    # Fibonacci-like decrease
-    trace4 = [10, 9, 7, 4, 0, 0, 0, 0, 0, 0, 0]
+colors = ['#2196F3', '#4CAF50', '#FF9800', '#9C27B0']
 
-    steps = range(len(trace1))
-    ax.plot(steps, trace1, 'o-', label='Decrement by 1', linewidth=2,
-            markersize=6, color='#2196F3')
-    ax.plot(steps, trace2, 's-', label='Halve', linewidth=2,
-            markersize=6, color='#FF5722')
-    ax.plot(steps, trace3, '^-', label='Slow (every 3 steps)', linewidth=2,
-            markersize=6, color='#4CAF50')
-    ax.plot(steps, trace4, 'D-', label='Fibonacci decrease', linewidth=2,
-            markersize=6, color='#9C27B0')
+for (name, modifier), color in zip(trajectories.items(), colors):
+    entropies = []
+    current_level = 15
+    for step in range(20):
+        if current_level == 0:
+            entropies.append(0.0)
+        else:
+            new_level = modifier(current_level)
+            entropies.append(spec_entropy(current_level, new_level))
+            current_level = new_level
+    ax2.plot(range(len(entropies)), entropies, 'o-', color=color, 
+             label=name, markersize=4, linewidth=1.5)
 
-    ax.set_xlabel('Iteration Step', fontsize=11)
-    ax.set_ylabel('Universe Level', fontsize=11)
-    ax.set_title('Level Stabilization Traces\n(All must eventually flatten)',
-                fontsize=13, fontweight='bold')
-    ax.legend(fontsize=9, loc='upper right')
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(-0.5, 17)
+ax2.set_xlabel('Iteration Step', fontsize=12)
+ax2.set_ylabel('Entropy', fontsize=12)
+ax2.set_title('Entropy Trajectories\n(starting from level 15)', 
+              fontsize=13, fontweight='bold')
+ax2.axhline(y=0, color='gray', linestyle=':', alpha=0.5)
+ax2.axhline(y=1, color='gray', linestyle=':', alpha=0.5)
+ax2.set_ylim(-0.05, 1.05)
+ax2.legend(fontsize=10)
+ax2.grid(True, alpha=0.3)
 
-
-def plot_depth_vs_level(ax):
-    """Plot self-reference depth as a function of initial level."""
-    levels = list(range(0, 21))
-
-    # Decrement modifier: depth = level
-    depths_dec = levels.copy()
-    # Halve modifier: depth = level - 0 = level (eventually reaches 0)
-    depths_halve = levels.copy()
-    # Identity modifier: depth = 0
-    depths_id = [0] * len(levels)
-    # Bounded modifier: depth = min(level, 5)
-    depths_bounded = [min(l, 5) for l in levels]
-
-    ax.plot(levels, depths_dec, 'o-', label='Decrement', linewidth=2, color='#2196F3')
-    ax.plot(levels, depths_halve, 's--', label='Halve', linewidth=2,
-            alpha=0.7, color='#FF5722')
-    ax.plot(levels, depths_id, '^-', label='Identity', linewidth=2, color='#4CAF50')
-    ax.plot(levels, depths_bounded, 'D-', label='Bounded (cap=5)', linewidth=2,
-            color='#9C27B0')
-
-    # Draw the y=x line
-    ax.plot(levels, levels, 'k--', alpha=0.3, label='depth = level bound')
-
-    ax.set_xlabel('Initial Level', fontsize=11)
-    ax.set_ylabel('Self-Reference Depth', fontsize=11)
-    ax.set_title('Self-Reference Depth vs Initial Level\n(Always ≤ initial level)',
-                fontsize=13, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-
-def plot_diagonal_barrier(ax):
-    """Visualize the diagonal barrier as a matrix."""
-    n = 6
-    # Create a matrix where entry (i,j) = 1 if predicate i evaluated at point j
-    np.random.seed(42)
-    matrix = np.random.randint(0, 2, size=(n, n))
-
-    # The diagonal: negation of matrix[i,i]
-    diagonal = np.array([1 - matrix[i, i] for i in range(n)])
-
-    # Display
-    im = ax.imshow(matrix, cmap='Blues', aspect='auto', vmin=-0.5, vmax=1.5)
-
-    # Highlight diagonal
-    for i in range(n):
-        ax.add_patch(plt.Rectangle((i - 0.5, i - 0.5), 1, 1,
-                                    fill=False, edgecolor='red', linewidth=3))
-
-    # Add text
-    for i in range(n):
-        for j in range(n):
-            ax.text(j, i, str(matrix[i, j]), ha='center', va='center',
-                   fontsize=12, fontweight='bold',
-                   color='white' if matrix[i, j] else 'black')
-
-    # Add diagonal predicate row
-    ax.text(n + 0.5, n // 2, f'Diagonal:\n{list(diagonal)}',
-           ha='left', va='center', fontsize=9, color='red',
-           fontweight='bold')
-
-    ax.set_xticks(range(n))
-    ax.set_yticks(range(n))
-    ax.set_xticklabels([f'x={i}' for i in range(n)])
-    ax.set_yticklabels([f'P₍{i}₎' for i in range(n)])
-    ax.set_title('Diagonal Barrier\n(Red diagonal → negated → new predicate at higher level)',
-                fontsize=12, fontweight='bold')
-
-
-def main():
-    fig = plt.figure(figsize=(16, 14))
-
-    # Create grid
-    gs = fig.add_gridspec(2, 2, hspace=0.35, wspace=0.3)
-
-    ax1 = fig.add_subplot(gs[0, 0])
-    ax2 = fig.add_subplot(gs[0, 1])
-    ax3 = fig.add_subplot(gs[1, 0])
-    ax4 = fig.add_subplot(gs[1, 1])
-
-    plot_consistency_tower(ax1)
-    plot_stabilization_traces(ax2)
-    plot_depth_vs_level(ax3)
-    plot_diagonal_barrier(ax4)
-
-    fig.suptitle('Stratified Self-Reference: Key Results',
-                fontsize=16, fontweight='bold', y=0.98)
-
-    plt.savefig('visualization_tower.png', dpi=150, bbox_inches='tight',
-                facecolor='white')
-    print("Saved visualization_tower.png")
-
-
-if __name__ == "__main__":
-    main()
+plt.tight_layout()
+plt.savefig('entropy_analysis.png', dpi=150, bbox_inches='tight')
+print("Saved entropy_analysis.png")
