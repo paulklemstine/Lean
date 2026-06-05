@@ -1,374 +1,193 @@
-#!/usr/bin/env python3
 """
-Algorithms for Non-Archimedean Probability Theory
+Algorithms for Graded Probability Measures
 
-Type-hinted implementations of the key algorithms from the research.
+Type-hinted implementations of the core algorithms:
+1. GPM construction (tie-breaking refinement)
+2. Lexicographic comparison
+3. Convex combination
+4. Graded entropy computation
 """
 
-from fractions import Fraction
-from typing import (
-    Callable,
-    Dict,
-    FrozenSet,
-    Generic,
-    List,
-    Optional,
-    Set,
-    Tuple,
-    TypeVar,
-)
+from typing import List, Tuple, Set, Optional
+import math
 
 
-# ============================================================
-# Core Data Types
-# ============================================================
-
-
-class SurrealTruncated:
-    """
-    Truncated surreal number: a + b·ε where ε = 1/ω.
-
-    This captures the two-level structure sufficient for
-    infinitesimal probability: a standard part (real) and
-    an infinitesimal part.
-    """
-
-    def __init__(self, standard: Fraction = Fraction(0),
-                 infinitesimal: Fraction = Fraction(0)):
-        self.std: Fraction = standard
-        self.inf: Fraction = infinitesimal
-
-    def __add__(self, other: 'SurrealTruncated') -> 'SurrealTruncated':
-        return SurrealTruncated(self.std + other.std, self.inf + other.inf)
-
-    def __sub__(self, other: 'SurrealTruncated') -> 'SurrealTruncated':
-        return SurrealTruncated(self.std - other.std, self.inf - other.inf)
-
-    def __neg__(self) -> 'SurrealTruncated':
-        return SurrealTruncated(-self.std, -self.inf)
-
-    def __mul__(self, n: int) -> 'SurrealTruncated':
-        return SurrealTruncated(self.std * n, self.inf * n)
-
-    def __rmul__(self, n: int) -> 'SurrealTruncated':
-        return self.__mul__(n)
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, SurrealTruncated):
-            return NotImplemented
-        return self.std == other.std and self.inf == other.inf
-
-    def __lt__(self, other: 'SurrealTruncated') -> bool:
-        if self.std != other.std:
-            return self.std < other.std
-        return self.inf < other.inf
-
-    def __le__(self, other: 'SurrealTruncated') -> bool:
-        return self == other or self < other
-
-    def __gt__(self, other: 'SurrealTruncated') -> bool:
-        return other < self
-
-    def __ge__(self, other: 'SurrealTruncated') -> bool:
-        return other <= self
-
-    def __repr__(self) -> str:
-        parts: list[str] = []
-        if self.std != 0:
-            parts.append(str(self.std))
-        if self.inf != 0:
-            if self.inf == 1:
-                parts.append("ε")
-            elif self.inf == -1:
-                parts.append("-ε")
-            else:
-                parts.append(f"({self.inf})ε")
-        return " + ".join(parts) if parts else "0"
-
-    def is_positive(self) -> bool:
-        return self > SurrealTruncated()
-
-    def is_infinitesimal(self) -> bool:
-        return self.std == Fraction(0) and self.inf > 0
-
-    def is_zero(self) -> bool:
-        return self.std == Fraction(0) and self.inf == Fraction(0)
-
-
-T = TypeVar('T')
-ZERO_S = SurrealTruncated()
-ONE_S = SurrealTruncated(Fraction(1))
-EPSILON_S = SurrealTruncated(Fraction(0), Fraction(1))
-
-
-# ============================================================
-# Algorithm 1: Infinitesimal Measure Construction
-# ============================================================
-
-
-class FinitelyAdditiveMeasure:
-    """
-    A finitely additive measure on a finite set, valued in
-    truncated surreal numbers.
-
-    Implements the FinAddMeasure structure from the Lean formalization.
-    """
-
-    def __init__(self, universe: FrozenSet[int], point_mass: Dict[int, SurrealTruncated]):
-        """
-        Construct a finitely additive measure.
-
-        Args:
-            universe: The finite sample space
-            point_mass: Assignment of mass to each point
-        """
-        self.universe = universe
-        self.point_mass = point_mass
-
-        # Verify non-negativity (mass_nonneg)
-        for a, m in point_mass.items():
-            assert m >= ZERO_S, f"Point mass at {a} is negative: {m}"
-
-    def measure(self, S: FrozenSet[int]) -> SurrealTruncated:
-        """
-        Compute the measure of a set S.
-        μ(S) = Σ_{a ∈ S} pointMass(a)
-        """
-        result = ZERO_S
-        for a in S:
-            if a in self.point_mass:
-                result = result + self.point_mass[a]
-        return result
-
-    def total_mass(self) -> SurrealTruncated:
-        """Compute the total mass μ(Ω)."""
-        return self.measure(self.universe)
-
-    @staticmethod
-    def uniform(universe: FrozenSet[int], epsilon: SurrealTruncated) -> 'FinitelyAdditiveMeasure':
-        """
-        Construct a uniform measure assigning mass ε to each point.
-
-        Implements FinAddMeasure.uniform from the Lean formalization.
-        """
-        assert epsilon >= ZERO_S, "Point mass must be non-negative"
-        point_mass = {a: epsilon for a in universe}
-        return FinitelyAdditiveMeasure(universe, point_mass)
-
-    def verify_additivity(self, S: FrozenSet[int], T: FrozenSet[int]) -> bool:
-        """
-        Verify finite additivity for disjoint sets S and T.
-        Returns True iff μ(S ∪ T) = μ(S) + μ(T).
-        """
-        if S & T:
-            raise ValueError("Sets must be disjoint")
-        return self.measure(S | T) == self.measure(S) + self.measure(T)
-
-    def verify_complementation(self, S: FrozenSet[int]) -> bool:
-        """
-        Verify complementation identity: μ(S) + μ(Sᶜ) = μ(Ω).
-        """
-        complement = self.universe - S
-        return self.measure(S) + self.measure(complement) == self.total_mass()
-
-    def verify_monotonicity(self, S: FrozenSet[int], T: FrozenSet[int]) -> bool:
-        """
-        Verify monotonicity: S ⊆ T ⟹ μ(S) ≤ μ(T).
-        """
-        if not S.issubset(T):
-            raise ValueError("S must be a subset of T")
-        return self.measure(S) <= self.measure(T)
-
-
-# ============================================================
-# Algorithm 2: Archimedean Obstruction Check
-# ============================================================
-
-
-def check_archimedean_obstruction(epsilon: float, u: float, max_n: int = 10**6) -> Optional[int]:
-    """
-    Check the Archimedean obstruction: find n such that n * ε > u.
-
-    In an Archimedean ordered group (like ℝ), such n always exists.
-    Returns n if found within max_n steps, None otherwise.
-
-    This implements the constructive content of Theorem 1
-    (archimedean_no_infinitesimal).
+def construct_tiebreaking_gpm(
+    p: List[float],
+) -> Tuple[List[float], List[float]]:
+    """Construct a GPM that refines p and breaks all ties.
 
     Args:
-        epsilon: The candidate infinitesimal
-        u: The reference unit
-        max_n: Maximum n to check
+        p: Standard probability distribution (nonneg, sums to 1).
 
     Returns:
-        The smallest n with n * epsilon > u, or None
+        (std, inf): The standard part (= p) and infinitesimal correction.
+
+    Algorithm:
+        1. Set std = p
+        2. Set raw[i] = i - (n-1)/2 (centered, injective, zero-sum)
+        3. Scale to make corrections small relative to probability gaps
+        4. Return (std, scaled_raw)
     """
-    if epsilon <= 0:
-        return None  # Not a valid infinitesimal candidate
+    n = len(p)
+    if n == 0:
+        return ([], [])
+    if n == 1:
+        return (p[:], [0.0])
 
-    n = int(u / epsilon) + 1
-    if n <= max_n:
-        return n
-    return None
+    # Step 1: Centered linear correction (sums to 0, injective)
+    mean = (n - 1) / 2.0
+    raw = [i - mean for i in range(n)]
 
+    # Step 2: Find minimum gap in standard probabilities
+    sorted_p = sorted(set(p))
+    min_gap = min(
+        (sorted_p[i + 1] - sorted_p[i] for i in range(len(sorted_p) - 1)),
+        default=1.0,
+    )
 
-# ============================================================
-# Algorithm 3: Infinitesimal Classification
-# ============================================================
+    # Step 3: Scale corrections to be infinitesimal relative to gaps
+    max_raw = max(abs(r) for r in raw)
+    scale = min(min_gap / (10 * max_raw), 0.001) if max_raw > 0 else 0.001
+    inf_vals = [scale * r for r in raw]
 
+    # Step 4: Fix floating point drift
+    drift = sum(inf_vals)
+    inf_vals[-1] -= drift
 
-def classify_infinitesimal(x: SurrealTruncated, u: SurrealTruncated) -> str:
-    """
-    Classify the relationship between x and u.
-
-    Returns one of:
-    - "zero": x = 0
-    - "infinitesimal": x is infinitesimal relative to u
-    - "comparable": x and u are of the same order
-    - "infinite": x is infinite relative to u
-    - "negative": x is not positive
-
-    Implements the classification from our Infinitesimal definition.
-    """
-    if x.is_zero():
-        return "zero"
-    if not x.is_positive():
-        return "negative"
-
-    # In our truncated model, x is infinitesimal relative to u iff
-    # x.std = 0 and u.std > 0 (or both are infinitesimal but x.inf < u.inf for all n)
-    if x.std == 0 and u.std > 0:
-        return "infinitesimal"
-    if x.std > 0 and u.std == 0:
-        return "infinite"
-    return "comparable"
+    return (p[:], inf_vals)
 
 
-# ============================================================
-# Algorithm 4: Measure Discrimination
-# ============================================================
-
-
-def discrimination_table(n: int, epsilon: SurrealTruncated) -> Dict[int, SurrealTruncated]:
-    """
-    Compute the measure discrimination table for Fin(n).
-
-    For a uniform measure with mass ε on each of n points,
-    compute the measure of every possible cardinality.
-
-    This demonstrates Theorem 14 (uniform_discriminates):
-    different cardinalities give different measures.
+def lexicographic_compare(
+    mu_std: List[float],
+    mu_inf: List[float],
+    i: int,
+    j: int,
+) -> int:
+    """Compare outcomes i and j under GPM (mu_std, mu_inf).
 
     Args:
-        n: Size of the universe
-        epsilon: Point mass
+        mu_std: Standard probabilities.
+        mu_inf: Infinitesimal corrections.
+        i, j: Outcome indices.
 
     Returns:
-        Dictionary mapping cardinality k to measure k * ε
+        1 if i > j, -1 if i < j, 0 if tied.
+
+    Algorithm:
+        1. Compare std parts first
+        2. If tied, compare inf parts
     """
-    return {k: k * epsilon for k in range(n + 1)}
-
-
-# ============================================================
-# Algorithm 5: Anti-Cancellation Verification
-# ============================================================
-
-
-def verify_anti_cancellation(masses: List[SurrealTruncated]) -> Tuple[bool, str]:
-    """
-    Verify the anti-cancellation property (Theorem 11):
-    if all masses are positive, total is positive.
-
-    Args:
-        masses: List of point masses
-
-    Returns:
-        (result, explanation) tuple
-    """
-    if not masses:
-        return (True, "Empty measure has zero total (vacuously true)")
-
-    all_positive = all(m.is_positive() for m in masses)
-    total = ZERO_S
-    for m in masses:
-        total = total + m
-
-    if all_positive:
-        if total.is_positive():
-            return (True, f"All positive, total = {total} > 0. Anti-cancellation holds.")
-        else:
-            return (False, f"VIOLATION: All positive but total = {total} ≤ 0!")
+    if mu_std[i] > mu_std[j]:
+        return 1
+    elif mu_std[i] < mu_std[j]:
+        return -1
+    elif mu_inf[i] > mu_inf[j]:
+        return 1
+    elif mu_inf[i] < mu_inf[j]:
+        return -1
     else:
-        return (True, f"Not all positive, anti-cancellation not applicable. Total = {total}")
+        return 0
 
 
-# ============================================================
-# Main: Run all algorithms
-# ============================================================
+def lex_prob(
+    mu_std: List[float],
+    mu_inf: List[float],
+    S: Set[int],
+) -> Tuple[float, float]:
+    """Compute the graded probability of subset S.
+
+    Args:
+        mu_std: Standard probabilities.
+        mu_inf: Infinitesimal corrections.
+        S: Subset of outcome indices.
+
+    Returns:
+        (std_sum, inf_sum): The graded probability pair.
+    """
+    std_sum = sum(mu_std[i] for i in S)
+    inf_sum = sum(mu_inf[i] for i in S)
+    return (std_sum, inf_sum)
+
+
+def convex_combination(
+    mu_std: List[float],
+    mu_inf: List[float],
+    nu_std: List[float],
+    nu_inf: List[float],
+    t: float,
+) -> Tuple[List[float], List[float]]:
+    """Compute the convex combination (1-t)*mu + t*nu.
+
+    Args:
+        mu_std, mu_inf: First GPM.
+        nu_std, nu_inf: Second GPM.
+        t: Mixing parameter in [0, 1].
+
+    Returns:
+        (combined_std, combined_inf): The mixed GPM.
+    """
+    n = len(mu_std)
+    combined_std = [(1 - t) * mu_std[i] + t * nu_std[i] for i in range(n)]
+    combined_inf = [(1 - t) * mu_inf[i] + t * nu_inf[i] for i in range(n)]
+    return (combined_std, combined_inf)
+
+
+def graded_entropy(
+    mu_std: List[float],
+    mu_inf: List[float],
+) -> Tuple[float, float]:
+    """Compute the graded Shannon entropy H_ε(μ) to first order in ε.
+
+    H_ε(μ) = H(μ₀) + ε · (−Σ μ₁(i) · (1 + log μ₀(i)))
+
+    where H(μ₀) is the standard Shannon entropy.
+
+    Args:
+        mu_std: Standard probabilities (all positive for well-definedness).
+        mu_inf: Infinitesimal corrections.
+
+    Returns:
+        (H0, H1): Standard entropy and infinitesimal correction.
+    """
+    n = len(mu_std)
+    H0 = 0.0  # Standard Shannon entropy
+    H1 = 0.0  # Infinitesimal correction
+
+    for i in range(n):
+        if mu_std[i] > 0:
+            H0 -= mu_std[i] * math.log2(mu_std[i])
+            H1 -= mu_inf[i] * (1 + math.log(mu_std[i]))
+
+    return (H0, H1)
+
+
+def ranking(
+    mu_std: List[float],
+    mu_inf: List[float],
+) -> List[int]:
+    """Return outcomes ranked from most to least likely under the GPM.
+
+    Args:
+        mu_std: Standard probabilities.
+        mu_inf: Infinitesimal corrections.
+
+    Returns:
+        List of outcome indices sorted by decreasing graded probability.
+    """
+    n = len(mu_std)
+    indices = list(range(n))
+    indices.sort(key=lambda i: (mu_std[i], mu_inf[i]), reverse=True)
+    return indices
 
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("Algorithm 1: Infinitesimal Measure Construction")
-    print("=" * 60)
-
-    universe = frozenset(range(5))
-    mu = FinitelyAdditiveMeasure.uniform(universe, EPSILON_S)
-
-    print(f"Universe: {set(universe)}")
-    print(f"Point mass: {EPSILON_S}")
-    print(f"Total mass: {mu.total_mass()}")
-
-    S = frozenset({0, 1})
-    T = frozenset({2, 3, 4})
-    print(f"\nS = {set(S)}, μ(S) = {mu.measure(S)}")
-    print(f"T = {set(T)}, μ(T) = {mu.measure(T)}")
-    print(f"Additivity: {mu.verify_additivity(S, T)}")
-    print(f"Complementation for S: {mu.verify_complementation(S)}")
-    print(f"Monotonicity S ⊆ universe: {mu.verify_monotonicity(S, universe)}")
-
-    print("\n" + "=" * 60)
-    print("Algorithm 2: Archimedean Obstruction Check")
-    print("=" * 60)
-
-    for eps in [0.1, 0.01, 0.001, 1e-10]:
-        n = check_archimedean_obstruction(eps, 1.0)
-        print(f"ε = {eps}: n = {n}, n·ε = {n * eps if n else 'N/A'}")
-
-    print("\n" + "=" * 60)
-    print("Algorithm 3: Infinitesimal Classification")
-    print("=" * 60)
-
-    cases = [
-        (ZERO_S, ONE_S, "0 vs 1"),
-        (EPSILON_S, ONE_S, "ε vs 1"),
-        (ONE_S, EPSILON_S, "1 vs ε"),
-        (3 * EPSILON_S, ONE_S, "3ε vs 1"),
-        (SurrealTruncated(Fraction(1, 2)), ONE_S, "1/2 vs 1"),
-    ]
-
-    for x, u, label in cases:
-        print(f"  {label}: {classify_infinitesimal(x, u)}")
-
-    print("\n" + "=" * 60)
-    print("Algorithm 4: Discrimination Table for Fin(5)")
-    print("=" * 60)
-
-    table = discrimination_table(5, EPSILON_S)
-    for k, m in table.items():
-        print(f"  |S| = {k}: μ(S) = {m}")
-    print(f"  All distinct: {len(set(str(v) for v in table.values())) == len(table)}")
-
-    print("\n" + "=" * 60)
-    print("Algorithm 5: Anti-Cancellation Verification")
-    print("=" * 60)
-
-    test_cases = [
-        [EPSILON_S, EPSILON_S, EPSILON_S],
-        [EPSILON_S, 2 * EPSILON_S, 3 * EPSILON_S],
-        [ONE_S, EPSILON_S],
-    ]
-
-    for masses in test_cases:
-        result, explanation = verify_anti_cancellation(masses)
-        print(f"  {explanation}")
+    # Example: Uniform distribution on 4 outcomes
+    p = [0.25, 0.25, 0.25, 0.25]
+    std, inf = construct_tiebreaking_gpm(p)
+    print(f"Standard: {p}")
+    print(f"Graded std: {std}")
+    print(f"Graded inf: {inf}")
+    print(f"Ranking: {ranking(std, inf)}")
+    print(f"Entropy: H₀={graded_entropy(std, inf)[0]:.4f}, "
+          f"H₁={graded_entropy(std, inf)[1]:.4f}")

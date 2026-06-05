@@ -1,230 +1,216 @@
-# Non-Archimedean Probability via Surreal-Valued Measures
+# Graded Probability Measures: Non-Archimedean Probability via Infinitesimal Perturbations
 
 ## Abstract
 
-We develop a theory of finitely additive measures valued in linearly ordered abelian groups, with particular attention to the non-Archimedean case. Our main contributions are: (1) a precise characterization of the Archimedean obstruction to infinitesimal point masses, showing that the impossibility of positive-yet-infinitesimal probability in ℝ is a consequence of the Archimedean property rather than measure-theoretic axioms; (2) structural theorems for infinitesimal elements including convexity, additive closure, and finite summation bounds; (3) a construction of uniform infinitesimal measures on finite types with provably bounded total mass; (4) a bridge theorem connecting the anti-cancellation property of positive measures to the aggregate anti-cancellation phenomenon in Lorentzian polynomial theory; and (5) a discrimination theorem showing that infinitesimal measures carry strictly more information than standard measures on finite types. All results are formalized and machine-verified in Lean 4 with Mathlib.
-
-**Keywords:** surreal numbers, non-Archimedean probability, infinitesimal measures, finitely additive measures, anti-cancellation, Lorentzian polynomials
+We introduce **Graded Probability Measures (GPMs)**, a novel mathematical structure that enriches standard probability distributions with infinitesimal corrections, modeled as elements of the lexicographic product ℝ ×ₗ ℝ. A GPM on a finite sample space Fin n consists of a standard probability mass function μ₀ together with a zero-sum correction μ₁, where the "true" probability of outcome i is conceptually μ₀(i) + ε·μ₁(i) for a formal infinitesimal ε. We prove eleven theorems establishing the fundamental theory of GPMs, including finite additivity, the impossibility of uniform infinitesimal indifference, the existence of universal tie-breaking refinements, convexity of the GPM space, and complementary antisymmetry. All results are machine-verified in Lean 4 with Mathlib. This framework provides rigorous foundations for lexicographic probability in decision theory and Bayesian reasoning.
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Classical probability theory, built on Kolmogorov's axioms with real-valued σ-additive measures, faces a well-known conceptual tension: in continuous probability spaces, individual points must have measure zero, even though the sample space is the union of its points. This is not a deficiency of the axioms but a direct consequence of the Archimedean property of ℝ: for any ε > 0 and any M > 0, there exists n ∈ ℕ with nε > M.
+Standard probability theory, built on Kolmogorov's axioms over the real numbers, has a well-known limitation: it cannot distinguish between equally probable events. When a probability mass function assigns p(i) = p(j) for distinct outcomes i and j, the theory treats them as indistinguishable from a probabilistic standpoint.
 
-The surreal numbers, discovered by Conway [Con01] in the context of combinatorial game theory, form the largest ordered field. They contain genuine infinitesimals — positive elements ε with nε ≤ 1 for all n ∈ ℕ. This raises a natural question: can we build a probability theory where infinitesimal point masses are well-defined?
+This limitation has practical consequences in:
+- **Decision theory**: Choosing between equally-valued options requires tie-breaking rules external to the probability framework.
+- **Game theory**: Lexicographic probability systems (Blume, Brandenburger, Dekel 1991) model cautious reasoning but lack unified algebraic foundations.
+- **Bayesian inference**: Conditioning on zero-probability events is undefined, leading to the Borel-Kolmogorov paradox.
+- **Nonstandard analysis**: The connection between infinitesimal probability and hyperreal-valued measures (Benci, Bottazzi, Di Nasso 2013) has been explored but not formalized.
 
-### 1.2 Related Work
+### 1.2 Contribution
 
-The idea of infinitesimal probabilities has been explored in several frameworks:
+We introduce the **Graded Probability Measure (GPM)**, a structure that extends standard PMFs with a secondary "infinitesimal" layer. Our key contributions are:
 
-- **Nonstandard analysis** (Robinson [Rob66]): The hyperreals *ℝ provide infinitesimals via ultrapower construction. Loeb measures [Loe75] use the standard part map to recover standard measures from nonstandard ones.
-- **Numerosities** (Benci, Di Nasso [BDN03]): An alternative approach to "counting" that assigns different numerosities to sets of the same cardinality.
-- **Surreal analysis** (Alling [All87], Rubinstein-Salzedo, Swaminathan [RS14]): Extensions of analysis to surreal-valued functions.
+1. A precise axiomatic definition of GPMs with five axioms: nonnegativity, normalization, zero-sum correction, and graded positivity.
+2. Proof that GPMs form a finitely additive probability system in the lexicographic order.
+3. The **Impossibility of Uniform Infinitesimal Indifference**: constant corrections must vanish.
+4. The **Universal Tie-Breaking Theorem**: every standard PMF admits a GPM refinement with all distinct probabilities.
+5. **Convexity**: the space of GPMs is convex, enabling mixture operations.
+6. Complete machine verification of all results in Lean 4.
 
-Our approach differs from these in that we work abstractly with linearly ordered abelian groups, identifying the precise algebraic conditions under which infinitesimal probability is possible. This generality reveals that the phenomenon is not specific to any particular number system but is a consequence of non-Archimedeanness itself.
+### 1.3 Related Work
 
-### 1.3 Contributions
-
-Our main results, all formally verified in Lean 4:
-
-1. **Archimedean Obstruction** (Theorem 1): In any Archimedean ordered group, no positive infinitesimal exists. This precisely identifies why ℝ-valued probability cannot have infinitesimal point masses.
-
-2. **Infinitesimal Convexity** (Theorem 2): The set of infinitesimals relative to a fixed unit is downward-closed among positive elements — a structural rigidity result.
-
-3. **Additive Closure** (Theorem 3): Infinitesimals are closed under addition (with a controlled growth of the reference unit).
-
-4. **Finite Summation Bound** (Theorem 4): Finite sums of infinitesimals remain bounded by a multiple of the unit.
-
-5. **Finite Additivity** (Theorem 5): Our measure construction is finitely additive.
-
-6. **Uniform Total Mass** (Theorem 6): The total mass of a uniform measure is Fintype.card α • ε.
-
-7. **Monotonicity** (Theorem 7): Non-negative finitely additive measures are monotone.
-
-8. **Archimedean Obstruction for Measures** (Theorem 8): Specialization of Theorem 1 to uniform measures.
-
-9. **Non-Archimedean Bounded Measure** (Theorem 9): In non-Archimedean groups, uniform infinitesimal measures have bounded total mass.
-
-10. **Strict Positivity** (Theorem 10): Uniform measures with positive point mass assign positive measure to every nonempty set.
-
-11. **Anti-Cancellation Bridge** (Theorem 11): Measures with all-positive point masses have positive total mass — the measure-theoretic analog of aggregate anti-cancellation in Lorentzian polynomial theory [BH20].
-
-12. **Complementation Identity** (Theorem 12): Standard complementation formula.
-
-13. **Non-Archimedean Characterization** (Theorem 13): IsNonArchimedean is equivalent to existence of positive infinitesimals.
-
-14. **Discrimination** (Theorem 14): Uniform positive measures distinguish sets of different cardinality.
+- **Lexicographic probability** (Blume, Brandenburger, Dekel 1991): Systems of probability measures ordered lexicographically. Our GPMs can be viewed as the simplest case (depth 2).
+- **Non-Archimedean probability** (Benci et al. 2013): Probability measures valued in non-Archimedean fields. Our work uses ℝ × ℝ with lexicographic order as the simplest concrete model.
+- **Surreal numbers** (Conway 1976): The ordered field containing all ordinals and their inverses. Our approach works in the "first-order" approximation ℝ((ε)) ≅ ℝ ×ₗ ℝ.
+- **Conditional probability foundations** (Rényi 1955, Popper 1955): Axiomatizations of conditional probability as primitive. GPMs offer an alternative where conditioning is derived from positive (infinitesimal) probabilities.
 
 ## 2. Definitions
 
-### 2.1 Infinitesimal Elements
+### 2.1 Graded Probability Mass Function
 
-Let (G, +, ≤) be a linearly ordered additive commutative group with the order compatible with addition (i.e., a ≤ b implies c + a ≤ c + b).
+**Definition 2.1.** A *Graded Probability Mass Function* on Fin n is a tuple (μ₀, μ₁) where:
+- μ₀ : Fin n → ℝ (the *standard part*)
+- μ₁ : Fin n → ℝ (the *infinitesimal correction*)
 
-**Definition 1** (Infinitesimal). An element ε ∈ G is *infinitesimal relative to u ∈ G* if:
-- 0 < ε (ε is strictly positive)
-- ∀ n ∈ ℕ, n • ε ≤ u (no finite multiple of ε exceeds u)
+satisfying:
+1. **Nonnegativity**: μ₀(i) ≥ 0 for all i
+2. **Normalization**: Σᵢ μ₀(i) = 1
+3. **Zero-sum correction**: Σᵢ μ₁(i) = 0
+4. **Graded positivity**: If μ₀(i) = 0, then μ₁(i) ≥ 0
 
-**Definition 2** (Non-Archimedean). G is *non-Archimedean* if there exist ε, u ∈ G with u > 0 and ε infinitesimal relative to u.
+The conceptual interpretation is that the "graded probability" of outcome i is μ₀(i) + ε·μ₁(i) where ε is a positive infinitesimal.
 
-### 2.2 Finitely Additive Measures
+### 2.2 Derived Notions
 
-**Definition 3** (FinAddMeasure). A *finitely additive G-valued measure* on a finite type α is a function μ : α → G with μ(a) ≥ 0 for all a ∈ α. The measure of a set S ⊆ α is μ(S) = Σ_{a ∈ S} μ(a).
+**Lexicographic value**: lexVal(μ, i) = (μ₀(i), μ₁(i)) ∈ ℝ × ℝ
 
-**Definition 4** (Uniform Measure). The *uniform measure* with mass ε on α assigns μ(a) = ε for all a ∈ α.
+**Lexicographic probability of a set**: lexProb(μ, S) = (Σᵢ∈S μ₀(i), Σᵢ∈S μ₁(i))
+
+**Ties broken**: μ is *ties-broken* if lexVal is injective.
+
+**Refinement**: μ *refines* p if μ₀ = p.
+
+**Number of distinct probabilities**: |{lexVal(μ, i) : i ∈ Fin n}|.
 
 ## 3. Main Results
 
-### 3.1 The Archimedean Obstruction
+### 3.1 Finite Additivity (Theorem 1)
 
-**Theorem 1** (archimedean_no_infinitesimal). *Let G be an Archimedean linearly ordered additive commutative group. Then for any ε, u ∈ G, ε is not infinitesimal relative to u.*
+**Theorem.** For disjoint sets S, T ⊆ Fin n:
+```
+lexProb(μ, S ∪ T) = (lexProb(μ, S).1 + lexProb(μ, T).1, lexProb(μ, S).2 + lexProb(μ, T).2)
+```
 
-*Proof sketch.* Assume ε is infinitesimal relative to u: 0 < ε and ∀ n, n • ε ≤ u. By the Archimedean property, there exists n with u ≤ n • ε. Then (n+1) • ε = n • ε + ε > u, contradicting (n+1) • ε ≤ u. □
+*Proof sketch.* Follows from Finset.sum_union for disjoint sets, applied componentwise.
 
 **PEGB Analysis:**
-- **P**roof: Complete Lean 4 proof using `Archimedean.arch` and order arithmetic.
-- **E**xample: In ℝ, ε = 0.001, u = 1: 1001 • 0.001 = 1.001 > 1. No real number is infinitesimal.
-- **G**eneralization: The result holds for any Archimedean ordered group, not just ℝ. The natural next generalization is to partially ordered groups where the Archimedean property is directional.
-- **B**oundary: The theorem fails precisely when the Archimedean property fails — i.e., in groups like the surreal numbers, Hahn series groups, or lexicographic products.
+- **P**roof: Complete Lean 4 proof using `Prod.ext` and `Finset.sum_union`.
+- **E**xample: For μ on Fin 3 with std = (1/2, 1/4, 1/4) and S = {0}, T = {1}: lexProb(S∪T) = (3/4, inf₀ + inf₁).
+- **G**eneralization: Extends to any finitely additive measure valued in an ordered abelian group, not just ℝ × ℝ.
+- **B**oundary: Fails for non-disjoint sets; the correct formula requires inclusion-exclusion.
 
-### 3.2 Structural Theory of Infinitesimals
+### 3.2 Total Measure (Theorem 2)
 
-**Theorem 2** (infinitesimal_convex). *If ε is infinitesimal relative to u and 0 < x ≤ ε, then x is infinitesimal relative to u.*
+**Theorem.** lexProb(μ, Fin n) = (1, 0).
 
-*Proof sketch.* For each n, n • x ≤ n • ε ≤ u, using the monotonicity of scalar multiplication and the infinitesimality of ε. □
+*Proof sketch.* Direct from the normalization and zero-sum axioms.
 
-**Theorem 3** (infinitesimal_add). *If ε₁ and ε₂ are both infinitesimal relative to u, then ε₁ + ε₂ is infinitesimal relative to 2 • u.*
+### 3.3 Impossibility of Uniform Infinitesimal Indifference (Theorem 3)
 
-*Proof sketch.* n • (ε₁ + ε₂) = n • ε₁ + n • ε₂ ≤ u + u = 2 • u. □
+**Theorem.** If n ≥ 2 and Σᵢ c = 0 for a constant c, then c = 0.
 
-**Theorem 4** (infinitesimal_finset_sum_bound). *If f(i) is infinitesimal relative to u for each i ∈ S, then n • (Σ_{i ∈ S} f(i)) ≤ |S| • u for all n ∈ ℕ.*
+*Proof sketch.* Σᵢ c = n·c = 0, and n ≥ 2 > 0 implies c = 0.
 
-*Proof sketch.* n • Σ f(i) = Σ (n • f(i)) ≤ Σ u = |S| • u. □
+**PEGB Analysis:**
+- **P**roof: Lean 4 proof using `Finset.sum_const` and positivity.
+- **E**xample: For n = 3, trying c = 0.1 gives sum 0.3 ≠ 0.
+- **G**eneralization: In any torsion-free abelian group, n·c = 0 with n ≥ 1 implies c = 0.
+- **B**oundary: Fails for n = 0 (empty sum is vacuously 0). For n = 1, c = 0 is forced but the theorem is vacuously uninteresting (no ties to break).
 
-**PEGB for the Convexity Theorem:**
-- **P**roof: By induction on the nsmul structure, using `add_le_add` and the base case.
-- **E**xample: If ε = 1/ω and x = 1/(2ω), then x < ε and x is also infinitesimal.
-- **G**eneralization: The convex cone of infinitesimals is actually a convex subgroup when extended to include 0 and negatives. This subgroup is the kernel of the natural valuation.
-- **B**oundary: The result requires the order to be linear. In partially ordered groups, the notion of infinitesimal must be refined directionally.
+**Significance:** This theorem demonstrates that *complete infinitesimal indifference is impossible*. Any attempt to refine a probability distribution at the infinitesimal level must introduce asymmetry. This is a conservation-of-information result: the zero-sum constraint forces the infinitesimal layer to carry nontrivial structure.
 
-### 3.3 Measure Theory
+### 3.4 Universal Tie-Breaking (Theorem 4)
 
-**Theorem 5** (FinAddMeasure.additive). *For disjoint finsets S, T, μ(S ∪ T) = μ(S) + μ(T).*
+**Theorem.** For any p : Fin n → ℝ with p nonneg and Σ p = 1 (n ≥ 1), there exists a GPM μ refining p with all ties broken.
 
-**Theorem 6** (FinAddMeasure.uniform_totalMass). *The total mass of a uniform measure with point mass ε on a type with n elements is n • ε.*
+*Proof sketch.* Construct rational weights q that are nonneg, sum to 1, and are injective. Use q to define the infinitesimal correction as (q(i) - p(i)) / Σⱼ (q(j) - p(j))², ensuring the correction is injective (inheriting injectivity from q) and satisfies the zero-sum property (after normalization). The graded positivity condition is verified by showing that when p(i) = 0, the correction is nonneg due to the positivity of q.
 
-**Theorem 7** (FinAddMeasure.monotone_measure). *If S ⊆ T, then μ(S) ≤ μ(T).*
+**PEGB Analysis:**
+- **P**roof: Lean 4 constructive proof building explicit rational witnesses.
+- **E**xample: For uniform p = (1/3, 1/3, 1/3), use q = (1/9, 3/9, 5/9) to get inf corrections that distinguish all three outcomes.
+- **G**eneralization: The theorem generalizes to any ordered field containing ℚ. The construction works over any field where injective sequences exist.
+- **B**oundary: For n = 0, the statement is vacuously true (no outcomes). The construction requires n ≥ 1 for the rational witness.
 
-**Theorem 9** (nonArchimedean_uniform_measure_bounded). *If ε is infinitesimal relative to u, the total mass of the uniform ε-measure on any finite type is at most u.*
+**Significance:** This is the central existence theorem. It shows that infinitesimal refinement is always possible — the space of GPMs refining any given PMF is nonempty. Combined with Theorem 3, it says: you *must* break symmetry at the infinitesimal level, and you *can* always do so maximally.
 
-This is the key theorem enabling infinitesimal probability: the total mass stays bounded even though every point carries positive mass.
+### 3.5 Complementary Antisymmetry (Theorem 9)
 
-**PEGB for the Bounded Measure Theorem:**
-- **P**roof: Total mass = n • ε ≤ u by the infinitesimality condition.
-- **E**xample: On Fin 1000 with ε = 1/ω, total mass = 1000/ω, still infinitesimal relative to 1.
-- **G**eneralization: For infinite types, one would need a summation theory for surreal-valued series, which is currently undeveloped.
-- **B**oundary: For countably infinite types, even infinitesimal uniform measures might produce infinite total mass (ω • (1/ω) = 1 in the surreals, but ω • (1/ω²) = 1/ω, still infinitesimal). The theory becomes delicate.
+**Theorem.** infProb(μ, Sᶜ) = −infProb(μ, S).
 
-### 3.4 The Anti-Cancellation Bridge
+*Proof sketch.* From Σᵢ μ₁(i) = 0, we get Σᵢ∈S μ₁(i) + Σᵢ∈Sᶜ μ₁(i) = 0.
 
-**Theorem 11** (FinAddMeasure.totalMass_pos_of_all_pos). *If all point masses are strictly positive and the type is nonempty, then the total mass is strictly positive.*
+**PEGB Analysis:**
+- **P**roof: Lean 4 proof using `Finset.sum_add_sum_compl` and the zero-sum axiom.
+- **E**xample: If μ₁ = (1, -2, 1) and S = {0,2}, then infProb(S) = 2, infProb(Sᶜ) = -2.
+- **G**eneralization: Holds for any signed measure with total mass 0, not just infinitesimal corrections.
+- **B**oundary: The standard part does NOT satisfy this: stdProb(Sᶜ) = 1 - stdProb(S), not −stdProb(S). The antisymmetry is unique to the zero-sum infinitesimal layer.
 
-This theorem is the measure-theoretic analog of `sum_ne_zero_of_same_sign_and_exists_ne_zero` from the Lorentzian aggregate anti-cancellation theory [BH20, FINAL/Pythagorean/LorentzianAggregateAntiCancel.lean]. Both results express the same structural principle: when all contributions to a sum share the same sign, no accidental cancellation can occur.
+### 3.6 Distinct Probabilities Count (Theorem 10)
 
-The connection is deeper than a mere analogy. In Lorentzian polynomial theory, the anti-cancellation property ensures that weighted sums of Hessian derivatives with sign-coherent weights preserve support exactly. In our measure theory, the anti-cancellation property ensures that positive measures produce positive totals. Both follow from the ordered group axiom that the sum of positive elements is positive.
+**Theorem.** If μ has all ties broken, then numDistinctProbs(μ) = n.
 
-**PEGB for the Anti-Cancellation Bridge:**
-- **P**roof: Extract a witness from Nonempty, show one term is positive, the sum is at least that term.
-- **E**xample: μ = (1/ω, 1/ω, 1/ω) on Fin 3 has total mass 3/ω > 0.
-- **G**eneralization: The anti-cancellation principle extends to any ordered module, not just groups. The Lorentzian setting adds polynomial structure; our setting adds measure structure. A unifying framework would use ordered modules with compatible bilinear forms.
-- **B**oundary: Anti-cancellation fails when signs are mixed. A measure with μ(0) = ε and μ(1) = -ε (if we allowed signed measures) would have total mass 0.
+*Proof sketch.* If lexVal is injective, then |image(lexVal, Fin n)| = |Fin n| = n.
 
-### 3.5 The Discrimination Theorem
+### 3.7 Convexity (Theorem 11)
 
-**Theorem 14** (FinAddMeasure.uniform_discriminates). *A uniform measure with positive point mass ε distinguishes sets of different cardinality: if |S| ≠ |T|, then μ(S) ≠ μ(T).*
+**Theorem.** For GPMs μ, ν on Fin n and t ∈ [0,1], the convex combination (1-t)μ + tν is a GPM.
 
-This result demonstrates that infinitesimal measures carry *more* information than standard measures on continuous spaces, where all finite and countable sets have measure zero.
+*Proof sketch.* Standard part: (1-t)μ₀(i) + tν₀(i) ≥ 0 by nonnegativity. Sum = (1-t)·1 + t·1 = 1. Infinitesimal correction sum = (1-t)·0 + t·0 = 0. Graded positivity: if the convex combination of standard parts is 0, both must be 0 (nonneg values summing to 0), so graded positivity of μ and ν transfers.
 
-**PEGB:**
-- **P**roof: μ(S) = |S| • ε and μ(T) = |T| • ε. Since ε > 0, the map n ↦ n • ε is strictly monotone, so |S| ≠ |T| implies |S| • ε ≠ |T| • ε.
-- **E**xample: On Fin 5, {0,1} has measure 2ε while {0,1,2} has measure 3ε. These are distinct surreal numbers.
-- **G**eneralization: Non-uniform measures with distinct point masses can distinguish individual points, not just cardinalities.
-- **B**oundary: On infinite types, all finite subsets have finite multiples of ε as measure, but infinite subsets might be indistinguishable from each other.
+**PEGB Analysis:**
+- **P**roof: Lean 4 constructive definition with inline proofs.
+- **E**xample: For μ with inf = (1, -1) and ν with inf = (-1, 1), the midpoint has inf = (0, 0).
+- **G**eneralization: The GPM space is not just convex but forms a *convex cone* under the natural action of nonneg reals on the infinitesimal part.
+- **B**oundary: The convex combination of two ties-broken GPMs is NOT necessarily ties-broken. Ties can reappear at specific mixing ratios — these form an algebraic variety in [0,1].
 
-## 4. The Surreal Application
+## 4. Algorithms
 
-Conway's surreal numbers satisfy all our hypotheses:
-- They form an additive commutative group (Surreal.instAddCommGroup)
-- They carry a linear order (Surreal.instLinearOrder)
-- The order is translation-invariant (CovariantClass Surreal Surreal (· + ·) (· ≤ ·))
-- They are non-Archimedean: the element 1/ω (where ω = {0,1,2,...|}) is infinitesimal relative to 1
-
-Our theorems therefore apply directly to Surreal, giving:
-- Uniform measures on Fin n with point mass ε = 1/ω are finitely additive
-- Their total mass n/ω is bounded by 1
-- Every nonempty subset has positive (infinitesimal) measure
-- Sets of different sizes are distinguishable
-
-## 5. Algorithms
-
-### 5.1 Finite Measure Computation
-
-Given a finite type α with n elements and an infinitesimal ε:
+### 4.1 GPM Construction Algorithm
 
 ```
-Algorithm INFINITESIMAL_MEASURE(S ⊆ α):
-  return |S| • ε
+Input: Standard PMF p on Fin n
+Output: Ties-broken GPM μ refining p
+
+1. Compute rational approximation q_i = (2i + 1) / n² for i = 0, ..., n-1
+2. Normalize: q_i ← q_i / (Σ q_j)
+3. Set μ₀ = p
+4. Set δ_i = q_i - p_i
+5. Set μ₁(i) = δ_i / Σ δ_j²
+6. Verify: Σ μ₁(i) = 0 (by construction)
+7. Return (μ₀, μ₁)
 ```
 
-This is O(|S|) in the size of S, or O(1) if |S| is known.
-
-### 5.2 Conditional Probability (Surreal)
-
-In a surreal-valued setting with multiplication:
+### 4.2 Lexicographic Comparison
 
 ```
-Algorithm CONDITIONAL_PROBABILITY(A, B, ε):
-  return (|A ∩ B| • ε) / (|B| • ε)
-  // Simplifies to |A ∩ B| / |B| (a real number!)
+Input: GPM μ, outcomes i, j
+Output: Comparison result
+
+1. If μ₀(i) > μ₀(j): return i > j
+2. If μ₀(i) < μ₀(j): return i < j
+3. If μ₁(i) > μ₁(j): return i > j
+4. If μ₁(i) < μ₁(j): return i < j
+5. Return i = j (tied)
 ```
 
-This recovers classical conditional probability on finite sets.
+## 5. Conjecture
+
+**Conjecture (Graded Conditional Probability).** For any GPM μ on Fin n where μ is strictly positive (every outcome has positive lexicographic probability), and for any nonempty S ⊆ Fin n, the *graded conditional probability* defined by:
+
+condProb(μ, i, S) = lexVal(μ, i) / lexProb(μ, S) (for i ∈ S)
+
+is a well-defined GPM on S (with appropriate quotient field arithmetic in ℝ((ε))).
+
+**Computational test:** For μ on Fin 3 with std = (1/2, 1/4, 1/4) and inf = (0, 1, -1), compute condProb for S = {1, 2}. The standard conditional probabilities are (1/2, 1/2), and the infinitesimal correction should give (1/2 + ε', 1/2 - ε') for some ε' > 0.
 
 ## 6. Discussion
 
-### 6.1 Finite vs. Countable Additivity
+### 6.1 Connection to Surreal Numbers
 
-Our theory is finitely additive by construction. Whether it extends to countable additivity is a subtle question. In the surreal numbers, infinite sums are not generally well-defined without additional convergence criteria. The natural approach would use the order topology on surreals, but this topology is not second-countable, which complicates sequential arguments.
+Our GPMs model the simplest non-archimedean extension of real-valued probability. In the full surreal number field No, one could define probability measures valued in No, but the algebraic structure of No is vastly more complex than ℝ × ℝ. Our framework captures the essential phenomenon — infinitesimal tie-breaking — in the simplest possible setting.
 
-### 6.2 Relationship to Nonstandard Analysis
+The key insight is that for finite probability spaces, depth-2 lexicographic probability (ℝ ×ₗ ℝ) suffices for full tie-breaking. Deeper hierarchies (ℝ ×ₗ ℝ ×ₗ ℝ, etc.) would allow tie-breaking at multiple infinitesimal scales but are not needed for the existence results.
 
-Our approach parallels but differs from the Loeb measure construction in nonstandard analysis. Loeb measures start with a nonstandard measure and apply the standard part map to recover a standard real-valued measure. We go in the opposite direction: we keep the non-standard (surreal) values and show they form a coherent measure theory on their own.
+### 6.2 Connection to Decision Theory
 
-### 6.3 Philosophical Implications
+Blume, Brandenburger, and Dekel (1991) introduced lexicographic probability systems (LPS) for modeling cautious behavior in games. An LPS is a finite sequence (μ₁, μ₂, ..., μₖ) of probability measures, where μ₁ is "most important" and ties are broken by μ₂, etc. Our GPMs correspond to depth-2 LPS where μ₁ = std and μ₂ = inf (appropriately normalized). The convexity theorem (Theorem 11) extends the known convexity of probability simplices to the LPS setting.
 
-The Archimedean obstruction theorem has philosophical significance for the foundations of probability. It shows that the impossibility of positive point masses in standard probability is not an inherent feature of "probability" as a concept, but rather an artifact of the number system used for values. This supports the view that the choice of value field is a modeling decision, not a mathematical necessity.
+### 6.3 Cross-Connection to Catalog Results
+
+Our framework connects to the existing Catalog result `sum_ne_zero_of_same_sign_and_exists_ne_zero` from `Pythagorean/LorentzianAggregateAntiCancel.lean`: when all infinitesimal corrections have the same sign and at least one is nonzero, their sum is nonzero — which means they *cannot* form a valid GPM correction (violating zero-sum). This provides an obstruction-theoretic perspective: the corrections must contain both positive and negative values, connecting to the anti-cancellation properties studied in Lorentzian aggregate theory.
 
 ## 7. Future Work
 
-1. **Countable additivity**: Develop a theory of convergence for surreal-valued series and investigate when countable additivity holds.
-2. **Integration**: Define and study surreal-valued integrals, enabling surreal-valued expected values.
-3. **Conditional probability**: Formalize conditional probability using surreal division (available in the surreal field structure, though not yet in Mathlib).
-4. **Infinite types**: Extend the theory to countably and uncountably infinite types.
-5. **Connection to Loeb measures**: Formalize the relationship between our surreal-valued measures and Loeb measures from nonstandard analysis.
+1. **Higher-order GPMs**: Extend to ℝ ×ₗ ℝ ×ₗ ... ×ₗ ℝ (depth k) and study when depth k suffices for a given PMF.
+2. **Infinite sample spaces**: Define GPMs on countable and uncountable spaces using surreal-valued integration.
+3. **Graded conditional probability**: Formalize the conditional probability conjecture using formal Laurent series arithmetic.
+4. **Graded entropy**: Define and study Shannon entropy for GPMs: H_ε(μ) = −Σ (μ₀(i) + ε·μ₁(i)) log(μ₀(i) + ε·μ₁(i)).
+5. **Game-theoretic applications**: Apply GPMs to extensive-form games with imperfect information.
 
 ## References
 
-[All87] Alling, N. L. *Foundations of Analysis over Surreal Number Fields*. North-Holland, 1987.
-
-[BDN03] Benci, V., Di Nasso, M. "Numerosities of labelled sets: a new way of counting." *Advances in Mathematics*, 173(1):50-67, 2003.
-
-[BH20] Brändén, P., Huh, J. "Lorentzian polynomials." *Annals of Mathematics*, 192(3):821-891, 2020.
-
-[Con01] Conway, J. H. *On Numbers and Games*. A K Peters, 2nd edition, 2001.
-
-[Loe75] Loeb, P. A. "Conversion from nonstandard to standard measure spaces and applications in probability theory." *Transactions of the AMS*, 211:113-122, 1975.
-
-[Rob66] Robinson, A. *Non-standard Analysis*. North-Holland, 1966.
-
-[RS14] Rubinstein-Salzedo, S., Swaminathan, A. "Analysis on surreal numbers." *Journal of Logic and Analysis*, 6, 2014.
+1. Benci, V., Bottazzi, E., Di Nasso, M. (2013). "Non-Archimedean Probability." *Milan Journal of Mathematics*, 81(1), 121-151.
+2. Blume, L., Brandenburger, A., Dekel, E. (1991). "Lexicographic Probabilities and Choice Under Uncertainty." *Econometrica*, 59(1), 61-79.
+3. Conway, J.H. (1976). *On Numbers and Games*. Academic Press.
+4. Rényi, A. (1955). "On a New Axiomatic Theory of Probability." *Acta Mathematica Hungarica*, 6(3-4), 285-335.
+5. Robinson, A. (1966). *Non-standard Analysis*. North-Holland.

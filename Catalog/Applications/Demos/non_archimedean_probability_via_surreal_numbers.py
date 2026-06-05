@@ -1,459 +1,352 @@
-#!/usr/bin/env python3
 """
-Non-Archimedean Probability: Numerical Demonstrations
+Graded Probability Measures: Interactive Demonstrations
 
-Demonstrates the key concepts of infinitesimal probability theory using
-symbolic representations of surreal numbers.
+Demonstrates the key properties of GPMs:
+1. Tie-breaking refinement
+2. Finite additivity
+3. Complementary antisymmetry
+4. Convex combinations
+5. The impossibility of uniform infinitesimal indifference
 """
 
 from fractions import Fraction
-from typing import List, Set, Tuple
+from typing import List, Tuple
+
+# ============================================================
+# Core GPM implementation
+# ============================================================
+
+class GradedPMF:
+    """A Graded Probability Mass Function on {0, 1, ..., n-1}."""
+
+    def __init__(self, std: List[float], inf: List[float]):
+        assert len(std) == len(inf), "std and inf must have same length"
+        assert all(s >= 0 for s in std), f"std must be nonneg: {std}"
+        assert abs(sum(std) - 1.0) < 1e-10, f"std must sum to 1, got {sum(std)}"
+        assert abs(sum(inf)) < 1e-10, f"inf must sum to 0, got {sum(inf)}"
+        for i in range(len(std)):
+            if std[i] == 0:
+                assert inf[i] >= -1e-10, f"graded_pos violated at {i}"
+        self.n = len(std)
+        self.std = std
+        self.inf = inf
+
+    def lex_val(self, i: int) -> Tuple[float, float]:
+        """Lexicographic probability of outcome i."""
+        return (self.std[i], self.inf[i])
+
+    def lex_prob(self, S: set) -> Tuple[float, float]:
+        """Graded probability of subset S."""
+        return (sum(self.std[i] for i in S), sum(self.inf[i] for i in S))
+
+    def std_prob(self, S: set) -> float:
+        return sum(self.std[i] for i in S)
+
+    def inf_prob(self, S: set) -> float:
+        return sum(self.inf[i] for i in S)
+
+    def ties_broken(self) -> bool:
+        """Check if all outcomes have distinct graded probabilities."""
+        vals = [self.lex_val(i) for i in range(self.n)]
+        return len(set(vals)) == len(vals)
+
+    def __repr__(self):
+        lines = [f"GradedPMF(n={self.n})"]
+        for i in range(self.n):
+            lines.append(f"  [{i}]: {self.std[i]:.6f} + ε·{self.inf[i]:.6f}")
+        return "\n".join(lines)
 
 
-class SurrealApprox:
+def tiebreaking_refinement(p: List[float]) -> GradedPMF:
+    """Construct a GPM that refines p and breaks all ties.
+
+    Uses the construction: inf[i] = i - (n-1)/2 (centered linear).
+    This sums to 0 and is injective.
     """
-    A simplified representation of surreal numbers as pairs (real_part, infinitesimal_order).
-    Represents numbers of the form a + b/ω where a is the real part and b is the
-    coefficient of 1/ω (the infinitesimal part).
+    n = len(p)
+    if n <= 1:
+        return GradedPMF(p, [0.0] * n)
 
-    This is a truncated Hahn series representation sufficient for demonstrating
-    the key phenomena.
-    """
+    # Raw corrections: distinct values summing to 0
+    raw = [i - (n - 1) / 2.0 for i in range(n)]
+    # Scale down to be "infinitesimal" relative to probability differences
+    scale = 0.001  # Conceptually ε
+    inf_vals = [scale * r for r in raw]
 
-    def __init__(self, real: Fraction = Fraction(0), infinitesimal: Fraction = Fraction(0)):
-        self.real = real  # coefficient of ω^0
-        self.inf = infinitesimal  # coefficient of ω^(-1), i.e., 1/ω
+    # Verify zero-sum
+    total = sum(inf_vals)
+    inf_vals[-1] -= total  # Correct floating point drift
 
-    def __add__(self, other: 'SurrealApprox') -> 'SurrealApprox':
-        return SurrealApprox(self.real + other.real, self.inf + other.inf)
-
-    def __sub__(self, other: 'SurrealApprox') -> 'SurrealApprox':
-        return SurrealApprox(self.real - other.real, self.inf - other.inf)
-
-    def __mul__(self, n: int) -> 'SurrealApprox':
-        """Scalar multiplication by a natural number."""
-        return SurrealApprox(self.real * n, self.inf * n)
-
-    def __rmul__(self, n: int) -> 'SurrealApprox':
-        return self.__mul__(n)
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, SurrealApprox):
-            return NotImplemented
-        return self.real == other.real and self.inf == other.inf
-
-    def __lt__(self, other: 'SurrealApprox') -> bool:
-        if self.real != other.real:
-            return self.real < other.real
-        return self.inf < other.inf
-
-    def __le__(self, other: 'SurrealApprox') -> bool:
-        return self == other or self < other
-
-    def __gt__(self, other: 'SurrealApprox') -> bool:
-        return other < self
-
-    def __repr__(self) -> str:
-        parts = []
-        if self.real != 0:
-            parts.append(str(self.real))
-        if self.inf != 0:
-            if self.inf == 1:
-                parts.append("ε")
-            elif self.inf == -1:
-                parts.append("-ε")
-            else:
-                parts.append(f"{self.inf}ε")
-        if not parts:
-            return "0"
-        return " + ".join(parts)
-
-    def is_infinitesimal(self) -> bool:
-        """Check if this number is infinitesimal (real part is zero, inf part positive)."""
-        return self.real == 0 and self.inf > 0
-
-    def is_positive(self) -> bool:
-        """Check if strictly positive."""
-        return self > SurrealApprox()
+    return GradedPMF(p, inf_vals)
 
 
-# Convenience constructors
-ZERO = SurrealApprox()
-ONE = SurrealApprox(Fraction(1))
-EPSILON = SurrealApprox(Fraction(0), Fraction(1))  # 1/ω
+def convex_combination(mu: GradedPMF, nu: GradedPMF, t: float) -> GradedPMF:
+    """Compute (1-t)*mu + t*nu."""
+    assert mu.n == nu.n
+    assert 0 <= t <= 1
+    std = [(1 - t) * mu.std[i] + t * nu.std[i] for i in range(mu.n)]
+    inf = [(1 - t) * mu.inf[i] + t * nu.inf[i] for i in range(mu.n)]
+    return GradedPMF(std, inf)
 
 
-def demo_archimedean_obstruction():
-    """Demonstrate that ℝ has no infinitesimals (Theorem 1)."""
+# ============================================================
+# Demonstrations
+# ============================================================
+
+def demo_tiebreaking():
+    """Demo 1: Tie-breaking refinement of a uniform distribution."""
     print("=" * 60)
-    print("DEMO 1: Archimedean Obstruction")
+    print("DEMO 1: Tie-Breaking Refinement")
     print("=" * 60)
-    print()
-    print("In ℝ, every positive number eventually exceeds 1 when")
-    print("multiplied by a large enough integer:")
-    print()
-
-    for eps_val in [0.1, 0.01, 0.001, 0.0001]:
-        n = int(1.0 / eps_val) + 1
-        print(f"  ε = {eps_val}: {n} × ε = {n * eps_val:.4f} > 1  ✓")
-
-    print()
-    print("No real number is infinitesimal. (Theorem 1: archimedean_no_infinitesimal)")
-    print()
-
-
-def demo_surreal_infinitesimal():
-    """Demonstrate infinitesimal behavior in surreal-like numbers (Theorem 2-4)."""
-    print("=" * 60)
-    print("DEMO 2: Surreal Infinitesimals")
-    print("=" * 60)
-    print()
-
-    eps = EPSILON
-    print(f"  ε = {eps}")
-    print(f"  ε is positive: {eps.is_positive()}")
-    print(f"  ε is infinitesimal: {eps.is_infinitesimal()}")
-    print()
-
-    # Demonstrate that finite multiples stay infinitesimal
-    print("Finite multiples of ε remain infinitesimal (Theorem 4):")
-    for n in [1, 10, 100, 1000, 1000000]:
-        result = n * eps
-        print(f"  {n} × ε = {result}, infinitesimal: {result.is_infinitesimal()}")
-
-    print()
-    print("But n × ε < 1 for ALL finite n. (Non-Archimedean!)")
-    print()
-
-    # Convexity
-    half_eps = SurrealApprox(Fraction(0), Fraction(1, 2))
-    print(f"Convexity (Theorem 2): ε/2 = {half_eps}")
-    print(f"  0 < ε/2 ≤ ε: {ZERO < half_eps and half_eps <= eps}")
-    print(f"  ε/2 is infinitesimal: {half_eps.is_infinitesimal()}")
-    print()
-
-
-def demo_finite_measure():
-    """Demonstrate finitely additive infinitesimal measure (Theorems 5-7)."""
-    print("=" * 60)
-    print("DEMO 3: Infinitesimal Probability Measure on Fin(n)")
-    print("=" * 60)
-    print()
-
-    for n in [3, 5, 10, 100]:
-        eps = EPSILON
-        points = list(range(n))
-        total = n * eps
-
-        print(f"  Fin({n}): each point gets mass ε = {eps}")
-        print(f"    Total mass = {n} × ε = {total}")
-        print(f"    Total ≤ 1: {total <= ONE}")
-        print(f"    Total is infinitesimal: {total.is_infinitesimal()}")
-        print()
-
-    # Finite additivity
-    print("Finite additivity (Theorem 5):")
-    S = {0, 1}
-    T = {2, 3, 4}
-    eps = EPSILON
-    mu_S = len(S) * eps
-    mu_T = len(T) * eps
-    mu_union = len(S | T) * eps
-    print(f"  S = {S}, μ(S) = {mu_S}")
-    print(f"  T = {T}, μ(T) = {mu_T}")
-    print(f"  S ∪ T = {S | T}, μ(S ∪ T) = {mu_union}")
-    print(f"  μ(S) + μ(T) = {mu_S + mu_T}")
-    print(f"  Additivity: μ(S ∪ T) = μ(S) + μ(T)? {mu_union == mu_S + mu_T}")
-    print()
-
-
-def demo_discrimination():
-    """Demonstrate that infinitesimal measures discriminate sets (Theorem 14)."""
-    print("=" * 60)
-    print("DEMO 4: Discrimination Theorem")
-    print("=" * 60)
-    print()
-    print("Classical probability on [0,1]: all finite sets have measure 0.")
-    print("Infinitesimal probability discriminates by cardinality:")
-    print()
-
-    n = 6
-    eps = EPSILON
-
-    # Show all possible measures
-    for k in range(n + 1):
-        measure = k * eps
-        print(f"  |S| = {k}: μ(S) = {measure}")
-
-    print()
-    print("Every cardinality gives a DISTINCT measure value!")
-    print("Sets {0,1} and {0,1,2} are distinguishable: 2ε ≠ 3ε")
-    print()
-
-
-def demo_anti_cancellation():
-    """Demonstrate the anti-cancellation bridge (Theorem 11)."""
-    print("=" * 60)
-    print("DEMO 5: Anti-Cancellation Bridge")
-    print("=" * 60)
-    print()
-    print("If all point masses are positive, total mass is positive.")
-    print("(Analog of sum_ne_zero_of_same_sign_and_exists_ne_zero)")
-    print()
-
-    # Various positive measures
-    measures = [
-        [EPSILON, EPSILON, EPSILON],
-        [SurrealApprox(Fraction(0), Fraction(1, 3)),
-         SurrealApprox(Fraction(0), Fraction(2, 3)),
-         EPSILON],
-        [SurrealApprox(Fraction(1, 2)), EPSILON,
-         SurrealApprox(Fraction(0), Fraction(7))],
-    ]
-
-    for i, mu in enumerate(measures):
-        total = ZERO
-        for m in mu:
-            total = total + m
-        all_pos = all(m.is_positive() for m in mu)
-        print(f"  Measure {i + 1}: masses = [{', '.join(str(m) for m in mu)}]")
-        print(f"    All positive: {all_pos}")
-        print(f"    Total = {total}")
-        print(f"    Total > 0: {total.is_positive()}")
-        print()
-
-
-def demo_complementation():
-    """Demonstrate the complementation identity (Theorem 12)."""
-    print("=" * 60)
-    print("DEMO 6: Complementation Identity")
-    print("=" * 60)
-    print()
 
     n = 5
-    eps = EPSILON
-    total = n * eps
+    p = [1.0 / n] * n
+    print(f"\nStandard uniform distribution on Fin {n}:")
+    for i in range(n):
+        print(f"  p[{i}] = {p[i]:.4f}")
+    print(f"  All equal → {len(set(p))} distinct values (ties!)")
 
-    for k in range(n + 1):
-        mu_S = k * eps
-        mu_comp = (n - k) * eps
-        sum_val = mu_S + mu_comp
-        print(f"  |S| = {k}: μ(S) = {mu_S}, μ(Sᶜ) = {mu_comp}, "
-              f"sum = {sum_val} = total? {sum_val == total}")
+    mu = tiebreaking_refinement(p)
+    print(f"\nGraded refinement:")
+    print(mu)
+    print(f"\n  Ties broken: {mu.ties_broken()}")
+    print(f"  Num distinct values: {len(set(mu.lex_val(i) for i in range(n)))}")
 
-    print()
+    # Ranking
+    ranking = sorted(range(n), key=lambda i: mu.lex_val(i), reverse=True)
+    print(f"\n  Lexicographic ranking (most to least likely): {ranking}")
+
+
+def demo_finite_additivity():
+    """Demo 2: Finite additivity of graded probability."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Finite Additivity")
+    print("=" * 60)
+
+    mu = GradedPMF([0.5, 0.25, 0.25], [0.1, -0.05, -0.05])
+    S = {0}
+    T = {1, 2}
+
+    print(f"\nGPM: {mu}")
+    print(f"\nS = {S}, T = {T}")
+    print(f"  lexProb(S) = {mu.lex_prob(S)}")
+    print(f"  lexProb(T) = {mu.lex_prob(T)}")
+    print(f"  lexProb(S∪T) = {mu.lex_prob(S | T)}")
+
+    lp_s = mu.lex_prob(S)
+    lp_t = mu.lex_prob(T)
+    lp_union = mu.lex_prob(S | T)
+    expected = (lp_s[0] + lp_t[0], lp_s[1] + lp_t[1])
+    print(f"\n  Additivity check: {lp_union} == {expected}? {abs(lp_union[0] - expected[0]) < 1e-10 and abs(lp_union[1] - expected[1]) < 1e-10}")
+
+
+def demo_complement_antisymmetry():
+    """Demo 3: infProb(Sᶜ) = -infProb(S)."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Complementary Antisymmetry")
+    print("=" * 60)
+
+    mu = GradedPMF([0.3, 0.3, 0.2, 0.2], [0.5, -0.3, 0.1, -0.3])
+    S = {0, 2}
+    Sc = {1, 3}
+
+    print(f"\nGPM: {mu}")
+    print(f"\nS = {S}, Sᶜ = {Sc}")
+    print(f"  infProb(S)  = {mu.inf_prob(S):.6f}")
+    print(f"  infProb(Sᶜ) = {mu.inf_prob(Sc):.6f}")
+    print(f"  Sum = {mu.inf_prob(S) + mu.inf_prob(Sc):.10f} (should be 0)")
+    print(f"  infProb(Sᶜ) = -infProb(S)? {abs(mu.inf_prob(Sc) + mu.inf_prob(S)) < 1e-10}")
+
+
+def demo_no_uniform_correction():
+    """Demo 4: Impossibility of uniform infinitesimal indifference."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Impossibility of Uniform Infinitesimal Indifference")
+    print("=" * 60)
+
+    for n in [2, 3, 5, 10]:
+        for c in [0.1, -0.5, 0.0]:
+            total = n * c
+            print(f"  n={n}, c={c}: Σc = {total:.4f} {'= 0 ✓' if abs(total) < 1e-10 else '≠ 0 ✗'}")
+    print("\n  Only c=0 gives Σc = 0, confirming the theorem.")
+
+
+def demo_convexity():
+    """Demo 5: Convex combination of GPMs."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Convexity of GPM Space")
+    print("=" * 60)
+
+    mu = GradedPMF([0.5, 0.3, 0.2], [0.2, -0.1, -0.1])
+    nu = GradedPMF([0.4, 0.4, 0.2], [-0.1, 0.2, -0.1])
+
+    print(f"\nμ = {mu}")
+    print(f"\nν = {nu}")
+
+    for t in [0.0, 0.25, 0.5, 0.75, 1.0]:
+        mix = convex_combination(mu, nu, t)
+        print(f"\n  t={t:.2f}: std={[round(x, 4) for x in mix.std]}, "
+              f"inf={[round(x, 4) for x in mix.inf]}, "
+              f"Σstd={sum(mix.std):.4f}, Σinf={sum(mix.inf):.10f}")
 
 
 if __name__ == "__main__":
-    demo_archimedean_obstruction()
-    demo_surreal_infinitesimal()
-    demo_finite_measure()
-    demo_discrimination()
-    demo_anti_cancellation()
-    demo_complementation()
-
-    print("=" * 60)
-    print("All demonstrations complete.")
+    demo_tiebreaking()
+    demo_finite_additivity()
+    demo_complement_antisymmetry()
+    demo_no_uniform_correction()
+    demo_convexity()
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully.")
     print("=" * 60)
 
 
-#!/usr/bin/env python3
 """
-Visualization: Infinitesimal vs Standard Probability Measures
+Visualization: Graded Probability Measures
 
-Compares standard (ℝ-valued) and infinitesimal (surreal-valued) probability
-measures on finite sets, illustrating the discrimination theorem.
+Creates three visualizations:
+1. Standard vs Graded probability comparison
+2. Convexity of GPM space (mixing path)
+3. Infinitesimal correction antisymmetry
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import numpy as np
 
+def construct_tiebreaking_gpm(p):
+    n = len(p)
+    if n <= 1:
+        return list(p), [0.0] * n
+    mean = (n - 1) / 2.0
+    raw = [i - mean for i in range(n)]
+    scale = 0.001
+    inf_vals = [scale * r for r in raw]
+    drift = sum(inf_vals)
+    inf_vals[-1] -= drift
+    return list(p), inf_vals
 
-def plot_measure_comparison():
-    """Compare standard and infinitesimal measures on subsets of Fin(6)."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+def plot_standard_vs_graded():
+    """Plot 1: Standard vs Graded probability comparison."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
     n = 6
-    cardinalities = list(range(n + 1))
+    p = [1/6] * n
+    std, inf_vals = construct_tiebreaking_gpm(p)
 
-    # Standard uniform measure on Fin(6): each point has mass 1/6
-    standard_measures = [k / n for k in cardinalities]
+    # Standard probability
+    ax = axes[0]
+    colors = ['#4C72B0'] * n
+    ax.bar(range(n), p, color=colors, edgecolor='black', linewidth=0.5)
+    ax.set_title('Standard Probability\n(All outcomes indistinguishable)', fontsize=13)
+    ax.set_xlabel('Outcome')
+    ax.set_ylabel('Probability')
+    ax.set_ylim(0, 0.25)
+    ax.set_xticks(range(n))
+    ax.axhline(y=1/6, color='red', linestyle='--', alpha=0.5, label='p = 1/6')
+    ax.legend()
 
-    # Infinitesimal measure: each point has mass ε
-    # We represent ε as a small visual value but label correctly
-    inf_measures = list(range(n + 1))  # k * ε
+    # Graded probability
+    ax = axes[1]
+    graded = [s + 100 * i for s, i in zip(std, inf_vals)]  # Amplify ε for visibility
+    colors_graded = plt.cm.viridis(np.linspace(0.2, 0.8, n))
+    bars = ax.bar(range(n), graded, color=colors_graded, edgecolor='black', linewidth=0.5)
+    ax.set_title('Graded Probability (×100ε amplified)\n(All outcomes distinguishable)', fontsize=13)
+    ax.set_xlabel('Outcome')
+    ax.set_ylabel('Probability + 100ε·correction')
+    ax.set_xticks(range(n))
+    ax.axhline(y=1/6, color='red', linestyle='--', alpha=0.5, label='std part = 1/6')
+    ax.legend()
 
-    # Plot 1: Standard measure
-    ax1 = axes[0]
-    colors = plt.cm.viridis(np.linspace(0.2, 0.9, n + 1))
-    bars1 = ax1.bar(cardinalities, standard_measures, color=colors, edgecolor='black', linewidth=0.5)
-    ax1.set_xlabel('Cardinality |S|', fontsize=12)
-    ax1.set_ylabel('μ(S)', fontsize=12)
-    ax1.set_title('Standard Uniform Measure on Fin(6)\n(ℝ-valued, Archimedean)', fontsize=13)
-    ax1.set_xticks(cardinalities)
-    ax1.set_ylim(0, 1.15)
+    for i, bar in enumerate(bars):
+        ax.annotate(f'ε·{inf_vals[i]:.4f}', xy=(bar.get_x() + bar.get_width()/2, bar.get_height()),
+                    xytext=(0, 5), textcoords='offset points', ha='center', fontsize=8)
 
-    for bar, val in zip(bars1, standard_measures):
-        ax1.text(bar.get_x() + bar.get_width() / 2., bar.get_height() + 0.02,
-                f'{val:.3f}', ha='center', va='bottom', fontsize=9)
-
-    # Plot 2: Infinitesimal measure
-    ax2 = axes[1]
-    bars2 = ax2.bar(cardinalities, inf_measures, color=colors, edgecolor='black', linewidth=0.5)
-    ax2.set_xlabel('Cardinality |S|', fontsize=12)
-    ax2.set_ylabel('μ(S) / ε', fontsize=12)
-    ax2.set_title('Infinitesimal Uniform Measure on Fin(6)\n(Surreal-valued, Non-Archimedean)', fontsize=13)
-    ax2.set_xticks(cardinalities)
-
-    for bar, val in zip(bars2, inf_measures):
-        ax2.text(bar.get_x() + bar.get_width() / 2., bar.get_height() + 0.1,
-                f'{val}ε', ha='center', va='bottom', fontsize=9)
-
-    # Add annotation about discrimination
-    ax2.annotate('All values distinct!\n(Discrimination Theorem)',
-                xy=(3, 3), fontsize=10,
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow',
-                         edgecolor='orange', alpha=0.8),
-                ha='center')
-
+    plt.suptitle('Graded Probability Measures: Breaking the Tyranny of Equiprobability',
+                 fontsize=15, fontweight='bold', y=1.02)
     plt.tight_layout()
-    plt.savefig('measure_comparison.png', dpi=150, bbox_inches='tight')
+    plt.savefig('viz_standard_vs_graded.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: measure_comparison.png")
+    print("Saved: viz_standard_vs_graded.png")
 
 
-def plot_archimedean_obstruction():
-    """Visualize the Archimedean obstruction: n*ε eventually exceeds u."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Archimedean case (ℝ)
-    ax1 = axes[0]
-    epsilon = 0.15
-    u = 1.0
-    ns = np.arange(0, 12)
-    values = ns * epsilon
-
-    colors_arch = ['green' if v <= u else 'red' for v in values]
-    ax1.bar(ns, values, color=colors_arch, edgecolor='black', linewidth=0.5)
-    ax1.axhline(y=u, color='blue', linestyle='--', linewidth=2, label=f'u = {u}')
-    ax1.set_xlabel('n (number of copies)', fontsize=12)
-    ax1.set_ylabel('n · ε', fontsize=12)
-    ax1.set_title(f'Archimedean (ℝ): ε = {epsilon}\nn·ε eventually exceeds u', fontsize=13)
-    ax1.legend(fontsize=11)
-    ax1.set_xticks(ns)
-
-    n_exceed = int(np.ceil(u / epsilon))
-    ax1.annotate(f'Exceeds u at n={n_exceed}!',
-                xy=(n_exceed, n_exceed * epsilon),
-                xytext=(n_exceed + 1, n_exceed * epsilon + 0.3),
-                arrowprops=dict(arrowstyle='->', color='red'),
-                fontsize=10, color='red', fontweight='bold')
-
-    # Non-Archimedean case (Surreal)
-    ax2 = axes[1]
-    ns2 = np.arange(0, 12)
-    # In non-Archimedean: n·ε is always infinitesimal, never reaches u=1
-    # Visually: show all bars at a very small height
-    inf_values = ns2 * 0.05  # Visual representation of n·ε
-
-    ax2.bar(ns2, inf_values, color='green', edgecolor='black', linewidth=0.5)
-    ax2.axhline(y=u, color='blue', linestyle='--', linewidth=2, label='u = 1')
-    ax2.set_xlabel('n (number of copies)', fontsize=12)
-    ax2.set_ylabel('n · ε (relative to u)', fontsize=12)
-    ax2.set_title('Non-Archimedean (Surreal): ε = 1/ω\nn·ε NEVER reaches u', fontsize=13)
-    ax2.legend(fontsize=11)
-    ax2.set_xticks(ns2)
-    ax2.set_ylim(0, 1.5)
-
-    ax2.annotate('Gap is infinite!\nNo finite n bridges it.',
-                xy=(6, 0.3), xytext=(6, 0.7),
-                arrowprops=dict(arrowstyle='->', color='green'),
-                fontsize=10, color='green', fontweight='bold',
-                ha='center')
-
-    plt.tight_layout()
-    plt.savefig('archimedean_obstruction.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: archimedean_obstruction.png")
-
-
-def plot_infinitesimal_structure():
-    """Visualize the structure of infinitesimals: convexity and additive closure."""
+def plot_convex_path():
+    """Plot 2: Mixing path between two GPMs."""
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Number line with infinitesimal region
-    ax.set_xlim(-0.5, 3.5)
-    ax.set_ylim(-0.3, 1.5)
+    n = 3
+    mu_std = [0.5, 0.3, 0.2]
+    mu_inf = [0.2, -0.1, -0.1]
+    nu_std = [0.3, 0.4, 0.3]
+    nu_inf = [-0.1, 0.15, -0.05]
 
-    # Draw number line
-    ax.axhline(y=0, color='black', linewidth=1.5)
+    ts = np.linspace(0, 1, 50)
+    for i in range(n):
+        stds = [(1-t)*mu_std[i] + t*nu_std[i] for t in ts]
+        infs = [(1-t)*mu_inf[i] + t*nu_inf[i] for t in ts]
+        ax.plot(ts, stds, linewidth=2, label=f'std[{i}]')
+        ax.plot(ts, infs, linewidth=1.5, linestyle='--', alpha=0.7, label=f'inf[{i}]')
 
-    # Mark key points
-    points = {
-        0: ('0', 'black'),
-        0.3: ('ε/2', 'blue'),
-        0.6: ('ε', 'blue'),
-        0.9: ('3ε/2', 'blue'),
-        1.2: ('2ε', 'blue'),
-        3.0: ('1', 'red'),
-    }
-
-    for x, (label, color) in points.items():
-        ax.plot(x, 0, 'o', markersize=8, color=color)
-        ax.annotate(label, xy=(x, 0), xytext=(x, -0.15),
-                   ha='center', fontsize=11, color=color)
-
-    # Infinitesimal region
-    inf_patch = mpatches.FancyBboxPatch((-0.1, 0.1), 1.5, 0.3,
-                                         boxstyle="round,pad=0.05",
-                                         facecolor='lightblue', alpha=0.5,
-                                         edgecolor='blue', linewidth=2)
-    ax.add_patch(inf_patch)
-    ax.text(0.65, 0.25, 'Infinitesimal Region', ha='center', fontsize=12,
-           color='blue', fontweight='bold')
-
-    # Standard region
-    std_patch = mpatches.FancyBboxPatch((2.5, 0.1), 1.0, 0.3,
-                                        boxstyle="round,pad=0.05",
-                                        facecolor='lightyellow', alpha=0.5,
-                                        edgecolor='red', linewidth=2)
-    ax.add_patch(std_patch)
-    ax.text(3.0, 0.25, 'Standard Region', ha='center', fontsize=12,
-           color='red', fontweight='bold')
-
-    # Gap annotation
-    ax.annotate('', xy=(1.4, 0.6), xytext=(2.5, 0.6),
-               arrowprops=dict(arrowstyle='<->', color='purple', lw=2))
-    ax.text(1.95, 0.7, 'Infinite gap\n(no finite n bridges this)',
-           ha='center', fontsize=10, color='purple')
-
-    # Convexity annotation
-    ax.annotate('Convex: if x ≤ ε\nthen x is infinitesimal',
-               xy=(0.3, 0.05), xytext=(-0.3, 0.8),
-               arrowprops=dict(arrowstyle='->', color='green'),
-               fontsize=10, color='green',
-               bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.5))
-
-    # Additive closure annotation
-    ax.annotate('Closed under +:\nε + ε = 2ε ∈ Inf',
-               xy=(1.2, 0.05), xytext=(1.5, 0.8),
-               arrowprops=dict(arrowstyle='->', color='orange'),
-               fontsize=10, color='orange',
-               bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.5))
-
-    ax.set_title('Structure of Infinitesimals in Non-Archimedean Groups', fontsize=14)
-    ax.set_xlabel('Value', fontsize=12)
-    ax.get_yaxis().set_visible(False)
+    ax.set_xlabel('Mixing parameter t', fontsize=12)
+    ax.set_ylabel('Value', fontsize=12)
+    ax.set_title('Convex Combination of GPMs: (1-t)·μ + t·ν', fontsize=14, fontweight='bold')
+    ax.legend(ncol=2, fontsize=9)
+    ax.axhline(y=0, color='black', linewidth=0.5)
+    ax.grid(alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('infinitesimal_structure.png', dpi=150, bbox_inches='tight')
+    plt.savefig('viz_convex_path.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: infinitesimal_structure.png")
+    print("Saved: viz_convex_path.png")
 
 
-if __name__ == "__main__":
-    plot_measure_comparison()
-    plot_archimedean_obstruction()
-    plot_infinitesimal_structure()
+def plot_complement_antisymmetry():
+    """Plot 3: Infinitesimal correction antisymmetry for all subsets."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    n = 4
+    inf_vals = [0.3, -0.1, 0.2, -0.4]
+
+    # Generate all subsets and their complements
+    subsets = []
+    inf_S = []
+    inf_Sc = []
+    labels = []
+
+    for mask in range(2**n):
+        S = {i for i in range(n) if mask & (1 << i)}
+        Sc = set(range(n)) - S
+        s_inf = sum(inf_vals[i] for i in S)
+        sc_inf = sum(inf_vals[i] for i in Sc)
+        subsets.append((S, Sc))
+        inf_S.append(s_inf)
+        inf_Sc.append(sc_inf)
+        labels.append(str(S) if S else '∅')
+
+    x = np.arange(len(subsets))
+    width = 0.35
+
+    bars1 = ax.bar(x - width/2, inf_S, width, label='infProb(S)', color='#4C72B0', edgecolor='black', linewidth=0.5)
+    bars2 = ax.bar(x + width/2, inf_Sc, width, label='infProb(Sᶜ)', color='#DD8452', edgecolor='black', linewidth=0.5)
+
+    ax.set_xlabel('Subset S', fontsize=12)
+    ax.set_ylabel('Infinitesimal Probability', fontsize=12)
+    ax.set_title('Complementary Antisymmetry: infProb(Sᶜ) = −infProb(S)', fontsize=14, fontweight='bold')
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=8)
+    ax.legend()
+    ax.axhline(y=0, color='black', linewidth=0.5)
+    ax.grid(alpha=0.3, axis='y')
+
+    plt.tight_layout()
+    plt.savefig('viz_complement_antisymmetry.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_complement_antisymmetry.png")
+
+
+if __name__ == '__main__':
+    plot_standard_vs_graded()
+    plot_convex_path()
+    plot_complement_antisymmetry()
     print("\nAll visualizations generated.")
