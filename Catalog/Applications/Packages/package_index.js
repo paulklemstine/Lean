@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "533a0a5e",
     "filename": "quantum_random_walks_on_cayley_graphs_spectral_gap.json",
     "pkg_num": 395,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.3748,
     "title": "Spectral Gap Deepening for Quantum Random Walks on Cayley Graphs"
   },
   {
@@ -12606,8 +12606,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "quantum_random_walks_on_cayley_graphs_spectral_gap",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.3748,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Spectral Gap Deepening for Quantum Random Walks on Cayley Graphs"
     }
