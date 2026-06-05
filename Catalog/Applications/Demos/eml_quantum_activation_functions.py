@@ -1,560 +1,400 @@
 #!/usr/bin/env python3
 """
-Applications of Quantum EML Activation Functions
+Quantum Phase-EML Neuron — Demonstration Script
 
-Demonstrates real-world applications of the normalized quantum EML chart:
-1. Variational quantum circuit optimization
-2. Quantum gate compilation
-3. Quantum state tomography via EML coordinates
-4. Smooth interpolation between quantum gates
-"""
-
-import numpy as np
-from typing import List, Tuple
-
-# Pauli matrices
-SIGMA_X = np.array([[0, 1], [1, 0]], dtype=complex)
-SIGMA_Y = np.array([[0, -1j], [1j, 0]], dtype=complex)
-SIGMA_Z = np.array([[1, 0], [0, -1]], dtype=complex)
-I2 = np.eye(2, dtype=complex)
-
-
-def pauli_compose(x: float, y: float, z: float) -> np.ndarray:
-    """Construct traceless Hermitian from Pauli coordinates."""
-    return x * SIGMA_X + y * SIGMA_Y + z * SIGMA_Z
-
-
-def qEMLnorm(H: np.ndarray, c: float) -> np.ndarray:
-    """Normalized quantum EML activation."""
-    return (1.0 / np.sqrt(1 + c)) * (I2 + 1j * H)
-
-
-def hermitian_sq_scalar(H: np.ndarray) -> float:
-    """Compute c for H² = c·I."""
-    return (H @ H)[0, 0].real
-
-
-def qEML_from_params(x: float, y: float, z: float) -> np.ndarray:
-    """
-    Compute qEMLnorm directly from Pauli coordinates (x, y, z).
-    This is the "activation function" mapping ℝ³ → SU(2).
-    """
-    H = pauli_compose(x, y, z)
-    c = x**2 + y**2 + z**2
-    return qEMLnorm(H, c)
-
-
-def inverse_qEML_params(U: np.ndarray) -> Tuple[float, float, float]:
-    """
-    Inverse map: SU(2) → ℝ³ (Pauli coordinates).
-    Works when tr(U).real > 0.
-    """
-    tr_re = np.trace(U).real
-    if tr_re <= 0:
-        raise ValueError("U has non-positive trace; outside chart domain")
-    
-    s = 2.0 / tr_re
-    H = -1j * (s * U - I2)
-    
-    z = H[0, 0].real
-    x = H[0, 1].real
-    y = -H[0, 1].imag
-    return x, y, z
-
-
-# ============================================================
-# APPLICATION 1: Smooth Gate Interpolation
-# ============================================================
-def gate_interpolation(U0: np.ndarray, U1: np.ndarray, 
-                       n_steps: int = 10) -> List[np.ndarray]:
-    """
-    Smoothly interpolate between two SU(2) gates using qEML coordinates.
-    
-    Instead of interpolating in matrix space (which doesn't preserve unitarity),
-    we interpolate in the ℝ³ Pauli parameter space and map back through qEML.
-    
-    This guarantees every intermediate gate is EXACTLY in SU(2).
-    
-    Parameters:
-        U0, U1: Starting and ending SU(2) gates (must have positive trace)
-        n_steps: Number of interpolation steps
-        
-    Returns: List of SU(2) matrices smoothly connecting U0 to U1
-    """
-    p0 = np.array(inverse_qEML_params(U0))
-    p1 = np.array(inverse_qEML_params(U1))
-    
-    gates = []
-    for t in np.linspace(0, 1, n_steps):
-        p = (1 - t) * p0 + t * p1
-        U = qEML_from_params(*p)
-        gates.append(U)
-    
-    return gates
-
-
-# ============================================================
-# APPLICATION 2: Variational Quantum Circuit Layer
-# ============================================================
-class QuantumEMLLayer:
-    """
-    A variational quantum circuit layer parameterized by qEML coordinates.
-    
-    Each qubit has 3 real parameters (x, y, z) ∈ ℝ³ that map to an SU(2)
-    rotation via the qEML chart. This gives:
-    
-    - Exact unitarity by construction (no projection needed)
-    - Smooth, differentiable parameterization
-    - Lipschitz-continuous dependence on parameters
-    - Natural connection to Bloch sphere geometry
-    
-    Advantages over Euler angle parameterization:
-    - No gimbal lock
-    - No periodic boundary conditions to handle
-    - Single chart covers half of SU(2) (sufficient for most circuits)
-    """
-    
-    def __init__(self, n_qubits: int):
-        """Initialize with random parameters."""
-        self.n_qubits = n_qubits
-        self.params = np.random.randn(n_qubits, 3) * 0.1
-    
-    def get_gates(self) -> List[np.ndarray]:
-        """Compute SU(2) gate for each qubit."""
-        return [qEML_from_params(*self.params[i]) for i in range(self.n_qubits)]
-    
-    def gradient(self, loss_grad: List[np.ndarray]) -> np.ndarray:
-        """
-        Compute parameter gradient via finite differences.
-        
-        In practice, this would use the parameter-shift rule or
-        automatic differentiation.
-        """
-        eps = 1e-7
-        grad = np.zeros_like(self.params)
-        
-        for i in range(self.n_qubits):
-            for j in range(3):
-                self.params[i, j] += eps
-                gates_plus = self.get_gates()
-                self.params[i, j] -= 2 * eps
-                gates_minus = self.get_gates()
-                self.params[i, j] += eps
-                
-                # Finite difference
-                grad[i, j] = np.real(
-                    np.trace(loss_grad[i].conj().T @ (gates_plus[i] - gates_minus[i]))
-                ) / (2 * eps)
-        
-        return grad
-
-
-# ============================================================
-# APPLICATION 3: Gate Compilation / Approximation
-# ============================================================
-def compile_gate_sequence(target: np.ndarray, 
-                          gate_set: List[np.ndarray],
-                          max_depth: int = 10,
-                          tol: float = 1e-6) -> List[int]:
-    """
-    Approximate a target SU(2) gate as a sequence of gates from a discrete set.
-    
-    Uses qEML coordinates to measure distance between gates in ℝ³,
-    then greedily selects the best next gate.
-    
-    This is a simplified version; production compilers use Solovay-Kitaev.
-    """
-    current = I2.copy()
-    sequence = []
-    
-    for _ in range(max_depth):
-        remaining = target @ current.conj().T
-        tr_re = np.trace(remaining).real
-        
-        if tr_re > 2 - tol:  # Close to identity
-            break
-        
-        # Find best gate to apply
-        best_idx = 0
-        best_trace = -3
-        
-        for idx, gate in enumerate(gate_set):
-            new_remaining = remaining @ gate.conj().T
-            tr = np.trace(new_remaining).real
-            if tr > best_trace:
-                best_trace = tr
-                best_idx = idx
-        
-        sequence.append(best_idx)
-        current = gate_set[best_idx] @ current
-    
-    return sequence
-
-
-# ============================================================
-# DEMONSTRATION
-# ============================================================
-if __name__ == "__main__":
-    np.random.seed(42)
-    
-    # --- Application 1: Gate Interpolation ---
-    print("=" * 60)
-    print("APPLICATION 1: Smooth Gate Interpolation via qEML")
-    print("=" * 60)
-    
-    # Interpolate between identity and a π/3 rotation around x-axis
-    U0 = I2
-    theta = np.pi / 3
-    U1 = np.cos(theta/2) * I2 + 1j * np.sin(theta/2) * SIGMA_X
-    
-    gates = gate_interpolation(U0, U1, n_steps=11)
-    
-    print(f"\nInterpolating from I to Rx(π/3):")
-    for i, U in enumerate(gates):
-        tr = np.trace(U).real / 2
-        angle = 2 * np.arccos(np.clip(tr, -1, 1))
-        is_su2 = np.allclose(U @ U.conj().T, I2) and abs(np.linalg.det(U) - 1) < 1e-10
-        print(f"  Step {i:2d}: angle={angle:.4f} rad ({np.degrees(angle):.1f}°), "
-              f"SU(2)={is_su2}")
-    
-    # --- Application 2: Variational Layer ---
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Variational Quantum Circuit Layer")
-    print("=" * 60)
-    
-    layer = QuantumEMLLayer(n_qubits=4)
-    gates = layer.get_gates()
-    
-    print(f"\n{layer.n_qubits}-qubit variational layer:")
-    for i, U in enumerate(gates):
-        x, y, z = layer.params[i]
-        is_su2 = np.allclose(U @ U.conj().T, I2) and abs(np.linalg.det(U) - 1) < 1e-10
-        r = np.sqrt(x**2 + y**2 + z**2)
-        angle = 2 * np.arctan(r)
-        print(f"  Qubit {i}: params=({x:+.3f}, {y:+.3f}, {z:+.3f}), "
-              f"‖r‖={r:.3f}, angle={np.degrees(angle):.1f}°, SU(2)={is_su2}")
-    
-    # --- Application 3: Gate Compilation ---
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Gate Compilation")
-    print("=" * 60)
-    
-    # Define a small gate set (T, S, Hadamard-like)
-    gate_set = [
-        qEML_from_params(0.1, 0, 0),   # Small X rotation
-        qEML_from_params(0, 0.1, 0),   # Small Y rotation
-        qEML_from_params(0, 0, 0.1),   # Small Z rotation
-        qEML_from_params(0.3, 0, 0),   # Medium X rotation
-        qEML_from_params(0, 0, 0.3),   # Medium Z rotation
-        qEML_from_params(0.1, 0.1, 0.1),  # Diagonal rotation
-    ]
-    
-    # Target: a specific rotation
-    target = qEML_from_params(0.5, 0.3, 0.2)
-    
-    sequence = compile_gate_sequence(target, gate_set, max_depth=20)
-    
-    # Reconstruct
-    result = I2.copy()
-    for idx in sequence:
-        result = gate_set[idx] @ result
-    
-    error = np.linalg.norm(target - result)
-    fidelity = abs(np.trace(target.conj().T @ result)) / 2
-    
-    print(f"\nTarget gate: qEML(0.5, 0.3, 0.2)")
-    print(f"Gate sequence length: {len(sequence)}")
-    print(f"Gate indices: {sequence}")
-    print(f"Reconstruction error: {error:.6f}")
-    print(f"Fidelity: {fidelity:.6f}")
-    
-    # --- Summary ---
-    print("\n" + "=" * 60)
-    print("KEY ADVANTAGES OF qEML PARAMETERIZATION")
-    print("=" * 60)
-    print("""
-    1. EXACT UNITARITY: Every parameter setting gives an exact SU(2) element.
-       No need for Gram-Schmidt or other post-hoc unitarization.
-    
-    2. SMOOTH INTERPOLATION: Linear interpolation in parameter space gives
-       smooth paths on SU(2), useful for adiabatic quantum computation.
-    
-    3. LIPSCHITZ STABILITY: Small parameter changes → small gate changes,
-       crucial for gradient-based quantum circuit optimization.
-    
-    4. NATURAL COORDINATES: Parameters directly encode rotation axis and
-       angle via the Bloch sphere connection.
-    
-    5. NO GIMBAL LOCK: Unlike Euler angles, the qEML chart has no
-       coordinate singularities (except at the antipodal point -I).
-    """)
-
-
-#!/usr/bin/env python3
-"""
-Quantum EML Activation Functions — Interactive Demonstration
-
-Demonstrates the normalized quantum EML activation as a coordinate chart on SU(2):
-  qEMLnorm(H, c) = (1/√(1+c)) · (I + iH)
-
-where H is a traceless Hermitian 2×2 matrix with H² = c·I.
-
-Key results demonstrated:
-1. Unnormalized I + iH is NOT unitary (obstruction)
-2. Traceless Hermitian 2×2 matrices square to scalar·I
-3. Normalized qEMLnorm IS unitary with det = 1 (lands in SU(2))
-4. Every SU(2) element with positive trace is in the image (surjectivity)
-5. Reconstruction error analysis near the singular locus (-I)
+Demonstrates the key theorems proved in the Lean 4 formalization:
+1. Classical-quantum bridge (θ=0 recovery)
+2. Phase-amplitude decoupling
+3. Surjectivity onto ℂ
+4. Quantum diagonal gap
+5. Unitarity characterization
+6. Quantum interference
 """
 
 import numpy as np
 from typing import Tuple
 
-# Pauli matrices
-sigma_x = np.array([[0, 1], [1, 0]], dtype=complex)
-sigma_y = np.array([[0, -1j], [1j, 0]], dtype=complex)
-sigma_z = np.array([[1, 0], [0, -1]], dtype=complex)
-I2 = np.eye(2, dtype=complex)
+
+def eml(x: float, y: float) -> float:
+    """Classical EML function: eml(x, y) = exp(x) - ln(y)"""
+    return np.exp(x) - np.log(y)
 
 
-def random_traceless_hermitian(scale: float = 1.0) -> np.ndarray:
-    """Generate a random traceless Hermitian 2×2 matrix H = x·σ_x + y·σ_y + z·σ_z."""
-    x, y, z = np.random.randn(3) * scale
-    return x * sigma_x + y * sigma_y + z * sigma_z
+def eml_diag(z: float) -> float:
+    """Diagonal EML: eml(z, z) = exp(z) - ln(z)"""
+    return np.exp(z) - np.log(z)
 
 
-def random_su2() -> np.ndarray:
-    """Generate a random SU(2) matrix via Haar measure (quaternion method)."""
-    v = np.random.randn(4)
-    v /= np.linalg.norm(v)
-    a, x, y, z = v
-    return a * I2 + 1j * (x * sigma_x + y * sigma_y + z * sigma_z)
+def quantum_phase_eml(theta: float, x: float, y: float) -> complex:
+    """Quantum phase-EML: q(θ, x, y) = exp(iθ) · eml(x, y)"""
+    return np.exp(1j * theta) * eml(x, y)
 
 
-def qEMLnorm(H: np.ndarray, c: float) -> np.ndarray:
-    """Normalized quantum EML activation: (1/√(1+c)) · (I + iH)."""
-    return (1.0 / np.sqrt(1 + c)) * (I2 + 1j * H)
+def complex_eml(z: complex, w: complex) -> complex:
+    """Full complex EML: cEML(z, w) = exp(z) - Log(w)"""
+    return np.exp(z) - np.log(w)
 
 
-def hermitian_sq_scalar(H: np.ndarray) -> float:
-    """For traceless Hermitian H, compute c such that H² = c·I."""
-    H2 = H @ H
-    c = H2[0, 0].real  # Should be real and equal to the scalar
-    return c
+def inverse_quantum_eml(w: complex) -> Tuple[float, float, float]:
+    """Find θ, x, y such that quantum_phase_eml(θ, x, y) = w.
+    Uses the constructive proof from the surjectivity theorem."""
+    if w == 0:
+        return 0.0, 0.0, np.e
+    r = abs(w)
+    theta = np.angle(w)
+    # Set x = 0, y = exp(1 - r), so eml(0, exp(1-r)) = 1 - (1-r) = r
+    x = 0.0
+    y = np.exp(1 - r)
+    return theta, x, y
 
 
-def inverse_qEML(U: np.ndarray) -> Tuple[np.ndarray, float]:
-    """Given U ∈ SU(2) with tr(U) > 0, find H traceless Hermitian with qEMLnorm(H,c) = U.
+def main():
+    print("=" * 60)
+    print("QUANTUM PHASE-EML NEURON — DEMONSTRATIONS")
+    print("=" * 60)
+
+    # Demo 1: Classical-Quantum Bridge
+    print("\n--- Demo 1: Classical-Quantum Bridge (Theorem 1) ---")
+    print("At θ=0, quantum EML reduces to classical EML:")
+    for x, y in [(0, 1), (1, 1), (0, np.e), (1, np.e)]:
+        q = quantum_phase_eml(0, x, y)
+        c = eml(x, y)
+        print(f"  q(0, {x:.1f}, {y:.3f}) = {q:.6f}  |  eml({x:.1f}, {y:.3f}) = {c:.6f}  |  match: {np.isclose(q, c)}")
+
+    # Demo 2: Phase-Amplitude Decoupling
+    print("\n--- Demo 2: Phase-Amplitude Decoupling (Theorem 2) ---")
+    print("|q(θ, x, y)|² = eml(x, y)² regardless of θ:")
+    x, y = 1.0, 2.0
+    c_sq = eml(x, y) ** 2
+    for theta in [0, np.pi/4, np.pi/2, np.pi, 3*np.pi/2]:
+        norm_sq = abs(quantum_phase_eml(theta, x, y)) ** 2
+        print(f"  θ = {theta:.4f}:  |q|² = {norm_sq:.6f}  |  eml² = {c_sq:.6f}  |  match: {np.isclose(norm_sq, c_sq)}")
+
+    # Demo 3: Surjectivity
+    print("\n--- Demo 3: Surjectivity (Theorem 3) ---")
+    print("Synthesizing parameters for target complex numbers:")
+    targets = [3 + 4j, -2 + 0j, 0 + 1j, 0 + 0j, -1 - 1j]
+    for w in targets:
+        theta, x, y = inverse_quantum_eml(w)
+        result = quantum_phase_eml(theta, x, y)
+        print(f"  target = {w:>10}  →  q({theta:.3f}, {x:.3f}, {y:.6f}) = {result.real:.3f}{result.imag:+.3f}i  |  match: {np.isclose(result, w)}")
+
+    # Demo 4: Quantum Diagonal Gap
+    print("\n--- Demo 4: Quantum Diagonal Gap (Theorem 4) ---")
+    print("For z > 0: |q(θ, z, z)|² ≥ 4")
+    for z in [0.01, 0.1, 0.5, 1.0, 2.0, 5.0, 10.0]:
+        for theta in [0, np.pi/3]:
+            norm_sq = abs(quantum_phase_eml(theta, z, z)) ** 2
+            print(f"  z = {z:6.2f}, θ = {theta:.3f}:  |q|² = {norm_sq:10.4f}  ≥ 4: {norm_sq >= 4 - 1e-10}")
+
+    # Demo 5: Unitarity Characterization
+    print("\n--- Demo 5: Unitarity Characterization (Theorem 5) ---")
+    print("q is unitary iff eml = ±1")
+    # eml(x, y) = 1: exp(x) - log(y) = 1 → x=0, y=1 gives eml=1
+    print("  eml(0, 1) =", eml(0, 1), "→ |q|² =", abs(quantum_phase_eml(np.pi/4, 0, 1))**2)
+    # eml(x, y) = -1: exp(x) - log(y) = -1 → x=0, y=exp(2) gives eml=1-2=-1
+    print("  eml(0, e²) =", eml(0, np.e**2), "→ |q|² =", abs(quantum_phase_eml(np.pi/4, 0, np.e**2))**2)
+    # Non-unitary example
+    print("  eml(1, 1) =", eml(1, 1), "→ |q|² =", abs(quantum_phase_eml(np.pi/4, 1, 1))**2, "(not unitary)")
+
+    # Demo 6: Quantum Interference
+    print("\n--- Demo 6: Quantum Interference (Theorem 7) ---")
+    x, y = 1.0, 1.0
+    e = eml(x, y)
+    print(f"  eml({x}, {y}) = {e:.4f}")
+    for delta_theta in [0, np.pi/4, np.pi/2, np.pi]:
+        theta1, theta2 = 0, delta_theta
+        q1 = quantum_phase_eml(theta1, x, y)
+        q2 = quantum_phase_eml(theta2, x, y)
+        actual = abs(q1 + q2) ** 2
+        predicted = 2 * e**2 * (1 + np.cos(theta1 - theta2))
+        print(f"  Δθ = {delta_theta:.4f}:  |q₁+q₂|² = {actual:.6f}  |  formula = {predicted:.6f}  |  match: {np.isclose(actual, predicted)}")
+
+    # Demo 7: Phase Derivative (Schrödinger structure)
+    print("\n--- Demo 7: Phase Derivative (Theorem 9) ---")
+    theta, x, y = 1.0, 0.5, 2.0
+    h = 1e-7
+    numerical_deriv = (quantum_phase_eml(theta + h, x, y) - quantum_phase_eml(theta - h, x, y)) / (2 * h)
+    analytical_deriv = 1j * quantum_phase_eml(theta, x, y)
+    print(f"  Numerical  ∂q/∂θ = {numerical_deriv:.6f}")
+    print(f"  Analytical i·q   = {analytical_deriv:.6f}")
+    print(f"  Match: {np.isclose(numerical_deriv, analytical_deriv, atol=1e-5)}")
+
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully.")
+    print("=" * 60)
+
+
+if __name__ == "__main__":
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Quantum EML Interference Pattern
+
+Shows how the interference intensity varies with phase difference,
+demonstrating constructive and destructive interference.
+"""
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+
+def eml(x: float, y: float) -> float:
+    return float(np.exp(x) - np.log(y))
+
+
+def quantum_interference_intensity(delta_theta: float, x: float, y: float) -> float:
+    e = eml(x, y)
+    return 2 * e**2 * (1 + np.cos(delta_theta))
+
+
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    # Panel 1: Interference vs phase difference
+    delta = np.linspace(0, 4 * np.pi, 500)
+    for x, y, label in [(0, 1, 'eml=1'), (1, 1, f'eml=e≈{np.e:.2f}'), (0, 0.1, f'eml≈{eml(0,0.1):.2f}')]:
+        intensity = [quantum_interference_intensity(d, x, y) for d in delta]
+        axes[0].plot(delta / np.pi, intensity, label=label, linewidth=2)
+    axes[0].set_xlabel('Phase difference Δθ/π')
+    axes[0].set_ylabel('Interference intensity |q₁+q₂|²')
+    axes[0].set_title('Quantum EML Interference Pattern')
+    axes[0].legend()
+    axes[0].grid(True, alpha=0.3)
+    axes[0].axhline(y=0, color='k', linewidth=0.5)
+
+    # Panel 2: Two quantum EML outputs in the complex plane
+    theta_vals = np.linspace(0, 2*np.pi, 100)
+    x, y = 0.5, 1.0
+    e = eml(x, y)
+    for theta_fixed in [0, np.pi/3, 2*np.pi/3, np.pi]:
+        q_vals = [np.exp(1j*t) * e + np.exp(1j*theta_fixed) * e for t in theta_vals]
+        axes[1].plot([q.real for q in q_vals], [q.imag for q in q_vals],
+                     label=f'θ₂={theta_fixed/np.pi:.1f}π', linewidth=1.5)
     
-    Construction: s = 2/Re(tr(U)), H = -i·(s·U - I), c = s² - 1.
-    """
-    tr_re = np.trace(U).real
-    s = 2.0 / tr_re
-    H = -1j * (s * U - I2)
-    c = s**2 - 1
-    return H, c
+    # Show unit circle for reference
+    circle = np.exp(1j * theta_vals)
+    axes[1].plot(circle.real, circle.imag, 'k--', alpha=0.3, label='Unit circle')
+    axes[1].set_xlabel('Re')
+    axes[1].set_ylabel('Im')
+    axes[1].set_title('Superposition loci in ℂ')
+    axes[1].legend(fontsize=8)
+    axes[1].set_aspect('equal')
+    axes[1].grid(True, alpha=0.3)
+
+    # Panel 3: Diagonal gap visualization
+    z_vals = np.linspace(0.01, 5, 500)
+    diag_vals = [np.exp(z) - np.log(z) for z in z_vals]
+    diag_sq = [d**2 for d in diag_vals]
+    axes[2].plot(z_vals, diag_sq, 'b-', linewidth=2, label='|q(θ,z,z)|² = (eᶻ−ln z)²')
+    axes[2].axhline(y=4, color='r', linestyle='--', linewidth=1.5, label='Gap bound = 4')
+    axes[2].fill_between(z_vals, 0, 4, alpha=0.15, color='red', label='Forbidden zone')
+    axes[2].set_xlabel('z')
+    axes[2].set_ylabel('|q(θ, z, z)|²')
+    axes[2].set_title('Quantum Diagonal Gap (Theorem 4)')
+    axes[2].legend()
+    axes[2].set_ylim(0, 50)
+    axes[2].grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('quantum_eml_interference.png', dpi=150, bbox_inches='tight')
+    print("Saved: quantum_eml_interference.png")
 
 
-def check_hermitian(H: np.ndarray, tol: float = 1e-12) -> bool:
-    """Check if H is Hermitian."""
-    return np.allclose(H, H.conj().T, atol=tol)
+if __name__ == "__main__":
+    main()
 
 
-def check_traceless(H: np.ndarray, tol: float = 1e-12) -> bool:
-    """Check if H is traceless."""
-    return abs(np.trace(H)) < tol
+#!/usr/bin/env python3
+"""
+Visualization: Quantum EML Phase Evolution
+
+Shows the circular trajectory in ℂ as the phase parameter θ evolves,
+and the Schrödinger structure ∂q/∂θ = i·q.
+"""
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 
-def check_unitary(U: np.ndarray, tol: float = 1e-12) -> bool:
-    """Check if U is unitary."""
-    return np.allclose(U @ U.conj().T, I2, atol=tol)
+def eml(x: float, y: float) -> float:
+    return float(np.exp(x) - np.log(y))
 
 
-def check_su2(U: np.ndarray, tol: float = 1e-12) -> bool:
-    """Check if U is in SU(2): unitary with det = 1."""
-    return check_unitary(U, tol) and abs(np.linalg.det(U) - 1) < tol
+def quantum_phase_eml(theta: float, x: float, y: float) -> complex:
+    return np.exp(1j * theta) * eml(x, y)
 
 
-# ============================================================
-# DEMONSTRATION 1: Obstruction — unnormalized is not unitary
-# ============================================================
-print("=" * 70)
-print("DEMO 1: Obstruction — I + iH is NOT unitary for nonzero H")
-print("=" * 70)
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-H = sigma_z  # Pauli Z
-A = I2 + 1j * H
-product = A @ A.conj().T
-print(f"\nH = σ_z = \n{H}")
-print(f"\nI + iH = \n{A}")
-print(f"\n(I + iH)(I + iH)† = \n{product}")
-print(f"\nIs unitary? {check_unitary(A)}")
-print(f"Expected: False (product = 2I, not I)")
-
-# Test with random H
-print("\nRandom traceless Hermitian matrices:")
-for i in range(5):
-    H = random_traceless_hermitian(scale=0.5 + i * 0.5)
-    A = I2 + 1j * H
-    c = hermitian_sq_scalar(H)
-    product = A @ A.conj().T
-    expected = (1 + c) * I2
-    print(f"  ‖H‖={np.linalg.norm(H):.3f}, c={c:.3f}, "
-          f"(I+iH)(I+iH)† ≈ {product[0,0].real:.3f}·I, "
-          f"unitary={check_unitary(A)}")
-
-# ============================================================
-# DEMONSTRATION 2: H² = c·I for traceless Hermitian H
-# ============================================================
-print("\n" + "=" * 70)
-print("DEMO 2: Traceless Hermitian H satisfies H² = c·I")
-print("=" * 70)
-
-for i in range(8):
-    H = random_traceless_hermitian(scale=2.0)
-    H2 = H @ H
-    c = H2[0, 0].real
-    residual = np.linalg.norm(H2 - c * I2)
-    print(f"  H with ‖H‖={np.linalg.norm(H):.4f}: "
-          f"c = {c:.4f}, ‖H² - c·I‖ = {residual:.2e}")
-
-# ============================================================
-# DEMONSTRATION 3: Normalized qEMLnorm is unitary with det = 1
-# ============================================================
-print("\n" + "=" * 70)
-print("DEMO 3: Normalized qEMLnorm(H, c) is in SU(2)")
-print("=" * 70)
-
-for i in range(8):
-    H = random_traceless_hermitian(scale=1.0 + i * 0.5)
-    c = hermitian_sq_scalar(H)
-    U = qEMLnorm(H, c)
-    det_val = np.linalg.det(U)
-    print(f"  ‖H‖={np.linalg.norm(H):.3f}, c={c:.3f}: "
-          f"unitary={check_unitary(U)}, "
-          f"det={det_val.real:.6f}+{det_val.imag:.2e}i, "
-          f"in SU(2)={check_su2(U)}")
-
-# ============================================================
-# DEMONSTRATION 4: Surjectivity — reconstruct random SU(2)
-# ============================================================
-print("\n" + "=" * 70)
-print("DEMO 4: Surjectivity — every SU(2) with tr > 0 is qEMLnorm(H, c)")
-print("=" * 70)
-
-n_success = 0
-n_total = 1000
-max_error = 0
-
-for i in range(n_total):
-    U = random_su2()
-    tr_re = np.trace(U).real
+    # Panel 1: Phase evolution circles for different EML amplitudes
+    theta = np.linspace(0, 2*np.pi, 200)
+    params = [(0, 1, 'eml=1'), (1, 1, f'eml=e≈{np.e:.1f}'), (0, 0.5, f'eml≈{eml(0,0.5):.1f}'),
+              (0, np.e**2, f'eml={eml(0, np.e**2):.1f}')]
     
-    if tr_re > 0.01:  # Positive trace (away from singularity)
-        H, c = inverse_qEML(U)
-        U_reconstructed = qEMLnorm(H, c)
-        error = np.linalg.norm(U - U_reconstructed)
-        max_error = max(max_error, error)
-        
-        if error < 1e-10:
-            n_success += 1
-        
-        if i < 10:
-            print(f"  tr(U)={tr_re:+.4f}: "
-                  f"H hermitian={check_hermitian(H)}, "
-                  f"H traceless={check_traceless(H)}, "
-                  f"‖U - qEMLnorm(H,c)‖={error:.2e}")
-
-print(f"\n  Success rate: {n_success}/{n_total} ({100*n_success/n_total:.1f}%)")
-print(f"  Max reconstruction error: {max_error:.2e}")
-
-# ============================================================
-# DEMONSTRATION 5: Behavior near the singular locus (U → -I)
-# ============================================================
-print("\n" + "=" * 70)
-print("DEMO 5: Singular behavior as U approaches -I")
-print("=" * 70)
-
-print("\n  As rotation angle θ → π, the chart parameter r = tan(θ/2) → ∞")
-print("  and the chart breaks down at U = -I (θ = π).\n")
-
-angles = np.linspace(0.01, np.pi - 0.001, 20)
-n_hat = np.array([0, 0, 1])  # Rotation axis = z
-
-for theta in angles:
-    # U = cos(θ)I + i·sin(θ)·σ_z
-    U = np.cos(theta) * I2 + 1j * np.sin(theta) * sigma_z
-    tr_re = np.trace(U).real  # = 2cos(θ)
+    for x, y, label in params:
+        q = [quantum_phase_eml(t, x, y) for t in theta]
+        axes[0].plot([z.real for z in q], [z.imag for z in q], linewidth=2, label=label)
+        # Mark θ=0 point
+        q0 = quantum_phase_eml(0, x, y)
+        axes[0].plot(q0.real, q0.imag, 'o', markersize=6)
     
-    if abs(tr_re) > 1e-10:
-        try:
-            H, c = inverse_qEML(U)
-            U_rec = qEMLnorm(H, c)
-            error = np.linalg.norm(U - U_rec)
-            r = np.sqrt(max(c, 0))
-            print(f"  θ={theta:.4f} (θ/π={theta/np.pi:.3f}), "
-                  f"tr(U)={tr_re:+.4f}, r={r:.4f}, "
-                  f"error={error:.2e}")
-        except Exception as e:
-            print(f"  θ={theta:.4f}: FAILED ({e})")
-    else:
-        print(f"  θ={theta:.4f} (θ/π={theta/np.pi:.3f}): "
-              f"tr(U)≈0, chart undefined")
+    axes[0].set_xlabel('Re(q)')
+    axes[0].set_ylabel('Im(q)')
+    axes[0].set_title('Phase Evolution: q(θ,x,y) traces circles')
+    axes[0].legend(fontsize=9)
+    axes[0].set_aspect('equal')
+    axes[0].grid(True, alpha=0.3)
+    axes[0].axhline(y=0, color='k', linewidth=0.5)
+    axes[0].axvline(x=0, color='k', linewidth=0.5)
 
-# ============================================================
-# DEMONSTRATION 6: Axis-angle decomposition
-# ============================================================
-print("\n" + "=" * 70)
-print("DEMO 6: Bloch sphere / axis-angle connection")
-print("=" * 70)
-
-print("\n  For H = tan(θ/2)·n̂·σ, qEMLnorm gives rotation by θ around n̂")
-print("  This is the Cayley chart: stereographic projection on S³\n")
-
-for _ in range(6):
-    # Random axis
-    n = np.random.randn(3)
-    n /= np.linalg.norm(n)
+    # Panel 2: Schrödinger derivative verification
+    x, y = 0.5, 1.5
+    theta_vals = np.linspace(0, 2*np.pi, 200)
+    q_vals = np.array([quantum_phase_eml(t, x, y) for t in theta_vals])
     
-    # Random angle in (0, π/2) — well inside the chart
-    theta = np.random.uniform(0.1, 1.4)
+    # Numerical derivative
+    dt = theta_vals[1] - theta_vals[0]
+    dq_dt = np.gradient(q_vals, dt)
+    iq_vals = 1j * q_vals
     
-    # Construct H = tan(θ/2) · n̂·σ
-    r = np.tan(theta / 2)
-    H = r * (n[0] * sigma_x + n[1] * sigma_y + n[2] * sigma_z)
-    c = hermitian_sq_scalar(H)
+    axes[1].plot(theta_vals/np.pi, np.real(dq_dt), 'b-', linewidth=2, label='Re(∂q/∂θ) numerical')
+    axes[1].plot(theta_vals/np.pi, np.real(iq_vals), 'b--', linewidth=1.5, label='Re(i·q) analytical')
+    axes[1].plot(theta_vals/np.pi, np.imag(dq_dt), 'r-', linewidth=2, label='Im(∂q/∂θ) numerical')
+    axes[1].plot(theta_vals/np.pi, np.imag(iq_vals), 'r--', linewidth=1.5, label='Im(i·q) analytical')
+    axes[1].set_xlabel('θ/π')
+    axes[1].set_ylabel('Value')
+    axes[1].set_title('Schrödinger Structure: ∂q/∂θ = i·q')
+    axes[1].legend(fontsize=8)
+    axes[1].grid(True, alpha=0.3)
+
+    # Panel 3: Unitarity defect as function of EML parameters
+    x_vals = np.linspace(-2, 3, 200)
+    y_vals_list = [0.5, 1.0, 2.0, np.e]
     
-    # Get the unitary
-    U = qEMLnorm(H, c)
+    for y_val in y_vals_list:
+        defects = [(np.exp(x) - np.log(y_val))**2 - 1 for x in x_vals]
+        axes[2].plot(x_vals, defects, linewidth=2, label=f'y={y_val:.1f}')
     
-    # Extract rotation angle from trace
-    recovered_theta = 2 * np.arctan(np.sqrt(c))
+    axes[2].axhline(y=0, color='k', linewidth=1.5, linestyle='--', label='Unitary (δ=0)')
+    axes[2].set_xlabel('x')
+    axes[2].set_ylabel('Unitarity defect δ = |q|² - 1')
+    axes[2].set_title('Unitarity Defect: δ=0 iff eml=±1')
+    axes[2].legend(fontsize=9)
+    axes[2].set_ylim(-2, 20)
+    axes[2].grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('quantum_eml_phase_evolution.png', dpi=150, bbox_inches='tight')
+    print("Saved: quantum_eml_phase_evolution.png")
+
+
+if __name__ == "__main__":
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Quantum EML Surjectivity
+
+Shows how the quantum phase-EML covers the entire complex plane
+by varying (θ, x, y) parameters.
+"""
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+
+def eml(x: float, y: float) -> float:
+    return float(np.exp(x) - np.log(y))
+
+
+def quantum_phase_eml(theta: float, x: float, y: float) -> complex:
+    return np.exp(1j * theta) * eml(x, y)
+
+
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    # Panel 1: Coverage of ℂ by sampling random parameters
+    np.random.seed(42)
+    n = 5000
+    thetas = np.random.uniform(0, 2*np.pi, n)
+    xs = np.random.uniform(-2, 3, n)
+    ys = np.exp(np.random.uniform(-3, 3, n))  # y > 0
     
-    print(f"  Input θ={theta:.4f}, axis=({n[0]:+.3f},{n[1]:+.3f},{n[2]:+.3f})")
-    print(f"  Recovered θ={recovered_theta:.4f}, "
-          f"error=|Δθ|={abs(theta - recovered_theta):.2e}")
-    print(f"  U in SU(2)={check_su2(U)}")
-    print()
+    q_vals = [quantum_phase_eml(t, x, y) for t, x, y in zip(thetas, xs, ys)]
+    axes[0].scatter([z.real for z in q_vals], [z.imag for z in q_vals],
+                    s=1, alpha=0.3, c='blue')
+    axes[0].set_xlabel('Re')
+    axes[0].set_ylabel('Im')
+    axes[0].set_title('Surjectivity: q covers ℂ (5000 samples)')
+    axes[0].set_xlim(-15, 15)
+    axes[0].set_ylim(-15, 15)
+    axes[0].set_aspect('equal')
+    axes[0].grid(True, alpha=0.3)
 
-# ============================================================
-# SUMMARY
-# ============================================================
-print("=" * 70)
-print("SUMMARY OF FORMALLY VERIFIED RESULTS")
-print("=" * 70)
-print("""
-1. OBSTRUCTION: I + iH is not unitary (verified in Lean 4)
-   → Naive EML does not survive quantization
+    # Panel 2: EML range (classical surjectivity)
+    x_vals = np.linspace(-3, 3, 200)
+    y_vals = np.exp(np.linspace(-3, 3, 200))
+    
+    eml_vals = []
+    for x in x_vals:
+        for y in y_vals:
+            eml_vals.append(eml(x, y))
+    
+    axes[1].hist(eml_vals, bins=100, density=True, alpha=0.7, color='steelblue')
+    axes[1].set_xlabel('eml(x, y)')
+    axes[1].set_ylabel('Density')
+    axes[1].set_title('Classical EML range: all of ℝ')
+    axes[1].axvline(x=0, color='r', linestyle='--', label='eml=0')
+    axes[1].axvline(x=1, color='g', linestyle='--', label='eml=1 (unitary)')
+    axes[1].axvline(x=-1, color='g', linestyle=':', label='eml=-1 (unitary)')
+    axes[1].legend(fontsize=9)
+    axes[1].grid(True, alpha=0.3)
 
-2. PAULI IDENTITY: H² = c·I for traceless Hermitian H (verified)
-   → The key algebraic miracle of 2×2 matrices
+    # Panel 3: Constructive inverse — given targets, show they are reached
+    targets = []
+    for r in np.linspace(0.5, 5, 8):
+        for phi in np.linspace(0, 2*np.pi, 12, endpoint=False):
+            targets.append(r * np.exp(1j * phi))
+    targets.append(0 + 0j)
+    
+    hits = []
+    for w in targets:
+        if abs(w) < 1e-10:
+            t, x, y = 0, 0, np.e
+        else:
+            r = abs(w)
+            t = np.angle(w)
+            x, y = 0, np.exp(1 - r)
+        hits.append(quantum_phase_eml(t, x, y))
+    
+    axes[2].scatter([w.real for w in targets], [w.imag for w in targets],
+                    s=50, c='red', marker='x', label='Targets', zorder=5)
+    axes[2].scatter([h.real for h in hits], [h.imag for h in hits],
+                    s=30, c='blue', marker='o', alpha=0.5, label='q(θ,x,y)', zorder=4)
+    
+    for t, h in zip(targets, hits):
+        axes[2].plot([t.real, h.real], [t.imag, h.imag], 'g-', alpha=0.2)
+    
+    axes[2].set_xlabel('Re')
+    axes[2].set_ylabel('Im')
+    axes[2].set_title('Inverse synthesis: targets → parameters → outputs')
+    axes[2].legend()
+    axes[2].set_aspect('equal')
+    axes[2].grid(True, alpha=0.3)
 
-3. UNITARITY: qEMLnorm(H,c) ∈ SU(2) (verified)
-   → Normalized activation lands in the correct group
+    plt.tight_layout()
+    plt.savefig('quantum_eml_surjectivity.png', dpi=150, bbox_inches='tight')
+    print("Saved: quantum_eml_surjectivity.png")
 
-4. SURJECTIVITY: {U ∈ SU(2) : tr(U) > 0} ⊂ im(qEMLnorm) (verified)
-   → The activation is a local coordinate chart
 
-5. SINGULAR LOCUS: Chart breaks down at U = -I (tr = -2)
-   → This is the antipodal point, unreachable by any single chart
-""")
+if __name__ == "__main__":
+    main()
