@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f63ef96d",
     "filename": "speculative_topological_data_analysis_of_theorem_n.json",
     "pkg_num": 394,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.352,
     "title": "Citation Complexes: Topological Data Analysis of Theorem Networks"
   },
   {
@@ -12577,8 +12577,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "speculative_topological_data_analysis_of_theorem_n",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.352,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Citation Complexes: Topological Data Analysis of Theorem Networks"
     }

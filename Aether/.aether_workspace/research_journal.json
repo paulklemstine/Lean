@@ -940,6 +940,46 @@
       "theorem_count": 5,
       "timestamp": "2026-06-05T17:00:04",
       "title": "Sonic Mathematics: Counterpoint as Category Theory"
+    },
+    {
+      "cycle_id": "b1455f51",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: EML Spectral Algebra\n\n## Synthesis\n\nThis research cycle established the **EML Spectral Algebra** — a novel graded algebraic framework for Kolmogorov-Arnold decompositions using EM",
+      "quality_score": 0.39864,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T17:35:14",
+      "title": "EML Kolmogorov-Arnold Representation"
+    },
+    {
+      "cycle_id": "396279f8",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis cycle established the **differential algebra structure** of the EML class: closure under addition, multiplication, composition, differentiation, and pointwise i",
+      "quality_score": 0.35840000000000005,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-05T17:35:55",
+      "title": "EML Differential Algebra: Closure Properties"
+    },
+    {
+      "cycle_id": "9024224e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: GrowthRank and Non-Standard Arithmetic\n\n## Synthesis\n\nThis research cycle established the **GrowthRank** — a totally ordered commutative monoid obtained by quotienting ℕ-valued se",
+      "quality_score": 0.50744,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T17:36:35",
+      "title": "Alien Mathematics: Non-Standard Arithmetic"
+    },
+    {
+      "cycle_id": "f63ef96d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Citation Complex Theory\n\n## Synthesis\n\nThis research cycle established the **citation complex** — an abstract simplicial complex built from theorem citation networks — as a rigoro",
+      "quality_score": 0.352,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T17:37:14",
+      "title": "Speculative: Topological Data Analysis of Theorem Networks"
     }
   ],
   "entries": [
@@ -985,7 +1025,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-05T17:00:04",
+  "last_updated": "2026-06-05T17:37:14",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -997,18 +1037,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "ca22eb67",
-        "quality": 0.3348,
-        "theorems": 5,
-        "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
-      },
-      {
-        "cycle_id": "dbd7459e",
-        "quality": 0.3368,
-        "theorems": 3,
-        "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-      },
       {
         "cycle_id": "542b5d3b",
         "quality": 0.44776000000000005,
@@ -1056,6 +1084,18 @@
         "quality": 0.44520000000000004,
         "theorems": 5,
         "title": "EML Universal Approximation: Density of EML Functions"
+      },
+      {
+        "cycle_id": "b1455f51",
+        "quality": 0.39864,
+        "theorems": 5,
+        "title": "EML Kolmogorov-Arnold Representation"
+      },
+      {
+        "cycle_id": "396279f8",
+        "quality": 0.35840000000000005,
+        "theorems": 4,
+        "title": "EML Differential Algebra: Closure Properties"
       }
     ],
     "Bridges": [
@@ -1194,18 +1234,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f9e10b94",
-        "quality": 0.6450400000000001,
-        "theorems": 4,
-        "title": "Sonic Mathematics: Counterpoint as Category Theory"
-      },
-      {
-        "cycle_id": "dc1dc6c0",
-        "quality": 0.4312,
-        "theorems": 5,
-        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-      },
-      {
         "cycle_id": "ded193f5",
         "quality": 0.40384000000000003,
         "theorems": 5,
@@ -1252,6 +1280,18 @@
         "quality": 0.56752,
         "theorems": 5,
         "title": "Sonic Mathematics: Counterpoint as Category Theory"
+      },
+      {
+        "cycle_id": "9024224e",
+        "quality": 0.50744,
+        "theorems": 5,
+        "title": "Alien Mathematics: Non-Standard Arithmetic"
+      },
+      {
+        "cycle_id": "f63ef96d",
+        "quality": 0.352,
+        "theorems": 5,
+        "title": "Speculative: Topological Data Analysis of Theorem Networks"
       }
     ],
     "Physics": [
