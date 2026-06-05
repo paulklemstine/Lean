@@ -1,189 +1,202 @@
 #!/usr/bin/env python3
 """
-Algorithms for Counterfactual Number Theory
+algorithms.py — Core algorithms for counterfactual number theory.
 
-Type-hinted implementations of the key algorithms used in the research.
+Type-hinted implementations of the key computational procedures
+used to analyze pseudo-prime systems and their factorization properties.
 """
-
-from typing import Set, List, Tuple, Dict, Optional
+from typing import Set, List, Tuple, Dict, Optional, FrozenSet
+from collections import defaultdict
 import math
 import random
 
 
-def sieve_of_eratosthenes(n: int) -> List[int]:
-    """Standard sieve of Eratosthenes.
-    
-    Returns list of primes up to n.
-    Time: O(n log log n), Space: O(n)
-    """
-    if n < 2:
-        return []
-    is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i * i, n + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, n + 1) if is_prime[i]]
+def cramer_model(n: int, seed: int = 42) -> Set[int]:
+    """Generate a Cramér random model up to n.
 
+    Each integer k ≥ 2 is included independently with probability 1/ln(k),
+    matching the density of actual primes predicted by the prime number theorem.
 
-def generate_random_prime_analog(n: int, seed: Optional[int] = None) -> Set[int]:
-    """Generate a random subset of {2,...,N} with density matching π(x)/x.
-    
-    Each integer k is included independently with probability 1/log(k),
-    giving expected count ∑_{k=2}^{N} 1/log(k) ≈ N/log(N) = π(N).
-    
     Args:
-        n: Upper bound
-        seed: Random seed for reproducibility
-        
+        n: Upper bound for the model.
+        seed: Random seed for reproducibility.
+
     Returns:
-        Set of "random primes"
+        Set of "pseudo-primes" in {2, ..., n}.
     """
     rng = random.Random(seed)
     return {k for k in range(2, n + 1) if rng.random() < 1.0 / math.log(k)}
 
 
-def find_product_collisions(s: Set[int], max_product: int) -> List[Tuple[int, int, int]]:
-    """Find all (a, b, a*b) with a, b, a*b ∈ S and a ≤ b.
-    
-    These are the "multiplicative collisions" that cause UFD collapse.
-    
-    Pseudocode:
-        for each a in S (sorted):
-            for each b in S with b >= a:
-                if a * b > max_product: break
-                if a * b in S: yield (a, b, a*b)
-    
-    Time: O(|S|² · lookup) where lookup is O(1) for hash sets
+def is_product_free(s: Set[int]) -> bool:
+    """Check if s is product-free: no a*b ∈ s for a,b ∈ s with a,b ≥ 2.
+
+    Time complexity: O(|s|²).
     """
-    sorted_s = sorted(x for x in s if x >= 2)
-    collisions: List[Tuple[int, int, int]] = []
-    for i, a in enumerate(sorted_s):
-        for b in sorted_s[i:]:
-            product = a * b
-            if product > max_product:
-                break
-            if product in s:
-                collisions.append((a, b, product))
-    return collisions
+    elems = sorted(x for x in s if x >= 2)
+    for i, a in enumerate(elems):
+        for b in elems[i:]:
+            if a * b in s:
+                return False
+    return True
 
 
-def is_product_free(s: Set[int], bound: int) -> bool:
-    """Check whether S ∩ {2,...,bound} is product-free.
-    
-    A set is product-free if no product of two elements is in the set.
-    The primes are product-free; random sets with prime-like density are not.
-    
-    Time: O(|S|²)
+def find_absorptions(s: Set[int]) -> List[Tuple[int, Tuple[int, int]]]:
+    """Find all generator absorptions: elements that are products of two others.
+
+    Returns list of (element, (factor1, factor2)) tuples.
     """
-    return len(find_product_collisions(s, bound)) == 0
+    elems = sorted(x for x in s if x >= 2)
+    absorptions = []
+    for i, a in enumerate(elems):
+        for b in elems[i:]:
+            prod = a * b
+            if prod in s:
+                absorptions.append((prod, (a, b)))
+    return absorptions
 
 
-def count_s_factorizations(n: int, s: Set[int]) -> int:
-    """Count the number of ordered S-factorizations of n.
-    
-    An S-factorization is a list [a₁, ..., aₖ] with all aᵢ ∈ S, aᵢ ≥ 2,
-    and ∏aᵢ = n. We count ordered factorizations (non-decreasing sequences)
-    to get the multiset count.
-    
-    Uses dynamic programming with memoization.
-    
-    Pseudocode:
-        def count(target, min_idx):
-            if target == 1: return 1
-            result = 0
-            for each s_i in S with s_i >= S[min_idx] and s_i | target:
-                result += count(target / s_i, i)
-            return result
-    
-    Time: O(n · |S| · d(n)) where d(n) is the number of divisors
+def find_product_collisions(
+    s: Set[int], max_product: int = 100000
+) -> Dict[int, List[Tuple[int, int]]]:
+    """Find all product collisions in s.
+
+    A product collision is a number n = a*b = c*d with {a,b} ≠ {c,d}
+    and a,b,c,d all in s.
+
+    Returns dict mapping product → list of factor pairs.
     """
-    sorted_s = sorted(x for x in s if 2 <= x <= n)
-    memo: Dict[Tuple[int, int], int] = {}
-    
-    def helper(target: int, min_idx: int) -> int:
-        if target == 1:
-            return 1
-        key = (target, min_idx)
-        if key in memo:
-            return memo[key]
-        total = 0
-        for i in range(min_idx, len(sorted_s)):
-            factor = sorted_s[i]
-            if factor > target:
-                break
-            if target % factor == 0:
-                total += helper(target // factor, i)
-        memo[key] = total
-        return total
-    
-    return helper(n, 0)
+    products: Dict[int, List[Tuple[int, int]]] = defaultdict(list)
+    elems = sorted(x for x in s if x >= 2)
+    for i, a in enumerate(elems):
+        for b in elems[i:]:
+            prod = a * b
+            if prod <= max_product:
+                products[prod].append((a, b))
+    return {n: pairs for n, pairs in products.items() if len(pairs) >= 2}
 
 
-def factorization_entropy(n: int, s: Set[int]) -> float:
-    """Compute the factorization entropy H_S(n) = log₂(#factorizations).
-    
-    For actual primes, H(n) = 0 for all n (unique factorization).
-    For random sets, H(n) > 0 indicates non-unique factorization.
+def factorize(n: int, generators: Set[int]) -> List[Tuple[int, ...]]:
+    """Find all factorizations of n using elements of generators.
+
+    Returns list of sorted tuples representing each factorization.
     """
-    count = count_s_factorizations(n, s)
-    return math.log2(count) if count > 0 else 0.0
+    gens = sorted(x for x in generators if x >= 2)
+    if n == 1:
+        return [()]
+    results = []
+    for g in gens:
+        if g > n:
+            break
+        if n % g == 0:
+            for rest in factorize(n // g, {x for x in generators if x >= g}):
+                results.append((g,) + rest)
+    return results
 
 
-def sumset(a: Set[int]) -> Set[int]:
-    """Compute A + A = {x + y : x, y ∈ A}.
-    
-    Time: O(|A|²)
+def collision_spectrum(
+    s: Set[int], level: int, max_n: int = 10000
+) -> Set[int]:
+    """Compute the collision spectrum at a given level.
+
+    Returns the set of numbers with ≥ 2 distinct factorizations of length exactly `level`.
     """
-    return {x + y for x in a for y in a}
+    spectrum = set()
+    for n in range(2, max_n + 1):
+        facts = factorize(n, s)
+        level_facts = [f for f in facts if len(f) == level]
+        if len(level_facts) >= 2:
+            spectrum.add(n)
+    return spectrum
 
 
-def sumset_card_lower_bound(card_a: int) -> int:
-    """Theoretical lower bound: |A + A| ≥ 2|A| - 1.
-    
-    This is tight for arithmetic progressions.
+def has_cross_level_collision(s: Set[int], max_n: int = 10000) -> Optional[Tuple[int, Tuple, Tuple]]:
+    """Check for cross-level collisions: same number with factorizations of different lengths.
+
+    Returns (n, fact1, fact2) if found, None otherwise.
     """
-    return max(2 * card_a - 1, 0)
+    for n in range(2, max_n + 1):
+        facts = factorize(n, s)
+        if len(facts) >= 2:
+            lengths = {len(f) for f in facts}
+            if len(lengths) >= 2:
+                f1 = facts[0]
+                f2 = next(f for f in facts if len(f) != len(f1))
+                return (n, f1, f2)
+    return None
 
 
-def counting_function_error(s: Set[int], x: int) -> float:
-    """Compute π_S(x) - x/log(x), the error in the PNT analog.
-    
-    For actual primes, RH predicts this is O(√x · log x).
-    For random sets, CLT gives fluctuations ~√(x/log x).
+def dirichlet_coverage(
+    s: Set[int], q: int
+) -> Dict[int, List[int]]:
+    """Analyze coverage of residue classes mod q.
+
+    Returns dict mapping residue class → list of elements in that class.
     """
-    pi_s_x = sum(1 for elem in s if elem <= x)
-    return pi_s_x - x / math.log(x) if x >= 2 else 0.0
+    coverage: Dict[int, List[int]] = defaultdict(list)
+    for x in sorted(s):
+        coverage[x % q].append(x)
+    return dict(coverage)
 
 
-def rh_failure_metric(s: Set[int], x: int) -> float:
-    """Normalized error: |π_S(x) - x/log(x)| / √(x/log(x)).
-    
-    Under RH for actual primes, this is O(√(log x)).
-    For random sets, this is O(1) by CLT.
+def factorization_hierarchy_classify(s: Set[int], max_n: int = 5000) -> Dict[str, bool]:
+    """Classify a set in the four-level factorization hierarchy.
+
+    Returns dict with keys: 'product_free', 'mult_independent', 'unique_factorization', 'pairwise_coprime'.
     """
-    error = abs(counting_function_error(s, x))
-    normalization = math.sqrt(x / math.log(x)) if x >= 3 else 1.0
-    return error / normalization
+    elems = sorted(x for x in s if x >= 2)
+
+    # Product-free check
+    pf = is_product_free(s)
+
+    # Multiplicative independence check
+    mi = len(find_absorptions(s)) == 0
+
+    # Unique factorization check
+    ufd = True
+    for n in range(2, max_n + 1):
+        if len(factorize(n, s)) > 1:
+            ufd = False
+            break
+
+    # Pairwise coprime check
+    coprime = all(
+        math.gcd(elems[i], elems[j]) == 1
+        for i in range(len(elems))
+        for j in range(i + 1, len(elems))
+    )
+
+    return {
+        'product_free': pf,
+        'mult_independent': mi,
+        'unique_factorization': ufd,
+        'pairwise_coprime': coprime,
+    }
+
+
+def cramer_defect(s: Set[int], k: int, max_n: int = 10000) -> int:
+    """Compute the Cramér defect at level k.
+
+    The defect counts elements of s that can be written as a product
+    of exactly k elements from s (each ≥ 2).
+    """
+    count = 0
+    for n in s:
+        if n < 2:
+            continue
+        facts = factorize(n, s)
+        if any(len(f) == k for f in facts if f != (n,)):
+            count += 1
+    return count
 
 
 if __name__ == "__main__":
-    # Quick demo
-    N = 1000
-    primes = set(sieve_of_eratosthenes(N))
-    random_set = generate_random_prime_analog(N, seed=42)
-    
-    print(f"N = {N}")
-    print(f"Primes: {len(primes)}, Random: {len(random_set)}")
-    print(f"Primes product-free: {is_product_free(primes, N)}")
-    print(f"Random product-free: {is_product_free(random_set, N)}")
-    
-    collisions = find_product_collisions(random_set, N)
-    print(f"Random collisions: {len(collisions)}")
-    
-    if collisions:
-        a, b, c = collisions[0]
-        print(f"Example: {a} × {b} = {c}, all in S → UFD collapse!")
-        print(f"  Factorization 1: [{c}]")
-        print(f"  Factorization 2: [{a}, {b}]")
+    # Example usage
+    primes_30 = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29}
+    print("Primes up to 30:", factorization_hierarchy_classify(primes_30))
+
+    sep_set = {6, 10, 21, 35}
+    print("{6,10,21,35}:", factorization_hierarchy_classify(sep_set))
+
+    cramer = cramer_model(100)
+    print(f"Cramér model (N=100, |S|={len(cramer)}):", factorization_hierarchy_classify(cramer, 500))
