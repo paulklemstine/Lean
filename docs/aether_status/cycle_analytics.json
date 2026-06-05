@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-05T02:39:18.344848+00:00",
+  "last_updated": "2026-06-05T03:11:40.186734+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -4013,6 +4013,41 @@
       "theorem_count": 5,
       "timestamp": "2026-06-05T02:39:18.284194+00:00",
       "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6278,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 17,
+      "domain": "MachineLearning",
+      "duration_seconds": 11450.778276205063,
+      "end_time": 1780629071.302205,
+      "files_integrated": 5,
+      "job_id": "0745dd05",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8323,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7449,
+        "novelty": 0.9446,
+        "proof_depth": 0.6593,
+        "usefulness": 0.8296
+      },
+      "quality_score": 0.3244,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780617620.5239289,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T03:11:40.122677+00:00",
+      "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
     }
   ]
 }

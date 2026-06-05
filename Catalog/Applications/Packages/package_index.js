@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0745dd05",
     "filename": "speculative_consciousness_as_fixed_points_of_recur.json",
     "pkg_num": 371,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.3244,
     "title": "Consciousness as Fixed Points of Recursive Type Theory"
   },
   {
@@ -11910,8 +11910,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "speculative_consciousness_as_fixed_points_of_recur",
       "primary_domain": "MachineLearning",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.3244,
+      "quality": "partial",
       "shape": "sphere_rings",
       "title": "Consciousness as Fixed Points of Recursive Type Theory"
     }
