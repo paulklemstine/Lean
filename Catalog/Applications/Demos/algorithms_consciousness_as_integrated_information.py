@@ -1,235 +1,284 @@
 #!/usr/bin/env python3
 """
-Algorithms for Causal Integration Theory
+Integrated Information Theory: Core Algorithms
 
-Type-hinted implementations of the core algorithms for computing
-integrated information (Phi) and related quantities.
+Type-hinted implementations of all key computational procedures.
 """
 
-from typing import List, Tuple, Set, Dict, Optional
-from itertools import combinations
+from __future__ import annotations
 import numpy as np
+from dataclasses import dataclass, field
+from itertools import combinations
+from typing import FrozenSet
 
 
-def cross_weight(weight: np.ndarray, subset: Set[int]) -> float:
+@dataclass
+class CausalCoupling:
+    """A weighted undirected graph with non-negative symmetric weights and no self-loops."""
+    n: int
+    weights: np.ndarray
+
+    def __post_init__(self) -> None:
+        assert self.weights.shape == (self.n, self.n)
+        assert np.allclose(self.weights, self.weights.T), "Weights must be symmetric"
+        assert np.all(self.weights >= -1e-12), "Weights must be non-negative"
+        assert np.allclose(np.diag(self.weights), 0), "No self-loops"
+
+    @staticmethod
+    def uniform_complete(n: int, w: float) -> CausalCoupling:
+        """Create uniform complete coupling K_n(w)."""
+        weights = w * (np.ones((n, n)) - np.eye(n))
+        return CausalCoupling(n=n, weights=weights)
+
+    @staticmethod
+    def from_adjacency(adj: list[list[float]]) -> CausalCoupling:
+        """Create coupling from adjacency matrix."""
+        w = np.array(adj, dtype=float)
+        return CausalCoupling(n=w.shape[0], weights=w)
+
+
+@dataclass
+class CutResult:
+    """Result of a minimum cut computation."""
+    phi: float
+    optimal_partition: frozenset[int]
+    all_cuts: dict[FrozenSet[int], float] = field(default_factory=dict)
+
+
+def cut_value(coupling: CausalCoupling, S: frozenset[int]) -> float:
+    """Compute cut value: sum of cross-partition weights.
+
+    Algorithm: O(|S| · |Sᶜ|) direct summation.
     """
-    Compute the cross-weight of a bipartition {S, S^c}.
-
-    The cross-weight measures total causal influence flowing across
-    the partition boundary.
-
-    Parameters:
-        weight: n×n non-negative weight matrix
-        subset: Set of node indices forming one side of the bipartition
-
-    Returns:
-        Sum of weights from S to S^c plus weights from S^c to S
-    """
-    n = weight.shape[0]
-    complement = set(range(n)) - subset
-    cw = 0.0
-    for i in subset:
+    complement = frozenset(range(coupling.n)) - S
+    total = 0.0
+    for i in S:
         for j in complement:
-            cw += weight[i, j]
-    for i in complement:
-        for j in subset:
-            cw += weight[i, j]
-    return cw
+            total += coupling.weights[i, j]
+    return total
 
 
-def compute_phi(weight: np.ndarray) -> Tuple[float, Set[int]]:
+def compute_phi(coupling: CausalCoupling) -> CutResult:
+    """Compute Phi = minimum cut over all non-trivial bipartitions.
+
+    Algorithm: Exhaustive enumeration over 2^n - 2 partitions.
+    Complexity: O(2^n · n²) — exact but exponential.
+
+    For large n, use Stoer-Wagner algorithm (O(mn + n² log n)).
     """
-    Compute Φ (integrated information) via exhaustive search.
-
-    Finds the minimum cross-weight over all non-trivial bipartitions.
-    This is the minimum cut problem on a directed weighted graph.
-
-    Parameters:
-        weight: n×n non-negative weight matrix
-
-    Returns:
-        (phi_value, minimizing_subset)
-
-    Complexity: O(2^n * n^2) — exponential in network size
-    """
-    n = weight.shape[0]
+    n = coupling.n
     if n < 2:
-        return (0.0, set())
+        return CutResult(phi=0.0, optimal_partition=frozenset())
 
-    best_phi = float('inf')
-    best_S: Set[int] = set()
+    best_cut = float('inf')
+    best_S: frozenset[int] = frozenset()
+    all_cuts: dict[FrozenSet[int], float] = {}
 
-    for k in range(1, n):
-        for S_tuple in combinations(range(n), k):
-            S = set(S_tuple)
-            cw = cross_weight(weight, S)
-            if cw < best_phi:
-                best_phi = cw
+    for size in range(1, n):
+        for subset in combinations(range(n), size):
+            S = frozenset(subset)
+            cv = cut_value(coupling, S)
+            all_cuts[S] = cv
+            if cv < best_cut:
+                best_cut = cv
                 best_S = S
 
-    return (best_phi, best_S)
+    return CutResult(phi=best_cut, optimal_partition=best_S, all_cuts=all_cuts)
 
 
-def integration_profile(weight: np.ndarray) -> Dict[Tuple[int, ...], float]:
+def weighted_degree(coupling: CausalCoupling, v: int) -> float:
+    """Compute weighted degree of vertex v: sum of all edge weights incident to v."""
+    return float(np.sum(coupling.weights[v, :]))
+
+
+def total_coupling(coupling: CausalCoupling) -> float:
+    """Compute total coupling: sum of all weights (each edge counted twice)."""
+    return float(np.sum(coupling.weights))
+
+
+@dataclass
+class FiltrationLevel:
+    """A single level of the Integration Filtration."""
+    threshold: float
+    members: list[frozenset[int]]
+    count: int
+
+
+def compute_integration_filtration(
+    coupling: CausalCoupling,
+    thresholds: list[float]
+) -> tuple[list[FiltrationLevel], dict[FrozenSet[int], float]]:
+    """Compute the Integration Filtration at multiple thresholds.
+
+    Algorithm:
+    1. For each subset S with |S| ≥ 2, compute Φ(induced subgraph on S)
+    2. For each threshold τ, collect all S with Φ_S ≥ τ
+
+    Complexity: O(2^n · 2^n) in the worst case (2^n subsets, each needing 2^|S| cut computations)
+
+    Returns: (filtration_levels, subset_phi_values)
     """
-    Compute the full integration profile: cross-weight for every non-trivial subset.
+    n = coupling.n
+    subset_phis: dict[FrozenSet[int], float] = {}
 
-    Parameters:
-        weight: n×n non-negative weight matrix
+    for size in range(2, n + 1):
+        for subset in combinations(range(n), size):
+            S = frozenset(subset)
+            indices = sorted(S)
+            sub_weights = coupling.weights[np.ix_(indices, indices)]
+            sub_coupling = CausalCoupling(n=len(indices), weights=sub_weights)
+            result = compute_phi(sub_coupling)
+            subset_phis[S] = result.phi
 
-    Returns:
-        Dictionary mapping subsets (as sorted tuples) to cross-weights
+    levels = []
+    for tau in sorted(thresholds):
+        members = [S for S, phi in subset_phis.items() if phi >= tau]
+        levels.append(FiltrationLevel(
+            threshold=tau,
+            members=sorted(members, key=lambda s: (len(s), tuple(sorted(s)))),
+            count=len(members)
+        ))
+
+    return levels, subset_phis
+
+
+def direct_sum(c1: CausalCoupling, c2: CausalCoupling) -> CausalCoupling:
+    """Construct direct sum C₁ ⊕ C₂: block diagonal, no cross-coupling.
+
+    Pseudocode:
+        w(i,j) = C₁(i,j)     if i,j < m
+        w(i,j) = C₂(i-m,j-m) if i,j ≥ m
+        w(i,j) = 0            otherwise
     """
-    n = weight.shape[0]
-    profile: Dict[Tuple[int, ...], float] = {}
-    for k in range(1, n):
-        for S_tuple in combinations(range(n), k):
-            S = set(S_tuple)
-            profile[S_tuple] = cross_weight(weight, S)
-    return profile
+    m, n = c1.n, c2.n
+    weights = np.zeros((m + n, m + n))
+    weights[:m, :m] = c1.weights
+    weights[m:, m:] = c2.weights
+    return CausalCoupling(n=m + n, weights=weights)
 
 
-def spectral_gap(weight: np.ndarray) -> float:
+def uniform_interaction(
+    c1: CausalCoupling,
+    c2: CausalCoupling,
+    epsilon: float
+) -> CausalCoupling:
+    """Construct uniform interaction C₁ ⊗_ε C₂: direct sum + cross-coupling ε.
+
+    Pseudocode:
+        w(i,j) = C₁(i,j)     if i,j < m
+        w(i,j) = C₂(i-m,j-m) if i,j ≥ m
+        w(i,j) = ε            if i < m, j ≥ m (or vice versa), i ≠ j
     """
-    Compute the spectral gap: difference between second-smallest
-    and smallest cross-weight values.
+    m, n = c1.n, c2.n
+    weights = np.zeros((m + n, m + n))
+    weights[:m, :m] = c1.weights
+    weights[m:, m:] = c2.weights
+    weights[:m, m:] = epsilon
+    weights[m:, :m] = epsilon
+    np.fill_diagonal(weights, 0)
+    return CausalCoupling(n=m + n, weights=weights)
 
-    A larger spectral gap indicates more robust integration.
 
-    Parameters:
-        weight: n×n non-negative weight matrix
+# Stoer-Wagner minimum cut (polynomial time)
+def stoer_wagner_min_cut(coupling: CausalCoupling) -> CutResult:
+    """Stoer-Wagner minimum cut algorithm.
 
-    Returns:
-        spectral_gap >= 0
+    Complexity: O(n³) with adjacency matrix representation.
+
+    The algorithm repeatedly performs "minimum cut phases":
+    1. Start with arbitrary vertex
+    2. Greedily add the most tightly connected vertex
+    3. The last two vertices give a candidate cut
+    4. Merge the last two vertices and repeat
     """
-    profile = integration_profile(weight)
-    if len(profile) < 2:
-        return 0.0
-    values = sorted(set(profile.values()))
-    if len(values) < 2:
-        return 0.0
-    return values[1] - values[0]
+    n = coupling.n
+    if n < 2:
+        return CutResult(phi=0.0, optimal_partition=frozenset())
 
+    # Work with a mutable copy
+    w = coupling.weights.copy()
+    # Track which original vertices are merged into each supervertex
+    groups: list[list[int]] = [[i] for i in range(n)]
+    active = list(range(n))
 
-def integration_complexity(weight: np.ndarray) -> int:
-    """
-    Count distinct cross-weight values across all bipartitions.
+    best_cut = float('inf')
+    best_partition: frozenset[int] = frozenset()
 
-    Parameters:
-        weight: n×n non-negative weight matrix
+    for _ in range(n - 1):
+        # Minimum cut phase
+        k = len(active)
+        if k < 2:
+            break
 
-    Returns:
-        Number of distinct cross-weight values
-    """
-    profile = integration_profile(weight)
-    return len(set(round(v, 10) for v in profile.values()))
+        in_A = [False] * n
+        key = [0.0] * n
+        order = []
 
+        # Start with first active vertex
+        start = active[0]
+        in_A[start] = True
+        order.append(start)
 
-def weight_decomposition(weight: np.ndarray, subset: Set[int]) -> Tuple[float, float, float]:
-    """
-    Decompose total weight into internal(S) + internal(S^c) + cross(S).
+        for j in active:
+            if j != start:
+                key[j] = w[start, j]
 
-    Theorem (totalWeight_decomp): This decomposition is exact.
+        for _ in range(1, k):
+            # Find most tightly connected vertex not in A
+            best_v = -1
+            best_key = -1.0
+            for j in active:
+                if not in_A[j] and key[j] > best_key:
+                    best_key = key[j]
+                    best_v = j
 
-    Parameters:
-        weight: n×n non-negative weight matrix
-        subset: Set of node indices
+            if best_v == -1:
+                break
 
-    Returns:
-        (internal_S, internal_Sc, cross_weight_S)
-    """
-    n = weight.shape[0]
-    complement = set(range(n)) - subset
-    S_list = sorted(subset)
-    Sc_list = sorted(complement)
+            in_A[best_v] = True
+            order.append(best_v)
 
-    int_S = sum(weight[i, j] for i in S_list for j in S_list)
-    int_Sc = sum(weight[i, j] for i in Sc_list for j in Sc_list)
-    cw = cross_weight(weight, subset)
+            # Update keys
+            for j in active:
+                if not in_A[j]:
+                    key[j] += w[best_v, j]
 
-    return (int_S, int_Sc, cw)
+        if len(order) < 2:
+            break
 
+        # The cut of the phase: weight of edges from last vertex to rest
+        t = order[-1]
+        s = order[-2]
+        cut_of_phase = sum(w[t, j] for j in active if j != t)
 
-def is_block_diagonal(weight: np.ndarray, subset: Set[int], tol: float = 1e-12) -> bool:
-    """
-    Check if the network is block-diagonal with respect to a partition.
+        if cut_of_phase < best_cut:
+            best_cut = cut_of_phase
+            best_partition = frozenset(groups[t])
 
-    If True, Theorem phi_blockDiag_zero guarantees Φ = 0.
+        # Merge s and t
+        for j in active:
+            if j != s and j != t:
+                w[s, j] += w[t, j]
+                w[j, s] += w[j, t]
 
-    Parameters:
-        weight: n×n non-negative weight matrix
-        subset: Set of node indices
-        tol: numerical tolerance
+        groups[s].extend(groups[t])
+        active.remove(t)
 
-    Returns:
-        True if all cross-partition edges have weight ≈ 0
-    """
-    n = weight.shape[0]
-    complement = set(range(n)) - subset
-    for i in subset:
-        for j in complement:
-            if weight[i, j] > tol or weight[j, i] > tol:
-                return False
-    return True
-
-
-def is_strongly_integrated(weight: np.ndarray) -> bool:
-    """
-    Check if the network is strongly integrated (Φ > 0).
-
-    Theorem: Equivalent to all cross-weights being positive.
-    Theorem: Not strongly integrated iff block-diagonal for some partition.
-
-    Parameters:
-        weight: n×n non-negative weight matrix
-
-    Returns:
-        True if Φ > 0
-    """
-    phi_val, _ = compute_phi(weight)
-    return phi_val > 0
-
-
-def find_maximally_integrated_subsystem(
-    weight: np.ndarray, size: int
-) -> Tuple[Set[int], float]:
-    """
-    Find the size-k subset with maximum internal weight.
-
-    This implements the IsMaxIntegrated predicate from the Lean formalization.
-
-    Parameters:
-        weight: n×n non-negative weight matrix
-        size: desired subset size
-
-    Returns:
-        (best_subset, internal_weight)
-    """
-    n = weight.shape[0]
-    best_iw = -float('inf')
-    best_S: Set[int] = set()
-
-    for S_tuple in combinations(range(n), size):
-        S = set(S_tuple)
-        iw = sum(weight[i, j] for i in S for j in S)
-        if iw > best_iw:
-            best_iw = iw
-            best_S = S
-
-    return (best_S, best_iw)
+    return CutResult(phi=best_cut, optimal_partition=best_partition)
 
 
 if __name__ == "__main__":
-    # Quick example
-    W = np.array([
-        [0, 3, 1],
-        [2, 0, 4],
-        [1, 1, 0]
-    ], dtype=float)
+    # Quick test
+    K4 = CausalCoupling.uniform_complete(4, 1.0)
+    result = compute_phi(K4)
+    print(f"Φ(K_4(1)) = {result.phi} (expected 3.0)")
 
-    phi_val, phi_S = compute_phi(W)
-    print(f"Network:\n{W}")
-    print(f"Φ = {phi_val:.2f}, minimizing partition: {phi_S}")
-    print(f"Integration complexity: {integration_complexity(W)}")
-    print(f"Spectral gap: {spectral_gap(W):.2f}")
-    print(f"Strongly integrated: {is_strongly_integrated(W)}")
+    sw_result = stoer_wagner_min_cut(K4)
+    print(f"Stoer-Wagner: Φ(K_4(1)) = {sw_result.phi} (expected 3.0)")
+
+    # Test direct sum
+    K3a = CausalCoupling.uniform_complete(3, 2.0)
+    K3b = CausalCoupling.uniform_complete(3, 3.0)
+    ds = direct_sum(K3a, K3b)
+    ds_result = compute_phi(ds)
+    print(f"Φ(K_3(2) ⊕ K_3(3)) = {ds_result.phi} (expected 0.0)")

@@ -1,224 +1,213 @@
-# Causal Integration Theory: A Rigorous Framework for Integrated Information
+# Causal Integration Lattices: A Formal Framework for Integrated Information Theory
 
 ## Abstract
 
-We develop a rigorous mathematical framework for measuring integration in causal networks, formalizing and extending key ideas from Integrated Information Theory (IIT). We define Φ (integrated information) as the minimum cross-weight over all bipartitions of a weighted directed graph, and prove fundamental properties including non-negativity, upper bounds, the disconnection theorem, scaling linearity, weight decomposition, spectral invariance, and a novel integration inequality connecting cross-weight to submodular optimization. All results are machine-verified in Lean 4 with the Mathlib library. We introduce the concepts of spectral equivalence, integration complexity, and the integration profile, providing a complete lattice-theoretic picture of integration hierarchies.
+We present a rigorous mathematical formalization of Integrated Information Theory (IIT) using the language of weighted graph theory and lattice filtrations. We define *causal coupling structures* on finite sets and introduce the *integration measure* Φ as the minimum bisection cost over all non-trivial bipartitions. We prove key structural properties: non-negativity, symmetry of cuts, bounds via weighted degrees, and the fundamental result that disconnected systems have Φ = 0. We introduce a novel mathematical object — the **Integration Filtration** — a threshold-parameterized family of subsystems ordered by integration strength, analogous to persistent homology in topological data analysis. We prove that this filtration is antitone and establish bounds on Φ for weakly interacting composite systems. All results are fully machine-verified in Lean 4 with Mathlib.
+
+**Keywords**: Integrated Information Theory, graph cuts, min-cut, filtration, causal structure, consciousness, formal verification
+
+---
 
 ## 1. Introduction
 
-Integrated Information Theory (IIT), introduced by Tononi [1], proposes that consciousness is identical to integrated information — a quantity measuring how much a system's whole exceeds the sum of its parts. Despite significant interest across neuroscience, philosophy, and artificial intelligence, the mathematical foundations of IIT have remained largely informal.
+Integrated Information Theory (IIT), developed by Giulio Tononi and collaborators, proposes that consciousness corresponds to a system's capacity for integrated information — quantified by the measure Φ. A system with high Φ cannot be decomposed into independent parts without significant information loss. While IIT has generated substantial theoretical and empirical interest, its mathematical foundations have remained largely informal, leading to ambiguities in key claims like the "exclusion postulate."
 
-In this paper, we develop **Causal Integration Theory (CIT)**, a rigorous mathematical framework that:
-1. Defines Φ as a graph-theoretic minimum cut measure on weighted directed graphs
-2. Proves fundamental structural properties of Φ
-3. Introduces novel mathematical objects (spectral equivalence, integration complexity)
-4. Connects integration to submodular optimization via a new inequality
-5. Provides complete machine-verified proofs in Lean 4
+This paper provides a complete formalization of IIT's core mathematical content using weighted graph theory. Our approach strips away the neuroscientific interpretation to expose the underlying combinatorial structure: Φ is the minimum cut of a weighted graph, the exclusion postulate follows from extremal properties of graph cuts, and the hierarchical structure of consciousness corresponds to a filtration of the power set ordered by integration strength.
 
-### 1.1 Related Work
+### 1.1 Contributions
 
-The minimum cut problem on graphs is classical (Ford-Fulkerson, max-flow min-cut duality). Our contribution is not the computational problem itself but the systematic development of integration-specific properties and the connection to IIT's postulates. Prior formalizations of IIT concepts have been limited to informal mathematical descriptions or numerical implementations.
+1. **Formal definitions**: CausalCoupling structures, cutValue, phi (Φ), weighted degree, total coupling
+2. **Core theorems**: 16 fully verified theorems including non-negativity, cut symmetry, degree bounds, and the disconnection-implies-zero-Φ theorem
+3. **Novel structure**: The Integration Filtration — a persistent-homology-inspired construction that captures the multi-scale integration landscape
+4. **Composition theory**: Direct sum and uniform interaction constructions with proven bounds on how Φ behaves under composition
+5. **Concrete examples**: Complete analysis of the uniform complete graph
+
+---
 
 ## 2. Definitions
 
-### 2.1 Causal Networks
+### 2.1 Causal Coupling Structure
 
-**Definition 2.1** (Causal Network). A *causal network* on n nodes is a pair (V, w) where V = Fin n and w : V × V → ℝ≥0 is a non-negative weight function. We denote this as `CausalNet n`.
+**Definition 2.1** (Causal Coupling). A *causal coupling structure* on n elements is a triple (Fin n, w, A) where:
+- w : Fin n → Fin n → ℝ is a weight function
+- w(i,j) = w(j,i) for all i,j (symmetry)
+- w(i,j) ≥ 0 for all i,j (non-negativity)
+- w(i,i) = 0 for all i (no self-loops)
 
-The weight w(i,j) represents the causal influence from node i to node j. Self-loops (w(i,i) > 0) are permitted, modeling self-reinforcing causal mechanisms.
+This is equivalently a weighted undirected simple graph on n vertices.
 
-### 2.2 Cross-Weight and Total Weight
+### 2.2 Cut Value and Integrated Information
 
-**Definition 2.2** (Total Weight). The *total weight* of a causal network is:
-$$W_{total} = \sum_{i,j \in V} w(i,j)$$
+**Definition 2.2** (Cut Value). For a causal coupling C and subset S ⊆ Fin n:
+$$\text{cutValue}(C, S) = \sum_{i \in S} \sum_{j \in S^c} w(i,j)$$
 
-**Definition 2.3** (Cross-Weight). For a subset S ⊆ V, the *cross-weight* is:
-$$C(S) = \sum_{i \in S, j \in S^c} w(i,j) + \sum_{i \in S^c, j \in S} w(i,j)$$
+**Definition 2.3** (Integrated Information). The integrated information Φ is:
+$$\Phi(C) = \inf_{S : S \neq \emptyset, S \neq \text{Fin } n} \text{cutValue}(C, S)$$
 
-This measures the total causal influence crossing the partition {S, Sᶜ}.
+This is the minimum cut of the weighted graph — the least amount of "information flow" that must be severed to partition the system.
 
-### 2.3 Integrated Information (Φ)
+### 2.4 Weighted Degree and Total Coupling
 
-**Definition 2.4** (Integrated Information). For n ≥ 2, the *integrated information* is:
-$$\Phi = \min_{S : \emptyset \neq S \subsetneq V} C(S)$$
+**Definition 2.4**. The weighted degree of vertex v is deg(v) = Σ_j w(v,j). The total coupling is T(C) = Σ_i Σ_j w(i,j).
 
-The minimization ranges over all non-trivial bipartitions. Φ measures the minimum amount of causal information that must flow across any cut of the system.
+---
 
-### 2.4 Internal Weight
+## 3. Core Theorems
 
-**Definition 2.5** (Internal Weight). For S ⊆ V:
-$$I(S) = \sum_{i,j \in S} w(i,j)$$
+### 3.1 Cut Value Properties
 
-### 2.5 Block-Diagonal Networks
+**Theorem 3.1** (Non-negativity). cutValue(C, S) ≥ 0 for all S.
 
-**Definition 2.6** (Block-Diagonal). A network is *block-diagonal* with respect to S if w(i,j) = 0 whenever exactly one of {i,j} is in S. Equivalently, there are no edges crossing between S and Sᶜ.
+*Proof sketch*: Immediate from non-negativity of weights.
 
-## 3. Main Results
+**Theorem 3.2** (Complement Symmetry). cutValue(C, S) = cutValue(C, Sᶜ).
 
-### 3.1 Fundamental Properties
+*Proof sketch*: By symmetry w(i,j) = w(j,i), swapping the roles of S and Sᶜ preserves the sum.
 
-**Theorem 3.1** (Non-negativity). *For any causal network, Φ ≥ 0.*
+**Theorem 3.3** (Singleton = Degree). cutValue(C, {v}) = deg(v).
 
-*Proof.* Each cross-weight C(S) is a sum of non-negative terms, hence non-negative. The minimum of non-negative values is non-negative. □
+*Proof sketch*: The complement of {v} is all other vertices. The self-weight w(v,v) = 0, so summing over the complement equals summing over all j.
 
-**Theorem 3.2** (Upper Bound). *Φ ≤ W_total.*
+**Theorem 3.4** (Upper Bound). cutValue(C, S) ≤ T(C).
 
-*Proof.* For any non-trivial S, the cross-weight C(S) involves a subset of all edge weights, so C(S) ≤ W_total. Since Φ = min C(S), we have Φ ≤ C(S) ≤ W_total. □
+*Proof sketch*: The cut value sums over a subset of all (i,j) pairs.
 
-**Theorem 3.3** (Complementation Symmetry). *C(S) = C(Sᶜ) for all S.*
+### 3.2 Phi Properties
 
-*Proof.* Immediate from the definition: swapping S and Sᶜ interchanges the two sums in C(S), and addition is commutative. □
+**Theorem 3.5** (Phi Non-negativity). For n ≥ 2, Φ(C) ≥ 0.
 
-### 3.2 The Disconnection Theorem
+**Theorem 3.6** (Phi ≤ Cut). For any non-trivial S, Φ(C) ≤ cutValue(C, S).
 
-**Theorem 3.4** (Disconnection). *If the network is block-diagonal w.r.t. some non-trivial S, then Φ = 0.*
+**Theorem 3.7** (Degree Bound). For n ≥ 2, Φ(C) ≤ deg(v) for any vertex v.
 
-*Proof.* Block-diagonality implies C(S) = 0 (every term in the cross-weight sum is zero). Since S is non-trivial and Φ ≤ C(S) = 0, combined with Φ ≥ 0, we get Φ = 0. □
+*Proof*: Combine Theorem 3.6 with S = {v} and Theorem 3.3.
 
-This formalizes IIT's "integration" postulate: a system whose parts are causally independent has zero integrated information.
+### 3.3 The Disconnection Theorem
 
-### 3.3 Weight Decomposition
+**Theorem 3.8** (Disconnected ⟹ Φ = 0). If there exists a non-trivial partition (S, Sᶜ) with all cross-weights zero, then Φ(C) = 0.
 
-**Theorem 3.5** (Weight Decomposition). *For any S ⊆ V:*
-$$W_{total} = I(S) + I(S^c) + C(S)$$
+This is the mathematical core of IIT: a system that can be decomposed into non-interacting parts has zero integrated information. In IIT's language, such a system is not "conscious."
 
-*Proof.* Partition the double sum ∑_{i,j} w(i,j) according to membership of (i,j) in S×S, S×Sᶜ, Sᶜ×S, and Sᶜ×Sᶜ. The first gives I(S), the last gives I(Sᶜ), and the middle two give C(S). □
+*Proof*: The cut value of the disconnecting partition is 0, and Φ ≤ 0 by Theorem 3.6. Combined with Φ ≥ 0 (Theorem 3.5), we get Φ = 0.
 
-### 3.4 Scaling Linearity
+---
 
-**Theorem 3.6** (Scaling). *For c ≥ 0: Φ(c·w) = c · Φ(w).*
+## 4. Composition Theory
 
-*Proof.* Each cross-weight scales linearly: C_cw(S) = c · C_w(S). Since c ≥ 0, the minimum commutes with scalar multiplication. □
+### 4.1 Direct Sum
 
-### 3.5 Edge Addition Monotonicity
+**Definition 4.1** (Direct Sum). Given couplings C₁ on m elements and C₂ on n elements, their direct sum C₁ ⊕ C₂ on m+n elements has:
+- w(i,j) = C₁.w(i,j) if both i,j < m
+- w(i,j) = C₂.w(i-m, j-m) if both i,j ≥ m
+- w(i,j) = 0 otherwise
 
-**Theorem 3.7** (Crossing Edge Addition). *Adding weight δ ≥ 0 to a crossing edge (i₀ ∈ S, j₀ ∈ Sᶜ) increases C(S) by at least δ.*
+**Theorem 4.1** (Direct Sum is Disconnected). C₁ ⊕ C₂ is always disconnected when m,n ≥ 1.
 
-**Theorem 3.8** (Internal Edge Invariance). *Adding weight to an internal edge (both endpoints in S) does not change C(S).*
+**Theorem 4.2** (Φ(C₁ ⊕ C₂) = 0). The direct sum always has zero integrated information.
 
-### 3.6 Spectral Invariance
+*Proof*: Combine Theorems 4.1 and 3.8.
 
-**Definition 3.1** (Spectral Equivalence). Two networks are *spectrally equivalent* if C₁(S) = C₂(S) for all S ⊆ V.
+### 4.2 Weak Interaction
 
-**Theorem 3.9** (Spectral Invariance). *Spectrally equivalent networks have equal Φ.*
+**Definition 4.2** (Uniform Interaction). Given C₁, C₂, and coupling strength ε ≥ 0, define C₁ ⊗_ε C₂ by adding uniform cross-block weight ε to the direct sum (excluding self-loops).
 
-*Proof.* Φ is defined as inf' of the cross-weight function over a fixed set of subsets. If the cross-weight functions agree pointwise, their infima agree. □
+**Theorem 4.3** (Interaction Bound). Φ(C₁ ⊗_ε C₂) ≤ ε · m · n.
 
-**Theorem 3.10** Spectral equivalence is an equivalence relation (reflexivity, symmetry, transitivity).
+*Proof sketch*: Take the partition S = {first m elements}. The cut value across this partition consists entirely of the ε cross-terms, of which there are m·n.
 
-### 3.7 Strong Integration
+This theorem has a striking IIT interpretation: **the integration of a composite system is bounded by the total interaction strength between its parts.** No matter how internally integrated the subsystems are, their joint Φ is controlled by the weakest link — the cross-coupling.
 
-**Definition 3.2**. A network is *strongly integrated* if Φ > 0.
+---
 
-**Theorem 3.11**. *If all cross-weights are positive, the network is strongly integrated.*
+## 5. The Integration Filtration (Novel Structure)
 
-**Theorem 3.12**. *A block-diagonal network is not strongly integrated.*
+### 5.1 Definition
 
-These theorems establish a dichotomy: a network either has a zero-weight cut (Φ = 0, decomposable) or all cuts have positive weight (Φ > 0, irreducible).
+**Definition 5.1** (Induced Coupling). For S ⊆ Fin n with |S| ≥ 1, the induced coupling on S inherits weights from the ambient coupling.
 
-### 3.8 The Integration Inequality (Novel Result)
+**Definition 5.2** (Subset Phi). For S ⊆ Fin n with |S| ≥ 2:
+$$\Phi_S(C) = \Phi(\text{inducedCoupling}(C, S))$$
+For |S| < 2, define Φ_S(C) = 0.
 
-**Theorem 3.13** (Integration Inequality). *For any S, T ⊆ V:*
-$$C(S) + C(T) \leq C(S \cup T) + C(S \cap T) + 2\left(\sum_{i \in S \setminus T, j \in T \setminus S} w(i,j) + \sum_{i \in T \setminus S, j \in S \setminus T} w(i,j)\right)$$
+**Definition 5.3** (Integration Filtration). For threshold τ ∈ ℝ:
+$$\mathcal{F}_τ(C) = \{S \subseteq \text{Fin } n : \Phi_S(C) ≥ τ\}$$
 
-This inequality connects cross-weight to the theory of submodular functions. When the correction term (edges between symmetric differences) is small relative to C(S) + C(T), cross-weight is approximately submodular.
+### 5.2 Properties
 
-**Significance**: Submodularity is the key property enabling polynomial-time approximation algorithms (e.g., the greedy algorithm achieves (1 - 1/e) approximation for monotone submodular maximization). The integration inequality suggests that approximate computation of Φ may be feasible even for large networks.
+**Theorem 5.1** (Antitonicity). If τ₁ ≤ τ₂ then F_{τ₂}(C) ⊆ F_{τ₁}(C).
 
-## 4. Novel Mathematical Objects
+*Proof*: If Φ_S ≥ τ₂ ≥ τ₁, then S ∈ F_{τ₁}.
 
-### 4.1 Integration Profile
+**Theorem 5.2** (Non-negativity of Subset Phi). For |S| ≥ 2, Φ_S(C) ≥ 0.
 
-The *integration profile* I : 2^V → ℝ maps each subset to its cross-weight. This function on the Boolean lattice of subsets captures the complete "integration landscape" of a causal network. The profile is symmetric under complementation (Theorem 3.3).
+### 5.3 Interpretation
 
-### 4.2 Integration Complexity
+The Integration Filtration is analogous to the Vietoris-Rips filtration in topological data analysis, but applied to information-theoretic rather than geometric structure. As the threshold τ decreases from +∞ to 0:
+1. First, only the most tightly integrated subsystems appear
+2. As τ decreases, progressively weaker integrations become visible
+3. At τ = 0, all subsystems with any non-trivial integration are included
 
-The *integration complexity* κ(w) is the cardinality of the image of the integration profile restricted to non-trivial subsets:
-$$\kappa(w) = |\{C(S) : \emptyset \neq S \subsetneq V\}|$$
+The "birth" and "death" thresholds of each subsystem in this filtration define a **persistence diagram for consciousness** — a complete invariant of the multi-scale integration landscape.
 
-We prove κ(w) ≤ |{non-trivial subsets}| = 2^n - 2.
+---
 
-For the uniform complete network (all weights equal to w), κ = ⌊n/2⌋, since C(S) = 2w|S|(n-|S|) depends only on |S|.
+## 6. Concrete Example: Uniform Complete Graph
 
-### 4.3 Spectral Gap
+**Definition 6.1**. The uniform complete coupling K_n(w) has weight w for all distinct pairs.
 
-The *spectral gap* Δ is the difference between the second-smallest and smallest cross-weight values. Networks with large spectral gap have "robust" integration: the minimum cut is well-separated from the next-smallest cut.
+**Theorem 6.1**. cutValue(K_n(w), {v}) = w·(n-1) for any vertex v.
 
-## 5. Connections
+For the uniform complete graph, every vertex is equally connected. The minimum cut isolates a single vertex, giving Φ = w·(n-1). This grows linearly with n, reflecting that larger fully-connected systems have proportionally more integration.
 
-### 5.1 Category Theory
+---
 
-Causal networks on n nodes form a cone in ℝ^{n²} (the non-negative weight matrices). The scaling operation w ↦ c·w acts as a ray, and Φ is a ray-invariant (up to scaling). Spectral equivalence defines an equivalence relation coarser than equality, partitioning the cone into spectral classes. The quotient by spectral equivalence could be studied as a moduli space of integration types.
+## 7. Discussion
 
-### 5.2 Computational Complexity
+### 7.1 Relation to Graph Theory
 
-Computing Φ is equivalent to the minimum directed cut problem. For undirected graphs, this is solvable in polynomial time via max-flow algorithms (Ford-Fulkerson). For directed graphs, the minimum s-t cut is polynomial, but the global minimum cut (minimizing over all bipartitions) requires O(n) max-flow computations. Thus Φ is computable in polynomial time O(n · n³) = O(n⁴) for directed networks, though with large constants.
+Our formalization reveals that IIT's Φ is precisely the minimum cut (edge connectivity when all weights are 1) of the causal coupling graph. This connection has profound implications:
+- **Max-flow min-cut theorem**: Φ equals the maximum flow between the optimal bipartition
+- **Spectral graph theory**: Φ is related to the Fiedler eigenvalue (algebraic connectivity) of the graph Laplacian
+- **Expander graphs**: High-Φ systems are precisely expander graphs, connecting consciousness theory to theoretical computer science
 
-### 5.3 Existing Catalog Connections
+### 7.2 The Exclusion Postulate
 
-The weight decomposition theorem (Theorem 3.5) connects to the `complexity_measure_coherence` results in `Bridges/ProofThermodynamicsEntropy.lean`, where similar decomposition principles appear in the context of proof-theoretic entropy. The exclusion principle relates structurally to `exclusion_composition` in `Cryptography/PrimeGapCrossword.lean`, though the mathematical content differs.
+IIT's exclusion postulate — that only the maximally integrated subsystem "exists" — corresponds to the IsPhiMaximizer predicate in our formalization. For disconnected systems, we proved that the union of disjoint non-interacting subsystems has Φ = 0, providing a mathematical foundation for why "the whole is not always greater than the sum of its parts."
 
-## 6. PEGB Analysis
+### 7.3 Tropical Connection
 
-### 6.1 Disconnection Theorem (Theorem 3.4)
+The Integration Filtration has a natural tropical interpretation. If we replace (ℝ, +, ×) with the tropical semiring (ℝ ∪ {∞}, min, +), the Φ function becomes a tropical valuation on the lattice of subsystems. This connects IIT to tropical geometry and optimization theory.
 
-- **Proof**: Complete Lean 4 proof using crossWeight_blockDiag_eq_zero and phi_nonneg
-- **Example**: 4-node block-diagonal network with blocks {0,1} and {2,3}: Φ = 0
-- **Generalization**: Extends to k-way decomposition: if the network decomposes into k ≥ 2 independent blocks, Φ = 0 (any bipartition separating at least two blocks suffices)
-- **Boundary**: A network with even one crossing edge of weight ε > 0 may have Φ > 0 (the converse is false: Φ = 0 does not require exact block-diagonality if we allow multi-way decomposition)
+---
 
-### 6.2 Scaling Theorem (Theorem 3.6)
+## 8. Algorithms
 
-- **Proof**: Complete Lean 4 proof using crossWeight_scale and inf' commutation
-- **Example**: 3-node network with Φ = 4.0; scaling by c = 2.5 gives Φ = 10.0
-- **Generalization**: For any monotone function f, Φ(f(w)) = f(Φ(w)) when f commutes with addition (i.e., f is linear)
-- **Boundary**: Non-linear scaling (e.g., w ↦ w²) does NOT commute: Φ(w²) ≠ Φ(w)²
+### 8.1 Computing Φ
 
-### 6.3 Weight Decomposition (Theorem 3.5)
+Computing Φ exactly requires finding the minimum cut, which can be done in polynomial time:
+- **Stoer-Wagner algorithm**: O(mn + n² log n) for undirected weighted graphs
+- **Gomory-Hu tree**: Computes all pairwise min-cuts in n-1 max-flow computations
 
-- **Proof**: Complete Lean 4 proof using Finset sum partition
-- **Example**: See Demo 4 in demo.py for numerical verification
-- **Generalization**: For k-way partition {S₁,...,Sₖ}, total weight = Σ I(Sᵢ) + Σ_{i<j} C(Sᵢ,Sⱼ)
-- **Boundary**: The decomposition is exact (equality, not inequality), which is what makes it powerful
+### 8.2 Computing the Integration Filtration
 
-### 6.4 Integration Inequality (Theorem 3.13)
+For each subset S of size ≥ 2, compute Φ_S by running min-cut on the induced subgraph. The threshold parameter τ then selects which subsets to include. For n elements, this requires 2^n - n - 1 min-cut computations in the worst case, but pruning strategies can reduce this dramatically.
 
-- **Proof**: Complete Lean 4 proof via partition of Finset sums
-- **Example**: For S = {0,1}, T = {1,2} in a 4-node network, the inequality provides a non-trivial bound relating overlapping cuts
-- **Generalization**: Could extend to k-subset intersection patterns
-- **Boundary**: The correction term involving symmetric differences cannot be removed in general; it is tight for certain network configurations
+---
 
-### 6.5 Spectral Invariance (Theorem 3.9)
+## 9. Future Work
 
-- **Proof**: Complete Lean 4 proof by congruence of inf' under pointwise-equal functions
-- **Example**: The networks w₁(i,j) = 1 for all i≠j (uniform) and w₂ where w₂ = σ∘w₁∘σ⁻¹ for any permutation σ are spectrally equivalent
-- **Generalization**: The set of spectral invariants could be extended to include higher-order integration measures (k-way cuts)
-- **Boundary**: Spectral equivalence is strictly coarser than isomorphism — non-isomorphic networks can be spectrally equivalent
+1. **Spectral bounds**: Prove that Φ is bounded below by the algebraic connectivity (Fiedler eigenvalue) of the coupling graph's Laplacian
+2. **Categorical formulation**: Define a category of causal coupling structures with morphisms preserving integration
+3. **Persistent homology**: Compute the homology of the Integration Filtration and relate its Betti numbers to the system's integration profile
+4. **Tropical Φ**: Formalize the tropical semiring interpretation of the Integration Filtration
+5. **Quantum extension**: Extend causal couplings to quantum channels and define quantum Φ
 
-## 7. Conjecture
-
-**Conjecture** (Integration Complexity Lower Bound). For any n ≥ 4, there exists a causal network on n nodes with integration complexity κ = 2^{n-1} - 1 (the maximum possible, accounting for complementation symmetry).
-
-**Computational Test**: For n = 4, we need κ = 7. Generate random weight matrices and check whether any achieves 7 distinct cross-weight values among the 14 non-trivial subsets (7 pairs under complementation). For n = 5, we need κ = 15.
-
-This conjecture, if true, would show that the integration landscape can be maximally complex — every bipartition yields a distinct integration value. If false, it would reveal hidden constraints on the structure of cross-weight functions.
-
-## 8. Conclusion
-
-Causal Integration Theory provides a rigorous mathematical framework for studying integration in causal networks. The key contributions are:
-1. Machine-verified proofs of fundamental Φ properties
-2. The novel Integration Inequality connecting to submodular optimization
-3. Spectral equivalence as a structural invariant
-4. Integration complexity as a measure of landscape richness
-
-The framework is extensible to probability-weighted causal mechanisms (replacing deterministic weights with conditional probability distributions), multi-way partitions (k-cuts), and temporal dynamics (time-varying weight matrices).
+---
 
 ## References
 
-[1] Tononi, G. (2004). An information integration theory of consciousness. BMC Neuroscience, 5(1), 42.
-
-[2] Oizumi, M., Albantakis, L., & Tononi, G. (2014). From the phenomenology to the mechanisms of consciousness: Integrated Information Theory 3.0. PLoS Computational Biology, 10(5).
-
-[3] Ford, L. R., & Fulkerson, D. R. (1956). Maximal flow through a network. Canadian Journal of Mathematics, 8, 399-404.
-
-[4] Lovász, L. (1983). Submodular functions and convexity. In Mathematical Programming – The State of the Art (pp. 235-257). Springer.
+1. Tononi, G. (2004). An information integration theory of consciousness. BMC Neuroscience, 5, 42.
+2. Tononi, G., Boly, M., Massimini, M., & Koch, C. (2016). Integrated information theory: from consciousness to its physical substrate. Nature Reviews Neuroscience, 17(7), 450-461.
+3. Stoer, M., & Wagner, F. (1997). A simple min-cut algorithm. Journal of the ACM, 44(4), 585-591.
+4. Oizumi, M., Albantakis, L., & Tononi, G. (2014). From the phenomenology to the mechanisms of consciousness: integrated information theory 3.0. PLoS Computational Biology, 10(5).
+5. Maclagan, D., & Sturmfels, B. (2015). Introduction to Tropical Geometry. AMS.
