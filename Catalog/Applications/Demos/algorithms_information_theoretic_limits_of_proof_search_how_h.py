@@ -1,254 +1,267 @@
 """
-Information-Theoretic Proof Search: Core Algorithms
+Information-Theoretic Limits of Proof Search: Algorithms
 
-Implements the key algorithms from the research paper on
-information-theoretic limits of proof search complexity.
+Implements the core algorithms and structures from the formal theory:
+- SearchDensityFunction
+- ProofEntropyProfile
+- Search difficulty computation
+- Entropy gap analysis
+- Phase transition detection
 """
 
+from __future__ import annotations
 import math
-from typing import Callable, Optional, List, Tuple
 from dataclasses import dataclass
+from typing import Callable, List, Tuple, Optional
 
 
 @dataclass
-class ProofSearchSpace:
-    """A proof search space with combinatorial parameters.
+class SearchDensityFunction:
+    """Models how provable theorem density evolves with proof length.
 
     Attributes:
-        alphabet_size: Number of symbols in the proof language (b ≥ 2)
-        max_proof_len: Maximum proof length (n)
-        valid_count: Number of valid proof strings (V ≤ b^n)
-        theorem_count: Number of provable theorems (T ≤ V)
+        b: Alphabet size (≥ 2)
+        total_theorems: Total number of theorem statements
+        provable_within: Function mapping proof length n to number of provable theorems
     """
-    alphabet_size: int
-    max_proof_len: int
-    valid_count: int
-    theorem_count: int
+    b: int
+    total_theorems: int
+    provable_within: Callable[[int], int]
 
     def __post_init__(self) -> None:
-        assert self.alphabet_size >= 2, "Alphabet size must be ≥ 2"
-        assert self.valid_count <= self.alphabet_size ** self.max_proof_len
-        assert self.theorem_count <= self.valid_count
-        assert self.theorem_count > 0
+        assert self.b >= 2, "Alphabet size must be ≥ 2"
+        assert self.total_theorems > 0, "Must have at least one theorem"
 
-    @property
-    def total_candidates(self) -> int:
-        """Total number of candidate strings: b^n."""
-        return self.alphabet_size ** self.max_proof_len
+    def search_space(self, n: int) -> int:
+        """Total number of candidate proofs of length n."""
+        return self.b ** n
 
-    @property
-    def search_difficulty(self) -> int:
-        """Search difficulty: ⌊b^n / (V+1)⌋."""
-        return self.total_candidates // (self.valid_count + 1)
+    def entropy_gap(self, n: int) -> int:
+        """Excess proof space capacity at length n."""
+        return self.search_space(n) - self.provable_within(n)
 
-    @property
-    def proof_density(self) -> float:
-        """Fraction of valid proofs among all candidates."""
-        tc = self.total_candidates
-        return self.valid_count / tc if tc > 0 else 0.0
+    def search_difficulty(self, n: int) -> float:
+        """Expected candidates to examine at length n."""
+        p = self.provable_within(n)
+        return self.search_space(n) / (p + 1)
 
-    @property
-    def information_content_bits(self) -> float:
-        """Information content in bits: -log₂(density)."""
-        d = self.proof_density
+    def unprovable_count(self, n: int) -> int:
+        """Theorems not provable at length n."""
+        return self.total_theorems - self.provable_within(n)
+
+    def density(self, n: int) -> float:
+        """Fraction of search space that contains valid proofs."""
+        ss = self.search_space(n)
+        return self.provable_within(n) / ss if ss > 0 else 0.0
+
+    def find_critical_length(self, max_n: int = 100) -> Optional[int]:
+        """Find smallest n where provable_within(n) >= total_theorems."""
+        for n in range(max_n + 1):
+            if self.provable_within(n) >= self.total_theorems:
+                return n
+        return None
+
+    def information_content(self, n: int) -> float:
+        """Information content: -log2(density) at length n."""
+        d = self.density(n)
         return -math.log2(d) if d > 0 else float('inf')
 
 
 @dataclass
-class ProofComplexityProfile:
-    """Captures how proof difficulty scales with statement complexity.
+class ProofEntropyProfile:
+    """Captures the information-theoretic signature of a proof system.
 
     Attributes:
-        alphabet_size: Number of symbols (b ≥ 2)
-        proof_len_fn: Maps statement length → max proof length (monotone)
-        proof_count_fn: Maps statement length → number of provable theorems
+        sdf: The underlying SearchDensityFunction
+        entropy_rate: Function mapping proof length n to entropy rate
     """
-    alphabet_size: int
-    proof_len_fn: Callable[[int], int]
-    proof_count_fn: Callable[[int], int]
+    sdf: SearchDensityFunction
+    entropy_rate: Callable[[int], int]
 
-    def difficulty_at(self, s: int) -> int:
-        """Search difficulty at statement length s."""
-        space = self.alphabet_size ** self.proof_len_fn(s)
-        return space // (self.proof_count_fn(s) + 1)
+    def cumulative_entropy(self, n: int) -> int:
+        """Total information content up to length n."""
+        return sum(self.entropy_rate(k) for k in range(n))
 
-    def cumulative_difficulty(self, s: int) -> int:
-        """Cumulative difficulty up to statement length s."""
-        return sum(self.difficulty_at(i) for i in range(s))
-
-    def information_profile(self, max_s: int) -> List[Tuple[int, float]]:
-        """Compute information content at each statement length."""
-        result = []
-        for s in range(1, max_s + 1):
-            space = self.alphabet_size ** self.proof_len_fn(s)
-            count = self.proof_count_fn(s)
-            density = count / space if space > 0 else 0
-            info = -math.log2(density) if density > 0 else float('inf')
-            result.append((s, info))
-        return result
-
-
-def sparse_proof_search_bound(b: int, n: int, k: int) -> int:
-    """Compute the lower bound on search difficulty.
-
-    For V ≤ b^k valid proofs in a space of b^n candidates,
-    search requires ≥ b^(n-k-1) examinations.
-
-    Args:
-        b: Alphabet size (≥ 2)
-        n: Proof length
-        k: Exponent of valid proof count (k+1 ≤ n)
-
-    Returns:
-        Lower bound b^(n-k-1) on search difficulty.
-    """
-    assert b >= 2
-    assert k + 1 <= n
-    return b ** (n - k - 1)
+    def structure_gap(self, n: int) -> int:
+        """How much structure reduces entropy below maximum."""
+        return n - self.entropy_rate(n)
 
 
 def brute_force_search(
-    alphabet_size: int,
-    max_len: int,
-    verifier: Callable[[List[int]], bool],
-    max_candidates: Optional[int] = None
-) -> Optional[List[int]]:
-    """Brute-force proof search over all strings.
+    b: int, n: int, verify: Callable[[List[int]], bool]
+) -> Tuple[Optional[List[int]], int]:
+    """Brute-force proof search over all strings of length n.
 
     Args:
-        alphabet_size: Number of symbols
-        max_len: Maximum string length
-        verifier: Function that checks if a string is a valid proof
-        max_candidates: Maximum number of candidates to check
+        b: Alphabet size
+        n: Proof length
+        verify: Function that checks if a candidate is a valid proof
 
     Returns:
-        A valid proof string, or None if not found.
+        (proof, steps): The proof found (or None) and number of steps taken
     """
-    checked = 0
-    limit = max_candidates or alphabet_size ** max_len
+    steps = 0
+    candidate = [0] * n
 
-    def generate(prefix: List[int], remaining: int):
-        nonlocal checked
-        if checked >= limit:
-            return None
-        if remaining == 0:
-            checked += 1
-            if verifier(prefix):
-                return list(prefix)
-            return None
-        for sym in range(alphabet_size):
-            result = generate(prefix + [sym], remaining - 1)
-            if result is not None:
-                return result
-        return None
+    for _ in range(b ** n):
+        steps += 1
+        if verify(candidate):
+            return candidate, steps
+        # Increment candidate (base-b counter)
+        carry = 1
+        for i in range(n - 1, -1, -1):
+            candidate[i] += carry
+            if candidate[i] >= b:
+                candidate[i] = 0
+                carry = 1
+            else:
+                carry = 0
+                break
 
-    return generate([], max_len)
+    return None, steps
 
 
-def compressible_fraction(b: int, n: int) -> float:
-    """Compute the maximum compressible fraction of strings.
-
-    At most b^(n-1) of b^n strings can be compressed, giving
-    fraction ≤ 1/b.
+def compute_search_bounds(b: int, n: int, k: int) -> dict:
+    """Compute information-theoretic search bounds.
 
     Args:
-        b: Alphabet size (≥ 2)
-        n: String length (≥ 1)
+        b: Alphabet size
+        n: Proof length (search space parameter)
+        k: Provability parameter (valid proofs ≤ b^k)
 
     Returns:
-        Upper bound on compressible fraction: 1/b.
+        Dictionary with computed bounds
     """
     assert b >= 2
-    assert n >= 1
-    return 1.0 / b
+    assert k + 1 <= n
+
+    search_space = b ** n
+    max_valid = b ** k
+    lower_bound = b ** (n - k - 1)
+    difficulty = search_space // (max_valid + 1)
+
+    return {
+        "search_space": search_space,
+        "max_valid_proofs": max_valid,
+        "search_difficulty_lower_bound": lower_bound,
+        "actual_difficulty": difficulty,
+        "information_gap_bits": (n - k) * math.log2(b),
+        "incompressible_fraction": (b - 1) / b,
+    }
 
 
-def search_hierarchy_bound(b: int, k: int) -> Tuple[int, int]:
-    """Compute hierarchy level bounds.
+def detect_phase_transition(sdf: SearchDensityFunction, max_n: int = 50) -> dict:
+    """Detect the phase transition in proof search.
 
-    Returns (lower, upper) where lower = k+1 and upper = b^k.
-    The theorem guarantees lower ≤ upper.
+    Returns information about where the system transitions from
+    'not enough capacity' to 'enough capacity but hard to search'.
+    """
+    critical_n = None
+    for n in range(max_n + 1):
+        if sdf.search_space(n) >= sdf.total_theorems:
+            critical_n = n
+            break
+
+    densities = []
+    difficulties = []
+    gaps = []
+
+    for n in range(min(max_n + 1, 30)):
+        densities.append((n, sdf.density(n)))
+        difficulties.append((n, sdf.search_difficulty(n)))
+        gaps.append((n, sdf.entropy_gap(n)))
+
+    return {
+        "critical_length": critical_n,
+        "densities": densities,
+        "difficulties": difficulties,
+        "entropy_gaps": gaps,
+        "total_theorems": sdf.total_theorems,
+        "alphabet_size": sdf.b,
+    }
+
+
+def composition_cost(b: int, m: int, n: int) -> dict:
+    """Compute costs for composing two proof obligations.
 
     Args:
-        b: Base (≥ 2)
-        k: Level
+        b: Alphabet size
+        m: Proof length for obligation 1
+        n: Proof length for obligation 2
 
     Returns:
-        Tuple of (linear bound, exponential bound).
+        Dictionary with individual and composed costs
     """
-    return (k + 1, b ** k)
+    cost_1 = b ** m
+    cost_2 = b ** n
+    composed = b ** (m + n)
+    sum_costs = cost_1 + cost_2
+
+    return {
+        "cost_1": cost_1,
+        "cost_2": cost_2,
+        "composed_cost": composed,
+        "sum_of_costs": sum_costs,
+        "superadditivity_factor": composed / sum_costs if sum_costs > 0 else float('inf'),
+        "multiplicative_factor": composed / (cost_1 * cost_2) if cost_1 * cost_2 > 0 else 0,
+    }
 
 
-def proof_density_at_length(
-    valid_count: int,
-    alphabet_size: int,
-    proof_length: int
-) -> float:
-    """Compute proof density at a given length.
+def log_factor_test(statement_lengths: List[int], proof_lengths: List[int]) -> dict:
+    """Test the log-factor growth conjecture.
 
-    Args:
-        valid_count: Number of valid proofs
-        alphabet_size: Alphabet size (≥ 2)
-        proof_length: Proof length
-
-    Returns:
-        Density V / b^n.
+    Computes p / (s * log2(s)) for each (s, p) pair and reports statistics.
     """
-    total = alphabet_size ** proof_length
-    return valid_count / total if total > 0 else 0.0
+    ratios = []
+    for s, p in zip(statement_lengths, proof_lengths):
+        if s >= 4:
+            log_s = math.log2(s)
+            ratio = p / (s * log_s)
+            ratios.append(ratio)
 
+    if not ratios:
+        return {"error": "No valid data points (need s >= 4)"}
 
-def information_bottleneck_bound(
-    alphabet_size: int,
-    proof_length: int
-) -> int:
-    """Maximum number of theorems provable with proofs of given length.
+    mean_ratio = sum(ratios) / len(ratios)
+    variance = sum((r - mean_ratio) ** 2 for r in ratios) / len(ratios)
 
-    By the mutual information bottleneck theorem,
-    T ≤ b^n.
-
-    Args:
-        alphabet_size: Alphabet size
-        proof_length: Maximum proof length
-
-    Returns:
-        Upper bound b^n on theorem count.
-    """
-    return alphabet_size ** proof_length
-
-
-def log_factor_prediction(statement_length: int) -> float:
-    """Predicted proof length under the log-factor conjecture.
-
-    Conjecture: proof_length ≈ C · s · log₂(s) for some constant C.
-    We use C = 3 as a reasonable estimate.
-
-    Args:
-        statement_length: Length of the theorem statement
-
-    Returns:
-        Predicted proof length.
-    """
-    if statement_length <= 1:
-        return float(statement_length)
-    C = 3.0
-    return C * statement_length * math.log2(statement_length)
+    return {
+        "num_points": len(ratios),
+        "mean_ratio": mean_ratio,
+        "std_ratio": math.sqrt(variance),
+        "min_ratio": min(ratios),
+        "max_ratio": max(ratios),
+        "conjecture_support": 0.5 <= mean_ratio <= 10,
+    }
 
 
 if __name__ == "__main__":
-    # Example usage
-    space = ProofSearchSpace(
-        alphabet_size=2,
-        max_proof_len=20,
-        valid_count=100,
-        theorem_count=50
+    # Example: binary proof system with 1000 theorems
+    sdf = SearchDensityFunction(
+        b=2,
+        total_theorems=1000,
+        provable_within=lambda n: min(2 ** n - 1, 1000)
     )
-    print(f"Search space: {space.total_candidates:,} candidates")
-    print(f"Search difficulty: {space.search_difficulty:,}")
-    print(f"Proof density: {space.proof_density:.2e}")
-    print(f"Information content: {space.information_content_bits:.1f} bits")
 
-    # Hierarchy
-    for k in range(10):
-        lo, hi = search_hierarchy_bound(2, k)
-        print(f"Level {k}: {lo} ≤ {hi}")
+    print("=== Search Density Function Demo ===")
+    for n in range(1, 15):
+        print(f"n={n:2d}: provable={sdf.provable_within(n):5d}, "
+              f"space={sdf.search_space(n):10d}, "
+              f"density={sdf.density(n):.6f}, "
+              f"difficulty={sdf.search_difficulty(n):.1f}")
+
+    print(f"\nCritical length: {sdf.find_critical_length()}")
+
+    print("\n=== Information-Theoretic Bounds ===")
+    bounds = compute_search_bounds(b=2, n=20, k=10)
+    for key, val in bounds.items():
+        print(f"  {key}: {val}")
+
+    print("\n=== Phase Transition ===")
+    pt = detect_phase_transition(sdf)
+    print(f"  Critical length: {pt['critical_length']}")
+
+    print("\n=== Composition Costs ===")
+    comp = composition_cost(b=2, m=5, n=5)
+    for key, val in comp.items():
+        print(f"  {key}: {val}")
