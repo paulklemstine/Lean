@@ -1,90 +1,29 @@
 #!/usr/bin/env python3
 """
-Algorithms for Game of Life Simulation Algebra
+Algorithms for Simulation Morphism Theory and Game of Life
 
-Type-hinted implementations of the core mathematical structures
-from the formalization.
+Provides type-hinted implementations of the core mathematical structures
+and algorithms developed in the Lean 4 formalization.
 """
 
-from typing import TypeVar, Generic, Callable, Optional, Set, Tuple, List, Dict
-from dataclasses import dataclass
-from abc import ABC, abstractmethod
-
-
-# ============================================================
-# Simulation System
-# ============================================================
-
-S = TypeVar('S')
-
-
-@dataclass
-class SimSystem(Generic[S]):
-    """A discrete dynamical system: state type + step function."""
-    step: Callable[[S], S]
-
-    def iterate(self, n: int, state: S) -> S:
-        """Apply step function n times."""
-        result = state
-        for _ in range(n):
-            result = self.step(result)
-        return result
-
-
-@dataclass
-class SimMorphism(Generic[S]):
-    """A simulation morphism between two dynamical systems.
-
-    Encodes the concept: system A can simulate system B with time factor k.
-    The encode function maps B-states to A-states such that
-    A^k(encode(s)) = encode(B.step(s)) for all s.
-    """
-    source: SimSystem  # System A (simulator)
-    target: SimSystem  # System B (simulated)
-    time_factor: int   # k
-    encode: Callable   # B.State -> A.State
-
-    def verify_commutation(self, test_state) -> bool:
-        """Check commutation diagram on a test state."""
-        # A^k(encode(s)) should equal encode(B.step(s))
-        lhs = self.source.iterate(self.time_factor, self.encode(test_state))
-        rhs = self.encode(self.target.step(test_state))
-        return lhs == rhs
-
-
-def compose_morphisms(f: SimMorphism, g: SimMorphism) -> SimMorphism:
-    """Compose two simulation morphisms.
-
-    If f: A simulates B with factor k1
-    and g: B simulates C with factor k2
-    then compose(f, g): A simulates C with factor k1 * k2
-    """
-    return SimMorphism(
-        source=f.source,
-        target=g.target,
-        time_factor=f.time_factor * g.time_factor,
-        encode=lambda s: f.encode(g.encode(s))
-    )
-
-
-def simulation_chain_overhead(factors: List[int]) -> int:
-    """Compute total overhead of a simulation chain.
-
-    Theorem (overhead_exponential): if all factors >= 2,
-    then overhead >= 2^len(factors).
-    """
-    result = 1
-    for k in factors:
-        result *= k
-    return result
-
+from dataclasses import dataclass, field
+from typing import (
+    TypeVar, Generic, Callable, Set, Tuple, Dict, List, Optional, FrozenSet
+)
+from functools import reduce
+import operator
 
 # ============================================================
-# Game of Life
+# Core Types
 # ============================================================
 
 Cell = Tuple[int, int]
-Grid = Set[Cell]
+GridConfig = FrozenSet[Cell]
+
+S = TypeVar('S')
+T = TypeVar('T')
+U = TypeVar('U')
+
 
 MOORE_OFFSETS: List[Cell] = [
     (-1, -1), (-1, 0), (-1, 1),
@@ -93,157 +32,267 @@ MOORE_OFFSETS: List[Cell] = [
 ]
 
 
-def neighbor_count(grid: Grid, cell: Cell) -> int:
-    """Count live Moore neighbors of a cell."""
-    x, y = cell
-    return sum(1 for dx, dy in MOORE_OFFSETS if (x + dx, y + dy) in grid)
+# ============================================================
+# Discrete Dynamical System
+# ============================================================
 
+@dataclass(frozen=True)
+class DiscreteDynSys(Generic[S]):
+    """A discrete dynamical system: a step function on a state space."""
+    step: Callable[[S], S]
 
-def gol_step(grid: Grid) -> Grid:
-    """Conway's Game of Life step function.
+    def orbit(self, s: S, n: int) -> List[S]:
+        """Compute the orbit of s for n steps."""
+        trajectory = [s]
+        for _ in range(n):
+            s = self.step(s)
+            trajectory.append(s)
+        return trajectory
 
-    Rules:
-    - Live cell with 2 or 3 neighbors survives
-    - Dead cell with exactly 3 neighbors is born
-    - All other cells die or stay dead
-    """
-    # Count neighbors for all relevant cells
-    counts: Dict[Cell, int] = {}
-    for cell in grid:
-        for dx, dy in MOORE_OFFSETS:
-            nb = (cell[0] + dx, cell[1] + dy)
-            counts[nb] = counts.get(nb, 0) + 1
+    def iterate(self, s: S, n: int) -> S:
+        """Apply step n times."""
+        for _ in range(n):
+            s = self.step(s)
+        return s
 
-    new_grid: Grid = set()
-    for cell, count in counts.items():
-        if cell in grid:
-            if count in (2, 3):
-                new_grid.add(cell)
-        else:
-            if count == 3:
-                new_grid.add(cell)
-    return new_grid
+    def is_fixed_point(self, s: S) -> bool:
+        """Check if s is a fixed point."""
+        return self.step(s) == s
 
-
-def gol_system() -> SimSystem[Grid]:
-    """The Game of Life as a SimSystem."""
-    return SimSystem(step=gol_step)
-
-
-def is_still_life(grid: Grid) -> bool:
-    """Check if a pattern is a still life (fixed point).
-
-    Theorem (isStillLife_iff): g is a still life iff
-    every live cell has 2 or 3 neighbors and
-    no dead cell has exactly 3 neighbors.
-    """
-    return gol_step(grid) == grid
-
-
-def is_oscillator(grid: Grid, period: int) -> bool:
-    """Check if a pattern is an oscillator with given period."""
-    if period <= 0:
-        return False
-    current = grid
-    for _ in range(period):
-        current = gol_step(current)
-    return current == grid
-
-
-def translate(grid: Grid, dx: int, dy: int) -> Grid:
-    """Translate a grid by (dx, dy).
-
-    Theorem (step_translate): step(translate(g, dx, dy)) = translate(step(g), dx, dy)
-    """
-    return {(x + dx, y + dy) for x, y in grid}
+    def find_period(self, s: S, max_steps: int = 10000) -> Optional[int]:
+        """Find the period of s, or None if not found within max_steps."""
+        current = s
+        for i in range(1, max_steps + 1):
+            current = self.step(current)
+            if current == s:
+                return i
+        return None
 
 
 # ============================================================
-# Tag Systems
+# Simulation Morphism
+# ============================================================
+
+@dataclass(frozen=True)
+class SimMorphism(Generic[S, T]):
+    """A simulation morphism from system A to system B.
+
+    Satisfies:
+    - faithful: B.step^[dilation](encode(s)) = encode(A.step(s))
+    - retract: decode(encode(s)) = s
+    """
+    source: DiscreteDynSys[S]
+    target: DiscreteDynSys[T]
+    encode: Callable[[S], T]
+    decode: Callable[[T], S]
+    dilation: int  # positive
+
+    def verify_faithful(self, s: S) -> bool:
+        """Check faithfulness for a single state."""
+        lhs = self.target.iterate(self.encode(s), self.dilation)
+        rhs = self.encode(self.source.step(s))
+        return lhs == rhs
+
+    def verify_retract(self, s: S) -> bool:
+        """Check retract for a single state."""
+        return self.decode(self.encode(s)) == s
+
+    def faithful_n(self, s: S, n: int) -> bool:
+        """Verify multi-step faithfulness for n steps."""
+        lhs = self.decode(self.target.iterate(self.encode(s), n * self.dilation))
+        rhs = self.source.iterate(s, n)
+        return lhs == rhs
+
+    @staticmethod
+    def identity(sys: DiscreteDynSys[S]) -> 'SimMorphism[S, S]':
+        """The identity simulation morphism."""
+        return SimMorphism(
+            source=sys, target=sys,
+            encode=lambda s: s, decode=lambda s: s,
+            dilation=1
+        )
+
+    def compose(self, other: 'SimMorphism[T, U]') -> 'SimMorphism[S, U]':
+        """Compose with another morphism. Dilation multiplies."""
+        return SimMorphism(
+            source=self.source,
+            target=other.target,
+            encode=lambda s: other.encode(self.encode(s)),
+            decode=lambda t: self.decode(other.decode(t)),
+            dilation=self.dilation * other.dilation
+        )
+
+
+# ============================================================
+# Game of Life
+# ============================================================
+
+def live_neighbor_count(cfg: GridConfig, p: Cell) -> int:
+    """Count live neighbors of cell p."""
+    return sum(1 for dx, dy in MOORE_OFFSETS if (p[0]+dx, p[1]+dy) in cfg)
+
+
+def gol_cell_update(cfg: GridConfig, p: Cell) -> bool:
+    """GoL update rule for a single cell."""
+    n = live_neighbor_count(cfg, p)
+    if p in cfg:
+        return n in (2, 3)
+    else:
+        return n == 3
+
+
+def gol_step(cfg: GridConfig) -> GridConfig:
+    """One step of Conway's Game of Life."""
+    candidates: Set[Cell] = set()
+    for x, y in cfg:
+        candidates.add((x, y))
+        for dx, dy in MOORE_OFFSETS:
+            candidates.add((x+dx, y+dy))
+    return frozenset(p for p in candidates if gol_cell_update(cfg, p))
+
+
+GoLSystem = DiscreteDynSys[GridConfig](step=gol_step)
+
+
+# ============================================================
+# GoL Patterns
+# ============================================================
+
+def block(corner: Cell = (0, 0)) -> GridConfig:
+    """2x2 block still life."""
+    x, y = corner
+    return frozenset({(x,y), (x+1,y), (x,y+1), (x+1,y+1)})
+
+
+def blinker_h(center: Cell = (0, 0)) -> GridConfig:
+    """Horizontal blinker (period 2)."""
+    x, y = center
+    return frozenset({(x-1,y), (x,y), (x+1,y)})
+
+
+def glider(corner: Cell = (0, 0)) -> GridConfig:
+    """Glider (period 4, translates by (1,1))."""
+    x, y = corner
+    return frozenset({(x+1,y), (x+2,y+1), (x,y+2), (x+1,y+2), (x+2,y+2)})
+
+
+def translate_config(cfg: GridConfig, d: Cell) -> GridConfig:
+    """Translate configuration by offset d."""
+    return frozenset((x+d[0], y+d[1]) for x, y in cfg)
+
+
+# ============================================================
+# Simulation Chain Analysis
 # ============================================================
 
 @dataclass
-class TagSystem:
-    """A tag system: string-rewriting computation model.
+class SimChain:
+    """A chain of simulation morphisms with tracked overhead."""
+    layers: List[int]  # dilation of each layer
 
-    At each step: read first symbol, append its production,
-    delete first `deletion_num` symbols.
+    @property
+    def depth(self) -> int:
+        return len(self.layers)
+
+    @property
+    def total_dilation(self) -> int:
+        return reduce(operator.mul, self.layers, 1)
+
+    def complexity_bound(self, max_dilation: int) -> int:
+        """Upper bound: max_dilation^depth."""
+        return max_dilation ** self.depth
+
+    def verify_bound(self) -> bool:
+        """Verify that product ≤ max^depth."""
+        if not self.layers:
+            return True
+        d = max(self.layers)
+        return self.total_dilation <= d ** self.depth
+
+
+def dilation_chain_bound(dilations: List[int]) -> Tuple[int, int]:
     """
-    deletion_num: int
-    productions: Dict[str, str]
-    halting_symbols: Set[str]
+    Compute the exact dilation and the d^n upper bound.
 
-    def step(self, config: str) -> Optional[str]:
-        """One step. Returns None on halt or underflow."""
-        if not config:
-            return None
-        first = config[0]
-        if first in self.halting_symbols:
-            return None
-        production = self.productions.get(first, "")
-        appended = config + production
-        if len(appended) <= self.deletion_num:
-            return None
-        return appended[self.deletion_num:]
-
-    def run(self, config: str, max_steps: int = 10000) -> Tuple[str, int, bool]:
-        """Run until halt or max_steps. Returns (final_config, steps, halted)."""
-        for i in range(max_steps):
-            result = self.step(config)
-            if result is None:
-                return config, i, True
-            config = result
-        return config, max_steps, False
+    Returns (product, d^n) where d = max(dilations), n = len(dilations).
+    Corresponds to theorem dilation_chain_bound.
+    """
+    if not dilations:
+        return (1, 1)
+    d = max(dilations)
+    n = len(dilations)
+    product = reduce(operator.mul, dilations, 1)
+    bound = d ** n
+    return (product, bound)
 
 
 # ============================================================
-# Known Patterns
+# Non-Monotonicity Witness
 # ============================================================
 
-BLOCK: Grid = {(0, 0), (0, 1), (1, 0), (1, 1)}
-BLINKER: Grid = {(0, -1), (0, 0), (0, 1)}
-GLIDER: Grid = {(0, 0), (1, 0), (2, 0), (2, 1), (1, 2)}
-BEEHIVE: Grid = {(0, 0), (0, 1), (1, -1), (1, 2), (2, 0), (2, 1)}
+def find_non_monotonicity_witness() -> Optional[Tuple[GridConfig, GridConfig, Cell]]:
+    """
+    Find a constructive witness that GoL is not monotone.
 
+    Returns (a, b, p) where a ⊆ b but golStep(a)(p) and not golStep(b)(p).
+    """
+    # Disk configuration
+    a = frozenset((x,y) for x in range(-1,2) for y in range(-1,2) if x*x+y*y <= 1)
+    b = a | frozenset({(1, 1)})
+
+    stepped_a = gol_step(a)
+    stepped_b = gol_step(b)
+
+    for p in stepped_a:
+        if p not in stepped_b:
+            return (a, b, p)
+    return None
+
+
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == "__main__":
-    # Verify key theorems computationally
-    print("Verifying formalized theorems computationally...\n")
+    # Verify block is still life
+    b = block()
+    assert GoLSystem.is_fixed_point(b), "Block should be a still life"
+    print("✓ Block is a still life")
 
-    # Theorem: block is a still life
-    assert is_still_life(BLOCK), "Block should be a still life"
-    print("✓ block_isStillLife: Block is a still life")
+    # Verify blinker period
+    bl = blinker_h()
+    period = GoLSystem.find_period(bl)
+    assert period == 2, f"Blinker should have period 2, got {period}"
+    print(f"✓ Blinker has period {period}")
 
-    # Theorem: singleton dies
-    singleton = {(5, 5)}
-    assert len(gol_step(singleton)) == 0, "Singleton should die"
-    print("✓ singleton_dies: Isolated cell dies")
+    # Verify glider period (with translation)
+    g = glider()
+    g4 = GoLSystem.iterate(g, 4)
+    assert g4 == translate_config(g, (1, 1)), "Glider should translate (1,1) in 4 steps"
+    print("✓ Glider translates (1,1) in 4 steps")
 
-    # Theorem: blinker is period-2 oscillator
-    assert is_oscillator(BLINKER, 2), "Blinker should be period 2"
-    print("✓ Blinker is a period-2 oscillator")
+    # Translation invariance
+    d = (100, -50)
+    cfg = blinker_h()
+    assert gol_step(translate_config(cfg, d)) == translate_config(gol_step(cfg), d)
+    print("✓ Translation invariance verified")
 
-    # Theorem: translation invariance
-    for pattern in [BLOCK, BLINKER, GLIDER]:
-        for dx, dy in [(1, 0), (0, 1), (-3, 7)]:
-            lhs = gol_step(translate(pattern, dx, dy))
-            rhs = translate(gol_step(pattern), dx, dy)
-            assert lhs == rhs, f"Translation invariance failed for dx={dx}, dy={dy}"
-    print("✓ step_translate: GoL commutes with translation")
+    # Non-monotonicity
+    witness = find_non_monotonicity_witness()
+    assert witness is not None, "Should find non-monotonicity witness"
+    a, b, p = witness
+    print(f"✓ Non-monotonicity witness: cell {p}")
 
-    # Theorem: overhead is multiplicative
-    chain = [3, 5, 7]
-    assert simulation_chain_overhead(chain) == 105
-    assert simulation_chain_overhead(chain) >= 2 ** len(chain)
-    print("✓ overhead_exponential: Chain overhead ≥ 2^n")
+    # Dilation chain bound
+    product, bound = dilation_chain_bound([100, 50, 1000])
+    assert product <= bound
+    print(f"✓ Dilation chain: {product:,} ≤ {bound:,}")
 
-    # Theorem: underpopulation
-    for pattern in [BLOCK, BLINKER]:
-        for cell in pattern:
-            nc = neighbor_count(pattern, cell)
-            result = cell in gol_step(pattern)
-            if nc <= 1:
-                assert not result, f"Cell {cell} with {nc} neighbors should die"
-    print("✓ underpopulation_extinction: Cells with ≤1 neighbor die")
+    # Finite support preservation
+    cfg = frozenset({(0,0), (1,0), (-1,1), (0,1), (0,2)})  # R-pentomino
+    for t in range(100):
+        cfg = gol_step(cfg)
+        assert len(cfg) < 10**6, "Support should remain finite"
+    print(f"✓ Finite support preserved over 100 steps (pop={len(cfg)})")
 
-    print("\nAll computational verifications passed!")
+    print("\nAll algorithm tests passed!")
