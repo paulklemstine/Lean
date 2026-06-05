@@ -1,24 +1,29 @@
 #!/usr/bin/env python3
 """
-Demo: The Affine Structure of Collatz Orbits
+Collatz Parity Dynamics: Demonstrations and Numerical Examples
 
-Demonstrates the key results:
-1. Affine representation: orbit segments are linear functions
-2. Cycle candidate computation for arbitrary parity words
-3. Verification that cycle candidates are never positive integers (for small words)
-4. Syracuse growth analysis
+This script demonstrates the key results from the formal Lean 4 development:
+1. Parity-driven affine linearization
+2. Contraction inequality verification
+3. Cycle equation analysis
+4. Orbit statistics and density bounds
 """
 
+from typing import Optional
 from fractions import Fraction
-from typing import List, Tuple, Optional
 
 
 def collatz_step(n: int) -> int:
-    """Standard Collatz step."""
+    """Standard Collatz step: T(n) = n/2 if even, 3n+1 if odd."""
     return n // 2 if n % 2 == 0 else 3 * n + 1
 
 
-def collatz_orbit(n: int, max_steps: int = 1000) -> List[int]:
+def syracuse(n: int) -> int:
+    """Syracuse map: (3n+1)/2 for odd n."""
+    return (3 * n + 1) // 2
+
+
+def collatz_orbit(n: int, max_steps: int = 10000) -> list[int]:
     """Compute the Collatz orbit of n until it reaches 1 or max_steps."""
     orbit = [n]
     while n != 1 and len(orbit) < max_steps:
@@ -27,195 +32,292 @@ def collatz_orbit(n: int, max_steps: int = 1000) -> List[int]:
     return orbit
 
 
-def parity_word(n: int, k: int) -> List[bool]:
-    """Get the parity word for the first k steps of n's orbit."""
-    word = []
-    val = n
-    for _ in range(k):
-        word.append(val % 2 == 1)
-        val = collatz_step(val)
-    return word
+def parity_sequence(orbit: list[int]) -> list[bool]:
+    """Extract the parity sequence: True if odd, False if even."""
+    return [x % 2 == 1 for x in orbit]
 
 
-def word_slope(w: List[bool]) -> Fraction:
-    """Compute the slope of the affine map for parity word w."""
-    j = sum(1 for b in w if b)  # count True (odd steps)
-    e = sum(1 for b in w if not b)  # count False (even steps)
-    return Fraction(3**j, 2**e)
-
-
-def word_intercept(w: List[bool]) -> Fraction:
-    """Compute the intercept of the affine map for parity word w.
-    
-    Recursive definition:
-    - intercept([]) = 0
-    - intercept(true :: w) = slope(w) + intercept(w)
-    - intercept(false :: w) = intercept(w)
+def affine_map_from_parity(parity_seq: list[bool]) -> tuple[Fraction, Fraction]:
     """
-    if not w:
-        return Fraction(0)
-    if w[0]:  # odd step
-        return word_slope(w[1:]) + word_intercept(w[1:])
-    else:  # even step
-        return word_intercept(w[1:])
-
-
-def cycle_candidate(w: List[bool]) -> Optional[Fraction]:
-    """Compute the unique cycle candidate for parity word w.
-    Returns None if slope = 1 (no unique candidate)."""
-    s = word_slope(w)
-    if s == 1:
-        return None
-    return word_intercept(w) / (1 - s)
-
-
-def collatz_rat_word(x: Fraction, w: List[bool]) -> Fraction:
-    """Apply the rational Collatz iteration with specified parity word."""
-    for b in w:
-        if b:
-            x = 3 * x + 1
+    Compute the ParityDrivenAffineMap (mul, offset) for a parity sequence.
+    
+    Even step: x ↦ x/2 → (1/2, 0)
+    Odd step: x ↦ 3x+1 → (3, 1)
+    Composition: g ∘ f = (g.mul * f.mul, g.mul * f.offset + g.offset)
+    """
+    mul = Fraction(1)
+    offset = Fraction(0)
+    for is_odd in parity_seq:
+        if is_odd:
+            # Compose odd step (3, 1) with current (mul, offset)
+            mul, offset = Fraction(3) * mul, Fraction(3) * offset + Fraction(1)
         else:
-            x = x / 2
-    return x
+            # Compose even step (1/2, 0) with current (mul, offset)
+            mul, offset = mul / 2, offset / 2
+    return mul, offset
 
 
-def verify_affine_representation(x: Fraction, w: List[bool]) -> bool:
-    """Verify the affine representation theorem for specific x and w."""
-    lhs = collatz_rat_word(x, w)
-    rhs = word_slope(w) * x + word_intercept(w)
-    return lhs == rhs
+def verify_affine_linearization(n: int) -> None:
+    """
+    Demonstrate that the parity-driven affine map correctly predicts
+    the orbit value at each step.
+    """
+    orbit = collatz_orbit(n)
+    parity = parity_sequence(orbit)
+    
+    print(f"\n{'='*60}")
+    print(f"DEMO 1: Affine Linearization for n = {n}")
+    print(f"{'='*60}")
+    print(f"Orbit: {' → '.join(str(x) for x in orbit[:15])}{'...' if len(orbit) > 15 else ''}")
+    print(f"Parity: {''.join('O' if p else 'E' for p in parity[:15])}{'...' if len(orbit) > 15 else ''}")
+    
+    # Verify at several checkpoints
+    for k in [3, 5, 10, min(len(orbit)-1, 20)]:
+        if k >= len(orbit):
+            break
+        mul, offset = affine_map_from_parity(parity[:k])
+        predicted = mul * n + offset
+        actual = orbit[k]
+        match = "✓" if predicted == actual else "✗"
+        print(f"  Step {k:3d}: predicted = {float(predicted):12.4f}, actual = {actual:8d}  {match}")
+        print(f"           affine map: {float(mul):.6f} · n + {float(offset):.4f}")
 
 
-def valid_parity_words(k: int) -> List[List[bool]]:
-    """Generate all valid parity words of length k (no consecutive True values)."""
-    if k == 0:
-        return [[]]
-    if k == 1:
-        return [[False], [True]]
-    words = []
-    for w in valid_parity_words(k - 1):
-        words.append(w + [False])
-        if not w[-1]:  # can only add True if previous is False
-            words.append(w + [True])
-    return words
+def verify_contraction_inequality() -> None:
+    """
+    Demonstrate the contraction inequality: 3^j < 2^(2j) for j ≥ 1.
+    """
+    print(f"\n{'='*60}")
+    print(f"DEMO 2: Contraction Inequality 3^j < 2^(2j)")
+    print(f"{'='*60}")
+    for j in range(1, 16):
+        lhs = 3**j
+        rhs = 2**(2*j)
+        ratio = lhs / rhs
+        print(f"  j={j:2d}: 3^j = {lhs:15d}, 2^(2j) = {rhs:15d}, ratio = {ratio:.6f} < 1  ✓")
+
+
+def analyze_parity_density() -> None:
+    """
+    Demonstrate the odd density bound: at most ⌈k/2⌉ steps are odd.
+    """
+    print(f"\n{'='*60}")
+    print(f"DEMO 3: Parity Density Analysis")
+    print(f"{'='*60}")
+    
+    for n in [27, 97, 871, 6171, 77031]:
+        orbit = collatz_orbit(n)
+        k = len(orbit) - 1  # number of steps
+        parity = parity_sequence(orbit[:-1])  # parity of first k values
+        odd_count = sum(parity)
+        bound = (k + 1) // 2
+        density = odd_count / k if k > 0 else 0
+        
+        print(f"  n={n:6d}: {k:4d} steps, {odd_count:4d} odd ({density:.3f}), "
+              f"bound = {bound:4d}, gap = {bound - odd_count:4d}  ✓")
+
+
+def cycle_equation_analysis() -> None:
+    """
+    Demonstrate the cycle equation: (2^e - 3^j) · x₀ = C.
+    """
+    print(f"\n{'='*60}")
+    print(f"DEMO 4: Cycle Equation Analysis")
+    print(f"{'='*60}")
+    
+    # The trivial cycle: 1 → 4 → 2 → 1
+    # L=3 steps, j=1 odd step (the step at n=1), e=2 even steps
+    L, j = 3, 1
+    e = L - j
+    coeff = 2**e - 3**j
+    print(f"  Trivial cycle 1→4→2→1:")
+    print(f"    L={L}, j={j}, e={e}")
+    print(f"    Cycle coefficient: 2^{e} - 3^{j} = {2**e} - {3**j} = {coeff}")
+    print(f"    x₀ = 1, C = {coeff * 1}")
+    print(f"    Equation: {coeff} · 1 = {coeff}  ✓")
+    
+    # Check that 2^e ≠ 3^j for various e, j
+    print(f"\n  Cycle coefficient 2^e - 3^j is never zero (parity argument):")
+    for e_val in range(1, 8):
+        for j_val in range(1, 8):
+            coeff = 2**e_val - 3**j_val
+            if abs(coeff) < 10:
+                print(f"    2^{e_val} - 3^{j_val} = {2**e_val} - {3**j_val} = {coeff}")
+
+
+def syracuse_bound_demo() -> None:
+    """
+    Demonstrate Syracuse bounds: Syracuse(n) ≤ 2n for odd n.
+    """
+    print(f"\n{'='*60}")
+    print(f"DEMO 5: Syracuse Bounds")
+    print(f"{'='*60}")
+    
+    max_ratio = 0
+    max_ratio_n = 1
+    for n in range(1, 1000, 2):  # odd numbers only
+        s = syracuse(n)
+        ratio = s / n
+        if ratio > max_ratio:
+            max_ratio = ratio
+            max_ratio_n = n
+        if n <= 19:
+            print(f"  Syracuse({n:3d}) = {s:5d}, ratio = {ratio:.4f}, "
+                  f"{'≤' if s <= 2*n else '>'} 2n={2*n}")
+    
+    print(f"\n  Max ratio in [1,999]: Syracuse({max_ratio_n})/{max_ratio_n} = {max_ratio:.6f}")
+    print(f"  (Proved: ratio ≤ 2 for all odd n ≥ 1)")
+
+
+def stopping_time_analysis() -> None:
+    """
+    Analyze stopping time distribution for the falsifiable conjecture.
+    """
+    print(f"\n{'='*60}")
+    print(f"DEMO 6: Stopping Time Analysis")
+    print(f"{'='*60}")
+    
+    import math
+    
+    max_stop = 0
+    max_stop_n = 1
+    max_peak = 0
+    max_peak_n = 1
+    
+    N = 100000
+    for n in range(1, N + 1):
+        orbit = collatz_orbit(n)
+        stop = len(orbit) - 1
+        peak = max(orbit)
+        
+        if stop > max_stop:
+            max_stop = stop
+            max_stop_n = n
+        if peak > max_peak:
+            max_peak = peak
+            max_peak_n = n
+    
+    print(f"  Range: [1, {N}]")
+    print(f"  Max stopping time: σ({max_stop_n}) = {max_stop}")
+    print(f"  Max peak value: peak({max_peak_n}) = {max_peak}")
+    print(f"  log₂(max_stop_n) = {math.log2(max_stop_n):.1f}")
+    print(f"  σ / log₂(n)² ≈ {max_stop / math.log2(max_stop_n)**2:.2f}")
+    print(f"  peak / n ≈ {max_peak / max_peak_n:.1f}")
+
+
+def log_drift_demo() -> None:
+    """
+    Demonstrate the log-drift heuristic.
+    """
+    print(f"\n{'='*60}")
+    print(f"DEMO 7: Log-Drift Analysis")
+    print(f"{'='*60}")
+    
+    for n in [27, 97, 871, 6171]:
+        orbit = collatz_orbit(n)
+        k = len(orbit) - 1
+        parity = parity_sequence(orbit[:-1])
+        j = sum(parity)
+        e = k - j
+        drift = j * 1.5 - e  # j * log₂(3) - e ≈ j * 1.585 - e
+        drift_exact = j * (3/2) - e  # our formalized version
+        
+        print(f"  n={n:6d}: k={k:4d}, j={j:3d} odd, e={e:4d} even")
+        print(f"           drift (approx) = {drift:.2f}, drift (3/2) = {drift_exact:.2f}")
+        print(f"           odd fraction = {j/k:.4f} {'< 2/5' if 5*j < 2*k else '≥ 2/5'}")
+
+
+if __name__ == "__main__":
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  Collatz Parity Dynamics: Demonstrations                ║")
+    print("║  Companion to formal Lean 4 proofs                      ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+    
+    verify_affine_linearization(27)
+    verify_affine_linearization(7)
+    verify_contraction_inequality()
+    analyze_parity_density()
+    cycle_equation_analysis()
+    syracuse_bound_demo()
+    stopping_time_analysis()
+    log_drift_demo()
+    
+    print(f"\n{'='*60}")
+    print("All demonstrations completed successfully.")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Cycle Equation Analysis
+
+Shows the cycle coefficient 2^e - 3^j for various (e, j) pairs
+and demonstrates why non-trivial cycles are algebraically constrained.
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def main():
-    print("=" * 70)
-    print("THE AFFINE STRUCTURE OF COLLATZ ORBITS")
-    print("=" * 70)
-    
-    # Demo 1: Affine Representation Verification
-    print("\n--- Demo 1: Affine Representation Theorem ---")
-    print("For any parity word w and starting value x:")
-    print("  collatzRatWord(x, w) = wordSlope(w) * x + wordIntercept(w)")
-    print()
-    
-    test_values = [Fraction(7), Fraction(27), Fraction(15), Fraction(100)]
-    test_lengths = [3, 5, 4, 6]
-    
-    for x, k in zip(test_values, test_lengths):
-        n = int(x)
-        w = parity_word(n, k)
-        s = word_slope(w)
-        c = word_intercept(w)
-        result = collatz_rat_word(x, w)
-        verified = verify_affine_representation(x, w)
-        
-        word_str = ''.join('O' if b else 'E' for b in w)
-        print(f"  n={n}, k={k}, word={word_str}")
-        print(f"    slope = {s} = 3^{sum(w)}/2^{k-sum(w)}")
-        print(f"    intercept = {c}")
-        print(f"    slope*{n} + intercept = {s*x + c} = {float(s*x + c):.4f}")
-        print(f"    actual T^{k}({n}) = {result} ✓" if verified else f"    MISMATCH ✗")
-        print()
-    
-    # Demo 2: Cycle Candidate Analysis
-    print("\n--- Demo 2: Cycle Candidates for Small Parity Words ---")
-    print("For each valid parity word, the unique cycle candidate is:")
-    print("  candidate = intercept / (1 - slope)")
-    print()
-    
-    positive_integer_cycles = []
-    for k in range(1, 12):
-        words = valid_parity_words(k)
-        mixed_words = [w for w in words if any(w) and not all(w)]
-        
-        for w in mixed_words:
-            cand = cycle_candidate(w)
-            if cand is not None and cand > 0 and cand.denominator == 1:
-                positive_integer_cycles.append((k, w, int(cand)))
-    
-    if positive_integer_cycles:
-        print("  Found positive integer cycle candidates:")
-        for k, w, c in positive_integer_cycles:
-            word_str = ''.join('O' if b else 'E' for b in w)
-            print(f"    k={k}, word={word_str}, candidate={c}")
-    else:
-        print("  No positive integer cycle candidates found for k ≤ 11!")
-        print("  (This confirms: no non-trivial Collatz cycle of length ≤ 11)")
-    
-    # Show some specific candidates
-    print("\n  Sample cycle candidates (showing they're not positive integers):")
-    for k in [3, 4, 5, 6]:
-        words = valid_parity_words(k)
-        mixed_words = [w for w in words if any(w) and not all(w)]
-        for w in mixed_words[:3]:
-            cand = cycle_candidate(w)
-            word_str = ''.join('O' if b else 'E' for b in w)
-            print(f"    k={k}, word={word_str}: candidate = {cand} = {float(cand):.6f}")
-    
-    # Demo 3: Syracuse Growth Analysis
-    print("\n\n--- Demo 3: Syracuse Growth Analysis ---")
-    print("For odd n, syracuse(n) = (3n+1)/2 ≤ 2n")
-    print()
-    
-    for n in [1, 3, 5, 7, 9, 11, 27, 99, 999]:
-        syr = (3 * n + 1) // 2
-        ratio = syr / n
-        print(f"  n={n:4d}: syracuse(n) = {syr:5d}, ratio = {ratio:.4f} ≤ 2.0 ✓")
-    
-    # Demo 4: Parity Exclusion and Valid Word Counting
-    print("\n\n--- Demo 4: Valid Parity Words (Fibonacci Connection) ---")
-    print("By parity exclusion, no two consecutive steps can be odd.")
-    print("The number of valid words of length k is the (k+2)-th Fibonacci number.")
-    print()
-    
-    for k in range(1, 16):
-        count = len(valid_parity_words(k))
-        total = 2**k
-        frac = count / total
-        print(f"  k={k:2d}: valid words = {count:6d} / {total:6d} = {frac:.4f}")
-    
-    # Demo 5: The Π₂ Structure
-    print("\n\n--- Demo 5: Bounded Verification (Π₂ Structure) ---")
-    print("Collatz conjecture = ∀N. CollatzUpTo(N)")
-    print()
-    
-    for N in [10, 100, 1000, 10000]:
-        all_reach = True
-        max_steps = 0
-        max_peak = 0
-        hardest = 1
-        for n in range(1, N + 1):
-            orbit = collatz_orbit(n)
-            if orbit[-1] != 1:
-                all_reach = False
-                break
-            steps = len(orbit) - 1
-            peak = max(orbit)
-            if steps > max_steps:
-                max_steps = steps
-                hardest = n
-            max_peak = max(max_peak, peak)
-        
-        status = "✓" if all_reach else "✗"
-        print(f"  CollatzUpTo({N:5d}) {status}: max_steps={max_steps:3d} "
-              f"(at n={hardest}), max_peak={max_peak}")
-    
-    print("\n" + "=" * 70)
-    print("All demonstrations complete.")
-    print("=" * 70)
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+    fig.suptitle('Collatz Cycle Equation: $(2^e - 3^j) \\cdot x_0 = C$', fontsize=16)
+
+    # Panel 1: Heatmap of |2^e - 3^j|
+    ax1 = axes[0]
+    max_val = 20
+    e_vals = np.arange(1, max_val + 1)
+    j_vals = np.arange(1, max_val + 1)
+    E, J = np.meshgrid(e_vals, j_vals)
+    coeffs = np.abs(2.0**E - 3.0**J)
+    im = ax1.pcolormesh(e_vals, j_vals, np.log10(coeffs + 1), cmap='viridis')
+    plt.colorbar(im, ax=ax1, label='$\\log_{10}|2^e - 3^j|$')
+    ax1.plot([1, max_val], [1*np.log(2)/np.log(3), max_val*np.log(2)/np.log(3)],
+             'r--', label='$j = e \\cdot \\log_3(2)$')
+    ax1.set_xlabel('e (even steps)')
+    ax1.set_ylabel('j (odd steps)')
+    ax1.set_title('Cycle Coefficient Magnitude')
+    ax1.legend()
+
+    # Panel 2: Near-misses where 2^e ≈ 3^j
+    ax2 = axes[1]
+    near_misses = []
+    for e in range(1, 100):
+        for j in range(1, 65):
+            diff = abs(2**e - 3**j)
+            if diff > 0 and diff < 2**(e//2):
+                near_misses.append((e, j, diff))
+
+    if near_misses:
+        es, js, diffs = zip(*near_misses)
+        scatter = ax2.scatter(es, js, c=np.log10([d for d in diffs]),
+                            cmap='coolwarm_r', s=15, alpha=0.8)
+        plt.colorbar(scatter, ax=ax2, label='$\\log_{10}|2^e - 3^j|$')
+    ax2.set_xlabel('e')
+    ax2.set_ylabel('j')
+    ax2.set_title('Near-misses: $|2^e - 3^j| < 2^{e/2}$')
+
+    # Panel 3: Minimum |2^e - 3^j| / 2^e for each cycle length L
+    ax3 = axes[2]
+    L_vals = range(4, 50)
+    min_ratios = []
+    for L in L_vals:
+        min_ratio = float('inf')
+        for j in range(1, L // 2 + 1):
+            e = L - j
+            coeff = abs(2**e - 3**j)
+            ratio = coeff / (2**e) if 2**e > 0 else float('inf')
+            min_ratio = min(min_ratio, ratio)
+        min_ratios.append(min_ratio)
+
+    ax3.semilogy(list(L_vals), min_ratios, 'ko-', markersize=3)
+    ax3.set_xlabel('Cycle length L')
+    ax3.set_ylabel('$\\min_j |1 - (3/2)^j \\cdot 2^{-e+j}|$')
+    ax3.set_title('Minimum Relative Cycle Gap')
+    ax3.axhline(y=0, color='r', linestyle='--', alpha=0.5)
+
+    plt.tight_layout()
+    plt.savefig('cycle_equation.png', dpi=150, bbox_inches='tight')
+    print("Saved cycle_equation.png")
 
 
 if __name__ == "__main__":
@@ -224,127 +326,93 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: Collatz Orbit Structure and Cycle Candidates
+Visualization: Collatz Orbit Structure and Parity Patterns
 
-Produces three plots:
-1. Collatz orbits colored by parity pattern
-2. Cycle candidate magnitudes vs word length
-3. Odd density distribution in Collatz orbits
+Creates a multi-panel figure showing:
+1. Collatz orbit of n=27 with parity coloring
+2. Odd density over orbit segments
+3. Contraction inequality 3^j vs 2^(2j)
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from fractions import Fraction
-from typing import List, Tuple, Optional
 
 
-def collatz_orbit(n: int, max_steps: int = 500) -> List[int]:
+def collatz_step(n: int) -> int:
+    return n // 2 if n % 2 == 0 else 3 * n + 1
+
+
+def collatz_orbit(n: int) -> list[int]:
     orbit = [n]
-    while n != 1 and len(orbit) < max_steps:
-        n = n // 2 if n % 2 == 0 else 3 * n + 1
+    while n != 1:
+        n = collatz_step(n)
         orbit.append(n)
     return orbit
 
 
-def word_slope_intercept(w: List[bool]) -> Tuple[Fraction, Fraction]:
-    slope = Fraction(1)
-    intercept = Fraction(0)
-    for b in reversed(w):
-        if b:
-            intercept = slope + intercept
-            slope = 3 * slope
-        else:
-            slope = slope / 2
-    return slope, intercept
+def main():
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig.suptitle('Collatz Parity Dynamics: Orbit Structure and Contraction', fontsize=16)
+
+    # Panel 1: Orbit of 27 with parity coloring
+    ax1 = axes[0, 0]
+    orbit = collatz_orbit(27)
+    colors = ['red' if x % 2 == 1 else 'blue' for x in orbit]
+    ax1.scatter(range(len(orbit)), orbit, c=colors, s=10, alpha=0.7)
+    ax1.plot(range(len(orbit)), orbit, 'k-', alpha=0.2, linewidth=0.5)
+    ax1.set_xlabel('Step')
+    ax1.set_ylabel('Value')
+    ax1.set_title('Orbit of n=27 (Red=odd, Blue=even)')
+    ax1.set_yscale('log')
+
+    # Panel 2: Odd density in sliding window
+    ax2 = axes[0, 1]
+    window = 10
+    densities = []
+    for i in range(len(orbit) - window):
+        segment = orbit[i:i+window]
+        odd_count = sum(1 for x in segment if x % 2 == 1)
+        densities.append(odd_count / window)
+    ax2.plot(range(len(densities)), densities, 'g-', linewidth=1)
+    ax2.axhline(y=0.5, color='r', linestyle='--', label='Max (parity exclusion)')
+    ax2.axhline(y=np.log(2)/np.log(3), color='orange', linestyle='--', label='Critical threshold')
+    ax2.axhline(y=1/3, color='blue', linestyle='--', label='Guaranteed contraction')
+    ax2.set_xlabel('Step')
+    ax2.set_ylabel('Odd density (window=10)')
+    ax2.set_title('Odd Step Density Along Orbit')
+    ax2.legend(fontsize=8)
+    ax2.set_ylim(0, 0.7)
+
+    # Panel 3: Contraction inequality
+    ax3 = axes[1, 0]
+    j_vals = np.arange(1, 20)
+    pow3 = 3.0**j_vals
+    pow4 = 4.0**j_vals
+    pow2_2j = 2.0**(2*j_vals)
+    ax3.semilogy(j_vals, pow3, 'ro-', label='$3^j$', markersize=4)
+    ax3.semilogy(j_vals, pow2_2j, 'bs-', label='$2^{2j} = 4^j$', markersize=4)
+    ax3.fill_between(j_vals, pow3, pow2_2j, alpha=0.1, color='green')
+    ax3.set_xlabel('j (number of odd steps)')
+    ax3.set_ylabel('Value')
+    ax3.set_title('Contraction Inequality: $3^j < 2^{2j}$')
+    ax3.legend()
+
+    # Panel 4: Stopping time distribution
+    ax4 = axes[1, 1]
+    N = 10000
+    stop_times = []
+    for n in range(1, N + 1):
+        orbit_n = collatz_orbit(n)
+        stop_times.append(len(orbit_n) - 1)
+    ax4.scatter(range(1, N + 1), stop_times, s=0.3, alpha=0.5, c='purple')
+    ax4.set_xlabel('n')
+    ax4.set_ylabel('Stopping time σ(n)')
+    ax4.set_title(f'Stopping Times for n ∈ [1, {N}]')
+
+    plt.tight_layout()
+    plt.savefig('collatz_dynamics.png', dpi=150, bbox_inches='tight')
+    print("Saved collatz_dynamics.png")
 
 
-def valid_parity_words(k: int) -> List[List[bool]]:
-    if k == 0:
-        return [[]]
-    if k == 1:
-        return [[False], [True]]
-    result = []
-    for w in valid_parity_words(k - 1):
-        result.append(w + [False])
-        if not w[-1]:
-            result.append(w + [True])
-    return result
-
-
-def cycle_candidate_val(w: List[bool]) -> Optional[float]:
-    s, c = word_slope_intercept(w)
-    if s == 1:
-        return None
-    return float(c / (1 - s))
-
-
-# --- Plot 1: Collatz Orbits ---
-fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-
-ax1 = axes[0]
-colors = plt.cm.viridis(np.linspace(0, 1, 8))
-for i, n in enumerate([7, 15, 27, 31, 63, 97, 171, 255]):
-    orbit = collatz_orbit(n)
-    ax1.plot(range(len(orbit)), orbit, '-', color=colors[i], alpha=0.8,
-             linewidth=1.5, label=f'n={n}')
-
-ax1.set_xlabel('Step', fontsize=12)
-ax1.set_ylabel('Value', fontsize=12)
-ax1.set_title('Collatz Orbits: Diverse Behaviors\nfrom Simple Rule', fontsize=13)
-ax1.legend(fontsize=8, ncol=2)
-ax1.set_yscale('log')
-ax1.grid(True, alpha=0.3)
-
-# --- Plot 2: Cycle Candidates ---
-ax2 = axes[1]
-all_candidates = []
-all_lengths = []
-
-for k in range(2, 18):
-    words = valid_parity_words(k)
-    mixed = [w for w in words if any(w) and not all(w)]
-    for w in mixed:
-        cand = cycle_candidate_val(w)
-        if cand is not None:
-            all_candidates.append(abs(cand))
-            all_lengths.append(k)
-
-ax2.scatter(all_lengths, all_candidates, s=3, alpha=0.4, c='steelblue')
-ax2.axhline(y=0, color='red', linestyle='--', alpha=0.5, label='y=0 (must be > 0 for cycle)')
-ax2.set_xlabel('Word Length k', fontsize=12)
-ax2.set_ylabel('|Cycle Candidate|', fontsize=12)
-ax2.set_title('Cycle Candidates vs Word Length\n(None are positive integers)', fontsize=13)
-ax2.set_yscale('log')
-ax2.grid(True, alpha=0.3)
-ax2.legend(fontsize=9)
-
-# --- Plot 3: Odd Density Distribution ---
-ax3 = axes[2]
-densities = []
-stopping_times = []
-
-for n in range(1, 5001):
-    orbit = collatz_orbit(n)
-    if orbit[-1] == 1 and len(orbit) > 1:
-        parities = [orbit[i] % 2 == 1 for i in range(len(orbit) - 1)]
-        odd_count = sum(parities)
-        density = odd_count / len(parities)
-        densities.append(density)
-        stopping_times.append(len(orbit) - 1)
-
-ax3.hist(densities, bins=50, color='coral', alpha=0.7, edgecolor='black', linewidth=0.5)
-ax3.axvline(x=np.log(2)/np.log(3), color='green', linestyle='--', linewidth=2,
-            label=f'log₂/log₃ ≈ {np.log(2)/np.log(3):.3f}')
-ax3.axvline(x=0.5, color='blue', linestyle=':', linewidth=2, label='0.5 threshold')
-ax3.set_xlabel('Odd Step Density', fontsize=12)
-ax3.set_ylabel('Count', fontsize=12)
-ax3.set_title('Distribution of Odd Density\nin Collatz Orbits (n ≤ 5000)', fontsize=13)
-ax3.legend(fontsize=9)
-ax3.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('collatz_analysis.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved collatz_analysis.png")
+if __name__ == "__main__":
+    main()

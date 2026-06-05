@@ -1,270 +1,341 @@
 #!/usr/bin/env python3
 """
-Algorithms for Collatz Orbit Analysis
+Algorithms for Collatz Parity Dynamics
 
-Type-hinted implementations of the key algorithms from the research.
+Type-hinted implementations of the core algorithms from the formal development.
 """
 
 from fractions import Fraction
-from typing import List, Optional, Tuple, Dict
-from dataclasses import dataclass
+from typing import Optional
 
 
-# =============================================================================
-# Algorithm 1: Affine Representation Computation
-# =============================================================================
-
-def compute_affine_coefficients(w: List[bool]) -> Tuple[Fraction, Fraction]:
+def collatz_step(n: int) -> int:
     """
-    Compute the slope and intercept of the affine map for parity word w.
+    Standard Collatz step.
     
-    Algorithm:
-        slope([]) = 1, intercept([]) = 0
-        For b :: rest:
-            If b (odd): slope = 3 * slope(rest), intercept = slope(rest) + intercept(rest)
-            If ¬b (even): slope = slope(rest) / 2, intercept = intercept(rest)
+    T(n) = n/2 if n is even, 3n+1 if n is odd.
     
-    Returns (slope, intercept) as exact fractions.
+    Corresponds to `CollatzParity.T` in Lean.
     
-    Time: O(k) where k = len(w)
-    Space: O(k) for recursion (O(1) with iterative version)
+    >>> collatz_step(6)
+    3
+    >>> collatz_step(7)
+    22
     """
-    if not w:
-        return Fraction(1), Fraction(0)
-    
-    rest_slope, rest_intercept = compute_affine_coefficients(w[1:])
-    
-    if w[0]:  # odd step
-        return 3 * rest_slope, rest_slope + rest_intercept
-    else:  # even step
-        return rest_slope / 2, rest_intercept
+    return n // 2 if n % 2 == 0 else 3 * n + 1
 
 
-def compute_affine_iterative(w: List[bool]) -> Tuple[Fraction, Fraction]:
+def collatz_iter(n: int, k: int) -> int:
     """
-    Iterative version of affine coefficient computation.
+    Iterate collatz_step k times.
     
-    Works right-to-left through the word, building up the affine map.
+    Corresponds to `CollatzParity.T_iter` in Lean.
     
-    Time: O(k), Space: O(1) (excluding arbitrary-precision arithmetic)
+    >>> collatz_iter(7, 3)
+    34
     """
-    slope = Fraction(1)
-    intercept = Fraction(0)
-    
-    for b in reversed(w):
-        if b:  # odd step
-            # New: slope' = 3 * slope, intercept' = slope + intercept
-            intercept = slope + intercept
-            slope = 3 * slope
-        else:  # even step
-            # New: slope' = slope / 2, intercept' = intercept
-            slope = slope / 2
-    
-    return slope, intercept
+    for _ in range(k):
+        n = collatz_step(n)
+    return n
 
 
-# =============================================================================
-# Algorithm 2: Cycle Candidate Computation
-# =============================================================================
-
-@dataclass
-class CycleCandidateResult:
-    """Result of cycle candidate analysis for a parity word."""
-    word: List[bool]
-    slope: Fraction
-    intercept: Fraction
-    candidate: Optional[Fraction]
-    is_positive_integer: bool
-    
-    def __repr__(self) -> str:
-        word_str = ''.join('O' if b else 'E' for b in self.word)
-        cand_str = str(self.candidate) if self.candidate else "undefined"
-        return (f"CycleCandidateResult(word={word_str}, slope={self.slope}, "
-                f"intercept={self.intercept}, candidate={cand_str}, "
-                f"is_positive_integer={self.is_positive_integer})")
-
-
-def analyze_cycle_candidate(w: List[bool]) -> CycleCandidateResult:
+def syracuse(n: int) -> int:
     """
-    Analyze the cycle candidate for a parity word.
+    Syracuse map: (3n+1)/2 for odd n.
     
-    Algorithm:
-        1. Compute slope s and intercept c.
-        2. If s = 1, candidate is undefined (no unique fixed point).
-        3. Otherwise, candidate = c / (1 - s).
-        4. Check if candidate is a positive integer.
+    Corresponds to `CollatzParity.syracuse` in Lean.
     
-    Time: O(k) for coefficient computation + O(1) for analysis
+    >>> syracuse(7)
+    11
     """
-    s, c = compute_affine_iterative(w)
-    
-    if s == 1:
-        return CycleCandidateResult(w, s, c, None, False)
-    
-    candidate = c / (1 - s)
-    is_pos_int = candidate > 0 and candidate.denominator == 1
-    
-    return CycleCandidateResult(w, s, c, candidate, is_pos_int)
+    return (3 * n + 1) // 2
 
 
-# =============================================================================
-# Algorithm 3: Valid Parity Word Enumeration
-# =============================================================================
+def stopping_time(n: int, max_steps: int = 10_000_000) -> Optional[int]:
+    """
+    Compute the stopping time of n: least k with T^k(n) = 1.
+    
+    Returns None if not found within max_steps.
+    
+    >>> stopping_time(1)
+    0
+    >>> stopping_time(7)
+    16
+    """
+    current = n
+    for k in range(max_steps):
+        if current == 1:
+            return k
+        current = collatz_step(current)
+    return None
 
-def enumerate_valid_words(k: int) -> List[List[bool]]:
+
+def peak_value(n: int) -> tuple[int, int]:
     """
-    Enumerate all valid parity words of length k.
+    Compute the peak value and its position along the Collatz orbit of n.
     
-    A parity word is valid if it contains no two consecutive True values
-    (by the parity exclusion theorem: after an odd Collatz step, the
-    result is always even).
+    Returns (peak, position) where position is the step at which the peak occurs.
     
-    The count follows the Fibonacci sequence: F(k+2) valid words of length k.
-    
-    Algorithm: Dynamic programming / recursive enumeration with constraint.
-    
-    Time: O(F(k+2)) ≈ O(φ^k) where φ = golden ratio
-    Space: O(k * F(k+2)) to store all words
+    >>> peak_value(27)
+    (9232, 77)
     """
-    if k == 0:
-        return [[]]
-    if k == 1:
-        return [[False], [True]]
+    current = n
+    peak = n
+    peak_pos = 0
+    step = 0
+    while current != 1:
+        current = collatz_step(current)
+        step += 1
+        if current > peak:
+            peak = current
+            peak_pos = step
+    return peak, peak_pos
+
+
+def parity_sequence(n: int, k: int) -> list[bool]:
+    """
+    Compute the parity sequence of the first k iterates of n.
     
-    result: List[List[bool]] = []
-    for w in enumerate_valid_words(k - 1):
-        result.append(w + [False])
-        if not w[-1]:
-            result.append(w + [True])
+    True = odd, False = even.
     
+    Corresponds to `CollatzParity.paritySeq` in Lean.
+    
+    >>> parity_sequence(7, 5)
+    [True, False, True, False, True]
+    """
+    result: list[bool] = []
+    current = n
+    for _ in range(k):
+        result.append(current % 2 == 1)
+        current = collatz_step(current)
     return result
 
 
-def count_valid_words(k: int) -> int:
-    """Count valid parity words of length k without enumerating them.
-    
-    Returns F(k+2) where F is the Fibonacci sequence.
-    Time: O(k), Space: O(1)
+def odd_count(parity_seq: list[bool]) -> int:
     """
-    if k == 0:
-        return 1
-    a, b = 1, 2  # F(2), F(3)
-    for _ in range(k - 1):
-        a, b = b, a + b
-    return b
-
-
-# =============================================================================
-# Algorithm 4: Systematic Cycle Elimination
-# =============================================================================
-
-def check_no_cycles_up_to(max_length: int) -> Tuple[bool, Optional[CycleCandidateResult]]:
+    Count odd steps in a parity sequence.
+    
+    Corresponds to `CollatzParity.oddCount` in Lean.
+    
+    >>> odd_count([True, False, True, False, True])
+    3
     """
-    Check that no valid parity word of length ≤ max_length has a positive
-    integer cycle candidate.
-    
-    Algorithm:
-        For each length k from 1 to max_length:
-            For each valid parity word w of length k:
-                If w has at least one odd and one even step (mixed):
-                    Compute cycle candidate
-                    If candidate is a positive integer: return (False, result)
-        Return (True, None)
-    
-    Time: O(sum_{k=1}^{max_length} F(k+2)) ≈ O(φ^{max_length+2})
+    return sum(parity_seq)
+
+
+class ParityDrivenAffineMap:
     """
-    for k in range(1, max_length + 1):
-        for w in enumerate_valid_words(k):
-            if not any(w) or all(w):
-                continue  # skip pure-even or pure-odd words
-            
-            result = analyze_cycle_candidate(w)
-            if result.is_positive_integer:
-                return False, result
+    A parity-driven affine map on ℚ: x ↦ mul * x + offset.
     
-    return True, None
-
-
-# =============================================================================
-# Algorithm 5: Orbit Complexity Profiling
-# =============================================================================
-
-@dataclass
-class OrbitProfile:
-    """Complete dynamical profile of a Collatz orbit."""
-    start: int
-    orbit: List[int]
-    stopping_time: int
-    peak_value: int
-    odd_count: int
-    even_count: int
-    odd_density: float
-    parity_word: List[bool]
-    affine_slope: Fraction
-    affine_intercept: Fraction
-
-
-def profile_orbit(n: int, max_steps: int = 10000) -> Optional[OrbitProfile]:
+    Corresponds to `CollatzParity.ParityDrivenAffineMap` in Lean.
     """
-    Compute the complete dynamical profile of n's Collatz orbit.
     
-    Returns None if n doesn't reach 1 within max_steps.
+    def __init__(self, mul: Fraction, offset: Fraction):
+        self.mul = mul
+        self.offset = offset
     
-    Time: O(stopping_time)
+    @staticmethod
+    def identity() -> 'ParityDrivenAffineMap':
+        """The identity map: x ↦ x."""
+        return ParityDrivenAffineMap(Fraction(1), Fraction(0))
+    
+    @staticmethod
+    def even_step() -> 'ParityDrivenAffineMap':
+        """Even step: x ↦ x/2."""
+        return ParityDrivenAffineMap(Fraction(1, 2), Fraction(0))
+    
+    @staticmethod
+    def odd_step() -> 'ParityDrivenAffineMap':
+        """Odd step: x ↦ 3x + 1."""
+        return ParityDrivenAffineMap(Fraction(3), Fraction(1))
+    
+    def eval(self, x: Fraction) -> Fraction:
+        """Evaluate the affine map at x."""
+        return self.mul * x + self.offset
+    
+    def compose(self, other: 'ParityDrivenAffineMap') -> 'ParityDrivenAffineMap':
+        """Compose self ∘ other: (self ∘ other)(x) = self(other(x))."""
+        return ParityDrivenAffineMap(
+            self.mul * other.mul,
+            self.mul * other.offset + self.offset
+        )
+    
+    @staticmethod
+    def from_parity_sequence(parity_seq: list[bool]) -> 'ParityDrivenAffineMap':
+        """
+        Build the cumulative affine map from a parity sequence.
+        
+        >>> m = ParityDrivenAffineMap.from_parity_sequence([True, False])
+        >>> m.eval(Fraction(7))
+        Fraction(11, 1)
+        """
+        result = ParityDrivenAffineMap.identity()
+        for is_odd in parity_seq:
+            step = ParityDrivenAffineMap.odd_step() if is_odd else ParityDrivenAffineMap.even_step()
+            result = step.compose(result)
+        return result
+    
+    def __repr__(self) -> str:
+        return f"AffineMap(x ↦ {self.mul} * x + {self.offset})"
+
+
+def contraction_inequality(j: int) -> bool:
     """
-    if n < 1:
+    Verify the contraction inequality: 3^j < 2^(2j).
+    
+    Always True for j ≥ 1 (proved in Lean).
+    
+    >>> contraction_inequality(5)
+    True
+    """
+    return 3**j < 2**(2*j) if j >= 1 else True
+
+
+def density_contraction(j: int, k: int) -> bool:
+    """
+    Verify the density contraction: 3^j < 2^(k-j) when 3j ≤ k.
+    
+    Always True for j ≥ 1 and 3j ≤ k (proved in Lean).
+    
+    >>> density_contraction(2, 7)
+    True
+    """
+    if j < 1 or 3 * j > k:
+        return False
+    return 3**j < 2**(k - j)
+
+
+def cycle_coefficient(e: int, j: int) -> int:
+    """
+    Compute the cycle coefficient 2^e - 3^j.
+    
+    Never zero for e, j ≥ 1 (proved in Lean: cycle_coeff_nonzero).
+    
+    >>> cycle_coefficient(2, 1)
+    1
+    """
+    return 2**e - 3**j
+
+
+def cycle_equation_check(x0: int, L: int) -> Optional[tuple[int, int, int]]:
+    """
+    Check if x0 participates in a cycle of length L.
+    
+    Returns (j, e, C) if it does, None otherwise.
+    
+    >>> cycle_equation_check(1, 3)
+    (1, 2, 1)
+    """
+    orbit = [x0]
+    current = x0
+    for _ in range(L):
+        current = collatz_step(current)
+        orbit.append(current)
+    
+    if orbit[L] != x0:
         return None
     
-    orbit = [n]
-    parities: List[bool] = []
-    val = n
+    j = sum(1 for x in orbit[:L] if x % 2 == 1)
+    e = L - j
+    C = cycle_coefficient(e, j) * x0
+    return j, e, C
+
+
+def log_drift(odd_steps: int, even_steps: int) -> float:
+    """
+    Compute the log-drift: odd_steps * (3/2) - even_steps.
     
-    while val != 1 and len(orbit) < max_steps:
-        parities.append(val % 2 == 1)
-        val = 3 * val + 1 if val % 2 == 1 else val // 2
-        orbit.append(val)
+    Negative drift indicates orbit contraction.
     
-    if val != 1:
-        return None
+    Corresponds to `CollatzBarrier.logDrift` in Lean.
     
-    stopping_time = len(orbit) - 1
-    peak = max(orbit)
-    odd_count = sum(1 for b in parities if b)
-    even_count = stopping_time - odd_count
-    odd_density = odd_count / stopping_time if stopping_time > 0 else 0.0
+    >>> log_drift(2, 5)
+    -2.0
+    """
+    return odd_steps * 1.5 - even_steps
+
+
+class ContractionCert:
+    """
+    A contraction certificate for an orbit segment.
     
-    slope, intercept = compute_affine_iterative(parities)
+    Corresponds to `CollatzBarrier.ContractionCert` in Lean.
+    """
     
-    return OrbitProfile(
-        start=n,
-        orbit=orbit,
-        stopping_time=stopping_time,
-        peak_value=peak,
-        odd_count=odd_count,
-        even_count=even_count,
-        odd_density=odd_density,
-        parity_word=parities,
-        affine_slope=slope,
-        affine_intercept=intercept,
-    )
+    def __init__(self, length: int, odd_steps: int):
+        assert length >= 1, "Length must be ≥ 1"
+        assert 3 * odd_steps <= length, f"Density condition violated: 3*{odd_steps} > {length}"
+        self.length = length
+        self.odd_steps = odd_steps
+    
+    def contracts(self) -> bool:
+        """Verify that 3^j < 2^(k-j)."""
+        j = self.odd_steps
+        k = self.length
+        if j == 0:
+            return 1 < 2**(k)  # always true for k ≥ 1
+        return 3**j < 2**(k - j)
+    
+    @staticmethod
+    def chain(c1: 'ContractionCert', c2: 'ContractionCert') -> 'ContractionCert':
+        """Chain two contraction certificates."""
+        return ContractionCert(
+            c1.length + c2.length,
+            c1.odd_steps + c2.odd_steps
+        )
+
+
+class ProofBarrierSystem:
+    """
+    A proof barrier system: captures the Σ₁/Π₂ gap.
+    
+    Corresponds to `CollatzBarrier.ProofBarrierSystem` in Lean.
+    """
+    
+    def __init__(self, name: str, property_fn, bounded_fn, universal_fn):
+        self.name = name
+        self.property_fn = property_fn
+        self.bounded_fn = bounded_fn
+        self.universal_fn = universal_fn
+    
+    def check_bounded(self, N: int) -> bool:
+        """Check bounded version up to N."""
+        return self.bounded_fn(N)
+    
+    def check_monotonicity(self, M: int, N: int) -> bool:
+        """Check that bounded(N) → bounded(M) for M ≤ N."""
+        if M > N:
+            return True  # vacuously true
+        if self.bounded_fn(N):
+            return self.bounded_fn(M)
+        return True  # hypothesis false
+
+
+# Instantiate for Collatz
+collatz_barrier = ProofBarrierSystem(
+    name="Collatz",
+    property_fn=lambda n: n == 0 or stopping_time(n) is not None,
+    bounded_fn=lambda N: all(
+        n == 0 or stopping_time(n) is not None 
+        for n in range(N + 1)
+    ),
+    universal_fn=lambda: None  # cannot decide!
+)
 
 
 if __name__ == "__main__":
-    # Quick demo
-    print("Affine coefficients for [O, E, O, E]:")
-    w = [True, False, True, False]
-    s, c = compute_affine_iterative(w)
-    print(f"  Slope = {s}, Intercept = {c}")
-    print(f"  Cycle candidate = {c / (1 - s)} = {float(c / (1 - s)):.6f}")
+    # Quick sanity checks
+    assert collatz_step(6) == 3
+    assert collatz_step(7) == 22
+    assert stopping_time(1) == 0
+    assert stopping_time(7) == 16
+    assert contraction_inequality(10)
+    assert density_contraction(3, 10)
+    assert cycle_coefficient(2, 1) == 1
+    assert cycle_equation_check(1, 3) == (1, 2, 1)
     
-    print("\nChecking no cycles up to length 20...")
-    ok, counterexample = check_no_cycles_up_to(20)
-    print(f"  No cycles found: {ok}")
+    # ParityDrivenAffineMap verification
+    m = ParityDrivenAffineMap.from_parity_sequence([True, False])
+    assert m.eval(Fraction(7)) == Fraction(11)
     
-    print("\nOrbit profile for n=27:")
-    p = profile_orbit(27)
-    if p:
-        print(f"  Stopping time: {p.stopping_time}")
-        print(f"  Peak value: {p.peak_value}")
-        print(f"  Odd density: {p.odd_density:.4f}")
-        print(f"  Affine slope: {float(p.affine_slope):.6e}")
+    print("All algorithm tests passed.")
