@@ -1,177 +1,346 @@
 """
-EML Interpolation Theory: Algorithms for Exp-Log Network Approximation
+EML Stone-Weierstrass Theory: Core Algorithms
 
-Type-hinted implementations of the core algorithms from the Stone-Weierstrass
-density theory for EML networks.
+Type-hinted implementations of the key algorithms from the EML
+approximation theory. These correspond to the Lean 4 formalization
+in Applications/EMLStoneWeierstrass.lean.
 """
 
-from typing import List, Tuple, Callable
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import List, Callable, Optional, Tuple
 import math
 
 
-class EMLLayer:
-    """A single EML neuron: x -> exp(a) * log(b*x + c)."""
+# ============================================================
+# Algorithm 1: EML Expression AST and Evaluation
+# ============================================================
 
-    def __init__(self, a: float, b: float, c: float):
-        self.a = a
-        self.b = b
-        self.c = c
-
-    def eval(self, x: float) -> float:
-        """Evaluate the EML layer at x."""
-        inner = self.b * x + self.c
-        if inner <= 0:
-            raise ValueError(f"Inner value {inner} <= 0 at x={x}")
-        return math.exp(self.a) * math.log(inner)
-
-    def inner(self, x: float) -> float:
-        """The inner function b*x + c."""
-        return self.b * x + self.c
-
-
-class EMLNet:
-    """A shallow EML network: weighted sum of EML layers."""
-
-    def __init__(self, layers: List[EMLLayer], weights: List[float]):
-        assert len(layers) == len(weights)
-        self.layers = layers
-        self.weights = weights
-        self.width = len(layers)
-
-    def eval(self, x: float) -> float:
-        """Evaluate the network at x."""
-        return sum(w * l.eval(x) for w, l in zip(self.weights, self.layers))
-
-
-def construct_log_basis_net(
-    mesh_points: List[float],
-    target_values: List[float],
-) -> EMLNet:
+@dataclass
+class EMLExpr:
+    """Abstract syntax tree for EML expressions.
+    
+    Corresponds to the Lean 4 inductive type EMLExpr.
     """
-    Construct an EML network that interpolates target_values at mesh_points.
-    Uses log-ratio basis functions: phi_j(x) = log(x / x_j) for each mesh point x_j.
+    pass
 
-    This is a simplified version; for exact interpolation we solve a linear system.
-    For approximation, we use piecewise-linear interpolation in log-space.
 
+@dataclass
+class Const(EMLExpr):
+    """Constant expression."""
+    value: float
+
+
+@dataclass
+class Var(EMLExpr):
+    """Input variable."""
+    pass
+
+
+@dataclass
+class Exp(EMLExpr):
+    """Exponential: exp(inner)."""
+    inner: EMLExpr
+
+
+@dataclass
+class Log(EMLExpr):
+    """Logarithm: log(inner)."""
+    inner: EMLExpr
+
+
+@dataclass
+class Add(EMLExpr):
+    """Addition: left + right."""
+    left: EMLExpr
+    right: EMLExpr
+
+
+@dataclass
+class Mul(EMLExpr):
+    """Multiplication: left * right."""
+    left: EMLExpr
+    right: EMLExpr
+
+
+def eml_eval(expr: EMLExpr, x: float) -> float:
+    """Evaluate an EML expression at input x.
+    
+    Corresponds to EMLExpr.eval in the Lean formalization.
+    
     Args:
-        mesh_points: Distinct positive reals where we want to interpolate
-        target_values: The values to match at those points
-
+        expr: The EML expression to evaluate.
+        x: The input value.
+    
     Returns:
-        An EMLNet that approximates the interpolation
+        The result of evaluating expr at x.
     """
-    n = len(mesh_points)
-    assert n == len(target_values)
-    assert all(x > 0 for x in mesh_points)
-
-    # Simple approach: use EML layers with b=1, c=0 (i.e., log(x))
-    # and b=0, c=exp(x_j) shifted layers
-    # For interpolation, we use Lagrange-style basis in log space
-
-    layers: List[EMLLayer] = []
-    weights: List[float] = []
-
-    for j in range(n):
-        # Layer j: x -> exp(0) * log(1 * x + 0) = log(x)
-        # But we need different layers. Use: x -> log(x + shift_j)
-        # where shift_j makes each basis function unique
-        shift = mesh_points[j]
-        layers.append(EMLLayer(a=0.0, b=1.0, c=shift))
-        weights.append(target_values[j] / (n * math.log(2 * mesh_points[j])) if mesh_points[j] > 0 else 0)
-
-    return EMLNet(layers, weights)
+    if isinstance(expr, Const):
+        return expr.value
+    elif isinstance(expr, Var):
+        return x
+    elif isinstance(expr, Exp):
+        return math.exp(eml_eval(expr.inner, x))
+    elif isinstance(expr, Log):
+        val = eml_eval(expr.inner, x)
+        return math.log(val) if val > 0 else 0.0
+    elif isinstance(expr, Add):
+        return eml_eval(expr.left, x) + eml_eval(expr.right, x)
+    elif isinstance(expr, Mul):
+        return eml_eval(expr.left, x) * eml_eval(expr.right, x)
+    else:
+        raise TypeError(f"Unknown EML expression type: {type(expr)}")
 
 
-def lipschitz_approx_width(K: float, epsilon: float) -> int:
+def eml_depth(expr: EMLExpr) -> int:
+    """Compute the depth of an EML expression.
+    
+    Corresponds to EMLExpr.depth in the Lean formalization.
     """
-    Compute the minimum width needed for epsilon-approximation
-    of a K-Lipschitz function on [0, 1].
+    if isinstance(expr, (Const, Var)):
+        return 0
+    elif isinstance(expr, (Exp, Log)):
+        return eml_depth(expr.inner) + 1
+    elif isinstance(expr, (Add, Mul)):
+        return max(eml_depth(expr.left), eml_depth(expr.right)) + 1
+    else:
+        raise TypeError(f"Unknown EML expression type: {type(expr)}")
 
-    Returns ceil(K/epsilon) + 1.
+
+def eml_size(expr: EMLExpr) -> int:
+    """Compute the size (number of nodes) of an EML expression.
+    
+    Corresponds to EMLExpr.size in the Lean formalization.
     """
-    return math.ceil(K / epsilon) + 1
+    if isinstance(expr, (Const, Var)):
+        return 1
+    elif isinstance(expr, (Exp, Log)):
+        return eml_size(expr.inner) + 1
+    elif isinstance(expr, (Add, Mul)):
+        return eml_size(expr.left) + eml_size(expr.right) + 1
+    else:
+        raise TypeError(f"Unknown EML expression type: {type(expr)}")
 
 
-def uniform_mesh(n: int, a: float = 0.0, b: float = 1.0) -> List[float]:
-    """Generate n uniformly spaced points on [a, b]."""
-    if n <= 1:
-        return [(a + b) / 2]
-    return [a + i * (b - a) / (n - 1) for i in range(n)]
+# ============================================================
+# Algorithm 2: EML Power Representation
+# ============================================================
+
+def eml_power(n: int) -> EMLExpr:
+    """Construct the EML expression for x^n: exp(n * log(x)).
+    
+    This always has size 5, regardless of n.
+    Corresponds to emlPower in the Lean formalization.
+    
+    Args:
+        n: The exponent (non-negative integer).
+    
+    Returns:
+        EML expression computing x^n on positive inputs.
+    """
+    return Exp(Mul(Const(float(n)), Log(Var())))
 
 
-def eml_piecewise_approx(
+# ============================================================
+# Algorithm 3: Polynomial to EML Compilation
+# ============================================================
+
+def polynomial_to_eml(coeffs: List[float]) -> EMLExpr:
+    """Compile a polynomial to an EML expression.
+    
+    Given coefficients [a_0, a_1, ..., a_d], constructs an EML expression
+    computing a_0 + a_1*x + a_2*x^2 + ... + a_d*x^d.
+    
+    The resulting expression has size O(d) where d = len(coeffs) - 1.
+    Corresponds to the construction in polynomial_eml_linear_size.
+    
+    Args:
+        coeffs: Polynomial coefficients, lowest degree first.
+    
+    Returns:
+        EML expression computing the polynomial on positive inputs.
+    """
+    if not coeffs:
+        return Const(0.0)
+    
+    # Start with the constant term
+    result: EMLExpr = Const(coeffs[0])
+    
+    # Add each higher-degree term: a_i * x^i = a_i * exp(i * log(x))
+    for i in range(1, len(coeffs)):
+        if coeffs[i] != 0.0:
+            term = Mul(Const(coeffs[i]), eml_power(i))
+            result = Add(result, term)
+    
+    return result
+
+
+# ============================================================
+# Algorithm 4: EML Approximation Quality Assessment
+# ============================================================
+
+def eml_approx_error(
+    expr: EMLExpr,
+    target: Callable[[float], float],
+    a: float,
+    b: float,
+    n_samples: int = 1000
+) -> float:
+    """Compute the maximum approximation error of an EML expression.
+    
+    Samples the interval [a, b] and computes the maximum absolute
+    difference between the EML expression and the target function.
+    
+    Args:
+        expr: The EML expression.
+        target: The target function to approximate.
+        a: Left endpoint (must be > 0 for log to be defined).
+        b: Right endpoint.
+        n_samples: Number of sample points.
+    
+    Returns:
+        Approximate sup-norm error.
+    """
+    if a <= 0:
+        raise ValueError("Left endpoint must be positive for EML evaluation")
+    
+    max_error = 0.0
+    for i in range(n_samples + 1):
+        x = a + (b - a) * i / n_samples
+        eml_val = eml_eval(expr, x)
+        target_val = target(x)
+        error = abs(eml_val - target_val)
+        max_error = max(max_error, error)
+    
+    return max_error
+
+
+# ============================================================
+# Algorithm 5: Lipschitz Transfer Bound Verification
+# ============================================================
+
+def verify_lipschitz_transfer(
     f: Callable[[float], float],
-    n: int,
-    a: float = 0.1,
-    b: float = 1.0,
-) -> Tuple[EMLNet, float]:
-    """
-    Construct an EML network of width n that approximates f on [a, b].
-
-    Uses piecewise linear interpolation at mesh points, then converts
-    to EML representation using log-based basis functions.
-
+    g: Callable[[float], float],
+    K: float,
+    epsilon: float,
+    a: float,
+    b: float,
+    n_pairs: int = 100
+) -> Tuple[bool, float]:
+    """Verify the Lipschitz transfer bound numerically.
+    
+    Checks that |g(x) - g(y)| ≤ K|x - y| + 2ε for sampled pairs.
+    Corresponds to eml_lipschitz_transfer in the Lean formalization.
+    
+    Args:
+        f: The original Lipschitz function.
+        g: The EML approximation.
+        K: Lipschitz constant of f.
+        epsilon: Approximation error bound.
+        a, b: Interval endpoints.
+        n_pairs: Number of random pairs to test.
+    
     Returns:
-        (network, max_error) where max_error is estimated on a fine grid
+        (all_satisfied, max_violation): Whether all pairs satisfy the bound,
+        and the maximum violation (negative means satisfied with margin).
     """
-    mesh = uniform_mesh(n, a, b)
-    values = [f(x) for x in mesh]
+    import random
+    random.seed(42)
+    
+    max_violation = float('-inf')
+    all_satisfied = True
+    
+    for _ in range(n_pairs):
+        x = random.uniform(a, b)
+        y = random.uniform(a, b)
+        
+        lhs = abs(g(x) - g(y))
+        rhs = K * abs(x - y) + 2 * epsilon
+        violation = lhs - rhs
+        
+        if violation > 1e-10:
+            all_satisfied = False
+        max_violation = max(max_violation, violation)
+    
+    return all_satisfied, max_violation
 
-    # Build EML network from mesh
-    layers = []
-    weights = []
 
-    for j in range(n):
-        # Use layers of the form exp(0) * log(x + c_j)
-        # with c_j chosen to create a localized basis
-        c_j = mesh[j]
-        layers.append(EMLLayer(a=0.0, b=1.0, c=c_j))
+# ============================================================
+# Algorithm 6: EML Complexity Estimation
+# ============================================================
 
-    # Solve for weights using least-squares on mesh points
-    # Build matrix A where A[i][j] = log(mesh[i] + mesh[j])
+def estimate_eml_complexity(
+    target: Callable[[float], float],
+    a: float,
+    b: float,
+    epsilon: float,
+    max_degree: int = 100
+) -> Tuple[int, EMLExpr]:
+    """Estimate the EML complexity of a function at scale epsilon.
+    
+    Uses polynomial approximation (via Chebyshev interpolation)
+    followed by EML compilation to find a small EML expression
+    that epsilon-approximates the target.
+    
+    Args:
+        target: The target function.
+        a, b: Interval endpoints (a > 0).
+        epsilon: Desired approximation accuracy.
+        max_degree: Maximum polynomial degree to try.
+    
+    Returns:
+        (size, expr): The size and EML expression achieving the approximation.
+    """
     import numpy as np
-    A = np.array([[math.log(mesh[i] + mesh[j]) for j in range(n)] for i in range(n)])
-    try:
-        w = np.linalg.solve(A, values)
-        weights = w.tolist()
-    except np.linalg.LinAlgError:
-        weights = [v / n for v in values]
-
-    net = EMLNet(layers, weights)
-
-    # Estimate max error on fine grid
-    test_points = uniform_mesh(1000, a, b)
-    max_err = max(abs(f(x) - net.eval(x)) for x in test_points)
-
-    return net, max_err
-
-
-def jackson_eml_width(L: float, epsilon: float, alpha: float) -> float:
-    """
-    Conjectured width for Jackson-type EML approximation rate.
-
-    For f in Lip_alpha with constant L, the conjecture predicts that
-    width O((L/epsilon)^(1/alpha)) suffices for epsilon-approximation.
-    """
-    return (L / epsilon) ** (1.0 / alpha)
-
-
-def separation_gap(x: float, y: float) -> float:
-    """
-    Compute the log-separation gap |log(x) - log(y)| for positive x, y.
-    This quantifies how well the EML basis function log separates x from y.
-    """
-    assert x > 0 and y > 0
-    return abs(math.log(x) - math.log(y))
+    
+    for degree in range(1, max_degree + 1):
+        # Chebyshev nodes on [a, b]
+        nodes = [
+            0.5 * (a + b) + 0.5 * (b - a) * math.cos(math.pi * (2*k + 1) / (2 * (degree + 1)))
+            for k in range(degree + 1)
+        ]
+        values = [target(x) for x in nodes]
+        
+        # Fit polynomial (using numpy for convenience)
+        coeffs_np = np.polyfit(nodes, values, degree)
+        coeffs = list(reversed(coeffs_np.tolist()))  # lowest degree first
+        
+        # Build EML expression
+        expr = polynomial_to_eml(coeffs)
+        
+        # Check error
+        error = eml_approx_error(expr, target, a, b)
+        
+        if error < epsilon:
+            return eml_size(expr), expr
+    
+    # Fallback: return the highest degree tried
+    return eml_size(expr), expr
 
 
-def exp_power_identity(n: int, x: float) -> Tuple[float, float]:
-    """
-    Verify the identity exp(n * log(x)) = x^n for positive x.
-    Returns (lhs, rhs) for comparison.
-    """
-    assert x > 0
-    lhs = math.exp(n * math.log(x))
-    rhs = x ** n
-    return lhs, rhs
+if __name__ == "__main__":
+    # Quick test
+    print("Testing EML algorithms...")
+    
+    # Test identity
+    identity = Exp(Log(Var()))
+    assert abs(eml_eval(identity, 2.5) - 2.5) < 1e-14
+    assert eml_size(identity) == 3
+    assert eml_depth(identity) == 2
+    print(f"✓ Identity: size={eml_size(identity)}, depth={eml_depth(identity)}")
+    
+    # Test power
+    p5 = eml_power(5)
+    assert abs(eml_eval(p5, 2.0) - 32.0) < 1e-10
+    assert eml_size(p5) == 5
+    print(f"✓ x^5: size={eml_size(p5)}, eval(2)={eml_eval(p5, 2.0)}")
+    
+    # Test polynomial
+    poly = polynomial_to_eml([1.0, 2.0, 3.0])  # 1 + 2x + 3x^2
+    val = eml_eval(poly, 2.0)
+    expected = 1 + 4 + 12
+    assert abs(val - expected) < 1e-10
+    print(f"✓ 1+2x+3x^2 at x=2: {val} (expected {expected}), size={eml_size(poly)}")
+    
+    print("\nAll tests passed!")

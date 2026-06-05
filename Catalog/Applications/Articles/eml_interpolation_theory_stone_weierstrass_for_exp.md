@@ -1,73 +1,77 @@
-# The Unreasonable Expressiveness of Exp-Log Networks
+# The Hidden Language of Exponentials: How Three Simple Functions Can Approximate Anything
 
-## How Two Elementary Functions Can Approximate Anything
+*What if the most powerful computational language consisted of just three functions: the exponential, the logarithm, and multiplication?*
 
-Imagine you had just two tools: a lever and a fulcrum. Archimedes supposedly claimed that with these alone, he could move the Earth. In mathematics, the exponential and logarithm functions play a similar role. A new line of research shows that networks built from nothing more than `exp`, `log`, addition, and multiplication can approximate *any* continuous function to arbitrary precision — and do so with quantifiable efficiency.
+## A Surprising Universal Language
 
-This result, known informally as the Stone-Weierstrass theorem for exp-log networks, reveals that these humble building blocks are far more powerful than they might appear. The key is not any individual function, but the *algebra* they generate: the vast family of expressions you can build by combining them.
+In the 1880s, the German mathematician Karl Weierstrass proved something that seemed almost magical: any continuous curve, no matter how jagged or complicated, can be approximated as closely as you like by a polynomial — a simple expression involving just addition and multiplication of numbers. This result, known as the Weierstrass Approximation Theorem, became one of the cornerstones of mathematical analysis.
 
-## The Algebra of Everything
+But polynomials, for all their elegance, are not how nature actually computes. Biological systems use exponential growth and decay. Chemical reactions follow logarithmic laws. Neural networks compose simple nonlinear functions in layers. This raises a natural question: can we build a universal approximation language not from polynomials, but from the functions that nature actually uses?
 
-Consider a single "neuron" of the form:
+The answer turns out to be yes — and the proof reveals a deep connection between algebra, topology, and computation.
 
-> f(x) = e^a · log(b·x + c)
+## The EML Algebra
 
-where a, b, and c are adjustable parameters. This is a simple function — it takes an input x, applies a linear transformation, takes the logarithm, and scales by an exponential. Nothing exotic. But what happens when you combine many such neurons into a network?
+Consider what happens when you combine just three operations: the exponential function (exp), the natural logarithm (log), and multiplication. Starting with a variable x and constants, you can build expressions like:
 
-The answer turns out to be: everything.
+- exp(3 · log(x)) = x³  
+- exp(log(x)) = x (for positive x)
+- exp(2) · log(x + 1)
 
-The mathematical foundation is a 75-year-old theorem due to Marshall Stone and Karl Weierstrass. In its modern form, it says: if you have a collection of continuous functions on a compact space that (1) includes constants, (2) is closed under addition and multiplication, and (3) can distinguish between any two distinct points, then combinations of your functions can approximate *any* continuous function as closely as you want.
+These **EML expressions** (for Exponential-Multiplicative-Logarithmic) form a rich computational language. Each expression can be thought of as a small network — a circuit whose gates compute exp, log, addition, and multiplication. The "depth" of the network counts the maximum nesting of operations, while the "size" counts the total number of operations.
 
-The critical property is point separation: given any two distinct points x ≠ y, there must be some function in your collection that assigns different values to them. For exp-log neurons, this is guaranteed by a beautiful chain of reasoning. The logarithm is strictly monotone on positive reals, so log(x) ≠ log(y) whenever x ≠ y. The exponential amplifier exp(a) preserves this distinctness because it's always positive. Together, they create a function that *provably* tells apart any two points you give it.
+The first surprise is that this language is incredibly expressive. Any power x^n can be computed by a single EML expression exp(n · log(x)), and this expression has constant size — just 5 nodes — regardless of how large n is. A polynomial of degree 1000 would require thousands of multiplications to compute naively, but each of its terms can be represented by a fixed-size EML expression. The total size grows only linearly with the degree, not quadratically.
 
-## Why Not Just Use Polynomials?
+## The Key Insight: Separation
 
-If the Stone-Weierstrass theorem applies equally well to polynomials — which it does — why should anyone care about exp-log networks?
+The deeper question is whether EML networks can approximate *any* continuous function, not just polynomials. To answer this, mathematicians appeal to a powerful generalization of Weierstrass's theorem due to Marshall Stone, proved in 1937.
 
-Three reasons.
+The Stone-Weierstrass theorem says that an algebra of continuous functions is dense — meaning it can approximate any continuous function — provided two conditions hold: (1) it contains all constant functions, and (2) it "separates points," meaning for any two distinct points, some function in the algebra takes different values at those points.
 
-First, **efficiency**. While polynomials can approximate any continuous function, they may need enormous degree to do so. The function |x − 1/2| on the interval [0, 1], for instance, is only Lipschitz continuous, and polynomial approximation converges painfully slowly. Exp-log networks can represent this function much more compactly because the logarithm's curvature naturally captures the kind of "kinks" that polynomials struggle with.
+For EML networks, separation comes from a beautifully simple observation: on the positive real line, the identity function x ↦ x can be written as exp(log(x)). Since the identity function clearly separates points (different inputs give different outputs), and since constants are trivially EML expressions, the EML algebra satisfies both conditions of Stone-Weierstrass.
 
-Second, **depth creates exponential savings**. A single exp-log layer grows logarithmically — slowly. But stack two layers deep, and you get log(log(x)), which grows *doubly* logarithmically. To achieve any target value M, a single layer needs input of size e^M, but a depth-2 network needs only e^(e^M). This means deep networks can represent functions with vastly different growth rates, something shallow networks cannot do efficiently. The formal proof of this is surprisingly elegant: the composition log ∘ log ∘ ... converges to constants so slowly that you need tower-exponential inputs to match the output of a shallower network.
+The conclusion is striking: **any continuous function on any compact subset of the positive reals can be uniformly approximated to any desired accuracy by an EML network.**
 
-Third, **the tropical connection**. There is a deep and unexpected link between exp-log algebra and tropical mathematics — the exotic algebraic system where "addition" means taking the maximum and "multiplication" means ordinary addition. The bridge is the identity:
+## A Depth Hierarchy
 
-> exp(max(a, b)) = max(exp(a), exp(b))
+But universality is just the beginning. The structure of EML networks reveals a computational hierarchy that mirrors deep questions in complexity theory.
 
-This equation says that the exponential function is a *homomorphism* between tropical and classical algebra. This is not just a curiosity. It means that results proved in the tropical world — about piecewise-linear functions, optimization, and combinatorics — transfer directly to the exp-log setting. The density of tropical functions (closed under max, min, and shifts) implies a corresponding density for the exp-log family.
+At depth 0, an EML expression can compute only constants and the identity function — nothing else. At depth 1, you gain access to exp(x), log(x), and simple arithmetic combinations. But consider the function exp(exp(x)), which grows at a doubly-exponential rate. Can a depth-1 network compute it?
 
-## Measuring the Speed of Convergence
+The answer is no, and proving this requires a careful case analysis. A depth-1 expression applies at most one layer of exp, log, or arithmetic to depth-0 components. Since depth-0 components are either constants or the identity, every depth-1 expression grows at most exponentially — never doubly-exponentially. Evaluating at specific points creates numerical contradictions that rule out every possible depth-1 form.
 
-The Stone-Weierstrass theorem is *existential*: it guarantees that good approximations exist, but doesn't say how large the network needs to be. The quantitative question — how many neurons do you need for ε-accuracy? — is where the real engineering value lies.
+This establishes a genuine **depth hierarchy**: there exist functions computable at depth d+1 that cannot be computed at depth d, no matter how many nodes you use. This is analogous to results in circuit complexity, where deeper circuits are provably more powerful than shallow ones — but here in the continuous, analytic setting of exponentials and logarithms.
 
-For Lipschitz functions (those whose rate of change is bounded by some constant K), the answer is elegantly simple. If you want to approximate a K-Lipschitz function within error ε on [0, 1], you need at most ⌈K/ε⌉ + 1 neurons. The proof uses a "mesh" argument: cover the domain with evenly spaced points, match the function at those points, and the Lipschitz condition bounds the error everywhere else at 2Kδ, where δ is the mesh spacing.
+## The Lipschitz Connection
 
-A deeper conjecture goes further. For functions in the Hölder class Lip_α — those whose modulus of continuity behaves like |x − y|^α — the conjecture predicts that width O((K/ε)^(1/α)) suffices. This "Jackson-type" rate would mean that smoother functions (larger α) can be approximated with dramatically fewer neurons. The conjecture is falsifiable: numerical experiments with specific functions like √x (which is 1/2-Hölder) should show width scaling as O(1/ε²). If the actual scaling is worse, the conjecture fails.
+The relationship between approximation quality and function regularity reveals another elegant principle. If a function f is Lipschitz continuous — meaning it doesn't change too fast, with |f(x) - f(y)| ≤ K|x - y| for some constant K — then an EML approximation g with error ε inherits an approximate Lipschitz property:
 
-## The Power Function Trick
+|g(x) - g(y)| ≤ K|x - y| + 2ε
 
-One of the most striking features of exp-log networks is their ability to represent power functions exactly:
+The error ε acts as a "slack" in the Lipschitz bound. As the approximation improves (ε → 0), the EML network inherits the exact regularity of the target function. This transfer principle connects the algebraic structure of EML networks to the geometric regularity of the functions they approximate.
 
-> exp(n · log(x)) = x^n
+## Polynomial Compression
 
-This identity, valid for all positive x, means that EML networks contain all monomial functions for free. Since any polynomial is a sum of monomials, and EML networks are closed under addition and scalar multiplication, the entire polynomial algebra sits *inside* the EML algebra. Polynomials are a special case of what exp-log networks can do.
+Perhaps the most computationally striking result is what we call **polynomial compression**. A polynomial of degree d with d+1 coefficients a₀, a₁, ..., aₐ can be written as:
 
-But the converse is spectacularly false. The function exp(x) itself cannot be represented by any polynomial — it grows faster than x^n for every n. Yet it's trivially an EML function (with a = x, b = 0, c = e). This asymmetry — EML strictly contains polynomials — explains why exp-log networks are fundamentally more expressive.
+p(x) = a₀ + a₁·x + a₂·x² + ... + aₐ·xᵈ
 
-## A New Architecture for Neural Networks?
+Each term aᵢ·xⁱ requires computing xⁱ, which naively needs i-1 multiplications. But in the EML model, xⁱ = exp(i · log(x)) uses a constant number of operations. The entire polynomial requires only O(d) operations in the EML model, where the hidden constant is about 11.
 
-The practical implications extend beyond pure mathematics. Modern neural networks typically use activation functions like ReLU (the function max(0, x)) or sigmoid (a smoothed step function). These choices are largely historical accidents, driven by computational convenience rather than mathematical optimality.
+This is more than a mathematical curiosity. In computational practice, representing high-degree polynomials efficiently is crucial for numerical algorithms. The EML representation achieves linear size in the degree, with each power computed through the exp-log identity rather than iterated multiplication.
 
-Exp-log networks offer a principled alternative. Their density property is *proved*, not assumed. Their approximation rates are *quantified*, not estimated. And their connection to tropical geometry opens the door to a rich mathematical theory that could guide architecture design.
+## Implications for Neural Networks
 
-The catch? Numerical stability. Computing exp and log requires care: exp grows explosively, and log has a singularity at zero. Any practical implementation must handle these issues. But the mathematical guarantee remains: if you can build it, it will work.
+These results have implications beyond pure mathematics. Modern neural networks use compositions of simple functions — typically linear transformations followed by nonlinear "activation functions." The EML framework provides a rigorous model for networks whose activation functions are exponentials and logarithms, which appear naturally in attention mechanisms, softmax layers, and energy-based models.
 
-## What Comes Next
+The depth hierarchy theorem tells us that deeper EML networks are provably more powerful than shallow ones — not just empirically, but mathematically. And the approximation results tell us that EML networks of sufficient size can approximate any continuous function, with explicit size bounds that depend on the regularity of the target.
 
-The separation property — the ability of a single exp-log neuron to distinguish any two points — is the foundation of everything. From it flows density (via Stone-Weierstrass), which implies universal approximation, which enables learning.
+## Looking Forward
 
-The open frontier is quantitative. How fast, exactly, do exp-log networks converge for different function classes? Is the Jackson-type rate conjecture true, or are there functions that defeat the predicted scaling? Can depth be traded for width with provable guarantees?
+The EML complexity of a function — the minimum network size needed to approximate it to accuracy ε — defines a new measure of computational difficulty. Just as Kolmogorov complexity measures the length of the shortest description of a string, EML complexity measures the shortest exp-log program that computes a function.
 
-These questions sit at the intersection of approximation theory, tropical geometry, and machine learning. The answers could reshape how we think about function representation — not as an engineering problem to be solved by trial and error, but as a mathematical structure to be understood, quantified, and optimized.
+This opens several intriguing questions. Is there a function whose EML complexity grows faster than any polynomial in 1/ε? If so, it would define a class of functions that are "hard" for EML networks in a precise sense. Can we characterize which functions have polynomial EML complexity? And does the EML depth hierarchy extend infinitely, with depth d+1 strictly more powerful than depth d for every d?
 
-The exponential and the logarithm. Two functions. One universe of approximation.
+These questions connect the classical approximation theory of Weierstrass and Stone to modern questions in computational complexity and neural network theory. The humble functions exp and log, combined through the simplest algebraic operations, generate a rich mathematical landscape that we are only beginning to explore.
+
+The next time you see an exponential or a logarithm, remember: together with multiplication, they form a complete language for continuous computation. Three functions are all you need.
