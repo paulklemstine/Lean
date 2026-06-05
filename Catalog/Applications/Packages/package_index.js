@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "cd162e5c",
     "filename": "mind_vs_gdel_can_minds_outperform_algorithms.json",
     "pkg_num": 394,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.2836,
     "title": "Reflective Proof Towers and the Penrose Diagonal Limiter"
   },
   {
@@ -12577,8 +12577,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "mind_vs_gdel_can_minds_outperform_algorithms",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.2836,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Reflective Proof Towers and the Penrose Diagonal Limiter"
     }
