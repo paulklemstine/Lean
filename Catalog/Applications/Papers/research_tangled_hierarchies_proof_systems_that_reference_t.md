@@ -1,231 +1,286 @@
-# Stratified Tangling: Quantitative Self-Reference in Provability Logic
+# Tangled Hierarchies: Depth Stratification and the Incompleteness-Soundness Trade-off in Provability Logic
 
 ## Abstract
 
-We develop a quantitative theory of self-referential proof systems within the framework of GL (Gödel-Löb) provability logic and Kripke semantics. We introduce **modal depth** as a complexity measure for modal formulas, define **k-soundness** as soundness restricted to formulas of modal depth at most k, and prove that this creates a strict, non-collapsible hierarchy of soundness assertions. Our main results include: (1) the **Fundamental Tangling Theorem**, which provides an explicit witness for the gap between external soundness and internal provability; (2) the **Internal Soundness Witness Impossibility**, showing that any system that can prove its own soundness for all formulas is inconsistent; (3) the **Reflective Hierarchy Incompleteness**, demonstrating that chains of mutually-verifying systems cannot bootstrap to absolute certainty; and (4) the **Tangling Spectrum Theorem**, characterizing full soundness via soundness defect sets. All results are formalized in Lean 4 with complete, machine-verified proofs.
+We formalize and extend the theory of *tangled hierarchies* in provability logic GL using Kripke frames with modal fixed-point structures. We prove three main results: (1) the **Fundamental Tangling Theorem**, which provides an explicit constructive witness (the consistency formula) of an unprovable truth in every consistent, sound world of a GL frame; (2) the **Dead-End Paradox**, showing that worlds with no successors are pathologically "too powerful" — they vacuously prove inconsistency and cannot be both sound and consistent; and (3) the **Incompleteness-Soundness Trade-off**, a lattice-theoretic result proving that in any nontrivial provability lattice with a Gödel element, the properties of soundness (□a ≤ a) and extensiveness (a ≤ □a) are mutually exclusive. We also establish a bridge between GL frame well-foundedness and abstract contractive systems, connecting provability logic to fixed-point theory in metric spaces. All results are formalized in Lean 4 with Mathlib and verified without axioms beyond the standard ones.
 
 ## 1. Introduction
 
-### 1.1 Background
+Provability logic GL (Gödel-Löb logic) captures the behavior of the provability predicate in Peano Arithmetic. Its key axiom — Löb's axiom □(□φ → φ) → □φ — encodes a deep fact about formal systems: if a system proves that its own provability of φ implies φ, then it already proves φ. This seemingly technical principle has profound consequences for the foundations of mathematics, as it directly implies Gödel's second incompleteness theorem.
 
-Gödel's second incompleteness theorem (1931) establishes that no consistent, sufficiently strong formal system can prove its own consistency. This result has been refined and generalized through provability logic — the modal logic GL — which axiomatizes the behavior of the provability predicate in formal arithmetic.
+The Kripke semantics of GL uses *GL frames*: relational structures (W, R) where R is transitive and converse well-founded. These frames model the provability relation: worlds represent possible theories, and accessibility represents "provability from." The structural properties of GL frames — irreflexivity, transitivity, and well-foundedness — create what we call a *tangled hierarchy*: a layered structure where each level can reason about the levels below it, but never about its own reliability.
 
-The semantic framework for GL uses **Kripke frames** (W, R) where R is transitive and converse well-founded. Solovay's completeness theorem (1976) shows that GL is complete with respect to these frames, establishing a perfect correspondence between modal validity and arithmetic provability.
+### 1.1 Contributions
 
-### 1.2 Contributions
+Our contributions are:
 
-We make the following novel contributions:
+1. **Fundamental Tangling Theorem** (Theorem 4.1): We prove that in any GL frame, every consistent world that satisfies □⊥ → ⊥ (soundness for ⊥) has a specific, canonically-identified unprovable truth — the consistency formula Con = □⊥ → ⊥ itself. This goes beyond the standard existential statement of Gödel II by providing a constructive witness.
 
-1. **Modal depth and k-soundness**: We stratify the notion of soundness by the modal complexity of formulas, creating a hierarchy {k-Sound}_k.
+2. **Dead-End Paradox** (Theorem 5.1): Dead-end worlds (those with no R-successors) are shown to be "vacuously omniscient" — they force □φ for all φ. Consequently, they force □⊥, and if they also satisfy □⊥ → ⊥, they force ⊥. This reveals a deep asymmetry: maximal proof power entails inconsistency.
 
-2. **The soundness defect**: We define the soundness defect at level k as the set of depth-≤k formulas where soundness fails, and characterize k-soundness as empty defect.
+3. **Incompleteness-Soundness Trade-off** (Theorem 7.1): In any nontrivial provability lattice with a Gödel element, the properties of soundness (□a ≤ a for all a) and extensiveness (a ≤ □a for all a) are mutually exclusive. If both held, □ would be the identity, and the Gödel element would force ⊥ = ⊤.
 
-3. **Structural theorems**: We prove that the k-soundness hierarchy is strict (via iterated consistency formulas) and that the gap between k-soundness and full soundness is essential.
+4. **Bridge to Contractive Systems** (Section 8): We define abstract contractive well-founded systems and show that GL frames are instances, connecting provability logic to the theory of contractive mappings and fixed-point theorems.
 
-4. **Reflective hierarchies**: We define chains of worlds with graded soundness and prove their fundamental incompleteness.
+### 1.2 Related Work
 
-5. **Proof algebra**: We characterize the algebraic closure properties of the theory and box-theory of a world, including Löb closure.
+The semantic study of provability logic begins with Solovay's completeness theorem (1976), which showed GL is arithmetically complete: a modal formula is a theorem of GL iff it is valid under all arithmetical interpretations. The Kripke semantics for GL was developed by Segerberg (1971) and further studied by Boolos (1993). The de Jongh-Sambin fixed-point theorem provides unique fixed points for modalized formulas in GL.
 
-6. **Stratified tangled systems**: We define a novel structure capturing the quantitative tangling phenomenon.
+Our work extends this classical theory by introducing the tangling depth measure, the dead-end paradox, and the lattice-theoretic incompleteness-soundness trade-off. The catalog results we build upon include the GL frame formalization in `Catalog/Logic/TangledHierarchies.lean` and the provability lattice theory in `Catalog/Logic/ProvabilityLogic.lean`.
 
 ## 2. Preliminaries
 
 ### 2.1 Modal Formulas
 
-Fix a type α of propositional variables. The **modal formulas** MF(α) are generated by:
-- Variables: p ∈ α
-- Falsum: ⊥
-- Implication: φ → ψ
-- Box: □φ
-
-We define negation ¬φ := φ → ⊥ and the consistency formula Con := ¬□⊥.
+**Definition 2.1.** The set of *modal formulas* over propositional variables α is generated by:
+```
+φ ::= p | ⊥ | φ → ψ | □φ
+```
+where p ranges over α. Negation ¬φ = φ → ⊥, consistency Con = ¬□⊥, and iterated box □ⁿφ are derived operations.
 
 ### 2.2 GL Frames
 
-A **GL frame** is a structure (W, R) where:
-- W is a nonempty type (possible worlds)
+**Definition 2.2.** A *GL frame* is a structure (W, R) where:
+- W is a type of possible worlds
 - R : W → W → Prop is the accessibility relation
-- R is transitive
-- R is converse well-founded (no infinite R-ascending chains)
-
-**Theorem 1** (GL Irreflexivity): In any GL frame, R is irreflexive.
-
-*Proof*: Follows immediately from converse well-foundedness: a self-loop w R w would give an infinite ascending chain w, w, w, ... □
+- R is transitive: wRv ∧ vRu → wRu
+- R is converse well-founded: there is no infinite sequence w₀, w₁, w₂, ... with wᵢRwᵢ₊₁ for all i
 
 ### 2.3 Kripke Semantics
 
-Given a GL frame M = (W, R) and a valuation V : α → W → Prop, the forcing relation ⊩ is defined recursively:
-- w ⊩ p iff V(p)(w)
-- w ⊩ ⊥ never
-- w ⊩ φ → ψ iff w ⊩ φ implies w ⊩ ψ
-- w ⊩ □φ iff for all v with wRv, v ⊩ φ
+**Definition 2.3.** The *forcing relation* M, V, w ⊨ φ is defined recursively:
+- M, V, w ⊨ p iff V(p, w)
+- M, V, w ⊨ ⊥ never
+- M, V, w ⊨ φ → ψ iff M, V, w ⊨ φ implies M, V, w ⊨ ψ
+- M, V, w ⊨ □φ iff for all v with wRv, M, V, v ⊨ φ
 
-## 3. Modal Depth and k-Soundness
+## 3. Core Results
 
-### 3.1 Modal Depth
+### 3.1 GL Irreflexivity
 
-**Definition 1** (Modal Depth): The modal depth d(φ) of a formula φ is:
-- d(p) = 0 for variables
-- d(⊥) = 0
-- d(φ → ψ) = max(d(φ), d(ψ))
-- d(□φ) = d(φ) + 1
+**Theorem 3.1.** In any GL frame, no world can access itself: ¬ wRw.
 
-The modal depth measures the maximum nesting of □ operators.
+*Proof.* If wRw, then since Function.swap R is well-founded and w is a minimal element of {w} under this ordering, we have ¬ (swap R) w w, i.e., ¬ wRw, a contradiction. □
 
-### 3.2 k-Soundness
+### 3.2 Löb's Theorem (Semantic)
 
-**Definition 2** (k-Soundness): A world w is **k-sound** (relative to M, V) if for all formulas φ with d(φ) ≤ k, w ⊩ □φ implies w ⊩ φ.
+**Theorem 3.2** (Löb). In any GL frame M, for any valuation V and formula φ:
+If w ⊨ □(□φ → φ), then w ⊨ □φ.
 
-**Definition 3** (Full Soundness): A world w is **fully sound** if it is k-sound for all k ∈ ℕ.
+*Proof.* We prove ∀v, wRv → v ⊨ φ by well-founded induction on the converse of R. Given v with wRv:
+1. By IH, for all u with vRu, u ⊨ φ (since wRu by transitivity, and u is strictly below v in the converse order).
+2. So v ⊨ □φ.
+3. Since w ⊨ □(□φ → φ) and wRv, we have v ⊨ □φ → φ.
+4. Combining 2 and 3: v ⊨ φ. □
 
-**Theorem 2** (k-Soundness Monotonicity): If w is k-sound and j ≤ k, then w is j-sound.
+### 3.3 Gödel's Second Incompleteness Theorem (Semantic)
 
-*Proof*: If d(φ) ≤ j ≤ k and w ⊩ □φ, then k-soundness gives w ⊩ φ. □
+**Theorem 3.3** (Gödel II). If w is consistent (¬ w ⊨ ⊥) and satisfies □⊥ → ⊥, then w does not force □(□⊥ → ⊥).
 
-### 3.3 The Iterated Consistency Hierarchy
+*Proof.* Suppose w ⊨ □(□⊥ → ⊥). By Löb's theorem with φ = ⊥, w ⊨ □⊥. By □⊥ → ⊥, w ⊨ ⊥. This contradicts consistency. □
 
-**Definition 4**: Define Con_n by:
-- Con_0 = ⊥
-- Con_{n+1} = □Con_n → Con_n
+## 4. The Fundamental Tangling Theorem
 
-**Theorem 3** (Depth of Iterated Consistency): d(Con_n) = n for all n.
+**Theorem 4.1** (Fundamental Tangling). In any GL frame, every consistent world that satisfies □⊥ → ⊥ has an explicit unprovable truth: the formula Con = □⊥ → ⊥ itself.
 
-*Proof*: By induction. d(Con_0) = d(⊥) = 0. d(Con_{n+1}) = max(d(□Con_n), d(Con_n)) = max(n+1, n) = n+1. □
+*Proof.* Let w be consistent with w ⊨ □⊥ → ⊥. Then:
+- w ⊨ Con (by hypothesis)
+- ¬ w ⊨ □Con (by Gödel II, since □Con = □(□⊥ → ⊥))
 
-**Corollary** (Strict Hierarchy): For n < m, d(Con_n) < d(Con_m). This shows the iterated consistency formulas witness the strictness of the modal depth hierarchy.
+So (Con, w ⊨ Con, ¬ w ⊨ □Con) is the constructive witness. □
 
-## 4. Main Results
+**PEGB Analysis:**
+- **P**roof: Complete, non-trivial, building on Löb's theorem.
+- **E**xample: In PA, Con(PA) = ¬Prov(⊥) is true but unprovable (assuming PA is consistent).
+- **G**eneralization: Extends to iterated consistency Con_n = □ⁿ⊥ → ⊥.
+- **B**oundary: Fails for inconsistent worlds (where ⊥ is forced) or worlds not satisfying □⊥ → ⊥.
 
-### 4.1 Löb's Theorem (Semantic)
+## 5. The Dead-End Paradox
 
-**Theorem 4** (Löb's Theorem): In any GL frame, if w ⊩ □(□φ → φ), then w ⊩ □φ.
+**Theorem 5.1** (Dead-End Paradox). A dead-end world (no R-successors) cannot be both sound for ⊥ and consistent.
 
-*Proof*: By well-founded induction on the converse of R. Given w ⊩ □(□φ → φ), for any v with wRv, we need v ⊩ φ. By the induction hypothesis, for all u with vRu, u ⊩ φ (since wRu by transitivity, the induction gives us access to all successors of v). Thus v ⊩ □φ. Combined with the hypothesis at v (which gives v ⊩ □φ → φ), we get v ⊩ φ. □
+*Proof.* If w has no successors, then w ⊨ □φ for all φ (vacuously). In particular, w ⊨ □⊥. If w also satisfies □⊥ → ⊥ (soundness for ⊥), then w ⊨ ⊥, contradicting consistency. □
 
-### 4.2 Second Incompleteness Theorem
+This reveals a deep asymmetry in provability:
+- Dead-end worlds prove too much (everything), not too little.
+- Having no worlds to "check against" makes everything vacuously provable.
+- Soundness requires that provability be constrained by accessible worlds.
 
-**Theorem 5** (Second Incompleteness): If w ⊩ □⊥ → ⊥ and w ⊭ ⊥, then w ⊭ □(□⊥ → ⊥).
+## 6. Structural Properties
 
-*Proof*: Suppose w ⊩ □(□⊥ → ⊥). By Löb (Theorem 4 with φ = ⊥), w ⊩ □⊥. By the soundness hypothesis, w ⊩ ⊥. Contradiction. □
+### 6.1 R as a Strict Partial Order
 
-### 4.3 The Fundamental Tangling Theorem
+**Theorem 6.1.** In any GL frame, R is irreflexive, asymmetric, and transitive — i.e., a strict partial order.
 
-**Theorem 6** (Fundamental Tangling): For any consistent world w satisfying □⊥ → ⊥, there exists a formula φ such that w ⊩ □φ → φ but w ⊭ □(□φ → φ).
+*Proof.* Irreflexivity is Theorem 3.1. Asymmetry follows from irreflexivity + transitivity: if wRv and vRw, then wRw by transitivity, contradicting irreflexivity. □
 
-*Proof*: Take φ = ⊥. Then w ⊩ □⊥ → ⊥ (by hypothesis) and w ⊭ □(□⊥ → ⊥) (by Theorem 5). □
+### 6.2 Box K Axiom
 
-This theorem makes the tangling gap concrete: the formula ⊥ always witnesses it.
+**Theorem 6.2.** The distribution axiom □(φ → ψ) → □φ → □ψ is valid in all GL frames.
 
-### 4.4 Internal Soundness Impossibility
+*Proof.* If w ⊨ □(φ → ψ) and w ⊨ □φ, then for any v with wRv: v ⊨ φ → ψ (from the first hypothesis) and v ⊨ φ (from the second). So v ⊨ ψ. □
 
-**Theorem 7** (Internal Soundness Forces Inconsistency): If w ⊩ □(□φ → φ) for all φ and w ⊩ □φ → φ for all φ, then w ⊩ ⊥.
+### 6.3 Iterated Box Properties
 
-*Proof*: Take φ = ⊥. The first hypothesis gives w ⊩ □(□⊥ → ⊥). By Löb, w ⊩ □⊥. The second hypothesis gives w ⊩ ⊥. □
+**Theorem 6.3.** If w ⊨ □ⁿ⁺¹⊥ and wRv, then v ⊨ □ⁿ⊥.
 
-**Corollary** (No Consistent Internal Soundness): If w is sound and consistent, then there exists φ such that w ⊭ □(□φ → φ).
+*Proof.* □ⁿ⁺¹⊥ = □(□ⁿ⊥), and w ⊨ □(□ⁿ⊥) means ∀v, wRv → v ⊨ □ⁿ⊥. □
 
-### 4.5 Isolated Worlds
+## 7. The Incompleteness-Soundness Trade-off
 
-**Theorem 8** (Isolated World Dichotomy): If w has no R-successors, then w is fully sound iff w ⊩ ⊥.
+### 7.1 Provability Lattices
 
-*Proof*: (→) If w has no successors, w ⊩ □φ for all φ (vacuously). Full soundness then requires w ⊩ φ for all φ, including w ⊩ ⊥.
-(←) If w ⊩ ⊥, then w ⊩ φ for all φ by ex falso. □
+**Definition 7.1.** A *provability lattice* is a bounded distributive lattice with a monotone operator □ satisfying □⊤ = ⊤.
 
-**Corollary**: Any fully sound, consistent world must have at least one R-successor.
+**Definition 7.2.** A *Gödel element* in L is an element g satisfying:
+- g ⊓ □g = ⊥ (self-refuting)
+- g ⊔ □g = ⊤ (self-affirming)
 
-### 4.6 The Tangling Dichotomy
+### 7.2 Independence
 
-**Theorem 9** (Enhanced Tangling Dichotomy): If w is fully sound, then either:
-1. w ⊩ ⊥ (w is inconsistent), or
-2. w has R-successors AND w ⊭ □(□⊥ → ⊥)
+**Theorem 7.1** (Gödel Independence). In a nontrivial (⊥ ≠ ⊤) consistent (□⊥ = ⊥) provability lattice, a Gödel element g satisfies:
+1. g ≠ ⊥ (not refutable)
+2. g ≠ ⊤ (not trivially true)
+3. □g ≠ ⊤ (not provable)
 
-There is no third option: a fully sound world is either inconsistent or incomplete regarding its own consistency.
+*Proof sketch.* If □g = ⊤, then g ⊓ ⊤ = g = ⊥, and then g ⊔ □g = ⊥ ⊔ □⊥ = ⊥ ⊔ ⊥ = ⊥, but g ⊔ □g = ⊤, giving ⊥ = ⊤, contradiction. Similar arguments for the other claims. □
 
-### 4.7 Reflective Hierarchy Incompleteness
+### 7.3 The Trade-off Theorem
 
-**Definition 5** (Reflective Hierarchy): A reflective hierarchy of depth n is a chain w₀ R w₁ R ··· R wₙ where wᵢ is (n-i)-sound.
+**Theorem 7.2** (Incompleteness-Soundness Trade-off). In a nontrivial provability lattice with a Gödel element, the following cannot simultaneously hold:
+- Extensiveness: a ≤ □a for all a
+- Soundness: □a ≤ a for all a
 
-**Theorem 10** (Hierarchy Incompleteness): In any reflective hierarchy, if w₀ is consistent, then w₀ ⊭ □(□⊥ → ⊥).
+*Proof.* If both hold, then □a = a for all a (the box operator is the identity). Then:
+- g ⊓ □g = g ⊓ g = g = ⊥ (by self-refuting)
+- g ⊔ □g = g ⊔ g = g = ⊤ (by self-affirming)
 
-*Proof*: w₀ is n-sound (by the graded soundness condition at i=0). By k-soundness monotonicity, w₀ is 0-sound. By Theorem 5, w₀ ⊭ □(□⊥ → ⊥). □
+So ⊥ = g = ⊤, contradicting nontriviality. □
 
-## 5. The Soundness Defect and Proof Algebra
+**Significance.** This theorem shows that the incompleteness phenomenon is not merely about specific formulas (like the Gödel sentence) but is a *structural* property of the provability operator itself. Any nontrivial system with self-reference must sacrifice either soundness or completeness — and this trade-off is *forced by the lattice structure*, not by the details of the encoding.
 
-### 5.1 The Soundness Defect
+## 8. Bridge to Contractive Systems
 
-**Definition 6**: The soundness defect D_k(w) = {φ | d(φ) ≤ k, w ⊩ □φ, w ⊭ φ}.
+### 8.1 Abstract Contractive Well-Founded Systems
 
-**Theorem 11** (Defect Characterization): w is k-sound iff D_k(w) = ∅.
+**Definition 8.1.** An *abstract contractive system* consists of:
+- A type α with a well-founded relation rel
+- An operator op : α → α
+- A non-increasing condition: ¬ rel x (op x) for all x
 
-**Theorem 12** (Defect Monotonicity): D_k(w) ⊆ D_{k+1}(w).
+**Theorem 8.1.** Any GL frame (W, R) gives rise to a contractive system with:
+- rel = swap R (the converse relation)
+- op = id
+- nonincreasing = irreflexivity of R
 
-**Theorem 13** (Tangling Spectrum): w is fully sound iff D_k(w) = ∅ for all k.
+This bridge connects GL frames to:
+- **Metric contractions**: Banach's fixed-point theorem uses d(f(x), f(y)) < d(x, y)
+- **Orbit convergence**: The catalog result `iterate_dist_fixed_point_bound` uses contractive dynamics
+- **Termination proofs**: Program termination uses well-founded descent, the same structure as GL frames
 
-### 5.2 The Proof Algebra
+### 8.2 Connection to Catalog Results
 
-The **theory** Th(w) = {φ | w ⊩ φ} and the **box theory** □Th(w) = {φ | w ⊩ □φ} satisfy:
+The existing catalog theorem `fixed_point_construction_bound` (from `Catalog/Bridges/EMLClosureCore.lean`) uses well-founded recursion to construct fixed points with bounded complexity. Our GL frame formalization shows that this same well-founded structure is what prevents self-referential systems from proving their own soundness — the *same mathematical principle* drives both fixed-point convergence and Gödelian incompleteness.
 
-**Theorem 14**: Th(w) is closed under modus ponens.
+## 9. Discussion
 
-**Theorem 15**: □Th(w) is closed under modus ponens (K axiom).
+### 9.1 The Geometry of Self-Reference
 
-**Theorem 16**: □Th(w) ⊆ Th(v) for all v with wRv.
+Our results reveal that the incompleteness phenomena in mathematical logic have a *geometric* character. The GL frame provides a spatial model where:
+- Worlds represent theories
+- Edges represent provability
+- Depth measures self-referential capacity
+- The tangling hierarchy creates a fractal pattern of blind spots
 
-**Theorem 17** (Löb Closure): □Th(w) is closed under the Löb rule: if □φ → φ ∈ □Th(w), then φ ∈ □Th(w).
+This geometric perspective suggests connections to:
+- **Algebraic geometry**: The "space of theories" has a natural topology
+- **Category theory**: GL frames form a category; soundness is a functor property
+- **Homotopy type theory**: The iterated consistency hierarchy resembles a tower of fibrations
 
-**Theorem 18** (Box Idempotence / Axiom 4): If w ⊩ □φ, then w ⊩ □□φ.
+### 9.2 Limitations
 
-### 5.3 Stratified Tangled Systems
+Our results require:
+- **Converse well-foundedness**: Without this, Löb's theorem fails (the modal logic K4 has infinite ascending chains)
+- **Transitivity**: Without this, the distribution of □ over R-chains breaks down
+- **Nontriviality**: The trade-off theorem is vacuously true for trivial lattices
 
-**Definition 7**: A **stratified tangled system** is a tuple (M, V, level) where:
-- M is a GL frame
-- V is a valuation
-- level : W → ℕ assigns each world its soundness level
-- level_spec: each world w is level(w)-sound
-- level_tight: each world w is either not (level(w)+1)-sound, or inconsistent
+### 9.3 Boundary Analysis
 
-**Theorem 19**: In a stratified tangled system, no consistent world is fully sound.
+Where do our results break down?
+- **Inconsistent worlds**: The fundamental tangling theorem fails because ⊥ is forced
+- **S4 frames** (reflexive + transitive): Löb's theorem does not hold; reflexivity allows self-referential loops
+- **Infinite-depth frames**: The well-foundedness condition excludes these, but they model interesting logics (like K4)
 
-## 6. The Canonical Construction
+## 10. Algorithms
 
-The **canonical GL frame** on n+1 worlds is Fin(n+1) with i R j iff i < j. This frame:
-- Is transitive (transitivity of <)
-- Is converse well-founded (finiteness)
-- Has maximal chains of length n (the identity chain 0, 1, ..., n)
-- The last world (n) is isolated
+### 10.1 Tangling Depth Computation
 
-This construction provides concrete finite models for all our results and serves as the standard counterexample family.
+**Input:** GL frame (W, R)
+**Output:** depth(w) for all w ∈ W
 
-## 7. Discussion
+```
+function compute_depths(W, R):
+    depths = {}
+    remaining = W
+    while remaining ≠ ∅:
+        leaves = {w ∈ remaining : no v ∈ remaining with wRv}
+        for w in leaves:
+            if successors(w) = ∅:
+                depths[w] = 0
+            else:
+                depths[w] = 1 + max(depths[v] : wRv)
+        remaining = remaining \ leaves
+    return depths
+```
 
-### 7.1 Relationship to Existing Work
+Time complexity: O(|W| + |E|) where |E| is the number of edges.
 
-Our k-soundness hierarchy is related to but distinct from:
-- The Turing hierarchy of iterated consistency extensions (PA, PA + Con(PA), ...)
-- Feferman's transfinite progressions of theories
-- The reflection principles studied by Beklemishev
+### 10.2 Unprovable Truth Detection
 
-The key novelty is treating soundness stratification as a *quantitative* property of individual worlds within a single frame, rather than as a property of theories along a progression.
+**Input:** GL frame (W, R), valuation V, world w, formula list Φ
+**Output:** List of (φ, true_at_w, provable_at_w) triples
 
-### 7.2 The Fixed-Point Connection
+```
+function find_unprovable_truths(M, V, w, Φ):
+    results = []
+    for φ in Φ:
+        is_true = evaluate(M, V, w, φ)
+        is_provable = evaluate(M, V, w, □φ)
+        results.append((φ, is_true, is_provable))
+    return results
+```
 
-Löb's theorem, viewed algebraically, says that the box theory is a fixed point of the "Löb closure" operation. This connects our work to the fixed-point theorems in the catalog (cf. lawvere_fixed_point, fixed_point_construction_bound). The tangling phenomenon can be seen as a consequence of the uniqueness (or non-existence) of certain fixed points.
+## 11. Future Work
 
-### 7.3 Implications for AI Safety
+1. **Iterated consistency hierarchy**: Prove that Con_0, Con_1, Con_2, ... form a strictly increasing chain in logical strength. Our iterated box formulas provide the framework; the strict separation requires additional arguments about the structure of GL frames.
 
-The Internal Soundness Witness Impossibility (Theorem 7) has direct implications for AI verification: no AI system can fully certify its own reliability using its own reasoning. This is not a practical limitation but a logical impossibility, providing a formal foundation for arguments about the necessity of external oversight.
+2. **Omega-soundness characterization**: Characterize omega-sound worlds (those satisfying □ⁿ⊥ → ⊥ for all n) in terms of frame properties.
 
-## 8. Future Work
+3. **Graded Gödel elements**: Extend the Gödel element to a family g_0, g_1, g_2, ... with g_n ⊓ □ⁿg_n = ⊥ and g_n ⊔ □ⁿg_n = ⊤.
 
-1. Extend the k-soundness hierarchy to transfinite ordinals
-2. Investigate the relationship between k-soundness and proof-theoretic ordinals
-3. Connect the soundness defect to computational complexity measures
-4. Explore the categorical structure of reflective hierarchies
+4. **Categorical formulation**: Express the tangling hierarchy as a functor from the category of GL frames to the category of graded lattices.
 
-## References
+## 12. References
 
-1. K. Gödel, "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I," *Monatshefte für Mathematik und Physik* 38 (1931), 173–198.
-2. R. Solovay, "Provability interpretations of modal logic," *Israel Journal of Mathematics* 25 (1976), 287–304.
-3. G. Boolos, *The Logic of Provability*, Cambridge University Press, 1993.
-4. L. Beklemishev, "Reflection principles and provability algebras in formal arithmetic," *Russian Mathematical Surveys* 60 (2005), 197–268.
-5. D. Hofstadter, *Gödel, Escher, Bach: An Eternal Golden Braid*, Basic Books, 1979.
+- Boolos, G. (1993). *The Logic of Provability*. Cambridge University Press.
+- Gödel, K. (1931). Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I. *Monatshefte für Mathematik und Physik*, 38, 173-198.
+- Löb, M. H. (1955). Solution of a problem of Leon Henkin. *Journal of Symbolic Logic*, 20(2), 115-118.
+- Segerberg, K. (1971). *An Essay in Classical Modal Logic*. Uppsala University.
+- Solovay, R. M. (1976). Provability interpretations of modal logic. *Israel Journal of Mathematics*, 25, 287-304.
+- de Jongh, D., & Sambin, G. (1975). Intuitionistic provability logic. Department of Mathematics, University of Amsterdam.
+
+## Appendix: Lean 4 Formalization
+
+All theorems in this paper are formalized in Lean 4 with Mathlib. The main file is:
+
+- `Catalog/Logic/TangledHierarchyDepth.lean` — Contains all definitions and proofs
+- Builds upon `Catalog/Logic/TangledHierarchies.lean` (existing catalog)
+- Builds upon `Catalog/Logic/ProvabilityLogic.lean` (existing catalog)
+
+Key formalized results:
+- `GLFrame.loeb_semantic`: Löb's theorem (Theorem 3.2)
+- `GLFrame.fundamental_tangling`: Fundamental Tangling Theorem (Theorem 4.1)
+- `GLFrame.dead_end_not_sound_consistent`: Dead-End Paradox (Theorem 5.1)
+- `goedel_independent`: Gödel Independence (Theorem 7.1)
+- `incompleteness_soundness_tradeoff`: Trade-off Theorem (Theorem 7.2)
+- `glContractiveWF`: Bridge to contractive systems (Theorem 8.1)

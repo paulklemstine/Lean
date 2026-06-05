@@ -1,507 +1,390 @@
 #!/usr/bin/env python3
 """
-Tangled Hierarchies: Interactive Demonstration
+Demo: Tangled Hierarchies in Self-Referential Proof Systems
 
-Demonstrates the key concepts from the formalized theory of self-referential
-proof systems, including modal depth computation, k-soundness checking,
-and the construction of canonical GL frames.
+Demonstrates the key mathematical structures using concrete examples:
+1. GL frames and Kripke semantics
+2. Löb's theorem and the incompleteness cascade
+3. The tangling depth hierarchy
+4. The incompleteness-soundness trade-off
 """
 
+from typing import Dict, List, Set, Tuple, Optional
 from dataclasses import dataclass
-from typing import Optional
-from enum import Enum
 
-
-# ============================================================
-# Modal Formulas
-# ============================================================
-
-class FormulaType(Enum):
-    VAR = "var"
-    BOT = "bot"
-    IMP = "imp"
-    BOX = "box"
-
-
-@dataclass
-class Formula:
-    """Modal formula in the language of provability logic."""
-    kind: FormulaType
-    var_name: Optional[str] = None
-    left: Optional['Formula'] = None
-    right: Optional['Formula'] = None
-    inner: Optional['Formula'] = None
-
-    def __repr__(self):
-        if self.kind == FormulaType.VAR:
-            return self.var_name
-        elif self.kind == FormulaType.BOT:
-            return "⊥"
-        elif self.kind == FormulaType.IMP:
-            return f"({self.left} → {self.right})"
-        elif self.kind == FormulaType.BOX:
-            return f"□{self.inner}"
-
-
-def var(name: str) -> Formula:
-    return Formula(FormulaType.VAR, var_name=name)
-
-def bot() -> Formula:
-    return Formula(FormulaType.BOT)
-
-def imp(a: Formula, b: Formula) -> Formula:
-    return Formula(FormulaType.IMP, left=a, right=b)
-
-def box(a: Formula) -> Formula:
-    return Formula(FormulaType.BOX, inner=a)
-
-def neg(a: Formula) -> Formula:
-    return imp(a, bot())
-
-def con() -> Formula:
-    """Consistency formula: ¬□⊥"""
-    return neg(box(bot()))
-
-
-# ============================================================
-# Modal Depth
-# ============================================================
-
-def modal_depth(phi: Formula) -> int:
-    """Compute the modal depth of a formula."""
-    if phi.kind == FormulaType.VAR:
-        return 0
-    elif phi.kind == FormulaType.BOT:
-        return 0
-    elif phi.kind == FormulaType.IMP:
-        return max(modal_depth(phi.left), modal_depth(phi.right))
-    elif phi.kind == FormulaType.BOX:
-        return modal_depth(phi.inner) + 1
-
-
-def iterated_con(n: int) -> Formula:
-    """The n-th iterated consistency formula."""
-    if n == 0:
-        return bot()
-    else:
-        inner = iterated_con(n - 1)
-        return imp(box(inner), inner)
-
-
-# ============================================================
-# GL Frames and Forcing
-# ============================================================
 
 @dataclass
 class GLFrame:
-    """A finite GL frame (W, R) with W = {0, ..., n-1}."""
-    n: int  # number of worlds
-    R: list[list[bool]]  # adjacency matrix
+    """A GL frame: worlds with a transitive, converse well-founded accessibility relation."""
+    worlds: List[str]
+    edges: List[Tuple[str, str]]  # (w, v) means wRv
 
-    def successors(self, w: int) -> list[int]:
-        return [v for v in range(self.n) if self.R[w][v]]
+    def successors(self, w: str) -> Set[str]:
+        return {v for (u, v) in self.edges if u == w}
 
     def is_transitive(self) -> bool:
-        for u in range(self.n):
-            for v in range(self.n):
-                for w in range(self.n):
-                    if self.R[u][v] and self.R[v][w] and not self.R[u][w]:
-                        return False
+        for (u, v) in self.edges:
+            for (v2, w) in self.edges:
+                if v == v2 and (u, w) not in self.edges:
+                    return False
         return True
 
     def is_irreflexive(self) -> bool:
-        return all(not self.R[w][w] for w in range(self.n))
+        return all(u != v for (u, v) in self.edges)
+
+    def depth(self, w: str, visited: Optional[Set[str]] = None) -> int:
+        """Compute tangling depth of a world."""
+        if visited is None:
+            visited = set()
+        if w in visited:
+            return 0  # Should not happen in a valid GL frame
+        visited.add(w)
+        succs = self.successors(w)
+        if not succs:
+            return 0
+        return 1 + max(self.depth(v, visited.copy()) for v in succs)
 
 
-def canonical_gl_frame(n: int) -> GLFrame:
-    """The canonical GL frame on n+1 worlds: i R j iff i < j."""
-    size = n + 1
-    R = [[i < j for j in range(size)] for i in range(size)]
-    return GLFrame(size, R)
-
-
-def forces(frame: GLFrame, V: dict[str, set[int]], w: int, phi: Formula) -> bool:
-    """Check if world w forces formula phi in the given frame with valuation V."""
-    if phi.kind == FormulaType.VAR:
-        return w in V.get(phi.var_name, set())
-    elif phi.kind == FormulaType.BOT:
-        return False
-    elif phi.kind == FormulaType.IMP:
-        return not forces(frame, V, w, phi.left) or forces(frame, V, w, phi.right)
-    elif phi.kind == FormulaType.BOX:
-        return all(forces(frame, V, v, phi.inner) for v in frame.successors(w))
-
-
-def is_k_sound(frame: GLFrame, V: dict[str, set[int]], w: int, k: int,
-               variables: list[str]) -> bool:
-    """Check if world w is k-sound (approximately, by sampling formulas)."""
-    formulas = generate_formulas(k, variables)
-    for phi in formulas:
-        if modal_depth(phi) <= k:
-            if forces(frame, V, w, box(phi)) and not forces(frame, V, w, phi):
-                return False
-    return True
-
-
-def generate_formulas(max_depth: int, variables: list[str]) -> list[Formula]:
-    """Generate a sample of formulas up to the given modal depth."""
-    result = [bot()] + [var(v) for v in variables]
-    if max_depth == 0:
-        return result
-
-    prev = generate_formulas(max_depth - 1, variables)
-
-    # Add boxes of previous formulas
-    for phi in prev:
-        result.append(box(phi))
-
-    # Add some implications
-    for phi in prev[:5]:
-        for psi in prev[:5]:
-            result.append(imp(phi, psi))
-
-    return result
-
-
-# ============================================================
-# Demonstrations
-# ============================================================
-
-def demo_modal_depth():
-    """Demonstrate modal depth computation."""
+def demo_gl_frame():
+    """Demonstrate a concrete GL frame and its properties."""
     print("=" * 60)
-    print("DEMO 1: Modal Depth of Formulas")
+    print("DEMO 1: GL Frame Structure")
     print("=" * 60)
 
-    p = var("p")
-    formulas = [
-        ("p", p),
-        ("⊥", bot()),
-        ("□p", box(p)),
-        ("□⊥ → ⊥ (consistency)", con()),
-        ("□(□⊥ → ⊥)", box(con())),
-    ]
+    # A simple GL frame: w0 -> w1 -> w2, with transitive closure
+    frame = GLFrame(
+        worlds=["w0", "w1", "w2"],
+        edges=[("w0", "w1"), ("w0", "w2"), ("w1", "w2")]
+    )
 
-    for name, phi in formulas:
-        print(f"  d({name}) = {modal_depth(phi)}")
+    print(f"Worlds: {frame.worlds}")
+    print(f"Edges: {frame.edges}")
+    print(f"Transitive: {frame.is_transitive()}")
+    print(f"Irreflexive: {frame.is_irreflexive()}")
 
-    print("\nIterated consistency formulas:")
-    for n in range(6):
-        phi = iterated_con(n)
-        print(f"  Con_{n} = {phi}")
-        print(f"  d(Con_{n}) = {modal_depth(phi)}")
-    print()
-
-
-def demo_canonical_frame():
-    """Demonstrate the canonical GL frame."""
-    print("=" * 60)
-    print("DEMO 2: Canonical GL Frame")
-    print("=" * 60)
-
-    n = 4
-    frame = canonical_gl_frame(n)
-    print(f"Canonical frame on {n+1} worlds (0, 1, 2, 3, 4):")
-    print(f"  Transitive: {frame.is_transitive()}")
-    print(f"  Irreflexive: {frame.is_irreflexive()}")
-
-    for w in range(frame.n):
+    for w in frame.worlds:
+        d = frame.depth(w)
         succs = frame.successors(w)
-        print(f"  World {w} sees: {succs}")
+        print(f"  depth({w}) = {d}, successors = {succs}")
 
-    # Maximal chain
-    chain = list(range(n + 1))
-    print(f"  Maximal chain: {' → '.join(map(str, chain))}")
-    print(f"  Chain length: {n}")
+    print()
+    print("Key insight: depth strictly decreases along edges.")
+    print(f"  w0 -> w1: depth {frame.depth('w0')} > {frame.depth('w1')}")
+    print(f"  w1 -> w2: depth {frame.depth('w1')} > {frame.depth('w2')}")
     print()
 
 
-def demo_forcing():
-    """Demonstrate the forcing relation."""
+def demo_loeb_theorem():
+    """Demonstrate Löb's theorem with a concrete evaluation."""
     print("=" * 60)
-    print("DEMO 3: Forcing Relation and Soundness")
+    print("DEMO 2: Löb's Theorem and Gödel's Second Incompleteness")
     print("=" * 60)
 
-    n = 3
-    frame = canonical_gl_frame(n)
-    V = {"p": {1, 3}}  # p is true at worlds 1 and 3
+    # In our GL frame, define a valuation and check forcing
+    frame = GLFrame(
+        worlds=["std", "w1", "w2"],
+        edges=[("std", "w1"), ("std", "w2"), ("w1", "w2")]
+    )
 
-    p = var("p")
-    formulas = [
-        ("p", p),
-        ("□p", box(p)),
-        ("□⊥", box(bot())),
-        ("□⊥ → ⊥", con()),
-        ("□(□⊥ → ⊥)", box(con())),
-    ]
+    # Check: does 'std' force □⊥?
+    # □⊥ at std means: for all v with std R v, v forces ⊥
+    # This is False (w1 does not force ⊥)
+    print("Frame: std -> w1 -> w2, std -> w2")
+    print()
+    print("Does 'std' force □⊥? NO")
+    print("  Because w1 is accessible from std, but w1 does not force ⊥.")
+    print()
 
-    print(f"Frame: canonical({n}), V(p) = {{1, 3}}")
-    for w in range(frame.n):
-        print(f"\n  World {w}:")
-        for name, phi in formulas:
-            val = forces(frame, V, w, phi)
-            print(f"    {w} ⊩ {name}: {val}")
+    # Check: does 'std' force □⊥ → ⊥?
+    # This means: if std forces □⊥, then std forces ⊥
+    # Since std does NOT force □⊥, this is vacuously true
+    print("Does 'std' force □⊥ → ⊥ (= consistency)? YES (vacuously)")
+    print("  std does not force □⊥, so the implication holds.")
+    print()
+
+    # Check: does 'std' force □(□⊥ → ⊥)?
+    # This means: for all v with std R v, v forces □⊥ → ⊥
+    # v = w1: does w1 force □⊥ → ⊥?
+    #   w1 forces □⊥ iff all successors of w1 force ⊥
+    #   w2 is the only successor, and w2 has no successors → w2 forces □⊥ (vacuously!)
+    #   So w1 forces □⊥. Does w1 force ⊥? NO.
+    #   So w1 does NOT force □⊥ → ⊥.
+    print("Does 'std' force □(□⊥ → ⊥) (= provability of consistency)? NO")
+    print("  w1 forces □⊥ (vacuously, via w2), but w1 does NOT force ⊥.")
+    print("  So w1 does not force □⊥ → ⊥, and std cannot prove consistency.")
+    print()
+    print("This is Gödel's Second Incompleteness Theorem!")
+    print("The system (std) is consistent but cannot prove its own consistency.")
+    print()
+
+    # Dead-end analysis
+    print("Dead-end paradox: w2 has no successors.")
+    print("  w2 forces □φ for ALL φ (vacuously)!")
+    print("  In particular, w2 forces □⊥.")
+    print("  If w2 were 'sound' (□⊥ → ⊥), then w2 would force ⊥.")
+    print("  So dead-end worlds CANNOT be both sound and consistent.")
     print()
 
 
-def demo_k_soundness():
-    """Demonstrate k-soundness checking."""
+def demo_tangling_hierarchy():
+    """Demonstrate the tangling hierarchy with increasing depth."""
     print("=" * 60)
-    print("DEMO 4: k-Soundness Hierarchy")
-    print("=" * 60)
-
-    n = 4
-    frame = canonical_gl_frame(n)
-    V = {"p": {2, 4}}
-
-    variables = ["p"]
-    print(f"Frame: canonical({n}), V(p) = {{2, 4}}")
-
-    for w in range(frame.n):
-        print(f"\n  World {w} (successors: {frame.successors(w)}):")
-        for k in range(4):
-            sound = is_k_sound(frame, V, w, k, variables)
-            print(f"    {k}-sound: {sound}")
-    print()
-
-
-def demo_tangling():
-    """Demonstrate the tangling phenomenon."""
-    print("=" * 60)
-    print("DEMO 5: The Tangling Phenomenon")
+    print("DEMO 3: The Tangling Hierarchy")
     print("=" * 60)
 
-    n = 3
-    frame = canonical_gl_frame(n)
-    V: dict[str, set[int]] = {}
-
-    con_formula = con()  # □⊥ → ⊥
-    box_con = box(con_formula)  # □(□⊥ → ⊥)
-
-    print(f"Frame: canonical({n})")
-    for w in range(frame.n):
-        con_val = forces(frame, V, w, con_formula)
-        box_con_val = forces(frame, V, w, box_con)
-        consistent = not forces(frame, V, w, bot())
-
-        print(f"\n  World {w}:")
-        print(f"    Consistent: {consistent}")
-        print(f"    {w} ⊩ □⊥ → ⊥ (sound for ⊥): {con_val}")
-        print(f"    {w} ⊩ □(□⊥ → ⊥) (proves own soundness): {box_con_val}")
-
-        if con_val and consistent and not box_con_val:
-            print(f"    *** TANGLING: World {w} IS sound but CANNOT PROVE its soundness ***")
-        if con_val and consistent and box_con_val:
-            print(f"    *** IMPOSSIBLE by 2nd incompleteness theorem ***")
-    print()
-
-
-def demo_reflective_hierarchy():
-    """Demonstrate reflective hierarchies."""
-    print("=" * 60)
-    print("DEMO 6: Reflective Hierarchy")
-    print("=" * 60)
-
+    # Build a deeper frame
     n = 5
-    frame = canonical_gl_frame(n)
-    V: dict[str, set[int]] = {}
+    worlds = [f"w{i}" for i in range(n)]
+    edges = [(f"w{i}", f"w{j}") for i in range(n) for j in range(i+1, n)]
+    frame = GLFrame(worlds=worlds, edges=edges)
 
-    print(f"Frame: canonical({n})")
-    print(f"Hierarchy: 0 → 1 → 2 → 3 → 4 → 5")
-    print(f"Graded soundness: world i is (5-i)-sound\n")
+    print(f"Frame with {n} worlds: w0 -> w1 -> ... -> w{n-1}")
+    print(f"(Transitively closed)")
+    print()
 
-    for i in range(n + 1):
-        level = n - i
-        succs = frame.successors(i)
-        isolated = len(succs) == 0
-        con_val = forces(frame, V, i, con())
+    for w in worlds:
+        d = frame.depth(w)
+        succs = frame.successors(w)
+        print(f"  {w}: depth = {d}, successors = {succs}")
 
-        print(f"  World {i}: {level}-sound, successors={succs}")
-        if isolated:
-            print(f"    (isolated — □φ vacuously true for all φ)")
-        print(f"    Satisfies □⊥ → ⊥: {con_val}")
+    print()
+    print("The tangling hierarchy:")
+    print("  Level 0 (w4): Dead end. Vacuously proves everything.")
+    print("  Level 1 (w3): Can reason about level 0. Cannot prove Con_0.")
+    print("  Level 2 (w2): Can reason about levels 0-1. Cannot prove Con_1.")
+    print("  ...")
+    print(f"  Level {n-1} (w0): Can reason about all lower levels.")
+    print()
+    print("At each level, the system cannot prove the consistency")
+    print("of the level below — creating an unavoidable 'tangle'.")
+    print()
 
-    print(f"\n  World 0 cannot prove □(□⊥ → ⊥) — hierarchy incompleteness!")
+
+def demo_soundness_tradeoff():
+    """Demonstrate the incompleteness-soundness trade-off."""
+    print("=" * 60)
+    print("DEMO 4: The Incompleteness-Soundness Trade-off")
+    print("=" * 60)
+
+    print("In a provability lattice with a Gödel element g:")
+    print("  g ⊓ □g = ⊥  (g and '□g' are contradictory)")
+    print("  g ⊔ □g = ⊤  (either g or □g holds)")
+    print()
+    print("Theorem: Extensiveness (a ≤ □a) and soundness (□a ≤ a)")
+    print("         CANNOT BOTH HOLD in a nontrivial lattice.")
+    print()
+    print("Proof sketch:")
+    print("  1. If both hold, then □a = a for all a (□ is the identity).")
+    print("  2. Then g ⊓ g = g = ⊥ (from self_refuting with □g = g).")
+    print("  3. And g ⊔ g = g = ⊤ (from self_affirming with □g = g).")
+    print("  4. So ⊥ = ⊤, contradicting nontriviality.")
+    print()
+    print("This means every nontrivial proof system must sacrifice either:")
+    print("  - Soundness: some provable statements are false, OR")
+    print("  - Completeness: some true statements are unprovable.")
+    print()
+    print("This is the deep structural reason why tangled hierarchies")
+    print("are UNAVOIDABLE in self-referential systems.")
     print()
 
 
 if __name__ == "__main__":
-    demo_modal_depth()
-    demo_canonical_frame()
-    demo_forcing()
-    demo_k_soundness()
-    demo_tangling()
-    demo_reflective_hierarchy()
-
-    print("=" * 60)
-    print("All demonstrations completed successfully.")
-    print("=" * 60)
+    demo_gl_frame()
+    demo_loeb_theorem()
+    demo_tangling_hierarchy()
+    demo_soundness_tradeoff()
 
 
 #!/usr/bin/env python3
 """
-Visualization: The Tangling Hierarchy in GL Frames
+Visualization: Tangled Hierarchy Depth in GL Frames
 
-Produces a figure showing the canonical GL frame, the k-soundness
-levels at each world, and the tangling gap.
+Produces a visualization of a GL frame showing:
+- World nodes colored by tangling depth
+- Accessibility edges
+- Annotations showing which consistency levels hold
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
+from typing import Dict, List, Set, Tuple
 
 
-def draw_canonical_frame(ax, n=5):
-    """Draw the canonical GL frame on n+1 worlds."""
-    ax.set_title(f"Canonical GL Frame (n={n})", fontsize=14, fontweight='bold')
+def compute_depth(worlds: List[str], edges: Set[Tuple[str, str]]) -> Dict[str, int]:
+    """Compute tangling depth for each world."""
+    successors = {w: set() for w in worlds}
+    for (u, v) in edges:
+        successors[u].add(v)
 
-    # Position worlds in a line
-    positions = {i: (i * 1.5, 0) for i in range(n + 1)}
+    depths: Dict[str, int] = {}
+    remaining = set(worlds)
 
-    # Draw edges (i → j for i < j)
-    for i in range(n + 1):
-        for j in range(i + 1, n + 1):
-            x1, y1 = positions[i]
-            x2, y2 = positions[j]
-            # Only draw direct successor edges for clarity
-            if j == i + 1:
-                ax.annotate('', xy=(x2 - 0.2, y2), xytext=(x1 + 0.2, y1),
-                           arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
+    while remaining:
+        leaves = {w for w in remaining
+                  if not successors[w].intersection(remaining)}
+        if not leaves:
+            break
+        for w in leaves:
+            if not successors[w]:
+                depths[w] = 0
+            else:
+                depths[w] = 1 + max(depths.get(v, 0) for v in successors[w])
+        remaining -= leaves
 
-    # Draw worlds
-    for i in range(n + 1):
-        x, y = positions[i]
-        consistent = i < n  # last world is isolated
-        color = '#4CAF50' if consistent else '#FF5722'
-        ax.add_patch(plt.Circle((x, y), 0.18, color=color, zorder=3))
-        ax.text(x, y, str(i), ha='center', va='center', fontsize=12,
-                fontweight='bold', color='white', zorder=4)
+    return depths
+
+
+def plot_gl_frame(
+    worlds: List[str],
+    edges: Set[Tuple[str, str]],
+    title: str = "GL Frame: Tangled Hierarchy",
+    filename: str = "tangled_hierarchy.png"
+):
+    """Plot a GL frame with depth coloring."""
+    depths = compute_depth(worlds, edges)
+    max_depth = max(depths.values()) if depths else 0
+
+    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
+
+    # Layout: arrange worlds by depth (higher depth = higher y)
+    n = len(worlds)
+    positions = {}
+    depth_groups: Dict[int, List[str]] = {}
+    for w in worlds:
+        d = depths.get(w, 0)
+        if d not in depth_groups:
+            depth_groups[d] = []
+        depth_groups[d].append(w)
+
+    for d, group in depth_groups.items():
+        for i, w in enumerate(group):
+            x = (i + 0.5) / len(group)
+            y = d / (max_depth + 1) * 0.8 + 0.1
+            positions[w] = (x, y)
+
+    # Draw edges
+    for (u, v) in edges:
+        x1, y1 = positions[u]
+        x2, y2 = positions[v]
+        ax.annotate("",
+                     xy=(x2, y2), xytext=(x1, y1),
+                     arrowprops=dict(arrowstyle="->", color="gray",
+                                     alpha=0.6, lw=1.5))
+
+    # Draw nodes
+    cmap = plt.cm.RdYlGn
+    for w in worlds:
+        x, y = positions[w]
+        d = depths.get(w, 0)
+        color = cmap(d / (max_depth + 0.5)) if max_depth > 0 else cmap(0.5)
+
+        circle = plt.Circle((x, y), 0.04, color=color, ec='black', lw=2, zorder=5)
+        ax.add_patch(circle)
+        ax.text(x, y, w, ha='center', va='center', fontsize=9,
+                fontweight='bold', zorder=6)
+
+        # Annotate with depth
+        ax.text(x, y - 0.06, f"depth={d}", ha='center', va='top',
+                fontsize=7, color='gray')
 
     # Labels
-    ax.text(n * 0.75, -0.8, "World i accesses world j iff i < j",
-            ha='center', fontsize=10, style='italic')
-
-    ax.set_xlim(-0.5, n * 1.5 + 0.5)
-    ax.set_ylim(-1.2, 1.2)
+    ax.set_xlim(-0.1, 1.1)
+    ax.set_ylim(-0.05, 1.05)
     ax.set_aspect('equal')
+    ax.set_title(title, fontsize=14, fontweight='bold')
     ax.axis('off')
 
-
-def draw_k_soundness_heatmap(ax, n=5):
-    """Draw a heatmap of k-soundness levels."""
-    ax.set_title("k-Soundness Levels", fontsize=14, fontweight='bold')
-
-    # In the canonical frame, world i is sound for formulas whose
-    # soundness doesn't require looking beyond the frame.
-    # World n (isolated) is NOT sound for anything (vacuous box forces ⊥).
-    # Other worlds are sound up to depth related to their position.
-
-    max_k = n
-    data = np.zeros((max_k + 1, n + 1))
-
-    for world in range(n + 1):
-        for k in range(max_k + 1):
-            # Approximate: world i is roughly (n-i)-sound
-            if world == n:
-                # Isolated world: not sound (vacuous box)
-                data[k][world] = 0
-            elif k <= n - world - 1:
-                data[k][world] = 1
-            else:
-                data[k][world] = 0.3  # uncertain
-
-    im = ax.imshow(data, cmap='RdYlGn', aspect='auto', vmin=0, vmax=1)
-    ax.set_xlabel("World", fontsize=11)
-    ax.set_ylabel("k (soundness level)", fontsize=11)
-    ax.set_xticks(range(n + 1))
-    ax.set_yticks(range(max_k + 1))
-
-    # Add text annotations
-    for k in range(max_k + 1):
-        for w in range(n + 1):
-            val = data[k][w]
-            text = "✓" if val > 0.8 else ("?" if val > 0.2 else "✗")
-            ax.text(w, k, text, ha='center', va='center', fontsize=10,
-                    color='black' if val > 0.5 else 'white')
-
-
-def draw_tangling_gap(ax):
-    """Draw the tangling gap visualization."""
-    ax.set_title("The Tangling Gap", fontsize=14, fontweight='bold')
-
-    levels = range(8)
-    external = [1] * 8  # External soundness at all levels
-    internal = [1 if k < 5 else 0 for k in levels]  # Internal proof up to some level
-
-    ax.bar([x - 0.15 for x in levels], external, 0.3, label='Externally Sound',
-           color='#4CAF50', alpha=0.8)
-    ax.bar([x + 0.15 for x in levels], internal, 0.3, label='Can Prove Soundness',
-           color='#2196F3', alpha=0.8)
-
-    ax.set_xlabel("Soundness Level k", fontsize=11)
-    ax.set_ylabel("Holds?", fontsize=11)
-    ax.set_xticks(list(levels))
-    ax.set_yticks([0, 1])
-    ax.set_yticklabels(['No', 'Yes'])
+    # Add legend
+    for d in sorted(depth_groups.keys()):
+        color = cmap(d / (max_depth + 0.5)) if max_depth > 0 else cmap(0.5)
+        ax.plot([], [], 'o', color=color, markersize=10,
+                label=f"Depth {d}")
     ax.legend(loc='upper right', fontsize=9)
 
-    # Arrow showing the gap
-    ax.annotate('Tangling\nGap', xy=(5, 0.5), fontsize=11, ha='center',
-                color='red', fontweight='bold')
+    # Add explanatory text
+    textstr = (
+        "Tangling Hierarchy:\n"
+        "• Depth 0: Dead end (vacuously proves □⊥)\n"
+        "• Depth n: Can reason about depth < n\n"
+        "• Each level cannot prove its\n"
+        "  own consistency (Gödel II)"
+    )
+    props = dict(boxstyle='round', facecolor='lightyellow', alpha=0.8)
+    ax.text(0.02, 0.98, textstr, transform=ax.transAxes, fontsize=8,
+            verticalalignment='top', bbox=props)
+
+    plt.tight_layout()
+    plt.savefig(filename, dpi=150, bbox_inches='tight')
+    plt.close()
+    print(f"Saved: {filename}")
 
 
-def draw_hierarchy(ax):
-    """Draw the reflective hierarchy."""
-    ax.set_title("Reflective Hierarchy", fontsize=14, fontweight='bold')
+def plot_soundness_tradeoff(filename: str = "soundness_tradeoff.png"):
+    """Plot the incompleteness-soundness trade-off."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
 
-    n = 6
-    for i in range(n):
-        y = n - 1 - i
-        level = n - 1 - i
-        color = plt.cm.viridis(level / (n - 1))
+    # Create a 2D plot: x = extensiveness, y = soundness
+    # The diagonal line represents □ = id
+    x = np.linspace(0, 1, 100)
 
-        # Draw world
-        circle = plt.Circle((2, y * 0.8), 0.25, color=color, zorder=3)
-        ax.add_patch(circle)
-        ax.text(2, y * 0.8, f"w_{i}", ha='center', va='center',
-                fontsize=10, color='white', fontweight='bold', zorder=4)
+    # Shade the impossible region
+    ax.fill_between(x, x, 1, alpha=0.15, color='red',
+                     label='Impossible (with Gödel element)')
+    ax.fill_between(x, 0, x, alpha=0.1, color='green',
+                     label='Possible region')
 
-        # Label with soundness level
-        ax.text(3.5, y * 0.8, f"{level}-sound", ha='left', va='center',
-                fontsize=10)
+    # Plot the diagonal
+    ax.plot(x, x, 'r--', lw=2, label='□ = id (collapse)')
 
-        # Arrow to next
-        if i < n - 1:
-            ax.annotate('', xy=(2, (y - 1) * 0.8 + 0.25),
-                       xytext=(2, y * 0.8 - 0.25),
-                       arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
+    # Mark key points
+    ax.plot(0.8, 0.3, 'bo', markersize=15, zorder=5)
+    ax.annotate('PA\n(sound, incomplete)', (0.8, 0.3),
+                textcoords="offset points", xytext=(15, -15),
+                fontsize=10, ha='left')
 
-    ax.text(2, -1.2, "Each level certifies the one below",
-            ha='center', fontsize=10, style='italic')
-    ax.text(2, -1.6, "No level certifies itself",
-            ha='center', fontsize=10, style='italic', color='red')
+    ax.plot(0.3, 0.9, 'gs', markersize=15, zorder=5)
+    ax.annotate('Complete theory\n(unsound)', (0.3, 0.9),
+                textcoords="offset points", xytext=(15, 10),
+                fontsize=10, ha='left')
 
-    ax.set_xlim(0, 5)
-    ax.set_ylim(-2, (n - 1) * 0.8 + 0.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
+    ax.plot(0.5, 0.5, 'r*', markersize=20, zorder=5)
+    ax.annotate('Trivial\n(⊥ = ⊤)', (0.5, 0.5),
+                textcoords="offset points", xytext=(15, -15),
+                fontsize=10, ha='left', color='red')
 
+    ax.set_xlabel('Extensiveness (a ≤ □a)', fontsize=12)
+    ax.set_ylabel('Soundness (□a ≤ a)', fontsize=12)
+    ax.set_title('The Incompleteness-Soundness Trade-off\n'
+                 '(with Gödel element in a nontrivial lattice)',
+                 fontsize=14, fontweight='bold')
+    ax.legend(fontsize=10, loc='lower right')
+    ax.set_xlim(-0.05, 1.05)
+    ax.set_ylim(-0.05, 1.05)
+    ax.grid(True, alpha=0.3)
 
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle("Tangled Hierarchies: Self-Referential Proof Systems",
-                 fontsize=16, fontweight='bold', y=0.98)
-
-    draw_canonical_frame(axes[0, 0])
-    draw_k_soundness_heatmap(axes[0, 1])
-    draw_tangling_gap(axes[1, 0])
-    draw_hierarchy(axes[1, 1])
-
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
-    plt.savefig("tangling_hierarchy.png", dpi=150, bbox_inches='tight')
-    plt.savefig("tangling_hierarchy.pdf", bbox_inches='tight')
-    print("Saved: tangling_hierarchy.png, tangling_hierarchy.pdf")
+    plt.tight_layout()
+    plt.savefig(filename, dpi=150, bbox_inches='tight')
+    plt.close()
+    print(f"Saved: {filename}")
 
 
 if __name__ == "__main__":
-    main()
+    # Demo 1: Small GL frame
+    worlds = ["w0", "w1", "w2", "w3"]
+    edges = {("w0", "w1"), ("w0", "w2"), ("w0", "w3"),
+             ("w1", "w2"), ("w1", "w3"), ("w2", "w3")}
+    plot_gl_frame(worlds, edges, "GL Frame: 4-World Tangled Hierarchy")
+
+    # Demo 2: Larger frame
+    n = 6
+    worlds_large = [f"w{i}" for i in range(n)]
+    edges_large = {(f"w{i}", f"w{j}") for i in range(n) for j in range(i+1, n)}
+    plot_gl_frame(worlds_large, edges_large,
+                  f"GL Frame: {n}-World Complete Hierarchy",
+                  "tangled_hierarchy_large.png")
+
+    # Demo 3: Soundness trade-off
+    plot_soundness_tradeoff()
