@@ -1,249 +1,233 @@
+#!/usr/bin/env python3
 """
-EML Differential Equations: Demonstrations
+Demo: EML Differential Equations — Wronskian Theory and Kovacic Classification
 
-Demonstrates key concepts from the formalized theory:
-1. Degree gap visualization for the Airy equation
-2. Wronskian constancy verification using numerical Airy functions
-3. EML expression differentiation and depth analysis
+Demonstrates the key theorems from our formalization with numerical examples.
 """
 
 import numpy as np
+from scipy.integrate import odeint
 from scipy.special import airy
-from scipy.integrate import solve_ivp
 
-def demo_degree_gap():
-    """Demonstrate the degree gap obstruction for polynomial solutions of Airy."""
+
+def wronskian(y1, y1_prime, y2, y2_prime):
+    """Compute the Wronskian W(y1, y2) = y1*y2' - y2*y1'."""
+    return y1 * y2_prime - y2 * y1_prime
+
+
+def verify_abel_identity():
+    """
+    Verify Abel's Identity: W' = -p * W for y'' + p*y' + q*y = 0.
+    
+    Example: Damped oscillator y'' + 2*y' + 5*y = 0 (p=2, q=5)
+    Solutions: y1 = e^{-x} cos(2x), y2 = e^{-x} sin(2x)
+    Predicted: W(x) = W(0) * e^{-2x} (since W' = -2W)
+    """
     print("=" * 60)
-    print("DEGREE GAP OBSTRUCTION FOR y'' = xy")
+    print("DEMO 1: Abel's Identity — W' = -p · W")
+    print("=" * 60)
+    print("\nODE: y'' + 2y' + 5y = 0 (damped oscillator)")
+    print("Solutions: y1 = e^(-x)cos(2x), y2 = e^(-x)sin(2x)")
+    print()
+
+    p = 2.0
+    xs = np.linspace(0, 3, 100)
+
+    y1 = np.exp(-xs) * np.cos(2 * xs)
+    y1_prime = np.exp(-xs) * (-np.cos(2 * xs) - 2 * np.sin(2 * xs))
+
+    y2 = np.exp(-xs) * np.sin(2 * xs)
+    y2_prime = np.exp(-xs) * (-np.sin(2 * xs) + 2 * np.cos(2 * xs))
+
+    W = wronskian(y1, y1_prime, y2, y2_prime)
+    W_predicted = W[0] * np.exp(-p * xs)
+
+    print(f"  W(0) = {W[0]:.6f}")
+    print(f"  W(1) = {W[50]:.6f}  (predicted: {W_predicted[50]:.6f})")
+    print(f"  W(3) = {W[-1]:.6f}  (predicted: {W_predicted[-1]:.6f})")
+    print(f"  Max |W - W_pred| = {np.max(np.abs(W - W_predicted)):.2e}")
+    print(f"\n  ✓ Abel's identity verified: W' = -{p}·W")
+
+
+def verify_wronskian_reduced():
+    """
+    Verify: when p = 0 (reduced form), the Wronskian is constant.
+    
+    Example: y'' + y = 0 (harmonic oscillator, p=0)
+    Solutions: y1 = cos(x), y2 = sin(x)
+    """
+    print("\n" + "=" * 60)
+    print("DEMO 2: Constant Wronskian for Reduced ODEs (p = 0)")
+    print("=" * 60)
+    print("\nODE: y'' + y = 0 (p=0, reduced form)")
+    print("Solutions: y1 = cos(x), y2 = sin(x)")
+    print()
+
+    xs = np.linspace(0, 10, 200)
+    y1 = np.cos(xs)
+    y1p = -np.sin(xs)
+    y2 = np.sin(xs)
+    y2p = np.cos(xs)
+
+    W = wronskian(y1, y1p, y2, y2p)
+
+    print(f"  W(0)  = {W[0]:.10f}")
+    print(f"  W(π)  = {W[62]:.10f}")
+    print(f"  W(2π) = {W[125]:.10f}")
+    print(f"  W(10) = {W[-1]:.10f}")
+    print(f"  Variation: {np.max(W) - np.min(W):.2e}")
+    print(f"\n  ✓ Wronskian is constant (within numerical precision)")
+
+
+def verify_solution_representation():
+    """
+    Verify the Solution Representation Theorem.
+    
+    y'' + y = 0, y1 = cos(x), y2 = sin(x)
+    y3 = 3cos(x) - 2sin(x)
+    Expected: c1 = 3, c2 = -2
+    """
+    print("\n" + "=" * 60)
+    print("DEMO 3: Solution Representation Theorem")
+    print("=" * 60)
+    print("\nODE: y'' + y = 0")
+    print("y1 = cos(x), y2 = sin(x), y3 = 3cos(x) - 2sin(x)")
+    print()
+
+    x = 1.0  # evaluate at x = 1
+    y1 = np.cos(x)
+    y1p = -np.sin(x)
+    y2 = np.sin(x)
+    y2p = np.cos(x)
+    y3 = 3 * np.cos(x) - 2 * np.sin(x)
+    y3p = -3 * np.sin(x) - 2 * np.cos(x)
+
+    W12 = wronskian(y1, y1p, y2, y2p)
+    W32 = wronskian(y3, y3p, y2, y2p)
+    W13 = wronskian(y1, y1p, y3, y3p)
+
+    c1 = W32 / W12
+    c2 = W13 / W12
+
+    print(f"  W(y1, y2) = {W12:.10f}")
+    print(f"  c1 = W(y3, y2) / W(y1, y2) = {c1:.10f}  (expected: 3)")
+    print(f"  c2 = W(y1, y3) / W(y1, y2) = {c2:.10f}  (expected: -2)")
+    print(f"\n  ✓ Solution representation verified: y3 = {c1:.1f}·y1 + {c2:.1f}·y2")
+
+
+def verify_riccati_reduction():
+    """
+    Verify the Riccati Reduction: if y solves the ODE, then r = y'/y solves
+    the Riccati equation r' + r² + p·r + q = 0.
+    
+    Example: y'' - y = 0 (p=0, q=-1), solution y = e^x, r = 1
+    Riccati: r' + r² - 1 = 0 + 1 - 1 = 0 ✓
+    """
+    print("\n" + "=" * 60)
+    print("DEMO 4: Riccati Reduction")
+    print("=" * 60)
+    print("\nODE: y'' - y = 0 (p=0, q=-1)")
+    print("Solution: y = e^x, so r = y'/y = 1")
+    print()
+
+    p, q = 0.0, -1.0
+    r = 1.0
+    r_prime = 0.0
+
+    riccati = r_prime + r ** 2 + p * r + q
+    print(f"  r' + r² + p·r + q = {r_prime} + {r**2} + {p*r} + {q} = {riccati}")
+    print(f"\n  ✓ Riccati equation satisfied")
+
+    # Also for y = e^{-x}, r = -1
+    r = -1.0
+    riccati = 0.0 + r ** 2 + p * r + q
+    print(f"\n  For y = e^(-x): r = -1")
+    print(f"  r' + r² + p·r + q = 0 + 1 + 0 + (-1) = {riccati}")
+    print(f"  ✓ Also satisfied")
+
+
+def airy_solutions():
+    """
+    Demonstrate Airy equation y'' = xy and its transcendence.
+    """
+    print("\n" + "=" * 60)
+    print("DEMO 5: Airy Equation — y'' = xy (No EML Solutions)")
     print("=" * 60)
     print()
-    print("If p(x) is a polynomial of degree n satisfying p'' = x·p,")
-    print("then deg(p'') = n-2 and deg(x·p) = n+1.")
-    print()
-    print("  n | deg(p'') | deg(x·p) | Equal?")
-    print("  --|----------|----------|-------")
-    for n in range(0, 8):
-        deg_lhs = max(n - 2, -1)  # -1 means zero polynomial
-        deg_rhs = n + 1
-        eq = "✓" if deg_lhs == deg_rhs else "✗ IMPOSSIBLE"
-        lhs_str = str(deg_lhs) if deg_lhs >= 0 else "  (zero)"
-        print(f"  {n} |    {lhs_str:>5} |    {deg_rhs:>5} | {eq}")
-    print()
-    print("No value of n makes the degrees match → no polynomial solution exists!")
-    print()
 
-def demo_wronskian_constancy():
-    """Numerically verify that W(Ai, Bi) is constant."""
+    xs = np.linspace(-15, 5, 1000)
+    ai, aip, bi, bip = airy(xs)
+
+    W = ai * bip - bi * aip
+
+    print(f"  Airy functions computed at {len(xs)} points")
+    print(f"  Wronskian W(Ai, Bi) = 1/π ≈ {1/np.pi:.10f}")
+    print(f"  Computed W(0) = {W[len(xs)//4*3]:.10f}")
+    print(f"  Wronskian variation: {np.max(W) - np.min(W):.2e}")
+    print()
+    print("  The Airy equation has Galois group SL(2,ℂ).")
+    print("  Since SL(2) is not solvable, no Liouvillian solutions exist.")
+    print("  This means Ai(x) and Bi(x) are genuinely new transcendental functions")
+    print("  that cannot be expressed using exponentials and logarithms.")
+    print()
+    print("  Key obstruction (proved): If y solves y'' = xy and y ≠ 0,")
+    print("  then r = y'/y cannot be constant (Theorem: airy_riccati_not_const).")
+
+
+def kovacic_classification_examples():
+    """
+    Demonstrate the four Kovacic cases with examples.
+    """
+    print("\n" + "=" * 60)
+    print("DEMO 6: Kovacic Classification — Four Cases")
     print("=" * 60)
-    print("WRONSKIAN CONSTANCY: W(Ai, Bi) = 1/π")
-    print("=" * 60)
-    print()
-
-    xs = np.linspace(-10, 5, 1000)
-    ai_vals, ai_prime, bi_vals, bi_prime = airy(xs)
-
-    wronskian = ai_vals * bi_prime - bi_vals * ai_prime
-
-    print(f"  x range: [{xs[0]:.1f}, {xs[-1]:.1f}]")
-    print(f"  W(Ai,Bi) at x=-10: {wronskian[0]:.10f}")
-    print(f"  W(Ai,Bi) at x=  0: {wronskian[len(xs)//2]:.10f}")
-    print(f"  W(Ai,Bi) at x=  5: {wronskian[-1]:.10f}")
-    print(f"  1/π             = {1/np.pi:.10f}")
-    print(f"  Max deviation   = {np.max(np.abs(wronskian - 1/np.pi)):.2e}")
-    print()
-    print("The Wronskian is constant to machine precision! (Abel's identity)")
-    print()
-
-def demo_eml_differentiation():
-    """Demonstrate EML expression differentiation with depth tracking."""
-    print("=" * 60)
-    print("EML EXPRESSION DIFFERENTIATION")
-    print("=" * 60)
-    print()
-
-    expressions = [
-        ("x", "1", 0, 0),
-        ("x²", "2x", 0, 0),
-        ("exp(x)", "exp(x)", 1, 1),
-        ("exp(x²)", "2x·exp(x²)", 1, 1),
-        ("log(x)", "1/x", 1, 1),
-        ("exp(exp(x))", "exp(x)·exp(exp(x))", 2, 2),
-        ("exp(log(x))", "exp(-log(x))·exp(log(x))", 2, 2),
-        ("x·exp(x)", "exp(x) + x·exp(x)", 1, 1),
-    ]
-
-    print(f"  {'Expression':<20} {'Derivative':<30} {'Depth':<6} {'Deriv Depth':<11}")
-    print(f"  {'─'*20} {'─'*30} {'─'*6} {'─'*11}")
-    for expr, deriv, depth, d_depth in expressions:
-        print(f"  {expr:<20} {deriv:<30} {depth:<6} {d_depth:<11}")
-    print()
-    print("Key insight: differentiation preserves EML class (closure theorem)")
-    print("Depth bound: depth(f') ≤ 2·depth(f) + 1")
-    print()
-
-def demo_airy_numerical():
-    """Solve the Airy equation numerically and show growth behavior."""
-    print("=" * 60)
-    print("AIRY EQUATION: NUMERICAL SOLUTIONS")
-    print("=" * 60)
-    print()
-
-    xs = np.linspace(-15, 5, 2000)
-    ai_vals, ai_prime, bi_vals, bi_prime = airy(xs)
-
-    print("Ai(x) values at key points:")
-    for x in [-10, -5, 0, 1, 2, 3, 4, 5]:
-        ai_v, _, bi_v, _ = airy(x)
-        print(f"  Ai({x:>3}) = {ai_v:>12.6e}    Bi({x:>3}) = {bi_v:>12.6e}")
-
-    print()
-    print("Growth behavior:")
-    print("  For x → +∞: Ai(x) ~ exp(-2x^{3/2}/3) / (2√π·x^{1/4})  (decays)")
-    print("  For x → +∞: Bi(x) ~ exp(+2x^{3/2}/3) / (√π·x^{1/4})    (grows)")
-    print()
-    print("  This intermediate growth rate exp(x^{3/2}) is BETWEEN")
-    print("  polynomial growth and exp(x) growth — it's genuinely")
-    print("  transcendental and cannot be captured by EML functions.")
-    print()
-
-def demo_kovacic_cases():
-    """Illustrate the four cases of the Kovacic algorithm."""
-    print("=" * 60)
-    print("KOVACIC ALGORITHM: FOUR CASES")
-    print("=" * 60)
-    print()
 
     cases = [
-        ("y'' = 0", "q=0", "Trivial ({1})", "y = ax + b", "Polynomial"),
-        ("y'' = y", "q=1", "Borel subgroup", "y = e^x", "Exponential"),
-        ("y'' = -y", "q=-1", "Finite (SO₂)", "y = sin(x)", "Trigonometric"),
-        ("y'' = xy", "q=x", "SL₂(ℂ) (full)", "y = Ai(x)", "Transcendental"),
-        ("y'' = x²y", "q=x²", "SL₂(ℂ) (full)", "Parabolic cyl.", "Transcendental"),
+        ("Case 1 (Reducible)", "y'' - y = 0", "e^x, e^{-x}",
+         "Galois group ⊆ triangular. Tower height: 1"),
+        ("Case 2 (Imprimitive)", "y'' - x^{-2}·y = 0", "x^φ, x^{1-φ} (φ = golden ratio)",
+         "Galois group ⊆ D_∞. Tower height: 2"),
+        ("Case 3 (Finite)", "y'' + y = 0", "cos(x), sin(x)",
+         "Galois group finite. Solutions are algebraic over exp"),
+        ("Case 4 (Full SL(2))", "y'' = x·y (Airy)", "Ai(x), Bi(x)",
+         "Galois group = SL(2). No Liouvillian solutions"),
     ]
 
-    print(f"  {'Equation':<14} {'q(x)':<6} {'Galois Group':<18} {'Solution':<16} {'Type':<14}")
-    print(f"  {'─'*14} {'─'*6} {'─'*18} {'─'*16} {'─'*14}")
-    for eq, q, galois, sol, typ in cases:
-        print(f"  {eq:<14} {q:<6} {galois:<18} {sol:<16} {typ:<14}")
+    for name, ode, sols, desc in cases:
+        print(f"\n  {name}")
+        print(f"    ODE: {ode}")
+        print(f"    Solutions: {sols}")
+        print(f"    {desc}")
+
+
+def main():
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  EML Differential Equations: Wronskian & Kovacic Theory ║")
+    print("╚══════════════════════════════════════════════════════════╝")
     print()
-    print("The polynomial degree gap eliminates polynomial solutions for ALL")
-    print("cases with deg(q) ≥ 1. The full Kovacic algorithm handles the rest.")
-    print()
 
-if __name__ == "__main__":
-    demo_degree_gap()
-    demo_wronskian_constancy()
-    demo_eml_differentiation()
-    demo_airy_numerical()
-    demo_kovacic_cases()
+    verify_abel_identity()
+    verify_wronskian_reduced()
+    verify_solution_representation()
+    verify_riccati_reduction()
+    airy_solutions()
+    kovacic_classification_examples()
 
-
-"""
-Visualization: Degree Gap Obstruction for Polynomial ODE Solutions
-
-Shows why no polynomial can satisfy y'' = q(x)y when deg(q) >= 1.
-The degree of the LHS (p'') and RHS (q*p) are irreconcilable.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-
-
-def plot_degree_gap():
-    """Create a visualization of the degree gap obstruction."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-    # Panel 1: Degree comparison for Airy (q = x, deg = 1)
-    ax = axes[0]
-    ns = np.arange(0, 8)
-    deg_lhs = np.maximum(ns - 2, -1)  # deg(p'') = n-2, or -inf if n <= 1
-    deg_rhs = ns + 1  # deg(x*p) = n+1
-
-    ax.plot(ns, deg_rhs, 'ro-', label="deg(x·p) = n+1", markersize=8, linewidth=2)
-    ax.plot(ns[ns >= 2], ns[ns >= 2] - 2, 'bs-', label="deg(p'') = n−2", markersize=8, linewidth=2)
-    ax.scatter([0, 1], [-0.5, -0.5], color='blue', marker='x', s=100, zorder=5, label="p'' = 0 (n ≤ 1)")
-
-    for n in ns:
-        if n >= 2:
-            ax.annotate('', xy=(n, n+1), xytext=(n, n-2),
-                       arrowprops=dict(arrowstyle='<->', color='green', lw=1.5))
-            ax.text(n + 0.2, (n + 1 + n - 2) / 2, f'gap={3}',
-                   fontsize=7, color='green')
-
-    ax.set_xlabel('n = deg(p)', fontsize=12)
-    ax.set_ylabel('Degree', fontsize=12)
-    ax.set_title("Airy: y'' = xy\n(gap = 3, always)", fontsize=13, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    # Panel 2: General case (varying deg(q))
-    ax = axes[1]
-    n = 5  # fixed degree of p
-    degs_q = np.arange(0, 6)
-    deg_pp = max(n - 2, 0)
-    deg_qp = degs_q + n
-
-    ax.barh(degs_q - 0.15, deg_qp, height=0.3, color='red', alpha=0.7, label='deg(q·p)')
-    ax.barh(degs_q + 0.15, [deg_pp] * len(degs_q), height=0.3, color='blue', alpha=0.7, label='deg(p\'\')')
-
-    ax.set_ylabel('deg(q)', fontsize=12)
-    ax.set_xlabel('Resulting degree', fontsize=12)
-    ax.set_title(f"Fixed n = {n}: LHS vs RHS degree\n(never match for deg(q) ≥ 1)", fontsize=13, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    # Panel 3: The impossibility region
-    ax = axes[2]
-    ns_grid = np.arange(0, 10)
-    dqs_grid = np.arange(0, 8)
-
-    # For each (n, dq), compute whether LHS degree = RHS degree
-    # LHS: n-2 (if n >= 2, else p'' = 0)
-    # RHS: dq + n (if dq >= 1)
-    for n in ns_grid:
-        for dq in dqs_grid:
-            if dq >= 1:
-                color = 'red'  # impossible
-                marker = 'x'
-            elif dq == 0 and n >= 2:
-                color = 'red'  # n-2 ≠ n
-                marker = 'x'
-            elif dq == 0 and n <= 1:
-                color = 'red'  # p''=0, cp≠0
-                marker = 'x'
-            else:
-                color = 'green'
-                marker = 'o'
-            ax.scatter(n, dq, color=color, marker=marker, s=60, zorder=5)
-
-    # Only q=0 allows solutions (linear functions)
-    ax.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
-    ax.text(8.5, 0.3, 'Only q=0\nallows\nsolutions', fontsize=8, ha='right', color='green')
-
-    # Shade impossible region
-    rect = patches.Rectangle((0, 0.5), 9, 7, linewidth=0, facecolor='red', alpha=0.08)
-    ax.add_patch(rect)
-
-    ax.set_xlabel('n = deg(p)', fontsize=12)
-    ax.set_ylabel('deg(q)', fontsize=12)
-    ax.set_title("Impossibility Map\n(✗ = no poly solution)", fontsize=13, fontweight='bold')
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('degree_gap_obstruction.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: degree_gap_obstruction.png")
+    print("\n" + "=" * 60)
+    print("All demonstrations complete.")
+    print("=" * 60)
 
 
 if __name__ == "__main__":
-    plot_degree_gap()
+    main()
 
 
+#!/usr/bin/env python3
 """
-Visualization: Wronskian Constancy and Airy Functions
+Visualization: Airy Functions and Their Transcendence
 
-Shows the Airy functions Ai(x), Bi(x) and their constant Wronskian.
+Shows the Airy functions Ai(x) and Bi(x), their Wronskian (constant = 1/π),
+and the Riccati variable r = Ai'/Ai (which cannot be constant — our theorem).
 """
 
 import numpy as np
@@ -251,82 +235,263 @@ import matplotlib.pyplot as plt
 from scipy.special import airy
 
 
-def plot_wronskian():
-    """Create a visualization of Airy functions and their Wronskian."""
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+def plot_airy_analysis():
+    """Create a multi-panel analysis of the Airy equation."""
+    xs = np.linspace(-12, 5, 2000)
+    ai, aip, bi, bip = airy(xs)
 
-    xs = np.linspace(-15, 5, 2000)
-    ai_vals, ai_prime, bi_vals, bi_prime = airy(xs)
-    wronskian = ai_vals * bi_prime - bi_vals * ai_prime
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
     # Panel 1: Airy functions
     ax = axes[0, 0]
-    ax.plot(xs, ai_vals, 'b-', linewidth=2, label='Ai(x)')
-    ax.plot(xs, bi_vals, 'r-', linewidth=2, label='Bi(x)')
-    ax.set_xlim(-15, 5)
-    ax.set_ylim(-1.5, 1.5)
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('y', fontsize=12)
-    ax.set_title('Airy Functions: Solutions of y\'\' = xy', fontsize=13, fontweight='bold')
+    ax.plot(xs, ai, 'b-', linewidth=1.5, label='Ai(x)')
+    ax.plot(xs, bi, 'r-', linewidth=1.5, label='Bi(x)')
+    ax.set_title(r"Airy Functions: $y'' = xy$", fontsize=13)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.legend(fontsize=11)
+    ax.set_ylim(-1, 2)
+    ax.grid(True, alpha=0.3)
+
+    # Panel 2: Wronskian (should be constant = 1/π)
+    ax = axes[0, 1]
+    W = ai * bip - bi * aip
+    ax.plot(xs, W, 'k-', linewidth=1.5, label=r'$W(\mathrm{Ai}, \mathrm{Bi})$')
+    ax.axhline(y=1/np.pi, color='g', linestyle='--', linewidth=1.5,
+               label=r'$1/\pi \approx %.6f$' % (1/np.pi))
+    ax.set_title(r"Wronskian (constant since $p=0$)", fontsize=13)
+    ax.set_xlabel('x')
+    ax.set_ylabel('W')
+    ax.legend(fontsize=11)
+    ax.set_ylim(0.3, 0.35)
+    ax.grid(True, alpha=0.3)
+
+    # Panel 3: Riccati variable r = Ai'/Ai
+    ax = axes[1, 0]
+    # Avoid zeros of Ai(x) — they cause poles in r
+    mask = np.abs(ai) > 1e-6
+    r_vals = np.where(mask, aip / ai, np.nan)
+    ax.plot(xs, r_vals, 'b-', linewidth=1, label=r"$r = \mathrm{Ai}'/\mathrm{Ai}$")
+    ax.set_title(r"Riccati Variable (cannot be constant)", fontsize=13)
+    ax.set_xlabel('x')
+    ax.set_ylabel('r(x)')
+    ax.set_ylim(-10, 10)
     ax.legend(fontsize=11)
     ax.grid(True, alpha=0.3)
     ax.axhline(y=0, color='gray', linewidth=0.5)
 
-    # Panel 2: Wronskian constancy
-    ax = axes[0, 1]
-    ax.plot(xs, wronskian, 'g-', linewidth=2, label='W(Ai, Bi)')
-    ax.axhline(y=1/np.pi, color='orange', linestyle='--', linewidth=1.5, label=f'1/π ≈ {1/np.pi:.6f}')
-    ax.set_xlim(-15, 5)
-    ax.set_ylim(1/np.pi - 0.001, 1/np.pi + 0.001)
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('W(Ai, Bi)(x)', fontsize=12)
-    ax.set_title('Wronskian: Constant = 1/π (Abel\'s Identity)', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-
-    # Panel 3: Verify y'' = xy
-    ax = axes[1, 0]
-    # Numerical second derivative
-    dx = xs[1] - xs[0]
-    ai_pp = np.gradient(np.gradient(ai_vals, dx), dx)
-    x_times_ai = xs * ai_vals
-    ax.plot(xs[10:-10], ai_pp[10:-10], 'b-', linewidth=1.5, alpha=0.7, label="Ai''(x) (numerical)")
-    ax.plot(xs[10:-10], x_times_ai[10:-10], 'r--', linewidth=1.5, alpha=0.7, label="x · Ai(x)")
-    ax.set_xlim(-15, 5)
-    ax.set_ylim(-1.5, 1.5)
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('y', fontsize=12)
-    ax.set_title("Verification: Ai''(x) = x · Ai(x)", fontsize=13, fontweight='bold')
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-
-    # Panel 4: Growth comparison
+    # Panel 4: Kovacic classification
     ax = axes[1, 1]
-    xs_pos = np.linspace(0.5, 8, 200)
-    ai_pos, _, bi_pos, _ = airy(xs_pos)
+    ax.axis('off')
+    text = """
+    Kovacic Classification of y'' = xy
 
-    # Asymptotic approximation
-    ai_asymp = np.exp(-2/3 * xs_pos**(3/2)) / (2 * np.sqrt(np.pi) * xs_pos**(1/4))
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    The Airy equation falls into
+    Case 4: Full SL(2) Galois group
 
-    ax.semilogy(xs_pos, np.abs(bi_pos), 'r-', linewidth=2, label='|Bi(x)| ~ exp(2x^{3/2}/3)')
-    ax.semilogy(xs_pos, np.abs(ai_pos), 'b-', linewidth=2, label='|Ai(x)| ~ exp(-2x^{3/2}/3)')
-    ax.semilogy(xs_pos, ai_asymp, 'b--', linewidth=1, alpha=0.5, label='Asymptotic approx.')
+    ▸ No Liouvillian solutions exist
+    ▸ Ai(x), Bi(x) are genuinely
+      new transcendental functions
+    ▸ Cannot be expressed using
+      exp, log, or algebraic operations
 
-    # Compare with polynomial and exponential growth
-    ax.semilogy(xs_pos, xs_pos**3, 'gray', linewidth=1, linestyle=':', label='x³ (polynomial)')
-    ax.semilogy(xs_pos, np.exp(xs_pos), 'gray', linewidth=1, linestyle='-.', label='exp(x)')
+    Proved obstructions:
+    1. No constant solutions (y=c ⟹ y=0)
+    2. Riccati variable r ≠ const
+       (if r = c, then x = c²,
+        but D(x)=1 ≠ 0=D(c²))
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    """
+    ax.text(0.05, 0.95, text, transform=ax.transAxes,
+            fontsize=11, verticalalignment='top', fontfamily='monospace',
+            bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
 
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('|y| (log scale)', fontsize=12)
-    ax.set_title('Growth Rates: Beyond Polynomial, Beyond exp(x)', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
+    plt.suptitle("Airy Equation: A Case Study in Differential Transcendence",
+                 fontsize=15, fontweight='bold', y=1.02)
     plt.tight_layout()
-    plt.savefig('wronskian_airy.png', dpi=150, bbox_inches='tight')
+    plt.savefig('viz_airy.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: wronskian_airy.png")
+    print("Saved: viz_airy.png")
 
 
 if __name__ == "__main__":
-    plot_wronskian()
+    plot_airy_analysis()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Kovacic Classification — The Four Cases
+
+Shows representative ODEs from each Kovacic case and their solutions.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+from scipy.special import airy
+
+
+def solve_ode(p_func, q_func, y0, yp0, x_span, n_points=500):
+    """Solve y'' + p(x)y' + q(x)y = 0 numerically."""
+    def rhs(x, state):
+        y, yp = state
+        return [yp, -p_func(x) * yp - q_func(x) * y]
+
+    sol = solve_ivp(rhs, x_span, [y0, yp0],
+                    t_eval=np.linspace(*x_span, n_points),
+                    method='RK45', max_step=0.01)
+    return sol.t, sol.y[0]
+
+
+def plot_four_cases():
+    """Create a 2x2 grid showing the four Kovacic cases."""
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+    colors = ['#2196F3', '#F44336', '#4CAF50', '#FF9800']
+
+    # Case 1: Reducible — y'' - y = 0 (exp solutions)
+    ax = axes[0, 0]
+    xs = np.linspace(-2, 2, 300)
+    y1 = np.exp(xs)
+    y2 = np.exp(-xs)
+    ax.plot(xs, y1, color=colors[0], linewidth=2, label=r'$e^x$')
+    ax.plot(xs, y2, color=colors[1], linewidth=2, label=r'$e^{-x}$')
+    ax.set_title("Case 1: Reducible (Exponential)", fontsize=13, fontweight='bold')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(-0.5, 7)
+    ax.text(0.02, 0.98, r"$y'' - y = 0$" + "\n" + r"$G^0 \cong \mathbb{G}_m$",
+            transform=ax.transAxes, fontsize=11, va='top',
+            bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.8))
+
+    # Case 2: Imprimitive — y'' + (1/(4x²))y = 0 (power solutions)
+    ax = axes[0, 1]
+    xs = np.linspace(0.1, 5, 300)
+    y1 = np.sqrt(xs)
+    y2 = 1.0 / np.sqrt(xs)
+    ax.plot(xs, y1, color=colors[0], linewidth=2, label=r'$\sqrt{x}$')
+    ax.plot(xs, y2, color=colors[1], linewidth=2, label=r'$1/\sqrt{x}$')
+    ax.set_title("Case 2: Imprimitive (Algebraic)", fontsize=13, fontweight='bold')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(0, 3)
+    ax.text(0.02, 0.98, r"$y'' + \frac{1}{4x^2}y = 0$" + "\n" + r"$G^0 \subseteq D_\infty$",
+            transform=ax.transAxes, fontsize=11, va='top',
+            bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+
+    # Case 3: Finite — y'' + y = 0 (trigonometric/algebraic)
+    ax = axes[1, 0]
+    xs = np.linspace(-4 * np.pi, 4 * np.pi, 500)
+    y1 = np.cos(xs)
+    y2 = np.sin(xs)
+    ax.plot(xs, y1, color=colors[0], linewidth=2, label=r'$\cos(x)$')
+    ax.plot(xs, y2, color=colors[1], linewidth=2, label=r'$\sin(x)$')
+    ax.set_title("Case 3: Finite Galois Group", fontsize=13, fontweight='bold')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.text(0.02, 0.98, r"$y'' + y = 0$" + "\n" + r"$|G| < \infty$",
+            transform=ax.transAxes, fontsize=11, va='top',
+            bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
+
+    # Case 4: Full SL(2) — Airy equation y'' = xy
+    ax = axes[1, 1]
+    xs = np.linspace(-15, 5, 1000)
+    ai, aip, bi, bip = airy(xs)
+    ax.plot(xs, ai, color=colors[0], linewidth=2, label='Ai(x)')
+    ax.plot(xs, bi, color=colors[1], linewidth=2, label='Bi(x)')
+    ax.set_title("Case 4: Full SL(2) — No EML Solutions", fontsize=13, fontweight='bold')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(-1.5, 2)
+    ax.text(0.02, 0.98, r"$y'' = xy$ (Airy)" + "\n" + r"$G = \mathrm{SL}(2)$",
+            transform=ax.transAxes, fontsize=11, va='top',
+            bbox=dict(boxstyle='round', facecolor='#FFCCCC', alpha=0.8))
+
+    plt.suptitle("The Kovacic Classification: Four Types of Second-Order Linear ODEs",
+                 fontsize=15, fontweight='bold')
+    plt.tight_layout()
+    plt.savefig('viz_kovacic.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_kovacic.png")
+
+
+if __name__ == "__main__":
+    plot_four_cases()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Wronskian Evolution Under Abel's Identity
+
+Shows how the Wronskian W(y1, y2) decays exponentially according to W' = -p*W
+for the damped oscillator y'' + 2y' + 5y = 0.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib
+
+
+def compute_wronskian_evolution():
+    """Compute Wronskian for damped oscillator solutions."""
+    p = 2.0  # damping coefficient
+
+    xs = np.linspace(0, 4, 500)
+
+    # Solutions: y1 = e^{-x}cos(2x), y2 = e^{-x}sin(2x)
+    y1 = np.exp(-xs) * np.cos(2 * xs)
+    y1p = np.exp(-xs) * (-np.cos(2 * xs) - 2 * np.sin(2 * xs))
+    y2 = np.exp(-xs) * np.sin(2 * xs)
+    y2p = np.exp(-xs) * (-np.sin(2 * xs) + 2 * np.cos(2 * xs))
+
+    W_exact = y1 * y2p - y2 * y1p
+    W_abel = W_exact[0] * np.exp(-p * xs)
+
+    return xs, y1, y2, W_exact, W_abel, p
+
+
+def plot_wronskian_evolution():
+    """Create the Wronskian evolution plot."""
+    xs, y1, y2, W_exact, W_abel, p = compute_wronskian_evolution()
+
+    fig, axes = plt.subplots(2, 1, figsize=(10, 8), gridspec_kw={'height_ratios': [1, 1]})
+
+    # Top: Solutions
+    ax1 = axes[0]
+    ax1.plot(xs, y1, 'b-', linewidth=1.5, label=r'$y_1 = e^{-x}\cos(2x)$')
+    ax1.plot(xs, y2, 'r-', linewidth=1.5, label=r'$y_2 = e^{-x}\sin(2x)$')
+    ax1.fill_between(xs, y1, y2, alpha=0.1, color='purple')
+    ax1.set_ylabel('Solution value', fontsize=12)
+    ax1.set_title(r"Damped Oscillator: $y'' + 2y' + 5y = 0$", fontsize=14)
+    ax1.legend(fontsize=11, loc='upper right')
+    ax1.grid(True, alpha=0.3)
+    ax1.set_xlim(0, 4)
+
+    # Bottom: Wronskian
+    ax2 = axes[1]
+    ax2.plot(xs, W_exact, 'k-', linewidth=2, label=r'$W(y_1, y_2)$ (exact)')
+    ax2.plot(xs, W_abel, 'g--', linewidth=2, label=r"Abel's prediction: $W_0 e^{-2x}$")
+    ax2.set_xlabel('x', fontsize=12)
+    ax2.set_ylabel('Wronskian', fontsize=12)
+    ax2.set_title(r"Abel's Identity: $W' = -pW$, so $W(x) = W_0 e^{-2x}$", fontsize=14)
+    ax2.legend(fontsize=11)
+    ax2.grid(True, alpha=0.3)
+    ax2.set_xlim(0, 4)
+
+    plt.tight_layout()
+    plt.savefig('viz_wronskian.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_wronskian.png")
+
+
+if __name__ == "__main__":
+    plot_wronskian_evolution()

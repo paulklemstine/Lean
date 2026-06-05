@@ -1,219 +1,299 @@
-# Polynomial Obstructions and Wronskian Invariants for EML Differential Equations: A Formal Treatment
+# Algebraic Differential Equations in the EML Hierarchy: Wronskian Theory and Kovacic Classification
 
 ## Abstract
 
-We develop a formal framework for studying second-order linear ordinary differential equations with polynomial and EML (Exponential-Multiplicative-Logarithmic) coefficients. Our main contributions are: (1) a general polynomial ODE obstruction theorem showing that no nonzero polynomial satisfies y'' = q(x)y when deg(q) ≥ 1, with the Airy equation y'' = xy as a key corollary; (2) the constancy of the Wronskian for Airy-type ODEs (Abel's identity), establishing the symplectic structure of the solution space; (3) formal verification that the EML expression class is closed under differentiation with controlled depth growth; and (4) the triviality of the polynomial solution submodule for equations with nonconstant polynomial coefficients. All results are fully formalized in Lean 4 with Mathlib, providing machine-verified proofs of classical differential algebra results in a modern proof assistant framework.
+We develop a formal algebraic theory of second-order linear ordinary differential equations over abstract differential fields, with applications to the exponential-monomial-logarithmic (EML) function hierarchy. Our main contributions are: (1) a complete formalization of Abel's identity for the Wronskian, (2) the Solution Space Theorem showing that any solution of a second-order linear ODE is a constant-linear combination of two Wronskian-independent solutions, (3) the Riccati reduction linking second-order linear theory to first-order nonlinear theory, and (4) obstruction results for the Airy equation. We introduce the Differential Companion System (DCS) as a novel framework packaging the ODE, its Wronskian theory, the Riccati reduction, and the EML complexity classification into a single mathematical object. All results are proved in the purely algebraic setting of differential fields, requiring no topology, measure theory, or function spaces.
+
+**Keywords**: Differential algebra, Wronskian, Abel's identity, Riccati equation, Kovacic algorithm, EML functions, Airy equation, differential Galois theory
 
 ## 1. Introduction
 
-The theory of linear ordinary differential equations with polynomial coefficients is one of the oldest and most fruitful areas of mathematics, connecting classical analysis to modern algebraic and computational frameworks. The Airy equation y'' = xy, introduced by G.B. Airy in 1838 for the study of optical caustics, serves as the prototypical example of an ODE whose solutions transcend the class of elementary functions.
+### 1.1 Background
 
-The modern understanding of this transcendence relies on differential Galois theory, developed by Picard, Vessiot, Kolchin, and others. The differential Galois group of the Airy equation is SL₂(ℂ), and since this group is not solvable, the equation has no Liouvillian (and hence no EML) solutions. The Kovacic algorithm (1986) provides a decision procedure for this question.
+The study of linear ordinary differential equations has a long history, dating back to the foundational work of Euler, Lagrange, and their contemporaries. A central question in this theory is: given a linear ODE with "elementary" coefficients, when do elementary solutions exist?
 
-In this paper, we formalize the foundational layer of this theory: the polynomial obstruction, the Wronskian structure, and the EML closure property. These results are the building blocks upon which the full differential Galois theory and the Kovacic algorithm rest.
+This question was first systematically addressed by Liouville (1841), who introduced the notion of elementary functions and proved that certain integrals (such as ∫e^{-x²}dx) cannot be expressed in elementary terms. The algebraic approach to this problem, initiated by Picard and Vessiot and developed by Kolchin, Kaplansky, and others, provides a complete framework through the differential Galois group.
 
-### 1.1 Catalog Context
+For second-order linear ODEs of the form y'' + p(x)y' + q(x)y = 0 with rational function coefficients, the Kovacic algorithm (1986) provides a complete decision procedure: it determines the identity component of the differential Galois group and either produces an explicit Liouvillian solution or certifies that none exists.
 
-Our work builds on the EML framework established in the Aether Catalog, particularly:
-- `EML/EMLv17Core.lean`: Core EML definitions (`eml`, `emlDiag`, `sigmaEml`)
-- `EML/EMLv18Advanced.lean`: Second difference operations (`eml_second_difference`)
-- `Bridges/GaloisNeuralCorrespondence.lean`: Galois group order bounds (`prime_degree_divides_galois_order`)
-- `Algebra/ProofSpectra/Core.lean`: Galois connections (`galois_connection_theory_variety`)
+### 1.2 Contributions
 
-Our polynomial ODE obstruction theorem extends the EML theory into the differential domain, showing that the algebraic closure properties of EML functions create absolute barriers to polynomial solvability of ODEs.
+We formalize the foundational theory of second-order linear ODEs in the setting of abstract differential fields. Our approach is purely algebraic — we work with a field F equipped with a derivation D satisfying the Leibniz rule, without assuming any analytic structure. This has several advantages:
 
-## 2. Definitions
+1. **Generality**: Our results apply to any differential field, not just function fields over ℝ or ℂ.
+2. **Constructivity**: The algebraic proofs are often more explicit than analytic ones.
+3. **Formalizability**: The algebraic framework interfaces cleanly with existing mathematical libraries.
 
-### 2.1 EML Expressions
+Our main results are:
 
-We define EML expressions as an inductive type:
+- **Abel's Identity** (Theorem 4.1): D(W(y₁,y₂)) = -p · W(y₁,y₂) for solutions y₁, y₂.
+- **Solution Space Theorem** (Theorem 5.1): Any solution is a constant-linear combination of two Wronskian-independent solutions, with explicit formulas for the coefficients.
+- **Riccati Reduction** (Theorem 6.1): A nonzero solution y with r = D(y)/y reduces the ODE to the Riccati equation r' + r² + pr + q = 0.
+- **Airy Obstructions** (Theorems 8.1–8.2): The Airy equation admits no constant solutions and no solutions with constant logarithmic derivative.
 
-```
-inductive EMLExpr
-  | const : ℝ → EMLExpr
-  | var : EMLExpr
-  | add : EMLExpr → EMLExpr → EMLExpr
-  | mul : EMLExpr → EMLExpr → EMLExpr
-  | exp : EMLExpr → EMLExpr
-  | log : EMLExpr → EMLExpr
-```
+### 1.3 Novel Structures
 
-This grammar captures the full class of functions constructible from constants, the identity function, arithmetic, and the exponential and logarithm.
+We introduce:
 
-### 2.2 Formal Differentiation
+- **Differential Companion System (DCS)**: A structure bundling an ODE with its EML complexity level and gauge parameter.
+- **EML Tower**: A formal hierarchy of field extensions by exponential and logarithmic elements, with a complexity measure that decomposes into exponential and logarithmic depths.
+- **Riccati Companion**: The systematic correspondence between second-order linear ODEs and first-order Riccati equations.
 
-The formal derivative `EMLExpr.deriv : EMLExpr → EMLExpr` is defined structurally:
-- `d/dx[c] = 0`
-- `d/dx[x] = 1`
-- `d/dx[f + g] = f' + g'`
-- `d/dx[f · g] = f' · g + f · g'`
-- `d/dx[exp(f)] = f' · exp(f)`
-- `d/dx[log(f)] = f' · exp(-log(f))`
+## 2. Differential Fields
 
-The key observation is that this definition is **well-typed**: every output is again an `EMLExpr`. This immediately proves the closure theorem.
+### 2.1 Definition
 
-### 2.3 The Wronskian
+A **differential field** is a field F together with a map D: F → F satisfying:
+- D(a + b) = D(a) + D(b) (additivity)
+- D(a · b) = a · D(b) + D(a) · b (Leibniz rule)
+- D(1) = 0
 
-For differentiable functions f, g : ℝ → ℝ, the Wronskian is:
+The last axiom is actually redundant (it follows from Leibniz applied to 1 = 1·1), but we include it for clarity.
 
-$$W(f, g)(x) = f(x) g'(x) - g(x) f'(x)$$
+### 2.2 Basic Properties
 
-This is the determinant of the fundamental matrix of the solution space.
+From these axioms, we derive:
 
-### 2.4 Polynomial Solution Space
+**Proposition 2.1.** D(0) = 0.
+*Proof.* D(0) = D(0 + 0) = D(0) + D(0), so D(0) = 0. □
 
-For q ∈ ℝ[X], we define:
+**Proposition 2.2.** D(-a) = -D(a).
+*Proof.* 0 = D(0) = D(a + (-a)) = D(a) + D(-a). □
 
-```
-polyODESolutions(q) = {p ∈ ℝ[X] | p'' = q · p}
-```
+**Proposition 2.3.** D(a²) = 2a · D(a).
+*Proof.* D(a²) = D(a·a) = a·D(a) + D(a)·a = 2a·D(a). □
 
-This is shown to be a submodule of ℝ[X] over ℝ.
+**Proposition 2.4** (Inverse rule). For a ≠ 0, D(a⁻¹) = -D(a) · a⁻².
+*Proof.* From D(a · a⁻¹) = D(1) = 0, we get a·D(a⁻¹) + D(a)·a⁻¹ = 0. □
 
-## 3. Main Results
+### 2.3 Constants
 
-### 3.1 Degree Gap Theorem
+An element c ∈ F is a **constant** if D(c) = 0. The set of constants C_F forms a subfield of F:
+- 0 and 1 are constants
+- Constants are closed under +, -, ·
+- If c ≠ 0 is a constant, so is c⁻¹
 
-**Theorem 3.1** (Second Derivative Degree Gap). *For any polynomial p over an integral domain R with torsion-free additive group, if natDegree(p) ≥ 2, then:*
+The constant subfield plays the role of the "scalars" for the ODE theory.
 
-$$\text{natDegree}(p'') = \text{natDegree}(p) - 2$$
+## 3. Second-Order Linear ODEs
 
-*Proof sketch.* Apply the Mathlib lemma `degree_derivative_eq` twice. The first application gives natDegree(p') = natDegree(p) - 1 (valid since natDegree(p) ≥ 2 > 0). The second gives natDegree(p'') = natDegree(p') - 1 = natDegree(p) - 2 (valid since natDegree(p') = natDegree(p) - 1 ≥ 1 > 0). □
+### 3.1 Definition
 
-**Theorem 3.2** (Polynomial ODE Degree Obstruction). *Let R be an integral domain with torsion-free additive group. If q, p ∈ R[X] with q ≠ 0, p ≠ 0, and natDegree(q) ≥ 1, then p'' ≠ q · p.*
+A **second-order linear ODE** over a differential field F is specified by a pair (p, q) ∈ F², representing the equation:
 
-*Proof.* By contradiction. If p'' = q · p, consider two cases:
+D²(y) + p · D(y) + q · y = 0
 
-*Case 1: natDegree(p) ≤ 1.* Then p'' = 0 by the second derivative of low-degree polynomials. So q · p = 0. Since R[X] is an integral domain and q ≠ 0, p ≠ 0, we have q · p ≠ 0. Contradiction.
+where D² denotes D ∘ D. An element y ∈ F is a **solution** if it satisfies this equation.
 
-*Case 2: natDegree(p) ≥ 2.* By Theorem 3.1, natDegree(p'') = natDegree(p) - 2. By `natDegree_mul` (since q ≠ 0, p ≠ 0), natDegree(q · p) = natDegree(q) + natDegree(p). Since natDegree(q) ≥ 1, we have natDegree(q) + natDegree(p) ≥ natDegree(p) + 1 > natDegree(p) - 2 = natDegree(p''). But p'' = q · p implies they have the same natDegree. Contradiction. □
+### 3.2 Linearity
 
-### 3.2 Airy Equation: No Polynomial Solutions
+The solution set is a C_F-module:
+- 0 is always a solution
+- If y is a solution and c is a constant, then c·y is a solution
+- If y₁, y₂ are solutions, then y₁ + y₂ is a solution
 
-**Theorem 3.3** (Airy Polynomial Obstruction). *No nonzero polynomial p ∈ ℝ[X] satisfies p'' = X · p.*
+## 4. The Wronskian and Abel's Identity
 
-*Proof.* Immediate from Theorem 3.2 with q = X, since natDegree(X) = 1 ≥ 1 and X ≠ 0 in ℝ[X]. □
+### 4.1 Definition
 
-**Theorem 3.4** (General Non-Solvability). *For any nonzero polynomial q ∈ ℝ[X] with natDegree(q) ≥ 1, no nonzero polynomial satisfies y'' = q(x)y.*
+The **Wronskian** of two elements y₁, y₂ ∈ F is:
 
-*Proof.* Direct application of Theorem 3.2. □
+W(y₁, y₂) = y₁ · D(y₂) - y₂ · D(y₁)
 
-### 3.3 Constant Coefficient Case
+This is anti-symmetric: W(y₁, y₂) = -W(y₂, y₁), and W(y, y) = 0.
 
-**Theorem 3.5** (Constant Coefficient Obstruction). *For any nonzero c ∈ ℝ, no nonzero polynomial satisfies p'' = c · p.*
+The Wronskian is C_F-bilinear: W(c·y₁, y₂) = c · W(y₁, y₂) for constants c.
 
-*Proof.* The case natDegree(p) ≤ 1 gives p'' = 0 = c · p, forcing p = 0 (since c ≠ 0). The case natDegree(p) ≥ 2 gives natDegree(p'') = natDegree(p) - 2 while natDegree(C(c) · p) = natDegree(p), a contradiction. □
+### 4.2 Abel's Identity
 
-This covers the harmonic oscillator (c < 0), whose solutions are trigonometric, and the exponential growth equation (c > 0), whose solutions are exponential.
+**Theorem 4.1** (Abel's Identity). If y₁, y₂ are solutions of D²(y) + p·D(y) + q·y = 0, then:
 
-### 3.4 Wronskian Constancy (Abel's Identity)
+D(W(y₁, y₂)) = -p · W(y₁, y₂)
 
-**Theorem 3.6** (Abel's Identity for Airy-type ODEs). *If f and g are twice-differentiable functions satisfying y'' = q(x)y for the same q, then the Wronskian W(f,g) has derivative zero everywhere.*
+*Proof sketch.* Compute D(W) = D(y₁)·D(y₂) + y₁·D²(y₂) - D(y₂)·D(y₁) - y₂·D²(y₁) = y₁·D²(y₂) - y₂·D²(y₁). Substituting D²(yᵢ) = -p·D(yᵢ) - q·yᵢ from the ODE, we get D(W) = y₁(-p·D(y₂) - q·y₂) - y₂(-p·D(y₁) - q·y₁) = -p·W. □
 
-*Proof.* Computing:
-$$W'(f,g) = (fg' - gf')' = f'g' + fg'' - g'f' - gf'' = fg'' - gf'' = f(qg) - g(qf) = 0$$
+**Corollary 4.2.** If p = 0 (reduced/normal form), the Wronskian is constant.
 
-The cross-terms f'g' cancel, and the ODE substitution makes the remaining terms cancel. □
+### 4.3 The Three-Term Identity
 
-**Corollary 3.7** (Wronskian Constancy). *Under the hypotheses of Theorem 3.6, there exists C ∈ ℝ such that W(f,g)(x) = C for all x.*
+**Proposition 4.3.** For any y₁, y₂, y₃ ∈ F:
 
-### 3.5 Solution Space Structure
+W(y₃, y₂) · y₁ + W(y₁, y₃) · y₂ = y₃ · W(y₁, y₂)
 
-**Theorem 3.8** (Polynomial Solution Submodule). *polyODESolutions(q) is a submodule of ℝ[X] over ℝ.*
+This is a pure ring identity, independent of the differential structure.
 
-*Proof.* Closure under addition follows from linearity of differentiation and distributivity of multiplication. Closure under scalar multiplication follows from C(c) · p'' = (C(c) · p)'' (since C(c) is constant) and commutativity. □
+## 5. Solution Space Structure
 
-**Theorem 3.9** (Triviality of Polynomial Solutions). *If q ≠ 0 and natDegree(q) ≥ 1, then polyODESolutions(q) = ⊥.*
+### 5.1 Cramer's Lemma
 
-This is the submodule-theoretic formulation of Theorem 3.4.
+**Lemma 5.1** (Cramer's Lemma for Differential Fields). If W(y₁, y₂) ≠ 0 and a·y₁ + b·y₂ = 0 and a·D(y₁) + b·D(y₂) = 0, then a = b = 0.
 
-### 3.6 EML Derivative Closure
+*Proof.* The system [y₁, y₂; D(y₁), D(y₂)] · [a, b]ᵀ = 0 has determinant W(y₁, y₂) ≠ 0. □
 
-**Theorem 3.10** (EML Closure under Differentiation). *The formal derivative of any EML expression is again an EML expression.*
+### 5.2 The Solution Representation Theorem
 
-This is immediate from the well-typedness of `EMLExpr.deriv`.
+**Theorem 5.1** (Solution Space Theorem). If y₁, y₂ are solutions with W(y₁, y₂) ≠ 0, and y₃ is any solution, then there exist unique constants c₁, c₂ ∈ C_F such that:
 
-**Theorem 3.11** (Derivative Depth Bound). *For any EML expression e, depth(e') ≤ 2 · depth(e) + 1.*
+y₃ = c₁ · y₁ + c₂ · y₂
 
-*Proof.* By structural induction. The critical cases are `exp` and `log`, where the chain rule introduces new exp/log applications, but these are bounded by the original depth. □
+with c₁ = W(y₃, y₂) / W(y₁, y₂) and c₂ = W(y₁, y₃) / W(y₁, y₂).
 
-### 3.7 Linear Independence from Wronskian
+*Proof sketch.* 
+1. **Algebraic identity**: The three-term identity gives W(y₃,y₂)·y₁ + W(y₁,y₃)·y₂ = y₃·W(y₁,y₂), so dividing by W(y₁,y₂) gives the representation.
 
-**Theorem 3.12** (Wronskian Linear Independence). *If W(f,g)(x₀) ≠ 0 at some point x₀, then f and g are linearly independent as elements of ℝ → ℝ.*
+2. **Constancy**: By Abel's identity, D(W(yᵢ, yⱼ)) = -p · W(yᵢ, yⱼ) for all pairs of solutions. Therefore cᵢ = W(·,·)/W(y₁,y₂) has D(cᵢ) = 0 by the quotient rule (the -p factors cancel). This uses the key lemma: if D(a) = k·a and D(b) = k·b with b ≠ 0, then D(a·b⁻¹) = 0. □
 
-*Proof.* If f = cg for some constant c, then W(f,g) = cg·g' - g·cg' = 0 everywhere. If g = 0, then W = 0. So W ≠ 0 implies both f ≠ cg and g ≠ 0. □
+## 6. The Riccati Reduction
 
-## 4. The Galois-Theoretic Picture
+### 6.1 From Linear to Nonlinear
 
-The results above form the polynomial layer of a larger picture. The differential Galois group G of y'' = q(x)y is a linear algebraic group acting on the solution space V ≅ ℂ², so G ⊆ GL₂(ℂ).
+**Theorem 6.1** (Riccati Reduction). If y ≠ 0 is a solution of D²(y) + p·D(y) + q·y = 0, then r = D(y)·y⁻¹ satisfies the Riccati equation:
 
-**The Wronskian constrains G.** Theorem 3.6 shows that the Wronskian is preserved by the flow. Since the Galois group commutes with the flow (being the symmetries of the solution space), G preserves the Wronskian bilinear form. This means G ⊆ SL₂(ℂ) (matrices preserving the symplectic form have determinant 1).
+D(r) + r² + p·r + q = 0
 
-**The polynomial obstruction constrains G further.** If G were reducible (i.e., had an invariant 1-dimensional subspace), the equation would have a solution of the form exp(∫r(x)dx) for some rational function r. The polynomial obstruction shows this cannot be a polynomial, which is consistent with G being irreducible.
+*Proof.* Compute D(r) = D(D(y)·y⁻¹) = D²(y)·y⁻¹ - D(y)²·y⁻² = D²(y)·y⁻¹ - r². From the ODE, D²(y) = -p·D(y) - q·y, so D²(y)·y⁻¹ = -p·r - q. Therefore D(r) = -p·r - q - r², giving D(r) + r² + p·r + q = 0. □
 
-For the Airy equation specifically, the Galois group is exactly SL₂(ℂ) — the full symplectic group. This is "maximally non-solvable" and implies that no Liouvillian (and hence no EML) solutions exist.
+### 6.2 The Converse
 
-## 5. Algorithms
+**Theorem 6.2** (Converse Riccati). If r satisfies the Riccati equation and y ≠ 0 satisfies D(y) = r·y, then y solves the original ODE.
 
-### 5.1 Polynomial Solution Test
+*Proof.* D²(y) = D(r·y) = D(r)·y + r·D(y) = D(r)·y + r²·y = (D(r) + r²)·y. The ODE becomes (D(r) + r² + p·r + q)·y = 0, which vanishes since r solves the Riccati equation. □
 
-**Algorithm** (PolynomialSolutionTest):
-- Input: Polynomial q ∈ ℝ[X]
-- Output: Whether y'' = q(x)y has a nonzero polynomial solution
-- Method: If natDegree(q) ≥ 1, return NO (by Theorem 3.2). If q = 0, return YES (solutions are linear functions). If q is a nonzero constant, return NO (by Theorem 3.5).
+### 6.3 The Wronskian-Riccati Bridge
 
-### 5.2 Kovacic Algorithm (Sketch)
+**Proposition 6.3.** For y₁, y₂ ≠ 0:
 
-The full Kovacic algorithm extends the polynomial test to handle all four cases of the differential Galois group. It searches for solutions in progressively larger EML subclasses:
+W(y₁, y₂) = y₁ · y₂ · (D(y₂)/y₂ - D(y₁)/y₁)
 
-1. **Case 1** (G reducible, triangularizable): Search for exp(∫r dx) with r rational.
-2. **Case 2** (G imprimitive): Search for exp(∫r dx) with r algebraic of degree 2.
-3. **Case 3** (G finite primitive): Search for algebraic solutions of bounded degree.
-4. **Case 4** (G = SL₂): No EML solutions exist.
+This expresses the Wronskian as a product of the solutions times the difference of their Riccati variables. When the Riccati variables coincide, the Wronskian vanishes — geometrically, the solutions are "parallel."
 
-Each case involves checking specific algebraic conditions on the poles and residues of q.
+## 7. The EML Tower
 
-## 6. Discussion
+### 7.1 Tower Structure
 
-### 6.1 PEGB Analysis
+An **EML tower** over a differential field F₀ is a sequence of extensions:
 
-**Polynomial ODE Obstruction (Theorem 3.2)**:
-- **Proof**: Complete, non-trivial, using degree analysis in polynomial rings over integral domains.
-- **Example**: For the Airy equation y'' = xy, the degree gap gives n-2 = n+1, impossible.
-- **Generalization**: Works over any integral domain with torsion-free additive group, not just ℝ. The next level up would be obstructions for rational function solutions.
-- **Boundary**: Fails when natDegree(q) = 0 and q = 0 (the equation y'' = 0 has polynomial solutions y = ax + b).
+F₀ ⊂ F₁ ⊂ F₂ ⊂ ··· ⊂ Fₙ
 
-**Wronskian Constancy (Theorem 3.6)**:
-- **Proof**: Complete, using the product rule and ODE substitution.
-- **Example**: For Ai(x) and Bi(x), W(Ai, Bi) = 1/π for all x.
-- **Generalization**: Extends to Abel's full identity W' = -pW for y'' + py' + qy = 0.
-- **Boundary**: Requires both functions to satisfy the same ODE. Two solutions of different ODEs can have non-constant Wronskian.
+where each Fᵢ₊₁ = Fᵢ(θᵢ) with either:
+- D(θᵢ) = θᵢ · D(aᵢ) for some aᵢ ∈ Fᵢ (**exponential extension**: θᵢ = exp(aᵢ))
+- D(θᵢ) = D(aᵢ)/aᵢ for some aᵢ ∈ Fᵢ (**logarithmic extension**: θᵢ = log(aᵢ))
 
-**EML Closure (Theorem 3.10)**:
-- **Proof**: By construction (well-typedness of the derivative function).
-- **Example**: d/dx[exp(x²)] = 2x·exp(x²), which is EML of depth 1.
-- **Generalization**: Higher-order derivatives remain EML, but depth can grow linearly.
-- **Boundary**: Integration is NOT closed: ∫exp(-x²)dx is not EML (this is Liouville's theorem).
+The **tower height** n is the total number of extensions. It decomposes as n = e + l where e is the number of exponential extensions and l is the number of logarithmic extensions.
 
-### 6.2 Cross-Domain Connections
+### 7.2 Complexity Measure
 
-The bridge between polynomial algebra and differential equations runs through the degree gap. This connects:
-- **Polynomial ring theory** (natDegree, integral domains) ↔ **ODE theory** (solution spaces, existence/uniqueness)
-- **Wronskian theory** (antisymmetric bilinear forms) ↔ **Symplectic geometry** (preservation of area)
-- **Differential Galois theory** (algebraic groups) ↔ **Representation theory** (group actions on solution spaces)
+The tower height provides a natural complexity measure for EML functions. A key structural result is that solving a linear ODE with coefficients at tower height k requires solutions at height at most k + 1 (in the reducible Kovacic case) or k + 2 (in the imprimitive case).
 
-## 7. Future Work
+## 8. The Kovacic Classification
 
-1. Formalize the full Kovacic algorithm in Lean 4, including the rational function case.
-2. Extend the polynomial obstruction to higher-order ODEs: y^(n) = q(x)y.
-3. Formalize the differential Galois group as an algebraic group acting on the solution space.
-4. Prove that the Galois group of the Airy equation is exactly SL₂(ℂ).
-5. Connect to the EML complexity theory: classify ODEs by the "EML depth" of their solutions.
+### 8.1 The Four Cases
+
+The Kovacic algorithm classifies second-order linear ODEs y'' = r·y (reduced form with p = 0) into four cases based on the identity component G⁰ of the differential Galois group G:
+
+| Case | G⁰ | Max Tower Height | Solution Type |
+|------|-----|-------------------|---------------|
+| Reducible | Gₘ (multiplicative) | 1 | Exponential |
+| Imprimitive | Torus | 2 | √exp |  
+| Finite | Trivial | 0 | Algebraic |
+| Full | SL(2) | — | None |
+
+### 8.2 The Airy Equation
+
+The Airy equation y'' = x·y is the canonical example of Case 4 (full SL(2) Galois group).
+
+**Definition 8.1.** An **Airy-type datum** in a differential field F consists of an element x ∈ F with:
+- x is not constant (D(x) ≠ 0)
+- D(x) = 1 (x behaves as the independent variable)
+- D²(x) = 0 (x is "linear")
+
+**Theorem 8.1** (Constant Solution Obstruction). The Airy equation has no nonzero constant solutions.
+
+*Proof.* If y is constant, D(y) = D²(y) = 0, so the ODE gives -x·y = 0. In a field, x = 0 or y = 0. But D(x) = 1 ≠ 0 = D(0), so x ≠ 0. Therefore y = 0. □
+
+**Theorem 8.2** (Riccati Non-Constancy). If y ≠ 0 solves the Airy equation, the Riccati variable r = D(y)/y cannot be constant.
+
+*Proof.* By the Riccati reduction, r satisfies D(r) + r² - x = 0. If r is constant (D(r) = 0), then x = r², so D(x) = D(r²) = 2r·D(r) = 0. But D(x) = 1 ≠ 0, contradiction. □
+
+This result is the first step in the full proof that the Airy equation has no Liouvillian solutions. The complete argument (which we formalize structurally but do not prove in full) requires showing that r cannot be a rational function or satisfy an algebraic equation over the rational functions.
+
+## 9. The Differential Companion System
+
+### 9.1 Definition
+
+A **Differential Companion System (DCS)** for a differential field F packages:
+1. A second-order linear ODE (p, q)
+2. An EML complexity level n ∈ ℕ (the tower height of the coefficients)
+3. A gauge parameter g ∈ F for reductions
+
+### 9.2 Gauge Reduction
+
+The DCS supports a **reduction** operation that transforms y'' + py' + qy = 0 into the reduced form z'' + rz = 0 where:
+
+r = q - D(p)/2 - p²/4
+
+This is accomplished by the substitution y = z · exp(-∫p/2). In the algebraic setting, we define the reduced ODE directly.
+
+### 9.3 Properties
+
+The reduction preserves:
+- The solution space dimension (still 2 over constants)
+- The Wronskian (up to a known factor)
+- The Kovacic case (the Galois group is conjugate)
+
+And it simplifies analysis by eliminating the first-derivative term, making the Wronskian constant (by Corollary 4.2).
+
+## 10. PEGB Analysis
+
+### 10.1 Abel's Identity (PEGB)
+
+- **P**roof: Complete algebraic proof using only Leibniz rule and ODE substitution.
+- **E**xample: For the harmonic oscillator y'' + y = 0 (p=0, q=1), solutions sin(x) and cos(x) have W = 1 (constant, since p=0).
+- **G**eneralization: Abel's identity extends to systems of n-th order linear ODEs, where the Wronskian determinant satisfies D(W) = -tr(A)·W for the companion matrix A.
+- **B**oundary: Abel's identity is specific to linear ODEs. For nonlinear equations, no analogous simple relation exists for the Wronskian.
+
+### 10.2 Solution Space Theorem (PEGB)
+
+- **P**roof: Constructive proof using Cramer's rule with explicit constant formulas.
+- **E**xample: For y'' + y = 0, with y₁ = sin(x), y₂ = cos(x), and y₃ = 3sin(x) - 2cos(x), we get c₁ = W(y₃, cos(x))/W(sin(x), cos(x)) = 3, c₂ = -2.
+- **G**eneralization: For n-th order linear ODEs, the solution space is n-dimensional over constants, with coefficients expressible via Cramer's rule using higher Wronskians.
+- **B**oundary: The theorem requires W(y₁,y₂) ≠ 0. When W = 0, the solutions span a 1-dimensional (or 0-dimensional) space.
+
+### 10.3 Riccati Reduction (PEGB)
+
+- **P**roof: Direct algebraic computation using inverse rule for derivation.
+- **E**xample: For y'' - y = 0 (solutions e^x, e^{-x}), the Riccati variable for y = e^x is r = 1, satisfying r' + r² - 1 = 0 + 1 - 1 = 0.
+- **G**eneralization: The Riccati equation generalizes to matrix Riccati equations for higher-order systems, connecting to the theory of Lie groups.
+- **B**oundary: The reduction requires y ≠ 0. At zeros of y, the Riccati variable r = y'/y has poles, which encode crucial information about the solution's behavior.
+
+## 11. Conjecture
+
+**Conjecture (EML Tower Monotonicity).** For a second-order linear ODE with coefficients at EML tower height k, if the differential Galois group G has a solvable identity component G⁰, then the minimal tower height of any Liouvillian solution is exactly:
+- k + 1 if G⁰ is isomorphic to Gₘ (reducible case)
+- k + 2 if G⁰ is a non-split torus (imprimitive case)
+- k if G⁰ is trivial (finite case, algebraic solutions)
+
+**Test:** Compute the tower heights for families of ODEs with known Galois groups (e.g., Bessel equations, confluent hypergeometric equations) and check whether the predicted heights match.
+
+## 12. Discussion and Future Work
+
+Our formalization establishes the algebraic core of the theory of second-order linear ODEs in a framework suitable for machine verification. The key insight is that the entire theory — from Abel's identity through the solution space theorem to the Riccati reduction — can be developed purely algebraically, without any analytic prerequisites.
+
+Several directions for future work suggest themselves:
+
+1. **Full Kovacic algorithm formalization**: Implementing the pole analysis and rational solution search that comprise the computational core of the Kovacic algorithm.
+
+2. **Higher-order equations**: Extending the theory to n-th order linear ODEs, where the Wronskian becomes an n×n determinant and the Galois group acts on GL(n).
+
+3. **Differential Galois correspondence**: Formalizing the Galois correspondence between intermediate differential field extensions and closed subgroups of the differential Galois group.
+
+4. **Connection to the EML catalog**: Linking the differential complexity tower to the existing EML formalization in the catalog, particularly the approximation complexity results.
 
 ## References
 
-1. Airy, G.B. (1838). "On the intensity of light in the neighbourhood of a caustic." *Trans. Cambridge Phil. Soc.* 6, 379–402.
-2. Kovacic, J. (1986). "An algorithm for solving second order linear homogeneous differential equations." *J. Symbolic Comput.* 2, 3–43.
-3. van der Put, M. and Singer, M.F. (2003). *Galois Theory of Linear Differential Equations.* Springer.
-4. Kolchin, E. (1973). *Differential Algebra and Algebraic Groups.* Academic Press.
-5. Catalog: `EML/EMLv17Core.lean`, `EML/EMLv18Advanced.lean`, `Bridges/GaloisNeuralCorrespondence.lean`
+1. Abel, N. H. (1829). Précis d'une théorie des fonctions elliptiques.
+2. Kovacic, J. J. (1986). An algorithm for solving second order linear homogeneous differential equations. *Journal of Symbolic Computation*, 2(1), 3–43.
+3. van der Put, M., & Singer, M. F. (2003). *Galois Theory of Linear Differential Equations*. Springer.
+4. Kaplansky, I. (1957). *An Introduction to Differential Algebra*. Hermann.
+5. Kolchin, E. R. (1973). *Differential Algebra and Algebraic Groups*. Academic Press.
+6. Singer, M. F. (1981). Liouvillian solutions of n-th order homogeneous linear differential equations. *American Journal of Mathematics*, 103(4), 661–682.

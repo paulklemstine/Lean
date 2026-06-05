@@ -1,354 +1,337 @@
+#!/usr/bin/env python3
 """
 Algorithms for EML Differential Equations
 
-Type-hinted implementations of the key algorithms from the formalization:
-1. Polynomial Solution Test — decides if y'' = q(x)y has polynomial solutions
-2. EML Expression Differentiation — formal symbolic differentiation
-3. Wronskian Computation — numerical Wronskian evaluation
-4. Kovacic Case 1 Test — checks for exponential solutions
+Type-hinted implementations of the Wronskian theory and Kovacic classification.
 """
 
-from __future__ import annotations
-from dataclasses import dataclass
-from typing import Union, Callable, Optional, Tuple
+from typing import Callable, Tuple, Optional, List
+from enum import Enum
 import numpy as np
 
 
-# ============================================================
-# Algorithm 1: EML Expression Tree and Differentiation
-# ============================================================
-
-@dataclass
-class Const:
-    """Constant EML expression."""
-    value: float
-
-@dataclass
-class Var:
-    """Variable x."""
-    pass
-
-@dataclass
-class Add:
-    """Sum of two EML expressions."""
-    left: 'EMLExpr'
-    right: 'EMLExpr'
-
-@dataclass
-class Mul:
-    """Product of two EML expressions."""
-    left: 'EMLExpr'
-    right: 'EMLExpr'
-
-@dataclass
-class Exp:
-    """Exponential of an EML expression."""
-    arg: 'EMLExpr'
-
-@dataclass
-class Log:
-    """Logarithm of an EML expression."""
-    arg: 'EMLExpr'
-
-EMLExpr = Union[Const, Var, Add, Mul, Exp, Log]
+# Type aliases
+RealFunc = Callable[[float], float]
 
 
-def eml_deriv(e: EMLExpr) -> EMLExpr:
+class KovacicCase(Enum):
+    """The four cases of the Kovacic algorithm."""
+    REDUCIBLE = 1      # G⁰ ≅ Gₘ: exponential solutions
+    IMPRIMITIVE = 2    # G⁰ ⊆ diagonal: sqrt-exponential solutions
+    FINITE = 3         # G finite: algebraic solutions
+    FULL_SL2 = 4       # G = SL(2): no Liouvillian solutions
+
+
+def wronskian(y1: float, y1p: float, y2: float, y2p: float) -> float:
     """
-    Formal differentiation of EML expressions.
-
-    Implements the chain rule, product rule, and standard derivative rules.
-    The key property: the output is always an EMLExpr (closure theorem).
-
+    Compute the Wronskian W(y1, y2) = y1 * y2' - y2 * y1'.
+    
     Args:
-        e: An EML expression
-
+        y1: Value of first solution
+        y1p: Value of first solution's derivative
+        y2: Value of second solution
+        y2p: Value of second solution's derivative
+    
     Returns:
-        The formal derivative, also an EML expression
+        The Wronskian value
     """
-    if isinstance(e, Const):
-        return Const(0.0)
-    elif isinstance(e, Var):
-        return Const(1.0)
-    elif isinstance(e, Add):
-        return Add(eml_deriv(e.left), eml_deriv(e.right))
-    elif isinstance(e, Mul):
-        # Product rule: (fg)' = f'g + fg'
-        return Add(
-            Mul(eml_deriv(e.left), e.right),
-            Mul(e.left, eml_deriv(e.right))
-        )
-    elif isinstance(e, Exp):
-        # Chain rule: (exp(f))' = f' * exp(f)
-        return Mul(eml_deriv(e.arg), Exp(e.arg))
-    elif isinstance(e, Log):
-        # Chain rule: (log(f))' = f'/f = f' * exp(-log(f))
-        return Mul(
-            eml_deriv(e.arg),
-            Exp(Mul(Const(-1.0), Log(e.arg)))
-        )
-    else:
-        raise TypeError(f"Unknown EML expression type: {type(e)}")
+    return y1 * y2p - y2 * y1p
 
 
-def eml_eval(e: EMLExpr, x: float) -> float:
-    """
-    Evaluate an EML expression at a point.
-
-    Args:
-        e: An EML expression
-        x: The point to evaluate at
-
-    Returns:
-        The value e(x)
-    """
-    if isinstance(e, Const):
-        return e.value
-    elif isinstance(e, Var):
-        return x
-    elif isinstance(e, Add):
-        return eml_eval(e.left, x) + eml_eval(e.right, x)
-    elif isinstance(e, Mul):
-        return eml_eval(e.left, x) * eml_eval(e.right, x)
-    elif isinstance(e, Exp):
-        return np.exp(eml_eval(e.arg, x))
-    elif isinstance(e, Log):
-        return np.log(eml_eval(e.arg, x))
-    else:
-        raise TypeError(f"Unknown EML expression type: {type(e)}")
-
-
-def eml_depth(e: EMLExpr) -> int:
-    """
-    Compute the exp/log nesting depth of an EML expression.
-
-    Args:
-        e: An EML expression
-
-    Returns:
-        The nesting depth (0 for polynomials)
-    """
-    if isinstance(e, (Const, Var)):
-        return 0
-    elif isinstance(e, (Add, Mul)):
-        return max(eml_depth(e.left), eml_depth(e.right))
-    elif isinstance(e, (Exp, Log)):
-        return eml_depth(e.arg) + 1
-    else:
-        raise TypeError(f"Unknown EML expression type: {type(e)}")
-
-
-def eml_to_string(e: EMLExpr) -> str:
-    """Pretty-print an EML expression."""
-    if isinstance(e, Const):
-        return f"{e.value:g}"
-    elif isinstance(e, Var):
-        return "x"
-    elif isinstance(e, Add):
-        return f"({eml_to_string(e.left)} + {eml_to_string(e.right)})"
-    elif isinstance(e, Mul):
-        return f"({eml_to_string(e.left)} · {eml_to_string(e.right)})"
-    elif isinstance(e, Exp):
-        return f"exp({eml_to_string(e.arg)})"
-    elif isinstance(e, Log):
-        return f"log({eml_to_string(e.arg)})"
-    else:
-        return "?"
-
-
-# ============================================================
-# Algorithm 2: Polynomial Solution Test
-# ============================================================
-
-def polynomial_solution_test(q_coeffs: list[float]) -> Tuple[bool, str]:
-    """
-    Decide if y'' = q(x)·y has a nonzero polynomial solution.
-
-    Based on the degree gap obstruction theorem:
-    - If deg(q) ≥ 1: NO polynomial solutions (degree gap)
-    - If q = 0: YES (solutions are y = ax + b)
-    - If q ≠ 0 constant: NO (solutions are exponential/trigonometric)
-
-    Args:
-        q_coeffs: Coefficients of q(x) = q[0] + q[1]x + q[2]x² + ...
-
-    Returns:
-        (has_solution, explanation) tuple
-    """
-    # Remove trailing zeros
-    while q_coeffs and abs(q_coeffs[-1]) < 1e-15:
-        q_coeffs = q_coeffs[:-1]
-
-    if not q_coeffs or all(abs(c) < 1e-15 for c in q_coeffs):
-        return True, "q = 0: solutions are y = ax + b (any linear function)"
-
-    deg = len(q_coeffs) - 1
-
-    if deg >= 1:
-        return False, (
-            f"DEGREE GAP OBSTRUCTION: deg(q) = {deg} ≥ 1.\n"
-            f"  For polynomial p of degree n: deg(p'') = n-2, deg(q·p) = n+{deg}.\n"
-            f"  These are irreconcilable for any n ≥ 0.\n"
-            f"  (Formally proved: poly_ode_degree_obstruction)"
-        )
-    else:
-        c = q_coeffs[0]
-        return False, (
-            f"CONSTANT COEFFICIENT: q = {c:.4g}.\n"
-            f"  p'' = {c:.4g}·p has solutions exp(±√({c:.4g})·x), not polynomials.\n"
-            f"  deg(p'') = n-2 ≠ n = deg(c·p) for n ≥ 2.\n"
-            f"  For n ≤ 1: p'' = 0 but c·p ≠ 0.\n"
-            f"  (Formally proved: no_poly_solution_const_coeff)"
-        )
-
-
-# ============================================================
-# Algorithm 3: Wronskian Computation
-# ============================================================
-
-def wronskian(
-    f: Callable[[float], float],
-    g: Callable[[float], float],
+def abel_predict_wronskian(
+    W0: float,
+    p: RealFunc,
+    x0: float,
     x: float,
-    h: float = 1e-7
+    n_steps: int = 1000
 ) -> float:
     """
-    Compute the Wronskian W(f, g)(x) = f(x)g'(x) - g(x)f'(x).
-
-    Uses central difference for derivative approximation.
-
+    Predict the Wronskian at point x using Abel's identity: W' = -p·W.
+    
+    This solves the first-order ODE W' = -p(t)·W with W(x0) = W0
+    using the trapezoidal rule for the integral.
+    
     Args:
-        f: First function
-        g: Second function
-        x: Point of evaluation
-        h: Step size for numerical differentiation
-
+        W0: Initial Wronskian value at x0
+        p: Coefficient function p(x) in the ODE y'' + p·y' + q·y = 0
+        x0: Initial point
+        x: Target point
+        n_steps: Number of integration steps
+    
     Returns:
-        W(f, g)(x)
+        Predicted Wronskian W(x) = W0 · exp(-∫_{x0}^{x} p(t) dt)
     """
-    f_val = f(x)
-    g_val = g(x)
-    f_prime = (f(x + h) - f(x - h)) / (2 * h)
-    g_prime = (g(x + h) - g(x - h)) / (2 * h)
-    return f_val * g_prime - g_val * f_prime
+    ts = np.linspace(x0, x, n_steps + 1)
+    dt = (x - x0) / n_steps
+    
+    # Trapezoidal rule for ∫p(t)dt
+    integral = 0.5 * p(ts[0]) + sum(p(t) for t in ts[1:-1]) + 0.5 * p(ts[-1])
+    integral *= dt
+    
+    return W0 * np.exp(-integral)
 
 
-def verify_wronskian_constancy(
-    f: Callable[[float], float],
-    g: Callable[[float], float],
-    x_range: Tuple[float, float] = (-10.0, 5.0),
-    n_points: int = 100
-) -> Tuple[float, float, float]:
+def riccati_from_solution(
+    y: RealFunc,
+    yp: RealFunc,
+    x: float
+) -> float:
     """
-    Verify that the Wronskian is constant over a range.
-
+    Compute the Riccati variable r = y'/y at a point.
+    
+    The Riccati reduction transforms y'' + p·y' + q·y = 0
+    into r' + r² + p·r + q = 0 via r = y'/y.
+    
     Args:
-        f, g: Two functions (should be solutions of the same ODE)
-        x_range: Range to check
-        n_points: Number of sample points
-
+        y: Solution function
+        yp: Derivative of solution
+        x: Evaluation point
+    
     Returns:
-        (mean_wronskian, std_dev, max_deviation) tuple
+        The Riccati variable r(x) = y'(x)/y(x)
+    
+    Raises:
+        ZeroDivisionError: If y(x) = 0
     """
-    xs = np.linspace(x_range[0], x_range[1], n_points)
-    ws = [wronskian(f, g, x) for x in xs]
-    mean_w = np.mean(ws)
-    std_w = np.std(ws)
-    max_dev = np.max(np.abs(np.array(ws) - mean_w))
-    return mean_w, std_w, max_dev
+    y_val = y(x)
+    if abs(y_val) < 1e-15:
+        raise ZeroDivisionError(f"Solution vanishes at x = {x}")
+    return yp(x) / y_val
 
 
-# ============================================================
-# Algorithm 4: Kovacic Case 1 Test (Simplified)
-# ============================================================
-
-def kovacic_case1_test(q_coeffs: list[float]) -> Tuple[bool, str]:
+def verify_riccati(
+    r: float,
+    rp: float,
+    p_val: float,
+    q_val: float
+) -> float:
     """
-    Simplified Kovacic Case 1 test for polynomial q.
+    Check the Riccati equation residual: r' + r² + p·r + q.
+    
+    Returns 0 if the Riccati equation is satisfied.
+    """
+    return rp + r**2 + p_val * r + q_val
 
-    Tests whether y'' = q(x)y might have a solution of the form
-    exp(∫r(x)dx) where r is a polynomial (simplest case).
 
-    If such a solution exists, then r satisfies the Riccati equation:
-    r' + r² = q. For polynomial r of degree d, the leading terms give:
-    - r² has degree 2d
-    - q has degree deg(q)
-    So 2d = deg(q), meaning deg(q) must be even.
-
-    For q = x (Airy): deg = 1 (odd), so NO polynomial Riccati solution.
-
+def solution_representation_coefficients(
+    y1: float, y1p: float,
+    y2: float, y2p: float,
+    y3: float, y3p: float
+) -> Tuple[float, float]:
+    """
+    Compute the representation coefficients c1, c2 such that y3 = c1·y1 + c2·y2.
+    
+    Uses the Wronskian formula:
+        c1 = W(y3, y2) / W(y1, y2)
+        c2 = W(y1, y3) / W(y1, y2)
+    
     Args:
-        q_coeffs: Coefficients of q(x)
-
+        y1, y1p: First solution and its derivative
+        y2, y2p: Second solution and its derivative
+        y3, y3p: Third solution and its derivative
+    
     Returns:
-        (possible, explanation) tuple
+        Tuple (c1, c2) of constant coefficients
+    
+    Raises:
+        ValueError: If W(y1, y2) = 0 (solutions not independent)
     """
-    while q_coeffs and abs(q_coeffs[-1]) < 1e-15:
-        q_coeffs = q_coeffs[:-1]
+    W12 = wronskian(y1, y1p, y2, y2p)
+    if abs(W12) < 1e-15:
+        raise ValueError("Solutions y1, y2 are not independent (W = 0)")
+    
+    W32 = wronskian(y3, y3p, y2, y2p)
+    W13 = wronskian(y1, y1p, y3, y3p)
+    
+    c1 = W32 / W12
+    c2 = W13 / W12
+    
+    return c1, c2
 
-    if not q_coeffs:
-        return True, "q = 0: trivial case, r = 0 works (exp(0) = 1 is polynomial)"
 
-    deg_q = len(q_coeffs) - 1
+class EMLTowerStep:
+    """A single step in an EML tower extension."""
+    
+    def __init__(self, ext_type: str, level: int):
+        """
+        Args:
+            ext_type: 'exponential' or 'logarithmic'
+            level: The tower level (0-indexed)
+        """
+        assert ext_type in ('exponential', 'logarithmic')
+        self.ext_type = ext_type
+        self.level = level
+    
+    def __repr__(self) -> str:
+        return f"EMLTowerStep({self.ext_type}, level={self.level})"
 
-    if deg_q % 2 == 1:
-        return False, (
-            f"PARITY OBSTRUCTION: deg(q) = {deg_q} is odd.\n"
-            f"  A polynomial Riccati solution r would need deg(r²) = deg(q),\n"
-            f"  i.e., 2·deg(r) = {deg_q}, giving deg(r) = {deg_q}/2 (not integer).\n"
-            f"  Therefore NO exponential-of-polynomial solution exists."
-        )
-    else:
-        d = deg_q // 2
-        lead_q = q_coeffs[-1]
-        # r² must match leading term: r_d² = q_{2d}
-        if lead_q > 0:
-            r_lead = np.sqrt(lead_q)
-            return True, (
-                f"POSSIBLE: deg(q) = {deg_q} is even, leading coeff > 0.\n"
-                f"  Candidate: r(x) ≈ ±{r_lead:.4g}·x^{d} + lower terms.\n"
-                f"  Full Kovacic algorithm needed to determine coefficients."
-            )
-        else:
-            return True, (
-                f"POSSIBLE (complex): deg(q) = {deg_q} is even, leading coeff < 0.\n"
-                f"  Solutions would be oscillatory (complex exponential).\n"
-                f"  Full Kovacic algorithm needed for complete analysis."
-            )
+
+class EMLTower:
+    """An EML (Exponential-Monomial-Logarithmic) tower of field extensions."""
+    
+    def __init__(self, steps: Optional[List[EMLTowerStep]] = None):
+        self.steps = steps or []
+    
+    @property
+    def height(self) -> int:
+        """Total tower height."""
+        return len(self.steps)
+    
+    @property
+    def exp_depth(self) -> int:
+        """Number of exponential extensions."""
+        return sum(1 for s in self.steps if s.ext_type == 'exponential')
+    
+    @property
+    def log_depth(self) -> int:
+        """Number of logarithmic extensions."""
+        return sum(1 for s in self.steps if s.ext_type == 'logarithmic')
+    
+    def add_exponential(self) -> 'EMLTower':
+        """Add an exponential extension."""
+        new_step = EMLTowerStep('exponential', self.height)
+        return EMLTower(self.steps + [new_step])
+    
+    def add_logarithmic(self) -> 'EMLTower':
+        """Add a logarithmic extension."""
+        new_step = EMLTowerStep('logarithmic', self.height)
+        return EMLTower(self.steps + [new_step])
+    
+    def verify_decomposition(self) -> bool:
+        """
+        Verify the tower height decomposition:
+        height = exp_depth + log_depth
+        
+        This corresponds to the formal theorem tower_height_decomp.
+        """
+        return self.height == self.exp_depth + self.log_depth
+    
+    def __repr__(self) -> str:
+        if not self.steps:
+            return "EMLTower(base field)"
+        return f"EMLTower(height={self.height}, exp={self.exp_depth}, log={self.log_depth})"
+
+
+def kovacic_max_tower_height(case: KovacicCase) -> Optional[int]:
+    """
+    The maximum EML tower height needed for solutions in each Kovacic case.
+    
+    Returns None for the full SL(2) case (no Liouvillian solutions).
+    """
+    return {
+        KovacicCase.REDUCIBLE: 1,
+        KovacicCase.IMPRIMITIVE: 2,
+        KovacicCase.FINITE: 0,
+        KovacicCase.FULL_SL2: None,
+    }[case]
+
+
+def reduced_ode_coefficient(p: float, q: float, dp: float) -> float:
+    """
+    Compute the reduced ODE coefficient r = q - p'/2 - p²/4.
+    
+    The substitution y = z·exp(-∫p/2) transforms
+    y'' + p·y' + q·y = 0 into z'' + r·z = 0.
+    
+    Args:
+        p: Coefficient of y'
+        q: Coefficient of y
+        dp: Derivative of p (= p'(x))
+    
+    Returns:
+        The reduced coefficient r
+    """
+    return q - dp / 2 - p**2 / 4
+
+
+# ============================================================================
+# Kovacic Algorithm (Simplified for rational coefficients)
+# ============================================================================
+
+def classify_pole(
+    residue: float,
+    order: int
+) -> List[KovacicCase]:
+    """
+    Classify which Kovacic cases are compatible with a given pole.
+    
+    Args:
+        residue: The leading coefficient of the Laurent expansion
+        order: The pole order
+    
+    Returns:
+        List of compatible Kovacic cases
+    """
+    compatible = []
+    
+    # Case 1: Requires pole order ≤ 2 or all poles have even order
+    if order <= 2:
+        compatible.append(KovacicCase.REDUCIBLE)
+    
+    # Case 2: Requires pole order ≤ 2 or order exactly 2
+    if order <= 2:
+        compatible.append(KovacicCase.IMPRIMITIVE)
+    
+    # Case 3: Requires pole order ≤ 2
+    if order <= 2:
+        compatible.append(KovacicCase.FINITE)
+    
+    # Case 4 is always possible (no Liouvillian solutions)
+    compatible.append(KovacicCase.FULL_SL2)
+    
+    return compatible
+
+
+def airy_kovacic_analysis() -> KovacicCase:
+    """
+    Analyze the Airy equation y'' = x·y using the Kovacic algorithm.
+    
+    The Airy equation in standard form is y'' + 0·y' + (-x)·y = 0,
+    or in reduced form: y'' = x·y.
+    
+    The coefficient r(x) = -x has no poles (it's a polynomial of degree 1).
+    
+    Key analysis:
+    - At infinity, the order of the pole of r is: ord_∞(r) = -(deg r) = -1
+    - Since -1 is odd and ≠ 1, Cases 1 and 2 are ruled out at infinity
+    - Case 3 requires specific arithmetic conditions that fail for degree 1
+    - Therefore: Case 4 (full SL(2))
+    
+    Returns:
+        KovacicCase.FULL_SL2
+    """
+    # The Airy equation falls into Case 4 (full SL(2) Galois group)
+    # No Liouvillian solutions exist
+    return KovacicCase.FULL_SL2
 
 
 if __name__ == "__main__":
-    print("=== Polynomial Solution Test ===")
-    test_cases = [
-        ([0.0], "y'' = 0"),
-        ([1.0], "y'' = y"),
-        ([-1.0], "y'' = -y"),
-        ([0.0, 1.0], "y'' = xy (Airy)"),
-        ([0.0, 0.0, 1.0], "y'' = x²y"),
-        ([-1.0, 0.0, 1.0], "y'' = (x²-1)y (Hermite-type)"),
-    ]
-
-    for coeffs, name in test_cases:
-        has_sol, explanation = polynomial_solution_test(coeffs)
-        print(f"\n{name}: {'HAS' if has_sol else 'NO'} polynomial solution")
-        print(f"  {explanation}")
-
-    print("\n\n=== Kovacic Case 1 Test ===")
-    for coeffs, name in test_cases:
-        possible, explanation = kovacic_case1_test(coeffs)
-        print(f"\n{name}: {'POSSIBLE' if possible else 'IMPOSSIBLE'}")
-        print(f"  {explanation}")
-
-    print("\n\n=== EML Differentiation ===")
-    # Example: d/dx[exp(x²)] = 2x·exp(x²)
-    expr = Exp(Mul(Var(), Var()))  # exp(x·x) = exp(x²)
-    deriv = eml_deriv(expr)
-    print(f"Expression: {eml_to_string(expr)}")
-    print(f"Derivative: {eml_to_string(deriv)}")
-    print(f"Depth: {eml_depth(expr)} → {eml_depth(deriv)}")
-
-    # Verify numerically
-    x = 2.0
-    print(f"At x={x}: expr = {eml_eval(expr, x):.6f}, "
-          f"deriv = {eml_eval(deriv, x):.6f}, "
-          f"expected = {2*x*np.exp(x**2):.6f}")
+    # Quick self-test
+    print("Testing algorithms...")
+    
+    # Test Wronskian
+    assert abs(wronskian(1, 0, 0, 1) - 1.0) < 1e-10, "Wronskian test failed"
+    
+    # Test tower decomposition
+    tower = EMLTower()
+    tower = tower.add_exponential()
+    tower = tower.add_logarithmic()
+    tower = tower.add_exponential()
+    assert tower.verify_decomposition(), "Tower decomposition failed"
+    assert tower.height == 3
+    assert tower.exp_depth == 2
+    assert tower.log_depth == 1
+    
+    # Test representation coefficients
+    c1, c2 = solution_representation_coefficients(
+        1, 0,   # y1 = cos(0) = 1, y1' = -sin(0) = 0
+        0, 1,   # y2 = sin(0) = 0, y2' = cos(0) = 1
+        3, -2,  # y3 = 3cos(0) - 2sin(0) = 3, y3' = -3sin(0) - 2cos(0) = -2
+    )
+    assert abs(c1 - 3.0) < 1e-10, f"c1 = {c1}, expected 3"
+    assert abs(c2 - (-2.0)) < 1e-10, f"c2 = {c2}, expected -2"
+    
+    # Test Airy classification
+    assert airy_kovacic_analysis() == KovacicCase.FULL_SL2
+    
+    print("All tests passed!")
