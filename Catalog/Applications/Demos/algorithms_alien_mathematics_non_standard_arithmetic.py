@@ -1,274 +1,314 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Algorithms for non-standard arithmetic.
+Algorithms for GrowthRank and Non-Standard Arithmetic
+=====================================================
 
-Provides type-hinted implementations of:
-1. Ultrapower equivalence checking
-2. Non-standard element comparison
-3. Transfer principle simulation
-4. Prime sequence generation for non-standard primes
+Type-hinted implementations of the core algorithms from the research.
 """
 
-from typing import List, Callable, Set, Tuple, Optional
+from __future__ import annotations
+from typing import Callable, List, Tuple, Optional, Set
+from math import isqrt, log2
 from dataclasses import dataclass
-import math
+from functools import reduce
 
 
 # ============================================================
-# Algorithm 1: Ultrapower Element Representation
+# Type Aliases
 # ============================================================
 
-@dataclass
-class UltrapowerElement:
-    """Represents an element of ℕ* = ℕ^I/U as a finite approximation.
-    
-    In the formal construction, elements are equivalence classes of
-    sequences modulo an ultrafilter. For computation, we represent
-    them as finite sequences with a specified index set size.
-    """
-    sequence: List[int]
-    
-    @property
-    def size(self) -> int:
-        return len(self.sequence)
-    
-    @staticmethod
-    def constant(n: int, size: int) -> 'UltrapowerElement':
-        """The diagonal embedding d(n) = [n, n, ..., n]."""
-        return UltrapowerElement([n] * size)
-    
-    @staticmethod
-    def identity(size: int) -> 'UltrapowerElement':
-        """The canonical infinite element ω = [0, 1, 2, ..., N-1]."""
-        return UltrapowerElement(list(range(size)))
-    
-    @staticmethod
-    def nth_prime_sequence(size: int) -> 'UltrapowerElement':
-        """The non-standard prime π = [p_0, p_1, p_2, ...]."""
-        primes = []
-        candidate = 2
-        while len(primes) < size:
-            if all(candidate % p != 0 for p in range(2, int(math.sqrt(candidate)) + 1)):
-                primes.append(candidate)
-            candidate += 1
-        return UltrapowerElement(primes)
-    
-    def add(self, other: 'UltrapowerElement') -> 'UltrapowerElement':
-        """Pointwise addition: [f] + [g] = [f + g]."""
-        assert self.size == other.size
-        return UltrapowerElement([a + b for a, b in zip(self.sequence, other.sequence)])
-    
-    def mul(self, other: 'UltrapowerElement') -> 'UltrapowerElement':
-        """Pointwise multiplication: [f] · [g] = [f · g]."""
-        assert self.size == other.size
-        return UltrapowerElement([a * b for a, b in zip(self.sequence, other.sequence)])
+Sequence = Callable[[int], int]
 
 
 # ============================================================
-# Algorithm 2: Ultrafilter Simulation (Majority Filter)
-# ============================================================
-
-def majority_filter_check(indices: Set[int], total: int) -> bool:
-    """Simulate ultrafilter membership using the majority filter.
-    
-    A principal ultrafilter at point p declares S "large" iff p ∈ S.
-    A nonprincipal ultrafilter declares S "large" iff it contains
-    "most" elements. We approximate this with the majority criterion:
-    S is large iff |S| > total/2.
-    
-    Pseudocode:
-        INPUT: set S ⊆ {0, ..., N-1}, total N
-        OUTPUT: True if |S| > N/2
-    """
-    return len(indices) > total / 2
-
-
-def ultrapower_less_than(a: UltrapowerElement, b: UltrapowerElement) -> bool:
-    """Check if [a] <* [b] in the ultrapower.
-    
-    [a] <* [b] iff {i | a(i) < b(i)} is U-large.
-    
-    Pseudocode:
-        INPUT: sequences a, b of length N
-        OUTPUT: True if a(i) < b(i) on more than N/2 indices
-    """
-    large_set = {i for i in range(a.size) if a.sequence[i] < b.sequence[i]}
-    return majority_filter_check(large_set, a.size)
-
-
-def ultrapower_equal(a: UltrapowerElement, b: UltrapowerElement) -> bool:
-    """Check if [a] = [b] in the ultrapower.
-    
-    Pseudocode:
-        INPUT: sequences a, b of length N
-        OUTPUT: True if a(i) = b(i) on more than N/2 indices
-    """
-    agree_set = {i for i in range(a.size) if a.sequence[i] == b.sequence[i]}
-    return majority_filter_check(agree_set, a.size)
-
-
-def ultrapower_divides(a: UltrapowerElement, b: UltrapowerElement) -> bool:
-    """Check if [a] |* [b] in the ultrapower.
-    
-    Pseudocode:
-        INPUT: sequences a, b of length N
-        OUTPUT: True if a(i) | b(i) on more than N/2 indices
-    """
-    div_set = {i for i in range(a.size) 
-               if a.sequence[i] != 0 and b.sequence[i] % a.sequence[i] == 0}
-    return majority_filter_check(div_set, a.size)
-
-
-# ============================================================
-# Algorithm 3: Transfer Principle Checker
+# Algorithm 1: Ultrafilter Approximation
 # ============================================================
 
 @dataclass
-class FirstOrderAtom:
-    """An atomic first-order formula over ℕ."""
-    predicate: str  # "eq", "le", "lt", "dvd", "prime"
-    args: Tuple     # indices into the variable list
-
-def check_transfer(
-    formula: Callable[[int], bool],
-    elements: List[UltrapowerElement],
-    size: int
-) -> Tuple[bool, float]:
-    """Check whether a first-order property transfers.
+class ApproxUltrafilter:
+    """Approximate a free ultrafilter on ℕ using a threshold-based rule.
     
-    Given a predicate P and ultrapower elements, compute the
-    fraction of indices where P holds. If > 0.5, P "transfers."
+    A set S ⊆ {0,...,N-1} is declared 'U-large' if its density in the
+    upper half exceeds a threshold. This captures the cofinite flavor
+    of free ultrafilters.
     
     Pseudocode:
-        INPUT: predicate P, ultrapower elements [f_1], ..., [f_k]
-        OUTPUT: (transfers: bool, confidence: float)
-        
-        count = 0
-        for i in 0..N-1:
-            if P(f_1(i), ..., f_k(i)):
-                count += 1
-        fraction = count / N
-        return (fraction > 0.5, fraction)
+        IS_LARGE(S, N):
+            tail ← {N/2, ..., N-1}
+            return |S ∩ tail| / |tail| > threshold
     """
-    count = sum(1 for i in range(size) if formula(i))
-    fraction = count / size
-    return (fraction > 0.5, fraction)
+    N: int = 1000
+    threshold: float = 0.5
+    
+    def is_large(self, S: Set[int]) -> bool:
+        """Determine if S is 'U-large' (approximation)."""
+        tail_start = self.N // 2
+        tail_size = self.N - tail_start
+        count = sum(1 for i in range(tail_start, self.N) if i in S)
+        return count / tail_size > self.threshold
+    
+    def ultra_le(self, f: Sequence, g: Sequence) -> bool:
+        """Check f ≤_U g."""
+        S = {i for i in range(self.N) if f(i) <= g(i)}
+        return self.is_large(S)
+    
+    def ultra_lt(self, f: Sequence, g: Sequence) -> bool:
+        """Check f <_U g."""
+        S = {i for i in range(self.N) if f(i) < g(i)}
+        return self.is_large(S)
+    
+    def ultra_eq(self, f: Sequence, g: Sequence) -> bool:
+        """Check f =_U g."""
+        S = {i for i in range(self.N) if f(i) == g(i)}
+        return self.is_large(S)
 
 
 # ============================================================
-# Algorithm 4: Non-Standard Prime Generator  
+# Algorithm 2: Growth Rank Classification
 # ============================================================
 
-def generate_nonstandard_prime(size: int) -> Tuple[UltrapowerElement, dict]:
-    """Generate a non-standard prime element.
-    
-    Constructs the sequence [p_0, p_1, p_2, ...] of consecutive primes
-    and verifies:
-    1. Every entry is prime
-    2. p_n > n for all n
+@dataclass
+class GrowthClass:
+    """Classification of a sequence's growth rate.
     
     Pseudocode:
-        INPUT: sequence length N
-        OUTPUT: (ultrapower element π, verification dict)
-        
-        primes = []
-        candidate = 2
-        while |primes| < N:
-            if isPrime(candidate):
-                primes.append(candidate)
-            candidate += 1
-        
-        verify:
-            all_prime = ∀ i, isPrime(primes[i])
-            all_exceed = ∀ i, primes[i] > i
-        
-        return (UltrapowerElement(primes), {all_prime, all_exceed})
+        CLASSIFY(f, N):
+            Compute ratios f(i)/i^α for α ∈ {0, 0.5, 1, 1.5, 2}
+            Find α that minimizes variance of ratios
+            Return (α, average_ratio)
     """
-    pi = UltrapowerElement.nth_prime_sequence(size)
+    exponent: float
+    coefficient: float
+    name: str
     
-    all_prime = all(
-        all(pi.sequence[i] % p != 0 for p in range(2, int(math.sqrt(pi.sequence[i])) + 1))
-        if pi.sequence[i] > 1 else False
-        for i in range(size)
-    )
-    all_exceed = all(pi.sequence[i] > i for i in range(size))
+    def __repr__(self) -> str:
+        return f"GrowthClass({self.name}: ~{self.coefficient:.2f} · n^{self.exponent:.2f})"
+
+
+def classify_growth(f: Sequence, N: int = 500) -> GrowthClass:
+    """Classify the growth rate of a sequence.
     
-    return pi, {
-        "all_prime": all_prime,
-        "all_exceed_index": all_exceed,
-        "min_prime": min(pi.sequence),
-        "max_prime": max(pi.sequence),
-        "growth_rate": pi.sequence[-1] / size if size > 0 else 0
+    Fits f(n) ≈ c · n^α by testing candidate exponents.
+    """
+    candidates = [0.0, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0]
+    best_alpha = 0.0
+    best_var = float('inf')
+    best_coeff = 1.0
+    
+    for alpha in candidates:
+        ratios: List[float] = []
+        for i in range(max(2, N // 4), N):
+            denom = i ** alpha if alpha > 0 else 1.0
+            if denom > 0:
+                ratios.append(f(i) / denom)
+        
+        if not ratios:
+            continue
+        
+        mean = sum(ratios) / len(ratios)
+        if mean == 0:
+            continue
+        var = sum((r - mean) ** 2 for r in ratios) / len(ratios)
+        # Normalize variance by mean^2 for fair comparison
+        normalized_var = var / (mean ** 2 + 1e-10)
+        
+        if normalized_var < best_var:
+            best_var = normalized_var
+            best_alpha = alpha
+            best_coeff = mean
+    
+    names = {
+        0.0: "constant", 0.25: "fourth-root", 0.5: "sqrt",
+        0.75: "n^(3/4)", 1.0: "linear", 1.5: "n^(3/2)",
+        2.0: "quadratic", 3.0: "cubic"
     }
+    return GrowthClass(best_alpha, best_coeff, names.get(best_alpha, f"n^{best_alpha}"))
 
 
 # ============================================================
-# Algorithm 5: Overspill Detector
+# Algorithm 3: Compositeness Transfer
 # ============================================================
 
-def detect_overspill(
-    property_family: Callable[[int, int], bool],
-    max_n: int,
-    size: int
-) -> dict:
-    """Detect the overspill phenomenon.
-    
-    Given a family P(i, n), compute:
-    - For each n, the fraction of indices where P(i, n) holds
-    - The fraction where ∀ n < max_n, P(i, n) holds simultaneously
-    - The ratio (simultaneous / individual), showing overspill gap
+def smallest_prime_factor(n: int) -> int:
+    """Return the smallest prime factor of n, or n if prime."""
+    if n < 2:
+        return n
+    if n % 2 == 0:
+        return 2
+    i = 3
+    while i * i <= n:
+        if n % i == 0:
+            return i
+        i += 2
+    return n
+
+
+def compositeness_transfer(
+    f: Sequence, N: int = 100
+) -> Tuple[Sequence, Sequence, float]:
+    """Extract factor sequences g, h such that f =_U g × h.
     
     Pseudocode:
-        INPUT: property P(i,n), bound max_n, index set size N
-        OUTPUT: analysis dict
-        
-        for n in 0..max_n-1:
-            individual[n] = |{i | P(i,n)}| / N
-        
-        simultaneous = |{i | ∀ n < max_n, P(i,n)}| / N
-        gap = min(individual) - simultaneous
-        
-        return {individual, simultaneous, gap}
+        COMPOSITENESS_TRANSFER(f, N):
+            For each i in {0, ..., N-1}:
+                If f(i) is composite:
+                    g(i) ← smallest_prime_factor(f(i))
+                    h(i) ← f(i) / g(i)
+                Else:
+                    g(i) ← 1, h(i) ← f(i)
+            Return (g, h, fraction_where_both_nontrivial)
+    
+    Returns: (g, h, success_rate)
     """
-    individual = {}
-    for n in range(max_n):
-        count = sum(1 for i in range(size) if property_family(i, n))
-        individual[n] = count / size
+    g_vals: List[int] = []
+    h_vals: List[int] = []
+    nontrivial = 0
     
-    simultaneous_count = sum(
-        1 for i in range(size)
-        if all(property_family(i, n) for n in range(max_n))
-    )
-    simultaneous = simultaneous_count / size
+    for i in range(N):
+        fi = f(i)
+        if fi >= 4:
+            gi = smallest_prime_factor(fi)
+            hi = fi // gi
+            if gi >= 2 and hi >= 2:
+                nontrivial += 1
+        else:
+            gi = 1
+            hi = fi
+        g_vals.append(gi)
+        h_vals.append(hi)
     
-    min_individual = min(individual.values()) if individual else 0
-    
-    return {
-        "individual_fractions": individual,
-        "simultaneous_fraction": simultaneous,
-        "gap": min_individual - simultaneous,
-        "overspill_detected": simultaneous == 0 and min_individual > 0.5
-    }
+    g_seq: Sequence = lambda i, v=g_vals: v[i] if i < len(v) else 1
+    h_seq: Sequence = lambda i, v=h_vals: v[i] if i < len(v) else 1
+    return g_seq, h_seq, nontrivial / N
 
+
+# ============================================================
+# Algorithm 4: Goldbach Transfer
+# ============================================================
+
+def is_prime(n: int) -> bool:
+    """Primality test."""
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+
+def goldbach_decompose(n: int) -> Optional[Tuple[int, int]]:
+    """Find primes p, q with n = p + q, or None."""
+    if n < 4 or n % 2 != 0:
+        return None
+    for p in range(2, n):
+        if is_prime(p) and is_prime(n - p):
+            return (p, n - p)
+    return None
+
+
+def goldbach_transfer(
+    f: Sequence, N: int = 100
+) -> Tuple[Sequence, Sequence, float]:
+    """Extract prime sequences p, q such that f =_U p + q.
+    
+    Pseudocode:
+        GOLDBACH_TRANSFER(f, N):
+            For each i in {0, ..., N-1}:
+                If f(i) is even and ≥ 4:
+                    (p(i), q(i)) ← goldbach_decompose(f(i))
+                Else:
+                    p(i) ← 2, q(i) ← 2
+            Return (p, q, success_rate)
+    """
+    p_vals: List[int] = []
+    q_vals: List[int] = []
+    success = 0
+    
+    for i in range(N):
+        fi = f(i)
+        decomp = goldbach_decompose(fi)
+        if decomp:
+            p_vals.append(decomp[0])
+            q_vals.append(decomp[1])
+            success += 1
+        else:
+            p_vals.append(2)
+            q_vals.append(2)
+    
+    p_seq: Sequence = lambda i, v=p_vals: v[i] if i < len(v) else 2
+    q_seq: Sequence = lambda i, v=q_vals: v[i] if i < len(v) else 2
+    return p_seq, q_seq, success / N
+
+
+# ============================================================
+# Algorithm 5: Underflow Detection
+# ============================================================
+
+def detect_underflow_bound(
+    P: Callable[[int], bool], max_check: int = 10000
+) -> Optional[int]:
+    """Find N such that P(n) holds for all n ≥ N, or None.
+    
+    Pseudocode:
+        DETECT_UNDERFLOW(P, max_check):
+            last_failure ← -1
+            For n from 0 to max_check:
+                If not P(n):
+                    last_failure ← n
+            If last_failure < max_check - 100:
+                Return last_failure + 1
+            Else:
+                Return None  (can't determine)
+    """
+    last_failure = -1
+    for n in range(max_check):
+        if not P(n):
+            last_failure = n
+    
+    if last_failure < max_check - 100:
+        return last_failure + 1
+    return None
+
+
+# ============================================================
+# Main: Run all algorithms
+# ============================================================
 
 if __name__ == "__main__":
-    N = 100
+    print("GrowthRank Algorithms\n")
     
-    # Demo: Non-standard prime
-    pi, info = generate_nonstandard_prime(N)
-    print(f"Non-standard prime (N={N}):")
-    print(f"  All entries prime: {info['all_prime']}")
-    print(f"  All exceed index: {info['all_exceed_index']}")
-    print(f"  Growth rate (p_N/N): {info['growth_rate']:.2f}")
+    # Growth classification
+    print("Growth Classification:")
+    sequences = [
+        ("constant 5", lambda i: 5),
+        ("sqrt", lambda i: isqrt(max(1, i))),
+        ("linear", lambda i: i),
+        ("quadratic", lambda i: i * i),
+    ]
+    for name, seq in sequences:
+        gc = classify_growth(seq)
+        print(f"  {name:>12} → {gc}")
     
-    # Demo: Overspill detection
-    result = detect_overspill(lambda i, n: n < i, max_n=20, size=N)
-    print(f"\nOverspill analysis for P(i,n) = 'n < i' (N={N}, max_n=20):")
-    print(f"  Simultaneous fraction: {result['simultaneous_fraction']}")
-    print(f"  Overspill detected: {result['overspill_detected']}")
+    # Compositeness transfer
+    print("\nCompositeness Transfer (f(i) = 6i+4):")
+    g, h, rate = compositeness_transfer(lambda i: 6 * i + 4, 200)
+    print(f"  Success rate: {rate:.1%}")
+    print(f"  g(10) = {g(10)}, h(10) = {h(10)}, product = {g(10)*h(10)}, f(10) = {6*10+4}")
     
-    # Demo: ω > d(n) check
-    omega = UltrapowerElement.identity(N)
-    for n in [10, 50, 99]:
-        dn = UltrapowerElement.constant(n, N)
-        print(f"\n  ω >* d({n}): {ultrapower_less_than(dn, omega)}")
+    # Goldbach transfer
+    print("\nGoldbach Transfer (f(i) = 2i+4):")
+    p, q, rate = goldbach_transfer(lambda i: 2 * i + 4, 200)
+    print(f"  Success rate: {rate:.1%}")
+    print(f"  p(10) = {p(10)}, q(10) = {q(10)}, sum = {p(10)+q(10)}, f(10) = {2*10+4}")
+    
+    # Underflow detection
+    print("\nUnderflow Detection:")
+    bound = detect_underflow_bound(lambda n: n * n + n + 41 > 0 and is_prime(n * n + n + 41))
+    print(f"  P(n) = 'n²+n+41 is prime': eventual bound N = {bound}")
+    print(f"  (P fails first at n = 40: 40²+40+41 = {40*40+40+41} = 41², not prime)")
