@@ -1,37 +1,20 @@
 {
   "checkpoints": [
     {
-<<<<<<<< HEAD:Aether/.aether_workspace/reasoning_logs/441dfd6e.json
-      "elapsed_seconds": 0.4,
-      "percent_complete": 0.0,
-      "status": "SUBMITTED",
-      "timestamp": "2026-06-05T20:32:16"
-========
-      "elapsed_seconds": 0.6,
-      "percent_complete": 0.0,
-      "status": "SUBMITTED",
-      "timestamp": "2026-06-05T20:18:23"
->>>>>>>> 092c40540168a3def44113edaa530ab4b65c1b44:Aether/.aether_workspace/reasoning_logs/6a2d0797.json
+      "elapsed_seconds": 0.0,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-05T21:10:56"
     }
   ],
   "completed_at": "",
-  "domain": "Novelty",
   "error": "",
   "final_percent": 0.0,
   "final_status": "",
   "has_files": false,
-<<<<<<<< HEAD:Aether/.aether_workspace/reasoning_logs/441dfd6e.json
   "job_id": "441dfd6e",
   "project_id": "213d9f72-4de2-4013-8ea1-6a818f63b57d",
-  "prompt_length": 22095,
   "stages": [],
-  "submitted_at": "2026-06-05T20:32:16",
-========
-  "job_id": "6a2d0797",
-  "project_id": "9ca4901f-98f9-4423-b899-af1420794fe4",
-  "prompt_length": 23081,
-  "stages": [],
-  "submitted_at": "2026-06-05T20:18:23",
->>>>>>>> 092c40540168a3def44113edaa530ab4b65c1b44:Aether/.aether_workspace/reasoning_logs/6a2d0797.json
+  "submitted_at": "",
   "total_duration_seconds": 0.0
 }
