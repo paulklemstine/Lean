@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "76744056",
     "filename": "the_l_function_oracle_what_if_we_could_compute_l_f.json",
     "pkg_num": 396,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.28384,
     "title": "Oracle Spectral Algebra: A Theory of L-Function Oracle Hierarchies"
   },
   {
@@ -12635,8 +12635,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_l_function_oracle_what_if_we_could_compute_l_f",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.28384,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Oracle Spectral Algebra: A Theory of L-Function Oracle Hierarchies"
     }
