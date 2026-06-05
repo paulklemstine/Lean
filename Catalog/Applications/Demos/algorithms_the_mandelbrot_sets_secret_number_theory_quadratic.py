@@ -1,93 +1,125 @@
 #!/usr/bin/env python3
 """
-Algorithms for Mandelbrot Set Number Theory
-=============================================
-Type-hinted implementations of key algorithms connecting
-quadratic iteration to number-theoretic structures.
+Algorithms for Mandelbrot-Möbius Bridge
+
+Type-hinted implementations of the core algorithms connecting
+quadratic iteration dynamics to number theory.
 """
 
-from typing import List, Tuple, Optional, Dict
+from typing import List, Tuple, Dict, Optional
 import math
 
 
-def quad_iter(c: complex, z: complex, n: int) -> complex:
-    """
-    Compute the n-th iterate of z -> z^2 + c.
+def mandelbrot_iterate(c: complex, n: int) -> List[complex]:
+    """Compute the Mandelbrot orbit z_0=0, z_{k+1} = z_k² + c for k=0..n-1.
 
-    Parameters
-    ----------
-    c : complex - Parameter of the quadratic family
-    z : complex - Starting point
-    n : int - Number of iterations
+    Args:
+        c: The parameter value (complex or real).
+        n: Number of iterations.
 
-    Returns
-    -------
-    complex - The value z_n = f_c^n(z)
+    Returns:
+        List of n+1 orbit values [z_0, z_1, ..., z_n].
     """
+    orbit: List[complex] = [complex(0)]
+    z = complex(0)
     for _ in range(n):
         z = z * z + c
-    return z
+        orbit.append(z)
+    return orbit
 
 
-def orbit(c: complex, z: complex, n: int) -> List[complex]:
+def mandelbrot_polynomial(n: int) -> List[int]:
+    """Compute the n-th Mandelbrot polynomial Φ_n as a list of integer coefficients.
+
+    The Mandelbrot polynomials satisfy Φ_0 = 0, Φ_{n+1} = Φ_n² + X.
+    Coefficient at index i represents the coefficient of c^i.
+
+    The degree of Φ_n is 2^{n-1} for n ≥ 1, and Φ_n is always monic.
+
+    Args:
+        n: The iteration index (non-negative integer).
+
+    Returns:
+        List of integer coefficients [a_0, a_1, ..., a_d] where d = 2^{n-1}.
     """
-    Compute the orbit {z, f(z), f^2(z), ..., f^n(z)}.
+    if n == 0:
+        return [0]
 
-    Returns list of length n+1 starting with z.
-    """
-    result = [z]
-    for _ in range(n):
-        z = z * z + c
-        result.append(z)
+    poly: List[int] = [0, 1]  # Φ_1 = c
+    for _ in range(n - 1):
+        # Square: poly² computed by convolution
+        d = len(poly)
+        sq: List[int] = [0] * (2 * d - 1)
+        for i in range(d):
+            for j in range(d):
+                sq[i + j] += poly[i] * poly[j]
+        # Add X: increment coefficient of c^1
+        while len(sq) < 2:
+            sq.append(0)
+        sq[1] += 1
+        poly = sq
+    return poly
+
+
+def poly_eval(coeffs: List[int], x: complex) -> complex:
+    """Evaluate polynomial with integer coefficients at x using Horner's method."""
+    result = complex(0)
+    for c in reversed(coeffs):
+        result = result * x + c
     return result
 
 
-def orbit_multiplier(c: complex, z: complex, n: int) -> complex:
+def euler_totient(n: int) -> int:
+    """Compute Euler's totient function φ(n).
+
+    φ(n) = n · ∏_{p|n} (1 - 1/p) where the product is over prime divisors of n.
     """
-    Compute the orbit multiplier: (f^n)'(z) = 2^n * prod_{k=0}^{n-1} f^k(z).
+    if n <= 0:
+        raise ValueError(f"Totient undefined for n={n}")
+    result = n
+    p = 2
+    temp = n
+    while p * p <= temp:
+        if temp % p == 0:
+            while temp % p == 0:
+                temp //= p
+            result -= result // p
+        p += 1
+    if temp > 1:
+        result -= result // temp
+    return result
 
-    This is the derivative of the n-th iterate at z, computed via the chain rule.
-    For z -> z^2 + c, f'(z) = 2z, so the chain rule gives:
-    (f^n)'(z) = prod_{k=0}^{n-1} f'(f^k(z)) = prod_{k=0}^{n-1} 2*f^k(z) = 2^n * prod f^k(z).
+
+def mobius_function(n: int) -> int:
+    """Compute the Möbius function μ(n).
+
+    μ(1) = 1.
+    μ(n) = 0 if n has a squared prime factor.
+    μ(n) = (-1)^k if n is a product of k distinct primes.
     """
-    product: complex = 1
-    current = z
-    for _ in range(n):
-        product *= current
-        current = current * current + c
-    return (2 ** n) * product
-
-
-def mobius(n: int) -> int:
-    """Compute the Möbius function μ(n)."""
+    if n <= 0:
+        raise ValueError(f"Möbius function undefined for n={n}")
     if n == 1:
         return 1
-    factors = prime_factorization(n)
-    for _, exp in factors:
-        if exp > 1:
-            return 0
-    return (-1) ** len(factors)
+    prime_factors = 0
+    temp = n
+    p = 2
+    while p * p <= temp:
+        if temp % p == 0:
+            prime_factors += 1
+            temp //= p
+            if temp % p == 0:
+                return 0
+        p += 1
+    if temp > 1:
+        prime_factors += 1
+    return (-1) ** prime_factors
 
 
-def prime_factorization(n: int) -> List[Tuple[int, int]]:
-    """Return prime factorization as list of (prime, exponent) pairs."""
-    factors: List[Tuple[int, int]] = []
-    d = 2
-    while d * d <= n:
-        exp = 0
-        while n % d == 0:
-            exp += 1
-            n //= d
-        if exp > 0:
-            factors.append((d, exp))
-        d += 1
-    if n > 1:
-        factors.append((n, 1))
-    return factors
-
-
-def divisors(n: int) -> List[int]:
-    """Return sorted list of positive divisors of n."""
+def get_divisors(n: int) -> List[int]:
+    """Return all positive divisors of n in sorted order."""
+    if n <= 0:
+        raise ValueError(f"Divisors undefined for n={n}")
     divs: List[int] = []
     for d in range(1, int(math.isqrt(n)) + 1):
         if n % d == 0:
@@ -97,167 +129,166 @@ def divisors(n: int) -> List[int]:
     return sorted(divs)
 
 
-def dynatomic_point_count(n: int) -> int:
+def necklace_count(k: int, n: int) -> int:
+    """Count the number of k-ary necklaces of length n.
+
+    A necklace is an equivalence class of strings under cyclic rotation.
+    Count = (1/n) Σ_{d|n} φ(d) · k^{n/d}.
+
+    For k=2, this counts binary necklaces and also equals the number of
+    orbits of the k-fold angle multiplication map on Q/Z.
     """
-    Compute Ψ(n) = Σ_{d|n} μ(n/d) · 2^d.
+    if n <= 0:
+        raise ValueError(f"Necklace count undefined for n={n}")
+    total = sum(euler_totient(d) * (k ** (n // d)) for d in get_divisors(n))
+    return total // n
 
-    This counts the number of periodic points of EXACT period n
-    for the generic quadratic map z -> z^2 + c.
 
-    For prime p: Ψ(p) = 2^p - 2 (by Fermat's little theorem, this is divisible by p).
-    The number of distinct primitive orbits of period n is Ψ(n)/n.
+def lyndon_word_count(k: int, n: int) -> int:
+    """Count the number of k-ary Lyndon words (primitive necklaces) of length n.
+
+    A Lyndon word is the lexicographically smallest rotation of an aperiodic string.
+    Count = (1/n) Σ_{d|n} μ(n/d) · k^d.
+
+    For k=2, this equals the number of primitive orbits of the doubling map
+    and also the number of irreducible polynomials of degree n over F_k.
     """
-    return sum(mobius(n // d) * (2 ** d) for d in divisors(n))
+    if n <= 0:
+        raise ValueError(f"Lyndon word count undefined for n={n}")
+    total = sum(mobius_function(n // d) * (k ** d) for d in get_divisors(n))
+    return total // n
 
 
-def necklace_count(n: int) -> int:
+def burnside_necklace_verify(n: int) -> Tuple[int, int]:
+    """Verify the Burnside necklace identity for binary strings.
+
+    LHS: Σ_{k=0}^{n-1} 2^{gcd(n,k)}
+    RHS: Σ_{d|n} φ(d) · 2^{n/d}
+
+    Returns (LHS, RHS). They should be equal.
     """
-    Count the number of primitive n-orbits = Ψ(n)/n.
+    lhs = sum(2 ** math.gcd(n, k) for k in range(n))
+    rhs = sum(euler_totient(d) * (2 ** (n // d)) for d in get_divisors(n))
+    return lhs, rhs
 
-    This equals the number of binary necklaces of length n,
-    connecting Mandelbrot dynamics to combinatorics.
+
+def period_2_bifurcation_analysis(c: float) -> Dict[str, object]:
+    """Analyze the period-1 and period-2 structure at parameter c.
+
+    Fixed points: z² - z + c = 0, discriminant = 1 - 4c.
+    Period-2 (non-fixed): z² + z + (c+1) = 0, discriminant = -3 - 4c.
+    Period-2 exists iff 4c + 3 < 0 (strict inequality).
+
+    Args:
+        c: Real parameter value.
+
+    Returns:
+        Dictionary with analysis results.
     """
-    psi = dynatomic_point_count(n)
-    assert psi % n == 0, f"Ψ({n}) = {psi} is not divisible by {n}"
-    return psi // n
+    fixed_disc = 1 - 4 * c
+    period2_disc = -3 - 4 * c
 
-
-def farey_mediant(p1: int, q1: int, p2: int, q2: int) -> Tuple[int, int]:
-    """
-    Compute the Farey mediant of p1/q1 and p2/q2.
-
-    In the Mandelbrot set, if p1/q1 and p2/q2 are Farey neighbors,
-    the bulb between them has rotation number (p1+p2)/(q1+q2).
-    """
-    return (p1 + p2, q1 + q2)
-
-
-def stern_brocot_path(p: int, q: int) -> List[str]:
-    """
-    Find the path in the Stern-Brocot tree to the fraction p/q.
-
-    Returns a sequence of 'L' and 'R' moves, which corresponds
-    to the external angle binary expansion in the Mandelbrot set.
-    """
-    path: List[str] = []
-    lo_p, lo_q = 0, 1
-    hi_p, hi_q = 1, 0
-    while True:
-        med_p = lo_p + hi_p
-        med_q = lo_q + hi_q
-        if med_p * q == p * med_q:
-            break
-        elif p * med_q < med_p * q:
-            path.append('L')
-            hi_p, hi_q = med_p, med_q
-        else:
-            path.append('R')
-            lo_p, lo_q = med_p, med_q
-    return path
-
-
-def fibonacci_periods(n_terms: int = 15) -> List[int]:
-    """
-    Generate the sequence of periods appearing in the Mandelbrot set's
-    principal antenna via iterated Farey mediation.
-
-    The sequence is: 1, 2, 3, 5, 8, 13, 21, ... (Fibonacci numbers).
-    """
-    fibs = [1, 1]
-    for _ in range(n_terms):
-        fibs.append(fibs[-1] + fibs[-2])
-    return fibs
-
-
-def escape_time(c: complex, max_iter: int = 1000, bailout: float = 2.0) -> int:
-    """
-    Compute the escape time of the Mandelbrot iteration for parameter c.
-
-    Returns the first n such that |z_n| > bailout, or max_iter if bounded.
-    This implements the escape criterion: if |z_n| > max(|c|, 2), the orbit
-    diverges monotonically (proved in our Lean formalization).
-    """
-    z: complex = 0
-    for n in range(max_iter):
-        z = z * z + c
-        if abs(z) > bailout:
-            return n
-    return max_iter
-
-
-def find_superattracting_center(
-    period: int,
-    initial_guess: complex,
-    max_newton: int = 100,
-    tol: float = 1e-14
-) -> Optional[complex]:
-    """
-    Find the superattracting center of a hyperbolic component of given period.
-
-    Uses Newton's method on the equation f^period(0, c) = 0 in the c-parameter.
-    At a superattracting center, the critical point 0 is periodic with the given period.
-    """
-    c = initial_guess
-    for _ in range(max_newton):
-        # Compute f^period(0, c) and its derivative w.r.t. c
-        z: complex = 0
-        dz_dc: complex = 0  # d(z_n)/dc
-        for _ in range(period):
-            dz_dc = 2 * z * dz_dc + 1
-            z = z * z + c
-        if abs(dz_dc) < 1e-30:
-            return None
-        c_new = c - z / dz_dc
-        if abs(c_new - c) < tol:
-            return c_new
-        c = c_new
-    return c
-
-
-def classify_bulb_symmetry(q: int) -> Dict[str, any]:
-    """
-    Classify the symmetry of a period-q bulb.
-
-    For the 1/q bulb (q prime): dihedral symmetry D_q.
-    For composite q: the symmetry group depends on the factorization.
-
-    Returns a dict with symmetry information.
-    """
-    factors = prime_factorization(q)
-    is_prime = len(factors) == 1 and factors[0][1] == 1
-
-    return {
-        "period": q,
-        "is_prime_period": is_prime,
-        "factorization": factors,
-        "symmetry": f"D_{q}" if is_prime else f"Product({','.join(f'D_{p}^{e}' for p, e in factors)})",
-        "primitive_orbits": necklace_count(q),
-        "dynatomic_degree": dynatomic_point_count(q),
+    result: Dict[str, object] = {
+        "c": c,
+        "fixed_point_discriminant": fixed_disc,
+        "period2_discriminant": period2_disc,
+        "has_fixed_points": fixed_disc >= 0,
+        "has_period2": 4 * c + 3 < 0,
+        "fixed_points": [],
+        "period2_points": [],
     }
+
+    if fixed_disc >= 0:
+        sq = math.sqrt(fixed_disc)
+        result["fixed_points"] = [(1 + sq) / 2, (1 - sq) / 2]
+
+    if period2_disc > 0:
+        sq = math.sqrt(period2_disc)
+        result["period2_points"] = [(-1 + sq) / 2, (-1 - sq) / 2]
+
+    return result
+
+
+def escape_time(c: complex, max_iter: int = 1000, escape_radius: float = 2.0) -> Optional[int]:
+    """Compute the escape time for the Mandelbrot iteration at c.
+
+    The escape radius of 2 is justified by the theorem:
+    for real c > 2, the sequence z_n is strictly increasing with z_n ≥ c > 2.
+
+    Args:
+        c: Complex parameter.
+        max_iter: Maximum number of iterations.
+        escape_radius: Escape radius (default 2.0, proven optimal).
+
+    Returns:
+        The escape iteration, or None if bounded within max_iter.
+    """
+    z = complex(0)
+    for n in range(1, max_iter + 1):
+        z = z * z + c
+        if abs(z) > escape_radius:
+            return n
+    return None
+
+
+def detect_period(c: float, max_period: int = 100, tolerance: float = 1e-10) -> Optional[int]:
+    """Detect the period of the attracting cycle at parameter c.
+
+    Uses the orbit of 0 (critical orbit) and checks for periodicity
+    after a transient of max_period iterations.
+
+    Args:
+        c: Real parameter.
+        max_period: Maximum period to check.
+        tolerance: Numerical tolerance for equality.
+
+    Returns:
+        Detected period, or None if no period found.
+    """
+    # Transient
+    z = 0.0
+    for _ in range(10 * max_period):
+        z = z * z + c
+        if abs(z) > 1e10:
+            return None  # Escapes
+
+    # Record orbit
+    orbit = [z]
+    for _ in range(max_period):
+        z = z * z + c
+        if abs(z) > 1e10:
+            return None
+        orbit.append(z)
+
+    # Check for periodicity
+    for d in range(1, max_period + 1):
+        if abs(orbit[-1] - orbit[-1 - d]) < tolerance:
+            # Verify it's the minimal period
+            is_minimal = True
+            for sub_d in get_divisors(d):
+                if sub_d < d and abs(orbit[-1] - orbit[-1 - sub_d]) < tolerance:
+                    is_minimal = False
+                    break
+            if is_minimal:
+                return d
+    return None
 
 
 if __name__ == "__main__":
-    print("Dynatomic point counts and orbit counts:")
-    print(f"{'n':>4} {'Ψ(n)':>8} {'orbits':>8} {'factorization':>20}")
-    print("-" * 44)
-    for n in range(1, 21):
-        psi = dynatomic_point_count(n)
-        orbs = necklace_count(n)
-        facts = prime_factorization(n)
-        fact_str = " × ".join(f"{p}^{e}" if e > 1 else str(p) for p, e in facts) if facts else "1"
-        print(f"{n:4d} {psi:8d} {orbs:8d} {fact_str:>20}")
+    # Quick verification
+    print("Mandelbrot polynomial degrees:")
+    for n in range(1, 7):
+        p = mandelbrot_polynomial(n)
+        deg = len(p) - 1
+        print(f"  Φ_{n}: degree {deg} = 2^{n-1} = {2**(n-1)} ✓" if deg == 2**(n-1)
+              else f"  Φ_{n}: degree {deg} ✗")
 
-    print("\nSuperattracting centers:")
-    guesses = {1: 0+0j, 2: -1+0j, 3: -1.75+0j, 4: -1.31+0j, 5: -1.625+0j}
-    for period, guess in guesses.items():
-        center = find_superattracting_center(period, guess)
-        if center is not None:
-            z = quad_iter(center, 0, period)
-            print(f"  Period {period}: c = {center:.10f}, |f^{period}(0)| = {abs(z):.2e}")
+    print("\nBurnside identity verification:")
+    for n in range(1, 11):
+        lhs, rhs = burnside_necklace_verify(n)
+        print(f"  n={n}: {lhs} = {rhs} {'✓' if lhs == rhs else '✗'}")
 
-    print("\nBulb symmetry classification:")
-    for q in range(2, 13):
-        info = classify_bulb_symmetry(q)
-        print(f"  q={q:2d}: {info['symmetry']:>20}, "
-              f"{info['primitive_orbits']} orbits, "
-              f"{'PRIME' if info['is_prime_period'] else 'composite'}")
+    print("\nPeriod detection:")
+    for c in [0.0, -1.0, -1.755, -1.25, 0.25]:
+        p = detect_period(c)
+        print(f"  c={c}: period = {p}")
