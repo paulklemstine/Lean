@@ -1,38 +1,44 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Jigsaw Puzzle Assembly Algorithms
+Algorithms for Jigsaw Puzzle Assembly and SAT Reduction
 
-Type-hinted implementations of key algorithms:
-1. Complement propagation (1-D assembly)
-2. SAT-to-puzzle reduction
-3. Grid Betti number computation
-4. Constraint graph analysis
+Type-hinted implementations of the core algorithms from the formalization.
 """
 
-from typing import List, Tuple, Optional, Dict, Set
 from enum import Enum
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import List, Tuple, Optional, Dict, Set
+from itertools import product as iterproduct
 
+
+# --- Core Types ---
 
 class EdgeType(Enum):
-    """Edge types for jigsaw pieces."""
-    TAB = "tab"
-    BLANK = "blank"
-    FLAT = "flat"
+    FLAT = 0
+    TAB = 1
+    BLANK = 2
 
 
 def complement(e: EdgeType) -> EdgeType:
-    """Complement involution: tab ↔ blank, flat ↔ flat."""
-    match e:
-        case EdgeType.TAB:
-            return EdgeType.BLANK
-        case EdgeType.BLANK:
-            return EdgeType.TAB
-        case EdgeType.FLAT:
-            return EdgeType.FLAT
+    """O(1) complement involution."""
+    if e == EdgeType.TAB:
+        return EdgeType.BLANK
+    elif e == EdgeType.BLANK:
+        return EdgeType.TAB
+    return EdgeType.FLAT
 
 
-@dataclass
+def compatible(e1: EdgeType, e2: EdgeType) -> bool:
+    """O(1) compatibility check."""
+    return complement(e1) == e2
+
+
+def bool_to_edge(b: bool) -> EdgeType:
+    """O(1) boolean-to-edge encoding."""
+    return EdgeType.TAB if b else EdgeType.BLANK
+
+
+@dataclass(frozen=True)
 class Piece:
     """A jigsaw piece with four directional edges."""
     top: EdgeType
@@ -41,284 +47,256 @@ class Piece:
     left: EdgeType
 
 
+# --- Grid Assembly ---
+
+Grid = List[List[Optional[Piece]]]
+
+
+def make_grid(rows: int, cols: int) -> Grid:
+    """Create empty grid."""
+    return [[None for _ in range(cols)] for _ in range(rows)]
+
+
+def is_valid_placement(grid: Grid, rows: int, cols: int) -> bool:
+    """
+    Check if a grid placement is valid.
+
+    Algorithm: Check all horizontal and vertical adjacencies.
+    Time: O(rows * cols)
+    Space: O(1)
+    """
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] is None:
+                continue
+            # Check right neighbor
+            if j + 1 < cols and grid[i][j + 1] is not None:
+                if not compatible(grid[i][j].right, grid[i][j + 1].left):
+                    return False
+            # Check bottom neighbor
+            if i + 1 < rows and grid[i + 1][j] is not None:
+                if not compatible(grid[i][j].bottom, grid[i + 1][j].top):
+                    return False
+    return True
+
+
+# --- Topological Invariants ---
+
+def internal_edges(m: int, n: int) -> int:
+    """Number of internal edges in an m×n grid. O(1)."""
+    return m * (n - 1) + (m - 1) * n
+
+
+def betti1(m: int, n: int) -> int:
+    """First Betti number of the m×n grid graph. O(1)."""
+    return (m - 1) * (n - 1)
+
+
+def euler_characteristic(m: int, n: int) -> int:
+    """Euler characteristic V - E + F for the m×n grid. O(1)."""
+    V = m * n
+    E = internal_edges(m, n)
+    F = betti1(m, n) + 1
+    return V - E + F  # Always equals 2 for m, n >= 1
+
+
+def constraint_variable_gap(m: int, n: int) -> int:
+    """Gap between 2*V and E. Equals m + n for m, n >= 1. O(1)."""
+    return 2 * m * n - internal_edges(m, n)
+
+
+# --- SAT Reduction ---
+
 @dataclass
 class Literal:
-    """A SAT literal: variable index and polarity."""
+    """A literal: variable index + polarity."""
     var: int
     positive: bool
+
+    def eval(self, assignment: List[bool]) -> bool:
+        val = assignment[self.var]
+        return val if self.positive else not val
 
 
 @dataclass
 class Clause:
-    """A 3-SAT clause: disjunction of exactly 3 literals."""
+    """A clause: disjunction of literals."""
     literals: List[Literal]
 
-    def __post_init__(self) -> None:
-        assert len(self.literals) == 3
+    def satisfied(self, assignment: List[bool]) -> bool:
+        return any(lit.eval(assignment) for lit in self.literals)
 
 
 @dataclass
-class Formula:
+class SAT3Formula:
     """A 3-CNF formula."""
     num_vars: int
     clauses: List[Clause]
 
+    def is_satisfied(self, assignment: List[bool]) -> bool:
+        return all(c.satisfied(assignment) for c in self.clauses)
 
-# ============================================================
-# Algorithm 1: Complement Propagation
-# ============================================================
+    def is_satisfiable(self) -> Tuple[bool, Optional[List[bool]]]:
+        """
+        Brute-force SAT solver.
 
-def propagate_row(pieces: List[Piece]) -> bool:
-    """
-    Check if a row of pieces forms a valid assembly.
-    Uses complement propagation: O(n) time.
-
-    Returns True if all horizontal adjacencies are compatible.
-    """
-    for i in range(len(pieces) - 1):
-        if complement(pieces[i].right) != pieces[i + 1].left:
-            return False
-    return True
-
-
-def determine_left_edges(right_edges: List[EdgeType], first_left: EdgeType) -> List[EdgeType]:
-    """
-    Given a sequence of right edges and the first left edge,
-    determine all left edges by complement propagation.
-
-    This implements the Spanning Tree Propagation theorem:
-    left[i+1] = complement(right[i]).
-    """
-    lefts = [first_left]
-    for r in right_edges[:-1]:
-        lefts.append(complement(r))
-    return lefts
+        Algorithm: Enumerate all 2^n assignments.
+        Time: O(2^n * m * k) where n = num_vars, m = num_clauses, k = literals/clause
+        Space: O(n)
+        """
+        for bits in iterproduct([False, True], repeat=self.num_vars):
+            assignment = list(bits)
+            if self.is_satisfied(assignment):
+                return True, assignment
+        return False, None
 
 
-# ============================================================
-# Algorithm 2: SAT-to-Puzzle Reduction
-# ============================================================
-
-def bool_to_edge(b: bool) -> EdgeType:
-    """Encode a Boolean as an edge: True → tab, False → blank."""
-    return EdgeType.TAB if b else EdgeType.BLANK
-
-
-def evaluate_literal(assignment: List[bool], lit: Literal) -> bool:
-    """Evaluate a literal under an assignment."""
-    val = assignment[lit.var]
-    return val if lit.positive else not val
-
-
-def literal_edge(assignment: List[bool], lit: Literal) -> EdgeType:
-    """Compute the edge encoding of a literal under an assignment."""
-    return bool_to_edge(evaluate_literal(assignment, lit))
-
-
-def check_satisfaction(formula: Formula, assignment: List[bool]) -> bool:
-    """
-    Check if an assignment satisfies a formula.
-    Equivalent to checking if each clause has at least one tab edge.
-    """
-    for clause in formula.clauses:
-        if not any(evaluate_literal(assignment, lit) for lit in clause.literals):
-            return False
-    return True
-
-
-def sat_to_puzzle_edges(
-    formula: Formula, assignment: List[bool]
+def sat_to_puzzle_encoding(
+    formula: SAT3Formula,
+    assignment: List[bool]
 ) -> List[List[EdgeType]]:
     """
-    Convert a SAT assignment to puzzle edge configuration.
+    Encode a SAT assignment as puzzle edge types.
 
-    Returns a list of edge lists, one per clause.
-    Each clause's edges are the literal edge encodings.
-    The formula is satisfied iff each clause list contains at least one TAB.
+    For each clause j and literal position k, output the edge type
+    corresponding to whether that literal is satisfied.
+
+    Time: O(m * k)
+
+    Returns: List of clauses, each a list of EdgeType values.
     """
-    result: List[List[EdgeType]] = []
+    encoding: List[List[EdgeType]] = []
     for clause in formula.clauses:
-        edges = [literal_edge(assignment, lit) for lit in clause.literals]
-        result.append(edges)
+        clause_encoding: List[EdgeType] = []
+        for lit in clause.literals:
+            val = lit.eval(assignment)
+            clause_encoding.append(bool_to_edge(val))
+        encoding.append(clause_encoding)
+    return encoding
+
+
+def verify_reduction(formula: SAT3Formula, assignment: List[bool]) -> bool:
+    """
+    Verify the reduction: check that every clause has at least one tab.
+
+    This is equivalent to checking that the assignment satisfies the formula
+    (by the reduction correctness theorem).
+
+    Time: O(m * k)
+    """
+    encoding = sat_to_puzzle_encoding(formula, assignment)
+    return all(
+        any(e == EdgeType.TAB for e in clause_enc)
+        for clause_enc in encoding
+    )
+
+
+def reduction_piece_count(num_vars: int, num_clauses: int) -> int:
+    """Piece count in the SAT-to-puzzle reduction. O(1)."""
+    return 2 * num_vars + num_clauses
+
+
+# --- Path Assembly ---
+
+def enumerate_valid_path_assemblies(n: int) -> List[List[bool]]:
+    """
+    Enumerate all valid alternating assignments for a 1×n path.
+
+    By the path assembly uniqueness theorem, there are exactly 2
+    valid assignments (for n >= 1): one starting with True, one with False.
+
+    Time: O(n)
+    """
+    if n == 0:
+        return [[]]
+    result: List[List[bool]] = []
+    for start in [True, False]:
+        path = [start]
+        for i in range(1, n):
+            path.append(not path[-1])
+        result.append(path)
     return result
 
 
-def find_all_satisfying(formula: Formula) -> List[List[bool]]:
-    """Brute-force find all satisfying assignments."""
-    solutions: List[List[bool]] = []
-    for bits in range(2 ** formula.num_vars):
-        assignment = [(bits >> i) & 1 == 1 for i in range(formula.num_vars)]
-        if check_satisfaction(formula, assignment):
-            solutions.append(assignment)
-    return solutions
+# --- Transfer Matrix (preview for future direction) ---
 
-
-# ============================================================
-# Algorithm 3: Grid Betti Number
-# ============================================================
-
-def grid_internal_edges(m: int, n: int) -> int:
-    """Number of internal edges in an m×n grid."""
-    return m * (n - 1) + (m - 1) * n
-
-
-def grid_betti1(m: int, n: int) -> int:
-    """First Betti number of the m×n grid graph."""
-    return (m - 1) * (n - 1)
-
-
-def verify_euler_poincare(m: int, n: int) -> bool:
-    """Verify E + 1 = V + β₁ for an m×n grid."""
-    E = grid_internal_edges(m, n)
-    V = m * n
-    beta = grid_betti1(m, n)
-    return E + 1 == V + beta
-
-
-def constraint_density(m: int, n: int) -> float:
-    """Constraint density E/V for an m×n grid."""
-    V = m * n
-    if V == 0:
-        return 0.0
-    return grid_internal_edges(m, n) / V
-
-
-# ============================================================
-# Algorithm 4: Constraint Graph Analysis
-# ============================================================
-
-def grid_constraint_graph(m: int, n: int) -> Dict[Tuple[int, int], List[Tuple[int, int]]]:
+def transfer_matrix_2xn(n: int) -> int:
     """
-    Build the adjacency list of the constraint graph for an m×n grid.
-    Vertices are (i, j) cells; edges connect adjacent cells.
+    Count valid 2×n assemblies using binary edge types (tab/blank).
+
+    Uses the transfer matrix method: each column state is a pair of
+    edge types (top-right, bottom-right), and the transfer matrix
+    encodes compatibility with the next column.
+
+    Time: O(4 * n) = O(n)  (matrix is 4×4 for 2 binary edge types)
     """
-    graph: Dict[Tuple[int, int], List[Tuple[int, int]]] = {}
-    for i in range(m):
-        for j in range(n):
-            neighbors: List[Tuple[int, int]] = []
-            if j + 1 < n:
-                neighbors.append((i, j + 1))
-            if j - 1 >= 0:
-                neighbors.append((i, j - 1))
-            if i + 1 < m:
-                neighbors.append((i + 1, j))
-            if i - 1 >= 0:
-                neighbors.append((i - 1, j))
-            graph[(i, j)] = neighbors
-    return graph
+    # States: (top_edge, bottom_edge) where each is True/False
+    # A state s1 can transition to s2 if:
+    #   - top(s1) is compatible with top(s2) horizontally
+    #   - bottom(s1) is compatible with bottom(s2) horizontally
+    #   - Within column, top and bottom are compatible vertically
 
+    states = list(iterproduct([True, False], repeat=2))
+    state_count = len(states)
 
-def find_spanning_tree(
-    graph: Dict[Tuple[int, int], List[Tuple[int, int]]]
-) -> Set[Tuple[Tuple[int, int], Tuple[int, int]]]:
-    """Find a spanning tree of the constraint graph using BFS."""
-    if not graph:
-        return set()
+    # Build transition matrix
+    T = [[0] * state_count for _ in range(state_count)]
+    for i, s1 in enumerate(states):
+        for j, s2 in enumerate(states):
+            # Horizontal compatibility
+            h_top = compatible(bool_to_edge(s1[0]), bool_to_edge(s2[0]))
+            h_bot = compatible(bool_to_edge(s1[1]), bool_to_edge(s2[1]))
+            # Vertical compatibility within s2
+            v_ok = compatible(bool_to_edge(s2[0]), bool_to_edge(s2[1]))
+            if h_top and h_bot and v_ok:
+                T[i][j] = 1
 
-    start = next(iter(graph))
-    visited: Set[Tuple[int, int]] = {start}
-    tree_edges: Set[Tuple[Tuple[int, int], Tuple[int, int]]] = set()
-    queue = [start]
+    if n <= 0:
+        return 0
+    if n == 1:
+        # Count states with valid vertical compatibility
+        return sum(1 for s in states
+                   if compatible(bool_to_edge(s[0]), bool_to_edge(s[1])))
 
-    while queue:
-        v = queue.pop(0)
-        for u in graph[v]:
-            if u not in visited:
-                visited.add(u)
-                tree_edges.add((min(v, u), max(v, u)))
-                queue.append(u)
+    # Matrix power T^(n-1)
+    # Start with states that have valid vertical compatibility
+    vec = [1 if compatible(bool_to_edge(s[0]), bool_to_edge(s[1]))
+           else 0 for s in states]
 
-    return tree_edges
+    for _ in range(n - 1):
+        new_vec = [0] * state_count
+        for j in range(state_count):
+            for i in range(state_count):
+                new_vec[j] += vec[i] * T[i][j]
+        vec = new_vec
 
+    return sum(vec)
 
-def count_independent_cycles(m: int, n: int) -> int:
-    """
-    Count independent cycles = E - V + 1 = β₁.
-    Verified against the closed-form formula.
-    """
-    graph = grid_constraint_graph(m, n)
-    tree = find_spanning_tree(graph)
-    total_edges = grid_internal_edges(m, n)
-    tree_edges = len(tree)
-    cycles = total_edges - tree_edges
-    assert cycles == grid_betti1(m, n), f"Cycle count mismatch: {cycles} vs {grid_betti1(m, n)}"
-    return cycles
-
-
-# ============================================================
-# Algorithm 5: Involution Analysis
-# ============================================================
-
-def involution_orbits(elements: List, involution) -> Tuple[List, List[Tuple]]:
-    """
-    Decompose a finite set under an involution into fixed points and free orbits.
-    Returns (fixed_points, free_orbits) where each free orbit is a pair.
-    """
-    fixed: List = []
-    free_orbits: List[Tuple] = []
-    seen: Set = set()
-
-    for e in elements:
-        if id(e) in seen:
-            continue
-        c = involution(e)
-        if c == e:
-            fixed.append(e)
-        else:
-            free_orbits.append((e, c))
-            seen.add(id(e))
-            seen.add(id(c))
-
-    return fixed, free_orbits
-
-
-# ============================================================
-# Main Demo
-# ============================================================
 
 if __name__ == "__main__":
-    print("=== Algorithm Demonstrations ===\n")
-
-    # 1. Complement propagation
-    print("1. Complement Propagation:")
-    right_edges = [EdgeType.TAB, EdgeType.BLANK, EdgeType.TAB]
-    left_edges = determine_left_edges(right_edges, EdgeType.FLAT)
-    print(f"   Right edges: {[e.value for e in right_edges]}")
-    print(f"   Left edges:  {[e.value for e in left_edges]}")
-
-    # 2. SAT reduction
-    print("\n2. SAT-to-Puzzle Reduction:")
-    formula = Formula(
+    # Quick test
+    formula = SAT3Formula(
         num_vars=3,
         clauses=[
             Clause([Literal(0, True), Literal(1, True), Literal(2, False)]),
             Clause([Literal(0, False), Literal(2, True), Literal(2, True)]),
         ]
     )
-    solutions = find_all_satisfying(formula)
-    print(f"   Formula: (x₀ ∨ x₁ ∨ ¬x₂) ∧ (¬x₀ ∨ x₂ ∨ x₂)")
-    print(f"   Satisfying assignments: {len(solutions)}")
-    for sol in solutions:
-        edges = sat_to_puzzle_edges(formula, sol)
-        print(f"   {sol} → edges: {[[e.value for e in c] for c in edges]}")
 
-    # 3. Betti numbers
-    print("\n3. Betti Numbers:")
-    for m, n in [(1, 10), (3, 3), (10, 10)]:
-        assert verify_euler_poincare(m, n)
-        print(f"   {m}×{n}: β₁ = {grid_betti1(m, n)}, density = {constraint_density(m, n):.3f}")
+    is_sat, witness = formula.is_satisfiable()
+    print(f"Formula satisfiable: {is_sat}")
+    if witness:
+        print(f"Witness: {witness}")
+        encoding = sat_to_puzzle_encoding(formula, witness)
+        print(f"Puzzle encoding: {[[e.name for e in c] for c in encoding]}")
+        print(f"Reduction valid: {verify_reduction(formula, witness)}")
 
-    # 4. Independent cycles
-    print("\n4. Independent Cycle Count (via spanning tree):")
-    for m, n in [(2, 2), (3, 3), (5, 5)]:
-        cycles = count_independent_cycles(m, n)
-        print(f"   {m}×{n}: {cycles} independent cycles")
+    print(f"\nPiece count: {reduction_piece_count(3, 2)}")
+    print(f"\nBetti numbers:")
+    for m, n in [(2, 2), (3, 3), (5, 5), (10, 10)]:
+        print(f"  β₁({m},{n}) = {betti1(m, n)}")
 
-    # 5. Involution orbits
-    print("\n5. Involution Orbit Decomposition:")
-    fixed, free = involution_orbits(list(EdgeType), complement)
-    print(f"   Fixed points: {[e.value for e in fixed]}")
-    print(f"   Free orbits:  {[(a.value, b.value) for a, b in free]}")
-    print(f"   Parity: |S| mod 2 = {len(EdgeType.__members__) % 2} = |Fix| mod 2 = {len(fixed) % 2} ✓")
-
-    print("\nAll algorithms verified ✓")
+    print(f"\nValid 2×n assembly counts (transfer matrix):")
+    for n in range(1, 8):
+        count = transfer_matrix_2xn(n)
+        print(f"  2×{n}: {count} valid assemblies")
