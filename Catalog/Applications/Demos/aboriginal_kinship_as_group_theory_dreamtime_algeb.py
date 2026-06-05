@@ -1,389 +1,410 @@
 #!/usr/bin/env python3
 """
-Aboriginal Kinship Systems: Numerical Demonstrations
-
+Dreamtime Algebra: Aboriginal Kinship Systems as Group Theory
+=============================================================
 Demonstrates the group-theoretic structure of Australian Aboriginal
-kinship systems (Kariera 4-section, Aranda 8-subsection).
+kinship systems (section and subsection systems).
 """
 
 from itertools import product
+from typing import Tuple
+
+# Type aliases
+Section = Tuple[int, ...]
 
 
-def z2_add(a: int, b: int) -> int:
-    """Addition in Z/2Z."""
-    return (a + b) % 2
+def add_mod2(a: Section, b: Section) -> Section:
+    """Add two elements in (Z/2Z)^n."""
+    return tuple((x + y) % 2 for x, y in zip(a, b))
 
 
-def section_add(s: tuple[int, ...], t: tuple[int, ...]) -> tuple[int, ...]:
-    """Componentwise addition in (Z/2Z)^k."""
-    return tuple(z2_add(a, b) for a, b in zip(s, t))
+def neg_mod2(a: Section) -> Section:
+    """Negate in (Z/2Z)^n (identity since -x = x in Z/2Z)."""
+    return a  # Every element is its own inverse
 
 
-# ============================================================
-# Demo 1: Kariera 4-Section System
-# ============================================================
+def all_elements(n: int) -> list[Section]:
+    """All elements of (Z/2Z)^n."""
+    return list(product(range(2), repeat=n))
+
+
+def kinship_spectrum(n: int) -> list[Section]:
+    """All valid marriage generators in (Z/2Z)^n."""
+    zero = tuple(0 for _ in range(n))
+    return [g for g in all_elements(n) if g != zero]
+    # In (Z/2Z)^n, every nonzero element has order 2
+
+
+def marriage_map(g: Section, marry_gen: Section) -> Section:
+    """Marriage map: g -> g + σ."""
+    return add_mod2(g, marry_gen)
+
+
+def descent_map(g: Section, descent_gen: Section) -> Section:
+    """Descent map: g -> g + δ."""
+    return add_mod2(g, descent_gen)
+
+
+def dreamtime_op(g: Section, marry_gen: Section, descent_gen: Section) -> Section:
+    """Dreamtime operator: g -> g + σ + δ."""
+    return add_mod2(add_mod2(g, marry_gen), descent_gen)
+
+
+# ===== KARIERA 4-SECTION SYSTEM =====
 print("=" * 60)
-print("DEMO 1: Kariera 4-Section System (Z2 x Z2)")
+print("THE KARIERA 4-SECTION SYSTEM (Z₂ × Z₂)")
 print("=" * 60)
 
 KARIERA_NAMES = {
-    (0, 0): "Banaka",
+    (0, 0): "Karimera",
     (1, 0): "Burung",
-    (0, 1): "Karimera",
-    (1, 1): "Palyeri",
+    (0, 1): "Palyeri",
+    (1, 1): "Banaka",
 }
 
-marriage = (1, 0)
-descent = (0, 1)
+MARRY_GEN = (1, 0)  # Marriage generator
+DESCENT_GEN = (0, 1)  # Descent generator
+DREAMTIME_GEN = add_mod2(MARRY_GEN, DESCENT_GEN)  # = (1, 1)
 
-print("\nSection table:")
-for s, name in KARIERA_NAMES.items():
-    partner = section_add(s, marriage)
-    child = section_add(s, descent)
-    print(f"  {name:10s} {s} -> marriage partner: {KARIERA_NAMES[partner]:10s}, "
-          f"child section: {KARIERA_NAMES[child]}")
+print(f"\nMarriage generator σ = {MARRY_GEN}")
+print(f"Descent generator  δ = {DESCENT_GEN}")
+print(f"Dreamtime element  τ = σ+δ = {DREAMTIME_GEN}")
 
-# Verify group axioms
-print("\nGroup axioms verification:")
-sections = list(KARIERA_NAMES.keys())
-identity = (0, 0)
+print("\n--- Marriage Rules ---")
+for g in all_elements(2):
+    partner = marriage_map(g, MARRY_GEN)
+    print(f"  {KARIERA_NAMES[g]:10s} marries {KARIERA_NAMES[partner]}")
 
-# Closure
-closed = all(section_add(a, b) in sections for a in sections for b in sections)
-print(f"  Closure: {closed}")
+print("\n--- Descent Rules (Father → Child) ---")
+for g in all_elements(2):
+    child = descent_map(g, DESCENT_GEN)
+    print(f"  {KARIERA_NAMES[g]:10s} → child is {KARIERA_NAMES[child]}")
 
-# Identity
-has_id = all(section_add(s, identity) == s for s in sections)
-print(f"  Identity (0,0): {has_id}")
+print("\n--- Alternating Generations ---")
+for g in all_elements(2):
+    child = descent_map(g, DESCENT_GEN)
+    grandchild = descent_map(child, DESCENT_GEN)
+    assert grandchild == g, "Alternating generations violated!"
+    print(f"  {KARIERA_NAMES[g]:10s} → {KARIERA_NAMES[child]:10s} → {KARIERA_NAMES[grandchild]:10s} (back to start)")
 
-# Inverses (every element is its own inverse)
-self_inverse = all(section_add(s, s) == identity for s in sections)
-print(f"  Every element is self-inverse: {self_inverse}")
+print("\n--- Moieties ---")
+seen = set()
+for g in all_elements(2):
+    if g not in seen:
+        partner = marriage_map(g, MARRY_GEN)
+        seen.add(g)
+        seen.add(partner)
+        print(f"  Moiety: {{{KARIERA_NAMES[g]}, {KARIERA_NAMES[partner]}}}")
 
-# Commutativity
-commutative = all(
-    section_add(a, b) == section_add(b, a)
-    for a in sections for b in sections
-)
-print(f"  Commutative: {commutative}")
+print("\n--- Kinship Spectrum ---")
+spectrum = kinship_spectrum(2)
+print(f"  |Spec_K(Z₂²)| = {len(spectrum)} = 2² - 1")
+for s in spectrum:
+    print(f"    {s} → marriage rule: ", end="")
+    pairs = []
+    seen = set()
+    for g in all_elements(2):
+        if g not in seen:
+            p = marriage_map(g, s)
+            pairs.append(f"{KARIERA_NAMES[g]}↔{KARIERA_NAMES[p]}")
+            seen.add(g)
+            seen.add(p)
+    print(", ".join(pairs))
 
-# Marriage involution
-print(f"\nMarriage involution: m + m = {section_add(marriage, marriage)} = identity ✓")
-
-# Exogamy
-print(f"Marriage element (1,0) ≠ identity (0,0): {marriage != identity} ✓")
-
-# ============================================================
-# Demo 2: Aranda 8-Subsection System
-# ============================================================
+# ===== ARANDA 8-SUBSECTION SYSTEM =====
 print("\n" + "=" * 60)
-print("DEMO 2: Aranda 8-Subsection System (Z2 x Z2 x Z2)")
+print("THE ARANDA 8-SUBSECTION SYSTEM (Z₂ × Z₂ × Z₂)")
 print("=" * 60)
 
-ARANDA_NAMES = {
-    (0, 0, 0): "A1", (1, 0, 0): "A2",
-    (0, 1, 0): "B1", (1, 1, 0): "B2",
-    (0, 0, 1): "C1", (1, 0, 1): "C2",
-    (0, 1, 1): "D1", (1, 1, 1): "D2",
-}
+ARANDA_MARRY = (1, 0, 0)
+ARANDA_DESCENT = (0, 1, 0)
+ARANDA_GEN3 = (0, 0, 1)  # Generational moiety
 
-m3 = (1, 0, 0)  # marriage
-d3 = (0, 1, 0)  # descent
+print(f"\nMarriage generator    σ = {ARANDA_MARRY}")
+print(f"Descent generator     δ = {ARANDA_DESCENT}")
+print(f"Generational moiety   γ = {ARANDA_GEN3}")
+print(f"Number of subsections = {len(all_elements(3))}")
 
-print("\nSubsection table:")
-for s in sorted(ARANDA_NAMES.keys()):
-    name = ARANDA_NAMES[s]
-    partner = section_add(s, m3)
-    child = section_add(s, d3)
-    print(f"  {name:3s} {s} -> marriage: {ARANDA_NAMES[partner]:3s}, "
-          f"child: {ARANDA_NAMES[child]}")
+print("\n--- Kinship Spectrum ---")
+aranda_spectrum = kinship_spectrum(3)
+print(f"  |Spec_K(Z₂³)| = {len(aranda_spectrum)} = 2³ - 1")
 
-# All order 2
-subsections = list(ARANDA_NAMES.keys())
-all_order_2 = all(section_add(s, s) == (0, 0, 0) for s in subsections)
-print(f"\nAll elements have order dividing 2: {all_order_2}")
-print(f"Number of subsections: {len(subsections)} = 2^3")
+print("\n--- Marriage Pairs ---")
+seen = set()
+for g in all_elements(3):
+    if g not in seen:
+        p = marriage_map(g, ARANDA_MARRY)
+        seen.add(g)
+        seen.add(p)
+        print(f"  {g} ↔ {p}")
 
-# ============================================================
-# Demo 3: Coset Structure
-# ============================================================
+print("\n--- Dreamtime Algebra Count ---")
+n_pairs = 0
+for m in aranda_spectrum:
+    for d in aranda_spectrum:
+        if m != d:
+            n_pairs += 1
+print(f"  Ordered pairs of generators: {n_pairs}")
+print(f"  = (2³-1)(2³-2) = 7 × 6 = {7*6}")
+
+# ===== IMPOSSIBILITY RESULTS =====
 print("\n" + "=" * 60)
-print("DEMO 3: Marriage Coset Structure")
+print("IMPOSSIBILITY RESULTS")
 print("=" * 60)
 
-marriage_subgroup = [(0, 0), marriage]
-print(f"\nMarriage subgroup: {marriage_subgroup}")
+for n in [2, 3, 4, 5, 6, 7]:
+    elements_order2 = []
+    for g in range(n):
+        if (2 * g) % n == 0 and g != 0:
+            elements_order2.append(g)
+    can_build = len(elements_order2) >= 2
+    status = "✓ CAN build" if can_build else "✗ CANNOT build"
+    print(f"  Z_{n}: elements of order 2 = {elements_order2} → {status} Dreamtime algebra")
 
-print("\nCoset decomposition of Kariera system:")
-visited = set()
-for s in sections:
-    coset = frozenset(section_add(s, m) for m in marriage_subgroup)
-    if coset not in visited:
-        visited.add(coset)
-        names = [KARIERA_NAMES[x] for x in sorted(coset)]
-        print(f"  Coset: {names}")
-
-print("\nMarriage partners are always in the SAME coset:")
-for s in sections:
-    p = section_add(s, marriage)
-    in_same_coset = frozenset([s, p]) in visited
-    print(f"  {KARIERA_NAMES[s]} <-> {KARIERA_NAMES[p]}: same coset = {in_same_coset}")
-
-# ============================================================
-# Demo 4: Hamming Distance as Kinship Distance
-# ============================================================
+# ===== TRIALITY =====
 print("\n" + "=" * 60)
-print("DEMO 4: Hamming Distance = Kinship Distance")
+print("TRIALITY: THREE KINSHIP SYSTEMS ON Z₂ × Z₂")
 print("=" * 60)
 
+systems = [
+    ("Original", MARRY_GEN, DESCENT_GEN),
+    ("Dual", DESCENT_GEN, MARRY_GEN),
+    ("Twist", DREAMTIME_GEN, DESCENT_GEN),
+]
 
-def hamming_weight(v: tuple[int, ...]) -> int:
-    return sum(1 for x in v if x != 0)
+for name, m, d in systems:
+    dt = add_mod2(m, d)
+    print(f"\n  {name}: σ={m}, δ={d}, τ={dt}")
+    for g in all_elements(2):
+        p = marriage_map(g, m)
+        print(f"    {KARIERA_NAMES[g]:10s} marries {KARIERA_NAMES[p]}")
 
-
-def hamming_distance(a: tuple[int, ...], b: tuple[int, ...]) -> int:
-    return hamming_weight(section_add(a, b))
-
-
-print("\nKariera distance matrix:")
-print(f"{'':12s}", end="")
-for s in sections:
-    print(f"{KARIERA_NAMES[s]:12s}", end="")
-print()
-for s in sections:
-    print(f"{KARIERA_NAMES[s]:12s}", end="")
-    for t in sections:
-        d = hamming_distance(s, t)
-        print(f"{d:12d}", end="")
-    print()
-
-print("\nInterpretation:")
-print("  Distance 0: Same section (identity)")
-print("  Distance 1: Marriage partner OR one-generation descent")
-print("  Distance 2: Marriage partner's child (maximum kinship distance)")
-
-# ============================================================
-# Demo 5: Embedding Kariera -> Aranda
-# ============================================================
+# ===== KLEIN FOUR VERIFICATION =====
 print("\n" + "=" * 60)
-print("DEMO 5: Kariera embeds in Aranda")
+print("KLEIN FOUR-GROUP VERIFICATION")
 print("=" * 60)
 
-print("\nEmbedding (a,b) -> (a,b,0):")
-for s in sections:
-    embedded = (s[0], s[1], 0)
-    print(f"  {KARIERA_NAMES[s]:10s} {s} -> {ARANDA_NAMES[embedded]:3s} {embedded}")
-
-print("\nProjection (a,b,c) -> (a,b):")
-for s in sorted(ARANDA_NAMES.keys()):
-    projected = (s[0], s[1])
-    print(f"  {ARANDA_NAMES[s]:3s} {s} -> {KARIERA_NAMES[projected]:10s} {projected}")
-
-print("\nKernel of projection: elements mapping to (0,0)")
-kernel = [s for s in subsections if (s[0], s[1]) == (0, 0)]
-for k in kernel:
-    print(f"  {ARANDA_NAMES[k]} {k}")
-print(f"Kernel size: {len(kernel)} = |Z2|")
-
-# ============================================================
-# Demo 6: Moiety Structure
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 6: Moiety Structure")
-print("=" * 60)
-
-print("\nKariera moieties (subgroups of index 2):")
-# Find all subgroups of order 2
-for g in sections:
-    if g != identity:
-        subgroup = {identity, g}
-        # Check it's a subgroup (it is, since g+g=0)
-        cosets = []
-        remaining = set(map(tuple, sections))
-        while remaining:
-            rep = min(remaining)
-            coset = frozenset(section_add(rep, s) for s in subgroup)
-            cosets.append(sorted(coset))
-            remaining -= coset
-        if len(cosets) == 2:
-            names = [[KARIERA_NAMES[x] for x in c] for c in cosets]
-            print(f"  Generator {g}: {names[0]} | {names[1]}")
-
-print("\nTotal: 3 moieties (matching theorem kariera_three_moieties... "
-      "well, we proved index-2 subgroups exist)")
+kinship_elts = [(0, 0), MARRY_GEN, DESCENT_GEN, DREAMTIME_GEN]
+print("\nAddition table:")
+print("     " + "  ".join(str(e) for e in kinship_elts))
+for a in kinship_elts:
+    row = []
+    for b in kinship_elts:
+        s = add_mod2(a, b)
+        assert s in kinship_elts, f"Closure violated: {a} + {b} = {s}"
+        row.append(str(s))
+    print(f"  {a}  " + "  ".join(row))
+print("\n✓ Closed under addition (Klein four-group V₄ verified)")
 
 print("\n" + "=" * 60)
-print("All demonstrations complete.")
+print("ALL DEMONSTRATIONS COMPLETE")
 print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Kinship Distance Heatmaps
-
-Shows Hamming distance matrices for Kariera and Aranda systems.
+Visualization of Aboriginal Kinship Systems as Group Theory
+============================================================
+Creates plots showing the Kariera and Aranda kinship structures.
 """
 
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def hamming_distance(a: tuple, b: tuple) -> int:
-    return sum(1 for x, y in zip(a, b) if (x + y) % 2 != 0)
-
-
-def main():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Kariera
-    kariera_codes = [(0, 0), (1, 0), (0, 1), (1, 1)]
-    kariera_names = ["Banaka", "Burung", "Karimera", "Palyeri"]
-
-    dist_k = np.array([[hamming_distance(a, b) for b in kariera_codes]
-                       for a in kariera_codes])
-
-    ax = axes[0]
-    im = ax.imshow(dist_k, cmap='YlOrRd', vmin=0, vmax=3)
-    ax.set_xticks(range(4))
-    ax.set_yticks(range(4))
-    ax.set_xticklabels(kariera_names, rotation=45, ha='right', fontsize=9)
-    ax.set_yticklabels(kariera_names, fontsize=9)
-    ax.set_title("Kariera Kinship Distance\n(Hamming Distance in ℤ₂²)",
-                 fontsize=12, fontweight='bold')
-    for i in range(4):
-        for j in range(4):
-            ax.text(j, i, str(dist_k[i, j]), ha='center', va='center',
-                    fontsize=14, fontweight='bold',
-                    color='white' if dist_k[i, j] >= 2 else 'black')
-
-    # Aranda
-    aranda_codes = [(i, j, k) for i in range(2) for j in range(2) for k in range(2)]
-    aranda_labels = [f"{'ABCD'[2*c[1]+c[2]]}{c[0]+1}" for c in aranda_codes]
-
-    dist_a = np.array([[hamming_distance(a, b) for b in aranda_codes]
-                       for a in aranda_codes])
-
-    ax = axes[1]
-    im2 = ax.imshow(dist_a, cmap='YlOrRd', vmin=0, vmax=3)
-    ax.set_xticks(range(8))
-    ax.set_yticks(range(8))
-    ax.set_xticklabels(aranda_labels, rotation=45, ha='right', fontsize=8)
-    ax.set_yticklabels(aranda_labels, fontsize=8)
-    ax.set_title("Aranda Kinship Distance\n(Hamming Distance in ℤ₂³)",
-                 fontsize=12, fontweight='bold')
-    for i in range(8):
-        for j in range(8):
-            ax.text(j, i, str(dist_a[i, j]), ha='center', va='center',
-                    fontsize=10, fontweight='bold',
-                    color='white' if dist_a[i, j] >= 2 else 'black')
-
-    fig.colorbar(im2, ax=axes, label='Kinship Distance', shrink=0.8)
-    plt.tight_layout()
-    plt.savefig('hamming_distances.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print("Saved: hamming_distances.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Kariera Kinship System as a Graph
-
-Shows the 4-section system with marriage edges (red) and descent edges (blue).
-"""
-
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
+from itertools import product
 
 
-def main():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+def add_mod2(a, b):
+    return tuple((x + y) % 2 for x, y in zip(a, b))
 
-    # --- Kariera System ---
-    ax = axes[0]
-    ax.set_title("Kariera 4-Section System (ℤ₂ × ℤ₂)", fontsize=14, fontweight='bold')
 
-    sections = {
-        (0, 0): ("Banaka", 0.0, 1.0),
-        (1, 0): ("Burung", 1.0, 1.0),
-        (0, 1): ("Karimera", 0.0, 0.0),
-        (1, 1): ("Palyeri", 1.0, 0.0),
-    }
+def make_kariera_kinship_graph():
+    """Plot the Kariera kinship graph with marriage and descent edges."""
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
-    marriage = (1, 0)
-    descent = (0, 1)
+    names = {(0, 0): "Karimera", (1, 0): "Burung",
+             (0, 1): "Palyeri", (1, 1): "Banaka"}
+    colors = {(0, 0): "#E74C3C", (1, 0): "#3498DB",
+              (0, 1): "#2ECC71", (1, 1): "#F39C12"}
 
-    for code, (name, x, y) in sections.items():
-        circle = plt.Circle((x, y), 0.12, color='#2196F3', alpha=0.8)
-        ax.add_patch(circle)
-        ax.text(x, y, f"{name}\n{code}", ha='center', va='center',
-                fontsize=8, fontweight='bold', color='white')
+    positions = {(0, 0): (0, 1), (1, 0): (1, 1),
+                 (0, 1): (0, 0), (1, 1): (1, 0)}
 
-    for code, (name, x, y) in sections.items():
-        mp = tuple((a + b) % 2 for a, b in zip(code, marriage))
-        mx, my = sections[mp][1], sections[mp][2]
-        ax.annotate('', xy=(mx - 0.13 * np.sign(mx - x), my),
-                    xytext=(x + 0.13 * np.sign(mx - x), y),
-                    arrowprops=dict(arrowstyle='->', color='red', lw=2))
+    marry_gen = (1, 0)
+    descent_gen = (0, 1)
+    dreamtime_gen = (1, 1)
 
-        dp = tuple((a + b) % 2 for a, b in zip(code, descent))
-        dx, dy = sections[dp][1], sections[dp][2]
-        offset = 0.05 if x == dx else 0
-        ax.annotate('', xy=(dx + offset, dy + 0.13 * np.sign(dy - y)),
-                    xytext=(x + offset, y - 0.13 * np.sign(dy - y)),
-                    arrowprops=dict(arrowstyle='->', color='blue', lw=2,
-                                    linestyle='dashed'))
+    generators = [
+        ("Marriage (σ)", marry_gen, "#E74C3C", axes[0]),
+        ("Descent (δ)", descent_gen, "#3498DB", axes[1]),
+        ("Dreamtime (τ)", dreamtime_gen, "#9B59B6", axes[2]),
+    ]
 
-    marriage_patch = mpatches.Patch(color='red', label='Marriage (+1,0)')
-    descent_patch = mpatches.Patch(color='blue', label='Descent (+0,1)')
-    ax.legend(handles=[marriage_patch, descent_patch], loc='upper right', fontsize=9)
-    ax.set_xlim(-0.3, 1.3)
-    ax.set_ylim(-0.3, 1.3)
+    for title, gen, edge_color, ax in generators:
+        ax.set_xlim(-0.5, 1.5)
+        ax.set_ylim(-0.5, 1.5)
+        ax.set_aspect('equal')
+        ax.set_title(title, fontsize=14, fontweight='bold')
+        ax.axis('off')
+
+        # Draw edges
+        seen = set()
+        for g in product(range(2), repeat=2):
+            if g not in seen:
+                h = add_mod2(g, gen)
+                seen.add(g)
+                seen.add(h)
+                x1, y1 = positions[g]
+                x2, y2 = positions[h]
+                ax.annotate("", xy=(x2, y2), xytext=(x1, y1),
+                           arrowprops=dict(arrowstyle="<->", color=edge_color,
+                                          lw=2.5))
+
+        # Draw nodes
+        for g, (x, y) in positions.items():
+            circle = plt.Circle((x, y), 0.12, color=colors[g],
+                              ec='black', lw=2, zorder=5)
+            ax.add_patch(circle)
+            ax.text(x, y - 0.22, names[g], ha='center', va='top',
+                   fontsize=10, fontweight='bold')
+            ax.text(x, y, str(g), ha='center', va='center',
+                   fontsize=8, color='white', fontweight='bold', zorder=6)
+
+    fig.suptitle("Kariera 4-Section System: Three Kinship Involutions",
+                fontsize=16, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    plt.savefig("kariera_kinship_graph.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: kariera_kinship_graph.png")
+
+
+def make_klein_four_cayley():
+    """Plot the Cayley table of the Klein four-group."""
+    fig, ax = plt.subplots(figsize=(6, 6))
+
+    elements = [(0, 0), (1, 0), (0, 1), (1, 1)]
+    labels = ["0", "σ", "δ", "τ"]
+    colors_map = {"0": "#FFFFFF", "σ": "#E74C3C", "δ": "#3498DB", "τ": "#9B59B6"}
+
+    n = len(elements)
+    for i, a in enumerate(elements):
+        for j, b in enumerate(elements):
+            s = add_mod2(a, b)
+            idx = elements.index(s)
+            label = labels[idx]
+            color = colors_map[label]
+            rect = plt.Rectangle((j, n - 1 - i), 1, 1, facecolor=color,
+                                edgecolor='black', lw=1.5, alpha=0.7)
+            ax.add_patch(rect)
+            ax.text(j + 0.5, n - 0.5 - i, label, ha='center', va='center',
+                   fontsize=16, fontweight='bold')
+
+    # Row/column headers
+    for i, label in enumerate(labels):
+        ax.text(i + 0.5, n + 0.3, label, ha='center', va='center',
+               fontsize=14, fontweight='bold', color=colors_map[label])
+        ax.text(-0.3, n - 0.5 - i, label, ha='center', va='center',
+               fontsize=14, fontweight='bold', color=colors_map[label])
+
+    ax.set_xlim(-0.6, n)
+    ax.set_ylim(-0.1, n + 0.6)
     ax.set_aspect('equal')
     ax.axis('off')
-
-    # --- Cayley Table ---
-    ax = axes[1]
-    ax.set_title("Cayley Table (Addition in ℤ₂ × ℤ₂)", fontsize=14, fontweight='bold')
-
-    labels = ["(0,0)", "(1,0)", "(0,1)", "(1,1)"]
-    names = ["Banaka", "Burung", "Karimera", "Palyeri"]
-    codes = [(0, 0), (1, 0), (0, 1), (1, 1)]
-
-    table_data = []
-    for i, a in enumerate(codes):
-        row = []
-        for j, b in enumerate(codes):
-            result = tuple((x + y) % 2 for x, y in zip(a, b))
-            idx = codes.index(result)
-            row.append(names[idx])
-        table_data.append(row)
-
-    colors = ['#E3F2FD', '#BBDEFB', '#90CAF9', '#64B5F6']
-    cell_colors = []
-    for row in table_data:
-        cell_colors.append([colors[names.index(cell)] for cell in row])
-
-    table = ax.table(cellText=table_data,
-                     rowLabels=names,
-                     colLabels=names,
-                     cellColours=cell_colors,
-                     loc='center',
-                     cellLoc='center')
-    table.auto_set_font_size(False)
-    table.set_fontsize(9)
-    table.scale(1.0, 1.5)
-    ax.axis('off')
+    ax.set_title("Cayley Table: Klein Four-Group V₄\n(Kinship Elements)",
+                fontsize=14, fontweight='bold')
 
     plt.tight_layout()
-    plt.savefig('kinship_graph.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print("Saved: kinship_graph.png")
+    plt.savefig("klein_four_cayley.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: klein_four_cayley.png")
+
+
+def make_spectrum_bar_chart():
+    """Bar chart of kinship spectrum sizes."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    ns = list(range(1, 7))
+    spectrum_sizes = [2**n - 1 for n in ns]
+    dreamtime_counts = [(2**n - 1) * (2**n - 2) for n in ns]
+
+    x = np.arange(len(ns))
+    width = 0.35
+
+    bars1 = ax.bar(x - width/2, spectrum_sizes, width, label='Kinship Spectrum |Spec_K|',
+                   color='#3498DB', edgecolor='black', alpha=0.8)
+    bars2 = ax.bar(x + width/2, dreamtime_counts, width, label='Dreamtime Algebras',
+                   color='#E74C3C', edgecolor='black', alpha=0.8)
+
+    ax.set_xlabel('Dimension n (group = (Z₂)ⁿ)', fontsize=12)
+    ax.set_ylabel('Count', fontsize=12)
+    ax.set_title('Kinship Spectrum and Dreamtime Algebra Counts', fontsize=14, fontweight='bold')
+    ax.set_xticks(x)
+    ax.set_xticklabels([f'n={n}\n({2**n} sections)' for n in ns])
+    ax.legend(fontsize=11)
+    ax.set_yscale('log')
+
+    # Add value labels
+    for bar in bars1:
+        h = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width()/2., h * 1.1, f'{int(h)}',
+               ha='center', va='bottom', fontsize=9, fontweight='bold')
+    for bar in bars2:
+        h = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width()/2., h * 1.1, f'{int(h)}',
+               ha='center', va='bottom', fontsize=9, fontweight='bold')
+
+    plt.tight_layout()
+    plt.savefig("spectrum_counts.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: spectrum_counts.png")
+
+
+def make_impossibility_chart():
+    """Visualize which groups admit Dreamtime algebras."""
+    fig, ax = plt.subplots(figsize=(12, 4))
+
+    groups = list(range(2, 17))
+    can_build = []
+    for n in groups:
+        # Count elements of order dividing 2 in Z_n
+        count = sum(1 for g in range(n) if (2 * g) % n == 0 and g != 0)
+        can_build.append(count >= 2)
+
+    colors_arr = ['#2ECC71' if c else '#E74C3C' for c in can_build]
+    bars = ax.bar(range(len(groups)), [1]*len(groups), color=colors_arr,
+                 edgecolor='black', alpha=0.8)
+
+    ax.set_xticks(range(len(groups)))
+    ax.set_xticklabels([f'Z_{n}' for n in groups], fontsize=11)
+    ax.set_yticks([])
+    ax.set_title('Which Cyclic Groups Admit Dreamtime Algebras?', fontsize=14, fontweight='bold')
+
+    # Add counts
+    for i, n in enumerate(groups):
+        count = sum(1 for g in range(n) if (2 * g) % n == 0 and g != 0)
+        ax.text(i, 0.5, f'{count}', ha='center', va='center',
+               fontsize=14, fontweight='bold', color='white')
+        status = "✓" if can_build[i] else "✗"
+        ax.text(i, 1.1, status, ha='center', va='bottom', fontsize=14)
+
+    ax.text(len(groups)/2, -0.3, '(Numbers show count of nontrivial elements of order 2; need ≥ 2)',
+           ha='center', fontsize=10, style='italic')
+
+    legend_elements = [mpatches.Patch(facecolor='#2ECC71', edgecolor='black', label='Admits DreamtimeAlgebra'),
+                       mpatches.Patch(facecolor='#E74C3C', edgecolor='black', label='Cannot')]
+    ax.legend(handles=legend_elements, loc='upper right', fontsize=10)
+
+    plt.tight_layout()
+    plt.savefig("impossibility_chart.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: impossibility_chart.png")
 
 
 if __name__ == "__main__":
-    main()
+    make_kariera_kinship_graph()
+    make_klein_four_cayley()
+    make_spectrum_bar_chart()
+    make_impossibility_chart()
+    print("\nAll visualizations generated!")

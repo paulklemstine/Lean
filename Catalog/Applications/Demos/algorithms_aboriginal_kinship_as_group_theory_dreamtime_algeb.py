@@ -1,259 +1,241 @@
 #!/usr/bin/env python3
 """
-Algorithms for Aboriginal Kinship Systems
-
-Type-hinted implementations of the key algorithms from the kinship
-group theory formalization.
+Algorithms for Dreamtime Algebra: Aboriginal Kinship Systems as Group Theory
+============================================================================
+Type-hinted implementations of the core algorithms.
 """
 
-from typing import TypeAlias
-
-Section: TypeAlias = tuple[int, ...]
-
-
-def z2_add(a: int, b: int) -> int:
-    """Addition in Z/2Z."""
-    return (a + b) % 2
+from typing import Tuple, List, Set, Dict, Optional, FrozenSet
+from itertools import product
+from dataclasses import dataclass
 
 
-def section_add(s: Section, t: Section) -> Section:
-    """Addition in the section group (Z/2Z)^k."""
-    return tuple(z2_add(a, b) for a, b in zip(s, t))
+# Type aliases
+Section = Tuple[int, ...]
 
 
-def marriage_partner(s: Section, marriage_element: Section) -> Section:
-    """Compute the marriage partner of section s.
+@dataclass
+class DreamtimeAlgebra:
+    """A Dreamtime algebra: (Z/2Z)^n with distinguished marriage and descent generators.
 
-    Args:
-        s: A section encoded as a tuple in (Z/2Z)^k
-        marriage_element: The marriage generator of the kinship system
-
-    Returns:
-        The unique section that s can marry
+    Attributes:
+        n: dimension (number of generators of the underlying group)
+        marry_gen: marriage generator σ (element of (Z/2Z)^n)
+        descent_gen: descent generator δ (element of (Z/2Z)^n)
     """
-    return section_add(s, marriage_element)
+    n: int
+    marry_gen: Section
+    descent_gen: Section
+
+    def __post_init__(self) -> None:
+        assert len(self.marry_gen) == self.n
+        assert len(self.descent_gen) == self.n
+        assert self.marry_gen != tuple(0 for _ in range(self.n)), "Marriage generator must be nontrivial"
+        assert self.descent_gen != tuple(0 for _ in range(self.n)), "Descent generator must be nontrivial"
+        assert self.marry_gen != self.descent_gen, "Marriage and descent must be distinct"
+
+    @property
+    def zero(self) -> Section:
+        return tuple(0 for _ in range(self.n))
+
+    @property
+    def dreamtime_gen(self) -> Section:
+        """The Dreamtime element τ = σ + δ."""
+        return add_mod2(self.marry_gen, self.descent_gen)
+
+    @property
+    def sections(self) -> List[Section]:
+        """All sections (elements of the group)."""
+        return list(product(range(2), repeat=self.n))
+
+    @property
+    def num_sections(self) -> int:
+        return 2 ** self.n
+
+    def marriage_map(self, g: Section) -> Section:
+        """Map section g to its marriage partner's section."""
+        return add_mod2(g, self.marry_gen)
+
+    def descent_map(self, g: Section) -> Section:
+        """Map section g to the child's section."""
+        return add_mod2(g, self.descent_gen)
+
+    def dreamtime_op(self, g: Section) -> Section:
+        """The Dreamtime operator: marriage then descent."""
+        return add_mod2(add_mod2(g, self.marry_gen), self.descent_gen)
+
+    def moiety(self, g: Section) -> FrozenSet[Section]:
+        """The moiety containing section g."""
+        return frozenset({g, self.marriage_map(g)})
+
+    def patrilineal_orbit(self, g: Section) -> FrozenSet[Section]:
+        """The patrilineal orbit of section g."""
+        return frozenset({g, self.descent_map(g)})
+
+    def is_marriage_compatible(self, g: Section, h: Section) -> bool:
+        """Check if g and h are marriage-compatible."""
+        return h == self.marriage_map(g)
+
+    def dual(self) -> 'DreamtimeAlgebra':
+        """The dual system: swap marriage and descent."""
+        return DreamtimeAlgebra(self.n, self.descent_gen, self.marry_gen)
+
+    def twist(self) -> 'DreamtimeAlgebra':
+        """The twisted system: use Dreamtime element as marriage generator."""
+        return DreamtimeAlgebra(self.n, self.dreamtime_gen, self.descent_gen)
+
+    def kinship_elements(self) -> List[Section]:
+        """The four kinship elements: {0, σ, δ, τ}."""
+        return [self.zero, self.marry_gen, self.descent_gen, self.dreamtime_gen]
+
+    def marriage_pairs(self) -> List[Tuple[Section, Section]]:
+        """All marriage pairs (unordered)."""
+        seen: Set[Section] = set()
+        pairs = []
+        for g in self.sections:
+            if g not in seen:
+                h = self.marriage_map(g)
+                pairs.append((g, h))
+                seen.add(g)
+                seen.add(h)
+        return pairs
+
+    def all_moieties(self) -> List[FrozenSet[Section]]:
+        """All moieties."""
+        seen: Set[FrozenSet[Section]] = set()
+        result = []
+        for g in self.sections:
+            m = self.moiety(g)
+            if m not in seen:
+                seen.add(m)
+                result.append(m)
+        return result
+
+    def generation_trace(self, start: Section, num_generations: int) -> List[Section]:
+        """Trace patrilineal descent for multiple generations."""
+        trace = [start]
+        current = start
+        for _ in range(num_generations):
+            current = self.descent_map(current)
+            trace.append(current)
+        return trace
 
 
-def descent(s: Section, descent_element: Section) -> Section:
-    """Compute the child's section given parent section s.
+def add_mod2(a: Section, b: Section) -> Section:
+    """Add two elements in (Z/2Z)^n."""
+    return tuple((x + y) % 2 for x, y in zip(a, b))
 
-    Args:
-        s: Parent's section
-        descent_element: The descent generator
 
-    Returns:
-        The child's section
+def kinship_spectrum(n: int) -> List[Section]:
+    """Compute the kinship spectrum of (Z/2Z)^n.
+
+    Returns all nonzero elements (each has order 2).
+    |Spec_K((Z/2Z)^n)| = 2^n - 1.
     """
-    return section_add(s, descent_element)
+    zero = tuple(0 for _ in range(n))
+    return [g for g in product(range(2), repeat=n) if g != zero]
 
 
-def kinship_distance(s: Section, t: Section) -> int:
-    """Compute the kinship distance between two sections.
+def enumerate_dreamtime_algebras(n: int) -> List[DreamtimeAlgebra]:
+    """Enumerate all Dreamtime algebras on (Z/2Z)^n.
 
-    The kinship distance is the Hamming weight of s - t in (Z/2Z)^k,
-    which equals the minimum number of elementary kinship operations
-    (marriage or descent) needed to transform s into t.
-
-    Args:
-        s, t: Sections in (Z/2Z)^k
-
-    Returns:
-        Non-negative integer kinship distance
+    Returns all ordered pairs (σ, δ) of distinct nonzero elements.
+    Count = (2^n - 1)(2^n - 2).
     """
-    diff = section_add(s, t)  # In Z/2Z, subtraction = addition
-    return sum(1 for x in diff if x != 0)
+    spectrum = kinship_spectrum(n)
+    algebras = []
+    for m in spectrum:
+        for d in spectrum:
+            if m != d:
+                algebras.append(DreamtimeAlgebra(n, m, d))
+    return algebras
 
 
-def enumerate_sections(k: int) -> list[Section]:
-    """Enumerate all 2^k sections of a k-generator kinship system.
+def can_build_dreamtime(group_orders: List[int]) -> bool:
+    """Check if Z_{n1} × Z_{n2} × ... has enough elements of order 2.
 
-    Args:
-        k: Number of generators (dimension of the section group)
-
-    Returns:
-        List of all sections as tuples in (Z/2Z)^k
+    A Dreamtime algebra needs ≥ 2 distinct nontrivial elements of order 2.
     """
-    if k == 0:
-        return [()]
-    smaller = enumerate_sections(k - 1)
-    return [s + (0,) for s in smaller] + [s + (1,) for s in smaller]
+    # Count elements of order dividing 2 in the product group
+    # Element (g1, ..., gk) has order dividing 2 iff each gi has order dividing 2 in Z_{ni}
+    count = 1
+    for n in group_orders:
+        # Elements of order dividing 2 in Z_n: those g with 2g ≡ 0 mod n
+        # These are g = 0 and g = n/2 (if n is even)
+        order2_count = 1 + (1 if n % 2 == 0 else 0)
+        count *= order2_count
+    # Subtract 1 for the identity
+    return (count - 1) >= 2
 
 
-def find_marriage_cosets(
-    sections: list[Section],
-    marriage_element: Section,
-) -> list[list[Section]]:
-    """Decompose sections into marriage-compatible cosets.
-
-    Each coset contains sections that are marriage partners of each other.
-    Within a coset, any member can marry any other member.
-
-    Args:
-        sections: All sections of the kinship system
-        marriage_element: The marriage generator
-
-    Returns:
-        List of cosets (each a list of sections)
-    """
-    identity = tuple(0 for _ in marriage_element)
-    subgroup = [identity, marriage_element]
-
-    visited: set[tuple[Section, ...]] = set()
-    cosets: list[list[Section]] = []
-
-    for s in sections:
-        coset = tuple(sorted(section_add(s, g) for g in subgroup))
-        if coset not in visited:
-            visited.add(coset)
-            cosets.append(list(coset))
-
-    return cosets
+def verify_alternating_generations(D: DreamtimeAlgebra) -> bool:
+    """Verify the alternating generations theorem for a given system."""
+    for g in D.sections:
+        child = D.descent_map(g)
+        grandchild = D.descent_map(child)
+        if grandchild != g:
+            return False
+    return True
 
 
-def find_moieties(k: int) -> list[list[Section]]:
-    """Find all moieties (subgroups of index 2) in (Z/2Z)^k.
-
-    A moiety is a subgroup containing exactly half the sections.
-    In (Z/2Z)^k, there are exactly 2^k - 1 such subgroups,
-    corresponding to the non-zero linear functionals on GF(2)^k.
-
-    Args:
-        k: Dimension of the section group
-
-    Returns:
-        List of moieties (each a list of sections in the subgroup)
-    """
-    sections = enumerate_sections(k)
-    identity = tuple(0 for _ in range(k))
-    moieties: list[list[Section]] = []
-
-    # Each non-zero vector in GF(2)^k defines a hyperplane (kernel of
-    # the associated linear functional), which is a subgroup of index 2
-    for normal in sections:
-        if normal == identity:
-            continue
-        # Kernel of the linear functional x -> <normal, x> mod 2
-        kernel = [
-            s for s in sections
-            if sum(a * b for a, b in zip(normal, s)) % 2 == 0
-        ]
-        if len(kernel) == len(sections) // 2:
-            kernel_sorted = sorted(kernel)
-            if kernel_sorted not in moieties:
-                moieties.append(kernel_sorted)
-
-    return moieties
+def verify_klein_four_closure(D: DreamtimeAlgebra) -> bool:
+    """Verify that the kinship elements form a Klein four-group."""
+    elts = D.kinship_elements()
+    elt_set = set(elts)
+    # Check closure under addition
+    for a in elts:
+        for b in elts:
+            s = add_mod2(a, b)
+            if s not in elt_set:
+                return False
+    return True
 
 
-def kinship_group_table(k: int) -> dict[tuple[Section, Section], Section]:
-    """Compute the full group (Cayley) table for (Z/2Z)^k.
-
-    Args:
-        k: Dimension
-
-    Returns:
-        Dictionary mapping (s, t) to s + t
-    """
-    sections = enumerate_sections(k)
-    return {(s, t): section_add(s, t) for s in sections for t in sections}
+def classify_groups_admitting_dreamtime(max_order: int) -> Dict[int, bool]:
+    """For each n ≤ max_order, check if Z_n admits a Dreamtime algebra."""
+    result = {}
+    for n in range(2, max_order + 1):
+        result[n] = can_build_dreamtime([n])
+    return result
 
 
-def verify_kinship_axioms(k: int) -> dict[str, bool]:
-    """Verify all group axioms for the kinship group (Z/2Z)^k.
+# ===== Concrete Systems =====
 
-    Args:
-        k: Dimension
-
-    Returns:
-        Dictionary of axiom names to verification results
-    """
-    sections = enumerate_sections(k)
-    identity = tuple(0 for _ in range(k))
-
-    results = {}
-
-    # Closure
-    results["closure"] = all(
-        section_add(a, b) in sections
-        for a in sections for b in sections
-    )
-
-    # Identity
-    results["identity"] = all(
-        section_add(s, identity) == s for s in sections
-    )
-
-    # Self-inverse (exponent 2)
-    results["self_inverse"] = all(
-        section_add(s, s) == identity for s in sections
-    )
-
-    # Commutativity
-    results["commutativity"] = all(
-        section_add(a, b) == section_add(b, a)
-        for a in sections for b in sections
-    )
-
-    # Associativity
-    results["associativity"] = all(
-        section_add(section_add(a, b), c) == section_add(a, section_add(b, c))
-        for a in sections for b in sections for c in sections
-    )
-
-    # Cardinality is power of 2
-    results["card_power_of_2"] = len(sections) == 2 ** k
-
-    return results
-
-
-def encode_kinship_as_code(
-    marriage_element: Section,
-    descent_element: Section,
-) -> list[Section]:
-    """Encode a kinship system as a binary linear code.
-
-    The codewords are all elements of the group generated by
-    marriage and descent.
-
-    Args:
-        marriage_element: Marriage generator
-        descent_element: Descent generator
-
-    Returns:
-        List of codewords (group elements)
-    """
-    k = len(marriage_element)
-    identity = tuple(0 for _ in range(k))
-
-    # Generate all combinations
-    generated: set[Section] = {identity}
-    to_process = [marriage_element, descent_element]
-
-    while to_process:
-        new_elem = to_process.pop()
-        if new_elem not in generated:
-            generated.add(new_elem)
-            for existing in list(generated):
-                combined = section_add(existing, new_elem)
-                if combined not in generated:
-                    to_process.append(combined)
-
-    return sorted(generated)
+KARIERA = DreamtimeAlgebra(n=2, marry_gen=(1, 0), descent_gen=(0, 1))
+ARANDA = DreamtimeAlgebra(n=3, marry_gen=(1, 0, 0), descent_gen=(0, 1, 0))
 
 
 if __name__ == "__main__":
-    # Kariera system
-    print("Kariera axiom verification:")
-    for name, ok in verify_kinship_axioms(2).items():
-        print(f"  {name}: {ok}")
+    print("=== Kariera System ===")
+    print(f"Sections: {KARIERA.num_sections}")
+    print(f"Marriage pairs: {KARIERA.marriage_pairs()}")
+    print(f"Alternating generations: {verify_alternating_generations(KARIERA)}")
+    print(f"Klein four closure: {verify_klein_four_closure(KARIERA)}")
 
-    print(f"\nKariera moieties: {len(find_moieties(2))}")
-    for i, m in enumerate(find_moieties(2)):
-        print(f"  Moiety {i+1}: {m}")
+    print("\n=== Aranda System ===")
+    print(f"Sections: {ARANDA.num_sections}")
+    print(f"Marriage pairs: {ARANDA.marriage_pairs()}")
+    print(f"Alternating generations: {verify_alternating_generations(ARANDA)}")
+    print(f"Klein four closure: {verify_klein_four_closure(ARANDA)}")
 
-    print(f"\nAranda moieties: {len(find_moieties(3))}")
+    print("\n=== Kinship Spectrum ===")
+    for n in range(1, 5):
+        spec = kinship_spectrum(n)
+        print(f"  |Spec_K((Z₂)^{n})| = {len(spec)} = 2^{n} - 1")
 
-    # Coding bridge
-    code = encode_kinship_as_code((1, 0), (0, 1))
-    print(f"\nKariera as code: {code}")
-    print(f"Code size: {len(code)} = 2^2")
+    print("\n=== Dreamtime Algebra Count ===")
+    for n in range(2, 5):
+        algebras = enumerate_dreamtime_algebras(n)
+        print(f"  (Z₂)^{n}: {len(algebras)} algebras = (2^{n}-1)(2^{n}-2)")
+
+    print("\n=== Group Classification ===")
+    classification = classify_groups_admitting_dreamtime(12)
+    for n, can in classification.items():
+        print(f"  Z_{n}: {'✓' if can else '✗'}")
+
+    print("\n=== Triality ===")
+    print(f"  Original: σ={KARIERA.marry_gen}, δ={KARIERA.descent_gen}")
+    d = KARIERA.dual()
+    print(f"  Dual:     σ={d.marry_gen}, δ={d.descent_gen}")
+    t = KARIERA.twist()
+    print(f"  Twist:    σ={t.marry_gen}, δ={t.descent_gen}")
