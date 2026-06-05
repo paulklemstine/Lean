@@ -1,223 +1,242 @@
+#!/usr/bin/env python3
 """
-Anti-Gravity Theorems: Algorithms for Analyzing Theorem Dependency Graphs
+Anti-Gravity Mathematics: Core Algorithms
 
-This module implements the core algorithms for computing anti-gravity scores,
-weight-complexity duality verification, and Kraft sparsity bounds.
+Type-hinted implementations of the key algorithms for analyzing
+anti-gravity structure in theorem dependency graphs.
 """
 
-from __future__ import annotations
-from typing import Dict, List, Set, Tuple
-from collections import defaultdict
-import math
+from collections import defaultdict, deque
+from typing import Dict, Set, List, Tuple, Optional
 
 
-class DepGraph:
-    """A directed graph modeling theorem dependencies.
-    
-    dep(u, v) means theorem u directly depends on theorem v.
+def compute_reachable_set(
+    adj: Dict[int, Set[int]], v: int
+) -> Set[int]:
     """
+    Compute the transitive closure (reachable set) from vertex v.
     
-    def __init__(self, vertices: List[str], edges: List[Tuple[str, str]]):
-        """Initialize with vertex list and edge list [(u, v)] meaning u depends on v."""
-        self.vertices: List[str] = vertices
-        self.edges: List[Tuple[str, str]] = edges
-        self._dependents: Dict[str, Set[str]] = defaultdict(set)  # v -> {u : dep(u,v)}
-        self._dependencies: Dict[str, Set[str]] = defaultdict(set)  # u -> {v : dep(u,v)}
+    This is the graph-theoretic analog of the 'gravitational field'
+    of a theorem: all theorems that transitively depend on v.
+    
+    Time: O(V + E)
+    """
+    visited: Set[int] = {v}
+    queue: deque = deque([v])
+    while queue:
+        u = queue.popleft()
+        for w in adj.get(u, set()):
+            if w not in visited:
+                visited.add(w)
+                queue.append(w)
+    return visited
+
+
+def compute_gravitational_weight(
+    adj: Dict[int, Set[int]], v: int
+) -> int:
+    """
+    Gravitational weight: |ReachableSet(v)|.
+    
+    High weight = foundational theorem (many results depend on it).
+    Bounded above by |V| (total number of theorems).
+    """
+    return len(compute_reachable_set(adj, v))
+
+
+def compute_proof_depth(
+    adj: Dict[int, Set[int]], n: int, axioms: Set[int], target: int
+) -> int:
+    """
+    Minimum derivation steps from axiom set to target.
+    
+    Returns n + 1 if target is unreachable from axioms.
+    Axioms have depth 0 (they resist proof — they ARE the proof).
+    
+    Time: O(V + E)
+    """
+    if target in axioms:
+        return 0
+    dist: Dict[int, int] = {a: 0 for a in axioms}
+    queue: deque = deque(axioms)
+    while queue:
+        u = queue.popleft()
+        for w in adj.get(u, set()):
+            if w not in dist:
+                dist[w] = dist[u] + 1
+                if w == target:
+                    return dist[w]
+                queue.append(w)
+    return n + 1
+
+
+def compute_anti_gravity_ratio(
+    weight: int, depth: int
+) -> float:
+    """
+    Anti-gravity ratio: weight / depth.
+    
+    For axioms (depth = 0), returns weight itself (maximum anti-gravity).
+    High ratio = easy to prove but enormously influential.
+    """
+    if depth == 0:
+        return float(weight)
+    return weight / depth
+
+
+def compute_proof_ball(
+    adj: Dict[int, Set[int]], sources: Set[int], radius: int
+) -> Set[int]:
+    """
+    Proof ball of radius k: all nodes reachable in at most k steps.
+    
+    ProofBall(S, 0) = S
+    ProofBall(S, k+1) = ProofBall(S, k) ∪ OutNeighbors(ProofBall(S, k))
+    
+    Time: O(k * (V + E))
+    """
+    current: Set[int] = set(sources)
+    for _ in range(radius):
+        expansion: Set[int] = set(current)
+        for v in current:
+            expansion.update(adj.get(v, set()))
+        current = expansion
+    return current
+
+
+def classify_antigravity(
+    adj: Dict[int, Set[int]], n: int, axioms: Set[int],
+    threshold_high: float = 5.0, threshold_moderate: float = 2.0
+) -> Dict[str, List[Tuple[int, float]]]:
+    """
+    Classify all nodes by anti-gravity ratio.
+    
+    Returns dict with keys 'axiom', 'high', 'moderate', 'low',
+    each mapping to list of (node, ratio) pairs.
+    """
+    result: Dict[str, List[Tuple[int, float]]] = {
+        'axiom': [], 'high': [], 'moderate': [], 'low': []
+    }
+    
+    for v in range(n):
+        w = compute_gravitational_weight(adj, v)
+        d = compute_proof_depth(adj, n, axioms, v)
+        r = compute_anti_gravity_ratio(w, d)
         
-        for u, v in edges:
-            assert u != v, f"Self-loop detected: {u}"
-            self._dependents[v].add(u)
-            self._dependencies[u].add(v)
+        if d == 0:
+            result['axiom'].append((v, r))
+        elif r > threshold_high:
+            result['high'].append((v, r))
+        elif r > threshold_moderate:
+            result['moderate'].append((v, r))
+        else:
+            result['low'].append((v, r))
     
-    def weight(self, v: str) -> int:
-        """Number of vertices that directly depend on v."""
-        return len(self._dependents.get(v, set()))
+    for key in result:
+        result[key].sort(key=lambda x: -x[1])
     
-    def complexity(self, v: str) -> int:
-        """Number of vertices that v directly depends on."""
-        return len(self._dependencies.get(v, set()))
-    
-    def is_source(self, v: str) -> bool:
-        """Whether v is a source (axiom) with no dependencies."""
-        return self.complexity(v) == 0
-    
-    def sources(self) -> List[str]:
-        """All source vertices."""
-        return [v for v in self.vertices if self.is_source(v)]
-    
-    def total_edges(self) -> int:
-        """Total number of dependency edges."""
-        return len(self.edges)
-    
-    def anti_gravity_score(self, v: str) -> float:
-        """Anti-gravity score: weight / (complexity + 1)."""
-        return self.weight(v) / (self.complexity(v) + 1)
-    
-    def is_anti_gravity(self, v: str, w_threshold: int, c_threshold: int) -> bool:
-        """Whether v is anti-gravity at given thresholds."""
-        return self.weight(v) >= w_threshold and self.complexity(v) <= c_threshold
-    
-    def anti_gravity_set(self, w_threshold: int, c_threshold: int) -> List[str]:
-        """All anti-gravity vertices at given thresholds."""
-        return [v for v in self.vertices 
-                if self.is_anti_gravity(v, w_threshold, c_threshold)]
-    
-    def transitive_weight(self, v: str) -> int:
-        """Number of vertices transitively reachable from v (BFS)."""
-        visited: Set[str] = set()
-        queue = [v]
-        while queue:
-            u = queue.pop(0)
-            if u in visited:
-                continue
-            visited.add(u)
-            for w in self._dependents.get(u, set()):
-                if w not in visited:
-                    queue.append(w)
-        return len(visited) - 1  # exclude v itself
-    
-    def depth(self, v: str) -> int:
-        """Shortest path from any source to v (BFS from all sources)."""
-        if self.is_source(v):
-            return 0
-        sources = self.sources()
-        if not sources:
-            return float('inf')  # type: ignore
-        
-        visited: Dict[str, int] = {}
-        queue: List[Tuple[str, int]] = [(s, 0) for s in sources]
-        
-        for s, _ in queue:
-            visited[s] = 0
-        
-        while queue:
-            u, d = queue.pop(0)
-            for w in self._dependents.get(u, set()):
-                if w not in visited:
-                    visited[w] = d + 1
-                    queue.append((w, d + 1))
-        
-        return visited.get(v, float('inf'))  # type: ignore
+    return result
 
 
-def verify_weight_complexity_duality(G: DepGraph) -> Tuple[int, int, bool]:
-    """Verify that sum of weights equals sum of complexities.
-    
-    Returns (total_weight, total_complexity, are_equal).
+def compute_vertex_expansion(
+    adj: Dict[int, Set[int]], n: int, subset: Set[int]
+) -> float:
     """
-    total_weight = sum(G.weight(v) for v in G.vertices)
-    total_complexity = sum(G.complexity(v) for v in G.vertices)
-    return total_weight, total_complexity, total_weight == total_complexity
-
-
-def find_above_average_weight(G: DepGraph) -> Tuple[str, int, float]:
-    """Find a vertex with above-average weight.
+    Vertex expansion ratio: |∂S| / |S| where ∂S = OutNeighbors(S) \\ S.
     
-    Returns (vertex, weight, average_weight).
+    High expansion → rapid ball growth → anti-gravity amplification.
+    Connected to spectral gap via Cheeger inequality.
     """
-    n = len(G.vertices)
-    if n == 0:
-        raise ValueError("Empty graph")
+    if not subset:
+        return 0.0
     
-    avg = G.total_edges() / n
-    best_v = max(G.vertices, key=lambda v: G.weight(v))
-    return best_v, G.weight(best_v), avg
+    boundary: Set[int] = set()
+    for v in subset:
+        for w in adj.get(v, set()):
+            if w not in subset:
+                boundary.add(w)
+    
+    return len(boundary) / len(subset)
 
 
-def markov_bound(G: DepGraph, w: int) -> Tuple[int, int]:
-    """Compute the Markov bound on high-weight vertices.
-    
-    Returns (actual_count, upper_bound).
+def find_stabilization_time(
+    adj: Dict[int, Set[int]], n: int, sources: Set[int]
+) -> int:
     """
-    actual = sum(1 for v in G.vertices if G.weight(v) >= w)
-    bound = G.total_edges() // w if w > 0 else len(G.vertices)
-    return actual, bound
-
-
-def kraft_sparsity_bound(k: int) -> int:
-    """Maximum number of prefix-free codewords with length <= k.
+    Find the smallest k such that ProofBall(S, k) = ProofBall(S, k+1).
     
-    Returns 2^(k+1) - 1.
+    By the finite stabilization theorem, this is at most n.
+    In practice, it's often much smaller (logarithmic in expanding graphs).
     """
-    return 2 ** (k + 1) - 1
+    current = set(sources)
+    for k in range(n + 1):
+        expansion = set(current)
+        for v in current:
+            expansion.update(adj.get(v, set()))
+        if expansion == current:
+            return k
+        current = expansion
+    return n
 
 
-def compute_anti_gravity_profile(G: DepGraph) -> List[Dict]:
-    """Compute full anti-gravity profile for all vertices.
-    
-    Returns list of dicts with vertex info, sorted by anti-gravity score.
+def compute_total_weight(
+    adj: Dict[int, Set[int]], n: int
+) -> int:
     """
-    profile = []
-    for v in G.vertices:
-        w = G.weight(v)
-        c = G.complexity(v)
-        score = w / (c + 1)
-        profile.append({
-            'vertex': v,
-            'weight': w,
-            'complexity': c,
-            'anti_gravity_score': score,
-            'is_source': G.is_source(v),
-            'transitive_weight': G.transitive_weight(v),
-        })
+    Total weight: sum of all node weights.
     
-    profile.sort(key=lambda x: x['anti_gravity_score'], reverse=True)
-    return profile
-
-
-def weight_distribution(G: DepGraph) -> Dict[int, int]:
-    """Compute the weight distribution: weight -> count of vertices with that weight."""
-    dist: Dict[int, int] = defaultdict(int)
-    for v in G.vertices:
-        dist[G.weight(v)] += 1
-    return dict(sorted(dist.items()))
-
-
-# Example mathematical library DAG
-def example_math_library() -> DepGraph:
-    """A small example modeling a mathematical library.
-    
-    Axioms -> Basic lemmas -> Intermediate results -> Advanced theorems
+    Bounded above by n² (each pair (v, u) contributes at most 1).
+    Bounded below by number of edges (each edge is a direct dependency).
     """
-    vertices = [
-        # Axioms (sources)
-        'axiom_nat_ind', 'axiom_add_comm', 'axiom_mul_assoc',
-        # Basic lemmas
-        'add_zero', 'mul_one', 'succ_pos',
-        # Intermediate
-        'nat_add_comm', 'mul_comm', 'pow_succ',
-        # Advanced
-        'binomial_theorem', 'fermat_little', 'euclid_inf_primes',
-        # Very advanced
-        'prime_number_theorem', 'quadratic_reciprocity',
-    ]
+    return sum(compute_gravitational_weight(adj, v) for v in range(n))
+
+
+def find_highest_antigravity_node(
+    adj: Dict[int, Set[int]], n: int, axioms: Set[int]
+) -> Tuple[int, float, int, int]:
+    """
+    Find the node with highest anti-gravity ratio.
     
-    edges = [
-        # Basic lemmas depend on axioms
-        ('add_zero', 'axiom_nat_ind'),
-        ('mul_one', 'axiom_nat_ind'),
-        ('mul_one', 'axiom_mul_assoc'),
-        ('succ_pos', 'axiom_nat_ind'),
-        # Intermediate depends on basics
-        ('nat_add_comm', 'axiom_add_comm'),
-        ('nat_add_comm', 'add_zero'),
-        ('mul_comm', 'mul_one'),
-        ('mul_comm', 'nat_add_comm'),
-        ('pow_succ', 'mul_one'),
-        ('pow_succ', 'axiom_nat_ind'),
-        # Advanced depends on intermediate
-        ('binomial_theorem', 'nat_add_comm'),
-        ('binomial_theorem', 'mul_comm'),
-        ('binomial_theorem', 'pow_succ'),
-        ('fermat_little', 'mul_comm'),
-        ('fermat_little', 'pow_succ'),
-        ('euclid_inf_primes', 'succ_pos'),
-        ('euclid_inf_primes', 'mul_comm'),
-        # Very advanced
-        ('prime_number_theorem', 'euclid_inf_primes'),
-        ('prime_number_theorem', 'binomial_theorem'),
-        ('quadratic_reciprocity', 'fermat_little'),
-        ('quadratic_reciprocity', 'mul_comm'),
-    ]
+    Returns (node, ratio, weight, depth).
+    By the pigeonhole theorem, at least one node has weight ≥ totalWeight/n.
+    """
+    best: Tuple[int, float, int, int] = (0, 0.0, 0, 0)
     
-    return DepGraph(vertices, edges)
+    for v in range(n):
+        w = compute_gravitational_weight(adj, v)
+        d = compute_proof_depth(adj, n, axioms, v)
+        r = compute_anti_gravity_ratio(w, d)
+        if r > best[1]:
+            best = (v, r, w, d)
+    
+    return best
+
+
+if __name__ == "__main__":
+    import random
+    random.seed(42)
+    
+    # Build example DAG
+    n = 30
+    adj: Dict[int, Set[int]] = defaultdict(set)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if random.random() < 0.15:
+                adj[i].add(j)
+    
+    axioms = {0, 1, 2}
+    
+    print("Anti-Gravity Analysis of Random DAG")
+    print(f"  n = {n}, axioms = {axioms}")
+    print(f"  Total weight: {compute_total_weight(adj, n)}")
+    print(f"  Weight bound (n²): {n**2}")
+    
+    best = find_highest_antigravity_node(adj, n, axioms)
+    print(f"  Highest AG node: {best[0]} (ratio={best[1]:.2f}, w={best[2]}, d={best[3]})")
+    
+    classes = classify_antigravity(adj, n, axioms)
+    for cls, nodes in classes.items():
+        print(f"  {cls}: {len(nodes)} nodes")
+    
+    stab = find_stabilization_time(adj, n, axioms)
+    print(f"  Stabilization time: {stab}")
