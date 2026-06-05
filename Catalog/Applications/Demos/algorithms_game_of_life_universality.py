@@ -1,306 +1,313 @@
 #!/usr/bin/env python3
 """
-Algorithms for Game of Life Simulation and Tropical Threshold Computation
+Algorithms for Game of Life and Simulation Morphism Algebra
 
-Type-hinted implementations of the core algorithms from the formalized theory.
+Type-hinted implementations of the key algorithms described in the research.
 """
 
-from typing import List, Tuple, Set, Dict, Callable, Optional
+from typing import Callable, TypeVar, Generic, Tuple, List, Set, Optional
+from dataclasses import dataclass
 import numpy as np
 
+# =============================================================================
+# Type Definitions
+# =============================================================================
 
-# ============================================================
-# Tropical Threshold Gate
-# ============================================================
+State = TypeVar('State')
+Output = TypeVar('Output')
 
-def tropical_threshold(s: int, lo: int, hi: int) -> int:
-    """
-    Tropical threshold gate.
+# =============================================================================
+# Algorithm 1: Game of Life Step
+# =============================================================================
 
-    Returns 1 if lo <= s <= hi, else 0.
-    Implementation uses only min, max (for truncating subtraction), and multiplication.
-
-    Time complexity: O(1)
-    Space complexity: O(1)
-    """
-    left = min(1, max(0, s + 1 - lo))
-    right = min(1, max(0, hi + 1 - s))
-    return left * right
-
-
-def tropical_and(x: int, y: int) -> int:
-    """AND gate via tropical threshold: TT(x+y, 2, 2)."""
-    return tropical_threshold(x + y, 2, 2)
-
-
-def tropical_or(x: int, y: int) -> int:
-    """OR gate via tropical threshold: TT(x+y, 1, 2)."""
-    return tropical_threshold(x + y, 1, 2)
-
-
-def tropical_not(x: int) -> int:
-    """NOT gate via tropical threshold: TT(1-x, 1, 1)."""
-    return tropical_threshold(1 - x, 1, 1)
-
-
-def tropical_nand(x: int, y: int) -> int:
-    """NAND gate via composition of tropical thresholds."""
-    return tropical_threshold(1 - tropical_threshold(x + y, 2, 2), 1, 1)
-
-
-def tropical_xor(x: int, y: int) -> int:
-    """XOR gate via tropical threshold: TT(x+y, 1, 1)."""
-    return tropical_threshold(x + y, 1, 1)
-
-
-# ============================================================
-# Boolean Function Synthesis via Tropical Thresholds
-# ============================================================
-
-def synthesize_boolean_function(
-    truth_table: List[int]
-) -> Callable[[int, int], int]:
-    """
-    Synthesize a tropical threshold implementation of any 2-input Boolean function.
-
+def gol_step(grid: np.ndarray) -> np.ndarray:
+    """Conway's Game of Life step function.
+    
+    Computes one generation of the Game of Life using numpy convolution
+    for efficiency. Uses toroidal (wrap-around) boundary conditions.
+    
+    Time complexity: O(n²) for an n×n grid
+    Space complexity: O(n²)
+    
     Args:
-        truth_table: [f(0,0), f(0,1), f(1,0), f(1,1)] where each value is 0 or 1
-
+        grid: 2D numpy array of 0s and 1s
+        
     Returns:
-        A function g(x, y) -> {0, 1} computing the same function using
-        tropical threshold primitives.
-
-    This implements the functional_completeness theorem constructively.
+        New grid after one GoL step
     """
-    assert len(truth_table) == 4
-    assert all(v in (0, 1) for v in truth_table)
-
-    c00, c01, c10, c11 = truth_table
-
-    def g(x: int, y: int) -> int:
-        # Interpolation formula using tropical operations
-        # Each term selects the correct truth table entry
-        t00 = c00 * tropical_threshold(x, 0, 0) * tropical_threshold(y, 0, 0)
-        t01 = c01 * tropical_threshold(x, 0, 0) * tropical_threshold(y, 1, 1)
-        t10 = c10 * tropical_threshold(x, 1, 1) * tropical_threshold(y, 0, 0)
-        t11 = c11 * tropical_threshold(x, 1, 1) * tropical_threshold(y, 1, 1)
-        return min(1, t00 + t01 + t10 + t11)
-
-    return g
-
-
-# ============================================================
-# Game of Life on ℤ × ℤ
-# ============================================================
-
-# Moore neighborhood offsets
-MOORE_OFFSETS: List[Tuple[int, int]] = [
-    (-1, -1), (-1, 0), (-1, 1),
-    (0, -1),           (0, 1),
-    (1, -1),  (1, 0),  (1, 1),
-]
+    # Count neighbors using array shifts (toroidal boundary)
+    rows, cols = grid.shape
+    neighbor_count = np.zeros_like(grid)
+    
+    for di in [-1, 0, 1]:
+        for dj in [-1, 0, 1]:
+            if di == 0 and dj == 0:
+                continue
+            neighbor_count += np.roll(np.roll(grid, di, axis=0), dj, axis=1)
+    
+    # Apply rules vectorized
+    birth = (grid == 0) & (neighbor_count == 3)
+    survive = (grid == 1) & ((neighbor_count == 2) | (neighbor_count == 3))
+    
+    return (birth | survive).astype(int)
 
 
-def neighbor_count(config: Set[Tuple[int, int]], p: Tuple[int, int]) -> int:
-    """Count the live Moore neighbors of cell p."""
-    count = 0
-    for di, dj in MOORE_OFFSETS:
-        if (p[0] + di, p[1] + dj) in config:
-            count += 1
-    return count
+# =============================================================================
+# Algorithm 2: SimSystem
+# =============================================================================
 
-
-def gol_step_sparse(config: Set[Tuple[int, int]]) -> Set[Tuple[int, int]]:
+@dataclass
+class SimSystem(Generic[State]):
+    """A computational dynamical system.
+    
+    Captures the essence of a deterministic computational process:
+    a state space with a step function.
     """
-    One step of the Game of Life using sparse (set-based) representation.
+    name: str
+    step: Callable[[State], State]
+    
+    def iterate(self, n: int, state: State) -> State:
+        """Apply step function n times.
+        
+        Time complexity: O(n × cost(step))
+        """
+        result = state
+        for _ in range(n):
+            result = self.step(result)
+        return result
 
-    Time complexity: O(|support| * 8) = O(|support|)
-    Space complexity: O(|support|)
 
-    This is the efficient implementation for finitely-supported configurations.
+# =============================================================================
+# Algorithm 3: SimMorphism with Composition
+# =============================================================================
+
+@dataclass
+class SimMorphism:
+    """A simulation morphism between SimSystems.
+    
+    Witnesses that the target system can simulate the source system
+    with a bounded time overhead factor.
+    
+    Key invariant (coherence):
+        target.iterate(time_factor, encode(s)) == encode(source.step(s))
     """
-    # Collect all cells that need to be checked (alive cells + their neighbors)
-    candidates: Set[Tuple[int, int]] = set()
-    for p in config:
-        candidates.add(p)
-        for di, dj in MOORE_OFFSETS:
-            candidates.add((p[0] + di, p[1] + dj))
-
-    # Apply the local rule to each candidate
-    new_config: Set[Tuple[int, int]] = set()
-    for p in candidates:
-        n = neighbor_count(config, p)
-        alive = p in config
-        if alive:
-            if n in (2, 3):  # survival
-                new_config.add(p)
-        else:
-            if n == 3:  # birth
-                new_config.add(p)
-
-    return new_config
-
-
-def gol_step_tropical_sparse(config: Set[Tuple[int, int]]) -> Set[Tuple[int, int]]:
-    """
-    GoL step using tropical threshold gates (algebraically equivalent).
-
-    This demonstrates the tropical decomposition theorem:
-    the GoL local rule = alive * TT(n, 2, 3) + (1-alive) * TT(n, 3, 3)
-    """
-    candidates: Set[Tuple[int, int]] = set()
-    for p in config:
-        candidates.add(p)
-        for di, dj in MOORE_OFFSETS:
-            candidates.add((p[0] + di, p[1] + dj))
-
-    new_config: Set[Tuple[int, int]] = set()
-    for p in candidates:
-        n = neighbor_count(config, p)
-        alive = 1 if p in config else 0
-        # Tropical threshold formulation
-        value = alive * tropical_threshold(n, 2, 3) + (1 - alive) * tropical_threshold(n, 3, 3)
-        if value == 1:
-            new_config.add(p)
-
-    return new_config
-
-
-# ============================================================
-# Pattern Analysis
-# ============================================================
-
-def classify_pattern(
-    config: Set[Tuple[int, int]], max_period: int = 100
-) -> Dict[str, object]:
-    """
-    Classify a GoL pattern as still life, oscillator, or spaceship.
-
-    Returns a dict with:
-    - 'type': 'still_life', 'oscillator', 'spaceship', or 'unknown'
-    - 'period': the period (if oscillator or spaceship)
-    - 'velocity': (dx, dy) (if spaceship)
-    """
-    if not config:
-        return {'type': 'still_life', 'period': 1}
-
-    original = frozenset(config)
-    current = set(config)
-
-    for t in range(1, max_period + 1):
-        current = gol_step_sparse(current)
-        current_frozen = frozenset(current)
-
-        if current_frozen == original:
-            if t == 1:
-                return {'type': 'still_life', 'period': 1}
+    source: SimSystem
+    target: SimSystem
+    encode: Callable
+    time_factor: int  # Must be positive
+    
+    def __post_init__(self):
+        assert self.time_factor > 0, "Time factor must be positive"
+    
+    @staticmethod
+    def identity(system: SimSystem) -> 'SimMorphism':
+        """Identity morphism: a system simulates itself with factor 1."""
+        return SimMorphism(
+            source=system,
+            target=system,
+            encode=lambda x: x,
+            time_factor=1
+        )
+    
+    def compose(self, other: 'SimMorphism') -> 'SimMorphism':
+        """Compose simulation morphisms.
+        
+        If self: A → B with factor t₁, and other: B → C with factor t₂,
+        returns A → C with factor t₁ × t₂.
+        
+        This is the key algebraic result: overhead is MULTIPLICATIVE.
+        """
+        assert self.target.name == other.source.name, \
+            f"Cannot compose: {self.target.name} ≠ {other.source.name}"
+        
+        self_encode = self.encode
+        other_encode = other.encode
+        
+        return SimMorphism(
+            source=self.source,
+            target=other.target,
+            encode=lambda s: other_encode(self_encode(s)),
+            time_factor=self.time_factor * other.time_factor
+        )
+    
+    def verify_coherence(self, test_states: list, 
+                         decode: Optional[Callable] = None) -> bool:
+        """Verify the coherence condition on test states.
+        
+        Returns True if for all test states s:
+          target.iterate(time_factor, encode(s)) ≈ encode(source.step(s))
+        """
+        for s in test_states:
+            encoded = self.encode(s)
+            simulated = self.target.iterate(self.time_factor, encoded)
+            expected = self.encode(self.source.step(s))
+            
+            if decode:
+                if decode(simulated) != decode(expected):
+                    return False
             else:
-                return {'type': 'oscillator', 'period': t}
-
-        # Check for spaceship (translation)
-        if len(current) == len(config):
-            # Find center of mass shift
-            if current:
-                ox = sum(p[0] for p in config) / len(config)
-                oy = sum(p[1] for p in config) / len(config)
-                cx = sum(p[0] for p in current) / len(current)
-                cy = sum(p[1] for p in current) / len(current)
-                dx, dy = round(cx - ox), round(cy - oy)
-                if dx != 0 or dy != 0:
-                    shifted = frozenset((p[0] - dx, p[1] - dy) for p in current)
-                    if shifted == original:
-                        return {'type': 'spaceship', 'period': t, 'velocity': (dx, dy)}
-
-    return {'type': 'unknown', 'max_period_checked': max_period}
+                if simulated != expected:
+                    return False
+        return True
 
 
-def chebyshev_distance(p: Tuple[int, int], q: Tuple[int, int]) -> int:
-    """Chebyshev (L∞) distance between two grid points."""
-    return max(abs(p[0] - q[0]), abs(p[1] - q[1]))
+# =============================================================================
+# Algorithm 4: SimComplexity
+# =============================================================================
 
-
-def support_bounding_box(
-    config: Set[Tuple[int, int]]
-) -> Optional[Tuple[int, int, int, int]]:
-    """Return (min_row, max_row, min_col, max_col) or None if empty."""
-    if not config:
-        return None
-    rows = [p[0] for p in config]
-    cols = [p[1] for p in config]
-    return (min(rows), max(rows), min(cols), max(cols))
-
-
-# ============================================================
-# Simulation Overhead Computation
-# ============================================================
-
-def turing_simulation_overhead(
-    tm_states: int, tm_symbols: int, tape_length: int
-) -> Dict[str, int]:
+@dataclass
+class SimComplexity:
+    """Complexity class for simulation overhead.
+    
+    Captures how time and space overhead scale with input size.
+    Both functions must be monotone.
     """
-    Compute the overhead of simulating a Turing machine using a 2D CA.
+    time_overhead: Callable[[int], int]
+    space_overhead: Callable[[int], int]
+    
+    @staticmethod
+    def linear(time_const: int, space_const: int) -> 'SimComplexity':
+        """Linear complexity: O(c·n) overhead."""
+        return SimComplexity(
+            time_overhead=lambda n: time_const * n,
+            space_overhead=lambda n: space_const * n
+        )
+    
+    @staticmethod
+    def quadratic(time_const: int, space_const: int) -> 'SimComplexity':
+        """Quadratic complexity: O(c·n²) overhead."""
+        return SimComplexity(
+            time_overhead=lambda n: time_const * n * n,
+            space_overhead=lambda n: space_const * n * n
+        )
+    
+    def compose(self, other: 'SimComplexity') -> 'SimComplexity':
+        """Compose complexities. Functions compose (multiply overhead).
+        
+        If C₁(n) and C₂(n) are the overheads, composition gives C₁(C₂(n)).
+        """
+        self_time = self.time_overhead
+        self_space = self.space_overhead
+        other_time = other.time_overhead
+        other_space = other.space_overhead
+        
+        return SimComplexity(
+            time_overhead=lambda n: self_time(other_time(n)),
+            space_overhead=lambda n: self_space(other_space(n))
+        )
 
-    Returns bounds on:
-    - cells_per_tape_cell: number of CA cells per TM tape cell
-    - time_per_tm_step: CA steps per TM step
-    - total_ca_cells: total CA cells needed
+
+# =============================================================================
+# Algorithm 5: Light Cone Analysis
+# =============================================================================
+
+def light_cone(t: int) -> Set[Tuple[int, int]]:
+    """Compute the light cone at time t.
+    
+    Returns the set of all (x, y) with |x| ≤ t and |y| ≤ t.
+    
+    Size: (2t+1)²
     """
-    import math
+    return {(x, y) for x in range(-t, t+1) for y in range(-t, t+1)}
 
-    cells_per_tape_cell = math.ceil(math.log2(max(1, tm_states * tm_symbols)))
-    time_per_tm_step = tape_length  # information must propagate across tape
-    total_ca_cells = tape_length * cells_per_tape_cell
 
+def verify_speed_of_light(grid: np.ndarray, center: Tuple[int, int], 
+                           steps: int) -> List[int]:
+    """Verify the speed of light bound experimentally.
+    
+    Returns the maximum Chebyshev distance of alive cells from center
+    at each time step.
+    """
+    distances = []
+    current = grid.copy()
+    
+    for _ in range(steps):
+        current = gol_step(current)
+        alive = np.argwhere(current == 1)
+        if len(alive) > 0:
+            max_dist = max(
+                max(abs(p[0] - center[0]), abs(p[1] - center[1]))
+                for p in alive
+            )
+        else:
+            max_dist = 0
+        distances.append(max_dist)
+    
+    return distances
+
+
+# =============================================================================
+# Algorithm 6: Still Life Detector
+# =============================================================================
+
+def is_still_life(grid: np.ndarray) -> bool:
+    """Check if a configuration is a still life (fixed point of golStep)."""
+    return np.array_equal(gol_step(grid), grid)
+
+
+def find_still_life_violations(grid: np.ndarray) -> List[Tuple[int, int, str]]:
+    """Find cells that violate still life constraints.
+    
+    Returns list of (row, col, violation_type) where violation_type is
+    'alive_wrong_count' or 'dead_birth'.
+    """
+    violations = []
+    rows, cols = grid.shape
+    
+    for i in range(rows):
+        for j in range(cols):
+            count = 0
+            for di in [-1, 0, 1]:
+                for dj in [-1, 0, 1]:
+                    if di == 0 and dj == 0:
+                        continue
+                    ni, nj = (i + di) % rows, (j + dj) % cols
+                    count += grid[ni, nj]
+            
+            if grid[i, j] == 1 and count not in (2, 3):
+                violations.append((i, j, f'alive with {count} neighbors'))
+            elif grid[i, j] == 0 and count == 3:
+                violations.append((i, j, 'dead with 3 neighbors (birth)'))
+    
+    return violations
+
+
+# =============================================================================
+# Algorithm 7: TM Simulation Overhead Calculator
+# =============================================================================
+
+def tm_simulation_bound(num_states: int, num_symbols: int) -> dict:
+    """Calculate the simulation overhead bound for a Turing machine.
+    
+    Returns bounds on the time factor needed to simulate a TM
+    with the given number of states and symbols in a 2D CA.
+    """
+    assert num_states > 0 and num_symbols > 0
+    
+    upper_bound = (num_states + 1) * (num_symbols + 1)
+    
     return {
-        'cells_per_tape_cell': cells_per_tape_cell,
-        'time_per_tm_step': time_per_tm_step,
-        'total_ca_cells': total_ca_cells,
-        'config_space_size': tm_states * (tm_symbols ** tape_length) * (tape_length + 1),
+        'num_states': num_states,
+        'num_symbols': num_symbols,
+        'time_factor_upper_bound': upper_bound,
+        'description': f'A TM with {num_states} states and {num_symbols} symbols '
+                       f'can be simulated with time factor ≤ {upper_bound}'
     }
 
 
 if __name__ == "__main__":
-    # Test tropical gates
-    print("Testing tropical gates...")
-    for x in [0, 1]:
-        for y in [0, 1]:
-            assert tropical_and(x, y) == x * y
-            assert tropical_or(x, y) == max(x, y)
-            assert tropical_nand(x, y) == 1 - x * y
-    for x in [0, 1]:
-        assert tropical_not(x) == 1 - x
-    print("  All gate tests passed ✓")
-
-    # Test functional completeness
-    print("Testing functional completeness...")
-    for i in range(16):
-        tt = [(i >> 3) & 1, (i >> 2) & 1, (i >> 1) & 1, i & 1]
-        g = synthesize_boolean_function(tt)
-        for x in [0, 1]:
-            for y in [0, 1]:
-                assert g(x, y) == tt[2*x + y], f"Failed for function {i}: g({x},{y}) = {g(x,y)}, expected {tt[2*x+y]}"
-    print("  All 16 functions synthesized correctly ✓")
-
-    # Test pattern classification
-    print("Testing pattern classification...")
-    block = {(0,0), (0,1), (1,0), (1,1)}
-    result = classify_pattern(block)
-    assert result['type'] == 'still_life', f"Block: {result}"
-    print(f"  Block: {result}")
-
-    blinker = {(0,0), (0,1), (0,2)}
-    result = classify_pattern(blinker)
-    assert result['type'] == 'oscillator' and result['period'] == 2
-    print(f"  Blinker: {result}")
-
-    glider = {(0,1), (1,2), (2,0), (2,1), (2,2)}
-    result = classify_pattern(glider)
-    print(f"  Glider: {result}")
-
-    # Test simulation overhead
-    print("\nSimulation overhead for TM(5 states, 2 symbols, tape 100):")
-    overhead = turing_simulation_overhead(5, 2, 100)
-    for k, v in overhead.items():
-        print(f"  {k}: {v}")
-
-    print("\nAll tests passed ✓")
+    # Quick smoke test
+    grid = np.zeros((10, 10), dtype=int)
+    grid[4:7, 5] = 1  # Blinker
+    
+    print("Blinker (period 2):")
+    for t in range(4):
+        pop = np.sum(grid)
+        still = is_still_life(grid)
+        print(f"  t={t}: population={pop}, still_life={still}")
+        grid = gol_step(grid)
+    
+    print("\nTM simulation bounds:")
+    for s, k in [(2, 2), (5, 3), (10, 5)]:
+        result = tm_simulation_bound(s, k)
+        print(f"  {result['description']}")

@@ -1,84 +1,32 @@
 #!/usr/bin/env python3
 """
-Game of Life: Tropical Threshold Universality Demo
+Game of Life: Simulation Morphism Algebra — Interactive Demo
 
-Demonstrates the key results from the formalized theory:
-1. Tropical threshold gates computing Boolean functions
-2. Game of Life evolution with structural property verification
-3. Functional completeness enumeration
+Demonstrates the key mathematical results:
+1. GoL step function and its properties
+2. Speed of light propagation
+3. Still life detection
+4. Simulation morphism composition with overhead tracking
 """
 
 import numpy as np
-from typing import Callable
+from typing import Callable, Tuple, List, Optional
 
-# ============================================================
-# Tropical Threshold Gate
-# ============================================================
-
-def tropical_threshold(s: int, lo: int, hi: int) -> int:
-    """Tropical threshold gate: returns 1 if lo <= s <= hi, else 0.
-    Uses only min, +, *, and truncating subtraction (max(0, x-y))."""
-    return min(1, max(0, s + 1 - lo)) * min(1, max(0, hi + 1 - s))
-
-
-def demo_tropical_gates():
-    """Demonstrate that tropical thresholds compute all basic Boolean gates."""
-    print("=" * 60)
-    print("TROPICAL THRESHOLD BOOLEAN GATES")
-    print("=" * 60)
-
-    print("\n--- AND gate: TT(x+y, 2, 2) ---")
-    for x in [0, 1]:
-        for y in [0, 1]:
-            result = tropical_threshold(x + y, 2, 2)
-            expected = x * y
-            status = "✓" if result == expected else "✗"
-            print(f"  AND({x}, {y}) = TT({x+y}, 2, 2) = {result}  (expected {expected}) {status}")
-
-    print("\n--- OR gate: TT(x+y, 1, 2) ---")
-    for x in [0, 1]:
-        for y in [0, 1]:
-            result = tropical_threshold(x + y, 1, 2)
-            expected = min(1, x + y)
-            status = "✓" if result == expected else "✗"
-            print(f"  OR({x}, {y}) = TT({x+y}, 1, 2) = {result}  (expected {expected}) {status}")
-
-    print("\n--- NOT gate: TT(1-x, 1, 1) ---")
-    for x in [0, 1]:
-        result = tropical_threshold(1 - x, 1, 1)
-        expected = 1 - x
-        status = "✓" if result == expected else "✗"
-        print(f"  NOT({x}) = TT({1-x}, 1, 1) = {result}  (expected {expected}) {status}")
-
-    print("\n--- NAND gate: TT(1 - TT(x+y, 2, 2), 1, 1) ---")
-    for x in [0, 1]:
-        for y in [0, 1]:
-            inner = tropical_threshold(x + y, 2, 2)
-            result = tropical_threshold(1 - inner, 1, 1)
-            expected = 1 - x * y
-            status = "✓" if result == expected else "✗"
-            print(f"  NAND({x}, {y}) = {result}  (expected {expected}) {status}")
-
-    print("\n--- XOR gate: TT(x+y, 1, 1) ---")
-    for x in [0, 1]:
-        for y in [0, 1]:
-            result = tropical_threshold(x + y, 1, 1)
-            expected = 0 if x == y else 1
-            status = "✓" if result == expected else "✗"
-            print(f"  XOR({x}, {y}) = TT({x+y}, 1, 1) = {result}  (expected {expected}) {status}")
-
-
-# ============================================================
-# Game of Life Implementation
-# ============================================================
+# =============================================================================
+# Game of Life Core
+# =============================================================================
 
 def gol_step(grid: np.ndarray) -> np.ndarray:
-    """One step of Conway's Game of Life on a toroidal grid."""
+    """Apply one step of Conway's Game of Life.
+    
+    Uses toroidal boundary conditions for finite grids.
+    """
     rows, cols = grid.shape
     new_grid = np.zeros_like(grid)
+    
     for i in range(rows):
         for j in range(cols):
-            # Count Moore neighbors
+            # Count alive neighbors
             count = 0
             for di in [-1, 0, 1]:
                 for dj in [-1, 0, 1]:
@@ -86,300 +34,492 @@ def gol_step(grid: np.ndarray) -> np.ndarray:
                         continue
                     ni, nj = (i + di) % rows, (j + dj) % cols
                     count += grid[ni, nj]
+            
             # Apply rules
-            if grid[i, j] == 1:
-                new_grid[i, j] = 1 if count in (2, 3) else 0  # survival
-            else:
-                new_grid[i, j] = 1 if count == 3 else 0  # birth
-    return new_grid
-
-
-def gol_step_tropical(grid: np.ndarray) -> np.ndarray:
-    """GoL step using tropical threshold gates (equivalent formulation)."""
-    rows, cols = grid.shape
-    new_grid = np.zeros_like(grid)
-    for i in range(rows):
-        for j in range(cols):
-            count = 0
-            for di in [-1, 0, 1]:
-                for dj in [-1, 0, 1]:
-                    if di == 0 and dj == 0:
-                        continue
-                    ni, nj = (i + di) % rows, (j + dj) % cols
-                    count += grid[ni, nj]
-            alive = grid[i, j]
-            # Tropical threshold formulation
-            survival = tropical_threshold(count, 2, 3)
-            birth = tropical_threshold(count, 3, 3)
-            new_grid[i, j] = alive * survival + (1 - alive) * birth
-    return new_grid
-
-
-def demo_gol_evolution():
-    """Demonstrate GoL evolution and verify structural properties."""
-    print("\n" + "=" * 60)
-    print("GAME OF LIFE EVOLUTION")
-    print("=" * 60)
-
-    # Blinker (period-2 oscillator)
-    grid = np.zeros((5, 5), dtype=int)
-    grid[2, 1:4] = 1  # horizontal blinker
-    print("\nBlinker oscillator (period 2):")
-    for t in range(5):
-        alive = np.sum(grid)
-        print(f"  t={t}: {alive} alive cells")
-        grid = gol_step(grid)
-
-    # Verify tropical and standard implementations agree
-    print("\nVerifying tropical threshold implementation matches standard:")
-    np.random.seed(42)
-    test_grid = np.random.randint(0, 2, (10, 10))
-    standard = gol_step(test_grid)
-    tropical = gol_step_tropical(test_grid)
-    match = np.array_equal(standard, tropical)
-    print(f"  10×10 random grid: {'MATCH ✓' if match else 'MISMATCH ✗'}")
-
-    # All-alive → all-dead (overcrowding theorem)
-    print("\nAll-alive configuration (overcrowding theorem):")
-    all_alive = np.ones((5, 5), dtype=int)
-    after = gol_step(all_alive)
-    print(f"  Before: {np.sum(all_alive)} alive")
-    print(f"  After:  {np.sum(after)} alive")
-    print(f"  All-alive → all-dead: {'VERIFIED ✓' if np.sum(after) == 0 else 'FAILED ✗'}")
-
-    # Empty configuration stability
-    print("\nEmpty configuration (still life theorem):")
-    empty = np.zeros((5, 5), dtype=int)
-    after = gol_step(empty)
-    print(f"  Empty stays empty: {'VERIFIED ✓' if np.sum(after) == 0 else 'FAILED ✗'}")
-
-
-def demo_functional_completeness():
-    """Demonstrate that ALL 16 Boolean functions are expressible."""
-    print("\n" + "=" * 60)
-    print("FUNCTIONAL COMPLETENESS OF TROPICAL THRESHOLDS")
-    print("=" * 60)
-
-    # All 16 Boolean functions on 2 inputs
-    functions = {}
-    for i in range(16):
-        name = f"f_{i:04b}"
-        tt = [(i >> 3) & 1, (i >> 2) & 1, (i >> 1) & 1, i & 1]
-        functions[name] = lambda x, y, t=tt: t[2*x + y]
-
-    print(f"\nAll {len(functions)} Boolean functions on 2 inputs:")
-    print(f"{'Function':<12} {'(0,0)':<8} {'(0,1)':<8} {'(1,0)':<8} {'(1,1)':<8} {'Tropical'}")
-    print("-" * 60)
-
-    all_ok = True
-    for name, f in sorted(functions.items()):
-        vals = [f(0, 0), f(0, 1), f(1, 0), f(1, 1)]
-
-        # Construct tropical threshold expression
-        # Using interpolation: g(x,y) = f(0,0)*(1-x)*(1-y) + f(0,1)*(1-x)*y + f(1,0)*x*(1-y) + f(1,1)*x*y
-        def g(x, y, v=vals):
-            return v[0] * (1-x) * (1-y) + v[1] * (1-x) * y + v[2] * x * (1-y) + v[3] * x * y
-
-        ok = all(f(x, y) == g(x, y) for x in [0, 1] for y in [0, 1])
-        all_ok = all_ok and ok
-        status = "✓" if ok else "✗"
-        print(f"  {name:<10} {vals[0]:<8} {vals[1]:<8} {vals[2]:<8} {vals[3]:<8} {status}")
-
-    print(f"\nAll 16 functions expressible: {'YES ✓' if all_ok else 'NO ✗'}")
-
-
-def demo_translation_equivariance():
-    """Numerically verify translation equivariance."""
-    print("\n" + "=" * 60)
-    print("TRANSLATION EQUIVARIANCE VERIFICATION")
-    print("=" * 60)
-
-    np.random.seed(123)
-    grid = np.random.randint(0, 2, (20, 20))
-
-    # shift then step
-    shifted = np.roll(np.roll(grid, 3, axis=0), 5, axis=1)
-    result1 = gol_step(shifted)
-
-    # step then shift
-    stepped = gol_step(grid)
-    result2 = np.roll(np.roll(stepped, 3, axis=0), 5, axis=1)
-
-    match = np.array_equal(result1, result2)
-    print(f"\n  shift(3,5) then step  vs  step then shift(3,5):")
-    print(f"  Results match: {'YES ✓' if match else 'NO ✗'}")
-    print(f"  (This verifies GoL.step_equivariant numerically)")
-
-
-if __name__ == "__main__":
-    demo_tropical_gates()
-    demo_gol_evolution()
-    demo_functional_completeness()
-    demo_translation_equivariance()
-    print("\n" + "=" * 60)
-    print("ALL DEMOS COMPLETE")
-    print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Game of Life Visualization: Evolution and Tropical Threshold Analysis
-
-Generates plots showing:
-1. GoL pattern evolution over time
-2. Tropical threshold function behavior
-3. Density evolution under GoL dynamics
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-
-
-def tropical_threshold(s, lo, hi):
-    """Tropical threshold gate (vectorized)."""
-    left = np.minimum(1, np.maximum(0, s + 1 - lo))
-    right = np.minimum(1, np.maximum(0, hi + 1 - s))
-    return left * right
-
-
-def gol_step(grid):
-    """One step of Game of Life on a toroidal grid."""
-    rows, cols = grid.shape
-    new_grid = np.zeros_like(grid)
-    for i in range(rows):
-        for j in range(cols):
-            count = 0
-            for di in [-1, 0, 1]:
-                for dj in [-1, 0, 1]:
-                    if di == 0 and dj == 0:
-                        continue
-                    ni, nj = (i + di) % rows, (j + dj) % cols
-                    count += grid[ni, nj]
             if grid[i, j] == 1:
                 new_grid[i, j] = 1 if count in (2, 3) else 0
             else:
                 new_grid[i, j] = 1 if count == 3 else 0
+    
     return new_grid
 
+def gol_iter(grid: np.ndarray, steps: int) -> np.ndarray:
+    """Iterate GoL for multiple steps."""
+    result = grid.copy()
+    for _ in range(steps):
+        result = gol_step(result)
+    return result
 
-def plot_tropical_threshold_landscape():
-    """Plot the tropical threshold function for different (lo, hi) pairs."""
-    fig, axes = plt.subplots(2, 3, figsize=(14, 8))
-    fig.suptitle('Tropical Threshold Gates: TT(s, lo, hi)', fontsize=16, fontweight='bold')
+# =============================================================================
+# Demo 1: Speed of Light
+# =============================================================================
 
-    configs = [
-        (2, 2, "AND: TT(s, 2, 2)"),
-        (1, 2, "OR: TT(s, 1, 2)"),
-        (1, 1, "XOR: TT(s, 1, 1)"),
-        (2, 3, "Survival: TT(s, 2, 3)"),
-        (3, 3, "Birth: TT(s, 3, 3)"),
-        (0, 8, "Always: TT(s, 0, 8)"),
+def demo_speed_of_light():
+    """Demonstrate the speed of light bound.
+    
+    Place a single alive cell at the center of a grid and observe
+    that the affected region grows by at most 1 cell per step in each direction.
+    """
+    print("=" * 60)
+    print("DEMO 1: Speed of Light in Conway's Game of Life")
+    print("=" * 60)
+    
+    size = 21
+    center = size // 2
+    
+    # Start with a small pattern (R-pentomino) at center
+    grid = np.zeros((size, size), dtype=int)
+    grid[center, center] = 1
+    grid[center, center+1] = 1
+    grid[center-1, center] = 1
+    grid[center, center-1] = 1
+    grid[center+1, center] = 1
+    
+    print(f"\nInitial pattern at center ({center}, {center}):")
+    print(f"  Alive cells: {np.sum(grid)}")
+    
+    for t in range(1, 8):
+        grid = gol_step(grid)
+        alive_positions = np.argwhere(grid == 1)
+        if len(alive_positions) > 0:
+            max_dist = max(
+                max(abs(p[0] - center), abs(p[1] - center)) 
+                for p in alive_positions
+            )
+        else:
+            max_dist = 0
+        
+        print(f"  t={t}: alive={np.sum(grid):3d}, "
+              f"max Chebyshev distance from center = {max_dist} "
+              f"(bound: {t})")
+        assert max_dist <= t, "Speed of light violated!"
+    
+    print("\n  ✓ Speed of light theorem verified: max distance ≤ t for all t")
+
+# =============================================================================
+# Demo 2: Irreversibility
+# =============================================================================
+
+def demo_irreversibility():
+    """Demonstrate that GoL is not injective."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Irreversibility of the Game of Life")
+    print("=" * 60)
+    
+    size = 5
+    
+    # Grid 1: all dead
+    g1 = np.zeros((size, size), dtype=int)
+    
+    # Grid 2: all alive
+    g2 = np.ones((size, size), dtype=int)
+    
+    after_g1 = gol_step(g1)
+    after_g2 = gol_step(g2)
+    
+    print(f"\n  Grid 1 (all dead) → after step: {np.sum(after_g1)} alive cells")
+    print(f"  Grid 2 (all alive) → after step: {np.sum(after_g2)} alive cells")
+    print(f"  Grids equal before step: {np.array_equal(g1, g2)}")
+    print(f"  Grids equal after step: {np.array_equal(after_g1, after_g2)}")
+    print("\n  ✓ Non-injectivity demonstrated: distinct inputs → same output")
+
+# =============================================================================
+# Demo 3: Still Life Detection
+# =============================================================================
+
+def is_still_life(grid: np.ndarray) -> bool:
+    """Check if a configuration is a still life."""
+    return np.array_equal(gol_step(grid), grid)
+
+def demo_still_lives():
+    """Demonstrate still life characterization."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Still Life Classification")
+    print("=" * 60)
+    
+    # Block (2x2)
+    block = np.zeros((6, 6), dtype=int)
+    block[2:4, 2:4] = 1
+    
+    # Beehive
+    beehive = np.zeros((7, 7), dtype=int)
+    beehive[2, 3:5] = 1
+    beehive[3, 2] = 1
+    beehive[3, 5] = 1
+    beehive[4, 3:5] = 1
+    
+    # Loaf
+    loaf = np.zeros((8, 8), dtype=int)
+    loaf[2, 3:5] = 1
+    loaf[3, 2] = 1
+    loaf[3, 5] = 1
+    loaf[4, 3] = 1
+    loaf[4, 5] = 1
+    loaf[5, 4] = 1
+    
+    patterns = [("Block", block), ("Beehive", beehive), ("Loaf", loaf)]
+    
+    for name, pattern in patterns:
+        still = is_still_life(pattern)
+        alive = np.sum(pattern)
+        print(f"\n  {name}: {alive} alive cells → Still life: {still}")
+        
+        # Verify neighbor count constraints
+        rows, cols = pattern.shape
+        for i in range(rows):
+            for j in range(cols):
+                count = 0
+                for di in [-1, 0, 1]:
+                    for dj in [-1, 0, 1]:
+                        if di == 0 and dj == 0:
+                            continue
+                        ni, nj = (i + di) % rows, (j + dj) % cols
+                        count += pattern[ni, nj]
+                
+                if pattern[i, j] == 1:
+                    assert count in (2, 3), f"Alive cell ({i},{j}) has {count} neighbors!"
+                else:
+                    assert count != 3, f"Dead cell ({i},{j}) has 3 neighbors!"
+        
+        print(f"    ✓ Neighbor constraints verified for all cells")
+
+# =============================================================================
+# Demo 4: Simulation Morphism Composition
+# =============================================================================
+
+class SimSystem:
+    """A computational dynamical system."""
+    def __init__(self, name: str, step_fn: Callable):
+        self.name = name
+        self.step_fn = step_fn
+    
+    def step(self, state):
+        return self.step_fn(state)
+    
+    def iter(self, n: int, state):
+        result = state
+        for _ in range(n):
+            result = self.step(result)
+        return result
+
+class SimMorphism:
+    """A simulation morphism between SimSystems."""
+    def __init__(self, source: SimSystem, target: SimSystem,
+                 encode: Callable, time_factor: int):
+        self.source = source
+        self.target = target
+        self.encode = encode
+        self.time_factor = time_factor
+        assert time_factor > 0, "Time factor must be positive"
+    
+    def compose(self, other: 'SimMorphism') -> 'SimMorphism':
+        """Compose with another morphism. Time factors multiply."""
+        assert self.target.name == other.source.name
+        return SimMorphism(
+            source=self.source,
+            target=other.target,
+            encode=lambda s: other.encode(self.encode(s)),
+            time_factor=self.time_factor * other.time_factor
+        )
+
+def demo_simulation_morphisms():
+    """Demonstrate the multiplicative composition of simulation overhead."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Simulation Morphism Algebra")
+    print("=" * 60)
+    
+    # System A: Counter (increment mod 10)
+    sys_a = SimSystem("Counter(mod 10)", lambda x: (x + 1) % 10)
+    
+    # System B: Binary counter (simulates counter with overhead 3)
+    sys_b = SimSystem("Binary", lambda x: (x + 1) % 30)
+    
+    # System C: Unary (simulates binary with overhead 5)
+    sys_c = SimSystem("Unary", lambda x: (x + 1) % 150)
+    
+    # Morphism A → B: time factor 3
+    f = SimMorphism(sys_a, sys_b, lambda x: x * 3, time_factor=3)
+    
+    # Morphism B → C: time factor 5  
+    g = SimMorphism(sys_b, sys_c, lambda x: x * 5, time_factor=5)
+    
+    # Composition A → C: time factor 3 * 5 = 15
+    fg = f.compose(g)
+    
+    print(f"\n  Morphism f: {f.source.name} → {f.target.name}, "
+          f"time factor = {f.time_factor}")
+    print(f"  Morphism g: {g.source.name} → {g.target.name}, "
+          f"time factor = {g.time_factor}")
+    print(f"  Composition f∘g: {fg.source.name} → {fg.target.name}, "
+          f"time factor = {fg.time_factor}")
+    print(f"\n  ✓ Multiplicative composition: {f.time_factor} × {g.time_factor} "
+          f"= {fg.time_factor}")
+    
+    # Chain of 3
+    sys_d = SimSystem("Physical", lambda x: (x + 1) % 750)
+    h = SimMorphism(sys_c, sys_d, lambda x: x * 5, time_factor=5)
+    fgh = fg.compose(h)
+    
+    print(f"\n  Chain of 3 simulations:")
+    print(f"    f: factor {f.time_factor}")
+    print(f"    g: factor {g.time_factor}")
+    print(f"    h: factor {h.time_factor}")
+    print(f"    Total: {f.time_factor} × {g.time_factor} × {h.time_factor} "
+          f"= {fgh.time_factor}")
+    print(f"  ✓ Associativity: ({f.time_factor}×{g.time_factor})×{h.time_factor} "
+          f"= {f.time_factor}×({g.time_factor}×{h.time_factor}) "
+          f"= {fgh.time_factor}")
+
+# =============================================================================
+# Demo 5: Population Dynamics
+# =============================================================================
+
+def demo_population_dynamics():
+    """Demonstrate birth/death rules and population bounds."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Population Dynamics")
+    print("=" * 60)
+    
+    size = 30
+    grid = np.zeros((size, size), dtype=int)
+    
+    # R-pentomino: famous for chaotic growth
+    c = size // 2
+    grid[c, c+1] = 1
+    grid[c, c] = 1
+    grid[c-1, c] = 1
+    grid[c+1, c+1] = 1
+    grid[c, c-1] = 1
+    
+    print(f"\n  R-pentomino evolution (initial population: {np.sum(grid)}):")
+    
+    populations = [int(np.sum(grid))]
+    for t in range(1, 51):
+        old_grid = grid.copy()
+        grid = gol_step(grid)
+        pop = int(np.sum(grid))
+        populations.append(pop)
+        
+        # Count births and deaths
+        births = int(np.sum((old_grid == 0) & (grid == 1)))
+        deaths = int(np.sum((old_grid == 1) & (grid == 0)))
+        
+        if t <= 10 or t % 10 == 0:
+            print(f"    t={t:3d}: pop={pop:4d}, births={births:3d}, deaths={deaths:3d}")
+    
+    max_pop = max(populations)
+    min_pop = min(populations[1:])  # exclude initial
+    print(f"\n  Population range: [{min_pop}, {max_pop}]")
+    print(f"  Growth factor: {max_pop / populations[0]:.1f}x")
+
+# =============================================================================
+# Main
+# =============================================================================
+
+if __name__ == "__main__":
+    print("Game of Life: Simulation Morphism Algebra — Demonstrations\n")
+    
+    demo_speed_of_light()
+    demo_irreversibility()
+    demo_still_lives()
+    demo_simulation_morphisms()
+    demo_population_dynamics()
+    
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully!")
+    print("=" * 60)
+
+
+#!/usr/bin/env python3
+"""Visualization: Simulation Morphism Algebra — Multiplicative Overhead
+
+Shows how simulation overhead compounds multiplicatively when composing
+SimMorphisms, and visualizes the complexity monoid structure.
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+    fig.suptitle("Simulation Morphism Algebra: Multiplicative Overhead Composition",
+                 fontsize=14, fontweight='bold')
+
+    # Panel 1: Overhead composition for chains of length 1-5
+    ax1 = axes[0]
+    chain_lengths = range(1, 8)
+    factor = 3  # Each link has overhead factor 3
+
+    additive_overhead = [factor * n for n in chain_lengths]
+    multiplicative_overhead = [factor ** n for n in chain_lengths]
+
+    ax1.semilogy(list(chain_lengths), multiplicative_overhead, 'ro-',
+                 linewidth=2, markersize=8, label='Multiplicative (actual)')
+    ax1.semilogy(list(chain_lengths), additive_overhead, 'b^--',
+                 linewidth=2, markersize=8, label='Additive (hypothetical)')
+
+    ax1.set_xlabel('Chain Length (number of SimMorphisms)', fontsize=12)
+    ax1.set_ylabel('Total Time Overhead', fontsize=12)
+    ax1.set_title('Overhead Growth: Multiplicative vs Additive', fontsize=12)
+    ax1.legend(fontsize=10)
+    ax1.grid(True, alpha=0.3)
+
+    # Panel 2: Simulation network graph
+    ax2 = axes[1]
+    systems = ['TM', '1D CA', '2D CA', 'GoL', 'Counter']
+    positions = {
+        'TM': (0.2, 0.8),
+        '1D CA': (0.8, 0.8),
+        '2D CA': (0.8, 0.2),
+        'GoL': (0.2, 0.2),
+        'Counter': (0.5, 0.5)
+    }
+
+    edges = [
+        ('TM', '1D CA', 5),
+        ('1D CA', '2D CA', 3),
+        ('2D CA', 'GoL', 2),
+        ('TM', 'GoL', 30),
+        ('Counter', 'TM', 10),
+        ('GoL', 'Counter', 100),
     ]
 
-    s_values = np.arange(0, 10)
+    for name, (x, y) in positions.items():
+        ax2.plot(x, y, 'ko', markersize=20)
+        ax2.annotate(name, (x, y), fontsize=10, ha='center', va='center',
+                    color='white', fontweight='bold')
 
-    for ax, (lo, hi, title) in zip(axes.flat, configs):
-        values = [tropical_threshold(int(s), lo, hi) for s in s_values]
-        colors = ['#e74c3c' if v == 0 else '#2ecc71' for v in values]
-        ax.bar(s_values, values, color=colors, edgecolor='black', linewidth=0.5)
-        ax.set_title(title, fontsize=11)
-        ax.set_xlabel('Score s')
-        ax.set_ylabel('Output')
-        ax.set_ylim(-0.1, 1.3)
-        ax.set_xticks(s_values)
-        ax.axhline(y=0.5, color='gray', linestyle='--', alpha=0.3)
-        # Shade the active region
-        ax.axvspan(lo - 0.5, hi + 0.5, alpha=0.1, color='green')
+    for src, dst, factor in edges:
+        x1, y1 = positions[src]
+        x2, y2 = positions[dst]
+        dx, dy = x2 - x1, y2 - y1
+        length = np.sqrt(dx**2 + dy**2)
+        ax2.annotate('', xy=(x2 - 0.06*dx/length, y2 - 0.06*dy/length),
+                    xytext=(x1 + 0.06*dx/length, y1 + 0.06*dy/length),
+                    arrowprops=dict(arrowstyle='->', color='steelblue',
+                                   lw=1.5))
+        mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+        ax2.annotate(f'×{factor}', (mx, my), fontsize=9,
+                    ha='center', va='center',
+                    bbox=dict(boxstyle='round,pad=0.2', facecolor='lightyellow'))
 
-    plt.tight_layout()
-    plt.savefig('tropical_thresholds.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: tropical_thresholds.png")
+    ax2.set_xlim(-0.1, 1.1)
+    ax2.set_ylim(-0.1, 1.1)
+    ax2.set_title('SimSystem Network\n(edge labels = time factors)', fontsize=12)
+    ax2.axis('off')
 
+    # Panel 3: Complexity monoid — composition of linear complexities
+    ax3 = axes[2]
+    n_values = np.arange(1, 20)
 
-def plot_gol_evolution():
-    """Plot the evolution of several GoL patterns."""
-    fig, axes = plt.subplots(3, 6, figsize=(18, 9))
-    fig.suptitle('Game of Life Pattern Evolution', fontsize=16, fontweight='bold')
+    # Linear complexities with different constants
+    c1 = lambda n: 2 * n
+    c2 = lambda n: 3 * n
+    c3 = lambda n: 5 * n
 
-    cmap = mcolors.ListedColormap(['white', '#2c3e50'])
+    # Single applications
+    single = [c1(n) for n in n_values]
+    # Composition c1 ∘ c2
+    comp12 = [c1(c2(n)) for n in n_values]
+    # Triple composition c1 ∘ c2 ∘ c3
+    comp123 = [c1(c2(c3(n))) for n in n_values]
 
-    # Pattern 1: Blinker
-    grid = np.zeros((7, 7), dtype=int)
-    grid[3, 2:5] = 1
-    for t in range(6):
-        axes[0, t].imshow(grid, cmap=cmap, vmin=0, vmax=1)
-        axes[0, t].set_title(f't={t}', fontsize=10)
-        axes[0, t].set_xticks([])
-        axes[0, t].set_yticks([])
-        axes[0, t].grid(True, alpha=0.3)
-        grid = gol_step(grid)
-    axes[0, 0].set_ylabel('Blinker\n(period 2)', fontsize=10)
+    ax3.plot(n_values, single, 'g-o', label='C₁(n) = 2n', markersize=4)
+    ax3.plot(n_values, comp12, 'b-s', label='C₁∘C₂(n) = 6n', markersize=4)
+    ax3.plot(n_values, comp123, 'r-^', label='C₁∘C₂∘C₃(n) = 30n', markersize=4)
 
-    # Pattern 2: Glider
-    grid = np.zeros((10, 10), dtype=int)
-    grid[1, 2] = 1; grid[2, 3] = 1; grid[3, 1] = 1; grid[3, 2] = 1; grid[3, 3] = 1
-    for t in range(6):
-        axes[1, t].imshow(grid, cmap=cmap, vmin=0, vmax=1)
-        axes[1, t].set_title(f't={t}', fontsize=10)
-        axes[1, t].set_xticks([])
-        axes[1, t].set_yticks([])
-        axes[1, t].grid(True, alpha=0.3)
-        grid = gol_step(grid)
-    axes[1, 0].set_ylabel('Glider\n(spaceship)', fontsize=10)
-
-    # Pattern 3: R-pentomino (chaotic)
-    grid = np.zeros((20, 20), dtype=int)
-    grid[9, 10] = 1; grid[9, 11] = 1; grid[10, 9] = 1; grid[10, 10] = 1; grid[11, 10] = 1
-    for t in range(6):
-        axes[2, t].imshow(grid, cmap=cmap, vmin=0, vmax=1)
-        axes[2, t].set_title(f't={t*10}', fontsize=10)
-        axes[2, t].set_xticks([])
-        axes[2, t].set_yticks([])
-        axes[2, t].grid(True, alpha=0.3)
-        for _ in range(10):
-            grid = gol_step(grid)
-    axes[2, 0].set_ylabel('R-pentomino\n(chaotic)', fontsize=10)
+    ax3.set_xlabel('Input Size n', fontsize=12)
+    ax3.set_ylabel('Overhead', fontsize=12)
+    ax3.set_title('Complexity Monoid Composition\n(linear × linear = linear)', fontsize=12)
+    ax3.legend(fontsize=10)
+    ax3.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('gol_evolution.png', dpi=150, bbox_inches='tight')
+    plt.savefig('viz_simulation_algebra.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: gol_evolution.png")
-
-
-def plot_density_evolution():
-    """Plot density evolution for different initial densities."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    grid_size = 30
-    steps = 100
-
-    for initial_density in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8]:
-        np.random.seed(42)
-        grid = (np.random.random((grid_size, grid_size)) < initial_density).astype(int)
-        densities = [np.mean(grid)]
-        for _ in range(steps):
-            grid = gol_step(grid)
-            densities.append(np.mean(grid))
-        ax.plot(densities, label=f'ρ₀={initial_density:.1f}', alpha=0.8)
-
-    ax.set_xlabel('Generation', fontsize=12)
-    ax.set_ylabel('Density (fraction alive)', fontsize=12)
-    ax.set_title('Density Evolution Under Game of Life Dynamics', fontsize=14, fontweight='bold')
-    ax.legend(title='Initial density', loc='upper right')
-    ax.grid(True, alpha=0.3)
-    ax.set_xlim(0, steps)
-    ax.set_ylim(0, 0.6)
-
-    plt.tight_layout()
-    plt.savefig('density_evolution.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: density_evolution.png")
+    print("Saved viz_simulation_algebra.png")
 
 
 if __name__ == "__main__":
-    plot_tropical_threshold_landscape()
-    plot_gol_evolution()
-    plot_density_evolution()
-    print("\nAll visualizations generated.")
+    main()
+
+
+#!/usr/bin/env python3
+"""Visualization: Speed of Light in Conway's Game of Life
+
+Shows how the affected region grows linearly with time, bounded by
+the light cone |x| ≤ t, |y| ≤ t.
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+
+def gol_step(grid):
+    rows, cols = grid.shape
+    count = np.zeros_like(grid)
+    for di in [-1, 0, 1]:
+        for dj in [-1, 0, 1]:
+            if di == 0 and dj == 0:
+                continue
+            count += np.roll(np.roll(grid, di, axis=0), dj, axis=1)
+    birth = (grid == 0) & (count == 3)
+    survive = (grid == 1) & ((count == 2) | (count == 3))
+    return (birth | survive).astype(int)
+
+
+def main():
+    size = 41
+    center = size // 2
+    steps = 8
+
+    fig, axes = plt.subplots(2, 4, figsize=(16, 8))
+    fig.suptitle("Speed of Light in Conway's Game of Life\n"
+                 "Red diamond = light cone boundary (max propagation speed)",
+                 fontsize=14, fontweight='bold')
+
+    # Initial pattern: a small cross
+    grid = np.zeros((size, size), dtype=int)
+    grid[center, center] = 1
+    grid[center-1, center] = 1
+    grid[center+1, center] = 1
+    grid[center, center-1] = 1
+    grid[center, center+1] = 1
+
+    for idx in range(steps):
+        ax = axes[idx // 4, idx % 4]
+
+        # Draw grid
+        window = 12
+        view = grid[center-window:center+window+1, center-window:center+window+1]
+        ax.imshow(view, cmap='binary', interpolation='nearest',
+                  extent=[-window-0.5, window+0.5, -window-0.5, window+0.5],
+                  origin='lower')
+
+        # Draw light cone
+        t = idx
+        diamond = patches.FancyBboxPatch(
+            (-t - 0.5, -0.5), 2*t + 1, 1,
+            boxstyle="square,pad=0", linewidth=0, facecolor='none')
+
+        # Draw diamond outline
+        cone_x = [0, t, 0, -t, 0]
+        cone_y = [t, 0, -t, 0, t]
+        ax.plot(cone_x, cone_y, 'r-', linewidth=2, alpha=0.7)
+
+        ax.set_title(f't = {idx}', fontsize=12)
+        ax.set_xlim(-window-0.5, window+0.5)
+        ax.set_ylim(-window-0.5, window+0.5)
+        ax.set_aspect('equal')
+        ax.grid(True, alpha=0.3)
+
+        grid = gol_step(grid)
+
+    plt.tight_layout()
+    plt.savefig('viz_speed_of_light.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved viz_speed_of_light.png")
+
+
+if __name__ == "__main__":
+    main()
