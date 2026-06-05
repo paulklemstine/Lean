@@ -1,21 +1,20 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tangled Hierarchies and Provability Logic
+Algorithms for Tangled Hierarchies in Provability Logic
 
-Type-hinted implementations of key algorithms for:
-1. GL frame construction and validation
-2. Modal formula evaluation (model checking)
-3. Tangling depth computation
-4. Soundness and consistency verification
+Type-hinted implementations of key algorithms from the formalized theory.
 """
 
-from __future__ import annotations
 from dataclasses import dataclass, field
+from typing import Optional, Callable
 from enum import Enum, auto
-from typing import FrozenSet
 
 
-class FormulaTag(Enum):
+# ============================================================
+# Core Data Structures
+# ============================================================
+
+class FormulaKind(Enum):
     VAR = auto()
     BOT = auto()
     IMP = auto()
@@ -23,312 +22,364 @@ class FormulaTag(Enum):
 
 
 @dataclass(frozen=True)
-class Formula:
-    """Modal formula in propositional modal logic."""
-    tag: FormulaTag
+class MFormula:
+    """Immutable modal formula."""
+    kind: FormulaKind
     var_name: str = ""
-    left: Formula | None = None
-    right: Formula | None = None
+    left: Optional['MFormula'] = None
+    right: Optional['MFormula'] = None
+    inner: Optional['MFormula'] = None
 
     @staticmethod
-    def var(name: str) -> Formula:
-        return Formula(tag=FormulaTag.VAR, var_name=name)
+    def var(name: str) -> 'MFormula':
+        return MFormula(FormulaKind.VAR, var_name=name)
 
     @staticmethod
-    def bot() -> Formula:
-        return Formula(tag=FormulaTag.BOT)
+    def bot() -> 'MFormula':
+        return MFormula(FormulaKind.BOT)
 
     @staticmethod
-    def imp(left: Formula, right: Formula) -> Formula:
-        return Formula(tag=FormulaTag.IMP, left=left, right=right)
+    def imp(a: 'MFormula', b: 'MFormula') -> 'MFormula':
+        return MFormula(FormulaKind.IMP, left=a, right=b)
 
     @staticmethod
-    def box(inner: Formula) -> Formula:
-        return Formula(tag=FormulaTag.BOX, left=inner)
+    def box(a: 'MFormula') -> 'MFormula':
+        return MFormula(FormulaKind.BOX, inner=a)
 
     @staticmethod
-    def neg(inner: Formula) -> Formula:
-        return Formula.imp(inner, Formula.bot())
+    def neg(a: 'MFormula') -> 'MFormula':
+        return MFormula.imp(a, MFormula.bot())
 
     @staticmethod
-    def top() -> Formula:
-        return Formula.neg(Formula.bot())
-
-    @staticmethod
-    def con() -> Formula:
-        """Consistency formula: ¬□⊥"""
-        return Formula.neg(Formula.box(Formula.bot()))
-
-    @staticmethod
-    def loeb(phi: Formula) -> Formula:
-        """Löb formula: □(□φ → φ) → □φ"""
-        return Formula.imp(
-            Formula.box(Formula.imp(Formula.box(phi), phi)),
-            Formula.box(phi)
-        )
-
-    @staticmethod
-    def soundness(phi: Formula) -> Formula:
-        """Soundness formula for φ: □φ → φ"""
-        return Formula.imp(Formula.box(phi), phi)
-
-    def __repr__(self) -> str:
-        if self.tag == FormulaTag.VAR:
-            return self.var_name
-        elif self.tag == FormulaTag.BOT:
-            return "⊥"
-        elif self.tag == FormulaTag.IMP:
-            if self.right and self.right.tag == FormulaTag.BOT:
-                return f"¬{self.left}"
-            return f"({self.left} → {self.right})"
-        elif self.tag == FormulaTag.BOX:
-            return f"□{self.left}"
-        return "?"
+    def con() -> 'MFormula':
+        return MFormula.neg(MFormula.box(MFormula.bot()))
 
 
 @dataclass
 class GLFrame:
-    """A GL frame: a finite Kripke frame with transitive, converse well-founded R.
+    """Finite GL frame with n worlds."""
+    n: int
+    adj: list[list[bool]]
 
-    Attributes:
-        worlds: Set of world identifiers
-        relation: Set of (w, v) pairs where w R v
+    def successors(self, w: int) -> list[int]:
+        """Return all worlds accessible from w."""
+        return [v for v in range(self.n) if self.adj[w][v]]
+
+    def predecessors(self, w: int) -> list[int]:
+        """Return all worlds that access w."""
+        return [v for v in range(self.n) if self.adj[v][w]]
+
+
+# ============================================================
+# Algorithm 1: Modal Depth Computation
+# ============================================================
+
+def modal_depth(phi: MFormula) -> int:
     """
-    worlds: FrozenSet[int]
-    relation: FrozenSet[tuple[int, int]]
+    Compute the modal depth of a formula.
 
-    @staticmethod
-    def linear(n: int) -> GLFrame:
-        """Construct a linear GL frame: 0 < 1 < ... < (n-1)."""
-        worlds = frozenset(range(n))
-        relation = frozenset((i, j) for i in range(n) for j in range(n) if i < j)
-        return GLFrame(worlds=worlds, relation=relation)
+    Pseudocode:
+        depth(var(p)) = 0
+        depth(⊥) = 0
+        depth(φ → ψ) = max(depth(φ), depth(ψ))
+        depth(□φ) = depth(φ) + 1
 
-    @staticmethod
-    def tree(edges: list[tuple[int, int]]) -> GLFrame:
-        """Construct a GL frame from edges, computing transitive closure."""
-        all_worlds: set[int] = set()
-        for u, v in edges:
-            all_worlds.add(u)
-            all_worlds.add(v)
+    Time complexity: O(|φ|) where |φ| is the formula size.
+    """
+    if phi.kind == FormulaKind.VAR:
+        return 0
+    elif phi.kind == FormulaKind.BOT:
+        return 0
+    elif phi.kind == FormulaKind.IMP:
+        assert phi.left is not None and phi.right is not None
+        return max(modal_depth(phi.left), modal_depth(phi.right))
+    elif phi.kind == FormulaKind.BOX:
+        assert phi.inner is not None
+        return modal_depth(phi.inner) + 1
+    return 0
 
-        # Compute transitive closure
-        adj: dict[int, set[int]] = {w: set() for w in all_worlds}
-        for u, v in edges:
-            adj[u].add(v)
 
-        changed = True
-        while changed:
-            changed = False
-            for u in all_worlds:
-                new_succs = set()
-                for v in adj[u]:
-                    for w in adj[v]:
-                        if w not in adj[u]:
-                            new_succs.add(w)
-                if new_succs:
-                    adj[u].update(new_succs)
-                    changed = True
+# ============================================================
+# Algorithm 2: Forcing Evaluation
+# ============================================================
 
-        relation = frozenset((u, v) for u in all_worlds for v in adj[u])
-        return GLFrame(worlds=frozenset(all_worlds), relation=relation)
+def evaluate_forcing(
+    frame: GLFrame,
+    valuation: dict[str, set[int]],
+    world: int,
+    phi: MFormula
+) -> bool:
+    """
+    Evaluate whether world ⊩ φ in the given frame.
 
-    def successors(self, w: int) -> FrozenSet[int]:
-        """Get all worlds accessible from w."""
-        return frozenset(v for (u, v) in self.relation if u == w)
+    Pseudocode:
+        force(w, var(p)) = p ∈ V(w)
+        force(w, ⊥) = false
+        force(w, φ → ψ) = ¬force(w, φ) ∨ force(w, ψ)
+        force(w, □φ) = ∀v. wRv → force(v, φ)
 
-    def is_transitive(self) -> bool:
-        """Check transitivity of R."""
-        for u, v in self.relation:
-            for w in self.successors(v):
-                if (u, w) not in self.relation:
-                    return False
-        return True
-
-    def is_irreflexive(self) -> bool:
-        """Check irreflexivity of R."""
-        return all((w, w) not in self.relation for w in self.worlds)
-
-    def is_acyclic(self) -> bool:
-        """Check acyclicity (equivalent to converse well-foundedness for finite frames)."""
-        visited: set[int] = set()
-        in_stack: set[int] = set()
-
-        def dfs(node: int) -> bool:
-            if node in in_stack:
-                return False  # Cycle found
-            if node in visited:
-                return True
-            visited.add(node)
-            in_stack.add(node)
-            for succ in self.successors(node):
-                if not dfs(succ):
-                    return False
-            in_stack.discard(node)
+    Time complexity: O(|φ| * n) where n = |W|.
+    """
+    if phi.kind == FormulaKind.VAR:
+        return world in valuation.get(phi.var_name, set())
+    elif phi.kind == FormulaKind.BOT:
+        return False
+    elif phi.kind == FormulaKind.IMP:
+        assert phi.left is not None and phi.right is not None
+        left_val = evaluate_forcing(frame, valuation, world, phi.left)
+        if not left_val:
             return True
+        return evaluate_forcing(frame, valuation, world, phi.right)
+    elif phi.kind == FormulaKind.BOX:
+        assert phi.inner is not None
+        return all(
+            evaluate_forcing(frame, valuation, v, phi.inner)
+            for v in frame.successors(world)
+        )
+    return False
 
-        return all(dfs(w) for w in self.worlds if w not in visited)
 
-    def is_gl_frame(self) -> bool:
-        """Verify all GL frame conditions."""
-        return self.is_transitive() and self.is_irreflexive() and self.is_acyclic()
+# ============================================================
+# Algorithm 3: k-Soundness Verification
+# ============================================================
 
-    def tangling_depth(self, w: int) -> int:
-        """Compute the tangling depth of world w.
+def generate_formulas_up_to_depth(
+    k: int,
+    variables: list[str]
+) -> list[MFormula]:
+    """
+    Generate all formulas of modal depth ≤ k over the given variables.
+    (For finite variable sets, this is finite but exponential in k.)
 
-        The tangling depth is the length of the longest R-chain from w.
-        Uses memoized DFS.
-        """
-        memo: dict[int, int] = {}
+    For practical purposes, we generate a representative sample.
+    """
+    if k < 0:
+        return []
 
-        def depth(v: int) -> int:
-            if v in memo:
-                return memo[v]
-            succs = self.successors(v)
-            if not succs:
-                memo[v] = 0
-            else:
-                memo[v] = 1 + max(depth(u) for u in succs)
-            return memo[v]
+    # Base formulas (depth 0)
+    base: list[MFormula] = [MFormula.bot()] + [MFormula.var(v) for v in variables]
 
-        return depth(w)
+    if k == 0:
+        # Add implications of base formulas
+        result = list(base)
+        for a in base:
+            for b in base:
+                result.append(MFormula.imp(a, b))
+        return result
 
-    def all_depths(self) -> dict[int, int]:
-        """Compute tangling depth for all worlds."""
-        return {w: self.tangling_depth(w) for w in sorted(self.worlds)}
+    # Recursive: get formulas of depth ≤ k-1
+    prev = generate_formulas_up_to_depth(k - 1, variables)
 
+    result = list(prev)
+    # Add boxes (increases depth by 1)
+    for phi in prev:
+        result.append(MFormula.box(phi))
+
+    # Add some representative implications
+    sample = prev[:min(len(prev), 8)]
+    for a in sample:
+        for b in sample:
+            f = MFormula.imp(a, b)
+            if modal_depth(f) <= k:
+                result.append(f)
+
+    return result
+
+
+def check_k_soundness(
+    frame: GLFrame,
+    valuation: dict[str, set[int]],
+    world: int,
+    k: int,
+    variables: list[str]
+) -> tuple[bool, Optional[MFormula]]:
+    """
+    Check if a world is k-sound. Returns (is_sound, counterexample).
+
+    Pseudocode:
+        for each formula φ with depth(φ) ≤ k:
+            if force(w, □φ) and ¬force(w, φ):
+                return (false, φ)
+        return (true, None)
+    """
+    formulas = generate_formulas_up_to_depth(k, variables)
+
+    for phi in formulas:
+        if modal_depth(phi) <= k:
+            box_phi = MFormula.box(phi)
+            if evaluate_forcing(frame, valuation, world, box_phi):
+                if not evaluate_forcing(frame, valuation, world, phi):
+                    return (False, phi)
+
+    return (True, None)
+
+
+# ============================================================
+# Algorithm 4: Soundness Defect Computation
+# ============================================================
+
+def compute_soundness_defect(
+    frame: GLFrame,
+    valuation: dict[str, set[int]],
+    world: int,
+    k: int,
+    variables: list[str]
+) -> list[MFormula]:
+    """
+    Compute the soundness defect D_k(w): the set of formulas of depth ≤ k
+    for which soundness fails at w.
+
+    Returns: list of formulas in the defect set.
+    """
+    formulas = generate_formulas_up_to_depth(k, variables)
+    defect: list[MFormula] = []
+
+    for phi in formulas:
+        if modal_depth(phi) <= k:
+            box_phi = MFormula.box(phi)
+            if evaluate_forcing(frame, valuation, world, box_phi):
+                if not evaluate_forcing(frame, valuation, world, phi):
+                    defect.append(phi)
+
+    return defect
+
+
+# ============================================================
+# Algorithm 5: Canonical GL Frame Construction
+# ============================================================
+
+def build_canonical_frame(n: int) -> GLFrame:
+    """
+    Construct the canonical GL frame on n+1 worlds.
+
+    Pseudocode:
+        W = {0, 1, ..., n}
+        R(i, j) = (i < j)
+
+    Properties:
+        - Transitive (< is transitive)
+        - Irreflexive
+        - Converse well-founded (finite)
+        - Maximal chain length = n
+    """
+    size = n + 1
+    adj = [[i < j for j in range(size)] for i in range(size)]
+    return GLFrame(size, adj)
+
+
+# ============================================================
+# Algorithm 6: Iterated Consistency Formula
+# ============================================================
+
+def iterated_consistency(n: int) -> MFormula:
+    """
+    Build the n-th iterated consistency formula.
+
+    Pseudocode:
+        Con_0 = ⊥
+        Con_{n+1} = □Con_n → Con_n
+
+    Property: modal_depth(Con_n) = n
+    """
+    if n == 0:
+        return MFormula.bot()
+    prev = iterated_consistency(n - 1)
+    return MFormula.imp(MFormula.box(prev), prev)
+
+
+# ============================================================
+# Algorithm 7: Tangling Gap Detection
+# ============================================================
+
+def detect_tangling_gap(
+    frame: GLFrame,
+    valuation: dict[str, set[int]],
+    world: int
+) -> Optional[MFormula]:
+    """
+    Find a formula witnessing the tangling gap at world w.
+    Returns a formula φ such that w ⊩ □φ → φ but w ⊭ □(□φ → φ).
+
+    By the Fundamental Tangling Theorem, ⊥ always works at consistent
+    worlds that satisfy □⊥ → ⊥.
+    """
+    phi = MFormula.bot()
+    soundness_phi = MFormula.imp(MFormula.box(phi), phi)
+
+    # Check w ⊩ □φ → φ
+    if not evaluate_forcing(frame, valuation, world, soundness_phi):
+        return None  # World is not sound for φ
+
+    # Check w ⊭ □(□φ → φ)
+    box_soundness = MFormula.box(soundness_phi)
+    if evaluate_forcing(frame, valuation, world, box_soundness):
+        return None  # No gap (should be impossible if consistent)
+
+    return phi
+
+
+# ============================================================
+# Algorithm 8: Reflective Hierarchy Construction
+# ============================================================
 
 @dataclass
-class KripkeModel:
-    """A Kripke model: a GL frame with a valuation."""
+class ReflectiveHierarchy:
+    """A reflective hierarchy of depth n."""
     frame: GLFrame
-    valuation: dict[str, FrozenSet[int]] = field(default_factory=dict)
+    valuation: dict[str, set[int]]
+    worlds: list[int]  # chain of worlds
+    depth: int
 
-    def forces(self, world: int, formula: Formula) -> bool:
-        """Evaluate whether world forces formula.
-
-        Implements the recursive forcing relation:
-        - w ⊨ var(p)   iff  V(p)(w)
-        - w ⊨ ⊥        never
-        - w ⊨ φ → ψ    iff  w ⊭ φ or w ⊨ ψ
-        - w ⊨ □φ       iff  ∀v. wRv → v ⊨ φ
-
-        Time complexity: O(|W|^depth(φ)) in the worst case,
-        but O(|W|² · |φ|) with memoization.
-        """
-        if formula.tag == FormulaTag.VAR:
-            return world in self.valuation.get(formula.var_name, frozenset())
-        elif formula.tag == FormulaTag.BOT:
-            return False
-        elif formula.tag == FormulaTag.IMP:
-            assert formula.left is not None and formula.right is not None
-            return (not self.forces(world, formula.left)) or self.forces(
-                world, formula.right
-            )
-        elif formula.tag == FormulaTag.BOX:
-            assert formula.left is not None
-            return all(
-                self.forces(v, formula.left)
-                for v in self.frame.successors(world)
-            )
-        else:
-            raise ValueError(f"Unknown formula tag: {formula.tag}")
-
-    def forcing_set(self, formula: Formula) -> FrozenSet[int]:
-        """Compute the set of all worlds that force the formula."""
-        return frozenset(w for w in self.frame.worlds if self.forces(w, formula))
-
-    def is_valid(self, formula: Formula) -> bool:
-        """Check if formula is valid (forced at every world)."""
-        return all(self.forces(w, formula) for w in self.frame.worlds)
-
-    def is_world_sound(self, world: int, formulas: list[Formula]) -> bool:
-        """Check if world is sound for a list of formulas.
-
-        A world w is sound for φ if w ⊨ □φ → φ.
-        """
-        return all(
-            self.forces(world, Formula.soundness(phi)) for phi in formulas
-        )
+    def verify_chain(self) -> bool:
+        """Verify the R-chain property."""
+        for i in range(len(self.worlds) - 1):
+            if not self.frame.adj[self.worlds[i]][self.worlds[i + 1]]:
+                return False
+        return True
 
 
-def verify_loeb_theorem(frame: GLFrame, max_vars: int = 2) -> bool:
-    """Verify Löb's theorem on a frame by checking all valuations.
-
-    For each subset of worlds as the valuation of each variable,
-    checks that □(□p → p) → □p holds everywhere.
-
-    Returns True if the Löb formula is valid for all valuations.
+def build_reflective_hierarchy(n: int) -> ReflectiveHierarchy:
     """
-    worlds_list = sorted(frame.worlds)
-    n = len(worlds_list)
+    Construct a reflective hierarchy of depth n using the canonical frame.
 
-    for mask in range(2**n):
-        val_set = frozenset(worlds_list[i] for i in range(n) if (mask >> i) & 1)
-        model = KripkeModel(frame=frame, valuation={"p": val_set})
-        p = Formula.var("p")
-        loeb_p = Formula.loeb(p)
-
-        if not model.is_valid(loeb_p):
-            return False
-    return True
-
-
-def verify_second_incompleteness(frame: GLFrame) -> dict[int, dict[str, bool]]:
-    """Verify the second incompleteness theorem on each world.
-
-    For each world, checks:
-    - Is it sound? (□⊥ → ⊥)
-    - Can it prove consistency? (□(□⊥ → ⊥))
-    - Does it have successors?
-
-    Returns a report for each world.
+    The canonical frame on n+1 worlds, with chain 0 → 1 → ... → n,
+    provides a natural reflective hierarchy.
     """
-    model = KripkeModel(frame=frame)
-    con_formula = Formula.con()  # □⊥ → ⊥
-    box_con = Formula.box(con_formula)  # □(□⊥ → ⊥)
-
-    report: dict[int, dict[str, bool]] = {}
-    for w in sorted(frame.worlds):
-        is_sound = model.forces(w, con_formula)
-        proves_con = model.forces(w, box_con)
-        has_succ = bool(frame.successors(w))
-        report[w] = {
-            "sound": is_sound,
-            "proves_consistency": proves_con,
-            "has_successors": has_succ,
-            "violates_2nd_incompleteness": is_sound and proves_con and has_succ,
-        }
-    return report
-
-
-def find_tangling_witness(
-    frame: GLFrame, world: int
-) -> Formula | None:
-    """Find a formula whose soundness the given world cannot prove.
-
-    If the world has successors and is sound, returns □⊥ → ⊥
-    (the consistency formula), which cannot be proved by a sound world.
-
-    Returns None if the world has no successors (trivial case).
-    """
-    if not frame.successors(world):
-        return None
-    return Formula.imp(Formula.box(Formula.bot()), Formula.bot())
+    frame = build_canonical_frame(n)
+    worlds = list(range(n + 1))
+    return ReflectiveHierarchy(
+        frame=frame,
+        valuation={},
+        worlds=worlds,
+        depth=n
+    )
 
 
 if __name__ == "__main__":
-    # Quick test
-    frame = GLFrame.linear(5)
-    assert frame.is_gl_frame(), "Linear frame should be GL"
-    assert verify_loeb_theorem(frame), "Löb should hold on linear GL frame"
+    # Quick self-test
+    print("Testing algorithms...")
 
-    report = verify_second_incompleteness(frame)
-    for w, info in report.items():
-        assert not info["violates_2nd_incompleteness"], (
-            f"World {w} violates 2nd incompleteness!"
-        )
+    # Test modal depth
+    p = MFormula.var("p")
+    assert modal_depth(p) == 0
+    assert modal_depth(MFormula.box(p)) == 1
+    assert modal_depth(MFormula.box(MFormula.box(p))) == 2
+    assert modal_depth(MFormula.con()) == 1
 
-    print("All algorithm tests passed ✓")
-    print(f"Frame depths: {frame.all_depths()}")
-    print(f"2nd incompleteness report: {report}")
+    # Test iterated consistency depth
+    for n in range(6):
+        assert modal_depth(iterated_consistency(n)) == n, f"Con_{n} depth mismatch"
+
+    # Test canonical frame
+    frame = build_canonical_frame(4)
+    assert frame.n == 5
+    assert frame.adj[0][1] == True
+    assert frame.adj[1][0] == False
+    assert frame.adj[3][3] == False
+
+    # Test tangling gap
+    frame = build_canonical_frame(3)
+    gap = detect_tangling_gap(frame, {}, 0)
+    assert gap is not None, "Expected tangling gap at world 0"
+
+    print("All tests passed!")
