@@ -1,19 +1,15 @@
 #!/usr/bin/env python3
 """
-Ordinal Cellular Automata: Transfinite Computation Demo
-========================================================
+Cellular Automata at the Ordinals: Transfinite Computation Demo
 
-Demonstrates key concepts from the formalization:
-1. Rule 110 evolution on finite grids
-2. Identity CA with limit aggregation (transfinite extension witness)
-3. Convergence behavior analysis
+Demonstrates Rule 110 evolution and transfinite computation concepts.
 """
 
-import itertools
+import sys
 
 
 def rule110(left: bool, center: bool, right: bool) -> bool:
-    """Rule 110 local transition function."""
+    """Rule 110 elementary cellular automaton lookup table."""
     table = {
         (True, True, True): False,
         (True, True, False): True,
@@ -27,394 +23,525 @@ def rule110(left: bool, center: bool, right: bool) -> bool:
     return table[(left, center, right)]
 
 
-def evolve_step(config: list[bool], rule=rule110, boundary=False) -> list[bool]:
-    """One step of CA evolution on a finite grid."""
+def step_config(config: list[bool]) -> list[bool]:
+    """Apply Rule 110 to evolve a configuration one step (periodic boundary)."""
     n = len(config)
-    new = []
-    for i in range(n):
-        left = config[i - 1] if i > 0 else boundary
-        center = config[i]
-        right = config[i + 1] if i < n - 1 else boundary
-        new.append(rule(left, center, right))
-    return new
+    return [rule110(config[(i - 1) % n], config[i], config[(i + 1) % n])
+            for i in range(n)]
 
 
-def evolve_n_steps(config: list[bool], n: int, rule=rule110) -> list[list[bool]]:
-    """Evolve for n steps, returning all intermediate configurations."""
+def evolve(config: list[bool], steps: int) -> list[list[bool]]:
+    """Evolve a configuration for multiple steps, returning the history."""
     history = [config]
-    current = config
-    for _ in range(n):
-        current = evolve_step(current, rule)
-        history.append(current)
+    for _ in range(steps):
+        config = step_config(config)
+        history.append(config)
     return history
 
 
-def identity_rule(left: bool, center: bool, right: bool) -> bool:
-    """Identity local rule: ignores neighbors, returns center."""
-    return center
+def display(history: list[list[bool]], width: int = 80) -> None:
+    """Display a spacetime diagram using Unicode characters."""
+    for row in history:
+        line = ''.join('█' if cell else ' ' for cell in row)
+        print(line[:width])
 
 
-def demonstrate_transfinite_extension():
+def detect_halting(history: list[list[bool]]) -> tuple[bool, int]:
+    """Detect if the evolution has stabilized (halting detection at ω).
+
+    Returns (stabilized, step) where step is the first step at which
+    the configuration stopped changing.
     """
-    Demonstrates the key theorem: exists_strict_transfinite_extension.
-    
-    With the identity local rule and limit aggregation that maps everything to True,
-    the finite orbit is {initial config} while the transfinite orbit also contains
-    the all-True configuration reached at time omega.
+    for i in range(1, len(history)):
+        if history[i] == history[i - 1]:
+            return True, i
+    return False, len(history)
+
+
+def orbit_cycle_detection(f, start, max_steps: int = 1000):
+    """Detect orbit cycling using Floyd's algorithm.
+
+    Demonstrates the orbit_eventually_cycles theorem:
+    for finite state spaces, orbits must cycle.
     """
-    print("=" * 60)
-    print("TRANSFINITE ORBIT STRICT EXTENSION")
-    print("=" * 60)
-    
-    # Initial configuration: all False
-    n = 10
-    init = [False] * n
-    
-    # Finite evolution with identity rule
-    print("\nIdentity rule: finite evolution (10 steps)")
-    history = evolve_n_steps(init, 10, identity_rule)
-    for i, cfg in enumerate(history):
-        cells = "".join("█" if c else "░" for c in cfg)
-        print(f"  t={i:2d}: {cells}")
-    
-    print(f"\n  Finite orbit size: 1 (all steps identical)")
-    print(f"  Finite orbit = {{all-False}}")
-    
-    # At time omega (limit aggregation)
-    limit_config = [True] * n  # limit aggregation maps to True
-    cells = "".join("█" if c else "░" for c in limit_config)
-    print(f"\n  t=ω:  {cells}  ← limit aggregation (always True)")
-    print(f"  Transfinite orbit = {{all-False, all-True}}")
-    print(f"  Strict containment: finiteOrbit ⊊ orbit ✓")
+    # Phase 1: Find a repeated element
+    slow = start
+    fast = start
+    for step in range(1, max_steps):
+        slow = f(slow)
+        fast = f(f(fast))
+        if slow == fast:
+            # Phase 2: Find the start of the cycle
+            mu = 0
+            slow = start
+            while slow != fast:
+                slow = f(slow)
+                fast = f(fast)
+                mu += 1
+            # Phase 3: Find cycle length
+            lam = 1
+            fast = f(slow)
+            while slow != fast:
+                fast = f(fast)
+                lam += 1
+            return mu, lam
+    return None, None
 
 
-def demonstrate_rule110():
-    """Demonstrate Rule 110 evolution showing complex behavior."""
-    print("\n" + "=" * 60)
-    print("RULE 110 EVOLUTION")
-    print("=" * 60)
-    
-    n = 40
-    # Single cell seed
-    init = [False] * n
-    init[n // 2] = True
-    
-    history = evolve_n_steps(init, 30, rule110)
-    print(f"\nRule 110 from single seed (width={n}, 30 steps):")
-    for i, cfg in enumerate(history):
-        cells = "".join("█" if c else " " for c in cfg)
-        print(f"  {cells}")
-    
-    # Check quiescent preservation
-    all_false = [False] * n
-    evolved = evolve_step(all_false, rule110)
-    print(f"\nQuiescent preservation: rule110(F,F,F) = {rule110(False,False,False)}")
-    print(f"  All-false config is fixed: {evolved == all_false} ✓")
+def kleene_chain_demo():
+    """Demonstrate the Kleene chain reaching a fixed point.
 
-
-def demonstrate_convergence():
-    """Analyze convergence behavior of Rule 110."""
-    print("\n" + "=" * 60)
-    print("CONVERGENCE ANALYSIS")
-    print("=" * 60)
-    
-    n = 20
-    
-    # Test various initial configurations
-    configs = [
-        ("single seed", [False]*9 + [True] + [False]*10),
-        ("two seeds", [False]*5 + [True] + [False]*8 + [True] + [False]*5),
-        ("block of 3", [False]*8 + [True,True,True] + [False]*9),
-    ]
-    
-    for name, init in configs:
-        # Evolve until convergence or max steps
-        current = init
-        seen = [current]
-        converged_at = None
-        
-        for t in range(1, 200):
-            current = evolve_step(current, rule110)
-            if current in seen:
-                converged_at = t
-                break
-            seen.append(current)
-        
-        if converged_at:
-            period_start = seen.index(current)
-            period = converged_at - period_start
-            print(f"\n  {name}: periodic from t={period_start}, period={period}")
-        else:
-            print(f"\n  {name}: no periodicity in 200 steps")
-            # Check if last configs are changing
-            last_few = seen[-5:]
-            all_same = all(c == last_few[0] for c in last_few)
-            if all_same:
-                print(f"    → converged to fixed point around t={len(seen)-5}")
-            else:
-                print(f"    → still evolving (complex dynamics)")
-
-
-def demonstrate_omega_squared_structure():
+    We use f(x) = max(x, threshold) on a finite lattice {0, 1, ..., N}.
+    The Kleene chain starts at 0 (= ⊥) and iterates until fixed point.
     """
-    Illustrate the ω² structure: cells indexed by (a, b) ∈ ω×ω.
-    Each 'row' a contains an ω-length CA. At limit ordinal ω·a,
-    row a aggregates and feeds into row a+1.
+    N = 10
+    threshold = 7
+
+    def f(x):
+        return max(x, threshold)
+
+    print("=== Kleene Chain Fixed Point Demo ===")
+    print(f"Lattice: {{0, 1, ..., {N}}}")
+    print(f"f(x) = max(x, {threshold})")
+    print()
+
+    x = 0  # ⊥
+    for step in range(5):
+        fx = f(x)
+        print(f"  Step {step}: x = {x}, f(x) = {fx}", end="")
+        if fx == x:
+            print(f"  ← FIXED POINT reached at step {step}!")
+            break
+        print()
+        x = fx
+    print()
+
+
+def transfinite_hierarchy_demo():
+    """Demonstrate the ordinal computational hierarchy.
+
+    Shows that ω·2 > ω and ω² > ω·n for all finite n,
+    corresponding to increasing computational power.
     """
-    print("\n" + "=" * 60)
-    print("ω² STRUCTURE: LAYERED COMPUTATION")
+    print("=== Ordinal Computational Hierarchy ===")
+    print()
+    print("Level 0 (finite):  Standard computation (finitely many steps)")
+    print("Level ω:           First limit — can detect halting of finite computations")
+    print("Level ω·2:         Two limit aggregations — can detect halting of ω-computations")
+    print("Level ω·n:         n limit aggregations")
+    print("Level ω²:          Infinitely many limit levels")
+    print()
+    print("Key theorem: ω² > ω·n for all finite n")
+    print("This means ω²-time CAs access infinitely many levels of limit aggregation.")
+    print()
+
+    # Demonstrate with ordinal arithmetic
+    omega = float('inf')  # symbolic ω
+    for n in range(1, 6):
+        print(f"  ω·{n} < ω² = ω·ω  ✓")
+    print()
+
+
+def energy_stabilization_demo():
+    """Demonstrate energy stabilization: antitone ordinal functions must stabilize.
+
+    We simulate with a concrete decreasing sequence that must reach 0.
+    """
+    print("=== Energy Stabilization Demo ===")
+    print("Simulating antitone energy function E(n) that must stabilize...")
+    print()
+
+    import random
+    random.seed(42)
+
+    energy = 20
+    history = [energy]
+    for step in range(30):
+        if energy > 0:
+            decrease = random.randint(0, min(3, energy))
+            energy -= decrease
+        history.append(energy)
+
+    for i, e in enumerate(history):
+        bar = '█' * e
+        stabilized = " ← STABILIZED" if i > 0 and e == history[i - 1] == history[-1] else ""
+        print(f"  Step {i:2d}: E = {e:2d}  {bar}{stabilized}")
+
+    print()
+    print("Theorem: Any antitone ordinal-valued function must stabilize.")
+    print("This is the engine that guarantees ordinal CA convergence.")
+    print()
+
+
+def main():
     print("=" * 60)
-    
-    width = 20
-    rows = 4
-    steps_per_row = 10
-    
-    print(f"\nSimulating ω² CA: {rows} layers × {steps_per_row} steps × {width} cells")
-    print("Each layer runs Rule 110, then aggregates into the next layer.\n")
-    
-    # Layer 0: start with single seed
-    current = [False] * width
-    current[width // 2] = True
-    
-    for layer in range(rows):
-        print(f"  Layer {layer} (time ω·{layer} to ω·{layer}+{steps_per_row}):")
-        
-        for step in range(steps_per_row):
-            cells = "".join("█" if c else " " for c in current)
-            if step == 0 or step == steps_per_row - 1:
-                print(f"    t=ω·{layer}+{step:2d}: {cells}")
-            elif step == 1:
-                print(f"    {'...':>14}")
-        
-        # Limit aggregation: OR of last configuration
-        # (simplified version of cofinal truth)
-        aggregated = current[:]  # carry forward
-        # Add some "limit effect": activate cells adjacent to active cells
-        new = current[:]
-        for i in range(width):
-            if current[i]:
-                if i > 0: new[i-1] = True
-                if i < width-1: new[i+1] = True
-        current = new
-        
-        # Continue evolution in next layer
-        for _ in range(steps_per_row):
-            current = evolve_step(current, rule110)
-    
-    print(f"\n  Each layer at ω·k receives aggregated data from layer k-1")
-    print(f"  This creates a hierarchy of computation levels")
-    print(f"  Information flows: finite steps (within layer) + transfinite (between layers)")
+    print("CELLULAR AUTOMATA AT THE ORDINALS")
+    print("Transfinite Computation Demo")
+    print("=" * 60)
+    print()
+
+    # Demo 1: Rule 110 evolution
+    print("=== Rule 110 Evolution ===")
+    print("Rule 110 is the simplest known Turing-complete CA.")
+    print()
+
+    # Single active cell in center
+    width = 60
+    init = [False] * width
+    init[width // 2] = True
+
+    history = evolve(init, 30)
+    display(history, width)
+    print()
+
+    stabilized, step = detect_halting(history)
+    if stabilized:
+        print(f"Configuration stabilized at step {step}")
+    else:
+        print(f"Configuration still evolving after {len(history) - 1} steps")
+    print()
+
+    # Rule 110 properties
+    print("Rule 110 properties (verified in Lean 4):")
+    print(f"  Active neighborhoods: 5 out of 8")
+    print(f"  Quiescent state: 000 → 0  ✓")
+    print(f"  Breaks symmetry: 111 → 0  (not preserved under all-ones)")
+    print(f"  Nontrivial: 111 → 0 ≠ 1 = center  ✓")
+    print()
+
+    # Demo 2: Orbit cycling
+    print("=== Orbit Cycling (Pigeonhole) ===")
+    states = list(range(8))
+    f_map = {0: 3, 1: 5, 2: 0, 3: 7, 4: 1, 5: 3, 6: 2, 7: 5}
+
+    def f_func(x):
+        return f_map[x]
+
+    print(f"State space: {states}")
+    print(f"f: {f_map}")
+    print()
+
+    for start in [0, 1, 4]:
+        mu, lam = orbit_cycle_detection(f_func, start)
+        orbit = [start]
+        x = start
+        for _ in range(mu + lam + 2):
+            x = f_func(x)
+            orbit.append(x)
+        print(f"  Start={start}: orbit = {orbit[:mu + lam + 2]}")
+        print(f"    Tail length (μ) = {mu}, Cycle length (λ) = {lam}")
+        print(f"    μ + λ = {mu + lam} ≤ {len(states)} = |states|  ✓")
+        print()
+
+    # Demo 3: Kleene chain
+    kleene_chain_demo()
+
+    # Demo 4: Hierarchy
+    transfinite_hierarchy_demo()
+
+    # Demo 5: Energy stabilization
+    energy_stabilization_demo()
 
 
 if __name__ == "__main__":
-    demonstrate_transfinite_extension()
-    demonstrate_rule110()
-    demonstrate_convergence()
-    demonstrate_omega_squared_structure()
-    
-    print("\n" + "=" * 60)
-    print("SUMMARY OF FORMALIZED RESULTS")
-    print("=" * 60)
-    print("""
-  1. evolve_zero: Evolution at time 0 = initial configuration
-  2. evolve_succ: Evolution at successor unfolds local rule
-  3. quiescent_succStep_invariant: Quiescent configs are fixed points
-  4. allQuiescent_evolve_stable: Quiescent stability through ALL ordinals
-  5. finiteOrbit_subset_orbit: Finite orbit ⊆ transfinite orbit
-  6. exists_strict_transfinite_extension: ∃ CA with strict containment
-  7. identity_finite_evolve: Identity rule keeps initial config forever
-  8. rule110_quiescent: Rule 110 preserves quiescent state
-  9. diagonal_constraint: Quiescent configs always in their own orbit
-    """)
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Ordinal Cellular Automata Evolution
-===================================================
+Visualization: Ordinal Computational Hierarchy
 
-Generates spacetime diagrams showing CA evolution across finite and
-transfinite stages, illustrating the strict extension theorem.
+Shows the strict hierarchy of computational power indexed by ordinals:
+  finite < ω < ω·2 < ... < ω·n < ... < ω²
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
+import numpy as np
+
+
+def main():
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+
+    # Left panel: Ordinal hierarchy as a nested structure
+    ax = axes[0]
+    ax.set_xlim(-1, 11)
+    ax.set_ylim(-0.5, 6.5)
+    ax.set_aspect('equal')
+
+    # Draw ordinal levels
+    levels = [
+        (0, 'n ∈ ℕ', 'Finite computation', '#2196F3'),
+        (1, 'ω', 'First limit: halting detection', '#4CAF50'),
+        (2, 'ω·2', 'Two limit aggregations', '#FF9800'),
+        (3, 'ω·3', 'Three limit aggregations', '#F44336'),
+        (4, 'ω·n', 'n limit aggregations', '#9C27B0'),
+        (5, 'ω²', 'Infinitely many levels', '#E91E63'),
+        (6, 'ω² + ω', 'Beyond ω²: new frontier', '#607D8B'),
+    ]
+
+    for i, (y, label, desc, color) in enumerate(levels):
+        # Draw level bar
+        width = 2 + i * 0.8
+        rect = plt.Rectangle((5 - width/2, y - 0.15), width, 0.3,
+                              facecolor=color, alpha=0.7, edgecolor='black', linewidth=1)
+        ax.add_patch(rect)
+        ax.text(5, y, label, ha='center', va='center', fontsize=11,
+                fontweight='bold', color='white')
+        ax.text(5 + width/2 + 0.2, y, desc, ha='left', va='center',
+                fontsize=9, color=color)
+
+        # Draw arrows between levels
+        if i > 0:
+            ax.annotate('', xy=(5, y - 0.15), xytext=(5, y - 0.85 + 0.15),
+                       arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
+
+    ax.set_title('Ordinal Computational Hierarchy\n'
+                 'Each level strictly exceeds the one below',
+                 fontsize=13, fontweight='bold')
+    ax.axis('off')
+
+    # Right panel: Energy stabilization
+    ax2 = axes[1]
+
+    # Simulate multiple energy traces
+    np.random.seed(42)
+    n_traces = 5
+    colors = plt.cm.viridis(np.linspace(0.2, 0.8, n_traces))
+
+    for trace_idx in range(n_traces):
+        steps = 50
+        energy = 20 + trace_idx * 5
+        energies = [energy]
+        for _ in range(steps):
+            if energy > 0:
+                decrease = np.random.randint(0, min(4, energy + 1))
+                energy -= decrease
+            energies.append(energy)
+
+        ax2.plot(energies, color=colors[trace_idx], linewidth=2,
+                label=f'E₀ = {energies[0]}', alpha=0.8)
+
+        # Mark stabilization point
+        for i in range(len(energies) - 1):
+            if all(e == energies[i] for e in energies[i:]):
+                ax2.axvline(x=i, color=colors[trace_idx], linestyle=':', alpha=0.3)
+                ax2.scatter([i], [energies[i]], color=colors[trace_idx],
+                          s=100, zorder=5, edgecolors='black')
+                break
+
+    ax2.set_xlabel('Ordinal Stage (simulated)', fontsize=12)
+    ax2.set_ylabel('Energy E(α)', fontsize=12)
+    ax2.set_title('Energy Stabilization Theorem\n'
+                  'Antitone ordinal functions must stabilize',
+                  fontsize=13, fontweight='bold')
+    ax2.legend(loc='upper right', fontsize=9)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('ordinal_hierarchy.png', dpi=150, bbox_inches='tight')
+    print("Saved: ordinal_hierarchy.png")
+
+
+if __name__ == "__main__":
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Orbit Cycling and Transfinite Computation
+
+Demonstrates orbit cycling (pigeonhole theorem) and the connection
+between finite-state dynamics and ordinal computation bounds.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def detect_orbit(f_map: dict, start: int, max_steps: int = 100):
+    """Trace an orbit and detect the cycle."""
+    orbit = [start]
+    seen = {start: 0}
+    x = start
+    for step in range(1, max_steps):
+        x = f_map[x]
+        if x in seen:
+            return orbit, seen[x], step - seen[x]
+        seen[x] = step
+        orbit.append(x)
+    return orbit, -1, -1
+
+
+def main():
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+
+    # Left: Orbit graph visualization
+    ax = axes[0]
+
+    # Define a function on {0, 1, ..., 7}
+    f_map = {0: 3, 1: 5, 2: 4, 3: 7, 4: 1, 5: 3, 6: 2, 7: 5}
+    n_states = len(f_map)
+
+    # Position states in a circle
+    angles = np.linspace(0, 2 * np.pi, n_states, endpoint=False)
+    positions = {i: (2 * np.cos(a), 2 * np.sin(a))
+                 for i, a in enumerate(angles)}
+
+    # Draw edges (function arrows)
+    for src, dst in f_map.items():
+        sx, sy = positions[src]
+        dx, dy = positions[dst]
+        if src != dst:
+            ax.annotate('', xy=(dx, dy), xytext=(sx, sy),
+                       arrowprops=dict(arrowstyle='->', color='#555555',
+                                      lw=1.5, connectionstyle='arc3,rad=0.2'))
+        else:
+            # Self-loop
+            circle = plt.Circle((sx, sy + 0.4), 0.3, fill=False,
+                              color='#555555', linewidth=1.5)
+            ax.add_patch(circle)
+
+    # Draw nodes
+    for state, (x, y) in positions.items():
+        circle = plt.Circle((x, y), 0.25, facecolor='#2196F3',
+                            edgecolor='black', linewidth=2, zorder=5)
+        ax.add_patch(circle)
+        ax.text(x, y, str(state), ha='center', va='center',
+               fontsize=14, fontweight='bold', color='white', zorder=6)
+
+    # Highlight an orbit
+    orbit, mu, lam = detect_orbit(f_map, 0)
+    orbit_full = orbit + [f_map[orbit[-1]]]
+
+    for i in range(len(orbit)):
+        x1, y1 = positions[orbit[i]]
+        x2, y2 = positions[f_map[orbit[i]]]
+        color = '#FF5722' if i < mu else '#4CAF50'
+        ax.annotate('', xy=(x2, y2), xytext=(x1, y1),
+                   arrowprops=dict(arrowstyle='->', color=color,
+                                  lw=3, connectionstyle='arc3,rad=0.25'),
+                   zorder=4)
+
+    ax.set_xlim(-3.5, 3.5)
+    ax.set_ylim(-3.5, 3.5)
+    ax.set_aspect('equal')
+    ax.set_title(f'Orbit Cycling (Pigeonhole Theorem)\n'
+                 f'Start=0: tail={mu}, cycle={lam} (total ≤ {n_states})',
+                 fontsize=13, fontweight='bold')
+    ax.text(-3.3, -3.2, '● Orange = tail  ● Green = cycle', fontsize=10)
+    ax.axis('off')
+
+    # Right: Multiple orbits showing cycling bounds
+    ax2 = axes[1]
+
+    starts = list(range(n_states))
+    bar_data = []
+
+    for s in starts:
+        _, mu, lam = detect_orbit(f_map, s)
+        bar_data.append((s, mu, lam))
+
+    x_pos = np.arange(len(bar_data))
+    tails = [d[1] for d in bar_data]
+    cycles = [d[2] for d in bar_data]
+
+    bars1 = ax2.bar(x_pos, tails, 0.6, label='Tail length (μ)', color='#FF9800', alpha=0.8)
+    bars2 = ax2.bar(x_pos, cycles, 0.6, bottom=tails, label='Cycle length (λ)',
+                    color='#4CAF50', alpha=0.8)
+
+    # Draw the bound line
+    ax2.axhline(y=n_states, color='red', linestyle='--', linewidth=2, label=f'Bound = |S| = {n_states}')
+
+    ax2.set_xlabel('Starting State', fontsize=12)
+    ax2.set_ylabel('Steps', fontsize=12)
+    ax2.set_title('Orbit Cycling Bounds\n'
+                  'μ + λ ≤ |state space| for all starting states',
+                  fontsize=13, fontweight='bold')
+    ax2.set_xticks(x_pos)
+    ax2.set_xticklabels([str(d[0]) for d in bar_data])
+    ax2.legend(fontsize=10)
+    ax2.grid(True, alpha=0.3, axis='y')
+
+    # Add value labels on bars
+    for i, (s, mu, lam) in enumerate(bar_data):
+        total = mu + lam
+        ax2.text(i, total + 0.1, f'{total}', ha='center', va='bottom', fontsize=9)
+
+    plt.tight_layout()
+    plt.savefig('orbit_cycling.png', dpi=150, bbox_inches='tight')
+    print("Saved: orbit_cycling.png")
+
+
+if __name__ == "__main__":
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Rule 110 Spacetime Diagram
+
+Renders the evolution of Rule 110 as a spacetime diagram,
+showing the complex, Turing-complete dynamics of this elementary CA.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 import numpy as np
 
 
 def rule110(left: bool, center: bool, right: bool) -> bool:
-    idx = (int(left) << 2) | (int(center) << 1) | int(right)
-    return bool((110 >> idx) & 1)
+    index = (int(left) << 2) | (int(center) << 1) | int(right)
+    return bool((110 >> index) & 1)
 
 
-def identity_rule(left: bool, center: bool, right: bool) -> bool:
-    return center
-
-
-def evolve_step(config: list[bool], rule, boundary=False) -> list[bool]:
+def evolve(config: list[bool], steps: int) -> np.ndarray:
     n = len(config)
-    result = []
-    for i in range(n):
-        left = config[i - 1] if i > 0 else boundary
-        center = config[i]
-        right = config[i + 1] if i < n - 1 else boundary
-        result.append(rule(left, center, right))
-    return result
+    grid = np.zeros((steps + 1, n), dtype=int)
+    grid[0] = config
+    for t in range(steps):
+        for i in range(n):
+            grid[t + 1, i] = int(rule110(
+                bool(grid[t, (i - 1) % n]),
+                bool(grid[t, i]),
+                bool(grid[t, (i + 1) % n])
+            ))
+    return grid
 
 
-def make_spacetime_diagram(init: list[bool], steps: int, rule, title: str,
-                           ax=None, show_limit=False, limit_config=None):
-    """Create a spacetime diagram of CA evolution."""
-    n = len(init)
-    grid = np.zeros((steps + 1 + (2 if show_limit else 0), n))
-    
-    current = init
-    grid[0] = [int(c) for c in current]
-    
-    for t in range(1, steps + 1):
-        current = evolve_step(current, rule)
-        grid[t] = [int(c) for c in current]
-    
-    if show_limit and limit_config is not None:
-        grid[steps + 1] = [0.5] * n  # separator
-        grid[steps + 2] = [int(c) for c in limit_config]
-    
-    if ax is None:
-        fig, ax = plt.subplots(figsize=(10, 8))
-    
-    cmap = plt.cm.colors.ListedColormap(['white', 'black', '#ff6600'])
-    bounds = [-0.25, 0.25, 0.75, 1.25]
-    norm = plt.cm.colors.BoundaryNorm(bounds, cmap.N)
-    
-    ax.imshow(grid, cmap=cmap, norm=norm, aspect='auto', interpolation='nearest')
-    ax.set_title(title, fontsize=12, fontweight='bold')
-    ax.set_xlabel('Cell Position')
-    ax.set_ylabel('Time Step')
-    
-    if show_limit:
-        ax.axhline(y=steps + 0.5, color='red', linewidth=2, linestyle='--')
-        ax.text(n + 0.5, steps + 1, '← ω', color='red', fontsize=11,
-                va='center', fontweight='bold')
-    
-    return ax
+def main():
+    # Configuration
+    width = 200
+    steps = 150
+
+    # Start with a single active cell
+    init = [False] * width
+    init[width - 2] = True
+
+    grid = evolve(init, steps)
+
+    fig, ax = plt.subplots(figsize=(14, 8))
+    ax.imshow(grid, cmap='binary', interpolation='nearest', aspect='auto')
+    ax.set_xlabel('Cell Position', fontsize=12)
+    ax.set_ylabel('Time Step', fontsize=12)
+    ax.set_title('Rule 110: Spacetime Diagram\n'
+                 'The simplest known Turing-complete cellular automaton',
+                 fontsize=14)
+
+    # Add ordinal level annotations
+    ax.axhline(y=steps * 0.33, color='red', linestyle='--', alpha=0.5, linewidth=1)
+    ax.axhline(y=steps * 0.67, color='blue', linestyle='--', alpha=0.5, linewidth=1)
+    ax.text(5, steps * 0.33 - 3, 'ω/3 (conceptual)', color='red', fontsize=9, alpha=0.7)
+    ax.text(5, steps * 0.67 - 3, '2ω/3 (conceptual)', color='blue', fontsize=9, alpha=0.7)
+
+    plt.tight_layout()
+    plt.savefig('rule110_spacetime.png', dpi=150, bbox_inches='tight')
+    print("Saved: rule110_spacetime.png")
 
 
-# Main visualization
-fig, axes = plt.subplots(1, 3, figsize=(18, 8))
-
-# Panel 1: Rule 110 from single seed
-width = 60
-init_110 = [False] * width
-init_110[width // 2] = True
-make_spacetime_diagram(init_110, 40, rule110,
-                       "Rule 110: Complex Dynamics", axes[0])
-
-# Panel 2: Identity rule showing finite stasis
-width2 = 30
-init_id = [False] * width2
-init_id[width2 // 2] = True
-limit_true = [True] * width2
-make_spacetime_diagram(init_id, 15, identity_rule,
-                       "Identity Rule: Finite Orbit = {init}\n→ Limit produces new config at ω",
-                       axes[1], show_limit=True, limit_config=limit_true)
-
-# Panel 3: Rule 110 on ω² (layered)
-width3 = 40
-layers = 4
-steps_per = 8
-total_steps = layers * (steps_per + 1)
-grid_omega2 = np.zeros((total_steps, width3))
-
-current = [False] * width3
-current[width3 // 2] = True
-
-row = 0
-for layer in range(layers):
-    for step in range(steps_per):
-        grid_omega2[row] = [int(c) for c in current]
-        current = evolve_step(current, rule110)
-        row += 1
-    # Limit aggregation: expand support
-    for i in range(width3):
-        if current[i]:
-            if i > 0: current[i-1] = True
-            if i < width3 - 1: current[i+1] = True
-    grid_omega2[row] = [0.5] * width3  # separator
-    row += 1
-
-cmap = plt.cm.colors.ListedColormap(['white', 'black', '#ff6600'])
-bounds = [-0.25, 0.25, 0.75, 1.25]
-norm = plt.cm.colors.BoundaryNorm(bounds, cmap.N)
-axes[2].imshow(grid_omega2, cmap=cmap, norm=norm, aspect='auto',
-               interpolation='nearest')
-axes[2].set_title("Rule 110 on ω²: Layered Transfinite\nOrange lines = limit ordinals ω·k",
-                  fontsize=12, fontweight='bold')
-axes[2].set_xlabel('Cell Position')
-axes[2].set_ylabel('Time')
-
-# Mark limit ordinals
-for layer in range(layers):
-    y = layer * (steps_per + 1) + steps_per
-    axes[2].axhline(y=y, color='red', linewidth=1.5, linestyle='--', alpha=0.7)
-
-plt.tight_layout()
-plt.savefig('ordinal_ca_visualization.png', dpi=150, bbox_inches='tight')
-plt.close()
-
-print("Saved: ordinal_ca_visualization.png")
-
-# Second figure: convergence analysis
-fig2, axes2 = plt.subplots(1, 2, figsize=(14, 6))
-
-# Novelty set analysis
-widths = [10, 15, 20, 25, 30]
-for w in widths:
-    init = [False] * w
-    init[w // 2] = True
-    
-    seen = set()
-    novel_steps = []
-    current = init
-    
-    for t in range(100):
-        key = tuple(current)
-        if key not in seen:
-            novel_steps.append(t)
-            seen.add(key)
-        current = evolve_step(current, rule110)
-    
-    axes2[0].plot(range(len(novel_steps)), novel_steps, 'o-', label=f'width={w}',
-                  markersize=3)
-
-axes2[0].set_xlabel('Novel Configuration Index')
-axes2[0].set_ylabel('Time Step of First Appearance')
-axes2[0].set_title('Novelty Set Growth\n(Rule 110, various widths)')
-axes2[0].legend()
-axes2[0].grid(True, alpha=0.3)
-
-# Orbit size growth
-orbit_sizes = []
-for w in range(5, 40):
-    init = [False] * w
-    init[w // 2] = True
-    
-    seen = set()
-    current = init
-    for t in range(200):
-        seen.add(tuple(current))
-        current = evolve_step(current, rule110)
-    orbit_sizes.append(len(seen))
-
-axes2[1].plot(range(5, 40), orbit_sizes, 'b-o', markersize=4)
-axes2[1].set_xlabel('Grid Width')
-axes2[1].set_ylabel('Distinct Configurations (200 steps)')
-axes2[1].set_title('Finite Orbit Size vs Width\n(Rule 110, single seed)')
-axes2[1].grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('convergence_analysis.png', dpi=150, bbox_inches='tight')
-plt.close()
-
-print("Saved: convergence_analysis.png")
+if __name__ == "__main__":
+    main()

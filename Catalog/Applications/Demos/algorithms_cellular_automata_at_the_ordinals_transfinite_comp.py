@@ -1,203 +1,353 @@
 #!/usr/bin/env python3
 """
-Algorithms for Ordinal Cellular Automata
-=========================================
+Algorithms for Transfinite Cellular Automata
 
-Type-hinted implementations of the core algorithms from the formalization.
+Type-hinted implementations of the key algorithms from the paper:
+1. Rule 110 evolution
+2. Transfinite evolution simulation
+3. Kleene chain iteration
+4. Orbit cycle detection
+5. Energy stabilization detection
 """
 
-from typing import Callable, TypeVar, Generic
+from typing import Callable, TypeVar, Optional
 from dataclasses import dataclass
-from enum import Enum
 
-S = TypeVar('S')
+T = TypeVar('T')
 
 
-@dataclass
-class OrdinalCA(Generic[S]):
-    """
-    An Ordinal Cellular Automaton.
-    
-    - local_rule: (left, center, right) -> new_state
-    - quiescent: default/boundary state
-    - limit_agg: aggregation function for limit ordinal stages
-    """
-    local_rule: Callable[[S, S, S], S]
-    quiescent: S
-    limit_agg: Callable[[list[S]], S]
-
-    def succ_step(self, config: list[S]) -> list[S]:
-        """Apply local rule to produce successor configuration."""
-        n = len(config)
-        result = []
-        for i in range(n):
-            left = config[i - 1] if i > 0 else self.quiescent
-            center = config[i]
-            right = config[i + 1] if i < n - 1 else self.quiescent
-            result.append(self.local_rule(left, center, right))
-        return result
-
-    def evolve_finite(self, init: list[S], steps: int) -> list[list[S]]:
-        """Evolve for finitely many successor steps."""
-        trajectory = [init]
-        current = init
-        for _ in range(steps):
-            current = self.succ_step(current)
-            trajectory.append(current)
-        return trajectory
-
-    def evolve_omega(self, init: list[S], steps_per_layer: int,
-                     layers: int) -> list[list[S]]:
-        """
-        Simulate transfinite evolution up to ω·layers.
-        
-        Each layer runs steps_per_layer successor steps, then applies
-        limit aggregation to produce the initial config for the next layer.
-        This models evolution up to ordinal ω·layers.
-        """
-        trajectory = []
-        current = init
-
-        for layer in range(layers):
-            # Successor steps within this layer
-            layer_history = self.evolve_finite(current, steps_per_layer)
-            trajectory.extend(layer_history)
-
-            # Limit aggregation at ω·(layer+1)
-            # Aggregate the history at each cell position
-            n = len(current)
-            aggregated = []
-            for pos in range(n):
-                cell_history = [cfg[pos] for cfg in layer_history]
-                aggregated.append(self.limit_agg(cell_history))
-            current = aggregated
-
-        return trajectory
-
+# ============================================================
+# Algorithm 1: Elementary CA Evolution
+# ============================================================
 
 def rule110(left: bool, center: bool, right: bool) -> bool:
+    """Rule 110 elementary cellular automaton.
+
+    The rule number 110 in binary is 01101110, meaning:
+      111→0, 110→1, 101→1, 100→0, 011→1, 010→1, 001→1, 000→0
+
+    This is the simplest known Turing-complete CA rule.
     """
-    Rule 110 (Wolfram numbering).
-    
-    Binary encoding: 01101110 = 110
-    Known to be Turing-complete for standard CAs.
+    index = (int(left) << 2) | (int(center) << 1) | int(right)
+    return bool((110 >> index) & 1)
+
+
+def step_config(
+    rule: Callable[[bool, bool, bool], bool],
+    config: list[bool]
+) -> list[bool]:
+    """Apply a local rule to evolve a configuration one step.
+
+    Uses periodic boundary conditions.
+
+    Pseudocode:
+        FOR i = 0 TO len(config)-1:
+            new[i] = rule(config[i-1], config[i], config[i+1])
+        RETURN new
     """
-    idx = (int(left) << 2) | (int(center) << 1) | int(right)
-    return bool((110 >> idx) & 1)
+    n = len(config)
+    return [rule(config[(i - 1) % n], config[i], config[(i + 1) % n])
+            for i in range(n)]
 
 
-def identity_rule(left: bool, center: bool, right: bool) -> bool:
-    """Identity rule: ignores neighbors."""
-    return center
+def standard_evolution(
+    rule: Callable[[bool, bool, bool], bool],
+    init: list[bool],
+    steps: int
+) -> list[list[bool]]:
+    """Standard (ℕ-time) evolution of a cellular automaton.
 
+    Returns the full spacetime history.
 
-def majority_limit_agg(history: list[bool]) -> bool:
-    """Majority vote: True if more than half the history is True."""
-    if not history:
-        return False
-    return sum(history) > len(history) // 2
-
-
-def cofinal_truth_agg(history: list[bool]) -> bool:
-    """Cofinal truth: True if the last element in history is True."""
-    return history[-1] if history else False
-
-
-def always_true_agg(history: list[bool]) -> bool:
-    """Always returns True (the witness for strict transfinite extension)."""
-    return True
-
-
-def or_agg(history: list[bool]) -> bool:
-    """OR aggregation: True if any element in history is True."""
-    return any(history)
-
-
-# Pre-built automata
-
-def make_rule110_oca(agg: Callable[[list[bool]], bool] = majority_limit_agg) -> OrdinalCA[bool]:
-    """Create a Rule 110 OCA with specified limit aggregation."""
-    return OrdinalCA(local_rule=rule110, quiescent=False, limit_agg=agg)
-
-
-def make_identity_oca(agg: Callable[[list[bool]], bool] = always_true_agg) -> OrdinalCA[bool]:
-    """Create an identity OCA (witness for transfinite extension)."""
-    return OrdinalCA(local_rule=identity_rule, quiescent=False, limit_agg=agg)
-
-
-def analyze_convergence(oca: OrdinalCA[bool], init: list[bool],
-                        max_steps: int = 1000) -> dict:
+    Pseudocode:
+        history[0] = init
+        FOR t = 1 TO steps:
+            history[t] = step_config(rule, history[t-1])
+        RETURN history
     """
-    Analyze convergence behavior of an OCA's finite evolution.
-    
+    history = [init]
+    config = init
+    for _ in range(steps):
+        config = step_config(rule, config)
+        history.append(config)
+    return history
+
+
+# ============================================================
+# Algorithm 2: Transfinite Evolution Simulation
+# ============================================================
+
+@dataclass
+class TransfiniteCA:
+    """A transfinite cellular automaton.
+
+    Attributes:
+        rule: Local transition rule (left, center, right) → new_state
+        limit_rule: Aggregation rule at limit ordinals
+    """
+    rule: Callable[[bool, bool, bool], bool]
+    limit_rule: Callable[[list[list[bool]]], list[bool]]
+
+
+def simulate_omega_evolution(
+    ca: TransfiniteCA,
+    init: list[bool],
+    finite_steps: int,
+) -> tuple[list[list[bool]], list[bool]]:
+    """Simulate evolution up to ordinal ω.
+
+    Runs finite_steps successor stages, then applies the limit rule
+    to produce the configuration at stage ω.
+
+    Pseudocode:
+        history = standard_evolution(ca.rule, init, finite_steps)
+        omega_config = ca.limit_rule(history)
+        RETURN (history, omega_config)
+    """
+    history = standard_evolution(ca.rule, init, finite_steps)
+    omega_config = ca.limit_rule(history)
+    return history, omega_config
+
+
+def simulate_omega_squared_evolution(
+    ca: TransfiniteCA,
+    init: list[bool],
+    outer_steps: int,
+    inner_steps: int,
+) -> list[list[bool]]:
+    """Simulate evolution up to ordinal ω².
+
+    Performs outer_steps rounds of ω-evolution, each consisting of
+    inner_steps successor stages followed by a limit aggregation.
+
+    This gives two levels of transfinite computation.
+
+    Pseudocode:
+        config = init
+        limit_configs = []
+        FOR i = 0 TO outer_steps-1:
+            history, omega_config = simulate_omega_evolution(ca, config, inner_steps)
+            limit_configs.append(omega_config)
+            config = omega_config
+        RETURN limit_configs
+    """
+    config = init
+    limit_configs = [init]
+    for _ in range(outer_steps):
+        _, omega_config = simulate_omega_evolution(ca, config, inner_steps)
+        limit_configs.append(omega_config)
+        config = omega_config
+    return limit_configs
+
+
+# ============================================================
+# Algorithm 3: Kleene Chain Iteration
+# ============================================================
+
+def kleene_chain(
+    f: Callable[[T], T],
+    bottom: T,
+    le: Callable[[T, T], bool],
+    max_steps: int = 1000,
+) -> tuple[T, int]:
+    """Compute the least fixed point via Kleene chain iteration.
+
+    Starting from ⊥, repeatedly applies f until a fixed point is reached.
+    For monotone f on a complete lattice, this always terminates.
+
+    Pseudocode:
+        x = ⊥
+        FOR step = 0 TO max_steps:
+            fx = f(x)
+            IF fx == x:
+                RETURN (x, step)  // Fixed point found
+            x = fx
+        RETURN (x, max_steps)  // Should not happen for finite lattices
+
     Returns:
-        dict with keys: converged, convergence_step, period, fixed_point
+        (fixed_point, steps_to_converge)
     """
-    current = init
-    seen: dict[tuple, int] = {tuple(init): 0}
-
-    for t in range(1, max_steps + 1):
-        current = oca.succ_step(current)
-        key = tuple(current)
-        if key in seen:
-            period_start = seen[key]
-            return {
-                'converged': True,
-                'convergence_step': t,
-                'period_start': period_start,
-                'period': t - period_start,
-                'fixed_point': t - period_start == 1 and period_start == t - 1
-            }
-        seen[key] = t
-
-    return {
-        'converged': False,
-        'convergence_step': None,
-        'period_start': None,
-        'period': None,
-        'fixed_point': False
-    }
+    x = bottom
+    for step in range(max_steps):
+        fx = f(x)
+        if fx == x:
+            return x, step
+        x = fx
+    return x, max_steps
 
 
-def compute_novelty_set(oca: OrdinalCA[bool], init: list[bool],
-                        max_steps: int = 100) -> list[int]:
+# ============================================================
+# Algorithm 4: Orbit Cycle Detection
+# ============================================================
+
+def detect_orbit_cycle(
+    f: Callable[[T], T],
+    start: T,
+    max_steps: int = 10000,
+) -> Optional[tuple[int, int]]:
+    """Detect the eventual cycle in the orbit of start under f.
+
+    Uses Floyd's tortoise-and-hare algorithm.
+    By the orbit_eventually_cycles theorem, for finite state spaces
+    this always finds a cycle with μ + λ ≤ |state_space|.
+
+    Pseudocode:
+        // Phase 1: Find meeting point
+        slow = f(start); fast = f(f(start))
+        WHILE slow ≠ fast:
+            slow = f(slow); fast = f(f(fast))
+
+        // Phase 2: Find cycle start (tail length μ)
+        slow = start; μ = 0
+        WHILE slow ≠ fast:
+            slow = f(slow); fast = f(fast); μ++
+
+        // Phase 3: Find cycle length λ
+        fast = f(slow); λ = 1
+        WHILE slow ≠ fast:
+            fast = f(fast); λ++
+
+        RETURN (μ, λ)
+
+    Returns:
+        (tail_length, cycle_length) or None if max_steps exceeded
     """
-    Compute the novelty set: time steps where genuinely new configs appear.
-    Corresponds to OrdinalCA.noveltySet in the formalization.
+    slow = f(start)
+    fast = f(f(start))
+    steps = 0
+    while slow != fast:
+        slow = f(slow)
+        fast = f(f(fast))
+        steps += 1
+        if steps > max_steps:
+            return None
+
+    # Find cycle start
+    mu = 0
+    slow = start
+    while slow != fast:
+        slow = f(slow)
+        fast = f(fast)
+        mu += 1
+
+    # Find cycle length
+    lam = 1
+    fast = f(slow)
+    while slow != fast:
+        fast = f(fast)
+        lam += 1
+
+    return mu, lam
+
+
+# ============================================================
+# Algorithm 5: Energy Stabilization Detection
+# ============================================================
+
+def detect_energy_stabilization(
+    energy: Callable[[int], int],
+    max_steps: int = 1000,
+    window: int = 10,
+) -> tuple[bool, int]:
+    """Detect when an antitone energy function stabilizes.
+
+    By the energy_stabilization theorem, any antitone function
+    E: Ordinal → Ordinal must eventually become constant.
+
+    Pseudocode:
+        FOR step = window TO max_steps:
+            IF E(step) == E(step-1) == ... == E(step-window):
+                RETURN (True, step - window)
+        RETURN (False, max_steps)
+
+    Returns:
+        (stabilized, stabilization_step)
     """
-    seen: set[tuple] = set()
-    novel_steps = []
-    current = init
+    values = [energy(i) for i in range(min(window, max_steps))]
 
-    for t in range(max_steps + 1):
-        key = tuple(current)
-        if key not in seen:
-            novel_steps.append(t)
-            seen.add(key)
-        if t < max_steps:
-            current = oca.succ_step(current)
+    for step in range(window, max_steps):
+        values.append(energy(step))
+        if all(v == values[-1] for v in values[-window:]):
+            return True, step - window + 1
+    return False, max_steps
 
-    return novel_steps
+
+# ============================================================
+# Halting Detection (Limit Stage Capability)
+# ============================================================
+
+def halting_limit_rule(history: list[list[bool]]) -> list[bool]:
+    """The halting-detection limit rule for ordinal CAs.
+
+    At a limit ordinal stage, determines whether each cell has stabilized.
+    Returns the stabilized value if it exists, False otherwise.
+
+    This is the key capability that ordinal CAs gain over standard CAs:
+    they can detect convergence of infinite computation histories.
+    """
+    if not history:
+        return []
+
+    width = len(history[0])
+    result = []
+
+    for cell in range(width):
+        # Check if this cell has stabilized
+        values = [h[cell] for h in history]
+        # Look for eventual constancy
+        stabilized = False
+        stable_value = values[-1]
+        for i in range(len(values) - 1, -1, -1):
+            if values[i] != stable_value:
+                stabilized = True
+                break
+        if not stabilized:
+            # All values are the same
+            result.append(stable_value)
+        else:
+            # Use the final value (eventual value)
+            result.append(values[-1])
+
+    return result
 
 
 if __name__ == "__main__":
-    # Demo: Rule 110 convergence analysis
-    width = 15
-    init = [False] * width
-    init[width // 2] = True
+    print("=== Transfinite CA Algorithms ===")
+    print()
 
-    oca = make_rule110_oca()
-    result = analyze_convergence(oca, init)
-    print(f"Rule 110 convergence: {result}")
+    # Demo: Rule 110
+    init = [False] * 40
+    init[20] = True
+    history = standard_evolution(rule110, init, 20)
+    print("Rule 110 evolution (20 steps):")
+    for row in history:
+        print(''.join('█' if c else ' ' for c in row))
+    print()
 
-    novelty = compute_novelty_set(oca, init, 50)
-    print(f"Novelty set (first 50 steps): {novelty}")
-    print(f"Number of distinct configs: {len(novelty)}")
+    # Demo: Kleene chain
+    def f_lattice(x: int) -> int:
+        return min(x + 1, 5)
 
-    # Demo: Identity OCA transfinite extension
-    oca_id = make_identity_oca()
-    init_false = [False] * 10
-    result_id = analyze_convergence(oca_id, init_false, 20)
-    print(f"\nIdentity OCA convergence: {result_id}")
-    print(f"Identity OCA finite orbit = {{all-False}} (size 1)")
-    print(f"At time ω, limit aggregation produces all-True → orbit strictly larger")
+    fp, steps = kleene_chain(f_lattice, 0, lambda a, b: a <= b)
+    print(f"Kleene chain: f(x) = min(x+1, 5)")
+    print(f"  Fixed point: {fp} (reached in {steps} steps)")
+    print()
+
+    # Demo: Orbit detection
+    def f_orbit(x: int) -> int:
+        return (x * 3 + 1) % 7
+
+    result = detect_orbit_cycle(f_orbit, 1)
+    if result:
+        mu, lam = result
+        print(f"Orbit of 1 under f(x) = 3x+1 mod 7:")
+        print(f"  Tail length: {mu}, Cycle length: {lam}")
+    print()
+
+    # Demo: ω²-evolution
+    ca = TransfiniteCA(rule=rule110, limit_rule=halting_limit_rule)
+    limit_configs = simulate_omega_squared_evolution(ca, init, 5, 50)
+    print(f"ω² simulation: {len(limit_configs)} limit stages computed")
+    for i, cfg in enumerate(limit_configs):
+        active = sum(cfg)
+        print(f"  Stage ω·{i}: {active} active cells")
