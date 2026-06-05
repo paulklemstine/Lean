@@ -1,245 +1,307 @@
 #!/usr/bin/env python3
 """
-Holographic Primes: Core Algorithms
+Holographic Depth Algebra: Core Algorithms
 
-Type-hinted implementations of the holographic prime dictionary.
+Type-hinted implementations of the key algorithms from the
+Holographic Depth Algebra framework.
 """
 
 import math
-from typing import List, Tuple, Dict, Callable
+from typing import Callable, Dict, List, Optional, Tuple
 
 
-def sieve_of_eratosthenes(n: int) -> List[int]:
-    """Return all primes up to n using the Sieve of Eratosthenes.
+# ============================================================
+# Core Data Structures
+# ============================================================
 
-    Time: O(n log log n), Space: O(n)
+class HolographicDepthAlgebra:
+    """A Holographic Depth Algebra with customizable boundary weights.
+
+    The canonical instance uses w(p) = log(p), yielding depth(n) = log(n).
     """
-    if n < 2:
-        return []
-    is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i * i, n + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, n + 1) if is_prime[i]]
+
+    def __init__(self, weight: Optional[Callable[[int], float]] = None):
+        """Initialize with a weight function w: prime -> R+.
+
+        Args:
+            weight: Boundary weight function. Default: w(p) = log(p).
+        """
+        self.weight = weight or (lambda p: math.log(p))
+
+    def depth(self, n: int) -> float:
+        """Compute holographic depth from prime factorization.
+
+        depth(n) = sum_{p | n} v_p(n) * w(p)
+
+        Args:
+            n: A positive integer.
+
+        Returns:
+            The holographic depth of n.
+        """
+        if n <= 0:
+            raise ValueError(f"n must be positive, got {n}")
+        if n == 1:
+            return 0.0
+        factors = self._factorize(n)
+        return sum(exp * self.weight(p) for p, exp in factors.items())
+
+    def local_partition(self, p: int, beta: float) -> float:
+        """Local partition function Z_p(beta) = (1 - p^{-beta})^{-1}.
+
+        Args:
+            p: A prime number.
+            beta: Inverse temperature (must be positive).
+
+        Returns:
+            The local partition function value.
+        """
+        return 1.0 / (1.0 - p ** (-beta))
+
+    def local_free_energy(self, p: int, beta: float) -> float:
+        """Local free energy F_p(beta) = log(1 - p^{-beta}).
+
+        Args:
+            p: A prime number.
+            beta: Inverse temperature (must be positive).
+
+        Returns:
+            The local free energy (always non-positive for beta > 0).
+        """
+        return math.log(1.0 - p ** (-beta))
+
+    def boltzmann(self, p: int, beta: float) -> float:
+        """Boltzmann weight b_p(beta) = p^{-beta}.
+
+        Args:
+            p: A prime number.
+            beta: Inverse temperature.
+
+        Returns:
+            The Boltzmann weight.
+        """
+        return p ** (-beta)
+
+    def boundary_entropy(self, p: int) -> float:
+        """Boundary entropy S(p) = log(p).
+
+        Args:
+            p: A prime number.
+
+        Returns:
+            The boundary entropy of prime p.
+        """
+        return math.log(p)
+
+    @staticmethod
+    def _factorize(n: int) -> Dict[int, int]:
+        """Compute prime factorization of n."""
+        factors: Dict[int, int] = {}
+        d = 2
+        while d * d <= n:
+            while n % d == 0:
+                factors[d] = factors.get(d, 0) + 1
+                n //= d
+            d += 1
+        if n > 1:
+            factors[n] = factors.get(n, 0) + 1
+        return factors
 
 
-def prime_factorization(n: int) -> List[Tuple[int, int]]:
-    """Return the prime factorization of n as [(p1, e1), (p2, e2), ...].
+# ============================================================
+# Arithmetic RG Flow
+# ============================================================
 
-    Time: O(√n)
+class ArithmeticRGFlow:
+    """Arithmetic Renormalization Group operator.
+
+    R_beta(f)(n) = f(n) * n^{-beta}
+
+    Satisfies the semigroup law: R_alpha . R_beta = R_{alpha + beta}
     """
-    if n <= 1:
-        return []
-    factors: List[Tuple[int, int]] = []
-    d = 2
-    while d * d <= n:
-        exp = 0
-        while n % d == 0:
-            n //= d
-            exp += 1
-        if exp > 0:
-            factors.append((d, exp))
-        d += 1
-    if n > 1:
-        factors.append((n, 1))
-    return factors
+
+    def __init__(self, f: Callable[[int], float]):
+        """Initialize with base function f.
+
+        Args:
+            f: Arithmetic function f: N -> R.
+        """
+        self.f = f
+
+    def rescale(self, beta: float, n: int) -> float:
+        """Apply RG operator at depth beta.
+
+        Args:
+            beta: Depth parameter.
+            n: Positive integer.
+
+        Returns:
+            f(n) * n^{-beta}
+        """
+        if n <= 0:
+            raise ValueError(f"n must be positive, got {n}")
+        return self.f(n) * n ** (-beta)
+
+    def dirichlet_partial_sum(self, beta: float, N: int) -> float:
+        """Compute partial Dirichlet series sum_{n=1}^{N} f(n) * n^{-beta}.
+
+        Args:
+            beta: Depth parameter (Re(s) in Dirichlet series).
+            N: Upper summation bound.
+
+        Returns:
+            The partial sum.
+        """
+        return sum(self.rescale(beta, n) for n in range(1, N + 1))
 
 
-def local_partition_function(p: int, beta: float) -> float:
-    """Compute Z_p(β) = (1 - p^{-β})⁻¹.
+# ============================================================
+# Holographic Reconstruction
+# ============================================================
 
-    The local partition function in the holographic dictionary.
-    Requires: p ≥ 2, β > 0.
-    """
-    return 1.0 / (1.0 - p ** (-beta))
-
-
-def bulk_weight(p: int, beta: float) -> float:
-    """Compute w_p(β) = -log(1 - p^{-β}).
-
-    The bulk weight, satisfying w_p(β) = log Z_p(β).
-    Requires: p ≥ 2, β > 0.
-    """
-    return -math.log(1.0 - p ** (-beta))
-
-
-def boundary_entropy(p: int) -> float:
-    """Compute S_p = log(p).
-
-    The boundary entropy of prime p.
-    """
-    return math.log(p)
-
-
-def holographic_free_energy(p: int, beta: float) -> float:
-    """Compute F_p(β) = log(1 - p^{-β}).
-
-    The holographic free energy, negative of the bulk weight.
-    """
-    return math.log(1.0 - p ** (-beta))
-
-
-def chebyshev_theta(n: int) -> float:
-    """Compute θ(n) = Σ_{p ≤ n, prime p} log(p).
-
-    The boundary area in the holographic dictionary.
-    Time: O(n log log n)
-    """
-    return sum(math.log(p) for p in sieve_of_eratosthenes(n))
-
-
-def von_mangoldt(n: int) -> float:
-    """Compute Λ(n).
-
-    Returns log(p) if n = p^k for some prime p and k ≥ 1, else 0.
-    Time: O(√n)
-    """
-    if n <= 1:
-        return 0.0
-    factors = prime_factorization(n)
-    if len(factors) == 1:
-        return math.log(factors[0][0])
-    return 0.0
-
-
-def moebius(n: int) -> int:
-    """Compute μ(n), the Möbius function.
-
-    μ(1) = 1
-    μ(n) = (-1)^k if n is a product of k distinct primes
-    μ(n) = 0 if n has a squared prime factor
-    """
-    if n == 1:
-        return 1
-    factors = prime_factorization(n)
-    for _, e in factors:
-        if e > 1:
-            return 0
-    return (-1) ** len(factors)
-
-
-def euler_totient(n: int) -> int:
-    """Compute φ(n), Euler's totient function.
-
-    φ(n) = n · ∏_{p|n} (1 - 1/p)
-    """
-    if n <= 0:
-        return 0
-    result = n
-    temp = n
-    d = 2
-    while d * d <= temp:
-        if temp % d == 0:
-            while temp % d == 0:
-                temp //= d
-            result -= result // d
-        d += 1
-    if temp > 1:
-        result -= result // temp
-    return result
-
-
-def omega_big(n: int) -> int:
-    """Compute Ω(n), the number of prime factors with multiplicity.
-
-    The "holographic depth" of n.
-    """
-    return sum(e for _, e in prime_factorization(n))
-
-
-def omega_small(n: int) -> int:
-    """Compute ω(n), the number of distinct prime factors."""
-    return len(prime_factorization(n))
-
-
-def liouville_function(n: int) -> int:
-    """Compute λ(n) = (-1)^{Ω(n)}.
-
-    The holographic parity function.
-    """
-    return (-1) ** omega_big(n)
-
-
-def finite_euler_product(n: int, beta: float) -> float:
-    """Compute ∏_{p ≤ n} Z_p(β).
-
-    The truncated bulk partition function.
-    """
-    result = 1.0
-    for p in sieve_of_eratosthenes(n):
-        result *= local_partition_function(p, beta)
-    return result
-
-
-def holographic_reconstruction(n: int) -> float:
-    """Reconstruct log(n) from von Mangoldt boundary data.
-
-    Computes Σ_{d|n} Λ(d) = log(n).
-    Time: O(√n · d(n)) where d(n) = number of divisors
-    """
-    if n <= 0:
-        return 0.0
-    total = 0.0
-    for d in range(1, n + 1):
-        if n % d == 0:
-            total += von_mangoldt(d)
-    return total
-
-
-def moebius_inversion(
-    f: Callable[[int], float],
+def holographic_reconstruct_additive(
+    boundary_data: Dict[int, float],
     n: int
 ) -> float:
-    """Apply Möbius inversion: g(n) = Σ_{d|n} μ(d) · f(n/d).
+    """Reconstruct bulk value from boundary data for completely additive f.
 
-    Given f = g * 1 (Dirichlet convolution with constant 1),
-    recovers g via the holographic inverse transform.
+    Given f(p) for primes p, computes f(n) = sum v_p(n) * f(p).
+
+    Args:
+        boundary_data: Dictionary {prime: f(prime)} of boundary values.
+        n: Positive integer to reconstruct.
+
+    Returns:
+        The reconstructed value f(n).
     """
-    total = 0.0
-    for d in range(1, n + 1):
-        if n % d == 0:
-            total += moebius(d) * f(n // d)
-    return total
+    if n <= 0:
+        raise ValueError(f"n must be positive, got {n}")
+    if n == 1:
+        return 0.0
+    factors = HolographicDepthAlgebra._factorize(n)
+    return sum(exp * boundary_data.get(p, 0.0) for p, exp in factors.items())
 
 
-def tropical_gap(p: int, beta: float) -> float:
-    """Compute the tropical-algebraic gap: Z_p(β) - exp(p^{-β}).
+def holographic_reconstruct_multiplicative(
+    boundary_data: Dict[Tuple[int, int], float],
+    n: int
+) -> float:
+    """Reconstruct bulk value from boundary data for multiplicative f.
 
-    This measures how much the tropical approximation underestimates
-    the exact partition function. Always ≥ 0.
+    Given f(p^k) for prime powers, computes f(n) = prod f(p^{v_p(n)}).
+
+    Args:
+        boundary_data: Dictionary {(p, k): f(p^k)} of boundary values.
+        n: Positive integer to reconstruct.
+
+    Returns:
+        The reconstructed value f(n).
     """
-    return local_partition_function(p, beta) - math.exp(p ** (-beta))
+    if n <= 0:
+        raise ValueError(f"n must be positive, got {n}")
+    if n == 1:
+        return 1.0
+    factors = HolographicDepthAlgebra._factorize(n)
+    result = 1.0
+    for p, exp in factors.items():
+        result *= boundary_data.get((p, exp), 1.0)
+    return result
 
 
-def prime_zeta(beta: float, n_terms: int = 10000) -> float:
-    """Compute the prime zeta function P(β) = Σ_p p^{-β}.
+# ============================================================
+# Euler Product Computation
+# ============================================================
 
-    Converges for β > 1. Uses primes up to n_terms.
+def euler_product(beta: float, prime_bound: int = 10000) -> float:
+    """Compute the Euler product approximation to zeta(beta).
+
+    zeta(beta) = prod_{p <= prime_bound} (1 - p^{-beta})^{-1}
+
+    Args:
+        beta: Must be > 1 for convergence.
+        prime_bound: Upper bound for primes in the product.
+
+    Returns:
+        Approximate value of zeta(beta).
     """
-    return sum(p ** (-beta) for p in sieve_of_eratosthenes(n_terms))
+    hda = HolographicDepthAlgebra()
+    product = 1.0
+    d = 2
+    while d <= prime_bound:
+        if _is_prime(d):
+            product *= hda.local_partition(d, beta)
+        d += 1
+    return product
 
 
-def holographic_dictionary() -> Dict[str, str]:
-    """Return the holographic dictionary mapping physics ↔ number theory."""
-    return {
-        "Boundary CFT": "Ring Z/pZ for each prime p",
-        "Bulk gravity": "p-adic field Q_p",
-        "Local partition function": "Z_p(β) = (1 - p^{-β})⁻¹",
-        "Bulk partition function": "Riemann zeta ζ(s)",
-        "Holographic assembly": "Euler product formula",
-        "Holographic duality": "Functional equation Ξ(1-s) = Ξ(s)",
-        "Boundary entropy": "log(p)",
-        "Bulk reconstruction": "Von Mangoldt: Σ Λ(d) = log(n)",
-        "Holographic inverse": "Möbius function: μ * ζ = ε",
-        "RG flow parameter": "Depth β",
-        "c-theorem": "Z_p(β) strictly decreasing",
-        "Boundary factorization": "CRT: Z/mnZ ≅ Z/mZ × Z/nZ",
-    }
+def _is_prime(n: int) -> bool:
+    """Simple primality test."""
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
+
+# ============================================================
+# Entropy Bound Verification
+# ============================================================
+
+def verify_entropy_bound(p: int, beta: float) -> Tuple[float, float, bool]:
+    """Verify the holographic entropy bound: -F_p(beta) <= b/(1-b).
+
+    Args:
+        p: A prime number.
+        beta: Inverse temperature > 0.
+
+    Returns:
+        Tuple of (lhs, rhs, is_satisfied).
+    """
+    hda = HolographicDepthAlgebra()
+    lhs = -hda.local_free_energy(p, beta)
+    b = hda.boltzmann(p, beta)
+    rhs = b / (1.0 - b)
+    return (lhs, rhs, lhs <= rhs + 1e-15)
+
+
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == "__main__":
-    print("Holographic Dictionary:")
-    for physics, math_ in holographic_dictionary().items():
-        print(f"  {physics:30s} ↔ {math_}")
+    hda = HolographicDepthAlgebra()
+
+    # Demonstrate depth computation
+    print("Holographic depths (canonical HDA):")
+    for n in [1, 2, 6, 12, 60, 360]:
+        print(f"  depth({n}) = {hda.depth(n):.6f}")
+
+    # Demonstrate reconstruction
+    print("\nHolographic reconstruction (additive, f(p) = 1):")
+    boundary = {2: 1.0, 3: 1.0, 5: 1.0, 7: 1.0, 11: 1.0}
+    for n in [1, 2, 4, 6, 12, 60]:
+        val = holographic_reconstruct_additive(boundary, n)
+        factors = HolographicDepthAlgebra._factorize(n) if n > 1 else {}
+        omega = sum(factors.values())
+        print(f"  f({n}) = {val:.0f} = Ω({n}) = {omega}")
+
+    # Demonstrate RG flow
+    print("\nRG semigroup verification:")
+    rg = ArithmeticRGFlow(lambda n: float(n))
+    for n in [2, 5, 10]:
+        v1 = rg.rescale(1.0, n) * n ** (-2.0)  # R_2(R_1(id))
+        v2 = rg.rescale(3.0, n)                  # R_3(id)
+        print(f"  R_2(R_1(id))({n}) = {v1:.6f}, R_3(id)({n}) = {v2:.6f}")
+
+    # Euler product
+    print("\nEuler product approximations:")
+    for s in [2.0, 3.0, 4.0]:
+        val = euler_product(s, 1000)
+        print(f"  ζ({s:.0f}) ≈ {val:.10f}")

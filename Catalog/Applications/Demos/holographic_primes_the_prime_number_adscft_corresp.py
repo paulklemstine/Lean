@@ -1,537 +1,383 @@
 #!/usr/bin/env python3
 """
-Holographic Primes: Demonstration Script
+Holographic Depth Algebra: Numerical Demonstrations
 
-Numerical examples illustrating the holographic prime correspondence.
-Each demo verifies a theorem from the Lean formalization.
+Demonstrates key results from the Holographic Depth Algebra framework:
+1. Complete additivity of log (depth function)
+2. Local partition function properties
+3. Holographic entropy bound
+4. RG semigroup law
+5. Holographic reconstruction
 """
 
 import math
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 
 
-def is_prime(n: int) -> bool:
-    """Check if n is prime."""
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+def prime_factorization(n: int) -> Dict[int, int]:
+    """Return prime factorization as {prime: exponent} dict."""
+    factors = {}
+    d = 2
+    while d * d <= n:
+        while n % d == 0:
+            factors[d] = factors.get(d, 0) + 1
+            n //= d
+        d += 1
+    if n > 1:
+        factors[n] = factors.get(n, 0) + 1
+    return factors
+
+
+def holographic_depth(n: int) -> float:
+    """Compute holographic depth = log(n) = sum v_p(n) * log(p)."""
+    if n <= 0:
+        raise ValueError("n must be positive")
+    return math.log(n)
+
+
+def holographic_depth_from_boundary(n: int) -> float:
+    """Compute depth from boundary data (prime factorization)."""
+    if n <= 0:
+        raise ValueError("n must be positive")
+    if n == 1:
+        return 0.0
+    factors = prime_factorization(n)
+    return sum(exp * math.log(p) for p, exp in factors.items())
+
+
+def local_partition_fn(p: int, beta: float) -> float:
+    """Z_p(beta) = (1 - p^{-beta})^{-1}."""
+    return 1.0 / (1.0 - p ** (-beta))
+
+
+def local_free_energy(p: int, beta: float) -> float:
+    """F_p(beta) = log(1 - p^{-beta})."""
+    return math.log(1.0 - p ** (-beta))
+
+
+def boltzmann_weight(p: int, beta: float) -> float:
+    """b_p(beta) = p^{-beta}."""
+    return p ** (-beta)
+
+
+def entropy_bound_rhs(p: int, beta: float) -> float:
+    """x/(1-x) where x = p^{-beta}."""
+    x = p ** (-beta)
+    return x / (1.0 - x)
+
+
+def arithmetic_rg(beta: float, f, n: int) -> float:
+    """(R_beta f)(n) = f(n) * n^{-beta}."""
+    return f(n) * n ** (-beta)
 
 
 def primes_up_to(n: int) -> List[int]:
-    """Return list of primes up to n."""
-    return [p for p in range(2, n + 1) if is_prime(p)]
+    """Sieve of Eratosthenes."""
+    if n < 2:
+        return []
+    sieve = [True] * (n + 1)
+    sieve[0] = sieve[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if sieve[i]:
+            for j in range(i*i, n+1, i):
+                sieve[j] = False
+    return [i for i in range(2, n+1) if sieve[i]]
 
 
-def local_partition_fn(p: int, beta: float) -> float:
-    """Z_p(β) = (1 - p^{-β})^{-1}"""
-    return 1.0 / (1.0 - p ** (-beta))
+# ============================================================
+# DEMO 1: Complete Additivity of Log
+# ============================================================
+print("=" * 60)
+print("DEMO 1: Complete Additivity — depth(mn) = depth(m) + depth(n)")
+print("=" * 60)
+
+test_pairs = [(2, 3), (6, 7), (12, 15), (100, 37), (2, 2), (7, 11)]
+for m, n in test_pairs:
+    d_mn = holographic_depth(m * n)
+    d_m = holographic_depth(m)
+    d_n = holographic_depth(n)
+    print(f"  depth({m}×{n}) = {d_mn:.6f},  depth({m})+depth({n}) = {d_m+d_n:.6f},  "
+          f"diff = {abs(d_mn - d_m - d_n):.2e}")
+
+# ============================================================
+# DEMO 2: Holographic Reconstruction — Boundary Determines Bulk
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 2: Holographic Reconstruction — Boundary → Bulk")
+print("=" * 60)
+
+for n in [1, 2, 6, 12, 60, 360, 2520, 10080]:
+    direct = holographic_depth(n)
+    from_boundary = holographic_depth_from_boundary(n)
+    factors = prime_factorization(n) if n > 1 else {}
+    fstr = " × ".join(f"{p}^{e}" for p, e in sorted(factors.items())) if factors else "1"
+    print(f"  n={n:>5} = {fstr:>20}  |  log(n)={direct:.4f}  |  Σ v_p·log(p)={from_boundary:.4f}")
+
+# ============================================================
+# DEMO 3: Local Partition Function Properties
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 3: Local Partition Function Z_p(β)")
+print("=" * 60)
+
+primes = [2, 3, 5, 7, 11]
+betas = [0.5, 1.0, 2.0, 5.0]
+
+print(f"  {'p':>3} | " + " | ".join(f"β={b:.1f}" for b in betas))
+print("  " + "-" * 50)
+for p in primes:
+    vals = [local_partition_fn(p, b) for b in betas]
+    print(f"  {p:>3} | " + " | ".join(f"{v:>7.4f}" for v in vals))
+
+print("\n  All Z_p(β) > 1 for β > 0: ✓" if all(
+    local_partition_fn(p, b) > 1 for p in primes for b in betas
+) else "  FAILED!")
+
+# ============================================================
+# DEMO 4: Holographic Entropy Bound
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 4: Holographic Entropy Bound: -F_p(β) ≤ p^{-β}/(1-p^{-β})")
+print("=" * 60)
+
+for p in [2, 3, 5, 7]:
+    for beta in [0.5, 1.0, 2.0, 5.0]:
+        lhs = -local_free_energy(p, beta)
+        rhs = entropy_bound_rhs(p, beta)
+        satisfied = lhs <= rhs + 1e-15  # numerical tolerance
+        print(f"  p={p}, β={beta:.1f}: -F={lhs:.6f} ≤ {rhs:.6f} {'✓' if satisfied else '✗'}")
+
+# ============================================================
+# DEMO 5: RG Semigroup Law
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 5: RG Semigroup — R_α(R_β f) = R_{α+β} f")
+print("=" * 60)
+
+f = lambda n: float(n)  # test function f(n) = n
+
+for alpha, beta in [(1.0, 2.0), (0.5, 1.5), (0.3, 0.7)]:
+    for n in [2, 5, 10, 100]:
+        lhs = arithmetic_rg(alpha, lambda m: arithmetic_rg(beta, f, m), n)
+        rhs = arithmetic_rg(alpha + beta, f, n)
+        print(f"  α={alpha}, β={beta}, n={n}: R_α∘R_β={lhs:.6f}, R_{{α+β}}={rhs:.6f}, "
+              f"diff={abs(lhs-rhs):.2e}")
+
+# ============================================================
+# DEMO 6: Euler Product Approximation
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 6: Euler Product ζ(s) = Π_p (1-p^{-s})^{-1}")
+print("=" * 60)
+
+for s in [2.0, 3.0, 4.0]:
+    # Exact values
+    exact = {2.0: math.pi**2/6, 3.0: 1.2020569031595942, 4.0: math.pi**4/90}
+    primes_list = primes_up_to(1000)
+    product = 1.0
+    for p in primes_list:
+        product *= local_partition_fn(p, s)
+    print(f"  ζ({s:.0f}): Euler product (primes≤1000) = {product:.10f}, "
+          f"exact = {exact[s]:.10f}, error = {abs(product - exact[s]):.2e}")
+
+# ============================================================
+# DEMO 7: Spectral Gap
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 7: Spectral Gap = log(2) ≈ {:.6f}".format(math.log(2)))
+print("=" * 60)
+
+print(f"  Minimum depth increment (multiplying by 2):")
+for n in [1, 3, 5, 7, 100]:
+    gap = holographic_depth(2*n) - holographic_depth(n)
+    print(f"    depth(2·{n}) - depth({n}) = {gap:.6f} = log(2)? {'✓' if abs(gap - math.log(2)) < 1e-10 else '✗'}")
+
+print(f"\n  Depth separation for consecutive integers:")
+for n in range(1, 11):
+    sep = holographic_depth(n+1) - holographic_depth(n)
+    print(f"    depth({n+1}) - depth({n}) = {sep:.6f} > 0? {'✓' if sep > 0 else '✗'}")
+
+# ============================================================
+# DEMO 8: Conjecture — Prime Reciprocal Divergence
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 8: ∑ 1/p Diverges (Infinite Boundary Area)")
+print("=" * 60)
+
+cumulative = 0.0
+for bound in [10, 100, 1000, 10000, 100000]:
+    ps = primes_up_to(bound)
+    cumulative = sum(1.0/p for p in ps)
+    print(f"  ∑_{{p≤{bound:>6}}} 1/p = {cumulative:.6f}  ({len(ps)} primes)")
+
+print("\n  Rate of growth ~ log(log(x)), confirming divergence.")
+print(f"  log(log(100000)) = {math.log(math.log(100000)):.4f}")
+
+print("\n" + "=" * 60)
+print("All demonstrations complete.")
+print("=" * 60)
 
 
-def bulk_weight(p: int, beta: float) -> float:
-    """w_p(β) = -log(1 - p^{-β})"""
-    return -math.log(1.0 - p ** (-beta))
+#!/usr/bin/env python3
+"""Visualization: Euler product convergence and holographic factorization."""
 
+import math
 
-def boundary_entropy(p: int) -> float:
-    """S_p = log(p)"""
-    return math.log(p)
+def sieve(n):
+    s = [True] * (n + 1)
+    s[0] = s[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if s[i]:
+            for j in range(i*i, n+1, i):
+                s[j] = False
+    return [i for i in range(2, n+1) if s[i]]
 
+def main():
+    try:
+        import matplotlib.pyplot as plt
+        import numpy as np
+    except ImportError:
+        print("matplotlib/numpy required")
+        return
 
-def chebyshev_theta(n: int) -> float:
-    """θ(n) = Σ_{p ≤ n, p prime} log(p)"""
-    return sum(math.log(p) for p in primes_up_to(n))
+    primes = sieve(10000)
 
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-def von_mangoldt(n: int) -> float:
-    """Λ(n) = log(p) if n = p^k for prime p, else 0."""
-    if n <= 1:
-        return 0.0
-    for p in range(2, n + 1):
-        if not is_prime(p):
-            continue
-        k = 0
+    # Plot 1: Euler product convergence
+    ax = axes[0, 0]
+    for s_val, color, label in [(2.0, '#e41a1c', 'ζ(2)'),
+                                  (3.0, '#377eb8', 'ζ(3)'),
+                                  (4.0, '#4daf4a', 'ζ(4)')]:
+        exact = {2.0: math.pi**2/6, 3.0: 1.2020569031595942, 4.0: math.pi**4/90}[s_val]
+        products = []
+        prod_val = 1.0
+        for p in primes[:200]:
+            prod_val *= 1.0 / (1.0 - p ** (-s_val))
+            products.append(prod_val)
+        ax.plot(range(1, len(products)+1), products, color=color, label=label, linewidth=1.5)
+        ax.axhline(y=exact, color=color, linestyle='--', alpha=0.4)
+
+    ax.set_xlabel('Number of primes in product')
+    ax.set_ylabel('Partial Euler product')
+    ax.set_title('Euler Product Convergence')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+
+    # Plot 2: Holographic depth spectrum
+    ax = axes[0, 1]
+    depths = [math.log(n) for n in range(1, 101)]
+    colors_arr = []
+    for n in range(1, 101):
+        f = {}
         m = n
-        while m % p == 0:
-            m //= p
-            k += 1
-        if m == 1 and k >= 1:
-            return math.log(p)
-        if k > 0:
-            return 0.0
-    return 0.0
+        d = 2
+        while d * d <= m:
+            while m % d == 0:
+                f[d] = f.get(d, 0) + 1
+                m //= d
+            d += 1
+        if m > 1:
+            f[m] = f.get(m, 0) + 1
+        colors_arr.append(len(f))  # number of distinct prime factors
 
+    scatter = ax.scatter(range(1, 101), depths, c=colors_arr, cmap='viridis',
+                          s=20, alpha=0.8)
+    ax.set_xlabel('n')
+    ax.set_ylabel('depth(n) = log(n)')
+    ax.set_title('Holographic Depth Spectrum')
+    plt.colorbar(scatter, ax=ax, label='ω(n) = distinct prime factors')
+    ax.grid(True, alpha=0.3)
 
-def prime_factorization(n: int) -> List[Tuple[int, int]]:
-    """Return prime factorization as list of (prime, exponent) pairs."""
-    factors = []
-    d = 2
-    while d * d <= n:
-        exp = 0
-        while n % d == 0:
-            n //= d
-            exp += 1
-        if exp > 0:
-            factors.append((d, exp))
-        d += 1
-    if n > 1:
-        factors.append((n, 1))
-    return factors
+    # Plot 3: Spectral gaps
+    ax = axes[1, 0]
+    gaps = [math.log(n+1) - math.log(n) for n in range(1, 200)]
+    ax.bar(range(1, 200), gaps, width=1.0, alpha=0.7, color='#377eb8')
+    ax.axhline(y=math.log(2), color='red', linestyle='--', linewidth=2, label='log(2) = spectral gap')
+    ax.set_xlabel('n')
+    ax.set_ylabel('log(n+1) - log(n)')
+    ax.set_title('Depth Gaps (Spectral Structure)')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(0, 0.8)
 
+    # Plot 4: Prime reciprocal sum divergence
+    ax = axes[1, 1]
+    bounds = [10, 50, 100, 500, 1000, 5000, 10000]
+    partial_sums = []
+    for b in bounds:
+        ps = sieve(b)
+        partial_sums.append(sum(1.0/p for p in ps))
 
-def omega_big(n: int) -> int:
-    """Ω(n) = number of prime factors with multiplicity."""
-    return sum(e for _, e in prime_factorization(n))
+    ax.semilogx(bounds, partial_sums, 'o-', color='#e41a1c', linewidth=2, markersize=6)
+    loglog_vals = [math.log(math.log(b)) for b in bounds]
+    ax.semilogx(bounds, loglog_vals, '--', color='gray', linewidth=1, label='log(log(x))')
+    ax.set_xlabel('x')
+    ax.set_ylabel('∑_{p≤x} 1/p')
+    ax.set_title('Divergence of Prime Reciprocals (Infinite Boundary)')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
 
-
-def liouville(n: int) -> int:
-    """λ(n) = (-1)^{Ω(n)}"""
-    return (-1) ** omega_big(n)
-
-
-def moebius(n: int) -> int:
-    """μ(n): Möbius function."""
-    if n == 1:
-        return 1
-    factors = prime_factorization(n)
-    for _, e in factors:
-        if e > 1:
-            return 0
-    return (-1) ** len(factors)
-
-
-def divisors(n: int) -> List[int]:
-    """Return list of divisors of n."""
-    divs = []
-    for d in range(1, n + 1):
-        if n % d == 0:
-            divs.append(d)
-    return divs
-
-
-# ============================================================================
-# DEMONSTRATIONS
-# ============================================================================
-
-def demo_partition_monotonicity():
-    """Demo Theorem 4: Z_p(β) is strictly decreasing in β."""
-    print("=" * 60)
-    print("DEMO: Partition Function Monotonicity (c-Theorem)")
-    print("=" * 60)
-    print()
-    for p in [2, 3, 5, 7]:
-        print(f"Prime p = {p}:")
-        betas = [0.5, 1.0, 2.0, 5.0, 10.0, 50.0]
-        for beta in betas:
-            z = local_partition_fn(p, beta)
-            print(f"  Z_{p}({beta:5.1f}) = {z:.6f}")
-        print(f"  → Strictly decreasing ✓")
-        print()
-
-
-def demo_von_mangoldt_reconstruction():
-    """Demo Theorem 5: Σ_{d|n} Λ(d) = log(n)."""
-    print("=" * 60)
-    print("DEMO: Von Mangoldt Holographic Reconstruction")
-    print("=" * 60)
-    print()
-    for n in [1, 2, 6, 12, 30, 60, 100]:
-        lhs = sum(von_mangoldt(d) for d in divisors(n))
-        rhs = math.log(n) if n > 0 else 0
-        print(f"  n = {n:3d}: Σ Λ(d) = {lhs:.6f},  log(n) = {rhs:.6f},  "
-              f"diff = {abs(lhs - rhs):.2e} ✓")
-    print()
-
-
-def demo_moebius_inverse():
-    """Demo Theorem 3: μ * ζ = ε."""
-    print("=" * 60)
-    print("DEMO: Möbius Holographic Inverse (μ * ζ = ε)")
-    print("=" * 60)
-    print()
-    for n in range(1, 16):
-        s = sum(moebius(d) for d in divisors(n))
-        expected = 1 if n == 1 else 0
-        status = "✓" if s == expected else "✗"
-        print(f"  n = {n:2d}: Σ_{{d|n}} μ(d) = {s:2d}  "
-              f"(expected {expected}) {status}")
-    print()
-
-
-def demo_tropical_bridge():
-    """Demo Theorem 14: exp(p^{-β}) ≤ Z_p(β)."""
-    print("=" * 60)
-    print("DEMO: Tropical-Algebraic Bridge")
-    print("=" * 60)
-    print()
-    for p in [2, 3, 5, 11]:
-        for beta in [0.5, 1.0, 2.0, 5.0]:
-            tropical = math.exp(p ** (-beta))
-            algebraic = local_partition_fn(p, beta)
-            gap = algebraic - tropical
-            print(f"  p={p:2d}, β={beta:.1f}: "
-                  f"exp(p^{{-β}})={tropical:.6f} ≤ Z_p(β)={algebraic:.6f}  "
-                  f"gap={gap:.6f} ✓")
-    print()
-
-
-def demo_depth_additivity():
-    """Demo Theorem 11: Ω(mn) = Ω(m) + Ω(n)."""
-    print("=" * 60)
-    print("DEMO: Holographic Depth Additivity")
-    print("=" * 60)
-    print()
-    pairs = [(6, 10), (12, 35), (8, 27), (100, 63), (2, 3)]
-    for m, n in pairs:
-        lhs = omega_big(m * n)
-        rhs = omega_big(m) + omega_big(n)
-        print(f"  Ω({m}×{n}) = Ω({m*n}) = {lhs},  "
-              f"Ω({m})+Ω({n}) = {omega_big(m)}+{omega_big(n)} = {rhs}  ✓")
-    print()
-
-
-def demo_liouville_multiplicativity():
-    """Demo Theorem 12: λ(mn) = λ(m)·λ(n)."""
-    print("=" * 60)
-    print("DEMO: Liouville Complete Multiplicativity")
-    print("=" * 60)
-    print()
-    for m in range(1, 8):
-        for n in range(1, 8):
-            lhs = liouville(m * n)
-            rhs = liouville(m) * liouville(n)
-            assert lhs == rhs, f"Failed for m={m}, n={n}"
-    print("  λ(mn) = λ(m)·λ(n) verified for all m,n ∈ {1,...,7}  ✓")
-    print()
-
-
-def demo_chebyshev_monotonicity():
-    """Demo Theorem 9: θ is non-decreasing."""
-    print("=" * 60)
-    print("DEMO: Chebyshev Theta Monotonicity (Boundary Area)")
-    print("=" * 60)
-    print()
-    prev = 0.0
-    for n in [1, 2, 3, 5, 10, 20, 50, 100, 200, 500, 1000]:
-        t = chebyshev_theta(n)
-        status = "✓" if t >= prev - 1e-10 else "✗"
-        print(f"  θ({n:4d}) = {t:10.4f}  (≥ {prev:.4f}) {status}")
-        prev = t
-    print()
-
-
-def demo_euler_product():
-    """Demo Theorem 10: log ∏ Z_p = Σ w_p."""
-    print("=" * 60)
-    print("DEMO: Log Euler Product = Sum of Bulk Weights")
-    print("=" * 60)
-    print()
-    beta = 2.0
-    for N in [10, 50, 100, 500]:
-        ps = primes_up_to(N)
-        log_prod = sum(math.log(local_partition_fn(p, beta)) for p in ps)
-        sum_weights = sum(bulk_weight(p, beta) for p in ps)
-        diff = abs(log_prod - sum_weights)
-        print(f"  N={N:3d}: log∏Z_p = {log_prod:.8f},  "
-              f"Σw_p = {sum_weights:.8f},  diff = {diff:.2e} ✓")
-    print()
-
-
-def demo_boundary_entropy():
-    """Demo Theorem 13: Boundary entropy is injective on primes."""
-    print("=" * 60)
-    print("DEMO: Boundary Entropy Injectivity")
-    print("=" * 60)
-    print()
-    ps = primes_up_to(30)
-    entropies = [(p, boundary_entropy(p)) for p in ps]
-    for p, s in entropies:
-        print(f"  S_{p:2d} = log({p:2d}) = {s:.6f}")
-    # Verify injectivity
-    vals = [s for _, s in entropies]
-    assert len(vals) == len(set(round(v, 10) for v in vals))
-    print(f"\n  All {len(ps)} entropies distinct ✓")
-    print()
-
+    plt.tight_layout()
+    plt.savefig('holographic_analysis.png', dpi=150, bbox_inches='tight')
+    print("Saved holographic_analysis.png")
 
 if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║     HOLOGRAPHIC PRIMES: NUMERICAL DEMONSTRATIONS       ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-    print()
-
-    demo_partition_monotonicity()
-    demo_von_mangoldt_reconstruction()
-    demo_moebius_inverse()
-    demo_tropical_bridge()
-    demo_depth_additivity()
-    demo_liouville_multiplicativity()
-    demo_chebyshev_monotonicity()
-    demo_euler_product()
-    demo_boundary_entropy()
-
-    print("All demonstrations passed. ✓")
+    main()
 
 
 #!/usr/bin/env python3
-"""
-Visualization: Möbius Function and Holographic Inverse
+"""Visualization: Local Partition Functions Z_p(beta) for various primes."""
 
-Shows the Möbius function μ(n) and demonstrates μ * ζ = ε.
-"""
 import math
 
-
-def prime_factorization(n):
-    if n <= 1: return []
-    factors = []
-    d = 2
-    while d * d <= n:
-        exp = 0
-        while n % d == 0:
-            n //= d
-            exp += 1
-        if exp > 0: factors.append((d, exp))
-        d += 1
-    if n > 1: factors.append((n, 1))
-    return factors
-
-
-def moebius(n):
-    if n == 1: return 1
-    f = prime_factorization(n)
-    for _, e in f:
-        if e > 1: return 0
-    return (-1) ** len(f)
-
-
-def liouville(n):
-    return (-1) ** sum(e for _, e in prime_factorization(n)) if n >= 1 else 0
-
-
-def divisors(n):
-    return [d for d in range(1, n + 1) if n % d == 0]
-
-
-try:
-    import matplotlib.pyplot as plt
-    import numpy as np
-
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-    # Panel 1: Möbius function values
-    ns = list(range(1, 101))
-    mus = [moebius(n) for n in ns]
-    colors = ['#e41a1c' if m == -1 else '#377eb8' if m == 1 else '#999999' for m in mus]
-
-    axes[0].bar(ns, mus, color=colors, width=0.8)
-    axes[0].set_xlabel('n', fontsize=12)
-    axes[0].set_ylabel('μ(n)', fontsize=12)
-    axes[0].set_title('Möbius Function μ(n)\n(Holographic Inverse Transform)', fontsize=13)
-    axes[0].set_ylim(-1.5, 1.5)
-    axes[0].axhline(y=0, color='black', linewidth=0.5)
-    axes[0].grid(True, alpha=0.3, axis='y')
-
-    # Panel 2: Cumulative sum M(n) = Σ_{k=1}^n μ(k)
-    cumsum = np.cumsum(mus)
-    axes[1].plot(ns, cumsum, 'b-', linewidth=1.5)
-    axes[1].fill_between(ns, 0, cumsum, alpha=0.2, color='blue')
-    axes[1].axhline(y=0, color='red', linestyle='--', alpha=0.5)
-    axes[1].set_xlabel('n', fontsize=12)
-    axes[1].set_ylabel('M(n) = Σ μ(k)', fontsize=12)
-    axes[1].set_title('Mertens Function M(n)\n(Holographic Cancellation)', fontsize=13)
-    axes[1].grid(True, alpha=0.3)
-
-    # Panel 3: Liouville function
-    lams = [liouville(n) for n in ns]
-    cumsum_l = np.cumsum(lams)
-    axes[2].plot(ns, cumsum_l, 'g-', linewidth=1.5)
-    axes[2].fill_between(ns, 0, cumsum_l, alpha=0.2, color='green')
-    axes[2].axhline(y=0, color='red', linestyle='--', alpha=0.5)
-    axes[2].set_xlabel('n', fontsize=12)
-    axes[2].set_ylabel('L(n) = Σ λ(k)', fontsize=12)
-    axes[2].set_title('Liouville Summatory L(n)\n(Holographic Parity Accumulation)', fontsize=13)
-    axes[2].grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('holographic_moebius.png', dpi=150, bbox_inches='tight')
-    print("Saved: holographic_moebius.png")
-
-except ImportError:
-    print("matplotlib not available.")
-    for n in range(1, 21):
-        print(f"  μ({n:2d}) = {moebius(n):2d},  λ({n:2d}) = {liouville(n):2d}")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Local Partition Function Monotonicity (c-Theorem)
-
-Shows Z_p(β) for several primes, demonstrating strict decrease.
-"""
-import math
-
-def is_prime(n: int) -> bool:
-    if n < 2: return False
-    if n < 4: return True
-    if n % 2 == 0 or n % 3 == 0: return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0: return False
-        i += 6
-    return True
-
-def local_partition_fn(p: int, beta: float) -> float:
+def local_partition_fn(p, beta):
     return 1.0 / (1.0 - p ** (-beta))
 
-try:
-    import matplotlib.pyplot as plt
-    import numpy as np
+def main():
+    try:
+        import matplotlib.pyplot as plt
+        import numpy as np
+    except ImportError:
+        print("matplotlib/numpy required for visualization")
+        return
+
+    betas = np.linspace(0.1, 5.0, 500)
+    primes = [2, 3, 5, 7, 11, 13]
+    colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#a65628']
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Left: Partition function Z_p(β)
-    betas = np.linspace(0.1, 5.0, 200)
-    primes = [2, 3, 5, 7, 11]
-    colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00']
+    # Plot 1: Z_p(beta)
+    for p, c in zip(primes, colors):
+        zvals = [local_partition_fn(p, b) for b in betas]
+        ax1.plot(betas, zvals, color=c, label=f'p={p}', linewidth=2)
 
-    for p, color in zip(primes, colors):
-        zs = [local_partition_fn(p, b) for b in betas]
-        ax1.plot(betas, zs, label=f'p = {p}', color=color, linewidth=2)
-
-    ax1.set_xlabel('Depth β', fontsize=12)
+    ax1.set_xlabel('β (inverse temperature)', fontsize=12)
     ax1.set_ylabel('Z_p(β)', fontsize=12)
-    ax1.set_title('Holographic c-Theorem:\nPartition Function Monotonicity', fontsize=14)
-    ax1.legend(fontsize=11)
-    ax1.set_ylim(0.9, 8)
+    ax1.set_title('Local Partition Functions', fontsize=14)
+    ax1.set_ylim(0, 10)
+    ax1.legend(fontsize=10)
     ax1.grid(True, alpha=0.3)
-    ax1.axhline(y=1.0, color='gray', linestyle='--', alpha=0.5, label='β → ∞ limit')
+    ax1.axhline(y=1, color='gray', linestyle='--', alpha=0.5)
 
-    # Right: Tropical vs Algebraic
-    for p, color in zip([2, 5], ['#e41a1c', '#ff7f00']):
-        zs_alg = [local_partition_fn(p, b) for b in betas]
-        zs_trop = [math.exp(p ** (-b)) for b in betas]
-        ax2.plot(betas, zs_alg, label=f'Z_{p}(β) [algebraic]', color=color,
-                 linewidth=2, linestyle='-')
-        ax2.plot(betas, zs_trop, label=f'exp(p⁻ᵝ) [tropical]', color=color,
-                 linewidth=2, linestyle='--')
-        ax2.fill_between(betas, zs_trop, zs_alg, alpha=0.1, color=color)
+    # Plot 2: Free energy -F_p(beta) vs entropy bound
+    for p, c in zip(primes[:4], colors[:4]):
+        free_energies = [-math.log(1.0 - p**(-b)) for b in betas]
+        bounds = [p**(-b) / (1.0 - p**(-b)) for b in betas]
+        ax2.plot(betas, free_energies, color=c, linewidth=2, label=f'-F_{p}(β)')
+        ax2.plot(betas, bounds, color=c, linewidth=1, linestyle='--', alpha=0.6)
 
-    ax2.set_xlabel('Depth β', fontsize=12)
+    ax2.set_xlabel('β (inverse temperature)', fontsize=12)
     ax2.set_ylabel('Value', fontsize=12)
-    ax2.set_title('Tropical-Algebraic Bridge:\nexp(p⁻ᵝ) ≤ Z_p(β)', fontsize=14)
-    ax2.legend(fontsize=10)
-    ax2.set_ylim(0.9, 4)
+    ax2.set_title('Holographic Entropy Bound: -F_p(β) ≤ p⁻ᵝ/(1-p⁻ᵝ)', fontsize=14)
+    ax2.set_ylim(0, 3)
+    ax2.legend(fontsize=9, loc='upper right')
     ax2.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('holographic_partition.png', dpi=150, bbox_inches='tight')
-    print("Saved: holographic_partition.png")
+    plt.savefig('holographic_partition_functions.png', dpi=150, bbox_inches='tight')
+    print("Saved holographic_partition_functions.png")
 
-except ImportError:
-    print("matplotlib not available. Generating text output.")
-    print("\nZ_p(β) for p=2:")
-    for beta in [0.5, 1.0, 2.0, 5.0]:
-        print(f"  β={beta}: Z={local_partition_fn(2, beta):.4f}, "
-              f"exp(2^{{-β}})={math.exp(2**(-beta)):.4f}")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Von Mangoldt Holographic Reconstruction
-
-Shows how Σ_{d|n} Λ(d) reconstructs log(n) from boundary data.
-"""
-import math
-
-
-def prime_factorization(n):
-    if n <= 1: return []
-    factors = []
-    d = 2
-    while d * d <= n:
-        exp = 0
-        while n % d == 0:
-            n //= d
-            exp += 1
-        if exp > 0: factors.append((d, exp))
-        d += 1
-    if n > 1: factors.append((n, 1))
-    return factors
-
-
-def von_mangoldt(n):
-    if n <= 1: return 0.0
-    f = prime_factorization(n)
-    return math.log(f[0][0]) if len(f) == 1 else 0.0
-
-
-def divisors(n):
-    return [d for d in range(1, n + 1) if n % d == 0]
-
-
-def is_prime(n):
-    if n < 2: return False
-    if n < 4: return True
-    if n % 2 == 0 or n % 3 == 0: return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0: return False
-        i += 6
-    return True
-
-
-def chebyshev_theta(n):
-    return sum(math.log(p) for p in range(2, n + 1) if is_prime(p))
-
-
-try:
-    import matplotlib.pyplot as plt
-    import numpy as np
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: Von Mangoldt reconstruction
-    ns = list(range(2, 61))
-    reconstructed = [sum(von_mangoldt(d) for d in divisors(n)) for n in ns]
-    actual = [math.log(n) for n in ns]
-
-    ax1.bar(ns, reconstructed, alpha=0.7, color='#377eb8', label='Σ Λ(d) over d|n')
-    ax1.plot(ns, actual, 'r-', linewidth=2, label='log(n)')
-    ax1.set_xlabel('n', fontsize=12)
-    ax1.set_ylabel('Value', fontsize=12)
-    ax1.set_title('Von Mangoldt Holographic\nReconstruction: Σ Λ(d) = log(n)', fontsize=14)
-    ax1.legend(fontsize=11)
-    ax1.grid(True, alpha=0.3)
-
-    # Right: Chebyshev theta vs n
-    ns2 = list(range(1, 201))
-    thetas = [chebyshev_theta(n) for n in ns2]
-
-    ax2.plot(ns2, thetas, 'b-', linewidth=2, label='θ(n) = Σ log(p)')
-    ax2.plot(ns2, ns2, 'r--', linewidth=1, alpha=0.5, label='n (reference)')
-    ax2.fill_between(ns2, 0, thetas, alpha=0.1, color='blue')
-    ax2.set_xlabel('n', fontsize=12)
-    ax2.set_ylabel('Value', fontsize=12)
-    ax2.set_title('Chebyshev θ(n): Boundary Area\n(Monotonically Non-decreasing)', fontsize=14)
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('holographic_reconstruction.png', dpi=150, bbox_inches='tight')
-    print("Saved: holographic_reconstruction.png")
-
-except ImportError:
-    print("matplotlib not available. Text output:")
-    for n in [2, 6, 12, 30, 60]:
-        s = sum(von_mangoldt(d) for d in divisors(n))
-        print(f"  n={n}: Σ Λ(d) = {s:.4f}, log(n) = {math.log(n):.4f}")
+if __name__ == "__main__":
+    main()
