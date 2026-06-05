@@ -1,116 +1,90 @@
-# The Hidden Mathematics of Musical Counterpoint
+# The Hidden Graph Inside Renaissance Music
 
-## How a 500-Year-Old Composition Technique Reveals Deep Algebraic Structure
+## How a 500-year-old composition technique reveals a surprising mathematical structure
 
-*When Bach wrote a fugue, he was navigating a mathematical landscape more structured than anyone realized. A new analysis reveals that the rules of counterpoint encode a precise algebraic object — and that a long-standing conjecture about its structure is wrong in an illuminating way.*
+When Johann Joseph Fux published his treatise *Gradus ad Parnassum* in 1725, he codified rules that composers had followed for centuries. His "species counterpoint" — the art of writing two independent melodies that sound beautiful together — became the foundation of Western musical training. Bach studied it. Mozart taught it. Beethoven wrestled with it.
 
----
+But buried inside Fux's seemingly simple rules lies a mathematical structure that nobody noticed for three hundred years: a directed graph with remarkable symmetry properties that connects music theory to modern combinatorics and category theory.
 
-In the summer of 1725, Johann Joseph Fux published *Gradus ad Parnassum*, a treatise on musical composition that would train every major composer for the next two centuries — Haydn, Mozart, Beethoven, Brahms, and beyond. At its core was a system of rules for writing *counterpoint*: the art of combining independent melodic lines into harmonious music.
+## The Rules of the Game
 
-Fux organized his system into "species," starting with the simplest: first-species counterpoint, where two voices move note against note, beat by beat. The rules seem simple enough. At each beat, the two voices must form a *consonant interval* — a unison, third, fifth, or sixth. And the way voices move from one beat to the next must follow specific motion rules. Most famously: no parallel fifths, no parallel octaves.
+First-species counterpoint is the simplest form: note against note. Two voices move together, creating a sequence of vertical intervals — the harmonic distances between the notes. The rules are strict:
 
-For centuries, these rules were taught as arbitrary aesthetic constraints, products of Renaissance taste. But a mathematical analysis reveals something unexpected: the rules of first-species counterpoint define a precise algebraic object with remarkable structural properties. And a natural conjecture about that structure — that it forms a hierarchy, a "partial order" — turns out to be *false* in a way that teaches us something deep about why counterpoint sounds the way it does.
+1. **Only consonant intervals allowed.** The voices may be a unison, minor third, major third, perfect fifth, minor sixth, or major sixth apart. That's six options out of twelve possible interval classes. Everything else — seconds, sevenths, the tritone — is forbidden.
 
-## The Six Consonances
+2. **No parallel motion to perfect consonances.** If both voices arrive at a unison or perfect fifth by moving in the same direction by the same amount, the passage is illegal. You can reach these "perfect" intervals, but only by contrary motion (voices moving in opposite directions) or oblique motion (one voice staying put).
 
-Start with the basics. In first-species counterpoint, the two voices can be separated by exactly six types of intervals (measured in semitones, modulo the octave):
+3. **Stepwise motion preferred.** Each voice should move by small amounts — typically one or two semitones at a time.
 
-- **Unison** (0 semitones) — the voices sing the same note
-- **Minor third** (3 semitones) — like C to E♭
-- **Major third** (4 semitones) — like C to E
-- **Perfect fifth** (7 semitones) — like C to G
-- **Minor sixth** (8 semitones) — like C to A♭
-- **Major sixth** (9 semitones) — like C to A
+These rules seem musical, not mathematical. But what happens when you ask a simple question: *which consonant interval can follow which?*
 
-These six intervals divide into two camps: the *perfect* consonances (unison and fifth) and the *imperfect* consonances (the thirds and sixths). This division is musically obvious — perfect consonances sound "hollow" and stable, while imperfect ones sound richer and more colorful. But the mathematical consequences of this division are surprisingly far-reaching.
+## The Transition Graph
 
-## The Motion Rules
+Imagine each consonant interval as a point on a map. Draw an arrow from interval A to interval B if a composer can legally move from A to B under the counterpoint rules. What does this map look like?
 
-When two voices move from one beat to the next, their relative motion falls into four types:
+The answer is surprisingly precise. When each voice moves by at most two semitones (the stepwise constraint), the complete transition graph has:
 
-1. **Contrary motion** — the voices move in opposite directions
-2. **Oblique motion** — one voice stays put while the other moves
-3. **Similar motion** — both voices move the same direction, but by different amounts
-4. **Parallel motion** — both voices move the same direction by the same amount
+- **6 vertices** (the six consonant intervals)
+- **Exactly 26 directed edges** (the legal transitions)
 
-The rules of strict counterpoint impose exactly one constraint: **you cannot approach a perfect consonance by parallel or similar motion**. That's it. No parallel fifths, no hidden octaves — it all comes down to this single principle. Moving to an imperfect consonance? Anything goes. Moving to a perfect consonance? Only contrary or oblique motion is permitted.
+Not 25. Not 27. Exactly 26. This number emerges from the interplay between the consonance constraint, the stepwise limitation, and the parallel-motion prohibition.
 
-## The Weight Matrix
+## The Separation Theorem
 
-This simple rule creates a mathematical object: a 6×6 matrix *W* where the entry W(i,j) counts how many of the four motion types are permitted when moving from interval *i* to interval *j*.
+The most striking feature of this graph is a gap between the two "perfect" consonances — the unison and the perfect fifth.
 
-The matrix has a striking property: **the entries depend only on the column, not the row**. Whether you're starting from a unison or a major sixth, the number of ways you can reach a given target interval is always the same. Every column indexed by a perfect consonance has the value 2 (contrary and oblique only), and every column indexed by an imperfect consonance has the value 4 (all motion types).
+Here's why: when each voice moves by at most two semitones, the interval between the voices can change by at most four semitones in either direction. But the unison and the perfect fifth are seven semitones apart. No amount of clever voice leading can bridge that gap in a single step.
 
-This means the matrix has *rank one*. In linear algebra terms, it factors as a product of a column of ones and a row vector encoding the perfectness of each interval. This is an extraordinarily constrained structure — out of all possible 6×6 matrices of accessibility values, the counterpoint rules produce one of the simplest possible.
+This is the **Stepwise Separation Theorem**: under stepwise motion, the unison and perfect fifth exist in separate "neighborhoods" of the consonance space. They can never directly reach each other.
 
-## The Spectral Gap
+This result has a clean mathematical proof. If voice 1 moves by *a* semitones and voice 2 moves by *b*, the interval changes by *b − a*. When |*a*| ≤ 2 and |*b*| ≤ 2, we have |*b − a*| ≤ 4. But reaching the fifth from the unison requires a change of 7 (or equivalently, 5 going the other way). Since neither 5 nor 7 falls within the range {−4, …, 4}, the transition is impossible.
 
-The rank-one property has a striking consequence. Compute W², the matrix you get by squaring W. Normally, squaring a matrix produces something complicated. But here: **W² = 20·W**. The squared matrix is just a scalar multiple of the original.
+## The Bridge Intervals
 
-In the language of spectral theory, this means the matrix has exactly one nonzero eigenvalue (20, the trace), and all other eigenvalues are zero. The *spectral gap* — the difference between the largest and second-largest eigenvalue — is as large as it could possibly be.
+Yet composers routinely move between unisons and fifths. How? Through intermediaries.
 
-If you think of the weight matrix as defining a random walk on consonant intervals (at each step, choose a target interval weighted by the number of available motions), this spectral gap means the walk *mixes instantly*. After a single step, the probability distribution has already reached its stationary state. The counterpoint random walk forgets its starting position in one beat.
+The graph reveals that the four imperfect consonances — the minor third, major third, minor sixth, and major sixth — serve as **bridges** between the separated perfect consonances. Every imperfect consonance can reach both the unison and the perfect fifth in a single step. So any path from unison to fifth (or back) must pass through at least one imperfect consonance.
 
-This is the mathematical expression of a musical fact: in counterpoint, where you *are* doesn't constrain where you can *go*. The compositional "memory" of the system is exactly one step long.
+This gives the transition graph a diameter of exactly 2: any consonant interval can reach any other in at most two steps, but some pairs (like unison-to-fifth) genuinely require two.
 
-## The Poset Conjecture — and Its Disproof
+Composers have intuitively known this for centuries. Counterpoint textbooks advise using imperfect consonances as "bridges" between perfect ones. The graph makes this intuition precise and proves it is not merely a preference but a mathematical necessity.
 
-A natural conjecture arises: perhaps the six consonant intervals, ordered by their accessibility, form a *partial order* — a mathematical hierarchy. Perhaps some intervals are "above" others in a natural ordering that respects the transition rules.
+## A Balanced Graph
 
-This conjecture is false, and the reason is illuminating.
+Perhaps the most elegant discovery is that the transition graph is **balanced**: every vertex has the same number of incoming and outgoing edges. The unison has 4 edges out and 4 edges in. The major third has 5 out and 5 in. Every consonant interval is equally "reachable" as it is "escapable."
 
-The transition relation — "can interval *I* reach interval *J*?" — is *total*. Every consonant interval can reach every other consonant interval, because contrary motion is always available. This means the relation is symmetric (if I can reach J, then J can reach I) and reflexive (every interval can reach itself).
+This is not obvious from the rules. The no-parallel-motion constraint treats perfect and imperfect consonances differently. The stepwise constraint creates asymmetric neighborhoods. Yet somehow, these constraints conspire to produce a perfectly balanced graph.
 
-But a partial order must be *antisymmetric*: if A ≤ B and B ≤ A, then A = B. Since the minor third can reach the major third and vice versa, but they are different intervals, antisymmetry fails. The counterpoint relation is not a partial order — it's an equivalence relation, and in fact it's the *trivial* equivalence relation where everything is equivalent to everything else.
+## The Inversion Asymmetry
 
-The interesting structure is not in *whether* transitions exist, but in *how many* motion types are available for each transition. The hierarchy isn't between intervals — it's between *motion types*, and it manifests as the 2:4 ratio between perfect and imperfect targets.
+Another surprise emerges when you ask about interval inversion — replacing each interval with its complement modulo the octave. The minor third (3 semitones) becomes the major sixth (9 semitones). The major third (4) becomes the minor sixth (8). These pairs are musically "equivalent" in a sense — they're the same interval heard upside-down.
 
-## The Asymmetry Ratio
+The imperfect consonances respect this symmetry perfectly: if you invert any imperfect consonance, you get another imperfect consonance. But the symmetry breaks at the perfect fifth. Inverting the perfect fifth (7 semitones) gives the perfect fourth (5 semitones), which is *not* consonant in first-species counterpoint.
 
-Count the cross-border morphisms: transitions between the perfect and imperfect subgroups.
+This asymmetry is well known to musicians — the perfect fourth has an ambiguous status in counterpoint theory, treated as dissonant in two-voice writing but consonant in three or more voices. The graph theory reveals that this is not an arbitrary convention but a structural consequence: the perfect fifth is the *unique* consonant interval whose inversion is dissonant. If you add the perfect fourth to the consonance set, inversion symmetry is restored.
 
-- From perfect to imperfect: 2 sources × 4 targets × 4 motions = **32** transitions
-- From imperfect to perfect: 4 sources × 2 targets × 2 motions = **16** transitions
+## The Hub Intervals
 
-The ratio is exactly 2:1. There are *twice* as many ways to move *away* from a perfect consonance as to move *toward* one.
+The major third (4 semitones) and the minor sixth (8 semitones) stand out as the most connected intervals in the graph, each with five outgoing and five incoming edges. They are the "hubs" of the counterpoint network — the intervals from which the most options are available.
 
-This asymmetry explains a well-known musical phenomenon: in counterpoint, perfect consonances are "expensive" to reach. Composers use them sparingly, typically at beginnings and endings of phrases. The mathematics shows why: the cost isn't arbitrary — it's a structural consequence of the motion restrictions, and the cost ratio is precisely 2:1.
+These two intervals are themselves an inversion pair: 4 + 8 = 12 ≡ 0 (mod 12). Their privileged position in the graph mirrors their privileged position in musical practice: thirds and sixths are the backbone of harmonic writing, the intervals around which everything else revolves.
 
-## Voice Exchange and the Complement Involution
+## From Diatonic to Chromatic
 
-There's a beautiful symmetry lurking in the consonances. If you swap the upper and lower voices — so the interval of 3 semitones (minor third) becomes 12 − 3 = 9 semitones (major sixth) — you get an *involution*: a transformation that, applied twice, returns to the starting point.
+When you restrict further to the diatonic scale (the white keys of the piano), the graph becomes sparser. Two consonant intervals — the minor third and the minor sixth — are not available as diatonic intervals from the root. The 26-edge chromatic graph shrinks to just 10 diatonic edges.
 
-This voice exchange pairs the consonances: minor third ↔ major sixth, major third ↔ minor sixth, while unison and fifth are fixed points. The remarkable fact is that **this involution is an automorphism of the entire counterpoint structure**. It preserves the weight matrix, the transition relation, the accessibility degrees — everything. The rules of counterpoint are invariant under voice exchange.
+This quantifies something every music theory student learns: diatonic counterpoint is more constrained than chromatic counterpoint. The graph theory tells us exactly how much more constrained: a 62% reduction in available transitions.
 
-This connects to a deep principle in music theory: what matters is the *interval* between voices, not which voice is on top. The mathematics confirms this invariance and shows it extends to the entire categorical structure.
+## What It Means
 
-## What Counterpoint Really Is
+The counterpoint transition graph is not just a curiosity. It reveals structural principles:
 
-The analysis reveals that first-species counterpoint, stripped to its mathematical essence, is not a hierarchy or a partial order. It is a **weighted complete graph** on six vertices, with edge weights determined by a single binary classification (perfect vs. imperfect). The weight matrix is rank-one, the spectral gap is maximal, and the structure admits a natural involutive symmetry.
+**The Cost of Perfection.** Perfect consonances pay for their acoustic purity with reduced connectivity. They are harder to reach, easier to get stuck at, and impossible to connect directly. Musical beauty has a combinatorial price.
 
-This is both simpler and richer than expected. Simpler, because the entire system reduces to a single binary distinction. Richer, because that distinction generates a precise quantitative structure — the 2:1 asymmetry ratio, the rank-one weight matrix, the instant-mixing random walk — that explains qualitative features of counterpoint that musicians have observed for centuries.
+**Bridges Are Necessary.** The imperfect consonances are not merely "weaker" versions of perfect ones. They serve a structural role that perfect consonances cannot: connecting the otherwise isolated regions of the consonance space.
 
-## The Strictness Spectrum
+**Balance From Asymmetry.** The most surprising result is the balanced graph property — that asymmetric local constraints produce global symmetry. This echoes similar phenomena in statistical mechanics and network theory, where local rules generate unexpected large-scale regularities.
 
-The analysis extends beyond Fux's specific rules. By introducing a *strictness parameter* — from level 0 (no rules at all) to level 3 (only contrary motion reaches perfect consonances) — we can watch the mathematical structure emerge.
+The next time you listen to a Bach fugue or a Palestrina motet, listen for the consonances. The major thirds and minor sixths carrying you from one perfect cadence to the next are not arbitrary choices. They are the bridges of a 26-edge directed graph, the only paths through a consonance space shaped by rules that a Viennese theorist codified three centuries ago — rules whose mathematical structure we are only now beginning to understand.
 
-At strictness 0, the weight matrix is completely uniform: every entry is 4. There is no asymmetry, no hierarchy, no structure. It is musical anarchy — everything is equally permitted.
-
-As strictness increases, the matrix develops its characteristic two-tier structure. The perfect consonance columns decrease (4, 3, 2, 1) while imperfect columns remain at 4. The asymmetry ratio grows: 1:1 → 4:3 → 2:1 → 4:1.
-
-Fux's system sits at strictness 2 — the sweet spot where the asymmetry ratio is exactly 2:1. This is the most "balanced" non-trivial system: strict enough to create meaningful compositional constraints, but not so strict that perfect consonances become prohibitively difficult to reach.
-
-Is it a coincidence that the historically dominant counterpoint system occupies this mathematical sweet spot? Perhaps not. A system at strictness 1 would be too permissive — only parallel fifths are forbidden, and most of the time you wouldn't notice the constraint. A system at strictness 3 would be too restrictive — reaching a perfect fifth or unison would require contrary motion, making large sections of music feel unnaturally constrained. Strictness 2 creates just enough tension: you *can* reach a perfect consonance, but only through two of the four available channels.
-
-## What This Means for Music and Mathematics
-
-The analysis reveals something that musicians have always sensed intuitively but never articulated precisely: the rules of counterpoint encode a mathematical structure that balances constraint and freedom in a specific, quantifiable way.
-
-The rank-one property of the weight matrix means the system is maximally simple in one sense — it reduces to a single binary classification — while being maximally efficient in another — the spectral gap ensures that no voice-leading "bottlenecks" arise. The complement involution guarantees that the system is symmetric under voice exchange, reflecting the musical principle that intervals are intervals regardless of which voice is on top.
-
-And the disproof of the poset conjecture teaches perhaps the deepest lesson: counterpoint is not a hierarchy. There is no interval that is "higher" or "more advanced" than another. The structure is fundamentally democratic — a complete graph where every vertex connects to every other. The richness comes not from the connectivity (which is trivial) but from the *weights* — the varying degrees of freedom in how connections are made.
-
-This is, in a sense, a mathematical parable about the nature of creative constraint. The rules of counterpoint do not limit *where* you can go; they limit *how* you can get there. And that difference — between restricting destinations and restricting paths — is precisely the difference between a hierarchy and a weighted complete graph.
-
-The rules Fux codified in 1725 encode, in the language of linear algebra, a mathematical structure of unexpected elegance. Perhaps that is why, three centuries later, composers still find them worth following.
+*The research described here was carried out using methods from graph theory, combinatorics, and category theory applied to the formal rules of first-species counterpoint as codified by J.J. Fux (1725).*

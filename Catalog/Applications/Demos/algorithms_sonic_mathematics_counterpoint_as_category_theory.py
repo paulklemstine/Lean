@@ -1,212 +1,240 @@
 #!/usr/bin/env python3
 """
-Counterpoint Category Algorithms
+Algorithms for Counterpoint Category Theory
 
-Type-hinted implementations of the core algorithms from the
-counterpoint-as-category-theory formalization.
+Type-hinted implementations of the key algorithms used in the
+formalization of first-species counterpoint as a directed graph.
 """
 
-from typing import List, Tuple, Dict, Set, Optional
-from dataclasses import dataclass
-from enum import Enum
+from typing import Dict, FrozenSet, List, Optional, Set, Tuple
 
 
-class CInterval(Enum):
-    """Consonant interval classes in first-species counterpoint."""
-    UNISON = 0   # perfect
-    MIN3 = 3     # imperfect
-    MAJ3 = 4     # imperfect
-    PERF5 = 7    # perfect
-    MIN6 = 8     # imperfect
-    MAJ6 = 9     # imperfect
-    
-    @property
-    def is_perfect(self) -> bool:
-        return self in (CInterval.UNISON, CInterval.PERF5)
-    
-    @property
-    def is_imperfect(self) -> bool:
-        return not self.is_perfect
-    
-    @property
-    def complement(self) -> 'CInterval':
-        """Voice exchange involution."""
-        comp_map = {
-            CInterval.UNISON: CInterval.UNISON,
-            CInterval.MIN3: CInterval.MAJ6,
-            CInterval.MAJ3: CInterval.MIN6,
-            CInterval.PERF5: CInterval.PERF5,
-            CInterval.MIN6: CInterval.MAJ3,
-            CInterval.MAJ6: CInterval.MIN3,
-        }
-        return comp_map[self]
+def consonant_interval_classes() -> FrozenSet[int]:
+    """Return the set of consonant interval classes in first-species counterpoint.
 
-
-class MotionKind(Enum):
-    """Types of relative motion between two voices."""
-    CONTRARY = 0   # opposite directions
-    OBLIQUE = 1    # one stays
-    SIMILAR = 2    # same direction, different amount
-    PARALLEL = 3   # same direction, same amount
-
-
-def is_permitted(motion: MotionKind, target: CInterval) -> bool:
+    Returns:
+        The six consonant interval classes {0, 3, 4, 7, 8, 9} in ZMod 12.
     """
-    Whether a motion kind is permitted for a transition TO a target interval.
-    
-    Rules of strict first-species counterpoint:
-    - Parallel motion to a perfect consonance: FORBIDDEN
-    - Similar motion to a perfect consonance: FORBIDDEN
-    - All other motions: PERMITTED
+    return frozenset({0, 3, 4, 7, 8, 9})
+
+
+def is_perfect(i: int) -> bool:
+    """Check if an interval class is a perfect consonance.
+
+    Args:
+        i: Interval class in ZMod 12.
+
+    Returns:
+        True if i is unison (0) or perfect fifth (7).
     """
-    if target.is_perfect:
-        return motion in (MotionKind.CONTRARY, MotionKind.OBLIQUE)
+    return i % 12 in {0, 7}
+
+
+def interval_delta(a: int, b: int) -> int:
+    """Compute the interval change from a two-voice leading.
+
+    Args:
+        a: Motion of voice 1 in semitones.
+        b: Motion of voice 2 in semitones.
+
+    Returns:
+        The interval change (b - a) mod 12.
+    """
+    return (b - a) % 12
+
+
+def voice_leading_cost(a: int, b: int) -> int:
+    """Compute the voice leading cost (total displacement).
+
+    Args:
+        a: Motion of voice 1.
+        b: Motion of voice 2.
+
+    Returns:
+        |a| + |b|, the L1 norm of the motion vector.
+    """
+    return abs(a) + abs(b)
+
+
+def is_valid_voice_leading(
+    source: int, target: int, a: int, b: int, stepwise_bound: int = 2
+) -> bool:
+    """Check if a voice leading is valid under first-species rules.
+
+    Args:
+        source: Starting interval class.
+        target: Target interval class.
+        a: Motion of voice 1.
+        b: Motion of voice 2.
+        stepwise_bound: Maximum motion per voice.
+
+    Returns:
+        True if the voice leading satisfies all constraints.
+    """
+    consonant = consonant_interval_classes()
+    if source % 12 not in consonant or target % 12 not in consonant:
+        return False
+    if abs(a) > stepwise_bound or abs(b) > stepwise_bound:
+        return False
+    if interval_delta(a, b) != (target - source) % 12:
+        return False
+    if is_perfect(target) and a == b:
+        return False
     return True
 
 
-def permitted_motions(target: CInterval) -> List[MotionKind]:
-    """List all permitted motion kinds for a given target interval."""
-    return [m for m in MotionKind if is_permitted(m, target)]
+def build_transition_graph(
+    stepwise_bound: int = 2,
+) -> Dict[int, Set[int]]:
+    """Build the counterpoint transition graph.
 
+    Args:
+        stepwise_bound: Maximum semitone motion per voice.
 
-def permitted_motion_count(target: CInterval) -> int:
-    """Count permitted motion kinds for a given target."""
-    return len(permitted_motions(target))
-
-
-@dataclass
-class WeightMatrix:
+    Returns:
+        Adjacency list mapping each consonant interval to its reachable set.
     """
-    The counterpoint weight matrix W ∈ M₆(ℕ).
-    
-    W(i,j) = number of permitted motion kinds from interval i to interval j.
-    Key property: W depends only on the column (target), not the row (source).
+    consonant = sorted(consonant_interval_classes())
+    graph: Dict[int, Set[int]] = {i: set() for i in consonant}
+
+    for i in consonant:
+        for j in consonant:
+            for a in range(-stepwise_bound, stepwise_bound + 1):
+                for b in range(-stepwise_bound, stepwise_bound + 1):
+                    if is_valid_voice_leading(i, j, a, b, stepwise_bound):
+                        graph[i].add(j)
+                        break  # found one valid leading, move to next j
+                else:
+                    continue
+                break
+
+    # Actually need to check all pairs properly
+    graph = {i: set() for i in consonant}
+    for i in consonant:
+        for j in consonant:
+            found = False
+            for a in range(-stepwise_bound, stepwise_bound + 1):
+                for b in range(-stepwise_bound, stepwise_bound + 1):
+                    if is_valid_voice_leading(i, j, a, b, stepwise_bound):
+                        found = True
+                        break
+                if found:
+                    break
+            if found:
+                graph[i].add(j)
+
+    return graph
+
+
+def compute_graph_diameter(graph: Dict[int, Set[int]]) -> int:
+    """Compute the diameter of a directed graph via BFS.
+
+    Args:
+        graph: Adjacency list.
+
+    Returns:
+        Maximum shortest path length between any pair of vertices.
     """
-    intervals: List[CInterval]
-    matrix: Dict[Tuple[CInterval, CInterval], int]
-    
-    @classmethod
-    def build(cls) -> 'WeightMatrix':
-        intervals = list(CInterval)
-        matrix = {}
-        for src in intervals:
-            for tgt in intervals:
-                matrix[(src, tgt)] = permitted_motion_count(tgt)
-        return cls(intervals=intervals, matrix=matrix)
-    
-    def trace(self) -> int:
-        return sum(self.matrix[(i, i)] for i in self.intervals)
-    
-    def total(self) -> int:
-        return sum(self.matrix.values())
-    
-    def row_sum(self, src: CInterval) -> int:
-        return sum(self.matrix[(src, tgt)] for tgt in self.intervals)
-    
-    def col_sum(self, tgt: CInterval) -> int:
-        return sum(self.matrix[(src, tgt)] for src in self.intervals)
-    
-    def w_squared(self, a: CInterval, c: CInterval) -> int:
-        """Compute (W²)(a,c) = sum_b W(a,b) * W(b,c)."""
-        return sum(
-            self.matrix[(a, b)] * self.matrix[(b, c)]
-            for b in self.intervals
-        )
-    
-    def verify_rank_one(self) -> bool:
-        """Verify W² = trace(W) · W."""
-        tr = self.trace()
-        return all(
-            self.w_squared(a, c) == tr * self.matrix[(a, c)]
-            for a in self.intervals
-            for c in self.intervals
-        )
+    vertices = list(graph.keys())
+    diameter = 0
+
+    for start in vertices:
+        distances: Dict[int, int] = {start: 0}
+        queue = [start]
+        while queue:
+            current = queue.pop(0)
+            for neighbor in graph.get(current, set()):
+                if neighbor not in distances:
+                    distances[neighbor] = distances[current] + 1
+                    queue.append(neighbor)
+
+        for v in vertices:
+            if v in distances:
+                diameter = max(diameter, distances[v])
+
+    return diameter
 
 
-def strictness_accessibility(strictness: int, target: CInterval) -> int:
+def check_balanced(graph: Dict[int, Set[int]]) -> bool:
+    """Check if a directed graph is balanced (in-degree = out-degree for all vertices).
+
+    Args:
+        graph: Adjacency list.
+
+    Returns:
+        True if the graph is balanced.
     """
-    Compute accessibility under parameterized strictness.
-    
-    Strictness levels:
-    0: No restrictions (all 4 motions always permitted)
-    1: No parallel perfect consonances
-    2: No parallel or similar to perfect consonances (standard model)
-    3: Only contrary motion to perfect consonances
+    vertices = set(graph.keys())
+    for v in vertices:
+        out_degree = len(graph.get(v, set()))
+        in_degree = sum(1 for u in vertices if v in graph.get(u, set()))
+        if out_degree != in_degree:
+            return False
+    return True
+
+
+def find_two_step_paths(
+    graph: Dict[int, Set[int]], source: int, target: int
+) -> List[int]:
+    """Find all intermediate vertices for two-step paths from source to target.
+
+    Args:
+        graph: Adjacency list.
+        source: Starting vertex.
+        target: Ending vertex.
+
+    Returns:
+        List of intermediate vertices k such that source → k → target.
     """
-    if not target.is_perfect:
-        return 4  # imperfect always fully accessible
-    
-    if strictness == 0:
-        return 4
-    elif strictness == 1:
-        return 3  # all except parallel
-    elif strictness == 2:
-        return 2  # only contrary and oblique
-    else:
-        return 1  # only contrary
+    return [k for k in graph.get(source, set()) if target in graph.get(k, set())]
 
 
-def verify_poset_conjecture() -> Tuple[bool, str]:
+def minimum_cost_edge(source: int, target: int, bound: int = 2) -> Optional[Tuple[int, int, int]]:
+    """Find the minimum-cost valid voice leading between two intervals.
+
+    Args:
+        source: Starting interval class.
+        target: Target interval class.
+        bound: Stepwise bound.
+
+    Returns:
+        Tuple (a, b, cost) or None if no valid leading exists.
     """
-    Test the conjecture: Is the counterpoint transition relation a partial order?
-    
-    Returns (is_poset, explanation).
+    best: Optional[Tuple[int, int, int]] = None
+    for a in range(-bound, bound + 1):
+        for b in range(-bound, bound + 1):
+            if is_valid_voice_leading(source, target, a, b, bound):
+                c = voice_leading_cost(a, b)
+                if best is None or c < best[2]:
+                    best = (a, b, c)
+    return best
+
+
+def adjacency_matrix(graph: Dict[int, Set[int]]) -> Tuple[List[int], List[List[int]]]:
+    """Compute the adjacency matrix of the transition graph.
+
+    Returns:
+        Tuple of (vertex_order, matrix) where matrix[i][j] = 1 iff edge exists.
     """
-    # Check antisymmetry
-    for a in CInterval:
-        for b in CInterval:
-            if a != b:
-                # Both are reachable (transition_complete)
-                a_to_b = any(is_permitted(m, b) for m in MotionKind)
-                b_to_a = any(is_permitted(m, a) for m in MotionKind)
-                if a_to_b and b_to_a:
-                    return (False, 
-                        f"Antisymmetry fails: {a.name} → {b.name} and "
-                        f"{b.name} → {a.name}, but {a.name} ≠ {b.name}")
-    return (True, "Relation is antisymmetric")
-
-
-def compute_border_counts() -> Dict[str, int]:
-    """Compute morphism counts for perfect/imperfect subquivers and borders."""
-    W = WeightMatrix.build()
-    
-    perfect = [i for i in CInterval if i.is_perfect]
-    imperfect = [i for i in CInterval if i.is_imperfect]
-    
-    perf_perf = sum(W.matrix[(s, t)] for s in perfect for t in perfect)
-    perf_imp = sum(W.matrix[(s, t)] for s in perfect for t in imperfect)
-    imp_perf = sum(W.matrix[(s, t)] for s in imperfect for t in perfect)
-    imp_imp = sum(W.matrix[(s, t)] for s in imperfect for t in imperfect)
-    
-    return {
-        'perfect_to_perfect': perf_perf,
-        'perfect_to_imperfect': perf_imp,
-        'imperfect_to_perfect': imp_perf,
-        'imperfect_to_imperfect': imp_imp,
-        'total': perf_perf + perf_imp + imp_perf + imp_imp,
-    }
+    vertices = sorted(graph.keys())
+    n = len(vertices)
+    idx = {v: i for i, v in enumerate(vertices)}
+    matrix = [[0] * n for _ in range(n)]
+    for u in vertices:
+        for v in graph.get(u, set()):
+            matrix[idx[u]][idx[v]] = 1
+    return vertices, matrix
 
 
 if __name__ == "__main__":
-    # Run all algorithms
-    print("=== Weight Matrix ===")
-    W = WeightMatrix.build()
-    print(f"Trace: {W.trace()}")
-    print(f"Total: {W.total()}")
-    print(f"Rank-1 (W² = 20·W): {W.verify_rank_one()}")
-    
-    print("\n=== Poset Conjecture ===")
-    is_poset, explanation = verify_poset_conjecture()
-    print(f"Is poset: {is_poset}")
-    print(f"Reason: {explanation}")
-    
-    print("\n=== Border Counts ===")
-    counts = compute_border_counts()
-    for k, v in counts.items():
-        print(f"  {k}: {v}")
-    
-    print("\n=== Strictness Sweep ===")
-    for s in range(4):
-        perf_access = strictness_accessibility(s, CInterval.PERF5)
-        imp_access = strictness_accessibility(s, CInterval.MIN3)
-        print(f"  Level {s}: perfect={perf_access}, imperfect={imp_access}")
+    # Quick verification
+    graph = build_transition_graph()
+    total = sum(len(v) for v in graph.values())
+    print(f"Transition graph: {len(graph)} vertices, {total} edges")
+    print(f"Diameter: {compute_graph_diameter(graph)}")
+    print(f"Balanced: {check_balanced(graph)}")
+
+    vertices, matrix = adjacency_matrix(graph)
+    print(f"\nAdjacency matrix (vertices: {vertices}):")
+    for row in matrix:
+        print(f"  {row}")
