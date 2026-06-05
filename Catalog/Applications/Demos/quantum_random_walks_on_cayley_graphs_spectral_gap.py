@@ -1,181 +1,314 @@
 #!/usr/bin/env python3
 """
-Quantum Random Walks on Cayley Graphs: Demonstration
+Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times
 
-Computes spectral gaps, mixing times, and quantum speedup factors
-for several families of Cayley graphs.
+Numerical demonstrations of the key theorems:
+1. Spectral gap → exponential decay bridge
+2. Amplitude gap √γ and quadratic speedup
+3. Product group mixing decomposition
+4. Cyclic group spectral gap and mixing
 """
-import math
 
-def spectral_gap_cyclic(n: int) -> float:
-    """Spectral gap of the cycle graph C_n (Cayley graph of Z/nZ, S={1,-1})."""
-    return 1 - math.cos(2 * math.pi / n)
+import numpy as np
 
-def spectral_gap_complete(n: int) -> float:
-    """Spectral gap of the complete graph K_n."""
-    return 1 - 1 / (n - 1)
+def spectral_exponential_bridge_demo():
+    """Demonstrate (1-γ)^t ≤ exp(-γt) ≤ (1-γ/2)^t for γ ∈ [0,1]."""
+    print("=" * 60)
+    print("THEOREM: Spectral-Exponential Bridge")
+    print("(1-γ)^t  ≤  exp(-γt)  ≤  (1-γ/2)^t")
+    print("=" * 60)
+    
+    for gamma in [0.1, 0.3, 0.5, 0.8, 1.0]:
+        print(f"\nγ = {gamma}:")
+        print(f"  {'t':>4}  {'(1-γ)^t':>12}  {'exp(-γt)':>12}  {'(1-γ/2)^t':>12}  {'bridge?':>8}")
+        for t in [1, 5, 10, 20, 50]:
+            lower = (1 - gamma) ** t
+            middle = np.exp(-gamma * t)
+            upper = (1 - gamma / 2) ** t
+            ok = "✓" if lower <= middle + 1e-15 and middle <= upper + 1e-15 else "✗"
+            print(f"  {t:4d}  {lower:12.6e}  {middle:12.6e}  {upper:12.6e}  {ok:>8}")
 
-def classical_mix_time(N: int, gap: float, eps: float = 0.01) -> float:
-    """Classical mixing time: (1/γ) · log(N/ε)."""
-    return (1 / gap) * (math.log(N) + math.log(1 / eps))
 
-def quantum_mix_time(N: int, gap: float, eps: float = 0.01) -> float:
-    """Quantum mixing time: (1/√γ) · log(N/ε)."""
-    return (1 / math.sqrt(gap)) * (math.log(N) + math.log(1 / eps))
+def amplitude_gap_demo():
+    """Demonstrate √(1-γ) ≤ 1 - γ/2 (amplitude gap bound)."""
+    print("\n" + "=" * 60)
+    print("THEOREM: Amplitude Gap Bound")
+    print("√(1-γ) ≤ 1 - γ/2  for γ ∈ [0,1]")
+    print("=" * 60)
+    
+    print(f"\n  {'γ':>6}  {'√(1-γ)':>10}  {'1-γ/2':>10}  {'gap':>10}  {'ok?':>5}")
+    for gamma in np.linspace(0, 1, 11):
+        sqrt_val = np.sqrt(1 - gamma)
+        bound = 1 - gamma / 2
+        gap = bound - sqrt_val
+        ok = "✓" if gap >= -1e-15 else "✗"
+        print(f"  {gamma:6.2f}  {sqrt_val:10.6f}  {bound:10.6f}  {gap:10.6f}  {ok:>5}")
 
-def speedup_factor(gap: float) -> float:
-    """Quantum speedup factor: √(1/γ)."""
-    return math.sqrt(1 / gap)
 
-def quantum_advantage_threshold() -> float:
-    """Below this spectral gap, quantum speedup > 2."""
-    return 0.25
+def probability_from_amplitude_demo():
+    """Demonstrate (1-γ/2)² ≤ 1 - 3γ/4."""
+    print("\n" + "=" * 60)
+    print("THEOREM: Probability from Amplitude")
+    print("(1-γ/2)² ≤ 1 - 3γ/4  for γ ∈ [0,1]")
+    print("=" * 60)
+    
+    print(f"\n  {'γ':>6}  {'(1-γ/2)²':>12}  {'1-3γ/4':>12}  {'slack':>12}")
+    for gamma in np.linspace(0, 1, 11):
+        lhs = (1 - gamma / 2) ** 2
+        rhs = 1 - 3 * gamma / 4
+        slack = rhs - lhs
+        print(f"  {gamma:6.2f}  {lhs:12.6f}  {rhs:12.6f}  {slack:12.6f}")
 
-print("=" * 70)
-print("QUANTUM RANDOM WALKS ON CAYLEY GRAPHS")
-print("Spectral Gaps and Mixing Times")
-print("=" * 70)
 
-# Example 1: Cyclic groups Z/nZ
-print("\n--- Cyclic Groups Z/nZ (generators {1, -1}) ---")
-print(f"{'n':>6} {'γ':>10} {'τ_classical':>14} {'τ_quantum':>14} {'speedup':>10}")
-print("-" * 60)
-for n in [5, 10, 20, 50, 100, 500, 1000]:
-    gap = spectral_gap_cyclic(n)
-    tc = classical_mix_time(n, gap)
-    tq = quantum_mix_time(n, gap)
-    su = speedup_factor(gap)
-    print(f"{n:>6} {gap:>10.6f} {tc:>14.2f} {tq:>14.2f} {su:>10.2f}")
+def mixing_time_demo():
+    """Demonstrate mixing time bounds for various groups."""
+    print("\n" + "=" * 60)
+    print("MIXING TIME BOUNDS")
+    print("Classical: T_mix ~ log(n)/γ")
+    print("Quantum:   T_mix ~ √n · log(n)/γ")
+    print("=" * 60)
+    
+    groups = [
+        ("Z/10Z ±1", 10, 2 * np.pi**2 / 100),
+        ("Z/100Z ±1", 100, 2 * np.pi**2 / 10000),
+        ("Z/1000Z ±1", 1000, 2 * np.pi**2 / 1000000),
+        ("S_5 transpositions", 120, 2/5),
+        ("S_8 transpositions", 40320, 2/8),
+        ("S_10 transpositions", 3628800, 2/10),
+    ]
+    
+    print(f"\n  {'Group':>22}  {'|G|':>10}  {'γ':>10}  {'T_class':>10}  {'T_quantum':>10}  {'speedup':>10}")
+    for name, n, gamma in groups:
+        t_class = np.log(n) / gamma
+        t_quantum = np.sqrt(n) * np.log(n) / gamma
+        speedup = t_class / t_quantum if t_quantum > 0 else float('inf')
+        print(f"  {name:>22}  {n:10d}  {gamma:10.6f}  {t_class:10.1f}  {t_quantum:10.1f}  {speedup:10.4f}")
 
-# Example 2: Complete graphs K_n
-print("\n--- Complete Graphs K_n (all transpositions) ---")
-print(f"{'n':>6} {'γ':>10} {'τ_classical':>14} {'τ_quantum':>14} {'speedup':>10}")
-print("-" * 60)
-for n in [4, 8, 16, 32, 64, 128]:
-    gap = spectral_gap_complete(n)
-    tc = classical_mix_time(n, gap)
-    tq = quantum_mix_time(n, gap)
-    su = speedup_factor(gap)
-    print(f"{n:>6} {gap:>10.6f} {tc:>14.2f} {tq:>14.2f} {su:>10.2f}")
 
-# Example 3: Quantum advantage threshold
-print("\n--- Quantum Advantage Threshold ---")
-print(f"Threshold γ* = {quantum_advantage_threshold()}")
-print(f"For γ < γ*, speedup > 2 (quantum advantage is meaningful)")
-print(f"For γ ≥ γ*, speedup ≤ 2 (quantum advantage is marginal)")
-print()
-for gap in [0.01, 0.05, 0.1, 0.25, 0.5, 0.9]:
-    su = speedup_factor(gap)
-    label = "QUANTUM ADVANTAGE" if gap < 0.25 else "marginal"
-    print(f"  γ = {gap:.2f}: speedup = {su:.2f}  [{label}]")
+def product_mixing_demo():
+    """Demonstrate product group mixing time decomposition."""
+    print("\n" + "=" * 60)
+    print("PRODUCT GROUP MIXING DECOMPOSITION")
+    print("T_mix(G₁×G₂) ~ log(|G₁|·|G₂|) / min(γ₁,γ₂)")
+    print("≥ max(T_mix(G₁), T_mix(G₂))")
+    print("=" * 60)
+    
+    cases = [
+        ("Z/10 × Z/20", 10, 20, 0.2, 0.05),
+        ("Z/100 × Z/50", 100, 50, 0.02, 0.08),
+        ("S_5 × Z/10", 120, 10, 0.4, 0.2),
+    ]
+    
+    print(f"\n  {'Product':>18}  {'T₁':>8}  {'T₂':>8}  {'max':>8}  {'T_prod':>8}  {'valid?':>7}")
+    for name, n1, n2, g1, g2 in cases:
+        t1 = np.log(n1) / g1
+        t2 = np.log(n2) / g2
+        max_t = max(t1, t2)
+        t_prod = np.log(n1 * n2) / min(g1, g2)
+        valid = "✓" if t_prod >= max_t - 1e-10 else "✗"
+        print(f"  {name:>18}  {t1:8.2f}  {t2:8.2f}  {max_t:8.2f}  {t_prod:8.2f}  {valid:>7}")
 
-# Example 4: Verify cyclic spectral gap lower bound
-print("\n--- Verifying γ ≥ 2/n² for Z/nZ ---")
-for n in [3, 5, 10, 50, 100]:
-    actual = spectral_gap_cyclic(n)
-    lower = 2 / n**2
-    ratio = actual / lower
-    print(f"  n={n:>4}: γ = {actual:.6f}, 2/n² = {lower:.6f}, ratio = {ratio:.2f}")
 
-# Example 5: Bipartite obstruction
-print("\n--- Bipartite Obstruction ---")
-print("For bipartite Cayley graphs (e.g., Z/2Z):")
-print("  eigenvalue λ_min = -1")
-print("  spectral gap = 1 - |λ_min| = 1 - 1 = 0")
-print("  → NO mixing (walk oscillates)")
-print("  This is the periodicity boundary condition.")
+def cosine_gap_demo():
+    """Demonstrate 1 - cos(x) ≥ x²/(2π²) for x ∈ [0,π]."""
+    print("\n" + "=" * 60)
+    print("THEOREM: Cosine Gap Lower Bound")
+    print("1 - cos(x) ≥ x²/(2π²)  for x ∈ [0,π]")
+    print("=" * 60)
+    
+    print(f"\n  {'x':>8}  {'1-cos(x)':>12}  {'x²/(2π²)':>12}  {'ratio':>8}")
+    for x in np.linspace(0.1, np.pi, 10):
+        lhs = 1 - np.cos(x)
+        rhs = x**2 / (2 * np.pi**2)
+        ratio = lhs / rhs if rhs > 0 else float('inf')
+        print(f"  {x:8.4f}  {lhs:12.6f}  {rhs:12.6f}  {ratio:8.4f}")
 
-print("\n" + "=" * 70)
-print("KEY FINDING: Quantum speedup = √(1/γ)")
-print("For sparse graphs (small γ), quantum walks are dramatically faster.")
-print("For dense graphs (γ ≈ 1), classical walks are already fast enough.")
-print("The threshold γ* = 1/4 divides meaningful from marginal speedup.")
-print("=" * 70)
+
+def refined_mixing_demo():
+    """Demonstrate the refined mixing bound √n · exp(-γT) ≤ 1."""
+    print("\n" + "=" * 60)
+    print("REFINED MIXING BOUND")
+    print("T = ⌊2/γ · log(n)⌋ ⟹ √n · exp(-γT) ≤ 1")
+    print("=" * 60)
+    
+    print(f"\n  {'n':>6}  {'γ':>6}  {'T':>6}  {'√n·exp(-γT)':>14}  {'≤1?':>5}")
+    for n in [10, 100, 1000, 10000]:
+        for gamma in [0.1, 0.5, 1.0]:
+            T = int(2 / gamma * np.log(n))
+            val = np.sqrt(n) * np.exp(-gamma * T)
+            ok = "✓" if val <= 1 + 1e-10 else "✗"
+            print(f"  {n:6d}  {gamma:6.2f}  {T:6d}  {val:14.6e}  {ok:>5}")
+
+
+if __name__ == "__main__":
+    spectral_exponential_bridge_demo()
+    amplitude_gap_demo()
+    probability_from_amplitude_demo()
+    mixing_time_demo()
+    product_mixing_demo()
+    cosine_gap_demo()
+    refined_mixing_demo()
+    
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Spectral Gap and Mixing Times for Cayley Graphs
-
-Standalone script using matplotlib. All functions inlined.
+Visualization: Product Group Mixing Decomposition
+T_mix(G₁×G₂) ≥ max(T_mix(G₁), T_mix(G₂)) with min-gap control.
 """
-import math
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
-
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Quantum Random Walks on Cayley Graphs:\nSpectral Gaps and Mixing Times', fontsize=14, fontweight='bold')
-
-    # Panel 1: Spectral gap vs n for cyclic groups
-    ax = axes[0, 0]
-    ns = np.arange(3, 201)
-    gaps = [1 - math.cos(2 * math.pi / n) for n in ns]
-    lower_bounds = [2 / n**2 for n in ns]
-    ax.semilogy(ns, gaps, 'b-', linewidth=2, label='γ = 1 - cos(2π/n)')
-    ax.semilogy(ns, lower_bounds, 'r--', linewidth=1.5, label='Lower bound: 2/n²')
-    ax.set_xlabel('n (group order)')
-    ax.set_ylabel('Spectral gap γ')
-    ax.set_title('Cyclic Group Z/nZ')
-    ax.legend()
+def plot_product_mixing():
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # Left: mixing time decomposition
+    ax = axes[0]
+    n1 = 100
+    gap1 = 0.1
+    n2_vals = np.arange(10, 500, 5)
+    
+    t1 = np.log(n1) / gap1
+    
+    for gap2 in [0.05, 0.1, 0.2, 0.5]:
+        t2_vals = np.log(n2_vals) / gap2
+        t_product = np.log(n1 * n2_vals) / np.minimum(gap1, gap2)
+        t_max = np.maximum(t1, t2_vals)
+        
+        ax.plot(n2_vals, t_product, '-', linewidth=2, label=f'$T_{{prod}}$, $\\gamma_2={gap2}$')
+        ax.plot(n2_vals, t_max, '--', linewidth=1.5, alpha=0.7)
+    
+    ax.axhline(y=t1, color='gray', linestyle=':', alpha=0.5, label=f'$T_1$ (n₁={n1})')
+    ax.set_xlabel('|G₂|', fontsize=13)
+    ax.set_ylabel('Mixing time', fontsize=13)
+    ax.set_title('Product Mixing: Solid = T_prod, Dashed = max(T₁,T₂)', fontsize=13)
+    ax.legend(fontsize=10)
     ax.grid(True, alpha=0.3)
-
-    # Panel 2: Classical vs Quantum mixing times
-    ax = axes[0, 1]
-    ns = np.arange(5, 501, 5)
-    classical_times = []
-    quantum_times = []
-    for n in ns:
-        gap = 1 - math.cos(2 * math.pi / n)
-        tc = (1 / gap) * (math.log(n) + math.log(100))
-        tq = (1 / math.sqrt(gap)) * (math.log(n) + math.log(100))
-        classical_times.append(tc)
-        quantum_times.append(tq)
-    ax.semilogy(ns, classical_times, 'r-', linewidth=2, label='Classical: (1/γ)·log(N/ε)')
-    ax.semilogy(ns, quantum_times, 'b-', linewidth=2, label='Quantum: (1/√γ)·log(N/ε)')
-    ax.set_xlabel('n (group order)')
-    ax.set_ylabel('Mixing time (steps)')
-    ax.set_title('Classical vs Quantum Mixing (Z/nZ)')
-    ax.legend()
+    
+    # Right: Cayley graph on Z/nZ - spectral gap vs n
+    ax = axes[1]
+    ns = np.arange(3, 200)
+    theoretical_gap = 1 - np.cos(2 * np.pi / ns)
+    lower_bound = 2 / ns**2
+    upper_bound = 2 * np.pi**2 / ns**2
+    
+    ax.loglog(ns, theoretical_gap, 'b-', linewidth=2.5, label='$1 - \\cos(2\\pi/n)$')
+    ax.loglog(ns, lower_bound, 'r--', linewidth=2, label='$2/n^2$ (lower bound)')
+    ax.loglog(ns, upper_bound, 'g-.', linewidth=2, label='$2\\pi^2/n^2$ (upper bound)')
+    ax.set_xlabel('Group size n', fontsize=13)
+    ax.set_ylabel('Spectral gap', fontsize=13)
+    ax.set_title('Cyclic Group Spectral Gap', fontsize=14)
+    ax.legend(fontsize=11)
     ax.grid(True, alpha=0.3)
-
-    # Panel 3: Speedup factor vs spectral gap
-    ax = axes[1, 0]
-    gaps = np.linspace(0.001, 1, 500)
-    speedups = [math.sqrt(1 / g) for g in gaps]
-    ax.plot(gaps, speedups, 'g-', linewidth=2)
-    ax.axvline(x=0.25, color='r', linestyle='--', alpha=0.7, label='γ* = 1/4 (threshold)')
-    ax.axhline(y=2, color='orange', linestyle=':', alpha=0.7, label='Speedup = 2')
-    ax.fill_between(gaps, speedups, 1, where=[g < 0.25 for g in gaps],
-                     alpha=0.15, color='green', label='Meaningful advantage')
-    ax.set_xlabel('Spectral gap γ')
-    ax.set_ylabel('Speedup factor √(1/γ)')
-    ax.set_title('Quantum Advantage Threshold')
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(0, 35)
-
-    # Panel 4: Exponential decay bound
-    ax = axes[1, 1]
-    ts = np.arange(0, 100)
-    for gamma in [0.05, 0.1, 0.2, 0.5]:
-        geometric = [(1 - gamma)**t for t in ts]
-        exponential = [math.exp(-gamma * t) for t in ts]
-        ax.plot(ts, geometric, '-', linewidth=1.5, label=f'(1-{gamma})^t')
-        ax.plot(ts, exponential, '--', linewidth=1, alpha=0.6)
-    ax.set_xlabel('Steps t')
-    ax.set_ylabel('Decay')
-    ax.set_title('Exponential Decay: (1-γ)^t ≤ exp(-γt)')
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(0, 1.05)
-
+    
     plt.tight_layout()
-    plt.savefig('spectral_gap_analysis.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: spectral_gap_analysis.png")
-
+    plt.savefig('product_mixing.png', dpi=150, bbox_inches='tight')
+    print("Saved product_mixing.png")
 
 if __name__ == "__main__":
-    main()
+    plot_product_mixing()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Quantum vs Classical Mixing on Cayley Graphs
+Shows the quadratic speedup arising from the amplitude gap.
+"""
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+def plot_quantum_speedup():
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # Left: mixing times vs group size
+    ax = axes[0]
+    ns = np.logspace(1, 6, 50)
+    gamma = 0.1
+    
+    classical = np.log(ns) / gamma
+    quantum = np.sqrt(ns) * np.log(ns) / gamma
+    
+    ax.loglog(ns, classical, 'b-', linewidth=2.5, label='Classical: $\\log(n)/\\gamma$')
+    ax.loglog(ns, quantum, 'r--', linewidth=2.5, label='Quantum: $\\sqrt{n} \\cdot \\log(n)/\\gamma$')
+    ax.fill_between(ns, quantum, classical, alpha=0.15, color='green', label='Quantum advantage')
+    ax.set_xlabel('Group size |G|', fontsize=13)
+    ax.set_ylabel('Mixing time bound', fontsize=13)
+    ax.set_title('Quantum vs Classical Mixing Times', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    
+    # Right: amplitude gap demonstration
+    ax = axes[1]
+    gammas = np.linspace(0.01, 1, 100)
+    sqrt_decay = np.sqrt(1 - gammas)
+    linear_bound = 1 - gammas / 2
+    classical_decay = 1 - gammas
+    
+    ax.plot(gammas, classical_decay, 'b-', linewidth=2.5, label='Classical: $1-\\gamma$')
+    ax.plot(gammas, sqrt_decay, 'r-', linewidth=2.5, label='Quantum: $\\sqrt{1-\\gamma}$')
+    ax.plot(gammas, linear_bound, 'g--', linewidth=2, label='Bound: $1-\\gamma/2$')
+    ax.fill_between(gammas, classical_decay, sqrt_decay, alpha=0.15, color='orange',
+                    label='Amplitude gap')
+    ax.set_xlabel('Spectral gap γ', fontsize=13)
+    ax.set_ylabel('Per-step decay factor', fontsize=13)
+    ax.set_title('The Amplitude Gap Mechanism', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('quantum_speedup.png', dpi=150, bbox_inches='tight')
+    print("Saved quantum_speedup.png")
+
+if __name__ == "__main__":
+    plot_quantum_speedup()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Spectral-Exponential Bridge
+(1-γ)^t ≤ exp(-γt) ≤ (1-γ/2)^t
+
+Shows how the discrete spectral gap connects to continuous exponential decay.
+"""
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+def plot_spectral_bridge():
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    
+    gammas = [0.1, 0.3, 0.7]
+    t_vals = np.arange(0, 50, 1)
+    
+    for ax, gamma in zip(axes, gammas):
+        lower = [(1 - gamma)**t for t in t_vals]
+        middle = [np.exp(-gamma * t) for t in t_vals]
+        upper = [(1 - gamma/2)**t for t in t_vals]
+        
+        ax.semilogy(t_vals, lower, 'b-', linewidth=2, label=f'$(1-\\gamma)^t$')
+        ax.semilogy(t_vals, middle, 'r--', linewidth=2, label=f'$e^{{-\\gamma t}}$')
+        ax.semilogy(t_vals, upper, 'g-.', linewidth=2, label=f'$(1-\\gamma/2)^t$')
+        
+        ax.fill_between(t_vals, lower, upper, alpha=0.1, color='purple')
+        ax.set_xlabel('Steps (t)', fontsize=12)
+        ax.set_ylabel('Decay', fontsize=12)
+        ax.set_title(f'γ = {gamma}', fontsize=14)
+        ax.legend(fontsize=10)
+        ax.grid(True, alpha=0.3)
+        ax.set_ylim(1e-8, 2)
+    
+    fig.suptitle('Spectral-Exponential Bridge: Sandwiching the Decay', fontsize=16, y=1.02)
+    plt.tight_layout()
+    plt.savefig('spectral_bridge.png', dpi=150, bbox_inches='tight')
+    print("Saved spectral_bridge.png")
+
+if __name__ == "__main__":
+    plot_spectral_bridge()
