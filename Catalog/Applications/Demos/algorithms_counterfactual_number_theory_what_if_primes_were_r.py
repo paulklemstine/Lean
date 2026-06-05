@@ -1,202 +1,229 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Core algorithms for counterfactual number theory.
+Algorithms for Counterfactual Number Theory
 
-Type-hinted implementations of the key computational procedures
-used to analyze pseudo-prime systems and their factorization properties.
+Type-hinted implementations of key algorithms for analyzing
+Beurling generalized prime systems.
 """
-from typing import Set, List, Tuple, Dict, Optional, FrozenSet
-from collections import defaultdict
+
+from typing import List, Set, Tuple, Optional, Dict
 import math
 import random
 
 
-def cramer_model(n: int, seed: int = 42) -> Set[int]:
-    """Generate a Cramér random model up to n.
-
-    Each integer k ≥ 2 is included independently with probability 1/ln(k),
-    matching the density of actual primes predicted by the prime number theorem.
-
+def sieve_primes(n: int) -> List[int]:
+    """Sieve of Eratosthenes returning all primes up to n.
+    
     Args:
-        n: Upper bound for the model.
-        seed: Random seed for reproducibility.
-
+        n: Upper bound
     Returns:
-        Set of "pseudo-primes" in {2, ..., n}.
+        Sorted list of primes in [2, n]
+    """
+    if n < 2:
+        return []
+    sieve = [True] * (n + 1)
+    sieve[0] = sieve[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if sieve[i]:
+            for j in range(i*i, n + 1, i):
+                sieve[j] = False
+    return [i for i in range(2, n + 1) if sieve[i]]
+
+
+def random_beurling_generators(n: int, seed: int = 42) -> List[int]:
+    """Generate a random subset of {2,...,n} with prime-like density.
+    
+    Each k ∈ {2,...,n} is included independently with probability 1/log(k).
+    
+    Args:
+        n: Upper bound for generators
+        seed: Random seed for reproducibility
+    Returns:
+        Sorted list of selected generators
     """
     rng = random.Random(seed)
-    return {k for k in range(2, n + 1) if rng.random() < 1.0 / math.log(k)}
+    gens: List[int] = []
+    for k in range(2, n + 1):
+        prob = 1.0 / max(math.log(k), 0.01)
+        if rng.random() < min(prob, 1.0):
+            gens.append(k)
+    return gens
 
 
-def is_product_free(s: Set[int]) -> bool:
-    """Check if s is product-free: no a*b ∈ s for a,b ∈ s with a,b ≥ 2.
-
-    Time complexity: O(|s|²).
+def find_product_collisions(generators: List[int]) -> List[Tuple[int, int, int]]:
+    """Find all triple collisions (a, b, a*b) in a generator set.
+    
+    A triple collision is a triple (a, b, c) where a, b, c are all generators
+    and a * b = c. These are certificates that unique factorization fails.
+    
+    Args:
+        generators: List of generators (elements ≥ 2)
+    Returns:
+        List of (a, b, c) triples with a*b = c, all in generators
     """
-    elems = sorted(x for x in s if x >= 2)
-    for i, a in enumerate(elems):
-        for b in elems[i:]:
-            if a * b in s:
+    gen_set: Set[int] = set(generators)
+    collisions: List[Tuple[int, int, int]] = []
+    for a in generators:
+        for b in generators:
+            if a <= b and a * b in gen_set:
+                collisions.append((a, b, a * b))
+    return collisions
+
+
+def is_product_free(generators: List[int]) -> bool:
+    """Check if a generator set is product-free.
+    
+    A set S is product-free if for all a, b ∈ S, a*b ∉ S.
+    Product-freeness is necessary for unique factorization.
+    
+    Args:
+        generators: List of generators
+    Returns:
+        True if the set is product-free
+    """
+    gen_set: Set[int] = set(generators)
+    for a in generators:
+        for b in generators:
+            if a * b in gen_set:
                 return False
     return True
 
 
-def find_absorptions(s: Set[int]) -> List[Tuple[int, Tuple[int, int]]]:
-    """Find all generator absorptions: elements that are products of two others.
-
-    Returns list of (element, (factor1, factor2)) tuples.
+def is_prime_separated(generators: List[int]) -> bool:
+    """Check if a generator set is prime-separated (no generator divides another).
+    
+    Args:
+        generators: List of generators
+    Returns:
+        True if no generator properly divides another
     """
-    elems = sorted(x for x in s if x >= 2)
-    absorptions = []
-    for i, a in enumerate(elems):
-        for b in elems[i:]:
-            prod = a * b
-            if prod in s:
-                absorptions.append((prod, (a, b)))
-    return absorptions
+    for a in generators:
+        for b in generators:
+            if a != b and b % a == 0:
+                return False
+    return True
 
 
-def find_product_collisions(
-    s: Set[int], max_product: int = 100000
-) -> Dict[int, List[Tuple[int, int]]]:
-    """Find all product collisions in s.
-
-    A product collision is a number n = a*b = c*d with {a,b} ≠ {c,d}
-    and a,b,c,d all in s.
-
-    Returns dict mapping product → list of factor pairs.
+def collision_density(n: int, trials: int = 1000) -> float:
+    """Estimate the probability that a random Beurling system has collisions.
+    
+    Generates `trials` random generator sets with prime-like density up to n,
+    and returns the fraction that have at least one product collision.
+    
+    Args:
+        n: Upper bound for generators
+        trials: Number of Monte Carlo trials
+    Returns:
+        Estimated probability of collision
     """
-    products: Dict[int, List[Tuple[int, int]]] = defaultdict(list)
-    elems = sorted(x for x in s if x >= 2)
-    for i, a in enumerate(elems):
-        for b in elems[i:]:
-            prod = a * b
-            if prod <= max_product:
-                products[prod].append((a, b))
-    return {n: pairs for n, pairs in products.items() if len(pairs) >= 2}
+    collision_count = 0
+    for seed in range(trials):
+        gens = random_beurling_generators(n, seed=seed)
+        if not is_product_free(gens):
+            collision_count += 1
+    return collision_count / trials
 
 
-def factorize(n: int, generators: Set[int]) -> List[Tuple[int, ...]]:
-    """Find all factorizations of n using elements of generators.
-
-    Returns list of sorted tuples representing each factorization.
+def beurling_integers(generators: List[int], bound: int) -> List[int]:
+    """Enumerate Beurling integers up to a bound.
+    
+    Returns all products of multisets of generators that are ≤ bound,
+    plus 1.
+    
+    Args:
+        generators: List of generators (≥ 2)
+        bound: Upper bound for enumeration
+    Returns:
+        Sorted list of Beurling integers in [1, bound]
     """
-    gens = sorted(x for x in generators if x >= 2)
-    if n == 1:
-        return [()]
-    results = []
-    for g in gens:
-        if g > n:
-            break
-        if n % g == 0:
-            for rest in factorize(n // g, {x for x in generators if x >= g}):
-                results.append((g,) + rest)
-    return results
+    result: Set[int] = {1}
+    # BFS-style enumeration
+    frontier: Set[int] = {1}
+    while frontier:
+        new_frontier: Set[int] = set()
+        for n in frontier:
+            for g in generators:
+                prod = n * g
+                if prod <= bound and prod not in result:
+                    result.add(prod)
+                    new_frontier.add(prod)
+        frontier = new_frontier
+    return sorted(result)
 
 
-def collision_spectrum(
-    s: Set[int], level: int, max_n: int = 10000
-) -> Set[int]:
-    """Compute the collision spectrum at a given level.
-
-    Returns the set of numbers with ≥ 2 distinct factorizations of length exactly `level`.
+def factorization_count(n: int, generators: List[int]) -> int:
+    """Count the number of distinct factorizations of n over a generator set.
+    
+    Uses dynamic programming. A factorization is an ordered sequence
+    of generators whose product is n (we count unordered by using
+    the constraint that factors are non-decreasing).
+    
+    Args:
+        n: Target number
+        generators: List of generators
+    Returns:
+        Number of distinct unordered factorizations
     """
-    spectrum = set()
-    for n in range(2, max_n + 1):
-        facts = factorize(n, s)
-        level_facts = [f for f in facts if len(f) == level]
-        if len(level_facts) >= 2:
-            spectrum.add(n)
-    return spectrum
+    gens = sorted(generators)
+    memo: Dict[Tuple[int, int], int] = {}
+    
+    def count(target: int, min_gen_idx: int) -> int:
+        if target == 1:
+            return 1
+        if (target, min_gen_idx) in memo:
+            return memo[(target, min_gen_idx)]
+        
+        total = 0
+        for i in range(min_gen_idx, len(gens)):
+            g = gens[i]
+            if g > target:
+                break
+            if target % g == 0:
+                total += count(target // g, i)
+        
+        memo[(target, min_gen_idx)] = total
+        return total
+    
+    return count(n, 0)
 
 
-def has_cross_level_collision(s: Set[int], max_n: int = 10000) -> Optional[Tuple[int, Tuple, Tuple]]:
-    """Check for cross-level collisions: same number with factorizations of different lengths.
-
-    Returns (n, fact1, fact2) if found, None otherwise.
+def contamination_cascade(primes: List[int], composite: int) -> Dict[str, object]:
+    """Analyze what happens when a composite is added to a prime generator set.
+    
+    Args:
+        primes: List of prime generators
+        composite: Composite number to add
+    Returns:
+        Dictionary with analysis results
     """
-    for n in range(2, max_n + 1):
-        facts = factorize(n, s)
-        if len(facts) >= 2:
-            lengths = {len(f) for f in facts}
-            if len(lengths) >= 2:
-                f1 = facts[0]
-                f2 = next(f for f in facts if len(f) != len(f1))
-                return (n, f1, f2)
-    return None
-
-
-def dirichlet_coverage(
-    s: Set[int], q: int
-) -> Dict[int, List[int]]:
-    """Analyze coverage of residue classes mod q.
-
-    Returns dict mapping residue class → list of elements in that class.
-    """
-    coverage: Dict[int, List[int]] = defaultdict(list)
-    for x in sorted(s):
-        coverage[x % q].append(x)
-    return dict(coverage)
-
-
-def factorization_hierarchy_classify(s: Set[int], max_n: int = 5000) -> Dict[str, bool]:
-    """Classify a set in the four-level factorization hierarchy.
-
-    Returns dict with keys: 'product_free', 'mult_independent', 'unique_factorization', 'pairwise_coprime'.
-    """
-    elems = sorted(x for x in s if x >= 2)
-
-    # Product-free check
-    pf = is_product_free(s)
-
-    # Multiplicative independence check
-    mi = len(find_absorptions(s)) == 0
-
-    # Unique factorization check
-    ufd = True
-    for n in range(2, max_n + 1):
-        if len(factorize(n, s)) > 1:
-            ufd = False
-            break
-
-    # Pairwise coprime check
-    coprime = all(
-        math.gcd(elems[i], elems[j]) == 1
-        for i in range(len(elems))
-        for j in range(i + 1, len(elems))
-    )
-
+    contaminated = sorted(set(primes + [composite]))
+    collisions = find_product_collisions(contaminated)
+    
     return {
-        'product_free': pf,
-        'mult_independent': mi,
-        'unique_factorization': ufd,
-        'pairwise_coprime': coprime,
+        "original_size": len(primes),
+        "contaminated_size": len(contaminated),
+        "composite_added": composite,
+        "product_free_before": True,  # Primes are always product-free
+        "product_free_after": is_product_free(contaminated),
+        "num_collisions": len(collisions),
+        "collisions": collisions[:10],
     }
 
 
-def cramer_defect(s: Set[int], k: int, max_n: int = 10000) -> int:
-    """Compute the Cramér defect at level k.
-
-    The defect counts elements of s that can be written as a product
-    of exactly k elements from s (each ≥ 2).
-    """
-    count = 0
-    for n in s:
-        if n < 2:
-            continue
-        facts = factorize(n, s)
-        if any(len(f) == k for f in facts if f != (n,)):
-            count += 1
-    return count
-
-
 if __name__ == "__main__":
-    # Example usage
-    primes_30 = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29}
-    print("Primes up to 30:", factorization_hierarchy_classify(primes_30))
-
-    sep_set = {6, 10, 21, 35}
-    print("{6,10,21,35}:", factorization_hierarchy_classify(sep_set))
-
-    cramer = cramer_model(100)
-    print(f"Cramér model (N=100, |S|={len(cramer)}):", factorization_hierarchy_classify(cramer, 500))
+    # Quick self-test
+    primes = sieve_primes(100)
+    print(f"Primes up to 100: {len(primes)} primes")
+    print(f"Product-free: {is_product_free(primes)}")
+    
+    gens = random_beurling_generators(100, seed=0)
+    print(f"\nRandom generators up to 100: {len(gens)} generators")
+    print(f"Product-free: {is_product_free(gens)}")
+    print(f"Collisions: {find_product_collisions(gens)[:5]}")
+    
+    print(f"\nCollision density (n=100): {collision_density(100):.2%}")
+    
+    # Factorization count demo
+    gens_236 = [2, 3, 6]
+    print(f"\nFactorizations of 12 over {{2,3,6}}: {factorization_count(12, gens_236)}")
+    print(f"  (12 = 6*2 = 2*2*3 → at least 2 factorizations)")
