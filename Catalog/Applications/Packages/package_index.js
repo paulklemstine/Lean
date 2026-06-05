@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f9e10b94",
     "filename": "sonic_mathematics_counterpoint_as_category_theory.json",
     "pkg_num": 388,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6450400000000001,
     "title": "The Voice Leading Category: Counterpoint as Categorical Structure"
   },
   {
@@ -12403,8 +12403,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "sonic_mathematics_counterpoint_as_category_theory",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6450400000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Voice Leading Category: Counterpoint as Categorical Structure"
     }
