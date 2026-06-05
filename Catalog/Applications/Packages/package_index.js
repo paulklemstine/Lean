@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f26cec77",
     "filename": "eml_differential_equations_odes_with_exponential_l.json",
     "pkg_num": 373,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.3144,
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
@@ -11968,8 +11968,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "eml_differential_equations_odes_with_exponential_l",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.3144,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
