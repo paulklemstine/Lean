@@ -1,205 +1,238 @@
-# Counterpoint as Category Theory: Voice Leading Categories over ℤ/12ℤ
+# Voice Leading Algebras: Counterpoint as Categorical Structure
 
 ## Abstract
 
-We formalize first-species counterpoint (Fux, 1725) as a category where objects are consonant interval classes in ℤ/12ℤ and morphisms are permitted voice leading motions. We identify and prove several structural results: (1) the Fourth Anomaly — the consonant interval set is not closed under inversion due to the perfect fifth/fourth asymmetry, with exactly 5 of 6 consonances having consonant inversions; (2) the 2/4 Law — transitions to perfect consonances admit exactly 2 motion types while transitions to imperfect consonances admit all 4, yielding 120 total abstract morphisms; (3) Contrary Motion Completeness — the contrary-motion subcategory is a complete graph on 6 vertices; (4) a bridge to order theory via the consonance distance preorder. All results are machine-verified in the Lean 4 proof assistant with the Mathlib library. The formalization reveals that the classical rules of counterpoint encode precise algebraic constraints arising from the group structure of ℤ/12ℤ and the combinatorial properties of the consonance set {0, 3, 4, 7, 8, 9}.
+We introduce the **Voice Leading Algebra** (VLA), a parameterized algebraic structure that formalizes the rules of first-species counterpoint over ℤ/nℤ. Objects are consonant interval classes; morphisms are voice leadings (pairs of pitch-class motions) satisfying consonance preservation and the prohibition against parallel perfect consonances. We prove five main theorems: (1) the **Counterpoint Obstruction** — valid voice leadings are not closed under composition, refuting naive categorification of counterpoint; (2) **Strong Connectivity** — the valid-transition quiver is strongly connected; (3) **Inversion Asymmetry** — the perfect fifth is the unique consonance whose octave complement is dissonant; (4) the **Perfect Bottleneck** — perfect consonances admit exactly 1 parallel self-transition vs. 12 for imperfect consonances; (5) **Tension Injectivity** — consonant intervals are uniquely identified by their tension rank. All results are machine-verified in Lean 4 with Mathlib. The VLA framework generalizes to arbitrary equal-tempered tuning systems.
+
+**Keywords**: counterpoint, voice leading, category theory, music theory, formal verification, modular arithmetic
+
+---
 
 ## 1. Introduction
 
-Species counterpoint, as codified by Fux [1] and refined by subsequent theorists, provides a rule-based system for composing multiple independent melodic lines. The rules constrain which intervals may appear between voices (consonance) and how voices may move from one interval to the next (voice leading). While these rules have been studied extensively from musical, acoustic, and cognitive perspectives, a rigorous algebraic analysis of their structure has been lacking.
+The rules of first-species counterpoint, codified by Fux in *Gradus ad Parnassum* (1725), govern the simplest form of polyphonic composition: note-against-note writing in two voices. The core constraints are:
 
-We model first-species counterpoint as a *constrained category* over the cyclic group ℤ/12ℤ. In this framework:
-- **Objects** are consonant interval classes: elements of the set C = {0, 3, 4, 7, 8, 9} ⊂ ℤ/12ℤ
-- **Morphisms** from interval *a* to interval *b* are permitted voice leading motions, classified by motion type (contrary, oblique, similar, parallel)
-- **Composition** is sequential voice leading
+1. Every vertical sonority must be a consonant interval (unison, third, fifth, sixth, or octave).
+2. No parallel motion between identical perfect consonances (no parallel fifths, no parallel unisons/octaves).
+3. Preference for contrary and oblique motion, especially when approaching perfect consonances.
 
-This categorical perspective reveals structural properties that are not apparent from the traditional rule-based formulation.
+These rules have been studied extensively in music theory (Jeppesen, 1939; Salzer & Schachter, 1969), computational musicology (Agmon, 1991; Tymoczko, 2011), and mathematical music theory (Mazzola, 2002; Fiore & Satyendra, 2005). However, a complete algebraic formalization that makes the *categorical failure* of these rules precise has been lacking.
 
-### 1.1 Relation to Prior Work
+We address this gap by introducing the **Voice Leading Algebra** (VLA), a structure that parameterizes counterpoint rules over an arbitrary cyclic group ℤ/nℤ. For the standard 12-tone equal temperament (12-TET), we establish five main results that reveal the algebraic structure of counterpoint.
 
-This work builds on and extends:
-- **Catalog entry `FINAL/Pythagorean/HarmonicMusicTheory.lean`**: The `root_triple_consonant_intervals` theorem establishing basic properties of consonant intervals in relation to Pythagorean triples.
-- **Catalog entry `Catalog/Algebra/MusicalCounterpoint.lean`**: Voice leading cost functions, the seminorm structure, and the no-parallel-perfects constraint. Our work extends this from cost analysis to full categorical structure.
-- **Catalog entry `Bridges/KnuthBendixCompletion.lean`** (`finished_rules_eq_theory`): The technique of showing that a finite set of rules generates exactly a specified theory, which we adapt to show that counterpoint rules generate a specific morphism set.
+### 1.1 Main Contributions
 
-### 1.2 Summary of Contributions
+1. **The Counterpoint Obstruction Theorem** (Theorem 3.1): We prove that valid voice leadings under the parallel-perfects prohibition are not closed under composition. This definitively shows that first-species counterpoint cannot be organized as a category with voice-leading composition. The correct framework is the free category (path category) on the valid-transition quiver.
 
-| Result | Statement | Significance |
-|--------|-----------|-------------|
-| Fourth Anomaly | ¬(∀ i ∈ C, -i ∈ C) | Consonance breaks inversion symmetry |
-| Neg-stable count | |{i ∈ C : -i ∈ C}| = 5 | Exactly one consonance breaks symmetry |
-| 2/4 Law | |Mor(a,b)| = 2 if b perfect, 4 if imperfect | Morphism count depends only on target |
-| Morphism count | |Mor| = 120 = 5! | Total abstract morphism count |
-| Contrary completeness | ∀ a,b ∈ C, ∃ contrary motion a → b | Complete subgraph on 6 vertices |
-| Hexachordal balance | |C| = |ℤ/12ℤ \ C| = 6 | Equal consonant/dissonant partition |
-| Non-additivity | C + C ⊄ C | Consonances don't form a subgroup |
-| Self-inverse uniqueness | ∀ i ∈ C, -i = i → i = 0 | Only unison is self-inverse among consonances |
+2. **Strong Connectivity** (Theorem 3.2): Despite the restrictions, the valid-transition quiver is strongly connected: any consonant interval can reach any other in a single step.
+
+3. **Inversion Asymmetry** (Theorem 3.3): The perfect fifth is the unique consonant interval whose octave complement (inversion in ℤ/12ℤ) is not consonant. This provides a group-theoretic explanation for the special status of the fifth.
+
+4. **The Perfect Bottleneck** (Theorem 3.4): Perfect consonances admit exactly 1 parallel self-transition (the identity), while imperfect consonances admit 12. The ratio 12:1 quantifies the restrictive nature of the parallel-perfects rule.
+
+5. **Tension Injectivity** (Theorem 3.5): The tension rank function is injective on consonant intervals, providing a well-defined total ordering that respects the perfect/imperfect partition.
+
+---
 
 ## 2. Definitions
 
-### 2.1 Interval Classes
+### 2.1 The Chromatic Pitch-Class Group
 
-**Definition 2.1.** An *interval class* is an element of the cyclic group ℤ/12ℤ, representing the distance between two pitch classes measured in semitones modulo the octave.
+We work over ℤ/12ℤ, the integers modulo 12, which represent the 12 chromatic pitch classes in standard equal temperament. Intervals between voices are elements of ℤ/12ℤ.
 
-**Definition 2.2.** The *consonant set* is C = {0, 3, 4, 7, 8, 9} ⊂ ℤ/12ℤ. This decomposes as:
-- *Perfect consonances*: P = {0, 7} (unison and perfect fifth)
-- *Imperfect consonances*: I = {3, 4, 8, 9} (thirds and sixths)
+### 2.2 Consonant and Perfect Intervals
 
-with C = P ⊔ I (disjoint union), |P| = 2, |I| = 4.
+**Definition 2.1** (Consonant Set). The set of consonant intervals is:
+$$C = \{0, 3, 4, 7, 8, 9\} \subset \mathbb{Z}/12\mathbb{Z}$$
+corresponding to unison (0), minor third (3), major third (4), perfect fifth (7), minor sixth (8), and major sixth (9).
 
-### 2.2 Voice Leading
+**Definition 2.2** (Perfect Set). The set of perfect consonances is:
+$$P = \{0, 7\} \subset C$$
 
-**Definition 2.3.** A *voice leading* from interval *a* to interval *b* is a tuple (a, b, δ_bass, δ_soprano) ∈ ℤ/12ℤ × ℤ/12ℤ × ℤ × ℤ satisfying the *coherence condition*: a + (δ_soprano - δ_bass) ≡ b (mod 12).
+**Definition 2.3** (Imperfect Set). The set of imperfect consonances is:
+$$I = \{3, 4, 8, 9\} = C \setminus P$$
 
-**Definition 2.4.** The *motion type* of a voice leading is classified as:
-- **Parallel**: δ_bass = δ_soprano
-- **Oblique**: δ_bass = 0 or δ_soprano = 0 (but not parallel)
-- **Contrary**: sgn(δ_bass) ≠ sgn(δ_soprano) (but not oblique)
-- **Similar**: sgn(δ_bass) = sgn(δ_soprano) (but not parallel)
+**Lemma 2.4**. $C = P \sqcup I$ (disjoint union). $|C| = 6$, $|P| = 2$, $|I| = 4$.
 
-### 2.3 First-Species Validity
+### 2.3 Voice Leadings
 
-**Definition 2.5.** A voice leading (a, b, δ_bass, δ_soprano) is *first-species valid* if:
-1. a, b ∈ C (both intervals are consonant)
-2. The coherence condition holds
-3. If the motion is parallel with δ_bass ≠ 0, then b ∉ P
-4. If the motion is similar, then b ∉ P
+**Definition 2.5** (Voice Leading). A voice leading is a pair $v = (\delta_u, \delta_l) \in (\mathbb{Z}/12\mathbb{Z})^2$, where $\delta_u$ is the motion of the upper voice and $\delta_l$ is the motion of the lower voice.
 
-These rules formalize Fux's prohibition on parallel and similar motion to perfect consonances.
+**Definition 2.6** (Apply). The application of voice leading $v = (\delta_u, \delta_l)$ to interval $i$ is:
+$$v(i) = i + \delta_u - \delta_l$$
+
+**Definition 2.7** (Composition). The composition of voice leadings $v_1 = (\delta_{u,1}, \delta_{l,1})$ and $v_2 = (\delta_{u,2}, \delta_{l,2})$ is:
+$$v_1 \circ v_2 = (\delta_{u,1} + \delta_{u,2}, \delta_{l,1} + \delta_{l,2})$$
+
+**Lemma 2.8** (Compatibility). $(v_1 \circ v_2)(i) = v_2(v_1(i))$.
+
+**Definition 2.9** (Parallel Motion). A voice leading $v = (\delta_u, \delta_l)$ has parallel motion if $\delta_u = \delta_l$ and $\delta_u \neq 0$.
+
+### 2.4 Valid Voice Leadings
+
+**Definition 2.10** (Validity). A voice leading $v$ is valid from interval $i$ if:
+1. $i \in C$ (source is consonant)
+2. $v(i) \in C$ (target is consonant)
+3. $\neg(i \in P \land v(i) = i \land v \text{ is parallel})$ (no parallel perfect consonances)
+
+**Definition 2.11** (Identity). The identity voice leading is $\text{id} = (0, 0)$.
+
+**Lemma 2.12**. The identity voice leading is valid from every consonant interval.
+
+### 2.5 The Interval Inversion
+
+**Definition 2.13** (Inversion). The inversion of interval $i$ is $\iota(i) = -i \in \mathbb{Z}/12\mathbb{Z}$.
+
+**Lemma 2.14**. $\iota$ is an involution: $\iota(\iota(i)) = i$.
+
+### 2.6 Tension Rank
+
+**Definition 2.15** (Tension Rank). The function $\tau : \mathbb{Z}/12\mathbb{Z} \to \mathbb{N}$ assigns:
+$$\tau(0) = 0, \quad \tau(7) = 1, \quad \tau(4) = 2, \quad \tau(3) = 3, \quad \tau(9) = 4, \quad \tau(8) = 5$$
+with $\tau(i) = 6$ for $i \notin C$.
+
+### 2.7 The Voice Leading Algebra (Generalization)
+
+**Definition 2.16** (Voice Leading Algebra). A VLA over $\mathbb{Z}/n\mathbb{Z}$ is a triple $(C, P, n)$ where:
+- $C \subseteq \mathbb{Z}/n\mathbb{Z}$ is a nonempty set of consonances
+- $P \subseteq C$ is a set of perfect consonances
+- Validity is defined as in Definition 2.10 with $C$ and $P$ replacing the standard sets
+
+The standard 12-TET VLA is $(\{0,3,4,7,8,9\}, \{0,7\}, 12)$.
+
+---
 
 ## 3. Main Results
 
-### 3.1 The Fourth Anomaly (Theorem 3.1)
+### 3.1 The Counterpoint Obstruction
 
-**Theorem 3.1** (consonance_neg_not_closed). *The consonant set C is not closed under negation in ℤ/12ℤ.*
+**Theorem 3.1** (Non-Compositionality). There exist consonant intervals $i, j$ and valid voice leadings $v_1 : i \to j$, $v_2 : j \to i$ such that $v_1 \circ v_2$ is not valid from $i$.
 
-*Proof.* -7 ≡ 5 (mod 12), and 5 ∉ C. □
+*Proof sketch*. Take $i = 7$ (P5), $j = 9$ (M6), $v_1 = (2, 0)$ (oblique: upper voice up 2), $v_2 = (0, 2)$ (oblique: lower voice up 2). Then:
+- $v_1(7) = 7 + 2 - 0 = 9$. Valid: $9 \in C$, and $9 \neq 7$ so no parallel-perfect issue.
+- $v_2(9) = 9 + 0 - 2 = 7$. Valid: $7 \in C$, and $9 \notin P$ so no parallel-perfect issue.
+- $(v_1 \circ v_2) = (2, 2)$. $(v_1 \circ v_2)(7) = 7 + 2 - 2 = 7$. But $7 \in P$, $7 = 7$, $\delta_u = \delta_l = 2 \neq 0$: parallel motion to the same perfect consonance. Invalid. □
 
-This is significant because the imperfect consonances I = {3, 4, 8, 9} *are* closed under negation: -3 = 9, -4 = 8, -9 = 3, -8 = 4. The symmetry breaks at the perfect consonances: -0 = 0 ∈ P, but -7 = 5 ∉ C.
+**Remark**. This theorem shows that the counterpoint rules define a *quiver* (directed graph with multiple edges), not a category. The correct categorical structure is the free category on this quiver — the path category, where morphisms are finite sequences of valid voice leadings.
 
-**Theorem 3.2** (neg_stable_count). *|{i ∈ C : -i ∈ C}| = 5.*
+### 3.2 Strong Connectivity
 
-*Proof.* The five neg-stable consonances are {0, 3, 4, 8, 9}. The unique neg-unstable consonance is 7 (perfect fifth). □
+**Theorem 3.2** (Connectivity). For any consonant intervals $i, j \in C$, there exists a valid voice leading from $i$ to $j$.
 
-**Corollary 3.3** (fourth_anomaly). *The perfect fourth (5) is the unique element of ℤ/12ℤ that is not consonant but whose negation is consonant.*
+*Proof sketch*. The witness is $v = (j - i, 0)$. Then $v(i) = i + (j-i) - 0 = j \in C$. The parallel condition requires $\delta_u = \delta_l = 0$ (since $\delta_l = 0$), so $\delta_u \neq 0$ fails if $i = j$ (giving $\delta_u = 0$). In all cases, the voice leading is valid. □
 
-This anomaly explains the historical controversy surrounding the perfect fourth in counterpoint theory. Acoustically, the fourth is as "pure" as the fifth (both arise from simple frequency ratios), yet counterpoint treats them asymmetrically. Our formalization shows this asymmetry is forced by the algebraic structure of the consonance set.
+**Corollary**. The path category of the counterpoint quiver is connected.
 
-### 3.2 The 2/4 Law (Theorems 3.4-3.5)
+### 3.3 Inversion Asymmetry
 
-**Theorem 3.4** (two_four_perfect). *For b ∈ P and motion type m, the constraint (m ∈ {parallel, similar} → b ∉ P) is equivalent to m ∈ {contrary, oblique}.*
+**Theorem 3.3** (Unique Inversion Failure). There exists a unique consonant interval whose inversion is not consonant, and it is the perfect fifth (7).
 
-**Theorem 3.5** (two_four_imperfect). *For b ∈ I and any motion type m, the constraint (m ∈ {parallel, similar} → b ∉ P) holds trivially.*
+*Proof*. Compute: $\iota(0) = 0 \in C$, $\iota(3) = 9 \in C$, $\iota(4) = 8 \in C$, $\iota(7) = 5 \notin C$, $\iota(8) = 4 \in C$, $\iota(9) = 3 \in C$. The unique failure is $i = 7$. □
 
-These theorems establish the 2/4 Law: transitions to perfect consonances admit exactly 2 motion types (contrary, oblique), while transitions to imperfect consonances admit all 4 motion types. This asymmetry is a direct consequence of the definitions and the disjointness of P and I.
+**Corollary 3.3.1**. The inversion $\iota$ restricts to an involution on the imperfect consonances $I$, swapping $3 \leftrightarrow 9$ and $4 \leftrightarrow 8$.
 
-**Corollary 3.6** (morphism_count). *The counterpoint category has 6 × 2 × 2 + 6 × 4 × 4 = 120 abstract morphisms.*
+**Remark**. This result provides a group-theoretic explanation for the special treatment of the fifth in counterpoint. The perfect fifth is the *only* consonant interval that breaks the inversion symmetry of the consonance lattice. Its complement, the perfect fourth (5 semitones), is classified as dissonant in strict two-voice counterpoint — a classification that has puzzled theorists for centuries. Our result shows this is not arbitrary but reflects a fundamental asymmetry in the algebraic structure.
 
-The number 120 = 5! is suggestive of a connection to the symmetric group S₅, though we have not established such a connection.
+### 3.4 The Perfect Bottleneck
 
-### 3.3 Contrary Motion Completeness (Theorem 3.7)
+**Theorem 3.4** (Parallel Self-Transition Counts).
+- For every $p \in P$: $|\{v : v \text{ valid from } p, v(p) = p, \delta_u = \delta_l\}| = 1$.
+- For every $q \in I$: $|\{v : v \text{ valid from } q, v(q) = q, \delta_u = \delta_l\}| = 12$.
 
-**Theorem 3.7** (contrary_motion_complete). *For any a, b ∈ C, there exists a valid first-species voice leading from a to b with contrary motion.*
+*Proof sketch*. A parallel self-transition $v = (a, a)$ satisfies $v(i) = i + a - a = i$. For $p \in P$: validity requires $\neg(p \in P \land p = p \land a = a \land a \neq 0)$, which forces $a = 0$. Only the identity works. For $q \in I$: $q \notin P$, so the parallel-perfects condition is vacuously satisfied. All 12 values of $a$ work. □
 
-*Proof.* We construct explicit witnesses. For arbitrary a, b ∈ C, set δ_bass to a negative value and δ_soprano to a positive value such that (δ_soprano - δ_bass) ≡ b - a (mod 12). The coherence condition is satisfied by construction, and since the motion type is contrary, the constraint on perfect targets does not apply. □
+**Corollary 3.4.1** (Bottleneck Inequality). $\forall p \in P, \forall q \in I: |\text{ParSelf}(p)| < |\text{ParSelf}(q)|$.
 
-This theorem establishes that the contrary-motion subcategory is a complete directed graph K₆ on 6 vertices, with 36 morphisms.
+The ratio 12:1 quantifies the "cost" of perfection: the parallel-fifths rule removes 11 of 12 parallel self-transitions from each perfect consonance.
 
-### 3.4 Hexachordal Balance (Theorem 3.8)
+### 3.5 Tension Injectivity
 
-**Theorem 3.8** (hexachordal_balance). *|C| = |ℤ/12ℤ \ C| = 6.*
+**Theorem 3.5** (Tension Injectivity). The tension rank $\tau$ is injective on $C$: for all $i, j \in C$, $\tau(i) = \tau(j) \implies i = j$.
 
-The consonant and dissonant interval classes form an equal partition of the chromatic space. This hexachordal balance relates to the hexachordal combinatoriality property studied in twelve-tone theory.
+*Proof*. The values $\tau(0) = 0, \tau(7) = 1, \tau(4) = 2, \tau(3) = 3, \tau(9) = 4, \tau(8) = 5$ are pairwise distinct. □
 
-### 3.5 Non-Subgroup Structure (Theorem 3.9)
+**Theorem 3.6** (Tension Separation). $\forall p \in P, \forall q \in I: \tau(p) < \tau(q)$.
 
-**Theorem 3.9** (consonant_not_additive). *C is not closed under addition in ℤ/12ℤ.*
+*Proof*. $\max\{\tau(p) : p \in P\} = \tau(7) = 1 < 2 = \tau(4) = \min\{\tau(q) : q \in I\}$. □
 
-*Proof.* 3 + 3 = 6 ∉ C. □
+### 3.6 Motion Classification
 
-Despite not forming a subgroup, C has interesting additive structure. For instance, 3 + 4 = 7 (the perfect fifth is the sum of minor and major thirds), which is a fundamental fact of music theory.
+**Theorem 3.7** (Perfect Self-Transition Motion). Every valid non-identity voice leading from a perfect consonance to itself must use non-parallel motion type.
 
-### 3.6 Self-Inverse Uniqueness (Theorem 3.10)
+*Proof*. If $v$ has parallel motion type, then $\delta_u = \delta_l \neq 0$, so $v$ is parallel. Combined with $i \in P$ and $v(i) = i$, this violates validity. □
 
-**Theorem 3.10** (consonant_self_inverse_only_zero). *For i ∈ C, -i = i if and only if i = 0.*
+### 3.7 General VLA Results
 
-Among the full group ℤ/12ℤ, the elements satisfying -i = i are {0, 6}. Since 6 ∉ C (the tritone is dissonant), the only self-inverse consonance is the unison.
+**Theorem 3.8** (General Identity). In any VLA $(C, P, n)$, the zero voice leading $(0, 0)$ is valid from every consonant interval.
 
-## 4. The Counterpoint Category: Structure
+*Proof*. The target is $i + 0 - 0 = i \in C$. The parallel condition requires $0 \neq 0$, which is false. □
 
-### 4.1 Objects and Morphisms
+**Theorem 3.9** (12-TET Connectivity). In the standard VLA, oblique motion $(j - i, 0)$ is always valid from $i$ to $j$ (for $i, j \in C$).
 
-The counterpoint category **Cpt** has:
-- 6 objects (consonant interval classes)
-- 120 abstract morphisms (valid voice leading types)
-- Identity morphisms at each object (stationary voice leading)
+---
 
-### 4.2 Subcategories
+## 4. The PEGB Analysis
 
-| Subcategory | Morphism restriction | Count | Structure |
-|-------------|---------------------|-------|-----------|
-| Contrary | Only contrary motion | 36 | Complete graph K₆ |
-| Oblique | Only oblique motion | 36 | Complete graph K₆ |
-| Parallel | Only parallel motion | 24 | Bipartite: C → I |
-| Similar | Only similar motion | 24 | Bipartite: C → I |
+### 4.1 Counterpoint Obstruction (Theorem 3.1)
 
-The parallel and similar subcategories have the same structure: all 6 sources can reach all 4 imperfect targets, but no perfect targets. This creates a bipartite-like structure that distinguishes the counterpoint category from a free category.
+- **P**roof: Machine-verified in Lean 4 with explicit witness $(i=7, j=9, v_1=(2,0), v_2=(0,2))$.
+- **E**xample: In C major, soprano on E5 and bass on A3 (P5). Soprano moves to F♯5, bass stays (oblique to M6). Then soprano stays, bass moves to B3 (oblique back to P5). Individually legal; composite is parallel fifths.
+- **G**eneralization: The obstruction holds in any VLA with $|P| \geq 1$ and $|C| \geq 2$ where $C \setminus P \neq \emptyset$ and there exist paths through imperfect consonances.
+- **B**oundary: If $P = \emptyset$ (no perfect consonances), the obstruction vanishes and voice leadings form a category. The parallel-perfects rule is exactly the obstruction to categorification.
 
-### 4.3 Composition
+### 4.2 Inversion Asymmetry (Theorem 3.3)
 
-We prove that composition of coherent voice leadings is coherent (Theorem `seq_coherent`), establishing that the sequential application of voice leadings respects the interval arithmetic.
+- **P**roof: Exhaustive verification over $C = \{0,3,4,7,8,9\}$.
+- **E**xample: The chord C-G (P5) inverts to G-C (P4), but P4 is dissonant. The chord C-E (M3) inverts to E-C (m6), both consonant.
+- **G**eneralization: In 19-TET, the consonant set changes and the inversion analysis yields different asymmetries. The VLA framework handles all equal temperaments.
+- **B**oundary: If we include the perfect fourth (5) as consonant (as in three-voice counterpoint), the inversion becomes closed on all consonances, and the asymmetry disappears.
 
-## 5. The Consonance Preorder
+### 4.3 Perfect Bottleneck (Theorem 3.4)
 
-### 5.1 Circle Distance
+- **P**roof: Counting argument via decidable enumeration over ℤ/12ℤ.
+- **E**xample: From unison C-C, the only valid parallel self-transition is "stay" (both voices hold). From major third C-E, any parallel motion (both up 1, both up 2, ..., both up 11) returns to major third C-E and is valid.
+- **G**eneralization: In a VLA over ℤ/nℤ with $|P| = k$, perfect consonances admit 1 parallel self-transition and imperfect consonances admit $n$.
+- **B**oundary: For $n = 1$ (trivial system), all intervals have 1 parallel self-transition. The bottleneck effect requires $n \geq 2$.
 
-We define the *circle distance* of an interval class as min(v, 12-v) where v is the value in {0, ..., 11}. This measures proximity to the unison in the chromatic circle.
+---
 
-### 5.2 Preorder Structure
+## 5. Falsifiable Conjecture
 
-The circle distance induces a preorder on interval classes:
-- **Minimum**: Unison (distance 0) — most consonant
-- **Maximum among consonances**: Perfect fifth (distance 5) — least consonant among consonances
+**Conjecture 5.1** (Chromatic Universality). For every prime $p \geq 5$, the VLA over ℤ/pℤ with $C = \{0, \lfloor p/4 \rfloor, \lfloor p/3 \rfloor, \lfloor p/2 \rfloor\}$ and $P = \{0, \lfloor p/2 \rfloor\}$ satisfies the Counterpoint Obstruction (non-compositionality of valid voice leadings).
 
-The preorder has three levels among consonances:
-1. Distance 0: {0} (unison) — 1 element
-2. Distance 3: {3, 9} (minor third, major sixth) — 2 elements
-3. Distance 4: {4, 8} (major third, minor sixth) — 2 elements
-4. Distance 5: {7} (perfect fifth) — 1 element
+**Computational Test**: Verify for $p = 5, 7, 11, 13, 17, 19, 23$ by exhaustive search over all voice-leading pairs.
 
-This preorder connects music theory to lattice theory: the consonance hierarchy becomes a partially ordered set with precise algebraic properties.
+---
 
-## 6. Discussion
+## 6. Connection to Existing Results
 
-### 6.1 The Original Conjecture
+Our work connects to the catalog theorem `root_triple_consonant_intervals` from `FINAL/Pythagorean/HarmonicMusicTheory.lean`, which establishes properties of consonant intervals in the Pythagorean tuning system. The VLA framework provides a categorical generalization: where the Pythagorean result works with specific frequency ratios, the VLA operates on the abstract algebraic structure of interval classes over ℤ/nℤ.
 
-The original conjecture — that the counterpoint category is equivalent to the thin category generated by a poset of 12 elements — turns out to be false in its exact form. The counterpoint category has 6 objects (not 12), and it is *not* thin (multiple morphisms between the same pair of objects, one for each valid motion type). However, the category has a rich structure that can be analyzed through its subcategories, each of which has a clear poset-theoretic interpretation.
+The non-compositionality result (Theorem 3.1) also connects to the Knuth-Bendix completion theorems in the catalog (`finished_rules_eq_theory` from `FINAL/Bridges/KnuthBendixCompletion.lean`), which study when rewriting systems converge. The counterpoint rules can be viewed as a non-confluent rewriting system, and our obstruction theorem shows that no completion to a category exists without enlarging the morphism set.
 
-### 6.2 Comparison with Existing Work
+---
 
-Our formalization extends the existing `MusicalCounterpoint.lean` catalog entry, which focused on the cost function (L¹ norm) and its seminorm properties. While that work analyzed *how much* voices move, our work analyzes *which transitions are structurally permitted*, revealing the categorical skeleton underlying counterpoint.
+## 7. Discussion and Future Work
 
-### 6.3 Connection to the Existing `root_triple_consonant_intervals` Theorem
+### 7.1 The Path Category
 
-The `root_triple_consonant_intervals` theorem in `FINAL/Pythagorean/HarmonicMusicTheory.lean` establishes consonant intervals in relation to Pythagorean triples. Our work complements this by analyzing the consonance set as a subset of ℤ/12ℤ rather than through frequency ratios, showing that the algebraic properties of {0, 3, 4, 7, 8, 9} in the cyclic group are sufficient to derive the structure of counterpoint without reference to acoustics.
+Since individual voice leadings don't compose, the natural categorical structure of counterpoint is the **path category** — the free category generated by the valid-transition quiver. Morphisms are finite sequences of valid voice leadings. This category is always well-defined and inherits strong connectivity from the underlying quiver.
 
-## 7. Future Work
+### 7.2 Higher Species
 
-1. **Higher species**: Extend to second and third species counterpoint, where passing tones and suspensions create richer categorical structures.
-2. **The 120 = 5! coincidence**: Investigate whether the morphism count reflects a genuine connection to S₅.
-3. **Tropical counterpoint**: Reformulate voice leading costs in the tropical semiring, connecting to the tropical geometry literature.
-4. **n-voice categories**: Extend from two voices to n voices, where the morphism constraints become more complex.
+First-species counterpoint is the simplest case. Second species (two notes against one), third species (four notes against one), and fourth species (syncopated counterpoint with suspensions) introduce temporal structure and dissonance treatment. The VLA framework could be extended to handle these by adding time-indexed validity conditions.
+
+### 7.3 Microtonal Systems
+
+The VLA framework naturally generalizes beyond 12-TET. For 19-TET, 31-TET, or 53-TET (which better approximate just intonation), the consonant set changes and new algebraic phenomena may emerge. The obstruction theorem and bottleneck inequality generalize to any VLA with non-trivial perfect consonances.
+
+---
 
 ## 8. References
 
-[1] J.J. Fux, *Gradus ad Parnassum*, 1725.
-
-[2] D. Tymoczko, *A Geometry of Music: Harmony and Counterpoint in the Extended Common Practice*, Oxford University Press, 2011.
-
-[3] `Catalog/Algebra/MusicalCounterpoint.lean` — Voice leading cost functions and seminorm structure.
-
-[4] `FINAL/Pythagorean/HarmonicMusicTheory.lean` — Consonant intervals and Pythagorean triples (`root_triple_consonant_intervals`).
-
-[5] `FINAL/Bridges/KnuthBendixCompletion.lean` — Rule completion theory (`finished_rules_eq_theory`).
-
-[6] `Catalog/Bridges/TropicalCounterpoint/Defs.lean` — Tropical counterpoint foundations.
+- Fux, J.J. (1725). *Gradus ad Parnassum*.
+- Jeppesen, K. (1939). *Counterpoint: The Polyphonic Vocal Style of the Sixteenth Century*.
+- Tymoczko, D. (2011). *A Geometry of Music*. Oxford University Press.
+- Mazzola, G. (2002). *The Topos of Music*. Birkhäuser.
+- Fiore, T.M. & Satyendra, R. (2005). Generalized contextual groups. *Music Theory Online*, 11(3).
+- Agmon, E. (1991). Linear transformations between cyclically generated chords. *Musikometrika*, 3, 15-40.
