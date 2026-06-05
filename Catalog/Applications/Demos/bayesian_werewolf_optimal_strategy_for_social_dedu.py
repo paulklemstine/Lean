@@ -1,393 +1,274 @@
 #!/usr/bin/env python3
 """
-Bayesian Werewolf: Numerical Demonstrations
+Bayesian Werewolf: Optimal Strategy for Social Deduction Games
+==============================================================
 
-Computes villager win probabilities under various strategies for the
-social deduction game Werewolf (Mafia). Demonstrates the strategy
-dominance theorem and the information value of Bayesian play.
+This demo computes exact survival probabilities for the Werewolf/Mafia game
+under various strategies and player configurations.
 """
 
-import itertools
-import random
 from fractions import Fraction
-from functools import lru_cache
+from typing import Dict, Tuple
+import itertools
 
 
-# ── Exact Win Probability via Recurrence ──────────────────────────────
-
-
-@lru_cache(maxsize=None)
-def win_prob(w: int, v: int, p: Fraction) -> Fraction:
+def survival_value(w: int, v: int, strategy: str = "random",
+                   alpha: float = 0.0,
+                   memo: Dict = None) -> Fraction:
     """
-    Villager win probability with w werewolves, v villagers,
-    and constant strategy accuracy p (probability of correctly
-    identifying a werewolf each day vote).
-    
-    Recurrence:
-      P(0, v) = 1 if v > 0, else 0
-      P(w, v) = p * P(w-1, v-1) + (1-p) * P(w, v-2)  if w < v and v > 1
-      P(w, v) = 0 if w >= v
+    Compute the exact survival probability for villagers.
+
+    Parameters:
+        w: number of remaining wolves
+        v: number of remaining villagers
+        strategy: "random", "perfect", or "skilled"
+        alpha: skill parameter for "skilled" strategy (0=random, 1=perfect)
+        memo: memoization dictionary
+
+    Returns:
+        Exact rational probability that villagers win
     """
-    if w == 0:
-        return Fraction(1) if v > 0 else Fraction(0)
-    if w >= v:
-        return Fraction(0)
-    if v <= 1:
-        return Fraction(0)
-    return p * win_prob(w - 1, v - 1, p) + (1 - p) * win_prob(w, v - 2, p)
+    if memo is None:
+        memo = {}
 
+    key = (w, v, strategy, alpha)
+    if key in memo:
+        return memo[key]
 
-@lru_cache(maxsize=None)
-def win_prob_random(w: int, v: int) -> Fraction:
-    """Win probability under random strategy σ(w,v) = w/(w+v)."""
+    # Terminal conditions
     if w == 0:
-        return Fraction(1) if v > 0 else Fraction(0)
-    if w >= v:
+        return Fraction(1)
+    if v <= w:
         return Fraction(0)
-    if v <= 1:
-        return Fraction(0)
+
+    # Wolf elimination probability
     total = w + v
-    sigma = Fraction(w, total)
-    return sigma * win_prob_random(w - 1, v - 1) + (1 - sigma) * win_prob_random(w, v - 2)
+    if strategy == "random":
+        p = Fraction(w, total)
+    elif strategy == "perfect":
+        p = Fraction(1) if w > 0 else Fraction(0)
+    elif strategy == "skilled":
+        alpha_frac = Fraction(alpha).limit_denominator(1000)
+        p = alpha_frac + (1 - alpha_frac) * Fraction(w, total)
+    else:
+        raise ValueError(f"Unknown strategy: {strategy}")
+
+    # After day vote eliminates a wolf: state (w-1, v)
+    if w - 1 == 0:
+        after_day_wolf = Fraction(1)
+    else:
+        # Night kill: (w-1, v-1)
+        if v - 1 <= w - 1:
+            after_day_wolf = Fraction(0)
+        else:
+            after_day_wolf = survival_value(w - 1, v - 1, strategy, alpha, memo)
+
+    # After day vote eliminates a villager: state (w, v-1)
+    if v - 1 <= w:
+        after_day_vill = Fraction(0)
+    else:
+        # Night kill: (w, v-2)
+        if v - 2 <= w:
+            after_day_vill = Fraction(0)
+        else:
+            after_day_vill = survival_value(w, v - 2, strategy, alpha, memo)
+
+    result = p * after_day_wolf + (1 - p) * after_day_vill
+    memo[key] = result
+    return result
 
 
-# ── Demonstration 1: Strategy Dominance ───────────────────────────────
-
-def demo_strategy_dominance():
-    """Verify the strategy dominance theorem numerically."""
-    print("=" * 60)
-    print("STRATEGY DOMINANCE THEOREM VERIFICATION")
-    print("If σ₁ ≥ σ₂ pointwise, then P(win | σ₁) ≥ P(win | σ₂)")
-    print("=" * 60)
-    
-    test_cases = [(2, 5), (3, 7), (1, 4), (2, 8), (4, 10)]
-    accuracies = [Fraction(i, 10) for i in range(0, 11)]
-    
-    for w, v in test_cases:
-        print(f"\nGame state: {w} wolves, {v} villagers (n={w+v})")
-        probs = []
-        for p in accuracies:
-            prob = win_prob(w, v, p)
-            probs.append(float(prob))
-            print(f"  σ = {float(p):.1f}: P(win) = {float(prob):.6f}")
-        
-        # Verify monotonicity
-        is_monotone = all(probs[i] <= probs[i + 1] for i in range(len(probs) - 1))
-        print(f"  Monotone in σ: {'✓' if is_monotone else '✗ VIOLATION!'}")
+def information_gap(w: int, v: int) -> Fraction:
+    """Compute the gap between perfect and random play."""
+    return survival_value(w, v, "perfect") - survival_value(w, v, "random")
 
 
-# ── Demonstration 2: Random vs Perfect Strategy ──────────────────────
+def main():
+    print("=" * 70)
+    print("BAYESIAN WEREWOLF: Exact Survival Probabilities")
+    print("=" * 70)
 
-def demo_random_vs_perfect():
-    """Compare random and perfect elimination strategies."""
-    print("\n" + "=" * 60)
-    print("RANDOM vs PERFECT STRATEGY COMPARISON")
-    print("=" * 60)
-    
-    for n in range(4, 16):
-        for k in range(1, n // 2 + 1):
+    # Single wolf cases
+    print("\n--- Single Wolf (k=1) ---")
+    for v in range(2, 11):
+        val = survival_value(1, v)
+        print(f"  V(1, {v:2d}) = {val} ≈ {float(val):.6f}")
+
+    # Two wolf cases
+    print("\n--- Two Wolves (k=2) ---")
+    for v in range(3, 13):
+        val = survival_value(2, v)
+        print(f"  V(2, {v:2d}) = {val} ≈ {float(val):.6f}")
+
+    # Three wolf cases
+    print("\n--- Three Wolves (k=3) ---")
+    for v in range(4, 15):
+        val = survival_value(3, v)
+        print(f"  V(3, {v:2d}) = {val} ≈ {float(val):.6f}")
+
+    # Information gap
+    print("\n--- Information Gap: V_perfect - V_random ---")
+    for w in range(1, 5):
+        for v in range(w + 1, w + 8):
+            gap = information_gap(w, v)
+            rand = survival_value(w, v, "random")
+            perf = survival_value(w, v, "perfect")
+            print(f"  Gap({w},{v:2d}) = {float(gap):.6f}  "
+                  f"(random={float(rand):.4f}, perfect={float(perf):.4f})")
+        print()
+
+    # Skilled strategy comparison
+    print("\n--- Skilled Strategy (α interpolation) for V(2, 5) ---")
+    for alpha_pct in range(0, 101, 10):
+        alpha = alpha_pct / 100.0
+        val = survival_value(2, 5, "skilled", alpha)
+        print(f"  α={alpha:.2f}: V = {val} ≈ {float(val):.6f}")
+
+    # The classic n=7, k=2 game
+    print("\n--- Classic Werewolf: n=7, k=2 ---")
+    rand = survival_value(2, 5, "random")
+    perf = survival_value(2, 5, "perfect")
+    print(f"  Random play:  V = {rand} ≈ {float(rand):.6f}")
+    print(f"  Perfect play: V = {perf} ≈ {float(perf):.6f}")
+    print(f"  Info gap:     {float(perf - rand):.6f}")
+    print(f"  Info multiplier: {float(perf / rand):.2f}x")
+
+    # Test the conjectured formula C * (1 - k/(n-k))^2
+    print("\n--- Testing Conjectured Formula ---")
+    print("  Conjecture: V_random(k, n-k) ≈ C * (1 - k/(n-k))^2")
+    for k in range(1, 4):
+        print(f"\n  k={k}:")
+        for n in range(2*k + 1, 3*k + 8):
             v = n - k
-            p_random = win_prob_random(k, v)
-            p_perfect = win_prob(k, v, Fraction(1))
-            info_value = float(p_perfect - p_random)
-            print(f"  n={n:2d}, k={k}: P_random={float(p_random):.4f}, "
-                  f"P_perfect={float(p_perfect):.4f} (={p_perfect}), "
-                  f"InfoValue={info_value:.4f}")
-
-
-# ── Demonstration 3: The 7-Player Game ────────────────────────────────
-
-def demo_seven_player():
-    """Detailed analysis of the classic 7-player, 2-wolf game."""
-    print("\n" + "=" * 60)
-    print("CLASSIC 7-PLAYER GAME (k=2, v=5)")
-    print("=" * 60)
-    
-    w, v = 2, 5
-    print(f"\nGame: {w} werewolves among {w+v} players")
-    print(f"Win condition: eliminate all {w} werewolves before w ≥ v")
-    
-    p_random = win_prob_random(w, v)
-    print(f"\nRandom elimination: P(win) = {p_random} ≈ {float(p_random):.6f}")
-    
-    # Sweep strategies
-    print("\nWin probability vs constant strategy accuracy:")
-    for i in range(0, 21):
-        p = Fraction(i, 20)
-        prob = win_prob(w, v, p)
-        bar = "█" * int(float(prob) * 40)
-        print(f"  σ={float(p):4.2f}: {float(prob):.4f} {bar}")
-    
-    # Information value at various accuracy levels
-    print("\nInformation value (improvement over random):")
-    for i in range(1, 11):
-        p = Fraction(i, 10)
-        prob = win_prob(w, v, p)
-        iv = float(prob - p_random)
-        print(f"  σ={float(p):.1f}: InfoValue = {iv:+.4f}")
-
-
-# ── Demonstration 4: Correct Elimination Dominance ────────────────────
-
-def demo_correct_elim():
-    """Verify that correct elimination always leads to a better state."""
-    print("\n" + "=" * 60)
-    print("CORRECT ELIMINATION DOMINANCE")
-    print("P(w+1, v-2) ≤ P(w, v-1) for all valid states")
-    print("=" * 60)
-    
-    violations = 0
-    checks = 0
-    for w in range(0, 8):
-        for v in range(3, 15):
-            if w + 1 >= v:
-                continue
-            for i in range(1, 10):
-                p = Fraction(i, 10)
-                lhs = win_prob(w + 1, v - 2, p)
-                rhs = win_prob(w, v - 1, p)
-                checks += 1
-                if lhs > rhs:
-                    print(f"  VIOLATION: w={w}, v={v}, σ={float(p)}: "
-                          f"P({w+1},{v-2})={float(lhs)} > P({w},{v-1})={float(rhs)}")
-                    violations += 1
-    
-    print(f"\n  Checked {checks} cases: {'All passed ✓' if violations == 0 else f'{violations} violations!'}")
-
-
-# ── Demonstration 5: Monte Carlo Simulation ──────────────────────────
-
-def simulate_game(n: int, k: int, strategy: str = "random",
-                  bayesian_accuracy: float = 0.5, num_games: int = 100000) -> float:
-    """Simulate Werewolf games and return villager win rate."""
-    wins = 0
-    for _ in range(num_games):
-        # Assign roles
-        players = list(range(n))
-        wolves = set(random.sample(players, k))
-        alive = set(players)
-        
-        while True:
-            w = len(wolves & alive)
-            v = len(alive) - w
-            
-            if w == 0:
-                wins += 1
-                break
-            if w >= v:
-                break
-            
-            # Day: vote to eliminate
-            alive_list = list(alive)
-            if strategy == "random":
-                target = random.choice(alive_list)
-            elif strategy == "bayesian":
-                # With probability bayesian_accuracy, pick a wolf
-                if random.random() < bayesian_accuracy and wolves & alive:
-                    target = random.choice(list(wolves & alive))
-                else:
-                    target = random.choice(alive_list)
+            actual = float(survival_value(k, v))
+            ratio = k / (n - k) if n > k else 1
+            predicted_shape = (1 - ratio) ** 2
+            if predicted_shape > 0:
+                C = actual / predicted_shape
             else:
-                target = random.choice(alive_list)
-            
-            alive.discard(target)
-            wolves.discard(target)
-            
-            # Check win after day
-            w = len(wolves & alive)
-            v = len(alive) - w
-            if w == 0:
-                wins += 1
-                break
-            if w >= v:
-                break
-            
-            # Night: wolves kill a villager
-            villagers_alive = list(alive - wolves)
-            if villagers_alive:
-                victim = random.choice(villagers_alive)
-                alive.discard(victim)
-    
-    return wins / num_games
-
-
-def demo_monte_carlo():
-    """Monte Carlo validation of analytical results."""
-    print("\n" + "=" * 60)
-    print("MONTE CARLO SIMULATION (100,000 games each)")
-    print("=" * 60)
-    
-    configs = [(7, 2), (9, 3), (11, 2), (13, 4), (5, 1)]
-    
-    for n, k in configs:
-        v = n - k
-        p_exact = float(win_prob_random(k, v))
-        p_sim = simulate_game(n, k, "random")
-        print(f"  n={n:2d}, k={k}: Exact={p_exact:.4f}, Simulated={p_sim:.4f}, "
-              f"Δ={abs(p_exact - p_sim):.4f}")
+                C = float('inf')
+            print(f"    n={n:2d}: V={actual:.6f}, (1-k/(n-k))^2={predicted_shape:.6f}, "
+                  f"implied C={C:.6f}")
 
 
 if __name__ == "__main__":
-    demo_strategy_dominance()
-    demo_random_vs_perfect()
-    demo_seven_player()
-    demo_correct_elim()
-    demo_monte_carlo()
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Strategy Dominance and Win Probability Landscape
-
-Generates plots showing the relationship between strategy accuracy
-and villager win probability across different game configurations.
+Visualization: Survival Probability Heatmaps and Information Gap
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
 import numpy as np
 from fractions import Fraction
-from functools import lru_cache
 
 
-@lru_cache(maxsize=None)
-def win_prob(w: int, v: int, sigma_num: int, sigma_den: int) -> float:
-    """Win probability with caching (using int fractions for hashability)."""
-    s = Fraction(sigma_num, sigma_den)
+def survival_value(w, v, strategy="random", alpha=0.0, memo=None):
+    if memo is None:
+        memo = {}
+    key = (w, v, strategy, alpha)
+    if key in memo:
+        return memo[key]
     if w == 0:
-        return 1.0 if v > 0 else 0.0
-    if w >= v or v <= 1:
-        return 0.0
-    return float(s) * win_prob(w - 1, v - 1, sigma_num, sigma_den) + \
-           float(1 - s) * win_prob(w, v - 2, sigma_num, sigma_den)
+        return Fraction(1)
+    if v <= w:
+        return Fraction(0)
+    total = w + v
+    if strategy == "random":
+        p = Fraction(w, total)
+    elif strategy == "perfect":
+        p = Fraction(1)
+    elif strategy == "skilled":
+        af = Fraction(alpha).limit_denominator(1000)
+        p = af + (1 - af) * Fraction(w, total)
+    else:
+        raise ValueError(strategy)
+    day_wolf = (w - 1, v)
+    if day_wolf[0] == 0:
+        after_wolf = Fraction(1)
+    else:
+        ns = (day_wolf[0], day_wolf[1] - 1)
+        if ns[1] <= ns[0]:
+            after_wolf = Fraction(0)
+        else:
+            after_wolf = survival_value(ns[0], ns[1], strategy, alpha, memo)
+    day_vill = (w, v - 1)
+    if day_vill[1] <= day_vill[0]:
+        after_vill = Fraction(0)
+    else:
+        ns = (day_vill[0], day_vill[1] - 1)
+        if ns[1] <= ns[0]:
+            after_vill = Fraction(0)
+        else:
+            after_vill = survival_value(ns[0], ns[1], strategy, alpha, memo)
+    result = p * after_wolf + (1 - p) * after_vill
+    memo[key] = result
+    return result
 
 
-def plot_strategy_dominance():
-    """Plot win probability vs strategy accuracy for various game sizes."""
-    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-    fig.suptitle('Strategy Dominance Theorem: Win Probability vs Accuracy',
-                 fontsize=14, fontweight='bold')
-    
-    configs = [(1, 3), (1, 5), (2, 5), (2, 7), (3, 7), (3, 10)]
-    
-    for ax, (w, v) in zip(axes.flat, configs):
-        sigmas = np.linspace(0, 1, 101)
-        probs = []
-        for s in sigmas:
-            s_frac = Fraction(int(round(s * 1000)), 1000)
-            p = win_prob(w, v, s_frac.numerator, s_frac.denominator)
-            probs.append(p)
-        
-        ax.plot(sigmas, probs, 'b-', linewidth=2)
-        ax.fill_between(sigmas, 0, probs, alpha=0.15, color='blue')
-        
-        # Mark random strategy point
-        random_sigma = w / (w + v)
-        random_prob = win_prob(w, v,
-                              Fraction(w, w + v).numerator,
-                              Fraction(w, w + v).denominator)
-        ax.plot(random_sigma, random_prob, 'ro', markersize=8,
-                label=f'Random (σ={random_sigma:.2f})')
-        ax.plot(1.0, probs[-1], 'g*', markersize=12,
-                label=f'Perfect (P=1)')
-        
-        ax.set_title(f'w={w}, v={v} (n={w+v})', fontsize=11)
-        ax.set_xlabel('Strategy accuracy σ')
-        ax.set_ylabel('P(villagers win)')
-        ax.set_xlim(0, 1)
-        ax.set_ylim(0, 1.05)
-        ax.grid(True, alpha=0.3)
-        ax.legend(fontsize=8)
-    
-    plt.tight_layout()
-    plt.savefig('strategy_dominance.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved strategy_dominance.png")
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-
-def plot_information_value_heatmap():
-    """Heatmap of information value across game states."""
-    fig, ax = plt.subplots(figsize=(10, 8))
-    
+    # Heatmap of random survival values
     max_w, max_v = 6, 15
-    info_values = np.full((max_w, max_v), np.nan)
-    
+    data = np.zeros((max_w, max_v))
     for w in range(1, max_w + 1):
-        for v in range(w + 1, max_v + 1):
-            # Info value at σ = 0.7 (moderate Bayesian accuracy)
-            p_strategy = win_prob(w, v, 7, 10)
-            p_random = win_prob(w, v,
-                                Fraction(w, w + v).numerator,
-                                Fraction(w, w + v).denominator)
-            info_values[w - 1, v - 1] = p_strategy - p_random
-    
-    im = ax.imshow(info_values, cmap='RdYlGn', aspect='auto',
-                   origin='lower', vmin=-0.1, vmax=0.5)
-    ax.set_xlabel('Villagers (v)', fontsize=12)
-    ax.set_ylabel('Werewolves (w)', fontsize=12)
-    ax.set_title('Information Value: P(win|σ=0.7) − P(win|random)',
-                 fontsize=13, fontweight='bold')
-    
-    ax.set_xticks(range(max_v))
-    ax.set_xticklabels(range(1, max_v + 1))
-    ax.set_yticks(range(max_w))
-    ax.set_yticklabels(range(1, max_w + 1))
-    
-    plt.colorbar(im, ax=ax, label='Information Value')
-    plt.tight_layout()
-    plt.savefig('information_value_heatmap.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved information_value_heatmap.png")
+        for v in range(1, max_v + 1):
+            data[w - 1, v - 1] = float(survival_value(w, v))
 
+    im1 = axes[0].imshow(data, cmap='RdYlGn', aspect='auto', vmin=0, vmax=1,
+                          origin='lower')
+    axes[0].set_xlabel('Villagers (v)')
+    axes[0].set_ylabel('Wolves (w)')
+    axes[0].set_title('Random Play: V(w, v)')
+    axes[0].set_xticks(range(max_v))
+    axes[0].set_xticklabels(range(1, max_v + 1))
+    axes[0].set_yticks(range(max_w))
+    axes[0].set_yticklabels(range(1, max_w + 1))
+    plt.colorbar(im1, ax=axes[0], label='P(villagers win)')
 
-def plot_phase_transition():
-    """Plot the phase transition: critical accuracy vs game ratio w/v."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-    
-    ratios = []
-    critical_sigmas_50 = []
-    critical_sigmas_25 = []
-    
-    for w in range(1, 6):
-        for v in range(w + 1, 16):
-            ratio = w / v
-            
-            # Find critical σ for 50% win probability
-            for i in range(0, 1001):
-                s = Fraction(i, 1000)
-                if win_prob(w, v, s.numerator, s.denominator) >= 0.5:
-                    ratios.append(ratio)
-                    critical_sigmas_50.append(float(s))
-                    break
-            
-            # Find critical σ for 25% win probability
-            for i in range(0, 1001):
-                s = Fraction(i, 1000)
-                if win_prob(w, v, s.numerator, s.denominator) >= 0.25:
-                    critical_sigmas_25.append((ratio, float(s)))
-                    break
-    
-    ax.scatter(ratios, critical_sigmas_50, c='red', s=40, alpha=0.7,
-               label='50% win threshold')
-    if critical_sigmas_25:
-        r25, s25 = zip(*critical_sigmas_25)
-        ax.scatter(r25, s25, c='blue', s=40, alpha=0.7,
-                   label='25% win threshold')
-    
-    ax.set_xlabel('Wolf ratio w/v', fontsize=12)
-    ax.set_ylabel('Critical strategy accuracy σ*', fontsize=12)
-    ax.set_title('Phase Transition: Minimum Accuracy for Given Win Rate',
-                 fontsize=13, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    
+    # Information gap heatmap
+    gap_data = np.zeros((max_w, max_v))
+    for w in range(1, max_w + 1):
+        for v in range(1, max_v + 1):
+            r = float(survival_value(w, v, "random"))
+            p = float(survival_value(w, v, "perfect"))
+            gap_data[w - 1, v - 1] = p - r
+
+    im2 = axes[1].imshow(gap_data, cmap='YlOrRd', aspect='auto', vmin=0, vmax=1,
+                          origin='lower')
+    axes[1].set_xlabel('Villagers (v)')
+    axes[1].set_ylabel('Wolves (w)')
+    axes[1].set_title('Information Gap: V_perfect - V_random')
+    axes[1].set_xticks(range(max_v))
+    axes[1].set_xticklabels(range(1, max_v + 1))
+    axes[1].set_yticks(range(max_w))
+    axes[1].set_yticklabels(range(1, max_w + 1))
+    plt.colorbar(im2, ax=axes[1], label='Gap')
+
+    # Skill interpolation for different games
+    alphas = np.linspace(0, 1, 21)
+    for w, v, label in [(1, 4, 'n=5, k=1'), (2, 5, 'n=7, k=2'),
+                         (3, 7, 'n=10, k=3'), (2, 8, 'n=10, k=2')]:
+        vals = [float(survival_value(w, v, "skilled", a)) for a in alphas]
+        axes[2].plot(alphas, vals, 'o-', label=label, markersize=3)
+
+    axes[2].set_xlabel('Skill parameter α')
+    axes[2].set_ylabel('P(villagers win)')
+    axes[2].set_title('Survival vs. Skill Level')
+    axes[2].legend()
+    axes[2].grid(True, alpha=0.3)
+    axes[2].set_xlim(0, 1)
+    axes[2].set_ylim(0, 1.05)
+
     plt.tight_layout()
-    plt.savefig('phase_transition.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved phase_transition.png")
+    plt.savefig('werewolf_analysis.png', dpi=150, bbox_inches='tight')
+    print("Saved werewolf_analysis.png")
 
 
 if __name__ == "__main__":
-    plot_strategy_dominance()
-    plot_information_value_heatmap()
-    plot_phase_transition()
+    main()
