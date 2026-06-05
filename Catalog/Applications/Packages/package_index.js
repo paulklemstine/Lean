@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "540d21ca",
     "filename": "eml_differential_equations_odes_with_exponential_l.json",
     "pkg_num": 383,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.20320000000000002,
     "title": "EML Differential Equations: Polynomial Obstructions and Wronskian Invariants"
   },
   {
@@ -12258,8 +12258,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "eml_differential_equations_odes_with_exponential_l",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.20320000000000002,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Differential Equations: Polynomial Obstructions and Wronskian Invariants"
     }

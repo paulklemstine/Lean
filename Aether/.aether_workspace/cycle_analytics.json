@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-05T10:20:11.222190+00:00",
+  "last_updated": "2026-06-05T10:54:21.943077+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -5470,6 +5470,41 @@
       "theorem_count": 5,
       "timestamp": "2026-06-05T10:20:11.148410+00:00",
       "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6938,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 54,
+      "domain": "Applications",
+      "duration_seconds": 6175.192182064056,
+      "end_time": 1780656830.4748554,
+      "files_integrated": 5,
+      "job_id": "540d21ca",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8088,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.7143,
+        "novelty": 0.95,
+        "proof_depth": 0.6133,
+        "usefulness": 0.7816
+      },
+      "quality_score": 0.20320000000000002,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780650655.2826734,
+      "strategy_count": 187,
+      "theorem_count": 6,
+      "timestamp": "2026-06-05T10:54:21.869864+00:00",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
   ]
 }

@@ -664,6 +664,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: EML Differential Equations\n\n## Synthesis\n\nThis research cycle established the polynomial layer of the EML differential equation theory, proving that no nonzero polynomial can satisfy y'' = q(x)y when deg(q) \u2265 1 (the \"degree gap obstruction\"), and that the Wronskian of solutions is constant for Airy-type ODEs. These results form the foundation upon which the full differential Galois theory and Kovacic algorithm rest.\n\nThe most promising cross-domain connection is the bridge between polynomial degree theory and symplectic geometry: the Wronskian constancy theorem shows that the solution space of y'' = q(x)y carries a natural symplectic structure, forcing the differential Galois group into SL\u2082. This connects the algebraic degree gap (a fact about polynomial rings) to the geometric structure of the solution space (a fact about Lie groups). The next cycle should exploit this bridge to formalize the full Galois group computation for specific equations like Airy.\n\nThe highest breakthrough potential lies in Direction 1 (Rational Function Obstruction), because extending from polynomial to rational function solutions covers Case 1 of the Kovacic algorithm \u2014 the most computationally tractable case \u2014 and would directly yield a partial formalization of the Kovacic decision procedure.\n\n---\n\n### Direction 1: Rational Function Solutions and the Kovacic Algorithm (Case 1)\n\n**Conjecture**: For a second-order linear ODE y'' = q(x)y with q \u2208 \u211d(x) a rational function, the equation has a solution of the form exp(\u222br(x)dx) with r \u2208 \u211d(x) rational if and only if certain algebraic conditions on the poles and residues of q are satisfied. Specifically, if q has a pole of order n at x\u2080, then the \"local exponents\" at x\u2080 must satisfy explicit integrality conditions.\n\n**Test**: Formalize the notion of \"local exponent\" at a pole of q. Compute the local exponents for q(x) = x (Airy equation: irregular singular point at infinity) and q(x) = 1/x\u00b2 (Euler equation: regular singular point at 0). Prove that the Airy equation fails the integrality conditions for Case 1, while the Euler equation satisfies them.\n\n**Impact**: If successful, this would formalize the first case of the Kovacic algorithm, handling roughly 40% of all decidable second-order linear ODEs. It would bridge formal polynomial algebra (our degree gap results) with formal complex analysis (residue theory). If the integrality conditions are false as stated, the failure would reveal which aspect of the classical theory requires modification for formalization.\n\n**Catalog References**: `Applications/PolynomialODE.lean` (degree gap obstruction), `Bridges/GaloisNeuralCorrespondence.lean` (Galois group structure), `EML/EMLv17Core.lean` (EML definitions)\n\n**Proof Strategy**: \n1. Define rational function residues using Mathlib's `RatFunc` type.\n2. Define the notion of \"Riccati equation\" associated with y'' = qy: w' + w\u00b2 = q where w = y'/y.\n3. Prove that polynomial solutions of the Riccati equation correspond to exp(\u222bpoly dx) solutions of the original ODE.\n4. Use partial fraction decomposition to reduce to local analysis at poles.\n5. Apply our degree gap theorem to show that if q has poles of certain orders, the Riccati equation has no polynomial solution.\n\n**Domain Bridges**: Polynomial algebra \u2194 Complex analysis (residue theory), Differential equations \u2194 Algebraic geometry (singularity classification)\n\n**Lineage**: Builds on `poly_ode_degree_obstruction` and `airy_no_poly_solution` from this cycle. Extends the polynomial obstruction to the rational function setting.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Higher-Order Degree Gap and the n-th Order Generalization\n\n**Conjecture**: For an n-th order linear ODE y^(n) = q(x)y with q a nonzero polynomial of degree d \u2265 1, no nonzero polynomial solution exists. More precisely, the degree gap obstruction generalizes: differentiating n times reduces degree by n, while multiplying by q increases degree by d, and these are irreconcilable when d \u2265 1.\n\n**Test**: Formalize the n-th derivative degree gap: if natDegree(p) \u2265 n, then natDegree(p^(n)) = natDegree(p) - n (in characteristic 0). Then prove the higher-order obstruction for specific cases: n = 3 (y''' = xy), n = 4 (y'''' = xy). Attempt the general inductive proof.\n\n**Impact**: The n-th order generalization would cover all linear ODEs of any order with nonconstant polynomial coefficients, vastly extending the scope of the obstruction. It would also illuminate the structure of the \"iterated degree gap\" phenomenon. Failure would indicate whether the n-th derivative degree result requires additional hypotheses beyond torsion-freeness.\n\n**Catalog References**: `Applications/PolynomialODE.lean` (second_deriv_degree_gap, poly_ode_degree_obstruction), `EML/EMLv18Advanced.lean` (eml_second_difference \u2014 second-order difference analog)\n\n**Proof Strategy**:\n1. Prove by induction on n that the n-th derivative of a polynomial of degree \u2265 n has degree exactly natDegree - n (in a torsion-free ring).\n2. Verify the base case (n = 1, already in Mathlib) and inductive step (compose with our degree gap lemma).\n3. Apply to the equation y^(n) = q\u00b7y: natDegree(LHS) = natDegree(p) - n vs natDegree(RHS) = d + natDegree(p), irreconcilable when d \u2265 1.\n\n**Domain Bridges**: Polynomial ring theory \u2194 Combinatorics (factorial growth of leading coefficients), Number theory \u2194 ODE theory (characteristic of the base ring)\n\n**Lineage**: Direct extension of `second_deriv_degree_gap` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Wronskian Galois Obstruction \u2014 SL\u2082 is the Full Group\n\n**Conjecture**: The differential Galois group of the Airy equation y'' = xy is exactly SL\u2082(\u2102). This can be proved by showing: (1) the Wronskian constancy forces G \u2286 SL\u2082 (established this cycle); (2) the polynomial obstruction eliminates reducible subgroups; (3) the exponential-polynomial obstruction eliminates imprimitive subgroups; (4) a monodromy argument eliminates finite subgroups.\n\n**Test**: Formalize steps (1)-(3) in Lean 4. Step (1) is done (our Wronskian constancy). For step (2), show that if G were reducible, there would exist a solution of the form exp(\u222br dx) with r rational, and derive a contradiction using the Riccati equation approach. For step (3), show that if G were imprimitive, there would exist a solution involving square roots of rational functions, and derive a contradiction from the growth rate of Airy functions.\n\n**Impact**: A formal proof that G(Airy) = SL\u2082(\u2102) would be a landmark result in formal mathematics \u2014 the first complete differential Galois group computation in a proof assistant. It would definitively establish the non-elementarity of Airy functions in the strongest possible sense.\n\n**Catalog References**: `Applications/WronskianTheory.lean` (airy_wronskian_const), `Bridges/GaloisNeuralCorrespondence.lean` (prime_degree_divides_galois_order), `Algebra/ProofSpectra/Core.lean` (galois_connection_theory_variety)\n\n**Proof Strategy**:\n1. Define the differential Galois group as the group of R-algebra automorphisms of the Picard-Vessiot extension.\n2. Use our Wronskian constancy to prove G \u2286 SL\u2082.\n3. Use the polynomial obstruction to eliminate the case G \u2286 Borel (upper triangular).\n4. Use Stokes' phenomenon (asymptotic analysis) to eliminate finite subgroups.\n5. Conclude G = SL\u2082 by exhaustion of Zariski-closed subgroups.\n\n**Domain Bridges**: Differential algebra \u2194 Algebraic group theory (classification of closed subgroups of SL\u2082), Analysis \u2194 Algebra (Stokes phenomenon connects asymptotic growth to group structure)\n\n**Lineage**: Builds on `airy_wronskian_const`, `airy_wronskian_deriv_zero`, and `airy_no_poly_solution` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: EML Integration Obstruction \u2014 Liouville's Theorem\n\n**Conjecture**: The integral \u222bexp(-x\u00b2)dx is not an EML function. More generally, if f is an EML function and \u222bf dx is EML, then f satisfies specific algebraic constraints (Liouville's criterion). This formalizes the classical result that \"most\" EML functions do not have EML antiderivatives.\n\n**Test**: Formalize Liouville's criterion for EML expressions: \u222bf dx is EML if and only if there exist EML functions g\u2081, ..., g\u2099 and constants c\u2081, ..., c\u2099 such that f = g\u2080' + \u03a3 c\u1d62 g\u1d62'/g\u1d62 (the \"logarithmic derivative\" form). Apply this to f(x) = exp(-x\u00b2) and derive a contradiction.\n\n**Impact**: This would formalize one of the most important classical results in differential algebra \u2014 the fact that EML functions are closed under differentiation but NOT under integration. It directly explains why the Airy equation is hard: even if we could express the solution as an integral, that integral might not be EML.\n\n**Catalog References**: `Applications/EMLDerivClosure.lean` (EML derivative closure), `EML/EMLv17Core.lean` (EML definitions)\n\n**Proof Strategy**:\n1. Formalize the \"tower of differential extensions\" framework: \u211d(x) \u2286 \u211d(x, exp(f\u2081)) \u2286 ... \u2286 K.\n2. Define \"elementary extension\" as adjunction of exp or log of an element.\n3. Prove Liouville's criterion by induction on the tower height.\n4. Apply to exp(-x\u00b2): assume \u222bexp(-x\u00b2) = g\u2080 + \u03a3 c\u1d62 log(g\u1d62), differentiate, and derive a contradiction by comparing with exp(-x\u00b2).\n\n**Domain Bridges**: Differential algebra \u2194 Field theory (transcendence degree), EML complexity \u2194 Integration theory (computability of antiderivatives)\n\n**Lineage**: Extends `deriv_depth_le` and the EML closure results from this cycle into the integration domain.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Tropical Airy Equation \u2014 Min-Plus Differential Equations\n\n**Conjecture**: The \"tropical Airy equation\" \u2014 the min-plus analog of y'' = xy \u2014 has solutions that are piecewise-linear functions with breakpoints at the zeros of the classical Airy function. Specifically, if we replace addition with min and multiplication with addition, the tropical ODE val(y'') = x + val(y) (where val is the p-adic or tropical valuation) should have solutions whose \"tropical curve\" encodes the asymptotic behavior of the classical solutions.\n\n**Test**: Define the tropical second derivative for piecewise-linear functions. Compute the solutions of val(y'') = x + val(y) explicitly. Compare the breakpoint structure with the known zeros of Ai(x) (approximately -2.338, -4.088, -5.521, ...).\n\n**Impact**: This would establish a novel bridge between tropical geometry and classical ODE theory, showing that tropical methods can capture qualitative information (zero locations) about transcendental functions. This connection is unexpected and could open new computational approaches to Airy-type equations.\n\n**Catalog References**: `Tropical/FreivaldsLocal.lean` (tropical algebraic methods), `Applications/PolynomialODE.lean` (classical Airy obstruction), `EML/UniversalApproxComplexity.lean` (EML complexity connections)\n\n**Proof Strategy**:\n1. Define \"tropical derivative\" as the slope change function for piecewise-linear functions.\n2. Define the \"tropical Airy equation\" as slope_change\u00b2 = x + f.\n3. Solve explicitly using the recursive structure of piecewise-linear functions.\n4. Compare breakpoints with classical Airy zeros using numerical verification (#eval).\n\n**Domain Bridges**: Tropical geometry \u2194 Classical analysis (Airy function zeros), Min-plus algebra \u2194 ODE theory (tropicalization of differential equations)\n\n**Lineage**: Bridges the tropical methods from `Tropical/FreivaldsLocal.lean` with the Airy equation analysis from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0712",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "540d21ca",
+    "status": "available",
+    "timestamp": "2026-06-05T10:54:20.366764+00:00",
+    "title": "Polynomial layer of the EML differential equ"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -1008,7 +1023,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
   },
   {
-    "consumed_by_exp_id": "284628ac",
+    "consumed_by_exp_id": "",
     "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
     "domains": [
       "EML",
@@ -1018,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.6299999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.751445+00:00",
     "title": "EML Quantum Activation Functions"
   },
@@ -1277,7 +1292,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Brill-Noether Theory"
   },
   {
-    "consumed_by_exp_id": "ed43d8ee",
+    "consumed_by_exp_id": "",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domains": [
       "EML",
@@ -1287,7 +1302,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },
@@ -1576,7 +1591,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalization Bounds via Rademacher Complexity"
   },
   {
-    "consumed_by_exp_id": "9fbbfc10",
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
       "EML",
@@ -1586,7 +1601,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
@@ -4141,7 +4156,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
   },
   {
-    "consumed_by_exp_id": "3e272eb8",
+    "consumed_by_exp_id": "",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -4151,7 +4166,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
@@ -4396,7 +4411,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
   {
-    "consumed_by_exp_id": "52eb923c",
+    "consumed_by_exp_id": "",
     "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
     "domains": [
       "Novelty",
@@ -4406,7 +4421,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:31.018128+00:00",
     "title": "Counterfactual Number Theory: What If Primes Were Random?"
   },
