@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "52eb923c",
     "filename": "counterfactual_number_theory_what_if_primes_were_r.json",
     "pkg_num": 386,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.27624000000000004,
     "title": "Counterfactual Number Theory: Beurling Systems and the Fragility of Unique Factorization"
   },
   {
@@ -12345,8 +12345,8 @@ window.PACKAGE_GRAPH = {
       "hue": 112,
       "id": "counterfactual_number_theory_what_if_primes_were_r",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.27624000000000004,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Counterfactual Number Theory: Beurling Systems and the Fragility of Unique Factorization"
     }

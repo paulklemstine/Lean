@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "68441a6a",
+    "consumed_by_exp_id": "",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
     "domains": [
       "EML",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -766,6 +766,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-05T11:34:59.678727+00:00",
     "title": "Rigorous foundation for the **Consistency Nerv"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Counterfactual Number Theory\n\n## Synthesis\n\nThis research cycle established a formal framework for *counterfactual number theory* via Beurling generalized prime systems. The central discovery is that **unique factorization is controlled by product-freeness, not density**. We proved that the primes' product-free property (no prime equals a product of two primes) is both necessary for unique factorization and logically independent of the prime counting function's asymptotic behavior. This separates the \"counting\" aspect of number theory (PNT, density) from the \"structural\" aspect (UFD, algebraic independence) in a formally verified way.\n\nThe most promising cross-domain connection is between product-free sets (a topic in additive/multiplicative combinatorics) and factorization theory. The existing catalog result `primes_are_product_free` in Cryptography, together with our new Density-Independence Separation Theorem, suggests a rich interface between combinatorial set theory and algebraic number theory that has not been systematically explored. The \"fragility\" of the primes\u2014that adding any single composite destroys unique factorization\u2014has potential implications for understanding the structure of number rings and their factorization properties.\n\nThe highest breakthrough potential lies in Direction 1 (Maximal Product-Free Subsets), because characterizing the largest product-free subsets of {2,...,N} would connect prime distribution theory to extremal combinatorics in a novel way, potentially yielding new bounds on prime gaps or additive structure.\n\n---\n\n### Direction 1: Maximal Product-Free Subsets of {2,...,N}\n\n**Conjecture**: Among all product-free subsets of {2, ..., N}, the set of primes in {2, ..., N} achieves the maximal cardinality for all sufficiently large N. That is, if S \u2286 {2,...,N} is product-free, then |S| \u2264 \u03c0(N) for N \u2265 N\u2080.\n\n**Test**: Enumerate all maximal product-free subsets of {2, ..., N} for N \u2264 50 using backtracking search. Compare the maximum cardinality to \u03c0(N). For larger N (up to 10\u2074), use greedy heuristics to find large product-free subsets and compare.\n\n**Impact**: If true, this would give a new *extremal characterization* of the primes: they are the unique densest product-free subset of \u2115\u22652 (up to finite exceptions). This would be a novel connection between prime number theory and extremal combinatorics. If false, the counterexample would reveal a different \"optimal\" multiplicative structure competing with the primes.\n\n**Catalog References**: `Cryptography/CounterfactualPrimes.lean` (primes_are_product_free), `Novelty/CounterfactualPrimes/Advanced.lean` (prime_subset_product_free)\n\n**Proof Strategy**: \n1. Prove that any product-free set S \u2286 {2,...,N} with |S| > \u03c0(N) must contain a composite c.\n2. Show that c = a\u00b7b for some a, b \u2264 \u221ac, and since a, b < c, they might also be in S, leading to a contradiction (a\u00b7b = c \u2208 S).\n3. The key lemma: if S is product-free and contains composite c, then S cannot contain all prime factors of c.\n4. Use inclusion-exclusion or sieve methods to bound |S|.\n\n**Domain Bridges**: Cryptography (product-free sets) <-> Novelty (Beurling systems) <-> Algebra (unique factorization domains)\n\n**Lineage**: Builds on this cycle's product_free_subset, prime_subset_product_free, and the Density-Independence Separation Theorem.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Beurling Zeta Functions and Analytic Continuation\n\n**Conjecture**: For a \"generic\" Beurling prime system (generators chosen randomly with density 1/log k), the associated Beurling zeta function \u03b6_S(s) = \u03a0_{g \u2208 S} (1 - g\u207b\u02e2)\u207b\u00b9 has a natural boundary on Re(s) = 1 almost surely, and in particular does NOT admit analytic continuation to Re(s) > 1/2. This would show that the Riemann Hypothesis is \"almost surely false\" in the counterfactual setting\u2014not because zeros appear on the wrong line, but because the function cannot even be extended past Re(s) = 1.\n\n**Test**: \n1. For finite random generator sets S \u2286 {2,...,N}, compute \u03b6_S(s) for s real and approaching 1 from the right. \n2. Estimate the pole behavior near s = 1.\n3. For complex s, plot |\u03b6_S(s)| in the critical strip and look for zero patterns.\n\n**Impact**: If the natural boundary conjecture holds, it would definitively separate the analytic structure of the Riemann zeta function from generic Beurling zeta functions. This would formalize the intuition that the RH is a statement about the *specific* primes, not about density. If false (i.e., random Beurling zeta functions DO admit continuation), this would suggest unexpected regularity in random multiplicative structures.\n\n**Catalog References**: `Novelty/CounterfactualPrimes/Defs.lean` (GeneratorSystem, BeurlingIntegers), `Bridges/QuantumClassicalBridge.lean` (tropical_density_is_log)\n\n**Proof Strategy**:\n1. Formalize the Beurling zeta function for finite generator sets.\n2. Prove that for randomly chosen generators, the Euler product has \"random\" coefficients.\n3. Apply Kahane's theorem or similar results on random Dirichlet series to establish natural boundary behavior.\n4. Key lemma: independence of generators implies independence of Dirichlet series terms.\n\n**Domain Bridges**: Novelty (Beurling systems) <-> Physics (zeta function methods) <-> EML (random series analysis)\n\n**Lineage**: Builds on this cycle's BeurlingIntegers definition and density analysis.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Product-Free vs Sum-Free Duality\n\n**Conjecture**: There exists a duality between product-free subsets of \u2115 (studied here) and sum-free subsets of \u2115 (a central topic in additive combinatorics), formalized through a logarithmic map. Specifically: S \u2286 \u2115\u22652 is product-free if and only if log(S) = {log s : s \u2208 S} is sum-free in the reals (meaning no element of log(S) equals the sum of two elements of log(S)).\n\n**Test**: \n1. Verify the equivalence for small cases computationally.\n2. Determine whether known results about sum-free sets (e.g., Cameron-Erd\u0151s conjecture, now a theorem) transfer to new results about product-free sets.\n3. Formalize the logarithmic map and prove the equivalence in Lean 4.\n\n**Impact**: If the duality is clean, it would allow direct transfer of the extensive additive combinatorics literature to the multiplicative setting. The Cameron-Erd\u0151s theorem bounds the number of sum-free subsets of {1,...,N}; the dual would bound product-free subsets of {2,...,N}. This could yield new structural results about prime numbers via additive combinatorics.\n\n**Catalog References**: `Novelty/CounterfactualPrimes/Defs.lean` (IsProductFreeSet), `Novelty/CounterfactualPrimes/Advanced.lean` (product_free_subset)\n\n**Proof Strategy**:\n1. Define the logarithmic map formally: for S \u2286 \u2115\u22652, log(S) \u2286 \u211d>0.\n2. Prove: a\u00b7b = c \u2194 log a + log b = log c (basic logarithm property).\n3. Conclude: S product-free \u2194 log(S) sum-free.\n4. Transfer sum-free density bounds to product-free density bounds.\n\n**Domain Bridges**: Novelty (product-free sets) <-> Algebra (additive combinatorics) <-> Tropical (logarithmic/tropical geometry connection)\n\n**Lineage**: Builds on this cycle's product-freeness theory and the Density-Independence Separation Theorem.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Factorization Entropy of Beurling Systems\n\n**Conjecture**: Define the *factorization entropy* of a generator system G at bound N as H_G(N) = (1/N) \u03a3_{n \u2264 N} log(f_G(n)), where f_G(n) is the number of distinct factorizations of n over G. For the prime system, H_primes(N) = 0 (unique factorization). For random Beurling systems with prime-like density, H_random(N) \u2192 \u221e as N \u2192 \u221e.\n\n**Test**:\n1. Compute f_G(n) for small generator sets using dynamic programming.\n2. Plot H_G(N) for prime generators vs random generators vs interval generators.\n3. Determine the growth rate of H_random(N): is it logarithmic, polynomial, or exponential in N?\n\n**Impact**: Factorization entropy would give a quantitative measure of \"how badly\" unique factorization fails. If it grows polynomially for random systems, this would give a precise sense in which the primes are \"infinitely more structured\" than random generators. The growth rate itself would be a new invariant of Beurling systems.\n\n**Catalog References**: `Novelty/CounterfactualPrimes/Defs.lean` (GeneratorSystem, Factorization), `EML/AdvancedTheory.lean` (ensembleComplexity)\n\n**Proof Strategy**:\n1. Formalize f_G(n) as a count of multisets over G.gens with product n.\n2. Prove f_primes(n) = 1 for all n (equivalent to FTA).\n3. For interval generators {2,...,k}, establish lower bounds on f_G(n) using partition counting.\n4. For random generators, use probabilistic arguments to bound expected factorization count.\n\n**Domain Bridges**: Novelty (Beurling systems) <-> EML (ensemble complexity / information theory) <-> Computation (algorithmic complexity of factorization)\n\n**Lineage**: Builds on this cycle's factorization framework and the Composite Contamination Theorem.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Multiplicative Independence and Matroid Structure\n\n**Conjecture**: The collection of multiplicatively independent subsets of \u2115\u22652 forms a matroid (satisfying the exchange property). The primes are a basis of this matroid, and the rank function gives a new characterization of the prime factorization structure.\n\n**Test**:\n1. Verify the exchange property for small cases: if A and B are maximal multiplicatively independent subsets of {2,...,N} with |A| < |B|, does there exist b \u2208 B \\ A with A \u222a {b} still multiplicatively independent?\n2. Compute the rank function for {2,...,20} and compare to \u03c0(20).\n3. Check the augmentation axiom computationally for N \u2264 30.\n\n**Impact**: If the matroid structure exists, it would provide a completely new algebraic framework for understanding prime factorization. Matroid theory has deep connections to optimization, coding theory, and algebraic geometry. A \"factorization matroid\" could connect number theory to these areas in unprecedented ways.\n\n**Catalog References**: `Novelty/CounterfactualPrimes/Defs.lean` (IsMultIndep), `Novelty/Structural.lean` (minorClosed_ground_subset)\n\n**Proof Strategy**:\n1. Define multiplicative independence formally (already done as `IsMultIndep`).\n2. Prove that the empty set is independent and subsets of independent sets are independent.\n3. Attempt to prove the exchange property: if |I| < |J| and both are independent, \u2203 j \u2208 J \\ I with I \u222a {j} independent.\n4. Key difficulty: the exchange property may fail due to multiplicative relations. If it fails, characterize exactly when and why.\n\n**Domain Bridges**: Novelty (multiplicative independence) <-> Algebra (matroid theory) <-> Geometry (matroid polytopes)\n\n**Lineage**: Builds on this cycle's IsMultIndep definition and the structural theory of product-free sets.\n\n**Ambition**: grand_challenge\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0719",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "52eb923c",
+    "status": "available",
+    "timestamp": "2026-06-05T12:10:08.991534+00:00",
+    "title": "Formal framework for *counterfactual number th"
   },
   {
     "consumed_by_exp_id": "",
@@ -1651,7 +1666,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "9f53f9e5",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -1661,7 +1676,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -2881,7 +2896,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mathematical foundations of a holographic co"
   },
   {
-    "consumed_by_exp_id": "ad4d5186",
+    "consumed_by_exp_id": "",
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domains": [
       "Computation",
@@ -2891,7 +2906,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3699999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.254223+00:00",
     "title": "Game of Life Universality"
   },
@@ -3241,7 +3256,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
   {
-    "consumed_by_exp_id": "f9e10b94",
+    "consumed_by_exp_id": "",
     "description": "Formalize musical counterpoint rules (Fux's species counterpoint) as a category where objects are consonant intervals and morphisms are permitted voice leadings. Conjecture: The category of first-species counterpoint over a diatonic scale is equivalent to the thin category generated by a specific poset of 12 elements. Test: enumerate all valid first-species counterpoint motions and prove they form exactly this category. Impact: bridges music theory, order theory, and categorical logic.",
     "domains": [
       "Algebra",
@@ -3251,7 +3266,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.503715+00:00",
     "title": "Sonic Mathematics: Counterpoint as Category Theory"
   },
@@ -3301,7 +3316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
   },
   {
-    "consumed_by_exp_id": "3acce6f1",
+    "consumed_by_exp_id": "",
     "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
     "domains": [
       "Speculative",
@@ -3311,7 +3326,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
   },
@@ -4336,7 +4351,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphisms of Meaning: When Structures Collide"
   },
   {
-    "consumed_by_exp_id": "dc1dc6c0",
+    "consumed_by_exp_id": "",
     "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domains": [
       "Novelty",
@@ -4346,7 +4361,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.852132+00:00",
     "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
@@ -4815,7 +4830,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e7178afa",
     "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(\u03c0) = K(\u03c0) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is \u0398(2^n).",
     "domains": [
       "Novelty",
@@ -4825,7 +4840,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.577793+00:00",
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
@@ -4860,7 +4875,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Topological Data Analysis of Theorem Networks"
   },
   {
-    "consumed_by_exp_id": "ec6dd6b1",
+    "consumed_by_exp_id": "",
     "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
     "domains": [
       "Novelty",
@@ -4870,7 +4885,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.838633+00:00",
     "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
   },

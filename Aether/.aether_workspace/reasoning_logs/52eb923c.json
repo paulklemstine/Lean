@@ -11,14 +11,28 @@
       "percent_complete": 0,
       "status": "RUNNING",
       "timestamp": "2026-06-05T10:53:52"
+    },
+    {
+      "elapsed_seconds": 6486.2,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-05T12:09:39"
+    },
+    {
+      "elapsed_seconds": 6486.2,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-05T12:09:39"
     }
   ],
-  "completed_at": "",
+  "completed_at": "2026-06-05T12:09:39",
   "domain": "Novelty",
   "error": "",
-  "final_percent": 0.0,
-  "final_status": "",
-  "has_files": false,
+  "final_percent": 0,
+  "final_status": "IDLE",
+  "has_files": true,
   "job_id": "52eb923c",
   "project_id": "0b6dcad5-9dee-4691-b190-387f00ce7eba",
   "prompt_length": 22479,
@@ -27,6 +41,16 @@
       "at_elapsed_seconds": 1939.8,
       "from": "SUBMITTED",
       "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 6486.2,
+      "from": "RUNNING",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 6486.2,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
     }
   ],
   "submitted_at": "2026-06-05T10:21:33",
