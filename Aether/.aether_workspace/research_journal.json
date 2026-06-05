@@ -980,6 +980,26 @@
       "theorem_count": 5,
       "timestamp": "2026-06-05T17:37:14",
       "title": "Speculative: Topological Data Analysis of Theorem Networks"
+    },
+    {
+      "cycle_id": "30139a0b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle introduced the **SearchDensityFunction** (SDF), a novel structure that models proof search as a density-tracking problem: how does the fraction o",
+      "quality_score": 0.34744,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T18:11:57",
+      "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
+    },
+    {
+      "cycle_id": "658626f5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Thermodynamic Proof Complexity\n\n## Synthesis\n\nThis cycle established a rigorous bridge between proof complexity theory and thermodynamic cost via Landauer's principle. The key dis",
+      "quality_score": 0.4192,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T18:12:26",
+      "title": "Speculative: Proof Complexity and Thermodynamic Cost"
     }
   ],
   "entries": [
@@ -1025,7 +1045,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-05T17:37:14",
+  "last_updated": "2026-06-05T18:12:26",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1037,12 +1057,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "542b5d3b",
-        "quality": 0.44776000000000005,
-        "theorems": 5,
-        "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-      },
       {
         "cycle_id": "f89c016e",
         "quality": 0.5444,
@@ -1096,6 +1110,12 @@
         "quality": 0.35840000000000005,
         "theorems": 4,
         "title": "EML Differential Algebra: Closure Properties"
+      },
+      {
+        "cycle_id": "30139a0b",
+        "quality": 0.34744,
+        "theorems": 5,
+        "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proo"
       }
     ],
     "Bridges": [
@@ -1234,12 +1254,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ded193f5",
-        "quality": 0.40384000000000003,
-        "theorems": 5,
-        "title": "Sonic Mathematics: Counterpoint as Category Theory"
-      },
-      {
         "cycle_id": "a9e3a342",
         "quality": 0.37160000000000004,
         "theorems": 5,
@@ -1292,6 +1306,12 @@
         "quality": 0.352,
         "theorems": 5,
         "title": "Speculative: Topological Data Analysis of Theorem Networks"
+      },
+      {
+        "cycle_id": "658626f5",
+        "quality": 0.4192,
+        "theorems": 5,
+        "title": "Speculative: Proof Complexity and Thermodynamic Cost"
       }
     ],
     "Physics": [
