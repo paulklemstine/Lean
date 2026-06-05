@@ -1,20 +1,60 @@
 #!/usr/bin/env python3
 """
-Langlands for Toddlers: Shape-Color Dictionary Demo
+Langlands Mirror Demo: Shape-Color Duality in Arithmetic
 
-Demonstrates the GL₁ Langlands correspondence by computing Jacobi symbols
-(Kronecker symbols) for fundamental discriminants and showing how they
-encode splitting behavior in quadratic number fields.
+Demonstrates the quadratic Langlands correspondence:
+  Shape (quadratic field Q(√d)) ↔ Color (Kronecker character χ_D)
+
+The trace function is the Jacobi symbol J(d, n), which encodes
+whether primes split, are inert, or ramify in Q(√d).
 """
 
-from typing import Dict, List, Tuple
+from math import gcd, isqrt
+from typing import List, Tuple, Dict
+
+
+def is_prime(n: int) -> bool:
+    """Check if n is prime."""
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+
+def legendre_symbol(a: int, p: int) -> int:
+    """Compute the Legendre symbol (a/p) for odd prime p."""
+    if p == 2:
+        raise ValueError("p must be odd prime")
+    a = a % p
+    if a == 0:
+        return 0
+    # Euler's criterion: (a/p) = a^((p-1)/2) mod p
+    result = pow(a, (p - 1) // 2, p)
+    return result if result <= 1 else -1
 
 
 def jacobi_symbol(a: int, n: int) -> int:
-    """Compute the Jacobi symbol (a/n) for positive odd n."""
+    """Compute the Jacobi symbol (a/n) for odd positive n."""
     if n <= 0 or n % 2 == 0:
-        raise ValueError(f"n must be positive and odd, got {n}")
+        if n == 1:
+            return 1
+        if n == 0:
+            return 0
+        raise ValueError(f"n must be positive odd, got {n}")
+    if n == 1:
+        return 1
     a = a % n
+    if a == 0:
+        return 0 if n > 1 else 1
+
     result = 1
     while a != 0:
         while a % 2 == 0:
@@ -29,234 +69,382 @@ def jacobi_symbol(a: int, n: int) -> int:
 
 
 def kronecker_symbol(d: int, n: int) -> int:
-    """Compute the Kronecker symbol (d/n), extending Jacobi to even n."""
+    """Compute the Kronecker symbol (d/n) for any integer d and positive n.
+    
+    This extends the Jacobi symbol to handle n=2 and even n.
+    """
     if n == 0:
         return 1 if abs(d) == 1 else 0
     if n == 1:
         return 1
-    if n == -1:
-        return -1 if d < 0 else 1
-    if n == 2:
-        if d % 2 == 0:
-            return 0
-        if d % 8 in (1, 7):
-            return 1
-        return -1
 
-    # Factor out powers of 2
     result = 1
-    while n % 2 == 0:
-        result *= kronecker_symbol(d, 2)
-        n //= 2
-    if n == 1:
-        return result
-
-    # Use Jacobi for odd part
+    # Handle sign of n
     if n < 0:
         n = -n
         if d < 0:
             result = -result
+
+    # Factor out powers of 2
+    v = 0
+    while n % 2 == 0:
+        v += 1
+        n //= 2
+
+    if v > 0:
+        if d % 2 == 0:
+            result *= 0
+            return 0
+        if v % 2 == 1:
+            # (d/2) depends on d mod 8
+            if d % 8 in (3, 5):
+                result *= -1
+
+    if n == 1:
+        return result
+
     return result * jacobi_symbol(d, n)
 
 
-def is_squarefree(n: int) -> bool:
-    """Check if n is squarefree."""
-    n = abs(n)
-    if n == 0:
-        return False
-    d = 2
-    while d * d <= n:
-        if n % (d * d) == 0:
-            return False
-        d += 1
-    return True
-
-
-def is_fundamental_discriminant(d: int) -> bool:
-    """Check if d is a fundamental discriminant."""
-    if d == 0:
-        return False
-    if d % 4 == 1:
-        return is_squarefree(d)
-    if d % 4 == 0:
-        m = d // 4
-        return is_squarefree(m) and m % 4 != 1 and m != 0
-    return False
-
-
-def fundamental_discriminant(d: int) -> int:
-    """Compute the fundamental discriminant of Q(√d) for squarefree d."""
-    if not is_squarefree(d) or d == 0:
-        raise ValueError(f"d must be nonzero and squarefree, got {d}")
+def quad_discriminant(d: int) -> int:
+    """Fundamental discriminant of Q(√d).
+    D = d if d ≡ 1 (mod 4), else D = 4d.
+    """
     if d % 4 == 1:
         return d
     return 4 * d
 
 
-def sieve_primes(limit: int) -> List[int]:
-    """Sieve of Eratosthenes."""
-    if limit < 2:
+def primes_up_to(n: int) -> List[int]:
+    """List of primes up to n via sieve."""
+    if n < 2:
         return []
-    sieve = [True] * (limit + 1)
+    sieve = [True] * (n + 1)
     sieve[0] = sieve[1] = False
-    for i in range(2, int(limit**0.5) + 1):
+    for i in range(2, isqrt(n) + 1):
         if sieve[i]:
-            for j in range(i*i, limit + 1, i):
+            for j in range(i*i, n + 1, i):
                 sieve[j] = False
-    return [i for i in range(2, limit + 1) if sieve[i]]
+    return [i for i in range(n + 1) if sieve[i]]
 
 
-def shape_color_table(discriminants: List[int], prime_limit: int = 30) -> None:
-    """Print the shape-color dictionary for given discriminants."""
-    primes = sieve_primes(prime_limit)
-
+def demonstrate_shape_color_matching():
+    """Demonstrate the shape-color correspondence for small quadratic fields."""
     print("=" * 70)
-    print("SHAPE-COLOR DICTIONARY: Jacobi Symbol J(D, p)")
+    print("LANGLANDS MIRROR: Shape-Color Correspondence for Quadratic Fields")
     print("=" * 70)
-    print(f"{'D':>6} | {'Field':>12} | " + " ".join(f"{p:>3}" for p in primes))
-    print("-" * 70)
 
-    for d in discriminants:
-        # Determine the field
-        if d % 4 == 0:
-            m = d // 4
-            field = f"Q(√{m})"
-        else:
-            field = f"Q(√{d})"
+    squarefree_d = [-3, -2, -1, 2, 3, 5, 6, 7, -5, -7, 13, -11]
+    primes = primes_up_to(30)
 
-        values = [kronecker_symbol(d, p) for p in primes]
-        val_str = " ".join(f"{v:>3}" for v in values)
-        print(f"{d:>6} | {field:>12} | {val_str}")
+    for d in squarefree_d:
+        D = quad_discriminant(d)
+        print(f"\n{'─' * 60}")
+        print(f"Shape: Q(√{d})  |  Discriminant D = {D}")
+        print(f"{'─' * 60}")
 
-    print("=" * 70)
-    print("Legend: +1 = split, -1 = inert, 0 = ramified")
-    print()
+        split = []
+        inert = []
+        ramified = []
 
-
-def verify_injectivity(discriminants: List[int], prime_limit: int = 100) -> None:
-    """Verify that distinct discriminants produce distinct character patterns."""
-    primes = sieve_primes(prime_limit)
-
-    print("INJECTIVITY VERIFICATION")
-    print("=" * 50)
-
-    for i in range(len(discriminants)):
-        for j in range(i + 1, len(discriminants)):
-            d1, d2 = discriminants[i], discriminants[j]
-            diff_primes = []
-            for p in primes:
-                if kronecker_symbol(d1, p) != kronecker_symbol(d2, p):
-                    diff_primes.append(p)
-            if diff_primes:
-                print(f"D={d1:>4} vs D={d2:>4}: differ at primes {diff_primes[:5]}...")
+        for p in primes:
+            val = kronecker_symbol(d, p)
+            if val == 1:
+                split.append(p)
+            elif val == -1:
+                inert.append(p)
             else:
-                print(f"D={d1:>4} vs D={d2:>4}: IDENTICAL (BUG?)")
+                ramified.append(p)
 
-    print()
-
-
-def gauss_sum_verification(prime_limit: int = 50) -> None:
-    """Verify g(χ)² = χ(-1)·p for quadratic characters mod p."""
-    import cmath
-
-    primes = [p for p in sieve_primes(prime_limit) if p > 2]
-
-    print("GAUSS SUM BRIDGE: g(χ)² vs χ(-1)·p")
-    print("=" * 60)
-    print(f"{'p':>5} | {'g(χ)²':>20} | {'χ(-1)·p':>10} | {'Match':>5}")
-    print("-" * 60)
-
-    for p in primes:
-        # Compute Gauss sum g(χ) = Σ (a/p) · e^{2πia/p}
-        gauss = sum(
-            jacobi_symbol(a, p) * cmath.exp(2j * cmath.pi * a / p)
-            for a in range(1, p)
-        )
-        g_sq = gauss ** 2
-        chi_neg1 = jacobi_symbol(-1, p)
-        expected = chi_neg1 * p
-
-        match = abs(g_sq - expected) < 1e-8
-        print(f"{p:>5} | {g_sq.real:>10.4f}+{g_sq.imag:>7.4f}i | {expected:>10} | {'✓' if match else '✗':>5}")
-
-    print()
+        print(f"  Color χ_D at primes: {[kronecker_symbol(d, p) for p in primes[:10]]}")
+        print(f"  Split primes (χ=+1):   {split}")
+        print(f"  Inert primes (χ=-1):   {inert}")
+        print(f"  Ramified primes (χ=0): {ramified}")
 
 
-def character_orthogonality_test(prime_limit: int = 30) -> None:
-    """Verify Σ χ(a) = 0 for quadratic characters mod p."""
-    primes = [p for p in sieve_primes(prime_limit) if p > 2]
+def verify_reciprocity():
+    """Verify quadratic reciprocity: J(p,q)·J(q,p) = (-1)^((p-1)/2·(q-1)/2)."""
+    print("\n" + "=" * 70)
+    print("MIRROR RECIPROCITY: Quadratic Reciprocity Verification")
+    print("=" * 70)
 
-    print("CHARACTER ORTHOGONALITY: Σ_{a=0}^{p-1} (a/p)")
-    print("=" * 40)
+    odd_primes = [p for p in primes_up_to(30) if p > 2]
+    all_pass = True
 
-    for p in primes:
-        total = sum(jacobi_symbol(a, p) for a in range(p))
-        status = "✓" if total == 0 else "✗"
-        print(f"  p = {p:>3}: Σ = {total:>3}  {status}")
+    for i, p in enumerate(odd_primes):
+        for q in odd_primes[i+1:]:
+            jp_q = jacobi_symbol(p, q)
+            jq_p = jacobi_symbol(q, p)
+            product = jp_q * jq_p
+            expected = (-1) ** (((p - 1) // 2) * ((q - 1) // 2))
 
-    print()
+            if product != expected:
+                print(f"  FAIL: p={p}, q={q}: J(p,q)·J(q,p) = {product} ≠ {expected}")
+                all_pass = False
 
-
-def reciprocity_test(prime_limit: int = 30) -> None:
-    """Verify quadratic reciprocity: (p/q)(q/p) = (-1)^((p-1)/2 · (q-1)/2)."""
-    primes = [p for p in sieve_primes(prime_limit) if p > 2]
-
-    print("QUADRATIC RECIPROCITY (SELF-DUALITY)")
-    print("=" * 60)
-
-    violations = 0
-    checks = 0
-    for i, p in enumerate(primes):
-        for q in primes[i+1:]:
-            lhs = jacobi_symbol(p, q) * jacobi_symbol(q, p)
-            rhs = (-1) ** ((p - 1) // 2 * (q - 1) // 2)
-            checks += 1
-            if lhs != rhs:
-                violations += 1
-                print(f"  VIOLATION: p={p}, q={q}: LHS={lhs}, RHS={rhs}")
-
-    print(f"  Checked {checks} pairs, {violations} violations")
-    if violations == 0:
-        print("  ✓ All pairs satisfy quadratic reciprocity!")
-    print()
+    if all_pass:
+        print(f"  ✓ Quadratic reciprocity verified for all pairs of odd primes ≤ 30")
 
 
-def fundamental_discriminant_census(limit: int = 100) -> None:
-    """Census of fundamental discriminants up to |D| ≤ limit."""
-    fund_discs = [d for d in range(-limit, limit + 1) if is_fundamental_discriminant(d)]
-    positive = [d for d in fund_discs if d > 0]
-    negative = [d for d in fund_discs if d < 0]
+def verify_multiplicativity():
+    """Verify complete multiplicativity of the Kronecker character."""
+    print("\n" + "=" * 70)
+    print("MULTIPLICATIVITY: J(d, mn) = J(d, m) · J(d, n)")
+    print("=" * 70)
 
-    print(f"FUNDAMENTAL DISCRIMINANT CENSUS (|D| ≤ {limit})")
-    print("=" * 50)
-    print(f"  Total: {len(fund_discs)}")
-    print(f"  Positive: {len(positive)}  {positive[:15]}...")
-    print(f"  Negative: {len(negative)}  {negative[:15]}...")
-    print()
+    test_d = [-1, 2, -3, 5, 7]
+    all_pass = True
+
+    for d in test_d:
+        for m in range(1, 20):
+            for n in range(1, 20):
+                lhs = kronecker_symbol(d, m * n)
+                rhs = kronecker_symbol(d, m) * kronecker_symbol(d, n)
+                if lhs != rhs:
+                    print(f"  FAIL: d={d}, m={m}, n={n}: J(d,mn)={lhs} ≠ J(d,m)·J(d,n)={rhs}")
+                    all_pass = False
+
+    if all_pass:
+        print(f"  ✓ Multiplicativity verified for d ∈ {test_d}, m,n ∈ [1,19]")
+
+
+def character_sum_demo():
+    """Demonstrate character sum cancellation and the Pólya–Vinogradov phenomenon."""
+    print("\n" + "=" * 70)
+    print("CHARACTER SUMS: ∑ χ_d(n) for n = 1 to N")
+    print("=" * 70)
+
+    test_cases = [(-1, "Q(i)"), (2, "Q(√2)"), (-3, "Q(√-3)"), (5, "Q(√5)")]
+
+    for d, name in test_cases:
+        D = quad_discriminant(d)
+        partial_sums = []
+        running_sum = 0
+        N = 100
+
+        for n in range(1, N + 1):
+            running_sum += kronecker_symbol(d, n)
+            partial_sums.append(running_sum)
+
+        max_sum = max(abs(s) for s in partial_sums)
+        bound = abs(D) ** 0.5
+        print(f"\n  {name} (D={D}):")
+        print(f"    Partial sums S(d, N) for N=1..{N}:")
+        print(f"    First 20: {partial_sums[:20]}")
+        print(f"    Max |S(d,N)| = {max_sum}")
+        print(f"    √|D| = {bound:.2f}")
+        print(f"    Pólya–Vinogradov bound ≈ √|D|·log|D| = {bound * (abs(D)**0.3 if abs(D) > 1 else 1):.2f}")
+
+
+def class_number_formula_test():
+    """Test Dirichlet's class number formula for imaginary quadratic fields.
+    h(d) = -(1/D) · ∑_{a=1}^{|D|-1} a · χ_D(a)  for D < 0
+    """
+    print("\n" + "=" * 70)
+    print("CLASS NUMBER FORMULA: h(d) = -(1/D) · ∑ a·χ_D(a)")
+    print("=" * 70)
+
+    # Known class numbers for imaginary quadratic fields
+    known_class_numbers = {
+        -1: 1, -2: 1, -3: 1, -5: 2, -6: 2, -7: 1,
+        -10: 2, -11: 1, -13: 2, -14: 4, -15: 2
+    }
+
+    for d, expected_h in sorted(known_class_numbers.items()):
+        D = quad_discriminant(d)
+        # Compute -(1/D) · ∑_{a=1}^{|D|-1} a · χ_D(a)
+        char_sum = sum(a * kronecker_symbol(D, a) for a in range(1, abs(D)))
+        # h = |char_sum| / |D| for D < -4; adjust by w for D = -3, -4
+        w = 6 if D == -3 else (4 if D == -4 else 2)
+        computed_h = w * abs(char_sum) / (2 * abs(D))
+
+        status = "✓" if abs(computed_h - expected_h) < 0.001 else "✗"
+        print(f"  {status} d={d:>3}, D={D:>4}: h = {computed_h:.0f} (expected {expected_h})  [Σa·χ(a) = {char_sum}]")
+
+
+
+def prime_density_demo():
+    """Demonstrate that split primes have density 1/2 (Chebotarev for quadratic case)."""
+    print("\n" + "=" * 70)
+    print("PRIME DENSITY: Split primes have density 1/2")
+    print("=" * 70)
+
+    test_d = [-1, 2, -3, 5]
+    N = 10000
+
+    all_primes = primes_up_to(N)
+
+    for d in test_d:
+        D = quad_discriminant(d)
+        # Exclude ramified primes (those dividing D)
+        good_primes = [p for p in all_primes if D % p != 0]
+        split_count = sum(1 for p in good_primes if kronecker_symbol(d, p) == 1)
+        total = len(good_primes)
+        ratio = split_count / total if total > 0 else 0
+
+        print(f"  d={d:>3} (D={D:>4}): {split_count}/{total} = {ratio:.4f} split "
+              f"(deviation from 1/2: {abs(ratio - 0.5):.4f})")
 
 
 if __name__ == "__main__":
-    print("\n" + "=" * 70)
-    print("  LANGLANDS FOR TODDLERS: THE GL₁ SHAPE-COLOR DICTIONARY")
-    print("=" * 70 + "\n")
+    demonstrate_shape_color_matching()
+    verify_reciprocity()
+    verify_multiplicativity()
+    character_sum_demo()
+    class_number_formula_test()
+    prime_density_demo()
 
-    # Key discriminants
-    discriminants = [-4, -3, 5, 8, -7, 12, -8, 13, 17, -11]
 
-    # 1. Shape-Color Table
-    shape_color_table(discriminants)
+#!/usr/bin/env python3
+"""
+Visualization: The Quadratic Langlands Mirror
 
-    # 2. Injectivity Verification
-    verify_injectivity(discriminants)
+Generates a heatmap of Kronecker character values J(d, p) for
+squarefree d vs. primes p, showing the "fingerprint" of each
+quadratic field.
+"""
 
-    # 3. Gauss Sum Bridge
-    gauss_sum_verification()
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import numpy as np
+from math import gcd, isqrt
 
-    # 4. Character Orthogonality
-    character_orthogonality_test()
 
-    # 5. Quadratic Reciprocity
-    reciprocity_test()
+def jacobi_symbol(a: int, n: int) -> int:
+    if n <= 0 or n % 2 == 0:
+        return 1 if n == 1 else 0
+    if n == 1:
+        return 1
+    a = a % n
+    if a == 0:
+        return 0 if n > 1 else 1
+    result = 1
+    while a != 0:
+        while a % 2 == 0:
+            a //= 2
+            if n % 8 in (3, 5):
+                result = -result
+        a, n = n, a
+        if a % 4 == 3 and n % 4 == 3:
+            result = -result
+        a = a % n
+    return result if n == 1 else 0
 
-    # 6. Census
-    fundamental_discriminant_census()
+
+def kronecker_symbol(d: int, n: int) -> int:
+    if n == 0:
+        return 1 if abs(d) == 1 else 0
+    if n == 1:
+        return 1
+    result = 1
+    v = 0
+    temp_n = n
+    while temp_n % 2 == 0:
+        v += 1
+        temp_n //= 2
+    if v > 0:
+        if d % 2 == 0:
+            return 0
+        if v % 2 == 1:
+            if d % 8 in (3, 5):
+                result = -1
+    if temp_n == 1:
+        return result
+    return result * jacobi_symbol(d, temp_n)
+
+
+def sieve_primes(n: int):
+    if n < 2:
+        return []
+    sieve = [True] * (n + 1)
+    sieve[0] = sieve[1] = False
+    for i in range(2, isqrt(n) + 1):
+        if sieve[i]:
+            for j in range(i*i, n + 1, i):
+                sieve[j] = False
+    return [i for i in range(n + 1) if sieve[i]]
+
+
+def is_squarefree(n: int) -> bool:
+    if n == 0:
+        return False
+    n = abs(n)
+    for p in range(2, isqrt(n) + 1):
+        if n % (p * p) == 0:
+            return False
+    return True
+
+
+def main():
+    # Select squarefree integers
+    d_values = sorted([d for d in range(-20, 21) if d != 0 and is_squarefree(d)])
+    primes = sieve_primes(60)
+
+    # Build the character matrix
+    matrix = np.zeros((len(d_values), len(primes)))
+    for i, d in enumerate(d_values):
+        for j, p in enumerate(primes):
+            matrix[i, j] = kronecker_symbol(d, p)
+
+    # Create the heatmap
+    fig, ax = plt.subplots(figsize=(14, 10))
+
+    cmap = mcolors.ListedColormap(['#d32f2f', '#ffffff', '#1976d2'])
+    bounds = [-1.5, -0.5, 0.5, 1.5]
+    norm = mcolors.BoundaryNorm(bounds, cmap.N)
+
+    im = ax.imshow(matrix, cmap=cmap, norm=norm, aspect='auto', interpolation='nearest')
+
+    ax.set_xticks(range(len(primes)))
+    ax.set_xticklabels([str(p) for p in primes], fontsize=7, rotation=45)
+    ax.set_yticks(range(len(d_values)))
+    ax.set_yticklabels([f"Q(√{d})" for d in d_values], fontsize=7)
+
+    ax.set_xlabel("Prime p (probe)", fontsize=12)
+    ax.set_ylabel("Quadratic field Q(√d) (shape)", fontsize=12)
+    ax.set_title("The Langlands Mirror: Shape-Color Fingerprints\n"
+                 "Blue = split (+1), White = ramified (0), Red = inert (−1)",
+                 fontsize=14)
+
+    cbar = plt.colorbar(im, ax=ax, ticks=[-1, 0, 1], shrink=0.8)
+    cbar.ax.set_yticklabels(['Inert (−1)', 'Ramified (0)', 'Split (+1)'])
+
+    plt.tight_layout()
+    plt.savefig('langlands_mirror_heatmap.png', dpi=150, bbox_inches='tight')
+    print("Saved: langlands_mirror_heatmap.png")
+
+    # Second plot: character sums
+    fig2, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+    test_fields = [(-1, "Q(i)"), (2, "Q(√2)"), (-3, "Q(√−3)"), (5, "Q(√5)")]
+    N = 200
+
+    for ax, (d, name) in zip(axes.flat, test_fields):
+        partial_sums = []
+        running = 0
+        for n in range(1, N + 1):
+            running += kronecker_symbol(d, n)
+            partial_sums.append(running)
+
+        D = d if d % 4 == 1 else 4 * d
+        bound = abs(D) ** 0.5
+
+        ax.plot(range(1, N + 1), partial_sums, 'b-', linewidth=0.8, alpha=0.8)
+        ax.axhline(y=bound, color='r', linestyle='--', alpha=0.5, label=f'√|D| = {bound:.1f}')
+        ax.axhline(y=-bound, color='r', linestyle='--', alpha=0.5)
+        ax.axhline(y=0, color='gray', linestyle='-', alpha=0.3)
+        ax.set_title(f"{name} (D={D})", fontsize=12)
+        ax.set_xlabel("N")
+        ax.set_ylabel("∑ χ_D(n)")
+        ax.legend(fontsize=9)
+
+    fig2.suptitle("Character Sum Cancellation: ∑ χ_D(n) stays bounded", fontsize=14)
+    plt.tight_layout()
+    plt.savefig('character_sums.png', dpi=150, bbox_inches='tight')
+    print("Saved: character_sums.png")
+
+
+if __name__ == "__main__":
+    main()
