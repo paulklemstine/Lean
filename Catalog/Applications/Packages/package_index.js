@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "af1058f7",
     "filename": "sheaf_theoretic_data_integration_when_databases_fo.json",
     "pkg_num": 381,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.66976,
     "title": "Sheaf-Theoretic Data Integration: Deep Extensions of the Coboundary-Consistency Correspondence"
   },
   {
@@ -12200,8 +12200,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "sheaf_theoretic_data_integration_when_databases_fo",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.66976,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Sheaf-Theoretic Data Integration: Deep Extensions of the Coboundary-Consistency Correspondence"
     }
