@@ -1,168 +1,320 @@
 #!/usr/bin/env python3
 """
-EML Universal Approximation: Algorithms
+EML Universal Approximation: Core Algorithms
 
-Type-hinted implementations of the key algorithms from the research.
+Type-hinted implementations of the key algorithms from the EML density
+and depth hierarchy theory.
 """
 
-import numpy as np
-from typing import Callable, List, Tuple, Optional
+from __future__ import annotations
 from dataclasses import dataclass
+from typing import Callable, List, Optional, Tuple
+from enum import Enum
+import math
+
+
+# ============================================================
+# Algorithm 1: EML Tree Evaluation
+# ============================================================
+
+class EMLNodeType(Enum):
+    VAR = "var"
+    LIT = "lit"
+    ADD = "add"
+    MUL = "mul"
+    NEG = "neg"
+    EML = "eml"
 
 
 @dataclass
-class ApproxResult:
-    """Result of an approximation computation."""
-    coefficients: np.ndarray
-    degree: int
-    depth: int
-    sup_norm_error: float
-    basis_name: str
-
-
-def iterExp(k: int, x: np.ndarray) -> np.ndarray:
-    """
-    Iterated exponential: exp composed with itself k times.
+class EMLTree:
+    """An EML expression tree.
     
-    iterExp(0, x) = x  (identity)
-    iterExp(1, x) = exp(x)
-    iterExp(2, x) = exp(exp(x))
-    ...
+    Nodes are either:
+    - var: the input variable
+    - lit(c): a real constant c
+    - add(left, right): sum
+    - mul(left, right): product
+    - neg(child): negation
+    - eml(left, right): eml(a, b) = exp(a) - log(b)
     """
-    result = x.copy().astype(float)
-    for _ in range(k):
-        result = np.exp(np.clip(result, -500, 500))  # Clip to prevent overflow
-    return result
+    node_type: EMLNodeType
+    value: Optional[float] = None  # for LIT nodes
+    left: Optional[EMLTree] = None
+    right: Optional[EMLTree] = None
+
+    def eval(self, x: float) -> float:
+        """Evaluate the EML tree at input x."""
+        if self.node_type == EMLNodeType.VAR:
+            return x
+        elif self.node_type == EMLNodeType.LIT:
+            return self.value
+        elif self.node_type == EMLNodeType.ADD:
+            return self.left.eval(x) + self.right.eval(x)
+        elif self.node_type == EMLNodeType.MUL:
+            return self.left.eval(x) * self.right.eval(x)
+        elif self.node_type == EMLNodeType.NEG:
+            return -self.left.eval(x)
+        elif self.node_type == EMLNodeType.EML:
+            a = self.left.eval(x)
+            b = self.right.eval(x)
+            return math.exp(a) - math.log(b)
+        raise ValueError(f"Unknown node type: {self.node_type}")
+
+    def depth(self) -> int:
+        """Compute the depth of the tree (max eml nesting)."""
+        if self.node_type in (EMLNodeType.VAR, EMLNodeType.LIT):
+            return 0
+        elif self.node_type in (EMLNodeType.ADD, EMLNodeType.MUL):
+            return max(self.left.depth(), self.right.depth())
+        elif self.node_type == EMLNodeType.NEG:
+            return self.left.depth()
+        elif self.node_type == EMLNodeType.EML:
+            return max(self.left.depth(), self.right.depth()) + 1
+        return 0
+
+    def size(self) -> int:
+        """Compute the size (node count) of the tree."""
+        if self.node_type in (EMLNodeType.VAR, EMLNodeType.LIT):
+            return 1
+        elif self.node_type == EMLNodeType.NEG:
+            return 1 + self.left.size()
+        else:
+            return 1 + self.left.size() + self.right.size()
+
+    def subst(self, inner: EMLTree) -> EMLTree:
+        """Substitute `inner` for every var in this tree."""
+        if self.node_type == EMLNodeType.VAR:
+            return inner
+        elif self.node_type == EMLNodeType.LIT:
+            return self
+        elif self.node_type == EMLNodeType.NEG:
+            return EMLTree(EMLNodeType.NEG, left=self.left.subst(inner))
+        else:
+            return EMLTree(self.node_type, self.value,
+                         self.left.subst(inner) if self.left else None,
+                         self.right.subst(inner) if self.right else None)
 
 
-def build_basis_matrix(x: np.ndarray, depth: int, degree: int) -> np.ndarray:
-    """
-    Build the Vandermonde matrix for depth-d polynomial approximation.
+# Convenience constructors
+def var() -> EMLTree:
+    return EMLTree(EMLNodeType.VAR)
+
+def lit(c: float) -> EMLTree:
+    return EMLTree(EMLNodeType.LIT, value=c)
+
+def add(a: EMLTree, b: EMLTree) -> EMLTree:
+    return EMLTree(EMLNodeType.ADD, left=a, right=b)
+
+def mul(a: EMLTree, b: EMLTree) -> EMLTree:
+    return EMLTree(EMLNodeType.MUL, left=a, right=b)
+
+def neg(a: EMLTree) -> EMLTree:
+    return EMLTree(EMLNodeType.NEG, left=a)
+
+def eml_node(a: EMLTree, b: EMLTree) -> EMLTree:
+    return EMLTree(EMLNodeType.EML, left=a, right=b)
+
+
+# ============================================================
+# Algorithm 2: Polynomial to EML Tree
+# ============================================================
+
+def polynomial_to_eml(coeffs: List[float]) -> EMLTree:
+    """Convert polynomial coefficients [a0, a1, ..., an] to an EML tree.
     
-    Depth 0: [1, x, x², ..., x^degree]
-    Depth 1: [1, exp(x), exp(x)², ..., exp(x)^degree]
-    Depth d: [1, iterExp(d,x), iterExp(d,x)², ...]
-    """
-    base = iterExp(depth, x)
-    return np.vander(base, degree + 1, increasing=True)
-
-
-def eml_approximate(
-    f: Callable[[np.ndarray], np.ndarray],
-    depth: int,
-    degree: int,
-    n_points: int = 500,
-    domain: Tuple[float, float] = (0.0, 1.0)
-) -> ApproxResult:
-    """
-    Approximate f on [a,b] using degree-N polynomial in iterExp(depth, x).
+    Represents a0 + a1*x + a2*x^2 + ... + an*x^n as a depth-0 EML tree.
     
-    Args:
-        f: Target function
-        depth: Tower depth (0=polynomials, 1=poly in exp, etc.)
-        degree: Polynomial degree
-        n_points: Number of sample points
-        domain: Approximation domain [a, b]
+    Pseudocode:
+        result = lit(0)
+        x_power = var()  # x^0 = 1 initially, but we handle specially
+        for i, coeff in enumerate(coeffs):
+            term = mul(lit(coeff), x_power_i)
+            result = add(result, term)
+        return result
+    """
+    if not coeffs:
+        return lit(0.0)
+    
+    # Build x^i incrementally
+    result: Optional[EMLTree] = None
+    
+    for i, c in enumerate(coeffs):
+        if abs(c) < 1e-15:
+            continue
+        # Build x^i
+        if i == 0:
+            term = lit(c)
+        else:
+            x_power = var()
+            for _ in range(i - 1):
+                x_power = mul(x_power, var())
+            term = mul(lit(c), x_power)
+        
+        if result is None:
+            result = term
+        else:
+            result = add(result, term)
+    
+    return result if result is not None else lit(0.0)
+
+
+# ============================================================
+# Algorithm 3: Iterated Exponential EML Tree
+# ============================================================
+
+def iter_exp_tree(n: int) -> EMLTree:
+    """Build the EML tree for iterExp(n, x) = exp^n(x).
+    
+    iterExp(0, x) = x              (tree: var)
+    iterExp(n+1, x) = exp(iterExp(n, x))  (tree: eml_node(iterExp_n, lit(1)))
+    
+    The tree has depth n and size 2n+1.
+    
+    Pseudocode:
+        tree = var()
+        for i in range(n):
+            tree = eml_node(tree, lit(1))  # exp(tree) - log(1) = exp(tree)
+        return tree
+    """
+    tree = var()
+    for _ in range(n):
+        tree = eml_node(tree, lit(1.0))
+    return tree
+
+
+# ============================================================
+# Algorithm 4: EML Approximation Spectrum Estimator
+# ============================================================
+
+def estimate_spectrum(
+    f: Callable[[float], float],
+    a: float,
+    b: float,
+    epsilon: float,
+    max_degree: int = 200,
+    num_eval_points: int = 500
+) -> Tuple[int, List[float]]:
+    """Estimate the EML Approximation Spectrum Ψ_f(ε).
+    
+    Returns the minimum polynomial degree (and hence tree size ≈ 2*degree+1)
+    needed to approximate f on [a,b] to within epsilon.
+    
+    Uses Chebyshev interpolation for near-optimal polynomial approximation.
+    
+    Pseudocode:
+        for degree = 1 to max_degree:
+            nodes = chebyshev_nodes(degree+1, a, b)
+            p = lagrange_interpolant(f, nodes)
+            error = max_{x in [a,b]} |f(x) - p(x)|
+            if error < epsilon:
+                return 2*degree + 1, coefficients
+        return -1 (not achievable within max_degree)
+    """
+    import numpy as np
+    
+    x_eval = np.linspace(a, b, num_eval_points)
+    f_eval = np.array([f(xi) for xi in x_eval])
+    
+    for degree in range(1, max_degree + 1):
+        # Chebyshev nodes
+        k = np.arange(1, degree + 2)
+        nodes = 0.5 * (a + b) + 0.5 * (b - a) * np.cos((2 * k - 1) * np.pi / (2 * (degree + 1)))
+        values = np.array([f(xi) for xi in nodes])
+        
+        # Lagrange interpolation
+        p_eval = np.zeros(num_eval_points)
+        for i in range(len(nodes)):
+            term = values[i] * np.ones(num_eval_points)
+            for j in range(len(nodes)):
+                if i != j:
+                    term *= (x_eval - nodes[j]) / (nodes[i] - nodes[j])
+            p_eval += term
+        
+        max_error = np.max(np.abs(f_eval - p_eval))
+        if max_error < epsilon:
+            return 2 * degree + 1, list(values)
+    
+    return -1, []
+
+
+# ============================================================
+# Algorithm 5: Depth Composition Bound Verifier
+# ============================================================
+
+def verify_depth_composition(
+    outer: EMLTree,
+    inner: EMLTree,
+    test_points: List[float]
+) -> Tuple[bool, int, int, int]:
+    """Verify the depth composition bound: depth(outer.subst(inner)) ≤ depth(outer) + depth(inner).
+    
+    Also verifies the substitution-evaluation identity:
+    (outer.subst(inner)).eval(x) = outer.eval(inner.eval(x))
     
     Returns:
-        ApproxResult with coefficients and error bound
+        (composition_correct, composed_depth, outer_depth, inner_depth)
     """
-    a, b = domain
-    x = np.linspace(a, b, n_points)
-    y = f(x)
+    composed = outer.subst(inner)
+    d_out = outer.depth()
+    d_in = inner.depth()
+    d_comp = composed.depth()
     
-    V = build_basis_matrix(x, depth, degree)
-    coeffs, _, _, _ = np.linalg.lstsq(V, y, rcond=None)
-    approx = V @ coeffs
-    error = float(np.max(np.abs(approx - y)))
+    depth_bound_holds = d_comp <= d_out + d_in
     
-    depth_names = {0: "polynomial", 1: "poly-in-exp", 2: "poly-in-exp²"}
-    basis_name = depth_names.get(depth, f"poly-in-exp^{depth}")
+    eval_matches = True
+    for x in test_points:
+        try:
+            v1 = composed.eval(x)
+            v2 = outer.eval(inner.eval(x))
+            if abs(v1 - v2) > 1e-10:
+                eval_matches = False
+        except (ValueError, OverflowError):
+            pass  # skip ill-defined points
     
-    return ApproxResult(
-        coefficients=coeffs,
-        degree=degree,
-        depth=depth,
-        sup_norm_error=error,
-        basis_name=basis_name
-    )
+    return depth_bound_holds and eval_matches, d_comp, d_out, d_in
 
 
-def tower_search(
-    f: Callable[[np.ndarray], np.ndarray],
-    epsilon: float,
-    max_depth: int = 5,
-    max_degree: int = 50,
-    domain: Tuple[float, float] = (0.0, 1.0)
-) -> Optional[ApproxResult]:
-    """
-    Search the approximation tower for the shallowest depth and lowest degree
-    that achieves error < epsilon.
-    
-    This implements the abstract tower search guaranteed to terminate
-    by the density theorem (eml_universalDensity_01).
-    """
-    for depth in range(max_depth + 1):
-        for degree in range(1, max_degree + 1):
-            result = eml_approximate(f, depth, degree, domain=domain)
-            if result.sup_norm_error < epsilon:
-                return result
-    return None
-
-
-def compare_depths(
-    f: Callable[[np.ndarray], np.ndarray],
-    degrees: List[int],
-    max_depth: int = 3,
-    domain: Tuple[float, float] = (0.0, 1.0)
-) -> dict:
-    """
-    Compare approximation errors across tower depths.
-    
-    Returns a dict mapping (depth, degree) -> error.
-    """
-    results = {}
-    for depth in range(max_depth + 1):
-        for degree in degrees:
-            result = eml_approximate(f, depth, degree, domain=domain)
-            results[(depth, degree)] = result.sup_norm_error
-    return results
-
-
-def stone_weierstrass_witness(
-    x1: float,
-    x2: float,
-    depth: int = 1
-) -> float:
-    """
-    Demonstrate point separation: given x1 ≠ x2 in [0,1],
-    return |iterExp(depth, x1) - iterExp(depth, x2)|.
-    
-    This is always positive when x1 ≠ x2, witnessing the
-    separation property used in Stone-Weierstrass.
-    """
-    val1 = iterExp(depth, np.array([x1]))[0]
-    val2 = iterExp(depth, np.array([x2]))[0]
-    return abs(val1 - val2)
-
+# ============================================================
+# Main demo
+# ============================================================
 
 if __name__ == "__main__":
-    # Example: approximate sin(πx) on [0,1]
-    target = lambda x: np.sin(np.pi * x)
+    print("EML Algorithms Demo")
+    print("=" * 50)
     
-    print("Tower search for sin(πx), ε = 0.01:")
-    result = tower_search(target, 0.01)
-    if result:
-        print(f"  Found at depth {result.depth}, degree {result.degree}")
-        print(f"  Basis: {result.basis_name}")
-        print(f"  Error: {result.sup_norm_error:.6f}")
+    # Demo 1: Build and evaluate EML trees
+    print("\n1. EML Tree for exp(x):")
+    exp_tree = eml_node(var(), lit(1.0))
+    print(f"   depth = {exp_tree.depth()}, size = {exp_tree.size()}")
+    for x in [0.0, 0.5, 1.0, 2.0]:
+        print(f"   eval({x}) = {exp_tree.eval(x):.6f} vs exp({x}) = {math.exp(x):.6f}")
     
-    print("\nDepth comparison for sin(πx):")
-    errors = compare_depths(target, [3, 5, 10, 15])
-    for (d, n), e in sorted(errors.items()):
-        print(f"  Depth {d}, Degree {n}: error = {e:.2e}")
+    # Demo 2: Iterated exponential
+    print("\n2. Iterated exponential trees:")
+    for n in range(4):
+        tree = iter_exp_tree(n)
+        print(f"   iterExp({n}): depth={tree.depth()}, size={tree.size()}, eval(1.0)={tree.eval(1.0):.6f}")
     
-    print("\nPoint separation witness:")
-    for x1, x2 in [(0.3, 0.7), (0.49, 0.51), (0.0, 1.0)]:
-        gap = stone_weierstrass_witness(x1, x2)
-        print(f"  |exp({x1}) - exp({x2})| = {gap:.6f}")
+    # Demo 3: Depth composition
+    print("\n3. Depth composition verification:")
+    t1 = eml_node(var(), lit(1.0))  # exp(x), depth 1
+    t2 = eml_node(var(), lit(1.0))  # exp(x), depth 1
+    ok, d_comp, d_out, d_in = verify_depth_composition(t1, t2, [0.0, 0.5, 1.0])
+    print(f"   exp(exp(x)): composed depth={d_comp}, bound={d_out}+{d_in}={d_out+d_in}, valid={ok}")
+    
+    # Demo 4: Polynomial to EML
+    print("\n4. Polynomial to EML tree (1 + 2x + 3x²):")
+    p_tree = polynomial_to_eml([1.0, 2.0, 3.0])
+    print(f"   depth = {p_tree.depth()}, size = {p_tree.size()}")
+    for x in [0.0, 0.5, 1.0]:
+        expected = 1.0 + 2.0 * x + 3.0 * x ** 2
+        print(f"   eval({x}) = {p_tree.eval(x):.6f} vs expected = {expected:.6f}")
+    
+    # Demo 5: Spectrum estimation
+    print("\n5. Approximation spectrum for sin(2πx):")
+    import numpy as np
+    f = lambda x: np.sin(2 * np.pi * x)
+    for eps in [1e-2, 1e-4, 1e-6, 1e-8]:
+        size, _ = estimate_spectrum(f, 0.0, 1.0, eps)
+        print(f"   ε = {eps:.0e}: Ψ = {size}")

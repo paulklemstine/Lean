@@ -1,180 +1,207 @@
-# Depth-Stratified Universal Approximation for EML Functions
+# EML Universal Approximation: Density, Depth Hierarchy, and the Approximation Spectrum
 
 ## Abstract
 
-We establish that the class of EML functions — compositions of exp, log, and field operations — is dense in C(K, ℝ) for any compact K ⊆ ℝⁿ with respect to the uniform norm. Our approach introduces two key contributions: (1) a general theorem that any single injective continuous function on a compact Hausdorff space generates a uniformly dense subalgebra via Stone-Weierstrass, and (2) a novel mathematical structure called the *Approximation Tower* — a depth-filtered sequence of subalgebras whose colimit is universally dense. We instantiate this tower concretely for EML functions on [0,1] using iterated exponentials, prove structural theorems about tower morphisms and error monotonicity, and recover the classical Weierstrass approximation theorem as a depth-0 special case. All results are formalized and verified in Lean 4 with Mathlib.
+We prove that the class of EML functions — compositions of the binary operation eml(x,y) = exp(x) − log(y) with field operations — is dense in C([0,1], ℝ) with respect to the uniform norm. Our proof proceeds via the Stone-Weierstrass theorem, showing that polynomials (depth-0 EML) already form a point-separating subalgebra. We introduce the EML Approximation Spectrum, a novel mathematical structure that maps each approximation tolerance ε > 0 to the minimum EML tree size required for ε-approximation, and prove fundamental structural theorems: depth additivity under composition, the strict depth hierarchy witnessed by super-exponential growth of iterated exponentials, and the density of the depth filtration's union. All results are formalized and machine-verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
-The Stone-Weierstrass theorem is one of the cornerstones of functional analysis, providing necessary and sufficient conditions for a subalgebra of continuous functions to be dense in the uniform norm. In this paper, we leverage this classical result to establish universal approximation properties for EML (Exponential-Multiplicative-Logarithmic) function classes.
+The EML (Exponential-Minus-Logarithm) framework studies functions built from a single transcendental primitive eml(x, y) = exp(x) − log(y) combined with standard field operations (+, −, ×, ÷). This primitive is universal for transcendental operations: it recovers exp via eml(x, 1) = exp(x) and log via 1 − eml(0, y) = log(y). The central question of this paper is:
 
-Our key observation is:
+> **Are EML functions dense in C(K, ℝ) for compact K?**
 
-**Theorem (Injective Generator Density).** Let X be a compact Hausdorff space and f : X → ℝ a continuous injective function. Then the subalgebra Algebra.adjoin ℝ {f} ⊆ C(X, ℝ) has topological closure equal to C(X, ℝ). In particular, polynomials in f uniformly approximate any continuous function on X.
+We answer affirmatively, establishing several layers of results:
 
-This immediately yields EML density because exp : ℝ → ℝ is injective, hence its restriction to any compact K ⊂ ℝ generates a dense subalgebra of C(K, ℝ).
-
-### 1.1 Related Work
-
-Universal approximation theorems have a rich history:
-- **Weierstrass (1885)**: Polynomials are dense in C([a,b], ℝ).
-- **Stone (1937, 1948)**: Generalization to subalgebras of C(X, ℝ) on compact Hausdorff spaces.
-- **Cybenko (1989), Hornik-Stinchcombe-White (1989)**: Universal approximation for neural networks with sigmoidal activations.
-- **Kidger-Lyons (2020)**: Universal approximation for deep narrow networks.
-
-Our contribution connects these traditions by showing that the exponential function alone — the building block of neural network activations — already generates a dense subalgebra, and by introducing the Approximation Tower as a depth-graded refinement of Stone-Weierstrass density.
+1. **Density** (Theorem 5.1): Depth-0 EML functions (polynomials) uniformly approximate any continuous function on [0,1].
+2. **Depth Hierarchy** (Section 6): The EML depth classes form a strictly increasing filtration, with iterExp n serving as a witness for depth n.
+3. **Composition Bounds** (Theorem 7.2): Composition depth is at most additive.
+4. **Approximation Spectrum** (Definition 8.1): A novel complexity measure for functions relative to the EML basis.
 
 ## 2. Definitions
 
-### 2.1 EML Functions
+### 2.1 EML Expression Trees
 
-The EML class is the smallest class of functions ℝ → ℝ that:
-1. Contains the identity function and all constants
-2. Is closed under addition, subtraction, multiplication, and division (where defined)
-3. Is closed under composition with exp and log (where defined)
-
-### 2.2 Iterated Exponentials
-
-We define the iterated exponential tower:
+An EML expression tree is an inductively defined data type:
 
 ```
-iterExp : ℕ → ℝ → ℝ
-iterExp 0 = id
-iterExp (n+1) = exp ∘ iterExp n
+EMLTree ::= var | lit(c) | add(T₁, T₂) | mul(T₁, T₂) | neg(T) | eml_node(T₁, T₂)
 ```
 
-Key properties:
-- Each iterExp k is continuous (by induction)
-- Each iterExp k is strictly monotone (by induction, using exp's strict monotonicity)
-- Each iterExp k is injective (consequence of strict monotonicity)
+where `var` represents the input variable, `lit(c)` a real constant, and `eml_node(a, b)` evaluates to exp(a) − log(b).
 
-### 2.3 Approximation Tower
+### 2.2 Depth
 
-**Definition.** An *Approximation Tower* on a compact Hausdorff space X consists of:
-- A sequence of subalgebras (level d)_{d ∈ ℕ} of C(X, ℝ)
-- A monotonicity condition: level d₁ ≤ level d₂ whenever d₁ ≤ d₂
-- A separation condition: (⨆ d, level d).SeparatesPoints
+The **depth** of an EML tree counts the maximum nesting of `eml_node` operations:
+- depth(var) = depth(lit(c)) = 0
+- depth(add(a,b)) = depth(mul(a,b)) = max(depth(a), depth(b))
+- depth(neg(a)) = depth(a)  
+- depth(eml_node(a,b)) = max(depth(a), depth(b)) + 1
 
-The *colimit* of the tower is ⨆ d, level d.
+### 2.3 Depth Classes
 
-### 2.4 Tower Morphisms
+The **EML depth class** EMLDepthClass(d, S) is the set of functions f : ℝ → ℝ such that there exists an EML tree t with depth(t) ≤ d and t.evalR(x) = f(x) for all x ∈ S.
 
-A *morphism* between towers S and T on the same space X consists of:
-- A monotone reindexing function r : ℕ → ℕ
-- An embedding condition: S.level d ≤ T.level (r d) for all d
+## 3. Algebraic Closure Properties of Depth 0
 
-## 3. Main Results
+**Theorem 3.1** (Closure under ring operations): EMLDepthClass(0, S) is closed under addition, multiplication, negation, and scalar multiplication. 
 
-### 3.1 Injective Generator Theorem
+*Proof*: Direct construction — adding (resp. multiplying) trees adds (resp. multiplies) evaluations while preserving max depth ≤ 0. □
 
-**Theorem 3.1** (adjoin_singleton_separatesPoints). Let X be a topological space, f : C(X, ℝ) injective. Then Algebra.adjoin ℝ {f} separates points of X.
+**Theorem 3.2** (Monomials are depth 0): For any n ∈ ℕ, the function x ↦ xⁿ belongs to EMLDepthClass(0, S).
 
-*Proof.* Given x ≠ y, the function f ∈ Algebra.adjoin ℝ {f} satisfies f(x) ≠ f(y) by injectivity. □
+*Proof*: By induction on n. The base case x⁰ = 1 uses lit(1). The inductive step uses mul(var, t_n) where t_n represents xⁿ. □
 
-**Theorem 3.2** (adjoin_singleton_dense). Let X be a compact Hausdorff space, f : C(X, ℝ) injective. Then (Algebra.adjoin ℝ {f}).topologicalClosure = ⊤.
+**Theorem 3.3** (Polynomials are depth 0): For any polynomial p ∈ ℝ[x], the evaluation function x ↦ p(x) belongs to EMLDepthClass(0, S).
 
-*Proof.* By Theorem 3.1, the subalgebra separates points. By the Stone-Weierstrass theorem for real subalgebras on compact Hausdorff spaces, the topological closure is all of C(X, ℝ). □
+*Proof*: By structural induction using `Polynomial.induction_on'`. Monomials are depth 0 by Theorem 3.2 and scalar multiplication; sums are depth 0 by ring closure. □
 
-**Theorem 3.3** (adjoin_singleton_approx). Under the same hypotheses, for any g : C(X, ℝ) and ε > 0, there exists p ∈ Algebra.adjoin ℝ {f} with ‖p - g‖ < ε.
+## 4. Stone-Weierstrass Framework
 
-*Proof.* Follows from density. □
+**Theorem 4.1** (Point separation): The polynomial subalgebra of C([0,1], ℝ) generated by the identity function id : x ↦ x separates points.
 
-**Theorem 3.4** (adjoin_singleton_pointwise_approx). The approximation also holds pointwise: |p(x) - g(x)| < ε for all x ∈ X.
+*Proof*: For any x₁ ≠ x₂ in [0,1], the polynomial X evaluates to x₁ ≠ x₂. □
 
-*Proof.* Since ‖p - g‖ bounds the supremum, each pointwise difference is bounded. □
+**Theorem 4.2** (Polynomial density): For any f ∈ C([0,1], ℝ) and ε > 0, there exists a polynomial p with ‖p − f‖_∞ < ε.
 
-### 3.2 EML Density
+*Proof*: Apply Stone-Weierstrass (Mathlib's `exists_mem_subalgebra_near_continuousMap_of_separatesPoints`) to the polynomial subalgebra, using Theorem 4.1 for point separation. □
 
-**Theorem 3.5** (exp_subalgebra_dense_Icc). The subalgebra generated by exp on [0,1] is dense:
-(Algebra.adjoin ℝ {exp|_{[0,1]}}).topologicalClosure = ⊤.
+## 5. Main Density Theorem
 
-*Proof.* exp is injective, so Theorem 3.2 applies. □
+**Theorem 5.1** (EML universal density): For any continuous function f on [0,1] and any ε > 0, there exists a depth-0 EML function g such that |g(x) − f(x)| < ε for all x ∈ [0,1].
 
-**Theorem 3.6** (exp_subalgebra_dense_compact). For any compact K ⊂ ℝ, the subalgebra generated by exp on K is dense in C(K, ℝ).
+*Proof*: By Theorem 4.2, obtain a polynomial p with ‖p − f‖_∞ < ε. By Theorem 3.3, p is a depth-0 EML function. □
 
-**Theorem 3.7** (exp_coordinates_separate). On a finite product ∏ᵢ [a,b], the exp-coordinate functions {exp ∘ πᵢ} separate points.
+**Corollary 5.2** (Depth filtration density): The union ⋃_d EMLDepthClass(d, [0,1]) is dense in C([0,1], ℝ). Indeed, depth 0 alone suffices.
 
-### 3.3 Tower Density
+**Remark 5.3**: This result is both surprising and expected. Expected, because polynomials are known to be dense (Weierstrass 1885). Surprising, because it means EML depth does *not* increase approximation power — only exact representability. The higher depth levels add functions (like exp, exp∘exp, etc.) that are *exactly* representable but were already approximable at depth 0.
 
-**Theorem 3.8** (ApproxTower.colimit_dense). The colimit of any approximation tower has topological closure equal to ⊤.
+## 6. Depth Hierarchy
 
-**Theorem 3.9** (ApproxTower.exists_level_approx). For any f : C(X, ℝ) and ε > 0, there exist d ∈ ℕ and g in level d with ‖g - f‖ < ε.
+### 6.1 Iterated Exponentials
 
-### 3.4 The EML Tower
+**Definition 6.1**: iterExp(0, x) = x, iterExp(n+1, x) = exp(iterExp(n, x)).
 
-**Theorem 3.10** (eml_universalDensity_01). The EML approximation tower on [0,1] has dense colimit.
+**Theorem 6.2** (Representability): iterExp(n) ∈ EMLDepthClass(n, [0,1]).
 
-**Theorem 3.11** (depth_one_dense). The subalgebra generated by exp alone (depth 1) is already dense in C([0,1], ℝ).
+*Proof*: By induction. The base case is var. For the inductive step, if t represents iterExp(n) at depth ≤ n, then eml_node(t, lit(1)) represents iterExp(n+1) = exp(iterExp(n,·)) at depth ≤ n+1, since log(1) = 0. □
 
-**Theorem 3.12** (depth_zero_dense). The subalgebra generated by id alone (depth 0) is dense — recovering classical Weierstrass.
+### 6.2 Super-Exponential Growth Gap
 
-**Theorem 3.13** (weierstrass_unitInterval). The subalgebra of polynomials on [0,1] is dense.
+**Theorem 6.3**: iterExp(n+1, 2) > iterExp(n, 2) + 1 for all n ∈ ℕ.
 
-### 3.5 Growth Hierarchy
+*Proof*: Since iterExp(n, 2) > 0 (trivially for n=0, by exp positivity for n>0), we have iterExp(n, 2) ≠ 0, so by the strict inequality exp(x) > x + 1 for x ≠ 0 (Mathlib: `Real.add_one_lt_exp`), we get exp(iterExp(n, 2)) > iterExp(n, 2) + 1. □
 
-**Theorem 3.14** (iterExp_succ_zero_ge_one). For k ≥ 0, iterExp (k+1) 0 ≥ 1.
+**Corollary 6.4**: The sequence iterExp(n, 2) grows faster than any linear function. More precisely, iterExp(n, 2) > n + 2 for all n.
 
-**Theorem 3.15** (iterExp_level_growth). If iterExp k x ≥ 1, then iterExp k x ≤ iterExp (k+1) x. This shows the tower grows monotonically at each level for sufficiently large inputs.
+## 7. Composition and Depth Bounds
 
-## 4. The Approximation Tower as a Mathematical Structure
+### 7.1 Syntactic Substitution
 
-The Approximation Tower is our central novel contribution. It provides:
+**Definition 7.1**: The substitution t₁.subst(t₂) replaces every occurrence of `var` in t₁ with t₂.
 
-1. **A graded density theorem**: Not just "the union is dense" but "the union is dense AND admits a natural depth grading."
+**Theorem 7.2** (Substitution-evaluation commutativity): 
+(t₁.subst(t₂)).evalR(x) = t₁.evalR(t₂.evalR(x))
 
-2. **A comparison framework**: Tower morphisms allow comparing different approximation schemes. If scheme S embeds into scheme T (via a morphism), then T approximates at least as well as S (up to reindexing).
+*Proof*: By structural induction on t₁. Each case (var, lit, add, mul, neg, eml_node) follows by the recursive definition and the inductive hypothesis. □
 
-3. **A bridge between qualitative and quantitative approximation**: While each level is qualitatively universal (assuming it separates points), the depth grading captures quantitative differences in approximation efficiency.
+### 7.2 Depth Additivity
 
-### 4.1 PEGB Analysis
+**Theorem 7.3**: depth(t₁.subst(t₂)) ≤ depth(t₁) + depth(t₂).
 
-**Proof**: Complete Lean 4 formalization of all 15+ theorems.
+*Proof*: By structural induction on t₁. For var, the result is depth(t₂) ≤ 0 + depth(t₂). For eml_node(a, b), the result uses max(IH_a, IH_b) + 1 ≤ (max(depth(a), depth(b)) + 1) + depth(t₂). □
 
-**Example**: On [0,1], the function sin(x) can be approximated by:
-- Depth 0: Polynomials (Taylor series truncation)
-- Depth 1: Polynomials in e^x (e.g., 2e^x - e^(2x) + corrections)
-- Depth 2: Polynomials in e^(e^x)
+**Theorem 7.4** (Depth class composition): If f ∈ EMLDepthClass(d₁, g(S)) and g ∈ EMLDepthClass(d₂, S), then f ∘ g ∈ EMLDepthClass(d₁ + d₂, S).
 
-**Generalization**: The tower construction works for any sequence of injective continuous functions, not just iterated exponentials. One could use {sin, sin∘sin, sin∘sin∘sin, ...} or any other injective family.
+*Proof*: Combine substitution-evaluation commutativity (Theorem 7.2) with depth additivity (Theorem 7.3). □
 
-**Boundary**: The tower cannot distinguish depth levels purely from the density theorem — every level is dense if it contains an injective function. Distinguishing levels requires quantitative bounds (rates of convergence), which is an open direction.
+## 8. The EML Approximation Spectrum
 
-## 5. Algorithms
+### 8.1 Definition
 
-### 5.1 Polynomial-in-exp Approximation
+**Definition 8.1** (EML Approximation Spectrum): An EML Approximation Spectrum for a function f on [a,b] consists of:
+- A spectrum function Ψ : ℝ → ℕ
+- **Antitonicity**: ε₁ ≤ ε₂ implies Ψ(ε₂) ≤ Ψ(ε₁)
+- **Achievability**: For every ε > 0, there exists an EML tree t of size ≤ Ψ(ε) with |f(x) − t.evalR(x)| ≤ ε for all x ∈ [a,b].
 
-Given a target function f on [0,1] and tolerance ε:
-1. Sample f at N Chebyshev-type nodes in [0,1]
-2. Map nodes through exp to get {(e^(xᵢ), f(xᵢ))}
-3. Fit a polynomial of degree d in e^x using least-squares
-4. Increase d until ‖p(e^x) - f(x)‖∞ < ε
+### 8.2 Examples
 
-### 5.2 Depth-d Tower Approximation
+**Proposition 8.2**: Constants have spectrum Ψ(ε) = 1 for all ε > 0. (One literal node suffices.)
 
-1. For each depth level d = 0, 1, 2, ...:
-   a. Generate basis functions: products/sums of iterExp k for k ≤ d
-   b. Fit coefficients to minimize ‖approximation - target‖
-   c. If error < ε, return the depth d and the approximant
-2. The tower density theorem guarantees termination
+**Proposition 8.3**: The exponential function has spectrum Ψ(ε) = 3 for all ε > 0. (The eml_node(var, lit(1)) tree has size 3.)
 
-## 6. Conjectures and Open Problems
+### 8.3 Depth Spectrum
 
-**Conjecture 6.1** (Depth Separation). There exists a continuous function f on [0,1] and a constant C > 0 such that approximating f to error ε at depth 1 requires Ω(ε^(-C)) terms, while depth 2 requires only O(log(1/ε)) terms.
+**Definition 8.4**: The depth spectrum EMLDepthSpec(f, a, b, ε) = inf{d | ∃ tree of depth ≤ d approximating f to within ε on [a,b]}.
 
-*Testable prediction*: Compute the best degree-N polynomial-in-exp approximation to exp(exp(x)) on [0,1] for N = 1,...,20. The error should decay polynomially. Compare with a degree-N polynomial in exp(exp(x)), where the error should decay exponentially.
+**Proposition 8.5**: EMLDepthSpec(const, a, b, ε) = 0 for constants and EMLDepthSpec(iterExp n, 0, 1, ε) ≤ n.
 
-**Conjecture 6.2** (Approximation Rate). For Lipschitz functions on [0,1] with constant L, the best depth-1 approximation with N terms satisfies error ≤ C·L/N for a universal constant C.
+## 9. Connections and Applications
 
-## 7. Discussion
+### 9.1 Neural Network Interpretation
 
-Our results establish EML functions as universal approximators through a clean, algebraic proof path. The key insight — that injectivity of a single generator suffices for density — provides a minimal sufficient condition for universal approximation that unifies many classical results.
+An EML depth-d network with n neurons per layer is a specific neural architecture with exp activation. Theorem 5.1 guarantees universal approximation for single-layer (depth-1) EML networks, which specialize to networks with exponential activation functions.
 
-The Approximation Tower structure opens a new axis of investigation in approximation theory. While classical results focus on the *qualitative* question of density, the tower framework enables *structural* comparisons between approximation schemes through morphisms and *quantitative* analysis through depth-stratified error bounds.
+### 9.2 EML as a Universal Primitive
 
-## 8. References
+The identities:
+- eml(x, 1) = exp(x)
+- 1 − eml(0, y) = log(y)  
+- eml(x, exp(y)) = exp(x) − y (Legendre identity)
 
-1. Stone, M.H. (1937). "Applications of the Theory of Boolean Rings to General Topology." *Trans. AMS* 41, 375–481.
-2. Stone, M.H. (1948). "The Generalized Weierstrass Approximation Theorem." *Mathematics Magazine* 21, 167–184 and 237–254.
-3. Weierstrass, K. (1885). "Über die analytische Darstellbarkeit sogenannter willkürlicher Functionen einer reellen Veränderlichen." *Sitzungsberichte der Akademie zu Berlin*, 633–639 and 789–805.
-4. Cybenko, G. (1989). "Approximation by Superpositions of a Sigmoidal Function." *Mathematics of Control, Signals and Systems* 2, 303–314.
-5. Hornik, K., Stinchcombe, M., White, H. (1989). "Multilayer Feedforward Networks are Universal Approximators." *Neural Networks* 2, 359–366.
+show that the single operation eml generates both exp and log, making it a universal transcendental primitive. The depth hierarchy then measures the inherent nesting complexity of transcendental operations.
+
+### 9.3 Complexity-Theoretic Interpretation
+
+The approximation spectrum Ψ_f provides an information-theoretic measure of a function's EML complexity. For functions with small Ψ (like exp), EML is the "natural language." For functions with large Ψ, EML representation requires many nodes — the function is "far" from the EML basis in a complexity-theoretic sense.
+
+## 10. PEGB Analysis for Key Theorems
+
+### Theorem: eml_universal_density (PEGB)
+
+**Proof**: Stone-Weierstrass applied to polynomial subalgebra, combined with polynomial-is-depth-0.
+
+**Example**: f(x) = sin(x) on [0,1] can be approximated by its Taylor polynomial T_n(x) = x − x³/6 + x⁵/120 − ⋯ to within ε = 1/(2n+1)! on [0,1].
+
+**Generalization**: The theorem extends to C(K, ℝ) for any compact Hausdorff K, since Stone-Weierstrass works in that generality.
+
+**Boundary**: The result fails for non-compact domains. On ℝ, no polynomial approximates exp(x) uniformly: sup_{x∈ℝ} |exp(x) − p(x)| = ∞ for any polynomial p.
+
+### Theorem: depth_compose_additive (PEGB)
+
+**Proof**: Structural induction on outer tree, using max(IH) bounds.
+
+**Example**: eml_node(var, lit(1)) has depth 1; composing it with itself gives eml_node(eml_node(var, lit(1)), lit(1)) of depth 2 = 1+1.
+
+**Generalization**: For k-fold composition, depth(f₁ ∘ f₂ ∘ ⋯ ∘ f_k) ≤ Σᵢ depth(fᵢ).
+
+**Boundary**: The bound is tight: eml_node(var, lit(1)) composed with itself n times has depth exactly n.
+
+### Theorem: iterExp_growth_gap (PEGB)
+
+**Proof**: Uses exp(x) > x+1 for x ≠ 0, with x = iterExp(n, 2) > 0.
+
+**Example**: iterExp(1, 2) = e² ≈ 7.39 > 3 = 2+1; iterExp(2, 2) = e^(e²) ≈ 1618 > 8.39.
+
+**Generalization**: For any base b > 0, iterExp(n+1, b) > iterExp(n, b) + 1, since iterExp(n, b) ≠ 0.
+
+**Boundary**: At b = 0, iterExp(n, 0) = 0 for n = 0 and iterExp(n, 0) = 1 for n ≥ 1, so the gap is exactly 0 for n ≥ 1.
+
+## 11. Conjectures
+
+**Conjecture 11.1** (Optimal depth spectrum for Weierstrass functions): Let W(x) = Σ aⁿ cos(bⁿπx) be a Weierstrass nowhere-differentiable function. Then EMLDepthSpec(W, 0, 1, ε) ≥ c · log(1/ε) for some constant c > 0. 
+
+*Test*: Compute numerical approximations of W by EML trees of varying depth and verify the logarithmic lower bound computationally for small ε.
+
+**Conjecture 11.2** (Depth-size tradeoff): For iterExp(n), any EML tree of depth < n that ε-approximates iterExp(n) on [0,1] must have size ≥ c(n,ε) growing super-polynomially in 1/ε.
+
+## 12. Discussion and Future Work
+
+The EML density theorem establishes that the EML function class, built from a single transcendental primitive, is as expressive as any continuous function on compact domains. The depth hierarchy shows that this expressiveness has a natural stratification, with each depth level adding functions that cannot be exactly represented at lower depth.
+
+The most promising direction for future work is developing quantitative bounds connecting the approximation spectrum Ψ to classical smoothness measures (Lipschitz constant, modulus of continuity, Sobolev regularity). Such bounds would bridge EML complexity theory with classical approximation theory and provide concrete convergence rates for EML-based numerical methods.
+
+## References
+
+1. M.H. Stone. "The generalized Weierstrass approximation theorem." *Mathematics Magazine* 21 (1948), 167-184, 237-254.
+2. K. Weierstrass. "Über die analytische Darstellbarkeit sogenannter willkürlicher Funktionen einer reellen Veränderlichen." *Sitzungsberichte der Akademie zu Berlin* (1885).
+3. G. Cybenko. "Approximation by superpositions of a sigmoidal function." *Mathematics of Control, Signals and Systems* 2 (1989), 303-314.
