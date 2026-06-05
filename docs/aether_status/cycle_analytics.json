@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-05T04:21:23.134310+00:00",
+  "last_updated": "2026-06-05T04:55:50.610473+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -4293,6 +4293,76 @@
       "theorem_count": 5,
       "timestamp": "2026-06-05T04:21:23.055411+00:00",
       "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5506,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 20,
+      "domain": "Applications",
+      "duration_seconds": 6150.323142051697,
+      "end_time": 1780635271.1231456,
+      "files_integrated": 5,
+      "job_id": "2f7d8255",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7521,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.5601,
+        "novelty": 0.95,
+        "proof_depth": 0.393,
+        "usefulness": 0.6965
+      },
+      "quality_score": 0.28080000000000005,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780629120.8000035,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T04:55:50.461500+00:00",
+      "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4533,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 21,
+      "domain": "Cryptography",
+      "duration_seconds": 4083.3030049800873,
+      "end_time": 1780635271.4537961,
+      "files_integrated": 6,
+      "job_id": "5fe831b9",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.88,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8138,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7293,
+        "novelty": 0.95,
+        "proof_depth": 0.6347,
+        "usefulness": 0.8173
+      },
+      "quality_score": 0.44864000000000004,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780631188.1507912,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T04:55:50.540301+00:00",
+      "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
     }
   ]
 }

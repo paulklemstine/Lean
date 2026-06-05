@@ -5,6 +5,12 @@
       "percent_complete": 0.0,
       "status": "SUBMITTED",
       "timestamp": "2026-06-05T04:21:44"
+    },
+    {
+      "elapsed_seconds": 1968.4,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-05T04:54:32"
     }
   ],
   "completed_at": "",
@@ -16,7 +22,13 @@
   "job_id": "6d9cd26b",
   "project_id": "8eeceab3-a57f-4f98-875c-a01289b7afde",
   "prompt_length": 20893,
-  "stages": [],
+  "stages": [
+    {
+      "at_elapsed_seconds": 1968.4,
+      "from": "SUBMITTED",
+      "to": "RUNNING"
+    }
+  ],
   "submitted_at": "2026-06-05T04:21:44",
   "total_duration_seconds": 0.0
 }

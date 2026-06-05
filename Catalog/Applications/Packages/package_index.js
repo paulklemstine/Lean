@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5fe831b9",
     "filename": "cryptographic_hash_functions_collision_resistance_.json",
     "pkg_num": 376,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.44864000000000004,
     "title": "Formalized Merkle-Damg\u00e5rd Security: Collision Resistance Preservation and Indifferentiability"
   },
   {
@@ -12055,8 +12055,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "cryptographic_hash_functions_collision_resistance_",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.44864000000000004,
+      "quality": "partial",
       "shape": "dodecahedron",
       "title": "Formalized Merkle-Damg\u00e5rd Security: Collision Resistance Preservation and Indifferentiability"
     }

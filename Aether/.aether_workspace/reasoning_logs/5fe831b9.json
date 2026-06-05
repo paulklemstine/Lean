@@ -11,14 +11,28 @@
       "percent_complete": 0,
       "status": "RUNNING",
       "timestamp": "2026-06-05T04:19:02"
+    },
+    {
+      "elapsed_seconds": 4083.5,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-05T04:54:31"
+    },
+    {
+      "elapsed_seconds": 4083.5,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-05T04:54:31"
     }
   ],
-  "completed_at": "",
+  "completed_at": "2026-06-05T04:54:31",
   "domain": "Cryptography",
   "error": "",
-  "final_percent": 0.0,
-  "final_status": "",
-  "has_files": false,
+  "final_percent": 0,
+  "final_status": "IDLE",
+  "has_files": true,
   "job_id": "5fe831b9",
   "project_id": "44614942-ab19-47f3-a8a6-15836958894e",
   "prompt_length": 20820,
@@ -27,6 +41,16 @@
       "at_elapsed_seconds": 1954.8,
       "from": "SUBMITTED",
       "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 4083.5,
+      "from": "RUNNING",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 4083.5,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
     }
   ],
   "submitted_at": "2026-06-05T03:46:28",
