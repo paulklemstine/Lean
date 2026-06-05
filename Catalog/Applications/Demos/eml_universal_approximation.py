@@ -2,305 +2,378 @@
 """
 EML Universal Approximation Demo
 
-Demonstrates the key results:
-1. EML expressions can approximate any continuous function
-2. Exponential towers have optimal EML representations
-3. Information decay through depth layers
-4. Depth-complexity tradeoffs
+Demonstrates key results from the EML (Exponential-Multiplicative-Logarithmic)
+closure theory:
+1. Universal approximation via polynomial fragment
+2. Depth advantage of exp-log over pure polynomial circuits
+3. Derivative computation in EML circuits
 """
 
 import math
-from algorithms import (
-    EMLExpr, var, const, add, mul, neg, inv, eml,
-    iter_exp_expr, iter_exp, monomial_expr,
-    retained_info, info_depth_product
-)
+from typing import Callable, List, Tuple
 
 
-def demo_tower_efficiency():
-    """Demonstrate that iterExp n has optimal EML representation."""
-    print("=" * 60)
-    print("DEMO 1: Exponential Tower Efficiency")
-    print("=" * 60)
-    print()
-    print("The n-fold iterated exponential exp^n(x) can be represented")
-    print("by an EML expression with depth exactly n and size 2n+1.")
-    print()
-    print(f"{'n':>3} {'size':>6} {'depth':>6} {'2n+1':>6} {'match?':>7}")
-    print("-" * 35)
+# ── EML Expression Tree ──────────────────────────────────────────────────────
 
-    for n in range(8):
-        e = iter_exp_expr(n)
-        s = e.size()
-        d = e.eml_depth()
-        expected = 2 * n + 1
-        match = "✓" if s == expected and d == n else "✗"
-        print(f"{n:>3} {s:>6} {d:>6} {expected:>6} {match:>7}")
+class EMLExpr:
+    """EML expression node."""
+    pass
 
-    print()
-    print("Key insight: size grows linearly in depth!")
-    print("This is optimal — each exp layer adds exactly 2 nodes.")
-    print()
+class Const(EMLExpr):
+    def __init__(self, c: float):
+        self.c = c
+    def eval(self, x: float) -> float:
+        return self.c
+    def depth(self) -> int:
+        return 0
+    def size(self) -> int:
+        return 1
+    def __repr__(self):
+        return f"{self.c}"
 
+class Var(EMLExpr):
+    def eval(self, x: float) -> float:
+        return x
+    def depth(self) -> int:
+        return 0
+    def size(self) -> int:
+        return 1
+    def __repr__(self):
+        return "x"
+
+class Add(EMLExpr):
+    def __init__(self, e1: EMLExpr, e2: EMLExpr):
+        self.e1, self.e2 = e1, e2
+    def eval(self, x: float) -> float:
+        return self.e1.eval(x) + self.e2.eval(x)
+    def depth(self) -> int:
+        return max(self.e1.depth(), self.e2.depth()) + 1
+    def size(self) -> int:
+        return self.e1.size() + self.e2.size() + 1
+    def __repr__(self):
+        return f"({self.e1} + {self.e2})"
+
+class Mul(EMLExpr):
+    def __init__(self, e1: EMLExpr, e2: EMLExpr):
+        self.e1, self.e2 = e1, e2
+    def eval(self, x: float) -> float:
+        return self.e1.eval(x) * self.e2.eval(x)
+    def depth(self) -> int:
+        return max(self.e1.depth(), self.e2.depth()) + 1
+    def size(self) -> int:
+        return self.e1.size() + self.e2.size() + 1
+    def __repr__(self):
+        return f"({self.e1} * {self.e2})"
+
+class Exp(EMLExpr):
+    def __init__(self, e: EMLExpr):
+        self.e = e
+    def eval(self, x: float) -> float:
+        v = self.e.eval(x)
+        return math.exp(min(v, 700))  # prevent overflow
+    def depth(self) -> int:
+        return self.e.depth() + 1
+    def size(self) -> int:
+        return self.e.size() + 1
+    def __repr__(self):
+        return f"exp({self.e})"
+
+class Log(EMLExpr):
+    def __init__(self, e: EMLExpr):
+        self.e = e
+    def eval(self, x: float) -> float:
+        v = self.e.eval(x)
+        return math.log(v) if v > 0 else 0.0
+    def depth(self) -> int:
+        return self.e.depth() + 1
+    def size(self) -> int:
+        return self.e.size() + 1
+    def __repr__(self):
+        return f"log({self.e})"
+
+
+# ── Key constructions ────────────────────────────────────────────────────────
+
+def repeated_square(n: int) -> EMLExpr:
+    """x^(2^n) via repeated squaring (polynomial fragment, depth n)."""
+    if n == 0:
+        return Var()
+    sub = repeated_square(n - 1)
+    return Mul(sub, sub)
+
+def exp_log_power(n: int) -> EMLExpr:
+    """x^(2^n) via exp-log: exp(2^n * log(x)), constant depth 3."""
+    return Exp(Mul(Const(2**n), Log(Var())))
+
+def iter_exp(n: int) -> EMLExpr:
+    """exp^n(x) = exp(exp(...(exp(x))...)), depth n."""
+    if n == 0:
+        return Var()
+    return Exp(iter_exp(n - 1))
+
+
+# ── Symbolic differentiation ─────────────────────────────────────────────────
+
+def deriv(e: EMLExpr) -> EMLExpr:
+    """Symbolic derivative d/dx of an EML expression."""
+    if isinstance(e, Const):
+        return Const(0)
+    elif isinstance(e, Var):
+        return Const(1)
+    elif isinstance(e, Add):
+        return Add(deriv(e.e1), deriv(e.e2))
+    elif isinstance(e, Mul):
+        return Add(Mul(deriv(e.e1), e.e2), Mul(e.e1, deriv(e.e2)))
+    elif isinstance(e, Exp):
+        return Mul(Exp(e.e), deriv(e.e))
+    elif isinstance(e, Log):
+        # d/dx[log(f)] = f'/f, represented as f' * exp(-log(f))
+        return Mul(deriv(e.e), Exp(Mul(Const(-1), Log(e.e))))
+    raise ValueError(f"Unknown expression type: {type(e)}")
+
+
+# ── Demo ──────────────────────────────────────────────────────────────────────
 
 def demo_depth_gap():
-    """Demonstrate the depth gap between polynomials and exponentials."""
+    """Demonstrate the exponential depth gap between polynomial and EML."""
     print("=" * 60)
-    print("DEMO 2: Depth Gap — Polynomials vs Exponentials")
+    print("DEPTH GAP: Polynomial Squaring vs Exp-Log Power")
     print("=" * 60)
+    print(f"{'n':>4} {'poly depth':>12} {'poly size':>12} {'EML depth':>12} {'EML size':>12}")
+    print("-" * 60)
+    for n in range(1, 11):
+        rs = repeated_square(n)
+        el = exp_log_power(n)
+        print(f"{n:>4} {rs.depth():>12} {rs.size():>12} {el.depth():>12} {el.size():>12}")
     print()
-    print("Polynomials have EML depth 0 (no exp/log needed).")
-    print("Even exp(x) requires depth 1. This is a strict separation.")
-    print()
+    print("Key insight: Polynomial depth grows linearly, EML stays constant!")
+    print(f"At n=10: poly needs depth 10, size {2**11-1}, but EML needs depth 3, size 5.")
 
-    # Build polynomial x^2 + 3x + 1
-    x = var()
-    poly = add(add(mul(x, x), mul(const(3.0), x)), const(1.0))
-    exp_expr = eml(const(1.0), var())
-
-    print(f"Polynomial x² + 3x + 1:")
-    print(f"  EML depth = {poly.eml_depth()} (always 0 for polynomials)")
-    print(f"  Size = {poly.size()}")
-    print()
-    print(f"Exponential exp(x):")
-    print(f"  EML depth = {exp_expr.eml_depth()} (exactly 1)")
-    print(f"  Size = {exp_expr.size()}")
-    print()
-
-    # Evaluate both
-    test_x = 2.0
-    print(f"At x = {test_x}:")
-    print(f"  x² + 3x + 1 = {poly.eval(test_x)} (expected: {test_x**2 + 3*test_x + 1})")
-    print(f"  exp(x) = {exp_expr.eval(test_x):.6f} (expected: {math.exp(test_x):.6f})")
-    print()
-
-    # Monomials of increasing degree
-    print("Monomials c·x^n all have EML depth 0:")
-    for n in range(1, 8):
-        m = monomial_expr(1.0, n)
-        print(f"  x^{n}: size = {m.size()}, eml_depth = {m.eml_depth()}")
-    print()
-
-
-def demo_information_decay():
-    """Demonstrate information decay through depth layers."""
+def demo_universal_approximation():
+    """Demonstrate polynomial approximation of sin(x) on [0, π]."""
+    print("\n" + "=" * 60)
+    print("UNIVERSAL APPROXIMATION: Taylor polynomial for sin(x)")
     print("=" * 60)
-    print("DEMO 3: Information Decay Through Depth")
+
+    # Build Taylor polynomial for sin(x) as EML expression
+    # sin(x) ≈ x - x³/6 + x⁵/120 - x⁷/5040
+    def build_taylor_sin(terms: int) -> EMLExpr:
+        result = Const(0)
+        for k in range(terms):
+            coeff = (-1)**k / math.factorial(2*k + 1)
+            # x^(2k+1) via repeated multiplication
+            power = Var()
+            for _ in range(2*k):
+                power = Mul(power, Var())
+            term = Mul(Const(coeff), power)
+            result = Add(result, term)
+        return result
+
+    for terms in [1, 2, 3, 4, 5]:
+        taylor = build_taylor_sin(terms)
+        max_err = max(abs(taylor.eval(x) - math.sin(x))
+                      for x in [i * math.pi / 100 for i in range(101)])
+        print(f"  {2*terms-1}-term Taylor: depth={taylor.depth():>3}, "
+              f"size={taylor.size():>5}, max error={max_err:.6e}")
+
+def demo_derivative():
+    """Demonstrate derivative computation."""
+    print("\n" + "=" * 60)
+    print("DERIVATIVE COMPUTATION in EML")
     print("=" * 60)
-    print()
-    print("With contraction factor α, retained information after l layers")
-    print("is α^l · K. This decreases geometrically in depth.")
-    print()
 
-    K = 100
-    alphas = [0.9, 0.7, 0.5, 0.3, 0.1]
+    for n in range(1, 6):
+        ie = iter_exp(n)
+        d = deriv(ie)
+        print(f"  d/dx[exp^{n}(x)]: depth={ie.depth()}->{d.depth()}, "
+              f"size={ie.size()}->{d.size()}")
 
-    print(f"Initial information K = {K}")
-    print()
-    print(f"{'α':>5} | " + " | ".join(f"l={l}" for l in range(7)))
-    print("-" * 65)
+    # Verify derivative of exp(x) is exp(x)
+    print("\n  Verification: d/dx[exp(x)] at x=1:")
+    e = Exp(Var())
+    de = deriv(e)
+    print(f"    exp(1) = {math.exp(1):.6f}")
+    print(f"    d/dx[exp(x)](1) = {de.eval(1):.6f}")
+    print(f"    Match: {abs(de.eval(1) - math.exp(1)) < 1e-10}")
 
-    for alpha in alphas:
-        vals = [f"{retained_info(alpha, l, K):>7.2f}" for l in range(7)]
-        print(f"{alpha:>5.1f} | " + " | ".join(vals))
+    # Derivative product formula
+    print("\n  Product formula for d/dx[exp^n(x)]:")
+    for n in range(1, 5):
+        ie = iter_exp(n)
+        d = deriv(ie)
+        x = 0.5
+        # Product of exp(iteratedExp(k, x)) for k = 0..n-1
+        product = 1.0
+        val = x
+        for k in range(n):
+            product *= math.exp(val)
+            val = math.exp(val)
+        print(f"    n={n}: deriv={d.eval(x):.6e}, product={product:.6e}, "
+              f"match={abs(d.eval(x) - product) < 1e-6}")
 
-    print()
-    print("The information-depth product α^l · K · l has a maximum:")
-    print()
-    print(f"{'α':>5} | " + " | ".join(f"l={l}" for l in range(7)))
-    print("-" * 65)
-
-    for alpha in alphas:
-        vals = [f"{info_depth_product(alpha, l, K):>7.2f}" for l in range(7)]
-        print(f"{alpha:>5.1f} | " + " | ".join(vals))
-        # Find maximum
-        max_l = max(range(20), key=lambda l: info_depth_product(alpha, l, K))
-        max_val = info_depth_product(alpha, max_l, K)
-        print(f"        → max at l={max_l}, value={max_val:.2f}")
-    print()
-
-
-def demo_composition():
-    """Demonstrate compositional approximation."""
+def demo_kolmogorov_connection():
+    """Demonstrate the connection to descriptive complexity."""
+    print("\n" + "=" * 60)
+    print("DESCRIPTIVE COMPLEXITY: Size as Kolmogorov proxy")
     print("=" * 60)
-    print("DEMO 4: Compositional Approximation")
-    print("=" * 60)
-    print()
-    print("Composing EML expressions: subst(outer, inner)")
-    print("Depth is additive, size is multiplicative.")
-    print()
 
-    # exp(exp(x)) via composition
-    exp_x = eml(const(1.0), var())
-
-    # Manual composition: exp(exp(x))
-    exp_exp = exp_x.subst(exp_x)
-    # Direct construction
-    direct = iter_exp_expr(2)
-
-    print(f"exp(exp(x)) via composition:")
-    print(f"  size = {exp_exp.size()}, eml_depth = {exp_exp.eml_depth()}")
-    print(f"exp(exp(x)) via direct construction:")
-    print(f"  size = {direct.size()}, eml_depth = {direct.eml_depth()}")
-    print()
-
-    # Verify they compute the same thing
-    for x in [0.1, 0.5, 1.0]:
-        v1 = exp_exp.eval(x)
-        v2 = direct.eval(x)
-        print(f"  x={x}: composed={v1:.6f}, direct={v2:.6f}, diff={abs(v1-v2):.2e}")
-
-    print()
-
-    # k-fold composition
-    print("k-fold composition of exp(x):")
-    e = eml(const(1.0), var())
-    for k in range(1, 6):
-        composed = iter_exp_expr(0)
-        for _ in range(k):
-            composed = e.subst(composed)
-        print(f"  k={k}: size={composed.size():>4}, depth={composed.eml_depth()}, "
-              f"depth_bound={k}*{e.eml_depth()}={k*e.eml_depth()}")
-    print()
-
-
-def demo_complexity_hierarchy():
-    """Demonstrate the complexity class hierarchy."""
-    print("=" * 60)
-    print("DEMO 5: EML Complexity Class Hierarchy")
-    print("=" * 60)
-    print()
-    print("Functions are classified by how fast their EML description")
-    print("complexity grows as tolerance ε → 0.")
-    print()
-
-    functions = {
-        "constant 5": (lambda x: 5.0, "O(1)"),
-        "identity x": (lambda x: x, "O(1)"),
-        "x²": (lambda x: x**2, "O(1)"),
-        "exp(x)": (lambda x: math.exp(x), "O(1)"),
-        "sin(x) ≈ Taylor": (lambda x: math.sin(x), "O(1/ε)"),
-    }
-
-    print("Function approximation on [0, 1]:")
-    print(f"{'function':>20} {'class':>10} {'ε=0.1 size':>12} {'ε=0.01 size':>12}")
-    print("-" * 56)
-
-    for name, (f, cls) in functions.items():
-        # Estimate sizes for different tolerances
-        import numpy as np
-        xs = np.linspace(0, 1, 100)
-        fvals = np.array([f(x) for x in xs])
-
-        # Simple polynomial fit
-        sizes = []
-        for eps in [0.1, 0.01]:
-            for deg in range(1, 50):
-                coeffs = np.polyfit(xs, fvals, deg)
-                approx = np.polyval(coeffs, xs)
-                if np.max(np.abs(fvals - approx)) <= eps:
-                    size = 2 * deg + 1
-                    sizes.append(size)
-                    break
-            else:
-                sizes.append(99)
-
-        print(f"{name:>20} {cls:>10} {sizes[0]:>12} {sizes[1]:>12}")
-    print()
-
+    # Show that depth < size always
+    print("\n  Verifying depth < size for all constructions:")
+    constructions = [
+        ("const(3.14)", Const(3.14)),
+        ("var", Var()),
+        ("exp(var)", Exp(Var())),
+        ("exp(exp(var))", Exp(Exp(Var()))),
+        ("var * var", Mul(Var(), Var())),
+        ("repeated_square(5)", repeated_square(5)),
+        ("exp_log_power(5)", exp_log_power(5)),
+        ("iter_exp(5)", iter_exp(5)),
+    ]
+    for name, expr in constructions:
+        d, s = expr.depth(), expr.size()
+        print(f"    {name:>25}: depth={d:>3}, size={s:>5}, depth < size: {d < s}")
 
 if __name__ == "__main__":
-    demo_tower_efficiency()
     demo_depth_gap()
-    demo_information_decay()
-    demo_composition()
-    demo_complexity_hierarchy()
+    demo_universal_approximation()
+    demo_derivative()
+    demo_kolmogorov_connection()
 
 
 #!/usr/bin/env python3
 """
-Visualization: EML Depth Hierarchy and Information Decay
+Visualization: EML Depth Gap Theorem
 
-Creates publication-quality plots showing:
-1. The EML depth hierarchy for exponential towers
-2. Information decay through depth layers
-3. The depth-size efficiency of EML representations
+Shows the exponential depth advantage of EML (exp-log) over polynomial
+circuits for computing x^(2^n).
 """
 
-import math
+import matplotlib.pyplot as plt
+import numpy as np
 
-def create_plots():
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    import numpy as np
+def main():
+    ns = list(range(1, 16))
+    poly_depths = ns  # depth = n
+    poly_sizes = [2**(n+1) - 1 for n in ns]
+    eml_depths = [3] * len(ns)  # constant depth 3
+    eml_sizes = [5] * len(ns)   # constant size 5
 
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Plot 1: Tower size vs depth
-    ax1 = axes[0, 0]
-    ns = list(range(0, 15))
-    sizes = [2 * n + 1 for n in ns]
-    depths = ns  # emlDepth = n for iterExp n
-    ax1.plot(ns, sizes, 'bo-', label='Size (2n+1)', markersize=8)
-    ax1.plot(ns, depths, 'rs-', label='EML Depth (n)', markersize=8)
-    ax1.fill_between(ns, depths, sizes, alpha=0.15, color='blue')
-    ax1.set_xlabel('Tower height n', fontsize=12)
-    ax1.set_ylabel('Measure', fontsize=12)
-    ax1.set_title('EML Tower Efficiency: Size vs Depth', fontsize=14, fontweight='bold')
-    ax1.legend(fontsize=11)
-    ax1.grid(True, alpha=0.3)
+    # Depth comparison
+    ax = axes[0]
+    ax.plot(ns, poly_depths, 'ro-', linewidth=2, markersize=8, label='Polynomial (repeated squaring)')
+    ax.plot(ns, eml_depths, 'bs-', linewidth=2, markersize=8, label='EML (exp-log)')
+    ax.fill_between(ns, eml_depths, poly_depths, alpha=0.2, color='green', label='Depth gap')
+    ax.set_xlabel('n (computing x^(2^n))', fontsize=14)
+    ax.set_ylabel('Circuit Depth', fontsize=14)
+    ax.set_title('Depth Gap Theorem', fontsize=16)
+    ax.legend(fontsize=12)
+    ax.grid(True, alpha=0.3)
+    ax.set_xticks(ns[::2])
 
-    # Plot 2: Information decay
-    ax2 = axes[0, 1]
-    K = 100
-    layers = np.arange(0, 15)
-    for alpha in [0.9, 0.7, 0.5, 0.3, 0.1]:
-        retained = [alpha ** l * K for l in layers]
-        ax2.plot(layers, retained, 'o-', label=f'α={alpha}', markersize=5)
-    ax2.set_xlabel('Depth (layers)', fontsize=12)
-    ax2.set_ylabel('Retained Information', fontsize=12)
-    ax2.set_title(f'Information Decay (K={K})', fontsize=14, fontweight='bold')
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-    ax2.set_yscale('log')
-
-    # Plot 3: Information-depth product
-    ax3 = axes[1, 0]
-    layers_fine = np.linspace(0.1, 15, 200)
-    for alpha in [0.9, 0.7, 0.5, 0.3]:
-        product = [alpha ** l * K * l for l in layers_fine]
-        ax3.plot(layers_fine, product, '-', label=f'α={alpha}', linewidth=2)
-        # Find and mark maximum
-        opt_l = -1 / math.log(alpha) if alpha < 1 else 1
-        opt_val = alpha ** opt_l * K * opt_l
-        ax3.plot(opt_l, opt_val, '*', markersize=15, color='black')
-    ax3.set_xlabel('Depth (layers)', fontsize=12)
-    ax3.set_ylabel('Info × Depth Product', fontsize=12)
-    ax3.set_title('Information-Depth Product', fontsize=14, fontweight='bold')
-    ax3.legend(fontsize=10)
-    ax3.grid(True, alpha=0.3)
-
-    # Plot 4: Depth stratification
-    ax4 = axes[1, 1]
-    categories = ['Polynomials\n(any degree)', 'exp(x)', 'exp(exp(x))',
-                   'exp³(x)', 'exp⁴(x)', 'exp⁵(x)']
-    eml_depths = [0, 1, 2, 3, 4, 5]
-    colors = ['#2ecc71', '#3498db', '#9b59b6', '#e74c3c', '#f39c12', '#1abc9c']
-    bars = ax4.barh(categories, eml_depths, color=colors, edgecolor='black', linewidth=0.5)
-    ax4.set_xlabel('EML Depth', fontsize=12)
-    ax4.set_title('EML Depth Hierarchy', fontsize=14, fontweight='bold')
-    ax4.grid(True, alpha=0.3, axis='x')
-    # Add value labels
-    for bar, val in zip(bars, eml_depths):
-        ax4.text(bar.get_width() + 0.1, bar.get_y() + bar.get_height()/2,
-                 str(val), va='center', fontsize=11, fontweight='bold')
+    # Size comparison (log scale)
+    ax = axes[1]
+    ax.semilogy(ns, poly_sizes, 'ro-', linewidth=2, markersize=8, label='Polynomial (repeated squaring)')
+    ax.semilogy(ns, eml_sizes, 'bs-', linewidth=2, markersize=8, label='EML (exp-log)')
+    ax.fill_between(ns, eml_sizes, poly_sizes, alpha=0.2, color='green', label='Size gap')
+    ax.set_xlabel('n (computing x^(2^n))', fontsize=14)
+    ax.set_ylabel('Circuit Size (log scale)', fontsize=14)
+    ax.set_title('Size Gap Theorem', fontsize=16)
+    ax.legend(fontsize=12)
+    ax.grid(True, alpha=0.3)
+    ax.set_xticks(ns[::2])
 
     plt.tight_layout()
-    plt.savefig('eml_hierarchy.png', dpi=150, bbox_inches='tight')
+    plt.savefig('depth_gap_theorem.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: eml_hierarchy.png")
-
+    print("Saved depth_gap_theorem.png")
 
 if __name__ == "__main__":
-    create_plots()
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: EML Derivative Growth and Product Formula
+
+Shows how the derivative of iterated exponentials grows according to
+the product formula: d/dx[exp^n(x)] = prod_{k=0}^{n-1} exp(exp^k(x))
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+
+def iterated_exp(n, x):
+    """Compute exp^n(x) = exp(exp(...(exp(x))...))."""
+    val = x
+    for _ in range(n):
+        val = min(val, 700)  # prevent overflow
+        val = math.exp(val)
+    return val
+
+def deriv_iterated_exp(n, x):
+    """Product formula: d/dx[exp^n(x)] = prod_{k=0}^{n-1} exp(exp^k(x))."""
+    product = 1.0
+    val = x
+    for k in range(n):
+        product *= math.exp(val)
+        val = math.exp(min(val, 700))
+    return product
+
+def main():
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Plot 1: Iterated exp values at small x
+    ax = axes[0]
+    xs = np.linspace(-2, 1, 200)
+    for n in range(1, 5):
+        ys = [iterated_exp(n, x) for x in xs]
+        ax.plot(xs, ys, linewidth=2, label=f'exp^{n}(x)')
+    ax.set_xlabel('x', fontsize=14)
+    ax.set_ylabel('exp^n(x)', fontsize=14)
+    ax.set_title('Iterated Exponentials', fontsize=16)
+    ax.set_ylim(-1, 50)
+    ax.legend(fontsize=12)
+    ax.grid(True, alpha=0.3)
+
+    # Plot 2: Derivative product formula factors
+    ax = axes[1]
+    x_val = 0.0
+    max_n = 8
+    depths = list(range(1, max_n + 1))
+    sizes = [n + 1 for n in depths]
+    deriv_sizes_at_zero = []
+    for n in depths:
+        # Size of derivative expression for iterExp(n)
+        # deriv(iterExp(n)) has recursive structure
+        # size grows roughly as n*(n+3)/2
+        s = 0
+        for k in range(n):
+            s += (n - k) + 2  # approximate
+        deriv_sizes_at_zero.append(s)
+
+    # Theoretical bound: 2 * size = 2 * (n + 1)
+    theoretical_bound = [2 * (n + 1) for n in depths]
+
+    ax.bar([d - 0.2 for d in depths], sizes, width=0.35, color='steelblue',
+           label='Original size', alpha=0.8)
+    ax.bar([d + 0.2 for d in depths], deriv_sizes_at_zero, width=0.35,
+           color='coral', label='Derivative size (approx)', alpha=0.8)
+    ax.plot(depths, theoretical_bound, 'k--', linewidth=2,
+            label='Depth bound: 2·size', marker='o')
+    ax.set_xlabel('Number of exp layers (n)', fontsize=14)
+    ax.set_ylabel('Size / Depth bound', fontsize=14)
+    ax.set_title('Derivative Depth vs Size Bound', fontsize=16)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3, axis='y')
+    ax.set_xticks(depths)
+
+    plt.tight_layout()
+    plt.savefig('derivative_growth.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved derivative_growth.png")
+
+if __name__ == "__main__":
+    main()

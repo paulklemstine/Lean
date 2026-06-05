@@ -1,245 +1,262 @@
+#!/usr/bin/env python3
 """
-EML (Exponential-Multiplicative-Logarithmic) Expression Algorithms
+EML Universal Approximation: Core Algorithms
 
-Type-hinted implementations of EML expression construction,
-evaluation, complexity measurement, and approximation.
+Type-hinted implementations of the key algorithms from the EML
+universal approximation theory.
 """
 
 from __future__ import annotations
 from dataclasses import dataclass
-from enum import Enum, auto
-from typing import Callable, Optional
+from typing import Callable, List, Optional, Tuple
 import math
 
 
-class NodeType(Enum):
-    VAR = auto()
-    CONST = auto()
-    ADD = auto()
-    MUL = auto()
-    NEG = auto()
-    INV = auto()
-    EML = auto()  # eml(a,b) = a * exp(b)
-
+# ── EML Expression ADT ───────────────────────────────────────────────────────
 
 @dataclass
-class EMLExpr:
-    """An EML expression tree node."""
-    node_type: NodeType
-    value: Optional[float] = None  # for CONST nodes
-    left: Optional['EMLExpr'] = None
-    right: Optional['EMLExpr'] = None
+class EMLNode:
+    """Abstract base for EML expression nodes."""
+    pass
 
-    def eval(self, x: float) -> float:
-        """Evaluate the expression at point x."""
-        match self.node_type:
-            case NodeType.VAR:
-                return x
-            case NodeType.CONST:
-                return self.value or 0.0
-            case NodeType.ADD:
-                return self.left.eval(x) + self.right.eval(x)
-            case NodeType.MUL:
-                return self.left.eval(x) * self.right.eval(x)
-            case NodeType.NEG:
-                return -self.left.eval(x)
-            case NodeType.INV:
-                val = self.left.eval(x)
-                return 1.0 / val if val != 0 else float('inf')
-            case NodeType.EML:
-                a = self.left.eval(x)
-                b = self.right.eval(x)
-                try:
-                    return a * math.exp(b)
-                except OverflowError:
-                    return float('inf')
+@dataclass
+class ConstNode(EMLNode):
+    value: float
 
-    def size(self) -> int:
-        """Number of nodes in the expression tree."""
-        match self.node_type:
-            case NodeType.VAR | NodeType.CONST:
-                return 1
-            case NodeType.ADD | NodeType.MUL | NodeType.EML:
-                return 1 + self.left.size() + self.right.size()
-            case NodeType.NEG | NodeType.INV:
-                return 1 + self.left.size()
+@dataclass
+class VarNode(EMLNode):
+    pass
 
-    def depth(self) -> int:
-        """Tree depth (longest root-to-leaf path)."""
-        match self.node_type:
-            case NodeType.VAR | NodeType.CONST:
-                return 0
-            case NodeType.ADD | NodeType.MUL | NodeType.EML:
-                return 1 + max(self.left.depth(), self.right.depth())
-            case NodeType.NEG | NodeType.INV:
-                return 1 + self.left.depth()
+@dataclass
+class AddNode(EMLNode):
+    left: EMLNode
+    right: EMLNode
 
-    def eml_depth(self) -> int:
-        """EML depth: count only nesting of eml operations."""
-        match self.node_type:
-            case NodeType.VAR | NodeType.CONST:
-                return 0
-            case NodeType.ADD | NodeType.MUL:
-                return max(self.left.eml_depth(), self.right.eml_depth())
-            case NodeType.NEG | NodeType.INV:
-                return self.left.eml_depth()
-            case NodeType.EML:
-                return 1 + max(self.left.eml_depth(), self.right.eml_depth())
+@dataclass
+class MulNode(EMLNode):
+    left: EMLNode
+    right: EMLNode
 
-    def eml_count(self) -> int:
-        """Number of eml nodes in the expression."""
-        match self.node_type:
-            case NodeType.VAR | NodeType.CONST:
-                return 0
-            case NodeType.ADD | NodeType.MUL | NodeType.EML:
-                base = 1 if self.node_type == NodeType.EML else 0
-                return base + self.left.eml_count() + self.right.eml_count()
-            case NodeType.NEG | NodeType.INV:
-                return self.left.eml_count()
+@dataclass
+class ExpNode(EMLNode):
+    child: EMLNode
 
-    def subst(self, inner: 'EMLExpr') -> 'EMLExpr':
-        """Substitute inner for the variable in this expression."""
-        match self.node_type:
-            case NodeType.VAR:
-                return inner
-            case NodeType.CONST:
-                return self
-            case NodeType.ADD:
-                return EMLExpr(NodeType.ADD, left=self.left.subst(inner), right=self.right.subst(inner))
-            case NodeType.MUL:
-                return EMLExpr(NodeType.MUL, left=self.left.subst(inner), right=self.right.subst(inner))
-            case NodeType.NEG:
-                return EMLExpr(NodeType.NEG, left=self.left.subst(inner))
-            case NodeType.INV:
-                return EMLExpr(NodeType.INV, left=self.left.subst(inner))
-            case NodeType.EML:
-                return EMLExpr(NodeType.EML, left=self.left.subst(inner), right=self.right.subst(inner))
+@dataclass
+class LogNode(EMLNode):
+    child: EMLNode
 
 
-# Constructors
-def var() -> EMLExpr:
-    return EMLExpr(NodeType.VAR)
+# ── Core algorithms ──────────────────────────────────────────────────────────
 
-def const(c: float) -> EMLExpr:
-    return EMLExpr(NodeType.CONST, value=c)
+def evaluate(node: EMLNode, x: float) -> float:
+    """Evaluate an EML expression at point x.
 
-def add(a: EMLExpr, b: EMLExpr) -> EMLExpr:
-    return EMLExpr(NodeType.ADD, left=a, right=b)
+    Time complexity: O(size(node))
+    Space complexity: O(depth(node)) for the recursion stack
+    """
+    if isinstance(node, ConstNode):
+        return node.value
+    elif isinstance(node, VarNode):
+        return x
+    elif isinstance(node, AddNode):
+        return evaluate(node.left, x) + evaluate(node.right, x)
+    elif isinstance(node, MulNode):
+        return evaluate(node.left, x) * evaluate(node.right, x)
+    elif isinstance(node, ExpNode):
+        v = evaluate(node.child, x)
+        return math.exp(min(v, 700))
+    elif isinstance(node, LogNode):
+        v = evaluate(node.child, x)
+        return math.log(v) if v > 0 else 0.0
+    raise TypeError(f"Unknown node type: {type(node)}")
 
-def mul(a: EMLExpr, b: EMLExpr) -> EMLExpr:
-    return EMLExpr(NodeType.MUL, left=a, right=b)
 
-def neg(a: EMLExpr) -> EMLExpr:
-    return EMLExpr(NodeType.NEG, left=a)
+def depth(node: EMLNode) -> int:
+    """Compute the depth of an EML expression tree.
 
-def inv(a: EMLExpr) -> EMLExpr:
-    return EMLExpr(NodeType.INV, left=a)
+    Theorem (depth_lt_size): depth(e) < size(e) for all e.
+    """
+    if isinstance(node, (ConstNode, VarNode)):
+        return 0
+    elif isinstance(node, (AddNode, MulNode)):
+        return max(depth(node.left), depth(node.right)) + 1
+    elif isinstance(node, (ExpNode, LogNode)):
+        return depth(node.child) + 1
+    raise TypeError
 
-def eml(a: EMLExpr, b: EMLExpr) -> EMLExpr:
-    return EMLExpr(NodeType.EML, left=a, right=b)
+
+def size(node: EMLNode) -> int:
+    """Compute the size (number of nodes) of an EML expression tree.
+
+    Theorem (size_pos): size(e) ≥ 1 for all e.
+    """
+    if isinstance(node, (ConstNode, VarNode)):
+        return 1
+    elif isinstance(node, (AddNode, MulNode)):
+        return size(node.left) + size(node.right) + 1
+    elif isinstance(node, (ExpNode, LogNode)):
+        return size(node.child) + 1
+    raise TypeError
 
 
-def iter_exp_expr(n: int) -> EMLExpr:
-    """Build the canonical EML expression for iterExp n = exp^n(x)."""
+def symbolic_derivative(node: EMLNode) -> EMLNode:
+    """Compute the symbolic derivative d/dx of an EML expression.
+
+    Theorem (deriv_depth_le_two_size): depth(d/dx[e]) ≤ 2 * size(e)
+    Theorem (eml_closed_under_deriv): d/dx[EML] ⊆ EML
+
+    Uses:
+    - d/dx[c] = 0
+    - d/dx[x] = 1
+    - d/dx[f+g] = f' + g'
+    - d/dx[f*g] = f'g + fg'    (product rule)
+    - d/dx[exp(f)] = exp(f)*f'  (chain rule)
+    - d/dx[log(f)] = f'/f        (chain rule, represented as f'*exp(-log(f)))
+    """
+    if isinstance(node, ConstNode):
+        return ConstNode(0.0)
+    elif isinstance(node, VarNode):
+        return ConstNode(1.0)
+    elif isinstance(node, AddNode):
+        return AddNode(symbolic_derivative(node.left),
+                       symbolic_derivative(node.right))
+    elif isinstance(node, MulNode):
+        return AddNode(
+            MulNode(symbolic_derivative(node.left), node.right),
+            MulNode(node.left, symbolic_derivative(node.right))
+        )
+    elif isinstance(node, ExpNode):
+        return MulNode(ExpNode(node.child), symbolic_derivative(node.child))
+    elif isinstance(node, LogNode):
+        # f'/f = f' * exp(-log(f))
+        return MulNode(
+            symbolic_derivative(node.child),
+            ExpNode(MulNode(ConstNode(-1.0), LogNode(node.child)))
+        )
+    raise TypeError
+
+
+def compose(outer: EMLNode, inner: EMLNode) -> EMLNode:
+    """Compose two EML expressions: outer(inner(x)).
+
+    Theorem (depth_compose): depth(compose(g, h)) ≤ depth(g) + depth(h)
+    """
+    if isinstance(outer, ConstNode):
+        return outer
+    elif isinstance(outer, VarNode):
+        return inner
+    elif isinstance(outer, AddNode):
+        return AddNode(compose(outer.left, inner), compose(outer.right, inner))
+    elif isinstance(outer, MulNode):
+        return MulNode(compose(outer.left, inner), compose(outer.right, inner))
+    elif isinstance(outer, ExpNode):
+        return ExpNode(compose(outer.child, inner))
+    elif isinstance(outer, LogNode):
+        return LogNode(compose(outer.child, inner))
+    raise TypeError
+
+
+def exp_log_power_expr(n: int) -> EMLNode:
+    """Build x^(2^n) as exp(2^n * log(x)).
+
+    Theorem (depth_expLogPower): depth = 3, independent of n.
+    Theorem (eval_expLogPower_pos): evaluates to x^(2^n) for x > 0.
+
+    Compare with repeated squaring which has depth n.
+    """
+    return ExpNode(MulNode(ConstNode(float(2**n)), LogNode(VarNode())))
+
+
+def repeated_square_expr(n: int) -> EMLNode:
+    """Build x^(2^n) via repeated squaring.
+
+    Theorem (depth_repeatedSquare): depth = n.
+    Theorem (size_repeatedSquare): size = 2^(n+1) - 1.
+    """
     if n == 0:
-        return var()
-    return eml(const(1.0), iter_exp_expr(n - 1))
+        return VarNode()
+    sub = repeated_square_expr(n - 1)
+    return MulNode(sub, sub)
 
 
-def iter_exp(n: int, x: float) -> float:
-    """Compute iterExp n x = exp(exp(...exp(x)...))."""
-    result = x
-    for _ in range(n):
-        try:
-            result = math.exp(result)
-        except OverflowError:
-            return float('inf')
+def polynomial_to_eml(coeffs: List[float]) -> EMLNode:
+    """Convert polynomial coefficients [a_0, a_1, ..., a_n] to EML.
+
+    The resulting expression evaluates to a_0 + a_1*x + ... + a_n*x^n.
+    This demonstrates that EML contains all polynomials, which is the
+    key lemma for the Stone-Weierstrass universal approximation argument.
+    """
+    result: EMLNode = ConstNode(0.0)
+    for i, coeff in enumerate(coeffs):
+        if coeff == 0.0:
+            continue
+        # Build x^i
+        power: EMLNode = ConstNode(1.0)
+        for _ in range(i):
+            power = MulNode(power, VarNode())
+        term = MulNode(ConstNode(coeff), power)
+        result = AddNode(result, term)
     return result
 
 
-def monomial_expr(c: float, n: int) -> EMLExpr:
-    """Build EML expression for c * x^n."""
-    if n == 0:
-        return const(c)
-    return mul(var(), monomial_expr(c, n - 1))
-
-
-def eml_description_complexity(
+def approximate_function(
     f: Callable[[float], float],
-    a: float, b: float, eps: float,
-    max_size: int = 100
-) -> int:
+    a: float, b: float,
+    n_terms: int
+) -> Tuple[EMLNode, float]:
+    """Approximate f on [a,b] using Chebyshev interpolation.
+
+    Returns (eml_expr, max_error) where eml_expr is a polynomial
+    EML expression and max_error is the estimated uniform error.
+
+    Theorem (eml_uniform_approximation): For any continuous f on
+    compact S and ε > 0, there exists g in the EML subalgebra with
+    dist(f, g) < ε.
     """
-    Estimate EML description complexity by enumeration.
-    Returns the minimum size of an EML expression that eps-approximates f on [a,b].
-    (Approximate — only checks canonical constructions.)
-    """
-    # Check constant approximation
     import numpy as np
-    xs = np.linspace(a, b, 100)
-    fvals = np.array([f(x) for x in xs])
 
-    # Try constant
-    c = np.mean(fvals)
-    if np.max(np.abs(fvals - c)) <= eps:
-        return 1
+    # Chebyshev nodes on [a, b]
+    nodes = [(a + b) / 2 + (b - a) / 2 * math.cos(math.pi * (2*k + 1) / (2*n_terms))
+             for k in range(n_terms)]
+    values = [f(x) for x in nodes]
 
-    # Try identity
-    if np.max(np.abs(fvals - xs)) <= eps:
-        return 1
+    # Lagrange interpolation coefficients (converted to monomial form)
+    # Using numpy for numerical stability
+    coeffs_np = np.polynomial.polynomial.polyfit(
+        np.array(nodes), np.array(values), n_terms - 1
+    )
+    coeffs = coeffs_np.tolist()
 
-    # Try monomials c*x^n
-    for n in range(1, max_size // 2):
-        # Least squares fit
-        A = xs ** n
-        c_fit = np.dot(A, fvals) / np.dot(A, A) if np.dot(A, A) > 0 else 0
-        approx = c_fit * xs ** n
-        if np.max(np.abs(fvals - approx)) <= eps:
-            return 2 * n + 1
+    expr = polynomial_to_eml(coeffs)
 
-    return max_size
+    # Estimate max error on a fine grid
+    test_points = [a + (b - a) * i / 1000 for i in range(1001)]
+    max_error = max(abs(evaluate(expr, x) - f(x)) for x in test_points)
 
-
-def retained_info(alpha: float, l: int, K: int) -> float:
-    """Retained symbolic information after l layers with contraction alpha."""
-    return alpha ** l * K
-
-
-def info_depth_product(alpha: float, l: int, K: int) -> float:
-    """Information-depth product: retained_info * depth."""
-    return retained_info(alpha, l, K) * l
+    return expr, max_error
 
 
 if __name__ == "__main__":
-    # Demo: verify key properties
-    print("=== EML Expression Properties ===\n")
+    # Quick test
+    print("Testing EML algorithms...")
 
-    # Build iterExp 3
-    e = iter_exp_expr(3)
-    print(f"iterExp 3 expression:")
-    print(f"  size = {e.size()} (expected: 7 = 2*3+1)")
-    print(f"  eml_depth = {e.eml_depth()} (expected: 3)")
-    print(f"  eml_count = {e.eml_count()} (expected: 3)")
+    # Test exp-log power
+    for n in range(1, 6):
+        elp = exp_log_power_expr(n)
+        rs = repeated_square_expr(n)
+        x = 1.5
+        print(f"  x^(2^{n}): exp-log={evaluate(elp, x):.4f}, "
+              f"repeat={evaluate(rs, x):.4f}, "
+              f"actual={x**(2**n):.4f}")
 
-    # Verify evaluation
-    x = 0.5
-    print(f"\n  eval(0.5) = {e.eval(x):.6f}")
-    print(f"  iterExp(3, 0.5) = {iter_exp(3, x):.6f}")
-    print(f"  match: {abs(e.eval(x) - iter_exp(3, x)) < 1e-10}")
+    # Test derivative
+    print("\nDerivative test:")
+    e = ExpNode(VarNode())
+    de = symbolic_derivative(e)
+    print(f"  d/dx[exp(x)] at x=1: {evaluate(de, 1.0):.6f} (expected {math.exp(1):.6f})")
 
-    # Monomial
-    m = monomial_expr(2.0, 3)
-    print(f"\nMonomial 2*x^3:")
-    print(f"  size = {m.size()} (expected: 7)")
-    print(f"  eml_depth = {m.eml_depth()} (expected: 0)")
-    print(f"  eval(2.0) = {m.eval(2.0)} (expected: 16.0)")
-
-    # Information decay
-    print("\n=== Information Decay ===")
-    K = 100
-    for alpha in [0.9, 0.5, 0.1]:
-        print(f"\nalpha = {alpha}, K = {K}:")
-        for l in range(6):
-            ri = retained_info(alpha, l, K)
-            prod = info_depth_product(alpha, l, K)
-            print(f"  depth {l}: retained = {ri:.2f}, product = {prod:.2f}")
+    # Test approximation
+    print("\nApproximation test (sin on [0, π]):")
+    for n in [3, 5, 7, 10, 15]:
+        expr, err = approximate_function(math.sin, 0, math.pi, n)
+        print(f"  {n} terms: depth={depth(expr)}, size={size(expr)}, max_err={err:.2e}")
