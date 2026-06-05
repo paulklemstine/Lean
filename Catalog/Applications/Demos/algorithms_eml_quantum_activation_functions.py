@@ -1,223 +1,228 @@
 #!/usr/bin/env python3
 """
-Quantum Phase-EML Neuron — Algorithms
+Quantum EML Activation Functions — Algorithms
 
-Type-hinted implementations of the quantum EML operations
-and their inverse (target synthesis) algorithms.
+Type-hinted implementations of the core quantum EML algorithms.
 """
 
-import numpy as np
 from typing import Tuple, List, Optional
-from dataclasses import dataclass
-
-
-@dataclass
-class QuantumEMLOutput:
-    """Result of a quantum EML neuron evaluation."""
-    value: complex
-    amplitude: float
-    phase: float
-    norm_sq: float
-    is_unitary: bool
-    unitarity_defect: float
+import numpy as np
 
 
 def eml(x: float, y: float) -> float:
     """Classical EML activation function.
     
-    eml(x, y) = exp(x) - ln(y)
-    
     Args:
         x: First parameter (exponential input)
-        y: Second parameter (logarithmic input), must be positive
-        
+        y: Second parameter (logarithmic input, must be > 0)
+    
     Returns:
-        The EML value exp(x) - ln(y)
+        exp(x) - log(y)
     """
-    if y <= 0:
-        raise ValueError(f"y must be positive, got {y}")
     return float(np.exp(x) - np.log(y))
 
 
-def eml_diag(z: float) -> float:
-    """Diagonal EML: eml(z, z) = exp(z) - ln(z).
+def quantum_eml_phase(x: float, y: float) -> complex:
+    """Quantum EML phase map.
     
-    Satisfies the bound eml_diag(z) >= 2 for z > 0.
-    
-    Args:
-        z: Parameter (must be positive)
-    """
-    if z <= 0:
-        raise ValueError(f"z must be positive, got {z}")
-    return float(np.exp(z) - np.log(z))
-
-
-def quantum_phase_eml(theta: float, x: float, y: float) -> QuantumEMLOutput:
-    """Quantum phase-EML neuron.
-    
-    q(θ, x, y) = exp(iθ) · (exp(x) - ln(y))
-    
-    Properties (proven in Lean 4):
-    - Bridge: q(0, x, y) = eml(x, y)
-    - Norm: |q|² = eml(x,y)²
-    - Surjective onto ℂ
-    - Periodic: q(θ+2π) = q(θ)
-    - Phase derivative: ∂q/∂θ = i·q
+    Maps classical parameters to a point on the unit circle S¹ ⊂ ℂ.
     
     Args:
-        theta: Phase parameter (radians)
-        x: Amplitude parameter (exponential input)
-        y: Amplitude parameter (logarithmic input), must be positive
-    """
-    if y <= 0:
-        raise ValueError(f"y must be positive, got {y}")
-    
-    classical_value = eml(x, y)
-    phase_factor = np.exp(1j * theta)
-    value = complex(phase_factor * classical_value)
-    norm_sq = classical_value ** 2
-    
-    return QuantumEMLOutput(
-        value=value,
-        amplitude=abs(classical_value),
-        phase=theta % (2 * np.pi),
-        norm_sq=norm_sq,
-        is_unitary=np.isclose(norm_sq, 1.0),
-        unitarity_defect=norm_sq - 1.0
-    )
-
-
-def inverse_quantum_eml(w: complex) -> Tuple[float, float, float]:
-    """Inverse quantum EML: find parameters producing target output.
-    
-    Given w ∈ ℂ, find θ, x, y > 0 such that q(θ, x, y) = w.
-    Uses the constructive proof from the surjectivity theorem.
-    
-    Args:
-        w: Target complex number
-        
-    Returns:
-        Tuple (θ, x, y) with y > 0 such that quantum_phase_eml(θ, x, y).value ≈ w
-    """
-    if w == 0:
-        return 0.0, 0.0, np.e  # eml(0, e) = 1 - 1 = 0
-    
-    r = abs(w)
-    theta = float(np.angle(w))
-    # Set eml(x, y) = r by choosing x = 0, y = exp(1 - r)
-    x = 0.0
-    y = float(np.exp(1 - r))
-    return theta, x, y
-
-
-def quantum_interference(
-    theta1: float, theta2: float, x: float, y: float
-) -> float:
-    """Compute the interference intensity of two quantum EML neurons.
-    
-    |q(θ₁, x, y) + q(θ₂, x, y)|² = 2·eml(x,y)²·(1 + cos(θ₁ - θ₂))
-    
-    Args:
-        theta1, theta2: Phase parameters of the two neurons
-        x, y: Shared amplitude parameters
-        
-    Returns:
-        The interference intensity (non-negative)
-    """
-    e = eml(x, y)
-    return float(2 * e**2 * (1 + np.cos(theta1 - theta2)))
-
-
-def multi_neuron_interference(
-    thetas: List[float], x: float, y: float
-) -> float:
-    """Compute the interference intensity of n quantum EML neurons.
-    
-    |Σ q(θ_k, x, y)|² = eml(x,y)² · |Σ exp(iθ_k)|²
-    
-    Args:
-        thetas: List of phase parameters
-        x, y: Shared amplitude parameters
-        
-    Returns:
-        Total interference intensity
-    """
-    e = eml(x, y)
-    phase_sum = sum(np.exp(1j * theta) for theta in thetas)
-    return float(e**2 * abs(phase_sum)**2)
-
-
-def unitarity_surface(
-    x_range: Tuple[float, float] = (-2, 3),
-    n_points: int = 1000
-) -> List[Tuple[float, float]]:
-    """Find (x, y) pairs where the quantum EML output is unitary.
-    
-    The quantum EML is unitary iff eml(x, y) = ±1,
-    i.e., exp(x) - ln(y) = ±1, i.e., y = exp(exp(x) ∓ 1).
+        x: First EML parameter
+        y: Second EML parameter (must be > 0)
     
     Returns:
-        List of (x, y) pairs on the unitarity surface
+        exp(i · eml(x, y)), a complex number with |z| = 1
     """
-    xs = np.linspace(x_range[0], x_range[1], n_points)
-    points = []
-    for x in xs:
-        # eml(x, y) = 1 → y = exp(exp(x) - 1)
-        y1 = np.exp(np.exp(x) - 1)
-        points.append((float(x), float(y1)))
-        # eml(x, y) = -1 → y = exp(exp(x) + 1)
-        y2 = np.exp(np.exp(x) + 1)
-        points.append((float(x), float(y2)))
-    return points
+    return complex(np.exp(1j * eml(x, y)))
 
 
-def quantum_eml_phase_evolution(
-    x: float, y: float,
-    theta_start: float = 0,
-    theta_end: float = 2 * np.pi,
-    n_steps: int = 100
-) -> List[complex]:
-    """Trace the path of the quantum EML as θ evolves.
-    
-    Since ∂q/∂θ = i·q (Schrödinger dynamics), the evolution traces
-    a circle of radius |eml(x,y)| in the complex plane.
+def quantum_eml_full(r: float, x: float, y: float) -> complex:
+    """Full quantum EML with amplitude control.
     
     Args:
-        x, y: Amplitude parameters
-        theta_start, theta_end: Phase range
-        n_steps: Number of evaluation points
-        
+        r: Amplitude (should be > 0 for non-degenerate output)
+        x: First EML parameter
+        y: Second EML parameter (must be > 0)
+    
     Returns:
-        List of complex values along the evolution path
+        r · exp(i · eml(x, y))
     """
-    thetas = np.linspace(theta_start, theta_end, n_steps)
-    return [complex(quantum_phase_eml(t, x, y).value) for t in thetas]
+    return r * np.exp(1j * eml(x, y))
+
+
+def compile_u1_gate(alpha: float) -> Tuple[float, float]:
+    """Compile a U(1) rotation gate as quantum EML parameters.
+    
+    Given target angle α, returns (x, y) such that
+    quantumEMLPhase(x, y) = exp(iα).
+    
+    The compilation formula is: x = 0, y = exp(1 - α).
+    
+    Args:
+        alpha: Target rotation angle in radians
+    
+    Returns:
+        Tuple (x, y) of quantum EML parameters
+    """
+    return (0.0, float(np.exp(1 - alpha)))
+
+
+def compile_inverse_gate(x: float, y: float) -> Tuple[float, float]:
+    """Find quantum EML parameters for the inverse gate.
+    
+    Given a gate with parameters (x, y), returns (x', y') such that
+    quantumEMLPhase(x, y) · quantumEMLPhase(x', y') = 1.
+    
+    Args:
+        x: First parameter of gate to invert
+        y: Second parameter of gate to invert (must be > 0)
+    
+    Returns:
+        Tuple (x', y') for the inverse gate
+    """
+    phase = eml(x, y)
+    return compile_u1_gate(-phase)
+
+
+def quantum_eml_gap(x: float, y: float) -> float:
+    """Compute quantum EML gate error relative to identity.
+    
+    Returns |exp(i·eml(x,y)) - 1|², which satisfies
+    the bound: gap ≤ eml(x,y)².
+    
+    Args:
+        x: First EML parameter
+        y: Second EML parameter
+    
+    Returns:
+        Squared distance from identity gate
+    """
+    return float(2 - 2 * np.cos(eml(x, y)))
+
+
+def quantum_eml_fidelity(x: float, y: float, alpha: float) -> float:
+    """Compute quantum EML fidelity with target phase.
+    
+    Returns cos(eml(x,y) - α), the overlap between the quantum EML
+    gate and the target rotation exp(iα).
+    
+    Args:
+        x: First EML parameter
+        y: Second EML parameter
+        alpha: Target angle
+    
+    Returns:
+        Fidelity value in [-1, 1], with 1 = perfect match
+    """
+    return float(np.cos(eml(x, y) - alpha))
+
+
+def compose_quantum_eml_gates(
+    gates: List[Tuple[float, float]]
+) -> complex:
+    """Compose a sequence of quantum EML gates.
+    
+    Uses the composition law: the product of phases equals
+    exp(i · sum of EML values).
+    
+    Args:
+        gates: List of (x, y) parameter pairs
+    
+    Returns:
+        Product of all quantum EML phases
+    """
+    total_eml = sum(eml(x, y) for x, y in gates)
+    return complex(np.exp(1j * total_eml))
+
+
+def optimize_quantum_eml_circuit(
+    target_alpha: float,
+    current_gates: List[Tuple[float, float]]
+) -> Tuple[float, float]:
+    """Add a correction gate to achieve target phase.
+    
+    Given a current circuit (sequence of quantum EML gates) and a
+    target phase, computes the parameters for one additional gate
+    that achieves the target exactly.
+    
+    Args:
+        target_alpha: Desired total rotation angle
+        current_gates: Existing gate parameters
+    
+    Returns:
+        Parameters (x, y) for the correction gate
+    """
+    current_phase = sum(eml(x, y) for x, y in current_gates)
+    correction = target_alpha - current_phase
+    return compile_u1_gate(correction)
+
+
+def quantum_eml_error_bound(x: float, y: float) -> float:
+    """Upper bound on quantum gate error from the gap bound theorem.
+    
+    Returns eml(x,y)², which is proven to be ≥ quantumEMLGap(x,y).
+    
+    Args:
+        x: First EML parameter
+        y: Second EML parameter
+    
+    Returns:
+        Upper bound on gate error
+    """
+    return eml(x, y) ** 2
+
+
+def quantum_eml_bloch_coordinates(
+    x: float, y: float
+) -> Tuple[float, float, float]:
+    """Map quantum EML gate to Bloch sphere equator coordinates.
+    
+    Returns (cos(eml), sin(eml), 0), a point on the unit sphere
+    equator corresponding to the quantum EML phase.
+    
+    Args:
+        x: First EML parameter
+        y: Second EML parameter
+    
+    Returns:
+        Tuple (bx, by, bz) on the Bloch sphere equator
+    """
+    theta = eml(x, y)
+    return (float(np.cos(theta)), float(np.sin(theta)), 0.0)
 
 
 if __name__ == "__main__":
     # Quick self-test
-    print("Testing inverse_quantum_eml...")
-    for w in [1+2j, -3+0j, 0+0j, 5-5j]:
-        t, x, y = inverse_quantum_eml(w)
-        result = quantum_phase_eml(t, x, y)
-        assert np.isclose(result.value, w, atol=1e-10), f"Failed for w={w}: got {result.value}"
-    print("  All inverse tests passed!")
+    print("Quantum EML Algorithms — Self Test")
     
-    print("Testing interference formula...")
-    for t1, t2 in [(0, 0), (0, np.pi), (np.pi/4, np.pi/2)]:
-        x, y = 1.0, 2.0
-        q1 = quantum_phase_eml(t1, x, y).value
-        q2 = quantum_phase_eml(t2, x, y).value
-        actual = abs(q1 + q2)**2
-        predicted = quantum_interference(t1, t2, x, y)
-        assert np.isclose(actual, predicted), f"Interference mismatch at ({t1}, {t2})"
-    print("  All interference tests passed!")
+    # Test compilation
+    for alpha in [0, np.pi/4, np.pi/2, np.pi]:
+        x, y = compile_u1_gate(alpha)
+        z = quantum_eml_phase(x, y)
+        expected = np.exp(1j * alpha)
+        assert abs(z - expected) < 1e-10, f"Compilation failed for α={alpha}"
+    print("✓ Gate compilation correct")
     
-    print("Testing diagonal gap...")
-    for z in [0.01, 0.1, 1.0, 10.0]:
-        for theta in [0, 1.0, np.pi]:
-            result = quantum_phase_eml(theta, z, z)
-            assert result.norm_sq >= 4 - 1e-10, f"Diagonal gap violated at z={z}, θ={theta}"
-    print("  All diagonal gap tests passed!")
+    # Test composition
+    gates = [(0, 1), (1, 2), (0.5, 0.5)]
+    composed = compose_quantum_eml_gates(gates)
+    manual = np.prod([quantum_eml_phase(x, y) for x, y in gates])
+    assert abs(composed - manual) < 1e-10
+    print("✓ Gate composition correct")
+    
+    # Test gap bound
+    for x, y in [(0, 1), (1, 1), (0, 0.5), (2, 3)]:
+        gap = quantum_eml_gap(x, y)
+        bound = quantum_eml_error_bound(x, y)
+        assert gap <= bound + 1e-10, f"Gap bound violated at ({x},{y})"
+    print("✓ Gap bound verified")
+    
+    # Test inversion
+    for x, y in [(0, 1), (1, 2), (0.5, 0.3)]:
+        xi, yi = compile_inverse_gate(x, y)
+        product = quantum_eml_phase(x, y) * quantum_eml_phase(xi, yi)
+        assert abs(product - 1) < 1e-10
+    print("✓ Gate inversion correct")
     
     print("\nAll tests passed!")

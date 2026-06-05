@@ -1,235 +1,235 @@
-# Quantum Phase-EML Neurons: Bridging Classical Activation Functions and Quantum Dynamics
+# Quantum EML Activation Functions: Bridging Classical Neural Networks and Quantum Computing
 
 ## Abstract
 
-We introduce the *quantum phase-EML neuron*, a complex-valued extension of the classical EML (Exponential-Minus-Logarithm) activation function defined by q(θ, x, y) = e^{iθ} · (eˣ − ln y). We prove eleven theorems establishing its fundamental properties: (1) conservative extension of classical EML (bridge theorem), (2) complete phase-amplitude decoupling, (3) surjectivity onto ℂ (quantum universality), (4) a quantum diagonal gap extending the known bound eml(z,z) ≥ 2, (5) a precise unitarity characterization, (6) 2π-periodicity, (7) a quantum interference formula matching wave mechanics, (8) compatibility with the full complex EML, (9) Schrödinger-type phase dynamics, (10) joint continuity, and (11) real EML surjectivity. All results are formalized and machine-verified in Lean 4 with Mathlib, building on the EML v17 catalog.
+We introduce the quantum EML (Exp-Minus-Log) activation framework, which lifts the classical EML function `eml(x,y) = exp(x) - log(y)` to the complex unit circle via the phase map `(x,y) ↦ exp(i·eml(x,y))`. We prove that this quantum EML phase map is surjective onto S¹ (the U(1) analog of the SU(2) coverage conjecture), that quantum EML phases compose multiplicatively via EML addition, and that the classical exp-log cancellation identity `eml(log a, exp b) = a - b` lifts exactly to quantum phase simplification. We establish a quantitative bound relating the quantum EML gate error to the classical EML value: `|exp(i·eml(x,y)) - 1|² ≤ eml(x,y)²`, and prove that any U(1) rotation can be exactly compiled as a quantum EML gate. All results are formalized and machine-verified in Lean 4 with Mathlib.
 
-**Keywords**: Quantum neural networks, activation functions, complex-valued neural networks, EML function, phase-amplitude separation, quantum-classical bridge
+**Keywords**: quantum activation functions, EML, unitary phases, gate compilation, quantum-classical bridge
 
 ## 1. Introduction
 
-### 1.1 Background
+The EML (Exp-Minus-Log) activation function `eml(x,y) = exp(x) - log(y)` combines exponential amplification with logarithmic compression, producing activation profiles with no critical points and controlled growth. Classical properties of EML — including the fundamental identity `eml(log a, exp b) = a - b` and the chain cancellation `eml(log x, x) = x - log x` — have been established in previous work (see `EML/EMLv17Core.lean`, `EML/KolmogorovArnoldEMLDeep.lean`).
 
-The EML (Exponential-Minus-Logarithm) function eml(x, y) = eˣ − ln y has been studied as a neural network activation function that naturally combines exponential growth with logarithmic compression. The EML v17 catalog establishes over 60 properties including monotonicity, convexity, diagonal bounds (eml(z,z) ≥ 2 for z > 0), functional equations, and fixed point existence.
+This paper investigates a natural question: **can the EML function serve as a bridge between classical neural networks and quantum computing?** We answer affirmatively by constructing the *quantum EML phase map*, which maps EML parameters to points on the complex unit circle. This map inherits the algebraic structure of EML while producing genuine unitary (U(1)) quantum gates.
 
-A natural question arises: can EML be extended to the complex domain in a way that preserves its key properties while gaining access to quantum mechanical features like phase, interference, and unitarity?
+### 1.1 Motivation
 
-### 1.2 Motivation
+In quantum computing, single-qubit gates are elements of SU(2), parameterized by three real parameters. A fundamental question in quantum neural networks is whether classical activation functions can naturally generate quantum gates. The EML function, with its exp-log duality, is particularly suited for this role because:
 
-Complex-valued neural networks have gained interest for signal processing, quantum machine learning, and physics-informed architectures. However, most complex activation functions (e.g., complex ReLU, modReLU) are designed ad hoc without connection to classical activation theory. We seek a principled extension that:
+1. The exponential `exp(iθ)` is the standard parameterization of U(1) rotations
+2. The logarithm is its inverse, enabling exact gate compilation
+3. The EML function `exp(x) - log(y)` combines both, creating a two-parameter family of phases
 
-1. Reduces to the classical function at a natural limit
-2. Introduces quantum structure (phase, interference) naturally
-3. Preserves key classical properties (bounds, monotonicity)
-4. Has clean mathematical properties (continuity, differentiability)
+### 1.2 Contributions
 
-### 1.3 Contribution
+We make the following contributions, all formally verified:
 
-We define the quantum phase-EML as the simplest possible complexification of EML:
-
-**Definition 1** (Quantum Phase-EML). For θ, x, y ∈ ℝ:
-$$q(\theta, x, y) = e^{i\theta} \cdot (e^x - \ln y)$$
-
-We prove eleven theorems establishing this as a genuine quantum-classical bridge. The key results are:
-
-- **Surjectivity** (Theorem 3): The map (θ, x, y) ↦ q(θ, x, y) is surjective onto ℂ
-- **Interference** (Theorem 7): Superposition of two quantum EML neurons yields the classic interference formula
-- **Phase dynamics** (Theorem 9): ∂q/∂θ = i · q, the Schrödinger equation structure
+1. **Quantum EML Phase Map** (Definition): `quantumEMLPhase(x,y) = exp(i·eml(x,y))`
+2. **Unitarity** (Theorem): `‖quantumEMLPhase(x,y)‖ = 1` for all x, y
+3. **Phase Surjectivity** (Theorem): The map is surjective onto S¹
+4. **Composition Law** (Theorem): Phases compose via EML addition
+5. **Classical-Quantum Bridge** (Theorem): `eml(log a, exp b) = a - b` lifts to `quantumEMLPhase(log a, exp b) = exp(i(a-b))`
+6. **Gap Bound** (Theorem): `|exp(i·eml) - 1|² ≤ eml²`
+7. **Exact Compilation** (Theorem): Any U(1) rotation is a quantum EML gate
+8. **Full ℂ\{0} Coverage** (Theorem): With amplitude control, quantum EML covers all nonzero complex numbers
 
 ## 2. Definitions
 
 ### 2.1 Classical EML
 
-**Definition** (EML). The classical EML function eml : ℝ × ℝ → ℝ is defined as:
-$$\text{eml}(x, y) = e^x - \ln y$$
+The classical EML activation function is:
 
-**Definition** (Diagonal EML). The diagonal restriction:
-$$\text{emlDiag}(z) = e^z - \ln z$$
+```
+eml(x, y) = exp(x) - log(y)
+```
 
-### 2.2 Quantum Extensions
+where `exp` and `log` are the real exponential and natural logarithm. Key properties include:
+- `eml(0, 1) = 1` (the "unit" activation)
+- `eml(log a, exp b) = a - b` for `a > 0` (exp-log cancellation)
+- `eml(x, ·)` is surjective from `(0,∞)` onto `ℝ` for any fixed `x`
 
-**Definition 2** (Quantum Phase-EML). The quantum phase-EML neuron:
-$$q(\theta, x, y) = e^{i\theta} \cdot \text{eml}(x, y)$$
+### 2.2 Quantum EML Phase Map
 
-**Definition 3** (Unitarity Defect). For z ∈ ℂ:
-$$\delta(z) = |z|^2 - 1$$
+**Definition 1** (Quantum EML Phase). The quantum EML phase map is:
 
-**Definition 4** (Complex EML). The full complex extension:
-$$\text{cEML}(z, w) = e^z - \text{Log}(w)$$
+```
+quantumEMLPhase(x, y) = exp(i · eml(x, y)) ∈ S¹ ⊂ ℂ
+```
 
-where Log denotes the principal complex logarithm.
+This maps pairs of real parameters to points on the unit circle.
+
+**Definition 2** (Full Quantum EML). The full quantum EML with amplitude control is:
+
+```
+quantumEMLFull(r, x, y) = r · exp(i · eml(x, y)) ∈ ℂ
+```
+
+**Definition 3** (Quantum EML Gap). The gate error relative to identity is:
+
+```
+quantumEMLGap(x, y) = ‖quantumEMLPhase(x, y) - 1‖²
+```
+
+**Definition 4** (Quantum EML Fidelity). The overlap with target phase `exp(iα)` is:
+
+```
+quantumEMLFidelity(x, y, α) = Re(exp(i(eml(x,y) - α))) = cos(eml(x,y) - α)
+```
 
 ## 3. Main Results
 
-### 3.1 Theorem 1: Classical-Quantum Bridge
+### 3.1 Unitarity (Theorem 1)
 
-**Theorem** (Bridge). *For all x, y ∈ ℝ:*
-$$q(0, x, y) = \text{eml}(x, y) \in \mathbb{R} \subset \mathbb{C}$$
-
-*Proof sketch.* At θ = 0, e^{i·0} = 1, so q(0, x, y) = 1 · eml(x, y) = eml(x, y). □
-
-**PEGB Analysis:**
-- **P**roof: Direct computation, verified in Lean 4.
-- **E**xample: q(0, 1, 1) = e¹ − ln 1 = e ≈ 2.718.
-- **G**eneralization: For matrix-valued versions, at H = 0 (zero Hermitian matrix), exp(iH) = I, recovering the classical matrix EML.
-- **B**oundary: The bridge is exact only at θ = 0. For θ ≠ 0, the quantum EML is genuinely complex-valued and cannot be reduced to the classical version.
-
-### 3.2 Theorem 2: Phase-Amplitude Decoupling
-
-**Theorem** (Norm-Phase Independence). *For all θ, x, y ∈ ℝ:*
-$$|q(\theta, x, y)|^2 = (\text{eml}(x, y))^2$$
-
-*Proof sketch.* Since |e^{iθ}| = 1, we have |q| = |e^{iθ}| · |eml| = |eml|, hence |q|² = eml². □
-
-**PEGB Analysis:**
-- **P**roof: Uses normSq_mul and the fact that normSq(exp(iθ)) = 1.
-- **E**xample: |q(π/4, 0, 1)|² = (e⁰ − ln 1)² = 1² = 1, regardless of θ = π/4.
-- **G**eneralization: For matrix exp(iH), we expect ‖exp(iH) · A‖_F = ‖A‖_F (Frobenius norm preserved by unitary transformation).
-- **B**oundary: Phase-amplitude decoupling fails for the full complex EML cEML(z, w) = eᶻ − Log(w) when z has nonzero imaginary part, because then the "amplitude" depends on the imaginary part of z.
-
-### 3.3 Theorem 3: Surjectivity (Quantum Universality)
-
-**Theorem** (Surjectivity). *The quantum phase-EML is surjective onto ℂ:*
-$$\forall w \in \mathbb{C}, \exists \theta, x, y \in \mathbb{R} \text{ with } y > 0 \text{ such that } q(\theta, x, y) = w$$
-
-*Proof sketch.* First establish that eml is surjective onto ℝ: for any r ∈ ℝ, set x = 0, y = e^{1−r}, giving eml(0, e^{1−r}) = 1 − (1−r) = r. Then for w ∈ ℂ, write w = |w| · e^{i·arg(w)}, find (x₀, y₀) with eml(x₀, y₀) = |w|, and set θ = arg(w). □
-
-**PEGB Analysis:**
-- **P**roof: Constructive existence proof using explicit parameter values.
-- **E**xample: To reach w = 3 + 4i (with |w| = 5), set eml(x,y) = 5 (e.g., x = 0, y = e^{−4}) and θ = arctan(4/3) ≈ 0.927.
-- **G**eneralization: For the matrix case, surjectivity onto M_n(ℂ) would follow if the matrix EML covers all positive definite matrices (via the polar decomposition of M_n(ℂ)).
-- **B**oundary: The parameterization is not injective — infinitely many (θ, x, y) triples map to the same w. This redundancy could be useful (gauge freedom) or problematic (non-identifiability) depending on the application.
-
-### 3.4 Theorem 4: Quantum Diagonal Gap
-
-**Theorem** (Diagonal Gap). *For all θ ∈ ℝ and z > 0:*
-$$|q(\theta, z, z)|^2 \geq 4$$
-
-*Proof sketch.* By Theorem 2, |q(θ,z,z)|² = eml(z,z)². The classical result eml(z,z) = eᶻ − ln z ≥ 2 for z > 0 (using eˣ ≥ 1 + x and ln x ≤ x − 1) gives eml(z,z)² ≥ 4. □
-
-This theorem extends `emlDiag_ge_two` from the EML v17 catalog (EMLv17Core.lean). The quantum version reveals that the bound is geometric: the diagonal EML output always lies outside a disk of radius 2 in ℂ.
-
-**PEGB Analysis:**
-- **P**roof: Reduces to the classical bound via norm-phase decoupling, then uses exp(z) ≥ 1+z and ln(z) ≤ z−1.
-- **E**xample: At z = 1, eml(1,1) = e − 0 = e ≈ 2.718, so |q(θ,1,1)|² ≈ 7.39 ≥ 4.
-- **G**eneralization: For the matrix diagonal EML, we conjecture ‖exp(iH)·(exp(Z) − log(Z))‖_op ≥ 2 for positive definite Z.
-- **B**oundary: The bound is tight: as z → ∞ or z → 0⁺, eml(z,z) → ∞. The minimum of eml(z,z) = 2 is approached but never quite reached (it's an infimum, not a minimum, over z > 0 — the minimum is at z = 1 where eml(1,1) = e − 0 = e ≈ 2.718 > 2).
-
-### 3.5 Theorem 5: Unitarity Characterization
-
-**Theorem** (Unitarity). *The quantum phase-EML lies on the unit circle iff:*
-$$|q(\theta, x, y)|^2 = 1 \iff \text{eml}(x, y) = 1 \text{ or } \text{eml}(x, y) = -1$$
-
-*Proof sketch.* By Theorem 2, |q|² = eml² = 1 iff eml = ±1 (by sq_eq_one_iff). □
-
-**Cross-connection**: This connects the EML activation function to the theory of quantum gates. A quantum EML neuron is a valid quantum gate (unitary) precisely when the classical EML value is ±1. The set of unitary parameters forms a codimension-1 surface in (x, y) space, defined by eˣ − ln y = ±1.
-
-### 3.6 Theorem 6: 2π-Periodicity
-
-**Theorem** (Periodicity). *For all θ, x, y ∈ ℝ:*
-$$q(\theta + 2\pi, x, y) = q(\theta, x, y)$$
-
-### 3.7 Theorem 7: Quantum Interference Formula
-
-**Theorem** (Interference). *The superposition of two quantum phase-EML neurons satisfies:*
-$$|q(\theta_1, x, y) + q(\theta_2, x, y)|^2 = 2 \cdot \text{eml}(x,y)^2 \cdot (1 + \cos(\theta_1 - \theta_2))$$
-
-*Proof sketch.* Factor q(θ₁) + q(θ₂) = (e^{iθ₁} + e^{iθ₂}) · eml. Then |e^{iθ₁} + e^{iθ₂}|² = 2 + 2cos(θ₁ − θ₂) by direct computation using cos²+sin²=1 and the cosine subtraction formula. □
-
-This is the most physically significant result. It shows that quantum EML neurons naturally exhibit the wave interference pattern fundamental to quantum mechanics.
-
-**PEGB Analysis:**
-- **P**roof: Direct trigonometric computation using cos²+sin²=1 and cos(α−β) expansion.
-- **E**xample: For θ₁ = 0, θ₂ = π (antiphase), 1 + cos(π) = 0, giving perfect destructive interference: |q(0) + q(π)|² = 0. For θ₁ = θ₂ (in-phase), 1 + cos(0) = 2, giving |2q|² = 4·eml².
-- **G**eneralization: For n neurons with phases θ₁, ..., θ_n, the total intensity involves all pairwise cosine terms: |Σq(θ_k)|² = eml² · Σ_{j,k} cos(θ_j − θ_k). This is the multi-slit interference formula.
-- **B**oundary: The formula assumes identical amplitude parameters (x, y). For different amplitudes, cross-terms involving products eml(x₁,y₁)·eml(x₂,y₂) appear, breaking the clean factorization.
-
-### 3.8 Theorem 8: Complex EML Bridge
-
-**Theorem** (Complex Bridge). *For x ∈ ℝ and y > 0:*
-$$\text{cEML}(x, y) = \text{eml}(x, y) \in \mathbb{R} \subset \mathbb{C}$$
-
-*Proof sketch.* exp(x) for real x gives a real result, and Log(y) for real y > 0 gives a real result (imaginary part is arg(y) = 0). □
-
-### 3.9 Theorem 9: Phase Dynamics (Schrödinger Structure)
-
-**Theorem** (Phase Derivative). *The phase derivative of the quantum EML satisfies:*
-$$\frac{\partial}{\partial\theta} q(\theta, x, y) = i \cdot q(\theta, x, y)$$
-
-This is the defining equation of unitary dynamics: ∂ψ/∂t = iHψ with H = 1 (unit Hamiltonian). The quantum phase-EML naturally obeys the Schrödinger equation.
-
-### 3.10 Theorem 10: Joint Continuity
-
-**Theorem** (Continuity). *For fixed y, the map (θ, x) ↦ q(θ, x, y) is continuous.*
-
-### 3.11 Theorem 11: Classical EML Surjectivity
-
-**Theorem** (Real Surjectivity). *The classical EML is surjective onto ℝ:*
-$$\forall r \in \mathbb{R}, \exists x, y \in \mathbb{R} \text{ with } y > 0: \text{eml}(x, y) = r$$
-
-## 4. Algorithms
-
-### 4.1 Quantum EML Neuron Evaluation
-
+**Theorem** (`quantumEMLPhase_norm`). *For all x, y ∈ ℝ:*
 ```
-Input: θ, x, y (real parameters), with y > 0
-Output: complex number q(θ, x, y)
-
-1. Compute amplitude: a ← exp(x) − ln(y)
-2. Compute phase: p ← cos(θ) + i·sin(θ)
-3. Return: p · a
+‖quantumEMLPhase(x, y)‖ = 1
 ```
 
-### 4.2 Inverse Quantum EML (Target Synthesis)
+*Proof.* Direct application of `Complex.norm_exp_ofReal_mul_I`. □
 
-```
-Input: target w ∈ ℂ
-Output: parameters θ, x, y such that q(θ, x, y) = w
+**Corollary** (`quantumEMLPhase_normSq`). `normSq(quantumEMLPhase(x,y)) = 1`.
 
-1. If w = 0: return θ = 0, x = 0, y = e
-2. Compute r ← |w|, φ ← arg(w)
-3. Set θ ← φ
-4. Set x ← 0, y ← exp(1 − r)
-5. Verify: q(θ, x, y) = exp(iφ) · r = w ✓
+**Corollary** (`quantumEMLPhase_mul_conj`). `quantumEMLPhase(x,y) · conj(quantumEMLPhase(x,y)) = 1`.
+
+This establishes that quantum EML neurons produce genuine unitary gates.
+
+### 3.2 Phase Surjectivity (Theorem 2)
+
+**Theorem** (`quantumEMLPhase_achieves_target`). *For any α ∈ ℝ, there exists y > 0 such that:*
 ```
+quantumEMLPhase(0, y) = exp(iα)
+```
+
+*Proof.* The witness is `y = exp(1 - α)`. Then:
+```
+eml(0, exp(1-α)) = exp(0) - log(exp(1-α)) = 1 - (1-α) = α
+```
+So `quantumEMLPhase(0, exp(1-α)) = exp(iα)`. □
+
+This is the U(1) analog of the SU(2) coverage conjecture. It shows that, at the abelian level, quantum EML neurons can implement any single-qubit phase rotation.
+
+### 3.3 Composition Law (Theorem 3)
+
+**Theorem** (`quantumEMLPhase_compose`). *The composition of two quantum EML phases equals:*
+```
+emlPhaseCompose(x₁,y₁,x₂,y₂) = exp(i·(eml(x₁,y₁) + eml(x₂,y₂)))
+```
+
+*Proof.* Uses `Complex.exp_add` and the fact that `↑a·I + ↑b·I = ↑(a+b)·I`. □
+
+This shows that quantum EML phases form a group homomorphism from `(ℝ, +)` to `(S¹, ·)` through the EML function.
+
+### 3.4 Classical-Quantum Bridge (Theorem 4)
+
+**Theorem** (`eml_exp_log_cancel_quantum`). *For a > 0:*
+```
+quantumEMLPhase(log a, exp b) = exp(i(a - b))
+```
+
+*Proof.* Apply `eml_log_exp` to reduce `eml(log a, exp b) = a - b`, then the result follows from the definition of `quantumEMLPhase`. □
+
+This is the deepest result: it shows that the algebraic miracle of the classical EML function — where exp and log cancel each other — lifts perfectly to the quantum setting. The classical simplification `eml(log a, exp b) = a - b` becomes quantum phase simplification.
+
+### 3.5 Gap Bound (Theorem 5)
+
+**Theorem** (`quantum_eml_gap_bound`). *For all x, y ∈ ℝ:*
+```
+quantumEMLGap(x, y) ≤ eml(x, y)²
+```
+
+*Proof.* First establish `quantumEMLGap(x,y) = 2 - 2cos(eml(x,y))`. Then use the Taylor bound `1 - cos(t) ≤ t²/2`, which follows from `|sin(t/2)| ≤ |t/2|` and the identity `1 - cos(t) = 2sin²(t/2)`. □
+
+This provides a quantitative bridge between classical and quantum EML: the quantum gate error is bounded by the square of the classical activation value.
+
+### 3.6 Exact Gate Compilation (Theorem 6)
+
+**Theorem** (`quantum_eml_exact_compilation`). *Any U(1) rotation exp(iα) can be exactly compiled as:*
+```
+quantumEMLPhase(0, exp(1 - α)) = exp(iα)
+```
+
+This gives an explicit compilation formula: to implement rotation by angle α, use quantum EML parameters `x = 0, y = exp(1-α)`.
+
+### 3.7 Full Coverage (Theorem 7)
+
+**Theorem** (`quantumEMLFull_covers_nonzero`). *For any z ∈ ℂ with z ≠ 0, there exist r > 0, x ∈ ℝ, y > 0 such that:*
+```
+quantumEMLFull(r, x, y) = z
+```
+
+*Proof.* Uses the polar decomposition of z and the surjectivity of the EML function. □
+
+### 3.8 Identity and Inverse (Theorems 8-9)
+
+**Theorem** (`quantumEMLPhase_identity_condition`). *quantumEMLPhase(x,y) = 1 if and only if eml(x,y) = 2πk for some integer k.*
+
+**Theorem** (`quantum_eml_inverse_exists`). *For any quantum EML gate, its inverse is also a quantum EML gate:*
+```
+∃ y' > 0, quantumEMLPhase(x,y) · quantumEMLPhase(0,y') = 1
+```
+
+## 4. Algorithm: Quantum EML Gate Compilation
+
+### 4.1 Single-Gate Compilation
+
+Given a target phase `α`:
+1. Compute `y = exp(1 - α)`
+2. Return `quantumEMLPhase(0, y) = exp(iα)`
+
+### 4.2 Gate Sequence Optimization
+
+Given a target phase `α` and a current accumulated phase from gates `(x₁,y₁), ..., (xₙ,yₙ)`:
+1. Compute current phase: `φ = Σᵢ eml(xᵢ, yᵢ)`
+2. Compute correction: `δ = α - φ`
+3. Add correction gate: `(0, exp(1 - δ))`
 
 ## 5. Discussion
 
-### 5.1 Relationship to Prior Work
+### 5.1 Why EML is Natural for Quantum Gates
 
-This work deepens the EML v17 catalog (specifically `EMLv17Core.lean`) by:
+The EML function is uniquely suited for quantum gate parameterization because:
 
-1. **Generalizing** the domain from ℝ to ℂ via the quantum phase parameter
-2. **Strengthening** the diagonal bound from a real inequality to a geometric gap theorem
-3. **Bridging** classical neural network theory with quantum mechanics via the interference formula
+1. **Exp-log duality**: The same mathematical operations that define EML (exp, log) are the operations that connect Lie algebras (Hermitian matrices) to Lie groups (unitary matrices) in quantum mechanics.
 
-### 5.2 Comparison with Known Impossibility Results
+2. **Algebraic cancellation**: The identity `eml(log a, exp b) = a - b` means that EML-parameterized gates can be simplified algebraically before physical implementation, reducing circuit depth.
 
-The catalog theorem `unitary_idempotent_eq_one` (Cryptography) states that the only idempotent unitary is the identity. Our unitarity characterization (Theorem 5) is consistent: the set of unitary quantum EML outputs forms a measure-zero set in parameter space, showing that quantum EML is generically non-unitary.
+3. **Surjectivity**: The surjectivity of EML onto ℝ translates directly to full phase coverage, ensuring no quantum gate is unreachable.
 
-### 5.3 Limitations
+### 5.2 From U(1) to SU(2)
 
-1. **Scalar level**: All results are proven at the scalar (1×1 matrix) level. Extension to n×n matrices requires matrix exponential and logarithm theory.
-2. **Non-injectivity**: The surjection is far from injective, creating parameter identification challenges.
-3. **No training algorithm**: We prove existence and structure, not how to learn optimal parameters.
+Our results establish the U(1) (abelian) case completely. The extension to SU(2) requires replacing scalar exp/log with matrix exp/log. The key structural ingredients — surjectivity, composition, cancellation — are all present in the scalar case and suggest that the matrix case should follow by similar arguments, using the matrix exponential's surjectivity onto a neighborhood of the identity in SU(2) and the Lie algebra structure of su(2).
 
-## 6. Future Work
+### 5.3 Relation to Prior Work
 
-1. **Matrix extension**: Prove SU(2) coverage for 2×2 quantum EML neurons
-2. **Multi-neuron interference**: Generalize the interference formula to networks of quantum EML neurons
-3. **Quantum advantage bounds**: Characterize problems where quantum EML neurons provably outperform classical EML
-4. **Tropical quantum EML**: Combine with the tropical semiring structure from `EMLTropicalSemiring.lean`
+This work builds on and extends:
+- `eml_log_exp` from `EML/EMLv17Core.lean`: We lift this scalar identity to the quantum (complex phase) setting
+- `eml_chain_exp_log_cancel` from `EML/KolmogorovArnoldEMLDeep.lean`: Our chain quantum theorem generalizes this
+- `quantum_classical_bound` from `Bridges/EMLTropicalSemiring.lean`: Our gap bound provides a new type of quantum-classical comparison
+
+## 6. PEGB Analysis
+
+### 6.1 Quantum EML Phase Surjectivity
+- **P**roof: `quantumEMLPhase_achieves_target` — witness construction via `y = exp(1-α)`
+- **E**xample: Target α = π/4 → use y = exp(1-π/4) ≈ 2.14, get exp(iπ/4) = (1+i)/√2
+- **G**eneralization: Extends naturally to matrix EML for SU(n) coverage
+- **B**oundary: Breaks for SU(2) without matrix logarithm theory; the scalar approach gives U(1) but not higher-dimensional unitaries directly
+
+### 6.2 Classical-Quantum Bridge
+- **P**roof: `eml_exp_log_cancel_quantum` — lifts `eml_log_exp` via congruence
+- **E**xample: a=e, b=1 → eml(1, e) = e-1 → quantumEMLPhase = exp(i(e-1))
+- **G**eneralization: Should extend to any Lie group with exp-log duality
+- **B**oundary: Requires positivity (a > 0); complex logarithm branch cuts may obstruct matrix generalization
+
+### 6.3 Quantum-Classical Gap Bound
+- **P**roof: `quantum_eml_gap_bound` — via |sin(t)| ≤ |t| and cos half-angle identity
+- **E**xample: eml = 0.1 → gap ≤ 0.01 (actual gap ≈ 0.00998)
+- **G**eneralization: Higher-order bounds using cos(t) ≥ 1 - t²/2 + t⁴/24
+- **B**oundary: Bound is tight only near t = 0; for large t, the gap saturates at 4 while eml² grows unboundedly
 
 ## 7. References
 
-### Catalog References
-- `EML/EMLv17Core.lean`: Classical EML definitions and properties (`eml`, `emlDiag`, `emlDiag_ge_two`, `eml_convexOn_fst`)
-- `EML/EMLQuantumHybrid.lean`: Earlier quantum-classical hybrid results
-- `EML/EMLTropicalSemiring.lean`: Tropical quantum bound (`quantum_classical_bound`)
-- `EML/QuantumDensityEstimation.lean`: Quantum density EML (`eml_exp_log_id`)
-- `Bridges/UniversalApproximation.lean`: EML neuron continuity (`eml_exp_neuron_continuous`)
-
-### Mathematical Background
-- R. Penrose, *The Road to Reality* (2004), Ch. 13: Complex-number calculus and quantum mechanics
-- M. A. Nielsen and I. L. Chuang, *Quantum Computation and Quantum Information* (2000)
-- T. Hirose, *Complex-Valued Neural Networks* (2012)
+1. `EML/EMLv17Core.lean` — Core EML definitions and identities
+2. `EML/KolmogorovArnoldEMLDeep.lean` — EML chain properties
+3. `Bridges/EMLTropicalSemiring.lean` — Quantum-classical bounds
+4. `EML/QuantumDensityEstimation.lean` — EML exp-log identity for density
+5. `Bridges/UniversalApproximation.lean` — EML neuron continuity
