@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "97b35e03",
     "filename": "sonic_mathematics_counterpoint_as_category_theory.json",
     "pkg_num": 392,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.56752,
     "title": "Counterpoint as Category Theory: The Stepwise Voice Leading Category"
   },
   {
@@ -12519,8 +12519,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "sonic_mathematics_counterpoint_as_category_theory",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.56752,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Counterpoint as Category Theory: The Stepwise Voice Leading Category"
     }

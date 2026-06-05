@@ -1,1 +1,1 @@
-GameOfLife/algorithms.py
+algorithms.py
