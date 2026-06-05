@@ -1,269 +1,280 @@
+#!/usr/bin/env python3
 """
-Algorithms for Manifold Detection via Persistent Homology
+Algorithms for the Poincaré Conjecture for Data.
 
-Implements the Vietoris-Rips complex construction, Betti number estimation,
-and Poincaré threshold computation for point cloud data.
+Type-hinted implementations of the core algorithms for manifold detection
+via persistent homology of Vietoris-Rips complexes.
 """
 
-from typing import List, Tuple, Set, FrozenSet, Optional
+from typing import Dict, List, Set, Tuple, Optional
 import numpy as np
 from itertools import combinations
 from collections import defaultdict
 
 
-def pairwise_distances(points: np.ndarray) -> np.ndarray:
-    """Compute the pairwise distance matrix for a point cloud.
+def generate_sphere_points(n: int, d: int, seed: Optional[int] = None) -> np.ndarray:
+    """Generate n points uniformly on the unit d-sphere S^d ⊂ R^{d+1}.
+
+    Algorithm: Sample from N(0, I_{d+1}) and project to the unit sphere.
+    This produces uniform distribution on S^d by rotational invariance of Gaussian.
 
     Args:
-        points: (n, d) array of n points in R^d
+        n: Number of points
+        d: Dimension of sphere (embedded in R^{d+1})
+        seed: Random seed for reproducibility
 
     Returns:
-        (n, n) symmetric distance matrix
+        Array of shape (n, d+1) with each row on the unit sphere
     """
-    diff = points[:, np.newaxis, :] - points[np.newaxis, :, :]
+    rng = np.random.default_rng(seed)
+    X = rng.standard_normal((n, d + 1))
+    norms = np.linalg.norm(X, axis=1, keepdims=True)
+    return X / norms
+
+
+def pairwise_distance_matrix(X: np.ndarray) -> np.ndarray:
+    """Compute the full pairwise distance matrix.
+
+    Args:
+        X: Point cloud, shape (n, d)
+
+    Returns:
+        Distance matrix D where D[i,j] = ||X[i] - X[j]||
+    """
+    n = X.shape[0]
+    diff = X[:, np.newaxis, :] - X[np.newaxis, :, :]
     return np.sqrt(np.sum(diff ** 2, axis=-1))
 
 
-def vietoris_rips_edges(dist_matrix: np.ndarray, epsilon: float) -> List[Tuple[int, int]]:
-    """Compute the 1-skeleton (edge list) of the Vietoris-Rips complex.
+def vietoris_rips_complex(
+    D: np.ndarray, epsilon: float, max_dim: int = 3
+) -> Dict[int, List[Tuple[int, ...]]]:
+    """Build the Vietoris-Rips complex at scale epsilon.
+
+    A k-simplex {v_0, ..., v_k} is included iff all pairwise distances ≤ epsilon.
+
+    Pseudocode:
+        for k = 0 to max_dim:
+            for each (k+1)-subset S of vertices:
+                if max_{i,j in S} d(i,j) <= epsilon:
+                    add S as a k-simplex
 
     Args:
-        dist_matrix: (n, n) pairwise distance matrix
-        epsilon: scale parameter
+        D: Pairwise distance matrix
+        epsilon: Scale parameter
+        max_dim: Maximum simplex dimension to compute
 
     Returns:
-        List of edges (i, j) with i < j and dist(i, j) <= epsilon
+        Dict mapping dimension k to list of k-simplices (as tuples of vertex indices)
     """
-    n = dist_matrix.shape[0]
-    edges = []
+    n = D.shape[0]
+    simplices: Dict[int, List[Tuple[int, ...]]] = defaultdict(list)
+
     for i in range(n):
-        for j in range(i + 1, n):
-            if dist_matrix[i, j] <= epsilon:
-                edges.append((i, j))
-    return edges
+        simplices[0].append((i,))
+
+    for k in range(1, min(max_dim + 1, n)):
+        for subset in combinations(range(n), k + 1):
+            if all(D[i][j] <= epsilon for i, j in combinations(subset, 2)):
+                simplices[k].append(subset)
+
+    return dict(simplices)
 
 
-def vietoris_rips_complex(dist_matrix: np.ndarray, epsilon: float,
-                          max_dim: int = 2) -> List[FrozenSet[int]]:
-    """Construct the Vietoris-Rips complex up to given dimension.
+def euler_characteristic(simplices: Dict[int, List[Tuple[int, ...]]]) -> int:
+    """Compute the Euler characteristic χ = Σ_k (-1)^k · f_k.
 
-    A simplex sigma is included iff all pairwise distances in sigma are <= epsilon.
-
-    Args:
-        dist_matrix: (n, n) pairwise distance matrix
-        epsilon: scale parameter
-        max_dim: maximum simplex dimension to compute
-
-    Returns:
-        List of simplices (as frozensets of vertex indices)
-    """
-    n = dist_matrix.shape[0]
-    simplices: List[FrozenSet[int]] = []
-
-    # Add vertices
-    for i in range(n):
-        simplices.append(frozenset([i]))
-
-    # Build clique complex from edges
-    edges = vietoris_rips_edges(dist_matrix, epsilon)
-    adj: dict[int, Set[int]] = defaultdict(set)
-    for i, j in edges:
-        adj[i].add(j)
-        adj[j].add(i)
-        simplices.append(frozenset([i, j]))
-
-    # Extend to higher simplices by finding cliques
-    if max_dim >= 2:
-        for i, j in edges:
-            common = adj[i] & adj[j]
-            for k in common:
-                if k > j:
-                    simplices.append(frozenset([i, j, k]))
-                    if max_dim >= 3:
-                        for l in adj[i] & adj[j] & adj[k]:
-                            if l > k:
-                                simplices.append(frozenset([i, j, k, l]))
-
-    return simplices
-
-
-def connected_components(n: int, edges: List[Tuple[int, int]]) -> int:
-    """Count connected components using union-find.
+    This is a topological invariant computable from the face counts.
+    For S^d: χ = 1 + (-1)^d (proved formally in our Lean formalization).
 
     Args:
-        n: number of vertices
-        edges: list of edges
+        simplices: Dict mapping dimension to list of simplices
 
     Returns:
-        Number of connected components (= beta_0)
+        The Euler characteristic (integer)
     """
-    parent = list(range(n))
+    return sum((-1) ** k * len(faces) for k, faces in simplices.items())
 
-    def find(x: int) -> int:
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
+
+class UnionFind:
+    """Union-Find data structure for computing connected components."""
+
+    def __init__(self, n: int):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+        self.num_components = n
+
+    def find(self, x: int) -> int:
+        while self.parent[x] != x:
+            self.parent[x] = self.parent[self.parent[x]]
+            x = self.parent[x]
         return x
 
-    def union(x: int, y: int) -> None:
-        px, py = find(x), find(y)
-        if px != py:
-            parent[px] = py
-
-    for i, j in edges:
-        union(i, j)
-
-    return len(set(find(i) for i in range(n)))
-
-
-def euler_characteristic(simplices: List[FrozenSet[int]]) -> int:
-    """Compute the Euler characteristic from a list of simplices.
-
-    chi = sum_{k>=0} (-1)^k * f_k where f_k = number of k-simplices.
-
-    Args:
-        simplices: list of simplices
-
-    Returns:
-        Euler characteristic
-    """
-    chi = 0
-    for s in simplices:
-        dim = len(s) - 1
-        chi += (-1) ** dim
-    return chi
+    def union(self, x: int, y: int) -> bool:
+        px, py = self.find(x), self.find(y)
+        if px == py:
+            return False
+        if self.rank[px] < self.rank[py]:
+            px, py = py, px
+        self.parent[py] = px
+        if self.rank[px] == self.rank[py]:
+            self.rank[px] += 1
+        self.num_components -= 1
+        return True
 
 
-def estimate_betti_numbers(dist_matrix: np.ndarray, epsilon: float,
-                           max_dim: int = 2) -> List[int]:
-    """Estimate Betti numbers of the Vietoris-Rips complex.
+def connectivity_threshold(D: np.ndarray) -> float:
+    """Compute the connectivity threshold (minimum spanning tree diameter).
 
-    Uses connected components for beta_0 and Euler characteristic relations.
+    This is the Poincaré threshold for H_0: the smallest epsilon such that
+    the VR graph is connected.
+
+    Algorithm: Kruskal's MST algorithm — sort edges by weight, add until
+    the graph becomes connected.
+
+    Pseudocode:
+        Sort all edges (i,j) by distance d(i,j)
+        Initialize Union-Find on n vertices
+        For each edge (i,j) in sorted order:
+            If i,j in different components:
+                Union(i,j)
+                Update threshold = d(i,j)
+                If 1 component remains: return threshold
 
     Args:
-        dist_matrix: (n, n) pairwise distance matrix
-        epsilon: scale parameter
-        max_dim: maximum dimension
+        D: Pairwise distance matrix
 
     Returns:
-        List [beta_0, beta_1, ...] of estimated Betti numbers
+        The connectivity threshold epsilon_star
     """
-    n = dist_matrix.shape[0]
-    edges = vietoris_rips_edges(dist_matrix, epsilon)
-    simplices = vietoris_rips_complex(dist_matrix, epsilon, max_dim)
+    n = D.shape[0]
+    if n <= 1:
+        return 0.0
 
-    beta_0 = connected_components(n, edges)
-
-    # Count simplices by dimension
-    f_vector = defaultdict(int)
-    for s in simplices:
-        f_vector[len(s) - 1] += 1
-
-    # For dimension 1: beta_1 = f_1 - f_0 + beta_0 (from Euler char)
-    # More precisely: chi = beta_0 - beta_1 + beta_2 - ...
-    chi = euler_characteristic(simplices)
-
-    betti = [beta_0]
-    if max_dim >= 1:
-        # beta_1 = beta_0 - chi + beta_2 - beta_3 + ...
-        # Approximate: beta_1 = beta_0 - chi (ignoring higher)
-        beta_1 = max(0, beta_0 - chi)
-        betti.append(beta_1)
-
-    if max_dim >= 2:
-        # beta_2 from Euler relation
-        beta_2 = max(0, chi - beta_0 + betti[1])
-        betti.append(beta_2)
-
-    return betti
-
-
-def poincare_threshold(dist_matrix: np.ndarray, d: int,
-                       epsilon_range: Optional[np.ndarray] = None,
-                       n_steps: int = 100) -> Tuple[float, List[Tuple[float, List[int]]]]:
-    """Compute the Poincaré threshold: smallest epsilon where VR has S^d homology.
-
-    S^d homology means beta_0 = 1, beta_d = 1, and beta_k = 0 for 0 < k < d.
-
-    Args:
-        dist_matrix: (n, n) pairwise distance matrix
-        d: expected manifold dimension
-        epsilon_range: range of epsilon values to search
-        n_steps: number of epsilon values to try
-
-    Returns:
-        (threshold, profile) where profile is [(epsilon, betti_numbers), ...]
-    """
-    if epsilon_range is None:
-        max_dist = np.max(dist_matrix)
-        epsilon_range = np.linspace(0.01 * max_dist, max_dist, n_steps)
-
-    profile = []
-    threshold = float('inf')
-
-    for eps in epsilon_range:
-        betti = estimate_betti_numbers(dist_matrix, eps, max_dim=max(d, 2))
-        profile.append((eps, betti))
-
-        # Check sphere-like homology
-        if len(betti) > d:
-            is_sphere = (betti[0] == 1 and
-                         betti[d] == 1 if d < len(betti) else False)
-            if d > 1:
-                is_sphere = is_sphere and all(betti[k] == 0
-                                              for k in range(1, min(d, len(betti))))
-            if is_sphere and eps < threshold:
-                threshold = eps
-
-    return threshold, profile
-
-
-def predicted_threshold(n: int, d: int, C: float = 1.0) -> float:
-    """Compute the predicted Poincaré threshold: C * sqrt(d) * n^{-1/d}.
-
-    Args:
-        n: number of points
-        d: manifold dimension
-        C: scaling constant
-
-    Returns:
-        Predicted threshold value
-    """
-    return C * np.sqrt(d) * n ** (-1.0 / d)
-
-
-def sample_sphere(n: int, d: int) -> np.ndarray:
-    """Sample n points uniformly from the unit d-sphere S^d in R^{d+1}.
-
-    Args:
-        n: number of points
-        d: dimension of the sphere (lives in R^{d+1})
-
-    Returns:
-        (n, d+1) array of points on S^d
-    """
-    points = np.random.randn(n, d + 1)
-    norms = np.linalg.norm(points, axis=1, keepdims=True)
-    return points / norms
-
-
-def covering_number_estimate(dist_matrix: np.ndarray, epsilon: float) -> int:
-    """Estimate the covering number N(X, epsilon) using a greedy algorithm.
-
-    Args:
-        dist_matrix: (n, n) pairwise distance matrix
-        epsilon: covering radius
-
-    Returns:
-        Size of the greedy cover (upper bound on covering number)
-    """
-    n = dist_matrix.shape[0]
-    covered = np.zeros(n, dtype=bool)
-    centers = []
-
+    edges: List[Tuple[float, int, int]] = []
     for i in range(n):
-        if not covered[i]:
-            centers.append(i)
-            covered |= (dist_matrix[i] <= epsilon)
+        for j in range(i + 1, n):
+            edges.append((D[i, j], i, j))
+    edges.sort()
 
-    return len(centers)
+    uf = UnionFind(n)
+    threshold = 0.0
+
+    for dist_val, i, j in edges:
+        if uf.union(i, j):
+            threshold = dist_val
+            if uf.num_components == 1:
+                break
+
+    return threshold
+
+
+def poincare_threshold_scan(
+    D: np.ndarray, epsilon_range: np.ndarray, target_dim: int
+) -> Dict[str, np.ndarray]:
+    """Scan across scales to find the Poincaré threshold.
+
+    For each epsilon, compute the Euler characteristic and compare with
+    the expected value for S^d (which is 1 + (-1)^d).
+
+    Args:
+        D: Pairwise distance matrix
+        epsilon_range: Array of epsilon values to scan
+        target_dim: Target sphere dimension d
+
+    Returns:
+        Dict with keys 'epsilon', 'euler_char', 'target_chi', 'num_components'
+    """
+    target_chi = 1 + (-1) ** target_dim
+    results = {
+        'epsilon': epsilon_range,
+        'euler_char': np.zeros(len(epsilon_range), dtype=int),
+        'target_chi': np.full(len(epsilon_range), target_chi, dtype=int),
+        'num_components': np.zeros(len(epsilon_range), dtype=int),
+    }
+
+    n = D.shape[0]
+    for idx, eps in enumerate(epsilon_range):
+        simplices = vietoris_rips_complex(D, eps, max_dim=min(target_dim + 1, 4))
+        chi = euler_characteristic(simplices)
+        results['euler_char'][idx] = chi
+
+        # Count connected components from 0-simplices and 1-simplices
+        uf = UnionFind(n)
+        for i, j in simplices.get(1, []):
+            uf.union(i, j)
+        results['num_components'][idx] = uf.num_components
+
+    return results
+
+
+def hausdorff_distance(X: np.ndarray, Y: np.ndarray) -> float:
+    """Compute the Hausdorff distance between point clouds X and Y.
+
+    d_H(X,Y) = max(max_i min_j d(x_i, y_j), max_j min_i d(x_i, y_j))
+
+    Args:
+        X: First point cloud, shape (n, d)
+        Y: Second point cloud, shape (m, d)
+
+    Returns:
+        The Hausdorff distance
+    """
+    # Compute all pairwise distances between X and Y
+    diff = X[:, np.newaxis, :] - Y[np.newaxis, :, :]
+    D_cross = np.sqrt(np.sum(diff ** 2, axis=-1))
+
+    forward = np.max(np.min(D_cross, axis=1))  # max_i min_j
+    backward = np.max(np.min(D_cross, axis=0))  # max_j min_i
+
+    return max(forward, backward)
+
+
+def verify_interleaving(
+    X: np.ndarray, Y: np.ndarray, epsilon: float
+) -> Dict[str, float]:
+    """Verify the Hausdorff VR interleaving theorem numerically.
+
+    If d_H(X,Y) ≤ δ, then edges at scale ε in X correspond to
+    edges at scale ε + 2δ in Y.
+
+    Args:
+        X, Y: Point clouds
+        epsilon: Scale parameter
+
+    Returns:
+        Dict with Hausdorff distance and interleaving verification
+    """
+    delta = hausdorff_distance(X, Y)
+    D_X = pairwise_distance_matrix(X)
+    D_Y = pairwise_distance_matrix(Y)
+
+    # For each edge in VR_ε(X), check if nearest-neighbor image
+    # is an edge in VR_{ε+2δ}(Y)
+    n = X.shape[0]
+    m = Y.shape[0]
+    D_cross = pairwise_distance_matrix(
+        np.vstack([X, Y])
+    )[:n, n:]  # distances from X to Y
+
+    # Map each point of X to nearest point of Y
+    nn_map = np.argmin(D_cross, axis=1)
+
+    violations = 0
+    total_edges = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            if D_X[i, j] <= epsilon:
+                total_edges += 1
+                j1, j2 = nn_map[i], nn_map[j]
+                if D_Y[j1, j2] > epsilon + 2 * delta + 1e-10:
+                    violations += 1
+
+    return {
+        'hausdorff_distance': delta,
+        'epsilon': epsilon,
+        'interleaving_scale': epsilon + 2 * delta,
+        'total_edges': total_edges,
+        'violations': violations,
+        'theorem_verified': violations == 0,
+    }
