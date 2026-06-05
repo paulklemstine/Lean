@@ -1,246 +1,260 @@
-# The Prime Spectral Algebra: A Holographic Framework for Prime Factorizations
+# Holographic Primes: The Prime Number AdS/CFT Correspondence
 
 ## Abstract
 
-We introduce the **Prime Spectral Algebra**, a novel algebraic framework that treats the prime factorization of natural numbers as a holographic spectrum. The central construction is the *spectral entropy* S(n) = Σ_p v_p(n) · log(p), which decomposes the logarithm of a number into contributions from individual primes. Our main result, the **Holographic Reconstruction Theorem**, proves that S(n) = log(n) for all n ≥ 1 — establishing that the "boundary" spectral data perfectly reconstructs the "bulk" observable.
+We develop a rigorous mathematical framework interpreting the Euler product factorization of the Riemann zeta function as a holographic correspondence between "boundary" data (individual primes) and "bulk" data (the full zeta function). This framework draws on structural parallels with the AdS/CFT correspondence from theoretical physics. We prove 14 theorems establishing: (1) the Chinese Remainder Theorem as holographic boundary factorization, (2) the Möbius function as the holographic inverse transform, (3) a c-theorem analog showing monotonicity of the local partition function, (4) the von Mangoldt function as the holographic reconstruction kernel, (5) infinite information capacity of the prime boundary, (6) a tropical-algebraic bridge inequality, and (7) the Liouville function as holographic parity. All proofs are fully formalized in Lean 4 with the Mathlib library, extending the existing Catalog's `Speculative.HolographicPrimes.Core` module.
 
-We define five interrelated invariants: spectral weight Ω(n), distinct spectral count ω(n), holographic defect δ(n) = Ω(n) − ω(n), spectral interaction energy I(n), and spectral concentration C(n). We prove that:
-
-1. The holographic defect characterizes squarefreeness: δ(n) = 0 ⟺ n is squarefree.
-2. The spectral weight is completely additive: Ω(ab) = Ω(a) + Ω(b).
-3. The spectral interaction vanishes for prime powers: I(p^k) = 0.
-4. The spectral weight satisfies a holographic bound: Ω(n) ≤ log₂(n).
-5. The depth filtration is multiplicatively compatible: F_k × F_j → F_{k+j}.
-
-All results are formalized and verified in Lean 4 with Mathlib, producing 22 machine-checked theorems with no unverified assumptions.
+**Keywords**: Riemann zeta function, Euler product, holographic principle, Möbius inversion, tropical geometry, formal verification
 
 ## 1. Introduction
 
-### 1.1 Motivation: Holography in Number Theory
+The AdS/CFT correspondence, proposed by Maldacena (1997), posits an equivalence between a gravitational theory in the bulk of anti-de Sitter (AdS) space and a conformal field theory (CFT) on its boundary. This holographic principle has become a cornerstone of theoretical physics, providing deep insights into quantum gravity, black hole thermodynamics, and strongly coupled quantum field theories.
 
-The AdS/CFT correspondence in theoretical physics [Maldacena 1997] establishes a duality between gravitational theories in the "bulk" of anti-de Sitter space and conformal field theories on the "boundary." This holographic principle — that bulk physics is fully encoded in boundary data — has proven extraordinarily fruitful in physics.
+In this paper, we observe that the Euler product formula for the Riemann zeta function,
 
-We observe that prime factorizations exhibit a structurally similar phenomenon. The fundamental theorem of arithmetic asserts that every positive integer has a unique factorization into primes. When expressed logarithmically, this factorization becomes an exact spectral decomposition:
+$$\zeta(s) = \prod_p \frac{1}{1 - p^{-s}}, \quad \text{Re}(s) > 1,$$
 
-$$\log(n) = \sum_{p \mid n} v_p(n) \cdot \log(p)$$
+exhibits a structure strikingly parallel to holographic duality. Each prime $p$ contributes a local "boundary" factor $Z_p(s) = (1 - p^{-s})^{-1}$, and the full "bulk" partition function $\zeta(s)$ is assembled from these local pieces. The functional equation $\Xi(1-s) = \Xi(s)$ plays the role of holographic duality, and the Möbius function provides the inverse holographic transform.
 
-where v_p(n) denotes the p-adic valuation of n. The right-hand side is a sum over "boundary" data (individual prime contributions), and the left-hand side is a "bulk" observable (the logarithmic magnitude). The equality constitutes a holographic reconstruction.
+We formalize this analogy rigorously, proving a suite of theorems that demonstrate the depth of the structural parallel. Our formalization is complete in Lean 4 with Mathlib, providing machine-verified guarantees of correctness.
 
-### 1.2 Contributions
+### 1.1 Relation to Prior Work
 
-We formalize this observation into a rigorous algebraic framework with the following novel contributions:
+This work extends the `Speculative.HolographicPrimes.Core` module from the Aether Catalog, which established basic definitions and proved foundational results including:
+- Positivity of the local partition function
+- Non-negativity of the bulk weight
+- The Euler product identity
+- The functional equation
 
-1. **Definition of the Spectral Decomposition Structure** (§2): A collection of interrelated spectral invariants capturing the holographic content of prime factorizations.
+Our contributions deepen these results by proving:
+- **Strict monotonicity** of the partition function (c-theorem analog)
+- **Complete multiplicativity** of the Liouville function (holographic parity)
+- **Injectivity** of the boundary entropy (holographic faithfulness)
+- **The tropical-algebraic bridge** inequality
+- **The additive-multiplicative bridge** (log Euler = sum of weights)
+- **Depth additivity** (Ω is completely additive)
 
-2. **Holographic Reconstruction Theorem** (§3): A formal proof that boundary spectral data reconstructs the bulk observable.
+### 1.2 Catalog References
 
-3. **Holographic Defect Characterization** (§4): Proof that the spectral defect precisely characterizes squarefreeness.
-
-4. **Spectral Interaction Theory** (§5): Analysis of cross-prime correlations via a quadratic form.
-
-5. **Depth Filtration** (§6): Construction of a multiplicatively compatible nested filtration indexed by p-adic depth.
-
-6. **Extension to Rationals** (§7): Generalization of spectral entropy to ℚ via S(a/b) = S(a) − S(b).
-
-7. **Connections to Analytic Number Theory** (§8): Bridges to the Chebyshev function, von Mangoldt function, and Euler product.
+| Catalog Theorem | File | Relation |
+|---|---|---|
+| `holographic_stability_conjecture` | `Speculative/HolographicPrimes/Core.lean` | Extended |
+| `euler_product_holographic` | `Speculative/HolographicPrimes/Core.lean` | Deepened |
+| `bulk_boundary_duality` | `Computation/HolographicCertificate.lean` | Bridged |
+| `completedRiemannZeta_one_sub` | Mathlib | Used |
+| `riemannZeta_eulerProduct_tprod` | Mathlib | Used |
 
 ## 2. Definitions
 
-### 2.1 Spectral Weight
+### 2.1 The Holographic Dictionary
 
-**Definition 2.1** (Spectral Weight). For n ∈ ℕ, the *spectral weight* is:
+**Definition 2.1** (Local Partition Function). For a prime $p$ and depth parameter $\beta > 0$:
+$$Z_p(\beta) = (1 - p^{-\beta})^{-1}$$
 
-Ω(n) := Σ_{p prime} v_p(n) = n.factorization.sum(λ _ k ↦ k)
+**Definition 2.2** (Bulk Weight). The bulk weight at prime $p$ and depth $\beta$:
+$$w_p(\beta) = -\log(1 - p^{-\beta}) = \log Z_p(\beta)$$
 
-This counts prime factors with multiplicity — the "total bulk depth" of n across all prime sectors.
+**Definition 2.3** (Boundary Entropy). The boundary entropy of prime $p$:
+$$S_p = \log(p)$$
 
-### 2.2 Spectral Entropy
+This equals the Shannon entropy of the uniform distribution on $\mathbb{Z}/p\mathbb{Z}$ and the von Mangoldt function $\Lambda(p)$.
 
-**Definition 2.2** (Spectral Entropy). For n ∈ ℕ, the *spectral entropy* is:
+**Definition 2.4** (Chebyshev Function). The boundary area:
+$$\theta(n) = \sum_{\substack{p \leq n \\ p \text{ prime}}} \log(p)$$
 
-S(n) := Σ_{p prime} v_p(n) · log(p) = n.factorization.sum(λ p k ↦ k · log p)
+**Definition 2.5** (Liouville Function). The holographic parity:
+$$\lambda(n) = (-1)^{\Omega(n)}$$
+where $\Omega(n)$ counts prime factors with multiplicity.
 
-This is the "boundary observable" — the weighted sum of prime contributions.
+## 3. Main Results
 
-### 2.3 Holographic Defect
+### 3.1 Boundary Factorization (Theorems 1–2)
 
-**Definition 2.3** (Holographic Defect). For n ∈ ℕ, the *holographic defect* is:
+**Theorem 3.1** (Holographic Boundary Factorization). *For coprime $m, n$:*
+$$\mathbb{Z}/mn\mathbb{Z} \cong \mathbb{Z}/m\mathbb{Z} \times \mathbb{Z}/n\mathbb{Z}$$
+*as rings.*
 
-δ(n) := Ω(n) − ω(n)
+This is the Chinese Remainder Theorem, reinterpreted: the boundary algebra at a composite modulus decomposes into independent boundary theories at each prime power factor. In the AdS/CFT analogy, this is the statement that the boundary CFT factorizes into independent sectors at each boundary point.
 
-where ω(n) = |n.primeFactors| counts distinct prime factors. The defect measures excess multiplicity beyond squarefreeness.
+**Theorem 3.2** (Boundary Character Multiplicativity). *For coprime $m, n$:*
+$$\varphi(mn) = \varphi(m) \cdot \varphi(n)$$
 
-### 2.4 Spectral Interaction Energy
+The number of boundary characters (units in $\mathbb{Z}/n\mathbb{Z}$) is multiplicative, extending the factorization to the character spectrum.
 
-**Definition 2.4** (Spectral Interaction). For n ∈ ℕ, the *spectral interaction energy* is:
+### 3.2 Möbius Holographic Inverse (Theorem 3)
 
-I(n) := Ω(n)² − Σ_{p prime} v_p(n)²
+**Theorem 3.3** (Möbius Holographic Inverse). *In the Dirichlet convolution ring:*
+$$\mu * \zeta = \varepsilon$$
 
-This equals 2·Σ_{p<q} v_p(n)·v_q(n), measuring cross-prime correlations.
+*where $\mu$ is the Möbius function, $\zeta$ is the constant function 1, and $\varepsilon$ is the multiplicative identity.*
 
-### 2.5 Depth Filtration
+**Proof sketch.** This follows from `ArithmeticFunction.coe_moebius_mul_coe_zeta` in Mathlib, which establishes the Möbius inversion formula as the Dirichlet inverse of the zeta function.
 
-**Definition 2.5** (Depth Filtration). For prime p and k ∈ ℕ, the *k-th depth filtration layer* is:
+**PEGB Analysis:**
+- **P** (Proof): Direct from Mathlib's `coe_moebius_mul_coe_zeta`.
+- **E** (Example): For $n = 12$: $\sum_{d|12} \mu(d) = \mu(1) + \mu(2) + \mu(3) + \mu(4) + \mu(6) + \mu(12) = 1 - 1 - 1 + 0 + 1 + 0 = 0$.
+- **G** (Generalization): Extends to any multiplicative function $f$ with Dirichlet series $\sum f(n)/n^s$; the inverse is $f^{-1}$ with $f * f^{-1} = \varepsilon$.
+- **B** (Boundary): Breaks down for non-multiplicative functions. The Dirichlet ring has zero divisors (non-invertible elements).
 
-F_k(p) := {n ∈ ℕ : v_p(n) ≥ k}
+### 3.3 Partition Function Monotonicity (Theorem 4)
 
-## 3. The Holographic Reconstruction Theorem
+**Theorem 3.4** (Holographic c-Theorem). *For any prime $p \geq 2$, the function $\beta \mapsto Z_p(\beta)$ is strictly decreasing on $(0, \infty)$.*
 
-**Theorem 3.1** (Holographic Reconstruction). For n ≥ 1:
-$$S(n) = \log(n)$$
+**Proof sketch.** The chain of implications:
+1. $\beta_1 < \beta_2$ implies $p^{-\beta_1} > p^{-\beta_2}$ (since $p > 1$)
+2. Hence $1 - p^{-\beta_1} < 1 - p^{-\beta_2}$
+3. Both quantities are positive (since $p^{-\beta} < 1$ for $\beta > 0$)
+4. Inversion reverses the inequality: $(1 - p^{-\beta_1})^{-1} > (1 - p^{-\beta_2})^{-1}$
 
-*Proof sketch.* By the fundamental theorem of arithmetic (Nat.factorization_prod_pow_eq_self), n = ∏_{p ∈ supp(n)} p^{v_p(n)}. Taking logarithms:
+This is the number-theoretic analog of the Zamolodchikov c-theorem: the effective number of degrees of freedom decreases along the RG flow.
 
-log(n) = log(∏_p p^{v_p(n)}) = Σ_p log(p^{v_p(n)}) = Σ_p v_p(n) · log(p) = S(n). ∎
+**PEGB Analysis:**
+- **P** (Proof): Uses `inv_strictAnti₀` and `rpow_lt_rpow_of_exponent_lt`.
+- **E** (Example): $Z_2(1) = 1/(1 - 1/2) = 2$, $Z_2(2) = 1/(1 - 1/4) = 4/3$, $Z_2(3) = 1/(1 - 1/8) = 8/7$. Indeed $2 > 4/3 > 8/7$.
+- **G** (Generalization): The function is not just decreasing but log-convex, which implies the free energy is convex — a thermodynamic stability condition.
+- **B** (Boundary): At $\beta = 0$, $Z_p(0) = (1 - 1)^{-1}$ is undefined (pole). As $\beta \to \infty$, $Z_p(\beta) \to 1$.
 
-**Corollary 3.2** (Spectral Additivity). For a, b ≥ 1:
-$$S(ab) = S(a) + S(b)$$
+### 3.4 Von Mangoldt Reconstruction (Theorem 5)
 
-*Proof.* S(ab) = log(ab) = log(a) + log(b) = S(a) + S(b). ∎
+**Theorem 3.5** (Holographic Bulk Reconstruction). *For all $n \in \mathbb{N}$:*
+$$\sum_{d | n} \Lambda(d) = \log(n)$$
 
-**Example 3.3.** S(12) = S(2²·3) = 2·log(2) + log(3) = log(4) + log(3) = log(12).
+**Theorem 3.6** (Von Mangoldt at Prime Powers). *For prime $p$ and $k \geq 1$:*
+$$\Lambda(p^k) = \log(p) = S_p$$
 
-**Boundary case.** For n = 0, both S(0) = 0 and log(0) = 0 (in the Mathlib convention), so the equation holds vacuously. However, the factorization of 0 is degenerate (empty), so the spectral decomposition carries no information.
+The von Mangoldt function at a prime power equals the boundary entropy. This means the bulk reconstruction formula decomposes log(n) into boundary entropy contributions at each prime power dividing n.
 
-### 3.1 PEGB Analysis
+**PEGB Analysis:**
+- **P** (Proof): Uses `ArithmeticFunction.vonMangoldt_sum` and `isPrimePow.pow`.
+- **E** (Example): $\sum_{d|12} \Lambda(d) = \Lambda(1) + \Lambda(2) + \Lambda(3) + \Lambda(4) + \Lambda(6) + \Lambda(12) = 0 + \log 2 + \log 3 + \log 2 + 0 + 0 = 2\log 2 + \log 3 = \log 12$.
+- **G** (Generalization): Extends to the explicit formula for $\psi(x)$, connecting zeros of $\zeta$ to the distribution of $\Lambda$.
+- **B** (Boundary): $\Lambda(n) = 0$ when $n$ is not a prime power — these are "off-shell" in the holographic dictionary.
 
-**Proof**: Complete Lean 4 proof via spectral_entropy_eq_log, using factorization_prod_pow_eq_self and log_prod.
+### 3.5 Tropical-Algebraic Bridge (Theorem 14)
 
-**Example**: S(360) = 3·log(2) + 2·log(3) + log(5) = log(360). Verified computationally for all n ≤ 10,000 with zero error.
+**Theorem 3.7** (Tropical Underestimate). *For prime $p$ and $\beta > 0$:*
+$$e^{p^{-\beta}} \leq Z_p(\beta)$$
 
-**Generalization**: Extended to ℚ via spectralEntropyRat: for q = a/b in lowest terms, S(q) = S(a) − S(b) = log|q|. (Theorem spectralEntropyRat_eq_log.)
+**Proof sketch.** Let $a = p^{-\beta} \in (0, 1)$. We need $e^a \leq (1-a)^{-1}$. This follows from the inequality $(1-a) \leq e^{-a}$ for $a \geq 0$, which is equivalent to $1 + x \leq e^x$ for $x = -a$.
 
-**Boundary**: Fails to be informative at n = 0 (degenerate spectrum). The reconstruction is trivially true but vacuous.
+This inequality bridges tropical geometry (where multiplication becomes addition via logarithms) and algebraic geometry (the multiplicative Euler product). The exponential function provides a lower bound — the tropical approximation always underestimates the algebraic truth.
 
-## 4. Holographic Defect and Squarefreeness
+**PEGB Analysis:**
+- **P** (Proof): Uses `Real.add_one_le_exp` and the positivity of $p^{-\beta}$.
+- **E** (Example): For $p = 2, \beta = 1$: $e^{1/2} \approx 1.649 \leq 2 = Z_2(1)$. ✓
+- **G** (Generalization): For the finite Euler product: $\exp(\sum_p p^{-\beta}) \leq \prod_p Z_p(\beta)$.
+- **B** (Boundary): Equality holds only in the limit $\beta \to \infty$ (both sides → 1). The gap grows as $\beta \to 0$.
 
-**Theorem 4.1** (Defect Characterization). For n ≥ 1:
-$$δ(n) = 0 \iff n \text{ is squarefree}$$
+### 3.6 Depth Additivity and Liouville Multiplicativity (Theorems 11–12)
 
-*Proof sketch.* The factorization support equals primeFactors, and each p in primeFactors has v_p(n) ≥ 1. The sum Ω(n) = Σ_{p ∈ supp} v_p(n) equals |supp| = ω(n) iff each v_p(n) = 1, which is equivalent to squarefreeness by Nat.squarefree_iff_factorization_le_one. ∎
+**Theorem 3.8** (Depth Additivity). *For $m, n \geq 1$:*
+$$\Omega(mn) = \Omega(m) + \Omega(n)$$
 
-### 4.1 PEGB Analysis
+**Theorem 3.9** (Liouville Multiplicativity). *For $m, n \geq 1$:*
+$$\lambda(mn) = \lambda(m) \cdot \lambda(n)$$
 
-**Proof**: Lean 4 proof via holographicDefect_eq_zero_iff.
+The holographic depth $\Omega(n)$ is completely additive, and the holographic parity $\lambda(n) = (-1)^{\Omega(n)}$ is completely multiplicative. This means the depth structure of the holographic theory respects composition.
 
-**Example**: δ(30) = Ω(30) − ω(30) = 3 − 3 = 0 (squarefree). δ(12) = 3 − 2 = 1 (not squarefree, since 4 | 12).
+### 3.7 Boundary Entropy Injectivity (Theorem 13)
 
-**Generalization**: For n = p₁^{a₁}···p_k^{a_k}, δ(n) = Σ(aᵢ − 1). The defect decomposes additively into per-prime excess contributions.
+**Theorem 3.10** (Holographic Faithfulness). *The map $p \mapsto S_p = \log(p)$ is injective on primes.*
 
-**Boundary**: δ(1) = 0, consistent with 1 being vacuously squarefree (no prime factors to be non-square).
+Different primes have different boundary entropies. This means the holographic dictionary is faithful: no information is lost in the boundary encoding. The proof uses the strict monotonicity and hence injectivity of the real logarithm on positive numbers.
 
-## 5. Spectral Interaction Energy
+## 4. The Holographic Structure
 
-**Theorem 5.1** (Prime Power Purity). For prime p and k ≥ 0:
-$$I(p^k) = 0$$
+### 4.1 Local-to-Global Principle
 
-*Proof.* The factorization of p^k has a single entry: v_p = k. Thus Ω = k, Σ v_p² = k², and I = k² − k² = 0. ∎
+The overarching principle is the local-to-global reconstruction:
 
-**Theorem 5.2** (Spectral Concentration Bound). For n with ω(n) ≥ 2 and p ∈ primeFactors(n):
-$$v_p(n) \leq Ω(n) − ω(n) + 1$$
+1. **Local boundary data**: Each prime $p$ contributes $Z_p(\beta)$
+2. **Global assembly**: $\zeta(\beta) = \prod_p Z_p(\beta)$ (Theorem 8)
+3. **Additive bridge**: $\log \zeta(\beta) = \sum_p w_p(\beta)$ (Theorem 10)
+4. **Inverse transform**: $\mu$ recovers local from global (Theorem 3)
 
-*Proof.* Each q ∈ primeFactors(n) \ {p} contributes at least 1 to Ω(n). There are ω(n) − 1 such primes, so Ω(n) ≥ v_p(n) + (ω(n) − 1), giving the bound. ∎
+### 4.2 The RG Flow
 
-### 5.1 PEGB Analysis
+The depth parameter $\beta$ plays the role of the RG scale:
+- $\beta \to 0^+$: UV (high energy), $Z_p(\beta) \to \infty$ — all degrees of freedom active
+- $\beta \to \infty$: IR (low energy), $Z_p(\beta) \to 1$ — only the ground state survives
+- The flow is irreversible: $Z_p$ is strictly decreasing (Theorem 4)
 
-**Proof**: Lean 4 proof via spectralInteraction_prime_pow.
+### 4.3 The Functional Equation as Duality
 
-**Example**: I(60) = I(2²·3·5) = 4² − (4 + 1 + 1) = 16 − 6 = 10. The three pairwise interactions (2↔3, 2↔5, 3↔5) contribute 2·(2·1 + 2·1 + 1·1) = 10.
+The completed zeta function satisfies $\Xi(1-s) = \Xi(s)$ (Theorem 7). In the holographic framework:
+- Depth $s$ and depth $1-s$ describe the same physics
+- The critical line $\text{Re}(s) = 1/2$ is the self-dual horizon
+- The Riemann Hypothesis states that all resonances (zeros) lie on the horizon
 
-**Generalization**: I(n) is the off-diagonal part of the quadratic form Q(v) = (Σ vᵢ)² on the valuation vector. In representation-theoretic terms, it's the square of the weight minus the Casimir.
+## 5. Algorithms
 
-**Boundary**: I = 0 precisely characterizes prime powers — numbers with a single active spectral frequency.
+### 5.1 Local Partition Function Computation
 
-## 6. Depth Filtration
+```
+Algorithm: ComputeLocalPartition(p, β)
+Input: prime p, depth β > 0
+Output: Z_p(β) = (1 - p^{-β})^{-1}
+1. Compute x = p^{-β} using fast exponentiation
+2. Return 1 / (1 - x)
+```
 
-**Theorem 6.1** (Antitone). The depth filtration is decreasing: k ≤ j ⟹ F_j(p) ⊆ F_k(p).
+### 5.2 Finite Euler Product
 
-**Theorem 6.2** (Multiplicative Compatibility). If n ∈ F_k(p), m ∈ F_j(p), and both are nonzero, then nm ∈ F_{k+j}(p).
+```
+Algorithm: FiniteEulerProduct(N, β)
+Input: bound N, depth β > 0
+Output: ∏_{p ≤ N} Z_p(β)
+1. Enumerate primes p ≤ N using sieve of Eratosthenes
+2. For each prime p, compute Z_p(β)
+3. Return product
+```
 
-*Proof.* By additivity of the p-adic valuation: v_p(nm) = v_p(n) + v_p(m) ≥ k + j. ∎
+### 5.3 Holographic Reconstruction
 
-**Theorem 6.3** (Prime Power Membership). p^k ∈ F_k(p) for all primes p and k ∈ ℕ.
+```
+Algorithm: HolographicReconstruct(n)
+Input: positive integer n
+Output: log(n) via von Mangoldt reconstruction
+1. Enumerate divisors d of n
+2. For each d, compute Λ(d) = log(p) if d = p^k, else 0
+3. Return ∑ Λ(d)
+```
 
-## 7. Extension to Rationals
+## 6. Discussion
 
-**Definition 7.1** (Rational Spectral Entropy). For q ∈ ℚ, q ≠ 0:
-$$S(q) := S(|q.\text{num}|) − S(q.\text{den})$$
+### 6.1 Limitations
 
-**Theorem 7.1** (Rational Reconstruction). For q ∈ ℚ, q ≠ 0:
-$$S(q) = \log|q|$$
+The holographic prime correspondence is a structural analogy, not a physical theory. Several aspects of AdS/CFT do not have direct analogs:
+- There is no clear "metric" on the "AdS space" of prime numbers
+- The conformal symmetry of the boundary CFT has no direct number-theoretic analog
+- The Riemann Hypothesis as "holographic stability" remains a conjecture (Theorem 12 in the Catalog, marked `sorry`)
 
-This extends the holographic reconstruction from ℕ to ℚ, establishing that the prime spectrum encodes the logarithmic magnitude of rational numbers as well.
+### 6.2 Open Questions
 
-## 8. Connections to Analytic Number Theory
+1. Can the analogy be made precise using p-adic AdS/CFT (Gubser et al., 2017)?
+2. Is there a natural "entanglement entropy" for the prime factorization?
+3. Does the c-theorem analog extend to Dirichlet L-functions?
 
-### 8.1 Chebyshev Function as Spectral Entropy
+## 7. Future Work
 
-**Theorem 8.1.** The Chebyshev function θ(n) equals the spectral entropy of the primorial:
-$$θ(n) = \sum_{p \leq n} \log(p) = S\left(\prod_{p \leq n} p\right)$$
-
-### 8.2 Von Mangoldt Function as Spectral Extractor
-
-**Theorem 8.2.** For prime p and k ≥ 1:
-$$\Lambda(p^k) = S(p) = \log(p)$$
-
-The von Mangoldt function extracts the "fundamental boundary frequency" from prime powers.
-
-### 8.3 Euler Product as Holographic Partition Function
-
-The Euler product ζ(s) = ∏_p (1 − p^{−s})^{−1} is a product of local partition functions, one per prime. Combined with the holographic duality ξ(s) = ξ(1−s) (the functional equation of the completed zeta function), this gives a full "holographic dictionary" relating bulk (zeta function) and boundary (Euler factors) descriptions.
-
-## 9. Falsifiable Conjecture
-
-**Conjecture 9.1** (Spectral Concentration). For any n with ω(n) ≥ 2:
-$$\max_p v_p(n) \leq Ω(n) − ω(n) + 1$$
-
-*Status*: Proved as Theorem 5.2 (spectral_concentration_bound). Originally stated as a conjecture, it turned out to follow from a simple counting argument. The theorem is tight: equality holds for n = p^a · q with a = Ω − ω + 1.
-
-## 10. Summary of Formalized Results
-
-| # | Theorem | Statement |
-|---|---------|-----------|
-| 1 | spectral_entropy_eq_log | S(n) = log(n) for n ≥ 1 |
-| 2 | spectralWeight_mul | Ω(ab) = Ω(a) + Ω(b) |
-| 3 | spectralEntropy_mul | S(ab) = S(a) + S(b) |
-| 4 | holographicDefect_eq_zero_iff | δ(n) = 0 ⟺ Squarefree n |
-| 5 | spectralInteraction_prime_pow | I(p^k) = 0 |
-| 6 | spectral_concentration_bound | v_p(n) ≤ Ω(n) − ω(n) + 1 |
-| 7 | spectralWeight_le_log2 | Ω(n) ≤ log₂(n) |
-| 8 | depthFiltration_antitone | F_j ⊆ F_k when k ≤ j |
-| 9 | depthFiltration_mul | F_k × F_j → F_{k+j} |
-| 10 | chebyshev_as_spectral_entropy | θ(n) = S(∏_{p≤n} p) |
-| 11 | vonMangoldt_spectral | Λ(p^k) = S(p) |
-| 12 | spectralEntropyRat_eq_log | S(q) = log|q| for q ∈ ℚ* |
-| 13 | spectralEntropy_dvd_le | a ∣ b ⟹ S(a) ≤ S(b) |
-| 14 | spectralWeight_prime | Ω(p) = 1 |
-| 15 | spectralWeight_prime_pow | Ω(p^k) = k |
-| 16 | spectralEntropy_prime_pow | S(p^k) = k·log(p) |
-| 17 | holographicDefect_prime | δ(p) = 0 |
-| 18 | holographicDefect_prime_sq | δ(p²) = 1 |
-| 19 | spectralWeight_one | Ω(1) = 0 |
-| 20 | spectralInteraction_one | I(1) = 0 |
-| 21 | prime_pow_mem_filtration | p^k ∈ F_k(p) |
-| 22 | spectral_entropy_prime_eq_boundary_entropy | S(p) = log(p) |
-
-All 22 theorems are fully proven with no sorry, no non-standard axioms, and complete machine verification.
-
-## 11. Future Work
-
-1. **Higher-order spectral invariants**: Define the spectral cumulants κ_n of the valuation distribution and study their growth.
-
-2. **Categorical spectral algebra**: The map n ↦ n.factorization is a functor from (ℕ*, ×) to (ℕ^Primes, +). Study its categorical properties.
-
-3. **p-adic spectral measures**: Replace discrete valuations with p-adic absolute values for a continuous spectral theory.
-
-4. **Connection to L-functions**: Extend the spectral framework to Dirichlet L-functions and their Euler products.
-
-5. **Tropical spectral algebra**: The spectral entropy S(n) is a tropical polynomial in the log(p) variables. Explore the tropical geometry of this map.
+See `FUTURE_DIRECTIONS.md` for detailed research directions, including:
+- Generalization to Dirichlet L-functions and automorphic forms
+- P-adic holography and the Bruhat-Tits tree
+- Holographic entanglement entropy for composite numbers
+- Random matrix connections (GUE statistics of zeta zeros)
 
 ## References
 
-1. Maldacena, J. (1997). The large N limit of superconformal field theories and supergravity. *Adv. Theor. Math. Phys.* 2, 231–252.
+1. Maldacena, J. (1999). The large-N limit of superconformal field theories and supergravity. *Adv. Theor. Math. Phys.*, 2(2), 231–252.
+2. Euler, L. (1737). Variae observationes circa series infinitas. *Commentarii academiae scientiarum Petropolitanae*, 9, 160–188.
+3. Riemann, B. (1859). Ueber die Anzahl der Primzahlen unter einer gegebenen Grösse. *Monatsberichte der Berliner Akademie*.
+4. Zamolodchikov, A. B. (1986). Irreversibility of the flux of the renormalization group in a 2D field theory. *JETP Lett.*, 43, 730–732.
+5. Gubser, S. S., et al. (2017). Edge length dynamics on graphs with applications to p-adic AdS/CFT. *JHEP*, 2017(6), 157.
+6. Montgomery, H. L. (1973). The pair correlation of zeros of the zeta function. *Proc. Sympos. Pure Math.*, 24, 181–193.
 
-2. Hardy, G.H. & Wright, E.M. (2008). *An Introduction to the Theory of Numbers*. 6th ed. Oxford University Press.
+## Appendix: Lean 4 Formalization
 
-3. Iwaniec, H. & Kowalski, E. (2004). *Analytic Number Theory*. AMS Colloquium Publications.
+All theorems are formalized in `Novelty/HolographicPrimes/Theorems.lean` using Lean 4 with Mathlib v4.28.0. The formalization comprises:
+- 7 definitions (localPartitionFn, bulkWeight, boundaryEntropy, chebyshev_theta, liouvilleReal, etc.)
+- 14 theorems, all fully proved (no `sorry`)
+- Key Mathlib dependencies: `ArithmeticFunction`, `ZMod`, `riemannZeta`, `completedRiemannZeta`
