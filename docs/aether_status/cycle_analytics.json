@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-05T21:58:16.307445+00:00",
+  "last_updated": "2026-06-05T22:33:13.241915+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -7439,6 +7439,76 @@
       "theorem_count": 6,
       "timestamp": "2026-06-05T21:58:16.219295+00:00",
       "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4395,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 118,
+      "domain": "Novelty",
+      "duration_seconds": 7197.845176935196,
+      "end_time": 1780698734.23402,
+      "files_integrated": 5,
+      "job_id": "441dfd6e",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.56,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.774,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7122,
+        "novelty": 0.9447,
+        "proof_depth": 0.6125,
+        "usefulness": 0.8062
+      },
+      "quality_score": 0.43584,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780691536.388843,
+      "strategy_count": 187,
+      "theorem_count": 6,
+      "timestamp": "2026-06-05T22:33:13.086932+00:00",
+      "title": "Game of Life Universality"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6393,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 126,
+      "domain": "Applications",
+      "duration_seconds": 4359.312715768814,
+      "end_time": 1780698735.6149764,
+      "files_integrated": 5,
+      "job_id": "c367e834",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8048,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.681,
+        "novelty": 0.95,
+        "proof_depth": 0.5657,
+        "usefulness": 0.7828
+      },
+      "quality_score": 0.27864,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780694376.3022606,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T22:33:13.168690+00:00",
+      "title": "EML Universal Approximation"
     }
   ]
 }
