@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "b7c356ff",
     "filename": "quantum_error_correction_from_homological_algebra_.json",
     "pkg_num": 383,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4808,
     "title": "CSS Codes as Cohomology: Chain Complexes Give Quantum Error Correction"
   },
   {
@@ -12258,8 +12258,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "quantum_error_correction_from_homological_algebra_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4808,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "CSS Codes as Cohomology: Chain Complexes Give Quantum Error Correction"
     }
