@@ -1,191 +1,154 @@
 #!/usr/bin/env python3
 """
-Quantum Zeta Spectrum: Numerical Demonstration
+Quantum Casimir Spectral Theory: Numerical Demonstrations
 
-Computes the q-Casimir spectrum for the quantum deformation parameter
-θ = π·γ₁ where γ₁ ≈ 14.134725 is the first non-trivial Riemann zero,
-and analyzes its spectral statistics.
+Demonstrates the key results from the formalized theory:
+1. q-integers and their classical limit
+2. q-Casimir eigenvalues and spectral structure  
+3. Spectral rigidity: recovering q from eigenvalues
+4. Connection between q-Casimir spectrum and Riemann zero statistics
 """
 
 import numpy as np
 
-# ============================================================
-# Core functions
-# ============================================================
+def q_integer(q: float, n: int) -> float:
+    """Symmetric q-integer [n]_q = sum_{k=0}^{n-1} q^{n-1-2k}"""
+    if n == 0:
+        return 0.0
+    return sum(q ** (n - 1 - 2 * k) for k in range(n))
 
-def q_integer(theta: float, n: int) -> float:
-    """Compute the trigonometric q-integer [n]_q = sin(nθ)/sin(θ)."""
-    s = np.sin(theta)
-    if abs(s) < 1e-15:
-        return float(n)  # classical limit
-    return np.sin(n * theta) / s
+def q_casimir(q: float, n: int) -> float:
+    """q-Casimir eigenvalue lambda_n = [n]_q * [n+1]_q"""
+    return q_integer(q, n) * q_integer(q, n + 1)
 
-
-def q_casimir(theta: float, n: int) -> float:
-    """Compute the q-Casimir eigenvalue [n]_q · [n+1]_q."""
-    return q_integer(theta, n) * q_integer(theta, n + 1)
-
-
-def casimir_oscillation(theta: float, n: int) -> float:
-    """The oscillatory part: cos((2n+1)θ)."""
-    return np.cos((2 * n + 1) * theta)
-
-
-# ============================================================
-# Demonstrations
-# ============================================================
-
-def demo_chebyshev_recurrence():
-    """Verify the Chebyshev recurrence numerically."""
+def demonstrate_classical_limit():
+    """Theorem: qInt 1 n = n and qCasimir 1 n = n(n+1)"""
     print("=" * 60)
-    print("Demo 1: Chebyshev Recurrence Verification")
-    print("  sin((n+2)θ) + sin(nθ) = 2cos(θ)sin((n+1)θ)")
+    print("1. CLASSICAL LIMIT (q → 1)")
     print("=" * 60)
-
-    gamma1 = 14.134725
-    theta = np.pi * gamma1
-
-    for n in range(10):
-        lhs = np.sin((n + 2) * theta) + np.sin(n * theta)
-        rhs = 2 * np.cos(theta) * np.sin((n + 1) * theta)
-        err = abs(lhs - rhs)
-        print(f"  n={n:2d}: LHS={lhs:+.10f}  RHS={rhs:+.10f}  error={err:.2e}")
-
-
-def demo_product_to_sum():
-    """Verify the product-to-sum formula numerically."""
-    print("\n" + "=" * 60)
-    print("Demo 2: Product-to-Sum Formula Verification")
-    print("  2sin(nθ)sin((n+1)θ) = cos(θ) - cos((2n+1)θ)")
-    print("=" * 60)
-
-    gamma1 = 14.134725
-    theta = np.pi * gamma1
-
-    for n in range(10):
-        lhs = 2 * np.sin(n * theta) * np.sin((n + 1) * theta)
-        rhs = np.cos(theta) - np.cos((2 * n + 1) * theta)
-        err = abs(lhs - rhs)
-        print(f"  n={n:2d}: LHS={lhs:+.10f}  RHS={rhs:+.10f}  error={err:.2e}")
-
-
-def demo_casimir_spectrum():
-    """Compute and display the q-Casimir spectrum."""
-    print("\n" + "=" * 60)
-    print("Demo 3: q-Casimir Spectrum for θ = π·γ₁")
-    print("=" * 60)
-
-    gamma1 = 14.134725
-    theta = np.pi * gamma1
-    sin_theta = np.sin(theta)
-
-    print(f"  γ₁ = {gamma1}")
-    print(f"  θ  = π·γ₁ = {theta:.6f}")
-    print(f"  sin(θ) = {sin_theta:.10f}")
-    print(f"  1/sin²(θ) = {1/sin_theta**2:.6f}")
+    print(f"{'n':>3} | {'[n]_1':>10} | {'n':>10} | {'λ_n(1)':>12} | {'n(n+1)':>12}")
+    print("-" * 60)
+    for n in range(8):
+        qi = q_integer(1.0, n)
+        qc = q_casimir(1.0, n)
+        print(f"{n:>3} | {qi:>10.4f} | {n:>10.4f} | {qc:>12.4f} | {n*(n+1):>12.4f}")
     print()
 
-    print(f"  {'n':>3s}  {'[n]_q':>12s}  {'[n+1]_q':>12s}  {'C_q(n)':>12s}  {'cos((2n+1)θ)':>14s}")
-    print("  " + "-" * 58)
-
-    for n in range(15):
-        qn = q_integer(theta, n)
-        qn1 = q_integer(theta, n + 1)
-        cn = q_casimir(theta, n)
-        osc = casimir_oscillation(theta, n)
-        print(f"  {n:3d}  {qn:+12.6f}  {qn1:+12.6f}  {cn:+12.6f}  {osc:+14.6f}")
-
-
-def demo_dirichlet_sum():
-    """Verify the Dirichlet cosine sum identity."""
-    print("\n" + "=" * 60)
-    print("Demo 4: Dirichlet Cosine Sum Identity")
-    print("  2sin(θ)·Σcos((k+1)θ) = sin((N+1)θ) + sin(Nθ) - sin(θ)")
+def demonstrate_inversion_symmetry():
+    """Theorem: qInt q⁻¹ n = qInt q n"""
     print("=" * 60)
-
-    theta = 0.7  # generic angle
-
-    for N in range(1, 15):
-        lhs = 2 * np.sin(theta) * sum(
-            np.cos((k + 1) * theta) for k in range(N)
-        )
-        rhs = np.sin((N + 1) * theta) + np.sin(N * theta) - np.sin(theta)
-        err = abs(lhs - rhs)
-        print(f"  N={N:2d}: LHS={lhs:+.10f}  RHS={rhs:+.10f}  error={err:.2e}")
-
-
-def demo_spectral_statistics():
-    """Compute spacing statistics of the q-Casimir spectrum."""
-    print("\n" + "=" * 60)
-    print("Demo 5: Spectral Statistics of q-Casimir Eigenvalues")
+    print("2. WEYL INVERSION SYMMETRY: [n]_{q⁻¹} = [n]_q")
     print("=" * 60)
-
-    gamma1 = 14.134725
-    theta = np.pi * gamma1
-
-    N = 100
-    eigenvalues = [q_casimir(theta, n) for n in range(N)]
-
-    # Compute nearest-neighbor spacings
-    sorted_eigs = sorted(eigenvalues)
-    spacings = [sorted_eigs[i+1] - sorted_eigs[i] for i in range(len(sorted_eigs) - 1)]
-    spacings = [s for s in spacings if s > 1e-10]  # remove near-zero spacings
-
-    if spacings:
-        mean_spacing = np.mean(spacings)
-        std_spacing = np.std(spacings)
-        normalized = [s / mean_spacing for s in spacings]
-
-        print(f"  Number of eigenvalues: {N}")
-        print(f"  Mean spacing: {mean_spacing:.6f}")
-        print(f"  Std deviation: {std_spacing:.6f}")
-        print(f"  Spacing ratio (std/mean): {std_spacing/mean_spacing:.6f}")
-        print(f"  (GUE prediction: ~0.42, Poisson: ~1.0)")
-    else:
-        print("  No non-trivial spacings found")
-
-
-def demo_bound_verification():
-    """Verify the |C_q(n)| ≤ 1/sin²(θ) bound."""
-    print("\n" + "=" * 60)
-    print("Demo 6: Casimir Bound Verification")
-    print("  |C_q(n)| ≤ 1/sin²(θ)")
-    print("=" * 60)
-
-    gamma1 = 14.134725
-    theta = np.pi * gamma1
-    bound = 1 / np.sin(theta) ** 2
-
-    print(f"  Bound = 1/sin²(θ) = {bound:.6f}")
+    q = 2.5
+    print(f"q = {q}, q⁻¹ = {1/q:.4f}")
+    print(f"{'n':>3} | {'[n]_q':>12} | {'[n]_{q⁻¹}':>12} | {'difference':>12}")
+    print("-" * 55)
+    for n in range(8):
+        qi_q = q_integer(q, n)
+        qi_inv = q_integer(1/q, n)
+        print(f"{n:>3} | {qi_q:>12.6f} | {qi_inv:>12.6f} | {abs(qi_q - qi_inv):>12.2e}")
     print()
 
-    max_ratio = 0
-    for n in range(200):
-        cn = abs(q_casimir(theta, n))
-        ratio = cn / bound
-        max_ratio = max(max_ratio, ratio)
+def demonstrate_spectral_rigidity():
+    """Theorem: q₁ + q₁⁻¹ = q₂ + q₂⁻¹ implies q₁ = q₂ or q₁ = q₂⁻¹"""
+    print("=" * 60)
+    print("3. SPECTRAL RIGIDITY")
+    print("=" * 60)
+    
+    # The function f(q) = q + q⁻¹ is 2-to-1 on R+
+    qs = [0.3, 0.5, 1.0, 2.0, 3.0, 5.0]
+    print("f(q) = q + q⁻¹ (first Casimir eigenvalue):")
+    print(f"{'q':>8} | {'q⁻¹':>8} | {'f(q)':>10} | {'f(q⁻¹)':>10}")
+    print("-" * 45)
+    for q in qs:
+        f_q = q + 1/q
+        f_inv = 1/q + q
+        print(f"{q:>8.4f} | {1/q:>8.4f} | {f_q:>10.6f} | {f_inv:>10.6f}")
+    print("\n→ The only ambiguity is q ↔ q⁻¹ (Weyl symmetry)")
+    print()
 
-    print(f"  Max |C_q(n)|/bound over n=0..199: {max_ratio:.6f}")
-    print(f"  Bound satisfied: {max_ratio <= 1.0 + 1e-10}")
+def demonstrate_riemann_connection():
+    """Connection between q-Casimir spectrum and Riemann zeros"""
+    print("=" * 60)
+    print("4. BRIDGE TO RIEMANN ZEROS")
+    print("=" * 60)
+    
+    gamma1 = 14.134725  # First Riemann zero imaginary part
+    
+    # q-parameter from first Riemann zero  
+    # Using q = exp(2π/γ₁) for a real deformation
+    q = np.exp(2 * np.pi / gamma1)
+    print(f"First Riemann zero: γ₁ ≈ {gamma1}")
+    print(f"Quantum group parameter: q = exp(2π/γ₁) ≈ {q:.6f}")
+    print(f"q + q⁻¹ = {q + 1/q:.6f}")
+    print()
+    
+    # q-Casimir spectrum
+    print("q-Casimir spectrum:")
+    print(f"{'n':>3} | {'λ_n(q)':>15} | {'n(n+1)':>10} | {'ratio':>10}")
+    print("-" * 50)
+    for n in range(10):
+        qc = q_casimir(q, n)
+        classical = n * (n + 1)
+        ratio = qc / classical if classical > 0 else 0
+        print(f"{n:>3} | {qc:>15.4f} | {classical:>10} | {ratio:>10.4f}")
+    
+    print()
+    print("Spectral growth comparison:")
+    print("  Classical (q=1): λ_n ~ n² (polynomial)")
+    print(f"  Quantum (q={q:.4f}): λ_n ~ q^(2n) (exponential)")
+    print()
+    
+    # Counting function: N(T) = #{n : λ_n ≤ T}
+    T_values = [10, 100, 1000, 10000, 100000]
+    print("Counting function N(T) = #{n : λ_n ≤ T}:")
+    print(f"{'T':>10} | {'N_q(T)':>8} | {'N_classical(T)':>15} | {'log(T)/2log(q)':>15}")
+    print("-" * 55)
+    for T in T_values:
+        # Quantum counting
+        n_q = sum(1 for n in range(1000) if q_casimir(q, n) <= T)
+        # Classical counting: n(n+1) ≤ T → n ≤ (√(4T+1)-1)/2
+        n_cl = int((np.sqrt(4*T + 1) - 1) / 2)
+        # Predicted quantum counting
+        log_pred = np.log(T) / (2 * np.log(q)) if q > 1 else float('inf')
+        print(f"{T:>10} | {n_q:>8} | {n_cl:>15} | {log_pred:>15.2f}")
+    print()
+    print("→ Quantum counting grows logarithmically (like Riemann zero density)")
+    print("→ Classical counting grows as √T (Weyl law)")
 
+def demonstrate_recurrence():
+    """Theorem: [n+1]_q = q^n + q⁻¹ · [n]_q"""
+    print("=" * 60)
+    print("5. q-INTEGER RECURRENCE")
+    print("=" * 60)
+    q = 1.5
+    print(f"q = {q}: verifying [n+1]_q = q^n + q⁻¹·[n]_q")
+    print(f"{'n':>3} | {'[n+1]_q':>12} | {'q^n + q⁻¹·[n]_q':>18} | {'error':>12}")
+    print("-" * 55)
+    for n in range(8):
+        lhs = q_integer(q, n + 1)
+        rhs = q**n + (1/q) * q_integer(q, n)
+        print(f"{n:>3} | {lhs:>12.6f} | {rhs:>18.6f} | {abs(lhs-rhs):>12.2e}")
+    print()
 
 if __name__ == "__main__":
-    demo_chebyshev_recurrence()
-    demo_product_to_sum()
-    demo_casimir_spectrum()
-    demo_dirichlet_sum()
-    demo_spectral_statistics()
-    demo_bound_verification()
+    print("QUANTUM CASIMIR SPECTRAL THEORY")
+    print("Numerical demonstrations of formalized results")
+    print()
+    
+    demonstrate_classical_limit()
+    demonstrate_inversion_symmetry()
+    demonstrate_spectral_rigidity()
+    demonstrate_recurrence()
+    demonstrate_riemann_connection()
 
 
 #!/usr/bin/env python3
 """
-Visualization: q-Casimir Spectrum for the Riemann Zero Deformation
+Visualization: q-Casimir Spectrum vs Classical Casimir Spectrum
 
-Generates three plots:
-1. The q-Casimir eigenvalues vs representation label
-2. The oscillatory decomposition: constant part vs cos((2n+1)θ)
-3. Nearest-neighbor spacing distribution compared to GUE/Poisson
+Shows how the q-deformation transforms the parabolic classical spectrum
+n(n+1) into an exponentially growing quantum spectrum.
 """
 
 import numpy as np
@@ -194,98 +157,83 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
-def q_integer(theta, n):
-    s = np.sin(theta)
-    if abs(s) < 1e-15:
-        return float(n)
-    return np.sin(n * theta) / s
+def q_integer(q, n):
+    if n == 0:
+        return 0.0
+    return sum(q ** (n - 1 - 2 * k) for k in range(n))
+
+def q_casimir(q, n):
+    return q_integer(q, n) * q_integer(q, n + 1)
 
 
-def q_casimir(theta, n):
-    return q_integer(theta, n) * q_integer(theta, n + 1)
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
+# Plot 1: q-Casimir spectrum for various q
+ax = axes[0, 0]
+ns = np.arange(0, 12)
+for q_val in [0.5, 0.8, 1.0, 1.2, 1.5, 2.0]:
+    eigenvalues = [q_casimir(q_val, n) for n in ns]
+    label = f'q = {q_val}'
+    style = '--' if q_val == 1.0 else '-'
+    lw = 2.5 if q_val == 1.0 else 1.5
+    ax.plot(ns, eigenvalues, style, linewidth=lw, label=label, marker='o', markersize=4)
+ax.set_xlabel('Representation index n')
+ax.set_ylabel('λ_n(q) = [n]_q · [n+1]_q')
+ax.set_title('q-Casimir Eigenvalues')
+ax.legend(fontsize=8)
+ax.set_yscale('log')
+ax.set_ylim(bottom=0.5)
+ax.grid(True, alpha=0.3)
 
-def casimir_oscillation(theta, n):
-    return np.cos((2 * n + 1) * theta)
+# Plot 2: q-integers
+ax = axes[0, 1]
+ns = np.arange(0, 10)
+for q_val in [0.5, 0.8, 1.0, 1.5, 2.0]:
+    qints = [q_integer(q_val, n) for n in ns]
+    style = '--' if q_val == 1.0 else '-'
+    ax.plot(ns, qints, style, linewidth=1.5, label=f'q = {q_val}', marker='s', markersize=4)
+ax.set_xlabel('n')
+ax.set_ylabel('[n]_q')
+ax.set_title('q-Integers: Quantum Deformation of ℕ')
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
 
+# Plot 3: Inversion symmetry
+ax = axes[1, 0]
+q_values = np.linspace(0.2, 5.0, 200)
+for n in [2, 3, 5, 8]:
+    qints = [q_integer(q, n) for q in q_values]
+    ax.plot(q_values, qints, linewidth=1.5, label=f'[{n}]_q')
+ax.axvline(x=1.0, color='gray', linestyle=':', alpha=0.5, label='q = 1')
+ax.set_xlabel('q')
+ax.set_ylabel('[n]_q')
+ax.set_title('q-Integers as Functions of q\n(symmetric about q ↔ q⁻¹ on log scale)')
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
 
-def main():
-    gamma1 = 14.134725
-    theta = np.pi * gamma1
-    N = 200
+# Plot 4: Spectral rigidity — f(q) = q + q⁻¹
+ax = axes[1, 1]
+q_values = np.linspace(0.15, 6.0, 500)
+f_values = q_values + 1.0 / q_values
+ax.plot(q_values, f_values, 'b-', linewidth=2, label='f(q) = q + q⁻¹')
+ax.axhline(y=2.0, color='red', linestyle='--', alpha=0.5, label='minimum = 2 (at q=1)')
 
-    ns = np.arange(N)
-    eigenvalues = np.array([q_casimir(theta, n) for n in ns])
-    oscillations = np.array([casimir_oscillation(theta, n) for n in ns])
+# Mark specific q and q⁻¹
+q_ex = 2.5
+ax.axvline(x=q_ex, color='green', linestyle=':', alpha=0.7)
+ax.axvline(x=1/q_ex, color='green', linestyle=':', alpha=0.7)
+ax.plot([q_ex, 1/q_ex], [q_ex + 1/q_ex, 1/q_ex + q_ex], 'go', markersize=8)
+ax.annotate(f'q={q_ex}', (q_ex, q_ex + 1/q_ex + 0.3), fontsize=9, ha='center')
+ax.annotate(f'q⁻¹={1/q_ex:.1f}', (1/q_ex, 1/q_ex + q_ex + 0.3), fontsize=9, ha='center')
 
-    fig, axes = plt.subplots(3, 1, figsize=(12, 14))
+ax.set_xlabel('q')
+ax.set_ylabel('q + q⁻¹ (first Casimir eigenvalue)')
+ax.set_title('Spectral Rigidity:\nf(q) = f(q⁻¹) determines q up to Weyl symmetry')
+ax.legend(fontsize=8)
+ax.set_ylim(1.5, 8)
+ax.grid(True, alpha=0.3)
 
-    # Plot 1: q-Casimir spectrum
-    ax1 = axes[0]
-    ax1.plot(ns, eigenvalues, 'b-', linewidth=0.8, alpha=0.7)
-    ax1.scatter(ns[:30], eigenvalues[:30], c='red', s=15, zorder=5)
-    bound = 1 / np.sin(theta) ** 2
-    ax1.axhline(y=bound, color='green', linestyle='--', alpha=0.5,
-                label=f'Upper bound 1/sin²(θ) = {bound:.4f}')
-    ax1.axhline(y=-bound, color='green', linestyle='--', alpha=0.5)
-    ax1.set_xlabel('Representation label n', fontsize=12)
-    ax1.set_ylabel('q-Casimir eigenvalue C_q(n)', fontsize=12)
-    ax1.set_title(f'q-Casimir Spectrum for θ = π·γ₁ (γ₁ ≈ {gamma1})',
-                  fontsize=14)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-
-    # Plot 2: Oscillatory decomposition
-    ax2 = axes[1]
-    sin2 = np.sin(theta) ** 2
-    constant_part = np.full(N, np.cos(theta) / (2 * sin2))
-    ax2.axhline(y=np.cos(theta) / (2 * sin2), color='blue', linestyle='-',
-                linewidth=2, label='Constant: cos(θ)/(2sin²θ)')
-    ax2.plot(ns, -oscillations / (2 * sin2), 'r-', linewidth=0.6, alpha=0.7,
-             label='-cos((2n+1)θ)/(2sin²θ)')
-    ax2.plot(ns, eigenvalues, 'k-', linewidth=0.5, alpha=0.4,
-             label='C_q(n) = sum')
-    ax2.set_xlabel('Representation label n', fontsize=12)
-    ax2.set_ylabel('Eigenvalue components', fontsize=12)
-    ax2.set_title('Casimir Eigenvalue = Constant + Oscillation (Explicit Formula Analog)',
-                  fontsize=14)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-    ax2.set_xlim(0, 50)
-
-    # Plot 3: Spacing distribution
-    ax3 = axes[2]
-    sorted_eigs = np.sort(eigenvalues)
-    spacings = np.diff(sorted_eigs)
-    spacings = spacings[spacings > 1e-10]
-    if len(spacings) > 0:
-        mean_s = np.mean(spacings)
-        normalized_spacings = spacings / mean_s
-
-        ax3.hist(normalized_spacings, bins=30, density=True, alpha=0.7,
-                 color='steelblue', edgecolor='black', label='q-Casimir spacings')
-
-        # Poisson prediction: P(s) = e^{-s}
-        s_range = np.linspace(0, 4, 200)
-        ax3.plot(s_range, np.exp(-s_range), 'r--', linewidth=2,
-                 label='Poisson: e^{-s}')
-
-        # GUE prediction: P(s) ≈ (32/π²)s² e^{-4s²/π}
-        gue = (32 / np.pi ** 2) * s_range ** 2 * np.exp(-4 * s_range ** 2 / np.pi)
-        ax3.plot(s_range, gue, 'g-', linewidth=2,
-                 label='GUE: (32/π²)s²e^{-4s²/π}')
-
-        ax3.set_xlabel('Normalized spacing s', fontsize=12)
-        ax3.set_ylabel('Probability density', fontsize=12)
-        ax3.set_title('Nearest-Neighbor Spacing Distribution', fontsize=14)
-        ax3.legend(fontsize=10)
-        ax3.set_xlim(0, 4)
-        ax3.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('quantum_zeta_spectrum.png', dpi=150, bbox_inches='tight')
-    print("Saved: quantum_zeta_spectrum.png")
-
-
-if __name__ == "__main__":
-    main()
+plt.suptitle('Quantum Casimir Spectral Theory', fontsize=14, fontweight='bold', y=1.01)
+plt.tight_layout()
+plt.savefig('quantum_casimir_spectrum.png', dpi=150, bbox_inches='tight')
+print("Saved: quantum_casimir_spectrum.png")
