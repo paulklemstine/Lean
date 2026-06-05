@@ -1,414 +1,362 @@
 #!/usr/bin/env python3
 """
-GrowthRank: Numerical Demonstrations of Non-Standard Arithmetic
-===============================================================
+Non-Standard Arithmetic: Ultrafilter Transfer and Characteristic Zero Emergence
 
-Demonstrates the key concepts from the GrowthRank construction:
-- Ultra-ordering on sequences
-- Standard vs nonstandard elements
-- Intermediate growth ranks
-- Compositeness transfer
-- Goldbach transfer
+Demonstrates the key mathematical ideas from the Lean 4 formalization:
+1. Ultrafilter combinatorics on finite sets
+2. Characteristic zero emergence from finite characteristics
+3. The non-Archimedean hierarchy in ultrapowers
 """
 
 import random
-from math import sqrt, isqrt, log2
-from typing import List, Tuple, Callable
-
-# ============================================================
-# Simulate an ultrafilter as a random consistent selector
-# (In reality, free ultrafilters are non-constructive objects)
-# ============================================================
-
-def simulate_ultrafilter_vote(S: set, N: int = 1000) -> bool:
-    """Simulate whether a subset S of {0,...,N-1} is 'U-large'.
-    We approximate a free ultrafilter by: S is large iff |S ∩ {N//2,...,N-1}| > N//4.
-    This is a coarse approximation that captures the 'cofinite' flavor."""
-    tail = set(range(N // 2, N))
-    return len(S & tail) > N // 4
+from typing import List, Set, Callable
 
 
-def ultra_le(f: Callable, g: Callable, N: int = 1000) -> bool:
-    """Check if f ≤_U g (approximately)."""
-    S = {i for i in range(N) if f(i) <= g(i)}
-    return simulate_ultrafilter_vote(S, N)
-
-
-def ultra_lt(f: Callable, g: Callable, N: int = 1000) -> bool:
-    """Check if f <_U g (approximately)."""
-    S = {i for i in range(N) if f(i) < g(i)}
-    return simulate_ultrafilter_vote(S, N)
-
-
-# ============================================================
-# Demo 1: Standard vs Nonstandard Elements
-# ============================================================
-
-def demo_standard_vs_nonstandard():
-    print("=" * 60)
-    print("Demo 1: Standard vs Nonstandard Elements")
-    print("=" * 60)
+def simulate_ultrafilter_pigeonhole(n_indices: int, n_colors: int, seed: int = 42):
+    """
+    Simulate the ultrafilter pigeonhole principle.
     
-    std_5 = lambda i: 5
-    std_100 = lambda i: 100
-    identity = lambda i: i
-    quadratic = lambda i: i * i
+    For any coloring of {0,...,n_indices-1} with n_colors colors,
+    at least one color class must be "large" (in any ultrafilter).
+    We simulate by showing that the largest color class always contains
+    at least ceil(n_indices / n_colors) elements.
+    """
+    random.seed(seed)
+    coloring = [random.randint(0, n_colors - 1) for _ in range(n_indices)]
     
-    N = 1000
+    # Count color classes
+    classes = {}
+    for i, c in enumerate(coloring):
+        classes.setdefault(c, []).append(i)
     
-    print(f"\nComparing sequences over {{0, ..., {N-1}}}:")
-    print(f"  std(5) ≤_U std(100)? {ultra_le(std_5, std_100, N)} (expected: True)")
-    print(f"  std(100) ≤_U std(5)? {ultra_le(std_100, std_5, N)} (expected: False)")
-    print(f"  std(100) <_U id?     {ultra_lt(std_100, identity, N)} (expected: True)")
-    print(f"  id <_U i²?           {ultra_lt(identity, quadratic, N)} (expected: True)")
-    print(f"  std(5) <_U √i?       {ultra_lt(std_5, lambda i: isqrt(i), N)} (expected: True)")
-    print(f"  √i <_U id?           {ultra_lt(lambda i: isqrt(i), identity, N)} (expected: True)")
+    print(f"=== Ultrafilter Pigeonhole ({n_colors} colors, {n_indices} indices) ===")
+    for color, indices in sorted(classes.items()):
+        print(f"  Color {color}: {len(indices)} elements")
     
-    print("\n  → The identity sequence is nonstandard: larger than all constants.")
-    print("  → √i sits between standard elements and the identity.")
+    largest = max(classes.items(), key=lambda x: len(x[1]))
+    print(f"  Largest class: color {largest[0]} with {len(largest[1])} elements")
+    print(f"  (Lower bound: ceil({n_indices}/{n_colors}) = {(n_indices + n_colors - 1) // n_colors})")
+    print()
 
 
-# ============================================================
-# Demo 2: Growth Rank Hierarchy
-# ============================================================
-
-def demo_growth_hierarchy():
-    print("\n" + "=" * 60)
-    print("Demo 2: Growth Rank Hierarchy")
-    print("=" * 60)
+def demonstrate_characteristic_zero():
+    """
+    Demonstrate how characteristic zero emerges from finite characteristics.
     
-    # Define sequences of different growth rates
-    sequences = [
-        ("const(1)", lambda i: 1),
-        ("const(10)", lambda i: 10),
-        ("log₂(i+1)", lambda i: max(1, int(log2(i + 1)))),
-        ("√i", lambda i: isqrt(max(1, i))),
-        ("i", lambda i: i),
-        ("i·log₂(i+1)", lambda i: i * max(1, int(log2(i + 1)))),
-        ("i²", lambda i: i * i),
-    ]
+    Key idea: Consider fields Z/p_n Z for primes p_1 < p_2 < ...
+    For any fixed N > 0, only finitely many p_i ≤ N.
+    So {i | p_i > N} is cofinite, hence in any free ultrafilter.
+    Therefore, the ultraproduct has characteristic 0.
+    """
+    print("=== Characteristic Zero from Finite Characteristics ===")
     
-    N = 500
-    print(f"\nGrowth rank ordering (N={N}):")
-    print("  Sequence            ≤_U next?   Values at i=100,200,300")
+    # Generate first 20 primes
+    primes = []
+    candidate = 2
+    while len(primes) < 20:
+        if all(candidate % p != 0 for p in primes):
+            primes.append(candidate)
+        candidate += 1
     
-    for j, (name, f) in enumerate(sequences):
-        vals = f"{f(100):>8}, {f(200):>8}, {f(300):>8}"
-        if j < len(sequences) - 1:
-            _, g = sequences[j + 1]
-            le = ultra_le(f, g, N)
-            print(f"  {name:<20} → {le!s:<8}  [{vals}]")
-        else:
-            print(f"  {name:<20}            [{vals}]")
-    
-    print("\n  → Each sequence strictly dominates the previous one.")
-    print("  → This chain shows 7 distinct growth ranks.")
-
-
-# ============================================================
-# Demo 3: No Minimum Nonstandard Element
-# ============================================================
-
-def demo_no_minimum():
-    print("\n" + "=" * 60)
-    print("Demo 3: No Minimum Nonstandard Element")
-    print("=" * 60)
-    
-    print("\n  Starting from f(i) = i (nonstandard):")
-    f = lambda i: i
-    N = 1000
-    
-    for step in range(8):
-        name = f"f/{2**step}" if step > 0 else "f = id"
-        divisor = 2 ** step
-        g = lambda i, d=divisor: i // d
-        
-        # Check it's still nonstandard (larger than some constant)
-        threshold = 10
-        S = {i for i in range(N) if g(i) > threshold}
-        is_nonstandard = simulate_ultrafilter_vote(S, N)
-        
-        print(f"  {name:<12}: g(100)={g(100):>6}, g(500)={g(500):>6}, "
-              f"g(999)={g(999):>6}, nonstandard? {is_nonstandard}")
-    
-    print("\n  → Repeated halving produces ever-smaller nonstandard elements.")
-    print("  → The nonstandard part has no minimum.")
-
-
-# ============================================================
-# Demo 4: Compositeness Transfer
-# ============================================================
-
-def is_prime(n: int) -> bool:
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
-
-
-def smallest_factor(n: int) -> int:
-    if n < 2:
-        return n
-    if n % 2 == 0:
-        return 2
-    i = 3
-    while i * i <= n:
-        if n % i == 0:
-            return i
-        i += 2
-    return n
-
-
-def demo_compositeness_transfer():
-    print("\n" + "=" * 60)
-    print("Demo 4: Compositeness Transfer")
-    print("=" * 60)
-    
-    # f(i) = 6*i + 4 (always composite for i ≥ 1)
-    f = lambda i: 6 * i + 4
-    N = 100
-    
-    print(f"\n  f(i) = 6i + 4 (composite for i ≥ 1)")
-    print(f"  Extracting factor sequences g(i), h(i) with f(i) = g(i) × h(i):\n")
-    
-    print(f"  {'i':>4} | {'f(i)':>6} | {'g(i)=minFac':>12} | {'h(i)=f/g':>10} | {'g≥2':>4} | {'h≥2':>4}")
-    print(f"  {'-'*4}-+-{'-'*6}-+-{'-'*12}-+-{'-'*10}-+-{'-'*4}-+-{'-'*4}")
-    
-    g_ge2_count = 0
-    h_ge2_count = 0
-    eq_count = 0
-    
-    for i in range(1, N + 1):
-        fi = f(i)
-        gi = smallest_factor(fi)
-        hi = fi // gi
-        g_ok = gi >= 2
-        h_ok = hi >= 2
-        eq_ok = gi * hi == fi
-        
-        if g_ok: g_ge2_count += 1
-        if h_ok: h_ge2_count += 1
-        if eq_ok: eq_count += 1
-        
-        if i <= 8 or i == N:
-            print(f"  {i:>4} | {fi:>6} | {gi:>12} | {hi:>10} | {'✓' if g_ok else '✗':>4} | {'✓' if h_ok else '✗':>4}")
-        elif i == 9:
-            print(f"  {'...':>4} | {'...':>6} | {'...':>12} | {'...':>10} | {'...':>4} | {'...':>4}")
-    
-    print(f"\n  Summary over {N} values:")
-    print(f"    g(i) ≥ 2: {g_ge2_count}/{N} ({100*g_ge2_count/N:.0f}%)")
-    print(f"    h(i) ≥ 2: {h_ge2_count}/{N} ({100*h_ge2_count/N:.0f}%)")
-    print(f"    f = g×h:  {eq_count}/{N} ({100*eq_count/N:.0f}%)")
-    print(f"\n  → Compositeness transfers: nontrivial factors exist U-a.e.")
-
-
-# ============================================================
-# Demo 5: Goldbach Transfer
-# ============================================================
-
-def demo_goldbach_transfer():
-    print("\n" + "=" * 60)
-    print("Demo 5: Goldbach Transfer to ℕ*")
-    print("=" * 60)
-    
-    # f(i) = 2i + 4 (even, ≥ 4)
-    f = lambda i: 2 * i + 4
-    N = 100
-    
-    print(f"\n  f(i) = 2i + 4 (even, ≥ 4)")
-    print(f"  Finding prime decompositions p(i) + q(i) = f(i):\n")
-    
-    successes = 0
-    for i in range(N):
-        fi = f(i)
-        found = False
-        for p in range(2, fi):
-            if is_prime(p) and is_prime(fi - p):
-                q = fi - p
-                if i < 8 or i == N - 1:
-                    print(f"  f({i}) = {fi} = {p} + {q} ({'✓' if is_prime(p) and is_prime(q) else '✗'})")
-                elif i == 8:
-                    print(f"  ...")
-                successes += 1
-                found = True
-                break
-        if not found:
-            print(f"  f({i}) = {fi} — NO DECOMPOSITION FOUND!")
-    
-    print(f"\n  Goldbach decomposition found: {successes}/{N} ({100*successes/N:.0f}%)")
-    print(f"  → If Goldbach holds for all ℕ, it automatically holds for ℕ*")
-
-
-# ============================================================
-# Demo 6: Underflow Principle
-# ============================================================
-
-def demo_underflow():
-    print("\n" + "=" * 60)
-    print("Demo 6: Underflow Principle")
-    print("=" * 60)
-    
-    print("\n  Property P(n): 'n² + n + 41 is prime' (Euler's famous polynomial)")
-    print("  This holds for n = 0, 1, ..., 39 but fails at n = 40.\n")
-    
-    for n in range(45):
-        val = n * n + n + 41
-        p = is_prime(val)
-        if n <= 5 or 38 <= n <= 42:
-            print(f"  P({n:>2}): {n}² + {n} + 41 = {val:>5}, prime? {p}")
-        elif n == 6:
-            print(f"  ...")
-    
-    print(f"\n  Underflow says: if P holds for ALL nonstandard n, then ∃ N, ∀ n ≥ N, P(n).")
-    print(f"  Contrapositive: P(40) is false → there exists a nonstandard f with P(f(i)) false U-a.e.")
-    print(f"  Indeed, take f(i) = 40 for all i. Then P(f(i)) = P(40) = False everywhere.")
-
-
-# ============================================================
-# Main
-# ============================================================
-
-if __name__ == "__main__":
-    print("GrowthRank: Numerical Demonstrations")
-    print("of Non-Standard Arithmetic Structures")
+    print(f"  Primes: {primes}")
     print()
     
-    demo_standard_vs_nonstandard()
-    demo_growth_hierarchy()
-    demo_no_minimum()
-    demo_compositeness_transfer()
-    demo_goldbach_transfer()
-    demo_underflow()
+    # For each N, show how many primes are > N
+    for N in [1, 5, 10, 20, 50]:
+        exceeding = [p for p in primes if p > N]
+        print(f"  N = {N:3d}: {len(exceeding)}/{len(primes)} primes exceed N "
+              f"(cofinite? {len(exceeding) > len(primes) // 2})")
     
-    print("\n" + "=" * 60)
-    print("All demonstrations complete.")
-    print("=" * 60)
+    print()
+    print("  → As N grows, {i | p_i > N} stays cofinite → in any free ultrafilter")
+    print("  → The ultraproduct has char ≠ N for all N > 0 → char = 0")
+    print()
+
+
+def demonstrate_non_archimedean_hierarchy():
+    """
+    Demonstrate the hierarchy of non-standard elements.
+    
+    In the ultrapower, the functions id, id², id³, ... represent
+    elements that are increasingly "infinite":
+    - id(i) = i exceeds every constant for large i
+    - id²(i) = i² exceeds id(i) for i ≥ 2
+    - id^k(i) = i^k exceeds id^(k-1)(i) for i ≥ 2
+    """
+    print("=== Non-Archimedean Hierarchy ===")
+    print("  Comparing growth rates (for i = 2, 3, 5, 10, 100):")
+    print()
+    
+    indices = [2, 3, 5, 10, 100]
+    powers = [1, 2, 3, 4, 5]
+    
+    # Header
+    header = f"  {'i':>6s}" + "".join(f"  {'i^' + str(k):>12s}" for k in powers)
+    print(header)
+    print("  " + "-" * (6 + 14 * len(powers)))
+    
+    for i in indices:
+        row = f"  {i:>6d}"
+        for k in powers:
+            row += f"  {i**k:>12d}"
+        print(row)
+    
+    print()
+    print("  Each column grows strictly faster than the previous")
+    print("  → In the ultrapower, i^k > i^(k-1) > ... > i > n for any standard n")
+    print("  → The ultrapower has infinitely many 'levels of infinity'")
+    print()
+
+
+def demonstrate_compactness():
+    """
+    Demonstrate the ultrafilter proof of compactness.
+    
+    Key idea: if every finite subset of constraints is satisfiable,
+    the whole set is satisfiable (via ultrafilter/ultraproduct).
+    """
+    print("=== Compactness via Ultrafilters ===")
+    print()
+    
+    # Example: constraints "x > n" for each n
+    # Every finite subset {x > n1, ..., x > nk} is satisfied by x = max(n1,...,nk) + 1
+    # But no single x satisfies all of them (in standard ℕ)
+    # In the ultraproduct, the diagonal element satisfies all!
+    
+    constraints = list(range(10))
+    print("  Constraints: x > 0, x > 1, x > 2, ..., x > 9, ...")
+    print()
+    
+    for size in [1, 3, 5, 8]:
+        subset = constraints[:size]
+        witness = max(subset) + 1
+        print(f"  Finite subset {{x > {', x > '.join(str(n) for n in subset)}}}")
+        print(f"    → Satisfied by x = {witness}")
+    
+    print()
+    print("  Every finite subset is satisfiable!")
+    print("  → By compactness (via ultrafilter), ∃ ultrafilter U witnessing all constraints")
+    print("  → In the ultraproduct, the diagonal element id(i) = i satisfies all x > n")
+    print()
+
+
+def demonstrate_overspill():
+    """
+    Demonstrate the overspill principle.
+    
+    If S_0 ⊇ S_1 ⊇ S_2 ⊇ ... are all "large" and each element
+    eventually leaves, there exists a function growing to infinity
+    while staying inside the chain.
+    """
+    print("=== Overspill Principle ===")
+    print()
+    
+    # Concrete example: S_n = {i | i ≥ n}
+    N = 20
+    print("  Decreasing chain: S_n = {i ∈ ℕ | i ≥ n}")
+    print()
+    
+    for n in [0, 5, 10, 15]:
+        elements = [i for i in range(N) if i >= n]
+        print(f"  S_{n:2d} = {{{', '.join(str(x) for x in elements)}, ...}}")
+    
+    print()
+    print("  Each S_n is cofinite (hence in any free ultrafilter)")
+    print("  Each element i eventually leaves: i ∉ S_{i+1}")
+    print()
+    print("  Overspill function f(i) = i:")
+    print("    - f(i) → ∞ (exceeds every standard bound)")
+    print("    - i ∈ S_{f(i)} = S_i iff i ≥ i ✓")
+    print()
+
+
+def demonstrate_transfer():
+    """
+    Demonstrate algebraic transfer through ultraproducts.
+    """
+    print("=== Algebraic Transfer: Division Algorithm ===")
+    print()
+    
+    # Show division algorithm transfers coordinatewise
+    a_vals = [17, 23, 31, 42, 55]
+    d_vals = [5, 7, 4, 6, 8]
+    
+    print("  Division algorithm in each coordinate:")
+    for i, (a, d) in enumerate(zip(a_vals, d_vals)):
+        q, r = divmod(a, d)
+        assert a == d * q + r and r < d
+        print(f"    i={i}: {a} = {d} × {q} + {r}  (r={r} < d={d} ✓)")
+    
+    print()
+    print("  In the ultraproduct:")
+    print(f"    a = ({', '.join(str(x) for x in a_vals)}, ...)")
+    print(f"    d = ({', '.join(str(x) for x in d_vals)}, ...)")
+    print(f"    q = ({', '.join(str(a//d) for a, d in zip(a_vals, d_vals))}, ...)")
+    print(f"    r = ({', '.join(str(a%d) for a, d in zip(a_vals, d_vals))}, ...)")
+    print("    a = d·q + r and r < d hold coordinatewise → hold in ultraproduct!")
+    print()
+
+
+if __name__ == "__main__":
+    print("╔══════════════════════════════════════════════════════════════╗")
+    print("║  Non-Standard Arithmetic: Demonstrations                    ║")
+    print("║  Ultrafilter Transfer & Characteristic Zero Emergence       ║")
+    print("╚══════════════════════════════════════════════════════════════╝")
+    print()
+    
+    simulate_ultrafilter_pigeonhole(100, 5)
+    demonstrate_characteristic_zero()
+    demonstrate_non_archimedean_hierarchy()
+    demonstrate_compactness()
+    demonstrate_overspill()
+    demonstrate_transfer()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Growth Rank Hierarchy
-=====================================
+Visualization: Non-Archimedean Hierarchy in Ultrapowers
 
-Plots the growth hierarchy of sequences, showing how different
-growth rates create distinct strata in the GrowthRank ordering.
+Shows how the functions i, i², i³, i⁴ grow, demonstrating the
+hierarchy of "infinities" in the ultrapower.
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_growth_hierarchy():
-    """Plot growth rank hierarchy showing standard vs nonstandard gap."""
+def plot_power_hierarchy():
+    """Plot the power hierarchy i^k for k = 1, 2, 3, 4."""
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
-    n = np.arange(1, 200)
-    
-    # Left panel: Growth rates
+
+    # Left: linear scale
     ax = axes[0]
-    ax.plot(n, np.ones_like(n) * 5, 'b--', linewidth=1.5, label='std(5)', alpha=0.7)
-    ax.plot(n, np.ones_like(n) * 20, 'b--', linewidth=1.5, label='std(20)', alpha=0.7)
-    ax.plot(n, np.log2(n + 1), 'g-', linewidth=2, label='log₂(n)')
-    ax.plot(n, np.sqrt(n), 'm-', linewidth=2, label='√n')
-    ax.plot(n, n, 'r-', linewidth=2, label='n (identity)')
-    ax.plot(n, n * np.log2(n + 1), 'orange', linewidth=2, label='n·log₂(n)')
-    
+    x = np.arange(2, 20)
+    colors = ['#2196F3', '#FF5722', '#4CAF50', '#9C27B0']
+    labels = ['i', 'i²', 'i³', 'i⁴']
+
+    for k, (color, label) in enumerate(zip(colors, labels), 1):
+        ax.plot(x, x**k, 'o-', color=color, label=label,
+                markersize=4, linewidth=2)
+
     ax.set_xlabel('Index i', fontsize=12)
-    ax.set_ylabel('f(i)', fontsize=12)
-    ax.set_title('Growth Rate Hierarchy', fontsize=14, fontweight='bold')
-    ax.legend(loc='upper left', fontsize=9)
-    ax.set_ylim(0, 250)
-    
-    # Add annotation for non-Archimedean gap
-    ax.annotate('Standard\nregion', xy=(150, 12), fontsize=10, color='blue',
-                ha='center', style='italic')
-    ax.annotate('Nonstandard\nregion', xy=(150, 180), fontsize=10, color='red',
-                ha='center', style='italic')
-    ax.axhline(y=30, color='gray', linestyle=':', alpha=0.5)
-    
-    # Right panel: Growth rank ordering (symbolic)
-    ax2 = axes[1]
-    ranks = [
-        (0.05, 'std(1)', 'blue'),
-        (0.10, 'std(5)', 'blue'),
-        (0.15, 'std(20)', 'blue'),
-        (0.25, '⋮', 'gray'),
-        (0.35, '── NON-ARCHIMEDEAN GAP ──', 'red'),
-        (0.45, 'log₂(n)', 'green'),
-        (0.55, '√n', 'purple'),
-        (0.65, 'n^(2/3)', 'brown'),
-        (0.75, 'n', 'red'),
-        (0.85, 'n·log(n)', 'orange'),
-        (0.95, 'n²', 'darkred'),
-    ]
-    
-    for y, label, color in ranks:
-        if '──' in label:
-            ax2.axhline(y=y, color='red', linewidth=2, linestyle='--', alpha=0.7)
-            ax2.text(0.5, y + 0.02, label, ha='center', fontsize=10,
-                    color='red', fontweight='bold')
-        elif label == '⋮':
-            ax2.text(0.5, y, '⋮', ha='center', fontsize=16, color='gray')
-        else:
-            ax2.plot(0.5, y, 'o', color=color, markersize=10)
-            ax2.text(0.55, y, f'  {label}', ha='left', va='center',
-                    fontsize=11, color=color)
-    
-    ax2.set_xlim(0, 1.2)
-    ax2.set_ylim(-0.05, 1.05)
-    ax2.set_title('GrowthRank Ordering 𝔊(U)', fontsize=14, fontweight='bold')
-    ax2.set_ylabel('Growth Rank (increasing ↑)', fontsize=12)
-    ax2.set_xticks([])
-    ax2.arrow(0.1, 0, 0, 0.95, head_width=0.03, head_length=0.02,
-             fc='black', ec='black', alpha=0.3)
-    
+    ax.set_ylabel('Value', fontsize=12)
+    ax.set_title('Power Hierarchy (Linear Scale)', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.set_yscale('linear')
+    ax.set_ylim(0, 5000)
+    ax.grid(True, alpha=0.3)
+
+    # Right: log scale
+    ax = axes[1]
+    x = np.arange(2, 50)
+    for k, (color, label) in enumerate(zip(colors, labels), 1):
+        ax.plot(x, x**k, '-', color=color, label=label, linewidth=2)
+
+    ax.set_xlabel('Index i', fontsize=12)
+    ax.set_ylabel('Value (log scale)', fontsize=12)
+    ax.set_title('Power Hierarchy (Log Scale)', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.set_yscale('log')
+    ax.grid(True, alpha=0.3)
+
+    # Add annotation
+    ax.annotate('Each level strictly dominates\nthe previous for i ≥ 2',
+                xy=(30, 30**3), fontsize=10,
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
+
+    plt.suptitle('Non-Archimedean Hierarchy in Ultrapowers',
+                 fontsize=16, fontweight='bold', y=1.02)
     plt.tight_layout()
-    plt.savefig('growth_hierarchy.png', dpi=150, bbox_inches='tight')
+    plt.savefig('viz_hierarchy.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: growth_hierarchy.png")
+    print("Saved viz_hierarchy.png")
 
 
-def plot_no_minimum():
-    """Plot the 'no minimum nonstandard' theorem."""
+def plot_char_zero_emergence():
+    """Visualize characteristic zero emergence."""
     fig, ax = plt.subplots(figsize=(10, 6))
-    
-    n = np.arange(1, 300)
-    
-    colors = plt.cm.viridis(np.linspace(0.2, 0.9, 8))
-    
-    for k in range(8):
-        divisor = 2 ** k
-        y = n // divisor
-        label = f'id/{divisor}' if k > 0 else 'id'
-        ax.plot(n, y, color=colors[k], linewidth=2 - k * 0.2, label=label,
-               alpha=0.8)
-    
-    # Standard threshold
-    ax.axhline(y=20, color='blue', linestyle=':', alpha=0.5, label='std(20)')
-    ax.fill_between(n, 0, 20, alpha=0.1, color='blue')
-    ax.text(250, 22, 'Standard region', fontsize=10, color='blue', ha='center')
-    
-    ax.set_xlabel('Index i', fontsize=12)
-    ax.set_ylabel('Sequence value', fontsize=12)
-    ax.set_title('No Minimum Nonstandard Element:\nRepeated halving stays nonstandard',
-                fontsize=14, fontweight='bold')
-    ax.legend(loc='upper left', fontsize=9, ncol=2)
-    ax.set_ylim(0, 100)
-    
+
+    # Generate primes
+    primes = []
+    candidate = 2
+    while len(primes) < 100:
+        if all(candidate % p != 0 for p in primes):
+            primes.append(candidate)
+        candidate += 1
+
+    # For each N, compute fraction of primes > N
+    N_values = range(1, 200)
+    fractions = []
+    for N in N_values:
+        frac = sum(1 for p in primes if p > N) / len(primes)
+        fractions.append(frac)
+
+    ax.plot(list(N_values), fractions, 'b-', linewidth=2)
+    ax.axhline(y=0.5, color='red', linestyle='--', alpha=0.5,
+               label='50% threshold')
+
+    # Mark key points
+    for N_mark in [10, 50, 100]:
+        frac = sum(1 for p in primes if p > N_mark) / len(primes)
+        ax.plot(N_mark, frac, 'ro', markersize=8)
+        ax.annotate(f'N={N_mark}: {frac:.0%}', xy=(N_mark, frac),
+                    xytext=(N_mark+10, frac+0.05), fontsize=9,
+                    arrowprops=dict(arrowstyle='->', color='red'))
+
+    ax.set_xlabel('Threshold N', fontsize=12)
+    ax.set_ylabel('Fraction of primes p > N', fontsize=12)
+    ax.set_title('Characteristic Zero Emergence:\nFraction of primes exceeding each threshold',
+                 fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+
     plt.tight_layout()
-    plt.savefig('no_minimum_nonstandard.png', dpi=150, bbox_inches='tight')
+    plt.savefig('viz_char_zero.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: no_minimum_nonstandard.png")
+    print("Saved viz_char_zero.png")
+
+
+def plot_overspill_function():
+    """Visualize the overspill function."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # S_n = {i | i >= n}, overspill function f(i) = i
+    N = 30
+    x = np.arange(0, N)
+
+    # Plot membership regions
+    for n in range(0, 10, 2):
+        ax.fill_between(x, n, 0, where=(x >= n),
+                         alpha=0.1, color=plt.cm.viridis(n/10))
+        ax.axhline(y=n, color=plt.cm.viridis(n/10), alpha=0.3,
+                   linestyle=':', linewidth=1)
+        if n < 8:
+            ax.text(N-1, n+0.3, f'S_{n}', fontsize=9,
+                    color=plt.cm.viridis(n/10))
+
+    # Plot f(i) = i (diagonal)
+    ax.plot(x, x, 'r-', linewidth=3, label='f(i) = i (overspill function)')
+    ax.plot(x, x, 'ro', markersize=4)
+
+    ax.set_xlabel('Index i', fontsize=12)
+    ax.set_ylabel('Level n / f(i)', fontsize=12)
+    ax.set_title('Overspill Principle: f(i) grows while staying in S_{f(i)}',
+                 fontsize=14)
+    ax.legend(fontsize=11)
+    ax.set_xlim(-0.5, N)
+    ax.set_ylim(-0.5, N)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('viz_overspill.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved viz_overspill.png")
 
 
 if __name__ == "__main__":
-    plot_growth_hierarchy()
-    plot_no_minimum()
+    plot_power_hierarchy()
+    plot_char_zero_emergence()
+    plot_overspill_function()
+    print("All visualizations generated.")

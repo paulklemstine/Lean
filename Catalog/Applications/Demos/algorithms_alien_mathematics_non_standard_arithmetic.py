@@ -1,314 +1,316 @@
 #!/usr/bin/env python3
 """
-Algorithms for GrowthRank and Non-Standard Arithmetic
-=====================================================
+Algorithms for Non-Standard Arithmetic
 
-Type-hinted implementations of the core algorithms from the research.
+Type-hinted implementations of the key constructions and algorithms
+from the ultrafilter transfer framework.
 """
 
-from __future__ import annotations
-from typing import Callable, List, Tuple, Optional, Set
-from math import isqrt, log2
+from typing import (
+    TypeVar, Generic, Set, FrozenSet, Callable, Optional,
+    List, Tuple, Dict, Iterator
+)
 from dataclasses import dataclass
 from functools import reduce
+import math
+
+
+T = TypeVar('T')
+I = TypeVar('I')  # Index type
 
 
 # ============================================================
-# Type Aliases
-# ============================================================
-
-Sequence = Callable[[int], int]
-
-
-# ============================================================
-# Algorithm 1: Ultrafilter Approximation
+# Algorithm 1: Ultrafilter Operations
 # ============================================================
 
 @dataclass
-class ApproxUltrafilter:
-    """Approximate a free ultrafilter on ℕ using a threshold-based rule.
+class SimulatedUltrafilter:
+    """
+    A simulated ultrafilter on a finite index set.
     
-    A set S ⊆ {0,...,N-1} is declared 'U-large' if its density in the
-    upper half exceeds a threshold. This captures the cofinite flavor
-    of free ultrafilters.
+    For finite sets, every ultrafilter is principal (concentrated at a point).
+    This simulates the combinatorics of ultrafilter membership testing.
     
     Pseudocode:
-        IS_LARGE(S, N):
-            tail ← {N/2, ..., N-1}
-            return |S ∩ tail| / |tail| > threshold
+        INPUT: index set I, focus point j ∈ I
+        MEMBERSHIP TEST(S):
+            RETURN j ∈ S
+        TRANSFER(P):
+            RETURN P(j)
     """
-    N: int = 1000
-    threshold: float = 0.5
+    index_set: FrozenSet[int]
+    focus: int  # Principal point
     
-    def is_large(self, S: Set[int]) -> bool:
-        """Determine if S is 'U-large' (approximation)."""
-        tail_start = self.N // 2
-        tail_size = self.N - tail_start
-        count = sum(1 for i in range(tail_start, self.N) if i in S)
-        return count / tail_size > self.threshold
+    def __post_init__(self) -> None:
+        assert self.focus in self.index_set, "Focus must be in index set"
     
-    def ultra_le(self, f: Sequence, g: Sequence) -> bool:
-        """Check f ≤_U g."""
-        S = {i for i in range(self.N) if f(i) <= g(i)}
-        return self.is_large(S)
+    def contains(self, subset: FrozenSet[int]) -> bool:
+        """Test if a subset is in the ultrafilter."""
+        return self.focus in subset
     
-    def ultra_lt(self, f: Sequence, g: Sequence) -> bool:
-        """Check f <_U g."""
-        S = {i for i in range(self.N) if f(i) < g(i)}
-        return self.is_large(S)
+    def transfer_and(self, p_set: FrozenSet[int], q_set: FrozenSet[int]) -> bool:
+        """Transfer conjunction: P ∧ Q is U-large iff both are."""
+        return self.contains(p_set & q_set)
     
-    def ultra_eq(self, f: Sequence, g: Sequence) -> bool:
-        """Check f =_U g."""
-        S = {i for i in range(self.N) if f(i) == g(i)}
-        return self.is_large(S)
+    def transfer_or(self, p_set: FrozenSet[int], q_set: FrozenSet[int]) -> bool:
+        """Transfer disjunction: P ∨ Q is U-large implies P or Q is."""
+        return self.contains(p_set) or self.contains(q_set)
+    
+    def negation_transfer(self, p_set: FrozenSet[int]) -> bool:
+        """If P is not U-large, then ¬P is U-large."""
+        return not self.contains(p_set)
+    
+    def finite_coloring_pigeonhole(self, coloring: Callable[[int], int],
+                                     k: int) -> int:
+        """Return a color whose class is in the ultrafilter."""
+        return coloring(self.focus)
 
 
 # ============================================================
-# Algorithm 2: Growth Rank Classification
+# Algorithm 2: Characteristic Zero Detection
+# ============================================================
+
+def char_zero_detection(
+    char_values: List[int],
+    threshold: int
+) -> Dict[str, object]:
+    """
+    Detect characteristic zero emergence in an ultraproduct.
+    
+    Given a sequence of characteristics (e.g., primes p_1, p_2, ...),
+    determine for which N the set {i | char_i > N} is cofinite.
+    
+    Pseudocode:
+        INPUT: char_values[0..n-1], threshold N
+        count = |{i | char_values[i] > N}|
+        RETURN count, is_cofinite (count > n/2 for "most" values)
+    
+    Args:
+        char_values: List of characteristic values
+        threshold: Value N to test against
+    
+    Returns:
+        Dictionary with analysis results
+    """
+    n = len(char_values)
+    exceeding = sum(1 for c in char_values if c > threshold)
+    at_most = n - exceeding
+    
+    return {
+        "total": n,
+        "exceeding_threshold": exceeding,
+        "at_most_threshold": at_most,
+        "fraction_exceeding": exceeding / n if n > 0 else 0,
+        "is_cofinite": at_most < float('inf'),  # Always true for finite
+        "char_zero_emerging": exceeding > at_most,
+    }
+
+
+def generate_prime_characteristics(count: int) -> List[int]:
+    """Generate the first `count` primes as characteristics."""
+    primes: List[int] = []
+    candidate = 2
+    while len(primes) < count:
+        if all(candidate % p != 0 for p in primes):
+            primes.append(candidate)
+        candidate += 1
+    return primes
+
+
+# ============================================================
+# Algorithm 3: Non-Archimedean Hierarchy
 # ============================================================
 
 @dataclass
-class GrowthClass:
-    """Classification of a sequence's growth rate.
-    
-    Pseudocode:
-        CLASSIFY(f, N):
-            Compute ratios f(i)/i^α for α ∈ {0, 0.5, 1, 1.5, 2}
-            Find α that minimizes variance of ratios
-            Return (α, average_ratio)
+class NonArchimedeanElement:
     """
-    exponent: float
-    coefficient: float
+    Represents an element of the ultrapower ℕ^I / U.
+    
+    An element is a function I → ℕ modulo the ultrafilter equivalence.
+    For the free ultrafilter on ℕ, the "standard" elements are constants,
+    and "non-standard" elements grow without bound.
+    """
+    representative: Callable[[int], int]
     name: str
     
-    def __repr__(self) -> str:
-        return f"GrowthClass({self.name}: ~{self.coefficient:.2f} · n^{self.exponent:.2f})"
-
-
-def classify_growth(f: Sequence, N: int = 500) -> GrowthClass:
-    """Classify the growth rate of a sequence.
+    def exceeds_constant(self, n: int, sample_size: int = 100) -> float:
+        """Estimate the proportion of indices where the element exceeds n."""
+        count = sum(1 for i in range(2, sample_size + 2)
+                    if self.representative(i) > n)
+        return count / sample_size
     
-    Fits f(n) ≈ c · n^α by testing candidate exponents.
+    def compare_with(self, other: 'NonArchimedeanElement',
+                     sample_size: int = 100) -> float:
+        """Estimate proportion where self > other."""
+        count = sum(1 for i in range(2, sample_size + 2)
+                    if self.representative(i) > other.representative(i))
+        return count / sample_size
+
+
+def build_power_hierarchy(max_power: int) -> List[NonArchimedeanElement]:
     """
-    candidates = [0.0, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0]
-    best_alpha = 0.0
-    best_var = float('inf')
-    best_coeff = 1.0
+    Build the hierarchy of non-standard elements i, i², i³, ...
     
-    for alpha in candidates:
-        ratios: List[float] = []
-        for i in range(max(2, N // 4), N):
-            denom = i ** alpha if alpha > 0 else 1.0
-            if denom > 0:
-                ratios.append(f(i) / denom)
-        
-        if not ratios:
-            continue
-        
-        mean = sum(ratios) / len(ratios)
-        if mean == 0:
-            continue
-        var = sum((r - mean) ** 2 for r in ratios) / len(ratios)
-        # Normalize variance by mean^2 for fair comparison
-        normalized_var = var / (mean ** 2 + 1e-10)
-        
-        if normalized_var < best_var:
-            best_var = normalized_var
-            best_alpha = alpha
-            best_coeff = mean
-    
-    names = {
-        0.0: "constant", 0.25: "fourth-root", 0.5: "sqrt",
-        0.75: "n^(3/4)", 1.0: "linear", 1.5: "n^(3/2)",
-        2.0: "quadratic", 3.0: "cubic"
-    }
-    return GrowthClass(best_alpha, best_coeff, names.get(best_alpha, f"n^{best_alpha}"))
+    Pseudocode:
+        FOR k = 1 TO max_power:
+            DEFINE element_k(i) = i^k
+        RETURN [element_1, ..., element_max_power]
+    """
+    elements: List[NonArchimedeanElement] = []
+    for k in range(1, max_power + 1):
+        power = k  # Capture for closure
+        elements.append(NonArchimedeanElement(
+            representative=lambda i, p=power: i ** p,
+            name=f"i^{k}" if k > 1 else "i"
+        ))
+    return elements
 
 
 # ============================================================
-# Algorithm 3: Compositeness Transfer
+# Algorithm 4: Overspill Function Construction
 # ============================================================
 
-def smallest_prime_factor(n: int) -> int:
-    """Return the smallest prime factor of n, or n if prime."""
-    if n < 2:
+def construct_overspill_function(
+    membership: Callable[[int, int], bool],
+    max_index: int
+) -> Callable[[int], int]:
+    """
+    Construct the overspill function f(i) = max{n | i ∈ S_n}.
+    
+    Given a decreasing chain S_0 ⊇ S_1 ⊇ ... where membership(i, n)
+    tests if i ∈ S_n, compute f(i) = sup{n | i ∈ S_n}.
+    
+    Pseudocode:
+        INPUT: membership test, max search depth
+        FUNCTION f(i):
+            n = 0
+            WHILE membership(i, n+1) AND n < max_index:
+                n = n + 1
+            RETURN n
+    
+    Args:
+        membership: Function (i, n) → bool testing if i ∈ S_n
+        max_index: Maximum search depth
+    
+    Returns:
+        The overspill function f
+    """
+    def f(i: int) -> int:
+        n = 0
+        while n < max_index and membership(i, n + 1):
+            n += 1
         return n
-    if n % 2 == 0:
-        return 2
-    i = 3
-    while i * i <= n:
-        if n % i == 0:
-            return i
-        i += 2
-    return n
-
-
-def compositeness_transfer(
-    f: Sequence, N: int = 100
-) -> Tuple[Sequence, Sequence, float]:
-    """Extract factor sequences g, h such that f =_U g × h.
-    
-    Pseudocode:
-        COMPOSITENESS_TRANSFER(f, N):
-            For each i in {0, ..., N-1}:
-                If f(i) is composite:
-                    g(i) ← smallest_prime_factor(f(i))
-                    h(i) ← f(i) / g(i)
-                Else:
-                    g(i) ← 1, h(i) ← f(i)
-            Return (g, h, fraction_where_both_nontrivial)
-    
-    Returns: (g, h, success_rate)
-    """
-    g_vals: List[int] = []
-    h_vals: List[int] = []
-    nontrivial = 0
-    
-    for i in range(N):
-        fi = f(i)
-        if fi >= 4:
-            gi = smallest_prime_factor(fi)
-            hi = fi // gi
-            if gi >= 2 and hi >= 2:
-                nontrivial += 1
-        else:
-            gi = 1
-            hi = fi
-        g_vals.append(gi)
-        h_vals.append(hi)
-    
-    g_seq: Sequence = lambda i, v=g_vals: v[i] if i < len(v) else 1
-    h_seq: Sequence = lambda i, v=h_vals: v[i] if i < len(v) else 1
-    return g_seq, h_seq, nontrivial / N
+    return f
 
 
 # ============================================================
-# Algorithm 4: Goldbach Transfer
+# Algorithm 5: Compactness Witness Construction
 # ============================================================
 
-def is_prime(n: int) -> bool:
-    """Primality test."""
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
-
-
-def goldbach_decompose(n: int) -> Optional[Tuple[int, int]]:
-    """Find primes p, q with n = p + q, or None."""
-    if n < 4 or n % 2 != 0:
-        return None
-    for p in range(2, n):
-        if is_prime(p) and is_prime(n - p):
-            return (p, n - p)
-    return None
-
-
-def goldbach_transfer(
-    f: Sequence, N: int = 100
-) -> Tuple[Sequence, Sequence, float]:
-    """Extract prime sequences p, q such that f =_U p + q.
-    
-    Pseudocode:
-        GOLDBACH_TRANSFER(f, N):
-            For each i in {0, ..., N-1}:
-                If f(i) is even and ≥ 4:
-                    (p(i), q(i)) ← goldbach_decompose(f(i))
-                Else:
-                    p(i) ← 2, q(i) ← 2
-            Return (p, q, success_rate)
-    """
-    p_vals: List[int] = []
-    q_vals: List[int] = []
-    success = 0
-    
-    for i in range(N):
-        fi = f(i)
-        decomp = goldbach_decompose(fi)
-        if decomp:
-            p_vals.append(decomp[0])
-            q_vals.append(decomp[1])
-            success += 1
-        else:
-            p_vals.append(2)
-            q_vals.append(2)
-    
-    p_seq: Sequence = lambda i, v=p_vals: v[i] if i < len(v) else 2
-    q_seq: Sequence = lambda i, v=q_vals: v[i] if i < len(v) else 2
-    return p_seq, q_seq, success / N
-
-
-# ============================================================
-# Algorithm 5: Underflow Detection
-# ============================================================
-
-def detect_underflow_bound(
-    P: Callable[[int], bool], max_check: int = 10000
+def compactness_witness(
+    constraints: List[Callable[[int], bool]],
+    search_bound: int = 10000
 ) -> Optional[int]:
-    """Find N such that P(n) holds for all n ≥ N, or None.
+    """
+    Search for a witness satisfying a finite conjunction of constraints.
+    
+    This implements the finite satisfiability check: given constraints
+    P_1, ..., P_k, find m such that P_n(m) for all n.
     
     Pseudocode:
-        DETECT_UNDERFLOW(P, max_check):
-            last_failure ← -1
-            For n from 0 to max_check:
-                If not P(n):
-                    last_failure ← n
-            If last_failure < max_check - 100:
-                Return last_failure + 1
-            Else:
-                Return None  (can't determine)
+        INPUT: constraints P_1, ..., P_k
+        FOR m = 0 TO search_bound:
+            IF ALL(P_n(m) for n in constraints):
+                RETURN m
+        RETURN None
     """
-    last_failure = -1
-    for n in range(max_check):
-        if not P(n):
-            last_failure = n
-    
-    if last_failure < max_check - 100:
-        return last_failure + 1
+    for m in range(search_bound):
+        if all(p(m) for p in constraints):
+            return m
     return None
 
 
+def demonstrate_compactness_finite_sat() -> None:
+    """
+    Demonstrate that {x > n | n ∈ ℕ} has the finite satisfiability property.
+    """
+    print("Compactness: testing finite subsets of {x > n | n ∈ ℕ}")
+    for k in [1, 5, 10, 50]:
+        constraints = [lambda m, n=n: m > n for n in range(k)]
+        witness = compactness_witness(constraints)
+        print(f"  |S| = {k}: witness = {witness}")
+
+
 # ============================================================
-# Main: Run all algorithms
+# Algorithm 6: Division Algorithm Transfer
 # ============================================================
+
+def division_transfer(
+    a_coords: List[int],
+    d_coords: List[int]
+) -> Tuple[List[int], List[int]]:
+    """
+    Compute the coordinatewise division algorithm for ultraproduct elements.
+    
+    Pseudocode:
+        INPUT: a = (a_1, ..., a_n), d = (d_1, ..., d_n) with d_i > 0
+        FOR i = 1 TO n:
+            q_i = a_i ÷ d_i  (integer division)
+            r_i = a_i mod d_i
+        RETURN (q_1,...,q_n), (r_1,...,r_n)
+    """
+    q_coords = [a // d for a, d in zip(a_coords, d_coords)]
+    r_coords = [a % d for a, d in zip(a_coords, d_coords)]
+    
+    # Verify the identity coordinatewise
+    for i, (a, d, q, r) in enumerate(zip(a_coords, d_coords, q_coords, r_coords)):
+        assert a == d * q + r, f"Division failed at index {i}"
+        assert r < d, f"Remainder not less than divisor at index {i}"
+    
+    return q_coords, r_coords
+
 
 if __name__ == "__main__":
-    print("GrowthRank Algorithms\n")
+    print("=== Non-Standard Arithmetic: Algorithm Demonstrations ===\n")
     
-    # Growth classification
-    print("Growth Classification:")
-    sequences = [
-        ("constant 5", lambda i: 5),
-        ("sqrt", lambda i: isqrt(max(1, i))),
-        ("linear", lambda i: i),
-        ("quadratic", lambda i: i * i),
-    ]
-    for name, seq in sequences:
-        gc = classify_growth(seq)
-        print(f"  {name:>12} → {gc}")
+    # Ultrafilter operations
+    I = frozenset(range(10))
+    U = SimulatedUltrafilter(I, focus=7)
+    S1 = frozenset({5, 7, 9})
+    S2 = frozenset({7, 8})
+    print(f"Ultrafilter focused at 7:")
+    print(f"  {set(S1)} ∈ U? {U.contains(S1)}")
+    print(f"  {set(S2)} ∈ U? {U.contains(S2)}")
+    print(f"  S1 ∩ S2 ∈ U? {U.transfer_and(S1, S2)}")
+    print()
     
-    # Compositeness transfer
-    print("\nCompositeness Transfer (f(i) = 6i+4):")
-    g, h, rate = compositeness_transfer(lambda i: 6 * i + 4, 200)
-    print(f"  Success rate: {rate:.1%}")
-    print(f"  g(10) = {g(10)}, h(10) = {h(10)}, product = {g(10)*h(10)}, f(10) = {6*10+4}")
+    # Characteristic zero detection
+    primes = generate_prime_characteristics(50)
+    for N in [10, 50, 100]:
+        result = char_zero_detection(primes, N)
+        print(f"Char zero detection (N={N}): "
+              f"{result['exceeding_threshold']}/{result['total']} exceed, "
+              f"emerging={result['char_zero_emerging']}")
+    print()
     
-    # Goldbach transfer
-    print("\nGoldbach Transfer (f(i) = 2i+4):")
-    p, q, rate = goldbach_transfer(lambda i: 2 * i + 4, 200)
-    print(f"  Success rate: {rate:.1%}")
-    print(f"  p(10) = {p(10)}, q(10) = {q(10)}, sum = {p(10)+q(10)}, f(10) = {2*10+4}")
+    # Power hierarchy
+    hierarchy = build_power_hierarchy(4)
+    print("Power hierarchy (fraction exceeding constant 1000):")
+    for elem in hierarchy:
+        frac = elem.exceeds_constant(1000, sample_size=200)
+        print(f"  {elem.name}: {frac:.2%}")
+    print()
     
-    # Underflow detection
-    print("\nUnderflow Detection:")
-    bound = detect_underflow_bound(lambda n: n * n + n + 41 > 0 and is_prime(n * n + n + 41))
-    print(f"  P(n) = 'n²+n+41 is prime': eventual bound N = {bound}")
-    print(f"  (P fails first at n = 40: 40²+40+41 = {40*40+40+41} = 41², not prime)")
+    # Overspill
+    f = construct_overspill_function(lambda i, n: i >= n, max_index=100)
+    print("Overspill function f(i) = max{n | i ≥ n}:")
+    for i in [5, 10, 50, 100]:
+        print(f"  f({i}) = {f(i)}")
+    print()
+    
+    # Division transfer
+    a = [17, 23, 31, 42, 55]
+    d = [5, 7, 4, 6, 8]
+    q, r = division_transfer(a, d)
+    print(f"Division transfer: a={a}, d={d}")
+    print(f"  q={q}, r={r}")
