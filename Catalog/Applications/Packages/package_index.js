@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "fce9a230",
     "filename": "sonic_mathematics_counterpoint_as_category_theory.json",
     "pkg_num": 396,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.46055999999999997,
     "title": "Sonic Mathematics: First-Species Counterpoint as Metric Category Theory"
   },
   {
@@ -12635,8 +12635,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "sonic_mathematics_counterpoint_as_category_theory",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.46055999999999997,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Sonic Mathematics: First-Species Counterpoint as Metric Category Theory"
     }

@@ -1140,6 +1140,36 @@
       "theorem_count": 5,
       "timestamp": "2026-06-05T23:07:10",
       "title": "EML Universal Approximation: Density of EML Functions"
+    },
+    {
+      "cycle_id": "8660cf0a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Transfinite Computation and Ordinal Cellular Automata\n\n## Synthesis\n\nThis research cycle established a rigorous mathematical framework for cellular automata indexed by ordinal tim",
+      "quality_score": 0.6504800000000001,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-05T23:41:56",
+      "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+    },
+    {
+      "cycle_id": "68ab771b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tangled Hierarchies and Self-Referential Proof Systems\n\n## Synthesis\n\nThis research cycle established a deep connection between three mathematical structures: (1) GL frames from p",
+      "quality_score": 0.46984000000000004,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T23:42:19",
+      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+    },
+    {
+      "cycle_id": "fce9a230",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle established that first-species counterpoint, when formalized over ℤ₁₂ with step-bounded voice leadings, has a clean metric characterization: the",
+      "quality_score": 0.46055999999999997,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-05T23:42:46",
+      "title": "Sonic Mathematics: Counterpoint as Category Theory"
     }
   ],
   "entries": [
@@ -1185,7 +1215,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-05T23:07:10",
+  "last_updated": "2026-06-05T23:42:46",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1197,12 +1227,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "b1455f51",
-        "quality": 0.39864,
-        "theorems": 5,
-        "title": "EML Kolmogorov-Arnold Representation"
-      },
       {
         "cycle_id": "396279f8",
         "quality": 0.35840000000000005,
@@ -1256,6 +1280,12 @@
         "quality": 0.48016000000000003,
         "theorems": 5,
         "title": "EML Universal Approximation: Density of EML Functions"
+      },
+      {
+        "cycle_id": "68ab771b",
+        "quality": 0.46984000000000004,
+        "theorems": 5,
+        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
       }
     ],
     "Bridges": [
@@ -1394,18 +1424,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "9024224e",
-        "quality": 0.50744,
-        "theorems": 5,
-        "title": "Alien Mathematics: Non-Standard Arithmetic"
-      },
-      {
-        "cycle_id": "f63ef96d",
-        "quality": 0.352,
-        "theorems": 5,
-        "title": "Speculative: Topological Data Analysis of Theorem Networks"
-      },
-      {
         "cycle_id": "658626f5",
         "quality": 0.4192,
         "theorems": 5,
@@ -1452,6 +1470,18 @@
         "quality": 0.43584,
         "theorems": 6,
         "title": "Game of Life Universality"
+      },
+      {
+        "cycle_id": "8660cf0a",
+        "quality": 0.6504800000000001,
+        "theorems": 4,
+        "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+      },
+      {
+        "cycle_id": "fce9a230",
+        "quality": 0.46055999999999997,
+        "theorems": 4,
+        "title": "Sonic Mathematics: Counterpoint as Category Theory"
       }
     ],
     "Physics": [

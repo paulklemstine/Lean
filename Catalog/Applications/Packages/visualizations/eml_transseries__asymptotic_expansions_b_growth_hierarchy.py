@@ -1,1 +1,1 @@
-See Applications/visualize_growth_hierarchy.py
+visualize_growth_hierarchy.py
