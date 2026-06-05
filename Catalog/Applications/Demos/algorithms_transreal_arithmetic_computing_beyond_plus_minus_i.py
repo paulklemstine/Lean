@@ -1,307 +1,260 @@
 #!/usr/bin/env python3
 """
-Transreal Arithmetic: Core Algorithms
-=====================================
-Type-hinted implementations of transreal number arithmetic.
+Transreal Arithmetic: Type-hinted implementations of core algorithms.
+
+Implements Anderson's transreal number system with defect computation,
+regularity classification, and wheel distributivity verification.
 """
 
 from __future__ import annotations
-from enum import Enum, auto
 from dataclasses import dataclass
+from enum import Enum, auto
 from typing import Optional, Tuple, List
 
 
-class Sign(Enum):
-    """Sign classification for dispatch."""
-    POSITIVE = auto()
-    NEGATIVE = auto()
-    ZERO = auto()
-
-
-def classify_sign(x: float) -> Sign:
-    """Classify the sign of a real number."""
-    if x > 0:
-        return Sign.POSITIVE
-    elif x < 0:
-        return Sign.NEGATIVE
-    return Sign.ZERO
+class Kind(Enum):
+    """Classification of a transreal element."""
+    REAL = auto()
+    POS_INF = auto()
+    NEG_INF = auto()
+    NULLITY = auto()
 
 
 @dataclass(frozen=True)
 class Transreal:
     """
-    A transreal number.
+    A transreal number: ℝ ∪ {+∞, -∞, Φ}.
 
-    Representation: (tag, value) where
-    - tag='real', value=float  → a real number
-    - tag='pos_inf'            → +∞
-    - tag='neg_inf'            → -∞
-    - tag='nullity'            → Φ (0/0)
+    Algorithm: Arithmetic with Three-Way Sign Dispatch
+
+    Pseudocode for multiplication:
+        if either operand is Φ: return Φ
+        if both are real: return real(a * b)
+        if both are ±∞: return +∞ if same sign else -∞
+        if one is ±∞ and other is real r:
+            if r > 0: return same sign as ∞ operand
+            if r < 0: return opposite sign
+            if r = 0: return Φ  (the key case: 0 · ∞ = Φ)
     """
-    tag: str
+    kind: Kind
     value: Optional[float] = None
 
     @staticmethod
     def real(x: float) -> Transreal:
-        return Transreal(tag='real', value=x)
+        return Transreal(Kind.REAL, x)
 
     @staticmethod
     def pos_inf() -> Transreal:
-        return Transreal(tag='pos_inf')
+        return Transreal(Kind.POS_INF)
 
     @staticmethod
     def neg_inf() -> Transreal:
-        return Transreal(tag='neg_inf')
+        return Transreal(Kind.NEG_INF)
 
     @staticmethod
-    def phi() -> Transreal:
-        return Transreal(tag='nullity')
+    def nullity() -> Transreal:
+        return Transreal(Kind.NULLITY)
 
-    def __str__(self) -> str:
-        if self.tag == 'real':
-            return str(self.value)
-        return {'pos_inf': '+∞', 'neg_inf': '-∞', 'nullity': 'Φ'}[self.tag]
+    def __repr__(self) -> str:
+        if self.kind == Kind.REAL:
+            return f"{self.value}"
+        return {Kind.POS_INF: "+∞", Kind.NEG_INF: "-∞", Kind.NULLITY: "Φ"}[self.kind]
 
-    def is_real(self) -> bool:
-        return self.tag == 'real'
+    def is_regular(self) -> bool:
+        """Check if element has zero defect (is a real number)."""
+        return self.kind == Kind.REAL
 
-    def is_nullity(self) -> bool:
-        return self.tag == 'nullity'
+    def is_singular(self) -> bool:
+        """Check if element has nullity defect (∞ or Φ)."""
+        return self.kind != Kind.REAL
 
-    def sign(self) -> Optional[Sign]:
-        if not self.is_real():
-            return None
-        return classify_sign(self.value)
+    def defect(self) -> Transreal:
+        """
+        Compute the defect: 0 · x.
 
+        The defect function stratifies transreals into two levels:
+        - Level 0 (regular): defect = 0, element is a real number
+        - Level 1 (singular): defect = Φ, element is ±∞ or Φ
+        """
+        return transreal_mul(Transreal.real(0), self)
 
-# ─── Addition ───
+    def negate(self) -> Transreal:
+        """Transreal negation."""
+        if self.kind == Kind.REAL:
+            return Transreal.real(-self.value)
+        elif self.kind == Kind.POS_INF:
+            return Transreal.neg_inf()
+        elif self.kind == Kind.NEG_INF:
+            return Transreal.pos_inf()
+        else:
+            return Transreal.nullity()
+
 
 def transreal_add(a: Transreal, b: Transreal) -> Transreal:
     """
-    Transreal addition.
+    Transreal addition following Anderson's axioms.
 
     Algorithm:
-    1. If either operand is Φ → Φ  (nullity absorption)
-    2. If both real → real addition
-    3. If both same infinity → that infinity
-    4. If opposite infinities → Φ
-    5. Infinity + real → that infinity
+    1. If either operand is Φ, return Φ (absorption)
+    2. If both are ±∞, return ∞ if same sign, Φ if opposite
+    3. If one is ±∞ and other is real, return the ±∞
+    4. If both are real, return real(a + b)
+
+    Complexity: O(1)
     """
-    if a.is_nullity() or b.is_nullity():
-        return Transreal.phi()
+    # Nullity absorbs
+    if a.kind == Kind.NULLITY or b.kind == Kind.NULLITY:
+        return Transreal.nullity()
 
-    if a.is_real() and b.is_real():
-        return Transreal.real(a.value + b.value)
-
-    if a.tag == 'pos_inf':
-        if b.tag == 'pos_inf':
+    # Infinity + Infinity
+    if a.kind == Kind.POS_INF:
+        if b.kind == Kind.POS_INF:
             return Transreal.pos_inf()
-        if b.tag == 'neg_inf':
-            return Transreal.phi()
-        return Transreal.pos_inf()
+        elif b.kind == Kind.NEG_INF:
+            return Transreal.nullity()  # ∞ + (-∞) = Φ
+        else:
+            return Transreal.pos_inf()
 
-    if a.tag == 'neg_inf':
-        if b.tag == 'neg_inf':
+    if a.kind == Kind.NEG_INF:
+        if b.kind == Kind.POS_INF:
+            return Transreal.nullity()
+        elif b.kind == Kind.NEG_INF:
             return Transreal.neg_inf()
-        if b.tag == 'pos_inf':
-            return Transreal.phi()
-        return Transreal.neg_inf()
+        else:
+            return Transreal.neg_inf()
 
-    # a is real, b is infinite
-    return b  # real + inf = inf
-
-
-# ─── Negation ───
-
-def transreal_neg(a: Transreal) -> Transreal:
-    """Transreal negation: negate reals, swap infinities, Φ → Φ."""
-    if a.is_real():
-        return Transreal.real(-a.value)
-    if a.tag == 'pos_inf':
-        return Transreal.neg_inf()
-    if a.tag == 'neg_inf':
+    # a is real
+    if b.kind == Kind.POS_INF:
         return Transreal.pos_inf()
-    return Transreal.phi()
+    if b.kind == Kind.NEG_INF:
+        return Transreal.neg_inf()
 
+    return Transreal.real(a.value + b.value)
 
-# ─── Multiplication ───
 
 def transreal_mul(a: Transreal, b: Transreal) -> Transreal:
     """
-    Transreal multiplication.
+    Transreal multiplication with three-way sign dispatch.
 
-    Algorithm:
-    1. If either is Φ → Φ
-    2. If both real → real multiplication
-    3. If infinity × real: dispatch on sign of real
-       - positive → same infinity
-       - negative → opposite infinity
-       - zero → Φ  (key departure from ring axioms!)
-    4. infinity × infinity: same sign → +∞, different → -∞
+    The key insight: when ∞ · 0 arises, the result is Φ (not 0 or ∞).
+    This is what creates the wheel structure.
+
+    Complexity: O(1)
     """
-    if a.is_nullity() or b.is_nullity():
-        return Transreal.phi()
+    # Nullity absorbs
+    if a.kind == Kind.NULLITY or b.kind == Kind.NULLITY:
+        return Transreal.nullity()
 
-    if a.is_real() and b.is_real():
+    # Both real
+    if a.kind == Kind.REAL and b.kind == Kind.REAL:
         return Transreal.real(a.value * b.value)
 
-    def inf_times_real(inf_positive: bool, r: float) -> Transreal:
-        s = classify_sign(r)
-        if s == Sign.ZERO:
-            return Transreal.phi()
-        if s == Sign.POSITIVE:
-            return Transreal.pos_inf() if inf_positive else Transreal.neg_inf()
-        return Transreal.neg_inf() if inf_positive else Transreal.pos_inf()
+    # Both infinity
+    if a.kind in (Kind.POS_INF, Kind.NEG_INF) and b.kind in (Kind.POS_INF, Kind.NEG_INF):
+        same_sign = (a.kind == b.kind)
+        return Transreal.pos_inf() if same_sign else Transreal.neg_inf()
 
-    if a.tag == 'pos_inf' and b.is_real():
-        return inf_times_real(True, b.value)
-    if a.tag == 'neg_inf' and b.is_real():
-        return inf_times_real(False, b.value)
-    if b.tag == 'pos_inf' and a.is_real():
-        return inf_times_real(True, a.value)
-    if b.tag == 'neg_inf' and a.is_real():
-        return inf_times_real(False, a.value)
+    # One infinity, one real — dispatch on sign
+    if a.kind == Kind.REAL:
+        return transreal_mul(b, a)  # Commutative
 
-    # Both infinite
-    if a.tag == b.tag:
-        return Transreal.pos_inf()
-    return Transreal.neg_inf()
+    r = b.value
+    pos_inf_factor = (a.kind == Kind.POS_INF)
+
+    if r > 0:
+        return Transreal.pos_inf() if pos_inf_factor else Transreal.neg_inf()
+    elif r < 0:
+        return Transreal.neg_inf() if pos_inf_factor else Transreal.pos_inf()
+    else:
+        return Transreal.nullity()  # ∞ · 0 = Φ — the critical case
 
 
-# ─── Inversion ───
+def verify_wheel_distributivity(a: Transreal, b: Transreal, c: Transreal) -> bool:
+    """
+    Verify the wheel distributive law: a(b+c) + 0·a = ab + ac + 0·a.
 
-def transreal_inv(a: Transreal) -> Transreal:
-    """Transreal multiplicative inverse: 1/0 = +∞, 1/±∞ = 0, 1/Φ = Φ."""
-    if a.is_nullity():
-        return Transreal.phi()
-    if a.tag in ('pos_inf', 'neg_inf'):
-        return Transreal.real(0.0)
-    if a.value == 0:
-        return Transreal.pos_inf()
-    return Transreal.real(1.0 / a.value)
-
-
-def transreal_div(a: Transreal, b: Transreal) -> Transreal:
-    """Transreal division: a / b = a × b⁻¹."""
-    return transreal_mul(a, transreal_inv(b))
-
-
-# ─── Property Checkers ───
-
-def is_additively_idempotent(x: Transreal) -> bool:
-    """Check if x + x = x."""
-    return transreal_add(x, x) == x
-
-
-def is_negation_fixed_point(x: Transreal) -> bool:
-    """Check if -x = x."""
-    return transreal_neg(x) == x
-
-
-def check_distributivity(a: Transreal, b: Transreal, c: Transreal) -> bool:
-    """Check if a * (b + c) = a*b + a*c."""
-    lhs = transreal_mul(a, transreal_add(b, c))
-    rhs = transreal_add(transreal_mul(a, b), transreal_mul(a, c))
+    This modified distributivity replaces standard distributivity in wheel algebras.
+    The correction term 0·a (the defect) absorbs pathological cases.
+    """
+    d = a.defect()
+    lhs = transreal_add(transreal_mul(a, transreal_add(b, c)), d)
+    rhs = transreal_add(transreal_mul(a, b), transreal_add(transreal_mul(a, c), d))
     return lhs == rhs
 
 
-# ─── Transreal Evaluation Engine ───
-
-def evaluate_expression(expr: str, env: dict[str, Transreal]) -> Transreal:
+def classify_element(x: Transreal) -> Tuple[str, str]:
     """
-    Simple expression evaluator for transreal arithmetic.
-    Supports +, -, *, / with standard precedence.
-    Variables looked up in env.
+    Classify a transreal element by its defect level and algebraic role.
+
+    Returns (level, description) where level is "regular" or "singular".
     """
-    # Tokenize
-    tokens: List[str] = []
-    i = 0
-    while i < len(expr):
-        if expr[i].isspace():
-            i += 1
-        elif expr[i] in '+-*/()':
-            tokens.append(expr[i])
-            i += 1
-        else:
-            j = i
-            while j < len(expr) and (expr[j].isalnum() or expr[j] in '._'):
-                j += 1
-            tokens.append(expr[i:j])
-            i = j
+    d = x.defect()
+    if d == Transreal.real(0):
+        return ("regular", f"Ring-like element with value {x.value}")
+    else:
+        roles = {
+            Kind.POS_INF: "Positive infinity — positive absorber",
+            Kind.NEG_INF: "Negative infinity — negative absorber",
+            Kind.NULLITY: "Nullity — universal absorber (0/0)",
+        }
+        return ("singular", roles.get(x.kind, "Unknown"))
 
-    pos = 0
 
-    def peek() -> Optional[str]:
-        nonlocal pos
-        return tokens[pos] if pos < len(tokens) else None
+def find_additive_idempotents(test_reals: List[float]) -> List[Transreal]:
+    """
+    Find all additive idempotents (x + x = x) among given test values
+    and the three special transreal elements.
 
-    def consume() -> str:
-        nonlocal pos
-        t = tokens[pos]
-        pos += 1
-        return t
+    In a ring, only 0 is idempotent. The transreals have exactly four:
+    {0, +∞, -∞, Φ}.
+    """
+    candidates = [Transreal.real(r) for r in test_reals]
+    candidates.extend([Transreal.pos_inf(), Transreal.neg_inf(), Transreal.nullity()])
 
-    def parse_atom() -> Transreal:
-        t = peek()
-        if t == '(':
-            consume()
-            result = parse_expr()
-            consume()  # ')'
-            return result
-        t = consume()
-        if t in env:
-            return env[t]
-        try:
-            return Transreal.real(float(t))
-        except ValueError:
-            raise ValueError(f"Unknown symbol: {t}")
+    return [x for x in candidates if transreal_add(x, x) == x]
 
-    def parse_factor() -> Transreal:
-        if peek() == '-':
-            consume()
-            return transreal_neg(parse_atom())
-        return parse_atom()
 
-    def parse_term() -> Transreal:
-        left = parse_factor()
-        while peek() in ('*', '/'):
-            op = consume()
-            right = parse_factor()
-            if op == '*':
-                left = transreal_mul(left, right)
-            else:
-                left = transreal_div(left, right)
-        return left
-
-    def parse_expr() -> Transreal:
-        left = parse_term()
-        while peek() in ('+', '-'):
-            op = consume()
-            right = parse_term()
-            if op == '+':
-                left = transreal_add(left, right)
-            else:
-                left = transreal_add(left, transreal_neg(right))
-        return left
-
-    return parse_expr()
+def check_cancellation(a: Transreal, b: Transreal, c: Transreal) -> bool:
+    """
+    Check if cancellation holds: does a + c = b + c imply a = b?
+    Returns True if cancellation holds (or sums differ), False if it fails.
+    """
+    sum_ac = transreal_add(a, c)
+    sum_bc = transreal_add(b, c)
+    if sum_ac == sum_bc:
+        return a == b  # Cancellation holds iff a = b when sums equal
+    return True  # Sums differ, cancellation not applicable
 
 
 if __name__ == "__main__":
-    # Quick test
-    env = {
-        'inf': Transreal.pos_inf(),
-        'ninf': Transreal.neg_inf(),
-        'phi': Transreal.phi(),
-    }
-    tests = [
-        "0 / 0",
-        "1 / 0",
-        "inf + ninf",
-        "0 * inf",
-        "inf * (0 + 1)",
-        "inf * 0 + inf * 1",
-    ]
-    for expr in tests:
-        result = evaluate_expression(expr, env)
-        print(f"{expr:30s} = {result}")
+    # Exhaustive wheel distributivity verification
+    elements = [Transreal.real(0), Transreal.real(1), Transreal.real(-1),
+                Transreal.real(2), Transreal.pos_inf(), Transreal.neg_inf(),
+                Transreal.nullity()]
+
+    print("Verifying wheel distributivity for all combinations...")
+    total = 0
+    passed = 0
+    for a in elements:
+        for b in elements:
+            for c in elements:
+                total += 1
+                if verify_wheel_distributivity(a, b, c):
+                    passed += 1
+                else:
+                    print(f"  FAILED: a={a}, b={b}, c={c}")
+
+    print(f"Wheel distributivity: {passed}/{total} passed")
+
+    print("\nAdditive idempotents:")
+    test_vals = [0, 1, -1, 2, -2, 0.5, 100, -100]
+    idempotents = find_additive_idempotents(test_vals)
+    for x in idempotents:
+        print(f"  {x}")
+
+    print("\nCancellation failures:")
+    for c in elements:
+        for a in elements:
+            for b in elements:
+                if a != b and not check_cancellation(a, b, c):
+                    print(f"  {a} + {c} = {b} + {c}, but {a} ≠ {b}")
