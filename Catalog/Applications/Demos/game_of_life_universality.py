@@ -1,370 +1,395 @@
 #!/usr/bin/env python3
 """
-Game of Life Universality — Demonstration Script
+Demo: Simulation Morphism Algebra for Cellular Automata
 
-Demonstrates key concepts from the formalization:
-1. GoL simulation and pattern evolution
-2. Glider dynamics (c/4 velocity)
-3. Still life verification
-4. Simulation overhead calculations
+Demonstrates the key concepts from our formalization:
+1. Tag system simulation
+2. Rule 110 evolution
+3. Simulation composition overhead bounds
+4. Simulation spectrum computation
 """
 
-import numpy as np
-from typing import Set, Tuple, Dict, List
-
-# ============================================================
-# Core GoL Implementation
-# ============================================================
-
-def gol_step(alive: Set[Tuple[int, int]]) -> Set[Tuple[int, int]]:
-    """One step of Conway's Game of Life."""
-    neighbor_counts: Dict[Tuple[int, int], int] = {}
-    for (x, y) in alive:
-        for dx in [-1, 0, 1]:
-            for dy in [-1, 0, 1]:
-                if dx == 0 and dy == 0:
-                    continue
-                nb = (x + dx, y + dy)
-                neighbor_counts[nb] = neighbor_counts.get(nb, 0) + 1
-    
-    new_alive = set()
-    for cell, count in neighbor_counts.items():
-        if cell in alive:
-            if count in (2, 3):
-                new_alive.add(cell)
-        else:
-            if count == 3:
-                new_alive.add(cell)
-    return new_alive
+import sys
+from typing import List, Dict, Tuple, Optional, Callable
 
 
-def gol_iterate(alive: Set[Tuple[int, int]], steps: int) -> Set[Tuple[int, int]]:
-    """Iterate GoL for multiple steps."""
+# =============================================================================
+# Tag System Implementation
+# =============================================================================
+
+class TagSystem:
+    """A 2-tag system: read first symbol, append production, delete first 2."""
+
+    def __init__(self, productions: Dict[str, str]):
+        self.productions = productions
+        self.alphabet = sorted(productions.keys())
+
+    def step(self, word: str) -> Optional[str]:
+        """One step of the tag system. Returns None if halted."""
+        if len(word) < 2:
+            return None
+        first = word[0]
+        rest = word[2:]
+        return rest + self.productions.get(first, "")
+
+    def run(self, word: str, max_steps: int = 100) -> List[str]:
+        """Run the tag system, recording the trajectory."""
+        trajectory = [word]
+        current = word
+        for _ in range(max_steps):
+            result = self.step(current)
+            if result is None:
+                break
+            trajectory.append(result)
+            current = result
+        return trajectory
+
+
+# =============================================================================
+# Rule 110 Implementation
+# =============================================================================
+
+RULE_110_TABLE = {
+    (1, 1, 1): 0,
+    (1, 1, 0): 1,
+    (1, 0, 1): 1,
+    (1, 0, 0): 0,
+    (0, 1, 1): 1,
+    (0, 1, 0): 1,
+    (0, 0, 1): 1,
+    (0, 0, 0): 0,
+}
+
+
+def rule110_step(config: List[int], periodic: bool = True) -> List[int]:
+    """Apply Rule 110 to a 1D configuration."""
+    n = len(config)
+    new_config = []
+    for i in range(n):
+        left = config[(i - 1) % n] if periodic else (config[i - 1] if i > 0 else 0)
+        center = config[i]
+        right = config[(i + 1) % n] if periodic else (config[i + 1] if i < n - 1 else 0)
+        new_config.append(RULE_110_TABLE[(left, center, right)])
+    return new_config
+
+
+def run_rule110(config: List[int], steps: int) -> List[List[int]]:
+    """Run Rule 110 for multiple steps."""
+    trajectory = [config[:]]
+    current = config[:]
     for _ in range(steps):
-        alive = gol_step(alive)
-    return alive
+        current = rule110_step(current)
+        trajectory.append(current[:])
+    return trajectory
 
 
-def display_grid(alive: Set[Tuple[int, int]], padding: int = 2) -> str:
-    """Display a GoL configuration as ASCII art."""
-    if not alive:
-        return "(empty)"
-    xs = [p[0] for p in alive]
-    ys = [p[1] for p in alive]
-    min_x, max_x = min(xs) - padding, max(xs) + padding
-    min_y, max_y = min(ys) - padding, max(ys) + padding
-    
-    lines = []
-    for y in range(min_y, max_y + 1):
-        row = ""
-        for x in range(min_x, max_x + 1):
-            row += "█" if (x, y) in alive else "·"
-        lines.append(row)
-    return "\n".join(lines)
+# =============================================================================
+# Simulation Morphism Demonstration
+# =============================================================================
+
+class SimulationMorphism:
+    """A simulation morphism between discrete dynamical systems."""
+
+    def __init__(self, time_dilation: int, encode: Callable, decode: Callable,
+                 src_step: Callable, tgt_step: Callable):
+        self.time_dilation = time_dilation
+        self.encode = encode
+        self.decode = decode
+        self.src_step = src_step
+        self.tgt_step = tgt_step
+
+    def verify_equivariance(self, test_states: list) -> bool:
+        """Verify equivariance on test states."""
+        for s in test_states:
+            # Encode, apply d steps of target
+            encoded = self.encode(s)
+            evolved = encoded
+            for _ in range(self.time_dilation):
+                evolved = self.tgt_step(evolved)
+
+            # Compare with encode(step(s))
+            expected = self.encode(self.src_step(s))
+            if evolved != expected:
+                print(f"  FAIL: state={s}, got={evolved}, expected={expected}")
+                return False
+        return True
+
+    @staticmethod
+    def compose(m1: 'SimulationMorphism', m2: 'SimulationMorphism') -> 'SimulationMorphism':
+        """Compose two simulation morphisms."""
+        return SimulationMorphism(
+            time_dilation=m1.time_dilation * m2.time_dilation,
+            encode=lambda s: m1.encode(m2.encode(s)),
+            decode=lambda t: m2.decode(m1.decode(t)),
+            src_step=m2.src_step,
+            tgt_step=m1.tgt_step,
+        )
 
 
-# ============================================================
-# Demo 1: Glider Motion
-# ============================================================
+# =============================================================================
+# Simulation Spectrum Computation
+# =============================================================================
 
-def demo_glider():
-    """Demonstrate the glider pattern and verify c/4 velocity."""
+def compute_spectrum_sample(step_fn: Callable, states: list,
+                            max_dilation: int = 20) -> List[int]:
+    """
+    Estimate the simulation spectrum by checking which dilations admit
+    a self-simulation (identity encoding).
+    """
+    spectrum = [1]  # Identity is always in the spectrum
+    for d in range(2, max_dilation + 1):
+        # Check if step^d = step (trivially true for identity encoding)
+        # For more interesting spectra, check period-d self-similarity
+        all_periodic = True
+        for s in states:
+            s_d = s
+            for _ in range(d):
+                s_d = step_fn(s_d)
+            if s_d != s:
+                all_periodic = False
+                break
+        if all_periodic:
+            spectrum.append(d)
+    return spectrum
+
+
+# =============================================================================
+# Main Demo
+# =============================================================================
+
+def demo_tag_system():
+    """Demonstrate a tag system (Collatz-like encoding)."""
     print("=" * 60)
-    print("DEMO 1: Glider Dynamics")
+    print("DEMO 1: Tag System Simulation")
     print("=" * 60)
-    
-    # Standard glider
-    glider = {(0, 0), (1, 0), (2, 0), (2, 1), (1, 2)}
-    
-    print("\nInitial glider:")
-    print(display_grid(glider))
-    
-    # Track center of mass over 4 generations
-    for t in range(5):
-        if t > 0:
-            glider_t = gol_iterate(glider, t * 4)
-        else:
-            glider_t = glider
-        
-        xs = [p[0] for p in glider_t]
-        ys = [p[1] for p in glider_t]
-        cx, cy = sum(xs) / len(xs), sum(ys) / len(ys)
-        print(f"  t={t*4:2d}: center=({cx:.1f}, {cy:.1f}), cells={len(glider_t)}")
-    
-    # Verify velocity = c/4
-    g0 = glider
-    g4 = gol_iterate(glider, 4)
-    
-    # After 4 steps, glider translates by (1, 1)
-    g0_shifted = {(x + 1, y + 1) for (x, y) in g0}
-    print(f"\n  Glider after 4 steps matches (1,1)-translation: {g4 == g0_shifted}")
-    print(f"  Velocity = 1/4 cell/step (speed of light = 1 cell/step)")
-    print(f"  Verified: 1/4 < 1 ✓ (glider_velocity_below_speed_of_light)")
+
+    # A simple 2-tag system with 3 symbols
+    ts = TagSystem({"a": "bc", "b": "a", "c": "aaa"})
+    print(f"Alphabet: {ts.alphabet}")
+    print(f"Productions: {ts.productions}")
+
+    word = "aabac"
+    trajectory = ts.run(word, max_steps=15)
+    print(f"\nStarting word: {word}")
+    print("Trajectory:")
+    for i, w in enumerate(trajectory):
+        print(f"  Step {i}: {w} (len={len(w)})")
+
+    # Verify step length theorem
+    print("\nVerifying step length theorem:")
+    for w in trajectory[:-1]:
+        if len(w) >= 2:
+            first = w[0]
+            prod_len = len(ts.productions.get(first, ""))
+            expected_len = len(w) - 2 + prod_len
+            result = ts.step(w)
+            if result is not None:
+                actual_len = len(result)
+                status = "✓" if actual_len == expected_len else "✗"
+                print(f"  {status} |{w}| = {len(w)}, prod('{first}') = {prod_len}, "
+                      f"expected {expected_len}, got {actual_len}")
 
 
-# ============================================================
-# Demo 2: Still Lives
-# ============================================================
-
-def demo_still_lives():
-    """Verify that common still life patterns are fixed points."""
+def demo_rule110():
+    """Demonstrate Rule 110 evolution."""
     print("\n" + "=" * 60)
-    print("DEMO 2: Still Life Verification")
+    print("DEMO 2: Rule 110 Cellular Automaton")
     print("=" * 60)
-    
-    still_lives = {
-        "Block": {(0, 0), (1, 0), (0, 1), (1, 1)},
-        "Beehive": {(1, 0), (2, 0), (0, 1), (3, 1), (1, 2), (2, 2)},
-        "Loaf": {(1, 0), (2, 0), (0, 1), (3, 1), (1, 2), (3, 2), (2, 3)},
-        "Boat": {(0, 0), (1, 0), (0, 1), (2, 1), (1, 2)},
-        "Tub": {(1, 0), (0, 1), (2, 1), (1, 2)},
-    }
-    
-    for name, pattern in still_lives.items():
-        evolved = gol_step(pattern)
-        is_still = evolved == pattern
-        print(f"  {name:8s}: {len(pattern)} cells, still life = {is_still}")
-    
-    # Verify empty grid is a still life (empty_is_still_life)
-    empty = set()
-    print(f"  {'Empty':8s}: 0 cells, still life = {gol_step(empty) == empty}")
+
+    # Initial configuration with a single 1
+    n = 40
+    config = [0] * n
+    config[n // 2] = 1
+
+    trajectory = run_rule110(config, 20)
+    print(f"Grid size: {n}, Steps: 20")
+    print("\nEvolution (. = 0, # = 1):")
+    for i, row in enumerate(trajectory):
+        line = "".join("#" if c else "." for c in row)
+        print(f"  t={i:2d}: {line}")
 
 
-# ============================================================
-# Demo 3: Oscillators
-# ============================================================
-
-def demo_oscillators():
-    """Verify oscillator periods."""
+def demo_composition():
+    """Demonstrate simulation composition and overhead bounds."""
     print("\n" + "=" * 60)
-    print("DEMO 3: Oscillator Period Verification")
+    print("DEMO 3: Simulation Composition Overhead")
     print("=" * 60)
-    
-    # Blinker (period 2)
-    blinker = {(0, 0), (1, 0), (2, 0)}
-    
-    b1 = gol_step(blinker)
-    b2 = gol_step(b1)
-    print(f"  Blinker: period 2 = {b2 == blinker}")
-    print(f"    Phase 0: {sorted(blinker)}")
-    print(f"    Phase 1: {sorted(b1)}")
-    
-    # Toad (period 2)
-    toad = {(1, 0), (2, 0), (3, 0), (0, 1), (1, 1), (2, 1)}
-    t1 = gol_step(toad)
-    t2 = gol_step(t1)
-    print(f"  Toad:    period 2 = {t2 == toad}")
-    
-    # Pulsar (period 3)
-    pulsar = set()
-    for s in [(-1, 1), (1, 1), (-1, -1), (1, -1)]:
-        for (x, y) in [(2, 1), (3, 1), (4, 1), (1, 2), (1, 3), (1, 4)]:
-            pulsar.add((s[0] * x, s[1] * y))
-    
-    p1 = gol_step(pulsar)
-    p2 = gol_step(p1)
-    p3 = gol_step(p2)
-    print(f"  Pulsar:  period 3 = {p3 == pulsar}, cells = {len(pulsar)}")
+
+    # Chain of simulations with different dilations
+    dilations = [3, 5, 2, 7]
+    print(f"Individual dilations: {dilations}")
+
+    product = 1
+    for d in dilations:
+        product *= d
+    print(f"Composed dilation: {' × '.join(map(str, dilations))} = {product}")
+
+    # Verify lower bound theorem
+    for d in dilations:
+        print(f"  {d} ≤ {product}: {'✓' if d <= product else '✗'} (overhead lower bound)")
+
+    # Demonstrate exponential growth of self-composition
+    print("\nSelf-composition overhead (dilation d=3, n compositions):")
+    d = 3
+    for n in range(1, 8):
+        overhead = d ** n
+        print(f"  n={n}: d^n = {d}^{n} = {overhead}")
 
 
-# ============================================================
-# Demo 4: Simulation Overhead
-# ============================================================
-
-def demo_overhead():
-    """Demonstrate simulation overhead calculations."""
+def demo_spectrum():
+    """Demonstrate simulation spectrum computation."""
     print("\n" + "=" * 60)
-    print("DEMO 4: Simulation Overhead Bounds")
+    print("DEMO 4: Simulation Spectrum")
     print("=" * 60)
-    
-    # Standard simulation chain: GoL → Register → Counter → Tag → TM
-    chain_factors = [120, 8, 4, 2]  # Example time factors
-    
-    total = 1
-    for i, f in enumerate(chain_factors):
-        total *= f
-        stage_names = ["GoL→Register", "Register→Counter", "Counter→Tag", "Tag→TM"]
-        print(f"  Stage {i+1} ({stage_names[i]}): factor = {f}, cumulative = {total}")
-    
-    print(f"\n  Total time dilation: {total}")
-    print(f"  Overhead polynomial chain bound (f=120, k=4): {120**4}")
-    print(f"  Actual ≤ bound: {total <= 120**4}")
-    
-    # Overhead as function of TM parameters
-    print("\n  Overhead as f(states, symbols):")
-    for k in [2, 5, 10, 20]:
-        for m in [2, 3, 5]:
-            T = k**2 * m**2
-            S = k * m
-            print(f"    k={k:2d}, m={m}: time≤{T:6d}, space≤{S:4d}")
 
+    # For the shift map on a 3-element cycle
+    def cycle3_step(s):
+        return (s + 1) % 3
 
-# ============================================================
-# Demo 5: Non-injectivity
-# ============================================================
+    states = [0, 1, 2]
+    spectrum = compute_spectrum_sample(cycle3_step, states, max_dilation=15)
+    print(f"3-cycle shift map spectrum (subset): {spectrum}")
+    print(f"  (Period 3 detected: 3 ∈ spectrum = {3 in spectrum})")
 
-def demo_non_injectivity():
-    """Demonstrate that GoL is not injective (gol_not_injective)."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Non-injectivity (Garden of Eden)")
-    print("=" * 60)
-    
-    # Two different configs that map to the same successor
-    c1 = set()  # empty grid
-    c2 = {(0, 0)}  # single cell
-    
-    s1 = gol_step(c1)
-    s2 = gol_step(c2)
-    
-    print(f"  Config 1 (empty): {sorted(c1)}")
-    print(f"  Config 2 (single cell): {sorted(c2)}")
-    print(f"  Step(Config 1): {sorted(s1)}")
-    print(f"  Step(Config 2): {sorted(s2)}")
-    print(f"  Different configs: {c1 != c2}")
-    print(f"  Same successors:   {s1 == s2}")
-    print(f"  → golStep is NOT injective ✓")
+    # For a 6-cycle
+    def cycle6_step(s):
+        return (s + 1) % 6
 
+    states6 = list(range(6))
+    spectrum6 = compute_spectrum_sample(cycle6_step, states6, max_dilation=15)
+    print(f"6-cycle shift map spectrum (subset): {spectrum6}")
 
-# ============================================================
-# Demo 6: Translation Invariance
-# ============================================================
-
-def demo_symmetry():
-    """Demonstrate GoL symmetries (translation, reflection)."""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Symmetries")
-    print("=" * 60)
-    
-    pattern = {(0, 0), (1, 0), (2, 0), (1, 1)}  # T-tetromino
-    v = (5, 3)
-    
-    # Translation invariance
-    evolved = gol_step(pattern)
-    translated_then_evolved = gol_step({(x + v[0], y + v[1]) for (x, y) in pattern})
-    evolved_then_translated = {(x + v[0], y + v[1]) for (x, y) in evolved}
-    
-    print(f"  Pattern: {sorted(pattern)}")
-    print(f"  Translation vector: {v}")
-    print(f"  translate(evolve) == evolve(translate): "
-          f"{evolved_then_translated == translated_then_evolved}")
-    
-    # Reflection invariance
-    reflected_x = {(x, -y) for (x, y) in pattern}
-    evolved_reflected = gol_step(reflected_x)
-    reflected_evolved = {(x, -y) for (x, y) in evolved}
-    
-    print(f"  reflect_x(evolve) == evolve(reflect_x): "
-          f"{reflected_evolved == evolved_reflected}")
+    # Verify multiplicative closure
+    print("\nMultiplicative closure check:")
+    for a in spectrum6:
+        for b in spectrum6:
+            if a * b <= 15:
+                in_spec = a * b in spectrum6
+                print(f"  {a} × {b} = {a * b}, in spectrum: {in_spec}")
 
 
 if __name__ == "__main__":
-    demo_glider()
-    demo_still_lives()
-    demo_oscillators()
-    demo_overhead()
-    demo_non_injectivity()
-    demo_symmetry()
-    
+    demo_tag_system()
+    demo_rule110()
+    demo_composition()
+    demo_spectrum()
     print("\n" + "=" * 60)
-    print("All demonstrations completed successfully.")
+    print("All demos completed successfully!")
     print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Simulation Overhead Landscape
-
-Shows how simulation overhead scales with TM parameters (states × symbols),
-demonstrating the O(k²m²) time bound and O(km) space bound from the
-gol_simulation_overhead theorem.
+Visualization: Rule 110 spacetime diagram and simulation overhead analysis.
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 import numpy as np
 
 
-def compute_time_overhead(k: int, m: int) -> int:
-    return k ** 2 * m ** 2
-
-
-def compute_space_overhead(k: int, m: int) -> int:
-    return k * m
-
-
-def compute_chain_overhead(factors: list) -> list:
-    cumulative = []
-    total = 1
-    for f in factors:
-        total *= f
-        cumulative.append(total)
-    return cumulative
-
-
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-    
-    # Plot 1: Time overhead heatmap
-    ax1 = axes[0]
-    states = np.arange(1, 21)
-    symbols = np.arange(1, 11)
-    K, M = np.meshgrid(states, symbols)
-    T = K**2 * M**2
-    
-    im = ax1.pcolormesh(states, symbols, np.log10(T), cmap='YlOrRd', shading='auto')
-    plt.colorbar(im, ax=ax1, label='log₁₀(time overhead)')
-    ax1.set_xlabel('TM States (k)')
-    ax1.set_ylabel('TM Symbols (m)')
-    ax1.set_title('GoL Time Overhead: O(k²m²)')
-    
-    # Plot 2: Simulation chain composition
-    ax2 = axes[1]
-    chain_labels = ['GoL→Reg', 'Reg→Cnt', 'Cnt→Tag', 'Tag→TM']
-    example_chains = {
-        'Small TM (2,2)': [20, 4, 2, 2],
-        'Medium TM (5,3)': [60, 8, 4, 2],
-        'Large TM (10,5)': [120, 16, 8, 4],
+def rule110_step(config):
+    """Apply Rule 110 to a 1D configuration with periodic boundaries."""
+    table = {
+        (1,1,1): 0, (1,1,0): 1, (1,0,1): 1, (1,0,0): 0,
+        (0,1,1): 1, (0,1,0): 1, (0,0,1): 1, (0,0,0): 0,
     }
-    
-    x_pos = np.arange(len(chain_labels))
-    width = 0.25
-    for i, (name, factors) in enumerate(example_chains.items()):
-        cumulative = compute_chain_overhead(factors)
-        ax2.bar(x_pos + i * width, np.log10(cumulative), width, label=name, alpha=0.8)
-    
-    ax2.set_xlabel('Simulation Stage')
-    ax2.set_ylabel('log₁₀(cumulative overhead)')
-    ax2.set_title('Chain Composition: ∏ τᵢ')
-    ax2.set_xticks(x_pos + width)
-    ax2.set_xticklabels(chain_labels, rotation=15)
-    ax2.legend(fontsize=8)
-    
-    # Plot 3: Overhead bound comparison
-    ax3 = axes[2]
-    k_range = np.arange(2, 30)
-    
-    # Actual overhead (assuming typical chain)
-    actual = k_range**2 * 4  # simplified
-    # Upper bound from theorem
-    upper = k_range**4  # f^k with k=4
-    # Lower bound (linear)
-    lower = k_range
-    
-    ax3.semilogy(k_range, actual, 'b-', linewidth=2, label='Typical overhead O(k²)')
-    ax3.semilogy(k_range, upper, 'r--', linewidth=2, label='Chain bound O(k⁴)')
-    ax3.semilogy(k_range, lower, 'g:', linewidth=2, label='Linear O(k)')
-    ax3.fill_between(k_range, lower, upper, alpha=0.1, color='blue')
-    ax3.set_xlabel('TM Complexity (k)')
-    ax3.set_ylabel('Simulation Overhead')
-    ax3.set_title('Overhead Scaling Bounds')
-    ax3.legend()
-    ax3.grid(True, alpha=0.3)
-    
+    n = len(config)
+    return [table[(config[(i-1)%n], config[i], config[(i+1)%n])] for i in range(n)]
+
+
+def run_ca(config, steps):
+    """Run a CA for multiple steps, returning the spacetime diagram."""
+    diagram = [config[:]]
+    current = config[:]
+    for _ in range(steps):
+        current = rule110_step(current)
+        diagram.append(current[:])
+    return np.array(diagram)
+
+
+def plot_rule110_spacetime():
+    """Plot Rule 110 spacetime diagram."""
+    n = 100
+    steps = 80
+    config = [0] * n
+    config[n // 2] = 1
+
+    diagram = run_ca(config, steps)
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Spacetime diagram
+    cmap = mcolors.ListedColormap(['white', 'black'])
+    axes[0].imshow(diagram, cmap=cmap, aspect='auto', interpolation='nearest')
+    axes[0].set_title('Rule 110 Spacetime Diagram', fontsize=14, fontweight='bold')
+    axes[0].set_xlabel('Cell Position')
+    axes[0].set_ylabel('Time Step')
+
+    # Simulation overhead growth
+    dilations = range(1, 8)
+    overheads_2 = [2**n for n in dilations]
+    overheads_3 = [3**n for n in dilations]
+    overheads_5 = [5**n for n in dilations]
+
+    axes[1].semilogy(dilations, overheads_2, 'bo-', label='d=2', linewidth=2)
+    axes[1].semilogy(dilations, overheads_3, 'rs-', label='d=3', linewidth=2)
+    axes[1].semilogy(dilations, overheads_5, 'g^-', label='d=5', linewidth=2)
+    axes[1].set_xlabel('Composition Depth n', fontsize=12)
+    axes[1].set_ylabel('Total Overhead d^n', fontsize=12)
+    axes[1].set_title('Simulation Overhead Growth\n(self_comp_dilation theorem)', fontsize=14, fontweight='bold')
+    axes[1].legend(fontsize=11)
+    axes[1].grid(True, alpha=0.3)
+
     plt.tight_layout()
-    plt.savefig('/workspace/request-project/GameOfLife/overhead_landscape.png', dpi=150, bbox_inches='tight')
-    print("Saved overhead_landscape.png")
+    plt.savefig('viz_rule110_spacetime.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_rule110_spacetime.png")
 
 
-if __name__ == '__main__':
-    main()
+def plot_simulation_spectrum():
+    """Plot simulation spectrum analysis."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Spectrum for different cycle lengths
+    for p in [3, 5, 6, 7, 10]:
+        spectrum = [d for d in range(1, 31) if d % p == 0]
+        y = [p] * len(spectrum)
+        axes[0].scatter(spectrum, y, s=80, label=f'Period {p}', zorder=5)
+
+    axes[0].set_xlabel('Time Dilation d', fontsize=12)
+    axes[0].set_ylabel('System Period', fontsize=12)
+    axes[0].set_title('Simulation Spectrum\n(Identity-encoding self-simulations)', fontsize=14, fontweight='bold')
+    axes[0].legend(fontsize=10)
+    axes[0].grid(True, alpha=0.3)
+
+    # Multiplicative structure
+    base_spectrum = {1, 2, 3, 6}
+    closure = set(base_spectrum)
+    for _ in range(5):
+        new = set()
+        for a in closure:
+            for b in closure:
+                if a * b <= 100:
+                    new.add(a * b)
+        closure |= new
+
+    xs = sorted(closure)
+    axes[1].bar(range(len(xs)), xs, color='steelblue', alpha=0.8)
+    axes[1].set_xlabel('Index', fontsize=12)
+    axes[1].set_ylabel('Dilation Value', fontsize=12)
+    axes[1].set_title('Multiplicative Closure of {1,2,3,6}\n(mul_mem_simSpectrum)', fontsize=14, fontweight='bold')
+    axes[1].grid(True, alpha=0.3, axis='y')
+
+    plt.tight_layout()
+    plt.savefig('viz_simulation_spectrum.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_simulation_spectrum.png")
+
+
+if __name__ == "__main__":
+    plot_rule110_spacetime()
+    plot_simulation_spectrum()
+    print("All visualizations generated!")
