@@ -1,295 +1,356 @@
-#!/usr/bin/env python3
 """
-EML Transseries: Asymptotic Expansions Beyond Power Series — Demonstration
+Transseries: Asymptotic Expansions Beyond Power Series — Demo
 
-This script demonstrates the key results of the transseries hierarchy:
-1. Exponential dominates all polynomials
-2. Double exponential dominates single exponential
-3. Logarithm is sub-polynomial
-4. EML function is asymptotically equivalent to exp
-5. Uniqueness of leading coefficients in asymptotic expansions
+Demonstrates the core concepts of transseries:
+1. Growth level comparison and the depth hierarchy
+2. Numerical verification of asymptotic separation theorems
+3. Transmonomial evaluation and comparison
+4. EML connection
 """
 
 import math
-from typing import Callable, List, Tuple
+from typing import NamedTuple
 
 
-def demonstrate_exp_dominates_poly():
-    """Show that x^n / exp(x) → 0 for various n."""
-    print("=" * 70)
-    print("THEOREM 1: Exponential Dominates All Polynomials")
-    print("  x^n = o(exp(x)) as x → +∞")
-    print("=" * 70)
-    
-    for n in [1, 2, 5, 10, 20]:
-        print(f"\n  n = {n}:")
-        print(f"  {'x':>10} {'x^n':>20} {'exp(x)':>20} {'ratio':>15}")
-        print(f"  {'-'*10} {'-'*20} {'-'*20} {'-'*15}")
-        for x in [10, 50, 100, 200, 500]:
-            poly = x ** n
+class GrowthLevel(NamedTuple):
+    """A growth level (depth, exponent) in the transseries hierarchy."""
+    depth: int
+    exponent: float
+
+    def __repr__(self):
+        if self.depth == 0:
+            return f"x^{self.exponent}"
+        elif self.depth == 1:
+            return f"exp({self.exponent}x)"
+        elif self.depth == 2:
+            return f"exp({self.exponent}·exp(x))"
+        elif self.depth == -1:
+            return f"log(x)^{self.exponent}"
+        else:
+            return f"depth{self.depth}(exp={self.exponent})"
+
+
+class TransseriesTerm(NamedTuple):
+    """A single term: coefficient × transmonomial."""
+    coeff: float
+    level: GrowthLevel
+
+    def evaluate(self, x: float) -> float:
+        """Evaluate the transmonomial at x."""
+        d, alpha = self.level
+        if d == -1:
+            return self.coeff * math.log(x) ** alpha if x > 0 else 0.0
+        elif d == 0:
+            return self.coeff * x ** alpha if x > 0 else 0.0
+        elif d == 1:
+            return self.coeff * math.exp(alpha * x)
+        elif d == 2:
             try:
-                expo = math.exp(x)
-                ratio = poly / expo
+                return self.coeff * math.exp(alpha * math.exp(x))
             except OverflowError:
-                expo = float('inf')
-                ratio = 0.0
-            print(f"  {x:>10} {poly:>20.3e} {expo:>20.3e} {ratio:>15.3e}")
-    print()
+                return float('inf') if self.coeff > 0 else float('-inf')
+        return 0.0
 
 
-def demonstrate_double_exp_dominance():
-    """Show that exp(x) / exp(exp(x)) → 0."""
-    print("=" * 70)
-    print("THEOREM 2: Double Exponential Dominates Single Exponential")
-    print("  exp(x) = o(exp(exp(x))) as x → +∞")
-    print("=" * 70)
-    
-    print(f"\n  {'x':>6} {'exp(x)':>15} {'exp(exp(x))':>20} {'ratio':>15}")
-    print(f"  {'-'*6} {'-'*15} {'-'*20} {'-'*15}")
-    for x in [1, 2, 3, 4, 5, 6, 7]:
-        exp_x = math.exp(x)
-        try:
-            exp_exp_x = math.exp(exp_x)
-            ratio = exp_x / exp_exp_x
-        except OverflowError:
-            exp_exp_x = float('inf')
-            ratio = 0.0
-        print(f"  {x:>6} {exp_x:>15.3e} {exp_exp_x:>20.3e} {ratio:>15.3e}")
-    print()
+class FormalTransseries:
+    """A finite formal sum of transseries terms."""
+
+    def __init__(self, terms: list[TransseriesTerm]):
+        self.terms = sorted(terms, key=lambda t: t.level, reverse=True)
+
+    def evaluate(self, x: float) -> float:
+        return sum(t.evaluate(x) for t in self.terms)
+
+    @property
+    def leading_level(self) -> GrowthLevel:
+        return self.terms[0].level if self.terms else GrowthLevel(0, 0)
+
+    @property
+    def leading_coeff(self) -> float:
+        return self.terms[0].coeff if self.terms else 0.0
+
+    def __repr__(self):
+        parts = []
+        for t in self.terms:
+            sign = "+" if t.coeff > 0 else "-"
+            parts.append(f"{sign} {abs(t.coeff):.2f}·{t.level}")
+        return " ".join(parts).lstrip("+ ")
 
 
-def demonstrate_log_subpolynomial():
-    """Show that log(x) / x^α → 0 for α > 0."""
-    print("=" * 70)
-    print("THEOREM 3: Logarithm is Sub-polynomial")
-    print("  log(x) = o(x^α) for all α > 0")
-    print("=" * 70)
-    
-    for alpha in [0.01, 0.1, 0.5, 1.0]:
-        print(f"\n  α = {alpha}:")
-        print(f"  {'x':>12} {'log(x)':>12} {'x^α':>15} {'ratio':>15}")
-        print(f"  {'-'*12} {'-'*12} {'-'*15} {'-'*15}")
-        for x in [10, 100, 1000, 10000, 100000, 1000000]:
-            log_x = math.log(x)
-            pow_x = x ** alpha
-            ratio = log_x / pow_x
-            print(f"  {x:>12} {log_x:>12.4f} {pow_x:>15.4f} {ratio:>15.6f}")
-    print()
+def demo_growth_hierarchy():
+    """Demonstrate the growth level comparison."""
+    print("=" * 60)
+    print("1. GROWTH LEVEL HIERARCHY")
+    print("=" * 60)
+
+    levels = [
+        GrowthLevel(-1, 1),  # log(x)
+        GrowthLevel(0, 0.5), # sqrt(x)
+        GrowthLevel(0, 1),   # x
+        GrowthLevel(0, 2),   # x^2
+        GrowthLevel(1, 0.1), # exp(0.1x)
+        GrowthLevel(1, 1),   # exp(x)
+        GrowthLevel(1, 3),   # exp(3x)
+        GrowthLevel(2, 1),   # exp(exp(x))
+    ]
+
+    print("\nGrowth levels in ascending order:")
+    for i, g in enumerate(levels):
+        print(f"  {i+1}. {g}")
+
+    print("\nComparison principle:")
+    print("  - Higher depth always wins (exp beats poly beats log)")
+    print("  - Same depth: larger exponent wins")
+
+    print("\nNumerical verification at x = 10:")
+    for g in levels:
+        t = TransseriesTerm(1.0, g)
+        val = t.evaluate(10.0)
+        if val < 1e300:
+            print(f"  {g}: {val:.4e}")
+        else:
+            print(f"  {g}: overflow (grows too fast!)")
 
 
-def demonstrate_eml_asymptotic():
-    """Show that EML(x,x) = exp(x) - log(x) ~ exp(x)."""
-    print("=" * 70)
-    print("THEOREM 5: EML Asymptotic Equivalence")
-    print("  exp(x) - log(x) ~ exp(x) as x → +∞")
-    print("=" * 70)
-    
-    print(f"\n  {'x':>8} {'exp(x)':>15} {'log(x)':>12} {'EML(x,x)':>15} {'EML/exp':>12}")
-    print(f"  {'-'*8} {'-'*15} {'-'*12} {'-'*15} {'-'*12}")
-    for x in [1, 2, 5, 10, 20, 50, 100]:
-        exp_x = math.exp(x)
-        log_x = math.log(x)
-        eml = exp_x - log_x
-        ratio = eml / exp_x
-        print(f"  {x:>8} {exp_x:>15.4f} {log_x:>12.4f} {eml:>15.4f} {ratio:>12.8f}")
-    print("\n  → The ratio EML/exp → 1, confirming exp(x) is the leading term.\n")
+def demo_depth_separation():
+    """Demonstrate the depth separation theorem numerically."""
+    print("\n" + "=" * 60)
+    print("2. DEPTH SEPARATION THEOREM")
+    print("=" * 60)
+
+    print("\nexp(x) / x^n for various n:")
+    for n in [1, 2, 5, 10]:
+        ratios = []
+        for x in [10, 50, 100, 500]:
+            ratio = math.exp(x) / x**n if x**n > 0 else float('inf')
+            ratios.append(ratio)
+        print(f"  n={n:2d}: x=10: {ratios[0]:.2e}, x=50: {ratios[1]:.2e}, "
+              f"x=100: {ratios[2]:.2e}, x=500: {ratios[3]:.2e}")
+
+    print("\nlog(x) / x^ε for ε = 0.1:")
+    for x in [10, 100, 1000, 10000, 100000]:
+        ratio = math.log(x) / x**0.1
+        print(f"  x={x:>6d}: log(x)/x^0.1 = {ratio:.6f}")
+    print("  → Converges to 0 (logarithmic subordination)")
 
 
-def demonstrate_leading_coeff_uniqueness():
-    """Numerical illustration of leading coefficient uniqueness."""
-    print("=" * 70)
-    print("THEOREM 7: Uniqueness of Leading Coefficients")
-    print("  If f(x) - c·g(x) = o(g(x)), then c is unique.")
-    print("=" * 70)
-    
-    # f(x) = 3*exp(x) + x^2
-    # The leading coefficient relative to exp(x) must be 3
-    print("\n  Example: f(x) = 3·exp(x) + x², g(x) = exp(x)")
-    print(f"\n  {'x':>8} {'f(x)':>20} {'3·g(x)':>20} {'f-3g':>15} {'(f-3g)/g':>12}")
-    print(f"  {'-'*8} {'-'*20} {'-'*20} {'-'*15} {'-'*12}")
-    for x in [1, 2, 5, 10, 20, 50]:
-        f_x = 3 * math.exp(x) + x**2
-        g_x = math.exp(x)
-        three_g = 3 * g_x
-        residual = f_x - three_g
-        ratio = residual / g_x
-        print(f"  {x:>8} {f_x:>20.4f} {three_g:>20.4f} {residual:>15.4f} {ratio:>12.8f}")
-    print("\n  → The residual ratio → 0, confirming c = 3 is the unique leading coefficient.\n")
+def demo_asymptotic_uniqueness():
+    """Demonstrate the asymptotic uniqueness theorem."""
+    print("\n" + "=" * 60)
+    print("3. ASYMPTOTIC UNIQUENESS THEOREM")
+    print("=" * 60)
+
+    print("\n|exp(αx) - exp(βx)| for α=1, β=1.01:")
+    for x in [1, 5, 10, 20, 50]:
+        diff = abs(math.exp(1.0 * x) - math.exp(1.01 * x))
+        print(f"  x={x:2d}: |exp(x) - exp(1.01x)| = {diff:.2e}")
+    print("  → Diverges: α ≠ β implies unbounded difference")
+
+    print("\nCounterexample with α=0, β=-1 (non-negative condition needed):")
+    for x in [1, 10, 100, 1000]:
+        diff = abs(math.exp(0) - math.exp(-x))
+        print(f"  x={x:4d}: |1 - exp(-x)| = {diff:.6f}")
+    print("  → Stays bounded! (α=0, β=-1 both satisfy |diff| ≤ 1)")
 
 
-def demonstrate_transseries_hierarchy():
-    """Show the full hierarchy: exp(exp(x)) >> exp(x) >> x^n >> log(x)."""
-    print("=" * 70)
-    print("THE COMPLETE TRANSSERIES HIERARCHY")
-    print("  exp(exp(x)) ≻ exp(x) ≻ x^n ≻ x ≻ log(x)")
-    print("=" * 70)
-    
-    print(f"\n  {'x':>6} {'log(x)':>10} {'x':>10} {'x²':>10} {'exp(x)':>12} {'exp(exp(x))':>15}")
-    print(f"  {'-'*6} {'-'*10} {'-'*10} {'-'*10} {'-'*12} {'-'*15}")
-    for x in [2, 3, 4, 5, 6]:
-        log_x = math.log(x)
-        x2 = x ** 2
-        exp_x = math.exp(x)
-        try:
-            exp_exp_x = math.exp(exp_x)
-        except OverflowError:
-            exp_exp_x = float('inf')
-        print(f"  {x:>6} {log_x:>10.4f} {x:>10} {x2:>10} {exp_x:>12.2f} {exp_exp_x:>15.2e}")
-    
-    print("\n  Each level grows incomparably faster than the one below it.")
-    print("  This is the foundational structure of transseries theory.\n")
+def demo_eml_connection():
+    """Demonstrate the EML-transseries connection."""
+    print("\n" + "=" * 60)
+    print("4. EML CONNECTION")
+    print("=" * 60)
+
+    print("\neml(a, b) = exp(a) - log(b)")
+    print("Transseries decomposition: depth-1 term + depth-(-1) term")
+    print("\n(exp(a) - log(2)) / exp(a) → 1 as a → ∞:")
+    b = 2.0
+    for a in [1, 5, 10, 20, 50]:
+        ratio = (math.exp(a) - math.log(b)) / math.exp(a)
+        print(f"  a={a:2d}: ratio = {ratio:.10f}")
+    print("  → The exponential part dominates")
+
+
+def demo_transseries_algebra():
+    """Demonstrate transseries construction and evaluation."""
+    print("\n" + "=" * 60)
+    print("5. TRANSSERIES ALGEBRA")
+    print("=" * 60)
+
+    # T = 3·exp(x) - 2·x^2 + log(x)
+    T = FormalTransseries([
+        TransseriesTerm(3.0, GrowthLevel(1, 1)),
+        TransseriesTerm(-2.0, GrowthLevel(0, 2)),
+        TransseriesTerm(1.0, GrowthLevel(-1, 1)),
+    ])
+
+    print(f"\nTransseries T = {T}")
+    print(f"Leading level: {T.leading_level}")
+    print(f"Leading coefficient: {T.leading_coeff}")
+
+    print("\nEvaluation:")
+    for x in [1.0, 2.0, 5.0, 10.0]:
+        val = T.evaluate(x)
+        print(f"  T({x}) = {val:.4f}")
+
+    print("\nTerm-by-term breakdown at x=10:")
+    for t in T.terms:
+        print(f"  {t.coeff:+.0f}·{t.level} = {t.evaluate(10.0):.4e}")
+    print(f"  Total: {T.evaluate(10.0):.4e}")
+    print("  → The depth-1 term (exp) completely dominates")
 
 
 if __name__ == "__main__":
-    print("\n" + "█" * 70)
-    print("  EML TRANSSERIES: ASYMPTOTIC EXPANSIONS BEYOND POWER SERIES")
-    print("█" * 70 + "\n")
-    
-    demonstrate_exp_dominates_poly()
-    demonstrate_double_exp_dominance()
-    demonstrate_log_subpolynomial()
-    demonstrate_eml_asymptotic()
-    demonstrate_leading_coeff_uniqueness()
-    demonstrate_transseries_hierarchy()
-    
-    print("=" * 70)
-    print("All demonstrations complete.")
-    print("These numerical results confirm the formally verified theorems")
-    print("in the transseries hierarchy.")
-    print("=" * 70)
+    demo_growth_hierarchy()
+    demo_depth_separation()
+    demo_asymptotic_uniqueness()
+    demo_eml_connection()
+    demo_transseries_algebra()
 
 
-#!/usr/bin/env python3
 """
-Visualization: The Transseries Asymptotic Hierarchy
+Visualization: EML-Transseries Connection
 
-Produces a plot showing the growth rates of the standard transseries scale:
-  log(x) << x << x^2 << exp(x) << exp(exp(x))
-
-on both linear and log scales, demonstrating the strict dominance chain.
+Shows how the EML operation eml(a,b) = exp(a) - log(b) decomposes
+into depth-1 and depth-(-1) transseries components.
 """
 
-import math
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 import numpy as np
 
-def create_hierarchy_plot():
-    """Create and save the transseries hierarchy visualization."""
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-    except ImportError:
-        print("matplotlib not available; skipping plot generation")
-        return
-    
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
-    # --- Left panel: log scale ---
-    x = np.linspace(1.01, 6, 500)
-    
-    log_x = np.log(x)
-    x_vals = x
-    x_sq = x ** 2
-    exp_x = np.exp(x)
-    # Cap exp(exp(x)) to avoid overflow
-    exp_exp_x = np.array([math.exp(math.exp(xi)) if xi < 5.5 else float('nan') for xi in x])
-    
-    ax = axes[0]
-    ax.semilogy(x, log_x, 'b-', linewidth=2, label=r'$\log(x)$')
-    ax.semilogy(x, x_vals, 'g-', linewidth=2, label=r'$x$')
-    ax.semilogy(x, x_sq, 'orange', linewidth=2, label=r'$x^2$')
-    ax.semilogy(x, exp_x, 'r-', linewidth=2, label=r'$\exp(x)$')
-    ax.semilogy(x, exp_exp_x, 'm-', linewidth=2, label=r'$\exp(\exp(x))$')
-    
-    # EML function
-    eml = exp_x - log_x
-    ax.semilogy(x, eml, 'r--', linewidth=1.5, alpha=0.7, label=r'$\exp(x) - \log(x)$')
-    
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('f(x)  [log scale]', fontsize=12)
-    ax.set_title('Transseries Hierarchy (Log Scale)', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=10, loc='upper left')
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(0.1, 1e100)
-    
-    # --- Right panel: ratios showing dominance ---
-    x2 = np.linspace(1.01, 20, 500)
-    
-    ax2 = axes[1]
-    
-    # Ratio: x^n / exp(x) → 0  (for n = 1, 2, 3, 5)
-    for n in [1, 2, 3, 5]:
-        ratio = x2**n / np.exp(x2)
-        ax2.plot(x2, ratio, linewidth=2, label=f'$x^{n}/\\exp(x)$')
-    
-    # Ratio: log(x) / x^0.5 → 0
-    ratio_log = np.log(x2) / np.sqrt(x2)
-    ax2.plot(x2, ratio_log, 'k--', linewidth=2, label=r'$\log(x)/\sqrt{x}$')
-    
-    ax2.axhline(y=0, color='gray', linestyle='-', alpha=0.5)
-    ax2.set_xlabel('x', fontsize=12)
-    ax2.set_ylabel('Ratio', fontsize=12)
-    ax2.set_title('Dominance Ratios → 0', fontsize=14, fontweight='bold')
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(-0.1, 3.0)
-    
-    plt.tight_layout()
-    plt.savefig('transseries_hierarchy.png', dpi=150, bbox_inches='tight')
-    print("Saved: transseries_hierarchy.png")
-    plt.close()
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# Figure 1: EML decomposition
+ax = axes[0]
+x = np.linspace(0.1, 8, 500)
+b = 2.0
+
+exp_part = np.exp(x)
+log_part = -np.log(b) * np.ones_like(x)
+eml_val = exp_part + log_part
+
+ax.plot(x, eml_val, label='eml(a, 2) = exp(a) - log(2)', linewidth=2.5, color='#E91E63')
+ax.plot(x, exp_part, label='exp(a) [depth 1]', linewidth=2, linestyle='--', color='#FF9800')
+ax.fill_between(x, exp_part, eml_val, alpha=0.2, color='#2196F3',
+                label='log(2) gap [depth -1]')
+ax.set_xlabel('a', fontsize=12)
+ax.set_ylabel('Value', fontsize=12)
+ax.set_title('EML Transseries Decomposition', fontsize=14)
+ax.legend(fontsize=10)
+ax.set_ylim(-5, 100)
+ax.grid(True, alpha=0.3)
+
+# Figure 2: Ratio showing exp dominance
+ax = axes[1]
+x2 = np.linspace(0.5, 10, 500)
+
+for b_val, color in [(0.5, '#2196F3'), (2.0, '#4CAF50'), (10.0, '#FF9800'), (100.0, '#9C27B0')]:
+    ratio = (np.exp(x2) - np.log(b_val)) / np.exp(x2)
+    ax.plot(x2, ratio, label=f'b={b_val}', linewidth=2, color=color)
+
+ax.axhline(y=1, color='red', linestyle=':', alpha=0.7, linewidth=1.5, label='Limit = 1')
+ax.set_xlabel('a', fontsize=12)
+ax.set_ylabel('(exp(a) - log(b)) / exp(a)', fontsize=12)
+ax.set_title('EML Asymptotic Dominance: Ratio → 1', fontsize=14)
+ax.legend(fontsize=10)
+ax.set_ylim(0.5, 1.5)
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('eml_connection.png', dpi=150, bbox_inches='tight')
+print("Saved eml_connection.png")
 
 
-def create_eml_decomposition_plot():
-    """Visualize the EML function as a transseries decomposition."""
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-    except ImportError:
-        print("matplotlib not available; skipping plot generation")
-        return
-    
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
-    x = np.linspace(0.5, 8, 500)
-    
-    # Left: EML decomposition
-    ax = axes[0]
-    exp_x = np.exp(x)
-    log_x = np.log(x)
-    eml = exp_x - log_x
-    
-    ax.fill_between(x, 0, exp_x, alpha=0.2, color='red', label=r'$\exp(x)$ (leading term)')
-    ax.fill_between(x, eml, exp_x, alpha=0.3, color='blue', label=r'$-\log(x)$ (correction)')
-    ax.plot(x, eml, 'k-', linewidth=2, label=r'$\mathrm{EML}(x,x) = \exp(x) - \log(x)$')
-    ax.plot(x, exp_x, 'r--', linewidth=1.5, alpha=0.7)
-    
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('f(x)', fontsize=12)
-    ax.set_title('EML Transseries Decomposition', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(0, 300)
-    
-    # Right: relative error EML/exp - 1
-    ax2 = axes[1]
-    x2 = np.linspace(1, 30, 500)
-    relative_error = -np.log(x2) / np.exp(x2)
-    
-    ax2.plot(x2, relative_error, 'b-', linewidth=2)
-    ax2.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
-    ax2.set_xlabel('x', fontsize=12)
-    ax2.set_ylabel(r'$(\mathrm{EML} - \exp)/\exp$', fontsize=12)
-    ax2.set_title('EML Relative Correction (→ 0)', fontsize=14, fontweight='bold')
-    ax2.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('eml_transseries_decomposition.png', dpi=150, bbox_inches='tight')
-    print("Saved: eml_transseries_decomposition.png")
-    plt.close()
+"""
+Visualization: Growth Hierarchy of Transseries
+
+Plots the growth rates of transmonomials at different depths,
+illustrating the depth separation theorem.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+def transmonomial_eval(depth: int, alpha: float, x: np.ndarray) -> np.ndarray:
+    """Evaluate a transmonomial at depth d with exponent alpha."""
+    if depth == -1:
+        return np.where(x > 0, np.log(x) ** alpha, 0.0)
+    elif depth == 0:
+        return np.where(x > 0, x ** alpha, 0.0)
+    elif depth == 1:
+        return np.exp(np.clip(alpha * x, -700, 700))
+    elif depth == 2:
+        inner = np.clip(alpha * np.exp(np.clip(x, -700, 20)), -700, 700)
+        return np.exp(inner)
+    return np.zeros_like(x)
+
+# Figure 1: Growth hierarchy (log scale)
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+x = np.linspace(0.1, 8, 500)
+
+ax = axes[0]
+ax.semilogy(x, transmonomial_eval(-1, 1, x), label='log(x) [depth -1]', linewidth=2, color='#2196F3')
+ax.semilogy(x, transmonomial_eval(0, 1, x), label='x [depth 0]', linewidth=2, color='#4CAF50')
+ax.semilogy(x, transmonomial_eval(0, 2, x), label='x² [depth 0]', linewidth=2, linestyle='--', color='#4CAF50')
+ax.semilogy(x, transmonomial_eval(1, 0.5, x), label='exp(0.5x) [depth 1]', linewidth=2, linestyle='--', color='#FF9800')
+ax.semilogy(x, transmonomial_eval(1, 1, x), label='exp(x) [depth 1]', linewidth=2, color='#FF9800')
+ax.set_xlabel('x', fontsize=12)
+ax.set_ylabel('Transmonomial value (log scale)', fontsize=12)
+ax.set_title('Growth Hierarchy of Transmonomials', fontsize=14)
+ax.legend(loc='upper left', fontsize=9)
+ax.set_ylim(0.1, 1e4)
+ax.grid(True, alpha=0.3)
+
+# Figure 2: Ratios demonstrating separation
+ax = axes[1]
+x2 = np.linspace(1, 15, 500)
+ratio1 = np.exp(x2) / x2**2
+ratio2 = np.exp(x2) / x2**5
+ratio3 = np.where(x2 > 1, np.log(x2) / x2**0.5, 0)
+
+ax.semilogy(x2, ratio1, label='exp(x)/x² → ∞', linewidth=2, color='#E91E63')
+ax.semilogy(x2, ratio2, label='exp(x)/x⁵ → ∞', linewidth=2, color='#9C27B0')
+ax.plot(x2, ratio3, label='log(x)/√x → 0', linewidth=2, color='#00BCD4')
+ax.axhline(y=1, color='gray', linestyle=':', alpha=0.5)
+ax.set_xlabel('x', fontsize=12)
+ax.set_ylabel('Ratio (log scale)', fontsize=12)
+ax.set_title('Depth Separation Ratios', fontsize=14)
+ax.legend(loc='upper left', fontsize=10)
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('growth_hierarchy.png', dpi=150, bbox_inches='tight')
+print("Saved growth_hierarchy.png")
 
 
-if __name__ == "__main__":
-    create_hierarchy_plot()
-    create_eml_decomposition_plot()
+# Figure 3: Asymptotic uniqueness visualization
+fig2, ax = plt.subplots(figsize=(10, 6))
+
+x3 = np.linspace(0, 5, 500)
+
+# Same exponent: bounded difference
+diff_same = np.abs(np.exp(1.0 * x3) - np.exp(1.0 * x3))
+ax.plot(x3, diff_same, label='|exp(x) - exp(x)| = 0 (α=β=1)', linewidth=2, color='#4CAF50')
+
+# Different exponents (both positive): unbounded
+diff_diff = np.abs(np.exp(1.0 * x3) - np.exp(1.1 * x3))
+ax.plot(x3, diff_diff, label='|exp(x) - exp(1.1x)| → ∞ (α=1, β=1.1)', linewidth=2, color='#F44336')
+
+# Counterexample: α=0, β=-1 (bounded but α≠β)
+diff_counter = np.abs(np.exp(0 * x3) - np.exp(-1 * x3))
+ax.plot(x3, diff_counter, label='|1 - exp(-x)| ≤ 1 (α=0, β=-1)', linewidth=2, color='#FF9800', linestyle='--')
+
+ax.set_xlabel('x', fontsize=12)
+ax.set_ylabel('|exp(αx) - exp(βx)|', fontsize=12)
+ax.set_title('Asymptotic Uniqueness: Bounded Difference ⟹ Equal Exponents (for α,β ≥ 0)', fontsize=13)
+ax.legend(fontsize=10)
+ax.set_ylim(-0.5, 20)
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('asymptotic_uniqueness.png', dpi=150, bbox_inches='tight')
+print("Saved asymptotic_uniqueness.png")
