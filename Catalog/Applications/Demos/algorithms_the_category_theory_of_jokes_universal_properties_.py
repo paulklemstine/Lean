@@ -1,251 +1,222 @@
+#!/usr/bin/env python3
 """
-Algorithms for Categorical Surprise Theory
+Categorical Deviation Theory — Core Algorithms
 
-Type-hinted implementations of the core algorithms from the research paper.
+Type-hinted implementations of the key structures and algorithms
+from categorical deviation theory.
 """
 
-import math
 from dataclasses import dataclass
-from typing import List, Tuple, Optional, Callable
+from typing import Callable, Generic, TypeVar, List, Tuple, Optional
+import math
 
-
-# ============================================================
-# Data Structures
-# ============================================================
-
-@dataclass
-class SurpriseSpace:
-    """A metric space with a distinguished expected element."""
-    expected: float
-    
-    def surprise(self, x: float) -> float:
-        """Compute the surprise value of x."""
-        return abs(x - self.expected)
-    
-    def find_optimal(self, candidates: List[float]) -> Tuple[float, float]:
-        """Find the maximally surprising element (Fundamental Theorem of Comedy)."""
-        if not candidates:
-            raise ValueError("Cannot find optimal in empty set")
-        best = max(candidates, key=self.surprise)
-        return best, self.surprise(best)
+T = TypeVar('T')
 
 
 @dataclass
-class Joke:
-    """A joke: expected resolution paired with actual punchline."""
-    expected_resolution: float
-    actual_punchline: float
-    
-    @property
-    def humor_value(self) -> float:
-        return abs(self.expected_resolution - self.actual_punchline)
+class MetricQuiver(Generic[T]):
+    """A quiver with pseudometric hom-sets.
 
+    Objects are of type T.
+    Morphisms between objects are represented as arbitrary values.
+    The distance function measures how far apart two morphisms are.
+    """
+    dist: Callable[[any, any], float]
 
-@dataclass  
-class IRJoke:
-    """Incongruity-Resolution joke model."""
-    incongruity: float
-    resolution: float
-    
-    def __post_init__(self) -> None:
-        assert self.incongruity >= 0, "Incongruity must be non-negative"
-        assert 0 <= self.resolution <= 1, "Resolution must be in [0, 1]"
-    
-    @property
-    def net_humor(self) -> float:
-        return self.incongruity * (1 - self.resolution)
-    
-    @property
-    def joke_type(self) -> str:
-        if self.resolution < 0.1:
-            return "absurdist"
-        elif self.resolution < 0.3:
-            return "dark"
-        elif self.resolution < 0.6:
-            return "observational"
-        elif self.resolution < 0.8:
-            return "wordplay"
-        else:
-            return "pun"
+    def verify_pseudometric(self, samples: List[any]) -> bool:
+        """Verify pseudometric axioms on a sample of morphisms."""
+        for f in samples:
+            if abs(self.dist(f, f)) > 1e-10:
+                return False
+        for f in samples:
+            for g in samples:
+                if abs(self.dist(f, g) - self.dist(g, f)) > 1e-10:
+                    return False
+                if self.dist(f, g) < -1e-10:
+                    return False
+        for f in samples:
+            for g in samples:
+                for h in samples:
+                    if self.dist(f, h) > self.dist(f, g) + self.dist(g, h) + 1e-10:
+                        return False
+        return True
 
 
 @dataclass
-class SubversionMap:
-    """A surprise-amplifying map between spaces."""
-    source: SurpriseSpace
-    target: SurpriseSpace
-    transform: Callable[[float], float]
-    amplification: float
-    
-    def apply(self, x: float) -> float:
-        return self.transform(x)
-    
-    def verify_amplification(self, x: float) -> bool:
-        """Check the amplification property at a point."""
-        target_surprise = self.target.surprise(self.apply(x))
-        source_surprise = self.source.surprise(x)
-        return target_surprise >= self.amplification * source_surprise - 1e-10
+class ExpectationQuiver(Generic[T]):
+    """A metric quiver with expected morphisms and surprise functional.
+
+    The surprise of a morphism f is dist(f, expected).
+    """
+    dist: Callable[[any, any], float]
+    expected: Callable[[T, T], any]
+
+    def surprise(self, a: T, b: T, f: any) -> float:
+        """Compute the surprise of morphism f from a to b."""
+        return self.dist(f, self.expected(a, b))
+
+    def surprise_lipschitz_check(self, a: T, b: T, f: any, g: any) -> bool:
+        """Verify |σ(f) - σ(g)| ≤ d(f,g)."""
+        return abs(self.surprise(a, b, f) - self.surprise(a, b, g)) <= self.dist(f, g) + 1e-10
 
 
 @dataclass
-class SurpriseFunctor:
-    """A pair of monotone maps with measurable gap."""
-    expected_map: Callable[[float], float]
-    twist_map: Callable[[float], float]
-    
-    def gap(self, x: float) -> float:
-        return abs(self.expected_map(x) - self.twist_map(x))
+class ComposableExpectationQuiver(Generic[T]):
+    """Full deviation theory structure with composition."""
+    dist: Callable[[any, any], float]
+    comp: Callable[[any, any], any]
+    expected: Callable[[T, T], any]
+
+    def surprise(self, a: T, b: T, f: any) -> float:
+        """Surprise of morphism f from a to b."""
+        return self.dist(f, self.expected(a, b))
+
+    def coherence_defect(self, a: T, b: T, c: T) -> float:
+        """Coherence defect at triple (a,b,c)."""
+        composed_expect = self.comp(self.expected(b, c), self.expected(a, b))
+        direct_expect = self.expected(a, c)
+        return self.dist(composed_expect, direct_expect)
+
+    def is_coherent(self, objects: List[T], tol: float = 1e-10) -> bool:
+        """Check if expectations are coherent on given objects."""
+        for a in objects:
+            for b in objects:
+                for c in objects:
+                    if self.coherence_defect(a, b, c) > tol:
+                        return False
+        return True
+
+    def chain_surprise(self, objects: List[T], morphisms: List[any]) -> Tuple[float, float]:
+        """Compute composed surprise and individual surprise sum for a chain.
+
+        Returns (composed_surprise, total_individual_surprise).
+        """
+        assert len(morphisms) == len(objects) - 1
+
+        # Individual surprises
+        individual = [
+            self.surprise(objects[i], objects[i+1], morphisms[i])
+            for i in range(len(morphisms))
+        ]
+        total_individual = sum(individual)
+
+        # Composed morphism
+        composed = morphisms[0]
+        for i in range(1, len(morphisms)):
+            composed = self.comp(morphisms[i], composed)
+
+        composed_surprise = self.surprise(objects[0], objects[-1], composed)
+        return composed_surprise, total_individual
 
 
-# ============================================================
-# Core Algorithms
-# ============================================================
+@dataclass
+class DeviationMonoid:
+    """A monoid with nonexpansive multiplication and deviation from identity."""
+    mul: Callable[[any, any], any]
+    one: any
+    dist: Callable[[any, any], float]
 
-def compute_info_surprise(p: float) -> float:
-    """
-    Compute information-theoretic surprise: -log₂(p).
-    
-    Algorithm: Direct computation using log₂.
-    Complexity: O(1)
-    """
-    if p <= 0:
-        return float('inf')
-    return -math.log2(p)
+    def deviation(self, a: any) -> float:
+        """Deviation of element a from identity."""
+        return self.dist(a, self.one)
 
+    def pow(self, a: any, n: int) -> any:
+        """Compute a^n by repeated multiplication."""
+        result = self.one
+        for _ in range(n):
+            result = self.mul(a, result)
+        return result
 
-def compute_uniform_entropy(n: int) -> float:
-    """
-    Compute entropy of uniform distribution on n elements: log₂(n).
-    
-    Algorithm: H = -Σ (1/n) log₂(1/n) = log₂(n)
-    Complexity: O(1)
-    """
-    if n <= 0:
-        raise ValueError("n must be positive")
-    return math.log2(n)
+    def deviation_pow_data(self, a: any, max_n: int) -> List[Tuple[int, float, float]]:
+        """Compute (n, deviation(a^n), n*deviation(a)) for n = 0..max_n.
 
-
-def find_optimal_joke(
-    candidates: List[float],
-    expected: float
-) -> Tuple[float, float]:
-    """
-    Find the maximally surprising punchline.
-    
-    Algorithm: Linear scan (argmax of surprise function).
-    Complexity: O(n) where n = len(candidates)
-    Correctness: Guaranteed by Fundamental Theorem of Comedy 
-                 (maximum exists in finite/compact spaces).
-    
-    Returns: (optimal_punchline, humor_value)
-    """
-    if not candidates:
-        raise ValueError("No candidates")
-    space = SurpriseSpace(expected)
-    return space.find_optimal(candidates)
+        Returns list of (n, actual_deviation, bound).
+        """
+        dev_a = self.deviation(a)
+        data = []
+        a_n = self.one
+        for n in range(max_n + 1):
+            dev = self.dist(a_n, self.one)
+            data.append((n, dev, n * dev_a))
+            a_n = self.mul(a, a_n)
+        return data
 
 
-def analyze_comedy_routine(humor_values: List[float]) -> dict:
-    """
-    Analyze a comedy routine (sequence of humor values).
-    
-    Algorithm: Single-pass statistics.
-    Complexity: O(n)
-    
-    Returns: Dictionary with total, average, peak, and monotonicity check.
-    """
-    if not humor_values:
-        return {"total": 0.0, "average": 0.0, "peak": 0.0}
-    
-    total = sum(humor_values)
-    average = total / len(humor_values)
-    peak = max(humor_values)
-    
+@dataclass
+class GradedDeviationSystem:
+    """A metric space with grading that modulates deviation accumulation."""
+    dist: Callable[[any, any], float]
+    grade: Callable[[any], float]
+
+    def graded_bound(self, a: any, intermediaries: List[any], b: any) -> float:
+        """Compute the graded deviation bound from a to b through intermediaries.
+
+        Returns Σ d(consecutive) + Σ grade(intermediary).
+        """
+        chain = [a] + intermediaries + [b]
+        dist_sum = sum(self.dist(chain[i], chain[i+1]) for i in range(len(chain)-1))
+        grade_sum = sum(self.grade(x) for x in intermediaries)
+        return dist_sum + grade_sum
+
+
+def build_real_line_quiver() -> ComposableExpectationQuiver:
+    """Construct the real line quiver from the paper."""
+    return ComposableExpectationQuiver(
+        dist=lambda f, g: abs(f - g),
+        comp=lambda f, g: f + g,
+        expected=lambda a, b: b - a,
+    )
+
+
+def build_matrix_deviation_monoid(dim: int = 2) -> DeviationMonoid:
+    """Construct a deviation monoid from dim×dim matrices with Frobenius norm."""
+    import numpy as np
+
+    identity = np.eye(dim)
+
+    def mat_mul(A, B):
+        return A @ B
+
+    def mat_dist(A, B):
+        return float(np.linalg.norm(A - B, 'fro'))
+
+    return DeviationMonoid(
+        mul=mat_mul,
+        one=identity,
+        dist=mat_dist,
+    )
+
+
+def compute_surprise_spectrum(
+    quiver: ComposableExpectationQuiver,
+    a: any, b: any,
+    morphism_samples: List[any]
+) -> dict:
+    """Compute statistics of the surprise functional over a sample of morphisms."""
+    surprises = [quiver.surprise(a, b, f) for f in morphism_samples]
     return {
-        "total": total,
-        "average": average,
-        "peak": peak,
-        "count": len(humor_values),
-        "average_le_peak": average <= peak + 1e-10,
+        "min": min(surprises),
+        "max": max(surprises),
+        "mean": sum(surprises) / len(surprises),
+        "std": (sum((s - sum(surprises)/len(surprises))**2 for s in surprises) / len(surprises)) ** 0.5,
     }
 
 
-def compute_gap_profile(
-    functor: SurpriseFunctor,
-    points: List[float]
-) -> List[Tuple[float, float]]:
-    """
-    Compute the surprise gap profile along a sequence of points.
-    
-    Algorithm: Evaluate gap at each point.
-    Complexity: O(n)
-    
-    Returns: List of (point, gap) pairs.
-    """
-    return [(x, functor.gap(x)) for x in points]
-
-
-def verify_gap_triangle(
-    functor: SurpriseFunctor,
-    x: float,
-    y: float
-) -> bool:
-    """
-    Verify the gap triangle inequality: gap(y) ≤ gap(x) + d_F(x,y) + d_T(x,y).
-    
-    Algorithm: Direct computation and comparison.
-    Complexity: O(1)
-    """
-    gap_y = functor.gap(y)
-    gap_x = functor.gap(x)
-    d_F = abs(functor.expected_map(x) - functor.expected_map(y))
-    d_T = abs(functor.twist_map(x) - functor.twist_map(y))
-    return gap_y <= gap_x + d_F + d_T + 1e-10
-
-
-def optimal_ir_decomposition(
-    humor_target: float,
-    max_incongruity: float = 10.0,
-    resolution_step: float = 0.01
-) -> IRJoke:
-    """
-    Find the IR decomposition that achieves a target humor value
-    with minimum incongruity (most efficient joke).
-    
-    Algorithm: For each resolution level, compute required incongruity.
-               Choose the decomposition with minimum incongruity.
-    Complexity: O(1/resolution_step)
-    
-    The optimal is always r=0, I=humor_target (absurdist).
-    But if we want r > 0 (some resolution), I must be larger.
-    """
-    best: Optional[IRJoke] = None
-    best_incongruity = float('inf')
-    
-    r = 0.0
-    while r <= 0.99:
-        # I * (1-r) = humor_target => I = humor_target / (1-r)
-        required_inc = humor_target / (1 - r)
-        if required_inc <= max_incongruity and required_inc < best_incongruity:
-            best_incongruity = required_inc
-            best = IRJoke(required_inc, r)
-        r += resolution_step
-    
-    if best is None:
-        raise ValueError(f"Cannot achieve humor {humor_target} within bounds")
-    return best
-
-
 if __name__ == "__main__":
-    # Quick demonstration
-    space = SurpriseSpace(expected=5.0)
-    optimal, humor = space.find_optimal([1.0, 3.0, 5.0, 7.0, 10.0])
-    print(f"Optimal punchline: {optimal}, humor: {humor}")
-    
-    joke = IRJoke(incongruity=8.0, resolution=0.3)
-    print(f"IR Joke: type={joke.joke_type}, net_humor={joke.net_humor}")
-    
-    print(f"Uniform entropy (n=8): {compute_uniform_entropy(8):.4f} bits")
-    
-    routine = analyze_comedy_routine([3.0, 5.0, 7.0, 2.0, 9.0])
-    print(f"Routine analysis: {routine}")
+    # Quick self-test
+    Q = build_real_line_quiver()
+    assert Q.is_coherent([0.0, 1.0, 2.0, 5.0])
+    print("Real line quiver: coherent ✓")
+
+    cs, ts = Q.chain_surprise([0, 3, 7, 10], [4, 3, 2])
+    print(f"Chain: composed_surprise={cs:.2f}, total_individual={ts:.2f}")
+    assert cs <= ts + 1e-10
+    print("Chain bound verified ✓")
+
+    # Surprise spectrum
+    import random
+    random.seed(42)
+    morphisms = [random.gauss(5, 2) for _ in range(1000)]
+    spectrum = compute_surprise_spectrum(Q, 0.0, 5.0, morphisms)
+    print(f"Surprise spectrum (0→5): min={spectrum['min']:.3f}, max={spectrum['max']:.3f}, "
+          f"mean={spectrum['mean']:.3f}, std={spectrum['std']:.3f}")
