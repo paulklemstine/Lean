@@ -510,6 +510,36 @@
       "theorem_count": 8,
       "timestamp": "2026-06-05T03:46:05",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "9bb6f622",
+      "domain": "Logic",
+      "key_insight": "## Synthesis\n\nThis research cycle established a rigorous formal theory of self-referential specification dynamics in stratified type systems. The central discovery is the **GL Bridge**: the consistenc",
+      "quality_score": 0.42600000000000005,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-05T04:19:41",
+      "title": "Self-Referential Type Theory: Proofs That Modify Their Own Specifications"
+    },
+    {
+      "cycle_id": "c53a9916",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle established a rigorous bridge between **Diophantine approximation theory** and **ReLU neural network expressiveness**. The key insight is that Re",
+      "quality_score": 0.3276,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T04:20:14",
+      "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
+    },
+    {
+      "cycle_id": "ef36afed",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis cycle established a complete formalization of Arrow's impossibility theorem via the ultrafilter characterization, together with novel topological obstruction th",
+      "quality_score": 0.5877600000000001,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T04:20:50",
+      "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
     }
   ],
   "entries": [
@@ -555,7 +585,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-05T03:46:05",
+  "last_updated": "2026-06-05T04:20:50",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -704,6 +734,18 @@
         "quality": 0.4777600000000001,
         "theorems": 6,
         "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
+      },
+      {
+        "cycle_id": "9bb6f622",
+        "quality": 0.42600000000000005,
+        "theorems": 4,
+        "title": "Self-Referential Type Theory: Proofs That Modify Their Own Specifications"
+      },
+      {
+        "cycle_id": "ef36afed",
+        "quality": 0.5877600000000001,
+        "theorems": 5,
+        "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
       }
     ],
     "MachineLearning": [
@@ -776,6 +818,12 @@
         "quality": 0.37336,
         "theorems": 6,
         "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
+      },
+      {
+        "cycle_id": "c53a9916",
+        "quality": 0.3276,
+        "theorems": 5,
+        "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
       }
     ],
     "Pythagorean": [

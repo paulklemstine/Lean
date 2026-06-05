@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "905a2bf6",
     "filename": "persistent_homology_of_prime_numbers_the_topology_.json",
     "pkg_num": 375,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.28584,
     "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
   {
@@ -12026,8 +12026,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "persistent_homology_of_prime_numbers_the_topology_",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.28584,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
     }
