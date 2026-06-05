@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e1a7a938",
     "filename": "the_collatz_conjecture_is_undecidable_what_if_3n1_.json",
     "pkg_num": 391,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.24384,
     "title": "Collatz Dynamics and Proof-Theoretic Barriers: Formalized Structural Theorems"
   },
   {
@@ -12490,8 +12490,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "the_collatz_conjecture_is_undecidable_what_if_3n1_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.24384,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Collatz Dynamics and Proof-Theoretic Barriers: Formalized Structural Theorems"
     }

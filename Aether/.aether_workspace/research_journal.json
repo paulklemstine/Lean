@@ -890,6 +890,26 @@
       "theorem_count": 4,
       "timestamp": "2026-06-05T14:58:27",
       "title": "Non-Archimedean Probability via Surreal Numbers"
+    },
+    {
+      "cycle_id": "ad4d5186",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle established a formal bridge between tropical algebra and the computational universality of Conway's Game of Life. The central discovery is that t",
+      "quality_score": 0.58416,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-05T15:33:28",
+      "title": "Game of Life Universality"
+    },
+    {
+      "cycle_id": "28609b55",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle established three interconnected results about jigsaw puzzles: (1) the algebraic structure of edge complementarity as a Z/2Z involution, (2) the",
+      "quality_score": 0.30856,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T15:34:02",
+      "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
     }
   ],
   "entries": [
@@ -935,7 +955,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-05T14:58:27",
+  "last_updated": "2026-06-05T15:34:02",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1144,18 +1164,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8753eff2",
-        "quality": 0.30944,
-        "theorems": 4,
-        "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
-      },
-      {
-        "cycle_id": "a5d2ff83",
-        "quality": 0.56672,
-        "theorems": 4,
-        "title": "Non-Archimedean Probability via Surreal Numbers"
-      },
-      {
         "cycle_id": "9b26e851",
         "quality": 0.34864000000000006,
         "theorems": 5,
@@ -1202,6 +1210,18 @@
         "quality": 0.4018400000000001,
         "theorems": 4,
         "title": "Non-Archimedean Probability via Surreal Numbers"
+      },
+      {
+        "cycle_id": "ad4d5186",
+        "quality": 0.58416,
+        "theorems": 4,
+        "title": "Game of Life Universality"
+      },
+      {
+        "cycle_id": "28609b55",
+        "quality": 0.30856,
+        "theorems": 5,
+        "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
       }
     ],
     "Physics": [
