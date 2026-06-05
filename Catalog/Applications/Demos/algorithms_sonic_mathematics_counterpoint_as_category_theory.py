@@ -1,205 +1,303 @@
+#!/usr/bin/env python3
 """
-Algorithms for Counterpoint Category Theory
+Counterpoint Category Theory — Algorithms
 
-Type-hinted implementations of the core algorithms for analyzing
-first-species counterpoint as a categorical structure.
+Type-hinted implementations of the core algorithms for counterpoint
+analysis in Z/12Z.
 """
 
-from typing import Set, Dict, List, Tuple, Optional
-from dataclasses import dataclass
+from math import gcd
+from typing import Optional
 
 
-@dataclass(frozen=True)
-class VoiceLeading:
-    """A voice leading in mod-n pitch space."""
-    bass_step: int
-    treble_step: int
-    n: int = 12
+# ============================================================
+# Core Types
+# ============================================================
 
-    @property
-    def interval_change(self) -> int:
-        return (self.treble_step - self.bass_step) % self.n
+Interval = int  # Elements of Z/12Z, range [0, 11]
+MotionType = str  # "parallel", "contrary", "similar", "oblique"
 
-    @property
-    def is_parallel(self) -> bool:
-        return self.bass_step == self.treble_step and self.bass_step % self.n != 0
-
-    def compose(self, other: 'VoiceLeading') -> 'VoiceLeading':
-        """Sequential composition of voice leadings."""
-        return VoiceLeading(
-            bass_step=(self.bass_step + other.bass_step) % self.n,
-            treble_step=(self.treble_step + other.treble_step) % self.n,
-            n=self.n
-        )
+CONSONANT_SET: frozenset[int] = frozenset({0, 3, 4, 7, 8, 9})
+PERFECT_SET: frozenset[int] = frozenset({0, 7})
+IMPERFECT_SET: frozenset[int] = frozenset({3, 4, 8, 9})
 
 
-def consonant_intervals(n: int = 12) -> Set[int]:
-    """Return the set of consonant intervals in n-TET.
+# ============================================================
+# Algorithm 1: Consonance Classification
+# ============================================================
 
-    For standard 12-TET: {0, 3, 4, 7, 8, 9}
-    For other n, uses a complexity-based consonance criterion.
+def is_consonant(n: Interval) -> bool:
     """
-    if n == 12:
-        return {0, 3, 4, 7, 8, 9}
-    # General case: intervals whose simplest frequency ratio has
-    # numerator + denominator ≤ 12
-    result = {0}
-    for i in range(1, n):
-        # Approximate frequency ratio
-        ratio = 2 ** (i / n)
-        # Find best rational approximation
-        best_p, best_q = 1, 1
-        best_err = abs(ratio - 1)
-        for q in range(1, 13):
-            p = round(ratio * q)
-            if p > 0:
-                err = abs(ratio - p / q)
-                if err < best_err:
-                    best_err = err
-                    best_p, best_q = p, q
-        if best_p + best_q <= 12:
-            result.add(i)
-    return result
+    Check if an interval (in semitones mod 12) is consonant.
 
+    Consonant intervals: {0, 3, 4, 7, 8, 9}
+    = {unison, minor 3rd, major 3rd, perfect 5th, minor 6th, major 6th}
 
-def perfect_consonances(n: int = 12) -> Set[int]:
-    """Return perfect consonances (unison and fifth) in n-TET."""
-    if n == 12:
-        return {0, 7}
-    # General: unison and the interval closest to 3:2 ratio
-    fifth = round(n * 0.58496)  # log2(3/2) ≈ 0.585
-    return {0, fifth % n}
-
-
-def enumerate_valid_voice_leadings(
-    consonant: Set[int],
-    perfect: Set[int],
-    n: int = 12
-) -> Dict[Tuple[int, int], List[VoiceLeading]]:
-    """Enumerate all valid voice leadings between consonant intervals.
-
-    Algorithm:
-    1. For each (source, target) pair of consonant intervals
-    2. For each possible bass step b ∈ {0, ..., n-1}
-    3. Compute treble step t = b + (target - source) mod n
-    4. Check: if target is perfect, reject parallel motion (b = t ≠ 0)
-    5. Collect all valid voice leadings
-
-    Returns: Dict mapping (source, target) to list of valid VoiceLeadings
-
-    Complexity: O(|C|² · n) where |C| = number of consonant intervals
+    Time: O(1)
+    Space: O(1)
     """
-    result: Dict[Tuple[int, int], List[VoiceLeading]] = {}
-
-    for s in sorted(consonant):
-        for t in sorted(consonant):
-            valid = []
-            for b in range(n):
-                treble = (b + (t - s)) % n
-                vl = VoiceLeading(bass_step=b, treble_step=treble, n=n)
-
-                # Check parallel-perfects rule
-                if t in perfect and vl.is_parallel:
-                    continue
-                valid.append(vl)
-            result[(s, t)] = valid
-
-    return result
+    return (n % 12) in CONSONANT_SET
 
 
-def compute_transition_matrix(
-    consonant: Set[int],
-    perfect: Set[int],
-    n: int = 12
-) -> Dict[Tuple[int, int], int]:
-    """Compute the transition count matrix.
-
-    Returns: Dict mapping (source, target) to number of valid voice leadings.
+def classify_consonance(n: Interval) -> str:
     """
-    vls = enumerate_valid_voice_leadings(consonant, perfect, n)
-    return {k: len(v) for k, v in vls.items()}
+    Classify an interval as perfect, imperfect, or dissonant.
 
-
-def find_composition_failures(
-    consonant: Set[int],
-    perfect: Set[int],
-    n: int = 12
-) -> List[Tuple[int, int, int, VoiceLeading, VoiceLeading]]:
-    """Find all composition failures: pairs of valid VLs whose composition is invalid.
-
-    Returns list of (source, middle, target, vl1, vl2) tuples where
-    vl1 and vl2 are individually valid but vl1.compose(vl2) is invalid.
+    Time: O(1)
     """
-    vls = enumerate_valid_voice_leadings(consonant, perfect, n)
-    failures = []
-
-    for (s, m), vl1_list in vls.items():
-        for (m2, t), vl2_list in vls.items():
-            if m2 != m:
-                continue
-            for vl1 in vl1_list:
-                for vl2 in vl2_list:
-                    comp = vl1.compose(vl2)
-                    # Check if composition is valid
-                    if comp.interval_change != (t - s) % n:
-                        continue  # shouldn't happen
-                    if t in perfect and comp.is_parallel:
-                        failures.append((s, m, t, vl1, vl2))
-
-    return failures
+    m = n % 12
+    if m in PERFECT_SET:
+        return "perfect"
+    elif m in IMPERFECT_SET:
+        return "imperfect"
+    else:
+        return "dissonant"
 
 
-def analyze_n_tet(n: int) -> Dict:
-    """Analyze counterpoint structure for n-TET tuning system.
+# ============================================================
+# Algorithm 2: Complement Map
+# ============================================================
 
-    Returns analysis dict with counts and structural properties.
+def complement(n: Interval) -> Interval:
     """
-    consonant = consonant_intervals(n)
-    perfect = perfect_consonances(n)
-    imperfect = consonant - perfect
+    Compute the interval complement: n -> -n mod 12.
 
-    matrix = compute_transition_matrix(consonant, perfect, n)
-    total_valid = sum(matrix.values())
-    total_unrestricted = len(consonant) ** 2 * n
+    Musically, this maps an interval to its octave complement.
+    Example: P5 (7) -> P4 (5), m3 (3) -> M6 (9).
 
-    failures = find_composition_failures(consonant, perfect, n)
+    Time: O(1)
+    """
+    return (12 - n) % 12
 
-    # Check inversion closure
-    inv_closed = all(((n - i) % n) in consonant for i in consonant)
 
-    return {
-        "n": n,
-        "consonant": sorted(consonant),
-        "perfect": sorted(perfect),
-        "imperfect": sorted(imperfect),
-        "num_consonant": len(consonant),
-        "total_valid": total_valid,
-        "total_unrestricted": total_unrestricted,
-        "deficit": total_unrestricted - total_valid,
-        "num_composition_failures": len(failures),
-        "is_category": len(failures) == 0,
-        "inversion_closed": inv_closed,
-        "transition_matrix": matrix,
-    }
+def is_complement_preserving(n: Interval) -> bool:
+    """
+    Check if a consonant interval's complement is also consonant.
 
+    Returns True for all consonant intervals EXCEPT the perfect fifth (7).
+
+    Time: O(1)
+    """
+    return is_consonant(n) and is_consonant(complement(n))
+
+
+# ============================================================
+# Algorithm 3: Voice-Leading Validation
+# ============================================================
+
+def is_transition_allowed(i: Interval, j: Interval) -> bool:
+    """
+    Check if a voice-leading transition from interval i to interval j
+    is allowed in first-species counterpoint.
+
+    Rules:
+    1. Both i and j must be consonant.
+    2. If i == j (self-transition), i must be imperfect.
+
+    Time: O(1)
+    """
+    i_mod = i % 12
+    j_mod = j % 12
+    if not (is_consonant(i_mod) and is_consonant(j_mod)):
+        return False
+    if i_mod == j_mod:
+        return i_mod in IMPERFECT_SET
+    return True
+
+
+def count_allowed_transitions() -> int:
+    """
+    Count the total number of allowed voice-leading transitions.
+
+    Result: 34 = 6*6 - 2 (complete graph minus 2 perfect self-loops)
+
+    Time: O(144) = O(1) since the domain is fixed.
+    """
+    return sum(1 for i in range(12) for j in range(12)
+               if is_transition_allowed(i, j))
+
+
+# ============================================================
+# Algorithm 4: Subgroup Generation in Z/nZ
+# ============================================================
+
+def additive_subgroup(generators: set[int], n: int = 12) -> frozenset[int]:
+    """
+    Compute the additive subgroup of Z/nZ generated by a set of elements.
+
+    Uses BFS on the Cayley graph.
+
+    Time: O(n * |generators|)
+    Space: O(n)
+    """
+    subgroup: set[int] = {0}
+    frontier: set[int] = {g % n for g in generators}
+    frontier -= subgroup
+
+    while frontier:
+        subgroup |= frontier
+        new_elements: set[int] = set()
+        for g in generators:
+            for s in frontier:
+                for candidate in [(s + g) % n, (s - g) % n]:
+                    if candidate not in subgroup:
+                        new_elements.add(candidate)
+        frontier = new_elements
+
+    return frozenset(subgroup)
+
+
+def generates_full_group(generators: set[int], n: int = 12) -> bool:
+    """
+    Check if a set of elements generates all of Z/nZ.
+
+    Time: O(n * |generators|)
+    """
+    return len(additive_subgroup(generators, n)) == n
+
+
+# ============================================================
+# Algorithm 5: Multiplicative Automorphism Check
+# ============================================================
+
+def multiplicative_units(n: int = 12) -> list[int]:
+    """
+    Compute the multiplicative units of Z/nZ.
+
+    Time: O(n)
+    """
+    return [k for k in range(n) if gcd(k, n) == 1]
+
+
+def preserves_consonance(k: int, consonant: frozenset[int] = CONSONANT_SET,
+                          n: int = 12) -> bool:
+    """
+    Check if multiplication by k preserves the consonant set in Z/nZ.
+
+    Time: O(|consonant|)
+    """
+    return all((k * c) % n in consonant for c in consonant)
+
+
+def consonance_automorphisms(n: int = 12) -> list[int]:
+    """
+    Find all multiplicative units of Z/nZ that preserve the consonant set.
+
+    For n=12 with the standard consonant set, returns [1] (rigidity theorem).
+
+    Time: O(n * |consonant|)
+    """
+    return [k for k in multiplicative_units(n) if preserves_consonance(k)]
+
+
+# ============================================================
+# Algorithm 6: Tension Level Computation
+# ============================================================
+
+TENSION_MAP: dict[int, int] = {0: 0, 7: 1, 4: 2, 9: 2, 3: 3, 8: 3}
+
+
+def tension_level(n: Interval) -> int:
+    """
+    Compute the harmonic tension level of a consonant interval.
+
+    0 = most stable (unison)
+    1 = stable (perfect fifth)
+    2 = moderate (major third, major sixth)
+    3 = least stable consonance (minor third, minor sixth)
+    4 = dissonant
+
+    Time: O(1)
+    """
+    return TENSION_MAP.get(n % 12, 4)
+
+
+# ============================================================
+# Algorithm 7: Voice-Leading Quiver Construction
+# ============================================================
+
+def build_quiver() -> tuple[list[int], list[tuple[int, int]]]:
+    """
+    Build the voice-leading quiver as (vertices, edges).
+
+    Returns:
+        vertices: sorted list of consonant intervals
+        edges: list of (source, target) pairs for allowed transitions
+
+    Time: O(1) (fixed domain)
+    """
+    vertices = sorted(CONSONANT_SET)
+    edges = [(i, j) for i in vertices for j in vertices
+             if is_transition_allowed(i, j)]
+    return vertices, edges
+
+
+def quiver_adjacency_matrix() -> list[list[int]]:
+    """
+    Compute the adjacency matrix of the voice-leading quiver.
+
+    Returns a 6x6 matrix where entry (i,j) is 1 if transition is allowed.
+
+    Time: O(1)
+    """
+    vertices = sorted(CONSONANT_SET)
+    idx = {v: i for i, v in enumerate(vertices)}
+    matrix = [[0] * 6 for _ in range(6)]
+    for i in vertices:
+        for j in vertices:
+            if is_transition_allowed(i, j):
+                matrix[idx[i]][idx[j]] = 1
+    return matrix
+
+
+# ============================================================
+# Algorithm 8: Counterpoint Sequence Validation
+# ============================================================
+
+def validate_counterpoint_sequence(intervals: list[Interval]) -> tuple[bool, Optional[int]]:
+    """
+    Validate a sequence of intervals as a first-species counterpoint.
+
+    Returns (True, None) if valid, or (False, position) where position
+    is the index of the first invalid transition.
+
+    Time: O(n) where n = len(intervals)
+    """
+    for i, interval in enumerate(intervals):
+        if not is_consonant(interval):
+            return False, i
+    for i in range(len(intervals) - 1):
+        if not is_transition_allowed(intervals[i], intervals[i + 1]):
+            return False, i
+    return True, None
+
+
+# ============================================================
+# Main: Run all algorithms and display results
+# ============================================================
 
 if __name__ == "__main__":
-    # Demonstrate for standard 12-TET
-    result = analyze_n_tet(12)
-    print(f"12-TET Analysis:")
-    print(f"  Consonant intervals: {result['consonant']}")
-    print(f"  Perfect: {result['perfect']}, Imperfect: {result['imperfect']}")
-    print(f"  Total valid VLs: {result['total_valid']}")
-    print(f"  Deficit: {result['deficit']}")
-    print(f"  Is a category: {result['is_category']}")
-    print(f"  Composition failures: {result['num_composition_failures']}")
-    print(f"  Inversion closed: {result['inversion_closed']}")
+    print("Consonance automorphisms:", consonance_automorphisms())
+    print("Allowed transition count:", count_allowed_transitions())
 
-    # Compare different tuning systems
-    print("\n--- Comparison across tuning systems ---")
-    for n in [5, 7, 12, 19, 24, 31]:
-        r = analyze_n_tet(n)
-        cat = "✓" if r["is_category"] else "✗"
-        print(f"  {n:2d}-TET: {r['num_consonant']} consonances, "
-              f"{r['total_valid']}/{r['total_unrestricted']} valid VLs, "
-              f"category={cat}")
+    print("\nGeneration tests:")
+    pairs = [(3, 4), (3, 8), (4, 9), (8, 9), (3, 9), (4, 8)]
+    for a, b in pairs:
+        sg = additive_subgroup({a, b})
+        print(f"  <{a},{b}> = {sorted(sg)} ({'full' if len(sg)==12 else 'proper'})")
+
+    print("\nQuiver adjacency matrix:")
+    for row in quiver_adjacency_matrix():
+        print("  ", row)
+
+    print("\nSample counterpoint validation:")
+    sequences = [
+        [0, 3, 4, 7, 8, 9],   # valid
+        [7, 7],                 # invalid (parallel fifth)
+        [3, 7, 4, 9],          # valid
+        [0, 0],                 # invalid (parallel unison)
+        [3, 3, 3],             # valid (parallel minor thirds OK)
+    ]
+    for seq in sequences:
+        valid, pos = validate_counterpoint_sequence(seq)
+        print(f"  {seq}: {'✓ valid' if valid else f'✗ invalid at position {pos}'}")
