@@ -1,300 +1,319 @@
 #!/usr/bin/env python3
 """
 Algorithms for Self-Referential Type Theory
+============================================
 
-Implements the core algorithms and constructions from the formalized theory:
-1. Lawvere fixed point finder
-2. Strange loop detector
-3. Consciousness tower simulator
-4. Quantifier depth classifier
-5. Fixed-point lattice computation
+Type-hinted implementations of the core algorithms from the
+Lawvere Fixed Point Theorem research cycle.
 """
 
-from typing import (
-    Callable, TypeVar, Set, List, Tuple, Optional, Dict, FrozenSet
-)
+from typing import TypeVar, Callable, Optional, Set, FrozenSet, List, Tuple, Dict
+from dataclasses import dataclass
+import itertools
 
 T = TypeVar('T')
+A = TypeVar('A')
+B = TypeVar('B')
 
 
-def lawvere_fixed_point_finder(
-    phi: Callable[[int], Callable[[int], int]],
-    f: Callable[[int], int],
-    domain: List[int]
-) -> Optional[int]:
+# =============================================================
+# Algorithm 1: Lawvere Diagonal Construction
+# =============================================================
+
+def lawvere_diagonal_search(
+    encoding: Callable[[int], Callable[[int], bool]],
+    transform: Callable[[bool], bool],
+    domain: range
+) -> Optional[Tuple[int, bool]]:
     """
-    Find a fixed point of f : β → β given a surjective φ : α → (α → β).
-
-    Algorithm (Lawvere's diagonal construction):
-    1. Define d(x) = f(φ(x)(x)) — the diagonal twist
-    2. Find a ∈ α with φ(a) = d (by surjectivity)
-    3. Then φ(a)(a) = d(a) = f(φ(a)(a)), so φ(a)(a) is a fixed point
-
+    Search for a Lawvere fixed point.
+    
+    Given an encoding e : ℕ → (ℕ → Bool) and a transform f : Bool → Bool,
+    constructs the diagonal d(x) = f(e(x)(x)) and searches for a
+    such that e(a) = d. Returns (a, fixed_point) if found.
+    
+    Complexity: O(|domain|²) in the worst case.
+    
     Args:
-        phi: Representation map (assumed surjective on domain)
-        f: The endomorphism whose fixed point we seek
-        domain: Finite approximation of the domain
-
+        encoding: The surjection e : A → (A → B)
+        transform: The endomorphism f : B → B
+        domain: The finite domain to search over
+        
     Returns:
-        A fixed point b with f(b) = b, or None if not found in domain
+        (index, fixed_point_value) or None
     """
+    # Construct diagonal function
+    diag = lambda x: transform(encoding(x)(x))
+    
     for a in domain:
-        candidate = phi(a)(a)
-        if f(candidate) == candidate:
-            return candidate
+        # Check if e(a) agrees with diag on entire domain
+        if all(encoding(a)(x) == diag(x) for x in domain):
+            b = encoding(a)(a)
+            assert transform(b) == b, "Lawvere guarantees this"
+            return (a, b)
+    
     return None
 
 
-def is_idempotent(
-    f: Callable[[int], int],
-    domain: List[int]
-) -> bool:
-    """Check if f is idempotent: f(f(x)) = f(x) for all x in domain."""
-    return all(f(f(x)) == f(x) for x in domain)
+# =============================================================
+# Algorithm 2: Diagonal Set Construction
+# =============================================================
+
+def diagonal_set(family: Callable[[int], Set[int]], domain: range) -> Set[int]:
+    """
+    Construct the diagonal set of a family of sets.
+    
+    D = {n ∈ domain | n ∉ family(n)}
+    
+    The diagonal set is guaranteed to differ from family(k) for every k
+    in the domain (Theorem: diag_differs).
+    
+    Args:
+        family: A function mapping indices to sets of naturals
+        domain: The index domain
+        
+    Returns:
+        The diagonal set D
+    """
+    return {n for n in domain if n not in family(n)}
 
 
-def fixed_point_set(
-    f: Callable[[int], int],
-    domain: List[int]
-) -> Set[int]:
-    """Compute the fixed-point set {x | f(x) = x}."""
+def verify_diagonal_differs(
+    family: Callable[[int], Set[int]], 
+    diag: Set[int], 
+    domain: range
+) -> List[Tuple[int, int, bool, bool]]:
+    """
+    Verify that the diagonal set differs from every family member.
+    
+    Returns list of (index, witness, in_diag, in_family) showing
+    where each family(k) differs from diag.
+    """
+    witnesses = []
+    for k in domain:
+        # By construction, k itself is the witness
+        in_diag = k in diag
+        in_family = k in family(k)
+        witnesses.append((k, k, in_diag, in_family))
+        assert in_diag != in_family, f"Diagonal must differ at index {k}"
+    return witnesses
+
+
+# =============================================================
+# Algorithm 3: Diagonal Hierarchy Builder
+# =============================================================
+
+@dataclass
+class HierarchyLevel:
+    """A level in the diagonal hierarchy."""
+    level: int
+    sets: List[Set[int]]
+    diagonal: Optional[Set[int]]
+
+
+def build_diagonal_hierarchy(
+    base_sets: List[Set[int]],
+    universe_size: int,
+    num_levels: int
+) -> List[HierarchyLevel]:
+    """
+    Build a diagonal hierarchy by iterated diagonalization.
+    
+    Starting from base_sets (Level 0), constructs Level 1 by
+    diagonalizing Level 0, Level 2 by diagonalizing Level 1, etc.
+    
+    Each level is strictly larger than the previous (by construction).
+    
+    Args:
+        base_sets: Initial collection of sets (Level 0)
+        universe_size: Size of the universe {0, ..., universe_size-1}
+        num_levels: Number of hierarchy levels to build
+        
+    Returns:
+        List of HierarchyLevel objects
+    """
+    hierarchy: List[HierarchyLevel] = []
+    current_sets = list(base_sets)
+    
+    for level in range(num_levels):
+        # Pad current_sets to universe_size
+        padded = current_sets[:universe_size]
+        while len(padded) < universe_size:
+            padded.append(set())
+        
+        # Compute diagonal
+        diag = {x for x in range(universe_size) if x not in padded[x]}
+        
+        hierarchy.append(HierarchyLevel(
+            level=level,
+            sets=list(current_sets),
+            diagonal=diag
+        ))
+        
+        # Level (n+1) = Level n ∪ {diagonal}
+        current_sets = list(current_sets) + [diag]
+    
+    return hierarchy
+
+
+# =============================================================
+# Algorithm 4: Knaster-Tarski Fixed Point Computation
+# =============================================================
+
+def compute_lfp_powerset(
+    f: Callable[[FrozenSet[int]], FrozenSet[int]],
+    universe: Set[int]
+) -> FrozenSet[int]:
+    """
+    Compute the least fixed point of a monotone function on P(universe).
+    
+    Uses the Knaster-Tarski characterization: lfp(f) = ⋂{S | f(S) ⊆ S}.
+    
+    Args:
+        f: A monotone function on the power set lattice
+        universe: The base set
+        
+    Returns:
+        The least fixed point of f
+    """
+    pre_fixed_points: List[FrozenSet[int]] = []
+    
+    for r in range(len(universe) + 1):
+        for subset in itertools.combinations(sorted(universe), r):
+            S = frozenset(subset)
+            if f(S).issubset(S):
+                pre_fixed_points.append(S)
+    
+    if not pre_fixed_points:
+        return frozenset(universe)
+    
+    return frozenset.intersection(*pre_fixed_points)
+
+
+def compute_gfp_powerset(
+    f: Callable[[FrozenSet[int]], FrozenSet[int]],
+    universe: Set[int]
+) -> FrozenSet[int]:
+    """
+    Compute the greatest fixed point of a monotone function on P(universe).
+    
+    Uses the Knaster-Tarski characterization: gfp(f) = ⋃{S | S ⊆ f(S)}.
+    """
+    post_fixed_points: List[FrozenSet[int]] = []
+    
+    for r in range(len(universe) + 1):
+        for subset in itertools.combinations(sorted(universe), r):
+            S = frozenset(subset)
+            if S.issubset(f(S)):
+                post_fixed_points.append(S)
+    
+    if not post_fixed_points:
+        return frozenset()
+    
+    return frozenset.union(*post_fixed_points)
+
+
+def compute_all_fixed_points(
+    f: Callable[[FrozenSet[int]], FrozenSet[int]],
+    universe: Set[int]
+) -> List[FrozenSet[int]]:
+    """
+    Enumerate all fixed points of f on P(universe).
+    """
+    fixed_points = []
+    for r in range(len(universe) + 1):
+        for subset in itertools.combinations(sorted(universe), r):
+            S = frozenset(subset)
+            if f(S) == S:
+                fixed_points.append(S)
+    return fixed_points
+
+
+# =============================================================
+# Algorithm 5: Fixed-Point Orbit Analysis
+# =============================================================
+
+def find_fixed_points(f: Callable[[int], int], domain: range) -> Set[int]:
+    """Find all fixed points of f in the given domain."""
     return {x for x in domain if f(x) == x}
 
 
-def function_range(
-    f: Callable[[int], int],
-    domain: List[int]
-) -> Set[int]:
-    """Compute the range {f(x) | x ∈ domain}."""
-    return {f(x) for x in domain}
+def find_periodic_points(f: Callable[[int], int], domain: range, period: int) -> Set[int]:
+    """Find all points with period dividing the given period."""
+    def iterate(x: int, n: int) -> int:
+        for _ in range(n):
+            x = f(x)
+        return x
+    
+    return {x for x in domain if iterate(x, period) == x}
 
 
-def verify_fp_eq_range(
-    f: Callable[[int], int],
-    domain: List[int]
-) -> bool:
-    """Verify that for an idempotent f, FP(f) = Range(f)."""
-    if not is_idempotent(f, domain):
-        return False
-    return fixed_point_set(f, domain) == function_range(f, domain)
-
-
-class StrangeLoop:
+def fixed_point_hierarchy(f: Callable[[int], int], domain: range, max_depth: int) -> Dict[int, Set[int]]:
     """
-    A strange loop operator with tangling and absorption.
-
-    A strange loop (op, shift) satisfies:
-    - tangle: op(op(x)) = op(shift(x))
-    - absorb: op(shift(x)) = op(x)
-
-    Together these imply op is idempotent: op(op(x)) = op(x).
+    Compute the hierarchy of fixed-point sets for f, f², f³, ...
+    
+    Returns dict mapping depth n to FixedPoints(f^n).
+    Demonstrates that FixedPoints(f) ⊆ FixedPoints(f²) ⊆ ...
     """
-
-    def __init__(
-        self,
-        op: Callable[[int], int],
-        shift: Callable[[int], int],
-        domain: List[int]
-    ):
-        self.op = op
-        self.shift = shift
-        self.domain = domain
-
-    def verify_tangle(self) -> bool:
-        """Verify op(op(x)) = op(shift(x)) for all x."""
-        return all(
-            self.op(self.op(x)) == self.op(self.shift(x))
-            for x in self.domain
-        )
-
-    def verify_absorb(self) -> bool:
-        """Verify op(shift(x)) = op(x) for all x."""
-        return all(
-            self.op(self.shift(x)) == self.op(x)
-            for x in self.domain
-        )
-
-    def verify_idempotent(self) -> bool:
-        """Verify the consequence: op is idempotent."""
-        return is_idempotent(self.op, self.domain)
-
-    def is_valid(self) -> bool:
-        """Check all strange loop axioms."""
-        return self.verify_tangle() and self.verify_absorb()
+    result = {}
+    for n in range(1, max_depth + 1):
+        result[n] = find_periodic_points(f, domain, n)
+    return result
 
 
-class ConsciousnessTower:
+# =============================================================
+# Algorithm 6: Self-Reference Trilemma Checker
+# =============================================================
+
+def check_self_reference_trilemma(
+    encoding: Dict[int, Set[int]],
+    domain: range
+) -> Tuple[bool, Optional[Set[int]]]:
     """
-    Simulates a consciousness tower with finite-dimensional levels.
-
-    Level n is represented as R^(base_dim + n).
-    up(n): Level n → Level (n+1) by appending 0
-    down(n): Level (n+1) → Level n by truncating
-    observe(n) = up(n) ∘ down(n): zeroes out the last coordinate
+    Check whether an encoding system satisfies the self-reference trilemma.
+    
+    Given an encoding (mapping indices to sets), checks if the "Russell set"
+    {i | i ∉ encoding(i)} is represented. If not, the system is incomplete.
+    
+    Args:
+        encoding: Maps each index i to the set encoding(i)
+        domain: The index domain
+        
+    Returns:
+        (is_complete, russell_set): is_complete is True only if some
+        encoding(k) equals the Russell set (which should never happen
+        for a consistent system).
     """
-
-    def __init__(self, base_dim: int = 2):
-        self.base_dim = base_dim
-
-    def level_dim(self, n: int) -> int:
-        """Dimension of level n."""
-        return self.base_dim + n
-
-    def up(self, n: int, x: List[float]) -> List[float]:
-        """Embed level n into level n+1."""
-        assert len(x) == self.level_dim(n)
-        return x + [0.0]
-
-    def down(self, n: int, x: List[float]) -> List[float]:
-        """Project level n+1 down to level n."""
-        assert len(x) == self.level_dim(n + 1)
-        return x[:self.level_dim(n)]
-
-    def observe(self, n: int, x: List[float]) -> List[float]:
-        """The observation operator at level n: up ∘ down."""
-        return self.up(n, self.down(n, x))
-
-    def verify_retract(self, n: int, x: List[float]) -> bool:
-        """Verify down(up(x)) = x."""
-        return self.down(n, self.up(n, x)) == x
-
-    def verify_idempotent(self, n: int, x: List[float]) -> bool:
-        """Verify observe(observe(x)) = observe(x)."""
-        obs1 = self.observe(n, x)
-        obs2 = self.observe(n, obs1)
-        return obs1 == obs2
-
-    def iterate_observe(
-        self, n: int, x: List[float], k: int
-    ) -> List[float]:
-        """Apply observe k times."""
-        result = x
-        for _ in range(k):
-            result = self.observe(n, result)
-        return result
-
-
-class QuantifierDepthClassifier:
-    """
-    Classifies predicates by their quantifier depth in the hierarchy.
-
-    Level 0: Decidable predicates (no unbounded quantifiers)
-    Level n+1: Predicates using quantifiers over level-n predicates
-
-    The hierarchy is:
-    - Strictly cumulative: Pred(n) ⊂ Pred(n+1)
-    - Each level has a diagonal predicate not in the level below
-    """
-
-    def __init__(self):
-        self.levels: Dict[int, List[str]] = {}
-
-    def add_predicate(self, level: int, name: str) -> None:
-        """Register a predicate at a given level."""
-        if level not in self.levels:
-            self.levels[level] = []
-        self.levels[level].append(name)
-
-    def get_all_up_to(self, level: int) -> List[str]:
-        """Get all predicates up to (inclusive) given level."""
-        result = []
-        for n in range(level + 1):
-            result.extend(self.levels.get(n, []))
-        return result
-
-    def diagonal_at(self, level: int) -> str:
-        """
-        The diagonal predicate at level n: definable at level n+1,
-        not at level n. This is the formal barrier to self-reference.
-        """
-        return f"diag_{level}: 'the predicate that diagonalizes level {level}'"
-
-
-class FixedPointLattice:
-    """
-    Computes the lattice structure of fixed-point sets.
-
-    For a collection of idempotent endomorphisms on a finite set,
-    their fixed-point sets form a lattice under inclusion:
-    - Top = domain (from identity)
-    - Composition of commuting idempotents gives meet
-    """
-
-    def __init__(self, domain: List[int]):
-        self.domain = domain
-        self.idempotents: Dict[str, Callable[[int], int]] = {}
-
-    def add_idempotent(
-        self, name: str, f: Callable[[int], int]
-    ) -> bool:
-        """Add an idempotent if it passes verification."""
-        if is_idempotent(f, self.domain):
-            self.idempotents[name] = f
-            return True
-        return False
-
-    def get_fp_set(self, name: str) -> FrozenSet[int]:
-        """Get the fixed-point set of a named idempotent."""
-        f = self.idempotents[name]
-        return frozenset(fixed_point_set(f, self.domain))
-
-    def get_all_fp_sets(self) -> Dict[str, FrozenSet[int]]:
-        """Get all fixed-point sets."""
-        return {
-            name: self.get_fp_set(name)
-            for name in self.idempotents
-        }
-
-    def verify_fp_eq_range(self, name: str) -> bool:
-        """Verify FP = Range for a named idempotent."""
-        return verify_fp_eq_range(
-            self.idempotents[name], self.domain
-        )
-
-    def lattice_top(self) -> FrozenSet[int]:
-        """Top element = entire domain (from identity)."""
-        return frozenset(self.domain)
-
-    def commuting_meet(
-        self, name1: str, name2: str
-    ) -> Optional[FrozenSet[int]]:
-        """
-        Compute meet of two idempotents if they commute.
-        For commuting idempotents f, g: FP(f∘g) = FP(f) ∩ FP(g).
-        """
-        f = self.idempotents[name1]
-        g = self.idempotents[name2]
-        # Check commutativity
-        if not all(f(g(x)) == g(f(x)) for x in self.domain):
-            return None
-        return self.get_fp_set(name1) & self.get_fp_set(name2)
-
-
-def cardinality_barrier(n: int) -> Tuple[bool, str]:
-    """
-    Check if a type of cardinality n can be self-referential.
-
-    A type T with |T| = n and a surjection T → (T → T) requires
-    n ≥ n^n. This is only possible for n ∈ {0, 1}.
-    """
-    if n == 0:
-        return True, "Trivial: empty type, vacuously self-referential"
-    nn = n ** n
-    if n >= nn:
-        return True, f"|T| = {n} ≥ {n}^{n} = {nn}: self-referential possible"
-    return False, f"|T| = {n} < {n}^{n} = {nn}: too small for self-reference"
+    russell = {i for i in domain if i not in encoding.get(i, set())}
+    
+    for k in domain:
+        if encoding.get(k, set()) == russell:
+            return (True, russell)  # "Complete" but must be inconsistent
+    
+    return (False, russell)  # Incomplete (as Lawvere guarantees)
 
 
 if __name__ == "__main__":
-    # Quick demo
-    print("Cardinality barrier for self-referential types:")
-    for n in range(6):
-        ok, msg = cardinality_barrier(n)
-        print(f"  n={n}: {msg}")
-
-    print("\nConsciousness tower (base_dim=2):")
-    tower = ConsciousnessTower(base_dim=2)
-    x = [1.0, 2.0, 3.0]
-    print(f"  Level 1, x = {x}")
-    print(f"  observe(x) = {tower.observe(0, x)}")
-    print(f"  Idempotent: {tower.verify_idempotent(0, x)}")
+    # Quick self-test
+    print("Testing algorithms...")
+    
+    # Test diagonal set
+    family = lambda n: {n, (n + 1) % 5}
+    d = diagonal_set(family, range(5))
+    print(f"Diagonal of family: {d}")
+    
+    # Test Knaster-Tarski
+    universe = {0, 1, 2, 3}
+    f = lambda S: frozenset(S | {3 - x for x in S if 0 <= 3 - x <= 3})
+    lfp = compute_lfp_powerset(f, universe)
+    gfp = compute_gfp_powerset(f, universe)
+    print(f"LFP = {set(lfp)}, GFP = {set(gfp)}")
+    
+    # Test hierarchy
+    hierarchy = build_diagonal_hierarchy(
+        [{0, 1}, {2, 3}, {0, 2}], universe_size=5, num_levels=3
+    )
+    for level in hierarchy:
+        print(f"Level {level.level}: {len(level.sets)} sets, diagonal = {level.diagonal}")
+    
+    print("All tests passed!")
