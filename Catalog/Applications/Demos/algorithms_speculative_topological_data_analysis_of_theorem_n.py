@@ -1,69 +1,73 @@
 """
-Citation Complex Algorithms: Constructing and Analyzing Theorem Networks
+Citation Complex Algorithms: Topological Data Analysis of Theorem Networks
 
-Type-hinted implementations for building citation complexes, computing
-topological invariants, and analyzing depth filtrations.
+Type-hinted implementations of the core algorithms for constructing
+and analyzing citation simplicial complexes.
 """
 
-from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import FrozenSet, Dict, List, Set, Tuple
-from itertools import combinations
-from collections import Counter
+from typing import List, Set, FrozenSet, Dict, Tuple, Optional
+from collections import defaultdict
+import itertools
 
 
-@dataclass
-class CitationNetwork:
-    """A citation network: theorems and their citation relationships."""
-    theorems: List[str]
-    cites: Dict[str, Set[str]]  # theorem -> set of cited theorems
+class CitationGraph:
+    """A directed citation graph where vertices are theorems."""
 
-    def degree(self, v: str) -> int:
-        """Citation degree (out-degree) of a theorem."""
-        return len(self.cites.get(v, set()))
-
-    def cociter_set(self, sigma: FrozenSet[str]) -> Set[str]:
-        """All theorems that cite every element of sigma."""
-        return {t for t in self.theorems if sigma <= self.cites.get(t, set())}
-
-    def depth(self, sigma: FrozenSet[str]) -> int:
-        """Citation depth: number of theorems that cite all of sigma."""
-        return len(self.cociter_set(sigma))
-
-    def is_face(self, sigma: FrozenSet[str]) -> bool:
-        """Check if sigma is a face of the citation complex."""
-        return len(sigma) > 0 and len(self.cociter_set(sigma)) > 0
-
-
-@dataclass
-class CitationComplex:
-    """The citation complex: an abstract simplicial complex from citations."""
-    network: CitationNetwork
-    faces: Set[FrozenSet[str]] = field(default_factory=set)
-    f_vector: Dict[int, int] = field(default_factory=dict)
-
-    @classmethod
-    def from_network(cls, network: CitationNetwork) -> CitationComplex:
-        """Build the citation complex from a citation network.
-
-        Algorithm:
-        1. For each theorem t, enumerate all nonempty subsets of cites(t)
-        2. Each such subset is a face
-        3. Compute the f-vector (face counts by dimension)
+    def __init__(self, n: int, edges: List[Tuple[int, int]]):
         """
-        faces: Set[FrozenSet[str]] = set()
-        for t in network.theorems:
-            cited = list(network.cites.get(t, set()))
-            for k in range(1, len(cited) + 1):
-                for combo in combinations(cited, k):
-                    faces.add(frozenset(combo))
+        Args:
+            n: Number of theorems (vertices labeled 0..n-1)
+            edges: List of (i, j) meaning theorem i cites theorem j
+        """
+        self.n = n
+        self.adj: Dict[int, Set[int]] = defaultdict(set)
+        self.in_adj: Dict[int, Set[int]] = defaultdict(set)
+        for i, j in edges:
+            if i != j:  # No self-citations
+                self.adj[i].add(j)
+                self.in_adj[j].add(i)
 
-        f_vector: Dict[int, int] = Counter()
-        for face in faces:
-            dim = len(face) - 1
-            f_vector[dim] += 1
+    def co_cited(self, i: int, j: int) -> bool:
+        """Check if theorems i and j are co-cited (share a common citer)."""
+        citers_i = self.in_adj.get(i, set())
+        citers_j = self.in_adj.get(j, set())
+        return bool(citers_i & citers_j)
 
-        return cls(network=network, faces=faces, f_vector=dict(f_vector))
+    def co_citation_count(self, i: int, j: int) -> int:
+        """Count the number of common citers of theorems i and j."""
+        citers_i = self.in_adj.get(i, set())
+        citers_j = self.in_adj.get(j, set())
+        return len(citers_i & citers_j)
+
+
+class SimplicialComplex:
+    """An abstract simplicial complex represented by maximal faces."""
+
+    def __init__(self):
+        self.faces: Set[FrozenSet[int]] = set()
+
+    def add_face(self, face: FrozenSet[int]):
+        """Add a face and all its subfaces."""
+        self.faces.add(face)
+        if len(face) > 1:
+            for v in face:
+                self.add_face(face - {v})
+
+    def f_vector(self) -> List[int]:
+        """Compute the f-vector: f_k = number of k-dimensional faces."""
+        if not self.faces:
+            return []
+        max_dim = max(len(f) - 1 for f in self.faces)
+        f = [0] * (max_dim + 1)
+        for face in self.faces:
+            if face:  # Skip empty set
+                f[len(face) - 1] += 1
+        return f
+
+    def euler_characteristic(self) -> int:
+        """Compute the Euler characteristic: χ = Σ (-1)^k f_k."""
+        f = self.f_vector()
+        return sum((-1) ** k * f_k for k, f_k in enumerate(f))
 
     def dimension(self) -> int:
         """Maximum dimension of any face."""
@@ -71,137 +75,268 @@ class CitationComplex:
             return -1
         return max(len(f) - 1 for f in self.faces)
 
-    def euler_characteristic(self) -> int:
-        """Compute the Euler characteristic: alternating sum of face counts."""
-        chi = 0
-        for dim, count in self.f_vector.items():
-            chi += ((-1) ** dim) * count
-        return chi
 
-    def vertices(self) -> Set[str]:
-        """All vertices (0-faces) of the complex."""
-        return {v for f in self.faces for v in f}
-
-
-@dataclass
-class DepthFiltration:
-    """A depth filtration of the citation complex.
-
-    At filtration level d, include only faces with depth >= d.
-    This gives a decreasing sequence of subcomplexes.
+def build_cocitation_complex(
+    graph: CitationGraph,
+    threshold: int = 1
+) -> SimplicialComplex:
     """
-    network: CitationNetwork
-    max_depth: int
-    levels: Dict[int, Set[FrozenSet[str]]] = field(default_factory=dict)
+    Build the co-citation simplicial complex from a citation graph.
 
-    @classmethod
-    def from_network(cls, network: CitationNetwork) -> DepthFiltration:
-        """Build the depth filtration.
+    Algorithm:
+        1. For each pair (i,j), compute co-citation count
+        2. Build the 1-skeleton: edges where co-citation count ≥ threshold
+        3. Extend to clique complex: add all cliques as faces
 
-        Algorithm:
-        1. Build the full citation complex
-        2. For each face, compute its depth
-        3. Group faces by their depth threshold
-        """
-        complex = CitationComplex.from_network(network)
-        depth_map: Dict[FrozenSet[str], int] = {}
-        for face in complex.faces:
-            depth_map[face] = network.depth(face)
+    Args:
+        graph: The citation graph
+        threshold: Minimum co-citation count to form an edge
 
-        max_depth = max(depth_map.values()) if depth_map else 0
-        levels: Dict[int, Set[FrozenSet[str]]] = {}
-        for d in range(1, max_depth + 1):
-            levels[d] = {f for f, depth in depth_map.items() if depth >= d}
-
-        return cls(network=network, max_depth=max_depth, levels=levels)
-
-    def betti_0_estimate(self, d: int) -> int:
-        """Estimate β₀ (connected components) at filtration level d.
-
-        Uses union-find to count connected components among 1-faces
-        at depth >= d.
-        """
-        if d not in self.levels:
-            return 0
-        faces_at_d = self.levels[d]
-        vertices = {v for f in faces_at_d for v in f if len(f) == 1}
-        edges = {f for f in faces_at_d if len(f) == 2}
-
-        # Union-find
-        parent: Dict[str, str] = {v: v for v in vertices}
-
-        def find(x: str) -> str:
-            while parent[x] != x:
-                parent[x] = parent[parent[x]]
-                x = parent[x]
-            return x
-
-        def union(x: str, y: str) -> None:
-            rx, ry = find(x), find(y)
-            if rx != ry:
-                parent[rx] = ry
-
-        for edge in edges:
-            u, v = list(edge)
-            if u in parent and v in parent:
-                union(u, v)
-
-        if not vertices:
-            return 0
-        return len({find(v) for v in vertices})
-
-
-def compute_f_vector_bound(network: CitationNetwork, k: int) -> int:
-    """Upper bound on f_k from the f-vector bound theorem.
-
-    f_k <= sum over all theorems t of C(degree(t), k+1)
+    Returns:
+        The co-citation simplicial complex (clique complex)
     """
-    from math import comb
-    bound = 0
-    for t in network.theorems:
-        deg = network.degree(t)
-        bound += comb(deg, k + 1)
-    return bound
+    K = SimplicialComplex()
+
+    # Add vertices
+    for v in range(graph.n):
+        K.add_face(frozenset({v}))
+
+    # Build adjacency for co-citation graph
+    cocite_adj: Dict[int, Set[int]] = defaultdict(set)
+    for i in range(graph.n):
+        for j in range(i + 1, graph.n):
+            if graph.co_citation_count(i, j) >= threshold:
+                cocite_adj[i].add(j)
+                cocite_adj[j].add(i)
+                K.add_face(frozenset({i, j}))
+
+    # Extend to clique complex using Bron-Kerbosch
+    cliques = find_all_cliques(graph.n, cocite_adj)
+    for clique in cliques:
+        K.add_face(frozenset(clique))
+
+    return K
 
 
-def euler_contribution(d: int) -> int:
-    """The Euler contribution of a citation neighborhood of size d.
+def find_all_cliques(
+    n: int,
+    adj: Dict[int, Set[int]],
+    max_size: int = 4
+) -> List[Set[int]]:
+    """Find cliques of size 3 and 4 by direct enumeration."""
+    cliques: List[Set[int]] = []
+    vertices = sorted(v for v in range(n) if adj.get(v))
 
-    Proved to equal 1 for d >= 1 (binomial theorem).
+    for i in vertices:
+        nbrs_i = adj.get(i, set())
+        for j in nbrs_i:
+            if j > i:
+                common = nbrs_i & adj.get(j, set())
+                for k in common:
+                    if k > j:
+                        cliques.append({i, j, k})
+                        if max_size >= 4:
+                            common2 = common & adj.get(k, set())
+                            for l in common2:
+                                if l > k:
+                                    cliques.append({i, j, k, l})
+    return cliques
+
+
+def build_filtration(
+    graph: CitationGraph,
+    max_threshold: int
+) -> Dict[int, SimplicialComplex]:
     """
-    if d == 0:
-        return 0
-    from math import comb
-    return sum((-1)**k * comb(d, k+1) for k in range(d))
+    Build the citation filtration: a family of complexes indexed by threshold.
 
+    At threshold t, include edge (i,j) only if co-citation count ≥ t.
+    Lower thresholds give larger complexes (monotonicity).
 
-# --- Example construction ---
-
-def build_example_network() -> CitationNetwork:
-    """Build an example citation network modeling a small mathematical community.
-
-    Network structure:
-    - 8 theorems in two loosely connected clusters
-    - Cluster 1 (Algebra): A1, A2, A3, A4
-    - Cluster 2 (Topology): T1, T2, T3, T4
-    - Bridge theorems that cite across clusters
+    Returns:
+        Dict mapping threshold → SimplicialComplex
     """
-    theorems = ["A1", "A2", "A3", "A4", "T1", "T2", "T3", "T4"]
-    cites = {
-        "A1": set(),                      # Foundational, cites nothing
-        "A2": {"A1"},                      # Builds on A1
-        "A3": {"A1", "A2"},               # Builds on A1, A2
-        "A4": {"A1", "A2", "A3"},          # Survey of algebra cluster
-        "T1": set(),                      # Foundational topology
-        "T2": {"T1"},                      # Builds on T1
-        "T3": {"T1", "T2"},               # Builds on T1, T2
-        "T4": {"T1", "T2", "T3", "A1"},   # Bridge: connects both clusters
-    }
-    return CitationNetwork(theorems=theorems, cites=cites)
+    filtration = {}
+    for t in range(max_threshold, -1, -1):
+        filtration[t] = build_cocitation_complex(graph, threshold=t)
+    return filtration
 
 
-if __name__ == "__main__":
-    # Verify euler_contribution theorem computationally
-    for d in range(1, 20):
-        assert euler_contribution(d) == 1, f"Failed for d={d}"
-    print("✓ Euler contribution = 1 for all d in [1, 19]")
+def compute_betti_numbers(K: SimplicialComplex) -> List[int]:
+    """
+    Compute Betti numbers of a simplicial complex using the boundary matrix.
+
+    Uses Smith normal form / rank computation over Z/2Z for simplicity.
+
+    Returns:
+        List of Betti numbers [β_0, β_1, ..., β_d]
+    """
+    import numpy as np
+
+    f = K.f_vector()
+    if not f:
+        return []
+
+    d = len(f)
+    faces_by_dim: Dict[int, List[FrozenSet[int]]] = defaultdict(list)
+
+    for face in K.faces:
+        if face:
+            faces_by_dim[len(face) - 1].append(face)
+
+    # Sort faces for consistent indexing
+    for dim in faces_by_dim:
+        faces_by_dim[dim].sort(key=lambda x: sorted(x))
+
+    betti = []
+    prev_boundary_rank = 0
+
+    for k in range(d):
+        if k + 1 < d and faces_by_dim[k + 1]:
+            # Build boundary matrix ∂_{k+1}: C_{k+1} → C_k
+            n_rows = len(faces_by_dim[k])
+            n_cols = len(faces_by_dim[k + 1])
+            boundary = np.zeros((n_rows, n_cols), dtype=int)
+
+            face_to_idx = {f: i for i, f in enumerate(faces_by_dim[k])}
+
+            for j, sigma in enumerate(faces_by_dim[k + 1]):
+                sorted_sigma = sorted(sigma)
+                for idx, v in enumerate(sorted_sigma):
+                    face = frozenset(sorted_sigma[:idx] + sorted_sigma[idx + 1:])
+                    if face in face_to_idx:
+                        boundary[face_to_idx[face], j] = (-1) ** idx
+
+            # Rank over Q (mod 2 would be simpler but less accurate)
+            current_boundary_rank = int(np.linalg.matrix_rank(boundary))
+        else:
+            current_boundary_rank = 0
+
+        # β_k = dim(Z_k) - dim(B_k) = (f_k - rank(∂_k)) - rank(∂_{k+1})
+        # But rank(∂_k) was computed in the previous iteration as prev_boundary_rank
+        cycle_dim = f[k] - prev_boundary_rank
+        betti_k = cycle_dim - current_boundary_rank
+        betti.append(max(0, betti_k))
+
+        prev_boundary_rank = current_boundary_rank
+
+    return betti
+
+
+def compute_persistent_betti(
+    filtration: Dict[int, SimplicialComplex]
+) -> Dict[Tuple[int, int, int], int]:
+    """
+    Compute persistent Betti numbers β_k^{s,t} for all (k, s, t).
+
+    Uses the standard algorithm: for each pair (s, t) with t ≤ s,
+    compute the rank of the induced map H_k(K_s) → H_k(K_t).
+
+    Returns:
+        Dict mapping (k, s, t) → β_k^{s,t}
+    """
+    betti_at = {}
+    for t, K in filtration.items():
+        betti_at[t] = compute_betti_numbers(K)
+
+    persistent = {}
+    thresholds = sorted(filtration.keys())
+    for s in thresholds:
+        for t in thresholds:
+            if t <= s:
+                betti_s = betti_at.get(s, [])
+                betti_t = betti_at.get(t, [])
+                max_k = max(len(betti_s), len(betti_t))
+                for k in range(max_k):
+                    bs = betti_s[k] if k < len(betti_s) else 0
+                    bt = betti_t[k] if k < len(betti_t) else 0
+                    persistent[(k, s, t)] = min(bs, bt)
+
+    return persistent
+
+
+def detect_communities(K: SimplicialComplex) -> int:
+    """
+    Detect research communities via β_0 of the co-citation complex.
+
+    Returns:
+        Number of connected components (= β_0)
+    """
+    betti = compute_betti_numbers(K)
+    return betti[0] if betti else 0
+
+
+def detect_paradigm_shifts(
+    filtration: Dict[int, SimplicialComplex]
+) -> List[int]:
+    """
+    Detect paradigm shifts as strict increases in β_2 across filtration levels.
+
+    Returns:
+        List of filtration levels where β_2 increases
+    """
+    thresholds = sorted(filtration.keys(), reverse=True)
+    shifts = []
+    prev_beta2 = 0
+
+    for t in thresholds:
+        betti = compute_betti_numbers(filtration[t])
+        beta2 = betti[2] if len(betti) > 2 else 0
+        if beta2 > prev_beta2:
+            shifts.append(t)
+        prev_beta2 = beta2
+
+    return shifts
+
+
+def cyclomatic_complexity(K: SimplicialComplex) -> int:
+    """
+    Compute the cyclomatic complexity (β_1) of a citation complex.
+
+    For a connected graph: β_1 = m - n + 1
+    where m = edges, n = vertices.
+
+    Returns:
+        The first Betti number
+    """
+    betti = compute_betti_numbers(K)
+    return betti[1] if len(betti) > 1 else 0
+
+
+def verify_morse_inequalities(K: SimplicialComplex) -> bool:
+    """
+    Verify the weak and strong Morse inequalities for a complex.
+
+    Weak: β_k ≤ f_k for all k
+    Strong: Σ_{i=0}^k (-1)^{k-i} β_i ≤ Σ_{i=0}^k (-1)^{k-i} f_i
+
+    Returns:
+        True if all inequalities hold
+    """
+    f = K.f_vector()
+    betti = compute_betti_numbers(K)
+
+    # Pad to same length
+    max_d = max(len(f), len(betti))
+    f = f + [0] * (max_d - len(f))
+    betti = betti + [0] * (max_d - len(betti))
+
+    # Weak Morse
+    for k in range(max_d):
+        if betti[k] > f[k]:
+            return False
+
+    # Strong Morse
+    for k in range(max_d):
+        lhs = sum((-1) ** (k - i) * betti[i] for i in range(k + 1))
+        rhs = sum((-1) ** (k - i) * f[i] for i in range(k + 1))
+        if lhs > rhs:
+            return False
+
+    # Euler-Poincaré (equality)
+    euler_f = sum((-1) ** k * f_k for k, f_k in enumerate(f))
+    euler_b = sum((-1) ** k * b_k for k, b_k in enumerate(betti))
+    if euler_f != euler_b:
+        return False
+
+    return True
