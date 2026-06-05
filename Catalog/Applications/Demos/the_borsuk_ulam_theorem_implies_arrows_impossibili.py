@@ -1,320 +1,363 @@
 """
-Demo: Arrow's Impossibility Theorem and the Topology of Social Choice
+Demo: Arrow's Impossibility and the Topology of Social Choice
 
-Demonstrates key concepts from the Borsuk-Ulam–Arrow bridge:
-1. Condorcet cycles and curvature of preference spaces
-2. Kendall distance as the metric on preference manifolds
-3. The antipodal structure of preference reversals
-4. How dictatorial SWFs are the only Pareto+IIA-compatible ones
+Demonstrates key concepts from the formalization:
+1. Condorcet paradox (majority cycling)
+2. Decisive coalition detection
+3. Antipodal obstruction (sign change)
+4. Majority rule on 2 alternatives
 """
 
 from itertools import permutations
-import math
+from typing import List, Tuple, Dict
 
 
-def all_strict_orders(n: int) -> list[tuple[int, ...]]:
-    """All strict linear orders on {0, 1, ..., n-1}."""
-    return list(permutations(range(n)))
+def pairwise_majority(profiles: List[List[int]], a: int, b: int) -> int:
+    """Count voters preferring a to b (a appears before b in ranking)."""
+    count = 0
+    for ranking in profiles:
+        if ranking.index(a) < ranking.index(b):
+            count += 1
+    return count
 
 
-def prefers(ranking: tuple[int, ...], a: int, b: int) -> bool:
-    """Does this ranking prefer a to b? (lower index = more preferred)"""
-    return ranking.index(a) < ranking.index(b)
+def social_sign(profiles: List[List[int]], a: int, b: int) -> int:
+    """Social sign: +1 if majority prefers a>b, -1 if b>a, 0 if tie."""
+    n = len(profiles)
+    count_ab = pairwise_majority(profiles, a, b)
+    if count_ab > n / 2:
+        return 1
+    elif count_ab < n / 2:
+        return -1
+    return 0
 
 
-def reverse_ranking(ranking: tuple[int, ...]) -> tuple[int, ...]:
-    """The antipodal ranking: reverse the order."""
-    return tuple(reversed(ranking))
+def reverse_profile(profile: List[int]) -> List[int]:
+    """Antipodal profile: reverse all preferences."""
+    return list(reversed(profile))
 
 
-def kendall_distance(r1: tuple[int, ...], r2: tuple[int, ...]) -> int:
-    """Kendall tau distance: number of pairwise disagreements."""
-    n = len(r1)
-    return sum(1 for i in range(n) for j in range(i+1, n)
-               if (prefers(r1, i, j) != prefers(r2, i, j)))
-
-
-def majority_beats(profile: list[tuple[int, ...]], a: int, b: int) -> bool:
-    """Does a majority-beat b in this profile?"""
-    support_ab = sum(1 for r in profile if prefers(r, a, b))
-    support_ba = sum(1 for r in profile if prefers(r, b, a))
-    return support_ab > support_ba
-
-
-def condorcet_cycles(profile: list[tuple[int, ...]], n: int) -> list[tuple[int, int, int]]:
-    """Find all Condorcet 3-cycles in the majority relation."""
-    cycles = []
-    for a in range(n):
-        for b in range(a+1, n):
-            for c in range(b+1, n):
-                if (majority_beats(profile, a, b) and
-                    majority_beats(profile, b, c) and
-                    majority_beats(profile, c, a)):
-                    cycles.append((a, b, c))
-                if (majority_beats(profile, a, c) and
-                    majority_beats(profile, c, b) and
-                    majority_beats(profile, b, a)):
-                    cycles.append((a, c, b))
-    return cycles
-
-
-def is_pareto(swf, n: int, k: int) -> bool:
-    """Check if a SWF satisfies Pareto efficiency."""
-    orders = all_strict_orders(n)
-    for profile_indices in range(len(orders)**k):
-        profile = []
-        idx = profile_indices
-        for _ in range(k):
-            profile.append(orders[idx % len(orders)])
-            idx //= len(orders)
-
-        social = swf(profile)
-        for a in range(n):
-            for b in range(n):
-                if a != b and all(prefers(r, a, b) for r in profile):
-                    if not prefers(social, a, b):
-                        return False
-    return True
-
-
-def dictator_swf(profile: list[tuple[int, ...]], d: int = 0) -> tuple[int, ...]:
-    """The dictator SWF: always outputs voter d's ranking."""
-    return profile[d]
-
-
-def main():
+def demo_condorcet_paradox():
+    """Demonstrate the Condorcet paradox with 3 voters, 3 alternatives."""
     print("=" * 60)
-    print("DEMO: Arrow's Impossibility and Preference Topology")
+    print("CONDORCET PARADOX")
     print("=" * 60)
 
-    # 1. Kendall distance and antipodal structure
-    print("\n--- Kendall Distance on S_3 ---")
-    n = 3
-    orders = all_strict_orders(n)
-    print(f"Number of strict orders on {n} alternatives: {len(orders)}")
-    print(f"Identity order: {orders[0]}")
-    rev = reverse_ranking(orders[0])
-    print(f"Antipodal (reversed) order: {rev}")
-    print(f"Kendall distance to antipode: {kendall_distance(orders[0], rev)}")
-    print(f"Maximum possible distance: {n*(n-1)//2}")
-    print(f"(These are equal — antipode is the farthest point!)")
+    # Three voters with cyclic preferences
+    profiles = [
+        [0, 1, 2],  # Voter 0: A > B > C
+        [1, 2, 0],  # Voter 1: B > C > A
+        [2, 0, 1],  # Voter 2: C > A > B
+    ]
 
-    # Verify kendall_reverse_maximal
-    print("\nVerifying: reverse is always the farthest point...")
-    for r in orders:
-        max_dist = kendall_distance(r, reverse_ranking(r))
-        for s in orders:
-            assert kendall_distance(r, s) <= max_dist, f"Failed for {r}, {s}"
-    print("✓ Verified for all pairs!")
+    names = {0: "A", 1: "B", 2: "C"}
+    print("\nVoter preferences:")
+    for i, p in enumerate(profiles):
+        print(f"  Voter {i}: {' > '.join(names[x] for x in p)}")
 
-    # 2. Condorcet cycles
-    print("\n--- Condorcet Cycles (Curvature) ---")
-    # Classic Condorcet cycle: 3 voters, 3 alternatives
-    profile_cycle = [(0, 1, 2), (1, 2, 0), (2, 0, 1)]
-    print(f"Profile: {profile_cycle}")
-    cycles = condorcet_cycles(profile_cycle, 3)
-    print(f"Condorcet cycles: {cycles}")
-    print(f"Curvature (cycle count): {len(cycles)}")
+    print("\nPairwise majority results:")
+    for a, b in [(0, 1), (1, 2), (2, 0)]:
+        count = pairwise_majority(profiles, a, b)
+        winner = names[a] if count > len(profiles) / 2 else names[b]
+        print(f"  {names[a]} vs {names[b]}: {count}-{len(profiles)-count} → {winner} wins")
 
-    # No-cycle profile
-    profile_flat = [(0, 1, 2), (0, 1, 2), (1, 0, 2)]
-    print(f"\nProfile: {profile_flat}")
-    cycles = condorcet_cycles(profile_flat, 3)
-    print(f"Condorcet cycles: {cycles}")
-    print(f"Curvature: {len(cycles)} (flat — majority is transitive)")
+    print("\n→ Majority cycle: A > B > C > A (intransitive!)")
+    print("→ This is why Arrow requires ≥3 alternatives for impossibility.\n")
 
-    # 3. Antipodal structure
-    print("\n--- Antipodal (Reversal) Structure ---")
-    print("Profile and its reversal:")
-    for r in profile_cycle:
-        print(f"  {r} → {reverse_ranking(r)}")
-    reversed_profile = [reverse_ranking(r) for r in profile_cycle]
-    cycles_rev = condorcet_cycles(reversed_profile, 3)
-    print(f"Original curvature: {len(condorcet_cycles(profile_cycle, 3))}")
-    print(f"Reversed curvature: {len(cycles_rev)}")
-    print("(Curvature is preserved under reversal!)")
 
-    # 4. Arrow's theorem check for n=3, k=2
-    print("\n--- Arrow's Theorem: Dictator Check (n=3, k=2) ---")
-    n, k = 3, 2
-    orders = all_strict_orders(n)
-
-    for d in range(k):
-        swf = lambda p, d=d: dictator_swf(p, d)
-        pareto = True
-        iia = True
-
-        # Check Pareto (sample)
-        for r in orders:
-            profile = [r, r]  # unanimous
-            social = swf(profile)
-            for a in range(n):
-                for b in range(n):
-                    if a != b and prefers(r, a, b):
-                        if not prefers(social, a, b):
-                            pareto = False
-
-        print(f"Dictator {d}: Pareto={pareto}, IIA={iia}")
-
-    print("\nArrow's theorem says: for n≥3, k≥2, ONLY dictators satisfy Pareto+IIA!")
-
-    # 5. Support reversal
-    print("\n--- Support Reversal Lemma ---")
-    profile = [(0, 1, 2), (2, 1, 0), (0, 2, 1)]
-    print(f"Profile: {profile}")
-    for a in range(3):
-        for b in range(3):
-            if a != b:
-                support_ab = sum(1 for r in profile if prefers(r, a, b))
-                rev_profile = [reverse_ranking(r) for r in profile]
-                support_ba_rev = sum(1 for r in rev_profile if prefers(r, a, b))
-                support_ab_orig = sum(1 for r in profile if prefers(r, b, a))
-                print(f"  support({a}>{b}) in P.reverse = {support_ba_rev} "
-                      f"= support({b}>{a}) in P = {support_ab_orig}")
-
-    print("\n" + "=" * 60)
-    print("CONCLUSION: Social choice is topology!")
-    print("The preference sphere's antipodal structure forces dictatorship.")
+def demo_antipodal_obstruction():
+    """Demonstrate the sign change between a profile and its antipodal."""
     print("=" * 60)
+    print("ANTIPODAL PARETO OBSTRUCTION (Borsuk-Ulam Analog)")
+    print("=" * 60)
+
+    # Unanimous profile
+    profiles = [
+        [0, 1, 2],  # A > B > C
+        [0, 1, 2],  # A > B > C
+        [0, 1, 2],  # A > B > C
+    ]
+
+    # Antipodal profile (all reversed)
+    antipodal = [reverse_profile(p) for p in profiles]
+
+    names = {0: "A", 1: "B", 2: "C"}
+    print("\nOriginal profile (unanimous A > B > C):")
+    for i, p in enumerate(profiles):
+        print(f"  Voter {i}: {' > '.join(names[x] for x in p)}")
+
+    print("\nAntipodal profile (unanimous C > B > A):")
+    for i, p in enumerate(antipodal):
+        print(f"  Voter {i}: {' > '.join(names[x] for x in p)}")
+
+    print("\nSocial signs (majority rule):")
+    for a, b in [(0, 1), (1, 2), (0, 2)]:
+        s_orig = social_sign(profiles, a, b)
+        s_anti = social_sign(antipodal, a, b)
+        print(f"  ({names[a]},{names[b]}): original={s_orig:+d}, "
+              f"antipodal={s_anti:+d}, changed={'YES' if s_orig != s_anti else 'NO'}")
+
+    print("\n→ The social sign MUST flip between profile and antipodal (Pareto).")
+    print("→ This is the discrete Borsuk-Ulam theorem for social choice.\n")
+
+
+def demo_decisive_coalitions():
+    """Show how decisive coalitions work with a dictator SWF."""
+    print("=" * 60)
+    print("DECISIVE COALITIONS AND DICTATORSHIP")
+    print("=" * 60)
+
+    n_voters = 3
+
+    # Dictator SWF: voter 0 is dictator
+    def dictator_swf(profiles):
+        return profiles[0]
+
+    print(f"\nSWF: Dictator (voter 0 always wins)")
+    print(f"Testing decisive coalitions for 3 voters:")
+
+    # Test all non-empty subsets
+    from itertools import combinations
+    for size in range(1, n_voters + 1):
+        for coalition in combinations(range(n_voters), size):
+            coalition_set = set(coalition)
+            is_decisive = True
+
+            # Test: coalition prefers A>B, others prefer B>A
+            profiles_test = []
+            for v in range(n_voters):
+                if v in coalition_set:
+                    profiles_test.append([0, 1, 2])  # A > B > C
+                else:
+                    profiles_test.append([1, 0, 2])  # B > A > C
+
+            result = dictator_swf(profiles_test)
+            if result.index(0) > result.index(1):  # society prefers B>A
+                is_decisive = False
+
+            status = "DECISIVE" if is_decisive else "not decisive"
+            contains_dictator = 0 in coalition_set
+            print(f"  Coalition {coalition}: {status} "
+                  f"({'contains dictator' if contains_dictator else 'no dictator'})")
+
+    print("\n→ Only coalitions containing the dictator (voter 0) are decisive.")
+    print("→ {0} is the unique minimal decisive coalition.\n")
+
+
+def demo_majority_two_alternatives():
+    """Show majority rule works for 2 alternatives."""
+    print("=" * 60)
+    print("MAJORITY RULE ON 2 ALTERNATIVES")
+    print("=" * 60)
+
+    n_voters = 5
+    alternatives = ["A", "B"]
+
+    print(f"\n{n_voters} voters, 2 alternatives: majority rule")
+    print("Testing Pareto efficiency:")
+
+    # Unanimous: all prefer A>B
+    profiles = [[0, 1]] * n_voters
+    count = pairwise_majority(profiles, 0, 1)
+    print(f"  All prefer A>B: majority count = {count}/{n_voters} → A wins ✓")
+
+    # Non-unanimous: 3 prefer A>B, 2 prefer B>A
+    profiles = [[0, 1]] * 3 + [[1, 0]] * 2
+    count = pairwise_majority(profiles, 0, 1)
+    print(f"  3 prefer A>B, 2 prefer B>A: count = {count}/{n_voters} → A wins")
+
+    print("\nTesting non-dictatorship:")
+    # For each voter, show they can be outvoted
+    for d in range(n_voters):
+        profiles = []
+        for v in range(n_voters):
+            if v == d:
+                profiles.append([0, 1])  # d prefers A>B
+            else:
+                profiles.append([1, 0])  # others prefer B>A
+        count = pairwise_majority(profiles, 0, 1)
+        outcome = "A" if count > n_voters / 2 else "B"
+        print(f"  Voter {d} vs all others: count={count}/{n_voters} → {outcome} wins "
+              f"({'dictator' if outcome == 'A' else 'outvoted'})")
+
+    print("\n→ No voter is a dictator. Majority rule satisfies Pareto + non-dictatorship.")
+    print("→ Arrow's impossibility does NOT apply to 2 alternatives.\n")
+
+
+def demo_dimension_counting():
+    """Show the dimension counting argument."""
+    print("=" * 60)
+    print("DIMENSION COUNTING: WHY 3 ALTERNATIVES BREAKS EVERYTHING")
+    print("=" * 60)
+
+    print("\n  k alternatives → k(k-1)/2 pairwise constraints, k-1 degrees of freedom")
+    print()
+    for k in range(2, 8):
+        constraints = k * (k - 1) // 2
+        freedom = k - 1
+        ratio = constraints / freedom if freedom > 0 else float('inf')
+        status = "BALANCED" if constraints == freedom else \
+                 "OVER-CONSTRAINED → IMPOSSIBILITY" if constraints > freedom else "UNDER"
+        print(f"  k={k}: constraints={constraints}, freedom={freedom}, "
+              f"ratio={ratio:.1f} → {status}")
+
+    print("\n→ At k=3, the system becomes over-constrained.")
+    print("→ This is the Borsuk-Ulam threshold: sphere dimension ≥ 2.\n")
 
 
 if __name__ == "__main__":
-    main()
+    demo_condorcet_paradox()
+    demo_antipodal_obstruction()
+    demo_decisive_coalitions()
+    demo_majority_two_alternatives()
+    demo_dimension_counting()
 
 
 """
-Visualization: The Preference Sphere and Kendall Distance
+Visualization: Arrow's Impossibility and the Preference Sphere
 
-Plots the 6 strict linear orders on 3 alternatives as points,
-with edges colored by Kendall distance. The antipodal pairs
-(maximum distance) are highlighted.
+Generates plots showing:
+1. The preference sphere with antipodal structure
+2. Social sign changes under Pareto
+3. Dimension counting
 """
 
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 import numpy as np
-from itertools import permutations
+from mpl_toolkits.mplot3d import Axes3D
 
 
-def ranking_to_str(r):
-    return ">".join(str(x) for x in r)
+def plot_dimension_counting():
+    """Plot the dimension counting argument for Arrow's impossibility."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
 
+    k_values = np.arange(2, 12)
+    constraints = k_values * (k_values - 1) // 2
+    freedom = k_values - 1
 
-def kendall_distance(r1, r2):
-    n = len(r1)
-    return sum(1 for i in range(n) for j in range(i+1, n)
-               if (r1.index(i) < r1.index(j)) != (r2.index(i) < r2.index(j)))
+    ax.bar(k_values - 0.2, constraints, 0.35, label='Pairwise constraints k(k-1)/2',
+           color='#e74c3c', alpha=0.8)
+    ax.bar(k_values + 0.2, freedom, 0.35, label='Degrees of freedom k-1',
+           color='#3498db', alpha=0.8)
 
+    ax.axvline(x=2.5, color='green', linestyle='--', linewidth=2,
+               label='Arrow boundary (k=3)')
+    ax.fill_betweenx([0, max(constraints) * 1.1], 2.5, 11.5,
+                      color='red', alpha=0.05)
+    ax.fill_betweenx([0, max(constraints) * 1.1], 1.5, 2.5,
+                      color='green', alpha=0.05)
 
-def main():
-    n = 3
-    orders = [list(p) for p in permutations(range(n))]
-    labels = [ranking_to_str(r) for r in orders]
+    ax.set_xlabel('Number of alternatives (k)', fontsize=14)
+    ax.set_ylabel('Count', fontsize=14)
+    ax.set_title("Arrow's Impossibility: Dimension Counting\n"
+                  "Over-constrained for k ≥ 3 (Borsuk-Ulam threshold)", fontsize=16)
+    ax.legend(fontsize=12)
+    ax.set_xticks(k_values)
 
-    # Place the 6 orders on a hexagon
-    angles = np.linspace(0, 2*np.pi, len(orders), endpoint=False)
-    # Arrange so that antipodal pairs are opposite
-    # Order: (0,1,2), (2,0,1), (1,2,0), (2,1,0), (0,2,1), (1,0,2)
-    # Antipodal pairs: (0,1,2)↔(2,1,0), (0,2,1)↔(1,2,0), (1,0,2)↔(2,0,1)
-    arranged = [(0,1,2), (1,0,2), (1,2,0), (2,1,0), (2,0,1), (0,2,1)]
-    labels_arr = [ranking_to_str(r) for r in arranged]
-
-    radius = 2.0
-    xs = radius * np.cos(angles)
-    ys = radius * np.sin(angles)
-
-    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
-
-    # Left: Preference Sphere with Kendall distances
-    ax = axes[0]
-    ax.set_aspect('equal')
-    ax.set_title('The Preference Sphere (n=3)\nKendall Distance Graph', fontsize=14)
-
-    # Draw circle
-    circle = plt.Circle((0, 0), radius, fill=False, color='gray',
-                        linestyle='--', alpha=0.5)
-    ax.add_patch(circle)
-
-    # Draw edges with color by Kendall distance
-    for i in range(len(arranged)):
-        for j in range(i+1, len(arranged)):
-            d = kendall_distance(list(arranged[i]), list(arranged[j]))
-            if d == 3:  # Antipodal
-                color = 'red'
-                lw = 3
-                alpha = 0.8
-            elif d == 2:
-                color = 'orange'
-                lw = 1.5
-                alpha = 0.5
-            else:
-                color = 'blue'
-                lw = 1
-                alpha = 0.3
-            ax.plot([xs[i], xs[j]], [ys[i], ys[j]], color=color,
-                   linewidth=lw, alpha=alpha, zorder=1)
-
-    # Draw nodes
-    for i in range(len(arranged)):
-        ax.plot(xs[i], ys[i], 'ko', markersize=10, zorder=3)
-        offset = 0.35
-        ax.annotate(labels_arr[i],
-                   (xs[i] + offset * np.cos(angles[i]),
-                    ys[i] + offset * np.sin(angles[i])),
-                   fontsize=11, ha='center', va='center',
-                   fontweight='bold',
-                   bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
-
-    # Legend
-    from matplotlib.lines import Line2D
-    legend_elements = [
-        Line2D([0], [0], color='red', lw=3, label='Antipodal (d=3)'),
-        Line2D([0], [0], color='orange', lw=1.5, label='Adjacent (d=2)'),
-        Line2D([0], [0], color='blue', lw=1, label='Near (d=1)'),
-    ]
-    ax.legend(handles=legend_elements, loc='lower right', fontsize=10)
-    ax.set_xlim(-3.5, 3.5)
-    ax.set_ylim(-3.5, 3.5)
-    ax.axis('off')
-
-    # Right: Condorcet Curvature visualization
-    ax2 = axes[1]
-    ax2.set_title('Condorcet Curvature\n(3 voters, 3 alternatives)', fontsize=14)
-
-    # Show different profiles and their curvature
-    profiles = [
-        ("Unanimous\n(flat)", [(0,1,2), (0,1,2), (0,1,2)], 0),
-        ("Mild\ndisagreement", [(0,1,2), (0,1,2), (1,0,2)], 0),
-        ("Condorcet\ncycle!", [(0,1,2), (1,2,0), (2,0,1)], 1),
-        ("Strong\ncycle", [(0,1,2), (2,0,1), (1,2,0)], 1),
-    ]
-
-    bar_colors = ['#2ecc71', '#2ecc71', '#e74c3c', '#e74c3c']
-    positions = range(len(profiles))
-    curvatures = [p[2] for p in profiles]
-    names = [p[0] for p in profiles]
-
-    bars = ax2.bar(positions, curvatures, color=bar_colors, edgecolor='black',
-                   width=0.6)
-    ax2.set_xticks(positions)
-    ax2.set_xticklabels(names, fontsize=10)
-    ax2.set_ylabel('Condorcet Curvature', fontsize=12)
-    ax2.set_ylim(-0.1, 1.5)
-
-    # Add profile details
-    for i, (name, profile, curv) in enumerate(profiles):
-        details = '\n'.join(f"V{j+1}: {ranking_to_str(r)}" for j, r in enumerate(profile))
-        ax2.annotate(details, (i, curv + 0.1), ha='center', va='bottom',
-                    fontsize=8, color='gray')
-
-    ax2.axhline(y=0, color='green', linestyle='--', alpha=0.5, label='Flat (no cycles)')
-    ax2.legend(fontsize=10)
+    for k, c, f in zip(k_values, constraints, freedom):
+        if c > f:
+            ax.annotate(f'{c}/{f}', (k, c + 1), ha='center', fontsize=9, color='red')
 
     plt.tight_layout()
-    plt.savefig('preference_sphere.png', dpi=150, bbox_inches='tight')
+    plt.savefig('dimension_counting.png', dpi=150)
+    plt.close()
+    print("Saved dimension_counting.png")
+
+
+def plot_sign_change():
+    """Plot the social sign change between profile and antipodal."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Left: unanimous profile → social sign = +1
+    ax1 = axes[0]
+    pairs = ['(A,B)', '(B,C)', '(A,C)']
+    signs_original = [1, 1, 1]
+    colors = ['#27ae60' if s > 0 else '#e74c3c' for s in signs_original]
+    ax1.barh(pairs, signs_original, color=colors, edgecolor='black', linewidth=2)
+    ax1.set_xlim(-1.5, 1.5)
+    ax1.set_title('Unanimous: A > B > C\nSocial signs', fontsize=14)
+    ax1.axvline(x=0, color='black', linewidth=0.5)
+    for i, s in enumerate(signs_original):
+        ax1.text(s + 0.1 * np.sign(s), i, f'{s:+d}', va='center', fontsize=16, fontweight='bold')
+
+    # Right: antipodal profile → social sign = -1
+    ax2 = axes[1]
+    signs_antipodal = [-1, -1, -1]
+    colors = ['#27ae60' if s > 0 else '#e74c3c' for s in signs_antipodal]
+    ax2.barh(pairs, signs_antipodal, color=colors, edgecolor='black', linewidth=2)
+    ax2.set_xlim(-1.5, 1.5)
+    ax2.set_title('Antipodal: C > B > A\nSocial signs (FLIPPED)', fontsize=14)
+    ax2.axvline(x=0, color='black', linewidth=0.5)
+    for i, s in enumerate(signs_antipodal):
+        ax2.text(s + 0.1 * np.sign(s), i, f'{s:+d}', va='center', fontsize=16, fontweight='bold')
+
+    fig.suptitle("Sign Change Theorem (Discrete Borsuk-Ulam)\n"
+                 "Social sign MUST flip between profile and antipodal", fontsize=16, y=1.02)
+    plt.tight_layout()
+    plt.savefig('sign_change.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved sign_change.png")
+
+
+def plot_preference_sphere():
+    """Plot the preference sphere for 3 alternatives."""
+    fig = plt.figure(figsize=(10, 10))
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Draw sphere
+    u = np.linspace(0, 2 * np.pi, 50)
+    v = np.linspace(0, np.pi, 50)
+    x = np.outer(np.cos(u), np.sin(v))
+    y = np.outer(np.sin(u), np.sin(v))
+    z = np.outer(np.ones(np.size(u)), np.cos(v))
+    ax.plot_surface(x, y, z, alpha=0.1, color='lightblue')
+
+    # Mark the 6 strict linear orders as points on the sphere
+    orders = {
+        'A>B>C': (0.8, 0.5, 0.3),
+        'A>C>B': (0.6, -0.4, 0.7),
+        'B>A>C': (-0.2, 0.8, 0.5),
+        'B>C>A': (-0.7, 0.3, -0.6),
+        'C>A>B': (-0.5, -0.7, 0.5),
+        'C>B>A': (-0.8, -0.5, -0.3),
+    }
+
+    # Normalize to unit sphere
+    for name, (px, py, pz) in orders.items():
+        norm = np.sqrt(px**2 + py**2 + pz**2)
+        px, py, pz = px/norm, py/norm, pz/norm
+        orders[name] = (px, py, pz)
+
+    # Draw points
+    for name, (px, py, pz) in orders.items():
+        ax.scatter([px], [py], [pz], s=100, zorder=5)
+        ax.text(px*1.15, py*1.15, pz*1.15, name, fontsize=9, ha='center')
+
+    # Draw antipodal pairs
+    antipodal_pairs = [
+        ('A>B>C', 'C>B>A'),
+        ('A>C>B', 'B>C>A'),
+        ('B>A>C', 'C>A>B'),
+    ]
+    for o1, o2 in antipodal_pairs:
+        p1 = orders[o1]
+        p2 = orders[o2]
+        ax.plot([p1[0], p2[0]], [p1[1], p2[1]], [p1[2], p2[2]],
+                'r--', linewidth=1.5, alpha=0.6)
+
+    ax.set_title('Preference Sphere S² for 3 Alternatives\n'
+                 'Antipodal pairs connected by dashed lines', fontsize=14)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
+
+    plt.tight_layout()
+    plt.savefig('preference_sphere.png', dpi=150)
     plt.close()
     print("Saved preference_sphere.png")
 
 
 if __name__ == "__main__":
-    main()
+    plot_dimension_counting()
+    plot_sign_change()
+    plot_preference_sphere()
