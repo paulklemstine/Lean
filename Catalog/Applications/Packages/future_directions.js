@@ -1308,7 +1308,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inverse Stereographic Cryptography: Projection as One-Way Function"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a2d0797",
     "description": "Replace softmax attention with stereographic attention: map query/key vectors to the Riemann sphere via stereographic projection, compute Cauchy kernel K(q,k) = 1/(1+|q-k|^2) on the sphere, and project back. Conjecture: Stereographic attention has O(sqrt(N)) sparsity (most Cauchy weights are near-zero) while maintaining the universal approximation properties of softmax attention. Test: prove the sparsity bound for random queries on the unit sphere. Impact: a new attention mechanism with built-in sparsity and geometric structure.",
     "domains": [
       "Geometry",
@@ -1318,7 +1318,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.906315+00:00",
     "title": "Stereographic Neural Attention: Attention via Riemann Sphere"
   },
@@ -1638,7 +1638,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3085bb48",
     "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
     "domains": [
       "EML",
@@ -1648,7 +1648,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.6299999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.751445+00:00",
     "title": "EML Quantum Activation Functions"
   },
@@ -1743,7 +1743,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Clean framework for separating density propert"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7be091c2",
     "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established a rigorous connection between jigsaw puzzle assembly, Boolean satisfiability, and the algebraic topology of grid constraint graphs. The central discovery is that the complement involution on edge types is the structural bridge connecting all three domains: it simultaneously encodes Boolean negation, determines the topological invariants of the constraint graph, and guarantees cycle consistency through its order-2 property.\n\nThe most promising cross-domain connection is between the Betti number of the constraint graph and computational complexity. We proved that \u03b2\u2081 = 0 (tree constraint graph) implies polynomial-time solvability, while \u03b2\u2081 \u2265 1 introduces cycles that require search. This suggests a quantitative complexity-topology correspondence: the *difficulty* of a constraint satisfaction problem scales with the topological complexity of its constraint graph. This principle, if extended to general CSPs, could provide a new lens for understanding computational hardness.\n\nThe involution parity theorem (|S| \u2261 |Fix(compl)| mod 2) connects to the broader Burnside counting framework and suggests that puzzle alphabets with specific fixed-point structures may have qualitatively different phase transition behaviors. The category of puzzle alphabets provides a natural setting for studying how algebraic structure constrains computational complexity.\n\n---\n\n### Direction 1: Spectral Gap and Puzzle Phase Transition\n\n**Conjecture**: For an n\u00d7n random jigsaw puzzle with k complementary edge pairs (alphabet size 2k+1), there exists a sharp threshold k*(n) \u2248 c\u00b7n such that for k < k*(n), random puzzles almost surely have multiple valid assemblies, while for k > k*(n), they almost surely have a unique valid assembly. The threshold is determined by the spectral gap of the complement graph's adjacency matrix.\n\n**Test**: Compute the expected number of valid assemblies for random n\u00d7n puzzles with varying k using the constraint density formula E = 2n(n-1). If the expected count crosses 1 near k \u2248 c\u00b7n for some constant c, the conjecture is supported. Formalize the first and second moment bounds.\n\n**Impact**: Would establish the first rigorous phase transition result for jigsaw puzzles, connecting puzzle solvability to random graph theory and the satisfiability threshold phenomenon.\n\n**Catalog References**: `Catalog/Bridges/JigsawNPComplete.lean`, `Catalog/EML/JigsawAlgebra.lean`\n\n**Proof Strategy**: Use the second moment method. The first moment (expected assemblies) is E[X] = k^V / (2k)^E where V = n\u00b2 and E = 2n(n-1). The ratio E/V \u2192 2 determines the threshold. Show E[X\u00b2]/E[X]\u00b2 \u2192 1 in the appropriate regime.\n\n**Domain Bridges**: Jigsaw puzzles <-> Random graph theory <-> Statistical physics (spin glass models)\n\n**Lineage**: Builds on grid_euler_poincare, square_constraint_count, constraint_gap_linear from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Non-Rectangular Grid Topology\n\n**Conjecture**: For a triangular grid with n rows (total cells n(n+1)/2), the first Betti number is \u03b2\u2081 = (n-1)(n-2)/2, and the complement operation on a hexagonal alphabet (with 3 complementary pairs) has order 2, so cycle consistency is automatic if and only if all cycle lengths are even.\n\n**Test**: Define the triangular grid graph formally. Compute its Euler characteristic. Verify that the cycle lengths in a triangular grid are all multiples of 3, not 2, which would break the parity theorem. If cycles have odd length, the complement parity theorem fails, and additional constraints beyond local compatibility are needed for global consistency.\n\n**Impact**: If triangular grids have odd-length cycles, they exhibit *topological obstructions* to assembly that rectangular grids lack. This would demonstrate that puzzle difficulty depends not just on the Betti number but on the parity of cycle lengths\u2014a qualitatively new phenomenon.\n\n**Catalog References**: `Catalog/Bridges/JigsawNPComplete.lean` (grid_euler_characteristic), `Bridges/JigsawTopology.lean` (compl_even_identity)\n\n**Proof Strategy**: Construct the triangular grid graph as a simplicial complex. Compute \u03b2\u2081 using the Euler-Poincar\u00e9 formula. Check whether all minimal cycles have even or odd length.\n\n**Domain Bridges**: Jigsaw puzzles <-> Simplicial homology <-> Tiling theory\n\n**Lineage**: Extends grid_euler_poincare and compl_even_identity from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Puzzle Alphabet Category and Functorial Reduction\n\n**Conjecture**: The category of puzzle alphabets (finite types with involution) is equivalent to the category of finite \u2124/2\u2124-sets. Under this equivalence, the SAT-to-puzzle reduction is a natural transformation from the Boolean constraint functor to the puzzle assembly functor. Specifically, the forgetful functor from PAlphabet to FinSet factors through \u2124/2\u2124-Set.\n\n**Test**: Formalize the category of \u2124/2\u2124-sets in Lean 4. Construct the equivalence functor. Verify that the Bool \u2192 JEdge map is a morphism of \u2124/2\u2124-sets (where \u2124/2\u2124 acts on Bool by negation and on JEdge by complement).\n\n**Impact**: Would provide a category-theoretic foundation for puzzle complexity, showing that the hardness of puzzle assembly is a consequence of the structure of the \u2124/2\u2124-action. Could lead to a classification of \"puzzle-hard\" problems via the representation theory of \u2124/2\u2124.\n\n**Catalog References**: `Bridges/JigsawTopology.lean` (PAlphabet, PAlphabetHom, hom_preserves_fixed)\n\n**Proof Strategy**: Use Mathlib's category theory library (CategoryTheory.Category). Define \u2124/2\u2124-Set as a category of functors from B\u2124/2\u2124 to FinSet. Construct the equivalence explicitly.\n\n**Domain Bridges**: Jigsaw puzzles <-> Category theory <-> Representation theory of finite groups\n\n**Lineage**: Extends PAlphabetHom.comp, hom_preserves_fixed, involution_parity from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Constraint Density and Coloring Bridge\n\n**Conjecture**: For any graph G with chromatic number \u03c7(G), there exists a puzzle alphabet A with |A| = 2\u03c7(G) - 1 such that the valid colorings of G with \u03c7(G) colors correspond bijectively to valid puzzle assemblies over A with constraint graph G. The constraint density threshold for puzzle solvability is related to the fractional chromatic number.\n\n**Test**: Construct the puzzle alphabet for small graphs (complete graphs K\u2083, K\u2084; cycles C\u2085, C\u2087). Verify the bijection between proper colorings and valid assemblies. Test whether the constraint density 2 - 2/n (for n\u00d7n grids) relates to the chromatic number of the grid graph (which is 2 for bipartite grids, 3 for odd cycles).\n\n**Impact**: Would establish a formal bridge between graph coloring and puzzle assembly, unifying two major areas of combinatorial optimization. The fractional chromatic number connection could provide new bounds on puzzle solvability.\n\n**Catalog References**: `Catalog/Bridges/JigsawNPComplete.lean`, `Bridges/JigsawTopology.lean` (encoding_compl_iff)\n\n**Proof Strategy**: For each color c, create two edge labels (c\u207a, c\u207b) with complement c\u207a \u2194 c\u207b, plus one boundary label. The coloring condition \"adjacent vertices have different colors\" becomes \"adjacent edges are complementary.\"\n\n**Domain Bridges**: Jigsaw puzzles <-> Graph coloring <-> Chromatic polynomial theory\n\n**Lineage**: Extends encoding_compl_iff, boolToEdge_injective from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Higher-Dimensional Puzzle Assembly\n\n**Conjecture**: For a 3-dimensional puzzle assembly on an m\u00d7n\u00d7p grid, the first Betti number is \u03b2\u2081 = (m-1)(n-1) + (m-1)(p-1) + (n-1)(p-1), and the second Betti number \u03b2\u2082 = (m-1)(n-1)(p-1) counts the number of independent \"cage constraints\" that are qualitatively harder than cycle constraints.\n\n**Test**: Define the 3D grid graph. Compute its homology groups. Verify the Betti number formula. Show that the complement parity theorem still applies (all 2D cycles have length 4, which is even) but that \u03b2\u2082 introduces a new type of constraint not present in 2D.\n\n**Impact**: Would demonstrate that puzzle complexity has a rich multi-scale structure: \u03b2\u2081 constrains 1-cycles, \u03b2\u2082 constrains 2-cycles (surfaces), and so on. The hierarchy \u03b2\u2080, \u03b2\u2081, \u03b2\u2082, ... provides a graded measure of puzzle difficulty.\n\n**Catalog References**: `Bridges/JigsawTopology.lean` (grid_euler_poincare, gridBetti1)\n\n**Proof Strategy**: Generalize gridBetti1 to gridBetti_k for arbitrary k. Use the Euler-Poincar\u00e9 formula for CW-complexes. Compute the face lattice of the 3D grid.\n\n**Domain Bridges**: Jigsaw puzzles <-> Algebraic topology (higher homology) <-> Higher-dimensional constraint satisfaction\n\n**Lineage**: Extends grid_euler_poincare from 2D to 3D from this cycle.\n\n**Ambition**: extension\n",
     "domains": [
       "Algebra",
@@ -1753,7 +1753,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.6,
     "research_mode": "team",
     "source_exp_id": "3b2d31f3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-04T23:26:09.222560+00:00",
     "title": "Rigorous connection between jigsaw puzzle asse"
   },
@@ -2087,7 +2087,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "7946f030",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -2097,7 +2097,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
@@ -2267,7 +2267,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Differential Equations: Power Series Solutions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "964d8a9b",
     "description": "Prove that the Gamma function Gamma(z) is a meromorphic EML function (it has no algebraic singularities). Show that the Riemann zeta function zeta(s) is not an EML function (it has essential singularities). Formalize the hypergeometric function _2F_1(a,b;c;z) and prove that it satisfies an EML differential equation (Gauss's hypergeometric equation).",
     "domains": [
       "EML",
@@ -2277,7 +2277,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.127649+00:00",
     "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
   },
@@ -2312,7 +2312,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2499ab7e",
     "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
     "domains": [
       "Tropical",
@@ -2322,7 +2322,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.620386+00:00",
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
@@ -3197,7 +3197,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "646ef0b0",
     "description": "Formalize the tropical semiring (R \u222a {-\u221e}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domains": [
       "Tropical",
@@ -3207,7 +3207,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
@@ -3317,7 +3317,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
   {
-    "consumed_by_exp_id": "b9304a7a",
+    "consumed_by_exp_id": "",
     "description": "Formalize musical counterpoint rules (Fux's species counterpoint) as a category where objects are consonant intervals and morphisms are permitted voice leadings. Conjecture: The category of first-species counterpoint over a diatonic scale is equivalent to the thin category generated by a specific poset of 12 elements. Test: enumerate all valid first-species counterpoint motions and prove they form exactly this category. Impact: bridges music theory, order theory, and categorical logic.",
     "domains": [
       "Algebra",
@@ -3327,7 +3327,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.503715+00:00",
     "title": "Sonic Mathematics: Counterpoint as Category Theory"
   },
@@ -3932,7 +3932,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
-    "consumed_by_exp_id": "4daea1a0",
+    "consumed_by_exp_id": "",
     "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
     "domains": [
       "Novelty",
@@ -3942,7 +3942,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.593085+00:00",
     "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
@@ -4127,7 +4127,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fdabb070",
     "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
     "domains": [
       "Novelty",
@@ -4137,7 +4137,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.728070+00:00",
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
@@ -4801,7 +4801,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92cc6cf5",
     "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
     "domains": [
       "Novelty",
@@ -4811,7 +4811,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.486848+00:00",
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
@@ -4846,7 +4846,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Category Theory as the DNA of Mathematics"
   },
   {
-    "consumed_by_exp_id": "27733637",
+    "consumed_by_exp_id": "",
     "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
     "domains": [
       "Novelty",
@@ -4856,7 +4856,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.748677+00:00",
     "title": "Speculative: Topological Data Analysis of Theorem Networks"
   },
