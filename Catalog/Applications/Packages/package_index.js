@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "aa1edaa2",
     "filename": "holographic_primes_the_prime_number_adscft_corresp.json",
     "pkg_num": 391,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.26544,
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
   {
@@ -12490,8 +12490,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "holographic_primes_the_prime_number_adscft_corresp",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.26544,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
     }
