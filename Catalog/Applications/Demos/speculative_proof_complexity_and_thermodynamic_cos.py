@@ -1,363 +1,280 @@
 #!/usr/bin/env python3
 """
-Thermodynamic Proof Complexity — Demonstration Script
+Thermodynamic Cost of Proof — Numerical Demonstrations
 
-Demonstrates the key numerical results from the thermodynamic proof complexity framework:
-1. Cost monotonicity: shorter proofs cost less energy
-2. Incompressibility dominance: most proofs are expensive
-3. Cost hierarchy: proof costs form an infinite ladder
-4. Sparse search: exponential overhead for finding valid proofs
-5. Sorting bridge: factorial growth implies positive proof cost
+Demonstrates the key results from the formalized theory connecting
+proof complexity to Landauer's principle.
 """
 
 import math
 
-# Constants
-kB = 1.380649e-23  # Boltzmann constant (J/K)
-ROOM_TEMP = 300     # Room temperature (K)
+# Physical constants
+k_B = 1.380649e-23  # Boltzmann constant (J/K)
+T_room = 300        # Room temperature (K)
+kT_room = k_B * T_room
 
 
-def proof_cost(length: int, temperature: float = ROOM_TEMP) -> float:
-    """Thermodynamic cost of a proof of given length at given temperature.
+def proof_cost(n: int, temperature: float = T_room, alphabet_size: int = 2) -> float:
+    """Minimum thermodynamic cost of a proof of length n.
     
-    cost(ℓ) = ℓ · kT · ln(2)
-    
-    In natural units (k=1), cost(ℓ) = ℓ · T · ln(2).
-    Here we use SI units for physical interpretation.
+    cost(π) = n · kT · ln(b)
     """
-    return length * kB * temperature * math.log(2)
+    return n * k_B * temperature * math.log(alphabet_size)
 
 
-def incompressible_fraction(alphabet_size: int) -> float:
-    """Fraction of strings that are incompressible (cannot be shortened).
+def landauer_capacity(energy_budget: float, temperature: float = T_room,
+                      alphabet_size: int = 2) -> tuple[int, int]:
+    """Maximum proof length and theorem count within energy budget.
     
-    For alphabet size b, the incompressible fraction is (b-1)/b.
+    Returns (max_length, max_theorems).
     """
-    return (alphabet_size - 1) / alphabet_size
+    cost_per_bit = k_B * temperature * math.log(alphabet_size)
+    max_length = int(energy_budget / cost_per_bit)
+    max_theorems = 2 * alphabet_size ** max_length
+    return max_length, max_theorems
 
 
-def search_overhead(total_candidates: int, valid_proofs: int) -> float:
-    """Search overhead: expected number of candidates to examine."""
-    return total_candidates / (valid_proofs + 1)
+def search_verification_gap(alphabet: int, max_len: int, verif_len: int) -> dict:
+    """Compute the search-verification energy gap.
+    
+    Returns dictionary with gap exponent, search cost ratio, and energy ratio.
+    """
+    gap_exp = max_len - verif_len - 1
+    search_cost_lower = alphabet ** gap_exp
+    verif_cost = verif_len  # in units of kT·ln(b)
+    search_cost = gap_exp   # in units of kT·ln(b)
+    return {
+        'gap_exponent': gap_exp,
+        'search_steps_lower_bound': search_cost_lower,
+        'verification_energy_bits': verif_cost,
+        'search_energy_bits': search_cost,
+        'energy_ratio': search_cost / verif_cost if verif_cost > 0 else float('inf'),
+    }
 
 
-def ruggedness_ratio(local_minima: int, valid_minima: int) -> float:
-    """Ruggedness ratio of the proof energy landscape."""
-    return local_minima / (valid_minima + 1)
+def incompressible_fraction(alphabet: int, length: int) -> float:
+    """Fraction of strings of length n that are incompressible.
+    
+    At least (b-1)/b of strings of length n are incompressible.
+    """
+    return (alphabet - 1) / alphabet
 
 
-def main():
-    print("=" * 70)
-    print("THERMODYNAMIC PROOF COMPLEXITY — NUMERICAL DEMONSTRATIONS")
-    print("=" * 70)
+def meta_proof_blowup(alphabet: int, n: int) -> float:
+    """Ratio of meta-proof space to proof space.
     
-    # Demo 1: Cost Monotonicity
-    print("\n--- Demo 1: Cost Monotonicity ---")
-    print("Shorter proofs have strictly lower thermodynamic cost.\n")
-    for length in [1, 5, 10, 50, 100, 1000]:
-        cost = proof_cost(length)
-        print(f"  Proof length {length:>5d}: cost = {cost:.4e} J "
-              f"({cost/kB/ROOM_TEMP/math.log(2):.1f} Landauer units)")
-    
-    # Demo 2: Incompressibility Dominance
-    print("\n--- Demo 2: Incompressibility Dominance ---")
-    print("Most proofs cannot be compressed to reduce their thermodynamic cost.\n")
-    for b in [2, 3, 10, 26, 256]:
-        frac = incompressible_fraction(b)
-        print(f"  Alphabet size {b:>3d}: {frac*100:.1f}% of proofs are incompressible")
-    
-    # Demo 3: Cost Hierarchy
-    print("\n--- Demo 3: Proof Cost Hierarchy ---")
-    print("The cost gap between adjacent levels is exactly kT·ln(2).\n")
-    landauer_unit = kB * ROOM_TEMP * math.log(2)
-    print(f"  One Landauer unit at {ROOM_TEMP}K: {landauer_unit:.4e} J")
-    print(f"  This is the minimum energy to erase one bit of proof information.\n")
-    for k in range(1, 8):
-        cost_k = proof_cost(k)
-        cost_k1 = proof_cost(k + 1)
-        gap = cost_k1 - cost_k
-        print(f"  Level {k} → {k+1}: gap = {gap:.4e} J "
-              f"(= {gap/landauer_unit:.6f} Landauer units)")
-    
-    # Demo 4: Sparse Search Exponential Bound
-    print("\n--- Demo 4: Sparse Search Exponential Bound ---")
-    print("When valid proofs are sparse, search overhead is exponential.\n")
-    b = 2
-    for n in [10, 20, 30, 50]:
-        for k_frac in [0.5, 0.1]:
-            k = int(n * k_frac)
-            total = b ** n
-            valid = b ** k
-            overhead = search_overhead(total, valid)
-            lower_bound = b ** (n - k - 1)
-            print(f"  n={n:>2d}, k={k:>2d}: total={total:.2e}, valid={valid:.2e}, "
-                  f"overhead ≥ {lower_bound:.2e}")
-    
-    # Demo 5: Sorting Bridge
-    print("\n--- Demo 5: Sorting as Proof ---")
-    print("Sorting n items requires log₂(n!) bits of information.\n")
-    for n in [2, 5, 10, 20, 52, 100]:
-        info_bits = math.log2(math.factorial(n))
-        cost = info_bits * kB * ROOM_TEMP * math.log(2)
-        print(f"  n={n:>3d}: log₂({n}!) = {info_bits:.1f} bits, "
-              f"cost = {cost:.4e} J")
-    
-    # Demo 6: Energy Landscape
-    print("\n--- Demo 6: Proof Energy Landscape ---")
-    print("Rugged landscapes trap proof search.\n")
-    scenarios = [
-        ("Easy problem", 1000, 100, 150, 0.0, 0.5),
-        ("Medium problem", 10000, 50, 500, 0.0, 2.0),
-        ("Hard problem", 1000000, 10, 10000, 0.0, 5.0),
-        ("Very hard", 10**9, 3, 10**6, 0.0, 10.0),
-    ]
-    for name, total, valid, local, e_global, e_local in scenarios:
-        r = ruggedness_ratio(local, valid)
-        trap_prob = 1 - valid / local if local > 0 else 0
-        gap = e_local - e_global
-        print(f"  {name:>15s}: ruggedness={r:>8.1f}, "
-              f"trap_prob={trap_prob:.3f}, energy_gap={gap:.1f}")
-    
-    # Demo 7: Chaitin Cost Bound
-    print("\n--- Demo 7: Chaitin Cost Bound ---")
-    print("For any bound k, there exist proofs more expensive than k·T·ln(2).\n")
-    b = 2
-    for k in [10, 20, 50, 100]:
-        threshold = b ** k + 1
-        min_cost = k * kB * ROOM_TEMP * math.log(2)
-        print(f"  k={k:>3d}: need >{threshold:.2e} statements, "
-              f"min cost exceeds {min_cost:.4e} J")
-    
-    # Demo 8: Falsifiable Conjecture Test
-    print("\n--- Demo 8: Falsifiable Conjecture ---")
-    print("Conjecture: avg/min cost ratio ≥ b^(n/3).\n")
-    b = 2
-    for n in [6, 12, 18, 24, 30]:
-        predicted_ratio = b ** (n // 3)
-        print(f"  n={n:>2d}: predicted ratio ≥ {predicted_ratio:>10d}")
-    print("\n  Any proof system with smaller ratios would refute the conjecture.")
-    
-    print("\n" + "=" * 70)
-    print("All demonstrations completed successfully.")
-    print("=" * 70)
+    Meta-proof space = b^(b^n), proof space = b^n.
+    Returns log_b ratio = b^n - n.
+    """
+    return alphabet ** n - n
 
 
-if __name__ == "__main__":
-    main()
+# ============================================================
+# DEMONSTRATIONS
+# ============================================================
+
+print("=" * 60)
+print("THERMODYNAMIC COST OF PROOF — DEMONSTRATIONS")
+print("=" * 60)
+
+# Demo 1: Basic proof costs
+print("\n--- Demo 1: Proof Costs at Room Temperature (300K) ---")
+for n in [10, 100, 1000, 10000]:
+    cost_joules = proof_cost(n)
+    print(f"  Proof of {n:>5} bits: {cost_joules:.4e} J "
+          f"({cost_joules / 1.602e-19:.2f} eV)")
+
+# Demo 2: Landauer capacity
+print("\n--- Demo 2: Landauer Capacity Bounds ---")
+print("  How many theorems can be proved within energy budget E?")
+for e_label, e_joules in [("1 eV", 1.602e-19), ("1 keV", 1.602e-16),
+                           ("1 J", 1.0), ("1 kWh", 3.6e6)]:
+    cost_per_bit = k_B * T_room * math.log(2)
+    max_len = int(e_joules / cost_per_bit)
+    print(f"  E = {e_label:>6}: max proof length ≈ {max_len} bits, "
+          f"max theorems ≈ 2^{max_len + 1}")
+
+# Demo 3: Search-verification gap
+print("\n--- Demo 3: Search-Verification Energy Gap ---")
+for n, k in [(100, 10), (1000, 100), (10000, 1000)]:
+    gap = search_verification_gap(2, n, k)
+    print(f"  n={n:>5}, k={k:>4}: gap exponent = {gap['gap_exponent']}, "
+          f"energy ratio = {gap['energy_ratio']:.1f}x")
+
+# Demo 4: Incompressibility
+print("\n--- Demo 4: Incompressible Fraction ---")
+for b in [2, 3, 10, 256]:
+    frac = incompressible_fraction(b, 100)
+    print(f"  Alphabet size {b:>3}: {frac:.4f} of strings are incompressible "
+          f"({frac*100:.1f}%)")
+
+# Demo 5: Geometric capacity bound verification
+print("\n--- Demo 5: Geometric Capacity Bound Verification ---")
+print("  Verifying Σᵢ₌₀ⁿ bⁱ ≤ 2·bⁿ for small values:")
+for b in [2, 3, 5]:
+    for n in [1, 3, 5, 8]:
+        actual_sum = sum(b**i for i in range(n + 1))
+        bound = 2 * b**n
+        tight = actual_sum / bound
+        print(f"  b={b}, n={n:>2}: sum={actual_sum:>10}, 2·bⁿ={bound:>10}, "
+              f"ratio={tight:.4f}")
+
+# Demo 6: Computability barrier
+print("\n--- Demo 6: Computability Barrier ---")
+print("  For fixed proof length f, how many statements lack short proofs?")
+for b, f, n in [(2, 10, 20), (2, 50, 100), (2, 100, 200)]:
+    # Use logarithmic computation to avoid huge numbers
+    log_ratio = (f + 1 - n) * math.log2(b)
+    frac = max(0.0, 1 - 2 ** log_ratio)
+    print(f"  b={b}, f={f:>3}, n={n:>3}: "
+          f"2·b^f / b^n = 2^{f+1-n}, "
+          f"uncovered fraction = {frac:.10f}")
+
+# Demo 7: Meta-proof blowup
+print("\n--- Demo 7: Meta-Proof Space Blowup ---")
+for b, n in [(2, 3), (2, 5), (2, 10)]:
+    proof_space = b**n
+    meta_space_log = b**n  # log_b of meta space
+    print(f"  b={b}, n={n:>2}: proof space = 2^{n}, "
+          f"meta-proof space = 2^(2^{n}) = 2^{proof_space}")
+
+# Demo 8: Proof cost additivity
+print("\n--- Demo 8: Proof Cost Additivity ---")
+for m, n in [(50, 80), (100, 200), (1000, 500)]:
+    cost_m = proof_cost(m)
+    cost_n = proof_cost(n)
+    cost_sum = proof_cost(m + n)
+    print(f"  cost({m}) + cost({n}) = {cost_m + cost_n:.4e} J, "
+          f"cost({m+n}) = {cost_sum:.4e} J, "
+          f"match: {abs(cost_m + cost_n - cost_sum) < 1e-30}")
+
+print("\n" + "=" * 60)
+print("All demonstrations completed successfully.")
+print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Proof Cost Hierarchy
+Visualization: Thermodynamic Proof Cost Landscape
 
-Shows how thermodynamic proof costs form an infinite ladder,
-with each step separated by exactly T·ln(2).
+Generates plots showing the key relationships between proof length,
+thermodynamic cost, and search-verification gaps.
 """
 
 import math
-
-try:
-    import matplotlib.pyplot as plt
-    import matplotlib.patches as mpatches
-    import numpy as np
-    HAS_MPL = True
-except ImportError:
-    HAS_MPL = False
-    print("matplotlib not available; generating text output instead.")
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
 
 
-def generate_hierarchy_data(max_level: int = 20, temperature: float = 1.0):
-    """Generate proof cost hierarchy data."""
-    levels = list(range(max_level + 1))
-    costs = [k * temperature * math.log(2) for k in levels]
-    gaps = [temperature * math.log(2)] * max_level
-    return levels, costs, gaps
+def proof_cost_joules(n: float, T: float = 300.0, b: int = 2) -> float:
+    """Minimum thermodynamic cost of a proof of length n."""
+    k_B = 1.380649e-23
+    return n * k_B * T * math.log(b)
 
 
-def plot_hierarchy():
-    """Plot the proof cost hierarchy."""
-    if not HAS_MPL:
-        levels, costs, gaps = generate_hierarchy_data()
-        print("\nProof Cost Hierarchy (T=1, natural units):")
-        print("-" * 40)
-        for k, c in zip(levels, costs):
-            bar = "█" * int(c * 5)
-            print(f"  Level {k:>2d}: cost = {c:.3f}  {bar}")
-        return
-
-    fig, axes = plt.subplots(1, 3, figsize=(16, 6))
-
-    # Plot 1: Cost ladder
-    levels, costs, gaps = generate_hierarchy_data(15, 1.0)
-    ax = axes[0]
-    ax.barh(levels, costs, color='steelblue', edgecolor='navy', alpha=0.8)
-    ax.set_xlabel('Thermodynamic Cost (T·ln(2) units)', fontsize=11)
-    ax.set_ylabel('Proof Length Level k', fontsize=11)
-    ax.set_title('Proof Cost Hierarchy', fontsize=13, fontweight='bold')
-    for k, c in zip(levels, costs):
-        ax.text(c + 0.1, k, f'{c:.2f}', va='center', fontsize=8)
-
-    # Plot 2: Incompressibility by alphabet size
-    ax = axes[1]
-    bs = list(range(2, 21))
-    fracs = [(b - 1) / b for b in bs]
-    ax.plot(bs, fracs, 'o-', color='crimson', markersize=6)
-    ax.axhline(y=0.5, color='gray', linestyle='--', alpha=0.5, label='50%')
-    ax.set_xlabel('Alphabet Size b', fontsize=11)
-    ax.set_ylabel('Incompressible Fraction (b-1)/b', fontsize=11)
-    ax.set_title('Incompressibility Dominance', fontsize=13, fontweight='bold')
-    ax.set_ylim(0.4, 1.05)
-    ax.legend()
-
-    # Plot 3: Search overhead (log scale)
-    ax = axes[2]
-    ns = list(range(5, 31))
-    for k_frac, color, label in [(0.5, 'green', 'k=n/2'), (0.3, 'orange', 'k=0.3n'), (0.1, 'red', 'k=n/10')]:
-        overheads = []
-        for n in ns:
-            k = max(0, int(n * k_frac))
-            if n > k + 1:
-                overheads.append(2 ** (n - k - 1))
-            else:
-                overheads.append(1)
-        ax.semilogy(ns, overheads, 'o-', color=color, markersize=4, label=label)
-    ax.set_xlabel('Proof Length n', fontsize=11)
-    ax.set_ylabel('Search Overhead (log scale)', fontsize=11)
-    ax.set_title('Exponential Search Cost', fontsize=13, fontweight='bold')
-    ax.legend()
-
-    plt.tight_layout()
-    plt.savefig('proof_cost_hierarchy.png', dpi=150, bbox_inches='tight')
-    print("Saved: proof_cost_hierarchy.png")
-    plt.close()
+def geometric_bound(b: int, n: int) -> int:
+    """Upper bound 2*b^n on strings of length <= n."""
+    return 2 * b ** n
 
 
-if __name__ == "__main__":
-    plot_hierarchy()
+def actual_sum(b: int, n: int) -> int:
+    """Exact count of strings of length <= n."""
+    return sum(b ** i for i in range(n + 1))
 
 
-#!/usr/bin/env python3
-"""
-Visualization: Proof Energy Landscape
+# --- Plot 1: Proof Cost vs Length ---
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-Visualizes the ruggedness of proof energy landscapes and
-how trapping probability scales with landscape parameters.
-"""
+ns = np.arange(1, 501)
+costs = [proof_cost_joules(n) for n in ns]
+costs_ev = [c / 1.602e-19 for c in costs]
 
-import math
+ax = axes[0, 0]
+ax.plot(ns, costs_ev, 'b-', linewidth=2)
+ax.set_xlabel('Proof Length (bits)', fontsize=12)
+ax.set_ylabel('Minimum Cost (eV)', fontsize=12)
+ax.set_title('Thermodynamic Proof Cost (T = 300K, binary)', fontsize=13)
+ax.grid(True, alpha=0.3)
+ax.annotate('Each bit costs kT·ln(2) ≈ 0.018 eV',
+            xy=(250, proof_cost_joules(250) / 1.602e-19),
+            fontsize=10, ha='center')
 
-try:
-    import matplotlib.pyplot as plt
-    import numpy as np
-    HAS_MPL = True
-except ImportError:
-    HAS_MPL = False
-    print("matplotlib not available; generating text output instead.")
+# --- Plot 2: Capacity Bound Tightness ---
+ax = axes[0, 1]
+ns_small = list(range(1, 16))
+for b in [2, 3, 5]:
+    ratios = [actual_sum(b, n) / geometric_bound(b, n) for n in ns_small]
+    ax.plot(ns_small, ratios, 'o-', label=f'b = {b}', markersize=4)
 
+ax.axhline(y=1.0, color='r', linestyle='--', alpha=0.5, label='Bound = 2·bⁿ')
+ax.set_xlabel('Maximum Proof Length n', fontsize=12)
+ax.set_ylabel('Actual / Bound', fontsize=12)
+ax.set_title('Geometric Capacity Bound Tightness', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+ax.set_ylim(0.4, 1.05)
 
-def generate_landscape(n_points: int = 200, n_valid: int = 5, seed: int = 42):
-    """Generate a synthetic proof energy landscape."""
-    import random
-    random.seed(seed)
+# --- Plot 3: Search-Verification Gap ---
+ax = axes[1, 0]
+n_vals = list(range(20, 201, 10))
+for k_frac in [0.1, 0.2, 0.3, 0.5]:
+    gaps = [n - int(k_frac * n) - 1 for n in n_vals]
+    ax.semilogy(n_vals, [2**g for g in gaps], '-', linewidth=2,
+                label=f'k/n = {k_frac}')
 
-    # Random energy values
-    energies = [random.gauss(5, 2) for _ in range(n_points)]
+ax.set_xlabel('Search Space Exponent n', fontsize=12)
+ax.set_ylabel('Energy Gap Factor (2^gap)', fontsize=12)
+ax.set_title('Search-Verification Energy Gap (b = 2)', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
 
-    # Place valid proofs at low energy
-    valid_indices = random.sample(range(n_points), n_valid)
-    for i in valid_indices:
-        energies[i] = random.uniform(0, 0.5)
+# --- Plot 4: Hierarchy & Meta-Proof Blowup ---
+ax = axes[1, 1]
+ks = list(range(1, 11))
+for b in [2, 3, 5]:
+    hierarchy_gaps = [(b - 1) * b**k for k in ks]
+    ax.semilogy(ks, hierarchy_gaps, 's-', label=f'Hierarchy gap (b={b})', markersize=5)
 
-    # Create some local minima (slightly higher than global)
-    n_local = n_valid * 10
-    local_indices = random.sample(
-        [i for i in range(n_points) if i not in valid_indices],
-        min(n_local, n_points - n_valid)
-    )
-    for i in local_indices:
-        energies[i] = random.uniform(1, 3)
+ax.set_xlabel('Hierarchy Level k', fontsize=12)
+ax.set_ylabel('Gap Size (b-1)·bᵏ', fontsize=12)
+ax.set_title('Proof Complexity Hierarchy Gap', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
 
-    return energies, valid_indices, local_indices
-
-
-def plot_landscape():
-    """Plot the proof energy landscape."""
-    if not HAS_MPL:
-        energies, valid, local = generate_landscape(100, 3)
-        print("\nProof Energy Landscape (100 points, 3 valid proofs):")
-        print("-" * 50)
-        for i in range(min(50, len(energies))):
-            bar = "█" * int(energies[i] * 3)
-            marker = " ← VALID" if i in valid else (" ← local min" if i in local else "")
-            print(f"  [{i:>3d}] E={energies[i]:>5.2f} {bar}{marker}")
-        return
-
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-    # Plot 1: Energy landscape cross-section
-    ax = axes[0, 0]
-    energies, valid, local = generate_landscape(200, 5)
-    x = list(range(len(energies)))
-    ax.fill_between(x, energies, alpha=0.3, color='steelblue')
-    ax.plot(x, energies, color='steelblue', linewidth=0.5)
-    ax.scatter(valid, [energies[i] for i in valid], color='gold',
-               s=100, zorder=5, label='Valid proofs (global min)', edgecolors='black')
-    ax.scatter(local[:20], [energies[i] for i in local[:20]], color='red',
-               s=30, zorder=4, label='Local minima (traps)', alpha=0.7)
-    ax.set_xlabel('Proof String Index', fontsize=11)
-    ax.set_ylabel('Energy', fontsize=11)
-    ax.set_title('Proof Energy Landscape', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=9)
-
-    # Plot 2: Ruggedness ratio vs proof length
-    ax = axes[0, 1]
-    ns = list(range(5, 26))
-    ratios = []
-    for n in ns:
-        total = 2 ** n
-        valid = max(1, total // (2 ** (n // 2)))
-        local = max(valid, int(math.sqrt(total)))
-        ratios.append(local / (valid + 1))
-    ax.semilogy(ns, ratios, 'o-', color='crimson', markersize=5)
-    ax.set_xlabel('Proof Length n', fontsize=11)
-    ax.set_ylabel('Ruggedness Ratio (log scale)', fontsize=11)
-    ax.set_title('Landscape Ruggedness Growth', fontsize=13, fontweight='bold')
-
-    # Plot 3: Trapping probability
-    ax = axes[1, 0]
-    valid_counts = list(range(1, 101))
-    for local_count, color, label in [
-        (200, 'red', 'V_l = 200'),
-        (500, 'orange', 'V_l = 500'),
-        (1000, 'green', 'V_l = 1000'),
-    ]:
-        probs = [1 - v / local_count for v in valid_counts if v <= local_count]
-        ax.plot(valid_counts[:len(probs)], probs, color=color, label=label)
-    ax.axhline(y=0.5, color='gray', linestyle='--', alpha=0.5, label='50% threshold')
-    ax.set_xlabel('Valid Minima Count V_g', fontsize=11)
-    ax.set_ylabel('Trapping Probability', fontsize=11)
-    ax.set_title('Trapping vs Valid Proof Count', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=9)
-
-    # Plot 4: Sorting cost (factorial bound)
-    ax = axes[1, 1]
-    ns = list(range(1, 21))
-    factorials = [math.factorial(n) for n in ns]
-    two_pows = [2 ** (n - 1) for n in ns]
-    info_bits = [math.log2(f) for f in factorials]
-
-    ax.semilogy(ns, factorials, 'o-', color='navy', label='n!', markersize=5)
-    ax.semilogy(ns, two_pows, 's--', color='crimson', label='2^(n-1)', markersize=5)
-    ax.set_xlabel('n (items to sort)', fontsize=11)
-    ax.set_ylabel('Value (log scale)', fontsize=11)
-    ax.set_title('Factorial ≥ 2^(n-1): Sorting Cost Bound', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=9)
-
-    plt.tight_layout()
-    plt.savefig('energy_landscape.png', dpi=150, bbox_inches='tight')
-    print("Saved: energy_landscape.png")
-    plt.close()
+plt.tight_layout()
+plt.savefig('proof_cost_landscape.png', dpi=150, bbox_inches='tight')
+print("Saved: proof_cost_landscape.png")
+plt.close()
 
 
-if __name__ == "__main__":
-    plot_landscape()
+# --- Standalone Plot: Computability Barrier ---
+fig, ax = plt.subplots(figsize=(10, 6))
+
+n_range = list(range(5, 31))
+for b_val in [2, 3, 5]:
+    for f_val in [3, 5, 10]:
+        if f_val + 2 <= max(n_range):
+            uncovered = []
+            ns_valid = []
+            for n in n_range:
+                if f_val + 2 <= n:
+                    frac = 1 - 2 * b_val**f_val / b_val**n
+                    uncovered.append(max(0, frac))
+                    ns_valid.append(n)
+            if ns_valid and b_val == 2:
+                ax.plot(ns_valid, uncovered, '-', linewidth=2,
+                        label=f'b={b_val}, f={f_val}')
+
+ax.set_xlabel('Statement Length n', fontsize=12)
+ax.set_ylabel('Fraction Without Short Proofs', fontsize=12)
+ax.set_title('Computability Barrier: Fraction of Statements Lacking Short Proofs', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+ax.set_ylim(-0.05, 1.05)
+
+plt.tight_layout()
+plt.savefig('computability_barrier.png', dpi=150, bbox_inches='tight')
+print("Saved: computability_barrier.png")
+plt.close()

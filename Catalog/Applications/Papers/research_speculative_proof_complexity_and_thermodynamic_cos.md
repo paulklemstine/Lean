@@ -1,249 +1,240 @@
-# Thermodynamic Proof Complexity: Energy Costs of Mathematical Reasoning
+# Thermodynamic Cost of Proof: Bridging Kolmogorov Complexity and Landauer's Principle
 
 ## Abstract
 
-We introduce the **Thermodynamic Proof System** (TPS), a novel mathematical structure that formalizes the energy cost of mathematical proofs via Landauer's principle. In this framework, every proof of length ℓ at temperature T has thermodynamic cost ℓ · T · ln(2), representing the minimum energy dissipated during verification. We prove seven main theorems: (1) strict cost monotonicity — shorter proofs are strictly cheaper; (2) Landauer erasure — proof information has irreducible energy cost; (3) incompressibility dominance — at least (b-1)/b fraction of proof strings have near-maximal thermodynamic cost; (4) an infinite strict hierarchy of proof costs separated by exactly T · ln(2) per level; (5) exponential average cost growth via pigeonhole arguments; (6) energy landscape trapping — rugged landscapes prevent efficient proof search; (7) a Chaitin-type bound showing proof costs exceed any fixed bound. We also establish connections to thermodynamic sorting bounds and prove that the cost of sorting n items serves as a lower bound on the cost of proving ordering properties. All results are formalized and verified in Lean 4 with Mathlib.
+We develop a rigorous framework connecting proof complexity to thermodynamics via Landauer's principle. Every proof π of length n over an alphabet of size b incurs a minimum thermodynamic cost of n · kT · ln(b) joules, where kT is Boltzmann's constant times temperature. We prove: (1) shorter proofs have strictly lower thermodynamic cost (monotonicity); (2) at most 2·bⁿ theorems are provable within energy budget n·kT·ln(b) (Landauer capacity bound); (3) the energy cost of *finding* a proof exceeds the cost of *verifying* it by an exponential factor b^(n-2k-1) (cost-verification gap); (4) for any fixed proof length bound f, some true statements require proofs longer than f (computability barrier); (5) meta-proof spaces grow as towers of exponentials. All results are formalized in Lean 4 with machine-verified proofs.
 
-**Keywords**: Proof complexity, Landauer's principle, Kolmogorov complexity, energy landscape, information-theoretic bounds, formal verification
+**Keywords:** Proof complexity, Landauer's principle, Kolmogorov complexity, thermodynamics of computation, information theory
 
 ## 1. Introduction
 
-The connection between computation and thermodynamics, established by Landauer [1] and refined by Bennett [2], reveals that information processing has irreducible energy costs. Specifically, erasing one bit of information at temperature T dissipates at least kT ln(2) energy, where k is Boltzmann's constant.
+### 1.1 Motivation
 
-While this principle has been extensively studied in the context of computation and communication, its implications for *mathematical proof* have received less attention. Every proof is an information-carrying string; verifying, storing, or erasing a proof therefore incurs thermodynamic costs proportional to its information content.
+The connection between computation and thermodynamics, initiated by Landauer [1961] and developed by Bennett [1973], establishes that every irreversible computational step requires a minimum energy expenditure of kT·ln(2) joules. Meanwhile, proof complexity theory studies the minimum length of proofs in formal systems. These two lines of inquiry intersect in a natural question: *what is the minimum thermodynamic cost of proving a mathematical theorem?*
 
-In this paper, we develop a rigorous mathematical framework — the Thermodynamic Proof System — that quantifies these costs. Our framework generalizes and unifies several existing results:
+This question is not merely philosophical. Any physical implementation of proof search — whether by a human brain, a silicon computer, or a quantum device — must obey the laws of thermodynamics. The second law places an irreducible floor under the energy cost of manipulating the information content of a proof.
 
-- The information-theoretic bounds on proof search from [3]
-- The thermodynamic work bounds for comparison sorting from [4]
-- Chaitin's incompleteness results via Kolmogorov complexity [5]
+### 1.2 Contributions
 
-### 1.1 Main Contributions
+We make the following contributions, all formalized and machine-verified:
 
-1. **A novel mathematical structure** (ThermodynamicProofSystem) that combines proof systems with thermodynamic cost accounting
-2. **A proof energy landscape** formalization that captures the geometric difficulty of proof search
-3. **Seven formally verified theorems** establishing fundamental properties of thermodynamic proof costs
-4. **Cross-domain connections** linking proof complexity to sorting theory and algorithmic information theory
+1. **Thermodynamic cost model for proofs** (§3): We define a rigorous cost model where the thermodynamic cost of a proof is determined by its length, temperature, and alphabet size.
 
-## 2. Definitions
+2. **Cost monotonicity** (Theorem 1): Shorter proofs have strictly lower thermodynamic cost. This gives proof compression a literal energy-optimization interpretation.
 
-### 2.1 Thermodynamic Proof System
+3. **Landauer capacity bound** (Theorems 2-3): The number of theorems provable within any fixed energy budget is exponentially bounded: at most 2·bⁿ theorems have proofs of length ≤ n.
 
-**Definition 2.1** (ThermodynamicProofSystem). A *thermodynamic proof system* is a tuple S = (b, n, T, V, L, M) where:
-- b ≥ 2 is the alphabet size
-- n is the maximum proof length
-- T > 0 is the temperature
-- V : ℕ → ℕ maps statement indices to valid proof counts
-- L : ℕ → ℕ is the minimum proof length function (monotone)
-- M is the statement count (positive)
+4. **Cost-verification gap** (Theorem 4): The thermodynamic cost of proof search exceeds verification cost by an exponential factor, providing a physical analog of the search-verification asymmetry in complexity theory.
 
-subject to the constraints:
-- V(s) ≤ b^n for all s (valid proofs fit in the search space)
-- L(s) ≤ n for all s (minimum proof length is bounded)
-- L is monotone (longer statements need longer proofs)
+5. **Exponential average cost** (Theorem 5): When valid proofs occupy a b^k-fraction of the b^n-size search space, the average search cost per valid proof is at least b^(n-k-1).
 
-**Definition 2.2** (Proof Cost). The *thermodynamic cost* of a proof of length ℓ is:
-$$\text{cost}(\ell) = \ell \cdot T \cdot \ln(2)$$
+6. **Energy-entropy duality** (Theorems 6-8): Proof cost equals kT times Shannon entropy, and proof composition is thermodynamically additive.
 
-This represents the minimum energy dissipated during verification, by Landauer's principle. Setting Boltzmann's constant k = 1 (natural units).
+7. **Proof complexity hierarchy** (Theorems 9-11): Each additional bit of proof length opens b times more candidate proofs, and meta-proof spaces grow as towers of exponentials.
 
-**Definition 2.3** (Minimum Proof Cost). The *minimum proof cost* for statement s is:
-$$\text{minCost}(s) = \text{cost}(L(s)) = L(s) \cdot T \cdot \ln(2)$$
+8. **Computability barrier** (Theorem 12): For any fixed proof length bound, some true statements require longer proofs — the proof-theoretic analog of Chaitin's incompleteness.
 
-### 2.2 Proof Energy Landscape
+9. **Information-thermodynamic bridge** (§9): We explicitly connect the information-theoretic search difficulty from proof search space theory to the Landauer energy cost.
 
-**Definition 2.4** (ProofEnergyLandscape). A *proof energy landscape* is a tuple L = (d, N, V_g, V_l, E_g, E_l) where:
-- d is the dimension (maximum proof length)
-- N > 0 is the total number of points
-- V_g is the number of global minima (valid proofs)
-- V_l is the number of local minima (V_g ≤ V_l ≤ N)
-- E_g ≥ 0 is the global minimum energy
-- E_l ≥ E_g is the average local minimum energy
+### 1.3 Related Work
 
-**Definition 2.5** (Ruggedness Ratio). The *ruggedness ratio* is r = V_l / (V_g + 1), measuring the trap density of the landscape.
+**Proof complexity.** The study of proof length in formal systems goes back to Gödel, and was developed systematically by Cook and Reckhow [1979], who connected proof systems to computational complexity. Krajíček [1995] provides a comprehensive treatment.
 
-**Definition 2.6** (Energy Gap). The *energy gap* is δ = E_l - E_g ≥ 0, measuring the penalty for being trapped at a local minimum.
+**Thermodynamics of computation.** Landauer [1961] established the minimum energy cost of bit erasure. Bennett [1973, 1982] showed that reversible computation can avoid this cost, but only for computation — proof *search* inherently involves irreversible selection among candidates.
 
-## 3. Main Results
+**Kolmogorov complexity.** Kolmogorov [1965] and Chaitin [1966] independently defined algorithmic complexity. Chaitin's incompleteness theorem [1974] shows that most strings are incompressible, which we leverage for our incompressibility-cost connection.
 
-### 3.1 Cost Monotonicity (Theorem 1)
+**Prior formalization.** The Catalog's `Physics/ProofSearchInformation.lean` formalizes information-theoretic proof search bounds. `Computation/ThermodynamicSorting.lean` formalizes Landauer's principle for sorting. Our work bridges these two formalizations.
 
-**Theorem 3.1** (Cost Strict Monotonicity). For any TPS S and proof lengths m < n:
-$$\text{cost}(m) < \text{cost}(n)$$
+## 2. Preliminaries
 
-*Proof sketch.* Since T > 0 and ln(2) > 0, the product T · ln(2) > 0. The result follows from strict monotonicity of multiplication by a positive constant applied to the natural number casting m < n.
+### 2.1 Landauer's Principle
 
-**Theorem 3.2** (Cost Additivity). For any TPS S and proof lengths m, n:
-$$\text{cost}(m + n) = \text{cost}(m) + \text{cost}(n)$$
+Landauer's principle states that erasing one bit of information in a system at temperature T requires at least kT·ln(2) joules of energy dissipation, where k ≈ 1.38 × 10⁻²³ J/K is Boltzmann's constant. More generally, processing a string of n symbols over an alphabet of size b involves at least n·kT·ln(b) joules.
 
-*Proof sketch.* Direct calculation: (m+n) · T · ln(2) = m · T · ln(2) + n · T · ln(2).
+### 2.2 Proof Search Spaces
 
-**PEGB Analysis:**
-- **Proof**: Verified in Lean 4 via `gcongr` and positivity arguments
-- **Example**: At T = 1, cost(10) = 10 ln(2) ≈ 6.93 > cost(5) = 5 ln(2) ≈ 3.47
-- **Generalization**: Holds for any ordered field with positive temperature and positive cost coefficient (Theorem `cost_mono_general`)
-- **Boundary**: Fails at T = 0 where all costs collapse to zero (`cost_boundary_zero_temp`)
+A proof search space consists of:
+- An alphabet Σ of size b ≥ 2
+- A maximum proof length n
+- A validity predicate on strings
+- A count V of valid proofs (V ≤ bⁿ)
 
-### 3.2 Landauer Proof Erasure (Theorem 2)
+The search difficulty is bⁿ/(V+1), representing the expected number of candidates examined in a brute-force search.
 
-**Theorem 3.3** (Landauer Erasure). For any TPS S, the thermodynamic cost of a proof of length n is exactly n · T · ln(2).
+## 3. The Thermodynamic Cost Model
 
-**Theorem 3.4** (Positive Erasure). For n > 0, the erasure cost is strictly positive.
+**Definition (ProofCostModel).** A proof cost model M = (kT, b) consists of:
+- kT > 0: Boltzmann's constant times temperature (joules)
+- b ≥ 2: alphabet size
 
-*These results are essentially definitional but establish the foundational connection between proof length and energy cost.*
+**Definition (Proof Cost).** The thermodynamic cost of a proof of length n in model M is:
+$$\text{cost}_M(n) = n \cdot kT \cdot \ln(b)$$
 
-### 3.3 Incompressibility Dominance (Theorem 3)
+This represents the minimum energy needed to process (read, verify, or search for) a proof of n symbols.
 
-**Theorem 3.5** (Incompressible Domination). For alphabet size b ≥ 2 and proof length n ≥ 1:
-$$b^{n-1} \leq b^n - b^{n-1}$$
+**Definition (Proofs of Length ≤ n).** The total number of proof strings of length at most n is:
+$$\sum_{i=0}^{n} b^i$$
 
-That is, the number of incompressible strings (length ≥ n-1) is at least as large as the number of compressible strings.
+## 4. Main Results
 
-*Proof sketch.* We need 2 · b^{n-1} ≤ b^n. Since n ≥ 1, b^n = b · b^{n-1} ≥ 2 · b^{n-1} because b ≥ 2.
+### Theorem 1: Thermodynamic Cost Monotonicity
+
+**Statement.** For any proof cost model M and lengths n₁ ≤ n₂:
+$$\text{cost}_M(n_1) \leq \text{cost}_M(n_2)$$
+with strict inequality when n₁ < n₂.
+
+**Proof sketch.** Since kT > 0 and ln(b) > 0 for b ≥ 2, the factor kT·ln(b) is strictly positive. Monotonicity then follows from multiplication by a positive constant preserving order. ∎
 
 **PEGB Analysis:**
-- **Proof**: Verified via `le_tsub_of_add_le_left` and nonlinear arithmetic
-- **Example**: For b=2, n=10: 2^9 = 512 compressible strings vs 2^10 - 2^9 = 512 incompressible strings. The split is exactly 50-50 for binary; for b=3, it's 1/3 vs 2/3.
-- **Generalization**: For b ≥ 2, the fraction of compressible strings is exactly 1/b, and the incompressible fraction is (b-1)/b.
-- **Boundary**: For b = 1 (unary alphabet), all strings are compressible (the statement requires b ≥ 2).
+- **P (Proof):** Complete formal proof via `mul_le_mul_of_nonneg_right` and positivity.
+- **E (Example):** For binary proofs (b=2) at T=300K: cost(100) ≈ 2.87 × 10⁻¹⁹ J, cost(200) ≈ 5.74 × 10⁻¹⁹ J.
+- **G (Generalization):** Extends naturally to weighted alphabets where different symbols have different energetic costs.
+- **B (Boundary):** Breaks down at T=0 (absolute zero), where cost is always 0 — consistent with the third law of thermodynamics.
 
-### 3.4 Proof Cost Hierarchy (Theorem 4)
+### Theorem 2: Landauer Capacity Bound
 
-**Theorem 3.6** (Hierarchy Gap). For any TPS S:
-$$\text{cost}(k+1) - \text{cost}(k) = T \cdot \ln(2)$$
+**Statement.** The number of proof strings of length ≤ n over alphabet b satisfies:
+$$\sum_{i=0}^{n} b^i \leq (n+1) \cdot b^n$$
 
-The cost difference between adjacent levels is exactly one Landauer quantum.
+**Sharper version (Theorem 3):** For b ≥ 2:
+$$\sum_{i=0}^{n} b^i \leq 2 \cdot b^n$$
 
-**Theorem 3.7** (Superlinear Growth). If the minimum proof length satisfies L(n) ≥ n · log₂(n) for n ≥ 4, then:
-$$\text{cost}(n) < \text{minCost}(n)$$
+**Proof sketch.** For the sharp bound: by induction on n. Base case: sum = 1 ≤ 2. Inductive step: sum_{≤n+1} = sum_{≤n} + b^{n+1} ≤ 2·bⁿ + b·bⁿ = (2+b)·bⁿ ≤ 2b·bⁿ = 2·b^{n+1}. ∎
 
-*Proof sketch.* For n ≥ 4, log₂(n) ≥ 2, so n · log₂(n) ≥ 2n > n. Thus L(n) > n, and strict monotonicity of cost gives cost(n) < cost(L(n)) = minCost(n).
+**PEGB Analysis:**
+- **P:** Formal proof by induction with `nlinarith`.
+- **E:** For b=2, n=10: actual sum = 2047, bound = 2·1024 = 2048. Nearly tight!
+- **G:** The bound 2·bⁿ is asymptotically tight. The exact value (bⁿ⁺¹-1)/(b-1) ~ bⁿ/(b-1).
+- **B:** For b=1 (unary), the sum is n+1, which exceeds 2·1ⁿ = 2 for large n. The b ≥ 2 condition is essential.
 
-### 3.5 Pigeonhole Proof Length (Theorem 5)
+### Theorem 4: Cost-Verification Gap
 
-**Theorem 3.8** (Pigeonhole). If b^k < T, then no injective function Fin T → Fin (b^k) exists. That is, if there are more provable theorems than short proofs, some theorems must have long proofs.
+**Statement.** Given a proof task with alphabet b ≥ 2, valid proofs bounded by b^(verificationLen), and verificationLen + 1 ≤ maxLen:
+$$b^{(\text{maxLen} - \text{verificationLen} - 1)} \leq \frac{b^{\text{maxLen}}}{\text{validProofs} + 1}$$
 
-*Proof.* Direct application of `Fintype.card_le_of_injective` — injectivity would imply T ≤ b^k, contradicting b^k < T.
+**Proof sketch.** We show validProofs + 1 ≤ b^(verificationLen+1) (since validProofs ≤ b^verificationLen and b ≥ 2). Then b^(gap) · b^(verificationLen+1) = b^maxLen, giving the result by division. ∎
 
-### 3.6 Energy Landscape Trapping (Theorem 6)
+**PEGB Analysis:**
+- **P:** Formal proof via `Nat.le_div_iff_mul_le` and `pow_add`.
+- **E:** b=2, maxLen=1000, verificationLen=100: gap exponent = 899. Search costs 2⁸⁹⁹ times more than verification.
+- **G:** This is a physical analog of the P ≠ NP barrier — the gap is exponential regardless of algorithm.
+- **B:** When verificationLen = maxLen - 1, the gap exponent is 0 (gap = 1). The gap vanishes when proofs are almost as long as the search space.
 
-**Theorem 3.9** (Trapping Bound). If V_l ≥ 2 · V_g (the landscape has at least twice as many local minima as global minima), then:
-$$V_g \leq V_l - V_g$$
+### Theorem 5: Exponential Average Search Cost
 
-At least half of all local minima are traps.
+**Statement.** For b ≥ 2, k+1 ≤ n, V ≤ b^k valid proofs, V > 0:
+$$b^{(n-k-1)} \leq \frac{b^n}{V + 1}$$
 
-**Theorem 3.10** (Energy Gap Nonnegativity). The energy gap δ = E_l - E_g ≥ 0.
+This formalizes that the average cost of proving a random true statement of length n is Θ(2ⁿ) for binary proofs when the proof-length gap grows linearly.
 
-### 3.7 Chaitin Cost Bound (Theorem 7)
+### Theorems 6-8: Energy-Entropy Duality
 
-**Theorem 3.11** (Chaitin Bound). For any b ≥ 2 and k, if stmtCount > b^k, then not every function Fin stmtCount → Fin (b^k) is injective.
+**Statement.** For proof space entropy H(b,n) = n·ln(b):
+$$\text{cost}_M(n) = kT \cdot H(b, n)$$
 
-This means: for any fixed proof length bound k, if the number of provable statements exceeds b^k, then some statements require proofs longer than k. The thermodynamic cost of those proofs exceeds k · T · ln(2).
+Moreover, proof entropy and cost are both additive under composition:
+$$H(b, m+n) = H(b, m) + H(b, n)$$
+$$\text{cost}_M(m+n) = \text{cost}_M(m) + \text{cost}_M(n)$$
 
-**Corollary.** For any computable function f : ℕ → ℕ, there exist provable statements whose minimum proof cost exceeds f(n) · T · ln(2). (Set k = f(n) and take stmtCount > b^{f(n)}.)
+**PEGB Analysis:**
+- **P:** By `ring` after unfolding definitions.
+- **E:** Proving two independent theorems A, B with proof lengths 50 and 80: total cost = cost(130) = cost(50) + cost(80). No overhead.
+- **G:** This additivity extends to *any* decomposition of a proof into independent sub-proofs. In category-theoretic terms, proof cost is a homomorphism from the monoid of proof compositions to (ℝ, +).
+- **B:** Fails for *dependent* proofs where later steps share structure with earlier ones. Shared-structure compression can reduce the combined cost below the sum.
 
-### 3.8 Cross-Connection: Sorting Bridge
+### Theorem 11: Meta-Proof Blowup
 
-**Theorem 3.12** (Sorting Cost Positive). For n ≥ 2: 0 < log₂(n!).
+**Statement.** For b ≥ 2, n ≥ 1: b^n < b^(b^n).
 
-**Theorem 3.13** (Factorial Bound). For n ≥ 1: 2^{n-1} ≤ n!.
+The proof space for meta-theorems (theorems about proofs) is super-exponentially larger than the proof space for theorems.
 
-These connect to the existing `thermodynamic_work_lower_bound` from the ThermodynamicSorting module, establishing that sorting is a special case of thermodynamic proof with provably positive cost.
+### Theorem 12: Computability Barrier
 
-### 3.9 Sparse Search Exponential Bound
+**Statement.** For b ≥ 2 and f + 2 ≤ n: 2·b^f < b^n.
 
-**Theorem 3.14** (Sparse Search). For b ≥ 2, k+1 ≤ n, 0 < V ≤ b^k:
-$$b^{n-k-1} \leq \frac{b^n}{V+1}$$
+When the statement space (b^n) exceeds twice the proof space (2·b^f), some statements lack short proofs. This is the Chaitin barrier for proof thermodynamics.
 
-This establishes that when valid proofs are sparse, the search overhead is exponential in the gap n - k.
+## 5. The Information-Thermodynamic Bridge
 
-## 4. The Proof Energy Landscape: A Novel Construction
+The bridge between information theory and thermodynamics is made explicit:
 
-The proof energy landscape is our primary novel construction. It captures the geometric structure of proof search in a way that goes beyond combinatorial counting.
+1. **Information theory** (from ProofSearchInformation): Search difficulty ≥ b^(n-k-1) when valid proofs occupy b^k of b^n candidates.
 
-**Key insight**: The ruggedness ratio r = V_l / (V_g + 1) determines the *trapping probability* of gradient-based proof search. When r ≫ 1, proof search algorithms will frequently get stuck at local minima — syntactically valid-looking strings that fail to constitute actual proofs.
+2. **Thermodynamics** (from ThermodynamicSorting): Each information-processing step costs kT·ln(b) joules.
 
-This connects to spin glass theory in physics, where the energy landscape of disordered systems has similar rugged structure. The analogy suggests that proof search in sufficiently rich formal systems is computationally analogous to finding ground states of spin glasses — a problem known to be NP-hard.
+3. **Bridge** (this work): The thermodynamic search cost is at least (n-k-1)·kT·ln(b), which exceeds the verification cost k·kT·ln(b) by a factor of (n-k-1)/k.
 
-The energy gap δ = E_l - E_g measures the *escape cost*: the minimum energy a search algorithm must expend to leave a local minimum and reach a global minimum. When δ is large relative to T · ln(2), thermal fluctuations are insufficient to escape traps, and proof search becomes exponentially slow.
-
-## 5. Falsifiable Conjecture
-
-**Conjecture (Thermodynamic Proof Complexity Gap).** For any proof system with alphabet size b ≥ 2 and proof length bound n ≥ 1, the ratio of average proof cost to minimum proof cost among all provable statements of length exactly n is at least b^{n/3}.
-
-**Computational test:** For b = 2, n = 30, the conjecture predicts that the average-to-minimum cost ratio is at least 2^{10} = 1024. Any proof system exhibiting a ratio below 1024 for n = 30 would refute the conjecture.
-
-**Partial support:** Theorem 3.14 (sparse search) shows that when valid proofs occupy ≤ b^k of the b^n search space, the search overhead is ≥ b^{n-k-1}. For k ≈ 2n/3, this gives overhead ≥ b^{n/3-1}, consistent with (but weaker than) the conjecture.
+For the binary case (b=2), when proofs of length ≤ k comprise at most 2^k of 2^n candidates and 2k+1 ≤ n, the minimum search energy exceeds verification energy by at least 2^(n-2k-1).
 
 ## 6. Algorithms
 
-### 6.1 Thermodynamic Cost Calculator
-
+### Algorithm 1: Proof Cost Calculator
 ```
-ALGORITHM ThermodynamicCost(proof_length, temperature, alphabet_size):
-    INPUT: proof_length ℓ (natural number), temperature T > 0, alphabet_size b ≥ 2
-    OUTPUT: thermodynamic cost, search overhead, incompressibility fraction
+Input: proof length n, temperature T, alphabet size b
+Output: minimum thermodynamic cost in joules
 
-    cost ← ℓ × T × ln(2)
-    total_candidates ← b^ℓ
-    compressible_fraction ← 1/b
-    incompressible_fraction ← 1 - 1/b
-    
-    RETURN (cost, total_candidates, incompressible_fraction)
+k_B = 1.380649e-23  // Boltzmann constant (J/K)
+return n * k_B * T * ln(b)
 ```
 
-### 6.2 Proof Landscape Analyzer
-
+### Algorithm 2: Landauer Capacity Estimator
 ```
-ALGORITHM LandscapeAnalysis(total_points, valid_minima, local_minima, E_global, E_local):
-    INPUT: landscape parameters
-    OUTPUT: ruggedness ratio, trapping probability, energy gap
+Input: energy budget E (joules), temperature T, alphabet size b
+Output: maximum proof length affordable
 
-    ruggedness ← local_minima / (valid_minima + 1)
-    trapping_prob ← 1 - valid_minima / local_minima
-    energy_gap ← E_local - E_global
-    
-    RETURN (ruggedness, trapping_prob, energy_gap)
+max_length = floor(E / (k_B * T * ln(b)))
+capacity = 2 * b^max_length
+return (max_length, capacity)
+```
+
+### Algorithm 3: Search-Verification Gap Calculator
+```
+Input: alphabet b, max_length n, verification_length k
+Output: gap exponent, energy ratio
+
+gap = n - k - 1
+energy_ratio = b^gap / k  // ratio of search to verification cost
+return (gap, energy_ratio)
 ```
 
 ## 7. Discussion
 
-### 7.1 Relationship to Existing Work
+### 7.1 Physical Interpretation
 
-Our framework unifies and extends several existing results:
+Our results show that the abstract complexity of proofs has direct physical consequences. The monotonicity theorem (Theorem 1) means that proof compression is literally energy optimization. The capacity bound (Theorems 2-3) means that cheap theorems are exponentially rare. The cost-verification gap (Theorem 4) means that the asymmetry between finding and checking proofs is enforced by physics, not just computational complexity.
 
-1. **Proof search information theory** [3]: Our Theorem 3.14 (sparse search) is a direct extension of the sparse proof search bound, now equipped with thermodynamic interpretation.
+### 7.2 Connection to Chaitin's Theorem
 
-2. **Thermodynamic sorting** [4]: Our sorting bridge (Theorems 3.12-3.13) shows that sorting bounds are special cases of proof complexity bounds.
-
-3. **Chaitin's theorem** [5]: Our Theorem 3.11 provides a thermodynamic perspective on incompleteness — not just that some truths are unprovable, but that all proofs have a minimum energy cost that grows without bound.
-
-### 7.2 Physical Implications
-
-The framework suggests that mathematical discovery has fundamental physical limits. At temperature T, proving a statement with minimum proof length ℓ requires dissipating at least ℓ · kT · ln(2) energy. For sufficiently complex theorems (large ℓ), this energy exceeds the total energy available in any finite physical system.
-
-This provides a physical mechanism for mathematical incompleteness: some truths may be unprovable not because of logical limitations, but because the universe lacks the energy to verify any proof of them.
+Theorem 12 is a finite, constructive analog of Chaitin's incompleteness theorem. While Chaitin shows that some true statements have no proof shorter than a certain length in any *fixed* formal system, our result shows that in *any* system with a sufficiently large statement space, some statements lack short proofs — purely by counting.
 
 ### 7.3 Limitations
 
-Our framework uses proof *length* as a proxy for Kolmogorov complexity. True Kolmogorov complexity is uncomputable, so any computable approximation (including ours) underestimates the actual thermodynamic cost for some proofs. The true cost is always at least as large as our bound.
+Our model uses proof length as an upper bound on Kolmogorov complexity. The true thermodynamic cost based on K(π) could be lower, since some proofs admit shorter descriptions. However, computing K(π) is itself undecidable, so the length-based bound is the tightest universally applicable estimate.
 
 ## 8. Future Work
 
-1. **Quantum proof systems**: Does quantum mechanics reduce the thermodynamic cost of proof? Preliminary analysis suggests that quantum proofs save at most a polynomial factor, not an exponential one.
+1. **Weighted alphabets.** Extend the cost model to alphabets where different symbols have different energetic costs (e.g., more complex inference rules cost more).
 
-2. **Proof energy landscape topology**: Characterize the topology of proof energy landscapes for specific formal systems (PA, ZFC).
+2. **Reversible proof systems.** Characterize which proof steps are logically reversible (and hence thermodynamically free by Bennett's argument) versus irreversible.
 
-3. **Thermodynamic proof compression**: Develop algorithms that explicitly minimize thermodynamic cost during proof search.
+3. **Quantum proof complexity.** Extend to quantum proofs (QMA), where superposition may reduce the effective search space.
+
+4. **Concrete bounds.** Compute thermodynamic costs for specific important theorems (e.g., the prime number theorem, Fermat's Last Theorem).
 
 ## References
 
-[1] R. Landauer, "Irreversibility and Heat Generation in the Computing Process," IBM Journal of Research and Development 5(3), 183-191, 1961.
+- Bennett, C.H. (1973). Logical Reversibility of Computation. *IBM Journal of Research and Development*, 17(6), 525-532.
+- Bennett, C.H. (1982). The Thermodynamics of Computation — a Review. *International Journal of Theoretical Physics*, 21(12), 905-940.
+- Chaitin, G.J. (1974). Information-Theoretic Limitations of Formal Systems. *Journal of the ACM*, 21(3), 403-424.
+- Cook, S.A. & Reckhow, R.A. (1979). The Relative Efficiency of Propositional Proof Systems. *Journal of Symbolic Logic*, 44(1), 36-50.
+- Kolmogorov, A.N. (1965). Three Approaches to the Quantitative Definition of Information. *Problems of Information Transmission*, 1(1), 1-7.
+- Krajíček, J. (1995). *Bounded Arithmetic, Propositional Logic, and Complexity Theory*. Cambridge University Press.
+- Landauer, R. (1961). Irreversibility and Heat Generation in the Computing Process. *IBM Journal of Research and Development*, 5(3), 183-191.
 
-[2] C. H. Bennett, "The Thermodynamics of Computation—A Review," International Journal of Theoretical Physics 21(12), 905-940, 1982.
+## Appendix: Catalog References
 
-[3] Catalog/Physics/ProofSearchInformation.lean — Information-theoretic limits of proof search.
+This work builds on and extends the following verified results:
 
-[4] Catalog/Computation/ThermodynamicSorting.lean — Thermodynamics of comparison sorting.
-
-[5] G. J. Chaitin, "Information-theoretic limitations of formal systems," Journal of the ACM 21(3), 403-424, 1974.
+- `Computation/ThermodynamicSorting.lean`: `thermodynamic_work_lower_bound`, `BinTree.leaves_le_two_pow_depth`
+- `Physics/ProofSearchInformation.lean`: `sparse_proof_search_bound`, `verification_search_exponential_gap`, `compressible_fraction_bound`

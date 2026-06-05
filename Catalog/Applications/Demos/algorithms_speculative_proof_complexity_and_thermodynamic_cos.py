@@ -1,245 +1,261 @@
 #!/usr/bin/env python3
 """
-Thermodynamic Proof Complexity — Core Algorithms
+Algorithms for Thermodynamic Proof Complexity
 
-Type-hinted implementations of the key algorithms from the
-Thermodynamic Proof Complexity framework.
+Type-hinted implementations of the key algorithms from the formalized theory.
 """
 
 import math
 from dataclasses import dataclass
-from typing import List, Tuple, Optional
+from typing import Optional
+
+
+# Physical constants
+K_BOLTZMANN: float = 1.380649e-23  # J/K
 
 
 @dataclass
-class ThermodynamicProofSystem:
-    """A proof system with thermodynamic cost accounting.
+class ProofCostModel:
+    """Thermodynamic cost model for proofs.
     
     Attributes:
-        alphabet_size: Number of symbols in the proof language (≥ 2)
-        max_proof_len: Maximum proof length
-        statement_count: Number of distinct statements
-        temperature: Physical temperature T > 0
+        temperature: System temperature in Kelvin (must be > 0).
+        alphabet_size: Size of the proof alphabet (must be >= 2).
     """
-    alphabet_size: int
-    max_proof_len: int
-    statement_count: int
     temperature: float
+    alphabet_size: int = 2
     
     def __post_init__(self) -> None:
-        assert self.alphabet_size >= 2, "Alphabet must have ≥ 2 symbols"
         assert self.temperature > 0, "Temperature must be positive"
-        assert self.statement_count > 0, "Must have ≥ 1 statement"
+        assert self.alphabet_size >= 2, "Alphabet size must be at least 2"
     
-    def proof_cost(self, proof_length: int) -> float:
-        """Thermodynamic cost of a proof of given length.
+    @property
+    def kT(self) -> float:
+        """Boltzmann constant times temperature (joules)."""
+        return K_BOLTZMANN * self.temperature
+    
+    @property
+    def cost_per_symbol(self) -> float:
+        """Energy cost per proof symbol (joules)."""
+        return self.kT * math.log(self.alphabet_size)
+    
+    def proof_cost(self, length: int) -> float:
+        """Minimum thermodynamic cost of a proof of given length.
         
-        cost(ℓ) = ℓ · T · ln(2)
+        cost(n) = n · kT · ln(b)
+        
+        Args:
+            length: Number of symbols in the proof.
+        Returns:
+            Minimum energy cost in joules.
         """
-        return proof_length * self.temperature * math.log(2)
+        return length * self.cost_per_symbol
     
-    def min_proof_cost(self, min_proof_length: int) -> float:
-        """Minimum thermodynamic cost for a statement with given min proof length."""
-        return self.proof_cost(min_proof_length)
+    def max_affordable_length(self, energy_budget: float) -> int:
+        """Maximum proof length affordable within energy budget.
+        
+        Args:
+            energy_budget: Available energy in joules.
+        Returns:
+            Maximum number of proof symbols processable.
+        """
+        return int(energy_budget / self.cost_per_symbol)
     
+    def proofs_of_length_at_most(self, n: int) -> int:
+        """Number of proof strings of length ≤ n.
+        
+        Σᵢ₌₀ⁿ bⁱ = (b^(n+1) - 1) / (b - 1)
+        """
+        b = self.alphabet_size
+        return (b ** (n + 1) - 1) // (b - 1)
+    
+    def capacity_bound(self, n: int) -> int:
+        """Upper bound on proofs of length ≤ n: 2·bⁿ.
+        
+        Theorem: Σᵢ₌₀ⁿ bⁱ ≤ 2·bⁿ for b ≥ 2.
+        """
+        return 2 * self.alphabet_size ** n
+
+
+@dataclass
+class ProofTask:
+    """A theorem-proving task with known search space bounds.
+    
+    Attributes:
+        alphabet_size: Size of the proof alphabet.
+        max_length: Maximum proof length to search.
+        valid_proofs: Number of valid proofs in the space.
+        verification_length: Length of the shortest proof (verification cost).
+    """
+    alphabet_size: int
+    max_length: int
+    valid_proofs: int
+    verification_length: int
+    
+    def __post_init__(self) -> None:
+        assert self.alphabet_size >= 2
+        assert self.valid_proofs <= self.alphabet_size ** self.verification_length
+        assert self.verification_length <= self.max_length
+        assert self.valid_proofs > 0
+    
+    @property
     def total_candidates(self) -> int:
         """Total number of candidate proof strings."""
-        return self.alphabet_size ** self.max_proof_len
+        return self.alphabet_size ** self.max_length
     
-    def search_overhead(self, valid_proofs: int) -> float:
-        """Search overhead: ratio of total candidates to valid proofs."""
-        return self.total_candidates() / (valid_proofs + 1)
+    @property
+    def search_cost(self) -> int:
+        """Search cost: total candidates / (valid proofs + 1)."""
+        return self.total_candidates // (self.valid_proofs + 1)
     
-    def incompressible_count(self, n: int) -> int:
-        """Number of incompressible strings of length n."""
-        total = self.alphabet_size ** n
-        compressible = self.alphabet_size ** (n - 1) if n >= 1 else 0
-        return total - compressible
+    @property
+    def energy_gap_exponent(self) -> int:
+        """Exponent of the search-verification energy gap."""
+        return self.max_length - self.verification_length - 1
     
-    def incompressible_fraction(self) -> float:
-        """Fraction of strings that are incompressible."""
-        return (self.alphabet_size - 1) / self.alphabet_size
+    def search_verification_gap(self) -> dict[str, float]:
+        """Compute the search-verification energy gap.
+        
+        Returns dictionary with gap metrics.
+        """
+        gap = self.energy_gap_exponent
+        return {
+            'gap_exponent': gap,
+            'search_cost_lower_bound': self.alphabet_size ** gap,
+            'search_cost_actual': self.search_cost,
+            'verification_cost': self.verification_length,
+            'energy_ratio': gap / self.verification_length if self.verification_length > 0 else float('inf'),
+        }
 
 
-@dataclass
-class ProofEnergyLandscape:
-    """Energy landscape over proof space.
+def geometric_capacity_bound(b: int, n: int) -> int:
+    """Compute the geometric capacity bound 2·bⁿ.
     
-    Models the geometric structure of proof search, with valid proofs
-    as global minima and invalid near-misses as local minima.
-    """
-    dim: int
-    total_points: int
-    valid_minima: int
-    local_minima: int
-    global_min_energy: float
-    local_min_avg_energy: float
-    
-    def __post_init__(self) -> None:
-        assert self.total_points > 0
-        assert self.valid_minima <= self.local_minima
-        assert self.local_minima <= self.total_points
-        assert self.global_min_energy <= self.local_min_avg_energy
-    
-    def ruggedness_ratio(self) -> float:
-        """Ruggedness ratio: local minima per global minimum."""
-        return self.local_minima / (self.valid_minima + 1)
-    
-    def energy_gap(self) -> float:
-        """Energy gap between local and global minima."""
-        return self.local_min_avg_energy - self.global_min_energy
-    
-    def trapping_probability(self) -> float:
-        """Probability of landing in a trap (non-global local minimum)."""
-        if self.local_minima == 0:
-            return 0.0
-        return 1 - self.valid_minima / self.local_minima
-    
-    def is_rugged(self) -> bool:
-        """Whether the landscape is rugged (trapping prob > 0.5)."""
-        return self.valid_minima * 2 <= self.local_minima
-
-
-@dataclass
-class ProofComplexityProfile:
-    """Profile of proof complexity across statement lengths.
-    
-    Captures how proof difficulty scales with statement complexity.
-    """
-    alphabet_size: int
-    proof_len_fn: List[int]  # proof_len_fn[s] = min proof length for statement s
-    proof_count_fn: List[int]  # proof_count_fn[s] = number of valid proofs for statement s
-    
-    def difficulty_at(self, s: int) -> float:
-        """Search difficulty at statement length s."""
-        if s >= len(self.proof_len_fn):
-            return float('inf')
-        total = self.alphabet_size ** self.proof_len_fn[s]
-        return total / (self.proof_count_fn[s] + 1)
-    
-    def cumulative_difficulty(self, s: int) -> float:
-        """Cumulative difficulty up to statement length s."""
-        return sum(self.difficulty_at(i) for i in range(s))
-
-
-def compute_hierarchy_gaps(
-    tps: ThermodynamicProofSystem,
-    max_level: int
-) -> List[Tuple[int, float, float]]:
-    """Compute the proof cost hierarchy.
-    
-    Returns list of (level, cost_at_level, gap_from_previous).
-    Each gap should be exactly T · ln(2).
-    """
-    result: List[Tuple[int, float, float]] = []
-    prev_cost = 0.0
-    for k in range(max_level + 1):
-        cost = tps.proof_cost(k)
-        gap = cost - prev_cost
-        result.append((k, cost, gap))
-        prev_cost = cost
-    return result
-
-
-def chaitin_bound_threshold(
-    alphabet_size: int,
-    cost_level: int
-) -> int:
-    """Compute the Chaitin threshold: number of statements needed
-    to guarantee some statement has proof cost > cost_level · T · ln(2).
-    
-    Returns b^cost_level + 1.
-    """
-    return alphabet_size ** cost_level + 1
-
-
-def sparse_search_lower_bound(
-    b: int, n: int, k: int
-) -> int:
-    """Lower bound on search overhead when valid proofs ≤ b^k out of b^n.
-    
-    Returns b^(n-k-1).
-    """
-    if n <= k + 1:
-        return 1
-    return b ** (n - k - 1)
-
-
-def analyze_sorting_cost(n: int, temperature: float = 300.0) -> dict:
-    """Analyze the thermodynamic cost of sorting n items.
-    
-    Sorting is a special case of proof search where the "proof"
-    is the correct permutation.
-    """
-    if n <= 1:
-        return {"n": n, "factorial": 1, "info_bits": 0.0, "cost": 0.0}
-    
-    factorial = math.factorial(n)
-    info_bits = math.log2(factorial)
-    cost = info_bits * temperature * math.log(2)
-    two_pow_bound = 2 ** (n - 1)
-    
-    return {
-        "n": n,
-        "factorial": factorial,
-        "info_bits": info_bits,
-        "cost_natural_units": cost,
-        "two_pow_lower_bound": two_pow_bound,
-        "factorial_ge_two_pow": factorial >= two_pow_bound,
-    }
-
-
-def landscape_analysis(
-    b: int, n: int,
-    valid_proof_density: float = 0.001
-) -> ProofEnergyLandscape:
-    """Create a proof energy landscape for given parameters.
+    Theorem: For b ≥ 2, Σᵢ₌₀ⁿ bⁱ ≤ 2·bⁿ.
     
     Args:
-        b: alphabet size
-        n: proof length
-        valid_proof_density: fraction of strings that are valid proofs
+        b: Alphabet size (≥ 2).
+        n: Maximum proof length.
+    Returns:
+        Upper bound on number of strings of length ≤ n.
     """
-    total = b ** n
-    valid = max(1, int(total * valid_proof_density))
-    # Estimate local minima as ~sqrt(total) (typical for random landscapes)
-    local = max(valid, int(math.sqrt(total)))
-    
-    return ProofEnergyLandscape(
-        dim=n,
-        total_points=total,
-        valid_minima=valid,
-        local_minima=local,
-        global_min_energy=0.0,
-        local_min_avg_energy=n * math.log(2) * 0.5  # half of max energy
-    )
+    assert b >= 2
+    return 2 * b ** n
 
+
+def incompressible_count(b: int, n: int) -> int:
+    """Number of incompressible strings of length n.
+    
+    Theorem: At least (b-1)·b^(n-1) strings of length n are incompressible.
+    
+    Args:
+        b: Alphabet size (≥ 2).
+        n: String length (≥ 1).
+    Returns:
+        Lower bound on incompressible string count.
+    """
+    assert b >= 2 and n >= 1
+    return (b - 1) * b ** (n - 1)
+
+
+def computability_barrier_check(b: int, f: int, n: int) -> bool:
+    """Check whether the computability barrier applies.
+    
+    Theorem: For b ≥ 2 and f+2 ≤ n, we have 2·bᶠ < bⁿ.
+    This means some statements of length n have no proof of length ≤ f.
+    
+    Args:
+        b: Alphabet size.
+        f: Fixed proof length bound.
+        n: Statement length.
+    Returns:
+        True if the barrier applies (some statements lack short proofs).
+    """
+    return b >= 2 and f + 2 <= n
+
+
+def meta_proof_space_log(b: int, n: int) -> int:
+    """Log_b of the meta-proof space size.
+    
+    Theorem: For b ≥ 2, n ≥ 1: meta-proof space = b^(b^n).
+    The log_b of this is b^n, which exceeds n.
+    
+    Args:
+        b: Alphabet size.
+        n: Proof length parameter.
+    Returns:
+        b^n (the log_b of the meta-proof space size).
+    """
+    return b ** n
+
+
+def proof_entropy(b: int, n: int) -> float:
+    """Shannon entropy of uniform distribution over b^n proof strings.
+    
+    H = n · ln(b) nats = n · log₂(b) bits.
+    
+    Args:
+        b: Alphabet size.
+        n: Proof length.
+    Returns:
+        Entropy in nats.
+    """
+    return n * math.log(b)
+
+
+def average_search_cost_exponent(b: int, n: int, k: int) -> int:
+    """Exponent of the average search cost.
+    
+    Theorem: When valid proofs ≤ b^k out of b^n candidates,
+    average search cost ≥ b^(n-k-1).
+    
+    Args:
+        b: Alphabet size.
+        n: Total search space exponent.
+        k: Valid proof space exponent.
+    Returns:
+        Exponent n-k-1 of the average search cost.
+    """
+    assert k + 1 <= n
+    return n - k - 1
+
+
+def hierarchy_gap(b: int, k: int) -> int:
+    """Gap between adjacent levels of the proof hierarchy.
+    
+    Theorem: b^(k+1) - b^k = (b-1)·b^k.
+    
+    Args:
+        b: Alphabet size.
+        k: Current level.
+    Returns:
+        (b-1) * b^k
+    """
+    return (b - 1) * b ** k
+
+
+# ============================================================
+# Example usage
+# ============================================================
 
 if __name__ == "__main__":
-    # Quick self-test
-    tps = ThermodynamicProofSystem(
+    # Create a cost model at room temperature with binary alphabet
+    model = ProofCostModel(temperature=300.0, alphabet_size=2)
+    
+    print(f"Cost per bit at 300K: {model.cost_per_symbol:.4e} J")
+    print(f"Cost of 1000-bit proof: {model.proof_cost(1000):.4e} J")
+    print(f"Max proof length with 1 J: {model.max_affordable_length(1.0)} bits")
+    print(f"Capacity bound for n=20: {model.capacity_bound(20)} strings")
+    
+    # Create a proof task
+    task = ProofTask(
         alphabet_size=2,
-        max_proof_len=100,
-        statement_count=1000,
-        temperature=1.0  # natural units
+        max_length=100,
+        valid_proofs=1000,
+        verification_length=10
     )
     
-    print("Cost of proof length 10:", tps.proof_cost(10))
-    print("Cost of proof length 5:", tps.proof_cost(5))
-    print("Cost monotonicity:", tps.proof_cost(5) < tps.proof_cost(10))
-    print("Incompressible fraction:", tps.incompressible_fraction())
-    
-    gaps = compute_hierarchy_gaps(tps, 5)
-    print("\nHierarchy gaps:")
-    for level, cost, gap in gaps:
-        print(f"  Level {level}: cost={cost:.4f}, gap={gap:.4f}")
-    
-    sorting = analyze_sorting_cost(10, temperature=1.0)
-    print(f"\nSorting 10 items: {sorting['info_bits']:.1f} bits, "
-          f"cost={sorting['cost_natural_units']:.2f}")
-    
-    landscape = landscape_analysis(2, 20)
-    print(f"\nLandscape (b=2, n=20):")
-    print(f"  Ruggedness: {landscape.ruggedness_ratio():.1f}")
-    print(f"  Trapping prob: {landscape.trapping_probability():.4f}")
-    print(f"  Is rugged: {landscape.is_rugged()}")
+    gap_info = task.search_verification_gap()
+    print(f"\nProof task gap analysis:")
+    for key, value in gap_info.items():
+        print(f"  {key}: {value}")
