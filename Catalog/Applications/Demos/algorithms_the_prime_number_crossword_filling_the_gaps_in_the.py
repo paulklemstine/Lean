@@ -1,260 +1,229 @@
 #!/usr/bin/env python3
 """
-Prime Gap Crossword: Core Algorithms
+Prime Gap Automaton — Algorithms
 
-Type-hinted implementations of the key algorithms from the prime gap
-transition theory.
+Type-hinted implementations of the prime gap automaton and
+its applications to prime gap prediction and pattern analysis.
 """
 
-from typing import Optional
-from collections import defaultdict
-from math import gcd, log
+from typing import List, Tuple, Dict, Set, Optional
+from dataclasses import dataclass
 
 
-def sieve_of_eratosthenes(limit: int) -> list[int]:
-    """Return all primes up to limit using the Sieve of Eratosthenes.
-    
-    Time: O(n log log n), Space: O(n)
+@dataclass
+class AutomatonState:
+    """State of the prime gap automaton."""
+    residue_mod6: int    # 1 or 5
+    residue_mod30: int   # one of {1,7,11,13,17,19,23,29}
+
+    @property
+    def state_id(self) -> int:
+        """Return 0 for residue 1 mod 6, 1 for residue 5 mod 6."""
+        return 0 if self.residue_mod6 == 1 else 1
+
+
+class PrimeGapAutomaton:
     """
-    if limit < 2:
-        return []
-    is_prime = [True] * (limit + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(limit**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i*i, limit + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, limit + 1) if is_prime[i]]
+    The 2-state finite automaton governing prime gap sequences mod 6.
 
-
-def prime_gap_sequence(limit: int) -> list[int]:
-    """Compute the prime gap sequence g(n) = p(n+1) - p(n).
-    
-    Returns gaps for all consecutive primes up to limit.
+    States: {0, 1} representing p ≡ 1 (mod 6) and p ≡ 5 (mod 6)
+    Transitions:
+        From state 0: gap ≡ 0 mod 6 → state 0, gap ≡ 4 mod 6 → state 1
+        From state 1: gap ≡ 0 mod 6 → state 1, gap ≡ 2 mod 6 → state 0
     """
-    primes = sieve_of_eratosthenes(limit)
-    return [primes[i+1] - primes[i] for i in range(len(primes) - 1)]
+
+    ADMISSIBLE_GAPS_MOD6: Dict[int, Set[int]] = {
+        0: {0, 4},  # From state 0 (p ≡ 1 mod 6)
+        1: {0, 2},  # From state 1 (p ≡ 5 mod 6)
+    }
+
+    @staticmethod
+    def transition(state: int, gap_mod6: int) -> int:
+        """Compute the next state given current state and gap mod 6."""
+        if gap_mod6 % 6 == 0:
+            return state  # Identity transition
+        elif state == 0:
+            return 1      # State 0 → State 1
+        else:
+            return 0      # State 1 → State 0
+
+    @staticmethod
+    def is_admissible_gap(state: int, gap: int) -> bool:
+        """Check if a gap value is admissible from the given state."""
+        return gap % 6 in PrimeGapAutomaton.ADMISSIBLE_GAPS_MOD6[state]
+
+    @staticmethod
+    def admissible_gaps_up_to(state: int, max_gap: int) -> List[int]:
+        """Return all admissible gap values up to max_gap from given state."""
+        admissible = PrimeGapAutomaton.ADMISSIBLE_GAPS_MOD6[state]
+        return [g for g in range(2, max_gap + 1, 2) if g % 6 in admissible]
+
+    @staticmethod
+    def classify_prime(p: int) -> int:
+        """Classify a prime > 3 into automaton state 0 or 1."""
+        if p <= 3:
+            raise ValueError("Automaton is defined for primes > 3")
+        return 0 if p % 6 == 1 else 1
 
 
-def mod6_state_sequence(primes: list[int]) -> list[int]:
-    """Compute the mod-6 state sequence for primes > 3.
-    
-    Each prime > 3 maps to its residue mod 6 (either 1 or 5).
-    The gap sequence uniquely determines this sequence given the
-    first state.
+class Mod30Automaton:
     """
-    return [p % 6 for p in primes if p > 3]
+    The 8-state automaton governing prime gaps mod 30.
 
-
-def mod6_transition(state: int, gap: int) -> int:
-    """Compute the next mod-6 state given current state and gap.
-    
-    Args:
-        state: Current state (1 or 5)
-        gap: Prime gap (must be even for primes > 3)
-    
-    Returns:
-        Next state (1 or 5)
+    States: {1, 7, 11, 13, 17, 19, 23, 29} (residues coprime to 30)
+    Transitions: gap g maps state r to (r + g) mod 30, which must also
+    be in the admissible set.
     """
-    return (state + gap) % 6
+
+    ADMISSIBLE_RESIDUES: Set[int] = {1, 7, 11, 13, 17, 19, 23, 29}
+
+    @staticmethod
+    def admissible_gaps(state: int) -> List[int]:
+        """Return admissible gap values mod 30 from given state."""
+        return [g for g in range(1, 31)
+                if (state + g) % 30 in Mod30Automaton.ADMISSIBLE_RESIDUES]
+
+    @staticmethod
+    def transition(state: int, gap: int) -> int:
+        """Compute the next state given current state and gap."""
+        next_state = (state + gap) % 30
+        assert next_state in Mod30Automaton.ADMISSIBLE_RESIDUES
+        return next_state
+
+    @staticmethod
+    def transition_matrix() -> Dict[int, Dict[int, int]]:
+        """Return the full transition matrix: state → gap_mod30 → next_state."""
+        matrix: Dict[int, Dict[int, int]] = {}
+        for r in Mod30Automaton.ADMISSIBLE_RESIDUES:
+            matrix[r] = {}
+            for g in Mod30Automaton.admissible_gaps(r):
+                matrix[r][g] = (r + g) % 30
+        return matrix
 
 
-def primorial_sieve_admissible(
-    residue: int,
-    modulus: int,
-    gap: int
-) -> bool:
-    """Check if a gap is admissible from a given residue mod modulus.
-    
-    A gap g from residue r mod M is admissible if:
-    1. (r + g) mod M is coprime to M (the target is in a valid state)
-    2. For all 0 < k < g, (r + k) mod M is NOT coprime to M
-       (all intermediate positions are sieved out)
-    
-    Condition 2 is the "forcing" condition — it ensures the gap cannot
-    be shortened.
+def analyze_gap_patterns(primes: List[int]) -> Dict[str, any]:
     """
-    target = (residue + gap) % modulus
-    if gcd(target, modulus) != 1:
-        return False
-    # Check intermediate positions are all composite (hit by sieve)
-    for k in range(1, gap):
-        if gcd((residue + k) % modulus, modulus) == 1:
-            return False  # Could stop at this position instead
-    return True
+    Analyze a list of primes through the automaton lens.
 
-
-def admissible_gaps_from(
-    residue: int,
-    modulus: int,
-    max_gap: int
-) -> list[int]:
-    """Find all admissible gaps from a residue class mod modulus.
-    
-    An admissible gap is one where the target residue is coprime to
-    modulus and all intermediate residues are not coprime.
+    Returns statistics about state distribution, transition frequencies,
+    and pattern admissibility.
     """
-    result = []
-    for g in range(1, max_gap + 1):
-        if primorial_sieve_admissible(residue, modulus, g):
-            result.append(g)
-    return result
+    if len(primes) < 2:
+        return {"error": "Need at least 2 primes"}
+
+    gaps = [primes[i+1] - primes[i] for i in range(len(primes) - 1)]
+
+    # State sequence
+    states = [PrimeGapAutomaton.classify_prime(p) for p in primes if p > 3]
+
+    # Transition verification
+    violations = 0
+    for i, (p, g) in enumerate(zip(primes[:-1], gaps)):
+        if p <= 3:
+            continue
+        state = PrimeGapAutomaton.classify_prime(p)
+        if not PrimeGapAutomaton.is_admissible_gap(state, g):
+            violations += 1
+
+    # Gap distribution by state
+    gap_dist: Dict[int, Dict[int, int]] = {0: {}, 1: {}}
+    for p, g in zip(primes[:-1], gaps):
+        if p <= 3:
+            continue
+        state = PrimeGapAutomaton.classify_prime(p)
+        gap_dist[state][g] = gap_dist[state].get(g, 0) + 1
+
+    return {
+        "total_gaps": len(gaps),
+        "violations": violations,
+        "state_counts": {0: states.count(0), 1: states.count(1)},
+        "gap_distribution_by_state": gap_dist,
+    }
 
 
-def gap_transition_graph(
-    modulus: int,
-    max_gap: int
-) -> dict[int, list[tuple[int, int]]]:
-    """Build the gap transition graph for a given modulus.
-    
-    Nodes: residues coprime to modulus
-    Edges: (source, gap, target) where gap is admissible
-    
-    Returns: dict mapping source residue to list of (gap, target) pairs
+def predict_admissible_next_gaps(p: int, max_gap: int = 100) -> List[int]:
     """
-    # Find all residues coprime to modulus
-    units = [r for r in range(modulus) if gcd(r, modulus) == 1]
-    
-    graph: dict[int, list[tuple[int, int]]] = {u: [] for u in units}
-    
-    for r in units:
-        for g in range(1, max_gap + 1):
-            target = (r + g) % modulus
-            if gcd(target, modulus) == 1:
-                graph[r].append((g, target))
-    
-    return graph
+    Given a prime p > 3, return all admissible gap values up to max_gap.
 
-
-def forcing_patterns(
-    modulus: int,
-    max_gap: int,
-    max_length: int
-) -> list[tuple[list[int], int]]:
-    """Find forcing patterns: gap words where the next gap is unique.
-    
-    A gap word w = [g1, g2, ..., gk] is forcing with bound B if,
-    starting from any admissible residue r mod modulus such that
-    the word is admissible at r, there is exactly one admissible
-    next gap g ≤ B.
-    
-    Returns: list of (word, forced_gap) pairs
+    These are the gap values compatible with the mod-6 constraint.
+    The actual gap must additionally ensure p + gap is prime.
     """
-    units = [r for r in range(modulus) if gcd(r, modulus) == 1]
+    state = PrimeGapAutomaton.classify_prime(p)
+    return PrimeGapAutomaton.admissible_gaps_up_to(state, max_gap)
+
+
+def sieve_based_prediction(p: int, max_gap: int = 100) -> List[int]:
+    """
+    Predict admissible next primes using the mod-30 automaton.
+
+    Returns candidate values q = p + g where g is admissible mod 30.
+    """
+    state = p % 30
+    candidates = []
+    for g in range(2, max_gap + 1, 2):
+        if (state + g) % 30 in Mod30Automaton.ADMISSIBLE_RESIDUES:
+            candidates.append(p + g)
+    return candidates
+
+
+def find_forcing_patterns(max_pattern_length: int = 4,
+                          max_gap: int = 30) -> List[Tuple[List[int], int]]:
+    """
+    Find gap patterns that uniquely determine the automaton's next state
+    and severely constrain the next gap value.
+
+    A pattern is 'forcing' if knowing the pattern of gaps determines
+    the mod-6 state and leaves very few admissible next gaps below max_gap.
+    """
+    forcing: List[Tuple[List[int], int]] = []
+
+    # Generate all admissible gap patterns
+    even_gaps = list(range(2, max_gap + 1, 2))
+
+    for length in range(1, max_pattern_length + 1):
+        # For each starting state
+        for start_state in [0, 1]:
+            patterns = _generate_patterns(start_state, length, even_gaps)
+            for pattern, end_state in patterns:
+                admissible = PrimeGapAutomaton.admissible_gaps_up_to(end_state, max_gap)
+                if len(admissible) <= 3:  # Highly constrained
+                    forcing.append((pattern, len(admissible)))
+
+    return forcing
+
+
+def _generate_patterns(start_state: int, length: int,
+                       gaps: List[int]) -> List[Tuple[List[int], int]]:
+    """Generate all admissible gap patterns of given length from start_state."""
+    if length == 0:
+        return [([], start_state)]
+
     results = []
-    
-    def search(word: list[int], depth: int) -> None:
-        if depth > max_length:
-            return
-        
-        # For each starting residue, compute the ending residue
-        # and check if the next gap is forced
-        ending_residues: set[int] = set()
-        for r in units:
-            # Check if word is admissible starting from r
-            pos = r
-            valid = True
-            for g in word:
-                next_pos = (pos + g) % modulus
-                if gcd(next_pos, modulus) != 1:
-                    valid = False
-                    break
-                pos = next_pos
-            if valid:
-                ending_residues.add(pos)
-        
-        if not ending_residues:
-            return
-        
-        # Check if all ending residues force the same next gap
-        forced_gap: Optional[int] = None
-        for end_r in ending_residues:
-            admissible = admissible_gaps_from(end_r, modulus, max_gap)
-            if len(admissible) == 1:
-                if forced_gap is None:
-                    forced_gap = admissible[0]
-                elif forced_gap != admissible[0]:
-                    forced_gap = None
-                    break
-            else:
-                forced_gap = None
-                break
-        
-        if forced_gap is not None and len(word) > 0:
-            results.append((list(word), forced_gap))
-        
-        # Extend the word
-        for g in range(2, max_gap + 1, 2):  # Only even gaps for p > 3
-            word.append(g)
-            search(word, depth + 1)
-            word.pop()
-    
-    search([], 0)
+    for g in gaps:
+        if PrimeGapAutomaton.is_admissible_gap(start_state, g):
+            next_state = PrimeGapAutomaton.transition(start_state, g % 6)
+            sub_patterns = _generate_patterns(next_state, length - 1, gaps)
+            for sub_pat, end_state in sub_patterns:
+                results.append(([g] + sub_pat, end_state))
+
     return results
 
 
-def hardy_littlewood_singular_series(gap: int) -> float:
-    """Compute the Hardy-Littlewood singular series S(g) for a gap g.
-    
-    S(g) = 2 * C₂ * ∏_{p|g, p≥3} (p-1)/(p-2)
-    
-    where C₂ ≈ 0.6601618 is the twin prime constant.
-    """
-    if gap == 0 or gap % 2 != 0:
-        return 0.0
-    
-    C2 = 0.6601618158468
-    result = 2.0 * C2
-    
-    # Find prime factors of gap
-    n = gap
-    p = 3
-    while p * p <= n:
-        if n % p == 0:
-            result *= (p - 1) / (p - 2)
-            while n % p == 0:
-                n //= p
-        p += 2
-    if n > 2:
-        result *= (n - 1) / (n - 2)
-    
-    return result
-
-
-def predicted_gap_count(
-    gap: int,
-    N: int,
-    avg_log_p: float
-) -> float:
-    """Predict the number of times gap g appears among primes up to N.
-    
-    Based on Hardy-Littlewood: count ≈ S(g) * N / (gap * (log N)²)
-    """
-    S = hardy_littlewood_singular_series(gap)
-    return S * N / (gap * avg_log_p * avg_log_p)
-
-
 if __name__ == "__main__":
-    # Quick demo
-    print("Prime gaps up to 100:", prime_gap_sequence(100))
-    print("\nMod-6 states:", mod6_state_sequence(sieve_of_eratosthenes(50)))
-    
-    print("\nAdmissible gaps from residue 1 mod 6 (max gap 12):")
-    print(admissible_gaps_from(1, 6, 12))
-    
-    print("\nAdmissible gaps from residue 5 mod 6 (max gap 12):")
-    print(admissible_gaps_from(5, 6, 12))
-    
-    print("\nGap transition graph mod 6 (max gap 12):")
-    graph = gap_transition_graph(6, 12)
-    for r, edges in sorted(graph.items()):
-        if gcd(r, 6) == 1:
-            print(f"  {r}: {edges}")
-    
-    print("\nForcing patterns mod 6 (max gap 6, length 3):")
-    for word, forced in forcing_patterns(6, 6, 3):
-        print(f"  {word} -> forced gap {forced}")
-    
-    print("\nHardy-Littlewood singular series:")
-    for g in [2, 4, 6, 8, 10, 12]:
-        print(f"  S({g}) = {hardy_littlewood_singular_series(g):.6f}")
+    # Demo
+    from sympy import primerange
+
+    primes = list(primerange(5, 100000))
+    result = analyze_gap_patterns(primes)
+
+    print("=== Prime Gap Automaton Analysis ===")
+    print(f"Total gaps: {result['total_gaps']}")
+    print(f"Constraint violations: {result['violations']}")
+    print(f"State distribution: {result['state_counts']}")
+
+    print("\nAdmissible next gaps from p=997 (state", PrimeGapAutomaton.classify_prime(997), "):")
+    print(predict_admissible_next_gaps(997, 50))
+
+    print("\nMod-30 candidates after p=997:")
+    candidates = sieve_based_prediction(997, 50)
+    print(candidates[:10])
