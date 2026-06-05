@@ -1,219 +1,231 @@
-# Viral Information Topology: Sheaf Cohomology of Meme Propagation on Social Networks
+# Viral Information Topology: Sheaf Cohomology of Propagation Networks
 
 ## Abstract
 
-We develop a mathematical framework for meme propagation over social networks using cellular sheaf cohomology on graphs. A meme is modeled as a section of a sheaf over the network graph, where vertices represent individuals or communities and edges represent communication channels. The zeroth cohomology group H⁰ measures the space of consistent meme interpretations (polysemy), while the first cohomology H¹ measures propagation obstructions. We prove five main results: (1) the **Walk Telescope Theorem**, establishing that consistent sections propagate faithfully along graph walks; (2) the **Monodromy Obstruction Theorem**, showing that twisted sheaves with non-trivial monodromy around cycles admit no nonzero global sections; (3) the **Spectral-Cohomological Bridge**, proving that H⁰ of the constant sheaf equals the kernel of the graph Laplacian; (4) the **Equilibrium Theorem**, showing that consistent sections are exactly the fixed points of diffusion dynamics; and (5) the **H⁰ Monotonicity Theorem**, establishing that adding edges can only decrease the space of consistent sections. We state a falsifiable conjecture connecting the Erdős-Rényi connectivity threshold to a phase transition in meme polysemy. All results are formally verified in Lean 4 with Mathlib.
+We introduce the **propagation sheaf** (PropSheaf), a novel mathematical structure that models information transmission over directed networks using cellular sheaf theory. The propagation sheaf extends the classical constant sheaf on a graph by equipping edges with transmission weights that encode fidelity of information transfer. We develop the cohomological framework: H⁰ counts linearly independent consistent interpretations (polysemy), while H¹ measures independent transmission barriers. Our main results include: (1) a rank-nullity theorem for graph sheaves establishing the Euler characteristic formula χ = dim H⁰ − dim H¹ = |V| − |E|; (2) a virality index V = dim H⁰ · (|E| + 1 − dim H¹) with proven upper bound V ≤ |V| · (|E| + 1); (3) unit-weight reduction theorems showing the propagation sheaf properly generalizes the constant sheaf; and (4) boundary analysis showing edgeless graphs achieve maximal H⁰ = |V| and H¹ = 0. All results are machine-verified in Lean 4 with Mathlib, yielding 13 formally proven theorems with no axioms beyond the standard foundations.
 
-**Keywords**: sheaf cohomology, graph theory, meme propagation, social networks, spectral graph theory, monodromy, information topology
-
----
+**Keywords**: Sheaf cohomology, graph theory, information propagation, viral dynamics, cellular sheaves, algebraic topology
 
 ## 1. Introduction
 
-The propagation of information through social networks is a central problem in computational social science, epidemiology, and marketing. Classical models—SIR, Bass diffusion, threshold models—treat information as a scalar quantity that either is or is not adopted by each individual. These models capture *extent* of propagation but miss a crucial phenomenon: **meaning transformation**. A meme that means "scientific breakthrough" in an academic community may mean "health tip" in a wellness community and "government conspiracy" in a conspiracy community. The meme spreads precisely *because* it accommodates multiple interpretations.
+The question of why certain ideas, images, or messages spread virally through social networks while others fail to propagate has traditionally been studied through epidemiological models (SIR, SIS), game-theoretic frameworks, or statistical network analysis. These approaches, while valuable, miss a fundamentally topological aspect of information propagation: the **consistency conditions** that information must satisfy as it crosses community boundaries.
 
-We propose that the correct mathematical framework for this phenomenon is **cellular sheaf cohomology on graphs**. A cellular sheaf on a graph G = (V, E) assigns a vector space (the *stalk*) to each vertex and each edge, with *restriction maps* connecting them. The zeroth cohomology H⁰(G, F) of a sheaf F measures the space of *global sections*—assignments of values to all vertices that are compatible across all edges. The first cohomology H¹(G, F) measures the *obstruction* to extending local sections to global ones.
+Consider a meme — a unit of cultural information — propagating through a social network. When the meme crosses from one community to another, its meaning may shift. A political joke understood ironically in one group may be taken literally in another. The question is not merely whether the meme *reaches* a new community, but whether it can be *consistently interpreted* across community boundaries.
 
-In our framework:
-- **H⁰ dimension** = number of independent meme interpretations (polysemy)
-- **H¹ dimension** = number of independent propagation barriers
-- **Virality** ≈ dim H⁰ / (1 + dim H¹)
+This paper formalizes this intuition using **cellular sheaf theory** on graphs. A sheaf on a graph assigns data (interpretations) to vertices and edges, with restriction maps encoding how interpretations transform along communication channels. The cohomology groups of this sheaf capture global properties of information propagation:
 
-The most viral memes have H¹ = 0 (no barriers) and large dim H⁰ (many interpretations). This is the polysemy-virality hypothesis.
+- **H⁰ (global sections)**: The space of interpretations consistent across all edges. Its dimension counts the number of independent "meanings" the meme can have.
+- **H¹ (first cohomology)**: The space of obstructions to extending local interpretations globally. Its dimension counts independent "barriers" to transmission.
 
-### 1.1 Related Work
-
-Sheaves on graphs were introduced by Shepard [1] and developed extensively by Curry [2] and Ghrist-Hansen [3]. Robinson [4] connected cellular sheaves to signal processing on networks. Our contribution is the application to information propagation with a focus on the monodromy obstruction and the spectral-cohomological bridge.
-
-Graph-based information diffusion has been studied through spectral methods [5], gossip algorithms [6], and opinion dynamics [7]. Our work unifies these through the sheaf-theoretic lens.
+Our central contribution is the **propagation sheaf** (PropSheaf), which extends the constant sheaf with transmission weights, and a formal analysis of the **virality index** — a quantity combining polysemy (dim H⁰) and barrier-freedom (dim H¹) that characterizes a meme's viral potential.
 
 ## 2. Definitions
 
-### 2.1 Consistent Sections
+### 2.1 Directed Multigraph
 
-**Definition 2.1** (Consistent Section). Let G = (V, E) be a simple graph and R a type. A function f : V → R is a *consistent section* of the constant R-sheaf on G if for all adjacent vertices u, v ∈ V:
+A **directed multigraph** G consists of:
+- A finite type V of vertices
+- A finite type E of edges  
+- Source and target functions src, tgt : E → V
 
-f(u) = f(v)
+This models a social network where vertices are agents and edges are directed communication channels.
 
-The set of consistent sections is denoted H⁰(G, R).
+### 2.2 Coboundary Map (Constant Sheaf)
 
-**Definition 2.2** (H⁰ Submodule). When R is a commutative semiring, H⁰(G, R) forms a submodule of the function space V → R. This is the *zeroth cohomology submodule*.
+The **coboundary map** δ : (V → k) → (E → k) for the constant sheaf over a field k is defined by:
 
-### 2.2 Coboundary Map
+$$\delta(f)(e) = f(\text{tgt}(e)) - f(\text{src}(e))$$
 
-**Definition 2.3** (Coboundary Operator). For a graph G with decidable adjacency, the coboundary operator δ : (V → ℚ) → (V × V → ℚ) is:
+This measures the "inconsistency" of a section f along each edge. A section f ∈ ker(δ) assigns the same value to both endpoints of every edge — it is a globally consistent interpretation.
 
-δ(f)(u, v) = f(v) − f(u) if G.Adj(u, v), else 0
+### 2.3 Sheaf Cohomology
 
-The consistent sections are exactly ker(δ): we proved H⁰(G, ℚ) = ker(δ).
+- **H⁰(G, k) = ker(δ)**: The space of global sections. Functions V → k that are constant along all edges.
+- **H¹(G, k) = coker(δ) = (E → k) / im(δ)**: Obstructions to extending local data to global sections.
+- **h0rank = dim H⁰ = finrank_k ker(δ)**
+- **h1rank = dim H¹ = |E| − finrank_k im(δ)**
 
-### 2.3 Twisted Meme Sheaf
+### 2.4 Propagation Sheaf (Novel Structure)
 
-**Definition 2.4** (Twisted Meme Sheaf). A twisted meme sheaf S on a graph G with vertices Fin n consists of:
-- A twist function τ : Fin n → Fin n → ℚ
-- Non-degeneracy: τ(i, j) ≠ 0 for all edges (i, j)
-- Reciprocity: τ(i, j) · τ(j, i) = 1 for all edges (i, j)
+A **propagation sheaf** S = (G, w) extends a directed multigraph G with a weight function w : E → k. The weighted coboundary map is:
 
-**Definition 2.5** (Twisted Consistency). A function f : Fin n → ℚ is twisted-consistent if for all adjacent i, j:
+$$\delta_w(f)(e) = w(e) \cdot f(\text{tgt}(e)) - f(\text{src}(e))$$
 
-f(j) = τ(i, j) · f(i)
+The asymmetry is intentional: w(e) models how the *receiver* transforms the message. When w(e) = 1 for all e, we recover the constant sheaf. When w(e) = 0, the edge is effectively blocked. Other values model partial distortion.
 
-When all twists are 1 (the *constant sheaf*), twisted consistency reduces to ordinary consistency.
+### 2.5 Virality Index
 
-### 2.4 Monodromy
+The **virality index** is:
 
-**Definition 2.6** (Walk Monodromy). The monodromy of a twisted sheaf S along a walk w is the product of twist factors along the walk's darts:
+$$V(S) = \dim H^0_w(S) \cdot (|E| + 1 - \dim H^1_w(S))$$
 
-mon(S, w) = ∏_{d ∈ darts(w)} τ(d.src, d.tgt)
-
-### 2.5 Graph Laplacian
-
-**Definition 2.7** (Graph Laplacian). For a graph G on Fin n, the Laplacian L is the n × n integer matrix:
-
-L(i, j) = deg(i) if i = j; −1 if adj(i, j); 0 otherwise
-
-### 2.6 Virality Index
-
-**Definition 2.8** (Virality Index). For a meme sheaf with total interpretation capacity n and H¹ dimension h₁:
-
-V(n, h₁) = n / (1 + h₁)
+This combines polysemy (high H⁰ → many interpretations) with barrier-freedom (low H¹ → few obstructions).
 
 ## 3. Main Results
 
-### 3.1 Walk Telescope Theorem
+### Theorem 1: Rank-Nullity for Graph Sheaves
 
-**Theorem 3.1** (Walk Telescope). If f is a consistent section and w is a walk from u to v in G, then f(u) = f(v).
+**Statement**: For any directed multigraph G over a field k:
 
-*Proof sketch*. By induction on the walk structure. The base case (nil walk) is trivial. For a cons walk u → x ⟶ v, consistency gives f(u) = f(x), and the inductive hypothesis gives f(x) = f(v). □
+$$\dim \ker(\delta) + \dim \text{im}(\delta) = |V|$$
 
-**Corollary 3.2**. On a connected graph, every consistent section is constant.
+**Proof sketch**: The coboundary map δ is a linear map between finite-dimensional vector spaces (V → k) and (E → k). The domain has dimension |V| by `Module.finrank_pi`. The result follows from `LinearMap.finrank_range_add_finrank_ker`.
 
-### 3.2 Polysemy-Connectivity Duality
+**PEGB**:
+- **P**roof: Formally verified in Lean 4 (`rank_nullity_coboundary`)
+- **E**xample: For K₃ (triangle), dim(V→k) = 3, rank(δ) = 2, dim ker(δ) = 1
+- **G**eneralization: Holds for any field k and any finite directed multigraph, including multigraphs with parallel edges
+- **B**oundary: When E = ∅, rank(δ) = 0 so dim ker(δ) = |V| (maximum). When G is connected and simple, rank(δ) = |V| - 1.
 
-**Theorem 3.3** (Indicator Sections). For any set S ⊆ V that is upward-closed under adjacency (if u ∈ S and u ~ v then v ∈ S), the indicator function 1_S is a consistent ℤ-section.
+### Theorem 2: Euler Characteristic Formula
 
-**Theorem 3.4** (Separating Sections). If u and v are in different connected components, there exists a consistent section f with f(u) ≠ f(v).
+**Statement**: dim H⁰ + dim H¹ + rank(δ) = |V| + dim H¹
 
-These two results establish that **dim H⁰ equals the number of connected components** for the constant sheaf over ℤ. Each component contributes one independent consistent section.
+This is equivalent to the classical formula χ = dim H⁰ − dim H¹ = |V| − |E|.
 
-### 3.3 Monodromy Obstruction Theorem
+**PEGB**:
+- **P**roof: Follows from Theorem 1 by algebraic manipulation (`euler_characteristic`)
+- **E**xample: For C₅ (pentagon cycle), χ = 5 − 5 = 0, so dim H⁰ = dim H¹ = 1
+- **G**eneralization: The Euler characteristic is a topological invariant — it depends only on |V| and |E|, not on the specific graph structure or the field k
+- **B**oundary: For trees, χ = 1 (since |E| = |V| − 1 for connected trees). For the complete graph Kₙ, χ = n − n(n−1)/2.
 
-**Theorem 3.5** (Monodromy Transport). For a twisted-consistent section f and walk w from u to v:
+### Theorem 3: Weighted Rank-Nullity
 
-f(v) = mon(S, w) · f(u)
+**Statement**: For any propagation sheaf S:
 
-*Proof sketch*. Induction on the walk. At each step, the twisted consistency condition f(x) = τ(u, x) · f(u) introduces one factor. The product telescopes. □
+$$\dim \ker(\delta_w) + \dim \text{im}(\delta_w) = |V|$$
 
-**Theorem 3.6** (Monodromy Obstruction). If a closed walk w from u to u has monodromy mon(S, w) ≠ 1, then every twisted-consistent section satisfies f(u) = 0.
+**PEGB**:
+- **P**roof: Same rank-nullity argument applied to the weighted coboundary map (`weighted_rank_nullity`)
+- **E**xample: Triangle with weights (2, 0.5, 1): rank-nullity still gives 3
+- **G**eneralization: Holds for any weight function, including degenerate (w = 0) cases
+- **B**oundary: When all weights are 0, δ_w = 0, so dim ker = |V| and rank = 0
 
-*Proof*. By Theorem 3.5, f(u) = mon(S, w) · f(u). Thus (mon(S, w) − 1) · f(u) = 0. Since ℚ has no zero divisors and mon(S, w) ≠ 1, we conclude f(u) = 0. □
+### Theorem 4: Edgeless Graph Cohomology
 
-**Theorem 3.7** (Global Vanishing). On a connected graph with a cycle carrying non-trivial monodromy, the only twisted-consistent section is the zero function.
+**Statement**: For an edgeless graph on V vertices:
+- dim H⁰ = |V| (every function is a global section)
+- dim H¹ = 0 (no obstructions since no edges)
 
-*Proof*. By Theorem 3.6, f(u) = 0 at the base vertex. For any other vertex v, connectivity provides a walk from u to v. By Theorem 3.5, f(v) = mon(S, w') · 0 = 0. □
+**PEGB**:
+- **P**roof: The coboundary map is the zero map since E = ∅. ker(0) = ⊤ has dimension |V|. coker(0) = 0. (`edgeless_h0`, `edgeless_h1`)
+- **E**xample: 5 isolated nodes: H⁰ = k⁵, H¹ = 0
+- **G**eneralization: More generally, disconnecting edges from a graph can only increase H⁰
+- **B**oundary: The edgeless case is the maximum for H⁰ and the minimum for H¹
 
-**Remark**. This result has a beautiful interpretation: a meme whose meaning "rotates" as it travels around a social cycle cannot sustain any coherent interpretation. It is the sheaf-theoretic analog of the Bohr-Sommerfeld quantization condition in physics.
+### Theorem 5: Virality Upper Bound
 
-### 3.4 Spectral-Cohomological Bridge
+**Statement**: For any propagation sheaf S:
 
-**Theorem 3.8** (Forward Bridge). If f is a consistent section, then Lf = 0 (f is in the kernel of the Laplacian).
+$$V(S) \leq |V| \cdot (|E| + 1)$$
 
-*Proof sketch*. Row i of Lf computes deg(i)·f(i) − Σ_{j~i} f(j). Since f is consistent, each f(j) = f(i), so the sum equals deg(i)·f(i), and the row value is 0. □
+**PEGB**:
+- **P**roof: Uses wh0rank ≤ |V| (from rank-nullity) and (|E| + 1 − wh1rank) ≤ |E| + 1 (from natural number subtraction). (`virality_upper_bound`)
+- **E**xample: Edgeless graph on 5 vertices: V = 5 · 1 = 5 (tight at |E| = 0)
+- **G**eneralization: For any linear virality function of the form V = f(H⁰) · g(H¹), similar bounds can be derived from the Euler characteristic constraint
+- **B**oundary: Equality requires H⁰ = |V| and H¹ = 0, which forces |E| = 0 (edgeless graph)
 
-**Theorem 3.9** (Reverse Bridge). If Lf = 0, then f is a consistent section.
+### Theorem 6: Unit-Weight Reduction
 
-*Proof sketch*. Consider the quadratic form f^T L f = Σ_{i~j} (f(i) − f(j))². If Lf = 0, then f^T L f = 0. Since each term is a non-negative integer squared, all terms vanish: f(i) = f(j) for all edges. □
+**Statement**: When all weights equal 1:
+- The weighted coboundary equals the standard coboundary
+- wh0rank = h0rank
+- wh1rank = h1rank
 
-**Corollary 3.10**. H⁰(G, ℤ) = ker(L). The sheaf-cohomological and spectral characterizations agree exactly.
+This confirms the propagation sheaf properly generalizes the constant sheaf.
 
-### 3.5 H⁰ Monotonicity
+## 4. The Polysemy-Virality Duality
 
-**Theorem 3.11** (Edge Monotonicity). If G ≤ H (G is a subgraph of H), then H⁰(H, R) ⊆ H⁰(G, R).
+The central insight of this work is the **polysemy-virality duality**: maximally viral information occupies a specific region of the cohomological landscape characterized by:
 
-**Corollary 3.12** (Extremal Duality). The complete graph has the smallest H⁰ (dimension 1 on a connected graph), and the empty graph has the largest (dimension |V|).
+1. **H¹ = 0**: No barriers to transmission across any edge
+2. **dim H⁰ maximal**: Maximum number of independent interpretations
 
-### 3.6 Equilibrium Theorem
+The Euler characteristic formula χ = dim H⁰ − dim H¹ = |V| − |E| constrains this trade-off. For a fixed graph, increasing H⁰ by 1 requires decreasing H¹ by 1 (or equivalently, removing an edge from the network). This creates a fundamental tension:
 
-**Theorem 3.13** (Propagation Equilibrium). A consistent section is a fixed point of the propagation dynamics (each vertex averages its neighbors' values).
+- **Dense networks** (many edges): Low H⁰ (strong consistency constraints) but potentially high H¹ (many barriers from cycles)
+- **Sparse networks** (few edges): High H⁰ (weak constraints allow diverse interpretations) but low H¹ (few cycle obstructions)
 
-*Proof sketch*. At vertex i with neighbors N(i), all f(j) = f(i) for j ∈ N(i). The average is f(i). □
+The "viral sweet spot" is a graph where every edge reduces to a tree-like connection (H¹ = 0) but the graph is still well-connected enough for propagation.
 
-### 3.7 Virality Optimization
+## 5. Computational Algorithm
 
-**Theorem 3.14** (Virality Maximization). V(n, h₁) ≤ V(n, 0) for all h₁ ≥ 0. Virality is maximized when H¹ = 0.
+The sheaf cohomology computation reduces to linear algebra:
 
-**Theorem 3.15** (Strict Decrease). For positive interpretation capacity, virality strictly decreases with increasing H¹ dimension.
+```
+Algorithm: SHEAF_COHOMOLOGY(G, w)
+Input: Directed graph G = (V, E, src, tgt), weights w : E → k
+Output: (dim H⁰, dim H¹, virality index)
 
-## 4. The Phase Transition Conjecture
+1. Construct matrix δ_w ∈ k^{|E| × |V|}:
+   For each edge e_i = (s_i, t_i):
+     δ_w[i, t_i] = w(e_i)
+     δ_w[i, s_i] = -1
 
-**Conjecture 4.1** (Viral Phase Transition). For the Erdős-Rényi random graph G(n, p) with the constant ℤ-sheaf:
-- If p < ln(n)/n, then dim H⁰ > 1 with high probability
-- If p > ln(n)/n, then dim H⁰ = 1 with high probability
+2. Compute r = rank(δ_w) via SVD
 
-This conjecture follows from the classical Erdős-Rényi connectivity threshold: below ln(n)/n, the graph is almost surely disconnected (multiple components = multiple interpretations), and above it, almost surely connected (single component = single interpretation).
+3. Return (|V| - r, |E| - r, (|V| - r) · (|E| + 1 - (|E| - r)))
+```
 
-**Verified extremes**: We formally proved that:
-- The complete graph (p = 1) has dim H⁰ = 1
-- The empty graph (p = 0) has dim H⁰ = n
+Time complexity: O(min(|V|, |E|) · |V| · |E|) for the SVD step.
 
-**Computational test**: For n = 1000, the threshold is p ≈ 0.0069. Monte Carlo simulation with 10⁴ samples should show >90% disconnection at p = 0.005 and >90% connection at p = 0.010.
+## 6. Falsifiable Conjecture
 
-## 5. Algorithms
+**Conjecture (Polysemy-Virality Correlation)**: For random Erdős–Rényi graphs G(n, p) with n = 1000 and the constant sheaf, the virality index V(G) = dim H⁰ · (|E| + 1 − dim H¹) correlates negatively with edge density p for p > 1/n (above the connectivity threshold).
 
-### 5.1 Computing H⁰ Dimension
+**Test**: Generate 1000 random graphs with p ∈ {0.001, 0.005, 0.01, 0.05, 0.1}, compute V(G) for each, and measure the Pearson correlation between p and V(G).
 
-For the constant sheaf, dim H⁰ equals the number of connected components, computable via BFS/DFS in O(|V| + |E|) time.
+**Prediction**: The correlation coefficient r < −0.5 for p > 2 log(n)/n.
 
-### 5.2 Computing Monodromy
+## 7. Connection to Existing Catalog
 
-For a twisted sheaf, monodromy along a walk is computed by multiplying twist factors: O(|walk length|) arithmetic operations.
+This work connects to the catalog result `viral_meme_max_virality` in `MachineLearning/ViralInformationTopology.lean`, providing a rigorous algebraic-topological foundation for the virality maximization principle. Where the previous result used graph-theoretic arguments, our sheaf-cohomological framework reveals the deeper structural reason: virality is governed by the vanishing of H¹ (absence of topological obstructions) combined with the dimension of H⁰ (multiplicity of consistent global interpretations).
 
-### 5.3 Detecting Obstruction
+The Euler characteristic formula also connects to the graph-theoretic results in `Algebra/GraphRiemannRoch/Defs.lean`, where the complete graph edge count theorem provides a concrete setting for computing sheaf cohomology.
 
-To determine if H¹ = 0 for a twisted sheaf on a connected graph:
-1. Build a spanning tree T of G
-2. For each non-tree edge e, compute the monodromy around the fundamental cycle of e
-3. H¹ = 0 iff all fundamental cycle monodromies equal 1
+## 8. Discussion
 
-This runs in O(|V| + |E|) time (dominated by DFS/BFS for the spanning tree).
+### Strengths
+- The propagation sheaf provides a rigorous mathematical framework for information dynamics
+- All key results are machine-verified, ensuring correctness
+- The virality index offers a computable quantity with proven bounds
+- The framework generalizes naturally to higher-dimensional cell complexes
 
-## 6. Discussion
+### Limitations
+- The constant sheaf model assigns identical data spaces to all vertices; real social networks have heterogeneous capacity
+- The weighted coboundary's asymmetric formulation (w on target only) is one of several possible models
+- The virality index, while well-defined, has not been validated against empirical data
 
-### 6.1 Biological Interpretation
+### Future Directions
+- Extend to **cosheaves** (modeling information aggregation rather than restriction)
+- Develop spectral theory of the sheaf Laplacian L = δᵀδ for community detection
+- Connect to persistent sheaf cohomology for temporal network analysis
+- Relate the propagation sheaf to the Čech cohomology of the underlying simplicial complex
 
-The monodromy obstruction has a direct biological analog. In epidemiology, a pathogen that mutates as it passes between populations may become "self-incompatible"—unable to reinfect its population of origin because the mutated version is unrecognizable. This is monodromy ≠ 1 around the social cycle.
+## 9. Formal Verification Summary
 
-### 6.2 Financial Contagion
+| Theorem | Statement | Lines |
+|---------|-----------|-------|
+| `rank_nullity_coboundary` | dim ker(δ) + dim im(δ) = \|V\| | Core identity |
+| `h0_le_card_V` | dim H⁰ ≤ \|V\| | Dimension bound |
+| `h1_le_card_E` | dim H¹ ≤ \|E\| | Dimension bound |
+| `edgeless_coboundary_eq_zero` | δ = 0 for edgeless graphs | Boundary case |
+| `edgeless_h0` | dim H⁰ = \|V\| for edgeless graphs | Maximum polysemy |
+| `edgeless_h1` | dim H¹ = 0 for edgeless graphs | Zero barriers |
+| `euler_characteristic` | Euler characteristic formula | Topological invariant |
+| `weighted_rank_nullity` | Weighted rank-nullity theorem | Propagation sheaf |
+| `unit_weight_eq_constant` | δ_w = δ when w ≡ 1 | Reduction theorem |
+| `unit_weight_wh0_eq_h0` | wh0 = h0 when w ≡ 1 | H⁰ reduction |
+| `unit_weight_wh1_eq_h1` | wh1 = h1 when w ≡ 1 | H¹ reduction |
+| `virality_factor_maximized_at_h1_zero` | Factor maximized at H¹ = 0 | Virality monotonicity |
+| `virality_at_h1_zero` | V = h0 · (\|E\| + 1) when H¹ = 0 | Simplified formula |
+| `virality_upper_bound` | V ≤ \|V\| · (\|E\| + 1) | Global upper bound |
 
-In financial networks, the "twist factors" can model exchange rates or risk transformations. The monodromy condition τ(A→B)·τ(B→C)·τ(C→A) = 1 is the no-arbitrage condition. Non-trivial monodromy = arbitrage opportunity = instability. The Global Vanishing Theorem then says: arbitrage opportunities cannot coexist with stable equilibria.
-
-### 6.3 Limitations
-
-Our model assumes:
-1. Linear interpretation spaces (real-world interpretations may be nonlinear)
-2. Deterministic restriction maps (real propagation involves noise)
-3. Static networks (social networks evolve over time)
-
-Extensions to sheaves of nonlinear spaces, stochastic restriction maps, and time-varying graphs are natural directions for future work.
-
-## 7. Conclusion
-
-We have established that meme virality is fundamentally a topological phenomenon. The sheaf cohomology of the network-meme pair determines propagation potential: H⁰ counts interpretations, H¹ counts barriers, and monodromy detects self-inconsistency. The spectral-cohomological bridge connects this framework to the powerful tools of spectral graph theory. The phase transition conjecture provides a falsifiable prediction linking network structure to meme behavior.
-
-The key takeaway: **the shape of the network matters more than the content of the message**. Topology has the final word on virality.
+All proofs use only standard axioms: `propext`, `Classical.choice`, `Quot.sound`.
 
 ## References
 
-[1] Shepard, A. (1985). A cellular description of the derived category of a stratified space. Brown University PhD thesis.
-
-[2] Curry, J. (2014). Sheaves, cosheaves, and applications. University of Pennsylvania PhD thesis.
-
-[3] Ghrist, R. & Hansen, J. (2022). "Opinions, Conflicts, and Consensus: Modeling Social Dynamics via Sheaves." *Topological Data Analysis*, Springer.
-
-[4] Robinson, M. (2014). *Topological Signal Processing*. Springer.
-
-[5] Chung, F. (1997). *Spectral Graph Theory*. AMS.
-
-[6] Shah, D. (2009). "Gossip Algorithms." *Foundations and Trends in Networking* 3(1).
-
-[7] DeGroot, M.H. (1974). "Reaching a Consensus." *Journal of the American Statistical Association* 69(345).
+1. Curry, J. (2014). Sheaves, Cosheaves and Applications. PhD thesis, University of Pennsylvania.
+2. Ghrist, R. & Hiraoka, Y. (2018). Applications of Sheaf Cohomology and Exact Sequences on Network Codings.
+3. Robinson, M. (2014). Topological Signal Processing. Springer.
+4. Hansen, J. & Ghrist, R. (2019). Toward a Spectral Theory of Cellular Sheaves. Journal of Applied and Computational Topology.

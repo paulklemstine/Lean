@@ -1,277 +1,233 @@
+#!/usr/bin/env python3
 """
-Viral Information Topology: Core Algorithms
+Algorithms for Viral Information Topology
 
 Type-hinted implementations of sheaf cohomology computations on graphs.
 """
 
-from typing import Dict, List, Optional, Set, Tuple
+from __future__ import annotations
 import numpy as np
-from collections import defaultdict, deque
+from dataclasses import dataclass
+from typing import List, Tuple, Optional, Dict
 
 
-class Graph:
-    """Simple undirected graph with integer vertices."""
-
-    def __init__(self, n: int, edges: List[Tuple[int, int]]):
-        self.n = n
-        self.adj: Dict[int, Set[int]] = defaultdict(set)
-        self.edges = []
-        for u, v in edges:
-            if u != v:
-                self.adj[u].add(v)
-                self.adj[v].add(u)
-                self.edges.append((min(u, v), max(u, v)))
-        self.edges = list(set(self.edges))
-
-    def neighbors(self, v: int) -> Set[int]:
-        return self.adj[v]
-
-    def degree(self, v: int) -> int:
-        return len(self.adj[v])
+@dataclass
+class DirectedGraph:
+    """A directed multigraph with labeled vertices and edges."""
+    n_vertices: int
+    edges: List[Tuple[int, int]]  # (source, target) pairs
+    
+    @property
+    def n_edges(self) -> int:
+        return len(self.edges)
+    
+    def adjacency_matrix(self) -> np.ndarray:
+        A = np.zeros((self.n_vertices, self.n_vertices))
+        for s, t in self.edges:
+            A[s, t] += 1
+        return A
 
 
-class TwistedSheaf:
-    """Twisted meme sheaf: each directed edge (i,j) carries a twist factor."""
-
-    def __init__(self, graph: Graph, twists: Dict[Tuple[int, int], float]):
-        self.graph = graph
-        self.twists = twists
-
-    @classmethod
-    def constant(cls, graph: Graph) -> "TwistedSheaf":
-        """The constant sheaf: all twists are 1."""
-        twists = {}
-        for u, v in graph.edges:
-            twists[(u, v)] = 1.0
-            twists[(v, u)] = 1.0
-        return cls(graph, twists)
-
-    def twist(self, u: int, v: int) -> float:
-        return self.twists.get((u, v), 1.0)
+@dataclass 
+class ConstantSheafCohomology:
+    """Cohomology dimensions for the constant sheaf on a graph."""
+    h0: int          # dim H^0 = dim ker(δ)
+    h1: int          # dim H^1 = dim coker(δ)
+    rank_delta: int  # rank of coboundary map
+    euler_char: int  # χ = h0 - h1 = |V| - |E|
 
 
-def connected_components(g: Graph) -> List[Set[int]]:
-    """Compute connected components via BFS. O(V + E)."""
-    visited: Set[int] = set()
-    components: List[Set[int]] = []
-
-    for v in range(g.n):
-        if v not in visited:
-            component: Set[int] = set()
-            queue = deque([v])
-            while queue:
-                u = queue.popleft()
-                if u in visited:
-                    continue
-                visited.add(u)
-                component.add(u)
-                for w in g.neighbors(u):
-                    if w not in visited:
-                        queue.append(w)
-            components.append(component)
-
-    return components
+@dataclass
+class PropagationSheaf:
+    """A propagation sheaf on a directed graph with edge weights."""
+    graph: DirectedGraph
+    weights: List[float]  # one weight per edge
+    
+    def __post_init__(self) -> None:
+        assert len(self.weights) == self.graph.n_edges, \
+            f"Expected {self.graph.n_edges} weights, got {len(self.weights)}"
 
 
-def h0_dimension(g: Graph) -> int:
-    """Compute dim H⁰ for the constant sheaf.
-
-    For the constant sheaf, dim H⁰ = number of connected components.
-    This is O(V + E) via BFS.
+def coboundary_matrix(graph: DirectedGraph) -> np.ndarray:
     """
-    return len(connected_components(g))
-
-
-def coboundary_matrix(g: Graph) -> np.ndarray:
-    """Build the coboundary matrix δ: ℝ^V → ℝ^E.
-
-    δ(f)(e) = f(tgt(e)) - f(src(e)) for each oriented edge e.
-    Orient edges as (min, max).
-
-    Returns matrix of shape (|E|, |V|).
+    Compute the coboundary matrix δ: R^V → R^E for the constant sheaf.
+    
+    Algorithm:
+        For each edge e_i = (s, t):
+            δ[i, t] = +1 (target contributes positively)
+            δ[i, s] = -1 (source contributes negatively)
+    
+    Time complexity: O(|E|)
+    Space complexity: O(|E| × |V|)
     """
-    m = len(g.edges)
-    delta = np.zeros((m, g.n))
-    for idx, (u, v) in enumerate(g.edges):
-        delta[idx, u] = -1.0
-        delta[idx, v] = 1.0
+    delta = np.zeros((graph.n_edges, graph.n_vertices))
+    for i, (s, t) in enumerate(graph.edges):
+        delta[i, t] = 1.0
+        delta[i, s] = -1.0
     return delta
 
 
-def graph_laplacian(g: Graph) -> np.ndarray:
-    """Build the graph Laplacian L = δᵀδ.
-
-    L(i,j) = deg(i) if i=j, -1 if adj(i,j), 0 otherwise.
-
-    Returns matrix of shape (|V|, |V|).
+def weighted_coboundary_matrix(sheaf: PropagationSheaf) -> np.ndarray:
     """
-    L = np.zeros((g.n, g.n))
-    for i in range(g.n):
-        L[i, i] = g.degree(i)
-        for j in g.neighbors(i):
-            L[i, j] = -1.0
-    return L
-
-
-def h0_via_laplacian(g: Graph, tol: float = 1e-10) -> int:
-    """Compute dim H⁰ via nullity of the Laplacian.
-
-    This demonstrates the Spectral-Cohomological Bridge:
-    dim H⁰ = dim ker(L) = multiplicity of eigenvalue 0.
+    Compute the weighted coboundary matrix δ_w: R^V → R^E.
+    
+    Algorithm:
+        For each edge e_i = (s, t) with weight w_i:
+            δ_w[i, t] = +w_i (target scaled by weight)
+            δ_w[i, s] = -1   (source contributes with unit weight)
+    
+    The asymmetry models directed information transmission:
+    the receiver transforms the message by factor w.
     """
-    L = graph_laplacian(g)
-    eigenvalues = np.linalg.eigvalsh(L)
-    return int(np.sum(np.abs(eigenvalues) < tol))
+    G = sheaf.graph
+    delta = np.zeros((G.n_edges, G.n_vertices))
+    for i, ((s, t), w) in enumerate(zip(G.edges, sheaf.weights)):
+        delta[i, t] = w
+        delta[i, s] = -1.0
+    return delta
 
 
-def h1_dimension(g: Graph) -> int:
-    """Compute dim H¹ for the constant sheaf.
-
-    By rank-nullity: dim H¹ = |E| - rank(δ) = |E| - (|V| - dim H⁰)
-                    = |E| - |V| + dim H⁰ = cycle rank + dim H⁰ - dim H⁰
-                    = |E| - |V| + (number of components)
-    This is the cycle rank (first Betti number).
+def compute_constant_sheaf_cohomology(graph: DirectedGraph) -> ConstantSheafCohomology:
     """
-    num_components = h0_dimension(g)
-    return len(g.edges) - g.n + num_components
-
-
-def euler_characteristic(g: Graph) -> int:
-    """Compute χ = |V| - |E| = dim H⁰ - dim H¹."""
-    return g.n - len(g.edges)
-
-
-def virality_index(total_interp: int, h1_dim: int) -> float:
-    """Compute the virality index: total_interp / (1 + h1_dim)."""
-    return total_interp / (1 + h1_dim)
-
-
-def walk_monodromy(sheaf: TwistedSheaf, walk: List[int]) -> float:
-    """Compute the monodromy of a twisted sheaf along a walk.
-
-    walk is a list of vertices [v0, v1, ..., vk].
-    Monodromy = product of twist(vi, vi+1) for i = 0, ..., k-1.
+    Compute H^0 and H^1 for the constant sheaf.
+    
+    Algorithm:
+        1. Build coboundary matrix δ
+        2. Compute rank(δ) via SVD
+        3. H^0 = |V| - rank(δ)   (rank-nullity theorem)
+        4. H^1 = |E| - rank(δ)   (dimension of cokernel)
+    
+    Time complexity: O(min(|V|, |E|) × |V| × |E|) for SVD
     """
-    mono = 1.0
-    for i in range(len(walk) - 1):
-        mono *= sheaf.twist(walk[i], walk[i + 1])
-    return mono
+    delta = coboundary_matrix(graph)
+    rank = int(np.linalg.matrix_rank(delta, tol=1e-10))
+    h0 = graph.n_vertices - rank
+    h1 = graph.n_edges - rank
+    return ConstantSheafCohomology(h0=h0, h1=h1, rank_delta=rank,
+                                    euler_char=h0 - h1)
 
 
-def spanning_tree_dfs(g: Graph, root: int = 0) -> Tuple[List[Tuple[int, int]], List[Tuple[int, int]]]:
-    """DFS spanning tree. Returns (tree_edges, non_tree_edges)."""
-    visited: Set[int] = set()
-    tree_edges: List[Tuple[int, int]] = []
-    stack = [root]
-    parent: Dict[int, int] = {root: -1}
-
-    while stack:
-        v = stack.pop()
-        if v in visited:
-            continue
-        visited.add(v)
-        if parent[v] != -1:
-            tree_edges.append((min(parent[v], v), max(parent[v], v)))
-        for w in g.neighbors(v):
-            if w not in visited:
-                parent[w] = v
-                stack.append(w)
-
-    tree_edge_set = set(tree_edges)
-    non_tree = [e for e in g.edges if e not in tree_edge_set]
-    return tree_edges, non_tree
-
-
-def fundamental_cycle_monodromies(g: Graph, sheaf: TwistedSheaf) -> List[float]:
-    """Compute monodromy around each fundamental cycle.
-
-    For each non-tree edge, find the fundamental cycle via the spanning tree
-    and compute its monodromy. O(V + E) total.
+def compute_propagation_cohomology(sheaf: PropagationSheaf) -> ConstantSheafCohomology:
     """
-    tree_edges, non_tree_edges = spanning_tree_dfs(g)
-
-    # Build tree adjacency for path finding
-    tree_adj: Dict[int, Set[int]] = defaultdict(set)
-    for u, v in tree_edges:
-        tree_adj[u].add(v)
-        tree_adj[v].add(u)
-
-    def tree_path(start: int, end: int) -> List[int]:
-        """BFS path in tree."""
-        parent: Dict[int, int] = {start: -1}
-        queue = deque([start])
-        while queue:
-            v = queue.popleft()
-            if v == end:
-                path = []
-                while v != -1:
-                    path.append(v)
-                    v = parent[v]
-                return path[::-1]
-            for w in tree_adj[v]:
-                if w not in parent:
-                    parent[w] = v
-                    queue.append(w)
-        return []
-
-    monodromies = []
-    for u, v in non_tree_edges:
-        # Fundamental cycle: tree path u -> v, then edge v -> u
-        path = tree_path(u, v)
-        path.append(u)  # Close the cycle
-        mono = walk_monodromy(sheaf, path)
-        monodromies.append(mono)
-
-    return monodromies
+    Compute H^0 and H^1 for a propagation sheaf.
+    
+    Algorithm:
+        Same as constant sheaf but using weighted coboundary matrix.
+    """
+    delta = weighted_coboundary_matrix(sheaf)
+    rank = int(np.linalg.matrix_rank(delta, tol=1e-10))
+    h0 = sheaf.graph.n_vertices - rank
+    h1 = sheaf.graph.n_edges - rank
+    return ConstantSheafCohomology(h0=h0, h1=h1, rank_delta=rank,
+                                    euler_char=h0 - h1)
 
 
-def is_flat(g: Graph, sheaf: TwistedSheaf, tol: float = 1e-10) -> bool:
-    """Check if a twisted sheaf is flat (all monodromies = 1)."""
-    monos = fundamental_cycle_monodromies(g, sheaf)
-    return all(abs(m - 1.0) < tol for m in monos)
+def virality_index(coh: ConstantSheafCohomology, n_edges: int) -> int:
+    """
+    Compute the virality index V = H^0 × (|E| + 1 - H^1).
+    
+    Maximized when H^1 = 0 (no barriers) and H^0 is large (many interpretations).
+    Upper bound: |V| × (|E| + 1).
+    """
+    return coh.h0 * (n_edges + 1 - coh.h1)
 
 
-def propagation_step(g: Graph, f: np.ndarray) -> np.ndarray:
-    """One step of meme propagation: each vertex averages neighbors."""
-    result = np.copy(f)
-    for v in range(g.n):
-        nbrs = list(g.neighbors(v))
-        if nbrs:
-            result[v] = np.mean(f[list(nbrs)])
-    return result
+def graph_laplacian(graph: DirectedGraph) -> np.ndarray:
+    """
+    Compute the graph Laplacian L = δᵀδ.
+    
+    The kernel of L equals ker(δ) = H^0.
+    Eigenvalues reveal community structure (spectral clustering).
+    """
+    delta = coboundary_matrix(graph)
+    return delta.T @ delta
 
 
-def propagation_equilibrium(g: Graph, f0: np.ndarray,
-                             max_steps: int = 1000,
-                             tol: float = 1e-10) -> Tuple[np.ndarray, int]:
-    """Run propagation to equilibrium. Returns (equilibrium, steps)."""
-    f = np.copy(f0)
-    for step in range(max_steps):
-        f_new = propagation_step(g, f)
-        if np.max(np.abs(f_new - f)) < tol:
-            return f_new, step + 1
-        f = f_new
-    return f, max_steps
+def detect_communities_spectral(graph: DirectedGraph, n_communities: int) -> np.ndarray:
+    """
+    Spectral community detection using the sheaf Laplacian.
+    
+    Algorithm:
+        1. Compute Laplacian L = δᵀδ
+        2. Find eigenvectors for smallest eigenvalues
+        3. Cluster vertices using k-means on eigenvector coordinates
+    
+    Returns: array of community labels for each vertex.
+    """
+    L = graph_laplacian(graph)
+    eigenvalues, eigenvectors = np.linalg.eigh(L)
+    
+    # Use the first n_communities eigenvectors (smallest eigenvalues)
+    features = eigenvectors[:, :n_communities]
+    
+    # Simple k-means clustering
+    from scipy.cluster.vq import kmeans2  # type: ignore
+    try:
+        _, labels = kmeans2(features, n_communities, minit='points')
+    except ImportError:
+        # Fallback: assign by eigenvector sign
+        labels = np.zeros(graph.n_vertices, dtype=int)
+        for i in range(min(n_communities - 1, features.shape[1])):
+            labels += (features[:, i] > 0).astype(int) * (2 ** i)
+        labels = labels % n_communities
+    
+    return labels
 
 
-def erdos_renyi(n: int, p: float, seed: Optional[int] = None) -> Graph:
-    """Generate an Erdős-Rényi random graph G(n, p)."""
-    rng = np.random.default_rng(seed)
-    edges = []
-    for i in range(n):
-        for j in range(i + 1, n):
-            if rng.random() < p:
-                edges.append((i, j))
-    return Graph(n, edges)
+def simulate_meme_spread(graph: DirectedGraph, 
+                          initial_infected: List[int],
+                          weights: Optional[List[float]] = None,
+                          steps: int = 10) -> List[List[int]]:
+    """
+    Simulate meme propagation on a graph.
+    
+    Algorithm:
+        At each step, each infected node transmits along outgoing edges.
+        An edge with weight w transmits with probability |w|.
+        Returns the set of infected nodes at each step.
+    """
+    rng = np.random.default_rng(42)
+    infected = set(initial_infected)
+    history = [sorted(infected)]
+    
+    if weights is None:
+        weights = [1.0] * graph.n_edges
+    
+    for _ in range(steps):
+        new_infected = set()
+        for i, (s, t) in enumerate(graph.edges):
+            if s in infected:
+                if rng.random() < abs(weights[i]):
+                    new_infected.add(t)
+            if t in infected:
+                if rng.random() < abs(weights[i]):
+                    new_infected.add(s)
+        infected = infected | new_infected
+        history.append(sorted(infected))
+    
+    return history
 
 
 if __name__ == "__main__":
-    # Quick demo
-    g = Graph(6, [(0, 1), (1, 2), (2, 0), (3, 4), (4, 5)])
-    print(f"Graph: {g.n} vertices, {len(g.edges)} edges")
-    print(f"Connected components: {len(connected_components(g))}")
-    print(f"dim H⁰ = {h0_dimension(g)}")
-    print(f"dim H¹ = {h1_dimension(g)}")
-    print(f"χ = {euler_characteristic(g)}")
-    print(f"dim H⁰ (Laplacian) = {h0_via_laplacian(g)}")
-    print(f"Virality index = {virality_index(g.n, h1_dimension(g)):.4f}")
+    # Example: Two communities connected by a bridge
+    G = DirectedGraph(
+        n_vertices=8,
+        edges=[(0,1),(1,2),(2,3),(0,3),  # Community 1 (K4-ish)
+               (4,5),(5,6),(6,7),(4,7),  # Community 2 (K4-ish)
+               (3,4)]                     # Bridge
+    )
+    
+    coh = compute_constant_sheaf_cohomology(G)
+    vi = virality_index(coh, G.n_edges)
+    
+    print(f"Graph: {G.n_vertices} vertices, {G.n_edges} edges")
+    print(f"H⁰ = {coh.h0}, H¹ = {coh.h1}")
+    print(f"Euler characteristic: {coh.euler_char} = {G.n_vertices} - {G.n_edges}")
+    print(f"Virality index: {vi}")
+    print(f"Upper bound: {G.n_vertices * (G.n_edges + 1)}")
+    
+    # Simulate meme spread
+    history = simulate_meme_spread(G, [0], steps=5)
+    print(f"\nMeme spread from node 0:")
+    for step, nodes in enumerate(history):
+        print(f"  Step {step}: {nodes}")
