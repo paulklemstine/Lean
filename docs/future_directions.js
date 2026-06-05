@@ -454,6 +454,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Cellular Automata Simulation Theory\n\n## Synthesis\n\nThis research cycle established a formalized algebraic theory of cellular automata simulation, proving three fundamental results: (1) simulation relations form a preorder with multiplicative overhead composition, (2) universality transfers through simulations, and (3) the Game of Life achieves O(k\u00b2m\u00b2) simulation overhead. The most promising cross-domain connection is the bridge between GoL on \u2124\u00b2 and the Berggren CA on Pythagorean orbit lattices\u2014both achieve universality through two-counter machine simulation, suggesting that universality is a structural invariant independent of the underlying lattice geometry.\n\nThe overhead composition theorem (Theorem 3.2 in the research paper) is the most impactful result for future work: it reduces any universality proof to a finite chain of local simulations, each verifiable independently. This decomposition principle should extend to continuous dynamical systems (via discretization) and quantum cellular automata (via decoherence channels), opening paths to formalize computational universality in physics.\n\nThe highest breakthrough potential lies in Direction 1 (simulation lower bounds): proving that O(k\u00b2m\u00b2) is optimal would be the first non-trivial lower bound in cellular automata simulation theory, connecting to the P vs NP problem through circuit complexity arguments.\n\n---\n\n### Direction 1: Optimal Simulation Lower Bounds for 2D Cellular Automata\n\n**Conjecture**: Any simulation of a k-state m-symbol Turing machine by a 2D binary totalistic cellular automaton requires time overhead \u03a9(km). Specifically, for GoL: there exists a family of TMs {T\u2096}\u2096\u2208\u2115 such that any GoL simulation of T\u2096 requires time factor \u2265 c\u00b7k for some universal constant c > 0.\n\n**Test**: Construct a specific family of TMs where the lower bound can be verified: TMs that require k distinct \"gadget states\" in any simulation, forcing \u03a9(k) spatial separation between gadgets and hence \u03a9(k) signal propagation time. Verify computationally for k \u2264 20 that no simulation with factor < k/2 exists.\n\n**Impact**: If true, this would be the first non-trivial lower bound in CA simulation theory, establishing that GoL's O(k\u00b2m\u00b2) overhead is near-optimal (within a polynomial factor). If false, it would reveal an unexpected compression technique, potentially connecting to circuit complexity breakthroughs.\n\n**Catalog References**: `GameOfLife/CellularAutomata.lean` (simulation_multi_step, overhead_polynomial_chain), `Catalog/Tropical/TropicalDeepResearch.lean` (turing_simulation_width_bound), `Catalog/Algebra/Core.lean` (simulation_complexity_inverse_gap)\n\n**Proof Strategy**: \n1. Define a \"simulation complexity\" measure: the minimum time factor \u03c4 over all valid simulations.\n2. Prove a communication complexity lower bound: any encoding of k TM states into GoL patterns requires \u03a9(k) distinct pattern types.\n3. Use the speed of light constraint to show distinct patterns must be \u03a9(1)-separated.\n4. Conclude that signal propagation requires time \u2265 separation distance.\n\n**Domain Bridges**: Cellular automata \u2194 Circuit complexity (simulation overhead maps to circuit depth), Cellular automata \u2194 Communication complexity (encoding constraints)\n\n**Lineage**: Builds on universality_transfer, gol_simulation_overhead, and the overhead_polynomial_chain framework from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Categorical Simulation Theory \u2014 Simulations as a 2-Category\n\n**Conjecture**: The collection of cellular automata, simulations between them, and natural transformations between simulations forms a 2-category CA_Sim, where: (a) the simulation preorder corresponds to the 1-morphisms, (b) \"simulation improvements\" (encodings with smaller overhead) correspond to 2-morphisms, and (c) universality classes are the connected components of the \"universal\" subcategory.\n\n**Test**: Formalize the 2-category structure in Lean 4 using Mathlib's category theory library. Prove that the composition of 2-morphisms (simulation improvements) preserves the overhead ordering. Verify that GoL and the Berggren CA are in the same connected component.\n\n**Impact**: This would provide a clean algebraic framework for comparing computational power across different dynamical systems\u2014not just cellular automata but potentially PDEs, neural networks, and quantum systems. The 2-categorical structure captures both \"can simulate\" (1-morphisms) and \"simulates more efficiently\" (2-morphisms).\n\n**Catalog References**: `GameOfLife/CellularAutomata.lean` (CASimulation.trans, CASimulation.refl), `Catalog/Pythagorean/BerggrenCA.lean` (berggren_orbit_turing_complete), Mathlib's `Mathlib.CategoryTheory.Category.Basic`\n\n**Proof Strategy**:\n1. Define Obj(CA_Sim) = CellularAutomaton instances.\n2. Define Hom(CA\u2081, CA\u2082) = CASimulation(CA\u2081, CA\u2082) (with time factor as a \"weight\").\n3. Verify associativity: (sim\u2081\u2082.trans sim\u2082\u2083).trans sim\u2083\u2084 \u2245 sim\u2081\u2082.trans (sim\u2082\u2083.trans sim\u2083\u2084) \u2014 time factors multiply associatively.\n4. Define 2-morphisms as pairs of simulations with overhead ordering.\n5. Prove the universal subcategory is closed under composition.\n\n**Domain Bridges**: Cellular automata \u2194 Category theory (simulation preorder as enriched category), Cellular automata \u2194 Algebraic topology (connected components of universality)\n\n**Lineage**: Direct extension of CASimulation.trans and CASimulation.refl from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Reversibility Obstruction \u2014 Formalizing Why Reversible CAs Are Computationally Weaker\n\n**Conjecture**: For any reversible (bijective) binary CA on \u2124\u00b2, the set of reachable configurations from any finite initial configuration has polynomial growth in t (the number of time steps), while universal CAs must support exponential configuration reachability. Formally: if \u03b4 is bijective, then |{\u03b4\u1d57(c) : c has support \u2286 [-n,n]\u00b2}| \u2264 poly(n,t).\n\n**Test**: Verify computationally for known reversible CAs (Critters, Billiard Ball, Second-Order GoL) that configuration reachability grows polynomially. Prove the polynomial bound for the special case of \"block-reversible\" CAs. Disprove the conjecture by finding a reversible CA with super-polynomial reachability growth.\n\n**Impact**: If true, this would establish a formal separation between reversible and irreversible CAs in terms of computational power, providing a cellular automata analog of the Landauer principle from thermodynamics. It would explain why GoL's non-injectivity (Theorem 4.8) is necessary for universality.\n\n**Catalog References**: `GameOfLife/GameOfLifeDefs.lean` (gol_not_injective, golCA), `GameOfLife/CellularAutomata.lean` (IsUniversalCA)\n\n**Proof Strategy**:\n1. Define \"block-reversible CA\" as a CA whose transition is a composition of bijective block maps.\n2. Prove that block-reversible CAs preserve a discrete Liouville measure.\n3. Use the Liouville measure to bound configuration reachability.\n4. Show that universal CAs cannot preserve any Liouville measure (by contradiction with the halting problem).\n\n**Domain Bridges**: Cellular automata \u2194 Thermodynamics (Landauer principle, entropy production), Cellular automata \u2194 Measure theory (invariant measures for dynamical systems)\n\n**Lineage**: Builds on gol_not_injective and the connection between irreversibility and universality identified in this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Quantum Cellular Automata Universality \u2014 Beyond Classical GoL\n\n**Conjecture**: There exists a quantum cellular automaton (QCA) on \u2124\u00b2 with local dimension 2 (qubits) that is quantum-universal (can simulate any quantum Turing machine) with polynomial overhead, and whose classical limit recovers GoL. The overhead bound is O(k\u00b2) where k is the number of quantum gates in the circuit being simulated.\n\n**Test**: Define a QCA whose classical limit (measurement in the computational basis at each step) gives GoL dynamics. Prove that the QCA's unitary evolution can simulate any quantum circuit. Verify the overhead bound for small circuits (\u2264 10 qubits).\n\n**Impact**: This would bridge classical and quantum computation through cellular automata, providing a unified framework where GoL is the \"classical shadow\" of a quantum-universal system. It would also give a constructive proof of quantum universality that is geometrically natural (grid-based rather than circuit-based).\n\n**Catalog References**: `GameOfLife/CellularAutomata.lean` (universality_transfer \u2014 the transfer theorem should generalize to quantum simulations), `Catalog/Algebra/Core.lean` (quantum_speedup_bound)\n\n**Proof Strategy**:\n1. Define QCA states as density matrices on \u2124\u00b2 \u2297 \u2102\u00b2.\n2. Define a unitary update rule whose diagonal (measurement) gives GoL.\n3. Prove that the off-diagonal terms enable quantum interference.\n4. Construct a universal gate set from QCA patterns (quantum analogs of gliders).\n5. Apply the universality transfer theorem to the quantum simulation chain.\n\n**Domain Bridges**: Cellular automata \u2194 Quantum computing (classical/quantum duality), Cellular automata \u2194 Condensed matter physics (lattice quantum systems)\n\n**Lineage**: Conceptual extension of the universality framework; would require new Lean 4 infrastructure for quantum mechanics (Hilbert spaces, unitaries).\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Totalistic Universality Classification in Higher Dimensions\n\n**Conjecture**: In d dimensions with q states, the fraction of totalistic CA rules that are universal converges to a positive constant as q \u2192 \u221e, and this constant increases with d. Specifically: for d = 2 and q = 2, the fraction is approximately 1/64 (GoL being one of ~2-3 universal rules out of ~2^18); for d = 2 and general q, the fraction is \u0398(1/q).\n\n**Test**: Enumerate all totalistic rules for small (d, q) values. For each rule, test universality by attempting to simulate a 2-counter machine. Record the fraction of universal rules. Plot fraction vs. q for d = 1, 2, 3.\n\n**Impact**: This would provide the first quantitative answer to \"how common is universality?\"\u2014a fundamental question in the theory of computation. If the fraction converges to a positive constant, it would suggest that universality is a generic rather than exceptional property, with profound implications for the computational capabilities of physical systems.\n\n**Catalog References**: `GameOfLife/GameOfLifeDefs.lean` (gol_totalistic, totalistic_1d_binary_count from Universality.lean), `GameOfLife/CellularAutomata.lean` (IsUniversalCA)\n\n**Proof Strategy**:\n1. Formalize the totalistic rule space as a finite type.\n2. Define computability-based criteria for universality detection.\n3. For d = 1, prove the fraction is 0 (no 1D binary totalistic rule is universal).\n4. For d \u2265 2, use probabilistic arguments: a random totalistic rule with enough states almost surely has glider-like patterns, which almost surely enable universal computation.\n5. Formalize the \"almost surely\" using ergodic theory on the rule space.\n\n**Domain Bridges**: Cellular automata \u2194 Probability theory (random rule universality), Cellular automata \u2194 Ergodic theory (generic properties of dynamical systems)\n\n**Lineage**: Extends one_dim_totalistic_linear_growth and gol_totalistic from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0698",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c8b009dd",
+    "status": "available",
+    "timestamp": "2026-06-05T08:34:59.070228+00:00",
+    "title": "Formalized algebraic theory of cellular automa"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Sperner-Nash Bridge\n\n## Synthesis\n\nThis research cycle established the **Nash Regret Landscape** as a novel mathematical structure connecting Sperner's combinatorial coloring theory to Nash equilibrium theory. The key insight \u2014 that Nash equilibria are precisely the zeros of the max-regret function, and that the Sperner chromatic decomposition mirrors the geometry of this zero set \u2014 opens several deep research directions.\n\nThe most promising cross-domain connection from this cycle is the bridge between the **equilibrium filtration** (a lattice-theoretic object) and the **Sperner-Nash number** (a combinatorial complexity measure). The filtration F_\u03b5 captures the \"robustness geometry\" of Nash equilibria: how the approximate equilibrium set expands as tolerance increases. The Sperner-Nash number captures the computational cost of resolving this geometry to precision \u03b5. The interplay between these two \u2014 geometric structure vs. computational cost \u2014 connects to the PPAD complexity class and potentially to the broader Catalog results on computational complexity (e.g., `Computation/InfoEfficientAlgorithms.lean` and oracle complexity results).\n\nThe zero-sum duality theorem (expected payoffs sum to zero across the *entire* strategy space, not just at equilibrium) suggests that zero-sum games may have richer algebraic structure than previously recognized. This connects to the tropical algebra thread in the Catalog, where min-plus structures naturally encode game-theoretic optimization.\n\n---\n\n### Direction 1: Tropical Nash Equilibria\n\n**Conjecture**: Define the *tropical regret landscape* by replacing standard arithmetic with the tropical semiring (min, +). Specifically, for a \"tropical game\" with payoff values in \u211d \u222a {\u221e}, define tropical expected payoff as min_{s} (\u03a3_j \u03c3_j(s_j) + u_i(s)) and tropical regret as the difference. Then: (a) the tropical Nash equilibria form a polyhedral complex, and (b) every classical Nash equilibrium is the dequantization limit of a unique tropical Nash equilibrium.\n\n**Test**: Implement the tropical Sperner-Nash algorithm for 2\u00d72 games and verify that the tropical equilibria converge to classical equilibria as the tropical parameter t \u2192 0. Compute the polyhedral structure explicitly.\n\n**Impact**: If true, this would establish tropical geometry as a natural setting for game theory, enabling polyhedral methods (linear programming, integer programming) for equilibrium computation. If false, it would reveal fundamental obstructions to tropicalizing game theory.\n\n**Catalog References**: `Tropical/Optimization.lean`, `Algebra/Bridges.lean` (TropicalContraction.has_fixed_point_approach)\n\n**Proof Strategy**: Start by defining tropical games formally. Prove that the tropical regret function is piecewise-linear (hence its zero set is polyhedral). Use the maslov dequantization to connect tropical and classical settings. The key lemma would be that tropical Sperner colorings converge to classical Sperner colorings.\n\n**Domain Bridges**: Tropical algebra \u2194 Game theory, Optimization \u2194 Equilibrium computation\n\n**Lineage**: Builds on the equilibrium filtration and regret landscape from this cycle, plus the tropical fixed point results in the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: The Regret Metric Space\n\n**Conjecture**: Define d(\u03c3, \u03c4) = max_{i, s_i} |r_i(\u03c3, s_i) - r_i(\u03c4, s_i)| (the L^\u221e distance between regret profiles). This is a pseudometric on mixed strategy profiles. Conjecture: (a) the quotient by d(\u03c3,\u03c4)=0 yields a compact metric space, (b) the Nash equilibrium set is the unique minimal closed subset whose \u03b5-neighborhood is F_\u03b5 for all \u03b5 > 0, and (c) the Hausdorff dimension of the Nash set in this metric is at most n-1 for n-player games.\n\n**Test**: Compute d explicitly for 2\u00d72 games and verify the metric space axioms. Check whether the Nash set has the correct dimension in known examples (matching pennies: dim 0, coordination game: dim 0).\n\n**Impact**: Would establish a canonical metric on strategy spaces whose topology is entirely determined by the game's strategic structure. This could lead to new notions of \"distance between games\" and continuity results for the Nash correspondence.\n\n**Catalog References**: `Bridges/ChromaticNashBridge.lean` (NashRegretLandscape, pure_deviation_bound)\n\n**Proof Strategy**: Prove triangle inequality for d (straightforward from the absolute value). Prove compactness via sequential compactness of the strategy simplex. The dimension bound would follow from the structure of the zero set of a finite family of piecewise-linear functions.\n\n**Domain Bridges**: Metric geometry \u2194 Game theory, Topology \u2194 Equilibrium theory\n\n**Lineage**: Directly extends the regret landscape from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Sperner-Nash Complexity Lower Bounds\n\n**Conjecture**: The Sperner-Nash number SN(G, \u03b5) = \u0398((1/\u03b5)^n) is tight: there exist games where any Sperner-type algorithm requires \u03a9((1/\u03b5)^n) vertex evaluations to find an \u03b5-approximate Nash equilibrium. Moreover, this is equivalent to the PPAD-hardness of approximate Nash.\n\n**Test**: Construct explicit \"hard\" games (e.g., generalized matching pennies with n players) where the chromatic decomposition has maximal complexity. Count the number of fully-colored simplices and verify they cannot be found with fewer than SN(G, \u03b5) evaluations.\n\n**Impact**: Would establish a precise combinatorial characterization of the computational complexity of Nash equilibrium \u2014 the PPAD barrier is really a \"Sperner barrier.\" This would be a significant connection between combinatorial topology and computational complexity.\n\n**Catalog References**: `Computation/InfoEfficientAlgorithms.lean`, `Computation/PadicValuationDepth.lean` (for complexity measures)\n\n**Proof Strategy**: Use information-theoretic arguments: each vertex evaluation reveals O(1) bits about the game, and locating the equilibrium to precision \u03b5 requires \u03a9(n log(1/\u03b5)) bits. The lower bound follows from the pigeonhole principle applied to the chromatic decomposition.\n\n**Domain Bridges**: Computational complexity \u2194 Combinatorial topology \u2194 Game theory\n\n**Lineage**: Extends the Sperner-Nash number bound from this cycle and connects to Catalog complexity results.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Nash Support Lemma Generalizations\n\n**Conjecture**: The Nash support lemma (at Nash, every strategy played with positive probability achieves maximum payoff) generalizes to a \"\u03b5-support lemma\": at an \u03b5-approximate Nash equilibrium, every strategy played with probability \u2265 \u03b4 achieves payoff within \u03b5/\u03b4 of the maximum. Moreover, this bound is tight.\n\n**Test**: Verify the \u03b5-support lemma numerically for random games with 3-5 players. Check tightness by constructing games where the bound is achieved.\n\n**Impact**: Would provide quantitative versions of the Nash support characterization, useful for learning algorithms (fictitious play, regret matching) where strategies have non-zero but small probabilities.\n\n**Catalog References**: `Bridges/SpernerNashEquilibria.lean` (nash_support_lemma, expectedPayoff_eq_weighted_sum)\n\n**Proof Strategy**: Use the convexity property (Theorem 8.1) with explicit tracking of the \u03b4-support condition. The key step: if \u03c3_i(s_i) \u2265 \u03b4 and D_i(\u03c3, s_i) < U_i(\u03c3) - \u03b5/\u03b4, then the weighted sum inequality forces a contradiction when summing over the support.\n\n**Domain Bridges**: Game theory \u2194 Online learning \u2194 Optimization\n\n**Lineage**: Directly extends the Nash support lemma from `SpernerNashEquilibria.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Quantum Sperner-Nash Correspondence\n\n**Conjecture**: Replace classical mixed strategies (probability distributions over pure strategies) with quantum mixed strategies (density matrices over a Hilbert space of strategies). Define quantum regret using the trace inner product. Then: (a) the quantum regret landscape has the same zero-characterization property (quantum Nash \u2194 zero quantum regret), and (b) the quantum Sperner-Nash number is exponentially smaller than the classical one for certain games, because quantum entanglement reduces the effective dimensionality of the strategy space.\n\n**Test**: Implement quantum strategies for 2\u00d72 games using the Eisert-Wilkens-Lewenstein quantization protocol. Compare the quantum and classical Sperner-Nash numbers.\n\n**Impact**: If the exponential speedup holds, this would be a new quantum computational advantage for a natural problem (finding Nash equilibria). If it fails, it would clarify the limitations of quantum game theory.\n\n**Catalog References**: `Physics/` (quantum error correction results), `Bridges/SpernerNashEquilibria.lean`\n\n**Proof Strategy**: Formalize quantum games in Lean using matrices over \u2102. Prove the zero-regret characterization for quantum strategies (should follow from the spectral theorem). The exponential speedup claim would require constructing explicit quantum states that \"shortcut\" the Sperner triangulation.\n\n**Domain Bridges**: Quantum computing \u2194 Game theory \u2194 Combinatorial topology\n\n**Lineage**: Novel direction combining this cycle's regret landscape with quantum information theory.\n\n**Ambition**: grand_challenge\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0699",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f89c016e",
+    "status": "available",
+    "timestamp": "2026-06-05T08:35:29.811035+00:00",
+    "title": "**Nash Regret Landscape** as a novel mathema"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -2566,7 +2596,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mathematical foundations of a holographic co"
   },
   {
-    "consumed_by_exp_id": "3860a5c0",
+    "consumed_by_exp_id": "",
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domains": [
       "Computation",
@@ -2576,7 +2606,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3699999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.254223+00:00",
     "title": "Game of Life Universality"
   },
@@ -3061,7 +3091,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
   {
-    "consumed_by_exp_id": "90302e56",
+    "consumed_by_exp_id": "",
     "description": "Formalize musical counterpoint rules (Fux's species counterpoint) as a category where objects are consonant intervals and morphisms are permitted voice leadings. Conjecture: The category of first-species counterpoint over a diatonic scale is equivalent to the thin category generated by a specific poset of 12 elements. Test: enumerate all valid first-species counterpoint motions and prove they form exactly this category. Impact: bridges music theory, order theory, and categorical logic.",
     "domains": [
       "Algebra",
@@ -3071,7 +3101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.503715+00:00",
     "title": "Sonic Mathematics: Counterpoint as Category Theory"
   },
@@ -3136,7 +3166,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Consciousness as Integrated Information"
   },
   {
-    "consumed_by_exp_id": "f9ff9271",
+    "consumed_by_exp_id": "",
     "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
     "domains": [
       "Speculative",
@@ -3146,7 +3176,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.177474+00:00",
     "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
@@ -3736,7 +3766,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8753eff2",
     "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
     "domains": [
       "Novelty",
@@ -3746,7 +3776,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.525722+00:00",
     "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
@@ -4186,7 +4216,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
   },
   {
-    "consumed_by_exp_id": "af1058f7",
+    "consumed_by_exp_id": "",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -4196,7 +4226,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
@@ -4815,7 +4845,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "63d3cfd9",
     "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
     "domains": [
       "Novelty",
@@ -4825,7 +4855,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.662181+00:00",
     "title": "Speculative: Category Theory as the DNA of Mathematics"
   },
@@ -4860,7 +4890,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
   },
   {
-    "consumed_by_exp_id": "e17bed83",
+    "consumed_by_exp_id": "",
     "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
     "domains": [
       "Novelty",
@@ -4870,7 +4900,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.923091+00:00",
     "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
   },

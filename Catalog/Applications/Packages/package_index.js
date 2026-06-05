@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f89c016e",
     "filename": "sperners_lemma_implies_nash_equilibria_combinatori.json",
     "pkg_num": 381,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5444,
     "title": "The Regret Landscape: Sperner-Nash Duality and Combinatorial Fixed Points in Game Theory"
   },
   {
@@ -12200,8 +12200,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5444,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Regret Landscape: Sperner-Nash Duality and Combinatorial Fixed Points in Game Theory"
     }
