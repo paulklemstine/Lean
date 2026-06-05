@@ -199,6 +199,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established a rigorous bridge between spectral graph theory and adversarial robustness in neural networks. The core discovery is that the algebraic connectivity \u03bb\u2082 of a computation graph, through the contraction factor c = 1 \u2212 \u03bb\u2082/d_max, provides an exponential improvement in certified robustness radius with each smoothing iteration. The most surprising result is the **robustness duality**: graphs with the same \u03bb\u2082/d_max ratio are robustness-equivalent, meaning sparse and dense graphs can achieve identical robustness guarantees.\n\nThe most promising cross-domain connection is the **Poincar\u00e9-Spectral-Robustness Bridge**, which links spectral geometry (Fiedler's algebraic connectivity), harmonic analysis (Poincar\u00e9 inequality on graphs), and adversarial ML (certified robustness). This three-way bridge suggests that other spectral-analytic tools \u2014 Cheeger's inequality, expander mixing lemma, heat kernel estimates \u2014 could yield fundamentally new robustness guarantees beyond the Lipschitz paradigm.\n\nThe highest breakthrough potential lies in **Direction 1** (non-linear spectral contraction), because real graph neural networks use non-linear activation functions, and our current theory is limited to linear smoothing. Proving contraction bounds for non-linear message-passing would make the spectral robustness framework directly applicable to state-of-the-art GNN architectures.\n\n---\n\n### Direction 1: Non-Linear Spectral Contraction Bounds\n\n**Conjecture**: For a graph neural network with ReLU activation and graph Laplacian L, the effective contraction factor under one message-passing step satisfies c_eff \u2264 c_linear = 1 \u2212 \u03bb\u2082/d_max, i.e., non-linear smoothing contracts at least as much as linear smoothing.\n\n**Test**: Formalize the contraction analysis for the non-linear operator T(f) = \u03c3(W \u00b7 smooth(f)) where \u03c3 is ReLU and smooth is the linear averaging operator. Compute the Lipschitz constant of T and compare with c \u00b7 \u2016W\u2016. A counterexample would be a specific graph and weight matrix where the non-linear operator expands more than the linear contraction predicts.\n\n**Impact**: If true, our entire spectral robustness framework applies directly to real GNN architectures with ReLU activations. The certified radius bounds become practically applicable. If false, the failure case reveals which non-linearities break the spectral smoothing guarantee, guiding the design of \"spectrally compatible\" activation functions.\n\n**Catalog References**: `Catalog/MachineLearning/SheafCertifiedRobustness.lean`, `MachineLearning/SpectralRobustness.lean`\n\n**Proof Strategy**: \n1. Prove that ReLU is 1-Lipschitz (standard).\n2. Show that linear smoothing with contraction c composed with a 1-Lipschitz function has Lipschitz constant \u2264 c.\n3. The key lemma is: for any 1-Lipschitz \u03c3 and linear map W, Lip(\u03c3 \u2218 W \u2218 smooth) \u2264 \u2016W\u2016 \u00b7 c.\n4. Use the sub-multiplicativity of Lipschitz constants under composition.\n\n**Domain Bridges**: Spectral Graph Theory <-> Neural Network Architecture <-> Convex Optimization (for Lipschitz computation)\n\n**Lineage**: Builds on `spectral_certified_radius_improvement` and `smoothing_reduces_lipschitz` from this cycle's results.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Cheeger Inequality for Certified Robustness\n\n**Conjecture**: The Cheeger constant h(G) of a computation graph provides a tighter certified robustness bound than algebraic connectivity for graphs with bottleneck structure. Specifically, the certified radius satisfies: radius \u2265 margin / ((1 \u2212 h\u00b2/(2d_max\u00b2))^k \u00b7 L), and this bound is strictly tighter than the \u03bb\u2082-based bound for certain graph families (e.g., barbell graphs).\n\n**Test**: \n1. Formalize the Cheeger constant h(G) = min_{S} |\u2202S|/(min(|S|, |V\\S|)).\n2. Prove the discrete Cheeger inequality: h\u00b2/2 \u2264 \u03bb\u2082 \u2264 2h.\n3. Derive the certified radius bound from the Cheeger constant.\n4. Construct a specific graph family (barbell graphs) where the Cheeger-based bound is strictly tighter.\n\n**Impact**: If true, this provides a *geometric* (rather than purely algebraic) characterization of robustness, connecting to graph partitioning and community structure. It would mean that graphs with clear community structure are inherently less robust \u2014 a surprising and practically important insight. If false, it reveals that algebraic connectivity captures all the robustness-relevant information, simplifying the theory.\n\n**Catalog References**: `MachineLearning/SpectralRobustness.lean` (contraction_factor, certified_radius)\n\n**Proof Strategy**:\n1. Formalize the Cheeger constant for finite graphs.\n2. Prove the discrete Cheeger inequality (standard but non-trivial).\n3. Use h\u00b2 \u2264 2\u03bb\u2082 to derive the contraction bound.\n4. For the tightness result, use barbell graphs where h is much smaller than \u221a(2\u03bb\u2082).\n\n**Domain Bridges**: Geometric Analysis (isoperimetric inequalities) <-> Graph Theory (Cheeger constant) <-> Adversarial ML (certified robustness)\n\n**Lineage**: Builds on `contraction_in_unit_interval` and `algebraic_connectivity_robustness_lower_bound` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Spectral Robustness for Attention Graphs in Transformers\n\n**Conjecture**: The effective algebraic connectivity of a transformer's attention graph (where edge weights are attention scores) determines a contraction factor for the attention mechanism. For a self-attention layer with attention matrix A, the effective contraction factor is c_attn = 1 \u2212 \u03bb\u2082(L_A)/d_max(A), where L_A is the Laplacian of the attention-weighted graph.\n\n**Test**: \n1. Define the attention graph Laplacian from attention weights.\n2. Compute \u03bb\u2082 for typical attention patterns (uniform, local, sparse).\n3. Prove that the attention mechanism acts as a graph smoothing operator with the predicted contraction factor.\n4. Verify numerically on pre-trained transformer attention matrices.\n\n**Impact**: If true, this would provide the first spectral characterization of transformer robustness, explaining why certain attention patterns produce more robust models. It could guide attention regularization for robustness. If false, attention mechanisms have fundamentally different smoothing properties than standard graph smoothing, which is itself an important insight.\n\n**Catalog References**: `MachineLearning/SpectralRobustness.lean`, `Catalog/MachineLearning/SheafCertifiedRobustness.lean`\n\n**Proof Strategy**:\n1. Model attention as a weighted adjacency matrix.\n2. Construct the attention Laplacian and compute its spectrum.\n3. Prove that multi-head attention with k heads provides contraction \u220f c\u1d62.\n4. Use the robustness duality to show that sparse attention (lower d_max) can be as robust as dense attention if \u03bb\u2082/d_max is maintained.\n\n**Domain Bridges**: Natural Language Processing (transformers) <-> Spectral Graph Theory (Laplacian spectrum) <-> Adversarial ML (robustness)\n\n**Lineage**: Builds on the `robustness_ratio_duality` theorem from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Dynamic Spectral Robustness and Adaptive Smoothing\n\n**Conjecture**: For a sequence of graphs G\u2081, G\u2082, ..., G\u2096 used in successive smoothing steps (each with contraction factor c\u1d62), the certified radius is:\nradius \u2265 margin / (\u220f\u1d62 c\u1d62 \u00b7 L)\nand the optimal allocation of a fixed \"connectivity budget\" B = \u03a3 \u03bb\u2082\u1d62 across k steps is to equalize all contraction factors: c\u2081 = c\u2082 = ... = c\u2096.\n\n**Test**:\n1. Formalize the heterogeneous smoothing framework with per-step graphs.\n2. Prove the product contraction bound.\n3. Use Lagrange multipliers (or AM-GM inequality) to prove the equalization result.\n4. Verify numerically that non-uniform allocation always yields worse robustness.\n\n**Impact**: If true, this provides an optimal design principle for multi-scale graph neural networks: distribute connectivity evenly across layers. This would be a practically important design guideline. If false, the optimal allocation depends on network depth in a non-trivial way, which itself is interesting.\n\n**Catalog References**: `MachineLearning/SpectralRobustness.lean` (iterSmoothLip_double, iterated_smoothing_radius_monotone)\n\n**Proof Strategy**:\n1. Generalize `iterSmoothLip` to use a list of contraction factors.\n2. Prove the product bound by induction on the list.\n3. Apply AM-GM: \u220f c\u1d62 \u2264 (\u03a3 c\u1d62 / k)^k, with equality iff all c\u1d62 are equal.\n4. Convert between \u03bb\u2082\u1d62 budget and c\u1d62 allocation.\n\n**Domain Bridges**: Optimization Theory (Lagrange multipliers) <-> Network Architecture Search <-> Spectral Graph Theory\n\n**Lineage**: Extends `iterated_smoothing_lipschitz_bound` and `iterated_smoothing_radius_monotone` to heterogeneous sequences.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Heat Kernel Robustness and Continuous-Time Smoothing\n\n**Conjecture**: The heat kernel e^{-tL} on a graph provides a continuous-time analog of iterated smoothing, with contraction factor e^{-t\u03bb\u2082}. This yields tighter robustness bounds for \"fractional\" smoothing steps and connects to the heat equation interpretation: robustness certification is equivalent to estimating the cooling rate of adversarial perturbations.\n\n**Test**:\n1. Formalize the matrix exponential e^{-tL} for the graph Laplacian.\n2. Prove that the contraction factor of the heat kernel at time t is e^{-t\u03bb\u2082}.\n3. Show that iterated smoothing (discrete time) converges to heat kernel smoothing as step size \u2192 0.\n4. Derive the continuous-time robustness bound: radius \u2265 margin \u00b7 e^{t\u03bb\u2082} / L.\n\n**Impact**: If true, this unifies the discrete (iterated) and continuous (heat kernel) approaches to spectral robustness, and provides a natural interpolation parameter t that can be optimized. The heat equation metaphor \u2014 \"adversarial perturbations diffuse away like heat\" \u2014 is conceptually powerful and connects to PDEs on graphs. If false, the continuous-time limit introduces subtle issues (matrix exponential vs. powers) that constrain the applicability.\n\n**Catalog References**: `MachineLearning/SpectralRobustness.lean`, potentially `Catalog/EML/AdvancedTheory.lean` (for spectral methods)\n\n**Proof Strategy**:\n1. Use Mathlib's matrix exponential (`Matrix.exp`) if available.\n2. Diagonalize L = U\u039bU^T and compute e^{-tL} = U\u00b7diag(e^{-t\u03bb\u1d62})\u00b7U^T.\n3. The contraction factor is max(e^{-t\u03bb\u1d62} : i \u2265 2) = e^{-t\u03bb\u2082}.\n4. Show c^k \u2192 e^{-t\u03bb\u2082} as k \u2192 \u221e, dt \u2192 0, k\u00b7dt \u2192 t.\n\n**Domain Bridges**: PDE Theory (heat equation) <-> Spectral Graph Theory <-> Adversarial ML <-> Stochastic Processes (random walks)\n\n**Lineage**: Generalizes the discrete contraction framework of this cycle to continuous time.\n\n**Ambition**: extension\n",
+    "domains": [
+      "MachineLearning",
+      "Algebra"
+    ],
+    "id": "fd_0671",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "21038de9",
+    "status": "available",
+    "timestamp": "2026-06-05T00:32:14.530430+00:00",
+    "title": "Rigorous bridge between spectral graph theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number \u03c1 = g - (r+1)(g-d+r) \u2265 0. Formalize the connection to classical algebraic geometry.",
     "domains": [
       "Tropical",
@@ -573,7 +588,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "f26cec77",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -583,7 +598,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -1876,7 +1891,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
   },
   {
-    "consumed_by_exp_id": "ef36afed",
+    "consumed_by_exp_id": "",
     "description": "Arrow's impossibility theorem states that no ranked voting system can be fair (Pareto efficient, non-dictatorial, and independent of irrelevant alternatives). The Borsuk-Ulam theorem states that every continuous function f: S^n -> R^n maps some pair of antipodal points to the same value: f(x) = f(-x). Conjecture: Arrow's theorem is a corollary of Borsuk-Ulam. Specifically, define the 'preference sphere' S^{n-1} as the set of all preference profiles over n alternatives, where antipodal points represent opposite preferences (x prefers A > B > C, -x prefers C > B > A). Define f: S^{n-1} -> R^{n-1} by f(x) = (social_preference(x)_1, ..., social_preference(x)_{n-1}). By Borsuk-Ulam, there exists x such that f(x) = f(-x), meaning the social preference for profile x equals the social preference for profile -x. This contradicts Pareto efficiency (if all voters prefer A to B, the social preference should prefer A to B). Therefore, no continuous voting function satisfies all of Arrow's axioms. Conjecture: this proof generalizes: any social choice function on n alternatives is either discontinuous or dictatorial. Test: formalize the Borsuk-Ulam proof of Arrow's theorem in Lean 4. Impact: social choice theory is topology. Arrow's impossibility is a topological theorem about spheres.",
     "domains": [
       "Novelty",
@@ -1886,7 +1901,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.691072+00:00",
     "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
   },
@@ -3465,7 +3480,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "905a2bf6",
     "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology \u2014 their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
     "domains": [
       "Novelty",
@@ -3475,7 +3490,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.617168+00:00",
     "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
@@ -4485,7 +4500,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },
   {
-    "consumed_by_exp_id": "0745dd05",
+    "consumed_by_exp_id": "",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
     "domains": [
       "Novelty",
@@ -4495,7 +4510,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.311824+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },

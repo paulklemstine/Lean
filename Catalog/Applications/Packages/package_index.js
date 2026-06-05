@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "21038de9",
     "filename": "spectral_graph_theory_meets_network_robustness.json",
     "pkg_num": 371,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4996,
     "title": "Spectral Graph Theory Meets Neural Network Robustness"
   },
   {
@@ -11910,8 +11910,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "spectral_graph_theory_meets_network_robustness",
       "primary_domain": "MachineLearning",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4996,
+      "quality": "partial",
       "shape": "sphere_rings",
       "title": "Spectral Graph Theory Meets Neural Network Robustness"
     }
