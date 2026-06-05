@@ -1,0 +1,22 @@
+{
+  "checkpoints": [
+    {
+      "elapsed_seconds": 0.5,
+      "percent_complete": 0.0,
+      "status": "SUBMITTED",
+      "timestamp": "2026-06-05T15:35:18"
+    }
+  ],
+  "completed_at": "",
+  "domain": "Bridges",
+  "error": "",
+  "final_percent": 0.0,
+  "final_status": "",
+  "has_files": false,
+  "job_id": "8fed90ac",
+  "project_id": "b3af5972-48fa-4918-b963-7893f044f10b",
+  "prompt_length": 25369,
+  "stages": [],
+  "submitted_at": "2026-06-05T15:35:18",
+  "total_duration_seconds": 0.0
+}
