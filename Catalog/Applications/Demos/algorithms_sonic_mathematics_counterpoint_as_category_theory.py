@@ -1,218 +1,236 @@
 #!/usr/bin/env python3
 """
-Algorithms: Voice Leading Algebra for Counterpoint Analysis
+Algorithms for Counterpoint Category Theory
 
-Type-hinted implementations of the core VLA algorithms.
+Type-hinted implementations of the core algorithms used in the
+formalization of first-species counterpoint as category theory.
 """
 
-from typing import Set, Tuple, List, Dict, Optional
-from dataclasses import dataclass
+from typing import Optional
 
 
-@dataclass(frozen=True)
-class VoiceLeading:
-    """A voice leading: pair of voice motions in semitones mod n."""
-    delta_upper: int
-    delta_lower: int
-    
-    def apply(self, interval: int, n: int = 12) -> int:
-        """Apply this voice leading to an interval."""
-        return (interval + self.delta_upper - self.delta_lower) % n
-    
-    def compose(self, other: 'VoiceLeading', n: int = 12) -> 'VoiceLeading':
-        """Compose two voice leadings by adding motions."""
-        return VoiceLeading(
-            (self.delta_upper + other.delta_upper) % n,
-            (self.delta_lower + other.delta_lower) % n
-        )
-    
-    def is_parallel(self, n: int = 12) -> bool:
-        """Check for parallel motion."""
-        return (self.delta_upper % n == self.delta_lower % n and 
-                self.delta_upper % n != 0)
-    
-    def motion_type(self) -> str:
-        """Classify the motion type."""
-        if self.delta_upper == 0 and self.delta_lower == 0:
-            return "stationary"
-        elif self.delta_upper == self.delta_lower:
-            return "parallel"
-        elif self.delta_upper == 0 or self.delta_lower == 0:
-            return "oblique"
-        else:
-            return "similar/contrary"
+# === Core Types ===
+
+PitchClass = int  # Elements of Z/12Z
+Interval = int    # Consonant interval (0, 3, 4, 7, 8, 9)
+StepBound = int   # Maximum step size for voice leading
+
+CONSONANT_INTERVALS: list[Interval] = [0, 3, 4, 7, 8, 9]
+PERFECT_CONSONANCES: set[Interval] = {0, 7}
+IMPERFECT_CONSONANCES: set[Interval] = {3, 4, 8, 9}
 
 
-@dataclass
-class VoiceLeadingAlgebra:
+# === Algorithm 1: Step Distance ===
+
+def step_distance(x: PitchClass) -> int:
     """
-    A Voice Leading Algebra over Z/nZ.
+    Compute the minimum step distance for a pitch class motion.
     
-    Parameters:
-        n: modulus (number of pitch classes)
-        consonances: set of consonant interval classes
-        perfects: set of perfect consonance classes (subset of consonances)
+    Pseudocode:
+        stepDist(x) = min(x mod 12, 12 - (x mod 12))
+    
+    This gives the shortest path around the chromatic circle.
     """
-    n: int
-    consonances: Set[int]
-    perfects: Set[int]
+    v = x % 12
+    return min(v, 12 - v)
+
+
+# === Algorithm 2: Chromatic Distance ===
+
+def chromatic_distance(i: Interval, j: Interval) -> int:
+    """
+    Compute chromatic circle distance between two intervals.
     
-    def __post_init__(self):
-        assert self.perfects.issubset(self.consonances), \
-            "Perfect consonances must be a subset of consonances"
-        assert len(self.consonances) > 0, \
-            "Must have at least one consonant interval"
+    Pseudocode:
+        chromDist(i, j) = stepDist(j - i)
+    """
+    return step_distance(j - i)
+
+
+# === Algorithm 3: Valid Transition Check ===
+
+def is_valid_transition(i: Interval, j: Interval, max_step: StepBound) -> bool:
+    """
+    Check if a valid voice leading exists from interval i to j.
     
-    def is_valid(self, interval: int, vl: VoiceLeading) -> bool:
-        """Check if a voice leading is valid from the given interval."""
-        if interval % self.n not in self.consonances:
+    Pseudocode:
+        validTransition(i, j, s):
+            for δb in Z/12Z:
+                for δs in Z/12Z:
+                    if j ≡ i + δs - δb (mod 12)
+                       AND stepDist(δb) ≤ s
+                       AND stepDist(δs) ≤ s
+                       AND NOT (δb = δs ≠ 0 AND j ∈ Perfect):
+                        return True
             return False
-        target = vl.apply(interval, self.n)
-        if target not in self.consonances:
-            return False
-        if (interval % self.n in self.perfects and 
-            target == interval % self.n and 
-            vl.is_parallel(self.n)):
-            return False
-        return True
     
-    def all_voice_leadings(self) -> List[VoiceLeading]:
-        """Enumerate all possible voice leadings."""
-        return [VoiceLeading(du, dl) for du in range(self.n) for dl in range(self.n)]
+    Time complexity: O(144) = O(1) since the search space is bounded.
+    """
+    if i not in CONSONANT_INTERVALS or j not in CONSONANT_INTERVALS:
+        return False
     
-    def valid_transitions(self, source: int, target: int) -> List[VoiceLeading]:
-        """Find all valid voice leadings from source to target interval."""
-        result = []
-        for vl in self.all_voice_leadings():
-            if self.is_valid(source, vl) and vl.apply(source, self.n) == target:
-                result.append(vl)
-        return result
+    for db in range(12):
+        for ds in range(12):
+            if (i + ds - db) % 12 == j % 12:
+                if step_distance(db) <= max_step and step_distance(ds) <= max_step:
+                    if not (db == ds and db != 0 and j % 12 in PERFECT_CONSONANCES):
+                        return True
+    return False
+
+
+# === Algorithm 4: Metric Bridge (O(1) shortcut) ===
+
+def metric_bridge_check(i: Interval, j: Interval) -> bool:
+    """
+    O(1) check for step-2 transitions using the Metric Bridge Theorem.
     
-    def adjacency_matrix(self) -> Dict[Tuple[int, int], int]:
-        """Compute the adjacency matrix of the counterpoint quiver."""
-        matrix = {}
-        intervals = sorted(self.consonances)
-        for i in intervals:
-            for j in intervals:
-                matrix[(i, j)] = len(self.valid_transitions(i, j))
-        return matrix
+    Pseudocode:
+        metricBridge(i, j) = chromDist(i, j) ≤ 4
     
-    def is_strongly_connected(self) -> bool:
-        """Check if the counterpoint quiver is strongly connected."""
-        intervals = sorted(self.consonances)
-        for i in intervals:
-            for j in intervals:
-                if len(self.valid_transitions(i, j)) == 0:
-                    return False
-        return True
+    This is equivalent to is_valid_transition(i, j, 2) but runs in O(1)
+    instead of O(144), thanks to the Metric Bridge Theorem.
+    """
+    return chromatic_distance(i, j) <= 4
+
+
+# === Algorithm 5: Find Shortest Path ===
+
+def find_shortest_path(
+    i: Interval, j: Interval, max_step: StepBound
+) -> Optional[list[Interval]]:
+    """
+    Find shortest path in the counterpoint graph using BFS.
     
-    def check_compositionality(self) -> Optional[Tuple[int, int, VoiceLeading, VoiceLeading]]:
-        """
-        Check if valid voice leadings are closed under composition.
-        Returns a counterexample (i, j, v1, v2) if not, None if they are.
-        """
-        intervals = sorted(self.consonances)
-        for i in intervals:
-            for j in intervals:
-                for v1 in self.valid_transitions(i, j):
-                    for k in intervals:
-                        for v2 in self.valid_transitions(j, k):
-                            comp = v1.compose(v2, self.n)
-                            if not self.is_valid(i, comp):
-                                return (i, j, v1, v2)
-        return None
+    Pseudocode:
+        BFS from i, exploring valid transitions at step bound s.
+        Returns shortest path [i, ..., j] or None if unreachable.
     
-    def parallel_self_transition_count(self, interval: int) -> int:
-        """Count parallel self-transitions from an interval."""
-        count = 0
-        for a in range(self.n):
-            vl = VoiceLeading(a, a)
-            if (self.is_valid(interval, vl) and 
-                vl.apply(interval, self.n) == interval):
-                count += 1
-        return count
+    By the Diameter Theorem, at step bound 2, paths have length ≤ 2.
+    At step bound 3+, all direct paths exist (length 1).
+    """
+    from collections import deque
     
-    def inversion_closed(self) -> bool:
-        """Check if consonances are closed under inversion (negation mod n)."""
-        for i in self.consonances:
-            if (-i) % self.n not in self.consonances:
+    if i == j:
+        return [i]
+    
+    queue: deque[list[Interval]] = deque([[i]])
+    visited: set[Interval] = {i}
+    
+    while queue:
+        path = queue.popleft()
+        current = path[-1]
+        
+        for next_interval in CONSONANT_INTERVALS:
+            if next_interval not in visited:
+                if is_valid_transition(current, next_interval, max_step):
+                    new_path = path + [next_interval]
+                    if next_interval == j:
+                        return new_path
+                    visited.add(next_interval)
+                    queue.append(new_path)
+    
+    return None
+
+
+# === Algorithm 6: Connected Components ===
+
+def find_components(max_step: StepBound) -> list[set[Interval]]:
+    """
+    Find connected components of the counterpoint graph.
+    
+    Pseudocode:
+        Standard DFS/BFS component finding on the transition graph.
+    
+    Results by step bound:
+        Step 1: {0}, {3,4}, {7,8,9}  (3 components)
+        Step 2: {0,3,4,7,8,9}        (1 component, connected)
+        Step 3+: {0,3,4,7,8,9}       (1 component, complete)
+    """
+    remaining = set(CONSONANT_INTERVALS)
+    components: list[set[Interval]] = []
+    
+    while remaining:
+        start = min(remaining)
+        component: set[Interval] = set()
+        stack = [start]
+        
+        while stack:
+            v = stack.pop()
+            if v in remaining:
+                remaining.discard(v)
+                component.add(v)
+                for w in CONSONANT_INTERVALS:
+                    if w in remaining and is_valid_transition(v, w, max_step):
+                        stack.append(w)
+        
+        components.append(component)
+    
+    return components
+
+
+# === Algorithm 7: Transition Matrix ===
+
+def transition_matrix(max_step: StepBound) -> list[list[bool]]:
+    """
+    Compute the full adjacency matrix of the counterpoint graph.
+    
+    Returns a 6×6 boolean matrix indexed by CONSONANT_INTERVALS.
+    """
+    return [
+        [is_valid_transition(i, j, max_step) for j in CONSONANT_INTERVALS]
+        for i in CONSONANT_INTERVALS
+    ]
+
+
+# === Algorithm 8: Graph Diameter ===
+
+def compute_diameter(max_step: StepBound) -> int:
+    """
+    Compute the diameter of the counterpoint graph.
+    Uses all-pairs BFS.
+    """
+    max_dist = 0
+    for i in CONSONANT_INTERVALS:
+        for j in CONSONANT_INTERVALS:
+            path = find_shortest_path(i, j, max_step)
+            if path is None:
+                return float('inf')  # type: ignore
+            max_dist = max(max_dist, len(path) - 1)
+    return max_dist
+
+
+# === Verification ===
+
+def verify_metric_bridge() -> bool:
+    """Verify the Metric Bridge Theorem for all consonant pairs."""
+    for i in CONSONANT_INTERVALS:
+        for j in CONSONANT_INTERVALS:
+            brute = is_valid_transition(i, j, 2)
+            metric = metric_bridge_check(i, j)
+            if brute != metric:
                 return False
-        return True
-    
-    def inversion_failures(self) -> Set[int]:
-        """Find consonant intervals whose inversion is not consonant."""
-        return {i for i in self.consonances if (-i) % self.n not in self.consonances}
-
-
-def standard_12tet() -> VoiceLeadingAlgebra:
-    """The standard 12-TET Voice Leading Algebra."""
-    return VoiceLeadingAlgebra(
-        n=12,
-        consonances={0, 3, 4, 7, 8, 9},
-        perfects={0, 7}
-    )
-
-
-def tension_rank(interval: int) -> int:
-    """Compute the tension rank of an interval in 12-TET."""
-    ranks = {0: 0, 7: 1, 4: 2, 3: 3, 9: 4, 8: 5}
-    return ranks.get(interval % 12, 6)
-
-
-def find_obstruction_witness(vla: VoiceLeadingAlgebra) -> Optional[dict]:
-    """
-    Find a witness for the Counterpoint Obstruction (non-compositionality).
-    
-    Returns a dict with keys: source, intermediate, v1, v2, composite, reason
-    or None if composition is always valid.
-    """
-    result = vla.check_compositionality()
-    if result is None:
-        return None
-    
-    i, j, v1, v2 = result
-    comp = v1.compose(v2, vla.n)
-    k = v2.apply(j, vla.n)
-    
-    return {
-        "source": i,
-        "intermediate": j,
-        "target": k,
-        "v1": (v1.delta_upper, v1.delta_lower),
-        "v2": (v2.delta_upper, v2.delta_lower),
-        "composite": (comp.delta_upper, comp.delta_lower),
-        "reason": "parallel perfect consonance in composite"
-    }
+    return True
 
 
 if __name__ == "__main__":
-    vla = standard_12tet()
+    print("Verifying Metric Bridge Theorem...", end=" ")
+    assert verify_metric_bridge(), "FAILED"
+    print("✓ Verified for all 36 pairs")
     
-    print("=== Voice Leading Algebra: 12-TET ===")
-    print(f"Consonances: {sorted(vla.consonances)}")
-    print(f"Perfects: {sorted(vla.perfects)}")
-    print(f"Strongly connected: {vla.is_strongly_connected()}")
-    print(f"Inversion closed: {vla.inversion_closed()}")
-    print(f"Inversion failures: {vla.inversion_failures()}")
-    print()
+    print("\nGraph diameters:")
+    for s in [1, 2, 3]:
+        d = compute_diameter(s)
+        print(f"  Step bound {s}: diameter = {d}")
     
-    witness = find_obstruction_witness(vla)
-    if witness:
-        print(f"Obstruction witness found:")
-        for k, v in witness.items():
-            print(f"  {k}: {v}")
-    print()
+    print("\nConnected components:")
+    for s in [1, 2, 3]:
+        comps = find_components(s)
+        print(f"  Step bound {s}: {len(comps)} component(s) — {comps}")
     
-    print("Parallel self-transition counts:")
-    for i in sorted(vla.consonances):
-        count = vla.parallel_self_transition_count(i)
-        kind = "perfect" if i in vla.perfects else "imperfect"
-        print(f"  interval {i:2d} ({kind:9s}): {count} transitions")
-    print()
-    
-    print("Adjacency matrix:")
-    matrix = vla.adjacency_matrix()
-    intervals = sorted(vla.consonances)
-    for i in intervals:
-        row = [matrix[(i, j)] for j in intervals]
-        print(f"  {i:2d}: {row}")
+    print("\nShortest paths for blocked pairs at step 2:")
+    blocked = [(0, 7), (3, 8), (3, 9), (4, 9)]
+    for i, j in blocked:
+        path = find_shortest_path(i, j, 2)
+        names = {0: "P1", 3: "m3", 4: "M3", 7: "P5", 8: "m6", 9: "M6"}
+        path_str = " → ".join(names[p] for p in path) if path else "unreachable"
+        print(f"  {names[i]} → {names[j]}: {path_str}")
