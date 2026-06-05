@@ -1,221 +1,223 @@
-#!/usr/bin/env python3
 """
-Algorithms for Gravitational Derivation Systems
+Anti-Gravity Theorems: Algorithms for Analyzing Theorem Dependency Graphs
 
-Type-hinted implementations of the core algorithms for analyzing
-anti-gravity phenomena in theorem dependency graphs.
+This module implements the core algorithms for computing anti-gravity scores,
+weight-complexity duality verification, and Kraft sparsity bounds.
 """
 
 from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import Optional
+from typing import Dict, List, Set, Tuple
+from collections import defaultdict
 import math
 
 
-@dataclass
-class GravitationalDerivationSystem:
+class DepGraph:
+    """A directed graph modeling theorem dependencies.
+    
+    dep(u, v) means theorem u directly depends on theorem v.
     """
-    A Gravitational Derivation System (GDS) on n theorems.
-
-    Theorems are numbered 0..n-1. Each theorem has a proof length and
-    dependencies on other theorems (forming a DAG).
-    """
-    n: int
-    adj: list[list[bool]]  # adj[i][j] = True means theorem i depends on theorem j
-    proof_lengths: list[int]
-    _weight_cache: Optional[list[int]] = field(default=None, repr=False)
-
-    def __post_init__(self) -> None:
-        assert len(self.adj) == self.n
-        assert all(len(row) == self.n for row in self.adj)
-        assert len(self.proof_lengths) == self.n
-        assert all(pl > 0 for pl in self.proof_lengths)
-        # Verify no self-dependencies
-        assert all(not self.adj[i][i] for i in range(self.n))
-
-    def direct_weight(self, j: int) -> int:
-        """Compute the gravitational weight of theorem j (in-degree)."""
-        if self._weight_cache is not None:
-            return self._weight_cache[j]
-        return sum(1 for i in range(self.n) if self.adj[i][j])
-
-    def compute_all_weights(self) -> list[int]:
-        """Compute and cache all weights. O(n²) time."""
-        self._weight_cache = [
-            sum(1 for i in range(self.n) if self.adj[i][j])
-            for j in range(self.n)
-        ]
-        return self._weight_cache
-
+    
+    def __init__(self, vertices: List[str], edges: List[Tuple[str, str]]):
+        """Initialize with vertex list and edge list [(u, v)] meaning u depends on v."""
+        self.vertices: List[str] = vertices
+        self.edges: List[Tuple[str, str]] = edges
+        self._dependents: Dict[str, Set[str]] = defaultdict(set)  # v -> {u : dep(u,v)}
+        self._dependencies: Dict[str, Set[str]] = defaultdict(set)  # u -> {v : dep(u,v)}
+        
+        for u, v in edges:
+            assert u != v, f"Self-loop detected: {u}"
+            self._dependents[v].add(u)
+            self._dependencies[u].add(v)
+    
+    def weight(self, v: str) -> int:
+        """Number of vertices that directly depend on v."""
+        return len(self._dependents.get(v, set()))
+    
+    def complexity(self, v: str) -> int:
+        """Number of vertices that v directly depends on."""
+        return len(self._dependencies.get(v, set()))
+    
+    def is_source(self, v: str) -> bool:
+        """Whether v is a source (axiom) with no dependencies."""
+        return self.complexity(v) == 0
+    
+    def sources(self) -> List[str]:
+        """All source vertices."""
+        return [v for v in self.vertices if self.is_source(v)]
+    
     def total_edges(self) -> int:
         """Total number of dependency edges."""
-        return sum(1 for i in range(self.n) for j in range(self.n) if self.adj[i][j])
+        return len(self.edges)
+    
+    def anti_gravity_score(self, v: str) -> float:
+        """Anti-gravity score: weight / (complexity + 1)."""
+        return self.weight(v) / (self.complexity(v) + 1)
+    
+    def is_anti_gravity(self, v: str, w_threshold: int, c_threshold: int) -> bool:
+        """Whether v is anti-gravity at given thresholds."""
+        return self.weight(v) >= w_threshold and self.complexity(v) <= c_threshold
+    
+    def anti_gravity_set(self, w_threshold: int, c_threshold: int) -> List[str]:
+        """All anti-gravity vertices at given thresholds."""
+        return [v for v in self.vertices 
+                if self.is_anti_gravity(v, w_threshold, c_threshold)]
+    
+    def transitive_weight(self, v: str) -> int:
+        """Number of vertices transitively reachable from v (BFS)."""
+        visited: Set[str] = set()
+        queue = [v]
+        while queue:
+            u = queue.pop(0)
+            if u in visited:
+                continue
+            visited.add(u)
+            for w in self._dependents.get(u, set()):
+                if w not in visited:
+                    queue.append(w)
+        return len(visited) - 1  # exclude v itself
+    
+    def depth(self, v: str) -> int:
+        """Shortest path from any source to v (BFS from all sources)."""
+        if self.is_source(v):
+            return 0
+        sources = self.sources()
+        if not sources:
+            return float('inf')  # type: ignore
+        
+        visited: Dict[str, int] = {}
+        queue: List[Tuple[str, int]] = [(s, 0) for s in sources]
+        
+        for s, _ in queue:
+            visited[s] = 0
+        
+        while queue:
+            u, d = queue.pop(0)
+            for w in self._dependents.get(u, set()):
+                if w not in visited:
+                    visited[w] = d + 1
+                    queue.append((w, d + 1))
+        
+        return visited.get(v, float('inf'))  # type: ignore
 
-    def dep_count(self, i: int) -> int:
-        """Number of direct dependencies of theorem i (out-degree)."""
-        return sum(1 for j in range(self.n) if self.adj[i][j])
 
-    def max_proof_length(self) -> int:
-        """Maximum proof length in the system."""
-        return max(self.proof_lengths)
-
-    def anti_gravity_score(self, j: int) -> float:
-        """Anti-gravity score: weight / proof_length."""
-        return self.direct_weight(j) / self.proof_lengths[j]
-
-    def is_anti_gravity(self, j: int, w: int, l: int) -> bool:
-        """Check if theorem j is (w, l)-anti-gravity."""
-        return self.direct_weight(j) >= w and self.proof_lengths[j] <= l
-
-    def transitive_weight(self, j: int) -> int:
-        """Compute transitive weight: number of theorems that transitively depend on j."""
-        visited: set[int] = set()
-
-        def dfs_reverse(v: int) -> None:
-            """Find all vertices that can reach j via the reverse graph."""
-            for i in range(self.n):
-                if self.adj[i][v] and i not in visited:
-                    # i depends on v, so i transitively depends on j
-                    pass
-            # Actually, we want all i such that there's a path from i to j
-            # i.e., i -> ... -> j in the dependency graph
-            # This means: i depends on some k, k depends on ... j
-            # Reverse: from j, follow edges backwards (who depends on j?)
-            for i in range(self.n):
-                if self.adj[i][v] and i not in visited:
-                    visited.add(i)
-                    dfs_reverse(i)
-
-        dfs_reverse(j)
-        return len(visited)
-
-    def add_edge(self, a: int, b: int) -> GravitationalDerivationSystem:
-        """Add edge (a, b) meaning theorem a now depends on theorem b."""
-        assert a != b
-        new_adj = [row[:] for row in self.adj]
-        new_adj[a][b] = True
-        return GravitationalDerivationSystem(self.n, new_adj, self.proof_lengths[:])
-
-
-def detect_anti_gravity_ranking(
-    gds: GravitationalDerivationSystem,
-) -> list[tuple[int, int, int, float]]:
+def verify_weight_complexity_duality(G: DepGraph) -> Tuple[int, int, bool]:
+    """Verify that sum of weights equals sum of complexities.
+    
+    Returns (total_weight, total_complexity, are_equal).
     """
-    Algorithm: Anti-Gravity Detection
+    total_weight = sum(G.weight(v) for v in G.vertices)
+    total_complexity = sum(G.complexity(v) for v in G.vertices)
+    return total_weight, total_complexity, total_weight == total_complexity
 
-    Input: A GDS
-    Output: Ranking of theorems by anti-gravity score (descending)
 
-    Returns list of (theorem_id, weight, proof_length, score) tuples.
-
-    Complexity: O(n²) for weight computation, O(n log n) for sorting.
+def find_above_average_weight(G: DepGraph) -> Tuple[str, int, float]:
+    """Find a vertex with above-average weight.
+    
+    Returns (vertex, weight, average_weight).
     """
-    gds.compute_all_weights()
-    results = []
-    for j in range(gds.n):
-        w = gds.direct_weight(j)
-        pl = gds.proof_lengths[j]
-        score = w / pl
-        results.append((j, w, pl, score))
-    results.sort(key=lambda x: x[3], reverse=True)
-    return results
+    n = len(G.vertices)
+    if n == 0:
+        raise ValueError("Empty graph")
+    
+    avg = G.total_edges() / n
+    best_v = max(G.vertices, key=lambda v: G.weight(v))
+    return best_v, G.weight(best_v), avg
 
 
-def verify_weight_edge_duality(gds: GravitationalDerivationSystem) -> bool:
+def markov_bound(G: DepGraph, w: int) -> Tuple[int, int]:
+    """Compute the Markov bound on high-weight vertices.
+    
+    Returns (actual_count, upper_bound).
     """
-    Verify Theorem 1: sum of weights = sum of dep counts.
+    actual = sum(1 for v in G.vertices if G.weight(v) >= w)
+    bound = G.total_edges() // w if w > 0 else len(G.vertices)
+    return actual, bound
 
-    Both sides count the total number of edges, just partitioned differently.
+
+def kraft_sparsity_bound(k: int) -> int:
+    """Maximum number of prefix-free codewords with length <= k.
+    
+    Returns 2^(k+1) - 1.
     """
-    total_weight = sum(gds.direct_weight(j) for j in range(gds.n))
-    total_deps = sum(gds.dep_count(i) for i in range(gds.n))
-    return total_weight == total_deps
+    return 2 ** (k + 1) - 1
 
 
-def verify_pigeonhole_bound(gds: GravitationalDerivationSystem) -> bool:
+def compute_anti_gravity_profile(G: DepGraph) -> List[Dict]:
+    """Compute full anti-gravity profile for all vertices.
+    
+    Returns list of dicts with vertex info, sorted by anti-gravity score.
     """
-    Verify Theorem 2: some theorem has weight >= m/n.
+    profile = []
+    for v in G.vertices:
+        w = G.weight(v)
+        c = G.complexity(v)
+        score = w / (c + 1)
+        profile.append({
+            'vertex': v,
+            'weight': w,
+            'complexity': c,
+            'anti_gravity_score': score,
+            'is_source': G.is_source(v),
+            'transitive_weight': G.transitive_weight(v),
+        })
+    
+    profile.sort(key=lambda x: x['anti_gravity_score'], reverse=True)
+    return profile
+
+
+def weight_distribution(G: DepGraph) -> Dict[int, int]:
+    """Compute the weight distribution: weight -> count of vertices with that weight."""
+    dist: Dict[int, int] = defaultdict(int)
+    for v in G.vertices:
+        dist[G.weight(v)] += 1
+    return dict(sorted(dist.items()))
+
+
+# Example mathematical library DAG
+def example_math_library() -> DepGraph:
+    """A small example modeling a mathematical library.
+    
+    Axioms -> Basic lemmas -> Intermediate results -> Advanced theorems
     """
-    if gds.n == 0:
-        return True
-    m = gds.total_edges()
-    max_weight = max(gds.direct_weight(j) for j in range(gds.n))
-    return max_weight >= m // gds.n
-
-
-def verify_cauchy_schwarz(gds: GravitationalDerivationSystem) -> bool:
-    """
-    Verify Theorem 10: m² <= n * sum(w²).
-    """
-    m = gds.total_edges()
-    sum_w_sq = sum(gds.direct_weight(j) ** 2 for j in range(gds.n))
-    return m ** 2 <= gds.n * sum_w_sq
-
-
-def find_anti_gravity_witnesses(
-    gds: GravitationalDerivationSystem,
-    k: int,
-) -> list[int]:
-    """
-    Find all (k, L)-anti-gravity theorems where L = max proof length.
-
-    By Theorem 4, if n*k <= m, this list is guaranteed non-empty.
-    """
-    L = gds.max_proof_length()
-    return [j for j in range(gds.n) if gds.is_anti_gravity(j, k, L)]
-
-
-def compute_pareto_ratio(gds: GravitationalDerivationSystem, percentile: float = 0.1) -> float:
-    """
-    Compute the fraction of total weight held by the top `percentile` of theorems.
-
-    The Anti-Gravity Pareto Conjecture predicts this is >= 0.5 for percentile = 0.1.
-    """
-    weights = sorted([gds.direct_weight(j) for j in range(gds.n)], reverse=True)
-    total = sum(weights)
-    if total == 0:
-        return 0.0
-    top_count = max(1, int(gds.n * percentile))
-    top_weight = sum(weights[:top_count])
-    return top_weight / total
-
-
-def gini_coefficient(gds: GravitationalDerivationSystem) -> float:
-    """
-    Compute the Gini coefficient of the weight distribution.
-
-    Gini = 0 means perfect equality (all weights equal).
-    Gini = 1 means perfect inequality (one theorem has all weight).
-    Anti-gravity systems tend to have high Gini coefficients.
-    """
-    weights = sorted([gds.direct_weight(j) for j in range(gds.n)])
-    n = gds.n
-    if n == 0 or sum(weights) == 0:
-        return 0.0
-    numerator = sum((2 * (i + 1) - n - 1) * weights[i] for i in range(n))
-    denominator = n * sum(weights)
-    return numerator / denominator
-
-
-if __name__ == "__main__":
-    # Quick self-test
-    n = 5
-    adj = [[False] * n for _ in range(n)]
-    adj[1][0] = True
-    adj[2][0] = True
-    adj[3][1] = True
-    adj[4][2] = True
-    proof_lengths = [1, 2, 2, 3, 3]
-
-    gds = GravitationalDerivationSystem(n, adj, proof_lengths)
-
-    print("Self-test:")
-    print(f"  Weight-edge duality: {verify_weight_edge_duality(gds)}")
-    print(f"  Pigeonhole bound: {verify_pigeonhole_bound(gds)}")
-    print(f"  Cauchy-Schwarz: {verify_cauchy_schwarz(gds)}")
-    print(f"  Pareto ratio (10%): {compute_pareto_ratio(gds):.2%}")
-    print(f"  Gini coefficient: {gini_coefficient(gds):.3f}")
-
-    ranking = detect_anti_gravity_ranking(gds)
-    print(f"  Top anti-gravity: theorem {ranking[0][0]} (score={ranking[0][3]:.2f})")
-    print("All tests passed ✓")
+    vertices = [
+        # Axioms (sources)
+        'axiom_nat_ind', 'axiom_add_comm', 'axiom_mul_assoc',
+        # Basic lemmas
+        'add_zero', 'mul_one', 'succ_pos',
+        # Intermediate
+        'nat_add_comm', 'mul_comm', 'pow_succ',
+        # Advanced
+        'binomial_theorem', 'fermat_little', 'euclid_inf_primes',
+        # Very advanced
+        'prime_number_theorem', 'quadratic_reciprocity',
+    ]
+    
+    edges = [
+        # Basic lemmas depend on axioms
+        ('add_zero', 'axiom_nat_ind'),
+        ('mul_one', 'axiom_nat_ind'),
+        ('mul_one', 'axiom_mul_assoc'),
+        ('succ_pos', 'axiom_nat_ind'),
+        # Intermediate depends on basics
+        ('nat_add_comm', 'axiom_add_comm'),
+        ('nat_add_comm', 'add_zero'),
+        ('mul_comm', 'mul_one'),
+        ('mul_comm', 'nat_add_comm'),
+        ('pow_succ', 'mul_one'),
+        ('pow_succ', 'axiom_nat_ind'),
+        # Advanced depends on intermediate
+        ('binomial_theorem', 'nat_add_comm'),
+        ('binomial_theorem', 'mul_comm'),
+        ('binomial_theorem', 'pow_succ'),
+        ('fermat_little', 'mul_comm'),
+        ('fermat_little', 'pow_succ'),
+        ('euclid_inf_primes', 'succ_pos'),
+        ('euclid_inf_primes', 'mul_comm'),
+        # Very advanced
+        ('prime_number_theorem', 'euclid_inf_primes'),
+        ('prime_number_theorem', 'binomial_theorem'),
+        ('quadratic_reciprocity', 'fermat_little'),
+        ('quadratic_reciprocity', 'mul_comm'),
+    ]
+    
+    return DepGraph(vertices, edges)
