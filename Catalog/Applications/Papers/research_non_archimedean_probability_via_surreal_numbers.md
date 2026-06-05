@@ -1,304 +1,230 @@
-# Non-Archimedean Finitely Additive Probability via Grid Refinement Schemes
+# Non-Archimedean Probability via Surreal-Valued Measures
 
 ## Abstract
 
-We develop a rigorous framework for finitely additive probability valued in ordered fields, motivated by the goal of assigning positive infinitesimal mass to individual points. We define the structure `NAProbability` — a finitely additive probability on a finite type with values in a linearly ordered field — and establish four structural theorems for the canonical family of uniform grid probabilities on `Fin(n+1)`. First, we prove the existence of uniform atomic probabilities with singleton mass `1/(n+1)`. Second, we show that affine observables have exact expectation `a/2 + b`, matching the continuum integral for all grid sizes. Third, we prove refinement invariance: expectation is preserved under grid subdivision by any factor `k ≥ 1`. Fourth, we prove convergence of grid expectations to classical continuum values. We complement these with an impossibility theorem showing that no finitely additive real-valued probability on `ℕ` can assign equal positive mass to all singletons while remaining bounded — delineating the precise frontier where non-Archimedean probability departs from the Kolmogorov framework. All results are formalized and verified in Lean 4 with Mathlib.
+We develop a theory of finitely additive measures valued in linearly ordered abelian groups, with particular attention to the non-Archimedean case. Our main contributions are: (1) a precise characterization of the Archimedean obstruction to infinitesimal point masses, showing that the impossibility of positive-yet-infinitesimal probability in ℝ is a consequence of the Archimedean property rather than measure-theoretic axioms; (2) structural theorems for infinitesimal elements including convexity, additive closure, and finite summation bounds; (3) a construction of uniform infinitesimal measures on finite types with provably bounded total mass; (4) a bridge theorem connecting the anti-cancellation property of positive measures to the aggregate anti-cancellation phenomenon in Lorentzian polynomial theory; and (5) a discrimination theorem showing that infinitesimal measures carry strictly more information than standard measures on finite types. All results are formalized and machine-verified in Lean 4 with Mathlib.
+
+**Keywords:** surreal numbers, non-Archimedean probability, infinitesimal measures, finitely additive measures, anti-cancellation, Lorentzian polynomials
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Classical probability theory, founded on Kolmogorov's axioms (1933), requires countable additivity of the probability measure. This axiom, while extremely powerful for analysis, forces a fundamental constraint: in any probability space with uncountably many equally-weighted atoms, each atom must have mass zero. This is incompatible with the intuition that in a uniform distribution on `[0,1]`, each point should carry some positive "weight."
+Classical probability theory, built on Kolmogorov's axioms with real-valued σ-additive measures, faces a well-known conceptual tension: in continuous probability spaces, individual points must have measure zero, even though the sample space is the union of its points. This is not a deficiency of the axioms but a direct consequence of the Archimedean property of ℝ: for any ε > 0 and any M > 0, there exists n ∈ ℕ with nε > M.
 
-Finitely additive probability — where additivity is required only for finite disjoint unions — relaxes this constraint. In a non-Archimedean ordered field containing infinitesimals, one can potentially assign each point a positive infinitesimal mass summing to exactly 1.
+The surreal numbers, discovered by Conway [Con01] in the context of combinatorial game theory, form the largest ordered field. They contain genuine infinitesimals — positive elements ε with nε ≤ 1 for all n ∈ ℕ. This raises a natural question: can we build a probability theory where infinitesimal point masses are well-defined?
 
-### 1.2 Approach
+### 1.2 Related Work
 
-Rather than attempting to construct surreal-valued measures directly on `[0,1]` (which requires substantial infrastructure not yet available in standard libraries), we build a scaffold of finite approximations with provable structural properties:
+The idea of infinitesimal probabilities has been explored in several frameworks:
 
-1. **Grid probabilities**: For each `n`, a uniform finitely additive probability on `Fin(n+1)` with singleton mass `1/(n+1)`.
-2. **Exact expectations**: Affine observables have grid expectations matching the continuum integral exactly.
-3. **Refinement coherence**: Expectations are preserved under grid subdivision.
-4. **Shadow convergence**: Grid expectations converge to classical values.
+- **Nonstandard analysis** (Robinson [Rob66]): The hyperreals *ℝ provide infinitesimals via ultrapower construction. Loeb measures [Loe75] use the standard part map to recover standard measures from nonstandard ones.
+- **Numerosities** (Benci, Di Nasso [BDN03]): An alternative approach to "counting" that assigns different numerosities to sets of the same cardinality.
+- **Surreal analysis** (Alling [All87], Rubinstein-Salzedo, Swaminathan [RS14]): Extensions of analysis to surreal-valued functions.
 
-This approach establishes the key properties that any surreal or hyperfinite extension must satisfy, providing a rigorous foundation for future constructions.
+Our approach differs from these in that we work abstractly with linearly ordered abelian groups, identifying the precise algebraic conditions under which infinitesimal probability is possible. This generality reveals that the phenomenon is not specific to any particular number system but is a consequence of non-Archimedeanness itself.
 
-### 1.3 Related Work
+### 1.3 Contributions
 
-- **Nonstandard analysis** (Robinson, 1966): Provides hyperreal numbers with infinitesimals, and the Loeb measure construction (1975) builds countably additive measures from hyperfinite counting measures.
-- **Surreal numbers** (Conway, 1976): A universal ordered field containing all ordinals and infinitesimals, originally from combinatorial game theory.
-- **Finitely additive probability** (de Finetti, 1937; Dubins & Savage, 1965): The subjective probability tradition, which requires only finite additivity.
-- **Formal verification**: Mathlib's `Finset`, `Fintype`, and `BigOperators` libraries provide the infrastructure for our formalization.
+Our main results, all formally verified in Lean 4:
 
-## 2. Definitions and Notation
+1. **Archimedean Obstruction** (Theorem 1): In any Archimedean ordered group, no positive infinitesimal exists. This precisely identifies why ℝ-valued probability cannot have infinitesimal point masses.
 
-### 2.1 NAProbability
+2. **Infinitesimal Convexity** (Theorem 2): The set of infinitesimals relative to a fixed unit is downward-closed among positive elements — a structural rigidity result.
 
-**Definition 2.1** (NAProbability). Let `α` be a finite type with decidable equality and `K` a linearly ordered field. An *NAProbability* on `α` valued in `K` is a structure:
+3. **Additive Closure** (Theorem 3): Infinitesimals are closed under addition (with a controlled growth of the reference unit).
 
-```
-structure NAProbability (α : Type*) (K : Type*)
-    [Fintype α] [DecidableEq α]
-    [Field K] [LinearOrder K] [IsStrictOrderedRing K] where
-  mass : Finset α → K
-  empty_mass : mass ∅ = 0
-  add_mass : ∀ s t, Disjoint s t → mass (s ∪ t) = mass s + mass t
-  total_mass : mass Finset.univ = 1
-  nonneg_mass : ∀ s, 0 ≤ mass s
-```
+4. **Finite Summation Bound** (Theorem 4): Finite sums of infinitesimals remain bounded by a multiple of the unit.
 
-### 2.2 Expectation
+5. **Finite Additivity** (Theorem 5): Our measure construction is finitely additive.
 
-**Definition 2.2** (NAExpectation). For `P : NAProbability α K` and `X : α → K`:
+6. **Uniform Total Mass** (Theorem 6): The total mass of a uniform measure is Fintype.card α • ε.
 
-```
-NAExpectation P X := ∑ a : α, X a * P.mass ({a})
-```
+7. **Monotonicity** (Theorem 7): Non-negative finitely additive measures are monotone.
 
-### 2.3 Grid Uniform Probability
+8. **Archimedean Obstruction for Measures** (Theorem 8): Specialization of Theorem 1 to uniform measures.
 
-**Definition 2.3** (gridUniformProb). For `n : ℕ`, the uniform probability on `Fin(n+1)`:
+9. **Non-Archimedean Bounded Measure** (Theorem 9): In non-Archimedean groups, uniform infinitesimal measures have bounded total mass.
 
-```
-(gridUniformProb n).mass s := (s.card : ℚ) / (n + 1)
-```
+10. **Strict Positivity** (Theorem 10): Uniform measures with positive point mass assign positive measure to every nonempty set.
 
-### 2.4 Refinement Map
+11. **Anti-Cancellation Bridge** (Theorem 11): Measures with all-positive point masses have positive total mass — the measure-theoretic analog of aggregate anti-cancellation in Lorentzian polynomial theory [BH20].
 
-**Definition 2.4** (refineObservable). For `k ≥ 1`, the block embedding from `Fin(n+1)` to `Fin(k(n+1))`:
+12. **Complementation Identity** (Theorem 12): Standard complementation formula.
 
-```
-refineObservable k hk X := fun j => X ⟨j.val / k, _⟩
-```
+13. **Non-Archimedean Characterization** (Theorem 13): IsNonArchimedean is equivalent to existence of positive infinitesimals.
 
-Each coarse point `i` has exactly `k` preimages: `{ik, ik+1, ..., ik+(k-1)}`.
+14. **Discrimination** (Theorem 14): Uniform positive measures distinguish sets of different cardinality.
 
-### 2.5 Infinitesimal Scheme
+## 2. Definitions
 
-**Definition 2.5** (InfinitesimalScheme). A family `{P_n}_{n ∈ ℕ}` of NAProbabilities on `Fin(n+1)` whose point masses tend to zero:
+### 2.1 Infinitesimal Elements
 
-```
-∀ aseq, Tendsto (fun n => pointMass n (aseq n)) atTop (𝓝 0)
-```
+Let (G, +, ≤) be a linearly ordered additive commutative group with the order compatible with addition (i.e., a ≤ b implies c + a ≤ c + b).
 
-The uniform grid probabilities form a canonical infinitesimal scheme with `pointMass n a = 1/(n+1)`.
+**Definition 1** (Infinitesimal). An element ε ∈ G is *infinitesimal relative to u ∈ G* if:
+- 0 < ε (ε is strictly positive)
+- ∀ n ∈ ℕ, n • ε ≤ u (no finite multiple of ε exceeds u)
+
+**Definition 2** (Non-Archimedean). G is *non-Archimedean* if there exist ε, u ∈ G with u > 0 and ε infinitesimal relative to u.
+
+### 2.2 Finitely Additive Measures
+
+**Definition 3** (FinAddMeasure). A *finitely additive G-valued measure* on a finite type α is a function μ : α → G with μ(a) ≥ 0 for all a ∈ α. The measure of a set S ⊆ α is μ(S) = Σ_{a ∈ S} μ(a).
+
+**Definition 4** (Uniform Measure). The *uniform measure* with mass ε on α assigns μ(a) = ε for all a ∈ α.
 
 ## 3. Main Results
 
-### 3.1 Theorem 1: Uniform Grid Probability Existence
+### 3.1 The Archimedean Obstruction
 
-**Theorem 3.1** (grid_uniform_exists). For every `n : ℕ`, there exists a probability `P : NAProbability (Fin(n+1)) ℚ` with `P.mass {i} = 1/(n+1)` for all `i`.
+**Theorem 1** (archimedean_no_infinitesimal). *Let G be an Archimedean linearly ordered additive commutative group. Then for any ε, u ∈ G, ε is not infinitesimal relative to u.*
 
-*Proof sketch.* Define `mass s := s.card / (n+1)`. Finite additivity follows from `Finset.card_union_of_disjoint`. Total mass uses `Finset.card_fin`. Non-negativity follows from non-negativity of cardinality. □
+*Proof sketch.* Assume ε is infinitesimal relative to u: 0 < ε and ∀ n, n • ε ≤ u. By the Archimedean property, there exists n with u ≤ n • ε. Then (n+1) • ε = n • ε + ε > u, contradicting (n+1) • ε ≤ u. □
 
-### 3.2 Theorem 2: Exact Affine Expectation
+**PEGB Analysis:**
+- **P**roof: Complete Lean 4 proof using `Archimedean.arch` and order arithmetic.
+- **E**xample: In ℝ, ε = 0.001, u = 1: 1001 • 0.001 = 1.001 > 1. No real number is infinitesimal.
+- **G**eneralization: The result holds for any Archimedean ordered group, not just ℝ. The natural next generalization is to partially ordered groups where the Archimedean property is directional.
+- **B**oundary: The theorem fails precisely when the Archimedean property fails — i.e., in groups like the surreal numbers, Hahn series groups, or lexicographic products.
 
-**Theorem 3.2** (grid_expectation_affine). For `n ≥ 1` and `a, b : ℚ`, let `X(i) = a·i/n + b` on `Fin(n+1)`. Then:
+### 3.2 Structural Theory of Infinitesimals
+
+**Theorem 2** (infinitesimal_convex). *If ε is infinitesimal relative to u and 0 < x ≤ ε, then x is infinitesimal relative to u.*
+
+*Proof sketch.* For each n, n • x ≤ n • ε ≤ u, using the monotonicity of scalar multiplication and the infinitesimality of ε. □
+
+**Theorem 3** (infinitesimal_add). *If ε₁ and ε₂ are both infinitesimal relative to u, then ε₁ + ε₂ is infinitesimal relative to 2 • u.*
+
+*Proof sketch.* n • (ε₁ + ε₂) = n • ε₁ + n • ε₂ ≤ u + u = 2 • u. □
+
+**Theorem 4** (infinitesimal_finset_sum_bound). *If f(i) is infinitesimal relative to u for each i ∈ S, then n • (Σ_{i ∈ S} f(i)) ≤ |S| • u for all n ∈ ℕ.*
+
+*Proof sketch.* n • Σ f(i) = Σ (n • f(i)) ≤ Σ u = |S| • u. □
+
+**PEGB for the Convexity Theorem:**
+- **P**roof: By induction on the nsmul structure, using `add_le_add` and the base case.
+- **E**xample: If ε = 1/ω and x = 1/(2ω), then x < ε and x is also infinitesimal.
+- **G**eneralization: The convex cone of infinitesimals is actually a convex subgroup when extended to include 0 and negatives. This subgroup is the kernel of the natural valuation.
+- **B**oundary: The result requires the order to be linear. In partially ordered groups, the notion of infinitesimal must be refined directionally.
+
+### 3.3 Measure Theory
+
+**Theorem 5** (FinAddMeasure.additive). *For disjoint finsets S, T, μ(S ∪ T) = μ(S) + μ(T).*
+
+**Theorem 6** (FinAddMeasure.uniform_totalMass). *The total mass of a uniform measure with point mass ε on a type with n elements is n • ε.*
+
+**Theorem 7** (FinAddMeasure.monotone_measure). *If S ⊆ T, then μ(S) ≤ μ(T).*
+
+**Theorem 9** (nonArchimedean_uniform_measure_bounded). *If ε is infinitesimal relative to u, the total mass of the uniform ε-measure on any finite type is at most u.*
+
+This is the key theorem enabling infinitesimal probability: the total mass stays bounded even though every point carries positive mass.
+
+**PEGB for the Bounded Measure Theorem:**
+- **P**roof: Total mass = n • ε ≤ u by the infinitesimality condition.
+- **E**xample: On Fin 1000 with ε = 1/ω, total mass = 1000/ω, still infinitesimal relative to 1.
+- **G**eneralization: For infinite types, one would need a summation theory for surreal-valued series, which is currently undeveloped.
+- **B**oundary: For countably infinite types, even infinitesimal uniform measures might produce infinite total mass (ω • (1/ω) = 1 in the surreals, but ω • (1/ω²) = 1/ω, still infinitesimal). The theory becomes delicate.
+
+### 3.4 The Anti-Cancellation Bridge
+
+**Theorem 11** (FinAddMeasure.totalMass_pos_of_all_pos). *If all point masses are strictly positive and the type is nonempty, then the total mass is strictly positive.*
+
+This theorem is the measure-theoretic analog of `sum_ne_zero_of_same_sign_and_exists_ne_zero` from the Lorentzian aggregate anti-cancellation theory [BH20, FINAL/Pythagorean/LorentzianAggregateAntiCancel.lean]. Both results express the same structural principle: when all contributions to a sum share the same sign, no accidental cancellation can occur.
+
+The connection is deeper than a mere analogy. In Lorentzian polynomial theory, the anti-cancellation property ensures that weighted sums of Hessian derivatives with sign-coherent weights preserve support exactly. In our measure theory, the anti-cancellation property ensures that positive measures produce positive totals. Both follow from the ordered group axiom that the sum of positive elements is positive.
+
+**PEGB for the Anti-Cancellation Bridge:**
+- **P**roof: Extract a witness from Nonempty, show one term is positive, the sum is at least that term.
+- **E**xample: μ = (1/ω, 1/ω, 1/ω) on Fin 3 has total mass 3/ω > 0.
+- **G**eneralization: The anti-cancellation principle extends to any ordered module, not just groups. The Lorentzian setting adds polynomial structure; our setting adds measure structure. A unifying framework would use ordered modules with compatible bilinear forms.
+- **B**oundary: Anti-cancellation fails when signs are mixed. A measure with μ(0) = ε and μ(1) = -ε (if we allowed signed measures) would have total mass 0.
+
+### 3.5 The Discrimination Theorem
+
+**Theorem 14** (FinAddMeasure.uniform_discriminates). *A uniform measure with positive point mass ε distinguishes sets of different cardinality: if |S| ≠ |T|, then μ(S) ≠ μ(T).*
+
+This result demonstrates that infinitesimal measures carry *more* information than standard measures on continuous spaces, where all finite and countable sets have measure zero.
+
+**PEGB:**
+- **P**roof: μ(S) = |S| • ε and μ(T) = |T| • ε. Since ε > 0, the map n ↦ n • ε is strictly monotone, so |S| ≠ |T| implies |S| • ε ≠ |T| • ε.
+- **E**xample: On Fin 5, {0,1} has measure 2ε while {0,1,2} has measure 3ε. These are distinct surreal numbers.
+- **G**eneralization: Non-uniform measures with distinct point masses can distinguish individual points, not just cardinalities.
+- **B**oundary: On infinite types, all finite subsets have finite multiples of ε as measure, but infinite subsets might be indistinguishable from each other.
+
+## 4. The Surreal Application
+
+Conway's surreal numbers satisfy all our hypotheses:
+- They form an additive commutative group (Surreal.instAddCommGroup)
+- They carry a linear order (Surreal.instLinearOrder)
+- The order is translation-invariant (CovariantClass Surreal Surreal (· + ·) (· ≤ ·))
+- They are non-Archimedean: the element 1/ω (where ω = {0,1,2,...|}) is infinitesimal relative to 1
+
+Our theorems therefore apply directly to Surreal, giving:
+- Uniform measures on Fin n with point mass ε = 1/ω are finitely additive
+- Their total mass n/ω is bounded by 1
+- Every nonempty subset has positive (infinitesimal) measure
+- Sets of different sizes are distinguishable
+
+## 5. Algorithms
+
+### 5.1 Finite Measure Computation
+
+Given a finite type α with n elements and an infinitesimal ε:
 
 ```
-NAExpectation (gridUniformProb n) X = a/2 + b
+Algorithm INFINITESIMAL_MEASURE(S ⊆ α):
+  return |S| • ε
 ```
 
-*Proof sketch.* Expand the expectation:
+This is O(|S|) in the size of S, or O(1) if |S| is known.
+
+### 5.2 Conditional Probability (Surreal)
+
+In a surreal-valued setting with multiplication:
 
 ```
-E[X] = ∑_{i=0}^{n} (a·i/n + b) · 1/(n+1)
-     = 1/(n+1) · (a/n · ∑ i + (n+1)·b)
-     = 1/(n+1) · (a/n · n(n+1)/2 + (n+1)·b)
-     = a/2 + b
+Algorithm CONDITIONAL_PROBABILITY(A, B, ε):
+  return (|A ∩ B| • ε) / (|B| • ε)
+  // Simplifies to |A ∩ B| / |B| (a real number!)
 ```
 
-The key lemma is the Gauss sum formula `∑_{i=0}^{n} i = n(n+1)/2`, proved by induction. The formal proof uses `Fin.sum_univ_castSucc` for the inductive step and `field_simp` for algebraic simplification. □
+This recovers classical conditional probability on finite sets.
 
-**Remark.** This is a genuine theorem, not merely a computation. It shows the discrete grid model recovers the exact continuum integral `∫₀¹ (ax+b) dx = a/2 + b` for all grid sizes simultaneously.
+## 6. Discussion
 
-### 3.3 Theorem 3: Refinement Invariance
+### 6.1 Finite vs. Countable Additivity
 
-**Theorem 3.3** (refinement_expectation_invariant). For `k ≥ 1` and any `X : Fin(n+1) → ℚ`:
+Our theory is finitely additive by construction. Whether it extends to countable additivity is a subtle question. In the surreal numbers, infinite sums are not generally well-defined without additional convergence criteria. The natural approach would use the order topology on surreals, but this topology is not second-countable, which complicates sequential arguments.
 
-```
-NAExpectation (gridUniformProb n) X = NAExpectation (uniformFinProb (k(n+1))) (refineObservable k hk X)
-```
+### 6.2 Relationship to Nonstandard Analysis
 
-*Proof sketch.* The fine-grid expectation decomposes by fibers:
+Our approach parallels but differs from the Loeb measure construction in nonstandard analysis. Loeb measures start with a nonstandard measure and apply the standard part map to recover a standard real-valued measure. We go in the opposite direction: we keep the non-standard (surreal) values and show they form a coherent measure theory on their own.
 
-```
-E_fine[refine(X)] = ∑_{j=0}^{k(n+1)-1} X(j/k) · 1/(k(n+1))
-                  = ∑_{i=0}^{n} ∑_{j: j/k=i} X(i) · 1/(k(n+1))
-                  = ∑_{i=0}^{n} k · X(i) / (k(n+1))
-                  = ∑_{i=0}^{n} X(i) / (n+1)
-                  = E_coarse[X]
-```
+### 6.3 Philosophical Implications
 
-The crucial helper lemma `refine_fiber_card` shows each fiber has exactly `k` elements:
+The Archimedean obstruction theorem has philosophical significance for the foundations of probability. It shows that the impossibility of positive point masses in standard probability is not an inherent feature of "probability" as a concept, but rather an artifact of the number system used for values. This supports the view that the choice of value field is a modeling decision, not a mathematical necessity.
 
-```
-|{j ∈ Fin(k(n+1)) : j/k = i}| = k
-```
+## 7. Future Work
 
-This is proved by constructing an explicit bijection with `Fin k` via `j ↦ j mod k`. □
+1. **Countable additivity**: Develop a theory of convergence for surreal-valued series and investigate when countable additivity holds.
+2. **Integration**: Define and study surreal-valued integrals, enabling surreal-valued expected values.
+3. **Conditional probability**: Formalize conditional probability using surreal division (available in the surreal field structure, though not yet in Mathlib).
+4. **Infinite types**: Extend the theory to countably and uncountably infinite types.
+5. **Connection to Loeb measures**: Formalize the relationship between our surreal-valued measures and Loeb measures from nonstandard analysis.
 
-**Remark.** Refinement invariance is the property that makes the grid sequence a *projective system* of probability spaces. It is the finite analogue of measure-preserving factor maps and the key structural requirement for any continuum extension.
+## References
 
-### 3.4 Theorem 4: Shadow Convergence
+[All87] Alling, N. L. *Foundations of Analysis over Surreal Number Fields*. North-Holland, 1987.
 
-**Theorem 3.4** (grid_average_converges_affine). For `a, b : ℚ`:
+[BDN03] Benci, V., Di Nasso, M. "Numerosities of labelled sets: a new way of counting." *Advances in Mathematics*, 173(1):50-67, 2003.
 
-```
-lim_{n→∞} NAExpectation (gridUniformProb (n+1)) (fun i => a·i/(n+2) + b) = a/2 + b
-```
+[BH20] Brändén, P., Huh, J. "Lorentzian polynomials." *Annals of Mathematics*, 192(3):821-891, 2020.
 
-*Proof sketch.* Expanding the expectation and using the Gauss sum formula yields:
+[Con01] Conway, J. H. *On Numbers and Games*. A K Peters, 2nd edition, 2001.
 
-```
-E_n = a/2 · (1 - 1/(n+2)) + b
-```
+[Loe75] Loeb, P. A. "Conversion from nonstandard to standard measure spaces and applications in probability theory." *Transactions of the AMS*, 211:113-122, 1975.
 
-This converges to `a/2 + b` since `1/(n+2) → 0`. The formal proof uses `Filter.Tendsto` and the convergence of `1/n` to zero in `ℚ` viewed in the `nhds` topology. □
+[Rob66] Robinson, A. *Non-standard Analysis*. North-Holland, 1966.
 
-### 3.5 Theorem 5: Impossibility of Equal Positive Atoms
-
-**Theorem 3.5** (no_equal_positive_atoms_nat). There is no triple `(ε, μ)` with `ε > 0`, `μ : Finset ℕ → ℝ` finitely additive, `μ {n} = ε` for all `n`, and `μ s ≤ 1` for all finite `s`.
-
-*Proof sketch.* By finite additivity and induction, `μ(Finset.range N) = N·ε`. By the Archimedean property, choose `N = ⌊1/ε⌋ + 1 > 1/ε`. Then `μ(Finset.range N) = N·ε > 1`, contradicting `μ s ≤ 1`. □
-
-**Remark.** This theorem precisely delineates the classical impossibility. The proof uses the Archimedean property of `ℝ` essentially — in a non-Archimedean field, `N·ε` can remain small for all standard `N` when `ε` is infinitesimal.
-
-## 4. Algorithms
-
-### 4.1 Grid Probability Construction
-
-**Algorithm 1**: `GridUniformProb(n)`
-```
-Input: n ∈ ℕ
-Output: NAProbability on Fin(n+1) over ℚ
-
-1. Set N ← n + 1
-2. For each i ∈ {0, ..., n}: point_mass[i] ← 1/N
-3. For any subset S ⊆ {0,...,n}: mass(S) ← |S|/N
-4. Return (mass, point_mass)
-
-Time: O(n) for construction, O(|S|) per mass query
-Space: O(n)
-```
-
-### 4.2 Expectation Computation
-
-**Algorithm 2**: `NAExpect(P, X)`
-```
-Input: NAProbability P on {0,...,n}, Observable X: {0,...,n} → ℚ
-Output: E[X] ∈ ℚ
-
-1. result ← 0
-2. For i = 0 to n:
-     result ← result + X(i) * P.point_mass[i]
-3. Return result
-
-Time: O(n)
-Space: O(1)
-```
-
-### 4.3 Refinement Coherence Check
-
-**Algorithm 3**: `CheckRefinement(n, k, X)`
-```
-Input: Grid parameter n, refinement factor k, observable X
-Output: Boolean (is invariant?)
-
-1. coarse_E ← NAExpect(GridUniformProb(n), X)
-2. fine_P ← GridUniformProb(k*(n+1) - 1)
-3. refined_X(j) ← X(j // k)  for j ∈ {0, ..., k*(n+1)-1}
-4. fine_E ← NAExpect(fine_P, refined_X)
-5. Return (coarse_E = fine_E)
-
-Time: O(k * n)
-Space: O(k * n)
-```
-
-## 5. Applications
-
-### 5.1 Fair Lotteries
-
-On a population of `N` individuals, `gridUniformProb(N-1)` assigns each person mass `1/N > 0`. Every individual has a genuinely positive probability of being selected, satisfying the strongest fairness criterion. Subgroup fairness follows by finite additivity: any subgroup of size `m` has mass `m/N`.
-
-### 5.2 Rare-Event Modeling
-
-In risk analysis with `N` possible failure modes, each mode has mass `1/N > 0` under the grid probability. Unlike classical models on infinite state spaces, no failure mode is assigned probability zero. This enables reasoning about individual rare events without the philosophical difficulties of probability-zero events that "can occur."
-
-### 5.3 Lexicographic Decision Theory
-
-The grid probability naturally supports lexicographic expected utility. On a grid of size `N`, "infinitesimal" differences of order `1/N` between utilities are faithfully represented. As `N → ∞`, these differences vanish in the classical limit but remain visible in the non-Archimedean framework.
-
-### 5.4 Information-Theoretic Consistency
-
-For affine distortion kernels, the expected distortion under grid probability is invariant under refinement (a direct corollary of Theorem 3.3). This gives a primitive information-theoretic consistency law: rate-distortion computations on coarse models are preserved at finer resolutions for linear distortion measures.
-
-## 6. Computational Experiments
-
-### 6.1 Affine Expectation Exactness
-
-| Grid size N | Observable f(x)=3x+2 | Expected E[f] | Computed E[f] | Error |
-|-------------|----------------------|---------------|---------------|-------|
-| 5 | 3i/4 + 2 | 7/2 | 7/2 | 0 |
-| 10 | 3i/9 + 2 | 7/2 | 7/2 | 0 |
-| 100 | 3i/99 + 2 | 7/2 | 7/2 | 0 |
-| 1000 | 3i/999 + 2 | 7/2 | 7/2 | 0 |
-
-Exact agreement for all grid sizes, confirming Theorem 3.2.
-
-### 6.2 Quadratic Convergence
-
-| Grid size N | E[x²] | True ∫₀¹ x² dx = 1/3 | Error | ≈ 1/(6N) |
-|-------------|-------|----------------------|-------|----------|
-| 10 | 0.3383 | 0.3333 | 5.0e-3 | 1.7e-2 |
-| 100 | 0.3338 | 0.3333 | 5.0e-4 | 1.7e-3 |
-| 1000 | 0.3334 | 0.3333 | 5.0e-5 | 1.7e-4 |
-
-Convergence at rate O(1/N), as expected for quadratic observables.
-
-### 6.3 Refinement Invariance Verification
-
-For X(i) = i² on Fin(6):
-| Refinement k | Fine grid size | Coarse E | Fine E | Invariant? |
-|-------------|---------------|----------|--------|------------|
-| 2 | 12 | 55/6 | 55/6 | ✓ |
-| 3 | 18 | 55/6 | 55/6 | ✓ |
-| 5 | 30 | 55/6 | 55/6 | ✓ |
-| 10 | 60 | 55/6 | 55/6 | ✓ |
-
-Exact invariance for all refinement factors, confirming Theorem 3.3.
-
-## 7. Discussion
-
-### 7.1 The Refinement-Coherence Principle
-
-The most significant structural insight is that grid probabilities form a projective system: expectations of coarse observables are preserved exactly under refinement. This is not merely a computational convenience — it is the mathematical condition for the existence of a projective limit. In the language of nonstandard analysis, it suggests that the hyperfinite counting measure (the Loeb measure construction) can be recovered as the "limit" of our grid scheme.
-
-### 7.2 Connection to Renormalization
-
-Refinement invariance of expectations has a striking analogy with renormalization group fixed points in physics. Under a scale transformation (grid refinement by factor k), the expectation functional is invariant. This makes grid expectation a fixed point of the refinement operator — a probabilistic analogue of renormalization group invariance.
-
-### 7.3 Limitations
-
-Our construction is valued in `ℚ`, not in a genuine non-Archimedean field. The point masses `1/(n+1)` are small but not infinitesimal. The passage from the discrete scaffold to a continuum non-Archimedean probability remains conjectural.
-
-Additionally, the refinement map `refineObservable` preserves expectations only for observables defined on the coarse grid. For observables that genuinely use the fine-grid structure, refinement creates new information not captured by the coarse model.
-
-## 8. Conjectures and Future Work
-
-**Conjecture 8.1** (Surreal Hyperfinite Probability). There exists a finitely additive probability `μ` valued in an ordered non-Archimedean field `K ⊇ ℚ`, defined on all finite subsets of `[0,1] ∩ ℚ`, with `μ({x}) > 0` for all `x` and `E_μ[ax+b] = a/2 + b`.
-
-**Conjecture 8.2** (Loeb Measure Recovery). The standard part of the surreal/hyperfinite probability from Conjecture 8.1, applied to Borel-measurable observables, recovers Lebesgue integration.
-
-**Conjecture 8.3** (Quadratic Refinement Asymptotics). For `X(i) = (i/n)²`, the refinement error `|E_fine - E_coarse|` for non-block refinements is O(1/k) in the refinement factor.
-
-## 9. References
-
-1. A.N. Kolmogorov, *Grundbegriffe der Wahrscheinlichkeitsrechnung*, 1933.
-2. A. Robinson, *Non-Standard Analysis*, North-Holland, 1966.
-3. P. Loeb, "Conversion from nonstandard to standard measure spaces and applications in probability theory," *Trans. AMS*, 211, 1975.
-4. J.H. Conway, *On Numbers and Games*, Academic Press, 1976.
-5. B. de Finetti, "La prévision: ses lois logiques, ses sources subjectives," *Annales de l'IHP*, 7(1), 1937.
-6. L. Dubins and L. Savage, *How to Gamble if You Must*, McGraw-Hill, 1965.
-7. E. Nelson, "Internal set theory," *Bull. AMS*, 83(6), 1977.
-8. R. Goldblatt, *Lectures on the Hyperreals*, Springer, 1998.
+[RS14] Rubinstein-Salzedo, S., Swaminathan, A. "Analysis on surreal numbers." *Journal of Logic and Analysis*, 6, 2014.

@@ -1,271 +1,374 @@
 #!/usr/bin/env python3
 """
-Algorithms for Non-Archimedean Finitely Additive Probability
+Algorithms for Non-Archimedean Probability Theory
 
-Implements the core algorithms from the research paper:
-1. Construction of grid uniform probabilities
-2. Computation of non-Archimedean-style expectations
-3. Refinement coherence checking
-4. Infinitesimal scheme construction and verification
+Type-hinted implementations of the key algorithms from the research.
 """
 
 from fractions import Fraction
-from typing import Callable, Dict, FrozenSet, List, Optional, Tuple
-import math
+from typing import (
+    Callable,
+    Dict,
+    FrozenSet,
+    Generic,
+    List,
+    Optional,
+    Set,
+    Tuple,
+    TypeVar,
+)
 
 
-class NAProbability:
-    """A finitely additive probability on a finite set with values in ℚ.
+# ============================================================
+# Core Data Types
+# ============================================================
 
-    This implements the NAProbability structure from the Lean formalization:
-    - mass : Finset α → K (here subsets of {0,...,n} → Fraction)
-    - empty_mass : mass(∅) = 0
-    - add_mass : mass(S ∪ T) = mass(S) + mass(T) for disjoint S, T
-    - total_mass : mass(universe) = 1
-    - nonneg_mass : mass(S) ≥ 0
 
-    Time complexity: O(|S|) per mass query, O(n) for expectation.
-    Space complexity: O(n) for storing the universe.
+class SurrealTruncated:
+    """
+    Truncated surreal number: a + b·ε where ε = 1/ω.
+
+    This captures the two-level structure sufficient for
+    infinitesimal probability: a standard part (real) and
+    an infinitesimal part.
     """
 
-    def __init__(self, n: int, point_masses: Dict[int, Fraction]):
-        """Initialize with universe {0, ..., n} and point masses.
+    def __init__(self, standard: Fraction = Fraction(0),
+                 infinitesimal: Fraction = Fraction(0)):
+        self.std: Fraction = standard
+        self.inf: Fraction = infinitesimal
+
+    def __add__(self, other: 'SurrealTruncated') -> 'SurrealTruncated':
+        return SurrealTruncated(self.std + other.std, self.inf + other.inf)
+
+    def __sub__(self, other: 'SurrealTruncated') -> 'SurrealTruncated':
+        return SurrealTruncated(self.std - other.std, self.inf - other.inf)
+
+    def __neg__(self) -> 'SurrealTruncated':
+        return SurrealTruncated(-self.std, -self.inf)
+
+    def __mul__(self, n: int) -> 'SurrealTruncated':
+        return SurrealTruncated(self.std * n, self.inf * n)
+
+    def __rmul__(self, n: int) -> 'SurrealTruncated':
+        return self.__mul__(n)
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, SurrealTruncated):
+            return NotImplemented
+        return self.std == other.std and self.inf == other.inf
+
+    def __lt__(self, other: 'SurrealTruncated') -> bool:
+        if self.std != other.std:
+            return self.std < other.std
+        return self.inf < other.inf
+
+    def __le__(self, other: 'SurrealTruncated') -> bool:
+        return self == other or self < other
+
+    def __gt__(self, other: 'SurrealTruncated') -> bool:
+        return other < self
+
+    def __ge__(self, other: 'SurrealTruncated') -> bool:
+        return other <= self
+
+    def __repr__(self) -> str:
+        parts: list[str] = []
+        if self.std != 0:
+            parts.append(str(self.std))
+        if self.inf != 0:
+            if self.inf == 1:
+                parts.append("ε")
+            elif self.inf == -1:
+                parts.append("-ε")
+            else:
+                parts.append(f"({self.inf})ε")
+        return " + ".join(parts) if parts else "0"
+
+    def is_positive(self) -> bool:
+        return self > SurrealTruncated()
+
+    def is_infinitesimal(self) -> bool:
+        return self.std == Fraction(0) and self.inf > 0
+
+    def is_zero(self) -> bool:
+        return self.std == Fraction(0) and self.inf == Fraction(0)
+
+
+T = TypeVar('T')
+ZERO_S = SurrealTruncated()
+ONE_S = SurrealTruncated(Fraction(1))
+EPSILON_S = SurrealTruncated(Fraction(0), Fraction(1))
+
+
+# ============================================================
+# Algorithm 1: Infinitesimal Measure Construction
+# ============================================================
+
+
+class FinitelyAdditiveMeasure:
+    """
+    A finitely additive measure on a finite set, valued in
+    truncated surreal numbers.
+
+    Implements the FinAddMeasure structure from the Lean formalization.
+    """
+
+    def __init__(self, universe: FrozenSet[int], point_mass: Dict[int, SurrealTruncated]):
+        """
+        Construct a finitely additive measure.
 
         Args:
-            n: Universe is {0, ..., n}
-            point_masses: Maps each point to its mass. Must sum to 1.
-
-        Raises:
-            ValueError: If masses don't satisfy axioms.
+            universe: The finite sample space
+            point_mass: Assignment of mass to each point
         """
-        self.n = n
-        self.universe = set(range(n + 1))
-        self.point_masses = dict(point_masses)
+        self.universe = universe
+        self.point_mass = point_mass
 
-        # Verify axioms
-        total = sum(self.point_masses.values())
-        if total != Fraction(1):
-            raise ValueError(f"Total mass is {total}, not 1")
-        for k, v in self.point_masses.items():
-            if v < 0:
-                raise ValueError(f"Negative mass {v} at point {k}")
-            if k < 0 or k > n:
-                raise ValueError(f"Point {k} not in universe {{0,...,{n}}}")
+        # Verify non-negativity (mass_nonneg)
+        for a, m in point_mass.items():
+            assert m >= ZERO_S, f"Point mass at {a} is negative: {m}"
 
-    def mass(self, subset: set) -> Fraction:
-        """Compute the mass of a subset.
-
-        By finite additivity, mass(S) = Σ_{i ∈ S} mass({i}).
-
-        Time: O(|subset|)
+    def measure(self, S: FrozenSet[int]) -> SurrealTruncated:
         """
-        return sum(self.point_masses.get(i, Fraction(0)) for i in subset)
-
-    def expectation(self, X: Callable[[int], Fraction]) -> Fraction:
-        """Compute E[X] = Σ_i X(i) * mass({i}).
-
-        Time: O(n)
+        Compute the measure of a set S.
+        μ(S) = Σ_{a ∈ S} pointMass(a)
         """
-        return sum(X(i) * self.point_masses[i] for i in self.universe)
+        result = ZERO_S
+        for a in S:
+            if a in self.point_mass:
+                result = result + self.point_mass[a]
+        return result
 
-    def verify_axioms(self) -> bool:
-        """Verify all NAProbability axioms hold.
+    def total_mass(self) -> SurrealTruncated:
+        """Compute the total mass μ(Ω)."""
+        return self.measure(self.universe)
 
-        Time: O(n)
+    @staticmethod
+    def uniform(universe: FrozenSet[int], epsilon: SurrealTruncated) -> 'FinitelyAdditiveMeasure':
         """
-        # empty_mass
-        if self.mass(set()) != Fraction(0):
-            return False
-        # total_mass
-        if self.mass(self.universe) != Fraction(1):
-            return False
-        # nonneg_mass (only check singletons; extends by additivity)
-        for i in self.universe:
-            if self.point_masses[i] < 0:
-                return False
-        return True
+        Construct a uniform measure assigning mass ε to each point.
+
+        Implements FinAddMeasure.uniform from the Lean formalization.
+        """
+        assert epsilon >= ZERO_S, "Point mass must be non-negative"
+        point_mass = {a: epsilon for a in universe}
+        return FinitelyAdditiveMeasure(universe, point_mass)
+
+    def verify_additivity(self, S: FrozenSet[int], T: FrozenSet[int]) -> bool:
+        """
+        Verify finite additivity for disjoint sets S and T.
+        Returns True iff μ(S ∪ T) = μ(S) + μ(T).
+        """
+        if S & T:
+            raise ValueError("Sets must be disjoint")
+        return self.measure(S | T) == self.measure(S) + self.measure(T)
+
+    def verify_complementation(self, S: FrozenSet[int]) -> bool:
+        """
+        Verify complementation identity: μ(S) + μ(Sᶜ) = μ(Ω).
+        """
+        complement = self.universe - S
+        return self.measure(S) + self.measure(complement) == self.total_mass()
+
+    def verify_monotonicity(self, S: FrozenSet[int], T: FrozenSet[int]) -> bool:
+        """
+        Verify monotonicity: S ⊆ T ⟹ μ(S) ≤ μ(T).
+        """
+        if not S.issubset(T):
+            raise ValueError("S must be a subset of T")
+        return self.measure(S) <= self.measure(T)
 
 
-def grid_uniform_prob(n: int) -> NAProbability:
-    """Construct the uniform probability on {0, ..., n}.
+# ============================================================
+# Algorithm 2: Archimedean Obstruction Check
+# ============================================================
 
-    Each singleton has mass 1/(n+1). This is the gridUniformProb
-    from the Lean formalization.
 
-    Time: O(n)  Space: O(n)
+def check_archimedean_obstruction(epsilon: float, u: float, max_n: int = 10**6) -> Optional[int]:
+    """
+    Check the Archimedean obstruction: find n such that n * ε > u.
+
+    In an Archimedean ordered group (like ℝ), such n always exists.
+    Returns n if found within max_n steps, None otherwise.
+
+    This implements the constructive content of Theorem 1
+    (archimedean_no_infinitesimal).
 
     Args:
-        n: Grid parameter. Universe is {0, ..., n} with n+1 points.
+        epsilon: The candidate infinitesimal
+        u: The reference unit
+        max_n: Maximum n to check
 
     Returns:
-        NAProbability with uniform masses.
+        The smallest n with n * epsilon > u, or None
     """
-    N = n + 1
-    mass = Fraction(1, N)
-    return NAProbability(n, {i: mass for i in range(N)})
+    if epsilon <= 0:
+        return None  # Not a valid infinitesimal candidate
+
+    n = int(u / epsilon) + 1
+    if n <= max_n:
+        return n
+    return None
 
 
-def na_expectation(P: NAProbability, X: Callable[[int], Fraction]) -> Fraction:
-    """Compute expectation of X under probability P.
+# ============================================================
+# Algorithm 3: Infinitesimal Classification
+# ============================================================
 
-    E[X] = Σ_{a ∈ α} X(a) · P.mass({a})
 
-    This matches NAExpectation from the Lean formalization.
-
-    Time: O(n) where n = |universe|
+def classify_infinitesimal(x: SurrealTruncated, u: SurrealTruncated) -> str:
     """
-    return P.expectation(X)
+    Classify the relationship between x and u.
 
+    Returns one of:
+    - "zero": x = 0
+    - "infinitesimal": x is infinitesimal relative to u
+    - "comparable": x and u are of the same order
+    - "infinite": x is infinite relative to u
+    - "negative": x is not positive
 
-def refine_observable(
-    n: int, k: int, X: Callable[[int], Fraction]
-) -> Callable[[int], Fraction]:
-    """Lift observable from Fin(n+1) to Fin(k*(n+1)) by block embedding.
-
-    Point j in the fine grid maps to coarse point j // k.
-    This matches refineObservable from the Lean formalization.
-
-    Time: O(1) per evaluation
+    Implements the classification from our Infinitesimal definition.
     """
-    def refined(j: int) -> Fraction:
-        return X(j // k)
-    return refined
+    if x.is_zero():
+        return "zero"
+    if not x.is_positive():
+        return "negative"
+
+    # In our truncated model, x is infinitesimal relative to u iff
+    # x.std = 0 and u.std > 0 (or both are infinitesimal but x.inf < u.inf for all n)
+    if x.std == 0 and u.std > 0:
+        return "infinitesimal"
+    if x.std > 0 and u.std == 0:
+        return "infinite"
+    return "comparable"
 
 
-def check_refinement_invariance(
-    n: int, k: int, X: Callable[[int], Fraction]
-) -> Tuple[bool, Fraction, Fraction]:
-    """Check that refinement preserves expectation.
+# ============================================================
+# Algorithm 4: Measure Discrimination
+# ============================================================
 
-    Verifies: E_coarse[X] = E_fine[refine(X)]
 
-    This is the computational test for Theorem 3 (refinement_expectation_invariant).
-
-    Time: O(k * n)
-
-    Returns:
-        (invariant, coarse_expectation, fine_expectation)
+def discrimination_table(n: int, epsilon: SurrealTruncated) -> Dict[int, SurrealTruncated]:
     """
-    coarse_P = grid_uniform_prob(n)
-    coarse_E = na_expectation(coarse_P, X)
+    Compute the measure discrimination table for Fin(n).
 
-    fine_n = k * (n + 1) - 1
-    fine_P = grid_uniform_prob(fine_n)
-    refined_X = refine_observable(n, k, X)
-    fine_E = na_expectation(fine_P, refined_X)
+    For a uniform measure with mass ε on each of n points,
+    compute the measure of every possible cardinality.
 
-    return (coarse_E == fine_E, coarse_E, fine_E)
-
-
-class InfinitesimalScheme:
-    """A sequence of grid probabilities whose point masses tend to zero.
-
-    This implements the InfinitesimalScheme structure from the Lean formalization.
-    Each level n gives a probability on Fin(n+1) with point mass 1/(n+1).
-
-    The scheme is the formal precursor to hyperfinite counting measure
-    and surreal-valued probability.
-    """
-
-    def __init__(self, max_level: int = 100):
-        """Initialize the scheme up to a given refinement level.
-
-        Args:
-            max_level: Maximum grid level to precompute.
-        """
-        self.max_level = max_level
-        self._probs: Dict[int, NAProbability] = {}
-
-    def probability(self, n: int) -> NAProbability:
-        """Get the probability at level n.
-
-        Time: O(n) on first call, O(1) thereafter.
-        """
-        if n not in self._probs:
-            self._probs[n] = grid_uniform_prob(n)
-        return self._probs[n]
-
-    def point_mass(self, n: int) -> Fraction:
-        """Point mass at level n: 1/(n+1).
-
-        Time: O(1)
-        """
-        return Fraction(1, n + 1)
-
-    def verify_tends_to_zero(self, levels: Optional[List[int]] = None) -> List[Tuple[int, float]]:
-        """Verify that point masses tend to zero.
-
-        Returns list of (level, point_mass) pairs showing convergence.
-        """
-        if levels is None:
-            levels = [2**k - 1 for k in range(1, 20)]
-        return [(n, float(self.point_mass(n))) for n in levels]
-
-    def expectation_at_level(
-        self, n: int, X_family: Callable[[int, int], Fraction]
-    ) -> Fraction:
-        """Compute expectation at level n for a family of observables.
-
-        X_family(n, i) gives the observable value at level n, point i.
-
-        Time: O(n)
-        """
-        P = self.probability(n)
-        return na_expectation(P, lambda i: X_family(n, i))
-
-
-def archimedean_obstruction(epsilon: float) -> Tuple[int, float]:
-    """Find N such that N*ε > 1, demonstrating the impossibility theorem.
-
-    For any ε > 0, the Archimedean property guarantees such N exists.
-
-    Time: O(1)
+    This demonstrates Theorem 14 (uniform_discriminates):
+    different cardinalities give different measures.
 
     Args:
-        epsilon: The putative equal positive mass.
+        n: Size of the universe
+        epsilon: Point mass
 
     Returns:
-        (N, N*epsilon) where N*epsilon > 1.
+        Dictionary mapping cardinality k to measure k * ε
     """
-    N = math.ceil(1 / epsilon) + 1
-    return (N, N * epsilon)
+    return {k: k * epsilon for k in range(n + 1)}
 
 
-# =============================================================================
-# Example usage
-# =============================================================================
+# ============================================================
+# Algorithm 5: Anti-Cancellation Verification
+# ============================================================
+
+
+def verify_anti_cancellation(masses: List[SurrealTruncated]) -> Tuple[bool, str]:
+    """
+    Verify the anti-cancellation property (Theorem 11):
+    if all masses are positive, total is positive.
+
+    Args:
+        masses: List of point masses
+
+    Returns:
+        (result, explanation) tuple
+    """
+    if not masses:
+        return (True, "Empty measure has zero total (vacuously true)")
+
+    all_positive = all(m.is_positive() for m in masses)
+    total = ZERO_S
+    for m in masses:
+        total = total + m
+
+    if all_positive:
+        if total.is_positive():
+            return (True, f"All positive, total = {total} > 0. Anti-cancellation holds.")
+        else:
+            return (False, f"VIOLATION: All positive but total = {total} ≤ 0!")
+    else:
+        return (True, f"Not all positive, anti-cancellation not applicable. Total = {total}")
+
+
+# ============================================================
+# Main: Run all algorithms
+# ============================================================
+
+
 if __name__ == "__main__":
-    print("=== Algorithm Demonstrations ===\n")
+    print("=" * 60)
+    print("Algorithm 1: Infinitesimal Measure Construction")
+    print("=" * 60)
 
-    # 1. Grid uniform probability
-    P = grid_uniform_prob(4)
-    print(f"Grid Fin(5): axioms valid = {P.verify_axioms()}")
-    print(f"  Singleton mass = {P.point_masses[0]}")
-    print(f"  Mass of {{0,1,2}} = {P.mass({0,1,2})}")
-    print()
+    universe = frozenset(range(5))
+    mu = FinitelyAdditiveMeasure.uniform(universe, EPSILON_S)
 
-    # 2. Affine expectation
-    a, b = Fraction(2), Fraction(1)
-    X = lambda i: a * Fraction(i, 4) + b
-    E = na_expectation(P, X)
-    print(f"E[2x+1] on Fin(5) = {E} (expected {a/2 + b})")
-    print()
+    print(f"Universe: {set(universe)}")
+    print(f"Point mass: {EPSILON_S}")
+    print(f"Total mass: {mu.total_mass()}")
 
-    # 3. Refinement invariance
-    X_square = lambda i: Fraction(i * i)
-    ok, coarse, fine = check_refinement_invariance(4, 3, X_square)
-    print(f"Refinement (n=4, k=3, X=i²): invariant={ok}")
-    print(f"  Coarse E = {coarse}, Fine E = {fine}")
-    print()
+    S = frozenset({0, 1})
+    T = frozenset({2, 3, 4})
+    print(f"\nS = {set(S)}, μ(S) = {mu.measure(S)}")
+    print(f"T = {set(T)}, μ(T) = {mu.measure(T)}")
+    print(f"Additivity: {mu.verify_additivity(S, T)}")
+    print(f"Complementation for S: {mu.verify_complementation(S)}")
+    print(f"Monotonicity S ⊆ universe: {mu.verify_monotonicity(S, universe)}")
 
-    # 4. Infinitesimal scheme
-    scheme = InfinitesimalScheme()
-    convergence = scheme.verify_tends_to_zero([0, 9, 99, 999, 9999])
-    print("Infinitesimal scheme point masses:")
-    for n, m in convergence:
-        print(f"  Level {n:>5}: mass = {m:.8f}")
-    print()
+    print("\n" + "=" * 60)
+    print("Algorithm 2: Archimedean Obstruction Check")
+    print("=" * 60)
 
-    # 5. Archimedean obstruction
-    N, mass = archimedean_obstruction(0.001)
-    print(f"Archimedean obstruction: ε=0.001 → N={N}, N*ε={mass:.3f} > 1")
+    for eps in [0.1, 0.01, 0.001, 1e-10]:
+        n = check_archimedean_obstruction(eps, 1.0)
+        print(f"ε = {eps}: n = {n}, n·ε = {n * eps if n else 'N/A'}")
+
+    print("\n" + "=" * 60)
+    print("Algorithm 3: Infinitesimal Classification")
+    print("=" * 60)
+
+    cases = [
+        (ZERO_S, ONE_S, "0 vs 1"),
+        (EPSILON_S, ONE_S, "ε vs 1"),
+        (ONE_S, EPSILON_S, "1 vs ε"),
+        (3 * EPSILON_S, ONE_S, "3ε vs 1"),
+        (SurrealTruncated(Fraction(1, 2)), ONE_S, "1/2 vs 1"),
+    ]
+
+    for x, u, label in cases:
+        print(f"  {label}: {classify_infinitesimal(x, u)}")
+
+    print("\n" + "=" * 60)
+    print("Algorithm 4: Discrimination Table for Fin(5)")
+    print("=" * 60)
+
+    table = discrimination_table(5, EPSILON_S)
+    for k, m in table.items():
+        print(f"  |S| = {k}: μ(S) = {m}")
+    print(f"  All distinct: {len(set(str(v) for v in table.values())) == len(table)}")
+
+    print("\n" + "=" * 60)
+    print("Algorithm 5: Anti-Cancellation Verification")
+    print("=" * 60)
+
+    test_cases = [
+        [EPSILON_S, EPSILON_S, EPSILON_S],
+        [EPSILON_S, 2 * EPSILON_S, 3 * EPSILON_S],
+        [ONE_S, EPSILON_S],
+    ]
+
+    for masses in test_cases:
+        result, explanation = verify_anti_cancellation(masses)
+        print(f"  {explanation}")

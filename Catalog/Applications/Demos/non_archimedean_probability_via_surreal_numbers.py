@@ -1,574 +1,459 @@
 #!/usr/bin/env python3
 """
-Applications of Non-Archimedean Finitely Additive Probability
+Non-Archimedean Probability: Numerical Demonstrations
 
-Real-world applications demonstrating the practical utility of the theory:
-1. Fair lottery on finite populations with exact equal treatment
-2. Rare-event modeling with explicitly positive infinitesimal probabilities
-3. Decision theory with lexicographic preferences
-4. Rate-distortion approximation on discrete grids
-5. Monte Carlo integration error analysis
+Demonstrates the key concepts of infinitesimal probability theory using
+symbolic representations of surreal numbers.
 """
 
 from fractions import Fraction
-from typing import Callable, Dict, List, Tuple
-import math
-import random
+from typing import List, Set, Tuple
 
 
-# =============================================================================
-# Application 1: Fair Finite Lotteries
-# =============================================================================
-def fair_lottery_analysis(population: int) -> Dict:
-    """Analyze fairness properties of a uniform grid probability lottery.
-
-    In a fair lottery, every participant must have exactly equal probability
-    of winning. Classical probability on infinite populations requires
-    measure-zero singletons, making "equal positive probability" impossible.
-
-    Our non-Archimedean framework gives each participant mass 1/N > 0.
-
-    Returns:
-        Dictionary with fairness metrics.
+class SurrealApprox:
     """
-    mass = Fraction(1, population)
+    A simplified representation of surreal numbers as pairs (real_part, infinitesimal_order).
+    Represents numbers of the form a + b/ω where a is the real part and b is the
+    coefficient of 1/ω (the infinitesimal part).
 
-    # Subgroup fairness: any k-person subgroup has mass k/N
-    subgroup_sizes = [1, 2, 10, population // 2, population]
-    subgroup_masses = {k: mass * k for k in subgroup_sizes if k <= population}
-
-    return {
-        "population": population,
-        "individual_mass": mass,
-        "individual_mass_float": float(mass),
-        "subgroup_masses": subgroup_masses,
-        "total_mass": mass * population,
-        "is_normalized": mass * population == Fraction(1),
-    }
-
-
-# =============================================================================
-# Application 2: Rare-Event Modeling
-# =============================================================================
-def rare_event_model(grid_size: int, rare_events: List[int]) -> Dict:
-    """Model rare events with explicitly positive probabilities.
-
-    In classical probability, events with probability 0 are "impossible"
-    even though they may occur. Non-Archimedean probability assigns
-    positive infinitesimal mass to each event.
-
-    Args:
-        grid_size: Total number of possible outcomes (N = grid_size).
-        rare_events: Indices of "rare" events.
-
-    Returns:
-        Analysis of rare event probabilities.
+    This is a truncated Hahn series representation sufficient for demonstrating
+    the key phenomena.
     """
-    mass = Fraction(1, grid_size)
 
-    rare_mass = mass * len(rare_events)
-    common_mass = Fraction(1) - rare_mass
+    def __init__(self, real: Fraction = Fraction(0), infinitesimal: Fraction = Fraction(0)):
+        self.real = real  # coefficient of ω^0
+        self.inf = infinitesimal  # coefficient of ω^(-1), i.e., 1/ω
 
-    return {
-        "grid_size": grid_size,
-        "singleton_mass": mass,
-        "num_rare_events": len(rare_events),
-        "rare_total_mass": rare_mass,
-        "common_total_mass": common_mass,
-        "rare_to_common_ratio": rare_mass / common_mass if common_mass > 0 else float('inf'),
-        "every_event_positive": True,  # This is the key property!
-    }
+    def __add__(self, other: 'SurrealApprox') -> 'SurrealApprox':
+        return SurrealApprox(self.real + other.real, self.inf + other.inf)
 
+    def __sub__(self, other: 'SurrealApprox') -> 'SurrealApprox':
+        return SurrealApprox(self.real - other.real, self.inf - other.inf)
 
-# =============================================================================
-# Application 3: Lexicographic Decision Theory
-# =============================================================================
-def lexicographic_utility(
-    n: int,
-    primary_utility: Callable[[int], Fraction],
-    secondary_utility: Callable[[int], Fraction],
-) -> Tuple[Fraction, Fraction, str]:
-    """Compare actions using lexicographic expected utility.
+    def __mul__(self, n: int) -> 'SurrealApprox':
+        """Scalar multiplication by a natural number."""
+        return SurrealApprox(self.real * n, self.inf * n)
 
-    In lexicographic decision theory, infinitesimal differences matter.
-    Our grid probability naturally supports this: on a grid of size N,
-    the "infinitesimal" contribution of each point is 1/N.
+    def __rmul__(self, n: int) -> 'SurrealApprox':
+        return self.__mul__(n)
 
-    For two levels of utility (primary and secondary), we compute:
-    - Primary expected utility: E[U_primary]
-    - Secondary expected utility: E[U_secondary]
-    - Decision: compare lexicographically
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, SurrealApprox):
+            return NotImplemented
+        return self.real == other.real and self.inf == other.inf
 
-    Args:
-        n: Grid parameter (universe = {0, ..., n}).
-        primary_utility: Primary utility function.
-        secondary_utility: Secondary utility function.
+    def __lt__(self, other: 'SurrealApprox') -> bool:
+        if self.real != other.real:
+            return self.real < other.real
+        return self.inf < other.inf
 
-    Returns:
-        (primary_E, secondary_E, decision_description)
-    """
-    mass = Fraction(1, n + 1)
+    def __le__(self, other: 'SurrealApprox') -> bool:
+        return self == other or self < other
 
-    primary_E = sum(primary_utility(i) * mass for i in range(n + 1))
-    secondary_E = sum(secondary_utility(i) * mass for i in range(n + 1))
+    def __gt__(self, other: 'SurrealApprox') -> bool:
+        return other < self
 
-    return primary_E, secondary_E, f"E[U1]={primary_E}, E[U2]={secondary_E}"
+    def __repr__(self) -> str:
+        parts = []
+        if self.real != 0:
+            parts.append(str(self.real))
+        if self.inf != 0:
+            if self.inf == 1:
+                parts.append("ε")
+            elif self.inf == -1:
+                parts.append("-ε")
+            else:
+                parts.append(f"{self.inf}ε")
+        if not parts:
+            return "0"
+        return " + ".join(parts)
 
+    def is_infinitesimal(self) -> bool:
+        """Check if this number is infinitesimal (real part is zero, inf part positive)."""
+        return self.real == 0 and self.inf > 0
 
-# =============================================================================
-# Application 4: Discrete Rate-Distortion
-# =============================================================================
-def grid_rate_distortion(
-    n: int,
-    codebook_size: int,
-    distortion_fn: Callable[[int, int], Fraction],
-) -> Dict:
-    """Compute rate-distortion on a uniform grid.
-
-    Under uniform grid probability, the expected distortion for a
-    codebook (set of reconstruction points) is:
-
-    D = E[min_{c ∈ codebook} d(X, c)] = (1/(n+1)) Σ_i min_c d(i, c)
-
-    For squared distortion d(x,y) = (x-y)², this gives exact rational answers.
-
-    The key insight from our theory: for affine distortion kernels,
-    this expected distortion is invariant under grid refinement.
-
-    Args:
-        n: Grid parameter.
-        codebook_size: Number of reconstruction points.
-        distortion_fn: Distortion function d(source, reconstruction).
-
-    Returns:
-        Rate-distortion analysis.
-    """
-    mass = Fraction(1, n + 1)
-
-    # Simple uniform codebook
-    codebook = [i * n // (codebook_size - 1) if codebook_size > 1 else n // 2
-                for i in range(codebook_size)]
-    codebook = list(set(codebook))  # Remove duplicates
-
-    # Expected distortion
-    total_distortion = Fraction(0)
-    for i in range(n + 1):
-        min_d = min(distortion_fn(i, c) for c in codebook)
-        total_distortion += min_d * mass
-
-    return {
-        "grid_size": n + 1,
-        "codebook": codebook,
-        "codebook_size": len(codebook),
-        "expected_distortion": total_distortion,
-        "expected_distortion_float": float(total_distortion),
-        "rate_bits": math.log2(len(codebook)) if len(codebook) > 0 else 0,
-    }
+    def is_positive(self) -> bool:
+        """Check if strictly positive."""
+        return self > SurrealApprox()
 
 
-# =============================================================================
-# Application 5: Monte Carlo Error Analysis
-# =============================================================================
-def monte_carlo_vs_grid(
-    f: Callable[[float], float],
-    n_grid: int,
-    n_mc: int,
-    true_integral: float,
-    seed: int = 42,
-) -> Dict:
-    """Compare grid expectation with Monte Carlo integration.
-
-    Our grid probability gives exact rational expectations.
-    Monte Carlo gives random approximations. This comparison
-    highlights the deterministic exactness of the grid approach.
-
-    Args:
-        f: Function to integrate over [0, 1].
-        n_grid: Number of grid points.
-        n_mc: Number of Monte Carlo samples.
-        true_integral: Known integral value for comparison.
-        seed: Random seed for reproducibility.
-
-    Returns:
-        Comparison metrics.
-    """
-    # Grid expectation (exact for our method)
-    grid_sum = sum(f(i / n_grid) for i in range(n_grid + 1))
-    grid_E = grid_sum / (n_grid + 1)
-    grid_error = abs(grid_E - true_integral)
-
-    # Monte Carlo
-    rng = random.Random(seed)
-    mc_samples = [f(rng.random()) for _ in range(n_mc)]
-    mc_E = sum(mc_samples) / n_mc
-    mc_error = abs(mc_E - true_integral)
-
-    return {
-        "function_desc": f.__doc__ or "unknown",
-        "true_integral": true_integral,
-        "grid_points": n_grid + 1,
-        "grid_expectation": grid_E,
-        "grid_error": grid_error,
-        "mc_samples": n_mc,
-        "mc_expectation": mc_E,
-        "mc_error": mc_error,
-        "grid_wins": grid_error < mc_error,
-    }
+# Convenience constructors
+ZERO = SurrealApprox()
+ONE = SurrealApprox(Fraction(1))
+EPSILON = SurrealApprox(Fraction(0), Fraction(1))  # 1/ω
 
 
-# =============================================================================
-# Main demonstration
-# =============================================================================
+def demo_archimedean_obstruction():
+    """Demonstrate that ℝ has no infinitesimals (Theorem 1)."""
+    print("=" * 60)
+    print("DEMO 1: Archimedean Obstruction")
+    print("=" * 60)
+    print()
+    print("In ℝ, every positive number eventually exceeds 1 when")
+    print("multiplied by a large enough integer:")
+    print()
+
+    for eps_val in [0.1, 0.01, 0.001, 0.0001]:
+        n = int(1.0 / eps_val) + 1
+        print(f"  ε = {eps_val}: {n} × ε = {n * eps_val:.4f} > 1  ✓")
+
+    print()
+    print("No real number is infinitesimal. (Theorem 1: archimedean_no_infinitesimal)")
+    print()
+
+
+def demo_surreal_infinitesimal():
+    """Demonstrate infinitesimal behavior in surreal-like numbers (Theorem 2-4)."""
+    print("=" * 60)
+    print("DEMO 2: Surreal Infinitesimals")
+    print("=" * 60)
+    print()
+
+    eps = EPSILON
+    print(f"  ε = {eps}")
+    print(f"  ε is positive: {eps.is_positive()}")
+    print(f"  ε is infinitesimal: {eps.is_infinitesimal()}")
+    print()
+
+    # Demonstrate that finite multiples stay infinitesimal
+    print("Finite multiples of ε remain infinitesimal (Theorem 4):")
+    for n in [1, 10, 100, 1000, 1000000]:
+        result = n * eps
+        print(f"  {n} × ε = {result}, infinitesimal: {result.is_infinitesimal()}")
+
+    print()
+    print("But n × ε < 1 for ALL finite n. (Non-Archimedean!)")
+    print()
+
+    # Convexity
+    half_eps = SurrealApprox(Fraction(0), Fraction(1, 2))
+    print(f"Convexity (Theorem 2): ε/2 = {half_eps}")
+    print(f"  0 < ε/2 ≤ ε: {ZERO < half_eps and half_eps <= eps}")
+    print(f"  ε/2 is infinitesimal: {half_eps.is_infinitesimal()}")
+    print()
+
+
+def demo_finite_measure():
+    """Demonstrate finitely additive infinitesimal measure (Theorems 5-7)."""
+    print("=" * 60)
+    print("DEMO 3: Infinitesimal Probability Measure on Fin(n)")
+    print("=" * 60)
+    print()
+
+    for n in [3, 5, 10, 100]:
+        eps = EPSILON
+        points = list(range(n))
+        total = n * eps
+
+        print(f"  Fin({n}): each point gets mass ε = {eps}")
+        print(f"    Total mass = {n} × ε = {total}")
+        print(f"    Total ≤ 1: {total <= ONE}")
+        print(f"    Total is infinitesimal: {total.is_infinitesimal()}")
+        print()
+
+    # Finite additivity
+    print("Finite additivity (Theorem 5):")
+    S = {0, 1}
+    T = {2, 3, 4}
+    eps = EPSILON
+    mu_S = len(S) * eps
+    mu_T = len(T) * eps
+    mu_union = len(S | T) * eps
+    print(f"  S = {S}, μ(S) = {mu_S}")
+    print(f"  T = {T}, μ(T) = {mu_T}")
+    print(f"  S ∪ T = {S | T}, μ(S ∪ T) = {mu_union}")
+    print(f"  μ(S) + μ(T) = {mu_S + mu_T}")
+    print(f"  Additivity: μ(S ∪ T) = μ(S) + μ(T)? {mu_union == mu_S + mu_T}")
+    print()
+
+
+def demo_discrimination():
+    """Demonstrate that infinitesimal measures discriminate sets (Theorem 14)."""
+    print("=" * 60)
+    print("DEMO 4: Discrimination Theorem")
+    print("=" * 60)
+    print()
+    print("Classical probability on [0,1]: all finite sets have measure 0.")
+    print("Infinitesimal probability discriminates by cardinality:")
+    print()
+
+    n = 6
+    eps = EPSILON
+
+    # Show all possible measures
+    for k in range(n + 1):
+        measure = k * eps
+        print(f"  |S| = {k}: μ(S) = {measure}")
+
+    print()
+    print("Every cardinality gives a DISTINCT measure value!")
+    print("Sets {0,1} and {0,1,2} are distinguishable: 2ε ≠ 3ε")
+    print()
+
+
+def demo_anti_cancellation():
+    """Demonstrate the anti-cancellation bridge (Theorem 11)."""
+    print("=" * 60)
+    print("DEMO 5: Anti-Cancellation Bridge")
+    print("=" * 60)
+    print()
+    print("If all point masses are positive, total mass is positive.")
+    print("(Analog of sum_ne_zero_of_same_sign_and_exists_ne_zero)")
+    print()
+
+    # Various positive measures
+    measures = [
+        [EPSILON, EPSILON, EPSILON],
+        [SurrealApprox(Fraction(0), Fraction(1, 3)),
+         SurrealApprox(Fraction(0), Fraction(2, 3)),
+         EPSILON],
+        [SurrealApprox(Fraction(1, 2)), EPSILON,
+         SurrealApprox(Fraction(0), Fraction(7))],
+    ]
+
+    for i, mu in enumerate(measures):
+        total = ZERO
+        for m in mu:
+            total = total + m
+        all_pos = all(m.is_positive() for m in mu)
+        print(f"  Measure {i + 1}: masses = [{', '.join(str(m) for m in mu)}]")
+        print(f"    All positive: {all_pos}")
+        print(f"    Total = {total}")
+        print(f"    Total > 0: {total.is_positive()}")
+        print()
+
+
+def demo_complementation():
+    """Demonstrate the complementation identity (Theorem 12)."""
+    print("=" * 60)
+    print("DEMO 6: Complementation Identity")
+    print("=" * 60)
+    print()
+
+    n = 5
+    eps = EPSILON
+    total = n * eps
+
+    for k in range(n + 1):
+        mu_S = k * eps
+        mu_comp = (n - k) * eps
+        sum_val = mu_S + mu_comp
+        print(f"  |S| = {k}: μ(S) = {mu_S}, μ(Sᶜ) = {mu_comp}, "
+              f"sum = {sum_val} = total? {sum_val == total}")
+
+    print()
+
+
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║     APPLICATIONS OF NON-ARCHIMEDEAN PROBABILITY                    ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
+    demo_archimedean_obstruction()
+    demo_surreal_infinitesimal()
+    demo_finite_measure()
+    demo_discrimination()
+    demo_anti_cancellation()
+    demo_complementation()
 
-    # Application 1: Fair Lottery
-    print("=" * 70)
-    print("APPLICATION 1: Fair Finite Lotteries")
-    print("=" * 70)
-    for pop in [100, 1000, 1000000]:
-        result = fair_lottery_analysis(pop)
-        print(f"\n  Population {pop:>10}:")
-        print(f"    Individual mass: {result['individual_mass']} "
-              f"({result['individual_mass_float']:.2e})")
-        print(f"    Normalized: {result['is_normalized']}")
-        for k, m in result['subgroup_masses'].items():
-            print(f"    Group of {k}: mass = {float(m):.6f}")
-    print()
-
-    # Application 2: Rare Events
-    print("=" * 70)
-    print("APPLICATION 2: Rare-Event Modeling")
-    print("=" * 70)
-    result = rare_event_model(1000000, list(range(10)))
-    print(f"\n  Grid size: {result['grid_size']}")
-    print(f"  Singleton mass: {result['singleton_mass']}")
-    print(f"  10 rare events total mass: {result['rare_total_mass']}")
-    print(f"  Every event has positive probability: {result['every_event_positive']}")
-    print()
-
-    # Application 3: Lexicographic Decision
-    print("=" * 70)
-    print("APPLICATION 3: Lexicographic Decision Theory")
-    print("=" * 70)
-    n = 99
-    # Action A: high primary utility, low secondary
-    prim_A = lambda i: Fraction(i, n)
-    sec_A = lambda i: Fraction(1)
-    E_prim_A, E_sec_A, desc_A = lexicographic_utility(n, prim_A, sec_A)
-
-    # Action B: same primary, higher secondary
-    prim_B = lambda i: Fraction(i, n)
-    sec_B = lambda i: Fraction(i * i, n * n)
-    E_prim_B, E_sec_B, desc_B = lexicographic_utility(n, prim_B, sec_B)
-
-    print(f"\n  Action A: {desc_A}")
-    print(f"  Action B: {desc_B}")
-    if E_prim_A == E_prim_B:
-        winner = "A" if E_sec_A > E_sec_B else "B"
-        print(f"  Primary utilities equal → decide by secondary → choose {winner}")
-    print()
-
-    # Application 4: Rate-Distortion
-    print("=" * 70)
-    print("APPLICATION 4: Discrete Rate-Distortion")
-    print("=" * 70)
-    squared = lambda x, y: Fraction((x - y) ** 2)
-    for n in [10, 50, 100]:
-        for cb_size in [2, 4, 8]:
-            result = grid_rate_distortion(n, cb_size, squared)
-            print(f"\n  Grid {n+1} pts, codebook size {result['codebook_size']}:")
-            print(f"    Expected distortion: {result['expected_distortion_float']:.6f}")
-            print(f"    Rate: {result['rate_bits']:.2f} bits")
-    print()
-
-    # Application 5: Monte Carlo comparison
-    print("=" * 70)
-    print("APPLICATION 5: Grid vs Monte Carlo Integration")
-    print("=" * 70)
-
-    def linear(x):
-        """f(x) = x"""
-        return x
-
-    def quadratic(x):
-        """f(x) = x²"""
-        return x * x
-
-    for f, integral, name in [
-        (linear, 0.5, "x"),
-        (quadratic, 1/3, "x²"),
-    ]:
-        print(f"\n  f(x) = {name}, ∫₀¹ f = {integral}")
-        result = monte_carlo_vs_grid(f, 100, 100, integral)
-        print(f"    Grid (101 pts): E = {result['grid_expectation']:.8f}, "
-              f"error = {result['grid_error']:.2e}")
-        print(f"    MC (100 samples): E = {result['mc_expectation']:.8f}, "
-              f"error = {result['mc_error']:.2e}")
-        print(f"    Grid wins: {result['grid_wins']}")
-    print()
-
-    print("=" * 70)
-    print("ALL APPLICATIONS DEMONSTRATED")
-    print("=" * 70)
+    print("=" * 60)
+    print("All demonstrations complete.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Non-Archimedean Probability via Finite Grids: Interactive Demo
+Visualization: Infinitesimal vs Standard Probability Measures
 
-Demonstrates the key theorems of non-Archimedean finitely additive probability:
-1. Uniform grid probabilities with equal atomic masses
-2. Exact affine expectation matching the continuum limit
-3. Refinement invariance under grid subdivision
-4. Convergence of grid expectations (shadow principle)
-5. Impossibility of equal positive atoms on infinite sets
+Compares standard (ℝ-valued) and infinitesimal (surreal-valued) probability
+measures on finite sets, illustrating the discrimination theorem.
 """
 
-from fractions import Fraction
-from typing import Callable, List
-import math
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import numpy as np
 
 
-def grid_uniform_mass(n: int, subset_size: int) -> Fraction:
-    """Mass of a subset of size `subset_size` on grid Fin(n+1)."""
-    return Fraction(subset_size, n + 1)
+def plot_measure_comparison():
+    """Compare standard and infinitesimal measures on subsets of Fin(6)."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    n = 6
+    cardinalities = list(range(n + 1))
+
+    # Standard uniform measure on Fin(6): each point has mass 1/6
+    standard_measures = [k / n for k in cardinalities]
+
+    # Infinitesimal measure: each point has mass ε
+    # We represent ε as a small visual value but label correctly
+    inf_measures = list(range(n + 1))  # k * ε
+
+    # Plot 1: Standard measure
+    ax1 = axes[0]
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, n + 1))
+    bars1 = ax1.bar(cardinalities, standard_measures, color=colors, edgecolor='black', linewidth=0.5)
+    ax1.set_xlabel('Cardinality |S|', fontsize=12)
+    ax1.set_ylabel('μ(S)', fontsize=12)
+    ax1.set_title('Standard Uniform Measure on Fin(6)\n(ℝ-valued, Archimedean)', fontsize=13)
+    ax1.set_xticks(cardinalities)
+    ax1.set_ylim(0, 1.15)
+
+    for bar, val in zip(bars1, standard_measures):
+        ax1.text(bar.get_x() + bar.get_width() / 2., bar.get_height() + 0.02,
+                f'{val:.3f}', ha='center', va='bottom', fontsize=9)
+
+    # Plot 2: Infinitesimal measure
+    ax2 = axes[1]
+    bars2 = ax2.bar(cardinalities, inf_measures, color=colors, edgecolor='black', linewidth=0.5)
+    ax2.set_xlabel('Cardinality |S|', fontsize=12)
+    ax2.set_ylabel('μ(S) / ε', fontsize=12)
+    ax2.set_title('Infinitesimal Uniform Measure on Fin(6)\n(Surreal-valued, Non-Archimedean)', fontsize=13)
+    ax2.set_xticks(cardinalities)
+
+    for bar, val in zip(bars2, inf_measures):
+        ax2.text(bar.get_x() + bar.get_width() / 2., bar.get_height() + 0.1,
+                f'{val}ε', ha='center', va='bottom', fontsize=9)
+
+    # Add annotation about discrimination
+    ax2.annotate('All values distinct!\n(Discrimination Theorem)',
+                xy=(3, 3), fontsize=10,
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow',
+                         edgecolor='orange', alpha=0.8),
+                ha='center')
+
+    plt.tight_layout()
+    plt.savefig('measure_comparison.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: measure_comparison.png")
 
 
-def singleton_mass(n: int) -> Fraction:
-    """Mass of each singleton on grid Fin(n+1)."""
-    return Fraction(1, n + 1)
+def plot_archimedean_obstruction():
+    """Visualize the Archimedean obstruction: n*ε eventually exceeds u."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Archimedean case (ℝ)
+    ax1 = axes[0]
+    epsilon = 0.15
+    u = 1.0
+    ns = np.arange(0, 12)
+    values = ns * epsilon
+
+    colors_arch = ['green' if v <= u else 'red' for v in values]
+    ax1.bar(ns, values, color=colors_arch, edgecolor='black', linewidth=0.5)
+    ax1.axhline(y=u, color='blue', linestyle='--', linewidth=2, label=f'u = {u}')
+    ax1.set_xlabel('n (number of copies)', fontsize=12)
+    ax1.set_ylabel('n · ε', fontsize=12)
+    ax1.set_title(f'Archimedean (ℝ): ε = {epsilon}\nn·ε eventually exceeds u', fontsize=13)
+    ax1.legend(fontsize=11)
+    ax1.set_xticks(ns)
+
+    n_exceed = int(np.ceil(u / epsilon))
+    ax1.annotate(f'Exceeds u at n={n_exceed}!',
+                xy=(n_exceed, n_exceed * epsilon),
+                xytext=(n_exceed + 1, n_exceed * epsilon + 0.3),
+                arrowprops=dict(arrowstyle='->', color='red'),
+                fontsize=10, color='red', fontweight='bold')
+
+    # Non-Archimedean case (Surreal)
+    ax2 = axes[1]
+    ns2 = np.arange(0, 12)
+    # In non-Archimedean: n·ε is always infinitesimal, never reaches u=1
+    # Visually: show all bars at a very small height
+    inf_values = ns2 * 0.05  # Visual representation of n·ε
+
+    ax2.bar(ns2, inf_values, color='green', edgecolor='black', linewidth=0.5)
+    ax2.axhline(y=u, color='blue', linestyle='--', linewidth=2, label='u = 1')
+    ax2.set_xlabel('n (number of copies)', fontsize=12)
+    ax2.set_ylabel('n · ε (relative to u)', fontsize=12)
+    ax2.set_title('Non-Archimedean (Surreal): ε = 1/ω\nn·ε NEVER reaches u', fontsize=13)
+    ax2.legend(fontsize=11)
+    ax2.set_xticks(ns2)
+    ax2.set_ylim(0, 1.5)
+
+    ax2.annotate('Gap is infinite!\nNo finite n bridges it.',
+                xy=(6, 0.3), xytext=(6, 0.7),
+                arrowprops=dict(arrowstyle='->', color='green'),
+                fontsize=10, color='green', fontweight='bold',
+                ha='center')
+
+    plt.tight_layout()
+    plt.savefig('archimedean_obstruction.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: archimedean_obstruction.png")
 
 
-def na_expectation(n: int, X: Callable[[int], Fraction]) -> Fraction:
-    """Expectation of observable X on uniform grid Fin(n+1).
+def plot_infinitesimal_structure():
+    """Visualize the structure of infinitesimals: convexity and additive closure."""
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    E[X] = sum_{i=0}^{n} X(i) * (1/(n+1))
-    """
-    return sum(X(i) * singleton_mass(n) for i in range(n + 1))
+    # Number line with infinitesimal region
+    ax.set_xlim(-0.5, 3.5)
+    ax.set_ylim(-0.3, 1.5)
 
+    # Draw number line
+    ax.axhline(y=0, color='black', linewidth=1.5)
 
-def refine_observable(n: int, k: int, X: Callable[[int], Fraction]) -> Callable[[int], Fraction]:
-    """Lift observable from Fin(n+1) to Fin(k*(n+1)) by block embedding.
+    # Mark key points
+    points = {
+        0: ('0', 'black'),
+        0.3: ('ε/2', 'blue'),
+        0.6: ('ε', 'blue'),
+        0.9: ('3ε/2', 'blue'),
+        1.2: ('2ε', 'blue'),
+        3.0: ('1', 'red'),
+    }
 
-    Point j in the fine grid maps to coarse point j // k.
-    """
-    def refined(j: int) -> Fraction:
-        return X(j // k)
-    return refined
+    for x, (label, color) in points.items():
+        ax.plot(x, 0, 'o', markersize=8, color=color)
+        ax.annotate(label, xy=(x, 0), xytext=(x, -0.15),
+                   ha='center', fontsize=11, color=color)
 
+    # Infinitesimal region
+    inf_patch = mpatches.FancyBboxPatch((-0.1, 0.1), 1.5, 0.3,
+                                         boxstyle="round,pad=0.05",
+                                         facecolor='lightblue', alpha=0.5,
+                                         edgecolor='blue', linewidth=2)
+    ax.add_patch(inf_patch)
+    ax.text(0.65, 0.25, 'Infinitesimal Region', ha='center', fontsize=12,
+           color='blue', fontweight='bold')
 
-# =============================================================================
-# Demo 1: Uniform atomic probability on finite grids
-# =============================================================================
-def demo_uniform_grid():
-    print("=" * 70)
-    print("DEMO 1: Uniform Atomic Probability on Finite Grids")
-    print("=" * 70)
-    print()
-    print("For each grid size N = n+1, every point carries mass 1/N.")
-    print("As N → ∞, these masses behave like infinitesimals.\n")
+    # Standard region
+    std_patch = mpatches.FancyBboxPatch((2.5, 0.1), 1.0, 0.3,
+                                        boxstyle="round,pad=0.05",
+                                        facecolor='lightyellow', alpha=0.5,
+                                        edgecolor='red', linewidth=2)
+    ax.add_patch(std_patch)
+    ax.text(3.0, 0.25, 'Standard Region', ha='center', fontsize=12,
+           color='red', fontweight='bold')
 
-    for n in [4, 9, 99, 999, 9999]:
-        N = n + 1
-        m = singleton_mass(n)
-        total = sum(singleton_mass(n) for _ in range(N))
-        print(f"  Grid Fin({N}): singleton mass = {m} = {float(m):.6f}, "
-              f"total mass = {total}")
+    # Gap annotation
+    ax.annotate('', xy=(1.4, 0.6), xytext=(2.5, 0.6),
+               arrowprops=dict(arrowstyle='<->', color='purple', lw=2))
+    ax.text(1.95, 0.7, 'Infinite gap\n(no finite n bridges this)',
+           ha='center', fontsize=10, color='purple')
 
-    print()
-    print("✓ Every point has positive mass (no atom is null)")
-    print("✓ Total mass is exactly 1 (normalization)")
-    print("✓ Masses tend to 0 as grid refines (infinitesimal behavior)")
-    print()
+    # Convexity annotation
+    ax.annotate('Convex: if x ≤ ε\nthen x is infinitesimal',
+               xy=(0.3, 0.05), xytext=(-0.3, 0.8),
+               arrowprops=dict(arrowstyle='->', color='green'),
+               fontsize=10, color='green',
+               bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.5))
 
+    # Additive closure annotation
+    ax.annotate('Closed under +:\nε + ε = 2ε ∈ Inf',
+               xy=(1.2, 0.05), xytext=(1.5, 0.8),
+               arrowprops=dict(arrowstyle='->', color='orange'),
+               fontsize=10, color='orange',
+               bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.5))
 
-# =============================================================================
-# Demo 2: Exact affine expectation
-# =============================================================================
-def demo_affine_expectation():
-    print("=" * 70)
-    print("DEMO 2: Exact Affine Expectation on Grids")
-    print("=" * 70)
-    print()
-    print("For X(i) = a*i/n + b on Fin(n+1), E[X] = a/2 + b exactly.\n")
+    ax.set_title('Structure of Infinitesimals in Non-Archimedean Groups', fontsize=14)
+    ax.set_xlabel('Value', fontsize=12)
+    ax.get_yaxis().set_visible(False)
 
-    test_cases = [
-        (1, 0, "identity"),
-        (2, 1, "2x + 1"),
-        (3, -1, "3x - 1"),
-        (Fraction(1, 2), Fraction(1, 3), "x/2 + 1/3"),
-    ]
-
-    for a, b, name in test_cases:
-        a, b = Fraction(a), Fraction(b)
-        expected = a / 2 + b
-        print(f"  f(x) = {name}:  expected E[f] = {expected}")
-
-        for n in [5, 10, 50, 100]:
-            X = lambda i, a=a, b=b, n=n: a * Fraction(i, n) + b
-            E = na_expectation(n, X)
-            print(f"    Grid Fin({n+1}): E[f] = {E} {'✓ EXACT' if E == expected else '✗ MISMATCH'}")
-        print()
-
-    print("✓ The discrete model recovers exact continuum expectations for affine functions")
-    print()
-
-
-# =============================================================================
-# Demo 3: Refinement invariance
-# =============================================================================
-def demo_refinement_invariance():
-    print("=" * 70)
-    print("DEMO 3: Refinement Invariance")
-    print("=" * 70)
-    print()
-    print("Refining grid Fin(n+1) to Fin(k*(n+1)) preserves expectations.\n")
-
-    def test_observable(i: int) -> Fraction:
-        """A simple test observable: i^2."""
-        return Fraction(i * i)
-
-    for n in [3, 5, 9]:
-        coarse_E = na_expectation(n, test_observable)
-        print(f"  Coarse grid Fin({n+1}): E[i²] = {coarse_E} = {float(coarse_E):.6f}")
-
-        for k in [2, 3, 5]:
-            fine_n = k * (n + 1) - 1
-            refined_X = refine_observable(n, k, test_observable)
-            fine_E = na_expectation(fine_n, refined_X)
-            match = "✓" if fine_E == coarse_E else "✗"
-            print(f"    Refined ×{k} → Fin({k*(n+1)}): E[refine(i²)] = {fine_E} {match}")
-        print()
-
-    # Also test with affine observables
-    print("  Testing refinement invariance for affine observables:")
-    for n in [4, 7]:
-        a, b = Fraction(3), Fraction(-1)
-        X_coarse = lambda i, a=a, b=b, n=n: a * Fraction(i, n) + b
-        coarse_E = na_expectation(n, X_coarse)
-
-        for k in [2, 4, 10]:
-            X_coarse_for_refine = lambda i: a * Fraction(i, n) + b
-            refined_X = refine_observable(n, k, X_coarse_for_refine)
-            fine_n = k * (n + 1) - 1
-            fine_E = na_expectation(fine_n, refined_X)
-            match = "✓" if fine_E == coarse_E else "✗"
-            print(f"    n={n}, k={k}: coarse={coarse_E}, fine={fine_E} {match}")
-
-    print()
-    print("✓ Expectations are exactly preserved under grid refinement")
-    print()
-
-
-# =============================================================================
-# Demo 4: Convergence to continuum (shadow principle)
-# =============================================================================
-def demo_convergence():
-    print("=" * 70)
-    print("DEMO 4: Convergence to Continuum (Shadow Principle)")
-    print("=" * 70)
-    print()
-    print("For X(i) = a*i/N + b on Fin(N), E[X] → a/2 + b as N → ∞.\n")
-
-    a, b = Fraction(3), Fraction(2)
-    target = a / 2 + b
-    print(f"  f(x) = 3x + 2, target = {target} = {float(target):.4f}\n")
-
-    for N in [5, 10, 50, 100, 500, 1000, 10000]:
-        n = N - 1
-        X = lambda i, n=n: a * Fraction(i, n) + b if n > 0 else b
-        E = na_expectation(n, X)
-        error = abs(float(E) - float(target))
-        print(f"    N = {N:>6}: E[f] = {float(E):.10f}, |error| = {error:.2e}")
-
-    print()
-
-    # Quadratic observable (not exact, but converges)
-    print("  Quadratic: f(x) = x², target = ∫₀¹ x² dx = 1/3\n")
-    target_quad = Fraction(1, 3)
-    for N in [5, 10, 50, 100, 500, 1000]:
-        n = N - 1
-        X = lambda i, n=n: Fraction(i, n) ** 2 if n > 0 else Fraction(0)
-        E = na_expectation(n, X)
-        error = abs(float(E) - float(target_quad))
-        print(f"    N = {N:>6}: E[f] = {float(E):.10f}, "
-              f"|error| = {error:.2e}, "
-              f"≈ 1/(6N) = {1/(6*N):.2e}")
-
-    print()
-    print("✓ Affine expectations converge exactly (are constant)")
-    print("✓ Quadratic expectations converge at rate O(1/N)")
-    print()
-
-
-# =============================================================================
-# Demo 5: Impossibility theorem illustration
-# =============================================================================
-def demo_impossibility():
-    print("=" * 70)
-    print("DEMO 5: Impossibility of Equal Positive Atoms on ℕ")
-    print("=" * 70)
-    print()
-    print("If every singleton {n} has mass ε > 0, then for N > 1/ε,")
-    print("the finite set {0,...,N-1} has mass N*ε > 1. Contradiction!\n")
-
-    for eps in [0.1, 0.01, 0.001, 0.0001]:
-        N_needed = math.ceil(1 / eps) + 1
-        mass = N_needed * eps
-        print(f"  ε = {eps}: need N = {N_needed}, "
-              f"mass = N*ε = {mass:.4f} > 1 ✓ (contradiction)")
-
-    print()
-    print("This is why classical (Archimedean) probability cannot assign")
-    print("equal positive mass to infinitely many atoms.")
-    print("Non-Archimedean probability escapes via infinitesimals or")
-    print("by abandoning countable additivity.")
-    print()
-
-
-# =============================================================================
-# Demo 6: Infinitesimal scheme visualization
-# =============================================================================
-def demo_infinitesimal_scheme():
-    print("=" * 70)
-    print("DEMO 6: Infinitesimal Scheme — Grid Refinement Sequence")
-    print("=" * 70)
-    print()
-    print("A sequence of grid probabilities where point masses → 0:\n")
-
-    print(f"  {'Level n':>10} {'Grid size':>12} {'Point mass':>20} {'≈ float':>14}")
-    print(f"  {'-'*10:>10} {'-'*12:>12} {'-'*20:>20} {'-'*14:>14}")
-
-    for n in range(15):
-        size = n + 1
-        mass = Fraction(1, size)
-        print(f"  {n:>10} {size:>12} {str(mass):>20} {float(mass):>14.8f}")
-
-    print()
-    print("Each row is a valid probability space.")
-    print("The point masses form a null sequence: 1, 1/2, 1/3, ... → 0.")
-    print("This is the formal precursor to hyperfinite counting measure.")
-    print()
+    plt.tight_layout()
+    plt.savefig('infinitesimal_structure.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: infinitesimal_structure.png")
 
 
 if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  NON-ARCHIMEDEAN PROBABILITY VIA FINITE GRIDS — INTERACTIVE DEMO   ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-
-    demo_uniform_grid()
-    demo_affine_expectation()
-    demo_refinement_invariance()
-    demo_convergence()
-    demo_impossibility()
-    demo_infinitesimal_scheme()
-
-    print("=" * 70)
-    print("ALL DEMOS COMPLETE")
-    print("=" * 70)
+    plot_measure_comparison()
+    plot_archimedean_obstruction()
+    plot_infinitesimal_structure()
+    print("\nAll visualizations generated.")
