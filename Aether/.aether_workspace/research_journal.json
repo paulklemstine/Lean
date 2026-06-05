@@ -1020,6 +1020,16 @@
       "theorem_count": 4,
       "timestamp": "2026-06-05T18:47:26",
       "title": "Sonic Mathematics: Counterpoint as Category Theory"
+    },
+    {
+      "cycle_id": "a2ddc296",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Self-Referential Types and Fixed-Point Hierarchies\n\n## Synthesis\n\nThis cycle established that the theory of self-referential types is fundamentally a theory of fixed points on com",
+      "quality_score": 0.31936,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T19:56:08",
+      "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
     }
   ],
   "entries": [
@@ -1065,7 +1075,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-05T18:47:26",
+  "last_updated": "2026-06-05T19:56:08",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1077,12 +1087,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "6abf238d",
-        "quality": 0.42064,
-        "theorems": 5,
-        "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
-      },
       {
         "cycle_id": "13ef8d33",
         "quality": 0.30584,
@@ -1136,6 +1140,12 @@
         "quality": 0.3488,
         "theorems": 5,
         "title": "EML Universal Approximation: Density of EML Functions"
+      },
+      {
+        "cycle_id": "a2ddc296",
+        "quality": 0.31936,
+        "theorems": 5,
+        "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
       }
     ],
     "Bridges": [

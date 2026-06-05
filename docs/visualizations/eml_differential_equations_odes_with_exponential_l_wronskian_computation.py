@@ -1,2 +1,2 @@
-def wronskian(f, fp, g, gp, x):
-    return f(x) * gp(x) - fp(x) * g(x)
+def wronskian(y1, y1p, y2, y2p):
+    return y1 * y2p - y2 * y1p
