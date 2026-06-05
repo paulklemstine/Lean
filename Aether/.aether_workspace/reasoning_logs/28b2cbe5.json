@@ -1,0 +1,22 @@
+{
+  "checkpoints": [
+    {
+      "elapsed_seconds": 0.7,
+      "percent_complete": 0.0,
+      "status": "SUBMITTED",
+      "timestamp": "2026-06-05T15:34:25"
+    }
+  ],
+  "completed_at": "",
+  "domain": "Shared",
+  "error": "",
+  "final_percent": 0.0,
+  "final_status": "",
+  "has_files": false,
+  "job_id": "28b2cbe5",
+  "project_id": "061bcd1a-6900-4919-b04f-24e7c8d1b4e9",
+  "prompt_length": 22284,
+  "stages": [],
+  "submitted_at": "2026-06-05T15:34:25",
+  "total_duration_seconds": 0.0
+}

@@ -1,0 +1,22 @@
+{
+  "checkpoints": [
+    {
+      "elapsed_seconds": 0.5,
+      "percent_complete": 0.0,
+      "status": "SUBMITTED",
+      "timestamp": "2026-06-05T15:35:00"
+    }
+  ],
+  "completed_at": "",
+  "domain": "Cryptography",
+  "error": "",
+  "final_percent": 0.0,
+  "final_status": "",
+  "has_files": false,
+  "job_id": "8faa780a",
+  "project_id": "8e07142c-bca2-4f4f-a0d4-903e5cdab697",
+  "prompt_length": 23355,
+  "stages": [],
+  "submitted_at": "2026-06-05T15:35:00",
+  "total_duration_seconds": 0.0
+}

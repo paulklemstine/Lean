@@ -933,6 +933,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rigorous framework for understanding proof den"
   },
   {
+<<<<<<< Updated upstream
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established a formal bridge between tropical algebra and the computational universality of Conway's Game of Life. The central discovery is that tropical threshold gates \u2014 the algebraic building blocks of GoL's local rule \u2014 form a functionally complete Boolean basis. This means the Game of Life's computational power is not an accident of Conway's specific parameter choices, but a structural consequence of using threshold-based local rules on a regular lattice.\n\nThe most promising cross-domain connection is between **tropical threshold universality** and the **Berggren CA universality** result from the Pythagorean domain (catalog: `berggren_orbit_turing_complete`). Both achieve computation through the same mechanism: threshold-based local rules operating on structured lattices. This suggests a general classification theorem: *any cellular automaton whose local rule can be decomposed into tropical threshold gates is a candidate for computational universality*. The key variable is the lattice structure \u2014 the Berggren CA operates on a tree-structured lattice while GoL uses \u2124\u00b2, and the geometry determines which computations are efficiently realizable.\n\nThe highest breakthrough potential lies in Direction 1 (Threshold Universality Classification), which would provide a complete algebraic characterization of which cellular automata are computationally universal. This would subsume both GoL universality and Berggren universality as special cases of a single theorem.\n\n---\n\n### Direction 1: Threshold Universality Classification Theorem\n\n**Conjecture**: A cellular automaton on a Cayley graph of a finitely generated group G is computationally universal if and only if (1) its local rule decomposes into tropical threshold gates that form a functionally complete Boolean basis, AND (2) the Cayley graph has polynomial growth (i.e., the group G is virtually nilpotent or has intermediate growth).\n\n**Test**: Formalize the definition of \"threshold-decomposable CA\" for arbitrary group-indexed cellular automata. Construct examples on free groups (exponential growth) and on \u2124^d (polynomial growth). Show that on \u2124^d for d \u2265 2, any threshold-decomposable CA with appropriate parameters achieves universality. Attempt to show that on free groups, the exponential growth prevents efficient simulation due to signal dispersion.\n\n**Impact**: If true, this would provide a complete algebraic+geometric criterion for CA universality, unifying GoL, Berggren CA, and potentially Wolfram's Rule 110. If false, the failure would reveal additional necessary conditions beyond threshold decomposability and growth rate.\n\n**Catalog References**: `Pythagorean/BerggrenCA.lean` (berggren_orbit_turing_complete), `Novelty/GameOfLife/Circuits.lean` (functional_completeness), `Computation/TropicalLife/Basic.lean`\n\n**Proof Strategy**: \n1. Define threshold-decomposable CA on arbitrary Cayley graphs\n2. Prove that threshold decomposability + polynomial growth \u2192 signal propagation with bounded overhead\n3. Construct a universal gate set from threshold gates on \u2124^d\n4. Show the Berggren CA on its tree lattice is also threshold-decomposable\n5. Attempt the converse: non-threshold-decomposable \u2192 not universal\n\n**Domain Bridges**: Tropical Algebra \u2194 Geometric Group Theory \u2194 Computational Complexity\n\n**Lineage**: Builds on this cycle's `TropGate.functional_completeness` and `GoL.step_equivariant`, extending to arbitrary group actions.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Entropy and Irreversibility Quantification\n\n**Conjecture**: For the Game of Life on finite tori (Fin m \u00d7 Fin n), define the **tropical entropy** as the logarithm of the number of distinct predecessor configurations. The tropical entropy is strictly decreasing for generic configurations (proving information loss), and the rate of decrease is bounded below by a function of the density.\n\n**Test**: Compute the tropical entropy for small tori (3\u00d73, 4\u00d74, 5\u00d75) computationally. Formalize the definition. Prove that the all-alive configuration has strictly fewer predecessors than the empty configuration. Establish lower bounds on the predecessor count for still lifes.\n\n**Impact**: A formal quantification of irreversibility in GoL would connect to the Garden of Eden theorem and to information-theoretic bounds on computation. If the entropy decrease can be bounded, this gives concrete limits on how much computation GoL can perform per unit area.\n\n**Catalog References**: `Computation/TropicalLife/Basic.lean` (tropicalLifeStep, IsStillLife), `Novelty/GameOfLife/InformationBridge.lean` (step_all_alive, step_preserves_empty)\n\n**Proof Strategy**:\n1. Define predecessor count for configurations on finite tori\n2. Show the step function is not injective (step_all_alive provides a concrete example)\n3. Bound the total number of predecessors using combinatorial arguments\n4. Define tropical entropy as log\u2082 of predecessor count\n5. Prove monotonicity under mild density assumptions\n\n**Domain Bridges**: Information Theory \u2194 Combinatorics \u2194 Tropical Algebra\n\n**Lineage**: Builds on this cycle's `step_all_alive` and `step_preserves_empty`.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Speed of Light Theorem and Signal Propagation Bounds\n\n**Conjecture**: For any spaceship (configuration c with step^p(c) = shift(v, c) for some period p and velocity v, with c finitely supported), the Chebyshev norm of the velocity vector satisfies `\u2016v\u2016_\u221e \u2264 p`. That is, no signal in the Game of Life can travel faster than one cell per generation (the \"speed of light\" c = 1).\n\n**Test**: Formalize the definition of spaceship with finite support. Prove the bound \u2016v\u2016_\u221e \u2264 p. Construct examples showing the bound is tight (the glider achieves v = (1,1) with p = 4, giving speed 1/4 < 1; the hypothetical \"light-speed spaceship\" would have \u2016v\u2016_\u221e = p).\n\n**Impact**: The speed of light is the most fundamental constraint on information propagation in GoL. A formal proof would enable rigorous analysis of computation time \u2014 any GoL computer simulating a TM with tape length L requires at least L generations per TM step.\n\n**Catalog References**: `Novelty/GameOfLife/Structure.lean` (step_local, step_equivariant), `Novelty/GameOfLife/Defs.lean` (chebyshevDist, FinitelySupported)\n\n**Proof Strategy**:\n1. Assume \u2016v\u2016_\u221e > p for contradiction\n2. By finite support, find a cell q that is alive in c but not reachable from any alive cell in p steps (due to speed limit from step_local)\n3. Show step^p(c)(q + v) must be false (unreachable), contradicting shift(v, c)(q + v) = c(q) = true\n4. The key lemma: if c has finite support S, then step^p(c) has support contained in the p-neighborhood of S\n\n**Domain Bridges**: Discrete Geometry \u2194 Information Theory \u2194 Computational Complexity\n\n**Lineage**: Builds on this cycle's `step_local` and `chebyshevDist` definitions.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Surjunctivity and the Garden of Eden Theorem for GoL\n\n**Conjecture**: Formalize and prove that the Game of Life step function on \u2124\u00b2 is not surjective \u2014 there exist \"Garden of Eden\" configurations with no predecessor. Moreover, formalize a constructive witness: a specific small pattern (e.g., on a 3\u00d73 or 4\u00d74 patch) that cannot be the image of any configuration under the GoL step.\n\n**Test**: Enumerate all 2^9 configurations on a 3\u00d73 grid and check which outputs are achievable (computationally). Identify unreachable outputs. Formalize one such unreachable pattern as a Garden of Eden witness. Then prove the formal non-surjectivity theorem.\n\n**Impact**: The Garden of Eden theorem (Myhill-Moore) states that a CA is surjective iff it is pre-injective. Proving GoL is not surjective would immediately imply it is not pre-injective, giving a concrete example of the theorem. This connects CA theory to symbolic dynamics.\n\n**Catalog References**: `Bridges/GardenOfEden.lean`, `Novelty/GameOfLife/InformationBridge.lean` (step_all_alive shows two configs map to all-dead)\n\n**Proof Strategy**:\n1. Use `step_all_alive` and `step_preserves_empty` to show step is not injective (two distinct configs map to the same output)\n2. By the Myhill-Moore theorem (if available in the catalog), conclude step is not pre-injective\n3. Alternatively, construct a direct Garden of Eden witness by exhaustive computation on a small patch\n4. Use `decide` or `native_decide` for the finite verification\n\n**Domain Bridges**: Symbolic Dynamics \u2194 Combinatorial Group Theory \u2194 Computability\n\n**Lineage**: Builds on this cycle's non-injectivity observation (empty and all-alive both map to empty).\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Tropical Circuit Complexity of GoL Patterns\n\n**Conjecture**: The **tropical circuit complexity** of a GoL pattern P (the minimum number of tropical threshold gates needed to compute the indicator function of P) is a computable invariant that correlates with the pattern's computational capability. Specifically, patterns with tropical circuit complexity \u2265 5 can act as logic gates, while patterns with complexity < 5 cannot.\n\n**Test**: Define tropical circuit complexity formally. Compute it for basic patterns (block = complexity 1, blinker = complexity 2, glider = complexity 4). Prove the lower bound for the glider. Show that the threshold 5 is correct by exhibiting a complexity-5 pattern that acts as a gate and a complexity-4 pattern that cannot.\n\n**Impact**: This would give a computable criterion for identifying \"useful\" GoL patterns \u2014 those with sufficient algebraic complexity to participate in universal computation.\n\n**Catalog References**: `Novelty/GameOfLife/Circuits.lean` (TropGate.threshold, functional_completeness), `Algebra/AlgebraicCircuitComplexity.lean`\n\n**Proof Strategy**:\n1. Define tropical circuit complexity as the minimum number of threshold gates\n2. Prove basic lower bounds using information-theoretic arguments\n3. Compute exact complexity for small patterns using exhaustive search\n4. Correlate with computational capability through simulation\n\n**Domain Bridges**: Circuit Complexity \u2194 Tropical Algebra \u2194 Pattern Theory\n\n**Lineage**: Builds on this cycle's tropical threshold gate constructions.\n\n**Ambition**: extension\n",
     "domains": [
@@ -979,6 +980,9 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+=======
+    "consumed_by_exp_id": "8faa780a",
+>>>>>>> Stashed changes
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -988,7 +992,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.828631+00:00",
     "title": "Inverse Stereographic Cryptography: Projection as One-Way Function"
   },
@@ -1068,7 +1072,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Learning with Errors: Hardness Reductions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "28b2cbe5",
     "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
     "domains": [
       "MachineLearning",
@@ -1078,7 +1082,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.560336+00:00",
     "title": "Grokking: Phase Transitions in Learning"
   },
@@ -1263,7 +1267,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e41ff7a4",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -1273,7 +1277,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -1637,7 +1641,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isogeny-Based Cryptography: CSI-FiSh"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "713ec797",
     "description": "Prove a tropical analog of the Hodge decomposition. Formalize tropical (p,q)-forms, the tropical Laplacian, and harmonic theory on balanced weighted polyhedral complexes.",
     "domains": [
       "Tropical",
@@ -1647,7 +1651,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.398315+00:00",
     "title": "Tropical Hodge Theory"
   },
@@ -3106,7 +3110,11 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mathematical foundations of a holographic co"
   },
   {
+<<<<<<< Updated upstream
     "consumed_by_exp_id": "",
+=======
+    "consumed_by_exp_id": "f5645237",
+>>>>>>> Stashed changes
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domains": [
       "Computation",
@@ -3481,7 +3489,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sonic Mathematics: Counterpoint as Category Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e56bc8e3",
     "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
     "domains": [
       "Geometry",
@@ -3491,7 +3499,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.310599+00:00",
     "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
   },
@@ -4261,7 +4269,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8fed90ac",
     "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
     "domains": [
       "Novelty",
@@ -4271,7 +4279,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.681497+00:00",
     "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
   },
@@ -4591,7 +4599,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24f901b8",
     "description": "Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
     "domains": [
       "Novelty",
@@ -4601,7 +4609,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.877377+00:00",
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
