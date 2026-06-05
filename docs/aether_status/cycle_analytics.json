@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-05T00:32:16.140535+00:00",
+  "last_updated": "2026-06-05T02:39:18.344848+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -3978,6 +3978,41 @@
       "theorem_count": 5,
       "timestamp": "2026-06-05T00:32:16.068162+00:00",
       "title": "Spectral Graph Theory Meets Network Robustness"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5668,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 14,
+      "domain": "Geometry",
+      "duration_seconds": 11537.084417581558,
+      "end_time": 1780627128.1290355,
+      "files_integrated": 5,
+      "job_id": "177306c3",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.88,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7888,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.696,
+        "novelty": 0.95,
+        "proof_depth": 0.5872,
+        "usefulness": 0.7686
+      },
+      "quality_score": 0.29544000000000004,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780615591.044618,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-05T02:39:18.284194+00:00",
+      "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
     }
   ]
 }

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "177306c3",
     "filename": "langlands_for_toddlers_galois_groups_as_shapes_aut.json",
     "pkg_num": 371,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.29544000000000004,
     "title": "Langlands Mirror: Shape-Color Duality in Arithmetic"
   },
   {
@@ -11910,8 +11910,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "langlands_for_toddlers_galois_groups_as_shapes_aut",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.29544000000000004,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Langlands Mirror: Shape-Color Duality in Arithmetic"
     }
