@@ -1,295 +1,274 @@
 #!/usr/bin/env python3
 """
-Non-Standard Arithmetic: Algorithms
+algorithms.py — Algorithms for non-standard arithmetic.
 
-Type-hinted implementations of the core algorithms and constructions
-from the non-standard arithmetic formalization.
+Provides type-hinted implementations of:
+1. Ultrapower equivalence checking
+2. Non-standard element comparison
+3. Transfer principle simulation
+4. Prime sequence generation for non-standard primes
 """
 
-from typing import Callable, List, Optional, Set, Tuple
+from typing import List, Callable, Set, Tuple, Optional
+from dataclasses import dataclass
 import math
 
 
 # ============================================================
-# Algorithm 1: Infinitesimal Classification
+# Algorithm 1: Ultrapower Element Representation
 # ============================================================
 
-def classify_element(
-    x: float,
-    max_test_n: int = 10000
-) -> str:
-    """Classify an element as infinitesimal, bounded, or infinite.
-
-    In a computationally bounded setting, we approximate the
-    algebraic definitions:
-    - Infinitesimal: n * |x| < 1 for all n up to max_test_n
-    - Bounded: |x| ≤ max_test_n
-    - Infinite: |x| > max_test_n
-
-    Args:
-        x: Element to classify
-        max_test_n: Maximum natural number to test against
-
-    Returns:
-        Classification string: "infinitesimal", "bounded", or "infinite"
+@dataclass
+class UltrapowerElement:
+    """Represents an element of ℕ* = ℕ^I/U as a finite approximation.
+    
+    In the formal construction, elements are equivalence classes of
+    sequences modulo an ultrafilter. For computation, we represent
+    them as finite sequences with a specified index set size.
     """
-    abs_x = abs(x)
-
-    # Check infinitesimal: n * |x| < 1 for all positive n
-    if all(n * abs_x < 1.0 for n in range(1, max_test_n + 1)):
-        return "infinitesimal"
-
-    # Check bounded: |x| ≤ some natural number
-    if abs_x <= max_test_n:
-        return "bounded"
-
-    return "infinite"
-
-
-def verify_ideal_property(
-    bounded_vals: List[float],
-    infinitesimal_vals: List[float],
-    max_n: int = 1000
-) -> List[Tuple[float, float, float, bool]]:
-    """Verify the ideal property: bounded × infinitesimal = infinitesimal.
-
-    Tests that for each pair (b, ε), the product b*ε remains
-    infinitesimal (up to computational bounds).
-
-    Returns list of (b, eps, product, is_product_infinitesimal).
-    """
-    results = []
-    for b in bounded_vals:
-        for eps in infinitesimal_vals:
-            product = b * eps
-            is_inf = all(n * abs(product) < 1.0 for n in range(1, max_n + 1))
-            results.append((b, eps, product, is_inf))
-    return results
+    sequence: List[int]
+    
+    @property
+    def size(self) -> int:
+        return len(self.sequence)
+    
+    @staticmethod
+    def constant(n: int, size: int) -> 'UltrapowerElement':
+        """The diagonal embedding d(n) = [n, n, ..., n]."""
+        return UltrapowerElement([n] * size)
+    
+    @staticmethod
+    def identity(size: int) -> 'UltrapowerElement':
+        """The canonical infinite element ω = [0, 1, 2, ..., N-1]."""
+        return UltrapowerElement(list(range(size)))
+    
+    @staticmethod
+    def nth_prime_sequence(size: int) -> 'UltrapowerElement':
+        """The non-standard prime π = [p_0, p_1, p_2, ...]."""
+        primes = []
+        candidate = 2
+        while len(primes) < size:
+            if all(candidate % p != 0 for p in range(2, int(math.sqrt(candidate)) + 1)):
+                primes.append(candidate)
+            candidate += 1
+        return UltrapowerElement(primes)
+    
+    def add(self, other: 'UltrapowerElement') -> 'UltrapowerElement':
+        """Pointwise addition: [f] + [g] = [f + g]."""
+        assert self.size == other.size
+        return UltrapowerElement([a + b for a, b in zip(self.sequence, other.sequence)])
+    
+    def mul(self, other: 'UltrapowerElement') -> 'UltrapowerElement':
+        """Pointwise multiplication: [f] · [g] = [f · g]."""
+        assert self.size == other.size
+        return UltrapowerElement([a * b for a, b in zip(self.sequence, other.sequence)])
 
 
 # ============================================================
-# Algorithm 2: Ultrafilter Simulation
+# Algorithm 2: Ultrafilter Simulation (Majority Filter)
 # ============================================================
 
-class CofiniteUltrafilter:
-    """Simulates a 'cofinite-like' ultrafilter on finite subsets of ℕ.
-
-    A free ultrafilter on ℕ contains all cofinite sets.
-    We simulate this by declaring a set S ⊆ [0, N) to be 'U-large'
-    if its complement in [0, N) has size < threshold.
+def majority_filter_check(indices: Set[int], total: int) -> bool:
+    """Simulate ultrafilter membership using the majority filter.
+    
+    A principal ultrafilter at point p declares S "large" iff p ∈ S.
+    A nonprincipal ultrafilter declares S "large" iff it contains
+    "most" elements. We approximate this with the majority criterion:
+    S is large iff |S| > total/2.
+    
+    Pseudocode:
+        INPUT: set S ⊆ {0, ..., N-1}, total N
+        OUTPUT: True if |S| > N/2
     """
+    return len(indices) > total / 2
 
-    def __init__(self, universe_size: int = 10000, threshold: float = 0.01):
-        self.N = universe_size
-        self.threshold = threshold
 
-    def is_large(self, s: Set[int]) -> bool:
-        """Check if set S is 'U-large' (complement is small)."""
-        complement_size = sum(1 for i in range(self.N) if i not in s)
-        return complement_size / self.N < self.threshold
+def ultrapower_less_than(a: UltrapowerElement, b: UltrapowerElement) -> bool:
+    """Check if [a] <* [b] in the ultrapower.
+    
+    [a] <* [b] iff {i | a(i) < b(i)} is U-large.
+    
+    Pseudocode:
+        INPUT: sequences a, b of length N
+        OUTPUT: True if a(i) < b(i) on more than N/2 indices
+    """
+    large_set = {i for i in range(a.size) if a.sequence[i] < b.sequence[i]}
+    return majority_filter_check(large_set, a.size)
 
-    def transfer_and(self, s1: Set[int], s2: Set[int]) -> Tuple[bool, bool, bool]:
-        """Verify conjunction transfer: if S1, S2 ∈ U then S1 ∩ S2 ∈ U."""
-        l1 = self.is_large(s1)
-        l2 = self.is_large(s2)
-        l_inter = self.is_large(s1 & s2)
-        return l1, l2, l_inter
 
-    def transfer_imp(
-        self,
-        prop_p: Callable[[int], bool],
-        prop_q: Callable[[int], bool]
-    ) -> Tuple[bool, bool, bool]:
-        """Verify implication transfer: P ∈ U and (P→Q) ∈ U implies Q ∈ U."""
-        s_p = {i for i in range(self.N) if prop_p(i)}
-        s_pq = {i for i in range(self.N) if not prop_p(i) or prop_q(i)}
-        s_q = {i for i in range(self.N) if prop_q(i)}
-        return self.is_large(s_p), self.is_large(s_pq), self.is_large(s_q)
+def ultrapower_equal(a: UltrapowerElement, b: UltrapowerElement) -> bool:
+    """Check if [a] = [b] in the ultrapower.
+    
+    Pseudocode:
+        INPUT: sequences a, b of length N
+        OUTPUT: True if a(i) = b(i) on more than N/2 indices
+    """
+    agree_set = {i for i in range(a.size) if a.sequence[i] == b.sequence[i]}
+    return majority_filter_check(agree_set, a.size)
+
+
+def ultrapower_divides(a: UltrapowerElement, b: UltrapowerElement) -> bool:
+    """Check if [a] |* [b] in the ultrapower.
+    
+    Pseudocode:
+        INPUT: sequences a, b of length N
+        OUTPUT: True if a(i) | b(i) on more than N/2 indices
+    """
+    div_set = {i for i in range(a.size) 
+               if a.sequence[i] != 0 and b.sequence[i] % a.sequence[i] == 0}
+    return majority_filter_check(div_set, a.size)
 
 
 # ============================================================
-# Algorithm 3: Overspill Construction
+# Algorithm 3: Transfer Principle Checker
 # ============================================================
 
-def construct_overflow_function(
-    membership: Callable[[int, int], bool],
-    universe_size: int = 1000,
-    max_chain_depth: int = 100
-) -> List[int]:
-    """Construct the overflow function for a decreasing chain.
+@dataclass
+class FirstOrderAtom:
+    """An atomic first-order formula over ℕ."""
+    predicate: str  # "eq", "le", "lt", "dvd", "prime"
+    args: Tuple     # indices into the variable list
 
-    Given a decreasing chain of sets S_n defined by membership(i, n),
-    compute f(i) = max{n | membership(i, n)} for each i.
-
-    This is the computational core of the overspill principle:
-    f represents a 'nonstandard element' in the ultraproduct.
-
-    Args:
-        membership: Function (i, n) → bool indicating i ∈ S_n
-        universe_size: Size of index set
-        max_chain_depth: Maximum chain depth to check
-
-    Returns:
-        List f where f[i] = max{n | i ∈ S_n}
+def check_transfer(
+    formula: Callable[[int], bool],
+    elements: List[UltrapowerElement],
+    size: int
+) -> Tuple[bool, float]:
+    """Check whether a first-order property transfers.
+    
+    Given a predicate P and ultrapower elements, compute the
+    fraction of indices where P holds. If > 0.5, P "transfers."
+    
+    Pseudocode:
+        INPUT: predicate P, ultrapower elements [f_1], ..., [f_k]
+        OUTPUT: (transfers: bool, confidence: float)
+        
+        count = 0
+        for i in 0..N-1:
+            if P(f_1(i), ..., f_k(i)):
+                count += 1
+        fraction = count / N
+        return (fraction > 0.5, fraction)
     """
-    f = []
-    for i in range(universe_size):
-        max_n = 0
-        for n in range(max_chain_depth):
-            if membership(i, n):
-                max_n = n
-            else:
-                break
-        f.append(max_n)
-    return f
+    count = sum(1 for i in range(size) if formula(i))
+    fraction = count / size
+    return (fraction > 0.5, fraction)
 
 
-def verify_overspill(
-    f: List[int],
-    membership: Callable[[int, int], bool],
-    check_depth: int = 50
-) -> dict:
-    """Verify the overspill properties of an overflow function.
+# ============================================================
+# Algorithm 4: Non-Standard Prime Generator  
+# ============================================================
 
-    Checks:
-    1. For each n, the set {i | f(i) ≥ n} has high density (should be 'U-large')
-    2. For each i, i ∈ S_{f(i)} (membership at the overflow point)
-
-    Returns dict with verification results.
+def generate_nonstandard_prime(size: int) -> Tuple[UltrapowerElement, dict]:
+    """Generate a non-standard prime element.
+    
+    Constructs the sequence [p_0, p_1, p_2, ...] of consecutive primes
+    and verifies:
+    1. Every entry is prime
+    2. p_n > n for all n
+    
+    Pseudocode:
+        INPUT: sequence length N
+        OUTPUT: (ultrapower element π, verification dict)
+        
+        primes = []
+        candidate = 2
+        while |primes| < N:
+            if isPrime(candidate):
+                primes.append(candidate)
+            candidate += 1
+        
+        verify:
+            all_prime = ∀ i, isPrime(primes[i])
+            all_exceed = ∀ i, primes[i] > i
+        
+        return (UltrapowerElement(primes), {all_prime, all_exceed})
     """
-    N = len(f)
-    results = {
-        "overflow_densities": {},
-        "membership_rate": 0.0,
-        "max_overflow": max(f) if f else 0,
-        "mean_overflow": sum(f) / len(f) if f else 0.0,
+    pi = UltrapowerElement.nth_prime_sequence(size)
+    
+    all_prime = all(
+        all(pi.sequence[i] % p != 0 for p in range(2, int(math.sqrt(pi.sequence[i])) + 1))
+        if pi.sequence[i] > 1 else False
+        for i in range(size)
+    )
+    all_exceed = all(pi.sequence[i] > i for i in range(size))
+    
+    return pi, {
+        "all_prime": all_prime,
+        "all_exceed_index": all_exceed,
+        "min_prime": min(pi.sequence),
+        "max_prime": max(pi.sequence),
+        "growth_rate": pi.sequence[-1] / size if size > 0 else 0
     }
 
-    # Check overflow property: {i | f(i) ≥ n} should be large
-    for n in range(0, min(check_depth, max(f) + 1) if f else 0, 5):
-        count = sum(1 for fi in f if fi >= n)
-        results["overflow_densities"][n] = count / N
-
-    # Check membership: i ∈ S_{f(i)}
-    member_count = sum(1 for i, fi in enumerate(f) if membership(i, fi))
-    results["membership_rate"] = member_count / N
-
-    return results
-
 
 # ============================================================
-# Algorithm 4: Non-Archimedean Detector
+# Algorithm 5: Overspill Detector
 # ============================================================
 
-def detect_non_archimedean(
-    abs_fn: Callable[[float], float],
-    test_elements: List[float],
-    max_n: int = 10000
-) -> Tuple[bool, Optional[float]]:
-    """Detect if a valued field is non-Archimedean by finding infinitesimals.
-
-    Given an absolute value function and test elements, searches for
-    a nonzero element x with n * |x| < 1 for all tested n.
-
-    Returns (is_non_archimedean, witness_infinitesimal).
-    """
-    for x in test_elements:
-        if x == 0:
-            continue
-        ax = abs_fn(x)
-        if ax == 0:
-            continue
-        if all(n * ax < 1.0 for n in range(1, max_n + 1)):
-            return True, x
-    return False, None
-
-
-def padic_absolute_value(x: int, p: int) -> float:
-    """Compute the p-adic absolute value |x|_p.
-
-    |x|_p = p^(-v_p(x)) where v_p(x) is the p-adic valuation.
-    """
-    if x == 0:
-        return 0.0
-    val = 0
-    n = abs(x)
-    while n % p == 0:
-        val += 1
-        n //= p
-    return float(p) ** (-val)
-
-
-# ============================================================
-# Algorithm 5: Compositeness Transfer Check
-# ============================================================
-
-def verify_compositeness_transfer(
-    f: Callable[[int], int],
-    a: Callable[[int], int],
-    b: Callable[[int], int],
-    n_indices: int = 10000
+def detect_overspill(
+    property_family: Callable[[int, int], bool],
+    max_n: int,
+    size: int
 ) -> dict:
-    """Verify that a factorization f = a * b transfers compositeness.
-
-    Checks the three conditions of the compositeness transfer theorem:
-    1. f(i) = a(i) * b(i) for 'most' i
-    2. a(i) > 1 for 'most' i
-    3. b(i) > 1 for 'most' i
-    → f(i) is composite for 'most' i
-
-    Returns verification statistics.
+    """Detect the overspill phenomenon.
+    
+    Given a family P(i, n), compute:
+    - For each n, the fraction of indices where P(i, n) holds
+    - The fraction where ∀ n < max_n, P(i, n) holds simultaneously
+    - The ratio (simultaneous / individual), showing overspill gap
+    
+    Pseudocode:
+        INPUT: property P(i,n), bound max_n, index set size N
+        OUTPUT: analysis dict
+        
+        for n in 0..max_n-1:
+            individual[n] = |{i | P(i,n)}| / N
+        
+        simultaneous = |{i | ∀ n < max_n, P(i,n)}| / N
+        gap = min(individual) - simultaneous
+        
+        return {individual, simultaneous, gap}
     """
-    fact_count = 0
-    a_gt1_count = 0
-    b_gt1_count = 0
-    composite_count = 0
-
-    for i in range(n_indices):
-        fi, ai, bi = f(i), a(i), b(i)
-        if fi == ai * bi:
-            fact_count += 1
-        if ai > 1:
-            a_gt1_count += 1
-        if bi > 1:
-            b_gt1_count += 1
-        if fi > 1 and not _is_prime_simple(fi):
-            composite_count += 1
-
+    individual = {}
+    for n in range(max_n):
+        count = sum(1 for i in range(size) if property_family(i, n))
+        individual[n] = count / size
+    
+    simultaneous_count = sum(
+        1 for i in range(size)
+        if all(property_family(i, n) for n in range(max_n))
+    )
+    simultaneous = simultaneous_count / size
+    
+    min_individual = min(individual.values()) if individual else 0
+    
     return {
-        "factorization_density": fact_count / n_indices,
-        "a_gt_1_density": a_gt1_count / n_indices,
-        "b_gt_1_density": b_gt1_count / n_indices,
-        "composite_density": composite_count / n_indices,
+        "individual_fractions": individual,
+        "simultaneous_fraction": simultaneous,
+        "gap": min_individual - simultaneous,
+        "overspill_detected": simultaneous == 0 and min_individual > 0.5
     }
-
-
-def _is_prime_simple(n: int) -> bool:
-    """Simple primality test."""
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    print("Classification test:")
-    for x in [0, 1e-10, 5.0, 1e20]:
-        print(f"  {x} -> {classify_element(x)}")
-
-    print("\nIdeal property test:")
-    results = verify_ideal_property([1.0, 10.0], [1e-10, 1e-20])
-    for b, eps, prod, is_inf in results:
-        print(f"  {b} × {eps:.1e} = {prod:.1e}, infinitesimal: {is_inf}")
-
-    print("\np-adic absolute values (p=5):")
-    for x in [1, 5, 25, 125, 6]:
-        print(f"  |{x}|_5 = {padic_absolute_value(x, 5):.6f}")
+    N = 100
+    
+    # Demo: Non-standard prime
+    pi, info = generate_nonstandard_prime(N)
+    print(f"Non-standard prime (N={N}):")
+    print(f"  All entries prime: {info['all_prime']}")
+    print(f"  All exceed index: {info['all_exceed_index']}")
+    print(f"  Growth rate (p_N/N): {info['growth_rate']:.2f}")
+    
+    # Demo: Overspill detection
+    result = detect_overspill(lambda i, n: n < i, max_n=20, size=N)
+    print(f"\nOverspill analysis for P(i,n) = 'n < i' (N={N}, max_n=20):")
+    print(f"  Simultaneous fraction: {result['simultaneous_fraction']}")
+    print(f"  Overspill detected: {result['overspill_detected']}")
+    
+    # Demo: ω > d(n) check
+    omega = UltrapowerElement.identity(N)
+    for n in [10, 50, 99]:
+        dn = UltrapowerElement.constant(n, N)
+        print(f"\n  ω >* d({n}): {ultrapower_less_than(dn, omega)}")
