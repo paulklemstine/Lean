@@ -1,319 +1,327 @@
 #!/usr/bin/env python3
 """
-Algorithms for Self-Referential Type Theory
-============================================
+Algorithms for Self-Referential Types and Fixed-Point Hierarchies.
 
-Type-hinted implementations of the core algorithms from the
-Lawvere Fixed Point Theorem research cycle.
+Implements the core mathematical constructions:
+1. Lawvere diagonal construction
+2. Fixed-point iteration (Knaster-Tarski)
+3. Closure operator computation
+4. Operator hierarchy construction
 """
 
-from typing import TypeVar, Callable, Optional, Set, FrozenSet, List, Tuple, Dict
+from typing import Callable, TypeVar, Optional, Set, FrozenSet
 from dataclasses import dataclass
-import itertools
+import math
 
 T = TypeVar('T')
-A = TypeVar('A')
-B = TypeVar('B')
 
 
-# =============================================================
-# Algorithm 1: Lawvere Diagonal Construction
-# =============================================================
+# ============================================================
+# Algorithm 1: Lawvere Diagonal
+# ============================================================
 
-def lawvere_diagonal_search(
-    encoding: Callable[[int], Callable[[int], bool]],
+def lawvere_diagonal(
+    enum: Callable[[int], Callable[[int], bool]],
     transform: Callable[[bool], bool],
-    domain: range
-) -> Optional[Tuple[int, bool]]:
+    domain_size: int
+) -> Callable[[int], bool]:
     """
-    Search for a Lawvere fixed point.
-    
-    Given an encoding e : ℕ → (ℕ → Bool) and a transform f : Bool → Bool,
-    constructs the diagonal d(x) = f(e(x)(x)) and searches for a
-    such that e(a) = d. Returns (a, fixed_point) if found.
-    
-    Complexity: O(|domain|²) in the worst case.
-    
+    Lawvere's diagonal construction.
+
+    Given an enumeration of functions and a transformation,
+    produces a function not in the enumeration.
+
+    Pseudocode:
+        LAWVERE-DIAGONAL(enum, f, n):
+            define g(i) = f(enum(i)(i)) for i in 0..n-1
+            return g
+
     Args:
-        encoding: The surjection e : A → (A → B)
-        transform: The endomorphism f : B → B
-        domain: The finite domain to search over
-        
+        enum: Maps index i to a function A → B
+        transform: The endomorphism f : B → B (e.g., negation)
+        domain_size: Size of the domain
+
     Returns:
-        (index, fixed_point_value) or None
+        A function not in the range of enum
     """
-    # Construct diagonal function
-    diag = lambda x: transform(encoding(x)(x))
-    
-    for a in domain:
-        # Check if e(a) agrees with diag on entire domain
-        if all(encoding(a)(x) == diag(x) for x in domain):
-            b = encoding(a)(a)
-            assert transform(b) == b, "Lawvere guarantees this"
-            return (a, b)
-    
-    return None
+    def diagonal(i: int) -> bool:
+        if i < domain_size:
+            return transform(enum(i)(i))
+        return False
+    return diagonal
 
 
-# =============================================================
-# Algorithm 2: Diagonal Set Construction
-# =============================================================
+def verify_diagonal_escape(
+    enum: Callable[[int], Callable[[int], bool]],
+    diagonal: Callable[[int], bool],
+    domain_size: int
+) -> bool:
+    """Verify the diagonal function differs from every enum(i)."""
+    for i in range(domain_size):
+        if all(enum(i)(j) == diagonal(j) for j in range(domain_size)):
+            return False  # Found a match — shouldn't happen!
+    return True
 
-def diagonal_set(family: Callable[[int], Set[int]], domain: range) -> Set[int]:
+
+# ============================================================
+# Algorithm 2: Knaster-Tarski Fixed Point Iteration
+# ============================================================
+
+@dataclass
+class FixedPointResult:
+    """Result of fixed-point iteration."""
+    value: float
+    iterations: int
+    converged: bool
+    trajectory: list[float]
+
+
+def knaster_tarski_lfp(
+    f: Callable[[float], float],
+    bottom: float = 0.0,
+    epsilon: float = 1e-10,
+    max_iter: int = 10000
+) -> FixedPointResult:
     """
-    Construct the diagonal set of a family of sets.
-    
-    D = {n ∈ domain | n ∉ family(n)}
-    
-    The diagonal set is guaranteed to differ from family(k) for every k
-    in the domain (Theorem: diag_differs).
-    
+    Compute the least fixed point of a monotone function on [0, ∞)
+    by iterating from bottom.
+
+    Pseudocode:
+        KNASTER-TARSKI-LFP(f, ⊥, ε):
+            x ← ⊥
+            trajectory ← [x]
+            while |f(x) - x| > ε:
+                x ← f(x)
+                trajectory.append(x)
+            return x, trajectory
+
     Args:
-        family: A function mapping indices to sets of naturals
-        domain: The index domain
-        
+        f: Monotone function (assumed, not checked)
+        bottom: Starting point (should be ≤ lfp)
+        epsilon: Convergence threshold
+        max_iter: Maximum iterations
+
     Returns:
-        The diagonal set D
+        FixedPointResult with the approximation
     """
-    return {n for n in domain if n not in family(n)}
+    x = bottom
+    trajectory = [x]
+
+    for i in range(max_iter):
+        x_new = f(x)
+        trajectory.append(x_new)
+        if abs(x_new - x) < epsilon:
+            return FixedPointResult(x_new, i + 1, True, trajectory)
+        x = x_new
+
+    return FixedPointResult(x, max_iter, False, trajectory)
 
 
-def verify_diagonal_differs(
-    family: Callable[[int], Set[int]], 
-    diag: Set[int], 
-    domain: range
-) -> List[Tuple[int, int, bool, bool]]:
+def knaster_tarski_gfp(
+    f: Callable[[float], float],
+    top: float = 1.0,
+    epsilon: float = 1e-10,
+    max_iter: int = 10000
+) -> FixedPointResult:
     """
-    Verify that the diagonal set differs from every family member.
-    
-    Returns list of (index, witness, in_diag, in_family) showing
-    where each family(k) differs from diag.
+    Compute the greatest fixed point by iterating from top.
+
+    Pseudocode:
+        KNASTER-TARSKI-GFP(f, ⊤, ε):
+            x ← ⊤
+            while |f(x) - x| > ε:
+                x ← f(x)
+            return x
     """
-    witnesses = []
-    for k in domain:
-        # By construction, k itself is the witness
-        in_diag = k in diag
-        in_family = k in family(k)
-        witnesses.append((k, k, in_diag, in_family))
-        assert in_diag != in_family, f"Diagonal must differ at index {k}"
-    return witnesses
+    x = top
+    trajectory = [x]
+
+    for i in range(max_iter):
+        x_new = f(x)
+        trajectory.append(x_new)
+        if abs(x_new - x) < epsilon:
+            return FixedPointResult(x_new, i + 1, True, trajectory)
+        x = x_new
+
+    return FixedPointResult(x, max_iter, False, trajectory)
 
 
-# =============================================================
-# Algorithm 3: Diagonal Hierarchy Builder
-# =============================================================
+# ============================================================
+# Algorithm 3: Closure Operator on Finite Power Sets
+# ============================================================
+
+def closure_from_galois(
+    relation: dict[int, Set[str]],
+    objects: Set[int],
+    properties: Set[str]
+) -> Callable[[FrozenSet[int]], FrozenSet[int]]:
+    """
+    Build a closure operator from a Galois connection defined by a relation.
+
+    Pseudocode:
+        GALOIS-CLOSURE(R, S):
+            T ← ∩{R[i] : i ∈ S}       (common properties)
+            return {j : T ⊆ R[j]}       (objects with all common properties)
+
+    Args:
+        relation: Maps each object to its set of properties
+        objects: The set of all objects
+        properties: The set of all properties
+
+    Returns:
+        The closure operator u ∘ l
+    """
+    def lower(S: FrozenSet[int]) -> FrozenSet[str]:
+        if not S:
+            return frozenset(properties)
+        return frozenset.intersection(*(frozenset(relation[i]) for i in S))
+
+    def upper(T: FrozenSet[str]) -> FrozenSet[int]:
+        return frozenset(i for i in objects if T <= frozenset(relation[i]))
+
+    def closure(S: FrozenSet[int]) -> FrozenSet[int]:
+        return upper(lower(S))
+
+    return closure
+
+
+def find_all_closed_sets(
+    closure: Callable[[FrozenSet[int]], FrozenSet[int]],
+    universe: Set[int]
+) -> list[FrozenSet[int]]:
+    """
+    Find all closed sets (fixed points of the closure operator).
+
+    Pseudocode:
+        FIND-CLOSED-SETS(cl, U):
+            closed ← []
+            for S ⊆ U:
+                if cl(S) = S:
+                    closed.append(S)
+            return closed
+    """
+    n = len(universe)
+    elements = sorted(universe)
+    closed = []
+
+    for mask in range(2**n):
+        S = frozenset(elements[i] for i in range(n) if mask & (1 << i))
+        if closure(S) == S:
+            closed.append(S)
+
+    return closed
+
+
+# ============================================================
+# Algorithm 4: Operator Hierarchy
+# ============================================================
 
 @dataclass
 class HierarchyLevel:
-    """A level in the diagonal hierarchy."""
+    """One level of the fixed-point hierarchy."""
     level: int
-    sets: List[Set[int]]
-    diagonal: Optional[Set[int]]
+    lfp: float
+    gfp: float
+    num_fixed_points_approx: int
 
 
-def build_diagonal_hierarchy(
-    base_sets: List[Set[int]],
-    universe_size: int,
-    num_levels: int
-) -> List[HierarchyLevel]:
+def build_operator_hierarchy(
+    operator_family: Callable[[int], Callable[[float], float]],
+    num_levels: int,
+    search_points: int = 1000
+) -> list[HierarchyLevel]:
     """
-    Build a diagonal hierarchy by iterated diagonalization.
-    
-    Starting from base_sets (Level 0), constructs Level 1 by
-    diagonalizing Level 0, Level 2 by diagonalizing Level 1, etc.
-    
-    Each level is strictly larger than the previous (by construction).
-    
+    Build an operator hierarchy and analyze each level.
+
+    Pseudocode:
+        BUILD-HIERARCHY(Φ, N):
+            for n = 0 to N-1:
+                compute lfp(Φ_n) by iteration from 0
+                compute gfp(Φ_n) by iteration from 1
+                count approximate fixed points in [0,1]
+            return hierarchy
+
     Args:
-        base_sets: Initial collection of sets (Level 0)
-        universe_size: Size of the universe {0, ..., universe_size-1}
-        num_levels: Number of hierarchy levels to build
-        
+        operator_family: Maps level n to monotone operator Φ_n
+        num_levels: Number of levels to compute
+        search_points: Resolution for fixed-point counting
+
     Returns:
-        List of HierarchyLevel objects
+        List of HierarchyLevel descriptions
     """
-    hierarchy: List[HierarchyLevel] = []
-    current_sets = list(base_sets)
-    
-    for level in range(num_levels):
-        # Pad current_sets to universe_size
-        padded = current_sets[:universe_size]
-        while len(padded) < universe_size:
-            padded.append(set())
-        
-        # Compute diagonal
-        diag = {x for x in range(universe_size) if x not in padded[x]}
-        
+    hierarchy = []
+
+    for n in range(num_levels):
+        phi = operator_family(n)
+
+        lfp_result = knaster_tarski_lfp(phi)
+        gfp_result = knaster_tarski_gfp(phi)
+
+        # Count approximate fixed points
+        count = 0
+        for k in range(search_points + 1):
+            x = k / search_points
+            if abs(phi(x) - x) < 1e-6:
+                count += 1
+
         hierarchy.append(HierarchyLevel(
-            level=level,
-            sets=list(current_sets),
-            diagonal=diag
+            level=n,
+            lfp=lfp_result.value,
+            gfp=gfp_result.value,
+            num_fixed_points_approx=max(1, count // 5)  # cluster
         ))
-        
-        # Level (n+1) = Level n ∪ {diagonal}
-        current_sets = list(current_sets) + [diag]
-    
+
     return hierarchy
 
 
-# =============================================================
-# Algorithm 4: Knaster-Tarski Fixed Point Computation
-# =============================================================
+# ============================================================
+# Algorithm 5: Self-Referential Complexity Bound
+# ============================================================
 
-def compute_lfp_powerset(
-    f: Callable[[FrozenSet[int]], FrozenSet[int]],
-    universe: Set[int]
-) -> FrozenSet[int]:
+def diagonal_separation(
+    enum: list[Set[int]],
+    universe_size: int
+) -> Set[int]:
     """
-    Compute the least fixed point of a monotone function on P(universe).
-    
-    Uses the Knaster-Tarski characterization: lfp(f) = ⋂{S | f(S) ⊆ S}.
-    
-    Args:
-        f: A monotone function on the power set lattice
-        universe: The base set
-        
-    Returns:
-        The least fixed point of f
+    Construct a set not in the enumeration via diagonalization.
+
+    Pseudocode:
+        DIAGONAL-SEPARATE(enum, n):
+            return {i ∈ [n] : i ∉ enum[i]}
+
+    This always produces a set different from every enum[i].
     """
-    pre_fixed_points: List[FrozenSet[int]] = []
-    
-    for r in range(len(universe) + 1):
-        for subset in itertools.combinations(sorted(universe), r):
-            S = frozenset(subset)
-            if f(S).issubset(S):
-                pre_fixed_points.append(S)
-    
-    if not pre_fixed_points:
-        return frozenset(universe)
-    
-    return frozenset.intersection(*pre_fixed_points)
+    return {i for i in range(min(len(enum), universe_size)) if i not in enum[i]}
 
 
-def compute_gfp_powerset(
-    f: Callable[[FrozenSet[int]], FrozenSet[int]],
-    universe: Set[int]
-) -> FrozenSet[int]:
-    """
-    Compute the greatest fixed point of a monotone function on P(universe).
-    
-    Uses the Knaster-Tarski characterization: gfp(f) = ⋃{S | S ⊆ f(S)}.
-    """
-    post_fixed_points: List[FrozenSet[int]] = []
-    
-    for r in range(len(universe) + 1):
-        for subset in itertools.combinations(sorted(universe), r):
-            S = frozenset(subset)
-            if S.issubset(f(S)):
-                post_fixed_points.append(S)
-    
-    if not post_fixed_points:
-        return frozenset()
-    
-    return frozenset.union(*post_fixed_points)
-
-
-def compute_all_fixed_points(
-    f: Callable[[FrozenSet[int]], FrozenSet[int]],
-    universe: Set[int]
-) -> List[FrozenSet[int]]:
-    """
-    Enumerate all fixed points of f on P(universe).
-    """
-    fixed_points = []
-    for r in range(len(universe) + 1):
-        for subset in itertools.combinations(sorted(universe), r):
-            S = frozenset(subset)
-            if f(S) == S:
-                fixed_points.append(S)
-    return fixed_points
-
-
-# =============================================================
-# Algorithm 5: Fixed-Point Orbit Analysis
-# =============================================================
-
-def find_fixed_points(f: Callable[[int], int], domain: range) -> Set[int]:
-    """Find all fixed points of f in the given domain."""
-    return {x for x in domain if f(x) == x}
-
-
-def find_periodic_points(f: Callable[[int], int], domain: range, period: int) -> Set[int]:
-    """Find all points with period dividing the given period."""
-    def iterate(x: int, n: int) -> int:
-        for _ in range(n):
-            x = f(x)
-        return x
-    
-    return {x for x in domain if iterate(x, period) == x}
-
-
-def fixed_point_hierarchy(f: Callable[[int], int], domain: range, max_depth: int) -> Dict[int, Set[int]]:
-    """
-    Compute the hierarchy of fixed-point sets for f, f², f³, ...
-    
-    Returns dict mapping depth n to FixedPoints(f^n).
-    Demonstrates that FixedPoints(f) ⊆ FixedPoints(f²) ⊆ ...
-    """
-    result = {}
-    for n in range(1, max_depth + 1):
-        result[n] = find_periodic_points(f, domain, n)
-    return result
-
-
-# =============================================================
-# Algorithm 6: Self-Reference Trilemma Checker
-# =============================================================
-
-def check_self_reference_trilemma(
-    encoding: Dict[int, Set[int]],
-    domain: range
-) -> Tuple[bool, Optional[Set[int]]]:
-    """
-    Check whether an encoding system satisfies the self-reference trilemma.
-    
-    Given an encoding (mapping indices to sets), checks if the "Russell set"
-    {i | i ∉ encoding(i)} is represented. If not, the system is incomplete.
-    
-    Args:
-        encoding: Maps each index i to the set encoding(i)
-        domain: The index domain
-        
-    Returns:
-        (is_complete, russell_set): is_complete is True only if some
-        encoding(k) equals the Russell set (which should never happen
-        for a consistent system).
-    """
-    russell = {i for i in domain if i not in encoding.get(i, set())}
-    
-    for k in domain:
-        if encoding.get(k, set()) == russell:
-            return (True, russell)  # "Complete" but must be inconsistent
-    
-    return (False, russell)  # Incomplete (as Lawvere guarantees)
+def verify_separation(enum: list[Set[int]], escaped: Set[int]) -> bool:
+    """Verify the escaped set differs from all enumerated sets."""
+    return all(enum[i] != escaped for i in range(len(enum)))
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    print("Testing algorithms...")
-    
-    # Test diagonal set
-    family = lambda n: {n, (n + 1) % 5}
-    d = diagonal_set(family, range(5))
-    print(f"Diagonal of family: {d}")
-    
-    # Test Knaster-Tarski
-    universe = {0, 1, 2, 3}
-    f = lambda S: frozenset(S | {3 - x for x in S if 0 <= 3 - x <= 3})
-    lfp = compute_lfp_powerset(f, universe)
-    gfp = compute_gfp_powerset(f, universe)
-    print(f"LFP = {set(lfp)}, GFP = {set(gfp)}")
-    
-    # Test hierarchy
-    hierarchy = build_diagonal_hierarchy(
-        [{0, 1}, {2, 3}, {0, 2}], universe_size=5, num_levels=3
+    # Demo: Lawvere diagonal
+    print("=== Lawvere Diagonal ===")
+    matrix = [[True, False, True], [False, True, False], [True, True, True]]
+    enum = lambda i: lambda j: matrix[i][j]
+    diag = lawvere_diagonal(enum, lambda b: not b, 3)
+    print(f"Diagonal: {[diag(i) for i in range(3)]}")
+    print(f"Escapes: {verify_diagonal_escape(enum, diag, 3)}")
+
+    # Demo: Knaster-Tarski
+    print("\n=== Knaster-Tarski LFP ===")
+    result = knaster_tarski_lfp(lambda x: math.sqrt(x), bottom=0.5)
+    print(f"lfp(sqrt) from 0.5: {result.value:.8f} in {result.iterations} iterations")
+
+    result = knaster_tarski_gfp(lambda x: math.sqrt(x), top=2.0)
+    print(f"gfp(sqrt) from 2.0: {result.value:.8f} in {result.iterations} iterations")
+
+    # Demo: Hierarchy
+    print("\n=== Operator Hierarchy ===")
+    hierarchy = build_operator_hierarchy(
+        lambda n: lambda x: x ** (1.0 / (n + 2)),
+        num_levels=5
     )
     for level in hierarchy:
-        print(f"Level {level.level}: {len(level.sets)} sets, diagonal = {level.diagonal}")
-    
-    print("All tests passed!")
+        print(f"  Level {level.level}: lfp={level.lfp:.6f}, gfp={level.gfp:.6f}, "
+              f"~{level.num_fixed_points_approx} fixed points")

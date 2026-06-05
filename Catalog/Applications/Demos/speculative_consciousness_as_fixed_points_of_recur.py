@@ -1,519 +1,347 @@
 #!/usr/bin/env python3
 """
-Demo: Self-Referential Types and Fixed Points
-==============================================
+Demo: Self-Referential Types and Fixed-Point Hierarchies
 
-Demonstrates the key mathematical constructions from the Lawvere Fixed Point
-Theorem research cycle. Shows concrete examples of:
-1. The Lawvere diagonal construction
-2. Cantor's theorem via diagonal argument
-3. The diagonal hierarchy
-4. Fixed points of iterated operators
+Demonstrates key mathematical concepts from the formalization:
+1. Lawvere's diagonal construction
+2. Fixed-point hierarchy iteration
+3. Closure operator fixed points
 """
 
-from typing import Callable, Set, Dict, List, Optional
-import itertools
+import numpy as np
 
 
-def lawvere_diagonal(e: Callable[[int], Callable[[int], bool]],
-                     f: Callable[[bool], bool],
-                     domain_size: int) -> Optional[int]:
+def lawvere_diagonal(enum: list[list[bool]], f=lambda x: not x) -> list[bool]:
     """
-    Demonstrate the Lawvere diagonal construction.
-    
-    Given e: A -> (A -> Bool) and f: Bool -> Bool,
-    constructs d(x) = f(e(x)(x)) and searches for a such that e(a) = d.
-    If found, e(a)(a) is a fixed point of f.
-    
-    Returns the fixed point if found, None otherwise.
+    Lawvere's diagonal construction.
+    Given an enumeration of Boolean functions (as a matrix),
+    constructs a function not in the enumeration by applying f to the diagonal.
+
+    This is the computational content of Lawvere's Fixed Point Theorem:
+    the diagonal g(n) = f(enum[n][n]) always escapes the enumeration.
     """
-    # Construct the diagonal function d
-    d = lambda x: f(e(x)(x))
-    
-    # Search for a such that e(a) agrees with d on the domain
-    for a in range(domain_size):
-        if all(e(a)(x) == d(x) for x in range(domain_size)):
-            fixed_point = e(a)(a)
-            print(f"  Found a = {a}")
-            print(f"  e(a)(a) = {fixed_point}")
-            print(f"  f(e(a)(a)) = {f(fixed_point)}")
-            print(f"  Fixed point: f({fixed_point}) = {fixed_point}? {f(fixed_point) == fixed_point}")
-            return fixed_point
-    return None
+    n = len(enum)
+    return [f(enum[i][i]) if i < len(enum[i]) else True for i in range(n)]
 
 
-def demo_cantor_diagonal():
-    """
-    Demonstrate Cantor's theorem: no surjection from {0,...,n-1} to 2^{0,...,n-1}.
-    """
+def cantor_diagonal_demo():
+    """Demonstrate Cantor's theorem as a special case of Lawvere."""
     print("=" * 60)
-    print("DEMO 1: Cantor's Diagonal Argument")
+    print("CANTOR'S THEOREM via LAWVERE'S DIAGONAL")
     print("=" * 60)
-    
-    n = 5
-    print(f"\nTrying to enumerate all subsets of {{0,...,{n-1}}} using {n} functions:")
-    
-    # Define n functions from {0,...,n-1} to Bool
-    # This represents an attempted enumeration
-    functions = []
-    for i in range(n):
-        # i-th function: characteristic function of {i, (i+1)%n}
-        func = lambda x, i=i: x == i or x == (i + 1) % n
-        functions.append(func)
-    
-    print("\nEnumerated functions (as characteristic sets):")
-    for i, f in enumerate(functions):
-        chars = [f(x) for x in range(n)]
-        subset = {x for x in range(n) if f(x)}
-        print(f"  f_{i} = {subset}")
-    
-    # Construct the diagonal set: {x | x not in f_x}
-    diagonal = {x for x in range(n) if not functions[x](x)}
-    print(f"\nDiagonal set D = {{x | x ∉ f_x}} = {diagonal}")
-    
-    # Verify D differs from every f_i
-    for i, f in enumerate(functions):
-        subset = {x for x in range(n) if f(x)}
-        differs_at = i  # D and f_i must differ at index i
-        print(f"  D vs f_{i}: D({i}) = {i in diagonal}, f_{i}({i}) = {f(i)} — {'DIFFER' if (i in diagonal) != f(i) else 'AGREE'}")
-    
-    print("\n→ The diagonal set differs from every enumerated set.")
-    print("  This proves no finite list can enumerate all subsets.")
 
-
-def demo_diagonal_hierarchy():
-    """
-    Demonstrate the diagonal hierarchy: iterated diagonalization
-    produces strictly increasing complexity levels.
-    """
-    print("\n" + "=" * 60)
-    print("DEMO 2: The Diagonal Hierarchy")
-    print("=" * 60)
-    
-    # Level 0: decidable sets (represented as finite sets of ℕ < 20)
-    # Level 1: sets that require one diagonalization
-    # Level 2: sets that require two diagonalizations
-    
-    n = 10  # universe size
-    
-    # Level 0: simple arithmetic sets
-    level0 = [
-        {x for x in range(n) if x % 2 == 0},  # evens
-        {x for x in range(n) if x % 2 == 1},  # odds
-        {x for x in range(n) if x % 3 == 0},  # multiples of 3
-        {x for x in range(n) if x < 5},        # small numbers
-        set(),                                   # empty set
-        set(range(n)),                           # full set
+    # Enumerate some subsets of {0,1,2,3,4}
+    enum = [
+        [True, False, True, False, True],    # {0, 2, 4}
+        [False, True, False, True, False],   # {1, 3}
+        [True, True, True, False, False],    # {0, 1, 2}
+        [False, False, False, True, True],   # {3, 4}
+        [True, True, True, True, True],      # {0, 1, 2, 3, 4}
     ]
-    
-    print(f"\nLevel 0 sets (simple arithmetic, {len(level0)} sets):")
-    for i, s in enumerate(level0):
-        print(f"  S_{i} = {sorted(s)}")
-    
-    # Pad to n functions
-    while len(level0) < n:
-        level0.append(set())
-    
-    # Diagonalize level 0
-    diag0 = {x for x in range(n) if x not in level0[x]}
-    print(f"\nDiagonal of Level 0: D₀ = {{x | x ∉ S_x}} = {sorted(diag0)}")
-    
-    # Verify D₀ is not in level 0
-    for i, s in enumerate(level0[:6]):
-        if diag0 == s:
-            print(f"  ⚠ D₀ equals S_{i}!")
-            break
-    else:
-        print("  ✓ D₀ differs from all Level 0 sets (as guaranteed by Lawvere)")
-    
-    # Level 1 includes level 0 plus D₀
-    level1 = level0[:6] + [diag0]
-    
-    # Pad to n
-    while len(level1) < n:
-        level1.append(set())
-    
-    # Diagonalize level 1
-    diag1 = {x for x in range(n) if x not in level1[x]}
-    print(f"\nDiagonal of Level 1: D₁ = {{x | x ∉ T_x}} = {sorted(diag1)}")
-    
-    for i, s in enumerate(level1[:7]):
-        if diag1 == s:
-            print(f"  ⚠ D₁ equals T_{i}!")
-            break
-    else:
-        print("  ✓ D₁ differs from all Level 1 sets")
-    
-    print(f"\n→ Level 0 ⊊ Level 1 ⊊ Level 2 ⊊ ... (strict hierarchy)")
-    print("  Each diagonalization creates genuinely new complexity.")
+
+    print("\nEnumeration (rows = encoded subsets):")
+    for i, row in enumerate(enum):
+        subset = {j for j, v in enumerate(row) if v}
+        print(f"  enum[{i}] = {subset}")
+
+    print(f"\nDiagonal entries: ", end="")
+    diag = [enum[i][i] for i in range(5)]
+    print([int(d) for d in diag])
+
+    escaped = lawvere_diagonal(enum, f=lambda x: not x)
+    escaped_set = {j for j, v in enumerate(escaped) if v}
+    print(f"Diagonal escape (negated): {escaped_set}")
+
+    # Verify it's not in the enumeration
+    for i, row in enumerate(enum):
+        if row == escaped:
+            print(f"  ERROR: matches enum[{i}]!")
+            return
+    print("  ✓ Not equal to any enum[i] — Cantor's theorem confirmed!")
 
 
-def demo_fixed_point_iteration():
-    """
-    Demonstrate fixed points under iteration and the period-2 phenomenon.
-    """
+def fixed_point_hierarchy_demo():
+    """Demonstrate the fixed-point hierarchy on [0,1] with monotone operators."""
     print("\n" + "=" * 60)
-    print("DEMO 3: Fixed Points of Iterated Operations")
+    print("FIXED-POINT HIERARCHY")
     print("=" * 60)
-    
-    # Example 1: f(x) = 1-x on {0, 1}
-    print("\nExample: f(x) = 1 - x on {0, 1}")
-    f = lambda x: 1 - x
-    
-    print("  f(0) =", f(0), "  f(1) =", f(1))
-    print("  Fixed points of f: none (f(0)=1≠0, f(1)=0≠1)")
-    
-    f2 = lambda x: f(f(x))
-    print("  f²(0) =", f2(0), "  f²(1) =", f2(1))
-    print("  Fixed points of f²: {0, 1} (f²=id)")
-    print("  → Period-2 orbits: 0 ↔ 1")
-    
-    # Example 2: Collatz-like function
-    print("\nExample: g(x) = x//2 if even, 3x+1 if odd (mod 16)")
-    def g(x):
-        if x % 2 == 0:
-            return x // 2
-        else:
-            return (3 * x + 1) % 16
-    
-    print("  Values: ", {x: g(x) for x in range(16)})
-    
-    # Find fixed points of g, g², g³, ...
-    for k in range(1, 7):
-        gk = lambda x, k=k: x
-        for _ in range(k):
-            gk_prev = gk
-            gk = lambda x, f=gk_prev: g(f(x))
-        
-        fps = {x for x in range(16) if gk(x) == x}
-        print(f"  Fixed points of g^{k}: {sorted(fps)} ({len(fps)} points)")
-    
-    print("\n  → Fixed point sets grow with iteration depth")
-    print("  → FixedPoints(f) ⊆ FixedPoints(f²) ⊆ FixedPoints(f³) ⊆ ...")
+
+    # Each operator Φ_n(x) = 1 - (1-x)^(n+2) on [0,1]
+    # These are monotone, and lfp(Φ_n) = 0 for all n,
+    # but gfp(Φ_n) = 1 for all n.
+    # More interestingly: Φ_n(x) = min(1, x + 1/(n+1))
+    # lfp = 0, but the "convergence speed" to fixed points differs.
+
+    print("\nOperator family: Φ_n(x) = min(1, x + 1/(n+1))")
+    print("Each has lfp = 0 and unique non-trivial fixed point at x = 1")
+    print()
+
+    # More interesting: use x^(1/(n+1)) which has fixed points at 0 and 1
+    for n in range(5):
+        def phi(x, n=n):
+            return x ** (1.0 / (n + 2))
+
+        # Find fixed points by iteration from 0.5
+        x = 0.5
+        for _ in range(1000):
+            x = phi(x)
+
+        # Count iterations to converge within epsilon from a start point
+        eps = 1e-8
+        x = 0.01
+        iters = 0
+        while abs(phi(x) - x) > eps and iters < 10000:
+            x = phi(x)
+            iters += 1
+
+        print(f"  Level {n}: Φ_{n}(x) = x^(1/{n+2}), "
+              f"converges to {x:.6f} from 0.01 in {iters} iterations")
+
+    print("\n  The hierarchy shows increasing 'attraction strength'")
+    print("  of fixed points at higher levels.")
 
 
-def demo_knaster_tarski():
-    """
-    Demonstrate the Knaster-Tarski theorem on a finite lattice.
-    """
+def closure_operator_demo():
+    """Demonstrate closure operators and their fixed points on power sets."""
     print("\n" + "=" * 60)
-    print("DEMO 4: Knaster-Tarski Fixed Points on Power Set Lattice")
+    print("CLOSURE OPERATORS AND GALOIS CONNECTIONS")
     print("=" * 60)
-    
-    universe = {0, 1, 2, 3, 4}
-    
-    # Monotone function: closure under taking pairs that sum to 4
-    def f(S: frozenset) -> frozenset:
-        result = set(S)
-        for x in S:
-            complement = 4 - x
-            if 0 <= complement <= 4:
-                result.add(complement)
-        return frozenset(result)
-    
-    print(f"\nMonotone function f on P({set(universe)}):")
-    print("  f(S) = S ∪ {4-x | x ∈ S, 0 ≤ 4-x ≤ 4}")
-    
-    # Compute all fixed points
-    fixed_points = []
-    for r in range(len(universe) + 1):
-        for subset in itertools.combinations(universe, r):
-            S = frozenset(subset)
-            if f(S) == S:
-                fixed_points.append(set(S))
-    
-    print(f"\n  Fixed points of f ({len(fixed_points)} total):")
-    for fp in sorted(fixed_points, key=lambda s: (len(s), sorted(s))):
-        print(f"    {fp}")
-    
-    # Find least fixed point (by Knaster-Tarski = ∩ of pre-fixed-points)
-    pre_fps = []
-    for r in range(len(universe) + 1):
-        for subset in itertools.combinations(universe, r):
-            S = frozenset(subset)
-            if f(S).issubset(S):
-                pre_fps.append(S)
-    
-    lfp = frozenset.intersection(*pre_fps) if pre_fps else frozenset()
-    print(f"\n  Least fixed point (⊓ pre-fixed-points): {set(lfp)}")
-    print(f"  f(lfp) = {set(f(lfp))} = lfp? {f(lfp) == lfp}")
-    
-    # Find greatest fixed point (∪ of post-fixed-points)
-    post_fps = []
-    for r in range(len(universe) + 1):
-        for subset in itertools.combinations(universe, r):
-            S = frozenset(subset)
-            if S.issubset(f(S)):
-                post_fps.append(S)
-    
-    gfp = frozenset.union(*post_fps) if post_fps else frozenset()
-    print(f"  Greatest fixed point (⊔ post-fixed-points): {set(gfp)}")
-    print(f"  f(gfp) = {set(f(gfp))} = gfp? {f(gfp) == gfp}")
 
+    # Work with subsets of {0, 1, 2, 3, 4}
+    universe = set(range(5))
 
-def demo_self_reference_trilemma():
-    """
-    Demonstrate the Self-Reference Trilemma with a truth-teller/liar example.
-    """
-    print("\n" + "=" * 60)
-    print("DEMO 5: The Self-Reference Trilemma")
-    print("=" * 60)
-    
-    print("""
-    The Self-Reference Trilemma: No system can be simultaneously
-    (1) Self-referential, (2) Consistent, and (3) Complete.
-    
-    Example: A library catalog that lists all books
-    
-    Consider a library with books b₀, b₁, b₂, ...
-    Each book bᵢ contains a list of books (a "catalog").
-    
-    Question: Is there a book that lists exactly the books
-    that do NOT list themselves?
-    
-    Let D = {i | book i does not list book i}
-    
-    If book k has catalog D:
-      - Does book k list itself?
-      - If yes: k ∈ catalog(k) = D, so k ∉ catalog(k). Contradiction!
-      - If no: k ∉ catalog(k) = D, so k ∈ catalog(k). Contradiction!
-    
-    Conclusion: No such book k exists.
-    The catalog system is INCOMPLETE — not every "natural" set
-    of books can be represented as a catalog.
-    
-    This is exactly Lawvere's theorem with:
-      α = books, β = Bool (listed/not listed)
-      e(i) = catalog function of book i
-      f = negation (Bool.not)
-    """)
-    
-    # Concrete numerical example
-    n = 6
-    catalogs = {
-        0: {0, 1, 2},      # Book 0 lists books 0, 1, 2
-        1: {1, 3, 5},      # Book 1 lists books 1, 3, 5
-        2: {0, 2, 4},      # Book 2 lists books 0, 2, 4
-        3: {3, 4, 5},      # Book 3 lists books 3, 4, 5
-        4: {0, 1},          # Book 4 lists books 0, 1
-        5: {2, 3, 4, 5},    # Book 5 lists books 2, 3, 4, 5
+    # Define a Galois connection via a relation R ⊆ A × B
+    # A = {0,1,2,3,4}, B = {a,b,c}
+    # R[i] = set of properties that object i has
+    R = {
+        0: {'a', 'b'},
+        1: {'b', 'c'},
+        2: {'a', 'b', 'c'},
+        3: {'a'},
+        4: {'b', 'c'},
     }
-    
-    # Self-listing status
-    print("  Book catalogs:")
-    for i in range(n):
-        lists_self = i in catalogs[i]
-        print(f"    Book {i}: lists {catalogs[i]}, lists self? {lists_self}")
-    
-    # The "Russell set"
-    russell = {i for i in range(n) if i not in catalogs[i]}
-    print(f"\n  Russell set R = {{i | book i doesn't list itself}} = {russell}")
-    
-    # Check if any book has this catalog
-    for i in range(n):
-        if catalogs[i] == russell:
-            print(f"  ⚠ Book {i} has catalog R!")
-    else:
-        print("  ✓ No book has the Russell set as its catalog.")
-        print("  → The catalog system is INCOMPLETE (Lawvere's theorem).")
+
+    # l(S) = ∩{R[i] : i ∈ S}  (common properties)
+    def lower(S: set) -> set:
+        if not S:
+            return {'a', 'b', 'c'}
+        return set.intersection(*(R[i] for i in S))
+
+    # u(T) = {i : T ⊆ R[i]}  (objects having all properties in T)
+    def upper(T: set) -> set:
+        return {i for i in range(5) if T <= R[i]}
+
+    # Closure: u ∘ l
+    def closure(S: set) -> set:
+        return upper(lower(S))
+
+    print("\nGalois connection between objects {0-4} and properties {a,b,c}")
+    print("Object properties:")
+    for i in range(5):
+        print(f"  Object {i}: {R[i]}")
+
+    print("\nClosure operator u∘l (self-referentially stable sets):")
+    # Find all fixed points (closed sets)
+    closed_sets = []
+    for mask in range(2**5):
+        S = {i for i in range(5) if mask & (1 << i)}
+        cl = closure(S)
+        if cl == S:
+            closed_sets.append(S)
+            print(f"  {S} → l={lower(S)}, u∘l={cl}  ✓ FIXED POINT")
+
+    print(f"\n  Total closed sets: {len(closed_sets)}")
+    print(f"  These form a complete lattice under ⊆")
+
+    # Verify: closed sets = range of u
+    range_u = set()
+    for pmask in range(2**3):
+        T = set()
+        props = ['a', 'b', 'c']
+        for j, p in enumerate(props):
+            if pmask & (1 << j):
+                T.add(p)
+        range_u.add(frozenset(upper(T)))
+
+    print(f"\n  Range of u: {[set(s) for s in range_u]}")
+    print(f"  Fixed points = Range of u: "
+          f"{'✓' if {frozenset(s) for s in closed_sets} == range_u else '✗'}")
+
+
+def reflective_system_demo():
+    """Demonstrate why reflective systems are impossible."""
+    print("\n" + "=" * 60)
+    print("IMPOSSIBILITY OF REFLECTIVE SYSTEMS")
+    print("=" * 60)
+
+    print("\nAttempting to build a reflective system on {0, 1, 2}...")
+    print("We need repr: (A→Bool) → A and eval: A → (A→Bool)")
+    print("such that eval(repr(P)) = P for all P.")
+    print()
+
+    # There are 2^3 = 8 functions {0,1,2} → Bool
+    # But only 3 elements to encode them.
+    # By pigeonhole, repr cannot be injective.
+
+    n = 3
+    num_predicates = 2**n
+
+    print(f"  |A| = {n}")
+    print(f"  |A → Bool| = {num_predicates}")
+    print(f"  We need repr to faithfully represent {num_predicates} predicates")
+    print(f"  using only {n} codes.")
+    print(f"  By pigeonhole: IMPOSSIBLE (need injective repr for faithfulness)")
+    print()
+    print("  But the Lawvere argument is deeper — it works even for infinite types:")
+    print("  The 'liar predicate' L(a) = ¬eval(a)(a) must have a code repr(L),")
+    print("  but then eval(repr(L))(repr(L)) = L(repr(L)) = ¬eval(repr(L))(repr(L))")
+    print("  which is a contradiction regardless of the cardinality of A.")
 
 
 if __name__ == "__main__":
-    demo_cantor_diagonal()
-    demo_diagonal_hierarchy()
-    demo_fixed_point_iteration()
-    demo_knaster_tarski()
-    demo_self_reference_trilemma()
-    
+    cantor_diagonal_demo()
+    fixed_point_hierarchy_demo()
+    closure_operator_demo()
+    reflective_system_demo()
     print("\n" + "=" * 60)
-    print("All demos completed successfully!")
-    print("=" * 60)
+    print("All demonstrations completed successfully.")
 
 
 #!/usr/bin/env python3
 """
-Visualization: The Diagonal Hierarchy
-======================================
+Visualization: Fixed-Point Hierarchy and Operator Convergence
 
-Visualizes the strict hierarchy produced by iterated diagonalization,
-showing how each level strictly contains the previous one.
+Generates a multi-panel figure showing:
+1. Convergence trajectories to fixed points at different hierarchy levels
+2. The cobweb diagram for fixed-point iteration
+3. Separation between hierarchy levels
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import numpy as np
 
 
-def build_hierarchy(n_universe: int, n_levels: int):
-    """Build the diagonal hierarchy and track set membership."""
-    levels = []
-    all_sets = []
-    
-    # Level 0: simple arithmetic sets
-    base = [
-        {x for x in range(n_universe) if x % 2 == 0},
-        {x for x in range(n_universe) if x % 2 == 1},
-        {x for x in range(n_universe) if x % 3 == 0},
-        {x for x in range(n_universe) if x < n_universe // 2},
-        set(),
-        set(range(n_universe)),
-    ]
-    all_sets.extend(base)
-    levels.append(list(base))
-    
-    for level in range(1, n_levels):
-        current = list(all_sets)
-        # Pad to n_universe
-        while len(current) < n_universe:
-            current.append(set())
-        
-        # Diagonal
-        diag = {x for x in range(n_universe) if x not in current[x]}
-        all_sets.append(diag)
-        levels.append(levels[-1] + [diag])
-    
-    return levels
+def compute_trajectory(f, x0, n_steps=50):
+    """Iterate f from x0 for n_steps."""
+    traj = [x0]
+    x = x0
+    for _ in range(n_steps):
+        x = f(x)
+        traj.append(x)
+    return traj
 
 
-def visualize():
-    n_universe = 12
-    n_levels = 5
-    levels = build_hierarchy(n_universe, n_levels)
-    
-    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
-    
-    # Left panel: Set membership matrix at each level
-    ax1 = axes[0]
-    colors = plt.cm.viridis(np.linspace(0.2, 0.9, n_levels))
-    
-    y_positions = []
-    y_labels = []
-    y_colors = []
-    
-    pos = 0
-    for level_idx, level_sets in enumerate(levels):
-        for set_idx, s in enumerate(level_sets):
-            y_positions.append(pos)
-            is_new = (level_idx > 0 and set_idx >= len(levels[level_idx - 1]))
-            label = f"L{level_idx}" + ("·D" if is_new else f"·S{set_idx}")
-            y_labels.append(label)
-            y_colors.append(colors[level_idx])
-            
-            for x in s:
-                ax1.scatter(x, pos, c=[colors[level_idx]], s=80, 
-                          edgecolors='black' if is_new else 'gray',
-                          linewidths=2 if is_new else 0.5,
-                          zorder=3)
-            pos += 1
-        pos += 0.5  # gap between levels
-    
-    ax1.set_yticks(y_positions)
-    ax1.set_yticklabels(y_labels, fontsize=7)
-    ax1.set_xlabel('Element', fontsize=12)
-    ax1.set_title('Set Membership by Hierarchy Level', fontsize=14)
-    ax1.set_xlim(-0.5, n_universe - 0.5)
+def cobweb_data(f, x0, n_steps=30):
+    """Generate cobweb diagram data for iteration of f from x0."""
+    xs, ys = [x0], [0]
+    x = x0
+    for _ in range(n_steps):
+        y = f(x)
+        xs.extend([x, y])
+        ys.extend([y, y])
+        x = y
+    return xs, ys
+
+
+def main():
+    fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+    fig.suptitle('Fixed-Point Hierarchy: Self-Referential Complexity', fontsize=16, fontweight='bold')
+
+    # Panel 1: Operator family and fixed points
+    ax1 = axes[0, 0]
+    x = np.linspace(0, 1, 500)
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, 6))
+
+    for n in range(6):
+        exp = 1.0 / (n + 2)
+        y = x ** exp
+        ax1.plot(x, y, color=colors[n], linewidth=2, label=f'Φ_{n}(x) = x^(1/{n+2})')
+
+    ax1.plot(x, x, 'k--', linewidth=1, alpha=0.5, label='y = x')
+    ax1.set_xlabel('x', fontsize=12)
+    ax1.set_ylabel('Φ_n(x)', fontsize=12)
+    ax1.set_title('Hierarchy of Monotone Operators', fontsize=13)
+    ax1.legend(fontsize=8, loc='lower right')
+    ax1.set_xlim(0, 1)
+    ax1.set_ylim(0, 1)
     ax1.grid(True, alpha=0.3)
-    ax1.invert_yaxis()
-    
-    # Right panel: Level sizes
-    ax2 = axes[1]
-    level_sizes = [len(l) for l in levels]
-    bars = ax2.bar(range(n_levels), level_sizes, color=colors, edgecolor='black')
-    ax2.set_xlabel('Hierarchy Level', fontsize=12)
-    ax2.set_ylabel('Number of Sets', fontsize=12)
-    ax2.set_title('Strict Growth: |Level n| < |Level n+1|', fontsize=14)
-    
-    for i, (bar, size) in enumerate(zip(bars, level_sizes)):
-        ax2.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.1,
-                str(size), ha='center', fontsize=12, fontweight='bold')
-    
-    # Add annotation about strictness
-    ax2.annotate('Each diagonal\nescapes its level',
-                xy=(2, level_sizes[2]), xytext=(3.5, level_sizes[1]),
-                arrowprops=dict(arrowstyle='->', color='red'),
-                fontsize=10, color='red', ha='center')
-    
-    plt.tight_layout()
-    plt.savefig('diagonal_hierarchy.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: diagonal_hierarchy.png")
 
+    # Panel 2: Cobweb diagram for level 2
+    ax2 = axes[0, 1]
+    f2 = lambda x: x ** (1.0 / 4)
+    xs_cob, ys_cob = cobweb_data(f2, 0.01, 20)
+    x_line = np.linspace(0, 1, 300)
 
-def visualize_fixed_points():
-    """Visualize fixed points of iterated functions."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
-    # Left: Fixed points of f^n for f(x) = (2x+1) mod 16
-    ax1 = axes[0]
-    n = 16
-    f = lambda x: (2 * x + 1) % n
-    
-    max_iter = 8
-    fp_sizes = []
-    fp_sets = []
-    
-    for k in range(1, max_iter + 1):
-        def iterate(x, depth=k):
-            for _ in range(depth):
-                x = f(x)
-            return x
-        fps = {x for x in range(n) if iterate(x) == x}
-        fp_sizes.append(len(fps))
-        fp_sets.append(fps)
-    
-    ax1.bar(range(1, max_iter + 1), fp_sizes, 
-           color=plt.cm.plasma(np.linspace(0.2, 0.8, max_iter)),
-           edgecolor='black')
-    ax1.set_xlabel('Iteration Depth k', fontsize=12)
-    ax1.set_ylabel('|FixedPoints(f^k)|', fontsize=12)
-    ax1.set_title('Fixed Points Grow with Iteration\nf(x) = (2x+1) mod 16', fontsize=13)
-    
-    # Right: Orbit structure
-    ax2 = axes[1]
-    
-    # Draw the orbit graph
-    theta = np.linspace(0, 2 * np.pi, n, endpoint=False)
-    x_pos = np.cos(theta)
-    y_pos = np.sin(theta)
-    
-    # Draw edges
+    ax2.plot(x_line, f2(x_line), 'b-', linewidth=2, label='Φ₂(x) = x^(1/4)')
+    ax2.plot(x_line, x_line, 'k--', linewidth=1, alpha=0.5)
+    ax2.plot(xs_cob, ys_cob, 'r-', linewidth=0.8, alpha=0.7)
+    ax2.plot(xs_cob[0], ys_cob[0], 'go', markersize=8, label='Start (0.01)')
+    ax2.plot(1, 1, 'r*', markersize=15, label='Fixed point (1.0)')
+    ax2.set_xlabel('x', fontsize=12)
+    ax2.set_ylabel('Φ₂(x)', fontsize=12)
+    ax2.set_title('Cobweb: Iteration to Fixed Point', fontsize=13)
+    ax2.legend(fontsize=10)
+    ax2.set_xlim(0, 1.05)
+    ax2.set_ylim(0, 1.05)
+    ax2.grid(True, alpha=0.3)
+
+    # Panel 3: Convergence speed comparison
+    ax3 = axes[1, 0]
+    x0 = 0.01
+    for n in range(6):
+        exp = 1.0 / (n + 2)
+        f_n = lambda x, e=exp: x ** e
+        traj = compute_trajectory(f_n, x0, 100)
+        # Distance to fixed point (1.0)
+        distances = [abs(1.0 - t) for t in traj]
+        ax3.semilogy(distances[:60], color=colors[n], linewidth=2, label=f'Level {n}')
+
+    ax3.set_xlabel('Iteration', fontsize=12)
+    ax3.set_ylabel('|x_n - 1| (log scale)', fontsize=12)
+    ax3.set_title('Convergence Speed by Hierarchy Level', fontsize=13)
+    ax3.legend(fontsize=9)
+    ax3.grid(True, alpha=0.3)
+
+    # Panel 4: Diagonal escape visualization
+    ax4 = axes[1, 1]
+    np.random.seed(42)
+    n = 10
+    # Create a random binary matrix (enumeration)
+    matrix = np.random.randint(0, 2, (n, n))
+    # The diagonal
+    diag = np.diag(matrix)
+    # The escaped set (negation of diagonal)
+    escaped = 1 - diag
+
+    im = ax4.imshow(matrix, cmap='Blues', aspect='equal', vmin=0, vmax=1)
+
+    # Highlight diagonal
     for i in range(n):
-        j = f(i)
-        ax2.annotate('', xy=(x_pos[j], y_pos[j]), xytext=(x_pos[i], y_pos[i]),
-                    arrowprops=dict(arrowstyle='->', color='steelblue', alpha=0.6))
-    
-    # Color nodes by first iteration depth where they become periodic
-    node_colors = []
+        ax4.add_patch(plt.Rectangle((i-0.5, i-0.5), 1, 1,
+                                     fill=False, edgecolor='red', linewidth=2))
+
+    # Show escaped set on the right
     for i in range(n):
-        depth = 0
-        for k in range(1, max_iter + 1):
-            if i in fp_sets[k - 1]:
-                depth = k
-                break
-        node_colors.append(depth if depth > 0 else max_iter + 1)
-    
-    scatter = ax2.scatter(x_pos, y_pos, c=node_colors, cmap='plasma',
-                         s=200, edgecolors='black', linewidths=1.5, zorder=5,
-                         vmin=1, vmax=max_iter)
-    
-    for i in range(n):
-        ax2.text(x_pos[i], y_pos[i], str(i), ha='center', va='center',
-                fontsize=8, fontweight='bold', zorder=6)
-    
-    ax2.set_title('Orbit Graph of f(x) = (2x+1) mod 16', fontsize=13)
-    ax2.set_aspect('equal')
-    ax2.axis('off')
-    
-    plt.colorbar(scatter, ax=ax2, label='First periodic depth k')
-    
+        color = 'green' if escaped[i] else 'white'
+        ax4.add_patch(plt.Rectangle((n+0.5, i-0.5), 1, 1,
+                                     facecolor=color, edgecolor='black', linewidth=1))
+        ax4.text(n+1, i, str(escaped[i]), ha='center', va='center', fontsize=9)
+
+    ax4.set_xlim(-0.5, n+1.5)
+    ax4.set_xticks(list(range(n)) + [n+1])
+    ax4.set_xticklabels([str(i) for i in range(n)] + ['Esc'])
+    ax4.set_yticks(range(n))
+    ax4.set_xlabel('Column / Escape', fontsize=12)
+    ax4.set_ylabel('Row (enum index)', fontsize=12)
+    ax4.set_title('Diagonal Escape (Cantor/Lawvere)', fontsize=13)
+
     plt.tight_layout()
-    plt.savefig('fixed_point_orbits.png', dpi=150, bbox_inches='tight')
+    plt.savefig('fixed_point_hierarchy.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: fixed_point_orbits.png")
+    print("Saved: fixed_point_hierarchy.png")
 
 
 if __name__ == "__main__":
-    visualize()
-    visualize_fixed_points()
+    main()
