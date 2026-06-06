@@ -1,301 +1,300 @@
 #!/usr/bin/env python3
 """
-Non-Standard Arithmetic: Numerical Demonstrations
+demo.py — Numerical demonstrations of non-standard arithmetic concepts.
 
-Demonstrates key concepts from the ultrapower construction ℕ* = ∏ℕ/U:
-1. Ultrafilter selection of values from finite ranges
-2. Non-Archimedean elements (sequences growing beyond any bound)
-3. Infinite primes (prime sequences that exceed all standard naturals)
-4. Infinitely divisible elements (n! is divisible by every positive integer)
-5. Descending chains (ω, ω-1, ω-2, ... demonstrating failure of well-ordering)
+Demonstrates the key ideas from the Overspill Semiring theory:
+1. Ultrafilter-like selection on finite approximations
+2. Factorial divisibility (infinitely composite elements)
+3. Transfer of primality through product structures
+4. The non-Archimedean nature of ultrapowers
 """
 
 import math
-from typing import List, Tuple
+from collections import Counter
 
 
-def demonstrate_ultrafilter_selection():
-    """Show how an ultrafilter 'selects' values from a 2-coloring."""
+def demo_factorial_divisibility():
+    """
+    Demonstrate that n! is divisible by every k ≤ n.
+    In UltraNat, [i ↦ i!] is divisible by EVERY standard k.
+    """
     print("=" * 60)
-    print("1. ULTRAFILTER COLOR SELECTION")
+    print("DEMO 1: Factorial — The Infinitely Composite Element")
     print("=" * 60)
-    # Consider the 2-coloring c(n) = n mod 2
-    N = 20
-    coloring = [n % 2 for n in range(N)]
-    evens = {i for i in range(N) if coloring[i] == 0}
-    odds = {i for i in range(N) if coloring[i] == 1}
-    print(f"Coloring c(n) = n mod 2 for n < {N}:")
-    print(f"  Evens: {sorted(evens)}")
-    print(f"  Odds:  {sorted(odds)}")
-    print("  A free ultrafilter must contain exactly one of these")
-    print("  (by the ultrafilter prime ideal property)")
+    print()
+    print("In UltraNat, the element [i ↦ i!] is divisible by every")
+    print("standard natural number k > 0. Here we verify for small cases:")
     print()
 
+    N = 20  # size of approximation
+    for k in range(1, 11):
+        divisible_indices = [i for i in range(k, N + 1) if math.factorial(i) % k == 0]
+        density = len(divisible_indices) / N
+        print(f"  k={k:2d}: {{i | k divides i!}} = {{i | i ≥ {k}}} "
+              f"— density {density:.2f} (→ 1 as N → ∞)")
 
-def demonstrate_infinite_elements():
-    """Show the 'infinite element' ω = [0, 1, 2, 3, ...]."""
-    print("=" * 60)
-    print("2. INFINITE ELEMENTS IN ℕ*")
-    print("=" * 60)
-    # ω = identity sequence, std(n) = constant-n sequence
-    print("The element ω = [0, 1, 2, 3, 4, ...] in ℕ*")
-    print("For any standard n, the set {i | n ≤ ω(i)} = {i | n ≤ i}")
-    print("is cofinite, hence in any free ultrafilter.")
     print()
-    for n in [5, 100, 10**6]:
-        agreement_set = f"{{i | i ≥ {n}}}"
-        print(f"  std({n}) ≤ ω because {agreement_set} is cofinite")
+    print("For any free ultrafilter U, ALL these sets are U-large,")
+    print("so [i ↦ i!] is simultaneously divisible by 1, 2, 3, 4, ...")
+    print("This is impossible for any standard natural number!")
+
+
+def demo_parity_transfer():
+    """
+    Demonstrate that every sequence has definite U-parity.
+    """
     print()
-    print("Therefore ω exceeds EVERY standard natural — it is 'infinite'")
+    print("=" * 60)
+    print("DEMO 2: Parity Transfer — Every Element Has Definite Parity")
+    print("=" * 60)
     print()
 
+    sequences = {
+        "f(i) = i": lambda i: i,
+        "f(i) = i²": lambda i: i * i,
+        "f(i) = 2i+1": lambda i: 2 * i + 1,
+        "f(i) = i!": lambda i: math.factorial(i),
+        "f(i) = fib(i)": lambda i: fib(i),
+    }
 
-def demonstrate_infinite_primes():
-    """Show the sequence of primes gives an infinite prime in ℕ*."""
-    print("=" * 60)
-    print("3. INFINITE PRIMES IN ℕ*")
-    print("=" * 60)
+    for name, f in sequences.items():
+        N = 50
+        even_count = sum(1 for i in range(1, N + 1) if f(i) % 2 == 0)
+        odd_count = N - even_count
+        parity = "EVEN" if even_count > odd_count else "ODD"
+        print(f"  {name:15s}: even={even_count}/{N}, odd={odd_count}/{N} "
+              f"→ U-parity: {parity}")
 
-    def nth_prime(n: int) -> int:
+    print()
+    print("By the ultrafilter prime property, exactly one parity class")
+    print("is U-large — every UltraNat element is internally even or odd.")
+
+
+def fib(n):
+    """Compute n-th Fibonacci number."""
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+
+
+def demo_prime_growth():
+    """
+    Demonstrate that the n-th prime grows without bound,
+    giving 'infinite primes' in UltraNat.
+    """
+    print()
+    print("=" * 60)
+    print("DEMO 3: Infinite Primes — Primes Beyond All Standard Numbers")
+    print("=" * 60)
+    print()
+
+    def nth_prime(n):
         """Return the n-th prime (0-indexed)."""
-        count = 0
+        primes = []
         candidate = 2
-        while True:
-            if all(candidate % d != 0 for d in range(2, int(math.sqrt(candidate)) + 1)):
-                if count == n:
-                    return candidate
-                count += 1
+        while len(primes) <= n:
+            if all(candidate % p != 0 for p in primes):
+                primes.append(candidate)
             candidate += 1
+        return primes[n]
 
-    primes = [nth_prime(i) for i in range(15)]
-    print(f"p* = [{', '.join(str(p) for p in primes)}, ...]")
+    print("The sequence p(i) = (i+1)-th prime is always prime and → ∞:")
     print()
-    print("isPrime'(p*) holds because {i | Nat.Prime(p*(i))} = ℕ ∈ U")
+    for i in range(20):
+        p = nth_prime(i)
+        print(f"  p({i:2d}) = {p:4d}  (prime: True, exceeds {i}: {p > i})")
+
     print()
-    for n in [10, 50, 100]:
-        # Find first index where p_i ≥ n
-        idx = next(i for i in range(1000) if nth_prime(i) >= n)
-        print(f"  std({n}) ≤ p* because p*({idx}) = {nth_prime(idx)} ≥ {n}")
-    print()
-    print("p* is simultaneously prime AND larger than every standard natural!")
-    print()
+    print("In UltraNat, [i ↦ p(i)] is BOTH prime (cannot be factored)")
+    print("and infinite (larger than every standard number).")
+    print("Standard arithmetic forbids infinite primes — UltraNat has them!")
 
 
-def demonstrate_infinitely_divisible():
-    """Show that n! is divisible by every standard natural."""
+def demo_transfer_coloring():
+    """
+    Demonstrate the ultrafilter coloring theorem.
+    """
+    print()
     print("=" * 60)
-    print("4. INFINITELY DIVISIBLE ELEMENTS")
+    print("DEMO 4: Ultrafilter Coloring — Exactly One Color Survives")
     print("=" * 60)
-    print("ω! = [0!, 1!, 2!, 3!, ...] = [1, 1, 2, 6, 24, 120, ...]")
-    print()
-    factorials = [math.factorial(i) for i in range(10)]
-    print(f"Sequence: {factorials}")
-    print()
-    for n in [2, 3, 5, 7, 12]:
-        div_set = [i for i in range(20) if math.factorial(i) % n == 0]
-        print(f"  {n} divides ω! on indices {div_set}...")
-        print(f"    (all i ≥ {n}, which is cofinite → in U)")
-    print()
-    print("ω! is divisible by EVERY positive standard natural!")
     print()
 
+    N = 100
+    colorings = {
+        "c(i) = i mod 2": lambda i: i % 2,
+        "c(i) = i mod 3": lambda i: i % 3,
+        "c(i) = (i²+1) mod 4": lambda i: (i * i + 1) % 4,
+    }
 
-def demonstrate_descending_chain():
-    """Show the descending chain ω, ω-1, ω-2, ..."""
+    for name, c in colorings.items():
+        num_colors = max(c(i) for i in range(N)) + 1
+        counts = Counter(c(i) for i in range(N))
+        print(f"  {name}:")
+        for color in range(num_colors):
+            density = counts.get(color, 0) / N
+            print(f"    Color {color}: density = {density:.3f}")
+        print(f"    → Any ultrafilter selects EXACTLY ONE color class")
+        print()
+
+
+def demo_non_archimedean():
+    """
+    Demonstrate the non-Archimedean property of UltraNat.
+    """
+    print()
     print("=" * 60)
-    print("5. FAILURE OF WELL-ORDERING: DESCENDING CHAINS")
+    print("DEMO 5: Non-Archimedean — Breaking the Archimedean Axiom")
     print("=" * 60)
-    print("Define f(n) = mk(i ↦ i - n) = ω - std(n)")
-    print()
-    N = 8
-    for n in range(6):
-        seq = [max(0, i - n) for i in range(N)]
-        print(f"  f({n}) = [{', '.join(str(x) for x in seq)}, ...]")
-    print()
-    print("f(n+1) ≤ f(n) because (i-(n+1)) ≤ (i-n) for all i")
-    print("f(n+1) ≠ f(n) because they differ on {i | i > n+1} ∈ U")
-    print()
-    print("This is an INFINITE STRICTLY DESCENDING CHAIN!")
-    print("ℕ* is linearly ordered but NOT well-ordered.")
-    print("This means induction on ℕ* elements is impossible")
-    print("— a fundamental difference from standard ℕ.")
     print()
 
-
-def demonstrate_geometric_bound():
-    """Show the geometric sum bound bridging to p-adic analysis."""
-    print("=" * 60)
-    print("6. BRIDGE TO p-ADIC ANALYSIS: GEOMETRIC SUM BOUND")
-    print("=" * 60)
-    for p in [2, 3, 5]:
-        print(f"\n  p = {p}:")
-        for n in range(1, 7):
-            geo_sum = sum(p**k for k in range(n))
-            power = p**n
-            ratio = geo_sum / power
-            print(f"    Σ_{{k<{n}}} {p}^k = {geo_sum:>6} ≤ {p}^{n} = {power:>6}  "
-                  f"(ratio = {ratio:.4f})")
-    print()
-    print("The ratio Σp^k / p^n → 1/(p-1) as n → ∞")
-    print("This growth pattern mirrors p-adic valuation depth:")
-    print("v_p(n!) ~ n/(p-1), connecting ultrapowers to p-adic analysis.")
+    print("In ℕ (Archimedean): for every x, ∃ n with x ≤ n.")
+    print("In UltraNat: [id] = [i ↦ i] exceeds every constant [i ↦ n].")
     print()
 
+    print("Verification: for each n, {i | n < i} has density → 1:")
+    for n in [1, 10, 100, 1000]:
+        N = 10000
+        count = sum(1 for i in range(N) if n < i)
+        print(f"  n = {n:4d}: |{{i < {N} | {n} < i}}| / {N} = {count/N:.4f}")
 
-def main():
     print()
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  NON-STANDARD ARITHMETIC: ULTRAPOWER CONSTRUCTION ℕ*   ║")
-    print("║  Formally Verified in Lean 4 with Mathlib              ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-    print()
-
-    demonstrate_ultrafilter_selection()
-    demonstrate_infinite_elements()
-    demonstrate_infinite_primes()
-    demonstrate_infinitely_divisible()
-    demonstrate_descending_chain()
-    demonstrate_geometric_bound()
-
-    print("=" * 60)
-    print("SUMMARY OF FORMALLY VERIFIED RESULTS")
-    print("=" * 60)
-    results = [
-        ("std_injective", "ℕ ↪ ℕ* is injective"),
-        ("std_add/mul", "std preserves +, ×"),
-        ("std_le_iff", "std preserves ≤"),
-        ("transfer_add_comm", "a + b = b + a in ℕ*"),
-        ("transfer_mul_comm", "a × b = b × a in ℕ*"),
-        ("transfer_add_assoc", "(a+b)+c = a+(b+c) in ℕ*"),
-        ("transfer_mul_add", "a×(b+c) = a×b + a×c in ℕ*"),
-        ("transfer_zero_product", "ab = 0 → a = 0 ∨ b = 0"),
-        ("nonstd_le_total", "a ≤ b ∨ b ≤ a (linear order)"),
-        ("nonstd_le_antisymm", "a ≤ b ∧ b ≤ a → a = b"),
-        ("exists_infinite_element", "∃ω > every std n"),
-        ("exists_infinite_prime", "∃p prime, p > every std n"),
-        ("exists_infinitely_divisible", "∃ω, ∀n>0: n | ω"),
-        ("euclid_transfer", "p prime, p|ab → p|a ∨ p|b"),
-        ("exists_descending_chain", "ℕ* is NOT well-ordered"),
-        ("geometric_sum_le_power", "Σp^k ≤ p^n (p-adic bridge)"),
-    ]
-    for name, desc in results:
-        print(f"  ✓ {name:30s} — {desc}")
-    print()
+    print("Every such set is cofinite, hence in any free ultrafilter.")
+    print("So [id] > [const n] for ALL n — truly non-Archimedean!")
 
 
 if __name__ == "__main__":
-    main()
+    demo_factorial_divisibility()
+    demo_parity_transfer()
+    demo_prime_growth()
+    demo_transfer_coloring()
+    demo_non_archimedean()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Non-Standard Arithmetic Ultrapower Structure
+viz_transfer.py — Visualization of ultrafilter transfer principles.
 
-Generates a multi-panel figure showing:
-1. The identity element ω vs standard naturals
-2. The prime sequence p* exceeding all bounds
-3. The factorial sequence ω! divisibility
-4. The descending chain ω, ω-1, ω-2, ...
+Produces a figure showing how properties transfer through ultraproducts,
+with examples of divisibility, primality, and parity transfer.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 import math
 
 
+def is_prime(n):
+    if n < 2:
+        return False
+    for d in range(2, int(n**0.5) + 1):
+        if n % d == 0:
+            return False
+    return True
+
+
 def nth_prime(n):
     """Return the n-th prime (0-indexed)."""
-    primes = []
+    count = 0
     candidate = 2
-    while len(primes) <= n:
-        if all(candidate % p != 0 for p in primes if p * p <= candidate):
-            primes.append(candidate)
+    while True:
+        if is_prime(candidate):
+            if count == n:
+                return candidate
+            count += 1
         candidate += 1
-    return primes[n]
 
 
 def main():
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Non-Standard Arithmetic: The Ultrapower ℕ*',
-                 fontsize=16, fontweight='bold', y=0.98)
+    fig.suptitle("Ultrafilter Transfer Principles in Non-Standard Arithmetic",
+                 fontsize=14, fontweight='bold')
 
-    N = 25
+    N = 60
 
-    # Panel 1: ω = [0,1,2,...] vs standard naturals
+    # Panel 1: Factorial divisibility
     ax = axes[0, 0]
-    indices = np.arange(N)
-    omega_seq = indices.copy()
-    for n in [5, 10, 15, 20]:
-        std_seq = np.full(N, n)
-        ax.plot(indices, std_seq, '--', alpha=0.5, label=f'std({n})')
-        # Shade where ω ≥ std(n)
-        mask = omega_seq >= n
-        ax.fill_between(indices, 0, omega_seq, where=mask, alpha=0.05, color='blue')
-    ax.plot(indices, omega_seq, 'b-', linewidth=2.5, label='ω = [0,1,2,...]', zorder=5)
-    ax.set_xlabel('Index i')
-    ax.set_ylabel('Value')
-    ax.set_title('Infinite Element ω Exceeds All Standard Naturals')
-    ax.legend(fontsize=8, loc='upper left')
-    ax.set_ylim(-1, N + 2)
-    ax.grid(True, alpha=0.3)
+    for k in [2, 3, 5, 7, 11]:
+        xs = list(range(1, N + 1))
+        ys = [1 if math.factorial(i) % k == 0 else 0 for i in xs]
+        offset = {2: 0, 3: 0.15, 5: 0.3, 7: 0.45, 11: 0.6}[k]
+        colors = ['green' if y else 'red' for y in ys]
+        ax.scatter([x + offset * 0.3 for x in xs], [k] * len(xs),
+                   c=colors, s=8, alpha=0.7)
+    ax.set_xlabel("Index i")
+    ax.set_ylabel("Divisor k")
+    ax.set_title("Factorial Divisibility: k | i!")
+    ax.set_yticks([2, 3, 5, 7, 11])
+    green_patch = mpatches.Patch(color='green', label='k | i! (True)')
+    red_patch = mpatches.Patch(color='red', label='k | i! (False)')
+    ax.legend(handles=[green_patch, red_patch], loc='lower right', fontsize=8)
 
-    # Panel 2: Prime sequence p*
+    # Panel 2: Primality of nth prime sequence
     ax = axes[0, 1]
-    prime_seq = [nth_prime(i) for i in range(N)]
-    ax.plot(indices, prime_seq, 'r-o', markersize=4, linewidth=2, label='p* = [p₀, p₁, p₂, ...]')
-    for n in [10, 30, 60]:
-        ax.axhline(y=n, color='gray', linestyle='--', alpha=0.5)
-        # Find first index exceeding n
-        idx = next(i for i in range(N) if prime_seq[i] >= n)
-        ax.annotate(f'std({n})', xy=(0, n), fontsize=8, color='gray')
-        ax.plot(idx, prime_seq[idx], 'k*', markersize=10, zorder=5)
-    ax.set_xlabel('Index i')
-    ax.set_ylabel('p*(i)')
-    ax.set_title('Infinite Prime p* = [2, 3, 5, 7, 11, ...]')
+    primes_seq = [nth_prime(i) for i in range(N)]
+    id_seq = list(range(N))
+    ax.plot(range(N), primes_seq, 'b-', linewidth=1.5, label='p(i) = (i+1)-th prime')
+    ax.plot(range(N), id_seq, 'r--', linewidth=1, alpha=0.5, label='id(i) = i')
+    ax.fill_between(range(N), id_seq, primes_seq, alpha=0.1, color='blue')
+    ax.set_xlabel("Index i")
+    ax.set_ylabel("Value")
+    ax.set_title("Infinite Primes: p(i) > i for all i")
     ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
 
-    # Panel 3: Factorial divisibility
+    # Panel 3: Parity transfer
     ax = axes[1, 0]
-    fact_seq = [math.factorial(i) for i in range(12)]
-    divisors = [2, 3, 5, 7]
-    colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3']
-    bar_width = 0.18
-    x = np.arange(12)
-    for j, (d, c) in enumerate(zip(divisors, colors)):
-        divides = [1 if f % d == 0 else 0 for f in fact_seq]
-        ax.bar(x + j * bar_width - 0.27, divides, bar_width, label=f'{d} | i!',
-               color=c, alpha=0.7)
-    ax.set_xlabel('Index i')
-    ax.set_ylabel('Divides? (1=yes)')
-    ax.set_title('ω! = [0!, 1!, 2!, ...] Divisible by All Standard n')
-    ax.set_xticks(x)
-    ax.legend(fontsize=8, loc='upper right')
-    ax.grid(True, alpha=0.3, axis='y')
+    sequences = {
+        'i': lambda i: i,
+        'i²': lambda i: i * i,
+        '2i+1': lambda i: 2 * i + 1,
+        'i!': lambda i: math.factorial(i) if i < 20 else 0,
+        'fib(i)': lambda i: fib(i) if i < 30 else 0,
+    }
+    y_pos = 0
+    for name, f in sequences.items():
+        xs = list(range(1, min(N, 25) + 1))
+        parities = [f(i) % 2 for i in xs]
+        colors = ['blue' if p == 0 else 'orange' for p in parities]
+        ax.scatter(xs, [y_pos] * len(xs), c=colors, s=15, marker='s')
+        ax.text(-2, y_pos, name, ha='right', va='center', fontsize=9)
+        y_pos += 1
+    ax.set_xlabel("Index i")
+    ax.set_title("Parity Transfer: Even (blue) vs Odd (orange)")
+    ax.set_yticks([])
+    ax.set_xlim(-5, min(N, 25) + 2)
+    blue_patch = mpatches.Patch(color='blue', label='Even')
+    orange_patch = mpatches.Patch(color='orange', label='Odd')
+    ax.legend(handles=[blue_patch, orange_patch], loc='upper right', fontsize=8)
 
-    # Panel 4: Descending chain
+    # Panel 4: Non-Archimedean growth
     ax = axes[1, 1]
-    chain_length = 6
-    N_chain = 20
-    indices_chain = np.arange(N_chain)
-    cmap = plt.cm.viridis
-    for k in range(chain_length):
-        chain_seq = np.maximum(0, indices_chain - k)
-        color = cmap(k / (chain_length - 1))
-        label = f'ω-{k}' if k > 0 else 'ω'
-        ax.plot(indices_chain, chain_seq, '-', linewidth=2, color=color, label=label)
-    ax.set_xlabel('Index i')
-    ax.set_ylabel('f(k)(i) = max(0, i-k)')
-    ax.set_title('Descending Chain: ω, ω-1, ω-2, ... (Never Reaches 0)')
-    ax.legend(fontsize=8, loc='upper left')
-    ax.grid(True, alpha=0.3)
+    xs = list(range(1, N + 1))
+    id_vals = xs
+    fact_vals = [min(math.factorial(i), 1e8) for i in xs]
+    const_vals = {10: [10] * len(xs), 100: [100] * len(xs), 1000: [1000] * len(xs)}
 
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
-    plt.savefig('ultrapower_structure.png', dpi=150, bbox_inches='tight')
-    print("Saved ultrapower_structure.png")
+    ax.semilogy(xs, fact_vals, 'b-', linewidth=2, label='[i ↦ i!] (infinite)')
+    ax.semilogy(xs, id_vals, 'g-', linewidth=1.5, label='[i ↦ i] (infinite)')
+    for n, vals in const_vals.items():
+        ax.semilogy(xs, vals, '--', alpha=0.4, label=f'[const {n}] (standard)')
+    ax.set_xlabel("Index i")
+    ax.set_ylabel("Value (log scale)")
+    ax.set_title("Non-Archimedean: Infinite Elements Exceed All Constants")
+    ax.legend(fontsize=7, loc='lower right')
+
+    plt.tight_layout()
+    plt.savefig("transfer_visualization.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved transfer_visualization.png")
+
+
+def fib(n):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
 
 
 if __name__ == "__main__":

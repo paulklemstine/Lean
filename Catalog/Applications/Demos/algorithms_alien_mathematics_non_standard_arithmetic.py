@@ -1,245 +1,219 @@
 #!/usr/bin/env python3
 """
-Algorithms for Non-Standard Arithmetic
+algorithms.py — Core algorithms for non-standard arithmetic computations.
 
-Type-hinted implementations of the key algorithms underlying
-the ultrapower construction and transfer theorems.
+Implements:
+1. UltrafilterApprox: Finite approximation to ultrafilter selection
+2. TransferEngine: Automated property transfer checker
+3. OverspillDetector: Identifies when overspill applies
 """
 
-from typing import List, Set, Callable, Optional, Tuple
+from typing import Callable, List, Tuple, Optional, TypeVar
 import math
 
+T = TypeVar('T')
 
-class UltrafilterSim:
-    """Simulates a free ultrafilter on ℕ using a 'principal-at-infinity' heuristic.
 
-    A true free ultrafilter is non-constructive (requires Zorn's Lemma).
-    This simulation decides membership by checking eventual behavior:
-    a set S is 'in U' if S contains {n, n+1, n+2, ...} for some n.
+class UltrafilterApprox:
+    """
+    Finite approximation to an ultrafilter on ℕ.
 
-    This captures the essential intuition: free ultrafilters on ℕ
-    concentrate measure at infinity.
+    Uses a 'selection function' that, given a partition of {0,...,N-1},
+    returns the selected block. For a free ultrafilter approximation,
+    we select the block with the largest elements (cofinality bias).
+
+    In the limit N → ∞, this approximates the behavior of a free
+    ultrafilter selecting cofinite sets.
     """
 
-    def __init__(self, threshold: int = 100):
-        self.threshold = threshold
+    def __init__(self, size: int = 1000, bias: str = "cofinal"):
+        """
+        Args:
+            size: Approximation universe size
+            bias: Selection strategy ('cofinal', 'density', 'random')
+        """
+        self.size = size
+        self.bias = bias
 
-    def is_large(self, membership_fn: Callable[[int], bool]) -> bool:
-        """Check if {i | membership_fn(i)} is 'U-large'."""
-        # Heuristic: check if eventually true
-        return all(membership_fn(i) for i in range(self.threshold, self.threshold + 50))
+    def is_large(self, predicate: Callable[[int], bool]) -> bool:
+        """Check if {i | predicate(i)} would be U-large."""
+        count = sum(1 for i in range(self.size) if predicate(i))
+        if self.bias == "cofinal":
+            # Check if predicate holds for all sufficiently large i
+            tail_size = self.size // 10
+            tail_count = sum(1 for i in range(self.size - tail_size, self.size)
+                           if predicate(i))
+            return tail_count == tail_size  # Must hold on entire tail
+        elif self.bias == "density":
+            return count > self.size // 2
+        else:
+            return count > self.size // 2
 
-    def select_value(self, fn: Callable[[int], int], finite_range: List[int]) -> int:
-        """Given fn: ℕ → finite set, return the U-selected value.
-        This implements ultrafilter_finite_image_resolution."""
-        for val in finite_range:
-            if self.is_large(lambda i, v=val: fn(i) == v):
-                return val
-        raise ValueError("No value selected (should not happen with a genuine ultrafilter)")
+    def select_color(self, coloring: Callable[[int], int],
+                     num_colors: int) -> int:
+        """Select the unique U-large color class."""
+        counts = [0] * num_colors
+        for i in range(self.size):
+            counts[coloring(i)] += 1
+        return max(range(num_colors), key=lambda c: counts[c])
+
+    def transfer_and(self, p: Callable[[int], bool],
+                     q: Callable[[int], bool]) -> bool:
+        """Check if P ∧ Q holds U-a.e., given P and Q hold U-a.e."""
+        return self.is_large(lambda i: p(i) and q(i))
+
+    def transfer_or(self, p: Callable[[int], bool],
+                    q: Callable[[int], bool]) -> Tuple[bool, bool]:
+        """Determine which of P, Q is U-large (at least one must be)."""
+        p_large = self.is_large(p)
+        q_large = self.is_large(q)
+        return (p_large, q_large)
 
 
-class NonstdNatElement:
-    """Represents an element of ℕ* as a sequence ℕ → ℕ."""
+class TransferEngine:
+    """
+    Checks whether arithmetic properties transfer through ultraproducts.
 
-    def __init__(self, seq: Callable[[int], int], name: str = ""):
-        self.seq = seq
-        self.name = name
+    Given a property P on ℕ expressed as a predicate, verifies that:
+    - P(f(i)) holds U-a.e.
+    - The transfer preserves logical connectives
+    """
 
-    def __repr__(self) -> str:
-        if self.name:
-            return f"NonstdNat({self.name})"
-        vals = [self.seq(i) for i in range(8)]
-        return f"NonstdNat([{', '.join(map(str, vals))}, ...])"
+    def __init__(self, ultra: UltrafilterApprox):
+        self.ultra = ultra
 
-    @staticmethod
-    def standard(n: int) -> 'NonstdNatElement':
-        """The standard embedding: std(n) = [n, n, n, ...]."""
-        return NonstdNatElement(lambda _: n, f"std({n})")
+    def check_pointwise(self, f: Callable[[int], int],
+                        prop: Callable[[int], bool]) -> bool:
+        """Check if prop(f(i)) holds U-a.e."""
+        return self.ultra.is_large(lambda i: prop(f(i)))
 
-    @staticmethod
-    def omega() -> 'NonstdNatElement':
-        """The canonical infinite element: ω = [0, 1, 2, 3, ...]."""
-        return NonstdNatElement(lambda i: i, "ω")
-
-    @staticmethod
-    def omega_factorial() -> 'NonstdNatElement':
-        """The infinitely divisible element: ω! = [0!, 1!, 2!, ...]."""
-        return NonstdNatElement(lambda i: math.factorial(i), "ω!")
-
-    @staticmethod
-    def nth_prime_seq() -> 'NonstdNatElement':
-        """The infinite prime: p* = [p₀, p₁, p₂, ...]."""
-        primes: List[int] = []
-
-        def get_nth_prime(n: int) -> int:
-            while len(primes) <= n:
-                candidate = primes[-1] + 1 if primes else 2
-                while True:
-                    if all(candidate % d != 0 for d in range(2, int(math.sqrt(candidate)) + 1)):
-                        primes.append(candidate)
-                        break
-                    candidate += 1
-            return primes[n]
-
-        return NonstdNatElement(get_nth_prime, "p*")
-
-    def add(self, other: 'NonstdNatElement') -> 'NonstdNatElement':
-        """Pointwise addition."""
-        return NonstdNatElement(
-            lambda i: self.seq(i) + other.seq(i),
-            f"({self.name} + {other.name})" if self.name and other.name else ""
+    def check_divisibility(self, f: Callable[[int], int],
+                           g: Callable[[int], int]) -> bool:
+        """Check if f | g holds U-a.e."""
+        return self.ultra.is_large(
+            lambda i: f(i) != 0 and g(i) % f(i) == 0
         )
 
-    def mul(self, other: 'NonstdNatElement') -> 'NonstdNatElement':
-        """Pointwise multiplication."""
-        return NonstdNatElement(
-            lambda i: self.seq(i) * other.seq(i),
-            f"({self.name} × {other.name})" if self.name and other.name else ""
-        )
-
-    def le(self, other: 'NonstdNatElement', U: UltrafilterSim) -> bool:
-        """Check self ≤ other in ℕ*."""
-        return U.is_large(lambda i: self.seq(i) <= other.seq(i))
-
-    def dvd(self, other: 'NonstdNatElement', U: UltrafilterSim) -> bool:
-        """Check self | other in ℕ* (internal divisibility)."""
-        return U.is_large(lambda i: self.seq(i) != 0 and other.seq(i) % self.seq(i) == 0)
-
-    def is_prime(self, U: UltrafilterSim) -> bool:
-        """Check internal primality."""
-        def is_nat_prime(n: int) -> bool:
+    def check_primality(self, f: Callable[[int], int]) -> bool:
+        """Check if f(i) is prime U-a.e."""
+        def is_prime(n: int) -> bool:
             if n < 2:
                 return False
-            return all(n % d != 0 for d in range(2, int(math.sqrt(n)) + 1))
-        return U.is_large(lambda i: is_nat_prime(self.seq(i)))
+            for d in range(2, int(n**0.5) + 1):
+                if n % d == 0:
+                    return False
+            return True
+        return self.ultra.is_large(lambda i: is_prime(f(i)))
+
+    def verify_bezout(self, f: Callable[[int], int],
+                      g: Callable[[int], int]) -> bool:
+        """Verify Bezout's identity transfers: ∃ a,b: gcd(f,g) = f·a + g·b."""
+        def bezout_holds(i: int) -> bool:
+            d = math.gcd(f(i), g(i))
+            # Extended Euclidean algorithm
+            if f(i) == 0 and g(i) == 0:
+                return True
+            _, a, b = extended_gcd(f(i), g(i))
+            return d == f(i) * a + g(i) * b
+        return self.ultra.is_large(bezout_holds)
 
 
-def transfer_algorithm(
-    property_fn: Callable[[int], bool],
-    U: UltrafilterSim
-) -> bool:
-    """Transfer a property from ℕ to ℕ* via the ultrafilter.
-
-    Given a property P: ℕ → Prop and an ultrafilter U,
-    returns whether {i | P(i)} ∈ U.
-
-    This is the computational version of the transfer principle:
-    a first-order property holds in ℕ* iff it holds on a U-large set.
+class OverspillDetector:
     """
-    return U.is_large(property_fn)
+    Detects overspill phenomena in finite approximations.
 
-
-def overspill_witness(
-    property_fn: Callable[[int, int], bool],
-    U: UltrafilterSim,
-    max_search: int = 1000
-) -> Optional[int]:
-    """Find an overspill witness: if P(i, n) holds for all standard n
-    on U-large sets, find a non-standard bound N beyond all tested n.
-
-    Returns the largest n for which P(·, n) is U-large.
+    Overspill: if an internal property holds for all 'standard' elements
+    (n < threshold), it must hold for some element beyond the threshold.
     """
-    best_n = 0
-    for n in range(max_search):
-        if U.is_large(lambda i, n=n: property_fn(i, n)):
-            best_n = n
-        else:
-            break
-    return best_n
+
+    def __init__(self, threshold: int = 100, universe: int = 1000):
+        self.threshold = threshold
+        self.universe = universe
+
+    def check_overspill(self, prop: Callable[[int], bool]) -> Optional[int]:
+        """
+        If prop holds for all n < threshold, find the first
+        witness beyond threshold where it still holds.
+
+        Returns the witness, or None if overspill fails
+        (which would mean the property is 'external', like 'being standard').
+        """
+        # Verify prop holds for all standard elements
+        for n in range(self.threshold):
+            if not prop(n):
+                return None
+
+        # Search for overspill witness
+        for n in range(self.threshold, self.universe):
+            if prop(n):
+                return n
+        return None
+
+    def detect_internal(self, prop: Callable[[int], bool]) -> bool:
+        """
+        Heuristically determine if a property is 'internal' (transfers)
+        vs 'external' (doesn't transfer).
+
+        Internal properties: defined by arithmetic operations
+        External properties: reference the 'standard' predicate
+        """
+        witness = self.check_overspill(prop)
+        return witness is not None
+
+    def find_overspill_boundary(self, prop: Callable[[int], bool]) -> int:
+        """Find the largest element where prop still holds."""
+        last_true = -1
+        for n in range(self.universe):
+            if prop(n):
+                last_true = n
+        return last_true
 
 
-def descending_chain(start: int, length: int) -> List[NonstdNatElement]:
-    """Construct a descending chain in ℕ*:
-    ω, ω-1, ω-2, ..., ω-length
-    where subtraction is truncating (as in ℕ)."""
-    return [
-        NonstdNatElement(
-            lambda i, k=k: max(0, i - k),
-            f"ω-{k}" if k > 0 else "ω"
-        )
-        for k in range(length)
-    ]
+def extended_gcd(a: int, b: int) -> Tuple[int, int, int]:
+    """Extended Euclidean algorithm. Returns (gcd, x, y) where a*x + b*y = gcd."""
+    if a == 0:
+        return b, 0, 1
+    gcd, x, y = extended_gcd(b % a, a)
+    return gcd, y - (b // a) * x, x
 
 
-def geometric_sum(p: int, n: int) -> int:
-    """Compute Σ_{k=0}^{n-1} p^k = (p^n - 1)/(p - 1)."""
-    if p == 1:
-        return n
-    return (p**n - 1) // (p - 1)
+def compute_ultra_element(f: Callable[[int], int],
+                          g: Callable[[int], int],
+                          op: str = "add",
+                          size: int = 20) -> List[int]:
+    """
+    Compute the pointwise operation of two UltraNat representatives.
 
-
-def padic_valuation(n: int, p: int) -> int:
-    """Compute v_p(n) = max k such that p^k | n."""
-    if n == 0:
-        return float('inf')  # type: ignore
-    v = 0
-    while n % p == 0:
-        v += 1
-        n //= p
-    return v
-
-
-def legendre_formula(n: int, p: int) -> int:
-    """Compute v_p(n!) using Legendre's formula:
-    v_p(n!) = Σ_{k≥1} ⌊n/p^k⌋"""
-    result = 0
-    pk = p
-    while pk <= n:
-        result += n // pk
-        pk *= p
-    return result
+    Returns the result sequence for visual inspection.
+    """
+    if op == "add":
+        return [f(i) + g(i) for i in range(size)]
+    elif op == "mul":
+        return [f(i) * g(i) for i in range(size)]
+    elif op == "gcd":
+        return [math.gcd(f(i), g(i)) for i in range(size)]
+    else:
+        raise ValueError(f"Unknown operation: {op}")
 
 
 if __name__ == "__main__":
-    U = UltrafilterSim(threshold=50)
+    # Example usage
+    U = UltrafilterApprox(size=500)
+    engine = TransferEngine(U)
+    detector = OverspillDetector(threshold=50, universe=500)
 
-    print("=== Algorithm Demonstrations ===\n")
+    # Check factorial divisibility
+    print("Factorial divisibility by 6:", engine.check_divisibility(
+        lambda i: 6, lambda i: math.factorial(max(i, 1))
+    ))
 
-    # Demonstrate transfer
-    omega = NonstdNatElement.omega()
-    pstar = NonstdNatElement.nth_prime_seq()
-    omega_fact = NonstdNatElement.omega_factorial()
+    # Check primality of p(i) = 2i+1 (not always prime)
+    print("Primality of 2i+1:", engine.check_primality(lambda i: 2*i+1))
 
-    print(f"ω = {omega}")
-    print(f"p* = {pstar}")
-    print(f"ω! = {omega_fact}")
-    print()
+    # Overspill: "n < 1000" holds for all standard n < 50
+    witness = detector.check_overspill(lambda n: n < 1000)
+    print(f"Overspill witness for 'n < 1000': {witness}")
 
-    # Check ordering
-    for n in [10, 100]:
-        std_n = NonstdNatElement.standard(n)
-        print(f"std({n}) ≤ ω: {std_n.le(omega, U)}")
-        print(f"std({n}) ≤ p*: {std_n.le(pstar, U)}")
-
-    print()
-
-    # Check primality
-    print(f"isPrime(p*): {pstar.is_prime(U)}")
-
-    # Check divisibility
-    for n in [2, 3, 5, 7, 100]:
-        std_n = NonstdNatElement.standard(n)
-        print(f"{n} | ω!: {std_n.dvd(omega_fact, U)}")
-
-    print()
-
-    # Descending chain
-    chain = descending_chain(0, 5)
-    print("Descending chain:")
-    for elem in chain:
-        print(f"  {elem}")
-
-    # Geometric bound
-    print("\nGeometric sum bounds:")
-    for p in [2, 3]:
-        for n in [4, 8]:
-            gs = geometric_sum(p, n)
-            print(f"  Σ_{{k<{n}}} {p}^k = {gs} ≤ {p}^{n} = {p**n}")
-
-    # Legendre formula bridge
-    print("\nLegendre formula (p-adic bridge):")
-    for p in [2, 3, 5]:
-        for n in [10, 50, 100]:
-            v = legendre_formula(n, p)
-            approx = n / (p - 1)
-            print(f"  v_{p}({n}!) = {v}, n/(p-1) = {approx:.1f}, ratio = {v/approx:.4f}")
+    # "Being standard" does NOT overspill
+    witness = detector.check_overspill(lambda n: n < 50)
+    print(f"Overspill for 'n < 50' (external): {witness}")
