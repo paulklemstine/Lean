@@ -1,240 +1,246 @@
 #!/usr/bin/env python3
 """
-Algorithms for cardinal arithmetic and embedding feasibility.
+Algorithms for Transfinite-Dimensional Geometry
 
-Type-hinted implementations of the key algorithmic ideas from the
-transfinite surface research.
+Type-hinted implementations of the key algorithms and computations
+from the Aleph-1 Surface theory.
 """
 
-from enum import Enum
-from dataclasses import dataclass
-from typing import Optional
+from typing import List, Tuple, Optional, Callable
+import math
 
 
-class CardinalForm(Enum):
-    """Canonical forms for cardinal expressions."""
-    FINITE = "finite"
-    ALEPH = "aleph"      # ℵ_α for ordinal α
-    POWER = "power"      # 2^κ for cardinal κ
-    PRODUCT = "product"  # κ^λ
-
-
-@dataclass
-class Cardinal:
+def arctan_embedding(x: float) -> float:
     """
-    Symbolic representation of a cardinal number.
+    The arctan embedding: ℝ → [0, 1].
     
-    Supports: finite values, aleph numbers, power expressions.
+    Maps x ↦ arctan(x)/π + 1/2.
+    
+    This is the coordinate-wise function used to embed ℝ^I into [0,1]^I
+    (the generalized Hilbert cube). It is:
+    - Injective (since arctan is strictly monotone)
+    - Continuous
+    - Maps ℝ onto (0, 1) ⊂ [0, 1]
+    
+    Complexity: O(1)
     """
-    form: CardinalForm
-    value: Optional[int] = None       # For FINITE
-    index: Optional[int] = None       # For ALEPH: ℵ_index
-    base: Optional['Cardinal'] = None # For POWER: 2^base
-    
-    def __repr__(self) -> str:
-        if self.form == CardinalForm.FINITE:
-            return str(self.value)
-        elif self.form == CardinalForm.ALEPH:
-            return f"ℵ_{self.index}"
-        elif self.form == CardinalForm.POWER:
-            return f"2^{self.base}"
-        return "?"
-    
-    @staticmethod
-    def finite(n: int) -> 'Cardinal':
-        return Cardinal(CardinalForm.FINITE, value=n)
-    
-    @staticmethod
-    def aleph(index: int) -> 'Cardinal':
-        return Cardinal(CardinalForm.ALEPH, index=index)
-    
-    @staticmethod
-    def power_of_two(base: 'Cardinal') -> 'Cardinal':
-        return Cardinal(CardinalForm.POWER, base=base)
-    
-    @property
-    def is_finite(self) -> bool:
-        return self.form == CardinalForm.FINITE
-    
-    @property
-    def is_countable(self) -> bool:
-        return self.is_finite or (self.form == CardinalForm.ALEPH and self.index == 0)
+    return math.atan(x) / math.pi + 0.5
 
 
-def compare_cardinals_gch(a: Cardinal, b: Cardinal) -> str:
+def arctan_embedding_inverse(y: float) -> float:
     """
-    Compare two cardinals under the Generalized Continuum Hypothesis.
+    Inverse of the arctan embedding: (0, 1) → ℝ.
     
-    Under GCH: 2^(ℵ_α) = ℵ_{α+1} for all ordinals α.
+    Maps y ↦ tan(π(y - 1/2)).
     
-    Returns: '<', '=', '>', or '?' (unknown)
+    Only defined for y ∈ (0, 1).
+    
+    Complexity: O(1)
     """
-    # Normalize under GCH
-    a_norm = _normalize_gch(a)
-    b_norm = _normalize_gch(b)
-    
-    if a_norm.form == CardinalForm.ALEPH and b_norm.form == CardinalForm.ALEPH:
-        assert a_norm.index is not None and b_norm.index is not None
-        if a_norm.index < b_norm.index:
-            return '<'
-        elif a_norm.index == b_norm.index:
-            return '='
-        else:
-            return '>'
-    
-    if a_norm.is_finite and b_norm.is_finite:
-        assert a_norm.value is not None and b_norm.value is not None
-        if a_norm.value < b_norm.value:
-            return '<'
-        elif a_norm.value == b_norm.value:
-            return '='
-        else:
-            return '>'
-    
-    if a_norm.is_finite and not b_norm.is_finite:
-        return '<'
-    if not a_norm.is_finite and b_norm.is_finite:
-        return '>'
-    
-    return '?'
+    if y <= 0 or y >= 1:
+        raise ValueError(f"y = {y} must be in (0, 1)")
+    return math.tan(math.pi * (y - 0.5))
 
 
-def _normalize_gch(c: Cardinal) -> Cardinal:
-    """Normalize a cardinal expression under GCH."""
-    if c.form == CardinalForm.POWER and c.base is not None:
-        base_norm = _normalize_gch(c.base)
-        if base_norm.form == CardinalForm.ALEPH and base_norm.index is not None:
-            # 2^(ℵ_α) = ℵ_{α+1} under GCH
-            return Cardinal.aleph(base_norm.index + 1)
-        if base_norm.is_finite and base_norm.value is not None:
-            return Cardinal.finite(2 ** base_norm.value)
-    return c
-
-
-def embedding_feasibility(
-    source_dim: Cardinal, 
-    target_dim: Cardinal,
-    assume_ch: bool = True
-) -> dict[str, object]:
+def coordinate_wise_embed(point: List[float]) -> List[float]:
     """
-    Determine whether a set-theoretic injection from [0,1]^source_dim 
-    to [0,1]^target_dim exists.
+    Apply the arctan embedding coordinate-wise.
     
-    Under CH (assume_ch=True):
-    - |[0,1]^κ| = 2^κ for infinite κ (simplified under GCH)
-    - Injection exists iff |source| ≤ |target|
+    This is the finite-dimensional analog of the embedding
+    ℝ^I → [0,1]^I from Theorem 5.1.
     
-    Returns dict with keys: 'feasible', 'reason', 'source_card', 'target_card'
+    Args:
+        point: A point in ℝⁿ (list of n real coordinates)
+    
+    Returns:
+        The embedded point in [0,1]ⁿ
+    
+    Complexity: O(n) where n = len(point)
     """
-    if assume_ch:
-        source_card = Cardinal.power_of_two(source_dim)
-        target_card = Cardinal.power_of_two(target_dim)
-        
-        comparison = compare_cardinals_gch(source_card, target_card)
-        
-        if comparison == '>' :
-            return {
-                'feasible': False,
-                'reason': f"|[0,1]^{source_dim}| = {source_card} > {target_card} = |[0,1]^{target_dim}|",
-                'source_card': str(source_card),
-                'target_card': str(target_card),
-            }
-        elif comparison in ('<', '='):
-            return {
-                'feasible': True,
-                'reason': f"|[0,1]^{source_dim}| ≤ |[0,1]^{target_dim}|",
-                'source_card': str(source_card),
-                'target_card': str(target_card),
-            }
-        else:
-            return {
-                'feasible': None,
-                'reason': "Cannot determine under current axioms",
-                'source_card': str(source_card),
-                'target_card': str(target_card),
-            }
-    
-    return {
-        'feasible': None,
-        'reason': "Without CH, embedding feasibility may be independent of ZFC",
-        'source_card': '?',
-        'target_card': '?',
-    }
+    return [arctan_embedding(x) for x in point]
 
 
-def triangulation_bound(vertex_count: Cardinal) -> dict[str, object]:
+def projection(point: List[float], target_dim: int) -> List[float]:
     """
-    Determine what spaces can be finitely triangulated with given vertex count.
+    Project a high-dimensional point to its first target_dim coordinates.
     
-    A triangulation with |V| vertices can cover at most |V| points (surjection bound).
+    This is the finite analog of the projection ℝ^{ℵ₁} → ℝⁿ.
+    By Theorem 4.1, such projections cannot be injective when
+    the source dimension is ℵ₁ (under CH).
+    
+    Args:
+        point: A point in ℝⁿ
+        target_dim: Number of coordinates to keep
+    
+    Returns:
+        The projected point (first target_dim coordinates)
+    
+    Complexity: O(target_dim)
     """
-    if vertex_count.is_finite:
-        return {
-            'max_target_size': str(vertex_count),
-            'can_cover_infinite': False,
-            'can_cover_aleph1_surface': False,
-            'reason': f"Surjection from {vertex_count} vertices covers ≤ {vertex_count} points"
+    return point[:target_dim]
+
+
+def collision_count(
+    points: List[List[float]], 
+    target_dim: int
+) -> Tuple[int, int]:
+    """
+    Count how many points collide after projection.
+    
+    Returns (original_distinct, projected_distinct).
+    The difference measures information loss.
+    
+    Complexity: O(n * d) where n = #points, d = target_dim
+    """
+    original = set(tuple(p) for p in points)
+    projected = set(tuple(p[:target_dim]) for p in points)
+    return len(original), len(projected)
+
+
+def cardinal_hierarchy(n_levels: int = 7) -> List[dict]:
+    """
+    Generate the cardinal hierarchy for display.
+    
+    Returns a list of dictionaries describing each aleph number,
+    its relationship to the continuum hypothesis, and its role
+    in the dimension theory.
+    
+    Args:
+        n_levels: Number of aleph numbers to generate
+    
+    Returns:
+        List of cardinal level descriptions
+    """
+    levels = []
+    for i in range(n_levels):
+        level: dict = {
+            "symbol": f"ℵ_{i}",
+            "ordinal_index": i,
+            "description": "",
+            "ch_value": "",
+            "embeddable_in_Rn": None,
         }
-    elif vertex_count.form == CardinalForm.ALEPH:
-        assert vertex_count.index is not None
-        if vertex_count.index == 0:
-            return {
-                'max_target_size': 'ℵ₀',
-                'can_cover_infinite': True,
-                'can_cover_aleph1_surface': False,
-                'reason': "ℵ₀ vertices cover ≤ ℵ₀ < 2^ℵ₁ points"
-            }
+        
+        if i == 0:
+            level["description"] = "Countably infinite"
+            level["ch_value"] = "ℵ₀"
+            level["embeddable_in_Rn"] = True
+        elif i == 1:
+            level["description"] = "First uncountable"
+            level["ch_value"] = "𝔠 = 2^ℵ₀ (under CH)"
+            level["embeddable_in_Rn"] = False
         else:
-            return {
-                'max_target_size': f'ℵ_{vertex_count.index}',
-                'can_cover_infinite': True,
-                'can_cover_aleph1_surface': vertex_count.index >= 1,
-                'reason': f"Need ≥ 2^ℵ₁ vertices; ℵ_{vertex_count.index} may suffice"
-            }
+            level["description"] = f"ℵ_{i}"
+            level["ch_value"] = f"2^ℵ_{i-1} (under GCH)"
+            level["embeddable_in_Rn"] = False
+        
+        levels.append(level)
     
-    return {'max_target_size': '?', 'can_cover_infinite': None, 
-            'can_cover_aleph1_surface': None, 'reason': 'Unknown'}
+    return levels
 
 
-def cardinal_hierarchy_ch() -> list[tuple[str, str, str]]:
+def dimension_gap_check(candidates: List[int]) -> List[bool]:
     """
-    Return the cardinal hierarchy under CH as a list of (level, description, relation).
+    Check if candidate values fall in the "dimension gap."
+    
+    In the finite analog: check if values are strictly between
+    two consecutive Fibonacci-like growth levels.
+    
+    The mathematical theorem (Cantor Dimension Gap) says:
+    No cardinal κ exists with ℵ₀ < κ < ℵ₁.
+    
+    Args:
+        candidates: List of candidate cardinal sizes
+    
+    Returns:
+        List of booleans: True if the candidate is in a "gap"
     """
-    return [
-        ("ℵ₀", "Countable: ℕ, ℤ, ℚ", ""),
-        ("ℵ₁ = 𝔠", "Continuum: ℝ, ℝⁿ, [0,1]^ℕ", "< (strict)"),
-        ("2^ℵ₁ = ℵ₂", "Second power: ≤ |[0,1]^ℵ₁|", "< (Cantor)"),
-        ("2^ℵ₂ = ℵ₃", "Third power: ≤ |[0,1]^ℵ₂|", "< (Cantor)"),
-    ]
+    # In finite analog: gaps are between consecutive powers of 2
+    # (mimicking 2^ℵ₀, 2^ℵ₁, etc.)
+    powers = [2**i for i in range(20)]
+    gaps = []
+    for c in candidates:
+        in_gap = any(powers[i] < c < powers[i+1] and c not in powers 
+                     for i in range(len(powers)-1))
+        gaps.append(in_gap)
+    return gaps
 
 
-# ── Demo ──
+def triangulation_vertex_lower_bound(
+    space_cardinality: int,
+    simplex_dim: int
+) -> int:
+    """
+    Compute the minimum number of vertices needed to triangulate
+    a space of given cardinality.
+    
+    By the triangulation vertex bound theorem:
+    #vertices ≥ #space (since the cover must be surjective)
+    
+    For finite spaces, this gives a concrete computable bound.
+    For transfinite spaces (ℵ₁-surface), the bound is:
+    #vertices > ℵ₁ (under CH)
+    
+    Args:
+        space_cardinality: Number of points in the space
+        simplex_dim: Maximum dimension of simplices used
+    
+    Returns:
+        Minimum number of vertices required
+    """
+    # The surjectivity bound: at least as many vertices as points
+    return space_cardinality
+
+
+def verify_embedding_injectivity(
+    embed: Callable[[float], float],
+    test_points: List[float]
+) -> bool:
+    """
+    Numerically verify that an embedding function is injective
+    on a set of test points.
+    
+    Args:
+        embed: The embedding function ℝ → [0,1]
+        test_points: Points to test
+    
+    Returns:
+        True if all test points map to distinct values
+    """
+    images = [embed(x) for x in test_points]
+    return len(set(images)) == len(images)
+
+
+# ============================================================
+# Main demonstration
+# ============================================================
 
 if __name__ == "__main__":
-    print("=== Cardinal Comparison (GCH) ===")
-    pairs = [
-        (Cardinal.aleph(0), Cardinal.aleph(1)),
-        (Cardinal.aleph(1), Cardinal.power_of_two(Cardinal.aleph(1))),
-        (Cardinal.power_of_two(Cardinal.aleph(0)), Cardinal.aleph(1)),
-    ]
-    for a, b in pairs:
-        result = compare_cardinals_gch(a, b)
-        print(f"  {a} {result} {b}")
+    print("ALGORITHMS FOR TRANSFINITE-DIMENSIONAL GEOMETRY")
+    print("=" * 50)
     
-    print("\n=== Embedding Feasibility (CH) ===")
-    tests = [
-        (Cardinal.aleph(0), Cardinal.aleph(0)),
-        (Cardinal.aleph(1), Cardinal.aleph(0)),
-        (Cardinal.aleph(1), Cardinal.aleph(1)),
-        (Cardinal.aleph(2), Cardinal.aleph(1)),
-    ]
-    for src, tgt in tests:
-        result = embedding_feasibility(src, tgt)
-        status = "✓" if result['feasible'] else "✗"
-        print(f"  [0,1]^{src} → [0,1]^{tgt}: {status} ({result['reason']})")
+    # Test arctan embedding
+    print("\n1. Arctan Embedding")
+    test_vals = [-100, -10, -1, 0, 1, 10, 100]
+    for x in test_vals:
+        y = arctan_embedding(x)
+        x_back = arctan_embedding_inverse(y)
+        print(f"  x={x:>6}, embed={y:.6f}, inverse={x_back:.4f}")
     
-    print("\n=== Triangulation Bounds ===")
-    for v in [Cardinal.finite(10), Cardinal.aleph(0), Cardinal.aleph(1)]:
-        result = triangulation_bound(v)
-        print(f"  {v} vertices: max coverage = {result['max_target_size']}, "
-              f"covers ℵ₁-surface: {result['can_cover_aleph1_surface']}")
+    # Test injectivity
+    print(f"\n  Injectivity verified: {verify_embedding_injectivity(arctan_embedding, test_vals)}")
+    
+    # Test projection collision
+    print("\n2. Projection Collision Rates")
+    import random
+    random.seed(42)
+    points = [[random.uniform(-10, 10) for _ in range(20)] for _ in range(500)]
+    for d in [1, 2, 5, 10, 15]:
+        orig, proj = collision_count(points, d)
+        print(f"  R^20 → R^{d}: {orig} distinct → {proj} distinct ({100*(1-proj/orig):.1f}% collision)")
+    
+    # Cardinal hierarchy
+    print("\n3. Cardinal Hierarchy")
+    for level in cardinal_hierarchy(5):
+        embeddable = "✓" if level["embeddable_in_Rn"] else "✗"
+        print(f"  {level['symbol']}: {level['description']} [{embeddable} embeddable in Rⁿ]")
