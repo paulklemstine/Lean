@@ -1,401 +1,381 @@
 #!/usr/bin/env python3
 """
 Demo: The Topology of Argumentation
-Numerical examples demonstrating argumentation framework analysis.
+====================================
+
+Demonstrates the key theorems about argumentation frameworks and their
+topological structure (the argumentation complex).
 """
 
-from typing import Set, FrozenSet, Dict, List, Tuple
-from itertools import combinations
+from algorithms import ArgFramework, verify_semantic_hierarchy, verify_symmetric_bridge
 
 
-def conflict_free(args: Set[int], attacks: Set[Tuple[int,int]], S: FrozenSet[int]) -> bool:
-    """Check if S is conflict-free."""
-    for a in S:
-        for b in S:
-            if (a, b) in attacks:
-                return False
-    return True
+def demo_basic_framework():
+    """Demo 1: A simple 3-argument framework with a cycle."""
+    print("=" * 60)
+    print("Demo 1: Three-Argument Cycle (a → b → c → a)")
+    print("=" * 60)
 
-
-def defends(args: Set[int], attacks: Set[Tuple[int,int]], S: FrozenSet[int], a: int) -> bool:
-    """Check if S defends argument a."""
-    for b in args:
-        if (b, a) in attacks:
-            if not any((c, b) in attacks for c in S):
-                return False
-    return True
-
-
-def admissible(args: Set[int], attacks: Set[Tuple[int,int]], S: FrozenSet[int]) -> bool:
-    """Check if S is admissible."""
-    if not conflict_free(args, attacks, S):
-        return False
-    return all(defends(args, attacks, S, a) for a in S)
-
-
-def all_subsets(args: Set[int]) -> List[FrozenSet[int]]:
-    """All subsets of args."""
-    result = []
-    args_list = sorted(args)
-    for r in range(len(args_list) + 1):
-        for combo in combinations(args_list, r):
-            result.append(frozenset(combo))
-    return result
-
-
-def preferred_extensions(args: Set[int], attacks: Set[Tuple[int,int]]) -> List[FrozenSet[int]]:
-    """Compute all preferred extensions."""
-    adm = [S for S in all_subsets(args) if admissible(args, attacks, S)]
-    preferred = []
-    for S in adm:
-        if not any(S < T for T in adm):
-            preferred.append(S)
-    return preferred
-
-
-def stable_extensions(args: Set[int], attacks: Set[Tuple[int,int]]) -> List[FrozenSet[int]]:
-    """Compute all stable extensions."""
-    result = []
-    for S in all_subsets(args):
-        if not conflict_free(args, attacks, S):
-            continue
-        if all(any((b, a) in attacks for b in S) for a in args if a not in S):
-            result.append(S)
-    return result
-
-
-def grounded_extension(args: Set[int], attacks: Set[Tuple[int,int]]) -> FrozenSet[int]:
-    """Compute the grounded extension via fixed-point iteration."""
-    S: Set[int] = set()
-    while True:
-        new_S = {a for a in args if defends(args, attacks, frozenset(S), a)}
-        if new_S == S:
-            return frozenset(S)
-        S = new_S
-
-
-def independence_complex(args: Set[int], attacks: Set[Tuple[int,int]]) -> List[FrozenSet[int]]:
-    """Compute the independence complex (all conflict-free sets)."""
-    return [S for S in all_subsets(args) if conflict_free(args, attacks, S)]
-
-
-def f_vector(args: Set[int], attacks: Set[Tuple[int,int]]) -> List[int]:
-    """Compute the f-vector of the independence complex."""
-    cf = independence_complex(args, attacks)
-    max_dim = max(len(S) for S in cf) if cf else 0
-    return [sum(1 for S in cf if len(S) == k + 1) for k in range(max_dim)]
-
-
-def euler_characteristic(args: Set[int], attacks: Set[Tuple[int,int]]) -> int:
-    """Compute the Euler characteristic of the independence complex."""
-    fv = f_vector(args, attacks)
-    return sum((-1)**k * fv[k] for k in range(len(fv)))
-
-
-def print_framework(name: str, args: Set[int], attacks: Set[Tuple[int,int]]):
-    """Analyze and print results for an argumentation framework."""
-    print(f"\n{'='*60}")
-    print(f"Framework: {name}")
-    print(f"Arguments: {sorted(args)}")
-    print(f"Attacks: {sorted(attacks)}")
-    print(f"{'='*60}")
-
-    cf = independence_complex(args, attacks)
-    print(f"\nConflict-free sets ({len(cf)}):")
-    for S in sorted(cf, key=lambda x: (len(x), sorted(x))):
-        print(f"  {set(S) if S else '{}'}")
-
-    fv = f_vector(args, attacks)
-    print(f"\nf-vector: {fv}")
-    chi = euler_characteristic(args, attacks)
-    print(f"Euler characteristic: {chi}")
-
-    pref = preferred_extensions(args, attacks)
-    print(f"\nPreferred extensions ({len(pref)}):")
-    for S in pref:
-        print(f"  {set(S)}")
-
-    stab = stable_extensions(args, attacks)
-    print(f"\nStable extensions ({len(stab)}):")
-    for S in stab:
-        print(f"  {set(S)}")
-
-    gnd = grounded_extension(args, attacks)
-    print(f"\nGrounded extension: {set(gnd)}")
-
-    # Test Euler characteristic conjecture
-    conjecture_val = len(pref) - len(gnd)
-    print(f"\n--- Euler Conjecture Test ---")
-    print(f"  χ(K) = {chi}")
-    print(f"  |preferred| - |grounded| = {len(pref)} - {len(gnd)} = {conjecture_val}")
-    print(f"  Conjecture holds? {chi == conjecture_val}")
-
-
-# === DEMO FRAMEWORKS ===
-
-if __name__ == "__main__":
-    print("THE TOPOLOGY OF ARGUMENTATION")
-    print("Numerical demonstrations of argumentation framework analysis")
-
-    # Framework 1: Two arguments, one attack
-    print_framework(
-        "Two-Argument (0 attacks 1)",
-        {0, 1},
-        {(0, 1)}
+    af = ArgFramework(
+        {"a", "b", "c"},
+        {("a", "b"), ("b", "c"), ("c", "a")}
     )
 
-    # Framework 2: Cycle of 3 (rock-paper-scissors)
-    print_framework(
-        "3-Cycle (Rock-Paper-Scissors)",
-        {0, 1, 2},
-        {(0, 1), (1, 2), (2, 0)}
+    cf_sets = af.all_conflict_free_sets()
+    print(f"\nConflict-free sets (faces of K(AF)):")
+    for s in sorted(cf_sets, key=lambda x: (len(x), sorted(x))):
+        print(f"  {set(s) if s else '{}'}")
+
+    print(f"\nf-vector: {af.f_vector()}")
+    print(f"Euler characteristic: χ = {af.euler_characteristic()}")
+
+    preferred = af.preferred_extensions()
+    print(f"\nPreferred extensions:")
+    for p in preferred:
+        print(f"  {set(p)}")
+
+    grounded = af.grounded_extension()
+    print(f"Grounded extension: {set(grounded)}")
+
+    hierarchy = verify_semantic_hierarchy(af)
+    print(f"\nSemantic hierarchy check: {hierarchy}")
+
+
+def demo_symmetric_framework():
+    """Demo 2: A symmetric (undirected) attack graph."""
+    print("\n" + "=" * 60)
+    print("Demo 2: Symmetric Framework (undirected graph)")
+    print("  a -- b -- c (mutual attacks)")
+    print("=" * 60)
+
+    af = ArgFramework(
+        {"a", "b", "c"},
+        {("a", "b"), ("b", "a"), ("b", "c"), ("c", "b")}
     )
 
-    # Framework 3: Linear chain
-    print_framework(
-        "Linear Chain (0→1→2→3)",
-        {0, 1, 2, 3},
-        {(0, 1), (1, 2), (2, 3)}
+    bridge = verify_symmetric_bridge(af)
+    print(f"\nSymmetric bridge verification: {bridge}")
+
+    cf_sets = af.all_conflict_free_sets()
+    print(f"\nConflict-free sets:")
+    for s in sorted(cf_sets, key=lambda x: (len(x), sorted(x))):
+        adm = af.is_admissible(s)
+        label = str(set(s)) if s else '{}'
+        print(f"  {label:20s} admissible={adm}")
+
+    preferred = af.preferred_extensions()
+    print(f"\nPreferred extensions (= maximal independent sets):")
+    for p in sorted(preferred, key=lambda x: sorted(x)):
+        print(f"  {set(p)}")
+
+
+def demo_stable_implies_preferred():
+    """Demo 3: Verify stable ⊂ preferred hierarchy."""
+    print("\n" + "=" * 60)
+    print("Demo 3: Stable → Preferred Hierarchy")
+    print("  Framework: a → b, c → b (two arguments attack b)")
+    print("=" * 60)
+
+    af = ArgFramework(
+        {"a", "b", "c"},
+        {("a", "b"), ("c", "b")}
     )
 
-    # Framework 4: Self-attacker
-    print_framework(
-        "Self-Attacker (0 attacks 0, plus 1)",
-        {0, 1},
-        {(0, 0)}
+    stable = af.stable_extensions()
+    preferred = af.preferred_extensions()
+    print(f"\nStable extensions: {[set(s) for s in stable]}")
+    print(f"Preferred extensions: {[set(s) for s in preferred]}")
+
+    hierarchy = verify_semantic_hierarchy(af)
+    print(f"Stable ⊂ Preferred: {hierarchy}")
+
+
+def demo_argumentation_complex():
+    """Demo 4: Full complex analysis of a debate-like framework."""
+    print("\n" + "=" * 60)
+    print("Demo 4: Argumentation Complex of a Debate")
+    print("  a1 → a2, a2 → a3, a3 → a1, a4 → a2, a5 (unattacked)")
+    print("=" * 60)
+
+    af = ArgFramework(
+        {"a1", "a2", "a3", "a4", "a5"},
+        {("a1", "a2"), ("a2", "a3"), ("a3", "a1"), ("a4", "a2")}
     )
 
-    # Framework 5: No attacks (complete peace)
-    print_framework(
-        "No Attacks (3 arguments)",
-        {0, 1, 2},
+    fvec = af.f_vector()
+    chi = af.euler_characteristic()
+    print(f"\nf-vector: {fvec}")
+    print(f"  f₀ = {fvec[0]} (vertices/non-self-attacking args)")
+    if len(fvec) > 1:
+        print(f"  f₁ = {fvec[1]} (edges/compatible pairs)")
+    if len(fvec) > 2:
+        print(f"  f₂ = {fvec[2]} (triangles/compatible triples)")
+    print(f"Euler characteristic: χ = {chi}")
+
+    preferred = af.preferred_extensions()
+    grounded = af.grounded_extension()
+    print(f"\nPreferred extensions: {[set(s) for s in preferred]}")
+    print(f"Grounded extension: {set(grounded)}")
+    print(f"|preferred| = {len(preferred)}, |grounded| = {len(grounded)}")
+
+
+def demo_no_attacks():
+    """Demo 5: Framework with no attacks — full simplex."""
+    print("\n" + "=" * 60)
+    print("Demo 5: Attack-Free Framework (full simplex)")
+    print("  {a, b, c} with no attacks")
+    print("=" * 60)
+
+    af = ArgFramework(
+        {"a", "b", "c"},
         set()
     )
 
-    # Framework 6: Diamond
-    print_framework(
-        "Diamond (0→1, 0→2, 1→3, 2→3)",
-        {0, 1, 2, 3},
-        {(0, 1), (0, 2), (1, 3), (2, 3)}
-    )
+    cf_sets = af.all_conflict_free_sets()
+    print(f"\nAll subsets are conflict-free: {len(cf_sets)} sets")
+    print(f"  (2^3 = {2**3}, matches: {len(cf_sets) == 2**3})")
 
-    # Framework 7: Even cycle (4-cycle)
-    print_framework(
-        "4-Cycle",
-        {0, 1, 2, 3},
-        {(0, 1), (1, 2), (2, 3), (3, 0)}
-    )
+    preferred = af.preferred_extensions()
+    print(f"Unique preferred extension: {set(preferred[0])}")
+    print(f"  (= entire argument set, as theorem predicts)")
 
-    # Dung's Fundamental Lemma demonstration
-    print("\n" + "="*60)
-    print("DUNG'S FUNDAMENTAL LEMMA DEMONSTRATION")
-    print("="*60)
+    fvec = af.f_vector()
+    print(f"f-vector: {fvec}")
+    print(f"Euler characteristic: χ = {af.euler_characteristic()}")
 
-    args = {0, 1, 2, 3}
-    attacks = {(1, 0), (2, 1)}  # 2 attacks 1, 1 attacks 0
 
-    S = frozenset({2})
-    a = 0
-    print(f"\nFramework: {sorted(args)}, attacks: {sorted(attacks)}")
-    print(f"S = {set(S)}, a = {a}")
-    print(f"S is admissible: {admissible(args, attacks, S)}")
-    print(f"S defends a={a}: {defends(args, attacks, S, a)}")
+def demo_euler_characteristic_survey():
+    """Demo 6: Survey of Euler characteristics across framework families."""
+    print("\n" + "=" * 60)
+    print("Demo 6: Euler Characteristic Survey")
+    print("=" * 60)
 
-    S_ext = S | frozenset({a})
-    print(f"S ∪ {{a}} = {set(S_ext)}")
-    print(f"S ∪ {{a}} is conflict-free: {conflict_free(args, attacks, S_ext)}")
-    print(f"S ∪ {{a}} is admissible: {admissible(args, attacks, S_ext)}")
-    print("→ Fundamental Lemma confirmed!")
+    # Linear chains: a1 → a2 → ... → an
+    print("\nLinear chains (a1 → a2 → ... → an):")
+    for n in range(2, 7):
+        args = {f"a{i}" for i in range(1, n + 1)}
+        attacks = {(f"a{i}", f"a{i+1}") for i in range(1, n)}
+        af = ArgFramework(args, attacks)
+        chi = af.euler_characteristic()
+        pref = af.preferred_extensions()
+        print(f"  n={n}: χ={chi}, |preferred|={len(pref)}, "
+              f"preferred={[sorted(set(p)) for p in pref]}")
 
-    # Summary
-    print("\n" + "="*60)
-    print("SUMMARY: Euler Characteristic Conjecture")
-    print("="*60)
-    print("The conjecture χ(K) = |preferred| - |grounded| is FALSE.")
-    print("It fails on multiple frameworks, including the trivial")
-    print("no-attack framework and the two-argument framework.")
+    # Cycles: a1 → a2 → ... → an → a1
+    print("\nCycles (a1 → a2 → ... → an → a1):")
+    for n in range(3, 8):
+        args = {f"a{i}" for i in range(1, n + 1)}
+        attacks = {(f"a{i}", f"a{i%n + 1}") for i in range(1, n + 1)}
+        af = ArgFramework(args, attacks)
+        chi = af.euler_characteristic()
+        pref = af.preferred_extensions()
+        print(f"  n={n}: χ={chi}, |preferred|={len(pref)}")
+
+
+if __name__ == "__main__":
+    demo_basic_framework()
+    demo_symmetric_framework()
+    demo_stable_implies_preferred()
+    demo_argumentation_complex()
+    demo_no_attacks()
+    demo_euler_characteristic_survey()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Argumentation Framework Analysis
-Standalone matplotlib visualization of argumentation frameworks.
+Visualization: Argumentation Complex Structure
+Plots the f-vector, Euler characteristic, and semantic hierarchy
+for families of argumentation frameworks.
 """
 
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 from itertools import combinations
-from typing import Set, FrozenSet, List, Tuple, Dict
+from typing import Set, FrozenSet, List, Dict, Tuple
 
 
-def conflict_free(args: Set[int], attacks: Set[Tuple[int,int]], S: FrozenSet[int]) -> bool:
-    for a in S:
-        for b in S:
-            if (a, b) in attacks:
+class ArgFramework:
+    def __init__(self, arguments, attacks):
+        self.arguments = set(arguments)
+        self.attacks = set(attacks)
+
+    def is_conflict_free(self, s):
+        for a in s:
+            for b in s:
+                if (a, b) in self.attacks:
+                    return False
+        return True
+
+    def attackers_of(self, arg):
+        return {a for a, t in self.attacks if t == arg}
+
+    def is_acceptable(self, arg, s):
+        for attacker in self.attackers_of(arg):
+            if not any((c, attacker) in self.attacks for c in s):
                 return False
-    return True
+        return True
+
+    def is_admissible(self, s):
+        if not self.is_conflict_free(s):
+            return False
+        return all(self.is_acceptable(a, s) for a in s)
+
+    def all_conflict_free_sets(self):
+        result = [frozenset()]
+        args = list(self.arguments)
+        for r in range(1, len(args) + 1):
+            for combo in combinations(args, r):
+                s = frozenset(combo)
+                if self.is_conflict_free(s):
+                    result.append(s)
+        return result
+
+    def preferred_extensions(self):
+        admissible = [s for s in self.all_conflict_free_sets() if self.is_admissible(s)]
+        return [s for s in admissible if not any(s < t for t in admissible)]
+
+    def f_vector(self):
+        cf = self.all_conflict_free_sets()
+        mx = max((len(s) for s in cf), default=0)
+        fv = [0] * mx
+        for s in cf:
+            if len(s) > 0:
+                fv[len(s) - 1] += 1
+        return fv
+
+    def euler_characteristic(self):
+        return sum((-1)**k * f for k, f in enumerate(self.f_vector()))
 
 
-def defends(args: Set[int], attacks: Set[Tuple[int,int]], S: FrozenSet[int], a: int) -> bool:
-    for b in args:
-        if (b, a) in attacks:
-            if not any((c, b) in attacks for c in S):
-                return False
-    return True
+def make_cycle(n):
+    args = set(range(n))
+    attacks = {(i, (i + 1) % n) for i in range(n)}
+    return ArgFramework(args, attacks)
 
 
-def admissible(args: Set[int], attacks: Set[Tuple[int,int]], S: FrozenSet[int]) -> bool:
-    if not conflict_free(args, attacks, S):
-        return False
-    return all(defends(args, attacks, S, a) for a in S)
+def make_chain(n):
+    args = set(range(n))
+    attacks = {(i, i + 1) for i in range(n - 1)}
+    return ArgFramework(args, attacks)
 
 
-def all_subsets(S: Set[int]) -> List[FrozenSet[int]]:
-    items = sorted(S)
-    result = []
-    for r in range(len(items) + 1):
-        for combo in combinations(items, r):
-            result.append(frozenset(combo))
-    return result
+def plot_euler_characteristic():
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+    # Cycles
+    ns = list(range(3, 12))
+    chis = [make_cycle(n).euler_characteristic() for n in ns]
+    prefs = [len(make_cycle(n).preferred_extensions()) for n in ns]
+
+    ax = axes[0]
+    ax.bar(np.array(ns) - 0.2, chis, 0.4, label='χ(K(AF))', color='steelblue', alpha=0.8)
+    ax.bar(np.array(ns) + 0.2, prefs, 0.4, label='|Preferred|', color='coral', alpha=0.8)
+    ax.set_xlabel('Cycle length n', fontsize=12)
+    ax.set_ylabel('Value', fontsize=12)
+    ax.set_title('Cycles: a₁→a₂→...→aₙ→a₁', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
+    ax.set_xticks(ns)
+
+    # Chains
+    ns2 = list(range(2, 10))
+    chis2 = [make_chain(n).euler_characteristic() for n in ns2]
+    prefs2 = [len(make_chain(n).preferred_extensions()) for n in ns2]
+
+    ax = axes[1]
+    ax.bar(np.array(ns2) - 0.2, chis2, 0.4, label='χ(K(AF))', color='steelblue', alpha=0.8)
+    ax.bar(np.array(ns2) + 0.2, prefs2, 0.4, label='|Preferred|', color='coral', alpha=0.8)
+    ax.set_xlabel('Chain length n', fontsize=12)
+    ax.set_ylabel('Value', fontsize=12)
+    ax.set_title('Chains: a₁→a₂→...→aₙ', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
+    ax.set_xticks(ns2)
+
+    plt.suptitle('Euler Characteristic of the Argumentation Complex', fontsize=15, fontweight='bold')
+    plt.tight_layout()
+    plt.savefig('euler_characteristic.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved euler_characteristic.png")
 
 
-def preferred_extensions(args: Set[int], attacks: Set[Tuple[int,int]]) -> List[FrozenSet[int]]:
-    adm = [S for S in all_subsets(args) if admissible(args, attacks, S)]
-    return [S for S in adm if not any(S < T for T in adm)]
+def plot_f_vectors():
+    fig, axes = plt.subplots(2, 3, figsize=(15, 9))
+
+    frameworks = [
+        ("3-Cycle", make_cycle(3)),
+        ("4-Cycle", make_cycle(4)),
+        ("5-Cycle", make_cycle(5)),
+        ("Chain-4", make_chain(4)),
+        ("Chain-6", make_chain(6)),
+        ("No attacks (4)", ArgFramework(set(range(4)), set())),
+    ]
+
+    for ax, (name, af) in zip(axes.flat, frameworks):
+        fv = af.f_vector()
+        dims = list(range(len(fv)))
+        colors = ['#2ecc71', '#3498db', '#9b59b6', '#e74c3c', '#f39c12']
+        ax.bar(dims, fv, color=[colors[i % len(colors)] for i in dims], alpha=0.85)
+        ax.set_xlabel('Dimension k')
+        ax.set_ylabel('f_k (# of k-faces)')
+        chi = af.euler_characteristic()
+        pref = len(af.preferred_extensions())
+        ax.set_title(f'{name}\nχ={chi}, |Pref|={pref}', fontsize=11)
+        ax.set_xticks(dims)
+
+    plt.suptitle('f-Vectors of Argumentation Complexes', fontsize=15, fontweight='bold')
+    plt.tight_layout()
+    plt.savefig('f_vectors.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved f_vectors.png")
 
 
-def f_vector(args: Set[int], attacks: Set[Tuple[int,int]]) -> List[int]:
-    cf = [S for S in all_subsets(args) if conflict_free(args, attacks, S)]
-    if not cf:
-        return []
-    max_size = max(len(S) for S in cf)
-    return [sum(1 for S in cf if len(S) == k + 1) for k in range(max_size)]
+def plot_semantic_hierarchy():
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    ns = list(range(3, 10))
+    stable_counts = []
+    preferred_counts = []
+    cf_counts = []
+
+    for n in ns:
+        af = make_cycle(n)
+        cf = len([s for s in af.all_conflict_free_sets() if len(s) > 0])
+        pref = len(af.preferred_extensions())
+        # Count stable extensions
+        stable = 0
+        for s in af.all_conflict_free_sets():
+            if len(s) > 0:
+                is_stable = all(
+                    any((b, a) in af.attacks for b in s)
+                    for a in af.arguments - s
+                )
+                if is_stable and af.is_conflict_free(s):
+                    stable += 1
+        stable_counts.append(stable)
+        preferred_counts.append(pref)
+        cf_counts.append(cf)
+
+    x = np.array(ns)
+    ax.plot(x, cf_counts, 'o-', color='#2ecc71', linewidth=2, markersize=8, label='Conflict-free (non-empty)')
+    ax.plot(x, preferred_counts, 's-', color='#3498db', linewidth=2, markersize=8, label='Preferred')
+    ax.plot(x, stable_counts, '^-', color='#e74c3c', linewidth=2, markersize=8, label='Stable')
+
+    ax.set_xlabel('Cycle length n', fontsize=12)
+    ax.set_ylabel('Count', fontsize=12)
+    ax.set_title('Semantic Hierarchy for n-Cycles\nStable ⊆ Preferred ⊆ Conflict-Free', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.set_xticks(ns)
+    ax.grid(alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('semantic_hierarchy.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved semantic_hierarchy.png")
 
 
-def euler_char(args: Set[int], attacks: Set[Tuple[int,int]]) -> int:
-    fv = f_vector(args, attacks)
-    return sum((-1)**k * fv[k] for k in range(len(fv)))
-
-
-def draw_framework(ax, args, attacks, positions, title, preferred=None):
-    """Draw an argumentation framework on a matplotlib axes."""
-    ax.set_title(title, fontsize=12, fontweight='bold')
-    ax.set_xlim(-1.5, 1.5)
-    ax.set_ylim(-1.5, 1.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
-
-    pref_args = set()
-    if preferred:
-        for ext in preferred:
-            pref_args |= ext
-
-    # Draw attacks (arrows)
-    for (a, b) in attacks:
-        if a == b:
-            # Self-loop
-            cx, cy = positions[a]
-            circle = plt.Circle((cx, cy + 0.3), 0.15, fill=False,
-                              color='red', linewidth=1.5)
-            ax.add_patch(circle)
-        else:
-            x1, y1 = positions[a]
-            x2, y2 = positions[b]
-            dx, dy = x2 - x1, y2 - y1
-            dist = np.sqrt(dx**2 + dy**2)
-            # Shorten arrow
-            shrink = 0.25
-            ax.annotate('', xy=(x2 - shrink*dx/dist, y2 - shrink*dy/dist),
-                       xytext=(x1 + shrink*dx/dist, y1 + shrink*dy/dist),
-                       arrowprops=dict(arrowstyle='->', color='red',
-                                     lw=1.5, mutation_scale=15))
-
-    # Draw arguments (nodes)
-    for arg in sorted(args):
-        x, y = positions[arg]
-        color = '#4CAF50' if arg in pref_args else '#2196F3'
-        circle = plt.Circle((x, y), 0.2, color=color, ec='black', lw=2, zorder=5)
-        ax.add_patch(circle)
-        ax.text(x, y, str(arg), ha='center', va='center',
-               fontsize=14, fontweight='bold', color='white', zorder=6)
-
-
-# Define frameworks
-frameworks = [
-    ("Two Arguments\n(0→1)", {0, 1}, {(0, 1)},
-     {0: (-0.7, 0), 1: (0.7, 0)}),
-    ("3-Cycle\n(Rock-Paper-Scissors)", {0, 1, 2}, {(0, 1), (1, 2), (2, 0)},
-     {0: (0, 1), 1: (-0.87, -0.5), 2: (0.87, -0.5)}),
-    ("Linear Chain\n(0→1→2→3)", {0, 1, 2, 3}, {(0, 1), (1, 2), (2, 3)},
-     {0: (-1.2, 0), 1: (-0.4, 0), 2: (0.4, 0), 3: (1.2, 0)}),
-    ("4-Cycle", {0, 1, 2, 3}, {(0, 1), (1, 2), (2, 3), (3, 0)},
-     {0: (-0.7, 0.7), 1: (0.7, 0.7), 2: (0.7, -0.7), 3: (-0.7, -0.7)}),
-]
-
-fig, axes = plt.subplots(2, 2, figsize=(12, 12))
-
-for idx, (title, args, attacks, pos) in enumerate(frameworks):
-    ax = axes[idx // 2][idx % 2]
-    pref = preferred_extensions(args, attacks)
-    draw_framework(ax, args, attacks, pos, title, pref)
-
-    fv = f_vector(args, attacks)
-    chi = euler_char(args, attacks)
-    pref_str = ', '.join(str(set(s)) for s in pref) if pref else '∅'
-
-    info = f"f-vector: {fv}\nχ = {chi}\nPreferred: {pref_str}"
-    ax.text(0, -1.3, info, ha='center', va='top', fontsize=8,
-           family='monospace', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-
-fig.suptitle('The Topology of Argumentation: Framework Gallery',
-            fontsize=16, fontweight='bold', y=0.98)
-plt.tight_layout(rect=[0, 0, 1, 0.95])
-plt.savefig('argumentation_gallery.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved: argumentation_gallery.png")
-
-# Second plot: f-vector comparison
-fig2, ax2 = plt.subplots(figsize=(10, 6))
-
-framework_names = []
-euler_chars = []
-n_preferred = []
-
-test_frameworks = [
-    ("Empty (3 args)", {0,1,2}, set()),
-    ("Single (0→1)", {0,1}, {(0,1)}),
-    ("3-Cycle", {0,1,2}, {(0,1),(1,2),(2,0)}),
-    ("Chain 4", {0,1,2,3}, {(0,1),(1,2),(2,3)}),
-    ("4-Cycle", {0,1,2,3}, {(0,1),(1,2),(2,3),(3,0)}),
-    ("Star (0→all)", {0,1,2,3}, {(0,1),(0,2),(0,3)}),
-    ("Complete 3", {0,1,2}, {(0,1),(1,0),(1,2),(2,1),(0,2),(2,0)}),
-]
-
-for name, args, attacks in test_frameworks:
-    framework_names.append(name)
-    euler_chars.append(euler_char(args, attacks))
-    n_preferred.append(len(preferred_extensions(args, attacks)))
-
-x = np.arange(len(framework_names))
-width = 0.35
-
-bars1 = ax2.bar(x - width/2, euler_chars, width, label='Euler characteristic χ',
-               color='#2196F3', alpha=0.8)
-bars2 = ax2.bar(x + width/2, n_preferred, width, label='# Preferred extensions',
-               color='#4CAF50', alpha=0.8)
-
-ax2.set_xlabel('Framework', fontsize=12)
-ax2.set_ylabel('Value', fontsize=12)
-ax2.set_title('Euler Characteristic vs. Preferred Extensions\n(Conjecture Disproof)',
-             fontsize=14, fontweight='bold')
-ax2.set_xticks(x)
-ax2.set_xticklabels(framework_names, rotation=30, ha='right')
-ax2.legend()
-ax2.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
-ax2.grid(axis='y', alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('euler_vs_preferred.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved: euler_vs_preferred.png")
+if __name__ == "__main__":
+    plot_euler_characteristic()
+    plot_f_vectors()
+    plot_semantic_hierarchy()

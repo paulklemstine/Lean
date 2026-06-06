@@ -1,205 +1,169 @@
-#!/usr/bin/env python3
 """
-Algorithms for Argumentation Framework Analysis
+Argumentation Framework Algorithms
+===================================
 
-Type-hinted implementations of the core algorithms for computing
-argumentation semantics and the independence complex.
+Type-hinted implementations of core argumentation semantics algorithms,
+including conflict-free set enumeration, admissibility checking, preferred
+extension computation, and argumentation complex construction.
 """
 
-from typing import Set, FrozenSet, List, Tuple, Dict, Optional
+from typing import Set, FrozenSet, List, Dict, Tuple, Optional
 from itertools import combinations
-from dataclasses import dataclass
 
 
-@dataclass
 class ArgFramework:
-    """An abstract argumentation framework (Dung, 1995)."""
-    args: Set[int]
-    attacks: Set[Tuple[int, int]]
+    """An argumentation framework AF = (A, R) with arguments A and attack relation R."""
 
-    def attackers(self, a: int) -> Set[int]:
-        """Return the set of arguments attacking a."""
-        return {b for (b, c) in self.attacks if c == a}
+    def __init__(self, arguments: Set[str], attacks: Set[Tuple[str, str]]):
+        self.arguments = arguments
+        self.attacks = attacks
+        self._attack_dict: Dict[str, Set[str]] = {a: set() for a in arguments}
+        for src, tgt in attacks:
+            self._attack_dict.setdefault(src, set()).add(tgt)
 
-    def attacked_by(self, a: int) -> Set[int]:
-        """Return the set of arguments attacked by a."""
-        return {c for (b, c) in self.attacks if b == a}
+    def attackers_of(self, arg: str) -> Set[str]:
+        """Return all arguments that attack `arg`."""
+        return {a for a, t in self.attacks if t == arg}
 
+    def attacks_from(self, arg: str) -> Set[str]:
+        """Return all arguments attacked by `arg`."""
+        return self._attack_dict.get(arg, set())
 
-def all_subsets(S: Set[int]) -> List[FrozenSet[int]]:
-    """Generate all subsets of S."""
-    items = sorted(S)
-    result: List[FrozenSet[int]] = []
-    for r in range(len(items) + 1):
-        for combo in combinations(items, r):
-            result.append(frozenset(combo))
-    return result
+    def is_conflict_free(self, s: FrozenSet[str]) -> bool:
+        """Check if a set S is conflict-free (no internal attacks)."""
+        for a in s:
+            for b in s:
+                if (a, b) in self.attacks:
+                    return False
+        return True
 
-
-def is_conflict_free(af: ArgFramework, S: FrozenSet[int]) -> bool:
-    """Check if S is conflict-free in af.
-
-    A set is conflict-free if no two of its members attack each other.
-    Time complexity: O(|S|²) with set lookup.
-    """
-    for a in S:
-        for b in S:
-            if (a, b) in af.attacks:
+    def is_acceptable(self, arg: str, s: FrozenSet[str]) -> bool:
+        """Check if `arg` is acceptable (defended) w.r.t. S."""
+        for attacker in self.attackers_of(arg):
+            defended = any((c, attacker) in self.attacks for c in s)
+            if not defended:
                 return False
-    return True
+        return True
 
-
-def defends(af: ArgFramework, S: FrozenSet[int], a: int) -> bool:
-    """Check if S defends argument a.
-
-    S defends a if for every attacker b of a, some c ∈ S attacks b.
-    Time complexity: O(|attackers(a)| · |S|).
-    """
-    for b in af.attackers(a):
-        if not any((c, b) in af.attacks for c in S):
+    def is_admissible(self, s: FrozenSet[str]) -> bool:
+        """Check if S is admissible: conflict-free and self-defending."""
+        if not self.is_conflict_free(s):
             return False
-    return True
+        return all(self.is_acceptable(a, s) for a in s)
+
+    def is_preferred(self, s: FrozenSet[str]) -> bool:
+        """Check if S is a preferred extension (maximally admissible)."""
+        if not self.is_admissible(s):
+            return False
+        for a in self.arguments - s:
+            extended = s | frozenset({a})
+            if self.is_admissible(extended):
+                return False
+        return True
+
+    def is_stable(self, s: FrozenSet[str]) -> bool:
+        """Check if S is a stable extension: conflict-free and attacks all outsiders."""
+        if not self.is_conflict_free(s):
+            return False
+        for a in self.arguments - s:
+            if not any((b, a) in self.attacks for b in s):
+                return False
+        return True
+
+    def all_conflict_free_sets(self) -> List[FrozenSet[str]]:
+        """Enumerate all conflict-free sets (faces of the argumentation complex)."""
+        result = [frozenset()]
+        args = list(self.arguments)
+        for r in range(1, len(args) + 1):
+            for combo in combinations(args, r):
+                s = frozenset(combo)
+                if self.is_conflict_free(s):
+                    result.append(s)
+        return result
+
+    def preferred_extensions(self) -> List[FrozenSet[str]]:
+        """Compute all preferred extensions by finding maximal admissible sets."""
+        admissible_sets = [s for s in self.all_conflict_free_sets()
+                          if self.is_admissible(s)]
+        preferred = []
+        for s in admissible_sets:
+            is_maximal = not any(
+                s < t for t in admissible_sets
+            )
+            if is_maximal:
+                preferred.append(s)
+        return preferred
+
+    def stable_extensions(self) -> List[FrozenSet[str]]:
+        """Compute all stable extensions."""
+        return [s for s in self.all_conflict_free_sets() if self.is_stable(s)]
+
+    def f_vector(self) -> List[int]:
+        """Compute the f-vector of the argumentation complex.
+        f[k] = number of conflict-free sets of cardinality k+1."""
+        cf_sets = self.all_conflict_free_sets()
+        max_card = max((len(s) for s in cf_sets), default=0)
+        fvec = [0] * max_card
+        for s in cf_sets:
+            if len(s) > 0:
+                fvec[len(s) - 1] += 1
+        return fvec
+
+    def euler_characteristic(self) -> int:
+        """Compute the Euler characteristic of the argumentation complex.
+        χ = Σ (-1)^k * f_k"""
+        fvec = self.f_vector()
+        return sum((-1)**k * f for k, f in enumerate(fvec))
+
+    def is_symmetric(self) -> bool:
+        """Check if the attack relation is symmetric."""
+        return all((b, a) in self.attacks for a, b in self.attacks)
+
+    def characteristic_function(self, s: FrozenSet[str]) -> FrozenSet[str]:
+        """The characteristic function F(S) = {a | a is acceptable w.r.t. S}."""
+        return frozenset(a for a in self.arguments if self.is_acceptable(a, s))
+
+    def grounded_extension(self) -> FrozenSet[str]:
+        """Compute the grounded extension as the least fixed point of F."""
+        s = frozenset()
+        while True:
+            new_s = self.characteristic_function(s)
+            if new_s == s:
+                return s
+            s = new_s
 
 
-def is_admissible(af: ArgFramework, S: FrozenSet[int]) -> bool:
-    """Check if S is admissible.
+def verify_semantic_hierarchy(af: ArgFramework) -> Dict[str, bool]:
+    """Verify the semantic hierarchy: stable ⊂ preferred for a given AF."""
+    stable = set(map(frozenset, af.stable_extensions()))
+    preferred = set(map(frozenset, af.preferred_extensions()))
 
-    S is admissible if it is conflict-free and defends all its members.
-    Time complexity: O(|S|² + |S| · |A| · |S|).
-    """
-    if not is_conflict_free(af, S):
-        return False
-    return all(defends(af, S, a) for a in S)
-
-
-def characteristic_function(af: ArgFramework, S: FrozenSet[int]) -> FrozenSet[int]:
-    """Compute F(S) = {a ∈ A | S defends a}.
-
-    The characteristic function maps a set to all arguments it defends.
-    """
-    return frozenset(a for a in af.args if defends(af, S, a))
-
-
-def compute_grounded(af: ArgFramework) -> FrozenSet[int]:
-    """Compute the grounded extension via least fixed point iteration.
-
-    Algorithm: Start with ∅, repeatedly apply F until convergence.
-    Guaranteed to terminate in ≤ |A| steps by monotonicity.
-    Time complexity: O(|A|² · |R|).
-    """
-    S: FrozenSet[int] = frozenset()
-    while True:
-        new_S = characteristic_function(af, S)
-        if new_S == S:
-            return S
-        S = new_S
-
-
-def compute_preferred(af: ArgFramework) -> List[FrozenSet[int]]:
-    """Compute all preferred extensions.
-
-    Algorithm: Enumerate all admissible sets, select maximal ones.
-    Time complexity: O(2^|A| · |A|² · |R|) — exponential, but exact.
-
-    For large frameworks, use labelling-based algorithms (Caminada, 2006).
-    """
-    admissible_sets = [S for S in all_subsets(af.args) if is_admissible(af, S)]
-    preferred: List[FrozenSet[int]] = []
-    for S in admissible_sets:
-        if not any(S < T for T in admissible_sets):
-            preferred.append(S)
-    return preferred
-
-
-def compute_stable(af: ArgFramework) -> List[FrozenSet[int]]:
-    """Compute all stable extensions.
-
-    A stable extension is conflict-free and attacks every non-member.
-    """
-    result: List[FrozenSet[int]] = []
-    for S in all_subsets(af.args):
-        if not is_conflict_free(af, S):
-            continue
-        attacks_all = all(
-            any((b, a) in af.attacks for b in S)
-            for a in af.args if a not in S
-        )
-        if attacks_all:
-            result.append(S)
-    return result
-
-
-def compute_complete(af: ArgFramework) -> List[FrozenSet[int]]:
-    """Compute all complete extensions.
-
-    A complete extension is admissible and contains every argument it defends.
-    Equivalently, S is a fixed point of F: F(S) = S.
-    """
-    return [
-        S for S in all_subsets(af.args)
-        if is_admissible(af, S) and characteristic_function(af, S) == S
-    ]
-
-
-def independence_complex(af: ArgFramework) -> List[FrozenSet[int]]:
-    """Compute the independence complex (all conflict-free sets).
-
-    Returns the list of all faces of the simplicial complex.
-    """
-    return [S for S in all_subsets(af.args) if is_conflict_free(af, S)]
-
-
-def f_vector(af: ArgFramework) -> List[int]:
-    """Compute the f-vector of the independence complex.
-
-    f_k = number of faces with exactly k+1 vertices (dimension k).
-    """
-    cf = independence_complex(af)
-    if not cf:
-        return []
-    max_size = max(len(S) for S in cf)
-    return [sum(1 for S in cf if len(S) == k + 1) for k in range(max_size)]
-
-
-def euler_characteristic(af: ArgFramework) -> int:
-    """Compute the Euler characteristic χ = Σ (-1)^k f_k."""
-    fv = f_vector(af)
-    return sum((-1)**k * fv[k] for k in range(len(fv)))
-
-
-def dung_fundamental_lemma_check(
-    af: ArgFramework,
-    S: FrozenSet[int],
-    a: int
-) -> Dict[str, bool]:
-    """Verify Dung's Fundamental Lemma conditions and conclusion.
-
-    Returns a dictionary with:
-    - admissible_S: S is admissible
-    - defends_a: S defends a
-    - cf_insert: insert(a, S) is conflict-free
-    - admissible_insert: insert(a, S) is admissible (the conclusion)
-    """
-    S_ext = S | frozenset({a})
     return {
-        "admissible_S": is_admissible(af, S),
-        "defends_a": defends(af, S, a),
-        "cf_insert": is_conflict_free(af, S_ext),
-        "admissible_insert": is_admissible(af, S_ext),
+        "stable_subset_preferred": stable.issubset(preferred),
+        "num_stable": len(stable),
+        "num_preferred": len(preferred),
+        "strict_containment": stable != preferred if stable else None,
     }
 
 
-if __name__ == "__main__":
-    # Example: Linear chain 0 → 1 → 2 → 3
-    af = ArgFramework(
-        args={0, 1, 2, 3},
-        attacks={(0, 1), (1, 2), (2, 3)}
-    )
+def verify_symmetric_bridge(af: ArgFramework) -> Dict[str, bool]:
+    """Verify the symmetric bridge theorem: in symmetric AFs,
+    conflict-free = admissible, so preferred = maximal independent sets."""
+    if not af.is_symmetric():
+        return {"is_symmetric": False}
 
-    print("Framework: 0 → 1 → 2 → 3")
-    print(f"Grounded extension: {set(compute_grounded(af))}")
-    print(f"Preferred extensions: {[set(S) for S in compute_preferred(af)]}")
-    print(f"Stable extensions: {[set(S) for S in compute_stable(af)]}")
-    print(f"Complete extensions: {[set(S) for S in compute_complete(af)]}")
-    print(f"f-vector: {f_vector(af)}")
-    print(f"Euler characteristic: {euler_characteristic(af)}")
+    cf_sets = [s for s in af.all_conflict_free_sets() if len(s) > 0]
+    all_cf_admissible = all(af.is_admissible(s) for s in cf_sets)
+
+    maximal_cf = []
+    for s in cf_sets:
+        if not any(s < t and af.is_conflict_free(t) for t in cf_sets):
+            maximal_cf.append(s)
+
+    preferred = af.preferred_extensions()
+
+    return {
+        "is_symmetric": True,
+        "all_cf_are_admissible": all_cf_admissible,
+        "maximal_cf_equals_preferred": set(map(frozenset, maximal_cf)) == set(map(frozenset, preferred)),
+    }
