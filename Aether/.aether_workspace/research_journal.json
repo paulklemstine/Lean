@@ -1260,6 +1260,26 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T02:39:56",
       "title": "Counterfactual Number Theory: What If Primes Were Random?"
+    },
+    {
+      "cycle_id": "8d9145ce",
+      "domain": "Applications",
+      "key_insight": "# Future Research Directions: Tropical Cryptography and Beyond\n\n## Synthesis\n\nThis cycle established that the Tropical Discrete Logarithm Problem (TDLP) has five formally verified structural weaknesse",
+      "quality_score": 0.5009600000000001,
+      "sorry_count": 0,
+      "theorem_count": 47,
+      "timestamp": "2026-06-06T03:13:35",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+    },
+    {
+      "cycle_id": "e588f077",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tropical Geometry of Neural Networks\n\n## Synthesis\n\nThis research cycle established the fundamental dictionary between ReLU neural network architecture and tropical geometry, form",
+      "quality_score": 0.3432,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T03:13:59",
+      "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
     }
   ],
   "entries": [
@@ -1305,7 +1325,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T02:39:56",
+  "last_updated": "2026-06-06T03:13:59",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1317,18 +1337,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "27733637",
-        "quality": 0.35024,
-        "theorems": 4,
-        "title": "Speculative: Topological Data Analysis of Theorem Networks"
-      },
-      {
-        "cycle_id": "74477321",
-        "quality": 0.40424000000000004,
-        "theorems": 4,
-        "title": "EML Differential Algebra: Closure Properties"
-      },
       {
         "cycle_id": "55640abb",
         "quality": 0.48016000000000003,
@@ -1376,6 +1384,18 @@
         "quality": 0.43664000000000003,
         "theorems": 5,
         "title": "Counterfactual Number Theory: What If Primes Were Random?"
+      },
+      {
+        "cycle_id": "8d9145ce",
+        "quality": 0.5009600000000001,
+        "theorems": 47,
+        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+      },
+      {
+        "cycle_id": "e588f077",
+        "quality": 0.3432,
+        "theorems": 5,
+        "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
       }
     ],
     "Bridges": [
