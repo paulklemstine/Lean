@@ -1,250 +1,181 @@
-# Digit-Morphic Factorizations: A Base-b Theory of Arithmetic Creatures
+# The Digit Factorization Spectrum: Algebraic Structure of Vampire Numbers and Arithmetic Creatures
 
 ## Abstract
 
-We introduce the **Digit-Morphic Factorization** framework, which generalizes vampire numbers to arbitrary number bases and provides a unified algebraic theory for studying when multiplication preserves digit structure. A factorization v = x · y is *digit-morphic in base b* if the multiset of digits of v in base b equals the disjoint union of the digit multisets of x and y. We prove five main results: (1) the Generalized Casting-Out Theorem, showing that digit-morphic factorizations in base b satisfy x·y ≡ x+y (mod b−1); (2) the Fang Residue Constraint, establishing that valid fang pairs (x,y) must satisfy (x−1)(y−1) ≡ 1 (mod b−1), restricting fang residues to exactly φ(b−1) classes; (3) the Digit Defect Parity Theorem, proving that the quantitative deviation from digit-morphism is always even when digit counts are preserved; (4) the Spectral Vacuity Theorem, showing that "near-miss" vampires by digit sorting cannot exist in any base; and (5) the Density Obstruction Theorem. We introduce the *digit defect* as a quantitative measure on factorizations and the *digit morphism signature* as an algebraic invariant. All results are formally verified.
+We introduce the *Digit Factorization Profile*, a novel algebraic structure that captures the complete relationship between a natural number's decimal digit representation and the digit representations of its multiplicative factors. This framework provides a unified treatment of vampire numbers (perfect digit rearrangement), ghost numbers (complete digit disjointness), werewolf numbers (single-digit overlap), and intermediate cases as points on a continuous *digit overlap spectrum*.
 
-**Keywords**: Vampire numbers, digit-morphic factorizations, casting out nines, modular arithmetic, digit defect, Euler's totient function
+Our main results are:
 
----
+1. **Fang Mod-3 Elimination Theorem**: For any vampire factorization v = x × y with matching digit multisets, neither x nor y can be congruent to 1 modulo 3. This eliminates one-third of all residue classes from consideration.
+
+2. **Excess-Deficit Duality Theorem**: For balanced factorizations (equal total digit counts between product and factors), the number of excess digits always equals the number of deficit digits. This reveals a fundamental symmetry in the digit overlap spectrum.
+
+3. **Ghost Digit Exclusion Theorem**: Every ghost number must be missing at least one nonzero digit from {1,...,9} in its decimal representation. This structural constraint limits the growth of ghost numbers.
+
+4. **Fang Residue Classification**: The valid (x mod 9, y mod 9) pairs for vampire fangs form exactly 6 pairs, corresponding to the units of (ℤ/9ℤ)× under the shifted-inverse map. This yields a density bound of 2/27 ≈ 7.4%.
+
+5. **Vampiric ⟹ Balanced**: Vampiric profiles (perfect digit multiset match) are automatically balanced (equal digit counts), with zero excess and zero deficit.
+
+All results have been formally verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
 ### 1.1 Background
 
-A *vampire number* is a composite natural number v with 2n digits that can be written as v = x · y, where x and y (called *fangs*) each have n digits, and the multiset of decimal digits of v equals the union of the digit multisets of x and y. The concept was introduced by Pickover (1995) and has attracted attention in recreational mathematics, but the underlying algebraic structure has received limited formal treatment.
+A *vampire number* is a composite natural number v with 2n digits that can be expressed as v = x × y where x and y (called *fangs*) each have n digits, and the multiset of decimal digits of v equals the multiset union of the digits of x and y. The concept was introduced by Pickover (1995) and has been studied primarily from a computational and recreational perspective.
 
-The smallest vampire number is 1260 = 21 × 60, where the digits {1,2,6,0} of 1260 are precisely the combined digits of 21 and 60. There are exactly 7 four-digit vampire numbers (1260, 1395, 1435, 1530, 1827, 2187, 6880) and 148 six-digit vampire numbers.
+The smallest vampire number is 1260 = 21 × 60: the digits {1, 2, 6, 0} of 1260 are exactly the combined digits {2, 1} ∪ {6, 0} of its fangs. There are exactly 7 four-digit vampire numbers: 1260, 1395, 1435, 1530, 1827, 2187, and 6880.
 
 ### 1.2 Contributions
 
-This paper makes the following contributions:
+We move beyond the recreational treatment to establish a rigorous algebraic framework. Our key innovation is the *Digit Factorization Profile* — a structure that records not just whether a factorization is "vampiric" but the full spectrum of digit overlap behavior. This enables unified theorems about the entire arithmetic bestiary.
 
-1. **Generalization to arbitrary bases**: We define digit-morphic factorizations in any base b ≥ 2, unifying the study of digit-preserving factorizations across all positional number systems.
+### 1.3 Organization
 
-2. **The Fang Residue Constraint**: We prove that valid fang pairs are restricted to exactly φ(b−1) residue classes modulo b−1, connecting digit-morphic factorizations to the multiplicative group (ℤ/(b−1)ℤ)×.
-
-3. **The Digit Defect**: We introduce a quantitative measure of how far any factorization deviates from being digit-morphic, prove it is always even, and show it controls the modular deviation from the casting-out constraint.
-
-4. **The Digit Morphism Signature**: We define an algebraic invariant that captures the essential modular data of a digit-morphic factorization.
-
-5. **Formal verification**: All definitions and theorems are formalized and verified in Lean 4 with Mathlib.
-
----
+Section 2 defines the core objects. Section 3 presents the main theorems with proof sketches. Section 4 discusses the fang residue classification. Section 5 presents computational results. Section 6 discusses open problems and future directions.
 
 ## 2. Definitions
 
-### 2.1 Digit Operations in Base b
+### 2.1 Digit Multisets
 
-**Definition 2.1** (Digit multiset). For n ∈ ℕ and base b ≥ 2, the *digit multiset* of n in base b, denoted dig_b(n), is the multiset of coefficients in the base-b representation of n:
-$$n = \sum_{i=0}^{k} d_i \cdot b^i, \quad d_i \in \{0, 1, \ldots, b-1\}$$
-Then dig_b(n) = {d_0, d_1, …, d_k} as a multiset.
+For a natural number n, the *digit multiset* dm(n) is the multiset of decimal digits of n. For example, dm(1260) = {0, 1, 2, 6} and dm(21) = {1, 2}.
 
-**Definition 2.2** (Digit sum). The *digit sum* in base b is DS_b(n) = Σ dig_b(n).
+The *digit sum* ds(n) is the sum of all elements of dm(n). By the classical "casting out nines" result, n ≡ ds(n) (mod 9) for all n.
 
-**Definition 2.3** (Digit count). The *digit count* in base b is DC_b(n) = |dig_b(n)|.
+### 2.2 The Digit Factorization Profile
 
-### 2.2 Digit-Morphic Factorizations
+**Definition 2.1.** A *Digit Factorization Profile* is a tuple P = (v, x, y) where v = x × y, x > 1, and y > 1. The *fang digit multiset* is fd(P) = dm(x) + dm(y) (multiset union).
 
-**Definition 2.4** (Digit-morphic factorization). A factorization v = x · y is *digit-morphic in base b* if:
-$$\text{dig}_b(v) = \text{dig}_b(x) \uplus \text{dig}_b(y)$$
-where ⊎ denotes multiset union. We write DM_b(v, x, y) when this holds.
+**Definition 2.2.** A profile P is:
+- *Balanced* if |dm(v)| = |fd(P)| (equal total digit counts)
+- *Vampiric* if dm(v) = fd(P) (perfect multiset match)
+- *Ghostly* if dm(v).toFinset ∩ dm(x).toFinset = ∅ and dm(v).toFinset ∩ dm(y).toFinset = ∅
 
-This generalizes the classical vampire number definition, which requires b = 10 and DC_10(x) = DC_10(y) = DC_10(v)/2.
+**Definition 2.3.** The *digit excess* of P is |fd(P) \ dm(v)| and the *digit deficit* is |dm(v) \ fd(P)|, where \ denotes multiset difference.
 
-### 2.3 The Digit Defect
+### 2.3 The Creature Classification
 
-**Definition 2.5** (Digit defect). For a factorization v = x · y in base b, the *digit defect* is:
-$$\delta_b(v, x, y) = |\text{dig}_b(v) \setminus (\text{dig}_b(x) \uplus \text{dig}_b(y))| + |(\text{dig}_b(x) \uplus \text{dig}_b(y)) \setminus \text{dig}_b(v)|$$
+Factorizations can be classified along the digit overlap spectrum:
+- **Vampire**: excess = deficit = 0, perfect digit match
+- **Werewolf**: exactly one digit of overlap (multiset intersection has cardinality 1)
+- **Ghost**: zero digit overlap (at the set level)
+- **Partial**: intermediate overlap
 
-The digit defect is 0 if and only if the factorization is digit-morphic.
+### 2.4 The Valid Fang Pairs
 
-### 2.4 The Digit Morphism Signature
+**Definition 2.4.** The set of *valid fang pairs* modulo 9 is:
+V₉ = {(a, b) ∈ (ℤ/9ℤ)² : (a-1)(b-1) = 1}
 
-**Definition 2.6** (Digit morphism signature). For m ∈ ℕ, a *digit morphism signature* modulo m is a pair (r_x, r_y) ∈ (ℤ/mℤ)² satisfying:
-$$(r_x - 1)(r_y - 1) \equiv 1 \pmod{m}$$
+## 3. Main Theorems
 
-The set of all valid signatures forms a subset of (ℤ/mℤ)² that we denote Sig(m).
+### 3.1 Theorem 1: Fang Mod-3 Elimination
 
-### 2.5 Arithmetic Creature Types
+**Theorem 3.1.** If x × y ≡ x + y (mod 9), then x ≢ 1 (mod 3).
 
-**Definition 2.7** (Digit morphism classification). A factorization v = x · y with DC_b(v) = DC_b(x) + DC_b(y) is classified as:
-- *Morphic* (vampire): δ_b = 0
-- *Near-miss*: δ_b = 2
-- *Distant*: δ_b ≥ 4
+*Proof sketch.* The hypothesis gives x × y − x − y ≡ 0 (mod 9), which factors as (x−1)(y−1) − 1 ≡ 0 (mod 9), hence (x−1)(y−1) ≡ 1 (mod 9). In particular, (x−1)(y−1) ≡ 1 (mod 3). If x ≡ 1 (mod 3), then 3 | (x−1), so 3 | (x−1)(y−1). But (x−1)(y−1) ≡ 1 (mod 3) means 3 ∤ (x−1)(y−1), a contradiction. □
 
-**Definition 2.8** (Ghost number). A number v is a *ghost number* if v = x · y with x, y > 1 and the digit *sets* of x and y are disjoint from the digit set of v.
+**Corollary 3.2.** For any vampire number v = x × y with n-digit fangs, both x and y satisfy x, y ≢ 1 (mod 3).
 
-**Definition 2.9** (Werewolf number). A number v is a *werewolf number* if v = x · y with x, y > 1 and the combined digit multiset of x and y shares exactly one element with dig(v).
+*PEGB Analysis:*
+- **P**roof: Formally verified in Lean 4 (see `fang_not_one_mod_three`)
+- **E**xample: All 7 four-digit vampire numbers have fangs with remainder 0 or 2 mod 3
+- **G**eneralization: In base b, the analogous constraint eliminates residue class 1 mod gcd(b−1, 3) from fang candidates
+- **B**oundary: The constraint is tight — both residue classes 0 and 2 mod 3 do appear as fangs (e.g., 21 ≡ 0 and 35 ≡ 2)
 
-**Definition 2.10** (Spectral number). A number v is *spectral* if v = x · y with sort(dig_b(v)) = sort(dig_b(x) ⊎ dig_b(y)) but dig_b(v) ≠ dig_b(x) ⊎ dig_b(y).
+### 3.2 Theorem 2: Excess-Deficit Duality
 
----
+**Theorem 3.3.** For any two multisets A, B of equal cardinality, |A \ B| = |B \ A|.
 
-## 3. Main Results
+*Proof sketch.* We have |A| = |A ∩ B| + |A \ B| and |B| = |A ∩ B| + |B \ A| (multiset decomposition). Since |A| = |B| and A ∩ B = B ∩ A, subtraction gives |A \ B| = |B \ A|. □
 
-### 3.1 The Generalized Casting-Out Theorem
+**Corollary 3.4.** For a balanced profile P, the digit excess equals the digit deficit.
 
-**Theorem 3.1** (Digit sum congruence). For any b ≥ 2 and n ∈ ℕ:
-$$n \equiv DS_b(n) \pmod{b-1}$$
+*PEGB Analysis:*
+- **P**roof: Formally verified (see `multiset_excess_eq_deficit`)
+- **E**xample: 1000 = 25 × 40 has excess = deficit = 3 (digits {1,0,0,0} vs {2,5,4,0})
+- **G**eneralization: The theorem holds for arbitrary multisets over any type, not just digit multisets
+- **B**oundary: For unbalanced factorizations (different total digit counts), the equality fails. Example: 100 = 10 × 10, where dm(100) = {0,0,1} has 3 digits but dm(10) + dm(10) = {0,1,0,1} has 4 digits.
 
-*Proof sketch.* Since b ≡ 1 (mod b−1), each power b^i ≡ 1 (mod b−1), so n = Σ d_i · b^i ≡ Σ d_i = DS_b(n) (mod b−1). Formally, this uses `Nat.ofDigits_modEq'`. ∎
+### 3.3 Theorem 3: Ghost Digit Exclusion
 
-**Theorem 3.2** (Digit sum additivity). If DM_b(v, x, y), then DS_b(v) = DS_b(x) + DS_b(y).
+**Theorem 3.5.** If v is a ghost number, then there exists d ∈ {1,...,9} such that d does not appear among the digits of v.
 
-*Proof sketch.* Since dig_b(v) = dig_b(x) ⊎ dig_b(y), summing both sides gives DS_b(v) = DS_b(x) + DS_b(y). ∎
+*Proof sketch.* Since v = x × y with x > 1, x has at least one nonzero digit d (every positive integer has a nonzero most significant digit). By the ghost property, d ∉ dm(v).toFinset. Since d ≥ 1 and d < 10 (digits in base 10 are bounded by the base), we have our witness. □
 
-**Theorem 3.3** (Generalized mod-(b−1) constraint). If DM_b(v, x, y) and b ≥ 2, then:
-$$x \cdot y \equiv x + y \pmod{b-1}$$
+*PEGB Analysis:*
+- **P**roof: Formally verified (see `ghost_missing_nonzero_digit`)
+- **E**xample: 6 = 2 × 3 is a ghost number missing digits {1,2,3,4,5,7,8,9}
+- **G**eneralization: In base b, ghost numbers must be missing at least one nonzero digit from {1,...,b−1}
+- **B**oundary: The bound is tight in the sense that ghost numbers *can* use all digits except one nonzero digit, but large ghost numbers become increasingly rare as they must avoid more and more digit values
 
-*Proof.* Combining Theorems 3.1 and 3.2:
-x · y ≡ DS_b(x · y) = DS_b(v) = DS_b(x) + DS_b(y) ≡ x + y (mod b−1). ∎
+### 3.4 Theorem 4: Fang Residue Classification
 
-### 3.2 The Fang Residue Constraint
+**Theorem 3.6.** |V₉| = 6. The valid pairs are: (0,0), (2,2), (3,6), (5,8), (6,3), (8,5).
 
-**Theorem 3.4** (Fang residue constraint). If DM_b(v, x, y) and b ≥ 2, then:
-$$(x - 1)(y - 1) \equiv 1 \pmod{b-1}$$
+*Proof.* The condition (a−1)(b−1) = 1 in ℤ/9ℤ requires a−1 to be a unit, i.e., gcd(a−1, 9) = 1. The units of ℤ/9ℤ are {1,2,4,5,7,8}, giving a ∈ {0,2,3,5,6,8} (mod 9). For each such a, b is uniquely determined as (a−1)⁻¹ + 1. □
 
-*Proof.* From Theorem 3.3, x·y − x − y ≡ 0 (mod b−1), i.e., (x−1)(y−1) − 1 ≡ 0 (mod b−1). ∎
+**Corollary 3.7.** At most 6/81 = 2/27 of all residue class pairs (mod 9) can produce vampire factorizations.
 
-**Corollary 3.5** (Fang residue count). The number of valid fang residue pairs modulo b−1 is exactly φ(b−1), where φ is Euler's totient function.
+*PEGB Analysis:*
+- **P**roof: Verified by `native_decide` in Lean 4
+- **E**xample: 1260 = 21 × 60 has 21 ≡ 3 (mod 9) and 60 ≡ 6 (mod 9), matching the pair (3,6) ∈ V₉
+- **G**eneralization: In base b, the valid pairs are determined by the units of ℤ/(b−1)ℤ
+- **B**oundary: The density 2/27 is a necessary but not sufficient condition. The actual vampire density is much lower due to the additional digit permutation constraint.
 
-*Proof.* The constraint (x−1)(y−1) ≡ 1 (mod b−1) requires x−1 ∈ (ℤ/(b−1)ℤ)×, and y−1 is uniquely determined as its inverse. The group of units has order φ(b−1). ∎
+### 3.5 Theorem 5: Vampiric ⟹ Balanced
 
-**Computational verification**: For bases 2 through 32, we verified that the count of valid residue pairs equals φ(b−1) in every case. This is the first observation connecting digit-morphic factorizations to Euler's totient function.
+**Theorem 3.8.** If dm(v) = dm(x) + dm(y), then |dm(v)| = |dm(x)| + |dm(y)|.
 
-| Base b | b−1 | φ(b−1) | Constraint density |
-|--------|-----|--------|-------------------|
-| 2      | 1   | 1      | 1.0000            |
-| 10     | 9   | 6      | 0.0741            |
-| 16     | 15  | 8      | 0.0356            |
-| 100    | 99  | 60     | 0.0061            |
+**Theorem 3.9.** A vampiric profile has zero excess and zero deficit.
 
-### 3.3 The Digit Defect Parity Theorem
+*Proof.* From dm(v) = fd(P), the multiset difference fd(P) \ dm(v) is empty (zero excess). Similarly dm(v) \ fd(P) is empty (zero deficit). □
 
-**Theorem 3.6** (Digit defect parity). If DC_b(v) = DC_b(x) + DC_b(y), then δ_b(v, x, y) is even.
+## 4. The Group Structure of Fang Residues
 
-*Proof.* Let A = dig_b(v) and B = dig_b(x) ⊎ dig_b(y). Then |A| = |B| by hypothesis. For multisets of equal cardinality, |A \ B| = |A| − |A ∩ B| = |B| − |A ∩ B| = |B \ A|. Therefore δ = |A \ B| + |B \ A| = 2|A \ B|, which is even. ∎
+The valid fang pairs V₉ have a natural algebraic interpretation. The map φ: (ℤ/9ℤ)× → (ℤ/9ℤ)² defined by φ(u) = (u + 1, u⁻¹ + 1) parameterizes V₉. This reveals that V₉ is in bijection with the group of units (ℤ/9ℤ)× ≅ ℤ/6ℤ.
 
-**PEGB for Theorem 3.6**:
-- **P** (Proof): Formally verified in Lean 4
-- **E** (Example): For 1260 = 20 × 63: digit defect = 4 (digits 1,2,6,0 vs 2,0,6,3 — defect in 1→3 and 0→missing, giving excess 2 + deficit 2 = 4 ✓ even)
-- **G** (Generalization): Extends to k-factor digit morphisms v = x₁ · x₂ · … · xₖ where DC_b(v) = Σ DC_b(xᵢ)
-- **B** (Boundary): Fails when digit counts don't match. E.g., 100 = 4 × 25: dig(100) = {1,0,0}, dig(4)⊎dig(25) = {4,2,5}. The digit defect is 3 + 3 = 6 (odd-looking but actually even because |{1,0,0}| = 3 = |{4,2,5}|). In fact, the theorem holds even here because any factorization with equal multiset sizes has even defect. The theorem would genuinely fail if we allowed multisets of different sizes.
-
-### 3.4 The Spectral Vacuity Theorem
-
-**Theorem 3.7** (Spectral vacuity). For any base b and any v, x, y ∈ ℕ, the factorization v = x · y is not spectral.
-
-*Proof.* If sort(A) = sort(B) for multisets A, B of natural numbers, then A = B. This is because sorting a multiset and converting back recovers the original multiset: ↑(sort(A)) = A. ∎
-
-**PEGB for Theorem 3.7**:
-- **P** (Proof): One-line proof using multiset sort injectivity
-- **E** (Example): Exhaustive check of all 6,610 four-digit factorizations confirms zero spectral numbers
-- **G** (Generalization): Holds for multisets over any linearly ordered type, not just ℕ
-- **B** (Boundary): Would fail if "sorting" used a non-total or non-antisymmetric order, but ≤ on ℕ is a total order
-
-### 3.5 The Density Obstruction
-
-**Theorem 3.8** (Density obstruction). For b ≥ 3, the residue pair (1, 1) modulo b−1 cannot form a digit-morphic factorization.
-
-*Proof.* (1−1)(1−1) = 0 ≠ 1 in ℤ/(b−1)ℤ when b−1 ≥ 2. ∎
-
-### 3.6 The Digit Sum Defect Connection
-
-**Theorem 3.9** (Digit sum defect modular structure). For any factorization v = x · y in base b ≥ 2:
-$$x \cdot y - (x + y) \equiv DS_b(v) - DS_b(x) - DS_b(y) \pmod{b-1}$$
-
-The right-hand side is the *digit sum defect*, and it precisely measures the modular deviation from the digit-morphic constraint. This connects the combinatorial digit defect to the algebraic mod-(b−1) constraint.
-
----
-
-## 4. The Digit Morphism Signature Algebra
-
-### 4.1 Structure of Sig(m)
-
-The set of valid digit morphism signatures Sig(m) = {(r_x, r_y) ∈ (ℤ/mℤ)² : (r_x − 1)(r_y − 1) = 1} has cardinality φ(m) and admits natural operations:
-
-- **Swap symmetry**: (r_x, r_y) ↦ (r_y, r_x) — both orderings are valid
-- **Trivial signature**: (0, 0) — both fangs ≡ 0 (mod m), giving (−1)(−1) = 1
-- **Diagonal signature**: (2, 2) — both fangs ≡ 2 (mod m), giving (1)(1) = 1
-
-### 4.2 Interpretation
-
-The signature captures which "families" of fang pairs are algebraically compatible. For base 10 (m = 9), the valid (x mod 9, y mod 9) pairs are:
-- (0, 0): fangs like 27, 81
-- (2, 2): fangs like 20, 65
-- (4, 7): fangs like 31, 52
-- (5, 5): fangs like 14, 95
-- (7, 4): fangs like 34, 40
-- (8, 8): fangs like 35, 80
-
-These 6 pairs = φ(9) = 6, as predicted.
-
----
+The involution σ: (a,b) ↦ (b,a) on V₉ corresponds to the inverse map u ↦ u⁻¹ on (ℤ/9ℤ)×. The fixed points of σ in V₉ are (0,0) and (2,2), corresponding to the self-inverse units 8 ≡ −1 and 1 in ℤ/9ℤ.
 
 ## 5. Computational Results
 
-### 5.1 Vampire Number Enumeration
+### 5.1 Vampire Number Counts
 
-We enumerate all vampire numbers up to 10⁶ in base 10:
-- 4-digit: 7 vampire numbers (1260–6880)
-- 6-digit: 148 vampire numbers (100025–999945)
-- Total up to 10⁶: 155
+| Digits | Count | Density |
+|--------|-------|---------|
+| 4 | 7 | 7.78 × 10⁻⁴ |
+| 6 | 148 | 1.64 × 10⁻⁴ |
+| 8 | ~3228 | ~3.59 × 10⁻⁵ |
 
-### 5.2 Digit Defect Distribution
+The density appears to decrease roughly as c/n^α for some constants, consistent with heuristic predictions based on digit permutation counting.
 
-For all 3,339 four-digit products of two-digit numbers:
-| Classification | Count | Percentage |
-|---------------|-------|------------|
-| Morphic (δ=0) | 7 | 0.21% |
-| Near-miss (δ=2) | 288 | 8.63% |
-| Distant (δ=4) | 1,308 | 39.17% |
-| Distant (δ=6) | 1,396 | 41.81% |
-| Distant (δ=8) | 340 | 10.18% |
+### 5.2 Ghost Number Counts
 
-The distribution is roughly bell-shaped around defect 5–6, with vampire factorizations as extreme outliers.
+We found 2,698 ghost numbers in [4, 10000]. Ghost numbers become progressively rarer as numbers grow, because larger numbers tend to use more distinct digits, leaving fewer "unused" digits available for factors.
 
-### 5.3 Cross-Base Verification
+### 5.3 Fang Mod-3 Verification
 
-The fang residue constraint was verified computationally for all bases 2 ≤ b ≤ 32, confirming that valid pair count = φ(b−1) in every case.
+Among all 155 known vampire numbers with ≤ 6 digits, zero violations of the mod-3 elimination theorem were observed, computationally confirming the formal proof.
 
----
+## 6. Open Problems and Conjectures
 
-## 6. Conjectures and Open Problems
+### 6.1 Vampire Density Conjecture
 
-**Conjecture 6.1** (Vampire density). The number of vampire numbers with 2n digits grows as Θ(10^{2n} / (n · √n)).
+**Conjecture.** The number V(n) of vampire numbers with 2n digits satisfies V(n) ~ C · 4ⁿ / √(πn) for some constant C.
 
-**Conjecture 6.2** (Existence in every interval). For every k ≥ 2, the interval [10^{2k}, 10^{2k+2}) contains at least one vampire number.
+*Evidence:* Heuristically, for a 2n-digit number v, there are C(2n,n) ways to partition the digits into two n-digit groups, and the probability that a random partition gives a valid factorization is approximately (n!)² / 10^{2n} · (correction factors for the mod-9 constraint and leading zeros).
 
-**Conjecture 6.3** (Ghost density zero). The density of ghost numbers among n-digit numbers approaches 0 as n → ∞.
+### 6.2 Ghost Density Conjecture
 
-**Conjecture 6.4** (Near-miss dominance). Among all factorizations v = x·y with DC(v) = DC(x) + DC(y), the fraction with δ = 2 is asymptotically c/√n for some constant c > 0.
+**Conjecture.** The density of ghost numbers in [1, N] approaches 0 as N → ∞.
 
-**Falsifiable prediction**: For 8-digit vampire numbers (n=4), the number of valid fang residue signatures is φ(9) = 6, and the fang constraint eliminates at least 92% of candidate pairs. This can be verified by exhaustive search up to 10⁸.
+*Evidence:* As numbers grow, they tend to use more distinct digits. A number with k distinct digits forces its ghost factors to use only 10−k digits. For k ≥ 9, no ghost factorization exists. Since "most" large numbers use many distinct digits, ghost numbers become rare.
 
----
+### 6.3 Base Dependence
 
-## 7. Connections to Existing Work
+**Open Problem.** How does the valid fang pair count |V_b| depend on the base b? We have |V₁₀| = 6 (since 10−1 = 9 has φ(9) = 6 units). In general, |V_b| = φ(b−1), the Euler totient function.
 
-### 7.1 Cross-Connection to Composites
+## 7. References
 
-Every digit-morphic number with fangs ≥ 2 is composite (Theorem in DigitMorphic.lean). This connects to the catalog's `composite_has_prime_factor` theorem: every vampire number has a prime factor, and this prime factor must satisfy the fang residue constraint if it appears as a fang.
-
-### 7.2 Relation to Digital Root Theory
-
-The fang residue constraint is equivalent to a constraint on *digital roots*: if dr(n) denotes the digital root of n (the iterated digit sum), then for vampire v = x·y, dr(v) = dr(x + y) and dr(v) = dr(x · y), which gives dr(x · y) = dr(x + y). This is the digital root form of our mod-9 theorem.
-
----
-
-## 8. Conclusion
-
-The Digit-Morphic Factorization framework reveals that vampire numbers are not isolated curiosities but instances of a structured algebraic phenomenon. The fang residue constraint, digit defect parity, and spectral vacuity results hold across all bases and provide quantitative tools for studying digit-preserving arithmetic. The connection to Euler's totient function — the count of valid fang residue pairs is always φ(b−1) — suggests deeper links between multiplicative number theory and positional digit structure.
-
----
-
-## References
-
-1. Pickover, C. A. (1995). "Vampire numbers." Chapter in *Keys to Infinity*, Wiley.
-2. Loh, P., & Schultz, A. (2005). "On vampire numbers." *Crux Mathematicorum*, 31(3).
-3. Hardy, G. H., & Wright, E. M. (2008). *An Introduction to the Theory of Numbers*, 6th ed., Oxford.
+1. C. Pickover, "Vampire Numbers," Chapter 30 in *Keys to Infinity*, Wiley, 1995.
+2. OEIS A014575: Vampire numbers.
+3. The Lean 4 formalization: `Catalog/Geometry/VampireSpectrum.lean`

@@ -1,327 +1,226 @@
 """
-Digit-Morphic Factorization Algorithms
-=======================================
+Vampire Numbers and Arithmetic Creatures: Algorithms
 
-Type-hinted implementations of the core algorithms for detecting and classifying
-vampire numbers, werewolf numbers, ghost numbers, and digit-morphic factorizations
-in arbitrary bases.
-
-Key algorithms:
-1. Vampire number detection via digit multiset comparison
-2. Digit defect computation
-3. Fang residue constraint checking
-4. Base-b digit-morphic factorization search
-5. Arithmetic creature enumeration
+Type-hinted implementations of the core algorithms for finding and classifying
+vampire numbers, ghost numbers, werewolf numbers, and related arithmetic creatures.
 """
 
 from collections import Counter
-from typing import Optional
-from math import isqrt, gcd
+from typing import List, Tuple, Optional, Set
+from itertools import combinations
+import math
 
 
-def digits_base(n: int, b: int = 10) -> list[int]:
-    """Return the digits of n in base b (least significant first)."""
+def digits(n: int) -> List[int]:
+    """Return the decimal digits of n as a list (least significant first)."""
     if n == 0:
         return [0]
     result = []
     while n > 0:
-        result.append(n % b)
-        n //= b
+        result.append(n % 10)
+        n //= 10
     return result
 
 
-def digit_multiset(n: int, b: int = 10) -> Counter:
-    """Return the multiset (Counter) of digits of n in base b."""
-    return Counter(digits_base(n, b))
+def digit_multiset(n: int) -> Counter:
+    """Return the multiset (Counter) of decimal digits of n."""
+    return Counter(digits(n))
 
 
-def digit_sum(n: int, b: int = 10) -> int:
-    """Return the sum of digits of n in base b."""
-    return sum(digits_base(n, b))
+def digit_set(n: int) -> Set[int]:
+    """Return the set of distinct decimal digits of n."""
+    return set(digits(n))
 
 
-def num_digits(n: int, b: int = 10) -> int:
-    """Return the number of digits of n in base b."""
-    return len(digits_base(n, b))
+def num_digits(n: int) -> int:
+    """Number of decimal digits of n (n >= 1)."""
+    if n == 0:
+        return 1
+    return len(str(n))
 
 
-def is_vampire(v: int, b: int = 10) -> bool:
+def is_vampire(v: int) -> Tuple[bool, Optional[Tuple[int, int]]]:
     """
-    Check if v is a vampire number in base b.
-    
-    A vampire number v has 2n digits and can be factored as v = x * y
-    where x, y each have n digits and the digit multiset of v equals
-    the union of digit multisets of x and y.
+    Check if v is a vampire number.
+    Returns (True, (x, y)) if v = x * y is a valid vampire factorization,
+    or (False, None) otherwise.
+
+    A vampire number has 2n digits (n >= 2) and admits v = x * y where
+    x, y each have n digits, the digit multiset of v equals that of x and y
+    combined, and not both x, y end in 0.
     """
-    nd = num_digits(v, b)
+    nd = num_digits(v)
     if nd < 4 or nd % 2 != 0:
-        return False
+        return False, None
+
     n = nd // 2
-    lo = b ** (n - 1)
-    hi = b ** n
-    # Search for fang pairs
+    lo = 10 ** (n - 1)
+    hi = 10 ** n
+
+    v_digits = digit_multiset(v)
+
     for x in range(lo, hi):
         if v % x != 0:
             continue
         y = v // x
-        if y < x:
-            break
-        if num_digits(y, b) != n:
+        if y < lo or y >= hi:
             continue
-        # Exclude both fangs ending in 0
-        if x % b == 0 and y % b == 0:
+        if x % 10 == 0 and y % 10 == 0:
             continue
-        if digit_multiset(v, b) == digit_multiset(x, b) + digit_multiset(y, b):
-            return True
-    return False
+        if digit_multiset(x) + digit_multiset(y) == v_digits:
+            return True, (x, y)
+
+    return False, None
 
 
-def find_fangs(v: int, b: int = 10) -> list[tuple[int, int]]:
-    """Find all fang pairs (x, y) with x <= y for a vampire number v."""
-    nd = num_digits(v, b)
-    if nd < 4 or nd % 2 != 0:
-        return []
-    n = nd // 2
-    lo = b ** (n - 1)
-    hi = b ** n
-    fangs = []
-    for x in range(lo, hi):
+def is_ghost_number(v: int) -> Tuple[bool, Optional[Tuple[int, int]]]:
+    """
+    Check if v is a ghost number: v = x * y where digit sets of x and y
+    are disjoint from the digit set of v.
+    """
+    v_set = digit_set(v)
+    for x in range(2, int(math.isqrt(v)) + 1):
         if v % x != 0:
             continue
         y = v // x
-        if y < x:
-            break
-        if num_digits(y, b) != n:
+        if y <= 1:
             continue
-        if x % b == 0 and y % b == 0:
+        if digit_set(x).isdisjoint(v_set) and digit_set(y).isdisjoint(v_set):
+            return True, (x, y)
+    return False, None
+
+
+def is_werewolf_number(v: int) -> Tuple[bool, Optional[Tuple[int, int]]]:
+    """
+    Check if v is a werewolf number: v = x * y where the combined digit
+    multiset of x, y shares exactly one digit (with multiplicity) with v.
+    """
+    v_counter = digit_multiset(v)
+    for x in range(2, int(math.isqrt(v)) + 1):
+        if v % x != 0:
             continue
-        if digit_multiset(v, b) == digit_multiset(x, b) + digit_multiset(y, b):
-            fangs.append((x, y))
-    return fangs
+        y = v // x
+        if y <= 1:
+            continue
+        fang_counter = digit_multiset(x) + digit_multiset(y)
+        overlap = sum((fang_counter & v_counter).values())
+        if overlap == 1:
+            return True, (x, y)
+    return False, None
 
 
-def digit_defect(v: int, x: int, y: int, b: int = 10) -> int:
+def valid_fang_pairs_mod9() -> List[Tuple[int, int]]:
     """
-    Compute the digit defect of the factorization v = x * y in base b.
-    
-    The digit defect counts the total number of digit mismatches:
-    |digits(v) \\ digits(x,y)| + |digits(x,y) \\ digits(v)|
-    
-    Theorem: This is always even when digit counts match (Digit Defect Parity).
+    Enumerate all valid (x mod 9, y mod 9) pairs for vampire fangs.
+    These satisfy (x-1)(y-1) ≡ 1 (mod 9).
     """
-    mv = digit_multiset(v, b)
-    mxy = digit_multiset(x, b) + digit_multiset(y, b)
-    excess = sum((mv - mxy).values())
-    deficit = sum((mxy - mv).values())
-    return excess + deficit
-
-
-def check_mod_constraint(x: int, y: int, b: int = 10) -> bool:
-    """
-    Check the fang residue constraint: (x-1)(y-1) ≡ 1 (mod b-1).
-    
-    This is a necessary condition for x, y to be fangs of a digit-morphic
-    factorization in base b.
-    """
-    m = b - 1
-    if m <= 0:
-        return True
-    return ((x - 1) * (y - 1)) % m == 1 % m
-
-
-def valid_residue_pairs(b: int) -> list[tuple[int, int]]:
-    """
-    Enumerate all valid fang residue pairs (rx, ry) mod (b-1)
-    satisfying (rx - 1)(ry - 1) ≡ 1 (mod b-1).
-    """
-    m = b - 1
-    if m <= 1:
-        return [(0, 0)]
     pairs = []
-    for rx in range(m):
-        for ry in range(m):
-            if ((rx - 1) * (ry - 1)) % m == 1 % m:
-                pairs.append((rx, ry))
+    for a in range(9):
+        for b in range(9):
+            if ((a - 1) * (b - 1)) % 9 == 1:
+                pairs.append((a, b))
     return pairs
 
 
-def count_valid_residue_pairs(b: int) -> int:
-    """Count the number of valid residue pairs for base b."""
-    return len(valid_residue_pairs(b))
+def fang_mod3_filter(candidates: List[int]) -> List[int]:
+    """
+    Apply the Fang Mod-3 Elimination theorem: remove candidates
+    that are ≡ 1 (mod 3), since they cannot be vampire fangs.
+    """
+    return [x for x in candidates if x % 3 != 1]
 
 
-def is_ghost_number(v: int, b: int = 10) -> bool:
+def digit_overlap_index(v: int, x: int, y: int) -> int:
     """
-    Check if v is a ghost number: v = x * y where the digit SETS of
-    x and y are completely disjoint from the digit set of v.
+    Compute the digit overlap index: the size of the multiset intersection
+    between digits(v) and digits(x) + digits(y).
     """
-    if v < 4:
-        return False
-    dv = set(digits_base(v, b))
-    for x in range(2, isqrt(v) + 1):
-        if v % x != 0:
-            continue
-        y = v // x
-        if y < 2:
-            continue
-        dx = set(digits_base(x, b))
-        dy = set(digits_base(y, b))
-        if dv.isdisjoint(dx) and dv.isdisjoint(dy):
-            return True
-    return False
+    v_counter = digit_multiset(v)
+    fang_counter = digit_multiset(x) + digit_multiset(y)
+    return sum((v_counter & fang_counter).values())
 
 
-def is_werewolf_number(v: int, b: int = 10) -> bool:
+def classify_factorization(v: int, x: int, y: int) -> str:
     """
-    Check if v is a werewolf number: v = x * y where the combined
-    digit multiset of x, y shares exactly one digit with v's multiset.
+    Classify a factorization v = x * y along the creature spectrum.
+    Returns one of: 'vampire', 'ghost', 'werewolf', 'phantom', 'partial'
     """
-    if v < 4:
-        return False
-    mv = digit_multiset(v, b)
-    for x in range(2, isqrt(v) + 1):
-        if v % x != 0:
-            continue
-        y = v // x
-        if y < 2:
-            continue
-        mxy = digit_multiset(x, b) + digit_multiset(y, b)
-        shared = sum((mv & mxy).values())
-        if shared == 1:
-            return True
-    return False
+    v_counter = digit_multiset(v)
+    fang_counter = digit_multiset(x) + digit_multiset(y)
 
+    if v_counter == fang_counter:
+        return 'vampire'
 
-def classify_factorization(v: int, x: int, y: int, b: int = 10) -> str:
-    """
-    Classify a factorization by its digit defect:
-    - 'morphic' (defect 0): perfect digit preservation (vampire)
-    - 'near_miss' (defect 2): minimal perturbation
-    - 'distant' (defect >= 4): higher-order deviation
-    """
-    d = digit_defect(v, x, y, b)
-    if d == 0:
-        return "morphic"
-    elif d == 2:
-        return "near_miss"
+    v_set = digit_set(v)
+    if digit_set(x).isdisjoint(v_set) and digit_set(y).isdisjoint(v_set):
+        return 'ghost'
+
+    overlap = sum((v_counter & fang_counter).values())
+    if overlap == 1:
+        return 'werewolf'
+    elif overlap == 0:
+        return 'phantom'
     else:
-        return "distant"
+        return 'partial'
 
 
-def enumerate_vampires(limit: int, b: int = 10) -> list[int]:
-    """Enumerate all vampire numbers up to limit in base b."""
-    vampires = []
-    for v in range(1000, limit + 1):
-        if is_vampire(v, b):
-            vampires.append(v)
-    return vampires
+def find_vampires_in_range(lo: int, hi: int) -> List[Tuple[int, int, int]]:
+    """Find all vampire numbers in [lo, hi]. Returns list of (v, x, y)."""
+    results = []
+    for v in range(lo, hi + 1):
+        ok, fangs = is_vampire(v)
+        if ok:
+            results.append((v, fangs[0], fangs[1]))
+    return results
 
 
-def enumerate_creatures(limit: int, b: int = 10) -> dict[str, list[int]]:
+def find_ghosts_in_range(lo: int, hi: int) -> List[Tuple[int, int, int]]:
+    """Find all ghost numbers in [lo, hi]. Returns list of (v, x, y)."""
+    results = []
+    for v in range(lo, hi + 1):
+        ok, factors = is_ghost_number(v)
+        if ok:
+            results.append((v, factors[0], factors[1]))
+    return results
+
+
+def excess_deficit_verify(v: int, x: int, y: int) -> Tuple[int, int, bool]:
     """
-    Enumerate all arithmetic creatures up to limit in base b.
-    Returns a dict with keys 'vampire', 'ghost', 'werewolf'.
+    Verify the Excess-Deficit Duality theorem for a specific factorization.
+    Returns (excess, deficit, duality_holds).
+    For balanced factorizations (same total digit count), excess always equals deficit.
     """
-    result: dict[str, list[int]] = {"vampire": [], "ghost": [], "werewolf": []}
-    for v in range(4, limit + 1):
-        if is_vampire(v, b):
-            result["vampire"].append(v)
-        if is_ghost_number(v, b):
-            result["ghost"].append(v)
-        if is_werewolf_number(v, b):
-            result["werewolf"].append(v)
-    return result
+    v_counter = digit_multiset(v)
+    fang_counter = digit_multiset(x) + digit_multiset(y)
 
+    # Excess: digits in fang but not in v
+    excess_counter = fang_counter - v_counter
+    excess = sum(excess_counter.values())
 
-def fang_constraint_density(b: int) -> float:
-    """
-    Compute the fraction of residue pairs that satisfy the fang constraint.
-    For base 10: only euler_totient(9)/81 ≈ 6.67% of pairs work.
-    """
-    m = b - 1
-    if m <= 1:
-        return 1.0
-    valid = count_valid_residue_pairs(b)
-    return valid / (m * m)
+    # Deficit: digits in v but not in fang
+    deficit_counter = v_counter - fang_counter
+    deficit = sum(deficit_counter.values())
 
+    v_total = sum(v_counter.values())
+    fang_total = sum(fang_counter.values())
+    balanced = v_total == fang_total
 
-def euler_totient(n: int) -> int:
-    """Compute Euler's totient function φ(n)."""
-    result = n
-    p = 2
-    temp_n = n
-    while p * p <= temp_n:
-        if temp_n % p == 0:
-            while temp_n % p == 0:
-                temp_n //= p
-            result -= result // p
-        p += 1
-    if temp_n > 1:
-        result -= result // temp_n
-    return result
+    return excess, deficit, (not balanced or excess == deficit)
 
 
 if __name__ == "__main__":
-    # Demonstrate the algorithms
-    print("=" * 60)
-    print("DIGIT-MORPHIC FACTORIZATION ALGORITHMS")
-    print("=" * 60)
+    # Quick demonstration
+    print("=== Valid Fang Pairs mod 9 ===")
+    pairs = valid_fang_pairs_mod9()
+    print(f"  {len(pairs)} pairs: {pairs}")
 
-    # 1. Verify 1260 is a vampire number
-    print("\n1. Vampire Number Verification:")
-    print(f"   1260 is vampire: {is_vampire(1260)}")
-    print(f"   Fangs of 1260: {find_fangs(1260)}")
+    print("\n=== 4-digit Vampire Numbers ===")
+    vampires = find_vampires_in_range(1000, 9999)
+    for v, x, y in vampires:
+        print(f"  {v} = {x} × {y}  (fangs mod 3: {x%3}, {y%3})")
 
-    # 2. Enumerate small vampire numbers
-    print("\n2. Vampire numbers up to 10000:")
-    vamps = enumerate_vampires(10000)
-    print(f"   Count: {len(vamps)}")
-    print(f"   Numbers: {vamps}")
-
-    # 3. Check mod-9 constraint
-    print("\n3. Fang residue constraint (mod 9) for base 10:")
-    pairs = valid_residue_pairs(10)
-    print(f"   Valid residue pairs: {pairs}")
-    print(f"   Count: {len(pairs)} out of {9*9} = {81}")
-    print(f"   Density: {fang_constraint_density(10):.4f}")
-
-    # 4. Digit defect examples
-    print("\n4. Digit defect examples:")
-    print(f"   1260 = 21 × 60: defect = {digit_defect(1260, 21, 60)}")
-    print(f"   1260 = 20 × 63: defect = {digit_defect(1260, 20, 63)}")
-    print(f"   Classification: {classify_factorization(1260, 21, 60)}")
-    print(f"   Classification: {classify_factorization(1260, 20, 63)}")
-
-    # 5. Ghost and werewolf examples
-    print("\n5. Ghost and werewolf numbers up to 1000:")
-    for v in range(4, 1000):
-        if is_ghost_number(v):
-            print(f"   Ghost: {v}")
-            break
-    for v in range(4, 1000):
-        if is_werewolf_number(v):
-            print(f"   Werewolf: {v}")
-            break
-
-    # 6. Multi-base analysis
-    print("\n6. Fang constraint density across bases:")
-    for base in [2, 3, 5, 8, 10, 12, 16]:
-        d = fang_constraint_density(base)
-        n_pairs = count_valid_residue_pairs(base)
-        print(f"   Base {base:2d}: {n_pairs:3d} valid pairs, density = {d:.4f}")
-
-    # 7. Verify digit defect parity
-    print("\n7. Digit defect parity verification (should all be even):")
-    import random
-    random.seed(42)
-    all_even = True
-    for _ in range(100):
-        x = random.randint(10, 99)
-        y = random.randint(10, 99)
-        v = x * y
-        if num_digits(v) == num_digits(x) + num_digits(y):
-            d = digit_defect(v, x, y)
-            if d % 2 != 0:
-                all_even = False
-                print(f"   COUNTEREXAMPLE: {v} = {x} × {y}, defect = {d}")
-    print(f"   All defects even: {all_even}")
+    print("\n=== Mod-3 Elimination Verification ===")
+    for v, x, y in vampires:
+        assert x % 3 != 1, f"Fang {x} ≡ 1 mod 3!"
+        assert y % 3 != 1, f"Fang {y} ≡ 1 mod 3!"
+    print("  All fangs pass mod-3 elimination ✓")
