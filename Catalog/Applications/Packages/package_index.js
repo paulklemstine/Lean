@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "87ee6989",
     "filename": "speculative_consciousness_as_fixed_points_of_recur.json",
     "pkg_num": 400,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.31904,
     "title": "Reflective Operator Algebras: Self-Referential Types via Fixed Points of Recursive Type Theory"
   },
   {
@@ -12751,8 +12751,8 @@ window.PACKAGE_GRAPH = {
       "hue": 280,
       "id": "speculative_consciousness_as_fixed_points_of_recur",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.31904,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Reflective Operator Algebras: Self-Referential Types via Fixed Points of Recursive Type Theory"
     }
