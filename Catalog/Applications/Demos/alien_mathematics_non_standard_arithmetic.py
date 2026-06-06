@@ -1,340 +1,186 @@
 #!/usr/bin/env python3
 """
-Demo: Non-Standard Arithmetic via Ultrafilters
+Non-Standard Arithmetic: Numerical Demonstrations
 
-Demonstrates key concepts from the formalized theory:
-1. Ultrafilter color selection (2-coloring dichotomy)
-2. Standard part computation (pigeonhole on bounded sequences)
-3. Saturation degree estimation
-4. Prime/composite dichotomy for diagonal elements
+Demonstrates key concepts from the ultrapower construction ℕ* = ∏ℕ/U:
+1. Ultrafilter selection of values from finite ranges
+2. Non-Archimedean elements (sequences growing beyond any bound)
+3. Infinite primes (prime sequences that exceed all standard naturals)
+4. Infinitely divisible elements (n! is divisible by every positive integer)
+5. Descending chains (ω, ω-1, ω-2, ... demonstrating failure of well-ordering)
 """
 
-import random
-from typing import List, Callable, Set
-
-# ============================================================
-# Demo 1: Ultrafilter Color Selection
-# ============================================================
-
-def demo_color_selection():
-    """
-    For any 2-coloring of ℕ, an ultrafilter selects exactly one color.
-    We simulate this with a "principal-like" filter concentrated on large numbers.
-    """
-    print("=" * 60)
-    print("DEMO 1: Ultrafilter Color Selection")
-    print("=" * 60)
-
-    colorings = {
-        "parity": lambda n: n % 2,
-        "mod3_threshold": lambda n: 0 if n % 3 == 0 else 1,
-        "sqrt_parity": lambda n: int(n ** 0.5) % 2,
-    }
-
-    N = 100000  # simulate "U-large" by looking at tail behavior
-
-    for name, c in colorings.items():
-        count_0 = sum(1 for i in range(N // 2, N) if c(i) == 0)
-        count_1 = sum(1 for i in range(N // 2, N) if c(i) == 1)
-        total = N // 2
-        selected = 0 if count_0 > count_1 else 1
-        print(f"\n  Coloring '{name}':")
-        print(f"    Color 0 density (tail): {count_0/total:.4f}")
-        print(f"    Color 1 density (tail): {count_1/total:.4f}")
-        print(f"    → Ultrafilter would select color {selected}")
-
-    print()
-
-
-# ============================================================
-# Demo 2: Standard Part Theorem
-# ============================================================
-
-def demo_standard_part():
-    """
-    For a bounded sequence f with f(i) ≤ n, the ultrafilter
-    selects exactly one value m ≤ n (the "standard part").
-    """
-    print("=" * 60)
-    print("DEMO 2: Standard Part Theorem")
-    print("=" * 60)
-
-    sequences = {
-        "f(i) = i mod 3": lambda i: i % 3,
-        "f(i) = min(i, 5)": lambda i: min(i, 5),
-        "f(i) = (i*i) mod 7": lambda i: (i * i) % 7,
-    }
-
-    N = 100000
-
-    for name, f in sequences.items():
-        bound = max(f(i) for i in range(N))
-        # Count how often each value appears in the tail
-        value_counts = {}
-        for i in range(N // 2, N):
-            v = f(i)
-            value_counts[v] = value_counts.get(v, 0) + 1
-
-        total = N // 2
-        print(f"\n  Sequence '{name}' (bound = {bound}):")
-        for v in sorted(value_counts.keys()):
-            density = value_counts[v] / total
-            print(f"    Value {v}: density = {density:.4f}")
-
-        # The "standard part" is the value selected by the ultrafilter
-        # For a density-based ultrafilter, it's the most common value
-        std_part = max(value_counts.keys(), key=lambda v: value_counts[v])
-        print(f"    → Standard part (density-selected): {std_part}")
-
-    print()
-
-
-# ============================================================
-# Demo 3: Saturation Degree
-# ============================================================
-
-def demo_saturation_degree():
-    """
-    The saturation degree measures how far a predicate extends
-    into the "non-standard" realm (large indices).
-    """
-    print("=" * 60)
-    print("DEMO 3: Saturation Degree")
-    print("=" * 60)
-
-    predicates = {
-        "P(i) = 'i is even'": lambda i: i % 2 == 0,
-        "P(i) = 'i < 1000'": lambda i: i < 1000,
-        "P(i) = 'i has a factor > 10'": lambda i: any(i % p == 0 for p in range(11, i + 1)) if i > 1 else False,
-        "P(i) = 'i is not a perfect square'": lambda i: int(i ** 0.5) ** 2 != i,
-    }
-
-    N = 10000
-
-    for name, P in predicates.items():
-        # Estimate saturation degree: find the largest n such that
-        # P holds on "most" of {n, n+1, ..., N}
-        sat_deg = 0
-        for n in range(N):
-            count = sum(1 for i in range(n, min(n + 1000, N)) if P(i))
-            if count > 500:  # "U-large" ≈ density > 0.5
-                sat_deg = n
-            else:
-                break
-
-        if sat_deg >= N - 1001:
-            print(f"\n  {name}: satDeg = ∞ (holds everywhere)")
-        else:
-            print(f"\n  {name}: satDeg ≈ {sat_deg}")
-
-    print()
-
-
-# ============================================================
-# Demo 4: Prime/Composite Dichotomy
-# ============================================================
-
-def is_prime(n: int) -> bool:
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
-
-
-def demo_prime_dichotomy():
-    """
-    The diagonal element ω = [id] is prime in some ultrapowers
-    and composite in others. We visualize the prime density.
-    """
-    print("=" * 60)
-    print("DEMO 4: Prime/Composite Dichotomy for ω = [id]")
-    print("=" * 60)
-
-    N = 100000
-    prime_count = 0
-    composite_count = 0
-
-    for i in range(2, N):
-        if is_prime(i):
-            prime_count += 1
-        else:
-            composite_count += 1
-
-    print(f"\n  Among {{2, ..., {N-1}}}:")
-    print(f"    Primes: {prime_count} ({100*prime_count/(N-2):.2f}%)")
-    print(f"    Composites: {composite_count} ({100*composite_count/(N-2):.2f}%)")
-    print(f"\n  → An ultrafilter concentrating on primes makes ω prime")
-    print(f"  → An ultrafilter concentrating on composites makes ω composite")
-    print(f"  → BOTH types of ultrafilter exist (proved in Lean!)")
-
-    # Show prime density decay (approximation to PNT)
-    print(f"\n  Prime density at different scales:")
-    for k in [100, 1000, 10000, 100000]:
-        count = sum(1 for i in range(2, k) if is_prime(i))
-        import math
-        theoretical = k / math.log(k)
-        print(f"    π({k}) = {count}, N/ln(N) ≈ {theoretical:.0f}, ratio = {count/theoretical:.4f}")
-
-    print()
-
-
-# ============================================================
-# Demo 5: Residue Class Selection
-# ============================================================
-
-def demo_residue_selection():
-    """
-    For any modulus m, an ultrafilter selects exactly one residue class.
-    """
-    print("=" * 60)
-    print("DEMO 5: Residue Class Selection")
-    print("=" * 60)
-
-    for m in [2, 3, 5, 7, 12]:
-        print(f"\n  Modulus m = {m}:")
-        print(f"    Residue classes: {{0, 1, ..., {m-1}}}")
-        print(f"    An ultrafilter selects EXACTLY ONE class")
-        print(f"    (proved for all m > 0 in Lean)")
-
-    print()
-
-
-if __name__ == "__main__":
-    demo_color_selection()
-    demo_standard_part()
-    demo_saturation_degree()
-    demo_prime_dichotomy()
-    demo_residue_selection()
-
-    print("=" * 60)
-    print("All demos complete. See Lean proofs in Novelty/NonStdArith/")
-    print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Prime Density and the Ultrafilter Dichotomy
-
-Shows how the prime density decays (PNT), illustrating why BOTH
-prime-selecting and composite-selecting ultrafilters exist.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
 import math
+from typing import List, Tuple
 
 
-def sieve_of_eratosthenes(limit: int) -> list:
-    """Return list of primes up to limit."""
-    is_prime = [True] * (limit + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(limit**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i*i, limit + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, limit + 1) if is_prime[i]]
+def demonstrate_ultrafilter_selection():
+    """Show how an ultrafilter 'selects' values from a 2-coloring."""
+    print("=" * 60)
+    print("1. ULTRAFILTER COLOR SELECTION")
+    print("=" * 60)
+    # Consider the 2-coloring c(n) = n mod 2
+    N = 20
+    coloring = [n % 2 for n in range(N)]
+    evens = {i for i in range(N) if coloring[i] == 0}
+    odds = {i for i in range(N) if coloring[i] == 1}
+    print(f"Coloring c(n) = n mod 2 for n < {N}:")
+    print(f"  Evens: {sorted(evens)}")
+    print(f"  Odds:  {sorted(odds)}")
+    print("  A free ultrafilter must contain exactly one of these")
+    print("  (by the ultrafilter prime ideal property)")
+    print()
+
+
+def demonstrate_infinite_elements():
+    """Show the 'infinite element' ω = [0, 1, 2, 3, ...]."""
+    print("=" * 60)
+    print("2. INFINITE ELEMENTS IN ℕ*")
+    print("=" * 60)
+    # ω = identity sequence, std(n) = constant-n sequence
+    print("The element ω = [0, 1, 2, 3, 4, ...] in ℕ*")
+    print("For any standard n, the set {i | n ≤ ω(i)} = {i | n ≤ i}")
+    print("is cofinite, hence in any free ultrafilter.")
+    print()
+    for n in [5, 100, 10**6]:
+        agreement_set = f"{{i | i ≥ {n}}}"
+        print(f"  std({n}) ≤ ω because {agreement_set} is cofinite")
+    print()
+    print("Therefore ω exceeds EVERY standard natural — it is 'infinite'")
+    print()
+
+
+def demonstrate_infinite_primes():
+    """Show the sequence of primes gives an infinite prime in ℕ*."""
+    print("=" * 60)
+    print("3. INFINITE PRIMES IN ℕ*")
+    print("=" * 60)
+
+    def nth_prime(n: int) -> int:
+        """Return the n-th prime (0-indexed)."""
+        count = 0
+        candidate = 2
+        while True:
+            if all(candidate % d != 0 for d in range(2, int(math.sqrt(candidate)) + 1)):
+                if count == n:
+                    return candidate
+                count += 1
+            candidate += 1
+
+    primes = [nth_prime(i) for i in range(15)]
+    print(f"p* = [{', '.join(str(p) for p in primes)}, ...]")
+    print()
+    print("isPrime'(p*) holds because {i | Nat.Prime(p*(i))} = ℕ ∈ U")
+    print()
+    for n in [10, 50, 100]:
+        # Find first index where p_i ≥ n
+        idx = next(i for i in range(1000) if nth_prime(i) >= n)
+        print(f"  std({n}) ≤ p* because p*({idx}) = {nth_prime(idx)} ≥ {n}")
+    print()
+    print("p* is simultaneously prime AND larger than every standard natural!")
+    print()
+
+
+def demonstrate_infinitely_divisible():
+    """Show that n! is divisible by every standard natural."""
+    print("=" * 60)
+    print("4. INFINITELY DIVISIBLE ELEMENTS")
+    print("=" * 60)
+    print("ω! = [0!, 1!, 2!, 3!, ...] = [1, 1, 2, 6, 24, 120, ...]")
+    print()
+    factorials = [math.factorial(i) for i in range(10)]
+    print(f"Sequence: {factorials}")
+    print()
+    for n in [2, 3, 5, 7, 12]:
+        div_set = [i for i in range(20) if math.factorial(i) % n == 0]
+        print(f"  {n} divides ω! on indices {div_set}...")
+        print(f"    (all i ≥ {n}, which is cofinite → in U)")
+    print()
+    print("ω! is divisible by EVERY positive standard natural!")
+    print()
+
+
+def demonstrate_descending_chain():
+    """Show the descending chain ω, ω-1, ω-2, ..."""
+    print("=" * 60)
+    print("5. FAILURE OF WELL-ORDERING: DESCENDING CHAINS")
+    print("=" * 60)
+    print("Define f(n) = mk(i ↦ i - n) = ω - std(n)")
+    print()
+    N = 8
+    for n in range(6):
+        seq = [max(0, i - n) for i in range(N)]
+        print(f"  f({n}) = [{', '.join(str(x) for x in seq)}, ...]")
+    print()
+    print("f(n+1) ≤ f(n) because (i-(n+1)) ≤ (i-n) for all i")
+    print("f(n+1) ≠ f(n) because they differ on {i | i > n+1} ∈ U")
+    print()
+    print("This is an INFINITE STRICTLY DESCENDING CHAIN!")
+    print("ℕ* is linearly ordered but NOT well-ordered.")
+    print("This means induction on ℕ* elements is impossible")
+    print("— a fundamental difference from standard ℕ.")
+    print()
+
+
+def demonstrate_geometric_bound():
+    """Show the geometric sum bound bridging to p-adic analysis."""
+    print("=" * 60)
+    print("6. BRIDGE TO p-ADIC ANALYSIS: GEOMETRIC SUM BOUND")
+    print("=" * 60)
+    for p in [2, 3, 5]:
+        print(f"\n  p = {p}:")
+        for n in range(1, 7):
+            geo_sum = sum(p**k for k in range(n))
+            power = p**n
+            ratio = geo_sum / power
+            print(f"    Σ_{{k<{n}}} {p}^k = {geo_sum:>6} ≤ {p}^{n} = {power:>6}  "
+                  f"(ratio = {ratio:.4f})")
+    print()
+    print("The ratio Σp^k / p^n → 1/(p-1) as n → ∞")
+    print("This growth pattern mirrors p-adic valuation depth:")
+    print("v_p(n!) ~ n/(p-1), connecting ultrapowers to p-adic analysis.")
+    print()
 
 
 def main():
-    N = 100000
-    primes = set(sieve_of_eratosthenes(N))
+    print()
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  NON-STANDARD ARITHMETIC: ULTRAPOWER CONSTRUCTION ℕ*   ║")
+    print("║  Formally Verified in Lean 4 with Mathlib              ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+    print()
 
-    # Compute running prime density
-    xs = list(range(2, N + 1))
-    prime_count = [0] * len(xs)
-    running = 0
-    for idx, x in enumerate(xs):
-        if x in primes:
-            running += 1
-        prime_count[idx] = running
+    demonstrate_ultrafilter_selection()
+    demonstrate_infinite_elements()
+    demonstrate_infinite_primes()
+    demonstrate_infinitely_divisible()
+    demonstrate_descending_chain()
+    demonstrate_geometric_bound()
 
-    densities = [prime_count[i] / xs[i] for i in range(len(xs))]
-    pnt_approx = [1 / math.log(x) if x > 1 else 0 for x in xs]
-
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Non-Standard Arithmetic: Prime/Composite Dichotomy\nfor the Diagonal Element ω = [id]',
-                 fontsize=14, fontweight='bold')
-
-    # Plot 1: Prime counting function
-    ax1 = axes[0, 0]
-    ax1.plot(xs, prime_count, 'b-', linewidth=0.5, label='π(n)')
-    ax1.plot(xs, [x / math.log(x) if x > 1 else 0 for x in xs],
-             'r--', linewidth=1, label='n/ln(n)')
-    ax1.set_xlabel('n')
-    ax1.set_ylabel('π(n)')
-    ax1.set_title('Prime Counting Function π(n)')
-    ax1.legend()
-    ax1.grid(True, alpha=0.3)
-
-    # Plot 2: Prime density
-    ax2 = axes[0, 1]
-    ax2.plot(xs[10:], densities[10:], 'b-', linewidth=0.5, label='π(n)/n')
-    ax2.plot(xs[10:], pnt_approx[10:], 'r--', linewidth=1, label='1/ln(n)')
-    ax2.set_xlabel('n')
-    ax2.set_ylabel('Density')
-    ax2.set_title('Prime Density → 0 (but primes are infinite)')
-    ax2.legend()
-    ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(0, 0.3)
-
-    # Plot 3: Local prime indicator (window of size 100)
-    ax3 = axes[1, 0]
-    window = 100
-    local_density = []
-    local_xs = []
-    for start in range(2, N - window, window):
-        count = sum(1 for i in range(start, start + window) if i in primes)
-        local_density.append(count / window)
-        local_xs.append(start + window // 2)
-
-    ax3.bar(local_xs[:200], local_density[:200], width=window * 0.9,
-            color=['blue' if d > 0.15 else 'red' for d in local_density[:200]],
-            alpha=0.6)
-    ax3.axhline(y=0.15, color='green', linestyle='--', label='Threshold')
-    ax3.set_xlabel('n (center of window)')
-    ax3.set_ylabel('Local prime density')
-    ax3.set_title('Local Prime Density (window=100)\nBlue=high, Red=low')
-    ax3.legend()
-    ax3.grid(True, alpha=0.3)
-
-    # Plot 4: Saturation degree illustration
-    ax4 = axes[1, 1]
-    predicates = {
-        'P(i) = "i is even"': lambda i: i % 2 == 0,
-        'P(i) = "i > 100"': lambda i: i > 100,
-        'P(i) = "i is prime"': lambda i: i in primes,
-        'P(i) = "i < 500"': lambda i: i < 500,
-    }
-
-    colors = ['blue', 'green', 'red', 'orange']
-    for (name, P), color in zip(predicates.items(), colors):
-        sat_profile = []
-        check_range = range(0, 2000, 10)
-        for n in check_range:
-            count = sum(1 for i in range(n, n + 200) if P(i))
-            sat_profile.append(count / 200)
-        ax4.plot(list(check_range), sat_profile, color=color, label=name, linewidth=1.5)
-
-    ax4.axhline(y=0.5, color='black', linestyle=':', label='U-large threshold')
-    ax4.set_xlabel('Starting index n')
-    ax4.set_ylabel('Density of P on [n, n+200]')
-    ax4.set_title('Saturation Degree: How Far P Extends')
-    ax4.legend(fontsize=8)
-    ax4.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('viz_prime_density.png', dpi=150, bbox_inches='tight')
-    print("Saved: viz_prime_density.png")
+    print("=" * 60)
+    print("SUMMARY OF FORMALLY VERIFIED RESULTS")
+    print("=" * 60)
+    results = [
+        ("std_injective", "ℕ ↪ ℕ* is injective"),
+        ("std_add/mul", "std preserves +, ×"),
+        ("std_le_iff", "std preserves ≤"),
+        ("transfer_add_comm", "a + b = b + a in ℕ*"),
+        ("transfer_mul_comm", "a × b = b × a in ℕ*"),
+        ("transfer_add_assoc", "(a+b)+c = a+(b+c) in ℕ*"),
+        ("transfer_mul_add", "a×(b+c) = a×b + a×c in ℕ*"),
+        ("transfer_zero_product", "ab = 0 → a = 0 ∨ b = 0"),
+        ("nonstd_le_total", "a ≤ b ∨ b ≤ a (linear order)"),
+        ("nonstd_le_antisymm", "a ≤ b ∧ b ≤ a → a = b"),
+        ("exists_infinite_element", "∃ω > every std n"),
+        ("exists_infinite_prime", "∃p prime, p > every std n"),
+        ("exists_infinitely_divisible", "∃ω, ∀n>0: n | ω"),
+        ("euclid_transfer", "p prime, p|ab → p|a ∨ p|b"),
+        ("exists_descending_chain", "ℕ* is NOT well-ordered"),
+        ("geometric_sum_le_power", "Σp^k ≤ p^n (p-adic bridge)"),
+    ]
+    for name, desc in results:
+        print(f"  ✓ {name:30s} — {desc}")
+    print()
 
 
 if __name__ == "__main__":
@@ -343,85 +189,113 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: Ultrafilter Color Selection and Residue Classes
+Visualization: Non-Standard Arithmetic Ultrapower Structure
 
-Demonstrates how ultrafilters partition ℕ by selecting one color
-from any finite coloring, and one residue class from any modulus.
+Generates a multi-panel figure showing:
+1. The identity element ω vs standard naturals
+2. The prime sequence p* exceeding all bounds
+3. The factorial sequence ω! divisibility
+4. The descending chain ω, ω-1, ω-2, ...
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
+import math
+
+
+def nth_prime(n):
+    """Return the n-th prime (0-indexed)."""
+    primes = []
+    candidate = 2
+    while len(primes) <= n:
+        if all(candidate % p != 0 for p in primes if p * p <= candidate):
+            primes.append(candidate)
+        candidate += 1
+    return primes[n]
 
 
 def main():
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Ultrafilter Selection: Color Classes and Residue Classes',
-                 fontsize=14, fontweight='bold')
+    fig.suptitle('Non-Standard Arithmetic: The Ultrapower ℕ*',
+                 fontsize=16, fontweight='bold', y=0.98)
 
-    N = 500
+    N = 25
 
-    # Plot 1: 2-coloring by parity
-    ax1 = axes[0, 0]
-    xs = np.arange(N)
-    colors_parity = ['blue' if x % 2 == 0 else 'red' for x in xs]
-    ax1.scatter(xs, [x % 2 for x in xs], c=colors_parity, s=2, alpha=0.5)
-    ax1.set_xlabel('n')
-    ax1.set_ylabel('c(n)')
-    ax1.set_title('2-Coloring: Parity\nUltrafilter selects ONE class')
-    ax1.set_yticks([0, 1])
-    ax1.set_yticklabels(['Even (blue)', 'Odd (red)'])
+    # Panel 1: ω = [0,1,2,...] vs standard naturals
+    ax = axes[0, 0]
+    indices = np.arange(N)
+    omega_seq = indices.copy()
+    for n in [5, 10, 15, 20]:
+        std_seq = np.full(N, n)
+        ax.plot(indices, std_seq, '--', alpha=0.5, label=f'std({n})')
+        # Shade where ω ≥ std(n)
+        mask = omega_seq >= n
+        ax.fill_between(indices, 0, omega_seq, where=mask, alpha=0.05, color='blue')
+    ax.plot(indices, omega_seq, 'b-', linewidth=2.5, label='ω = [0,1,2,...]', zorder=5)
+    ax.set_xlabel('Index i')
+    ax.set_ylabel('Value')
+    ax.set_title('Infinite Element ω Exceeds All Standard Naturals')
+    ax.legend(fontsize=8, loc='upper left')
+    ax.set_ylim(-1, N + 2)
+    ax.grid(True, alpha=0.3)
 
-    # Plot 2: 3-coloring by mod 3
-    ax2 = axes[0, 1]
-    color_map = {0: 'blue', 1: 'green', 2: 'red'}
-    colors_mod3 = [color_map[x % 3] for x in xs]
-    ax2.scatter(xs, [x % 3 for x in xs], c=colors_mod3, s=2, alpha=0.5)
-    ax2.set_xlabel('n')
-    ax2.set_ylabel('c(n)')
-    ax2.set_title('3-Coloring: mod 3\nUltrafilter selects ONE residue class')
-    ax2.set_yticks([0, 1, 2])
+    # Panel 2: Prime sequence p*
+    ax = axes[0, 1]
+    prime_seq = [nth_prime(i) for i in range(N)]
+    ax.plot(indices, prime_seq, 'r-o', markersize=4, linewidth=2, label='p* = [p₀, p₁, p₂, ...]')
+    for n in [10, 30, 60]:
+        ax.axhline(y=n, color='gray', linestyle='--', alpha=0.5)
+        # Find first index exceeding n
+        idx = next(i for i in range(N) if prime_seq[i] >= n)
+        ax.annotate(f'std({n})', xy=(0, n), fontsize=8, color='gray')
+        ax.plot(idx, prime_seq[idx], 'k*', markersize=10, zorder=5)
+    ax.set_xlabel('Index i')
+    ax.set_ylabel('p*(i)')
+    ax.set_title('Infinite Prime p* = [2, 3, 5, 7, 11, ...]')
+    ax.legend(fontsize=8)
+    ax.grid(True, alpha=0.3)
 
-    # Plot 3: Residue class densities for different moduli
-    ax3 = axes[1, 0]
-    moduli = [2, 3, 5, 7, 11]
-    for m in moduli:
-        densities = []
-        for r in range(m):
-            count = sum(1 for i in range(N) if i % m == r)
-            densities.append(count / N)
-        ax3.bar([f"m={m},r={r}" for r in range(m)], densities,
-                alpha=0.6, label=f'mod {m}')
+    # Panel 3: Factorial divisibility
+    ax = axes[1, 0]
+    fact_seq = [math.factorial(i) for i in range(12)]
+    divisors = [2, 3, 5, 7]
+    colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3']
+    bar_width = 0.18
+    x = np.arange(12)
+    for j, (d, c) in enumerate(zip(divisors, colors)):
+        divides = [1 if f % d == 0 else 0 for f in fact_seq]
+        ax.bar(x + j * bar_width - 0.27, divides, bar_width, label=f'{d} | i!',
+               color=c, alpha=0.7)
+    ax.set_xlabel('Index i')
+    ax.set_ylabel('Divides? (1=yes)')
+    ax.set_title('ω! = [0!, 1!, 2!, ...] Divisible by All Standard n')
+    ax.set_xticks(x)
+    ax.legend(fontsize=8, loc='upper right')
+    ax.grid(True, alpha=0.3, axis='y')
 
-    ax3.set_xlabel('Residue class')
-    ax3.set_ylabel('Density')
-    ax3.set_title('Residue Class Densities\n(Equal by symmetry → ultrafilter breaks tie)')
-    ax3.tick_params(axis='x', rotation=90, labelsize=6)
+    # Panel 4: Descending chain
+    ax = axes[1, 1]
+    chain_length = 6
+    N_chain = 20
+    indices_chain = np.arange(N_chain)
+    cmap = plt.cm.viridis
+    for k in range(chain_length):
+        chain_seq = np.maximum(0, indices_chain - k)
+        color = cmap(k / (chain_length - 1))
+        label = f'ω-{k}' if k > 0 else 'ω'
+        ax.plot(indices_chain, chain_seq, '-', linewidth=2, color=color, label=label)
+    ax.set_xlabel('Index i')
+    ax.set_ylabel('f(k)(i) = max(0, i-k)')
+    ax.set_title('Descending Chain: ω, ω-1, ω-2, ... (Never Reaches 0)')
+    ax.legend(fontsize=8, loc='upper left')
+    ax.grid(True, alpha=0.3)
 
-    # Plot 4: Standard part illustration
-    ax4 = axes[1, 1]
-    # Sequence f(i) = i mod 5
-    f_vals = [i % 5 for i in range(N)]
-    window = 50
-    for m in range(5):
-        running = []
-        for start in range(0, N - window, 5):
-            count = sum(1 for i in range(start, start + window) if f_vals[i] == m)
-            running.append(count / window)
-        ax4.plot(range(0, N - window, 5), running,
-                 label=f'Density of f=={m}', linewidth=1.5)
-
-    ax4.axhline(y=0.5, color='black', linestyle=':', label='Majority threshold')
-    ax4.set_xlabel('Window start')
-    ax4.set_ylabel('Density')
-    ax4.set_title('Standard Part: f(i) = i mod 5\nUltrafilter selects one value')
-    ax4.legend(fontsize=8)
-    ax4.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('viz_ultrafilter_selection.png', dpi=150, bbox_inches='tight')
-    print("Saved: viz_ultrafilter_selection.png")
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    plt.savefig('ultrapower_structure.png', dpi=150, bbox_inches='tight')
+    print("Saved ultrapower_structure.png")
 
 
 if __name__ == "__main__":

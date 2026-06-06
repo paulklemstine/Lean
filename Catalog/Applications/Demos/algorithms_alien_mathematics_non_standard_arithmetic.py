@@ -1,209 +1,245 @@
 #!/usr/bin/env python3
 """
-Algorithms for Non-Standard Arithmetic via Ultrafilters
+Algorithms for Non-Standard Arithmetic
 
-Type-hinted implementations of key algorithms from the formalized theory.
+Type-hinted implementations of the key algorithms underlying
+the ultrapower construction and transfer theorems.
 """
 
-from typing import List, Callable, Optional, Tuple, Set
-from dataclasses import dataclass
-from enum import Enum
+from typing import List, Set, Callable, Optional, Tuple
 import math
 
 
-# ============================================================
-# Algorithm 1: Ultrafilter Color Selection
-# ============================================================
+class UltrafilterSim:
+    """Simulates a free ultrafilter on ℕ using a 'principal-at-infinity' heuristic.
 
-class FilterDecision(Enum):
-    """Result of an ultrafilter decision on a set."""
-    IN_FILTER = "U-large"
-    NOT_IN_FILTER = "U-small"
+    A true free ultrafilter is non-constructive (requires Zorn's Lemma).
+    This simulation decides membership by checking eventual behavior:
+    a set S is 'in U' if S contains {n, n+1, n+2, ...} for some n.
 
-
-@dataclass
-class SimulatedUltrafilter:
+    This captures the essential intuition: free ultrafilters on ℕ
+    concentrate measure at infinity.
     """
-    A simulated ultrafilter on ℕ, represented by a "concentration set"
-    that determines which sets are "large."
 
-    In the real theory, ultrafilters are non-constructive objects.
-    This simulation uses density on a tail segment as a proxy.
+    def __init__(self, threshold: int = 100):
+        self.threshold = threshold
 
-    Algorithm: Ultrafilter Color Selection
-    Input: A k-coloring c : ℕ → {0, ..., k-1}
-    Output: The selected color (the one whose preimage is "U-large")
+    def is_large(self, membership_fn: Callable[[int], bool]) -> bool:
+        """Check if {i | membership_fn(i)} is 'U-large'."""
+        # Heuristic: check if eventually true
+        return all(membership_fn(i) for i in range(self.threshold, self.threshold + 50))
 
-    Pseudocode:
-        1. For each color j in {0, ..., k-1}:
-           - Compute density of {n | c(n) = j} on [N/2, N]
-        2. Return the color with highest density
-        3. (In theory, exactly one color is selected; ties are broken by the ultrafilter)
+    def select_value(self, fn: Callable[[int], int], finite_range: List[int]) -> int:
+        """Given fn: ℕ → finite set, return the U-selected value.
+        This implements ultrafilter_finite_image_resolution."""
+        for val in finite_range:
+            if self.is_large(lambda i, v=val: fn(i) == v):
+                return val
+        raise ValueError("No value selected (should not happen with a genuine ultrafilter)")
+
+
+class NonstdNatElement:
+    """Represents an element of ℕ* as a sequence ℕ → ℕ."""
+
+    def __init__(self, seq: Callable[[int], int], name: str = ""):
+        self.seq = seq
+        self.name = name
+
+    def __repr__(self) -> str:
+        if self.name:
+            return f"NonstdNat({self.name})"
+        vals = [self.seq(i) for i in range(8)]
+        return f"NonstdNat([{', '.join(map(str, vals))}, ...])"
+
+    @staticmethod
+    def standard(n: int) -> 'NonstdNatElement':
+        """The standard embedding: std(n) = [n, n, n, ...]."""
+        return NonstdNatElement(lambda _: n, f"std({n})")
+
+    @staticmethod
+    def omega() -> 'NonstdNatElement':
+        """The canonical infinite element: ω = [0, 1, 2, 3, ...]."""
+        return NonstdNatElement(lambda i: i, "ω")
+
+    @staticmethod
+    def omega_factorial() -> 'NonstdNatElement':
+        """The infinitely divisible element: ω! = [0!, 1!, 2!, ...]."""
+        return NonstdNatElement(lambda i: math.factorial(i), "ω!")
+
+    @staticmethod
+    def nth_prime_seq() -> 'NonstdNatElement':
+        """The infinite prime: p* = [p₀, p₁, p₂, ...]."""
+        primes: List[int] = []
+
+        def get_nth_prime(n: int) -> int:
+            while len(primes) <= n:
+                candidate = primes[-1] + 1 if primes else 2
+                while True:
+                    if all(candidate % d != 0 for d in range(2, int(math.sqrt(candidate)) + 1)):
+                        primes.append(candidate)
+                        break
+                    candidate += 1
+            return primes[n]
+
+        return NonstdNatElement(get_nth_prime, "p*")
+
+    def add(self, other: 'NonstdNatElement') -> 'NonstdNatElement':
+        """Pointwise addition."""
+        return NonstdNatElement(
+            lambda i: self.seq(i) + other.seq(i),
+            f"({self.name} + {other.name})" if self.name and other.name else ""
+        )
+
+    def mul(self, other: 'NonstdNatElement') -> 'NonstdNatElement':
+        """Pointwise multiplication."""
+        return NonstdNatElement(
+            lambda i: self.seq(i) * other.seq(i),
+            f"({self.name} × {other.name})" if self.name and other.name else ""
+        )
+
+    def le(self, other: 'NonstdNatElement', U: UltrafilterSim) -> bool:
+        """Check self ≤ other in ℕ*."""
+        return U.is_large(lambda i: self.seq(i) <= other.seq(i))
+
+    def dvd(self, other: 'NonstdNatElement', U: UltrafilterSim) -> bool:
+        """Check self | other in ℕ* (internal divisibility)."""
+        return U.is_large(lambda i: self.seq(i) != 0 and other.seq(i) % self.seq(i) == 0)
+
+    def is_prime(self, U: UltrafilterSim) -> bool:
+        """Check internal primality."""
+        def is_nat_prime(n: int) -> bool:
+            if n < 2:
+                return False
+            return all(n % d != 0 for d in range(2, int(math.sqrt(n)) + 1))
+        return U.is_large(lambda i: is_nat_prime(self.seq(i)))
+
+
+def transfer_algorithm(
+    property_fn: Callable[[int], bool],
+    U: UltrafilterSim
+) -> bool:
+    """Transfer a property from ℕ to ℕ* via the ultrafilter.
+
+    Given a property P: ℕ → Prop and an ultrafilter U,
+    returns whether {i | P(i)} ∈ U.
+
+    This is the computational version of the transfer principle:
+    a first-order property holds in ℕ* iff it holds on a U-large set.
     """
-    tail_start: int = 50000
-    tail_end: int = 100000
-
-    def is_large(self, S: Set[int]) -> bool:
-        """Check if a set is "U-large" (high density in the tail)."""
-        count = sum(1 for i in range(self.tail_start, self.tail_end) if i in S)
-        total = self.tail_end - self.tail_start
-        return count > total / 2
-
-    def select_color(self, c: Callable[[int], int], k: int) -> int:
-        """Select the U-large color class from a k-coloring."""
-        best_color = 0
-        best_count = 0
-        for j in range(k):
-            count = sum(1 for i in range(self.tail_start, self.tail_end) if c(i) == j)
-            if count > best_count:
-                best_count = count
-                best_color = j
-        return best_color
+    return U.is_large(property_fn)
 
 
-def ultrafilter_color_selection(c: Callable[[int], int], k: int) -> int:
+def overspill_witness(
+    property_fn: Callable[[int, int], bool],
+    U: UltrafilterSim,
+    max_search: int = 1000
+) -> Optional[int]:
+    """Find an overspill witness: if P(i, n) holds for all standard n
+    on U-large sets, find a non-standard bound N beyond all tested n.
+
+    Returns the largest n for which P(·, n) is U-large.
     """
-    Algorithm: Ultrafilter Color Selection
-
-    For any k-coloring c : ℕ → Fin k, an ultrafilter selects exactly
-    one color whose preimage is U-large.
-
-    Complexity: O(N * k) where N is the simulation window size
-    Correctness: Guaranteed by Theorem ultrafilter_selects_k_color
-    """
-    U = SimulatedUltrafilter()
-    return U.select_color(c, k)
+    best_n = 0
+    for n in range(max_search):
+        if U.is_large(lambda i, n=n: property_fn(i, n)):
+            best_n = n
+        else:
+            break
+    return best_n
 
 
-# ============================================================
-# Algorithm 2: Standard Part Computation
-# ============================================================
-
-def standard_part(f: Callable[[int], int], bound: int,
-                  window_start: int = 50000, window_end: int = 100000) -> int:
-    """
-    Algorithm: Standard Part
-
-    Given a bounded sequence f : ℕ → ℕ with f(i) ≤ bound,
-    compute the "standard part" — the value m ≤ bound that f takes
-    on the largest fraction of the tail.
-
-    Input: f : ℕ → ℕ, bound : ℕ with f(i) ≤ bound for large i
-    Output: m ∈ {0, ..., bound} such that {i | f(i) = m} is "U-large"
-
-    Pseudocode:
-        1. For each m in {0, ..., bound}:
-           - Count |{i ∈ [N/2, N] | f(i) = m}|
-        2. Return the m with the highest count
-        3. By the Standard Part Theorem (std_part_exists),
-           exactly one m achieves majority under any ultrafilter
-
-    Complexity: O(N * bound)
-    Correctness: Guaranteed by Theorem std_part_exists + std_part_unique
-    """
-    counts = [0] * (bound + 1)
-    for i in range(window_start, window_end):
-        v = f(i)
-        if 0 <= v <= bound:
-            counts[v] += 1
-    return max(range(bound + 1), key=lambda m: counts[m])
+def descending_chain(start: int, length: int) -> List[NonstdNatElement]:
+    """Construct a descending chain in ℕ*:
+    ω, ω-1, ω-2, ..., ω-length
+    where subtraction is truncating (as in ℕ)."""
+    return [
+        NonstdNatElement(
+            lambda i, k=k: max(0, i - k),
+            f"ω-{k}" if k > 0 else "ω"
+        )
+        for k in range(length)
+    ]
 
 
-# ============================================================
-# Algorithm 3: Saturation Degree Estimation
-# ============================================================
-
-def saturation_degree(P: Callable[[int], bool],
-                      max_n: int = 10000,
-                      window_size: int = 1000,
-                      threshold: float = 0.5) -> Optional[int]:
-    """
-    Algorithm: Saturation Degree Estimation
-
-    Estimate the saturation degree of a predicate P — the largest n
-    such that P holds on "most" of {n, n+1, ..., n + window_size}.
-
-    Input: P : ℕ → Bool, max_n : ℕ (search bound)
-    Output: satDeg(P) ∈ ℕ ∪ {∞} (None represents ∞)
-
-    Pseudocode:
-        1. For n = 0, 1, 2, ..., max_n:
-           - Count |{i ∈ [n, n + W] | P(i)}|
-           - If count/W < threshold, return n (first failure)
-        2. If no failure found, return ∞
-
-    Complexity: O(max_n * window_size)
-    Correctness: Approximates the formal satDeg definition
-    """
-    for n in range(max_n):
-        count = sum(1 for i in range(n, n + window_size) if P(i))
-        if count < threshold * window_size:
-            return n
-    return None  # ∞
+def geometric_sum(p: int, n: int) -> int:
+    """Compute Σ_{k=0}^{n-1} p^k = (p^n - 1)/(p - 1)."""
+    if p == 1:
+        return n
+    return (p**n - 1) // (p - 1)
 
 
-# ============================================================
-# Algorithm 4: Bounded Quantifier Transfer Check
-# ============================================================
-
-def bounded_forall_transfer_check(
-    P: Callable[[int, int], bool],
-    n: int,
-    window_start: int = 50000,
-    window_end: int = 100000
-) -> Tuple[bool, float]:
-    """
-    Algorithm: Bounded ∀ Transfer Verification
-
-    Check whether ∀ k < n, P(i, k) holds "simultaneously" on a large set.
-
-    Input: P : ℕ × ℕ → Bool, n : ℕ
-    Output: (holds, density) — whether the conjunction is U-large
-
-    Pseudocode:
-        1. For each i in [N/2, N]:
-           - Check if ∀ k < n, P(i, k) holds
-        2. Compute density of successful i's
-        3. Return (density > 0.5, density)
-
-    Correctness: Guaranteed by Theorem bounded_forall_transfer
-    """
-    success_count = 0
-    total = window_end - window_start
-    for i in range(window_start, window_end):
-        if all(P(i, k) for k in range(n)):
-            success_count += 1
-    density = success_count / total
-    return (density > 0.5, density)
+def padic_valuation(n: int, p: int) -> int:
+    """Compute v_p(n) = max k such that p^k | n."""
+    if n == 0:
+        return float('inf')  # type: ignore
+    v = 0
+    while n % p == 0:
+        v += 1
+        n //= p
+    return v
 
 
-# ============================================================
-# Algorithm 5: Residue Class Selection
-# ============================================================
-
-def residue_class_selection(m: int,
-                            window_start: int = 50000,
-                            window_end: int = 100000) -> int:
-    """
-    Algorithm: Residue Class Selection
-
-    For modulus m > 0, determine which residue class mod m is
-    selected by the (simulated) ultrafilter.
-
-    Correctness: Guaranteed by Theorem residue_class_selection
-    """
-    counts = [0] * m
-    for i in range(window_start, window_end):
-        counts[i % m] += 1
-    return max(range(m), key=lambda r: counts[r])
+def legendre_formula(n: int, p: int) -> int:
+    """Compute v_p(n!) using Legendre's formula:
+    v_p(n!) = Σ_{k≥1} ⌊n/p^k⌋"""
+    result = 0
+    pk = p
+    while pk <= n:
+        result += n // pk
+        pk *= p
+    return result
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    print("Color selection (parity):", ultrafilter_color_selection(lambda n: n % 2, 2))
-    print("Standard part (i mod 3):", standard_part(lambda i: i % 3, 2))
-    print("Saturation degree ('i is even'):", saturation_degree(lambda i: i % 2 == 0))
-    print("Saturation degree ('i < 1000'):", saturation_degree(lambda i: i < 1000))
-    print("Bounded ∀ transfer (i > k for k < 5):",
-          bounded_forall_transfer_check(lambda i, k: i > k, 5))
-    print("Residue class mod 7:", residue_class_selection(7))
+    U = UltrafilterSim(threshold=50)
+
+    print("=== Algorithm Demonstrations ===\n")
+
+    # Demonstrate transfer
+    omega = NonstdNatElement.omega()
+    pstar = NonstdNatElement.nth_prime_seq()
+    omega_fact = NonstdNatElement.omega_factorial()
+
+    print(f"ω = {omega}")
+    print(f"p* = {pstar}")
+    print(f"ω! = {omega_fact}")
+    print()
+
+    # Check ordering
+    for n in [10, 100]:
+        std_n = NonstdNatElement.standard(n)
+        print(f"std({n}) ≤ ω: {std_n.le(omega, U)}")
+        print(f"std({n}) ≤ p*: {std_n.le(pstar, U)}")
+
+    print()
+
+    # Check primality
+    print(f"isPrime(p*): {pstar.is_prime(U)}")
+
+    # Check divisibility
+    for n in [2, 3, 5, 7, 100]:
+        std_n = NonstdNatElement.standard(n)
+        print(f"{n} | ω!: {std_n.dvd(omega_fact, U)}")
+
+    print()
+
+    # Descending chain
+    chain = descending_chain(0, 5)
+    print("Descending chain:")
+    for elem in chain:
+        print(f"  {elem}")
+
+    # Geometric bound
+    print("\nGeometric sum bounds:")
+    for p in [2, 3]:
+        for n in [4, 8]:
+            gs = geometric_sum(p, n)
+            print(f"  Σ_{{k<{n}}} {p}^k = {gs} ≤ {p}^{n} = {p**n}")
+
+    # Legendre formula bridge
+    print("\nLegendre formula (p-adic bridge):")
+    for p in [2, 3, 5]:
+        for n in [10, 50, 100]:
+            v = legendre_formula(n, p)
+            approx = n / (p - 1)
+            print(f"  v_{p}({n}!) = {v}, n/(p-1) = {approx:.1f}, ratio = {v/approx:.4f}")
