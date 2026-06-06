@@ -1,259 +1,282 @@
-#!/usr/bin/env python3
 """
-Non-Standard Arithmetic: Core Algorithms
-
-Type-hinted implementations of the key algorithmic concepts from the
-formalized non-standard arithmetic theory.
+Algorithms for Non-Standard Arithmetic
+=======================================
+Type-hinted implementations of the key algorithms from the formalization.
 """
 
-from typing import (
-    Callable, FrozenSet, Generic, List, Optional, Set, Tuple, TypeVar
-)
+from typing import Callable, List, Set, Tuple, Optional
 from dataclasses import dataclass
-from functools import reduce
+import math
 
 
-T = TypeVar('T')
+# --- Core Types ---
 
+Sequence = Callable[[int], int]
+"""A sequence ℕ → ℕ, representing an element of the ultrapower."""
 
-# =============================================================================
-# Algorithm 1: Ultrafilter Operations
-# =============================================================================
+ULargeTest = Callable[[Set[int]], bool]
+"""A predicate testing whether a set is 'U-large'."""
+
 
 @dataclass
-class UltrafilterApprox:
-    """
-    Finite approximation of an ultrafilter on {0, ..., N-1}.
+class UltrapowerElement:
+    """An element of ℕ* represented as a sequence."""
+    seq: Sequence
+    name: str = ""
 
-    Pseudocode:
-        ULTRAFILTER-APPROX(N):
-            universe ← {0, ..., N-1}
-            large_sets ← maximal filter on universe
-            RETURN large_sets
+    def evaluate(self, indices: range) -> List[int]:
+        return [self.seq(i) for i in indices]
 
-    In practice, we use a principal ultrafilter (concentrated at a point)
-    as the approximation, since non-principal ultrafilters on finite sets
-    don't exist.
-    """
-    N: int
-    principal_point: int
-
-    def is_large(self, S: FrozenSet[int]) -> bool:
-        """O(1) membership test."""
-        return self.principal_point in S
-
-    def complement(self, S: FrozenSet[int]) -> FrozenSet[int]:
-        """O(N) complement computation."""
-        return frozenset(range(self.N)) - S
-
-    def intersection(self, S1: FrozenSet[int], S2: FrozenSet[int]) -> FrozenSet[int]:
-        """O(min(|S1|, |S2|)) intersection."""
-        return S1 & S2
-
-    def dichotomy(self, S: FrozenSet[int]) -> Tuple[bool, bool]:
-        """
-        Ultrafilter dichotomy: exactly one of S, Sᶜ is large.
-        Returns (S_large, Sc_large).
-        """
-        s_large = self.is_large(S)
-        return (s_large, not s_large)
-
-
-# =============================================================================
-# Algorithm 2: Non-Standard Number Arithmetic
-# =============================================================================
 
 @dataclass
-class NonstandardNumber:
-    """
-    Representation of a non-standard natural number.
+class DivisionResult:
+    """Result of the division algorithm in ℕ*."""
+    quotient: UltrapowerElement
+    remainder: UltrapowerElement
+    dividend: UltrapowerElement
+    divisor: UltrapowerElement
 
-    A non-standard number is an equivalence class [f] of sequences
-    f : I → ℕ under the ultrafilter equivalence relation.
+
+@dataclass
+class GCDResult:
+    """Result of GCD computation in ℕ*."""
+    gcd: UltrapowerElement
+    operand_a: UltrapowerElement
+    operand_b: UltrapowerElement
+
+
+# --- Algorithm 1: Ultrapower Division ---
+
+def ultrapower_division(
+    f: UltrapowerElement,
+    g: UltrapowerElement,
+) -> DivisionResult:
+    """
+    Division algorithm in ℕ*.
+
+    Given f, g ∈ ℕ* with g > 0 (U-a.e.), compute q, r ∈ ℕ*
+    such that f = g·q + r and r < g (U-a.e.).
 
     Pseudocode:
-        NONSTANDARD-ADD([f], [g]):
-            RETURN [i ↦ f(i) + g(i)]
+        q(i) = f(i) // g(i)
+        r(i) = f(i) % g(i)
 
-        NONSTANDARD-MUL([f], [g]):
-            RETURN [i ↦ f(i) * g(i)]
-
-        NONSTANDARD-LE([f], [g], U):
-            S ← {i | f(i) ≤ g(i)}
-            RETURN U.is_large(S)
+    Time complexity: O(1) per index (pointwise).
     """
-    values: List[int]
-    label: str = ""
-
-    @staticmethod
-    def standard(n: int, length: int = 100) -> 'NonstandardNumber':
-        """Standard embedding: std(n) = [n, n, n, ...]."""
-        return NonstandardNumber([n] * length, f"std({n})")
-
-    @staticmethod
-    def omega(length: int = 100) -> 'NonstandardNumber':
-        """Canonical infinite element: ω = [0, 1, 2, ...]."""
-        return NonstandardNumber(list(range(length)), "ω")
-
-    def add(self, other: 'NonstandardNumber') -> 'NonstandardNumber':
-        """Pointwise addition."""
-        n = min(len(self.values), len(other.values))
-        return NonstandardNumber(
-            [self.values[i] + other.values[i] for i in range(n)],
-            f"({self.label}+{other.label})"
-        )
-
-    def mul(self, other: 'NonstandardNumber') -> 'NonstandardNumber':
-        """Pointwise multiplication."""
-        n = min(len(self.values), len(other.values))
-        return NonstandardNumber(
-            [self.values[i] * other.values[i] for i in range(n)],
-            f"({self.label}×{other.label})"
-        )
-
-    def le_set(self, other: 'NonstandardNumber') -> FrozenSet[int]:
-        """Return {i | self(i) ≤ other(i)}."""
-        n = min(len(self.values), len(other.values))
-        return frozenset(i for i in range(n) if self.values[i] <= other.values[i])
-
-    def is_infinite(self, U: UltrafilterApprox) -> bool:
-        """Check if self exceeds every standard element (approximation)."""
-        N = len(self.values)
-        for n in range(N):
-            s = NonstandardNumber.standard(n, N)
-            le_set = s.le_set(self)
-            if not U.is_large(le_set):
-                return False
-        return True
+    q = UltrapowerElement(
+        seq=lambda i: f.seq(i) // g.seq(i) if g.seq(i) > 0 else 0,
+        name=f"({f.name} / {g.name})"
+    )
+    r = UltrapowerElement(
+        seq=lambda i: f.seq(i) % g.seq(i) if g.seq(i) > 0 else f.seq(i),
+        name=f"({f.name} % {g.name})"
+    )
+    return DivisionResult(quotient=q, remainder=r, dividend=f, divisor=g)
 
 
-# =============================================================================
-# Algorithm 3: Overspill Detection
-# =============================================================================
+# --- Algorithm 2: Ultrapower GCD ---
 
-def overspill_check(
-    P: Callable[[int], bool],
-    N: int,
-    threshold: int = 10
-) -> Tuple[bool, Optional[int]]:
+def ultrapower_gcd(
+    f: UltrapowerElement,
+    g: UltrapowerElement,
+) -> GCDResult:
     """
-    Check if property P satisfies the overspill condition.
+    GCD in ℕ*.
+
+    Given f, g ∈ ℕ*, compute gcd(f, g) ∈ ℕ* pointwise.
 
     Pseudocode:
-        OVERSPILL-CHECK(P, N, threshold):
-            FOR n = 0 TO threshold:
-                tail ← {i ∈ {n,...,N-1} | P(i)}
-                IF tail ≠ {n,...,N-1}:
-                    RETURN (False, n)  // P fails for some i ≥ n
-            RETURN (True, None)  // P holds on all tails → overspill
+        d(i) = gcd(f(i), g(i))
 
-    Returns (overspills, failure_point).
+    The result satisfies:
+        d | f and d | g (U-a.e.)
+        For any c with c|f and c|g (U-a.e.), c | d (U-a.e.)
     """
-    for n in range(min(threshold, N)):
-        for i in range(n, N):
-            if not P(i):
-                return (False, i)
-    return (True, None)
+    d = UltrapowerElement(
+        seq=lambda i: math.gcd(f.seq(i), g.seq(i)),
+        name=f"gcd({f.name}, {g.name})"
+    )
+    return GCDResult(gcd=d, operand_a=f, operand_b=g)
 
 
-# =============================================================================
-# Algorithm 4: Transfer Verification
-# =============================================================================
+# --- Algorithm 3: Standard Part ---
 
-def verify_transfer(
-    identity: Callable[[int], bool],
-    N: int,
-    U: UltrafilterApprox
-) -> Tuple[bool, FrozenSet[int]]:
+def standard_part(
+    f: UltrapowerElement,
+    bound: int,
+    is_large: ULargeTest,
+    sample_size: int = 10000,
+) -> Optional[int]:
     """
-    Verify that an arithmetic identity transfers to the ultrapower.
+    Standard part of a bounded element of ℕ*.
+
+    Given f ∈ ℕ* with f ≤ bound (U-a.e.), find m ≤ bound
+    such that f = m (U-a.e.).
 
     Pseudocode:
-        VERIFY-TRANSFER(identity, N, U):
-            S ← {i ∈ {0,...,N-1} | identity(i)}
-            RETURN (U.is_large(S), S)
+        For m in {0, ..., bound}:
+            If {i | f(i) = m} is U-large:
+                return m
+        return None  (should not happen by pigeonhole)
 
-    The identity holds in the ultrapower iff S ∈ U.
+    Time complexity: O(bound × sample_size).
     """
-    S = frozenset(i for i in range(N) if identity(i))
-    return (U.is_large(S), S)
+    for m in range(bound + 1):
+        eq_set = {i for i in range(sample_size) if f.seq(i) == m}
+        if is_large(eq_set):
+            return m
+    return None
 
 
-# =============================================================================
-# Algorithm 5: Integral Domain Check
-# =============================================================================
+# --- Algorithm 4: Overspill Witness ---
 
-def integral_domain_transfer(
-    f: List[int],
-    g: List[int],
-    U: UltrafilterApprox
-) -> Tuple[str, FrozenSet[int]]:
+def overspill_witness(
+    P: Callable[[int, int], bool],
+    max_standard: int = 1000,
+) -> Tuple[Sequence, int]:
     """
-    Check the zero-product property for sequences f, g.
+    Construct an overspill witness function.
+
+    Given a downward-closed predicate P(i, n) that holds for all
+    standard n (on U-large sets), construct f : ℕ → ℕ such that
+    f grows without bound and P(i, f(i)) holds.
+
+    Strategy:
+        For each i, f(i) = max{n ≤ i | P(i, n)}
+
+    Returns: (f, estimated_growth_rate)
+
+    Time complexity: O(max_standard²) for estimation.
+    """
+    def f(i: int) -> int:
+        # Find max n with P(i, n)
+        best = 0
+        for n in range(min(i + 1, max_standard)):
+            if P(i, n):
+                best = n
+            else:
+                break
+        return best
+
+    # Estimate growth rate
+    growth_samples = [f(i) for i in range(100, max_standard)]
+    avg_growth = sum(growth_samples) / len(growth_samples) if growth_samples else 0
+
+    return f, int(avg_growth)
+
+
+# --- Algorithm 5: Trichotomy Decision ---
+
+def trichotomy_decide(
+    f: UltrapowerElement,
+    g: UltrapowerElement,
+    sample_size: int = 10000,
+) -> str:
+    """
+    Decide the order relation between f and g in ℕ*.
+
+    Returns one of '<', '=', '>' based on which set has
+    the highest density (simulating the ultrafilter decision).
 
     Pseudocode:
-        INTEGRAL-DOMAIN-CHECK(f, g, U):
-            zero_product ← {i | f(i) * g(i) = 0}
-            IF NOT U.is_large(zero_product):
-                RETURN "product nonzero"
-            f_zero ← {i | f(i) = 0}
-            g_zero ← {i | g(i) = 0}
-            IF U.is_large(f_zero):
-                RETURN "[f] = 0"
-            ELIF U.is_large(g_zero):
-                RETURN "[g] = 0"
-            ELSE:
-                RETURN "VIOLATION" // should not happen for domains
+        Count |{i < N | f(i) < g(i)}|
+        Count |{i < N | f(i) = g(i)}|
+        Count |{i < N | f(i) > g(i)}|
+        Return the relation with highest count.
+
+    Time complexity: O(sample_size).
     """
-    N = min(len(f), len(g))
-    zero_product = frozenset(i for i in range(N) if f[i] * g[i] == 0)
+    lt_count = sum(1 for i in range(sample_size) if f.seq(i) < g.seq(i))
+    eq_count = sum(1 for i in range(sample_size) if f.seq(i) == g.seq(i))
+    gt_count = sum(1 for i in range(sample_size) if f.seq(i) > g.seq(i))
 
-    if not U.is_large(zero_product):
-        return ("product nonzero", zero_product)
-
-    f_zero = frozenset(i for i in range(N) if f[i] == 0)
-    g_zero = frozenset(i for i in range(N) if g[i] == 0)
-
-    if U.is_large(f_zero):
-        return ("[f] = 0", f_zero)
-    elif U.is_large(g_zero):
-        return ("[g] = 0", g_zero)
+    if lt_count >= eq_count and lt_count >= gt_count:
+        return '<'
+    elif eq_count >= lt_count and eq_count >= gt_count:
+        return '='
     else:
-        return ("VIOLATION", zero_product)
+        return '>'
 
 
-# =============================================================================
-# Main demonstration
-# =============================================================================
+# --- Algorithm 6: Compositeness Witness Transfer ---
+
+def composite_witness_transfer(
+    f: UltrapowerElement,
+    sample_size: int = 10000,
+) -> Optional[Tuple[UltrapowerElement, UltrapowerElement]]:
+    """
+    Extract compositeness witnesses for f ∈ ℕ*.
+
+    If f(i) is composite for U-a.e. i, return (a, b) ∈ ℕ*×ℕ*
+    with 1 < a, 1 < b, and f = a·b (U-a.e.).
+
+    Pseudocode:
+        For each i:
+            If f(i) is composite:
+                a(i) = smallest factor > 1
+                b(i) = f(i) / a(i)
+            Else:
+                a(i) = 1, b(i) = f(i)
+
+    Time complexity: O(sample_size × √max_value).
+    """
+    def smallest_factor(n: int) -> int:
+        if n <= 1:
+            return n
+        for d in range(2, int(n**0.5) + 1):
+            if n % d == 0:
+                return d
+        return n  # n is prime
+
+    def a_seq(i: int) -> int:
+        n = f.seq(i)
+        sf = smallest_factor(n)
+        return sf if sf != n and sf > 1 else 1
+
+    def b_seq(i: int) -> int:
+        n = f.seq(i)
+        a = a_seq(i)
+        return n // a if a > 1 else n
+
+    a = UltrapowerElement(seq=a_seq, name="factor_a")
+    b = UltrapowerElement(seq=b_seq, name="factor_b")
+
+    # Check if f is indeed composite on most indices
+    composite_count = sum(1 for i in range(sample_size)
+                         if f.seq(i) > 1 and smallest_factor(f.seq(i)) != f.seq(i))
+
+    if composite_count / sample_size > 0.5:
+        return (a, b)
+    return None
+
+
+# --- Main ---
 
 if __name__ == "__main__":
-    N = 50
-    U = UltrafilterApprox(N, principal_point=37)
+    # Example: division of ω² by ω+1
+    omega = UltrapowerElement(seq=lambda i: i, name="ω")
+    omega_sq = UltrapowerElement(seq=lambda i: i*i, name="ω²")
+    omega_plus_1 = UltrapowerElement(seq=lambda i: i+1, name="ω+1")
 
-    print("=== Non-Standard Arithmetic Algorithms ===\n")
+    result = ultrapower_division(omega_sq, omega_plus_1)
+    print("Division: ω² ÷ (ω+1)")
+    print(f"  Quotient: {result.quotient.evaluate(range(10))}")
+    print(f"  Remainder: {result.remainder.evaluate(range(10))}")
 
-    # 1. Ultrafilter dichotomy
-    S = frozenset(range(0, N, 2))  # even numbers
-    s_large, sc_large = U.dichotomy(S)
-    print(f"1. Dichotomy: evens large={s_large}, odds large={sc_large}")
+    # Example: GCD of 6ω and 4ω
+    f = UltrapowerElement(seq=lambda i: 6*i, name="6ω")
+    g = UltrapowerElement(seq=lambda i: 4*i, name="4ω")
+    gcd_result = ultrapower_gcd(f, g)
+    print(f"\nGCD(6ω, 4ω) = {gcd_result.gcd.evaluate(range(10))}")
 
-    # 2. Infinite element
-    w = NonstandardNumber.omega(N)
-    print(f"\n2. ω is infinite: {w.is_infinite(U)}")
+    # Example: Trichotomy
+    print(f"\nω² vs 2ω+1: {trichotomy_decide(omega_sq, UltrapowerElement(lambda i: 2*i+1, '2ω+1'))}")
 
-    # 3. Overspill
-    overspills, fail = overspill_check(lambda n: n * n > 100, N)
-    print(f"\n3. Overspill for n²>100: overspills={overspills}, fail_at={fail}")
+    # Example: Overspill
+    def P(i: int, n: int) -> bool:
+        return i > n
 
-    # 4. Transfer verification
-    transfers, agree_set = verify_transfer(
-        lambda i: (i + 1) * (i + 1) == i * i + 2 * i + 1, N, U
-    )
-    print(f"\n4. Transfer (n+1)²=n²+2n+1: holds={transfers}, "
-          f"agree on {len(agree_set)}/{N} indices")
-
-    # 5. Integral domain
-    f_seq = [0 if i % 2 == 0 else i for i in range(N)]
-    g_seq = [i if i % 2 == 0 else 0 for i in range(N)]
-    result, witness = integral_domain_transfer(f_seq, g_seq, U)
-    print(f"\n5. Zero-product: {result}")
+    f_overspill, growth = overspill_witness(P)
+    print(f"\nOverspill witness for P(i,n) = 'i > n':")
+    print(f"  f(100) = {f_overspill(100)}, f(500) = {f_overspill(500)}")
+    print(f"  Estimated growth rate: {growth}")

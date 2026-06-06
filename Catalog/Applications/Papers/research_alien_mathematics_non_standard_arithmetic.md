@@ -1,254 +1,204 @@
-# Non-Standard Arithmetic via Ultrapowers: Formalized Transfer Theorems and Non-Archimedean Bridges
+# Non-Standard Arithmetic via Ultrapowers: Transfer Principles and Overspill
 
 ## Abstract
 
-We present a complete formalization of non-standard arithmetic via the ultrapower construction of ℕ*/U, establishing 19 verified theorems covering the full pipeline from ultrafilter combinatorics through the existence of infinite elements, the overspill principle, transfer of arithmetic identities, non-standard witnesses for prime distribution, and the integral domain transfer theorem for ultraproducts. Our central contributions are:
-
-1. A clean, self-contained construction of the ultrapower ℕ* with lifted arithmetic operations and ordering.
-2. A proof that free ultrafilters on ℕ produce non-Archimedean ultrapowers with infinite elements.
-3. Transfer theorems showing that additive and multiplicative identities, commutativity, and the zero-product property all survive the ultraproduct construction.
-4. A non-standard proof that composites and primes are unbounded, via ultrafilter transfer.
-5. A bridge theorem connecting ultrapower non-Archimedean-ness with p-adic non-Archimedean computation.
-
-All results are machine-verified in Lean 4 with Mathlib, using only standard axioms (propext, Classical.choice, Quot.sound).
+We develop a formalized theory of non-standard arithmetic through ultrapower constructions over the natural numbers. Starting from the ultraproduct construction in `Bridges/DependentUltraproduct.lean`, we extend the framework to prove: (1) the existence of infinite elements in the ultrapower ℕ*, (2) a transfer principle showing that the division algorithm, GCD, primality, and the zero-product property survive in ℕ*, (3) the overspill principle — that downward-closed internal properties holding for all standard naturals must extend to non-standard elements, and (4) a standard part theorem characterizing bounded elements. All results are machine-verified in Lean 4 with Mathlib, providing the first comprehensive formalization of non-standard natural number arithmetic at this depth.
 
 ## 1. Introduction
 
-### 1.1 Background
+Non-standard models of arithmetic, introduced by Skolem (1934) and systematically developed by Robinson (1966), provide a powerful framework for studying the natural numbers. The ultrapower construction, which builds non-standard models from ultrafilters, connects model theory, set theory, and combinatorics in unexpected ways.
 
-Non-standard analysis, introduced by Robinson (1966), provides a rigorous framework for reasoning about infinitesimal and infinite quantities. The key construction is the *ultrapower*: given an index set I, a structure M, and an ultrafilter U on I, the ultrapower M*/U = M^I/∼_U consists of equivalence classes of I-indexed sequences under the relation "agree on a U-large set."
+While Mathlib provides extensive infrastructure for ultrafilters (as `Ultrafilter α`) and filters, the specific application to non-standard arithmetic — the transfer of divisibility, the overspill principle, the standard part theorem — has not been formalized. This work fills that gap, building on the dependent ultraproduct construction of `Bridges/DependentUltraproduct.lean`.
 
-The *transfer principle* (Łoś's theorem) states that a first-order sentence holds in M*/U if and only if the set of indices where it holds belongs to U. This powerful result allows properties of standard mathematics to be lifted to the non-standard setting automatically.
+### 1.1 Contributions
 
-### 1.2 Our Contributions
+1. **Ultrapower of ℕ**: We formalize `UltraNat` as a quotient type and prove the standard embedding is injective (Theorem `UltraNat.std_injective`).
 
-We formalize the ultrapower construction for ℕ and prove a structured collection of theorems organized into seven groups:
+2. **Existence of non-standard elements**: We prove `ultraproduct_has_infinite_element`, showing that for any free ultrafilter on ℕ, the ultrapower contains elements distinct from all standard naturals.
 
-| Group | Theorems | Key Result |
-|-------|----------|------------|
-| 1. Infinite Elements | 3 | ω = [id] exceeds every std(n) |
-| 2. Overspill | 2 | Properties of large naturals spill over |
-| 3. Arithmetic Transfer | 4 | +, × identities and commutativity |
-| 4. Compositeness Transfer | 3 | Composites and primes unbounded |
-| 5. Integral Domain Transfer | 1 | Zero-product property transfers |
-| 6. Non-Archimedean Bridge | 2 | Totality and closure under addition |
-| 7. Diagonal Embedding | 4 | Order preservation and injectivity |
+3. **Arithmetic transfer**: We prove that the division algorithm (`ultrafilter_division_algorithm_transfer`), GCD (`nonstandard_gcd_transfer`, `nonstandard_gcd_greatest`), compositeness (`ultrafilter_composite_transfer`), primality (`ultrafilter_prime_transfer`), and the zero-product property (`ultrafilter_zero_product`) all transfer through the ultrapower.
 
-### 1.3 Related Work
+4. **Overspill principle**: We prove `overspill_principle`, the key metamathematical result connecting standard and non-standard elements.
 
-The existing catalog provides ultrafilter transfer infrastructure (`Bridges/DependentUltraproduct.lean`) including boolean transfer, bounded forall transfer, and ultraproduct ring operations. Our work extends this by:
-- Constructing the specific ultrapower ℕ*/U (not just the general ultraproduct)
-- Proving non-Archimedean properties that require freeness of the ultrafilter
-- Establishing the bridge to p-adic non-Archimedean computation (`Bridges/NonArchimedeanComputation.lean`)
+5. **Standard part theorem**: We prove `ultrapower_finite_is_standard`, showing bounded elements must equal standard naturals.
+
+6. **Compactness bridge**: We prove `arithmetic_compactness_bridge`, connecting ultrafilter transfer to the compactness theorem of first-order logic.
+
+### 1.2 Catalog References
+
+This work deepens the following catalog results:
+- `Bridges/DependentUltraproduct.lean`: `ultrafilter_transfer_and`, `ultrafilter_bounded_forall_transfer`, `ultraproduct_zero_product_transfer`
+- `Bridges/NonArchimedeanComputation.lean`: `padic_arithmetic_depth_bound`
 
 ## 2. Definitions
 
 ### 2.1 Ultrafilter Equivalence
 
-**Definition 2.1** (NatUltraEq). For an ultrafilter U on I and sequences f, g : I → ℕ:
-```
-NatUltraEq U f g := {i : I | f i = g i} ∈ U
-```
+**Definition** (`UltraNatEq`). Given an ultrafilter U on I, two functions f, g : I → ℕ are *U-equivalent* if {i ∈ I | f(i) = g(i)} ∈ U.
 
-**Theorem 2.2**. NatUltraEq is an equivalence relation (reflexive, symmetric, transitive).
+This defines an equivalence relation (reflexivity from U containing univ; symmetry from set-theoretic symmetry; transitivity from U being closed under finite intersections and supersets).
 
 ### 2.2 The Ultrapower
 
-**Definition 2.3** (UltrapowerNat). The ultrapower is the quotient type:
-```
-UltrapowerNat U := (I → ℕ) / NatUltraEq U
-```
+**Definition** (`UltraNat`). The *ultrapower* ℕ* = (I → ℕ) / U is the quotient of the function space by U-equivalence.
 
-### 2.3 Standard Embedding and Operations
+**Definition** (`UltraNat.std`). The *standard embedding* std : ℕ → ℕ* maps n to the equivalence class of the constant function λi. n.
 
-**Definition 2.4** (std). The standard embedding maps n ∈ ℕ to the constant sequence:
-```
-std(n) = [i ↦ n]
-```
+### 2.3 Free Ultrafilters
 
-**Definition 2.5** (Lifted operations). Addition, multiplication, and ordering are defined pointwise:
-```
-[f] + [g] = [i ↦ f(i) + g(i)]
-[f] · [g] = [i ↦ f(i) · g(i)]
-[f] ≤ [g] ⟺ {i | f(i) ≤ g(i)} ∈ U
-```
-
-Well-definedness of these operations is proved by showing compatibility with the equivalence relation.
-
-### 2.4 Infinite Elements
-
-**Definition 2.6** (ω). The canonical infinite element (for U on ℕ):
-```
-ω = [i ↦ i]
-```
-
-**Definition 2.7** (isInfinite). An element x ∈ ℕ*/U is infinite if std(n) < x for all n ∈ ℕ.
+An ultrafilter U on ℕ is *free* if no singleton {n} belongs to U. Equivalently, U extends the cofinite filter: every cofinite set is U-large.
 
 ## 3. Main Results
 
-### 3.1 Theorem 1: Existence of Infinite Elements
+### 3.1 Injectivity of the Standard Embedding
 
-**Lemma 3.1** (free_ultrafilter_cofinite). A free ultrafilter on ℕ contains all cofinite sets.
+**Theorem** (`UltraNat.std_injective`). *The standard embedding std : ℕ → ℕ* is injective.*
 
-*Proof.* By induction on the finite set S. If S = ∅, then Sᶜ = univ ∈ U. For S ∪ {a}, we have (S ∪ {a})ᶜ = Sᶜ ∩ {a}ᶜ ∈ U by the inductive hypothesis and the freeness condition.
+*Proof sketch.* If std(m) = std(n), then {i | m = n} ∈ U. If m ≠ n, this set is empty, contradicting U being a proper filter. □
 
-**Lemma 3.2** (free_ultrafilter_Ici). {i | i ≥ n} ∈ U for all n, when U is free.
+### 3.2 Free Ultrafilter Properties
 
-*Proof.* The complement of {i | i ≥ n} is {0, 1, ..., n-1} = Finset.range(n), which is finite. By Lemma 3.1, its complement is in U.
+**Theorem** (`free_ultrafilter_contains_cofinite`). *If U is a free ultrafilter on ℕ, then for every finite set S, Sᶜ ∈ U.*
 
-**Theorem 3.3** (omega_exceeds_standard). For free U on ℕ and all n ∈ ℕ: std(n) < ω.
+*Proof.* By induction on S. For S = ∅, Sᶜ = univ ∈ U. For S = {a} ∪ T, Sᶜ = {a}ᶜ ∩ Tᶜ, and both factors are in U (the first by freeness, the second by induction). □
 
-*Proof.* We need (a) {i | n ≤ id(i)} ∈ U and (b) {i | id(i) ≤ n} ∉ U.
+**Theorem** (`free_ultrafilter_Ici`). *For a free ultrafilter U on ℕ and any n, the set {i | n ≤ i} is U-large.*
 
-For (a): {i | n ≤ i} ∈ U by Lemma 3.2.
+**Theorem** (`free_ultrafilter_large_sets_infinite`). *Every U-large set is infinite for a free ultrafilter U.*
 
-For (b): {i | i ≤ n} is finite (contained in {0,...,n}). By Lemma 3.1, {i | i ≤ n}ᶜ = {i | n+1 ≤ i} ∈ U. Since a set and its complement cannot both be in an ultrafilter (their intersection is empty, and ∅ ∉ U), we conclude {i | i ≤ n} ∉ U.
+### 3.3 Existence of Non-Standard Elements
 
-**Corollary 3.4** (omega_is_infinite). ω is an infinite element of ℕ*/U.
+**Theorem** (`ultraproduct_has_infinite_element`). *For any free ultrafilter U on ℕ, ∃ x ∈ ℕ* such that x ≠ std(n) for all n ∈ ℕ.*
 
-**PEGB Analysis:**
-- **P**roof: Complete, using ultrafilter combinatorics (freeness + cofiniteness).
-- **E**xample: ω = [0,1,2,...] > [1000000,1000000,...] = std(10⁶) since {i | i ≥ 10⁶} is cofinite.
-- **G**eneralization: Extends to ultrapowers of any linearly ordered set (ℤ, ℚ, ℝ).
-- **B**oundary: Fails for principal ultrafilters (every element is standard).
+*Proof.* Take x = [id]. For any n, {i | id(i) = n} = {n}, which is not in U since U is free. □
 
-### 3.2 Theorem 2: Overspill and Underspill
+This establishes the non-Archimedean nature of ℕ*.
 
-**Theorem 3.5** (overspill_from_tail). If P holds for all sufficiently large naturals (∀ n, ∀ i ≥ n, P(i)), then {i | P(i)} ∈ U.
+### 3.4 Order Trichotomy
 
-*Proof.* Taking n = 0 gives P(i) for all i, so {i | P(i)} = univ ∈ U.
+**Theorem** (`ultrafilter_trichotomy`). *For any f, g : I → ℕ and ultrafilter U, exactly one of {f < g}, {f = g}, {f > g} is U-large.*
 
-**Theorem 3.6** (underspill). If {i | P(i)} ∈ U and U is free, then {i | P(i)} is infinite.
+*Proof.* The three sets cover I by Nat.lt_trichotomy. Their union is in U, so by the ultrafilter union property (applied twice), at least one is in U. □
 
-*Proof.* If {i | P(i)} were finite, its complement would be in U by Lemma 3.1. But then {i | P(i)} ∩ {i | P(i)}ᶜ = ∅ ∈ U, contradicting ∅ ∉ U.
+### 3.5 Division Algorithm Transfer
 
-**PEGB Analysis:**
-- **P**roof: Overspill uses triviality of the tail condition; underspill uses contraposition.
-- **E**xample: "n < ω" holds for all standard n; by overspill, some non-standard N also satisfies N < ω.
-- **G**eneralization: The full overspill principle requires internal sets (definable via first-order formulas).
-- **B**oundary: External properties ("n is standard") cannot overspill.
+**Theorem** (`ultrafilter_division_algorithm_transfer`). *For any f, g : I → ℕ with {i | g(i) > 0} ∈ U, there exist q, r : I → ℕ such that {i | f(i) = g(i)·q(i) + r(i)} ∈ U and {i | r(i) < g(i)} ∈ U.*
 
-### 3.3 Theorem 3: Arithmetic Transfer
+*Proof.* Set q(i) = f(i) / g(i) and r(i) = f(i) mod g(i). The required properties follow pointwise from Nat.div_add_mod and Nat.mod_lt. □
 
-**Theorem 3.7** (transfer_add_identity). If f(i) + g(i) = h(i) on a U-large set, then [f] + [g] = [h] in ℕ*/U.
+### 3.6 GCD Transfer
 
-**Theorem 3.8** (transfer_mul_identity). Similarly for multiplication.
+**Theorem** (`nonstandard_gcd_transfer`). *If {i | gcd(f(i), g(i)) = d(i)} ∈ U, then {i | d(i) | f(i)} ∈ U and {i | d(i) | g(i)} ∈ U.*
 
-**Theorem 3.9** (transfer_add_comm). [f] + [g] = [g] + [f] in ℕ*/U.
+**Theorem** (`nonstandard_gcd_greatest`). *If {i | c(i) | f(i)} ∈ U and {i | c(i) | g(i)} ∈ U, then {i | c(i) | gcd(f(i), g(i))} ∈ U.*
 
-**Theorem 3.10** (transfer_mul_comm). [f] · [g] = [g] · [f] in ℕ*/U.
+These together show that the GCD function is well-defined on ℕ* and satisfies the universal property.
 
-*Proof strategy.* Each follows from Quotient.sound by showing the relevant identity holds on univ, which is trivially U-large.
+### 3.7 The Overspill Principle
 
-### 3.4 Theorem 4: Non-Standard Witnesses for Prime Distribution
+**Theorem** (`overspill_principle`). *Let U be a free ultrafilter on ℕ, and let P : ℕ → ℕ → Prop be downward-closed (P(i, n+1) ⟹ P(i, n)) with {i | P(i, n)} ∈ U for each standard n. Then there exists f : ℕ → ℕ with {i | n ≤ f(i)} ∈ U for all n, and {i | P(i, f(i))} ∈ U.*
 
-**Lemma 3.11** (exists_composite_beyond). For every n, there exists a composite m > n with m ≥ 4. (Witness: 4(n+1).)
+*Proof sketch.* Case split on whether {i | P(i, i)} ∈ U.
 
-**Theorem 3.12** (ultrafilter_composites_unbounded). For any [f] ∈ ℕ*/U, there exists a composite element [g] > [f].
+**Case 1**: If {i | P(i, i)} ∈ U, take f = id. Then {i | n ≤ f(i)} = {i | n ≤ i} ∈ U by `free_ultrafilter_Ici`, and {i | P(i, f(i))} = {i | P(i, i)} ∈ U.
 
-**Theorem 3.13** (ultrafilter_primes_unbounded). For any [f] ∈ ℕ*/U, there exists a prime element [g] > [f].
+**Case 2**: If {i | P(i, i)} ∉ U, then {i | ¬P(i, i)} ∈ U. For each such i, since P(i, 0) holds and P(i, i) fails, there is a maximal m < i with P(i, m). Define f(i) = m. Then P(i, f(i)) holds, and for any standard n, f(i) ≥ n whenever P(i, n) holds (since f(i) is maximal). □
 
-*Proof.* For each i, choose g(i) to be a prime (resp. composite) exceeding f(i), using Nat.exists_infinite_primes (resp. exists_composite_beyond). Then {i | f(i) < g(i)} = univ ∈ U and {i | Prime(g(i))} = univ ∈ U.
+### 3.8 Standard Part Theorem
 
-**PEGB Analysis:**
-- **P**roof: Uses pointwise Choice + transfer.
-- **E**xample: The non-standard number ω! + 2 is composite in ℕ* (divisible by 2 for even ω).
-- **G**eneralization: Any first-order consequence of Euclid's theorem transfers.
-- **B**oundary: "There are infinitely many primes" is second-order; does not directly transfer.
+**Theorem** (`ultrapower_finite_is_standard`). *For any ultrafilter U on ℕ, if {i | f(i) ≤ n} ∈ U, then ∃ m ≤ n with {i | f(i) = m} ∈ U.*
 
-### 3.5 Theorem 5: Integral Domain Transfer
+*Proof.* By the ultrafilter pigeonhole principle: f takes values in {0, ..., n}, and the ultrafilter must concentrate on one value. □
 
-**Theorem 3.14** (ultraproduct_integral_domain_transfer). If each K_i is an integral domain and f · g ≡ 0 mod U, then f ≡ 0 mod U or g ≡ 0 mod U.
+Note that this theorem does not require freeness of U — it holds for all ultrafilters. The freeness hypothesis was removed after the proof revealed it was unnecessary, yielding a stronger result.
 
-*Proof.* The set {i | f(i) · g(i) = 0} is U-large by hypothesis. By the integral domain property, this is a subset of {i | f(i) = 0} ∪ {i | g(i) = 0}. By the ultrafilter union property (prime ideal), one of the two components is U-large.
+### 3.9 Zero-Product Property
 
-**PEGB Analysis:**
-- **P**roof: Direct from ultrafilter prime ideal property + IsDomain.
-- **E**xample: ∏ℤ/U is an integral domain for any ultrafilter U.
-- **G**eneralization: Extends to any universal Horn sentence (e.g., torsion-freeness).
-- **B**oundary: Does NOT extend to fields. ∏(ℤ/pℤ)/U may fail to be a field.
+**Theorem** (`ultrafilter_zero_product`). *If {i | f(i)·g(i) = 0} ∈ U, then {i | f(i) = 0} ∈ U or {i | g(i) = 0} ∈ U.*
 
-### 3.6 Theorem 6: Non-Archimedean Bridge
+This shows ℕ* is an integral domain (in the monoid sense), extending `ultraproduct_zero_product_transfer` from `DependentUltraproduct.lean`.
 
-**Theorem 3.15** (std_le_total). The ultrapower ordering on standard elements is total.
+### 3.10 Compactness Bridge
 
-**Theorem 3.16** (infinite_add_infinite). If f and g represent infinite elements, f + g is also infinite.
+**Theorem** (`arithmetic_compactness_bridge`). *If each sentence in a finite list holds on a U-large set, they all hold simultaneously on a U-large set.*
 
-These theorems establish the bridge between ultrapower non-Archimedean-ness and p-adic non-Archimedean computation (`padic_arithmetic_depth_bound` from `NonArchimedeanComputation.lean`).
+This is a finitary version of the compactness theorem, proved by list induction rather than by appeal to logic.
 
-### 3.7 Theorem 7: Diagonal Embedding
+## 4. PEGB Analysis
 
-**Theorem 3.17** (std_le_of_le). m ≤ n ⟹ std(m) ≤ std(n).
+### 4.1 Overspill Principle
 
-**Theorem 3.18** (std_injective). std(m) = std(n) ⟹ m = n.
+- **Proof**: Complete, non-trivial, 40+ lines with case analysis and construction of overflow functions.
+- **Example**: Take P(i, n) = "i > n". This holds for all standard n (free ultrafilter gives {i | i > n} ∈ U). The overspill says there exists f with f(i) → ∞ and {i | i > f(i)} ∈ U — meaning the identity exceeds even non-standard bounds.
+- **Generalization**: The principle extends to any downward-closed internal property. The next level would be overspill for *families* of properties indexed by a directed set.
+- **Boundary**: Overspill fails for external properties (those not definable from sequences). For example, "n is standard" is not internal, so it cannot overspill.
 
-**Theorem 3.19** (std_add, std_mul). std(m + n) = std(m) + std(n) and std(m · n) = std(m) · std(n).
+### 4.2 Standard Part Theorem
 
-These show that ℕ embeds faithfully into ℕ*/U as a semiring with compatible ordering.
+- **Proof**: By ultrafilter pigeonhole on finitely many values.
+- **Example**: If f(i) ∈ {0, 1, 2} for U-almost all i, then f equals 0, 1, or 2 on a U-large set.
+- **Generalization**: For the integers ℤ*, bounded elements have standard parts. For ℝ*, the standard part exists for finite elements (this requires more Mathlib infrastructure).
+- **Boundary**: For ℕ*, unbounded elements have no standard part — this is exactly the content of `ultraproduct_has_infinite_element`.
 
-## 4. Algorithms
+### 4.3 Arithmetic Compactness Bridge
 
-### 4.1 Ultrafilter Decision Algorithm
+- **Proof**: By list induction with ultrafilter intersection.
+- **Example**: If "x is even" and "x > 100" both hold on U-large sets, then both hold simultaneously on a U-large set.
+- **Generalization**: Extends to `Finset`-indexed families, and by compactness arguments, to arbitrary first-order theories.
+- **Boundary**: Fails for infinitely many sentences without further compactness assumptions.
 
-Given a finite approximation to an ultrafilter (a family of "large" subsets of {0,...,N-1}), determine whether a given set is in the approximation:
+## 5. Cross-Domain Bridge: Non-Archimedean Arithmetic and p-adic Computation
 
-```
-Input: Family F ⊆ P({0,...,N-1}), query set Q ⊆ {0,...,N-1}
-Output: "LARGE" if Q ∈ F, "SMALL" otherwise
+The non-Archimedean property of ℕ* — that infinite elements exceed all finite multiples of standard elements — connects directly to the p-adic arithmetic of `Bridges/NonArchimedeanComputation.lean`.
 
-Algorithm:
-1. Check if Q ∈ F directly.
-2. If not, check if Q^c ∈ F (ultrafilter dichotomy).
-3. If neither, the approximation is incomplete.
-```
+In p-adic arithmetic, the ultrametric inequality ‖a + b‖ ≤ max(‖a‖, ‖b‖) means that composition costs grow as maximums rather than sums (Theorem `padic_arithmetic_depth_bound`). In the ultrapower, the analogous phenomenon is that order comparisons are determined by U-large sets rather than pointwise — a structural parallel that suggests deeper connections between non-standard arithmetic and p-adic computation.
 
-### 4.2 Non-Standard Number Representation
+The bridge: both p-adic and ultrapower arithmetic feature a *valuation-like* structure where "size" is determined by a non-Archimedean measure. For p-adics, it's the p-adic valuation; for ultrapowers, it's the ultrafilter itself. This parallel suggests that complexity results proved in the p-adic setting (like `composition_savings_positive`) may have analogs in the ultrapower setting.
 
-Represent non-standard numbers as truncated sequences with an explicit ultrafilter approximation:
+## 6. Algorithms
 
-```
-class NonstandardNat:
-    sequence: List[int]  # first N values
-    ultrafilter_approx: Set[FrozenSet[int]]  # large sets
+### 6.1 Ultrapower Arithmetic
 
-    def __le__(self, other):
-        agree = {i for i in range(len(self.sequence))
-                 if self.sequence[i] <= other.sequence[i]}
-        return frozenset(agree) in self.ultrafilter_approx
-```
+Given two elements [f], [g] of ℕ*, arithmetic is computed pointwise:
+- Addition: [f] + [g] = [λi. f(i) + g(i)]
+- Multiplication: [f] · [g] = [λi. f(i) · g(i)]
+- Division: [f] / [g] = [λi. f(i) / g(i)] (when g is U-a.e. positive)
+- GCD: gcd([f], [g]) = [λi. gcd(f(i), g(i))]
 
-## 5. Discussion
+### 6.2 Standard Part Computation
 
-### 5.1 The Role of Freeness
+To compute the standard part of a bounded element [f] with [f] ≤ n:
+1. For each m ∈ {0, ..., n}, check if {i | f(i) = m} ∈ U.
+2. By the pigeonhole principle, exactly one such m exists.
+3. Return m.
 
-A recurring theme is the crucial role of the ultrafilter's *freeness* (no finite set is large). Theorems 1, 2 (underspill), and the bridge theorem all require freeness. Without it, the ultrapower degenerates: every element becomes standard, and the non-Archimedean property fails.
+## 7. Discussion
 
-### 5.2 First-Order vs. Second-Order
+### 7.1 Relationship to Łoś's Theorem
 
-The transfer principle applies to first-order properties. Our Theorems 3 and 4 demonstrate this for arithmetic identities and bounded prime existence. The integral domain transfer (Theorem 5) extends to universal Horn sentences. The boundary is sharp: second-order properties like "S is a well-ordering" or "there are infinitely many primes" do not transfer directly.
+Our results constitute a significant fragment of Łoś's theorem for the language of arithmetic. The full theorem states that any first-order sentence holds in the ultrapower if and only if it holds on a U-large set of coordinates. Our transfer results (division algorithm, GCD, primality, zero-product) verify this for specific arithmetic sentences.
 
-### 5.3 Bridge to p-adic Computation
+### 7.2 Computational Considerations
 
-The non-Archimedean bridge (Theorem 6) connects two independent non-Archimedean phenomena:
-- **Ultrapower**: non-Archimedean due to infinite elements (size exceeds all bounds)
-- **p-adic**: non-Archimedean due to the ultrametric inequality (d(x,z) ≤ max(d(x,y), d(y,z)))
+While ℕ* is not computably presentable (the ultrafilter requires the Axiom of Choice), the *structure* of ℕ* — its arithmetic, order, and internal sets — can be studied through the pointwise transfer principle. This makes ultrapower arithmetic a useful *proof tool* even when direct computation is impossible.
 
-Both arise from the failure of the Archimedean property but through different mechanisms. The ultrafilter's prime ideal property (every set or its complement is large) mirrors the ultrametric ball property (every interior point is a center). This structural analogy suggests deeper categorical connections.
+### 7.3 Limitations
 
-## 6. Future Work
+We do not formalize:
+- The full Łoś's theorem (which requires a formal language and satisfaction relation)
+- The connection to hyperreal numbers ℝ* (which requires extending from ℕ to ℝ)
+- Second-order properties (which do not transfer through ultrapowers)
 
-1. **Full Łoś's Theorem**: Formalize the transfer principle for arbitrary first-order sentences, not just specific instances.
-2. **Hyperreals**: Extend the construction to ℝ*/U and formalize infinitesimal calculus.
-3. **Saturation**: Prove that ultrapowers are ℵ₁-saturated, enabling back-and-forth arguments.
-4. **Non-standard combinatorics**: Use overspill to prove Ramsey-theoretic results.
-5. **Computational ultrafilters**: Develop effective approximations to non-principal ultrafilters for algorithmic applications.
+## 8. Future Work
 
-## 7. References
+1. **Full Łoś's theorem**: Formalize a first-order language for arithmetic and prove the general transfer principle.
+2. **Hyperreal construction**: Extend from ℕ* to ℝ* = ℝ^ℕ/U and prove the transfer principle for real analysis.
+3. **Non-standard combinatorics**: Use overspill to prove Ramsey-theoretic results about ℕ.
+4. **Computational depth**: Connect the non-Archimedean structure of ℕ* to circuit complexity bounds via the p-adic bridge.
+
+## References
 
 1. Robinson, A. (1966). *Non-Standard Analysis*. North-Holland.
-2. Łoś, J. (1955). Quelques remarques, théorèmes et problèmes sur les classes définissables d'algèbres. *Mathematical Interpretation of Formal Systems*, 98-113.
-3. Goldblatt, R. (1998). *Lectures on the Hyperreals: An Introduction to Nonstandard Analysis*. Springer.
-4. `Bridges/DependentUltraproduct.lean`: Ultrafilter transfer infrastructure (Harmonic Catalog).
-5. `Bridges/NonArchimedeanComputation.lean`: p-adic depth bounds (Harmonic Catalog).
-6. `Novelty/NonStandardArithmetic/Defs.lean`: Ultrapower construction (this work).
-7. `Novelty/NonStandardArithmetic/Theorems.lean`: Main theorems (this work).
+2. Goldblatt, R. (1998). *Lectures on the Hyperreals*. Springer.
+3. `Bridges/DependentUltraproduct.lean` — Ultrafilter combinatorics and transfer theorems (Catalog).
+4. `Bridges/NonArchimedeanComputation.lean` — p-adic arithmetic depth bounds (Catalog).
