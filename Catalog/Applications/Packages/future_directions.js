@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "aa79e64b",
+    "consumed_by_exp_id": "",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
     "domains": [
       "EML",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -2149,6 +2149,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Counterfactual Number Theory\n\n## Synthesis\n\nThis cycle established the fundamental framework of **Generator Systems** \u2014 a formalization of counterfactual number theory where arbitrary subsets of \u2115 replace the primes as multiplicative building blocks. The central discovery is the **Cram\u00e9r Dichotomy**: product-freeness is the precise structural property that separates systems with unique factorization from those without it. This creates a clean bridge between density theory (how many generators?) and algebraic structure (do factorizations work?), connecting to the existing catalog results on product-free sets in `Cryptography/CounterfactualPrimes.lean`.\n\nThe most promising cross-domain connection is between our multiplicative Schur property and tropical semiring theory. In tropical algebra, multiplication becomes addition and the min operation replaces addition \u2014 our generator system framework could be reformulated tropically, potentially connecting to `Tropical/` catalog entries and creating a bridge between counterfactual number theory and tropical optimization. The notion of \"factorization\" in a tropical semiring corresponds to decomposition into tropical primes, and our results on density-structure tension may have analogs there.\n\nThe highest breakthrough potential lies in Direction 1: determining the exact asymptotic maximum density of product-free subsets of [2, N]. If the primes are provably optimal (or near-optimal), this would be a deep result connecting sieve theory, combinatorial number theory, and our generator system framework. The formal infrastructure built in this cycle \u2014 SFactorization, product-freeness predicates, and the necessity theorem \u2014 provides the foundation for this investigation.\n\n---\n\n### Direction 1: Optimal Product-Free Density Conjecture\n\n**Conjecture**: Among all product-free subsets S \u2286 [2, N], the maximum cardinality satisfies |S| \u2264 (1 + o(1)) \u00b7 \u03c0(N), where \u03c0(N) is the prime counting function. That is, the primes are asymptotically the densest product-free subset of the integers.\n\n**Test**: For N \u2208 {10\u00b3, 10\u2074, 10\u2075, 10\u2076}, compute the maximum product-free subset of [2, N] using a greedy algorithm (add elements in random order, skip if creating a collision) over 10,000 trials. Compare the best size found to \u03c0(N). If the ratio max|S|/\u03c0(N) converges to 1 from above or below, this supports or refutes the conjecture. An explicit counterexample with |S| > 1.01 \u00b7 \u03c0(N) for large N would refute it.\n\n**Impact**: If true, this characterizes the primes as the unique (up to finite perturbation) densest product-free set \u2014 a new structural characterization of the primes. If false, the explicit construction of a denser product-free set would be a significant number-theoretic result, potentially related to smooth numbers or lacunary sequences.\n\n**Catalog References**: `Cryptography/CounterfactualPrimes.lean` (primes_are_product_free), `Novelty/CounterfactualPrimes/Basic.lean` (productFree_necessary, primes_are_productFreeGen)\n\n**Proof Strategy**: \n1. Establish that any product-free S \u2286 [2, N] satisfies: for each s \u2208 S, all multiples s\u00b7t with t \u2208 S must lie outside S. This gives an exclusion constraint.\n2. Use the multiplicative structure of [2, N] to bound |S| via a fractional relaxation.\n3. Show the prime set approximately saturates this bound.\n4. Key lemma: if S is product-free and s \u2208 S, then S \u2229 s\u00b7S = \u2205, where s\u00b7S = {s\u00b7t : t \u2208 S}.\n\n**Domain Bridges**: Cryptography <-> Novelty (product-free sets arise in both multiplicative collision analysis and generator system theory)\n\n**Lineage**: Builds on `primes_are_product_free` and the product-free necessity theorem from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Generator Systems\n\n**Conjecture**: The generator system framework, when reformulated over the tropical semiring (\u211d \u222a {\u221e}, min, +), produces a \"tropical factorization theory\" where unique factorization holds iff the generator set satisfies a tropical analog of product-freeness (sum-freeness: a + b \u2209 S for all a, b \u2208 S). Moreover, the tropical density threshold for sum-freeness collapse is exactly 1/3, matching the classical Schur number result.\n\n**Test**: Define a TropicalGeneratorSystem with carrier \u2286 \u211d\u22650 and \"tropical S-factorization\" as multisets from S whose tropical product (= ordinary sum) equals n. Prove or disprove that sum-freeness is necessary for tropical unique factorization. Computationally, sample random subsets of [0, N] with various densities and check sum-freeness.\n\n**Impact**: This would create a formal bridge between counterfactual number theory and tropical geometry, two areas with no known connection. The density threshold of 1/3 (from Schur/Rado theory) would contrast sharply with the ~1/log(n) threshold in the multiplicative case, revealing how the algebraic operation fundamentally determines the density-structure tension.\n\n**Catalog References**: `Tropical/` (tropical semiring definitions), `Novelty/CounterfactualPrimes/Basic.lean` (GeneratorSystem, SFactorization)\n\n**Proof Strategy**:\n1. Define `TropicalGeneratorSystem` by analogy with `GeneratorSystem`.\n2. Prove the analog of productFree_necessary for tropical factorization.\n3. Use Schur's theorem to bound the density threshold.\n4. Compare with the multiplicative case quantitatively.\n\n**Domain Bridges**: Novelty <-> Tropical (generator systems provide a template that can be instantiated over any semiring)\n\n**Lineage**: Builds on the generator system framework from this cycle and tropical semiring results in the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Factorization Entropy of Generator Systems\n\n**Conjecture**: For the interval system [2, N], the average number of S-factorizations of a random integer n \u2208 [2, N\u00b2] grows as exp(c \u00b7 \u221a(log N)) for some constant c > 0. This \"factorization entropy\" quantifies how badly unique factorization fails.\n\n**Test**: For N \u2208 {5, 10, 15, 20, 25, 30}, enumerate all S-factorizations for each n \u2208 [2, N\u00b2] in the interval system [2, N]. Compute the average count and fit to exp(c \u00b7 \u221a(log N)). A good fit confirms the conjecture; a different growth rate refutes it.\n\n**Impact**: This would quantify the \"degree of non-uniqueness\" in counterfactual number theories, providing a continuous measure of how far a generator system is from supporting unique factorization. The specific growth rate exp(c\u221alog N) would connect to the theory of partitions and the Hardy-Ramanujan formula.\n\n**Catalog References**: `Novelty/CounterfactualPrimes/Density.lean` (interval12_three_factorizations, interval_not_productFree)\n\n**Proof Strategy**:\n1. For the interval system [2, N], an S-factorization of n is equivalent to an ordered factorization of n using factors in [2, N].\n2. Use results on the number of ordered factorizations (related to the divisor function iterated) to bound the count.\n3. The average over n \u2208 [2, N\u00b2] can be computed using Dirichlet series techniques.\n\n**Domain Bridges**: Novelty <-> Computation (factorization counting algorithms connect to computational complexity of number-theoretic problems)\n\n**Lineage**: Builds on interval12_three_factorizations and the factorization explosion observations from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Generator System Completion and Free Monoids\n\n**Conjecture**: For any product-free generator system S, there exists a unique maximal set of integers that have unique S-factorizations. This \"factorizable domain\" D(S) forms a free commutative monoid generated by S.carrier. Moreover, D(primes) = \u2115\u22651 (recovering the FTA), and for any strict subset S \u228a primes, D(S) \u228a \u2115\u22651.\n\n**Test**: For concrete product-free systems (e.g., {2, 5, 7}, {3, 5, 11, 13}), compute D(S) \u2229 [1, 1000] and verify it equals the set of integers whose prime factorization only uses primes from S. Prove that D(S) is a multiplicative submonoid.\n\n**Impact**: This would give a categorical characterization of the FTA: the prime generator system is the unique product-free system whose factorizable domain is all of \u2115\u22651. This connects generator systems to the theory of free commutative monoids and provides a new proof-theoretic perspective on why the primes are unique.\n\n**Catalog References**: `Novelty/CounterfactualPrimes/Basic.lean` (HasUniqueFactorization, IsProductFreeGen), `Novelty/CounterfactualPrimes/Density.lean` (remove_prime_loses_coverage)\n\n**Proof Strategy**:\n1. Define D(S) = {n \u2208 \u2115 | n has exactly one S-factorization}.\n2. Show D(S) is closed under multiplication (if a, b \u2208 D(S), then ab \u2208 D(S)) when S is product-free.\n3. Show D(S) = {products of elements of S.carrier} using induction on the number of factors.\n4. Prove D(primes) = \u2115\u22651 using the existence part of the FTA.\n\n**Domain Bridges**: Novelty <-> Algebra (free monoid theory connects to abstract algebra and category theory)\n\n**Lineage**: Builds on productFree_necessary, remove_prime_loses_coverage, and the product-free stability results.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Probabilistic Cram\u00e9r Density Threshold\n\n**Conjecture**: Let S be a random subset of [2, N] where each n is included independently with probability \u03b1/log(n). There exists a critical threshold \u03b1* \u2208 (0, 1) such that:\n- For \u03b1 < \u03b1*, S is product-free with probability \u2192 1 as N \u2192 \u221e\n- For \u03b1 > \u03b1*, S contains a multiplicative collision with probability \u2192 1 as N \u2192 \u221e\n\nMoreover, \u03b1* = 1/2 (the square root of the prime density factor).\n\n**Test**: For N \u2208 {10\u00b3, 10\u2074, 10\u2075}, sample 1000 random sets for each \u03b1 \u2208 {0.1, 0.2, ..., 1.0} and compute the collision probability. Plot the transition curve and identify the threshold. If it sharpens around \u03b1 = 0.5 as N increases, this supports the conjecture.\n\n**Impact**: This would be a phase transition result in probabilistic number theory: below the threshold, random sets behave like (sparse) primes; above it, they behave like dense intervals. The value \u03b1* = 1/2 would have a clean interpretation: the expected number of multiplicative triples transitions from o(1) to \u03c9(1) at this threshold.\n\n**Catalog References**: `Novelty/CounterfactualPrimes/Basic.lean` (IsProductFreeGen), `Novelty/CounterfactualPrimes/Density.lean` (interval_not_productFree)\n\n**Proof Strategy**:\n1. Count expected triples: E[#{(a,b) \u2208 S\u00b2 : ab \u2208 S}] = \u03a3_{a,b \u2264 N, ab \u2264 N} (\u03b1/log a)(\u03b1/log b)(\u03b1/log(ab)).\n2. Evaluate the sum asymptotically using standard analytic number theory techniques.\n3. Show the expected count transitions from 0 to \u221e at \u03b1 = \u03b1*.\n4. Apply second moment methods to prove concentration.\n\n**Domain Bridges**: Novelty <-> Physics (phase transitions in random structures connect to statistical mechanics models)\n\n**Lineage**: Builds on the density-product tension results and computational experiments from this cycle.\n\n**Ambition**: grand_challenge\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0866",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e6d747d5",
+    "status": "available",
+    "timestamp": "2026-06-06T19:18:53.200099+00:00",
+    "title": "Fundamental framework of **Generator Systems** \u2014 a fo"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established the **Spectral Pairing** as a novel algebraic structure axiomatizing the GL\u2081 Langlands correspondence. The key discovery is that the Jacobi symbol's properties \u2014 bilinearity, trichotomy, and quadratic reciprocity \u2014 can be cleanly separated into a set of axioms that capture the \"shape-color duality\" at the heart of class field theory. The spectral pairing framework revealed that reciprocity is not merely an identity but structural data: a \u2124/2\u2124-valued bilinear form (the reciprocity operator) that governs argument exchange.\n\nThe most promising cross-domain connection from this cycle links the **kernel theory** of spectral pairings to the **subgroup structure** studied in the Catalog's existing work on Galois obstructions (`Algebra/GaloisObstruction.lean`). The first kernel of the Jacobi spectral pairing at a prime p is exactly the quadratic residues mod p \u2014 a subgroup of index 2. For non-abelian extensions (GL\u2082 and beyond), the analogous \"kernel\" should be a more complex object: a representation-theoretic subgroup whose structure encodes the Langlands functoriality. This connection has the highest breakthrough potential because it could provide a concrete, computable bridge between the abelian (GL\u2081) and non-abelian (GL\u2082) Langlands programs.\n\nThe cycle's results also connect to the Catalog's `berggren_quadratic_form_invariant` through the bilinearity of the Jacobi symbol (both are multiplicative pairings taking values in {\u22121, 0, 1}), and to `galois_expressivity_degree_bound` through the Frobenius detector theorems (both use Galois-theoretic data to classify objects).\n\n---\n\n### Direction 1: Higher Spectral Pairings and Cubic Reciprocity\n\n**Conjecture**: There exists a SpectralPairing-like structure over the Eisenstein integers \u2124[\u03c9] (where \u03c9 = e^{2\u03c0i/3}) axiomatizing the cubic residue symbol, with reciprocity operator valued in {1, \u03c9, \u03c9\u00b2} rather than {\u22121, 1}. Specifically, define a CubicSpectralPairing as a map f : \u2124[\u03c9] \u2192 \u2124[\u03c9] \u2192 \u2124[\u03c9] with values in {0, 1, \u03c9, \u03c9\u00b2}, multiplicativity in both arguments, and a cubic reciprocity law f(\u03b1, \u03b2) = R(\u03b1, \u03b2) \u00b7 f(\u03b2, \u03b1) where R is a cube root of unity depending on the residue classes of \u03b1, \u03b2 modulo (1 \u2212 \u03c9)\u00b3.\n\n**Test**: Verify the cubic reciprocity law computationally for all pairs of primary primes \u03c0, \u03c1 in \u2124[\u03c9] with norm up to 1000. For each pair, compute the cubic residue symbol (\u03c0/\u03c1)\u2083 and (\u03c1/\u03c0)\u2083 and verify that their ratio equals the predicted cubic reciprocity sign.\n\n**Impact**: If the cubic SpectralPairing axioms are correct, they would extend the shape-color framework from GL\u2081 to a \"GL\u2081 over \u2124[\u03c9]\" setting, providing the first formal axiomatization of cubic reciprocity as a structural object. This would be a concrete step toward higher reciprocity laws.\n\n**Catalog References**: `Applications/LanglandsSpectrum.lean` (SpectralPairing definition), `Algebra/GaloisObstruction.lean` (Galois group structure)\n\n**Proof Strategy**: (1) Define CubicSpectralPairing in Lean, extending SpectralPairing with \u2124[\u03c9]-valued evaluations. (2) Construct the cubic residue symbol as an instance, using Mathlib's `GaussianInt` or custom Eisenstein integer formalization. (3) Prove the cubic reciprocity law as the reciprocity axiom, likely requiring significant new Mathlib infrastructure for cubic residue symbols.\n\n**Domain Bridges**: Number Theory (reciprocity laws) \u2194 Algebra (Eisenstein integers) \u2194 Representation Theory (GL\u2081 over quadratic fields)\n\n**Lineage**: Builds on this cycle's SpectralPairing definition and the Catalog's GL1LanglandsBilinear.lean\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Spectral Kernel Classification and Chebotarev\n\n**Conjecture**: Two SpectralPairings with the same first kernel (i.e., {a : \u03c3\u2081(a, p) = 1} = {a : \u03c3\u2082(a, p) = 1} for all primes p) must be equal. In other words, the kernel determines the pairing. More precisely: if \u03c3\u2081 and \u03c3\u2082 are SpectralPairings such that for every prime p, \u03c3\u2081(a, p) = 1 \u27fa \u03c3\u2082(a, p) = 1 for all a, then \u03c3\u2081 = \u03c3\u2082.\n\n**Test**: Construct two distinct SpectralPairings on small inputs (primes up to 50) and verify their kernels differ. Alternatively, verify that perturbing the Jacobi symbol at a single point changes the kernel at some prime.\n\n**Impact**: This would establish a \"uniqueness from kernels\" theorem, analogous to how a linear functional is determined by its kernel. It would also connect to the Chebotarev density theorem, which says that the splitting behavior of primes in an extension determines the extension.\n\n**Catalog References**: `Applications/LanglandsSpectrum.lean` (SpectralPairing.firstKernel), `Bridges/GaloisNeuralCorrespondence.lean` (Galois expressivity)\n\n**Proof Strategy**: (1) Formalize the statement in Lean. (2) Show that the kernel at p determines \u03c3(\u00b7, p) on units (since \u03c3 takes values in {\u22121, 0, 1}, and the kernel is the preimage of 1, knowing the kernel and the preimage of 0 determines the function). (3) Show the preimage of 0 is determined by gcd, which is independent of the pairing. (4) Conclude that the kernel determines \u03c3 at each prime, hence everywhere by multiplicativity.\n\n**Domain Bridges**: Number Theory (Chebotarev) \u2194 Algebra (spectral pairings) \u2194 Machine Learning (kernel methods \u2014 the name is not coincidental!)\n\n**Lineage**: Builds on this cycle's kernel theory (spectral_kernel_mul_closed, spectral_kernel_one)\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Spectral Pairings as Functors\n\n**Conjecture**: The assignment d \u21a6 S_d (discriminant to splitting spectrum) defines a functor from the category of squarefree integers (with morphisms given by divisibility) to the category of multiplicative functions \u2115 \u2192 {\u22121, 0, 1} (with morphisms given by pointwise comparison). Moreover, this functor preserves products: S_{d\u2081\u00b7d\u2082} = S_{d\u2081} \u00b7 S_{d\u2082} (pointwise).\n\n**Test**: Verify functoriality for all squarefree d\u2081, d\u2082 with |d\u2081|, |d\u2082| \u2264 30: check that S_{d\u2081\u00b7d\u2082}(p) = S_{d\u2081}(p) \u00b7 S_{d\u2082}(p) for all primes p \u2264 100. Also check that if d\u2081 | d\u2082 (as squarefree integers), then the spectrum of d\u2082/d\u2081 is consistent with the ratio of spectra.\n\n**Impact**: Establishing the categorical structure would connect the spectral pairing framework to the existing Catalog work on category-theoretic bridges (e.g., `Bridges/AlgebraEMLClosureComputation.lean`). It would also provide a clean framework for studying the \"composition\" of Langlands correspondences.\n\n**Catalog References**: `Applications/LanglandsSpectrum.lean` (spectrum_product_compose, spectral_composition_assoc), `Bridges/AlgebraEMLClosureComputation.lean` (categorical structures)\n\n**Proof Strategy**: (1) Define the source category (squarefree integers under multiplication, modulo squares). (2) Define the target category (multiplicative functions under pointwise product). (3) Construct the functor using `jacobiSym.mul_left`. (4) Prove functoriality (preservation of composition) using `spectral_composition_assoc`.\n\n**Domain Bridges**: Number Theory (spectral pairings) \u2194 Category Theory (functors) \u2194 EML (algebraic max-closure, from `EML/AlgebraicMaxClosure.lean`)\n\n**Lineage**: Builds on this cycle's spectrum_product_compose and spectral_composition_assoc\n\n**Ambition**: extension\n\n---\n\n### Direction 4: GL\u2082 Spectral Matrix and Modularity\n\n**Conjecture**: There exists a \"GL\u2082 Spectral Matrix\" M(E, p) for elliptic curves E over \u211a and primes p, where M(E, p) = p + 1 \u2212 #E(\ud835\udd3d_p) (the trace of Frobenius). This matrix satisfies an analogue of the SpectralPairing axioms: (1) M(E\u2081 \u00d7 E\u2082, p) relates to M(E\u2081, p) and M(E\u2082, p) via the product formula for L-functions. (2) The \"reciprocity operator\" is the functional equation of the L-function, which relates L(E, s) to L(E, 2\u2212s). (3) The modularity theorem (Wiles) guarantees that each row of M is the Fourier coefficients of a weight-2 modular form.\n\n**Test**: For the first 10 elliptic curves over \u211a (ordered by conductor), compute the GL\u2082 spectral matrix M(E, p) for primes p \u2264 100. Verify that the resulting sequences match the q-expansions of weight-2 newforms from the LMFDB database.\n\n**Impact**: This would extend the spectral pairing framework from GL\u2081 (where the \"spectrum\" is a \u00b11-valued function) to GL\u2082 (where the \"spectrum\" is an integer-valued function satisfying the Hasse-Weil bound |a_p| \u2264 2\u221ap). This is the natural next step in the Langlands program and would connect to the Catalog's existing work on elliptic curves and modular forms.\n\n**Catalog References**: `Applications/LanglandsSpectrum.lean` (SpectralPairing), `Algebra/GaloisObstruction.lean` (Galois theory), `Cryptography/DiophantineCryptoCore.lean` (Diophantine equations)\n\n**Proof Strategy**: (1) Define GL\u2082SpectralPairing in Lean, with evaluation map taking values in \u2124 (not just {\u22121, 0, 1}). (2) Define the Hasse-Weil bound as an axiom. (3) Formalize the trace of Frobenius for specific elliptic curves (e.g., y\u00b2 = x\u00b3 \u2212 x has conductor 32). (4) Verify computationally that the traces match modular form coefficients for small cases.\n\n**Domain Bridges**: Number Theory (Langlands GL\u2082) \u2194 Algebraic Geometry (elliptic curves) \u2194 Analysis (modular forms) \u2194 Cryptography (elliptic curve cryptography)\n\n**Lineage**: Builds on this cycle's SpectralPairing and the Catalog's Galois obstruction theory\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Spectral Pairing Deformations and p-adic Langlands\n\n**Conjecture**: The SpectralPairing axioms admit a continuous family of deformations parametrized by p-adic integers \u2124_p, where the Jacobi symbol is the \"classical limit\" (the value at the trivial character). Specifically, for each continuous p-adic character \u03c8 : \u2124_p\u00d7 \u2192 \u2124_p\u00d7, define \u03c3_\u03c8(a, b) = \u03c8(a) \u00b7 J(a, b). Then \u03c3_\u03c8 satisfies modified SpectralPairing axioms with a twisted reciprocity operator R_\u03c8(a, b) = \u03c8(a/b) \u00b7 R(a, b).\n\n**Test**: For p = 5, compute the deformed spectral pairing \u03c3_\u03c8 for the Teichm\u00fcller character \u03c8 : (\u2124/5\u2124)\u00d7 \u2192 \u2124\u2085\u00d7 and verify that the modified reciprocity law holds for all pairs of odd integers up to 100.\n\n**Impact**: p-adic deformations of the Langlands correspondence are at the frontier of current research (the p-adic Langlands program of Breuil, Colmez, Emerton). Formalizing even the GL\u2081 case would provide foundational infrastructure for this rapidly developing field.\n\n**Catalog References**: `Applications/LanglandsSpectrum.lean`, `Computation/PadicValuationDepth.lean` (p-adic valuations)\n\n**Proof Strategy**: (1) Formalize continuous p-adic characters using Mathlib's `PadicInt`. (2) Define the twisted spectral pairing \u03c3_\u03c8. (3) Prove the modified reciprocity law by combining the classical reciprocity law with the multiplicativity of \u03c8.\n\n**Domain Bridges**: Number Theory (p-adic Langlands) \u2194 Analysis (p-adic analysis) \u2194 Computation (p-adic arithmetic, from `Computation/PadicValuationDepth.lean`)\n\n**Lineage**: Builds on this cycle's SpectralPairing and the Catalog's p-adic valuation theory\n\n**Ambition**: grand_challenge\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0867",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "39b5ec2e",
+    "status": "available",
+    "timestamp": "2026-06-06T19:19:19.787261+00:00",
+    "title": "**Spectral Pairing** as a novel algebraic st"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -2433,7 +2463,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "ab60be36",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -2443,7 +2473,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -3303,7 +3333,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
-    "consumed_by_exp_id": "320647bd",
+    "consumed_by_exp_id": "",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domains": [
       "Algebra",
@@ -3313,12 +3343,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.181414+00:00",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
   {
-    "consumed_by_exp_id": "d5d08f3f",
+    "consumed_by_exp_id": "",
     "description": "Formalize musical counterpoint rules (Fux's species counterpoint) as a category where objects are consonant intervals and morphisms are permitted voice leadings. Conjecture: The category of first-species counterpoint over a diatonic scale is equivalent to the thin category generated by a specific poset of 12 elements. Test: enumerate all valid first-species counterpoint motions and prove they form exactly this category. Impact: bridges music theory, order theory, and categorical logic.",
     "domains": [
       "Algebra",
@@ -3328,7 +3358,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.503715+00:00",
     "title": "Sonic Mathematics: Counterpoint as Category Theory"
   },
@@ -3918,7 +3948,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8741911e",
     "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
     "domains": [
       "Novelty",
@@ -3928,7 +3958,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.593085+00:00",
     "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
@@ -4323,7 +4353,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphisms of Meaning: When Structures Collide"
   },
   {
-    "consumed_by_exp_id": "0c51998f",
+    "consumed_by_exp_id": "",
     "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domains": [
       "Novelty",
@@ -4333,7 +4363,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.852132+00:00",
     "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
@@ -4518,7 +4548,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6ee4fa6a",
     "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
     "domains": [
       "Novelty",
@@ -4528,7 +4558,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:31.030197+00:00",
     "title": "Aleph-1 Surface: Geometry Between Dimensions"
   },
@@ -4563,7 +4593,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
   },
   {
-    "consumed_by_exp_id": "8f3d46f5",
+    "consumed_by_exp_id": "",
     "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
     "domains": [
       "Novelty",
@@ -4573,7 +4603,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:31.073799+00:00",
     "title": "Infinite Games Against Death: Immortality Strategies"
   },

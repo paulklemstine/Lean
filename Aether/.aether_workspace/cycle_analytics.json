@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-06T18:45:16.930686+00:00",
+  "last_updated": "2026-06-06T19:19:21.601463+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -11368,6 +11368,76 @@
       "theorem_count": 4,
       "timestamp": "2026-06-06T18:45:16.771148+00:00",
       "title": "Speculative: Mathematics as an Evolving Ecosystem"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4349,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 243,
+      "domain": "Novelty",
+      "duration_seconds": 4031.1287801265717,
+      "end_time": 1780773504.7312455,
+      "files_integrated": 5,
+      "job_id": "e6d747d5",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.88,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7969,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.7146,
+        "novelty": 0.95,
+        "proof_depth": 0.6137,
+        "usefulness": 0.7818
+      },
+      "quality_score": 0.42864,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780769473.6024654,
+      "strategy_count": 187,
+      "theorem_count": 4,
+      "timestamp": "2026-06-06T19:19:21.403162+00:00",
+      "title": "Counterfactual Number Theory: What If Primes Were Random?"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.596,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 244,
+      "domain": "Applications",
+      "duration_seconds": 4011.2498319149017,
+      "end_time": 1780773505.1190543,
+      "files_integrated": 5,
+      "job_id": "39b5ec2e",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.56,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.744,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.6695,
+        "novelty": 0.93,
+        "proof_depth": 0.5579,
+        "usefulness": 0.7539
+      },
+      "quality_score": 0.22360000000000002,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780769493.8692224,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T19:19:21.506546+00:00",
+      "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
     }
   ]
 }

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "39b5ec2e",
     "filename": "langlands_for_toddlers_galois_groups_as_shapes_aut.json",
     "pkg_num": 402,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.22360000000000002,
     "title": "Spectral Pairing Algebra: Shape-Color Duality in GL\u2081 Langlands"
   },
   {
@@ -12809,8 +12809,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "langlands_for_toddlers_galois_groups_as_shapes_aut",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.22360000000000002,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Spectral Pairing Algebra: Shape-Color Duality in GL\u2081 Langlands"
     }
