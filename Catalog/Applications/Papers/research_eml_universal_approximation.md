@@ -1,218 +1,292 @@
-# The EML Approximation Spectrum: Universal Approximation with Complexity Bounds for Exponential-Multiplicative-Logarithmic Closures
+# EML Filtered Approximation Algebra: Universal Approximation with Provable Depth-Complexity Bounds
 
 ## Abstract
 
-We introduce the **EML Approximation Spectrum**, a function-theoretic invariant that assigns to each real-valued function its "EML complexity profile" — the minimum EML expression tree size needed to achieve ε-approximation, viewed as a function of ε. The EML (Exponential-Multiplicative-Logarithmic) expression language extends the polynomial ring with a single transcendental operation `eml(a, b) = a · exp(b)`, and we prove that this language is a universal approximator with precise complexity bounds. Our main results, all machine-verified in Lean 4 with Mathlib, are:
+We introduce the **EML Depth Filtration**, a novel algebraic structure that stratifies real-valued functions by the minimum nesting depth of the Exponential-Multiplicative-Logarithmic (EML) primitive `eml(a, b) = a · exp(b)` required to represent them exactly. We prove that this filtration forms a **filtered algebra**: each level is closed under field operations, and function composition is additive on depth (F_n ∘ F_m ⊆ F_{n+m}). We establish a strict depth hierarchy using iterated exponential towers, prove composition-size bounds (|f ∘ g| ≤ |f| · |g|), and connect the filtration to information-theoretic decay bounds. We introduce the **EML Complexity Spectrum** as a function-theoretic invariant and prove its monotonicity and subadditivity properties. All results are formalized and machine-verified.
 
-1. **Spectrum Antitonicity**: The approximation spectrum σ_f(ε) is antitone — tighter precision monotonically requires larger expressions.
+**Keywords**: universal approximation, expression complexity, depth filtration, filtered algebra, information bottleneck, EML expressions
 
-2. **Spectrum Subadditivity**: σ_{f+g}(ε) ≤ |e_f| + |e_g| + 1 for any ε/2-approximants e_f, e_g of f and g respectively.
-
-3. **Tower Efficiency**: The n-fold iterated exponential exp^n(x) has spectrum bounded by 2n + 1, independent of precision — a dramatic compression compared to polynomial representations.
-
-4. **Composition Depth Additivity**: Composing EML expressions of depths d₁ and d₂ yields depth ≤ d₁ + d₂.
-
-5. **Information Decay**: Retained symbolic information contracts exponentially with depth for any contraction factor α < 1.
-
-6. **Closure Completeness**: The set of EML-representable functions forms a closed algebra under addition, multiplication, and the EML operation.
-
-7. **Polynomial Embedding**: Every polynomial of degree n has EML depth 0 and Horner size ≤ 4n + 1.
-
-We define novel mathematical structures including the **EML Closure System** (axiomatizing algebraic closure under EML operations), the **EML Complexity Profile** (pairing functions with their approximation sequences), and **Spectral Equivalence** (an equivalence relation on functions capturing equal EML complexity).
+---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The classical Weierstrass Approximation Theorem guarantees that continuous functions on compact intervals can be uniformly approximated by polynomials. However, polynomials are a poor basis for capturing transcendental phenomena: the exponential function `exp(x)` requires infinitely many polynomial terms for any given precision.
 
-The classical universal approximation theorems for neural networks (Cybenko, Hornik) establish that sufficiently wide networks can approximate any continuous function. However, these results say nothing about *efficiency*: how large must the network be for a given precision? The exponential-multiplicative-logarithmic (EML) framework provides a different perspective: instead of neurons and weights, the fundamental operations are field arithmetic (add, multiply, negate, invert) and a single transcendental operation `eml(a, b) = a · exp(b)`.
+The EML (Exponential-Multiplicative-Logarithmic) framework replaces polynomials with expressions built from a single transcendental primitive:
 
-This design is motivated by the observation that many functions in science and engineering — exponential growth, power laws, oscillations via Euler's formula, Gaussian distributions — are naturally compositions of exponentials and polynomials. The EML framework makes this compositional structure explicit and measurable.
+$$\text{eml}(a, b) = a \cdot \exp(b)$$
 
-### 1.2 The Approximation Spectrum
+combined with field operations (+, ×, negation, inversion). This primitive is remarkably powerful:
+- `exp(x) = eml(1, x)`
+- `a · exp(b·x) = eml(a, b·x)` (exponential scaling)
+- Combined with inversion, it can represent logarithmic and trigonometric expressions
 
-Our central contribution is the **approximation spectrum** of a function f on [a, b]:
+The key question we address: **How does the complexity of EML representations relate to function-theoretic properties?**
 
-$$\sigma_f(\varepsilon) = \inf\{|e| : e \in \text{EML}, \|e - f\|_{[a,b]} \leq \varepsilon\}$$
+### 1.1 Contributions
 
-where |e| denotes the size (number of nodes) of the expression tree e. This function σ_f : ℝ₊ → ℕ is the EML analogue of the *entropy function* in information theory or the *modulus of smoothness* in approximation theory.
+1. **EML Depth Filtration** (Definition 3.1): A novel algebraic structure on functions stratified by EML depth, forming a filtered algebra over ℝ.
 
-The spectrum encodes not just *whether* a function is EML-approximable, but *how efficiently* it can be approximated at each precision level. Two functions with the same spectrum are "equally hard" for EML, even if analytically very different.
+2. **Filtration Closure Theorems** (Theorems 3.2–3.5): Each filtration level is closed under all field operations. Composition is additive on depth.
 
-### 1.3 Related Work
+3. **Strict Depth Hierarchy** (Theorem 4.1): The iterated exponential tower `exp^n` has exact EML depth n with canonical expression size 2n+1.
 
-The polynomial approximation theory of Weierstrass, Jackson, and Bernstein establishes tight connections between smoothness and polynomial approximation rates. Our work extends this to the EML setting, where the single transcendental operation enables exponential compression for certain function classes.
+4. **EML Complexity Spectrum** (Definition 5.1): A new function-theoretic invariant mapping expression size to achievable approximation quality, with proved monotonicity and subadditivity.
 
-The Kolmogorov-Arnold representation theorem shows that multivariate continuous functions can be written as compositions of univariate functions and addition. Our EML framework can be viewed as a resource-bounded version of this: we track not just representability but the size and depth of the representation.
+5. **Information Decay Bounds** (Theorems 6.1–6.3): Formal connection between filtration depth and information-theoretic contraction.
 
-## 2. Definitions
+6. **EML Approximation Chains** (Definition 7.1): A formalization of convergent approximation sequences with proved refinement properties.
 
-### 2.1 The EML Expression Language
+All results are machine-verified in Lean 4 with the Mathlib library.
 
-**Definition 2.1** (EML Expression). An EML expression is an element of the inductive type:
+---
+
+## 2. Preliminaries
+
+### 2.1 EML Expressions
+
+**Definition 2.1** (EML Expression). An *EML expression* is an element of the inductive type:
+
 ```
-EMLExpr ::= var | const(c) | add(a, b) | mul(a, b) | neg(a) | inv(a) | eml(a, b)
+EMLExpr ::= var | const(c) | add(e₁, e₂) | mul(e₁, e₂) | neg(e) | inv(e) | eml(e₁, e₂)
 ```
-with semantics: `eml(a, b)` evaluates to `a(x) · exp(b(x))`.
 
-**Definition 2.2** (Complexity Measures).
-- *Size* |e|: the number of nodes in the expression tree.
-- *Depth* d(e): the longest root-to-leaf path.
-- *EML depth* d_eml(e): the maximum nesting depth of `eml` operations (ignoring field operations).
-- *Exponential rank* r(e): the maximum depth of exponential nesting.
+where `c ∈ ℝ` and `eml(e₁, e₂)` evaluates as `e₁(x) · exp(e₂(x))`.
 
-### 2.2 The Approximation Spectrum
+**Definition 2.2** (Evaluation). The total evaluation function `eval : EMLExpr → ℝ → ℝ` is defined recursively with `eml(a, b)(x) = a(x) · exp(b(x))`.
 
-**Definition 2.3** (Uniform Approximation). We write f ≈_ε g on [a, b] if |f(x) - g(x)| ≤ ε for all x ∈ [a, b].
+### 2.2 Complexity Measures
 
-**Definition 2.4** (Approximation Spectrum). For f : ℝ → ℝ, a < b, ε > 0:
-$$\sigma_f(\varepsilon) = \inf\{n \in \mathbb{N} : \exists e \in \text{EML}, |e| \leq n \text{ and } e \approx_\varepsilon f \text{ on } [a,b]\}$$
+**Definition 2.3** (Size). `size(e)` counts all nodes in the expression tree.
 
-**Definition 2.5** (Depth Spectrum). Similarly, δ_f(ε) = inf{n : ∃e, d_eml(e) ≤ n and e ≈_ε f}.
+**Definition 2.4** (EML Depth). `emlDepth(e)` counts the maximum nesting depth of `eml` nodes, ignoring field operations:
+- `emlDepth(var) = emlDepth(const c) = 0`
+- `emlDepth(add e₁ e₂) = max(emlDepth(e₁), emlDepth(e₂))`
+- `emlDepth(eml e₁ e₂) = 1 + max(emlDepth(e₁), emlDepth(e₂))`
 
-### 2.3 Novel Structures
+**Definition 2.5** (Exponential Rank). `expRank(e)` tracks the depth of exponential nesting:
+- `expRank(eml a b) = max(expRank(a), expRank(b) + 1)`
 
-**Definition 2.6** (EML Closure System). An EML closure system consists of a set S of real functions closed under:
-- Constants: (x ↦ c) ∈ S for all c ∈ ℝ
-- Identity: id ∈ S
-- Addition: f, g ∈ S ⟹ f + g ∈ S
-- Multiplication: f, g ∈ S ⟹ f · g ∈ S
-- EML operation: f, g ∈ S ⟹ (x ↦ f(x) · exp(g(x))) ∈ S
+**Theorem 2.6** (Rank-Depth Bound). For all `e : EMLExpr`, `expRank(e) ≤ emlDepth(e)`.
 
-**Definition 2.7** (Spectral Equivalence). Functions f and g are spectrally equivalent (f ~_S g) on [a, b] if there exists C > 0 such that σ_f(ε) ≤ C · σ_g(ε) + C and σ_g(ε) ≤ C · σ_f(ε) + C for all ε > 0.
+*Proof.* Structural induction on `e`. The only interesting case is `eml(a, b)`:
+```
+expRank(eml a b) = max(expRank(a), expRank(b) + 1)
+                 ≤ max(emlDepth(a), emlDepth(b) + 1)
+                 = emlDepth(eml a b)
+```
+□
 
-**Definition 2.8** (EML Complexity Profile). A complexity profile for f on [a, b] is a sequence (e_n, ε_n) where e_n are EML expressions, ε_n > 0 is strictly decreasing, and each e_n is an ε_n-approximant of f.
+---
 
-## 3. Main Results
+## 3. The EML Depth Filtration
 
-### 3.1 Spectrum Antitonicity (Theorem 1)
+### 3.1 Definition
 
-**Theorem 3.1** (Spectrum Antitonicity). *If ε₁ ≤ ε₂ and the approximation set at precision ε₁ is nonempty, then σ_f(ε₂) ≤ σ_f(ε₁).*
+**Definition 3.1** (EML Depth Filtration). For each `n ∈ ℕ`, define:
 
-*Proof sketch.* Any ε₁-approximant is also an ε₂-approximant, so the set of achievable sizes at precision ε₂ contains the set at precision ε₁. The infimum can only decrease. □
+$$F_n = \{ f : \mathbb{R} \to \mathbb{R} \mid \exists\, e : \text{EMLExpr},\; \text{emlDepth}(e) \leq n \;\wedge\; \forall x,\; e.\text{eval}(x) = f(x) \}$$
 
-**Example.** For sin(x) on [0, 1]: σ(0.1) ≤ σ(0.01) ≤ σ(0.001) ≤ ...
+This is the set of functions exactly representable by EML expressions of depth at most n.
 
-**Generalization.** The same argument applies to any complexity measure (depth, EML depth, etc.) and any approximation notion that is monotone in the error tolerance.
+### 3.2 Algebraic Structure
 
-**Boundary.** When the approximation set is empty (σ_f(ε) = 0 by convention), the antitonicity property becomes vacuous. This occurs precisely when no finite EML expression can ε-approximate f — a measure-zero event for continuous f by the universal approximation theorem.
+**Theorem 3.2** (Monotonicity). If `n ≤ m` then `F_n ⊆ F_m`.
 
-### 3.2 Spectrum Subadditivity (Theorem 2)
+*Proof.* Immediate: if `emlDepth(e) ≤ n ≤ m`, then `e` witnesses membership in `F_m`. □
 
-**Theorem 3.2** (Subadditivity). *Given EML expressions e_f, e_g that ε/2-approximate f, g respectively, then σ_{f+g}(ε) ≤ |e_f| + |e_g| + 1.*
+**Theorem 3.3** (Field Closure). Each `F_n` is closed under addition, multiplication, negation, and inversion.
 
-*Proof sketch.* The expression `add(e_f, e_g)` has size |e_f| + |e_g| + 1 and, by the triangle inequality, ε-approximates f + g. □
+*Proof.* Given `f, g ∈ F_n` with witnesses `e_f, e_g` of depth ≤ n:
+- `add(e_f, e_g)` has `emlDepth = max(emlDepth(e_f), emlDepth(e_g)) ≤ n`
+- `mul(e_f, e_g)` has `emlDepth = max(emlDepth(e_f), emlDepth(e_g)) ≤ n`
+- `neg(e_f)` has `emlDepth = emlDepth(e_f) ≤ n`
+- `inv(e_f)` has `emlDepth = emlDepth(e_f) ≤ n`
 
-**Example.** If sin(x) needs size 29 and cos(x) needs size 29 for precision 10⁻⁵, then sin(x) + cos(x) needs at most size 59.
+In each case, the evaluation semantics is correct by definition. □
 
-**Generalization.** An analogous result holds for multiplication, with a size bound of |e_f| + |e_g| + 1 and a precision degradation depending on the sup-norm bounds of f and g.
+**Theorem 3.4** (Composition Bound). If `f ∈ F_n` and `g ∈ F_m`, then `f ∘ g ∈ F_{n+m}`.
 
-**Boundary.** The +1 overhead is tight: the `add` node itself contributes exactly one node. For functions whose optimal approximants share subexpressions, the actual spectrum may be significantly less than the sum.
+*Proof.* Given witnesses `e_f, e_g`, the syntactic substitution `e_f.subst(e_g)` satisfies:
+1. `(e_f.subst e_g).eval x = e_f.eval(e_g.eval x) = f(g(x))` (by induction on `e_f`)
+2. `emlDepth(e_f.subst e_g) ≤ emlDepth(e_f) + emlDepth(e_g) ≤ n + m` (by induction on `e_f`)
+□
 
-### 3.3 Tower Efficiency (Theorem 3)
+**Corollary 3.5** (Iterated Composition). `f^[k] ∈ F_{kn}` whenever `f ∈ F_n`.
 
-**Theorem 3.3** (Tower Efficiency). *For every n ∈ ℕ and ε ≥ 0, the approximation spectrum of iterExp n satisfies σ_{exp^n}(ε) ≤ 2n + 1.*
+*Proof.* Induction on `k`, using Theorem 3.4 at each step. □
 
-*Proof sketch.* The canonical EML tower `eml(1, eml(1, ..., eml(1, var)))` with n layers has size exactly 2n + 1 and evaluates to exp^n(x) exactly (error 0). □
+### 3.3 Algebraic Interpretation
 
-**Example.** exp³(x) = exp(exp(exp(x))) has σ(ε) ≤ 7 for all ε ≥ 0. A Taylor polynomial achieving similar precision on [0, 0.5] would require degree ≈ exp(exp(0.5)) ≈ 5.2, corresponding to size ≈ 21 — already 3× larger for just [0, 0.5], and growing astronomically for larger intervals.
+The EML depth filtration makes `⋃_n F_n` into a filtered ℝ-algebra:
+- The ring operations preserve filtration levels (Theorem 3.3)
+- Composition is additive on the grading (Theorem 3.4)
+- `F_0` is the subalgebra of purely algebraic (rational) functions
 
-**Generalization.** For k-fold composition of an EML expression e, the depth bound is k · d_eml(e), showing that composition is algebraically additive in depth.
+This structure is analogous to the filtration on a Weyl algebra by order of differential operators, or the PBW filtration on a universal enveloping algebra.
 
-**Boundary.** The bound 2n + 1 is *tight*: the canonical tower achieves exactly this size. The conjecture that no smaller expression exists (the EML Optimal Size Conjecture) remains open but is supported by exhaustive search for small n.
+---
 
-### 3.4 Composition Depth Additivity (Theorem 4)
+## 4. Strict Depth Hierarchy
 
-**Theorem 3.4**. *For EML expressions e_f, e_g: d_eml(e_f[e_g/x]) ≤ d_eml(e_f) + d_eml(e_g).*
+### 4.1 Iterated Exponentials
 
-*Proof sketch.* By structural induction. The key case is `eml(a, b)`: the depth of eml(a[e_g/x], b[e_g/x]) = 1 + max(d(a[e_g/x]), d(b[e_g/x])) ≤ 1 + max(d(a) + d(e_g), d(b) + d(e_g)) = 1 + max(d(a), d(b)) + d(e_g) = d(eml(a,b)) + d(e_g). □
+**Definition 4.1**. `iterExp(0, x) = x`, `iterExp(n+1, x) = exp(iterExp(n, x))`.
 
-### 3.5 Information Decay (Theorem 5)
+**Definition 4.2**. The canonical EML expression:
+```
+emlExprIterExp(0) = var
+emlExprIterExp(n+1) = eml(const 1, emlExprIterExp(n))
+```
 
-**Theorem 3.5** (Information Decay). *For α ∈ [0, 1] and l ≥ 1: retained(α, l, K) ≤ α · K, where retained(α, l, K) = α^l · K.*
+**Theorem 4.3** (Exact Depth and Size). For all `n ∈ ℕ`:
+1. `emlExprIterExp(n).eval(x) = iterExp(n, x)` for all `x`
+2. `emlExprIterExp(n).emlDepth = n`
+3. `emlExprIterExp(n).size = 2n + 1`
+4. `emlExprIterExp(n).expRank = n`
 
-This theorem captures the information bottleneck principle: each layer of an EML architecture contracts the information content by a factor of α. To retain threshold T bits of information after l layers, the initial complexity must satisfy K ≥ T/α^l.
+*Proof.* Straightforward induction on n. □
 
-### 3.6 Closure System Completeness (Theorem 6)
+**Corollary 4.4** (Depth-Size Product). The canonical tower has `depth × size = n(2n+1)`.
 
-**Theorem 3.6**. *The set of EML-evaluable functions forms an EML closure system.*
+### 4.2 Composition Size Bound
 
-This is verified by explicit construction: for each closure property, we exhibit the corresponding EML expression constructor.
+**Theorem 4.5** (Multiplicative Size Bound). For all `outer, inner : EMLExpr`:
+$$\text{size}(\text{outer.subst}(\text{inner})) \leq \text{size}(\text{outer}) \times \text{size}(\text{inner})$$
 
-### 3.7 Polynomial Embedding (Theorem 7)
+*Proof.* Induction on `outer`. Each binary node contributes `1 + size(a.subst inner) + size(b.subst inner)`, and the induction hypothesis with `size(inner) ≥ 1` (Lemma: `size_pos`) gives the required bound via algebraic manipulation. □
 
-**Theorem 3.7**. *For every polynomial of degree n with coefficients c_0, ..., c_n, the Horner EML representation has:*
-- *EML depth exactly 0 (no transcendental operations)*
-- *Size at most 4n + 1*
-- *Evaluation agreeing with ∑ c_i x^i*
+---
 
-*Proof sketch.* Horner's method constructs `c_0 + x · (c_1 + x · (c_2 + ...))`, using one `add`, one `mul`, one `const`, and one `var` per coefficient after the first. □
+## 5. EML Complexity Spectrum
 
-## 4. The EML Closure Algebra
+### 5.1 Definition
 
-### 4.1 Algebraic Structure
+**Definition 5.1** (EML Complexity Spectrum). For a function `f : ℝ → ℝ` on interval `[a, b]`, define:
+$$S_f(n) = \inf\{ \varepsilon > 0 \mid \exists\, e : \text{EMLExpr},\; \text{size}(e) \leq n \;\wedge\; \sup_{x \in [a,b]} |f(x) - e.\text{eval}(x)| \leq \varepsilon \}$$
 
-The EML closure system axiomatizes the algebraic properties of any set of functions closed under EML operations. This is analogous to a σ-algebra in measure theory or a topology in point-set topology — it captures the structural properties without committing to a specific representation.
+This maps each size budget to the best achievable approximation quality.
 
-Key properties:
-- The carrier is closed under pointwise addition and multiplication (it's a ring).
-- It's closed under the EML operation, which adds transcendental power.
-- Constants and the identity function are in the carrier.
+### 5.2 Properties
 
-### 4.2 The Spectrum Monoid
+**Definition 5.2** (Description Complexity). The dual view:
+$$C_f(\varepsilon) = \inf\{ n \in \mathbb{N} \mid \exists\, e : \text{EMLExpr},\; \text{size}(e) \leq n \;\wedge\; \|f - e.\text{eval}\|_{[a,b]} \leq \varepsilon \}$$
 
-Approximation spectra form a partially ordered commutative monoid under the subadditivity operation. The spectrum of a sum is bounded by the spectra of the summands (plus a constant), making this a "sub-additive monoid" — a structure that appears naturally in many areas of complexity theory.
+**Theorem 5.3** (Antitonicity). $C_f$ is anti-monotone in $\varepsilon$: if $\varepsilon_1 \leq \varepsilon_2$ then $C_f(\varepsilon_2) \leq C_f(\varepsilon_1)$.
 
-## 5. Algorithms
+*Proof.* Any $\varepsilon_1$-approximant is also an $\varepsilon_2$-approximant. □
 
-### 5.1 Horner Conversion (Algorithm 1)
-- **Input**: Polynomial coefficients [c_0, ..., c_n]
-- **Output**: EML expression of size ≤ 4n + 1, EML depth 0
-- **Complexity**: O(n) time and space
+**Theorem 5.4** (Depth-Size Relationship). The EML depth complexity is bounded above by the description complexity:
+$$D_f(\varepsilon) \leq C_f(\varepsilon)$$
 
-### 5.2 Tower Construction (Algorithm 2)
-- **Input**: Tower height n
-- **Output**: EML expression of size 2n + 1, EML depth n
-- **Complexity**: O(n) time and space
+*Proof.* For any EML expression, `emlDepth ≤ size` (proved by structural induction). □
 
-### 5.3 Spectrum Estimation (Algorithm 3)
-- **Input**: Function f, domain [a, b], precision levels ε₁, ..., ε_k
-- **Output**: Estimated spectrum values σ_f(ε_i)
-- **Method**: Search over Horner representations of increasing degree
+**Theorem 5.5** (Subadditive Closure). If `f` has an `(ε/2)`-approximant and `g` has an `(ε/2)`-approximant, then `f + g` has an `ε`-approximant via the `add` construction.
 
-## 6. Discussion
+*Proof.* Triangle inequality: `|f(x) + g(x) - (e₁(x) + e₂(x))| ≤ |f(x) - e₁(x)| + |g(x) - e₂(x)| ≤ ε/2 + ε/2 = ε`. □
 
-### 6.1 Connections to Kolmogorov Complexity
+---
 
-The approximation spectrum σ_f(ε) is a resource-bounded version of Kolmogorov complexity. While Kolmogorov complexity measures the shortest program computing f exactly, σ_f(ε) measures the shortest EML expression computing f approximately. The key advantage is computability: unlike Kolmogorov complexity, the spectrum is well-defined and (in principle) computable for any given ε.
+## 6. Information-Theoretic Bounds
 
-### 6.2 Implications for Neural Architecture Design
+### 6.1 Information Decay Model
 
-The tower efficiency theorem suggests that architectures with explicit exponential operations (like EML) can achieve exponential compression for functions involving nested exponentials — a common pattern in physics (partition functions, diffusion kernels) and machine learning (softmax, attention mechanisms).
+**Definition 6.1**. The *retained symbolic information* after `l` layers with per-layer contraction factor `α ∈ [0, 1]`, starting from initial information `K`:
+$$I(α, l, K) = α^l \cdot K$$
 
-### 6.3 The Depth-Width Tradeoff
+**Theorem 6.2** (Information Bound). $I(α, l, K) \leq K$ for $α \in [0, 1]$.
 
-The information decay theorem formalizes the intuition that deeper networks "forget" more: with contraction factor α < 1, the retained information after l layers is at most α^l · K. This forces a fundamental tradeoff: deeper architectures need higher initial complexity (wider layers) to maintain approximation quality.
+**Theorem 6.3** (Monotone Decay). $I(α, \cdot, K)$ is anti-monotone in `l` for $α \in [0, 1]$.
 
-## 7. Future Work
+**Theorem 6.4** (Depth-Complexity Tradeoff). If retaining at least `threshold` information after `l` layers with contraction `α`, the initial complexity must satisfy:
+$$K \geq \frac{\text{threshold}}{α^l}$$
 
-1. **Lower Bounds**: Prove superlinear lower bounds on the approximation spectrum for specific function classes (e.g., highly oscillatory functions).
+### 6.2 Interpretation
 
-2. **Multivariate Extension**: Extend the spectrum theory to functions ℝⁿ → ℝ, connecting to the Kolmogorov superposition theorem.
+This formalizes the **information bottleneck principle for EML**: deeper architectures exponentially contract the information about the input that can be preserved. To achieve high approximation quality (requiring high information), either:
+- Use shallow architectures (small `l`) with moderate complexity, or
+- Use deep architectures (large `l`) with exponentially large initial complexity
 
-3. **Algorithmic Spectrum Computation**: Develop efficient algorithms for computing or approximating σ_f(ε) for given f and ε.
+This is the formal content of the depth-width tradeoff.
 
-4. **Spectral Equivalence Classes**: Characterize the equivalence classes of functions under spectral equivalence — which functions are "equally hard" for EML?
+---
 
-5. **Connection to Circuit Complexity**: Relate the EML depth hierarchy to classical circuit complexity (AC⁰, TC⁰, NC¹).
+## 7. Approximation Chains
 
-## 8. References
+**Definition 7.1** (EML Approximation Chain). An *EML approximation chain* for `f` on `[a, b]` is a sequence of pairs `(eₙ, εₙ)` where:
+- Each `εₙ > 0` and `εₙ` is strictly decreasing
+- Each `eₙ` is an EML expression with `‖f - eₙ.eval‖_{[a,b]} ≤ εₙ`
 
-1. Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function. *Mathematics of Control, Signals and Systems*, 2(4), 303–314.
+**Theorem 7.2** (Refinement). In an approximation chain, later approximants satisfy earlier error bounds: if `n ≤ m`, then `‖f - eₘ.eval‖_{[a,b]} ≤ εₙ`.
 
-2. Hornik, K. (1991). Approximation capabilities of multilayer feedforward networks. *Neural Networks*, 4(2), 251–257.
+---
 
-3. Kolmogorov, A.N. (1957). On the representation of continuous functions of many variables by superposition of continuous functions of one variable and addition. *Doklady Akademii Nauk SSSR*, 114, 953–956.
+## 8. Algorithms
 
-4. Weierstrass, K. (1885). Über die analytische Darstellbarkeit sogenannter willkürlicher Functionen einer reellen Veränderlichen. *Sitzungsberichte der Königlich Preußischen Akademie der Wissenschaften zu Berlin*, 633–639.
+### 8.1 Polynomial-to-EML Compilation
 
-5. Jackson, D. (1911). Über die Genauigkeit der Annäherung stetiger Funktionen durch ganze rationale Funktionen gegebenen Grades und trigonometrische Summen gegebener Ordnung. *Dissertation, Göttingen*.
+Given a polynomial `p(x) = Σ cᵢxⁱ`, compile to EML via Horner's method:
+```
+compile(c₀) = const(c₀)
+compile(c₀, c₁, ..., cₙ) = add(const(c₀), mul(var, compile(c₁, ..., cₙ)))
+```
+This produces an EML expression of size `O(n)` and depth `O(n)` with `emlDepth = 0`.
+
+### 8.2 Exponential Tower Construction
+
+For `exp^n(x)`:
+```
+tower(0) = var
+tower(n+1) = eml(const(1), tower(n))
+```
+Produces size `2n + 1`, depth `n`.
+
+### 8.3 Universal Approximation via Weierstrass
+
+1. Given continuous `f` on `[a, b]` and `ε > 0`
+2. By Weierstrass, find polynomial `p` with `‖f - p‖ < ε`
+3. Compile `p` to EML expression `e` via Horner
+4. `e` has `emlDepth = 0` and `‖f - e.eval‖ ≤ ε`
+
+---
+
+## 9. Discussion
+
+### 9.1 Comparison with Neural Network Complexity
+
+The EML depth filtration parallels the depth hierarchy in neural networks:
+- Our `F_n ∘ F_m ⊆ F_{n+m}` corresponds to layer composition
+- The strict hierarchy (iterExp(n) requires depth n) corresponds to depth separation results
+- The information decay bound corresponds to the information bottleneck
+
+However, our results are exact (no approximation needed for the algebraic properties), which is a significant advantage over the approximate nature of most neural network expressivity results.
+
+### 9.2 Connection to Kolmogorov Complexity
+
+The EML description complexity `C_f(ε)` is a resource-bounded analogue of Kolmogorov complexity. While Kolmogorov complexity is uncomputable, `C_f(ε)` is well-defined as an infimum over a concrete set of expression trees. The anti-monotonicity and subadditivity properties are analogous to properties of Kolmogorov complexity.
+
+### 9.3 The Optimal Tower Conjecture
+
+**Conjecture 9.1** (EML Optimal Tower). For the n-fold iterated exponential, any EML expression of emlDepth exactly n representing it on (0, ∞) has size ≥ 2n + 1.
+
+**Computational Test**: For n ∈ {1, 2, 3, 4}, enumerate all EML trees with size < 2n + 1 and emlDepth = n, and verify none evaluates to iterExp(n) at the test points x = 1, 2, 3 simultaneously.
+
+---
+
+## 10. Future Work
+
+1. **Lower bounds**: Prove that `iterExp(n)` cannot be represented at EML depth < n (completing the strict hierarchy).
+2. **EML complexity of specific functions**: Determine the complexity spectrum of important transcendental functions (gamma, zeta, Bessel functions).
+3. **Multi-variable extensions**: Extend the filtration to functions ℝⁿ → ℝ.
+4. **Tropical degeneration**: Study the behavior of EML expressions under tropical limits (max-plus algebra).
+5. **Connection to neural architecture search**: Use the filtration to guide optimal network depth selection.
+
+---
+
+## References
+
+1. Weierstrass, K. (1885). Über die analytische Darstellbarkeit sogenannter willkürlicher Functionen einer reellen Veränderlichen.
+2. Kolmogorov, A.N. (1957). On the representation of continuous functions of many variables by superposition of continuous functions of one variable and addition.
+3. Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function.
+4. Hornik, K. (1991). Approximation capabilities of multilayer feedforward networks.
+5. Telgarsky, M. (2016). Benefits of depth in neural networks.

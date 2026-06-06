@@ -1,353 +1,311 @@
 #!/usr/bin/env python3
 """
-EML Approximation Spectrum — Core Algorithms
+EML Filtered Approximation Algebra — Core Algorithms
 
-Type-hinted implementations of the key algorithms from the EML approximation
-spectrum theory, including:
-1. EML expression evaluation and complexity measurement
-2. Approximation spectrum computation (brute-force and heuristic)
-3. Horner polynomial-to-EML conversion
-4. Information decay computation
-5. Optimal EML expression search
+Type-hinted implementations of the key algorithms from the research.
 """
 
-import math
+from __future__ import annotations
 from dataclasses import dataclass
-from enum import Enum, auto
-from typing import Callable, Dict, List, Optional, Tuple
+from typing import Callable, List, Tuple, Optional
+import math
 
 
 # ============================================================
-# Algorithm 1: EML Expression Data Structure
+# Algorithm 1: EML Expression Tree with Evaluation
 # ============================================================
-
-class NodeType(Enum):
-    VAR = auto()
-    CONST = auto()
-    ADD = auto()
-    MUL = auto()
-    NEG = auto()
-    INV = auto()
-    EML = auto()  # eml(a, b) = a * exp(b)
-
 
 @dataclass
 class EMLNode:
-    """A node in an EML expression tree."""
-    node_type: NodeType
-    value: Optional[float] = None  # for CONST nodes
-    left: Optional['EMLNode'] = None
-    right: Optional['EMLNode'] = None
+    """Base class for EML expression nodes."""
+    pass
 
-    def eval(self, x: float) -> float:
-        """Evaluate the expression at x."""
-        if self.node_type == NodeType.VAR:
-            return x
-        elif self.node_type == NodeType.CONST:
-            return self.value or 0.0
-        elif self.node_type == NodeType.ADD:
-            return self.left.eval(x) + self.right.eval(x)
-        elif self.node_type == NodeType.MUL:
-            return self.left.eval(x) * self.right.eval(x)
-        elif self.node_type == NodeType.NEG:
-            return -self.left.eval(x)
-        elif self.node_type == NodeType.INV:
-            v = self.left.eval(x)
-            return 1.0 / v if v != 0 else float('inf')
-        elif self.node_type == NodeType.EML:
-            a_val = self.left.eval(x)
-            b_val = self.right.eval(x)
-            if b_val > 700:
-                return float('inf') if a_val > 0 else float('-inf')
-            return a_val * math.exp(b_val)
-        return 0.0
+@dataclass
+class VarNode(EMLNode):
+    """Variable node: evaluates to the input."""
+    pass
 
-    def size(self) -> int:
-        """Count the number of nodes."""
-        if self.node_type in (NodeType.VAR, NodeType.CONST):
-            return 1
-        elif self.node_type in (NodeType.NEG, NodeType.INV):
-            return 1 + self.left.size()
-        else:
-            return 1 + self.left.size() + self.right.size()
+@dataclass
+class ConstNode(EMLNode):
+    """Constant node."""
+    value: float
 
-    def eml_depth(self) -> int:
-        """Compute the EML depth (nesting of eml operations)."""
-        if self.node_type in (NodeType.VAR, NodeType.CONST):
-            return 0
-        elif self.node_type in (NodeType.NEG, NodeType.INV):
-            return self.left.eml_depth()
-        elif self.node_type == NodeType.EML:
-            return 1 + max(self.left.eml_depth(), self.right.eml_depth())
-        else:  # ADD, MUL
-            return max(self.left.eml_depth(), self.right.eml_depth())
+@dataclass
+class AddNode(EMLNode):
+    """Addition: left + right."""
+    left: EMLNode
+    right: EMLNode
 
-    def tree_depth(self) -> int:
-        """Compute the tree depth."""
-        if self.node_type in (NodeType.VAR, NodeType.CONST):
-            return 0
-        elif self.node_type in (NodeType.NEG, NodeType.INV):
-            return 1 + self.left.tree_depth()
-        else:
-            return 1 + max(self.left.tree_depth(), self.right.tree_depth())
+@dataclass
+class MulNode(EMLNode):
+    """Multiplication: left * right."""
+    left: EMLNode
+    right: EMLNode
+
+@dataclass
+class NegNode(EMLNode):
+    """Negation: -child."""
+    child: EMLNode
+
+@dataclass
+class InvNode(EMLNode):
+    """Inversion: 1/child."""
+    child: EMLNode
+
+@dataclass
+class EmlNode(EMLNode):
+    """EML primitive: coeff * exp(exponent)."""
+    coeff: EMLNode
+    exponent: EMLNode
+
+
+def eml_eval(node: EMLNode, x: float) -> float:
+    """Evaluate an EML expression tree at point x."""
+    if isinstance(node, VarNode):
+        return x
+    elif isinstance(node, ConstNode):
+        return node.value
+    elif isinstance(node, AddNode):
+        return eml_eval(node.left, x) + eml_eval(node.right, x)
+    elif isinstance(node, MulNode):
+        return eml_eval(node.left, x) * eml_eval(node.right, x)
+    elif isinstance(node, NegNode):
+        return -eml_eval(node.child, x)
+    elif isinstance(node, InvNode):
+        v = eml_eval(node.child, x)
+        return 1.0 / v if v != 0 else float('inf')
+    elif isinstance(node, EmlNode):
+        a = eml_eval(node.coeff, x)
+        b = eml_eval(node.exponent, x)
+        return a * math.exp(min(b, 500))  # overflow protection
+    else:
+        raise ValueError(f"Unknown node type: {type(node)}")
+
+
+def eml_size(node: EMLNode) -> int:
+    """Compute the size (number of nodes) of an EML expression."""
+    if isinstance(node, (VarNode, ConstNode)):
+        return 1
+    elif isinstance(node, (AddNode, MulNode, EmlNode)):
+        return 1 + eml_size(node.left if hasattr(node, 'left') else node.coeff) + \
+               eml_size(node.right if hasattr(node, 'right') else node.exponent)
+    elif isinstance(node, (NegNode, InvNode)):
+        return 1 + eml_size(node.child)
+    return 0
+
+
+def eml_depth(node: EMLNode) -> int:
+    """Compute the EML depth (maximum eml-nesting depth)."""
+    if isinstance(node, (VarNode, ConstNode)):
+        return 0
+    elif isinstance(node, (AddNode, MulNode)):
+        return max(eml_depth(node.left), eml_depth(node.right))
+    elif isinstance(node, (NegNode, InvNode)):
+        return eml_depth(node.child)
+    elif isinstance(node, EmlNode):
+        return 1 + max(eml_depth(node.coeff), eml_depth(node.exponent))
+    return 0
 
 
 # ============================================================
-# Algorithm 2: Horner Polynomial-to-EML Conversion
+# Algorithm 2: Iterated Exponential Tower Construction
+# ============================================================
+
+def build_iter_exp_expr(n: int) -> EMLNode:
+    """
+    Build the canonical EML expression for exp^n(x).
+    
+    tower(0) = var
+    tower(n+1) = eml(const(1), tower(n))
+    
+    Properties:
+        - size = 2n + 1
+        - eml_depth = n
+        - eval(x) = exp^n(x)
+    """
+    if n == 0:
+        return VarNode()
+    return EmlNode(ConstNode(1.0), build_iter_exp_expr(n - 1))
+
+
+# ============================================================
+# Algorithm 3: Polynomial-to-EML via Horner's Method
 # ============================================================
 
 def horner_to_eml(coefficients: List[float]) -> EMLNode:
     """
-    Convert polynomial coefficients to EML expression via Horner's method.
-
-    Given coefficients [c_0, c_1, ..., c_n], produces an EML expression
-    computing c_0 + x*(c_1 + x*(c_2 + ... + x*c_n)).
-
-    Time complexity: O(n) tree construction
-    Space complexity: O(n) nodes
-    Resulting size: 4n + 1 nodes
-
-    Args:
-        coefficients: Polynomial coefficients [c_0, c_1, ..., c_n]
-
-    Returns:
-        EMLNode representing the polynomial
+    Convert polynomial coefficients [c₀, c₁, ..., cₙ] to EML expression
+    using Horner's method.
+    
+    Result: c₀ + x*(c₁ + x*(c₂ + ... + x*cₙ))
+    
+    Properties:
+        - eml_depth = 0 (no transcendental operations)
+        - size = O(n)
     """
+    if len(coefficients) == 0:
+        return ConstNode(0.0)
     if len(coefficients) == 1:
-        return EMLNode(NodeType.CONST, value=coefficients[0])
-
-    # Horner form: c_0 + x * horner(c_1, c_2, ..., c_n)
-    inner = horner_to_eml(coefficients[1:])
-    return EMLNode(
-        NodeType.ADD,
-        left=EMLNode(NodeType.CONST, value=coefficients[0]),
-        right=EMLNode(
-            NodeType.MUL,
-            left=EMLNode(NodeType.VAR),
-            right=inner
-        )
-    )
+        return ConstNode(coefficients[0])
+    
+    # Build from innermost coefficient outward
+    result: EMLNode = ConstNode(coefficients[-1])
+    for i in range(len(coefficients) - 2, -1, -1):
+        result = AddNode(ConstNode(coefficients[i]), MulNode(VarNode(), result))
+    return result
 
 
 # ============================================================
-# Algorithm 3: Iterated Exponential Tower Construction
+# Algorithm 4: EML Approximation Chain
 # ============================================================
 
-def eml_tower(n: int) -> EMLNode:
-    """
-    Construct the canonical EML expression for iterExp n.
-
-    Produces eml(1, eml(1, ..., eml(1, var)...)) with n layers.
-
-    Time complexity: O(n) construction
-    Space complexity: O(n) nodes
-    Resulting size: 2n + 1 nodes
-    EML depth: exactly n
-
-    Args:
-        n: Tower height (number of exponentiations)
-
-    Returns:
-        EMLNode computing exp^n(x)
-    """
-    if n == 0:
-        return EMLNode(NodeType.VAR)
-    return EMLNode(
-        NodeType.EML,
-        left=EMLNode(NodeType.CONST, value=1.0),
-        right=eml_tower(n - 1)
-    )
+@dataclass
+class ApproxChainEntry:
+    """One entry in an EML approximation chain."""
+    expr: EMLNode
+    error_bound: float
 
 
-# ============================================================
-# Algorithm 4: Approximation Spectrum Computation
-# ============================================================
-
-def compute_approx_error(
+def build_taylor_approx_chain(
     f: Callable[[float], float],
-    expr: EMLNode,
+    coefficients_fn: Callable[[int], List[float]],
     a: float, b: float,
-    n_samples: int = 500
-) -> float:
-    """Compute max |f(x) - expr(x)| over [a, b] by sampling."""
-    max_err = 0.0
-    for i in range(n_samples + 1):
-        x = a + (b - a) * i / n_samples
-        try:
-            fx = f(x)
-            gx = expr.eval(x)
-            if math.isfinite(fx) and math.isfinite(gx):
-                max_err = max(max_err, abs(fx - gx))
-            else:
-                max_err = float('inf')
-        except (OverflowError, ZeroDivisionError):
-            max_err = float('inf')
-    return max_err
+    max_terms: int = 10
+) -> List[ApproxChainEntry]:
+    """
+    Build an approximation chain for f on [a, b] using Taylor-like expansions.
+    
+    Args:
+        f: target function
+        coefficients_fn: function mapping n -> first n+1 Taylor coefficients
+        a, b: interval endpoints
+        max_terms: maximum number of terms
+    
+    Returns:
+        List of (expression, error_bound) pairs with decreasing errors
+    """
+    chain: List[ApproxChainEntry] = []
+    
+    for n in range(1, max_terms + 1):
+        coeffs = coefficients_fn(n)
+        expr = horner_to_eml(coeffs)
+        
+        # Compute maximum error on [a, b]
+        max_error = 0.0
+        num_points = 200
+        for i in range(num_points + 1):
+            x = a + (b - a) * i / num_points
+            error = abs(f(x) - eml_eval(expr, x))
+            max_error = max(max_error, error)
+        
+        chain.append(ApproxChainEntry(expr, max_error))
+    
+    return chain
 
 
-def approx_spectrum_sample(
+# ============================================================
+# Algorithm 5: EML Complexity Spectrum Estimation
+# ============================================================
+
+def estimate_complexity_spectrum(
     f: Callable[[float], float],
     a: float, b: float,
-    epsilons: List[float],
-    max_poly_degree: int = 30
-) -> Dict[float, int]:
+    max_size: int = 50,
+    num_test_points: int = 100
+) -> List[Tuple[int, float]]:
     """
-    Estimate the approximation spectrum σ_f(ε) for given ε values.
-
-    Uses polynomial (Horner) approximation as the search strategy.
-    For each ε, finds the minimum polynomial degree d such that the
-    degree-d Taylor/Chebyshev polynomial achieves error ≤ ε.
-
-    The spectrum value is then 4d + 1 (the Horner size bound).
-
-    Args:
-        f: Target function
-        a, b: Domain endpoints
-        epsilons: List of precision levels to evaluate
-        max_poly_degree: Maximum polynomial degree to search
-
-    Returns:
-        Dictionary mapping ε → estimated minimum EML size
+    Estimate the EML complexity spectrum of f on [a, b].
+    
+    For each size budget n, find the best achievable approximation error
+    using polynomial (Horner) EML expressions of that size.
+    
+    Returns: list of (size, min_error) pairs
     """
-    spectrum: Dict[float, int] = {}
-
-    for eps in sorted(epsilons, reverse=True):
-        for deg in range(max_poly_degree + 1):
-            # Use Taylor coefficients around midpoint
-            mid = (a + b) / 2
-            coeffs = _taylor_coeffs(f, mid, deg, a, b)
-            expr = horner_to_eml(coeffs)
-            error = compute_approx_error(f, expr, a, b)
-            if error <= eps:
-                spectrum[eps] = expr.size()
-                break
-        else:
-            spectrum[eps] = 4 * max_poly_degree + 1  # upper bound
-
+    spectrum: List[Tuple[int, float]] = []
+    
+    # Use Taylor coefficients of exp as a proxy
+    # For general f, this would use optimization
+    for n_terms in range(1, max_size // 2 + 1):
+        # Build Chebyshev-like polynomial approximation
+        # Using Taylor around midpoint
+        mid = (a + b) / 2
+        half = (b - a) / 2
+        
+        coeffs = []
+        factorial = 1.0
+        f_val = f(mid)
+        # Simple Taylor approximation
+        h = 1e-6
+        derivs = [f(mid)]
+        for k in range(1, n_terms):
+            # Numerical derivative (crude but functional)
+            factorial *= k
+            # Use central differences
+            deriv_val = 0.0
+            for j in range(k + 1):
+                sign = (-1) ** (k - j)
+                binom = math.comb(k, j)
+                deriv_val += sign * binom * f(mid + (j - k/2) * h)
+            deriv_val /= h ** k
+            derivs.append(deriv_val)
+        
+        coeffs = [derivs[i] / math.factorial(i) for i in range(n_terms)]
+        
+        # Shift to evaluate at (x - mid)
+        # For simplicity, evaluate directly
+        expr = horner_to_eml(coeffs)
+        
+        max_error = 0.0
+        for i in range(num_test_points + 1):
+            x = a + (b - a) * i / num_test_points
+            # Evaluate at (x - mid) since Taylor is centered there
+            error = abs(f(x) - eml_eval(expr, x - mid))
+            max_error = max(max_error, error)
+        
+        expr_size = eml_size(expr)
+        spectrum.append((expr_size, max_error))
+    
     return spectrum
 
 
-def _taylor_coeffs(
-    f: Callable[[float], float],
-    center: float,
-    degree: int,
-    a: float, b: float
-) -> List[float]:
-    """Compute approximate Taylor coefficients via finite differences."""
-    h = 1e-6
-    coeffs = []
-    for k in range(degree + 1):
-        # k-th derivative at center via central difference
-        deriv = _nth_derivative(f, center, k, h)
-        coeffs.append(deriv / math.factorial(k))
-    # Shift: convert from expansion at center to expansion at 0
-    # For simplicity, we expand at 0 directly
-    coeffs_at_zero = []
-    for k in range(degree + 1):
-        deriv = _nth_derivative(f, 0.0, k, h)
-        coeffs_at_zero.append(deriv / math.factorial(k))
-    return coeffs_at_zero
-
-
-def _nth_derivative(
-    f: Callable[[float], float],
-    x: float,
-    n: int,
-    h: float = 1e-5
-) -> float:
-    """Approximate n-th derivative using central differences."""
-    if n == 0:
-        return f(x)
-    # Recursive central difference
-    return (_nth_derivative(f, x + h, n - 1, h) -
-            _nth_derivative(f, x - h, n - 1, h)) / (2 * h)
-
-
 # ============================================================
-# Algorithm 5: Information Decay Computation
+# Algorithm 6: Information Decay Calculator
 # ============================================================
 
-def retained_information(
+def compute_information_decay(
     alpha: float,
-    depth: int,
-    initial_complexity: int
-) -> float:
+    initial_info: float,
+    max_layers: int = 20
+) -> List[Tuple[int, float]]:
     """
-    Compute retained symbolic information after depth layers.
-
-    Formula: α^l × K
-
+    Compute retained symbolic information through layers.
+    
+    I(l) = alpha^l * K
+    
     Args:
-        alpha: Per-layer contraction factor (0 ≤ α ≤ 1)
-        depth: Number of layers
-        initial_complexity: Initial information content K
-
+        alpha: per-layer contraction factor in [0, 1]
+        initial_info: initial information K
+        max_layers: number of layers to compute
+    
     Returns:
-        Retained information as a float
+        list of (layer, retained_info) pairs
     """
-    return (alpha ** depth) * initial_complexity
+    return [(l, alpha ** l * initial_info) for l in range(max_layers + 1)]
 
 
-def minimum_initial_complexity(
+def compute_depth_complexity_tradeoff(
+    threshold: float,
     alpha: float,
-    depth: int,
-    threshold: float
-) -> float:
+    max_depth: int = 20
+) -> List[Tuple[int, float]]:
     """
-    Compute minimum initial complexity to retain at least threshold
-    information after depth layers.
-
-    Formula: K ≥ threshold / α^l
-
-    Args:
-        alpha: Per-layer contraction factor (0 < α ≤ 1)
-        depth: Number of layers
-        threshold: Minimum required retained information
-
-    Returns:
-        Minimum initial complexity K
+    Compute minimum initial complexity K needed at each depth l
+    to retain at least `threshold` information.
+    
+    K >= threshold / alpha^l
     """
-    if alpha <= 0:
-        return float('inf')
-    return threshold / (alpha ** depth)
-
-
-# ============================================================
-# Algorithm 6: EML Expression Composition
-# ============================================================
-
-def compose_eml(outer: EMLNode, inner: EMLNode) -> EMLNode:
-    """
-    Substitute inner for var in outer (syntactic composition).
-
-    The resulting expression computes outer(inner(x)).
-
-    Time complexity: O(|outer| × |inner|) in worst case
-    EML depth: ≤ depth(outer) + depth(inner)
-    Size: ≤ size(outer) × size(inner)
-
-    Args:
-        outer: The outer expression
-        inner: The inner expression (replaces var)
-
-    Returns:
-        Composed expression
-    """
-    if outer.node_type == NodeType.VAR:
-        return inner
-    elif outer.node_type == NodeType.CONST:
-        return EMLNode(NodeType.CONST, value=outer.value)
-    elif outer.node_type in (NodeType.NEG, NodeType.INV):
-        return EMLNode(
-            outer.node_type,
-            left=compose_eml(outer.left, inner)
-        )
-    else:  # ADD, MUL, EML
-        return EMLNode(
-            outer.node_type,
-            left=compose_eml(outer.left, inner),
-            right=compose_eml(outer.right, inner)
-        )
+    return [(l, threshold / (alpha ** l) if alpha > 0 else float('inf'))
+            for l in range(max_depth + 1)]
 
 
 # ============================================================
@@ -355,49 +313,35 @@ def compose_eml(outer: EMLNode, inner: EMLNode) -> EMLNode:
 # ============================================================
 
 if __name__ == "__main__":
-    print("EML Approximation Spectrum — Algorithm Demonstrations")
+    print("EML Algorithms Demo")
     print("=" * 60)
-
-    # Tower construction
-    print("\n1. Tower Construction:")
-    for n in range(1, 6):
-        tower = eml_tower(n)
-        print(f"   iterExp {n}: size={tower.size()}, "
-              f"eml_depth={tower.eml_depth()}, "
-              f"eval(0.5)={tower.eval(0.5):.6f}")
-
-    # Horner conversion
-    print("\n2. Horner Polynomial Conversion:")
-    coeffs = [1, 1, 0.5, 1/6, 1/24]  # exp(x) Taylor to degree 4
-    poly = horner_to_eml(coeffs)
-    print(f"   exp(x) Taylor deg 4: size={poly.size()}, "
-          f"eval(1.0)={poly.eval(1.0):.6f} vs e={math.e:.6f}")
-
-    # Information decay
-    print("\n3. Information Decay (K=1000, α=0.7):")
-    for d in range(0, 11):
-        info = retained_information(0.7, d, 1000)
-        min_k = minimum_initial_complexity(0.7, d, 100)
-        print(f"   depth {d:2d}: retained={info:8.2f}, "
-              f"min_K_for_100={min_k:10.2f}")
-
-    # Spectrum computation
-    print("\n4. Approximation Spectrum for sin(x) on [0, 1]:")
-    epsilons = [1.0, 0.1, 0.01, 0.001, 0.0001, 1e-5]
-    spectrum = approx_spectrum_sample(math.sin, 0.0, 1.0, epsilons, 20)
-    for eps, size in sorted(spectrum.items(), reverse=True):
-        print(f"   ε = {eps:.0e}: min size ≈ {size}")
-
-    # Composition
-    print("\n5. Expression Composition:")
-    exp_expr = eml_tower(1)  # exp(x)
-    exp_exp = compose_eml(eml_tower(1), eml_tower(1))  # exp(exp(x))
-    direct = eml_tower(2)  # direct exp^2(x)
-    x_test = 0.3
-    print(f"   Composed exp(exp(x)): size={exp_exp.size()}, "
-          f"eval({x_test})={exp_exp.eval(x_test):.6f}")
-    print(f"   Direct  exp^2(x):     size={direct.size()}, "
-          f"eval({x_test})={direct.eval(x_test):.6f}")
-    print(f"   Depth bound: composed={exp_exp.eml_depth()} ≤ "
-          f"{exp_expr.eml_depth()} + {exp_expr.eml_depth()} = "
-          f"{2 * exp_expr.eml_depth()}")
+    
+    # Algorithm 1 & 2: Iterated exponential towers
+    print("\n--- Iterated Exponential Towers ---")
+    for n in range(5):
+        expr = build_iter_exp_expr(n)
+        print(f"  exp^{n}: size={eml_size(expr)}, depth={eml_depth(expr)}, "
+              f"eval(0.5)={eml_eval(expr, 0.5):.6f}")
+    
+    # Algorithm 3: Polynomial conversion
+    print("\n--- Polynomial-to-EML (Horner) ---")
+    coeffs = [1, 1, 0.5, 1/6, 1/24]  # exp Taylor coefficients
+    expr = horner_to_eml(coeffs)
+    print(f"  Taylor exp(x) ≈ 1 + x + x²/2 + x³/6 + x⁴/24")
+    print(f"  Size: {eml_size(expr)}, Depth: {eml_depth(expr)}")
+    print(f"  eval(1.0) = {eml_eval(expr, 1.0):.6f} (exact: {math.e:.6f})")
+    
+    # Algorithm 4: Approximation chain
+    print("\n--- Approximation Chain for exp(x) on [0, 1] ---")
+    def exp_coeffs(n: int) -> List[float]:
+        return [1.0 / math.factorial(i) for i in range(n)]
+    
+    chain = build_taylor_approx_chain(math.exp, exp_coeffs, 0, 1, max_terms=8)
+    for i, entry in enumerate(chain):
+        print(f"  Step {i+1}: size={eml_size(entry.expr)}, error={entry.error_bound:.2e}")
+    
+    # Algorithm 6: Information decay
+    print("\n--- Information Decay (α=0.7, K=100) ---")
+    decay = compute_information_decay(0.7, 100, max_layers=10)
+    for l, info in decay:
+        print(f"  Layer {l}: retained = {info:.4f}")
