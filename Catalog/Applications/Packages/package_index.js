@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0dd655e3",
     "filename": "paradoxes_as_theorems_liar_berry_and_russell_made_.json",
     "pkg_num": 400,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.252,
     "title": "Dialectical Algebras: Paradoxes as Theorems via Four-Valued Fixed Points"
   },
   {
@@ -12751,8 +12751,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "paradoxes_as_theorems_liar_berry_and_russell_made_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.252,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Dialectical Algebras: Paradoxes as Theorems via Four-Valued Fixed Points"
     }

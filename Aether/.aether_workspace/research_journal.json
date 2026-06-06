@@ -1340,6 +1340,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T04:52:33",
       "title": "Game of Life Universality"
+    },
+    {
+      "cycle_id": "36a0e436",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: EML-KA Algebra and Representation Theory\n\n## Synthesis\n\nThis cycle established the algebraic foundations of EML-KA (Exp-Log Kolmogorov-Arnold) decompositions, proving that the exp",
+      "quality_score": 0.31264000000000003,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T05:27:16",
+      "title": "EML Kolmogorov-Arnold Representation"
     }
   ],
   "entries": [
@@ -1385,7 +1395,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T04:52:33",
+  "last_updated": "2026-06-06T05:27:16",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1397,12 +1407,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "ea6b6347",
-        "quality": 0.43479999999999996,
-        "theorems": 6,
-        "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
-      },
       {
         "cycle_id": "d917ed85",
         "quality": 0.33464000000000005,
@@ -1456,6 +1460,12 @@
         "quality": 0.3224,
         "theorems": 4,
         "title": "Speculative: Computational Complexity as Physical Law"
+      },
+      {
+        "cycle_id": "36a0e436",
+        "quality": 0.31264000000000003,
+        "theorems": 5,
+        "title": "EML Kolmogorov-Arnold Representation"
       }
     ],
     "Bridges": [
