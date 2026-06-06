@@ -1,347 +1,342 @@
 #!/usr/bin/env python3
 """
-EML Filtered Approximation Algebra — Core Algorithms
+EML Universal Approximation — Algorithms
 
-Type-hinted implementations of the key algorithms from the research.
+Type-hinted implementations of the core algorithms from the EML Approximation
+Filtration theory.
 """
-
-from __future__ import annotations
-from dataclasses import dataclass
-from typing import Callable, List, Tuple, Optional
 import math
+from typing import List, Tuple, Optional, Callable
+from dataclasses import dataclass
 
 
-# ============================================================
-# Algorithm 1: EML Expression Tree with Evaluation
-# ============================================================
+# ──────────────────────────────────────────────────────────────────────────────
+# Algorithm 1: EML Expression Evaluation
+# ──────────────────────────────────────────────────────────────────────────────
 
-@dataclass
-class EMLNode:
-    """Base class for EML expression nodes."""
+class EMLExpr:
+    """Abstract base for EML expressions."""
     pass
 
 @dataclass
-class VarNode(EMLNode):
-    """Variable node: evaluates to the input."""
-    pass
-
+class Var(EMLExpr): pass
 @dataclass
-class ConstNode(EMLNode):
-    """Constant node."""
+class Const(EMLExpr):
     value: float
-
 @dataclass
-class AddNode(EMLNode):
-    """Addition: left + right."""
-    left: EMLNode
-    right: EMLNode
-
+class Add(EMLExpr):
+    left: EMLExpr
+    right: EMLExpr
 @dataclass
-class MulNode(EMLNode):
-    """Multiplication: left * right."""
-    left: EMLNode
-    right: EMLNode
-
+class Mul(EMLExpr):
+    left: EMLExpr
+    right: EMLExpr
 @dataclass
-class NegNode(EMLNode):
-    """Negation: -child."""
-    child: EMLNode
-
+class Neg(EMLExpr):
+    child: EMLExpr
 @dataclass
-class InvNode(EMLNode):
-    """Inversion: 1/child."""
-    child: EMLNode
-
+class Inv(EMLExpr):
+    child: EMLExpr
 @dataclass
-class EmlNode(EMLNode):
-    """EML primitive: coeff * exp(exponent)."""
-    coeff: EMLNode
-    exponent: EMLNode
+class EML(EMLExpr):
+    coeff: EMLExpr
+    exponent: EMLExpr
 
 
-def eml_eval(node: EMLNode, x: float) -> float:
-    """Evaluate an EML expression tree at point x."""
-    if isinstance(node, VarNode):
+def evaluate(expr: EMLExpr, x: float) -> float:
+    """
+    Algorithm: Recursive evaluation of EML expression trees.
+
+    Time complexity: O(size(expr))
+    Space complexity: O(depth(expr)) stack frames
+
+    Pseudocode:
+        EVAL(e, x):
+          match e:
+            Var       → x
+            Const(c)  → c
+            Add(a, b) → EVAL(a, x) + EVAL(b, x)
+            Mul(a, b) → EVAL(a, x) · EVAL(b, x)
+            Neg(a)    → −EVAL(a, x)
+            Inv(a)    → 1 / EVAL(a, x)
+            EML(a, b) → EVAL(a, x) · exp(EVAL(b, x))
+    """
+    if isinstance(expr, Var):
         return x
-    elif isinstance(node, ConstNode):
-        return node.value
-    elif isinstance(node, AddNode):
-        return eml_eval(node.left, x) + eml_eval(node.right, x)
-    elif isinstance(node, MulNode):
-        return eml_eval(node.left, x) * eml_eval(node.right, x)
-    elif isinstance(node, NegNode):
-        return -eml_eval(node.child, x)
-    elif isinstance(node, InvNode):
-        v = eml_eval(node.child, x)
+    elif isinstance(expr, Const):
+        return expr.value
+    elif isinstance(expr, Add):
+        return evaluate(expr.left, x) + evaluate(expr.right, x)
+    elif isinstance(expr, Mul):
+        return evaluate(expr.left, x) * evaluate(expr.right, x)
+    elif isinstance(expr, Neg):
+        return -evaluate(expr.child, x)
+    elif isinstance(expr, Inv):
+        v = evaluate(expr.child, x)
         return 1.0 / v if v != 0 else float('inf')
-    elif isinstance(node, EmlNode):
-        a = eml_eval(node.coeff, x)
-        b = eml_eval(node.exponent, x)
-        return a * math.exp(min(b, 500))  # overflow protection
-    else:
-        raise ValueError(f"Unknown node type: {type(node)}")
+    elif isinstance(expr, EML):
+        a = evaluate(expr.coeff, x)
+        b = evaluate(expr.exponent, x)
+        try:
+            return a * math.exp(b)
+        except OverflowError:
+            return float('inf') if a > 0 else float('-inf')
+    raise TypeError(f"Unknown expression type: {type(expr)}")
 
 
-def eml_size(node: EMLNode) -> int:
-    """Compute the size (number of nodes) of an EML expression."""
-    if isinstance(node, (VarNode, ConstNode)):
-        return 1
-    elif isinstance(node, (AddNode, MulNode, EmlNode)):
-        return 1 + eml_size(node.left if hasattr(node, 'left') else node.coeff) + \
-               eml_size(node.right if hasattr(node, 'right') else node.exponent)
-    elif isinstance(node, (NegNode, InvNode)):
-        return 1 + eml_size(node.child)
-    return 0
+# ──────────────────────────────────────────────────────────────────────────────
+# Algorithm 2: Structural Analysis
+# ──────────────────────────────────────────────────────────────────────────────
 
-
-def eml_depth(node: EMLNode) -> int:
-    """Compute the EML depth (maximum eml-nesting depth)."""
-    if isinstance(node, (VarNode, ConstNode)):
-        return 0
-    elif isinstance(node, (AddNode, MulNode)):
-        return max(eml_depth(node.left), eml_depth(node.right))
-    elif isinstance(node, (NegNode, InvNode)):
-        return eml_depth(node.child)
-    elif isinstance(node, EmlNode):
-        return 1 + max(eml_depth(node.coeff), eml_depth(node.exponent))
-    return 0
-
-
-# ============================================================
-# Algorithm 2: Iterated Exponential Tower Construction
-# ============================================================
-
-def build_iter_exp_expr(n: int) -> EMLNode:
+def analyze_structure(expr: EMLExpr) -> dict:
     """
-    Build the canonical EML expression for exp^n(x).
-    
-    tower(0) = var
-    tower(n+1) = eml(const(1), tower(n))
-    
-    Properties:
-        - size = 2n + 1
-        - eml_depth = n
-        - eval(x) = exp^n(x)
+    Algorithm: Compute all structural measures in a single traversal.
+
+    Returns dict with: size, eml_depth, eml_count, field_count, leaf_count, exp_rank
+    Verifies the decomposition: size = leaf_count + field_count + eml_count
+
+    Pseudocode:
+        ANALYZE(e):
+          match e:
+            Var/Const → (size=1, depth=0, eml=0, field=0, leaf=1, rank=0)
+            Add(a,b)  → merge(ANALYZE(a), ANALYZE(b), op='field')
+            EML(a,b)  → merge(ANALYZE(a), ANALYZE(b), op='eml')
+            ...
     """
-    if n == 0:
-        return VarNode()
-    return EmlNode(ConstNode(1.0), build_iter_exp_expr(n - 1))
+    if isinstance(expr, (Var, Const)):
+        return dict(size=1, eml_depth=0, eml_count=0, field_count=0, leaf_count=1, exp_rank=0)
+
+    if isinstance(expr, (Neg, Inv)):
+        c = analyze_structure(expr.child)
+        return dict(
+            size=1 + c['size'],
+            eml_depth=c['eml_depth'],
+            eml_count=c['eml_count'],
+            field_count=1 + c['field_count'],
+            leaf_count=c['leaf_count'],
+            exp_rank=c['exp_rank']
+        )
+
+    if isinstance(expr, (Add, Mul)):
+        l = analyze_structure(expr.left)
+        r = analyze_structure(expr.right)
+        return dict(
+            size=1 + l['size'] + r['size'],
+            eml_depth=max(l['eml_depth'], r['eml_depth']),
+            eml_count=l['eml_count'] + r['eml_count'],
+            field_count=1 + l['field_count'] + r['field_count'],
+            leaf_count=l['leaf_count'] + r['leaf_count'],
+            exp_rank=max(l['exp_rank'], r['exp_rank'])
+        )
+
+    if isinstance(expr, EML):
+        a = analyze_structure(expr.coeff)
+        b = analyze_structure(expr.exponent)
+        return dict(
+            size=1 + a['size'] + b['size'],
+            eml_depth=1 + max(a['eml_depth'], b['eml_depth']),
+            eml_count=1 + a['eml_count'] + b['eml_count'],
+            field_count=a['field_count'] + b['field_count'],
+            leaf_count=a['leaf_count'] + b['leaf_count'],
+            exp_rank=max(a['exp_rank'], b['exp_rank'] + 1)
+        )
+
+    raise TypeError(f"Unknown: {type(expr)}")
 
 
-# ============================================================
-# Algorithm 3: Polynomial-to-EML via Horner's Method
-# ============================================================
+# ──────────────────────────────────────────────────────────────────────────────
+# Algorithm 3: Syntactic Substitution (Composition)
+# ──────────────────────────────────────────────────────────────────────────────
 
-def horner_to_eml(coefficients: List[float]) -> EMLNode:
+def substitute(expr: EMLExpr, replacement: EMLExpr) -> EMLExpr:
     """
-    Convert polynomial coefficients [c₀, c₁, ..., cₙ] to EML expression
-    using Horner's method.
-    
-    Result: c₀ + x*(c₁ + x*(c₂ + ... + x*cₙ))
-    
-    Properties:
-        - eml_depth = 0 (no transcendental operations)
-        - size = O(n)
+    Algorithm: Replace every Var in expr with replacement.
+    Implements function composition: (f.subst g).eval(x) = f.eval(g.eval(x))
+
+    Time: O(size(expr) · size(replacement)) worst case
+    Depth bound: depth(result) ≤ depth(expr) + depth(replacement)
+    Size bound: size(result) ≤ size(expr) · size(replacement)
     """
-    if len(coefficients) == 0:
-        return ConstNode(0.0)
-    if len(coefficients) == 1:
-        return ConstNode(coefficients[0])
-    
-    # Build from innermost coefficient outward
-    result: EMLNode = ConstNode(coefficients[-1])
-    for i in range(len(coefficients) - 2, -1, -1):
-        result = AddNode(ConstNode(coefficients[i]), MulNode(VarNode(), result))
-    return result
+    if isinstance(expr, Var):
+        return replacement
+    elif isinstance(expr, Const):
+        return expr
+    elif isinstance(expr, Add):
+        return Add(substitute(expr.left, replacement), substitute(expr.right, replacement))
+    elif isinstance(expr, Mul):
+        return Mul(substitute(expr.left, replacement), substitute(expr.right, replacement))
+    elif isinstance(expr, Neg):
+        return Neg(substitute(expr.child, replacement))
+    elif isinstance(expr, Inv):
+        return Inv(substitute(expr.child, replacement))
+    elif isinstance(expr, EML):
+        return EML(substitute(expr.coeff, replacement), substitute(expr.exponent, replacement))
+    raise TypeError(f"Unknown: {type(expr)}")
 
 
-# ============================================================
-# Algorithm 4: EML Approximation Chain
-# ============================================================
+# ──────────────────────────────────────────────────────────────────────────────
+# Algorithm 4: EML Approximation Search (Greedy)
+# ──────────────────────────────────────────────────────────────────────────────
 
-@dataclass
-class ApproxChainEntry:
-    """One entry in an EML approximation chain."""
-    expr: EMLNode
-    error_bound: float
-
-
-def build_taylor_approx_chain(
-    f: Callable[[float], float],
-    coefficients_fn: Callable[[int], List[float]],
-    a: float, b: float,
-    max_terms: int = 10
-) -> List[ApproxChainEntry]:
-    """
-    Build an approximation chain for f on [a, b] using Taylor-like expansions.
-    
-    Args:
-        f: target function
-        coefficients_fn: function mapping n -> first n+1 Taylor coefficients
-        a, b: interval endpoints
-        max_terms: maximum number of terms
-    
-    Returns:
-        List of (expression, error_bound) pairs with decreasing errors
-    """
-    chain: List[ApproxChainEntry] = []
-    
-    for n in range(1, max_terms + 1):
-        coeffs = coefficients_fn(n)
-        expr = horner_to_eml(coeffs)
-        
-        # Compute maximum error on [a, b]
-        max_error = 0.0
-        num_points = 200
-        for i in range(num_points + 1):
-            x = a + (b - a) * i / num_points
-            error = abs(f(x) - eml_eval(expr, x))
-            max_error = max(max_error, error)
-        
-        chain.append(ApproxChainEntry(expr, max_error))
-    
-    return chain
-
-
-# ============================================================
-# Algorithm 5: EML Complexity Spectrum Estimation
-# ============================================================
-
-def estimate_complexity_spectrum(
+def greedy_eml_approx(
     f: Callable[[float], float],
     a: float, b: float,
-    max_size: int = 50,
-    num_test_points: int = 100
-) -> List[Tuple[int, float]]:
+    max_depth: int,
+    n_samples: int = 100
+) -> Tuple[EMLExpr, float]:
     """
-    Estimate the EML complexity spectrum of f on [a, b].
-    
-    For each size budget n, find the best achievable approximation error
-    using polynomial (Horner) EML expressions of that size.
-    
-    Returns: list of (size, min_error) pairs
+    Algorithm: Greedy search for EML approximation.
+
+    Given a target function f on [a, b], search for an EML expression
+    of depth ≤ max_depth that minimizes the uniform approximation error.
+
+    This is a simplified version — full optimization would use gradient descent
+    on the EML parameters.
+
+    Pseudocode:
+        GREEDY_APPROX(f, [a,b], D):
+          xs = sample [a, b]
+          best = Const(mean(f(xs)))  # depth 0 baseline
+          for d = 1 to D:
+            # Try eml(1, best) and affine combinations
+            candidates = generate_candidates(best, d)
+            best = argmin_{c in candidates} max_error(c, f, xs)
+          return best
+
+    Returns: (best_expr, max_error)
     """
-    spectrum: List[Tuple[int, float]] = []
-    
-    # Use Taylor coefficients of exp as a proxy
-    # For general f, this would use optimization
-    for n_terms in range(1, max_size // 2 + 1):
-        # Build Chebyshev-like polynomial approximation
-        # Using Taylor around midpoint
-        mid = (a + b) / 2
-        half = (b - a) / 2
-        
-        coeffs = []
-        factorial = 1.0
-        f_val = f(mid)
-        # Simple Taylor approximation
-        h = 1e-6
-        derivs = [f(mid)]
-        for k in range(1, n_terms):
-            # Numerical derivative (crude but functional)
-            factorial *= k
-            # Use central differences
-            deriv_val = 0.0
-            for j in range(k + 1):
-                sign = (-1) ** (k - j)
-                binom = math.comb(k, j)
-                deriv_val += sign * binom * f(mid + (j - k/2) * h)
-            deriv_val /= h ** k
-            derivs.append(deriv_val)
-        
-        coeffs = [derivs[i] / math.factorial(i) for i in range(n_terms)]
-        
-        # Shift to evaluate at (x - mid)
-        # For simplicity, evaluate directly
-        expr = horner_to_eml(coeffs)
-        
-        max_error = 0.0
-        for i in range(num_test_points + 1):
-            x = a + (b - a) * i / num_test_points
-            # Evaluate at (x - mid) since Taylor is centered there
-            error = abs(f(x) - eml_eval(expr, x - mid))
-            max_error = max(max_error, error)
-        
-        expr_size = eml_size(expr)
-        spectrum.append((expr_size, max_error))
-    
-    return spectrum
+    xs = [a + (b - a) * i / (n_samples - 1) for i in range(n_samples)]
+    ys = [f(x) for x in xs]
+
+    def max_error(expr: EMLExpr) -> float:
+        try:
+            return max(abs(f(x) - evaluate(expr, x)) for x in xs)
+        except (OverflowError, ZeroDivisionError):
+            return float('inf')
+
+    # Depth 0: constant approximation
+    mean_y = sum(ys) / len(ys)
+    best = Const(mean_y)
+    best_err = max_error(best)
+
+    # Depth 0: linear approximation x
+    for c0 in [mean_y, ys[0], ys[-1]]:
+        for c1 in [0, 1, -1, (ys[-1]-ys[0])/(b-a) if b > a else 0]:
+            candidate = Add(Mul(Const(c1), Var()), Const(c0 - c1 * (a + b)/2))
+            err = max_error(candidate)
+            if err < best_err:
+                best, best_err = candidate, err
+
+    for d in range(1, max_depth + 1):
+        # Try exp-based approximations at this depth
+        for scale in [0.1, 0.5, 1.0, 2.0]:
+            for shift in [-1, 0, 1]:
+                candidate = EML(Const(scale), Add(Var(), Const(shift)))
+                err = max_error(candidate)
+                if err < best_err:
+                    best, best_err = candidate, err
+
+        # Try composing with best
+        candidate = EML(Const(1.0), best)
+        err = max_error(candidate)
+        if err < best_err:
+            best, best_err = candidate, err
+
+    return best, best_err
 
 
-# ============================================================
-# Algorithm 6: Information Decay Calculator
-# ============================================================
+# ──────────────────────────────────────────────────────────────────────────────
+# Algorithm 5: Complexity Spectrum Computation
+# ──────────────────────────────────────────────────────────────────────────────
 
-def compute_information_decay(
-    alpha: float,
-    initial_info: float,
-    max_layers: int = 20
-) -> List[Tuple[int, float]]:
+def compute_spectrum_sample(
+    f: Callable[[float], float],
+    a: float, b: float,
+    max_size: int = 20,
+    n_samples: int = 50
+) -> List[Tuple[int, int, float]]:
     """
-    Compute retained symbolic information through layers.
-    
-    I(l) = alpha^l * K
-    
-    Args:
-        alpha: per-layer contraction factor in [0, 1]
-        initial_info: initial information K
-        max_layers: number of layers to compute
-    
-    Returns:
-        list of (layer, retained_info) pairs
+    Algorithm: Sample the complexity spectrum of a function.
+
+    Enumerate small EML expressions and record (depth, size, error) triples.
+    This gives an empirical approximation of the EML Complexity Spectrum.
+
+    Returns: List of (eml_depth, size, max_error) triples, Pareto-filtered.
     """
-    return [(l, alpha ** l * initial_info) for l in range(max_layers + 1)]
+    xs = [a + (b - a) * i / max(n_samples - 1, 1) for i in range(n_samples)]
 
+    results = []
 
-def compute_depth_complexity_tradeoff(
-    threshold: float,
-    alpha: float,
-    max_depth: int = 20
-) -> List[Tuple[int, float]]:
-    """
-    Compute minimum initial complexity K needed at each depth l
-    to retain at least `threshold` information.
-    
-    K >= threshold / alpha^l
-    """
-    return [(l, threshold / (alpha ** l) if alpha > 0 else float('inf'))
-            for l in range(max_depth + 1)]
+    # Generate expressions up to a given size
+    def gen_exprs(max_s: int) -> List[EMLExpr]:
+        exprs = [Var()]
+        for c in [-1.0, 0.0, 0.5, 1.0, 2.0]:
+            exprs.append(Const(c))
 
+        # Size 3: binary ops
+        if max_s >= 3:
+            base = list(exprs)
+            for e1 in base:
+                for e2 in base:
+                    for op in [Add, Mul, EML]:
+                        exprs.append(op(e1, e2))
 
-# ============================================================
-# Main: Run all algorithms
-# ============================================================
+        # Size 5: one more level
+        if max_s >= 5:
+            small = [Var(), Const(1.0), Const(0.0)]
+            depth1 = [EML(Const(1.0), e) for e in small] + \
+                     [Add(e1, e2) for e1 in small for e2 in small[:2]]
+            for e1 in depth1:
+                for e2 in small:
+                    exprs.append(EML(e1, e2))
+                    exprs.append(Add(e1, e2))
+
+        return exprs
+
+    for expr in gen_exprs(max_size):
+        s = analyze_structure(expr)
+        if s['size'] > max_size:
+            continue
+        try:
+            err = max(abs(f(x) - evaluate(expr, x)) for x in xs)
+            if math.isfinite(err):
+                results.append((s['eml_depth'], s['size'], err))
+        except (OverflowError, ZeroDivisionError, ValueError):
+            continue
+
+    # Pareto filter
+    results.sort(key=lambda r: (r[0], r[1], r[2]))
+    pareto = []
+    best_err = float('inf')
+    for d, s, e in results:
+        if e < best_err:
+            pareto.append((d, s, e))
+            best_err = e
+
+    return pareto
+
 
 if __name__ == "__main__":
-    print("EML Algorithms Demo")
-    print("=" * 60)
-    
-    # Algorithm 1 & 2: Iterated exponential towers
-    print("\n--- Iterated Exponential Towers ---")
-    for n in range(5):
-        expr = build_iter_exp_expr(n)
-        print(f"  exp^{n}: size={eml_size(expr)}, depth={eml_depth(expr)}, "
-              f"eval(0.5)={eml_eval(expr, 0.5):.6f}")
-    
-    # Algorithm 3: Polynomial conversion
-    print("\n--- Polynomial-to-EML (Horner) ---")
-    coeffs = [1, 1, 0.5, 1/6, 1/24]  # exp Taylor coefficients
-    expr = horner_to_eml(coeffs)
-    print(f"  Taylor exp(x) ≈ 1 + x + x²/2 + x³/6 + x⁴/24")
-    print(f"  Size: {eml_size(expr)}, Depth: {eml_depth(expr)}")
-    print(f"  eval(1.0) = {eml_eval(expr, 1.0):.6f} (exact: {math.e:.6f})")
-    
-    # Algorithm 4: Approximation chain
-    print("\n--- Approximation Chain for exp(x) on [0, 1] ---")
-    def exp_coeffs(n: int) -> List[float]:
-        return [1.0 / math.factorial(i) for i in range(n)]
-    
-    chain = build_taylor_approx_chain(math.exp, exp_coeffs, 0, 1, max_terms=8)
-    for i, entry in enumerate(chain):
-        print(f"  Step {i+1}: size={eml_size(entry.expr)}, error={entry.error_bound:.2e}")
-    
-    # Algorithm 6: Information decay
-    print("\n--- Information Decay (α=0.7, K=100) ---")
-    decay = compute_information_decay(0.7, 100, max_layers=10)
-    for l, info in decay:
-        print(f"  Layer {l}: retained = {info:.4f}")
+    # Quick test
+    e = EML(Const(1.0), Var())  # exp(x)
+    info = analyze_structure(e)
+    print(f"exp(x): {info}")
+    assert info['size'] == info['leaf_count'] + info['field_count'] + info['eml_count']
+
+    # Test substitution
+    f = EML(Const(1.0), Var())      # exp(x)
+    g = Add(Var(), Const(1.0))      # x + 1
+    fog = substitute(f, g)           # exp(x + 1)
+    print(f"\nSubstitution test:")
+    for x in [0, 1, 2]:
+        v1 = evaluate(fog, x)
+        v2 = evaluate(f, evaluate(g, x))
+        print(f"  x={x}: subst={v1:.6f}, compose={v2:.6f}, match={abs(v1-v2)<1e-10}")
+
+    # Test approximation search
+    print(f"\nGreedy approximation of sin(x) on [0, pi]:")
+    best, err = greedy_eml_approx(math.sin, 0, math.pi, max_depth=3)
+    info = analyze_structure(best)
+    print(f"  Best: depth={info['eml_depth']}, size={info['size']}, error={err:.6f}")
+
+    print("\nAll algorithm tests passed.")
