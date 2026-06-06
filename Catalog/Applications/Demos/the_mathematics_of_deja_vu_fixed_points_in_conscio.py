@@ -1,362 +1,275 @@
 #!/usr/bin/env python3
 """
-Dynamical Spectrum Theory: Numerical Demonstrations
+Recurrence Spectrum Demo: Visualizing Periodic Orbits in the Logistic Map
 
-Demonstrates the key mathematical concepts:
-1. Logistic map fixed points and period-2 orbits
-2. Period-3 windows and their implications
-3. Cognitive dynamics simulation showing deja vu states
-4. Orbit classification: periodic, pre-periodic, chaotic
-"""
-
-import math
-from typing import List, Tuple, Set
-
-
-def logistic_map(r: float, x: float) -> float:
-    """The logistic map f(x) = r·x·(1-x)."""
-    return r * x * (1 - x)
-
-
-def iterate(f, x: float, n: int) -> float:
-    """Compute f^[n](x)."""
-    for _ in range(n):
-        x = f(x)
-    return x
-
-
-def orbit(f, x: float, n: int) -> List[float]:
-    """Compute the orbit [x, f(x), f²(x), ..., f^n(x)]."""
-    result = [x]
-    for _ in range(n):
-        x = f(x)
-        result.append(x)
-    return result
-
-
-def find_fixed_points(r: float, tol: float = 1e-10) -> List[float]:
-    """Find fixed points of the logistic map analytically.
-    
-    f(x) = x ⟺ r·x·(1-x) = x ⟺ x·(r(1-x) - 1) = 0
-    Solutions: x = 0 and x = (r-1)/r
-    """
-    points = [0.0]
-    if abs(r) > tol:
-        points.append((r - 1) / r)
-    return points
-
-
-def find_period2_orbit(r: float) -> Tuple[float, float]:
-    """Find the period-2 orbit of the logistic map.
-    
-    For r > 3, the fixed point (r-1)/r becomes unstable and
-    a period-2 orbit appears. The period-2 points satisfy:
-    x = r·(r·x·(1-x))·(1 - r·x·(1-x))
-    
-    Solutions (besides fixed points): 
-    x = ((r+1) ± √((r+1)(r-3))) / (2r)
-    """
-    if r <= 3:
-        return (float('nan'), float('nan'))
-    
-    discriminant = (r + 1) * (r - 3)
-    if discriminant < 0:
-        return (float('nan'), float('nan'))
-    
-    sqrt_disc = math.sqrt(discriminant)
-    x1 = ((r + 1) + sqrt_disc) / (2 * r)
-    x2 = ((r + 1) - sqrt_disc) / (2 * r)
-    return (x1, x2)
-
-
-def detect_period(f, x0: float, max_iter: int = 10000, 
-                  settle: int = 5000, tol: float = 1e-8) -> int:
-    """Detect the period of the orbit starting at x0.
-    
-    Let the orbit settle, then look for the smallest period.
-    """
-    # Settle
-    x = x0
-    for _ in range(settle):
-        x = f(x)
-    
-    # Record the settled point
-    anchor = x
-    x = f(x)
-    
-    for period in range(1, max_iter - settle):
-        if abs(x - anchor) < tol:
-            return period
-        x = f(x)
-    
-    return -1  # Aperiodic (likely chaotic)
-
-
-def sharkovsky_classify(n: int) -> str:
-    """Classify a positive integer by its Sharkovsky class."""
-    if n <= 0:
-        return "invalid"
-    if n == 1:
-        return "power_of_two(0)"
-    
-    # Check if power of 2
-    if n & (n - 1) == 0:
-        k = n.bit_length() - 1
-        return f"power_of_two({k})"
-    
-    # Find 2-adic valuation
-    v = 0
-    m = n
-    while m % 2 == 0:
-        v += 1
-        m //= 2
-    
-    if v == 0:
-        return f"odd_large({n})"
-    else:
-        return f"mixed(v={v}, odd={m})"
-
-
-def spectrum_analysis(r: float, x0: float = 0.3) -> dict:
-    """Analyze the dynamical spectrum of the logistic map at parameter r."""
-    f = lambda x: logistic_map(r, x)
-    
-    # Find fixed points
-    fps = find_fixed_points(r)
-    
-    # Detect period
-    period = detect_period(f, x0)
-    
-    # Find period-2 orbit if applicable
-    p2 = find_period2_orbit(r) if r > 3 else None
-    
-    # Compute Lyapunov exponent (indicates chaos)
-    x = x0
-    lyap = 0.0
-    N = 10000
-    for _ in range(N):
-        deriv = abs(r * (1 - 2*x))
-        if deriv > 0:
-            lyap += math.log(deriv)
-        x = f(x)
-    lyap /= N
-    
-    return {
-        'r': r,
-        'fixed_points': fps,
-        'detected_period': period,
-        'period2_orbit': p2,
-        'lyapunov_exponent': lyap,
-        'is_chaotic': lyap > 0,
-        'sharkovsky_class': sharkovsky_classify(period) if period > 0 else 'chaotic'
-    }
-
-
-def cognitive_dynamics_demo():
-    """Simulate cognitive dynamics as logistic map and find deja vu states."""
-    print("=" * 70)
-    print("COGNITIVE DYNAMICS: DEJA VU AS FIXED POINTS")
-    print("=" * 70)
-    print()
-    
-    # Demo 1: Fixed point regime (r = 2.5)
-    print("--- Regime 1: Stable cognition (r = 2.5) ---")
-    r = 2.5
-    info = spectrum_analysis(r)
-    print(f"  Fixed points: {info['fixed_points']}")
-    print(f"  Nontrivial fixed point: {(r-1)/r:.6f}")
-    print(f"  Orbit period: {info['detected_period']}")
-    print(f"  Lyapunov exponent: {info['lyapunov_exponent']:.4f}")
-    print(f"  Interpretation: Cognitive state converges to a single attractor.")
-    print(f"  Deja vu frequency: Every thought eventually feels familiar.")
-    print()
-    
-    # Demo 2: Period-2 regime (r = 3.2)
-    print("--- Regime 2: Oscillating cognition (r = 3.2) ---")
-    r = 3.2
-    info = spectrum_analysis(r)
-    p2 = find_period2_orbit(r)
-    print(f"  Fixed points: {info['fixed_points']}")
-    print(f"  Period-2 orbit: ({p2[0]:.6f}, {p2[1]:.6f})")
-    print(f"  Orbit period: {info['detected_period']}")
-    print(f"  Lyapunov exponent: {info['lyapunov_exponent']:.4f}")
-    print(f"  Interpretation: Mind oscillates between two states.")
-    print()
-    
-    # Demo 3: Period-3 window (r ≈ 3.83)
-    print("--- Regime 3: Period-3 window (r = 3.83) ---")
-    r = 3.83
-    info = spectrum_analysis(r, x0=0.5)
-    print(f"  Fixed points: {info['fixed_points']}")
-    print(f"  Orbit period: {info['detected_period']}")
-    print(f"  Sharkovsky class: {info['sharkovsky_class']}")
-    print(f"  Lyapunov exponent: {info['lyapunov_exponent']:.4f}")
-    print(f"  Interpretation: Period 3 implies chaos (Li-Yorke).")
-    print(f"  By Sharkovsky's theorem, all periods exist!")
-    print()
-    
-    # Demo 4: Full chaos (r = 3.99)
-    print("--- Regime 4: Chaotic cognition (r = 3.99) ---")
-    r = 3.99
-    info = spectrum_analysis(r)
-    print(f"  Fixed points: {info['fixed_points']}")
-    print(f"  Orbit period: {info['detected_period']} (likely aperiodic)")
-    print(f"  Lyapunov exponent: {info['lyapunov_exponent']:.4f}")
-    print(f"  Is chaotic: {info['is_chaotic']}")
-    print(f"  Interpretation: Unpredictable cognitive trajectory.")
-    print(f"  Deja vu states are dense but measure-zero.")
-    print()
-    
-    # IVT Fixed Point Theorem demonstration
-    print("=" * 70)
-    print("IVT FIXED POINT THEOREM DEMONSTRATION")
-    print("=" * 70)
-    print()
-    print("Theorem: Any continuous f: [0,1] → [0,1] has a fixed point.")
-    print()
-    for r_val in [1.5, 2.0, 2.5, 3.0, 3.5, 4.0]:
-        fp = (r_val - 1) / r_val
-        f_fp = logistic_map(r_val, fp)
-        print(f"  r = {r_val}: fixed point at x = {fp:.6f}, "
-              f"f(x) = {f_fp:.6f}, |f(x)-x| = {abs(f_fp - fp):.2e}")
-    
-    print()
-    print("=" * 70)
-    print("SHARKOVSKY ORDERING CLASSIFICATION")
-    print("=" * 70)
-    print()
-    for n in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 16, 32]:
-        print(f"  n = {n:3d}: {sharkovsky_classify(n)}")
-    
-    print()
-    print("=" * 70)
-    print("ORBIT BIFURCATION ANALYSIS")
-    print("=" * 70)
-    print()
-    print("  r    | Period | Lyapunov | Class")
-    print("  " + "-" * 50)
-    for r_val in [x * 0.1 for x in range(10, 41)]:
-        info = spectrum_analysis(r_val, x0=0.3)
-        p = info['detected_period']
-        ly = info['lyapunov_exponent']
-        cl = info['sharkovsky_class']
-        print(f"  {r_val:.1f}  | {p:5d}  | {ly:+.4f}  | {cl}")
-
-
-if __name__ == '__main__':
-    cognitive_dynamics_demo()
-
-
-#!/usr/bin/env python3
-"""
-Bifurcation Diagram and Orbit Analysis Visualization
-
-Generates publication-quality plots of:
-1. The logistic map bifurcation diagram
-2. Orbit portraits at key parameter values
-3. Lyapunov exponent vs parameter
+This script demonstrates the key mathematical results about periodic orbits
+and fixed points in the logistic map f(x) = r*x*(1-x), showing how the
+recurrence spectrum changes as the parameter r varies.
 """
 
 import numpy as np
 
-def logistic_map(r, x):
+def logistic_map(r: float, x: float) -> float:
+    """The logistic map f(x) = r*x*(1-x)."""
     return r * x * (1 - x)
 
-def generate_bifurcation_data(r_min=2.5, r_max=4.0, r_steps=2000,
-                               n_settle=500, n_plot=200, x0=0.3):
-    """Generate bifurcation diagram data."""
-    r_values = np.linspace(r_min, r_max, r_steps)
-    r_data = []
-    x_data = []
+def iterate_map(f, x: float, n: int) -> float:
+    """Compute f^n(x) by iterating f n times."""
+    for _ in range(n):
+        x = f(x)
+    return x
+
+def find_fixed_points(r: float, tol: float = 1e-10) -> list:
+    """Find fixed points of the logistic map: solutions of r*x*(1-x) = x."""
+    # x = 0 is always a fixed point
+    # r*x*(1-x) = x => r*(1-x) = 1 => x = 1 - 1/r (for r != 0)
+    fps = [0.0]
+    if abs(r) > tol:
+        fp = 1 - 1/r
+        if 0 <= fp <= 1:
+            fps.append(fp)
+    return fps
+
+def find_periodic_points(r: float, period: int, n_samples: int = 1000,
+                         n_transient: int = 500, tol: float = 1e-8) -> list:
+    """Find approximate periodic points of the logistic map with given period."""
+    f = lambda x: logistic_map(r, x)
+    periodic = []
     
-    for r in r_values:
+    for x0 in np.linspace(0.01, 0.99, n_samples):
+        # Iterate to remove transients
         x = x0
-        for _ in range(n_settle):
+        for _ in range(n_transient):
+            x = f(x)
+        
+        # Check if x has the given period
+        y = x
+        for _ in range(period):
+            y = f(y)
+        
+        if abs(y - x) < tol:
+            # Verify it's not a divisor period
+            is_shorter = False
+            for d in range(1, period):
+                if period % d == 0:
+                    z = x
+                    for _ in range(d):
+                        z = f(z)
+                    if abs(z - x) < tol:
+                        is_shorter = True
+                        break
+            
+            if not is_shorter:
+                # Check if already found
+                if not any(abs(x - p) < tol for p in periodic):
+                    periodic.append(x)
+    
+    return sorted(periodic)
+
+def compute_recurrence_spectrum(r: float, max_period: int = 20) -> dict:
+    """Compute the recurrence spectrum for the logistic map at parameter r."""
+    spectrum = {}
+    for p in range(1, max_period + 1):
+        pts = find_periodic_points(r, p)
+        if pts:
+            spectrum[p] = pts
+    return spectrum
+
+def demo_fixed_point_theorem():
+    """Demonstrate the Interval Fixed Point Theorem."""
+    print("=" * 60)
+    print("INTERVAL FIXED POINT THEOREM")
+    print("Any continuous f: [0,1] → [0,1] has a fixed point")
+    print("=" * 60)
+    
+    for r in [0.5, 1.0, 2.0, 3.0, 3.5, 3.83, 4.0]:
+        fps = find_fixed_points(r)
+        print(f"\nr = {r}:")
+        print(f"  Fixed points: {[f'{x:.6f}' for x in fps]}")
+        for x in fps:
+            fx = logistic_map(r, x)
+            print(f"  f({x:.6f}) = {fx:.6f} (error: {abs(fx - x):.2e})")
+
+def demo_recurrence_spectrum():
+    """Demonstrate the Recurrence Spectrum at different r values."""
+    print("\n" + "=" * 60)
+    print("RECURRENCE SPECTRUM OF THE LOGISTIC MAP")
+    print("=" * 60)
+    
+    test_params = [
+        (2.0, "Stable fixed point"),
+        (3.2, "Period-2 cycle"),
+        (3.5, "Period-4 cycle"),
+        (3.83, "Period-3 window (chaos!)"),
+        (4.0, "Full chaos"),
+    ]
+    
+    for r, desc in test_params:
+        print(f"\nr = {r} ({desc}):")
+        spectrum = compute_recurrence_spectrum(r, max_period=8)
+        if spectrum:
+            for period, pts in sorted(spectrum.items()):
+                print(f"  Period {period}: {len(pts)} point(s)")
+                for x in pts[:3]:  # Show at most 3
+                    print(f"    x = {x:.8f}")
+        else:
+            print("  No periodic points found (transient behavior)")
+
+def demo_sharkovsky_ordering():
+    """Demonstrate the Sharkovsky ordering implications."""
+    print("\n" + "=" * 60)
+    print("SHARKOVSKY'S THEOREM: PERIOD 3 IMPLIES ALL PERIODS")
+    print("=" * 60)
+    
+    r = 3.83  # Period-3 window
+    print(f"\nAt r = {r} (period-3 window):")
+    print("Checking which periods exist...")
+    
+    for p in range(1, 13):
+        pts = find_periodic_points(r, p, n_samples=2000)
+        status = f"FOUND ({len(pts)} points)" if pts else "not found"
+        print(f"  Period {p:2d}: {status}")
+
+def demo_spectral_entropy():
+    """Demonstrate spectral entropy concepts."""
+    print("\n" + "=" * 60)
+    print("SPECTRAL ENTROPY: PERIODIC POINT GROWTH")
+    print("=" * 60)
+    
+    for r in [3.0, 3.5, 3.83, 4.0]:
+        print(f"\nr = {r}:")
+        counts = []
+        for n in range(1, 11):
+            # Count period-n points (points with f^n(x) = x)
+            f = lambda x, r=r: logistic_map(r, x)
+            count = 0
+            for x0 in np.linspace(0.01, 0.99, 500):
+                x = x0
+                for _ in range(200):
+                    x = f(x)
+                y = x
+                for _ in range(n):
+                    y = f(y)
+                if abs(y - x) < 1e-8:
+                    count += 1
+            counts.append(count)
+            print(f"  |Fix(f^{n:2d})| ≈ {count:4d}")
+        
+        if counts[-1] > 0 and counts[0] > 0:
+            growth = np.log(counts[-1] / max(counts[0], 1)) / 9
+            print(f"  Estimated spectral entropy ≈ {growth:.4f}")
+
+if __name__ == "__main__":
+    demo_fixed_point_theorem()
+    demo_recurrence_spectrum()
+    demo_sharkovsky_ordering()
+    demo_spectral_entropy()
+    
+    print("\n" + "=" * 60)
+    print("CONCLUSION: Déjà vu is mathematically inevitable")
+    print("Any continuous self-map of a bounded interval MUST have")
+    print("at least one fixed point — a state that recurs identically.")
+    print("=" * 60)
+
+
+#!/usr/bin/env python3
+"""
+Bifurcation Diagram and Recurrence Spectrum Visualization
+
+Standalone visualization script showing:
+1. The bifurcation diagram of the logistic map
+2. The recurrence spectrum at selected parameter values
+3. The Sharkovsky ordering structure
+"""
+
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
+
+
+def logistic_map(r, x):
+    return r * x * (1.0 - x)
+
+
+def iterate_map(r, x, n):
+    for _ in range(n):
+        x = logistic_map(r, x)
+    return x
+
+
+def compute_bifurcation(r_min=2.5, r_max=4.0, n_r=2000, n_trans=500, n_plot=300):
+    rs = np.linspace(r_min, r_max, n_r)
+    r_vals, x_vals = [], []
+    for r in rs:
+        x = 0.5
+        for _ in range(n_trans):
             x = logistic_map(r, x)
         for _ in range(n_plot):
             x = logistic_map(r, x)
-            r_data.append(r)
-            x_data.append(x)
-    
-    return np.array(r_data), np.array(x_data)
+            r_vals.append(r)
+            x_vals.append(x)
+    return np.array(r_vals), np.array(x_vals)
 
-def compute_lyapunov(r_values, n_iter=5000, x0=0.3):
-    """Compute Lyapunov exponent for each r value."""
-    lyap = np.zeros_like(r_values)
-    for i, r in enumerate(r_values):
-        x = x0
-        total = 0.0
-        for _ in range(n_iter):
-            deriv = abs(r * (1 - 2*x))
-            if deriv > 1e-15:
-                total += np.log(deriv)
-            x = logistic_map(r, x)
-        lyap[i] = total / n_iter
-    return lyap
 
-def plot_all():
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-    except ImportError:
-        print("matplotlib not available, generating data only")
-        return
-    
-    fig, axes = plt.subplots(3, 1, figsize=(12, 14))
-    
-    # Plot 1: Bifurcation diagram
-    ax1 = axes[0]
-    r_data, x_data = generate_bifurcation_data()
-    ax1.scatter(r_data, x_data, s=0.01, c='black', alpha=0.3)
-    ax1.set_xlabel('r (bifurcation parameter)', fontsize=12)
-    ax1.set_ylabel('x (attractor)', fontsize=12)
-    ax1.set_title('Logistic Map Bifurcation Diagram: The Road to Chaos', fontsize=14)
-    
-    # Mark key regions
-    ax1.axvline(x=3.0, color='blue', linestyle='--', alpha=0.5, label='Period doubling (r=3)')
-    ax1.axvline(x=3.83, color='red', linestyle='--', alpha=0.5, label='Period-3 window (r≈3.83)')
-    ax1.legend(fontsize=10)
-    
-    # Plot 2: Lyapunov exponent
-    ax2 = axes[1]
-    r_lyap = np.linspace(2.5, 4.0, 1000)
-    lyap = compute_lyapunov(r_lyap)
-    ax2.plot(r_lyap, lyap, 'k-', linewidth=0.5)
-    ax2.axhline(y=0, color='red', linestyle='-', alpha=0.5)
-    ax2.fill_between(r_lyap, lyap, 0, where=(lyap > 0), alpha=0.3, color='red', label='Chaotic (λ > 0)')
-    ax2.fill_between(r_lyap, lyap, 0, where=(lyap <= 0), alpha=0.3, color='blue', label='Periodic (λ ≤ 0)')
-    ax2.set_xlabel('r', fontsize=12)
-    ax2.set_ylabel('Lyapunov exponent λ', fontsize=12)
-    ax2.set_title('Lyapunov Exponent: Quantifying Chaos', fontsize=14)
-    ax2.legend(fontsize=10)
-    
-    # Plot 3: Orbit portraits
-    ax3 = axes[2]
-    r_values = [2.8, 3.2, 3.83, 3.99]
-    colors = ['blue', 'green', 'red', 'purple']
-    labels = ['Fixed point\n(r=2.8)', 'Period-2\n(r=3.2)', 
-              'Period-3\n(r=3.83)', 'Chaos\n(r=3.99)']
-    
-    for r, color, label in zip(r_values, colors, labels):
-        x = 0.3
-        orbit = []
-        for i in range(200):
-            x = logistic_map(r, x)
-            if i >= 150:
-                orbit.append(x)
-        
-        ax3.plot(range(len(orbit)), orbit, '-o', color=color, 
-                markersize=2, linewidth=0.5, label=label, alpha=0.8)
-    
-    ax3.set_xlabel('Iteration (after settling)', fontsize=12)
-    ax3.set_ylabel('x', fontsize=12)
-    ax3.set_title('Orbit Portraits at Key Parameter Values', fontsize=14)
-    ax3.legend(fontsize=9, ncol=2)
-    
-    plt.tight_layout()
-    plt.savefig('bifurcation_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved bifurcation_analysis.png")
+def detect_period(r, x0=0.5, max_p=50, tol=1e-8):
+    x = x0
+    for _ in range(1000):
+        x = logistic_map(r, x)
+    for p in range(1, max_p + 1):
+        y = x
+        for _ in range(p):
+            y = logistic_map(r, y)
+        if abs(y - x) < tol:
+            return p
+    return None
 
-if __name__ == '__main__':
-    plot_all()
+
+def cobweb_diagram(ax, r, x0=0.2, n_steps=50):
+    xs = np.linspace(0, 1, 500)
+    ys = r * xs * (1 - xs)
+    ax.plot(xs, ys, 'b-', linewidth=2, label=f'$f(x) = {r}x(1-x)$')
+    ax.plot(xs, xs, 'k--', linewidth=1, label='$y = x$')
+    
+    x = x0
+    for _ in range(n_steps):
+        fx = logistic_map(r, x)
+        ax.plot([x, x], [x, fx], 'r-', linewidth=0.5, alpha=0.7)
+        ax.plot([x, fx], [fx, fx], 'r-', linewidth=0.5, alpha=0.7)
+        x = fx
+    
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.set_xlabel('$x$')
+    ax.set_ylabel('$f(x)$')
+    ax.set_title(f'Cobweb: $r = {r}$')
+    ax.legend(fontsize=8)
+
+
+fig = plt.figure(figsize=(16, 12))
+gs = GridSpec(2, 3, figure=fig, hspace=0.35, wspace=0.3)
+
+# Panel 1: Bifurcation diagram
+ax1 = fig.add_subplot(gs[0, :])
+r_vals, x_vals = compute_bifurcation()
+ax1.scatter(r_vals, x_vals, s=0.01, c='black', alpha=0.3)
+ax1.axvline(x=3.83, color='red', linestyle='--', alpha=0.7, label='$r = 3.83$ (period-3)')
+ax1.axvline(x=3.0, color='blue', linestyle='--', alpha=0.5, label='$r = 3.0$ (onset)')
+ax1.set_xlabel('$r$ (bifurcation parameter)', fontsize=12)
+ax1.set_ylabel('$x$ (attractor)', fontsize=12)
+ax1.set_title('Bifurcation Diagram of the Logistic Map', fontsize=14)
+ax1.legend()
+
+# Panel 2-4: Cobweb diagrams at three r values
+for idx, (r, title) in enumerate([(2.8, 'Fixed Point'), (3.5, 'Period-4'), (3.83, 'Period-3 (Chaos)')]):
+    ax = fig.add_subplot(gs[1, idx])
+    cobweb_diagram(ax, r)
+    ax.set_title(f'{title}: $r = {r}$', fontsize=11)
+
+plt.suptitle('Recurrence Spectrum of the Logistic Map: Déjà Vu in Dynamical Systems',
+             fontsize=15, fontweight='bold', y=1.02)
+plt.savefig('/workspace/request-project/bifurcation_diagram.png', dpi=150, bbox_inches='tight')
+plt.close()
+
+print("Saved bifurcation_diagram.png")
