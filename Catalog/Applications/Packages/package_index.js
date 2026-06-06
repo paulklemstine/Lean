@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3bce3ef5",
     "filename": "the_mathematics_of_jigsaw_puzzles_np_completeness_.json",
     "pkg_num": 401,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.27480000000000004,
     "title": "The Mathematics of Jigsaw Puzzles: Algebraic Foundations, NP-Completeness, and Complement Duality"
   },
   {
@@ -12780,8 +12780,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_mathematics_of_jigsaw_puzzles_np_completeness_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.27480000000000004,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Mathematics of Jigsaw Puzzles: Algebraic Foundations, NP-Completeness, and Complement Duality"
     }
