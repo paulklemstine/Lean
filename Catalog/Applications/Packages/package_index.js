@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "eea162c4",
     "filename": "speculative_the_universe_computes_its_own_existenc.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.20600000000000002,
     "title": "Reflexive Simulation Systems: When Computation Computes Itself"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "speculative_the_universe_computes_its_own_existenc",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.20600000000000002,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Reflexive Simulation Systems: When Computation Computes Itself"
     }
