@@ -3063,7 +3063,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
   {
-    "consumed_by_exp_id": "05f8889f",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -3073,7 +3073,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
@@ -3708,7 +3708,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Consciousness as Integrated Information"
   },
   {
-    "consumed_by_exp_id": "ca96e84a",
+    "consumed_by_exp_id": "",
     "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
     "domains": [
       "Speculative",
@@ -3718,7 +3718,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.177474+00:00",
     "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
@@ -4278,7 +4278,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
   {
-    "consumed_by_exp_id": "765fbc61",
+    "consumed_by_exp_id": "",
     "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal \u2014 they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
     "domains": [
       "Novelty",
@@ -4288,7 +4288,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.626049+00:00",
     "title": "The Category Theory of Jokes: Universal Properties of Humor"
   },
@@ -4698,7 +4698,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ae396bb",
     "description": "Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connect to Infinite Time Turing Machines and ordinal computation.",
     "domains": [
       "Novelty",
@@ -4708,7 +4708,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.883358+00:00",
     "title": "Cellular Automata at the Ordinals: Transfinite Computation"
   },
@@ -5177,7 +5177,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
   },
   {
-    "consumed_by_exp_id": "778aa955",
+    "consumed_by_exp_id": "",
     "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
     "domains": [
       "Novelty",
@@ -5187,7 +5187,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.923091+00:00",
     "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
   },
