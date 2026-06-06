@@ -1,1 +1,1 @@
-algorithms.py::is_vampire
+algorithms.py

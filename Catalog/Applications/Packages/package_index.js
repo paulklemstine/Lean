@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3034e0f5",
     "filename": "vampire_numbers_and_other_numerical_monsters_a_bes.json",
     "pkg_num": 399,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.35440000000000005,
     "title": "The Digit Factorization Spectrum: Vampire Numbers and Arithmetic Creatures"
   },
   {
@@ -12722,8 +12722,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "vampire_numbers_and_other_numerical_monsters_a_bes",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.35440000000000005,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Digit Factorization Spectrum: Vampire Numbers and Arithmetic Creatures"
     }

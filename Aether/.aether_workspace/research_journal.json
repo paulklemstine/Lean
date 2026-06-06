@@ -1280,6 +1280,36 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T03:13:59",
       "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+    },
+    {
+      "cycle_id": "4b987b4b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis cycle established the first rigorous formalization of Integrated Information Theory (IIT) as a combinatorial measure on deterministic causal systems. The centra",
+      "quality_score": 0.46264000000000005,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-06T03:45:49",
+      "title": "Consciousness as Integrated Information"
+    },
+    {
+      "cycle_id": "2a243e0b",
+      "domain": "Novelty",
+      "key_insight": "## Synthesis\n\nThis research cycle established a formalized theory of non-standard natural number arithmetic via ultrapowers, proving 17 theorems including the overspill principle, transfer of the divi",
+      "quality_score": 0.58608,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T03:46:14",
+      "title": "Alien Mathematics: Non-Standard Arithmetic"
+    },
+    {
+      "cycle_id": "3034e0f5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: The Digit Factorization Spectrum\n\n## Synthesis\n\nThis research cycle established the *Digit Factorization Profile* as a novel algebraic framework for studying the interplay between",
+      "quality_score": 0.35440000000000005,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-06T03:46:40",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ],
   "entries": [
@@ -1325,7 +1355,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T03:13:59",
+  "last_updated": "2026-06-06T03:46:40",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1534,24 +1564,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "5d621309",
-        "quality": 0.48712,
-        "theorems": 5,
-        "title": "Alien Mathematics: Non-Standard Arithmetic"
-      },
-      {
-        "cycle_id": "b9304a7a",
-        "quality": 0.43079999999999996,
-        "theorems": 5,
-        "title": "Sonic Mathematics: Counterpoint as Category Theory"
-      },
-      {
-        "cycle_id": "4daea1a0",
-        "quality": 0.30176000000000003,
-        "theorems": 5,
-        "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-      },
-      {
         "cycle_id": "533a0a5e",
         "quality": 0.3748,
         "theorems": 6,
@@ -1592,6 +1604,24 @@
         "quality": 0.34144,
         "theorems": 5,
         "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+      },
+      {
+        "cycle_id": "4b987b4b",
+        "quality": 0.46264000000000005,
+        "theorems": 4,
+        "title": "Consciousness as Integrated Information"
+      },
+      {
+        "cycle_id": "2a243e0b",
+        "quality": 0.58608,
+        "theorems": 5,
+        "title": "Alien Mathematics: Non-Standard Arithmetic"
+      },
+      {
+        "cycle_id": "3034e0f5",
+        "quality": 0.35440000000000005,
+        "theorems": 4,
+        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
       }
     ],
     "Physics": [
