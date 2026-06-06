@@ -1,195 +1,240 @@
 #!/usr/bin/env python3
 """
-Algorithms for Transfinite Surface Analysis
+Algorithms for cardinal arithmetic and embedding feasibility.
 
-Type-hinted implementations of the key algorithms from the
-Aleph-1 Surface research.
+Type-hinted implementations of the key algorithmic ideas from the
+transfinite surface research.
 """
 
-from dataclasses import dataclass
 from enum import Enum
+from dataclasses import dataclass
 from typing import Optional
-import math
 
 
-class ObstructionType(Enum):
-    """Types of dimensional obstruction."""
-    NONE = "no obstruction"
-    COMBINATORIAL = "combinatorial (triangulation)"
-    ALGEBRAIC = "algebraic (linear embedding)"
-    BOTH = "both combinatorial and algebraic"
+class CardinalForm(Enum):
+    """Canonical forms for cardinal expressions."""
+    FINITE = "finite"
+    ALEPH = "aleph"      # ℵ_α for ordinal α
+    POWER = "power"      # 2^κ for cardinal κ
+    PRODUCT = "product"  # κ^λ
 
 
 @dataclass
-class CardinalBound:
-    """Result of a cardinal bound check."""
-    source_card: str  # description of source cardinality
-    target_card: str  # description of target cardinality
-    bound_holds: bool  # True if source ≤ target
-    obstruction: ObstructionType
-
-
-def check_triangulation_feasibility(
-    vertex_count: int | str,
-    target_cardinality: int | str,
-) -> CardinalBound:
-    """Check whether a triangulation with given vertex count
-    can cover a space of given cardinality.
-
-    Uses the cardinal triangulation bound: |V| ≥ |X| is necessary.
-
-    Args:
-        vertex_count: Number of vertices (int or "aleph0", "aleph1", "continuum")
-        target_cardinality: Cardinality of target space
-
-    Returns:
-        CardinalBound with feasibility result
+class Cardinal:
     """
-    cardinal_order = {"finite": 0, "aleph0": 1, "aleph1": 2, "continuum": 2}
-
-    def classify(x: int | str) -> tuple[str, int]:
-        if isinstance(x, int):
-            return "finite", 0
-        return str(x), cardinal_order.get(str(x), 3)
-
-    v_class, v_ord = classify(vertex_count)
-    t_class, t_ord = classify(target_cardinality)
-
-    if isinstance(vertex_count, int) and isinstance(target_cardinality, int):
-        feasible = vertex_count >= target_cardinality
-    else:
-        feasible = v_ord >= t_ord
-
-    return CardinalBound(
-        source_card=str(vertex_count),
-        target_card=str(target_cardinality),
-        bound_holds=feasible,
-        obstruction=ObstructionType.NONE if feasible else ObstructionType.COMBINATORIAL,
-    )
-
-
-def check_linear_embedding_feasibility(
-    source_rank: int | str,
-    target_dim: int,
-) -> CardinalBound:
-    """Check whether an injective linear map exists from a module
-    of given rank to ℝ^n.
-
-    Uses the embedding obstruction: rank(M) ≤ dim(N) is necessary.
-
-    Args:
-        source_rank: Rank of source module (int or "aleph0", "aleph1")
-        target_dim: Dimension of target space (finite)
-
-    Returns:
-        CardinalBound with feasibility result
+    Symbolic representation of a cardinal number.
+    
+    Supports: finite values, aleph numbers, power expressions.
     """
-    if isinstance(source_rank, int):
-        feasible = source_rank <= target_dim
-    else:
-        feasible = False  # infinite rank never embeds in finite dim
+    form: CardinalForm
+    value: Optional[int] = None       # For FINITE
+    index: Optional[int] = None       # For ALEPH: ℵ_index
+    base: Optional['Cardinal'] = None # For POWER: 2^base
+    
+    def __repr__(self) -> str:
+        if self.form == CardinalForm.FINITE:
+            return str(self.value)
+        elif self.form == CardinalForm.ALEPH:
+            return f"ℵ_{self.index}"
+        elif self.form == CardinalForm.POWER:
+            return f"2^{self.base}"
+        return "?"
+    
+    @staticmethod
+    def finite(n: int) -> 'Cardinal':
+        return Cardinal(CardinalForm.FINITE, value=n)
+    
+    @staticmethod
+    def aleph(index: int) -> 'Cardinal':
+        return Cardinal(CardinalForm.ALEPH, index=index)
+    
+    @staticmethod
+    def power_of_two(base: 'Cardinal') -> 'Cardinal':
+        return Cardinal(CardinalForm.POWER, base=base)
+    
+    @property
+    def is_finite(self) -> bool:
+        return self.form == CardinalForm.FINITE
+    
+    @property
+    def is_countable(self) -> bool:
+        return self.is_finite or (self.form == CardinalForm.ALEPH and self.index == 0)
 
-    return CardinalBound(
-        source_card=str(source_rank),
-        target_card=str(target_dim),
-        bound_holds=feasible,
-        obstruction=ObstructionType.NONE if feasible else ObstructionType.ALGEBRAIC,
-    )
 
-
-def dual_obstruction_check(
-    space_cardinality: int | str,
-    module_rank: int | str,
-    target_dim: int,
-) -> CardinalBound:
-    """Check both combinatorial and algebraic obstructions simultaneously.
-
-    Args:
-        space_cardinality: Cardinality of the space
-        module_rank: Rank of the module
-        target_dim: Dimension of finite-dimensional target
-
-    Returns:
-        CardinalBound with combined result
+def compare_cardinals_gch(a: Cardinal, b: Cardinal) -> str:
     """
-    tri_check = check_triangulation_feasibility(target_dim, space_cardinality)
-    lin_check = check_linear_embedding_feasibility(module_rank, target_dim)
+    Compare two cardinals under the Generalized Continuum Hypothesis.
+    
+    Under GCH: 2^(ℵ_α) = ℵ_{α+1} for all ordinals α.
+    
+    Returns: '<', '=', '>', or '?' (unknown)
+    """
+    # Normalize under GCH
+    a_norm = _normalize_gch(a)
+    b_norm = _normalize_gch(b)
+    
+    if a_norm.form == CardinalForm.ALEPH and b_norm.form == CardinalForm.ALEPH:
+        assert a_norm.index is not None and b_norm.index is not None
+        if a_norm.index < b_norm.index:
+            return '<'
+        elif a_norm.index == b_norm.index:
+            return '='
+        else:
+            return '>'
+    
+    if a_norm.is_finite and b_norm.is_finite:
+        assert a_norm.value is not None and b_norm.value is not None
+        if a_norm.value < b_norm.value:
+            return '<'
+        elif a_norm.value == b_norm.value:
+            return '='
+        else:
+            return '>'
+    
+    if a_norm.is_finite and not b_norm.is_finite:
+        return '<'
+    if not a_norm.is_finite and b_norm.is_finite:
+        return '>'
+    
+    return '?'
 
-    if not tri_check.bound_holds and not lin_check.bound_holds:
-        obstruction = ObstructionType.BOTH
-    elif not tri_check.bound_holds:
-        obstruction = ObstructionType.COMBINATORIAL
-    elif not lin_check.bound_holds:
-        obstruction = ObstructionType.ALGEBRAIC
-    else:
-        obstruction = ObstructionType.NONE
 
-    return CardinalBound(
-        source_card=f"space={space_cardinality}, rank={module_rank}",
-        target_card=f"dim={target_dim}",
-        bound_holds=(obstruction == ObstructionType.NONE),
-        obstruction=obstruction,
-    )
+def _normalize_gch(c: Cardinal) -> Cardinal:
+    """Normalize a cardinal expression under GCH."""
+    if c.form == CardinalForm.POWER and c.base is not None:
+        base_norm = _normalize_gch(c.base)
+        if base_norm.form == CardinalForm.ALEPH and base_norm.index is not None:
+            # 2^(ℵ_α) = ℵ_{α+1} under GCH
+            return Cardinal.aleph(base_norm.index + 1)
+        if base_norm.is_finite and base_norm.value is not None:
+            return Cardinal.finite(2 ** base_norm.value)
+    return c
 
 
-def hilbert_cube_cardinality_chain() -> list[tuple[str, str, str]]:
-    """Compute the cardinality chain proving |[0,1]^ℕ| = 𝔠.
+def embedding_feasibility(
+    source_dim: Cardinal, 
+    target_dim: Cardinal,
+    assume_ch: bool = True
+) -> dict[str, object]:
+    """
+    Determine whether a set-theoretic injection from [0,1]^source_dim 
+    to [0,1]^target_dim exists.
+    
+    Under CH (assume_ch=True):
+    - |[0,1]^κ| = 2^κ for infinite κ (simplified under GCH)
+    - Injection exists iff |source| ≤ |target|
+    
+    Returns dict with keys: 'feasible', 'reason', 'source_card', 'target_card'
+    """
+    if assume_ch:
+        source_card = Cardinal.power_of_two(source_dim)
+        target_card = Cardinal.power_of_two(target_dim)
+        
+        comparison = compare_cardinals_gch(source_card, target_card)
+        
+        if comparison == '>' :
+            return {
+                'feasible': False,
+                'reason': f"|[0,1]^{source_dim}| = {source_card} > {target_card} = |[0,1]^{target_dim}|",
+                'source_card': str(source_card),
+                'target_card': str(target_card),
+            }
+        elif comparison in ('<', '='):
+            return {
+                'feasible': True,
+                'reason': f"|[0,1]^{source_dim}| ≤ |[0,1]^{target_dim}|",
+                'source_card': str(source_card),
+                'target_card': str(target_card),
+            }
+        else:
+            return {
+                'feasible': None,
+                'reason': "Cannot determine under current axioms",
+                'source_card': str(source_card),
+                'target_card': str(target_card),
+            }
+    
+    return {
+        'feasible': None,
+        'reason': "Without CH, embedding feasibility may be independent of ZFC",
+        'source_card': '?',
+        'target_card': '?',
+    }
 
-    Returns list of (expression, relation, justification) triples.
+
+def triangulation_bound(vertex_count: Cardinal) -> dict[str, object]:
+    """
+    Determine what spaces can be finitely triangulated with given vertex count.
+    
+    A triangulation with |V| vertices can cover at most |V| points (surjection bound).
+    """
+    if vertex_count.is_finite:
+        return {
+            'max_target_size': str(vertex_count),
+            'can_cover_infinite': False,
+            'can_cover_aleph1_surface': False,
+            'reason': f"Surjection from {vertex_count} vertices covers ≤ {vertex_count} points"
+        }
+    elif vertex_count.form == CardinalForm.ALEPH:
+        assert vertex_count.index is not None
+        if vertex_count.index == 0:
+            return {
+                'max_target_size': 'ℵ₀',
+                'can_cover_infinite': True,
+                'can_cover_aleph1_surface': False,
+                'reason': "ℵ₀ vertices cover ≤ ℵ₀ < 2^ℵ₁ points"
+            }
+        else:
+            return {
+                'max_target_size': f'ℵ_{vertex_count.index}',
+                'can_cover_infinite': True,
+                'can_cover_aleph1_surface': vertex_count.index >= 1,
+                'reason': f"Need ≥ 2^ℵ₁ vertices; ℵ_{vertex_count.index} may suffice"
+            }
+    
+    return {'max_target_size': '?', 'can_cover_infinite': None, 
+            'can_cover_aleph1_surface': None, 'reason': 'Unknown'}
+
+
+def cardinal_hierarchy_ch() -> list[tuple[str, str, str]]:
+    """
+    Return the cardinal hierarchy under CH as a list of (level, description, relation).
     """
     return [
-        ("|[0,1]|", "= 𝔠", "Cantor-Bernstein with ℝ"),
-        ("|[0,1]|", "≤ |[0,1]^ℕ|", "constant-sequence embedding"),
-        ("|[0,1]^ℕ|", "≤ |ℝ^ℕ|", "Subtype.val injection"),
-        ("|ℝ^ℕ|", "= 𝔠^ℵ₀", "cardinal exponentiation"),
-        ("𝔠^ℵ₀", "= (2^ℵ₀)^ℵ₀", "definition of 𝔠"),
-        ("(2^ℵ₀)^ℵ₀", "= 2^(ℵ₀·ℵ₀)", "cardinal exponentiation rule"),
-        ("2^(ℵ₀·ℵ₀)", "= 2^ℵ₀", "ℵ₀·ℵ₀ = ℵ₀"),
-        ("2^ℵ₀", "= 𝔠", "definition of 𝔠"),
+        ("ℵ₀", "Countable: ℕ, ℤ, ℚ", ""),
+        ("ℵ₁ = 𝔠", "Continuum: ℝ, ℝⁿ, [0,1]^ℕ", "< (strict)"),
+        ("2^ℵ₁ = ℵ₂", "Second power: ≤ |[0,1]^ℵ₁|", "< (Cantor)"),
+        ("2^ℵ₂ = ℵ₃", "Third power: ≤ |[0,1]^ℵ₂|", "< (Cantor)"),
     ]
 
 
-def min_triangulation_complexity(dim: int, epsilon: float = 0.1) -> int:
-    """Estimate minimum simplices for ε-triangulation of [0,1]^d.
-
-    The Kuhn triangulation of [0,1]^d uses d! simplices per unit cube.
-    For ε-refinement, we need ~(1/ε)^d cubes, each with d! simplices.
-
-    Args:
-        dim: Dimension d
-        epsilon: Approximation parameter
-
-    Returns:
-        Estimated minimum simplex count
-    """
-    cubes = math.ceil(1.0 / epsilon) ** dim
-    simplices_per_cube = math.factorial(dim)
-    return cubes * simplices_per_cube
-
+# ── Demo ──
 
 if __name__ == "__main__":
-    # Demo the algorithms
-    print("=== Triangulation Feasibility ===")
-    for v, t in [(10, 5), (5, 10), ("aleph0", "aleph1"), ("aleph0", "aleph0")]:
-        result = check_triangulation_feasibility(v, t)
-        status = "✓ Feasible" if result.bound_holds else f"✗ {result.obstruction.value}"
-        print(f"  |V|={v}, |X|={t}: {status}")
-
-    print("\n=== Linear Embedding Feasibility ===")
-    for r, n in [(3, 5), (10, 3), ("aleph0", 100), ("aleph1", 1000)]:
-        result = check_linear_embedding_feasibility(r, n)
-        status = "✓ Feasible" if result.bound_holds else f"✗ {result.obstruction.value}"
-        print(f"  rank={r}, dim={n}: {status}")
-
-    print("\n=== Dual Obstruction ===")
-    result = dual_obstruction_check("aleph1", "aleph1", 3)
-    print(f"  ℵ₁-space, ℵ₁-rank module, target ℝ³: {result.obstruction.value}")
-
-    print("\n=== Hilbert Cube Cardinality Chain ===")
-    for expr, rel, just in hilbert_cube_cardinality_chain():
-        print(f"  {expr} {rel}  ({just})")
-
-    print("\n=== Triangulation Complexity ===")
-    for d in [1, 2, 3, 5, 10, 20]:
-        n = min_triangulation_complexity(d, 0.1)
-        print(f"  dim={d}, ε=0.1: ≥{n:,} simplices")
+    print("=== Cardinal Comparison (GCH) ===")
+    pairs = [
+        (Cardinal.aleph(0), Cardinal.aleph(1)),
+        (Cardinal.aleph(1), Cardinal.power_of_two(Cardinal.aleph(1))),
+        (Cardinal.power_of_two(Cardinal.aleph(0)), Cardinal.aleph(1)),
+    ]
+    for a, b in pairs:
+        result = compare_cardinals_gch(a, b)
+        print(f"  {a} {result} {b}")
+    
+    print("\n=== Embedding Feasibility (CH) ===")
+    tests = [
+        (Cardinal.aleph(0), Cardinal.aleph(0)),
+        (Cardinal.aleph(1), Cardinal.aleph(0)),
+        (Cardinal.aleph(1), Cardinal.aleph(1)),
+        (Cardinal.aleph(2), Cardinal.aleph(1)),
+    ]
+    for src, tgt in tests:
+        result = embedding_feasibility(src, tgt)
+        status = "✓" if result['feasible'] else "✗"
+        print(f"  [0,1]^{src} → [0,1]^{tgt}: {status} ({result['reason']})")
+    
+    print("\n=== Triangulation Bounds ===")
+    for v in [Cardinal.finite(10), Cardinal.aleph(0), Cardinal.aleph(1)]:
+        result = triangulation_bound(v)
+        print(f"  {v} vertices: max coverage = {result['max_target_size']}, "
+              f"covers ℵ₁-surface: {result['can_cover_aleph1_surface']}")
