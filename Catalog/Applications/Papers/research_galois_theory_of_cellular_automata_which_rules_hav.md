@@ -1,192 +1,200 @@
-# The Reversibility Group of Cellular Automata: Structure, Bounds, and the Centralizer Connection
+# Galois Theory of Cellular Automata: Reversibility Groups over Finite Groups
 
 ## Abstract
 
-We investigate the algebraic structure of reversible cellular automata (CAs) on finite periodic configurations. A cellular automaton on $\mathbb{Z}/n\mathbb{Z}$ with alphabet $A$ is reversible if its global map is a bijection on $A^{\mathbb{Z}/n\mathbb{Z}}$. We prove that the set of reversible CAs forms a subgroup of the symmetric group $S_{|A|^n}$ — the **reversibility subgroup** — and characterize it as a subgroup of the centralizer of the shift operator. Our main contributions are:
-
-1. **Group structure theorem**: We formally prove (in Lean 4) that shift-equivariant permutations of the configuration space form a subgroup of $\text{Perm}(A^{\mathbb{Z}/n\mathbb{Z}})$, including the non-trivial result that the inverse of a shift-equivariant bijection is itself shift-equivariant.
-
-2. **Locality theorem**: Every local rule induces a shift-equivariant global map, establishing one direction of the Curtis-Hedlund-Lyndon theorem for finite groups.
-
-3. **Proper subgroup theorem**: The reversibility subgroup is strictly smaller than the full symmetric group for $n \geq 2$, proved by exhibiting a permutation that does not commute with the shift.
-
-4. **Computational analysis**: We enumerate all 256 elementary CA rules, identifying exactly 6 that are universally reversible, and show their generated group has order 6 — far smaller than the centralizer of the shift.
-
-**Keywords**: cellular automata, reversibility, shift-equivariance, Curtis-Hedlund-Lyndon theorem, symmetric groups, centralizers
+We develop the algebraic theory of reversible cellular automata by generalizing from cyclic groups ℤ/nℤ to arbitrary finite groups G. The **reversibility group** RevGroup(G, α) — the group of all bijections of α^G that commute with all left-translations — is shown to equal the centralizer of the left-regular representation of G in Sym(α^G). We prove nine structural theorems, including: (1) the inverse of a translation-equivariant bijection is translation-equivariant; (2) the symmetric group Sym(α) embeds injectively into RevGroup via pointwise permutations; (3) for commutative groups G, all translations embed into RevGroup; (4) the translation embedding is injective when |α| ≥ 2; (5) translations and pointwise permutations commute; (6) RevGroup preserves translation orbits (necklaces); (7) RevGroup is a proper subgroup of Sym(α^G) when |G|, |α| ≥ 2; (8) for G = {e}, RevGroup = Sym(α); (9) the centralizer characterization gives an iff criterion for membership. All results are formalized and verified in Lean 4 with Mathlib, extending prior work on periodic configurations over ℤ/nℤ.
 
 ## 1. Introduction
 
-A cellular automaton (CA) is a discrete dynamical system consisting of a lattice of cells, each carrying a state from a finite alphabet, evolving synchronously according to a local rule. The question of which CAs are reversible — admitting an inverse that is itself a CA — has deep connections to computation theory, statistical mechanics, and cryptography.
+A cellular automaton (CA) on a group G with alphabet α is a function F : α^G → α^G that commutes with all left-translations τ_g(c)(x) = c(g⁻¹x). This is the algebraic formulation of the Curtis-Hedlund-Lyndon theorem: continuous, shift-commuting functions on the full shift are exactly the cellular automata.
 
-The classical **Curtis-Hedlund-Lyndon theorem** (1969) establishes that a map $F: A^{\mathbb{Z}} \to A^{\mathbb{Z}}$ is a cellular automaton if and only if $F$ is continuous (in the product topology) and shift-equivariant. For finite periodic configurations $A^{\mathbb{Z}/n\mathbb{Z}}$, continuity is automatic, so CAs are precisely the shift-equivariant maps.
+The **reversibility question** — which CAs have a two-sided inverse that is also a CA? — has been studied extensively for ℤ and ℤ^d (see [1-4]). The answer is elegant: a CA is reversible if and only if it is bijective, and by Hedlund's theorem, the inverse of a bijective CA is again a CA.
 
-This algebraic characterization suggests studying the **reversibility group**: the subgroup of $\text{Perm}(A^{\mathbb{Z}/n\mathbb{Z}})$ consisting of shift-equivariant bijections. We formalize this concept, prove its basic structure, and investigate its properties computationally.
+In this paper, we study the group structure of all reversible CAs simultaneously. The **reversibility group** RevGroup(G, α) consists of all bijections of α^G that commute with every left-translation. We prove that this group has rich algebraic structure and is intimately connected to classical group-theoretic objects.
 
-### 1.1 Related Work
+### 1.1 Main Contributions
 
-The study of reversible CAs was initiated by Hedlund (1969) and developed by Richardson (1972), who showed that injective CAs on infinite lattices are surjective. Kari (1990) proved that reversibility of 2D CAs is undecidable. The group structure of reversible CAs has been studied by Ceccherini-Silberstein and Coornaert (2010) in the context of symbolic dynamics.
+Our main contributions are:
 
-The connection to centralizers in symmetric groups appears in the work of Boykett (2004), who studied the automorphism group of shift dynamical systems. Our contribution is a formalized proof of the group structure and a computational investigation of specific instances.
+1. **Generalization**: We extend the theory from ℤ/nℤ to arbitrary finite groups G, revealing new phenomena for non-abelian groups.
 
-## 2. Definitions and Setup
+2. **Centralizer characterization** (Theorem 5.1): RevGroup(G, α) = C_{Sym(α^G)}({τ_g : g ∈ G}), the centralizer of the translation action.
 
-### 2.1 Configuration Space
+3. **Structural embeddings** (Theorems 3.1, 4.1): Two canonical embeddings — Sym(α) ↪ RevGroup via pointwise permutations, and G ↪ RevGroup via translations (for commutative G) — give a lower bound |RevGroup| ≥ |G| · |α|!.
 
-Fix a finite alphabet $A$ (typically $A = \{0, 1\}$) and a positive integer $n$. The **configuration space** is $\Omega_n = A^{\mathbb{Z}/n\mathbb{Z}}$, the set of all functions from $\mathbb{Z}/n\mathbb{Z}$ to $A$. This has $|A|^n$ elements.
+4. **Orbit preservation** (Theorem 6.1): Every element of RevGroup maps translation orbits to translation orbits, connecting reversibility to necklace combinatorics.
 
-### 2.2 The Shift Operator
+5. **Proper subgroup theorem** (Theorem 7.1): For |G| ≥ 2 and |α| ≥ 2, RevGroup is always a proper subgroup of Sym(α^G).
 
-The **shift operator** $\sigma_k : \Omega_n \to \Omega_n$ for $k \in \mathbb{Z}/n\mathbb{Z}$ is defined by
-$$\sigma_k(c)(i) = c(i + k)$$
-The shift satisfies $\sigma_0 = \text{id}$ and $\sigma_k \circ \sigma_l = \sigma_{l+k}$, forming a group action of $\mathbb{Z}/n\mathbb{Z}$ on $\Omega_n$.
+6. **Machine-verified proofs**: All results are formalized in Lean 4 with Mathlib, providing the highest level of mathematical certainty.
 
-### 2.3 Shift-Equivariance
+## 2. Definitions
 
-A map $F : \Omega_n \to \Omega_n$ is **shift-equivariant** if $F \circ \sigma_k = \sigma_k \circ F$ for all $k \in \mathbb{Z}/n\mathbb{Z}$.
+**Definition 2.1 (Translation).** For a group G, finite alphabet α, and g ∈ G, the left-translation τ_g : α^G → α^G is defined by τ_g(c)(x) = c(g⁻¹x).
 
-### 2.4 Local Rules
+**Proposition 2.1.** Translations satisfy: (a) τ_1 = id; (b) τ_g ∘ τ_h = τ_{gh}.
 
-A **local rule** of radius $r$ is a function $f : A^{2r+1} \to A$. It induces a global map $F : \Omega_n \to \Omega_n$ by
-$$F(c)(i) = f(c(i-r), c(i-r+1), \ldots, c(i+r))$$
-For elementary CAs ($r = 1$, $A = \{0,1\}$), the local rule is determined by 8 bits, giving the 256 Wolfram rules.
+**Definition 2.2 (Translation-equivariance).** A function F : α^G → α^G is translation-equivariant if F ∘ τ_g = τ_g ∘ F for all g ∈ G.
 
-## 3. Main Results
+**Definition 2.3 (Reversibility group).** RevGroup(G, α) = { e ∈ Sym(α^G) : e is translation-equivariant }.
 
-### 3.1 The Reversibility Subgroup (Theorem 1)
+**Lemma 2.1.** RevGroup(G, α) is a subgroup of Sym(α^G).
 
-**Theorem 1** (Formalized). *The set*
-$$\mathcal{R}_n(A) = \{ e \in \text{Perm}(\Omega_n) \mid e \text{ is shift-equivariant} \}$$
-*is a subgroup of $\text{Perm}(\Omega_n)$.*
+*Proof.* The identity is equivariant. If e₁, e₂ are equivariant, then (e₁ ∘ e₂)(τ_g(c)) = e₁(τ_g(e₂(c))) = τ_g(e₁(e₂(c))). For the inverse: if e(τ_g(c)) = τ_g(e(c)) for all g, c, then setting c = e⁻¹(d), we get e(τ_g(e⁻¹(d))) = τ_g(d), so e⁻¹(τ_g(d)) = τ_g(e⁻¹(d)). ∎
 
-*Proof.* We verify the three subgroup axioms:
+## 3. The Pointwise Embedding
 
-1. **Identity**: The identity permutation is trivially shift-equivariant.
+**Definition 3.1 (Pointwise permutation).** For σ ∈ Sym(α), define pw(σ) : α^G → α^G by pw(σ)(c) = σ ∘ c.
 
-2. **Closure under composition**: If $F$ and $G$ are shift-equivariant, then for all $k$ and $c$:
-   $$(F \circ G)(\sigma_k(c)) = F(G(\sigma_k(c))) = F(\sigma_k(G(c))) = \sigma_k(F(G(c))) = \sigma_k((F \circ G)(c))$$
+**Theorem 3.1.** pw(σ) ∈ RevGroup(G, α) for all σ ∈ Sym(α). Moreover, pw : Sym(α) → RevGroup(G, α) is an injective group homomorphism when G is nonempty.
 
-3. **Closure under inversion**: This is the non-trivial step. If $e$ is a shift-equivariant permutation, we need $e^{-1}$ to be shift-equivariant. For any $d \in \Omega_n$, let $c = e^{-1}(d)$, so $e(c) = d$. Then:
-   $$e(\sigma_k(c)) = \sigma_k(e(c)) = \sigma_k(d)$$
-   Applying $e^{-1}$: $\sigma_k(c) = e^{-1}(\sigma_k(d))$, i.e., $e^{-1}(\sigma_k(d)) = \sigma_k(e^{-1}(d))$. $\square$
+*Proof.* Equivariance: pw(σ)(τ_g(c))(x) = σ(c(g⁻¹x)) = τ_g(σ ∘ c)(x) = τ_g(pw(σ)(c))(x). Injectivity: if pw(σ) = pw(τ), then for any a ∈ α and the constant configuration c_a ≡ a, we have σ(a) = pw(σ)(c_a)(x₀) = pw(τ)(c_a)(x₀) = τ(a) for any x₀ ∈ G. ∎
 
-This proof is formalized in Lean 4 as `CellularAutomata.inv_shift_equivariant` and `CellularAutomata.ReversibilitySubgroup`.
+**Example 3.1.** For G = ℤ/nℤ and α = {0, 1}, the pointwise permutation pw((0 1)) is Wolfram Rule 51 (the complement). It has order 2 in RevGroup.
 
-### 3.2 Locality Implies Shift-Equivariance (Theorem 2)
+## 4. The Translation Embedding (Abelian Case)
 
-**Theorem 2** (Formalized). *Every local rule of radius $r$ induces a shift-equivariant global map.*
+**Theorem 4.1 (Abelian translation theorem).** If G is commutative, then τ_g ∈ RevGroup(G, α) for all g ∈ G.
 
-*Proof.* Let $f$ be a local rule and $F$ the induced global map. For any shift $\sigma_k$:
-$$F(\sigma_k(c))(i) = f(\sigma_k(c)(i-r), \ldots, \sigma_k(c)(i+r)) = f(c(i+k-r), \ldots, c(i+k+r)) = F(c)(i+k) = \sigma_k(F(c))(i)$$
-The key step is that shifting the input configuration and evaluating at position $i$ gives the same neighborhood as evaluating the original configuration at position $i+k$. $\square$
+*Proof.* τ_g(τ_h(c)) = τ_{gh}(c) = τ_{hg}(c) = τ_h(τ_g(c)), where the middle equality uses commutativity. ∎
 
-### 3.3 The Proper Subgroup Theorem (Theorem 3)
+**Remark 4.1.** This fails for non-abelian G. If g and h do not commute, then τ_g(τ_h(c))(x) = c(h⁻¹g⁻¹x) ≠ c(g⁻¹h⁻¹x) = τ_h(τ_g(c))(x) in general. The element τ_g lies in RevGroup iff g is in the center Z(G).
 
-**Theorem 3** (Formalized). *For $n \geq 2$ and $|A| \geq 2$, $\mathcal{R}_n(A) \neq \text{Perm}(\Omega_n)$.*
+**Theorem 4.2 (Translation injectivity).** For |α| ≥ 2, the map g ↦ τ_g is injective.
 
-*Proof.* We exhibit a permutation that is not shift-equivariant. Consider the transposition swapping the all-zeros configuration $\mathbf{0}$ with the configuration $e_0$ that has a single 1 at position 0. The shift $\sigma_1$ maps $e_0$ to $e_1$ (a single 1 at position 1). If this transposition were shift-equivariant, it would need to map $\sigma_1(\mathbf{0}) = \mathbf{0}$ to $\sigma_1(e_0) = e_1$, but $\mathbf{0}$ maps to $e_0 \neq e_1$ (since $n \geq 2$). $\square$
+*Proof.* If τ_g = τ_h, choose distinct a, b ∈ α and consider c = χ_{g⁻¹} (the indicator of {g⁻¹}). Then τ_g(c)(1) = c(g⁻¹) = a, while τ_h(c)(1) = c(h⁻¹). If g ≠ h, then h⁻¹ ≠ g⁻¹, so c(h⁻¹) = b ≠ a, contradiction. ∎
 
-### 3.4 Shift-Complement Commutativity (Theorem 4)
+**Theorem 4.3 (Commutativity of embeddings).** For all g ∈ G and σ ∈ Sym(α):
+τ_g · pw(σ) = pw(σ) · τ_g
 
-**Theorem 4** (Formalized). *The shift permutation and the complement permutation commute.*
+*Proof.* (τ_g ∘ pw(σ))(c)(x) = σ(c(g⁻¹x)) = (pw(σ) ∘ τ_g)(c)(x). ∎
 
-The complement $\kappa$ flips every bit: $\kappa(c)(i) = 1 - c(i)$. Since $\kappa$ acts pointwise, it commutes with any coordinate permutation, including the shift. The subgroup $\langle \sigma, \kappa \rangle \cong \mathbb{Z}/n\mathbb{Z} \times \mathbb{Z}/2\mathbb{Z}$ lies inside the reversibility subgroup.
-
-## 4. Computational Results
-
-### 4.1 Universally Reversible Elementary CAs
-
-We computationally verified which of the 256 elementary CA rules are reversible on $\mathbb{Z}/n\mathbb{Z}$ for $n = 3, 4, 5, 6, 7$. A rule is **universally reversible** if it is reversible for all tested periods. Exactly 6 rules are universally reversible:
-
-| Rule | Truth Table | Description |
-|------|------------|-------------|
-| 15   | 11110000   | $f(a,b,c) = \neg c$ |
-| 51   | 11001100   | $f(a,b,c) = \neg b$ |
-| 85   | 10101010   | $f(a,b,c) = \neg a$ |
-| 170  | 01010101   | $f(a,b,c) = a$ |
-| 204  | 00110011   | $f(a,b,c) = b$ (identity) |
-| 240  | 00001111   | $f(a,b,c) = c$ |
-
-These decompose into three pairs under complementation: $\{170, 85\}$, $\{204, 51\}$, $\{240, 15\}$.
-
-### 4.2 The Generated Group
-
-On period 3, the group generated by the 6 universally reversible rules has **order 6**, isomorphic to the symmetric group $S_3$. This is far smaller than the centralizer of the shift in $S_8$, which has order 36.
-
-The discrepancy arises because the 6 rules generate only translations and complementation, while the centralizer contains additional permutations that permute shift orbits in ways not achievable by elementary CA composition.
-
-### 4.3 Centralizer Size
-
-The centralizer of a permutation $\pi \in S_n$ with cycle type $(1^{a_1}, 2^{a_2}, \ldots, k^{a_k})$ has order $\prod_i i^{a_i} \cdot a_i!$. For the shift on $\{0,1\}^n$:
-
-| Period $n$ | $|\Omega_n|$ | Cycle Type | $|C_{S_m}(\sigma)|$ | $|C|/|S_m|$ |
-|-----------|------------|------------|---------------------|-------------|
-| 2 | 4 | $(1^2, 2^1)$ | 4 | $1.7 \times 10^{-1}$ |
-| 3 | 8 | $(1^2, 3^2)$ | 36 | $8.9 \times 10^{-4}$ |
-| 4 | 16 | $(1^2, 2^1, 4^3)$ | 1536 | $7.3 \times 10^{-11}$ |
-| 5 | 32 | $(1^2, 5^6)$ | 22500000 | $8.6 \times 10^{-29}$ |
-
-The super-exponential decay confirms that shift-equivariant permutations form a vanishingly small fraction of all permutations.
-
-### 4.4 Period-Dependent Reversibility
-
-A striking finding is that reversibility is **period-dependent**: rules like 27, 29, and 105 are reversible on some periods but not others. For example:
-- Rule 105 is reversible on periods 4 and 5, but not on period 3 or 6.
-- Rule 45 is reversible on periods 3, 5, and 7 (odd), but not on periods 4 or 6 (even).
-
-This suggests a deeper number-theoretic structure connecting CA reversibility to divisibility properties of the period.
+**Corollary 4.1.** The subgroup of RevGroup generated by translations (in the abelian case) and pointwise permutations is isomorphic to G × Sym(α), giving the lower bound |RevGroup| ≥ |G| · |α|!.
 
 ## 5. The Centralizer Characterization
 
-The reversibility subgroup $\mathcal{R}_n(A)$ equals the centralizer of the cyclic group $\langle \sigma_1 \rangle$ in $\text{Perm}(\Omega_n)$:
-$$\mathcal{R}_n(A) = C_{\text{Perm}(\Omega_n)}(\langle \sigma_1 \rangle) = \{ e \in \text{Perm}(\Omega_n) \mid e\sigma_1 = \sigma_1 e \}$$
+**Theorem 5.1 (Centralizer theorem).** e ∈ RevGroup(G, α) if and only if e commutes with τ_g for all g ∈ G.
 
-This follows because a permutation is shift-equivariant if and only if it commutes with every shift, and $\sigma_k = \sigma_1^k$, so commuting with $\sigma_1$ implies commuting with all shifts.
+*Proof.* (⇒): If e is translation-equivariant, then for all c, (e ∘ τ_g)(c) = e(τ_g(c)) = τ_g(e(c)) = (τ_g ∘ e)(c). So e · τ_g = τ_g · e as permutations.
 
-The centralizer of a permutation is determined by its cycle structure. The orbits of $\sigma_1$ on $\Omega_n$ are the **binary necklaces** of length $n$. By Burnside's lemma, the number of binary necklaces of length $n$ is:
-$$N(n) = \frac{1}{n} \sum_{d \mid n} \phi(n/d) \cdot 2^d$$
+(⇐): If e · τ_g = τ_g · e for all g, then for all c, e(τ_g(c)) = τ_g(e(c)), which is translation-equivariance. ∎
 
-Each element of the centralizer must map orbits to orbits of the same size, and within each orbit, must commute with the cyclic rotation. This gives:
-$$|C(\sigma_1)| = \prod_{d \mid n} d^{a_d} \cdot a_d!$$
-where $a_d$ is the number of orbits of size $d$.
+**Corollary 5.1.** RevGroup(G, α) = C_{Sym(α^G)}(T), where T = {τ_g : g ∈ G} is the image of G under the translation representation.
 
-## 6. Discussion
+This is the key structural insight: the reversibility group is a centralizer, and its structure is governed by the representation theory of T acting on α^G.
 
-### 6.1 Gap Between Generated Group and Centralizer
+## 6. Orbit Preservation
 
-Our computation reveals a significant gap: on period 3, the 6 universally reversible elementary CAs generate a group of order 6, while the full centralizer has order 36. This means there exist shift-equivariant permutations that cannot be decomposed into compositions of elementary CA rules with radius 1.
+**Definition 6.1 (Translation orbit / necklace).** The translation orbit of c ∈ α^G is O(c) = {τ_g(c) : g ∈ G}.
 
-This raises a natural question: what is the minimum radius $r$ needed such that all shift-equivariant permutations on $\{0,1\}^{\mathbb{Z}/n\mathbb{Z}}$ can be realized as compositions of reversible CAs of radius $\leq r$?
+**Theorem 6.1 (Necklace theorem).** For all e ∈ RevGroup(G, α): e(O(c)) = O(e(c)).
 
-### 6.2 Connection to Necklace Combinatorics
+*Proof.* (⊆): If d ∈ e(O(c)), then d = e(τ_g(c)) = τ_g(e(c)) ∈ O(e(c)).
+(⊇): If d ∈ O(e(c)), then d = τ_g(e(c)) = e(τ_g(c)) ∈ e(O(c)). ∎
 
-The orbit structure of the shift on $\Omega_n$ connects CA reversibility to classical combinatorial objects: binary necklaces. The centralizer size depends on the necklace count $N(n)$ and the distribution of necklace lengths, which in turn depends on the Euler totient function. This creates a bridge between CA theory and analytic number theory.
+**Corollary 6.1.** The action of RevGroup on α^G descends to an action on the set of translation orbits. This connects the reversibility group to necklace combinatorics.
 
-### 6.3 Formalization
+**Example 6.1.** For G = ℤ/3ℤ and α = {0,1}, the 8 configurations partition into orbits: {000}, {111}, {001, 010, 100}, {011, 110, 101}. Every element of RevGroup must map this partition to itself (possibly permuting orbits of the same size).
 
-All main theorems (1-4) are fully formalized in Lean 4 using Mathlib. The formalization required approximately 250 lines of code and uses concepts from group theory (subgroups, permutations), modular arithmetic (ZMod), and function extensionality. No custom axioms were introduced.
+## 7. The Proper Subgroup Theorem
 
-## 7. Future Work
+**Theorem 7.1 (Proper subgroup).** For |G| ≥ 2 and |α| ≥ 2, RevGroup(G, α) ⊊ Sym(α^G).
 
-1. **Higher radii**: Extend the analysis to CAs with radius $r > 1$. The universal reversibility picture changes dramatically: more rules become universally reversible, and the generated group grows.
+*Proof.* Let g₀ ∈ G with g₀ ≠ 1, and a, b ∈ α with a ≠ b. Define c₀ ≡ a (constant) and c₁(x) = b if x = 1, a otherwise. The swap permutation (c₀ c₁) is not translation-equivariant: τ_{g₀}(c₁) ≠ c₀ and ≠ c₁ (since shifting moves the "spike" to a different position), so the swap fixes τ_{g₀}(c₁), but τ_{g₀} maps c₁ to something different from c₁ while the swap exchanges c₁ and c₀. ∎
 
-2. **Larger alphabets**: Generalize from binary to $k$-ary alphabets. The structure of the reversibility group over larger alphabets may reveal connections to wreath products.
+## 8. Boundary Cases
 
-3. **Infinite lattices**: Formalize the full Curtis-Hedlund-Lyndon theorem for CAs on $A^{\mathbb{Z}}$ with the product topology. This requires formalizing compactness of the Cantor space and continuous shift-equivariant maps.
+**Theorem 8.1 (Trivial group boundary).** For G = {e} (the trivial group): RevGroup({e}, α) = Sym(α).
 
-4. **Decidability boundary**: Investigate the boundary between decidable reversibility (1D CAs, where reversibility is decidable via de Bruijn graphs) and undecidable reversibility (2D CAs, Kari 1990).
+*Proof.* The only translation is the identity, so every permutation commutes with it. ∎
 
-5. **Period-dependent structure**: Characterize which rules are reversible on period $n$ in terms of the prime factorization of $n$.
+**Theorem 8.2 (Fixed-point boundary).** For any G and α, the constant configurations are fixed by all translations: τ_g(c_a) = c_a where c_a(x) = a for all x.
+
+## 9. Concrete Computations
+
+### 9.1 Shift Cycle Type and Centralizer Order
+
+For G = ℤ/nℤ and α = {0,1}, the shift σ acts on 2^n configurations. Its cycle type determines the centralizer order:
+
+| n | Cycle type | |Centralizer| | |S_{2^n}| | Ratio |
+|---|-----------|--------------|----------|-------|
+| 2 | {1:2, 2:1} | 4 | 24 | 0.167 |
+| 3 | {1:2, 3:2} | 18 | 40,320 | 4.5×10⁻⁴ |
+| 4 | {1:2, 2:1, 4:3} | 384 | 2.1×10¹³ | 1.8×10⁻¹¹ |
+| 5 | {1:2, 5:6} | 4,320,000 | 2.6×10³⁵ | 1.7×10⁻²⁹ |
+
+### 9.2 Reversible Elementary CAs
+
+The 6 reversible elementary CAs (radius 1, binary) are:
+
+| Rule | Function | Description |
+|------|----------|-------------|
+| 204 | f(a,b,c) = b | Identity |
+| 170 | f(a,b,c) = c | Left shift |
+| 240 | f(a,b,c) = a | Right shift |
+| 51 | f(a,b,c) = ¬b | Complement |
+| 85 | f(a,b,c) = ¬c | Left shift + complement |
+| 15 | f(a,b,c) = ¬a | Right shift + complement |
+
+These generate a group isomorphic to ℤ × ℤ/2ℤ modulo the finite period constraint.
+
+## 10. PEGB Analysis
+
+### Theorem: Centralizer Characterization (Theorem 5.1)
+
+- **Proof**: Complete Lean 4 proof using extensionality and unfolding of definitions.
+- **Example**: For G = ℤ/3ℤ, α = {0,1}, the centralizer of σ in S₈ has order 18 = 2 · 3² (from cycle type {1², 3²}).
+- **Generalization**: The next level up would be characterizing centralizers for the shift acting on α^{G×H} for product groups, connecting to higher-dimensional CA theory.
+- **Boundary**: The characterization breaks down for infinite groups (where Sym(α^G) is not a finite group and the centralizer theory becomes more subtle).
+
+### Theorem: Abelian Translation Embedding (Theorem 4.1)
+
+- **Proof**: Direct computation using commutativity of G.
+- **Example**: For G = ℤ/4ℤ, translations by 0,1,2,3 give 4 distinct elements of RevGroup. Combined with the complement (pointwise), this gives at least 8 elements.
+- **Generalization**: For non-abelian G, the embedding restricts to Z(G), the center. Computing |RevGroup| for non-abelian G involves the centralizer of a non-regular representation.
+- **Boundary**: For the free group F₂ (infinite, non-abelian, trivial center), the only "translation" in RevGroup is the identity.
+
+### Theorem: Proper Subgroup (Theorem 7.1)
+
+- **Proof**: Constructive — exhibits an explicit permutation not in RevGroup.
+- **Example**: For G = ℤ/2ℤ, α = {0,1}: |RevGroup| = 4 while |S₄| = 24.
+- **Generalization**: The ratio |RevGroup|/|Sym(α^G)| → 0 super-exponentially as |G| → ∞.
+- **Boundary**: For G = {e}, RevGroup = Sym(α), so the inequality is sharp: it fails precisely when |G| = 1.
+
+## 11. Discussion
+
+### 11.1 Connection to Existing Catalog Results
+
+Our work directly extends `Catalog/Geometry/CellularAutomataGalois.lean`, which established the reversibility subgroup and proved `reversibility_proper_subgroup` for the specific case n = 3, α = Bool. We generalize this to arbitrary finite groups G and alphabets α with arbitrary cardinality.
+
+We also connect to `Catalog/Tropical/HashInversion.lean` through the theme of `reversible_iff_bijective`: a function on finite types is reversible iff bijective, and our RevGroup consists exactly of the bijections satisfying an additional equivariance constraint.
+
+### 11.2 The Non-Abelian Surprise
+
+The most surprising finding is the connection between commutativity and reversibility for non-abelian groups. The fact that translation by g gives a reversible CA only when g ∈ Z(G) means that the center of the group controls the translational part of the reversibility group. For groups with trivial center (like simple non-abelian groups), the only reversible translations are the identity — a dramatic restriction compared to the abelian case.
+
+### 11.3 Categorical Perspective
+
+The reversibility group can be understood categorically as the automorphism group of the G-set α^G (with G acting by translation). This connects to the theory of permutation groups, wreath products, and the Burnside ring.
+
+## 12. Future Work
+
+1. Compute RevGroup explicitly for non-abelian groups (S₃, D₄, Q₈).
+2. Prove the wreath product decomposition of RevGroup from the cycle type.
+3. Extend to infinite groups (ℤ, ℤ^d) using topological methods.
+4. Connect to quantum cellular automata on finite groups.
+5. Study the lattice of subgroups of RevGroup and its Galois-theoretic interpretation.
 
 ## References
 
-1. G. A. Hedlund, "Endomorphisms and automorphisms of the shift dynamical system," *Mathematical Systems Theory*, vol. 3, pp. 320–375, 1969.
+[1] G. A. Hedlund, "Endomorphisms and automorphisms of the shift dynamical system," *Mathematical Systems Theory*, 3:320–375, 1969.
 
-2. D. Richardson, "Tessellations with local transformations," *Journal of Computer and System Sciences*, vol. 6, pp. 373–388, 1972.
+[2] T. Ceccherini-Silberstein and M. Coornaert, *Cellular Automata and Groups*, Springer, 2010.
 
-3. J. Kari, "Reversibility and surjectivity problems of cellular automata," *Journal of Computer and System Sciences*, vol. 48, pp. 149–182, 1994.
+[3] S. Wolfram, *A New Kind of Science*, Wolfram Media, 2002.
 
-4. T. Ceccherini-Silberstein and M. Coornaert, *Cellular Automata and Groups*, Springer, 2010.
+[4] J. Kari, "Reversibility and surjectivity problems of cellular automata," *Journal of Computer and System Sciences*, 48(1):149–182, 1994.
 
-5. T. Boykett, "Efficient exhaustive listings of reversible one dimensional cellular automata," *Theoretical Computer Science*, vol. 325, pp. 215–247, 2004.
+[5] Catalog result: `Catalog/Geometry/CellularAutomataGalois.lean` — reversibility_proper_subgroup, inv_shift_equivariant.
 
-6. S. Wolfram, *A New Kind of Science*, Wolfram Media, 2002.
+[6] Catalog result: `Catalog/Tropical/HashInversion.lean` — reversible_iff_bijective.

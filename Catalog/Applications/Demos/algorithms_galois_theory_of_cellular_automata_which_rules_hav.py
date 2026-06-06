@@ -1,246 +1,220 @@
+#!/usr/bin/env python3
 """
 Algorithms for Cellular Automata Reversibility Analysis
 
-Type-hinted implementations of the core algorithms for analyzing
-reversible cellular automata and computing reversibility groups.
+Type-hinted implementations of the core algorithms from the research.
 """
 
-from typing import List, Tuple, Dict, Set, Callable
-from itertools import product as cartesian_product
-from functools import reduce
+from typing import Dict, List, Tuple, Set, Optional
+from itertools import product
+from math import gcd, factorial
+from collections import Counter
+from dataclasses import dataclass
 
 
-def wolfram_rule(rule_number: int) -> Callable[[Tuple[int, int, int]], int]:
-    """Convert a Wolfram rule number (0-255) to a local rule function.
+@dataclass
+class CycleType:
+    """Represents the cycle type of a permutation.
 
-    Args:
-        rule_number: Integer 0-255 encoding the elementary CA rule.
-
-    Returns:
-        A function mapping (left, center, right) -> new_center.
+    cycle_counts maps cycle length k to number of cycles a_k.
     """
-    def local_rule(neighborhood: Tuple[int, int, int]) -> int:
-        index = neighborhood[0] * 4 + neighborhood[1] * 2 + neighborhood[2]
-        return (rule_number >> index) & 1
-    return local_rule
+    cycle_counts: Dict[int, int]
+
+    @property
+    def degree(self) -> int:
+        """Total number of elements permuted."""
+        return sum(k * a for k, a in self.cycle_counts.items())
+
+    def centralizer_order(self) -> int:
+        """Order of the centralizer in S_n.
+
+        For cycle type (1^{a_1}, 2^{a_2}, ..., m^{a_m}):
+        |C(σ)| = ∏_k (a_k! · k^{a_k})
+        """
+        result = 1
+        for k, a_k in self.cycle_counts.items():
+            result *= factorial(a_k) * (k ** a_k)
+        return result
 
 
-def apply_ca_periodic(rule: Callable[[Tuple[int, int, int]], int],
-                      config: List[int]) -> List[int]:
-    """Apply an elementary CA rule to a periodic configuration.
+def eca_local_rule(rule_number: int) -> Dict[Tuple[int, int, int], int]:
+    """Extract the local rule table from a Wolfram rule number.
 
-    Args:
-        rule: Local rule function (left, center, right) -> new_value.
-        config: List of 0s and 1s representing the periodic configuration.
-
-    Returns:
-        New configuration after one step.
+    Returns a dict mapping (left, center, right) -> output.
     """
+    table: Dict[Tuple[int, int, int], int] = {}
+    for a, b, c in product([0, 1], repeat=3):
+        index = 4 * a + 2 * b + c
+        table[(a, b, c)] = (rule_number >> index) & 1
+    return table
+
+
+def apply_eca(rule_number: int, config: Tuple[int, ...]) -> Tuple[int, ...]:
+    """Apply elementary CA rule to periodic configuration."""
     n = len(config)
-    return [rule((config[(i - 1) % n], config[i], config[(i + 1) % n]))
-            for i in range(n)]
+    return tuple(
+        ((rule_number >> (4 * config[(i-1) % n] + 2 * config[i] + config[(i+1) % n])) & 1)
+        for i in range(n)
+    )
 
 
-def is_reversible_on_period(rule_number: int, period: int) -> bool:
-    """Check if a CA rule is reversible (bijective) on configurations of given period.
+def is_bijective_on_period(rule_number: int, period: int) -> bool:
+    """Test if rule induces a bijection on configurations of given period."""
+    all_configs = list(product([0, 1], repeat=period))
+    images = set(apply_eca(rule_number, c) for c in all_configs)
+    return len(images) == len(all_configs)
 
-    Args:
-        rule_number: Wolfram rule number (0-255).
-        period: Period of the configuration space.
 
-    Returns:
-        True if the global map is a bijection on {0,1}^period.
+def find_all_reversible_rules(max_period: int = 8) -> List[int]:
+    """Find all ECA rules that are reversible on all tested periods.
+
+    A rule is declared reversible if it is bijective on configurations
+    of periods 2 through max_period.
     """
-    rule = wolfram_rule(rule_number)
-    configs = list(cartesian_product([0, 1], repeat=period))
-    images = set()
-    for config in configs:
-        image = tuple(apply_ca_periodic(rule, list(config)))
-        if image in images:
-            return False
-        images.add(image)
-    return len(images) == len(configs)
+    reversible: List[int] = []
+    for rule in range(256):
+        if all(is_bijective_on_period(rule, n) for n in range(2, max_period + 1)):
+            reversible.append(rule)
+    return reversible
 
 
-def find_reversible_rules(period: int, max_rule: int = 256) -> List[int]:
-    """Find all reversible elementary CA rules for a given period.
+def compute_shift_cycle_type(n: int, alphabet_size: int = 2) -> CycleType:
+    """Compute the cycle type of the left shift on alphabet^n.
 
-    Args:
-        period: Period of the configuration space.
-        max_rule: Maximum rule number to check (default 256 for elementary CAs).
-
-    Returns:
-        List of rule numbers that are reversible on the given period.
+    The left shift σ sends (c_0, c_1, ..., c_{n-1}) to (c_1, c_2, ..., c_0).
     """
-    return [r for r in range(max_rule) if is_reversible_on_period(r, period)]
+    configs = list(product(range(alphabet_size), repeat=n))
+    config_idx = {c: i for i, c in enumerate(configs)}
+    visited = [False] * len(configs)
+    cycle_lengths: List[int] = []
 
-
-def compute_permutation(rule_number: int, period: int) -> Dict[Tuple[int, ...], Tuple[int, ...]]:
-    """Compute the permutation induced by a reversible CA rule.
-
-    Args:
-        rule_number: Wolfram rule number.
-        period: Period of the configuration space.
-
-    Returns:
-        Dictionary mapping each configuration to its image.
-    """
-    rule = wolfram_rule(rule_number)
-    configs = list(cartesian_product([0, 1], repeat=period))
-    return {config: tuple(apply_ca_periodic(rule, list(config)))
-            for config in configs}
-
-
-def permutation_to_cycles(perm: Dict) -> List[List]:
-    """Decompose a permutation into disjoint cycles.
-
-    Args:
-        perm: Dictionary mapping elements to their images.
-
-    Returns:
-        List of cycles, each cycle is a list of elements.
-    """
-    visited: Set = set()
-    cycles: List[List] = []
-    for start in perm:
-        if start in visited:
+    for i in range(len(configs)):
+        if visited[i]:
             continue
-        cycle = []
-        current = start
-        while current not in visited:
-            visited.add(current)
-            cycle.append(current)
-            current = perm[current]
-        if len(cycle) > 1:
-            cycles.append(cycle)
-    return cycles
+        length = 0
+        j = i
+        while not visited[j]:
+            visited[j] = True
+            length += 1
+            shifted = configs[j][1:] + (configs[j][0],)
+            j = config_idx[shifted]
+        cycle_lengths.append(length)
+
+    return CycleType(dict(Counter(cycle_lengths)))
 
 
-def shift_permutation(period: int) -> Dict[Tuple[int, ...], Tuple[int, ...]]:
-    """Compute the shift permutation on {0,1}^period.
+def fixed_point_count(n: int, power: int, alphabet_size: int = 2) -> int:
+    """Number of configurations fixed by σ^power on alphabet^n.
 
-    The shift sends configuration c to the configuration where c[i] -> c[(i+1) % n].
-
-    Args:
-        period: Period of the configuration space.
-
-    Returns:
-        Dictionary mapping each configuration to its shifted version.
+    Formula: |alphabet|^{gcd(power, n)}
     """
-    configs = list(cartesian_product([0, 1], repeat=period))
-    return {config: tuple(config[(i + 1) % period] for i in range(period))
-            for config in configs}
+    return alphabet_size ** gcd(power, n)
 
 
-def centralizer_size_from_cycle_type(cycle_type: Dict[int, int], total: int) -> int:
-    """Compute the size of the centralizer of a permutation from its cycle type.
+def burnside_orbit_count(n: int, alphabet_size: int = 2) -> int:
+    """Count necklaces (translation orbits) using Burnside's lemma.
 
-    For a permutation with cycle type (1^a1, 2^a2, ..., k^ak), the centralizer
-    in S_n has order ∏_i (i^ai * ai!).
+    |orbits| = (1/n) Σ_{m=0}^{n-1} |Fix(σ^m)|
+             = (1/n) Σ_{m=0}^{n-1} k^{gcd(m, n)}
 
-    Args:
-        cycle_type: Dictionary mapping cycle length to multiplicity.
-        total: Total number of elements (for fixed points).
-
-    Returns:
-        Order of the centralizer.
+    where k = alphabet_size.
     """
-    import math
-    result = 1
-    for length, count in cycle_type.items():
-        result *= (length ** count) * math.factorial(count)
-    return result
+    total = sum(fixed_point_count(n, m, alphabet_size) for m in range(n))
+    return total // n
 
 
-def compute_shift_cycle_type(period: int) -> Dict[int, int]:
-    """Compute the cycle type of the shift on {0,1}^period.
+def reversibility_group_lower_bound(
+    group_order: int, alphabet_size: int
+) -> int:
+    """Lower bound on |RevGroup| from the direct product G × Sym(α).
 
-    Args:
-        period: Period of the configuration space.
-
-    Returns:
-        Dictionary mapping cycle length to multiplicity.
+    |RevGroup| ≥ |G| · |α|!
+    (from the commuting translation and pointwise embeddings)
     """
-    perm = shift_permutation(period)
-    cycles = permutation_to_cycles(perm)
-    cycle_type: Dict[int, int] = {}
-
-    # Count fixed points
-    fixed = sum(1 for k, v in perm.items() if k == v)
-    if fixed > 0:
-        cycle_type[1] = fixed
-
-    for cycle in cycles:
-        length = len(cycle)
-        cycle_type[length] = cycle_type.get(length, 0) + 1
-
-    return cycle_type
+    return group_order * factorial(alphabet_size)
 
 
-def compose_permutations(perm1: Dict, perm2: Dict) -> Dict:
-    """Compose two permutations: (perm1 ∘ perm2)(x) = perm1(perm2(x)).
+def analyze_rule_composition(rules: List[int], period: int) -> Dict[str, any]:
+    """Analyze the composition structure of a set of rules.
 
-    Args:
-        perm1: First permutation (applied second).
-        perm2: Second permutation (applied first).
-
-    Returns:
-        Composed permutation.
+    Returns information about the group generated by the rules
+    under composition on configurations of given period.
     """
-    return {k: perm1[v] for k, v in perm2.items()}
+    configs = list(product([0, 1], repeat=period))
+    n_configs = len(configs)
+    config_idx = {c: i for i, c in enumerate(configs)}
 
+    # Convert each rule to a permutation (as a list)
+    perms: Dict[int, Tuple[int, ...]] = {}
+    for rule in rules:
+        perm = tuple(config_idx[apply_eca(rule, c)] for c in configs)
+        perms[rule] = perm
 
-def generate_group(generators: List[Dict], elements: List) -> List[Dict]:
-    """Generate a group from a set of permutation generators using BFS.
+    def compose_perm(p: Tuple[int, ...], q: Tuple[int, ...]) -> Tuple[int, ...]:
+        return tuple(q[p[i]] for i in range(len(p)))
 
-    Args:
-        generators: List of permutations (as dictionaries).
-        elements: List of all elements being permuted.
+    def perm_order(p: Tuple[int, ...]) -> int:
+        identity = tuple(range(len(p)))
+        current = p
+        order = 1
+        while current != identity:
+            current = compose_perm(current, p)
+            order += 1
+        return order
 
-    Returns:
-        List of all group elements (permutations).
-    """
-    identity = {e: e for e in elements}
-    group = {tuple(sorted(identity.items())): identity}
-    queue = list(generators)
+    # Generate the group
+    identity = tuple(range(n_configs))
+    generated: Set[Tuple[int, ...]] = {identity}
+    frontier = set(perms.values())
+    generated.update(frontier)
 
-    for gen in generators:
-        key = tuple(sorted(gen.items()))
-        if key not in group:
-            group[key] = gen
+    while frontier:
+        new_elements: Set[Tuple[int, ...]] = set()
+        for p in frontier:
+            for q in generated.copy():
+                pq = compose_perm(p, q)
+                qp = compose_perm(q, p)
+                if pq not in generated:
+                    new_elements.add(pq)
+                if qp not in generated:
+                    new_elements.add(qp)
+            # Add inverses
+            inv = [0] * len(p)
+            for i, j in enumerate(p):
+                inv[j] = i
+            inv_t = tuple(inv)
+            if inv_t not in generated:
+                new_elements.add(inv_t)
+        generated.update(new_elements)
+        frontier = new_elements
 
-    changed = True
-    while changed:
-        changed = False
-        current = list(group.values())
-        for g in current:
-            for gen in generators:
-                product = compose_permutations(g, gen)
-                key = tuple(sorted(product.items()))
-                if key not in group:
-                    group[key] = product
-                    changed = True
-                product2 = compose_permutations(gen, g)
-                key2 = tuple(sorted(product2.items()))
-                if key2 not in group:
-                    group[key2] = product2
-                    changed = True
-
-    return list(group.values())
+    return {
+        "rules": rules,
+        "period": period,
+        "n_configs": n_configs,
+        "group_order": len(generated),
+        "rule_orders": {r: perm_order(perms[r]) for r in rules},
+        "full_sym_order": factorial(n_configs),
+    }
 
 
 if __name__ == "__main__":
-    # Example usage
-    print("=== Reversible Elementary CA Rules ===")
-    for period in [3, 4, 5, 6, 7]:
-        rev_rules = find_reversible_rules(period)
-        print(f"Period {period}: {len(rev_rules)} reversible rules: {rev_rules}")
+    # Demonstrate the algorithms
+    print("Finding reversible ECA rules...")
+    rev = find_all_reversible_rules(max_period=8)
+    print(f"Reversible rules: {rev}")
 
-    print("\n=== Shift Cycle Types ===")
-    for period in [3, 4, 5, 6]:
-        ct = compute_shift_cycle_type(period)
-        total = 2 ** period
-        csize = centralizer_size_from_cycle_type(ct, total)
-        print(f"Period {period}: cycle type = {ct}, "
-              f"centralizer size = {csize}, "
-              f"fraction of S_{total} = {csize}/{total}! ≈ {csize/reduce(lambda a,b: a*b, range(1,total+1)):.2e}")
+    print("\nShift cycle types:")
+    for n in range(2, 7):
+        ct = compute_shift_cycle_type(n)
+        print(f"  n={n}: {ct.cycle_counts}, |centralizer| = {ct.centralizer_order()}")
+
+    print("\nNecklace counts:")
+    for n in range(1, 11):
+        print(f"  n={n}: {burnside_orbit_count(n)} binary necklaces")
+
+    print("\nGroup generated by reversible rules on period 4:")
+    info = analyze_rule_composition(rev, period=4)
+    print(f"  Group order: {info['group_order']}")
+    print(f"  Individual rule orders: {info['rule_orders']}")
+    print(f"  |S_16| = {info['full_sym_order']}")
