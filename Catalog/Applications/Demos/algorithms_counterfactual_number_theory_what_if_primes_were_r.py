@@ -2,238 +2,204 @@
 """
 Algorithms for Counterfactual Number Theory
 
-Type-hinted implementations of the core algorithms from the research.
+Type-hinted implementations of core algorithms from the research.
 """
 
-from math import sqrt, log, gcd
-from itertools import combinations_with_replacement
-from collections import defaultdict
+import math
+import random
 from typing import Optional
 
 
-def is_product_free(S: set[int]) -> bool:
+def cramer_random_set(n: int, seed: int = 42) -> set[int]:
     """
-    Check if a set S ⊆ ℕ is product-free.
-    
-    A set is product-free if for all a, b ∈ S with a, b ≥ 2,
-    the product a*b ∉ S.
-    
-    Time: O(|S|²)
-    """
-    S_ge2 = {s for s in S if s >= 2}
-    for a in S_ge2:
-        for b in S_ge2:
-            if a * b in S_ge2:
-                return False
-    return True
+    Generate a Cramér random prime model: each integer k in [2, n]
+    is included with probability 1/log(k).
 
+    This is the standard probabilistic model for studying what properties
+    of the primes are "generic" (hold for any set of this density) versus
+    "special" (require the specific multiplicative structure of primes).
 
-def check_multiplicative_independence(
-    S: set[int], 
-    max_card: int = 6
-) -> tuple[bool, Optional[tuple[tuple[int, ...], tuple[int, ...]]]]:
-    """
-    Check if S is multiplicatively independent up to multisets of given max cardinality.
-    
-    S is MI if for all multisets m₁, m₂ over S: prod(m₁) = prod(m₂) → m₁ = m₂.
-    
+    Args:
+        n: Upper bound for the set
+        seed: Random seed for reproducibility
+
     Returns:
-        (True, None) if MI up to max_card
-        (False, (m₁, m₂)) if a counterexample is found
-    
-    Time: O(|S|^max_card) — exponential but exact for small sets
+        A random subset of [2, n] with approximately n/log(n) elements
     """
-    elements = sorted(s for s in S if s >= 2)
-    if not elements:
-        return True, None
-    
-    products: dict[int, list[tuple[int, ...]]] = defaultdict(list)
-    for card in range(1, max_card + 1):
-        for combo in combinations_with_replacement(elements, card):
-            prod_val = 1
-            for x in combo:
-                prod_val *= x
-            products[prod_val].append(combo)
-    
-    for prod_val, factorizations in products.items():
-        if len(factorizations) > 1:
-            return False, (factorizations[0], factorizations[1])
-    
+    rng = random.Random(seed)
+    return {k for k in range(2, n + 1) if rng.random() < 1.0 / math.log(k)}
+
+
+def is_product_free(s: set[int]) -> tuple[bool, Optional[tuple[int, int, int]]]:
+    """
+    Check whether a set S ⊆ ℕ is product-free.
+
+    A set is product-free if for all a, b ∈ S, a·b ∉ S.
+    This is the key structural property that separates primes from
+    generic dense subsets of ℕ.
+
+    Complexity: O(|S|² log(max(S))) using hash set lookup.
+
+    Args:
+        s: A finite set of positive integers
+
+    Returns:
+        (True, None) if product-free, (False, (a, b, a*b)) otherwise
+    """
+    sorted_s = sorted(s)
+    max_val = max(s) if s else 0
+    for i, a in enumerate(sorted_s):
+        for b in sorted_s[i:]:
+            prod = a * b
+            if prod > max_val:
+                break
+            if prod in s:
+                return False, (a, b, prod)
     return True, None
 
 
-def collision_index(S: set[int]) -> int:
+def s_factorizations(s: set[int], n: int, max_depth: int = 20) -> list[tuple[int, ...]]:
     """
-    Compute the collision index of a finite set S.
-    
-    The collision index counts ordered pairs (a,b) ∈ S×S with a,b ≥ 2
-    and a*b ∈ S. This measures how far S is from being prime-like.
-    
-    For actual primes: collision_index = 0
-    For dense random sets: collision_index ~ |S|²/N
-    
-    Time: O(|S|²)
-    """
-    count = 0
-    S_ge2 = {s for s in S if s >= 2}
-    for a in S_ge2:
-        for b in S_ge2:
-            if a * b in S_ge2:
-                count += 1
-    return count
+    Enumerate all S-factorizations of n: multisets of elements from S
+    whose product equals n.
 
+    This is the core operation for studying unique factorization in
+    counterfactual number theories. For primes, each n has exactly
+    one factorization. For generic dense sets, the count explodes.
 
-def factorization_spectrum(
-    S: set[int], 
-    n: int, 
-    max_depth: int = 10
-) -> list[tuple[int, ...]]:
+    Args:
+        s: Generator set (elements ≥ 2)
+        n: Number to factorize
+        max_depth: Maximum number of factors to prevent infinite recursion
+
+    Returns:
+        List of factorizations, each as a sorted tuple
     """
-    Compute the factorization spectrum σ_S(n): all S-factorizations of n.
-    
-    An S-factorization of n is a sorted tuple (a₁, ..., aₖ) with each aᵢ ∈ S,
-    aᵢ ≥ 2, and a₁ × ... × aₖ = n.
-    
-    Returns a list of sorted tuples (multisets as sorted tuples).
-    
-    For MI sets: len(result) ≤ 1 for all n
-    For non-MI sets: len(result) can grow without bound
-    
-    Time: Exponential in log(n) / log(min(S))
-    """
-    elements = sorted(s for s in S if 2 <= s <= n)
+    candidates = sorted(x for x in s if 2 <= x <= n)
     results: list[tuple[int, ...]] = []
-    
-    def search(remaining: int, min_elem: int, current: list[int]) -> None:
+
+    def backtrack(remaining: int, min_factor: int, current: list[int]) -> None:
         if remaining == 1:
             results.append(tuple(current))
             return
-        for e in elements:
-            if e < min_elem:
+        if len(current) >= max_depth:
+            return
+        for c in candidates:
+            if c < min_factor:
                 continue
-            if e > remaining:
+            if c > remaining:
                 break
-            if remaining % e == 0 and len(current) < max_depth:
-                current.append(e)
-                search(remaining // e, e, current)
-                current.pop()
-    
-    search(n, 2, [])
+            if remaining % c == 0:
+                backtrack(remaining // c, c, current + [c])
+
+    backtrack(n, 2, [])
     return results
 
 
-def find_product_triples(S: set[int]) -> list[tuple[int, int, int]]:
+def factorization_count_ratio(s: set[int], n_range: int) -> dict[int, int]:
     """
-    Find all product triples (a, b, c) in S with a*b = c, a,b ≥ 2.
-    
-    Product triples are the minimal obstruction to multiplicative independence.
-    
-    Time: O(|S|²)
+    For each number up to n_range, count how many S-factorizations it has.
+
+    Returns a histogram: {count: how_many_numbers_have_that_count}
     """
-    triples: list[tuple[int, int, int]] = []
-    S_ge2 = sorted(s for s in S if s >= 2)
-    for a in S_ge2:
-        for b in S_ge2:
-            if b >= a and a * b in S:
-                triples.append((a, b, a * b))
-    return triples
+    histogram: dict[int, int] = {}
+    for n in range(2, n_range + 1):
+        count = len(s_factorizations(s, n))
+        histogram[count] = histogram.get(count, 0) + 1
+    return histogram
 
 
-def find_divisibility_chains(S: set[int], max_length: int = 10) -> list[list[int]]:
+def product_free_density_bound(n: int, trials: int = 100) -> float:
     """
-    Find all maximal divisibility chains in S.
-    
-    A divisibility chain is a sequence a₁ | a₂ | ... | aₖ with all aᵢ ∈ S,
-    aᵢ ≥ 2, and each aᵢ strictly dividing aᵢ₊₁.
-    
-    Time: O(|S|² × max_length)
+    Estimate the maximum density (as fraction of n/log(n)) achievable
+    by a product-free subset of [2, n], using random search.
+
+    This explores the tension between density and product-freeness:
+    the primes achieve density factor ~1.0 while being product-free,
+    which our theorems show is exceptional.
+
+    Args:
+        n: Upper bound
+        trials: Number of random trials
+
+    Returns:
+        Best density factor found (relative to n/log(n))
     """
-    elements = sorted(s for s in S if s >= 2)
-    chains: list[list[int]] = []
-    
-    def extend_chain(chain: list[int]) -> None:
-        last = chain[-1]
-        extended = False
-        for e in elements:
-            if e > last and e % last == 0 and len(chain) < max_length:
-                chain.append(e)
-                extend_chain(chain)
-                chain.pop()
-                extended = True
-        if not extended:
-            if len(chain) >= 2:
-                chains.append(list(chain))
-    
-    for e in elements:
-        extend_chain([e])
-    
-    return chains
+    target_density = n / math.log(n) if n > 1 else 1
+    best_ratio = 0.0
+
+    for trial in range(trials):
+        rng = random.Random(trial)
+        # Start with all elements, greedily remove collisions
+        elements = list(range(2, n + 1))
+        rng.shuffle(elements)
+        s: set[int] = set()
+        for x in elements:
+            # Add x if it doesn't create a collision
+            can_add = True
+            for a in s:
+                if a * x in s or x * a in s:
+                    can_add = False
+                    break
+                # Also check if x completes a collision: ∃ b ∈ S with b*x ∈ S
+                for b in s:
+                    if b * x == a or x * b == a:
+                        can_add = False
+                        break
+                if not can_add:
+                    break
+            if can_add:
+                s.add(x)
+
+        ratio = len(s) / target_density if target_density > 0 else 0
+        best_ratio = max(best_ratio, ratio)
+
+    return best_ratio
 
 
-def cramer_random_model(N: int, seed: int = 42) -> set[int]:
+def collision_probability(n: int, density_factor: float = 1.0,
+                          trials: int = 1000) -> float:
     """
-    Generate a Cramér random model: each n ∈ [2, N] is included
-    independently with probability 1/ln(n).
-    
-    This models primes probabilistically: the Prime Number Theorem says
-    π(N) ≈ N/ln(N), so each number has "probability" 1/ln(n) of being prime.
-    """
-    import random
-    rng = random.Random(seed)
-    S: set[int] = set()
-    for n in range(2, N + 1):
-        if rng.random() < 1.0 / log(n):
-            S.add(n)
-    return S
+    Estimate the probability that a random subset of [2, n] with
+    density ~ density_factor / log(k) contains a multiplicative collision.
 
+    Args:
+        n: Upper bound
+        density_factor: Multiplier for the base density 1/log(k)
+        trials: Number of Monte Carlo trials
 
-def compare_prime_vs_random(N: int, num_trials: int = 10) -> dict:
+    Returns:
+        Estimated probability of containing at least one collision
     """
-    Compare actual primes with Cramér random models on key properties.
-    
-    For each property, reports the value for actual primes and the
-    average over random trials.
-    """
-    # Actual primes
-    primes: set[int] = set()
-    for n in range(2, N + 1):
-        if all(n % i != 0 for i in range(2, int(sqrt(n)) + 1)):
-            primes.add(n)
-    
-    prime_stats = {
-        "count": len(primes),
-        "product_free": is_product_free(primes),
-        "collision_index": collision_index(primes),
-        "MI": check_multiplicative_independence(primes, max_card=3)[0],
-    }
-    
-    # Random models
-    random_stats: dict[str, list] = {
-        "count": [], "product_free": [], "collision_index": [], "MI": []
-    }
-    for seed in range(num_trials):
-        model = cramer_random_model(N, seed=seed)
-        random_stats["count"].append(len(model))
-        random_stats["product_free"].append(is_product_free(model))
-        random_stats["collision_index"].append(collision_index(model))
-        random_stats["MI"].append(check_multiplicative_independence(model, max_card=3)[0])
-    
-    return {
-        "N": N,
-        "primes": prime_stats,
-        "random_avg": {
-            "count": sum(random_stats["count"]) / num_trials,
-            "product_free_rate": sum(random_stats["product_free"]) / num_trials,
-            "avg_collision_index": sum(random_stats["collision_index"]) / num_trials,
-            "MI_rate": sum(random_stats["MI"]) / num_trials,
-        }
-    }
+    collisions = 0
+    for trial in range(trials):
+        rng = random.Random(trial)
+        s = {k for k in range(2, n + 1)
+             if rng.random() < density_factor / math.log(k)}
+        is_free, _ = is_product_free(s)
+        if not is_free:
+            collisions += 1
+    return collisions / trials
 
 
 if __name__ == "__main__":
-    print("Comparing primes vs Cramér random models:")
-    for N in [50, 100, 200]:
-        result = compare_prime_vs_random(N, num_trials=20)
-        print(f"\n  N = {N}:")
-        print(f"    Primes: {result['primes']}")
-        print(f"    Random: {result['random_avg']}")
+    # Quick demonstration
+    print("=== Cramér Random Set ===")
+    S = cramer_random_set(100)
+    print(f"Random set up to 100: {sorted(S)}")
+    print(f"Size: {len(S)}, expected ~100/log(100) ≈ {100/math.log(100):.1f}")
+
+    free, counter = is_product_free(S)
+    print(f"Product-free: {free}")
+    if counter:
+        print(f"  Collision: {counter[0]} × {counter[1]} = {counter[2]}")
+
+    print()
+    print("=== Factorizations of 12 ===")
+    for label, gen_set in [("Primes", {2, 3, 5, 7, 11}),
+                            ("Primes ∪ {6}", {2, 3, 5, 6, 7, 11}),
+                            ("[2,12]", set(range(2, 13)))]:
+        facts = s_factorizations(gen_set, 12)
+        print(f"  {label}: {len(facts)} factorization(s)")
+        for f in facts:
+            print(f"    {'×'.join(map(str, f))}")

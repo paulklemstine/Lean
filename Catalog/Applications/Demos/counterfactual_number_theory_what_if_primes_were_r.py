@@ -2,280 +2,322 @@
 """
 Counterfactual Number Theory: What If Primes Were Random?
 
-Demonstrates the key results:
-1. Product-free sets vs MI sets
-2. Collision index computation
-3. Upper interval product-freeness
-4. Factorization spectrum examples
+Demonstrates the key findings of the research:
+1. Random dense subsets of N almost always contain multiplicative collisions
+2. Unique factorization collapses for non-product-free sets
+3. The primes are exceptional: product-free despite high density
 """
 
-from math import gcd, sqrt, log
-from itertools import combinations_with_replacement, product
-from collections import defaultdict
+import random
+import math
+from collections import Counter
+
+def is_prime(n: int) -> bool:
+    """Check if n is prime."""
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def cramer_random_set(N: int, seed: int = 42) -> set:
+    """
+    Generate a Cramér random prime set: each integer n >= 2
+    is included independently with probability 1/log(n).
+    """
+    rng = random.Random(seed)
+    S = set()
+    for n in range(2, N + 1):
+        if rng.random() < 1.0 / math.log(n):
+            S.add(n)
+    return S
+
+def check_product_free(S: set) -> tuple:
+    """
+    Check if S is product-free. Returns (is_free, counterexample).
+    A counterexample is (a, b) such that a*b is also in S.
+    """
+    sorted_S = sorted(S)
+    for i, a in enumerate(sorted_S):
+        for b in sorted_S[i:]:
+            if a * b in S:
+                return False, (a, b, a * b)
+    return True, None
+
+def count_factorizations(S: set, n: int, max_depth: int = 10) -> list:
+    """
+    Find all S-factorizations of n (multisets of elements from S with product n).
+    """
+    sorted_S = sorted(s for s in S if s <= n)
+    results = []
+
+    def backtrack(remaining: int, min_factor: int, current: list):
+        if remaining == 1:
+            results.append(tuple(current))
+            return
+        if len(current) >= max_depth:
+            return
+        for s in sorted_S:
+            if s < min_factor:
+                continue
+            if s > remaining:
+                break
+            if remaining % s == 0:
+                backtrack(remaining // s, s, current + [s])
+
+    backtrack(n, 2, [])
+    return results
+
+def demo_product_free_collapse():
+    """Demonstrate that random dense sets fail product-freeness."""
+    print("=" * 70)
+    print("DEMO 1: Product-Free Collapse in Random Sets")
+    print("=" * 70)
+    print()
+
+    N = 1000
+    primes = {n for n in range(2, N + 1) if is_prime(n)}
+    print(f"Primes up to {N}: {len(primes)} elements")
+    is_free, _ = check_product_free(primes)
+    print(f"Primes are product-free: {is_free}")
+    print()
+
+    print("Cramér random sets (density ~ 1/log n):")
+    for seed in range(1, 6):
+        S = cramer_random_set(N, seed=seed)
+        is_free, counter = check_product_free(S)
+        print(f"  Seed {seed}: |S| = {len(S)}, product-free: {is_free}", end="")
+        if counter:
+            print(f"  (collision: {counter[0]} × {counter[1]} = {counter[2]})")
+        else:
+            print()
+    print()
+    print("→ Random sets with prime-like density are NEVER product-free!")
+    print()
+
+def demo_factorization_explosion():
+    """Demonstrate factorization multiplicity in perturbed systems."""
+    print("=" * 70)
+    print("DEMO 2: Factorization Explosion")
+    print("=" * 70)
+    print()
+
+    primes = {n for n in range(2, 50) if is_prime(n)}
+    print("Standard primes: each composite has unique prime factorization")
+    for n in [12, 30, 36]:
+        facts = count_factorizations(primes, n)
+        print(f"  {n}: {len(facts)} factorization(s) → {facts}")
+    print()
+
+    # Perturbed system: primes + {6}
+    perturbed = primes | {6}
+    print("Perturbed system (primes ∪ {6}):")
+    for n in [6, 12, 30, 36]:
+        facts = count_factorizations(perturbed, n)
+        print(f"  {n}: {len(facts)} factorization(s) → {facts}")
+    print()
+
+    # Dense interval system
+    interval = set(range(2, 13))
+    print("Interval system [2, 12]:")
+    for n in [6, 8, 12, 24]:
+        facts = count_factorizations(interval, n, max_depth=6)
+        print(f"  {n}: {len(facts)} factorization(s)")
+        for f in facts[:5]:
+            print(f"    {'×'.join(map(str, f))} = {n}")
+        if len(facts) > 5:
+            print(f"    ... and {len(facts) - 5} more")
+    print()
+
+def demo_density_threshold():
+    """Explore the density threshold for product-freeness."""
+    print("=" * 70)
+    print("DEMO 3: Density Threshold for Product-Freeness")
+    print("=" * 70)
+    print()
+
+    N = 500
+    trials = 100
+
+    print(f"For N = {N}, testing random subsets of [2,N] at various densities:")
+    print(f"{'Density':>10} {'|S| (avg)':>10} {'Product-free %':>15}")
+    print("-" * 40)
+
+    for density_factor in [0.05, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0]:
+        free_count = 0
+        total_size = 0
+        for trial in range(trials):
+            rng = random.Random(trial * 1000 + int(density_factor * 100))
+            S = set()
+            for n in range(2, N + 1):
+                target_density = density_factor / math.log(n)
+                if rng.random() < target_density:
+                    S.add(n)
+            total_size += len(S)
+            is_free, _ = check_product_free(S)
+            if is_free:
+                free_count += 1
+        avg_size = total_size / trials
+        pct_free = 100 * free_count / trials
+        print(f"{density_factor:>10.2f} {avg_size:>10.1f} {pct_free:>14.1f}%")
+
+    print()
+    print("→ As density increases, product-freeness probability drops to 0!")
+    print("  The primes achieve density factor ~1.0 while staying product-free.")
+    print("  This is the 'prime miracle': density AND structure simultaneously.")
+    print()
+
+def demo_collision_chains():
+    """Show how a single collision propagates."""
+    print("=" * 70)
+    print("DEMO 4: Collision Chain Propagation")
+    print("=" * 70)
+    print()
+
+    # Start with primes and add 6
+    primes = {n for n in range(2, 100) if is_prime(n)}
+    additions = [6, 15, 35, 77]  # 2*3, 3*5, 5*7, 7*11
+
+    S = set(primes)
+    for a in additions:
+        S.add(a)
+        _, counter = check_product_free(S)
+        facts_for_a = count_factorizations(S, a)
+        print(f"Add {a} to primes: {len(facts_for_a)} factorizations of {a}")
+        for f in facts_for_a:
+            print(f"  {'×'.join(map(str, f))} = {a}")
+
+    print()
+    print("→ Each added composite creates new factorizations,")
+    print("  demonstrating the 'fragility' of unique factorization.")
+
+if __name__ == "__main__":
+    demo_product_free_collapse()
+    demo_factorization_explosion()
+    demo_density_threshold()
+    demo_collision_chains()
 
 
-def is_product_free(S: set[int]) -> bool:
-    """Check if S is product-free: no a*b in S for a,b in S with a,b >= 2."""
-    for a in S:
-        for b in S:
-            if a >= 2 and b >= 2 and a * b in S:
+#!/usr/bin/env python3
+"""
+Visualization: Collision Probability vs Density
+
+Shows how the probability of a multiplicative collision increases
+with the density of the generator set, demonstrating the tension
+between density and product-freeness.
+"""
+
+import math
+import random
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def is_product_free_fast(s_sorted, s_set, max_val):
+    """Fast product-free check."""
+    for i, a in enumerate(s_sorted):
+        for b in s_sorted[i:]:
+            p = a * b
+            if p > max_val:
+                break
+            if p in s_set:
                 return False
     return True
 
 
-def is_multiplicatively_independent(S: set[int], max_card: int = 6) -> tuple[bool, str]:
-    """Check MI up to multisets of given max cardinality.
-    Returns (is_mi, counterexample_or_empty)."""
-    elements = sorted(s for s in S if s >= 2)
-    if not elements:
-        return True, ""
-    
-    # Build all multiset products up to max_card
-    products: dict[int, list[tuple[int, ...]]] = defaultdict(list)
-    for card in range(1, max_card + 1):
-        for combo in combinations_with_replacement(elements, card):
-            prod_val = 1
-            for x in combo:
-                prod_val *= x
-            products[prod_val].append(combo)
-    
-    # Check for collisions
-    for prod_val, factorizations in products.items():
-        if len(factorizations) > 1:
-            return False, f"{prod_val} = {'×'.join(map(str,factorizations[0]))} = {'×'.join(map(str,factorizations[1]))}"
-    
-    return True, ""
+def compute_collision_data(N=200, trials=200):
+    """Compute collision probability for various density factors."""
+    density_factors = np.linspace(0.05, 2.0, 30)
+    collision_probs = []
+    avg_sizes = []
+
+    for df in density_factors:
+        collisions = 0
+        total_size = 0
+        for trial in range(trials):
+            rng = random.Random(trial * 10000 + int(df * 1000))
+            s_set = set()
+            for k in range(2, N + 1):
+                if rng.random() < df / math.log(k):
+                    s_set.add(k)
+            total_size += len(s_set)
+            if s_set:
+                s_sorted = sorted(s_set)
+                if not is_product_free_fast(s_sorted, s_set, max(s_set)):
+                    collisions += 1
+        collision_probs.append(collisions / trials)
+        avg_sizes.append(total_size / trials)
+
+    return density_factors, collision_probs, avg_sizes
 
 
-def collision_index(S: set[int]) -> int:
-    """Count product triples: pairs (a,b) in S×S with a*b in S, a,b >= 2."""
-    count = 0
-    for a in S:
-        for b in S:
-            if a >= 2 and b >= 2 and a * b in S:
-                count += 1
-    return count
+def compute_prime_density(N=200):
+    """Compute the density factor of actual primes."""
+    def is_prime(n):
+        if n < 2: return False
+        if n < 4: return True
+        if n % 2 == 0 or n % 3 == 0: return False
+        i = 5
+        while i * i <= n:
+            if n % i == 0 or n % (i + 2) == 0: return False
+            i += 6
+        return True
 
-
-def factorization_spectrum(S: set[int], n: int, max_depth: int = 8) -> list[tuple[int, ...]]:
-    """Find all S-factorizations of n (multisets of elements from S with product n)."""
-    elements = sorted(s for s in S if 2 <= s <= n)
-    results = []
-    
-    def search(remaining: int, min_element: int, current: list[int]):
-        if remaining == 1:
-            results.append(tuple(current))
-            return
-        for e in elements:
-            if e < min_element:
-                continue
-            if e > remaining:
-                break
-            if remaining % e == 0 and len(current) < max_depth:
-                current.append(e)
-                search(remaining // e, e, current)
-                current.pop()
-    
-    search(n, 2, [])
-    return results
-
-
-def prime_density_vs_random(N: int) -> dict:
-    """Compare prime density with upper interval density and their MI properties."""
-    primes = set()
-    for n in range(2, N + 1):
-        if all(n % i != 0 for i in range(2, int(sqrt(n)) + 1)):
-            primes.add(n)
-    
-    upper_interval = {k for k in range(N // 2 + 1, N + 1)}
-    
-    prime_pf = is_product_free(primes)
-    prime_mi, _ = is_multiplicatively_independent(primes, max_card=4)
-    upper_pf = is_product_free(upper_interval)
-    upper_mi, upper_counter = is_multiplicatively_independent(upper_interval, max_card=4)
-    
-    return {
-        "N": N,
-        "prime_count": len(primes),
-        "prime_density": len(primes) / N,
-        "upper_count": len(upper_interval),
-        "upper_density": len(upper_interval) / N,
-        "primes_product_free": prime_pf,
-        "primes_MI": prime_mi,
-        "upper_product_free": upper_pf,
-        "upper_MI": upper_mi,
-        "upper_MI_counter": upper_counter,
-    }
+    prime_count = sum(1 for n in range(2, N + 1) if is_prime(n))
+    target = N / math.log(N)
+    return prime_count / target
 
 
 def main():
-    print("=" * 70)
-    print("COUNTERFACTUAL NUMBER THEORY: What If Primes Were Random?")
-    print("=" * 70)
-    
-    # Demo 1: Product-free vs MI
-    print("\n--- Demo 1: Product-Free ≠ MI ---")
-    examples = [
-        ({2, 3}, "Two smallest primes"),
-        ({2, 4}, "Contains divisibility pair"),
-        ({4, 6, 9}, "Product-free but NOT MI"),
-        ({2, 3, 5, 7}, "First four primes"),
-    ]
-    for S, desc in examples:
-        pf = is_product_free(S)
-        mi, counter = is_multiplicatively_independent(S)
-        print(f"  {str(S):20s}  ({desc})")
-        print(f"    Product-free: {pf}, MI: {mi}")
-        if counter:
-            print(f"    Counterexample: {counter}")
-    
-    # Demo 2: Factorization spectrum
-    print("\n--- Demo 2: Factorization Spectrum ---")
-    test_sets = [
-        ({2, 3, 5, 7}, "Primes {2,3,5,7}"),
-        ({2, 4, 8}, "Powers of 2"),
-        ({4, 6, 9}, "Product-free non-MI"),
-    ]
-    for S, desc in test_sets:
-        print(f"\n  Generating set: {S} ({desc})")
-        for n in [8, 12, 16, 24, 36]:
-            facts = factorization_spectrum(S, n)
-            if facts:
-                print(f"    σ({n}) = {len(facts)}: {facts}")
-    
-    # Demo 3: Collision index
-    print("\n\n--- Demo 3: Collision Index ---")
-    for N in [10, 20, 50]:
-        primes_N = {p for p in range(2, N + 1) 
-                    if all(p % i != 0 for i in range(2, int(sqrt(p)) + 1))}
-        full_set = set(range(2, N + 1))
-        upper = {k for k in range(N // 2 + 1, N + 1)}
-        print(f"  N={N}:")
-        print(f"    Primes up to {N}: collision index = {collision_index(primes_N)}")
-        print(f"    Full set [2,{N}]:  collision index = {collision_index(full_set)}")
-        print(f"    Upper ({N//2},{N}]: collision index = {collision_index(upper)}")
-    
-    # Demo 4: Prime density vs upper interval
-    print("\n--- Demo 4: Density vs Structure ---")
-    for N in [16, 32, 64, 100]:
-        result = prime_density_vs_random(N)
-        print(f"  N={N}:")
-        print(f"    Primes: {result['prime_count']} elements ({result['prime_density']:.3f}), "
-              f"PF={result['primes_product_free']}, MI={result['primes_MI']}")
-        print(f"    Upper:  {result['upper_count']} elements ({result['upper_density']:.3f}), "
-              f"PF={result['upper_product_free']}, MI={result['upper_MI']}")
-        if result['upper_MI_counter']:
-            print(f"    Upper MI failure: {result['upper_MI_counter']}")
-    
-    # Demo 5: The 9×16 = 12×12 counterexample
-    print("\n--- Demo 5: The (8, 16] Counterexample ---")
-    S = set(range(9, 17))
-    print(f"  S = {sorted(S)}")
-    print(f"  Product-free: {is_product_free(S)}")
-    mi, counter = is_multiplicatively_independent(S)
-    print(f"  MI: {mi}")
-    print(f"  Counterexample: {counter}")
-    print(f"  9 × 16 = {9*16} = 12 × 12 = {12*12}")
-    
-    print("\n" + "=" * 70)
-    print("KEY INSIGHT: Primes are special not because of their density")
-    print("(≈ N/log N) but because of their multiplicative independence.")
-    print("Product-freeness is necessary but not sufficient for MI.")
-    print("The gap between these properties is the 'Cramér gap'.")
-    print("=" * 70)
+    N = 200
+    print("Computing collision probabilities...")
+    density_factors, collision_probs, avg_sizes = compute_collision_data(N)
+    prime_df = compute_prime_density(N)
 
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Collision Index Growth
-
-Compares collision indices of primes, random Cramér models, and structured sets.
-"""
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from math import sqrt, log
-import random
-
-
-def collision_index(S):
-    count = 0
-    S_ge2 = {s for s in S if s >= 2}
-    for a in S_ge2:
-        for b in S_ge2:
-            if a * b in S_ge2:
-                count += 1
-    return count
-
-
-def get_primes(N):
-    primes = set()
-    for n in range(2, N + 1):
-        if all(n % i != 0 for i in range(2, int(sqrt(n)) + 1)):
-            primes.add(n)
-    return primes
-
-
-def cramer_model(N, seed=0):
-    rng = random.Random(seed)
-    return {n for n in range(2, N + 1) if rng.random() < 1.0 / log(n)}
-
-
-def main():
-    Ns = list(range(10, 201, 10))
-    
-    prime_ci = []
-    random_ci_mean = []
-    random_ci_std = []
-    full_ci = []
-    upper_ci = []
-    
-    for N in Ns:
-        primes = get_primes(N)
-        prime_ci.append(collision_index(primes))
-        
-        rci = [collision_index(cramer_model(N, seed=s)) for s in range(20)]
-        random_ci_mean.append(np.mean(rci))
-        random_ci_std.append(np.std(rci))
-        
-        full_ci.append(collision_index(set(range(2, N + 1))))
-        upper_ci.append(collision_index(set(range(N // 2 + 1, N + 1))))
-    
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-    
-    # Plot 1: Collision indices
-    ax1.plot(Ns, prime_ci, 'g-o', label='Primes', markersize=4, linewidth=2)
-    ax1.errorbar(Ns, random_ci_mean, yerr=random_ci_std, fmt='r-s', 
-                label='Cramér Random (mean ± std)', markersize=3, capsize=3, linewidth=1.5)
-    ax1.plot(Ns, upper_ci, 'b-^', label='Upper Interval (N/2, N]', markersize=3, linewidth=1.5)
-    ax1.set_xlabel('N')
-    ax1.set_ylabel('Collision Index')
-    ax1.set_title('Collision Index: Primes vs Random vs Upper Interval')
-    ax1.legend()
+
+    # Plot 1: Collision probability vs density factor
+    ax1.plot(density_factors, collision_probs, 'b-o', markersize=4, linewidth=2)
+    ax1.axvline(x=prime_df, color='red', linestyle='--', linewidth=2,
+                label=f'Prime density factor ≈ {prime_df:.2f}')
+    ax1.axhline(y=0, color='green', linestyle=':', alpha=0.5,
+                label='Primes: 0% collision (product-free)')
+    ax1.set_xlabel('Density Factor (relative to 1/log n)', fontsize=12)
+    ax1.set_ylabel('P(collision)', fontsize=12)
+    ax1.set_title(f'Collision Probability vs Density (N={N})', fontsize=14)
+    ax1.legend(fontsize=10)
+    ax1.set_ylim(-0.05, 1.05)
     ax1.grid(True, alpha=0.3)
-    
-    # Plot 2: Normalized collision index (per element squared)
-    prime_counts = [len(get_primes(N)) for N in Ns]
-    ax2.plot(Ns, [0] * len(Ns), 'g-o', label='Primes (always 0)', 
-             markersize=4, linewidth=2)
-    norm_random = [m / max(1, (N / log(N))**2) for m, N in zip(random_ci_mean, Ns)]
-    ax2.plot(Ns, norm_random, 'r-s', label='Random / (N/ln N)²', 
-             markersize=3, linewidth=1.5)
-    ax2.set_xlabel('N')
-    ax2.set_ylabel('Normalized Collision Index')
-    ax2.set_title('Collision Density (Normalized)')
-    ax2.legend()
+
+    # Annotate the prime miracle
+    ax1.annotate('THE PRIME MIRACLE\nDensity ~1.0 but\n0% collisions',
+                xy=(prime_df, 0), xytext=(prime_df + 0.3, 0.3),
+                arrowprops=dict(arrowstyle='->', color='red', lw=2),
+                fontsize=10, color='red', fontweight='bold',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
+
+    # Plot 2: Average set size vs density factor
+    ax2.plot(density_factors, avg_sizes, 'g-s', markersize=4, linewidth=2)
+    ax2.axvline(x=prime_df, color='red', linestyle='--', linewidth=2,
+                label=f'Prime count ≈ {sum(1 for n in range(2, N+1) if all(n%i for i in range(2, int(n**0.5)+1)) and n > 1)}')
+    ax2.set_xlabel('Density Factor', fontsize=12)
+    ax2.set_ylabel('Average Set Size', fontsize=12)
+    ax2.set_title('Set Size vs Density Factor', fontsize=14)
+    ax2.legend(fontsize=10)
     ax2.grid(True, alpha=0.3)
-    
-    plt.suptitle('The Cramér Gap: Why Random ≠ Prime', fontsize=14, fontweight='bold')
+
     plt.tight_layout()
-    plt.savefig('collision_index.png', dpi=150, bbox_inches='tight')
-    print("Saved collision_index.png")
+    plt.savefig('collision_probability.png', dpi=150, bbox_inches='tight')
+    print("Saved: collision_probability.png")
 
 
 if __name__ == "__main__":
@@ -284,82 +326,94 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: Factorization Spectrum Heatmap
+Visualization: Factorization Count Explosion
 
-Shows how the factorization spectrum σ_S(n) varies for different generating sets.
+Shows how the number of distinct factorizations grows as a generator system
+becomes denser, compared to the constant 1 for prime factorization.
 """
+
+import math
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from math import sqrt, log
-from itertools import combinations_with_replacement
-from collections import defaultdict
 
 
-def factorization_count(S: set, n: int, max_depth: int = 10) -> int:
-    elements = sorted(s for s in S if 2 <= s <= n)
+def is_prime(n):
+    if n < 2: return False
+    if n < 4: return True
+    if n % 2 == 0 or n % 3 == 0: return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0: return False
+        i += 6
+    return True
+
+
+def count_factorizations(s_set, n, max_depth=15):
+    """Count S-factorizations of n."""
+    candidates = sorted(x for x in s_set if 2 <= x <= n)
     count = 0
-    def search(remaining, min_elem, depth):
+
+    def backtrack(remaining, min_factor, depth):
         nonlocal count
         if remaining == 1:
             count += 1
             return
-        for e in elements:
-            if e < min_elem: continue
-            if e > remaining: break
-            if remaining % e == 0 and depth < max_depth:
-                search(remaining // e, e, depth + 1)
-    search(n, 2, 0)
+        if depth >= max_depth:
+            return
+        for c in candidates:
+            if c < min_factor:
+                continue
+            if c > remaining:
+                break
+            if remaining % c == 0:
+                backtrack(remaining // c, c, depth + 1)
+
+    backtrack(n, 2, 0)
     return count
-
-
-def get_primes(N):
-    primes = set()
-    for n in range(2, N + 1):
-        if all(n % i != 0 for i in range(2, int(sqrt(n)) + 1)):
-            primes.add(n)
-    return primes
 
 
 def main():
     N = 60
-    ns = list(range(2, N + 1))
-    
-    sets = {
-        "Primes ≤ 60": get_primes(N),
-        "{2, 4, 8, 16, 32}": {2, 4, 8, 16, 32},
-        "{4, 6, 9}": {4, 6, 9},
-        "{2, 3, 5}": {2, 3, 5},
-        "Upper (30, 60]": set(range(31, 61)),
-    }
-    
-    fig, axes = plt.subplots(len(sets), 1, figsize=(14, 3 * len(sets)), sharex=True)
-    
-    for idx, (name, S) in enumerate(sets.items()):
-        ax = axes[idx]
-        spectrum = [factorization_count(S, n) for n in ns]
-        
-        colors = ['#2ecc71' if s <= 1 else '#e74c3c' if s > 1 else '#95a5a6' for s in spectrum]
-        ax.bar(ns, spectrum, color=colors, width=0.8, alpha=0.8)
-        ax.set_ylabel('σ_S(n)')
-        ax.set_title(f'Factorization Spectrum: S = {name}', fontsize=11)
+
+    # Systems to compare
+    primes = {n for n in range(2, N + 1) if is_prime(n)}
+    perturbed = primes | {6, 10, 15}  # Add some composites
+    interval_small = set(range(2, 8))  # [2, 7]
+    interval_large = set(range(2, 16))  # [2, 15]
+
+    systems = [
+        ("Primes (standard)", primes, 'blue'),
+        ("Primes ∪ {6,10,15}", perturbed, 'orange'),
+        ("[2, 7]", interval_small, 'green'),
+        ("[2, 15]", interval_large, 'red'),
+    ]
+
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+    numbers = list(range(2, N + 1))
+
+    for ax, (name, s_set, color) in zip(axes.flat, systems):
+        counts = [count_factorizations(s_set, n) for n in numbers]
+        ax.bar(numbers, counts, color=color, alpha=0.7, width=0.8)
+        ax.set_xlabel('n', fontsize=11)
+        ax.set_ylabel('# of S-factorizations', fontsize=11)
+        ax.set_title(f'{name} (|S|={len(s_set)})', fontsize=13)
         ax.set_yscale('symlog', linthresh=1)
-        max_s = max(spectrum) if spectrum else 1
-        ax.set_ylim(0, max(max_s * 1.2, 2))
-        
-        # Annotate key points
-        for i, (n, s) in enumerate(zip(ns, spectrum)):
-            if s > 2:
-                ax.annotate(f'{s}', (n, s), textcoords="offset points", 
-                           xytext=(0, 5), ha='center', fontsize=7)
-    
-    axes[-1].set_xlabel('n')
-    plt.suptitle('Factorization Spectrum: How Badly Does UFD Fail?', 
-                 fontsize=14, fontweight='bold', y=1.02)
+        avg_count = np.mean([c for c in counts if c > 0])
+        max_count = max(counts) if counts else 0
+        ax.text(0.95, 0.95,
+                f'max: {max_count}\navg: {avg_count:.1f}',
+                transform=ax.transAxes, fontsize=10,
+                verticalalignment='top', horizontalalignment='right',
+                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+
+    plt.suptitle('Factorization Count: Primes vs Counterfactual Systems',
+                 fontsize=15, fontweight='bold')
     plt.tight_layout()
-    plt.savefig('factorization_spectrum.png', dpi=150, bbox_inches='tight')
-    print("Saved factorization_spectrum.png")
+    plt.savefig('factorization_explosion.png', dpi=150, bbox_inches='tight')
+    print("Saved: factorization_explosion.png")
 
 
 if __name__ == "__main__":
