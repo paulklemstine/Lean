@@ -1,0 +1,1 @@
+# See Novelty/visualize_deflection.py - cauchy_schwarz_tightness()
