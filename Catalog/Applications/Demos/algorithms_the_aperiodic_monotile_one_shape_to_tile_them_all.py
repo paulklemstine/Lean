@@ -1,218 +1,185 @@
+#!/usr/bin/env python3
 """
-Algorithms for the Aperiodic Monotile (Hat Tile) Spectrum
+Substitution Tiling Algebra — Core Algorithms
 
-Implements:
-1. Hat spectrum parameterization (edge lengths, areas, edge ratios)
-2. Substitution matrix spectral analysis
-3. Tile patch generation via substitution
+Type-hinted implementations of the key algorithms from the STA framework.
 """
 
-import math
-from typing import Tuple, List, Dict
+from typing import Dict, List, Set, Tuple, Optional
+import numpy as np
+from numpy.typing import NDArray
 
-# ============================================================
-# Algorithm 1: Hat Spectrum Parameterization
-# ============================================================
 
-def edge_length_a(t: float) -> float:
-    """Compute edge length a(t) = (1-t) + t*sqrt(3) for t in [0,1]."""
-    return (1.0 - t) + t * math.sqrt(3)
+def apply_substitution(rules: Dict[str, List[str]], word: List[str]) -> List[str]:
+    """Apply a substitution rule to every letter in a word.
 
-def edge_length_b(t: float) -> float:
-    """Compute edge length b(t) = t + (1-t)*sqrt(3) for t in [0,1]."""
-    return t + (1.0 - t) * math.sqrt(3)
-
-def edge_ratio(t: float) -> float:
-    """Compute the edge ratio a(t)/b(t)."""
-    return edge_length_a(t) / edge_length_b(t)
-
-def hat_tile_area(t: float, scale: float = 1.0) -> float:
-    """Compute the area of a hat tile at parameter t with given scale.
-
-    The hat is composed of 8 kites, each with area sqrt(3)/4 * s^2.
-    Total area = 2*sqrt(3)*s^2.
+    Time complexity: O(|word| * max_rule_length)
+    Space complexity: O(output_length)
     """
-    s = edge_length_a(t) * scale
-    return 2.0 * math.sqrt(3) * s ** 2
-
-def critical_parameter() -> float:
-    """The critical parameter t* = 1/2 where a(t) = b(t)."""
-    return 0.5
-
-def is_aperiodic(t: float, tol: float = 1e-10) -> bool:
-    """Check if the tile at parameter t is aperiodic (t != 1/2)."""
-    return abs(t - 0.5) > tol
-
-
-# ============================================================
-# Algorithm 2: Expansion Factor Analysis
-# ============================================================
-
-def hat_expansion_factor() -> float:
-    """The linear expansion factor lambda = 2 + sqrt(3)."""
-    return 2.0 + math.sqrt(3)
-
-def hat_expansion_conjugate() -> float:
-    """The conjugate 2 - sqrt(3), which is 1/lambda."""
-    return 2.0 - math.sqrt(3)
-
-def verify_minimal_polynomial(lam: float) -> float:
-    """Verify lambda^2 - 4*lambda + 1 = 0. Returns the residual."""
-    return lam**2 - 4*lam + 1
-
-def verify_conjugate_product(lam: float, lam_bar: float) -> float:
-    """Verify lambda * lambda_bar = 1. Returns the residual."""
-    return lam * lam_bar - 1.0
-
-def area_expansion_factor() -> float:
-    """The area expansion factor lambda^2 = 7 + 4*sqrt(3)."""
-    lam = hat_expansion_factor()
-    return lam ** 2
-
-def tile_count_at_level(n: int) -> float:
-    """Approximate number of tiles in a level-n supertile.
-
-    The area grows as lambda^(2n), so the tile count is approximately
-    lambda^(2n) (since all tiles have the same area at a given parameter).
-    """
-    lam = hat_expansion_factor()
-    return lam ** (2 * n)
-
-
-# ============================================================
-# Algorithm 3: Substitution Matrix Analysis
-# ============================================================
-
-def substitution_matrix() -> List[List[int]]:
-    """The 4x4 substitution matrix for the hat metatile system (H,T,P,F).
-
-    M[i][j] = number of copies of metatile type i in the supertile of type j.
-    """
-    return [
-        [1, 0, 0, 1],
-        [1, 1, 0, 0],
-        [0, 1, 1, 0],
-        [0, 0, 1, 1]
-    ]
-
-def matrix_multiply(A: List[List[float]], B: List[List[float]]) -> List[List[float]]:
-    """Multiply two square matrices."""
-    n = len(A)
-    C = [[0.0] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                C[i][j] += A[i][k] * B[k][j]
-    return C
-
-def matrix_power(M: List[List[float]], p: int) -> List[List[float]]:
-    """Compute M^p by repeated squaring."""
-    n = len(M)
-    result = [[1.0 if i == j else 0.0 for j in range(n)] for i in range(n)]
-    base = [row[:] for row in M]
-    while p > 0:
-        if p % 2 == 1:
-            result = matrix_multiply(result, base)
-        base = matrix_multiply(base, base)
-        p //= 2
+    result: List[str] = []
+    for letter in word:
+        result.extend(rules[letter])
     return result
 
-def metatile_counts_at_level(n: int) -> List[List[float]]:
-    """Compute M^n to get metatile counts at substitution level n."""
-    M = [[float(x) for x in row] for row in substitution_matrix()]
-    return matrix_power(M, n)
 
-def metatile_frequencies(n: int) -> List[float]:
-    """Compute the relative frequency of each metatile type at level n.
+def iterate_substitution(rules: Dict[str, List[str]], start: str, depth: int) -> List[str]:
+    """Compute σ^depth(start) — the depth-fold iteration of substitution.
 
-    Returns [freq_H, freq_T, freq_P, freq_F] where freq_X is the
-    proportion of type-X metatiles in a level-n H-supertile.
+    Warning: output length grows exponentially. For expanding systems,
+    |σ^n(a)| ≥ 2^n. Use depth ≤ 15 for practical computation.
     """
-    Mn = metatile_counts_at_level(n)
-    # Column 0 = supertile of type H
-    col = [Mn[i][0] for i in range(4)]
-    total = sum(col)
-    return [c / total for c in col]
+    word: List[str] = [start]
+    for _ in range(depth):
+        word = apply_substitution(rules, word)
+    return word
 
 
-# ============================================================
-# Algorithm 4: Hat Tile Vertex Generation
-# ============================================================
+def substitution_matrix(rules: Dict[str, List[str]], alphabet: List[str]) -> NDArray[np.int64]:
+    """Compute the substitution matrix M where M[i,j] = count(alphabet[i], rules[alphabet[j]]).
 
-def hat_vertices(a: float, b: float) -> List[Tuple[float, float]]:
-    """Generate the 13 vertices of the hat tile with edge lengths a and b.
-
-    The hat is constructed from kites of the hexagonal Laves tiling.
-    Vertices are given in counterclockwise order.
+    The substitution matrix is the key algebraic invariant of a substitution system.
+    Its eigenvalues determine growth rates and aperiodicity properties.
     """
-    s3 = math.sqrt(3)
-
-    # The hat tile vertices (in a coordinate system aligned with the hex grid)
-    # Based on the Smith et al. vertex coordinates
-    vertices = [
-        (0, 0),
-        (a, 0),
-        (a + b * 0.5, b * s3 / 2),
-        (a + b * 0.5 + a * 0.5, b * s3 / 2 + a * s3 / 2),
-        (a + b, b * s3),
-        (a + b - a * 0.5, b * s3 + a * s3 / 2),
-        (b, b * s3),
-        (b - a * 0.5, b * s3 - a * s3 / 2),
-        (-a * 0.5, b * s3 / 2 + a * s3 / 2),
-        (-a, b * s3 / 2 + a * s3 / 2 - b * s3 / 2),
-        (-a - b * 0.5, a * s3 / 2),
-        (-b * 0.5, a * s3 / 2 - b * s3 / 2),
-        (-b * 0.5 + a * 0.5, 0),
-    ]
-    return vertices
+    k: int = len(alphabet)
+    M: NDArray[np.int64] = np.zeros((k, k), dtype=np.int64)
+    for j, src in enumerate(alphabet):
+        for i, tgt in enumerate(alphabet):
+            M[i, j] = rules[src].count(tgt)
+    return M
 
 
-def hat_spectrum_sample(num_points: int = 100) -> List[Dict]:
-    """Sample the hat spectrum at evenly spaced parameter values.
+def is_primitive(rules: Dict[str, List[str]], alphabet: List[str],
+                 max_depth: int = 20) -> Tuple[bool, int]:
+    """Check if a substitution system is primitive.
 
-    Returns a list of dicts with keys: t, a, b, ratio, area, is_aperiodic.
+    Returns (is_primitive, witness_depth) where witness_depth is the minimal
+    depth at which all letters appear in all iterated words.
+
+    A primitive system has the property that its substitution matrix M satisfies
+    M^n > 0 (all entries positive) for some n.
     """
-    results = []
-    for i in range(num_points + 1):
-        t = i / num_points
-        a = edge_length_a(t)
-        b = edge_length_b(t)
-        results.append({
-            't': t,
-            'a': a,
-            'b': b,
-            'ratio': a / b,
-            'area': hat_tile_area(t),
-            'is_aperiodic': is_aperiodic(t),
-        })
-    return results
+    for n in range(1, max_depth + 1):
+        all_present: bool = True
+        for start in alphabet:
+            word = iterate_substitution(rules, start, n)
+            word_set: Set[str] = set(word)
+            if not all(letter in word_set for letter in alphabet):
+                all_present = False
+                break
+        if all_present:
+            return True, n
+    return False, -1
+
+
+def growth_sequence(rules: Dict[str, List[str]], start: str,
+                    max_depth: int = 20) -> List[int]:
+    """Compute the growth sequence g(start, 0), g(start, 1), ..., g(start, max_depth).
+
+    For expanding systems (all rules have length ≥ 2), this grows exponentially.
+    For the hat system starting from H: 1, 7, 35, 187, 1001, ...
+    For Fibonacci starting from a: 1, 2, 3, 5, 8, 13, 21, ...
+    """
+    word: List[str] = [start]
+    lengths: List[int] = [1]
+    for _ in range(max_depth):
+        word = apply_substitution(rules, word)
+        lengths.append(len(word))
+    return lengths
+
+
+def factor_complexity(word: List[str], max_length: int) -> List[int]:
+    """Compute factor complexity p(1), p(2), ..., p(max_length).
+
+    For aperiodic words, p(n) ≥ n + 1 (Morse-Hedlund theorem).
+    For periodic words with period q, p(n) ≤ q for all n ≥ q.
+    """
+    complexities: List[int] = []
+    for n in range(1, max_length + 1):
+        if n > len(word):
+            complexities.append(0)
+            continue
+        factors: Set[Tuple[str, ...]] = set()
+        for i in range(len(word) - n + 1):
+            factors.add(tuple(word[i:i+n]))
+        complexities.append(len(factors))
+    return complexities
+
+
+def spectral_aperiodicity_check(rules: Dict[str, List[str]],
+                                 alphabet: List[str]) -> Dict[str, object]:
+    """Check if a substitution system has a spectral aperiodicity certificate.
+
+    Returns a dict with:
+    - 'is_primitive': bool
+    - 'primitive_depth': int (witness depth, or -1)
+    - 'is_expanding': bool (all rules have length ≥ 2)
+    - 'has_certificate': bool
+    - 'eigenvalues': list of eigenvalues of the substitution matrix
+    - 'dominant_eigenvalue': float
+    """
+    M = substitution_matrix(rules, alphabet)
+    eigenvalues = sorted(np.linalg.eigvals(M).real, reverse=True)
+    prim, depth = is_primitive(rules, alphabet)
+    expanding = all(len(rules[a]) >= 2 for a in alphabet)
+
+    return {
+        'is_primitive': prim,
+        'primitive_depth': depth,
+        'is_expanding': expanding,
+        'has_certificate': prim and expanding,
+        'matrix': M.tolist(),
+        'eigenvalues': eigenvalues,
+        'dominant_eigenvalue': eigenvalues[0] if eigenvalues else 0.0,
+    }
+
+
+def letter_frequencies(rules: Dict[str, List[str]], alphabet: List[str],
+                       start: str, depth: int) -> Dict[str, float]:
+    """Compute letter frequencies in σ^depth(start).
+
+    For primitive systems, these converge to the Perron eigenvector
+    (left eigenvector of the substitution matrix for the dominant eigenvalue).
+    """
+    word = iterate_substitution(rules, start, depth)
+    total = len(word)
+    return {letter: word.count(letter) / total for letter in alphabet}
+
+
+# === Predefined Systems ===
+
+HAT_RULES: Dict[str, List[str]] = {
+    'H': ['H', 'H', 'H', 'H', 'T', 'P', 'F'],
+    'T': ['H', 'H', 'T'],
+    'P': ['H', 'P'],
+    'F': ['H', 'F'],
+}
+HAT_ALPHABET: List[str] = ['H', 'T', 'P', 'F']
+
+FIBONACCI_RULES: Dict[str, List[str]] = {
+    'a': ['a', 'b'],
+    'b': ['a'],
+}
+FIBONACCI_ALPHABET: List[str] = ['a', 'b']
+
+THUE_MORSE_RULES: Dict[str, List[str]] = {
+    'a': ['a', 'b'],
+    'b': ['b', 'a'],
+}
+THUE_MORSE_ALPHABET: List[str] = ['a', 'b']
 
 
 if __name__ == "__main__":
-    # Quick verification
-    lam = hat_expansion_factor()
-    lam_bar = hat_expansion_conjugate()
+    # Quick test
+    for name, rules, alphabet in [
+        ("Hat", HAT_RULES, HAT_ALPHABET),
+        ("Fibonacci", FIBONACCI_RULES, FIBONACCI_ALPHABET),
+        ("Thue-Morse", THUE_MORSE_RULES, THUE_MORSE_ALPHABET),
+    ]:
+        print(f"\n{'='*50}")
+        print(f"System: {name}")
+        result = spectral_aperiodicity_check(rules, alphabet)
+        for key, value in result.items():
+            print(f"  {key}: {value}")
 
-    print("=== Expansion Factor Properties ===")
-    print(f"lambda = {lam:.10f}")
-    print(f"lambda_bar = {lam_bar:.10f}")
-    print(f"lambda^2 - 4*lambda + 1 = {verify_minimal_polynomial(lam):.2e}")
-    print(f"lambda * lambda_bar = {verify_conjugate_product(lam, lam_bar) + 1:.10f}")
-    print(f"lambda + lambda_bar = {lam + lam_bar:.10f}")
-    print()
-
-    print("=== Hat Spectrum Boundary Values ===")
-    print(f"t=0 (hat):    a={edge_length_a(0):.4f}, b={edge_length_b(0):.4f}")
-    print(f"t=0.5 (crit): a={edge_length_a(0.5):.4f}, b={edge_length_b(0.5):.4f}")
-    print(f"t=1 (turtle): a={edge_length_a(1):.4f}, b={edge_length_b(1):.4f}")
-    print()
-
-    print("=== Tile Counts at Substitution Levels ===")
-    for n in range(8):
-        count = tile_count_at_level(n)
-        print(f"Level {n}: ~{count:.1f} tiles")
-    print()
-
-    print("=== Metatile Frequencies (level 10 H-supertile) ===")
-    freqs = metatile_frequencies(10)
-    print(f"H: {freqs[0]:.6f}, T: {freqs[1]:.6f}, P: {freqs[2]:.6f}, F: {freqs[3]:.6f}")
+        freqs = letter_frequencies(rules, alphabet, alphabet[0], 8)
+        print(f"  Letter frequencies at depth 8: {freqs}")
