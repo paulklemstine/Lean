@@ -1,19 +1,16 @@
-#!/usr/bin/env python3
 """
-Anti-Gravity Mathematics: Numerical Demonstrations
+Anti-Gravity Theorems: Demonstration
 
-Demonstrates the key results about anti-gravity theorems in derivation graphs:
-1. Pigeonhole weight theorem
-2. Ball growth under expansion
-3. Weight-depth tradeoff
-4. Anti-gravity ratio distribution
+This script demonstrates the anti-gravity phenomenon in randomly generated
+derivation graphs. It computes the weight (descendant count) and in-degree
+of each vertex, identifies anti-gravity vertices, and verifies the
+theoretical predictions.
 """
-
 import random
-from collections import defaultdict, deque
+from collections import defaultdict
 
-def build_random_dag(n: int, edge_prob: float = 0.15, seed: int = 42) -> dict:
-    """Build a random DAG on n nodes with given edge probability."""
+def build_dag(n: int, edge_prob: float = 0.1, seed: int = 42) -> dict:
+    """Build a random DAG on n vertices with given edge probability."""
     random.seed(seed)
     adj = defaultdict(set)
     for i in range(n):
@@ -22,243 +19,130 @@ def build_random_dag(n: int, edge_prob: float = 0.15, seed: int = 42) -> dict:
                 adj[i].add(j)
     return dict(adj)
 
-def compute_reachable(adj: dict, n: int, v: int) -> set:
-    """Compute all nodes reachable from v via BFS."""
-    visited = {v}
-    queue = deque([v])
-    while queue:
-        u = queue.popleft()
-        for w in adj.get(u, set()):
-            if w not in visited:
-                visited.add(w)
-                queue.append(w)
-    return visited
-
-def compute_weight(adj: dict, n: int, v: int) -> int:
-    """Gravitational weight: number of reachable nodes."""
-    return len(compute_reachable(adj, n, v))
-
-def compute_proof_depth(adj: dict, n: int, axioms: set, v: int) -> int:
-    """Minimum steps to reach v from axiom set via BFS."""
-    if v in axioms:
-        return 0
-    visited = dict()
-    queue = deque()
-    for a in axioms:
-        visited[a] = 0
-        queue.append(a)
-    while queue:
-        u = queue.popleft()
-        for w in adj.get(u, set()):
-            if w not in visited:
-                visited[w] = visited[u] + 1
-                if w == v:
-                    return visited[w]
-                queue.append(w)
-    return n + 1  # unreachable
-
-def compute_anti_gravity_ratio(weight: int, depth: int) -> float:
-    """Anti-gravity ratio: weight / depth, or weight if depth = 0."""
-    if depth == 0:
-        return float(weight)
-    return weight / depth
-
-def proof_ball(adj: dict, n: int, sources: set, k: int) -> set:
-    """Compute proof ball of radius k around sources."""
-    current = set(sources)
-    for _ in range(k):
-        new = set(current)
-        for v in current:
-            new.update(adj.get(v, set()))
-        current = new
-    return current
-
-def demo_pigeonhole():
-    """Demo 1: Pigeonhole Weight Theorem"""
-    print("=" * 60)
-    print("DEMO 1: Pigeonhole Weight Theorem")
-    print("In any graph, some node has weight ≥ average weight")
-    print("=" * 60)
-    
-    n = 20
-    adj = build_random_dag(n, edge_prob=0.2)
-    
-    weights = {v: compute_weight(adj, n, v) for v in range(n)}
-    total_weight = sum(weights.values())
-    avg_weight = total_weight / n
-    max_node = max(weights, key=weights.get)
-    
-    print(f"  Nodes: {n}")
-    print(f"  Total weight: {total_weight}")
-    print(f"  Average weight: {avg_weight:.2f}")
-    print(f"  Max weight node: {max_node} (weight = {weights[max_node]})")
-    print(f"  Theorem verified: {weights[max_node]} ≥ {avg_weight:.2f} ✓")
-    print()
-
-def demo_ball_growth():
-    """Demo 2: Ball Growth under Expansion"""
-    print("=" * 60)
-    print("DEMO 2: Ball Growth Under Expansion")
-    print("Proof balls grow multiplicatively in expanding graphs")
-    print("=" * 60)
-    
-    n = 50
-    adj = build_random_dag(n, edge_prob=0.15)
-    sources = {0, 1, 2}
-    
-    print(f"  Nodes: {n}, Sources: {sources}")
-    print(f"  {'Step k':<10} {'|Ball(k)|':<12} {'Growth':<10}")
-    print(f"  {'-'*32}")
-    
-    prev_size = 0
-    for k in range(8):
-        ball = proof_ball(adj, n, sources, k)
-        growth = len(ball) - prev_size if prev_size > 0 else "-"
-        print(f"  {k:<10} {len(ball):<12} {growth}")
-        prev_size = len(ball)
-        if len(ball) == n:
-            print(f"  (saturated at step {k})")
-            break
-    print()
-
-def demo_weight_depth_tradeoff():
-    """Demo 3: Weight-Depth Product Bound"""
-    print("=" * 60)
-    print("DEMO 3: Weight-Depth Product Bound")
-    print("weight(v) * depth(v) ≤ n² + n for all nodes")
-    print("=" * 60)
-    
-    n = 30
-    adj = build_random_dag(n, edge_prob=0.12)
-    axioms = {0, 1}
-    bound = n**2 + n
-    
-    print(f"  Nodes: {n}, Bound: n² + n = {bound}")
-    print(f"  {'Node':<8} {'Weight':<10} {'Depth':<8} {'Product':<10} {'≤ Bound?'}")
-    print(f"  {'-'*44}")
-    
-    violations = 0
+def compute_descendants(adj: dict, n: int) -> dict:
+    """Compute descendant set for each vertex using BFS."""
+    descendants = {}
     for v in range(n):
-        w = compute_weight(adj, n, v)
-        d = compute_proof_depth(adj, n, axioms, v)
-        product = w * d
-        ok = product <= bound
-        if not ok:
-            violations += 1
-        if v < 10 or not ok:
-            print(f"  {v:<8} {w:<10} {d:<8} {product:<10} {'✓' if ok else '✗'}")
-    
-    print(f"  ... ({n} nodes total)")
-    print(f"  Violations: {violations} (theorem says 0) ✓" if violations == 0 
-          else f"  Violations: {violations} ✗")
-    print()
+        visited = set()
+        queue = [v]
+        while queue:
+            u = queue.pop(0)
+            if u in visited:
+                continue
+            visited.add(u)
+            for w in adj.get(u, set()):
+                if w not in visited:
+                    queue.append(w)
+        descendants[v] = visited
+    return descendants
 
-def demo_antigravity_distribution():
-    """Demo 4: Anti-Gravity Ratio Distribution"""
-    print("=" * 60)
-    print("DEMO 4: Anti-Gravity Ratio Distribution")
-    print("Classifying nodes by anti-gravity ratio")
-    print("=" * 60)
-    
-    n = 40
-    adj = build_random_dag(n, edge_prob=0.15)
-    axioms = {0, 1, 2}
-    
-    ratios = []
-    for v in range(n):
-        w = compute_weight(adj, n, v)
-        d = compute_proof_depth(adj, n, axioms, v)
-        r = compute_anti_gravity_ratio(w, d)
-        ratios.append((v, w, d, r))
-    
-    ratios.sort(key=lambda x: -x[3])
-    
-    print(f"  Top 10 anti-gravity nodes:")
-    print(f"  {'Node':<8} {'Weight':<10} {'Depth':<8} {'AG Ratio':<12} {'Class'}")
-    print(f"  {'-'*48}")
-    
-    for v, w, d, r in ratios[:10]:
-        if d == 0:
-            cls = "AXIOM (max AG)"
-        elif r > 5:
-            cls = "HIGH AG"
-        elif r > 2:
-            cls = "MODERATE AG"
-        else:
-            cls = "LOW AG"
-        print(f"  {v:<8} {w:<10} {d:<8} {r:<12.2f} {cls}")
-    
-    # Statistics
-    high_ag = sum(1 for _, _, _, r in ratios if r > 5)
-    mod_ag = sum(1 for _, _, _, r in ratios if 2 < r <= 5)
-    low_ag = sum(1 for _, _, _, r in ratios if r <= 2)
-    
-    print(f"\n  Distribution:")
-    print(f"    High AG (ratio > 5):     {high_ag} ({100*high_ag/n:.1f}%)")
-    print(f"    Moderate AG (2 < r ≤ 5): {mod_ag} ({100*mod_ag/n:.1f}%)")
-    print(f"    Low AG (ratio ≤ 2):      {low_ag} ({100*low_ag/n:.1f}%)")
-    print()
+def compute_in_degree(adj: dict, n: int) -> dict:
+    """Compute in-degree for each vertex."""
+    in_deg = defaultdict(int)
+    for u in range(n):
+        for v in adj.get(u, set()):
+            in_deg[v] += 1
+    return dict(in_deg)
 
-def demo_successor_weight_monotonicity():
-    """Demo 5: Weight Monotonicity under Successors"""
-    print("=" * 60)
-    print("DEMO 5: Weight Monotonicity (Successor Inheritance)")
-    print("If v → u then weight(v) ≥ weight(u)")
-    print("=" * 60)
-    
-    n = 25
-    adj = build_random_dag(n, edge_prob=0.2)
-    
-    violations = 0
-    checked = 0
-    examples = []
-    
+def find_anti_gravity(n: int, edge_prob: float, tau: int, seed: int = 42):
+    """Find anti-gravity vertices in a random DAG."""
+    adj = build_dag(n, edge_prob, seed)
+    descendants = compute_descendants(adj, n)
+    in_deg = compute_in_degree(adj, n)
+
+    total_weight = sum(len(descendants[v]) for v in range(n))
+    edge_count = sum(in_deg.get(v, 0) for v in range(n))
+
+    anti_gravity = []
     for v in range(n):
-        w_v = compute_weight(adj, n, v)
-        for u in adj.get(v, set()):
-            w_u = compute_weight(adj, n, u)
-            checked += 1
-            if w_v < w_u:
-                violations += 1
-            if len(examples) < 5:
-                examples.append((v, u, w_v, w_u))
-    
-    print(f"  Edges checked: {checked}")
-    for v, u, wv, wu in examples:
-        print(f"  Edge {v}→{u}: weight({v})={wv} ≥ weight({u})={wu} {'✓' if wv >= wu else '✗'}")
-    print(f"  Violations: {violations} (theorem says 0) ✓" if violations == 0
-          else f"  Violations: {violations} ✗")
-    print()
+        weight = len(descendants[v])
+        d = in_deg.get(v, 0)
+        if weight > tau * d:
+            anti_gravity.append((v, weight, d, weight / max(d, 1)))
+
+    return {
+        'n': n,
+        'edge_prob': edge_prob,
+        'tau': tau,
+        'total_weight': total_weight,
+        'edge_count': edge_count,
+        'ratio': total_weight / max(edge_count, 1),
+        'anti_gravity_count': len(anti_gravity),
+        'anti_gravity_fraction': len(anti_gravity) / n,
+        'top_anti_gravity': sorted(anti_gravity, key=lambda x: -x[3])[:5],
+        'theorem_prediction_holds': total_weight > tau * edge_count
+    }
+
+def main():
+    print("=" * 70)
+    print("ANTI-GRAVITY THEOREMS: NUMERICAL DEMONSTRATION")
+    print("=" * 70)
+
+    # Experiment 1: Varying sparsity
+    print("\n--- Experiment 1: Anti-gravity vs graph density ---")
+    print(f"{'Density':>10} {'Edges':>8} {'TotalWt':>10} {'Ratio':>8} {'AG Count':>10} {'AG %':>8}")
+    print("-" * 60)
+    for p in [0.01, 0.02, 0.05, 0.1, 0.2, 0.3]:
+        result = find_anti_gravity(100, p, tau=3, seed=42)
+        print(f"{p:>10.2f} {result['edge_count']:>8d} {result['total_weight']:>10d} "
+              f"{result['ratio']:>8.1f} {result['anti_gravity_count']:>10d} "
+              f"{result['anti_gravity_fraction']:>8.1%}")
+
+    # Experiment 2: The pigeonhole prediction
+    print("\n--- Experiment 2: Pigeonhole prediction (τ=2) ---")
+    print("When TotalWeight > τ·EdgeCount, anti-gravity MUST exist.")
+    print(f"{'n':>6} {'TotalWt':>10} {'τ·Edges':>10} {'Holds?':>8} {'AG exists?':>12}")
+    print("-" * 50)
+    for n in [20, 50, 100, 200, 500]:
+        result = find_anti_gravity(n, 0.05, tau=2, seed=42)
+        tw = result['total_weight']
+        te = 2 * result['edge_count']
+        holds = tw > te
+        ag_exists = result['anti_gravity_count'] > 0
+        print(f"{n:>6d} {tw:>10d} {te:>10d} {'YES' if holds else 'NO':>8} "
+              f"{'YES' if ag_exists else 'NO':>12}")
+
+    # Experiment 3: The top anti-gravity vertices
+    print("\n--- Experiment 3: Top anti-gravity vertices (n=200, p=0.05, τ=3) ---")
+    result = find_anti_gravity(200, 0.05, tau=3, seed=42)
+    print(f"Total vertices: {result['n']}")
+    print(f"Total weight: {result['total_weight']}")
+    print(f"Edge count: {result['edge_count']}")
+    print(f"Weight/Edge ratio: {result['ratio']:.2f}")
+    print(f"Anti-gravity count: {result['anti_gravity_count']} ({result['anti_gravity_fraction']:.1%})")
+    print("\nTop anti-gravity vertices (vertex, weight, in-degree, leverage):")
+    for v, w, d, lev in result['top_anti_gravity']:
+        print(f"  v={v:>4d}  weight={w:>6d}  in-degree={d:>3d}  leverage={lev:>8.1f}")
+
+    # Experiment 4: Sparse graph guarantee
+    print("\n--- Experiment 4: Sparse graph guarantee ---")
+    print("In very sparse graphs, nearly ALL vertices are anti-gravity.")
+    result_sparse = find_anti_gravity(200, 0.005, tau=5, seed=42)
+    result_dense = find_anti_gravity(200, 0.3, tau=5, seed=42)
+    print(f"Sparse (p=0.005): {result_sparse['anti_gravity_fraction']:.1%} anti-gravity")
+    print(f"Dense  (p=0.3):   {result_dense['anti_gravity_fraction']:.1%} anti-gravity")
+    print(f"\nKey insight: Sparser derivation systems have MORE anti-gravity theorems!")
 
 if __name__ == "__main__":
-    print("\n🌌 ANTI-GRAVITY MATHEMATICS: NUMERICAL DEMONSTRATIONS 🌌\n")
-    demo_pigeonhole()
-    demo_ball_growth()
-    demo_weight_depth_tradeoff()
-    demo_antigravity_distribution()
-    demo_successor_weight_monotonicity()
-    print("All demonstrations complete.")
+    main()
 
 
-#!/usr/bin/env python3
 """
-Anti-Gravity Mathematics: Visualization
+Visualization: Anti-Gravity Density vs Graph Sparsity
 
-Produces a scatter plot of weight vs proof depth for nodes in a random DAG,
-with anti-gravity ratio encoded as color. Demonstrates the weight-depth
-tradeoff theorem and anti-gravity node clustering.
+Shows how the fraction of anti-gravity vertices varies with graph density,
+confirming the theoretical prediction that sparser graphs have more
+anti-gravity theorems.
 """
-
 import random
-from collections import defaultdict, deque
+from collections import defaultdict
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
 import numpy as np
 
 
-def build_random_dag(n, edge_prob=0.12, seed=42):
+def build_dag(n, edge_prob, seed=42):
     random.seed(seed)
     adj = defaultdict(set)
     for i in range(n):
@@ -268,113 +152,95 @@ def build_random_dag(n, edge_prob=0.12, seed=42):
     return dict(adj)
 
 
-def compute_reachable(adj, v):
-    visited = {v}
-    queue = deque([v])
-    while queue:
-        u = queue.popleft()
-        for w in adj.get(u, set()):
-            if w not in visited:
-                visited.add(w)
-                queue.append(w)
-    return visited
+def compute_descendants(adj, n):
+    descendants = {}
+    for v in range(n):
+        visited = set()
+        queue = [v]
+        while queue:
+            u = queue.pop(0)
+            if u in visited:
+                continue
+            visited.add(u)
+            for w in adj.get(u, set()):
+                if w not in visited:
+                    queue.append(w)
+        descendants[v] = visited
+    return descendants
 
 
-def compute_depth(adj, n, axioms, v):
-    if v in axioms:
-        return 0
-    dist = {a: 0 for a in axioms}
-    queue = deque(axioms)
-    while queue:
-        u = queue.popleft()
-        for w in adj.get(u, set()):
-            if w not in dist:
-                dist[w] = dist[u] + 1
-                if w == v:
-                    return dist[w]
-                queue.append(w)
-    return n + 1
+def compute_in_degree(adj, n):
+    in_deg = defaultdict(int)
+    for u in range(n):
+        for v in adj.get(u, set()):
+            in_deg[v] += 1
+    return dict(in_deg)
+
+
+def anti_gravity_stats(n, edge_prob, tau, seed=42):
+    adj = build_dag(n, edge_prob, seed)
+    descendants = compute_descendants(adj, n)
+    in_deg = compute_in_degree(adj, n)
+    total_w = sum(len(descendants[v]) for v in range(n))
+    edge_c = sum(in_deg.get(v, 0) for v in range(n))
+    ag_count = sum(1 for v in range(n)
+                   if len(descendants[v]) > tau * in_deg.get(v, 0))
+    weights = [len(descendants[v]) for v in range(n)]
+    return {
+        'ag_frac': ag_count / n,
+        'weight_edge_ratio': total_w / max(edge_c, 1),
+        'weights': weights,
+        'edge_count': edge_c,
+        'total_weight': total_w,
+    }
 
 
 def main():
-    n = 60
-    adj = build_random_dag(n, edge_prob=0.12)
-    axioms = {0, 1, 2, 3}
-    
-    weights = []
-    depths = []
-    ratios = []
-    labels = []
-    
-    for v in range(n):
-        w = len(compute_reachable(adj, v))
-        d = compute_depth(adj, n, axioms, v)
-        r = w / d if d > 0 else w
-        weights.append(w)
-        depths.append(d)
-        ratios.append(r)
-        labels.append(v)
-    
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-    
-    # Plot 1: Weight vs Depth scatter
-    ax1 = axes[0]
-    scatter = ax1.scatter(depths, weights, c=ratios, cmap='plasma', 
-                          s=80, edgecolors='black', linewidth=0.5, alpha=0.8)
-    plt.colorbar(scatter, ax=ax1, label='Anti-Gravity Ratio')
-    
-    # Draw the n²+n bound curve
-    d_range = np.linspace(0.5, max(depths) + 1, 100)
-    w_bound = (n**2 + n) / d_range
-    w_bound = np.minimum(w_bound, n)
-    ax1.plot(d_range, w_bound, 'r--', alpha=0.5, label='weight·depth ≤ n²+n')
-    
-    ax1.set_xlabel('Proof Depth', fontsize=12)
-    ax1.set_ylabel('Gravitational Weight', fontsize=12)
-    ax1.set_title('Anti-Gravity Map\n(High AG = bright, top-left)', fontsize=13)
-    ax1.legend(fontsize=9)
-    ax1.set_xlim(-0.5, max(depths) + 1)
-    
-    # Plot 2: Ball growth curves
-    ax2 = axes[1]
-    for src in [0, 5, 15, 30]:
-        sizes = []
-        current = {src}
-        for k in range(15):
-            sizes.append(len(current))
-            expansion = set(current)
-            for v in current:
-                expansion.update(adj.get(v, set()))
-            if expansion == current:
-                sizes.extend([len(current)] * (14 - k))
-                break
-            current = expansion
-        ax2.plot(range(len(sizes)), sizes, 'o-', label=f'Source {src}', markersize=4)
-    
-    ax2.set_xlabel('Steps k', fontsize=12)
-    ax2.set_ylabel('|ProofBall(k)|', fontsize=12)
-    ax2.set_title('Proof Ball Growth\n(Steeper = more anti-gravity)', fontsize=13)
-    ax2.legend(fontsize=9)
-    ax2.axhline(y=n, color='gray', linestyle=':', alpha=0.5, label='n')
-    
-    # Plot 3: Anti-gravity ratio histogram
-    ax3 = axes[2]
-    finite_ratios = [r for r in ratios if r < 100]
-    ax3.hist(finite_ratios, bins=20, color='mediumpurple', edgecolor='black', alpha=0.8)
-    ax3.axvline(x=np.mean(finite_ratios), color='red', linestyle='--', 
-                label=f'Mean = {np.mean(finite_ratios):.1f}')
-    ax3.axvline(x=np.median(finite_ratios), color='orange', linestyle='--',
-                label=f'Median = {np.median(finite_ratios):.1f}')
-    ax3.set_xlabel('Anti-Gravity Ratio', fontsize=12)
-    ax3.set_ylabel('Count', fontsize=12)
-    ax3.set_title('Distribution of AG Ratios\n(Right-skewed = anti-gravity concentration)', fontsize=13)
-    ax3.legend(fontsize=9)
-    
-    plt.suptitle('Anti-Gravity Mathematics: Theorem Dependency Structure', 
-                 fontsize=15, fontweight='bold', y=1.02)
+    n = 150
+    tau = 3
+    densities = np.linspace(0.005, 0.4, 30)
+
+    ag_fracs = []
+    we_ratios = []
+    for p in densities:
+        stats = anti_gravity_stats(n, p, tau)
+        ag_fracs.append(stats['ag_frac'])
+        we_ratios.append(stats['weight_edge_ratio'])
+
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+    # Plot 1: Anti-gravity density vs edge probability
+    axes[0].plot(densities, ag_fracs, 'b-o', markersize=4, linewidth=1.5)
+    axes[0].set_xlabel('Edge Probability', fontsize=12)
+    axes[0].set_ylabel('Anti-Gravity Fraction', fontsize=12)
+    axes[0].set_title(f'Anti-Gravity Density (n={n}, τ={tau})', fontsize=13)
+    axes[0].axhline(y=0.1, color='r', linestyle='--', alpha=0.7, label='10% prediction')
+    axes[0].legend()
+    axes[0].grid(True, alpha=0.3)
+
+    # Plot 2: Weight/Edge ratio vs density
+    axes[1].plot(densities, we_ratios, 'g-s', markersize=4, linewidth=1.5)
+    axes[1].set_xlabel('Edge Probability', fontsize=12)
+    axes[1].set_ylabel('TotalWeight / EdgeCount', fontsize=12)
+    axes[1].set_title('Proof Compression Ratio', fontsize=13)
+    axes[1].axhline(y=tau, color='r', linestyle='--', alpha=0.7, label=f'τ={tau} threshold')
+    axes[1].legend()
+    axes[1].grid(True, alpha=0.3)
+
+    # Plot 3: Weight distribution for sparse vs dense
+    stats_sparse = anti_gravity_stats(n, 0.02, tau)
+    stats_dense = anti_gravity_stats(n, 0.2, tau)
+    axes[2].hist(stats_sparse['weights'], bins=30, alpha=0.6, label='Sparse (p=0.02)', color='blue')
+    axes[2].hist(stats_dense['weights'], bins=30, alpha=0.6, label='Dense (p=0.2)', color='red')
+    axes[2].set_xlabel('Vertex Weight', fontsize=12)
+    axes[2].set_ylabel('Count', fontsize=12)
+    axes[2].set_title('Weight Distribution', fontsize=13)
+    axes[2].legend()
+    axes[2].grid(True, alpha=0.3)
+
     plt.tight_layout()
-    plt.savefig('antigravity_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved: antigravity_analysis.png")
+    plt.savefig('Novelty/anti_gravity_visualization.png', dpi=150, bbox_inches='tight')
+    print("Saved visualization to Novelty/anti_gravity_visualization.png")
 
 
 if __name__ == "__main__":
