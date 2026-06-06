@@ -1,384 +1,207 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tangled Hierarchies in Provability Logic
+Tangled Hierarchies: Core Algorithms
 
-Implements core algorithms for GL frame construction, formula evaluation,
-soundness spectrum computation, and tangling degree calculation.
+Type-hinted implementations of provability lattice operations
+and consistency tower computations.
 """
 
-from dataclasses import dataclass, field
-from typing import Dict, Set, Tuple, List, Optional, FrozenSet
-from enum import Enum, auto
-import itertools
-
-
-# ============================================================
-# Type Definitions
-# ============================================================
-
-class FType(Enum):
-    """Formula node types."""
-    VAR = auto()
-    BOT = auto()
-    IMP = auto()
-    BOX = auto()
-
-
-@dataclass(frozen=True)
-class MFormula:
-    """Immutable modal formula (hashable for use in sets/dicts)."""
-    typ: FType
-    var_name: str = ""
-    left: Optional['MFormula'] = None
-    right: Optional['MFormula'] = None
-
-    @staticmethod
-    def var(name: str) -> 'MFormula':
-        return MFormula(FType.VAR, var_name=name)
-
-    @staticmethod
-    def bot() -> 'MFormula':
-        return MFormula(FType.BOT)
-
-    @staticmethod
-    def imp(a: 'MFormula', b: 'MFormula') -> 'MFormula':
-        return MFormula(FType.IMP, left=a, right=b)
-
-    @staticmethod
-    def box(a: 'MFormula') -> 'MFormula':
-        return MFormula(FType.BOX, left=a)
-
-    @staticmethod
-    def neg(a: 'MFormula') -> 'MFormula':
-        return MFormula.imp(a, MFormula.bot())
-
-    @staticmethod
-    def top() -> 'MFormula':
-        return MFormula.neg(MFormula.bot())
-
-    @staticmethod
-    def con() -> 'MFormula':
-        return MFormula.neg(MFormula.box(MFormula.bot()))
-
-    @staticmethod
-    def loeb(phi: 'MFormula') -> 'MFormula':
-        return MFormula.imp(MFormula.box(MFormula.imp(MFormula.box(phi), phi)),
-                           MFormula.box(phi))
-
-    @staticmethod
-    def soundness_formula(phi: 'MFormula') -> 'MFormula':
-        return MFormula.imp(MFormula.box(phi), phi)
-
-    def depth(self) -> int:
-        """Modal depth of the formula."""
-        if self.typ == FType.VAR or self.typ == FType.BOT:
-            return 0
-        elif self.typ == FType.IMP:
-            return max(self.left.depth(), self.right.depth())
-        elif self.typ == FType.BOX:
-            return 1 + self.left.depth()
-        return 0
-
-    def variables(self) -> Set[str]:
-        """Set of propositional variables in the formula."""
-        if self.typ == FType.VAR:
-            return {self.var_name}
-        elif self.typ == FType.BOT:
-            return set()
-        elif self.typ == FType.IMP:
-            return self.left.variables() | self.right.variables()
-        elif self.typ == FType.BOX:
-            return self.left.variables()
-        return set()
+from typing import Set, List, Callable, Tuple, Optional
+from dataclasses import dataclass
 
 
 @dataclass
 class GLFrame:
-    """GL frame with efficient successor lookup."""
-    worlds: FrozenSet[int]
-    _successors: Dict[int, FrozenSet[int]] = field(default_factory=dict)
+    """A GL (Gödel-Löb) frame: finite set of worlds with transitive,
+    irreflexive accessibility relation."""
+    worlds: Set[int]
+    accessible: Callable[[int, int], bool]  # R(w, v)
+    
+    def successors(self, w: int) -> Set[int]:
+        return {v for v in self.worlds if self.accessible(w, v)}
+    
+    def box(self, S: Set[int]) -> Set[int]:
+        """□S = {w : all successors of w are in S}"""
+        return {w for w in self.worlds if self.successors(w) <= S}
+    
+    def diamond(self, S: Set[int]) -> Set[int]:
+        """◇S = {w : some successor of w is in S}"""
+        return {w for w in self.worlds if self.successors(w) & S}
+    
+    def box_iter(self, n: int, S: Set[int]) -> Set[int]:
+        """□ⁿS: iterate box n times."""
+        result = S
+        for _ in range(n):
+            result = self.box(result)
+        return result
+    
+    def soundness_element(self, S: Set[int]) -> Set[int]:
+        """snd(S) = (□S)ᶜ ∪ S"""
+        return (self.worlds - self.box(S)) | S
+    
+    def snd_iter(self, n: int, S: Set[int]) -> Set[int]:
+        """Iterate soundness n times."""
+        result = S
+        for _ in range(n):
+            result = self.soundness_element(result)
+        return result
+    
+    def consistency_tower(self, max_depth: int) -> List[Set[int]]:
+        """Compute the first max_depth levels of the consistency tower.
+        conTower(n) = (□^(n+1)⊥)ᶜ"""
+        tower = []
+        for n in range(max_depth):
+            box_iter_bot = self.box_iter(n + 1, set())
+            tower.append(self.worlds - box_iter_bot)
+        return tower
+    
+    def provability_tower(self, max_depth: int) -> List[Set[int]]:
+        """Compute the first max_depth levels of the provability tower.
+        boxIter(n, ⊥)"""
+        tower = [set()]
+        for n in range(max_depth):
+            tower.append(self.box(tower[-1]))
+        return tower
+    
+    def tangling_rank(self, w: int) -> int:
+        """Compute the well-founded rank of world w.
+        The rank of a world is 1 + max rank of its successors."""
+        succs = self.successors(w)
+        if not succs:
+            return 0
+        return 1 + max(self.tangling_rank(v) for v in succs)
+    
+    def tangling_spectrum(self) -> dict:
+        """Compute the tangling spectrum: {world: rank}"""
+        return {w: self.tangling_rank(w) for w in self.worlds}
+    
+    def is_world_sound(self, w: int) -> bool:
+        """Check if world w is sound: for all valuations and formulas,
+        if w forces □φ then w forces φ.
+        
+        Equivalent to: w has no R-successors (in the semantic sense,
+        a world is sound iff it cannot reach any world)."""
+        return len(self.successors(w)) == 0
+    
+    def sound_worlds(self) -> Set[int]:
+        """Return the set of all sound worlds."""
+        return {w for w in self.worlds if self.is_world_sound(w)}
 
-    def __post_init__(self):
-        for w in self.worlds:
-            if w not in self._successors:
-                self._successors[w] = frozenset()
 
-    @classmethod
-    def from_relation(cls, worlds: Set[int],
-                      relation: Set[Tuple[int, int]]) -> 'GLFrame':
-        """Construct from explicit world set and relation."""
-        succ: Dict[int, Set[int]] = {w: set() for w in worlds}
-        for u, v in relation:
-            succ[u].add(v)
-        return cls(
-            worlds=frozenset(worlds),
-            _successors={w: frozenset(s) for w, s in succ.items()}
-        )
-
-    def successors(self, w: int) -> FrozenSet[int]:
-        return self._successors.get(w, frozenset())
-
-    def has_edge(self, u: int, v: int) -> bool:
-        return v in self._successors.get(u, frozenset())
-
-    def relation(self) -> Set[Tuple[int, int]]:
-        return {(u, v) for u in self.worlds for v in self.successors(u)}
-
-    @classmethod
-    def chain(cls, n: int) -> 'GLFrame':
-        """Build a GL frame that is a chain: n-1 → n-2 → ... → 0
-        with all transitive edges (reflective tower)."""
-        worlds = set(range(n))
-        relation = {(i, j) for i in range(n) for j in range(i)}
-        return cls.from_relation(worlds, relation)
+def linear_gl_frame(n: int) -> GLFrame:
+    """Create a linear GL frame on n worlds: 0 < 1 < ... < n-1."""
+    return GLFrame(
+        worlds=set(range(n)),
+        accessible=lambda w, v: w < v
+    )
 
 
-# ============================================================
-# Algorithm 1: Force Evaluation (Model Checking)
-# ============================================================
-
-Valuation = Dict[str, FrozenSet[int]]
-
-
-def evaluate_forces(frame: GLFrame, val: Valuation,
-                    world: int, phi: MFormula) -> bool:
+def tree_gl_frame(depth: int) -> GLFrame:
+    """Create a binary tree GL frame of given depth.
+    Worlds are labeled by binary strings (as integers).
     """
-    Evaluate forces(M, V, w, φ) — whether world w forces formula φ.
+    worlds = set()
+    next_id = [0]
+    
+    def build_tree(d: int) -> int:
+        w = next_id[0]
+        next_id[0] += 1
+        worlds.add(w)
+        if d > 0:
+            left = build_tree(d - 1)
+            right = build_tree(d - 1)
+            children[w] = {left, right}
+        else:
+            children[w] = set()
+        return w
+    
+    children: dict = {}
+    root = build_tree(depth)
+    
+    # Compute transitive closure
+    def descendants(w: int) -> Set[int]:
+        result = set()
+        for c in children.get(w, set()):
+            result.add(c)
+            result |= descendants(c)
+        return result
+    
+    desc_cache = {w: descendants(w) for w in worlds}
+    
+    return GLFrame(
+        worlds=worlds,
+        accessible=lambda w, v: v in desc_cache.get(w, set())
+    )
 
-    Time complexity: O(|W| * 2^d) where d is the modal depth of φ.
-    Space complexity: O(d) for recursion stack.
 
-    Algorithm: Direct recursive evaluation following the Kripke semantics.
+def verify_loeb_axiom(frame: GLFrame, valuation: Set[int]) -> bool:
+    """Verify Löb's axiom □(□φ → φ) → □φ for a specific valuation.
+    
+    Args:
+        frame: A GL frame
+        valuation: Set of worlds where φ is true
+    
+    Returns:
+        True if the Löb axiom holds for this valuation
     """
-    if phi.typ == FType.VAR:
-        return world in val.get(phi.var_name, frozenset())
-    elif phi.typ == FType.BOT:
-        return False
-    elif phi.typ == FType.IMP:
-        return (not evaluate_forces(frame, val, world, phi.left) or
-                evaluate_forces(frame, val, world, phi.right))
-    elif phi.typ == FType.BOX:
-        return all(evaluate_forces(frame, val, v, phi.left)
-                   for v in frame.successors(world))
-    raise ValueError(f"Unknown formula type: {phi.typ}")
+    box_phi = frame.box(valuation)
+    # □φ → φ at world w means: w ∉ □φ or w ∈ φ
+    imp_set = (frame.worlds - box_phi) | valuation
+    box_imp = frame.box(imp_set)
+    # □(□φ → φ) → □φ means: box_imp ⊆ box_phi
+    return box_imp <= box_phi
 
 
-# ============================================================
-# Algorithm 2: Soundness Spectrum Computation
-# ============================================================
-
-def compute_soundness_spectrum(
-    frame: GLFrame, val: Valuation, world: int,
-    formulas: List[MFormula]
-) -> List[MFormula]:
+def verify_second_incompleteness(frame: GLFrame) -> bool:
+    """Verify the semantic second incompleteness theorem:
+    no sound, consistent world proves its own consistency.
+    
+    Returns True if the theorem holds (no counterexample found).
     """
-    Compute the soundness spectrum of a world.
-
-    Input: GL frame, valuation, world, candidate formulas
-    Output: List of formulas φ where w ⊩ □φ → φ
-
-    Time: O(|formulas| * |W| * 2^d_max) where d_max is the max modal depth.
-    """
-    spectrum = []
-    for phi in formulas:
-        soundness = MFormula.soundness_formula(phi)
-        if evaluate_forces(frame, val, world, soundness):
-            spectrum.append(phi)
-    return spectrum
-
-
-# ============================================================
-# Algorithm 3: Tangling Degree Computation
-# ============================================================
-
-def compute_tangling_degree(frame: GLFrame, world: int,
-                            memo: Optional[Dict[int, int]] = None) -> int:
-    """
-    Compute the tangling degree of a world via well-founded recursion.
-
-    Input: GL frame, world
-    Output: Tangling degree (length of longest R-chain from world)
-
-    Time: O(|W|^2) in worst case (each world visited once).
-    Space: O(|W|) for memoization.
-
-    Pseudocode:
-        deg(w) = 0                      if successors(w) = ∅
-        deg(w) = max{deg(v) | v ∈ successors(w)} + 1  otherwise
-    """
-    if memo is None:
-        memo = {}
-    if world in memo:
-        return memo[world]
-
-    succs = frame.successors(world)
-    if not succs:
-        memo[world] = 0
-        return 0
-
-    max_deg = max(compute_tangling_degree(frame, v, memo) for v in succs)
-    result = max_deg + 1
-    memo[world] = result
-    return result
-
-
-# ============================================================
-# Algorithm 4: GL Frame Validity Checker
-# ============================================================
-
-def check_gl_validity(frame: GLFrame, phi: MFormula,
-                      var_names: Optional[List[str]] = None) -> bool:
-    """
-    Check whether φ is valid on a (finite) GL frame.
-
-    Enumerates all valuations and checks all worlds.
-
-    Input: GL frame, formula
-    Output: True iff φ is valid (holds at every world under every valuation)
-
-    Time: O(2^(|vars| * |W|) * |W| * 2^d) — exponential in variables.
-    """
-    if var_names is None:
-        var_names = sorted(phi.variables())
-
-    if not var_names:
-        # No variables: check with empty valuation
-        val: Valuation = {}
-        return all(evaluate_forces(frame, val, w, phi) for w in frame.worlds)
-
-    # Enumerate all possible valuations
-    world_list = sorted(frame.worlds)
-    for assignment in itertools.product(
-        *[itertools.combinations(world_list, r)
-          for _ in var_names
-          for r in range(len(world_list) + 1)]
-    ):
-        # This is too expensive for large frames; use subset enumeration
-        break
-
-    # More efficient: enumerate subsets for each variable
-    for combo in itertools.product(
-        *[range(2 ** len(world_list)) for _ in var_names]
-    ):
-        val = {}
-        for i, var in enumerate(var_names):
-            val[var] = frozenset(
-                world_list[j] for j in range(len(world_list))
-                if combo[i] & (1 << j)
-            )
-        if not all(evaluate_forces(frame, val, w, phi) for w in frame.worlds):
-            return False
+    box_bot = frame.box(set())
+    # Sound for ⊥: worlds not in □⊥
+    sound_worlds = frame.worlds - box_bot
+    # Consistent: worlds not in ⊥ (all worlds)
+    consistent = frame.worlds
+    # Can prove own soundness: worlds in □(□⊥ → ⊥) = □(sound_for_bot)
+    box_sound = frame.box(sound_worlds)
+    
+    for w in sound_worlds & consistent:
+        if w in box_sound:
+            return False  # Counterexample!
     return True
 
 
-# ============================================================
-# Algorithm 5: Reflective Tower Constructor
-# ============================================================
-
-def build_reflective_tower(height: int) -> Tuple[GLFrame, List[int]]:
+def compute_tangling_ceiling(frame: GLFrame, start: Set[int], 
+                              max_iter: int = 100) -> Tuple[Set[int], int]:
+    """Compute the tangling ceiling: iterate snd until stabilization.
+    
+    Returns (ceiling_set, num_iterations).
     """
-    Construct a reflective tower of given height.
+    current = start
+    for i in range(max_iter):
+        next_set = frame.soundness_element(current)
+        if next_set == current:
+            return current, i
+        current = next_set
+    return current, max_iter
 
-    Output: (GL frame, tower sequence [w_0, w_1, ..., w_{height-1}])
-
-    The tower satisfies:
-    - w_i R w_j whenever i > j
-    - All worlds are distinct
-    - R is transitive and converse well-founded
-
-    Time: O(height^2) for edge construction.
-    """
-    frame = GLFrame.chain(height)
-    tower = list(range(height))  # tower[i] = world i
-    return frame, tower
-
-
-# ============================================================
-# Algorithm 6: Counterexample Search for Universal Soundness
-# ============================================================
-
-def find_universal_soundness_counterexample(
-    frame: GLFrame, world: int, var_names: List[str]
-) -> Optional[Tuple[Valuation, MFormula]]:
-    """
-    Find a (valuation, formula) pair witnessing failure of universal soundness.
-
-    Uses the strategic valuation V(p, u) = (u ≠ w) from the
-    Universal Tangling Collapse theorem.
-
-    Input: GL frame, target world, variable names
-    Output: (V, φ) such that w ⊮ □φ → φ, or None if world is terminal.
-    """
-    if not frame.successors(world):
-        # Terminal world — universal soundness restricted to box-free
-        # formulas might hold trivially
-        return None
-
-    if not var_names:
-        return None  # Need at least one variable
-
-    # Strategic valuation: var true everywhere except at w
-    var = var_names[0]
-    strategic_val: Valuation = {
-        var: frozenset(w for w in frame.worlds if w != world)
-    }
-
-    phi = MFormula.var(var)
-    soundness = MFormula.soundness_formula(phi)
-
-    if not evaluate_forces(frame, strategic_val, world, soundness):
-        return (strategic_val, phi)
-
-    return None  # Should not happen if world has successors
-
-
-# ============================================================
-# Main: Run all algorithms on example frames
-# ============================================================
 
 if __name__ == "__main__":
-    print("Tangled Hierarchies — Algorithm Demonstrations")
-    print("=" * 60)
-
-    # Build a 5-level reflective tower
-    frame, tower = build_reflective_tower(5)
-
-    print(f"\n1. Reflective Tower (height 5)")
-    print(f"   Worlds: {sorted(frame.worlds)}")
-    print(f"   Edges: {sorted(frame.relation())}")
-
-    # Compute tangling degrees
-    print(f"\n2. Tangling Degrees:")
-    memo: Dict[int, int] = {}
-    for w in sorted(frame.worlds):
-        deg = compute_tangling_degree(frame, w, memo)
-        print(f"   deg(w_{w}) = {deg}")
-
-    # Verify Löb's theorem
-    p = MFormula.var("p")
-    loeb_p = MFormula.loeb(p)
-    print(f"\n3. Löb's Theorem Validity Check:")
-    is_valid = check_gl_validity(frame, loeb_p, ["p"])
-    print(f"   □(□p → p) → □p is valid: {is_valid}")
-
-    # Find universal soundness counterexamples
-    print(f"\n4. Universal Soundness Counterexamples:")
-    for w in sorted(frame.worlds):
-        result = find_universal_soundness_counterexample(frame, w, ["p"])
-        if result:
-            val, phi = result
-            print(f"   World {w}: Counterexample found! "
-                  f"V(p) = {set(val['p'])}")
-        else:
-            print(f"   World {w}: Terminal (no counterexample needed)")
-
-    # Compute soundness spectra
-    print(f"\n5. Soundness Spectra:")
-    test_formulas = [
-        MFormula.bot(), MFormula.top(), MFormula.var("p"),
-        MFormula.box(MFormula.bot()), MFormula.box(MFormula.var("p"))
-    ]
-    val: Valuation = {"p": frozenset({0, 2, 4})}
-    for w in sorted(frame.worlds):
-        spectrum = compute_soundness_spectrum(frame, val, w, test_formulas)
-        print(f"   World {w}: {len(spectrum)}/{len(test_formulas)} formulas in spectrum")
+    # Demo: linear frame
+    frame = linear_gl_frame(6)
+    print("Linear GL Frame on 6 worlds")
+    print(f"Tangling spectrum: {frame.tangling_spectrum()}")
+    print(f"Provability tower: {[sorted(s) for s in frame.provability_tower(8)]}")
+    print(f"Consistency tower: {[sorted(s) for s in frame.consistency_tower(8)]}")
+    print(f"Löb axiom verified: {verify_loeb_axiom(frame, {3, 4, 5})}")
+    print(f"Second incompleteness verified: {verify_second_incompleteness(frame)}")
+    
+    ceiling, iters = compute_tangling_ceiling(frame, {5})
+    print(f"Tangling ceiling from {{5}}: {sorted(ceiling)} (after {iters} iterations)")
+    
+    # Demo: tree frame
+    tree = tree_gl_frame(3)
+    print(f"\nBinary tree GL frame (depth 3): {len(tree.worlds)} worlds")
+    print(f"Second incompleteness verified: {verify_second_incompleteness(tree)}")
+    print(f"Tangling spectrum: {tree.tangling_spectrum()}")
