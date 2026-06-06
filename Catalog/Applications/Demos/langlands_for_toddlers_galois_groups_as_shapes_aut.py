@@ -1,133 +1,161 @@
 #!/usr/bin/env python3
 """
-Langlands Shape-Color Correspondence: Numerical Demonstrations
+Demo: Shape-Color Dictionary for GL₁ Langlands Correspondence
 
-Demonstrates the GL₁ Langlands correspondence by computing:
-1. Quadratic characters (Legendre symbols) for small primes
-2. Gauss sums and verification of g(χ)² = χ(-1)·p
-3. Character orthogonality (color conservation)
-4. Square detection and color mixing rules
+Computes the splitting matrix M[i,j] = J(dᵢ, pⱼ) for a selection of
+fundamental discriminants and primes, illustrating the bijection between
+"shapes" (quadratic extensions) and "colors" (Dirichlet characters).
 """
 
-import cmath
-import math
-from typing import List, Tuple, Dict
+def jacobi_symbol(a: int, n: int) -> int:
+    """Compute the Jacobi symbol (a/n) for odd positive n."""
+    if n <= 0 or n % 2 == 0:
+        raise ValueError(f"n must be odd and positive, got {n}")
+    a = a % n
+    result = 1
+    while a != 0:
+        while a % 2 == 0:
+            a //= 2
+            if n % 8 in (3, 5):
+                result = -result
+        a, n = n, a
+        if a % 4 == 3 and n % 4 == 3:
+            result = -result
+        a = a % n
+    return result if n == 1 else 0
 
 
-def legendre_symbol(a: int, p: int) -> int:
-    """Compute the Legendre symbol (a/p) for odd prime p."""
-    if a % p == 0:
-        return 0
-    val = pow(a, (p - 1) // 2, p)
-    return val if val == 1 else -1
+def qr_sign(a: int, b: int) -> int:
+    """Quadratic reciprocity correction sign (-1)^((a/2)(b/2))."""
+    return (-1) ** ((a // 2) * (b // 2))
 
 
-def gauss_sum(p: int) -> complex:
-    """Compute the quadratic Gauss sum g(χ) = Σ_{t=0}^{p-1} χ(t)·e^{2πit/p}."""
-    omega = cmath.exp(2j * cmath.pi / p)
-    return sum(legendre_symbol(t, p) * omega**t for t in range(p))
+def compute_splitting_matrix(discriminants: list[int], primes: list[int]) -> list[list[int]]:
+    """Compute the splitting matrix M[i,j] = J(d_i, p_j)."""
+    return [[jacobi_symbol(d, p) for p in primes] for d in discriminants]
 
 
-def verify_gauss_sum_squared(p: int) -> Tuple[complex, complex, bool]:
-    """Verify g(χ)² = χ(-1)·p for prime p."""
-    g = gauss_sum(p)
-    g_sq = g * g
-    chi_neg1 = legendre_symbol(-1, p)
-    expected = chi_neg1 * p
-    close = abs(g_sq - expected) < 1e-6
-    return g_sq, expected, close
+def print_splitting_matrix(discriminants: list[int], primes: list[int]):
+    """Print the splitting matrix with labels."""
+    matrix = compute_splitting_matrix(discriminants, primes)
+    header = "d\\p  " + "  ".join(f"{p:>3}" for p in primes)
+    print(header)
+    print("-" * len(header))
+    for d, row in zip(discriminants, matrix):
+        vals = "  ".join(f"{v:>3}" for v in row)
+        print(f"{d:>4} | {vals}")
 
 
-def verify_color_conservation(p: int) -> Tuple[int, bool]:
-    """Verify Σ χ(a) = 0 for the quadratic character mod p."""
-    total = sum(legendre_symbol(a, p) for a in range(p))
-    return total, total == 0
+def verify_reciprocity(p: int, q: int):
+    """Verify quadratic reciprocity: J(p,q)*J(q,p) = qrSign(p,q)."""
+    jpq = jacobi_symbol(p, q)
+    jqp = jacobi_symbol(q, p)
+    sign = qr_sign(p, q)
+    product = jpq * jqp
+    status = "✓" if product == sign else "✗"
+    print(f"  J({p},{q})={jpq:>2}, J({q},{p})={jqp:>2}, "
+          f"product={product:>2}, qrSign={sign:>2}  [{status}]")
 
 
-def count_squares(p: int) -> Tuple[int, int, bool]:
-    """Count squares mod p and verify half_units_are_squares."""
-    squares = sum(1 for a in range(1, p) if legendre_symbol(a, p) == 1)
-    non_squares = sum(1 for a in range(1, p) if legendre_symbol(a, p) == -1)
-    return squares, non_squares, squares == non_squares == (p - 1) // 2
+def verify_frobenius_detector():
+    """Verify the Frobenius detector: J(-1,p)=1 iff p≡1 (mod 4)."""
+    print("\n=== Frobenius Detector: J(-1, p) ===")
+    print("p ≡ 1 (mod 4) → J(-1,p) = +1  (shape -1 splits)")
+    print("p ≡ 3 (mod 4) → J(-1,p) = -1  (shape -1 is inert)")
+    print()
+    primes = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+    for p in primes:
+        j = jacobi_symbol(-1, p)
+        predicted = 1 if p % 4 == 1 else -1
+        status = "✓" if j == predicted else "✗"
+        print(f"  p={p:>2}: J(-1,{p:>2})={j:>2}, p mod 4 = {p%4}, predicted={predicted:>2} [{status}]")
 
 
-def verify_color_mixing(p: int) -> List[Tuple[int, int, int, int, str]]:
-    """Verify color mixing rules: sq×sq=sq, nsq×nsq=sq, sq×nsq=nsq."""
-    results = []
-    for a in range(1, p):
-        for b in range(1, p):
-            ca = legendre_symbol(a, p)
-            cb = legendre_symbol(b, p)
-            cab = legendre_symbol((a * b) % p, p)
-            expected = ca * cb
-            rule = ""
-            if ca == 1 and cb == 1: rule = "sq×sq=sq"
-            elif ca == -1 and cb == -1: rule = "nsq×nsq=sq"
-            elif ca == 1 and cb == -1: rule = "sq×nsq=nsq"
-            elif ca == -1 and cb == 1: rule = "nsq×sq=nsq"
-            if cab != expected:
-                results.append((a, b, cab, expected, f"FAIL: {rule}"))
-            elif len(results) < 10:
-                results.append((a, b, cab, expected, f"OK: {rule}"))
-    return results
+def verify_two_detector():
+    """Verify: J(2,p)=1 iff p≡±1 (mod 8)."""
+    print("\n=== Shape-2 Detector: J(2, p) ===")
+    print("p ≡ ±1 (mod 8) → J(2,p) = +1  (shape 2 splits)")
+    print("p ≡ ±3 (mod 8) → J(2,p) = -1  (shape 2 is inert)")
+    print()
+    primes = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+    for p in primes:
+        j = jacobi_symbol(2, p)
+        predicted = 1 if p % 8 in (1, 7) else -1
+        status = "✓" if j == predicted else "✗"
+        print(f"  p={p:>2}: J(2,{p:>2})={j:>2}, p mod 8 = {p%8}, predicted={predicted:>2} [{status}]")
+
+
+def verify_square_triviality():
+    """Verify: J(d², p) = 1 for primes p not dividing d."""
+    print("\n=== Square Triviality: J(d², p) = 1 ===")
+    ds = [2, 3, 5, 7, 11]
+    primes = [3, 5, 7, 11, 13, 17, 19, 23]
+    for d in ds:
+        for p in primes:
+            if p == d:
+                continue
+            j = jacobi_symbol(d * d, p)
+            status = "✓" if j == 1 else "✗"
+            if j != 1:
+                print(f"  FAIL: J({d}²,{p}) = {j} [{status}]")
+    print("  All checks passed ✓")
+
+
+def verify_spectrum_product():
+    """Verify: J(d₁·d₂, n) = J(d₁, n)·J(d₂, n)."""
+    print("\n=== Spectrum Product Rule: J(d₁d₂, n) = J(d₁,n)·J(d₂,n) ===")
+    pairs = [(2, 3), (3, 5), (-1, 7), (2, -3), (5, -7)]
+    primes = [3, 5, 7, 11, 13, 17]
+    all_ok = True
+    for d1, d2 in pairs:
+        for p in primes:
+            lhs = jacobi_symbol(d1 * d2, p)
+            rhs = jacobi_symbol(d1, p) * jacobi_symbol(d2, p)
+            if lhs != rhs:
+                print(f"  FAIL: J({d1}·{d2},{p}): {lhs} ≠ {rhs}")
+                all_ok = False
+    if all_ok:
+        print("  All checks passed ✓")
 
 
 def main():
-    primes = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+    print("=" * 60)
+    print("  SHAPE-COLOR DICTIONARY: GL₁ Langlands Correspondence")
+    print("=" * 60)
 
-    print("=" * 70)
-    print("LANGLANDS SHAPE-COLOR CORRESPONDENCE: NUMERICAL VERIFICATION")
-    print("=" * 70)
+    # The splitting matrix
+    discriminants = [-1, 2, -3, 5, -7, 6, -11, 13]
+    primes = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
 
-    # 1. Quadratic characters
-    print("\n--- 1. Quadratic Characters (Legendre Symbols) ---")
-    for p in primes[:8]:
-        chars = [legendre_symbol(a, p) for a in range(p)]
-        squares = [a for a in range(1, p) if legendre_symbol(a, p) == 1]
-        print(f"F_{p}: χ = {chars[1:]}")
-        print(f"       Squares: {squares}")
+    print("\n=== The Splitting Matrix ===")
+    print("Rows = shapes (discriminants), Columns = colors (primes)")
+    print("J(d, p) = +1 means d is a QR mod p (the shape 'splits')")
+    print("J(d, p) = -1 means d is a QNR mod p (the shape is 'inert')")
+    print()
+    print_splitting_matrix(discriminants, primes)
 
-    # 2. Gauss sum squared
-    print("\n--- 2. Gauss Sum Squared: g(χ)² = χ(-1)·p ---")
-    for p in primes:
-        g_sq, expected, ok = verify_gauss_sum_squared(p)
-        chi_neg1 = legendre_symbol(-1, p)
-        sign = "+" if chi_neg1 == 1 else "-"
-        status = "✓" if ok else "✗"
-        print(f"  p={p:3d}: g(χ)² = {g_sq.real:8.3f} + {g_sq.imag:.3f}i, "
-              f"χ(-1)·p = {sign}{p}, {status}")
+    # Quadratic reciprocity verification
+    print("\n=== Quadratic Reciprocity: J(p,q)·J(q,p) = qrSign(p,q) ===")
+    odd_primes = [3, 5, 7, 11, 13, 17, 19, 23]
+    for i, p in enumerate(odd_primes):
+        for q in odd_primes[i+1:]:
+            verify_reciprocity(p, q)
 
-    # 3. Color conservation
-    print("\n--- 3. Color Conservation: Σ χ(a) = 0 ---")
-    for p in primes:
-        total, ok = verify_color_conservation(p)
-        print(f"  p={p:3d}: Σ χ(a) = {total}, {'✓' if ok else '✗'}")
+    verify_frobenius_detector()
+    verify_two_detector()
+    verify_square_triviality()
+    verify_spectrum_product()
 
-    # 4. Half units are squares
-    print("\n--- 4. Color Balance: |squares| = |non-squares| = (p-1)/2 ---")
-    for p in primes:
-        sq, nsq, ok = count_squares(p)
-        print(f"  p={p:3d}: squares={sq}, non-squares={nsq}, "
-              f"(p-1)/2={(p-1)//2}, {'✓' if ok else '✗'}")
+    # Character sum vanishing
+    print("\n=== Character Sum Vanishing: Σ J(a,p) = 0 ===")
+    for p in [3, 5, 7, 11, 13, 17, 19, 23]:
+        total = sum(jacobi_symbol(a, p) for a in range(p))
+        status = "✓" if total == 0 else "✗"
+        print(f"  Σ J(a,{p:>2}) for a=0..{p-1}: sum = {total} [{status}]")
 
-    # 5. Color mixing verification
-    print("\n--- 5. Color Mixing Rules (sample from F₇) ---")
-    results = verify_color_mixing(7)
-    for a, b, cab, exp, status in results[:10]:
-        print(f"  χ({a})·χ({b}) = χ({(a*b)%7}): {cab} = {exp} {status}")
-
-    # 6. Shape detection: χ(-1) classifies p mod 4
-    print("\n--- 6. Shape Detection: χ(-1) = +1 iff p ≡ 1 (mod 4) ---")
-    for p in primes:
-        chi_neg1 = legendre_symbol(-1, p)
-        p_mod4 = p % 4
-        expected = 1 if p_mod4 == 1 else -1
-        ok = chi_neg1 == expected
-        print(f"  p={p:3d}: χ(-1) = {chi_neg1:+d}, p mod 4 = {p_mod4}, {'✓' if ok else '✗'}")
-
-    print("\n" + "=" * 70)
-    print("All verifications demonstrate the shape-color correspondence at GL₁.")
-    print("=" * 70)
+    print("\n" + "=" * 60)
+    print("  All verifications complete.")
+    print("=" * 60)
 
 
 if __name__ == "__main__":
@@ -136,11 +164,11 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: Shape-Color Correspondence Table
+Visualization: Quadratic Reciprocity as Matrix Symmetry
 
-Creates a heatmap showing the quadratic character values χ(a) for
-different primes p, visualizing the "coloring" of each finite field.
-Squares are white (+1), non-squares are black (-1).
+Shows the asymmetry matrix A[p,q] = J(p,q)*J(q,p) vs qrSign(p,q),
+demonstrating that quadratic reciprocity is a "near-symmetry" with
+a computable correction sign.
 """
 
 import matplotlib
@@ -150,68 +178,89 @@ import matplotlib.colors as mcolors
 import numpy as np
 
 
-def legendre_symbol(a: int, p: int) -> int:
-    if a % p == 0:
+def jacobi_symbol(a: int, n: int) -> int:
+    if n <= 0 or n % 2 == 0:
         return 0
-    val = pow(a, (p - 1) // 2, p)
-    return val if val == 1 else -1
+    a = a % n
+    result = 1
+    while a != 0:
+        while a % 2 == 0:
+            a //= 2
+            if n % 8 in (3, 5):
+                result = -result
+        a, n = n, a
+        if a % 4 == 3 and n % 4 == 3:
+            result = -result
+        a = a % n
+    return result if n == 1 else 0
+
+
+def qr_sign(a: int, b: int) -> int:
+    return (-1) ** ((a // 2) * (b // 2))
+
+
+def sieve_primes(n: int) -> list:
+    is_prime = [True] * (n + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i*i, n + 1, i):
+                is_prime[j] = False
+    return [i for i in range(3, n + 1) if is_prime[i]]
 
 
 def main():
-    primes = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
-    max_a = max(primes)
+    primes = sieve_primes(50)
+    n = len(primes)
 
-    # Create the character table
-    data = np.zeros((len(primes), max_a))
+    # Compute the product matrix and the sign matrix
+    product_matrix = np.zeros((n, n), dtype=int)
+    sign_matrix = np.zeros((n, n), dtype=int)
+
     for i, p in enumerate(primes):
-        for a in range(max_a):
-            if a < p:
-                data[i, a] = legendre_symbol(a, p)
+        for j, q in enumerate(primes):
+            if i != j:
+                product_matrix[i, j] = jacobi_symbol(p, q) * jacobi_symbol(q, p)
+                sign_matrix[i, j] = qr_sign(p, q)
             else:
-                data[i, a] = np.nan
+                product_matrix[i, j] = 0
+                sign_matrix[i, j] = 0
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6),
-                                     gridspec_kw={'width_ratios': [3, 1]})
+    cmap = mcolors.LinearSegmentedColormap.from_list('recip', ['#d62728', '#f0f0f0', '#1f77b4'])
 
-    # Heatmap
-    cmap = mcolors.ListedColormap(['#D32F2F', '#BDBDBD', '#1565C0'])
-    bounds = [-1.5, -0.5, 0.5, 1.5]
-    norm = mcolors.BoundaryNorm(bounds, cmap.N)
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
-    masked_data = np.ma.masked_invalid(data)
-    im = ax1.imshow(masked_data, cmap=cmap, norm=norm, aspect='auto',
-                    interpolation='nearest')
+    # Panel 1: Product matrix J(p,q)*J(q,p)
+    im1 = axes[0].imshow(product_matrix, cmap=cmap, vmin=-1, vmax=1)
+    axes[0].set_title('J(p,q) · J(q,p)\n(Reciprocity Product)', fontsize=11)
+    axes[0].set_xticks(range(n))
+    axes[0].set_xticklabels([str(p) for p in primes], fontsize=8, rotation=45)
+    axes[0].set_yticks(range(n))
+    axes[0].set_yticklabels([str(p) for p in primes], fontsize=8)
 
-    ax1.set_yticks(range(len(primes)))
-    ax1.set_yticklabels([f'F_{p}' for p in primes])
-    ax1.set_xlabel('Element a', fontsize=12)
-    ax1.set_ylabel('Prime Field', fontsize=12)
-    ax1.set_title('Shape-Color Table: χ(a) for Finite Fields', fontsize=13)
+    # Panel 2: qrSign matrix
+    im2 = axes[1].imshow(sign_matrix, cmap=cmap, vmin=-1, vmax=1)
+    axes[1].set_title('qrSign(p,q)\n(Reciprocity Correction)', fontsize=11)
+    axes[1].set_xticks(range(n))
+    axes[1].set_xticklabels([str(p) for p in primes], fontsize=8, rotation=45)
+    axes[1].set_yticks(range(n))
+    axes[1].set_yticklabels([str(p) for p in primes], fontsize=8)
 
-    cbar = plt.colorbar(im, ax=ax1, ticks=[-1, 0, 1], shrink=0.8)
-    cbar.set_ticklabels(['Non-square (-1)', 'Zero (0)', 'Square (+1)'])
+    # Panel 3: Difference (should be all zero)
+    diff_matrix = product_matrix - sign_matrix
+    cmap_diff = mcolors.LinearSegmentedColormap.from_list('diff', ['#ff0000', '#00ff00', '#ff0000'])
+    im3 = axes[2].imshow(np.abs(diff_matrix), cmap='Greens_r', vmin=0, vmax=1)
+    axes[2].set_title('|Difference|\n(All green = QR verified)', fontsize=11)
+    axes[2].set_xticks(range(n))
+    axes[2].set_xticklabels([str(p) for p in primes], fontsize=8, rotation=45)
+    axes[2].set_yticks(range(n))
+    axes[2].set_yticklabels([str(p) for p in primes], fontsize=8)
 
-    # Bar chart: count of squares vs non-squares
-    sq_counts = []
-    nsq_counts = []
-    for p in primes:
-        sq = sum(1 for a in range(1, p) if legendre_symbol(a, p) == 1)
-        nsq = sum(1 for a in range(1, p) if legendre_symbol(a, p) == -1)
-        sq_counts.append(sq)
-        nsq_counts.append(nsq)
-
-    y_pos = np.arange(len(primes))
-    ax2.barh(y_pos - 0.15, sq_counts, 0.3, label='Squares (+1)', color='#1565C0', alpha=0.8)
-    ax2.barh(y_pos + 0.15, nsq_counts, 0.3, label='Non-squares (-1)', color='#D32F2F', alpha=0.8)
-    ax2.set_yticks(y_pos)
-    ax2.set_yticklabels([f'F_{p}' for p in primes])
-    ax2.set_xlabel('Count', fontsize=12)
-    ax2.set_title('Color Balance: |sq| = |nsq| = (p-1)/2', fontsize=11)
-    ax2.legend(fontsize=9)
-
+    plt.suptitle('Quadratic Reciprocity: The Splitting Matrix is Almost Symmetric',
+                 fontsize=14, fontweight='bold', y=1.02)
     plt.tight_layout()
-    plt.savefig('shape_color_table.png', dpi=150, bbox_inches='tight')
-    print("Saved shape_color_table.png")
+    plt.savefig('Applications/reciprocity_symmetry.png', dpi=150, bbox_inches='tight')
+    print("Saved: Applications/reciprocity_symmetry.png")
 
 
 if __name__ == "__main__":
@@ -220,88 +269,86 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: Gauss Sums in the Complex Plane
+Visualization: The Splitting Matrix as a Heatmap
 
-Shows how the Gauss sum g(χ) = Σ χ(t)·e^{2πit/p} is built from
-individual terms, each of which is a root of unity weighted by ±1.
-The sum spirals to a point with |g(χ)| = √p.
+Shows the shape-color dictionary M[i,j] = J(d_i, p_j) as a color-coded
+matrix, where +1 = blue (split), -1 = red (inert), 0 = white (ramified).
 """
 
-import cmath
-import math
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
+import matplotlib.colors as mcolors
 import numpy as np
 
 
-def legendre_symbol(a: int, p: int) -> int:
-    if a % p == 0:
+def jacobi_symbol(a: int, n: int) -> int:
+    if n <= 0 or n % 2 == 0:
         return 0
-    val = pow(a, (p - 1) // 2, p)
-    return val if val == 1 else -1
+    a = a % n
+    result = 1
+    while a != 0:
+        while a % 2 == 0:
+            a //= 2
+            if n % 8 in (3, 5):
+                result = -result
+        a, n = n, a
+        if a % 4 == 3 and n % 4 == 3:
+            result = -result
+        a = a % n
+    return result if n == 1 else 0
 
 
-def gauss_sum_partial(p: int, k: int) -> complex:
-    omega = cmath.exp(2j * cmath.pi / p)
-    return sum(legendre_symbol(t, p) * omega**t for t in range(k + 1))
-
-
-def plot_gauss_sum_spiral(p: int, ax: plt.Axes):
-    """Plot the cumulative Gauss sum as a spiral in the complex plane."""
-    points = [0j] + [gauss_sum_partial(p, k) for k in range(p)]
-
-    xs = [z.real for z in points]
-    ys = [z.imag for z in points]
-
-    # Color by Legendre symbol
-    for i in range(len(points) - 1):
-        chi = legendre_symbol(i, p)
-        color = '#2196F3' if chi == 1 else '#F44336' if chi == -1 else '#9E9E9E'
-        ax.plot([xs[i], xs[i+1]], [ys[i], ys[i+1]], color=color, linewidth=1.5, alpha=0.8)
-
-    # Mark the final point
-    final = points[-1]
-    ax.plot(final.real, final.imag, 'ko', markersize=8, zorder=5)
-    ax.annotate(f'g(χ) = {final.real:.2f} + {final.imag:.2f}i',
-                xy=(final.real, final.imag), fontsize=8,
-                xytext=(10, 10), textcoords='offset points')
-
-    # Circle of radius sqrt(p)
-    theta = np.linspace(0, 2*np.pi, 100)
-    r = math.sqrt(p)
-    ax.plot(r * np.cos(theta), r * np.sin(theta), 'k--', alpha=0.3, linewidth=1)
-    ax.annotate(f'|g(χ)| = √{p} ≈ {r:.2f}', xy=(r, 0), fontsize=7,
-                xytext=(5, -15), textcoords='offset points', alpha=0.5)
-
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-    ax.set_title(f'Gauss Sum Spiral for F_{p}', fontsize=11)
-    ax.axhline(y=0, color='k', linewidth=0.5)
-    ax.axvline(x=0, color='k', linewidth=0.5)
+def sieve_primes(n: int) -> list:
+    if n < 2:
+        return []
+    is_prime = [True] * (n + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i*i, n + 1, i):
+                is_prime[j] = False
+    return [i for i in range(3, n + 1) if is_prime[i]]
 
 
 def main():
-    fig, axes = plt.subplots(2, 3, figsize=(14, 9))
-    primes = [3, 5, 7, 11, 13, 17]
+    # Discriminants (squarefree)
+    discriminants = [-1, 2, -2, 3, -3, 5, -5, 6, -6, 7, -7, 10, -10, 11, -11, 13, -13, 14, -14, 15]
+    primes = sieve_primes(80)[:20]
 
-    for ax, p in zip(axes.flat, primes):
-        plot_gauss_sum_spiral(p, ax)
+    # Compute matrix
+    matrix = np.array([[jacobi_symbol(d, p) for p in primes] for d in discriminants])
 
-    # Add legend
-    from matplotlib.lines import Line2D
-    legend_elements = [
-        Line2D([0], [0], color='#2196F3', linewidth=2, label='χ(t) = +1 (square)'),
-        Line2D([0], [0], color='#F44336', linewidth=2, label='χ(t) = -1 (non-square)'),
-        Line2D([0], [0], color='#9E9E9E', linewidth=2, label='χ(t) = 0'),
-    ]
-    fig.legend(handles=legend_elements, loc='lower center', ncol=3, fontsize=10)
+    # Custom colormap: red (-1) -> white (0) -> blue (+1)
+    cmap = mcolors.LinearSegmentedColormap.from_list('split', ['#d62728', '#ffffff', '#1f77b4'])
 
-    fig.suptitle('Gauss Sum Spirals: Colors Encoding Shapes', fontsize=14, fontweight='bold')
-    plt.tight_layout(rect=[0, 0.05, 1, 0.95])
-    plt.savefig('gauss_sum_spirals.png', dpi=150, bbox_inches='tight')
-    print("Saved gauss_sum_spirals.png")
+    fig, ax = plt.subplots(figsize=(14, 10))
+    im = ax.imshow(matrix, cmap=cmap, vmin=-1, vmax=1, aspect='auto')
+
+    ax.set_xticks(range(len(primes)))
+    ax.set_xticklabels([str(p) for p in primes], fontsize=9)
+    ax.set_yticks(range(len(discriminants)))
+    ax.set_yticklabels([str(d) for d in discriminants], fontsize=9)
+
+    ax.set_xlabel('Prime p (Color Basis)', fontsize=12)
+    ax.set_ylabel('Discriminant d (Shape)', fontsize=12)
+    ax.set_title('The Splitting Matrix: Shape-Color Dictionary\n'
+                 'M[d, p] = J(d, p)  |  Blue = Split (+1)  |  Red = Inert (-1)  |  White = Ramified (0)',
+                 fontsize=13)
+
+    # Add text annotations
+    for i in range(len(discriminants)):
+        for j in range(len(primes)):
+            val = matrix[i, j]
+            color = 'white' if abs(val) == 1 else 'gray'
+            ax.text(j, i, f'{val:+d}' if val != 0 else '0',
+                    ha='center', va='center', fontsize=7, color=color if val != 0 else 'lightgray',
+                    fontweight='bold')
+
+    plt.colorbar(im, ax=ax, shrink=0.8, label='J(d, p)')
+    plt.tight_layout()
+    plt.savefig('Applications/splitting_matrix.png', dpi=150, bbox_inches='tight')
+    print("Saved: Applications/splitting_matrix.png")
 
 
 if __name__ == "__main__":

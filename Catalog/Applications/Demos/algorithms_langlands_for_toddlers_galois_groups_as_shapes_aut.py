@@ -1,98 +1,36 @@
 #!/usr/bin/env python3
 """
-Algorithms for the GL₁ Langlands Shape-Color Correspondence.
+Algorithms for the Spectral Pairing Framework
 
-Implements the core mathematical objects:
-- Legendre/Jacobi symbols (quadratic characters)
-- Gauss sums over finite fields
-- Character orthogonality verification
-- Shape-color matching for quadratic extensions
+Implements the core algorithms for computing and analyzing the
+shape-color dictionary of the GL₁ Langlands correspondence.
 """
 
-import cmath
-import math
-from typing import List, Dict, Tuple, Optional
-
-
-def is_prime(n: int) -> bool:
-    """Miller-Rabin primality test for small numbers."""
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0:
-        return False
-    d = n - 1
-    r = 0
-    while d % 2 == 0:
-        d //= 2
-        r += 1
-    for a in [2, 3, 5, 7, 11, 13]:
-        if a >= n:
-            continue
-        x = pow(a, d, n)
-        if x == 1 or x == n - 1:
-            continue
-        for _ in range(r - 1):
-            x = pow(x, 2, n)
-            if x == n - 1:
-                break
-        else:
-            return False
-    return True
-
-
-def legendre_symbol(a: int, p: int) -> int:
-    """
-    Compute the Legendre symbol (a/p).
-
-    The Legendre symbol is the fundamental "shape detector":
-    - (a/p) = 1 if a is a quadratic residue mod p (a "square")
-    - (a/p) = -1 if a is a quadratic non-residue mod p
-    - (a/p) = 0 if p divides a
-
-    This is the GL₁ Langlands "color" assigned to element a by prime p.
-
-    Args:
-        a: Integer to test
-        p: Odd prime modulus
-
-    Returns:
-        Legendre symbol value in {-1, 0, 1}
-    """
-    if not is_prime(p) or p == 2:
-        raise ValueError(f"p={p} must be an odd prime")
-    a = a % p
-    if a == 0:
-        return 0
-    val = pow(a, (p - 1) // 2, p)
-    return val if val == 1 else -1
+from typing import Callable
 
 
 def jacobi_symbol(a: int, n: int) -> int:
     """
-    Compute the Jacobi symbol (a/n) for odd positive n.
+    Compute the Jacobi symbol (a/n).
 
-    The Jacobi symbol extends the Legendre symbol to composite moduli
-    via multiplicativity: (a/n₁n₂) = (a/n₁)(a/n₂).
-
-    This is the BilinearSymbol from GL1LanglandsBilinear.lean.
+    The Jacobi symbol generalizes the Legendre symbol to composite odd moduli.
+    It is the canonical "evaluation map" of the spectral pairing.
 
     Args:
-        a: Integer (first argument)
-        n: Odd positive integer (second argument)
+        a: Integer (the "shape")
+        n: Positive odd integer (the "color basis element")
 
     Returns:
-        Jacobi symbol value in {-1, 0, 1}
+        -1, 0, or 1
     """
     if n <= 0 or n % 2 == 0:
-        raise ValueError(f"n={n} must be odd and positive")
+        raise ValueError(f"n must be odd and positive, got {n}")
     a = a % n
     result = 1
     while a != 0:
         while a % 2 == 0:
             a //= 2
-            if n % 8 in [3, 5]:
+            if n % 8 in (3, 5):
                 result = -result
         a, n = n, a
         if a % 4 == 3 and n % 4 == 3:
@@ -101,187 +39,230 @@ def jacobi_symbol(a: int, n: int) -> int:
     return result if n == 1 else 0
 
 
-def gauss_sum(p: int, chi: Optional[callable] = None) -> complex:
+def qr_sign(a: int, b: int) -> int:
     """
-    Compute the Gauss sum g(χ, ψ) = Σ_{t ∈ F_p} χ(t)·ψ(t).
+    Compute the quadratic reciprocity sign (-1)^((a//2)*(b//2)).
 
-    Uses the standard additive character ψ(t) = e^{2πit/p}
-    and the quadratic character χ = (·/p) by default.
-
-    The Gauss sum is the "paintbrush" that transforms shapes (Galois)
-    into colors (automorphic). It satisfies:
-    - |g(χ)|² = p (shape recovery)
-    - g(χ)² = χ(-1)·p (quadratic formula)
-    - χ(a)·g(χ, ψ∘(a·)) = g(χ, ψ) (intertwining)
+    This is the "asymmetry defect" of the spectral pairing: it measures
+    how much the Jacobi symbol changes when we swap its arguments.
 
     Args:
-        p: Prime modulus
-        chi: Character function (defaults to Legendre symbol)
+        a, b: Natural numbers
 
     Returns:
-        Complex Gauss sum value
+        1 or -1
     """
-    if chi is None:
-        chi = lambda t: legendre_symbol(t, p)
-    omega = cmath.exp(2j * cmath.pi / p)
-    return sum(chi(t) * omega**t for t in range(p))
+    return (-1) ** ((a // 2) * (b // 2))
 
 
-def quadratic_discriminant(d: int) -> int:
+def splitting_matrix(
+    discriminants: list[int],
+    primes: list[int]
+) -> list[list[int]]:
     """
-    Compute the discriminant of Q(√d) for squarefree d.
+    Compute the splitting matrix M[i,j] = J(d_i, p_j).
 
-    The discriminant D is:
-    - D = d if d ≡ 1 (mod 4)
-    - D = 4d if d ≡ 2 or 3 (mod 4)
-
-    The discriminant is the "shape parameter" that determines the
-    corresponding Dirichlet character in the Langlands correspondence.
+    The splitting matrix is the finite fragment of the GL₁ Langlands
+    correspondence. Each row is the "color" (Dirichlet character)
+    assigned to a "shape" (discriminant).
 
     Args:
-        d: Squarefree integer
+        discriminants: List of discriminants (shapes)
+        primes: List of odd primes (color basis)
 
     Returns:
-        Discriminant D
+        Matrix of Jacobi symbol values
     """
-    if d % 4 == 1:
-        return d
-    else:
-        return 4 * d
+    return [[jacobi_symbol(d, p) for p in primes] for d in discriminants]
 
 
-def kronecker_symbol(d: int, n: int) -> int:
+def spectrum_of(d: int, primes: list[int]) -> list[int]:
     """
-    Compute the Kronecker symbol (d/n), extending Jacobi to all integers.
+    Compute the splitting spectrum of discriminant d.
 
-    The Kronecker symbol is the Dirichlet character χ_D associated to
-    the quadratic field Q(√d) with discriminant D. It encodes:
-    - χ_D(p) = 1: p splits in Q(√d) → two shapes
-    - χ_D(p) = -1: p is inert in Q(√d) → one compound shape
-    - χ_D(p) = 0: p ramifies in Q(√d) → degenerate shape
+    The spectrum S_d is the function p ↦ J(d, p). It is the
+    "color" assigned to the "shape" d by the Langlands dictionary.
 
     Args:
         d: Discriminant
-        n: Integer to evaluate at
+        primes: List of primes to evaluate at
 
     Returns:
-        Kronecker symbol value in {-1, 0, 1}
+        List of J(d, p) values
     """
-    if n == 0:
-        return 1 if abs(d) == 1 else 0
-    if n == 1:
-        return 1
-    if n == -1:
-        return -1 if d < 0 else 1
-
-    # Handle n = 2
-    if n == 2:
-        if d % 2 == 0:
-            return 0
-        d8 = d % 8
-        if d8 == 1 or d8 == 7:
-            return 1
-        else:
-            return -1
-
-    # For odd prime n
-    if n < 0:
-        return kronecker_symbol(d, -1) * kronecker_symbol(d, -n)
-
-    # Factor out powers of 2
-    result = 1
-    temp_n = n
-    while temp_n % 2 == 0:
-        result *= kronecker_symbol(d, 2)
-        temp_n //= 2
-
-    if temp_n > 1:
-        result *= jacobi_symbol(d, temp_n)
-
-    return result
+    return [jacobi_symbol(d, p) for p in primes]
 
 
-def shape_color_table(p: int) -> Dict[str, List]:
+def spectrum_inner_product(
+    d1: int,
+    d2: int,
+    primes: list[int]
+) -> int:
     """
-    Generate the complete shape-color correspondence table for F_p.
+    Compute the inner product of two spectra: ∑_p J(d₁,p)·J(d₂,p).
 
-    For each element a ∈ {1, ..., p-1}:
-    - Shape: whether a is a square (geometric property)
-    - Color: the value of χ(a) (spectral property)
-    - These always match: square ↔ color +1, non-square ↔ color -1
+    By the spectrum product rule, this equals ∑_p J(d₁d₂, p).
+    When d₁ = d₂, this counts the number of primes where d is a QR
+    minus the number where it's a QNR.
 
     Args:
-        p: Prime
+        d1, d2: Discriminants
+        primes: List of primes
 
     Returns:
-        Dictionary with elements, shapes, and colors
+        Integer inner product
     """
-    elements = list(range(1, p))
-    squares_set = set()
-    for a in range(1, p):
-        squares_set.add((a * a) % p)
+    return sum(jacobi_symbol(d1, p) * jacobi_symbol(d2, p) for p in primes)
 
-    shapes = ["square" if a in squares_set else "non-square" for a in elements]
-    colors = [legendre_symbol(a, p) for a in elements]
 
-    # Verify the correspondence
-    for i, a in enumerate(elements):
-        expected_color = 1 if shapes[i] == "square" else -1
-        assert colors[i] == expected_color, f"Mismatch at a={a}"
+def is_spectrally_orthogonal(
+    d1: int,
+    d2: int,
+    primes: list[int],
+    threshold: float = 0.1
+) -> bool:
+    """
+    Test whether two spectra are approximately orthogonal.
 
+    Two distinct squarefree discriminants have spectra that are
+    asymptotically orthogonal by the equidistribution theorem.
+
+    Args:
+        d1, d2: Discriminants
+        primes: List of primes
+        threshold: Relative threshold for orthogonality
+
+    Returns:
+        True if the normalized inner product is below threshold
+    """
+    if not primes:
+        return True
+    ip = spectrum_inner_product(d1, d2, primes)
+    return abs(ip) / len(primes) < threshold
+
+
+def frobenius_classify(p: int) -> dict[str, int]:
+    """
+    Classify a prime by its Frobenius data for fundamental shapes.
+
+    Returns a dictionary mapping shape names to their splitting behavior.
+
+    Args:
+        p: An odd prime
+
+    Returns:
+        Dictionary with keys '-1', '2', '-3', '5' and values ±1
+    """
     return {
-        "elements": elements,
-        "shapes": shapes,
-        "colors": colors,
-        "num_squares": sum(1 for s in shapes if s == "square"),
-        "num_nonsquares": sum(1 for s in shapes if s == "non-square"),
+        '-1': jacobi_symbol(-1, p),
+        '2': jacobi_symbol(2, p),
+        '-3': jacobi_symbol(-3, p),
+        '5': jacobi_symbol(5, p),
     }
 
 
-def verify_langlands_gl1(max_p: int = 50) -> List[Dict]:
+def reciprocity_verify(
+    primes: list[int]
+) -> list[tuple[int, int, bool]]:
     """
-    Verify the GL₁ Langlands correspondence for all primes up to max_p.
+    Verify quadratic reciprocity for all pairs from a list of odd primes.
 
-    Checks:
-    1. g(χ)² = χ(-1)·p (Gauss sum squared)
-    2. Σ χ(a) = 0 (color conservation)
-    3. |squares| = (p-1)/2 (color balance)
-    4. Color mixing rules hold
+    For each pair (p, q), checks that J(p,q)·J(q,p) = qrSign(p,q).
 
     Args:
-        max_p: Maximum prime to check
+        primes: List of odd primes
 
     Returns:
-        List of verification results
+        List of (p, q, success) triples
     """
     results = []
-    for p in range(3, max_p + 1, 2):
-        if not is_prime(p):
-            continue
-
-        g = gauss_sum(p)
-        g_sq = g * g
-        chi_neg1 = legendre_symbol(-1, p)
-        expected = chi_neg1 * p
-
-        char_sum = sum(legendre_symbol(a, p) for a in range(p))
-        table = shape_color_table(p)
-
-        results.append({
-            "prime": p,
-            "gauss_sq_match": abs(g_sq - expected) < 1e-6,
-            "color_conservation": char_sum == 0,
-            "color_balance": table["num_squares"] == table["num_nonsquares"],
-            "chi_neg1": chi_neg1,
-            "p_mod4": p % 4,
-        })
-
+    for i, p in enumerate(primes):
+        for q in primes[i+1:]:
+            product = jacobi_symbol(p, q) * jacobi_symbol(q, p)
+            expected = qr_sign(p, q)
+            results.append((p, q, product == expected))
     return results
 
 
+def character_sum(d: int, p: int) -> int:
+    """
+    Compute the character sum ∑_{a=0}^{p-1} J(d, p) evaluated at a.
+
+    For prime p not dividing d, this equals ∑ Legendre(a·d, p) = 0.
+    The sum ∑_{a=0}^{p-1} J(a, p) = 0 by character orthogonality.
+
+    Args:
+        d: Discriminant (unused in the basic sum)
+        p: Odd prime
+
+    Returns:
+        Sum of J(a, p) for a = 0, ..., p-1
+    """
+    return sum(jacobi_symbol(a, p) for a in range(p))
+
+
+def spectral_pairing_table(max_d: int = 20, num_primes: int = 10) -> str:
+    """
+    Generate a formatted table of the spectral pairing.
+
+    Args:
+        max_d: Maximum absolute discriminant
+        num_primes: Number of primes to include
+
+    Returns:
+        Formatted string table
+    """
+    # Generate squarefree discriminants
+    def is_squarefree(n: int) -> bool:
+        n = abs(n)
+        if n == 0:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % (i * i) == 0:
+                return False
+        return True
+
+    discriminants = sorted(
+        [d for d in range(-max_d, max_d + 1) if is_squarefree(d) and d != 0 and d != 1],
+        key=abs
+    )
+
+    # Generate primes
+    def sieve(n: int) -> list[int]:
+        if n < 2:
+            return []
+        is_prime = [True] * (n + 1)
+        is_prime[0] = is_prime[1] = False
+        for i in range(2, int(n**0.5) + 1):
+            if is_prime[i]:
+                for j in range(i*i, n + 1, i):
+                    is_prime[j] = False
+        return [i for i in range(3, n + 1) if is_prime[i] and i % 2 == 1]
+
+    primes = sieve(100)[:num_primes]
+
+    lines = []
+    header = f"{'d':>4} | " + " ".join(f"{p:>3}" for p in primes)
+    lines.append(header)
+    lines.append("-" * len(header))
+    for d in discriminants[:20]:  # Limit rows
+        vals = " ".join(f"{jacobi_symbol(d, p):>3}" for p in primes)
+        lines.append(f"{d:>4} | {vals}")
+
+    return "\n".join(lines)
+
+
 if __name__ == "__main__":
-    results = verify_langlands_gl1(100)
-    print(f"Verified GL₁ Langlands for {len(results)} primes up to 100.")
-    all_ok = all(r["gauss_sq_match"] and r["color_conservation"] and r["color_balance"]
-                 for r in results)
-    print(f"All checks passed: {all_ok}")
+    print("=== Spectral Pairing Table ===")
+    print(spectral_pairing_table())
+
+    print("\n=== Reciprocity Verification ===")
+    primes = [3, 5, 7, 11, 13]
+    results = reciprocity_verify(primes)
+    for p, q, ok in results:
+        print(f"  ({p}, {q}): {'✓' if ok else '✗'}")
+
+    print("\n=== Frobenius Classification ===")
+    for p in [3, 5, 7, 11, 13, 17, 19, 23, 29, 31]:
+        data = frobenius_classify(p)
+        print(f"  p={p:>2}: {data}")
