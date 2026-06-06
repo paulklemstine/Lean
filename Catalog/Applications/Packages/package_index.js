@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "97879ae4",
     "filename": "the_library_of_babel_combinatorics_of_the_universa.json",
     "pkg_num": 401,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.2048,
     "title": "The Babel Graded Graph: Combinatorial Geometry of Universal Libraries"
   },
   {
@@ -12780,8 +12780,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_library_of_babel_combinatorics_of_the_universa",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.2048,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Babel Graded Graph: Combinatorial Geometry of Universal Libraries"
     }
