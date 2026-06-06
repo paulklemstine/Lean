@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "320647bd",
     "filename": "non_archimedean_probability_via_surreal_numbers.json",
     "pkg_num": 402,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.33464000000000005,
     "title": "Non-Archimedean Probability via Infinitesimal Weights"
   },
   {
@@ -12809,8 +12809,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "non_archimedean_probability_via_surreal_numbers",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.33464000000000005,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Non-Archimedean Probability via Infinitesimal Weights"
     }

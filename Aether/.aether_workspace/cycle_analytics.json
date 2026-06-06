@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-06T20:25:54.488990+00:00",
+  "last_updated": "2026-06-06T20:59:46.048892+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -11613,6 +11613,63 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T20:25:54.380322+00:00",
       "title": "Aleph-1 Surface: Geometry Between Dimensions"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6167,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 246,
+      "domain": "Novelty",
+      "duration_seconds": 7991.1152148246765,
+      "end_time": 1780779548.2293227,
+      "files_integrated": 5,
+      "job_id": "320647bd",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8067,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.7095,
+        "novelty": 0.95,
+        "proof_depth": 0.6064,
+        "usefulness": 0.7782
+      },
+      "quality_score": 0.33464000000000005,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780771557.1141078,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T20:59:45.887779+00:00",
+      "title": "Non-Archimedean Probability via Surreal Numbers"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 252,
+      "domain": "Applications",
+      "duration_seconds": 5943.657667160034,
+      "end_time": 1780779548.7723138,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "8741911e",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780773605.1146467,
+      "strategy_count": 187,
+      "theorem_count": 0,
+      "timestamp": "2026-06-06T20:59:45.965771+00:00",
+      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
     }
   ]
 }
