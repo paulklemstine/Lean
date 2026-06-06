@@ -1,414 +1,254 @@
+#!/usr/bin/env python3
 """
-Ordinal Cellular Automata: Transfinite Computation Demo
-========================================================
-
-Demonstrates the spreading OCA and its convergence at omega.
-Shows how finite-step evolution produces threshold configurations,
-and the limit at omega produces the all-true configuration.
+Transfinite Cellular Automata Demo
+===================================
+Demonstrates cellular automata evolution with transfinite-style limit rules.
+Since we cannot literally compute at ordinal ω in finite time, we simulate
+the "limit behavior" by running a CA for many steps and applying the
+eventual-value / limsup rule when the sequence stabilizes.
 """
 
-def spread_rule(config: list[bool], size: int) -> list[bool]:
-    """Apply the spreading rule: cell n becomes true if it or its left neighbor is true."""
-    result = [False] * size
-    for n in range(size):
-        result[n] = config[n] or (config[n - 1] if n > 0 else False)
-    return result
+def rule110(left: bool, center: bool, right: bool) -> bool:
+    """Rule 110 cellular automaton."""
+    idx = (int(left) << 2) | (int(center) << 1) | int(right)
+    # Rule 110 = binary 01101110
+    return bool((110 >> idx) & 1)
 
+def apply_ca_rule(rule_fn, config: list[bool]) -> list[bool]:
+    """Apply a CA rule to a configuration (with wraparound boundary)."""
+    n = len(config)
+    return [rule_fn(config[(i-1) % n], config[i], config[(i+1) % n]) for i in range(n)]
 
-def seed_config(size: int) -> list[bool]:
-    """The seed configuration: only cell 0 is true."""
-    config = [False] * size
-    config[0] = True
-    return config
-
-
-def threshold_config(n: int, size: int) -> list[bool]:
-    """The threshold configuration: cells 0..n-1 are true."""
-    return [k < n for k in range(size)]
-
-
-def evolve_finite(config: list[bool], steps: int) -> list[bool]:
-    """Evolve for a finite number of steps."""
-    current = config[:]
+def run_ca(rule_fn, init: list[bool], steps: int) -> list[list[bool]]:
+    """Run a CA for a given number of steps, returning all configurations."""
+    history = [init]
+    current = init
     for _ in range(steps):
-        current = spread_rule(current, len(current))
-    return current
+        current = apply_ca_rule(rule_fn, current)
+        history.append(current)
+    return history
+
+def eventual_value_limit(history: list[list[bool]], cell: int) -> bool:
+    """Compute the eventual-value limit rule for a cell.
+    Returns True if the cell is eventually always True."""
+    n = len(history)
+    for start in range(n):
+        if all(history[t][cell] for t in range(start, n)):
+            return True
+    return False
+
+def limsup_limit(history: list[list[bool]], cell: int) -> bool:
+    """Compute the limsup limit rule for a cell.
+    Returns True if the cell is True cofinally (infinitely often)."""
+    n = len(history)
+    # Check if True appears in the last quarter of the history
+    quarter = max(1, n // 4)
+    return any(history[t][cell] for t in range(n - quarter, n))
+
+def display_config(config: list[bool], char_true='█', char_false='·') -> str:
+    """Display a configuration as a string."""
+    return ''.join(char_true if c else char_false for c in config)
 
 
-def display_config(config: list[bool], label: str = "") -> str:
-    """Display a configuration as a string of 0s and 1s."""
-    bits = "".join("█" if c else "░" for c in config)
-    return f"{label:>20s}: {bits}"
+def demo_rule110():
+    """Demonstrate Rule 110 evolution and transfinite limit behavior."""
+    print("=" * 60)
+    print("RULE 110 CELLULAR AUTOMATON")
+    print("=" * 60)
+
+    # Single cell initialization
+    size = 40
+    init = [False] * size
+    init[size // 2] = True
+
+    history = run_ca(rule110, init, 30)
+
+    print(f"\nEvolution from single cell (size={size}, 30 steps):")
+    for t, config in enumerate(history):
+        print(f"  t={t:3d}: {display_config(config)}")
+
+    # Compute limit rules
+    print("\n--- Limit Behavior at 'ω' ---")
+    eventual = [eventual_value_limit(history, i) for i in range(size)]
+    limsup = [limsup_limit(history, i) for i in range(size)]
+
+    print(f"  Eventual value: {display_config(eventual)}")
+    print(f"  Limsup:         {display_config(limsup)}")
 
 
-def main():
-    SIZE = 40
+def demo_stabilization():
+    """Demonstrate stabilization ordinals for different CA rules."""
+    print("\n" + "=" * 60)
+    print("STABILIZATION ORDINALS")
+    print("=" * 60)
 
-    print("=" * 70)
-    print("ORDINAL CELLULAR AUTOMATA: TRANSFINITE COMPUTATION")
-    print("=" * 70)
-    print()
-    print("The Spreading Rule: cell n becomes TRUE if it or its")
-    print("left neighbor (n-1) is TRUE. Starting from seed = [1,0,0,...]")
-    print()
+    # Identity rule (stabilizes at 0)
+    def rule_identity(l, c, r):
+        return c
 
-    # Show finite evolution
-    print("--- Finite Evolution (steps 0 through 15) ---")
-    print()
-    config = seed_config(SIZE)
-    for step in range(16):
-        print(display_config(config, f"Step {step}"))
-        config = spread_rule(config, SIZE)
+    # XOR rule (may oscillate)
+    def rule_xor(l, c, r):
+        return l ^ r
 
-    print()
-    print("--- Key Observations ---")
-    print()
-    print("After n steps: cells 0..n are TRUE, cells n+1..∞ are FALSE")
-    print("This is the 'threshold' configuration: threshold(n+1)")
-    print()
+    # AND rule (monotone, stabilizes quickly)
+    def rule_and(l, c, r):
+        return l and c and r
 
-    # Verify threshold property
-    print("--- Verification: step n produces threshold(n+1) ---")
-    for n in range(10):
-        evolved = evolve_finite(seed_config(SIZE), n)
-        thresh = threshold_config(n + 1, SIZE)
-        assert evolved == thresh, f"Mismatch at step {n}"
-        print(f"  Step {n:2d} = threshold({n+1:2d})  ✓")
+    size = 20
+    init = [i % 3 == 0 for i in range(size)]
 
-    print()
-    print("--- The Limit at ω ---")
-    print()
-    print("At NO finite step do we reach all-TRUE.")
-    print("But at ω (the first limit ordinal), we take the")
-    print("pointwise supremum of ALL finite steps:")
-    print()
-    print("  sup{{threshold(n) : n ∈ ℕ}} = all-TRUE")
-    print()
-    print("This is because for any cell k, threshold(k+1) has")
-    print("cell k = TRUE, so the sup has every cell TRUE.")
-    print()
+    rules = [
+        ("Identity (stabilizes at 0)", rule_identity),
+        ("Rule 110 (complex)", rule110),
+        ("AND rule (monotone, fast stabilization)", rule_and),
+    ]
 
-    all_true = [True] * SIZE
-    print(display_config(all_true, "Step ω (limit)"))
-    print()
+    for name, rule_fn in rules:
+        history = run_ca(rule_fn, init, 50)
 
-    # Show the hierarchy
-    print("--- Transfinite Computation Hierarchy ---")
-    print()
-    print("The hierarchy is STRICTLY increasing:")
-    for n in range(8):
-        evolved = evolve_finite(seed_config(SIZE), n)
-        true_count = sum(evolved)
-        print(f"  Level {n}: {true_count} true cells")
-    print(f"  Level ω: {SIZE} true cells (ALL)")
-    print()
-    print("Each finite level is strictly weaker than the next.")
-    print("The jump to ω is QUALITATIVELY different: it requires")
-    print("infinite computation (taking a limit).")
-    print()
+        # Find stabilization step
+        stab_step = None
+        for t in range(len(history) - 1):
+            if history[t] == history[t + 1]:
+                stab_step = t
+                break
 
-    # Stabilization
-    print("--- Stabilization ---")
-    print()
-    print("The spreading OCA stabilizes at ω:")
-    print("  • Before ω: NOT stable (spread changes threshold(n) → threshold(n+1))")
-    print("  • At ω: STABLE (spread(all-TRUE) = all-TRUE)")
-    print("  • After ω: Still stable (fixed point persists)")
-    print()
+        print(f"\n  {name}:")
+        print(f"    Initial: {display_config(init)}")
+        if stab_step is not None:
+            print(f"    Stabilizes at step {stab_step}")
+            print(f"    Final:   {display_config(history[stab_step])}")
+        else:
+            print(f"    Does NOT stabilize within 50 steps")
+            print(f"    Step 50: {display_config(history[50])}")
 
-    config = all_true[:]
-    after_spread = spread_rule(config, SIZE)
-    assert after_spread == all_true
-    print("  spread(all-TRUE) = all-TRUE  ✓  (fixed point)")
-    print()
 
-    # The Limit Layer
-    print("--- The Limit Layer ---")
-    print()
-    print("The all-TRUE configuration is in the LIMIT LAYER:")
-    print("it appears at ω but at NO finite step.")
-    print("This proves that transfinite evolution is STRICTLY")
-    print("more powerful than finite evolution.")
-    print()
-    print("In computational terms: the spreading OCA at ω")
-    print("'decides' a property (all cells eventually become true)")
-    print("that no finite computation can determine.")
+def demo_transfinite_iteration():
+    """Demonstrate the concept of transfinite iteration:
+    run CA, apply limit rule, run again, apply limit rule, etc."""
+    print("\n" + "=" * 60)
+    print("TRANSFINITE ITERATION (ω × 3)")
+    print("=" * 60)
 
-    # Cascade OCA
-    print()
-    print("--- Cascade OCA Family ---")
-    print()
-    print("The cascade rule of depth d requires d consecutive")
-    print("true cells to propagate. Higher depth = slower spread.")
-    print()
+    size = 30
+    init = [False] * size
+    init[size // 2] = True
+    init[size // 4] = True
 
-    for depth in [1, 2, 3]:
-        config = seed_config(20)
-        print(f"  Cascade depth {depth}:")
-        for step in range(8):
-            if step % 2 == 0:
-                label = f"    Step {step}"
-                print(display_config(config, label))
-            # Apply cascade rule
-            new_config = [False] * 20
-            for k in range(20):
-                if config[k]:
-                    new_config[k] = True
-                elif k >= depth and all(config[k - 1 - i] for i in range(depth)):
-                    new_config[k] = True
-            config = new_config
-        print()
+    current = init
+    for epoch in range(3):
+        print(f"\n  --- Epoch {epoch} (ordinal ω·{epoch} to ω·{epoch+1}) ---")
+        history = run_ca(rule110, current, 20)
+
+        for t in [0, 5, 10, 15, 20]:
+            print(f"    t=ω·{epoch}+{t:2d}: {display_config(history[t])}")
+
+        # Apply eventual-value limit rule
+        current = [eventual_value_limit(history, i) for i in range(size)]
+        print(f"    Limit (ω·{epoch+1}): {display_config(current)}")
+
+
+def demo_successor_counting():
+    """Demonstrate the successor counting function and its stabilization."""
+    print("\n" + "=" * 60)
+    print("SUCCESSOR COUNTING (Stabilization at Prescribed Ordinals)")
+    print("=" * 60)
+
+    for bound in [3, 5, 10]:
+        values = [min(n, bound) for n in range(bound + 5)]
+        print(f"\n  bound={bound}: {values}")
+        print(f"    Stabilizes at step {bound} (value={bound})")
 
 
 if __name__ == "__main__":
-    main()
+    demo_rule110()
+    demo_stabilization()
+    demo_transfinite_iteration()
+    demo_successor_counting()
+    print("\n" + "=" * 60)
+    print("Demo complete.")
 
 
+#!/usr/bin/env python3
 """
-Visualization: Transfinite Computation Hierarchy
-=================================================
-
-Shows the strict hierarchy of computation levels and the
-qualitative jump at the first limit ordinal omega.
+Visualization: Transfinite CA Evolution Spacetime Diagram
+=========================================================
+Creates a spacetime diagram showing Rule 110 evolution with
+transfinite limit-rule behavior marked at epoch boundaries.
 """
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def spread_rule(config: list[bool]) -> list[bool]:
-    size = len(config)
-    result = [False] * size
-    for n in range(size):
-        result[n] = config[n] or (config[n - 1] if n > 0 else False)
-    return result
-
-
-def cascade_rule(depth: int, config: list[bool]) -> list[bool]:
-    size = len(config)
-    result = [False] * size
-    for k in range(size):
-        if config[k]:
-            result[k] = True
-        elif k >= depth and all(config[k - 1 - i] for i in range(depth)):
-            result[k] = True
-    return result
-
-
-def seed_config(size: int) -> list[bool]:
-    config = [False] * size
-    config[0] = True
-    return config
-
-
-def evolve(rule_fn, config: list[bool], steps: int) -> list[bool]:
-    current = config[:]
-    for _ in range(steps):
-        current = rule_fn(current)
-    return current
-
-
-def main():
-    SIZE = 100
-    MAX_STEPS = 50
-
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-    # Panel 1: Growth curves for different cascade depths
-    ax = axes[0, 0]
-    for depth in [1, 2, 3, 5]:
-        rule = lambda c, d=depth: cascade_rule(d, c)
-        counts = []
-        config = seed_config(SIZE)
-        for step in range(MAX_STEPS):
-            counts.append(sum(config))
-            config = rule(config)
-        ax.plot(range(MAX_STEPS), counts, label=f'Depth {depth}', linewidth=2)
-
-    ax.axhline(y=SIZE, color='gold', linewidth=2, linestyle='--', label='Limit at ω')
-    ax.set_xlabel('Time Step', fontsize=11)
-    ax.set_ylabel('TRUE Cells', fontsize=11)
-    ax.set_title('Cascade OCA: Growth Rate vs Depth', fontsize=13, fontweight='bold')
-    ax.legend()
-    ax.grid(alpha=0.3)
-
-    # Panel 2: Stabilization ordinal visualization
-    ax = axes[0, 1]
-    ordinals = list(range(20)) + [25]  # last represents omega
-    values = list(range(1, 21)) + [SIZE]
-
-    ax.fill_between(range(20), values[:20], alpha=0.3, color='#e94560',
-                    label='Finite levels')
-    ax.plot(range(20), values[:20], 'o-', color='#e94560', markersize=4)
-
-    # The omega jump
-    ax.plot([19, 20], [20, SIZE], 'o--', color='gold', markersize=8,
-            linewidth=2, label='Jump to ω')
-    ax.annotate('ω', xy=(20, SIZE), fontsize=14, fontweight='bold',
-                color='gold', ha='center', va='bottom')
-
-    ax.set_xlabel('Ordinal Level', fontsize=11)
-    ax.set_ylabel('TRUE Cells (Computation Power)', fontsize=11)
-    ax.set_title('Strict Hierarchy with ω-Jump', fontsize=13, fontweight='bold')
-    ax.legend()
-    ax.grid(alpha=0.3)
-
-    # Panel 3: Limit layer visualization
-    ax = axes[1, 0]
-    steps_to_show = [0, 3, 6, 9, 12, 15]
-    for i, step in enumerate(steps_to_show):
-        config = evolve(spread_rule, seed_config(40), step)
-        y_vals = [1 if c else 0 for c in config]
-        ax.bar(np.arange(40) + i * 0.12, y_vals, width=0.1,
-               alpha=0.7, label=f'Step {step}')
-
-    # Omega
-    ax.bar(np.arange(40) + len(steps_to_show) * 0.12,
-           [1] * 40, width=0.1, alpha=0.9, color='gold', label='Step ω')
-
-    ax.set_xlabel('Cell Position', fontsize=11)
-    ax.set_ylabel('Cell State', fontsize=11)
-    ax.set_title('Evolution Snapshots → Limit Layer', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=8, ncol=4)
-
-    # Panel 4: Fixed point analysis
-    ax = axes[1, 1]
-    SIZE2 = 30
-    # Show that spread(allTrue) = allTrue
-    all_true = [True] * SIZE2
-    after_spread = spread_rule(all_true)
-
-    # Show residuals
-    x = range(SIZE2)
-    residuals = [int(a) - int(b) for a, b in zip(after_spread, all_true)]
-    ax.bar(x, [1] * SIZE2, color='gold', alpha=0.5, label='All-TRUE config')
-    ax.bar(x, [0] * SIZE2, color='red', alpha=0.5, label='After spread (same)')
-
-    ax.text(SIZE2 / 2, 0.5, 'spread(⊤) = ⊤\nFIXED POINT',
-            ha='center', va='center', fontsize=14, fontweight='bold',
-            bbox=dict(boxstyle='round', facecolor='gold', alpha=0.8))
-
-    ax.set_xlabel('Cell Position', fontsize=11)
-    ax.set_ylabel('Cell State', fontsize=11)
-    ax.set_title('ω-Jump Idempotence', fontsize=13, fontweight='bold')
-    ax.set_ylim(-0.1, 1.5)
-
-    plt.tight_layout()
-    plt.savefig('hierarchy_analysis.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: hierarchy_analysis.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-"""
-Visualization: Ordinal Cellular Automata Evolution
-===================================================
-
-Creates a spacetime diagram showing how the spreading OCA evolves,
-with the limit at omega clearly marked.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 
 
-def spread_rule(config: list[bool]) -> list[bool]:
-    size = len(config)
-    result = [False] * size
-    for n in range(size):
-        result[n] = config[n] or (config[n - 1] if n > 0 else False)
+def rule110(left: bool, center: bool, right: bool) -> bool:
+    idx = (int(left) << 2) | (int(center) << 1) | int(right)
+    return bool((110 >> idx) & 1)
+
+
+def apply_rule(config: list[bool]) -> list[bool]:
+    n = len(config)
+    return [rule110(config[(i-1) % n], config[i], config[(i+1) % n])
+            for i in range(n)]
+
+
+def eventual_value_limit(history: list[list[bool]]) -> list[bool]:
+    n = len(history[0])
+    result = []
+    for i in range(n):
+        last_false = -1
+        for t in range(len(history)):
+            if not history[t][i]:
+                last_false = t
+        result.append(last_false < len(history) - 1 and
+                      all(history[t][i] for t in range(last_false + 1, len(history))))
     return result
 
 
-def seed_config(size: int) -> list[bool]:
-    config = [False] * size
-    config[0] = True
-    return config
-
-
 def main():
-    SIZE = 30
-    STEPS = 25
+    size = 60
+    steps_per_epoch = 25
+    num_epochs = 4
 
-    # Generate spacetime diagram
-    configs = []
-    config = seed_config(SIZE)
-    for _ in range(STEPS):
-        configs.append(config[:])
-        config = spread_rule(config)
+    init = [False] * size
+    init[size // 2] = True
+    init[size // 3] = True
 
-    # Add the omega limit (all true)
-    omega_config = [True] * SIZE
-    configs.append(omega_config)
+    all_configs = []
+    limit_rows = []
+    current = init
 
-    # Create the plot
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8),
-                                     gridspec_kw={'width_ratios': [2, 1]})
+    for epoch in range(num_epochs):
+        epoch_history = [current]
+        for _ in range(steps_per_epoch):
+            current = apply_rule(current)
+            epoch_history.append(current)
+        all_configs.extend(epoch_history)
+        limit_rows.append(len(all_configs) - 1)
+        current = eventual_value_limit(epoch_history)
+        all_configs.append(current)
 
-    # Left: Spacetime diagram
-    data = np.array([[1 if c else 0 for c in row] for row in configs])
+    # Convert to numpy array
+    grid = np.array([[int(c) for c in row] for row in all_configs])
 
-    # Use a custom colormap
-    cmap = plt.cm.colors.ListedColormap(['#1a1a2e', '#e94560'])
+    fig, ax = plt.subplots(figsize=(12, 8))
+    ax.imshow(grid, cmap='binary', aspect='auto', interpolation='nearest')
 
-    ax1.imshow(data, cmap=cmap, aspect='auto', interpolation='nearest')
-    ax1.set_xlabel('Cell Position (k)', fontsize=12)
-    ax1.set_ylabel('Time Step', fontsize=12)
-    ax1.set_title('Spreading OCA: Spacetime Diagram', fontsize=14, fontweight='bold')
+    # Mark limit ordinals
+    for lr in limit_rows:
+        ax.axhline(y=lr + 0.5, color='red', linewidth=2, linestyle='--', alpha=0.7)
 
-    # Mark the omega step
-    ax1.axhline(y=STEPS - 0.5, color='gold', linewidth=2, linestyle='--')
-    ax1.text(SIZE + 0.5, STEPS, 'ω (limit)', fontsize=11, color='gold',
-             va='center', fontweight='bold')
+    ax.set_xlabel('Cell Position', fontsize=12)
+    ax.set_ylabel('Time Step', fontsize=12)
+    ax.set_title('Transfinite CA Evolution: Rule 110 with Eventual-Value Limit Rule\n'
+                 'Red lines = limit ordinals (ω, 2ω, 3ω, ...)', fontsize=14)
 
-    # Add step labels
-    for i in range(0, STEPS, 5):
-        ax1.text(-1.5, i, str(i), ha='right', va='center', fontsize=9)
-    ax1.text(-1.5, STEPS, 'ω', ha='right', va='center', fontsize=11,
-             fontweight='bold', color='gold')
-
-    # Right: Hierarchy bar chart
-    true_counts = [sum(c) for c in configs[:-1]]
-    true_counts.append(SIZE)  # omega
-
-    labels = [str(i) for i in range(STEPS)] + ['ω']
-    colors = ['#e94560'] * STEPS + ['gold']
-
-    # Only show every 5th bar for readability
-    indices = list(range(0, STEPS, 3)) + [STEPS]
-    bar_counts = [true_counts[i] for i in indices]
-    bar_labels = [labels[i] for i in indices]
-    bar_colors = ['#e94560'] * (len(indices) - 1) + ['gold']
-
-    bars = ax2.barh(range(len(indices)), bar_counts, color=bar_colors, edgecolor='white')
-    ax2.set_yticks(range(len(indices)))
-    ax2.set_yticklabels(bar_labels)
-    ax2.set_xlabel('Number of TRUE Cells', fontsize=12)
-    ax2.set_ylabel('Time Step', fontsize=12)
-    ax2.set_title('Transfinite Hierarchy', fontsize=14, fontweight='bold')
-    ax2.invert_yaxis()
-
-    # Add value labels
-    for i, (bar, count) in enumerate(zip(bars, bar_counts)):
-        ax2.text(count + 0.5, i, str(count), va='center', fontsize=9)
-
-    # Legend
-    finite_patch = mpatches.Patch(color='#e94560', label='Finite steps')
-    omega_patch = mpatches.Patch(color='gold', label='Limit at ω')
-    ax2.legend(handles=[finite_patch, omega_patch], loc='lower right')
+    limit_patch = mpatches.Patch(color='red', alpha=0.7, label='Limit ordinal (ω·k)')
+    ax.legend(handles=[limit_patch], loc='upper right')
 
     plt.tight_layout()
-    plt.savefig('oca_spacetime.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: oca_spacetime.png")
+    plt.savefig('transfinite_ca_evolution.png', dpi=150, bbox_inches='tight')
+    print("Saved transfinite_ca_evolution.png")
 
 
 if __name__ == "__main__":

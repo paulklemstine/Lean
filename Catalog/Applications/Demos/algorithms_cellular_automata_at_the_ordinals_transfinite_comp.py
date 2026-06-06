@@ -1,231 +1,201 @@
+#!/usr/bin/env python3
 """
-Ordinal Cellular Automata: Algorithms
-======================================
-
-Type-hinted implementations of the core algorithms for
-ordinal cellular automata and transfinite computation.
+Algorithms for Transfinite Cellular Automata
+=============================================
+Type-hinted implementations of the core algorithms from the paper.
 """
-
 from typing import Callable, Optional
 from dataclasses import dataclass
 
 
-# --- Configuration Types ---
-
-Config = list[bool]  # A configuration is a list of boolean cell states
+# Type aliases
+CellState = bool
+Config = list[CellState]
+CARule = Callable[[CellState, CellState, CellState], CellState]
 
 
 @dataclass
-class OrdinalCA:
-    """An Ordinal Cellular Automaton.
+class TransfiniteCAResult:
+    """Result of a transfinite CA computation."""
+    history: list[Config]
+    limit_config: Config
+    stabilization_step: Optional[int]
+    epochs_run: int
 
-    Attributes:
-        rule: The local transition rule (Config → Config)
-        name: Human-readable name
+
+def apply_rule(rule: CARule, config: Config) -> Config:
+    """Apply a 1D CA rule to a configuration with periodic boundary."""
+    n = len(config)
+    return [rule(config[(i-1) % n], config[i], config[(i+1) % n])
+            for i in range(n)]
+
+
+def rule110(left: CellState, center: CellState, right: CellState) -> CellState:
+    """Elementary CA Rule 110 (Turing-complete)."""
+    idx = (int(left) << 2) | (int(center) << 1) | int(right)
+    return bool((110 >> idx) & 1)
+
+
+def rule90(left: CellState, center: CellState, right: CellState) -> CellState:
+    """Elementary CA Rule 90 (XOR rule, generates Sierpinski triangle)."""
+    return left ^ right
+
+
+def eventual_value_limit(history: list[Config]) -> Config:
     """
-    rule: Callable[[Config], Config]
-    name: str = "OCA"
+    Eventual-value limit rule for Boolean configurations.
 
-    def evolve_finite(self, config: Config, steps: int) -> Config:
-        """Evolve for a finite number of steps."""
-        current = config[:]
-        for _ in range(steps):
-            current = self.rule(current)
-        return current
+    A cell is True at the limit if it is eventually always True.
+    This corresponds to the ITTM (Infinite Time Turing Machine) limit rule.
 
-    def evolve_to_omega(self, config: Config, approx_steps: int = 1000) -> Config:
-        """Approximate the limit at ω by running many finite steps.
-
-        For monotone OCAs, the limit is reached when the configuration
-        stabilizes (no change between consecutive steps).
-        """
-        current = config[:]
-        for _ in range(approx_steps):
-            next_config = self.rule(current)
-            if next_config == current:
-                break
-            current = next_config
-        return current
-
-    def stabilization_step(self, config: Config, max_steps: int = 10000) -> Optional[int]:
-        """Find the finite step at which the OCA stabilizes, if it does.
-
-        Returns None if the OCA hasn't stabilized within max_steps.
-        For the spreading OCA on finite configs, this always terminates.
-        """
-        current = config[:]
-        for step in range(max_steps):
-            next_config = self.rule(current)
-            if next_config == current:
-                return step
-            current = next_config
-        return None
-
-    def computation_depth(self, initial: Config, target: Config,
-                          max_steps: int = 10000) -> Optional[int]:
-        """Find the ordinal depth at which target first appears.
-
-        Returns the minimum step n such that rule^n(initial) = target,
-        or None if not found within max_steps.
-        """
-        current = initial[:]
-        for step in range(max_steps):
-            if current == target:
-                return step
-            current = self.rule(current)
-        return None
-
-
-# --- Spreading Rule ---
-
-def spread_rule(config: Config) -> Config:
-    """The spreading rule: cell n becomes true if it or its left neighbor is true.
-
-    This is monotone (preserves ≤) and inflationary (c ≤ spread(c)).
+    Algorithm:
+        For each cell i:
+            Find the latest time t where cell i is False.
+            If such t exists and t < len(history) - 1, cell is True.
+            Otherwise, cell takes the value at the last step.
     """
-    size = len(config)
-    result = [False] * size
-    for n in range(size):
-        result[n] = config[n] or (config[n - 1] if n > 0 else False)
+    if not history:
+        return []
+    n = len(history[0])
+    result: Config = []
+    for i in range(n):
+        # Find if the cell is eventually always True
+        last_false = -1
+        for t in range(len(history)):
+            if not history[t][i]:
+                last_false = t
+        # Eventually True if there's a point after which it's always True
+        result.append(last_false < len(history) - 1 and
+                      all(history[t][i] for t in range(last_false + 1, len(history))))
     return result
 
 
-def make_spread_oca() -> OrdinalCA:
-    """Create the canonical spreading OCA."""
-    return OrdinalCA(rule=spread_rule, name="Spreading OCA")
-
-
-# --- Cascade Rule Family ---
-
-def cascade_rule(depth: int) -> Callable[[Config], Config]:
-    """Create a cascade rule of given depth.
-
-    The cascade rule of depth d requires d consecutive true cells
-    to the left for propagation. Depth 1 = spreading rule.
+def limsup_limit(history: list[Config]) -> Config:
     """
-    def rule(config: Config) -> Config:
-        size = len(config)
-        result = [False] * size
-        for k in range(size):
-            if config[k]:
-                result[k] = True
-            elif k >= depth and all(config[k - 1 - i] for i in range(depth)):
-                result[k] = True
-        return result
-    return rule
+    Limsup limit rule for Boolean configurations.
+
+    A cell is True at the limit if it is True cofinally
+    (appears True arbitrarily late in the sequence).
+
+    Algorithm:
+        For each cell i, check if True appears in the final portion.
+    """
+    if not history:
+        return []
+    n = len(history[0])
+    tail_start = max(0, len(history) - len(history) // 3)
+    return [any(history[t][i] for t in range(tail_start, len(history)))
+            for i in range(n)]
 
 
-def make_cascade_oca(depth: int) -> OrdinalCA:
-    """Create a cascade OCA of given depth."""
-    return OrdinalCA(
-        rule=cascade_rule(depth),
-        name=f"Cascade OCA (depth {depth})"
+def transfinite_ca(
+    rule: CARule,
+    init: Config,
+    steps_per_epoch: int,
+    num_epochs: int,
+    limit_rule: Callable[[list[Config]], Config] = eventual_value_limit
+) -> TransfiniteCAResult:
+    """
+    Simulate transfinite CA evolution.
+
+    Runs the CA for `steps_per_epoch` steps (simulating ω steps),
+    applies the limit rule, and repeats for `num_epochs` (simulating ω·n).
+
+    This is a finite approximation to the ordinal computation:
+    - Each epoch corresponds to an interval [ω·k, ω·(k+1))
+    - The limit rule is applied at each ω·k
+
+    Parameters:
+        rule: The CA rule function
+        init: Initial configuration
+        steps_per_epoch: Number of steps per epoch (approximating ω)
+        num_epochs: Number of epochs to run
+        limit_rule: Function to compute the limit at each ω·k
+
+    Returns:
+        TransfiniteCAResult with full history and analysis
+    """
+    current = init
+    full_history: list[Config] = [init]
+    stabilization_step: Optional[int] = None
+
+    for epoch in range(num_epochs):
+        epoch_history = [current]
+        for _ in range(steps_per_epoch):
+            current = apply_rule(rule, current)
+            epoch_history.append(current)
+
+        # Apply limit rule at the limit ordinal
+        current = limit_rule(epoch_history)
+        full_history.extend(epoch_history[1:])
+        full_history.append(current)
+
+        # Check stabilization
+        if stabilization_step is None and len(full_history) >= 2:
+            if full_history[-1] == full_history[-2]:
+                stabilization_step = len(full_history) - 2
+
+    return TransfiniteCAResult(
+        history=full_history,
+        limit_config=current,
+        stabilization_step=stabilization_step,
+        epochs_run=num_epochs
     )
 
 
-# --- Configuration Constructors ---
-
-def seed_config(size: int) -> Config:
-    """The seed configuration: only cell 0 is true."""
-    config = [False] * size
-    if size > 0:
-        config[0] = True
-    return config
+def find_stabilization(configs: list[Config]) -> Optional[int]:
+    """Find the first step at which the configuration stabilizes."""
+    for t in range(len(configs) - 1):
+        if configs[t] == configs[t + 1]:
+            return t
+    return None
 
 
-def threshold_config(n: int, size: int) -> Config:
-    """Threshold configuration: cells 0..n-1 are true."""
-    return [k < n for k in range(size)]
-
-
-def all_true(size: int) -> Config:
-    """The all-true configuration."""
-    return [True] * size
-
-
-def all_false(size: int) -> Config:
-    """The all-false (quiescent) configuration."""
-    return [False] * size
-
-
-# --- Transfinite Computation Hierarchy ---
-
-@dataclass
-class HierarchyLevel:
-    """A level in the transfinite computation hierarchy."""
-    ordinal_label: str  # e.g., "0", "1", ..., "ω"
-    config: Config
-    true_count: int
-    is_fixed_point: bool
-
-
-def compute_hierarchy(oca: OrdinalCA, initial: Config,
-                      finite_levels: int = 20) -> list[HierarchyLevel]:
-    """Compute the transfinite computation hierarchy.
-
-    Returns levels 0, 1, ..., n, ω showing how the OCA evolves.
+def ca_monotonicity_check(rule: CARule) -> bool:
     """
-    levels: list[HierarchyLevel] = []
-    current = initial[:]
+    Check if a CA rule is monotone.
 
-    for step in range(finite_levels):
-        next_config = oca.rule(current)
-        is_fp = (next_config == current)
-        levels.append(HierarchyLevel(
-            ordinal_label=str(step),
-            config=current[:],
-            true_count=sum(current),
-            is_fixed_point=is_fp
-        ))
-        if is_fp:
-            break
-        current = next_config
+    A rule is monotone if: whenever (a ≤ a', b ≤ b', c ≤ c'),
+    we have rule(a,b,c) ≤ rule(a',b',c').
 
-    # Omega level
-    omega_config = oca.evolve_to_omega(initial)
-    omega_next = oca.rule(omega_config)
-    levels.append(HierarchyLevel(
-        ordinal_label="ω",
-        config=omega_config,
-        true_count=sum(omega_config),
-        is_fixed_point=(omega_next == omega_config)
-    ))
-
-    return levels
-
-
-# --- Omega-Jump Operator ---
-
-def omega_jump(oca: OrdinalCA, config: Config,
-               approx_steps: int = 1000) -> Config:
-    """The ω-jump operator: evolves to the limit at ω.
-
-    For monotone inflationary OCAs, this is the supremum of all
-    finite iterates. Approximated by iterating until stabilization.
+    For Boolean: False ≤ True. So monotonicity means
+    setting inputs to True can only keep the output True.
     """
-    return oca.evolve_to_omega(config, approx_steps)
+    for a in [False, True]:
+        for b in [False, True]:
+            for c in [False, True]:
+                if rule(a, b, c):
+                    # Check all (a', b', c') ≥ (a, b, c)
+                    for a2 in ([a, True] if not a else [True]):
+                        for b2 in ([b, True] if not b else [True]):
+                            for c2 in ([c, True] if not c else [True]):
+                                if not rule(a2, b2, c2):
+                                    return False
+    return True
 
 
-def verify_omega_jump_idempotent(oca: OrdinalCA, config: Config) -> bool:
-    """Verify that the ω-jump is idempotent (for stabilized OCAs).
-
-    Returns True if ω-jump(ω-jump(config)) = ω-jump(config).
+def successor_count_sequence(bound: int, length: int) -> list[int]:
     """
-    first_jump = omega_jump(oca, config)
-    second_jump = omega_jump(oca, first_jump)
-    return first_jump == second_jump
+    Generate the successor counting sequence.
+    succCountBelow(bound, n) = min(n, bound)
+
+    This sequence stabilizes at exactly step `bound`.
+    """
+    return [min(n, bound) for n in range(length)]
 
 
 if __name__ == "__main__":
-    # Quick verification
-    oca = make_spread_oca()
-    SIZE = 50
+    # Example usage
+    size = 20
+    init = [False] * size
+    init[size // 2] = True
 
-    print("Spreading OCA Hierarchy:")
-    hierarchy = compute_hierarchy(oca, seed_config(SIZE))
-    for level in hierarchy:
-        print(f"  Level {level.ordinal_label:>3s}: "
-              f"{level.true_count:3d} true cells, "
-              f"fixed_point={level.is_fixed_point}")
+    result = transfinite_ca(rule110, init, steps_per_epoch=30, num_epochs=5)
+    print(f"Transfinite CA simulation:")
+    print(f"  Epochs: {result.epochs_run}")
+    print(f"  Total steps: {len(result.history)}")
+    print(f"  Stabilization: {result.stabilization_step}")
+    print(f"  Rule 110 is monotone: {ca_monotonicity_check(rule110)}")
 
-    print(f"\nω-jump idempotent: {verify_omega_jump_idempotent(oca, seed_config(SIZE))}")
+    print(f"\nSuccessor counting (bound=5):")
+    print(f"  {successor_count_sequence(5, 10)}")
