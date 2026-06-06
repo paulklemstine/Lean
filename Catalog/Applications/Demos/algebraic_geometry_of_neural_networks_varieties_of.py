@@ -1,386 +1,317 @@
-#!/usr/bin/env python3
 """
-Tropical Activation Complex: Numerical Demonstrations
+Demo: Tropical Geometry of Neural Network Decision Boundaries
 
-Demonstrates the key theorems about ReLU network decision boundary complexity.
+This script demonstrates the key results from our research on the connection
+between ReLU neural networks and tropical geometry.
 """
 
-from math import comb, prod, log2, floor
-from typing import List, Tuple
-from itertools import product as iter_product
+import numpy as np
 
+def relu(x):
+    """ReLU activation: max(x, 0)"""
+    return np.maximum(x, 0)
 
-def zaslavsky_bound(n: int, d: int) -> int:
-    """Maximum regions from n hyperplanes in R^d."""
-    return sum(comb(n, k) for k in range(d + 1))
+def tropical_poly_eval(slopes, intercepts, x):
+    """Evaluate a 1D tropical polynomial: max_i(slope_i * x + intercept_i)"""
+    return np.max([s * x + b for s, b in zip(slopes, intercepts)])
 
+def relu_as_tropical_rational(x):
+    """ReLU as a tropical rational function:
+    numerator = max(x, 0), denominator = 0"""
+    num = np.maximum(x, 0)  # max(1*x + 0, 0*x + 0)
+    den = 0                  # max(0*x + 0) = 0
+    return num - den
 
-def network_region_bound(input_dim: int, widths: List[int]) -> int:
-    """Product of per-layer Zaslavsky bounds."""
-    return prod(zaslavsky_bound(w, input_dim) for w in widths)
-
-
-def tropical_degree(widths: List[int]) -> int:
-    """Product of layer widths."""
-    return prod(widths) if widths else 1
-
-
-def fold_number(widths: List[int]) -> int:
-    """Sum of layer widths."""
-    return sum(widths)
-
-
-def singularity_budget(widths: List[int]) -> int:
-    """Sum of C(w_i, 2)."""
-    return sum(comb(w, 2) for w in widths)
-
-
-def compute_tac(input_dim: int, widths: List[int]) -> dict:
-    """Compute all TAC invariants."""
-    return {
-        "input_dim": input_dim,
-        "widths": widths,
-        "depth": len(widths),
-        "total_width": fold_number(widths),
-        "tropical_degree": tropical_degree(widths),
-        "fold_number": fold_number(widths),
-        "singularity_budget": singularity_budget(widths),
-        "region_bound": network_region_bound(input_dim, widths),
-        "activation_patterns": 2 ** fold_number(widths),
-    }
-
-
-def verify_fundamental_theorem(tac: dict) -> dict:
-    """Verify the fundamental TAC inequality chain."""
-    td = tac["tropical_degree"]
-    rb = tac["region_bound"]
-    fn = tac["fold_number"]
-    sb = tac["singularity_budget"]
-
-    return {
-        "degree_le_region": td <= rb,
-        "region_le_exp_fold": rb <= 2 ** fn,
-        "singularity_le_fold_sq": sb <= fn ** 2,
-    }
-
-
-def find_optimal_architecture(total_width: int, max_depth: int, input_dim: int) -> Tuple[List[int], int]:
-    """Find architecture maximizing region bound for given total width."""
-    best_arch = [total_width]
-    best_bound = network_region_bound(input_dim, best_arch)
-
-    for depth in range(1, max_depth + 1):
-        base = total_width // depth
-        remainder = total_width % depth
-        widths = [base + (1 if i < remainder else 0) for i in range(depth)]
-        bound = network_region_bound(input_dim, widths)
-        if bound > best_bound:
-            best_bound = bound
-            best_arch = widths
-
-    return best_arch, best_bound
-
-
-# ============================================================
-# DEMONSTRATIONS
-# ============================================================
-
-print("=" * 70)
-print("TROPICAL ACTIVATION COMPLEX: NUMERICAL DEMONSTRATIONS")
-print("=" * 70)
-
-# Demo 1: Fundamental Theorem Verification
-print("\n--- Demo 1: Fundamental Theorem Verification ---\n")
-architectures = [
-    (2, [4]),
-    (2, [3, 3]),
-    (2, [2, 2, 2]),
-    (2, [6]),
-    (3, [5, 5]),
-    (10, [20, 20, 20]),
-    (100, [50, 50, 50, 50]),
-]
-
-for dim, widths in architectures:
-    tac = compute_tac(dim, widths)
-    checks = verify_fundamental_theorem(tac)
-    status = "✓" if all(checks.values()) else "✗"
-    print(f"  {status} Arch ({dim}; {widths}): "
-          f"deg={tac['tropical_degree']}, "
-          f"regions={tac['region_bound']}, "
-          f"2^fold={tac['activation_patterns']}, "
-          f"sing={tac['singularity_budget']}, "
-          f"fold²={tac['fold_number']**2}")
-
-# Demo 2: Depth Advantage
-print("\n--- Demo 2: Depth Advantage (W=12, n=3) ---\n")
-total_w = 12
-n = 3
-print(f"  Total width W={total_w}, input dim n={n}\n")
-print(f"  {'Architecture':<25} {'Depth':>5} {'Regions':>10} {'Trop.Deg':>10} {'Ratio':>8}")
-print(f"  {'-'*25} {'-'*5} {'-'*10} {'-'*10} {'-'*8}")
-
-for depth in [1, 2, 3, 4, 6, 12]:
-    base = total_w // depth
-    rem = total_w % depth
-    widths = [base + (1 if i < rem else 0) for i in range(depth)]
-    tac = compute_tac(n, widths)
-    ratio = tac["region_bound"] / max(tac["tropical_degree"], 1)
-    print(f"  {str(widths):<25} {depth:>5} {tac['region_bound']:>10} "
-          f"{tac['tropical_degree']:>10} {ratio:>8.1f}")
-
-# Demo 3: Optimal Architecture Search
-print("\n--- Demo 3: Optimal Architecture Search ---\n")
-for W in [6, 10, 20]:
-    for n in [2, 5]:
-        best_arch, best_bound = find_optimal_architecture(W, W, n)
-        print(f"  W={W}, n={n}: optimal arch = {best_arch}, "
-              f"regions = {best_bound}")
-
-# Demo 4: AM-GM Trade-Off
-print("\n--- Demo 4: AM-GM Trade-Off (W=12) ---\n")
-W = 12
-for L in range(1, 13):
-    avg = W // L
-    td = (avg + 1) ** L
-    actual_widths = [W // L + (1 if i < W % L else 0) for i in range(L)]
-    actual_td = tropical_degree(actual_widths)
-    print(f"  L={L:>2}: prod(w_i)={actual_td:>10}, "
-          f"(W/L+1)^L={td:>10}, "
-          f"bound holds: {actual_td <= td}")
-
-# Demo 5: Zaslavsky Bound Table
-print("\n--- Demo 5: Zaslavsky Bound Z(n, d) ---\n")
-header = 'n\\d'
-print(f"  {header:>4}", end="")
-for d in range(8):
-    print(f"  {d:>6}", end="")
-print()
-for n_val in range(10):
-    print(f"  {n_val:>4}", end="")
-    for d in range(8):
-        print(f"  {zaslavsky_bound(n_val, d):>6}", end="")
-    print(f"  (2^n={2**n_val})")
-
-# Demo 6: ReLU Properties
-print("\n--- Demo 6: ReLU Properties ---\n")
-
-
-def relu(x: float) -> float:
-    return max(0.0, x)
-
-
-test_values = [-3.0, -1.5, -0.5, 0.0, 0.5, 1.5, 3.0]
-print("  x     relu(x)   (x+|x|)/2   idempotent")
-for x in test_values:
+# Demo 1: Verify ReLU = Tropical Rational
+print("=" * 60)
+print("Demo 1: ReLU as Tropical Rational Function")
+print("=" * 60)
+test_points = np.linspace(-5, 5, 11)
+for x in test_points:
     r = relu(x)
-    formula = (x + abs(x)) / 2
-    idemp = relu(relu(x))
-    print(f"  {x:>5.1f}  {r:>7.3f}   {formula:>9.3f}   {idemp:>7.3f} == {r:.3f}: {abs(idemp - r) < 1e-10}")
+    t = relu_as_tropical_rational(x)
+    print(f"  x={x:6.2f}  relu={r:6.2f}  tropical={t:6.2f}  match={np.isclose(r, t)}")
 
-print("\n  Lipschitz check: |relu(x) - relu(y)| <= |x - y|")
-import random
-random.seed(42)
-for _ in range(5):
-    x, y = random.uniform(-5, 5), random.uniform(-5, 5)
-    lip = abs(relu(x) - relu(y)) <= abs(x - y) + 1e-15
-    print(f"  x={x:.3f}, y={y:.3f}: "
-          f"|relu(x)-relu(y)|={abs(relu(x)-relu(y)):.4f}, "
-          f"|x-y|={abs(x-y):.4f}, holds={lip}")
+# Demo 2: Width-Depth Tradeoff
+print("\n" + "=" * 60)
+print("Demo 2: Width-Depth Tradeoff (w*L ≤ w^L)")
+print("=" * 60)
+for w in range(2, 6):
+    for L in range(2, 6):
+        shallow = w * L
+        deep = w ** L
+        print(f"  w={w}, L={L}: shallow={shallow:6d}  deep={deep:6d}  "
+              f"ratio={deep/shallow:8.1f}x  deep≥shallow={deep >= shallow}")
 
-print("\n" + "=" * 70)
-print("All demonstrations complete.")
+# Demo 3: Activation Pattern Counting
+print("\n" + "=" * 60)
+print("Demo 3: Activation Pattern Space = 2^w")
+print("=" * 60)
+for w in range(1, 8):
+    patterns = 2 ** w
+    print(f"  Width w={w}: {patterns:5d} activation patterns")
+
+# Demo 4: Deep vs Shallow Region Bound
+print("\n" + "=" * 60)
+print("Demo 4: Deep (w+1)^L vs Shallow w*L+1")
+print("=" * 60)
+for w in [2, 3, 5, 10]:
+    for L in [2, 3, 5, 10]:
+        deep = (w + 1) ** L
+        shallow = w * L + 1
+        print(f"  w={w:2d}, L={L:2d}: deep={(w+1)}^{L}={deep:12d}  "
+              f"shallow={w}*{L}+1={shallow:6d}  ratio={deep/shallow:10.1f}x")
+
+# Demo 5: Connected Component Bound
+print("\n" + "=" * 60)
+print("Demo 5: Connected Components ≤ ∏wᵢ ≤ 2^(∑wᵢ)")
+print("=" * 60)
+architectures = [
+    [4, 4],
+    [8, 8, 8],
+    [16, 16],
+    [4, 8, 4],
+    [32, 32, 32, 32],
+]
+for widths in architectures:
+    prod_w = np.prod(widths)
+    sum_w = sum(widths)
+    exp_bound = 2 ** sum_w
+    print(f"  Widths {str(widths):20s}: ∏wᵢ={prod_w:12d}  "
+          f"2^(∑wᵢ)=2^{sum_w}={exp_bound:15d}  "
+          f"tightness={prod_w/exp_bound:.6f}")
+
+# Demo 6: Softmax → Max (Tropical Limit)
+print("\n" + "=" * 60)
+print("Demo 6: Softmax-to-Max Convergence (β → ∞)")
+print("=" * 60)
+x = np.array([1.0, 3.0, 2.0, 0.5])
+true_max = np.max(x)
+print(f"  x = {x}, max = {true_max}")
+for beta in [0.1, 0.5, 1.0, 2.0, 5.0, 10.0, 50.0, 100.0]:
+    lse = (1.0 / beta) * np.log(np.sum(np.exp(beta * x)))
+    print(f"  β={beta:6.1f}: (1/β)log∑exp(βxᵢ) = {lse:.6f}  "
+          f"gap = {lse - true_max:.6f}")
+
+# Demo 7: Tropical Degree and Network Depth
+print("\n" + "=" * 60)
+print("Demo 7: Tropical Degree = ∏wᵢ = w^L (uniform width)")
+print("=" * 60)
+for w in [2, 3, 4, 5]:
+    for L in [1, 2, 3, 4, 5]:
+        degree = w ** L
+        print(f"  w={w}, L={L}: tropical degree = {degree}")
+
+print("\n" + "=" * 60)
+print("All demos completed successfully!")
+print("=" * 60)
 
 
-#!/usr/bin/env python3
 """
-Visualization: Depth Advantage in ReLU Networks
+Visualization: Decision Boundaries of ReLU Networks as Tropical Hypersurfaces
 
-Shows how the number of linear regions depends on depth for fixed total width,
-demonstrating the exponential depth advantage from the Tropical Activation Complex theory.
+Generates a 2D visualization of a ReLU network's decision boundary,
+showing the piecewise linear structure and tropical geometry.
 """
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import numpy as np
-from math import comb, prod
-
-
-def zaslavsky_bound(n: int, d: int) -> int:
-    return sum(comb(n, k) for k in range(d + 1))
-
-
-def network_region_bound(input_dim: int, widths: list) -> int:
-    return prod(zaslavsky_bound(w, input_dim) for w in widths) if widths else 1
-
-
-def balanced_widths(total_width: int, depth: int) -> list:
-    base = total_width // depth
-    rem = total_width % depth
-    return [base + (1 if i < rem else 0) for i in range(depth)]
-
-
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-# Plot 1: Region bound vs depth for various total widths
-ax1 = axes[0]
-input_dim = 3
-for W in [6, 10, 16, 24]:
-    depths = list(range(1, W + 1))
-    regions = []
-    for d in depths:
-        ws = balanced_widths(W, d)
-        regions.append(network_region_bound(input_dim, ws))
-    ax1.semilogy(depths, regions, 'o-', label=f'W={W}', markersize=3)
-
-ax1.set_xlabel('Depth L')
-ax1.set_ylabel('Region Bound (log scale)')
-ax1.set_title(f'Region Bound vs Depth (n={input_dim})')
-ax1.legend()
-ax1.grid(True, alpha=0.3)
-
-# Plot 2: Fundamental theorem inequality chain
-ax2 = axes[1]
-W = 12
-input_dim = 2
-depths = list(range(1, W + 1))
-trop_degrees = []
-region_bounds = []
-exp_folds = []
-
-for d in depths:
-    ws = balanced_widths(W, d)
-    trop_degrees.append(prod(ws) if ws else 1)
-    region_bounds.append(network_region_bound(input_dim, ws))
-    exp_folds.append(2 ** sum(ws))
-
-ax2.semilogy(depths, trop_degrees, 's-', label='Tropical degree ∏wᵢ', color='blue', markersize=5)
-ax2.semilogy(depths, region_bounds, 'o-', label='Region bound ∏Z(wᵢ,n)', color='red', markersize=5)
-ax2.semilogy(depths, exp_folds, '^-', label='2^(fold number)', color='green', markersize=5)
-ax2.set_xlabel('Depth L')
-ax2.set_ylabel('Value (log scale)')
-ax2.set_title(f'Fundamental TAC Inequality (W={W}, n={input_dim})')
-ax2.legend(fontsize=8)
-ax2.grid(True, alpha=0.3)
-
-# Plot 3: Zaslavsky bound heatmap
-ax3 = axes[2]
-max_n = 15
-max_d = 8
-Z = np.zeros((max_n, max_d))
-for n in range(max_n):
-    for d in range(max_d):
-        Z[n, d] = zaslavsky_bound(n, d)
-
-im = ax3.imshow(np.log2(Z + 1), aspect='auto', origin='lower',
-                extent=[-0.5, max_d - 0.5, -0.5, max_n - 0.5],
-                cmap='viridis')
-ax3.set_xlabel('Dimension d')
-ax3.set_ylabel('Hyperplanes n')
-ax3.set_title('log₂(Z(n,d) + 1)')
-plt.colorbar(im, ax=ax3, label='log₂(regions + 1)')
-
-plt.tight_layout()
-plt.savefig('depth_advantage.png', dpi=150, bbox_inches='tight')
-print("Saved depth_advantage.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Tropical Activation Complex Structure
-
-Shows the relationship between the four TAC invariants across different architectures.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+
+
+def relu(x):
+    return np.maximum(x, 0)
+
+
+def relu_network_2d(x1, x2, seed=42):
+    """A 2-layer ReLU network with width 6 on 2D input."""
+    rng = np.random.RandomState(seed)
+    
+    # Layer 1: 2 -> 6
+    W1 = rng.randn(6, 2) * 1.5
+    b1 = rng.randn(6) * 0.5
+    
+    # Layer 2: 6 -> 4
+    W2 = rng.randn(4, 6) * 1.0
+    b2 = rng.randn(4) * 0.3
+    
+    # Output: 4 -> 1
+    w_out = rng.randn(4) * 0.5
+    b_out = 0.0
+    
+    inp = np.stack([x1.ravel(), x2.ravel()], axis=0)
+    h1 = relu(W1 @ inp + b1[:, None])
+    h2 = relu(W2 @ h1 + b2[:, None])
+    out = (w_out @ h2 + b_out).reshape(x1.shape)
+    return out
+
+
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+    
+    x = np.linspace(-3, 3, 500)
+    X1, X2 = np.meshgrid(x, x)
+    
+    for idx, (seed, title) in enumerate([
+        (42, "2-Layer, Width 6"),
+        (17, "2-Layer, Width 6 (seed 2)"),
+        (99, "2-Layer, Width 6 (seed 3)")
+    ]):
+        ax = axes[idx]
+        Z = relu_network_2d(X1, X2, seed=seed)
+        
+        # Color map: positive vs negative regions
+        ax.contourf(X1, X2, Z, levels=50, cmap='RdBu_r', alpha=0.8)
+        
+        # Decision boundary: f(x) = 0
+        ax.contour(X1, X2, Z, levels=[0], colors='black', linewidths=2)
+        
+        # Activation boundaries (hyperplanes where neurons switch)
+        ax.contour(X1, X2, Z, levels=20, colors='gray', linewidths=0.3, alpha=0.5)
+        
+        ax.set_title(f'Decision Boundary: {title}', fontsize=12, fontweight='bold')
+        ax.set_xlabel('x₁')
+        ax.set_ylabel('x₂')
+        ax.set_aspect('equal')
+    
+    plt.suptitle('ReLU Network Decision Boundaries as Tropical Hypersurfaces',
+                 fontsize=14, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    plt.savefig('decision_boundary_visualization.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved decision_boundary_visualization.png")
+
+
+if __name__ == "__main__":
+    main()
+
+
+"""
+Visualization: Depth vs Width Tradeoff
+
+Shows how network depth provides exponential expressiveness gains
+over width alone, with the tropical degree w^L growing much faster
+than the shallow bound w*L.
+"""
+
 import numpy as np
-from math import comb, prod
+import matplotlib.pyplot as plt
 
 
-def zaslavsky_bound(n: int, d: int) -> int:
-    return sum(comb(n, k) for k in range(d + 1))
+def main():
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # Left panel: Deep vs Shallow for different widths
+    ax1 = axes[0]
+    L_vals = np.arange(1, 8)
+    
+    for w, color in [(2, 'blue'), (3, 'green'), (4, 'red'), (5, 'purple')]:
+        deep = np.array([(w+1)**L for L in L_vals])
+        shallow = np.array([w*L + 1 for L in L_vals])
+        ax1.semilogy(L_vals, deep, 'o-', color=color, label=f'(w+1)^L, w={w}')
+        ax1.semilogy(L_vals, shallow, 's--', color=color, alpha=0.5, label=f'w*L+1, w={w}')
+    
+    ax1.set_title('Deep vs Shallow Region Counts', fontsize=12, fontweight='bold')
+    ax1.set_xlabel('Depth L')
+    ax1.set_ylabel('Number of Regions')
+    ax1.legend(fontsize=7, ncol=2)
+    ax1.grid(True, alpha=0.3)
+    
+    # Right panel: Ratio deep/shallow
+    ax2 = axes[1]
+    L_vals = np.arange(2, 10)
+    
+    for w, color in [(2, 'blue'), (3, 'green'), (4, 'red'), (5, 'purple'), (10, 'orange')]:
+        ratio = np.array([(w+1)**L / (w*L + 1) for L in L_vals])
+        ax2.semilogy(L_vals, ratio, 'o-', color=color, label=f'w={w}')
+    
+    ax2.set_title('Expressiveness Ratio: Deep / Shallow', fontsize=12, fontweight='bold')
+    ax2.set_xlabel('Depth L')
+    ax2.set_ylabel('Ratio (w+1)^L / (w*L+1)')
+    ax2.legend()
+    ax2.grid(True, alpha=0.3)
+    
+    plt.suptitle('The Exponential Advantage of Depth',
+                 fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    plt.savefig('depth_width_tradeoff.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved depth_width_tradeoff.png")
 
 
-def compute_tac_invariants(input_dim: int, widths: list) -> dict:
-    ws = widths
-    return {
-        "tropical_degree": prod(ws) if ws else 1,
-        "fold_number": sum(ws),
-        "singularity_budget": sum(comb(w, 2) for w in ws),
-        "region_bound": prod(zaslavsky_bound(w, input_dim) for w in ws) if ws else 1,
-    }
+if __name__ == "__main__":
+    main()
 
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+"""
+Visualization: Softmax-to-Max Tropical Limit
 
-# Generate many architectures with total width 12, input dim 3
-W = 12
-n = 3
-architectures = []
-for L in range(1, W + 1):
-    base = W // L
-    rem = W % L
-    widths = [base + (1 if i < rem else 0) for i in range(L)]
-    tac = compute_tac_invariants(n, widths)
-    tac["depth"] = L
-    tac["widths"] = widths
-    architectures.append(tac)
+Shows how the log-sum-exp (softmax) converges to the max function
+as the temperature parameter β → ∞. This is the fundamental
+dequantization from classical to tropical geometry.
+"""
 
-depths = [a["depth"] for a in architectures]
-tds = [a["tropical_degree"] for a in architectures]
-fns = [a["fold_number"] for a in architectures]
-sbs = [a["singularity_budget"] for a in architectures]
-rbs = [a["region_bound"] for a in architectures]
+import numpy as np
+import matplotlib.pyplot as plt
 
-# Plot 1: All four invariants vs depth
-ax = axes[0, 0]
-ax.plot(depths, tds, 'bo-', label='Tropical degree', markersize=5)
-ax.plot(depths, sbs, 'gs-', label='Singularity budget', markersize=5)
-ax.set_xlabel('Depth L')
-ax.set_ylabel('Value')
-ax.set_title(f'TAC Invariants vs Depth (W={W}, n={n})')
-ax.legend()
-ax.grid(True, alpha=0.3)
 
-# Plot 2: Region bound and exponential bound
-ax = axes[0, 1]
-ax.semilogy(depths, rbs, 'ro-', label='Region bound', markersize=5)
-ax.axhline(y=2**W, color='green', linestyle='--', label=f'2^W = {2**W}')
-ax.set_xlabel('Depth L')
-ax.set_ylabel('Value (log scale)')
-ax.set_title(f'Region Bound vs 2^W (W={W}, n={n})')
-ax.legend()
-ax.grid(True, alpha=0.3)
+def main():
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # Left panel: LSE functions for different β
+    ax1 = axes[0]
+    x = np.linspace(-3, 3, 500)
+    
+    # Two affine functions
+    f1 = 2 * x + 1
+    f2 = -x + 2
+    trop_max = np.maximum(f1, f2)
+    
+    ax1.plot(x, f1, '--', color='blue', alpha=0.5, label='2x + 1')
+    ax1.plot(x, f2, '--', color='red', alpha=0.5, label='-x + 2')
+    ax1.plot(x, trop_max, 'k-', linewidth=2, label='max (tropical)')
+    
+    for beta, color in [(0.5, '#ff9999'), (1, '#ff6666'), (2, '#ff3333'),
+                        (5, '#cc0000'), (20, '#990000')]:
+        lse = (1/beta) * np.log(np.exp(beta * f1) + np.exp(beta * f2))
+        ax1.plot(x, lse, '-', color=color, alpha=0.7, label=f'β={beta}')
+    
+    ax1.set_title('Log-Sum-Exp → Max (Tropical Limit)', fontsize=12, fontweight='bold')
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('f(x)')
+    ax1.legend(loc='upper left', fontsize=8)
+    ax1.set_ylim(-5, 10)
+    ax1.grid(True, alpha=0.3)
+    
+    # Right panel: Convergence rate
+    ax2 = axes[1]
+    betas = np.logspace(-1, 3, 100)
+    values = np.array([1.0, 3.0, 2.0, 0.5])
+    true_max = np.max(values)
+    
+    gaps = []
+    for beta in betas:
+        v_max = np.max(values)
+        lse = v_max + (1/beta) * np.log(np.sum(np.exp(beta * (values - v_max))))
+        gaps.append(lse - true_max)
+    
+    ax2.loglog(betas, gaps, 'b-', linewidth=2)
+    ax2.loglog(betas, np.log(len(values)) / betas, 'r--', linewidth=1,
+              label=f'log(n)/β bound (n={len(values)})')
+    
+    ax2.set_title('Convergence Gap: LSE - max', fontsize=12, fontweight='bold')
+    ax2.set_xlabel('β (temperature⁻¹)')
+    ax2.set_ylabel('Gap = (1/β)log∑exp(βxᵢ) - max(xᵢ)')
+    ax2.legend()
+    ax2.grid(True, alpha=0.3)
+    
+    plt.suptitle('The Tropical Limit: From Smooth to Piecewise Linear',
+                 fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    plt.savefig('tropical_limit_visualization.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved tropical_limit_visualization.png")
 
-# Plot 3: Tropical degree vs region bound (scatter)
-ax = axes[1, 0]
-colors = plt.cm.viridis(np.linspace(0, 1, len(architectures)))
-for i, a in enumerate(architectures):
-    ax.scatter(a["tropical_degree"], a["region_bound"], c=[colors[i]],
-               s=50, zorder=3, label=f'L={a["depth"]}' if a["depth"] <= 4 else '')
-# Diagonal line y = x
-max_val = max(max(tds), max(rbs))
-ax.plot([0, max_val], [0, max_val], 'k--', alpha=0.3, label='degree = regions')
-ax.set_xlabel('Tropical Degree')
-ax.set_ylabel('Region Bound')
-ax.set_title('Tropical Degree vs Region Bound')
-ax.legend(fontsize=7)
-ax.grid(True, alpha=0.3)
 
-# Plot 4: Singularity budget vs fold_number^2
-ax = axes[1, 1]
-fn_sq = [f**2 for f in fns]
-ax.bar(range(len(depths)), sbs, alpha=0.7, label='Singularity budget', color='blue')
-ax.bar(range(len(depths)), fn_sq, alpha=0.3, label='Fold number²', color='red')
-ax.set_xlabel('Architecture index (depth 1 to 12)')
-ax.set_ylabel('Value')
-ax.set_title('Singularity Budget ≤ Fold Number²')
-ax.legend()
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('tac_structure.png', dpi=150, bbox_inches='tight')
-print("Saved tac_structure.png")
+if __name__ == "__main__":
+    main()

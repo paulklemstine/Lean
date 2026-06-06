@@ -1,254 +1,176 @@
-#!/usr/bin/env python3
 """
-Algorithms for Tropical Activation Complex computation and analysis.
+Algorithms for Tropical Geometry of Neural Network Decision Boundaries
 
-Type-hinted implementations of all algorithms from the research paper.
+Type-hinted implementations of the core algorithms.
 """
 
-from math import comb, prod, log2, floor, ceil
-from typing import List, Tuple, Dict, Optional
-from dataclasses import dataclass
+from typing import List, Tuple, Callable
+import numpy as np
+from numpy.typing import NDArray
 
 
-@dataclass
-class ReLUArchitecture:
-    """A ReLU neural network architecture."""
-    input_dim: int
-    hidden_widths: List[int]
-
-    @property
-    def depth(self) -> int:
-        return len(self.hidden_widths)
-
-    @property
-    def total_width(self) -> int:
-        return sum(self.hidden_widths)
-
-    @property
-    def max_width(self) -> int:
-        return max(self.hidden_widths) if self.hidden_widths else 0
+def relu(x: NDArray[np.float64]) -> NDArray[np.float64]:
+    """ReLU activation: max(x, 0)"""
+    return np.maximum(x, 0)
 
 
-@dataclass
-class TropicalActivationComplex:
-    """The Tropical Activation Complex (TAC) — a novel mathematical structure
-    capturing the algebraic geometry of ReLU decision boundaries."""
-    arch: ReLUArchitecture
-    tropical_degree: int
-    fold_number: int
-    singularity_budget: int
-    region_bound: int
-
-    def verify_fundamental_theorem(self) -> Dict[str, bool]:
-        """Verify all parts of the fundamental TAC inequality."""
-        return {
-            "degree_le_region": self.tropical_degree <= self.region_bound,
-            "region_le_exp_fold": self.region_bound <= 2 ** self.fold_number,
-            "singularity_le_fold_sq": self.singularity_budget <= self.fold_number ** 2,
-        }
-
-    def __repr__(self) -> str:
-        return (f"TAC(arch=({self.arch.input_dim}; {self.arch.hidden_widths}), "
-                f"deg={self.tropical_degree}, fold={self.fold_number}, "
-                f"sing={self.singularity_budget}, regions={self.region_bound})")
-
-
-def zaslavsky_bound(num_hyperplanes: int, dimension: int) -> int:
-    """Compute the Zaslavsky bound: max regions from n hyperplanes in R^d.
-
-    Z(n, d) = sum_{k=0}^{d} C(n, k)
-
-    This is the maximum number of connected components that n hyperplanes
-    in general position create in R^d.
-
-    Args:
-        num_hyperplanes: Number of hyperplanes (n)
-        dimension: Ambient dimension (d)
-
-    Returns:
-        The Zaslavsky bound Z(n, d)
-    """
-    return sum(comb(num_hyperplanes, k) for k in range(dimension + 1))
-
-
-def compute_tac(arch: ReLUArchitecture) -> TropicalActivationComplex:
-    """Construct a Tropical Activation Complex from a ReLU architecture.
-
-    Computes all four structural invariants:
-    - Tropical degree: prod(w_i)
-    - Fold number: sum(w_i)
-    - Singularity budget: sum(C(w_i, 2))
-    - Region bound: prod(Z(w_i, n))
-
-    Args:
-        arch: The ReLU network architecture
-
-    Returns:
-        The corresponding TAC
-    """
-    ws = arch.hidden_widths
-    n = arch.input_dim
-
-    return TropicalActivationComplex(
-        arch=arch,
-        tropical_degree=prod(ws) if ws else 1,
-        fold_number=sum(ws),
-        singularity_budget=sum(comb(w, 2) for w in ws),
-        region_bound=prod(zaslavsky_bound(w, n) for w in ws) if ws else 1,
-    )
-
-
-def optimal_balanced_architecture(
-    total_width: int, depth: int, input_dim: int
-) -> Tuple[ReLUArchitecture, TropicalActivationComplex]:
-    """Find the balanced architecture for given total width and depth.
-
-    By the AM-GM theorem, the tropical degree is maximized when all
-    layer widths are as equal as possible.
-
-    Args:
-        total_width: Total width W = sum(w_i)
-        depth: Number of hidden layers L
-        input_dim: Input dimension n
-
-    Returns:
-        Tuple of (optimal architecture, its TAC)
-    """
-    base = total_width // depth
-    remainder = total_width % depth
-    widths = [base + (1 if i < remainder else 0) for i in range(depth)]
-
-    arch = ReLUArchitecture(input_dim=input_dim, hidden_widths=widths)
-    return arch, compute_tac(arch)
-
-
-def search_optimal_depth(
-    total_width: int, input_dim: int, max_depth: Optional[int] = None
-) -> Tuple[int, ReLUArchitecture, TropicalActivationComplex]:
-    """Search for the depth that maximizes the region bound.
-
-    Args:
-        total_width: Total width W
-        input_dim: Input dimension n
-        max_depth: Maximum depth to search (defaults to total_width)
-
-    Returns:
-        Tuple of (optimal depth, architecture, TAC)
-    """
-    if max_depth is None:
-        max_depth = total_width
-
-    best_depth = 1
-    best_arch, best_tac = optimal_balanced_architecture(total_width, 1, input_dim)
-    best_regions = best_tac.region_bound
-
-    for d in range(2, max_depth + 1):
-        arch, tac = optimal_balanced_architecture(total_width, d, input_dim)
-        if tac.region_bound > best_regions:
-            best_regions = tac.region_bound
-            best_depth = d
-            best_arch = arch
-            best_tac = tac
-
-    return best_depth, best_arch, best_tac
-
-
-def relu(x: float) -> float:
-    """ReLU activation function: max(0, x)."""
-    return max(0.0, x)
-
-
-def relu_abs_formula(x: float) -> float:
-    """ReLU via absolute value: (x + |x|) / 2."""
-    return (x + abs(x)) / 2.0
-
-
-def max_abs_formula(a: float, b: float) -> float:
-    """Max via absolute value: (a + b + |a - b|) / 2."""
-    return (a + b + abs(a - b)) / 2.0
-
-
-def count_activation_patterns_1d(
-    weights: List[float], biases: List[float], x_range: Tuple[float, float], num_samples: int = 10000
-) -> int:
-    """Count distinct activation patterns of a single ReLU layer on 1D input.
-
-    Each neuron computes relu(w*x + b). The activation pattern records
-    which neurons are active (w*x + b > 0) at each point.
-
-    Args:
-        weights: Layer weights
-        biases: Layer biases
-        x_range: Range of x values to sample
-        num_samples: Number of sample points
-
-    Returns:
-        Number of distinct activation patterns observed
-    """
-    patterns = set()
-    x_min, x_max = x_range
-
-    for i in range(num_samples):
-        x = x_min + (x_max - x_min) * i / (num_samples - 1)
-        pattern = tuple(1 if w * x + b > 0 else 0 for w, b in zip(weights, biases))
-        patterns.add(pattern)
-
-    return len(patterns)
-
-
-def amgm_bound(widths: List[int]) -> int:
-    """Compute the AM-GM upper bound on tropical degree.
-
-    prod(w_i) <= (sum(w_i) / L + 1)^L
-
-    Args:
-        widths: Layer widths
-
-    Returns:
-        The AM-GM upper bound
-    """
-    if not widths:
-        return 1
-    S = sum(widths)
-    L = len(widths)
-    return (S // L + 1) ** L
-
-
-def depth_advantage_ratio(
-    total_width: int, depth: int, input_dim: int
+def tropical_polynomial_eval(
+    slopes: List[float],
+    intercepts: List[float],
+    x: float
 ) -> float:
-    """Compute the ratio of deep/shallow region bounds.
-
-    Measures how much advantage depth gives over a single-layer network
-    with the same total width.
-
-    Args:
-        total_width: Total width W
-        depth: Number of layers L
-        input_dim: Input dimension n
-
-    Returns:
-        Ratio deep_regions / shallow_regions
+    """Evaluate a 1D tropical polynomial: max_i(slope_i * x + intercept_i)
+    
+    A tropical polynomial is the pointwise maximum of affine functions.
+    In tropical geometry, this replaces classical polynomial evaluation
+    where 'addition' becomes 'max' and 'multiplication' becomes '+'.
     """
-    _, shallow_tac = optimal_balanced_architecture(total_width, 1, input_dim)
-    _, deep_tac = optimal_balanced_architecture(total_width, depth, input_dim)
+    return max(s * x + b for s, b in zip(slopes, intercepts))
 
-    if shallow_tac.region_bound == 0:
-        return float('inf')
-    return deep_tac.region_bound / shallow_tac.region_bound
+
+def tropical_rational_eval(
+    num_slopes: List[float],
+    num_intercepts: List[float],
+    den_slopes: List[float],
+    den_intercepts: List[float],
+    x: float
+) -> float:
+    """Evaluate a tropical rational function: num(x) - den(x)
+    
+    Every ReLU network function is a tropical rational function
+    (Zhang-Naitzat-Lim, 2018).
+    """
+    num = tropical_polynomial_eval(num_slopes, num_intercepts, x)
+    den = tropical_polynomial_eval(den_slopes, den_intercepts, x)
+    return num - den
+
+
+def count_linear_regions(widths: List[int]) -> int:
+    """Upper bound on linear regions for a ReLU network with given layer widths.
+    
+    Returns prod_i (w_i + 1), which bounds the number of distinct
+    activation patterns that can be realized.
+    """
+    result = 1
+    for w in widths:
+        result *= (w + 1)
+    return result
+
+
+def count_activation_patterns(widths: List[int]) -> int:
+    """Total number of possible activation patterns: prod_i 2^w_i = 2^(sum w_i)"""
+    return 2 ** sum(widths)
+
+
+def tropical_degree(widths: List[int]) -> int:
+    """Tropical degree of a ReLU network: product of layer widths.
+    
+    This bounds the number of 'bends' in the piecewise linear function,
+    which equals the degree of the tropical hypersurface.
+    """
+    result = 1
+    for w in widths:
+        result *= w
+    return result
+
+
+def width_depth_ratio(w: int, L: int) -> float:
+    """Ratio of deep network complexity to shallow: w^L / (w*L)
+    
+    This quantifies the exponential advantage of depth over width.
+    For w >= 2, L >= 2, this ratio is always >= 1.
+    """
+    return (w ** L) / (w * L)
+
+
+def softmax_to_max(x: NDArray[np.float64], beta: float) -> float:
+    """Scaled log-sum-exp: (1/β) * log(∑ exp(β*x_i))
+    
+    Converges to max(x) as β → ∞ (tropical limit).
+    Always >= max(x) for any β > 0.
+    """
+    # Numerically stable computation
+    x_max = np.max(x)
+    return x_max + (1.0 / beta) * np.log(np.sum(np.exp(beta * (x - x_max))))
+
+
+def find_decision_boundary_1d(
+    network_fn: Callable[[float], float],
+    x_range: Tuple[float, float],
+    n_points: int = 10000
+) -> List[float]:
+    """Find approximate zero crossings of a 1D function.
+    
+    Returns x-values where the function changes sign.
+    For a ReLU network, these are points on the decision boundary.
+    """
+    x_vals = np.linspace(x_range[0], x_range[1], n_points)
+    y_vals = np.array([network_fn(x) for x in x_vals])
+    
+    crossings = []
+    for i in range(len(y_vals) - 1):
+        if y_vals[i] * y_vals[i+1] < 0:
+            # Linear interpolation to find crossing
+            t = y_vals[i] / (y_vals[i] - y_vals[i+1])
+            crossings.append(x_vals[i] + t * (x_vals[i+1] - x_vals[i]))
+    
+    return crossings
+
+
+def relu_network_1d(
+    weights: List[List[float]],
+    biases: List[List[float]],
+    final_weight: List[float],
+    final_bias: float,
+    x: float
+) -> float:
+    """Evaluate a 1D-input ReLU network.
+    
+    weights[l][j] = weight of neuron j in layer l
+    biases[l][j] = bias of neuron j in layer l
+    """
+    h = np.array([x])
+    for w_layer, b_layer in zip(weights, biases):
+        W = np.array(w_layer).reshape(-1, len(h))
+        b = np.array(b_layer)
+        h = relu(W @ h + b)
+    return float(np.dot(final_weight, h) + final_bias)
+
+
+def compute_tropical_representation(
+    weights: List[List[float]],
+    biases: List[List[float]]
+) -> Tuple[List[Tuple[float, float]], List[Tuple[float, float]]]:
+    """Compute the tropical rational representation of a 1-layer 1D ReLU network.
+    
+    Returns (numerator_terms, denominator_terms) where each term is (slope, intercept).
+    
+    For a single layer: relu(wx + b) = max(wx + b, 0) - 0
+    Numerator has terms (w, b) and (0, 0).
+    Denominator has term (0, 0).
+    """
+    num_terms = []
+    den_terms = [(0.0, 0.0)]
+    
+    for w, b in zip(weights[0], biases[0]):
+        num_terms.append((w, b))
+        num_terms.append((0.0, 0.0))
+    
+    return num_terms, den_terms
 
 
 if __name__ == "__main__":
-    # Example usage
-    arch = ReLUArchitecture(input_dim=2, hidden_widths=[4, 4, 4])
-    tac = compute_tac(arch)
-    print(f"Architecture: {arch}")
-    print(f"TAC: {tac}")
-    print(f"Fundamental theorem: {tac.verify_fundamental_theorem()}")
-    print()
-
-    # Optimal depth search
-    opt_depth, opt_arch, opt_tac = search_optimal_depth(12, 3)
-    print(f"Optimal depth for W=12, n=3: {opt_depth}")
-    print(f"Architecture: {opt_arch}")
-    print(f"Regions: {opt_tac.region_bound}")
+    # Example: 3-layer network with width 4
+    widths = [4, 4, 4]
+    
+    print("Network architecture:", widths)
+    print(f"  Linear regions (upper bound): {count_linear_regions(widths)}")
+    print(f"  Activation patterns: {count_activation_patterns(widths)}")
+    print(f"  Tropical degree: {tropical_degree(widths)}")
+    print(f"  Width-depth ratio: {width_depth_ratio(4, 3):.1f}x")
+    
+    # Tropical limit demo
+    x = np.array([1.0, 3.0, 2.0])
+    for beta in [1, 10, 100]:
+        approx = softmax_to_max(x, beta)
+        print(f"  β={beta}: softmax→max = {approx:.6f} (true max = {max(x)})")
