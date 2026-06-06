@@ -1,272 +1,243 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Type-hinted implementations of the counterpoint category algorithms.
+Contrapuntal Quiver — Core Algorithms
 
-Provides:
-  1. CounterpointCategory: enumeration and classification of transitions
-  2. PathEnumerator: counting and generating valid counterpoint paths
-  3. SymmetryAnalyzer: complement involution and order analysis
-  4. DiatonicSpecializer: diatonic scale consonance analysis
+Type-hinted implementations of the key algorithms from the
+Contrapuntal Quiver formalization.
 """
 
+from enum import IntEnum
+from typing import Dict, FrozenSet, List, Optional, Set, Tuple
 from dataclasses import dataclass
-from enum import Enum, auto
-from typing import List, Tuple, Set, Dict, Iterator
 
 
-class ConsInterval(Enum):
-    """The six consonant interval classes (mod octave)."""
-    P1 = 0   # Perfect unison
-    m3 = 3   # Minor third
-    M3 = 4   # Major third
-    P5 = 7   # Perfect fifth
-    m6 = 8   # Minor sixth
-    M6 = 9   # Major sixth
-
-    @property
-    def is_perfect(self) -> bool:
-        return self in (ConsInterval.P1, ConsInterval.P5)
-
-    @property
-    def is_imperfect(self) -> bool:
-        return not self.is_perfect
-
-    @property
-    def complement(self) -> 'ConsInterval':
-        """The octave complement involution."""
-        return {
-            ConsInterval.P1: ConsInterval.P1,
-            ConsInterval.m3: ConsInterval.M6,
-            ConsInterval.M3: ConsInterval.m6,
-            ConsInterval.P5: ConsInterval.P5,
-            ConsInterval.m6: ConsInterval.M3,
-            ConsInterval.M6: ConsInterval.m3,
-        }[self]
-
-    @property
-    def consonance_rank(self) -> int:
-        """Higher = more consonant."""
-        return {
-            ConsInterval.m6: 0, ConsInterval.M6: 1,
-            ConsInterval.m3: 2, ConsInterval.M3: 3,
-            ConsInterval.P5: 4, ConsInterval.P1: 5,
-        }[self]
-
-
-class MotionType(Enum):
-    """The four types of contrapuntal motion."""
-    PARALLEL = auto()
-    SIMILAR = auto()
-    CONTRARY = auto()
-    OBLIQUE = auto()
+class MotionType(IntEnum):
+    """Motion types in counterpoint, ordered by restrictiveness."""
+    CONTRARY = 0
+    OBLIQUE = 1
+    SIMILAR = 2
+    PARALLEL = 3
 
 
 @dataclass(frozen=True)
-class CPTransition:
-    """A counterpoint transition: (source, target, motion)."""
-    source: ConsInterval
-    target: ConsInterval
-    motion: MotionType
+class ContrapuntalQuiver:
+    """A contrapuntal quiver over a finite vertex set.
 
-    def is_permitted(self) -> bool:
-        """Standard rule: no parallel motion to perfect consonances."""
-        return not (self.motion == MotionType.PARALLEL and self.target.is_perfect)
+    Attributes:
+        vertices: tuple of vertex labels
+        is_perfect: function classifying vertices as perfect/imperfect
+        threshold: function giving the maximum permitted motion type for each edge
+    """
+    vertices: Tuple[int, ...]
+    perfect_set: FrozenSet[int]
 
-    def is_strictly_permitted(self) -> bool:
-        """Strict rule: no parallel/similar to perfect consonances."""
-        return not (
-            self.motion in (MotionType.PARALLEL, MotionType.SIMILAR)
-            and self.target.is_perfect
-        )
+    def is_perfect(self, v: int) -> bool:
+        return v in self.perfect_set
 
+    def threshold(self, a: int, b: int) -> MotionType:
+        """The maximum permitted motion type from a to b."""
+        if self.is_perfect(b):
+            return MotionType.SIMILAR
+        return MotionType.PARALLEL
 
-class CounterpointCategory:
-    """The finite category of first-species counterpoint transitions."""
+    def allowed(self, a: int, b: int, m: MotionType) -> bool:
+        """Whether motion type m is permitted from a to b."""
+        return m <= self.threshold(a, b)
 
-    def __init__(self, strict: bool = False) -> None:
-        self.strict = strict
-        self._transitions: List[CPTransition] = []
-        self._permitted: List[CPTransition] = []
-        self._forbidden: List[CPTransition] = []
-        self._build()
+    def hom_set(self, a: int, b: int) -> Set[MotionType]:
+        """The set of permitted motion types from a to b."""
+        return {m for m in MotionType if self.allowed(a, b, m)}
 
-    def _build(self) -> None:
-        for s in ConsInterval:
-            for t in ConsInterval:
-                for m in MotionType:
-                    tr = CPTransition(s, t, m)
-                    self._transitions.append(tr)
-                    check = tr.is_strictly_permitted() if self.strict else tr.is_permitted()
-                    if check:
-                        self._permitted.append(tr)
-                    else:
-                        self._forbidden.append(tr)
+    def hom_set_size(self, a: int, b: int) -> int:
+        """Size of the hom-set from a to b."""
+        return len(self.hom_set(a, b))
 
-    @property
-    def total_count(self) -> int:
-        return len(self._transitions)
+    def out_degree(self, a: int, m: MotionType) -> int:
+        """Number of targets reachable from a via motion type m."""
+        return sum(1 for b in self.vertices if self.allowed(a, b, m))
 
-    @property
-    def permitted_count(self) -> int:
-        return len(self._permitted)
+    def in_degree(self, b: int, m: MotionType) -> int:
+        """Number of sources that can reach b via motion type m."""
+        return sum(1 for a in self.vertices if self.allowed(a, b, m))
 
-    @property
-    def forbidden_count(self) -> int:
-        return len(self._forbidden)
+    def total_freedom(self, a: int) -> int:
+        """Total out-degree of vertex a across all motion types."""
+        return sum(self.out_degree(a, m) for m in MotionType)
 
-    def permitted_transitions(self) -> List[CPTransition]:
-        return list(self._permitted)
-
-    def forbidden_transitions(self) -> List[CPTransition]:
-        return list(self._forbidden)
-
-    def fiber_size(self, target: ConsInterval) -> int:
-        """Number of permitted motion types for a given target."""
+    def total_morphism_count(self) -> int:
+        """Total number of morphisms in the quiver."""
         return sum(
-            1 for m in MotionType
-            if (CPTransition(ConsInterval.P1, target, m).is_strictly_permitted()
-                if self.strict
-                else CPTransition(ConsInterval.P1, target, m).is_permitted())
+            self.hom_set_size(a, b)
+            for a in self.vertices
+            for b in self.vertices
         )
 
-    def adjacency_matrix(self, motion: MotionType) -> Dict[Tuple[ConsInterval, ConsInterval], bool]:
-        """Which source-target pairs are reachable via a specific motion type."""
-        result: Dict[Tuple[ConsInterval, ConsInterval], bool] = {}
-        for s in ConsInterval:
-            for t in ConsInterval:
-                tr = CPTransition(s, t, motion)
-                check = tr.is_strictly_permitted() if self.strict else tr.is_permitted()
-                result[(s, t)] = check
-        return result
+    def restrictiveness_spectrum(self) -> Dict[int, int]:
+        """Distribution of hom-set sizes."""
+        spectrum: Dict[int, int] = {}
+        for a in self.vertices:
+            for b in self.vertices:
+                size = self.hom_set_size(a, b)
+                spectrum[size] = spectrum.get(size, 0) + 1
+        return spectrum
+
+    def motion_subgraph_edges(self, m: MotionType) -> List[Tuple[int, int]]:
+        """Edges in the subgraph for a given motion type."""
+        return [(a, b) for a in self.vertices for b in self.vertices
+                if self.allowed(a, b, m)]
 
 
-class PathEnumerator:
-    """Enumerate and count valid counterpoint paths of given length."""
+def build_fux_quiver() -> ContrapuntalQuiver:
+    """Construct the standard Fux first-species contrapuntal quiver.
 
-    def __init__(self, strict: bool = False) -> None:
-        self.strict = strict
-
-    def is_valid_step(self, s: ConsInterval, t: ConsInterval, m: MotionType) -> bool:
-        tr = CPTransition(s, t, m)
-        return tr.is_strictly_permitted() if self.strict else tr.is_permitted()
-
-    def count_paths(self, length: int) -> int:
-        """Count valid paths of given length (number of transitions)."""
-        if length == 0:
-            return len(ConsInterval)
-        intervals = list(ConsInterval)
-        motions = list(MotionType)
-        count = 0
-        # For length 1, count valid single transitions
-        if length == 1:
-            for s in intervals:
-                for t in intervals:
-                    for m in motions:
-                        if self.is_valid_step(s, t, m):
-                            count += 1
-            return count
-        # For length 2
-        if length == 2:
-            for i1 in intervals:
-                for i2 in intervals:
-                    for i3 in intervals:
-                        for m1 in motions:
-                            for m2 in motions:
-                                if (self.is_valid_step(i1, i2, m1) and
-                                    self.is_valid_step(i2, i3, m2)):
-                                    count += 1
-            return count
-        raise ValueError(f"Length {length} not efficiently supported")
-
-    def passage_rate(self, length: int) -> float:
-        """Fraction of potential paths that are valid."""
-        valid = self.count_paths(length)
-        total = len(ConsInterval) ** (length + 1) * len(MotionType) ** length
-        return valid / total
+    Returns:
+        The Fux quiver on 6 consonant interval classes.
+    """
+    return ContrapuntalQuiver(
+        vertices=(0, 3, 4, 7, 8, 9),
+        perfect_set=frozenset({0, 7})
+    )
 
 
-class SymmetryAnalyzer:
-    """Analyze symmetries of the counterpoint transition system."""
+def verify_target_determination(quiver: ContrapuntalQuiver) -> bool:
+    """Verify the Target Determination Principle.
 
-    @staticmethod
-    def fixed_points() -> List[ConsInterval]:
-        """Intervals fixed by the complement involution."""
-        return [i for i in ConsInterval if i.complement == i]
+    Checks that fuxAllowed(a1, b, m) == fuxAllowed(a2, b, m)
+    for all a1, a2, b, m.
 
-    @staticmethod
-    def orbits() -> List[Tuple[ConsInterval, ConsInterval]]:
-        """Non-trivial orbits of the complement involution."""
-        seen: Set[ConsInterval] = set()
-        orbits = []
-        for i in ConsInterval:
-            if i not in seen and i.complement != i:
-                orbits.append((i, i.complement))
-                seen.add(i)
-                seen.add(i.complement)
-        return orbits
+    Args:
+        quiver: a contrapuntal quiver
 
-    @staticmethod
-    def verify_order_reversing() -> bool:
-        """Check complement reverses order on imperfect consonances."""
-        imperfect = [i for i in ConsInterval if i.is_imperfect]
-        for i in imperfect:
-            for j in imperfect:
-                if i.consonance_rank <= j.consonance_rank:
-                    if not (j.complement.consonance_rank <= i.complement.consonance_rank):
-                        return False
-        return True
+    Returns:
+        True if the principle holds
+    """
+    for b in quiver.vertices:
+        for m in MotionType:
+            values = {quiver.allowed(a, b, m) for a in quiver.vertices}
+            if len(values) > 1:
+                return False
+    return True
 
 
-class DiatonicSpecializer:
-    """Analyze consonance in specific diatonic scales."""
+def verify_downward_closure(quiver: ContrapuntalQuiver) -> bool:
+    """Verify the downward-closure axiom.
 
-    SCALES: Dict[str, List[int]] = {
-        "C_major": [0, 2, 4, 5, 7, 9, 11],
-        "A_minor": [9, 11, 0, 2, 4, 5, 7],
-        "G_major": [7, 9, 11, 0, 2, 4, 6],
+    Checks that if m1 <= m2 and allowed(a, b, m2), then allowed(a, b, m1).
+
+    Returns:
+        True if the axiom holds
+    """
+    for a in quiver.vertices:
+        for b in quiver.vertices:
+            for m2 in MotionType:
+                if quiver.allowed(a, b, m2):
+                    for m1 in MotionType:
+                        if m1 <= m2 and not quiver.allowed(a, b, m1):
+                            return False
+    return True
+
+
+def interval_inversion(i: int) -> int:
+    """Interval inversion (complement map) mod 12."""
+    return (12 - i) % 12
+
+
+def consonance_inversion_analysis() -> Dict[str, object]:
+    """Analyze how inversion affects the consonance set.
+
+    Returns:
+        Dictionary with analysis results
+    """
+    consonances = {0, 3, 4, 7, 8, 9}
+    results = {}
+
+    for i in sorted(consonances):
+        inv = interval_inversion(i)
+        results[i] = {
+            "inversion": inv,
+            "survives": inv in consonances
+        }
+
+    survivors = sum(1 for v in results.values() if v["survives"])
+
+    return {
+        "pairs": results,
+        "survivors": survivors,
+        "total": len(consonances),
+        "broken": [i for i, v in results.items() if not v["survives"]]
     }
 
-    CONSONANT_SEMITONES = {i.value for i in ConsInterval}
 
-    @classmethod
-    def consonant_pairs(cls, scale_name: str) -> List[Tuple[int, int]]:
-        """Find all consonant pairs in a given scale."""
-        scale = cls.SCALES[scale_name]
-        pairs = []
-        for i, d1 in enumerate(scale):
-            for j, d2 in enumerate(scale):
-                interval = (d2 - d1) % 12
-                if interval in cls.CONSONANT_SEMITONES:
-                    pairs.append((i, j))
-        return pairs
+def contrapuntal_entropy(quiver: ContrapuntalQuiver, b: int) -> float:
+    """Compute the contrapuntal entropy of targeting interval b.
 
-    @classmethod
-    def consonance_density(cls, scale_name: str) -> float:
-        """Fraction of dyads that are consonant."""
-        pairs = cls.consonant_pairs(scale_name)
-        total = len(cls.SCALES[scale_name]) ** 2
-        return len(pairs) / total
+    H(b) = log2(|homSet(a, b)|)
+
+    This is source-independent by Target Determination.
+    """
+    import math
+    size = quiver.hom_set_size(quiver.vertices[0], b)
+    return math.log2(size) if size > 0 else 0.0
+
+
+def enumerate_all_quivers(
+    vertices: Tuple[int, ...],
+    perfect_set: FrozenSet[int]
+) -> int:
+    """Count all valid contrapuntal quivers on given vertices.
+
+    A valid quiver must satisfy:
+    1. Downward closure
+    2. Contrary universality
+    3. Parallel-perfect prohibition
+
+    Due to downward closure, each edge is determined by its threshold
+    motion type. The constraints are:
+    - Threshold >= CONTRARY (universality)
+    - If target is perfect: threshold <= SIMILAR
+
+    Returns:
+        Number of valid quivers
+    """
+    # Each edge has a threshold in {CONTRARY, OBLIQUE, SIMILAR, PARALLEL}
+    # Constraint: if target is perfect, threshold <= SIMILAR (3 choices)
+    # Constraint: if target is imperfect, threshold can be anything (4 choices)
+
+    n_perfect_targets = sum(1 for v in vertices if v in perfect_set)
+    n_imperfect_targets = len(vertices) - n_perfect_targets
+
+    n_edges_to_perfect = len(vertices) * n_perfect_targets
+    n_edges_to_imperfect = len(vertices) * n_imperfect_targets
+
+    # Each edge to perfect has 3 threshold choices (CONTRARY, OBLIQUE, SIMILAR)
+    # Each edge to imperfect has 4 threshold choices
+    total = (3 ** n_edges_to_perfect) * (4 ** n_edges_to_imperfect)
+    return total
 
 
 if __name__ == "__main__":
-    # Demo
-    cat = CounterpointCategory(strict=False)
-    print(f"Standard: {cat.permitted_count} permitted, {cat.forbidden_count} forbidden")
+    fux = build_fux_quiver()
 
-    cat_strict = CounterpointCategory(strict=True)
-    print(f"Strict:   {cat_strict.permitted_count} permitted, {cat_strict.forbidden_count} forbidden")
+    print("Fux Quiver Properties:")
+    print(f"  Vertices: {fux.vertices}")
+    print(f"  Perfect: {fux.perfect_set}")
+    print(f"  Total morphisms: {fux.total_morphism_count()}")
+    print(f"  Target Determination: {verify_target_determination(fux)}")
+    print(f"  Downward Closure: {verify_downward_closure(fux)}")
+    print(f"  Spectrum: {fux.restrictiveness_spectrum()}")
 
-    pe = PathEnumerator()
-    print(f"Length-2 paths: {pe.count_paths(2)}")
-    print(f"Passage rate:   {pe.passage_rate(2):.4f}")
+    print(f"\nFreedom scores:")
+    for v in fux.vertices:
+        print(f"  {v}: {fux.total_freedom(v)}")
 
-    sa = SymmetryAnalyzer()
-    print(f"Fixed points:   {[i.name for i in sa.fixed_points()]}")
-    print(f"Orbits:         {[(a.name, b.name) for a, b in sa.orbits()]}")
-    print(f"Order-reversing: {sa.verify_order_reversing()}")
+    print(f"\nContrapuntal entropy:")
+    for v in fux.vertices:
+        print(f"  {v}: {contrapuntal_entropy(fux, v):.4f} bits")
 
-    ds = DiatonicSpecializer()
-    for scale in ["C_major", "A_minor"]:
-        density = ds.consonance_density(scale)
-        pairs = len(ds.consonant_pairs(scale))
-        print(f"{scale}: {pairs}/49 consonant pairs ({density:.1%})")
+    inv = consonance_inversion_analysis()
+    print(f"\nInversion analysis:")
+    print(f"  Survivors: {inv['survivors']}/{inv['total']}")
+    print(f"  Broken: {inv['broken']}")
+
+    n_quivers = enumerate_all_quivers(fux.vertices, fux.perfect_set)
+    print(f"\nTotal valid quivers on 6 consonances: {n_quivers}")

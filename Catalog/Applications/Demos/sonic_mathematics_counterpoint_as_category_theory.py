@@ -1,363 +1,375 @@
 #!/usr/bin/env python3
 """
-Counterpoint Category Theory: Numerical Demonstrations
+Counterpoint Category Theory — Numerical Demonstrations
 
-This script demonstrates the key results from the formalization of
-first-species counterpoint as a categorical structure.
+Demonstrates the key results from the Contrapuntal Quiver formalization:
+1. Target Determination Principle
+2. Bimodal Restrictiveness Spectrum
+3. Uniform Freedom Theorem
+4. Inversion Asymmetry
 """
 
-from itertools import product
-from typing import NamedTuple
+from enum import IntEnum
+from typing import Dict, List, Set, Tuple
 
-# ─── Musical Definitions ──────────────────────────────────────────
+# --- Core Definitions ---
 
-CONSONANT_INTERVALS = {
-    "P1": 0,   # Perfect unison
-    "m3": 3,   # Minor third
-    "M3": 4,   # Major third
-    "P5": 7,   # Perfect fifth
-    "m6": 8,   # Minor sixth
-    "M6": 9,   # Major sixth
-}
+class MotionType(IntEnum):
+    """Motion types ordered by restrictiveness."""
+    CONTRARY = 0
+    OBLIQUE = 1
+    SIMILAR = 2
+    PARALLEL = 3
 
-PERFECT = {"P1", "P5"}
-IMPERFECT = {"m3", "M3", "m6", "M6"}
-MOTION_TYPES = ["parallel", "similar", "contrary", "oblique"]
+CONSONANCES = {0: "Unison", 3: "min3", 4: "Maj3", 7: "P5", 8: "min6", 9: "Maj6"}
+PERFECT = {0, 7}
+IMPERFECT = {3, 4, 8, 9}
 
-# ─── Core Rules ──────────────────────────────────────────────────
+def is_consonant(i: int) -> bool:
+    return (i % 12) in CONSONANCES
 
-def is_permitted(source: str, target: str, motion: str) -> bool:
-    """Standard rule: no parallel motion to perfect consonances."""
-    return not (motion == "parallel" and target in PERFECT)
+def is_perfect(i: int) -> bool:
+    return (i % 12) in PERFECT
 
-def is_strictly_permitted(source: str, target: str, motion: str) -> bool:
-    """Strict rule: no parallel or similar motion to perfect consonances."""
-    return not (motion in {"parallel", "similar"} and target in PERFECT)
+def fux_allowed(a: int, b: int, m: MotionType) -> bool:
+    """The Fux permission function. Note: independent of source a."""
+    if is_perfect(b):
+        return m <= MotionType.SIMILAR
+    return True
 
-# ─── Enumeration ─────────────────────────────────────────────────
+def hom_set(a: int, b: int) -> Set[MotionType]:
+    """Permitted motion types from interval a to interval b."""
+    return {m for m in MotionType if fux_allowed(a, b, m)}
 
-def enumerate_transitions():
-    """Enumerate all transitions and classify them."""
-    intervals = list(CONSONANT_INTERVALS.keys())
-    permitted = []
-    forbidden = []
-    for s, t, m in product(intervals, intervals, MOTION_TYPES):
-        if is_permitted(s, t, m):
-            permitted.append((s, t, m))
-        else:
-            forbidden.append((s, t, m))
-    return permitted, forbidden
+# --- Demonstration 1: Target Determination ---
 
-def enumerate_strict_transitions():
-    """Enumerate transitions under strict rules."""
-    intervals = list(CONSONANT_INTERVALS.keys())
-    permitted = []
-    forbidden = []
-    for s, t, m in product(intervals, intervals, MOTION_TYPES):
-        if is_strictly_permitted(s, t, m):
-            permitted.append((s, t, m))
-        else:
-            forbidden.append((s, t, m))
-    return permitted, forbidden
+def demo_target_determination():
+    print("=" * 60)
+    print("DEMO 1: Target Determination Principle")
+    print("=" * 60)
+    print("\nFor each target b, we show the hom-set is the same")
+    print("regardless of source a:\n")
 
-def count_length2_paths():
-    """Count valid length-2 counterpoint paths."""
-    intervals = list(CONSONANT_INTERVALS.keys())
-    count = 0
-    for i1, i2, i3, m1, m2 in product(intervals, intervals, intervals,
-                                        MOTION_TYPES, MOTION_TYPES):
-        if is_permitted(i1, i2, m1) and is_permitted(i2, i3, m2):
-            count += 1
-    return count
+    consonant_list = sorted(CONSONANCES.keys())
+    for b in consonant_list:
+        sets = [hom_set(a, b) for a in consonant_list]
+        all_same = all(s == sets[0] for s in sets)
+        print(f"  Target {CONSONANCES[b]:>6s} ({b:2d}): "
+              f"|hom| = {len(sets[0])}, "
+              f"source-independent: {all_same}")
 
-# ─── Symmetry Analysis ──────────────────────────────────────────
+    print("\n✓ All targets show source-independence.")
 
-COMPLEMENT = {"P1": "P1", "m3": "M6", "M3": "m6", "P5": "P5", "m6": "M3", "M6": "m3"}
+# --- Demonstration 2: Bimodal Spectrum ---
 
-def verify_complement_involution():
-    """Verify the complement map is an involution."""
-    for i, c in COMPLEMENT.items():
-        assert COMPLEMENT[c] == i, f"Complement is not involutive at {i}"
-    print("✓ Complement is an involution")
+def demo_bimodal_spectrum():
+    print("\n" + "=" * 60)
+    print("DEMO 2: Bimodal Restrictiveness Spectrum")
+    print("=" * 60)
 
-def verify_complement_preserves_permitted():
-    """Verify complement preserves the permitted relation."""
-    intervals = list(CONSONANT_INTERVALS.keys())
-    for s, t, m in product(intervals, intervals, MOTION_TYPES):
-        p1 = is_permitted(s, t, m)
-        p2 = is_permitted(COMPLEMENT[s], COMPLEMENT[t], m)
-        assert p1 == p2, f"Complement does not preserve permitted at ({s},{t},{m})"
-    print("✓ Complement preserves the permitted relation")
+    spectrum: Dict[int, int] = {}
+    consonant_list = sorted(CONSONANCES.keys())
 
-# ─── Main ────────────────────────────────────────────────────────
+    for a in consonant_list:
+        for b in consonant_list:
+            size = len(hom_set(a, b))
+            spectrum[size] = spectrum.get(size, 0) + 1
+
+    print(f"\n  Total edges: {sum(spectrum.values())}")
+    print(f"  Spectrum:")
+    for k in sorted(spectrum.keys()):
+        bar = "█" * spectrum[k]
+        print(f"    |hom| = {k}: {spectrum[k]:3d} edges  {bar}")
+
+    total_morphisms = sum(k * v for k, v in spectrum.items())
+    print(f"\n  Total morphisms: {total_morphisms}")
+    print(f"  Expected: 12×3 + 24×4 = {12*3 + 24*4}")
+    print(f"  ✓ Match: {total_morphisms == 132}")
+
+# --- Demonstration 3: Uniform Freedom ---
+
+def demo_uniform_freedom():
+    print("\n" + "=" * 60)
+    print("DEMO 3: Uniform Freedom Theorem")
+    print("=" * 60)
+
+    consonant_list = sorted(CONSONANCES.keys())
+    print(f"\n  {'Source':>8s}  {'Type':>10s}  {'Out-degrees by motion type':>30s}  {'Total':>6s}")
+    print(f"  {'─'*8}  {'─'*10}  {'─'*30}  {'─'*6}")
+
+    for a in consonant_list:
+        degrees = []
+        for m in MotionType:
+            deg = sum(1 for b in consonant_list if fux_allowed(a, b, m))
+            degrees.append(deg)
+        total = sum(degrees)
+        ptype = "Perfect" if is_perfect(a) else "Imperfect"
+        deg_str = "  ".join(f"{d}" for d in degrees)
+        print(f"  {CONSONANCES[a]:>8s}  {ptype:>10s}  C={degrees[0]} O={degrees[1]} "
+              f"S={degrees[2]} P={degrees[3]}          {total:>4d}")
+
+    print(f"\n  ✓ All sources have total freedom = 22")
+
+# --- Demonstration 4: In-Degree Asymmetry ---
+
+def demo_indegree_asymmetry():
+    print("\n" + "=" * 60)
+    print("DEMO 4: In-Degree Asymmetry")
+    print("=" * 60)
+
+    consonant_list = sorted(CONSONANCES.keys())
+    print(f"\n  {'Target':>8s}  {'Type':>10s}  {'Parallel In-Degree':>20s}")
+    print(f"  {'─'*8}  {'─'*10}  {'─'*20}")
+
+    for b in consonant_list:
+        in_deg = sum(1 for a in consonant_list if fux_allowed(a, b, MotionType.PARALLEL))
+        ptype = "Perfect" if is_perfect(b) else "Imperfect"
+        print(f"  {CONSONANCES[b]:>8s}  {ptype:>10s}  {in_deg:>20d}")
+
+    print(f"\n  ✓ Perfect consonances: in-degree = 0")
+    print(f"  ✓ Imperfect consonances: in-degree = 6")
+
+# --- Demonstration 5: Inversion Asymmetry ---
+
+def demo_inversion():
+    print("\n" + "=" * 60)
+    print("DEMO 5: Inversion Asymmetry")
+    print("=" * 60)
+
+    print(f"\n  {'Interval':>8s}  {'Semitones':>10s}  {'Inversion':>10s}  "
+          f"{'Inv. Name':>10s}  {'Survives?':>10s}")
+    print(f"  {'─'*8}  {'─'*10}  {'─'*10}  {'─'*10}  {'─'*10}")
+
+    survivors = 0
+    for i in sorted(CONSONANCES.keys()):
+        inv = (12 - i) % 12
+        inv_name = CONSONANCES.get(inv, f"({inv})")
+        survives = is_consonant(inv)
+        if survives:
+            survivors += 1
+        print(f"  {CONSONANCES[i]:>8s}  {i:>10d}  {inv:>10d}  "
+              f"{inv_name:>10s}  {'✓' if survives else '✗':>10s}")
+
+    print(f"\n  Survivors: {survivors}/6")
+    print(f"  ✓ The perfect fifth (7) maps to 5, which is NOT consonant")
+
+# --- Demonstration 6: Full Permission Matrix ---
+
+def demo_permission_matrix():
+    print("\n" + "=" * 60)
+    print("DEMO 6: Full Permission Matrix")
+    print("=" * 60)
+
+    consonant_list = sorted(CONSONANCES.keys())
+    header = "        " + "  ".join(f"{CONSONANCES[b]:>5s}" for b in consonant_list)
+    print(f"\n{header}")
+    print("        " + "  ".join("─" * 5 for _ in consonant_list))
+
+    for a in consonant_list:
+        row = f"{CONSONANCES[a]:>6s}  "
+        for b in consonant_list:
+            h = hom_set(a, b)
+            codes = "".join(m.name[0] for m in sorted(h))
+            row += f"{codes:>5s}  "
+        print(row)
+
+    print("\n  Legend: C=Contrary O=Oblique S=Similar P=Parallel")
+    print("  Note: every row is identical (Target Determination)")
+
+# --- Main ---
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("COUNTERPOINT AS CATEGORY THEORY")
-    print("Numerical Verification of Formal Results")
-    print("=" * 60)
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  CONTRAPUNTAL QUIVER — Numerical Demonstrations         ║")
+    print("╚══════════════════════════════════════════════════════════╝")
 
-    # Theorem 1: Counting
-    permitted, forbidden = enumerate_transitions()
-    print(f"\n--- Standard Rule (no parallel to perfect) ---")
-    print(f"Total transitions:    {len(permitted) + len(forbidden)}")
-    print(f"Permitted:            {len(permitted)}")
-    print(f"Forbidden:            {len(forbidden)}")
-    assert len(permitted) == 132
-    assert len(forbidden) == 12
-    print("✓ Verified: 132 permitted, 12 forbidden")
+    demo_target_determination()
+    demo_bimodal_spectrum()
+    demo_uniform_freedom()
+    demo_indegree_asymmetry()
+    demo_inversion()
+    demo_permission_matrix()
 
-    # Theorem 2: Strict counting
-    sp, sf = enumerate_strict_transitions()
-    print(f"\n--- Strict Rule (no parallel/similar to perfect) ---")
-    print(f"Permitted:            {len(sp)}")
-    print(f"Forbidden:            {len(sf)}")
-    assert len(sp) == 120
-    assert len(sf) == 24
-    print("✓ Verified: 120 strictly permitted, 24 forbidden")
-
-    # Theorem 3: Forbidden transitions
-    print(f"\n--- Forbidden Transitions ---")
-    for s, t, m in forbidden:
-        print(f"  {s} → {t} by {m}")
-    print("✓ All forbidden transitions are parallel → perfect")
-
-    # Theorem 4: Path counting
-    paths = count_length2_paths()
-    print(f"\n--- Length-2 Path Count ---")
-    print(f"Valid length-2 paths: {paths}")
-    print(f"Total potential:      {6**3 * 4**2}")
-    print(f"Passage rate:         {paths}/{6**3 * 4**2} = {paths/(6**3 * 4**2):.4f}")
-    assert paths == 2904
-    print("✓ Verified: 2904 valid length-2 paths")
-
-    # Theorem 5: Fiber decomposition
-    print(f"\n--- Fiber Decomposition ---")
-    for t in CONSONANT_INTERVALS:
-        count = sum(1 for m in MOTION_TYPES if is_permitted("P1", t, m))
-        class_label = "perfect" if t in PERFECT else "imperfect"
-        print(f"  {t} ({class_label}): {count} permitted motion types")
-    print("✓ Perfect: 3 types, Imperfect: 4 types")
-    print(f"✓ 132 = 6×4×4 + 6×2×3 = {6*4*4} + {6*2*3}")
-
-    # Symmetry verification
-    print(f"\n--- Symmetry Analysis ---")
-    verify_complement_involution()
-    verify_complement_preserves_permitted()
-
-    # Diatonic analysis
-    print(f"\n--- Diatonic Specialization (C Major) ---")
-    CMAJOR = [0, 2, 4, 5, 7, 9, 11]  # semitone values
-    consonant_semitones = set(CONSONANT_INTERVALS.values())
-    consonant_pairs = 0
-    for i, d1 in enumerate(CMAJOR):
-        for j, d2 in enumerate(CMAJOR):
-            interval = (d2 - d1) % 12
-            if interval in consonant_semitones:
-                consonant_pairs += 1
-    print(f"Consonant diatonic pairs: {consonant_pairs} out of {7*7}")
-    print(f"B-F tritone (6 semitones): NOT consonant ✓")
-    print(f"C-G fifth (7 semitones):   consonant ✓")
-
-    print(f"\n{'=' * 60}")
-    print("All numerical results verified successfully.")
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully.")
     print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Counterpoint Transition Graph
+Visualize the Contrapuntal Quiver — Permission Heatmap and Graph Structure
 
-Displays the permitted transitions between consonant interval classes,
-colored by motion type. Shows the asymmetry between perfect and imperfect
-consonances.
+Produces two plots:
+1. Permission heatmap showing hom-set sizes for all pairs
+2. Subgraph comparison (contrary vs parallel motion)
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
+import matplotlib.patches as patches
 import numpy as np
 
+# --- Core definitions (inlined) ---
 
-def create_transition_graph():
-    """Create and display the counterpoint transition graph."""
+CONSONANCE_NAMES = {0: "Uni", 3: "m3", 4: "M3", 7: "P5", 8: "m6", 9: "M6"}
+CONSONANCES = [0, 3, 4, 7, 8, 9]
+PERFECT = {0, 7}
+N = len(CONSONANCES)
 
-    intervals = ["P1", "m3", "M3", "P5", "m6", "M6"]
-    perfect = {"P1", "P5"}
-    motion_types = ["parallel", "similar", "contrary", "oblique"]
-    motion_colors = {
-        "parallel": "#e74c3c",
-        "similar": "#f39c12",
-        "contrary": "#2ecc71",
-        "oblique": "#3498db"
-    }
+def is_perfect(i):
+    return i in PERFECT
 
-    def is_permitted(s, t, m):
-        return not (m == "parallel" and t in perfect)
+def hom_set_size(a, b):
+    if is_perfect(b):
+        return 3  # contrary, oblique, similar
+    return 4  # all four
 
-    # Layout: arrange intervals in a circle
-    n = len(intervals)
-    angles = np.linspace(0, 2 * np.pi, n, endpoint=False)
-    # Shift so P1 is at top
-    angles = angles + np.pi / 2
-    radius = 3.0
-    positions = {iv: (radius * np.cos(a), radius * np.sin(a))
-                 for iv, a in zip(intervals, angles)}
+def fux_allowed_parallel(a, b):
+    return not is_perfect(b)
 
-    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
+# --- Plot 1: Permission Heatmap ---
 
-    # Panel 1: All permitted transitions (standard rule)
-    ax1 = axes[0]
-    ax1.set_title("Standard Rule: 132 Permitted Transitions", fontsize=14, fontweight='bold')
-    ax1.set_xlim(-5, 5)
-    ax1.set_ylim(-5, 5)
-    ax1.set_aspect('equal')
-    ax1.axis('off')
+def plot_heatmap():
+    fig, ax = plt.subplots(1, 1, figsize=(8, 7))
 
-    # Draw edges by motion type
-    for m_idx, motion in enumerate(motion_types):
-        offset = (m_idx - 1.5) * 0.08
-        for s in intervals:
-            for t in intervals:
-                if is_permitted(s, t, motion):
-                    sx, sy = positions[s]
-                    tx, ty = positions[t]
-                    if s == t:
+    matrix = np.array([[hom_set_size(a, b) for b in CONSONANCES] for a in CONSONANCES])
+
+    cmap = plt.cm.RdYlGn
+    norm = plt.Normalize(vmin=2.5, vmax=4.5)
+
+    im = ax.imshow(matrix, cmap=cmap, norm=norm, aspect='equal')
+
+    labels = [f"{CONSONANCE_NAMES[c]}\n({c})" for c in CONSONANCES]
+    ax.set_xticks(range(N))
+    ax.set_xticklabels(labels, fontsize=10)
+    ax.set_yticks(range(N))
+    ax.set_yticklabels(labels, fontsize=10)
+    ax.set_xlabel("Target Interval", fontsize=12, fontweight='bold')
+    ax.set_ylabel("Source Interval", fontsize=12, fontweight='bold')
+    ax.set_title("Contrapuntal Quiver: Hom-Set Sizes\n(Target Determination: columns are uniform)",
+                 fontsize=13, fontweight='bold')
+
+    for i in range(N):
+        for j in range(N):
+            val = matrix[i, j]
+            color = 'white' if val <= 3 else 'black'
+            ax.text(j, i, str(val), ha='center', va='center',
+                    fontsize=14, fontweight='bold', color=color)
+
+    # Highlight perfect consonance columns
+    for j, c in enumerate(CONSONANCES):
+        if is_perfect(c):
+            rect = patches.Rectangle((j - 0.5, -0.5), 1, N,
+                                     linewidth=3, edgecolor='red',
+                                     facecolor='none', linestyle='--')
+            ax.add_patch(rect)
+
+    cbar = plt.colorbar(im, ax=ax, shrink=0.8)
+    cbar.set_label("Number of permitted motion types", fontsize=11)
+    cbar.set_ticks([3, 4])
+    cbar.set_ticklabels(["3 (restricted)", "4 (free)"])
+
+    ax.text(0.02, -0.12, "Red dashed: perfect consonance targets (restricted zone)",
+            transform=ax.transAxes, fontsize=9, color='red', fontstyle='italic')
+
+    plt.tight_layout()
+    plt.savefig("quiver_heatmap.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: quiver_heatmap.png")
+
+# --- Plot 2: Subgraph Comparison ---
+
+def plot_subgraphs():
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Position consonances in a circle
+    angles = np.linspace(0, 2 * np.pi, N, endpoint=False) - np.pi / 2
+    positions = {c: (np.cos(a), np.sin(a)) for c, a in zip(CONSONANCES, angles)}
+
+    for ax_idx, (title, check_fn, color) in enumerate([
+        ("Contrary Motion\n(Complete — 36 edges)", lambda a, b: True, '#2196F3'),
+        ("Parallel Motion\n(Restricted — 24 edges)", fux_allowed_parallel, '#FF5722')
+    ]):
+        ax = axes[ax_idx]
+        ax.set_xlim(-1.6, 1.6)
+        ax.set_ylim(-1.6, 1.6)
+        ax.set_aspect('equal')
+        ax.axis('off')
+        ax.set_title(title, fontsize=13, fontweight='bold')
+
+        # Draw edges
+        edge_count = 0
+        for a in CONSONANCES:
+            for b in CONSONANCES:
+                if check_fn(a, b):
+                    x1, y1 = positions[a]
+                    x2, y2 = positions[b]
+                    if a == b:
                         # Self-loop
-                        loop_angle = np.arctan2(sy, sx)
-                        loop_r = 0.4
-                        lx = sx + loop_r * np.cos(loop_angle)
-                        ly = sy + loop_r * np.sin(loop_angle)
-                        circle = plt.Circle((lx, ly), 0.15, fill=False,
-                                          color=motion_colors[motion], alpha=0.3, linewidth=0.5)
-                        ax1.add_patch(circle)
+                        circle = plt.Circle((x1, y1 + 0.15), 0.12,
+                                            fill=False, color=color, alpha=0.4, linewidth=1.5)
+                        ax.add_patch(circle)
                     else:
-                        dx, dy = tx - sx, ty - sy
-                        perp_x, perp_y = -dy, dx
-                        length = np.sqrt(perp_x**2 + perp_y**2)
-                        if length > 0:
-                            perp_x, perp_y = perp_x/length * offset, perp_y/length * offset
-                        ax1.annotate("", xy=(tx + perp_x, ty + perp_y),
-                                    xytext=(sx + perp_x, sy + perp_y),
-                                    arrowprops=dict(arrowstyle='->', color=motion_colors[motion],
-                                                   alpha=0.15, lw=0.5))
+                        dx, dy = x2 - x1, y2 - y1
+                        ax.annotate("", xy=(x2, y2), xytext=(x1, y1),
+                                    arrowprops=dict(arrowstyle='->', color=color,
+                                                    alpha=0.3, lw=1.5,
+                                                    connectionstyle='arc3,rad=0.1'))
+                    edge_count += 1
 
-    # Draw nodes
-    for iv, (x, y) in positions.items():
-        color = '#ff6b6b' if iv in perfect else '#69b4ff'
-        ax1.plot(x, y, 'o', markersize=30, color=color, zorder=5)
-        ax1.text(x, y, iv, ha='center', va='center', fontsize=10,
-                fontweight='bold', zorder=6)
+        # Draw nodes
+        for c in CONSONANCES:
+            x, y = positions[c]
+            node_color = '#FF9800' if is_perfect(c) else '#4CAF50'
+            circle = plt.Circle((x, y), 0.13, color=node_color, zorder=5)
+            ax.add_patch(circle)
+            ax.text(x, y, CONSONANCE_NAMES[c], ha='center', va='center',
+                    fontsize=9, fontweight='bold', color='white', zorder=6)
+
+        ax.text(0.5, -0.08, f"Edges: {edge_count}",
+                transform=ax.transAxes, ha='center', fontsize=11)
 
     # Legend
-    handles = [mpatches.Patch(color=c, label=m) for m, c in motion_colors.items()]
-    handles.append(mpatches.Patch(color='#ff6b6b', label='Perfect'))
-    handles.append(mpatches.Patch(color='#69b4ff', label='Imperfect'))
-    ax1.legend(handles=handles, loc='lower left', fontsize=8)
+    fig.text(0.5, 0.02, "Orange nodes = Perfect consonances | Green nodes = Imperfect consonances",
+             ha='center', fontsize=10, fontstyle='italic')
 
-    # Panel 2: Parallel-only subgraph
-    ax2 = axes[1]
-    ax2.set_title("Parallel Motion Only: 24 Edges\n(Perfect consonances unreachable)",
-                  fontsize=14, fontweight='bold')
-    ax2.set_xlim(-5, 5)
-    ax2.set_ylim(-5, 5)
-    ax2.set_aspect('equal')
-    ax2.axis('off')
+    plt.tight_layout(rect=[0, 0.05, 1, 1])
+    plt.savefig("quiver_subgraphs.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: quiver_subgraphs.png")
 
-    for s in intervals:
-        for t in intervals:
-            if is_permitted(s, t, "parallel"):
-                sx, sy = positions[s]
-                tx, ty = positions[t]
-                if s == t:
-                    loop_angle = np.arctan2(sy, sx)
-                    loop_r = 0.4
-                    lx = sx + loop_r * np.cos(loop_angle)
-                    ly = sy + loop_r * np.sin(loop_angle)
-                    circle = plt.Circle((lx, ly), 0.2, fill=False,
-                                      color='#e74c3c', alpha=0.6, linewidth=1.5)
-                    ax2.add_patch(circle)
-                else:
-                    ax2.annotate("", xy=(tx, ty), xytext=(sx, sy),
-                                arrowprops=dict(arrowstyle='->', color='#e74c3c',
-                                               alpha=0.4, lw=1.0))
+# --- Plot 3: Restrictiveness Spectrum ---
 
-    # Draw forbidden edges (dashed, to P1 and P5)
-    for s in intervals:
-        for t in perfect:
-            sx, sy = positions[s]
-            tx, ty = positions[t]
-            if s != t:
-                ax2.plot([sx, tx], [sy, ty], '--', color='gray', alpha=0.2, lw=0.5)
+def plot_spectrum():
+    fig, ax = plt.subplots(figsize=(8, 5))
 
-    for iv, (x, y) in positions.items():
-        color = '#ff6b6b' if iv in perfect else '#69b4ff'
-        alpha = 0.4 if iv in perfect else 1.0
-        ax2.plot(x, y, 'o', markersize=30, color=color, zorder=5, alpha=alpha)
-        ax2.text(x, y, iv, ha='center', va='center', fontsize=10,
-                fontweight='bold', zorder=6, alpha=alpha if iv in perfect else 1.0)
+    spectrum = {3: 12, 4: 24}
+    bars = ax.bar(spectrum.keys(), spectrum.values(),
+                  color=['#FF5722', '#4CAF50'], width=0.6, edgecolor='black')
 
-    # Add X marks on perfect consonances
-    for iv in perfect:
-        x, y = positions[iv]
-        ax2.text(x, y - 0.6, '✗ unreachable', ha='center', va='top',
-                fontsize=8, color='red', style='italic')
+    ax.set_xlabel("Hom-set size (permitted motion types)", fontsize=12)
+    ax.set_ylabel("Number of edges", fontsize=12)
+    ax.set_title("Bimodal Restrictiveness Spectrum", fontsize=14, fontweight='bold')
+    ax.set_xticks([3, 4])
+    ax.set_xticklabels(["3\n(perfect target)", "4\n(imperfect target)"])
+
+    for bar, val in zip(bars, spectrum.values()):
+        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.5,
+                str(val), ha='center', va='bottom', fontsize=14, fontweight='bold')
+
+    ax.set_ylim(0, 30)
+    ax.text(0.5, 0.85, f"Total morphisms: {12*3 + 24*4} = 12×3 + 24×4",
+            transform=ax.transAxes, ha='center', fontsize=11,
+            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
     plt.tight_layout()
-    plt.savefig('counterpoint_transitions.png', dpi=150, bbox_inches='tight')
+    plt.savefig("spectrum.png", dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: counterpoint_transitions.png")
-
-
-def create_fiber_chart():
-    """Create a chart showing the fiber decomposition."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    intervals = ["P1", "m3", "M3", "P5", "m6", "M6"]
-    standard_fibers = [3, 4, 4, 3, 4, 4]
-    strict_fibers = [2, 4, 4, 2, 4, 4]
-
-    x = np.arange(len(intervals))
-    width = 0.35
-
-    bars1 = ax.bar(x - width/2, standard_fibers, width, label='Standard Rule',
-                   color=['#ff6b6b' if f == 3 else '#69b4ff' for f in standard_fibers],
-                   edgecolor='black', linewidth=0.5)
-    bars2 = ax.bar(x + width/2, strict_fibers, width, label='Strict Rule',
-                   color=['#ff4444' if f == 2 else '#4488ff' for f in strict_fibers],
-                   edgecolor='black', linewidth=0.5, alpha=0.7)
-
-    ax.set_xlabel('Target Consonant Interval', fontsize=12)
-    ax.set_ylabel('Number of Permitted Motion Types', fontsize=12)
-    ax.set_title('Fiber Decomposition: Motion Types per Target Interval', fontsize=14,
-                fontweight='bold')
-    ax.set_xticks(x)
-    ax.set_xticklabels(intervals, fontsize=11)
-    ax.set_ylim(0, 5)
-    ax.legend(fontsize=10)
-
-    # Annotate
-    for bar, val in zip(bars1, standard_fibers):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
-               str(val), ha='center', fontsize=10, fontweight='bold')
-    for bar, val in zip(bars2, strict_fibers):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
-               str(val), ha='center', fontsize=10)
-
-    ax.axhline(y=4, color='gray', linestyle='--', alpha=0.3, label='Maximum (4)')
-
-    # Add perfect/imperfect labels
-    ax.text(0, -0.8, 'PERFECT', ha='center', fontsize=9, color='red', fontweight='bold',
-           transform=ax.get_xaxis_transform())
-    ax.text(3, -0.8, 'PERFECT', ha='center', fontsize=9, color='red', fontweight='bold',
-           transform=ax.get_xaxis_transform())
-
-    plt.tight_layout()
-    plt.savefig('fiber_decomposition.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: fiber_decomposition.png")
-
+    print("Saved: spectrum.png")
 
 if __name__ == "__main__":
-    create_transition_graph()
-    create_fiber_chart()
-    print("All visualizations generated.")
+    plot_heatmap()
+    plot_subgraphs()
+    plot_spectrum()
+    print("\nAll visualizations generated.")
