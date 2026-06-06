@@ -1,0 +1,22 @@
+{
+  "checkpoints": [
+    {
+      "elapsed_seconds": 0.4,
+      "percent_complete": 0.0,
+      "status": "SUBMITTED",
+      "timestamp": "2026-06-06T14:16:40"
+    }
+  ],
+  "completed_at": "",
+  "domain": "Pythagorean",
+  "error": "",
+  "final_percent": 0.0,
+  "final_status": "",
+  "has_files": false,
+  "job_id": "211a265c",
+  "project_id": "e86fd961-1eb3-4f06-ad8d-f9d77c07b67e",
+  "prompt_length": 23034,
+  "stages": [],
+  "submitted_at": "2026-06-06T14:16:40",
+  "total_duration_seconds": 0.0
+}
