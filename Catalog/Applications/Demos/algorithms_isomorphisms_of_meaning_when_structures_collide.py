@@ -1,190 +1,191 @@
+#!/usr/bin/env python3
 """
-Algorithms for Semantic Structures and Group Analogies.
+Semantic Fiber Theory — Core Algorithms
 
-Implements the core mathematical constructions from the
-Isomorphisms of Meaning framework.
+Type-hinted implementations of the key algorithms from the theory.
 """
 
-from typing import TypeVar, Callable, Optional, List, Tuple, Dict, Set
+from typing import TypeVar, Dict, Set, List, Tuple, Callable, Optional, FrozenSet
 from itertools import permutations
-from collections import Counter
+from dataclasses import dataclass
 from math import factorial
 
+A = TypeVar('A')
+S = TypeVar('S')
 T = TypeVar('T')
-L = TypeVar('L')
 
 
-# ─── Semantic Structures ───
+@dataclass(frozen=True)
+class DecoratedType:
+    """A type equipped with a meaning function."""
+    elements: FrozenSet[int]
+    meaning: Dict[int, str]
 
-class SemanticStructure:
-    """A semantic structure: a finite set {0, ..., n-1} with a labeling function."""
+    def opacity_index(self) -> int:
+        """Compute the opacity index = |range(meaning)|."""
+        return len(set(self.meaning.values()))
 
-    def __init__(self, labels: List) -> None:
-        self.n = len(labels)
-        self.labels = list(labels)
+    def is_faithful(self) -> bool:
+        """Check if the decoration is injective."""
+        vals = list(self.meaning.values())
+        return len(vals) == len(set(vals))
 
-    def label(self, i: int) -> object:
-        return self.labels[i]
+    def is_constant(self) -> bool:
+        """Check if the decoration is constant."""
+        vals = list(self.meaning.values())
+        return len(set(vals)) <= 1
 
-    def semantic_entropy(self) -> int:
-        """Number of distinct labels used."""
-        return len(set(self.labels))
+    def semantic_kernel(self) -> List[FrozenSet[int]]:
+        """Compute the semantic kernel: equivalence classes of same-meaning elements."""
+        classes: Dict[str, Set[int]] = {}
+        for x, m in self.meaning.items():
+            classes.setdefault(m, set()).add(x)
+        return [frozenset(c) for c in classes.values()]
 
-    def is_semantically_equivalent(self, other: 'SemanticStructure') -> bool:
-        """Check if self and other are semantically equivalent.
-
-        Two structures are semantically equivalent if there exists a permutation
-        σ such that other.label(σ(i)) = self.label(i) for all i.
-        """
-        if self.n != other.n:
-            return False
-        for perm in permutations(range(self.n)):
-            if all(other.labels[perm[i]] == self.labels[i] for i in range(self.n)):
-                return True
-        return False
-
-    def semantic_automorphisms(self) -> List[Tuple[int, ...]]:
-        """Return all label-preserving permutations."""
-        auts: List[Tuple[int, ...]] = []
-        for perm in permutations(range(self.n)):
-            if all(self.labels[perm[i]] == self.labels[i] for i in range(self.n)):
-                auts.append(perm)
-        return auts
-
-    def __repr__(self) -> str:
-        return f"SemanticStructure({self.labels})"
+    def compose(self, f: Callable[[str], str]) -> 'DecoratedType':
+        """Compose the meaning function with f, yielding a coarser decoration."""
+        new_meaning = {x: f(m) for x, m in self.meaning.items()}
+        return DecoratedType(self.elements, new_meaning)
 
 
-def identity_label(n: int) -> SemanticStructure:
-    """The identity labeling: element i gets label i."""
-    return SemanticStructure(list(range(n)))
+def is_meaning_preserving(dt: DecoratedType, perm: Dict[int, int]) -> bool:
+    """Check if a permutation preserves the meaning function."""
+    return all(dt.meaning[perm[x]] == dt.meaning[x] for x in dt.elements)
 
 
-def const_label(n: int, label: object) -> SemanticStructure:
-    """The constant labeling: every element gets the same label."""
-    return SemanticStructure([label] * n)
+def meaning_preserving_subgroup(dt: DecoratedType) -> List[Dict[int, int]]:
+    """Compute all meaning-preserving permutations (the automorphism subgroup)."""
+    elems = sorted(dt.elements)
+    result = []
+    for p in permutations(elems):
+        perm = dict(zip(elems, p))
+        if is_meaning_preserving(dt, perm):
+            result.append(perm)
+    return result
 
 
-# ─── Group Analogies ───
-
-class GroupAnalogy:
-    """Implements group analogy a:b :: c:d in an additive group (integers mod n)."""
-
-    @staticmethod
-    def holds(a: int, b: int, c: int, d: int, n: int) -> bool:
-        """Check if a:b :: c:d holds in Z/nZ.
-
-        In additive notation: b - a ≡ d - c (mod n).
-        """
-        return (b - a) % n == (d - c) % n
-
-    @staticmethod
-    def complete(a: int, b: int, c: int, n: int) -> int:
-        """Complete the analogy a:b :: c:? in Z/nZ.
-
-        Returns d = c + (b - a) mod n.
-        """
-        return (c + b - a) % n
-
-    @staticmethod
-    def count_valid_quadruples(n: int) -> int:
-        """Count valid analogy quadruples in Z/nZ."""
-        count = 0
-        for a in range(n):
-            for b in range(n):
-                for c in range(n):
-                    for d in range(n):
-                        if GroupAnalogy.holds(a, b, c, d, n):
-                            count += 1
-        return count
-
-
-# ─── 2-Isomorphisms ───
-
-def are_2_isomorphic(
-    f: Tuple[int, ...], g: Tuple[int, ...], n: int, m: int
+def is_decorated_equiv(
+    d1: DecoratedType,
+    d2: DecoratedType,
+    bijection: Dict[int, int]
 ) -> bool:
-    """Check if two bijections f, g : Fin n → Fin m are 2-isomorphic.
-
-    f and g are represented as tuples of length n with values in {0, ..., m-1}.
-    Two bijections are 2-isomorphic if there exist automorphisms s of Fin n and
-    t of Fin m such that t(f(x)) = g(s(x)) for all x.
-    """
-    for s in permutations(range(n)):
-        for t in permutations(range(m)):
-            if all(t[f[x]] == g[s[x]] for x in range(n)):
-                return True
-    return False
+    """Check if a bijection is a decorated equivalence between d1 and d2."""
+    if set(bijection.keys()) != d1.elements:
+        return False
+    if set(bijection.values()) != d2.elements:
+        return False
+    return all(d2.meaning[bijection[x]] == d1.meaning[x] for x in d1.elements)
 
 
-def count_2_iso_classes(n: int) -> int:
-    """Count the number of 2-isomorphism equivalence classes of bijections Fin n → Fin n."""
-    all_perms = list(permutations(range(n)))
+def find_decorated_equiv(
+    d1: DecoratedType,
+    d2: DecoratedType
+) -> Optional[Dict[int, int]]:
+    """Find a decorated equivalence between d1 and d2, or None if none exists."""
+    if d1.opacity_index() != d2.opacity_index():
+        return None
+    if set(d1.meaning.values()) != set(d2.meaning.values()):
+        return None
+
+    elems1 = sorted(d1.elements)
+    elems2 = sorted(d2.elements)
+    if len(elems1) != len(elems2):
+        return None
+
+    for p in permutations(elems2):
+        bijection = dict(zip(elems1, p))
+        if is_decorated_equiv(d1, d2, bijection):
+            return bijection
+    return None
+
+
+def find_cycles(n: int, perm: Tuple[int, ...]) -> List[List[int]]:
+    """Find the cycle decomposition of a permutation on {0, ..., n-1}."""
     visited: Set[int] = set()
-    classes = 0
-    for i, f in enumerate(all_perms):
-        if i in visited:
-            continue
-        classes += 1
-        for j, g in enumerate(all_perms):
-            if j not in visited and are_2_isomorphic(f, g, n, n):
-                visited.add(j)
-    return classes
+    cycles: List[List[int]] = []
+    for start in range(n):
+        if start not in visited:
+            cycle: List[int] = []
+            x = start
+            while x not in visited:
+                visited.add(x)
+                cycle.append(x)
+                x = perm[x]
+            cycles.append(cycle)
+    return cycles
 
 
-# ─── Entropy-Rigidity Analysis ───
-
-def entropy_rigidity_analysis(n: int, k: int) -> Dict:
-    """Analyze the entropy-rigidity duality for structures on Fin n with k labels.
-
-    Returns statistics about the relationship between semantic entropy and
-    automorphism group size across all possible labelings.
+def burnside_count(n: int, k: int) -> int:
     """
-    from itertools import product as cart_product
+    Count equivalence classes of decorations Fin(n) → Fin(k)
+    under the action of Sym(n), using Burnside's lemma.
 
-    results: Dict[int, List[int]] = {}  # entropy -> list of aut group sizes
-
-    for labels in cart_product(range(k), repeat=n):
-        s = SemanticStructure(list(labels))
-        ent = s.semantic_entropy()
-        aut_count = len(s.semantic_automorphisms())
-        if ent not in results:
-            results[ent] = []
-        results[ent].append(aut_count)
-
-    analysis: Dict = {}
-    for ent in sorted(results):
-        sizes = results[ent]
-        analysis[ent] = {
-            'count': len(sizes),
-            'min_aut': min(sizes),
-            'max_aut': max(sizes),
-            'avg_aut': sum(sizes) / len(sizes),
-        }
-
-    return analysis
-
-
-# ─── Semantic Equivalence Classes ───
-
-def count_semantic_classes(n: int, k: int) -> int:
-    """Count distinct semantic equivalence classes on Fin n with labels in Fin k.
-
-    This is equivalent to the number of multisets of size n from k elements,
-    which is C(n+k-1, k-1).
+    Returns (1/|Sym(n)|) * Σ_{σ ∈ Sym(n)} k^{c(σ)}
+    where c(σ) is the number of cycles of σ.
     """
-    from math import comb
-    return comb(n + k - 1, k - 1)
+    total_fixed = 0
+    for p in permutations(range(n)):
+        cycles = find_cycles(n, p)
+        total_fixed += k ** len(cycles)
+    return total_fixed // factorial(n)
 
 
-def orbit_size(label_counts: Tuple[int, ...]) -> int:
-    """Compute the orbit size of a labeling with given color class sizes.
-
-    By the orbit-stabilizer theorem: |orbit| = n! / ∏(nᵢ!)
-    where n = ∑ nᵢ.
+def opacity_spectrum(n: int, k: int) -> Dict[int, int]:
     """
-    n = sum(label_counts)
-    denom = 1
-    for c in label_counts:
-        denom *= factorial(c)
-    return factorial(n) // denom
+    Compute the distribution of opacity indices across all
+    decorations Fin(n) → Fin(k).
+
+    Returns a dictionary mapping opacity_index → count.
+    """
+    from itertools import product as cartprod
+    spectrum: Dict[int, int] = {}
+    for decoration in cartprod(range(k), repeat=n):
+        oi = len(set(decoration))
+        spectrum[oi] = spectrum.get(oi, 0) + 1
+    return spectrum
+
+
+def semantic_distance(d1: DecoratedType, d2: DecoratedType) -> float:
+    """
+    Compute a semantic distance between two decorated types on the same carrier.
+    Defined as the fraction of elements with different meanings.
+    """
+    assert d1.elements == d2.elements
+    total = len(d1.elements)
+    if total == 0:
+        return 0.0
+    diff = sum(1 for x in d1.elements if d1.meaning[x] != d2.meaning[x])
+    return diff / total
+
+
+# --- Example usage ---
+
+if __name__ == "__main__":
+    # Create a decorated type
+    dt = DecoratedType(
+        elements=frozenset({0, 1, 2, 3}),
+        meaning={0: 'A', 1: 'B', 2: 'A', 3: 'C'}
+    )
+
+    print(f"Decorated type: {dt.meaning}")
+    print(f"Opacity index: {dt.opacity_index()}")
+    print(f"Faithful: {dt.is_faithful()}")
+    print(f"Constant: {dt.is_constant()}")
+    print(f"Semantic kernel: {dt.semantic_kernel()}")
+
+    # Meaning-preserving subgroup
+    subgroup = meaning_preserving_subgroup(dt)
+    print(f"\nMeaning-preserving permutations: {len(subgroup)} / {factorial(4)}")
+    print(f"Restriction ratio: {factorial(4) / len(subgroup):.1f}x")
+
+    # Burnside enumeration
+    print("\nBurnside enumeration (n, k) → classes:")
+    for n in range(1, 5):
+        for k in [2, 3]:
+            print(f"  ({n}, {k}): {burnside_count(n, k)} classes")
+
+    # Opacity spectrum
+    print("\nOpacity spectrum for n=3, k=3:")
+    spec = opacity_spectrum(3, 3)
+    for oi in sorted(spec):
+        print(f"  Opacity {oi}: {spec[oi]} decorations")

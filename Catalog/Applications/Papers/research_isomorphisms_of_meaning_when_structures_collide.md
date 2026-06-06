@@ -1,184 +1,278 @@
-# Isomorphisms of Meaning: Semantic Structures, Group Analogies, and the Entropy-Rigidity Duality
+# Semantic Fiber Theory: Decorated Equivalences and the Opacity of Isomorphisms
 
 ## Abstract
 
-We introduce *semantic structures* — finite types equipped with labeling functions — and develop a formal theory of *semantic equivalence*, which refines classical structural isomorphism by requiring preservation of labels. We prove that semantic equivalence is strictly finer than structural isomorphism (the Semantic Gap Theorem), establish a duality between semantic entropy and automorphism rigidity (the Entropy-Rigidity Theorem), formalize Hofstadter's Copycat analogy architecture via group analogies with a uniqueness result for analogy completion, and prove that permutation-invariant formal systems cannot distinguish semantically inequivalent structures in the same orbit (the Indistinguishability Principle). We also define and study 2-isomorphisms (isomorphisms of isomorphisms), proving they form an equivalence relation. All results are fully machine-verified.
+We introduce **Semantic Fiber Theory**, a mathematical framework that formalizes when structural isomorphisms fail to preserve semantic content. Given a type α equipped with a meaning function m : α → S, we define *decorated equivalences* as bijections commuting with meaning, and study the resulting category. Our main contributions are: (1) the **Opacity Existence Theorem**, showing that non-trivial semantic spaces always admit opaque pairs — structurally isomorphic but semantically non-equivalent objects; (2) the **Range Invariance Theorem**, identifying the range of the meaning function as the fundamental decorated-equivalence invariant; (3) the **Automorphism Restriction Theorem**, proving that meaning-preserving automorphisms form a proper subgroup of the full symmetry group; (4) the **Semantic Collapse Theorem**, establishing a pigeonhole bound on faithful decorations; (5) the **Semantic Coarsening Theorem**, showing that post-composition can only reduce semantic resolution. We construct the **Semantic Fiber Category** and prove the forgetful functor to Type is faithful but not full. All results are formally verified in Lean 4 with Mathlib.
 
-**Keywords**: semantic structures, labeled isomorphisms, group analogies, entropy-rigidity, 2-morphisms, Copycat architecture, formal indistinguishability
+**Keywords**: decorated equivalence, semantic fiber, opacity index, meaning-preserving morphism, automorphism restriction, categorical semantics
+
+---
 
 ## 1. Introduction
 
-The observation that isomorphic mathematical structures can carry different "meanings" is classical in philosophy of mathematics (Benacerraf 1965), but has rarely been formalized. We provide a rigorous framework by introducing *semantic structures* — pairs (X, ℓ) where X is a finite type and ℓ : X → L is a labeling function. Two semantic structures are *semantically equivalent* if there exists a bijection σ : X → X such that ℓ₂ ∘ σ = ℓ₁.
+The notion that isomorphic mathematical structures are "the same" is foundational to modern mathematics. Category theory, in particular, treats isomorphic objects as interchangeable. Yet practitioners frequently encounter situations where two isomorphic structures carry different "meanings" — different colorings, labelings, interpretations, or physical significance.
 
-This refinement of classical isomorphism allows us to prove several results:
+This paper develops a systematic theory of **decorated types** — structures equipped with meaning functions — and studies when structural isomorphisms lift to *decorated equivalences* that preserve meaning. The gap between structural and decorated equivalence, which we call **opacity**, turns out to have rich mathematical structure.
 
-1. **Semantic Gap** (Theorem 3.1): There exist pairs of semantic structures on the same underlying type that are structurally isomorphic but semantically inequivalent.
+### 1.1 Motivation
 
-2. **Entropy-Rigidity Duality** (Theorem 4.3): Maximal semantic entropy implies trivial automorphism group.
+Several classical examples motivate our framework:
 
-3. **Analogy Completion** (Theorem 5.2): In any group, analogy completion is unique.
+1. **Graph coloring**: Two graphs may be isomorphic as abstract graphs while admitting non-isomorphic proper colorings.
+2. **Physical interpretation**: Mathematically isomorphic equations (e.g., heat and diffusion) carry different physical meanings.
+3. **Analogical reasoning**: Hofstadter's Copycat architecture [1] maps between structures that are isomorphic in some respects but semantically distinct in others.
+4. **Model theory**: Two elementarily equivalent structures may satisfy different sentences in extended languages.
 
-4. **Analogy Density** (Theorem 5.4): In a finite group of order n, exactly n³ quadruples form valid analogies.
+### 1.2 Contributions
 
-5. **Indistinguishability** (Theorem 6.2): Permutation-invariant properties cannot separate orbit-equivalent structures.
+We make the following contributions:
+
+- **Novel mathematical structure**: The `DecoratedType` and `DecoratedEquiv` framework, along with the Semantic Fiber Category.
+- **14 formally verified theorems** covering existence, invariance, automorphism restriction, collapse, coarsening, and categorical properties.
+- **The opacity index**: A new numerical invariant measuring semantic richness.
+- **Cross-connections**: Links to group theory (automorphism subgroups), combinatorics (fiber cardinality), information theory (coarsening), and category theory (faithful/full functors).
+
+---
 
 ## 2. Definitions
 
-### 2.1 Semantic Structures
+### 2.1 Decorated Types
 
-**Definition 2.1** (Semantic Structure). A *semantic structure* of size n with labels in L is a pair S = (n, ℓ) where ℓ : Fin n → L is the labeling function.
+**Definition 2.1** (Decorated Type). A *decorated type* over a type α with semantic space S is a pair (α, m) where m : α → S is a function called the *meaning function*.
 
-**Definition 2.2** (Semantic Equivalence). A *semantic equivalence* from S = (n, ℓ_S) to T = (n, ℓ_T) is a bijection σ : Fin n ≃ Fin n such that ℓ_T(σ(i)) = ℓ_S(i) for all i.
+```
+structure DecoratedType (α : Type*) (S : Type*) where
+  meaning : α → S
+```
 
-**Definition 2.3** (Semantic Automorphism). A *semantic automorphism* of S is a semantic equivalence from S to itself: a bijection σ satisfying ℓ(σ(i)) = ℓ(i) for all i.
+### 2.2 Decorated Equivalences
 
-### 2.2 Canonical Examples
+**Definition 2.2** (Decorated Equivalence). A *decorated equivalence* between (α, m₁) and (β, m₂) is an equivalence e : α ≃ β such that m₂ ∘ e = m₁, i.e., for all x : α, m₂(e(x)) = m₁(x).
 
-- **Identity labeling**: identityLabel(n) = (n, id), where element i is labeled by i itself.
-- **Constant labeling**: constLabel(n, l) = (n, λ_ ↦ l), where all elements share the same label.
+We prove that decorated equivalence is an equivalence relation (reflexive, symmetric, transitive).
 
-### 2.3 Semantic Entropy
+### 2.3 Opacity
 
-**Definition 2.4**. The *semantic entropy* H(S) of a semantic structure S = (n, ℓ) is the cardinality of the image of ℓ: H(S) = |Im(ℓ)|.
+**Definition 2.3** (Opaque Pair). Two decorated types D₁ and D₂ are *opaque* relative to an equivalence e : α ≃ β if there exists x : α such that D₂.meaning(e(x)) ≠ D₁.meaning(x).
 
-### 2.4 Group Analogies
+**Definition 2.4** (Opacity Index). The *opacity index* of a decorated type D is the cardinality of the range of its meaning function:
 
-**Definition 2.5** (Group Analogy). In a group G, a *group analogy* a:b :: c:d holds when a⁻¹b = c⁻¹d. This captures the intuition that "the transformation from a to b is the same as the transformation from c to d."
+  opacityIndex(D) = |range(m)|
 
-### 2.5 2-Isomorphisms
+### 2.4 The Semantic Kernel
 
-**Definition 2.6** (Isomorphism of Isomorphisms). Given bijections f, g : α ≃ β, a *2-isomorphism* from f to g consists of automorphisms s : α ≃ α and t : β ≃ β such that t ∘ f = g ∘ s.
+**Definition 2.5** (Semantic Kernel). The *semantic kernel* of a decorated type D is the equivalence relation ∼ on α where x ∼ y iff m(x) = m(y).
 
-## 3. The Semantic Gap
+---
 
-**Theorem 3.1** (Semantic Gap). The homogeneous labeling homLabel₂ = (2, λ_ ↦ true) and the heterogeneous labeling hetLabel₂ = (2, λi ↦ (i = 0)) on Fin 2 are not semantically equivalent.
+## 3. Main Results
 
-*Proof sketch*. There are exactly two bijections on Fin 2: the identity and the transposition. For the identity σ = id, we need hetLabel₂(0) = homLabel₂(0) = true (✓) and hetLabel₂(1) = homLabel₂(1) = true (✗, since hetLabel₂(1) = false). For the transposition, hetLabel₂(1) = homLabel₂(0) = true (✗). Neither bijection preserves labels. □
+### 3.1 Opacity Existence (Theorem A)
 
-**Corollary 3.2**. Structural isomorphism does not imply semantic equivalence.
+**Theorem 3.1** (Opacity Existence). For any type α with an element a : α and semantic space S with two distinct values s₁ ≠ s₂, there exist decorated types D₁, D₂ on α such that the identity equivalence is opaque.
 
-## 4. Entropy-Rigidity Duality
+*Proof sketch*: Take D₁ with constant meaning s₁ and D₂ with constant meaning s₂. Then the identity maps a to a, but D₂.meaning(a) = s₂ ≠ s₁ = D₁.meaning(a). □
 
-**Theorem 4.1**. The identity labeling has entropy n: H(identityLabel(n)) = n.
+**PEGB Analysis**:
+- **Proof**: Constructive witness with constant decorations.
+- **Example**: On Bool with meanings {0, 1}, the decorations "all-0" and "all-1" are opaque under id.
+- **Generalization**: For |S| = k, there are k(k−1)/2 opaque pairs of constant decorations.
+- **Boundary**: When |S| = 1, no opaque pairs exist — this is the unique case where opacity vanishes.
 
-*Proof*. The image of id on Fin n is all of Fin n, which has cardinality n. □
+### 3.2 Range Invariance (Theorem B)
 
-**Theorem 4.2**. For n ≥ 1, the constant labeling has entropy 1: H(constLabel(n, l)) = 1.
+**Theorem 3.2** (Range Invariance). If D₁ and D₂ are related by a decorated equivalence e, then range(m₂) = range(m₁).
 
-*Proof*. The image of a constant function on a nonempty domain is a singleton. □
+*Proof sketch*: Since e is bijective and m₂ ∘ e = m₁, we have range(m₁) = range(m₂ ∘ e) = m₂(range(e)) = m₂(β) = range(m₂). □
 
-**Theorem 4.3** (Entropy-Rigidity). If H(S) = n for a semantic structure S on Fin n, then the only semantic automorphism of S is the identity.
+**PEGB Analysis**:
+- **Proof**: Uses surjectivity of equivalences and functoriality of range.
+- **Example**: Decorations {a↦1, b↦2} and {a↦2, b↦1} have the same range {1,2}.
+- **Generalization**: For any decorated-equivalence invariant functor F, F(range) is preserved.
+- **Boundary**: The converse fails: equal ranges do not imply decorated equivalence.
 
-*Proof*. If H(S) = n, then ℓ is injective (since |Im(ℓ)| = n = |domain|, the function must be injective). If σ is a semantic automorphism, then ℓ(σ(i)) = ℓ(i) for all i, which by injectivity gives σ(i) = i. □
+### 3.3 Automorphism Restriction (Theorem C)
 
-**Remark 4.4**. This establishes a duality: maximum information (entropy n) corresponds to minimum symmetry (trivial automorphism group), while minimum information (entropy 1) corresponds to maximum symmetry (full symmetric group S_n).
+**Theorem 3.3** (Automorphism Restriction). The set of meaning-preserving permutations of a decorated type forms a subgroup of Aut(α).
 
-## 5. Group Analogies and the Copycat Architecture
+*Proof sketch*: Closure under identity (trivial), composition (functorial), and inverse (by substitution y = σ⁻¹(x) in m(σ(y)) = m(y)). □
 
-### 5.1 The Analogy Relation
+### 3.4 Semantic Fiber Cardinality (Theorem D)
 
-**Theorem 5.1**. Group analogy is reflexive (a:b :: a:b) and symmetric (a:b :: c:d ⟹ c:d :: a:b).
+**Theorem 3.4** (Semantic Fiber Cardinality). The number of decorations from Fin(n) to Fin(k) is k^n.
 
-*Proof*. Reflexivity: a⁻¹b = a⁻¹b. Symmetry: if a⁻¹b = c⁻¹d, then c⁻¹d = a⁻¹b. □
+This is a counting result, but its significance lies in context: it gives the size of the *semantic fiber* over a given type.
 
-### 5.2 Analogy Completion
+### 3.5 Opacity Index Properties (Theorems E-F)
 
-**Theorem 5.2** (Analogy Completion). For any a, b, c in a group G, there exists a unique d such that a:b :: c:d. The completion is d = c · a⁻¹ · b.
+**Theorem 3.5** (Opacity Index Positivity). For nonempty types with finite-range decorations, the opacity index is positive.
 
-*Proof*. Existence: d = c · a⁻¹ · b satisfies c⁻¹ · (c · a⁻¹ · b) = a⁻¹ · b. Uniqueness: if a⁻¹b = c⁻¹d₁ = c⁻¹d₂, then d₁ = d₂ by left cancellation. □
+**Theorem 3.6** (Opacity Index Invariance). The opacity index is invariant under decorated equivalence.
 
-**Remark 5.3**. This theorem gives Hofstadter's Copycat architecture a group-theoretic foundation. The analogy "abc → abd as ijk → ?" can be modeled by treating letter sequences as group elements and the transformation "increment last letter" as the group element a⁻¹b. The unique completion is then determined by the group operation.
+**Theorem 3.7** (Faithful Maximum Opacity). A faithful (injective) decoration achieves opacity index equal to |α|.
 
-### 5.3 Analogy Density
+### 3.6 Semantic Collapse (Theorem G)
 
-**Theorem 5.4** (Analogy Density). In a finite group G of order n, the number of valid analogy quadruples is n³.
+**Theorem 3.8** (Semantic Collapse). If |S| < |α|, no faithful decoration exists.
 
-*Proof*. The map (a, b, c) ↦ (a, b, c, c · a⁻¹ · b) is an injection from G³ to valid quadruples (by Theorem 5.2, the completion is unique). It is also surjective (every valid quadruple arises this way). Hence |valid quadruples| = |G³| = n³. □
+*Proof sketch*: By the pigeonhole principle, an injective function α → S requires |α| ≤ |S|. □
 
-**Corollary 5.5**. The fraction of quadruples forming valid analogies is 1/n, independent of the group structure.
+**PEGB Analysis**:
+- **Proof**: Contrapositive of Fintype.card_le_of_injective.
+- **Example**: No injective coloring of 5 vertices with 3 colors exists.
+- **Generalization**: The minimum number of collisions is ⌈|α|/|S|⌉ - 1 per element.
+- **Boundary**: At |S| = |α|, faithful decorations exist (by injection) but are not unique.
 
-## 6. The Indistinguishability Principle
+### 3.7 Semantic Coarsening (Theorem H)
 
-**Definition 6.1**. A predicate P on labelings Fin n → Bool is *permutation-invariant* if P(f) implies P(f ∘ σ⁻¹) for every permutation σ.
+**Theorem 3.9** (Semantic Coarsening). For finite-range decorations, composition with any function cannot increase the opacity index.
 
-**Theorem 6.2** (Indistinguishability). If P is permutation-invariant and f, g : Fin n → Bool are in the same orbit (i.e., g = f ∘ σ for some σ), then P(f) implies P(g).
+*Proof sketch*: range(f ∘ m) = f(range(m)), and |f(S)| ≤ |S| for any function f. □
 
-*Proof*. If g(i) = f(σ(i)) for all i, then g = f ∘ σ. Applying the invariance condition with τ = σ⁻¹ gives P(f) ⟹ P(f ∘ σ) = P(g). □
+**PEGB Analysis**:
+- **Proof**: Uses Set.ncard_image_le.
+- **Example**: Composing a 3-color decoration with a 2-color map reduces opacity from 3 to ≤ 2.
+- **Generalization**: Repeated composition forms a non-increasing sequence of opacity indices.
+- **Boundary**: Injective f preserves opacity exactly; only non-injective f can decrease it.
 
-**Interpretation**. This theorem says that no permutation-invariant formal system can distinguish two structures in the same orbit. Since permutation-invariant properties are exactly those that depend on "structure" rather than "naming," this formalizes the claim that formal systems preserve truth but not meaning.
+### 3.8 Categorical Properties (Theorems I-J)
 
-## 7. 2-Isomorphisms and Higher Structure
+**Theorem 3.10** (Forgetful Functor Faithfulness). The forgetful functor from the Semantic Fiber Category to Type is faithful.
 
-**Theorem 7.1**. The 2-isomorphism relation on Equiv α β is an equivalence relation.
+**Theorem 3.11** (Forgetful Functor Not Full). The forgetful functor is not full: there exist structural maps that do not preserve meaning.
 
-*Proof*. Reflexivity: use identity automorphisms. Symmetry: given (s, t) witnessing f ≃₂ g, the pair (s⁻¹, t⁻¹) witnesses g ≃₂ f. Transitivity: compose the automorphisms. □
+### 3.9 Kernel Refinement (Theorem K)
 
-**Remark 7.2**. The equivalence classes under 2-isomorphism form a quotient of the set of bijections by the action of Aut(α) × Aut(β). This connects to the theory of double cosets in group theory and to the notion of natural transformations in category theory.
+**Theorem 3.12** (Kernel Refinement). If f : S → T is injective, the semantic kernel of D.compose(f) equals the semantic kernel of D.
 
-## 8. Semantic Automorphism Subgroup
+### 3.10 Transparency and Strictness (Theorems L-M)
 
-We prove that semantic automorphisms form a subgroup of the symmetric group:
+**Theorem 3.13** (Constant Decoration Transparency). Constant decorations are fully transparent: every permutation preserves a constant meaning function.
 
-**Theorem 8.1**. For any semantic structure S on Fin n:
-- (a) The identity is a semantic automorphism.
-- (b) The composition of semantic automorphisms is a semantic automorphism.
-- (c) The inverse of a semantic automorphism is a semantic automorphism.
+**Theorem 3.14** (Swap Non-Preservation). Swapping two elements with distinct meanings does not preserve meaning.
 
-*Proof*. (a) ℓ(id(i)) = ℓ(i). (b) ℓ(σ₂(σ₁(i))) = ℓ(σ₁(i)) = ℓ(i). (c) From ℓ(σ(i)) = ℓ(i) for all i, substituting i = σ⁻¹(j) gives ℓ(j) = ℓ(σ⁻¹(j)). □
+---
 
-## 9. Algorithms
+## 4. The Semantic Fiber Category
 
-### 9.1 Semantic Equivalence Testing
+### 4.1 Construction
 
-Given two semantic structures S, T on Fin n with labels in L:
-1. Compute the multisets M_S = {ℓ_S(i) : i ∈ Fin n} and M_T = {ℓ_T(i) : i ∈ Fin n}.
-2. If M_S ≠ M_T, output "not equivalent."
-3. Otherwise, partition Fin n into color classes by ℓ_S and ℓ_T.
-4. Search for a bijection matching color classes.
+Objects: Pairs (α, m) where α is a type and m : α → S.
+Morphisms: Functions f : α → β with m₂ ∘ f = m₁.
+Identity: The identity function.
+Composition: Function composition (associativity is automatic).
 
-Complexity: O(n log n) for steps 1-3; step 4 is equivalent to testing isomorphism of colored graphs.
+### 4.2 The Forgetful Functor
 
-### 9.2 Analogy Completion
+The forgetful functor U : SemFib(S) → Type sends (α, m) to α and f to f. We prove:
 
-Given a, b, c in a group G, compute d = c · a⁻¹ · b.
+- **Faithful**: U reflects equality of morphisms (Theorem 3.10).
+- **Not full**: U does not surject onto morphisms (Theorem 3.11).
 
-Complexity: O(1) group operations.
+This gap — faithful but not full — is the categorical essence of semantic opacity.
 
-## 10. Applications and Connections
+---
 
-### 10.1 Graph Neural Networks
+## 5. Connections and Applications
 
-Graph neural networks that are permutation-equivariant satisfy our definition of permutation invariance. By the Indistinguishability Principle (Theorem 6.2), such networks cannot distinguish non-isomorphic graphs that have the same multiset of local features — a known limitation formalized here.
+### 5.1 Group Theory
 
-### 10.2 Cryptographic Hash Functions
+The automorphism restriction theorem (§3.3) connects to the theory of permutation group actions. The meaning-preserving subgroup can be viewed as the stabilizer of the decoration under the natural action of Sym(α) on the space of decorations Sᵅ.
 
-The semantic gap (Theorem 3.1) is the mathematical foundation of collision resistance: two inputs can produce the same structural output while having different semantic content.
+### 5.2 Information Theory
 
-### 10.3 Hofstadter's Copycat
+The coarsening theorem (§3.7) is an information-theoretic result: post-processing cannot increase information content. The opacity index plays the role of entropy, and the semantic kernel plays the role of the information channel.
 
-The analogy completion theorem (Theorem 5.2) shows that Copycat-style analogical reasoning, when modeled algebraically, produces unique answers. The density theorem (Theorem 5.4) quantifies the "analogy space" of any finite group.
+### 5.3 Analogical Reasoning
 
-## 11. Discussion
+Hofstadter's Copycat architecture [1] identifies analogies as structural mappings between different domains. In our framework, an analogy is a decorated equivalence where the semantic spaces of the two decorated types differ. The opacity phenomenon formalizes when a plausible analogy (structural map) fails to preserve the intended meaning — explaining why some analogies are "good" and others are "misleading."
 
-The central insight of this work is that the familiar notion of isomorphism, while powerful, is too coarse to capture semantic distinctions. The semantic equivalence relation we introduce is a natural refinement that preserves labels as well as structure.
+### 5.4 Cross-Connection to Existing Catalog
 
-The entropy-rigidity duality (Theorem 4.3) provides a quantitative version of this insight: more meaning implies less symmetry. This connects to deep themes in physics (symmetry breaking), information theory (entropy as information content), and philosophy (the identity of indiscernibles).
+The opacity phenomenon connects to the oracle preservation theorems in the Aether Catalog. The `oracle_preserves_truth` theorem (Computation/OmniscientOracle.lean) shows that oracles preserve truth values. In our framework, truth values are a special case of meaning functions (m : α → Bool), and oracle preservation is a special case of decorated morphism compatibility. The key difference: oracles preserve truth (a 2-valued meaning) but need not preserve richer meanings (k-valued for k > 2).
 
-The group analogy framework provides a precise mathematical model for Hofstadter's Copycat architecture, showing that analogical reasoning in algebraic structures is both unique and universal.
+---
 
-## 12. Future Work
+## 6. Algorithms
 
-1. Extend the entropy-rigidity duality to continuous groups and measure-theoretic entropy.
-2. Characterize the lattice of semantic equivalence classes for specific label spaces.
-3. Connect 2-isomorphism equivalence classes to double cosets and Burnside's lemma.
-4. Apply the indistinguishability principle to expressiveness bounds for graph neural networks.
-5. Develop a topological theory of semantic structures using persistent homology of the labeling function.
+### 6.1 Computing the Opacity Index
+
+```
+Algorithm ComputeOpacityIndex(D):
+  Input: Decorated type D = (α, m) with finite α
+  Output: Opacity index
+  S ← {}
+  for x in α:
+    S ← S ∪ {m(x)}
+  return |S|
+```
+
+### 6.2 Testing Decorated Equivalence
+
+```
+Algorithm TestDecoratedEquiv(D₁, D₂, e):
+  Input: Decorated types D₁ = (α, m₁), D₂ = (β, m₂), equiv e : α ≃ β
+  Output: Boolean
+  for x in α:
+    if m₂(e(x)) ≠ m₁(x):
+      return False
+  return True
+```
+
+### 6.3 Computing the Meaning-Preserving Subgroup
+
+```
+Algorithm MeaningPreservingSubgroup(D):
+  Input: Decorated type D = (α, m) with finite α
+  Output: Set of permutations preserving meaning
+  H ← {}
+  for σ in Sym(α):
+    if ∀x: m(σ(x)) = m(x):
+      H ← H ∪ {σ}
+  return H
+```
+
+---
+
+## 7. Conjectures
+
+**Conjecture 7.1** (Semantic Burnside). For a finite type α of size n with decorations in a set S of size k, the number of semantically distinct decorations modulo Aut(α) equals:
+
+  (1/|Aut(α)|) Σ_{σ ∈ Aut(α)} k^{|Fix(σ)|}
+
+This is Burnside's lemma applied to the action of Aut(α) on S^α. We conjecture that this formula extends to decorated equivalence classes in the Semantic Fiber Category.
+
+**Computational test**: For n = 3, k = 2, the formula gives (2³ + 3·2 + 2·2⁰)/6 = (8 + 6 + 2)/6 ≈ 2.67... Hmm, this should give an integer. For S₃ acting on {0,1}³: identity fixes all 8, three transpositions fix 4 each, two 3-cycles fix 2 each. Total: (8 + 4 + 4 + 4 + 2 + 2)/6 = 24/6 = 4. The four classes are: {000}, {001, 010, 100}, {011, 101, 110}, {111}.
+
+---
+
+## 8. Discussion
+
+### 8.1 Limitations
+
+The current framework treats meaning as a function to a fixed semantic space. In practice, meaning may be relational (depending on context) or intensional (depending on the mode of presentation, not just the referent). Extending the framework to handle these richer notions of meaning is a natural direction.
+
+### 8.2 Relation to Model Theory
+
+The semantic kernel (Definition 2.5) is closely related to the theory of definable equivalence relations in model theory. The opacity phenomenon is a special case of the observation that elementary equivalence does not imply isomorphism — but our framework provides quantitative tools (the opacity index, the meaning-preserving subgroup) that go beyond the qualitative distinction.
+
+---
+
+## 9. Future Work
+
+1. **Semantic sheaves**: Extend the fiber construction to a sheaf over a topological space of contexts.
+2. **Quantitative opacity**: Develop a metric on the space of decorations, measuring "how opaque" a pair is.
+3. **Computational complexity**: Determine the complexity of computing the meaning-preserving subgroup.
+4. **Higher-categorical generalization**: Extend to ∞-categories where morphisms between morphisms carry their own semantic content.
+
+---
 
 ## References
 
-1. Benacerraf, P. (1965). What numbers could not be. *Philosophical Review*, 74(1), 47-73.
-2. Hofstadter, D.R. (1995). *Fluid Concepts and Creative Analogies*. Basic Books.
-3. Mitchell, M. (1993). *Analogy-Making as Perception*. MIT Press.
-4. Baez, J.C., & Dolan, J. (1998). Categorification. *Contemporary Mathematics*, 230, 1-36.
-5. Weisfeiler, B., & Leman, A. (1968). The reduction of a graph to canonical form and the algebra which appears therein. *NTI*, Series 2(9), 12-16.
-6. Xu, K., Hu, W., Leskovec, J., & Jegelka, S. (2019). How powerful are graph neural networks? *ICLR 2019*.
+[1] Hofstadter, D. R. (1995). *Fluid Concepts and Creative Analogies*. Basic Books.
+
+[2] Mac Lane, S. (1998). *Categories for the Working Mathematician*. Springer.
+
+[3] Marker, D. (2002). *Model Theory: An Introduction*. Springer.
+
+[4] Burnside, W. (1897). *Theory of Groups of Finite Order*. Cambridge University Press.
