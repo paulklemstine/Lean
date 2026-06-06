@@ -1,464 +1,390 @@
 #!/usr/bin/env python3
 """
-Non-Archimedean Probability Theory: Demonstrations
+Surreal Probability: Numerical Demonstrations
 
-This script demonstrates the key ideas of non-Archimedean probability using
-symbolic computation with infinitesimal elements represented as formal
-polynomials in ε.
+Demonstrates the key results of the surreal probability theory:
+1. Infinitesimal perturbation of uniform measures
+2. Dual impossibility theorem (numerical illustration)
+3. Product measures
+4. Bayesian update with near-infinitesimal priors
+5. Information ordering
 """
 
 from fractions import Fraction
-from typing import Dict, Set, FrozenSet
+from typing import List, Dict, Tuple
+import math
 
 
-class InfinitesimalNumber:
-    """A number of the form a + b*ε + c*ε² (truncated formal power series).
-    
-    Represents elements of a non-Archimedean field where ε is a positive
-    infinitesimal satisfying n*ε < 1 for all natural n.
+def uniform_measure(n: int) -> List[Fraction]:
+    """Uniform probability measure on n elements."""
+    return [Fraction(1, n)] * n
+
+
+def perturbed_measure(n: int, weights: List[int], eps: Fraction) -> List[Fraction]:
     """
+    Infinitesimally perturbed uniform measure.
     
-    def __init__(self, real: Fraction = Fraction(0), 
-                 eps1: Fraction = Fraction(0),
-                 eps2: Fraction = Fraction(0)):
-        self.real = real  # standard part
-        self.eps1 = eps1  # coefficient of ε
-        self.eps2 = eps2  # coefficient of ε²
-    
-    def __add__(self, other):
-        return InfinitesimalNumber(
-            self.real + other.real,
-            self.eps1 + other.eps1, 
-            self.eps2 + other.eps2
-        )
-    
-    def __sub__(self, other):
-        return InfinitesimalNumber(
-            self.real - other.real,
-            self.eps1 - other.eps1,
-            self.eps2 - other.eps2
-        )
-    
-    def __mul__(self, other):
-        # (a + bε + cε²)(d + eε + fε²) truncated to O(ε²)
-        return InfinitesimalNumber(
-            self.real * other.real,
-            self.real * other.eps1 + self.eps1 * other.real,
-            self.real * other.eps2 + self.eps1 * other.eps1 + self.eps2 * other.real
-        )
-    
-    def __truediv__(self, other):
-        if other.real != 0:
-            # Division when standard part is nonzero
-            inv_r = Fraction(1) / other.real
-            # 1/(d + eε + fε²) ≈ (1/d)(1 - (eε+fε²)/d + (eε)²/d²)
-            a = inv_r
-            b = -other.eps1 * inv_r * inv_r
-            c = (other.eps1 * other.eps1 * inv_r - other.eps2) * inv_r * inv_r
-            inv = InfinitesimalNumber(a, b, c)
-            return self * inv
-        elif other.eps1 != 0:
-            # Division by an infinitesimal (ε-level)
-            inv_e = Fraction(1) / other.eps1
-            # Dividing a + bε by eε = a/(eε) + b/e
-            # This gives an infinite part - represent as special
-            return InfinitesimalNumber(
-                self.eps1 * inv_e,  # ε/ε part
-                self.eps2 * inv_e,  # ε²/ε part
-                Fraction(0)
-            )
+    Each element i gets probability 1/n + weights[i] * eps.
+    Weights must sum to 0.
+    """
+    assert len(weights) == n, f"Need {n} weights, got {len(weights)}"
+    assert sum(weights) == 0, f"Weights must sum to 0, got {sum(weights)}"
+    base = Fraction(1, n)
+    return [base + w * eps for w in weights]
+
+
+def is_valid_pmf(pmf: List[Fraction]) -> bool:
+    """Check if a pmf is valid: non-negative and sums to 1."""
+    return all(p >= 0 for p in pmf) and sum(pmf) == 1
+
+
+def is_fully_discriminating(pmf: List[Fraction]) -> bool:
+    """Check if all probabilities are distinct."""
+    return len(set(pmf)) == len(pmf)
+
+
+def product_measure(mu: List[Fraction], nu: List[Fraction]) -> Dict[Tuple[int, int], Fraction]:
+    """Product of two probability measures."""
+    result = {}
+    for i, p in enumerate(mu):
+        for j, q in enumerate(nu):
+            result[(i, j)] = p * q
+    return result
+
+
+def conditional_prob(pmf: List[Fraction], event: List[int]) -> Dict[int, Fraction]:
+    """Conditional probability given an event (list of indices)."""
+    total = sum(pmf[i] for i in event)
+    assert total > 0, "Cannot condition on zero-probability event"
+    result = {}
+    for i in range(len(pmf)):
+        if i in event:
+            result[i] = pmf[i] / total
         else:
-            raise ZeroDivisionError("Cannot divide by zero")
-    
-    def __eq__(self, other):
-        if isinstance(other, (int, float, Fraction)):
-            other = InfinitesimalNumber(Fraction(other))
-        return self.real == other.real and self.eps1 == other.eps1 and self.eps2 == other.eps2
-    
-    def __repr__(self):
-        parts = []
-        if self.real != 0:
-            parts.append(str(self.real))
-        if self.eps1 != 0:
-            parts.append(f"{self.eps1}·ε")
-        if self.eps2 != 0:
-            parts.append(f"{self.eps2}·ε²")
-        return " + ".join(parts) if parts else "0"
-    
-    def is_infinitesimal(self) -> bool:
-        """Check if this number is infinitesimal (standard part is zero)."""
-        return self.real == 0
-    
-    def standard_part(self) -> Fraction:
-        """Return the standard (real) part, discarding infinitesimals."""
-        return self.real
+            result[i] = Fraction(0)
+    return result
 
 
-# ============================================================
-# Demo 1: Infinitesimal Arithmetic
-# ============================================================
+def bayesian_update(prior: List[Fraction], likelihood: List[Fraction]) -> List[Fraction]:
+    """Bayesian update: posterior ∝ likelihood * prior."""
+    evidence = sum(l * p for l, p in zip(likelihood, prior))
+    assert evidence > 0, "Evidence must be positive"
+    return [(l * p) / evidence for l, p in zip(likelihood, prior)]
 
-def demo_infinitesimal_arithmetic():
+
+def refines(mu: List[Fraction], nu: List[Fraction]) -> bool:
+    """Check if mu refines nu (preserves all distinctions)."""
+    n = len(mu)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if nu[i] != nu[j] and mu[i] == mu[j]:
+                return False
+    return True
+
+
+def demo_perturbation():
+    """Demonstrate infinitesimal perturbation."""
     print("=" * 60)
-    print("DEMO 1: Infinitesimal Arithmetic")
+    print("DEMO 1: Infinitesimal Perturbation")
     print("=" * 60)
     
-    eps = InfinitesimalNumber(Fraction(0), Fraction(1))
-    print(f"ε = {eps}")
-    print(f"Is ε infinitesimal? {eps.is_infinitesimal()}")
+    n = 5
+    # Use eps = 1/10000 as a "near-infinitesimal"
+    eps = Fraction(1, 10000)
+    weights = [-2, -1, 0, 1, 2]  # Sum = 0
     
-    # Sum of infinitesimals
-    two_eps = eps + eps
-    print(f"\nε + ε = {two_eps}")
-    print(f"Is 2ε infinitesimal? {two_eps.is_infinitesimal()}")
+    uniform = uniform_measure(n)
+    perturbed = perturbed_measure(n, weights, eps)
     
-    # Product
-    eps_sq = eps * eps
-    print(f"\nε · ε = {eps_sq}")
-    print(f"Is ε² infinitesimal? {eps_sq.is_infinitesimal()}")
+    print(f"\nUniform measure on {n} elements:")
+    for i, p in enumerate(uniform):
+        print(f"  P({i}) = {p} = {float(p):.6f}")
+    print(f"  Valid: {is_valid_pmf(uniform)}")
+    print(f"  Fully discriminating: {is_fully_discriminating(uniform)}")
     
-    # Scaling
-    n = 1000000
-    n_eps = InfinitesimalNumber(Fraction(0), Fraction(n))
-    print(f"\n{n}·ε = {n_eps}")
-    print(f"Is {n}·ε infinitesimal? {n_eps.is_infinitesimal()}")
-    print(f"Standard part of {n}·ε = {n_eps.standard_part()}")
-    
-    # Real + infinitesimal
-    one_plus_eps = InfinitesimalNumber(Fraction(1)) + eps
-    print(f"\n1 + ε = {one_plus_eps}")
-    print(f"Standard part of (1 + ε) = {one_plus_eps.standard_part()}")
+    print(f"\nPerturbed measure (ε = {eps}, weights = {weights}):")
+    for i, p in enumerate(perturbed):
+        print(f"  P({i}) = {p} = {float(p):.10f}")
+    print(f"  Valid: {is_valid_pmf(perturbed)}")
+    print(f"  Fully discriminating: {is_fully_discriminating(perturbed)}")
+    print(f"  Sum = {sum(perturbed)}")
 
 
-# ============================================================
-# Demo 2: Uniform Infinitesimal Probability Measure
-# ============================================================
-
-def demo_uniform_infinitesimal_measure():
+def demo_dual_impossibility():
+    """Demonstrate the dual impossibility theorem numerically."""
     print("\n" + "=" * 60)
-    print("DEMO 2: Uniform Infinitesimal Probability Measure")
+    print("DEMO 2: Dual Impossibility Theorem")
     print("=" * 60)
     
-    eps = InfinitesimalNumber(Fraction(0), Fraction(1))
+    # Archimedean direction: eps = 0.01, sums diverge
+    eps_arch = 0.01
+    print(f"\nArchimedean direction (ε = {eps_arch}):")
+    print("  Partial sums of uniform ε-probability on ℕ:")
+    for n in [10, 50, 100, 500, 1000]:
+        s = n * eps_arch
+        print(f"  Sum over {n:4d} elements: {s:8.2f} {'> 1 ✗' if s > 1 else '≤ 1 ✓'}")
     
-    # Create a probability space on {1, 2, 3, 4, 5}
-    omega = {1, 2, 3, 4, 5}
-    
-    print(f"Sample space Ω = {omega}")
-    print(f"Weight per point: ε = {eps}")
-    
-    # Singleton measures
-    for x in sorted(omega):
-        print(f"  μ({{{x}}}) = {eps}")
-    
-    # Finite set measures
-    S = {1, 2, 3}
-    measure_S = InfinitesimalNumber(Fraction(0), Fraction(len(S)))
-    print(f"\nμ({S}) = {len(S)} · ε = {measure_S}")
-    print(f"Is μ({S}) infinitesimal? {measure_S.is_infinitesimal()}")
-    print(f"Is μ({S}) < 1? Yes (infinitesimal < 1)")
-    
-    # Complement
-    S_comp = omega - S
-    measure_S_comp = InfinitesimalNumber(Fraction(1)) - measure_S
-    print(f"\nμ({S_comp}) = 1 - μ({S}) = {measure_S_comp}")
-    print(f"Standard part of μ(Sᶜ) = {measure_S_comp.standard_part()}")
-    
-    # Full space - in this model, μ(Ω) should be 1
-    # But 5ε ≠ 1 in general. This illustrates that the uniform
-    # infinitesimal measure on an INFINITE set has μ(Ω) = 1,
-    # while finite subsets have infinitesimal measure.
-    measure_omega = InfinitesimalNumber(Fraction(0), Fraction(5))
-    print(f"\nμ(Ω) for finite |Ω|=5: {measure_omega}")
-    print("Note: For a finite space, this is NOT a valid probability measure")
-    print("(since 5ε ≠ 1). The uniform infinitesimal measure requires an")
-    print("INFINITE sample space where the 'sum' of all weights equals 1.")
+    # Non-Archimedean direction: eps "infinitesimal" → eps < 1/(n+1)
+    print(f"\nNon-Archimedean direction (ε < 1/(n+1) for all n):")
+    print("  For any finite set of size n, sum = n·ε < n/(n+1) < 1:")
+    for n in [10, 100, 1000, 10000]:
+        bound = Fraction(n, n + 1)
+        print(f"  n = {n:5d}: n·ε < {bound} = {float(bound):.10f} < 1 ✓")
 
 
-# ============================================================  
-# Demo 3: Conditional Probability on Singletons
-# ============================================================
-
-def demo_conditional_probability():
+def demo_product():
+    """Demonstrate product measures."""
     print("\n" + "=" * 60)
-    print("DEMO 3: Conditional Probability (Dirac Recovery)")
+    print("DEMO 3: Product Measure")
     print("=" * 60)
     
-    eps = InfinitesimalNumber(Fraction(0), Fraction(1))
+    eps = Fraction(1, 10000)
+    mu = perturbed_measure(3, [-1, 0, 1], eps)
+    nu = perturbed_measure(2, [-1, 1], eps)
     
-    # P(A | {x}) where A = {1, 3, 5} and we condition on various x
-    A = {1, 3, 5}
+    print(f"\nMeasure μ on {{0,1,2}}:")
+    for i, p in enumerate(mu):
+        print(f"  μ({i}) = {float(p):.8f}")
     
-    print(f"Event A = {A}")
-    print(f"Weight ε = {eps}")
+    print(f"\nMeasure ν on {{0,1}}:")
+    for i, p in enumerate(nu):
+        print(f"  ν({i}) = {float(p):.8f}")
     
-    for x in range(1, 6):
-        if x in A:
-            # A ∩ {x} = {x}, so P(A|{x}) = μ({x})/μ({x}) = 1
-            p = eps / eps
-            print(f"\nP(A | {{{x}}}) = μ(A ∩ {{{x}}})/μ({{{x}}}) = ε/ε = {p}")
-        else:
-            # A ∩ {x} = ∅, so P(A|{x}) = 0/μ({x}) = 0
-            print(f"\nP(A | {{{x}}}) = μ(∅)/μ({{{x}}}) = 0/ε = 0")
-    
-    print("\n→ Conditioning on {x} recovers the Dirac delta:")
-    print("  P(A | {x}) = 1 if x ∈ A, 0 if x ∉ A")
-    print("  This is well-defined because μ({x}) = ε > 0!")
+    prod = product_measure(mu, nu)
+    print(f"\nProduct measure μ×ν on {{0,1,2}}×{{0,1}}:")
+    for (i, j), p in sorted(prod.items()):
+        print(f"  (μ×ν)({i},{j}) = {float(p):.12f}")
+    print(f"  Sum = {sum(prod.values())}")
+    print(f"  Valid: {sum(prod.values()) == 1}")
 
 
-# ============================================================
-# Demo 4: Inclusion-Exclusion with Infinitesimals  
-# ============================================================
-
-def demo_inclusion_exclusion():
+def demo_conditional():
+    """Demonstrate conditional probability."""
     print("\n" + "=" * 60)
-    print("DEMO 4: Inclusion-Exclusion with Infinitesimals")
+    print("DEMO 4: Conditional Probability")
     print("=" * 60)
     
-    eps = InfinitesimalNumber(Fraction(0), Fraction(1))
+    eps = Fraction(1, 10000)
+    pmf = perturbed_measure(4, [-3, -1, 1, 3], eps)
     
-    A = {1, 2, 3}
-    B = {2, 3, 4, 5}
+    print(f"\nMeasure on {{0,1,2,3}}:")
+    for i, p in enumerate(pmf):
+        print(f"  P({i}) = {float(p):.10f}")
     
-    mu_A = InfinitesimalNumber(Fraction(0), Fraction(len(A)))
-    mu_B = InfinitesimalNumber(Fraction(0), Fraction(len(B)))
-    mu_AB = InfinitesimalNumber(Fraction(0), Fraction(len(A & B)))
-    mu_AuB = InfinitesimalNumber(Fraction(0), Fraction(len(A | B)))
-    
-    print(f"A = {A}, B = {B}")
-    print(f"A ∩ B = {A & B}, A ∪ B = {A | B}")
-    print(f"\nμ(A) = {mu_A}")
-    print(f"μ(B) = {mu_B}")
-    print(f"μ(A ∩ B) = {mu_AB}")
-    print(f"μ(A ∪ B) = {mu_AuB}")
-    
-    # Verify inclusion-exclusion
-    ie_result = mu_A + mu_B - mu_AB
-    print(f"\nμ(A) + μ(B) - μ(A ∩ B) = {ie_result}")
-    print(f"μ(A ∪ B) = {mu_AuB}")
-    print(f"Inclusion-exclusion holds: {ie_result == mu_AuB}")
+    event = [0, 1]
+    cond = conditional_prob(pmf, event)
+    print(f"\nConditional on event {{{', '.join(map(str, event))}}}:")
+    for i, p in cond.items():
+        print(f"  P({i}|event) = {float(p):.10f}")
+    print(f"  Sum over event = {sum(cond[i] for i in event)}")
 
 
-# ============================================================
-# Demo 5: Anti-Concentration Theorem
-# ============================================================
-
-def demo_anti_concentration():
+def demo_bayesian():
+    """Demonstrate Bayesian update with near-infinitesimal prior."""
     print("\n" + "=" * 60)
-    print("DEMO 5: Anti-Concentration Theorem")
+    print("DEMO 5: Bayesian Update")
     print("=" * 60)
     
-    print("In a uniform infinitesimal probability space with weight ε:")
-    print()
+    eps = Fraction(1, 10000)
+    prior = perturbed_measure(3, [-1, 0, 1], eps)
+    likelihood = [Fraction(9, 10), Fraction(1, 10), Fraction(5, 10)]
     
-    for n in [1, 10, 100, 1000, 10**6, 10**9]:
-        print(f"  |S| = {n:>12,} → μ(S) = {n}·ε (infinitesimal, < 1)")
+    posterior = bayesian_update(prior, likelihood)
     
-    print()
-    print("No matter how large the finite set, its measure is infinitesimal.")
-    print("The 'bulk' of probability mass lives outside any finite set.")
-    print()
-    print("Proof: n·ε is infinitesimal because for any positive m,")
-    print("  m · |n·ε| = (m·n) · ε < 1")
-    print("since m·n is a natural number and ε is infinitesimal.")
+    print(f"\nPrior (perturbed uniform, ε = {eps}):")
+    for i, p in enumerate(prior):
+        print(f"  P(H{i}) = {float(p):.10f}")
+    
+    print(f"\nLikelihood P(D|Hᵢ):")
+    for i, l in enumerate(likelihood):
+        print(f"  P(D|H{i}) = {float(l):.4f}")
+    
+    print(f"\nPosterior P(Hᵢ|D):")
+    for i, p in enumerate(posterior):
+        print(f"  P(H{i}|D) = {float(p):.10f}")
+    print(f"  Sum = {sum(posterior)}")
+
+
+def demo_information():
+    """Demonstrate information ordering."""
+    print("\n" + "=" * 60)
+    print("DEMO 6: Information Ordering")
+    print("=" * 60)
+    
+    eps = Fraction(1, 10000)
+    uniform = uniform_measure(4)
+    perturbed1 = perturbed_measure(4, [-3, -1, 1, 3], eps)
+    perturbed2 = perturbed_measure(4, [-1, 0, 0, 1], eps)  # Not injective!
+    
+    print(f"\nUniform: {[float(p) for p in uniform]}")
+    print(f"Perturbed1 (injective weights): {[float(p) for p in perturbed1]}")
+    print(f"Perturbed2 (non-injective weights): {[float(p) for p in perturbed2]}")
+    
+    print(f"\nPerturbed1 refines uniform: {refines(perturbed1, uniform)}")
+    print(f"Perturbed2 refines uniform: {refines(perturbed2, uniform)}")
+    print(f"Uniform refines perturbed1: {refines(uniform, perturbed1)}")
+    print(f"Perturbed1 fully discriminating: {is_fully_discriminating(perturbed1)}")
+    print(f"Perturbed2 fully discriminating: {is_fully_discriminating(perturbed2)}")
 
 
 if __name__ == "__main__":
-    demo_infinitesimal_arithmetic()
-    demo_uniform_infinitesimal_measure()
-    demo_conditional_probability()
-    demo_inclusion_exclusion()
-    demo_anti_concentration()
+    demo_perturbation()
+    demo_dual_impossibility()
+    demo_product()
+    demo_conditional()
+    demo_bayesian()
+    demo_information()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Anti-Concentration Theorem
+Visualization: Dual Impossibility Theorem for Surreal Probability
 
-Shows how the measure of finite subsets grows linearly with |S| but remains
-infinitesimal (< 1) for all finite sets. Compares with standard uniform
-probability where μ(S) = |S|/|Ω| approaches 1.
+Shows both directions of the impossibility:
+1. Archimedean: partial sums of ε diverge (left panel)
+2. Non-Archimedean: partial sums of infinitesimal ε are trapped below 1 (right panel)
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 
 
-def plot_anti_concentration():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+def plot_dual_impossibility():
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+    fig.suptitle("Dual Impossibility Theorem for Surreal Probability",
+                 fontsize=16, fontweight='bold', y=0.98)
     
-    # Left: Standard probability on finite Ω with |Ω| = 100
-    ax1 = axes[0]
-    N = 100
-    sizes = np.arange(0, N + 1)
-    standard_measure = sizes / N
+    # Panel 1: Archimedean direction
+    epsilons = [0.1, 0.05, 0.01, 0.005, 0.001]
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, len(epsilons)))
     
-    ax1.plot(sizes, standard_measure, 'b-', linewidth=2, label='μ(S) = |S|/|Ω|')
-    ax1.axhline(y=1, color='r', linestyle='--', alpha=0.5, label='μ = 1')
-    ax1.set_xlabel('|S| (size of finite subset)', fontsize=12)
-    ax1.set_ylabel('μ(S)', fontsize=12)
-    ax1.set_title('Standard Uniform Probability\n(|Ω| = 100)', fontsize=14)
+    for eps, color in zip(epsilons, colors):
+        n_vals = np.arange(1, int(2.0 / eps) + 10)
+        sums = n_vals * eps
+        ax1.plot(n_vals, sums, color=color, linewidth=2,
+                label=f"ε = {eps}")
+    
+    ax1.axhline(y=1, color='red', linestyle='--', linewidth=2, alpha=0.7,
+               label='Target: sum = 1')
+    ax1.set_xlabel("Number of elements (n)", fontsize=12)
+    ax1.set_ylabel("Partial sum: n · ε", fontsize=12)
+    ax1.set_title("Archimedean Direction\n(ε fixed, n grows → sum diverges)", fontsize=13)
+    ax1.legend(fontsize=9, loc='upper left')
+    ax1.set_ylim(0, 3)
+    ax1.set_xlim(0, 500)
+    ax1.fill_between([0, 500], 1, 3, alpha=0.1, color='red')
+    ax1.text(250, 2.5, "Sum exceeds 1\n(impossible region)",
+            ha='center', fontsize=11, color='darkred', style='italic')
+    ax1.grid(True, alpha=0.3)
+    
+    # Panel 2: Non-Archimedean direction
+    n_vals = np.arange(1, 101)
+    bounds = n_vals / (n_vals + 1)
+    
+    ax2.fill_between(n_vals, bounds, 1, alpha=0.15, color='blue',
+                    label='Gap: 1 - n/(n+1)')
+    ax2.plot(n_vals, bounds, 'b-', linewidth=2.5,
+            label='Upper bound: n/(n+1)')
+    ax2.axhline(y=1, color='red', linestyle='--', linewidth=2, alpha=0.7,
+               label='Target: sum = 1')
+    
+    # Show specific points
+    for n in [5, 10, 25, 50, 100]:
+        if n <= 100:
+            b = n / (n + 1)
+            ax2.plot(n, b, 'ko', markersize=6, zorder=5)
+            ax2.annotate(f'n={n}: {b:.4f}', (n, b),
+                        textcoords="offset points",
+                        xytext=(10, -15 if n % 2 == 0 else 10),
+                        fontsize=8, color='navy')
+    
+    ax2.set_xlabel("Number of elements (n)", fontsize=12)
+    ax2.set_ylabel("Upper bound on partial sum", fontsize=12)
+    ax2.set_title("Non-Archimedean Direction\n(ε infinitesimal → sum trapped below 1)", fontsize=13)
+    ax2.legend(fontsize=10, loc='lower right')
+    ax2.set_ylim(0, 1.1)
+    ax2.set_xlim(0, 105)
+    ax2.grid(True, alpha=0.3)
+    ax2.text(50, 0.3, "Sum ≤ n/(n+1) < 1\nfor ALL finite n",
+            ha='center', fontsize=12, color='navy', style='italic',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='lightblue', alpha=0.5))
+    
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    plt.savefig("dual_impossibility.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: dual_impossibility.png")
+
+
+def plot_discrimination_power():
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+    fig.suptitle("Discrimination Power of Surreal Probability Measures",
+                 fontsize=16, fontweight='bold', y=0.98)
+    
+    # Panel 1: Uniform vs Perturbed
+    n = 6
+    eps = 0.005
+    weights = [-5, -3, -1, 1, 3, 5]
+    
+    uniform = [1/n] * n
+    perturbed = [1/n + w * eps for w in weights]
+    
+    x = np.arange(n)
+    width = 0.35
+    
+    bars1 = ax1.bar(x - width/2, uniform, width, label='Uniform',
+                   color='steelblue', alpha=0.8, edgecolor='navy')
+    bars2 = ax1.bar(x + width/2, perturbed, width, label='Perturbed (ε-shifted)',
+                   color='coral', alpha=0.8, edgecolor='darkred')
+    
+    ax1.set_xlabel("Element index", fontsize=12)
+    ax1.set_ylabel("Probability", fontsize=12)
+    ax1.set_title("Uniform vs Perturbed Measure\n(6 elements)", fontsize=13)
     ax1.legend(fontsize=11)
-    ax1.set_ylim(-0.05, 1.15)
-    ax1.grid(True, alpha=0.3)
+    ax1.set_xticks(x)
+    ax1.set_xticklabels([f'a{i}' for i in range(n)])
+    ax1.grid(True, alpha=0.3, axis='y')
+    ax1.set_ylim(0, max(perturbed) * 1.3)
     
-    # Right: Infinitesimal probability (conceptual)
-    ax2 = axes[1]
+    # Annotate the infinitesimal differences
+    for i in range(n):
+        diff = perturbed[i] - uniform[i]
+        sign = '+' if diff >= 0 else ''
+        ax1.annotate(f'{sign}{diff:.3f}',
+                    (x[i] + width/2, perturbed[i]),
+                    textcoords="offset points", xytext=(0, 5),
+                    fontsize=8, ha='center', color='darkred')
     
-    # μ(S) = |S| · ε which is always infinitesimal
-    # We represent this conceptually with a very small slope
-    eps_values = [0.001, 0.01, 0.1]
-    colors = ['green', 'orange', 'purple']
-    labels = ['ε = 0.001', 'ε = 0.01', 'ε = 0.1']
+    # Panel 2: Information content vs epsilon
+    n = 5
+    weights = [-2, -1, 0, 1, 2]
+    epsilons = np.logspace(-6, -1, 50)
     
-    for eps, color, label in zip(eps_values, colors, labels):
-        measure = sizes * eps
-        ax2.plot(sizes, measure, color=color, linewidth=2, label=label, alpha=0.8)
+    spreads = [max(1/n + w * e for w in weights) - min(1/n + w * e for w in weights)
+              for e in epsilons]
     
-    ax2.axhline(y=1, color='r', linestyle='--', alpha=0.5, label='μ = 1 (never reached)')
-    ax2.set_xlabel('|S| (size of finite subset)', fontsize=12)
-    ax2.set_ylabel('μ(S) = |S| · ε', fontsize=12)
-    ax2.set_title('Infinitesimal Probability\n(μ(S) < 1 for all finite S)', fontsize=14)
-    ax2.legend(fontsize=11)
-    ax2.set_ylim(-0.05, 1.15)
+    ax2.semilogx(epsilons, spreads, 'b-', linewidth=2.5)
+    ax2.fill_between(epsilons, 0, spreads, alpha=0.2, color='blue')
+    ax2.set_xlabel("ε (infinitesimal parameter)", fontsize=12)
+    ax2.set_ylabel("Spread: max(μ) - min(μ)", fontsize=12)
+    ax2.set_title("Discrimination Spread vs ε\n(grows linearly with ε)", fontsize=13)
     ax2.grid(True, alpha=0.3)
     
-    # Add annotation
-    ax2.annotate('Anti-Concentration:\nNo finite set reaches μ = 1',
-                xy=(70, 0.7), fontsize=11, color='darkred',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', alpha=0.8))
+    # Mark key points
+    for e in [1e-5, 1e-3, 1e-1]:
+        s = max(1/n + w * e for w in weights) - min(1/n + w * e for w in weights)
+        ax2.plot(e, s, 'ro', markersize=8, zorder=5)
+        ax2.annotate(f'ε={e:.0e}\nspread={s:.4f}',
+                    (e, s), textcoords="offset points",
+                    xytext=(15, 5), fontsize=9,
+                    arrowprops=dict(arrowstyle='->', color='red', lw=1.5))
     
-    plt.tight_layout()
-    plt.savefig('anti_concentration.png', dpi=150, bbox_inches='tight')
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    plt.savefig("discrimination_power.png", dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved anti_concentration.png")
-
-
-def plot_conditional_probability():
-    """Visualize the Dirac Recovery Theorem."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
-    # Event A = {1, 3, 5, 7, 9} out of Ω = {1, ..., 10}
-    omega = list(range(1, 11))
-    A = {1, 3, 5, 7, 9}
-    
-    # Standard probability: P(A|{x}) is undefined (0/0)
-    ax1 = axes[0]
-    std_probs = [float('nan')] * len(omega)  # undefined
-    ax1.bar(omega, [0.5] * len(omega), color='gray', alpha=0.3, label='P({x}) = 0 (undefined P(A|{x}))')
-    ax1.set_xlabel('x', fontsize=12)
-    ax1.set_ylabel('P(A | {x})', fontsize=12)
-    ax1.set_title('Standard Probability\nP(A|{x}) = 0/0 (undefined!)', fontsize=14)
-    ax1.set_ylim(-0.1, 1.5)
-    ax1.text(5.5, 1.2, 'UNDEFINED', fontsize=16, color='red', ha='center',
-             bbox=dict(facecolor='lightyellow', alpha=0.8))
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-    
-    # Infinitesimal probability: P(A|{x}) = 1 if x ∈ A, 0 otherwise
-    ax2 = axes[1]
-    inf_probs = [1 if x in A else 0 for x in omega]
-    colors = ['#2ecc71' if x in A else '#e74c3c' for x in omega]
-    ax2.bar(omega, inf_probs, color=colors, alpha=0.8, edgecolor='black')
-    ax2.set_xlabel('x', fontsize=12)
-    ax2.set_ylabel('P(A | {x})', fontsize=12)
-    ax2.set_title('Non-Archimedean Probability\nP(A|{x}) = Dirac delta (well-defined!)', fontsize=14)
-    ax2.set_ylim(-0.1, 1.5)
-    
-    # Legend
-    from matplotlib.patches import Patch
-    legend_elements = [Patch(facecolor='#2ecc71', label='x ∈ A → P(A|{x}) = 1'),
-                      Patch(facecolor='#e74c3c', label='x ∉ A → P(A|{x}) = 0')]
-    ax2.legend(handles=legend_elements, fontsize=10)
-    ax2.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('dirac_recovery.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved dirac_recovery.png")
-
-
-def plot_infinitesimal_structure():
-    """Visualize the additive structure of infinitesimals."""
-    fig, ax = plt.subplots(figsize=(10, 8))
-    
-    # Number line with infinitesimal neighborhood of 0
-    y_levels = np.linspace(0, 1, 6)
-    
-    # Standard reals
-    reals = [-1, -0.5, 0, 0.5, 1]
-    ax.scatter(reals, [0] * len(reals), s=100, c='blue', zorder=5)
-    for r in reals:
-        ax.annotate(str(r), (r, 0), textcoords="offset points", xytext=(0, 15),
-                   ha='center', fontsize=12, color='blue')
-    ax.plot([-1.5, 1.5], [0, 0], 'b-', alpha=0.3, linewidth=2)
-    ax.text(-1.4, 0.05, 'Standard reals', fontsize=11, color='blue')
-    
-    # Zoom into neighborhood of 0
-    zoom_center = 0
-    zoom_width = 0.1
-    
-    # Draw zoom lines
-    ax.plot([zoom_center - zoom_width, -1.2], [0, 0.3], 'k--', alpha=0.2)
-    ax.plot([zoom_center + zoom_width, 1.2], [0, 0.3], 'k--', alpha=0.2)
-    
-    # Zoomed view
-    eps_vals = [-3, -2, -1, 0, 1, 2, 3]
-    x_positions = [v * 0.3 for v in eps_vals]
-    
-    ax.scatter(x_positions, [0.5] * len(eps_vals), s=80, c='green', zorder=5)
-    for v, x in zip(eps_vals, x_positions):
-        if v == 0:
-            label = '0'
-        elif v == 1:
-            label = 'ε'
-        elif v == -1:
-            label = '-ε'
-        else:
-            label = f'{v}ε'
-        ax.annotate(label, (x, 0.5), textcoords="offset points", xytext=(0, 15),
-                   ha='center', fontsize=11, color='green')
-    
-    ax.plot([-1.2, 1.2], [0.5, 0.5], 'g-', alpha=0.3, linewidth=2)
-    ax.text(-1.1, 0.55, 'Infinitesimal neighborhood of 0', fontsize=11, color='green')
-    
-    # Second-order infinitesimals
-    eps2_vals = [-2, -1, 0, 1, 2]
-    x_positions2 = [v * 0.2 for v in eps2_vals]
-    
-    ax.scatter(x_positions2, [0.85] * len(eps2_vals), s=60, c='purple', zorder=5)
-    for v, x in zip(eps2_vals, x_positions2):
-        if v == 0:
-            label = '0'
-        elif v == 1:
-            label = 'ε²'
-        elif v == -1:
-            label = '-ε²'
-        else:
-            label = f'{v}ε²'
-        ax.annotate(label, (x, 0.85), textcoords="offset points", xytext=(0, 15),
-                   ha='center', fontsize=10, color='purple')
-    
-    ax.plot([-0.8, 0.8], [0.85, 0.85], 'purple', alpha=0.3, linewidth=2)
-    ax.text(-0.75, 0.9, 'Second-order infinitesimals', fontsize=10, color='purple')
-    
-    ax.set_xlim(-1.5, 1.5)
-    ax.set_ylim(-0.15, 1.15)
-    ax.set_ylabel('Zoom level', fontsize=12)
-    ax.set_title('Non-Archimedean Number Line\nInfinitely many "levels" of smallness', fontsize=14)
-    ax.set_yticks([0, 0.5, 0.85])
-    ax.set_yticklabels(['Reals', 'ε-level', 'ε²-level'])
-    ax.grid(True, alpha=0.2)
-    
-    plt.tight_layout()
-    plt.savefig('infinitesimal_structure.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved infinitesimal_structure.png")
+    print("Saved: discrimination_power.png")
 
 
 if __name__ == "__main__":
-    plot_anti_concentration()
-    plot_conditional_probability()
-    plot_infinitesimal_structure()
+    plot_dual_impossibility()
+    plot_discrimination_power()
