@@ -1,217 +1,275 @@
 #!/usr/bin/env python3
 """
-Hypergraph Ramsey Theory: Numerical Demonstrations
+Hypergraph Ramsey Theory: Demonstrations and Computations
 
-Demonstrates key results from the formalization:
-1. Tower function growth rates
-2. Probabilistic lower bounds for R_3(k,k)
-3. Stepping-up bound analysis
-4. Growth rate comparison: graph vs hypergraph Ramsey numbers
+Demonstrates the key concepts: tower functions, counting lower bounds,
+chromatic density, and the growth of Ramsey numbers across uniformities.
 """
 
-from math import comb, log2, factorial
+import math
+from itertools import combinations
 
-def tower(b: int, k: int) -> int:
-    """Tower function: iterated exponentiation. tower(b,0)=1, tower(b,k+1)=b^tower(b,k)."""
-    if k == 0:
+def tower(b: int, n: int) -> int:
+    """Tower function: iterated exponentiation. tower(b, 0) = 1, tower(b, n+1) = b^tower(b, n)."""
+    if n == 0:
         return 1
-    prev = tower(b, k - 1)
-    if prev > 100000:  # Avoid computing astronomically large numbers
+    prev = tower(b, n - 1)
+    if prev > 100000:  # avoid astronomical numbers
         return float('inf')
     return b ** prev
 
-def tower_log2(k: int) -> str:
-    """String representation of log2(tower(2,k))."""
-    if k <= 4:
-        return str(tower(2, k))
-    return f"2^{tower_log2(k-1)}"
-
-def stepping_up_bound(R: int) -> int:
-    """Stepping-up bound: 2^(R-1) + 1."""
-    return 2 ** (R - 1) + 1
-
-def prob_bound_holds(n: int, k: int) -> bool:
-    """Check if the probabilistic bound holds: 2*C(n,k) < 2^C(k,3)."""
-    return 2 * comb(n, k) < 2 ** comb(k, 3)
-
-def max_prob_bound(k: int) -> int:
-    """Find the largest n such that prob_bound_holds(n, k) is True."""
+def ramsey_counting_lower_bound(r: int, k: int) -> int:
+    """
+    Probabilistic lower bound for R_r(k,k).
+    Returns the largest n such that 2 * C(n,k) < 2^C(k,r).
+    """
+    threshold = 2 ** math.comb(k, r)
     n = k
-    while prob_bound_holds(n, k):
+    while 2 * math.comb(n, k) < threshold:
         n += 1
     return n - 1
 
-def main():
-    print("=" * 70)
-    print("HYPERGRAPH RAMSEY THEORY: NUMERICAL DEMONSTRATIONS")
-    print("=" * 70)
+def check_monochromatic(coloring: dict, vertices: list, r: int) -> bool:
+    """Check if a vertex set is monochromatic (all r-subsets same color)."""
+    color_set = set()
+    for subset in combinations(vertices, r):
+        key = tuple(sorted(subset))
+        color_set.add(coloring.get(key, 0))
+        if len(color_set) > 1:
+            return False
+    return True
 
-    # 1. Tower function values
-    print("\n1. TOWER FUNCTION VALUES (base 2)")
-    print("-" * 40)
-    for k in range(7):
-        val = tower(2, k)
-        if val != float('inf') and val < 10**100:
-            print(f"  tower(2, {k}) = {val}")
+def brute_force_ramsey_1(s: int, t: int) -> int:
+    """Compute R_1(s,t) by brute force = s + t - 1."""
+    # For 1-uniform: just pigeonhole
+    return s + t - 1
+
+def chromatic_density(coloring: dict, vertices: list, r: int) -> float:
+    """Compute the chromatic density (fraction of red r-subsets)."""
+    total = 0
+    red = 0
+    for subset in combinations(vertices, r):
+        key = tuple(sorted(subset))
+        total += 1
+        if coloring.get(key, 0) == 1:
+            red += 1
+    return red / total if total > 0 else 0.5
+
+def demo_tower_growth():
+    """Demonstrate tower function growth."""
+    print("=" * 60)
+    print("Tower Function Growth: tower(2, n)")
+    print("=" * 60)
+    for n in range(8):
+        val = tower(2, n)
+        if val != float('inf'):
+            print(f"  tower(2, {n}) = {val}")
         else:
-            print(f"  tower(2, {k}) = {tower_log2(k)} (too large to write)")
+            print(f"  tower(2, {n}) = 2^(tower(2,{n-1})) [astronomically large]")
+    print()
 
-    # 2. Probabilistic lower bounds
-    print("\n2. PROBABILISTIC LOWER BOUNDS FOR R_3(k,k)")
+def demo_counting_lower_bounds():
+    """Demonstrate counting lower bounds for various uniformities."""
+    print("=" * 60)
+    print("Counting Lower Bounds for R_r(k,k)")
+    print("=" * 60)
+    print(f"{'r':>3} {'k':>3} {'C(k,r)':>10} {'2^C(k,r)':>15} {'Lower bound':>12}")
     print("-" * 50)
-    print(f"  {'k':>3} | {'C(k,3)':>8} | {'2^C(k,3)':>12} | {'max n':>6} | R_3(k,k) > n")
-    print(f"  {'---':>3} | {'--------':>8} | {'------------':>12} | {'------':>6} | ------------")
-    for k in range(3, 11):
-        ck3 = comb(k, 3)
-        power = 2 ** ck3
-        max_n = max_prob_bound(k)
-        print(f"  {k:>3} | {ck3:>8} | {power:>12} | {max_n:>6} | R_3({k},{k}) > {max_n}")
+    for r in range(2, 5):
+        for k in range(r + 1, min(r + 8, 15)):
+            ckr = math.comb(k, r)
+            if ckr <= 50:  # avoid overflow
+                lb = ramsey_counting_lower_bound(r, k)
+                print(f"{r:>3} {k:>3} {ckr:>10} {2**ckr:>15} {lb:>12}")
+    print()
 
-    # 3. Known Ramsey values and bounds
-    print("\n3. KNOWN VALUES AND BOUNDS FOR R_3(k,k)")
-    print("-" * 50)
-    known = {
-        3: (4, 4, "exact"),
-        4: (13, 13, "exact"),
-        5: (34, 55, "bounds"),
-        6: (79, 330, "bounds"),
-    }
-    for k, (lo, hi, status) in known.items():
-        prob = max_prob_bound(k)
-        print(f"  R_3({k},{k}): [{lo}, {hi}] ({status}), prob bound gives > {prob}")
+def demo_ramsey_one():
+    """Demonstrate R_1(s,t) = s + t - 1."""
+    print("=" * 60)
+    print("1-Uniform Ramsey Numbers: R_1(s,t) = s + t - 1")
+    print("=" * 60)
+    for s in range(1, 8):
+        for t in range(1, 8):
+            print(f"  R_1({s},{t}) = {brute_force_ramsey_1(s, t)}", end="  ")
+        print()
+    print()
 
-    # 4. Stepping-up analysis
-    print("\n4. STEPPING-UP BOUND ANALYSIS")
-    print("-" * 50)
-    print("  R_2(k,k) → R_3(k+1,k+1) via stepping-up:")
-    graph_ramsey = {3: 6, 4: 18, 5: 48, 6: 102}
-    for k, R2 in graph_ramsey.items():
-        R3_bound = stepping_up_bound(R2)
-        print(f"  R_2({k},{k}) = {R2} → R_3({k+1},{k+1}) ≤ 2^{R2-1}+1 = {R3_bound}")
+def demo_uniformity_spectrum():
+    """Demonstrate how Ramsey bounds grow across uniformities."""
+    print("=" * 60)
+    print("Ramsey Spectrum: Growth Across Uniformities")
+    print("=" * 60)
+    print("For diagonal R_r(k,k), counting lower bounds:")
+    print(f"{'k':>3} {'r=2 (graph)':>15} {'r=3 (3-unif)':>15} {'r=4 (4-unif)':>15}")
+    print("-" * 55)
+    for k in range(3, 10):
+        bounds = []
+        for r in range(2, 5):
+            if math.comb(k, r) <= 50:
+                lb = ramsey_counting_lower_bound(r, k)
+                bounds.append(str(lb))
+            else:
+                bounds.append("huge")
+        print(f"{k:>3} {bounds[0]:>15} {bounds[1]:>15} {bounds[2]:>15}")
+    print()
+    print("Key observation: as uniformity r increases, the lower bounds")
+    print("grow dramatically (single exponential → double exponential → tower).")
+    print()
 
-    # 5. Growth rate comparison
-    print("\n5. GROWTH RATE COMPARISON")
-    print("-" * 50)
-    print(f"  {'k':>3} | {'4^k (graph)':>15} | {'tower(2,k)':>20} | {'ratio':>10}")
-    print(f"  {'---':>3} | {'------------':>15} | {'-------------------':>20} | {'----------':>10}")
-    for k in range(1, 6):
-        graph = 4 ** k
-        hyper = tower(2, k)
-        if hyper == float('inf') or hyper > 10**15:
-            print(f"  {k:>3} | {graph:>15} | {'(too large)':>20} | {'∞':>10}")
-        else:
-            ratio = hyper / graph if graph > 0 else float('inf')
-            print(f"  {k:>3} | {graph:>15} | {hyper:>20} | {ratio:>10.1f}")
-
-    # 6. Double exponential vs single exponential
-    print("\n6. GROWTH GAP: SINGLE vs DOUBLE EXPONENTIAL")
-    print("-" * 50)
-    for k in range(3, 8):
-        single = 2 ** (k * k // 6)  # approx probabilistic lower bound
-        double = tower(2, k)  # tower function upper bound regime
-        if double != float('inf') and double < 10**15:
-            print(f"  k={k}: single-exp ~ 2^{k*k//6} = {single}, tower(2,{k}) = {double}")
-        else:
-            print(f"  k={k}: single-exp ~ 2^{k*k//6} = {single}, tower(2,{k}) = {tower_log2(k)} (too large)")
-
-    print("\n" + "=" * 70)
-    print("KEY INSIGHT: The gap between single and double exponential")
-    print("growth rates is the central open problem in hypergraph Ramsey theory.")
-    print("Our formalization proves the probabilistic lower bound (single exp)")
-    print("and establishes the tower function hierarchy (double exp upper bound).")
-    print("=" * 70)
+def demo_density_dichotomy():
+    """Demonstrate the density dichotomy for a random-ish coloring."""
+    print("=" * 60)
+    print("Density Dichotomy Example")
+    print("=" * 60)
+    n = 6
+    r = 2
+    vertices = list(range(n))
+    # Create a biased coloring
+    coloring = {}
+    for pair in combinations(vertices, r):
+        key = tuple(sorted(pair))
+        # Color based on sum parity
+        coloring[key] = 1 if sum(pair) % 3 == 0 else 0
+    
+    total = math.comb(n, r)
+    red = sum(1 for v in coloring.values() if v == 1)
+    blue = total - red
+    
+    print(f"  n = {n}, r = {r}")
+    print(f"  Total {r}-subsets: {total}")
+    print(f"  Red: {red}, Blue: {blue}")
+    print(f"  Density dichotomy: max(red, blue) = {max(red, blue)} ≥ {total}/2 = {total/2}")
+    print(f"  ✓ At least one color has ≥ half the subsets")
+    print()
 
 if __name__ == "__main__":
-    main()
+    demo_tower_growth()
+    demo_counting_lower_bounds()
+    demo_ramsey_one()
+    demo_uniformity_spectrum()
+    demo_density_dichotomy()
+    
+    print("=" * 60)
+    print("Summary of Formalized Results")
+    print("=" * 60)
+    print("1. HyperRamseyProp: Ramsey property for r-uniform hypergraphs")
+    print("2. Counting lower bound: 2·C(n,k) < 2^C(k,r) → ¬R_r(n,k,k)")
+    print("3. R_1(s,t) = s + t - 1 (exact, with tightness proof)")
+    print("4. Uniformity gap: ¬R_r(n,s,t) → ¬R_{r+1}(n,s+1,t+1)")
+    print("5. Tower iteration bound: f(r+1) ≤ 2^f(r) → f(r) ≤ tower(2,r)")
+    print("6. Link coloring: monochromatic preservation under link")
+    print("7. Density dichotomy: pigeonhole for hypergraph colorings")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Hypergraph Ramsey Number Growth Rates
+Visualization: Tower Function Growth and Ramsey Spectrum
 
-Compares single exponential (probabilistic lower bound) with
-double exponential (stepping-up upper bound) growth for R_3(k,k).
+Creates plots showing:
+1. Tower function vs exponential growth
+2. Ramsey lower bounds across uniformities
+3. Uniformity gap ratios
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from math import comb, log2
+import math
 
-def tower(b, k):
-    if k == 0:
+def tower(b, n):
+    if n == 0:
         return 1
-    return b ** tower(b, k - 1)
+    prev = tower(b, n - 1)
+    if prev > 100:
+        return float('inf')
+    return b ** prev
 
-def prob_lower_bound(k):
-    target = 2 ** comb(k, 3)
+def counting_lower_bound(r, k):
+    if r > k:
+        return k
+    ckr = math.comb(k, r)
+    if ckr > 60:
+        return float('inf')
+    threshold = 2 ** ckr
     n = k
-    while 2 * comb(n, k) < target:
+    while 2 * math.comb(n, k) < threshold and n < 10**6:
         n += 1
     return n - 1
 
-def main():
-    ks = list(range(3, 12))
+# Figure 1: Tower vs Exponential Growth
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-    # Probabilistic lower bounds (log scale)
-    prob_bounds = [prob_lower_bound(k) for k in ks]
-    log_prob = [log2(max(b, 1)) for b in prob_bounds]
+# Plot 1: Tower function (log scale)
+ns = list(range(0, 6))
+tower_vals = [tower(2, n) for n in ns]
+exp_vals = [2**n for n in ns]
 
-    # Known bounds
-    known_lower = {3: 4, 4: 13, 5: 34, 6: 79}
-    known_upper = {3: 4, 4: 13, 5: 55, 6: 330}
+ax = axes[0]
+valid_tower = [(n, v) for n, v in zip(ns, tower_vals) if v < float('inf')]
+valid_exp = [(n, v) for n, v in zip(ns, exp_vals) if v < float('inf')]
+ax.semilogy([x[0] for x in valid_tower], [x[1] for x in valid_tower], 
+            'ro-', linewidth=2, markersize=8, label='tower(2, n)')
+ax.semilogy([x[0] for x in valid_exp], [x[1] for x in valid_exp],
+            'bs--', linewidth=2, markersize=8, label='2^n')
+ax.set_xlabel('Height n', fontsize=12)
+ax.set_ylabel('Value (log scale)', fontsize=12)
+ax.set_title('Tower Function vs Exponential', fontsize=14)
+ax.legend(fontsize=11)
+ax.grid(True, alpha=0.3)
 
-    # Single exponential reference: 2^(k^2/6)
-    single_exp = [k**2 / 6 for k in ks]
+# Plot 2: Ramsey lower bounds
+ax = axes[1]
+ks = list(range(3, 12))
+for r in [2, 3, 4]:
+    lbs = []
+    valid_ks = []
+    for k in ks:
+        lb = counting_lower_bound(r, k)
+        if lb < float('inf') and lb < 10**6:
+            lbs.append(lb)
+            valid_ks.append(k)
+    if valid_ks:
+        ax.semilogy(valid_ks, lbs, 'o-', linewidth=2, markersize=6, 
+                    label=f'r={r} ({r}-uniform)')
+ax.set_xlabel('Clique size k', fontsize=12)
+ax.set_ylabel('Lower bound on R_r(k,k)', fontsize=12)
+ax.set_title('Counting Lower Bounds', fontsize=14)
+ax.legend(fontsize=11)
+ax.grid(True, alpha=0.3)
 
-    # Double exponential reference: 2^(2^k) (log_2 of log_2)
-    # log2(tower(2,k)) = tower(2,k-1)
-    double_exp_log = [tower(2, k-1) for k in ks if k <= 6]
+# Plot 3: Growth rate comparison
+ax = axes[2]
+ks = list(range(3, 10))
+ratios_2 = []
+ratios_3 = []
+valid_ks_2 = []
+valid_ks_3 = []
+for k in ks:
+    lb2 = counting_lower_bound(2, k)
+    lb3 = counting_lower_bound(3, k)
+    if lb2 > 1 and lb2 < float('inf'):
+        ratios_2.append(math.log2(lb2))
+        valid_ks_2.append(k)
+    if lb3 > 1 and lb3 < float('inf'):
+        ratios_3.append(math.log2(lb3))
+        valid_ks_3.append(k)
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+if valid_ks_2:
+    ax.plot(valid_ks_2, ratios_2, 'ro-', linewidth=2, markersize=8, label='log₂ R₂(k,k)')
+if valid_ks_3:
+    ax.plot(valid_ks_3, ratios_3, 'bs-', linewidth=2, markersize=8, label='log₂ R₃(k,k)')
+# Theoretical curves
+k_theory = np.linspace(3, 10, 100)
+ax.plot(k_theory, k_theory/2, 'r--', alpha=0.5, label='k/2 (graph theory)')
+ax.plot(k_theory, k_theory**2/6, 'b--', alpha=0.5, label='k²/6 (3-uniform)')
+ax.set_xlabel('Clique size k', fontsize=12)
+ax.set_ylabel('log₂(lower bound)', fontsize=12)
+ax.set_title('Growth Rate: Linear vs Quadratic', fontsize=14)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
 
-    # Plot 1: Lower bounds comparison
-    ax1 = axes[0]
-    ax1.plot(ks, log_prob, 'bo-', label='Probabilistic bound (log₂)', linewidth=2, markersize=8)
-    ax1.plot(ks, single_exp, 'r--', label='k²/6 (single exp exponent)', linewidth=2)
-
-    known_ks = sorted(known_lower.keys())
-    ax1.plot(known_ks, [log2(known_lower[k]) for k in known_ks],
-             'g^-', label='Known lower bounds (log₂)', markersize=10, linewidth=2)
-    ax1.plot(known_ks, [log2(known_upper[k]) for k in known_ks],
-             'rv-', label='Known upper bounds (log₂)', markersize=10, linewidth=2)
-
-    ax1.set_xlabel('Clique size k', fontsize=12)
-    ax1.set_ylabel('log₂(R₃(k,k) bound)', fontsize=12)
-    ax1.set_title('Hypergraph Ramsey Number Bounds\n(logarithmic scale)', fontsize=14)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-
-    # Plot 2: Tower hierarchy
-    ax2 = axes[1]
-    tower_heights = list(range(1, 6))
-    tower_vals = [tower(2, h) for h in tower_heights]
-    log_tower = [log2(v) for v in tower_vals]
-
-    graph_ramsey_approx = [4**k for k in tower_heights]
-    log_graph = [k * log2(4) for k in tower_heights]
-
-    ax2.semilogy(tower_heights, tower_vals, 'ro-', label='tower(2, k)',
-                 linewidth=2, markersize=8)
-    ax2.semilogy(tower_heights, graph_ramsey_approx, 'b^--',
-                 label='4^k (graph Ramsey scale)', linewidth=2, markersize=8)
-
-    ax2.set_xlabel('Height k / Uniformity level', fontsize=12)
-    ax2.set_ylabel('Value (log scale)', fontsize=12)
-    ax2.set_title('Tower Function vs Single Exponential\n(Exponential Separation)', fontsize=14)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('hypergraph_ramsey_growth.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: hypergraph_ramsey_growth.png")
-
-if __name__ == "__main__":
-    main()
+plt.tight_layout()
+plt.savefig('ramsey_spectrum.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved ramsey_spectrum.png")

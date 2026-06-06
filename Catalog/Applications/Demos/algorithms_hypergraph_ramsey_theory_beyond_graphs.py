@@ -1,185 +1,190 @@
 #!/usr/bin/env python3
 """
-Hypergraph Ramsey Theory: Algorithms
+Hypergraph Ramsey Theory: Core Algorithms
 
-Type-hinted implementations of the key algorithms from the formalization.
+Type-hinted implementations of key algorithms for computing Ramsey bounds,
+tower functions, and chromatic densities.
 """
 
-from math import comb, log2
-from typing import List, Set, FrozenSet, Callable, Optional, Tuple
+from typing import Dict, List, Tuple, Set, Optional, FrozenSet
 from itertools import combinations
-import random
+import math
 
 
 def tower(base: int, height: int) -> int:
     """
-    Tower function: iterated exponentiation.
+    Compute the tower function: iterated exponentiation.
+    
     tower(b, 0) = 1
-    tower(b, k+1) = b^tower(b, k)
-
-    Examples:
-        tower(2, 0) = 1
-        tower(2, 1) = 2
-        tower(2, 2) = 4
-        tower(2, 3) = 16
-        tower(2, 4) = 65536
+    tower(b, n+1) = b^tower(b, n)
+    
+    For base=2: 1, 2, 4, 16, 65536, 2^65536, ...
     """
     if height == 0:
         return 1
-    prev = tower(base, height - 1)
-    if prev > 100000:
-        return float('inf')
-    return base ** prev
+    return base ** tower(base, height - 1)
 
 
-def stepping_up_bound(graph_ramsey: int) -> int:
+def counting_lower_bound(r: int, k: int) -> int:
     """
-    Erdős-Rado stepping-up bound.
-    Given R_r(k,l), provides upper bound for R_{r+1}(k+1, l+1).
-
-    stepping_up_bound(R) = 2^(R-1) + 1
-
-    This encodes the key structural insight: each increase in uniformity
-    adds one exponential layer to the Ramsey number.
-    """
-    return 2 ** (graph_ramsey - 1) + 1
-
-
-def probabilistic_lower_bound(k: int, r: int = 3) -> int:
-    """
-    Compute the probabilistic lower bound for R_r(k,k).
-
-    For r-uniform hypergraphs, the probabilistic method gives:
-    R_r(k,k) > max{n : 2 * C(n,k) < 2^C(k,r)}
-
+    Compute the probabilistic (counting) lower bound for R_r(k,k).
+    
+    Returns the largest n such that 2 * C(n,k) < 2^C(k,r).
+    By the first moment method, R_r(k,k) > this value.
+    
     Args:
-        k: Clique size
-        r: Uniformity (default 3 for 3-uniform hypergraphs)
-
+        r: uniformity (r-element subsets)
+        k: clique size
+    
     Returns:
-        Lower bound n such that R_r(k,k) > n
+        Lower bound on R_r(k,k)
     """
-    target = 2 ** comb(k, r)
+    if r > k:
+        return k  # trivial case
+    
+    threshold = 2 ** math.comb(k, r)
     n = k
-    while 2 * comb(n, k) < target:
+    while 2 * math.comb(n, k) < threshold:
         n += 1
     return n - 1
 
 
-def check_monochromatic_clique(
-    coloring: Callable[[FrozenSet[int]], bool],
-    vertices: Set[int],
+def is_monochromatic(
+    coloring: Dict[FrozenSet[int], int],
+    vertices: List[int],
+    r: int
+) -> Optional[int]:
+    """
+    Check if a vertex set is monochromatic under a given coloring.
+    
+    Returns the color if monochromatic, None otherwise.
+    """
+    if len(vertices) < r:
+        return 0  # vacuously monochromatic
+    
+    color: Optional[int] = None
+    for subset in combinations(vertices, r):
+        key = frozenset(subset)
+        c = coloring.get(key, 0)
+        if color is None:
+            color = c
+        elif c != color:
+            return None
+    return color
+
+
+def chromatic_density(
+    coloring: Dict[FrozenSet[int], int],
+    vertices: List[int],
+    r: int,
+    target_color: int = 1
+) -> float:
+    """
+    Compute the chromatic density: fraction of r-subsets with target color.
+    """
+    total = 0
+    count = 0
+    for subset in combinations(vertices, r):
+        key = frozenset(subset)
+        total += 1
+        if coloring.get(key, 0) == target_color:
+            count += 1
+    return count / total if total > 0 else 0.5
+
+
+def ramsey_spectrum_bounds(k: int, max_r: int = 5) -> Dict[int, Tuple[int, int]]:
+    """
+    Compute known bounds on R_r(k,k) for r = 2, ..., max_r.
+    
+    Returns dict mapping r -> (lower_bound, upper_bound_estimate).
+    """
+    bounds: Dict[int, Tuple[int, int]] = {}
+    
+    for r in range(2, max_r + 1):
+        if math.comb(k, r) <= 60:  # avoid overflow
+            lb = counting_lower_bound(r, k)
+        else:
+            lb = k  # trivial bound
+        
+        # Upper bound from stepping-up: very rough estimate
+        if r == 2:
+            # Graph Ramsey: roughly 4^k / sqrt(k)
+            ub = min(4 ** k, 10**15)
+        elif r - 2 >= 0 and r in bounds:
+            prev_ub = bounds[r - 1][1]
+            ub = min(2 ** prev_ub + prev_ub, 10**15)
+        else:
+            ub = min(tower(2, r - 1) * (4 ** k), 10**15)
+        
+        bounds[r] = (lb, ub)
+    
+    return bounds
+
+
+def uniformity_gap(bounds: Dict[int, Tuple[int, int]], r: int) -> float:
+    """
+    Compute the uniformity gap ratio: log(UB(r+1)) / log(UB(r)).
+    
+    This measures how much faster Ramsey numbers grow when uniformity increases.
+    """
+    if r not in bounds or (r + 1) not in bounds:
+        return 0.0
+    
+    ub_r = bounds[r][1]
+    ub_r1 = bounds[r + 1][1]
+    
+    if ub_r <= 1 or ub_r1 <= 1:
+        return 0.0
+    
+    return math.log(ub_r1) / math.log(ub_r)
+
+
+def link_coloring(
+    coloring: Dict[FrozenSet[int], int],
+    vertex: int,
+    n: int,
+    r: int
+) -> Dict[FrozenSet[int], int]:
+    """
+    Compute the link coloring at a vertex.
+    
+    The link of vertex v in an (r+1)-uniform coloring is the r-uniform
+    coloring where color(S) = original_color(S ∪ {v}).
+    """
+    link: Dict[FrozenSet[int], int] = {}
+    other_vertices = [i for i in range(n) if i != vertex]
+    
+    for subset in combinations(other_vertices, r):
+        key_link = frozenset(subset)
+        key_original = frozenset(subset) | {vertex}
+        link[key_link] = coloring.get(key_original, 0)
+    
+    return link
+
+
+def find_monochromatic_clique(
+    coloring: Dict[FrozenSet[int], int],
+    n: int,
+    r: int,
     k: int,
-    r: int = 3
-) -> Optional[Tuple[FrozenSet[int], bool]]:
+    target_color: int = 1
+) -> Optional[List[int]]:
     """
-    Check if a coloring contains a monochromatic k-clique.
-
-    Args:
-        coloring: Function from r-element subsets to bool (True=red, False=blue)
-        vertices: Set of vertices
-        k: Required clique size
-        r: Uniformity
-
-    Returns:
-        (clique, color) if found, None otherwise
+    Find a monochromatic k-clique of the given color, or return None.
+    
+    Brute force search over all k-element subsets.
     """
-    for clique_tuple in combinations(sorted(vertices), k):
-        clique = frozenset(clique_tuple)
-        r_subsets = [frozenset(s) for s in combinations(clique_tuple, r)]
-        if not r_subsets:
-            return (clique, True)  # vacuously monochromatic
-
-        first_color = coloring(r_subsets[0])
-        if all(coloring(s) == first_color for s in r_subsets[1:]):
-            return (clique, first_color)
-
+    for vertices in combinations(range(n), k):
+        vlist = list(vertices)
+        if is_monochromatic(coloring, vlist, r) == target_color:
+            return vlist
     return None
-
-
-def random_coloring_search(
-    n: int, k: int, r: int = 3, trials: int = 1000
-) -> Optional[Callable[[FrozenSet[int]], bool]]:
-    """
-    Search for a coloring of r-subsets of [n] with no monochromatic k-clique
-    using random colorings.
-
-    This implements the probabilistic method computationally:
-    if R_r(k,k) > n, random colorings should frequently avoid monochromatic cliques.
-
-    Args:
-        n: Number of vertices
-        k: Clique size to avoid
-        r: Uniformity
-        trials: Number of random colorings to try
-
-    Returns:
-        A coloring with no monochromatic k-clique, or None
-    """
-    vertices = set(range(n))
-    r_subsets = [frozenset(s) for s in combinations(range(n), r)]
-
-    for _ in range(trials):
-        # Random coloring
-        colors = {s: random.choice([True, False]) for s in r_subsets}
-        coloring = lambda s, c=colors: c[s]
-
-        result = check_monochromatic_clique(coloring, vertices, k, r)
-        if result is None:
-            return coloring
-
-    return None
-
-
-def erdos_szekeres_bound(k: int) -> int:
-    """
-    Erdős-Szekeres upper bound for graph Ramsey numbers: R_2(k,k) ≤ C(2k-2, k-1).
-    """
-    return comb(2 * k - 2, k - 1)
-
-
-def growth_rate_analysis(k_max: int = 10) -> List[dict]:
-    """
-    Analyze the growth rate of R_3(k,k) bounds.
-
-    Returns a list of dicts with:
-    - k: clique size
-    - prob_lower: probabilistic lower bound
-    - graph_ramsey_bound: Erdős-Szekeres bound for R_2(k,k)
-    - stepping_up: stepping-up bound from R_2(k-1,k-1)
-    - tower_value: tower(2, k)
-    """
-    results = []
-    for k in range(3, k_max + 1):
-        prob = probabilistic_lower_bound(k)
-        graph = erdos_szekeres_bound(k)
-        step = stepping_up_bound(erdos_szekeres_bound(k - 1)) if k > 3 else None
-        tw_val = tower(2, k)
-        tw = tw_val if tw_val != float('inf') and tw_val < 10**100 else None
-
-        results.append({
-            'k': k,
-            'prob_lower': prob,
-            'graph_ramsey_bound': graph,
-            'stepping_up': step,
-            'tower_value': tw,
-        })
-
-    return results
 
 
 if __name__ == "__main__":
-    print("Growth Rate Analysis:")
-    print("-" * 80)
-    for r in growth_rate_analysis(8):
-        tw_str = str(r['tower_value']) if r['tower_value'] is not None else ">10^10000"
-        step_str = str(r['stepping_up']) if r['stepping_up'] is not None else "N/A"
-        print(f"k={r['k']}: prob_lower={r['prob_lower']}, "
-              f"graph_R2={r['graph_ramsey_bound']}, "
-              f"step_up={step_str}, tower={tw_str}")
-
-    print("\nRandom coloring search for small cases:")
-    for n in [4, 8, 11, 12]:
-        result = random_coloring_search(n, 5, 3, trials=100)
-        status = "FOUND" if result else "NOT FOUND"
-        print(f"  n={n}, k=5: good coloring {status}")
+    # Example: compute spectrum for k=4
+    print("Ramsey Spectrum for k=4:")
+    bounds = ramsey_spectrum_bounds(4, max_r=4)
+    for r, (lb, ub) in sorted(bounds.items()):
+        gap = uniformity_gap(bounds, r) if r + 1 in bounds else 0
+        print(f"  r={r}: lower={lb}, upper≈{ub}, gap_ratio={gap:.2f}")
