@@ -1,460 +1,408 @@
 #!/usr/bin/env python3
 """
-Non-Archimedean Probability via Surreal Numbers — Demonstrations
+Demo: Non-Archimedean Probability via Surreal-Valued Measures
 
-This script demonstrates the key concepts from the formalized theory:
-1. The Archimedean impossibility: why ε > 0 in ℝ can't be infinitesimal
-2. The non-Archimedean construction: uniform measures with infinitesimal weights
-3. Finite additivity and monotonicity properties
-4. The characterization theorem in action
+Numerical examples illustrating the key theorems from the formalized theory.
 """
 
 from fractions import Fraction
-from typing import FrozenSet, TypeVar
-
-T = TypeVar('T')
+from typing import List, Dict, Set, FrozenSet
 
 
-def archimedean_witness(epsilon: float, bound: float) -> int:
-    """
-    Find the smallest n such that n * epsilon > bound.
-    This witnesses the Archimedean property: in ℝ, such n always exists.
-    
-    >>> archimedean_witness(0.01, 1.0)
-    101
-    >>> archimedean_witness(0.001, 1.0)
-    1001
-    """
-    n = 0
-    while n * epsilon <= bound:
-        n += 1
-    return n
+def weighted_measure(weights: Dict[str, Fraction], S: FrozenSet[str]) -> Fraction:
+    """Compute the measure of set S under the given weights."""
+    return sum(weights[x] for x in S if x in weights)
 
 
-def demonstrate_archimedean_impossibility():
-    """
-    Show that in ℝ, no positive ε can satisfy n·ε ≤ 1 for all n.
-    For each ε, we find the n that breaks the bound.
-    """
+def demo_finite_additivity():
+    """Demonstrate finite additivity: μ(A ∪ B) = μ(A) + μ(B) for disjoint A, B."""
     print("=" * 60)
-    print("ARCHIMEDEAN IMPOSSIBILITY IN ℝ")
-    print("=" * 60)
-    print("\nFor each ε > 0, we find n such that n·ε > 1:")
-    print(f"{'ε':>15} {'n (witness)':>15} {'n·ε':>15}")
-    print("-" * 50)
-    
-    for exp in range(1, 11):
-        eps = 10 ** (-exp)
-        n = archimedean_witness(eps, 1.0)
-        print(f"{eps:>15.1e} {n:>15d} {n * eps:>15.4f}")
-    
-    print("\nConclusion: No matter how small ε is, some finite n")
-    print("makes n·ε exceed 1. Infinitesimal probability is")
-    print("IMPOSSIBLE in the real numbers.\n")
-
-
-class SurrealLike:
-    """
-    A simplified model of surreal-like numbers for demonstration.
-    Represents elements of the form a + b/ω where a, b ∈ ℚ.
-    
-    The element 1/ω is infinitesimal: positive but smaller than any 1/n.
-    """
-    
-    def __init__(self, standard: Fraction = Fraction(0), 
-                 infinitesimal: Fraction = Fraction(0)):
-        self.std = standard      # the "standard part"
-        self.inf = infinitesimal  # coefficient of 1/ω
-    
-    def __repr__(self):
-        parts = []
-        if self.std != 0:
-            parts.append(str(self.std))
-        if self.inf != 0:
-            if self.inf == 1:
-                parts.append("1/ω")
-            elif self.inf == -1:
-                parts.append("-1/ω")
-            else:
-                parts.append(f"{self.inf}/ω")
-        return " + ".join(parts) if parts else "0"
-    
-    def __add__(self, other):
-        return SurrealLike(self.std + other.std, self.inf + other.inf)
-    
-    def __sub__(self, other):
-        return SurrealLike(self.std - other.std, self.inf - other.inf)
-    
-    def __mul__(self, n: int):
-        return SurrealLike(self.std * n, self.inf * n)
-    
-    def __rmul__(self, n: int):
-        return self.__mul__(n)
-    
-    def __le__(self, other):
-        if self.std != other.std:
-            return self.std <= other.std
-        return self.inf <= other.inf
-    
-    def __lt__(self, other):
-        return self <= other and not (self.std == other.std and self.inf == other.inf)
-    
-    def __eq__(self, other):
-        if isinstance(other, int) and other == 0:
-            return self.std == 0 and self.inf == 0
-        return self.std == other.std and self.inf == other.inf
-    
-    def is_positive(self):
-        if self.std > 0:
-            return True
-        if self.std == 0 and self.inf > 0:
-            return True
-        return False
-    
-    def is_infinitesimal(self):
-        """True if this is positive but smaller than any positive rational."""
-        return self.std == 0 and self.inf > 0
-
-
-# Convenient constructors
-ZERO = SurrealLike()
-ONE = SurrealLike(Fraction(1))
-EPSILON = SurrealLike(infinitesimal=Fraction(1))  # 1/ω
-
-
-def uniform_measure(epsilon: SurrealLike, n: int) -> SurrealLike:
-    """Uniform measure of a set with n elements: μ(S) = n · ε"""
-    return n * epsilon
-
-
-def demonstrate_non_archimedean_measure():
-    """
-    Show that in the surreal-like numbers, 1/ω is infinitesimal
-    and the uniform measure with weight 1/ω works perfectly.
-    """
-    print("=" * 60)
-    print("NON-ARCHIMEDEAN MEASURE WITH SURREAL NUMBERS")
+    print("DEMO 1: Finite Additivity")
     print("=" * 60)
     
-    eps = EPSILON
-    print(f"\nWeight ε = {eps}")
-    print(f"ε is positive: {eps.is_positive()}")
-    print(f"ε is infinitesimal: {eps.is_infinitesimal()}")
+    # Uniform probability on {a, b, c, d}
+    elements = ['a', 'b', 'c', 'd']
+    weights = {x: Fraction(1, 4) for x in elements}
     
-    print(f"\n{'n (set size)':>15} {'μ(S) = n·ε':>20} {'μ(S) ≤ 1?':>10}")
-    print("-" * 50)
+    A = frozenset(['a', 'b'])
+    B = frozenset(['c', 'd'])
     
-    for n in [1, 5, 10, 100, 1000, 10**6, 10**9]:
-        mu = uniform_measure(eps, n)
-        bounded = mu <= ONE
-        print(f"{n:>15d} {str(mu):>20s} {'YES' if bounded else 'NO':>10s}")
+    mu_A = weighted_measure(weights, A)
+    mu_B = weighted_measure(weights, B)
+    mu_AB = weighted_measure(weights, A | B)
     
-    print("\nConclusion: n · (1/ω) ≤ 1 for ALL finite n.")
-    print("Every point has positive probability 1/ω > 0,")
-    print("yet no finite collection exceeds total mass 1.\n")
-
-
-def demonstrate_finite_additivity():
-    """
-    Verify finite additivity: μ(S ∪ T) = μ(S) + μ(T) for disjoint S, T.
-    """
-    print("=" * 60)
-    print("FINITE ADDITIVITY VERIFICATION")
-    print("=" * 60)
-    
-    eps = EPSILON
-    
-    test_cases = [
-        (3, 5),   # |S| = 3, |T| = 5
-        (10, 20), # |S| = 10, |T| = 20
-        (1, 1),   # singletons
-        (0, 7),   # empty + nonempty
-        (100, 200),
-    ]
-    
-    print(f"\n{'|S|':>5} {'|T|':>5} {'μ(S∪T)':>15} {'μ(S)+μ(T)':>15} {'Equal?':>8}")
-    print("-" * 55)
-    
-    for s_size, t_size in test_cases:
-        mu_union = uniform_measure(eps, s_size + t_size)
-        mu_s = uniform_measure(eps, s_size)
-        mu_t = uniform_measure(eps, t_size)
-        mu_sum = mu_s + mu_t
-        equal = mu_union == mu_sum
-        print(f"{s_size:>5d} {t_size:>5d} {str(mu_union):>15s} {str(mu_sum):>15s} {'✓' if equal else '✗':>8s}")
-    
-    print("\nFinite additivity holds perfectly.\n")
-
-
-def demonstrate_monotonicity():
-    """
-    Verify monotonicity: S ⊆ T implies μ(S) ≤ μ(T).
-    """
-    print("=" * 60)
-    print("MONOTONICITY VERIFICATION")
-    print("=" * 60)
-    
-    eps = EPSILON
-    
-    print(f"\n{'|S|':>5} {'|T|':>5} {'μ(S)':>15} {'μ(T)':>15} {'μ(S) ≤ μ(T)?':>15}")
-    print("-" * 60)
-    
-    for s_size, t_size in [(1, 5), (3, 3), (0, 10), (7, 100), (50, 51)]:
-        mu_s = uniform_measure(eps, s_size)
-        mu_t = uniform_measure(eps, t_size)
-        mono = mu_s <= mu_t
-        print(f"{s_size:>5d} {t_size:>5d} {str(mu_s):>15s} {str(mu_t):>15s} {'✓' if mono else '✗':>15s}")
-    
+    print(f"Weights: {dict(weights)}")
+    print(f"A = {set(A)}, B = {set(B)}")
+    print(f"μ(A) = {mu_A} = {float(mu_A):.4f}")
+    print(f"μ(B) = {mu_B} = {float(mu_B):.4f}")
+    print(f"μ(A ∪ B) = {mu_AB} = {float(mu_AB):.4f}")
+    print(f"μ(A) + μ(B) = {mu_A + mu_B} = {float(mu_A + mu_B):.4f}")
+    print(f"Finite additivity holds: {mu_AB == mu_A + mu_B}")
     print()
 
 
-def demonstrate_complementary_bound():
-    """
-    Show that b - μ(S) ≥ 0 for all finite S when ε is infinitesimal w.r.t. b.
-    """
+def demo_no_free_lunch():
+    """Demonstrate the No Free Lunch theorem with simulated infinitesimals."""
     print("=" * 60)
-    print("COMPLEMENTARY BOUND: NO FINITE SET EXHAUSTS THE MASS")
+    print("DEMO 2: No Free Lunch Theorem")
     print("=" * 60)
     
-    eps = EPSILON
-    b = ONE
+    # Simulate infinitesimal ε as a very small fraction
+    # In surreal numbers, ε would be genuinely infinitesimal
+    for k in [10, 100, 1000, 10000]:
+        eps = Fraction(1, k)
+        n_points = 5
+        weights = {str(i): eps for i in range(n_points)}
+        total = weighted_measure(weights, frozenset(weights.keys()))
+        
+        print(f"ε = 1/{k}, n = {n_points}")
+        print(f"  Each weight = {eps}")
+        print(f"  Total = {n_points} × ε = {total} = {float(total):.6f}")
+        print(f"  Total > 0: {total > 0}  (No Free Lunch!)")
     
-    print(f"\nTotal mass b = {b}")
-    print(f"Weight ε = {eps}")
-    
-    print(f"\n{'|S|':>12} {'μ(S)':>15} {'b - μ(S)':>20} {'≥ 0?':>6}")
-    print("-" * 58)
-    
-    for n in [1, 10, 100, 1000, 10**6]:
-        mu = uniform_measure(eps, n)
-        remaining = b - mu
-        nonneg = SurrealLike() <= remaining
-        print(f"{n:>12d} {str(mu):>15s} {str(remaining):>20s} {'✓' if nonneg else '✗':>6s}")
-    
-    print(f"\nRemaining mass is always 1 - n/ω, which is positive")
-    print(f"for all finite n. The total mass is never exhausted.\n")
+    print("\nKey insight: No matter how small ε is (even infinitesimal),")
+    print("n × ε > 0 always holds. This is anti-cancellation in action.")
+    print()
 
 
-def demonstrate_characterization():
-    """
-    Demonstrate the characterization theorem:
-    ∃ infinitesimal ↔ not Archimedean.
-    """
+def demo_archimedean_exclusion():
+    """Show that ℚ and ℝ have no infinitesimals (Archimedean Exclusion)."""
     print("=" * 60)
-    print("CHARACTERIZATION: INFINITESIMAL ↔ NON-ARCHIMEDEAN")
+    print("DEMO 3: Archimedean Exclusion Theorem")
     print("=" * 60)
     
-    print("""
-    Structure        | Archimedean? | Has infinitesimal? | Infinitesimal prob?
-    -----------------+--------------+--------------------+--------------------
-    ℝ (reals)        | YES          | NO                 | IMPOSSIBLE
-    ℚ (rationals)    | YES          | NO                 | IMPOSSIBLE  
-    ℤ (integers)     | YES          | NO                 | IMPOSSIBLE
-    Surreals (No)    | NO           | YES (1/ω)          | POSSIBLE
-    Hyperreals (*ℝ)  | NO           | YES (ε)            | POSSIBLE
-    Laurent series   | NO           | YES (t)            | POSSIBLE
+    # For any ε > 0 in ℚ, find n such that n·ε ≥ 1
+    test_epsilons = [Fraction(1, 3), Fraction(1, 100), Fraction(1, 10**6)]
+    
+    for eps in test_epsilons:
+        # Find smallest n with n·ε ≥ 1
+        n = 1
+        while n * eps < 1:
+            n += 1
+        print(f"ε = {eps}")
+        print(f"  Smallest n with n·ε ≥ 1: n = {n}")
+        print(f"  n·ε = {n * eps} ≥ 1 ✓")
+        print(f"  → ε is NOT infinitesimal in ℚ (Archimedean property)")
+    
+    print("\nConclusion: No rational (or real) number is infinitesimal.")
+    print("Infinitesimal probability requires non-Archimedean fields")
+    print("like Conway's surreal numbers.")
+    print()
 
-    The characterization theorem proves these are not coincidences:
-    the Archimedean property is EXACTLY the obstruction to
-    infinitesimal probability.
-    """)
+
+def demo_uniform_measure():
+    """Demonstrate the Uniform Measure Theorem."""
+    print("=" * 60)
+    print("DEMO 4: Uniform Measure Theorem")
+    print("=" * 60)
+    
+    for n in [3, 5, 7, 12]:
+        elements = [str(i) for i in range(n)]
+        weight = Fraction(1, n)
+        weights = {x: weight for x in elements}
+        total = weighted_measure(weights, frozenset(elements))
+        
+        print(f"n = {n}: weight = 1/{n}, total = {n} × (1/{n}) = {total}")
+        assert total == 1, f"Expected 1, got {total}"
+    
+    print("\nAll totals equal 1 — uniform probability works in any field!")
+    print()
 
 
-if __name__ == "__main__":
-    demonstrate_archimedean_impossibility()
-    demonstrate_non_archimedean_measure()
-    demonstrate_finite_additivity()
-    demonstrate_monotonicity()
-    demonstrate_complementary_bound()
-    demonstrate_characterization()
-    
+def demo_complement():
+    """Demonstrate the complement formula: P(Aᶜ) = 1 - P(A)."""
     print("=" * 60)
-    print("SUMMARY")
+    print("DEMO 5: Complement Formula")
     print("=" * 60)
-    print("""
-    Key Results (all formally verified in Lean 4):
     
-    1. IMPOSSIBILITY (Archimedean Obstruction Theorem):
-       In ℝ, ℚ, or any Archimedean structure, no positive element
-       can be infinitesimal. Uniform positive probability on
-       individual points is impossible.
+    elements = ['a', 'b', 'c', 'd', 'e']
+    weights = {x: Fraction(1, 5) for x in elements}
+    universe = frozenset(elements)
     
-    2. POSSIBILITY (Non-Archimedean Construction):
-       In surreal numbers or any non-Archimedean structure,
-       infinitesimals exist, enabling uniform positive probability
-       on every point while keeping all finite unions bounded.
+    A = frozenset(['a', 'c'])
+    A_complement = universe - A
     
-    3. CHARACTERIZATION:
-       (∃ infinitesimal) ↔ (not Archimedean)
-       This is a complete equivalence, not just one direction.
+    mu_A = weighted_measure(weights, A)
+    mu_Ac = weighted_measure(weights, A_complement)
     
-    4. BRIDGE:
-       This connects order theory, measure theory, and
-       nonstandard analysis through a single algebraic property.
-    """)
+    print(f"Universe = {set(universe)}")
+    print(f"A = {set(A)}")
+    print(f"Aᶜ = {set(A_complement)}")
+    print(f"P(A) = {mu_A}")
+    print(f"P(Aᶜ) = {mu_Ac}")
+    print(f"1 - P(A) = {1 - mu_A}")
+    print(f"P(Aᶜ) = 1 - P(A): {mu_Ac == 1 - mu_A}")
+    print()
+
+
+def demo_partition_of_unity():
+    """Demonstrate partition of unity over fibers."""
+    print("=" * 60)
+    print("DEMO 6: Partition of Unity")
+    print("=" * 60)
+    
+    # Elements with non-uniform weights
+    weights = {
+        'a': Fraction(1, 6), 'b': Fraction(1, 6),
+        'c': Fraction(1, 3), 'd': Fraction(1, 3)
+    }
+    
+    # Partition by a function f
+    def f(x):
+        return "vowel" if x in ('a') else "consonant"
+    
+    # Actually let's use even/odd index
+    elements = list(weights.keys())
+    
+    def parity(x):
+        return "group1" if x in ('a', 'b') else "group2"
+    
+    fibers = {}
+    for x in elements:
+        key = parity(x)
+        if key not in fibers:
+            fibers[key] = set()
+        fibers[key].add(x)
+    
+    total = sum(weights.values())
+    fiber_sum = Fraction(0)
+    
+    print(f"Weights: {weights}")
+    print(f"Total: {total}")
+    print(f"Partition by parity:")
+    
+    for key, fiber in fibers.items():
+        mu_fiber = weighted_measure(weights, frozenset(fiber))
+        print(f"  {key} = {fiber}: μ = {mu_fiber}")
+        fiber_sum += mu_fiber
+    
+    print(f"Sum of fiber measures: {fiber_sum}")
+    print(f"Equals total: {fiber_sum == total}")
+    print()
+
+
+def demo_three_set_additivity():
+    """Demonstrate three-set additivity for pairwise disjoint sets."""
+    print("=" * 60)
+    print("DEMO 7: Three-Set Additivity")
+    print("=" * 60)
+    
+    elements = [str(i) for i in range(9)]
+    weights = {x: Fraction(1, 9) for x in elements}
+    
+    A = frozenset(['0', '1', '2'])
+    B = frozenset(['3', '4', '5'])
+    C = frozenset(['6', '7', '8'])
+    
+    mu_A = weighted_measure(weights, A)
+    mu_B = weighted_measure(weights, B)
+    mu_C = weighted_measure(weights, C)
+    mu_ABC = weighted_measure(weights, A | B | C)
+    
+    print(f"A = {set(A)}, B = {set(B)}, C = {set(C)}")
+    print(f"μ(A) = {mu_A}, μ(B) = {mu_B}, μ(C) = {mu_C}")
+    print(f"μ(A ∪ B ∪ C) = {mu_ABC}")
+    print(f"μ(A) + μ(B) + μ(C) = {mu_A + mu_B + mu_C}")
+    print(f"Three-set additivity holds: {mu_ABC == mu_A + mu_B + mu_C}")
+    print()
+
+
+if __name__ == '__main__':
+    print("Non-Archimedean Probability: Numerical Demonstrations")
+    print("=" * 60)
+    print()
+    
+    demo_finite_additivity()
+    demo_no_free_lunch()
+    demo_archimedean_exclusion()
+    demo_uniform_measure()
+    demo_complement()
+    demo_partition_of_unity()
+    demo_three_set_additivity()
+    
+    print("All demonstrations completed successfully!")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Archimedean vs Non-Archimedean Probability
+Visualization: Non-Archimedean Probability Measures
 
-Shows how n·ε grows with n in Archimedean (real) and 
-non-Archimedean (surreal-like) settings.
+Standalone script using matplotlib to visualize key concepts.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
+from fractions import Fraction
 
 
-def plot_archimedean_vs_non_archimedean():
-    """
-    Plot the growth of n·ε in Archimedean vs non-Archimedean settings.
-    """
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+def plot_archimedean_exclusion():
+    """Visualize why Archimedean fields exclude infinitesimals."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
     
-    # Left plot: Archimedean (ℝ)
-    ax1 = axes[0]
-    ns = np.arange(0, 150)
+    # Left: Archimedean property in ℝ
+    epsilons = [0.5, 0.2, 0.1, 0.05, 0.01]
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, len(epsilons)))
     
-    for eps_val, label, color in [
-        (0.01, "ε = 0.01", "#e74c3c"),
-        (0.005, "ε = 0.005", "#3498db"),
-        (0.002, "ε = 0.002", "#2ecc71"),
-    ]:
-        values = ns * eps_val
-        ax1.plot(ns, values, label=label, color=color, linewidth=2)
+    for eps, color in zip(epsilons, colors):
+        n_needed = int(np.ceil(1.0 / eps))
+        ns = np.arange(0, n_needed + 2)
+        values = ns * eps
+        ax1.plot(ns, values, 'o-', color=color, markersize=3,
+                label=f'ε = {eps}, n* = {n_needed}')
+        ax1.axhline(y=1, color='red', linestyle='--', alpha=0.5)
+        ax1.plot(n_needed, n_needed * eps, 's', color=color, markersize=10)
     
-    ax1.axhline(y=1, color='black', linestyle='--', linewidth=2, label='bound = 1')
-    ax1.fill_between(ns, 1, 1.5, alpha=0.15, color='red')
-    ax1.set_xlabel('n (number of points)', fontsize=12)
-    ax1.set_ylabel('n · ε (total measure)', fontsize=12)
-    ax1.set_title('Archimedean (ℝ): Every ε > 0\neventually exceeds bound', fontsize=13)
-    ax1.legend(fontsize=10)
-    ax1.set_ylim(0, 1.5)
-    ax1.set_xlim(0, 150)
-    ax1.text(120, 1.2, 'FORBIDDEN\nZONE', ha='center', fontsize=11, 
-             color='red', fontweight='bold')
+    ax1.set_xlabel('n (multiples of ε)')
+    ax1.set_ylabel('n · ε')
+    ax1.set_title('Archimedean Property: n·ε always reaches 1')
+    ax1.legend(fontsize=8)
+    ax1.set_ylim(-0.1, 2.0)
     ax1.grid(True, alpha=0.3)
     
-    # Right plot: Non-Archimedean (surreal-like)
-    ax2 = axes[1]
+    # Right: Non-Archimedean (conceptual)
+    ns = np.arange(0, 50)
+    # Standard ε
+    ax2.fill_between(ns, 0, np.ones_like(ns), alpha=0.1, color='red',
+                     label='Standard: reaches 1')
+    ax2.plot(ns, ns * 0.05, 'b-', linewidth=2, label='ε = 0.05 (standard)')
     
-    # In the surreal setting, n/ω is always infinitesimal
-    # We represent this by showing the "standard part" staying at 0
-    # and a zoomed inset showing the infinitesimal growth
+    # "Infinitesimal" (never reaches 1) - conceptual
+    inf_values = 1 - 1.0 / (ns + 1)  # Approaches but never reaches 1
+    ax2.plot(ns, inf_values * 0.3, 'g-', linewidth=2,
+            label='ε = infinitesimal (non-Archimedean)')
+    ax2.axhline(y=1, color='red', linestyle='--', alpha=0.5, label='y = 1 barrier')
     
-    ns_large = np.arange(0, 10001)
-    # Standard part is always 0
-    standard_parts = np.zeros_like(ns_large, dtype=float)
-    
-    ax2.plot(ns_large, standard_parts, color='#2ecc71', linewidth=3, 
-             label='st(n/ω) = 0 for all finite n')
-    ax2.axhline(y=1, color='black', linestyle='--', linewidth=2, label='bound = 1')
-    ax2.set_xlabel('n (number of points)', fontsize=12)
-    ax2.set_ylabel('standard part of n · ε', fontsize=12)
-    ax2.set_title('Non-Archimedean (Surreal): n/ω\nnever reaches any positive real', fontsize=13)
-    ax2.legend(fontsize=10, loc='upper left')
-    ax2.set_ylim(-0.1, 1.5)
-    ax2.set_xlim(0, 10000)
+    ax2.set_xlabel('n')
+    ax2.set_ylabel('n · ε')
+    ax2.set_title('Non-Archimedean: n·ε never reaches 1')
+    ax2.legend(fontsize=8)
+    ax2.set_ylim(-0.1, 2.0)
     ax2.grid(True, alpha=0.3)
     
-    # Add annotation
-    ax2.annotate('n/ω is infinitesimal\nfor ALL finite n', 
-                xy=(5000, 0), xytext=(5000, 0.5),
-                arrowprops=dict(arrowstyle='->', color='#2ecc71', lw=2),
-                fontsize=11, ha='center', color='#2ecc71', fontweight='bold')
-    
-    # Add safe zone
-    ax2.fill_between(ns_large, 0, 1, alpha=0.05, color='green')
-    ax2.text(8000, 0.7, 'ALWAYS\nSAFE', ha='center', fontsize=11,
-             color='green', fontweight='bold')
-    
     plt.tight_layout()
-    plt.savefig('/workspace/request-project/Novelty/SurrealProbability/archimedean_comparison.png', 
-                dpi=150, bbox_inches='tight')
+    plt.savefig('archimedean_exclusion.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved archimedean_comparison.png")
+    print("Saved: archimedean_exclusion.png")
 
 
-def plot_measure_properties():
-    """
-    Plot the key measure properties: additivity, monotonicity, boundedness.
-    """
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+def plot_no_free_lunch():
+    """Visualize the No Free Lunch theorem."""
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
     
-    # Plot 1: Finite additivity
-    ax1 = axes[0]
-    n_vals = range(1, 11)
-    mu_vals = list(n_vals)  # μ(S) = n (in units of ε)
+    # Three scenarios with decreasing weights
+    scenarios = [
+        ("Standard weights", [0.3, 0.25, 0.2, 0.15, 0.1]),
+        ("Small weights", [0.02, 0.02, 0.02, 0.02, 0.02]),
+        ("Tiny weights (→ infinitesimal)", [0.001, 0.001, 0.001, 0.001, 0.001]),
+    ]
     
-    # Show μ(S ∪ T) = μ(S) + μ(T)
-    s_sizes = [2, 3, 5, 1, 4, 6, 7, 2, 8, 3]
-    t_sizes = [3, 2, 1, 4, 3, 2, 1, 5, 1, 4]
-    union_sizes = [s + t for s, t in zip(s_sizes, t_sizes)]
+    for ax, (title, weights) in zip(axes, scenarios):
+        n = len(weights)
+        x = np.arange(n)
+        total = sum(weights)
+        
+        bars = ax.bar(x, weights, color='steelblue', alpha=0.7, edgecolor='navy')
+        ax.axhline(y=0, color='black', linewidth=0.5)
+        
+        # Show total
+        ax.bar(n + 0.5, total, color='gold', alpha=0.7, edgecolor='darkgoldenrod',
+              width=0.8)
+        ax.text(n + 0.5, total + max(weights) * 0.05, f'Σ = {total:.4f}',
+               ha='center', fontsize=9, fontweight='bold')
+        
+        ax.set_title(title, fontsize=11)
+        ax.set_xticks(list(range(n)) + [n + 0.5])
+        ax.set_xticklabels([f'w{i+1}' for i in range(n)] + ['Total'])
+        ax.set_ylabel('Weight')
+        
+        # Highlight: total > 0
+        if total > 0:
+            ax.annotate('> 0 ✓', xy=(n + 0.5, total / 2),
+                       fontsize=14, color='green', fontweight='bold',
+                       ha='center')
     
-    x = range(len(s_sizes))
-    width = 0.25
-    
-    ax1.bar([i - width for i in x], s_sizes, width, label='μ(S)/ε', color='#3498db', alpha=0.8)
-    ax1.bar(list(x), t_sizes, width, label='μ(T)/ε', color='#e74c3c', alpha=0.8)
-    ax1.bar([i + width for i in x], union_sizes, width, label='μ(S∪T)/ε', color='#2ecc71', alpha=0.8)
-    
-    ax1.set_xlabel('Trial', fontsize=11)
-    ax1.set_ylabel('Measure (in units of ε)', fontsize=11)
-    ax1.set_title('Finite Additivity\nμ(S∪T) = μ(S) + μ(T)', fontsize=12)
-    ax1.legend(fontsize=9)
-    ax1.grid(True, alpha=0.3, axis='y')
-    
-    # Plot 2: Monotonicity
-    ax2 = axes[1]
-    ns = np.arange(0, 51)
-    
-    ax2.fill_between(ns, ns, 50, alpha=0.1, color='blue')
-    ax2.plot(ns, ns, color='#3498db', linewidth=3, label='μ(S) = |S|·ε')
-    
-    # Highlight subset relationships
-    for s, t in [(10, 30), (5, 15), (20, 40)]:
-        ax2.annotate('', xy=(t, t), xytext=(s, s),
-                    arrowprops=dict(arrowstyle='->', color='#e74c3c', lw=2))
-        ax2.plot([s], [s], 'o', color='#e74c3c', markersize=8)
-        ax2.plot([t], [t], 's', color='#2ecc71', markersize=8)
-    
-    ax2.set_xlabel('|S| (set cardinality)', fontsize=11)
-    ax2.set_ylabel('μ(S) (in units of ε)', fontsize=11)
-    ax2.set_title('Monotonicity\nS ⊆ T → μ(S) ≤ μ(T)', fontsize=12)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-    
-    # Plot 3: Boundedness (complementary bound)
-    ax3 = axes[2]
-    ns = np.arange(0, 101)
-    # In units of ε, remaining = b/ε - n (where b = 1, ε = 1/ω, b/ε = ω)
-    # But in standard part, it's always 1
-    remaining_standard = np.ones_like(ns, dtype=float)
-    
-    ax3.fill_between(ns, 0, remaining_standard, alpha=0.15, color='green')
-    ax3.plot(ns, remaining_standard, color='#2ecc71', linewidth=3, 
-             label='st(1 - n/ω) = 1')
-    ax3.axhline(y=0, color='gray', linestyle='-', linewidth=1)
-    
-    ax3.set_xlabel('|S| (points measured)', fontsize=11)
-    ax3.set_ylabel('Remaining mass (standard part)', fontsize=11)
-    ax3.set_title('Complementary Bound\n1 - μ(S) ≥ 0 always', fontsize=12)
-    ax3.legend(fontsize=10)
-    ax3.set_ylim(-0.1, 1.5)
-    ax3.grid(True, alpha=0.3)
-    ax3.text(50, 0.5, 'Mass never\nexhausted', ha='center', fontsize=12,
-             color='green', fontweight='bold')
-    
+    fig.suptitle('No Free Lunch: Positive Weights → Positive Total\n'
+                '(Even infinitesimal weights sum to a positive total)',
+                fontsize=13, fontweight='bold')
     plt.tight_layout()
-    plt.savefig('/workspace/request-project/Novelty/SurrealProbability/measure_properties.png',
-                dpi=150, bbox_inches='tight')
+    plt.savefig('no_free_lunch.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved measure_properties.png")
+    print("Saved: no_free_lunch.png")
 
 
-if __name__ == "__main__":
-    plot_archimedean_vs_non_archimedean()
-    plot_measure_properties()
+def plot_bridge_diagram():
+    """Visualize the bridge between Lorentzian polynomials and probability."""
+    fig, ax = plt.subplots(figsize=(12, 7))
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 8)
+    ax.axis('off')
+    
+    # Lorentzian Polynomials box
+    lp_box = mpatches.FancyBboxPatch((0.5, 5.5), 3.5, 2, boxstyle="round,pad=0.2",
+                                      facecolor='#E8F4FD', edgecolor='#2196F3', linewidth=2)
+    ax.add_patch(lp_box)
+    ax.text(2.25, 7.0, 'Lorentzian\nPolynomials', ha='center', va='center',
+           fontsize=12, fontweight='bold', color='#1565C0')
+    ax.text(2.25, 5.9, 'Anti-cancellation\nSupport exactness', ha='center', va='center',
+           fontsize=9, color='#424242')
+    
+    # Probability Theory box
+    pt_box = mpatches.FancyBboxPatch((6, 5.5), 3.5, 2, boxstyle="round,pad=0.2",
+                                      facecolor='#FFF3E0', edgecolor='#FF9800', linewidth=2)
+    ax.add_patch(pt_box)
+    ax.text(7.75, 7.0, 'Probability\nTheory', ha='center', va='center',
+           fontsize=12, fontweight='bold', color='#E65100')
+    ax.text(7.75, 5.9, 'Measure positivity\nNo Free Lunch', ha='center', va='center',
+           fontsize=9, color='#424242')
+    
+    # Bridge arrow
+    ax.annotate('', xy=(6, 6.5), xytext=(4, 6.5),
+               arrowprops=dict(arrowstyle='<->', color='#4CAF50', lw=3))
+    ax.text(5, 6.9, 'BRIDGE', ha='center', va='center',
+           fontsize=11, fontweight='bold', color='#2E7D32')
+    ax.text(5, 6.2, 'Same algebraic\nfoundation', ha='center', va='center',
+           fontsize=9, color='#388E3C', style='italic')
+    
+    # Ordered Algebra foundation
+    oa_box = mpatches.FancyBboxPatch((2.5, 2.5), 5, 1.8, boxstyle="round,pad=0.2",
+                                      facecolor='#E8F5E9', edgecolor='#4CAF50', linewidth=2)
+    ax.add_patch(oa_box)
+    ax.text(5, 3.8, 'Ordered Algebra', ha='center', va='center',
+           fontsize=12, fontweight='bold', color='#1B5E20')
+    ax.text(5, 3.0, 'Linearly ordered cancellative add comm monoid\n'
+           '∀ f ≥ 0, ∃ k: f(k) > 0 → Σ f > 0', ha='center', va='center',
+           fontsize=9, color='#424242', family='monospace')
+    
+    # Arrows from foundation
+    ax.annotate('', xy=(2.25, 5.5), xytext=(3.5, 4.3),
+               arrowprops=dict(arrowstyle='->', color='#666', lw=1.5))
+    ax.annotate('', xy=(7.75, 5.5), xytext=(6.5, 4.3),
+               arrowprops=dict(arrowstyle='->', color='#666', lw=1.5))
+    
+    # Non-Archimedean extension
+    na_box = mpatches.FancyBboxPatch((2.5, 0.3), 5, 1.5, boxstyle="round,pad=0.2",
+                                      facecolor='#F3E5F5', edgecolor='#9C27B0', linewidth=2)
+    ax.add_patch(na_box)
+    ax.text(5, 1.35, 'Non-Archimedean Fields', ha='center', va='center',
+           fontsize=12, fontweight='bold', color='#4A148C')
+    ax.text(5, 0.7, 'Surreal numbers · Hyperreals · Levi-Civita field\n'
+           'Infinitesimal ε: 0 < ε < 1/n for all n',
+           ha='center', va='center', fontsize=9, color='#424242')
+    
+    ax.annotate('', xy=(5, 2.5), xytext=(5, 1.8),
+               arrowprops=dict(arrowstyle='->', color='#9C27B0', lw=1.5))
+    
+    ax.set_title('Bridge: Lorentzian Polynomials ↔ Non-Archimedean Probability',
+                fontsize=14, fontweight='bold', pad=20)
+    
+    plt.savefig('bridge_diagram.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: bridge_diagram.png")
+
+
+if __name__ == '__main__':
+    plot_archimedean_exclusion()
+    plot_no_free_lunch()
+    plot_bridge_diagram()
+    print("\nAll visualizations generated!")

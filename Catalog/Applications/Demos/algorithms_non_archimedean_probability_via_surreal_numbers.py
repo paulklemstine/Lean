@@ -1,193 +1,265 @@
 #!/usr/bin/env python3
 """
-Algorithms for Non-Archimedean Probability
+Algorithms for Non-Archimedean Probability Theory
 
 Type-hinted implementations of the core algorithms from the formalized theory.
 """
 
 from fractions import Fraction
-from typing import FrozenSet, Set, TypeVar, Generic, Callable
+from typing import (
+    TypeVar, Generic, Callable, Dict, FrozenSet, Set, List, Tuple, Optional
+)
+from dataclasses import dataclass
 
-T = TypeVar('T')
+T = TypeVar('T')  # Element type
+V = TypeVar('V')  # Value type (e.g., Fraction, float)
 
 
-class SurrealElement:
+@dataclass
+class WeightedMeasure(Generic[T]):
+    """A finitely additive measure determined by a weight function.
+    
+    Corresponds to the Lean definition:
+        structure WeightedMeasure (α : Type*) (G : Type*) where
+          weight : α → G
     """
-    A surreal-like number of the form a + b·ε where ε = 1/ω is infinitesimal.
+    weights: Dict[T, Fraction]
     
-    This is a first-order approximation of surreal numbers, sufficient for
-    demonstrating the uniform infinitesimal measure construction.
+    def measure(self, S: FrozenSet[T]) -> Fraction:
+        """Compute μ(S) = ∑ x ∈ S, w(x).
+        
+        Implements WeightedMeasure.measure from the Lean formalization.
+        """
+        return sum(self.weights.get(x, Fraction(0)) for x in S)
     
-    Attributes:
-        standard: The standard (real) part
-        infinitesimal: The coefficient of 1/ω
-    """
+    def is_prob(self) -> bool:
+        """Check if this is a probability measure (total mass = 1).
+        
+        Implements WeightedMeasure.IsProb.
+        """
+        return self.measure(frozenset(self.weights.keys())) == Fraction(1)
     
-    def __init__(self, standard: Fraction = Fraction(0),
-                 infinitesimal: Fraction = Fraction(0)):
-        self.standard = standard
-        self.infinitesimal = infinitesimal
+    def is_nonneg(self) -> bool:
+        """Check if all weights are non-negative."""
+        return all(w >= 0 for w in self.weights.values())
     
-    def __add__(self, other: 'SurrealElement') -> 'SurrealElement':
-        return SurrealElement(
-            self.standard + other.standard,
-            self.infinitesimal + other.infinitesimal
-        )
-    
-    def __sub__(self, other: 'SurrealElement') -> 'SurrealElement':
-        return SurrealElement(
-            self.standard - other.standard,
-            self.infinitesimal - other.infinitesimal
-        )
-    
-    def __le__(self, other: 'SurrealElement') -> bool:
-        if self.standard != other.standard:
-            return self.standard < other.standard
-        return self.infinitesimal <= other.infinitesimal
-    
-    def __lt__(self, other: 'SurrealElement') -> bool:
-        if self.standard != other.standard:
-            return self.standard < other.standard
-        return self.infinitesimal < other.infinitesimal
-    
-    def scale(self, n: int) -> 'SurrealElement':
-        """Compute n • self (scalar multiplication by natural number)."""
-        return SurrealElement(self.standard * n, self.infinitesimal * n)
-    
-    def is_infinitesimal(self) -> bool:
-        """Check if this element is a positive infinitesimal."""
-        return self.standard == 0 and self.infinitesimal > 0
-    
-    def __repr__(self) -> str:
-        parts = []
-        if self.standard != 0:
-            parts.append(str(self.standard))
-        if self.infinitesimal != 0:
-            if self.infinitesimal == 1:
-                parts.append("ε")
-            else:
-                parts.append(f"{self.infinitesimal}ε")
-        return " + ".join(parts) if parts else "0"
+    def is_pos(self) -> bool:
+        """Check if all weights are strictly positive."""
+        return all(w > 0 for w in self.weights.values())
 
 
-class UniformInfinitesimalMeasure:
-    """
-    A finitely additive measure assigning uniform infinitesimal weight to each point.
+def uniform_measure(elements: List[T]) -> WeightedMeasure[T]:
+    """Create a uniform probability measure on the given elements.
+    
+    Implements uniformProb from the Lean formalization.
+    Each element receives weight 1/n where n = len(elements).
     
     Algorithm:
-        μ(S) = |S| • ε
+        1. Compute n = |elements|
+        2. Set w(x) = 1/n for each x
+        3. Return WeightedMeasure with these weights
     
-    Properties (all formally verified in Lean 4):
-        - μ(∅) = 0
-        - μ({x}) = ε > 0 for all x
-        - μ(S ∪ T) = μ(S) + μ(T) for disjoint S, T
-        - S ⊆ T → μ(S) ≤ μ(T)
-        - μ(S) ≤ b for all finite S (when ε is infinitesimal w.r.t. b)
+    Complexity: O(n)
     """
-    
-    def __init__(self, weight: SurrealElement):
-        """Initialize with infinitesimal weight ε."""
-        if not weight.is_infinitesimal():
-            raise ValueError("Weight must be a positive infinitesimal")
-        self.weight = weight
-    
-    def measure(self, s: FrozenSet[T]) -> SurrealElement:
-        """Compute μ(S) = |S| • ε."""
-        return self.weight.scale(len(s))
-    
-    def measure_by_card(self, n: int) -> SurrealElement:
-        """Compute μ for a set of cardinality n."""
-        return self.weight.scale(n)
-    
-    def is_bounded_by(self, bound: SurrealElement, s: FrozenSet[T]) -> bool:
-        """Check if μ(S) ≤ bound."""
-        return self.measure(s) <= bound
-    
-    def complement_mass(self, total: SurrealElement, s: FrozenSet[T]) -> SurrealElement:
-        """Compute remaining mass: total - μ(S)."""
-        return total - self.measure(s)
+    n = len(elements)
+    if n == 0:
+        raise ValueError("Cannot create uniform measure on empty set")
+    weight = Fraction(1, n)
+    return WeightedMeasure({x: weight for x in elements})
 
 
-def archimedean_witness(epsilon: float, bound: float) -> int:
-    """
-    Find the smallest n such that n·ε > bound.
+def verify_finite_additivity(
+    mu: WeightedMeasure[T],
+    A: FrozenSet[T],
+    B: FrozenSet[T]
+) -> Tuple[bool, str]:
+    """Verify finite additivity for disjoint sets A and B.
     
-    In an Archimedean ordered field, this always terminates.
-    This algorithm witnesses the impossibility of infinitesimal
-    probability in Archimedean settings.
+    Checks: μ(A ∪ B) = μ(A) + μ(B) when A ∩ B = ∅
+    
+    Returns (success, message).
     
     Algorithm:
-        n ← ⌈bound/ε⌉ + 1
-    
-    Time complexity: O(1) (direct computation)
-    
-    Args:
-        epsilon: A positive real number
-        bound: The upper bound to exceed
-    
-    Returns:
-        The smallest n with n·ε > bound
+        1. Check A ∩ B = ∅
+        2. Compute μ(A), μ(B), μ(A ∪ B)
+        3. Verify equality
     """
-    import math
-    return math.ceil(bound / epsilon) + 1
+    if A & B:
+        return False, f"Sets are not disjoint: intersection = {A & B}"
+    
+    mu_A = mu.measure(A)
+    mu_B = mu.measure(B)
+    mu_AB = mu.measure(A | B)
+    
+    if mu_AB == mu_A + mu_B:
+        return True, f"μ(A∪B) = {mu_AB} = {mu_A} + {mu_B} = μ(A) + μ(B) ✓"
+    else:
+        return False, f"FAILED: μ(A∪B) = {mu_AB} ≠ {mu_A + mu_B} = μ(A) + μ(B)"
 
 
-def inclusion_exclusion_measure(
-    weight: SurrealElement,
-    s_card: int,
-    t_card: int, 
-    intersection_card: int
-) -> SurrealElement:
+def archimedean_witness(epsilon: Fraction) -> Optional[int]:
+    """Find n such that n * ε ≥ 1 (Archimedean property witness).
+    
+    Implements the constructive content of no_infinitesimal_in_archimedean.
+    
+    For any ε > 0 in ℚ, returns the smallest n ∈ ℕ with n·ε ≥ 1.
+    Returns None if ε ≤ 0.
+    
+    Algorithm:
+        1. If ε ≤ 0, return None (not a valid infinitesimal candidate)
+        2. Compute n = ⌈1/ε⌉
+        3. Return n
+    
+    Complexity: O(1) (exact rational arithmetic)
     """
-    Compute μ(S ∪ T) using inclusion-exclusion.
+    if epsilon <= 0:
+        return None
+    # Ceiling of 1/ε
+    inv = Fraction(1) / epsilon
+    n = int(inv)
+    if Fraction(n) < inv:
+        n += 1
+    return n
+
+
+def complement_probability(
+    mu: WeightedMeasure[T],
+    S: FrozenSet[T]
+) -> Fraction:
+    """Compute P(Sᶜ) = 1 - P(S) for a probability measure.
     
-    μ(S ∪ T) = μ(S) + μ(T) - μ(S ∩ T)
-             = |S|·ε + |T|·ε - |S ∩ T|·ε
-             = (|S| + |T| - |S ∩ T|)·ε
+    Implements measure_compl_eq_one_sub.
     
-    This is verified by the uniformFinsetMeasure_union theorem.
+    Algorithm:
+        1. Compute P(S)
+        2. Return 1 - P(S)
     """
-    union_card = s_card + t_card - intersection_card
-    return weight.scale(union_card)
+    return Fraction(1) - mu.measure(S)
 
 
-def check_infinitesimal_property(
-    element: SurrealElement,
-    bound: SurrealElement,
-    max_n: int = 10000
-) -> bool:
+def partition_measure(
+    mu: WeightedMeasure[T],
+    classifier: Callable[[T], str]
+) -> Dict[str, Fraction]:
+    """Decompose measure by partition (fiber decomposition).
+    
+    Implements measure_eq_sum_fibers.
+    
+    Algorithm:
+        1. Group elements by classifier(x)
+        2. Compute μ(fiber) for each class
+        3. Return dict mapping class → measure
+    
+    Invariant: sum of values = μ(universe)
     """
-    Empirically check if element is additively infinitesimal w.r.t. bound.
+    fibers: Dict[str, Set[T]] = {}
+    for x in mu.weights:
+        key = classifier(x)
+        if key not in fibers:
+            fibers[key] = set()
+        fibers[key].add(x)
     
-    Tests n • element ≤ bound for n = 0, 1, ..., max_n.
-    In a truly non-Archimedean setting, this holds for ALL n;
-    we can only test finitely many.
+    return {
+        key: mu.measure(frozenset(fiber))
+        for key, fiber in fibers.items()
+    }
+
+
+def no_free_lunch_check(
+    mu: WeightedMeasure[T],
+    S: FrozenSet[T]
+) -> Tuple[bool, Fraction]:
+    """Verify the No Free Lunch theorem: positive weights → positive measure.
+    
+    Implements weighted_measure_pos_of_pos_weights.
+    
+    Returns (all_positive, total_measure).
+    If all weights on S are positive and S is nonempty, total must be > 0.
     """
-    for n in range(max_n + 1):
-        if not element.scale(n) <= bound:
-            return False
-    return True
+    if not S:
+        return True, Fraction(0)
+    
+    all_pos = all(mu.weights.get(x, Fraction(0)) > 0 for x in S)
+    total = mu.measure(S)
+    
+    return all_pos, total
 
 
-# Example usage
-if __name__ == "__main__":
-    # Create infinitesimal weight
-    eps = SurrealElement(infinitesimal=Fraction(1))
-    one = SurrealElement(standard=Fraction(1))
+def monotonicity_check(
+    mu: WeightedMeasure[T],
+    A: FrozenSet[T],
+    B: FrozenSet[T]
+) -> Tuple[bool, str]:
+    """Check monotonicity: if all weights nonneg and A ⊆ B, then μ(A) ≤ μ(B).
     
-    # Create measure
-    mu = UniformInfinitesimalMeasure(eps)
+    Implements weighted_measure_mono_of_nonneg.
+    """
+    if not A.issubset(B):
+        return False, "A is not a subset of B"
     
-    # Demonstrate properties
-    print("Uniform Infinitesimal Measure Demo")
-    print(f"Weight: {eps}")
-    print(f"μ(∅) = {mu.measure_by_card(0)}")
-    print(f"μ({{x}}) = {mu.measure_by_card(1)}")
-    print(f"μ(5 points) = {mu.measure_by_card(5)}")
-    print(f"μ(1000 points) = {mu.measure_by_card(1000)}")
-    print(f"μ(10⁶ points) ≤ 1? {mu.measure_by_card(10**6) <= one}")
+    if not all(mu.weights.get(x, Fraction(0)) >= 0 for x in B):
+        return False, "Not all weights on B are non-negative"
     
-    # Archimedean witness in ℝ
-    for e in [0.1, 0.01, 0.001]:
-        n = archimedean_witness(e, 1.0)
-        print(f"\nArchimedean witness for ε={e}: n={n}, n·ε={n*e:.3f} > 1")
+    mu_A = mu.measure(A)
+    mu_B = mu.measure(B)
+    
+    if mu_A <= mu_B:
+        return True, f"μ(A) = {mu_A} ≤ {mu_B} = μ(B) ✓"
+    else:
+        return False, f"FAILED: μ(A) = {mu_A} > {mu_B} = μ(B)"
+
+
+# Pseudocode for the main algorithm
+PSEUDOCODE = """
+Algorithm: Non-Archimedean Finitely Additive Probability
+
+Input: A finite set S = {x₁, ..., xₙ}, a weight function w : S → F
+       where F is a linearly ordered field (possibly non-Archimedean)
+
+Output: A finitely additive probability measure μ on 2^S
+
+1. DEFINE μ(A) = Σ_{x ∈ A} w(x) for each A ⊆ S
+
+2. VERIFY probability axioms:
+   a. μ(∅) = 0                              [Empty set]
+   b. μ(S) = Σ w(xᵢ)                        [Total mass]
+   c. For disjoint A, B:                     [Finite additivity]
+      μ(A ∪ B) = μ(A) + μ(B)
+
+3. IF w(x) = 1/n for all x (uniform case):
+   THEN μ(S) = n · (1/n) = 1               [Probability measure]
+
+4. IF w(x) > 0 for all x ∈ A and A ≠ ∅:
+   THEN μ(A) > 0                            [No Free Lunch]
+   (This holds even when w(x) is infinitesimal!)
+
+5. ARCHIMEDEAN TEST:
+   IF F is Archimedean (e.g., ℝ, ℚ):
+     THEN no w(x) can be infinitesimal
+     (For any w > 0, ∃ n: n·w ≥ 1)
+   ELSE (F is non-Archimedean, e.g., surreal numbers):
+     w(x) CAN be infinitesimal
+     μ(A) is infinitesimal but positive for finite A
+"""
+
+
+if __name__ == '__main__':
+    # Quick test
+    elements = ['a', 'b', 'c', 'd']
+    mu = uniform_measure(elements)
+    
+    assert mu.is_prob(), "Uniform measure should be a probability measure"
+    assert mu.is_pos(), "Uniform measure should have positive weights"
+    
+    A = frozenset(['a', 'b'])
+    B = frozenset(['c', 'd'])
+    
+    ok, msg = verify_finite_additivity(mu, A, B)
+    assert ok, msg
+    
+    n = archimedean_witness(Fraction(1, 100))
+    assert n is not None and n * Fraction(1, 100) >= 1
+    
+    print("All algorithm tests passed!")
+    print()
+    print(PSEUDOCODE)
