@@ -1180,6 +1180,26 @@
       "theorem_count": 6,
       "timestamp": "2026-06-06T00:17:26",
       "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+    },
+    {
+      "cycle_id": "d917ed85",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: EML Special Functions\n\n## Synthesis\n\nThis research cycle established a rigorous bridge between the EML (exp-minus-log) framework and classical special functions. The key discovery",
+      "quality_score": 0.33464000000000005,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T00:52:34",
+      "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
+    },
+    {
+      "cycle_id": "6b757900",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle established **dialectical algebras** as a novel algebraic framework for understanding paradox tolerance in paraconsistent logic. The central disc",
+      "quality_score": 0.30144000000000004,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T00:52:59",
+      "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
     }
   ],
   "entries": [
@@ -1225,7 +1245,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T00:17:26",
+  "last_updated": "2026-06-06T00:52:59",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1237,12 +1257,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "30139a0b",
-        "quality": 0.34744,
-        "theorems": 5,
-        "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proo"
-      },
       {
         "cycle_id": "5c5ec1a8",
         "quality": 0.3488,
@@ -1296,6 +1310,12 @@
         "quality": 0.43479999999999996,
         "theorems": 6,
         "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+      },
+      {
+        "cycle_id": "d917ed85",
+        "quality": 0.33464000000000005,
+        "theorems": 5,
+        "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
       }
     ],
     "Bridges": [
@@ -1434,12 +1454,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "658626f5",
-        "quality": 0.4192,
-        "theorems": 5,
-        "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-      },
-      {
         "cycle_id": "2d4e7760",
         "quality": 0.46008000000000004,
         "theorems": 4,
@@ -1492,6 +1506,12 @@
         "quality": 0.46055999999999997,
         "theorems": 4,
         "title": "Sonic Mathematics: Counterpoint as Category Theory"
+      },
+      {
+        "cycle_id": "6b757900",
+        "quality": 0.30144000000000004,
+        "theorems": 5,
+        "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
       }
     ],
     "Physics": [
