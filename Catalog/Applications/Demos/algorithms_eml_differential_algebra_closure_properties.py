@@ -1,330 +1,313 @@
 #!/usr/bin/env python3
 """
-EML Differential Algebra — Core Algorithms
+EML Differential Algebra — Algorithms
 
-Type-hinted implementations of the EML Derivation Calculus operations:
-symbolic differentiation, evaluation, simplification, and derivation tower analysis.
+Type-hinted implementations of:
+1. EML expression trees with symbolic differentiation
+2. Depth computation
+3. EML chain rule evaluation
+4. Differential closure verification
 """
 
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Union
+from typing import Union, Callable
 import math
 
 
 # ============================================================
-# Expression AST
+# EML Expression Tree
 # ============================================================
 
-@dataclass(frozen=True)
-class Cnst:
+@dataclass
+class Const:
     """Constant expression."""
-    c: float
+    value: float
 
-@dataclass(frozen=True)
+@dataclass
 class Var:
-    """Variable x."""
+    """Variable expression."""
     pass
 
-@dataclass(frozen=True)
+@dataclass
 class Add:
-    """Pointwise addition."""
-    e1: Expr
-    e2: Expr
+    """Addition of two expressions."""
+    left: Expr
+    right: Expr
 
-@dataclass(frozen=True)
+@dataclass
 class Mul:
-    """Pointwise multiplication."""
-    e1: Expr
-    e2: Expr
+    """Multiplication of two expressions."""
+    left: Expr
+    right: Expr
 
-@dataclass(frozen=True)
+@dataclass
+class Sub:
+    """Subtraction of two expressions."""
+    left: Expr
+    right: Expr
+
+@dataclass
+class Div:
+    """Division of two expressions."""
+    left: Expr
+    right: Expr
+
+@dataclass
 class Neg:
-    """Pointwise negation."""
-    e: Expr
+    """Negation of an expression."""
+    inner: Expr
 
-@dataclass(frozen=True)
+@dataclass
 class Inv:
-    """Pointwise reciprocal."""
-    e: Expr
+    """Multiplicative inverse of an expression."""
+    inner: Expr
 
-@dataclass(frozen=True)
-class Eexp:
-    """Exponential composition."""
-    e: Expr
+@dataclass
+class Exp:
+    """Exponential of an expression."""
+    inner: Expr
 
-@dataclass(frozen=True)
-class Elog:
-    """Logarithmic composition."""
-    e: Expr
+@dataclass
+class Log:
+    """Logarithm of an expression."""
+    inner: Expr
 
-Expr = Union[Cnst, Var, Add, Mul, Neg, Inv, Eexp, Elog]
+@dataclass
+class EML:
+    """EML operator: eml(a, b) = exp(a) - log(b)."""
+    first: Expr
+    second: Expr
 
-
-# ============================================================
-# Algorithm 1: Symbolic Differentiation
-# ============================================================
-
-def symbolic_differentiate(e: Expr) -> Expr:
-    """
-    Compute the symbolic derivative of an EML expression.
-
-    Implements the standard differentiation rules:
-    - d/dx[c] = 0
-    - d/dx[x] = 1
-    - d/dx[f+g] = f' + g'  (sum rule)
-    - d/dx[f*g] = f'*g + f*g'  (product rule)
-    - d/dx[-f] = -f'
-    - d/dx[1/f] = -f'/f²  (reciprocal rule)
-    - d/dx[exp(f)] = f'*exp(f)  (chain rule)
-    - d/dx[log(f)] = f'/f  (chain rule)
-
-    Returns a new Expr representing the derivative.
-    Time complexity: O(size(e))
-    Space complexity: O(size(e)) for the output (which may be larger)
-    """
-    match e:
-        case Cnst(_):
-            return Cnst(0.0)
-        case Var():
-            return Cnst(1.0)
-        case Add(e1, e2):
-            return Add(symbolic_differentiate(e1), symbolic_differentiate(e2))
-        case Mul(e1, e2):
-            return Add(
-                Mul(symbolic_differentiate(e1), e2),
-                Mul(e1, symbolic_differentiate(e2))
-            )
-        case Neg(inner):
-            return Neg(symbolic_differentiate(inner))
-        case Inv(inner):
-            # d/dx[1/f] = -f' * (1/f)² = -f'/(f²)
-            return Neg(Mul(
-                symbolic_differentiate(inner),
-                Mul(Inv(inner), Inv(inner))
-            ))
-        case Eexp(inner):
-            # d/dx[exp(f)] = f' * exp(f)
-            return Mul(symbolic_differentiate(inner), Eexp(inner))
-        case Elog(inner):
-            # d/dx[log(f)] = f'/f
-            return Mul(symbolic_differentiate(inner), Inv(inner))
-        case _:
-            raise TypeError(f"Unknown expression type: {type(e)}")
+Expr = Union[Const, Var, Add, Mul, Sub, Div, Neg, Inv, Exp, Log, EML]
 
 
 # ============================================================
-# Algorithm 2: Semantic Evaluation
+# Evaluation
 # ============================================================
 
-def evaluate(e: Expr, x: float) -> float:
-    """
-    Evaluate an EML expression at a given point.
-
-    Time complexity: O(size(e))
-    Raises ValueError for invalid operations (log of non-positive, division by zero).
-    """
-    match e:
-        case Cnst(c):
+def evaluate(expr: Expr, x: float) -> float:
+    """Evaluate an expression at a point x."""
+    match expr:
+        case Const(c):
             return c
         case Var():
             return x
-        case Add(e1, e2):
-            return evaluate(e1, x) + evaluate(e2, x)
-        case Mul(e1, e2):
-            return evaluate(e1, x) * evaluate(e2, x)
-        case Neg(inner):
-            return -evaluate(inner, x)
-        case Inv(inner):
-            val = evaluate(inner, x)
-            if val == 0:
-                raise ValueError("Division by zero in Inv")
-            return 1.0 / val
-        case Eexp(inner):
-            return math.exp(evaluate(inner, x))
-        case Elog(inner):
-            val = evaluate(inner, x)
-            if val <= 0:
-                raise ValueError(f"Log of non-positive value: {val}")
-            return math.log(val)
-        case _:
-            raise TypeError(f"Unknown expression type: {type(e)}")
+        case Add(a, b):
+            return evaluate(a, x) + evaluate(b, x)
+        case Mul(a, b):
+            return evaluate(a, x) * evaluate(b, x)
+        case Sub(a, b):
+            return evaluate(a, x) - evaluate(b, x)
+        case Div(a, b):
+            return evaluate(a, x) / evaluate(b, x)
+        case Neg(a):
+            return -evaluate(a, x)
+        case Inv(a):
+            return 1.0 / evaluate(a, x)
+        case Exp(a):
+            return math.exp(evaluate(a, x))
+        case Log(a):
+            return math.log(evaluate(a, x))
+        case EML(a, b):
+            return math.exp(evaluate(a, x)) - math.log(evaluate(b, x))
+    raise TypeError(f"Unknown expression type: {type(expr)}")
 
 
 # ============================================================
-# Algorithm 3: Expression Simplification
+# Symbolic Differentiation
 # ============================================================
 
-def simplify(e: Expr) -> Expr:
+def differentiate(expr: Expr) -> Expr:
     """
-    Simplify an EML expression by applying algebraic identities:
-    - 0 + e → e, e + 0 → e
-    - 0 * e → 0, e * 0 → 0
-    - 1 * e → e, e * 1 → e
-    - -(-e) → e
-    - neg(0) → 0
-
-    This is a single-pass bottom-up simplification.
-    Time complexity: O(size(e))
+    Symbolically differentiate an EML expression.
+    
+    Key property: the derivative of an EML expression is always
+    another EML expression (or expression built from EML parts).
+    This implements the Differential Closure Theorem.
     """
-    match e:
-        case Cnst(_) | Var():
-            return e
-        case Add(e1, e2):
-            s1, s2 = simplify(e1), simplify(e2)
-            if isinstance(s1, Cnst) and s1.c == 0: return s2
-            if isinstance(s2, Cnst) and s2.c == 0: return s1
-            if isinstance(s1, Cnst) and isinstance(s2, Cnst):
-                return Cnst(s1.c + s2.c)
-            return Add(s1, s2)
-        case Mul(e1, e2):
-            s1, s2 = simplify(e1), simplify(e2)
-            if isinstance(s1, Cnst) and s1.c == 0: return Cnst(0.0)
-            if isinstance(s2, Cnst) and s2.c == 0: return Cnst(0.0)
-            if isinstance(s1, Cnst) and s1.c == 1: return s2
-            if isinstance(s2, Cnst) and s2.c == 1: return s1
-            if isinstance(s1, Cnst) and isinstance(s2, Cnst):
-                return Cnst(s1.c * s2.c)
-            return Mul(s1, s2)
-        case Neg(inner):
-            s = simplify(inner)
-            if isinstance(s, Cnst): return Cnst(-s.c)
-            if isinstance(s, Neg): return s.e
-            return Neg(s)
-        case Inv(inner):
-            s = simplify(inner)
-            if isinstance(s, Cnst) and s.c != 0:
-                return Cnst(1.0 / s.c)
-            return Inv(s)
-        case Eexp(inner):
-            return Eexp(simplify(inner))
-        case Elog(inner):
-            return Elog(simplify(inner))
-        case _:
-            return e
+    match expr:
+        case Const(_):
+            return Const(0)
+        case Var():
+            return Const(1)
+        case Add(a, b):
+            return Add(differentiate(a), differentiate(b))
+        case Sub(a, b):
+            return Sub(differentiate(a), differentiate(b))
+        case Neg(a):
+            return Neg(differentiate(a))
+        case Mul(a, b):
+            # Leibniz rule: (a·b)' = a'·b + a·b'
+            return Add(Mul(differentiate(a), b), Mul(a, differentiate(b)))
+        case Div(a, b):
+            # Quotient rule: (a/b)' = (a'·b - a·b') / b²
+            return Div(
+                Sub(Mul(differentiate(a), b), Mul(a, differentiate(b))),
+                Mul(b, b)
+            )
+        case Inv(a):
+            # (1/a)' = -a'/a²
+            return Neg(Div(differentiate(a), Mul(a, a)))
+        case Exp(a):
+            # (exp(a))' = a'·exp(a)
+            return Mul(differentiate(a), Exp(a))
+        case Log(a):
+            # (log(a))' = a'/a
+            return Div(differentiate(a), a)
+        case EML(a, b):
+            # EML chain rule: (eml(a, b))' = a'·exp(a) - b'/b
+            # Note: exp(a) = eml(a, 1), so this stays in the EML class!
+            return Sub(
+                Mul(differentiate(a), EML(a, Const(1))),
+                Div(differentiate(b), b)
+            )
+    raise TypeError(f"Unknown expression type: {type(expr)}")
 
 
 # ============================================================
-# Algorithm 4: Expression Size Analysis
+# Depth Computation
 # ============================================================
 
-def expr_size(e: Expr) -> int:
-    """Count nodes in an expression tree."""
-    match e:
-        case Cnst(_) | Var():
+def transcendence_depth(expr: Expr) -> int:
+    """
+    Compute the transcendence depth of an EML expression.
+    
+    Depth measures the maximum nesting level of exp/log operations.
+    Key theorem: differentiation preserves depth.
+    """
+    match expr:
+        case Const(_) | Var():
+            return 0
+        case Add(a, b) | Mul(a, b) | Sub(a, b) | Div(a, b):
+            return max(transcendence_depth(a), transcendence_depth(b))
+        case Neg(a) | Inv(a):
+            return transcendence_depth(a)
+        case Exp(a) | Log(a):
+            return 1 + transcendence_depth(a)
+        case EML(a, b):
+            # eml(a, b) = exp(a) - log(b), depth = 1 + max(depth(a), depth(b))
+            return 1 + max(transcendence_depth(a), transcendence_depth(b))
+    raise TypeError(f"Unknown expression type: {type(expr)}")
+
+
+def verify_depth_preservation(expr: Expr) -> tuple[int, int, bool]:
+    """
+    Verify that differentiation preserves transcendence depth.
+    Returns (original_depth, derivative_depth, preserved).
+    """
+    d = transcendence_depth(expr)
+    deriv = differentiate(expr)
+    d_deriv = transcendence_depth(deriv)
+    return d, d_deriv, d_deriv <= d
+
+
+# ============================================================
+# Expression Size
+# ============================================================
+
+def expr_size(expr: Expr) -> int:
+    """Count nodes in the expression tree."""
+    match expr:
+        case Const(_) | Var():
             return 1
-        case Add(e1, e2) | Mul(e1, e2):
-            return 1 + expr_size(e1) + expr_size(e2)
-        case Neg(inner) | Inv(inner) | Eexp(inner) | Elog(inner):
-            return 1 + expr_size(inner)
-        case _:
-            raise TypeError(f"Unknown expression type: {type(e)}")
+        case Add(a, b) | Mul(a, b) | Sub(a, b) | Div(a, b) | EML(a, b):
+            return 1 + expr_size(a) + expr_size(b)
+        case Neg(a) | Inv(a) | Exp(a) | Log(a):
+            return 1 + expr_size(a)
+    raise TypeError(f"Unknown expression type: {type(expr)}")
 
 
 # ============================================================
-# Algorithm 5: Derivation Tower
+# Pretty Printing
 # ============================================================
 
-def derivation_tower(e: Expr, depth: int, simplify_each: bool = False) -> list[Expr]:
-    """
-    Compute the derivation tower of an expression to a given depth.
-
-    The derivation tower is the sequence [e, sdiff(e), sdiff²(e), ...].
-
-    Args:
-        e: The base expression
-        depth: Number of derivatives to compute
-        simplify_each: If True, simplify after each differentiation step
-
-    Returns:
-        List of expressions [e, sdiff(e), ..., sdiff^depth(e)]
-    """
-    tower: list[Expr] = [e]
-    current = e
-    for _ in range(depth):
-        current = symbolic_differentiate(current)
-        if simplify_each:
-            current = simplify(current)
-        tower.append(current)
-    return tower
-
-
-def tower_size_profile(e: Expr, depth: int, simplify_each: bool = False) -> list[int]:
-    """
-    Compute the size profile of a derivation tower.
-
-    Returns list of sizes [size(e), size(sdiff(e)), ...].
-    """
-    tower = derivation_tower(e, depth, simplify_each)
-    return [expr_size(t) for t in tower]
+def pretty(expr: Expr) -> str:
+    """Pretty-print an EML expression."""
+    match expr:
+        case Const(c):
+            return f"{c}"
+        case Var():
+            return "x"
+        case Add(a, b):
+            return f"({pretty(a)} + {pretty(b)})"
+        case Sub(a, b):
+            return f"({pretty(a)} - {pretty(b)})"
+        case Mul(a, b):
+            return f"({pretty(a)} * {pretty(b)})"
+        case Div(a, b):
+            return f"({pretty(a)} / {pretty(b)})"
+        case Neg(a):
+            return f"(-{pretty(a)})"
+        case Inv(a):
+            return f"(1/{pretty(a)})"
+        case Exp(a):
+            return f"exp({pretty(a)})"
+        case Log(a):
+            return f"log({pretty(a)})"
+        case EML(a, b):
+            return f"eml({pretty(a)}, {pretty(b)})"
+    raise TypeError(f"Unknown expression type: {type(expr)}")
 
 
 # ============================================================
-# Algorithm 6: Validity Checker
-# ============================================================
-
-def is_valid_at(e: Expr, x: float) -> bool:
-    """
-    Check if an expression is valid at a given point.
-
-    An expression is valid if all Inv and Elog subexpressions
-    have nonzero arguments at x.
-    """
-    match e:
-        case Cnst(_) | Var():
-            return True
-        case Add(e1, e2) | Mul(e1, e2):
-            return is_valid_at(e1, x) and is_valid_at(e2, x)
-        case Neg(inner) | Eexp(inner):
-            return is_valid_at(inner, x)
-        case Inv(inner):
-            return is_valid_at(inner, x) and evaluate(inner, x) != 0
-        case Elog(inner):
-            return is_valid_at(inner, x) and evaluate(inner, x) != 0
-        case _:
-            raise TypeError(f"Unknown expression type: {type(e)}")
-
-
-def has_no_inv_log(e: Expr) -> bool:
-    """Check if an expression is in the inv/log-free fragment."""
-    match e:
-        case Cnst(_) | Var():
-            return True
-        case Add(e1, e2) | Mul(e1, e2):
-            return has_no_inv_log(e1) and has_no_inv_log(e2)
-        case Neg(inner) | Eexp(inner):
-            return has_no_inv_log(inner)
-        case Inv(_) | Elog(_):
-            return False
-        case _:
-            raise TypeError(f"Unknown expression type: {type(e)}")
-
-
-# ============================================================
-# Main
+# Demonstrations
 # ============================================================
 
 if __name__ == "__main__":
-    # Example: Verify the exponential fixed point
-    exp_x = Eexp(Var())
-    tower = derivation_tower(exp_x, 5)
-    print("Derivation tower of exp(x) at x=1:")
-    for i, e in enumerate(tower):
-        val = evaluate(e, 1.0)
-        sz = expr_size(e)
-        print(f"  n={i}: eval={val:.6f} (e={math.e:.6f}), size={sz}")
-
-    # Example: Size growth analysis
-    print("\nSize growth profiles:")
-    for name, expr in [("exp(x)", Eexp(Var())),
-                        ("x*x", Mul(Var(), Var())),
-                        ("1/x", Inv(Var()))]:
-        sizes = tower_size_profile(expr, 5)
-        print(f"  {name}: {sizes}")
-
-    # Example: Simplification impact
-    print("\nSimplification impact on exp(x) tower:")
-    raw_sizes = tower_size_profile(Eexp(Var()), 5, simplify_each=False)
-    simp_sizes = tower_size_profile(Eexp(Var()), 5, simplify_each=True)
-    print(f"  Raw:        {raw_sizes}")
-    print(f"  Simplified: {simp_sizes}")
+    print("=" * 60)
+    print("EML SYMBOLIC DIFFERENTIATION ENGINE")
+    print("=" * 60)
+    
+    # Example 1: eml(x, exp(x)) = exp(x) - x
+    print("\n--- Example 1: eml(x, exp(x)) ---")
+    e1 = EML(Var(), Exp(Var()))
+    d1 = differentiate(e1)
+    print(f"  Expression: {pretty(e1)}")
+    print(f"  Derivative: {pretty(d1)}")
+    print(f"  Depth: {transcendence_depth(e1)} → {transcendence_depth(d1)}")
+    for x in [0, 1, 2]:
+        print(f"  f({x}) = {evaluate(e1, x):.4f}, f'({x}) = {evaluate(d1, x):.4f}")
+    
+    # Example 2: eml(x², 1) = exp(x²)
+    print("\n--- Example 2: eml(x², 1) ---")
+    e2 = EML(Mul(Var(), Var()), Const(1))
+    d2 = differentiate(e2)
+    print(f"  Expression: {pretty(e2)}")
+    print(f"  Derivative: {pretty(d2)}")
+    print(f"  Depth: {transcendence_depth(e2)} → {transcendence_depth(d2)}")
+    
+    # Example 3: Iterated exp: exp(exp(x))
+    print("\n--- Example 3: exp(exp(x)) = eml(eml(x, 1), 1) ---")
+    e3 = EML(EML(Var(), Const(1)), Const(1))
+    d3 = differentiate(e3)
+    print(f"  Expression: {pretty(e3)}")
+    print(f"  Derivative: {pretty(d3)}")
+    depth_orig, depth_deriv, preserved = verify_depth_preservation(e3)
+    print(f"  Depth: {depth_orig} → {depth_deriv}, preserved: {preserved}")
+    
+    # Example 4: Diagonal eml(x, x) = exp(x) - log(x)
+    print("\n--- Example 4: Diagonal eml(x, x) ---")
+    e4 = EML(Var(), Var())
+    d4 = differentiate(e4)
+    d4d = differentiate(d4)
+    print(f"  f(x)   = {pretty(e4)}")
+    print(f"  f'(x)  = {pretty(d4)}")
+    print(f"  f''(x) = {pretty(d4d)}")
+    print(f"  Depth: {transcendence_depth(e4)} → {transcendence_depth(d4)} → {transcendence_depth(d4d)}")
+    
+    # Depth preservation verification
+    print("\n--- Depth Preservation Verification ---")
+    test_exprs = [
+        ("x", Var()),
+        ("exp(x)", Exp(Var())),
+        ("log(x)", Log(Var())),
+        ("exp(exp(x))", Exp(Exp(Var()))),
+        ("eml(x, x)", EML(Var(), Var())),
+        ("x*exp(x)", Mul(Var(), Exp(Var()))),
+    ]
+    for name, expr in test_exprs:
+        d_orig, d_deriv, ok = verify_depth_preservation(expr)
+        print(f"  {name:20s}: depth {d_orig} → {d_deriv}  {'✓' if ok else '✗'}")
+    
+    print("\n" + "=" * 60)

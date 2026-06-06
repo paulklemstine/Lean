@@ -1,289 +1,279 @@
 #!/usr/bin/env python3
 """
-EML Differential Algebra Demo
+EML Differential Algebra — Numerical Demonstrations
 
-Demonstrates the EML Derivation Calculus: symbolic differentiation,
-derivation towers, expression size growth, and semantic evaluation.
+Demonstrates the key results of the EML differential algebra:
+1. EML subsumes exp and log
+2. The EML chain rule
+3. Depth hierarchy examples
+4. Integration obstruction witness
 """
 
 import math
-from typing import Union
 
-# --- Expression AST ---
 
-class Expr:
-    """Base class for EML expressions."""
-    pass
+def eml(x: float, y: float) -> float:
+    """The EML operator: eml(x, y) = exp(x) - log(y)."""
+    if y <= 0:
+        raise ValueError(f"eml undefined for y={y} <= 0")
+    return math.exp(x) - math.log(y)
 
-class Cnst(Expr):
-    def __init__(self, c: float):
-        self.c = c
-    def __repr__(self):
-        return f"{self.c}"
 
-class Var(Expr):
-    def __repr__(self):
-        return "x"
+def eml_deriv_x(x: float, y: float) -> float:
+    """Partial derivative of eml w.r.t. x: ∂eml/∂x = exp(x)."""
+    return math.exp(x)
 
-class Add(Expr):
-    def __init__(self, e1: Expr, e2: Expr):
-        self.e1, self.e2 = e1, e2
-    def __repr__(self):
-        return f"({self.e1} + {self.e2})"
 
-class Mul(Expr):
-    def __init__(self, e1: Expr, e2: Expr):
-        self.e1, self.e2 = e1, e2
-    def __repr__(self):
-        return f"({self.e1} * {self.e2})"
+def eml_deriv_y(x: float, y: float) -> float:
+    """Partial derivative of eml w.r.t. y: ∂eml/∂y = -1/y."""
+    return -1.0 / y
 
-class Neg(Expr):
-    def __init__(self, e: Expr):
-        self.e = e
-    def __repr__(self):
-        return f"(-{self.e})"
 
-class Inv(Expr):
-    def __init__(self, e: Expr):
-        self.e = e
-    def __repr__(self):
-        return f"(1/{self.e})"
+def eml_chain_rule(f_val: float, g_val: float, f_prime: float, g_prime: float) -> float:
+    """
+    Full chain rule for eml(f(t), g(t)):
+    d/dt[eml(f(t), g(t))] = f'·exp(f) - g'/g
+    """
+    return f_prime * math.exp(f_val) - g_prime / g_val
 
-class Eexp(Expr):
-    def __init__(self, e: Expr):
-        self.e = e
-    def __repr__(self):
-        return f"exp({self.e})"
 
-class Elog(Expr):
-    def __init__(self, e: Expr):
-        self.e = e
-    def __repr__(self):
-        return f"log({self.e})"
+def numerical_derivative(func, t: float, h: float = 1e-8) -> float:
+    """Central difference numerical derivative."""
+    return (func(t + h) - func(t - h)) / (2 * h)
 
-# --- Evaluation ---
 
-def evaluate(e: Expr, x: float) -> float:
-    """Evaluate an EML expression at x."""
-    if isinstance(e, Cnst): return e.c
-    if isinstance(e, Var): return x
-    if isinstance(e, Add): return evaluate(e.e1, x) + evaluate(e.e2, x)
-    if isinstance(e, Mul): return evaluate(e.e1, x) * evaluate(e.e2, x)
-    if isinstance(e, Neg): return -evaluate(e.e, x)
-    if isinstance(e, Inv): return 1.0 / evaluate(e.e, x)
-    if isinstance(e, Eexp): return math.exp(evaluate(e.e, x))
-    if isinstance(e, Elog): return math.log(evaluate(e.e, x))
-    raise ValueError(f"Unknown expression: {e}")
+print("=" * 70)
+print("EML DIFFERENTIAL ALGEBRA — NUMERICAL DEMONSTRATIONS")
+print("=" * 70)
 
-# --- Symbolic Differentiation ---
+# Demo 1: EML subsumes exp and log
+print("\n--- Demo 1: EML Subsumes exp and log ---")
+for x in [0, 1, 2, -1, 0.5]:
+    exp_x = math.exp(x)
+    eml_x_1 = eml(x, 1)
+    print(f"  exp({x:6.2f}) = {exp_x:.6f},  eml({x}, 1) = {eml_x_1:.6f},  match: {abs(exp_x - eml_x_1) < 1e-10}")
 
-def sdiff(e: Expr) -> Expr:
-    """Symbolically differentiate an EML expression."""
-    if isinstance(e, Cnst): return Cnst(0)
-    if isinstance(e, Var): return Cnst(1)
-    if isinstance(e, Add): return Add(sdiff(e.e1), sdiff(e.e2))
-    if isinstance(e, Mul): return Add(Mul(sdiff(e.e1), e.e2), Mul(e.e1, sdiff(e.e2)))
-    if isinstance(e, Neg): return Neg(sdiff(e.e))
-    if isinstance(e, Inv): return Neg(Mul(sdiff(e.e), Mul(Inv(e.e), Inv(e.e))))
-    if isinstance(e, Eexp): return Mul(sdiff(e.e), Eexp(e.e))
-    if isinstance(e, Elog): return Mul(sdiff(e.e), Inv(e.e))
-    raise ValueError(f"Unknown expression: {e}")
+print()
+for y in [0.5, 1, 2, math.e, 10]:
+    log_y = math.log(y)
+    recover = 1 - eml(0, y)
+    print(f"  log({y:6.2f}) = {log_y:.6f},  1 - eml(0, {y}) = {recover:.6f},  match: {abs(log_y - recover) < 1e-10}")
 
-# --- Expression Size ---
+# Demo 2: EML Chain Rule verification
+print("\n--- Demo 2: EML Full Chain Rule ---")
+print("  Testing d/dt[eml(t, exp(t))] = exp(t) - 1")
+for t in [0, 0.5, 1, 2, -1]:
+    F = lambda s: eml(s, math.exp(s))
+    analytic = math.exp(t) - 1
+    numerical = numerical_derivative(F, t)
+    chain = eml_chain_rule(t, math.exp(t), 1, math.exp(t))
+    print(f"  t={t:5.1f}: analytic={analytic:10.6f}, chain_rule={chain:10.6f}, numerical={numerical:10.6f}")
 
-def size(e: Expr) -> int:
-    """Count nodes in an expression tree."""
-    if isinstance(e, (Cnst, Var)): return 1
-    if isinstance(e, (Add, Mul)): return 1 + size(e.e1) + size(e.e2)
-    if isinstance(e, (Neg, Inv, Eexp, Elog)): return 1 + size(e.e)
-    raise ValueError(f"Unknown expression: {e}")
+print("\n  Testing d/dt[eml(t², 1)] = 2t·exp(t²)")
+for t in [0, 0.5, 1, -1, 2]:
+    F = lambda s: eml(s**2, 1)
+    analytic = 2 * t * math.exp(t**2)
+    numerical = numerical_derivative(F, t)
+    print(f"  t={t:5.1f}: analytic={analytic:10.6f}, numerical={numerical:10.6f}, error={abs(analytic-numerical):.2e}")
 
-# --- Derivation Tower ---
+# Demo 3: Diagonal EML derivatives
+print("\n--- Demo 3: Diagonal emlDiag(z) = exp(z) - log(z) ---")
+print("  First derivative: exp(z) - 1/z")
+print("  Second derivative: exp(z) + 1/z²")
+for z in [0.5, 1, 2, 3]:
+    d = lambda w: math.exp(w) - math.log(w)
+    d1_analytic = math.exp(z) - 1/z
+    d1_numerical = numerical_derivative(d, z)
+    d2_func = lambda w: math.exp(w) - 1/w
+    d2_analytic = math.exp(z) + 1/z**2
+    d2_numerical = numerical_derivative(d2_func, z)
+    print(f"  z={z:.1f}: d'={d1_analytic:10.4f} (num={d1_numerical:10.4f}), "
+          f"d''={d2_analytic:10.4f} (num={d2_numerical:10.4f})")
 
-def derivation_tower(e: Expr, n: int) -> list[Expr]:
-    """Compute the first n elements of the derivation tower."""
-    tower = [e]
-    for _ in range(n):
-        tower.append(sdiff(tower[-1]))
-    return tower
+# Demo 4: Depth hierarchy
+print("\n--- Demo 4: EML Depth Hierarchy ---")
+print("  Depth 0: x² (polynomial)")
+print("  Depth 1: exp(x), log(x)")
+print("  Depth 2: exp(exp(x)), log(log(x))")
+print("  Depth 3: exp(exp(exp(x)))")
+x_test = 1.0
+print(f"\n  At x = {x_test}:")
+print(f"    Depth 0: x²        = {x_test**2:.6f}")
+print(f"    Depth 1: exp(x)    = {math.exp(x_test):.6f}")
+print(f"    Depth 1: log(x)    = {math.log(x_test):.6f}")
+print(f"    Depth 2: exp(eˣ)   = {math.exp(math.exp(x_test)):.6f}")
+print(f"    Depth 3: exp(exp(eˣ)) = {math.exp(math.exp(math.exp(x_test))):.6f}")
 
-# === DEMOS ===
+print("\n  Derivatives preserve depth:")
+print(f"    d/dx[exp(x)]      = exp(x) = {math.exp(x_test):.6f} (depth 1)")
+print(f"    d/dx[exp(eˣ)]     = eˣ·exp(eˣ) = {math.exp(x_test)*math.exp(math.exp(x_test)):.6f} (depth 2)")
+print(f"    d/dx[log(x)]      = 1/x = {1/x_test:.6f} (depth 0, decreased!)")
 
-print("=" * 60)
-print("EML Differential Algebra Demo")
-print("=" * 60)
+# Demo 5: Integration obstruction
+print("\n--- Demo 5: Integration Obstruction ---")
+print("  exp(exp(x)) is EML-expressible (depth 2)")
+print("  But ∫exp(exp(x))dx has NO elementary antiderivative!")
+print("\n  Numerical evidence (no closed form):")
+from functools import reduce
+total = 0
+h = 0.001
+for i in range(1000):
+    t = i * h
+    total += math.exp(math.exp(t)) * h
+print(f"    ∫₀¹ exp(exp(x)) dx ≈ {total:.6f}")
+print(f"    (Compare: this cannot be expressed using exp, log, and algebra)")
 
-# Demo 1: Basic symbolic differentiation
-print("\n--- Demo 1: Symbolic Differentiation ---")
-x_squared = Mul(Var(), Var())
-print(f"Expression: {x_squared}")
-print(f"Derivative: {sdiff(x_squared)}")
-print(f"d/dx[x²] at x=3: {evaluate(sdiff(x_squared), 3.0)} (expected: 6.0)")
+# Demo 6: eml(log(x), x) = x - log(x)
+print("\n--- Demo 6: Identity eml(log(x), x) = x - log(x) ---")
+for x in [0.5, 1, math.e, 5, 10]:
+    lhs = eml(math.log(x), x)
+    rhs = x - math.log(x)
+    print(f"  x={x:6.2f}: eml(log(x), x) = {lhs:.6f}, x - log(x) = {rhs:.6f}, match: {abs(lhs-rhs) < 1e-10}")
 
-# Demo 2: Exponential fixed point
-print("\n--- Demo 2: Exponential Fixed Point ---")
-exp_x = Eexp(Var())
-print(f"Expression: {exp_x}")
-for n in range(5):
-    tower_n = derivation_tower(exp_x, n)[-1]
-    val = evaluate(tower_n, 1.0)
-    print(f"  iterSdiff({n}, exp(x)) at x=1: {val:.6f} (exp(1) = {math.e:.6f})")
-
-# Demo 3: Expression size growth
-print("\n--- Demo 3: Expression Size Growth (Derivation Tower) ---")
-for base_name, base_expr in [("exp(x)", Eexp(Var())),
-                                ("x²", Mul(Var(), Var())),
-                                ("log(x)", Elog(Var()))]:
-    print(f"\n  {base_name}:")
-    tower = derivation_tower(base_expr, 6)
-    for i, e in enumerate(tower):
-        print(f"    n={i}: size={size(e)}")
-
-# Demo 4: The logarithm obstruction
-print("\n--- Demo 4: Why Reciprocal is Needed ---")
-log_x = Elog(Var())
-d_log = sdiff(log_x)
-print(f"d/dx[log(x)] = {d_log}")
-print(f"This contains Inv (reciprocal) — NOT in the basic EML class!")
-print(f"Evaluation at x=2: {evaluate(d_log, 2.0)} (expected: 0.5)")
-
-# Demo 5: Chain rule verification
-print("\n--- Demo 5: Chain Rule for exp(x²) ---")
-exp_x2 = Eexp(Mul(Var(), Var()))
-d_exp_x2 = sdiff(exp_x2)
-print(f"d/dx[exp(x²)] = {d_exp_x2}")
-x_val = 1.0
-symbolic_val = evaluate(d_exp_x2, x_val)
-exact_val = 2 * x_val * math.exp(x_val ** 2)
-print(f"At x={x_val}: symbolic={symbolic_val:.6f}, exact={exact_val:.6f}")
-
-# Demo 6: Polynomial termination
-print("\n--- Demo 6: Polynomial Termination ---")
-x3 = Mul(Var(), Mul(Var(), Var()))
-print(f"Expression: x³")
-tower = derivation_tower(x3, 5)
-for i, e in enumerate(tower):
-    val = evaluate(e, 2.0)
-    print(f"  d^{i}/dx^{i}[x³] at x=2: {val}")
-
-# Demo 7: Size bound verification
-print("\n--- Demo 7: Quadratic Size Bound Verification ---")
-test_exprs = [
-    ("x", Var()),
-    ("exp(x)", Eexp(Var())),
-    ("x²", Mul(Var(), Var())),
-    ("1/x", Inv(Var())),
-    ("exp(exp(x))", Eexp(Eexp(Var()))),
-]
-print(f"{'Expression':<20} {'size(e)':<10} {'size(sdiff)':<12} {'3*size²':<10} {'OK?':<5}")
-for name, expr in test_exprs:
-    s = size(expr)
-    ds = size(sdiff(expr))
-    bound = 3 * s * s
-    ok = ds <= bound
-    print(f"{name:<20} {s:<10} {ds:<12} {bound:<10} {'✓' if ok else '✗':<5}")
-
-print("\n" + "=" * 60)
-print("All demos complete.")
+print("\n" + "=" * 70)
+print("All demonstrations complete.")
+print("Key result: EML differential algebra is closed under differentiation")
+print("but NOT closed under integration.")
+print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Derivation Tower Size Growth
+Visualization: Depth Preservation under Differentiation
 
-Shows how expression size grows under iterated symbolic differentiation
-for different expression types (polynomial, exponential, logarithmic).
+Shows that differentiating EML functions preserves transcendence depth.
+Compares original functions and their derivatives at each depth level.
 """
 
+import numpy as np
 import matplotlib.pyplot as plt
-import math
 
-def sdiff_size_growth(base_size: int, expr_type: str, n_steps: int) -> list[int]:
-    """Simulate size growth for different expression classes."""
-    from algorithms import (Var, Mul, Eexp, Elog, Inv,
-                           derivation_tower, expr_size)
+def make_depth_examples():
+    """Generate functions and their derivatives at each depth level."""
+    x = np.linspace(0.1, 3, 300)
     
-    if expr_type == "polynomial":
-        e = Mul(Var(), Var())  # x²
-    elif expr_type == "exponential":
-        e = Eexp(Var())  # exp(x)
-    elif expr_type == "logarithmic":
-        e = Elog(Var())  # log(x)
-    elif expr_type == "reciprocal":
-        e = Inv(Var())  # 1/x
-    else:
-        raise ValueError(f"Unknown type: {expr_type}")
+    examples = {
+        'Depth 0': [
+            ('x²', x**2, "d/dx[x²] = 2x", 2*x),
+            ('3x+1', 3*x+1, "d/dx[3x+1] = 3", np.full_like(x, 3)),
+        ],
+        'Depth 1': [
+            ('exp(x)', np.exp(x), "d/dx[exp(x)] = exp(x)", np.exp(x)),
+            ('log(x)', np.log(x), "d/dx[log(x)] = 1/x", 1/x),
+            ('eml(x,x)', np.exp(x)-np.log(x), "d/dx = exp(x)-1/x", np.exp(x)-1/x),
+        ],
+        'Depth 2': [
+            ('exp(eˣ)', np.exp(np.exp(x)), "d/dx = eˣ·exp(eˣ)", np.exp(x)*np.exp(np.exp(x))),
+            ('log(log(x))', np.log(np.log(x)), "d/dx = 1/(x·log(x))", 1/(x*np.log(x))),
+        ],
+    }
+    return x, examples
+
+x, examples = make_depth_examples()
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+for idx, (depth_name, funcs) in enumerate(examples.items()):
+    ax = axes[idx]
+    colors = plt.cm.tab10(np.linspace(0, 1, 2*len(funcs)))
     
-    tower = derivation_tower(e, n_steps)
-    return [expr_size(t) for t in tower]
+    for i, (name, vals, dname, dvals) in enumerate(funcs):
+        # Clip for visualization
+        vals_clip = np.clip(vals, -10, 50)
+        dvals_clip = np.clip(dvals, -10, 50)
+        
+        ax.plot(x, vals_clip, color=colors[2*i], linewidth=2, label=name)
+        ax.plot(x, dvals_clip, color=colors[2*i+1], linewidth=1.5, 
+                linestyle='--', label=dname)
+    
+    ax.set_title(f'{depth_name}', fontsize=14, fontweight='bold')
+    ax.set_xlabel('x')
+    ax.set_ylabel('f(x)')
+    ax.legend(fontsize=7, loc='upper left')
+    ax.set_ylim(-5, 30)
+    ax.grid(True, alpha=0.3)
+    ax.axhline(y=0, color='black', linewidth=0.5)
 
-# Compute tower sizes
-n_steps = 8
-types = {
-    "x² (polynomial)": "polynomial",
-    "exp(x) (exponential)": "exponential",
-    "log(x) (logarithmic)": "logarithmic",
-    "1/x (reciprocal)": "reciprocal",
-}
+fig.suptitle('EML Depth Preservation: Derivatives Stay at Same Depth', 
+             fontsize=14, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('eml_depth_preservation.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved: eml_depth_preservation.png")
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-for label, etype in types.items():
-    try:
-        sizes = sdiff_size_growth(0, etype, n_steps)
-        ax1.plot(range(len(sizes)), sizes, 'o-', label=label, linewidth=2, markersize=6)
-        # Log scale
-        log_sizes = [math.log2(s) if s > 0 else 0 for s in sizes]
-        ax2.plot(range(len(log_sizes)), log_sizes, 'o-', label=label, linewidth=2, markersize=6)
-    except RecursionError:
-        print(f"Recursion limit for {label} at step {n_steps}")
+#!/usr/bin/env python3
+"""
+Visualization: EML Function Surface and Derivative Vector Field
 
-ax1.set_xlabel("Differentiation Step n", fontsize=12)
-ax1.set_ylabel("Expression Size (nodes)", fontsize=12)
-ax1.set_title("Derivation Tower: Expression Size Growth", fontsize=14)
-ax1.legend(fontsize=10)
-ax1.grid(True, alpha=0.3)
+Shows the eml(x, y) = exp(x) - log(y) surface with its gradient field,
+illustrating the partial derivatives ∂eml/∂x = exp(x) and ∂eml/∂y = -1/y.
+"""
 
-ax2.set_xlabel("Differentiation Step n", fontsize=12)
-ax2.set_ylabel("log₂(Expression Size)", fontsize=12)
-ax2.set_title("Derivation Tower: Log-Scale Size Growth", fontsize=14)
-ax2.legend(fontsize=10)
-ax2.grid(True, alpha=0.3)
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+def eml(x, y):
+    return np.exp(x) - np.log(y)
+
+def eml_dx(x, y):
+    return np.exp(x)
+
+def eml_dy(x, y):
+    return -1.0 / y
+
+# Surface plot
+fig = plt.figure(figsize=(14, 5))
+
+# Panel 1: EML surface
+ax1 = fig.add_subplot(131, projection='3d')
+x = np.linspace(-2, 2, 50)
+y = np.linspace(0.1, 5, 50)
+X, Y = np.meshgrid(x, y)
+Z = eml(X, Y)
+ax1.plot_surface(X, Y, Z, cmap='viridis', alpha=0.8, edgecolor='none')
+ax1.set_xlabel('x')
+ax1.set_ylabel('y')
+ax1.set_zlabel('eml(x,y)')
+ax1.set_title('eml(x,y) = exp(x) - log(y)')
+
+# Panel 2: Gradient field
+ax2 = fig.add_subplot(132)
+x2 = np.linspace(-2, 2, 15)
+y2 = np.linspace(0.3, 5, 15)
+X2, Y2 = np.meshgrid(x2, y2)
+U = eml_dx(X2, Y2)
+V = eml_dy(X2, Y2)
+magnitude = np.sqrt(U**2 + V**2)
+ax2.quiver(X2, Y2, U/magnitude, V/magnitude, magnitude, cmap='coolwarm')
+ax2.set_xlabel('x')
+ax2.set_ylabel('y')
+ax2.set_title('∇eml = (exp(x), -1/y)')
+ax2.set_aspect('equal')
+
+# Panel 3: Depth hierarchy - derivatives
+ax3 = fig.add_subplot(133)
+x3 = np.linspace(-1, 2, 200)
+
+# depth 0: polynomial
+ax3.plot(x3, x3**2, label='depth 0: x²', linewidth=2)
+# depth 1: exp
+ax3.plot(x3, np.exp(x3), label='depth 1: exp(x)', linewidth=2)
+# depth 1 derivative (stays depth 1)
+ax3.plot(x3, np.exp(x3), label="d/dx[exp(x)] = exp(x)", linewidth=2, linestyle='--')
+# depth 1: log derivative (drops to depth 0)
+x3pos = x3[x3 > 0.1]
+ax3.plot(x3pos, 1.0/x3pos, label="d/dx[log(x)] = 1/x (depth 0!)", linewidth=2, linestyle=':')
+
+ax3.set_xlabel('x')
+ax3.set_ylabel('f(x)')
+ax3.set_title('Depth Hierarchy')
+ax3.legend(fontsize=8)
+ax3.set_ylim(-2, 10)
+ax3.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig("tower_growth.png", dpi=150, bbox_inches='tight')
-print("Saved tower_growth.png")
+plt.savefig('eml_differential_algebra.png', dpi=150, bbox_inches='tight')
 plt.close()
-
-# Second visualization: Semantic vs Syntactic behavior for exp
-fig2, (ax3, ax4) = plt.subplots(1, 2, figsize=(14, 6))
-
-from algorithms import Eexp, Var, derivation_tower, evaluate, expr_size
-
-exp_x = Eexp(Var())
-tower = derivation_tower(exp_x, 6)
-
-# Semantic values at x=1
-x_val = 1.0
-semantic_vals = [evaluate(t, x_val) for t in tower]
-syntactic_sizes = [expr_size(t) for t in tower]
-
-ax3.bar(range(len(semantic_vals)), semantic_vals, color='steelblue', alpha=0.8)
-ax3.axhline(y=math.e, color='red', linestyle='--', linewidth=2, label=f'exp(1) = {math.e:.4f}')
-ax3.set_xlabel("Differentiation Step n", fontsize=12)
-ax3.set_ylabel("Evaluation at x=1", fontsize=12)
-ax3.set_title("Semantic Values: Constant at exp(1)", fontsize=14)
-ax3.legend(fontsize=10)
-ax3.grid(True, alpha=0.3, axis='y')
-
-ax4.bar(range(len(syntactic_sizes)), syntactic_sizes, color='coral', alpha=0.8)
-ax4.set_xlabel("Differentiation Step n", fontsize=12)
-ax4.set_ylabel("Expression Size (nodes)", fontsize=12)
-ax4.set_title("Syntactic Size: Exponential Growth", fontsize=14)
-ax4.grid(True, alpha=0.3, axis='y')
-
-fig2.suptitle("exp(x) Derivation Tower: Constant Semantics, Explosive Syntax", fontsize=15, y=1.02)
-plt.tight_layout()
-plt.savefig("exp_tower_contrast.png", dpi=150, bbox_inches='tight')
-print("Saved exp_tower_contrast.png")
-plt.close()
+print("Saved: eml_differential_algebra.png")
