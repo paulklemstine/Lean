@@ -1,198 +1,187 @@
 """
-Theory Ecosystem Algorithms
-============================
+Theory Ecosystem Algorithms: Fitness, Competition, and Evolution
 
-Type-hinted implementations of the core algorithms from the Theory Ecosystem framework.
+Implements the mathematical framework for modeling mathematical theories
+as species in an intellectual ecosystem with fitness-driven evolution.
 """
 
-from dataclasses import dataclass
 from typing import List, Tuple, Optional
+from dataclasses import dataclass
 import math
 
 
 @dataclass
-class FormalTheory:
-    """A mathematical theory characterized by axioms, theorems, and connections."""
-    axioms: int
-    theorems: int
-    connections: int
-    name: str = ""
+class TheorySpec:
+    """A mathematical theory modeled as an ecosystem species."""
+    name: str
+    axiom_count: int      # Number of axioms (parsimony)
+    theorem_count: int    # Number of theorems (productivity)
+    connection_count: int # Inter-theoretic connections
 
-    def __post_init__(self) -> None:
-        if self.axioms < 1:
-            raise ValueError("A theory must have at least one axiom")
+    def __post_init__(self):
+        assert self.axiom_count > 0, "Axiom count must be positive"
 
-    @property
-    def raw_fitness(self) -> int:
-        """Raw fitness numerator: connections × theorems."""
-        return self.connections * self.theorems
-
-    @property
     def fitness(self) -> float:
-        """Fitness: connections × theorems / axioms²."""
-        return self.raw_fitness / (self.axioms ** 2)
+        """f(T) = connections * theorems / axioms^2"""
+        return (self.connection_count * self.theorem_count) / (self.axiom_count ** 2)
 
-    @property
-    def proof_density(self) -> float:
-        """Theorems per axiom."""
-        return self.theorems / self.axioms
-
-    def fitter_than(self, other: 'FormalTheory') -> bool:
-        """Cross-multiplied fitness comparison (exact, no floating point)."""
-        return (self.raw_fitness * other.axioms ** 2 >
-                other.raw_fitness * self.axioms ** 2)
+    def explanatory_power(self) -> int:
+        """connections * theorems: the numerator of fitness"""
+        return self.connection_count * self.theorem_count
 
 
-def evolve_step(theory: FormalTheory, alpha: int, beta: int) -> FormalTheory:
-    """One step of theory evolution.
+def fitness_comparison(t1: TheorySpec, t2: TheorySpec) -> int:
+    """Compare fitness without floating point: returns +1 if t1 fitter, -1 if t2 fitter, 0 if equal.
+    Uses cross-multiplication: c1*t1*a2^2 vs c2*t2*a1^2"""
+    lhs = t1.connection_count * t1.theorem_count * t2.axiom_count ** 2
+    rhs = t2.connection_count * t2.theorem_count * t1.axiom_count ** 2
+    if lhs > rhs:
+        return 1
+    elif lhs < rhs:
+        return -1
+    return 0
 
-    Theorems grow by α × connections (cross-pollination).
-    Connections grow by β × theorems (influence).
-    Axioms remain fixed.
+
+def extension_beneficial(theory: TheorySpec, new_axioms: int,
+                          new_theorems: int, new_connections: int) -> bool:
+    """Check if extending a theory increases fitness.
+    Extension is beneficial iff:
+    (c + Δc)(t + Δt) * a^2 > c * t * (a + Δa)^2"""
+    c, t, a = theory.connection_count, theory.theorem_count, theory.axiom_count
+    lhs = (c + new_connections) * (t + new_theorems) * a ** 2
+    rhs = c * t * (a + new_axioms) ** 2
+    return lhs > rhs
+
+
+def critical_threshold(a: int, c: int, t: int) -> float:
+    """The minimum gain in explanatory power needed for a single-axiom
+    extension to increase fitness.
+    Threshold = c * t * (2a + 1) / a^2"""
+    return c * t * (2 * a + 1) / (a ** 2)
+
+
+def quadratic_penalty(a: int) -> int:
+    """The quadratic cost of adding one more axiom: (a+1)^2 - a^2 = 2a+1"""
+    return 2 * a + 1
+
+
+def ecosystem_evolution(theories: List[TheorySpec],
+                        generations: int = 100,
+                        mutation_rate: float = 0.1) -> List[List[TheorySpec]]:
+    """Simulate ecosystem evolution with fitness-driven selection.
+
+    At each generation:
+    1. Compute fitness for all theories
+    2. Theories below median fitness lose connections (competitive exclusion)
+    3. Theories above median gain connections (reinforcement)
+    4. Random mutations add/remove axioms with probability mutation_rate
+
+    Returns history of theory states over generations.
     """
-    return FormalTheory(
-        axioms=theory.axioms,
-        theorems=theory.theorems + alpha * theory.connections,
-        connections=theory.connections + beta * theory.theorems,
-        name=theory.name
-    )
+    import random
+    history = [list(theories)]
+
+    for _ in range(generations):
+        fitnesses = [(t, t.fitness()) for t in theories]
+        fitnesses.sort(key=lambda x: x[1])
+        median_fitness = fitnesses[len(fitnesses) // 2][1]
+
+        new_theories = []
+        for theory, fit in fitnesses:
+            new_conn = theory.connection_count
+            new_thm = theory.theorem_count
+            new_ax = theory.axiom_count
+
+            # Fitness-driven dynamics
+            if fit > median_fitness:
+                new_conn = int(new_conn * 1.05)  # Winners gain connections
+                new_thm = int(new_thm * 1.02)    # And prove more theorems
+            else:
+                new_conn = max(1, int(new_conn * 0.95))  # Losers lose connections
+
+            # Random mutations
+            if random.random() < mutation_rate:
+                if random.random() < 0.5 and new_ax > 1:
+                    new_ax -= 1  # Axiom reduction (Occam pressure)
+                else:
+                    new_ax += 1  # Axiom addition
+                    new_thm = int(new_thm * 1.1)  # New axiom enables more theorems
+                    new_conn = int(new_conn * 1.15)  # And more connections
+
+            new_theories.append(TheorySpec(
+                name=theory.name,
+                axiom_count=max(1, new_ax),
+                theorem_count=max(1, new_thm),
+                connection_count=max(1, new_conn)
+            ))
+
+        theories = new_theories
+        history.append(list(theories))
+
+    return history
 
 
-def fitness_decomposition(theory: FormalTheory, alpha: int, beta: int
-                          ) -> Tuple[int, int, int, int]:
-    """Decompose the fitness gain from one evolution step.
+def find_fitness_fixed_points(theories: List[TheorySpec],
+                               max_iter: int = 1000,
+                               tolerance: float = 1e-6) -> List[TheorySpec]:
+    """Find equilibrium states where no single-axiom extension is beneficial."""
+    equilibrium = list(theories)
 
-    Returns (original, direct_theorem, direct_connection, synergy).
-    """
-    original = theory.raw_fitness
-    direct_theorem = alpha * theory.connections ** 2
-    direct_connection = beta * theory.theorems ** 2
-    synergy = alpha * beta * theory.raw_fitness
-    return original, direct_theorem, direct_connection, synergy
+    for _ in range(max_iter):
+        changed = False
+        for i, theory in enumerate(equilibrium):
+            # Check if adding an axiom would help
+            best_fitness = theory.fitness()
+            best_spec = theory
 
+            for delta_t in range(0, 100, 10):
+                for delta_c in range(0, 50, 5):
+                    if extension_beneficial(theory, 1, delta_t, delta_c):
+                        extended = TheorySpec(
+                            name=theory.name,
+                            axiom_count=theory.axiom_count + 1,
+                            theorem_count=theory.theorem_count + delta_t,
+                            connection_count=theory.connection_count + delta_c
+                        )
+                        if extended.fitness() > best_fitness + tolerance:
+                            best_fitness = extended.fitness()
+                            best_spec = extended
+                            changed = True
 
-def extension_threshold(a: int, t: int, c: int, k: int, dt: int, dc: int) -> bool:
-    """Check if extending a theory (adding k axioms, dt theorems, dc connections)
-    improves fitness.
+            equilibrium[i] = best_spec
 
-    Uses exact integer arithmetic (cross-multiplication).
-    """
-    return (c + dc) * (t + dt) * a ** 2 > c * t * (a + k) ** 2
+        if not changed:
+            break
 
-
-def content_gain_ratio(t: int, c: int, dt: int, dc: int) -> float:
-    """The content gain ratio: how much new content relative to original."""
-    if c * t == 0:
-        return float('inf') if (c + dc) * (t + dt) > 0 else 0.0
-    return (c + dc) * (t + dt) / (c * t)
-
-
-def axiom_cost_ratio(a: int, k: int) -> float:
-    """The quadratic axiom cost ratio."""
-    return ((a + k) / a) ** 2
-
-
-@dataclass
-class TheoryEcosystem:
-    """A collection of theories with niche assignments."""
-    theories: List[FormalTheory]
-    niches: List[int]
-
-    def __post_init__(self) -> None:
-        if len(self.theories) != len(self.niches):
-            raise ValueError("Each theory must have a niche assignment")
-
-    def niche_dominant(self) -> List[FormalTheory]:
-        """Return the dominant theory in each niche (competitive exclusion)."""
-        niche_best: dict[int, Tuple[int, FormalTheory]] = {}
-        for i, (theory, niche) in enumerate(zip(self.theories, self.niches)):
-            if niche not in niche_best or theory.fitter_than(niche_best[niche][1]):
-                niche_best[niche] = (i, theory)
-        return [t for _, t in sorted(niche_best.values())]
-
-    def total_fitness(self) -> float:
-        """Sum of all theories' fitness values."""
-        return sum(t.fitness for t in self.theories)
-
-    def diversity(self) -> int:
-        """Number of distinct niches occupied."""
-        return len(set(self.niches))
-
-    def ecosystem_entropy(self) -> float:
-        """Shannon entropy of the fitness distribution."""
-        total = self.total_fitness()
-        if total == 0:
-            return 0.0
-        probs = [t.fitness / total for t in self.theories if t.fitness > 0]
-        return -sum(p * math.log2(p) for p in probs if p > 0)
+    return equilibrium
 
 
-def simulate_evolution(theory: FormalTheory, alpha: int, beta: int,
-                       steps: int) -> List[FormalTheory]:
-    """Simulate multiple evolution steps, returning the trajectory."""
-    trajectory = [theory]
-    current = theory
-    for _ in range(steps):
-        current = evolve_step(current, alpha, beta)
-        trajectory.append(current)
-    return trajectory
+# ===== Named theory instances =====
 
-
-def find_optimal_split(a: int, t: int, c: int
-                       ) -> Optional[Tuple[FormalTheory, FormalTheory, float]]:
-    """Find the optimal way to split a theory into two theories
-    that maximizes total fitness.
-
-    Returns (theory1, theory2, total_fitness) or None if no split improves fitness.
-    """
-    original = FormalTheory(a, t, c)
-    original_fitness = original.fitness
-
-    best_split: Optional[Tuple[FormalTheory, FormalTheory, float]] = None
-    best_fitness = original_fitness
-
-    for a1 in range(1, a):
-        a2 = a - a1
-        if a2 < 1:
-            continue
-        for t1 in range(0, t + 1):
-            t2 = t - t1
-            for c1 in range(1, c + 1):
-                c2 = max(1, c - c1 + 1)  # +1 for cross-connection
-                t1_theory = FormalTheory(a1, t1, c1)
-                t2_theory = FormalTheory(a2, t2, c2)
-                total = t1_theory.fitness + t2_theory.fitness
-                if total > best_fitness:
-                    best_fitness = total
-                    best_split = (t1_theory, t2_theory, total)
-
-    return best_split
-
-
-# Key examples
-ZFC = FormalTheory(axioms=9, theorems=1000, connections=5, name="ZFC")
-ZFC_LC = FormalTheory(axioms=11, theorems=1500, connections=8, name="ZFC+LC")
-PEANO = FormalTheory(axioms=5, theorems=800, connections=4, name="Peano Arithmetic")
-EUCLIDEAN = FormalTheory(axioms=5, theorems=465, connections=6, name="Euclidean Geometry")
-CATEGORY = FormalTheory(axioms=4, theorems=600, connections=10, name="Category Theory")
+ZFC = TheorySpec("ZFC", axiom_count=9, theorem_count=1000, connection_count=20)
+ZFC_LC = TheorySpec("ZFC+LC", axiom_count=10, theorem_count=1400, connection_count=35)
+PA = TheorySpec("PA", axiom_count=5, theorem_count=800, connection_count=15)
+CATEGORY_THEORY = TheorySpec("Category Theory", axiom_count=4, theorem_count=600, connection_count=30)
+TYPE_THEORY = TheorySpec("Type Theory", axiom_count=7, theorem_count=500, connection_count=25)
+EUCLIDEAN_GEOMETRY = TheorySpec("Euclidean Geometry", axiom_count=5, theorem_count=400, connection_count=10)
 
 
 if __name__ == "__main__":
-    theories = [ZFC, ZFC_LC, PEANO, EUCLIDEAN, CATEGORY]
-    print("=== Theory Fitness Rankings ===\n")
-    for t in sorted(theories, key=lambda x: x.fitness, reverse=True):
-        print(f"  {t.name:25s}  fitness = {t.fitness:8.2f}  "
-              f"(a={t.axioms}, t={t.theorems}, c={t.connections})")
+    theories = [ZFC, ZFC_LC, PA, CATEGORY_THEORY, TYPE_THEORY, EUCLIDEAN_GEOMETRY]
+
+    print("=== Theory Fitness Rankings ===")
+    ranked = sorted(theories, key=lambda t: t.fitness(), reverse=True)
+    for i, t in enumerate(ranked, 1):
+        print(f"  {i}. {t.name}: f = {t.fitness():.2f} "
+              f"(a={t.axiom_count}, t={t.theorem_count}, c={t.connection_count})")
 
     print(f"\n=== ZFC vs ZFC+LC ===")
-    print(f"  ZFC fitness:    {ZFC.fitness:.2f}")
-    print(f"  ZFC+LC fitness: {ZFC_LC.fitness:.2f}")
-    print(f"  ZFC+LC dominates: {ZFC_LC.fitter_than(ZFC)}")
-    print(f"  Content gain ratio: {content_gain_ratio(1000, 5, 500, 3):.2f}")
-    print(f"  Axiom cost ratio:   {axiom_cost_ratio(9, 2):.2f}")
+    print(f"  ZFC fitness:    {ZFC.fitness():.2f}")
+    print(f"  ZFC+LC fitness: {ZFC_LC.fitness():.2f}")
+    print(f"  Comparison: {'ZFC+LC wins' if fitness_comparison(ZFC_LC, ZFC) > 0 else 'ZFC wins'}")
 
-    print(f"\n=== Evolution Simulation (Category Theory, α=β=1, 5 steps) ===")
-    trajectory = simulate_evolution(CATEGORY, 1, 1, 5)
-    for i, t in enumerate(trajectory):
-        print(f"  Step {i}: fitness = {t.fitness:10.2f}  "
-              f"(t={t.theorems}, c={t.connections})")
+    print(f"\n=== Extension Analysis ===")
+    print(f"  Critical threshold for ZFC: {critical_threshold(9, 20, 1000):.2f}")
+    print(f"  Actual gain from LC: {(35*1400 - 20*1000):.0f}")
+    print(f"  Quadratic penalty at a=9: {quadratic_penalty(9)}")
+    print(f"  Quadratic penalty at a=10: {quadratic_penalty(10)}")
