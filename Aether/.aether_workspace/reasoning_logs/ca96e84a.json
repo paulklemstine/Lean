@@ -1,22 +1,22 @@
 {
   "checkpoints": [
     {
-      "elapsed_seconds": 0.2,
+      "elapsed_seconds": 0.8,
       "percent_complete": 0.0,
       "status": "SUBMITTED",
-      "timestamp": "2026-06-05T20:20:02"
+      "timestamp": "2026-06-06T13:27:19"
     }
   ],
   "completed_at": "",
-  "domain": "Geometry",
+  "domain": "Novelty",
   "error": "",
   "final_percent": 0.0,
   "final_status": "",
   "has_files": false,
-  "job_id": "2499ab7e",
-  "project_id": "3dd3f183-ca60-41b7-b1f9-274ed64c870b",
-  "prompt_length": 22805,
+  "job_id": "ca96e84a",
+  "project_id": "b456fbf2-0c79-42f7-8104-402905907d79",
+  "prompt_length": 22018,
   "stages": [],
-  "submitted_at": "2026-06-05T20:20:02",
+  "submitted_at": "2026-06-06T13:27:19",
   "total_duration_seconds": 0.0
 }

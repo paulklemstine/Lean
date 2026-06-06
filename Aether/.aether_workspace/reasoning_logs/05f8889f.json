@@ -1,22 +1,22 @@
 {
   "checkpoints": [
     {
-      "elapsed_seconds": 0.5,
+      "elapsed_seconds": 0.4,
       "percent_complete": 0.0,
       "status": "SUBMITTED",
-      "timestamp": "2026-06-05T20:20:16"
+      "timestamp": "2026-06-06T13:27:38"
     }
   ],
   "completed_at": "",
-  "domain": "Logic",
+  "domain": "Applications",
   "error": "",
   "final_percent": 0.0,
   "final_status": "",
   "has_files": false,
-  "job_id": "fdabb070",
-  "project_id": "bc58bbd6-356c-4f00-9ece-8492814034cf",
-  "prompt_length": 25191,
+  "job_id": "05f8889f",
+  "project_id": "5b4c1828-eaf8-4e60-aef5-c25259e08cf7",
+  "prompt_length": 24366,
   "stages": [],
-  "submitted_at": "2026-06-05T20:20:16",
+  "submitted_at": "2026-06-06T13:27:38",
   "total_duration_seconds": 0.0
 }

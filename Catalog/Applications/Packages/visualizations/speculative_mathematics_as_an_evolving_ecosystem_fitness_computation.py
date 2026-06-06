@@ -1,2 +1,3 @@
-def fitness(axioms: int, theorems: int, connections: int) -> float:
-    return connections * theorems / axioms
+def fitness(axioms, theorems, connections):
+    from fractions import Fraction
+    return Fraction(connections * theorems, axioms ** 2)
