@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "47985e32",
     "filename": "eml_special_functions_gamma_zeta_and_hypergeometri.json",
     "pkg_num": 401,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.27544,
     "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
   },
   {
@@ -12780,8 +12780,8 @@ window.PACKAGE_GRAPH = {
       "hue": 280,
       "id": "eml_special_functions_gamma_zeta_and_hypergeometri",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.27544,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
     }

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-06T15:56:37.792808+00:00",
+  "last_updated": "2026-06-06T16:28:57.228403+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -10773,6 +10773,41 @@
       "theorem_count": 7,
       "timestamp": "2026-06-06T15:56:37.672245+00:00",
       "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6152,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 228,
+      "domain": "Applications",
+      "duration_seconds": 4181.243458747864,
+      "end_time": 1780763298.8484497,
+      "files_integrated": 5,
+      "job_id": "47985e32",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.76,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7582,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.6532,
+        "novelty": 0.95,
+        "proof_depth": 0.5259,
+        "usefulness": 0.738
+      },
+      "quality_score": 0.27544,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780759117.604991,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T16:28:57.181657+00:00",
+      "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
     }
   ]
 }
