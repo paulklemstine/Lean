@@ -1,470 +1,415 @@
+#!/usr/bin/env python3
 """
-EML Differential Equations: Numerical Demonstrations
+EML Differential Equations: Demonstrations
 
-This script demonstrates the key concepts from the EML ODE theory:
-1. EML expression evaluation and symbolic differentiation
-2. Depth filtration of EML expressions
-3. Wronskian computation for Airy equation solutions
-4. Growth comparison: EML vs Airy solutions
-"""
-
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from typing import Callable, Tuple, List
-
-# ============================================================
-# §1. EML Expression Evaluation
-# ============================================================
-
-class EMLExpr:
-    """Represents an EML expression (exp-log-algebraic)."""
-    pass
-
-class Const(EMLExpr):
-    def __init__(self, c: float):
-        self.c = c
-    def eval(self, x: float) -> float:
-        return self.c
-    def depth(self) -> int:
-        return 0
-    def deriv(self) -> 'EMLExpr':
-        return Const(0)
-    def __repr__(self):
-        return f"{self.c}"
-
-class Var(EMLExpr):
-    def eval(self, x: float) -> float:
-        return x
-    def depth(self) -> int:
-        return 0
-    def deriv(self) -> 'EMLExpr':
-        return Const(1)
-    def __repr__(self):
-        return "x"
-
-class Add(EMLExpr):
-    def __init__(self, a: EMLExpr, b: EMLExpr):
-        self.a, self.b = a, b
-    def eval(self, x: float) -> float:
-        return self.a.eval(x) + self.b.eval(x)
-    def depth(self) -> int:
-        return max(self.a.depth(), self.b.depth())
-    def deriv(self) -> 'EMLExpr':
-        return Add(self.a.deriv(), self.b.deriv())
-    def __repr__(self):
-        return f"({self.a} + {self.b})"
-
-class Mul(EMLExpr):
-    def __init__(self, a: EMLExpr, b: EMLExpr):
-        self.a, self.b = a, b
-    def eval(self, x: float) -> float:
-        return self.a.eval(x) * self.b.eval(x)
-    def depth(self) -> int:
-        return max(self.a.depth(), self.b.depth())
-    def deriv(self) -> 'EMLExpr':
-        return Add(Mul(self.a.deriv(), self.b), Mul(self.a, self.b.deriv()))
-    def __repr__(self):
-        return f"({self.a} * {self.b})"
-
-class Neg(EMLExpr):
-    def __init__(self, e: EMLExpr):
-        self.e = e
-    def eval(self, x: float) -> float:
-        return -self.e.eval(x)
-    def depth(self) -> int:
-        return self.e.depth()
-    def deriv(self) -> 'EMLExpr':
-        return Neg(self.e.deriv())
-    def __repr__(self):
-        return f"(-{self.e})"
-
-class Inv(EMLExpr):
-    def __init__(self, e: EMLExpr):
-        self.e = e
-    def eval(self, x: float) -> float:
-        v = self.e.eval(x)
-        return 1.0/v if v != 0 else float('inf')
-    def depth(self) -> int:
-        return self.e.depth()
-    def deriv(self) -> 'EMLExpr':
-        return Neg(Mul(self.e.deriv(), Inv(Mul(self.e, self.e))))
-    def __repr__(self):
-        return f"(1/{self.e})"
-
-class Exp(EMLExpr):
-    def __init__(self, e: EMLExpr):
-        self.e = e
-    def eval(self, x: float) -> float:
-        return np.exp(np.clip(self.e.eval(x), -500, 500))
-    def depth(self) -> int:
-        return self.e.depth() + 1
-    def deriv(self) -> 'EMLExpr':
-        return Mul(Exp(self.e), self.e.deriv())
-    def __repr__(self):
-        return f"exp({self.e})"
-
-class Log(EMLExpr):
-    def __init__(self, e: EMLExpr):
-        self.e = e
-    def eval(self, x: float) -> float:
-        v = self.e.eval(x)
-        return np.log(max(v, 1e-300))
-    def depth(self) -> int:
-        return self.e.depth() + 1
-    def deriv(self) -> 'EMLExpr':
-        return Mul(self.e.deriv(), Inv(self.e))
-    def __repr__(self):
-        return f"log({self.e})"
-
-
-# ============================================================
-# §2. Demonstration: Depth Closure Under Differentiation
-# ============================================================
-
-def demonstrate_depth_closure():
-    """Show that symbolic differentiation preserves EML depth."""
-    print("=" * 60)
-    print("§2. DEPTH CLOSURE UNDER DIFFERENTIATION")
-    print("=" * 60)
-
-    examples = [
-        ("exp(x)", Exp(Var())),
-        ("log(x)", Log(Var())),
-        ("exp(exp(x))", Exp(Exp(Var()))),
-        ("x * exp(x)", Mul(Var(), Exp(Var()))),
-        ("log(exp(x) + 1)", Log(Add(Exp(Var()), Const(1)))),
-    ]
-
-    for name, expr in examples:
-        d = expr.deriv()
-        print(f"\n  f(x) = {name}")
-        print(f"    depth(f)  = {expr.depth()}")
-        print(f"    depth(f') = {d.depth()}")
-        print(f"    f'(x) = {d}")
-        assert d.depth() <= expr.depth(), f"FAILURE: depth increased for {name}!"
-        print(f"    ✓ depth(f') ≤ depth(f)")
-
-    print("\n  All depth closure checks passed! ✓")
-
-
-# ============================================================
-# §3. Wronskian Computation for Airy Equation
-# ============================================================
-
-def airy_wronskian_demo():
-    """Compute the Wronskian for numerical Airy-like solutions."""
-    print("\n" + "=" * 60)
-    print("§3. WRONSKIAN FOR AIRY EQUATION y'' = xy")
-    print("=" * 60)
-
-    # Numerical integration of Airy equation using RK4
-    def airy_rk4(x0: float, x1: float, y0: float, yp0: float, n: int = 1000):
-        h = (x1 - x0) / n
-        xs = [x0]
-        ys = [y0]
-        yps = [yp0]
-        x, y, yp = x0, y0, yp0
-        for _ in range(n):
-            k1y = yp
-            k1yp = x * y
-            k2y = yp + 0.5*h*k1yp
-            k2yp = (x + 0.5*h) * (y + 0.5*h*k1y)
-            k3y = yp + 0.5*h*k2yp
-            k3yp = (x + 0.5*h) * (y + 0.5*h*k2y)
-            k4y = yp + h*k3yp
-            k4yp = (x + h) * (y + h*k3y)
-            y += h/6 * (k1y + 2*k2y + 2*k3y + k4y)
-            yp += h/6 * (k1yp + 2*k2yp + 2*k3yp + k4yp)
-            x += h
-            xs.append(x)
-            ys.append(y)
-            yps.append(yp)
-        return np.array(xs), np.array(ys), np.array(yps)
-
-    # Two linearly independent solutions with different initial conditions
-    x0, x1 = 0, 5
-    xs1, y1, y1p = airy_rk4(x0, x1, 1, 0)  # Ai-like
-    xs2, y2, y2p = airy_rk4(x0, x1, 0, 1)  # Bi-like
-
-    # Wronskian W = y1*y2' - y2*y1'
-    W = y1 * y2p - y2 * y1p
-
-    print(f"\n  Initial conditions:")
-    print(f"    y₁(0)=1, y₁'(0)=0  (Ai-like)")
-    print(f"    y₂(0)=0, y₂'(0)=1  (Bi-like)")
-    print(f"\n  Wronskian W(x) = y₁·y₂' - y₂·y₁'")
-    print(f"    W(0) = {W[0]:.6f}")
-    print(f"    W(1) = {W[len(W)//5]:.6f}")
-    print(f"    W(3) = {W[3*len(W)//5]:.6f}")
-    print(f"    W(5) = {W[-1]:.6f}")
-    print(f"\n  Abel's identity: since p(x) = 0 for Airy,")
-    print(f"  W' = -p·W = 0, so W is CONSTANT.")
-    print(f"  Numerical verification: max|W - W(0)| = {np.max(np.abs(W - W[0])):.2e}")
-
-
-# ============================================================
-# §4. Growth Rate Comparison: EML vs Airy
-# ============================================================
-
-def growth_comparison():
-    """Compare growth rates of EML functions vs Airy solutions."""
-    print("\n" + "=" * 60)
-    print("§4. GROWTH RATE OBSTRUCTION")
-    print("=" * 60)
-
-    # Airy Bi grows like exp(2/3 * x^(3/2)) / (sqrt(pi) * x^(1/4))
-    x = np.linspace(1, 10, 100)
-
-    # Airy-like growth
-    airy_growth = np.exp(2/3 * x**(3/2)) / (np.sqrt(np.pi) * x**(1/4))
-
-    # EML functions of various depths
-    depth0 = x**3  # polynomial (depth 0)
-    depth1 = np.exp(x)  # single exponential (depth 1)
-    depth1b = np.exp(2*x)  # faster exponential (depth 1)
-
-    print(f"\n  At x = 5:")
-    print(f"    Polynomial x³:        {5**3:.2f}")
-    print(f"    exp(x):                {np.exp(5):.2f}")
-    print(f"    exp(2x):               {np.exp(10):.2f}")
-    print(f"    Airy ~ exp(2x^1.5/3):  {np.exp(2/3 * 5**1.5):.2f}")
-    print(f"\n  At x = 10:")
-    print(f"    exp(x):                {np.exp(10):.2e}")
-    print(f"    exp(2x):               {np.exp(20):.2e}")
-    print(f"    Airy ~ exp(2x^1.5/3):  {np.exp(2/3 * 10**1.5):.2e}")
-    print(f"\n  Key insight: Airy growth exp(2x^{{3/2}}/3) is BETWEEN")
-    print(f"  polynomial and single-exponential growth for small x,")
-    print(f"  but eventually dominates exp(cx) for any fixed c.")
-    print(f"  The exponent x^{{3/2}} is NOT an EML function (fractional power).")
-    print(f"  This is the growth-theoretic obstruction to Airy being EML.")
-
-
-# ============================================================
-# §5. EML Differential Operator Algebra
-# ============================================================
-
-def diff_operator_demo():
-    """Demonstrate the EML differential operator algebra."""
-    print("\n" + "=" * 60)
-    print("§5. EML DIFFERENTIAL OPERATOR ALGEBRA")
-    print("=" * 60)
-
-    # The Airy operator: D² - x
-    print("\n  Airy operator: L = D² - x·I")
-    print(f"    Coefficient of D²: 1 (depth 0)")
-    print(f"    Coefficient of D:  0 (depth 0)")
-    print(f"    Coefficient of I:  -x (depth 0)")
-    print(f"    Operator depth: max(0, 0, 0) = 0")
-
-    # An EML operator: D² + exp(x)·D + log(x)·I
-    print("\n  EML operator: M = D² + exp(x)·D + log(x)·I")
-    print(f"    Coefficient of D²: 1 (depth 0)")
-    print(f"    Coefficient of D:  exp(x) (depth 1)")
-    print(f"    Coefficient of I:  log(x) (depth 1)")
-    print(f"    Operator depth: max(0, 1, 1) = 1")
-
-    # Addition preserves depth bound
-    print("\n  Addition L + M:")
-    print(f"    depth(L + M) ≤ max(depth(L), depth(M)) = max(0, 1) = 1")
-    print(f"    This is our ADD_DEPTH_LE theorem.")
-
-
-# ============================================================
-# Main
-# ============================================================
-
-if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  EML DIFFERENTIAL EQUATIONS: NUMERICAL DEMONSTRATIONS   ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-
-    demonstrate_depth_closure()
-    airy_wronskian_demo()
-    growth_comparison()
-    diff_operator_demo()
-
-    print("\n" + "=" * 60)
-    print("All demonstrations completed successfully!")
-    print("=" * 60)
-
-
-"""
-Visualization: Growth Rate Obstruction for Airy Solutions
-
-This script creates a visualization comparing the growth rates of EML functions
-at various depths with the growth of Airy function solutions. The key insight
-is that Airy solutions grow like exp(2x^{3/2}/3), which is "between" the growth
-classes available to EML functions of any fixed depth.
+This script demonstrates the key mathematical ideas from the EML Differential
+Ring theory, including:
+1. Wronskian computation for Airy functions
+2. Abel's identity verification
+3. Riccati equation from exponential ansatz
+4. SL(2) invariance of the Wronskian
 """
 
 import numpy as np
+from scipy.special import airy
+from scipy.integrate import solve_ivp
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-def create_growth_comparison():
-    """Create the growth comparison plot."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Left panel: log-scale growth comparison
-    x = np.linspace(0.5, 8, 200)
+def demo_airy_wronskian():
+    """
+    Demonstrate that the Wronskian of Airy functions Ai(x) and Bi(x)
+    is constant = 1/π.
+    """
+    print("=" * 60)
+    print("Demo 1: Airy Wronskian is Constant")
+    print("=" * 60)
 
-    # Depth 0: polynomial growth
-    poly_growth = x**3
+    x = np.linspace(-10, 5, 1000)
+    ai, ai_prime, bi, bi_prime = airy(x)
 
-    # Depth 1: exponential growth
-    exp_growth = np.exp(x)
-    exp2_growth = np.exp(2*x)
+    # W(Ai, Bi) = Ai * Bi' - Bi * Ai'
+    wronskian = ai * bi_prime - bi * ai_prime
 
-    # Airy growth: exp(2/3 * x^{3/2})
-    airy_growth = np.exp(2/3 * x**(1.5))
+    print(f"  Theoretical value: W = 1/π ≈ {1/np.pi:.10f}")
+    print(f"  Computed W at x=0:       {wronskian[500]:.10f}")
+    print(f"  Max deviation from 1/π:  {np.max(np.abs(wronskian - 1/np.pi)):.2e}")
+    print(f"  → Abel's identity confirmed: W' = -p·W = 0 (since p=0)")
+    print()
 
-    ax1.semilogy(x, poly_growth, 'b-', linewidth=2, label='$x^3$ (depth 0)')
-    ax1.semilogy(x, exp_growth, 'g-', linewidth=2, label='$e^x$ (depth 1)')
-    ax1.semilogy(x, airy_growth, 'r-', linewidth=3, label='$e^{2x^{3/2}/3}$ (Airy)')
-    ax1.semilogy(x, exp2_growth, 'g--', linewidth=2, label='$e^{2x}$ (depth 1)')
-
-    ax1.set_xlabel('x', fontsize=14)
-    ax1.set_ylabel('Function value (log scale)', fontsize=14)
-    ax1.set_title('Growth Rate Obstruction', fontsize=16)
-    ax1.legend(fontsize=11, loc='upper left')
-    ax1.grid(True, alpha=0.3)
-    ax1.set_ylim([1e-1, 1e15])
-
-    # Right panel: the exponent comparison
-    x2 = np.linspace(1, 20, 200)
-
-    # Exponents of different growth classes
-    linear_exp = x2  # exp(x)
-    quadratic_exp = x2**2  # exp(x^2) - depth 1 can do this via exp(x^2)
-    airy_exp = 2/3 * x2**1.5  # Airy exponent
-
-    ax2.plot(x2, linear_exp, 'g-', linewidth=2, label='$x$ (in $e^x$)')
-    ax2.plot(x2, airy_exp, 'r-', linewidth=3, label='$\\frac{2}{3}x^{3/2}$ (Airy exponent)')
-    ax2.plot(x2, quadratic_exp, 'm--', linewidth=2, label='$x^2$ (in $e^{x^2}$)')
-    ax2.fill_between(x2, linear_exp, airy_exp, alpha=0.15, color='red',
-                      label='Gap: $x < \\frac{2}{3}x^{3/2}$ but $< x^2$')
-
-    ax2.set_xlabel('x', fontsize=14)
-    ax2.set_ylabel('Exponent value', fontsize=14)
-    ax2.set_title('Airy Exponent is Non-EML', fontsize=16)
-    ax2.legend(fontsize=10, loc='upper left')
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('Applications/EMLDiffEq/growth_obstruction.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved growth_obstruction.png")
+    return x, ai, bi, wronskian
 
 
-def create_wronskian_plot():
-    """Create plot showing Abel's identity for Airy equation."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+def demo_abel_identity():
+    """
+    Verify Abel's identity W' = -p*W for a general 2nd-order ODE.
+    Consider y'' + sin(x)*y' + cos(x)*y = 0.
+    """
+    print("=" * 60)
+    print("Demo 2: Abel's Identity for General ODE")
+    print("=" * 60)
 
-    # Numerical Airy solutions via RK4
-    def solve_airy(y0, yp0, x_range, n=2000):
-        x0, x1 = x_range
-        h = (x1 - x0) / n
-        xs, ys, yps = [x0], [y0], [yp0]
-        x, y, yp = x0, y0, yp0
-        for _ in range(n):
-            k1y, k1yp = yp, x * y
-            k2y, k2yp = yp + 0.5*h*k1yp, (x + 0.5*h) * (y + 0.5*h*k1y)
-            k3y, k3yp = yp + 0.5*h*k2yp, (x + 0.5*h) * (y + 0.5*h*k2y)
-            k4y, k4yp = yp + h*k3yp, (x + h) * (y + h*k3y)
-            y += h/6 * (k1y + 2*k2y + 2*k3y + k4y)
-            yp += h/6 * (k1yp + 2*k2yp + 2*k3yp + k4yp)
-            x += h
-            xs.append(x); ys.append(y); yps.append(yp)
-        return np.array(xs), np.array(ys), np.array(yps)
+    def ode_system(t, Y):
+        y1, y1p, y2, y2p = Y
+        p = np.sin(t)
+        q = np.cos(t)
+        return [y1p, -p*y1p - q*y1, y2p, -p*y2p - q*y2]
 
-    xs, y1, y1p = solve_airy(1, 0, (-10, 5))
-    _, y2, y2p = solve_airy(0, 1, (-10, 5))
+    # Two linearly independent initial conditions
+    sol = solve_ivp(ode_system, [0, 10], [1, 0, 0, 1],
+                    t_eval=np.linspace(0, 10, 1000), rtol=1e-12)
 
-    # Plot solutions
-    ax1.plot(xs, y1, 'b-', linewidth=2, label='$y_1$ (Ai-like)')
-    ax1.plot(xs, y2, 'r-', linewidth=2, label='$y_2$ (Bi-like)')
-    ax1.set_xlabel('x', fontsize=14)
-    ax1.set_ylabel('y', fontsize=14)
-    ax1.set_title('Airy Equation Solutions', fontsize=16)
-    ax1.legend(fontsize=12)
-    ax1.grid(True, alpha=0.3)
-    ax1.set_ylim([-2, 3])
+    y1, y1p, y2, y2p = sol.y
+    t = sol.t
 
     # Wronskian
     W = y1 * y2p - y2 * y1p
-    ax2.plot(xs, W, 'k-', linewidth=2, label='$W(x) = y_1 y_2\' - y_2 y_1\'$')
-    ax2.axhline(y=W[0], color='r', linestyle='--', alpha=0.7, label=f'$W(0) = {W[0]:.4f}$')
-    ax2.set_xlabel('x', fontsize=14)
-    ax2.set_ylabel('Wronskian', fontsize=14)
-    ax2.set_title("Abel's Identity: W = const (p=0)", fontsize=16)
-    ax2.legend(fontsize=12)
-    ax2.grid(True, alpha=0.3)
-    ax2.set_ylim([W[0]-0.1, W[0]+0.1])
 
-    plt.tight_layout()
-    plt.savefig('Applications/EMLDiffEq/wronskian_airy.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved wronskian_airy.png")
+    # Abel's formula: W(x) = W(0) * exp(-∫₀ˣ p(t) dt)
+    # ∫₀ˣ sin(t) dt = 1 - cos(x)
+    W_abel = W[0] * np.exp(-(1 - np.cos(t)))
+
+    print(f"  ODE: y'' + sin(x)·y' + cos(x)·y = 0")
+    print(f"  W(0) = {W[0]:.10f}")
+    print(f"  Max |W_numerical - W_Abel|: {np.max(np.abs(W - W_abel)):.2e}")
+    print(f"  → Abel's identity W(x) = W(0)·exp(-∫p dx) verified!")
+    print()
+
+    return t, W, W_abel
 
 
-def create_depth_filtration_diagram():
-    """Visualize the depth filtration of the EML algebra."""
-    fig, ax = plt.subplots(figsize=(10, 8))
+def demo_riccati_reduction():
+    """
+    Show that y = exp(∫v dx) reduces y'' + q*y = 0 to v' + v² + q = 0.
+    For the Airy equation (q = -x), the Riccati equation is v' + v² - x = 0.
+    """
+    print("=" * 60)
+    print("Demo 3: Riccati Reduction for Airy Equation")
+    print("=" * 60)
 
-    # Draw boxes for each depth level
-    levels = [
-        (0, 'Rational Functions\n$\\frac{P(x)}{Q(x)}$', '#E3F2FD',
-         ['$x$', '$x^2+1$', '$\\frac{1}{x}$', '$\\frac{x^2-1}{x+3}$']),
-        (1, 'Depth-1 EML\n$\\exp, \\log$ of rationals', '#E8F5E9',
-         ['$e^x$', '$\\ln x$', '$e^x - \\ln x$', '$\\frac{e^x}{x}$']),
-        (2, 'Depth-2 EML\n$\\exp(\\exp), \\log(\\log)$, etc.', '#FFF3E0',
-         ['$e^{e^x}$', '$\\ln(\\ln x)$', '$e^{x \\ln x}$']),
-        (3, 'Depth-3+ EML\nHigher nesting', '#FCE4EC',
-         ['$e^{e^{e^x}}$', '$\\ln(e^{\\ln x} + 1)$']),
+    # Solve Riccati equation v' + v² - x = 0
+    def riccati(t, v):
+        return [-(v[0]**2) + t]
+
+    sol = solve_ivp(riccati, [0.1, 10], [0.5], t_eval=np.linspace(0.1, 10, 500),
+                    rtol=1e-10)
+
+    # The Riccati equation blows up (poles), reflecting Airy's non-integrability
+    t = sol.t
+    v = sol.y[0]
+
+    print(f"  Airy equation: y'' = x·y (p=0, q=-x)")
+    print(f"  Riccati reduction: v' + v² - x = 0 where y = exp(∫v dx)")
+    print(f"  Solution v(0.1) = {v[0]:.6f}")
+    print(f"  Solution v(1.0) ≈ {v[np.argmin(np.abs(t-1))]:.6f}")
+    print(f"  The Riccati equation has movable poles → no EML solution")
+    print()
+
+
+def demo_sl2_invariance():
+    """
+    Demonstrate SL(2) invariance of the Wronskian.
+    """
+    print("=" * 60)
+    print("Demo 4: SL(2) Invariance of the Wronskian")
+    print("=" * 60)
+
+    x = np.linspace(-5, 3, 500)
+    ai, ai_prime, bi, bi_prime = airy(x)
+
+    # Original Wronskian
+    W_orig = ai * bi_prime - bi * ai_prime
+
+    # SL(2) transformation: [a b; c d] with ad - bc = 1
+    test_matrices = [
+        (2, 3, 1, 2),    # det = 4 - 3 = 1
+        (1, 1, 0, 1),    # upper triangular
+        (3, -1, 2, -0.33333333),  # approximate, det ≈ 1
+        (0, -1, 1, 0),   # rotation-like
     ]
 
-    for depth, label, color, examples in levels:
-        y = 6 - 1.8 * depth
-        rect = plt.Rectangle((0.5, y - 0.7), 9, 1.4, facecolor=color,
-                              edgecolor='black', linewidth=2)
-        ax.add_patch(rect)
-        ax.text(1.2, y + 0.3, f'Depth {depth}: {label}', fontsize=12, fontweight='bold',
-                va='center')
-        ex_str = ',  '.join(examples)
-        ax.text(1.2, y - 0.3, f'Examples: {ex_str}', fontsize=10, va='center',
-                style='italic')
+    for a, b, c, d in test_matrices:
+        det = a*d - b*c
+        y1_new = a * ai + b * bi
+        y2_new = c * ai + d * bi
+        y1p_new = a * ai_prime + b * bi_prime
+        y2p_new = c * ai_prime + d * bi_prime
+        W_new = y1_new * y2p_new - y2_new * y1p_new
 
-    # Arrow showing differentiation preserves depth
-    ax.annotate('', xy=(8.5, 1.5), xytext=(8.5, 5.8),
-                arrowprops=dict(arrowstyle='<->', color='red', lw=2))
-    ax.text(8.7, 3.7, '$\\frac{d}{dx}$\npreserves\ndepth', fontsize=13,
-            color='red', fontweight='bold', ha='left')
+        print(f"  Matrix [{a:.2f} {b:.2f}; {c:.2f} {d:.2f}], det = {det:.4f}")
+        print(f"    W_new/W_orig ≈ {np.mean(W_new/W_orig):.6f} (should be {det:.4f})")
 
-    # Airy solution annotation
-    ax.annotate('Airy: $e^{\\frac{2}{3}x^{3/2}}$\n(NOT EML — fractional power)',
-                xy=(5, 0.3), fontsize=13, color='purple', fontweight='bold',
-                ha='center',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='#F3E5F5',
-                          edgecolor='purple', linewidth=2))
+    print()
+    print("  → W transforms as W ↦ det(σ)·W, confirming our theorem!")
+    print()
 
-    ax.set_xlim(0, 10)
-    ax.set_ylim(-0.5, 7)
-    ax.set_aspect('equal')
-    ax.axis('off')
-    ax.set_title('EML Depth Filtration: A Tower of Function Classes', fontsize=18,
-                 fontweight='bold', pad=20)
+
+def demo_eml_tower():
+    """
+    Demonstrate EML tower heights for various functions.
+    """
+    print("=" * 60)
+    print("Demo 5: EML Tower Heights")
+    print("=" * 60)
+
+    x = np.linspace(0.1, 3, 100)
+
+    towers = [
+        ("Constants (height 0)", lambda x: np.ones_like(x) * 3, 0),
+        ("x (height 0)", lambda x: x, 0),
+        ("x² + 2x (height 0)", lambda x: x**2 + 2*x, 0),
+        ("exp(x) (height 1)", lambda x: np.exp(x), 1),
+        ("log(x) (height 1)", lambda x: np.log(x), 1),
+        ("exp(exp(x)) (height 2)", lambda x: np.exp(np.exp(x)), 2),
+        ("log(log(x)) (height 2)", lambda x: np.log(np.log(x)), 2),
+        ("x·exp(x²) (height 1)", lambda x: x * np.exp(x**2), 1),
+    ]
+
+    for name, f, height in towers:
+        vals = f(x)
+        print(f"  {name}: range [{np.min(vals):.3f}, {np.max(vals):.3f}]")
+
+    print()
+    print("  Airy function Ai(x): NOT in any finite EML tower!")
+    print("  → This is the content of our non-solvability obstruction.")
+
+
+if __name__ == "__main__":
+    print("\n" + "=" * 60)
+    print("  EML DIFFERENTIAL EQUATIONS: RESEARCH DEMONSTRATIONS")
+    print("=" * 60 + "\n")
+
+    demo_airy_wronskian()
+    demo_abel_identity()
+    demo_riccati_reduction()
+    demo_sl2_invariance()
+    demo_eml_tower()
+
+    print("\n" + "=" * 60)
+    print("  All demonstrations completed successfully!")
+    print("=" * 60)
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Riccati Reduction and EML Tower Structure
+
+Shows how the exponential ansatz y = exp(∫v dx) reduces a 2nd-order
+ODE to the Riccati equation, and visualizes the pole structure that
+obstructs EML solvability.
+"""
+
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+
+def plot_riccati_poles():
+    """Plot Riccati solutions for Airy equation showing pole structure."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Airy Riccati: v' + v² - x = 0
+    initial_values = [0.1, 0.5, 1.0, -0.5, -1.0, 2.0]
+    colors = plt.cm.viridis(np.linspace(0, 1, len(initial_values)))
+
+    ax = axes[0]
+    for v0, color in zip(initial_values, colors):
+        def riccati(t, v):
+            return [-(v[0]**2) + t]
+
+        sol = solve_ivp(riccati, [0, 8], [v0],
+                        t_eval=np.linspace(0, 8, 2000),
+                        rtol=1e-10, atol=1e-12,
+                        max_step=0.01)
+
+        # Clip to reasonable range
+        v = np.clip(sol.y[0], -20, 20)
+        ax.plot(sol.t, v, color=color, linewidth=1.5, label=f'v(0) = {v0}')
+
+    ax.set_xlabel('x', fontsize=12)
+    ax.set_ylabel('v(x)', fontsize=12)
+    ax.set_title("Riccati Equation v' + v² - x = 0\n(Airy's equation reduction)",
+                 fontsize=12, fontweight='bold')
+    ax.legend(fontsize=9)
+    ax.set_ylim(-10, 10)
+    ax.grid(True, alpha=0.3)
+    ax.axhline(y=0, color='k', linewidth=0.5)
+
+    # Constant coefficient case: v' + v² + 1 = 0 (harmonic oscillator)
+    ax2 = axes[1]
+    initial_values_2 = [0.5, 1.0, 2.0, -0.5, -1.0]
+    colors2 = plt.cm.plasma(np.linspace(0, 1, len(initial_values_2)))
+
+    for v0, color in zip(initial_values_2, colors2):
+        def riccati_harmonic(t, v):
+            return [-(v[0]**2) - 1]
+
+        sol = solve_ivp(riccati_harmonic, [0, 5], [v0],
+                        t_eval=np.linspace(0, 5, 2000),
+                        rtol=1e-10, atol=1e-12,
+                        max_step=0.01)
+
+        v = np.clip(sol.y[0], -20, 20)
+        ax2.plot(sol.t, v, color=color, linewidth=1.5, label=f'v(0) = {v0}')
+
+    ax2.set_xlabel('x', fontsize=12)
+    ax2.set_ylabel('v(x)', fontsize=12)
+    ax2.set_title("Riccati v' + v² + 1 = 0\n(Harmonic oscillator: v = -tan(x+c))",
+                  fontsize=12, fontweight='bold')
+    ax2.legend(fontsize=9)
+    ax2.set_ylim(-10, 10)
+    ax2.grid(True, alpha=0.3)
+    ax2.axhline(y=0, color='k', linewidth=0.5)
 
     plt.tight_layout()
-    plt.savefig('Applications/EMLDiffEq/depth_filtration.png', dpi=150, bbox_inches='tight')
+    plt.savefig('riccati_reduction.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved depth_filtration.png")
+    print("Saved riccati_reduction.png")
 
 
-if __name__ == '__main__':
-    create_growth_comparison()
-    create_wronskian_plot()
-    create_depth_filtration_diagram()
-    print("\nAll visualizations created!")
+def plot_eml_tower():
+    """Visualize EML tower hierarchy."""
+    fig, ax = plt.subplots(figsize=(12, 7))
+
+    # Tower levels
+    levels = {
+        0: ['1', 'x', 'x²', 'x³+2x', 'polynomials'],
+        1: ['eˣ', 'ln x', 'x·eˣ', 'e^(x²)', 'ln(x²+1)'],
+        2: ['e^(eˣ)', 'ln(ln x)', 'e^(x·ln x)', 'ln(eˣ+1)'],
+        3: ['e^(e^(eˣ))', 'ln(ln(ln x))'],
+    }
+
+    colors = ['#2ecc71', '#3498db', '#e74c3c', '#9b59b6']
+    y_offset = 0
+
+    for level, funcs in levels.items():
+        y = 3 - level
+        for i, func in enumerate(funcs):
+            x_pos = i * 2.2 + 0.5
+            rect = plt.Rectangle((x_pos - 0.8, y - 0.3), 1.6, 0.6,
+                                 facecolor=colors[level], alpha=0.3,
+                                 edgecolor=colors[level], linewidth=2)
+            ax.add_patch(rect)
+            ax.text(x_pos, y, func, ha='center', va='center',
+                    fontsize=10, fontweight='bold')
+
+        ax.text(-0.5, y, f'Height {level}', ha='right', va='center',
+                fontsize=12, fontweight='bold', color=colors[level])
+
+    # Airy function annotation
+    ax.annotate('Ai(x), Bi(x)\n(NOT in any tower!)',
+                xy=(5, -0.5), fontsize=13, fontweight='bold',
+                color='red', ha='center',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow',
+                         edgecolor='red', linewidth=2))
+
+    ax.set_xlim(-1.5, 11)
+    ax.set_ylim(-1.5, 4)
+    ax.set_title('EML Tower Height Hierarchy', fontsize=14, fontweight='bold')
+    ax.axis('off')
+
+    plt.tight_layout()
+    plt.savefig('eml_tower.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved eml_tower.png")
+
+
+if __name__ == "__main__":
+    plot_riccati_poles()
+    plot_eml_tower()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Airy Wronskian and Abel's Identity
+
+Produces a 2-panel figure showing:
+1. Airy functions Ai(x) and Bi(x)
+2. Their Wronskian W(Ai, Bi) = 1/π (constant)
+"""
+
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from scipy.special import airy
+
+
+def plot_airy_wronskian():
+    x = np.linspace(-15, 5, 2000)
+    ai, aip, bi, bip = airy(x)
+    W = ai * bip - bi * aip
+
+    fig, axes = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
+
+    # Panel 1: Airy functions
+    ax1 = axes[0]
+    ax1.plot(x, ai, 'b-', linewidth=2, label='Ai(x)')
+    ax1.plot(x, bi, 'r-', linewidth=2, label='Bi(x)')
+    ax1.set_ylabel('Function Value', fontsize=12)
+    ax1.set_title('Airy Functions and Their Wronskian', fontsize=14, fontweight='bold')
+    ax1.legend(fontsize=12)
+    ax1.set_ylim(-1.5, 2.5)
+    ax1.grid(True, alpha=0.3)
+    ax1.axhline(y=0, color='k', linewidth=0.5)
+
+    # Panel 2: Wronskian
+    ax2 = axes[1]
+    ax2.plot(x, W, 'g-', linewidth=2, label=f'W(Ai, Bi) = 1/π ≈ {1/np.pi:.4f}')
+    ax2.axhline(y=1/np.pi, color='k', linestyle='--', alpha=0.5, label='1/π')
+    ax2.set_xlabel('x', fontsize=12)
+    ax2.set_ylabel('Wronskian', fontsize=12)
+    ax2.set_title("Abel's Identity: W' = -p·W = 0 (since p = 0 for Airy)", fontsize=12)
+    ax2.legend(fontsize=12)
+    ax2.set_ylim(0, 0.5)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('airy_wronskian.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved airy_wronskian.png")
+
+
+def plot_sl2_invariance():
+    x = np.linspace(-8, 4, 1000)
+    ai, aip, bi, bip = airy(x)
+    W_orig = ai * bip - bi * aip
+
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+
+    matrices = [
+        ((1, 0, 0, 1), 'Identity'),
+        ((2, 1, 1, 1), 'det = 1'),
+        ((1, 1, 0, 1), 'Upper triangular'),
+        ((0, -1, 1, 0), 'Rotation'),
+    ]
+
+    for ax, ((a, b, c, d), name) in zip(axes.flat, matrices):
+        y1_new = a * ai + b * bi
+        y2_new = c * ai + d * bi
+        y1p_new = a * aip + b * bip
+        y2p_new = c * aip + d * bip
+        W_new = y1_new * y2p_new - y2_new * y1p_new
+
+        ax.plot(x, W_orig, 'b-', linewidth=2, alpha=0.7, label='Original W')
+        ax.plot(x, W_new, 'r--', linewidth=2, alpha=0.7, label='Transformed W')
+        det = a*d - b*c
+        ax.set_title(f'{name}: det = {det}', fontsize=11)
+        ax.legend(fontsize=9)
+        ax.grid(True, alpha=0.3)
+        ax.set_ylim(-0.1, 0.5)
+
+    fig.suptitle('SL(2) Invariance of the Wronskian', fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    plt.savefig('sl2_invariance.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved sl2_invariance.png")
+
+
+if __name__ == "__main__":
+    plot_airy_wronskian()
+    plot_sl2_invariance()

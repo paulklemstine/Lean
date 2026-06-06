@@ -1,266 +1,267 @@
+#!/usr/bin/env python3
 """
 EML Differential Equations: Core Algorithms
 
-Type-hinted implementations of the key algorithms from the EML ODE theory.
+Type-hinted implementations of the key algorithms from the
+EML Differential Ring theory.
 """
 
-from typing import Union, List, Tuple, Optional
+from typing import Callable, Tuple, List, Optional
 import numpy as np
-from dataclasses import dataclass
 
 
-# ============================================================
-# Algorithm 1: EML Expression Symbolic Differentiation
-# ============================================================
-
-@dataclass
-class EMLConst:
-    value: float
-
-@dataclass
-class EMLVar:
-    pass
-
-@dataclass
-class EMLAdd:
-    left: 'EMLNode'
-    right: 'EMLNode'
-
-@dataclass
-class EMLMul:
-    left: 'EMLNode'
-    right: 'EMLNode'
-
-@dataclass
-class EMLNeg:
-    child: 'EMLNode'
-
-@dataclass
-class EMLInv:
-    child: 'EMLNode'
-
-@dataclass
-class EMLExp:
-    child: 'EMLNode'
-
-@dataclass
-class EMLLog:
-    child: 'EMLNode'
-
-EMLNode = Union[EMLConst, EMLVar, EMLAdd, EMLMul, EMLNeg, EMLInv, EMLExp, EMLLog]
+# Type aliases
+RealFunc = Callable[[float], float]
+VectorFunc = Callable[[float], np.ndarray]
 
 
-def eml_eval(node: EMLNode, x: float) -> float:
-    """Evaluate an EML expression at a point x."""
-    if isinstance(node, EMLConst):
-        return node.value
-    elif isinstance(node, EMLVar):
-        return x
-    elif isinstance(node, EMLAdd):
-        return eml_eval(node.left, x) + eml_eval(node.right, x)
-    elif isinstance(node, EMLMul):
-        return eml_eval(node.left, x) * eml_eval(node.right, x)
-    elif isinstance(node, EMLNeg):
-        return -eml_eval(node.child, x)
-    elif isinstance(node, EMLInv):
-        v = eml_eval(node.child, x)
-        return 1.0 / v if v != 0 else float('inf')
-    elif isinstance(node, EMLExp):
-        return np.exp(np.clip(eml_eval(node.child, x), -500, 500))
-    elif isinstance(node, EMLLog):
-        v = eml_eval(node.child, x)
-        return np.log(max(v, 1e-300))
-    raise TypeError(f"Unknown node type: {type(node)}")
-
-
-def eml_depth(node: EMLNode) -> int:
-    """Compute the EML depth (transcendental nesting level)."""
-    if isinstance(node, (EMLConst, EMLVar)):
-        return 0
-    elif isinstance(node, (EMLAdd, EMLMul)):
-        return max(eml_depth(node.left), eml_depth(node.right))
-    elif isinstance(node, (EMLNeg, EMLInv)):
-        return eml_depth(node.child)
-    elif isinstance(node, (EMLExp, EMLLog)):
-        return eml_depth(node.child) + 1
-    raise TypeError(f"Unknown node type: {type(node)}")
-
-
-def eml_symb_deriv(node: EMLNode) -> EMLNode:
+def wronskian(y1: RealFunc, y2: RealFunc, x: float, h: float = 1e-8) -> float:
     """
-    Symbolic differentiation of an EML expression.
+    Compute the Wronskian W(y1, y2) at point x using numerical differentiation.
 
-    Algorithm:
-        INPUT: EML expression tree e
-        OUTPUT: EML expression tree e' = de/dx
+    W(y1, y2)(x) = y1(x) * y2'(x) - y2(x) * y1'(x)
 
-    Rules:
-        d/dx(c)      = 0
-        d/dx(x)      = 1
-        d/dx(f + g)  = f' + g'
-        d/dx(f * g)  = f'g + fg'
-        d/dx(-f)     = -f'
-        d/dx(1/f)    = -f'/(f²)
-        d/dx(exp(f)) = exp(f) * f'
-        d/dx(log(f)) = f'/f
+    Args:
+        y1: First solution function
+        y2: Second solution function
+        x: Point of evaluation
+        h: Step size for numerical differentiation
 
-    Key property: depth(e') ≤ depth(e) (Closure Theorem).
+    Returns:
+        Wronskian value at x
     """
-    if isinstance(node, EMLConst):
-        return EMLConst(0)
-    elif isinstance(node, EMLVar):
-        return EMLConst(1)
-    elif isinstance(node, EMLAdd):
-        return EMLAdd(eml_symb_deriv(node.left), eml_symb_deriv(node.right))
-    elif isinstance(node, EMLMul):
-        return EMLAdd(
-            EMLMul(eml_symb_deriv(node.left), node.right),
-            EMLMul(node.left, eml_symb_deriv(node.right))
-        )
-    elif isinstance(node, EMLNeg):
-        return EMLNeg(eml_symb_deriv(node.child))
-    elif isinstance(node, EMLInv):
-        # d/dx(1/f) = -f'/(f²)
-        return EMLNeg(EMLMul(
-            eml_symb_deriv(node.child),
-            EMLInv(EMLMul(node.child, node.child))
-        ))
-    elif isinstance(node, EMLExp):
-        # d/dx(exp(f)) = exp(f) * f'
-        return EMLMul(EMLExp(node.child), eml_symb_deriv(node.child))
-    elif isinstance(node, EMLLog):
-        # d/dx(log(f)) = f'/f
-        return EMLMul(eml_symb_deriv(node.child), EMLInv(node.child))
-    raise TypeError(f"Unknown node type: {type(node)}")
+    dy1 = (y1(x + h) - y1(x - h)) / (2 * h)
+    dy2 = (y2(x + h) - y2(x - h)) / (2 * h)
+    return y1(x) * dy2 - y2(x) * dy1
 
 
-# ============================================================
-# Algorithm 2: EML ODE Depth Analysis (Kovacic-style)
-# ============================================================
+def abel_wronskian(
+    p: RealFunc,
+    W0: float,
+    x0: float,
+    x: float,
+    n_steps: int = 1000
+) -> float:
+    """
+    Compute the Wronskian using Abel's formula:
+    W(x) = W(x0) * exp(-∫_{x0}^{x} p(t) dt)
 
-def analyze_ode_depth(
-    coeff2: EMLNode,
-    coeff1: EMLNode,
-    coeff0: EMLNode
+    Uses composite Simpson's rule for the integral.
+
+    Args:
+        p: The p-coefficient in y'' + p*y' + q*y = 0
+        W0: Initial Wronskian value W(x0)
+        x0: Initial point
+        x: Target point
+        n_steps: Number of integration steps
+
+    Returns:
+        Wronskian value at x via Abel's formula
+    """
+    # Composite Simpson's rule for ∫p
+    t = np.linspace(x0, x, 2 * n_steps + 1)
+    dt = (x - x0) / (2 * n_steps)
+    values = np.array([p(ti) for ti in t])
+
+    integral = dt / 3 * (
+        values[0] + values[-1] +
+        4 * np.sum(values[1::2]) +
+        2 * np.sum(values[2:-1:2])
+    )
+
+    return W0 * np.exp(-integral)
+
+
+def riccati_solve(
+    q: RealFunc,
+    v0: float,
+    x_span: Tuple[float, float],
+    n_steps: int = 10000
+) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Solve the Riccati equation v' + v² + q = 0 using RK4.
+
+    This is the reduction of y'' + q*y = 0 via y = exp(∫v dx).
+
+    Args:
+        q: The q-coefficient
+        v0: Initial value v(x0)
+        x_span: (x_start, x_end)
+        n_steps: Number of steps
+
+    Returns:
+        (x_array, v_array): Solution arrays
+    """
+    x0, x1 = x_span
+    h = (x1 - x0) / n_steps
+    x = np.zeros(n_steps + 1)
+    v = np.zeros(n_steps + 1)
+    x[0] = x0
+    v[0] = v0
+
+    def f(t: float, vt: float) -> float:
+        return -(vt ** 2) - q(t)
+
+    for i in range(n_steps):
+        k1 = f(x[i], v[i])
+        k2 = f(x[i] + h/2, v[i] + h*k1/2)
+        k3 = f(x[i] + h/2, v[i] + h*k2/2)
+        k4 = f(x[i] + h, v[i] + h*k3)
+        v[i+1] = v[i] + h/6 * (k1 + 2*k2 + 2*k3 + k4)
+        x[i+1] = x[i] + h
+
+        # Detect blow-up (Riccati pole)
+        if abs(v[i+1]) > 1e10:
+            return x[:i+2], v[:i+2]
+
+    return x, v
+
+
+def sl2_transform(
+    y1: np.ndarray,
+    y2: np.ndarray,
+    matrix: Tuple[float, float, float, float]
+) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Apply an SL(2) transformation to a pair of solutions.
+
+    [y1_new]   [a b] [y1]
+    [y2_new] = [c d] [y2]
+
+    Args:
+        y1, y2: Original solution arrays
+        matrix: (a, b, c, d) with ad - bc = 1
+
+    Returns:
+        (y1_new, y2_new): Transformed solutions
+    """
+    a, b, c, d = matrix
+    det = a * d - b * c
+    if abs(det - 1.0) > 1e-6:
+        raise ValueError(f"Matrix determinant {det} ≠ 1 (not in SL(2))")
+
+    return a * y1 + b * y2, c * y1 + d * y2
+
+
+def eml_tower_height(expr: str) -> int:
+    """
+    Compute the EML tower height of a symbolic expression.
+
+    Tower height 0: constants, polynomials
+    Tower height n+1: exp(height-n) or log(height-n)
+
+    Args:
+        expr: String representation of the expression
+
+    Returns:
+        Tower height
+    """
+    # Simple recursive parser
+    expr = expr.strip()
+
+    if expr.startswith("exp(") and expr.endswith(")"):
+        inner = expr[4:-1]
+        return eml_tower_height(inner) + 1
+
+    if expr.startswith("log(") and expr.endswith(")"):
+        inner = expr[4:-1]
+        return eml_tower_height(inner) + 1
+
+    # Check for nested operations
+    if "exp(" in expr or "log(" in expr:
+        # Find the maximum tower height among subexpressions
+        max_h = 0
+        i = 0
+        while i < len(expr):
+            for prefix in ["exp(", "log("]:
+                if expr[i:].startswith(prefix):
+                    depth = 1
+                    j = i + len(prefix)
+                    while j < len(expr) and depth > 0:
+                        if expr[j] == '(':
+                            depth += 1
+                        elif expr[j] == ')':
+                            depth -= 1
+                        j += 1
+                    sub = expr[i:j]
+                    max_h = max(max_h, eml_tower_height(sub))
+                    i = j
+                    break
+            else:
+                i += 1
+        return max_h
+
+    # Base case: polynomial expression
+    return 0
+
+
+def classify_ode_solvability(
+    p: RealFunc,
+    q: RealFunc,
+    x_test: List[float]
 ) -> dict:
     """
-    Analyze the depth structure of a second-order linear EML ODE.
+    Heuristic classification of 2nd-order linear ODE solvability.
 
-    INPUT: Coefficients a(x), b(x), c(x) of a(x)y'' + b(x)y' + c(x)y = 0
-    OUTPUT: Depth analysis including operator depth and Wronskian properties
+    Uses numerical invariants to guess whether y'' + p*y' + q*y = 0
+    might have EML solutions.
 
-    Algorithm (Kovacic-inspired depth analysis):
-        1. Compute operator depth d = max(depth(a), depth(b), depth(c))
-        2. Compute reduced form: divide by a to get y'' + p*y' + q*y = 0
-        3. Analyze Wronskian depth: W' = -p*W implies W = C*exp(-∫p)
-        4. If p is EML of depth d_p, the Wronskian involves antiderivatives
-           of EML functions, which may increase depth
+    Args:
+        p: Coefficient of y'
+        q: Coefficient of y
+        x_test: Test points for evaluation
+
+    Returns:
+        Dictionary with classification results
     """
-    d_a = eml_depth(coeff2)
-    d_b = eml_depth(coeff1)
-    d_c = eml_depth(coeff0)
-    operator_depth = max(d_a, d_b, d_c)
-
-    # Compute p = b/a and q = c/a (as EML expressions)
-    p_expr = EMLMul(coeff1, EMLInv(coeff2))
-    q_expr = EMLMul(coeff0, EMLInv(coeff2))
-
-    p_depth = eml_depth(p_expr)
-    q_depth = eml_depth(q_expr)
-
-    return {
-        'operator_depth': operator_depth,
-        'p_depth': p_depth,
-        'q_depth': q_depth,
-        'reduced_depth': max(p_depth, q_depth),
-        'wronskian_note': (
-            f"W' = -p·W, so W = C·exp(-∫p(x)dx). "
-            f"Since p has depth {p_depth}, the Wronskian "
-            f"involves exp of an antiderivative of a depth-{p_depth} EML function."
-        )
+    results: dict = {
+        "p_zero": all(abs(p(x)) < 1e-10 for x in x_test),
+        "q_polynomial_degree": None,
+        "abel_integral_eml": None,
+        "classification": "unknown"
     }
 
+    # Check if q is a polynomial (finite differences stabilize)
+    q_vals = [q(x) for x in x_test]
+    for deg in range(10):
+        diffs = q_vals
+        for _ in range(deg + 1):
+            diffs = [diffs[i+1] - diffs[i] for i in range(len(diffs) - 1)]
+            if not diffs:
+                break
+        if diffs and all(abs(d) < 1e-6 for d in diffs):
+            results["q_polynomial_degree"] = deg
+            break
 
-# ============================================================
-# Algorithm 3: Numerical Wronskian Verification
-# ============================================================
+    # Classification heuristics
+    if results["p_zero"] and results["q_polynomial_degree"] == 1:
+        results["classification"] = "Airy-type (likely non-EML)"
+    elif results["p_zero"] and results["q_polynomial_degree"] == 0:
+        results["classification"] = "Constant coefficient (EML-solvable)"
+    elif results["q_polynomial_degree"] is not None:
+        results["classification"] = "Polynomial coefficient (requires Kovacic)"
 
-def verify_abel_identity(
-    p_func: callable,
-    y1: np.ndarray,
-    y1p: np.ndarray,
-    y2: np.ndarray,
-    y2p: np.ndarray,
-    xs: np.ndarray
-) -> Tuple[float, float]:
-    """
-    Numerically verify Abel's identity W' = -p·W.
-
-    INPUT: coefficient p(x), two solutions y₁, y₂ with derivatives
-    OUTPUT: (max_error, relative_error) of W' + p·W = 0
-
-    Algorithm:
-        1. Compute W(x) = y₁·y₂' - y₂·y₁'
-        2. Compute W'(x) numerically (finite differences)
-        3. Compute -p(x)·W(x)
-        4. Return max|W' + p·W|
-    """
-    W = y1 * y2p - y2 * y1p
-    h = xs[1] - xs[0]
-    Wprime = np.gradient(W, h)
-    pW = np.array([p_func(x) for x in xs]) * W
-    error = Wprime + pW
-    max_error = float(np.max(np.abs(error[10:-10])))  # trim boundaries
-    rel_error = max_error / (np.max(np.abs(W[10:-10])) + 1e-15)
-    return max_error, rel_error
-
-
-# ============================================================
-# Algorithm 4: EML Expression Substitution
-# ============================================================
-
-def eml_subst(expr: EMLNode, replacement: EMLNode) -> EMLNode:
-    """
-    Substitute the variable in expr with replacement.
-
-    INPUT: EML expression e, replacement expression f
-    OUTPUT: e[x ↦ f], the expression with x replaced by f
-
-    Key property: depth(e[x ↦ f]) ≤ depth(e) + depth(f)
-    """
-    if isinstance(expr, EMLConst):
-        return expr
-    elif isinstance(expr, EMLVar):
-        return replacement
-    elif isinstance(expr, EMLAdd):
-        return EMLAdd(eml_subst(expr.left, replacement),
-                      eml_subst(expr.right, replacement))
-    elif isinstance(expr, EMLMul):
-        return EMLMul(eml_subst(expr.left, replacement),
-                      eml_subst(expr.right, replacement))
-    elif isinstance(expr, EMLNeg):
-        return EMLNeg(eml_subst(expr.child, replacement))
-    elif isinstance(expr, EMLInv):
-        return EMLInv(eml_subst(expr.child, replacement))
-    elif isinstance(expr, EMLExp):
-        return EMLExp(eml_subst(expr.child, replacement))
-    elif isinstance(expr, EMLLog):
-        return EMLLog(eml_subst(expr.child, replacement))
-    raise TypeError(f"Unknown node type: {type(expr)}")
+    return results
 
 
 if __name__ == "__main__":
     # Quick test
-    # exp(x) - log(x) is the EML function
-    eml_expr = EMLAdd(EMLExp(EMLVar()), EMLNeg(EMLLog(EMLVar())))
-    print(f"eml(2) = exp(2) - log(2) = {eml_eval(eml_expr, 2.0):.6f}")
-    print(f"Expected: {np.exp(2) - np.log(2):.6f}")
-    print(f"Depth: {eml_depth(eml_expr)}")
+    print("Testing Wronskian computation...")
+    W = wronskian(np.sin, np.cos, 1.0)
+    print(f"  W(sin, cos)(1) = {W:.10f} (should be ≈ -1)")
 
-    d = eml_symb_deriv(eml_expr)
-    print(f"Derivative depth: {eml_depth(d)}")
-    print(f"Closure check: {eml_depth(d) <= eml_depth(eml_expr)}")
+    print("\nTesting EML tower heights...")
+    examples = ["x^2 + 3", "exp(x)", "log(x)", "exp(exp(x))", "exp(x*log(x))"]
+    for e in examples:
+        print(f"  height('{e}') = {eml_tower_height(e)}")
 
-    # Airy equation analysis
-    result = analyze_ode_depth(EMLConst(1), EMLConst(0), EMLNeg(EMLVar()))
-    print(f"\nAiry equation depth analysis: {result}")
+    print("\nTesting ODE classification...")
+    x_test = list(np.linspace(0.5, 5, 20))
+
+    # Airy equation: p=0, q=-x
+    result = classify_ode_solvability(lambda x: 0, lambda x: -x, x_test)
+    print(f"  Airy (y''=xy): {result['classification']}")
+
+    # Constant coefficient: p=0, q=1
+    result = classify_ode_solvability(lambda x: 0, lambda x: 1, x_test)
+    print(f"  y''+y=0: {result['classification']}")
