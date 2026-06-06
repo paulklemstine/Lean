@@ -1,274 +1,354 @@
 #!/usr/bin/env python3
 """
-Algorithms for Spectral Gap Analysis of Constraint Satisfaction Problems.
+Algorithms for Spectral Gap Analysis of Constraint Satisfaction Problems
 
-Type-hinted implementations of the key algorithms from the research.
+Type-hinted implementations of the core algorithms:
+1. Markov chain construction from CSP solution spaces
+2. Spectral gap computation via eigenvalue decomposition
+3. Conductance (Cheeger constant) computation
+4. Mixing time estimation
+5. Phase transition detection
 """
 
 import numpy as np
-from typing import List, Tuple, Callable, Optional
+from typing import List, Dict, Tuple, Optional, Callable
+from dataclasses import dataclass
 
 
-def compute_spectral_gap(P: np.ndarray) -> float:
+@dataclass
+class MarkovChainResult:
+    """Result of Markov chain analysis."""
+    transition_matrix: np.ndarray
+    spectral_gap: float
+    mixing_time: float
+    conductance: float
+    stationary_distribution: np.ndarray
+    is_irreducible: bool
+    eigenvalues: np.ndarray
+
+
+@dataclass
+class PhaseTransitionResult:
+    """Result of phase transition detection."""
+    critical_density: float
+    gap_function: List[Tuple[float, float]]
+    transition_width: float
+    subcritical_gap: float
+    supercritical_gap: float
+
+
+def build_stochastic_matrix(
+    adjacency: np.ndarray,
+    lazy: bool = True
+) -> np.ndarray:
     """
-    Compute the spectral gap of a row-stochastic matrix P.
+    Build a stochastic matrix from an adjacency matrix.
     
-    The spectral gap is γ = 1 - |λ₂| where λ₂ is the second-largest
-    eigenvalue in absolute value.
+    Algorithm: Lazy Random Walk Construction
+    
+    Pseudocode:
+        for each state i:
+            degree_i = sum of adjacency[i]
+            if degree_i > 0:
+                P[i,j] = (1/2) * adjacency[i,j] / degree_i  (lazy)
+                P[i,i] += 1/2
+            else:
+                P[i,i] = 1  (absorbing)
     
     Args:
-        P: Row-stochastic matrix (n × n)
+        adjacency: Symmetric adjacency matrix
+        lazy: If True, use lazy chain (stay with prob 1/2)
     
     Returns:
-        Spectral gap γ ∈ [0, 1]
+        Row-stochastic transition matrix
     """
-    eigenvalues = np.linalg.eigvals(P)
-    sorted_abs = np.sort(np.abs(eigenvalues))[::-1]
-    if len(sorted_abs) < 2:
-        return 0.0
-    return float(1.0 - sorted_abs[1])
-
-
-def estimate_mixing_time(gap: float, n: int, epsilon: float = 0.25) -> float:
-    """
-    Estimate the mixing time from the spectral gap.
+    n = adjacency.shape[0]
+    P = np.zeros((n, n))
     
-    Uses the bound: t_mix(ε) ≤ (1/γ) · log(n/ε)
+    for i in range(n):
+        degree = np.sum(adjacency[i])
+        if degree > 0:
+            if lazy:
+                for j in range(n):
+                    if adjacency[i, j] > 0:
+                        P[i, j] = 0.5 * adjacency[i, j] / degree
+                P[i, i] += 0.5
+            else:
+                for j in range(n):
+                    P[i, j] = adjacency[i, j] / degree
+        else:
+            P[i, i] = 1.0
+    
+    return P
+
+
+def compute_spectral_gap(P: np.ndarray) -> Tuple[float, np.ndarray]:
+    """
+    Compute the spectral gap of a stochastic matrix.
+    
+    Algorithm: Eigenvalue Spectral Gap
+    
+    Pseudocode:
+        eigenvalues = sorted eigenvalues of P (descending)
+        gap = eigenvalues[0] - eigenvalues[1]
+        return gap, eigenvalues
+    
+    The spectral gap gamma = 1 - lambda_2 for a row-stochastic matrix
+    with largest eigenvalue 1.
     
     Args:
-        gap: Spectral gap γ > 0
-        n: Number of states
-        epsilon: Target total variation distance
+        P: Row-stochastic matrix
     
     Returns:
-        Upper bound on mixing time
+        (spectral_gap, sorted_eigenvalues)
     """
-    if gap <= 0:
-        return float('inf')
-    return (1.0 / gap) * np.log(n / epsilon)
+    n = P.shape[0]
+    if n <= 1:
+        return 0.0, np.array([1.0])
+    
+    eigenvalues = np.sort(np.real(np.linalg.eigvals(P)))[::-1]
+    gap = float(eigenvalues[0] - eigenvalues[1])
+    return max(gap, 0.0), eigenvalues
 
 
-def variance_decay(
-    initial_variance: float,
-    gap: float,
-    num_steps: int
-) -> List[float]:
-    """
-    Compute the variance decay sequence under spectral gap bound.
-    
-    Implements Theorem 3.4: var(t) ≤ (1-γ)^t · var(0)
-    
-    Args:
-        initial_variance: Initial variance var(0)
-        gap: Spectral gap γ ∈ (0, 1]
-        num_steps: Number of time steps
-    
-    Returns:
-        List of variance upper bounds [var(0), var(1), ..., var(T)]
-    """
-    rate = 1.0 - gap
-    return [initial_variance * (rate ** t) for t in range(num_steps + 1)]
-
-
-def kl_divergence(p: np.ndarray, q: np.ndarray) -> float:
-    """
-    Compute the KL divergence KL(p || q).
-    
-    Implements: KL(p || q) = Σᵢ p(i) · log(p(i) / q(i))
-    
-    By Gibbs' inequality (Theorem 5.1), KL(p || q) ≥ 0 with equality iff p = q.
-    
-    Args:
-        p: Probability distribution (positive entries, sums to 1)
-        q: Probability distribution (positive entries, sums to 1)
-    
-    Returns:
-        KL divergence (non-negative by Gibbs' inequality)
-    """
-    mask = (p > 0) & (q > 0)
-    return float(np.sum(p[mask] * np.log(p[mask] / q[mask])))
-
-
-def total_variation(p: np.ndarray, q: np.ndarray) -> float:
-    """
-    Compute the total variation distance TV(p, q) = (1/2) Σᵢ |p(i) - q(i)|.
-    
-    Args:
-        p: Probability distribution
-        q: Probability distribution
-    
-    Returns:
-        Total variation distance ∈ [0, 1]
-    """
-    return 0.5 * float(np.sum(np.abs(p - q)))
-
-
-def solution_count_model(
-    density: float,
-    critical_density: float = 17 / 81,
-    sharpness: float = 50.0
-) -> int:
-    """
-    Model the solution count as a function of constraint density.
-    
-    Uses an exponential model with a sharp transition at d_c.
-    
-    Args:
-        density: Constraint density d ∈ [0, 1]
-        critical_density: Critical density d_c (default: 17/81 for Sudoku)
-        sharpness: Controls transition sharpness
-    
-    Returns:
-        Estimated number of solutions
-    """
-    if density >= critical_density:
-        return 1
-    return max(1, int(np.exp(sharpness * (critical_density - density))))
-
-
-def spectral_gap_profile(
-    density: float,
-    critical_density: float = 17 / 81,
-    max_gap: float = 0.5,
-    sharpness: float = 10.0
-) -> float:
-    """
-    Model the spectral gap as a function of constraint density.
-    
-    Implements the trichotomy:
-    - d < d_c: gap > 0 (subcritical, fast mixing)
-    - d ≈ d_c: gap → 0 (critical, slow mixing)
-    - d > d_c: gap = 0 (supercritical, absorbing)
-    
-    Args:
-        density: Constraint density d ∈ [0, 1]
-        critical_density: Critical density d_c
-        max_gap: Maximum spectral gap (at d = 0)
-        sharpness: Controls transition width
-    
-    Returns:
-        Spectral gap estimate
-    """
-    if density >= critical_density:
-        return 0.0
-    return max_gap * (1.0 - np.exp(-sharpness * (critical_density - density)))
-
-
-def detect_phase_transition(
-    gap_function: Callable[[float], float],
-    d_min: float = 0.0,
-    d_max: float = 1.0,
-    resolution: int = 1000
-) -> Optional[float]:
-    """
-    Detect the critical density where the spectral gap transitions to zero.
-    
-    Uses binary search to find the zero-crossing point.
-    
-    Args:
-        gap_function: Function mapping density to spectral gap
-        d_min: Minimum density to search
-        d_max: Maximum density to search
-        resolution: Number of grid points for initial scan
-    
-    Returns:
-        Estimated critical density, or None if no transition found
-    """
-    densities = np.linspace(d_min, d_max, resolution)
-    gaps = [gap_function(d) for d in densities]
-    
-    # Find the first density where gap ≈ 0
-    for i, (d, g) in enumerate(zip(densities, gaps)):
-        if g <= 1e-10:
-            if i == 0:
-                return d_min
-            # Binary search between densities[i-1] and densities[i]
-            lo, hi = densities[i - 1], densities[i]
-            for _ in range(50):  # 50 iterations of bisection
-                mid = (lo + hi) / 2
-                if gap_function(mid) > 1e-10:
-                    lo = mid
-                else:
-                    hi = mid
-            return float((lo + hi) / 2)
-    
-    return None
-
-
-def cheeger_conductance(
+def compute_conductance(
     P: np.ndarray,
     stationary: np.ndarray
 ) -> float:
     """
-    Compute the Cheeger conductance of a Markov chain.
+    Compute the conductance (Cheeger constant) of a Markov chain.
     
-    h = min_{S: π(S) ≤ 1/2} Q(S, Sᶜ) / π(S)
-    where Q(S, Sᶜ) = Σ_{i∈S, j∉S} π(i) P(i,j)
+    Algorithm: Brute-Force Conductance
     
-    Warning: Exponential in state space size. Only feasible for small chains.
+    Pseudocode:
+        Phi = infinity
+        for each non-trivial subset S:
+            if pi(S) <= 1/2:
+                Q = sum_{i in S, j not in S} pi[i] * P[i,j]
+                Phi = min(Phi, Q / pi(S))
+        return Phi
+    
+    Cheeger's inequality: Phi^2/2 <= gamma <= 2*Phi
     
     Args:
         P: Transition matrix
         stationary: Stationary distribution
     
     Returns:
-        Cheeger conductance h
+        Conductance value
     """
-    n = len(stationary)
+    n = P.shape[0]
+    if n <= 1:
+        return 0.0
+    
     min_conductance = float('inf')
     
-    # Iterate over all non-empty proper subsets
-    for mask in range(1, 2 ** n - 1):
-        S = [i for i in range(n) if mask & (1 << i)]
-        pi_S = sum(stationary[i] for i in S)
+    # For small n, enumerate all subsets
+    if n <= 20:
+        for mask in range(1, 2**n - 1):
+            S = [i for i in range(n) if mask & (1 << i)]
+            Sc = [i for i in range(n) if not (mask & (1 << i))]
+            
+            pi_S = sum(stationary[i] for i in S)
+            if pi_S > 0.5 + 1e-10:
+                continue
+            if pi_S < 1e-15:
+                continue
+            
+            flow = sum(stationary[i] * P[i, j] for i in S for j in Sc)
+            conductance = flow / pi_S
+            min_conductance = min(min_conductance, conductance)
+    else:
+        # For large n, use sweep cut on Fiedler vector
+        _, eigvecs = np.linalg.eigh(P)
+        fiedler = eigvecs[:, -2]
+        order = np.argsort(fiedler)
         
-        if pi_S > 0.5 or pi_S <= 0:
-            continue
-        
-        # Compute flow Q(S, Sᶜ)
-        S_complement = [i for i in range(n) if not (mask & (1 << i))]
-        flow = sum(
-            stationary[i] * P[i, j]
-            for i in S
-            for j in S_complement
-        )
-        
-        conductance = flow / pi_S
-        min_conductance = min(min_conductance, conductance)
+        for k in range(1, n):
+            S = set(order[:k])
+            pi_S = sum(stationary[i] for i in S)
+            if pi_S > 0.5 + 1e-10:
+                break
+            if pi_S < 1e-15:
+                continue
+            
+            flow = sum(stationary[i] * P[i, j] 
+                      for i in S for j in range(n) if j not in S)
+            conductance = flow / pi_S
+            min_conductance = min(min_conductance, conductance)
     
     return min_conductance if min_conductance < float('inf') else 0.0
 
 
+def estimate_mixing_time(
+    gap: float,
+    n_states: int,
+    epsilon: float = 0.25
+) -> float:
+    """
+    Estimate mixing time from spectral gap.
+    
+    Algorithm: Spectral Mixing Time Bound
+    
+    Pseudocode:
+        if gap <= 0:
+            return infinity
+        t_mix = (1/gap) * (ln(n) + ln(1/epsilon))
+        return t_mix
+    
+    Theorem: t_mix(eps) <= (1/gamma) * ln(1/(eps * sqrt(pi_min)))
+    
+    Args:
+        gap: Spectral gap
+        n_states: Number of states
+        epsilon: Target TV distance
+    
+    Returns:
+        Mixing time upper bound
+    """
+    if gap <= 1e-15:
+        return float('inf')
+    return (1.0 / gap) * (np.log(n_states) + np.log(1.0 / epsilon))
+
+
+def detect_phase_transition(
+    density_gap_pairs: List[Tuple[float, float]],
+    threshold: float = 0.01
+) -> PhaseTransitionResult:
+    """
+    Detect phase transition from density-gap data.
+    
+    Algorithm: Phase Transition Detection
+    
+    Pseudocode:
+        Sort pairs by density
+        Find largest gap decrease between consecutive densities
+        Critical density = midpoint of largest decrease
+        Transition width = density interval of steepest descent
+    
+    Args:
+        density_gap_pairs: List of (density, spectral_gap) pairs
+        threshold: Minimum gap to consider non-zero
+    
+    Returns:
+        PhaseTransitionResult with critical density and analysis
+    """
+    pairs = sorted(density_gap_pairs, key=lambda x: x[0])
+    
+    max_decrease = 0.0
+    critical_idx = 0
+    
+    for i in range(len(pairs) - 1):
+        decrease = pairs[i][1] - pairs[i+1][1]
+        if decrease > max_decrease:
+            max_decrease = decrease
+            critical_idx = i
+    
+    d_c = (pairs[critical_idx][0] + pairs[critical_idx + 1][0]) / 2
+    
+    # Find transition width
+    subcritical_gaps = [g for d, g in pairs if d < d_c and g > threshold]
+    supercritical_gaps = [g for d, g in pairs if d > d_c]
+    
+    subcritical_gap = np.mean(subcritical_gaps) if subcritical_gaps else 0.0
+    supercritical_gap = np.mean(supercritical_gaps) if supercritical_gaps else 0.0
+    
+    # Transition width: density range where gap changes most
+    high_gap_density = min(d for d, g in pairs if g > 0.5 * subcritical_gap) if subcritical_gap > 0 else pairs[0][0]
+    low_gap_density = max(d for d, g in pairs if g < 2 * supercritical_gap) if supercritical_gap > 0 else pairs[-1][0]
+    
+    return PhaseTransitionResult(
+        critical_density=d_c,
+        gap_function=pairs,
+        transition_width=low_gap_density - high_gap_density,
+        subcritical_gap=subcritical_gap,
+        supercritical_gap=supercritical_gap
+    )
+
+
+def analyze_markov_chain(P: np.ndarray) -> MarkovChainResult:
+    """
+    Complete analysis of a Markov chain.
+    
+    Args:
+        P: Transition matrix
+    
+    Returns:
+        MarkovChainResult with all computed quantities
+    """
+    n = P.shape[0]
+    
+    # Compute spectral gap and eigenvalues
+    gap, eigenvalues = compute_spectral_gap(P)
+    
+    # Compute stationary distribution
+    # For a doubly stochastic matrix, it's uniform
+    eigenvalues_full, eigvecs = np.linalg.eig(P.T)
+    idx = np.argmin(np.abs(eigenvalues_full - 1.0))
+    stationary = np.real(eigvecs[:, idx])
+    stationary = np.abs(stationary)
+    stationary /= np.sum(stationary)
+    
+    # Compute conductance
+    conductance = compute_conductance(P, stationary)
+    
+    # Check irreducibility
+    # A chain is irreducible if P^n has all positive entries
+    Pn = np.linalg.matrix_power(P, n)
+    is_irreducible = np.all(Pn > 1e-10)
+    
+    # Mixing time
+    mixing_time = estimate_mixing_time(gap, n)
+    
+    return MarkovChainResult(
+        transition_matrix=P,
+        spectral_gap=gap,
+        mixing_time=mixing_time,
+        conductance=conductance,
+        stationary_distribution=stationary,
+        is_irreducible=is_irreducible,
+        eigenvalues=eigenvalues
+    )
+
+
+def verify_cheeger_inequality(
+    gap: float,
+    conductance: float
+) -> Tuple[bool, str]:
+    """
+    Verify Cheeger's inequality: Phi^2/2 <= gamma <= 2*Phi
+    
+    Args:
+        gap: Spectral gap
+        conductance: Cheeger constant
+    
+    Returns:
+        (is_satisfied, description)
+    """
+    lower = conductance ** 2 / 2
+    upper = 2 * conductance
+    
+    lower_ok = lower <= gap + 1e-10
+    upper_ok = gap <= upper + 1e-10
+    
+    desc = (f"Phi = {conductance:.6f}, gamma = {gap:.6f}\n"
+            f"  Lower (Phi^2/2 = {lower:.6f}): {'✓' if lower_ok else '✗'}\n"
+            f"  Upper (2*Phi = {upper:.6f}): {'✓' if upper_ok else '✗'}")
+    
+    return lower_ok and upper_ok, desc
+
+
 if __name__ == "__main__":
-    # Quick test
-    print("Testing algorithms...")
+    # Example: two-state chain
+    p = 0.3
+    P = np.array([[1-p, p], [p, 1-p]])
     
-    # Random stochastic matrix
-    P = np.array([[0.7, 0.2, 0.1],
-                   [0.1, 0.6, 0.3],
-                   [0.3, 0.2, 0.5]])
+    result = analyze_markov_chain(P)
+    print(f"Two-state chain (p={p}):")
+    print(f"  Spectral gap: {result.spectral_gap:.4f}")
+    print(f"  Conductance: {result.conductance:.4f}")
+    print(f"  Mixing time: {result.mixing_time:.4f}")
+    print(f"  Irreducible: {result.is_irreducible}")
     
-    gap = compute_spectral_gap(P)
-    print(f"Spectral gap: {gap:.6f}")
-    print(f"Mixing time estimate: {estimate_mixing_time(gap, 3):.2f}")
-    
-    # Variance decay
-    decay = variance_decay(1.0, gap, 10)
-    print(f"Variance decay: {[f'{v:.4f}' for v in decay]}")
-    
-    # KL divergence
-    p = np.array([0.3, 0.3, 0.4])
-    q = np.array([1/3, 1/3, 1/3])
-    print(f"KL(p || q) = {kl_divergence(p, q):.6f} ≥ 0 ✓")
-    
-    # Phase transition detection
-    d_c = detect_phase_transition(spectral_gap_profile)
-    print(f"Detected critical density: {d_c:.4f} (expected: {17/81:.4f})")
-    
-    # Cheeger conductance
-    stat = np.array([1/3, 1/3, 1/3])
-    h = cheeger_conductance(P, stat)
-    print(f"Cheeger conductance: {h:.6f}")
-    print(f"Cheeger bound: {h**2/2:.6f} ≤ γ = {gap:.6f} ≤ {2*h:.6f}")
-    
-    print("\nAll tests passed!")
+    ok, desc = verify_cheeger_inequality(result.spectral_gap, result.conductance)
+    print(f"\nCheeger's inequality:\n{desc}")
