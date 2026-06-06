@@ -1,570 +1,603 @@
 #!/usr/bin/env python3
 """
-Mandelbrot-Möbius Bridge: Numerical Demonstrations
+Mandelbrot Number Theory: Numerical Demonstrations
 
-Demonstrates the key results connecting quadratic iteration z ↦ z² + c
-to number theory via Möbius inversion and necklace counting.
+Demonstrates the connection between quadratic iteration z_{n+1} = z_n² + c
+and number theory, including necklace divisibility, dynatomic point counting,
+and tropical Mandelbrot dynamics.
 """
 
 import math
-from typing import List, Tuple, Optional
+from functools import lru_cache
 
 
-def mandelbrot_seq(c: float, n: int) -> List[float]:
-    """Compute the first n+1 terms of the Mandelbrot sequence at parameter c."""
-    seq = [0.0]
-    z = 0.0
+def mandelbrot_iter(c: complex, n: int) -> complex:
+    """Compute f_c^n(0) where f_c(z) = z² + c."""
+    z = 0
     for _ in range(n):
-        z = z**2 + c
-        seq.append(z)
-    return seq
+        z = z * z + c
+    return z
 
 
-def mandelbrot_poly_coeffs(n: int) -> List[int]:
-    """Compute coefficients of the n-th Mandelbrot polynomial Φ_n(c) over ℤ.
-    Returns list where index i is the coefficient of c^i."""
-    if n == 0:
-        return [0]
-    # Start with Φ_1 = c = [0, 1]
-    poly = [0, 1]
-    for _ in range(n - 1):
-        # Square the polynomial
-        deg = len(poly) - 1
-        sq = [0] * (2 * deg + 1)
-        for i in range(len(poly)):
-            for j in range(len(poly)):
-                sq[i + j] += poly[i] * poly[j]
-        # Add X (add 1 to coefficient of c^1)
-        if len(sq) < 2:
-            sq.extend([0] * (2 - len(sq)))
-        sq[1] += 1
-        poly = sq
-    return poly
+def mandelbrot_iter_mod(c: int, n: int, modulus: int) -> int:
+    """Compute f_c^n(0) mod m."""
+    z = 0
+    for _ in range(n):
+        z = (z * z + c) % modulus
+    return z
 
 
-def euler_totient(n: int) -> int:
-    """Euler's totient function φ(n)."""
-    result = n
-    p = 2
-    temp = n
-    while p * p <= temp:
-        if temp % p == 0:
-            while temp % p == 0:
-                temp //= p
-            result -= result // p
-        p += 1
-    if temp > 1:
-        result -= result // temp
-    return result
-
-
-def mobius(n: int) -> int:
-    """Möbius function μ(n)."""
+def moebius(n: int) -> int:
+    """Compute the Möbius function μ(n)."""
     if n == 1:
         return 1
-    count = 0
+    factors = []
     temp = n
-    p = 2
-    while p * p <= temp:
-        if temp % p == 0:
-            count += 1
-            temp //= p
-            if temp % p == 0:
-                return 0  # p² divides n
-        p += 1
+    d = 2
+    while d * d <= temp:
+        if temp % d == 0:
+            count = 0
+            while temp % d == 0:
+                temp //= d
+                count += 1
+            if count > 1:
+                return 0
+            factors.append(d)
+        d += 1
     if temp > 1:
-        count += 1
-    return (-1) ** count
+        factors.append(temp)
+    return (-1) ** len(factors)
 
 
-def divisors(n: int) -> List[int]:
-    """Return all positive divisors of n."""
+def divisors(n: int) -> list:
+    """Return sorted list of divisors of n."""
     divs = []
-    for d in range(1, int(n**0.5) + 1):
+    for d in range(1, n + 1):
         if n % d == 0:
             divs.append(d)
-            if d != n // d:
-                divs.append(n // d)
-    return sorted(divs)
+    return divs
 
 
-def necklace_count(n: int) -> int:
-    """Number of binary necklaces of length n = (1/n) Σ_{d|n} φ(d) · 2^{n/d}."""
-    total = sum(euler_totient(d) * (2 ** (n // d)) for d in divisors(n))
-    return total // n
+def dynatomic_sum(n: int) -> int:
+    """Compute Ψ(n) = ∑_{d|n} μ(n/d) · 2^d."""
+    return sum(moebius(n // d) * (2 ** d) for d in divisors(n))
 
 
-def lyndon_count(n: int) -> int:
-    """Number of binary Lyndon words (primitive necklaces) of length n.
-    = (1/n) Σ_{d|n} μ(n/d) · 2^d."""
-    total = sum(mobius(n // d) * (2 ** d) for d in divisors(n))
-    return total // n
+def necklace_number(n: int) -> int:
+    """Number of distinct binary necklaces of length n = Ψ(n)/n."""
+    return dynatomic_sum(n) // n
 
 
-def burnside_verify(n: int) -> Tuple[int, int]:
-    """Verify Burnside necklace identity: Σ 2^gcd(n,k) = Σ φ(d)·2^{n/d}.
-    Returns (LHS, RHS)."""
-    lhs = sum(2 ** math.gcd(n, k) for k in range(n))
-    rhs = sum(euler_totient(d) * (2 ** (n // d)) for d in divisors(n))
-    return lhs, rhs
+def tropical_quad_iter(c: float, z: float, n: int) -> float:
+    """Tropical iteration: max(2z, c)."""
+    for _ in range(n):
+        z = max(2 * z, c)
+    return z
 
 
-def fixed_point_analysis(c: float) -> dict:
-    """Analyze fixed points of z ↦ z² + c.
+# === DEMO 1: Necklace Divisibility ===
+print("=" * 60)
+print("DEMO 1: Necklace Divisibility — n | Ψ(n)")
+print("=" * 60)
+print(f"{'n':>4} {'Ψ(n)':>10} {'N(n)=Ψ(n)/n':>12} {'n|Ψ(n)?':>8}")
+print("-" * 40)
+for n in range(1, 21):
+    psi = dynatomic_sum(n)
+    neck = necklace_number(n)
+    divides = "✓" if psi % n == 0 else "✗"
+    print(f"{n:>4} {psi:>10} {neck:>12} {divides:>8}")
 
-    Fixed points satisfy z² - z + c = 0.
-    Discriminant = 1 - 4c.
-    """
-    disc = 1 - 4 * c
-    result = {"c": c, "discriminant": disc, "fixed_points": []}
-    if disc >= 0:
-        z1 = (1 + math.sqrt(disc)) / 2
-        z2 = (1 - math.sqrt(disc)) / 2
-        result["fixed_points"] = [z1, z2]
-    return result
+# === DEMO 2: Dynatomic-Totient Analogy ===
+print("\n" + "=" * 60)
+print("DEMO 2: Dynatomic-Totient Analogy for Prime Powers")
+print("=" * 60)
+print(f"{'p^k':>8} {'Ψ(p^k)':>12} {'2^(p^k)-2^(p^(k-1))':>22} {'Match?':>7}")
+print("-" * 55)
+for p in [2, 3, 5, 7]:
+    for k in range(1, 5):
+        pk = p ** k
+        if pk > 1000:
+            continue
+        psi = dynatomic_sum(pk)
+        expected = 2 ** pk - 2 ** (p ** (k - 1))
+        match = "✓" if psi == expected else "✗"
+        print(f"{p}^{k} = {pk:>4} {psi:>12} {expected:>22} {match:>7}")
 
+# === DEMO 3: Mandelbrot Period Classification ===
+print("\n" + "=" * 60)
+print("DEMO 3: Period Classification via Mandelbrot Iteration")
+print("=" * 60)
+print("Period-2 centers: f²(0) = 0, f(0) ≠ 0")
+for c_val in [0, -1, -2, 0.25]:
+    c = complex(c_val)
+    f1 = mandelbrot_iter(c, 1)
+    f2 = mandelbrot_iter(c, 2)
+    f3 = mandelbrot_iter(c, 3)
+    print(f"  c = {c_val:>6}: f(0) = {f1:.4f}, f²(0) = {f2:.4f}, f³(0) = {f3:.4f}")
 
-def period2_analysis(c: float) -> dict:
-    """Analyze period-2 orbits of z ↦ z² + c.
+print("\nPeriod-3: f³(0) = 0 iff c(c³+2c²+c+1) = 0")
+print("  Roots of c³+2c²+c+1 (approximately):")
+# Find roots numerically
+import cmath
+coeffs_check = lambda c: c**3 + 2*c**2 + c + 1
+# Newton's method for real root
+x = -1.75
+for _ in range(100):
+    f = x**3 + 2*x**2 + x + 1
+    fp = 3*x**2 + 4*x + 1
+    if abs(fp) < 1e-15:
+        break
+    x -= f / fp
+print(f"    Real root: c ≈ {x:.10f}")
+print(f"    Verify: c³+2c²+c+1 = {coeffs_check(x):.2e}")
+print(f"    f³(0) at this c: {abs(mandelbrot_iter(complex(x), 3)):.2e}")
 
-    Period-2 points satisfy z² + z + (c + 1) = 0.
-    Discriminant = -3 - 4c.
-    Non-fixed period-2 exists iff 4c + 3 < 0 (i.e., c < -3/4).
-    """
-    disc = -3 - 4 * c
-    result = {"c": c, "discriminant": disc, "period2_points": [],
-              "exists": 4 * c + 3 < 0}
-    if disc > 0:
-        z1 = (-1 + math.sqrt(disc)) / 2
-        z2 = (-1 - math.sqrt(disc)) / 2
-        result["period2_points"] = [z1, z2]
-    return result
+# === DEMO 4: Tropical Mandelbrot Dynamics ===
+print("\n" + "=" * 60)
+print("DEMO 4: Tropical Mandelbrot Dynamics")
+print("=" * 60)
+print("Tropical iteration: z ↦ max(2z, c)")
+print("\nCase 1: c = -1 ≤ 0 (bounded, orbit stays at 0)")
+for n in range(6):
+    val = tropical_quad_iter(-1, 0, n)
+    print(f"  Step {n}: {val}")
 
+print("\nCase 2: c = 2 > 0 (escaping)")
+for n in range(6):
+    val = tropical_quad_iter(2, 0, n)
+    print(f"  Step {n}: {val}")
 
-def escape_time(c: float, max_iter: int = 100, radius: float = 2.0) -> Optional[int]:
-    """Compute escape time for the Mandelbrot iteration at c.
-    Returns None if orbit stays bounded within max_iter iterations."""
-    z = 0.0
-    for n in range(1, max_iter + 1):
-        z = z**2 + c
-        if abs(z) > radius:
-            return n
-    return None
+print("\nCase 3: Escape theorem — z=3, c=1 (c < 2z), orbit = 2^n · z")
+for n in range(6):
+    val = tropical_quad_iter(1, 3, n)
+    expected = (2 ** n) * 3
+    print(f"  Step {n}: {val} (expected 2^{n}·3 = {expected})")
 
+# === DEMO 5: Orbit Counting and Fermat's Little Theorem ===
+print("\n" + "=" * 60)
+print("DEMO 5: Orbit Counting — Dynamical Fermat's Little Theorem")
+print("=" * 60)
+print("p | 2^p - 2 (Fermat's Little Theorem as orbit count)")
+for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]:
+    val = 2**p - 2
+    orbits = val // p
+    print(f"  p={p:>2}: 2^p - 2 = {val:>12}, orbits = {orbits:>10}, "
+          f"p | (2^p-2)? {'✓' if val % p == 0 else '✗'}")
 
-# ═══════════════════════════════════════════════════════
-# DEMONSTRATIONS
-# ═══════════════════════════════════════════════════════
+# === DEMO 6: Mandelbrot Roots mod p ===
+print("\n" + "=" * 60)
+print("DEMO 6: Roots of P_n(c) mod p — Dynatomic Polynomial Splitting")
+print("=" * 60)
+print(f"{'p':>4} {'Period 1':>9} {'Period 2':>9} {'Period 3':>9} {'Period 4':>9}")
+for p in [3, 5, 7, 11, 13, 17, 19, 23]:
+    roots = []
+    for n in range(1, 5):
+        count = sum(1 for c in range(p) if mandelbrot_iter_mod(c, n, p) == 0)
+        roots.append(count)
+    print(f"{p:>4} {roots[0]:>9} {roots[1]:>9} {roots[2]:>9} {roots[3]:>9}")
 
-def demo_mandelbrot_polynomials():
-    """Demonstrate the Mandelbrot polynomial structure."""
-    print("=" * 60)
-    print("DEMO 1: Mandelbrot Polynomials Φ_n(c)")
-    print("=" * 60)
-    for n in range(1, 6):
-        coeffs = mandelbrot_poly_coeffs(n)
-        degree = len(coeffs) - 1
-        while degree > 0 and coeffs[degree] == 0:
-            degree -= 1
-        terms = []
-        for i in range(degree, -1, -1):
-            if coeffs[i] != 0:
-                if i == 0:
-                    terms.append(f"{coeffs[i]}")
-                elif i == 1:
-                    terms.append(f"{coeffs[i]}c" if coeffs[i] != 1 else "c")
-                else:
-                    terms.append(f"{coeffs[i]}c^{i}" if coeffs[i] != 1 else f"c^{i}")
-        poly_str = " + ".join(terms) if terms else "0"
-        print(f"  Φ_{n}(c) = {poly_str}")
-        print(f"    degree = {degree}, expected 2^{n-1} = {2**(n-1)}  ✓" if degree == 2**(n-1) else f"    MISMATCH!")
-        print(f"    leading coeff = {coeffs[degree]} (monic ✓)" if coeffs[degree] == 1 else f"    NOT MONIC!")
-    print()
-
-
-def demo_bifurcation():
-    """Demonstrate the period-1 and period-2 bifurcation analysis."""
-    print("=" * 60)
-    print("DEMO 2: Bifurcation Analysis")
-    print("=" * 60)
-
-    print("\n  Fixed point analysis (z² - z + c = 0):")
-    for c in [0.25, 0.0, -0.5, -0.75, -1.0, -2.0]:
-        fp = fixed_point_analysis(c)
-        pts = [f"{z:.4f}" for z in fp["fixed_points"]]
-        status = "✓" if fp["discriminant"] >= 0 else "✗"
-        print(f"    c = {c:6.2f}: disc = {fp['discriminant']:6.2f}, "
-              f"fixed points: {pts if pts else 'none'} {status}")
-
-    print("\n  Period-2 analysis (z² + z + c + 1 = 0):")
-    for c in [-0.5, -0.75, -1.0, -1.25, -1.5, -2.0]:
-        p2 = period2_analysis(c)
-        pts = [f"{z:.4f}" for z in p2["period2_points"]]
-        status = "✓" if p2["exists"] else "✗ (boundary or none)"
-        print(f"    c = {c:6.2f}: disc = {p2['discriminant']:6.2f}, "
-              f"period-2: {pts if pts else 'none'} {status}")
-    print()
-
-
-def demo_burnside_necklace():
-    """Demonstrate the Burnside necklace identity."""
-    print("=" * 60)
-    print("DEMO 3: Burnside Necklace Identity")
-    print("  Σ 2^gcd(n,k) = Σ φ(d)·2^{n/d}")
-    print("=" * 60)
-    for n in range(1, 13):
-        lhs, rhs = burnside_verify(n)
-        necklaces = necklace_count(n)
-        lyndon = lyndon_count(n)
-        status = "✓" if lhs == rhs else "✗"
-        print(f"  n={n:2d}: Burnside sum = {lhs:6d} = {rhs:6d} {status}, "
-              f"necklaces = {necklaces:4d}, Lyndon words = {lyndon:4d}")
-    print()
-
-
-def demo_mobius_orbit_counting():
-    """Demonstrate primitive orbit counting via Möbius inversion."""
-    print("=" * 60)
-    print("DEMO 4: Möbius Orbit Counting for Doubling Map θ → 2θ")
-    print("=" * 60)
-    for n in range(1, 16):
-        total_periodic = 2**n - 1  # |Fix(f^n)| for doubling map
-        primitive = sum(mobius(n // d) * (2**d - 1) for d in divisors(n))
-        check = sum(
-            sum(mobius(n // d) * (2**d - 1) for d in divisors(k))
-            for k in divisors(n)
-        )
-        print(f"  n={n:2d}: |Fix(f^n)| = {total_periodic:6d}, "
-              f"primitive = {primitive:5d}, "
-              f"orbits = {primitive // n if primitive % n == 0 else 'ERR':>4}")
-    print()
-
-
-def demo_special_parameters():
-    """Demonstrate special parameter values of the Mandelbrot set."""
-    print("=" * 60)
-    print("DEMO 5: Special Parameter Values")
-    print("=" * 60)
-
-    # c = 0: center of cardioid
-    seq = mandelbrot_seq(0.0, 10)
-    print(f"  c = 0 (cardioid center): {seq[:6]}... (all zeros ✓)")
-
-    # c = -1: center of period-2 bulb
-    seq = mandelbrot_seq(-1.0, 10)
-    print(f"  c = -1 (period-2 center): {seq[:8]}... (period 2 ✓)")
-
-    # c = -2: tip of Mandelbrot set
-    seq = mandelbrot_seq(-2.0, 6)
-    print(f"  c = -2 (tip): {seq[:6]}... (z_2 = {seq[2]} ✓)")
-
-    # c = 3: outside, escape
-    esc = escape_time(3.0)
-    print(f"  c = 3 (outside): escapes at step {esc}")
-
-    # c = -1.755: near period-3 window
-    seq = mandelbrot_seq(-1.755, 20)
-    print(f"  c = -1.755 (near period-3): {[round(z, 3) for z in seq[:8]]}...")
-    print()
-
-
-def demo_escape_growth():
-    """Demonstrate super-exponential escape growth for c > 2."""
-    print("=" * 60)
-    print("DEMO 6: Escape Growth for c > 2")
-    print("=" * 60)
-    for c in [2.1, 3.0, 5.0, 10.0]:
-        seq = mandelbrot_seq(c, 8)
-        print(f"  c = {c}:")
-        for n in range(1, min(8, len(seq))):
-            ratio = seq[n] / seq[n-1] if seq[n-1] != 0 and n > 1 else float('inf')
-            print(f"    z_{n} = {seq[n]:.6e}, z_{n}/z_{n-1} = {ratio:.2f}")
-        print()
-
-
-if __name__ == "__main__":
-    demo_mandelbrot_polynomials()
-    demo_bifurcation()
-    demo_burnside_necklace()
-    demo_mobius_orbit_counting()
-    demo_special_parameters()
-    demo_escape_growth()
+print("\n" + "=" * 60)
+print("All demonstrations complete.")
+print("=" * 60)
 
 
 #!/usr/bin/env python3
-"""Visualization: Mandelbrot Set with Period Coloring
+import json
 
-Renders the Mandelbrot set on the real line, coloring by detected period
-to reveal the number-theoretic structure of bulbs.
+def read(f):
+    with open(f) as fh:
+        return fh.read()
+
+article = read('ARTICLE.md')
+paper = read('RESEARCH_PAPER.md')
+future = read('FUTURE_DIRECTIONS.md')
+lean = read('MandelbrotNumberTheory.lean')
+demo = read('demo.py')
+algo = read('algorithms.py')
+viz1 = read('viz_necklaces.py')
+viz2 = read('viz_tropical.py')
+viz3 = read('viz_mandelbrot_periods.py')
+
+necklace_html = read('widget_necklace.html')
+tropical_html = read('widget_tropical.html')
+mandelbrot_html = read('widget_mandelbrot.html')
+
+package = {
+    'title': 'Quadratic Recurrence and Number Theory: Necklace Divisibility and Tropical Mandelbrot Dynamics',
+    'domain': 'Applications',
+    'article': article,
+    'research_paper': paper,
+    'future_directions': future,
+    'demos': ['demo.py'],
+    'algorithms': [
+        {
+            'name': 'Dynatomic Sum Computation',
+            'pseudocode': 'For each divisor d of n: compute mu(n/d) * 2^d. Sum all terms.',
+            'code': algo
+        }
+    ],
+    'visualizations': [
+        {'name': 'Necklace Numbers', 'code': viz1, 'description': 'Necklace numbers and dynatomic sums.'},
+        {'name': 'Tropical Dynamics', 'code': viz2, 'description': 'Tropical Mandelbrot dynamics.'},
+        {'name': 'Period Map', 'code': viz3, 'description': 'Mandelbrot period map.'}
+    ],
+    'interactive_demos': [
+        {
+            'name': 'Necklace Divisibility Explorer',
+            'description': 'Explore dynatomic sum and necklace number for any n.',
+            'html': necklace_html
+        },
+        {
+            'name': 'Tropical Mandelbrot Iterator',
+            'description': 'Simulate tropical dynamics z -> max(2z, c).',
+            'html': tropical_html
+        },
+        {
+            'name': 'Mandelbrot Period Explorer',
+            'description': 'Click to analyze orbits and detect periods.',
+            'html': mandelbrot_html
+        }
+    ],
+    'lean_proofs': [
+        {
+            'file': 'Applications/MandelbrotNumberTheory.lean',
+            'theorems': [
+                'necklace_div', 'dynatomic_of_prime', 'dynatomic_prime_power',
+                'orbit_mult_succ', 'mandelbrot_superattracting',
+                'mandelbrot_period3_factored', 'mandelbrot_period2',
+                'mandelbrot_exact_period2', 'mandelbrot_orbit_shift',
+                'mandelbrot_orbit_shift_mul', 'mandelbrot_gcd_return_prime',
+                'tropical_escape', 'tropical_bounded_stabilize',
+                'tropical_fixed_nonpos', 'tropical_mandelbrot_bounded_iff_nonpos',
+                'tropical_mandelbrot_orbit_zero',
+                'mandelbrotPoly_eval', 'fermat_orbit_count',
+                'prime_orbit_count_ge_two'
+            ]
+        }
+    ]
+}
+
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+print('PACKAGE.json written')
+
+
+#!/usr/bin/env python3
 """
+Visualization: Mandelbrot Set Period Map
+
+Colors each point c in the Mandelbrot set by the period of its
+attracting cycle, revealing the number-theoretic structure of bulbs.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 import numpy as np
 
 
-def mandelbrot_period(c_real, c_imag, max_iter=200, max_period=30):
-    """Detect period of attracting cycle, or return 0 if escapes."""
-    z_real, z_imag = 0.0, 0.0
-    # Transient
+def find_period(c, max_iter=200, max_period=50, tol=1e-8):
+    """Find the period of the attracting cycle for parameter c."""
+    z = complex(0)
+    # Iterate to settle onto the attractor
     for _ in range(max_iter):
-        zr2 = z_real * z_real
-        zi2 = z_imag * z_imag
-        if zr2 + zi2 > 4:
-            return -1  # escapes
-        z_imag = 2 * z_real * z_imag + c_imag
-        z_real = zr2 - zi2 + c_real
-
-    # Record orbit for period detection
-    orbit_r = [z_real]
-    orbit_i = [z_imag]
-    for _ in range(max_period):
-        zr2 = z_real * z_real
-        zi2 = z_imag * z_imag
-        if zr2 + zi2 > 4:
-            return -1
-        z_imag = 2 * z_real * z_imag + c_imag
-        z_real = zr2 - zi2 + c_real
-        orbit_r.append(z_real)
-        orbit_i.append(z_imag)
-
-    for d in range(1, max_period + 1):
-        dr = orbit_r[-1] - orbit_r[-1 - d]
-        di = orbit_i[-1] - orbit_i[-1 - d]
-        if dr * dr + di * di < 1e-12:
-            return d
-    return 0
+        z = z * z + c
+        if abs(z) > 10:
+            return 0  # escaping
+    # Now check for periodicity
+    z_ref = z
+    for p in range(1, max_period + 1):
+        z = z * z + c
+        if abs(z) > 10:
+            return 0
+        if abs(z - z_ref) < tol:
+            return p
+    return -1  # period not found
 
 
-def main():
-    # Create figure with two panels
-    fig, axes = plt.subplots(2, 1, figsize=(14, 10))
+# Generate period map
+nx, ny = 800, 600
+x = np.linspace(-2.2, 0.8, nx)
+y = np.linspace(-1.2, 1.2, ny)
+periods = np.zeros((ny, nx))
 
-    # Panel 1: Mandelbrot set with period coloring
-    nx, ny = 800, 600
-    x = np.linspace(-2.2, 0.8, nx)
-    y = np.linspace(-1.2, 1.2, ny)
-    periods = np.zeros((ny, nx))
+for j in range(ny):
+    for i in range(nx):
+        c = complex(x[i], y[j])
+        periods[j, i] = find_period(c)
 
-    for i in range(ny):
-        for j in range(nx):
-            periods[i, j] = mandelbrot_period(x[j], y[i])
+fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 
-    cmap = plt.cm.tab20
-    norm = mcolors.BoundaryNorm(boundaries=range(-1, 22), ncolors=cmap.N)
+# Plot 1: Period map
+ax = axes[0]
+# Create custom colormap
+cmap = plt.cm.get_cmap('tab20', 20)
+im = ax.imshow(periods, extent=[-2.2, 0.8, -1.2, 1.2],
+               cmap=cmap, vmin=0, vmax=20, aspect='auto', origin='lower')
+ax.set_xlabel('Re(c)')
+ax.set_ylabel('Im(c)')
+ax.set_title('Mandelbrot Set: Period of Attracting Cycles')
+cbar = plt.colorbar(im, ax=ax, label='Period')
+cbar.set_ticks(range(0, 21, 2))
 
-    ax = axes[0]
-    im = ax.imshow(periods, extent=[-2.2, 0.8, -1.2, 1.2],
-                   cmap=cmap, norm=norm, aspect='auto', origin='lower')
-    ax.set_title('Mandelbrot Set: Period of Attracting Cycle', fontsize=14)
-    ax.set_xlabel('Re(c)')
-    ax.set_ylabel('Im(c)')
+# Annotate key bulbs
+annotations = [
+    (0.25, 0, '1'),
+    (-0.75, 0, '2'),
+    (-0.12, 0.74, '3'),
+    (-1.25, 0, '3'),
+    (0.28, 0.53, '4'),
+    (-0.5, 0.56, '5'),
+]
+for cx, cy, label in annotations:
+    ax.annotate(label, (cx, cy), fontsize=8, color='white',
+                ha='center', va='center',
+                bbox=dict(boxstyle='round,pad=0.2', fc='black', alpha=0.6))
 
-    # Mark special parameters
-    special = {
-        (0, 0): 'c=0\nperiod 1',
-        (-1, 0): 'c=-1\nperiod 2',
-        (-0.75, 0): 'c=-3/4\nbifurcation',
-        (0.25, 0): 'c=1/4\ncusp',
-        (-2, 0): 'c=-2\ntip'
-    }
-    for (cx, cy), label in special.items():
-        ax.plot(cx, cy, 'ko', markersize=4)
-        ax.annotate(label, (cx, cy), textcoords="offset points",
-                    xytext=(0, 10), ha='center', fontsize=7,
-                    color='white', fontweight='bold')
+# Plot 2: Period histogram
+ax = axes[1]
+period_counts = {}
+for p in range(1, 21):
+    count = np.sum(periods == p)
+    if count > 0:
+        period_counts[p] = count
 
-    cbar = fig.colorbar(im, ax=ax, ticks=range(0, 21))
-    cbar.set_label('Period')
+bars = ax.bar(list(period_counts.keys()), list(period_counts.values()),
+              color='steelblue', alpha=0.7)
+# Color prime periods differently
+for bar, p in zip(bars, period_counts.keys()):
+    is_prime = p > 1 and all(p % d != 0 for d in range(2, int(p**0.5) + 1))
+    if is_prime:
+        bar.set_color('#e41a1c')
+        bar.set_alpha(0.8)
+ax.set_xlabel('Period')
+ax.set_ylabel('Pixel count')
+ax.set_title('Distribution of Periods (red = prime period)')
+ax.grid(True, alpha=0.3, axis='y')
 
-    # Panel 2: Real-axis bifurcation diagram
-    ax2 = axes[1]
-    c_values = np.linspace(-2, 0.25, 2000)
-    for c in c_values:
-        z = 0.0
-        # Transient
-        for _ in range(200):
-            z = z * z + c
-            if abs(z) > 10:
-                break
-        else:
-            # Plot attractor
-            zs = []
-            for _ in range(100):
-                z = z * z + c
-                if abs(z) > 10:
-                    break
-                zs.append(z)
-            if zs:
-                ax2.plot([c] * len(zs), zs, ',', color='black', markersize=0.1)
-
-    ax2.axvline(x=-0.75, color='red', linestyle='--', alpha=0.5, label='c = -3/4 (period-2 bifurcation)')
-    ax2.axvline(x=0.25, color='blue', linestyle='--', alpha=0.5, label='c = 1/4 (cusp)')
-    ax2.set_title('Bifurcation Diagram: Period-Doubling Cascade', fontsize=14)
-    ax2.set_xlabel('c')
-    ax2.set_ylabel('Attractor values')
-    ax2.legend(fontsize=8)
-    ax2.set_xlim(-2, 0.25)
-    ax2.set_ylim(-2, 2)
-
-    plt.tight_layout()
-    plt.savefig('mandelbrot_periods.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print("Saved mandelbrot_periods.png")
-
-
-if __name__ == "__main__":
-    main()
+plt.tight_layout()
+plt.savefig('/workspace/request-project/Applications/mandelbrot_periods.png', dpi=150)
+plt.close()
+print("Saved mandelbrot_periods.png")
 
 
 #!/usr/bin/env python3
-"""Visualization: Necklace Counting and Möbius Inversion
-
-Visualizes the triple correspondence:
-  Doubling map orbits ↔ Binary necklaces ↔ Irreducible polynomials over F₂
 """
+Visualization: Necklace Numbers and Dynatomic Point Counts
+
+Shows the deep parallel between Euler's totient function φ(n)
+and the dynatomic point count Ψ(n) = ∑_{d|n} μ(n/d)·2^d.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import math
+
+
+def moebius(n):
+    if n == 1:
+        return 1
+    temp, d, factors = n, 2, 0
+    while d * d <= temp:
+        if temp % d == 0:
+            count = 0
+            while temp % d == 0:
+                temp //= d
+                count += 1
+            if count > 1:
+                return 0
+            factors += 1
+        d += 1
+    if temp > 1:
+        factors += 1
+    return (-1) ** factors
+
+
+def divisors(n):
+    result = []
+    for d in range(1, n + 1):
+        if n % d == 0:
+            result.append(d)
+    return result
+
+
+def dynatomic_sum(n):
+    return sum(moebius(n // d) * (2 ** d) for d in divisors(n))
 
 
 def euler_totient(n):
     result = n
-    p = 2
     temp = n
-    while p * p <= temp:
-        if temp % p == 0:
-            while temp % p == 0:
-                temp //= p
-            result -= result // p
-        p += 1
+    d = 2
+    while d * d <= temp:
+        if temp % d == 0:
+            while temp % d == 0:
+                temp //= d
+            result -= result // d
+        d += 1
     if temp > 1:
         result -= result // temp
     return result
 
 
-def mobius(n):
-    if n == 1:
-        return 1
-    count = 0
-    temp = n
-    p = 2
-    while p * p <= temp:
-        if temp % p == 0:
-            count += 1
-            temp //= p
-            if temp % p == 0:
-                return 0
-        p += 1
-    if temp > 1:
-        count += 1
-    return (-1) ** count
+N = 30
+ns = list(range(1, N + 1))
+psi_vals = [dynatomic_sum(n) for n in ns]
+necklace_vals = [psi_vals[i] // ns[i] for i in range(N)]
+phi_vals = [euler_totient(n) for n in ns]
+necklace_phi = [phi_vals[i] // 1 for i in range(N)]  # φ(n)/1
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+# Plot 1: Dynatomic sum Ψ(n) vs 2^n
+ax = axes[0, 0]
+ax.semilogy(ns, psi_vals, 'bo-', label='Ψ(n) = dynatomic sum', markersize=5)
+ax.semilogy(ns, [2**n for n in ns], 'r--', alpha=0.5, label='2^n (total periodic pts)')
+ax.set_xlabel('Period n')
+ax.set_ylabel('Count (log scale)')
+ax.set_title('Dynatomic Point Count Ψ(n)')
+ax.legend()
+ax.grid(True, alpha=0.3)
+
+# Plot 2: Necklace numbers N(n) = Ψ(n)/n
+ax = axes[0, 1]
+ax.bar(ns, necklace_vals, color='steelblue', alpha=0.7)
+ax.set_xlabel('Length n')
+ax.set_ylabel('N(n) = Ψ(n)/n')
+ax.set_title('Binary Necklace Numbers')
+ax.grid(True, alpha=0.3, axis='y')
+
+# Plot 3: Totient-Dynatomic analogy
+ax = axes[1, 0]
+ax.semilogy(ns, [psi_vals[i] / ns[i] for i in range(N)], 'bo-',
+            label='Ψ(n)/n (necklaces)', markersize=5)
+ax.semilogy(ns, [phi_vals[i] / ns[i] for i in range(N)], 'rs-',
+            label='φ(n)/n (reduced residues)', markersize=5)
+ax.set_xlabel('n')
+ax.set_ylabel('Ratio (log scale)')
+ax.set_title('Totient-Dynatomic Analogy: Ψ(n)/n vs φ(n)/n')
+ax.legend()
+ax.grid(True, alpha=0.3)
+
+# Plot 4: Prime power verification
+ax = axes[1, 1]
+primes = [2, 3, 5, 7]
+colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3']
+for i, p in enumerate(primes):
+    ks = list(range(1, 8))
+    pks = [p**k for k in ks if p**k <= 200]
+    ks = ks[:len(pks)]
+    psi_pk = [dynatomic_sum(pk) for pk in pks]
+    expected = [2**pk - 2**(p**(k-1)) for pk, k in zip(pks, ks)]
+    ax.semilogy(ks, psi_pk, 'o-', color=colors[i], label=f'Ψ({p}^k)', markersize=6)
+    ax.semilogy(ks, expected, 's--', color=colors[i], alpha=0.5, markersize=4)
+ax.set_xlabel('k')
+ax.set_ylabel('Ψ(p^k) (log scale)')
+ax.set_title('Prime Power Formula: Ψ(p^k) = 2^{p^k} - 2^{p^{k-1}}')
+ax.legend()
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('/workspace/request-project/Applications/necklace_numbers.png', dpi=150)
+plt.close()
+print("Saved necklace_numbers.png")
 
 
-def divisors(n):
-    divs = []
-    for d in range(1, int(math.isqrt(n)) + 1):
-        if n % d == 0:
-            divs.append(d)
-            if d != n // d:
-                divs.append(n // d)
-    return sorted(divs)
+#!/usr/bin/env python3
+"""
+Visualization: Tropical Mandelbrot Dynamics
+
+Shows the tropical (max-plus) analog of the Mandelbrot iteration:
+z ↦ max(2z, c), and its connection to the classical Mandelbrot set.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
 
 
-def necklace_count(n):
-    return sum(euler_totient(d) * (2 ** (n // d)) for d in divisors(n)) // n
+def tropical_iterate(c, z, n):
+    for _ in range(n):
+        z = max(2 * z, c)
+    return z
 
 
-def lyndon_count(n):
-    return sum(mobius(n // d) * (2 ** d) for d in divisors(n)) // n
+def mandelbrot_escape_time(c, max_iter=100):
+    z = 0 + 0j
+    for n in range(max_iter):
+        z = z * z + c
+        if abs(z) > 2:
+            return n
+    return max_iter
 
 
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-    # Panel 1: Necklace and Lyndon word counts
-    ax = axes[0, 0]
-    ns = list(range(1, 21))
-    necklaces = [necklace_count(n) for n in ns]
-    lyndon = [lyndon_count(n) for n in ns]
-    total = [2**n for n in ns]
+# Plot 1: Tropical orbits for various c
+ax = axes[0, 0]
+cs = [-2, -1, -0.5, 0, 0.5, 1, 2]
+colors_list = plt.cm.coolwarm(np.linspace(0, 1, len(cs)))
+steps = list(range(8))
+for c_val, color in zip(cs, colors_list):
+    orbit = [tropical_iterate(c_val, 0, n) for n in steps]
+    ax.plot(steps, orbit, 'o-', color=color, label=f'c={c_val}', markersize=5)
+ax.axhline(y=0, color='black', linewidth=0.5, linestyle='--')
+ax.set_xlabel('Step n')
+ax.set_ylabel('Tropical iterate')
+ax.set_title('Tropical Mandelbrot Orbits: z ↦ max(2z, c)')
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
 
-    ax.semilogy(ns, total, 'k-o', label='Total strings 2^n', markersize=4)
-    ax.semilogy(ns, necklaces, 'b-s', label='Necklaces N(2,n)', markersize=4)
-    ax.semilogy(ns, lyndon, 'r-^', label='Lyndon words L(2,n)', markersize=4)
-    ax.set_xlabel('n')
-    ax.set_ylabel('Count (log scale)')
-    ax.set_title('Binary String Counting')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
+# Plot 2: Tropical Mandelbrot set boundary
+ax = axes[0, 1]
+c_range = np.linspace(-3, 3, 1000)
+bounded = []
+for c in c_range:
+    z = 0
+    escaped = False
+    for _ in range(50):
+        z = max(2 * z, c)
+        if z > 1e10:
+            escaped = True
+            break
+    bounded.append(0 if escaped else 1)
+ax.fill_between(c_range, 0, bounded, alpha=0.4, color='steelblue',
+                label='Tropical M (bounded)')
+ax.axvline(x=0, color='red', linestyle='--', linewidth=1.5,
+           label='Boundary: c = 0')
+ax.set_xlabel('c')
+ax.set_ylabel('Bounded (1) / Escaping (0)')
+ax.set_title('Tropical Mandelbrot Set = {c ≤ 0}')
+ax.legend()
+ax.set_ylim(-0.1, 1.1)
+ax.grid(True, alpha=0.3)
 
-    # Panel 2: Ratio L(n)/N(n) — shows which n have many primitive necklaces
-    ax = axes[0, 1]
-    ratios = [lyndon[i] / necklaces[i] if necklaces[i] > 0 else 0 for i in range(len(ns))]
-    colors = ['red' if all(n % p != 0 for p in [2, 3, 5, 7, 11, 13, 17, 19] if p < n)
-              and n > 1 else 'blue' for n in ns]
-    # Actually check primality properly
-    def is_prime(n):
-        if n < 2:
-            return False
-        for p in range(2, int(n**0.5) + 1):
-            if n % p == 0:
-                return False
-        return True
+# Plot 3: Escape theorem verification
+ax = axes[1, 0]
+z0 = 3.0
+c_val = 1.0
+steps_long = list(range(10))
+actual = [tropical_iterate(c_val, z0, n) for n in steps_long]
+predicted = [2**n * z0 for n in steps_long]
+ax.semilogy(steps_long, actual, 'bo-', label='Actual orbit', markersize=6)
+ax.semilogy(steps_long, predicted, 'r--', label='2^n · z₀', markersize=4)
+ax.set_xlabel('Step n')
+ax.set_ylabel('Value (log scale)')
+ax.set_title(f'Tropical Escape: z₀={z0}, c={c_val} (c < 2z₀)')
+ax.legend()
+ax.grid(True, alpha=0.3)
 
-    colors = ['red' if is_prime(n) else 'steelblue' for n in ns]
-    ax.bar(ns, ratios, color=colors, alpha=0.7, edgecolor='black', linewidth=0.5)
-    ax.set_xlabel('n')
-    ax.set_ylabel('L(2,n) / N(2,n)')
-    ax.set_title('Primitive Fraction (red = prime n)')
-    ax.grid(True, alpha=0.3, axis='y')
+# Plot 4: Classical vs Tropical — side by side on real line
+ax = axes[1, 1]
+c_range_fine = np.linspace(-2.5, 0.5, 500)
+classical_bounded = []
+tropical_bounded_vals = []
+for c in c_range_fine:
+    # Classical
+    z = 0
+    classical_esc = False
+    for _ in range(100):
+        z = z * z + c
+        if abs(z) > 2:
+            classical_esc = True
+            break
+    classical_bounded.append(0 if classical_esc else 1)
+    # Tropical
+    tropical_bounded_vals.append(1 if c <= 0 else 0)
 
-    # Panel 3: Burnside identity verification — visual decomposition
-    ax = axes[1, 0]
-    n_test = 12
-    contributions = []
-    divs = divisors(n_test)
-    for d in divs:
-        contributions.append(euler_totient(d) * (2 ** (n_test // d)))
+ax.fill_between(c_range_fine, 0, classical_bounded, alpha=0.4,
+                color='blue', label='Classical M ∩ ℝ')
+ax.fill_between(c_range_fine, 0, [t * 0.5 for t in tropical_bounded_vals],
+                alpha=0.4, color='red', label='Tropical M (scaled)')
+ax.set_xlabel('c (real axis)')
+ax.set_ylabel('Bounded')
+ax.set_title('Classical vs Tropical Mandelbrot on ℝ')
+ax.legend()
+ax.grid(True, alpha=0.3)
 
-    ax.bar(range(len(divs)), contributions, tick_label=[str(d) for d in divs],
-           color='teal', alpha=0.7, edgecolor='black')
-    ax.set_xlabel(f'Divisor d of {n_test}')
-    ax.set_ylabel(f'φ(d) · 2^({n_test}/d)')
-    ax.set_title(f'Burnside Decomposition for n={n_test}')
-    ax.grid(True, alpha=0.3, axis='y')
-
-    total_sum = sum(contributions)
-    ax.text(0.95, 0.95, f'Sum = {total_sum}\nNecklaces = {total_sum // n_test}',
-            transform=ax.transAxes, ha='right', va='top',
-            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-
-    # Panel 4: Möbius function values for small n
-    ax = axes[1, 1]
-    mu_ns = list(range(1, 31))
-    mu_vals = [mobius(n) for n in mu_ns]
-    bar_colors = ['green' if v == 1 else 'red' if v == -1 else 'gray' for v in mu_vals]
-    ax.bar(mu_ns, mu_vals, color=bar_colors, alpha=0.7, edgecolor='black', linewidth=0.5)
-    ax.set_xlabel('n')
-    ax.set_ylabel('μ(n)')
-    ax.set_title('Möbius Function: The Engine of Orbit Counting')
-    ax.set_ylim(-1.5, 1.5)
-    ax.grid(True, alpha=0.3, axis='y')
-    ax.axhline(y=0, color='black', linewidth=0.5)
-
-    # Legend for Möbius
-    from matplotlib.patches import Patch
-    legend_elements = [
-        Patch(facecolor='green', alpha=0.7, label='μ(n) = +1 (even # primes)'),
-        Patch(facecolor='red', alpha=0.7, label='μ(n) = -1 (odd # primes)'),
-        Patch(facecolor='gray', alpha=0.7, label='μ(n) = 0 (has p² factor)'),
-    ]
-    ax.legend(handles=legend_elements, fontsize=8)
-
-    plt.tight_layout()
-    plt.savefig('necklace_mobius.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print("Saved necklace_mobius.png")
-
-
-if __name__ == "__main__":
-    main()
+plt.tight_layout()
+plt.savefig('/workspace/request-project/Applications/tropical_mandelbrot.png', dpi=150)
+plt.close()
+print("Saved tropical_mandelbrot.png")
