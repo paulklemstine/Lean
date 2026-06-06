@@ -1660,6 +1660,66 @@
       "theorem_count": 7,
       "timestamp": "2026-06-06T18:10:24",
       "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+    },
+    {
+      "cycle_id": "ddd6ad11",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Causal Integration Algebra\n\n## Synthesis\n\nThis research cycle established the **Causal Integration Algebra** — a formally verified framework that captures the mathematical essence",
+      "quality_score": 0.47719999999999996,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T18:43:06",
+      "title": "Consciousness as Integrated Information"
+    },
+    {
+      "cycle_id": "81d5bdfe",
+      "domain": "Applications",
+      "key_insight": "# Future Research Directions: EML Single-Operator Universality\n\n## Synthesis\n\nThis research cycle established the **equi-expressivity theorem** for the EML operation eml(x,y) = exp(x) − log(y): it gen",
+      "quality_score": 0.45096,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T18:43:31",
+      "title": "EML Single Operator Church-Turing Thesis"
+    },
+    {
+      "cycle_id": "851c68fb",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Asymmetric Duration Games\n\n## Synthesis\n\nThis research cycle introduced **Asymmetric Duration Games (ADGs)** — a framework for studying games between players of unequal computatio",
+      "quality_score": 0.31464000000000003,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-06T18:43:58",
+      "title": "Infinite Games Against Death: Immortality Strategies"
+    },
+    {
+      "cycle_id": "8ba285ca",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Thermodynamic Proof Complexity\n\n## Synthesis\n\nThis research cycle established a rigorous mathematical framework—**ProofEnergetics**—connecting proof complexity theory with thermod",
+      "quality_score": 0.36904000000000003,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-06T18:44:24",
+      "title": "Speculative: Proof Complexity and Thermodynamic Cost"
+    },
+    {
+      "cycle_id": "2cb52ecf",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Surreal Topology and the Archimedean–Connected Dichotomy\n\n## Synthesis\n\nThis research cycle established the Archimedean–Connected Dichotomy: a linearly ordered field with the orde",
+      "quality_score": 0.54096,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-06T18:44:48",
+      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+    },
+    {
+      "cycle_id": "f16c8283",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Mathematical Theory Ecosystems\n\n## Synthesis\n\nThis research cycle established a rigorous mathematical framework for modeling mathematical theories as species in an intellectual ec",
+      "quality_score": 0.3312,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-06T18:45:16",
+      "title": "Speculative: Mathematics as an Evolving Ecosystem"
     }
   ],
   "entries": [
@@ -1705,7 +1765,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T18:10:24",
+  "last_updated": "2026-06-06T18:45:16",
   "open_questions": [
     {
       "context": "sorry",
@@ -1725,24 +1785,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "f6f91325",
-        "quality": 0.3184,
-        "theorems": 5,
-        "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
-      },
-      {
-        "cycle_id": "23501acd",
-        "quality": 0.3104,
-        "theorems": 6,
-        "title": "EML Differential Algebra: Closure Properties"
-      },
-      {
-        "cycle_id": "3ee91f5d",
-        "quality": 0.4496,
-        "theorems": 4,
-        "title": "EML Kolmogorov-Arnold Representation"
-      },
       {
         "cycle_id": "58b87998",
         "quality": 0.33240000000000003,
@@ -1784,6 +1826,24 @@
         "quality": 0.48840000000000006,
         "theorems": 4,
         "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
+      },
+      {
+        "cycle_id": "81d5bdfe",
+        "quality": 0.45096,
+        "theorems": 5,
+        "title": "EML Single Operator Church-Turing Thesis"
+      },
+      {
+        "cycle_id": "8ba285ca",
+        "quality": 0.36904000000000003,
+        "theorems": 7,
+        "title": "Speculative: Proof Complexity and Thermodynamic Cost"
+      },
+      {
+        "cycle_id": "f16c8283",
+        "quality": 0.3312,
+        "theorems": 4,
+        "title": "Speculative: Mathematics as an Evolving Ecosystem"
       }
     ],
     "Bridges": [
@@ -1922,24 +1982,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "e792ecc6",
-        "quality": 0.30864,
-        "theorems": 5,
-        "title": "Non-Archimedean Probability via Surreal Numbers"
-      },
-      {
-        "cycle_id": "b3069478",
-        "quality": 0.654,
-        "theorems": 5,
-        "title": "Alien Mathematics: Non-Standard Arithmetic"
-      },
-      {
-        "cycle_id": "2c08a7e0",
-        "quality": 0.3024,
-        "theorems": 5,
-        "title": "Consciousness as Integrated Information"
-      },
-      {
         "cycle_id": "765fbc61",
         "quality": 0.53256,
         "theorems": 5,
@@ -1980,6 +2022,24 @@
         "quality": 0.37184000000000006,
         "theorems": 7,
         "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+      },
+      {
+        "cycle_id": "ddd6ad11",
+        "quality": 0.47719999999999996,
+        "theorems": 5,
+        "title": "Consciousness as Integrated Information"
+      },
+      {
+        "cycle_id": "851c68fb",
+        "quality": 0.31464000000000003,
+        "theorems": 7,
+        "title": "Infinite Games Against Death: Immortality Strategies"
+      },
+      {
+        "cycle_id": "2cb52ecf",
+        "quality": 0.54096,
+        "theorems": 4,
+        "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
       }
     ],
     "Physics": [

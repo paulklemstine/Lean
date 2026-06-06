@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f16c8283",
     "filename": "speculative_mathematics_as_an_evolving_ecosystem.json",
     "pkg_num": 402,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.3312,
     "title": "Mathematical Theories as Species: Fitness, Competitive Exclusion, and Ecosystem Dynamics"
   },
   {
@@ -12809,8 +12809,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "speculative_mathematics_as_an_evolving_ecosystem",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.3312,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Mathematical Theories as Species: Fitness, Competitive Exclusion, and Ecosystem Dynamics"
     }
