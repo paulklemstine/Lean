@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "8d3b69b1",
     "filename": "quantum_groups_from_number_theory_the_riemann_hypo.json",
     "pkg_num": 400,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.28464,
     "title": "Quantum Group Spectral Theory: The q-Integer-Chebyshev Bridge and Casimir Eigenvalue Analysis"
   },
   {
@@ -12751,8 +12751,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "quantum_groups_from_number_theory_the_riemann_hypo",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.28464,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Quantum Group Spectral Theory: The q-Integer-Chebyshev Bridge and Casimir Eigenvalue Analysis"
     }

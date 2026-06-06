@@ -1350,6 +1350,26 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T05:27:16",
       "title": "EML Kolmogorov-Arnold Representation"
+    },
+    {
+      "cycle_id": "ba001e63",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tangled Hierarchies Research Program\n\n## Synthesis\n\nThis cycle established the algebraic theory of **provability lattices** — Boolean algebras with Löb-satisfying box operators —",
+      "quality_score": 0.63888,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T06:00:37",
+      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+    },
+    {
+      "cycle_id": "9208c399",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle established the **Computational Morphism Monoid** (CMM) — a novel algebraic structure on cellular automata simulation complexities — and proved i",
+      "quality_score": 0.47448000000000007,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-06T06:01:08",
+      "title": "Game of Life Universality"
     }
   ],
   "entries": [
@@ -1395,7 +1415,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T05:27:16",
+  "last_updated": "2026-06-06T06:01:08",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1407,12 +1427,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "d917ed85",
-        "quality": 0.33464000000000005,
-        "theorems": 5,
-        "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
-      },
       {
         "cycle_id": "c5b30d4a",
         "quality": 0.30664,
@@ -1466,6 +1480,12 @@
         "quality": 0.31264000000000003,
         "theorems": 5,
         "title": "EML Kolmogorov-Arnold Representation"
+      },
+      {
+        "cycle_id": "ba001e63",
+        "quality": 0.63888,
+        "theorems": 5,
+        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
       }
     ],
     "Bridges": [
@@ -1604,12 +1624,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "441dfd6e",
-        "quality": 0.43584,
-        "theorems": 6,
-        "title": "Game of Life Universality"
-      },
-      {
         "cycle_id": "8660cf0a",
         "quality": 0.6504800000000001,
         "theorems": 4,
@@ -1661,6 +1675,12 @@
         "cycle_id": "ff64d6c9",
         "quality": 0.36104,
         "theorems": 5,
+        "title": "Game of Life Universality"
+      },
+      {
+        "cycle_id": "9208c399",
+        "quality": 0.47448000000000007,
+        "theorems": 4,
         "title": "Game of Life Universality"
       }
     ],
