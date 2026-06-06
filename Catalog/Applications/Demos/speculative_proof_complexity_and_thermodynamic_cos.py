@@ -1,332 +1,293 @@
 #!/usr/bin/env python3
 """
-Thermodynamic Proof Complexity: Numerical Demonstrations
+Proof Complexity and Thermodynamic Cost — Numerical Demonstrations
 
-This script demonstrates the key results from the Proof Energy Landscape
-framework with concrete numerical examples.
+This script demonstrates the key results from the thermodynamic proof
+complexity framework with concrete numerical examples.
 """
 
 import math
-from algorithms import ProofEnergyLandscape, geometric_sum, find_phase_transition, chaitin_bound_search
 
-def demo_cost_monotonicity():
-    """Demonstrate Theorem 1: Shorter proofs have strictly lower cost."""
-    print("=" * 60)
-    print("DEMO 1: Cost Monotonicity (Theorem 1)")
-    print("=" * 60)
-    T = 300  # Room temperature in Kelvin
-    kB = 1.380649e-23  # Boltzmann constant in J/K
-    kT = kB * T
+# Physical constants
+k_B = 1.380649e-23  # Boltzmann constant (J/K)
+ROOM_TEMP = 300      # Room temperature (K)
+kT = k_B * ROOM_TEMP
+LN2 = math.log(2)
+LANDAUER_UNIT = kT * LN2  # ~2.87e-21 J at room temp
 
-    print(f"\nTemperature: {T} K")
-    print(f"kT = {kT:.4e} J")
-    print(f"Landauer cost per bit: kT·ln(2) = {kT * math.log(2):.4e} J")
-    print(f"\nProof length → Thermodynamic cost:")
-    for k in [1, 10, 100, 1000, 10000]:
-        cost = k * kT * math.log(2)
-        print(f"  |π| = {k:>6d}  →  cost = {cost:.4e} J")
 
-    print("\n✓ Confirmed: cost is strictly increasing with proof length")
+def proof_cost(proof_len: int, temperature: float = ROOM_TEMP) -> float:
+    """Thermodynamic cost of a proof: |π| * kT * ln(2)."""
+    return proof_len * k_B * temperature * LN2
 
-def demo_incompressibility():
-    """Demonstrate Theorem 3: Most strings are incompressible."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Incompressibility Majority (Theorem 3)")
-    print("=" * 60)
 
-    for b in [2, 3, 10, 256]:
-        frac = 1 - 1/b
-        print(f"\n  Alphabet size b = {b}:")
-        print(f"    Incompressible fraction: {frac:.4f} = {frac*100:.1f}%")
-        for k in [5, 10, 20]:
-            total = b ** k
-            incompressible = total - b ** (k-1)
-            print(f"    k={k}: {incompressible:>15,d} / {total:>15,d} incompressible")
+def search_cost(alphabet_size: int, search_space_len: int,
+                valid_count: int, temperature: float = ROOM_TEMP) -> float:
+    """Thermodynamic cost of exhaustive proof search."""
+    candidates = alphabet_size ** search_space_len // (valid_count + 1)
+    return candidates * k_B * temperature * LN2
 
-def demo_partition_function():
-    """Demonstrate the partition function and phase transition."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Partition Function and Phase Transitions")
-    print("=" * 60)
 
-    # Create a landscape with density ν(k) = min(2^k, 2^(N-k)) (peaked in middle)
-    N = 20
-    b = 2
-    landscape = ProofEnergyLandscape(
-        alphabet_size=b,
-        max_length=N,
-        density_of_states=lambda k: min(b**k, b**(N-k)) if k <= N else 0
-    )
+def geom_sum(b: int, n: int) -> int:
+    """Sum of b^0 + b^1 + ... + b^(n-1)."""
+    return sum(b**i for i in range(n))
 
-    print(f"\nLandscape: b={b}, N={N}, ν(k) = min(2^k, 2^(N-k))")
-    print(f"Total valid proofs up to N: {landscape.total_valid_proofs(N):,}")
 
-    # Scan inverse temperature
-    print(f"\n{'β':>8s} {'⟨k⟩':>10s} {'Var(k)':>12s} {'F':>12s} {'S':>10s}")
-    print("-" * 55)
-    for beta in [0.01, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0]:
-        mean_k = landscape.mean_proof_length(beta)
-        var_k = landscape.proof_length_variance(beta)
-        F = landscape.free_energy(beta)
-        S = landscape.entropy(beta)
-        print(f"{beta:>8.2f} {mean_k:>10.3f} {var_k:>12.3f} {F:>12.3f} {S:>10.3f}")
+def main():
+    print("=" * 70)
+    print("PROOF COMPLEXITY AND THERMODYNAMIC COST")
+    print("Numerical Demonstrations")
+    print("=" * 70)
 
-    beta_c, max_var = find_phase_transition(landscape)
-    print(f"\nPhase transition at β_c ≈ {beta_c:.3f} (T_c = {1/beta_c:.3f})")
-    print(f"Peak variance: {max_var:.3f}")
+    # Demo 1: Proof Cost Monotonicity
+    print("\n--- Demo 1: Proof Cost Strict Monotonicity ---")
+    print(f"Landauer unit at T={ROOM_TEMP}K: {LANDAUER_UNIT:.4e} J")
+    print()
+    for length in [1, 10, 100, 1000, 10**6]:
+        cost = proof_cost(length)
+        print(f"  Proof length {length:>10,d}: cost = {cost:.4e} J")
 
-def demo_exponential_search():
-    """Demonstrate Theorem 8: Exponential growth of search space."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Exponential Search Space (Theorem 8)")
-    print("=" * 60)
-
-    print(f"\n{'n':>5s} {'n':>12s} {'2^n':>15s} {'ratio':>10s}")
-    print("-" * 45)
-    for n in range(1, 21):
-        ratio = 2**n / n
-        print(f"{n:>5d} {n:>12d} {2**n:>15,d} {ratio:>10.1f}")
-
-def demo_geometric_series():
-    """Demonstrate Theorem 15: Geometric series formula."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Geometric Series (Theorem 15)")
-    print("=" * 60)
-
+    # Demo 2: Incompressibility Barrier
+    print("\n--- Demo 2: Incompressibility Barrier ---")
+    print("Geometric sum vs b^n (shorter strings < total strings):")
     for b in [2, 3, 10]:
-        print(f"\n  Alphabet b = {b}:")
-        for n in [5, 10, 20]:
-            geom = geometric_sum(b, n)
-            formula = (b**(n+1) - 1) // (b - 1)
-            print(f"    Σ_{{k=0}}^{{{n}}} {b}^k = {geom:>15,d}  "
-                  f"({b}^{n+1}-1)/({b}-1) = {formula:>15,d}  "
-                  f"Match: {geom == formula}")
+        for n in [1, 5, 10]:
+            gs = geom_sum(b, n)
+            total = b**n
+            ratio = gs / total
+            print(f"  b={b}, n={n}: sum={gs:>12,d}  b^n={total:>12,d}  "
+                  f"ratio={ratio:.6f}  gap={total - gs:>12,d}")
 
-def demo_chaitin_bound():
-    """Demonstrate the Chaitin-like unboundedness result."""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Chaitin-like Unboundedness (Theorem 7)")
-    print("=" * 60)
-
-    bounds = chaitin_bound_search(alphabet_size=2, max_length=20)
-    print(f"\n{'Statement length s':>20s} {'Max proof cost':>15s} {'2^(s+1)':>12s}")
-    print("-" * 50)
-    for s, cost in bounds:
-        print(f"{s:>20d} {cost:>15d} {2**(s+1):>12,d}")
-
-    print("\n✓ For any fixed bound C, there exist proofs with cost > C")
-    print("  (since b^(C+1) > C for all C, confirming Theorem 7)")
-
-def demo_average_cost():
-    """Demonstrate Theorems 9-10: Average cost bounds."""
-    print("\n" + "=" * 60)
-    print("DEMO 7: Average Cost Bounds (Theorems 9-10)")
-    print("=" * 60)
-
+    # Demo 3: Discovery-Verification Gap
+    print("\n--- Demo 3: Discovery-Verification Thermodynamic Gap ---")
+    print("Search cost vs verification cost for sparse proof spaces:")
     b = 2
-    for N in [5, 10, 20, 50]:
-        # Fully dense landscape: ν(k) = 1 for all k
-        landscape = ProofEnergyLandscape(
-            alphabet_size=b,
-            max_length=N,
-            density_of_states=lambda k: 1
-        )
-        weighted = landscape.weighted_total_cost(N)
-        partition = landscape.total_valid_proofs(N)
-        lower = N * (N + 1) // 2
-        upper = N * partition
-        avg = weighted / partition if partition > 0 else 0
-        print(f"\n  N={N:>3d}: weighted_cost={weighted:>6d}, "
-              f"lower={lower:>6d}, upper={upper:>6d}, "
-              f"avg={avg:.1f}")
-        print(f"         n(n+1)/2 ≤ weighted ≤ n·Z: "
-              f"{lower} ≤ {weighted} ≤ {upper}: "
-              f"{'✓' if lower <= weighted <= upper else '✗'}")
+    for n in [10, 20, 30, 40]:
+        for k in [2, 5]:
+            if k + 1 > n:
+                continue
+            search_candidates = b ** (n - k - 1)
+            ver_cost = proof_cost(n)
+            src_cost = search_cost(b, n, b**k)
+            ratio = search_candidates
+            print(f"  n={n:>2d}, k={k}: search_candidates={search_candidates:>15,d}  "
+                  f"gap_factor={ratio:>15,d}")
 
-def demo_cost_separation():
-    """Demonstrate Theorem 14: Cost separation between proof systems."""
-    print("\n" + "=" * 60)
-    print("DEMO 8: Cost Separation (Theorem 14)")
-    print("=" * 60)
+    # Demo 4: Existence of Long Proofs
+    print("\n--- Demo 4: Existence of Long Proofs ---")
+    print("For b^n theorems with distinct proofs, max proof length >= n:")
+    b = 2
+    for n in [5, 10, 15, 20]:
+        theorems = b**n
+        short_strings = geom_sum(b, n)
+        print(f"  n={n:>2d}: {theorems:>10,d} theorems, "
+              f"{short_strings:>10,d} strings of length < n  "
+              f"(deficit: {theorems - short_strings:>10,d})")
 
-    T = 300
-    kT = 1.380649e-23 * T
+    # Demo 5: Complexity Class Separation
+    print("\n--- Demo 5: Complexity Class Separation ---")
+    print("Linear (c*n) vs Exponential (2^n) growth:")
+    for c in [1, 5, 10]:
+        threshold = 2 * c + 2
+        print(f"\n  c = {c}, separation threshold n >= {threshold}:")
+        for n in [threshold, threshold + 5, threshold + 10]:
+            lin = c * n
+            exp = 2**n
+            print(f"    n={n:>3d}: c*n={lin:>15,d}  2^n={exp:>15,d}  "
+                  f"ratio={exp/lin:.1f}x")
 
-    systems = [
-        ("Propositional logic", 5),
-        ("First-order logic", 50),
-        ("Set theory (ZFC)", 500),
-        ("Peano arithmetic", 5000),
+    # Demo 6: Real-world Scale
+    print("\n--- Demo 6: Real-World Scale ---")
+    print("Thermodynamic cost of proof search at different scales:")
+    scenarios = [
+        ("Simple theorem (n=20, k=10)", 2, 20, 2**10),
+        ("Medium theorem (n=50, k=20)", 2, 50, 2**20),
+        ("Hard theorem (n=100, k=30)", 2, 100, 2**30),
+        ("Cryptographic (n=256, k=128)", 2, 256, 2**128),
     ]
+    sun_energy_per_sec = 3.828e26  # watts
+    for name, b, n, valid in scenarios:
+        cost = search_cost(b, n, valid)
+        sun_seconds = cost / sun_energy_per_sec if cost > 0 else 0
+        print(f"  {name}:")
+        print(f"    Search energy: {cost:.4e} J")
+        if sun_seconds > 1:
+            print(f"    Sun-seconds:   {sun_seconds:.4e}")
+        print()
 
-    print(f"\n  At T = {T}K:")
-    for name, min_len in systems:
-        cost = min_len * kT * math.log(2)
-        print(f"  {name:>25s}: min proof len = {min_len:>5d}, "
-              f"cost = {cost:.4e} J")
-
-    print(f"\n  Cost gap between any two systems with Δm proof-length difference:")
-    for dm in [10, 100, 1000]:
-        gap = dm * kT * math.log(2)
-        print(f"    Δm = {dm:>5d}: gap = {gap:.4e} J")
+    print("=" * 70)
+    print("All demonstrations complete.")
 
 
 if __name__ == "__main__":
-    demo_cost_monotonicity()
-    demo_incompressibility()
-    demo_partition_function()
-    demo_exponential_search()
-    demo_geometric_series()
-    demo_chaitin_bound()
-    demo_average_cost()
-    demo_cost_separation()
-
-    print("\n" + "=" * 60)
-    print("ALL DEMONSTRATIONS COMPLETE")
-    print("=" * 60)
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Proof Energy Landscape
+Visualization: Thermodynamic Complexity Class Separation
 
-Generates plots of the key structures in the thermodynamic proof complexity framework:
-1. Boltzmann distribution over proof lengths at different temperatures
-2. Phase transition diagram (mean length vs inverse temperature)
-3. Free energy landscape
+Shows the strict separation between linear and exponential
+thermodynamic complexity classes.
 """
-
 import math
 
-def compute_boltzmann(nu_func, N, beta):
-    """Compute Boltzmann distribution P(k) = nu(k)*exp(-beta*k)/Z."""
-    weights = [nu_func(k) * math.exp(-beta * k) for k in range(N + 1)]
-    Z = sum(weights)
-    if Z == 0:
-        return [0.0] * (N + 1), 0.0
-    probs = [w / Z for w in weights]
-    return probs, Z
+try:
+    import matplotlib.pyplot as plt
+    import numpy as np
+except ImportError:
+    print("matplotlib and numpy required")
+    exit(1)
 
-def mean_length(nu_func, N, beta):
-    probs, Z = compute_boltzmann(nu_func, N, beta)
-    if Z == 0:
-        return 0.0
-    return sum(k * p for k, p in enumerate(probs))
-
-def variance_length(nu_func, N, beta):
-    probs, Z = compute_boltzmann(nu_func, N, beta)
-    if Z == 0:
-        return 0.0
-    m = sum(k * p for k, p in enumerate(probs))
-    m2 = sum(k**2 * p for k, p in enumerate(probs))
-    return m2 - m**2
-
-def free_energy(nu_func, N, beta):
-    _, Z = compute_boltzmann(nu_func, N, beta)
-    if Z <= 0 or beta <= 0:
-        return float('inf')
-    return -math.log(Z) / beta
 
 def main():
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        import numpy as np
-    except ImportError:
-        print("matplotlib/numpy not available. Skipping visualization.")
-        return
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    fig.suptitle("Thermodynamic Complexity Classes",
+                 fontsize=16, fontweight='bold')
 
-    N = 30
+    # Plot 1: Linear vs Exponential separation
+    ax1 = axes[0]
+    n_values = np.arange(1, 25)
+
+    for c in [1, 2, 5, 10]:
+        linear = c * n_values
+        threshold = 2 * c + 2
+        ax1.semilogy(n_values, linear, '--', label=f'Linear (c={c})', alpha=0.7)
+        ax1.axvline(x=threshold, color='gray', alpha=0.2, linestyle=':')
+
+    exp_vals = np.array([2**n for n in n_values], dtype=float)
+    ax1.semilogy(n_values, exp_vals, 'k-', linewidth=2.5, label='Exponential (2^n)')
+
+    ax1.set_xlabel('Statement Length n', fontsize=12)
+    ax1.set_ylabel('Proof Length Bound (log scale)', fontsize=12)
+    ax1.set_title('Linear vs Exponential Classes\n(Theorem: c·n < 2^n for large n)', fontsize=13)
+    ax1.legend(fontsize=9)
+    ax1.grid(True, alpha=0.3)
+    ax1.set_ylim(1, 1e7)
+
+    # Plot 2: Hierarchy gap visualization
+    ax2 = axes[1]
+    K_B = 1.380649e-23
+    T = 300
+    LN2 = math.log(2)
+    LANDAUER = K_B * T * LN2
+
+    levels = np.arange(0, 21)
+    costs = levels * LANDAUER * 1e21  # in units of 10^-21 J
+
+    bars = ax2.bar(levels, costs, color=plt.cm.viridis(levels / 20), edgecolor='black',
+                   linewidth=0.5)
+
+    # Annotate the gap
+    for i in range(1, min(6, len(levels))):
+        ax2.annotate('', xy=(i, costs[i]),
+                     xytext=(i, costs[i-1]),
+                     arrowprops=dict(arrowstyle='<->', color='red', lw=1.5))
+
+    ax2.text(3, costs[3] * 0.5, f'Gap = kT·ln(2)\n= {LANDAUER:.2e} J',
+             fontsize=10, color='red', ha='center',
+             bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+
+    ax2.set_xlabel('Hierarchy Level k', fontsize=12)
+    ax2.set_ylabel('Proof Cost (×10⁻²¹ J)', fontsize=12)
+    ax2.set_title('Proof Cost Hierarchy\n(Uniform Landauer Gap)', fontsize=13)
+    ax2.grid(True, alpha=0.3, axis='y')
+
+    plt.tight_layout()
+    plt.savefig('complexity_classes.png', dpi=150, bbox_inches='tight')
+    print("Saved: complexity_classes.png")
+    plt.close()
+
+
+if __name__ == "__main__":
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Discovery-Verification Thermodynamic Gap
+
+Shows how the energy cost of finding a proof grows exponentially
+compared to the cost of checking it.
+"""
+import math
+
+try:
+    import matplotlib.pyplot as plt
+    import matplotlib.ticker as ticker
+    import numpy as np
+except ImportError:
+    print("matplotlib and numpy required. Install with: pip install matplotlib numpy")
+    exit(1)
+
+
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+    fig.suptitle("Thermodynamic Cost of Mathematical Proof",
+                 fontsize=16, fontweight='bold')
+
+    K_B = 1.380649e-23
+    T = 300
+    LN2 = math.log(2)
+    LANDAUER = K_B * T * LN2
+
+    # Plot 1: Proof cost vs length (strict monotonicity)
+    ax1 = axes[0]
+    lengths = np.arange(0, 101)
+    costs = lengths * LANDAUER
+    ax1.plot(lengths, costs * 1e21, 'b-', linewidth=2)
+    ax1.set_xlabel('Proof Length (symbols)', fontsize=12)
+    ax1.set_ylabel('Thermodynamic Cost (×10⁻²¹ J)', fontsize=12)
+    ax1.set_title('Proof Cost Monotonicity\n(Theorem 1)', fontsize=13)
+    ax1.grid(True, alpha=0.3)
+    ax1.annotate('Slope = kT·ln(2)\n(Landauer unit)',
+                 xy=(60, 60 * LANDAUER * 1e21),
+                 xytext=(30, 80 * LANDAUER * 1e21),
+                 arrowprops=dict(arrowstyle='->', color='red'),
+                 fontsize=10, color='red')
+
+    # Plot 2: Incompressibility barrier
+    ax2 = axes[1]
     b = 2
-    nu_symmetric = lambda k: min(b**k, b**(N - k)) if 0 <= k <= N else 0
+    ns = np.arange(1, 21)
+    total = np.array([b**n for n in ns], dtype=float)
+    compressible = np.array([sum(b**i for i in range(n)) for n in ns], dtype=float)
+    incompressible = total - compressible
 
-    # Plot 1: Boltzmann distributions at different temperatures
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    ax2.semilogy(ns, total, 'b-o', label='Total strings (b^n)', markersize=4)
+    ax2.semilogy(ns, compressible, 'r--s', label='Compressible (<b^n)', markersize=4)
+    ax2.semilogy(ns, incompressible, 'g-^', label='Incompressible', markersize=4)
+    ax2.fill_between(ns, compressible, total, alpha=0.15, color='green',
+                     label='Irreducible cost region')
+    ax2.set_xlabel('String Length n', fontsize=12)
+    ax2.set_ylabel('Count (log scale)', fontsize=12)
+    ax2.set_title('Incompressibility Barrier\n(Chaitin Analog, b=2)', fontsize=13)
+    ax2.legend(fontsize=9)
+    ax2.grid(True, alpha=0.3)
 
-    betas = [0.05, 0.2, 0.69, 2.0]
-    titles = ['High T (β=0.05)', 'Medium T (β=0.2)', 'Critical (β≈ln2)', 'Low T (β=2.0)']
-    for ax, beta, title in zip(axes.flat, betas, titles):
-        probs, _ = compute_boltzmann(nu_symmetric, N, beta)
-        ax.bar(range(N + 1), probs, color='steelblue', alpha=0.7, edgecolor='navy', linewidth=0.5)
-        ml = mean_length(nu_symmetric, N, beta)
-        ax.axvline(ml, color='red', linestyle='--', linewidth=2, label=f'⟨k⟩={ml:.1f}')
-        ax.set_xlabel('Proof length k')
-        ax.set_ylabel('P(k)')
-        ax.set_title(title)
-        ax.legend()
+    # Plot 3: Discovery vs Verification gap
+    ax3 = axes[2]
+    n_values = np.arange(5, 31)
+    k = 3  # sparse proofs
+    search_exp = n_values - k - 1
+    search_cands = np.array([2**e for e in search_exp], dtype=float)
+    verify_cost = n_values.astype(float)  # proportional to proof length
 
-    plt.suptitle('Boltzmann Distribution over Proof Lengths\nν(k) = min(2^k, 2^(N-k)), N=30', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('plot_boltzmann_distributions.png', dpi=150, bbox_inches='tight')
-    plt.close()
-
-    # Plot 2: Phase transition diagram
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(18, 5))
-
-    beta_range = np.linspace(0.01, 3.0, 500)
-    means = [mean_length(nu_symmetric, N, beta) for beta in beta_range]
-    variances = [variance_length(nu_symmetric, N, beta) for beta in beta_range]
-    free_energies = [free_energy(nu_symmetric, N, beta) for beta in beta_range]
-
-    ax1.plot(beta_range, means, 'b-', linewidth=2)
-    ax1.axhline(N/2, color='gray', linestyle=':', alpha=0.5)
-    ax1.axvline(math.log(2), color='red', linestyle='--', alpha=0.7, label=f'β_c = ln(2) ≈ {math.log(2):.3f}')
-    ax1.set_xlabel('Inverse temperature β')
-    ax1.set_ylabel('Mean proof length ⟨k⟩')
-    ax1.set_title('Order Parameter: Mean Proof Length')
-    ax1.legend()
-
-    ax2.plot(beta_range, variances, 'r-', linewidth=2)
-    ax2.axvline(math.log(2), color='red', linestyle='--', alpha=0.7, label=f'β_c ≈ {math.log(2):.3f}')
-    ax2.set_xlabel('Inverse temperature β')
-    ax2.set_ylabel('Var(k)')
-    ax2.set_title('Susceptibility: Proof Length Variance')
-    ax2.legend()
-
-    ax3.plot(beta_range, free_energies, 'g-', linewidth=2)
-    ax3.axvline(math.log(2), color='red', linestyle='--', alpha=0.7, label=f'β_c ≈ {math.log(2):.3f}')
-    ax3.set_xlabel('Inverse temperature β')
-    ax3.set_ylabel('Free energy F(β)')
-    ax3.set_title('Free Energy Landscape')
-    ax3.legend()
-
-    plt.suptitle('Phase Transition in Proof Energy Landscape\nν(k) = min(2^k, 2^(30-k))', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('plot_phase_transition.png', dpi=150, bbox_inches='tight')
-    plt.close()
-
-    # Plot 3: Incompressibility and cost scaling
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    ks = list(range(1, 21))
-    for b_val in [2, 3, 10]:
-        fracs = [1 - 1/b_val for _ in ks]
-        ax1.plot(ks, fracs, 'o-', label=f'b={b_val}', markersize=4)
-    ax1.set_xlabel('String length k')
-    ax1.set_ylabel('Incompressible fraction')
-    ax1.set_title('Fraction of Incompressible Strings')
-    ax1.legend()
-    ax1.set_ylim(0, 1.05)
-
-    ns = list(range(1, 16))
-    for b_val in [2, 3, 5]:
-        costs = [b_val**n for n in ns]
-        ax2.semilogy(ns, costs, 'o-', label=f'b^n (b={b_val})', markersize=4)
-    ax2.plot(ns, ns, 'k--', label='n (linear)', linewidth=2)
-    ax2.set_xlabel('Proof length n')
-    ax2.set_ylabel('Search space size (log scale)')
-    ax2.set_title('Exponential Search Space Growth (Theorem 8)')
-    ax2.legend()
+    ax3.semilogy(n_values, search_cands, 'r-o', label='Search candidates', markersize=4)
+    ax3.semilogy(n_values, verify_cost, 'b-s', label='Verification cost (∝ n)', markersize=4)
+    ax3.fill_between(n_values, verify_cost, search_cands, alpha=0.1, color='red',
+                     label='Thermodynamic gap')
+    ax3.set_xlabel('Search Space Size n', fontsize=12)
+    ax3.set_ylabel('Cost (log scale, Landauer units)', fontsize=12)
+    ax3.set_title(f'Discovery-Verification Gap\n(k={k}, b=2)', fontsize=13)
+    ax3.legend(fontsize=9)
+    ax3.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('plot_cost_scaling.png', dpi=150, bbox_inches='tight')
+    plt.savefig('thermodynamic_proof_cost.png', dpi=150, bbox_inches='tight')
+    print("Saved: thermodynamic_proof_cost.png")
     plt.close()
 
-    print("Visualizations saved:")
-    print("  plot_boltzmann_distributions.png")
-    print("  plot_phase_transition.png")
-    print("  plot_cost_scaling.png")
 
 if __name__ == "__main__":
     main()

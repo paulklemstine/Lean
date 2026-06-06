@@ -1,175 +1,198 @@
+#!/usr/bin/env python3
 """
-Thermodynamic Proof Complexity: Algorithms and Data Structures
+Algorithms for Proof Complexity and Thermodynamic Cost
 
-This module implements the core algorithms for computing thermodynamic
-properties of formal proof systems, including partition functions,
-Boltzmann weights, and free energy landscapes.
+Type-hinted implementations of the key algorithms from the research.
 """
 
 import math
-from typing import List, Tuple, Callable, Optional
+from typing import List, Tuple, Optional
 from dataclasses import dataclass
 
 
-@dataclass
-class ProofEnergyLandscape:
-    """A proof system with thermodynamic structure.
+# Physical constants
+K_BOLTZMANN: float = 1.380649e-23  # J/K
+LN2: float = math.log(2)
 
-    Attributes:
-        alphabet_size: Number of symbols in the proof alphabet (b >= 2)
-        max_length: Maximum proof length (N > 0)
-        density_of_states: Function mapping length k -> number of valid proofs at length k
-    """
+
+@dataclass
+class ProofThermodynamicSystem:
+    """A proof system with thermodynamic parameters."""
     alphabet_size: int
-    max_length: int
-    density_of_states: Callable[[int], int]
+    max_proof_len: int
+    temperature: float  # Kelvin
+    valid_count: int
 
     def __post_init__(self) -> None:
-        assert self.alphabet_size >= 2, "Alphabet must have at least 2 symbols"
-        assert self.max_length > 0, "Max length must be positive"
+        assert self.alphabet_size >= 2, "Alphabet must have ≥ 2 symbols"
+        assert self.temperature > 0, "Temperature must be positive"
+        assert self.valid_count <= self.alphabet_size ** self.max_proof_len
 
-    def total_strings(self, k: int) -> int:
-        """Total number of strings of length k."""
-        return self.alphabet_size ** k
+    @property
+    def total_candidates(self) -> int:
+        """Total number of candidate proof strings."""
+        return self.alphabet_size ** self.max_proof_len
 
-    def scaled_cost(self, k: int, temperature: float) -> float:
-        """Thermodynamic cost of a proof of length k at temperature T.
-        cost(k, T) = k * T * ln(2) [Landauer's principle]
-        """
-        return k * temperature * math.log(2)
+    def proof_cost(self, proof_len: int) -> float:
+        """Thermodynamic cost of a proof: |π| * kT * ln(2)."""
+        return proof_len * K_BOLTZMANN * self.temperature * LN2
 
-    def total_valid_proofs(self, n: int) -> int:
-        """Total valid proofs up to length n."""
-        return sum(self.density_of_states(k) for k in range(n + 1))
+    def search_cost(self, candidates_examined: int) -> float:
+        """Thermodynamic cost of examining candidates."""
+        return candidates_examined * K_BOLTZMANN * self.temperature * LN2
 
-    def partition_function(self, beta: float, n: Optional[int] = None) -> float:
-        """Boltzmann partition function Z(β) = Σ_k ν(k) * exp(-β*k).
+    @property
+    def search_difficulty(self) -> int:
+        """Search difficulty: total / (valid + 1)."""
+        return self.total_candidates // (self.valid_count + 1)
 
-        Args:
-            beta: Inverse temperature parameter
-            n: Maximum length to sum over (defaults to max_length)
-        """
-        if n is None:
-            n = self.max_length
-        return sum(
-            self.density_of_states(k) * math.exp(-beta * k)
-            for k in range(n + 1)
-        )
-
-    def mean_proof_length(self, beta: float) -> float:
-        """Expected proof length under Boltzmann distribution.
-        <k> = Σ_k k * ν(k) * exp(-β*k) / Z(β)
-        """
-        Z = self.partition_function(beta)
-        if Z == 0:
-            return 0.0
-        return sum(
-            k * self.density_of_states(k) * math.exp(-beta * k)
-            for k in range(self.max_length + 1)
-        ) / Z
-
-    def proof_length_variance(self, beta: float) -> float:
-        """Variance of proof length under Boltzmann distribution."""
-        mean = self.mean_proof_length(beta)
-        Z = self.partition_function(beta)
-        if Z == 0:
-            return 0.0
-        mean_sq = sum(
-            k**2 * self.density_of_states(k) * math.exp(-beta * k)
-            for k in range(self.max_length + 1)
-        ) / Z
-        return mean_sq - mean**2
-
-    def free_energy(self, beta: float) -> float:
-        """Helmholtz free energy F = -T * ln(Z) = -(1/β) * ln(Z)."""
-        Z = self.partition_function(beta)
-        if Z <= 0 or beta <= 0:
-            return float('inf')
-        return -math.log(Z) / beta
-
-    def entropy(self, beta: float) -> float:
-        """Thermodynamic entropy S = β*(⟨E⟩ - F)."""
-        Z = self.partition_function(beta)
-        if Z <= 0 or beta <= 0:
-            return 0.0
-        F = self.free_energy(beta)
-        E_mean = self.mean_proof_length(beta)  # E = k in natural units
-        return beta * (E_mean - F)
-
-    def incompressible_count(self, k: int) -> int:
-        """Number of incompressible strings at length k."""
-        if k == 0:
-            return 1
-        return self.alphabet_size ** k - self.alphabet_size ** (k - 1)
-
-    def incompressible_fraction(self, k: int) -> float:
-        """Fraction of strings at length k that are incompressible."""
-        if k == 0:
-            return 1.0
-        return 1.0 - 1.0 / self.alphabet_size
-
-    def weighted_total_cost(self, n: int) -> int:
-        """Sum of k * ν(k) for k from 0 to n."""
-        return sum(k * self.density_of_states(k) for k in range(n + 1))
-
-    def cost_gap(self, k1: int, k2: int, temperature: float) -> float:
-        """Thermodynamic cost gap between proofs of length k2 and k1."""
-        return (k2 - k1) * temperature * math.log(2)
+    @property
+    def landauer_unit(self) -> float:
+        """One Landauer unit: kT * ln(2)."""
+        return K_BOLTZMANN * self.temperature * LN2
 
 
 def geometric_sum(b: int, n: int) -> int:
-    """Compute Σ_{k=0}^{n} b^k = (b^(n+1) - 1) / (b - 1)."""
+    """
+    Compute ∑_{i=0}^{n-1} b^i = (b^n - 1) / (b - 1).
+
+    This counts the total number of strings of length < n
+    over an alphabet of size b.
+    """
     if b == 1:
-        return n + 1
-    return (b ** (n + 1) - 1) // (b - 1)
+        return n
+    return (b ** n - 1) // (b - 1)
 
 
-def find_phase_transition(landscape: ProofEnergyLandscape,
-                          beta_min: float = 0.01,
-                          beta_max: float = 10.0,
-                          num_points: int = 1000) -> Tuple[float, float]:
-    """Find the critical inverse temperature where proof length variance peaks.
-
-    Returns:
-        (beta_critical, max_variance): The critical point and peak variance.
+def incompressible_count(b: int, n: int) -> int:
     """
-    best_beta = beta_min
-    best_var = 0.0
-    for i in range(num_points):
-        beta = beta_min + (beta_max - beta_min) * i / num_points
-        var = landscape.proof_length_variance(beta)
-        if var > best_var:
-            best_var = var
-            best_beta = beta
-    return best_beta, best_var
+    Count of incompressible strings of length n over alphabet b.
 
-
-def chaitin_bound_search(alphabet_size: int, max_length: int) -> List[Tuple[int, int]]:
-    """Search for the Chaitin-like bound: how proof cost grows with statement length.
-
-    For each 'statement length' s, compute the maximum proof length needed.
-    Returns list of (statement_length, max_proof_cost) pairs.
+    By the pigeonhole principle, at least b^n - geom_sum(b, n)
+    strings of length n cannot be injectively mapped to shorter strings.
     """
-    results = []
-    for s in range(1, max_length + 1):
-        # The maximum number of statements of length s
-        num_statements = alphabet_size ** s
-        # By pigeonhole, at least one statement needs proof of length ≥ log_b(num_statements)
-        min_proof_length = s  # since log_b(b^s) = s
-        results.append((s, min_proof_length))
-    return results
+    return b ** n - geometric_sum(b, n)
 
 
-def compute_boltzmann_distribution(landscape: ProofEnergyLandscape,
-                                    beta: float) -> List[Tuple[int, float]]:
-    """Compute the Boltzmann probability distribution over proof lengths.
-
-    Returns list of (length, probability) pairs.
+def search_candidates_lower_bound(b: int, n: int, k: int) -> int:
     """
-    Z = landscape.partition_function(beta)
-    if Z == 0:
-        return [(k, 0.0) for k in range(landscape.max_length + 1)]
-    return [
-        (k, landscape.density_of_states(k) * math.exp(-beta * k) / Z)
-        for k in range(landscape.max_length + 1)
+    Lower bound on search candidates when valid proofs ≤ b^k in space b^n.
+
+    Returns b^(n - k - 1), the minimum number of candidates to examine.
+    """
+    assert b >= 2, "Alphabet size must be ≥ 2"
+    assert k + 1 <= n, "Need k + 1 ≤ n"
+    return b ** (n - k - 1)
+
+
+def classify_thermodynamic_class(
+    proof_lengths: List[int],
+    statement_lengths: List[int]
+) -> str:
+    """
+    Classify a proof system's thermodynamic complexity class.
+
+    Given empirical (statement_length, proof_length) pairs, determine
+    whether the system is linear, polynomial, or exponential.
+    """
+    if not proof_lengths or not statement_lengths:
+        return "unknown"
+
+    # Check if linear: proof_len ≤ c * statement_len for some constant c
+    max_ratio = max(p / s for p, s in zip(proof_lengths, statement_lengths) if s > 0)
+
+    # Check if polynomial: proof_len ≤ statement_len^d for some d
+    max_degree = max(
+        math.log(p) / math.log(s) if s > 1 and p > 0 else 0
+        for p, s in zip(proof_lengths, statement_lengths)
+    )
+
+    # Check if exponential: proof_len grows as 2^n
+    log_ratios = [
+        math.log2(p) / s if p > 0 and s > 0 else 0
+        for p, s in zip(proof_lengths, statement_lengths)
     ]
+    exp_ratio = max(log_ratios) if log_ratios else 0
+
+    if max_ratio <= 10:
+        return f"linear (c ≈ {max_ratio:.1f})"
+    elif max_degree <= 5:
+        return f"polynomial (d ≈ {max_degree:.1f})"
+    else:
+        return f"exponential (ratio ≈ {exp_ratio:.2f})"
+
+
+def discovery_verification_gap(
+    b: int, n: int, k: int, proof_len: int
+) -> Tuple[float, float, float]:
+    """
+    Compute the discovery-verification thermodynamic gap.
+
+    Returns: (search_energy, verification_energy, ratio)
+    """
+    search_cands = search_candidates_lower_bound(b, n, k)
+    kT_ln2 = K_BOLTZMANN * 300 * LN2  # at room temperature
+
+    search_energy = search_cands * kT_ln2
+    verify_energy = proof_len * kT_ln2
+    ratio = search_cands / proof_len if proof_len > 0 else float('inf')
+
+    return search_energy, verify_energy, ratio
+
+
+def average_proof_length_bound(b: int, num_theorems: int) -> int:
+    """
+    Lower bound on average proof length for distinct theorems.
+
+    If num_theorems theorems each have distinct proofs over alphabet b,
+    the maximum proof length is at least ⌈log_b(num_theorems)⌉.
+    """
+    if num_theorems <= 1:
+        return 0
+    return math.ceil(math.log(num_theorems) / math.log(b))
+
+
+def exp_strictly_larger_threshold(c: int) -> int:
+    """
+    Find the threshold n where c * n < 2^n is guaranteed.
+
+    Returns 2*c + 2, the formal threshold from the theorem.
+    """
+    return 2 * c + 2
+
+
+def proof_cost_hierarchy(
+    system: ProofThermodynamicSystem, max_level: int
+) -> List[Tuple[int, float, float]]:
+    """
+    Compute the proof cost hierarchy up to max_level.
+
+    Returns list of (level, cost, gap_from_previous).
+    """
+    result: List[Tuple[int, float, float]] = []
+    for k in range(max_level + 1):
+        cost = system.proof_cost(k)
+        gap = system.landauer_unit if k > 0 else 0.0
+        result.append((k, cost, gap))
+    return result
+
+
+if __name__ == "__main__":
+    # Quick self-test
+    system = ProofThermodynamicSystem(
+        alphabet_size=2,
+        max_proof_len=20,
+        temperature=300,
+        valid_count=1000
+    )
+
+    print(f"Landauer unit: {system.landauer_unit:.4e} J")
+    print(f"Proof cost (len=10): {system.proof_cost(10):.4e} J")
+    print(f"Search difficulty: {system.search_difficulty}")
+    print(f"Incompressible count (b=2, n=10): {incompressible_count(2, 10)}")
+    print(f"Avg proof length bound (b=2, T=1024): {average_proof_length_bound(2, 1024)}")
+
+    hierarchy = proof_cost_hierarchy(system, 5)
+    print("\nHierarchy:")
+    for level, cost, gap in hierarchy:
+        print(f"  Level {level}: cost={cost:.4e} J, gap={gap:.4e} J")
