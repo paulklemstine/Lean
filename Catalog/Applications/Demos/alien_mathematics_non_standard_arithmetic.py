@@ -1,372 +1,428 @@
+#!/usr/bin/env python3
 """
-Non-Standard Arithmetic Demo
-============================
-Demonstrates the ultrapower construction and key properties
-of non-standard natural numbers.
+Demo: Non-Standard Arithmetic via Ultrafilters
+
+Demonstrates key concepts from the formalized theory:
+1. Ultrafilter color selection (2-coloring dichotomy)
+2. Standard part computation (pigeonhole on bounded sequences)
+3. Saturation degree estimation
+4. Prime/composite dichotomy for diagonal elements
 """
 
 import random
-from typing import List, Callable, Set, Tuple
+from typing import List, Callable, Set
 
-# --- Ultrafilter Simulation ---
-# We cannot construct a true free ultrafilter computationally (requires AC),
-# but we can simulate one using a density-based heuristic:
-# a set S ⊆ ℕ is "U-large" if it has density 1.
+# ============================================================
+# Demo 1: Ultrafilter Color Selection
+# ============================================================
 
-def density(S: Set[int], N: int = 10000) -> float:
-    """Estimate the density of S ∩ {0,...,N-1}."""
-    return len([x for x in range(N) if x in S]) / N
+def demo_color_selection():
+    """
+    For any 2-coloring of ℕ, an ultrafilter selects exactly one color.
+    We simulate this with a "principal-like" filter concentrated on large numbers.
+    """
+    print("=" * 60)
+    print("DEMO 1: Ultrafilter Color Selection")
+    print("=" * 60)
 
-def is_U_large(S: Set[int], N: int = 10000) -> bool:
-    """Heuristic: S is 'U-large' if it has high density."""
-    return density(S, N) > 0.5
+    colorings = {
+        "parity": lambda n: n % 2,
+        "mod3_threshold": lambda n: 0 if n % 3 == 0 else 1,
+        "sqrt_parity": lambda n: int(n ** 0.5) % 2,
+    }
 
-# --- Ultrapower Element ---
-class UltrapowerElement:
-    """Represents an element of ℕ* as a sequence ℕ → ℕ."""
-    def __init__(self, f: Callable[[int], int], name: str = ""):
-        self.f = f
-        self.name = name or "anonymous"
+    N = 100000  # simulate "U-large" by looking at tail behavior
 
-    def __repr__(self):
-        vals = [self.f(i) for i in range(10)]
-        return f"[{self.name}] = ({', '.join(map(str, vals))}, ...)"
+    for name, c in colorings.items():
+        count_0 = sum(1 for i in range(N // 2, N) if c(i) == 0)
+        count_1 = sum(1 for i in range(N // 2, N) if c(i) == 1)
+        total = N // 2
+        selected = 0 if count_0 > count_1 else 1
+        print(f"\n  Coloring '{name}':")
+        print(f"    Color 0 density (tail): {count_0/total:.4f}")
+        print(f"    Color 1 density (tail): {count_1/total:.4f}")
+        print(f"    → Ultrafilter would select color {selected}")
 
-    def add(self, other: 'UltrapowerElement') -> 'UltrapowerElement':
-        return UltrapowerElement(lambda i: self.f(i) + other.f(i),
-                                f"({self.name} + {other.name})")
-
-    def mul(self, other: 'UltrapowerElement') -> 'UltrapowerElement':
-        return UltrapowerElement(lambda i: self.f(i) * other.f(i),
-                                f"({self.name} * {other.name})")
-
-    def eq_on(self, other: 'UltrapowerElement', N: int = 10000) -> Set[int]:
-        """Set where self == other."""
-        return {i for i in range(N) if self.f(i) == other.f(i)}
-
-    def lt_on(self, other: 'UltrapowerElement', N: int = 10000) -> Set[int]:
-        """Set where self < other."""
-        return {i for i in range(N) if self.f(i) < other.f(i)}
+    print()
 
 
-# --- Demo 1: Standard Embedding ---
-print("=" * 60)
-print("DEMO 1: Standard Embedding ℕ → ℕ*")
-print("=" * 60)
+# ============================================================
+# Demo 2: Standard Part Theorem
+# ============================================================
 
-std_5 = UltrapowerElement(lambda i: 5, "std(5)")
-std_7 = UltrapowerElement(lambda i: 7, "std(7)")
-print(f"  std(5) = {std_5}")
-print(f"  std(7) = {std_7}")
-print(f"  std(5) + std(7) = {std_5.add(std_7)}")
-print(f"  std(5) * std(7) = {std_5.mul(std_7)}")
-print(f"  Agree set (std(5) == std(7)): density = {density(std_5.eq_on(std_7)):.4f}")
-print(f"  → std(5) ≠ std(7) (empty agree set)")
-print()
+def demo_standard_part():
+    """
+    For a bounded sequence f with f(i) ≤ n, the ultrafilter
+    selects exactly one value m ≤ n (the "standard part").
+    """
+    print("=" * 60)
+    print("DEMO 2: Standard Part Theorem")
+    print("=" * 60)
 
-# --- Demo 2: Infinite Element ---
-print("=" * 60)
-print("DEMO 2: The Infinite Element id ∈ ℕ*")
-print("=" * 60)
+    sequences = {
+        "f(i) = i mod 3": lambda i: i % 3,
+        "f(i) = min(i, 5)": lambda i: min(i, 5),
+        "f(i) = (i*i) mod 7": lambda i: (i * i) % 7,
+    }
 
-omega = UltrapowerElement(lambda i: i, "ω")
-print(f"  ω = {omega}")
-for n in [10, 100, 1000]:
-    std_n = UltrapowerElement(lambda i, n=n: n, f"std({n})")
-    agree = omega.eq_on(std_n)
-    exceed = omega.lt_on(std_n)
-    print(f"  ω vs std({n}): agree density = {density(agree):.4f}, "
-          f"ω > std({n}) density = {1 - density(exceed):.4f}")
-print(f"  → ω exceeds ALL standard numbers (agree density → 0)")
-print()
+    N = 100000
 
-# --- Demo 3: Division Algorithm Transfer ---
-print("=" * 60)
-print("DEMO 3: Division Algorithm in ℕ*")
-print("=" * 60)
+    for name, f in sequences.items():
+        bound = max(f(i) for i in range(N))
+        # Count how often each value appears in the tail
+        value_counts = {}
+        for i in range(N // 2, N):
+            v = f(i)
+            value_counts[v] = value_counts.get(v, 0) + 1
 
-f_elem = UltrapowerElement(lambda i: i * i + 7, "i²+7")
-g_elem = UltrapowerElement(lambda i: i + 1, "i+1")
-q_elem = UltrapowerElement(lambda i: (i*i + 7) // (i + 1), "q")
-r_elem = UltrapowerElement(lambda i: (i*i + 7) % (i + 1), "r")
+        total = N // 2
+        print(f"\n  Sequence '{name}' (bound = {bound}):")
+        for v in sorted(value_counts.keys()):
+            density = value_counts[v] / total
+            print(f"    Value {v}: density = {density:.4f}")
 
-print(f"  f = {f_elem}")
-print(f"  g = {g_elem}")
-print(f"  q = f/g = {q_elem}")
-print(f"  r = f%g = {r_elem}")
+        # The "standard part" is the value selected by the ultrafilter
+        # For a density-based ultrafilter, it's the most common value
+        std_part = max(value_counts.keys(), key=lambda v: value_counts[v])
+        print(f"    → Standard part (density-selected): {std_part}")
 
-div_check = {i for i in range(1, 10000) if f_elem.f(i) == g_elem.f(i) * q_elem.f(i) + r_elem.f(i)}
-rem_check = {i for i in range(1, 10000) if r_elem.f(i) < g_elem.f(i)}
-print(f"  f = g*q + r holds on: density = {len(div_check)/9999:.4f}")
-print(f"  r < g holds on: density = {len(rem_check)/9999:.4f}")
-print(f"  → Division algorithm transfers to ℕ* ✓")
-print()
-
-# --- Demo 4: GCD Transfer ---
-print("=" * 60)
-print("DEMO 4: GCD Transfer in ℕ*")
-print("=" * 60)
-
-import math
-f_gcd = UltrapowerElement(lambda i: 6 * i + 12, "6i+12")
-g_gcd = UltrapowerElement(lambda i: 4 * i + 8, "4i+8")
-d_gcd = UltrapowerElement(lambda i: math.gcd(6*i+12, 4*i+8), "gcd")
-
-print(f"  f = {f_gcd}")
-print(f"  g = {g_gcd}")
-print(f"  gcd(f,g) = {d_gcd}")
-
-gcd_divf = {i for i in range(10000) if d_gcd.f(i) > 0 and f_gcd.f(i) % d_gcd.f(i) == 0}
-gcd_divg = {i for i in range(10000) if d_gcd.f(i) > 0 and g_gcd.f(i) % d_gcd.f(i) == 0}
-print(f"  gcd | f density = {density(gcd_divf):.4f}")
-print(f"  gcd | g density = {density(gcd_divg):.4f}")
-print(f"  → GCD transfers to ℕ* ✓")
-print()
-
-# --- Demo 5: Overspill ---
-print("=" * 60)
-print("DEMO 5: Overspill Principle Illustration")
-print("=" * 60)
-
-print("  Property P(i, n) = 'i > n' (downward closed)")
-print("  For each standard n: {i | P(i,n)} = {i | i > n}")
-print("  This set has density → 1 as N → ∞")
-for n in [10, 100, 1000]:
-    P_set = {i for i in range(10000) if i > n}
-    print(f"    n={n}: density = {density(P_set):.4f}")
-print()
-print("  Overspill: ∃ f(i) → ∞ with P(i, f(i)) = 'i > f(i)' U-large")
-print("  f = id works: {i | i > i} = ∅ → FAILS for f=id")
-print("  f(i) = i-1 works: {i | i > i-1} = ℕ\\{0} → SUCCESS")
-print("  The proof constructs the optimal f by case analysis.")
-print()
-
-# --- Demo 6: Trichotomy ---
-print("=" * 60)
-print("DEMO 6: Order Trichotomy in ℕ*")
-print("=" * 60)
-
-a = UltrapowerElement(lambda i: i**2, "i²")
-b = UltrapowerElement(lambda i: 2*i + 1, "2i+1")
-
-lt_set = a.lt_on(b)
-eq_set = a.eq_on(b)
-gt_set = {i for i in range(10000) if a.f(i) > b.f(i)}
-
-print(f"  a = {a}")
-print(f"  b = {b}")
-print(f"  a < b density: {density(lt_set):.4f}")
-print(f"  a = b density: {density(eq_set):.4f}")
-print(f"  a > b density: {density(gt_set):.4f}")
-print(f"  → Exactly one is 'U-large' (dominant density)")
-print()
-
-# --- Demo 7: Standard Part ---
-print("=" * 60)
-print("DEMO 7: Standard Part of Bounded Elements")
-print("=" * 60)
-
-bounded = UltrapowerElement(lambda i: i % 5, "i mod 5")
-print(f"  f = {bounded} (bounded by 4)")
-for m in range(5):
-    eq_set = {i for i in range(10000) if bounded.f(i) == m}
-    print(f"    f = {m} density: {density(eq_set):.4f}")
-print("  → No single value dominates (no free ultrafilter simulation)")
-print("  But for a TRUE free ultrafilter, exactly one value is selected!")
-print()
-
-print("=" * 60)
-print("All demos completed successfully.")
-print("=" * 60)
+    print()
 
 
+# ============================================================
+# Demo 3: Saturation Degree
+# ============================================================
+
+def demo_saturation_degree():
+    """
+    The saturation degree measures how far a predicate extends
+    into the "non-standard" realm (large indices).
+    """
+    print("=" * 60)
+    print("DEMO 3: Saturation Degree")
+    print("=" * 60)
+
+    predicates = {
+        "P(i) = 'i is even'": lambda i: i % 2 == 0,
+        "P(i) = 'i < 1000'": lambda i: i < 1000,
+        "P(i) = 'i has a factor > 10'": lambda i: any(i % p == 0 for p in range(11, i + 1)) if i > 1 else False,
+        "P(i) = 'i is not a perfect square'": lambda i: int(i ** 0.5) ** 2 != i,
+    }
+
+    N = 10000
+
+    for name, P in predicates.items():
+        # Estimate saturation degree: find the largest n such that
+        # P holds on "most" of {n, n+1, ..., N}
+        sat_deg = 0
+        for n in range(N):
+            count = sum(1 for i in range(n, min(n + 1000, N)) if P(i))
+            if count > 500:  # "U-large" ≈ density > 0.5
+                sat_deg = n
+            else:
+                break
+
+        if sat_deg >= N - 1001:
+            print(f"\n  {name}: satDeg = ∞ (holds everywhere)")
+        else:
+            print(f"\n  {name}: satDeg ≈ {sat_deg}")
+
+    print()
+
+
+# ============================================================
+# Demo 4: Prime/Composite Dichotomy
+# ============================================================
+
+def is_prime(n: int) -> bool:
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+
+def demo_prime_dichotomy():
+    """
+    The diagonal element ω = [id] is prime in some ultrapowers
+    and composite in others. We visualize the prime density.
+    """
+    print("=" * 60)
+    print("DEMO 4: Prime/Composite Dichotomy for ω = [id]")
+    print("=" * 60)
+
+    N = 100000
+    prime_count = 0
+    composite_count = 0
+
+    for i in range(2, N):
+        if is_prime(i):
+            prime_count += 1
+        else:
+            composite_count += 1
+
+    print(f"\n  Among {{2, ..., {N-1}}}:")
+    print(f"    Primes: {prime_count} ({100*prime_count/(N-2):.2f}%)")
+    print(f"    Composites: {composite_count} ({100*composite_count/(N-2):.2f}%)")
+    print(f"\n  → An ultrafilter concentrating on primes makes ω prime")
+    print(f"  → An ultrafilter concentrating on composites makes ω composite")
+    print(f"  → BOTH types of ultrafilter exist (proved in Lean!)")
+
+    # Show prime density decay (approximation to PNT)
+    print(f"\n  Prime density at different scales:")
+    for k in [100, 1000, 10000, 100000]:
+        count = sum(1 for i in range(2, k) if is_prime(i))
+        import math
+        theoretical = k / math.log(k)
+        print(f"    π({k}) = {count}, N/ln(N) ≈ {theoretical:.0f}, ratio = {count/theoretical:.4f}")
+
+    print()
+
+
+# ============================================================
+# Demo 5: Residue Class Selection
+# ============================================================
+
+def demo_residue_selection():
+    """
+    For any modulus m, an ultrafilter selects exactly one residue class.
+    """
+    print("=" * 60)
+    print("DEMO 5: Residue Class Selection")
+    print("=" * 60)
+
+    for m in [2, 3, 5, 7, 12]:
+        print(f"\n  Modulus m = {m}:")
+        print(f"    Residue classes: {{0, 1, ..., {m-1}}}")
+        print(f"    An ultrafilter selects EXACTLY ONE class")
+        print(f"    (proved for all m > 0 in Lean)")
+
+    print()
+
+
+if __name__ == "__main__":
+    demo_color_selection()
+    demo_standard_part()
+    demo_saturation_degree()
+    demo_prime_dichotomy()
+    demo_residue_selection()
+
+    print("=" * 60)
+    print("All demos complete. See Lean proofs in Novelty/NonStdArith/")
+    print("=" * 60)
+
+
+#!/usr/bin/env python3
 """
-Visualization: Ultrapower Elements and Transfer Properties
-==========================================================
-Standalone matplotlib visualization of non-standard arithmetic concepts.
+Visualization: Prime Density and the Ultrafilter Dichotomy
+
+Shows how the prime density decays (PNT), illustrating why BOTH
+prime-selecting and composite-selecting ultrafilters exist.
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import numpy as np
 import math
 
 
-def plot_ultrapower_elements():
-    """Plot standard vs non-standard elements of ℕ*."""
+def sieve_of_eratosthenes(limit: int) -> list:
+    """Return list of primes up to limit."""
+    is_prime = [True] * (limit + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(limit**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i*i, limit + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, limit + 1) if is_prime[i]]
+
+
+def main():
+    N = 100000
+    primes = set(sieve_of_eratosthenes(N))
+
+    # Compute running prime density
+    xs = list(range(2, N + 1))
+    prime_count = [0] * len(xs)
+    running = 0
+    for idx, x in enumerate(xs):
+        if x in primes:
+            running += 1
+        prime_count[idx] = running
+
+    densities = [prime_count[i] / xs[i] for i in range(len(xs))]
+    pnt_approx = [1 / math.log(x) if x > 1 else 0 for x in xs]
+
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Non-Standard Arithmetic: Ultrapower Elements', fontsize=16, fontweight='bold')
+    fig.suptitle('Non-Standard Arithmetic: Prime/Composite Dichotomy\nfor the Diagonal Element ω = [id]',
+                 fontsize=14, fontweight='bold')
 
-    N = 50
-    indices = np.arange(N)
-
-    # Plot 1: Standard vs Infinite elements
+    # Plot 1: Prime counting function
     ax1 = axes[0, 0]
-    ax1.plot(indices, np.full(N, 5), 'b-', linewidth=2, label='std(5) = (5, 5, 5, ...)')
-    ax1.plot(indices, indices, 'r-', linewidth=2, label='ω = (0, 1, 2, ...)')
-    ax1.plot(indices, indices**2, 'g--', linewidth=1.5, label='ω² = (0, 1, 4, ...)')
-    ax1.set_xlabel('Index i')
-    ax1.set_ylabel('Value')
-    ax1.set_title('Standard vs Non-Standard Elements')
+    ax1.plot(xs, prime_count, 'b-', linewidth=0.5, label='π(n)')
+    ax1.plot(xs, [x / math.log(x) if x > 1 else 0 for x in xs],
+             'r--', linewidth=1, label='n/ln(n)')
+    ax1.set_xlabel('n')
+    ax1.set_ylabel('π(n)')
+    ax1.set_title('Prime Counting Function π(n)')
     ax1.legend()
-    ax1.set_ylim(-5, 100)
     ax1.grid(True, alpha=0.3)
 
-    # Plot 2: Division algorithm transfer
+    # Plot 2: Prime density
     ax2 = axes[0, 1]
-    f_vals = indices**2 + 7
-    g_vals = indices + 1
-    q_vals = np.array([f_vals[i] // g_vals[i] for i in range(N)])
-    r_vals = np.array([f_vals[i] % g_vals[i] for i in range(N)])
-    check = np.array([f_vals[i] == g_vals[i] * q_vals[i] + r_vals[i] for i in range(N)])
-
-    ax2.plot(indices, q_vals, 'b-', linewidth=1.5, label='q = f÷g')
-    ax2.plot(indices, r_vals, 'r-', linewidth=1.5, label='r = f mod g')
-    ax2.fill_between(indices, 0, g_vals, alpha=0.1, color='green', label='g (divisor bound)')
-    ax2.plot(indices, g_vals, 'g--', linewidth=1, alpha=0.5)
-    ax2.set_xlabel('Index i')
-    ax2.set_ylabel('Value')
-    ax2.set_title(f'Division Algorithm Transfer (all {sum(check)} indices verify)')
+    ax2.plot(xs[10:], densities[10:], 'b-', linewidth=0.5, label='π(n)/n')
+    ax2.plot(xs[10:], pnt_approx[10:], 'r--', linewidth=1, label='1/ln(n)')
+    ax2.set_xlabel('n')
+    ax2.set_ylabel('Density')
+    ax2.set_title('Prime Density → 0 (but primes are infinite)')
     ax2.legend()
     ax2.grid(True, alpha=0.3)
+    ax2.set_ylim(0, 0.3)
 
-    # Plot 3: GCD transfer
+    # Plot 3: Local prime indicator (window of size 100)
     ax3 = axes[1, 0]
-    f_gcd = 6 * indices + 12
-    g_gcd = 4 * indices + 8
-    d_gcd = np.array([math.gcd(int(f_gcd[i]), int(g_gcd[i])) for i in range(N)])
+    window = 100
+    local_density = []
+    local_xs = []
+    for start in range(2, N - window, window):
+        count = sum(1 for i in range(start, start + window) if i in primes)
+        local_density.append(count / window)
+        local_xs.append(start + window // 2)
 
-    ax3.plot(indices, f_gcd, 'b-', linewidth=1.5, label='f = 6i+12')
-    ax3.plot(indices, g_gcd, 'r-', linewidth=1.5, label='g = 4i+8')
-    ax3.plot(indices, d_gcd, 'k-', linewidth=2, label='gcd(f,g)')
-    ax3.fill_between(indices, 0, d_gcd, alpha=0.2, color='yellow')
-    ax3.set_xlabel('Index i')
-    ax3.set_ylabel('Value')
-    ax3.set_title('GCD Transfer: gcd(6i+12, 4i+8)')
+    ax3.bar(local_xs[:200], local_density[:200], width=window * 0.9,
+            color=['blue' if d > 0.15 else 'red' for d in local_density[:200]],
+            alpha=0.6)
+    ax3.axhline(y=0.15, color='green', linestyle='--', label='Threshold')
+    ax3.set_xlabel('n (center of window)')
+    ax3.set_ylabel('Local prime density')
+    ax3.set_title('Local Prime Density (window=100)\nBlue=high, Red=low')
     ax3.legend()
     ax3.grid(True, alpha=0.3)
 
-    # Plot 4: Overspill illustration
+    # Plot 4: Saturation degree illustration
     ax4 = axes[1, 1]
-    N_overspill = 100
-    idx = np.arange(N_overspill)
+    predicates = {
+        'P(i) = "i is even"': lambda i: i % 2 == 0,
+        'P(i) = "i > 100"': lambda i: i > 100,
+        'P(i) = "i is prime"': lambda i: i in primes,
+        'P(i) = "i < 500"': lambda i: i < 500,
+    }
 
-    # P(i, n) = "i > n" — downward closed
-    # For each n, {i | i > n} contains {n+1, n+2, ...}
-    for n in [5, 15, 30, 50]:
-        P_set = idx > n
-        ax4.fill_between(idx, 0, P_set.astype(float) * 0.8 + n * 0.01,
-                        alpha=0.15, label=f'P(·, {n})')
-        ax4.axhline(y=n * 0.01, color='gray', linestyle=':', alpha=0.3)
+    colors = ['blue', 'green', 'red', 'orange']
+    for (name, P), color in zip(predicates.items(), colors):
+        sat_profile = []
+        check_range = range(0, 2000, 10)
+        for n in check_range:
+            count = sum(1 for i in range(n, n + 200) if P(i))
+            sat_profile.append(count / 200)
+        ax4.plot(list(check_range), sat_profile, color=color, label=name, linewidth=1.5)
 
-    # The overspill witness f(i) = i-1
-    f_overspill = np.maximum(idx - 1, 0)
-    ax4.plot(idx, f_overspill / N_overspill, 'k-', linewidth=2,
-            label='f(i) = i-1 (overspill)')
-    ax4.set_xlabel('Index i')
-    ax4.set_ylabel('Normalized value')
-    ax4.set_title('Overspill: P(i,n)="i>n" spills to non-standard f')
+    ax4.axhline(y=0.5, color='black', linestyle=':', label='U-large threshold')
+    ax4.set_xlabel('Starting index n')
+    ax4.set_ylabel('Density of P on [n, n+200]')
+    ax4.set_title('Saturation Degree: How Far P Extends')
     ax4.legend(fontsize=8)
     ax4.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('ultrapower_elements.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved ultrapower_elements.png")
-
-
-def plot_trichotomy():
-    """Visualize order trichotomy in ℕ*."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    fig.suptitle('Order Trichotomy in ℕ*: Exactly One Relation Holds U-a.e.',
-                fontsize=14, fontweight='bold')
-
-    N = 200
-    indices = np.arange(N)
-
-    comparisons = [
-        (lambda i: i**2, lambda i: 3*i + 10, 'i² vs 3i+10'),
-        (lambda i: 2*i + 1, lambda i: 2*i + 1, '2i+1 vs 2i+1'),
-        (lambda i: i + 100, lambda i: i**2, 'i+100 vs i²'),
-    ]
-
-    for ax, (f, g, title) in zip(axes, comparisons):
-        f_vals = np.array([f(i) for i in range(N)])
-        g_vals = np.array([g(i) for i in range(N)])
-
-        lt_mask = f_vals < g_vals
-        eq_mask = f_vals == g_vals
-        gt_mask = f_vals > g_vals
-
-        colors = np.where(lt_mask, 'blue', np.where(eq_mask, 'green', 'red'))
-
-        for i in range(N):
-            ax.bar(i, 1, color=colors[i], alpha=0.7, width=1.0)
-
-        lt_pct = sum(lt_mask) / N * 100
-        eq_pct = sum(eq_mask) / N * 100
-        gt_pct = sum(gt_mask) / N * 100
-
-        ax.set_title(f'{title}\n< {lt_pct:.0f}% = {eq_pct:.0f}% > {gt_pct:.0f}%')
-        ax.set_xlabel('Index i')
-        ax.set_yticks([])
-
-    blue_patch = mpatches.Patch(color='blue', alpha=0.7, label='f < g')
-    green_patch = mpatches.Patch(color='green', alpha=0.7, label='f = g')
-    red_patch = mpatches.Patch(color='red', alpha=0.7, label='f > g')
-    fig.legend(handles=[blue_patch, green_patch, red_patch],
-              loc='lower center', ncol=3, fontsize=12)
-
-    plt.tight_layout(rect=[0, 0.08, 1, 0.95])
-    plt.savefig('trichotomy.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved trichotomy.png")
-
-
-def plot_standard_part():
-    """Visualize the standard part theorem."""
-    fig, ax = plt.subplots(figsize=(12, 6))
-    fig.suptitle('Standard Part Theorem: Bounded Elements are Standard',
-                fontsize=14, fontweight='bold')
-
-    N = 500
-    indices = np.arange(N)
-    bound = 4
-
-    # f(i) = i mod 5 (bounded by 4)
-    f_vals = indices % 5
-
-    # Color each point by its value
-    colors_map = {0: '#1f77b4', 1: '#ff7f0e', 2: '#2ca02c', 3: '#d62728', 4: '#9467bd'}
-    colors = [colors_map[v] for v in f_vals]
-
-    ax.scatter(indices, f_vals, c=colors, s=5, alpha=0.7)
-
-    # Add horizontal lines for each standard value
-    for m in range(5):
-        count = sum(1 for v in f_vals if v == m)
-        density = count / N
-        ax.axhline(y=m, color=colors_map[m], linestyle='--', alpha=0.5)
-        ax.text(N + 5, m, f'm={m}: {density:.1%}', color=colors_map[m],
-               fontsize=10, va='center')
-
-    ax.set_xlabel('Index i', fontsize=12)
-    ax.set_ylabel('f(i) = i mod 5', fontsize=12)
-    ax.set_title(f'f = i mod 5 (bounded by {bound})\n'
-                'Ultrafilter selects exactly one value m with {{i | f(i)=m}} ∈ U',
-                fontsize=11)
-    ax.set_xlim(-10, N + 60)
-    ax.set_ylim(-0.5, 5)
-    ax.grid(True, alpha=0.2)
-
-    plt.tight_layout()
-    plt.savefig('standard_part.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved standard_part.png")
+    plt.savefig('viz_prime_density.png', dpi=150, bbox_inches='tight')
+    print("Saved: viz_prime_density.png")
 
 
 if __name__ == "__main__":
-    plot_ultrapower_elements()
-    plot_trichotomy()
-    plot_standard_part()
-    print("\nAll visualizations generated.")
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Ultrafilter Color Selection and Residue Classes
+
+Demonstrates how ultrafilters partition ℕ by selecting one color
+from any finite coloring, and one residue class from any modulus.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def main():
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig.suptitle('Ultrafilter Selection: Color Classes and Residue Classes',
+                 fontsize=14, fontweight='bold')
+
+    N = 500
+
+    # Plot 1: 2-coloring by parity
+    ax1 = axes[0, 0]
+    xs = np.arange(N)
+    colors_parity = ['blue' if x % 2 == 0 else 'red' for x in xs]
+    ax1.scatter(xs, [x % 2 for x in xs], c=colors_parity, s=2, alpha=0.5)
+    ax1.set_xlabel('n')
+    ax1.set_ylabel('c(n)')
+    ax1.set_title('2-Coloring: Parity\nUltrafilter selects ONE class')
+    ax1.set_yticks([0, 1])
+    ax1.set_yticklabels(['Even (blue)', 'Odd (red)'])
+
+    # Plot 2: 3-coloring by mod 3
+    ax2 = axes[0, 1]
+    color_map = {0: 'blue', 1: 'green', 2: 'red'}
+    colors_mod3 = [color_map[x % 3] for x in xs]
+    ax2.scatter(xs, [x % 3 for x in xs], c=colors_mod3, s=2, alpha=0.5)
+    ax2.set_xlabel('n')
+    ax2.set_ylabel('c(n)')
+    ax2.set_title('3-Coloring: mod 3\nUltrafilter selects ONE residue class')
+    ax2.set_yticks([0, 1, 2])
+
+    # Plot 3: Residue class densities for different moduli
+    ax3 = axes[1, 0]
+    moduli = [2, 3, 5, 7, 11]
+    for m in moduli:
+        densities = []
+        for r in range(m):
+            count = sum(1 for i in range(N) if i % m == r)
+            densities.append(count / N)
+        ax3.bar([f"m={m},r={r}" for r in range(m)], densities,
+                alpha=0.6, label=f'mod {m}')
+
+    ax3.set_xlabel('Residue class')
+    ax3.set_ylabel('Density')
+    ax3.set_title('Residue Class Densities\n(Equal by symmetry → ultrafilter breaks tie)')
+    ax3.tick_params(axis='x', rotation=90, labelsize=6)
+
+    # Plot 4: Standard part illustration
+    ax4 = axes[1, 1]
+    # Sequence f(i) = i mod 5
+    f_vals = [i % 5 for i in range(N)]
+    window = 50
+    for m in range(5):
+        running = []
+        for start in range(0, N - window, 5):
+            count = sum(1 for i in range(start, start + window) if f_vals[i] == m)
+            running.append(count / window)
+        ax4.plot(range(0, N - window, 5), running,
+                 label=f'Density of f=={m}', linewidth=1.5)
+
+    ax4.axhline(y=0.5, color='black', linestyle=':', label='Majority threshold')
+    ax4.set_xlabel('Window start')
+    ax4.set_ylabel('Density')
+    ax4.set_title('Standard Part: f(i) = i mod 5\nUltrafilter selects one value')
+    ax4.legend(fontsize=8)
+    ax4.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('viz_ultrafilter_selection.png', dpi=150, bbox_inches='tight')
+    print("Saved: viz_ultrafilter_selection.png")
+
+
+if __name__ == "__main__":
+    main()

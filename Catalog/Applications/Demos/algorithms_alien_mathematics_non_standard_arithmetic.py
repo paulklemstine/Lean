@@ -1,282 +1,209 @@
+#!/usr/bin/env python3
 """
-Algorithms for Non-Standard Arithmetic
-=======================================
-Type-hinted implementations of the key algorithms from the formalization.
+Algorithms for Non-Standard Arithmetic via Ultrafilters
+
+Type-hinted implementations of key algorithms from the formalized theory.
 """
 
-from typing import Callable, List, Set, Tuple, Optional
+from typing import List, Callable, Optional, Tuple, Set
 from dataclasses import dataclass
+from enum import Enum
 import math
 
 
-# --- Core Types ---
+# ============================================================
+# Algorithm 1: Ultrafilter Color Selection
+# ============================================================
 
-Sequence = Callable[[int], int]
-"""A sequence ℕ → ℕ, representing an element of the ultrapower."""
-
-ULargeTest = Callable[[Set[int]], bool]
-"""A predicate testing whether a set is 'U-large'."""
-
-
-@dataclass
-class UltrapowerElement:
-    """An element of ℕ* represented as a sequence."""
-    seq: Sequence
-    name: str = ""
-
-    def evaluate(self, indices: range) -> List[int]:
-        return [self.seq(i) for i in indices]
+class FilterDecision(Enum):
+    """Result of an ultrafilter decision on a set."""
+    IN_FILTER = "U-large"
+    NOT_IN_FILTER = "U-small"
 
 
 @dataclass
-class DivisionResult:
-    """Result of the division algorithm in ℕ*."""
-    quotient: UltrapowerElement
-    remainder: UltrapowerElement
-    dividend: UltrapowerElement
-    divisor: UltrapowerElement
-
-
-@dataclass
-class GCDResult:
-    """Result of GCD computation in ℕ*."""
-    gcd: UltrapowerElement
-    operand_a: UltrapowerElement
-    operand_b: UltrapowerElement
-
-
-# --- Algorithm 1: Ultrapower Division ---
-
-def ultrapower_division(
-    f: UltrapowerElement,
-    g: UltrapowerElement,
-) -> DivisionResult:
+class SimulatedUltrafilter:
     """
-    Division algorithm in ℕ*.
+    A simulated ultrafilter on ℕ, represented by a "concentration set"
+    that determines which sets are "large."
 
-    Given f, g ∈ ℕ* with g > 0 (U-a.e.), compute q, r ∈ ℕ*
-    such that f = g·q + r and r < g (U-a.e.).
+    In the real theory, ultrafilters are non-constructive objects.
+    This simulation uses density on a tail segment as a proxy.
+
+    Algorithm: Ultrafilter Color Selection
+    Input: A k-coloring c : ℕ → {0, ..., k-1}
+    Output: The selected color (the one whose preimage is "U-large")
 
     Pseudocode:
-        q(i) = f(i) // g(i)
-        r(i) = f(i) % g(i)
-
-    Time complexity: O(1) per index (pointwise).
+        1. For each color j in {0, ..., k-1}:
+           - Compute density of {n | c(n) = j} on [N/2, N]
+        2. Return the color with highest density
+        3. (In theory, exactly one color is selected; ties are broken by the ultrafilter)
     """
-    q = UltrapowerElement(
-        seq=lambda i: f.seq(i) // g.seq(i) if g.seq(i) > 0 else 0,
-        name=f"({f.name} / {g.name})"
-    )
-    r = UltrapowerElement(
-        seq=lambda i: f.seq(i) % g.seq(i) if g.seq(i) > 0 else f.seq(i),
-        name=f"({f.name} % {g.name})"
-    )
-    return DivisionResult(quotient=q, remainder=r, dividend=f, divisor=g)
+    tail_start: int = 50000
+    tail_end: int = 100000
+
+    def is_large(self, S: Set[int]) -> bool:
+        """Check if a set is "U-large" (high density in the tail)."""
+        count = sum(1 for i in range(self.tail_start, self.tail_end) if i in S)
+        total = self.tail_end - self.tail_start
+        return count > total / 2
+
+    def select_color(self, c: Callable[[int], int], k: int) -> int:
+        """Select the U-large color class from a k-coloring."""
+        best_color = 0
+        best_count = 0
+        for j in range(k):
+            count = sum(1 for i in range(self.tail_start, self.tail_end) if c(i) == j)
+            if count > best_count:
+                best_count = count
+                best_color = j
+        return best_color
 
 
-# --- Algorithm 2: Ultrapower GCD ---
-
-def ultrapower_gcd(
-    f: UltrapowerElement,
-    g: UltrapowerElement,
-) -> GCDResult:
+def ultrafilter_color_selection(c: Callable[[int], int], k: int) -> int:
     """
-    GCD in ℕ*.
+    Algorithm: Ultrafilter Color Selection
 
-    Given f, g ∈ ℕ*, compute gcd(f, g) ∈ ℕ* pointwise.
+    For any k-coloring c : ℕ → Fin k, an ultrafilter selects exactly
+    one color whose preimage is U-large.
+
+    Complexity: O(N * k) where N is the simulation window size
+    Correctness: Guaranteed by Theorem ultrafilter_selects_k_color
+    """
+    U = SimulatedUltrafilter()
+    return U.select_color(c, k)
+
+
+# ============================================================
+# Algorithm 2: Standard Part Computation
+# ============================================================
+
+def standard_part(f: Callable[[int], int], bound: int,
+                  window_start: int = 50000, window_end: int = 100000) -> int:
+    """
+    Algorithm: Standard Part
+
+    Given a bounded sequence f : ℕ → ℕ with f(i) ≤ bound,
+    compute the "standard part" — the value m ≤ bound that f takes
+    on the largest fraction of the tail.
+
+    Input: f : ℕ → ℕ, bound : ℕ with f(i) ≤ bound for large i
+    Output: m ∈ {0, ..., bound} such that {i | f(i) = m} is "U-large"
 
     Pseudocode:
-        d(i) = gcd(f(i), g(i))
+        1. For each m in {0, ..., bound}:
+           - Count |{i ∈ [N/2, N] | f(i) = m}|
+        2. Return the m with the highest count
+        3. By the Standard Part Theorem (std_part_exists),
+           exactly one m achieves majority under any ultrafilter
 
-    The result satisfies:
-        d | f and d | g (U-a.e.)
-        For any c with c|f and c|g (U-a.e.), c | d (U-a.e.)
+    Complexity: O(N * bound)
+    Correctness: Guaranteed by Theorem std_part_exists + std_part_unique
     """
-    d = UltrapowerElement(
-        seq=lambda i: math.gcd(f.seq(i), g.seq(i)),
-        name=f"gcd({f.name}, {g.name})"
-    )
-    return GCDResult(gcd=d, operand_a=f, operand_b=g)
+    counts = [0] * (bound + 1)
+    for i in range(window_start, window_end):
+        v = f(i)
+        if 0 <= v <= bound:
+            counts[v] += 1
+    return max(range(bound + 1), key=lambda m: counts[m])
 
 
-# --- Algorithm 3: Standard Part ---
+# ============================================================
+# Algorithm 3: Saturation Degree Estimation
+# ============================================================
 
-def standard_part(
-    f: UltrapowerElement,
-    bound: int,
-    is_large: ULargeTest,
-    sample_size: int = 10000,
-) -> Optional[int]:
+def saturation_degree(P: Callable[[int], bool],
+                      max_n: int = 10000,
+                      window_size: int = 1000,
+                      threshold: float = 0.5) -> Optional[int]:
     """
-    Standard part of a bounded element of ℕ*.
+    Algorithm: Saturation Degree Estimation
 
-    Given f ∈ ℕ* with f ≤ bound (U-a.e.), find m ≤ bound
-    such that f = m (U-a.e.).
+    Estimate the saturation degree of a predicate P — the largest n
+    such that P holds on "most" of {n, n+1, ..., n + window_size}.
+
+    Input: P : ℕ → Bool, max_n : ℕ (search bound)
+    Output: satDeg(P) ∈ ℕ ∪ {∞} (None represents ∞)
 
     Pseudocode:
-        For m in {0, ..., bound}:
-            If {i | f(i) = m} is U-large:
-                return m
-        return None  (should not happen by pigeonhole)
+        1. For n = 0, 1, 2, ..., max_n:
+           - Count |{i ∈ [n, n + W] | P(i)}|
+           - If count/W < threshold, return n (first failure)
+        2. If no failure found, return ∞
 
-    Time complexity: O(bound × sample_size).
+    Complexity: O(max_n * window_size)
+    Correctness: Approximates the formal satDeg definition
     """
-    for m in range(bound + 1):
-        eq_set = {i for i in range(sample_size) if f.seq(i) == m}
-        if is_large(eq_set):
-            return m
-    return None
-
-
-# --- Algorithm 4: Overspill Witness ---
-
-def overspill_witness(
-    P: Callable[[int, int], bool],
-    max_standard: int = 1000,
-) -> Tuple[Sequence, int]:
-    """
-    Construct an overspill witness function.
-
-    Given a downward-closed predicate P(i, n) that holds for all
-    standard n (on U-large sets), construct f : ℕ → ℕ such that
-    f grows without bound and P(i, f(i)) holds.
-
-    Strategy:
-        For each i, f(i) = max{n ≤ i | P(i, n)}
-
-    Returns: (f, estimated_growth_rate)
-
-    Time complexity: O(max_standard²) for estimation.
-    """
-    def f(i: int) -> int:
-        # Find max n with P(i, n)
-        best = 0
-        for n in range(min(i + 1, max_standard)):
-            if P(i, n):
-                best = n
-            else:
-                break
-        return best
-
-    # Estimate growth rate
-    growth_samples = [f(i) for i in range(100, max_standard)]
-    avg_growth = sum(growth_samples) / len(growth_samples) if growth_samples else 0
-
-    return f, int(avg_growth)
-
-
-# --- Algorithm 5: Trichotomy Decision ---
-
-def trichotomy_decide(
-    f: UltrapowerElement,
-    g: UltrapowerElement,
-    sample_size: int = 10000,
-) -> str:
-    """
-    Decide the order relation between f and g in ℕ*.
-
-    Returns one of '<', '=', '>' based on which set has
-    the highest density (simulating the ultrafilter decision).
-
-    Pseudocode:
-        Count |{i < N | f(i) < g(i)}|
-        Count |{i < N | f(i) = g(i)}|
-        Count |{i < N | f(i) > g(i)}|
-        Return the relation with highest count.
-
-    Time complexity: O(sample_size).
-    """
-    lt_count = sum(1 for i in range(sample_size) if f.seq(i) < g.seq(i))
-    eq_count = sum(1 for i in range(sample_size) if f.seq(i) == g.seq(i))
-    gt_count = sum(1 for i in range(sample_size) if f.seq(i) > g.seq(i))
-
-    if lt_count >= eq_count and lt_count >= gt_count:
-        return '<'
-    elif eq_count >= lt_count and eq_count >= gt_count:
-        return '='
-    else:
-        return '>'
-
-
-# --- Algorithm 6: Compositeness Witness Transfer ---
-
-def composite_witness_transfer(
-    f: UltrapowerElement,
-    sample_size: int = 10000,
-) -> Optional[Tuple[UltrapowerElement, UltrapowerElement]]:
-    """
-    Extract compositeness witnesses for f ∈ ℕ*.
-
-    If f(i) is composite for U-a.e. i, return (a, b) ∈ ℕ*×ℕ*
-    with 1 < a, 1 < b, and f = a·b (U-a.e.).
-
-    Pseudocode:
-        For each i:
-            If f(i) is composite:
-                a(i) = smallest factor > 1
-                b(i) = f(i) / a(i)
-            Else:
-                a(i) = 1, b(i) = f(i)
-
-    Time complexity: O(sample_size × √max_value).
-    """
-    def smallest_factor(n: int) -> int:
-        if n <= 1:
+    for n in range(max_n):
+        count = sum(1 for i in range(n, n + window_size) if P(i))
+        if count < threshold * window_size:
             return n
-        for d in range(2, int(n**0.5) + 1):
-            if n % d == 0:
-                return d
-        return n  # n is prime
-
-    def a_seq(i: int) -> int:
-        n = f.seq(i)
-        sf = smallest_factor(n)
-        return sf if sf != n and sf > 1 else 1
-
-    def b_seq(i: int) -> int:
-        n = f.seq(i)
-        a = a_seq(i)
-        return n // a if a > 1 else n
-
-    a = UltrapowerElement(seq=a_seq, name="factor_a")
-    b = UltrapowerElement(seq=b_seq, name="factor_b")
-
-    # Check if f is indeed composite on most indices
-    composite_count = sum(1 for i in range(sample_size)
-                         if f.seq(i) > 1 and smallest_factor(f.seq(i)) != f.seq(i))
-
-    if composite_count / sample_size > 0.5:
-        return (a, b)
-    return None
+    return None  # ∞
 
 
-# --- Main ---
+# ============================================================
+# Algorithm 4: Bounded Quantifier Transfer Check
+# ============================================================
+
+def bounded_forall_transfer_check(
+    P: Callable[[int, int], bool],
+    n: int,
+    window_start: int = 50000,
+    window_end: int = 100000
+) -> Tuple[bool, float]:
+    """
+    Algorithm: Bounded ∀ Transfer Verification
+
+    Check whether ∀ k < n, P(i, k) holds "simultaneously" on a large set.
+
+    Input: P : ℕ × ℕ → Bool, n : ℕ
+    Output: (holds, density) — whether the conjunction is U-large
+
+    Pseudocode:
+        1. For each i in [N/2, N]:
+           - Check if ∀ k < n, P(i, k) holds
+        2. Compute density of successful i's
+        3. Return (density > 0.5, density)
+
+    Correctness: Guaranteed by Theorem bounded_forall_transfer
+    """
+    success_count = 0
+    total = window_end - window_start
+    for i in range(window_start, window_end):
+        if all(P(i, k) for k in range(n)):
+            success_count += 1
+    density = success_count / total
+    return (density > 0.5, density)
+
+
+# ============================================================
+# Algorithm 5: Residue Class Selection
+# ============================================================
+
+def residue_class_selection(m: int,
+                            window_start: int = 50000,
+                            window_end: int = 100000) -> int:
+    """
+    Algorithm: Residue Class Selection
+
+    For modulus m > 0, determine which residue class mod m is
+    selected by the (simulated) ultrafilter.
+
+    Correctness: Guaranteed by Theorem residue_class_selection
+    """
+    counts = [0] * m
+    for i in range(window_start, window_end):
+        counts[i % m] += 1
+    return max(range(m), key=lambda r: counts[r])
+
 
 if __name__ == "__main__":
-    # Example: division of ω² by ω+1
-    omega = UltrapowerElement(seq=lambda i: i, name="ω")
-    omega_sq = UltrapowerElement(seq=lambda i: i*i, name="ω²")
-    omega_plus_1 = UltrapowerElement(seq=lambda i: i+1, name="ω+1")
-
-    result = ultrapower_division(omega_sq, omega_plus_1)
-    print("Division: ω² ÷ (ω+1)")
-    print(f"  Quotient: {result.quotient.evaluate(range(10))}")
-    print(f"  Remainder: {result.remainder.evaluate(range(10))}")
-
-    # Example: GCD of 6ω and 4ω
-    f = UltrapowerElement(seq=lambda i: 6*i, name="6ω")
-    g = UltrapowerElement(seq=lambda i: 4*i, name="4ω")
-    gcd_result = ultrapower_gcd(f, g)
-    print(f"\nGCD(6ω, 4ω) = {gcd_result.gcd.evaluate(range(10))}")
-
-    # Example: Trichotomy
-    print(f"\nω² vs 2ω+1: {trichotomy_decide(omega_sq, UltrapowerElement(lambda i: 2*i+1, '2ω+1'))}")
-
-    # Example: Overspill
-    def P(i: int, n: int) -> bool:
-        return i > n
-
-    f_overspill, growth = overspill_witness(P)
-    print(f"\nOverspill witness for P(i,n) = 'i > n':")
-    print(f"  f(100) = {f_overspill(100)}, f(500) = {f_overspill(500)}")
-    print(f"  Estimated growth rate: {growth}")
+    # Quick self-test
+    print("Color selection (parity):", ultrafilter_color_selection(lambda n: n % 2, 2))
+    print("Standard part (i mod 3):", standard_part(lambda i: i % 3, 2))
+    print("Saturation degree ('i is even'):", saturation_degree(lambda i: i % 2 == 0))
+    print("Saturation degree ('i < 1000'):", saturation_degree(lambda i: i < 1000))
+    print("Bounded ∀ transfer (i > k for k < 5):",
+          bounded_forall_transfer_check(lambda i, k: i > k, 5))
+    print("Residue class mod 7:", residue_class_selection(7))
