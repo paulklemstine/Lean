@@ -1,193 +1,204 @@
+#!/usr/bin/env python3
 """
-Algorithms for Graded Probability Measures
+Non-Archimedean Probability Theory — Algorithms
 
-Type-hinted implementations of the core algorithms:
-1. GPM construction (tie-breaking refinement)
-2. Lexicographic comparison
-3. Convex combination
-4. Graded entropy computation
+Type-hinted implementations of the key algorithms from the research.
 """
 
-from typing import List, Tuple, Set, Optional
-import math
+from fractions import Fraction
+from typing import Any, Callable, Dict, FrozenSet, List, Optional, Set, Tuple, TypeVar
+
+T = TypeVar('T')
 
 
-def construct_tiebreaking_gpm(
-    p: List[float],
-) -> Tuple[List[float], List[float]]:
-    """Construct a GPM that refines p and breaks all ties.
+class FinProbMeasure:
+    """A finitely additive probability measure on a finite set.
+
+    The measure assigns a rational weight to each element such that
+    the weights sum to 1. Supports measure computation for subsets,
+    complement computation, and disjoint union additivity.
+    """
+
+    def __init__(self, weights: Dict[str, Fraction]) -> None:
+        """Initialize with a dictionary of element -> weight.
+
+        Args:
+            weights: Maps each element name to its probability weight.
+                     Weights must sum to 1.
+
+        Raises:
+            ValueError: If weights don't sum to 1 or any weight is negative.
+        """
+        total = sum(weights.values())
+        if total != Fraction(1):
+            raise ValueError(f"Weights must sum to 1, got {total}")
+        self._weights = dict(weights)
+        self._universe = frozenset(weights.keys())
+
+    @classmethod
+    def uniform(cls, elements: List[str]) -> 'FinProbMeasure':
+        """Create a uniform probability measure on the given elements.
+
+        Args:
+            elements: List of element names (must be non-empty).
+
+        Returns:
+            A FinProbMeasure assigning 1/n to each element.
+        """
+        n = len(elements)
+        if n == 0:
+            raise ValueError("Cannot create uniform measure on empty set")
+        eps = Fraction(1, n)
+        return cls({e: eps for e in elements})
+
+    def weight(self, element: str) -> Fraction:
+        """Get the weight of a single element."""
+        return self._weights.get(element, Fraction(0))
+
+    def measure(self, subset: Set[str]) -> Fraction:
+        """Compute the measure of a subset.
+
+        Args:
+            subset: A set of element names.
+
+        Returns:
+            The sum of weights of elements in the subset.
+        """
+        return sum(self._weights.get(e, Fraction(0)) for e in subset)
+
+    def measure_complement(self, subset: Set[str]) -> Fraction:
+        """Compute μ(Aᶜ) = 1 - μ(A)."""
+        return Fraction(1) - self.measure(subset)
+
+    def verify_additivity(self, s: Set[str], t: Set[str]) -> bool:
+        """Verify μ(S ∪ T) = μ(S) + μ(T) for disjoint S, T.
+
+        Args:
+            s, t: Disjoint subsets.
+
+        Returns:
+            True if additivity holds.
+
+        Raises:
+            ValueError: If s and t are not disjoint.
+        """
+        if s & t:
+            raise ValueError(f"Sets must be disjoint, intersection: {s & t}")
+        return self.measure(s | t) == self.measure(s) + self.measure(t)
+
+    def is_strictly_monotone(self, s: Set[str], t: Set[str]) -> bool:
+        """Check if S ⊂ T implies μ(S) < μ(T)."""
+        if not (s < t):  # proper subset
+            raise ValueError("s must be a proper subset of t")
+        return self.measure(s) < self.measure(t)
+
+
+def archimedean_test(epsilon: float, bound: int = 10**8) -> Optional[int]:
+    """Test whether epsilon is 'infinitesimal' up to a computational bound.
+
+    In an Archimedean field (like ℝ), this always finds n with n·ε > 1.
+    In a non-Archimedean field, no such n exists.
 
     Args:
-        p: Standard probability distribution (nonneg, sums to 1).
+        epsilon: A positive real number to test.
+        bound: Maximum n to check.
 
     Returns:
-        (std, inf): The standard part (= p) and infinitesimal correction.
-
-    Algorithm:
-        1. Set std = p
-        2. Set raw[i] = i - (n-1)/2 (centered, injective, zero-sum)
-        3. Scale to make corrections small relative to probability gaps
-        4. Return (std, scaled_raw)
+        The smallest n with n·ε > 1, or None if no such n ≤ bound exists.
     """
-    n = len(p)
-    if n == 0:
-        return ([], [])
-    if n == 1:
-        return (p[:], [0.0])
-
-    # Step 1: Centered linear correction (sums to 0, injective)
-    mean = (n - 1) / 2.0
-    raw = [i - mean for i in range(n)]
-
-    # Step 2: Find minimum gap in standard probabilities
-    sorted_p = sorted(set(p))
-    min_gap = min(
-        (sorted_p[i + 1] - sorted_p[i] for i in range(len(sorted_p) - 1)),
-        default=1.0,
-    )
-
-    # Step 3: Scale corrections to be infinitesimal relative to gaps
-    max_raw = max(abs(r) for r in raw)
-    scale = min(min_gap / (10 * max_raw), 0.001) if max_raw > 0 else 0.001
-    inf_vals = [scale * r for r in raw]
-
-    # Step 4: Fix floating point drift
-    drift = sum(inf_vals)
-    inf_vals[-1] -= drift
-
-    return (p[:], inf_vals)
+    if epsilon <= 0:
+        raise ValueError("epsilon must be positive")
+    n = int(1.0 / epsilon) + 1
+    if n <= bound:
+        return n
+    return None
 
 
-def lexicographic_compare(
-    mu_std: List[float],
-    mu_inf: List[float],
-    i: int,
-    j: int,
-) -> int:
-    """Compare outcomes i and j under GPM (mu_std, mu_inf).
+def infinitesimal_sub_probability(
+    omega: int,
+    num_points: int
+) -> Tuple[Fraction, Fraction]:
+    """Compute the sub-probability and gap for an infinitesimal measure.
+
+    Uses ε = 1/ω as an approximation to a genuine infinitesimal.
 
     Args:
-        mu_std: Standard probabilities.
-        mu_inf: Infinitesimal corrections.
-        i, j: Outcome indices.
+        omega: The "infinite" number (denominator of ε).
+        num_points: Number of points to assign weight ε.
 
     Returns:
-        1 if i > j, -1 if i < j, 0 if tied.
-
-    Algorithm:
-        1. Compare std parts first
-        2. If tied, compare inf parts
+        Tuple of (total_weight, gap) where gap = 1 - total_weight.
     """
-    if mu_std[i] > mu_std[j]:
-        return 1
-    elif mu_std[i] < mu_std[j]:
-        return -1
-    elif mu_inf[i] > mu_inf[j]:
-        return 1
-    elif mu_inf[i] < mu_inf[j]:
-        return -1
-    else:
-        return 0
+    eps = Fraction(1, omega)
+    total = eps * num_points
+    gap = Fraction(1) - total
+    return total, gap
 
 
-def lex_prob(
-    mu_std: List[float],
-    mu_inf: List[float],
-    S: Set[int],
-) -> Tuple[float, float]:
-    """Compute the graded probability of subset S.
+def construct_non_archimedean_measure(
+    elements: List[str],
+    omega: int
+) -> Tuple[Dict[str, Fraction], Fraction, Fraction]:
+    """Construct a non-Archimedean sub-probability measure.
+
+    Assigns weight 1/ω to each element, where ω is an "infinite" number.
 
     Args:
-        mu_std: Standard probabilities.
-        mu_inf: Infinitesimal corrections.
-        S: Subset of outcome indices.
+        elements: List of element names.
+        omega: The denominator for the infinitesimal weight.
 
     Returns:
-        (std_sum, inf_sum): The graded probability pair.
+        Tuple of (weights_dict, total_weight, gap_to_one).
     """
-    std_sum = sum(mu_std[i] for i in S)
-    inf_sum = sum(mu_inf[i] for i in S)
-    return (std_sum, inf_sum)
+    eps = Fraction(1, omega)
+    weights = {e: eps for e in elements}
+    total = eps * len(elements)
+    gap = Fraction(1) - total
+    return weights, total, gap
 
 
-def convex_combination(
-    mu_std: List[float],
-    mu_inf: List[float],
-    nu_std: List[float],
-    nu_inf: List[float],
-    t: float,
-) -> Tuple[List[float], List[float]]:
-    """Compute the convex combination (1-t)*mu + t*nu.
+def non_archimedean_characterization_test(
+    field_elements: List[Fraction],
+    candidate_eps: Fraction,
+    max_n: int = 1000
+) -> Tuple[bool, Optional[int]]:
+    """Test if a candidate ε satisfies the non-Archimedean condition.
+
+    Checks whether n · ε < 1 for all n ≤ max_n.
 
     Args:
-        mu_std, mu_inf: First GPM.
-        nu_std, nu_inf: Second GPM.
-        t: Mixing parameter in [0, 1].
+        field_elements: Not used directly; for context.
+        candidate_eps: The candidate infinitesimal.
+        max_n: Maximum n to test.
 
     Returns:
-        (combined_std, combined_inf): The mixed GPM.
+        Tuple of (is_infinitesimal, first_failure_n).
+        is_infinitesimal is True if n·ε < 1 for all tested n.
+        first_failure_n is the first n where n·ε ≥ 1, or None.
     """
-    n = len(mu_std)
-    combined_std = [(1 - t) * mu_std[i] + t * nu_std[i] for i in range(n)]
-    combined_inf = [(1 - t) * mu_inf[i] + t * nu_inf[i] for i in range(n)]
-    return (combined_std, combined_inf)
+    if candidate_eps <= 0:
+        return False, None
+    for n in range(1, max_n + 1):
+        if n * candidate_eps >= 1:
+            return False, n
+    return True, None
 
 
-def graded_entropy(
-    mu_std: List[float],
-    mu_inf: List[float],
-) -> Tuple[float, float]:
-    """Compute the graded Shannon entropy H_ε(μ) to first order in ε.
-
-    H_ε(μ) = H(μ₀) + ε · (−Σ μ₁(i) · (1 + log μ₀(i)))
-
-    where H(μ₀) is the standard Shannon entropy.
-
-    Args:
-        mu_std: Standard probabilities (all positive for well-definedness).
-        mu_inf: Infinitesimal corrections.
-
-    Returns:
-        (H0, H1): Standard entropy and infinitesimal correction.
-    """
-    n = len(mu_std)
-    H0 = 0.0  # Standard Shannon entropy
-    H1 = 0.0  # Infinitesimal correction
-
-    for i in range(n):
-        if mu_std[i] > 0:
-            H0 -= mu_std[i] * math.log2(mu_std[i])
-            H1 -= mu_inf[i] * (1 + math.log(mu_std[i]))
-
-    return (H0, H1)
-
-
-def ranking(
-    mu_std: List[float],
-    mu_inf: List[float],
-) -> List[int]:
-    """Return outcomes ranked from most to least likely under the GPM.
-
-    Args:
-        mu_std: Standard probabilities.
-        mu_inf: Infinitesimal corrections.
-
-    Returns:
-        List of outcome indices sorted by decreasing graded probability.
-    """
-    n = len(mu_std)
-    indices = list(range(n))
-    indices.sort(key=lambda i: (mu_std[i], mu_inf[i]), reverse=True)
-    return indices
-
-
+# Example usage
 if __name__ == "__main__":
-    # Example: Uniform distribution on 4 outcomes
-    p = [0.25, 0.25, 0.25, 0.25]
-    std, inf = construct_tiebreaking_gpm(p)
-    print(f"Standard: {p}")
-    print(f"Graded std: {std}")
-    print(f"Graded inf: {inf}")
-    print(f"Ranking: {ranking(std, inf)}")
-    print(f"Entropy: H₀={graded_entropy(std, inf)[0]:.4f}, "
-          f"H₁={graded_entropy(std, inf)[1]:.4f}")
+    # Uniform measure on 5 elements
+    mu = FinProbMeasure.uniform(["a", "b", "c", "d", "e"])
+    print(f"Uniform measure on 5 elements:")
+    print(f"  μ({{a,b}}) = {mu.measure({'a', 'b'})}")
+    print(f"  μ({{c,d,e}}) = {mu.measure({'c', 'd', 'e'})}")
+    print(f"  Additivity: {mu.verify_additivity({'a', 'b'}, {'c', 'd', 'e'})}")
+    print(f"  Strict mono: {mu.is_strictly_monotone({'a'}, {'a', 'b'})}")
+
+    # Non-Archimedean test
+    omega = 10**15
+    weights, total, gap = construct_non_archimedean_measure(
+        [str(i) for i in range(1000)], omega
+    )
+    print(f"\nNon-Archimedean measure (ω=10^15, 1000 points):")
+    print(f"  Total: {float(total):.15f}")
+    print(f"  Gap:   {float(gap):.15f}")

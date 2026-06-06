@@ -1,213 +1,164 @@
+#!/usr/bin/env python3
 """
-Graded Probability Measures: Interactive Demonstrations
+Non-Archimedean Probability Theory — Demonstration
 
-Demonstrates the key properties of GPMs:
-1. Tie-breaking refinement
-2. Finite additivity
-3. Complementary antisymmetry
-4. Convex combinations
-5. The impossibility of uniform infinitesimal indifference
+This script demonstrates the key concepts from the non-Archimedean probability
+theory developed in this research cycle:
+
+1. The Archimedean impossibility: why standard ℝ can't have infinitesimal probabilities
+2. Finite approximations to infinitesimal probability measures
+3. The infinitesimal gap property
+4. Strict monotonicity of positive-weight measures
 """
 
 from fractions import Fraction
-from typing import List, Tuple
-
-# ============================================================
-# Core GPM implementation
-# ============================================================
-
-class GradedPMF:
-    """A Graded Probability Mass Function on {0, 1, ..., n-1}."""
-
-    def __init__(self, std: List[float], inf: List[float]):
-        assert len(std) == len(inf), "std and inf must have same length"
-        assert all(s >= 0 for s in std), f"std must be nonneg: {std}"
-        assert abs(sum(std) - 1.0) < 1e-10, f"std must sum to 1, got {sum(std)}"
-        assert abs(sum(inf)) < 1e-10, f"inf must sum to 0, got {sum(inf)}"
-        for i in range(len(std)):
-            if std[i] == 0:
-                assert inf[i] >= -1e-10, f"graded_pos violated at {i}"
-        self.n = len(std)
-        self.std = std
-        self.inf = inf
-
-    def lex_val(self, i: int) -> Tuple[float, float]:
-        """Lexicographic probability of outcome i."""
-        return (self.std[i], self.inf[i])
-
-    def lex_prob(self, S: set) -> Tuple[float, float]:
-        """Graded probability of subset S."""
-        return (sum(self.std[i] for i in S), sum(self.inf[i] for i in S))
-
-    def std_prob(self, S: set) -> float:
-        return sum(self.std[i] for i in S)
-
-    def inf_prob(self, S: set) -> float:
-        return sum(self.inf[i] for i in S)
-
-    def ties_broken(self) -> bool:
-        """Check if all outcomes have distinct graded probabilities."""
-        vals = [self.lex_val(i) for i in range(self.n)]
-        return len(set(vals)) == len(vals)
-
-    def __repr__(self):
-        lines = [f"GradedPMF(n={self.n})"]
-        for i in range(self.n):
-            lines.append(f"  [{i}]: {self.std[i]:.6f} + ε·{self.inf[i]:.6f}")
-        return "\n".join(lines)
+from typing import List, Set
 
 
-def tiebreaking_refinement(p: List[float]) -> GradedPMF:
-    """Construct a GPM that refines p and breaks all ties.
-
-    Uses the construction: inf[i] = i - (n-1)/2 (centered linear).
-    This sums to 0 and is injective.
-    """
-    n = len(p)
-    if n <= 1:
-        return GradedPMF(p, [0.0] * n)
-
-    # Raw corrections: distinct values summing to 0
-    raw = [i - (n - 1) / 2.0 for i in range(n)]
-    # Scale down to be "infinitesimal" relative to probability differences
-    scale = 0.001  # Conceptually ε
-    inf_vals = [scale * r for r in raw]
-
-    # Verify zero-sum
-    total = sum(inf_vals)
-    inf_vals[-1] -= total  # Correct floating point drift
-
-    return GradedPMF(p, inf_vals)
-
-
-def convex_combination(mu: GradedPMF, nu: GradedPMF, t: float) -> GradedPMF:
-    """Compute (1-t)*mu + t*nu."""
-    assert mu.n == nu.n
-    assert 0 <= t <= 1
-    std = [(1 - t) * mu.std[i] + t * nu.std[i] for i in range(mu.n)]
-    inf = [(1 - t) * mu.inf[i] + t * nu.inf[i] for i in range(mu.n)]
-    return GradedPMF(std, inf)
-
-
-# ============================================================
-# Demonstrations
-# ============================================================
-
-def demo_tiebreaking():
-    """Demo 1: Tie-breaking refinement of a uniform distribution."""
+def archimedean_impossibility_demo():
+    """Demonstrate that in ℝ, any ε > 0 eventually exceeds 1 when summed."""
     print("=" * 60)
-    print("DEMO 1: Tie-Breaking Refinement")
+    print("ARCHIMEDEAN IMPOSSIBILITY THEOREM")
+    print("In ℝ, for any ε > 0, there exists n with n·ε > 1")
     print("=" * 60)
 
-    n = 5
-    p = [1.0 / n] * n
-    print(f"\nStandard uniform distribution on Fin {n}:")
-    for i in range(n):
-        print(f"  p[{i}] = {p[i]:.4f}")
-    print(f"  All equal → {len(set(p))} distinct values (ties!)")
-
-    mu = tiebreaking_refinement(p)
-    print(f"\nGraded refinement:")
-    print(mu)
-    print(f"\n  Ties broken: {mu.ties_broken()}")
-    print(f"  Num distinct values: {len(set(mu.lex_val(i) for i in range(n)))}")
-
-    # Ranking
-    ranking = sorted(range(n), key=lambda i: mu.lex_val(i), reverse=True)
-    print(f"\n  Lexicographic ranking (most to least likely): {ranking}")
+    for eps in [0.1, 0.01, 0.001, 1e-6, 1e-10]:
+        # Compute n analytically: n = ceil(1/eps)
+        import math
+        n = math.ceil(1.0 / eps)
+        print(f"  ε = {eps:<15}  →  n = {n:>15,} copies needed to exceed 1")
+        print(f"    n·ε = {n * eps:.6f}")
+    print()
 
 
-def demo_finite_additivity():
-    """Demo 2: Finite additivity of graded probability."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Finite Additivity")
+def uniform_measure_demo():
+    """Demonstrate uniform finitely additive measures on Fin(n)."""
+    print("=" * 60)
+    print("UNIFORM FINITELY ADDITIVE MEASURES")
+    print("On Fin(n), each point gets weight 1/n, total = 1")
     print("=" * 60)
 
-    mu = GradedPMF([0.5, 0.25, 0.25], [0.1, -0.05, -0.05])
-    S = {0}
-    T = {1, 2}
+    for n in [3, 5, 10, 100]:
+        eps = Fraction(1, n)
+        total = sum(eps for _ in range(n))
+        assert total == 1, f"Total should be 1, got {total}"
+        print(f"  Fin({n}): ε = 1/{n}, total = {total}")
 
-    print(f"\nGPM: {mu}")
-    print(f"\nS = {S}, T = {T}")
-    print(f"  lexProb(S) = {mu.lex_prob(S)}")
-    print(f"  lexProb(T) = {mu.lex_prob(T)}")
-    print(f"  lexProb(S∪T) = {mu.lex_prob(S | T)}")
+        # Demonstrate additivity for disjoint subsets
+        s1 = set(range(n // 3))
+        s2 = set(range(n // 3, 2 * n // 3))
+        mu_s1 = Fraction(len(s1), n)
+        mu_s2 = Fraction(len(s2), n)
+        mu_union = Fraction(len(s1 | s2), n)
+        assert mu_union == mu_s1 + mu_s2
+        print(f"    μ(S1) = {mu_s1}, μ(S2) = {mu_s2}, "
+              f"μ(S1∪S2) = {mu_union} = μ(S1)+μ(S2) ✓")
+    print()
 
-    lp_s = mu.lex_prob(S)
-    lp_t = mu.lex_prob(T)
-    lp_union = mu.lex_prob(S | T)
-    expected = (lp_s[0] + lp_t[0], lp_s[1] + lp_t[1])
-    print(f"\n  Additivity check: {lp_union} == {expected}? {abs(lp_union[0] - expected[0]) < 1e-10 and abs(lp_union[1] - expected[1]) < 1e-10}")
 
-
-def demo_complement_antisymmetry():
-    """Demo 3: infProb(Sᶜ) = -infProb(S)."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Complementary Antisymmetry")
+def infinitesimal_approximation_demo():
+    """Approximate infinitesimal probability with very small rationals."""
+    print("=" * 60)
+    print("INFINITESIMAL PROBABILITY APPROXIMATION")
+    print("As ε → 0, we can weight more points while staying below 1")
     print("=" * 60)
 
-    mu = GradedPMF([0.3, 0.3, 0.2, 0.2], [0.5, -0.3, 0.1, -0.3])
-    S = {0, 2}
-    Sc = {1, 3}
+    # Simulate with exact rational arithmetic
+    for power in [2, 4, 8, 16, 32]:
+        omega = 10 ** power  # "infinite" number
+        eps = Fraction(1, omega)
+        # Assign weight ε to each of k points
+        for k_power in [1, 2, 4, 8]:
+            k = 10 ** k_power
+            if k < omega:
+                total = eps * k
+                gap = 1 - total
+                print(f"  ω = 10^{power}, ε = 1/ω, k = 10^{k_power}: "
+                      f"total = {float(total):.2e}, gap = {float(gap):.10f}")
+        print()
 
-    print(f"\nGPM: {mu}")
-    print(f"\nS = {S}, Sᶜ = {Sc}")
-    print(f"  infProb(S)  = {mu.inf_prob(S):.6f}")
-    print(f"  infProb(Sᶜ) = {mu.inf_prob(Sc):.6f}")
-    print(f"  Sum = {mu.inf_prob(S) + mu.inf_prob(Sc):.10f} (should be 0)")
-    print(f"  infProb(Sᶜ) = -infProb(S)? {abs(mu.inf_prob(Sc) + mu.inf_prob(S)) < 1e-10}")
 
-
-def demo_no_uniform_correction():
-    """Demo 4: Impossibility of uniform infinitesimal indifference."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Impossibility of Uniform Infinitesimal Indifference")
+def strict_monotonicity_demo():
+    """Demonstrate strict monotonicity of positive-weight measures."""
+    print("=" * 60)
+    print("STRICT MONOTONICITY")
+    print("S ⊂ T with positive weights ⟹ μ(S) < μ(T)")
     print("=" * 60)
 
-    for n in [2, 3, 5, 10]:
-        for c in [0.1, -0.5, 0.0]:
-            total = n * c
-            print(f"  n={n}, c={c}: Σc = {total:.4f} {'= 0 ✓' if abs(total) < 1e-10 else '≠ 0 ✗'}")
-    print("\n  Only c=0 gives Σc = 0, confirming the theorem.")
+    n = 10
+    # Use different positive weights
+    weights = [Fraction(1, k + 1) for k in range(n)]
+    print(f"  Weights: {[str(w) for w in weights]}")
+
+    # Show strict monotonicity for nested subsets
+    for size in range(1, n + 1):
+        subset = set(range(size))
+        mu = sum(weights[i] for i in subset)
+        print(f"  |S| = {size:2d}: μ(S) = {float(mu):.6f} ({mu})")
+    print()
 
 
-def demo_convexity():
-    """Demo 5: Convex combination of GPMs."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Convexity of GPM Space")
+def gap_persistence_demo():
+    """Demonstrate that the infinitesimal gap never closes."""
+    print("=" * 60)
+    print("INFINITESIMAL GAP PERSISTENCE")
+    print("For all finite n: 1 - n·ε > 0 (the gap never closes)")
     print("=" * 60)
 
-    mu = GradedPMF([0.5, 0.3, 0.2], [0.2, -0.1, -0.1])
-    nu = GradedPMF([0.4, 0.4, 0.2], [-0.1, 0.2, -0.1])
+    omega = 10**20  # Large "infinite" number
+    eps = Fraction(1, omega)
 
-    print(f"\nμ = {mu}")
-    print(f"\nν = {nu}")
+    print(f"  ε = 1/{omega} (approximating an infinitesimal)")
+    for n in [1, 10, 100, 1000, 10**6, 10**9, 10**12, 10**15, 10**18]:
+        total = eps * n
+        gap = 1 - total
+        print(f"  n = {n:>20,}: gap = 1 - n·ε = {float(gap):.20f}")
 
-    for t in [0.0, 0.25, 0.5, 0.75, 1.0]:
-        mix = convex_combination(mu, nu, t)
-        print(f"\n  t={t:.2f}: std={[round(x, 4) for x in mix.std]}, "
-              f"inf={[round(x, 4) for x in mix.inf]}, "
-              f"Σstd={sum(mix.std):.4f}, Σinf={sum(mix.inf):.10f}")
+    print(f"\n  At n = ω = {omega}: gap = 1 - ω·ε = {float(1 - eps * omega):.1f}")
+    print("  ↑ The gap closes ONLY at the hyperfinite boundary!")
+    print()
+
+
+def complement_formula_demo():
+    """Demonstrate μ(Aᶜ) = 1 - μ(A)."""
+    print("=" * 60)
+    print("COMPLEMENT FORMULA: μ(Aᶜ) = 1 - μ(A)")
+    print("=" * 60)
+
+    n = 12
+    eps = Fraction(1, n)
+
+    for subset_size in [0, 1, 3, 6, 9, 12]:
+        mu_a = eps * subset_size
+        mu_comp = 1 - mu_a
+        comp_direct = eps * (n - subset_size)
+        assert mu_comp == comp_direct
+        print(f"  |A| = {subset_size:2d}: μ(A) = {float(mu_a):.4f}, "
+              f"μ(Aᶜ) = {float(mu_comp):.4f}, "
+              f"μ(A) + μ(Aᶜ) = {float(mu_a + mu_comp):.1f} ✓")
+    print()
 
 
 if __name__ == "__main__":
-    demo_tiebreaking()
-    demo_finite_additivity()
-    demo_complement_antisymmetry()
-    demo_no_uniform_correction()
-    demo_convexity()
-    print("\n" + "=" * 60)
-    print("All demonstrations completed successfully.")
+    print("Non-Archimedean Probability Theory — Demonstrations")
     print("=" * 60)
+    print()
+
+    archimedean_impossibility_demo()
+    uniform_measure_demo()
+    infinitesimal_approximation_demo()
+    strict_monotonicity_demo()
+    gap_persistence_demo()
+    complement_formula_demo()
+
+    print("All demonstrations complete.")
 
 
+#!/usr/bin/env python3
 """
-Visualization: Graded Probability Measures
+Visualization: Archimedean vs Non-Archimedean Probability
 
-Creates three visualizations:
-1. Standard vs Graded probability comparison
-2. Convexity of GPM space (mixing path)
-3. Infinitesimal correction antisymmetry
+Shows how sums n·ε behave differently in Archimedean and non-Archimedean fields.
 """
 
 import matplotlib
@@ -215,138 +166,134 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-def construct_tiebreaking_gpm(p):
-    n = len(p)
-    if n <= 1:
-        return list(p), [0.0] * n
-    mean = (n - 1) / 2.0
-    raw = [i - mean for i in range(n)]
-    scale = 0.001
-    inf_vals = [scale * r for r in raw]
-    drift = sum(inf_vals)
-    inf_vals[-1] -= drift
-    return list(p), inf_vals
 
-def plot_standard_vs_graded():
-    """Plot 1: Standard vs Graded probability comparison."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+def plot_archimedean_vs_nonarch():
+    """Plot the fundamental difference between Archimedean and non-Archimedean sums."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-    n = 6
-    p = [1/6] * n
-    std, inf_vals = construct_tiebreaking_gpm(p)
+    # Left: Archimedean case (ε = 0.1, 0.01, 0.001)
+    ax1 = axes[0]
+    n_values = np.arange(0, 200)
 
-    # Standard probability
-    ax = axes[0]
-    colors = ['#4C72B0'] * n
-    ax.bar(range(n), p, color=colors, edgecolor='black', linewidth=0.5)
-    ax.set_title('Standard Probability\n(All outcomes indistinguishable)', fontsize=13)
-    ax.set_xlabel('Outcome')
-    ax.set_ylabel('Probability')
-    ax.set_ylim(0, 0.25)
-    ax.set_xticks(range(n))
-    ax.axhline(y=1/6, color='red', linestyle='--', alpha=0.5, label='p = 1/6')
-    ax.legend()
+    for eps, color, label in [
+        (0.1, '#e74c3c', 'ε = 0.1'),
+        (0.01, '#3498db', 'ε = 0.01'),
+        (0.001, '#2ecc71', 'ε = 0.001')
+    ]:
+        sums = n_values * eps
+        ax1.plot(n_values, sums, color=color, label=label, linewidth=2)
 
-    # Graded probability
-    ax = axes[1]
-    graded = [s + 100 * i for s, i in zip(std, inf_vals)]  # Amplify ε for visibility
-    colors_graded = plt.cm.viridis(np.linspace(0.2, 0.8, n))
-    bars = ax.bar(range(n), graded, color=colors_graded, edgecolor='black', linewidth=0.5)
-    ax.set_title('Graded Probability (×100ε amplified)\n(All outcomes distinguishable)', fontsize=13)
-    ax.set_xlabel('Outcome')
-    ax.set_ylabel('Probability + 100ε·correction')
-    ax.set_xticks(range(n))
-    ax.axhline(y=1/6, color='red', linestyle='--', alpha=0.5, label='std part = 1/6')
-    ax.legend()
+    ax1.axhline(y=1, color='black', linestyle='--', linewidth=1.5, label='Total = 1')
+    ax1.set_xlabel('Number of points n', fontsize=12)
+    ax1.set_ylabel('Total weight n·ε', fontsize=12)
+    ax1.set_title('Archimedean Field (ℝ)\nEvery ε > 0 eventually exceeds 1', fontsize=13)
+    ax1.legend(fontsize=10)
+    ax1.set_ylim(-0.05, 2.0)
+    ax1.grid(True, alpha=0.3)
 
-    for i, bar in enumerate(bars):
-        ax.annotate(f'ε·{inf_vals[i]:.4f}', xy=(bar.get_x() + bar.get_width()/2, bar.get_height()),
-                    xytext=(0, 5), textcoords='offset points', ha='center', fontsize=8)
+    # Right: Non-Archimedean case (simulated)
+    ax2 = axes[1]
+    n_values_na = np.arange(0, 10000)
 
-    plt.suptitle('Graded Probability Measures: Breaking the Tyranny of Equiprobability',
-                 fontsize=15, fontweight='bold', y=1.02)
+    # Simulate "infinitesimal" as 1/ω for large ω
+    for omega, color, label in [
+        (100000, '#e74c3c', 'ε = 1/ω (ω=10⁵)'),
+        (1000000, '#3498db', 'ε = 1/ω (ω=10⁶)'),
+        (10000000, '#2ecc71', 'ε = 1/ω (ω=10⁷)')
+    ]:
+        eps = 1.0 / omega
+        sums = n_values_na * eps
+        ax2.plot(n_values_na, sums, color=color, label=label, linewidth=2)
+
+    ax2.axhline(y=1, color='black', linestyle='--', linewidth=1.5, label='Total = 1')
+    ax2.set_xlabel('Number of points n', fontsize=12)
+    ax2.set_ylabel('Total weight n·ε', fontsize=12)
+    ax2.set_title('Non-Archimedean Field\nInfinitesimal ε: n·ε < 1 for all finite n', fontsize=13)
+    ax2.legend(fontsize=10)
+    ax2.set_ylim(-0.05, 1.2)
+    ax2.grid(True, alpha=0.3)
+
+    # Add annotation
+    ax2.annotate('Gap always positive!',
+                xy=(8000, 0.85), fontsize=11, color='#8e44ad',
+                fontweight='bold',
+                arrowprops=dict(arrowstyle='->', color='#8e44ad'),
+                xytext=(5000, 0.5))
+
     plt.tight_layout()
-    plt.savefig('viz_standard_vs_graded.png', dpi=150, bbox_inches='tight')
+    plt.savefig('archimedean_comparison.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: viz_standard_vs_graded.png")
+    print("Saved: archimedean_comparison.png")
 
 
-def plot_convex_path():
-    """Plot 2: Mixing path between two GPMs."""
+def plot_gap_persistence():
+    """Plot how the gap 1 - n·ε persists for infinitesimal ε."""
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    n = 3
-    mu_std = [0.5, 0.3, 0.2]
-    mu_inf = [0.2, -0.1, -0.1]
-    nu_std = [0.3, 0.4, 0.3]
-    nu_inf = [-0.1, 0.15, -0.05]
+    # Different "ω" values
+    omegas = [10**k for k in range(3, 9)]
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, len(omegas)))
 
-    ts = np.linspace(0, 1, 50)
-    for i in range(n):
-        stds = [(1-t)*mu_std[i] + t*nu_std[i] for t in ts]
-        infs = [(1-t)*mu_inf[i] + t*nu_inf[i] for t in ts]
-        ax.plot(ts, stds, linewidth=2, label=f'std[{i}]')
-        ax.plot(ts, infs, linewidth=1.5, linestyle='--', alpha=0.7, label=f'inf[{i}]')
+    for omega, color in zip(omegas, colors):
+        eps = 1.0 / omega
+        n_max = min(omega // 2, 100000)
+        n_values = np.linspace(0, n_max, 1000)
+        gaps = 1.0 - n_values * eps
+        ax.plot(n_values / omega, gaps, color=color,
+                label=f'ω = 10^{int(np.log10(omega))}', linewidth=2)
 
-    ax.set_xlabel('Mixing parameter t', fontsize=12)
-    ax.set_ylabel('Value', fontsize=12)
-    ax.set_title('Convex Combination of GPMs: (1-t)·μ + t·ν', fontsize=14, fontweight='bold')
-    ax.legend(ncol=2, fontsize=9)
-    ax.axhline(y=0, color='black', linewidth=0.5)
-    ax.grid(alpha=0.3)
+    ax.set_xlabel('Fraction of ω used (n/ω)', fontsize=12)
+    ax.set_ylabel('Gap: 1 - n·ε', fontsize=12)
+    ax.set_title('Infinitesimal Gap Persistence\n'
+                 'The gap 1 - n·ε remains positive for all n < ω', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.set_ylim(0.4, 1.05)
+    ax.grid(True, alpha=0.3)
+    ax.axhline(y=0, color='red', linestyle=':', linewidth=1, alpha=0.5)
 
     plt.tight_layout()
-    plt.savefig('viz_convex_path.png', dpi=150, bbox_inches='tight')
+    plt.savefig('gap_persistence.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: viz_convex_path.png")
+    print("Saved: gap_persistence.png")
 
 
-def plot_complement_antisymmetry():
-    """Plot 3: Infinitesimal correction antisymmetry for all subsets."""
+def plot_strict_monotonicity():
+    """Visualize strict monotonicity of positive-weight measures."""
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    n = 4
-    inf_vals = [0.3, -0.1, 0.2, -0.4]
+    n = 15
+    # Positive weights (decreasing for visual interest)
+    weights = [1.0 / (k + 1) for k in range(n)]
 
-    # Generate all subsets and their complements
-    subsets = []
-    inf_S = []
-    inf_Sc = []
-    labels = []
+    # Compute cumulative measures for nested subsets
+    subset_sizes = list(range(n + 1))
+    measures = [sum(weights[:k]) for k in subset_sizes]
 
-    for mask in range(2**n):
-        S = {i for i in range(n) if mask & (1 << i)}
-        Sc = set(range(n)) - S
-        s_inf = sum(inf_vals[i] for i in S)
-        sc_inf = sum(inf_vals[i] for i in Sc)
-        subsets.append((S, Sc))
-        inf_S.append(s_inf)
-        inf_Sc.append(sc_inf)
-        labels.append(str(S) if S else '∅')
+    ax.bar(subset_sizes, measures, color='#3498db', alpha=0.7, edgecolor='#2980b9')
+    ax.plot(subset_sizes, measures, 'o-', color='#e74c3c', linewidth=2, markersize=6)
 
-    x = np.arange(len(subsets))
-    width = 0.35
+    # Highlight strict increase
+    for i in range(1, len(measures)):
+        if measures[i] > measures[i-1]:
+            ax.annotate('', xy=(i, measures[i]),
+                       xytext=(i-1, measures[i-1]),
+                       arrowprops=dict(arrowstyle='->', color='#2ecc71',
+                                      lw=1.5))
 
-    bars1 = ax.bar(x - width/2, inf_S, width, label='infProb(S)', color='#4C72B0', edgecolor='black', linewidth=0.5)
-    bars2 = ax.bar(x + width/2, inf_Sc, width, label='infProb(Sᶜ)', color='#DD8452', edgecolor='black', linewidth=0.5)
-
-    ax.set_xlabel('Subset S', fontsize=12)
-    ax.set_ylabel('Infinitesimal Probability', fontsize=12)
-    ax.set_title('Complementary Antisymmetry: infProb(Sᶜ) = −infProb(S)', fontsize=14, fontweight='bold')
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=8)
-    ax.legend()
-    ax.axhline(y=0, color='black', linewidth=0.5)
-    ax.grid(alpha=0.3, axis='y')
+    ax.set_xlabel('Subset size |S|', fontsize=12)
+    ax.set_ylabel('Measure μ(S)', fontsize=12)
+    ax.set_title('Strict Monotonicity of Positive-Weight Measures\n'
+                 'S ⊂ T ⟹ μ(S) < μ(T) when all weights > 0', fontsize=13)
+    ax.grid(True, alpha=0.3, axis='y')
 
     plt.tight_layout()
-    plt.savefig('viz_complement_antisymmetry.png', dpi=150, bbox_inches='tight')
+    plt.savefig('strict_monotonicity.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: viz_complement_antisymmetry.png")
+    print("Saved: strict_monotonicity.png")
 
 
-if __name__ == '__main__':
-    plot_standard_vs_graded()
-    plot_convex_path()
-    plot_complement_antisymmetry()
+if __name__ == "__main__":
+    plot_archimedean_vs_nonarch()
+    plot_gap_persistence()
+    plot_strict_monotonicity()
     print("\nAll visualizations generated.")
