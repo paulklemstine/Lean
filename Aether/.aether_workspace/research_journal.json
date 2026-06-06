@@ -1760,6 +1760,26 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T21:32:11",
       "title": "EML Universal Approximation"
+    },
+    {
+      "cycle_id": "fe03a028",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Semantic Fiber Theory\n\n## Synthesis\n\nThis research cycle introduced **Semantic Fiber Theory**, a framework that formalizes when structural isomorphisms fail to preserve semantic c",
+      "quality_score": 0.42824000000000007,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-06T23:11:37",
+      "title": "Isomorphisms of Meaning: When Structures Collide"
+    },
+    {
+      "cycle_id": "253fdac1",
+      "domain": "Applications",
+      "key_insight": "# Future Research Directions\n\n## Synthesis\n\nThis cycle established a rigorous bridge between quadratic dynamics (the Mandelbrot iteration z ↦ z² + c) and number theory, centered on the necklace divisi",
+      "quality_score": 0.47343999999999997,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-06T23:12:03",
+      "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
     }
   ],
   "entries": [
@@ -1805,7 +1825,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T21:32:11",
+  "last_updated": "2026-06-06T23:12:03",
   "open_questions": [
     {
       "context": "sorry",
@@ -1825,18 +1845,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "ff8bd2d8",
-        "quality": 0.3124,
-        "theorems": 4,
-        "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-      },
-      {
-        "cycle_id": "51d93a26",
-        "quality": 0.33199999999999996,
-        "theorems": 6,
-        "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-      },
       {
         "cycle_id": "05f8889f",
         "quality": 0.37096000000000007,
@@ -1884,6 +1892,18 @@
         "quality": 0.31880000000000003,
         "theorems": 5,
         "title": "EML Universal Approximation"
+      },
+      {
+        "cycle_id": "fe03a028",
+        "quality": 0.42824000000000007,
+        "theorems": 4,
+        "title": "Isomorphisms of Meaning: When Structures Collide"
+      },
+      {
+        "cycle_id": "253fdac1",
+        "quality": 0.47343999999999997,
+        "theorems": 7,
+        "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
       }
     ],
     "Bridges": [

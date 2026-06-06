@@ -1,0 +1,1 @@
+# See Applications/visualize_opacity.py - plot_opacity_spectrum()

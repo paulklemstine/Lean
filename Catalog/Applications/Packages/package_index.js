@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "253fdac1",
     "filename": "the_mandelbrot_sets_secret_number_theory_quadratic.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.47343999999999997,
     "title": "Quadratic Recurrence and Number Theory: Necklace Divisibility and Tropical Mandelbrot Dynamics"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "the_mandelbrot_sets_secret_number_theory_quadratic",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.47343999999999997,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Quadratic Recurrence and Number Theory: Necklace Divisibility and Tropical Mandelbrot Dynamics"
     }
