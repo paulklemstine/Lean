@@ -1,348 +1,305 @@
 #!/usr/bin/env python3
 """
-EML Transcendence Tower: Numerical Demonstrations
+Demo: EML Transcendence Theory
 
-Demonstrates the transcendence tower structure and properties of EML numbers.
+Numerical demonstrations of the EML function eml(x,y) = exp(x) - log(y)
+and its transcendence properties.
 """
 
 import math
-from typing import List, Tuple
+from typing import Tuple
 
-# --- EML Expression evaluator ---
+def eml(x: float, y: float) -> float:
+    """The EML function: eml(x, y) = exp(x) - log(y)."""
+    return math.exp(x) - math.log(y)
 
-class EMLExpr:
-    """An EML (Exp-Mul-Log) expression tree."""
-    pass
+def eml_diag(z: float) -> float:
+    """Diagonal EML: emlDiag(z) = exp(z) - log(z)."""
+    return math.exp(z) - math.log(z)
 
-class Rat(EMLExpr):
-    def __init__(self, q: float):
-        self.q = q
-    def eval(self) -> float:
-        return self.q
-    def depth(self) -> int:
-        return 0
-    def __repr__(self):
-        return str(self.q)
-
-class Add(EMLExpr):
-    def __init__(self, a: EMLExpr, b: EMLExpr):
-        self.a, self.b = a, b
-    def eval(self) -> float:
-        return self.a.eval() + self.b.eval()
-    def depth(self) -> int:
-        return max(self.a.depth(), self.b.depth())
-    def __repr__(self):
-        return f"({self.a} + {self.b})"
-
-class Mul(EMLExpr):
-    def __init__(self, a: EMLExpr, b: EMLExpr):
-        self.a, self.b = a, b
-    def eval(self) -> float:
-        return self.a.eval() * self.b.eval()
-    def depth(self) -> int:
-        return max(self.a.depth(), self.b.depth())
-    def __repr__(self):
-        return f"({self.a} × {self.b})"
-
-class Exp(EMLExpr):
-    def __init__(self, a: EMLExpr):
-        self.a = a
-    def eval(self) -> float:
-        return math.exp(self.a.eval())
-    def depth(self) -> int:
-        return self.a.depth() + 1
-    def __repr__(self):
-        return f"exp({self.a})"
-
-class Log(EMLExpr):
-    def __init__(self, a: EMLExpr):
-        self.a = a
-    def eval(self) -> float:
-        v = self.a.eval()
-        return math.log(v) if v > 0 else 0.0
-    def depth(self) -> int:
-        return self.a.depth() + 1
-    def __repr__(self):
-        return f"log({self.a})"
-
-
-def iterated_exp(n: int, base: float = 1.0) -> float:
-    """Compute exp^n(base) = exp(exp(...exp(base)...))."""
-    result = base
-    for _ in range(n):
-        result = math.exp(result)
-    return result
-
-
-# --- Demonstrations ---
-
-def demo_tower_levels():
-    """Show canonical EML numbers at each tower level."""
+def demonstrate_eml_identities():
+    """Verify key EML identities numerically."""
     print("=" * 60)
-    print("TRANSCENDENCE TOWER: Canonical EML Numbers")
+    print("EML Function Identities")
     print("=" * 60)
     
-    # Level 0: Rationals
-    print("\n📐 Level 0 (Rationals):")
-    for q in [0, 1, -1, 1/2, 22/7]:
-        expr = Rat(q)
-        print(f"  {expr} = {expr.eval():.6f}  (depth={expr.depth()})")
+    # eml(0, 1) = 1
+    val = eml(0, 1)
+    print(f"\neml(0, 1) = {val:.15f}")
+    print(f"  Expected: 1.0")
+    print(f"  Error: {abs(val - 1.0):.2e}")
     
-    # Level 1: One exp/log application
-    print("\n🌟 Level 1 (Single exp/log):")
-    level1 = [
-        ("e = exp(1)", Exp(Rat(1))),
-        ("1/e = exp(-1)", Exp(Rat(-1))),
-        ("log(2)", Log(Rat(2))),
-        ("log(3)", Log(Rat(3))),
-        ("√2 = exp(log(2)/2)", Exp(Mul(Log(Rat(2)), Rat(0.5)))),
-    ]
-    for name, expr in level1:
-        print(f"  {name} = {expr.eval():.10f}  (depth={expr.depth()})")
+    # eml(x, exp(x)) = exp(x) - x
+    x = 2.5
+    val = eml(x, math.exp(x))
+    expected = math.exp(x) - x
+    print(f"\neml({x}, exp({x})) = {val:.15f}")
+    print(f"  Expected (exp({x}) - {x}): {expected:.15f}")
+    print(f"  Error: {abs(val - expected):.2e}")
     
-    # Level 2: Two exp/log applications
-    print("\n⭐ Level 2 (Double exp/log):")
-    level2 = [
-        ("e^e = exp(exp(1))", Exp(Exp(Rat(1)))),
-        ("log(log(2))", Log(Log(Rat(2)))),  # Note: log(log(2)) < 0 since log(2) < 1... actually log(2)≈0.693 > 0 but log(0.693)≈-0.366
-        ("e^e + log(2)", Add(Exp(Exp(Rat(1))), Log(Rat(2)))),
-        ("exp(log(2)·log(3))", Exp(Mul(Log(Rat(2)), Log(Rat(3))))),
-    ]
-    for name, expr in level2:
-        print(f"  {name} = {expr.eval():.10f}  (depth={expr.depth()})")
-    
-    # Level 3
-    print("\n🌠 Level 3 (Triple exp/log):")
-    level3 = [
-        ("exp(exp(exp(1)))", Exp(Exp(Exp(Rat(1))))),
-        ("exp(e^e)", Exp(Exp(Exp(Rat(1))))),
-    ]
-    for name, expr in level3:
-        v = expr.eval()
-        print(f"  {name} = {v:.6e}  (depth={expr.depth()})")
+    # eml(log(y), y) = y - log(y) for y > 0
+    y = 3.0
+    val = eml(math.log(y), y)
+    expected = y - math.log(y)
+    print(f"\neml(log({y}), {y}) = {val:.15f}")
+    print(f"  Expected ({y} - log({y})): {expected:.15f}")
+    print(f"  Error: {abs(val - expected):.2e}")
 
-
-def demo_iterated_exponentials():
-    """The iterated exponential sequence: 1, e, e^e, e^{e^e}, ..."""
+def demonstrate_eml_transcendence():
+    """Show EML values at rational inputs (conjectured transcendental under Schanuel)."""
     print("\n" + "=" * 60)
-    print("ITERATED EXPONENTIALS: The Transcendence Cascade")
-    print("=" * 60)
-    print("\nexp^0(1) = 1  (algebraic)")
-    print(f"exp^1(1) = e ≈ {math.e:.15f}  (transcendental by Schanuel)")
-    
-    val = math.e
-    for n in range(2, 6):
-        try:
-            val = math.exp(val)
-        except OverflowError:
-            val = float('inf')
-        status = "transcendental by Schanuel + ExpTranscPropagation"
-        if val > 1e100:
-            print(f"exp^{n}(1) ≈ 10^{math.log10(val):.1f}  ({status})")
-        else:
-            print(f"exp^{n}(1) ≈ {val:.6f}  ({status})")
-    
-    print("\nKey result: Under Schanuel's conjecture, ALL exp^n(1) for n ≥ 1")
-    print("are transcendental. This is the Transcendence Cascade theorem.")
-
-
-def demo_algebraic_independence():
-    """Demonstrate algebraic independence tests."""
-    print("\n" + "=" * 60)
-    print("ALGEBRAIC INDEPENDENCE: Schanuel's Conjecture Implications")
+    print("EML Values at Rational Inputs (Transcendental under Schanuel)")
     print("=" * 60)
     
-    print("\nSchanuel's conjecture (n=1):")
-    print("  If α ≠ 0, then at least one of {α, exp(α)} is transcendental.")
-    print(f"  α = 1:     {{1, e}} → e is transcendental (1 is algebraic)")
-    print(f"  α = log 2: {{log 2, 2}} → log 2 is transcendental (2 is algebraic)")
+    rationals = [(1, 1), (1, 2), (2, 1), (1, 3), (3, 2), (2, 3)]
     
-    print("\nSchanuel's conjecture (n=2):")
-    print("  If α, β are ℚ-lin. indep., at least 2 of {α, β, e^α, e^β} are alg. indep.")
-    print(f"  α=1, β=e: {{1, e, e, e^e}} → e and e^e are algebraically independent")
-    print(f"  → e^e ≈ {math.exp(math.e):.10f} is transcendental")
-    
-    print(f"\n  α=1, β=log 2: {{1, log 2, e, 2}} → 1 and e are alg. indep.")
-    print(f"  → exp(exp(1)) + log(2) ≈ {math.exp(math.e) + math.log(2):.10f}")
-    print(f"     is transcendental (sum of alg. indep. transcendentals)")
-
-
-def demo_eml_depth_bounds():
-    """Show depth vs transcendental weight bounds."""
-    print("\n" + "=" * 60)
-    print("DEPTH vs TRANSCENDENTAL WEIGHT")
-    print("=" * 60)
-    
-    exprs = [
-        ("1", Rat(1)),
-        ("exp(1)", Exp(Rat(1))),
-        ("log(2)", Log(Rat(2))),
-        ("exp(exp(1))", Exp(Exp(Rat(1)))),
-        ("exp(1) + log(2)", Add(Exp(Rat(1)), Log(Rat(2)))),
-        ("exp(exp(1)) + log(2)", Add(Exp(Exp(Rat(1))), Log(Rat(2)))),
-        ("exp(log(2)·exp(1))", Exp(Mul(Log(Rat(2)), Exp(Rat(1))))),
-    ]
-    
-    print(f"\n{'Expression':<25} {'Value':<15} {'Depth':<7} {'Weight':<8}")
-    print("-" * 55)
-    for name, expr in exprs:
-        # Count exp and log nodes
-        def count_ops(e):
-            if isinstance(e, Rat): return 0, 0
-            elif isinstance(e, Add):
-                a = count_ops(e.a)
-                b = count_ops(e.b)
-                return a[0]+b[0], a[1]+b[1]
-            elif isinstance(e, Mul):
-                a = count_ops(e.a)
-                b = count_ops(e.b)
-                return a[0]+b[0], a[1]+b[1]
-            elif isinstance(e, Exp):
-                a = count_ops(e.a)
-                return a[0]+1, a[1]
-            elif isinstance(e, Log):
-                a = count_ops(e.a)
-                return a[0], a[1]+1
-            return 0, 0
+    for p, q in rationals:
+        x = p / q
+        val = eml(x, 1)  # eml(p/q, 1) = exp(p/q)
+        print(f"\n  eml({p}/{q}, 1) = exp({p}/{q}) = {val:.15f}")
         
-        ec, lc = count_ops(expr)
-        weight = ec + lc
-        print(f"  {name:<23} {expr.eval():<15.6f} {expr.depth():<7} {weight:<8}")
+    print("\n\nKey EML numbers (transcendental under Schanuel):")
     
-    print("\nTheorem: depth(e) ≤ transcWeight(e) for all EML expressions e")
+    # e = exp(1) = eml(1, 1)
+    e_val = eml(1, 1)
+    print(f"  e = eml(1, 1) = {e_val:.15f}")
+    
+    # eml(1, 2) = e - log(2)
+    eml_1_2 = eml(1, 2)
+    print(f"  eml(1, 2) = e - log(2) = {eml_1_2:.15f}")
+    
+    # eml(2, 1) = exp(2) = e²
+    eml_2_1 = eml(2, 1)
+    print(f"  eml(2, 1) = e² = {eml_2_1:.15f}")
+    
+    # emlDiag(1) = e - 0 = e
+    print(f"  emlDiag(1) = e - log(1) = {eml_diag(1):.15f}")
+    
+    # emlDiag(2) = e² - log(2)
+    print(f"  emlDiag(2) = e² - log(2) = {eml_diag(2):.15f}")
 
+def demonstrate_eml_diagonal_positivity():
+    """Demonstrate that emlDiag(z) > 0 for z > 0."""
+    print("\n" + "=" * 60)
+    print("EML Diagonal Positivity: emlDiag(z) > 0 for z > 0")
+    print("=" * 60)
+    
+    test_points = [0.001, 0.01, 0.1, 0.5, 1.0, 2.0, 5.0, 10.0, 100.0]
+    
+    print(f"\n  {'z':>10s} | {'emlDiag(z)':>20s} | {'exp(z)-z':>20s} | {'gap':>15s}")
+    print("  " + "-" * 72)
+    
+    for z in test_points:
+        val = eml_diag(z)
+        lower = math.exp(z) - z
+        gap = val - lower  # = z - log(z) ≥ 0 for z > 0
+        print(f"  {z:10.3f} | {val:20.10f} | {lower:20.10f} | {gap:15.10f}")
+
+def demonstrate_algebraic_independence():
+    """Numerical evidence for algebraic independence under Schanuel."""
+    print("\n" + "=" * 60)
+    print("Algebraic Independence Under Schanuel's Conjecture")
+    print("=" * 60)
+    
+    print("\nUnder Schanuel's conjecture, the following pairs are")
+    print("algebraically independent over Q:")
+    
+    pairs = [
+        ("e = exp(1)", "exp(√2)", math.e, math.exp(math.sqrt(2))),
+        ("exp(1)", "exp(2)", math.exp(1), math.exp(2)),
+        ("exp(1)", "exp(3)", math.exp(1), math.exp(3)),
+    ]
+    
+    for name_a, name_b, a, b in pairs:
+        print(f"\n  {name_a} = {a:.10f}")
+        print(f"  {name_b} = {b:.10f}")
+        # Test some polynomial relations
+        print(f"    a + b = {a + b:.10f}")
+        print(f"    a * b = {a * b:.10f}")
+        print(f"    a² - 2b = {a**2 - 2*b:.10f}")
+        print(f"    a³ - 3ab = {a**3 - 3*a*b:.10f}")
+
+def demonstrate_iterated_eml():
+    """Show iterated EML tower values."""
+    print("\n" + "=" * 60)
+    print("Iterated EML Tower")
+    print("=" * 60)
+    
+    x, y = 1.0, 1.0
+    val = eml(x, y)
+    print(f"\n  Level 0: eml({x}, {y}) = {val:.15f}")
+    
+    # Level 1: eml(eml(1,1), 1) = eml(e, 1) = exp(e)
+    val2 = eml(val, 1)
+    print(f"  Level 1: eml(eml(1,1), 1) = exp(e) = {val2:.15f}")
+    
+    # Level 2: eml(eml(eml(1,1), 1), 1) = exp(exp(e))
+    val3 = eml(val2, 1)
+    print(f"  Level 2: eml(eml(eml(1,1), 1), 1) = exp(exp(e)) = {val3:.6e}")
+    
+    print("\n  Under Schanuel's conjecture, each level produces a number")
+    print("  of strictly increasing transcendence complexity.")
 
 if __name__ == "__main__":
-    demo_tower_levels()
-    demo_iterated_exponentials()
-    demo_algebraic_independence()
-    demo_eml_depth_bounds()
+    demonstrate_eml_identities()
+    demonstrate_eml_transcendence()
+    demonstrate_eml_diagonal_positivity()
+    demonstrate_algebraic_independence()
+    demonstrate_iterated_eml()
+    
+    print("\n" + "=" * 60)
+    print("Summary")
+    print("=" * 60)
+    print("""
+The EML function eml(x,y) = exp(x) - log(y) generates a rich class
+of transcendental numbers from rational inputs. Under Schanuel's 
+conjecture:
+
+1. eml(q, 1) = exp(q) is transcendental for all nonzero q ∈ Q
+2. eml(q, r) is transcendental for most q, r ∈ Q with r > 0
+3. Iterated EML towers produce numbers of increasing transcendence degree
+4. Pairs like (exp(1), exp(2)) are algebraically independent
+
+These results connect the EML functional structure to deep questions
+in transcendental number theory.
+""")
 
 
 #!/usr/bin/env python3
 """
-Visualization: EML Transcendence Tower
+Visualization: EML Function Landscape and Transcendence Structure
 
-Standalone visualization of the transcendence tower structure,
-showing how EML numbers stratify by depth and transcendence complexity.
+Produces plots showing the EML function eml(x,y) = exp(x) - log(y)
+and its connections to transcendental number theory.
 """
 
-import math
-
-def generate_tower_data():
-    """Generate data for the transcendence tower visualization."""
-    levels = {
-        0: [
-            ("0", 0), ("1", 1), ("-1", -1), ("1/2", 0.5),
-            ("2", 2), ("3", 3), ("7", 7),
-        ],
-        1: [
-            ("e", math.e), ("1/e", 1/math.e),
-            ("log 2", math.log(2)), ("log 3", math.log(3)),
-            ("log 10", math.log(10)),
-        ],
-        2: [
-            ("e^e", math.exp(math.e)),
-            ("e^e+log 2", math.exp(math.e) + math.log(2)),
-            ("log(log 10)", math.log(math.log(10))),
-        ],
-    }
-    return levels
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import cm
+from mpl_toolkits.mplot3d import Axes3D
 
 
-def plot_tower():
-    """Create the transcendence tower visualization."""
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        import matplotlib.patches as mpatches
-    except ImportError:
-        print("matplotlib not available, printing text version")
-        levels = generate_tower_data()
-        for k, items in sorted(levels.items()):
-            print(f"\nLevel {k}:")
-            for name, val in items:
-                print(f"  {name} = {val:.6f}")
-        return
+def plot_eml_surface():
+    """Plot the EML function as a 3D surface."""
+    fig = plt.figure(figsize=(14, 5))
     
-    levels = generate_tower_data()
+    # Surface plot
+    ax1 = fig.add_subplot(121, projection='3d')
+    x = np.linspace(-2, 3, 100)
+    y = np.linspace(0.1, 5, 100)
+    X, Y = np.meshgrid(x, y)
+    Z = np.exp(X) - np.log(Y)
     
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))
+    surf = ax1.plot_surface(X, Y, Z, cmap=cm.viridis, alpha=0.8, linewidth=0)
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('y')
+    ax1.set_zlabel('eml(x, y)')
+    ax1.set_title('EML Function: eml(x,y) = exp(x) - log(y)')
+    fig.colorbar(surf, ax=ax1, shrink=0.5, aspect=10)
     
-    # Left panel: Tower structure
-    colors = ['#3498db', '#e74c3c', '#2ecc71', '#9b59b6']
+    # Contour plot with special points
+    ax2 = fig.add_subplot(122)
+    contours = ax2.contourf(X, Y, Z, levels=20, cmap=cm.viridis)
+    fig.colorbar(contours, ax=ax2)
     
-    for k, items in sorted(levels.items()):
-        y_positions = [k] * len(items)
-        x_positions = [v for _, v in items]
-        labels = [n for n, _ in items]
-        
-        ax1.scatter(x_positions, y_positions, 
-                   s=100, c=colors[k % len(colors)], 
-                   zorder=5, alpha=0.8, edgecolors='black', linewidth=0.5)
-        
-        for x, y, label in zip(x_positions, y_positions, labels):
-            ax1.annotate(label, (x, y), textcoords="offset points",
-                        xytext=(0, 12), ha='center', fontsize=8,
-                        fontweight='bold')
+    # Mark special points
+    special_points = [
+        (0, 1, 'eml(0,1)=1', 'red'),
+        (1, 1, 'eml(1,1)=e', 'white'),
+        (1, 2, 'eml(1,2)=e-ln2', 'yellow'),
+        (2, 1, 'eml(2,1)=e²', 'cyan'),
+    ]
+    for px, py, label, color in special_points:
+        ax2.plot(px, py, 'o', color=color, markersize=8, markeredgecolor='black')
+        ax2.annotate(label, (px, py), textcoords="offset points",
+                    xytext=(10, 5), fontsize=8, color=color,
+                    bbox=dict(boxstyle='round,pad=0.2', facecolor='black', alpha=0.7))
     
-    ax1.set_xlabel('Value', fontsize=12)
-    ax1.set_ylabel('Tower Level', fontsize=12)
-    ax1.set_title('EML Transcendence Tower', fontsize=14, fontweight='bold')
-    ax1.set_yticks([0, 1, 2])
-    ax1.set_yticklabels(['Level 0\n(Algebraic)', 'Level 1\n(exp/log of rationals)', 
-                        'Level 2\n(iterated exp/log)'])
-    ax1.grid(True, alpha=0.3)
-    ax1.axhline(y=0.5, color='gray', linestyle='--', alpha=0.5)
-    ax1.axhline(y=1.5, color='gray', linestyle='--', alpha=0.5)
-    
-    # Right panel: Iterated exponentials (log scale)
-    n_values = list(range(0, 6))
-    iter_exp_values = []
-    val = 1.0
-    for n in n_values:
-        iter_exp_values.append(val)
-        try:
-            val = math.exp(val)
-        except OverflowError:
-            val = float('inf')
-    
-    # Use log scale for display
-    log_values = [math.log10(max(v, 1e-10)) for v in iter_exp_values if v < float('inf')]
-    n_plot = n_values[:len(log_values)]
-    
-    ax2.bar(n_plot, log_values, color=[colors[min(n, 3)] for n in n_plot],
-            edgecolor='black', linewidth=0.5, alpha=0.8)
-    
-    for n, lv in zip(n_plot, log_values):
-        if iter_exp_values[n] < 1e6:
-            ax2.text(n, lv + 0.3, f'{iter_exp_values[n]:.2f}', 
-                    ha='center', fontsize=9, fontweight='bold')
-        else:
-            ax2.text(n, lv + 0.3, f'10^{lv:.1f}', 
-                    ha='center', fontsize=9, fontweight='bold')
-    
-    ax2.set_xlabel('n (number of exp applications)', fontsize=12)
-    ax2.set_ylabel('log₁₀(exp^n(1))', fontsize=12)
-    ax2.set_title('Iterated Exponentials: The Cascade', fontsize=14, fontweight='bold')
-    ax2.set_xticks(n_plot)
-    ax2.grid(True, alpha=0.3, axis='y')
-    
-    # Add status labels
-    status_labels = ['algebraic', 'transcendental\n(Schanuel n=1)', 
-                     'transcendental\n(Schanuel n=2)', 
-                     'transcendental\n(Schanuel n=3)',
-                     'transcendental\n(cascade)', 'transcendental\n(cascade)']
-    for n in n_plot:
-        ax2.text(n, -1.5, status_labels[n], ha='center', fontsize=7,
-                style='italic', color='gray')
+    ax2.set_xlabel('x')
+    ax2.set_ylabel('y')
+    ax2.set_title('EML Contours with Transcendental Points')
     
     plt.tight_layout()
-    plt.savefig('transcendence_tower.png', dpi=150, bbox_inches='tight')
-    print("Saved transcendence_tower.png")
+    plt.savefig('eml_surface.png', dpi=150, bbox_inches='tight')
+    plt.close()
+
+
+def plot_eml_diagonal():
+    """Plot the EML diagonal emlDiag(z) = exp(z) - log(z) and its lower bound."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    
+    z = np.linspace(0.01, 4, 1000)
+    eml_diag = np.exp(z) - np.log(z)
+    lower_bound = np.exp(z) - z
+    
+    # Main plot
+    ax = axes[0]
+    ax.plot(z, eml_diag, 'b-', linewidth=2, label='emlDiag(z) = exp(z) - log(z)')
+    ax.plot(z, lower_bound, 'r--', linewidth=1.5, label='Lower bound: exp(z) - z')
+    ax.fill_between(z, lower_bound, eml_diag, alpha=0.2, color='green',
+                    label='Gap = z - log(z) ≥ 0')
+    ax.axhline(y=0, color='gray', linestyle='-', linewidth=0.5)
+    ax.set_xlabel('z')
+    ax.set_ylabel('Value')
+    ax.set_title('EML Diagonal: Always Positive for z > 0')
+    ax.legend(fontsize=9)
+    ax.set_ylim(-1, 20)
+    ax.grid(True, alpha=0.3)
+    
+    # Gap plot
+    ax = axes[1]
+    gap = z - np.log(z)
+    ax.plot(z, gap, 'g-', linewidth=2, label='Gap: z - log(z)')
+    ax.axhline(y=1, color='red', linestyle='--', linewidth=1, label='Minimum = 1 (at z=1)')
+    ax.plot(1, 1, 'ro', markersize=10)
+    ax.set_xlabel('z')
+    ax.set_ylabel('z - log(z)')
+    ax.set_title('EML Diagonal Gap: z - log(z) ≥ 1')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('eml_diagonal.png', dpi=150, bbox_inches='tight')
+    plt.close()
+
+
+def plot_eml_tower():
+    """Plot the EML tower: iterated applications of eml(·, 1) = exp(·)."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    # Starting from various rationals, iterate eml(·, 1) = exp(·)
+    starts = [0.5, 1.0, 1.5, 2.0]
+    max_iters = 4
+    
+    for s in starts:
+        values = [s]
+        for _ in range(max_iters):
+            next_val = np.exp(values[-1])
+            if next_val > 1e15:
+                break
+            values.append(next_val)
+        
+        ax.semilogy(range(len(values)), values, 'o-', linewidth=2,
+                   markersize=8, label=f'Start: {s}')
+    
+    ax.set_xlabel('Iteration (EML Tower Level)')
+    ax.set_ylabel('Value (log scale)')
+    ax.set_title('EML Tower: Iterated exp(·) from Rational Seeds\n'
+                'Each level increases transcendence complexity under Schanuel')
+    ax.legend()
+    ax.grid(True, alpha=0.3, which='both')
+    
+    plt.tight_layout()
+    plt.savefig('eml_tower.png', dpi=150, bbox_inches='tight')
     plt.close()
 
 
 if __name__ == "__main__":
-    plot_tower()
+    plot_eml_surface()
+    print("Generated: eml_surface.png")
+    
+    plot_eml_diagonal()
+    print("Generated: eml_diagonal.png")
+    
+    plot_eml_tower()
+    print("Generated: eml_tower.png")
