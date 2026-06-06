@@ -1,243 +1,211 @@
 #!/usr/bin/env python3
 """
-Contrapuntal Quiver — Core Algorithms
-
-Type-hinted implementations of the key algorithms from the
-Contrapuntal Quiver formalization.
+Algorithms for Counterpoint Category Theory.
+Type-hinted implementations of the core mathematical structures.
 """
 
-from enum import IntEnum
-from typing import Dict, FrozenSet, List, Optional, Set, Tuple
+from typing import List, Set, Tuple, Optional, Dict
+from enum import Enum, auto
 from dataclasses import dataclass
 
 
-class MotionType(IntEnum):
-    """Motion types in counterpoint, ordered by restrictiveness."""
-    CONTRARY = 0
-    OBLIQUE = 1
-    SIMILAR = 2
-    PARALLEL = 3
+class ConsInterval(Enum):
+    """Consonant interval classes in first-species counterpoint."""
+    UNISON = 0   # Perfect
+    MIN3 = 3     # Imperfect
+    MAJ3 = 4     # Imperfect
+    FIFTH = 7    # Perfect
+    MIN6 = 8     # Imperfect
+    MAJ6 = 9     # Imperfect
+
+    @property
+    def is_perfect(self) -> bool:
+        return self in (ConsInterval.UNISON, ConsInterval.FIFTH)
+
+    @property
+    def is_imperfect(self) -> bool:
+        return not self.is_perfect
+
+    @property
+    def complement(self) -> 'ConsInterval':
+        """The complement involution: swaps m3↔M6, M3↔m6."""
+        mapping = {
+            ConsInterval.UNISON: ConsInterval.UNISON,
+            ConsInterval.MIN3: ConsInterval.MAJ6,
+            ConsInterval.MAJ3: ConsInterval.MIN6,
+            ConsInterval.FIFTH: ConsInterval.FIFTH,
+            ConsInterval.MIN6: ConsInterval.MAJ3,
+            ConsInterval.MAJ6: ConsInterval.MIN3,
+        }
+        return mapping[self]
+
+    @property
+    def name_short(self) -> str:
+        names = {0: "U", 3: "m3", 4: "M3", 7: "P5", 8: "m6", 9: "M6"}
+        return names[self.value]
+
+
+class MotionType(Enum):
+    """Types of relative motion between two voices."""
+    PARALLEL = auto()
+    SIMILAR = auto()
+    CONTRARY = auto()
+    OBLIQUE = auto()
 
 
 @dataclass(frozen=True)
-class ContrapuntalQuiver:
-    """A contrapuntal quiver over a finite vertex set.
+class VLTransition:
+    """A voice leading transition."""
+    source: ConsInterval
+    target: ConsInterval
+    motion: MotionType
 
-    Attributes:
-        vertices: tuple of vertex labels
-        is_perfect: function classifying vertices as perfect/imperfect
-        threshold: function giving the maximum permitted motion type for each edge
-    """
-    vertices: Tuple[int, ...]
-    perfect_set: FrozenSet[int]
-
-    def is_perfect(self, v: int) -> bool:
-        return v in self.perfect_set
-
-    def threshold(self, a: int, b: int) -> MotionType:
-        """The maximum permitted motion type from a to b."""
-        if self.is_perfect(b):
-            return MotionType.SIMILAR
-        return MotionType.PARALLEL
-
-    def allowed(self, a: int, b: int, m: MotionType) -> bool:
-        """Whether motion type m is permitted from a to b."""
-        return m <= self.threshold(a, b)
-
-    def hom_set(self, a: int, b: int) -> Set[MotionType]:
-        """The set of permitted motion types from a to b."""
-        return {m for m in MotionType if self.allowed(a, b, m)}
-
-    def hom_set_size(self, a: int, b: int) -> int:
-        """Size of the hom-set from a to b."""
-        return len(self.hom_set(a, b))
-
-    def out_degree(self, a: int, m: MotionType) -> int:
-        """Number of targets reachable from a via motion type m."""
-        return sum(1 for b in self.vertices if self.allowed(a, b, m))
-
-    def in_degree(self, b: int, m: MotionType) -> int:
-        """Number of sources that can reach b via motion type m."""
-        return sum(1 for a in self.vertices if self.allowed(a, b, m))
-
-    def total_freedom(self, a: int) -> int:
-        """Total out-degree of vertex a across all motion types."""
-        return sum(self.out_degree(a, m) for m in MotionType)
-
-    def total_morphism_count(self) -> int:
-        """Total number of morphisms in the quiver."""
-        return sum(
-            self.hom_set_size(a, b)
-            for a in self.vertices
-            for b in self.vertices
-        )
-
-    def restrictiveness_spectrum(self) -> Dict[int, int]:
-        """Distribution of hom-set sizes."""
-        spectrum: Dict[int, int] = {}
-        for a in self.vertices:
-            for b in self.vertices:
-                size = self.hom_set_size(a, b)
-                spectrum[size] = spectrum.get(size, 0) + 1
-        return spectrum
-
-    def motion_subgraph_edges(self, m: MotionType) -> List[Tuple[int, int]]:
-        """Edges in the subgraph for a given motion type."""
-        return [(a, b) for a in self.vertices for b in self.vertices
-                if self.allowed(a, b, m)]
+    @property
+    def is_valid(self) -> bool:
+        """Check first-species validity."""
+        if self.target.is_perfect and self.motion in (MotionType.PARALLEL, MotionType.SIMILAR):
+            return False
+        return True
 
 
-def build_fux_quiver() -> ContrapuntalQuiver:
-    """Construct the standard Fux first-species contrapuntal quiver.
-
-    Returns:
-        The Fux quiver on 6 consonant interval classes.
-    """
-    return ContrapuntalQuiver(
-        vertices=(0, 3, 4, 7, 8, 9),
-        perfect_set=frozenset({0, 7})
-    )
+def all_consonant_intervals() -> List[ConsInterval]:
+    """Return all 6 consonant interval classes."""
+    return list(ConsInterval)
 
 
-def verify_target_determination(quiver: ContrapuntalQuiver) -> bool:
-    """Verify the Target Determination Principle.
-
-    Checks that fuxAllowed(a1, b, m) == fuxAllowed(a2, b, m)
-    for all a1, a2, b, m.
-
-    Args:
-        quiver: a contrapuntal quiver
-
-    Returns:
-        True if the principle holds
-    """
-    for b in quiver.vertices:
-        for m in MotionType:
-            values = {quiver.allowed(a, b, m) for a in quiver.vertices}
-            if len(values) > 1:
-                return False
-    return True
+def all_motion_types() -> List[MotionType]:
+    """Return all 4 motion types."""
+    return list(MotionType)
 
 
-def verify_downward_closure(quiver: ContrapuntalQuiver) -> bool:
-    """Verify the downward-closure axiom.
-
-    Checks that if m1 <= m2 and allowed(a, b, m2), then allowed(a, b, m1).
-
-    Returns:
-        True if the axiom holds
-    """
-    for a in quiver.vertices:
-        for b in quiver.vertices:
-            for m2 in MotionType:
-                if quiver.allowed(a, b, m2):
-                    for m1 in MotionType:
-                        if m1 <= m2 and not quiver.allowed(a, b, m1):
-                            return False
-    return True
+def counterpoint_hom(src: ConsInterval, tgt: ConsInterval) -> List[MotionType]:
+    """Compute the hom-set from src to tgt: valid motion types."""
+    return [m for m in MotionType if VLTransition(src, tgt, m).is_valid]
 
 
-def interval_inversion(i: int) -> int:
-    """Interval inversion (complement map) mod 12."""
-    return (12 - i) % 12
+def receptivity(interval: ConsInterval) -> int:
+    """Number of valid approach motions to this interval."""
+    return len(counterpoint_hom(ConsInterval.UNISON, interval))
 
 
-def consonance_inversion_analysis() -> Dict[str, object]:
-    """Analyze how inversion affects the consonance set.
+def interval_distance(i: ConsInterval, j: ConsInterval) -> int:
+    """Minimum semitone distance between two consonant intervals (mod 12)."""
+    return min((j.value - i.value) % 12, (i.value - j.value) % 12)
 
-    Returns:
-        Dictionary with analysis results
-    """
-    consonances = {0, 3, 4, 7, 8, 9}
-    results = {}
 
-    for i in sorted(consonances):
-        inv = interval_inversion(i)
-        results[i] = {
-            "inversion": inv,
-            "survives": inv in consonances
-        }
+def consonant_add(i: ConsInterval, j: ConsInterval) -> Optional[ConsInterval]:
+    """Add two consonant intervals mod 12; return result if consonant."""
+    result = (i.value + j.value) % 12
+    consonant_values = {c.value for c in ConsInterval}
+    if result in consonant_values:
+        return ConsInterval(result)
+    return None
 
-    survivors = sum(1 for v in results.values() if v["survives"])
 
+def consonance_adjacent(i: ConsInterval, j: ConsInterval) -> bool:
+    """Check if two intervals sum (mod 12) to a consonance."""
+    return consonant_add(i, j) is not None
+
+
+def enumerate_valid_transitions() -> List[VLTransition]:
+    """Enumerate all valid first-species transitions."""
+    result = []
+    for src in ConsInterval:
+        for tgt in ConsInterval:
+            for m in MotionType:
+                t = VLTransition(src, tgt, m)
+                if t.is_valid:
+                    result.append(t)
+    return result
+
+
+def restriction_factor() -> Tuple[int, int]:
+    """Compute the restriction factor as (valid, total)."""
+    valid = len(enumerate_valid_transitions())
+    total = len(ConsInterval) ** 2 * len(MotionType)
+    return valid, total
+
+
+def consonant_closure_ratio() -> Tuple[int, int]:
+    """Fraction of ordered pairs summing to a consonance."""
+    count = sum(1 for i in ConsInterval for j in ConsInterval
+                if consonance_adjacent(i, j))
+    total = len(ConsInterval) ** 2
+    return count, total
+
+
+def is_consonance_preserving(t: int) -> bool:
+    """Check if transposition by t preserves the consonance set."""
+    consonant_values = {c.value for c in ConsInterval}
+    return all((s + t) % 12 in consonant_values for s in consonant_values)
+
+
+def stabilizer() -> List[int]:
+    """Compute the stabilizer of the consonance set under transposition."""
+    return [t for t in range(12) if is_consonance_preserving(t)]
+
+
+def adjacency_matrix() -> List[List[int]]:
+    """Compute the consonance adjacency matrix."""
+    intervals = list(ConsInterval)
+    n = len(intervals)
+    matrix = [[0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if consonance_adjacent(intervals[i], intervals[j]):
+                matrix[i][j] = 1
+    return matrix
+
+
+def transition_matrix() -> Dict[str, List[List[int]]]:
+    """Compute the transition count matrix (how many valid motions from i to j)."""
+    intervals = list(ConsInterval)
+    n = len(intervals)
+    matrix = [[0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            matrix[i][j] = len(counterpoint_hom(intervals[i], intervals[j]))
     return {
-        "pairs": results,
-        "survivors": survivors,
-        "total": len(consonances),
-        "broken": [i for i, v in results.items() if not v["survives"]]
+        "labels": [c.name_short for c in intervals],
+        "matrix": matrix
     }
 
 
-def contrapuntal_entropy(quiver: ContrapuntalQuiver, b: int) -> float:
-    """Compute the contrapuntal entropy of targeting interval b.
-
-    H(b) = log2(|homSet(a, b)|)
-
-    This is source-independent by Target Determination.
-    """
-    import math
-    size = quiver.hom_set_size(quiver.vertices[0], b)
-    return math.log2(size) if size > 0 else 0.0
-
-
-def enumerate_all_quivers(
-    vertices: Tuple[int, ...],
-    perfect_set: FrozenSet[int]
-) -> int:
-    """Count all valid contrapuntal quivers on given vertices.
-
-    A valid quiver must satisfy:
-    1. Downward closure
-    2. Contrary universality
-    3. Parallel-perfect prohibition
-
-    Due to downward closure, each edge is determined by its threshold
-    motion type. The constraints are:
-    - Threshold >= CONTRARY (universality)
-    - If target is perfect: threshold <= SIMILAR
-
-    Returns:
-        Number of valid quivers
-    """
-    # Each edge has a threshold in {CONTRARY, OBLIQUE, SIMILAR, PARALLEL}
-    # Constraint: if target is perfect, threshold <= SIMILAR (3 choices)
-    # Constraint: if target is imperfect, threshold can be anything (4 choices)
-
-    n_perfect_targets = sum(1 for v in vertices if v in perfect_set)
-    n_imperfect_targets = len(vertices) - n_perfect_targets
-
-    n_edges_to_perfect = len(vertices) * n_perfect_targets
-    n_edges_to_imperfect = len(vertices) * n_imperfect_targets
-
-    # Each edge to perfect has 3 threshold choices (CONTRARY, OBLIQUE, SIMILAR)
-    # Each edge to imperfect has 4 threshold choices
-    total = (3 ** n_edges_to_perfect) * (4 ** n_edges_to_imperfect)
-    return total
-
-
 if __name__ == "__main__":
-    fux = build_fux_quiver()
+    # Verify key theorems computationally
+    print("Verifying theorems...")
 
-    print("Fux Quiver Properties:")
-    print(f"  Vertices: {fux.vertices}")
-    print(f"  Perfect: {fux.perfect_set}")
-    print(f"  Total morphisms: {fux.total_morphism_count()}")
-    print(f"  Target Determination: {verify_target_determination(fux)}")
-    print(f"  Downward Closure: {verify_downward_closure(fux)}")
-    print(f"  Spectrum: {fux.restrictiveness_spectrum()}")
+    # Target-only dependence
+    for tgt in ConsInterval:
+        homs = [frozenset(counterpoint_hom(src, tgt)) for src in ConsInterval]
+        assert len(set(homs)) == 1, f"Target-only dependence fails for {tgt}"
+    print("✓ Target-only dependence verified")
 
-    print(f"\nFreedom scores:")
-    for v in fux.vertices:
-        print(f"  {v}: {fux.total_freedom(v)}")
+    # Complement involution
+    for i in ConsInterval:
+        assert i.complement.complement == i
+    print("✓ Complement involution verified")
 
-    print(f"\nContrapuntal entropy:")
-    for v in fux.vertices:
-        print(f"  {v}: {contrapuntal_entropy(fux, v):.4f} bits")
+    # Exact counting
+    v, t = restriction_factor()
+    assert v == 120 and t == 144
+    print(f"✓ Restriction factor: {v}/{t} = 5/6")
 
-    inv = consonance_inversion_analysis()
-    print(f"\nInversion analysis:")
-    print(f"  Survivors: {inv['survivors']}/{inv['total']}")
-    print(f"  Broken: {inv['broken']}")
+    # Ramsey property
+    from itertools import combinations
+    for a, b, c in combinations(ConsInterval, 3):
+        assert (consonance_adjacent(a, b) or
+                consonance_adjacent(b, c) or
+                consonance_adjacent(a, c))
+    print("✓ Ramsey property verified")
 
-    n_quivers = enumerate_all_quivers(fux.vertices, fux.perfect_set)
-    print(f"\nTotal valid quivers on 6 consonances: {n_quivers}")
+    # Rigidity
+    assert stabilizer() == [0]
+    print("✓ Trivial stabilizer verified")
+
+    # Closure ratio
+    cn, ct = consonant_closure_ratio()
+    assert cn == 23
+    print(f"✓ Consonant closure ratio: {cn}/{ct}")
+
+    print("\nAll theorems verified!")

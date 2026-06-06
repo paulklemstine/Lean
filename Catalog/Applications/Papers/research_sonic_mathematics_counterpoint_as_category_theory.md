@@ -1,352 +1,215 @@
-# The Contrapuntal Quiver: First-Species Counterpoint as an Enriched Categorical Structure
+# The Category of First-Species Counterpoint: Algebraic Structure of Voice Leading Rules
 
 ## Abstract
 
-We introduce the **Contrapuntal Quiver**, a novel mathematical structure that formalizes the voice-leading rules of first-species counterpoint (Fux, 1725) as a directed graph enriched over downward-closed subsets of a totally ordered set of motion types. Our main structural theorem, the **Target Determination Principle**, establishes that the Fux permission function is source-independent: the set of permitted motion types for a transition depends solely on whether the target interval is a perfect consonance. This yields a faithful functor from the 6-vertex contrapuntal quiver to a 2-vertex "perfection quiver," demonstrating that the algebraic complexity of the entire first-species rule system is captured by a binary classification. All results are machine-verified in Lean 4 using the Mathlib library.
+We formalize Fux's first-species counterpoint as a categorical structure and prove structural theorems connecting music theory to order theory, combinatorics, and abstract algebra. Our main contributions are: (1) a complete formal model of consonant intervals and permitted voice leadings in Lean 4; (2) the **target-only dependence theorem**, showing that the set of valid motion types for any transition depends solely on whether the target interval is a perfect or imperfect consonance; (3) the **complement functor theorem**, establishing that the involution swapping minor/major interval pairs extends to a category endofunctor; (4) the **consonance Ramsey property**, proving that among any three distinct consonant intervals, at least one pair sums to a consonance; and (5) the **rigidity theorem**, showing the consonance set has trivial stabilizer under the transposition action on ℤ/12ℤ. All results are machine-verified in Lean 4 with Mathlib.
 
-**Keywords**: counterpoint, category theory, enriched categories, music theory formalization, voice leading, quiver theory
-
----
+**Keywords**: counterpoint, category theory, music theory, formal verification, Ramsey theory, voice leading
 
 ## 1. Introduction
 
-The formalization of musical structures using mathematical tools has a long history, from Euler's *tentamen novae theoriae musicae* (1739) through Lewin's generalized interval systems (1987) to Tymoczko's voice-leading geometry (2011). However, the *rules* of counterpoint—the constraints governing how voices move relative to one another—have largely resisted algebraic formalization. Existing mathematical treatments of counterpoint tend to work with the geometry of voice-leading spaces or the group theory of pitch-class transformations, rather than directly axiomatizing the permission structure of the rules themselves.
+Musical counterpoint — the art of combining independent melodic lines — has been a central concern of Western music theory since the Renaissance. The rules governing which combinations of notes are "correct" were codified most influentially by Johann Joseph Fux in *Gradus ad Parnassum* (1725), which remains the foundation of counterpoint pedagogy.
 
-We take a different approach. Rather than embedding counterpoint in a pre-existing mathematical framework, we ask: **what mathematical structure does the counterpoint rule system naturally inhabit?** The answer turns out to be a novel enriched directed graph structure—the Contrapuntal Quiver—that combines elements of order theory, graph theory, and category theory.
+Despite centuries of study, the algebraic structure implicit in these rules has received little formal mathematical attention. While neo-Riemannian theory and the work of Tymoczko, Mazzola, and others have applied group theory and topology to harmony and voice leading, the specific categorical structure of species counterpoint — which intervals may follow which, and by what motion types — has not been characterized precisely.
 
-### 1.1 Summary of Results
+In this paper, we provide such a characterization for first-species (note-against-note) counterpoint. Our approach models consonant intervals as objects in a category and permitted voice leadings as morphisms, then proves structural theorems about the resulting category.
 
-1. **The Contrapuntal Quiver** (Definition 3.1): A directed graph enriched with downward-closed sets of motion types, axiomatizing the essential features of voice-leading rules.
+### 1.1 Prior Work
 
-2. **The Target Determination Principle** (Theorem 4.1): The Fux permission function `fuxAllowed(a, b, m)` is independent of `a`. This source-independence is a non-obvious structural property with no precedent in the music-theory literature.
+The mathematical study of voice leading was advanced significantly by Tymoczko's geometric approach [1], modeling voice leadings as paths in quotient spaces. Mazzola's *Topos of Music* [2] applied category theory to musical structures at a high level of abstraction. The specific connection between counterpoint rules and finite categories, however, appears to be new.
 
-3. **The Binary Filtration** (Theorem 4.2): The rule system decomposes into exactly two levels based on target perfection, yielding a bimodal restrictiveness spectrum.
+Our work builds on the formalization of Pythagorean harmonic ratios in `Catalog/Pythagorean/HarmonicMusicTheory.lean`, which establishes consonance predicates for frequency ratios derived from Pythagorean triples, and voice leading cost theory in `Catalog/Algebra/MusicalCounterpoint.lean`, which models voice leading efficiency as an L¹ seminorm.
 
-4. **The Perfection Functor** (Theorem 6.1): The 6-vertex Fux quiver factors faithfully through a 2-vertex perfection quiver, demonstrating that the algebraic content of the rules is binary.
+### 1.2 Contributions
 
-5. **Uniform Freedom** (Theorem 5.1): Every consonance has the same total out-degree (22) in the enriched permission graph.
+1. **Formal model** (Section 3): Complete Lean 4 formalization of consonant intervals, motion types, and transition validity.
+2. **Target-only dependence** (Theorem 6.1): The hom-set structure depends only on the target's perfect/imperfect class.
+3. **Complement endofunctor** (Theorem 7.1): The complement involution is a well-defined endofunctor.
+4. **Exact counting** (Section 8): Precise enumeration of valid transitions (120 of 144) and the restriction factor 5/6.
+5. **Algebraic non-closure** (Section 9): The consonance set {0,3,4,7,8,9} is not a subgroup of ℤ/12ℤ.
+6. **Ramsey property** (Theorem 10.1): No dissonance triangle exists among consonant intervals.
+7. **Rigidity** (Theorem 11.1): Trivial transposition stabilizer.
 
-6. **Inversion Asymmetry** (Theorem 7.1): The Fux consonance set is not closed under interval inversion, with exactly 5 of 6 consonances surviving.
+## 2. Mathematical Preliminaries
 
-7. **Dissonance Complementarity** (Theorem 7.2): The chromatic scale partitions into 6 consonances and 6 dissonances—an exact 1:1 ratio.
+### 2.1 Pitch Classes and Intervals
 
----
+We work in the standard equal-temperament model where pitch classes are elements of ℤ/12ℤ. An **interval** between two simultaneous pitches is a value in {0, 1, ..., 11}, measured in semitones.
 
-## 2. Preliminaries
+### 2.2 Consonance in First-Species Counterpoint
 
-### 2.1 Interval Classes
+Following Fux, the **consonant intervals** in two-voice first-species counterpoint are:
 
-We work with interval classes modulo octave equivalence, represented as elements of ℤ₁₂ (or equivalently, `Fin 12`). The six consonant interval classes in first-species counterpoint are:
+| Interval | Semitones | Classification |
+|----------|-----------|---------------|
+| Unison/Octave | 0 | Perfect |
+| Minor third | 3 | Imperfect |
+| Major third | 4 | Imperfect |
+| Perfect fifth | 7 | Perfect |
+| Minor sixth | 8 | Imperfect |
+| Major sixth | 9 | Imperfect |
 
-| Index | Semitones | Name | Type |
-|-------|-----------|------|------|
-| 0 | 0 | Unison/Octave | Perfect |
-| 1 | 3 | Minor Third | Imperfect |
-| 2 | 4 | Major Third | Imperfect |
-| 3 | 7 | Perfect Fifth | Perfect |
-| 4 | 8 | Minor Sixth | Imperfect |
-| 5 | 9 | Major Sixth | Imperfect |
+The perfect fourth (5 semitones), despite being the inversion of the perfect fifth, is treated as dissonant in this context.
 
-### 2.2 Motion Types
+### 2.3 Motion Types
 
-Four types of relative motion between voices are traditionally distinguished:
-
+When two voices move from one vertical interval to another, the relative motion is classified into four types:
+- **Parallel**: both voices move by the same interval
+- **Similar**: both voices move in the same direction but by different amounts
 - **Contrary**: voices move in opposite directions
-- **Oblique**: one voice stationary, the other moves
-- **Similar**: same direction, different magnitude
-- **Parallel**: same direction, same magnitude
+- **Oblique**: one voice remains stationary
 
-We equip these with a total order by *restrictiveness*: contrary ≤ oblique ≤ similar ≤ parallel. This ordering reflects the pedagogical and historical hierarchy: contrary motion is considered safest and is always permitted; parallel motion is the most restricted.
+## 3. The Counterpoint Category
 
-### 2.3 Fux's Rules (First Species)
+### 3.1 Objects
 
-Fux's first-species counterpoint rules can be summarized:
-1. Every vertical sonority must be a consonant interval.
-2. Parallel motion between perfect consonances of the same type is forbidden ("no parallel fifths/octaves").
-3. Similar (direct) motion to a perfect consonance requires the soprano to move by step.
+The objects of our category **Cpt** are the elements of the type `ConsInterval`, a finite type with six constructors corresponding to the six consonant intervals.
 
-We model rule (3) by treating similar motion to perfect consonances as *restricted but not forbidden*, and parallel motion to perfect consonances as *absolutely forbidden*.
+### 3.2 Morphisms
 
----
+For objects (intervals) *s* and *t*, the hom-set Hom(*s*, *t*) consists of motion types *m* ∈ {parallel, similar, contrary, oblique} such that the transition (*s*, *t*, *m*) is valid under Fux's rules.
 
-## 3. The Contrapuntal Quiver
+**Definition (Validity).** A transition (*s*, *t*, *m*) is valid iff:
+- *t* is imperfect, OR
+- *t* is perfect AND *m* ∈ {contrary, oblique}
 
-### Definition 3.1 (Contrapuntal Quiver)
+Equivalently, the only forbidden transitions are approaches to perfect consonances by parallel or similar motion.
 
-A **Contrapuntal Quiver** over a finite type `V` is a tuple `(V, isPerfect, allowed)` where:
-- `isPerfect : V → Bool` classifies vertices as perfect or imperfect
-- `allowed : V → V → MotionType → Bool` assigns to each directed edge and motion type a permission value
+### 3.3 Composition
 
-subject to three axioms:
-1. **Downward closure**: If `m₁ ≤ m₂` and `allowed(a, b, m₂) = true`, then `allowed(a, b, m₁) = true`.
-2. **Contrary universality**: `allowed(a, b, contrary) = true` for all `a, b`.
-3. **Parallel-perfect prohibition**: If `isPerfect(b) = true`, then `allowed(a, b, parallel) = false`.
+Morphisms compose via a binary operation on motion types. Importantly, composition preserves validity when the target is imperfect (Theorem 12.1 in the formalization).
 
-The downward-closure axiom ensures that the set of permitted motion types for each edge forms a *principal downward set* in the motion-type order. Combined with the universality and prohibition axioms, this means each edge carries one of two possible permission sets:
-- `{contrary, oblique, similar}` (if parallel is forbidden)
-- `{contrary, oblique, similar, parallel}` (if parallel is permitted)
+## 4. The Perfect Fourth Anomaly
 
-### Remark
+**Theorem 4.1 (Fourth Anomaly).** *No consonant interval has semitone value 5. In particular, the mod-12 complement of the perfect fifth (12 - 7 = 5) is not consonant.*
 
-The Contrapuntal Quiver is formally an enrichment of a quiver (directed multigraph) over the poset of downward-closed subsets of the motion-type order. In categorical language, it is a functor from the path category of the underlying directed graph to the category of downward-closed subsets of a totally ordered set.
+This theorem formalizes a well-known but mathematically precise asymmetry: the consonant interval set is NOT closed under the complement map *i* ↦ 12 - *i* on ℤ/12ℤ. The perfect fourth breaks the inversion symmetry.
 
----
+**Theorem 4.2 (Imperfect Complement Closure).** *The imperfect consonances are closed under complementation: 3 + 9 = 12 and 4 + 8 = 12.*
 
-## 4. The Target Determination Principle
+The complement involution pairs minor thirds with major sixths and major thirds with minor sixths.
 
-### The Fux Permission Function
+## 5. The Complement Endofunctor
 
-The concrete Fux permission function is:
+**Definition.** The complement map on `ConsInterval` is defined by:
+- min3 ↦ maj6, maj3 ↦ min6, min6 ↦ maj3, maj6 ↦ min3
+- unison ↦ unison, fifth ↦ fifth (fixed points)
 
-```
-fuxAllowed(a, b, m) = if isPerfect(b) then (m ≤ similar) else true
-```
+**Theorem 5.1 (Involution).** *The complement map is an involution: complement ∘ complement = id.*
 
-### Theorem 4.1 (Target Determination)
+**Theorem 5.2 (Class Preservation).** *The complement preserves the perfect/imperfect classification: isPerfect(complement(i)) = isPerfect(i) for all i.*
 
-For all `a₁, a₂, b : Fin 6` and `m : MotionType`:
-```
-fuxAllowed(a₁, b, m) = fuxAllowed(a₂, b, m)
-```
+**Theorem 5.3 (Functoriality).** *If a transition (s, t, m) is valid, then (complement(s), complement(t), m) is also valid. Therefore, complement extends to an endofunctor of Cpt.*
 
-**Proof sketch**: By definition, `fuxAllowed` does not reference its first argument. □
+*Proof.* Validity depends only on *t*'s class and *m*. Since complement preserves *t*'s class (Theorem 5.2), validity is preserved. □
 
-While the proof is trivial given the definition, the *observation* is not. The definition was derived from Fux's rules, which are traditionally stated in terms of both source and target intervals. The source-independence is a structural insight that simplifies the entire rule system.
+**Theorem 5.4 (Fixed Points).** *The fixed points of complement are exactly the perfect consonances: complement(i) = i iff isPerfect(i) = true.*
 
-### Theorem 4.2 (Binary Filtration)
+## 6. Target-Only Dependence
 
-The permission function decomposes into exactly two levels:
-- For all `a, b` with `isPerfect(b) = true`: `fuxAllowed(a, b, parallel) = false`
-- For all `a, b` with `isPerfect(b) = false`: `fuxAllowed(a, b, parallel) = true`
+**Theorem 6.1 (Target-Only Dependence).** *For any consonant intervals s₁, s₂, and t:*
+  *Hom(s₁, t) = Hom(s₂, t)*
 
-### Theorem 4.3 (Bimodal Spectrum)
+*In words: the hom-set depends only on the target, not the source.*
 
-The restrictiveness spectrum is bimodal:
-- 12 edges have hom-set size 3 (those targeting perfect consonances)
-- 24 edges have hom-set size 4 (those targeting imperfect consonances)
-- No edges have any other hom-set size
+*Proof.* By exhaustive verification over all 6 × 6 × 6 triples (machine-checked). The underlying reason is that validity depends only on (t.isPerfect, m), which is independent of s. □
 
----
+**Corollary 6.2.** *The hom-set has exactly two possible values:*
+- *Hom(s, t) = {parallel, similar, contrary, oblique} if t is imperfect*
+- *Hom(s, t) = {contrary, oblique} if t is perfect*
 
-## 5. Subgraph Analysis and the Free Zone
+This is a remarkably strong structural property. In most categories arising from constraint systems, the morphism structure depends on both source and target. The fact that source information is irrelevant means the category has a "projection" structure onto the two-object category {perfect, imperfect}.
 
-### Theorem 5.1 (Uniform Freedom)
+## 7. Receptivity and the Restriction Factor
 
-Every consonant interval class has the same total freedom score:
-```
-∀ a : Fin 6, totalFreedom(a) = 22
-```
-where `totalFreedom(a) = Σ_m outDegree(a, m)`.
+**Definition.** The *receptivity* of a consonant interval *i* is |Hom(·, i)|, the number of valid approach motions.
 
-This is a corollary of Target Determination: since permission depends only on the target, the out-degree of every vertex is identical.
+| Interval | Class | Receptivity |
+|----------|-------|-------------|
+| Unison | Perfect | 2 |
+| Minor third | Imperfect | 4 |
+| Major third | Imperfect | 4 |
+| Fifth | Perfect | 2 |
+| Minor sixth | Imperfect | 4 |
+| Major sixth | Imperfect | 4 |
 
-### Theorem 5.2 (Free Zone)
+**Theorem 7.1 (Total Receptivity).** *∑ receptivity(i) = 20.*
 
-For all `a, b : Fin 6` with `b` imperfect, and all `m : MotionType`:
-```
-fuxAllowed(a, b, m) = true
-```
+**Theorem 7.2 (Restriction Factor).** *The ratio of valid to total transitions is 120/144 = 5/6. Equivalently, counterpoint rules forbid exactly 1/6 of all possible transitions.*
 
-The imperfect consonances (thirds and sixths) form a "free zone" where all motion types are permitted.
+The decomposition: 6 × (4 × 4 + 2 × 2) = 6 × 20 = 120.
 
-### Theorem 5.3 (Complete Subgraphs)
+## 8. Graph-Theoretic Properties
 
-- The contrary-motion subgraph is the complete digraph on 6 vertices (36 edges).
-- The similar-motion subgraph is also complete (36 edges).
-- The oblique-motion subgraph is complete (36 edges).
-- The parallel-motion subgraph has 24 edges (12 forbidden).
+**Theorem 8.1 (Complete Transition Graph).** *The transition graph (where i → j iff canFollow(i, j)) is the complete directed graph on 6 vertices.*
 
-### Theorem 5.4 (In-Degree Asymmetry)
+**Corollary 8.2.** *The number of valid counterpoint sequences of length n is 6ⁿ.*
 
-While out-degrees are uniform, in-degrees are not:
-- Perfect consonances: parallel in-degree = 0
-- Imperfect consonances: parallel in-degree = 6
+**Theorem 8.3 (Parallel Conflict Asymmetry).** *The parallel conflict relation (i → j iff parallel motion from i to j is forbidden) depends only on j's class. It has 12 directed edges: all 6 sources to each of 2 perfect targets.*
 
-This asymmetry is the algebraic signature of the perfect/imperfect distinction.
+## 9. Algebraic Structure of the Consonance Set
 
----
+**Theorem 9.1 (Non-Closure).** *The set {0, 3, 4, 7, 8, 9} ⊂ ℤ/12ℤ is not closed under addition. Specifically:*
+- *3 + 3 = 6 (tritone, dissonant)*
+- *7 + 7 ≡ 2 (major second, dissonant)*
+- *9 + 9 ≡ 6 (tritone, dissonant)*
 
-## 6. The Perfection Functor
+**Theorem 9.2 (Partial Closure).** *Of 36 ordered pairs, exactly 23 sum to a consonant interval, yielding a closure ratio of 23/36 ≈ 64%.*
 
-### Theorem 6.1 (Faithful Factorization)
+## 10. The Consonance Ramsey Property
 
-There exists a 2-vertex contrapuntal quiver `perfQuiver` on `PerfClass = {perfect, imperfect}` and a surjective map `perfClassify : Fin 6 → PerfClass` such that:
-```
-fuxAllowed(a, b, m) = quotientAllowed(perfClassify(a), perfClassify(b), m)
-```
+**Theorem 10.1 (Ramsey Property).** *Define consonance adjacency: i ~ j iff (toNat(i) + toNat(j)) mod 12 is a consonant semitone value. Then among any three distinct consonant intervals, at least one pair is adjacent.*
 
-This factorization is *faithful*: no permission information is lost.
+*Equivalently, the consonance adjacency graph on 6 vertices has no independent set of size 3.*
 
-### Corollary
+*Proof.* By exhaustive verification over all (6 choose 3) = 20 triples (machine-checked). □
 
-The algebraic complexity of first-species counterpoint, measured by the number of distinct permission patterns, is exactly 2 (one for perfect targets, one for imperfect targets), not 36 (one for each ordered pair of consonances).
+This is a miniature Ramsey theorem. The complement graph (pairs summing to dissonance) has 5 edges: {3,7}, {3,8}, {4,7}, {4,9}, {8,9}. One can verify that no triangle exists in this sparse graph.
 
----
+## 11. Rigidity of the Consonance Set
 
-## 7. Symmetry and Asymmetry
+**Theorem 11.1 (Trivial Stabilizer).** *The only t ∈ ℤ/12ℤ such that {0+t, 3+t, 4+t, 7+t, 8+t, 9+t} mod 12 ⊆ {0, 3, 4, 7, 8, 9} is t = 0.*
 
-### Theorem 7.1 (Inversion Asymmetry)
+*Proof.* By exhaustive check over all 12 values (machine-checked). □
 
-The interval inversion map `i ↦ (12 - i) mod 12` does *not* preserve the Fux consonance set. Specifically:
-- The perfect fifth (7) maps to 5 (perfect fourth), which is NOT consonant
-- Exactly 5 of 6 consonances survive inversion
-- The imperfect consonances pair up: {3 ↔ 9} and {4 ↔ 8}
+This means the consonance set is "maximally positioned" within ℤ/12ℤ: it cannot be nontrivially translated onto itself. Combined with the non-closure result, this shows the consonances have a rigid, asymmetric algebraic structure.
 
-### Theorem 7.2 (Dissonance Complementarity)
+## 12. The Voice Leading Distance
 
-The chromatic scale partitions into 6 consonances and 6 dissonances. This 1:1 ratio is a noteworthy structural property of Fux's consonance definition.
+**Definition.** The *interval distance* between consonant intervals *i* and *j* is:
 
----
+  d(i, j) = min((toNat(j) - toNat(i)) mod 12, (toNat(i) - toNat(j)) mod 12)
 
-## 8. Algorithms
+**Theorem 12.1.** *The interval distance is symmetric and satisfies d(i,i) = 0.*
 
-### Algorithm 1: Voice-Leading Permission Check
+**Theorem 12.2.** *The diameter of the consonance set under this metric is 5, achieved by the unison-fifth pair.*
 
-**Input**: Source interval `a`, target interval `b`, motion type `m`
-**Output**: Whether the transition is permitted
+## 13. Discussion
 
-```python
-def is_permitted(a: int, b: int, m: str) -> bool:
-    perfect = {0, 7}  # unison/octave, fifth
-    consonant = {0, 3, 4, 7, 8, 9}
-    if b not in consonant:
-        return False  # target must be consonant
-    if b in perfect:
-        return m != 'parallel'
-    return True
-```
+### 13.1 Relation to the Original Conjecture
 
-**Complexity**: O(1) — the algorithm is a constant-time lookup.
+The original conjecture proposed that the first-species counterpoint category is equivalent to the thin category generated by a specific 12-element poset. Our analysis shows this is not quite right: the transition graph is complete (Theorem 8.1), so the thin category is the indiscrete category on 6 objects, not a nontrivial poset. However, the *labeled* category (where morphisms carry motion-type information) has rich structure characterized by the target-only dependence property.
 
-### Algorithm 2: Restrictiveness Spectrum Computation
+The number 12 in the conjecture may relate to the 12 directed edges in the parallel conflict graph (Theorem 8.3), but this graph is not a poset (it depends only on the target).
 
-**Input**: A contrapuntal quiver
-**Output**: Distribution of hom-set sizes
+### 13.2 The Target-Only Dependence Principle
 
-```python
-def spectrum(quiver):
-    counts = {}
-    for a in quiver.vertices:
-        for b in quiver.vertices:
-            size = sum(1 for m in MotionType if quiver.allowed(a, b, m))
-            counts[size] = counts.get(size, 0) + 1
-    return counts
-```
+The most surprising result is Theorem 6.1. In most constraint-satisfaction systems, both endpoints matter for determining valid transitions. The fact that counterpoint's validity depends only on the target suggests a deep connection to fiber categories and opfibrations in category theory.
 
----
+### 13.3 Connection to Pythagorean Music Theory
 
-## 9. Conjectures
+Our consonance set {0, 3, 4, 7, 8, 9} corresponds precisely to the intervals with simple frequency ratios: 1/1, 6/5, 5/4, 3/2, 8/5, 5/3. The formal connection between this ratio-based characterization (developed in `HarmonicMusicTheory.lean`) and the counterpoint rules demonstrates that voice leading constraints arise naturally from acoustic consonance.
 
-### Conjecture 9.1 (Second-Species Extension)
+## 14. Conclusion
 
-In second-species counterpoint (two notes against one), the contrapuntal quiver acquires a *temporal enrichment*: each edge carries not just a set of motion types but a *sequence* of motion types indexed by the rhythmic position. We conjecture that the Target Determination Principle extends to second species with a modified perfection predicate that accounts for passing tones.
-
-**Test**: Enumerate all valid second-species progressions and verify source-independence computationally.
-
-### Conjecture 9.2 (Universality of Bimodality)
-
-Every "reasonable" contrapuntal rule system (satisfying the three quiver axioms) on the 6 consonant interval classes has a bimodal restrictiveness spectrum. More precisely, the spectrum concentrates on at most 2 distinct values.
-
-**Test**: Enumerate all contrapuntal quivers on 6 vertices satisfying the axioms and compute their spectra.
-
----
-
-## 10. Discussion
-
-### 10.1 Relationship to Prior Work
-
-Our approach differs from existing mathematical treatments of counterpoint in several ways:
-
-- **Tymoczko (2011)** studies voice-leading *geometry* — the continuous space of voice leadings. Our approach studies the *permission structure* — which discrete transitions are allowed.
-- **Mazzola (2002)** applies topos theory to music. Our structure is more elementary (enriched graphs rather than topoi) but captures the specific algebraic content of the Fux rules.
-- **Lewin (1987)** defines generalized interval systems. Our consonant intervals form a subset of a GIS, but the quiver structure on this subset is novel.
-
-### 10.2 Musical Implications
-
-The Target Determination Principle has a clear musical interpretation: when composing counterpoint, a musician need only consider the *destination* to determine what motions are available. The origin is irrelevant. This matches experienced composers' intuition — they "think ahead" to the next consonance rather than worrying about what they're leaving.
-
-### 10.3 Categorical Perspective
-
-The Contrapuntal Quiver can be viewed as a category where:
-- Objects are consonant interval classes
-- Morphisms from `a` to `b` are the elements of `homSet(a, b)` (permitted motion types)
-- Composition selects the most conservative (least restrictive) compatible motion
-
-This makes the Perfection Functor a genuine functor between categories, and the Target Determination Principle equivalent to the statement that the functor is faithful.
-
----
-
-## 11. PEGB Analysis
-
-For each major theorem, we provide the full Proof–Example–Generalization–Boundary analysis.
-
-### PEGB for Target Determination (Theorem 4.1)
-
-- **Proof**: By direct inspection of the `fuxAllowed` definition, which does not reference its first argument. Machine-verified in Lean 4 via `simp [fuxAllowed]`.
-- **Example**: The hom-set from minor-third to perfect-fifth is {contrary, oblique, similar}, and the hom-set from major-sixth to perfect-fifth is also {contrary, oblique, similar}. The source (minor third vs. major sixth) is irrelevant.
-- **Generalization**: Target Determination holds for ANY contrapuntal quiver whose `allowed` function has the form `f(isPerfect(b), m)` for some function `f`. This characterizes a natural class of "target-determined" quivers.
-- **Boundary**: Target Determination would FAIL if the "no parallel unisons" rule were replaced by "no parallel motion FROM unisons" (a source-dependent rule that some modern counterpoint textbooks describe). This shows the principle is specific to Fux's original formulation.
-
-### PEGB for the Free Zone Theorem (Theorem 5.2)
-
-- **Proof**: Direct from the definition: when `isPerfect(b) = false`, the permission function returns `true` regardless of source and motion type.
-- **Example**: The transition from perfect fifth (index 3) to minor third (index 1) admits all four motion types: contrary, oblique, similar, and parallel.
-- **Generalization**: In any contrapuntal quiver, the vertices `b` with `isPerfect(b) = false` form a "free zone" where all motion types are permitted. The free zone is characterized as the complement of the perfect set.
-- **Boundary**: The free zone is maximal — adding any perfect consonance to the imperfect set would shrink the free zone. The exact boundary is the set of 12 forbidden edges (6 sources × 2 perfect targets).
-
-### PEGB for the Bimodal Spectrum (Theorem 4.3)
-
-- **Proof**: Computed by `native_decide` over all 36 directed edges.
-- **Example**: spectrumCount(3) = 12 and spectrumCount(4) = 24. No edge has fewer than 3 or more than 4 permitted types.
-- **Generalization**: For a contrapuntal quiver with `p` perfect vertices and `n` total vertices, the spectrum is always bimodal with `n·p` edges of size 3 and `n·(n-p)` edges of size 4.
-- **Boundary**: Bimodality breaks if we allow edges with fewer than 3 types (e.g., forbidding similar motion to perfect consonances), which would create a trimodal spectrum.
-
-### PEGB for Inversion Asymmetry (Theorem 7.1)
-
-- **Proof**: By computation: `intervalInversion(7) = 5`, and `5 ∉ {0,3,4,7,8,9}`.
-- **Example**: The perfect fifth C–G inverts to the perfect fourth G–C. In Fux's system, this fourth is dissonant (when the lower note is the bass).
-- **Generalization**: The inversion map `i → (12-i) mod 12` preserves exactly those consonance sets `S` where `S = {12-s mod 12 : s ∈ S}`. The Fux set fails this precisely because 7 ∈ S but 5 ∉ S.
-- **Boundary**: If the perfect fourth (5) were included as consonant (as in some medieval and modern theories), the inversion asymmetry would vanish — all 7 consonances would survive. The fourth's exclusion is the *unique* source of the asymmetry.
-
-### PEGB for Uniform Freedom (Theorem 5.1)
-
-- **Proof**: By `decide` over all 6 vertices: each has totalFreedom = 22.
-- **Example**: The unison (perfect, index 0) has out-degrees: C=6, O=6, S=6, P=4, total=22. The minor third (imperfect, index 1) also has: C=6, O=6, S=6, P=4, total=22.
-- **Generalization**: Uniform Freedom holds for any contrapuntal quiver satisfying Target Determination. The total freedom of every vertex is `k·n` where `k` is the number of motion types with level ≤ minimum threshold, summed appropriately.
-- **Boundary**: Uniform Freedom is a property of *out-degrees*. In-degrees are NOT uniform: perfect consonances have parallel in-degree 0, imperfect have parallel in-degree 6. The asymmetry lives entirely in the in-degree structure.
-
----
-
-## 12. Falsifiable Conjecture
-
-**Conjecture (Maximality of Fux)**: Among all contrapuntal quivers on 6 vertices with exactly 2 perfect vertices, the Fux quiver (where `allowed(a,b,m) = (m ≤ similar)` when `b` is perfect and `true` otherwise) has the maximum total morphism count.
-
-**Computational test**: Enumerate all valid contrapuntal quivers on `Fin 6` with `isPerfect = {0, 3}`. Each of the 36 edges has a threshold in {contrary, oblique, similar, parallel}, subject to:
-1. Threshold ≥ contrary (by contrary universality)
-2. If target is perfect: threshold ≤ similar
-
-This gives 3^12 × 4^24 ≈ 1.5 × 10^20 possible quivers. The Fux quiver uses the maximum threshold for each edge (similar for perfect targets, parallel for imperfect targets), so it trivially maximizes the count. The conjecture is therefore **TRUE** and the test confirms it.
-
-More interesting variant: **Conjecture (Uniqueness)**: The Fux quiver is the UNIQUE quiver achieving this maximum. This follows immediately from the observation that the maximum threshold for each edge is unique. □
-
----
-
-## 13. Conclusion
-
-The Contrapuntal Quiver provides a precise algebraic framework for the rules of first-species counterpoint. The central insight—Target Determination—reveals that Fux's seemingly complex rule system has a remarkably simple algebraic core: a binary classification of target intervals that determines the entire permission structure. This simplicity was hidden by the traditional presentation of the rules in terms of source-target pairs.
-
-The structure we have introduced — an enriched quiver over downward-closed subsets of a totally ordered motion-type set — is novel in the mathematical literature. It combines elements of order theory (the motion-type poset), graph theory (the underlying quiver), and category theory (the enrichment and factorization), yielding a framework that is both mathematically precise and musically meaningful.
-
-The Perfection Functor demonstrates that the algebraic content of first-species counterpoint is, in a precise sense, binary: the entire rule system collapses to a 2-vertex quotient without loss of information. This is a striking example of a complex rule system possessing hidden simplicity, and it suggests that similar algebraic analyses might reveal analogous structures in other rule-based systems.
-
-All results are formalized and machine-verified in Lean 4 using the Mathlib library, providing complete certainty of correctness and establishing a foundation for extensions to higher species and alternative musical systems.
-
----
+We have shown that Fux's first-species counterpoint rules encode a categorical structure with remarkable algebraic properties: target-only dependence of hom-sets, an involutive endofunctor from interval complementation, a Ramsey property preventing dissonance triangles, and a rigid consonance set with trivial stabilizer. These properties bridge music theory, category theory, combinatorics, and abstract algebra.
 
 ## References
 
-1. Fux, J.J. (1725). *Gradus ad Parnassum*.
-2. Lewin, D. (1987). *Generalized Musical Intervals and Transformations*. Yale University Press.
-3. Mazzola, G. (2002). *The Topos of Music*. Birkhäuser.
-4. Tymoczko, D. (2011). *A Geometry of Music*. Oxford University Press.
-5. Cohn, R. (1998). "Introduction to Neo-Riemannian Theory." *Journal of Music Theory*, 42(2).
+1. Tymoczko, D. *A Geometry of Music*. Oxford University Press, 2011.
+2. Mazzola, G. *The Topos of Music*. Birkhäuser, 2002.
+3. Fux, J.J. *Gradus ad Parnassum*. Vienna, 1725.
+4. `Catalog/Pythagorean/HarmonicMusicTheory.lean` — Pythagorean harmonic ratio theory
+5. `Catalog/Algebra/MusicalCounterpoint.lean` — Voice leading cost as L¹ seminorm
+6. Forte, A. *The Structure of Atonal Music*. Yale University Press, 1973.
+7. Clough, J. and Douthett, J. "Maximally even sets." *Journal of Music Theory* 35 (1991): 93-173.
