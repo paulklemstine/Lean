@@ -1,344 +1,406 @@
 #!/usr/bin/env python3
 """
-EML Stone-Weierstrass Demo: Numerical Examples
+EML Interpolation Theory: Demonstrations
 
-Demonstrates the key results from the EML interpolation theory:
-1. EML approximation of x² using a single exponential
-2. Iterated exponential tower growth
-3. EML complexity comparison: polynomials vs transcendentals
+This script demonstrates key results from the EML Stone-Weierstrass theory:
+1. EML expression evaluation and complexity measures
+2. Separation of points via log
+3. Polynomial vs. EML approximation of power functions
+4. Iterated exponential growth hierarchy
+5. Exp-log cancellation and normal forms
 """
 
 import math
+from dataclasses import dataclass
+from typing import Union
 
-def eml_approx_square(x: float) -> float:
-    """The EML approximation to x²: 2*(exp(x) - 1 - x)."""
-    return 2.0 * (math.exp(x) - 1.0 - x)
 
-def eml_approx_square_scaled(x: float, eps: float) -> float:
-    """Scaled EML approximation: 2*(exp(eps*x) - 1 - eps*x) / eps².
-    Converges to x² as eps → 0."""
-    if abs(eps) < 1e-15:
-        return x * x
-    return 2.0 * (math.exp(eps * x) - 1.0 - eps * x) / (eps * eps)
+# === EML Expression Tree ===
 
-def iterated_exp(n: int, x: float) -> float:
-    """Compute exp^[n](x) = exp(exp(...exp(x)...)) with n applications."""
-    result = x
-    for _ in range(n):
-        result = math.exp(result)
+@dataclass
+class Const:
+    value: float
+
+@dataclass
+class Proj:
+    pass
+
+@dataclass
+class Exp:
+    child: 'EMLExpr'
+
+@dataclass
+class Log:
+    child: 'EMLExpr'
+
+@dataclass
+class Add:
+    left: 'EMLExpr'
+    right: 'EMLExpr'
+
+@dataclass
+class Mul:
+    left: 'EMLExpr'
+    right: 'EMLExpr'
+
+EMLExpr = Union[Const, Proj, Exp, Log, Add, Mul]
+
+
+def eval_eml(expr: EMLExpr, x: float) -> float:
+    """Evaluate an EML expression at x."""
+    if isinstance(expr, Const):
+        return expr.value
+    elif isinstance(expr, Proj):
+        return x
+    elif isinstance(expr, Exp):
+        v = eval_eml(expr.child, x)
+        return math.exp(min(v, 700))  # prevent overflow
+    elif isinstance(expr, Log):
+        v = eval_eml(expr.child, x)
+        return math.log(v) if v > 0 else 0.0
+    elif isinstance(expr, Add):
+        return eval_eml(expr.left, x) + eval_eml(expr.right, x)
+    elif isinstance(expr, Mul):
+        return eval_eml(expr.left, x) * eval_eml(expr.right, x)
+    raise TypeError(f"Unknown expression type: {type(expr)}")
+
+
+def depth(expr: EMLExpr) -> int:
+    """Compute the depth of an EML expression."""
+    if isinstance(expr, (Const, Proj)):
+        return 0
+    elif isinstance(expr, (Exp, Log)):
+        return depth(expr.child) + 1
+    elif isinstance(expr, (Add, Mul)):
+        return max(depth(expr.left), depth(expr.right)) + 1
+    raise TypeError
+
+
+def size(expr: EMLExpr) -> int:
+    """Compute the size of an EML expression."""
+    if isinstance(expr, (Const, Proj)):
+        return 1
+    elif isinstance(expr, (Exp, Log)):
+        return size(expr.child) + 1
+    elif isinstance(expr, (Add, Mul)):
+        return size(expr.left) + size(expr.right) + 1
+    raise TypeError
+
+
+def pretty(expr: EMLExpr) -> str:
+    """Pretty-print an EML expression."""
+    if isinstance(expr, Const):
+        return f"{expr.value:.4g}"
+    elif isinstance(expr, Proj):
+        return "x"
+    elif isinstance(expr, Exp):
+        return f"exp({pretty(expr.child)})"
+    elif isinstance(expr, Log):
+        return f"log({pretty(expr.child)})"
+    elif isinstance(expr, Add):
+        return f"({pretty(expr.left)} + {pretty(expr.right)})"
+    elif isinstance(expr, Mul):
+        return f"({pretty(expr.left)} * {pretty(expr.right)})"
+    raise TypeError
+
+
+# === Demo 1: EML Expression Basics ===
+
+print("=" * 60)
+print("DEMO 1: EML Expression Basics")
+print("=" * 60)
+
+# x^2 via EML: exp(2 * log(x))
+x_squared = Exp(Mul(Const(2), Log(Proj())))
+print(f"\nExpression: {pretty(x_squared)}")
+print(f"Depth: {depth(x_squared)}, Size: {size(x_squared)}")
+
+for x in [1.0, 2.0, 3.0, math.pi]:
+    result = eval_eml(x_squared, x)
+    expected = x ** 2
+    print(f"  x={x:.4f}: EML={result:.6f}, x²={expected:.6f}, error={abs(result-expected):.2e}")
+
+# sqrt(x) via EML: exp(0.5 * log(x))
+sqrt_x = Exp(Mul(Const(0.5), Log(Proj())))
+print(f"\nExpression: {pretty(sqrt_x)}")
+print(f"Depth: {depth(sqrt_x)}, Size: {size(sqrt_x)}")
+
+for x in [1.0, 4.0, 9.0, 2.0]:
+    result = eval_eml(sqrt_x, x)
+    expected = math.sqrt(x)
+    print(f"  x={x:.4f}: EML={result:.6f}, √x={expected:.6f}, error={abs(result-expected):.2e}")
+
+
+# === Demo 2: Separation of Points ===
+
+print("\n" + "=" * 60)
+print("DEMO 2: Separation of Points")
+print("=" * 60)
+
+log_expr = Log(Proj())
+pairs = [(1.0, 2.0), (1.0, math.e), (0.5, 1.5), (3.0, 3.001)]
+
+for x, y in pairs:
+    fx = eval_eml(log_expr, x)
+    fy = eval_eml(log_expr, y)
+    print(f"  x={x:.4f}, y={y:.4f}: log(x)={fx:.6f}, log(y)={fy:.6f}, "
+          f"separated={'YES' if abs(fx - fy) > 1e-15 else 'NO'}")
+
+
+# === Demo 3: Polynomial vs EML for Power Functions ===
+
+print("\n" + "=" * 60)
+print("DEMO 3: Polynomial vs EML for x^(1/3)")
+print("=" * 60)
+
+# EML: exp(1/3 * log(x)) — EXACT for x > 0
+cbrt_eml = Exp(Mul(Const(1/3), Log(Proj())))
+
+# Taylor polynomial for x^(1/3) around x=1 (up to degree n)
+def taylor_cbrt(x: float, n: int) -> float:
+    """Taylor expansion of x^(1/3) around x=1, degree n."""
+    result = 1.0
+    coeff = 1.0
+    dx = x - 1
+    for k in range(1, n + 1):
+        coeff *= (1/3 - k + 1) / k
+        result += coeff * dx ** k
     return result
 
-def eml_term_eval(term: dict, x: float) -> float:
-    """Evaluate an EML term (represented as a dict) at x."""
-    kind = term["kind"]
-    if kind == "const":
-        return term["value"]
-    elif kind == "proj":
-        return x
-    elif kind == "exp":
-        return math.exp(eml_term_eval(term["child"], x))
-    elif kind == "log":
-        val = eml_term_eval(term["child"], x)
-        return math.log(val) if val > 0 else 0.0
-    elif kind == "add":
-        return eml_term_eval(term["left"], x) + eml_term_eval(term["right"], x)
-    elif kind == "mul":
-        return eml_term_eval(term["left"], x) * eml_term_eval(term["right"], x)
-    else:
-        raise ValueError(f"Unknown term kind: {kind}")
+test_points = [0.5, 1.0, 2.0, 5.0, 10.0]
+print(f"\n{'x':>8} | {'EML (exact)':>12} | {'Taylor-5':>12} | {'Taylor-10':>12} | {'Taylor-20':>12} | {'True':>12}")
+print("-" * 75)
 
-def eml_term_width(term: dict) -> int:
-    """Count transcendental operations in an EML term."""
-    kind = term["kind"]
-    if kind in ("const", "proj"):
-        return 0
-    elif kind in ("exp", "log"):
-        return eml_term_width(term["child"]) + 1
-    elif kind in ("add", "mul"):
-        return eml_term_width(term["left"]) + eml_term_width(term["right"])
-    return 0
+for x in test_points:
+    eml_val = eval_eml(cbrt_eml, x)
+    t5 = taylor_cbrt(x, 5)
+    t10 = taylor_cbrt(x, 10)
+    t20 = taylor_cbrt(x, 20)
+    true_val = x ** (1/3)
+    print(f"{x:8.2f} | {eml_val:12.8f} | {t5:12.8f} | {t10:12.8f} | {t20:12.8f} | {true_val:12.8f}")
 
-def eml_term_depth(term: dict) -> int:
-    """Compute depth of an EML term."""
-    kind = term["kind"]
-    if kind in ("const", "proj"):
-        return 0
-    elif kind in ("exp", "log"):
-        return eml_term_depth(term["child"]) + 1
-    elif kind in ("add", "mul"):
-        return max(eml_term_depth(term["left"]), eml_term_depth(term["right"])) + 1
-    return 0
+print("\nEML expression size: 5 (constant)")
+print("Taylor polynomial sizes: 6, 11, 21 (growing)")
+print("EML error: 0 (machine precision)")
 
 
-def main():
-    print("=" * 70)
-    print("EML STONE-WEIERSTRASS: NUMERICAL DEMONSTRATIONS")
-    print("=" * 70)
+# === Demo 4: Iterated Exponential Growth ===
 
-    # Demo 1: EML approximation of x²
-    print("\n--- Demo 1: EML Approximation of x² ---")
-    print("Term: 2*(exp(x) - 1 - x)")
-    print("Width: 1 (one exponential), Depth: 3")
-    print()
-    print(f"{'x':>8} {'x²':>12} {'EML(x)':>12} {'Error':>12} {'Rel. Error':>12}")
-    print("-" * 60)
-    for x_val in [0.0, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0]:
-        true_val = x_val ** 2
-        eml_val = eml_approx_square(x_val)
-        error = eml_val - true_val
-        rel_err = error / true_val if true_val > 0 else 0.0
-        print(f"{x_val:8.2f} {true_val:12.6f} {eml_val:12.6f} {error:12.6f} {rel_err:12.4%}")
+print("\n" + "=" * 60)
+print("DEMO 4: Iterated Exponential Growth Hierarchy")
+print("=" * 60)
 
-    print(f"\nMax error on [0,1]: {max(eml_approx_square(x/100) - (x/100)**2 for x in range(101)):.6f}")
-    print(f"Theoretical bound (e - 2): {math.e - 2:.6f}")
+def iter_exp(n: int) -> EMLExpr:
+    """Build the n-fold iterated exponential."""
+    if n == 0:
+        return Proj()
+    return Exp(iter_exp(n - 1))
 
-    # Demo 2: Scaled EML approximation convergence
-    print("\n--- Demo 2: Scaled EML Convergence ---")
-    print("Term: 2*(exp(εx) - 1 - εx) / ε²")
-    x_test = 0.5
-    print(f"\nAt x = {x_test}, x² = {x_test**2}")
-    for eps in [1.0, 0.5, 0.1, 0.01, 0.001]:
-        approx = eml_approx_square_scaled(x_test, eps)
-        print(f"  ε = {eps:<8.3f}  EML(x) = {approx:.10f}  error = {approx - x_test**2:+.2e}")
-
-    # Demo 3: Iterated exponential tower
-    print("\n--- Demo 3: Iterated Exponential Tower ---")
-    print("exp^[n](0) for n = 0, 1, 2, 3, 4")
-    for n in range(5):
-        try:
-            val = iterated_exp(n, 0.0)
-            print(f"  exp^[{n}](0) = {val:.6f}")
-        except OverflowError:
-            print(f"  exp^[{n}](0) = OVERFLOW (too large for float)")
-
-    print("\nStrictly increasing: ", end="")
-    vals = []
-    for n in range(5):
-        try:
-            vals.append(iterated_exp(n, 0.0))
-        except OverflowError:
-            break
-    print(" < ".join(f"{v:.4f}" for v in vals))
-
-    # Demo 4: EML term examples
-    print("\n--- Demo 4: EML Term Construction ---")
-
-    # x² as EML: Mul(Proj, Proj)
-    x_sq = {"kind": "mul", "left": {"kind": "proj"}, "right": {"kind": "proj"}}
-    print(f"x² = Mul(Proj, Proj)  width={eml_term_width(x_sq)}, depth={eml_term_depth(x_sq)}")
-    print(f"  eval(1.5) = {eml_term_eval(x_sq, 1.5):.4f} (expected {1.5**2:.4f})")
-
-    # exp(x) as EML
-    exp_x = {"kind": "exp", "child": {"kind": "proj"}}
-    print(f"exp(x) = Exp(Proj)  width={eml_term_width(exp_x)}, depth={eml_term_depth(exp_x)}")
-    print(f"  eval(1.0) = {eml_term_eval(exp_x, 1.0):.6f} (expected {math.e:.6f})")
-
-    # exp(exp(x)) as EML
-    exp_exp_x = {"kind": "exp", "child": {"kind": "exp", "child": {"kind": "proj"}}}
-    print(f"exp(exp(x)) = Exp(Exp(Proj))  width={eml_term_width(exp_exp_x)}, depth={eml_term_depth(exp_exp_x)}")
-    print(f"  eval(0.0) = {eml_term_eval(exp_exp_x, 0.0):.6f} (expected {math.e:.6f})")
-
-    # The approximation term: 2*(exp(x) - 1 - x)
-    approx_term = {
-        "kind": "mul",
-        "left": {"kind": "const", "value": 2.0},
-        "right": {
-            "kind": "add",
-            "left": {"kind": "exp", "child": {"kind": "proj"}},
-            "right": {
-                "kind": "mul",
-                "left": {"kind": "const", "value": -1.0},
-                "right": {
-                    "kind": "add",
-                    "left": {"kind": "const", "value": 1.0},
-                    "right": {"kind": "proj"}
-                }
-            }
-        }
-    }
-    print(f"2(exp(x)-1-x)  width={eml_term_width(approx_term)}, depth={eml_term_depth(approx_term)}")
-
-    # Demo 5: EML complexity comparison
-    print("\n--- Demo 5: EML Complexity ---")
-    print("Polynomial x³: width=0 (no transcendentals needed)")
-    print("exp(x):         width=1 (exactly one transcendental)")
-    print("exp(exp(x)):    width=2 (two transcendentals)")
-    print()
-    print("Key insight: polynomials have EML complexity 0,")
-    print("transcendental functions have positive EML complexity.")
-
-    print("\n" + "=" * 70)
-    print("All demonstrations complete.")
-    print("=" * 70)
+x = 1.0
+print(f"\nValues of exp^n({x}) for n = 0, 1, 2, 3, 4:")
+for n in range(5):
+    expr = iter_exp(n)
+    val = eval_eml(expr, x)
+    print(f"  n={n}: depth={depth(expr)}, size={size(expr)}, "
+          f"exp^{n}({x}) = {val:.6e}")
+print("\nNote: Each level grows STRICTLY faster (Theorem: iterExp_strictly_increasing)")
 
 
-if __name__ == "__main__":
-    main()
+# === Demo 5: Exp-Log Cancellation ===
+
+print("\n" + "=" * 60)
+print("DEMO 5: Exp-Log Cancellation Paradox")
+print("=" * 60)
+
+identity_via_cancel = Exp(Log(Proj()))  # exp(log(x)) = x for x > 0
+plain_proj = Proj()
+
+print(f"\nExpression 1 (identity): {pretty(plain_proj)}")
+print(f"  Depth: {depth(plain_proj)}, Size: {size(plain_proj)}")
+
+print(f"\nExpression 2 (exp∘log): {pretty(identity_via_cancel)}")
+print(f"  Depth: {depth(identity_via_cancel)}, Size: {size(identity_via_cancel)}")
+
+print(f"\nBoth compute the same function on x > 0:")
+for x in [0.5, 1.0, 2.0, math.pi, 100.0]:
+    v1 = eval_eml(plain_proj, x)
+    v2 = eval_eml(identity_via_cancel, x)
+    print(f"  x={x:.4f}: proj={v1:.6f}, exp(log(x))={v2:.6f}, match={'YES' if abs(v1-v2) < 1e-12 else 'NO'}")
+
+print(f"\nSize 1 vs Size 3 — same function! Size is NOT a faithful complexity measure.")
+
+
+# === Demo 6: EML Substitution (Composition) ===
+
+print("\n" + "=" * 60)
+print("DEMO 6: EML Substitution Algebra")
+print("=" * 60)
+
+def subst(e1: EMLExpr, e2: EMLExpr) -> EMLExpr:
+    """Substitute e2 for Proj in e1."""
+    if isinstance(e1, Const):
+        return e1
+    elif isinstance(e1, Proj):
+        return e2
+    elif isinstance(e1, Exp):
+        return Exp(subst(e1.child, e2))
+    elif isinstance(e1, Log):
+        return Log(subst(e1.child, e2))
+    elif isinstance(e1, Add):
+        return Add(subst(e1.left, e2), subst(e1.right, e2))
+    elif isinstance(e1, Mul):
+        return Mul(subst(e1.left, e2), subst(e1.right, e2))
+    raise TypeError
+
+# exp(exp(x)) = exp ∘ exp
+exp_of_exp = subst(Exp(Proj()), Exp(Proj()))
+print(f"\nexp ∘ exp = {pretty(exp_of_exp)}")
+print(f"Depth: {depth(exp_of_exp)}, Size: {size(exp_of_exp)}")
+
+# x^2 ∘ exp = exp(x)^2 = exp(2x)
+sq_of_exp = subst(x_squared, Exp(Proj()))
+print(f"\nx² ∘ exp = {pretty(sq_of_exp)}")
+print(f"Depth: {depth(sq_of_exp)}, Size: {size(sq_of_exp)}")
+for x in [0, 1, 2]:
+    print(f"  x={x}: result={eval_eml(sq_of_exp, float(x)):.6f}, exp(2x)={math.exp(2*x):.6f}")
+
+print(f"\nDepth additivity: depth(e1∘e2) ≤ depth(e1) + depth(e2)")
+e1 = Exp(Mul(Const(2), Proj()))  # exp(2x), depth=2
+e2 = Log(Add(Proj(), Const(1)))   # log(x+1), depth=2
+composed = subst(e1, e2)
+print(f"  e1 = {pretty(e1)}, depth={depth(e1)}")
+print(f"  e2 = {pretty(e2)}, depth={depth(e2)}")
+print(f"  e1∘e2 = {pretty(composed)}, depth={depth(composed)}")
+print(f"  Bound: {depth(e1)} + {depth(e2)} = {depth(e1)+depth(e2)} ≥ {depth(composed)} ✓")
+
+print("\n" + "=" * 60)
+print("All demonstrations complete.")
+print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: EML Approximation of x²
+Visualization: EML Depth Hierarchy
 
-Shows the EML term 2*(exp(x) - 1 - x) versus x² on [0, 1],
-with error analysis.
+Shows the growth rates of iterated exponentials exp^n(x) for n=0,1,2,3,
+demonstrating strict growth separation between depth levels.
 """
-
 import math
-
-def plot_eml_approximation():
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        import numpy as np
-    except ImportError:
-        print("matplotlib/numpy not available, printing table instead")
-        for i in range(11):
-            x = i / 10.0
-            print(f"x={x:.1f}  x²={x**2:.4f}  EML={2*(math.exp(x)-1-x):.4f}  err={2*(math.exp(x)-1-x)-x**2:.4f}")
-        return
-
-    x = np.linspace(0, 1, 200)
-    x_sq = x ** 2
-    eml = 2 * (np.exp(x) - 1 - x)
-    error = eml - x_sq
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Left plot: functions
-    ax1 = axes[0]
-    ax1.plot(x, x_sq, 'b-', linewidth=2, label=r'$x^2$')
-    ax1.plot(x, eml, 'r--', linewidth=2, label=r'$2(\exp(x) - 1 - x)$')
-    ax1.fill_between(x, x_sq, eml, alpha=0.2, color='red', label='Overestimate')
-    ax1.set_xlabel('x', fontsize=12)
-    ax1.set_ylabel('y', fontsize=12)
-    ax1.set_title('EML Approximation of $x^2$ (Width = 1)', fontsize=14)
-    ax1.legend(fontsize=11)
-    ax1.grid(True, alpha=0.3)
-
-    # Right plot: error
-    ax2 = axes[1]
-    ax2.plot(x, error, 'r-', linewidth=2, label='Error')
-    ax2.axhline(y=math.e - 2, color='gray', linestyle=':', linewidth=1,
-                label=f'Bound: $e - 2 \\approx {math.e - 2:.3f}$')
-    ax2.set_xlabel('x', fontsize=12)
-    ax2.set_ylabel('Error', fontsize=12)
-    ax2.set_title('Approximation Error on [0, 1]', fontsize=14)
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('eml_approximation.png', dpi=150, bbox_inches='tight')
-    print("Saved: eml_approximation.png")
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
 
 
-def plot_scaled_convergence():
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        import numpy as np
-    except ImportError:
-        return
-
-    x = np.linspace(0, 1, 200)
-    x_sq = x ** 2
-
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(x, x_sq, 'k-', linewidth=3, label=r'$x^2$ (target)')
-
-    for eps, color in [(1.0, 'red'), (0.5, 'orange'), (0.1, 'green'), (0.01, 'blue')]:
-        eml_scaled = 2 * (np.exp(eps * x) - 1 - eps * x) / (eps ** 2)
-        ax.plot(x, eml_scaled, '--', color=color, linewidth=1.5,
-                label=rf'$\varepsilon = {eps}$')
-
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('y', fontsize=12)
-    ax.set_title(r'Convergence: $\frac{2}{\varepsilon^2}(\exp(\varepsilon x) - 1 - \varepsilon x) \to x^2$',
-                 fontsize=13)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(-0.1, 1.5)
-
-    plt.tight_layout()
-    plt.savefig('eml_convergence.png', dpi=150, bbox_inches='tight')
-    print("Saved: eml_convergence.png")
+def iter_exp_eval(n: int, x: np.ndarray) -> np.ndarray:
+    """Evaluate n-fold iterated exponential, clipping to avoid overflow."""
+    result = x.copy()
+    for _ in range(n):
+        result = np.exp(np.clip(result, -100, 50))
+    return result
 
 
-if __name__ == "__main__":
-    plot_eml_approximation()
-    plot_scaled_convergence()
+x = np.linspace(-2, 2, 500)
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# Left: actual values (clipped)
+ax = axes[0]
+colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
+for n in range(5):
+    y = iter_exp_eval(n, x)
+    y_clipped = np.clip(y, -10, 100)
+    ax.plot(x, y_clipped, color=colors[n], linewidth=2,
+            label=f'exp^{n}(x), depth={n}')
+ax.set_ylim(-5, 100)
+ax.set_xlabel('x', fontsize=12)
+ax.set_ylabel('exp^n(x)', fontsize=12)
+ax.set_title('Iterated Exponential Growth', fontsize=14)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+
+# Right: log scale to show separation
+ax = axes[1]
+x_pos = np.linspace(0.01, 1.5, 500)
+for n in range(5):
+    y = iter_exp_eval(n, x_pos)
+    ax.semilogy(x_pos, y, color=colors[n], linewidth=2,
+                label=f'exp^{n}(x)')
+ax.set_xlabel('x', fontsize=12)
+ax.set_ylabel('exp^n(x) (log scale)', fontsize=12)
+ax.set_title('Growth Separation (log scale)', fontsize=14)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('depth_hierarchy.png', dpi=150, bbox_inches='tight')
+print("Saved depth_hierarchy.png")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Exponential Tower Growth
+Visualization: EML vs Polynomial Approximation of Power Functions
 
-Shows the growth of iterated exponentials exp^[n](x) for n = 0, 1, 2, 3
-on a compact interval, demonstrating the depth hierarchy.
+Shows that EML expressions (exp(r*log(x))) compute x^r exactly while
+Taylor polynomials diverge away from the expansion point.
 """
-
 import math
-
-def plot_tower_growth():
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        import numpy as np
-    except ImportError:
-        print("matplotlib not available")
-        return
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Left: exp^[n](x) on [-1, 1]
-    ax1 = axes[0]
-    x = np.linspace(-1, 1, 300)
-    colors = ['blue', 'green', 'orange', 'red']
-    labels = [r'$x$ (depth 0)', r'$e^x$ (depth 1)',
-              r'$e^{e^x}$ (depth 2)', r'$e^{e^{e^x}}$ (depth 3)']
-
-    for n in range(4):
-        y = x.copy()
-        for _ in range(n):
-            y = np.exp(y)
-        # Clip for display
-        y = np.clip(y, -10, 50)
-        ax1.plot(x, y, color=colors[n], linewidth=2, label=labels[n])
-
-    ax1.set_xlabel('x', fontsize=12)
-    ax1.set_ylabel('y', fontsize=12)
-    ax1.set_title('Iterated Exponentials: Depth Hierarchy', fontsize=14)
-    ax1.legend(fontsize=10)
-    ax1.set_ylim(-2, 50)
-    ax1.grid(True, alpha=0.3)
-
-    # Right: exp^[n](0) sequence (tower at zero)
-    ax2 = axes[1]
-    n_vals = list(range(5))
-    tower_vals = []
-    val = 0.0
-    for n in range(5):
-        tower_vals.append(val)
-        val = math.exp(val)
-
-    ax2.bar(n_vals, tower_vals, color=['blue', 'green', 'orange', 'red', 'purple'],
-            alpha=0.7, edgecolor='black')
-    for i, v in enumerate(tower_vals):
-        ax2.text(i, v + 0.3, f'{v:.2f}', ha='center', fontsize=10)
-
-    ax2.set_xlabel('n (depth)', fontsize=12)
-    ax2.set_ylabel(r'$\exp^{[n]}(0)$', fontsize=12)
-    ax2.set_title('Exponential Tower at Zero', fontsize=14)
-    ax2.set_xticks(n_vals)
-    ax2.grid(True, alpha=0.3, axis='y')
-
-    plt.tight_layout()
-    plt.savefig('eml_tower_growth.png', dpi=150, bbox_inches='tight')
-    print("Saved: eml_tower_growth.png")
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
 
 
-if __name__ == "__main__":
-    plot_tower_growth()
+def eval_taylor_cbrt(x: np.ndarray, degree: int) -> np.ndarray:
+    """Taylor expansion of x^(1/3) around x=1, given degree."""
+    result = np.ones_like(x, dtype=float)
+    coeff = 1.0
+    dx = x - 1.0
+    for k in range(1, degree + 1):
+        coeff *= (1.0/3.0 - k + 1) / k
+        result = result + coeff * dx ** k
+    return result
+
+
+def eval_eml_cbrt(x: np.ndarray) -> np.ndarray:
+    """EML expression exp(1/3 * log(x)) = x^(1/3), exact."""
+    return np.exp((1.0/3.0) * np.log(x))
+
+
+x = np.linspace(0.1, 5.0, 500)
+true_vals = x ** (1.0/3.0)
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# Left panel: function values
+ax = axes[0]
+ax.plot(x, true_vals, 'k-', linewidth=2, label='True x^{1/3}')
+ax.plot(x, eval_eml_cbrt(x), 'r--', linewidth=2, label='EML (exact, size=5)')
+for deg, color in [(3, 'blue'), (5, 'green'), (10, 'orange')]:
+    y_taylor = eval_taylor_cbrt(x, deg)
+    y_taylor = np.clip(y_taylor, -5, 5)
+    ax.plot(x, y_taylor, color=color, alpha=0.7, label=f'Taylor deg {deg}')
+ax.set_ylim(-1, 3)
+ax.set_xlabel('x', fontsize=12)
+ax.set_ylabel('f(x)', fontsize=12)
+ax.set_title('EML vs Taylor Approximation of x^{1/3}', fontsize=14)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+
+# Right panel: error
+ax = axes[1]
+eml_error = np.abs(eval_eml_cbrt(x) - true_vals)
+ax.semilogy(x, eml_error + 1e-16, 'r-', linewidth=2, label='EML error (machine ε)')
+for deg, color in [(3, 'blue'), (5, 'green'), (10, 'orange')]:
+    y_taylor = eval_taylor_cbrt(x, deg)
+    taylor_error = np.abs(y_taylor - true_vals)
+    ax.semilogy(x, taylor_error + 1e-16, color=color, alpha=0.7, label=f'Taylor deg {deg} error')
+ax.set_xlabel('x', fontsize=12)
+ax.set_ylabel('|error|', fontsize=12)
+ax.set_title('Approximation Error (log scale)', fontsize=14)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('eml_approximation.png', dpi=150, bbox_inches='tight')
+print("Saved eml_approximation.png")

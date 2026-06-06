@@ -1,268 +1,269 @@
 #!/usr/bin/env python3
 """
-EML Network Algorithms: Type-hinted implementations
+EML Interpolation Theory: Core Algorithms
 
-Core algorithms for EML term construction, evaluation, complexity analysis,
-and approximation.
+Type-hinted implementations of the key algorithms from the EML
+Stone-Weierstrass theory.
 """
 
 from __future__ import annotations
-from dataclasses import dataclass
-from typing import Callable, List, Optional, Tuple
 import math
+from dataclasses import dataclass
+from typing import Union, Callable
 
 
-# --- EML Term Data Structure ---
+# === Core Data Structures ===
 
-@dataclass
-class EMLTerm:
-    """Base class for EML terms."""
-    pass
-
-@dataclass
-class Const(EMLTerm):
-    """Constant function: x ↦ c"""
+@dataclass(frozen=True)
+class Const:
+    """A constant value."""
     value: float
 
-@dataclass
-class Proj(EMLTerm):
-    """Identity/projection: x ↦ x"""
+@dataclass(frozen=True)
+class Proj:
+    """The identity/projection function x ↦ x."""
     pass
 
-@dataclass
-class Exp(EMLTerm):
-    """Exponential: x ↦ exp(child(x))"""
-    child: EMLTerm
+@dataclass(frozen=True)
+class Exp:
+    """Exponential: exp(child)."""
+    child: EMLExpr
 
-@dataclass
-class Log(EMLTerm):
-    """Logarithm: x ↦ log(child(x))"""
-    child: EMLTerm
+@dataclass(frozen=True)
+class Log:
+    """Logarithm: log(child)."""
+    child: EMLExpr
 
-@dataclass
-class Add(EMLTerm):
-    """Addition: x ↦ left(x) + right(x)"""
-    left: EMLTerm
-    right: EMLTerm
+@dataclass(frozen=True)
+class Add:
+    """Addition: left + right."""
+    left: EMLExpr
+    right: EMLExpr
 
-@dataclass
-class Mul(EMLTerm):
-    """Multiplication: x ↦ left(x) · right(x)"""
-    left: EMLTerm
-    right: EMLTerm
+@dataclass(frozen=True)
+class Mul:
+    """Multiplication: left * right."""
+    left: EMLExpr
+    right: EMLExpr
 
 
-# --- Evaluation ---
+EMLExpr = Union[Const, Proj, Exp, Log, Add, Mul]
 
-def evaluate(term: EMLTerm, x: float) -> float:
-    """Evaluate an EML term at a point.
 
-    Uses safe log (returns 0 for non-positive inputs) matching Lean's Real.log.
+@dataclass(frozen=True)
+class EMLComplexity:
+    """Complexity pair (depth, size) with invariant depth ≤ size."""
+    depth: int
+    size: int
+
+    def __post_init__(self) -> None:
+        assert self.depth <= self.size, f"Depth {self.depth} > size {self.size}"
+
+    def __le__(self, other: EMLComplexity) -> bool:
+        return self.depth <= other.depth and self.size <= other.size
+
+
+# === Algorithm 1: EML Evaluation ===
+
+def eval_eml(expr: EMLExpr, x: float) -> float:
     """
-    if isinstance(term, Const):
-        return term.value
-    elif isinstance(term, Proj):
+    Evaluate an EML expression at a point x.
+
+    Time complexity: O(size(expr))
+    Space complexity: O(depth(expr)) for recursion stack
+
+    Pseudocode:
+        EVAL(const(c), x) = c
+        EVAL(proj, x) = x
+        EVAL(exp(e), x) = exp(EVAL(e, x))
+        EVAL(log(e), x) = log(EVAL(e, x)) if EVAL(e, x) > 0, else 0
+        EVAL(add(e1, e2), x) = EVAL(e1, x) + EVAL(e2, x)
+        EVAL(mul(e1, e2), x) = EVAL(e1, x) * EVAL(e2, x)
+    """
+    if isinstance(expr, Const):
+        return expr.value
+    elif isinstance(expr, Proj):
         return x
-    elif isinstance(term, Exp):
-        return math.exp(evaluate(term.child, x))
-    elif isinstance(term, Log):
-        val = evaluate(term.child, x)
-        return math.log(val) if val > 0 else 0.0
-    elif isinstance(term, Add):
-        return evaluate(term.left, x) + evaluate(term.right, x)
-    elif isinstance(term, Mul):
-        return evaluate(term.left, x) * evaluate(term.right, x)
-    raise TypeError(f"Unknown term type: {type(term)}")
+    elif isinstance(expr, Exp):
+        v = eval_eml(expr.child, x)
+        return math.exp(min(v, 700))  # overflow protection
+    elif isinstance(expr, Log):
+        v = eval_eml(expr.child, x)
+        return math.log(v) if v > 0 else 0.0
+    elif isinstance(expr, Add):
+        return eval_eml(expr.left, x) + eval_eml(expr.right, x)
+    elif isinstance(expr, Mul):
+        return eval_eml(expr.left, x) * eval_eml(expr.right, x)
+    raise TypeError(f"Unknown EML expression type: {type(expr)}")
 
 
-# --- Complexity Measures ---
+# === Algorithm 2: Complexity Computation ===
 
-def width(term: EMLTerm) -> int:
-    """Count transcendental operations (Exp, Log)."""
-    if isinstance(term, (Const, Proj)):
+def compute_depth(expr: EMLExpr) -> int:
+    """Compute the depth of an EML expression. O(size) time."""
+    if isinstance(expr, (Const, Proj)):
         return 0
-    elif isinstance(term, (Exp, Log)):
-        return width(term.child) + 1
-    elif isinstance(term, (Add, Mul)):
-        return width(term.left) + width(term.right)
-    return 0
+    elif isinstance(expr, (Exp, Log)):
+        return compute_depth(expr.child) + 1
+    elif isinstance(expr, (Add, Mul)):
+        return max(compute_depth(expr.left), compute_depth(expr.right)) + 1
+    raise TypeError
 
-def depth(term: EMLTerm) -> int:
-    """Longest path from root to leaf."""
-    if isinstance(term, (Const, Proj)):
-        return 0
-    elif isinstance(term, (Exp, Log)):
-        return depth(term.child) + 1
-    elif isinstance(term, (Add, Mul)):
-        return max(depth(term.left), depth(term.right)) + 1
-    return 0
 
-def size(term: EMLTerm) -> int:
-    """Total number of nodes."""
-    if isinstance(term, (Const, Proj)):
+def compute_size(expr: EMLExpr) -> int:
+    """Compute the size of an EML expression. O(size) time."""
+    if isinstance(expr, (Const, Proj)):
         return 1
-    elif isinstance(term, (Exp, Log)):
-        return size(term.child) + 1
-    elif isinstance(term, (Add, Mul)):
-        return size(term.left) + size(term.right) + 1
-    return 1
-
-def is_log_free(term: EMLTerm) -> bool:
-    """Check if a term contains no Log nodes."""
-    if isinstance(term, (Const, Proj)):
-        return True
-    elif isinstance(term, Exp):
-        return is_log_free(term.child)
-    elif isinstance(term, Log):
-        return False
-    elif isinstance(term, (Add, Mul)):
-        return is_log_free(term.left) and is_log_free(term.right)
-    return True
+    elif isinstance(expr, (Exp, Log)):
+        return compute_size(expr.child) + 1
+    elif isinstance(expr, (Add, Mul)):
+        return compute_size(expr.left) + compute_size(expr.right) + 1
+    raise TypeError
 
 
-# --- Composition ---
-
-def compose(s: EMLTerm, t: EMLTerm) -> EMLTerm:
-    """Substitute t for every Proj in s: (s ∘ t)(x) = s(t(x))."""
-    if isinstance(s, Const):
-        return s
-    elif isinstance(s, Proj):
-        return t
-    elif isinstance(s, Exp):
-        return Exp(compose(s.child, t))
-    elif isinstance(s, Log):
-        return Log(compose(s.child, t))
-    elif isinstance(s, Add):
-        return Add(compose(s.left, t), compose(s.right, t))
-    elif isinstance(s, Mul):
-        return Mul(compose(s.left, t), compose(s.right, t))
-    raise TypeError(f"Unknown term type: {type(s)}")
+def complexity(expr: EMLExpr) -> EMLComplexity:
+    """Compute the EML complexity of an expression."""
+    return EMLComplexity(compute_depth(expr), compute_size(expr))
 
 
-# --- Constructors ---
+# === Algorithm 3: EML Substitution (Composition) ===
 
-def power_term(n: int) -> EMLTerm:
-    """Construct the EML term for x^n (width 0)."""
-    if n == 0:
-        return Const(1.0)
-    return Mul(power_term(n - 1), Proj())
+def subst(e1: EMLExpr, e2: EMLExpr) -> EMLExpr:
+    """
+    Substitute e2 for Proj in e1, computing e1 ∘ e2.
 
-def iter_exp_term(n: int) -> EMLTerm:
-    """Construct exp^[n](x) as an EML term (width = depth = n)."""
+    Postcondition: eval(subst(e1, e2), x) = eval(e1, eval(e2, x))
+    Depth bound: depth(subst(e1, e2)) ≤ depth(e1) + depth(e2)
+
+    Pseudocode:
+        SUBST(const(c), e2) = const(c)
+        SUBST(proj, e2) = e2
+        SUBST(exp(e), e2) = exp(SUBST(e, e2))
+        SUBST(log(e), e2) = log(SUBST(e, e2))
+        SUBST(add(a,b), e2) = add(SUBST(a, e2), SUBST(b, e2))
+        SUBST(mul(a,b), e2) = mul(SUBST(a, e2), SUBST(b, e2))
+    """
+    if isinstance(e1, Const):
+        return e1
+    elif isinstance(e1, Proj):
+        return e2
+    elif isinstance(e1, Exp):
+        return Exp(subst(e1.child, e2))
+    elif isinstance(e1, Log):
+        return Log(subst(e1.child, e2))
+    elif isinstance(e1, Add):
+        return Add(subst(e1.left, e2), subst(e1.right, e2))
+    elif isinstance(e1, Mul):
+        return Mul(subst(e1.left, e2), subst(e1.right, e2))
+    raise TypeError
+
+
+# === Algorithm 4: Constructing EML Power Functions ===
+
+def eml_pow(r: float) -> EMLExpr:
+    """
+    Construct the EML expression for x^r: exp(r * log(x)).
+    Size: 5 (constant). Depth: 3 (constant).
+
+    For positive x: eval(eml_pow(r), x) = x^r exactly.
+    """
+    return Exp(Mul(Const(r), Log(Proj())))
+
+
+# === Algorithm 5: Iterated Exponential ===
+
+def iter_exp(n: int) -> EMLExpr:
+    """
+    Construct the n-fold iterated exponential exp^n(x).
+    Depth: n. Size: n+1.
+    """
     if n == 0:
         return Proj()
-    return Exp(iter_exp_term(n - 1))
+    return Exp(iter_exp(n - 1))
 
-def polynomial_term(coeffs: List[float]) -> EMLTerm:
-    """Construct a_0 + a_1*x + a_2*x² + ... as an EML term.
 
-    Width is always 0 (no transcendentals).
+# === Algorithm 6: Softmax Approximation of Max ===
+
+def softmax_approx(t: float) -> EMLExpr:
     """
-    if not coeffs:
-        return Const(0.0)
-    result: EMLTerm = Const(coeffs[0])
-    x_power: EMLTerm = Proj()
-    for i, c in enumerate(coeffs[1:], 1):
-        if abs(c) > 1e-15:
-            term = Mul(Const(c), x_power)
-            result = Add(result, term)
-        if i < len(coeffs) - 1:
-            x_power = Mul(x_power, Proj())
-    return result
-
-def approx_square_term() -> EMLTerm:
-    """The EML term 2*(exp(x) - 1 - x) approximating x²."""
+    Construct the EML expression for softmax_t(x, 0) = (1/t) * log(exp(t*x) + 1).
+    Approximates max(x, 0) = ReLU(x) with error ≤ log(2)/t.
+    """
     return Mul(
-        Const(2.0),
-        Add(
-            Exp(Proj()),
-            Mul(Const(-1.0), Add(Const(1.0), Proj()))
-        )
+        Const(1.0 / t),
+        Log(Add(Exp(Mul(Const(t), Proj())), Const(1.0)))
     )
 
 
-# --- EML Complexity Estimation ---
+# === Algorithm 7: Uniform Approximation Error ===
 
-def estimate_eml_complexity(
-    f: Callable[[float], float],
-    a: float,
-    b: float,
-    epsilon: float,
-    max_width: int = 10,
-    n_samples: int = 100
-) -> Optional[int]:
-    """Estimate EML complexity by brute-force search over small terms.
-
-    Returns the minimum width of an EML term achieving epsilon-approximation,
-    or None if no term found within max_width.
+def uniform_error(expr: EMLExpr, f: Callable[[float], float],
+                  a: float, b: float, n_samples: int = 1000) -> float:
     """
-    xs = [a + (b - a) * i / n_samples for i in range(n_samples + 1)]
-    f_vals = [f(x) for x in xs]
-
-    # Width 0: check polynomials up to degree 10
-    for deg in range(11):
-        term = power_term(deg)
-        # Try scaling: c * x^deg
-        for c_int in range(-20, 21):
-            c = c_int / 10.0
-            scaled = Mul(Const(c), term) if abs(c - 1.0) > 1e-10 else term
-            try:
-                errors = [abs(evaluate(scaled, x) - fv) for x, fv in zip(xs, f_vals)]
-                if max(errors) <= epsilon:
-                    return 0
-            except (OverflowError, ValueError):
-                continue
-
-    # Width 1: try a * exp(b*x + c) + d*x + e
-    for a_i in range(-5, 6):
-        for b_i in range(-5, 6):
-            for d_i in range(-5, 6):
-                a_c = a_i / 5.0
-                b_c = b_i / 5.0
-                d_c = d_i / 5.0
-                term = Add(
-                    Mul(Const(a_c), Exp(Add(Mul(Const(b_c), Proj()), Const(0.0)))),
-                    Mul(Const(d_c), Proj())
-                )
-                try:
-                    errors = [abs(evaluate(term, x) - fv) for x, fv in zip(xs, f_vals)]
-                    if max(errors) <= epsilon:
-                        return 1
-                except (OverflowError, ValueError):
-                    continue
-
-    return None
+    Estimate the uniform approximation error ||f - eval(expr, ·)||_∞
+    on [a, b] by sampling n_samples points.
+    """
+    max_err = 0.0
+    for i in range(n_samples + 1):
+        x = a + (b - a) * i / n_samples
+        err = abs(f(x) - eval_eml(expr, x))
+        max_err = max(max_err, err)
+    return max_err
 
 
-# --- Pretty Printing ---
+# === Algorithm 8: Pretty Printing ===
 
-def to_string(term: EMLTerm) -> str:
-    """Convert EML term to human-readable string."""
-    if isinstance(term, Const):
-        return str(term.value)
-    elif isinstance(term, Proj):
+def pretty_print(expr: EMLExpr) -> str:
+    """Human-readable representation of an EML expression."""
+    if isinstance(expr, Const):
+        if expr.value == int(expr.value):
+            return str(int(expr.value))
+        return f"{expr.value:.4g}"
+    elif isinstance(expr, Proj):
         return "x"
-    elif isinstance(term, Exp):
-        return f"exp({to_string(term.child)})"
-    elif isinstance(term, Log):
-        return f"log({to_string(term.child)})"
-    elif isinstance(term, Add):
-        return f"({to_string(term.left)} + {to_string(term.right)})"
-    elif isinstance(term, Mul):
-        return f"({to_string(term.left)} * {to_string(term.right)})"
-    return "?"
+    elif isinstance(expr, Exp):
+        return f"exp({pretty_print(expr.child)})"
+    elif isinstance(expr, Log):
+        return f"log({pretty_print(expr.child)})"
+    elif isinstance(expr, Add):
+        return f"({pretty_print(expr.left)} + {pretty_print(expr.right)})"
+    elif isinstance(expr, Mul):
+        return f"({pretty_print(expr.left)} · {pretty_print(expr.right)})"
+    raise TypeError
 
 
 if __name__ == "__main__":
-    # Quick test
-    t = approx_square_term()
-    print(f"Term: {to_string(t)}")
-    print(f"Width: {width(t)}, Depth: {depth(t)}, Size: {size(t)}")
-    print(f"Log-free: {is_log_free(t)}")
-    print(f"eval(0.5) = {evaluate(t, 0.5):.6f} (x² = {0.25:.6f})")
+    # Quick self-test
+    print("Self-test:")
 
-    # Composition test
-    exp2 = compose(Exp(Proj()), Exp(Proj()))
-    print(f"\nexp(exp(x)): {to_string(exp2)}")
-    print(f"Width: {width(exp2)}, Depth: {depth(exp2)}")
-    print(f"eval(0) = {evaluate(exp2, 0.0):.6f} (expected {math.e:.6f})")
+    # Test x^2
+    e = eml_pow(2.0)
+    assert abs(eval_eml(e, 3.0) - 9.0) < 1e-10
+    print(f"  x^2 at x=3: {eval_eml(e, 3.0)} ✓")
+
+    # Test sqrt
+    e = eml_pow(0.5)
+    assert abs(eval_eml(e, 4.0) - 2.0) < 1e-10
+    print(f"  √x at x=4: {eval_eml(e, 4.0)} ✓")
+
+    # Test substitution
+    e1 = Exp(Proj())
+    e2 = Exp(Proj())
+    composed = subst(e1, e2)
+    x = 1.0
+    assert abs(eval_eml(composed, x) - math.exp(math.exp(x))) < 1e-10
+    print(f"  exp(exp(1)): {eval_eml(composed, x):.6f} ✓")
+
+    # Test depth bound
+    c = complexity(composed)
+    assert c.depth <= compute_depth(e1) + compute_depth(e2)
+    print(f"  Depth bound: {c.depth} ≤ {compute_depth(e1)} + {compute_depth(e2)} ✓")
+
+    # Test softmax
+    relu_approx = softmax_approx(100.0)
+    err = uniform_error(relu_approx, lambda x: max(x, 0), -1.0, 1.0)
+    print(f"  Softmax(100) approx of ReLU, error: {err:.6f}")
+    assert err < 0.1, f"Softmax error too large: {err}"
+    print("  ✓")
+
+    print("All self-tests passed.")
