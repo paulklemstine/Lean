@@ -1,294 +1,340 @@
 #!/usr/bin/env python3
 """
-Algorithms for Discrete Dynamical Systems Analysis
+Algorithms for Dynamical Spectrum Analysis
 
 Type-hinted implementations of the core algorithms used in the
-Recurrence Spectrum theory of cognitive dynamics.
+Dynamical Spectrum Theory framework.
 """
 
-from typing import Callable, Dict, List, Optional, Set, Tuple
+from typing import List, Tuple, Optional, Set, Callable
 import math
 
 
-# ============================================================
-# Algorithm 1: Recurrence Spectrum Computation
-# ============================================================
+def logistic_map(r: float, x: float) -> float:
+    """
+    The logistic map f_r(x) = r·x·(1 - x).
+    
+    Args:
+        r: The bifurcation parameter (typically 0 < r ≤ 4)
+        x: Current state (typically in [0, 1])
+    
+    Returns:
+        The next state f_r(x)
+    
+    Complexity: O(1)
+    """
+    return r * x * (1.0 - x)
 
-def compute_recurrence_spectrum(
-    f: Callable[[float], float],
-    x0: float,
-    max_period: int,
-    tolerance: float = 1e-10,
-    transient: int = 1000
-) -> Dict[int, List[float]]:
+
+def iterate_map(f: Callable[[float], float], x: float, n: int) -> float:
     """
-    Compute the recurrence spectrum of a dynamical system.
+    Compute the n-th iterate f^[n](x).
     
-    For each period n from 1 to max_period, finds all approximate
-    periodic points with minimal period n accessible from x0.
+    Args:
+        f: The dynamical map
+        x: Initial state
+        n: Number of iterations
     
-    Algorithm:
-    1. Skip transient iterations to approach the attractor
-    2. For each candidate period n:
-       a. Iterate f^n and check if |f^n(x) - x| < tolerance
-       b. Verify minimality: no proper divisor d of n has |f^d(x) - x| < tolerance
-    3. Group results by minimal period
+    Returns:
+        f^[n](x)
     
-    Returns: Dictionary mapping period n → list of periodic points
-    
-    Complexity: O(transient + max_period² × orbit_length)
+    Complexity: O(n)
     """
-    # Skip transient
-    x = x0
-    for _ in range(transient):
+    for _ in range(n):
         x = f(x)
+    return x
+
+
+def compute_orbit(f: Callable[[float], float], x0: float, 
+                  length: int) -> List[float]:
+    """
+    Compute the forward orbit of x0 under f.
     
-    # Collect long orbit
-    orbit_len = max_period * 50
-    orbit: List[float] = [x]
-    for _ in range(orbit_len):
+    Args:
+        f: The dynamical map
+        x0: Initial state
+        length: Number of iterates to compute
+    
+    Returns:
+        [x0, f(x0), f²(x0), ..., f^length(x0)]
+    
+    Complexity: O(length)
+    """
+    orbit = [x0]
+    x = x0
+    for _ in range(length):
         x = f(x)
         orbit.append(x)
-    
-    spectrum: Dict[int, List[float]] = {}
-    
-    for n in range(1, max_period + 1):
-        points: List[float] = []
-        for i in range(len(orbit) - n):
-            if abs(orbit[i + n] - orbit[i]) < tolerance:
-                # Check minimality
-                is_minimal = True
-                for d in range(1, n):
-                    if n % d == 0 and abs(orbit[i + d] - orbit[i]) < tolerance:
-                        is_minimal = False
-                        break
-                if is_minimal:
-                    # Deduplicate
-                    if not any(abs(p - orbit[i]) < tolerance * 100 for p in points):
-                        points.append(orbit[i])
-        if points:
-            spectrum[n] = points
-    
-    return spectrum
+    return orbit
 
 
-# ============================================================
-# Algorithm 2: Recurrence Depth Computation
-# ============================================================
-
-def compute_recurrence_depth(
-    f: Callable[[float], float],
-    x: float,
-    epsilon: float,
-    max_iterations: int
-) -> int:
+def detect_period_floyd(f: Callable[[float], float], x0: float,
+                       tol: float = 1e-10) -> Tuple[int, int]:
     """
-    Compute the recurrence depth of point x.
+    Detect periodicity using Floyd's cycle detection algorithm.
     
-    The recurrence depth is the minimum k ≥ 0 such that
-    |f^[k+1](x) - x| < epsilon. If no such k exists within
-    max_iterations, returns max_iterations.
+    Returns (mu, lambda) where:
+    - mu: length of the pre-periodic (transient) part
+    - lambda: period of the cycle
     
-    This invariant measures how "close to periodic" a point is:
-    - Fixed points: depth = 0
-    - Period-n points: depth = n-1
-    - Non-recurrent points: depth → ∞
+    This is O(mu + lambda) in time and O(1) in space.
     
-    Algorithm: Simple iteration with early termination.
-    Complexity: O(max_iterations)
+    Args:
+        f: The dynamical map
+        x0: Initial state
+        tol: Tolerance for equality comparison
+    
+    Returns:
+        (mu, lambda): pre-period and period
     """
-    if epsilon <= 0:
-        return max_iterations
+    # Phase 1: Find meeting point of tortoise and hare
+    tortoise = f(x0)
+    hare = f(f(x0))
+    max_iter = 100000
     
-    current = x
-    for k in range(max_iterations):
-        current = f(current)
-        if abs(current - x) < epsilon:
-            return k
-    return max_iterations
+    count = 0
+    while abs(tortoise - hare) > tol and count < max_iter:
+        tortoise = f(tortoise)
+        hare = f(f(hare))
+        count += 1
+    
+    if count >= max_iter:
+        return (-1, -1)  # No period detected
+    
+    # Phase 2: Find mu (start of cycle)
+    mu = 0
+    tortoise = x0
+    while abs(tortoise - hare) > tol and mu < max_iter:
+        tortoise = f(tortoise)
+        hare = f(hare)
+        mu += 1
+    
+    # Phase 3: Find lambda (period)
+    lam = 1
+    hare = f(tortoise)
+    while abs(tortoise - hare) > tol and lam < max_iter:
+        hare = f(hare)
+        lam += 1
+    
+    return (mu, lam)
 
 
-# ============================================================
-# Algorithm 3: Interval Covering Detection
-# ============================================================
-
-def detect_covering_relations(
-    f: Callable[[float], float],
-    intervals: List[Tuple[float, float]],
-    n_samples: int = 1000
-) -> List[Tuple[int, int]]:
+def sharkovsky_order(a: int, b: int) -> bool:
     """
-    Detect interval covering relations for a continuous map.
+    Determine if a ◁ b in the Sharkovsky ordering.
     
-    For each pair of intervals (Iᵢ, Iⱼ), checks whether f(Iᵢ) ⊇ Iⱼ
-    by sampling the image of Iᵢ and checking containment.
+    The Sharkovsky ordering is:
+    3 ◁ 5 ◁ 7 ◁ ... ◁ 2·3 ◁ 2·5 ◁ ... ◁ 2²·3 ◁ ... ◁ 2³ ◁ 2² ◁ 2 ◁ 1
     
-    Algorithm:
-    1. For each interval Iᵢ = [aᵢ, bᵢ]:
-       a. Sample f at n_samples points in Iᵢ
-       b. Compute min and max of f(Iᵢ) approximately
-    2. Check: f(Iᵢ) ⊇ Iⱼ iff min(f(Iᵢ)) ≤ aⱼ and max(f(Iᵢ)) ≥ bⱼ
+    Returns True if a forces b (a ◁ b), meaning any continuous map
+    with a period-a orbit must also have a period-b orbit.
     
-    Returns: List of (i, j) pairs where Iᵢ f-covers Iⱼ
-    Complexity: O(|intervals|² × n_samples)
+    Args:
+        a: First period
+        b: Second period
+    
+    Returns:
+        True if a ◁ b in Sharkovsky ordering
     """
-    n = len(intervals)
-    images: List[Tuple[float, float]] = []
+    if a <= 0 or b <= 0:
+        return False
     
-    for a, b in intervals:
-        samples = [f(a + (b - a) * k / n_samples) for k in range(n_samples + 1)]
-        images.append((min(samples), max(samples)))
+    def decompose(n: int) -> Tuple[int, int]:
+        """Return (2-adic valuation, odd part)."""
+        v = 0
+        while n % 2 == 0:
+            v += 1
+            n //= 2
+        return (v, n)
     
-    coverings: List[Tuple[int, int]] = []
-    for i in range(n):
-        for j in range(n):
-            a_j, b_j = intervals[j]
-            img_min, img_max = images[i]
-            if img_min <= a_j + 1e-10 and img_max >= b_j - 1e-10:
-                coverings.append((i, j))
+    va, oa = decompose(a)
+    vb, ob = decompose(b)
     
-    return coverings
+    # Case 1: Both are pure powers of 2
+    if oa == 1 and ob == 1:
+        return va > vb  # Higher powers force lower
+    
+    # Case 2: a is power of 2, b is not (or vice versa)
+    if oa == 1 and ob > 1:
+        return False  # Powers of 2 don't force odd multiples
+    if oa > 1 and ob == 1:
+        return True  # Non-power-of-2 forces all powers of 2
+    
+    # Case 3: Both have odd parts > 1
+    if va < vb:
+        return True  # Lower 2-adic valuation forces higher
+    if va > vb:
+        return False
+    
+    # Same 2-adic valuation: compare odd parts
+    return oa < ob
 
 
-# ============================================================
-# Algorithm 4: Möbius Periodic Point Counting
-# ============================================================
-
-def mobius_function(n: int) -> int:
-    """Compute the Möbius function μ(n)."""
-    if n == 1:
-        return 1
-    
-    # Factor n
-    factors: List[int] = []
-    d = 2
-    temp = n
-    while d * d <= temp:
-        if temp % d == 0:
-            factors.append(d)
-            temp //= d
-            if temp % d == 0:
-                return 0  # p² divides n
-        d += 1
-    if temp > 1:
-        factors.append(temp)
-    
-    return (-1) ** len(factors)
-
-
-def count_minimal_period_points(
-    phi_values: Dict[int, int],
-    n: int
-) -> int:
+def lyapunov_exponent(f: Callable[[float], float],
+                      df: Callable[[float], float],
+                      x0: float, n: int = 10000) -> float:
     """
-    Apply Möbius inversion to compute the number of minimal-period-n points.
+    Compute the Lyapunov exponent of f at x0.
     
-    Given Φ(d) = #{x : f^d(x) = x} for all d | n,
-    computes φ(n) = Σ_{d|n} μ(n/d) · Φ(d).
+    λ = lim_{n→∞} (1/n) Σ log|f'(f^k(x0))|
     
-    This is the key number-theoretic connection in the Recurrence Spectrum theory.
-    """
-    result = 0
-    for d in range(1, n + 1):
-        if n % d == 0:
-            mu = mobius_function(n // d)
-            phi_d = phi_values.get(d, 0)
-            result += mu * phi_d
-    return result
-
-
-# ============================================================
-# Algorithm 5: Bifurcation Diagram Computation
-# ============================================================
-
-def compute_bifurcation_data(
-    r_min: float = 2.5,
-    r_max: float = 4.0,
-    n_r: int = 1000,
-    transient: int = 500,
-    n_plot: int = 200
-) -> List[Tuple[float, List[float]]]:
-    """
-    Compute bifurcation diagram data for the logistic map.
+    Positive λ indicates chaos; negative indicates stability.
     
-    For each value of parameter r, iterates the logistic map
-    past the transient and records the attractor values.
+    Args:
+        f: The dynamical map
+        df: The derivative of f
+        x0: Initial state
+        n: Number of iterations
     
-    Returns: List of (r, attractor_values) pairs
-    """
-    data: List[Tuple[float, List[float]]] = []
-    
-    for i in range(n_r):
-        r = r_min + (r_max - r_min) * i / (n_r - 1)
-        x = 0.5
-        # Skip transient
-        for _ in range(transient):
-            x = r * x * (1.0 - x)
-        # Record attractor
-        values: List[float] = []
-        for _ in range(n_plot):
-            x = r * x * (1.0 - x)
-            values.append(x)
-        data.append((r, values))
-    
-    return data
-
-
-# ============================================================
-# Algorithm 6: Lyapunov Exponent Computation
-# ============================================================
-
-def lyapunov_exponent(
-    f: Callable[[float], float],
-    df: Callable[[float], float],
-    x0: float,
-    n_iter: int = 10000,
-    transient: int = 1000
-) -> float:
-    """
-    Compute the Lyapunov exponent of a one-dimensional map.
-    
-    λ = lim_{n→∞} (1/n) Σ_{k=0}^{n-1} log|f'(f^k(x₀))|
-    
-    Positive λ indicates chaos (sensitive dependence on initial conditions).
-    The Lyapunov exponent equals the topological entropy for unimodal maps.
+    Returns:
+        Estimated Lyapunov exponent
     """
     x = x0
-    # Skip transient
-    for _ in range(transient):
+    total = 0.0
+    for _ in range(n):
+        d = abs(df(x))
+        if d > 0:
+            total += math.log(d)
         x = f(x)
-    
-    log_sum = 0.0
-    for _ in range(n_iter):
-        derivative = abs(df(x))
-        if derivative < 1e-15:
-            return float('-inf')
-        log_sum += math.log(derivative)
-        x = f(x)
-    
-    return log_sum / n_iter
+    return total / n
 
 
-if __name__ == "__main__":
-    # Quick test
-    r = 3.83
-    f = lambda x: r * x * (1.0 - x)
-    df = lambda x: r * (1.0 - 2.0 * x)
+def ivt_fixed_point_bisection(f: Callable[[float], float],
+                              a: float, b: float,
+                              tol: float = 1e-12,
+                              max_iter: int = 100) -> float:
+    """
+    Find a fixed point of f in [a,b] using bisection on g(x) = f(x) - x.
     
-    print("Recurrence Spectrum at r = 3.83:")
-    spectrum = compute_recurrence_spectrum(f, 0.5, 10)
-    for period, points in sorted(spectrum.items()):
-        print(f"  Period {period}: {len(points)} point(s)")
+    Assumes f maps [a,b] to [a,b] (so f(a) ≥ a and f(b) ≤ b).
     
-    print(f"\nLyapunov exponent: {lyapunov_exponent(f, df, 0.5):.4f}")
+    This is the computational realization of the IVT fixed point theorem:
+    g(a) = f(a) - a ≥ 0 and g(b) = f(b) - b ≤ 0,
+    so by IVT there exists c with g(c) = 0, i.e., f(c) = c.
     
-    print("\nCovering relations for period-3 orbit:")
-    # Find orbit
-    x = 0.5
-    for _ in range(10000):
+    Args:
+        f: Continuous function mapping [a,b] to [a,b]
+        a: Left endpoint
+        b: Right endpoint
+        tol: Tolerance for convergence
+        max_iter: Maximum iterations
+    
+    Returns:
+        Approximate fixed point
+    """
+    ga = f(a) - a
+    gb = f(b) - b
+    
+    for _ in range(max_iter):
+        mid = (a + b) / 2
+        gmid = f(mid) - mid
+        
+        if abs(gmid) < tol or (b - a) < tol:
+            return mid
+        
+        if ga * gmid <= 0:
+            b = mid
+            gb = gmid
+        else:
+            a = mid
+            ga = gmid
+    
+    return (a + b) / 2
+
+
+def dynamical_spectrum(f: Callable[[float], float],
+                       x_samples: List[float],
+                       max_period: int = 100) -> Set[int]:
+    """
+    Estimate the dynamical spectrum by sampling orbits.
+    
+    For each sample point, detect its period and add to the spectrum.
+    
+    Args:
+        f: The dynamical map
+        x_samples: Sample initial conditions
+        max_period: Maximum period to detect
+    
+    Returns:
+        Set of detected periods
+    """
+    periods: Set[int] = set()
+    
+    for x0 in x_samples:
+        mu, lam = detect_period_floyd(f, x0)
+        if 0 < lam <= max_period:
+            periods.add(lam)
+    
+    return periods
+
+
+def cognitive_state_classifier(
+    f: Callable[[float], float],
+    x0: float,
+    n_settle: int = 1000,
+    n_test: int = 1000,
+    tol: float = 1e-8
+) -> str:
+    """
+    Classify a cognitive trajectory as:
+    - "fixed": converges to fixed point (deja vu = permanent)
+    - "periodic": enters a cycle (deja vu = recurring pattern)
+    - "chaotic": aperiodic (deja vu = fleeting/illusory)
+    
+    Args:
+        f: Cognitive dynamics map
+        x0: Initial cognitive state
+        n_settle: Iterations to let orbit settle
+        n_test: Iterations to test for periodicity
+        tol: Tolerance
+    
+    Returns:
+        Classification string
+    """
+    # Settle the orbit
+    x = x0
+    for _ in range(n_settle):
         x = f(x)
-    pts = sorted([x, f(x), f(f(x))])
-    intervals = [(pts[0], pts[1]), (pts[1], pts[2])]
-    coverings = detect_covering_relations(f, intervals)
-    for i, j in coverings:
-        print(f"  I_{i} f-covers I_{j}")
+    
+    anchor = x
+    
+    # Test for fixed point
+    x_next = f(x)
+    if abs(x_next - x) < tol:
+        return "fixed"
+    
+    # Test for periodicity
+    x = x_next
+    for period in range(1, n_test):
+        if abs(x - anchor) < tol:
+            return f"periodic(period={period})"
+        x = f(x)
+    
+    return "chaotic"
+
+
+if __name__ == '__main__':
+    # Example: Sharkovsky ordering verification
+    print("Sharkovsky ordering examples:")
+    print(f"  3 ◁ 5: {sharkovsky_order(3, 5)}")
+    print(f"  3 ◁ 1: {sharkovsky_order(3, 1)}")
+    print(f"  5 ◁ 3: {sharkovsky_order(5, 3)}")
+    print(f"  2 ◁ 1: {sharkovsky_order(2, 1)}")
+    print(f"  4 ◁ 2: {sharkovsky_order(4, 2)}")
+    print(f"  6 ◁ 3: {sharkovsky_order(6, 3)}")
+    
+    # Dynamical spectrum of logistic map
+    print("\nDynamical spectrum at various r values:")
+    for r in [2.5, 3.2, 3.5, 3.83, 4.0]:
+        f = lambda x, r=r: logistic_map(r, x)
+        samples = [i/100 for i in range(1, 100)]
+        spectrum = dynamical_spectrum(f, samples)
+        print(f"  r = {r}: periods = {sorted(spectrum)}")
+    
+    # IVT fixed point
+    print("\nIVT fixed point bisection:")
+    for r in [2.5, 3.0, 3.5, 4.0]:
+        f = lambda x, r=r: logistic_map(r, x)
+        fp = ivt_fixed_point_bisection(f, 0.01, 0.99)
+        print(f"  r = {r}: fixed point ≈ {fp:.10f}, "
+              f"theoretical = {(r-1)/r:.10f}")

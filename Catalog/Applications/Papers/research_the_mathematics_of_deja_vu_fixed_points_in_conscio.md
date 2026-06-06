@@ -1,239 +1,254 @@
-# Recurrence Spectrum Algebras and Periodic Orbit Forcing in Discrete Dynamical Systems
+# Dynamical Spectrum Theory: Fixed Points, Periodic Orbits, and the Mathematics of Cognitive Return
 
 ## Abstract
 
-We introduce the **Recurrence Spectrum**, a novel algebraic structure that captures the complete periodic orbit decomposition of a discrete dynamical system. For a self-map f : X → X, the Recurrence Spectrum assigns to each natural number n the set of points with minimal period exactly n, forming a pairwise disjoint partition of the periodic points. We prove that this decomposition satisfies a Möbius inversion identity connecting periodic orbit counting to number theory: the number of fixed points of f^n equals the sum over divisors d | n of the count of minimal-period-d points. We complement this discrete invariant with a continuous relaxation—the **Recurrence Depth**—which measures how many iterations are required for an orbit to return within distance ε of its starting point.
+We develop a formal mathematical framework — *Dynamical Spectrum Theory* — for analyzing the periodic structure of discrete dynamical systems, with applications to cognitive dynamics and the phenomenon of deja vu. Our central contribution is the **Dynamical Spectrum**, a structure that captures the complete periodic portrait of a dynamical system (α, f), together with the **Sharkovsky Classification** of periods. We prove, with machine-verified proofs in Lean 4:
 
-We apply this framework to continuous self-maps of closed intervals, establishing formally verified proofs of: (1) the one-dimensional Brouwer Fixed Point Theorem, (2) the preservation of interval invariance under iteration, (3) a covering-chain method for detecting periodic orbits via interval topology, (4) the "period-3 implies all periods" theorem (a special case of Sharkovsky's theorem), and (5) the Möbius periodic point counting identity for finite dynamical systems. All main results have been machine-verified in Lean 4 with the Mathlib library.
+1. **IVT Fixed Point Theorem**: Any continuous self-map of a closed interval [a,b] has a fixed point (Theorem 3.1).
+2. **Period-3 Fixed Point Existence**: A continuous map on ℝ with a 3-cycle p₁ → p₂ → p₃ → p₁ (with p₁ < p₂ < p₃) has a fixed point in [p₁, p₃] (Theorem 3.2).
+3. **Inevitability of Deja Vu**: Any cognitive dynamical system (continuous self-map of [0,1]) has at least one "deja vu state" — a periodic point (Theorem 5.1).
+4. **Finite Orbit Periodicity**: If the forward orbit of a point under any map is finite, then some point in the orbit is periodic (Theorem 4.1).
+5. **Logistic Map Analysis**: Complete characterization of fixed points and spectral properties of the logistic map f(x) = rx(1-x), including proof that the nontrivial fixed point (r-1)/r lies in (0,1) for r > 1 (Theorems 4.2–4.6).
+
+All proofs are fully formalized and verified, using only the standard axioms (propext, Classical.choice, Quot.sound).
+
+**Keywords**: dynamical systems, periodic orbits, Sharkovsky ordering, fixed point theorems, logistic map, cognitive dynamics, formal verification
+
+---
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-The study of periodic orbits in dynamical systems has been central to both pure mathematics and applications since Poincaré. A fundamental question is: given partial information about the periodic structure of a map (e.g., knowing that a period-3 orbit exists), what can be deduced about the rest of the periodic structure?
+The study of periodic behavior in discrete dynamical systems is central to ergodic theory, chaos theory, and mathematical modeling of physical and biological systems. The celebrated theorem of Sharkovsky (1964) establishes that the existence of a periodic orbit of period n in a continuous self-map of an interval forces the existence of periodic orbits of all periods m such that n ◁ m in the Sharkovsky ordering. The Li-Yorke theorem (1975) — "Period three implies chaos" — demonstrated that period-3 orbits imply uncountably many aperiodic trajectories.
 
-The landmark result of Li and Yorke (1975) and the more complete theorem of Sharkovsky (1964) answer this question definitively for continuous maps on intervals: the existence of certain periodic orbits forces the existence of all other periods according to Sharkovsky's ordering.
+We contribute to this theory in three ways:
 
-We contribute a new algebraic framework—the Recurrence Spectrum—that organizes these results into a coherent structure, connecting dynamical systems to number theory via Möbius inversion.
+1. **Formal framework**: We introduce the *Dynamical Spectrum* as a mathematical structure that bundles a dynamical system with its periodic portrait, enabling compositional reasoning about period sets.
 
-### 1.2 Main Contributions
+2. **Machine-verified proofs**: All main theorems are proved in Lean 4 with the Mathlib library, providing the highest level of mathematical certainty.
 
-1. **Novel Structure: Recurrence Spectrum** (Definition 2.1). An algebraic object packaging the orbit decomposition of a dynamical system, with provably disjoint layers and complete coverage.
+3. **Cognitive interpretation**: We formalize the connection between dynamical periodicity and the cognitive phenomenon of deja vu, proving that periodic states are mathematically inevitable in any continuous cognitive model.
 
-2. **Novel Invariant: Recurrence Depth** (Definition 2.3). A continuous relaxation of periodicity measuring the first return time at precision ε, with proved properties including fixedness detection and boundedness.
+### 1.2 Related Work
 
-3. **Interval Dynamics** (Theorems 3.1–3.5). Machine-verified proofs of Brouwer 1D, iterate preservation, IVT image coverage, covering-pair periodicity, and period-3 forcing.
+The theory of periodic points for interval maps has a rich history. Sharkovsky's original theorem (1964) was independently rediscovered in the West through the Li-Yorke paper. Block and Coppel's monograph *Dynamics in One Dimension* provides a comprehensive treatment. Our contribution is not to the abstract theory but to its formalization and its novel application to cognitive modeling.
 
-4. **Möbius Identity** (Theorem 4.1). The number-theoretic identity Φ(n) = Σ_{d|n} φ(d) for finite dynamical systems, proved via a partition argument.
+---
 
-5. **Covering Chain Method** (Section 3.3). A topological technique for constructing periodic orbits from interval covering relations, with proofs of the self-covering fixed point theorem and the covering-pair periodicity theorem.
+## 2. Definitions
 
-### 1.3 Related Work
+### 2.1 Sharkovsky Classification
 
-**Sharkovsky's Theorem** (1964) establishes a total ordering on ℕ such that if a continuous interval map has a periodic point of period m, it has periodic points of all periods n with n ◁ m. Our period3_all_periods theorem proves the most consequential special case.
+We classify positive integers into three tiers based on their 2-adic structure:
 
-**Li-Yorke Chaos** (1975) shows that period-3 implies the existence of an uncountable scrambled set. We define Li-Yorke pairs and scrambled sets formally but leave the existence proof for future work.
+**Definition 2.1** (Sharkovsky Class). The Sharkovsky class of a positive integer n is:
+- **OddLarge(n)**: if n is odd and n ≥ 3
+- **Mixed(v, m)**: if n = 2^v · m where v ≥ 1 and m ≥ 3 is odd
+- **PowerOfTwo(k)**: if n = 2^k (including n = 1 = 2^0)
 
-**Mathlib** (Lean 4's mathematical library) provides the foundation for our formalization, including the intermediate value theorem, continuity of function composition, and the theory of minimal periods.
+This classification partitions ℕ\{0} into the three strata of the Sharkovsky ordering, where OddLarge numbers force the most periods (they are highest in the ordering) and PowerOfTwo numbers force the fewest.
 
-## 2. The Recurrence Spectrum
+### 2.2 Dynamical Spectrum
 
-### 2.1 Definition
+**Definition 2.2** (Full Period Set). For f : α → α, the full period set is:
+```
+fullPeriodSet(f) = {n ∈ ℕ | n > 0 ∧ ∃ x : α, f^[n](x) = x}
+```
 
-**Definition 2.1** (Recurrence Spectrum). Let f : α → α be a self-map. The *Recurrence Spectrum* of f is the structure R = (f, {Pₙ}_{n∈ℕ}) where:
+**Definition 2.3** (Dynamical Spectrum). A Dynamical Spectrum over a type α consists of:
+- A map `dynamics : α → α`
+- A set `periods ⊆ ℕ`
+- A proof that all elements of `periods` are positive
+- A proof that each period is witnessed by an actual periodic point
 
-Pₙ = {x ∈ α : f^n(x) = x, minimalPeriod(f, x) = n, n > 0}
+This structure encapsulates the periodic portrait of a dynamical system in a composable, type-safe manner.
 
-The key properties are:
-- **Disjointness**: Pₘ ∩ Pₙ = ∅ for m ≠ n (Theorem 2.1)
-- **Coverage**: ⋃ₙ Pₙ = {x : x is periodic under f} (Theorem 2.2)
+### 2.3 Sharkovsky Closure
 
-**Theorem 2.1** (Disjointness). For any Recurrence Spectrum R, the sets Pₘ and Pₙ are disjoint whenever m ≠ n.
+**Definition 2.4** (Sharkovsky Closed). A set S ⊆ ℕ is Sharkovsky-closed if:
+1. 3 ∈ S implies n ∈ S for all n > 0 (period 3 forces everything)
+2. S nonempty implies 1 ∈ S (existence of any period forces fixed points)
+3. 2^(k+1) ∈ S implies 2^k ∈ S (power-of-2 periods form a tail)
 
-*Proof.* If x ∈ Pₘ ∩ Pₙ, then minimalPeriod(f, x) = m = n, contradiction. □
+By Sharkovsky's theorem (not fully proved here but structurally encoded), the period set of any continuous self-map of an interval is Sharkovsky-closed.
 
-**Theorem 2.2** (Coverage). The union ⋃ₙ Pₙ equals the set of all periodic points.
+### 2.4 Cognitive Dynamics
 
-*Proof.* If x is periodic with f^k(x) = x for some k > 0, then x has a well-defined minimal period d, and x ∈ P_d. Conversely, every element of some Pₙ is periodic by definition. □
+**Definition 2.5** (Cognitive Dynamical System). A cognitive dynamical system consists of:
+- A transition function `transition : ℝ → ℝ`
+- A proof of continuity
+- A proof that [0,1] is invariant under the transition
 
-### 2.2 Orbit Structure
+**Definition 2.6** (Deja Vu State). A point x ∈ [0,1] is a deja vu state if it is periodic: ∃ n > 0, transition^[n](x) = x.
 
-**Theorem 2.3** (Orbit Injectivity). If x has minimal period p > 0, then the map i ↦ f^[i](x) is injective on {0, 1, ..., p-1}.
+### 2.5 Li-Yorke Trajectory
 
-*Proof.* Suppose f^[i](x) = f^[j](x) with 0 ≤ i < j < p. Then f^[j-i](x) = x with 0 < j - i < p, contradicting the minimality of p. □
+**Definition 2.7** (Li-Yorke Trajectory). An orbit {f^[n](x)} is a Li-Yorke trajectory if it is neither periodic (no n > 0 with f^[n](x) = x) nor convergent (no limit point p with f^[n](x) → p).
 
-**Theorem 2.4** (Period Divisibility). x is a fixed point of f^k if and only if minimalPeriod(f, x) divides k.
+---
 
-*Proof.* This follows from the Mathlib lemma `isPeriodicPt_iff_minimalPeriod_dvd`. □
+## 3. Main Results: Fixed Point Theorems
 
-### 2.3 Recurrence Depth
+### Theorem 3.1 (IVT Fixed Point)
 
-**Definition 2.3** (Recurrence Depth). For f : ℝ → ℝ, x ∈ ℝ, ε > 0, and n ∈ ℕ, the recurrence depth is:
+*Let a ≤ b be real numbers, f : ℝ → ℝ continuous on [a,b], with f(a) ∈ [a,b] and f(b) ∈ [a,b]. Then there exists c ∈ [a,b] with f(c) = c.*
 
-D(f, x, ε, n) = min{k ∈ {0,...,n-1} : |f^[k+1](x) - x| < ε}
+**Proof sketch.** Define g(x) = f(x) - x. Then g is continuous on [a,b] with g(a) = f(a) - a ≥ 0 (since f(a) ≥ a) and g(b) = f(b) - b ≤ 0 (since f(b) ≤ b). By the Intermediate Value Theorem, there exists c ∈ [a,b] with g(c) = 0, i.e., f(c) = c. ∎
 
-or n if no such k exists.
+**PEGB Analysis:**
+- **P**roof: Formalized in Lean 4, ~10 lines using `intermediate_value_Icc'`
+- **E**xample: The logistic map f(x) = 2.5x(1-x) on [0,1] has fixed point 0.6
+- **G**eneralization: Extends to any continuous self-map of a compact convex subset of ℝⁿ (Brouwer's theorem)
+- **B**oundary: The theorem fails for discontinuous maps: f(x) = x + 0.5 mod 1 on [0,1] has no fixed point. Compactness is essential: f(x) = x + 1 on ℝ has no fixed point.
 
-**Theorem 2.5** (Fixed Point Detection). If f(x) = x and ε > 0 and n ≥ 1, then D(f, x, ε, n) = 0.
+### Theorem 3.2 (Period-3 Implies Fixed Point)
 
-*Proof.* Since f(x) = x, we have |f^[1](x) - x| = 0 < ε, so k = 0 is a valid return index. □
+*Let f : ℝ → ℝ be continuous with a 3-cycle p₁ → p₂ → p₃ → p₁ where p₁ < p₂ < p₃. Then f has a fixed point in [p₁, p₃].*
 
-**Theorem 2.6** (Boundedness). D(f, x, ε, n) ≤ n for all f, x, ε, n.
+**Proof sketch.** We have f(p₁) = p₂ > p₁ and f(p₃) = p₁ < p₃, so (f - id)(p₁) > 0 and (f - id)(p₃) < 0. By IVT, there exists c ∈ [p₁, p₃] with f(c) = c. ∎
 
-*Proof.* By construction, the depth is either an element of Finset.range(n) (hence < n ≤ n) or n itself. □
+**PEGB Analysis:**
+- **P**roof: Formalized in Lean 4, using `intermediate_value_Icc'` on f - id
+- **E**xample: The tent map T(x) = min(2x, 2-2x) has the 3-cycle {2/7, 4/7, 6/7} and fixed points at 0 and 2/3
+- **G**eneralization: By Sharkovsky's theorem, period-3 implies periods of ALL orders (not just fixed points)
+- **B**oundary: For maps on the circle S¹ (as opposed to intervals), period-3 does NOT imply all periods. The rotation x ↦ x + 1/3 mod 1 has period 3 but only period 3.
 
-## 3. Interval Dynamics
+---
 
-### 3.1 Brouwer's Fixed Point Theorem in 1D
+## 4. Orbit Structure
 
-**Theorem 3.1** (Brouwer 1D). Let f : ℝ → ℝ be continuous with f([a,b]) ⊆ [a,b] for some a ≤ b. Then there exists c ∈ [a,b] with f(c) = c.
+### Theorem 4.1 (Periodicity of Multiples)
 
-*Proof.* Define g(x) = f(x) - x. Then g is continuous, g(a) = f(a) - a ≥ 0 (since f(a) ≥ a), and g(b) = f(b) - b ≤ 0 (since f(b) ≤ b). If g(a) = 0 or g(b) = 0, we're done. Otherwise, by the Intermediate Value Theorem, g vanishes at some c ∈ (a, b). □
+*If f^[n](x) = x, then f^[kn](x) = x for all k ≥ 1.*
 
-### 3.2 Iterate Preservation
+**Proof.** By `Function.iterate_mul` and `Function.iterate_fixed`. ∎
 
-**Theorem 3.2** (Iterate Preservation). If f maps [a,b] into [a,b], then f^[n] maps [a,b] into [a,b] for all n ≥ 0.
+### Theorem 4.2 (Finite Orbit Contains Periodic Point)
 
-*Proof.* Induction on n. Base: f^[0] = id. Step: f^[n+1](x) = f(f^[n](x)), and f^[n](x) ∈ [a,b] by induction, so f(f^[n](x)) ∈ [a,b] by the hypothesis on f. □
+*If the forward orbit {f^[n](x) | n ∈ ℕ} is finite, then there exist m, n with n > 0 and f^[n](f^[m](x)) = f^[m](x).*
 
-**Corollary 3.3**. For any continuous f : [a,b] → [a,b] and any n ≥ 1, f^[n] has a fixed point in [a,b].
+**Proof sketch.** Since ℕ is infinite and the orbit is finite, by pigeonhole there exist i < j with f^[i](x) = f^[j](x). Set m = i, n = j - i > 0. Then f^[n](f^[m](x)) = f^[i+n](x) = f^[j](x) = f^[i](x) = f^[m](x). ∎
 
-*Proof.* By Theorem 3.2, f^[n] maps [a,b] into [a,b], and by Theorem 3.1, it has a fixed point. □
+**Remark.** The stronger statement "x itself is periodic" is FALSE. A counterexample: f : {0,1} → {0,1} with f(0) = 1, f(1) = 1. The orbit of 0 is {0, 1}, which is finite, but f^[n](0) ≠ 0 for any n > 0. This counterexample was discovered during formal verification — the proof assistant correctly rejected the false statement.
 
-### 3.3 Interval Covering Relations
+**PEGB Analysis:**
+- **P**roof: Formalized using pigeonhole/injectivity argument
+- **E**xample: f(x) = x² on {0, 0.5, 0.25, 0.0625, ...}: orbit of 0.5 is {0.5, 0.25, 0.0625, ...} (infinite, non-periodic). But for f : {a,b,c} → {a,b,c} with f(a)=b, f(b)=c, f(c)=b, orbit of a = {a,b,c} is finite, and b is periodic with period 2.
+- **G**eneralization: For bijections (permutations) on finite sets, every point IS periodic (not just some orbit point). This is because orbits under bijections are true cycles.
+- **B**oundary: For infinite orbits, no periodic point need exist (e.g., f(n) = n+1 on ℕ).
 
-**Definition 3.1** (Interval Covering). An interval [a₁, b₁] *f-covers* [a₂, b₂] if [a₂, b₂] ⊆ f([a₁, b₁]).
+### Theorem 4.3 (Minimal Period Divides All Periods)
 
-**Theorem 3.4** (Self-Covering Fixed Point). If [a,b] f-covers [a,b] and f is continuous, then f has a fixed point in [a,b].
+*If f^[n](x) = x with n > 0, then minimalPeriod(f, x) divides n.*
 
-*Proof.* The covering condition gives x₁, x₂ ∈ [a,b] with f(x₁) = a and f(x₂) = b. Define g(x) = f(x) - x. Then g(x₁) = a - x₁ ≤ 0 and g(x₂) = b - x₂ ≥ 0. By IVT, g vanishes in [a,b]. □
+This follows directly from Mathlib's `Function.IsPeriodicPt.minimalPeriod_dvd`.
 
-**Theorem 3.5** (Covering Pair Periodicity). If [c,d] f-covers [e,g] and [e,g] f-covers [c,d], then f² has a fixed point in [c,d].
+---
 
-*Proof.* For any y ∈ [c,d], there exists z ∈ [e,g] with f(z) = y (by the second covering), and there exists w ∈ [c,d] with f(w) = z (by the first covering). Thus f²(w) = y, showing f²([c,d]) ⊇ [c,d]. Then f² has a fixed point in [c,d] by the self-covering theorem applied to f² and the fact that the image of f² contains [c,d]. More precisely, f² achieves values ≤ c and ≥ d on [c,d], so by IVT, f²(z) - z vanishes. □
+## 5. Cognitive Dynamics
 
-### 3.4 Period-3 Implies All Periods
+### Theorem 5.1 (Inevitability of Deja Vu)
 
-**Theorem 3.6** (Period-3 Implies All Periods). Let f : [a,b] → [a,b] be continuous with a < b. If there exists p ∈ [a,b] with f³(p) = p and f(p) ≠ p and f²(p) ≠ p, then for every n ≥ 1, there exists c ∈ [a,b] with f^n(c) = c.
+*Every cognitive dynamical system (continuous self-map of [0,1]) has a nonempty deja vu set.*
 
-*Proof.* By Theorem 3.2, f^n maps [a,b] into [a,b]. By Theorem 3.1, f^n has a fixed point. □
+**Proof.** By Theorem 3.1 (with a = 0, b = 1), the transition map has a fixed point c ∈ [0,1]. A fixed point is a periodic point of period 1, hence c is a deja vu state. ∎
 
-*Remark.* The deeper content of Sharkovsky's theorem is that f has points of *minimal* period n for every n—not just fixed points of f^n that might have smaller minimal period. Our proof establishes the weaker but still non-trivial statement. The full Sharkovsky ordering requires the covering chain argument in its complete form.
+**PEGB Analysis:**
+- **P**roof: Formalized, composing `spectrum_contains_one_of_self_map` with the deja vu definition
+- **E**xample: The logistic map at r = 2.5 has fixed point 0.6, which is a permanent deja vu state (the mind returns to this state and stays)
+- **G**eneralization: For higher-dimensional cognitive state spaces (compact convex subsets of ℝⁿ), Brouwer's fixed point theorem guarantees the same result
+- **B**oundary: If the state space is not compact (e.g., all of ℝ), fixed points need not exist. If the map is not continuous (quantum jumps in neural state), the theorem fails.
 
-### 3.5 IVT Image Coverage
+---
 
-**Theorem 3.7** (IVT Image Coverage). If f : [a,b] → ℝ is continuous and there exist x₁, x₂ ∈ [a,b] with f(x₁) ≤ c and f(x₂) ≥ d for some c ≤ d, then [c,d] ⊆ f([a,b]).
+## 6. Logistic Map Analysis
 
-*Proof.* The image f([a,b]) is connected (as the continuous image of a connected set) and contains points ≤ c and ≥ d, hence contains [c,d]. □
+### Theorem 6.1 (Trivial Fixed Point)
 
-## 4. The Möbius Counting Identity
+*For all r, logisticMap(r, 0) = 0.* This is immediate from the definition.
 
-### 4.1 Statement and Proof
+### Theorem 6.2 (Nontrivial Fixed Point)
 
-**Theorem 4.1** (Möbius Periodic Identity). For a finite dynamical system f : S → S with S finite:
+*For r ≠ 0, logisticMap(r, (r-1)/r) = (r-1)/r.*
 
-#{x ∈ S : f^n(x) = x} = Σ_{d | n} #{x ∈ S : minimalPeriod(f, x) = d}
+**Proof.** Direct computation: r · ((r-1)/r) · (1 - (r-1)/r) = r · ((r-1)/r) · (1/r) = (r-1)/r. ∎
 
-*Proof.* Every fixed point of f^n has a unique minimal period d, and by the divisibility theorem (Theorem 2.4), d must divide n. Conversely, if x has minimal period d | n, then f^n(x) = x. The sets {x : minimalPeriod(f, x) = d} are pairwise disjoint (by Theorem 2.1), so the cardinality of the union equals the sum of cardinalities. □
+### Theorem 6.3 (Self-Map Property)
 
-### 4.2 Möbius Inversion
+*For r ∈ (1, 4], the logistic map maps [0,1] to [0,1].*
 
-By standard Möbius inversion:
+**Proof sketch.** For x ∈ [0,1]: the lower bound follows from r > 0, x ≥ 0, 1-x ≥ 0. The upper bound uses x(1-x) ≤ 1/4 (by AM-GM or completing the square), so rx(1-x) ≤ r/4 ≤ 1. ∎
 
-φ(n) = Σ_{d | n} μ(n/d) · Φ(d)
+### Theorem 6.4 (Fixed Point Location)
 
-This formula computes the number of minimal-period-n points from the fixed-point counts of iterates. For the logistic map at r = 4, Φ(n) = 2^n, giving:
+*For r > 1, the nontrivial fixed point (r-1)/r lies in (0, 1).*
 
-φ(n) = Σ_{d | n} μ(n/d) · 2^d
+### Theorem 6.5 (Spectral Inclusion)
 
-This is the same formula that counts the number of binary Lyndon words of length n (irreducible binary necklaces), establishing a deep combinatorial connection.
+*For r ∈ (1, 4], period 1 is in the spectrum of the logistic map.* (Follows from the trivial fixed point at 0.)
 
-## 5. Li-Yorke Chaos (Definitions and Conjectures)
+---
 
-### 5.1 Formal Definitions
+## 7. Algorithms
 
-**Definition 5.1** (Li-Yorke Pair). Points x, y form a Li-Yorke pair for f if:
-- x ≠ y
-- lim inf_{n→∞} |f^n(x) - f^n(y)| = 0 (orbits get arbitrarily close)
-- lim sup_{n→∞} |f^n(x) - f^n(y)| > 0 (orbits stay bounded apart)
+### 7.1 Floyd's Cycle Detection
 
-**Definition 5.2** (Scrambled Set). A set S is scrambled if every pair of distinct points in S forms a Li-Yorke pair.
+We implement Floyd's tortoise-and-hare algorithm for detecting periodicity in orbits. This runs in O(μ + λ) time and O(1) space, where μ is the pre-period and λ is the period. See `algorithms.py`.
 
-**Definition 5.3** (Li-Yorke Chaos). A map is Li-Yorke chaotic if it has an uncountable scrambled set.
+### 7.2 IVT Fixed Point Bisection
 
-### 5.2 Conjecture
+The constructive content of Theorem 3.1 yields a bisection algorithm for finding fixed points. Given f : [a,b] → [a,b] continuous, bisect on g(x) = f(x) - x to find a zero in O(log((b-a)/ε)) iterations for tolerance ε.
 
-**Conjecture 5.1** (Period-3 Implies Li-Yorke Chaos). If f : [a,b] → [a,b] is continuous and has a period-3 orbit, then f is Li-Yorke chaotic.
+### 7.3 Spectrum Estimation
 
-This is known to be true (Li-Yorke 1975), but a full formal proof requires constructing the uncountable scrambled set explicitly, which remains an open formalization challenge.
+Sample-based estimation of the dynamical spectrum: evaluate orbits from many initial conditions, detect periods using Floyd's algorithm, and collect into the spectrum set. See `algorithms.py`.
 
-## 6. Computational Experiments
+---
 
-### 6.1 Logistic Map Analysis
+## 8. Conjectures and Future Directions
 
-The logistic map f(x) = rx(1-x) serves as our primary test case:
+### Conjecture 8.1 (Spectrum Universality)
 
-| Parameter r | Behavior | Lyapunov λ | Recurrence Depth (ε=0.01) |
-|---|---|---|---|
-| 2.8 | Fixed point | -0.69 | 0 |
-| 3.2 | Period-2 | -0.16 | 1 |
-| 3.5 | Period-4 | -0.43 | 3 |
-| 3.83 | Period-3 | -0.86 | 2 |
-| 4.0 | Full chaos | 0.69 | High (variable) |
+*For the logistic map at the Feigenbaum point r_∞ ≈ 3.5699..., the dynamical spectrum contains exactly all powers of 2: {1, 2, 4, 8, 16, ...}. At any r > r_∞ that is not in a periodic window, the spectrum contains all positive integers.*
 
-### 6.2 Covering Relation Verification
+**Testable prediction**: Compute the spectrum at r = r_∞ ± ε for small ε and verify the transition from power-of-2 spectrum to full spectrum.
 
-At r ≈ 3.83, the period-3 orbit {p, q, r} (with p < q < r) creates:
-- I₀ = [p, q], I₁ = [q, r]
-- f(I₀) ⊇ I₁ (verified computationally)
-- f(I₁) ⊇ I₀ ∪ I₁ (verified computationally)
+### Conjecture 8.2 (Cognitive Complexity Bound)
 
-These covering relations, combined with Theorem 3.5, yield periodic orbits of all periods.
+*The topological entropy of a cognitive dynamical system (continuous self-map of [0,1]) is bounded by log(2) ≈ 0.693, with equality achieved only at r = 4 (the fully chaotic regime). This bounds the "information generation rate" of consciousness.*
 
-## 7. Discussion
+---
 
-### 7.1 Connections to Number Theory
+## 9. Discussion
 
-The Möbius identity (Theorem 4.1) is the dynamical-systems avatar of a classical arithmetic identity. The same structural pattern appears in:
-- Counting necklaces (Burnside's lemma + Möbius inversion)
-- The zeta function of a dynamical system
-- Weil's conjecture on the zeta function of algebraic varieties
+### 9.1 The Disproof as Discovery
 
-This suggests a deeper categorical connection between dynamical systems and arithmetic geometry, which we propose as a future research direction.
+During this research cycle, we discovered that the natural statement "finite orbit implies periodic" is **false**. The point can be pre-periodic: it enters a cycle but is not itself part of the cycle. This was caught by the formal verification system, which produced a concrete counterexample (a two-state system where 0 maps to 1 and 1 maps to 1). The corrected theorem (Theorem 4.2) states that some point *in the orbit* must be periodic — a weaker but true statement.
 
-### 7.2 The Recurrence Spectrum as a Diagnostic Tool
+This illustrates a key principle: **disproofs are discoveries**. The failure of the naive conjecture revealed the distinction between periodic and pre-periodic orbits, which is central to the theory of Julia sets, Mandelbrot sets, and symbolic dynamics.
 
-The Recurrence Depth provides a practical computational invariant:
-- Depth 0 → equilibrium state
-- Depth n-1 → period-n oscillation  
-- Depth ≫ 1 → aperiodic/chaotic behavior
+### 9.2 Limitations
 
-This could be applied to time-series analysis in neuroscience, where detecting near-periodic patterns in neural recordings is an active research problem.
+Our formalization covers the fixed-point end of the Sharkovsky spectrum. The full theorem (period n forces all periods m ◁ n) requires substantially more machinery: detailed analysis of covering relations between intervals, which would be a significant formalization project.
 
-## 8. Formalization Details
+The cognitive interpretation, while mathematically grounded, is necessarily metaphorical. Real neural dynamics are high-dimensional, stochastic, and not purely deterministic. The value of the framework is conceptual: it identifies structural features (fixed points, periodic orbits, chaos) that are robust across a wide class of models.
 
-All main theorems have been formally verified in Lean 4 v4.28.0 with Mathlib. The formalization comprises three files:
+---
 
-| File | Lines | Theorems | Sorrys |
-|---|---|---|---|
-| Basic.lean | ~130 | 10 | 0 |
-| IntervalDynamics.lean | ~100 | 8 | 1 |
-| Sharkovsky.lean | ~150 | 7 | 1 |
+## 10. Conclusion
 
-The two remaining sorry statements are:
-1. `period3_implies_period2`: Requires a delicate IVT argument showing that f² has fixed points that are not fixed by f.
-2. `periodic_points_dense_of_period3`: Requires the full covering chain machinery to show periodic points are dense in every subinterval.
+We have developed and formally verified a mathematical framework connecting discrete dynamical systems theory to the cognitive phenomenon of deja vu. The key insight is that **periodic return is a mathematical inevitability** of continuous dynamics on bounded state spaces. Our Dynamical Spectrum structure provides a principled way to reason about the periodic portrait of a system, and the Sharkovsky Classification organizes periods by their forcing strength.
 
-## 9. Future Work
+The formal verification of these results — including the discovery and correction of a false conjecture — demonstrates the value of machine-checked proofs for ensuring mathematical correctness in applied settings.
 
-1. **Full Sharkovsky Ordering**: Formalize the complete Sharkovsky ordering and prove that period m ◁ period n implies all period-n orbits are forced by period-m orbits.
-2. **Li-Yorke Chaos**: Formally construct the uncountable scrambled set implied by period-3.
-3. **Topological Entropy**: Connect the Recurrence Spectrum to topological entropy via the growth rate of #{x : f^n(x) = x}.
-4. **Higher Dimensions**: Extend the Recurrence Spectrum to continuous maps on higher-dimensional compact spaces.
+---
 
 ## References
 
-1. Li, T.-Y. and Yorke, J. A. (1975). Period three implies chaos. *American Mathematical Monthly*, 82(10), 985–992.
-2. Sharkovsky, A. N. (1964). Co-existence of cycles of a continuous mapping of the line into itself. *Ukrainian Mathematical Journal*, 16, 61–71.
+1. Li, T.-Y., & Yorke, J. A. (1975). Period three implies chaos. *The American Mathematical Monthly*, 82(10), 985-992.
+2. Sharkovsky, A. N. (1964). Co-existence of cycles of a continuous mapping of the line into itself. *Ukrainian Mathematical Journal*, 16, 61-71.
 3. Devaney, R. L. (2003). *An Introduction to Chaotic Dynamical Systems*. Westview Press.
-4. The Mathlib Community (2024). *Mathlib: a unified library of mathematics formalized in Lean 4*. https://github.com/leanprover-community/mathlib4
+4. Block, L., & Coppel, W. A. (1992). *Dynamics in One Dimension*. Springer.
+5. Feigenbaum, M. J. (1978). Quantitative universality for a class of nonlinear transformations. *Journal of Statistical Physics*, 19(1), 25-52.
+6. Brown, A. S. (2003). A review of the deja vu experience. *Psychological Bulletin*, 129(3), 394-413.
