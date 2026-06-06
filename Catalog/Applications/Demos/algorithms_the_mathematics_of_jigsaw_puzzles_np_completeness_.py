@@ -1,59 +1,130 @@
-#!/usr/bin/env python3
 """
-Algorithms for Jigsaw Puzzle NP-Completeness
+algorithms.py — Type-hinted implementations of jigsaw puzzle algorithms.
 
-Type-hinted implementations of the key algorithms:
-1. 3-SAT to Jigsaw Puzzle reduction
-2. Puzzle verification
-3. Configuration space analysis
+Implements the core structures and algorithms for:
+1. Jigsaw puzzle representation and assembly validation
+2. 3-SAT to Jigsaw Puzzle reduction
+3. Puzzle homomorphisms and complement duality
+4. Row signature constraint propagation
 """
 
 from enum import Enum
-from dataclasses import dataclass
-from typing import List, Tuple, Optional, Dict, Set
-from itertools import product
+from typing import List, Tuple, Optional, Callable, Dict, Set
+from dataclasses import dataclass, field
 
+
+# ── Core Types ──────────────────────────────────────────────
 
 class EdgeType(Enum):
     """Edge types for jigsaw puzzle pieces."""
-    FLAT = 0
-    TAB = 1
-    BLANK = 2
+    TAB = "tab"
+    BLANK = "blank"
+    FLAT = "flat"
 
     def complement(self) -> 'EdgeType':
-        """The complement of an edge type: tab ↔ blank, flat ↔ flat."""
+        """The complement involution: tab ↔ blank, flat ↦ flat."""
         if self == EdgeType.TAB:
             return EdgeType.BLANK
         elif self == EdgeType.BLANK:
             return EdgeType.TAB
         return EdgeType.FLAT
 
-    def compatible(self, other: 'EdgeType') -> bool:
-        """Check if two edges are compatible (complementary)."""
-        return other == self.complement()
+    def is_complementary(self, other: 'EdgeType') -> bool:
+        """Two edges are complementary iff tab meets blank."""
+        return (self == EdgeType.TAB and other == EdgeType.BLANK) or \
+               (self == EdgeType.BLANK and other == EdgeType.TAB)
 
 
 @dataclass(frozen=True)
-class PieceSignature:
-    """A jigsaw piece defined by its four edge types."""
+class JigsawPiece:
+    """A jigsaw piece with four directed edges."""
     top: EdgeType
     right: EdgeType
     bottom: EdgeType
     left: EdgeType
 
-    def complement(self) -> 'PieceSignature':
-        """Apply complement to all edges."""
-        return PieceSignature(
+    def fits_horizontal(self, other: 'JigsawPiece') -> bool:
+        """Can self be placed to the left of other?"""
+        return self.right.is_complementary(other.left)
+
+    def fits_vertical(self, other: 'JigsawPiece') -> bool:
+        """Can self be placed above other?"""
+        return self.bottom.is_complementary(other.top)
+
+    def dual(self) -> 'JigsawPiece':
+        """Complement all edges (the dual piece)."""
+        return JigsawPiece(
             self.top.complement(),
             self.right.complement(),
             self.bottom.complement(),
-            self.left.complement(),
+            self.left.complement()
+        )
+
+    def signature(self) -> Tuple[EdgeType, EdgeType, EdgeType, EdgeType]:
+        return (self.top, self.right, self.bottom, self.left)
+
+
+# ── Puzzle Grid ─────────────────────────────────────────────
+
+@dataclass
+class PuzzleGrid:
+    """A rectangular grid of jigsaw pieces."""
+    rows: int
+    cols: int
+    pieces: List[List[JigsawPiece]]
+
+    def is_valid_assembly(self) -> bool:
+        """Check if all adjacencies are compatible."""
+        # Horizontal check
+        for i in range(self.rows):
+            for j in range(self.cols - 1):
+                if not self.pieces[i][j].fits_horizontal(self.pieces[i][j + 1]):
+                    return False
+        # Vertical check
+        for i in range(self.rows - 1):
+            for j in range(self.cols):
+                if not self.pieces[i][j].fits_vertical(self.pieces[i + 1][j]):
+                    return False
+        return True
+
+    def dual(self) -> 'PuzzleGrid':
+        """Apply complement duality to entire grid."""
+        return PuzzleGrid(
+            self.rows, self.cols,
+            [[p.dual() for p in row] for row in self.pieces]
         )
 
 
-@dataclass
+# ── Row Signatures ──────────────────────────────────────────
+
+RowSignature = Tuple[EdgeType, ...]
+
+
+def row_bottom_signature(grid: PuzzleGrid, row: int) -> RowSignature:
+    """Extract the bottom-edge signature of a row."""
+    return tuple(grid.pieces[row][j].bottom for j in range(grid.cols))
+
+
+def row_top_signature(grid: PuzzleGrid, row: int) -> RowSignature:
+    """Extract the top-edge signature of a row."""
+    return tuple(grid.pieces[row][j].top for j in range(grid.cols))
+
+
+def complement_signature(sig: RowSignature) -> RowSignature:
+    """Pointwise complement of a row signature."""
+    return tuple(e.complement() for e in sig)
+
+
+def signatures_compatible(s1: RowSignature, s2: RowSignature) -> bool:
+    """Check if two row signatures are compatible (all pairs complementary)."""
+    return all(e1.is_complementary(e2) for e1, e2 in zip(s1, s2))
+
+
+# ── 3-SAT Reduction ────────────────────────────────────────
+
+@dataclass(frozen=True)
 class Literal:
-    """A boolean literal: variable index + polarity."""
+    """A SAT literal: variable index + polarity."""
     var: int
     polarity: bool
 
@@ -62,199 +133,152 @@ class Literal:
         return v if self.polarity else not v
 
 
-@dataclass
+@dataclass(frozen=True)
 class Clause:
-    """A 3-SAT clause (disjunction of 3 literals)."""
-    literals: List[Literal]
+    """A 3-SAT clause (OR of exactly 3 literals)."""
+    literals: Tuple[Literal, Literal, Literal]
 
-    def satisfied(self, assignment: List[bool]) -> bool:
-        return any(lit.eval(assignment) for lit in self.literals)
+    def sat(self, assignment: List[bool]) -> bool:
+        return any(l.eval(assignment) for l in self.literals)
 
 
 @dataclass
 class Formula3SAT:
-    """A 3-SAT formula (conjunction of clauses)."""
+    """A 3-SAT formula: n variables, m clauses."""
     num_vars: int
     clauses: List[Clause]
 
-    def satisfiable(self) -> Tuple[bool, Optional[List[bool]]]:
-        """Brute-force check satisfiability (exponential)."""
-        for bits in product([False, True], repeat=self.num_vars):
-            assignment = list(bits)
-            if all(c.satisfied(assignment) for c in self.clauses):
+    def is_satisfiable(self) -> Tuple[bool, Optional[List[bool]]]:
+        """Brute-force SAT check (for small instances)."""
+        for bits in range(2 ** self.num_vars):
+            assignment = [(bits >> i) & 1 == 1 for i in range(self.num_vars)]
+            if all(c.sat(assignment) for c in self.clauses):
                 return True, assignment
         return False, None
 
 
-def bool_to_edge(b: bool) -> EdgeType:
-    """Encode a boolean as an edge type."""
-    return EdgeType.TAB if b else EdgeType.BLANK
-
-
-def edge_to_bool(e: EdgeType) -> bool:
-    """Decode an edge type to a boolean."""
-    return e == EdgeType.TAB
-
-
-# ============================================================
-# Algorithm 1: 3-SAT to Jigsaw Reduction
-# ============================================================
-
-def reduce_3sat_to_puzzle(formula: Formula3SAT) -> Dict:
+def sat_to_puzzle_reduction(formula: Formula3SAT) -> Dict:
     """
     Reduce a 3-SAT formula to a jigsaw puzzle instance.
 
-    Returns a dictionary describing the puzzle:
-    - variable_pieces: pairs of (TRUE, FALSE) pieces per variable
-    - clause_pieces: one piece per clause
-    - total_pieces: 2n + m
+    Returns a dictionary describing the puzzle construction:
+    - variable_pieces: For each variable, TRUE and FALSE pieces
+    - clause_pieces: For each clause, a piece encoding OR semantics
+    - total_pieces: 2n + m (+ boundary pieces)
     """
-    variable_pieces: List[Tuple[PieceSignature, PieceSignature]] = []
+    variable_pieces = {}
     for i in range(formula.num_vars):
-        true_piece = PieceSignature(
+        true_piece = JigsawPiece(
             top=EdgeType.FLAT,
-            right=EdgeType.TAB,
+            right=EdgeType.TAB,      # "true" assignment edge
             bottom=EdgeType.FLAT,
-            left=EdgeType.FLAT,
+            left=EdgeType.FLAT
         )
-        false_piece = PieceSignature(
+        false_piece = JigsawPiece(
             top=EdgeType.FLAT,
-            right=EdgeType.BLANK,
+            right=EdgeType.BLANK,    # "false" assignment edge
             bottom=EdgeType.FLAT,
-            left=EdgeType.FLAT,
+            left=EdgeType.FLAT
         )
-        variable_pieces.append((true_piece, false_piece))
+        variable_pieces[f"x{i+1}"] = {
+            "TRUE": true_piece,
+            "FALSE": false_piece,
+            "complementary": true_piece.right.is_complementary(false_piece.right)
+        }
 
-    clause_piece_templates: List = []
-    for clause in formula.clauses:
-        # Template: depends on the assignment
-        clause_piece_templates.append(clause)
+    clause_pieces = {}
+    for j, clause in enumerate(formula.clauses):
+        # Output is tab iff at least one literal is satisfied
+        clause_pieces[f"C{j+1}"] = {
+            "clause": clause,
+            "input_count": 3,
+            "semantics": "output = TAB iff ∃ literal with TAB input"
+        }
 
     return {
         "variable_pieces": variable_pieces,
-        "clause_templates": clause_piece_templates,
-        "total_pieces": 2 * formula.num_vars + len(formula.clauses),
+        "clause_pieces": clause_pieces,
+        "total_core_pieces": 2 * formula.num_vars + len(formula.clauses),
     }
 
 
-def instantiate_clause_piece(clause: Clause, assignment: List[bool]) -> PieceSignature:
-    """Create a clause piece given an assignment."""
-    vals = [lit.eval(assignment) for lit in clause.literals]
-    return PieceSignature(
-        top=bool_to_edge(vals[0]),
-        right=bool_to_edge(any(vals)),
-        bottom=bool_to_edge(vals[2]),
-        left=bool_to_edge(vals[1]),
+# ── Puzzle Homomorphism ─────────────────────────────────────
+
+@dataclass
+class PuzzleHomomorphism:
+    """Structure-preserving map between puzzle instances."""
+    map_edge: Callable[[EdgeType], EdgeType]
+
+    def map_piece(self, p: JigsawPiece) -> JigsawPiece:
+        return JigsawPiece(
+            self.map_edge(p.top),
+            self.map_edge(p.right),
+            self.map_edge(p.bottom),
+            self.map_edge(p.left)
+        )
+
+    def preserves_complementarity(self) -> bool:
+        """Verify this homomorphism preserves edge complementarity."""
+        for e1 in EdgeType:
+            for e2 in EdgeType:
+                if e1.is_complementary(e2):
+                    if not self.map_edge(e1).is_complementary(self.map_edge(e2)):
+                        return False
+        return True
+
+
+# Identity and complement homomorphisms
+IDENTITY_HOM = PuzzleHomomorphism(map_edge=lambda e: e)
+COMPLEMENT_HOM = PuzzleHomomorphism(map_edge=lambda e: e.complement())
+
+
+# ── Compatibility Counting ──────────────────────────────────
+
+def count_compatible_pairs() -> Dict[str, int]:
+    """Count all horizontally compatible piece pairs (verified: 1458)."""
+    edge_types = list(EdgeType)
+    all_pieces = [
+        JigsawPiece(t, r, b, l)
+        for t in edge_types for r in edge_types
+        for b in edge_types for l in edge_types
+    ]
+
+    total = len(all_pieces) ** 2
+    compatible = sum(
+        1 for p in all_pieces for q in all_pieces
+        if p.fits_horizontal(q)
     )
 
-
-# ============================================================
-# Algorithm 2: Puzzle Verification
-# ============================================================
-
-def verify_grid(grid: List[List[PieceSignature]]) -> bool:
-    """
-    Verify that a puzzle grid is valid (all adjacencies compatible).
-
-    Time complexity: O(rows × cols)
-    """
-    rows = len(grid)
-    if rows == 0:
-        return True
-    cols = len(grid[0])
-
-    for i in range(rows):
-        for j in range(cols):
-            # Check horizontal compatibility
-            if j + 1 < cols:
-                if not grid[i][j].right.compatible(grid[i][j + 1].left):
-                    return False
-            # Check vertical compatibility
-            if i + 1 < rows:
-                if not grid[i][j].bottom.compatible(grid[i + 1][j].top):
-                    return False
-    return True
-
-
-# ============================================================
-# Algorithm 3: Configuration Space Analysis
-# ============================================================
-
-def count_configurations(n_rows: int, n_cols: int, n_edge_types: int = 3) -> int:
-    """Count total configurations (before compatibility constraints)."""
-    return n_edge_types ** (4 * n_rows * n_cols)
-
-
-def count_adjacency_constraints(n_rows: int, n_cols: int) -> int:
-    """Count the number of adjacency constraints in a grid."""
-    horiz = n_rows * max(0, n_cols - 1)
-    vert = max(0, n_rows - 1) * n_cols
-    return horiz + vert
-
-
-def enumerate_compatible_pairs() -> List[Tuple[EdgeType, EdgeType]]:
-    """Enumerate all compatible edge type pairs."""
-    pairs = []
-    for e1 in EdgeType:
-        for e2 in EdgeType:
-            if e1.compatible(e2):
-                pairs.append((e1, e2))
-    return pairs
-
-
-# ============================================================
-# Algorithm 4: Complement Duality
-# ============================================================
-
-def complement_grid(grid: List[List[PieceSignature]]) -> List[List[PieceSignature]]:
-    """Apply complement to every piece in a grid."""
-    return [[piece.complement() for piece in row] for row in grid]
-
-
-def verify_complement_preserves_validity(grid: List[List[PieceSignature]]) -> bool:
-    """Verify that complement preserves grid validity."""
-    original_valid = verify_grid(grid)
-    complemented_valid = verify_grid(complement_grid(grid))
-    return original_valid == complemented_valid
+    return {
+        "total_pieces": len(all_pieces),
+        "total_pairs": total,
+        "compatible_pairs": compatible,
+        "compatibility_ratio": compatible / total
+    }
 
 
 if __name__ == "__main__":
-    # Demo: reduce and verify
+    # Test the reduction
     formula = Formula3SAT(
         num_vars=3,
         clauses=[
-            Clause([Literal(0, True), Literal(1, True), Literal(2, False)]),
-            Clause([Literal(0, False), Literal(2, True), Literal(2, True)]),
-        ],
+            Clause((Literal(0, True), Literal(1, True), Literal(2, False))),
+            Clause((Literal(0, False), Literal(2, True), Literal(2, True))),
+        ]
     )
 
-    print("Formula satisfiability check:")
-    sat, assignment = formula.satisfiable()
-    print(f"  Satisfiable: {sat}")
+    sat, assignment = formula.is_satisfiable()
+    print(f"Formula satisfiable: {sat}")
     if assignment:
-        print(f"  Assignment: {assignment}")
+        print(f"Assignment: {['T' if a else 'F' for a in assignment]}")
 
-        print("\nReduction to jigsaw puzzle:")
-        puzzle = reduce_3sat_to_puzzle(formula)
-        print(f"  Variable pieces: {len(puzzle['variable_pieces'])} pairs")
-        print(f"  Clause templates: {len(puzzle['clause_templates'])}")
-        print(f"  Total pieces: {puzzle['total_pieces']}")
+    reduction = sat_to_puzzle_reduction(formula)
+    print(f"Total core pieces: {reduction['total_core_pieces']}")
 
-        print("\nClause piece verification:")
-        for i, clause in enumerate(formula.clauses):
-            piece = instantiate_clause_piece(clause, assignment)
-            output_is_tab = piece.right == EdgeType.TAB
-            clause_sat = clause.satisfied(assignment)
-            print(f"  Clause {i}: output={piece.right.name}, "
-                  f"satisfied={clause_sat}, match={output_is_tab == clause_sat}")
+    stats = count_compatible_pairs()
+    print(f"Compatible pairs: {stats['compatible_pairs']}/{stats['total_pairs']}")
+    print(f"Compatibility ratio: {stats['compatibility_ratio']:.4f}")
 
-    print("\nCompatible edge pairs:")
-    for e1, e2 in enumerate_compatible_pairs():
-        print(f"  {e1.name} ↔ {e2.name}")
-
-    print("\nConfiguration space sizes:")
-    for n in range(1, 6):
-        for m in range(1, 6):
-            configs = count_configurations(n, m)
-            constraints = count_adjacency_constraints(n, m)
-            print(f"  {n}×{m}: {configs:>20,} configs, {constraints:>3} constraints")
+    # Verify complement duality
+    print(f"\nComplement homomorphism preserves complementarity: "
+          f"{COMPLEMENT_HOM.preserves_complementarity()}")
