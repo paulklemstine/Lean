@@ -1310,6 +1310,26 @@
       "theorem_count": 4,
       "timestamp": "2026-06-06T03:46:40",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "cycle_id": "98c23273",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: EML Transcendence and Schanuel's Conjecture\n\n## Synthesis\n\nThis cycle established the first machine-verified conditional transcendence results for iterated exponentials under Scha",
+      "quality_score": 0.39704000000000006,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-06T04:18:31",
+      "title": "EML Number Theory: Transcendence and Algebraic Independence"
+    },
+    {
+      "cycle_id": "fd3f7238",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Computational Thermodynamics\n\n## Synthesis\n\nThis research cycle established the **Computational Entropy Automaton (CEA)** as a novel mathematical structure connecting computationa",
+      "quality_score": 0.3224,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-06T04:19:26",
+      "title": "Speculative: Computational Complexity as Physical Law"
     }
   ],
   "entries": [
@@ -1355,7 +1375,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T03:46:40",
+  "last_updated": "2026-06-06T04:19:26",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1367,18 +1387,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "55640abb",
-        "quality": 0.48016000000000003,
-        "theorems": 5,
-        "title": "EML Universal Approximation: Density of EML Functions"
-      },
-      {
-        "cycle_id": "68ab771b",
-        "quality": 0.46984000000000004,
-        "theorems": 5,
-        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-      },
       {
         "cycle_id": "ea6b6347",
         "quality": 0.43479999999999996,
@@ -1426,6 +1434,18 @@
         "quality": 0.3432,
         "theorems": 5,
         "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+      },
+      {
+        "cycle_id": "98c23273",
+        "quality": 0.39704000000000006,
+        "theorems": 4,
+        "title": "EML Number Theory: Transcendence and Algebraic Independence"
+      },
+      {
+        "cycle_id": "fd3f7238",
+        "quality": 0.3224,
+        "theorems": 4,
+        "title": "Speculative: Computational Complexity as Physical Law"
       }
     ],
     "Bridges": [

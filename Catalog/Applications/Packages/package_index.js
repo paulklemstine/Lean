@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "fd3f7238",
     "filename": "speculative_computational_complexity_as_physical_l.json",
     "pkg_num": 400,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.3224,
     "title": "Computational Entropy Automata: Thermodynamic Bounds on Complexity"
   },
   {
@@ -12751,8 +12751,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "speculative_computational_complexity_as_physical_l",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.3224,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Computational Entropy Automata: Thermodynamic Bounds on Complexity"
     }
