@@ -1,229 +1,179 @@
-# Non-Archimedean Probability via Surreal-Valued Finitely Additive Measures
+# Non-Archimedean Probability Theory: Finitely Additive Measures with Infinitesimal Weights
 
 ## Abstract
 
-We develop a rigorous framework for finitely additive probability measures valued in linearly ordered fields, with particular emphasis on non-Archimedean fields such as Conway's surreal numbers. Our main contributions are:
-
-1. **Generalized Anti-Cancellation Theorem**: We extend the anti-cancellation principle of Brändén–Huh (originally proved for ℚ in the context of Lorentzian polynomials) to arbitrary linearly ordered cancellative add comm monoids, showing it is a universal algebraic phenomenon.
-
-2. **No Free Lunch Theorem**: We prove that finitely additive measures with strictly positive weights assign strictly positive measure to all nonempty sets, even when weights are infinitesimal. This bridges algebraic geometry (Lorentzian polynomial theory) to probability theory.
-
-3. **Archimedean Exclusion Theorem**: We give a clean characterization showing that infinitesimal elements cannot exist in any Archimedean ordered field, establishing the necessity of non-Archimedean structures for infinitesimal probability.
-
-4. **Complete Finitely Additive Framework**: We prove finite additivity, monotonicity, complement formulas, partition of unity, and uniform measure theorems, all parameterized over arbitrary ordered algebraic structures.
-
-All results are machine-verified in Lean 4 with the Mathlib library.
+We develop a rigorous framework for probability theory in non-Archimedean linearly ordered fields, where infinitesimal probabilities are first-class citizens. Our central construction is the **finitely additive probability measure** `FinAddProb Ω F` valued in an arbitrary linearly ordered field `F`, together with the **uniform infinitesimal probability space** `UniformInfProb Ω F` where every point receives equal positive infinitesimal probability. We prove that infinitesimal elements form a convex additive subgroup closed under bounded multiplication, that the standard measure-theoretic identities (complement rule, monotonicity, inclusion-exclusion) hold in the non-Archimedean setting, and that our framework enables well-defined conditional probability on singletons — recovering the Dirac delta as an honest conditional distribution rather than a limiting artifact. All results are formalized in Lean 4 with complete machine-checked proofs.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Standard probability theory, as axiomatized by Kolmogorov, is built on real-valued measures. A fundamental consequence of countable additivity in ℝ is that in any uncountable probability space, "most" points must have probability zero. This creates well-known conceptual difficulties:
 
-In standard (σ-additive, ℝ-valued) probability theory, any probability measure on an uncountable set that assigns equal probability to each point must assign probability 0 to each point. This is a consequence of two properties: countable additivity and the Archimedean property of ℝ. 
+1. **Conditioning on null events**: P(A | B) is undefined when P(B) = 0, yet probabilists routinely condition on continuous random variables taking specific values.
+2. **Uniform distributions on infinite sets**: There is no countably additive probability measure on ℕ that assigns equal probability to each number.
+3. **Philosophical puzzles**: If a dart is thrown at [0,1], what is the probability of hitting exactly π/4? Standard theory says zero, yet the event is possible.
 
-The question of whether one can assign nonzero infinitesimal probabilities to individual points has been explored informally in nonstandard analysis (Robinson, 1966; Nelson, 1977) and in the context of de Finetti's finitely additive probability (de Finetti, 1974). However, rigorous formalized treatments have been lacking.
+Non-standard analysis, pioneered by Robinson (1966) and applied to probability by Loeb (1975), provides one resolution using hyperreal numbers. However, the Loeb measure construction requires the transfer principle and ultrafilter technology, obscuring the underlying algebraic simplicity.
 
-Conway's surreal numbers (Conway, 1976) provide a particularly attractive setting for this investigation: they form the universal linearly ordered field, containing all real numbers alongside infinitesimal and infinite elements. This universality means that any result proved for "arbitrary linearly ordered fields" automatically applies to surreals.
+We propose a more elementary approach: work directly with finitely additive probability measures valued in an arbitrary linearly ordered field that may contain infinitesimal elements. This yields a clean algebraic theory that:
+- Requires only finite additivity (not countable additivity)
+- Works over any linearly ordered field (Archimedean or not)
+- Enables positive probability for every point
+- Provides well-defined conditional probability on singletons
+- Recovers the Dirac delta as an honest conditional distribution
 
-### 1.2 Relationship to Prior Work
+## 2. Infinitesimal Elements in Ordered Fields
 
-Our work deepens the **anti-cancellation theorem** from the Lorentzian polynomial framework of Brändén and Huh (2020). The original result, formalized as `sum_ne_zero_of_same_sign_and_exists_ne_zero` in the Aether Catalog (`Pythagorean/LorentzianAggregateAntiCancel.lean`), states that in ℚ, a finite sum of rationals sharing the same sign (pairwise product positive), with at least one nonzero, is itself nonzero.
+### 2.1 Definition
 
-We generalize this in two directions:
-- **Domain generalization**: from ℚ to any linearly ordered cancellative add comm monoid
-- **Application bridge**: from polynomial support theory to probability measure positivity
+Let F be a linearly ordered field. An element x ∈ F is **infinitesimal** if n · |x| < 1 for every positive natural number n. Equivalently, |x| < 1/n for every positive integer n.
 
-### 1.3 Main Results
+**Definition (IsInfinitesimal)**: `IsInfinitesimal x ≡ ∀ n : ℕ, 0 < n → (n : F) * |x| < 1`
 
-**Theorem (Generalized Anti-Cancellation).** Let G be a linearly ordered cancellative additive commutative monoid, ι a finite type, and f : ι → G. If f(i) ≥ 0 for all i and f(k) > 0 for some k, then ∑ᵢ f(i) > 0.
+**Definition (HasInfinitesimals)**: A field F **has infinitesimals** if there exists x > 0 with `IsInfinitesimal x`.
 
-**Theorem (No Free Lunch).** Let μ be a weighted measure on a finite set S valued in a linearly ordered cancellative add comm monoid. If μ assigns strictly positive weight to every element of S and S is nonempty, then μ(S) > 0.
+### 2.2 Algebraic Closure Properties
 
-**Theorem (Archimedean Exclusion).** In any Archimedean linearly ordered field F, there is no infinitesimal element: no ε ∈ F satisfies 0 < ε and n·ε < 1 for all n ∈ ℕ.
+**Theorem 1 (Additive Closure)**: *The sum of two infinitesimals is infinitesimal.*
 
-**Theorem (Uniform Measure).** For any nonempty finite type α and any linearly ordered field F, the uniform measure assigning weight (card α)⁻¹ to each point is a probability measure with total mass 1.
+*Proof sketch*: The key is the "2n trick." Given infinitesimals x, y and positive n, note that 2n is also positive, so (2n)|x| < 1 and (2n)|y| < 1, giving n|x| < 1/2 and n|y| < 1/2. By the triangle inequality, n|x+y| ≤ n|x| + n|y| < 1. □
 
-## 2. Definitions
+This is more subtle than it appears: the naive bound n|x| < 1 and n|y| < 1 only gives n|x+y| < 2, which is insufficient. The factor-of-2 trick is essential.
 
-### 2.1 Weighted Measures
+**Theorem 2 (Multiplicative Absorption)**: *If x is infinitesimal and |y| ≤ M for some natural M, then xy is infinitesimal.*
 
-**Definition 1 (Weighted Measure).** A *weighted measure* on a type α valued in G is a pair (α, w) where w : α → G is a weight function. The measure of a finset S ⊆ α is:
+*Proof sketch*: For positive n, n|xy| = n|x||y| ≤ nM|x| = (nM)|x| < 1 since nM is a positive natural. □
 
-$$\mu(S) = \sum_{x \in S} w(x)$$
+**Theorem 3 (Square Closure)**: *The square of an infinitesimal is infinitesimal.*
 
-**Definition 2 (Probability Measure).** A weighted measure μ on a finite type α is a *probability measure* if μ(α) = 1, i.e., ∑ₓ w(x) = 1.
+This follows from Theorem 2 with M = 1, since |x| < 1 for any infinitesimal x.
 
-**Definition 3 (Uniform Measure).** The *uniform measure* with weight c assigns w(x) = c for all x ∈ α. The *uniform probability measure* assigns w(x) = (card α)⁻¹.
+### 2.3 Archimedean Dichotomy
 
-### 2.2 Infinitesimality
+**Theorem 4**: *In an Archimedean field, the only infinitesimal is zero.*
 
-**Definition 4 (Infinitesimal).** An element ε of a linearly ordered field F is *infinitesimal relative to r > 0* if:
-1. ε > 0
-2. r > 0  
-3. n · ε < r for all n ∈ ℕ
+*Proof*: If x ≠ 0, then |x| > 0. By the Archimedean property, there exists n with n|x| ≥ 1, contradicting infinitesimality. □
 
-An element is *infinitesimal* if it is infinitesimal relative to 1.
+This is the fundamental boundary result: non-Archimedean fields are precisely those where our theory becomes non-trivial.
 
-Note: This definition makes sense in any linearly ordered field, but by the Archimedean Exclusion Theorem (Theorem 5), no infinitesimal elements exist in Archimedean fields like ℝ or ℚ.
+## 3. Finitely Additive Probability Measures
 
-## 3. Main Results with Proof Sketches
+### 3.1 The Structure
 
-### 3.1 Basic Measure Properties
+**Definition (FinAddProb)**: A *finitely additive probability measure* on Ω valued in F consists of:
+- A function μ : Set Ω → F
+- Non-negativity: μ(S) ≥ 0 for all S
+- Null empty set: μ(∅) = 0
+- Normalization: μ(Ω) = 1
+- Finite additivity: μ(A ∪ B) = μ(A) + μ(B) when A ∩ B = ∅
 
-**Theorem 1 (Empty Set).** μ(∅) = 0.
+### 3.2 Derived Properties
 
-*Proof.* The sum over an empty set is 0 by definition. □
+**Theorem 5 (Complement Rule)**: μ(Sᶜ) = 1 - μ(S).
 
-**Theorem 2 (Singleton).** μ({x}) = w(x).
+**Theorem 6 (Monotonicity)**: A ⊆ B ⟹ μ(A) ≤ μ(B).
 
-*Proof.* The sum over a singleton reduces to the single term. □
+**Theorem 7 (Inclusion-Exclusion)**: μ(A ∪ B) = μ(A) + μ(B) - μ(A ∩ B).
 
-**Theorem 3 (Finite Additivity).** For disjoint A, B: μ(A ∪ B) = μ(A) + μ(B).
+**Theorem 8 (Sub-additivity)**: μ(A ∪ B) ≤ μ(A) + μ(B).
 
-*Proof.* By the sum decomposition lemma for disjoint finsets (Finset.sum_union). □
+All four follow by standard algebraic manipulations from the axioms.
 
-**Theorem 4 (Three-Set Additivity).** For pairwise disjoint A, B, C: μ(A ∪ B ∪ C) = μ(A) + μ(B) + μ(C).
+### 3.3 Conditional Probability
 
-*Proof.* Apply Theorem 3 twice, using the fact that A ∪ B and C are disjoint when A, C are disjoint and B, C are disjoint. □
+**Definition**: P(A | B) = μ(A ∩ B) / μ(B), defined whenever μ(B) ≠ 0.
 
-### 3.2 Anti-Cancellation and Positivity
+In the non-Archimedean setting, μ(B) can be a positive infinitesimal — still nonzero, so division is well-defined. This is the crucial advantage over real-valued probability.
 
-**Theorem 5 (Generalized Anti-Cancellation).** Let G be a linearly ordered cancellative additive commutative monoid. If f : ι → G satisfies f(i) ≥ 0 for all i and f(k) > 0 for some k, then ∑ᵢ f(i) > 0.
+**Theorem 9 (Conditional Probability Bounds)**: 0 ≤ P(A | B) ≤ 1 when μ(B) > 0.
 
-*Proof sketch.* By the single-term lower bound: f(k) ≤ ∑ᵢ f(i) (since all other terms are nonneg). Since f(k) > 0, we conclude 0 < f(k) ≤ ∑ᵢ f(i). □
+## 4. Uniform Infinitesimal Probability Spaces
 
-This generalizes `sum_ne_zero_of_same_sign_and_exists_ne_zero` from ℚ (in `LorentzianAggregateAntiCancel.lean`) to arbitrary ordered cancellative monoids, while also strengthening the conclusion from ≠ 0 to > 0.
+### 4.1 The Construction
 
-**Theorem 6 (No Free Lunch).** If μ is a weighted measure with w(x) > 0 for all x ∈ S and S is nonempty, then μ(S) > 0.
+**Definition (UniformInfProb)**: A *uniform infinitesimal probability space* is a `FinAddProb` equipped with:
+- A weight ε > 0 with `IsInfinitesimal ε`
+- Each singleton has measure ε: μ({x}) = ε for all x ∈ Ω
 
-*Proof.* Direct application of Finset.sum_pos to the weight function restricted to S. □
+### 4.2 Anti-Concentration
 
-**Theorem 7 (Monotonicity).** If w(x) ≥ 0 for all x ∈ B and A ⊆ B, then μ(A) ≤ μ(B).
+**Theorem 10 (Finset Measure)**: *For a finite set S with |S| = n, μ(S) = nε.*
 
-*Proof.* By Finset.sum_le_sum_of_subset_of_nonneg. □
+*Proof*: By induction on the Finset structure, using finite additivity and singleton measure. □
 
-### 3.3 Uniform Measures
+**Theorem 11 (Anti-Concentration)**: *The measure of any finite set is infinitesimal.*
 
-**Theorem 8 (Uniform Measure Total).** For uniform weight c on a type with n elements: μ(univ) = n • c.
+*Proof*: μ(S) = |S| · ε. Since ε is infinitesimal and |S| is a natural number bound, |S| · ε is infinitesimal by the multiplicative absorption theorem. □
 
-*Proof.* ∑ₓ c = n • c by Finset.sum_const. □
+**Theorem 12 (No Finite Exhaustion)**: *μ(S) < 1 for every finite set S.*
 
-**Theorem 9 (Uniform Probability).** The uniform 1/n measure on an n-element type has total mass 1.
+This is an immediate corollary: infinitesimals have absolute value less than 1.
 
-*Proof.* μ(univ) = n • (1/n) = n · n⁻¹ = 1, using the field axiom for nonzero n. The key insight: n > 0 since the type is nonempty, so (card α : F) ≠ 0. □
+### 4.3 The Dirac Recovery Theorem
 
-**Theorem 10 (Uniform Positivity).** Each weight (card α)⁻¹ in the uniform probability measure is strictly positive.
+**Theorem 13 (Dirac Recovery)**: *In a uniform infinitesimal probability space,*
+$$P(A \mid \{x\}) = \begin{cases} 1 & \text{if } x \in A \\ 0 & \text{if } x \notin A \end{cases}$$
 
-*Proof.* Since card α > 0 (nonempty type), (card α : F) > 0, so its inverse is positive. □
+*Proof*: If x ∈ A, then A ∩ {x} = {x}, so P(A | {x}) = μ({x})/μ({x}) = 1. If x ∉ A, then A ∩ {x} = ∅, so P(A | {x}) = 0/μ({x}) = 0. □
 
-### 3.4 Archimedean Exclusion
+**Significance**: This theorem shows that in non-Archimedean probability, conditioning on a singleton is always well-defined and yields exactly the Dirac delta measure. In standard probability, one needs regular conditional distributions (which require σ-algebra structure and the Radon-Nikodym theorem) to make sense of conditioning on null events. Here, it follows immediately from the algebraic structure — no measure theory machinery required.
 
-**Theorem 11 (Archimedean Exclusion).** No Archimedean linearly ordered field has infinitesimal elements.
+## 5. Connections and Context
 
-*Proof.* Suppose ε > 0 is infinitesimal, i.e., n · ε < 1 for all n ∈ ℕ. By the Archimedean property, there exists n with 1/ε < n, hence 1 < n · ε, contradicting n · ε < 1. □
+### 5.1 Relationship to Nonstandard Analysis
 
-**Theorem 12 (Infinitesimal Sum Positivity).** For ε > 0 and positive natural number n: n · ε > 0.
+Our framework can be seen as a simplification of the Loeb measure construction. Loeb (1975) showed how to convert a hyperfinite counting measure (which is *-finitely additive) into a genuine σ-additive measure via the standard part map. Our approach stops before taking standard parts, working directly with the infinitesimal-valued measure. This preserves information that the Loeb construction discards.
 
-*Proof.* Product of two positive quantities is positive. □
+### 5.2 Connection to de Finetti's Probability
 
-### 3.5 Structural Theorems
+De Finetti (1974) advocated for finitely additive probability as more fundamental than countably additive probability. Our framework vindicates this view in a new way: finite additivity is not merely a weakening of countable additivity, but enables qualitatively new phenomena (positive probability for all points) when the value field is enlarged.
 
-**Theorem 13 (Complement).** For probability measure μ: μ(univᶜ \ S) = 1 − μ(S).
+### 5.3 Cross-Domain Bridge
 
-*Proof.* By finite additivity on the partition univ = (univ \ S) ∪ S, we get μ(univ) = μ(univ \ S) + μ(S). Since μ(univ) = 1, the result follows. □
+The Anti-Concentration Theorem (Theorem 11) provides a bridge to existing catalog results. The `sum_ne_zero_of_same_sign_and_exists_ne_zero` theorem from the Lorentzian aggregate anti-cancellation work establishes that sums of same-sign elements don't cancel to zero. Our result is a probability-theoretic analogue: sums of infinitesimal probabilities remain infinitesimal (and hence nonzero and less than 1), preventing any finite collection from "exhausting" the measure.
 
-**Theorem 14 (Partition of Unity).** For any function f : α → β:
-$$\mu(\text{univ}) = \sum_{b \in \beta} \mu(f^{-1}(b))$$
+## 6. Falsifiable Conjectures
 
-*Proof.* Rewrite the sum using Finset.sum_fiberwise, decomposing univ into fibers of f. □
+**Conjecture 1 (Infinitesimal Kolmogorov Extension)**: There exists a non-Archimedean linearly ordered field F and a uniform infinitesimal probability measure on [0,1]_F (the unit interval in F) that is finitely additive and assigns weight ε to each point, where ε is infinitesimal and the measure of the whole interval is exactly 1.
 
-**Theorem 15 (Bridge).** If all weights in a weighted measure on a nonempty finite type are positive, the total measure is positive.
+**Computational Test**: Construct F as the field of formal Laurent series ℝ((t)) with t infinitesimal. Define μ({x}) = t for each x ∈ [0,1] ∩ ℝ. Verify that μ is finitely additive on finite unions and that μ([0,1]) can be consistently defined as 1.
 
-*Proof.* Applies the No Free Lunch Theorem (Theorem 6) to S = univ. □
+**Status**: Our `UniformInfProb` structure axiomatizes exactly this scenario. The existence question reduces to whether a consistent assignment μ : Set([0,1]) → ℝ((t)) satisfying the axioms exists. By our `finset_measure_lt_one` theorem, any such measure must assign infinitesimal measure to every finite set.
 
-## 4. PEGB Analysis
+**Conjecture 2 (Infinitesimal Bayes)**: For any uniform infinitesimal probability space, the posterior distribution obtained by conditioning on a finite set S recovers the classical uniform distribution on S.
 
-### 4.1 Generalized Anti-Cancellation (Theorem 5)
+## 7. Algorithms
 
-- **Proof**: Complete, machine-verified. Uses `Finset.single_le_sum` as the key step.
-- **Example**: f = (ε, ε, ε) where ε is an infinitesimal in a surreal-like field. Then ∑ f = 3ε > 0. In ℚ (the original setting), f = (1/3, 1/3, 1/3) gives ∑ f = 1 ≠ 0.
-- **Generalization**: Works for any `LinearOrder + AddCommMonoid + IsOrderedCancelAddMonoid` — this includes ℤ, ℚ, ℝ, surreals, hyperreals, and formal Laurent series fields.
-- **Boundary**: Fails without cancellation (in a non-cancellative monoid, zero divisors can create cancellation). Also fails for signed sums: f = (1, -1) sums to 0.
+### 7.1 Infinitesimal Arithmetic
 
-### 4.2 No Free Lunch Theorem (Theorem 6)
+For computational purposes, represent infinitesimals as formal power series in an indeterminate ε:
+```
+a₀ + a₁ε + a₂ε² + ... (finite truncation)
+```
+with standard polynomial arithmetic. Probability computations then reduce to polynomial arithmetic.
 
-- **Proof**: Complete, machine-verified. Direct corollary of `Finset.sum_pos`.
-- **Example**: Assigning weight ε to each of 3 points gives total 3ε > 0.
-- **Generalization**: Extends to countable sets in non-Archimedean settings if one develops transfinite summation.
-- **Boundary**: Requires strict positivity. If even one weight is 0, the conclusion weakens to ≥ 0.
+### 7.2 Conditional Probability
 
-### 4.3 Archimedean Exclusion (Theorem 11)
+Given a uniform infinitesimal measure with weight ε:
+1. Compute μ(A ∩ B) by counting: |A ∩ B| · ε
+2. Compute μ(B) by counting: |B| · ε
+3. P(A|B) = |A ∩ B| / |B| (the ε cancels)
 
-- **Proof**: Complete, machine-verified. Uses Archimedean property to find n with 1/ε < n.
-- **Example**: In ℝ, any ε > 0 satisfies ⌈1/ε⌉ · ε ≥ 1. For ε = 0.001, 1000 · ε = 1 ≥ 1.
-- **Generalization**: Characterizes the Archimedean property: F is Archimedean iff it has no infinitesimal elements (our theorem is one direction; the converse also holds).
-- **Boundary**: The theorem is sharp — there exist non-Archimedean ordered fields (e.g., ℝ((t)) with t infinitesimal).
+This recovers the classical counting formula for conditional probability on finite sets.
 
-### 4.4 Uniform Measure Theorem (Theorem 9)
+## 8. Discussion and Future Work
 
-- **Proof**: Complete, machine-verified. Key step: n · n⁻¹ = 1 for nonzero n.
-- **Example**: Fin 5 with weight 1/5 each. Total = 5 · (1/5) = 1.
-- **Generalization**: Works in any ordered field. In particular, in surreal numbers, the uniform measure on Fin n assigns 1/n to each point, where 1/n is the standard surreal reciprocal.
-- **Boundary**: Requires α to be nonempty (empty type has card 0, and 0⁻¹ = 0 in a field).
+Our formalization demonstrates that non-Archimedean probability theory has a clean algebraic foundation that can be fully machine-verified. The key structural insight is that infinitesimal elements in ordered fields satisfy exactly the closure properties needed for probability measure theory.
 
-### 4.5 Complement Formula (Theorem 13)
+Future directions include:
+1. Developing non-Archimedean expectation and integration
+2. Proving a non-Archimedean strong law of large numbers
+3. Connecting to game-theoretic probability via surreal numbers
+4. Exploring applications to Bayesian epistemology (fair lotteries on infinite sets)
 
-- **Proof**: Complete, machine-verified. Uses finite additivity on the partition univ = (univ \ S) ∪ S.
-- **Example**: On Fin 4 with uniform weights, P({0,1}) = 1/2, P({2,3}) = 1 - 1/2 = 1/2.
-- **Generalization**: Works for any additive group (not just fields).
-- **Boundary**: Requires μ to be a probability measure (total mass 1). For arbitrary measures, μ(univ \ S) = μ(univ) - μ(S).
+## References
 
-## 5. Cross-Domain Bridge
-
-### 5.1 Lorentzian Polynomials ↔ Probability Measures
-
-The anti-cancellation principle originates in the theory of Lorentzian polynomials (Brändén–Huh, 2020), where it ensures that weighted Hessian operations on polynomials with nonneg coefficients and same-sign weights preserve support exactness. Our generalization reveals that the same algebraic mechanism underlies a fundamental probabilistic property: the positivity of measures with positive weights.
-
-The bridge is:
-
-| Lorentzian Polynomial Theory | Probability Theory |
-|---|---|
-| Polynomial coefficients cα | Point probabilities w(x) |
-| Hessian weight A(i,j) | (not applicable — all weights equal) |
-| Support of H_A(p) | Support of measure μ |
-| Anti-cancellation: supp = aggregate shadow | No Free Lunch: μ(S) > 0 for positive weights |
-| Overlap sign coherence | Same-sign condition (trivially satisfied for positive weights) |
-
-### 5.2 Non-Archimedean Analysis ↔ Game Theory
-
-Conway's surreal numbers were originally developed for combinatorial game theory. The connection to probability theory suggests a new direction: using surreal-valued measures to analyze games with infinitesimal advantages. A game position worth ε (an infinitesimal surreal number) could be assigned probability ε in a probabilistic analysis of game trees.
-
-## 6. Discussion
-
-### 6.1 What We Proved
-
-We established a complete framework for finitely additive probability on finite sets, parameterized over arbitrary ordered algebraic structures. The framework includes all standard probability identities (additivity, complement, partition of unity) plus positivity theorems specific to the ordered setting (No Free Lunch, monotonicity).
-
-### 6.2 What Remains Open
-
-1. **Infinite sets**: Extending the framework to countably or uncountably infinite sets requires a theory of surreal-valued summation/integration that does not yet exist in formalized mathematics.
-
-2. **Normalization**: The original conjecture asks for a measure on [0,1] where each point has infinitesimal weight ε and the total integrates to 1. For finite subsets, we showed n·ε is positive but infinitesimal. Making the total exactly 1 requires choosing ε = 1/n for n-element sets, which is standard (not infinitesimal). The genuinely infinitesimal case requires infinite sets.
-
-3. **σ-additivity**: Our measures are finitely additive. Whether a meaningful notion of countable additivity exists for surreal-valued measures is an open question.
-
-4. **Surreal field structure**: Mathlib currently formalizes surreal numbers as an ordered group with multiplication, but not as a full field (division is not yet formalized). Our theorems are stated for abstract ordered fields, which will automatically specialize to surreals once the field structure is available.
-
-## 7. References
-
-1. Conway, J.H. "On Numbers and Games." Academic Press, 1976.
-2. Brändén, P. and Huh, J. "Lorentzian Polynomials." Annals of Mathematics, 2020.
-3. de Finetti, B. "Theory of Probability." Wiley, 1974.
-4. Benci, V. and Di Nasso, M. "Numerosities of labelled sets: a new way of counting." Advances in Mathematics, 2003.
-5. Robinson, A. "Non-Standard Analysis." North-Holland, 1966.
-6. Kolmogorov, A.N. "Grundbegriffe der Wahrscheinlichkeitsrechnung." Springer, 1933.
-7. Murota, K. "Discrete Convex Analysis." SIAM, 2003.
-
-## Catalog References
-
-- `Pythagorean/LorentzianAggregateAntiCancel.lean`: Original anti-cancellation theorem for ℚ
-- `Novelty/SurrealProbability.lean`: This work (all theorems machine-verified)
+1. Conway, J.H. *On Numbers and Games*. Academic Press, 1976.
+2. de Finetti, B. *Theory of Probability*. Wiley, 1974.
+3. Kolmogorov, A.N. *Foundations of the Theory of Probability*. Chelsea, 1933/1956.
+4. Loeb, P.A. "Conversion from nonstandard to standard measure spaces." *Trans. AMS*, 211:113-122, 1975.
+5. Robinson, A. *Non-standard Analysis*. North-Holland, 1966.
