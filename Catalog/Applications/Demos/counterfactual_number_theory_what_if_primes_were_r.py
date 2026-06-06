@@ -2,283 +2,365 @@
 """
 Counterfactual Number Theory: What If Primes Were Random?
 
-Numerical demonstrations of key results from the Beurling generalized
-prime systems framework. Shows how random subsets of N with prime-like
-density almost never produce unique factorization.
+Demonstrates the key results:
+1. Product-free sets vs MI sets
+2. Collision index computation
+3. Upper interval product-freeness
+4. Factorization spectrum examples
 """
 
-import random
-import math
-from collections import Counter
+from math import gcd, sqrt, log
+from itertools import combinations_with_replacement, product
+from collections import defaultdict
 
-def prime_density_count(n):
-    """Expected number of primes up to n: n/log(n)"""
-    if n < 3:
-        return 1
-    return n / math.log(n)
 
-def actual_primes_up_to(n):
-    """Sieve of Eratosthenes"""
-    sieve = [True] * (n + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if sieve[i]:
-            for j in range(i*i, n + 1, i):
-                sieve[j] = False
-    return [i for i in range(2, n + 1) if sieve[i]]
-
-def random_generators(n, seed=42):
-    """Generate a random subset of {2,...,n} with density ~1/log(k) at each k"""
-    rng = random.Random(seed)
-    gens = []
-    for k in range(2, n + 1):
-        if k < 3:
-            prob = 0.5
-        else:
-            prob = 1.0 / math.log(k)
-        if rng.random() < prob:
-            gens.append(k)
-    return gens
-
-def find_triple_collisions(gens):
-    """Find all (a, b) pairs where a*b is also a generator"""
-    gen_set = set(gens)
-    collisions = []
-    for a in gens:
-        for b in gens:
-            if a * b in gen_set:
-                collisions.append((a, b, a*b))
-    return collisions
-
-def is_product_free(gens):
-    """Check if a set of generators is product-free"""
-    gen_set = set(gens)
-    for a in gens:
-        for b in gens:
-            if a * b in gen_set:
+def is_product_free(S: set[int]) -> bool:
+    """Check if S is product-free: no a*b in S for a,b in S with a,b >= 2."""
+    for a in S:
+        for b in S:
+            if a >= 2 and b >= 2 and a * b in S:
                 return False
     return True
 
 
-def demo_density_comparison():
-    """Compare actual prime density vs random subset density"""
-    print("=" * 60)
-    print("DEMO 1: Density Comparison — Primes vs Random Subsets")
-    print("=" * 60)
+def is_multiplicatively_independent(S: set[int], max_card: int = 6) -> tuple[bool, str]:
+    """Check MI up to multisets of given max cardinality.
+    Returns (is_mi, counterexample_or_empty)."""
+    elements = sorted(s for s in S if s >= 2)
+    if not elements:
+        return True, ""
     
-    for n in [100, 1000, 10000]:
-        primes = actual_primes_up_to(n)
-        random_gens = random_generators(n)
-        expected = prime_density_count(n)
-        
-        print(f"\n  n = {n:,}")
-        print(f"    Actual primes:    {len(primes):>6} (PNT predicts {expected:.0f})")
-        print(f"    Random generators: {len(random_gens):>6}")
-        print(f"    Ratio actual/expected: {len(primes)/expected:.3f}")
-        print(f"    Ratio random/expected: {len(random_gens)/expected:.3f}")
+    # Build all multiset products up to max_card
+    products: dict[int, list[tuple[int, ...]]] = defaultdict(list)
+    for card in range(1, max_card + 1):
+        for combo in combinations_with_replacement(elements, card):
+            prod_val = 1
+            for x in combo:
+                prod_val *= x
+            products[prod_val].append(combo)
+    
+    # Check for collisions
+    for prod_val, factorizations in products.items():
+        if len(factorizations) > 1:
+            return False, f"{prod_val} = {'×'.join(map(str,factorizations[0]))} = {'×'.join(map(str,factorizations[1]))}"
+    
+    return True, ""
 
 
-def demo_collision_analysis():
-    """Demonstrate that random generators have collisions but primes don't"""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Product Collisions — The UFD Collapse")
-    print("=" * 60)
-    
-    n = 200
-    primes = actual_primes_up_to(n)
-    
-    print(f"\n  Primes up to {n}: {len(primes)} generators")
-    prime_collisions = find_triple_collisions(primes)
-    print(f"  Triple collisions in primes: {len(prime_collisions)}")
-    print(f"  Product-free: {is_product_free(primes)}")
-    
-    for seed in range(5):
-        random_gens = random_generators(n, seed=seed)
-        collisions = find_triple_collisions(random_gens)
-        print(f"\n  Random set (seed={seed}): {len(random_gens)} generators")
-        print(f"  Triple collisions: {len(collisions)}")
-        if collisions:
-            print(f"  First 5 collisions: {collisions[:5]}")
-        print(f"  Product-free: {is_product_free(random_gens)}")
+def collision_index(S: set[int]) -> int:
+    """Count product triples: pairs (a,b) in S×S with a*b in S, a,b >= 2."""
+    count = 0
+    for a in S:
+        for b in S:
+            if a >= 2 and b >= 2 and a * b in S:
+                count += 1
+    return count
 
 
-def demo_separation_theorem():
-    """Demonstrate the density-independence separation theorem"""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Density-Independence Separation")
-    print("=" * 60)
+def factorization_spectrum(S: set[int], n: int, max_depth: int = 8) -> list[tuple[int, ...]]:
+    """Find all S-factorizations of n (multisets of elements from S with product n)."""
+    elements = sorted(s for s in S if 2 <= s <= n)
+    results = []
     
-    # Same cardinality, different factorization properties
-    set_a = [2, 3, 5]  # Product-free (all primes)
-    set_b = [2, 3, 6]  # NOT product-free (2*3=6)
+    def search(remaining: int, min_element: int, current: list[int]):
+        if remaining == 1:
+            results.append(tuple(current))
+            return
+        for e in elements:
+            if e < min_element:
+                continue
+            if e > remaining:
+                break
+            if remaining % e == 0 and len(current) < max_depth:
+                current.append(e)
+                search(remaining // e, e, current)
+                current.pop()
     
-    print(f"\n  Set A = {set_a}: |A| = {len(set_a)}, product-free = {is_product_free(set_a)}")
-    print(f"  Set B = {set_b}: |B| = {len(set_b)}, product-free = {is_product_free(set_b)}")
-    print(f"  → Same cardinality, opposite factorization properties!")
-    
-    # Larger example
-    set_c = [2, 3, 5, 7, 11]  # All primes
-    set_d = [2, 3, 5, 6, 10]  # Contains 2*3=6 and 2*5=10
-    
-    print(f"\n  Set C = {set_c}: |C| = {len(set_c)}, product-free = {is_product_free(set_c)}")
-    collisions_c = find_triple_collisions(set_c)
-    print(f"  Collisions: {len(collisions_c)}")
-    
-    print(f"\n  Set D = {set_d}: |D| = {len(set_d)}, product-free = {is_product_free(set_d)}")
-    collisions_d = find_triple_collisions(set_d)
-    print(f"  Collisions: {len(collisions_d)}")
-    for c in collisions_d:
-        print(f"    {c[0]} × {c[1]} = {c[2]}")
+    search(n, 2, [])
+    return results
 
 
-def demo_collision_probability():
-    """Monte Carlo estimate of collision probability for random generators"""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Collision Probability (Monte Carlo)")
-    print("=" * 60)
+def prime_density_vs_random(N: int) -> dict:
+    """Compare prime density with upper interval density and their MI properties."""
+    primes = set()
+    for n in range(2, N + 1):
+        if all(n % i != 0 for i in range(2, int(sqrt(n)) + 1)):
+            primes.add(n)
     
-    n = 100
-    trials = 1000
-    collision_count = 0
+    upper_interval = {k for k in range(N // 2 + 1, N + 1)}
     
-    for seed in range(trials):
-        gens = random_generators(n, seed=seed)
-        if not is_product_free(gens):
-            collision_count += 1
+    prime_pf = is_product_free(primes)
+    prime_mi, _ = is_multiplicatively_independent(primes, max_card=4)
+    upper_pf = is_product_free(upper_interval)
+    upper_mi, upper_counter = is_multiplicatively_independent(upper_interval, max_card=4)
     
-    print(f"\n  n = {n}, trials = {trials}")
-    print(f"  Random sets with collisions: {collision_count}/{trials} "
-          f"({100*collision_count/trials:.1f}%)")
-    print(f"  → Random generators almost ALWAYS have collisions")
-    print(f"  → Unique factorization is a SPECIAL property of the primes")
+    return {
+        "N": N,
+        "prime_count": len(primes),
+        "prime_density": len(primes) / N,
+        "upper_count": len(upper_interval),
+        "upper_density": len(upper_interval) / N,
+        "primes_product_free": prime_pf,
+        "primes_MI": prime_mi,
+        "upper_product_free": upper_pf,
+        "upper_MI": upper_mi,
+        "upper_MI_counter": upper_counter,
+    }
 
 
-def demo_contamination():
-    """Show how adding one composite to primes destroys product-freeness"""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Composite Contamination Cascade")
-    print("=" * 60)
+def main():
+    print("=" * 70)
+    print("COUNTERFACTUAL NUMBER THEORY: What If Primes Were Random?")
+    print("=" * 70)
     
-    primes_20 = actual_primes_up_to(20)
-    print(f"\n  Primes up to 20: {primes_20}")
-    print(f"  Product-free: {is_product_free(primes_20)}")
+    # Demo 1: Product-free vs MI
+    print("\n--- Demo 1: Product-Free ≠ MI ---")
+    examples = [
+        ({2, 3}, "Two smallest primes"),
+        ({2, 4}, "Contains divisibility pair"),
+        ({4, 6, 9}, "Product-free but NOT MI"),
+        ({2, 3, 5, 7}, "First four primes"),
+    ]
+    for S, desc in examples:
+        pf = is_product_free(S)
+        mi, counter = is_multiplicatively_independent(S)
+        print(f"  {str(S):20s}  ({desc})")
+        print(f"    Product-free: {pf}, MI: {mi}")
+        if counter:
+            print(f"    Counterexample: {counter}")
     
-    composites = [4, 6, 9, 10, 15, 21]
-    for c in composites:
-        contaminated = sorted(set(primes_20 + [c]))
-        collisions = find_triple_collisions(contaminated)
-        print(f"\n  Add {c}: {contaminated}")
-        print(f"  Product-free: {is_product_free(contaminated)}")
-        print(f"  Collisions: {len(collisions)}")
-        if collisions:
-            for col in collisions[:3]:
-                print(f"    {col[0]} × {col[1]} = {col[2]}")
+    # Demo 2: Factorization spectrum
+    print("\n--- Demo 2: Factorization Spectrum ---")
+    test_sets = [
+        ({2, 3, 5, 7}, "Primes {2,3,5,7}"),
+        ({2, 4, 8}, "Powers of 2"),
+        ({4, 6, 9}, "Product-free non-MI"),
+    ]
+    for S, desc in test_sets:
+        print(f"\n  Generating set: {S} ({desc})")
+        for n in [8, 12, 16, 24, 36]:
+            facts = factorization_spectrum(S, n)
+            if facts:
+                print(f"    σ({n}) = {len(facts)}: {facts}")
+    
+    # Demo 3: Collision index
+    print("\n\n--- Demo 3: Collision Index ---")
+    for N in [10, 20, 50]:
+        primes_N = {p for p in range(2, N + 1) 
+                    if all(p % i != 0 for i in range(2, int(sqrt(p)) + 1))}
+        full_set = set(range(2, N + 1))
+        upper = {k for k in range(N // 2 + 1, N + 1)}
+        print(f"  N={N}:")
+        print(f"    Primes up to {N}: collision index = {collision_index(primes_N)}")
+        print(f"    Full set [2,{N}]:  collision index = {collision_index(full_set)}")
+        print(f"    Upper ({N//2},{N}]: collision index = {collision_index(upper)}")
+    
+    # Demo 4: Prime density vs upper interval
+    print("\n--- Demo 4: Density vs Structure ---")
+    for N in [16, 32, 64, 100]:
+        result = prime_density_vs_random(N)
+        print(f"  N={N}:")
+        print(f"    Primes: {result['prime_count']} elements ({result['prime_density']:.3f}), "
+              f"PF={result['primes_product_free']}, MI={result['primes_MI']}")
+        print(f"    Upper:  {result['upper_count']} elements ({result['upper_density']:.3f}), "
+              f"PF={result['upper_product_free']}, MI={result['upper_MI']}")
+        if result['upper_MI_counter']:
+            print(f"    Upper MI failure: {result['upper_MI_counter']}")
+    
+    # Demo 5: The 9×16 = 12×12 counterexample
+    print("\n--- Demo 5: The (8, 16] Counterexample ---")
+    S = set(range(9, 17))
+    print(f"  S = {sorted(S)}")
+    print(f"  Product-free: {is_product_free(S)}")
+    mi, counter = is_multiplicatively_independent(S)
+    print(f"  MI: {mi}")
+    print(f"  Counterexample: {counter}")
+    print(f"  9 × 16 = {9*16} = 12 × 12 = {12*12}")
+    
+    print("\n" + "=" * 70)
+    print("KEY INSIGHT: Primes are special not because of their density")
+    print("(≈ N/log N) but because of their multiplicative independence.")
+    print("Product-freeness is necessary but not sufficient for MI.")
+    print("The gap between these properties is the 'Cramér gap'.")
+    print("=" * 70)
 
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  COUNTERFACTUAL NUMBER THEORY: What If Primes Were      ║")
-    print("║  Random?  — Numerical Demonstrations                    ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-    
-    demo_density_comparison()
-    demo_collision_analysis()
-    demo_separation_theorem()
-    demo_collision_probability()
-    demo_contamination()
-    
-    print("\n" + "=" * 60)
-    print("KEY INSIGHT: The primes are product-free — no prime equals")
-    print("the product of two primes. Random subsets with the same")
-    print("density almost never have this property. This is WHY unique")
-    print("factorization holds for the integers but fails for almost")
-    print("every 'counterfactual' number system.")
-    print("=" * 60)
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Collision probability heatmap for random Beurling systems.
+Visualization: Collision Index Growth
 
-Shows how collision probability varies with the number of generators
-and the upper bound N.
+Compares collision indices of primes, random Cramér models, and structured sets.
 """
-
-import math
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from math import sqrt, log
 import random
 
-def random_beurling_generators(n, seed=42):
-    rng = random.Random(seed)
-    gens = []
-    for k in range(2, n + 1):
-        prob = 1.0 / max(math.log(k), 0.01)
-        if rng.random() < min(prob, 1.0):
-            gens.append(k)
-    return gens
 
-def is_product_free(generators):
-    gen_set = set(generators)
-    for a in generators:
-        for b in generators:
-            if a * b in gen_set:
-                return False
-    return True
+def collision_index(S):
+    count = 0
+    S_ge2 = {s for s in S if s >= 2}
+    for a in S_ge2:
+        for b in S_ge2:
+            if a * b in S_ge2:
+                count += 1
+    return count
+
+
+def get_primes(N):
+    primes = set()
+    for n in range(2, N + 1):
+        if all(n % i != 0 for i in range(2, int(sqrt(n)) + 1)):
+            primes.add(n)
+    return primes
+
+
+def cramer_model(N, seed=0):
+    rng = random.Random(seed)
+    return {n for n in range(2, N + 1) if rng.random() < 1.0 / log(n)}
+
 
 def main():
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        import numpy as np
-    except ImportError:
-        print("matplotlib/numpy not available, skipping visualization")
-        return
-
-    # Compute collision probability for different N values
-    N_values = [20, 40, 60, 80, 100, 150, 200, 300, 500]
-    trials = 200
+    Ns = list(range(10, 201, 10))
     
-    collision_probs = []
-    avg_gen_counts = []
+    prime_ci = []
+    random_ci_mean = []
+    random_ci_std = []
+    full_ci = []
+    upper_ci = []
     
-    for N in N_values:
-        collisions = 0
-        gen_counts = []
-        for seed in range(trials):
-            gens = random_beurling_generators(N, seed=seed)
-            gen_counts.append(len(gens))
-            if not is_product_free(gens):
-                collisions += 1
-        collision_probs.append(collisions / trials)
-        avg_gen_counts.append(sum(gen_counts) / len(gen_counts))
+    for N in Ns:
+        primes = get_primes(N)
+        prime_ci.append(collision_index(primes))
+        
+        rci = [collision_index(cramer_model(N, seed=s)) for s in range(20)]
+        random_ci_mean.append(np.mean(rci))
+        random_ci_std.append(np.std(rci))
+        
+        full_ci.append(collision_index(set(range(2, N + 1))))
+        upper_ci.append(collision_index(set(range(N // 2 + 1, N + 1))))
     
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
     
-    # Plot 1: Collision probability vs N
-    ax1.plot(N_values, collision_probs, 'ro-', linewidth=2, markersize=8)
-    ax1.axhline(y=1.0, color='gray', linestyle='--', alpha=0.5)
-    ax1.set_xlabel('Upper bound N', fontsize=12)
-    ax1.set_ylabel('P(collision exists)', fontsize=12)
-    ax1.set_title('Collision Probability for Random Beurling Systems', fontsize=14)
-    ax1.set_ylim(-0.05, 1.05)
+    # Plot 1: Collision indices
+    ax1.plot(Ns, prime_ci, 'g-o', label='Primes', markersize=4, linewidth=2)
+    ax1.errorbar(Ns, random_ci_mean, yerr=random_ci_std, fmt='r-s', 
+                label='Cramér Random (mean ± std)', markersize=3, capsize=3, linewidth=1.5)
+    ax1.plot(Ns, upper_ci, 'b-^', label='Upper Interval (N/2, N]', markersize=3, linewidth=1.5)
+    ax1.set_xlabel('N')
+    ax1.set_ylabel('Collision Index')
+    ax1.set_title('Collision Index: Primes vs Random vs Upper Interval')
+    ax1.legend()
     ax1.grid(True, alpha=0.3)
     
-    # Plot 2: Generator count comparison
-    expected_primes = [N / math.log(N) if N > 1 else 0 for N in N_values]
-    
-    ax2.plot(N_values, avg_gen_counts, 'bo-', label='Random generators (avg)', 
-             linewidth=2, markersize=8)
-    ax2.plot(N_values, expected_primes, 'g--', label='n/log(n) (PNT)', 
-             linewidth=2)
-    ax2.set_xlabel('Upper bound N', fontsize=12)
-    ax2.set_ylabel('Count', fontsize=12)
-    ax2.set_title('Generator Density: Random vs PNT Prediction', fontsize=14)
-    ax2.legend(fontsize=11)
+    # Plot 2: Normalized collision index (per element squared)
+    prime_counts = [len(get_primes(N)) for N in Ns]
+    ax2.plot(Ns, [0] * len(Ns), 'g-o', label='Primes (always 0)', 
+             markersize=4, linewidth=2)
+    norm_random = [m / max(1, (N / log(N))**2) for m, N in zip(random_ci_mean, Ns)]
+    ax2.plot(Ns, norm_random, 'r-s', label='Random / (N/ln N)²', 
+             markersize=3, linewidth=1.5)
+    ax2.set_xlabel('N')
+    ax2.set_ylabel('Normalized Collision Index')
+    ax2.set_title('Collision Density (Normalized)')
+    ax2.legend()
     ax2.grid(True, alpha=0.3)
     
+    plt.suptitle('The Cramér Gap: Why Random ≠ Prime', fontsize=14, fontweight='bold')
     plt.tight_layout()
-    plt.savefig('collision_heatmap.png', dpi=150, bbox_inches='tight')
-    print("Saved collision_heatmap.png")
+    plt.savefig('collision_index.png', dpi=150, bbox_inches='tight')
+    print("Saved collision_index.png")
+
+
+if __name__ == "__main__":
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Factorization Spectrum Heatmap
+
+Shows how the factorization spectrum σ_S(n) varies for different generating sets.
+"""
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from math import sqrt, log
+from itertools import combinations_with_replacement
+from collections import defaultdict
+
+
+def factorization_count(S: set, n: int, max_depth: int = 10) -> int:
+    elements = sorted(s for s in S if 2 <= s <= n)
+    count = 0
+    def search(remaining, min_elem, depth):
+        nonlocal count
+        if remaining == 1:
+            count += 1
+            return
+        for e in elements:
+            if e < min_elem: continue
+            if e > remaining: break
+            if remaining % e == 0 and depth < max_depth:
+                search(remaining // e, e, depth + 1)
+    search(n, 2, 0)
+    return count
+
+
+def get_primes(N):
+    primes = set()
+    for n in range(2, N + 1):
+        if all(n % i != 0 for i in range(2, int(sqrt(n)) + 1)):
+            primes.add(n)
+    return primes
+
+
+def main():
+    N = 60
+    ns = list(range(2, N + 1))
+    
+    sets = {
+        "Primes ≤ 60": get_primes(N),
+        "{2, 4, 8, 16, 32}": {2, 4, 8, 16, 32},
+        "{4, 6, 9}": {4, 6, 9},
+        "{2, 3, 5}": {2, 3, 5},
+        "Upper (30, 60]": set(range(31, 61)),
+    }
+    
+    fig, axes = plt.subplots(len(sets), 1, figsize=(14, 3 * len(sets)), sharex=True)
+    
+    for idx, (name, S) in enumerate(sets.items()):
+        ax = axes[idx]
+        spectrum = [factorization_count(S, n) for n in ns]
+        
+        colors = ['#2ecc71' if s <= 1 else '#e74c3c' if s > 1 else '#95a5a6' for s in spectrum]
+        ax.bar(ns, spectrum, color=colors, width=0.8, alpha=0.8)
+        ax.set_ylabel('σ_S(n)')
+        ax.set_title(f'Factorization Spectrum: S = {name}', fontsize=11)
+        ax.set_yscale('symlog', linthresh=1)
+        max_s = max(spectrum) if spectrum else 1
+        ax.set_ylim(0, max(max_s * 1.2, 2))
+        
+        # Annotate key points
+        for i, (n, s) in enumerate(zip(ns, spectrum)):
+            if s > 2:
+                ax.annotate(f'{s}', (n, s), textcoords="offset points", 
+                           xytext=(0, 5), ha='center', fontsize=7)
+    
+    axes[-1].set_xlabel('n')
+    plt.suptitle('Factorization Spectrum: How Badly Does UFD Fail?', 
+                 fontsize=14, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    plt.savefig('factorization_spectrum.png', dpi=150, bbox_inches='tight')
+    print("Saved factorization_spectrum.png")
+
 
 if __name__ == "__main__":
     main()

@@ -2,228 +2,238 @@
 """
 Algorithms for Counterfactual Number Theory
 
-Type-hinted implementations of key algorithms for analyzing
-Beurling generalized prime systems.
+Type-hinted implementations of the core algorithms from the research.
 """
 
-from typing import List, Set, Tuple, Optional, Dict
-import math
-import random
+from math import sqrt, log, gcd
+from itertools import combinations_with_replacement
+from collections import defaultdict
+from typing import Optional
 
 
-def sieve_primes(n: int) -> List[int]:
-    """Sieve of Eratosthenes returning all primes up to n.
-    
-    Args:
-        n: Upper bound
-    Returns:
-        Sorted list of primes in [2, n]
+def is_product_free(S: set[int]) -> bool:
     """
-    if n < 2:
-        return []
-    sieve = [True] * (n + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if sieve[i]:
-            for j in range(i*i, n + 1, i):
-                sieve[j] = False
-    return [i for i in range(2, n + 1) if sieve[i]]
-
-
-def random_beurling_generators(n: int, seed: int = 42) -> List[int]:
-    """Generate a random subset of {2,...,n} with prime-like density.
+    Check if a set S ⊆ ℕ is product-free.
     
-    Each k ∈ {2,...,n} is included independently with probability 1/log(k).
+    A set is product-free if for all a, b ∈ S with a, b ≥ 2,
+    the product a*b ∉ S.
     
-    Args:
-        n: Upper bound for generators
-        seed: Random seed for reproducibility
-    Returns:
-        Sorted list of selected generators
+    Time: O(|S|²)
     """
-    rng = random.Random(seed)
-    gens: List[int] = []
-    for k in range(2, n + 1):
-        prob = 1.0 / max(math.log(k), 0.01)
-        if rng.random() < min(prob, 1.0):
-            gens.append(k)
-    return gens
-
-
-def find_product_collisions(generators: List[int]) -> List[Tuple[int, int, int]]:
-    """Find all triple collisions (a, b, a*b) in a generator set.
-    
-    A triple collision is a triple (a, b, c) where a, b, c are all generators
-    and a * b = c. These are certificates that unique factorization fails.
-    
-    Args:
-        generators: List of generators (elements ≥ 2)
-    Returns:
-        List of (a, b, c) triples with a*b = c, all in generators
-    """
-    gen_set: Set[int] = set(generators)
-    collisions: List[Tuple[int, int, int]] = []
-    for a in generators:
-        for b in generators:
-            if a <= b and a * b in gen_set:
-                collisions.append((a, b, a * b))
-    return collisions
-
-
-def is_product_free(generators: List[int]) -> bool:
-    """Check if a generator set is product-free.
-    
-    A set S is product-free if for all a, b ∈ S, a*b ∉ S.
-    Product-freeness is necessary for unique factorization.
-    
-    Args:
-        generators: List of generators
-    Returns:
-        True if the set is product-free
-    """
-    gen_set: Set[int] = set(generators)
-    for a in generators:
-        for b in generators:
-            if a * b in gen_set:
+    S_ge2 = {s for s in S if s >= 2}
+    for a in S_ge2:
+        for b in S_ge2:
+            if a * b in S_ge2:
                 return False
     return True
 
 
-def is_prime_separated(generators: List[int]) -> bool:
-    """Check if a generator set is prime-separated (no generator divides another).
-    
-    Args:
-        generators: List of generators
-    Returns:
-        True if no generator properly divides another
+def check_multiplicative_independence(
+    S: set[int], 
+    max_card: int = 6
+) -> tuple[bool, Optional[tuple[tuple[int, ...], tuple[int, ...]]]]:
     """
-    for a in generators:
-        for b in generators:
-            if a != b and b % a == 0:
-                return False
-    return True
-
-
-def collision_density(n: int, trials: int = 1000) -> float:
-    """Estimate the probability that a random Beurling system has collisions.
+    Check if S is multiplicatively independent up to multisets of given max cardinality.
     
-    Generates `trials` random generator sets with prime-like density up to n,
-    and returns the fraction that have at least one product collision.
+    S is MI if for all multisets m₁, m₂ over S: prod(m₁) = prod(m₂) → m₁ = m₂.
     
-    Args:
-        n: Upper bound for generators
-        trials: Number of Monte Carlo trials
     Returns:
-        Estimated probability of collision
+        (True, None) if MI up to max_card
+        (False, (m₁, m₂)) if a counterexample is found
+    
+    Time: O(|S|^max_card) — exponential but exact for small sets
     """
-    collision_count = 0
-    for seed in range(trials):
-        gens = random_beurling_generators(n, seed=seed)
-        if not is_product_free(gens):
-            collision_count += 1
-    return collision_count / trials
+    elements = sorted(s for s in S if s >= 2)
+    if not elements:
+        return True, None
+    
+    products: dict[int, list[tuple[int, ...]]] = defaultdict(list)
+    for card in range(1, max_card + 1):
+        for combo in combinations_with_replacement(elements, card):
+            prod_val = 1
+            for x in combo:
+                prod_val *= x
+            products[prod_val].append(combo)
+    
+    for prod_val, factorizations in products.items():
+        if len(factorizations) > 1:
+            return False, (factorizations[0], factorizations[1])
+    
+    return True, None
 
 
-def beurling_integers(generators: List[int], bound: int) -> List[int]:
-    """Enumerate Beurling integers up to a bound.
-    
-    Returns all products of multisets of generators that are ≤ bound,
-    plus 1.
-    
-    Args:
-        generators: List of generators (≥ 2)
-        bound: Upper bound for enumeration
-    Returns:
-        Sorted list of Beurling integers in [1, bound]
+def collision_index(S: set[int]) -> int:
     """
-    result: Set[int] = {1}
-    # BFS-style enumeration
-    frontier: Set[int] = {1}
-    while frontier:
-        new_frontier: Set[int] = set()
-        for n in frontier:
-            for g in generators:
-                prod = n * g
-                if prod <= bound and prod not in result:
-                    result.add(prod)
-                    new_frontier.add(prod)
-        frontier = new_frontier
-    return sorted(result)
-
-
-def factorization_count(n: int, generators: List[int]) -> int:
-    """Count the number of distinct factorizations of n over a generator set.
+    Compute the collision index of a finite set S.
     
-    Uses dynamic programming. A factorization is an ordered sequence
-    of generators whose product is n (we count unordered by using
-    the constraint that factors are non-decreasing).
+    The collision index counts ordered pairs (a,b) ∈ S×S with a,b ≥ 2
+    and a*b ∈ S. This measures how far S is from being prime-like.
     
-    Args:
-        n: Target number
-        generators: List of generators
-    Returns:
-        Number of distinct unordered factorizations
+    For actual primes: collision_index = 0
+    For dense random sets: collision_index ~ |S|²/N
+    
+    Time: O(|S|²)
     """
-    gens = sorted(generators)
-    memo: Dict[Tuple[int, int], int] = {}
+    count = 0
+    S_ge2 = {s for s in S if s >= 2}
+    for a in S_ge2:
+        for b in S_ge2:
+            if a * b in S_ge2:
+                count += 1
+    return count
+
+
+def factorization_spectrum(
+    S: set[int], 
+    n: int, 
+    max_depth: int = 10
+) -> list[tuple[int, ...]]:
+    """
+    Compute the factorization spectrum σ_S(n): all S-factorizations of n.
     
-    def count(target: int, min_gen_idx: int) -> int:
-        if target == 1:
-            return 1
-        if (target, min_gen_idx) in memo:
-            return memo[(target, min_gen_idx)]
-        
-        total = 0
-        for i in range(min_gen_idx, len(gens)):
-            g = gens[i]
-            if g > target:
+    An S-factorization of n is a sorted tuple (a₁, ..., aₖ) with each aᵢ ∈ S,
+    aᵢ ≥ 2, and a₁ × ... × aₖ = n.
+    
+    Returns a list of sorted tuples (multisets as sorted tuples).
+    
+    For MI sets: len(result) ≤ 1 for all n
+    For non-MI sets: len(result) can grow without bound
+    
+    Time: Exponential in log(n) / log(min(S))
+    """
+    elements = sorted(s for s in S if 2 <= s <= n)
+    results: list[tuple[int, ...]] = []
+    
+    def search(remaining: int, min_elem: int, current: list[int]) -> None:
+        if remaining == 1:
+            results.append(tuple(current))
+            return
+        for e in elements:
+            if e < min_elem:
+                continue
+            if e > remaining:
                 break
-            if target % g == 0:
-                total += count(target // g, i)
-        
-        memo[(target, min_gen_idx)] = total
-        return total
+            if remaining % e == 0 and len(current) < max_depth:
+                current.append(e)
+                search(remaining // e, e, current)
+                current.pop()
     
-    return count(n, 0)
+    search(n, 2, [])
+    return results
 
 
-def contamination_cascade(primes: List[int], composite: int) -> Dict[str, object]:
-    """Analyze what happens when a composite is added to a prime generator set.
-    
-    Args:
-        primes: List of prime generators
-        composite: Composite number to add
-    Returns:
-        Dictionary with analysis results
+def find_product_triples(S: set[int]) -> list[tuple[int, int, int]]:
     """
-    contaminated = sorted(set(primes + [composite]))
-    collisions = find_product_collisions(contaminated)
+    Find all product triples (a, b, c) in S with a*b = c, a,b ≥ 2.
+    
+    Product triples are the minimal obstruction to multiplicative independence.
+    
+    Time: O(|S|²)
+    """
+    triples: list[tuple[int, int, int]] = []
+    S_ge2 = sorted(s for s in S if s >= 2)
+    for a in S_ge2:
+        for b in S_ge2:
+            if b >= a and a * b in S:
+                triples.append((a, b, a * b))
+    return triples
+
+
+def find_divisibility_chains(S: set[int], max_length: int = 10) -> list[list[int]]:
+    """
+    Find all maximal divisibility chains in S.
+    
+    A divisibility chain is a sequence a₁ | a₂ | ... | aₖ with all aᵢ ∈ S,
+    aᵢ ≥ 2, and each aᵢ strictly dividing aᵢ₊₁.
+    
+    Time: O(|S|² × max_length)
+    """
+    elements = sorted(s for s in S if s >= 2)
+    chains: list[list[int]] = []
+    
+    def extend_chain(chain: list[int]) -> None:
+        last = chain[-1]
+        extended = False
+        for e in elements:
+            if e > last and e % last == 0 and len(chain) < max_length:
+                chain.append(e)
+                extend_chain(chain)
+                chain.pop()
+                extended = True
+        if not extended:
+            if len(chain) >= 2:
+                chains.append(list(chain))
+    
+    for e in elements:
+        extend_chain([e])
+    
+    return chains
+
+
+def cramer_random_model(N: int, seed: int = 42) -> set[int]:
+    """
+    Generate a Cramér random model: each n ∈ [2, N] is included
+    independently with probability 1/ln(n).
+    
+    This models primes probabilistically: the Prime Number Theorem says
+    π(N) ≈ N/ln(N), so each number has "probability" 1/ln(n) of being prime.
+    """
+    import random
+    rng = random.Random(seed)
+    S: set[int] = set()
+    for n in range(2, N + 1):
+        if rng.random() < 1.0 / log(n):
+            S.add(n)
+    return S
+
+
+def compare_prime_vs_random(N: int, num_trials: int = 10) -> dict:
+    """
+    Compare actual primes with Cramér random models on key properties.
+    
+    For each property, reports the value for actual primes and the
+    average over random trials.
+    """
+    # Actual primes
+    primes: set[int] = set()
+    for n in range(2, N + 1):
+        if all(n % i != 0 for i in range(2, int(sqrt(n)) + 1)):
+            primes.add(n)
+    
+    prime_stats = {
+        "count": len(primes),
+        "product_free": is_product_free(primes),
+        "collision_index": collision_index(primes),
+        "MI": check_multiplicative_independence(primes, max_card=3)[0],
+    }
+    
+    # Random models
+    random_stats: dict[str, list] = {
+        "count": [], "product_free": [], "collision_index": [], "MI": []
+    }
+    for seed in range(num_trials):
+        model = cramer_random_model(N, seed=seed)
+        random_stats["count"].append(len(model))
+        random_stats["product_free"].append(is_product_free(model))
+        random_stats["collision_index"].append(collision_index(model))
+        random_stats["MI"].append(check_multiplicative_independence(model, max_card=3)[0])
     
     return {
-        "original_size": len(primes),
-        "contaminated_size": len(contaminated),
-        "composite_added": composite,
-        "product_free_before": True,  # Primes are always product-free
-        "product_free_after": is_product_free(contaminated),
-        "num_collisions": len(collisions),
-        "collisions": collisions[:10],
+        "N": N,
+        "primes": prime_stats,
+        "random_avg": {
+            "count": sum(random_stats["count"]) / num_trials,
+            "product_free_rate": sum(random_stats["product_free"]) / num_trials,
+            "avg_collision_index": sum(random_stats["collision_index"]) / num_trials,
+            "MI_rate": sum(random_stats["MI"]) / num_trials,
+        }
     }
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    primes = sieve_primes(100)
-    print(f"Primes up to 100: {len(primes)} primes")
-    print(f"Product-free: {is_product_free(primes)}")
-    
-    gens = random_beurling_generators(100, seed=0)
-    print(f"\nRandom generators up to 100: {len(gens)} generators")
-    print(f"Product-free: {is_product_free(gens)}")
-    print(f"Collisions: {find_product_collisions(gens)[:5]}")
-    
-    print(f"\nCollision density (n=100): {collision_density(100):.2%}")
-    
-    # Factorization count demo
-    gens_236 = [2, 3, 6]
-    print(f"\nFactorizations of 12 over {{2,3,6}}: {factorization_count(12, gens_236)}")
-    print(f"  (12 = 6*2 = 2*2*3 → at least 2 factorizations)")
+    print("Comparing primes vs Cramér random models:")
+    for N in [50, 100, 200]:
+        result = compare_prime_vs_random(N, num_trials=20)
+        print(f"\n  N = {N}:")
+        print(f"    Primes: {result['primes']}")
+        print(f"    Random: {result['random_avg']}")
