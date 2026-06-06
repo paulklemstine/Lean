@@ -1,285 +1,225 @@
-#!/usr/bin/env python3
 """
-Algorithms for Conway's Game of Life simulation and analysis.
+Algorithms for Game of Life Simulation and Analysis
 
-Type-hinted implementations of the core algorithms formalized in Lean 4.
+Type-hinted implementations of the key algorithms underlying the
+formal proofs in Theorems.lean.
 """
 
-from typing import Set, Tuple, Dict, List, Optional, FrozenSet
-
-# Type aliases
-Cell = tuple[int, int]
-Config = frozenset[Cell]
-
-# Moore neighborhood offsets (8 neighbors, excluding self)
-MOORE_OFFSETS: list[Cell] = [
-    (-1, -1), (-1, 0), (-1, 1),
-    (0, -1),           (0, 1),
-    (1, -1),  (1, 0),  (1, 1),
-]
+from typing import Set, Dict, Tuple, Optional, Callable
+from dataclasses import dataclass
 
 
-def chebyshev_distance(p: Cell, q: Cell) -> int:
-    """Chebyshev (L∞) distance between two cells.
-    
-    This is the metric that governs the speed of light in GoL.
-    Proved symmetric (chebyshevDist_comm) and self-zero (chebyshevDist_self).
-    """
-    return max(abs(p[0] - q[0]), abs(p[1] - q[1]))
+# ============================================================
+# Core Game of Life
+# ============================================================
+
+Position = Tuple[int, int]
+Config = Set[Position]
 
 
-def live_neighbor_count(config: Config, cell: Cell) -> int:
-    """Count live Moore neighbors of a cell.
-    
-    Proved: always ≤ 8 (liveNeighborCount_le_eight).
-    """
-    return sum(
-        1 for dx, dy in MOORE_OFFSETS
-        if (cell[0] + dx, cell[1] + dy) in config
-    )
+def moore_neighbors(p: Position) -> list[Position]:
+    """The 8 Moore neighbors of position p."""
+    x, y = p
+    return [(x+dx, y+dy) for dx in [-1, 0, 1] for dy in [-1, 0, 1]
+            if (dx, dy) != (0, 0)]
+
+
+def alive_count(config: Config, p: Position) -> int:
+    """Count alive neighbors of p in the configuration."""
+    return sum(1 for n in moore_neighbors(p) if n in config)
+
+
+def gol_rule(config: Config, p: Position) -> bool:
+    """Conway's B3/S23 rule at position p. Returns True if alive."""
+    n = alive_count(config, p)
+    if p in config:
+        return n in (2, 3)  # Survival
+    else:
+        return n == 3  # Birth
 
 
 def gol_step(config: Config) -> Config:
-    """One step of Conway's Game of Life (B3/S23 rule).
-    
-    Proved properties:
-    - Outer totalistic (gol_outer_totalistic)
-    - Translation invariant (golStep_translate)
-    - Rotation invariant (golStep_rotate90)
-    - Reflection invariant (golStep_reflectX)
-    - Preserves finite support (golStep_preserves_finite_support)
-    - Vacuum is fixed point (golStep_vacuum)
-    """
-    # Collect candidate cells (live cells + their neighbors)
-    candidates: set[Cell] = set()
-    for x, y in config:
-        candidates.add((x, y))
-        for dx, dy in MOORE_OFFSETS:
-            candidates.add((x + dx, y + dy))
-    
-    new_config: set[Cell] = set()
-    for cell in candidates:
-        n = live_neighbor_count(config, cell)
-        if cell in config:
-            if n in (2, 3):  # Survival
-                new_config.add(cell)
-        else:
-            if n == 3:  # Birth
-                new_config.add(cell)
-    
-    return frozenset(new_config)
+    """One step of Conway's Game of Life."""
+    candidates: Set[Position] = set()
+    for p in config:
+        candidates.add(p)
+        candidates.update(moore_neighbors(p))
+    return {p for p in candidates if gol_rule(config, p)}
 
 
-def gol_evolve(config: Config, steps: int) -> Config:
-    """Iterate GoL for multiple steps.
-    
-    Proved: golEvolve_add — golEvolve(s+t) = golEvolve(s) ∘ golEvolve(t).
-    """
+def gol_iterate(config: Config, steps: int) -> Config:
+    """Iterate GoL for the given number of steps."""
     for _ in range(steps):
         config = gol_step(config)
     return config
 
 
-def is_still_life(config: Config) -> bool:
-    """Check if a configuration is a still life (fixed point).
-    
-    Proved equivalent (still_life_iff) to:
-    - All live cells have 2 or 3 neighbors
-    - All dead cells don't have exactly 3 neighbors
-    """
-    return gol_step(config) == config
+# ============================================================
+# Chebyshev Distance and Light Cone
+# ============================================================
+
+def chebyshev_distance(p: Position, q: Position) -> int:
+    """Chebyshev (L∞) distance between two positions."""
+    return max(abs(p[0] - q[0]), abs(p[1] - q[1]))
 
 
-def find_period(config: Config, max_period: int = 1000) -> Optional[int]:
-    """Find the minimal period of a configuration.
-    
-    Proved (oscillator_period_divides): minimal period divides all periods.
+def light_cone(center: Position, radius: int) -> Set[Position]:
+    """All positions within Chebyshev distance radius of center."""
+    cx, cy = center
+    return {(cx + dx, cy + dy)
+            for dx in range(-radius, radius + 1)
+            for dy in range(-radius, radius + 1)}
+
+
+def verify_light_cone_theorem(
+    config1: Config, config2: Config, p: Position, t: int
+) -> bool:
+    """Verify the light cone theorem for specific configurations.
+
+    If config1 and config2 agree on light_cone(p, t+1),
+    then they agree at p after t+1 steps.
     """
+    # Check agreement on input cone
+    cone = light_cone(p, t + 1)
+    for q in cone:
+        if (q in config1) != (q in config2):
+            return True  # Hypothesis not satisfied, theorem holds vacuously
+
+    # Check conclusion
+    result1 = gol_iterate(config1, t + 1)
+    result2 = gol_iterate(config2, t + 1)
+    return (p in result1) == (p in result2)
+
+
+# ============================================================
+# Simulation Framework
+# ============================================================
+
+@dataclass
+class TuringMachine:
+    """A simple Turing machine with binary alphabet."""
+    num_states: int
+    transitions: Dict[Tuple[int, bool], Tuple[int, bool, bool]]
+    initial_state: int
+    halting_states: Set[int]
+
+
+@dataclass
+class TMConfig:
+    """A Turing machine configuration."""
+    state: int
+    head_pos: int
+    tape: Dict[int, bool]  # Sparse representation
+
+    def read(self) -> bool:
+        return self.tape.get(self.head_pos, False)
+
+
+def tm_step(tm: TuringMachine, config: TMConfig) -> TMConfig:
+    """One step of a Turing machine."""
+    symbol = config.read()
+    new_state, new_symbol, move_right = tm.transitions[(config.state, symbol)]
+    new_tape = dict(config.tape)
+    new_tape[config.head_pos] = new_symbol
+    new_head = config.head_pos + (1 if move_right else -1)
+    return TMConfig(new_state, new_head, new_tape)
+
+
+def tm_run(tm: TuringMachine, config: TMConfig, steps: int) -> TMConfig:
+    """Run a Turing machine for the given number of steps."""
+    for _ in range(steps):
+        if config.state in tm.halting_states:
+            break
+        config = tm_step(tm, config)
+    return config
+
+
+# ============================================================
+# Simulation Overhead Analysis
+# ============================================================
+
+def simulation_space_bound(D: int, t: int) -> int:
+    """Upper bound on space needed for GoL simulation.
+
+    A simulation of a region of diameter D for t steps
+    requires at most (D + 2t + 1)² cells.
+    """
+    return (D + 2 * t + 1) ** 2
+
+
+def simulation_chain_overhead(factors: list[int]) -> int:
+    """Total overhead of a chain of simulations.
+
+    The overhead is the product of individual time dilation factors.
+    """
+    result = 1
+    for f in factors:
+        result *= f
+    return result
+
+
+# ============================================================
+# Pattern Recognition
+# ============================================================
+
+def find_period(config: Config, max_period: int = 100) -> Optional[int]:
+    """Find the period of a GoL pattern, or None if not periodic."""
+    states = [config]
     current = config
-    for p in range(1, max_period + 1):
+    for t in range(1, max_period + 1):
         current = gol_step(current)
         if current == config:
-            return p
+            return t
+        states.append(current)
     return None
 
 
-def translate(config: Config, dx: int, dy: int) -> Config:
-    """Translate a configuration by (dx, dy).
-    
-    Proved: golStep commutes with translate (golStep_translate).
-    """
-    return frozenset((x + dx, y + dy) for x, y in config)
-
-
-def reflect_x(config: Config) -> Config:
-    """Reflect across the y-axis (negate x-coordinate).
-    
-    Proved: golStep commutes with reflectX (golStep_reflectX).
-    """
-    return frozenset((-x, y) for x, y in config)
-
-
-def rotate_90(config: Config) -> Config:
-    """Rotate 90° counterclockwise.
-    
-    Proved: golStep commutes with rotate90 (golStep_rotate90).
-    """
-    return frozenset((y, -x) for x, y in config)
-
-
-def light_cone(center: Cell, time: int) -> set[Cell]:
-    """The light cone of a cell: all cells that could be influenced after t steps.
-    
-    By gol_speed_of_light, this is the Chebyshev ball of radius t.
-    """
-    return {
-        (center[0] + dx, center[1] + dy)
-        for dx in range(-time, time + 1)
-        for dy in range(-time, time + 1)
-    }
-
-
-# NAND circuit simulation
-def nand(a: bool, b: bool) -> bool:
-    """NAND gate. Proved functionally complete:
-    - NOT(a) = NAND(a, a)         [not_from_nand]
-    - AND(a,b) = ¬NAND(a,b)      [and_from_nand]
-    - OR(a,b) = NAND(¬a, ¬b)     [or_from_nand]
-    - XOR(a,b) = complex expr     [xor_from_nand]
-    """
-    return not (a and b)
-
-
-class NandCircuit:
-    """A NAND circuit in topological order.
-    
-    Mirrors the Lean NandCircuit structure.
-    """
-    
-    def __init__(self, num_inputs: int, gates: list[tuple[int, int]], output: int):
-        self.num_inputs = num_inputs
-        self.gates = gates  # Each gate: (input1_wire, input2_wire)
-        self.output = output
-        
-        # Verify topological ordering
-        for i, (g1, g2) in enumerate(gates):
-            assert g1 < num_inputs + i, f"Gate {i} input1 violates topological order"
-            assert g2 < num_inputs + i, f"Gate {i} input2 violates topological order"
-    
-    def eval(self, inputs: list[bool]) -> bool:
-        """Evaluate the circuit. Mirrors NandCircuit.eval in Lean."""
-        assert len(inputs) == self.num_inputs
-        wires = list(inputs)
-        for g1, g2 in self.gates:
-            wires.append(not (wires[g1] and wires[g2]))
-        return wires[self.output]
-
-
-# Two-counter machine simulation
-class TCInstruction:
-    """Two-counter machine instruction."""
-    INC1 = "inc1"
-    INC2 = "inc2"
-    DEC1_JZ = "dec1_jz"
-    DEC2_JZ = "dec2_jz"
-    HALT = "halt"
-    
-    def __init__(self, op: str, jump_target: int = 0):
-        self.op = op
-        self.jump_target = jump_target
-
-
-class TCState:
-    """State of a two-counter machine."""
-    def __init__(self, pc: int, c1: int, c2: int):
-        self.pc = pc
-        self.c1 = c1
-        self.c2 = c2
-    
-    def __repr__(self) -> str:
-        return f"TCState(pc={self.pc}, c1={self.c1}, c2={self.c2})"
-
-
-def tc_step(program: list[TCInstruction], state: TCState) -> Optional[TCState]:
-    """Single step of a two-counter machine. Returns None if halted."""
-    if state.pc >= len(program):
-        return None
-    
-    instr = program[state.pc]
-    
-    if instr.op == TCInstruction.HALT:
-        return None
-    elif instr.op == TCInstruction.INC1:
-        return TCState(state.pc + 1, state.c1 + 1, state.c2)
-    elif instr.op == TCInstruction.INC2:
-        return TCState(state.pc + 1, state.c1, state.c2 + 1)
-    elif instr.op == TCInstruction.DEC1_JZ:
-        if state.c1 == 0:
-            return TCState(instr.jump_target, 0, state.c2)
-        else:
-            return TCState(state.pc + 1, state.c1 - 1, state.c2)
-    elif instr.op == TCInstruction.DEC2_JZ:
-        if state.c2 == 0:
-            return TCState(instr.jump_target, 0, state.c2)
-        else:
-            return TCState(state.pc + 1, state.c1, state.c2 - 1)
-    else:
-        return None
-
-
-def tc_run(program: list[TCInstruction], c1: int, c2: int, 
-           max_steps: int = 10000) -> list[TCState]:
-    """Run a two-counter machine, returning the trace."""
-    state = TCState(0, c1, c2)
-    trace = [state]
-    
-    for _ in range(max_steps):
-        next_state = tc_step(program, state)
-        if next_state is None:
-            break
-        trace.append(next_state)
-        state = next_state
-    
-    return trace
+def find_translation_period(
+    config: Config, max_period: int = 100
+) -> Optional[Tuple[int, Position]]:
+    """Find the translation period and offset of a spaceship pattern."""
+    current = config
+    for t in range(1, max_period + 1):
+        current = gol_step(current)
+        if not current:
+            continue
+        # Check if current is a translation of config
+        if len(current) != len(config):
+            continue
+        # Try all possible offsets
+        p1 = min(config)
+        p2 = min(current)
+        dx, dy = p2[0] - p1[0], p2[1] - p1[1]
+        translated = {(x + dx, y + dy) for x, y in config}
+        if translated == current:
+            return t, (dx, dy)
+    return None
 
 
 if __name__ == "__main__":
-    # Example: addition program (c1 += c2)
-    # 0: dec2_jz 2   (if c2 == 0, jump to halt)
-    # 1: inc1         (c1++)
-    # 2: halt
-    # Wait, this only moves one. Let me make a proper loop:
-    # 0: dec2_jz 2   (if c2==0, goto 2)
-    # 1: inc1         (c1++, then goto 0 implicitly... no, PC advances)
-    # We need: 0: dec2_jz 3, 1: inc1, 2: goto 0
-    # But we don't have goto. Use dec1_jz as unconditional jump by pre-setting c1=0
-    # Actually let's just demonstrate:
-    
-    add_program = [
-        TCInstruction(TCInstruction.DEC2_JZ, jump_target=2),  # 0: if c2==0 goto 2
-        TCInstruction(TCInstruction.INC1),                      # 1: c1++
-        # Need to loop back. Use dec1_jz with a dummy to implement goto.
-        # This simple model doesn't have unconditional jump, so let's demo differently.
-        TCInstruction(TCInstruction.HALT),                      # 2: halt
-    ]
-    
-    trace = tc_run(add_program, c1=5, c2=3)
-    print("Two-counter machine trace (partial addition):")
-    for s in trace:
-        print(f"  {s}")
-    
-    # Demo: NAND circuit for AND
-    # Wire 0, 1 are inputs
-    # Gate 0: NAND(0, 1) -> wire 2
-    # Gate 1: NAND(2, 2) -> wire 3 = AND(0, 1)
-    and_circuit = NandCircuit(
-        num_inputs=2,
-        gates=[(0, 1), (2, 2)],
-        output=3
-    )
-    
-    print("\nNAND circuit for AND:")
-    for a in [False, True]:
-        for b in [False, True]:
-            result = and_circuit.eval([a, b])
-            print(f"  AND({int(a)}, {int(b)}) = {int(result)}")
+    # Verify the glider is a period-4 spaceship
+    glider: Config = {(0, 1), (1, 2), (2, 0), (2, 1), (2, 2)}
+    result = find_translation_period(glider)
+    assert result is not None
+    period, offset = result
+    print(f"Glider: period={period}, offset={offset}")
+    assert period == 4
+
+    # Verify the blinker is period 2
+    blinker: Config = {(0, 0), (1, 0), (2, 0)}
+    p = find_period(blinker)
+    print(f"Blinker: period={p}")
+    assert p == 2
+
+    # Verify light cone theorem
+    config1: Config = {(0, 0), (0, 1), (1, 0)}
+    config2: Config = {(0, 0), (0, 1), (1, 0), (10, 10)}
+    assert verify_light_cone_theorem(config1, config2, (0, 0), 3)
+    print("Light cone theorem verified for test case!")
+
+    # Simulation overhead
+    print(f"\nSimulation space bounds:")
+    for D in [10, 50, 100]:
+        for t in [100, 1000]:
+            bound = simulation_space_bound(D, t)
+            print(f"  D={D}, t={t}: space ≤ {bound:,}")
