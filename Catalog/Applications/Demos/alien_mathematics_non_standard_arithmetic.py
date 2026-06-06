@@ -1,301 +1,430 @@
 #!/usr/bin/env python3
 """
-demo.py — Numerical demonstrations of non-standard arithmetic concepts.
+Non-Standard Arithmetic: Numerical Demonstrations
 
-Demonstrates the key ideas from the Overspill Semiring theory:
-1. Ultrafilter-like selection on finite approximations
-2. Factorial divisibility (infinitely composite elements)
-3. Transfer of primality through product structures
-4. The non-Archimedean nature of ultrapowers
+Demonstrates key concepts from the formalized theory of non-standard
+natural numbers via ultrapowers, including:
+- Ultrafilter properties and U-large sets
+- Existence of infinite elements
+- The overspill principle
+- Transfer of arithmetic properties
+- Descending chains from infinite elements
 """
 
-import math
-from collections import Counter
+import random
+from typing import Callable, List, Set, Tuple
+from fractions import Fraction
 
+# =============================================================================
+# Demo 1: Simulating a Free Ultrafilter
+# =============================================================================
 
-def demo_factorial_divisibility():
+def demo_free_ultrafilter():
     """
-    Demonstrate that n! is divisible by every k ≤ n.
-    In UltraNat, [i ↦ i!] is divisible by EVERY standard k.
+    Simulate a free ultrafilter on ℕ using a probabilistic model.
+    
+    A true free ultrafilter is non-constructive (requires AC), but we can
+    approximate one by deciding membership based on density: a set S is
+    "U-large" if its natural density exceeds 1/2.
+    
+    This approximation captures the key property: finite sets are small,
+    cofinite sets are large.
     """
     print("=" * 60)
-    print("DEMO 1: Factorial — The Infinitely Composite Element")
+    print("Demo 1: Simulating a Free Ultrafilter")
     print("=" * 60)
-    print()
-    print("In UltraNat, the element [i ↦ i!] is divisible by every")
-    print("standard natural number k > 0. Here we verify for small cases:")
-    print()
-
-    N = 20  # size of approximation
-    for k in range(1, 11):
-        divisible_indices = [i for i in range(k, N + 1) if math.factorial(i) % k == 0]
-        density = len(divisible_indices) / N
-        print(f"  k={k:2d}: {{i | k divides i!}} = {{i | i ≥ {k}}} "
-              f"— density {density:.2f} (→ 1 as N → ∞)")
-
-    print()
-    print("For any free ultrafilter U, ALL these sets are U-large,")
-    print("so [i ↦ i!] is simultaneously divisible by 1, 2, 3, 4, ...")
-    print("This is impossible for any standard natural number!")
-
-
-def demo_parity_transfer():
-    """
-    Demonstrate that every sequence has definite U-parity.
-    """
-    print()
-    print("=" * 60)
-    print("DEMO 2: Parity Transfer — Every Element Has Definite Parity")
-    print("=" * 60)
-    print()
-
-    sequences = {
-        "f(i) = i": lambda i: i,
-        "f(i) = i²": lambda i: i * i,
-        "f(i) = 2i+1": lambda i: 2 * i + 1,
-        "f(i) = i!": lambda i: math.factorial(i),
-        "f(i) = fib(i)": lambda i: fib(i),
+    
+    N = 10000  # simulation universe
+    
+    # Check various sets
+    test_sets = {
+        "Even numbers": lambda i: i % 2 == 0,
+        "Odd numbers": lambda i: i % 2 == 1,
+        "Multiples of 3": lambda i: i % 3 == 0,
+        "Numbers > 100": lambda i: i > 100,
+        "{0, 1, ..., 50}": lambda i: i <= 50,
+        "Primes < 1000": lambda i: is_prime(i) and i < 1000,
+        "All of ℕ": lambda i: True,
+        "Empty set": lambda i: False,
     }
+    
+    for name, pred in test_sets.items():
+        count = sum(1 for i in range(N) if pred(i))
+        density = count / N
+        is_large = density > 0.5
+        print(f"  {name:30s}  density={density:.4f}  U-large: {is_large}")
+    
+    # Key property: finite sets are always small
+    finite_set = set(range(100))
+    density = len(finite_set) / N
+    print(f"\n  Finite set {{0,...,99}}:       density={density:.4f}  → SMALL (as expected)")
+    print(f"  Its complement:              density={1-density:.4f}  → LARGE (free ultrafilter property)")
 
-    for name, f in sequences.items():
-        N = 50
-        even_count = sum(1 for i in range(1, N + 1) if f(i) % 2 == 0)
-        odd_count = N - even_count
-        parity = "EVEN" if even_count > odd_count else "ODD"
-        print(f"  {name:15s}: even={even_count}/{N}, odd={odd_count}/{N} "
-              f"→ U-parity: {parity}")
+def is_prime(n: int) -> bool:
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
-    print()
-    print("By the ultrafilter prime property, exactly one parity class")
-    print("is U-large — every UltraNat element is internally even or odd.")
+# =============================================================================
+# Demo 2: Infinite Elements in the Ultrapower
+# =============================================================================
 
-
-def fib(n):
-    """Compute n-th Fibonacci number."""
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
-
-
-def demo_prime_growth():
+def demo_infinite_elements():
     """
-    Demonstrate that the n-th prime grows without bound,
-    giving 'infinite primes' in UltraNat.
+    Demonstrate that the identity sequence (0, 1, 2, 3, ...) represents
+    an "infinite" element in the ultrapower — it exceeds every standard n.
     """
-    print()
+    print("\n" + "=" * 60)
+    print("Demo 2: Infinite Elements in the Ultrapower")
     print("=" * 60)
-    print("DEMO 3: Infinite Primes — Primes Beyond All Standard Numbers")
-    print("=" * 60)
-    print()
+    
+    N = 10000
+    identity = list(range(N))  # the identity sequence
+    
+    for standard_n in [10, 100, 1000, 5000]:
+        exceeds = sum(1 for i in range(N) if identity[i] > standard_n)
+        fraction = exceeds / N
+        print(f"  {{i | id(i) > {standard_n:5d}}} has {exceeds:5d}/{N} = {fraction:.4f} of indices")
+        print(f"    → {'U-large (cofinite complement)' if fraction > 0.5 else 'NOT U-large'}")
+    
+    # Compare with a constant sequence (standard element)
+    constant_42 = [42] * N
+    for standard_n in [10, 100]:
+        exceeds = sum(1 for i in range(N) if constant_42[i] > standard_n)
+        fraction = exceeds / N
+        print(f"  {{i | const_42(i) > {standard_n:3d}}} has {exceeds:5d}/{N} = {fraction:.4f}")
+        print(f"    → {('U-large' if fraction > 0.5 else 'NOT U-large')} (standard element)")
 
-    def nth_prime(n):
-        """Return the n-th prime (0-indexed)."""
-        primes = []
-        candidate = 2
-        while len(primes) <= n:
-            if all(candidate % p != 0 for p in primes):
-                primes.append(candidate)
-            candidate += 1
-        return primes[n]
+# =============================================================================
+# Demo 3: The Overspill Principle
+# =============================================================================
 
-    print("The sequence p(i) = (i+1)-th prime is always prime and → ∞:")
-    print()
-    for i in range(20):
-        p = nth_prime(i)
-        print(f"  p({i:2d}) = {p:4d}  (prime: True, exceeds {i}: {p > i})")
-
-    print()
-    print("In UltraNat, [i ↦ p(i)] is BOTH prime (cannot be factored)")
-    print("and infinite (larger than every standard number).")
-    print("Standard arithmetic forbids infinite primes — UltraNat has them!")
-
-
-def demo_transfer_coloring():
+def demo_overspill():
     """
-    Demonstrate the ultrafilter coloring theorem.
+    Demonstrate the overspill principle: if P(n) holds for all standard n,
+    then {i | ∀ k ≤ i, P(k)} = ℕ (trivially U-large).
+    
+    More interesting: demonstrate with a property that holds "up to a point"
+    and see where overspill fails.
     """
-    print()
+    print("\n" + "=" * 60)
+    print("Demo 3: The Overspill Principle")
     print("=" * 60)
-    print("DEMO 4: Ultrafilter Coloring — Exactly One Color Survives")
-    print("=" * 60)
-    print()
+    
+    N = 10000
+    
+    # Property 1: "k < 100" — holds for all k < 100, fails at k = 100
+    print("\n  Property P(k) = 'k < 100':")
+    for threshold in [50, 99, 100, 200]:
+        count = sum(1 for i in range(N) if all(k < 100 for k in range(min(threshold, i+1))))
+        # Actually: {i | ∀ k ≤ i, k < 100} = {0, 1, ..., 98}
+        overspill_set = sum(1 for i in range(N) if i < 100)
+        frac = overspill_set / N
+        print(f"    {{i | ∀ k ≤ i, k < 100}} has {overspill_set} elements → density {frac:.4f}")
+        break  # same for all thresholds
+    
+    # Property 2: "k is not prime or k < 1000" — demonstrates overspill failure
+    print("\n  Property P(k) = 'True' (holds for all k):")
+    overspill_set = N  # {i | ∀ k ≤ i, True} = ℕ
+    print(f"    {{i | ∀ k ≤ i, True}} = all of ℕ → density 1.0")
+    print(f"    → OVERSPILL SUCCEEDS: the set is all of ℕ")
+    
+    # Property 3: Bertrand's postulate
+    print("\n  Property P(k) = 'Bertrand: ∃ prime p with k < p ≤ 2k' (for k ≥ 1):")
+    failures = []
+    for k in range(1, 1001):
+        has_prime = any(is_prime(p) for p in range(k + 1, 2 * k + 1))
+        if not has_prime:
+            failures.append(k)
+    print(f"    Failures in [1, 1000]: {failures if failures else 'NONE'}")
+    print(f"    → Bertrand holds for all standard k, overspills to non-standard!")
 
+# =============================================================================
+# Demo 4: Transfer of Algebraic Properties
+# =============================================================================
+
+def demo_transfer():
+    """
+    Demonstrate that algebraic identities transfer to the ultrapower.
+    Since they hold pointwise for ALL indices, the relevant sets are all of ℕ.
+    """
+    print("\n" + "=" * 60)
+    print("Demo 4: Transfer of Algebraic Properties")
+    print("=" * 60)
+    
     N = 100
-    colorings = {
-        "c(i) = i mod 2": lambda i: i % 2,
-        "c(i) = i mod 3": lambda i: i % 3,
-        "c(i) = (i²+1) mod 4": lambda i: (i * i + 1) % 4,
+    random.seed(42)
+    
+    f = [random.randint(0, 1000) for _ in range(N)]
+    g = [random.randint(0, 1000) for _ in range(N)]
+    h = [random.randint(0, 1000) for _ in range(N)]
+    
+    # Check commutativity
+    comm_add = sum(1 for i in range(N) if f[i] + g[i] == g[i] + f[i])
+    comm_mul = sum(1 for i in range(N) if f[i] * g[i] == g[i] * f[i])
+    assoc = sum(1 for i in range(N) if (f[i] + g[i]) + h[i] == f[i] + (g[i] + h[i]))
+    distrib = sum(1 for i in range(N) if f[i] * (g[i] + h[i]) == f[i] * g[i] + f[i] * h[i])
+    
+    print(f"  Add commutativity: {comm_add}/{N} indices agree  → {'TRANSFERS' if comm_add == N else 'FAILS'}")
+    print(f"  Mul commutativity: {comm_mul}/{N} indices agree  → {'TRANSFERS' if comm_mul == N else 'FAILS'}")
+    print(f"  Add associativity: {assoc}/{N} indices agree  → {'TRANSFERS' if assoc == N else 'FAILS'}")
+    print(f"  Distributivity:    {distrib}/{N} indices agree  → {'TRANSFERS' if distrib == N else 'FAILS'}")
+    
+    # Zero product property
+    print("\n  Zero-product property (integral domain):")
+    for _ in range(5):
+        a = random.randint(0, 10)
+        b = random.randint(0, 10)
+        if a * b == 0:
+            print(f"    {a} × {b} = 0 → a=0: {a==0}, b=0: {b==0}, a=0 or b=0: {a==0 or b==0}")
+
+# =============================================================================
+# Demo 5: Descending Chains and Well-Ordering Failure
+# =============================================================================
+
+def demo_descending_chain():
+    """
+    Demonstrate descending chains from an infinite element.
+    Starting from [id], compute [id]-1, [id]-2, ..., [id]-k
+    and show each step is strictly decreasing on a U-large set.
+    """
+    print("\n" + "=" * 60)
+    print("Demo 5: Descending Chains (Well-Ordering Failure)")
+    print("=" * 60)
+    
+    N = 10000
+    
+    print(f"\n  Starting from the infinite element [id] = (0, 1, 2, 3, ...)")
+    print(f"  Computing [id] - k for k = 0, 1, 2, ..., 20:")
+    print(f"  (Using ℕ subtraction: n - k = max(n - k, 0))")
+    
+    for k in range(0, 21, 5):
+        # [id] - k: the sequence (max(0, 0-k), max(0, 1-k), ..., max(0, (N-1)-k))
+        seq = [max(0, i - k) for i in range(N)]
+        
+        if k > 0:
+            prev_seq = [max(0, i - (k-1)) for i in range(N)]
+            strictly_less = sum(1 for i in range(N) if seq[i] < prev_seq[i])
+            frac = strictly_less / N
+            print(f"    [id]-{k:2d} < [id]-{k-1:2d}: {strictly_less}/{N} = {frac:.4f} "
+                  f"{'→ U-LARGE (descent continues)' if frac > 0.5 else ''}")
+        else:
+            print(f"    [id]-{k:2d}: first 10 values = {seq[:10]}...")
+    
+    print(f"\n  In standard ℕ, any descending chain must terminate at 0.")
+    print(f"  In *ℕ, starting from [id], we can descend indefinitely!")
+
+# =============================================================================
+# Demo 6: Ultrafilter Limits
+# =============================================================================
+
+def demo_ultrafilter_limits():
+    """
+    Demonstrate ultrafilter limits for bounded sequences.
+    Using a density-based approximation of a free ultrafilter.
+    """
+    print("\n" + "=" * 60)
+    print("Demo 6: Ultrafilter Limits (Stone-Čech Bridge)")
+    print("=" * 60)
+    
+    N = 100000
+    
+    sequences = {
+        "1/(n+1)": lambda n: Fraction(1, n + 1),
+        "n/(n+1)": lambda n: Fraction(n, n + 1),
+        "(-1)^n * 1/(n+1) + 1/2": lambda n: Fraction((-1)**n, n + 1) + Fraction(1, 2),
     }
+    
+    for name, seq_fn in sequences.items():
+        # Compute approximate ultrafilter limit as the "density limit"
+        # For a free ultrafilter concentrating on large indices, this is the
+        # ordinary limit when it exists
+        tail_avg = sum(float(seq_fn(n)) for n in range(N - 1000, N)) / 1000
+        print(f"\n  Sequence f(n) = {name}:")
+        print(f"    First 5 values: {[float(seq_fn(n)) for n in range(5)]}")
+        print(f"    Tail average (last 1000): {tail_avg:.6f}")
+        print(f"    → Ultrafilter limit ≈ {tail_avg:.6f}")
 
-    for name, c in colorings.items():
-        num_colors = max(c(i) for i in range(N)) + 1
-        counts = Counter(c(i) for i in range(N))
-        print(f"  {name}:")
-        for color in range(num_colors):
-            density = counts.get(color, 0) / N
-            print(f"    Color {color}: density = {density:.3f}")
-        print(f"    → Any ultrafilter selects EXACTLY ONE color class")
-        print()
-
-
-def demo_non_archimedean():
-    """
-    Demonstrate the non-Archimedean property of UltraNat.
-    """
-    print()
-    print("=" * 60)
-    print("DEMO 5: Non-Archimedean — Breaking the Archimedean Axiom")
-    print("=" * 60)
-    print()
-
-    print("In ℕ (Archimedean): for every x, ∃ n with x ≤ n.")
-    print("In UltraNat: [id] = [i ↦ i] exceeds every constant [i ↦ n].")
-    print()
-
-    print("Verification: for each n, {i | n < i} has density → 1:")
-    for n in [1, 10, 100, 1000]:
-        N = 10000
-        count = sum(1 for i in range(N) if n < i)
-        print(f"  n = {n:4d}: |{{i < {N} | {n} < i}}| / {N} = {count/N:.4f}")
-
-    print()
-    print("Every such set is cofinite, hence in any free ultrafilter.")
-    print("So [id] > [const n] for ALL n — truly non-Archimedean!")
-
+# =============================================================================
+# Main
+# =============================================================================
 
 if __name__ == "__main__":
-    demo_factorial_divisibility()
-    demo_parity_transfer()
-    demo_prime_growth()
-    demo_transfer_coloring()
-    demo_non_archimedean()
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  NON-STANDARD ARITHMETIC: Numerical Demonstrations     ║")
+    print("║  Exploring *ℕ = ℕ^ℕ/U — Numbers Beyond Infinity       ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+    
+    demo_free_ultrafilter()
+    demo_infinite_elements()
+    demo_overspill()
+    demo_transfer()
+    demo_descending_chain()
+    demo_ultrafilter_limits()
+    
+    print("\n" + "=" * 60)
+    print("All demonstrations complete.")
+    print("See ARTICLE.md for the full story and RESEARCH_PAPER.md for details.")
 
 
 #!/usr/bin/env python3
 """
-viz_transfer.py — Visualization of ultrafilter transfer principles.
+Visualization: Non-Standard Arithmetic Ultrapower Structure
 
-Produces a figure showing how properties transfer through ultraproducts,
-with examples of divisibility, primality, and parity transfer.
+Creates plots showing:
+1. U-large sets and the free ultrafilter property
+2. Infinite elements dominating all standard naturals
+3. Descending chains from infinite elements
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import numpy as np
-import math
 
-
-def is_prime(n):
-    if n < 2:
-        return False
-    for d in range(2, int(n**0.5) + 1):
-        if n % d == 0:
-            return False
-    return True
-
-
-def nth_prime(n):
-    """Return the n-th prime (0-indexed)."""
-    count = 0
-    candidate = 2
-    while True:
-        if is_prime(candidate):
-            if count == n:
-                return candidate
-            count += 1
-        candidate += 1
-
-
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle("Ultrafilter Transfer Principles in Non-Standard Arithmetic",
-                 fontsize=14, fontweight='bold')
-
-    N = 60
-
-    # Panel 1: Factorial divisibility
-    ax = axes[0, 0]
-    for k in [2, 3, 5, 7, 11]:
-        xs = list(range(1, N + 1))
-        ys = [1 if math.factorial(i) % k == 0 else 0 for i in xs]
-        offset = {2: 0, 3: 0.15, 5: 0.3, 7: 0.45, 11: 0.6}[k]
-        colors = ['green' if y else 'red' for y in ys]
-        ax.scatter([x + offset * 0.3 for x in xs], [k] * len(xs),
-                   c=colors, s=8, alpha=0.7)
-    ax.set_xlabel("Index i")
-    ax.set_ylabel("Divisor k")
-    ax.set_title("Factorial Divisibility: k | i!")
-    ax.set_yticks([2, 3, 5, 7, 11])
-    green_patch = mpatches.Patch(color='green', label='k | i! (True)')
-    red_patch = mpatches.Patch(color='red', label='k | i! (False)')
-    ax.legend(handles=[green_patch, red_patch], loc='lower right', fontsize=8)
-
-    # Panel 2: Primality of nth prime sequence
-    ax = axes[0, 1]
-    primes_seq = [nth_prime(i) for i in range(N)]
-    id_seq = list(range(N))
-    ax.plot(range(N), primes_seq, 'b-', linewidth=1.5, label='p(i) = (i+1)-th prime')
-    ax.plot(range(N), id_seq, 'r--', linewidth=1, alpha=0.5, label='id(i) = i')
-    ax.fill_between(range(N), id_seq, primes_seq, alpha=0.1, color='blue')
-    ax.set_xlabel("Index i")
-    ax.set_ylabel("Value")
-    ax.set_title("Infinite Primes: p(i) > i for all i")
+def plot_ularge_sets():
+    """Plot the density of various sets under a free ultrafilter approximation."""
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    
+    N = 1000
+    indices = np.arange(N)
+    
+    # Panel 1: Finite vs cofinite sets
+    ax = axes[0]
+    finite_sizes = list(range(0, N, 10))
+    densities = [s / N for s in finite_sizes]
+    ax.plot(finite_sizes, densities, 'b-', linewidth=2, label='Density of {0,...,k}')
+    ax.axhline(y=0.5, color='r', linestyle='--', alpha=0.7, label='U-large threshold')
+    ax.fill_between(finite_sizes, 0.5, 1, alpha=0.1, color='green', label='U-large region')
+    ax.fill_between(finite_sizes, 0, 0.5, alpha=0.1, color='red', label='U-small region')
+    ax.set_xlabel('Set size k')
+    ax.set_ylabel('Density')
+    ax.set_title('Finite Sets are U-small')
     ax.legend(fontsize=8)
-
-    # Panel 3: Parity transfer
-    ax = axes[1, 0]
-    sequences = {
-        'i': lambda i: i,
-        'i²': lambda i: i * i,
-        '2i+1': lambda i: 2 * i + 1,
-        'i!': lambda i: math.factorial(i) if i < 20 else 0,
-        'fib(i)': lambda i: fib(i) if i < 30 else 0,
-    }
-    y_pos = 0
-    for name, f in sequences.items():
-        xs = list(range(1, min(N, 25) + 1))
-        parities = [f(i) % 2 for i in xs]
-        colors = ['blue' if p == 0 else 'orange' for p in parities]
-        ax.scatter(xs, [y_pos] * len(xs), c=colors, s=15, marker='s')
-        ax.text(-2, y_pos, name, ha='right', va='center', fontsize=9)
-        y_pos += 1
-    ax.set_xlabel("Index i")
-    ax.set_title("Parity Transfer: Even (blue) vs Odd (orange)")
-    ax.set_yticks([])
-    ax.set_xlim(-5, min(N, 25) + 2)
-    blue_patch = mpatches.Patch(color='blue', label='Even')
-    orange_patch = mpatches.Patch(color='orange', label='Odd')
-    ax.legend(handles=[blue_patch, orange_patch], loc='upper right', fontsize=8)
-
-    # Panel 4: Non-Archimedean growth
-    ax = axes[1, 1]
-    xs = list(range(1, N + 1))
-    id_vals = xs
-    fact_vals = [min(math.factorial(i), 1e8) for i in xs]
-    const_vals = {10: [10] * len(xs), 100: [100] * len(xs), 1000: [1000] * len(xs)}
-
-    ax.semilogy(xs, fact_vals, 'b-', linewidth=2, label='[i ↦ i!] (infinite)')
-    ax.semilogy(xs, id_vals, 'g-', linewidth=1.5, label='[i ↦ i] (infinite)')
-    for n, vals in const_vals.items():
-        ax.semilogy(xs, vals, '--', alpha=0.4, label=f'[const {n}] (standard)')
-    ax.set_xlabel("Index i")
-    ax.set_ylabel("Value (log scale)")
-    ax.set_title("Non-Archimedean: Infinite Elements Exceed All Constants")
-    ax.legend(fontsize=7, loc='lower right')
-
+    
+    # Panel 2: Cofinite sets are U-large
+    ax = axes[1]
+    ax.plot(finite_sizes, [1 - d for d in densities], 'g-', linewidth=2, label='Density of {k+1,...,N}')
+    ax.axhline(y=0.5, color='r', linestyle='--', alpha=0.7, label='U-large threshold')
+    ax.fill_between(finite_sizes, 0.5, 1, alpha=0.1, color='green')
+    ax.fill_between(finite_sizes, 0, 0.5, alpha=0.1, color='red')
+    ax.set_xlabel('Complement starting point k')
+    ax.set_ylabel('Density')
+    ax.set_title('Cofinite Sets are U-large')
+    ax.legend(fontsize=8)
+    
+    # Panel 3: The ultrafilter prime property
+    ax = axes[2]
+    even_density = [sum(1 for i in range(n+1) if i % 2 == 0) / (n+1) for n in range(N)]
+    odd_density = [sum(1 for i in range(n+1) if i % 2 == 1) / (n+1) for n in range(N)]
+    ax.plot(range(N), even_density, 'b-', alpha=0.7, linewidth=1, label='Even numbers')
+    ax.plot(range(N), odd_density, 'r-', alpha=0.7, linewidth=1, label='Odd numbers')
+    ax.axhline(y=0.5, color='gray', linestyle='--', alpha=0.7)
+    ax.set_xlabel('Universe size')
+    ax.set_ylabel('Density')
+    ax.set_title('Ultrafilter Must Choose: Even OR Odd')
+    ax.legend(fontsize=8)
+    ax.set_ylim(0.4, 0.6)
+    
     plt.tight_layout()
-    plt.savefig("transfer_visualization.png", dpi=150, bbox_inches='tight')
+    plt.savefig('viz_ularge_sets.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved transfer_visualization.png")
+    print("Saved: viz_ularge_sets.png")
 
 
-def fib(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
+def plot_infinite_element():
+    """Visualize the infinite element [id] dominating all standard naturals."""
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+    
+    N = 200
+    indices = np.arange(N)
+    
+    # Panel 1: Identity vs constant sequences
+    ax = axes[0]
+    ax.plot(indices, indices, 'b-', linewidth=2, label='[id] = (0,1,2,...)')
+    for c in [10, 50, 100, 150]:
+        ax.axhline(y=c, color='red', linestyle='--', alpha=0.5, linewidth=1)
+        ax.text(5, c + 3, f'std({c})', color='red', fontsize=8)
+    
+    ax.fill_between(indices, indices, 200, alpha=0.05, color='blue')
+    ax.set_xlabel('Index i')
+    ax.set_ylabel('Value')
+    ax.set_title('Infinite Element [id] vs Standard Elements')
+    ax.legend(fontsize=10)
+    ax.set_ylim(0, 200)
+    
+    # Panel 2: Fraction of indices where [id] > n, for various n
+    ax = axes[1]
+    standard_values = list(range(0, N))
+    fractions = [(N - n - 1) / N for n in standard_values]
+    ax.plot(standard_values, fractions, 'b-', linewidth=2)
+    ax.axhline(y=0.5, color='r', linestyle='--', alpha=0.7, label='U-large threshold')
+    ax.fill_between(standard_values, 0.5, [max(f, 0.5) for f in fractions], alpha=0.2, color='green', label='U-large (id > n)')
+    ax.set_xlabel('Standard bound n')
+    ax.set_ylabel('Fraction of indices where id(i) > n')
+    ax.set_title('Density of {i | id(i) > n}')
+    ax.legend(fontsize=10)
+    
+    plt.tight_layout()
+    plt.savefig('viz_infinite_element.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_infinite_element.png")
+
+
+def plot_descending_chain():
+    """Visualize descending chains from infinite elements."""
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+    
+    N = 100
+    indices = np.arange(N)
+    
+    # Panel 1: The chain [id], [id]-1, [id]-2, ...
+    ax = axes[0]
+    colors = plt.cm.viridis(np.linspace(0, 0.8, 11))
+    for k in range(0, 11, 2):
+        chain_k = np.maximum(indices - k, 0)
+        ax.plot(indices, chain_k, color=colors[k], linewidth=1.5, label=f'[id]−{k}')
+    ax.set_xlabel('Index i')
+    ax.set_ylabel('Value')
+    ax.set_title('Descending Chain from [id]')
+    ax.legend(fontsize=8, loc='upper left')
+    
+    # Panel 2: For each step, density of strict descent
+    ax = axes[1]
+    steps = list(range(1, 51))
+    descent_densities = []
+    for k in steps:
+        chain_prev = np.maximum(indices - (k - 1), 0)
+        chain_curr = np.maximum(indices - k, 0)
+        strictly_less = np.sum(chain_curr < chain_prev)
+        descent_densities.append(strictly_less / N)
+    
+    ax.plot(steps, descent_densities, 'b-', linewidth=2)
+    ax.axhline(y=0.5, color='r', linestyle='--', alpha=0.7, label='U-large threshold')
+    ax.fill_between(steps, 0.5, descent_densities, alpha=0.2, color='green', label='U-large descent')
+    ax.set_xlabel('Step k')
+    ax.set_ylabel('Density of strict descent')
+    ax.set_title('Descending Chain: Each Step is U-large')
+    ax.legend(fontsize=10)
+    ax.set_ylim(0, 1.05)
+    
+    plt.tight_layout()
+    plt.savefig('viz_descending_chain.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_descending_chain.png")
 
 
 if __name__ == "__main__":
-    main()
+    plot_ularge_sets()
+    plot_infinite_element()
+    plot_descending_chain()
+    print("All visualizations generated.")

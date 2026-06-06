@@ -1,219 +1,266 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Core algorithms for non-standard arithmetic computations.
+Non-Standard Arithmetic: Core Algorithms
 
-Implements:
-1. UltrafilterApprox: Finite approximation to ultrafilter selection
-2. TransferEngine: Automated property transfer checker
-3. OverspillDetector: Identifies when overspill applies
+Type-hinted implementations of the key algorithms from the
+non-standard arithmetic theory.
 """
 
-from typing import Callable, List, Tuple, Optional, TypeVar
+from typing import Callable, List, Optional, Set, Tuple
+from fractions import Fraction
 import math
 
-T = TypeVar('T')
 
+# =============================================================================
+# Algorithm 1: Ultrapower Arithmetic
+# =============================================================================
 
-class UltrafilterApprox:
+class UltrapowerElement:
     """
-    Finite approximation to an ultrafilter on ℕ.
-
-    Uses a 'selection function' that, given a partition of {0,...,N-1},
-    returns the selected block. For a free ultrafilter approximation,
-    we select the block with the largest elements (cofinality bias).
-
-    In the limit N → ∞, this approximates the behavior of a free
-    ultrafilter selecting cofinite sets.
+    Represents an element of the ultrapower ℕ^ℕ/U.
+    
+    In practice, we represent it as a finite-length sequence
+    (a truncation of the infinite sequence) and use density-based
+    "U-large" decisions as an approximation to a true free ultrafilter.
     """
-
-    def __init__(self, size: int = 1000, bias: str = "cofinal"):
+    
+    def __init__(self, seq: List[int], universe_size: int = 10000):
+        """Initialize with a sequence of natural numbers."""
+        self.seq = seq
+        self.n = len(seq)
+        self.universe_size = universe_size
+    
+    @staticmethod
+    def standard(value: int, n: int = 10000) -> 'UltrapowerElement':
+        """Create a standard element (constant sequence)."""
+        return UltrapowerElement([value] * n, n)
+    
+    @staticmethod
+    def identity(n: int = 10000) -> 'UltrapowerElement':
+        """Create the diagonal/identity element (0, 1, 2, 3, ...)."""
+        return UltrapowerElement(list(range(n)), n)
+    
+    def __add__(self, other: 'UltrapowerElement') -> 'UltrapowerElement':
+        """Pointwise addition."""
+        assert self.n == other.n
+        return UltrapowerElement([a + b for a, b in zip(self.seq, other.seq)], self.n)
+    
+    def __mul__(self, other: 'UltrapowerElement') -> 'UltrapowerElement':
+        """Pointwise multiplication."""
+        assert self.n == other.n
+        return UltrapowerElement([a * b for a, b in zip(self.seq, other.seq)], self.n)
+    
+    def __sub__(self, other: 'UltrapowerElement') -> 'UltrapowerElement':
+        """Pointwise ℕ-subtraction (truncated at 0)."""
+        assert self.n == other.n
+        return UltrapowerElement([max(0, a - b) for a, b in zip(self.seq, other.seq)], self.n)
+    
+    def u_large_set(self, predicate: Callable[[int], bool]) -> float:
         """
-        Args:
-            size: Approximation universe size
-            bias: Selection strategy ('cofinal', 'density', 'random')
+        Compute the density of {i | predicate(seq[i])}.
+        Returns a float in [0, 1]; values > 0.5 are "U-large".
         """
-        self.size = size
-        self.bias = bias
-
-    def is_large(self, predicate: Callable[[int], bool]) -> bool:
-        """Check if {i | predicate(i)} would be U-large."""
-        count = sum(1 for i in range(self.size) if predicate(i))
-        if self.bias == "cofinal":
-            # Check if predicate holds for all sufficiently large i
-            tail_size = self.size // 10
-            tail_count = sum(1 for i in range(self.size - tail_size, self.size)
-                           if predicate(i))
-            return tail_count == tail_size  # Must hold on entire tail
-        elif self.bias == "density":
-            return count > self.size // 2
-        else:
-            return count > self.size // 2
-
-    def select_color(self, coloring: Callable[[int], int],
-                     num_colors: int) -> int:
-        """Select the unique U-large color class."""
-        counts = [0] * num_colors
-        for i in range(self.size):
-            counts[coloring(i)] += 1
-        return max(range(num_colors), key=lambda c: counts[c])
-
-    def transfer_and(self, p: Callable[[int], bool],
-                     q: Callable[[int], bool]) -> bool:
-        """Check if P ∧ Q holds U-a.e., given P and Q hold U-a.e."""
-        return self.is_large(lambda i: p(i) and q(i))
-
-    def transfer_or(self, p: Callable[[int], bool],
-                    q: Callable[[int], bool]) -> Tuple[bool, bool]:
-        """Determine which of P, Q is U-large (at least one must be)."""
-        p_large = self.is_large(p)
-        q_large = self.is_large(q)
-        return (p_large, q_large)
-
-
-class TransferEngine:
-    """
-    Checks whether arithmetic properties transfer through ultraproducts.
-
-    Given a property P on ℕ expressed as a predicate, verifies that:
-    - P(f(i)) holds U-a.e.
-    - The transfer preserves logical connectives
-    """
-
-    def __init__(self, ultra: UltrafilterApprox):
-        self.ultra = ultra
-
-    def check_pointwise(self, f: Callable[[int], int],
-                        prop: Callable[[int], bool]) -> bool:
-        """Check if prop(f(i)) holds U-a.e."""
-        return self.ultra.is_large(lambda i: prop(f(i)))
-
-    def check_divisibility(self, f: Callable[[int], int],
-                           g: Callable[[int], int]) -> bool:
-        """Check if f | g holds U-a.e."""
-        return self.ultra.is_large(
-            lambda i: f(i) != 0 and g(i) % f(i) == 0
-        )
-
-    def check_primality(self, f: Callable[[int], int]) -> bool:
-        """Check if f(i) is prime U-a.e."""
-        def is_prime(n: int) -> bool:
-            if n < 2:
+        count = sum(1 for x in self.seq if predicate(x))
+        return count / self.n
+    
+    def is_infinite(self) -> bool:
+        """Check if this element is "infinite" (exceeds every standard n)."""
+        # An element is infinite if for every M, {i | seq[i] > M} is U-large
+        # We check for several values of M
+        for M in [10, 100, 1000]:
+            density = self.u_large_set(lambda x, m=M: x > m)
+            if density <= 0.5:
                 return False
-            for d in range(2, int(n**0.5) + 1):
-                if n % d == 0:
-                    return False
-            return True
-        return self.ultra.is_large(lambda i: is_prime(f(i)))
-
-    def verify_bezout(self, f: Callable[[int], int],
-                      g: Callable[[int], int]) -> bool:
-        """Verify Bezout's identity transfers: ∃ a,b: gcd(f,g) = f·a + g·b."""
-        def bezout_holds(i: int) -> bool:
-            d = math.gcd(f(i), g(i))
-            # Extended Euclidean algorithm
-            if f(i) == 0 and g(i) == 0:
-                return True
-            _, a, b = extended_gcd(f(i), g(i))
-            return d == f(i) * a + g(i) * b
-        return self.ultra.is_large(bezout_holds)
+        return True
+    
+    def u_equivalent(self, other: 'UltrapowerElement') -> float:
+        """Density of {i | seq[i] = other.seq[i]}."""
+        assert self.n == other.n
+        return sum(1 for a, b in zip(self.seq, other.seq) if a == b) / self.n
+    
+    def __repr__(self) -> str:
+        if len(set(self.seq)) == 1:
+            return f"Std({self.seq[0]})"
+        return f"[{', '.join(str(x) for x in self.seq[:5])}, ...]"
 
 
-class OverspillDetector:
+# =============================================================================
+# Algorithm 2: Overspill Detection
+# =============================================================================
+
+def overspill_check(
+    predicate: Callable[[int], bool],
+    max_standard: int = 10000
+) -> Tuple[bool, Optional[int]]:
     """
-    Detects overspill phenomena in finite approximations.
-
-    Overspill: if an internal property holds for all 'standard' elements
-    (n < threshold), it must hold for some element beyond the threshold.
+    Check if a predicate P satisfies the overspill condition.
+    
+    Returns (holds_for_all_standard, first_failure) where:
+    - holds_for_all_standard: True if P(k) holds for all k in [0, max_standard]
+    - first_failure: The first k where P(k) fails, or None if it holds everywhere
+    
+    If holds_for_all_standard is True, then by the Overspill Principle,
+    P must hold for some non-standard element in any free ultrapower.
     """
-
-    def __init__(self, threshold: int = 100, universe: int = 1000):
-        self.threshold = threshold
-        self.universe = universe
-
-    def check_overspill(self, prop: Callable[[int], bool]) -> Optional[int]:
-        """
-        If prop holds for all n < threshold, find the first
-        witness beyond threshold where it still holds.
-
-        Returns the witness, or None if overspill fails
-        (which would mean the property is 'external', like 'being standard').
-        """
-        # Verify prop holds for all standard elements
-        for n in range(self.threshold):
-            if not prop(n):
-                return None
-
-        # Search for overspill witness
-        for n in range(self.threshold, self.universe):
-            if prop(n):
-                return n
-        return None
-
-    def detect_internal(self, prop: Callable[[int], bool]) -> bool:
-        """
-        Heuristically determine if a property is 'internal' (transfers)
-        vs 'external' (doesn't transfer).
-
-        Internal properties: defined by arithmetic operations
-        External properties: reference the 'standard' predicate
-        """
-        witness = self.check_overspill(prop)
-        return witness is not None
-
-    def find_overspill_boundary(self, prop: Callable[[int], bool]) -> int:
-        """Find the largest element where prop still holds."""
-        last_true = -1
-        for n in range(self.universe):
-            if prop(n):
-                last_true = n
-        return last_true
+    for k in range(max_standard + 1):
+        if not predicate(k):
+            return (False, k)
+    return (True, None)
 
 
-def extended_gcd(a: int, b: int) -> Tuple[int, int, int]:
-    """Extended Euclidean algorithm. Returns (gcd, x, y) where a*x + b*y = gcd."""
-    if a == 0:
-        return b, 0, 1
-    gcd, x, y = extended_gcd(b % a, a)
-    return gcd, y - (b // a) * x, x
-
-
-def compute_ultra_element(f: Callable[[int], int],
-                          g: Callable[[int], int],
-                          op: str = "add",
-                          size: int = 20) -> List[int]:
+def underspill_check(
+    predicate: Callable[[int], bool],
+    max_check: int = 10000
+) -> Tuple[bool, Optional[int]]:
     """
-    Compute the pointwise operation of two UltraNat representatives.
-
-    Returns the result sequence for visual inspection.
+    Check the underspill condition: if P fails for all "large" elements,
+    find the standard failure point.
+    
+    Returns (has_standard_failure, failure_point).
     """
-    if op == "add":
-        return [f(i) + g(i) for i in range(size)]
-    elif op == "mul":
-        return [f(i) * g(i) for i in range(size)]
-    elif op == "gcd":
-        return [math.gcd(f(i), g(i)) for i in range(size)]
-    else:
-        raise ValueError(f"Unknown operation: {op}")
+    for k in range(max_check, -1, -1):
+        if not predicate(k):
+            return (True, k)
+    return (False, None)
+
+
+# =============================================================================
+# Algorithm 3: Transfer Verification
+# =============================================================================
+
+def verify_transfer(
+    identity: Callable[[List[int]], bool],
+    num_samples: int = 1000,
+    max_val: int = 100
+) -> Tuple[float, int]:
+    """
+    Verify that an algebraic identity transfers to the ultrapower.
+    
+    Tests the identity on random sequences and returns:
+    - density: fraction of index positions where the identity holds
+    - violations: number of positions where it fails
+    
+    For genuine algebraic identities (like commutativity), density should be 1.0.
+    """
+    import random
+    random.seed(42)
+    
+    violations = 0
+    total = 0
+    
+    for _ in range(num_samples):
+        vals = [random.randint(0, max_val) for _ in range(10)]
+        if not identity(vals):
+            violations += 1
+        total += 1
+    
+    density = 1.0 - violations / total
+    return (density, violations)
+
+
+# =============================================================================
+# Algorithm 4: Ultrafilter Limit Computation
+# =============================================================================
+
+def ultrafilter_limit(
+    sequence: Callable[[int], float],
+    n_terms: int = 100000,
+    tail_fraction: float = 0.01
+) -> Tuple[float, float]:
+    """
+    Approximate the ultrafilter limit of a bounded sequence.
+    
+    For a free ultrafilter, the ultrafilter limit of a convergent sequence
+    equals its ordinary limit. For oscillating sequences, the ultrafilter
+    "chooses" a subsequential limit.
+    
+    Returns (limit_estimate, confidence) where confidence measures
+    how stable the estimate is.
+    """
+    tail_size = max(1, int(n_terms * tail_fraction))
+    tail_start = n_terms - tail_size
+    
+    tail_values = [sequence(i) for i in range(tail_start, n_terms)]
+    
+    limit_est = sum(tail_values) / len(tail_values)
+    
+    # Confidence: inverse of variance in the tail
+    variance = sum((v - limit_est) ** 2 for v in tail_values) / len(tail_values)
+    confidence = 1.0 / (1.0 + variance)
+    
+    return (limit_est, confidence)
+
+
+# =============================================================================
+# Algorithm 5: Descending Chain Construction
+# =============================================================================
+
+def descending_chain(
+    infinite_element: UltrapowerElement,
+    num_steps: int = 20
+) -> List[UltrapowerElement]:
+    """
+    Construct a descending chain from an infinite element in *ℕ.
+    
+    Starting from [f], computes [f]-1, [f]-2, ..., [f]-k.
+    In standard ℕ, such a chain must terminate. In *ℕ, it continues
+    indefinitely from an infinite starting point.
+    
+    Returns the chain of ultrapower elements.
+    """
+    chain = [infinite_element]
+    one = UltrapowerElement.standard(1, infinite_element.n)
+    
+    current = infinite_element
+    for _ in range(num_steps):
+        current = current - one
+        chain.append(current)
+    
+    return chain
+
+
+def verify_chain_descending(chain: List[UltrapowerElement]) -> List[float]:
+    """
+    Verify that each step in the chain is strictly descending U-a.e.
+    
+    Returns the density of {i | chain[k+1][i] < chain[k][i]} for each step.
+    """
+    densities = []
+    for k in range(len(chain) - 1):
+        n = chain[k].n
+        strictly_less = sum(
+            1 for i in range(n)
+            if chain[k + 1].seq[i] < chain[k].seq[i]
+        )
+        densities.append(strictly_less / n)
+    return densities
 
 
 if __name__ == "__main__":
-    # Example usage
-    U = UltrafilterApprox(size=500)
-    engine = TransferEngine(U)
-    detector = OverspillDetector(threshold=50, universe=500)
-
-    # Check factorial divisibility
-    print("Factorial divisibility by 6:", engine.check_divisibility(
-        lambda i: 6, lambda i: math.factorial(max(i, 1))
-    ))
-
-    # Check primality of p(i) = 2i+1 (not always prime)
-    print("Primality of 2i+1:", engine.check_primality(lambda i: 2*i+1))
-
-    # Overspill: "n < 1000" holds for all standard n < 50
-    witness = detector.check_overspill(lambda n: n < 1000)
-    print(f"Overspill witness for 'n < 1000': {witness}")
-
-    # "Being standard" does NOT overspill
-    witness = detector.check_overspill(lambda n: n < 50)
-    print(f"Overspill for 'n < 50' (external): {witness}")
+    # Quick self-test
+    print("Testing UltrapowerElement...")
+    
+    # Standard elements
+    three = UltrapowerElement.standard(3)
+    five = UltrapowerElement.standard(5)
+    eight = three + five
+    assert all(x == 8 for x in eight.seq), "3 + 5 should be 8"
+    
+    # Infinite element
+    omega = UltrapowerElement.identity()
+    assert omega.is_infinite(), "Identity should be infinite"
+    assert not three.is_infinite(), "Standard 3 should not be infinite"
+    
+    # Overspill
+    result, failure = overspill_check(lambda k: k < 1000, max_standard=2000)
+    assert not result and failure == 1000
+    
+    result, failure = overspill_check(lambda k: True, max_standard=1000)
+    assert result and failure is None
+    
+    # Descending chain
+    chain = descending_chain(omega, 10)
+    densities = verify_chain_descending(chain)
+    assert all(d > 0.99 for d in densities), f"Chain should be descending: {densities}"
+    
+    print("All tests passed!")
