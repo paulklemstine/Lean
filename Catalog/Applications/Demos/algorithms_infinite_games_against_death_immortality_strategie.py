@@ -1,261 +1,293 @@
 #!/usr/bin/env python3
 """
-Asymmetric Duration Games: Core Algorithms
-Type-hinted implementations of all key strategies and game mechanics.
+Algorithms for Infinite Games Against Death
+
+Type-hinted implementations of the key algorithms from the
+Mortal-Eternity game framework.
 """
 
-from typing import FrozenSet, Set, Callable, Tuple, List, Optional
+from typing import List, Tuple, Optional, Callable, Iterator
 from dataclasses import dataclass
+from enum import Enum
 
 
-# ============================================================
-# Type Aliases
-# ============================================================
-BannedSet = FrozenSet[int]
-MortalStrategy = Callable[[Set[int]], int]
-EternityStrategy = Callable[[Set[int], int], int]
+class GameOutcome(Enum):
+    """Outcome of a single round."""
+    SURVIVED = "survived"
+    CAUGHT = "caught"
 
-
-# ============================================================
-# Core Strategies
-# ============================================================
-
-def ascending_strategy(banned: Set[int]) -> int:
-    """The ascending strategy: always pick above the maximum banned value.
-    
-    Theorem: This strategy is safe (never picks a banned position)
-    and achieves ω-survival (survives any finite number of rounds).
-    
-    Time complexity: O(|banned|) per round.
-    Space complexity: O(1) additional (beyond the banned set).
-    """
-    if not banned:
-        return 0
-    return max(banned) + 1
-
-
-def cardinality_strategy(banned: Set[int]) -> int:
-    """The cardinality strategy: pick |banned| as position.
-    
-    Theorem: This strategy is finite-state (depends only on |banned|).
-    Note: NOT always safe — fails if |banned| ∈ banned.
-    """
-    return len(banned)
-
-
-def spread_strategy(lane: int, k: int) -> MortalStrategy:
-    """k-lane spread strategy: play ascending in region [lane * stride, ...].
-    
-    Used for k-player coalition games.
-    """
-    def strategy(banned: Set[int]) -> int:
-        stride = 1000  # Large separation between lanes
-        local_banned = {x for x in banned if x >= lane * stride}
-        if not local_banned:
-            return lane * stride
-        return max(local_banned) + 1
-    return strategy
-
-
-# ============================================================
-# Game Engine
-# ============================================================
 
 @dataclass
-class GameResult:
-    """Result of playing an evasion game."""
-    mortal_moves: List[int]
-    eternity_bans: List[int]
-    survived: bool
-    rounds_played: int
-    final_banned_set: Set[int]
-
-
-def play_evasion_game(
-    mortal: MortalStrategy,
-    eternity: EternityStrategy,
-    n_rounds: int
-) -> GameResult:
-    """Play the standard evasion game for n rounds.
+class GameState:
+    """State of a layered survival game."""
+    counters: List[int]  # Stack of counters (depth = len(counters))
+    total_rounds: int = 0
     
-    Each round:
-    1. Mortal picks a position based on the current banned set
-    2. If the position is banned, Mortal loses
-    3. Eternity bans a new position based on the banned set and Mortal's choice
+    @property
+    def depth(self) -> int:
+        return len(self.counters)
+    
+    @property  
+    def is_alive(self) -> bool:
+        return any(c > 0 for c in self.counters)
+
+
+def cyclic_shift(position: int, board_size: int) -> int:
     """
-    banned: Set[int] = set()
-    mortal_moves: List[int] = []
-    eternity_bans: List[int] = []
+    Mortal's reactive evasion strategy.
     
-    for i in range(n_rounds):
-        pos = mortal(banned)
-        mortal_moves.append(pos)
-        if pos in banned:
-            return GameResult(mortal_moves, eternity_bans, False, i, banned)
-        ban = eternity(banned, pos)
-        eternity_bans.append(ban)
-        banned.add(ban)
+    The cyclic shift i ↦ (i+1) mod n is fixed-point-free for n ≥ 2,
+    guaranteeing survival at every reactive round.
     
-    return GameResult(mortal_moves, eternity_bans, True, n_rounds, banned)
-
-
-def play_power_evasion_game(
-    mortal: MortalStrategy,
-    eternity_power: Callable[[Set[int], int], List[int]],
-    n_rounds: int
-) -> GameResult:
-    """Play with k-power Eternity (bans multiple positions per round).
+    Args:
+        position: Eternity's search position (0 ≤ position < board_size)
+        board_size: Number of positions on the board (n ≥ 2)
     
-    Theorem: The ascending strategy survives against any k-power Eternity.
+    Returns:
+        Mortal's hiding position, guaranteed ≠ position
+    
+    Complexity: O(1) time, O(1) space
     """
-    banned: Set[int] = set()
-    mortal_moves: List[int] = []
-    all_bans: List[int] = []
-    
-    for i in range(n_rounds):
-        pos = mortal(banned)
-        mortal_moves.append(pos)
-        if pos in banned:
-            return GameResult(mortal_moves, all_bans, False, i, banned)
-        new_bans = eternity_power(banned, pos)
-        all_bans.extend(new_bans)
-        banned.update(new_bans)
-    
-    return GameResult(mortal_moves, all_bans, True, n_rounds, banned)
+    assert board_size >= 2, "Need at least 2 positions for evasion"
+    return (position + 1) % board_size
 
 
-# ============================================================
-# Survival Verification
-# ============================================================
-
-def verify_omega_survival(
-    mortal: MortalStrategy,
-    eternity: EternityStrategy,
-    max_n: int = 1000
-) -> Tuple[bool, int]:
-    """Verify ω-survival up to max_n rounds.
-    
-    Returns (all_survived, max_rounds_tested).
+def reactive_evasion_game(
+    board_size: int,
+    eternity_strategy: Callable[[int], int],
+    max_rounds: int = 1000
+) -> Iterator[Tuple[int, int, int, GameOutcome]]:
     """
-    for n in range(1, max_n + 1):
-        result = play_evasion_game(mortal, eternity, n)
-        if not result.survived:
-            return False, n
-    return True, max_n
-
-
-def verify_omega_squared_survival(
-    mortal: MortalStrategy,
-    eternity: EternityStrategy,
-    max_m: int = 50,
-    max_n: int = 50
-) -> Tuple[bool, Optional[Tuple[int, int]]]:
-    """Verify ω²-survival: check survival for m*n rounds for all m,n ≤ max.
+    Simulate a reactive evasion game.
     
-    Returns (all_survived, first_failure or None).
+    Yields (round, search, hide, outcome) tuples.
+    Game runs until max_rounds or until Mortal is caught (never with cyclic shift).
+    
+    Args:
+        board_size: Number of positions (n ≥ 2)
+        eternity_strategy: Maps round number to search position
+        max_rounds: Maximum rounds to simulate
+    
+    Yields:
+        (round_number, search_position, hide_position, outcome)
     """
-    for m in range(1, max_m + 1):
-        for n in range(1, max_n + 1):
-            result = play_evasion_game(mortal, eternity, m * n)
-            if not result.survived:
-                return False, (m, n)
-    return True, None
+    for t in range(max_rounds):
+        search = eternity_strategy(t) % board_size
+        hide = cyclic_shift(search, board_size)
+        outcome = GameOutcome.SURVIVED if hide != search else GameOutcome.CAUGHT
+        yield (t, search, hide, outcome)
+        if outcome == GameOutcome.CAUGHT:
+            return
 
 
-# ============================================================
-# Strategy Analysis
-# ============================================================
-
-def is_finite_state(mortal: MortalStrategy, test_size: int = 100) -> bool:
-    """Test if a strategy is finite-state (depends only on |banned|).
-    
-    Checks by comparing outputs on sets of the same cardinality.
+def hierarchical_survival(
+    depth: int,
+    reset_values: Callable[[int], int],
+    board_size: int = 2
+) -> int:
     """
-    import itertools
-    for card in range(1, min(test_size, 5)):
-        outputs: Set[int] = set()
-        for combo in itertools.combinations(range(min(test_size, 15)), card):
-            banned = set(combo)
-            outputs.add(mortal(banned))
-        if len(outputs) > 1:
-            return False
-    return True
-
-
-def strategy_growth_rate(mortal: MortalStrategy, n_rounds: int = 100) -> List[int]:
-    """Measure how the strategy's chosen positions grow over rounds.
+    Compute total survival time for a hierarchical game.
     
-    Uses a "worst-case" Eternity (bans Mortal's position) to maximize growth.
+    A depth-d game has d levels of counters. Each level provides
+    ω additional ordinal value. Total game value: ω^d.
+    
+    Args:
+        depth: Nesting depth (d ≥ 0)
+        reset_values: Function mapping level to reset value
+        board_size: Board size for base-level evasion
+    
+    Returns:
+        Total number of rounds survived
+    
+    Complexity: O(Π reset_values(i)) time, O(depth) space
     """
-    banned: Set[int] = set()
-    positions: List[int] = []
+    if depth == 0:
+        return reset_values(0)
     
-    for _ in range(n_rounds):
-        pos = mortal(banned)
-        positions.append(pos)
-        banned.add(pos)  # Ban Mortal's position (worst case for growth)
-    
-    return positions
+    total = 0
+    outer_count = reset_values(depth)
+    for _ in range(outer_count):
+        # Each outer iteration runs a (depth-1)-level game
+        total += hierarchical_survival(depth - 1, reset_values, board_size)
+    return total
 
 
-# ============================================================
-# Ordinal Game Value Computation
-# ============================================================
-
-def compute_finite_game_value(k: int) -> int:
-    """Compute the exact game value on Fin(k).
-    
-    On Fin(k), the game value is exactly k: Mortal can visit each
-    position once, then all positions are banned.
+def compute_layered_survival(tracks: List[int]) -> int:
     """
-    return k
-
-
-def compute_survival_hierarchy(max_level: int = 5) -> dict:
-    """Compute the survival hierarchy up to the given level.
+    Compute total survival for k parallel tracks.
     
-    Level 0: ω (any finite n)
-    Level 1: ω·k (for fixed k)
-    Level 2: ω² (all finite products)
+    Each track contributes its duration to total survival.
+    With k tracks of ω-games, ordinal value is ω·k.
+    
+    Args:
+        tracks: List of track durations [d₁, d₂, ..., dₖ]
+    
+    Returns:
+        Total survival time = Σ dᵢ
     """
-    hierarchy = {}
-    for level in range(max_level):
-        if level == 0:
-            hierarchy[level] = "ω (any finite n)"
-        elif level == 1:
-            hierarchy[level] = "ω·k (k-fold composition)"
-        else:
-            hierarchy[level] = f"ω^{level} ({level}-fold products)"
-    return hierarchy
+    return sum(tracks)
+
+
+def compute_nested_survival(
+    durations: List[List[int]]
+) -> int:
+    """
+    Compute total survival for doubly-nested games.
+    
+    durations[i][j] = duration of sub-round j in macro-round i.
+    Ordinal value: ω² (since both levels are unbounded).
+    
+    Args:
+        durations: Nested list of durations
+    
+    Returns:
+        Total survival time = Σᵢ Σⱼ durations[i][j]
+    """
+    return sum(sum(inner) for inner in durations)
+
+
+def exceed_bound_layered(bound: int, k: int) -> List[int]:
+    """
+    Find reset values for k tracks that exceed a given bound.
+    
+    This witnesses the ω·k game value: for any bound,
+    we can find durations making total survival ≥ bound.
+    
+    Args:
+        bound: Target survival lower bound
+        k: Number of tracks (≥ 1)
+    
+    Returns:
+        List of k track durations whose sum ≥ bound
+    """
+    assert k >= 1
+    per_track = (bound + k - 1) // k  # Ceiling division
+    return [per_track] * k
+
+
+def exceed_bound_nested(bound: int) -> List[List[int]]:
+    """
+    Find nested reset values that exceed a given bound.
+    
+    This witnesses the ω² game value: for any bound,
+    we can find a doubly-nested configuration with total ≥ bound.
+    
+    Args:
+        bound: Target survival lower bound
+    
+    Returns:
+        Nested list of durations whose double sum ≥ bound
+    """
+    # Use bound macro-rounds of 1 sub-round each
+    return [[1] for _ in range(bound)]
+
+
+@dataclass
+class OrdinalGameValue:
+    """Representation of ordinal game values up to ω^ω."""
+    coefficients: List[int]  # coefficients[d] = coefficient of ω^d
+    
+    def __str__(self) -> str:
+        if not self.coefficients or all(c == 0 for c in self.coefficients):
+            return "0"
+        terms = []
+        for d in range(len(self.coefficients) - 1, -1, -1):
+            c = self.coefficients[d]
+            if c == 0:
+                continue
+            if d == 0:
+                terms.append(str(c))
+            elif d == 1:
+                terms.append(f"ω·{c}" if c > 1 else "ω")
+            else:
+                terms.append(f"ω^{d}·{c}" if c > 1 else f"ω^{d}")
+        return " + ".join(terms) if terms else "0"
+    
+    @staticmethod
+    def from_depth(depth: int) -> 'OrdinalGameValue':
+        """Game value for a depth-d nested game: ω^d."""
+        coeffs = [0] * (depth + 1)
+        coeffs[depth] = 1
+        return OrdinalGameValue(coefficients=coeffs)
+    
+    def exceeds_finite(self) -> bool:
+        """Whether this ordinal is ≥ ω (transfinite)."""
+        return any(c > 0 for c in self.coefficients[1:])
+
+
+def mortal_strategy_memory(depth: int) -> str:
+    """
+    Describe Mortal's memory requirements for depth-d survival.
+    
+    A depth-d strategy needs d natural-number counters.
+    Memory per play = d · ⌈log₂(max_counter)⌉ bits,
+    but max_counter is chosen at runtime (unbounded).
+    
+    Args:
+        depth: Game nesting depth
+    
+    Returns:
+        Human-readable description of memory requirements
+    """
+    if depth == 0:
+        return "No state needed (memoryless reactive strategy)"
+    return (f"{depth} natural-number counter{'s' if depth > 1 else ''} "
+            f"({depth} words of memory, "
+            f"game value = {OrdinalGameValue.from_depth(depth)})")
+
+
+def demonstrate_ordinal_arithmetic():
+    """Show the correspondence between game operations and ordinal arithmetic."""
+    print("Game Operation → Ordinal Operation")
+    print("-" * 50)
+    
+    # Sequential composition = ordinal addition
+    g1 = OrdinalGameValue([3])  # 3 rounds
+    g2 = OrdinalGameValue([5])  # 5 rounds
+    g_seq = OrdinalGameValue([8])  # 3 + 5 = 8
+    print(f"Sequential({g1}, {g2}) = {g_seq}  (ordinal addition)")
+    
+    # Layered = ordinal multiplication
+    g_layer = OrdinalGameValue([0, 3])  # ω·3
+    print(f"Layered(3 tracks × ω) = {g_layer}  (ordinal multiplication)")
+    
+    # Nested = ordinal exponentiation
+    g_nested = OrdinalGameValue([0, 0, 1])  # ω²
+    print(f"Nested(2 levels) = {g_nested}  (ordinal exponentiation)")
+    
+    # Depth hierarchy
+    for d in range(6):
+        gv = OrdinalGameValue.from_depth(d)
+        mem = mortal_strategy_memory(d)
+        print(f"Depth {d}: value = {gv}, memory = {mem}")
 
 
 if __name__ == "__main__":
-    import random
-    random.seed(42)
+    print("=" * 60)
+    print("ALGORITHMS: Infinite Games Against Death")
+    print("=" * 60)
     
-    # Verify ascending strategy
-    def random_eternity(banned: Set[int], pos: int) -> int:
-        return random.randint(0, pos + 10)
+    # Demo 1: Cyclic shift evasion
+    print("\n--- Cyclic Shift Evasion ---")
+    for n in [2, 3, 5, 10]:
+        shifts = [(i, cyclic_shift(i, n)) for i in range(n)]
+        fpf = all(s != i for i, s in shifts)
+        print(f"n={n}: {shifts} (fixed-point-free: {fpf})")
     
-    print("Verifying ω-survival of ascending strategy...")
-    ok, n = verify_omega_survival(ascending_strategy, random_eternity, 500)
-    print(f"  Result: {'PASS' if ok else 'FAIL'} up to n={n}")
+    # Demo 2: Hierarchical survival
+    print("\n--- Hierarchical Survival ---")
+    for depth in [1, 2, 3]:
+        total = hierarchical_survival(depth, lambda _: 3, board_size=2)
+        print(f"Depth {depth}, reset=3: total = {total} rounds "
+              f"(value = {OrdinalGameValue.from_depth(depth)})")
     
-    print("\nVerifying ω²-survival...")
-    ok, fail = verify_omega_squared_survival(ascending_strategy, random_eternity, 20, 20)
-    print(f"  Result: {'PASS' if ok else f'FAIL at {fail}'}")
+    # Demo 3: Exceeding bounds
+    print("\n--- Exceeding Arbitrary Bounds ---")
+    for bound in [100, 10000, 1000000]:
+        tracks = exceed_bound_layered(bound, k=5)
+        total = compute_layered_survival(tracks)
+        print(f"Bound {bound}: tracks={tracks[:3]}..., total={total} ≥ {bound} ✓")
     
-    print("\nFinite-state check:")
-    print(f"  ascending_strategy: {is_finite_state(ascending_strategy)}")
-    print(f"  cardinality_strategy: {is_finite_state(cardinality_strategy)}")
-    
-    print("\nGrowth rate (ascending, 20 rounds):")
-    print(f"  {strategy_growth_rate(ascending_strategy, 20)}")
-    
-    print("\nSurvival hierarchy:")
-    for level, desc in compute_survival_hierarchy().items():
-        print(f"  Level {level}: {desc}")
-    
-    print("\nFinite game values:")
-    for k in [3, 5, 10, 100]:
-        print(f"  Fin({k}): value = {compute_finite_game_value(k)}")
+    # Demo 4: Ordinal arithmetic
+    print("\n--- Ordinal Arithmetic Correspondence ---")
+    demonstrate_ordinal_arithmetic()
