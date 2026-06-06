@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0bd02370",
     "filename": "vampire_numbers_and_other_numerical_monsters_a_bes.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.23040000000000002,
     "title": "The Mod-9 Algebra of Vampire Numbers: Classification, Polynomial Bridges, and Density Sieves"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "vampire_numbers_and_other_numerical_monsters_a_bes",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.23040000000000002,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Mod-9 Algebra of Vampire Numbers: Classification, Polynomial Bridges, and Density Sieves"
     }
