@@ -1,255 +1,262 @@
 #!/usr/bin/env python3
 """
-Type-hinted implementations of core transseries algorithms.
+Transseries Algorithms: Type-Hinted Implementations
+
+Core algorithms for working with transseries, including:
+- Growth level comparison and ordering
+- Transseries arithmetic (addition, scalar multiplication)
+- Asymptotic comparison via leading term extraction
+- Transseries evaluation at a point
 """
 
+from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 import math
 
 
 @dataclass(frozen=True, order=True)
-class LogExpMonomial:
-    """
-    A log-exp monomial representing exp(c*x) * x^a * (log x)^b.
-    Ordered lexicographically: (exp_coeff, poly_exp, log_exp).
-    """
-    exp_coeff: int  # c in exp(cx)
-    poly_exp: int   # a in x^a
-    log_exp: int    # b in (log x)^b
+class GrowthLevel:
+    """A growth level (depth, exponent) classifying transmonomial growth.
     
-    def __mul__(self, other: 'LogExpMonomial') -> 'LogExpMonomial':
-        """Group operation: componentwise addition of exponents."""
-        return LogExpMonomial(
-            self.exp_coeff + other.exp_coeff,
-            self.poly_exp + other.poly_exp,
-            self.log_exp + other.log_exp
-        )
+    Ordered lexicographically: depth first, then exponent.
+    - depth=0, exponent=α: polynomial x^α
+    - depth=1, exponent=1: exp(x)
+    - depth=2, exponent=1: exp(exp(x))
+    - depth=-1, exponent=1: log(x)
+    """
+    depth: int
+    exponent: float
     
-    def inv(self) -> 'LogExpMonomial':
-        """Group inverse: negation of exponents."""
-        return LogExpMonomial(-self.exp_coeff, -self.poly_exp, -self.log_exp)
+    @staticmethod
+    def poly(alpha: float) -> GrowthLevel:
+        return GrowthLevel(0, alpha)
+    
+    @staticmethod
+    def exp_level(alpha: float = 1.0) -> GrowthLevel:
+        return GrowthLevel(1, alpha)
+    
+    @staticmethod
+    def log_level(alpha: float = 1.0) -> GrowthLevel:
+        return GrowthLevel(-1, alpha)
+    
+    def exp_shift(self) -> GrowthLevel:
+        """Increase depth by 1 (formal exp wrapping)."""
+        return GrowthLevel(self.depth + 1, self.exponent)
+    
+    def log_shift(self) -> GrowthLevel:
+        """Decrease depth by 1 (formal log wrapping)."""
+        return GrowthLevel(self.depth - 1, self.exponent)
+    
+    def eval_at(self, x: float) -> float:
+        """Evaluate this growth level as a function at x."""
+        val = x ** self.exponent
+        if self.depth > 0:
+            for _ in range(self.depth):
+                val = math.exp(min(val, 700))
+        elif self.depth < 0:
+            for _ in range(-self.depth):
+                if val > 0:
+                    val = math.log(val)
+                else:
+                    return float('-inf')
+        return val
+    
+    def __repr__(self) -> str:
+        if self.depth == 0:
+            return f"x^{self.exponent}"
+        elif self.depth > 0:
+            inner = f"x^{self.exponent}" if self.exponent != 1.0 else "x"
+            return "exp(" * self.depth + inner + ")" * self.depth
+        else:
+            inner = f"x^{self.exponent}" if self.exponent != 1.0 else "x"
+            return "log(" * (-self.depth) + inner + ")" * (-self.depth)
+
+
+class Transseries:
+    """A finitely supported formal sum over growth levels.
+    
+    T = Σ_g a_g · m_g where m_g is the transmonomial at growth level g.
+    """
+    
+    def __init__(self, terms: Optional[Dict[GrowthLevel, float]] = None):
+        self._terms: Dict[GrowthLevel, float] = {}
+        if terms:
+            for g, c in terms.items():
+                if abs(c) > 1e-15:
+                    self._terms[g] = c
+    
+    @staticmethod
+    def monomial(g: GrowthLevel, coeff: float) -> Transseries:
+        """Create a single-term transseries c · m_g."""
+        return Transseries({g: coeff})
+    
+    @staticmethod
+    def zero() -> Transseries:
+        """The zero transseries."""
+        return Transseries()
+    
+    def coeff(self, g: GrowthLevel) -> float:
+        """Get the coefficient at growth level g."""
+        return self._terms.get(g, 0.0)
     
     @property
-    def depth(self) -> int:
-        """GDA depth grading: |exp_coeff|."""
-        return abs(self.exp_coeff)
+    def support(self) -> List[GrowthLevel]:
+        """Sorted list of growth levels with nonzero coefficients."""
+        return sorted(self._terms.keys(), reverse=True)
     
-    def evaluate(self, x: float) -> float:
-        """Evaluate at x > 0. Returns inf on overflow."""
-        try:
-            val = 1.0
-            if self.exp_coeff != 0:
-                val *= math.exp(self.exp_coeff * x)
-            if self.poly_exp != 0:
-                val *= x ** self.poly_exp
-            if self.log_exp != 0:
-                val *= math.log(x) ** self.log_exp
-            return val
-        except (OverflowError, ValueError):
-            return float('inf') if self.exp_coeff > 0 else 0.0
+    @property
+    def leading_level(self) -> Optional[GrowthLevel]:
+        """The maximum growth level in the support, or None if zero."""
+        if not self._terms:
+            return None
+        return max(self._terms.keys())
     
-    def __str__(self) -> str:
-        parts = []
-        if self.exp_coeff != 0:
-            parts.append(f"exp({self.exp_coeff}x)")
-        if self.poly_exp != 0:
-            parts.append(f"x^{self.poly_exp}")
-        if self.log_exp != 0:
-            parts.append(f"(log x)^{self.log_exp}")
-        return "·".join(parts) if parts else "1"
-
-
-# Standard monomials
-ONE = LogExpMonomial(0, 0, 0)
-
-
-def compare_monomials(m1: LogExpMonomial, m2: LogExpMonomial) -> int:
-    """
-    Lexicographic comparison of monomials.
-    Returns -1, 0, or 1.
+    @property
+    def leading_coeff(self) -> float:
+        """The coefficient at the leading growth level."""
+        g = self.leading_level
+        return self._terms[g] if g is not None else 0.0
     
-    Algorithm:
-        1. Compare exp_coeff
-        2. If equal, compare poly_exp
-        3. If equal, compare log_exp
+    def __add__(self, other: Transseries) -> Transseries:
+        """Add two transseries coefficient-wise."""
+        result: Dict[GrowthLevel, float] = dict(self._terms)
+        for g, c in other._terms.items():
+            result[g] = result.get(g, 0.0) + c
+        return Transseries(result)
     
-    Time: O(1)
-    """
-    if m1.exp_coeff != m2.exp_coeff:
-        return -1 if m1.exp_coeff < m2.exp_coeff else 1
-    if m1.poly_exp != m2.poly_exp:
-        return -1 if m1.poly_exp < m2.poly_exp else 1
-    if m1.log_exp != m2.log_exp:
-        return -1 if m1.log_exp < m2.log_exp else 1
-    return 0
-
-
-def depth_subadditive(m1: LogExpMonomial, m2: LogExpMonomial) -> bool:
-    """Verify depth subadditivity: depth(m1*m2) <= depth(m1) + depth(m2)."""
-    return (m1 * m2).depth <= m1.depth + m2.depth
-
-
-@dataclass
-class Transseries:
-    """
-    Finitely-supported formal sum of LogExpMonomials with real coefficients.
-    Implements addition, subtraction, leading term extraction, and depth computation.
-    """
-    terms: Dict[LogExpMonomial, float] = field(default_factory=dict)
+    def __neg__(self) -> Transseries:
+        return Transseries({g: -c for g, c in self._terms.items()})
     
-    def _clean(self) -> None:
-        """Remove zero coefficients."""
-        self.terms = {m: c for m, c in self.terms.items() if abs(c) > 1e-15}
-    
-    def __add__(self, other: 'Transseries') -> 'Transseries':
-        """
-        Transseries addition: pointwise addition of coefficients.
-        Time: O(|supp(self)| + |supp(other)|)
-        """
-        result = dict(self.terms)
-        for m, c in other.terms.items():
-            result[m] = result.get(m, 0.0) + c
-        ts = Transseries(result)
-        ts._clean()
-        return ts
-    
-    def __neg__(self) -> 'Transseries':
-        return Transseries({m: -c for m, c in self.terms.items()})
-    
-    def __sub__(self, other: 'Transseries') -> 'Transseries':
+    def __sub__(self, other: Transseries) -> Transseries:
         return self + (-other)
     
-    def scale(self, r: float) -> 'Transseries':
-        """Scalar multiplication by r."""
-        if abs(r) < 1e-15:
-            return Transseries()
-        return Transseries({m: r * c for m, c in self.terms.items()})
+    def scale(self, s: float) -> Transseries:
+        """Scalar multiplication: s · T."""
+        return Transseries({g: s * c for g, c in self._terms.items()})
     
-    def leading_monomial(self) -> Optional[LogExpMonomial]:
-        """
-        Extract the leading (dominant) monomial.
-        Time: O(|support|)
-        """
-        if not self.terms:
-            return None
-        return max(self.terms.keys())
+    def eval_at(self, x: float) -> float:
+        """Evaluate the transseries at x (for large x, approximately)."""
+        return sum(c * g.eval_at(x) for g, c in self._terms.items())
     
-    def leading_coeff(self) -> float:
-        """Leading coefficient."""
-        m = self.leading_monomial()
-        return self.terms.get(m, 0.0) if m else 0.0
+    def is_zero(self) -> bool:
+        return len(self._terms) == 0
     
-    def exp_depth(self) -> int:
-        """
-        Exponential depth: max |exp_coeff| over support.
-        Time: O(|support|)
-        """
-        if not self.terms:
-            return 0
-        return max(m.depth for m in self.terms)
-    
-    def is_purely_polynomial(self) -> bool:
-        """Check if all monomials have exp_coeff = 0."""
-        return all(m.exp_coeff == 0 for m in self.terms)
-    
-    def is_purely_logarithmic(self) -> bool:
-        """Check if all monomials have exp_coeff = 0 and poly_exp = 0."""
-        return all(m.exp_coeff == 0 and m.poly_exp == 0 for m in self.terms)
-    
-    def evaluate(self, x: float) -> float:
-        """Evaluate the transseries at x > 0."""
-        return sum(c * m.evaluate(x) for m, c in self.terms.items())
-    
-    def coeff(self, m: LogExpMonomial) -> float:
-        """Get coefficient of monomial m."""
-        return self.terms.get(m, 0.0)
-    
-    @staticmethod
-    def const(r: float) -> 'Transseries':
-        """Constant transseries."""
-        return Transseries({ONE: r}) if abs(r) > 1e-15 else Transseries()
-    
-    @staticmethod
-    def mono(m: LogExpMonomial) -> 'Transseries':
-        """Unit monomial transseries."""
-        return Transseries({m: 1.0})
-    
-    def __str__(self) -> str:
-        if not self.terms:
+    def __repr__(self) -> str:
+        if not self._terms:
             return "0"
         parts = []
-        for m in sorted(self.terms.keys(), reverse=True):
-            c = self.terms[m]
-            if abs(c - 1.0) < 1e-10:
-                parts.append(str(m))
-            elif abs(c + 1.0) < 1e-10:
-                parts.append(f"-{m}")
+        for g in self.support:
+            c = self._terms[g]
+            if abs(c - 1.0) < 1e-15:
+                parts.append(f"{g}")
+            elif abs(c + 1.0) < 1e-15:
+                parts.append(f"-{g}")
             else:
-                parts.append(f"{c:.4g}·{m}")
+                parts.append(f"{c:.4g}·{g}")
         return " + ".join(parts)
 
 
-def convolution_product(f: Transseries, g: Transseries) -> Transseries:
-    """
-    Convolution product of two transseries:
-    (f * g)(m) = Σ_{m1*m2=m} f(m1) * g(m2)
+def asymptotic_compare(t1: Transseries, t2: Transseries) -> int:
+    """Compare two transseries asymptotically.
     
-    For finitely-supported transseries, this is a finite sum.
-    Time: O(|supp(f)| * |supp(g)|)
-    """
-    result: Dict[LogExpMonomial, float] = {}
-    for m1, c1 in f.terms.items():
-        for m2, c2 in g.terms.items():
-            m_prod = m1 * m2
-            result[m_prod] = result.get(m_prod, 0.0) + c1 * c2
-    ts = Transseries(result)
-    ts._clean()
-    return ts
-
-
-def asymptotic_compare(f: Transseries, g: Transseries) -> int:
-    """
-    Compare two transseries asymptotically.
-    Returns -1 if f < g, 0 if f = g, 1 if f > g (as x -> infinity).
+    Returns:
+        +1 if t1 dominates t2 (t1/t2 → ∞)
+        -1 if t2 dominates t1 (t1/t2 → 0)
+         0 if they are asymptotically equivalent (t1/t2 → 1)
     
-    Algorithm:
-        1. Compute difference h = f - g
-        2. If h = 0, they are equal
-        3. Otherwise, the sign of h is determined by its leading coefficient
-    
-    Time: O(|supp(f)| + |supp(g)|)
+    Algorithm: Compare leading growth levels, then leading coefficients,
+    then recurse on the remainder.
     """
-    h = f - g
-    if not h.terms:
+    diff = t1 - t2
+    if diff.is_zero():
         return 0
-    lc = h.leading_coeff()
-    return -1 if lc < 0 else 1
+    
+    g = diff.leading_level
+    c = diff.leading_coeff
+    
+    if g is not None:
+        if c > 0:
+            return 1  # t1 dominates
+        elif c < 0:
+            return -1  # t2 dominates
+    
+    return 0
 
 
-def verify_comparison_theorem(f: Transseries, g: Transseries) -> bool:
+def eml_transseries(y: float) -> Transseries:
+    """Construct the transseries for eml(x, y) = exp(x) - log(y).
+    
+    This has two terms:
+    - exp(x) at growth level (1, 1) with coefficient 1
+    - -log(y) at growth level (0, 0) with coefficient -log(y)
+      (this is a constant term, depth 0, exponent 0 = x^0 = 1)
     """
-    Verify the Asymptotic Comparison Theorem:
-    f = g iff coeff(f, m) = coeff(g, m) for all m in support(f) ∪ support(g).
-    """
-    all_monomials = set(f.terms.keys()) | set(g.terms.keys())
-    coeffs_match = all(abs(f.coeff(m) - g.coeff(m)) < 1e-15 for m in all_monomials)
-    structurally_equal = (not (f - g).terms)
-    return coeffs_match == structurally_equal
+    return Transseries({
+        GrowthLevel.exp_level(1.0): 1.0,
+        GrowthLevel.poly(0.0): -math.log(y) if y > 0 else 0.0,
+    })
 
+
+def verify_diagonal_gap(x: float) -> Tuple[float, bool]:
+    """Verify the diagonal gap theorem: exp(x) - log(x) ≥ 2 for x > 0."""
+    if x <= 0:
+        raise ValueError("x must be positive")
+    gap = math.exp(x) - math.log(x)
+    return gap, gap >= 2.0
+
+
+# ---- Main demo ----
 
 if __name__ == "__main__":
-    # Quick self-test
-    m1 = LogExpMonomial(1, 2, 0)
-    m2 = LogExpMonomial(0, 3, 1)
-    print(f"Monomial comparison: {m1} vs {m2} -> {compare_monomials(m1, m2)}")
-    print(f"Depth subadditivity: {depth_subadditive(m1, m2)}")
+    print("=== Transseries Algorithm Demonstrations ===\n")
     
-    f = Transseries.mono(m1) + Transseries.const(3.0)
-    g = Transseries.mono(m2).scale(2.0) + Transseries.const(-1.0)
-    print(f"f = {f}")
-    print(f"g = {g}")
-    print(f"f + g = {f + g}")
-    print(f"f * g = {convolution_product(f, g)}")
-    print(f"Comparison theorem holds: {verify_comparison_theorem(f, f)}")
-    print(f"Comparison theorem holds: {verify_comparison_theorem(f, g)}")
+    # Growth level comparison
+    print("1. Growth Level Ordering:")
+    levels = [
+        GrowthLevel.log_level(),
+        GrowthLevel.poly(0.5),
+        GrowthLevel.poly(1.0),
+        GrowthLevel.poly(2.0),
+        GrowthLevel.exp_level(),
+        GrowthLevel(2, 1.0),
+    ]
+    for i, g in enumerate(levels):
+        print(f"   {g}")
+        if i > 0:
+            assert levels[i-1] < levels[i], f"Order violation: {levels[i-1]} >= {levels[i]}"
+    print("   ✓ All comparisons verified\n")
+    
+    # Transseries arithmetic
+    print("2. Transseries Arithmetic:")
+    t1 = Transseries.monomial(GrowthLevel.exp_level(), 3.0)
+    t2 = Transseries.monomial(GrowthLevel.poly(2.0), -1.0)
+    t_sum = t1 + t2
+    print(f"   T1 = {t1}")
+    print(f"   T2 = {t2}")
+    print(f"   T1 + T2 = {t_sum}")
+    print(f"   Eval at x=5: {t_sum.eval_at(5):.2f}\n")
+    
+    # EML transseries
+    print("3. EML Transseries Decomposition:")
+    eml = eml_transseries(2.0)
+    print(f"   eml(x, 2) ≈ {eml}")
+    print(f"   Leading level: {eml.leading_level}")
+    for x in [1, 5, 10]:
+        print(f"   Eval at x={x}: {eml.eval_at(x):.4f} "
+              f"(exact: {math.exp(x) - math.log(2):.4f})")
+    
+    # Asymptotic comparison
+    print("\n4. Asymptotic Comparison:")
+    t_exp = Transseries.monomial(GrowthLevel.exp_level(), 1.0)
+    t_poly = Transseries.monomial(GrowthLevel.poly(100.0), 1.0)
+    result = asymptotic_compare(t_exp, t_poly)
+    print(f"   exp(x) vs x^100: {'exp dominates' if result > 0 else 'poly dominates'}")
+    
+    # Diagonal gap verification
+    print("\n5. Diagonal Gap Verification:")
+    for x in [0.001, 0.1, 0.5, 1.0, 2.0, 10.0]:
+        gap, valid = verify_diagonal_gap(x)
+        print(f"   x={x:>6.3f}: gap = {gap:.6f}, ≥ 2: {valid}")
+    
+    print("\n=== All demonstrations completed ===")

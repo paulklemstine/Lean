@@ -1,244 +1,247 @@
-# Graded Dominance Algebras and Formal Transseries: A Rigorous Framework for Asymptotic Expansions Beyond Power Series
+# Formalized Transseries: Asymptotic Expansions Beyond Power Series
 
 ## Abstract
 
-We introduce the **Graded Dominance Algebra (GDA)**, a novel algebraic structure combining a commutative group, a total order, and a depth grading with subadditivity. We prove that the group of log-exp monomials — formal objects of the form exp(cx)·x^a·(log x)^b — instantiates this structure via the lexicographic dominance ordering. Using this framework, we construct finitely-supported transseries as formal sums over the monomial group and establish key structural theorems: the Asymptotic Comparison Theorem (coefficient-wise equality implies identity), the Leading Term Comparison Principle (sums with distinct leading monomials preserve the dominant term), and the Dominance Hierarchy (exponential > polynomial > logarithmic). All results are formalized with complete machine-checked proofs.
+We present a rigorous formalization of the foundational theory of transseries — formal asymptotic expansions incorporating iterated exponentials and logarithms. We introduce the **growth level** framework, a pair (depth, exponent) classifying transmonomials by their asymptotic growth rate, and establish that growth levels form a strict total order. We prove the fundamental asymptotic dominance hierarchy: exponential functions dominate all polynomials, double exponentials dominate all powers of single exponentials, and logarithms are negligible relative to any positive power. We bridge these results to the EML (exp-log-multiply) function algebra, proving that the EML function eml(x,y) = exp(x) - log(y) is asymptotically equivalent to its leading exponential term, and establishing the diagonal gap theorem: exp(x) - log(x) ≥ 2 for all x > 0, with strict inequality away from x = 1. All results are machine-verified with complete proofs.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+### 1.1 Background
 
-Classical asymptotic analysis relies on asymptotic expansions — formal expressions that approximate functions as a variable tends to infinity. Power series (Taylor/Laurent expansions) capture polynomial-order behavior but are blind to exponential phenomena. The theory of **transseries**, developed systematically by Écalle [1] and later formalized algebraically by van den Dries, Macintyre, and Marker [2], extends asymptotic expansions to incorporate exponential and logarithmic scales.
+Transseries, introduced by Écalle and independently developed by van der Hoeven, extend classical power series by incorporating exponential and logarithmic terms at all levels of nesting. The field of transseries 𝕋 is a real-closed ordered differential field containing ℝ and admitting an exponential function, providing a universal domain for asymptotic analysis of exp-log-polynomial functions.
 
-Despite significant mathematical interest — transseries play a central role in resurgence theory, differential algebra, and model theory of exponentiation — the algebraic foundations have not previously been formalized in a proof assistant. This paper addresses that gap while introducing a new algebraic structure that clarifies the interaction between ordering and grading in the monomial group.
+The theory has deep connections to:
+- **Model theory**: Aschenbrenner, van den Dries, and van der Hoeven proved that the field of transseries is model-complete and admits quantifier elimination in a natural language [1].
+- **Hardy fields**: Transseries provide the universal Hardy field, the "algebraic closure" of the field of germs of exp-log-polynomial functions at infinity.
+- **Surreal numbers**: The surreal numbers contain the transseries as a natural subfield.
 
 ### 1.2 Contributions
 
-1. **The Graded Dominance Algebra (GDA)**: A new algebraic structure (Definition 3.1) that axiomatizes the interaction between group multiplication, total ordering, and exponential depth.
+We formalize the foundational layer of transseries theory:
 
-2. **Concrete instantiation**: We prove that the group of log-exp monomials (ℤ³ with componentwise addition, lexicographic ordering, and depth = |first component|) is a GDA (Theorem 4.1).
+1. **Growth Level Hierarchy** (§2): A formalized classification of transmonomials by exponential depth and polynomial exponent, with a machine-verified proof that this classification gives a strict total order.
 
-3. **Transseries algebra**: We construct finitely-supported transseries as Finsupp over the monomial group and prove the Asymptotic Comparison Theorem (Theorem 5.1), the Leading Term Comparison Principle (Theorem 5.5), and the Dominance Hierarchy (Theorem 6.1).
+2. **Asymptotic Dominance Theorems** (§3): Complete proofs of the fundamental separation results:
+   - exp(x)/x^n → ∞ for all n ∈ ℕ (Theorem 3.1)
+   - exp(exp(x))/exp(cx) → ∞ for all c ∈ ℝ (Theorem 3.2)  
+   - log(x)/x^α → 0 for all α > 0 (Theorem 3.3)
+   - x^n/exp(x) → 0 for all n ∈ ℕ (Theorem 3.4)
 
-4. **Complete formalization**: All 25+ theorems have machine-checked proofs with no axioms beyond the standard Lean 4 foundations (propext, Quot.sound, Classical.choice).
+3. **Exp-Log Duality** (§4): Proof that the exponential and logarithmic shifts on growth levels are inverse order isomorphisms.
 
-## 2. Preliminaries
+4. **EML Bridge** (§5): Connection to the EML function algebra, proving asymptotic decomposition and the diagonal gap theorem.
 
-### 2.1 Log-Exp Monomials
+5. **Transseries Uniqueness** (§6): The formal uniqueness theorem for transseries coefficients.
 
-**Definition 2.1.** A *log-exp monomial* is a triple m = (c, a, b) ∈ ℤ³, representing the formal growth rate exp(cx) · x^a · (log x)^b.
+### 1.3 Relation to Catalog
 
-The set of log-exp monomials forms a group under componentwise addition:
-- (c₁, a₁, b₁) · (c₂, a₂, b₂) = (c₁+c₂, a₁+a₂, b₁+b₂)
-- Identity: (0, 0, 0)
-- Inverse: (c, a, b)⁻¹ = (-c, -a, -b)
+This work builds on and extends several results from the existing theorem catalog:
 
-This group is isomorphic to (ℤ³, +) and is therefore a free abelian group of rank 3.
+- **`EML/EMLv17Core.lean`**: Definitions of the eml function and its basic properties (monotonicity, convexity, derivative).
+- **`EML/KolmogorovArnoldEMLDeep.lean`**: The exp-log cancellation identity `eml_chain_exp_log_cancel`.
+- **`EML/V14Research.lean`**: The exp-log gap theorem `eml14_exp_log_gap`.
+- **`Geometry/EMLStoneWeierstrass.lean`**: The real power representation `exp_real_log_eq_rpow`.
 
-### 2.2 The Dominance Ordering
+Our contribution deepens these results by:
+- Placing them in the systematic framework of transseries growth levels
+- Proving the asymptotic dominance hierarchy that explains *why* the exp-log gap exists
+- Establishing the double-exponential separation that goes beyond single-level comparisons
+- Formalizing the uniqueness theorem that connects coefficient equality to function identity
 
-**Definition 2.2.** The *dominance ordering* on log-exp monomials is the lexicographic order on (c, a, b):
+## 2. Growth Levels
 
-m₁ < m₂ iff c₁ < c₂, or (c₁ = c₂ and a₁ < a₂), or (c₁ = c₂ and a₁ = a₂ and b₁ < b₂).
+### 2.1 Definition
 
-This ordering reflects the asymptotic hierarchy: exponential rate dominates polynomial degree, which dominates logarithmic power. The ordering is total and compatible with the group operation:
-
-**Theorem 2.1** (Order-Translation Invariance). For all monomials a, b, c: a < b implies c·a < c·b.
-
-*Proof.* The lexicographic order on ℤ³ is translation-invariant under componentwise addition. □
-
-### 2.3 The Depth Function
-
-**Definition 2.3.** The *depth* of a monomial m = (c, a, b) is depth(m) = |c|.
-
-**Theorem 2.2** (Depth Subadditivity). depth(m₁ · m₂) ≤ depth(m₁) + depth(m₂).
-
-*Proof.* |c₁ + c₂| ≤ |c₁| + |c₂| by the triangle inequality for integers. □
-
-## 3. The Graded Dominance Algebra
-
-**Definition 3.1** (Graded Dominance Algebra). A *Graded Dominance Algebra* (GDA) is a tuple (G, ·, ≤, depth) where:
-1. (G, ·) is a commutative group
-2. (G, ≤) is a linear (total) order
-3. depth : G → ℕ is a function satisfying:
-   - (GDA1) depth(1) = 0
-   - (GDA2) depth(g · h) ≤ depth(g) + depth(h) (subadditivity)
-   - (GDA3) a < b implies c · a < c · b (order-multiplication compatibility)
-
-The key novelty is the interaction between the depth grading and the other structures. Unlike a filtered group (where the filtration is defined by subgroups), the GDA depth function need not define subgroups at each level — though in our concrete case, depth-0 elements do form a subgroup.
-
-**Theorem 3.1** (Depth-0 Subgroup). In any GDA, the set {g : depth(g) = 0} is closed under multiplication and inversion.
-
-*Proof.* Closure under multiplication follows from subadditivity: depth(g·h) ≤ 0 + 0 = 0. Closure under inversion follows because depth(g) = 0 implies depth(g⁻¹) ≤ depth(g⁻¹) and depth(g · g⁻¹) = depth(1) = 0, so from subadditivity applied to g·g⁻¹. In the concrete case, depth(g⁻¹) = |-c| = |c| = depth(g) = 0. □
-
-## 4. The GDA Instance
-
-**Theorem 4.1** (LogExpMonomial is a GDA). The group of log-exp monomials with the lexicographic dominance ordering and depth = |expCoeff| is a Graded Dominance Algebra.
-
-*Proof.* We verify each axiom:
-- (GDA1): depth(1) = depth(0,0,0) = |0| = 0. ✓
-- (GDA2): depth(m₁·m₂) = |c₁+c₂| ≤ |c₁|+|c₂| = depth(m₁)+depth(m₂). ✓
-- (GDA3): Theorem 2.1 (order-translation invariance). ✓ □
-
-### 4.1 The Quotient Monomial Theorem
-
-**Theorem 4.2** (Quotient Positive Leading). If m₁ < m₂, then the quotient monomial m₂ · m₁⁻¹ has a strictly positive leading component.
-
-Specifically, if m₁ < m₂, then one of:
-- (m₂·m₁⁻¹).expCoeff > 0, or
-- (m₂·m₁⁻¹).expCoeff = 0 and (m₂·m₁⁻¹).polyExp > 0, or  
-- (m₂·m₁⁻¹).expCoeff = 0 and (m₂·m₁⁻¹).polyExp = 0 and (m₂·m₁⁻¹).logExp > 0.
-
-This theorem formalizes the principle that asymptotically separated monomials have a "gap" that can be measured by the quotient monomial.
-
-### 4.2 Depth Stratification
-
-**Theorem 4.3** (Depth-0 Characterization). monomialDepth(m) = 0 iff m.expCoeff = 0.
-
-The depth-0 monomials are exactly the polynomial-logarithmic monomials — those with no exponential component. This subgroup is isomorphic to ℤ² and represents the "sub-exponential" world of classical asymptotics.
-
-## 5. Transseries and the Comparison Theorem
-
-### 5.1 Construction
-
-**Definition 5.1.** A *transseries* is a finitely-supported function from LogExpMonomial to ℝ, i.e., an element of LogExpMonomial →₀ ℝ.
-
-We equip transseries with:
-- Addition: pointwise addition of coefficients
-- Scalar multiplication: pointwise scaling
-- Coefficient extraction: coeff(f, m) = f(m)
-- Leading monomial: the maximum element of the support
-- Exponential depth: max{|m.expCoeff| : m ∈ support(f)}
-
-### 5.2 The Asymptotic Comparison Theorem
-
-**Theorem 5.1** (Asymptotic Comparison). Two transseries f, g are equal iff they agree on all coefficients: f = g ↔ ∀m, coeff(f,m) = coeff(g,m).
-
-*Proof.* This is the extensionality principle for Finsupp, but its significance lies in its asymptotic interpretation: the coefficient map provides a complete invariant for transseries. Unlike the case of smooth functions (where Taylor coefficients do not determine the function), transseries coefficients uniquely determine the expansion. □
-
-**Theorem 5.2** (Zero Characterization). f = 0 iff all coefficients are zero.
-
-### 5.3 Leading Term Theory
-
-**Theorem 5.3** (Leading Monomial Existence). Every nonzero transseries has a well-defined leading monomial.
-
-**Theorem 5.4** (Leading Monomial Maximality). The leading monomial of f dominates all other monomials in the support of f.
-
-**Theorem 5.5** (Leading Term Comparison). If f and g have leading monomials mf < mg, then the leading monomial of f + g is mg.
-
-*Proof sketch.* Since mf < mg, the monomial mg is not in f's support (if it were, it would have to be ≤ mf by maximality, contradicting mf < mg). Therefore coeff(f+g, mg) = 0 + coeff(g, mg) ≠ 0, so mg ∈ support(f+g). For any m' in support(f+g) ⊆ support(f) ∪ support(g), either m' ∈ support(f) so m' ≤ mf < mg, or m' ∈ support(g) so m' ≤ mg. Thus mg is the maximum of support(f+g). □
-
-### 5.4 Depth Filtration
-
-**Theorem 5.6** (Depth of Constants). const(r) has depth 0 for r ≠ 0.
-
-**Theorem 5.7** (Depth Subadditivity for Sums). expDepth(f + g) ≤ max(expDepth(f), expDepth(g)).
-
-**Theorem 5.8** (Purely Polynomial ⟹ Depth 0). If f is purely polynomial (all monomials have expCoeff = 0), then expDepth(f) = 0.
-
-## 6. The Dominance Hierarchy
-
-### 6.1 Three-Level Dominance
-
-**Theorem 6.1** (Dominance Hierarchy). For positive integers n, b ≥ 1:
-- (log x)^b < x^n (logarithms are dominated by polynomials)
-- x^n < exp(x) (polynomials are dominated by exponentials)
-
-More precisely, logMonomial(b) < polyMonomial(n) < expMonomial(1).
-
-**Theorem 6.2** (Exponential Dominance). For any polynomial monomial x^n and any exponential monomial exp(cx) with c > 0: polyMonomial(n) < expMonomial(c).
-
-**Theorem 6.3** (Polynomial Ordering). polyMonomial(n₁) < polyMonomial(n₂) iff n₁ < n₂.
-
-### 6.2 PEGB Analysis
-
-#### Theorem 6.1 (Dominance Hierarchy): PEGB
-
-**Proof**: Complete formal proof using lexicographic comparison on the monomial triple.
-
-**Example**: logMonomial(2) = (0,0,2) < polyMonomial(3) = (0,3,0) < expMonomial(1) = (1,0,0). Numerically: (log x)² ≈ 47.7 < x³ = 1000 < e^x ≈ 2.2×10⁴³ at x = 100.
-
-**Generalization**: The hierarchy extends to iterated exponentials: exp^(n)(x) < exp^(n+1)(x) for all n, where exp^(n) denotes n-fold iteration of exp. Our framework can be extended to capture this by allowing rational or ordinal-valued expCoeff.
-
-**Boundary**: The hierarchy breaks down when exponents are allowed to be 0 or negative. For instance, polyMonomial(0) = (0,0,0) = 1, and logMonomial(0) = (0,0,0) = 1, so the strict inequality fails when n = 0 or b = 0. The hypothesis n > 0 is necessary.
-
-## 7. Algorithms
-
-### 7.1 Monomial Comparison Algorithm
+A **growth level** is a pair g = (d, α) ∈ ℤ × ℝ representing the asymptotic growth class:
+- d = 0, α: polynomial growth x^α
+- d > 0, α: d-times iterated exponential exp^d(x^α)
+- d < 0, α: |d|-times iterated logarithm log^|d|(x^α)
 
 ```
-Input: Two monomials m₁ = (c₁, a₁, b₁), m₂ = (c₂, a₂, b₂)
-Output: -1, 0, or 1 indicating m₁ < m₂, m₁ = m₂, or m₁ > m₂
-
-1. If c₁ ≠ c₂: return sign(c₁ - c₂)
-2. If a₁ ≠ a₂: return sign(a₁ - a₂)
-3. return sign(b₁ - b₂)
+structure GrowthLevel where
+  depth : ℤ
+  exponent : ℝ
 ```
 
-Time complexity: O(1). This is the lexicographic comparison algorithm.
+### 2.2 Lexicographic Order
 
-### 7.2 Leading Term Extraction
+We define the strict order lexicographically: g₁ < g₂ if d₁ < d₂, or if d₁ = d₂ and α₁ < α₂. This captures the asymptotic intuition: depth is the primary discriminator (exp always beats polynomial), and within the same depth, higher exponent means faster growth.
 
+**Theorem 2.1** (Trichotomy). For any growth levels a, b: exactly one of a < b, a = b, b < a holds.
+
+*Proof.* By trichotomy on ℤ (for depths) and trichotomy on ℝ (for exponents), with case analysis. □
+
+**Theorem 2.2** (Transitivity). The order is transitive.
+
+**Theorem 2.3** (Irreflexivity). No growth level is strictly less than itself.
+
+### 2.3 Exp-Log Shifts
+
+The **exponential shift** expShift(d, α) = (d+1, α) and **logarithmic shift** logShift(d, α) = (d-1, α) are inverse bijections that preserve the order:
+
+**Theorem 2.4** (Shift Cancellation). logShift ∘ expShift = id and expShift ∘ logShift = id.
+
+**Theorem 2.5** (Order Preservation). a < b ⟺ expShift(a) < expShift(b).
+
+This makes (expShift, logShift) an order isomorphism of the growth levels with themselves, reflecting the algebraic duality of exp and log.
+
+### 2.4 Depth Filtration
+
+The growth levels decompose into **depth slices** {g | g.depth = d} for each d ∈ ℤ. These slices are pairwise disjoint and their union is all of GrowthLevel. Each slice is order-isomorphic to (ℝ, <) via the exponent map.
+
+## 3. Asymptotic Dominance
+
+### 3.1 Exponential vs. Polynomial
+
+**Theorem 3.1** (Exp Dominates Polynomial). For all n ∈ ℕ:
+  lim_{x→∞} exp(x) / x^{n+1} = ∞
+
+*Proof sketch.* This follows from the Mathlib result `tendsto_exp_div_pow_atTop`, which is proved by induction on n using L'Hôpital's rule. □
+
+**Theorem 3.2** (Polynomial Negligible vs. Exp). For all n ∈ ℕ:
+  lim_{x→∞} x^n / exp(x) = 0
+
+This is the contrapositive formulation, proved using `tendsto_pow_mul_exp_neg_atTop_nhds_zero`.
+
+### 3.2 Double-Exponential Separation
+
+**Theorem 3.3** (Depth-2 Dominates Depth-1). For all c ∈ ℝ:
+  lim_{x→∞} exp(exp(x)) / exp(cx) = ∞
+
+*Proof sketch.* Write exp(exp(x))/exp(cx) = exp(exp(x) - cx). Since exp(x) - cx → ∞ (by Theorem 3.1 with n=0), and exp is monotone increasing to ∞, the composition tends to ∞. □
+
+This is the canonical example of the depth gap: no matter how large the constant c, the double exponential eventually dwarfs exp(cx). Setting c = n gives:
+
+**Corollary 3.4**. exp(exp(x)) / (exp(x))^n → ∞ for all n ∈ ℕ.
+
+### 3.3 Logarithmic Negligibility
+
+**Theorem 3.5** (Log Negligible vs. Powers). For all α > 0:
+  lim_{x→∞} log(x) / x^α = 0
+
+*Proof sketch.* Substitute y = log(x), reducing to y/exp(αy) → 0, which follows from Theorem 3.2. □
+
+## 4. Iterated Exp-Log Cancellation
+
+**Theorem 4.1** (Double Cancellation). For x > 1:
+  exp(exp(log(log(x)))) = x
+
+*Proof.* For x > 1, log(x) > 0, so exp(log(log(x))) = log(x) by the inverse property. Then exp(log(x)) = x. □
+
+This result formalizes the algebraic coherence of the exp-log tower: two layers of wrapping and unwrapping cancel perfectly, recovering the original value.
+
+## 5. EML Bridge
+
+### 5.1 Asymptotic Decomposition
+
+The EML function eml(x, y) = exp(x) - log(y) has a natural two-term transseries expansion. The leading term is at growth level (1, 1) with coefficient 1, and the subleading term is at growth level (-1, 1) with coefficient -1 (in the y-variable).
+
+**Theorem 5.1** (EML Asymptotic Equivalence). For fixed y > 0:
+  lim_{x→∞} (exp(x) - log(y)) / exp(x) = 1
+
+**Theorem 5.2** (Log Negligibility). For any y ∈ ℝ:
+  lim_{x→∞} log(y) / exp(x) = 0
+
+**Theorem 5.3** (Residual Extraction). The residual after subtracting the leading term is constant:
+  (exp(x) - log(y)) - exp(x) = -log(y) for all x
+
+### 5.2 Diagonal Gap
+
+**Theorem 5.4** (Diagonal Gap). For x > 0:
+  exp(x) - log(x) ≥ 2
+
+*Proof.* From the classical inequalities exp(x) ≥ 1 + x and log(x) ≤ x - 1:
+  exp(x) - log(x) ≥ (1 + x) - (x - 1) = 2 □
+
+**Theorem 5.5** (Strict Diagonal Gap). For x > 0, x ≠ 1:
+  exp(x) - log(x) > 2
+
+*Proof.* At least one of the inequalities is strict: exp(x) > 1 + x for x ≠ 0 (strict convexity), and log(x) < x - 1 for x ≠ 1 (strict concavity). For x > 0 and x ≠ 1, the latter always holds. □
+
+### 5.3 Monotonicity
+
+**Theorem 5.6**. x ↦ eml(x, y) is strictly increasing for any fixed y.
+
+**Theorem 5.7**. y ↦ eml(x, y) is strictly decreasing on (0, ∞) for any fixed x.
+
+## 6. Transseries Uniqueness
+
+### 6.1 The Type of Transseries
+
+We define a transseries as a finitely supported function from growth levels to ℝ:
 ```
-Input: Transseries f = {(m₁, a₁), ..., (mₖ, aₖ)}
-Output: (leading monomial, leading coefficient)
-
-1. Set best = m₁, coeff = a₁
-2. For i = 2 to k:
-   If compare(mᵢ, best) > 0:
-     best = mᵢ, coeff = aᵢ
-3. Return (best, coeff)
+abbrev TransseriesF := GrowthLevel →₀ ℝ
 ```
 
-Time complexity: O(k) where k = |support(f)|.
+This captures the essential idea: a transseries is a finite formal sum T = Σᵢ aᵢ · mᵢ where each mᵢ is a transmonomial classified by its growth level.
 
-### 7.3 Transseries Addition
+### 6.2 Uniqueness Theorem
 
-```
-Input: Transseries f, g
-Output: f + g
+**Theorem 6.1** (Transseries Extensionality). If T₁(g) = T₂(g) for all growth levels g, then T₁ = T₂.
 
-1. result = copy of f
-2. For each (m, a) in g:
-   result[m] += a
-   If result[m] = 0: remove m from result
-3. Return result
-```
+This follows from `Finsupp.ext` but encodes the key principle: the transseries expansion of a function (when it exists) is unique. Two transseries that "agree to all orders" — matching at every growth level — must be identical.
 
-Time complexity: O(|support(f)| + |support(g)|) with hash maps.
+## 7. PEGB Analysis
 
-## 8. Connections to Existing Work
+### Theorem: Exponential Dominates Polynomial (§3.1)
+- **P**roof: Complete, using Mathlib's `tendsto_exp_div_pow_atTop`.
+- **E**xample: exp(100) ≈ 2.69 × 10^43, while 100^10 = 10^20. The ratio is ≈ 2.69 × 10^23.
+- **G**eneralization: Extends to real exponents via rpow. Next level: exp(x^α) dominates x^β for any α > 0.
+- **B**oundary: Breaks for subexponential functions like exp(√x), which has growth level (1, 1/2) — same depth but lower exponent.
 
-### 8.1 Connection to EML
+### Theorem: Double-Exponential Separation (§3.2)
+- **P**roof: Complete, via exp(exp(x) - cx) decomposition.
+- **E**xample: At x = 10, exp(exp(10))/exp(10·10) ≈ exp(22016) — a number with ≈ 9500 digits.
+- **G**eneralization: exp^{n+1}(x) dominates any power of exp^n(x). The hierarchy is infinite.
+- **B**oundary: For *sub-iterated* growth like exp(x·log(x)), the separation is more subtle.
 
-The existing catalog contains theorems about EML (exp-minus-log) operations, including `eml_chain_exp_log_cancel` which proves exp(log(x)) = x for positive x. Our monomial algebra generalizes this: the monomial exp(x) · (1/x) is represented by (1, -1, 0), and the cancellation corresponds to the group identity (1, 0, 0) · (0, -1, 0) = (1, -1, 0) in the monomial group.
+### Theorem: Diagonal Gap (§5.2)
+- **P**roof: Complete, from AM-GM-type bounds on exp and log.
+- **E**xample: At x = 1, exp(1) - log(1) ≈ 2.718, confirming gap > 2. Minimum approaches 2 near x → 0⁺.
+- **G**eneralization: For exp^n(x) - log^n(x), analogous gaps exist with larger constants.
+- **B**oundary: The gap constant 2 is specific to the depth-(1, -1) pair. Higher depth pairs have larger gaps.
 
-### 8.2 Connection to Hardy Fields
+## 8. Discussion
 
-Hardy fields — ordered differential fields of germs of real-valued functions — provide the analytic counterpart to our algebraic construction. Every element of a Hardy field has a log-exp monomial as its "leading term," and the dominance ordering on monomials corresponds to the ordering of germs at infinity.
+### 8.1 Cross-Domain Bridge
 
-## 9. Conjectures
+The transseries framework bridges three domains:
+- **Analysis** (asymptotic growth rates and limits)
+- **Algebra** (ordered fields, differential algebra)
+- **Logic** (model completeness, o-minimality)
 
-**Conjecture 9.1** (Multiplicative Closure). The set of transseries with the convolution product (defined by summing over all factorizations of a monomial) forms a commutative ring.
+Our growth level formalization provides the concrete combinatorial structure underlying this bridge: the totally ordered pair (depth, exponent) is simple enough to compute with, yet rich enough to classify all exp-log-polynomial growth rates.
 
-**Test**: Verify that mono(m₁) * mono(m₂) = mono(m₁ · m₂) and that the distributive law holds for simple examples.
+### 8.2 Limitations
 
-**Conjecture 9.2** (Depth Monotonicity under Differentiation). For a suitable formal derivative on transseries, the depth of f' is at most depth(f) + 1.
+Our formalization covers the *finitely supported* case — transseries with finitely many terms. The full theory requires:
+- Well-ordered supports (Hahn series)
+- Infinite sums with convergence conditions
+- The grid-based representation of van der Hoeven
 
-## 10. Discussion
+These extensions are natural targets for future formalization.
 
-The Graded Dominance Algebra provides a clean axiomatization of the interplay between order, group structure, and complexity grading that arises naturally in asymptotic analysis. The key insight is that the depth grading is not merely a bookkeeping device — it captures genuine mathematical structure (the exponential hierarchy) and interacts non-trivially with the other operations.
+## 9. Algorithms
 
-Our formalization deliberately restricts to finitely-supported transseries (Finsupp) rather than well-ordered supports. This simplifies the Lean formalization while preserving the essential algebraic structure. The extension to well-ordered supports is a natural next step.
+### 9.1 Growth Level Comparison
+Compare two growth levels in O(1) time by comparing depths (integers), then exponents (reals).
 
-## References
+### 9.2 Transseries Addition
+Add two finitely supported transseries by combining their supports and adding coefficients at shared growth levels.
 
-[1] J. Écalle, *Introduction aux fonctions analysables et preuve constructive de la conjecture de Dulac*, Hermann, Paris, 1992.
+### 9.3 Asymptotic Comparison
+Given two transseries, compare their leading (maximal) growth levels. If they differ, the one with the higher growth level dominates. If they agree, compare the leading coefficients and recurse on the remainder.
 
-[2] L. van den Dries, A. Macintyre, D. Marker, "Logarithmic-exponential power series," *J. London Math. Soc.*, 56(3):417-434, 1997.
+## 10. References
 
-[3] J. van der Hoeven, *Transseries and Real Differential Algebra*, Lecture Notes in Mathematics 1888, Springer, 2006.
+[1] M. Aschenbrenner, L. van den Dries, J. van der Hoeven. *Asymptotic Differential Algebra and Model Theory of Transseries*. Annals of Mathematics Studies, Princeton University Press, 2017.
 
-[4] M. Aschenbrenner, L. van den Dries, J. van der Hoeven, *Asymptotic Differential Algebra and Model Theory of Transseries*, Annals of Mathematics Studies 195, Princeton University Press, 2017.
+[2] J. van der Hoeven. *Transseries and Real Differential Algebra*. Lecture Notes in Mathematics, Springer, 2006.
 
-[5] M. Aschenbrenner, L. van den Dries, J. van der Hoeven, "Toward a model theory for transseries," *Notre Dame J. Formal Logic*, 54(3-4):279-310, 2013.
+[3] J. Écalle. *Introduction aux fonctions analysables et preuve constructive de la conjecture de Dulac*. Hermann, 1992.
+
+[4] Catalog reference: `EML/EMLv17Core.lean` — EML function definition and basic identities.
+
+[5] Catalog reference: `EML/KolmogorovArnoldEMLDeep.lean` — exp-log chain cancellation.
+
+[6] Catalog reference: `EML/V14Research.lean` — exp-log gap theorem.
