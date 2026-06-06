@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-06T17:03:21.120770+00:00",
+  "last_updated": "2026-06-06T17:38:10.328810+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -11018,6 +11018,76 @@
       "theorem_count": 6,
       "timestamp": "2026-06-06T17:03:21.023169+00:00",
       "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5112,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 227,
+      "domain": "Novelty",
+      "duration_seconds": 8287.231130123138,
+      "end_time": 1780767383.1233406,
+      "files_integrated": 5,
+      "job_id": "90c42a89",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.74,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6932,
+        "cross_domain": 0.85,
+        "grade": "substantial",
+        "importance": 0.5568,
+        "novelty": 0.95,
+        "proof_depth": 0.3883,
+        "usefulness": 0.6191
+      },
+      "quality_score": 0.588765,
+      "sorry_count": 1,
+      "sorry_density": 0.2,
+      "start_time": 1780759095.8922105,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T17:38:10.116613+00:00",
+      "title": "Game of Life Universality"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7344,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 230,
+      "domain": "Novelty",
+      "duration_seconds": 8077.515398740768,
+      "end_time": 1780767383.818345,
+      "files_integrated": 5,
+      "job_id": "133c7706",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.68,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8834,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9348,
+        "novelty": 0.95,
+        "proof_depth": 0.9283,
+        "usefulness": 0.9641
+      },
+      "quality_score": 0.29159999999999997,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780759306.3029463,
+      "strategy_count": 187,
+      "theorem_count": 4,
+      "timestamp": "2026-06-06T17:38:10.227283+00:00",
+      "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
     }
   ]
 }

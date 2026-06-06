@@ -1640,6 +1640,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T17:02:52",
       "title": "The Topology of Argumentation: Why Debates Have Holes"
+    },
+    {
+      "cycle_id": "90c42a89",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle established the **Signal Collision Algebra (SCA)** as a novel algebraic framework for proving computational universality of cellular automata. Th",
+      "quality_score": 0.588765,
+      "sorry_count": 1,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T17:37:23",
+      "title": "Game of Life Universality"
     }
   ],
   "entries": [
@@ -1685,8 +1695,16 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T17:02:52",
-  "open_questions": [],
+  "last_updated": "2026-06-06T17:37:23",
+  "open_questions": [
+    {
+      "context": "sorry",
+      "cycle_id": "90c42a89",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-06-06T17:37:23"
+    }
+  ],
   "research_threads": {
     "Algebra": [
       {
@@ -1894,12 +1912,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c254878a",
-        "quality": 0.30184,
-        "theorems": 5,
-        "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-      },
-      {
         "cycle_id": "a7bbe785",
         "quality": 0.40176,
         "theorems": 5,
@@ -1952,6 +1964,12 @@
         "quality": 0.39360000000000006,
         "theorems": 5,
         "title": "The Topology of Argumentation: Why Debates Have Holes"
+      },
+      {
+        "cycle_id": "90c42a89",
+        "quality": 0.588765,
+        "theorems": 5,
+        "title": "Game of Life Universality"
       }
     ],
     "Physics": [
