@@ -1,430 +1,367 @@
 #!/usr/bin/env python3
 """
-Matroid Minors and Well-Quasi-Ordering: Demonstration
+Matroid Minor Theory: Obstruction Spectrum Demo
 
-This script demonstrates key concepts from the matroid minor / WQO theory:
-1. Finite matroid construction via rank functions
-2. Minor operations (deletion, contraction)
-3. WQO verification for small matroid classes
-4. Excluded minor computation
-5. Obstruction spectrum visualization
+Demonstrates the key concepts from the formalized theory:
+1. Obstruction spectra for known minor-closed graph classes
+2. Spectral duality pairs for self-dual classes
+3. Growth-bounded obstruction systems
 """
 
-from itertools import combinations
-from typing import Dict, FrozenSet, List, Optional, Set, Tuple
+from typing import Dict, List, Tuple
+import math
 
 
-class FiniteMatroid:
-    """A finite matroid defined by a rank function on subsets of a ground set."""
-
-    def __init__(self, ground_set: Set[int], rank_fn: Dict[FrozenSet[int], int]):
-        self.E = frozenset(ground_set)
-        self._rank = rank_fn
-
-    def rank(self, A: FrozenSet[int]) -> int:
-        return self._rank.get(A, 0)
-
-    @classmethod
-    def from_matrix(cls, matrix: List[List[int]], field_size: int) -> 'FiniteMatroid':
-        """Construct a matroid from a matrix over GF(field_size)."""
-        n_cols = len(matrix[0]) if matrix else 0
-        ground_set = set(range(n_cols))
-        rank_fn = {}
-
-        for size in range(n_cols + 1):
-            for subset in combinations(range(n_cols), size):
-                fs = frozenset(subset)
-                # Compute rank as the rank of the submatrix over the field
-                submatrix = [[row[j] % field_size for j in subset] for row in matrix]
-                rank_fn[fs] = _matrix_rank_gf(submatrix, field_size)
-
-        return cls(ground_set, rank_fn)
-
-    @classmethod
-    def uniform(cls, r: int, n: int) -> 'FiniteMatroid':
-        """The uniform matroid U_{r,n}: rank function is min(|A|, r)."""
-        ground_set = set(range(n))
-        rank_fn = {}
-        for size in range(n + 1):
-            for subset in combinations(range(n), size):
-                fs = frozenset(subset)
-                rank_fn[fs] = min(len(fs), r)
-        return cls(ground_set, rank_fn)
-
-    def delete(self, e: int) -> 'FiniteMatroid':
-        """Delete element e: restrict to E \ {e}."""
-        new_E = self.E - {e}
-        new_rank = {}
-        for size in range(len(new_E) + 1):
-            for subset in combinations(sorted(new_E), size):
-                fs = frozenset(subset)
-                new_rank[fs] = self.rank(fs)
-        return FiniteMatroid(set(new_E), new_rank)
-
-    def contract(self, e: int) -> 'FiniteMatroid':
-        """Contract element e: rank_M/e(A) = rank_M(A ∪ {e}) - rank_M({e})."""
-        new_E = self.E - {e}
-        re = self.rank(frozenset({e}))
-        new_rank = {}
-        for size in range(len(new_E) + 1):
-            for subset in combinations(sorted(new_E), size):
-                fs = frozenset(subset)
-                new_rank[fs] = self.rank(fs | {e}) - re
-        return FiniteMatroid(set(new_E), new_rank)
-
-    def is_minor_of(self, other: 'FiniteMatroid') -> bool:
-        """Check if self is a minor of other (brute force for small matroids)."""
-        if len(self.E) > len(other.E):
-            return False
-        if len(self.E) == len(other.E):
-            return self._isomorphic_to(other)
-
-        # Try all possible sequences of deletions and contractions
-        for e in other.E:
-            # Try deletion
-            deleted = other.delete(e)
-            if self.is_minor_of(deleted):
-                return True
-            # Try contraction
-            contracted = other.contract(e)
-            if self.is_minor_of(contracted):
-                return True
-        return False
-
-    def _isomorphic_to(self, other: 'FiniteMatroid') -> bool:
-        """Check if two matroids on the same-size ground set are isomorphic."""
-        from itertools import permutations
-        if len(self.E) != len(other.E):
-            return False
-        self_list = sorted(self.E)
-        other_list = sorted(other.E)
-        for perm in permutations(other_list):
-            mapping = dict(zip(self_list, perm))
-            match = True
-            for fs, rk in self._rank.items():
-                mapped = frozenset(mapping[x] for x in fs)
-                if other.rank(mapped) != rk:
-                    match = False
-                    break
-            if match:
-                return True
-        return False
-
-    def full_rank(self) -> int:
-        return self.rank(self.E)
-
-    def __repr__(self) -> str:
-        return f"Matroid(E={sorted(self.E)}, rank={self.full_rank()})"
+class ObstructionSpectrum:
+    """The obstruction spectrum for a minor-closed matroid class.
+    
+    Maps each rank r to the number of excluded minors of rank r.
+    """
+    def __init__(self, spectrum: Dict[int, int], total: int):
+        self.spectrum = spectrum
+        self.total = total
+        self.max_rank = max((r for r, c in spectrum.items() if c > 0), default=0)
+        self.width = sum(1 for c in spectrum.values() if c > 0)
+    
+    def __repr__(self):
+        entries = [f"  rank {r}: {c} excluded minor(s)" 
+                   for r, c in sorted(self.spectrum.items()) if c > 0]
+        return (f"ObstructionSpectrum(total={self.total}, "
+                f"max_rank={self.max_rank}, width={self.width})\n" + 
+                "\n".join(entries))
 
 
-def _matrix_rank_gf(matrix: List[List[int]], p: int) -> int:
-    """Compute rank of a matrix over GF(p) using Gaussian elimination."""
-    if not matrix or not matrix[0]:
+class SpectralDualityPair:
+    """Captures the duality relationship between primal and dual spectra."""
+    def __init__(self, primal: ObstructionSpectrum, dual: ObstructionSpectrum, 
+                 max_ground_rank: int):
+        self.primal = primal
+        self.dual = dual
+        self.max_ground_rank = max_ground_rank
+    
+    def is_palindromic(self) -> bool:
+        """Check if the spectrum is palindromic (self-dual class)."""
+        for r in range(self.max_ground_rank + 1):
+            p = self.primal.spectrum.get(r, 0)
+            d = self.dual.spectrum.get(self.max_ground_rank - r, 0)
+            if p != d:
+                return False
+        return True
+
+
+def planar_graphs_spectrum() -> ObstructionSpectrum:
+    """Obstruction spectrum for planar graphs.
+    
+    By the Kuratowski/Wagner theorem, the excluded minors are K_5 (rank 4)
+    and K_{3,3} (rank 3). Both are rank-3 graphic matroids (cycle matroid).
+    K_5 has cycle matroid of rank 4, K_{3,3} has cycle matroid of rank 4.
+    """
+    spectrum = {3: 0, 4: 2}  # K_5 and K_{3,3} both have matroid rank 4
+    return ObstructionSpectrum(spectrum, total=2)
+
+
+def outerplanar_spectrum() -> ObstructionSpectrum:
+    """Obstruction spectrum for outerplanar graphs.
+    
+    Excluded minors: K_4 (rank 3) and K_{2,3} (rank 3).
+    """
+    spectrum = {3: 2}
+    return ObstructionSpectrum(spectrum, total=2)
+
+
+def series_parallel_spectrum() -> ObstructionSpectrum:
+    """Obstruction spectrum for series-parallel graphs.
+    
+    Single excluded minor: K_4 (rank 3).
+    """
+    spectrum = {3: 1}
+    return ObstructionSpectrum(spectrum, total=1)
+
+
+def binary_matroids_spectrum() -> ObstructionSpectrum:
+    """Obstruction spectrum for binary (GF(2)-representable) matroids.
+    
+    The unique excluded minor is U_{2,4} (uniform matroid of rank 2 on 4 elements).
+    This is a classical result of Tutte.
+    """
+    spectrum = {2: 1}
+    return ObstructionSpectrum(spectrum, total=1)
+
+
+def ternary_matroids_spectrum() -> ObstructionSpectrum:
+    """Obstruction spectrum for ternary (GF(3)-representable) matroids.
+    
+    Known excluded minors:
+    - U_{2,5} (rank 2)
+    - U_{3,5} (rank 3, dual of U_{2,5})
+    - F_7 (Fano matroid, rank 3)
+    - F_7* (dual Fano, rank 4)
+    Total: 4 known excluded minors. Conjectured to be complete.
+    """
+    spectrum = {2: 1, 3: 2, 4: 1}
+    return ObstructionSpectrum(spectrum, total=4)
+
+
+def gf4_matroids_spectrum() -> ObstructionSpectrum:
+    """Obstruction spectrum for GF(4)-representable matroids.
+    
+    Known excluded minors include U_{2,6}, U_{4,6}, P_6, and others.
+    Geelen, Gerards, and Kapoor (2000) proved there are exactly 7.
+    """
+    spectrum = {2: 1, 3: 3, 4: 2, 5: 1}
+    return ObstructionSpectrum(spectrum, total=7)
+
+
+def growth_rate_bound(q: int, r: int) -> int:
+    """Growth rate bound for GF(q)-representable matroids.
+    
+    The maximum number of elements in a rank-r simple GF(q)-representable matroid
+    is (q^r - 1)/(q - 1), the number of points in PG(r-1, q).
+    """
+    if q <= 1 or r <= 0:
         return 0
-    m = len(matrix)
-    n = len(matrix[0])
-    mat = [row[:] for row in matrix]
-
-    rank = 0
-    for col in range(n):
-        # Find pivot
-        pivot = None
-        for row in range(rank, m):
-            if mat[row][col] % p != 0:
-                pivot = row
-                break
-        if pivot is None:
-            continue
-        # Swap
-        mat[rank], mat[pivot] = mat[pivot], mat[rank]
-        # Scale
-        inv = pow(mat[rank][col], p - 2, p)
-        mat[rank] = [(x * inv) % p for x in mat[rank]]
-        # Eliminate
-        for row in range(m):
-            if row != rank and mat[row][col] % p != 0:
-                factor = mat[row][col]
-                mat[row] = [(mat[row][j] - factor * mat[rank][j]) % p for j in range(n)]
-        rank += 1
-
-    return rank
+    return (q**r - 1) // (q - 1)
 
 
-def demonstrate_wqo():
-    """Demonstrate the WQO property for small uniform matroids."""
-    print("=" * 60)
-    print("DEMONSTRATION: Well-Quasi-Ordering for Uniform Matroids")
-    print("=" * 60)
-
-    # Generate some uniform matroids U_{r,n} for small r, n
-    matroids = []
-    for n in range(1, 7):
-        for r in range(0, n + 1):
-            matroids.append((r, n, FiniteMatroid.uniform(r, n)))
-
-    print(f"\nGenerated {len(matroids)} uniform matroids U_{{r,n}} with n ≤ 6")
-
-    # Check the WQO property: every infinite sequence has a comparable pair
-    # For demonstration, check that in any subsequence of length 10, there's a pair
-    import random
-    random.seed(42)
-    for trial in range(5):
-        seq = random.choices(matroids, k=10)
-        found = False
-        for i in range(len(seq)):
-            for j in range(i + 1, len(seq)):
-                ri, ni, Mi = seq[i]
-                rj, nj, Mj = seq[j]
-                # U_{r1,n1} is a minor of U_{r2,n2} iff r1 ≤ r2 and n1 - r1 ≤ n2 - r2
-                if ri <= rj and (ni - ri) <= (nj - rj):
-                    print(f"  Trial {trial+1}: U_{{{ri},{ni}}} ≤ U_{{{rj},{nj}}} "
-                          f"(positions {i}, {j})")
-                    found = True
-                    break
-            if found:
-                break
-        if not found:
-            print(f"  Trial {trial+1}: No comparable pair found (surprising!)")
+def demonstrate_hierarchy():
+    """Demonstrate the Robertson-Seymour matroid hierarchy."""
+    print("=" * 70)
+    print("Robertson-Seymour Matroid Hierarchy: Obstruction Spectra")
+    print("=" * 70)
+    
+    spectra = [
+        ("Series-parallel graphs", series_parallel_spectrum()),
+        ("Outerplanar graphs", outerplanar_spectrum()),
+        ("Planar graphs", planar_graphs_spectrum()),
+        ("Binary matroids (GF(2))", binary_matroids_spectrum()),
+        ("Ternary matroids (GF(3))", ternary_matroids_spectrum()),
+        ("GF(4)-representable", gf4_matroids_spectrum()),
+    ]
+    
+    for name, spec in spectra:
+        print(f"\n--- {name} ---")
+        print(spec)
+        print(f"  Width/Total ratio: {spec.width}/{spec.total} = {spec.width/max(spec.total,1):.2f}")
+    
+    print("\n" + "=" * 70)
+    print("Growth Rate Bounds (max elements for rank-r simple matroid)")
+    print("=" * 70)
+    
+    for q in [2, 3, 4, 5, 7]:
+        print(f"\nGF({q})-representable:")
+        for r in range(1, 7):
+            bound = growth_rate_bound(q, r)
+            print(f"  rank {r}: ≤ {bound} elements")
 
 
-def demonstrate_excluded_minors():
-    """Demonstrate excluded minors for GF(2)-representability."""
-    print("\n" + "=" * 60)
-    print("DEMONSTRATION: Excluded Minors for Binary Representability")
-    print("=" * 60)
-
-    # U_{2,4} is the unique excluded minor for GF(2)-representability
-    u24 = FiniteMatroid.uniform(2, 4)
-    print(f"\nU_{{2,4}} = {u24}")
-    print(f"  Full rank: {u24.full_rank()}")
-    print(f"  Is U_{{2,4}} representable over GF(2)?")
-
-    # Check: try all 2×4 matrices over GF(2)
-    representable = False
-    for a in range(16):  # 2^4 choices for row 1
-        for b in range(16):  # 2^4 choices for row 2
-            row1 = [(a >> i) & 1 for i in range(4)]
-            row2 = [(b >> i) & 1 for i in range(4)]
-            M = FiniteMatroid.from_matrix([row1, row2], 2)
-            # Check if rank function matches U_{2,4}
-            match = True
-            for size in range(5):
-                for subset in combinations(range(4), size):
-                    fs = frozenset(subset)
-                    if M.rank(fs) != u24.rank(fs):
-                        match = False
-                        break
-                if not match:
-                    break
-            if match:
-                representable = True
-                break
-        if representable:
-            break
-
-    print(f"  Answer: {'Yes' if representable else 'No'}")
-    print(f"  (U_{{2,4}} is NOT GF(2)-representable — it's the excluded minor!)")
-
-    # Show that all proper minors of U_{2,4} ARE GF(2)-representable
-    print(f"\n  Checking proper minors of U_{{2,4}}:")
-    for e in range(4):
-        deleted = u24.delete(e)
-        contracted = u24.contract(e)
-        # U_{2,3} and U_{1,3} are both binary
-        print(f"    U_{{2,4}} \\ {e} ≅ U_{{2,3}} (binary representable: Yes)")
-        print(f"    U_{{2,4}} / {e} ≅ U_{{1,3}} (binary representable: Yes)")
-        break  # All elements are symmetric
+def demonstrate_duality():
+    """Demonstrate spectral duality for ternary matroids."""
+    print("\n" + "=" * 70)
+    print("Spectral Duality: Ternary Matroids")
+    print("=" * 70)
+    
+    # Ternary matroid spectrum
+    primal = ternary_matroids_spectrum()
+    # Dual: U_{2,5}* = U_{3,5}, F_7* is already in the list
+    # The dual spectrum reflects ranks around the maximum ground rank
+    # For ternary: rank 2 ↔ rank 4 (dual of U_{2,5} is U_{3,5} at rank 3)
+    dual_spectrum = {2: 1, 3: 2, 4: 1}  # Same! Ternary is nearly self-dual
+    dual = ObstructionSpectrum(dual_spectrum, total=4)
+    
+    pair = SpectralDualityPair(primal, dual, max_ground_rank=5)
+    print(f"\nPrimal spectrum: {dict(sorted(primal.spectrum.items()))}")
+    print(f"Dual spectrum:   {dict(sorted(dual.spectrum.items()))}")
+    print(f"Is palindromic (self-dual): {pair.is_palindromic()}")
+    print(f"Total preserved: {primal.total == dual.total}")
 
 
-def demonstrate_obstruction_spectrum():
-    """Demonstrate the obstruction spectrum concept."""
-    print("\n" + "=" * 60)
-    print("DEMONSTRATION: Obstruction Spectrum")
-    print("=" * 60)
+def demonstrate_wqo_antichain():
+    """Demonstrate the WQO ↔ finite antichains connection."""
+    print("\n" + "=" * 70)
+    print("WQO and Antichains: The Core Theorem")
+    print("=" * 70)
+    
+    print("""
+Theorem (Formalized): For a matroid minor system S,
+  WQO(S, ≤_minor) ⟹ ∀ minor-closed P, |ExcludedMinors(P)| < ∞
 
-    spectra = {
-        "GF(2)-representability": {4: 1},
-        "GF(3)-representability": {5: 2, 7: 2},
-        "GF(4)-representability": {5: 3, 6: 2, 7: 2},
-        "Planarity (graphs)": {5: 2},
-    }
+Conversely:
+  (∀ minor-closed P, |ExcludedMinors(P)| < ∞) ⟹ No infinite antichains
 
-    for prop, spectrum in spectra.items():
-        total = sum(spectrum.values())
-        max_size = max(spectrum.keys()) if spectrum else 0
-        print(f"\n  {prop}:")
-        print(f"    Spectrum: σ(k) = ", end="")
-        parts = [f"σ({k}) = {v}" for k, v in sorted(spectrum.items())]
-        print(", ".join(parts) + ", 0 otherwise")
-        print(f"    Total excluded minors: {total}")
-        print(f"    Maximum excluded minor size: {max_size}")
-        print(f"    Support: {sorted(spectrum.keys())}")
-
-
-def demonstrate_dickson():
-    """Demonstrate Dickson's lemma (product WQO)."""
-    print("\n" + "=" * 60)
-    print("DEMONSTRATION: Dickson's Lemma (Product WQO)")
-    print("=" * 60)
-
-    import random
-    random.seed(123)
-
-    print("\n  Any infinite sequence of pairs (a, b) ∈ ℕ² contains")
-    print("  i < j with a_i ≤ a_j AND b_i ≤ b_j.\n")
-
-    # Generate a random sequence of pairs
-    seq = [(random.randint(0, 20), random.randint(0, 20)) for _ in range(15)]
-    print(f"  Sequence: {seq[:8]}...")
-
-    for i in range(len(seq)):
-        for j in range(i + 1, len(seq)):
-            if seq[i][0] <= seq[j][0] and seq[i][1] <= seq[j][1]:
-                print(f"  Found: seq[{i}] = {seq[i]} ≤ seq[{j}] = {seq[j]}")
-                print(f"  ({seq[i][0]} ≤ {seq[j][0]} and {seq[i][1]} ≤ {seq[j][1]})")
-                return
-
-    print("  (No pair found in this short sequence)")
+Known instances:
+  - Graphs (Robertson-Seymour, 2004): WQO ✓
+  - Binary matroids (GF(2)): Equivalent to graphs, WQO ✓
+  - Ternary matroids (GF(3)): OPEN (conjectured WQO)
+  - GF(4)-representable: OPEN (conjectured WQO)
+  - General matroids: WQO FAILS (infinite antichains exist)
+""")
+    
+    # Demonstrate the antichain obstruction for general matroids
+    print("Example of infinite antichain in general matroids:")
+    print("  The family {U_{2,n} : n ≥ 4} forms an infinite antichain.")
+    print("  U_{2,n} is NOT a minor of U_{2,m} for n > m (rank 2 uniform matroids).")
+    print("  This shows general matroids are NOT WQO under minors.")
 
 
 if __name__ == "__main__":
-    demonstrate_wqo()
-    demonstrate_excluded_minors()
-    demonstrate_obstruction_spectrum()
-    demonstrate_dickson()
-    print("\n" + "=" * 60)
-    print("All demonstrations complete.")
-    print("=" * 60)
+    demonstrate_hierarchy()
+    demonstrate_duality()
+    demonstrate_wqo_antichain()
+    
+    print("\n" + "=" * 70)
+    print("Key Results Formalized in Lean 4")
+    print("=" * 70)
+    print("""
+1. excluded_minors_antichain: Excluded minors form an antichain
+2. contains_excluded_minor: Every non-member contains an excluded minor
+3. wqo_implies_finite_excluded_minors_set: WQO → finite excluded minors
+4. finite_excluded_minors_implies_no_infinite_antichain: Converse direction
+5. exists_of_wqo: WQO → every class has an obstruction spectrum
+6. total_ge_width: Width ≤ Total (spectrum density bound)
+7. dual_excluded_minors: Duality preserves excluded minor structure
+8. self_dual_palindromic: Self-dual classes have palindromic spectra
+9. palindromic_center: Center symmetry for odd-rank palindromic spectra
+10. bot_excluded_minors_characterization: Minimal elements characterization
+""")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Obstruction Spectrum for Various Minor-Closed Properties
+Visualization: Obstruction Spectra for Minor-Closed Matroid Classes
 
-Produces a bar chart showing the obstruction spectrum σ(k) for several
-known minor-closed properties of matroids and graphs.
+Generates bar charts showing the obstruction spectrum for various
+well-known minor-closed classes, illustrating the growth pattern
+as field size increases.
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
 
 def plot_obstruction_spectra():
-    """Plot obstruction spectra for known minor-closed properties."""
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-    fig.suptitle('Obstruction Spectra for Minor-Closed Properties',
+    """Plot obstruction spectra for known minor-closed classes."""
+    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+    fig.suptitle('Obstruction Spectra for Minor-Closed Matroid Classes', 
                  fontsize=16, fontweight='bold')
-
-    properties = [
-        {
-            'name': 'Graph Planarity',
-            'spectrum': {5: 2},
-            'labels': {5: 'K₅, K₃,₃'},
-            'color': '#2196F3',
-            'description': 'Wagner/Kuratowski theorem'
-        },
-        {
-            'name': 'GF(2)-Representability\n(Binary Matroids)',
-            'spectrum': {4: 1},
-            'labels': {4: 'U₂,₄'},
-            'color': '#4CAF50',
-            'description': 'Tutte 1958'
-        },
-        {
-            'name': 'GF(3)-Representability\n(Ternary Matroids)',
-            'spectrum': {5: 2, 7: 2},
-            'labels': {5: 'U₂,₅, U₃,₅', 7: 'F₇, F₇*'},
-            'color': '#FF9800',
-            'description': 'Bixby, Seymour 1979'
-        },
-        {
-            'name': 'GF(4)-Representability\n(Quaternary Matroids)',
-            'spectrum': {5: 3, 6: 2, 7: 2},
-            'labels': {5: 'U₂,₅, U₃,₅, +1', 6: '2 others', 7: 'P₈, P₈⁻'},
-            'color': '#E91E63',
-            'description': 'Geelen-Gerards-Kapoor 2000'
-        },
+    
+    classes = [
+        ("Series-Parallel\n(1 excl. minor)", {3: 1}, '#2ecc71'),
+        ("Outerplanar\n(2 excl. minors)", {3: 2}, '#3498db'),
+        ("Planar Graphs\n(2 excl. minors)", {4: 2}, '#e74c3c'),
+        ("Binary GF(2)\n(1 excl. minor)", {2: 1}, '#9b59b6'),
+        ("Ternary GF(3)\n(4 excl. minors)", {2: 1, 3: 2, 4: 1}, '#f39c12'),
+        ("GF(4)-representable\n(7 excl. minors)", {2: 1, 3: 3, 4: 2, 5: 1}, '#1abc9c'),
     ]
-
-    for idx, prop in enumerate(properties):
-        ax = axes[idx // 2][idx % 2]
-        spectrum = prop['spectrum']
-
-        max_k = max(spectrum.keys()) + 2 if spectrum else 10
-        ks = list(range(1, max_k + 1))
-        values = [spectrum.get(k, 0) for k in ks]
-
-        bars = ax.bar(ks, values, color=prop['color'], alpha=0.8, edgecolor='black',
-                      linewidth=0.5)
-
-        for k, v in spectrum.items():
-            if v > 0:
-                label = prop['labels'].get(k, '')
-                ax.annotate(label, (k, v), textcoords="offset points",
-                           xytext=(0, 8), ha='center', fontsize=8,
-                           fontweight='bold')
-
-        total = sum(spectrum.values())
-        ax.set_title(f"{prop['name']}\n({prop['description']})", fontsize=11)
-        ax.set_xlabel('Ground set size k', fontsize=10)
-        ax.set_ylabel('σ(k) = # excluded minors', fontsize=10)
-        ax.set_xticks(ks)
-        ax.set_ylim(0, max(values) + 1.5)
-        ax.text(0.95, 0.95, f'Total: {total}', transform=ax.transAxes,
-                ha='right', va='top', fontsize=10,
-                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-
+    
+    for idx, (name, spectrum, color) in enumerate(classes):
+        ax = axes[idx // 3][idx % 3]
+        max_rank = max(spectrum.keys(), default=0)
+        ranks = list(range(max_rank + 2))
+        counts = [spectrum.get(r, 0) for r in ranks]
+        
+        bars = ax.bar(ranks, counts, color=color, alpha=0.8, edgecolor='white', linewidth=1.5)
+        ax.set_title(name, fontsize=11, fontweight='bold')
+        ax.set_xlabel('Rank', fontsize=10)
+        ax.set_ylabel('# Excluded Minors', fontsize=10)
+        ax.set_xticks(ranks)
+        ax.set_ylim(0, max(counts) + 1)
+        ax.grid(axis='y', alpha=0.3)
+        
+        # Annotate bars
+        for bar, count in zip(bars, counts):
+            if count > 0:
+                ax.text(bar.get_x() + bar.get_width()/2., bar.get_height() + 0.1,
+                       str(count), ha='center', va='bottom', fontweight='bold', fontsize=12)
+    
     plt.tight_layout()
     plt.savefig('obstruction_spectra.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved obstruction_spectra.png")
+    print("Saved: obstruction_spectra.png")
 
 
-def plot_wqo_sequence():
-    """Visualize the WQO property: finding comparable pairs in sequences."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    np.random.seed(42)
-    n = 20
-    pairs = [(np.random.randint(0, 15), np.random.randint(0, 15)) for _ in range(n)]
-
-    # Find the first comparable pair (Dickson's lemma)
-    found_i, found_j = None, None
-    for i in range(n):
-        for j in range(i + 1, n):
-            if pairs[i][0] <= pairs[j][0] and pairs[i][1] <= pairs[j][1]:
-                found_i, found_j = i, j
-                break
-        if found_i is not None:
-            break
-
-    xs = [p[0] for p in pairs]
-    ys = [p[1] for p in pairs]
-
-    ax.scatter(xs, ys, c='steelblue', s=80, zorder=5, edgecolors='black', linewidths=0.5)
-
-    for idx, (x, y) in enumerate(pairs):
-        ax.annotate(str(idx), (x, y), textcoords="offset points",
-                   xytext=(5, 5), fontsize=8, color='gray')
-
-    if found_i is not None and found_j is not None:
-        ax.scatter([xs[found_i], xs[found_j]], [ys[found_i], ys[found_j]],
-                  c='red', s=150, zorder=6, edgecolors='darkred', linewidths=2)
-        ax.annotate('', xy=(xs[found_j], ys[found_j]), xytext=(xs[found_i], ys[found_i]),
-                   arrowprops=dict(arrowstyle='->', color='red', lw=2))
-        ax.set_title(f"Dickson's Lemma: pair[{found_i}] = {pairs[found_i]} ≤ "
-                    f"pair[{found_j}] = {pairs[found_j]}", fontsize=13, fontweight='bold')
-
-    ax.set_xlabel('First component', fontsize=12)
-    ax.set_ylabel('Second component', fontsize=12)
+def plot_growth_rates():
+    """Plot growth rate functions for different finite fields."""
+    fig, ax = plt.subplots(figsize=(10, 7))
+    
+    ranks = np.arange(1, 8)
+    
+    for q, color, label in [(2, '#e74c3c', 'GF(2) — Graphs'), 
+                             (3, '#3498db', 'GF(3) — Ternary'),
+                             (4, '#2ecc71', 'GF(4)'),
+                             (5, '#f39c12', 'GF(5)'),
+                             (7, '#9b59b6', 'GF(7)')]:
+        growth = [(q**r - 1) // (q - 1) for r in ranks]
+        ax.plot(ranks, growth, 'o-', color=color, label=label, 
+                linewidth=2, markersize=8)
+    
+    ax.set_xlabel('Rank r', fontsize=13)
+    ax.set_ylabel('Max elements in rank-r simple matroid', fontsize=13)
+    ax.set_title('Growth Rate Functions for GF(q)-Representable Matroids', 
+                fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.set_yscale('log')
     ax.grid(True, alpha=0.3)
-
+    
     plt.tight_layout()
-    plt.savefig('dickson_lemma.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved dickson_lemma.png")
+    plt.savefig('growth_rates.png', dpi=150, bbox_inches='tight')
+    print("Saved: growth_rates.png")
+
+
+def plot_hierarchy():
+    """Plot the hierarchy of matroid classes."""
+    fig, ax = plt.subplots(figsize=(10, 8))
+    
+    # Hierarchy levels (field size, total excluded minors, label)
+    levels = [
+        (2, 1, 'GF(2)\n(Binary)'),
+        (3, 4, 'GF(3)\n(Ternary)'),
+        (4, 7, 'GF(4)'),
+        (5, '?', 'GF(5)'),
+        (7, '?', 'GF(7)'),
+    ]
+    
+    # Draw hierarchy
+    y_positions = [4, 3, 2, 1, 0]
+    x_center = 0.5
+    
+    for i, (q, total, label) in enumerate(levels):
+        y = y_positions[i]
+        width = 0.3 + 0.05 * q
+        
+        color = '#3498db' if isinstance(total, int) else '#bdc3c7'
+        rect = plt.Rectangle((x_center - width/2, y - 0.3), width, 0.6,
+                             facecolor=color, edgecolor='black', 
+                             linewidth=2, alpha=0.7)
+        ax.add_patch(rect)
+        
+        total_str = str(total) if isinstance(total, int) else '?'
+        ax.text(x_center, y, f'{label}\nExcl. minors: {total_str}',
+               ha='center', va='center', fontsize=11, fontweight='bold')
+        
+        # Draw arrow to next level
+        if i < len(levels) - 1:
+            ax.annotate('', xy=(x_center, y_positions[i+1] + 0.35),
+                       xytext=(x_center, y - 0.35),
+                       arrowprops=dict(arrowstyle='->', color='gray', lw=2))
+    
+    # Add Robertson-Seymour annotation
+    ax.text(x_center + 0.35, 4, '← Robertson-Seymour\n    (PROVED)', 
+           fontsize=10, color='green', fontweight='bold')
+    ax.text(x_center + 0.35, 2.5, '← GGW Conjecture\n    (OPEN)', 
+           fontsize=10, color='red', fontweight='bold')
+    
+    ax.set_xlim(-0.2, 1.2)
+    ax.set_ylim(-0.8, 5)
+    ax.set_title('Robertson-Seymour Matroid Hierarchy', fontsize=14, fontweight='bold')
+    ax.axis('off')
+    
+    plt.tight_layout()
+    plt.savefig('hierarchy.png', dpi=150, bbox_inches='tight')
+    print("Saved: hierarchy.png")
 
 
 if __name__ == "__main__":
     plot_obstruction_spectra()
-    plot_wqo_sequence()
+    plot_growth_rates()
+    plot_hierarchy()
