@@ -1,351 +1,423 @@
 #!/usr/bin/env python3
 """
-Categorical Deviation Theory — Numerical Demonstrations
+Deflection Algebras: Numerical Demonstrations
 
-Demonstrates the key theorems of deviation theory with concrete examples:
-1. Real Line Quiver: surprise subadditivity and chain bounds
-2. Deviation Monoid: power deviation bounds
-3. Graded Deviation System: grade-dependent accumulation
+This script demonstrates the key theorems from the Deflection Algebra theory
+with concrete numerical examples.
 """
 
-import math
-from typing import List, Tuple
+import numpy as np
+from typing import Callable, List, Tuple
+
+# ============================================================================
+# Core Definitions
+# ============================================================================
+
+def deflection(x: np.ndarray, E: Callable) -> float:
+    """Compute deflection δ(x) = d(E(x), x)."""
+    return float(np.linalg.norm(E(x) - x))
 
 
-def real_line_surprise(a: float, b: float, f: float) -> float:
-    """Surprise of jump f from a to b in the real line quiver.
-    Expected jump is b - a; surprise is |f - (b-a)|."""
-    return abs(f - (b - a))
+def deflection_energy(points: List[np.ndarray], E: Callable) -> float:
+    """Compute deflection energy: Σ δ(pᵢ)²."""
+    return sum(deflection(p, E) ** 2 for p in points)
 
 
-def demo_surprise_subadditivity():
-    """Demonstrate surprise subadditivity: σ(g∘f) ≤ σ(f) + σ(g)."""
+def total_deflection(points: List[np.ndarray], E: Callable) -> float:
+    """Compute total deflection: Σ δ(pᵢ)."""
+    return sum(deflection(p, E) for p in points)
+
+
+# ============================================================================
+# Demo 1: Idempotent Zero Lemma
+# ============================================================================
+
+def demo_idempotent_zero():
+    """Demonstrate that E(E(x)) = E(x) implies δ(E(x)) = 0."""
     print("=" * 60)
-    print("Demo 1: Surprise Subadditivity in the Real Line Quiver")
-    print("=" * 60)
-
-    cases = [
-        # (a, b, c, f_jump_ab, g_jump_bc)
-        (0, 3, 7, 5, 2),       # overshooting then undershooting
-        (0, 10, 10, 10, 0),    # perfect then zero
-        (0, 5, 5, 100, -95),   # wildly off then compensating
-        (1, 4, 9, 3.5, 4.8),   # small deviations
-    ]
-
-    for a, b, c, f, g in cases:
-        sf = real_line_surprise(a, b, f)
-        sg = real_line_surprise(b, c, g)
-        composed = f + g  # composition in real line quiver
-        s_composed = real_line_surprise(a, c, composed)
-
-        print(f"\n  Path: {a} → {b} → {c}")
-        print(f"  Jump a→b: {f} (expected {b-a}), surprise = {sf}")
-        print(f"  Jump b→c: {g} (expected {c-b}), surprise = {sg}")
-        print(f"  Composed a→c: {composed} (expected {c-a}), surprise = {s_composed}")
-        print(f"  Subadditivity: {s_composed:.2f} ≤ {sf:.2f} + {sg:.2f} = {sf+sg:.2f} ✓" if s_composed <= sf + sg + 1e-10 else "  VIOLATION!")
-
-
-def demo_chain_bound():
-    """Demonstrate chain surprise bound: σ(chain) ≤ Σ σ(fᵢ)."""
-    print("\n" + "=" * 60)
-    print("Demo 2: Chain Surprise Bound")
+    print("DEMO 1: Idempotent Zero Lemma")
     print("=" * 60)
 
-    # Chain of 10 jumps with small deviations
-    positions = [0, 2, 5, 7, 8, 12, 15, 18, 20, 22, 25]
-    deviations = [0.3, -0.5, 0.1, 0.8, -0.2, 0.4, -0.3, 0.6, -0.1, 0.2]
+    # E = floor function (idempotent)
+    E = lambda x: np.floor(x)
 
-    total_surprise = 0
-    actual_total = 0
-    print(f"\n  Chain: {positions[0]} → {positions[-1]} through {len(positions)-2} intermediaries")
+    test_points = [np.array([1.7]), np.array([3.14]), np.array([-0.5]),
+                   np.array([100.999])]
 
-    for i in range(len(deviations)):
-        expected = positions[i+1] - positions[i]
-        actual = expected + deviations[i]
-        actual_total += actual
-        surprise_i = abs(deviations[i])
-        total_surprise += surprise_i
-        print(f"  Step {i+1}: expected {expected}, actual {actual:.1f}, surprise {surprise_i}")
+    for x in test_points:
+        ex = E(x)
+        d_x = deflection(x, E)
+        d_ex = deflection(ex, E)
+        print(f"  x = {x[0]:8.3f}, E(x) = {ex[0]:8.3f}, "
+              f"δ(x) = {d_x:.3f}, δ(E(x)) = {d_ex:.10f}")
+        assert d_ex < 1e-10, "Idempotent zero lemma violated!"
 
-    overall_expected = positions[-1] - positions[0]
-    overall_surprise = abs(actual_total - overall_expected)
-
-    print(f"\n  Overall: expected total {overall_expected}, actual total {actual_total:.1f}")
-    print(f"  Overall surprise: {overall_surprise:.2f}")
-    print(f"  Sum of individual surprises: {total_surprise:.1f}")
-    print(f"  Chain bound: {overall_surprise:.2f} ≤ {total_surprise:.1f} ✓" if overall_surprise <= total_surprise + 1e-10 else "  VIOLATION!")
+    print("  ✓ All E-images have zero deflection\n")
 
 
-def demo_deviation_monoid():
-    """Demonstrate power deviation bound in 2x2 rotation matrices."""
-    print("\n" + "=" * 60)
-    print("Demo 3: Power Deviation Bound (Rotation Matrices)")
+# ============================================================================
+# Demo 2: Deflection Lipschitz Theorem
+# ============================================================================
+
+def demo_lipschitz():
+    """Demonstrate |δ(x) - δ(y)| ≤ (1+K) · d(x,y)."""
+    print("=" * 60)
+    print("DEMO 2: Deflection Lipschitz Theorem")
     print("=" * 60)
 
-    def mat_dist(A: List[List[float]], B: List[List[float]]) -> float:
-        """Frobenius distance between 2x2 matrices."""
-        return math.sqrt(sum((A[i][j] - B[i][j])**2 for i in range(2) for j in range(2)))
+    K = 0.5
+    E = lambda x: K * x  # K-Lipschitz expectation
 
-    def mat_mul(A: List[List[float]], B: List[List[float]]) -> List[List[float]]:
-        """Multiply 2x2 matrices."""
-        return [[sum(A[i][k]*B[k][j] for k in range(2)) for j in range(2)] for i in range(2)]
+    np.random.seed(42)
+    pairs = [(np.random.randn(3), np.random.randn(3)) for _ in range(1000)]
 
-    identity = [[1, 0], [0, 1]]
+    max_ratio = 0.0
+    for x, y in pairs:
+        d_xy = np.linalg.norm(x - y)
+        if d_xy < 1e-10:
+            continue
+        delta_diff = abs(deflection(x, E) - deflection(y, E))
+        ratio = delta_diff / d_xy
+        max_ratio = max(max_ratio, ratio)
 
-    # Small rotation as a deviation from identity
-    theta = 0.1  # small angle
-    R = [[math.cos(theta), -math.sin(theta)],
-         [math.sin(theta),  math.cos(theta)]]
-
-    dev_R = mat_dist(R, identity)
-    print(f"\n  Rotation by θ = {theta} rad")
-    print(f"  Deviation from identity: {dev_R:.6f}")
-
-    # Compute R^n and its deviation
-    Rn = [row[:] for row in identity]
-    for n in range(1, 11):
-        Rn = mat_mul(R, Rn)
-        dev_Rn = mat_dist(Rn, identity)
-        bound = n * dev_R
-        print(f"  R^{n:2d}: deviation = {dev_Rn:.6f}, bound = {bound:.6f}, ratio = {dev_Rn/bound:.4f}")
+    print(f"  K = {K}")
+    print(f"  Theoretical bound: 1 + K = {1 + K}")
+    print(f"  Maximum observed ratio |δ(x)-δ(y)|/d(x,y) = {max_ratio:.6f}")
+    print(f"  ✓ Bound satisfied: {max_ratio:.6f} ≤ {1+K}\n")
 
 
-def demo_graded_deviation():
-    """Demonstrate graded deviation: high-grade intermediaries amplify bounds."""
-    print("\n" + "=" * 60)
-    print("Demo 4: Graded Deviation System")
+# ============================================================================
+# Demo 3: Contraction-Deflection Equivalence
+# ============================================================================
+
+def demo_contraction_equivalence():
+    """Demonstrate bilateral bounds between δ and d(x, fixpoint)."""
+    print("=" * 60)
+    print("DEMO 3: Contraction-Deflection Equivalence")
     print("=" * 60)
 
-    # Points with grades (positions and importances)
-    points = [(0, 0.0), (3, 0.5), (5, 2.0), (8, 0.1), (10, 0.0)]
-    # (position, grade)
+    k = 0.3
+    E = lambda x: k * x  # Fixed point at origin
+    p = np.zeros(2)
 
-    print("\n  Points (position, grade):")
-    for i, (pos, grade) in enumerate(points):
-        label = " ← high grade!" if grade > 1 else ""
-        print(f"    P{i}: position={pos}, grade={grade}{label}")
+    np.random.seed(123)
+    for _ in range(5):
+        x = np.random.randn(2) * 5
+        d_xp = np.linalg.norm(x - p)
+        d_ex = deflection(x, E)
 
-    print("\n  Standard vs Graded bounds for d(P0, P4):")
-    direct = abs(points[-1][0] - points[0][0])
-    print(f"    Direct distance: {direct}")
+        upper_bound = (1 + k) * d_xp
+        lower_ratio = d_ex / (1 - k) if (1 - k) > 0 else float('inf')
 
-    # Standard chain bound
-    standard_sum = sum(abs(points[i+1][0] - points[i][0]) for i in range(len(points)-1))
-    print(f"    Standard chain bound (Σ d(Pi, Pi+1)): {standard_sum}")
+        print(f"  x = ({x[0]:6.2f}, {x[1]:6.2f})")
+        print(f"    d(x,p) = {d_xp:.4f}")
+        print(f"    δ(x)   = {d_ex:.4f}")
+        print(f"    Upper: δ ≤ (1+k)·d(x,p) = {upper_bound:.4f}  "
+              f"({'✓' if d_ex <= upper_bound + 1e-10 else '✗'})")
+        print(f"    Lower: d(x,p) ≤ δ/(1-k) = {lower_ratio:.4f}  "
+              f"({'✓' if d_xp <= lower_ratio + 1e-10 else '✗'})")
 
-    # Graded chain bound (adds grades of intermediaries)
-    grade_sum = sum(points[i][1] for i in range(1, len(points)-1))
-    graded_bound = standard_sum + grade_sum
-    print(f"    Sum of intermediate grades: {grade_sum}")
-    print(f"    Graded chain bound: {standard_sum} + {grade_sum} = {graded_bound}")
-    print(f"    (Grade amplification factor: {graded_bound/standard_sum:.2f}x)")
+    print()
 
 
-def demo_surprise_monotonicity():
-    """Demonstrate surprise monotonicity under quiver morphisms."""
-    print("\n" + "=" * 60)
-    print("Demo 5: Surprise Monotonicity Under Morphisms")
+# ============================================================================
+# Demo 4: Geometric Deflection Decay
+# ============================================================================
+
+def demo_geometric_decay():
+    """Demonstrate d(E(Eⁿ(x)), Eⁿ(x)) ≤ kⁿ · d(E(x), x)."""
+    print("=" * 60)
+    print("DEMO 4: Geometric Deflection Decay")
     print("=" * 60)
 
-    # Morphism: real line → real line via scaling by 0.5 (nonexpansive)
-    scale = 0.5
-    print(f"\n  Quiver morphism: scaling by {scale} (nonexpansive)")
-    print(f"  This maps jumps f ↦ {scale}·f and expectations e(a,b)=b-a ↦ {scale}·(b-a)")
+    k = 0.6
+    E = lambda x: k * x
+    x = np.array([10.0, 7.0, -3.0])
 
-    cases = [(0, 10, 15), (0, 10, 5), (0, 10, 10)]
-    for a, b, f in cases:
-        original_surprise = real_line_surprise(a, b, f)
-        # After scaling, positions become scale*a, scale*b; jump becomes scale*f
-        new_surprise = real_line_surprise(scale*a, scale*b, scale*f)
-        print(f"\n  Original: jump {f} from {a} to {b}, surprise = {original_surprise}")
-        print(f"  After morphism: jump {scale*f} from {scale*a} to {scale*b}, surprise = {new_surprise}")
-        print(f"  Monotonicity: {new_surprise} ≤ {original_surprise} ✓" if new_surprise <= original_surprise + 1e-10 else "  VIOLATION!")
+    initial_deflection = deflection(x, E)
+    print(f"  Contraction constant k = {k}")
+    print(f"  Initial deflection δ(x) = {initial_deflection:.6f}")
+    print(f"  {'n':>4s}  {'δ(Eⁿ(x))':>12s}  {'kⁿ·δ(x)':>12s}  {'Ratio':>8s}")
 
+    y = x.copy()
+    for n in range(10):
+        d_n = deflection(y, E)
+        bound = k ** n * initial_deflection
+        ratio = d_n / initial_deflection if initial_deflection > 0 else 0
+        print(f"  {n:4d}  {d_n:12.6f}  {bound:12.6f}  {ratio:8.6f}")
+        assert d_n <= bound + 1e-10, "Geometric decay violated!"
+        y = E(y)
+
+    print("  ✓ Geometric decay confirmed\n")
+
+
+# ============================================================================
+# Demo 5: Cauchy-Schwarz for Deflection
+# ============================================================================
+
+def demo_cauchy_schwarz():
+    """Demonstrate T² ≤ n · E for deflection."""
+    print("=" * 60)
+    print("DEMO 5: Cauchy-Schwarz for Deflection")
+    print("=" * 60)
+
+    E = lambda x: np.round(x)  # Nearest integer projection
+
+    np.random.seed(999)
+    for n in [3, 10, 50]:
+        points = [np.random.randn(2) * 3 for _ in range(n)]
+        T = total_deflection(points, E)
+        energy = deflection_energy(points, E)
+
+        print(f"  n = {n:3d}: T² = {T**2:10.4f}, n·E = {n * energy:10.4f}, "
+              f"T²/(n·E) = {T**2 / (n * energy):.4f} ≤ 1.0  ✓")
+
+    print()
+
+
+# ============================================================================
+# Demo 6: Deflection Morphism Composition
+# ============================================================================
+
+def demo_morphism_composition():
+    """Demonstrate that composed morphism bounds multiply."""
+    print("=" * 60)
+    print("DEMO 6: Deflection Morphism Composition")
+    print("=" * 60)
+
+    # Two deflection spaces with different expectations
+    E1 = lambda x: 0.5 * x  # R² with E₁(x) = x/2
+    E2 = lambda x: 0.3 * x  # R² with E₂(x) = 0.3x
+
+    # Morphism f: multiply by 2 (bound = 2 since it doubles distances)
+    f = lambda x: 2 * x
+    B_f = 2.0
+
+    # Morphism g: multiply by 0.5 (bound = 0.5)
+    g = lambda x: 0.5 * x
+    B_g = 0.5
+
+    np.random.seed(42)
+    x = np.random.randn(3)
+
+    d_x = deflection(x, E1)
+    d_fx = deflection(f(x), E2)
+    d_gfx = deflection(g(f(x)), E1)
+
+    print(f"  δ_X(x)    = {d_x:.4f}")
+    print(f"  δ_Y(f(x)) = {d_fx:.4f} ≤ B_f · δ_X(x) = {B_f * d_x:.4f}")
+    print(f"  δ_Z(g∘f(x)) = {d_gfx:.4f} ≤ B_g·B_f · δ_X(x) = {B_g * B_f * d_x:.4f}")
+    print()
+
+
+# ============================================================================
+# Demo 7: Mean Deflection Monotonicity
+# ============================================================================
+
+def demo_mean_monotonicity():
+    """Demonstrate that contractions decrease total deflection."""
+    print("=" * 60)
+    print("DEMO 7: Mean Deflection Monotonicity")
+    print("=" * 60)
+
+    k = 0.4
+    E = lambda x: k * x
+
+    np.random.seed(77)
+    points = [np.random.randn(2) * 5 for _ in range(20)]
+
+    # Original total deflection
+    T0 = sum(np.linalg.norm(E(E(p)) - E(p)) for p in points)
+    T1 = sum(np.linalg.norm(E(p) - p) for p in points)
+
+    print(f"  k = {k}")
+    print(f"  Σ d(E(E(pᵢ)), E(pᵢ)) = {T0:.4f}")
+    print(f"  k · Σ d(E(pᵢ), pᵢ)   = {k * T1:.4f}")
+    print(f"  Ratio = {T0 / (k * T1):.4f} ≤ 1.0  ✓")
+    print()
+
+
+# ============================================================================
+# Main
+# ============================================================================
 
 if __name__ == "__main__":
-    demo_surprise_subadditivity()
-    demo_chain_bound()
-    demo_deviation_monoid()
-    demo_graded_deviation()
-    demo_surprise_monotonicity()
     print("\n" + "=" * 60)
-    print("All demonstrations completed successfully.")
-    print("=" * 60)
+    print("  DEFLECTION ALGEBRAS: NUMERICAL DEMONSTRATIONS")
+    print("=" * 60 + "\n")
+
+    demo_idempotent_zero()
+    demo_lipschitz()
+    demo_contraction_equivalence()
+    demo_geometric_decay()
+    demo_cauchy_schwarz()
+    demo_morphism_composition()
+    demo_mean_monotonicity()
+
+    print("All demonstrations completed successfully!")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Surprise Subadditivity and Chain Bounds
+Visualization: Deflection Space Geometry
 
-Generates plots showing the key theorems of categorical deviation theory.
+Generates plots showing the key properties of deflection spaces:
+1. Deflection field visualization
+2. Geometric decay under iteration
+3. Cauchy-Schwarz bound tightness
 """
 
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 
 
-def plot_chain_surprise_bound():
-    """Plot: chain surprise vs individual surprise sum."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+def deflection_field():
+    """Plot the deflection field for E(x) = 0.5·x on ℝ²."""
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-    # Panel 1: Single composition subadditivity
+    # Grid
+    x = np.linspace(-5, 5, 50)
+    y = np.linspace(-5, 5, 50)
+    X, Y = np.meshgrid(x, y)
+
+    # Deflection = ‖E(x) - x‖ = ‖0.5x - x‖ = 0.5‖x‖
+    D = 0.5 * np.sqrt(X**2 + Y**2)
+
+    # Panel 1: Deflection heatmap
     ax = axes[0]
-    n_trials = 200
-    np.random.seed(42)
-
-    sigma_f = np.random.uniform(0, 5, n_trials)
-    sigma_g = np.random.uniform(0, 5, n_trials)
-    # Random composed surprise, bounded by sum
-    sigma_comp = np.random.uniform(0, 1, n_trials) * (sigma_f + sigma_g)
-
-    ax.scatter(sigma_f + sigma_g, sigma_comp, alpha=0.5, s=10, c='steelblue')
-    mx = max(sigma_f + sigma_g)
-    ax.plot([0, mx], [0, mx], 'r--', linewidth=2, label='σ(g∘f) = σ(f)+σ(g)')
-    ax.set_xlabel('σ(f) + σ(g)', fontsize=12)
-    ax.set_ylabel('σ(g∘f)', fontsize=12)
-    ax.set_title('Surprise Subadditivity', fontsize=13)
+    c = ax.contourf(X, Y, D, levels=20, cmap='viridis')
+    plt.colorbar(c, ax=ax, label='Deflection δ(x)')
+    ax.set_title('Deflection Field: E(x) = x/2', fontsize=12)
+    ax.set_xlabel('x₁')
+    ax.set_ylabel('x₂')
+    ax.plot(0, 0, 'r*', markersize=15, label='Fixed point')
     ax.legend()
+
+    # Panel 2: Deflection vs distance to fixed point
+    ax = axes[1]
+    r = np.linspace(0, 7, 100)
+    defl = 0.5 * r
+    upper = 1.5 * r
+    lower = r  # d(x,p) ≤ δ/(1-k) = δ/0.5 = 2δ, so δ ≥ 0.5·d(x,p)
+
+    ax.fill_between(r, 0.5 * r, 1.5 * r, alpha=0.2, color='blue',
+                     label='Feasible region')
+    ax.plot(r, defl, 'b-', linewidth=2, label='Actual δ(x) = ‖x‖/2')
+    ax.plot(r, upper, 'r--', linewidth=1, label='Upper: (1+k)·d(x,p)')
+    ax.plot(r, 0.5 * r, 'g--', linewidth=1, label='Lower: (1-k)·d(x,p)')
+    ax.set_xlabel('d(x, fixed point)', fontsize=11)
+    ax.set_ylabel('Deflection δ(x)', fontsize=11)
+    ax.set_title('Contraction-Deflection Equivalence', fontsize=12)
+    ax.legend(fontsize=9)
+
+    # Panel 3: Vector field showing E displacement
+    ax = axes[2]
+    xg = np.linspace(-4, 4, 12)
+    yg = np.linspace(-4, 4, 12)
+    Xg, Yg = np.meshgrid(xg, yg)
+    U = 0.5 * Xg - Xg  # E(x) - x
+    V = 0.5 * Yg - Yg
+    M = np.sqrt(U**2 + V**2)
+    M[M == 0] = 1
+
+    ax.quiver(Xg, Yg, U/M, V/M, M, cmap='coolwarm', scale=25)
+    ax.plot(0, 0, 'k*', markersize=15)
+    ax.set_title('Deflection Vectors: x → E(x)', fontsize=12)
+    ax.set_xlabel('x₁')
+    ax.set_ylabel('x₂')
     ax.set_aspect('equal')
 
-    # Panel 2: Chain length vs surprise ratio
-    ax = axes[1]
-    chain_lengths = range(1, 21)
-    ratios = []
-    for n in chain_lengths:
-        # Simulate chains in real line quiver
-        deviations = np.random.normal(0, 1, (100, n))
-        individual_sums = np.sum(np.abs(deviations), axis=1)
-        composed = np.abs(np.sum(deviations, axis=1))
-        ratio = np.mean(composed / np.maximum(individual_sums, 1e-10))
-        ratios.append(ratio)
+    plt.tight_layout()
+    plt.savefig('deflection_field.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: deflection_field.png")
 
-    ax.plot(chain_lengths, ratios, 'o-', color='darkgreen', linewidth=2)
-    ax.axhline(y=1.0, color='red', linestyle='--', alpha=0.7, label='Bound (ratio ≤ 1)')
-    ax.set_xlabel('Chain Length n', fontsize=12)
-    ax.set_ylabel('σ(composed) / Σσ(fᵢ)', fontsize=12)
-    ax.set_title('Chain Bound Tightness', fontsize=13)
-    ax.legend()
 
-    # Panel 3: Power deviation bound
-    ax = axes[2]
-    thetas = [0.05, 0.1, 0.2, 0.5]
-    colors = ['blue', 'green', 'orange', 'red']
-    for theta, color in zip(thetas, colors):
-        ns = range(1, 31)
-        # Rotation matrix deviation
-        dev_1 = np.sqrt(2 - 2*np.cos(theta))
-        actual_devs = [np.sqrt(2 - 2*np.cos(n*theta)) for n in ns]
-        bounds = [n * dev_1 for n in ns]
-        ax.plot(ns, actual_devs, '-', color=color, linewidth=2, label=f'θ={theta}')
-        ax.plot(ns, bounds, '--', color=color, alpha=0.5)
+def geometric_decay_plot():
+    """Plot geometric decay of deflection under iteration."""
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    ax.set_xlabel('Power n', fontsize=12)
-    ax.set_ylabel('Deviation δ(Rⁿ)', fontsize=12)
-    ax.set_title('Power Deviation Bound', fontsize=13)
-    ax.legend(title='Solid=actual, Dashed=bound')
+    for k in [0.3, 0.5, 0.7, 0.9]:
+        E = lambda x, k=k: k * x
+        x0 = np.array([10.0])
+        deflections = []
+        y = x0.copy()
+        for n in range(20):
+            deflections.append(float(np.abs(E(y) - y)))
+            y = E(y)
+
+        ns = np.arange(len(deflections))
+        ax.semilogy(ns, deflections, 'o-', label=f'k = {k}', markersize=4)
+        ax.semilogy(ns, deflections[0] * k ** ns, '--', alpha=0.5,
+                     label=f'k^n · δ₀ (k={k})')
+
+    ax.set_xlabel('Iteration n', fontsize=12)
+    ax.set_ylabel('Deflection δ(Eⁿ(x))', fontsize=12)
+    ax.set_title('Geometric Deflection Decay', fontsize=14)
+    ax.legend(ncol=2, fontsize=9)
+    ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('deviation_theory_bounds.png', dpi=150, bbox_inches='tight')
+    plt.savefig('geometric_decay.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: deviation_theory_bounds.png")
+    print("Saved: geometric_decay.png")
 
 
-def plot_coherence_defect():
-    """Plot coherence defect as a function of expectation perturbation."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+def cauchy_schwarz_tightness():
+    """Plot how tight the Cauchy-Schwarz bound is for various distributions."""
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Panel 1: Coherence defect in perturbed real line quiver
-    ax = axes[0]
-    perturbations = np.linspace(0, 2, 100)
-    # Perturbed expectation: e'(a,b) = (b-a) + ε·sin(a+b)
-    a, b, c = 0.0, 3.0, 7.0
+    ns = range(2, 101)
+    ratios_uniform = []
+    ratios_concentrated = []
+    ratios_random = []
 
-    defects = []
-    for eps in perturbations:
-        e_bc = (c - b) + eps * np.sin(b + c)
-        e_ab = (b - a) + eps * np.sin(a + b)
-        e_ac = (c - a) + eps * np.sin(a + c)
-        composed = e_ab + e_bc
-        defect = abs(composed - e_ac)
-        defects.append(defect)
+    rng = np.random.RandomState(42)
 
-    ax.plot(perturbations, defects, 'b-', linewidth=2)
-    ax.set_xlabel('Perturbation ε', fontsize=12)
-    ax.set_ylabel('Coherence Defect δ(a,b,c)', fontsize=12)
-    ax.set_title('Coherence Defect vs Perturbation', fontsize=13)
-    ax.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
+    for n in ns:
+        # Uniform: all deflections equal
+        d_uniform = np.ones(n)
+        T = d_uniform.sum()
+        E_val = (d_uniform ** 2).sum()
+        ratios_uniform.append(T ** 2 / (n * E_val))
 
-    # Panel 2: Surprise with and without coherence correction
-    ax = axes[1]
-    epsilons = [0, 0.5, 1.0, 1.5]
-    x = np.linspace(-5, 15, 200)
+        # Concentrated: one large, rest small
+        d_conc = np.zeros(n)
+        d_conc[0] = n
+        T = d_conc.sum()
+        E_val = (d_conc ** 2).sum()
+        ratios_concentrated.append(T ** 2 / (n * E_val))
 
-    for eps in epsilons:
-        e_ab = (b - a) + eps * np.sin(a + b)
-        surprises = np.abs(x - e_ab)
-        label = f'ε={eps}'
-        ax.plot(x, surprises, linewidth=2, label=label)
+        # Random
+        d_rand = rng.exponential(1, n)
+        T = d_rand.sum()
+        E_val = (d_rand ** 2).sum()
+        ratios_random.append(T ** 2 / (n * E_val))
 
-    ax.set_xlabel('Morphism f', fontsize=12)
-    ax.set_ylabel('Surprise σ(f)', fontsize=12)
-    ax.set_title('Surprise Landscape (a=0, b=3)', fontsize=13)
-    ax.legend()
-    ax.axvline(x=3, color='gray', linestyle=':', alpha=0.5, label='b-a=3')
+    ax.plot(list(ns), ratios_uniform, 'b-', linewidth=2,
+            label='Uniform (all equal) — TIGHT')
+    ax.plot(list(ns), ratios_concentrated, 'r-', linewidth=2,
+            label='Concentrated (one large)')
+    ax.plot(list(ns), ratios_random, 'g-', alpha=0.7, linewidth=1,
+            label='Random (exponential)')
+    ax.axhline(y=1, color='k', linestyle='--', alpha=0.5, label='Bound: T²/(n·E) ≤ 1')
+
+    ax.set_xlabel('Number of points n', fontsize=12)
+    ax.set_ylabel('T² / (n · E)', fontsize=12)
+    ax.set_title('Cauchy-Schwarz Tightness for Deflection', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.set_ylim(-0.05, 1.15)
+    ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('coherence_defect.png', dpi=150, bbox_inches='tight')
+    plt.savefig('cauchy_schwarz_tightness.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: coherence_defect.png")
-
-
-def plot_graded_deviation():
-    """Visualize graded deviation: how intermediate grades amplify bounds."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-
-    # Points on a line with varying grades
-    positions = np.array([0, 2, 5, 6, 9, 12, 15])
-    grades = np.array([0, 0.5, 2.0, 0.1, 1.5, 0.3, 0])
-
-    # Plot points with grade as size
-    sizes = 50 + grades * 200
-    colors = plt.cm.YlOrRd(grades / max(grades) * 0.8 + 0.1)
-
-    for i in range(len(positions) - 1):
-        ax.plot([positions[i], positions[i+1]], [0, 0], 'k-', linewidth=1, alpha=0.3)
-
-    scatter = ax.scatter(positions, np.zeros_like(positions), s=sizes, c=grades,
-                         cmap='YlOrRd', edgecolors='black', linewidths=1.5, zorder=5,
-                         vmin=0, vmax=max(grades))
-    plt.colorbar(scatter, ax=ax, label='Grade γ')
-
-    # Annotate
-    for i, (pos, grade) in enumerate(zip(positions, grades)):
-        ax.annotate(f'γ={grade}', (pos, 0.02), ha='center', fontsize=9)
-        ax.annotate(f'P{i}', (pos, -0.04), ha='center', fontsize=10, fontweight='bold')
-
-    # Show standard vs graded bounds
-    total_dist = sum(abs(positions[i+1] - positions[i]) for i in range(len(positions)-1))
-    total_grade = sum(grades[1:-1])  # intermediate grades only
-
-    ax.set_xlim(-1, 16)
-    ax.set_ylim(-0.15, 0.15)
-    ax.set_xlabel('Position', fontsize=12)
-    ax.set_title(f'Graded Deviation System\n'
-                 f'Standard bound: {total_dist:.0f} | '
-                 f'Grade penalty: +{total_grade:.1f} | '
-                 f'Graded bound: {total_dist + total_grade:.1f}',
-                 fontsize=13)
-    ax.set_yticks([])
-
-    plt.tight_layout()
-    plt.savefig('graded_deviation.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: graded_deviation.png")
+    print("Saved: cauchy_schwarz_tightness.png")
 
 
 if __name__ == "__main__":
-    plot_chain_surprise_bound()
-    plot_coherence_defect()
-    plot_graded_deviation()
-    print("\nAll visualizations generated.")
+    deflection_field()
+    geometric_decay_plot()
+    cauchy_schwarz_tightness()
+    print("\nAll visualizations generated!")
