@@ -2329,6 +2329,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: EML Differential Equations\n\n## Synthesis\n\nThis cycle established a formal obstruction theory for EML-solvability of linear ODEs, centered on Airy's equation y\u2033 = xy as the prototypical barrier. We proved four independent obstruction arguments (polynomial degree, Riccati degree parity, Wronskian conservation/SL\u2082 invariance, and growth rate analysis) and developed foundational infrastructure including ODE uniqueness for second-order equations with continuous coefficients.\n\nThe most promising cross-domain connection is between the **differential Galois group** formalized here and the **algebraic Galois theory** already present in the Catalog (`Bridges/GaloisNeuralCorrespondence.lean`, `Algebra/ProofSpectra/Core.lean`). Both theories share the same core mechanism \u2014 group-theoretic obstructions to solvability \u2014 but operate in different categories (differential fields vs. number fields). Bridging these formally would unify a substantial portion of modern algebra.\n\nThe cycle's Wronskian theory and ODE uniqueness results are independently valuable and reusable. The growth rate classification (`EMLGrowthClass`) provides a framework for distinguishing solution types that could be applied to broad classes of ODEs beyond Airy.\n\n---\n\n### Direction 1: Formal Stokes Phenomenon for Airy's Equation\n\n**Conjecture**: The asymptotic expansion of Ai(x) as x \u2192 +\u221e (along the positive real axis) and as x \u2192 \u2212\u221e involve different linear combinations of formal WKB solutions, and the transition matrices between these asymptotic regimes are elements of the Stokes group, which is a unipotent subgroup of SL\u2082(\u2102). Formally: the monodromy representation of Airy's equation factors through the wild fundamental group, and the Stokes multipliers can be computed exactly as specific constants involving \u0393(1/3) and \u0393(2/3).\n\n**Test**: Compute Stokes multipliers numerically by integrating Airy's equation along paths crossing Stokes lines (at angles 0, 2\u03c0/3, 4\u03c0/3) and verify they match the predicted values. Formally, prove that the connection matrix between the sectors arg(x) \u2208 (\u2212\u03c0/3, \u03c0/3) and arg(x) \u2208 (\u03c0/3, \u03c0) has the form [[1, s], [0, 1]] for a specific constant s.\n\n**Impact**: This would be the first formalization of the Stokes phenomenon in any proof assistant. The Stokes phenomenon is fundamental to asymptotic analysis, quantum mechanics (WKB approximation), and resurgence theory. A formal treatment would open the door to verified asymptotics.\n\n**Catalog References**: `EML/EMLDiffEq.lean` (Wronskian theory, Abel's identity), `EML/EMLDiffGalois.lean` (SL\u2082 Galois invariance)\n\n**Proof Strategy**: (1) Define formal WKB solutions as asymptotic series. (2) Prove existence of actual solutions with prescribed asymptotics in each sector using Borel summation. (3) Compute the connection matrices between sectors. (4) Show these matrices are unipotent elements of SL\u2082.\n\n**Domain Bridges**: Differential Galois Theory \u2194 Asymptotic Analysis \u2194 Quantum Mechanics\n\n**Lineage**: Builds on this cycle's Wronskian conservation and SL\u2082 invariance results.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Kovacic Algorithm \u2014 Full Decidability Proof\n\n**Conjecture**: Kovacic's algorithm, when formalized as a decision procedure on rational functions r(x) = P(x)/Q(x) with integer coefficients, terminates in time polynomial in the total degree of P and Q, and correctly decides Liouvillian solvability of y\u2033 = r(x)y.\n\n**Test**: Implement the full three-case algorithm in Lean 4 with a verified termination proof. Test on a battery of equations: (a) y\u2033 = x\u00b2y (Liouvillian: y = exp(x\u00b3/3)), (b) y\u2033 = xy (not Liouvillian: Airy), (c) y\u2033 = (1/x\u00b2)y (Euler equation: Liouvillian), (d) y\u2033 = (x\u00b2+1)y (Parabolic cylinder: Liouvillian via Hermite functions?). Verify each decision against known results.\n\n**Impact**: A formally verified Kovacic algorithm would be the first certified decision procedure for Liouvillian solvability. This has applications in computer algebra systems (Maple, Mathematica) where Kovacic's algorithm is implemented but not verified.\n\n**Catalog References**: `EML/EMLDiffGalois.lean` (Riccati obstruction, polynomial derivative algebra), `EML/EMLDiffEq.lean` (no_polynomial_solves_airy)\n\n**Proof Strategy**: (1) Formalize rational functions as a computable type. (2) Implement pole order analysis. (3) Formalize the three cases as finite searches over candidate exponents. (4) Prove termination by bounding the search space. (5) Prove soundness by showing each case correctly identifies solutions.\n\n**Domain Bridges**: Computer Algebra \u2194 Differential Galois Theory \u2194 Computation\n\n**Lineage**: Builds on this cycle's no_polynomial_solves_riccati and kovacic_case1_airy_obstruction.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: EML Growth Hierarchy \u2014 Fractional Exponential Orders\n\n**Conjecture**: Define the *exponential order* of a function f at infinity as ord(f) = inf{\u03b1 > 0 : f(x) = O(exp(x^\u03b1))}. Then: (a) Every EML function has rational exponential order. (b) The Airy function Bi has exponential order exactly 3/2, which is rational but cannot be realized by any EML function. (c) More generally, the exponential orders realizable by solutions of y\u2033 = r(x)y with polynomial r of degree d are exactly {(d+2)/2}, and (d+2)/2 is realizable by an EML function iff d is even.\n\n**Test**: Verify conjecture (c) computationally for d = 0,1,2,...,10 by computing the WKB exponent \u222b\u221ar(x)dx and checking its degree. Formally, prove (a) by structural induction on EML expressions and (b) by the growth rate analysis from this cycle.\n\n**Impact**: This would establish a precise numerical invariant distinguishing EML-solvable from EML-unsolvable equations, providing an effective criterion independent of the full Galois group computation.\n\n**Catalog References**: `EML/EMLDiffGalois.lean` (EMLGrowthClass, exp_not_polynomial_growth), `EML/EMLDiffEq.lean` (exp_dominates_polynomial, airy_not_tendsto_zero)\n\n**Proof Strategy**: (1) Define exponential order formally. (2) Prove the WKB approximation: solutions of y\u2033 = r(x)y have exponential order equal to the degree of \u222b\u221ar(x)dx. (3) Classify which exponential orders arise from EML expressions. (4) Show the parity obstruction: odd-degree r gives half-integer exponential order, incompatible with EML.\n\n**Domain Bridges**: Asymptotic Analysis \u2194 EML Theory \u2194 Complex Analysis\n\n**Lineage**: Builds on this cycle's growth rate analysis and polynomial degree obstruction.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Differential Galois\u2013Algebraic Galois Bridge\n\n**Conjecture**: There exists a formal functor from the category of Picard-Vessiot extensions of \u2102(x) to the category of algebraic groups over \u2102, such that: (a) the image of this functor restricted to constant coefficient equations y^(n) + a\u2099\u208b\u2081y^(n-1) + ... + a\u2080y = 0 recovers the classical Galois group of the splitting field of the characteristic polynomial t^n + a\u2099\u208b\u2081t^(n-1) + ... + a\u2080; (b) for Fuchsian equations (regular singular points only), the differential Galois group is the Zariski closure of the monodromy group.\n\n**Test**: Verify (a) for specific examples: the equation y\u2033 + y = 0 (Galois group {\u00b11} \u2245 \u2124/2, matching the algebraic Galois group of t\u00b2 + 1 over \u211d). Verify (b) for the Gauss hypergeometric equation with specific parameters where the monodromy group is known.\n\n**Impact**: This would be the first formal bridge between algebraic and differential Galois theory, connecting two of the most powerful obstruction theories in mathematics. It would enable transfer of results from the well-developed algebraic theory to the less-developed differential setting.\n\n**Catalog References**: `Bridges/GaloisNeuralCorrespondence.lean` (prime_degree_divides_galois_order), `Algebra/ProofSpectra/Core.lean` (galois_connection_theory_variety), `EML/EMLDiffGalois.lean` (galois_preserves_wronskian)\n\n**Proof Strategy**: (1) Formalize Picard-Vessiot extensions as differential field extensions with no new constants. (2) Define the differential Galois group as the automorphism group of the extension. (3) For constant-coefficient equations, show the exponential solutions generate a splitting field isomorphic to the algebraic splitting field. (4) For Fuchsian equations, relate analytic continuation to monodromy.\n\n**Domain Bridges**: Algebraic Galois Theory \u2194 Differential Galois Theory \u2194 Topology (Monodromy)\n\n**Lineage**: Builds on this cycle's SL\u2082 invariance and Wronskian theory, connecting to the algebraic Galois results in the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Nonlinear EML ODEs \u2014 Painlev\u00e9 Transcendents\n\n**Conjecture**: The first Painlev\u00e9 equation y\u2033 = 6y\u00b2 + x has no EML solutions, and its \"nonlinear differential Galois group\" (in the sense of Malgrange) is the full symplectomorphism group of the phase space, which is infinite-dimensional.\n\n**Test**: (a) Verify the polynomial obstruction: if y is a polynomial of degree d, then d \u2212 2 = 2d + 1 (from y\u2033 vs 6y\u00b2 + x), giving d = \u22123, impossible. (b) Numerically integrate Painlev\u00e9 I and verify that solutions develop arrays of double poles (the Painlev\u00e9 property) with specific pole patterns. (c) Check that the pole locations are not expressible as EML functions of the initial conditions.\n\n**Impact**: Painlev\u00e9 transcendents are the next level of \"new transcendental functions\" beyond Airy. They arise in random matrix theory, quantum gravity, and integrable systems. A formal obstruction theory would extend our results from linear to nonlinear ODEs.\n\n**Catalog References**: `EML/EMLDiffEq.lean` (no_polynomial_solves_airy \u2014 analogous degree argument), `EML/EMLDiffGalois.lean` (no_polynomial_solves_riccati \u2014 analogous nonlinear obstruction)\n\n**Proof Strategy**: (1) Prove the polynomial obstruction (straightforward degree argument). (2) Formalize the Painlev\u00e9 property (movable poles are at worst double). (3) Show the pole distribution contradicts EML structure. (4) Connect to Malgrange's nonlinear differential Galois theory.\n\n**Domain Bridges**: Nonlinear ODEs \u2194 Random Matrix Theory \u2194 EML Theory\n\n**Lineage**: Extends this cycle's linear obstruction theory to the nonlinear setting.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0829",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0a026f10",
+    "status": "available",
+    "timestamp": "2026-06-06T11:46:03.844103+00:00",
+    "title": "Formal obstruction theory for EML-solvability of linear"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -3108,7 +3123,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
   {
-    "consumed_by_exp_id": "0a472467",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -3118,7 +3133,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -3543,7 +3558,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hawking Radiation: Information Paradox Formalized"
   },
   {
-    "consumed_by_exp_id": "2c08a7e0",
+    "consumed_by_exp_id": "",
     "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
     "domains": [
       "Speculative",
@@ -3553,7 +3568,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
   },
@@ -4443,7 +4458,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
-    "consumed_by_exp_id": "10cfab4d",
+    "consumed_by_exp_id": "",
     "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
     "domains": [
       "Novelty",
@@ -4453,7 +4468,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.820858+00:00",
     "title": "Hypergraph Ramsey Theory: Beyond Graphs"
   },
@@ -4937,7 +4952,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "51d93a26",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
     "domains": [
       "Novelty",
@@ -4947,7 +4962,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.311824+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
@@ -4982,7 +4997,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4c34a6d6",
     "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
     "domains": [
       "Novelty",
@@ -4992,7 +5007,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.662181+00:00",
     "title": "Speculative: Category Theory as the DNA of Mathematics"
   },
@@ -5012,7 +5027,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Topological Data Analysis of Theorem Networks"
   },
   {
-    "consumed_by_exp_id": "ff8bd2d8",
+    "consumed_by_exp_id": "",
     "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
     "domains": [
       "Novelty",
@@ -5022,7 +5037,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.838633+00:00",
     "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
   },

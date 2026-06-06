@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "90628b34",
     "filename": "cellular_automata_as_algebraic_geometry_wolframs_r.json",
     "pkg_num": 401,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.18000000000000002,
     "title": "Cellular Automata as Algebraic Geometry over GF(2): Fixed-Point Varieties and Conjugate Duality"
   },
   {
@@ -12780,8 +12780,8 @@ window.PACKAGE_GRAPH = {
       "hue": 89,
       "id": "cellular_automata_as_algebraic_geometry_wolframs_r",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.18000000000000002,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Cellular Automata as Algebraic Geometry over GF(2): Fixed-Point Varieties and Conjugate Duality"
     }

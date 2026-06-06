@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-06T11:13:09.829516+00:00",
+  "last_updated": "2026-06-06T11:47:10.894403+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -9946,6 +9946,76 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T11:13:09.738227+00:00",
       "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7584,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 189,
+      "domain": "Applications",
+      "duration_seconds": 8459.11698293686,
+      "end_time": 1780746302.313383,
+      "files_integrated": 5,
+      "job_id": "0a026f10",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.56,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8534,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.9417,
+        "novelty": 0.95,
+        "proof_depth": 0.9381,
+        "usefulness": 0.9191
+      },
+      "quality_score": 0.17600000000000002,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780737843.1964002,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T11:47:10.648428+00:00",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6606,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 201,
+      "domain": "Novelty",
+      "duration_seconds": 3873.995492696762,
+      "end_time": 1780746303.4296281,
+      "files_integrated": 5,
+      "job_id": "90628b34",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7556,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.7069,
+        "novelty": 0.95,
+        "proof_depth": 0.6027,
+        "usefulness": 0.7764
+      },
+      "quality_score": 0.18000000000000002,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780742429.4341354,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T11:47:10.801444+00:00",
+      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }
   ]
 }
