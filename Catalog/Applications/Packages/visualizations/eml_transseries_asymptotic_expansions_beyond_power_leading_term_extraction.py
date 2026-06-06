@@ -1,4 +1,5 @@
-def leading_term(transseries):
-    if not transseries.terms:
-        return None
-    return max(transseries.terms, key=lambda t: t.level)
+def leading_term(ts):
+    if not ts.terms:
+        return None, 0.0
+    m = max(ts.terms.keys())
+    return m, ts.terms[m]
