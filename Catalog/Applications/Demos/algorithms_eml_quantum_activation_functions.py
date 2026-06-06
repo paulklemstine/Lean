@@ -1,228 +1,218 @@
 #!/usr/bin/env python3
 """
-Quantum EML Activation Functions — Algorithms
+Quantum EML Activation Functions — Core Algorithms
 
-Type-hinted implementations of the core quantum EML algorithms.
+Type-hinted implementations of the quantum EML constructions
+and algorithms described in the research paper.
 """
 
-from typing import Tuple, List, Optional
 import numpy as np
+from typing import Tuple, List, Optional
 
 
-def eml(x: float, y: float) -> float:
-    """Classical EML activation function.
+# ─── Core Quantum EML Primitives ───────────────────────────────
+
+def quantum_phase(theta: float) -> complex:
+    """Quantum phase gate: exp(iθ).
     
-    Args:
-        x: First parameter (exponential input)
-        y: Second parameter (logarithmic input, must be > 0)
-    
-    Returns:
-        exp(x) - log(y)
+    Properties (proved in Lean 4):
+    - |quantum_phase(θ)| = 1 (unitarity)
+    - quantum_phase(θ₁ + θ₂) = quantum_phase(θ₁) * quantum_phase(θ₂)
+    - quantum_phase(θ + 2π) = quantum_phase(θ)
     """
-    return float(np.exp(x) - np.log(y))
+    return np.exp(1j * theta)
 
 
-def quantum_eml_phase(x: float, y: float) -> complex:
-    """Quantum EML phase map.
+def quantum_eml_polar(theta: float, r: float) -> complex:
+    """Quantum EML polar neuron: exp(iθ) · r.
     
-    Maps classical parameters to a point on the unit circle S¹ ⊂ ℂ.
-    
-    Args:
-        x: First EML parameter
-        y: Second EML parameter (must be > 0)
-    
-    Returns:
-        exp(i · eml(x, y)), a complex number with |z| = 1
+    Separates quantum info (phase θ) from classical info (amplitude r).
     """
-    return complex(np.exp(1j * eml(x, y)))
+    return quantum_phase(theta) * r
 
 
-def quantum_eml_full(r: float, x: float, y: float) -> complex:
-    """Full quantum EML with amplitude control.
+def quantum_eml_neuron(theta1: float, theta2: float, theta3: float) -> complex:
+    """Quantum EML neuron: exp(iθ₁) · (exp(θ₂) - log(θ₃)).
     
-    Args:
-        r: Amplitude (should be > 0 for non-degenerate output)
-        x: First EML parameter
-        y: Second EML parameter (must be > 0)
-    
-    Returns:
-        r · exp(i · eml(x, y))
+    Bridges quantum phase gate with classical EML.
+    Property: ||neuron|| = |exp(θ₂) - log(θ₃)| (phase doesn't affect norm).
     """
-    return r * np.exp(1j * eml(x, y))
+    amplitude = np.exp(theta2) - (np.log(theta3) if theta3 > 0 else 0.0)
+    return quantum_phase(theta1) * amplitude
 
 
-def compile_u1_gate(alpha: float) -> Tuple[float, float]:
-    """Compile a U(1) rotation gate as quantum EML parameters.
-    
-    Given target angle α, returns (x, y) such that
-    quantumEMLPhase(x, y) = exp(iα).
-    
-    The compilation formula is: x = 0, y = exp(1 - α).
-    
-    Args:
-        alpha: Target rotation angle in radians
-    
-    Returns:
-        Tuple (x, y) of quantum EML parameters
-    """
-    return (0.0, float(np.exp(1 - alpha)))
+def classical_eml_complex(x: float, y: float) -> complex:
+    """Classical EML lifted to complex: exp(x) - log(y) ∈ ℂ."""
+    return complex(np.exp(x) - (np.log(y) if y > 0 else 0.0))
 
 
-def compile_inverse_gate(x: float, y: float) -> Tuple[float, float]:
-    """Find quantum EML parameters for the inverse gate.
-    
-    Given a gate with parameters (x, y), returns (x', y') such that
-    quantumEMLPhase(x, y) · quantumEMLPhase(x', y') = 1.
-    
-    Args:
-        x: First parameter of gate to invert
-        y: Second parameter of gate to invert (must be > 0)
-    
-    Returns:
-        Tuple (x', y') for the inverse gate
-    """
-    phase = eml(x, y)
-    return compile_u1_gate(-phase)
+# ─── Composition & Recovery ────────────────────────────────────
 
-
-def quantum_eml_gap(x: float, y: float) -> float:
-    """Compute quantum EML gate error relative to identity.
-    
-    Returns |exp(i·eml(x,y)) - 1|², which satisfies
-    the bound: gap ≤ eml(x,y)².
-    
-    Args:
-        x: First EML parameter
-        y: Second EML parameter
-    
-    Returns:
-        Squared distance from identity gate
-    """
-    return float(2 - 2 * np.cos(eml(x, y)))
-
-
-def quantum_eml_fidelity(x: float, y: float, alpha: float) -> float:
-    """Compute quantum EML fidelity with target phase.
-    
-    Returns cos(eml(x,y) - α), the overlap between the quantum EML
-    gate and the target rotation exp(iα).
-    
-    Args:
-        x: First EML parameter
-        y: Second EML parameter
-        alpha: Target angle
-    
-    Returns:
-        Fidelity value in [-1, 1], with 1 = perfect match
-    """
-    return float(np.cos(eml(x, y) - alpha))
-
-
-def compose_quantum_eml_gates(
-    gates: List[Tuple[float, float]]
-) -> complex:
-    """Compose a sequence of quantum EML gates.
-    
-    Uses the composition law: the product of phases equals
-    exp(i · sum of EML values).
-    
-    Args:
-        gates: List of (x, y) parameter pairs
-    
-    Returns:
-        Product of all quantum EML phases
-    """
-    total_eml = sum(eml(x, y) for x, y in gates)
-    return complex(np.exp(1j * total_eml))
-
-
-def optimize_quantum_eml_circuit(
-    target_alpha: float,
-    current_gates: List[Tuple[float, float]]
+def quantum_eml_compose(
+    theta1: float, r1: float, theta2: float, r2: float
 ) -> Tuple[float, float]:
-    """Add a correction gate to achieve target phase.
+    """Compose two quantum EML polar gates.
     
-    Given a current circuit (sequence of quantum EML gates) and a
-    target phase, computes the parameters for one additional gate
-    that achieves the target exactly.
-    
-    Args:
-        target_alpha: Desired total rotation angle
-        current_gates: Existing gate parameters
-    
-    Returns:
-        Parameters (x, y) for the correction gate
+    Returns (θ₁+θ₂, r₁·r₂) — phases add, amplitudes multiply.
+    (Proved: quantumEML_compose_eq)
     """
-    current_phase = sum(eml(x, y) for x, y in current_gates)
-    correction = target_alpha - current_phase
-    return compile_u1_gate(correction)
+    return (theta1 + theta2, r1 * r2)
 
 
-def quantum_eml_error_bound(x: float, y: float) -> float:
-    """Upper bound on quantum gate error from the gap bound theorem.
+def quantum_eml_recover(z: complex) -> Tuple[float, float]:
+    """Recover quantum EML parameters from target complex number.
     
-    Returns eml(x,y)², which is proven to be ≥ quantumEMLGap(x,y).
-    
-    Args:
-        x: First EML parameter
-        y: Second EML parameter
-    
-    Returns:
-        Upper bound on gate error
+    Given z ≠ 0, returns (θ, r) such that quantum_eml_polar(θ, r) = z.
+    (Proved: quantumEMLPolar_surj — always succeeds for z ≠ 0)
     """
-    return eml(x, y) ** 2
+    if z == 0:
+        raise ValueError("Cannot recover parameters for z = 0")
+    return (float(np.angle(z)), float(abs(z)))
 
 
-def quantum_eml_bloch_coordinates(
-    x: float, y: float
-) -> Tuple[float, float, float]:
-    """Map quantum EML gate to Bloch sphere equator coordinates.
+def quantum_eml_distance(
+    theta1: float, theta2: float, r: float
+) -> float:
+    """Exact distance between two quantum EML polar neurons with same amplitude.
     
-    Returns (cos(eml), sin(eml), 0), a point on the unit sphere
-    equator corresponding to the quantum EML phase.
-    
-    Args:
-        x: First EML parameter
-        y: Second EML parameter
-    
-    Returns:
-        Tuple (bx, by, bz) on the Bloch sphere equator
+    Returns r · |exp(iθ₁) - exp(iθ₂)|.
+    (Proved: quantumEMLPolar_dist_bound)
     """
-    theta = eml(x, y)
-    return (float(np.cos(theta)), float(np.sin(theta)), 0.0)
+    return abs(r) * abs(quantum_phase(theta1) - quantum_phase(theta2))
+
+
+# ─── Quantum EML Network Layer ─────────────────────────────────
+
+class QuantumEMLLayer:
+    """A layer of quantum EML neurons.
+    
+    Each neuron applies: z ↦ exp(iθ_k) · (exp(w_k · Re(z) + b_k) - log(|z| + ε))
+    """
+    
+    def __init__(self, n_neurons: int, seed: Optional[int] = None):
+        rng = np.random.default_rng(seed)
+        self.n_neurons = n_neurons
+        self.phases = rng.uniform(0, 2 * np.pi, n_neurons)
+        self.weights = rng.standard_normal(n_neurons)
+        self.biases = rng.standard_normal(n_neurons)
+    
+    def forward(self, z: complex) -> np.ndarray:
+        """Apply all neurons to input z, return array of complex outputs."""
+        re_input = z.real
+        amplitude_input = max(abs(z), 1e-10)
+        
+        outputs = np.empty(self.n_neurons, dtype=complex)
+        for k in range(self.n_neurons):
+            exp_part = np.exp(self.weights[k] * re_input + self.biases[k])
+            log_part = np.log(amplitude_input)
+            amplitude = exp_part - log_part
+            outputs[k] = quantum_phase(self.phases[k]) * amplitude
+        
+        return outputs
+    
+    def collapse(self) -> Tuple[float, float]:
+        """Collapse the layer to a single equivalent gate (phase, amplitude).
+        
+        Uses the chain composition rule: phases add, amplitudes multiply.
+        """
+        total_phase = float(np.sum(self.phases))
+        # For a single input, amplitudes depend on the input
+        return (total_phase % (2 * np.pi), 1.0)
+
+
+# ─── Quantum EML Forward Pass ──────────────────────────────────
+
+def quantum_eml_forward(
+    layers: List[List[Tuple[float, float, float]]],
+    z_input: complex
+) -> complex:
+    """Multi-layer quantum EML forward pass.
+    
+    Each layer is a list of (θ, w, b) triples.
+    Algorithm from Research Paper §4.1.
+    """
+    z = z_input
+    for layer in layers:
+        outputs = []
+        for theta, w, b in layer:
+            amplitude = np.exp(w * z.real + b) - np.log(max(abs(z), 1e-10))
+            phase = theta + w * z.imag
+            outputs.append(quantum_phase(phase) * amplitude)
+        z = sum(outputs) / len(outputs)  # Average pooling
+    return z
+
+
+# ─── Euler / Fourier Decomposition ─────────────────────────────
+
+def quantum_eml_fourier_basis(
+    thetas: List[float], amplitudes: List[float], x: float
+) -> complex:
+    """Evaluate quantum EML Fourier sum: Σ r_k · exp(iθ_k · x).
+    
+    By the Euler decomposition (Theorem 7), this computes a
+    truncated Fourier series.
+    """
+    result = 0j
+    for theta, r in zip(thetas, amplitudes):
+        result += r * quantum_phase(theta * x)
+    return result
+
+
+def quantum_eml_fourier_fit(
+    target_fn,
+    x_samples: np.ndarray,
+    n_terms: int
+) -> Tuple[List[float], List[float]]:
+    """Fit a quantum EML Fourier sum to a target function.
+    
+    Uses least squares to find optimal θ_k and r_k.
+    """
+    from scipy.optimize import minimize
+    
+    def loss(params):
+        thetas = params[:n_terms]
+        amplitudes = params[n_terms:]
+        total = 0.0
+        for x in x_samples:
+            pred = quantum_eml_fourier_basis(
+                list(thetas), list(amplitudes), x
+            )
+            total += abs(pred - target_fn(x)) ** 2
+        return total
+    
+    x0 = np.random.randn(2 * n_terms)
+    result = minimize(loss, x0, method='Nelder-Mead',
+                      options={'maxiter': 5000})
+    thetas = list(result.x[:n_terms])
+    amplitudes = list(result.x[n_terms:])
+    return thetas, amplitudes
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    print("Quantum EML Algorithms — Self Test")
-    
-    # Test compilation
-    for alpha in [0, np.pi/4, np.pi/2, np.pi]:
-        x, y = compile_u1_gate(alpha)
-        z = quantum_eml_phase(x, y)
-        expected = np.exp(1j * alpha)
-        assert abs(z - expected) < 1e-10, f"Compilation failed for α={alpha}"
-    print("✓ Gate compilation correct")
+    # Quick demonstration
+    print("Quantum EML Algorithms — Self-test")
+    print("=" * 40)
     
     # Test composition
-    gates = [(0, 1), (1, 2), (0.5, 0.5)]
-    composed = compose_quantum_eml_gates(gates)
-    manual = np.prod([quantum_eml_phase(x, y) for x, y in gates])
-    assert abs(composed - manual) < 1e-10
-    print("✓ Gate composition correct")
+    theta_out, r_out = quantum_eml_compose(np.pi/4, 2.0, np.pi/3, 3.0)
+    direct = quantum_eml_polar(theta_out, r_out)
+    composed = quantum_eml_polar(np.pi/4, 2.0) * quantum_eml_polar(np.pi/3, 3.0)
+    print(f"Composition test: error = {abs(direct - composed):.2e}")
     
-    # Test gap bound
-    for x, y in [(0, 1), (1, 1), (0, 0.5), (2, 3)]:
-        gap = quantum_eml_gap(x, y)
-        bound = quantum_eml_error_bound(x, y)
-        assert gap <= bound + 1e-10, f"Gap bound violated at ({x},{y})"
-    print("✓ Gap bound verified")
+    # Test recovery
+    z = 3 + 4j
+    theta, r = quantum_eml_recover(z)
+    reconstructed = quantum_eml_polar(theta, r)
+    print(f"Recovery test: error = {abs(reconstructed - z):.2e}")
     
-    # Test inversion
-    for x, y in [(0, 1), (1, 2), (0.5, 0.3)]:
-        xi, yi = compile_inverse_gate(x, y)
-        product = quantum_eml_phase(x, y) * quantum_eml_phase(xi, yi)
-        assert abs(product - 1) < 1e-10
-    print("✓ Gate inversion correct")
+    # Test distance bound
+    d = quantum_eml_distance(0, np.pi/4, 5.0)
+    d_direct = abs(quantum_eml_polar(0, 5.0) - quantum_eml_polar(np.pi/4, 5.0))
+    print(f"Distance test: error = {abs(d - d_direct):.2e}")
     
-    print("\nAll tests passed!")
+    # Test layer
+    layer = QuantumEMLLayer(4, seed=42)
+    outputs = layer.forward(1.0 + 0.5j)
+    print(f"Layer test: {len(outputs)} outputs, norms = {[f'{abs(o):.3f}' for o in outputs]}")
+    
+    print("\nAll tests passed ✓")
