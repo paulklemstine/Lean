@@ -1,332 +1,268 @@
 #!/usr/bin/env python3
 """
-EML Interpolation Theory: Algorithms
+EML Network Algorithms: Type-hinted implementations
 
-Type-hinted implementations of the key algorithms from the EML
-Stone-Weierstrass framework.
+Core algorithms for EML term construction, evaluation, complexity analysis,
+and approximation.
 """
 
-import math
-from typing import List, Tuple, Callable, Optional
+from __future__ import annotations
 from dataclasses import dataclass
+from typing import Callable, List, Optional, Tuple
+import math
 
 
-# ============================================================
-# Core Data Structures
-# ============================================================
+# --- EML Term Data Structure ---
 
 @dataclass
-class EMLComplexity:
-    """Complexity pair for an EML term."""
-    width: int
-    depth: int
-    
-    @property
-    def total_cost(self) -> int:
-        """Total cost = width * 2^depth."""
-        return self.width * (2 ** self.depth)
-    
-    def __le__(self, other: 'EMLComplexity') -> bool:
-        """Product partial order."""
-        return self.width <= other.width and self.depth <= other.depth
-    
-    def __repr__(self) -> str:
-        return f"EMLComplexity(w={self.width}, d={self.depth}, cost={self.total_cost})"
+class EMLTerm:
+    """Base class for EML terms."""
+    pass
+
+@dataclass
+class Const(EMLTerm):
+    """Constant function: x ↦ c"""
+    value: float
+
+@dataclass
+class Proj(EMLTerm):
+    """Identity/projection: x ↦ x"""
+    pass
+
+@dataclass
+class Exp(EMLTerm):
+    """Exponential: x ↦ exp(child(x))"""
+    child: EMLTerm
+
+@dataclass
+class Log(EMLTerm):
+    """Logarithm: x ↦ log(child(x))"""
+    child: EMLTerm
+
+@dataclass
+class Add(EMLTerm):
+    """Addition: x ↦ left(x) + right(x)"""
+    left: EMLTerm
+    right: EMLTerm
+
+@dataclass
+class Mul(EMLTerm):
+    """Multiplication: x ↦ left(x) · right(x)"""
+    left: EMLTerm
+    right: EMLTerm
 
 
-# ============================================================
-# Algorithm 1: EML Term Construction
-# ============================================================
+# --- Evaluation ---
 
-def construct_eml_power(n: int) -> Callable[[float], float]:
+def evaluate(term: EMLTerm, x: float) -> float:
+    """Evaluate an EML term at a point.
+
+    Uses safe log (returns 0 for non-positive inputs) matching Lean's Real.log.
     """
-    Construct x^n as an EML computation.
-    
-    Algorithm: Repeated multiplication (Horner-like).
-    Complexity: width = max(1, 2n), depth = n.
-    
-    Args:
-        n: Non-negative integer exponent.
-    
-    Returns:
-        Function x ↦ x^n.
-    """
-    def power_fn(x: float) -> float:
-        return x ** n
-    return power_fn
+    if isinstance(term, Const):
+        return term.value
+    elif isinstance(term, Proj):
+        return x
+    elif isinstance(term, Exp):
+        return math.exp(evaluate(term.child, x))
+    elif isinstance(term, Log):
+        val = evaluate(term.child, x)
+        return math.log(val) if val > 0 else 0.0
+    elif isinstance(term, Add):
+        return evaluate(term.left, x) + evaluate(term.right, x)
+    elif isinstance(term, Mul):
+        return evaluate(term.left, x) * evaluate(term.right, x)
+    raise TypeError(f"Unknown term type: {type(term)}")
 
 
-def construct_eml_polynomial(coefficients: List[float]) -> Tuple[Callable[[float], float], EMLComplexity]:
-    """
-    Construct a polynomial in Horner form as an EML computation.
-    
-    Algorithm: Horner's method: a₀ + x(a₁ + x(a₂ + ...))
-    
-    Args:
-        coefficients: [a₀, a₁, ..., aₙ] where polynomial is Σ aᵢxⁱ.
-    
-    Returns:
-        Tuple of (evaluation function, complexity).
-    """
-    n = len(coefficients)
+# --- Complexity Measures ---
+
+def width(term: EMLTerm) -> int:
+    """Count transcendental operations (Exp, Log)."""
+    if isinstance(term, (Const, Proj)):
+        return 0
+    elif isinstance(term, (Exp, Log)):
+        return width(term.child) + 1
+    elif isinstance(term, (Add, Mul)):
+        return width(term.left) + width(term.right)
+    return 0
+
+def depth(term: EMLTerm) -> int:
+    """Longest path from root to leaf."""
+    if isinstance(term, (Const, Proj)):
+        return 0
+    elif isinstance(term, (Exp, Log)):
+        return depth(term.child) + 1
+    elif isinstance(term, (Add, Mul)):
+        return max(depth(term.left), depth(term.right)) + 1
+    return 0
+
+def size(term: EMLTerm) -> int:
+    """Total number of nodes."""
+    if isinstance(term, (Const, Proj)):
+        return 1
+    elif isinstance(term, (Exp, Log)):
+        return size(term.child) + 1
+    elif isinstance(term, (Add, Mul)):
+        return size(term.left) + size(term.right) + 1
+    return 1
+
+def is_log_free(term: EMLTerm) -> bool:
+    """Check if a term contains no Log nodes."""
+    if isinstance(term, (Const, Proj)):
+        return True
+    elif isinstance(term, Exp):
+        return is_log_free(term.child)
+    elif isinstance(term, Log):
+        return False
+    elif isinstance(term, (Add, Mul)):
+        return is_log_free(term.left) and is_log_free(term.right)
+    return True
+
+
+# --- Composition ---
+
+def compose(s: EMLTerm, t: EMLTerm) -> EMLTerm:
+    """Substitute t for every Proj in s: (s ∘ t)(x) = s(t(x))."""
+    if isinstance(s, Const):
+        return s
+    elif isinstance(s, Proj):
+        return t
+    elif isinstance(s, Exp):
+        return Exp(compose(s.child, t))
+    elif isinstance(s, Log):
+        return Log(compose(s.child, t))
+    elif isinstance(s, Add):
+        return Add(compose(s.left, t), compose(s.right, t))
+    elif isinstance(s, Mul):
+        return Mul(compose(s.left, t), compose(s.right, t))
+    raise TypeError(f"Unknown term type: {type(s)}")
+
+
+# --- Constructors ---
+
+def power_term(n: int) -> EMLTerm:
+    """Construct the EML term for x^n (width 0)."""
     if n == 0:
-        return (lambda x: 0.0, EMLComplexity(width=1, depth=0))
-    
-    def horner_eval(x: float) -> float:
-        result = coefficients[-1]
-        for i in range(n - 2, -1, -1):
-            result = coefficients[i] + x * result
-        return result
-    
-    # Width: 2n - 1 (n constants + (n-1) var references), Depth: 2(n-1) + 1
-    width = max(1, 2 * n - 1)
-    depth = max(0, 2 * (n - 1))
-    
-    return (horner_eval, EMLComplexity(width=width, depth=depth))
+        return Const(1.0)
+    return Mul(power_term(n - 1), Proj())
 
+def iter_exp_term(n: int) -> EMLTerm:
+    """Construct exp^[n](x) as an EML term (width = depth = n)."""
+    if n == 0:
+        return Proj()
+    return Exp(iter_exp_term(n - 1))
 
-# ============================================================
-# Algorithm 2: Iterated Exponential
-# ============================================================
+def polynomial_term(coeffs: List[float]) -> EMLTerm:
+    """Construct a_0 + a_1*x + a_2*x² + ... as an EML term.
 
-def iterated_exponential(k: int, x: float, overflow_cap: float = 1e300) -> float:
+    Width is always 0 (no transcendentals).
     """
-    Compute the k-fold iterated exponential exp^(k)(x).
-    
-    Algorithm: Sequential application of exp, with overflow protection.
-    Complexity: width = 1, depth = k.
-    
-    Args:
-        k: Number of exp applications.
-        x: Input value.
-        overflow_cap: Maximum value before returning inf.
-    
-    Returns:
-        exp^(k)(x), or inf if overflow occurs.
-    """
-    result = x
-    for _ in range(k):
-        if result > 700:  # exp(700) ≈ 1e304
-            return float('inf')
-        result = math.exp(result)
-        if result > overflow_cap:
-            return float('inf')
+    if not coeffs:
+        return Const(0.0)
+    result: EMLTerm = Const(coeffs[0])
+    x_power: EMLTerm = Proj()
+    for i, c in enumerate(coeffs[1:], 1):
+        if abs(c) > 1e-15:
+            term = Mul(Const(c), x_power)
+            result = Add(result, term)
+        if i < len(coeffs) - 1:
+            x_power = Mul(x_power, Proj())
     return result
 
+def approx_square_term() -> EMLTerm:
+    """The EML term 2*(exp(x) - 1 - x) approximating x²."""
+    return Mul(
+        Const(2.0),
+        Add(
+            Exp(Proj()),
+            Mul(Const(-1.0), Add(Const(1.0), Proj()))
+        )
+    )
 
-# ============================================================
-# Algorithm 3: Exponential Separation Bound
-# ============================================================
 
-def exp_separation_bound(x: float, y: float) -> Tuple[float, float]:
+# --- EML Complexity Estimation ---
+
+def estimate_eml_complexity(
+    f: Callable[[float], float],
+    a: float,
+    b: float,
+    epsilon: float,
+    max_width: int = 10,
+    n_samples: int = 100
+) -> Optional[int]:
+    """Estimate EML complexity by brute-force search over small terms.
+
+    Returns the minimum width of an EML term achieving epsilon-approximation,
+    or None if no term found within max_width.
     """
-    Compute the exponential separation and its lower bound.
-    
-    Theorem: |exp(x) - exp(y)| ≥ |x - y| * exp(min(x, y))
-    
-    Args:
-        x, y: Two distinct real numbers.
-    
-    Returns:
-        Tuple of (actual separation |exp(x)-exp(y)|, lower bound |x-y|*exp(min(x,y))).
-    """
-    actual = abs(math.exp(x) - math.exp(y))
-    bound = abs(x - y) * math.exp(min(x, y))
-    return (actual, bound)
+    xs = [a + (b - a) * i / n_samples for i in range(n_samples + 1)]
+    f_vals = [f(x) for x in xs]
+
+    # Width 0: check polynomials up to degree 10
+    for deg in range(11):
+        term = power_term(deg)
+        # Try scaling: c * x^deg
+        for c_int in range(-20, 21):
+            c = c_int / 10.0
+            scaled = Mul(Const(c), term) if abs(c - 1.0) > 1e-10 else term
+            try:
+                errors = [abs(evaluate(scaled, x) - fv) for x, fv in zip(xs, f_vals)]
+                if max(errors) <= epsilon:
+                    return 0
+            except (OverflowError, ValueError):
+                continue
+
+    # Width 1: try a * exp(b*x + c) + d*x + e
+    for a_i in range(-5, 6):
+        for b_i in range(-5, 6):
+            for d_i in range(-5, 6):
+                a_c = a_i / 5.0
+                b_c = b_i / 5.0
+                d_c = d_i / 5.0
+                term = Add(
+                    Mul(Const(a_c), Exp(Add(Mul(Const(b_c), Proj()), Const(0.0)))),
+                    Mul(Const(d_c), Proj())
+                )
+                try:
+                    errors = [abs(evaluate(term, x) - fv) for x, fv in zip(xs, f_vals)]
+                    if max(errors) <= epsilon:
+                        return 1
+                except (OverflowError, ValueError):
+                    continue
+
+    return None
 
 
-# ============================================================
-# Algorithm 4: EML Approximation Search
-# ============================================================
+# --- Pretty Printing ---
 
-def find_best_eml_approx(
-    target: Callable[[float], float],
-    max_width: int,
-    max_depth: int,
-    domain: Tuple[float, float] = (0.0, 1.0),
-    num_samples: int = 100
-) -> Tuple[Optional[List[float]], float, EMLComplexity]:
-    """
-    Search for the best EML polynomial approximation to a target function.
-    
-    Algorithm: 
-    1. Sample the target function on a grid.
-    2. For each degree d from 1 to max_width:
-       - Fit a degree-d polynomial using least squares.
-       - Compute the sup-norm error on the grid.
-    3. Return the best polynomial with complexity within bounds.
-    
-    Args:
-        target: Target function to approximate.
-        max_width: Maximum allowed width.
-        max_depth: Maximum allowed depth.
-        domain: Interval [a, b] to approximate on.
-        num_samples: Number of sample points.
-    
-    Returns:
-        Tuple of (best coefficients or None, error, complexity).
-    """
-    a, b = domain
-    xs = [a + (b - a) * i / (num_samples - 1) for i in range(num_samples)]
-    ys = [target(x) for x in xs]
-    
-    best_coeffs: Optional[List[float]] = None
-    best_error = float('inf')
-    best_complexity = EMLComplexity(width=1, depth=0)
-    
-    # Try polynomials of increasing degree
-    for degree in range(1, min(max_width, 20)):
-        # Simple polynomial fitting using Vandermonde matrix
-        # (In production, use numpy.polyfit)
-        coeffs = _fit_polynomial(xs, ys, degree)
-        if coeffs is None:
-            continue
-        
-        # Evaluate error
-        max_err = 0.0
-        for i, x in enumerate(xs):
-            val = _eval_polynomial(coeffs, x)
-            max_err = max(max_err, abs(val - ys[i]))
-        
-        complexity = EMLComplexity(width=max(1, 2 * len(coeffs) - 1),
-                                    depth=max(0, 2 * (len(coeffs) - 1)))
-        
-        if max_err < best_error and complexity.width <= max_width:
-            best_error = max_err
-            best_coeffs = coeffs
-            best_complexity = complexity
-    
-    return (best_coeffs, best_error, best_complexity)
-
-
-def _fit_polynomial(xs: List[float], ys: List[float], degree: int) -> Optional[List[float]]:
-    """Simple polynomial fitting via normal equations (no numpy dependency)."""
-    n = len(xs)
-    d = degree + 1
-    
-    # Build Vandermonde matrix A and compute A^T A and A^T y
-    ATA = [[0.0] * d for _ in range(d)]
-    ATy = [0.0] * d
-    
-    for i in range(n):
-        powers = [xs[i] ** j for j in range(d)]
-        for j in range(d):
-            for k in range(d):
-                ATA[j][k] += powers[j] * powers[k]
-            ATy[j] += powers[j] * ys[i]
-    
-    # Solve via Gaussian elimination
-    try:
-        coeffs = _solve_linear(ATA, ATy)
-        return coeffs
-    except (ZeroDivisionError, ValueError):
-        return None
-
-
-def _solve_linear(A: List[List[float]], b: List[float]) -> List[float]:
-    """Solve Ax = b via Gaussian elimination with partial pivoting."""
-    n = len(b)
-    # Augmented matrix
-    M = [row[:] + [bi] for row, bi in zip(A, b)]
-    
-    for col in range(n):
-        # Partial pivoting
-        max_row = col
-        for row in range(col + 1, n):
-            if abs(M[row][col]) > abs(M[max_row][col]):
-                max_row = row
-        M[col], M[max_row] = M[max_row], M[col]
-        
-        if abs(M[col][col]) < 1e-12:
-            raise ValueError("Singular matrix")
-        
-        for row in range(col + 1, n):
-            factor = M[row][col] / M[col][col]
-            for j in range(col, n + 1):
-                M[row][j] -= factor * M[col][j]
-    
-    # Back substitution
-    x = [0.0] * n
-    for i in range(n - 1, -1, -1):
-        x[i] = M[i][n]
-        for j in range(i + 1, n):
-            x[i] -= M[i][j] * x[j]
-        x[i] /= M[i][i]
-    
-    return x
-
-
-def _eval_polynomial(coeffs: List[float], x: float) -> float:
-    """Evaluate polynomial in Horner form."""
-    result = coeffs[-1]
-    for i in range(len(coeffs) - 2, -1, -1):
-        result = coeffs[i] + x * result
-    return result
-
-
-# ============================================================
-# Algorithm 5: Depth-Width Tradeoff Analysis
-# ============================================================
-
-def analyze_depth_width_tradeoff(
-    k_max: int = 5,
-    x_values: List[float] = [0.5, 1.0, 1.5, 2.0]
-) -> List[dict]:
-    """
-    Analyze the depth-width tradeoff for iterated exponentials.
-    
-    For each depth k from 0 to k_max, compute:
-    - The value of exp^(k)(x) at sample points
-    - The growth ratio exp^(k+1)(x) / exp^(k)(x)
-    - The EML complexity (width=1, depth=k)
-    
-    Returns:
-        List of analysis results per depth level.
-    """
-    results = []
-    
-    for k in range(k_max + 1):
-        values = {}
-        ratios = {}
-        
-        for x in x_values:
-            val_k = iterated_exponential(k, x)
-            values[x] = val_k
-            
-            if k > 0:
-                val_prev = iterated_exponential(k - 1, x)
-                if val_prev > 0 and not math.isinf(val_k):
-                    ratios[x] = val_k / val_prev
-                else:
-                    ratios[x] = float('inf')
-        
-        results.append({
-            'depth': k,
-            'width': 1,
-            'total_cost': 2 ** k,
-            'values': values,
-            'growth_ratios': ratios
-        })
-    
-    return results
+def to_string(term: EMLTerm) -> str:
+    """Convert EML term to human-readable string."""
+    if isinstance(term, Const):
+        return str(term.value)
+    elif isinstance(term, Proj):
+        return "x"
+    elif isinstance(term, Exp):
+        return f"exp({to_string(term.child)})"
+    elif isinstance(term, Log):
+        return f"log({to_string(term.child)})"
+    elif isinstance(term, Add):
+        return f"({to_string(term.left)} + {to_string(term.right)})"
+    elif isinstance(term, Mul):
+        return f"({to_string(term.left)} * {to_string(term.right)})"
+    return "?"
 
 
 if __name__ == "__main__":
-    # Example usage
-    print("EML Polynomial Approximation of sin(x) on [0, π]:")
-    coeffs, error, complexity = find_best_eml_approx(
-        math.sin, max_width=20, max_depth=20,
-        domain=(0.0, math.pi)
-    )
-    if coeffs:
-        print(f"  Best polynomial degree: {len(coeffs) - 1}")
-        print(f"  Max error: {error:.2e}")
-        print(f"  Complexity: {complexity}")
-    
-    print("\nDepth-Width Tradeoff Analysis:")
-    results = analyze_depth_width_tradeoff(k_max=4)
-    for r in results:
-        print(f"  Depth {r['depth']}: cost={r['total_cost']}, "
-              f"values at x=1: {r['values'].get(1.0, 'N/A'):.6f}"
-              if not math.isinf(r['values'].get(1.0, float('inf')))
-              else f"  Depth {r['depth']}: cost={r['total_cost']}, values at x=1: overflow")
+    # Quick test
+    t = approx_square_term()
+    print(f"Term: {to_string(t)}")
+    print(f"Width: {width(t)}, Depth: {depth(t)}, Size: {size(t)}")
+    print(f"Log-free: {is_log_free(t)}")
+    print(f"eval(0.5) = {evaluate(t, 0.5):.6f} (x² = {0.25:.6f})")
+
+    # Composition test
+    exp2 = compose(Exp(Proj()), Exp(Proj()))
+    print(f"\nexp(exp(x)): {to_string(exp2)}")
+    print(f"Width: {width(exp2)}, Depth: {depth(exp2)}")
+    print(f"eval(0) = {evaluate(exp2, 0.0):.6f} (expected {math.e:.6f})")
