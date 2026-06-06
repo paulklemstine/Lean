@@ -1,305 +1,216 @@
 #!/usr/bin/env python3
 """
-Oracle Approximation Theory — Core Algorithms
+Ramanujan Oracle: Algorithms
 
-Type-hinted implementations of all key algorithms from the research paper.
+Type-hinted implementations of the core oracle algorithms formalized in Lean 4.
 """
 
-from __future__ import annotations
-from math import comb, log2
-from itertools import product
-from dataclasses import dataclass, field
+from typing import Callable, List, Optional, Tuple
+from enum import Enum
+from dataclasses import dataclass
+import math
 
 
-# ============================================================
-# Core Types
-# ============================================================
+class OracleResponse(Enum):
+    """The three possible responses of a Ramanujan oracle."""
+    AFFIRM = "affirm"
+    DENY = "deny"
+    ABSTAIN = "abstain"
 
-TruthAssignment = tuple[bool, ...]
-OracleSet = list[TruthAssignment]
+
+# Type aliases
+Oracle = Callable[[int], OracleResponse]
+TruthAssignment = Callable[[int], bool]
 
 
-# ============================================================
-# Algorithm 1: Hamming Distance
-# ============================================================
-
-def hamming_distance(f: TruthAssignment, g: TruthAssignment) -> int:
+def oracle_correct_on(response: OracleResponse, truth: bool) -> bool:
+    """Check if an oracle response is correct for a given truth value.
+    
+    Affirm matches True, Deny matches False, Abstain is never correct.
     """
-    Compute the Hamming distance between two truth assignments.
+    if response == OracleResponse.AFFIRM and truth:
+        return True
+    if response == OracleResponse.DENY and not truth:
+        return True
+    return False
 
-    Time complexity: O(n) where n = len(f).
 
-    >>> hamming_distance((True, False, True), (True, True, True))
-    1
-    >>> hamming_distance((False,) * 4, (True,) * 4)
-    4
+def oracle_accuracy_count(oracle: Oracle, truth: TruthAssignment, 
+                          domain: List[int]) -> int:
+    """Count the number of correct oracle predictions on a domain.
+    
+    This implements the formal `oracleAccuracyCount` from Lean.
     """
-    assert len(f) == len(g), "Truth assignments must have equal length"
-    return sum(a != b for a, b in zip(f, g))
+    return sum(1 for s in domain if oracle_correct_on(oracle(s), truth(s)))
 
 
-# ============================================================
-# Algorithm 2: Hamming Ball Volume
-# ============================================================
-
-def hamming_ball_volume(n: int, d: int) -> int:
+def disagreement_count(oracle: Oracle, truth: TruthAssignment,
+                       domain: List[int]) -> int:
+    """Count disagreements = |domain| - accuracy_count.
+    
+    Formally verified: accuracy + disagreement = |domain|.
     """
-    Compute |B(c, d)| = Σ_{i=0}^{d} C(n, i), the volume of a
-    Hamming ball of radius d in {0,1}^n.
+    return len(domain) - oracle_accuracy_count(oracle, truth, domain)
 
-    Time complexity: O(min(d, n)).
 
-    >>> hamming_ball_volume(4, 0)
-    1
-    >>> hamming_ball_volume(4, 1)
-    5
-    >>> hamming_ball_volume(4, 4)
-    16
+def is_binary_oracle(oracle: Oracle, domain: List[int]) -> bool:
+    """Check if an oracle never abstains on the given domain."""
+    return all(oracle(s) != OracleResponse.ABSTAIN for s in domain)
+
+
+def binary_oracle_to_assignment(oracle: Oracle) -> TruthAssignment:
+    """Convert a binary oracle to the unique truth assignment it matches.
+    
+    Formally verified: this is the unique assignment achieving 100% accuracy.
     """
-    return sum(comb(n, i) for i in range(min(d, n) + 1))
+    def assignment(s: int) -> bool:
+        return oracle(s) == OracleResponse.AFFIRM
+    return assignment
 
 
-# ============================================================
-# Algorithm 3: Binary Entropy
-# ============================================================
-
-def binary_entropy(alpha: float) -> float:
+def oracle_jump(oracle: Oracle) -> Oracle:
+    """Compute the jump of an oracle.
+    
+    The jump negates every response (affirm↔deny, abstain→affirm).
+    Formally verified properties:
+    - jump_disagrees: jump always differs from source on non-abstentions
+    - jump_is_binary: jump never abstains
     """
-    Compute the binary entropy H(α) = -α log₂(α) - (1-α) log₂(1-α).
+    def jumped(s: int) -> OracleResponse:
+        r = oracle(s)
+        if r == OracleResponse.AFFIRM:
+            return OracleResponse.DENY
+        elif r == OracleResponse.DENY:
+            return OracleResponse.AFFIRM
+        else:
+            return OracleResponse.AFFIRM
+    return jumped
 
-    Used in the asymptotic Hamming ball volume bound:
-      |B(c, ⌊αn⌋)| ≈ 2^{n·H(α)}
 
-    >>> abs(binary_entropy(0.5) - 1.0) < 1e-10
-    True
-    >>> binary_entropy(0.0)
-    0.0
+def iterated_jump(oracle: Oracle, n: int) -> Oracle:
+    """Compute the n-th iterated jump.
+    
+    jump^0(f) = f, jump^(n+1)(f) = jump(jump^n(f)).
+    Formally verified: jump_hierarchy_noncollapse shows consecutive
+    levels always differ.
     """
-    if alpha <= 0 or alpha >= 1:
+    result = oracle
+    for _ in range(n):
+        result = oracle_jump(result)
+    return result
+
+
+def oracle_compose(primary: Oracle, fallback: Oracle) -> Oracle:
+    """Compose two oracles: use primary, fall back on abstention.
+    
+    Formally verified: if fallback is binary, composition is binary.
+    """
+    def composed(s: int) -> OracleResponse:
+        r = primary(s)
+        if r == OracleResponse.ABSTAIN:
+            return fallback(s)
+        return r
+    return composed
+
+
+def cantor_diagonal_defeater(family: List[Oracle]) -> TruthAssignment:
+    """Construct a truth assignment that defeats every oracle in the family.
+    
+    For oracle n, looks at its response on statement n (the diagonal)
+    and chooses the opposite truth value.
+    
+    Formally verified: cantor_diagonal_oracle proves this construction
+    defeats every oracle on its diagonal statement.
+    """
+    def defeater(n: int) -> bool:
+        if n < len(family):
+            r = family[n](n)
+            if r == OracleResponse.AFFIRM:
+                return False
+            else:
+                return True
+        return True
+    return defeater
+
+
+def oracle_space_cardinality(N: int) -> int:
+    """Number of possible oracles on N statements: 3^N.
+    
+    Formally verified: finite_oracle_space_card.
+    """
+    return 3 ** N
+
+
+def truth_space_cardinality(N: int) -> int:
+    """Number of possible truth assignments on N statements: 2^N.
+    
+    Formally verified: finite_truth_space_card.
+    """
+    return 2 ** N
+
+
+def computable_oracle_ratio(b: int, n: int) -> float:
+    """Ratio of computable oracles to all oracles.
+    
+    At most b^n programs of length n, but 3^(b^n) possible oracles.
+    Formally verified: computable_oracle_ratio_bound shows b^n ≤ 3^(b^n).
+    """
+    programs = b ** n
+    total = 3 ** (b ** n)
+    if total == 0:
         return 0.0
-    return -alpha * log2(alpha) - (1 - alpha) * log2(1 - alpha)
+    return programs / total
 
 
-# ============================================================
-# Algorithm 4: Oracle Coverage Computation
-# ============================================================
-
-def oracle_coverage(
-    oracles: OracleSet, d: int, n: int
-) -> set[TruthAssignment]:
+def abstention_coverage(k: int) -> int:
+    """Number of truth assignments compatible with k abstentions: 2^k.
+    
+    Formally verified: abstention_coverage shows 1 ≤ 2^k.
+    A binary oracle matches exactly 1 assignment; abstaining on k
+    statements multiplies compatibility by 2^k.
     """
-    Compute Coverage(O, d) = ⋃_{f ∈ O} B(f, d).
+    return 2 ** k
 
-    Time complexity: O(m · 2^n · n) where m = |O|.
-
-    >>> oracles = [(False, False), (True, True)]
-    >>> len(oracle_coverage(oracles, 0, 2))
-    2
-    >>> len(oracle_coverage(oracles, 1, 2))
-    4
-    """
-    covered: set[TruthAssignment] = set()
-    for bits in product([False, True], repeat=n):
-        t = tuple(bits)
-        for f in oracles:
-            if hamming_distance(f, t) <= d:
-                covered.add(t)
-                break
-    return covered
-
-
-# ============================================================
-# Algorithm 5: Deficiency Profile
-# ============================================================
 
 @dataclass
-class DeficiencyProfile:
-    """The deficiency profile of an oracle set."""
-    n: int
-    oracle_count: int
-    values: list[int] = field(default_factory=list)
-
-    def is_antitone(self) -> bool:
-        """Verify the profile is antitone (Theorem 3.2)."""
-        return all(self.values[i] >= self.values[i + 1]
-                   for i in range(len(self.values) - 1))
-
-    def gap_at_zero(self) -> int:
-        """The exponential gap at tolerance 0."""
-        return self.values[0] if self.values else 0
-
-    def covering_radius(self) -> int:
-        """Smallest d such that DP(O, d) = 0 (full coverage)."""
-        for d, dp in enumerate(self.values):
-            if dp == 0:
-                return d
-        return self.n + 1
+class OracleAnalysis:
+    """Analysis of an oracle's performance against a truth assignment."""
+    accuracy: int
+    disagreements: int
+    domain_size: int
+    accuracy_rate: float
+    is_binary: bool
+    abstention_count: int
 
 
-def compute_deficiency_profile(
-    oracles: OracleSet, n: int
-) -> DeficiencyProfile:
-    """
-    Compute DP(O, d) for d = 0, 1, ..., n.
-
-    Time complexity: O(n · m · 2^n · n) = O(n² · m · 2^n).
-
-    >>> profile = compute_deficiency_profile([(False, False, False)], 3)
-    >>> profile.values
-    [7, 4, 1, 0]
-    >>> profile.is_antitone()
-    True
-    """
-    total = 2**n
-    values = []
-    for d in range(n + 1):
-        covered = oracle_coverage(oracles, d, n)
-        values.append(total - len(covered))
-    return DeficiencyProfile(n=n, oracle_count=len(oracles), values=values)
-
-
-# ============================================================
-# Algorithm 6: Maximally Deficient Truth Assignment
-# ============================================================
-
-def find_max_deficient(
-    oracles: OracleSet, n: int
-) -> tuple[TruthAssignment, int]:
-    """
-    Find the truth assignment t maximizing min_{f ∈ O} d(f, t).
-    This is the "hardest to approximate" truth.
-
-    Time complexity: O(m · 2^n · n).
-
-    Returns (truth_assignment, min_distance_to_any_oracle).
-
-    >>> t, d = find_max_deficient([(False, False)], 2)
-    >>> d
-    2
-    >>> t
-    (True, True)
-    """
-    best_t: TruthAssignment | None = None
-    best_min_dist = -1
-
-    for bits in product([False, True], repeat=n):
-        t = tuple(bits)
-        if not oracles:
-            return t, n + 1
-        min_d = min(hamming_distance(f, t) for f in oracles)
-        if min_d > best_min_dist:
-            best_min_dist = min_d
-            best_t = t
-
-    assert best_t is not None
-    return best_t, best_min_dist
-
-
-# ============================================================
-# Algorithm 7: Oracle Insufficiency Check
-# ============================================================
-
-def check_insufficiency(
-    oracle_count: int, n: int, d: int
-) -> dict[str, object]:
-    """
-    Check whether the Oracle Insufficiency Theorem applies.
-
-    Uses the Hamming ball volume bound: if m · |B(0,d)| < 2^n,
-    then some truth assignment is uncovered.
-
-    >>> result = check_insufficiency(3, 10, 1)
-    >>> result['insufficient']
-    True
-    """
-    ball_size = hamming_ball_volume(n, d)
-    total = 2**n
-    coverage_bound = oracle_count * ball_size
-
-    return {
-        "n": n,
-        "oracle_count": oracle_count,
-        "tolerance": d,
-        "ball_size": ball_size,
-        "total_assignments": total,
-        "coverage_upper_bound": coverage_bound,
-        "insufficient": coverage_bound < total,
-        "uncovered_lower_bound": max(0, total - coverage_bound),
-    }
-
-
-# ============================================================
-# Algorithm 8: Oracle Approximation Tower
-# ============================================================
-
-@dataclass
-class OracleApproxTower:
-    """An oracle approximation tower with antitone tolerances."""
-    n: int
-    oracles: list[TruthAssignment]
-    tolerances: list[int]
-
-    def __post_init__(self) -> None:
-        assert len(self.oracles) == len(self.tolerances)
-        # Verify antitone tolerances
-        for i in range(len(self.tolerances) - 1):
-            assert self.tolerances[i] >= self.tolerances[i + 1], \
-                f"Tolerances must be antitone: {self.tolerances[i]} < {self.tolerances[i+1]}"
-
-    @property
-    def height(self) -> int:
-        return len(self.oracles)
-
-    def cumulative_oracles(self, level: int) -> OracleSet:
-        """Get all oracles up to and including the given level."""
-        return self.oracles[: level + 1]
-
-    def coverage_at_level(self, level: int) -> set[TruthAssignment]:
-        """Coverage using cumulative oracles at the level's tolerance."""
-        return oracle_coverage(
-            self.cumulative_oracles(level),
-            self.tolerances[level],
-            self.n,
-        )
-
-    def deficiency_at_level(self, level: int) -> int:
-        """Deficiency at a given tower level."""
-        return 2**self.n - len(self.coverage_at_level(level))
-
-
-# ============================================================
-# Algorithm 9: Asymptotic Insufficiency Threshold
-# ============================================================
-
-def insufficiency_threshold(n: int, alpha: float) -> float:
-    """
-    Compute the maximum number of oracles m such that oracle
-    insufficiency is guaranteed at tolerance d = ⌊αn⌋.
-
-    Returns m_max = 2^n / |B(0, ⌊αn⌋)|.
-
-    For m > m_max, oracle insufficiency may not hold.
-    For m ≤ m_max, some truth assignment is uncovered.
-
-    >>> insufficiency_threshold(10, 0.0)
-    1024.0
-    """
-    d = int(alpha * n)
-    ball_size = hamming_ball_volume(n, d)
-    return 2**n / ball_size
+def analyze_oracle(oracle: Oracle, truth: TruthAssignment,
+                   domain: List[int]) -> OracleAnalysis:
+    """Comprehensive analysis of oracle performance."""
+    acc = oracle_accuracy_count(oracle, truth, domain)
+    dis = disagreement_count(oracle, truth, domain)
+    n = len(domain)
+    abstentions = sum(1 for s in domain if oracle(s) == OracleResponse.ABSTAIN)
+    return OracleAnalysis(
+        accuracy=acc,
+        disagreements=dis,
+        domain_size=n,
+        accuracy_rate=acc / n if n > 0 else 0.0,
+        is_binary=is_binary_oracle(oracle, domain),
+        abstention_count=abstentions
+    )
 
 
 if __name__ == "__main__":
-    import doctest
-    doctest.testmod()
-    print("All doctests passed!")
-
-    # Example: compute insufficiency thresholds
-    print("\nInsufficiency thresholds (max oracles for guaranteed gaps):")
-    print(f"  {'n':>3}  {'α=0.05':>10}  {'α=0.10':>10}  {'α=0.20':>10}  {'α=0.30':>10}")
-    for n in [10, 20, 50, 100]:
-        row = f"  {n:3d}"
-        for alpha in [0.05, 0.10, 0.20, 0.30]:
-            threshold = insufficiency_threshold(n, alpha)
-            row += f"  {threshold:10.1f}"
-        print(row)
+    # Quick demonstration
+    N = 10
+    domain = list(range(N))
+    
+    # Create a simple oracle
+    oracle = lambda s: OracleResponse.AFFIRM if s % 2 == 0 else OracleResponse.DENY
+    truth = lambda s: s % 2 == 0  # true for evens
+    
+    analysis = analyze_oracle(oracle, truth, domain)
+    print(f"Oracle analysis: {analysis}")
+    print(f"Oracle space for N={N}: {oracle_space_cardinality(N)}")
+    print(f"Truth space for N={N}: {truth_space_cardinality(N)}")
+    print(f"Computable ratio for b=2, n=5: {computable_oracle_ratio(2, 5):.2e}")
