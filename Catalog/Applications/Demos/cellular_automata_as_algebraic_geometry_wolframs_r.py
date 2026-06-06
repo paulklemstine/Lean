@@ -2,187 +2,356 @@
 """
 Cellular Automata as Algebraic Geometry over GF(2)
 ===================================================
-Demonstrates the core results: ANF decomposition, complement conjugation,
-and fixed-point variety dimensions for all 256 elementary cellular automata.
+Demonstrates the core results: ECA rules as polynomial maps over GF(2),
+fixed-point varieties, conjugate duality, and the dimension classification.
+
+Run: python3 demo.py
 """
 
-import itertools
-from typing import Callable, Dict, List, Tuple
+import numpy as np
+from itertools import product
 
+# --- GF(2) Arithmetic ---
 
-def gf2(x: int) -> int:
-    """Reduce to GF(2)."""
-    return x % 2
+def gf2_add(a, b):
+    """Addition in GF(2) = XOR."""
+    return a ^ b
 
+def gf2_mul(a, b):
+    """Multiplication in GF(2) = AND."""
+    return a & b
 
-def eca_local_rule(rule_num: int) -> Callable[[int, int, int], int]:
-    """Return the local rule function for a given ECA rule number (0-255)."""
-    def g(a: int, b: int, c: int) -> int:
-        idx = a * 4 + b * 2 + c
-        return (rule_num >> idx) & 1
-    return g
+# --- ECA Local Rule ---
 
+def eca_local(rule_num, left, center, right):
+    """Apply ECA local rule: extract bit from rule number."""
+    idx = (left << 2) | (center << 1) | right
+    return (rule_num >> idx) & 1
 
-def anf_coefficients(rule_num: int) -> List[int]:
-    """Compute the Algebraic Normal Form coefficients via Möbius inversion.
+def eca_step(rule_num, state):
+    """Global ECA step with periodic boundary on n cells."""
+    n = len(state)
+    return np.array([
+        eca_local(rule_num, state[(i-1) % n], state[i], state[(i+1) % n])
+        for i in range(n)
+    ], dtype=int)
+
+# --- Fixed Point Computation ---
+
+def find_fixed_points(rule_num, n):
+    """Find all fixed points of an ECA rule on n cells over GF(2)."""
+    fixed = []
+    for bits in product([0, 1], repeat=n):
+        state = np.array(bits, dtype=int)
+        if np.array_equal(eca_step(rule_num, state), state):
+            fixed.append(state)
+    return fixed
+
+def count_fixed_points(rule_num, n):
+    """Count fixed points (size of the variety V(f_r - id))."""
+    return len(find_fixed_points(rule_num, n))
+
+# --- Polynomial (Algebraic Normal Form) Representation ---
+
+def compute_anf(rule_num):
+    """Compute the Algebraic Normal Form coefficients for a rule.
     
-    Returns [c0, c1, c2, c3, c4, c5, c6, c7] where:
-    g(a,b,c) = c0 + c1*a + c2*b + c3*c + c4*ab + c5*ac + c6*bc + c7*abc  (mod 2)
+    Every function GF(2)^3 -> GF(2) has a unique representation as:
+    g(a,b,c) = c0 + c1*a + c2*b + c3*c + c4*ab + c5*ac + c6*bc + c7*abc
+    
+    This is the content of our polynomial_representation theorem.
     """
-    g = eca_local_rule(rule_num)
+    # Evaluate on all 8 inputs
+    vals = {}
+    for a, b, c in product([0, 1], repeat=3):
+        vals[(a, b, c)] = eca_local(rule_num, a, b, c)
+    
+    # Möbius inversion to get ANF coefficients
     c = [0] * 8
-    c[0] = g(0, 0, 0)
-    c[1] = gf2(g(0, 0, 0) + g(1, 0, 0))
-    c[2] = gf2(g(0, 0, 0) + g(0, 1, 0))
-    c[3] = gf2(g(0, 0, 0) + g(0, 0, 1))
-    c[4] = gf2(g(0, 0, 0) + g(1, 0, 0) + g(0, 1, 0) + g(1, 1, 0))
-    c[5] = gf2(g(0, 0, 0) + g(1, 0, 0) + g(0, 0, 1) + g(1, 0, 1))
-    c[6] = gf2(g(0, 0, 0) + g(0, 1, 0) + g(0, 0, 1) + g(0, 1, 1))
-    c[7] = gf2(sum(g(a, b, c) for a, b, c in itertools.product([0, 1], repeat=3)))
+    c[0] = vals[(0,0,0)]
+    c[1] = vals[(0,0,0)] ^ vals[(1,0,0)]
+    c[2] = vals[(0,0,0)] ^ vals[(0,1,0)]
+    c[3] = vals[(0,0,0)] ^ vals[(0,0,1)]
+    c[4] = vals[(0,0,0)] ^ vals[(1,0,0)] ^ vals[(0,1,0)] ^ vals[(1,1,0)]
+    c[5] = vals[(0,0,0)] ^ vals[(1,0,0)] ^ vals[(0,0,1)] ^ vals[(1,0,1)]
+    c[6] = vals[(0,0,0)] ^ vals[(0,1,0)] ^ vals[(0,0,1)] ^ vals[(0,1,1)]
+    c[7] = (vals[(0,0,0)] ^ vals[(1,0,0)] ^ vals[(0,1,0)] ^ vals[(0,0,1)] ^
+            vals[(1,1,0)] ^ vals[(1,0,1)] ^ vals[(0,1,1)] ^ vals[(1,1,1)])
     return c
 
-
-def anf_degree(rule_num: int) -> int:
-    """Compute the ANF degree of a rule."""
-    c = anf_coefficients(rule_num)
-    if c[7] != 0:
-        return 3
-    if any(c[i] != 0 for i in [4, 5, 6]):
-        return 2
-    if any(c[i] != 0 for i in [1, 2, 3]):
-        return 1
-    if c[0] != 0:
-        return 0
-    return -1  # zero polynomial
-
-
-def anf_string(rule_num: int) -> str:
-    """Pretty-print the ANF of a rule."""
-    c = anf_coefficients(rule_num)
+def anf_to_string(c):
+    """Convert ANF coefficients to a human-readable polynomial string."""
     terms = []
-    monomials = ["1", "a", "b", "c", "ab", "ac", "bc", "abc"]
-    for i, (coeff, mono) in enumerate(zip(c, monomials)):
-        if coeff:
-            terms.append(mono)
-    return " + ".join(terms) if terms else "0"
+    monomial_names = ['1', 'a', 'b', 'c', 'ab', 'ac', 'bc', 'abc']
+    for i, name in enumerate(monomial_names):
+        if c[i]:
+            terms.append(name)
+    return ' + '.join(terms) if terms else '0'
 
+# --- Conjugate Duality ---
 
-def is_additive(rule_num: int) -> bool:
-    """Check if a rule is additive (linear over GF(2))."""
-    c = anf_coefficients(rule_num)
-    return c[0] == 0 and c[4] == 0 and c[5] == 0 and c[6] == 0 and c[7] == 0
+def conjugate_rule(rule_num):
+    """Compute the conjugate rule: ḡ(a,b,c) = 1 + g(1+a, 1+b, 1+c) over GF(2)."""
+    conj = 0
+    for a, b, c in product([0, 1], repeat=3):
+        idx = (a << 2) | (b << 1) | c
+        val = 1 ^ eca_local(rule_num, 1^a, 1^b, 1^c)
+        conj |= (val << idx)
+    return conj
 
+# --- Linearity Check ---
 
-def complement_conjugate_rule(rule_num: int) -> int:
-    """Compute the complement-conjugate rule number."""
-    g = eca_local_rule(rule_num)
-    new_rule = 0
-    for a, b, c in itertools.product([0, 1], repeat=3):
-        idx = a * 4 + b * 2 + c
-        val = gf2(1 + g(gf2(1 + a), gf2(1 + b), gf2(1 + c)))
-        new_rule |= (val << idx)
-    return new_rule
+def is_additive_rule(rule_num):
+    """Check if a rule's local function is additive (linear) over GF(2)."""
+    # g(0,0,0) must be 0
+    if eca_local(rule_num, 0, 0, 0) != 0:
+        return False
+    # Check additivity: g(a+a', b+b', c+c') = g(a,b,c) + g(a',b',c')
+    for a, a_, b, b_, c, c_ in product([0, 1], repeat=6):
+        lhs = eca_local(rule_num, a^a_, b^b_, c^c_)
+        rhs = eca_local(rule_num, a, b, c) ^ eca_local(rule_num, a_, b_, c_)
+        if lhs != rhs:
+            return False
+    return True
 
-
-def count_fixed_points(rule_num: int, n: int) -> int:
-    """Count fixed points of ECA rule_num on a cyclic array of n cells."""
-    g = eca_local_rule(rule_num)
-    count = 0
-    for bits in itertools.product([0, 1], repeat=n):
-        is_fixed = True
-        for i in range(n):
-            left = bits[(i - 1) % n]
-            center = bits[i]
-            right = bits[(i + 1) % n]
-            if g(left, center, right) != center:
-                is_fixed = False
-                break
-        if is_fixed:
-            count += 1
-    return count
-
+# --- Main Demo ---
 
 def main():
     print("=" * 70)
     print("CELLULAR AUTOMATA AS ALGEBRAIC GEOMETRY OVER GF(2)")
     print("=" * 70)
-
-    # Demo 1: ANF representation
-    print("\n--- Algebraic Normal Form (ANF) Examples ---")
-    showcase_rules = [0, 90, 110, 150, 204, 255]
-    for r in showcase_rules:
-        c = anf_coefficients(r)
-        print(f"  Rule {r:3d}: g(a,b,c) = {anf_string(r):20s}  degree={anf_degree(r)}  additive={is_additive(r)}")
-
-    # Demo 2: Complement conjugation pairs
-    print("\n--- Complement-Conjugate Pairs (Involution on Rule Space) ---")
+    
+    # Demo 1: Polynomial representation
+    print("\n--- Demo 1: Polynomial Representation (ANF) ---")
+    print("Every ECA rule is a polynomial over GF(2).\n")
+    demo_rules = [0, 51, 90, 102, 110, 150, 170, 204, 255]
+    for r in demo_rules:
+        c = compute_anf(r)
+        print(f"  Rule {r:>3}: g(a,b,c) = {anf_to_string(c)}")
+    
+    # Demo 2: Fixed point counts
+    print("\n--- Demo 2: Fixed Point Counts (Variety Size) ---")
+    print("Number of fixed points |V(f_r - id)| for n cells:\n")
+    print(f"  {'Rule':>6} | {'n=3':>4} {'n=4':>4} {'n=5':>4} {'n=6':>4} {'n=7':>4} {'n=8':>4} | {'Linear?':>8} | Polynomial")
+    print("  " + "-" * 65)
+    
+    interesting_rules = [0, 51, 60, 90, 102, 110, 150, 170, 204, 255]
+    for r in interesting_rules:
+        counts = [count_fixed_points(r, n) for n in range(3, 9)]
+        linear = "Yes" if is_additive_rule(r) else "No"
+        poly = anf_to_string(compute_anf(r))
+        counts_str = " ".join(f"{c:>4}" for c in counts)
+        print(f"  Rule {r:>3} | {counts_str} | {linear:>8} | {poly}")
+    
+    # Demo 3: Conjugate duality
+    print("\n--- Demo 3: Conjugate Duality ---")
+    print("Rules come in conjugate pairs (g, ḡ) with isomorphic fixed-point varieties.\n")
     seen = set()
     pairs = []
     for r in range(256):
-        rc = complement_conjugate_rule(r)
         if r not in seen:
+            c = conjugate_rule(r)
             seen.add(r)
-            seen.add(rc)
-            if r != rc:
-                pairs.append((r, rc))
+            seen.add(c)
+            if r != c:
+                pairs.append((r, c))
     
-    self_conjugate = [r for r in range(256) if complement_conjugate_rule(r) == r]
-    print(f"  Self-conjugate rules: {len(self_conjugate)} (fixed points of involution)")
+    print(f"  Self-conjugate rules: {sum(1 for r in range(256) if conjugate_rule(r) == r)}")
     print(f"  Conjugate pairs: {len(pairs)}")
-    print(f"  Total orbits: {len(self_conjugate) + len(pairs)} (= {len(self_conjugate)} + {len(pairs)})")
-    print(f"  First 10 self-conjugate: {self_conjugate[:10]}")
-    print(f"  First 5 pairs: {pairs[:5]}")
-
-    # Demo 3: Fixed-point counts for small n
-    print("\n--- Fixed-Point Variety Dimensions (n=6 cells) ---")
-    n = 6
-    print(f"  {'Rule':>6s} | {'ANF':>25s} | {'Degree':>6s} | {'|Fix|':>6s} | {'dim':>4s} | {'Additive':>8s}")
-    print("  " + "-" * 68)
+    print(f"\n  Sample pairs (rule, conjugate, n=6 fixed points):")
+    for r, c in pairs[:8]:
+        fp_r = count_fixed_points(r, 6)
+        fp_c = count_fixed_points(c, 6)
+        print(f"    Rule {r:>3} ↔ Rule {c:>3}  |  |V_r| = {fp_r:>2}, |V_ḡ| = {fp_c:>2}")
     
-    for r in [0, 51, 90, 105, 150, 170, 204, 255]:
-        fp = count_fixed_points(r, n)
-        # For additive rules, |Fix| = 2^d
-        import math
-        dim = math.log2(fp) if fp > 0 else -1
-        print(f"  {r:6d} | {anf_string(r):>25s} | {anf_degree(r):6d} | {fp:6d} | {dim:4.1f} | {is_additive(r)!s:>8s}")
-
-    # Demo 4: Verify complement bijection
-    print("\n--- Complement Bijection Verification (n=5) ---")
-    n = 5
-    for r in [0, 30, 90, 110, 150]:
-        rc = complement_conjugate_rule(r)
-        fp_r = count_fixed_points(r, n)
-        fp_rc = count_fixed_points(rc, n)
-        print(f"  Rule {r:3d} <-> Rule {rc:3d}: |Fix(r)|={fp_r}, |Fix(r̃)|={fp_rc}  {'✓' if fp_r == fp_rc else '✗'}")
-
-    # Demo 5: Additive rules => power-of-2 fixed points
-    print("\n--- Additive Rules: Fixed-Point Count is Always 2^d ---")
-    additive_rules = [r for r in range(256) if is_additive(r)]
-    print(f"  Number of additive rules: {len(additive_rules)}")
-    print(f"  Additive rules: {additive_rules}")
+    # Demo 4: Linear rules and submodule dimensions
+    print("\n--- Demo 4: Linear Rules (Fixed Points Form a Submodule) ---")
+    linear_rules = [r for r in range(256) if is_additive_rule(r)]
+    print(f"\n  {len(linear_rules)} linear rules found: {linear_rules}")
+    print(f"\n  For linear rules, fixed points form a subspace of GF(2)^n.")
+    print(f"  Dimension = log₂(|fixed points|):\n")
+    print(f"  {'Rule':>6} | {'dim(n=4)':>8} {'dim(n=6)':>8} {'dim(n=8)':>8} | Polynomial")
+    print("  " + "-" * 55)
+    for r in linear_rules:
+        dims = []
+        for n in [4, 6, 8]:
+            fp = count_fixed_points(r, n)
+            dim = int(np.log2(fp)) if fp > 0 else -1
+            dims.append(dim)
+        poly = anf_to_string(compute_anf(r))
+        dims_str = " ".join(f"{d:>8}" for d in dims)
+        print(f"  Rule {r:>3} | {dims_str} | {poly}")
     
-    n = 7
-    print(f"\n  Verification for n={n}:")
-    all_power_of_two = True
-    for r in additive_rules:
-        fp = count_fixed_points(r, n)
-        is_pow2 = fp > 0 and (fp & (fp - 1)) == 0
-        if not is_pow2:
-            all_power_of_two = False
-        import math
-        d = int(math.log2(fp)) if fp > 0 else -1
-        print(f"    Rule {r:3d}: g(a,b,c) = {anf_string(r):12s}  |Fix| = {fp:4d} = 2^{d}")
+    # Demo 5: Rule 150 characterization
+    print("\n--- Demo 5: Rule 150 Fixed Point Characterization ---")
+    print("Theorem: s is fixed by Rule 150 iff s_{i-1} = s_{i+1} for all i.\n")
+    for n in range(3, 9):
+        fps = find_fixed_points(150, n)
+        print(f"  n={n}: {len(fps)} fixed points")
+        for fp in fps:
+            print(f"    {''.join(map(str, fp))}")
     
-    print(f"  All additive rules have power-of-2 fixed points: {all_power_of_two}")
-
-    # Demo 6: ANF degree distribution
-    print("\n--- ANF Degree Distribution Across All 256 Rules ---")
-    degree_counts = {-1: 0, 0: 0, 1: 0, 2: 0, 3: 0}
+    # Demo 6: Rule 51 has no fixed points
+    print("\n--- Demo 6: Rule 51 Obstruction (Empty Variety) ---")
+    print("Theorem: Rule 51 has no fixed points for any n.")
+    for n in range(3, 12):
+        fp = count_fixed_points(51, n)
+        print(f"  n={n}: {fp} fixed points {'✓ (V = ∅)' if fp == 0 else '✗ ERROR'}")
+    
+    # Demo 7: Full 256-rule census
+    print("\n--- Demo 7: Fixed Point Census (All 256 Rules, n=6) ---")
+    census = {}
     for r in range(256):
-        degree_counts[anf_degree(r)] += 1
-    for d in sorted(degree_counts.keys()):
-        label = f"degree {d}" if d >= 0 else "zero   "
-        print(f"  {label}: {degree_counts[d]:3d} rules")
+        fp = count_fixed_points(r, 6)
+        census.setdefault(fp, []).append(r)
+    
+    print(f"\n  Distribution of |V(f_r - id)| for n=6:")
+    for fp_count in sorted(census.keys()):
+        rules = census[fp_count]
+        print(f"    |V| = {fp_count:>3}: {len(rules)} rules  (e.g., {rules[:5]}{'...' if len(rules)>5 else ''})")
+    
+    print("\n" + "=" * 70)
+    print("KEY INSIGHT: Every ECA is a polynomial dynamical system over GF(2).")
+    print("The fixed-point variety V(f_r - id) encodes the rule's static structure.")
+    print("For linear rules, V is a subspace whose dimension is a complexity measure.")
+    print("Conjugate duality pairs rules with isomorphic varieties (256 → 128).")
+    print("=" * 70)
+
+if __name__ == "__main__":
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Dimension Spectrum of ECA Fixed-Point Varieties
+================================================================
+For linear rules, plot the dimension of the fixed-point subspace
+as a function of n, revealing number-theoretic patterns.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from itertools import product
+import math
+
+
+def eca_local_rule(rule_num, left, center, right):
+    idx = (left << 2) | (center << 1) | right
+    return (rule_num >> idx) & 1
+
+def eca_global_step(rule_num, state):
+    n = len(state)
+    return [
+        eca_local_rule(rule_num, state[(i-1) % n], state[i], state[(i+1) % n])
+        for i in range(n)
+    ]
+
+def count_fixed_points(rule_num, n):
+    count = 0
+    for bits in product([0, 1], repeat=n):
+        state = list(bits)
+        if eca_global_step(rule_num, state) == state:
+            count += 1
+    return count
+
+def is_linear_rule(rule_num):
+    if eca_local_rule(rule_num, 0, 0, 0) != 0:
+        return False
+    for a, ap, b, bp, c, cp in product([0, 1], repeat=6):
+        lhs = eca_local_rule(rule_num, a^ap, b^bp, c^cp)
+        rhs = eca_local_rule(rule_num, a, b, c) ^ eca_local_rule(rule_num, ap, bp, cp)
+        if lhs != rhs:
+            return False
+    return True
+
+
+def main():
+    linear_rules = [r for r in range(256) if is_linear_rule(r)]
+    rule_names = {0: '0', 60: 'a⊕b', 90: 'a⊕c', 102: 'b⊕c', 
+                  150: 'a⊕b⊕c', 170: 'c', 204: 'b', 240: 'a'}
+    
+    ns = list(range(3, 17))
+    
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    
+    # Plot 1: Dimension vs n for each linear rule
+    ax1 = axes[0, 0]
+    colors = plt.cm.tab10(np.linspace(0, 1, len(linear_rules)))
+    for idx, r in enumerate(linear_rules):
+        dims = []
+        for n in ns:
+            fp = count_fixed_points(r, n)
+            dim = int(math.log2(fp)) if fp > 0 else -1
+            dims.append(dim)
+        label = f"Rule {r} ({rule_names.get(r, '?')})"
+        ax1.plot(ns, dims, 'o-', label=label, color=colors[idx], markersize=4)
+    
+    ax1.set_xlabel('Number of cells n')
+    ax1.set_ylabel('dim(V) = dim ker(T - I)')
+    ax1.set_title('Fixed-Point Subspace Dimension\n(Linear Rules over GF(2))')
+    ax1.legend(fontsize=7, ncol=2)
+    ax1.grid(True, alpha=0.3)
+    
+    # Plot 2: Rule 90 (Sierpinski) dimension spectrum
+    ax2 = axes[0, 1]
+    dims_90 = []
+    for n in ns:
+        fp = count_fixed_points(90, n)
+        dim = int(math.log2(fp)) if fp > 0 else -1
+        dims_90.append(dim)
+    
+    colors_90 = ['red' if n % 3 == 0 else 'blue' for n in ns]
+    ax2.bar(ns, dims_90, color=colors_90, alpha=0.7)
+    ax2.set_xlabel('n')
+    ax2.set_ylabel('dim ker(T₉₀ - I)')
+    ax2.set_title('Rule 90 Fixed-Point Dimension\nRed: n ≡ 0 (mod 3), Blue: otherwise')
+    ax2.grid(True, alpha=0.3)
+    
+    # Plot 3: Fixed point count distribution for all 256 rules
+    ax3 = axes[1, 0]
+    n_test = 8
+    all_fp_counts = [count_fixed_points(r, n_test) for r in range(256)]
+    unique_counts = sorted(set(all_fp_counts))
+    freq = [all_fp_counts.count(c) for c in unique_counts]
+    
+    # Color bars: power-of-2 counts in blue, others in orange
+    bar_colors = ['steelblue' if (c & (c-1) == 0 and c > 0) else 'darkorange' 
+                  for c in unique_counts]
+    
+    ax3.bar(range(len(unique_counts)), freq, color=bar_colors, alpha=0.8)
+    ax3.set_xticks(range(len(unique_counts)))
+    ax3.set_xticklabels([str(c) for c in unique_counts], rotation=45, fontsize=7)
+    ax3.set_xlabel(f'|V(f_r - id)| (n={n_test})')
+    ax3.set_ylabel('Number of rules')
+    ax3.set_title(f'Fixed-Point Count Distribution (n={n_test})\nBlue: power of 2, Orange: not power of 2')
+    
+    # Plot 4: Rule 150 even/odd bifurcation
+    ax4 = axes[1, 1]
+    dims_150_even = []
+    dims_150_odd = []
+    ns_even = [n for n in ns if n % 2 == 0]
+    ns_odd = [n for n in ns if n % 2 == 1]
+    
+    for n in ns_even:
+        fp = count_fixed_points(150, n)
+        dims_150_even.append(int(math.log2(fp)) if fp > 0 else -1)
+    for n in ns_odd:
+        fp = count_fixed_points(150, n)
+        dims_150_odd.append(int(math.log2(fp)) if fp > 0 else -1)
+    
+    ax4.plot(ns_even, dims_150_even, 'rs-', label='n even: dim = 2', markersize=8)
+    ax4.plot(ns_odd, dims_150_odd, 'bo-', label='n odd: dim = 1', markersize=8)
+    ax4.set_xlabel('n')
+    ax4.set_ylabel('dim ker(T₁₅₀ - I)')
+    ax4.set_title('Rule 150: Even/Odd Parity Bifurcation\nof Fixed-Point Dimension')
+    ax4.legend()
+    ax4.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('eca_dimension_spectrum.png', dpi=150, bbox_inches='tight')
+    print("Saved: eca_dimension_spectrum.png")
 
 
 if __name__ == "__main__":
@@ -191,111 +360,93 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: Fixed-Point Variety Dimensions for All 256 ECAs
+Visualization: Fixed-Point Variety Dimensions for All 256 ECA Rules
+====================================================================
+Produces a heatmap showing the fixed-point count for each rule,
+organized to reveal the conjugate duality structure.
 """
 
-import itertools
-import math
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
+from itertools import product
 
 
-def eca_truth_table(rule_num):
-    return [(rule_num >> i) & 1 for i in range(8)]
+def eca_local_rule(rule_num, left, center, right):
+    idx = (left << 2) | (center << 1) | right
+    return (rule_num >> idx) & 1
 
-
-def anf_coefficients(rule_num):
-    g = lambda a, b, c: eca_truth_table(rule_num)[a*4 + b*2 + c]
-    c = [0]*8
-    c[0] = g(0,0,0)
-    c[1] = (g(0,0,0)+g(1,0,0))%2
-    c[2] = (g(0,0,0)+g(0,1,0))%2
-    c[3] = (g(0,0,0)+g(0,0,1))%2
-    c[4] = (g(0,0,0)+g(1,0,0)+g(0,1,0)+g(1,1,0))%2
-    c[5] = (g(0,0,0)+g(1,0,0)+g(0,0,1)+g(1,0,1))%2
-    c[6] = (g(0,0,0)+g(0,1,0)+g(0,0,1)+g(0,1,1))%2
-    c[7] = sum(g(a,b,c) for a,b,c in itertools.product([0,1],repeat=3))%2
-    return c
-
-
-def anf_degree(rule_num):
-    c = anf_coefficients(rule_num)
-    if c[7]: return 3
-    if any(c[i] for i in [4,5,6]): return 2
-    if any(c[i] for i in [1,2,3]): return 1
-    if c[0]: return 0
-    return -1
-
+def eca_global_step(rule_num, state):
+    n = len(state)
+    return [
+        eca_local_rule(rule_num, state[(i-1) % n], state[i], state[(i+1) % n])
+        for i in range(n)
+    ]
 
 def count_fixed_points(rule_num, n):
-    tt = eca_truth_table(rule_num)
     count = 0
-    for bits in itertools.product([0,1], repeat=n):
-        ok = True
-        for i in range(n):
-            idx = bits[(i-1)%n]*4 + bits[i]*2 + bits[(i+1)%n]
-            if tt[idx] != bits[i]:
-                ok = False
-                break
-        if ok:
+    for bits in product([0, 1], repeat=n):
+        state = list(bits)
+        if eca_global_step(rule_num, state) == state:
             count += 1
     return count
 
-
-def complement_conjugate(rule_num):
-    tt = eca_truth_table(rule_num)
-    new = 0
-    for a,b,c in itertools.product([0,1], repeat=3):
-        idx = a*4 + b*2 + c
-        val = (1 + tt[(1-a)*4 + (1-b)*2 + (1-c)]) % 2
-        new |= (val << idx)
-    return new
+def compute_conjugate(rule_num):
+    conj = 0
+    for a, b, c in product([0, 1], repeat=3):
+        idx = (a << 2) | (b << 1) | c
+        val = 1 ^ eca_local_rule(rule_num, 1^a, 1^b, 1^c)
+        conj |= (val << idx)
+    return conj
 
 
-# === Figure 1: Fixed-point count heatmap ===
-n = 8
-fp_counts = [count_fixed_points(r, n) for r in range(256)]
+def main():
+    n = 8  # Use 8 cells for meaningful variety structure
+    
+    # Compute fixed point counts for all 256 rules
+    fp_counts = np.array([count_fixed_points(r, n) for r in range(256)])
+    
+    # Reshape into 16x16 grid
+    fp_grid = fp_counts.reshape(16, 16)
+    
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+    
+    # Plot 1: Heatmap of fixed point counts
+    ax1 = axes[0]
+    im = ax1.imshow(np.log2(fp_grid + 1), cmap='viridis', aspect='auto')
+    ax1.set_title(f'Fixed-Point Variety Size (n={n} cells)\nlog₂(|V(f_r - id)| + 1)', fontsize=13)
+    ax1.set_xlabel('Rule number (low nibble)')
+    ax1.set_ylabel('Rule number (high nibble)')
+    
+    # Add colorbar
+    cbar = plt.colorbar(im, ax=ax1, label='log₂(count + 1)')
+    
+    # Add annotations for notable rules
+    notable = {204: 'Id', 0: '0', 51: '¬b', 110: 'TC', 150: 'Σ', 90: 'XOR'}
+    for rule, label in notable.items():
+        row, col = rule // 16, rule % 16
+        ax1.annotate(label, (col, row), fontsize=7, ha='center', va='center',
+                    color='white', fontweight='bold')
+    
+    # Plot 2: Conjugate duality verification
+    ax2 = axes[1]
+    rules = list(range(256))
+    fp_r = fp_counts
+    fp_conj = np.array([count_fixed_points(compute_conjugate(r), n) for r in range(256)])
+    
+    ax2.scatter(fp_r, fp_conj, alpha=0.5, s=15, c='steelblue')
+    ax2.plot([0, max(fp_r)], [0, max(fp_r)], 'r--', alpha=0.5, label='|V(g)| = |V(ḡ)|')
+    ax2.set_xlabel('|V(g)| (fixed points of rule g)')
+    ax2.set_ylabel('|V(ḡ)| (fixed points of conjugate)')
+    ax2.set_title('Conjugate Duality Theorem\n|V(g)| = |V(ḡ)| for all rules', fontsize=13)
+    ax2.legend()
+    ax2.set_aspect('equal')
+    
+    plt.tight_layout()
+    plt.savefig('eca_variety_dimensions.png', dpi=150, bbox_inches='tight')
+    print("Saved: eca_variety_dimensions.png")
 
-fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-# Heatmap
-grid = np.array(fp_counts).reshape(16, 16)
-im = axes[0].imshow(grid, cmap='viridis', aspect='auto')
-axes[0].set_title(f'Fixed-Point Count |V(f)| for n={n} cells', fontsize=12)
-axes[0].set_xlabel('Rule number (low nibble)')
-axes[0].set_ylabel('Rule number (high nibble)')
-plt.colorbar(im, ax=axes[0], label='Number of fixed points')
-
-# Degree vs fixed points
-degrees = [anf_degree(r) for r in range(256)]
-for deg in [-1, 0, 1, 2, 3]:
-    idx = [r for r in range(256) if degrees[r] == deg]
-    fps = [fp_counts[r] for r in idx]
-    label = f'deg={deg}' if deg >= 0 else 'zero'
-    axes[1].scatter([deg + np.random.uniform(-0.2, 0.2) for _ in idx], 
-                    [math.log2(fp + 0.5) for fp in fps],
-                    alpha=0.5, s=15, label=label)
-axes[1].set_xlabel('ANF Polynomial Degree')
-axes[1].set_ylabel('log₂(|Fix| + 0.5)')
-axes[1].set_title('ANF Degree vs Fixed-Point Count', fontsize=12)
-axes[1].legend()
-
-# Complement conjugation verification
-fp_orig = []
-fp_conj = []
-for r in range(256):
-    rc = complement_conjugate(r)
-    fp_orig.append(fp_counts[r])
-    fp_conj.append(fp_counts[rc])
-axes[2].scatter(fp_orig, fp_conj, alpha=0.4, s=10, c='crimson')
-axes[2].plot([0, max(fp_counts)], [0, max(fp_counts)], 'k--', alpha=0.5, label='y=x')
-axes[2].set_xlabel('|Fix(g)|')
-axes[2].set_ylabel('|Fix(g̃)|')
-axes[2].set_title('Complement Bijection: |Fix(g)| = |Fix(g̃)|', fontsize=12)
-axes[2].legend()
-
-plt.tight_layout()
-plt.savefig('eca_algebraic_geometry.png', dpi=150)
-print("Saved eca_algebraic_geometry.png")
+if __name__ == "__main__":
+    main()

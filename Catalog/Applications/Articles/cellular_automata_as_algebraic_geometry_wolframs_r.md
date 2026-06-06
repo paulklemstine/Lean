@@ -1,84 +1,93 @@
-# When Cellular Automata Become Geometry
+# The Hidden Geometry of Simple Rules
 
-## The Hidden Polynomial World Inside the Simplest Computers
+## How a 256-member family of one-dimensional automata conceals a rich algebraic landscape
 
-Imagine a row of light bulbs, each one either on or off. Every second, each bulb looks at itself and its two neighbors and decides whether to switch. The rule is simple: a fixed table that says, for every possible configuration of three bulbs, what the center one should become. There are exactly 256 such rules — the elementary cellular automata, catalogued and studied by Stephen Wolfram in the 1980s.
+When Stephen Wolfram first cataloged all 256 elementary cellular automata (ECAs) in the 1980s, he classified them by their visual behavior: some converge to boring uniformity, others produce chaotic noise, and a handful—like the famous Rule 110—generate patterns complex enough to compute anything a modern laptop can. But this behavioral classification, based on watching patterns evolve on a screen, leaves a deeper question unanswered: *What is the mathematical structure underneath?*
 
-Some rules are boring. Rule 0 turns everything off. Rule 204 does nothing at all. But Rule 110 is anything but boring: it can simulate a universal Turing machine. From 256 tiny lookup tables emerges the full spectrum of computational complexity, from trivial to universal.
+A new line of investigation reveals that these automata are not just computational curiosities—they are polynomial dynamical systems living over the smallest possible number field, GF(2), the "binary field" where 1 + 1 = 0. Every cellular automaton rule is, secretly, a polynomial equation. And the solutions to that equation—the *fixed points* of the automaton—form geometric objects called algebraic varieties. The geometry of these varieties encodes the complexity of the rule in ways that Wolfram's visual classification never could.
 
-For forty years, this has been the story: cellular automata as computation. But a new mathematical investigation reveals that these 256 rules have a secret double life — as algebraic geometry, the branch of mathematics that studies shapes defined by polynomial equations.
+---
 
-## Every Rule Is a Polynomial
+## Polynomials Over the Binary Field
 
-The key insight is deceptively simple. Each bulb is either on (1) or off (0), and we can do arithmetic with these values using the rules of modular arithmetic: 1 + 1 = 0, as in a light switch. Mathematicians call this GF(2), the field with two elements.
+The key insight is disarmingly simple. Consider a row of cells, each colored black (1) or white (0). An ECA rule examines each cell and its two neighbors—a window of three cells—and decides the new color. Since each cell is binary, the rule is a function from three binary inputs to one binary output. There are exactly 2^8 = 256 such functions, one for each ECA.
 
-In this arithmetic, every possible rule — every lookup table mapping three inputs to one output — can be written as a polynomial. Not just any polynomial, but a *multilinear* polynomial of degree at most 3:
+Now here is the crucial observation: over GF(2), the binary field, *every* function from three inputs to one output is a polynomial. Specifically, it can be written in the form:
 
-g(a, b, c) = c₀ + c₁a + c₂b + c₃c + c₄ab + c₅ac + c₆bc + c₇abc
+> g(a, b, c) = c₀ + c₁a + c₂b + c₃c + c₄ab + c₅ac + c₆bc + c₇abc
 
-where each coefficient cᵢ is 0 or 1. This is called the **Algebraic Normal Form** (ANF), and it is unique: every rule corresponds to exactly one polynomial, and every such polynomial corresponds to exactly one rule.
+where the eight coefficients cᵢ are each 0 or 1, and all arithmetic is modulo 2. The eight multilinear monomials {1, a, b, c, ab, ac, bc, abc} form a basis for all 256 possible functions—a fact established rigorously using the theory of algebraic normal forms.
 
-Rule 90, which generates beautiful Sierpiński triangles, has the polynomial g(a, b, c) = a + c — it simply XORs the two neighbors. Rule 110, the universal computer, is g(a, b, c) = b + c + bc + abc — a genuinely cubic polynomial. Rule 204, the identity, is just g(a, b, c) = b.
+This means every ECA is a *polynomial dynamical system*. When we ask "what happens to a row of n cells under this rule?", we are really asking about the behavior of a degree-3 polynomial map over a finite field.
 
-This isn't just notation. It's a bridge to an entirely different mathematical universe.
+---
 
-## Fixed Points as Geometric Objects
+## The Fixed-Point Variety
 
-When a cellular automaton runs, some configurations are unchanged — the **fixed points**. A pattern that maps to itself under the rule. These are the stable structures, the equilibria, the "crystals" of the automaton's dynamics.
+The most basic question about any dynamical system is: which states don't change? A *fixed point* is a configuration that maps to itself: the automaton, applied once, leaves it unchanged. In algebraic geometry, the set of solutions to a system of polynomial equations is called a *variety*. For an ECA rule g on n cells, the fixed points are exactly the solutions to the system:
 
-In algebraic geometry, a **variety** is the set of solutions to a system of polynomial equations. And here's the connection: the fixed points of a cellular automaton on n cells are precisely the solutions to n polynomial equations over GF(2):
+> g(s_{i-1}, sᵢ, s_{i+1}) = sᵢ, for each cell i
 
-g(sₙ₋₁, s₀, s₁) = s₀  
-g(s₀, s₁, s₂) = s₁  
-...  
-g(sₙ₋₂, sₙ₋₁, s₀) = sₙ₋₁
+This is a system of n polynomial equations in n unknowns over GF(2). Its solution set V(f - id) is an algebraic variety over the binary field.
 
-Each equation has degree at most 3. The fixed-point set is literally an algebraic variety — a geometric object defined by polynomial equations.
+The dimension and structure of this variety turn out to be remarkably informative. Rule 204, which simply copies the center cell (g(a,b,c) = b), is the identity map—every state is a fixed point, and V is the entire space, dimension n. Rule 0, which zeroes everything out, has a single fixed point: the all-zeros state, a zero-dimensional variety (a point). Rule 51, the complement rule (g(a,b,c) = 1 + b), has *no* fixed points at all—V is the empty set.
 
-## The Complement Conjugation Theorem
+These extremes are simple. The real richness appears in between.
 
-One of the most elegant results to emerge from this geometric perspective is a hidden symmetry. For any rule g, there is a "complement-conjugate" rule g̃, defined by flipping every input and output:
+---
 
-g̃(a, b, c) = 1 + g(1+a, 1+b, 1+c)
+## The Submodule Theorem
 
-The theorem says: the operation of complementing every cell — turning every 0 to 1 and every 1 to 0 — transforms fixed points of g into fixed points of g̃, perfectly and bijectively. This means the fixed-point varieties of g and g̃ always have exactly the same size.
+Among the 256 rules, eight are *linear*: their local function is a sum of inputs with no quadratic or cubic terms. Rule 90 (g = a + c, the famous Sierpiński rule) and Rule 150 (g = a + b + c) are the most celebrated examples.
 
-Moreover, this complement-conjugate operation is an **involution**: applying it twice returns to the original rule. It partitions the 256 rules into 120 conjugate pairs and 16 self-conjugate rules (like Rule 150, whose polynomial a + b + c is its own complement-conjugate). These 16 self-conjugate rules are the "fixed points" of a symmetry acting on the space of all rules — a meta-mathematical echo of the fixed-point varieties we're studying.
+For these linear rules, something beautiful happens: the fixed-point variety is not just any collection of points—it is a *linear subspace* of GF(2)ⁿ. More precisely, it is a submodule of the vector space of all n-cell states. Its dimension can be computed by standard linear algebra: it is the nullity of the matrix T - I, where T is the circulant transition matrix of the rule.
 
-## The Linear Rules and Their Perfect Geometry
+This is the central algebraic-geometric result of the investigation. It means that for linear ECAs, the complexity of the fixed-point structure is captured by a single number—the dimension of a subspace—which can be computed efficiently even for enormous system sizes.
 
-Among the 256 rules, exactly 8 are **additive** — their polynomial has no constant term and no products of variables:
+For Rule 150, the dimension exhibits a striking *parity bifurcation*: when the number of cells n is even, the fixed-point subspace has dimension 2 (exactly 4 fixed points); when n is odd, it has dimension 1 (exactly 2 fixed points). This follows from the characterization theorem: a state s is fixed by Rule 150 if and only if s_{i-1} = s_{i+1} for every cell i—neighboring cells on the same side must agree.
 
-g(a, b, c) = αa + βb + γc
+Rule 90 shows even more intricate behavior. Its fixed-point dimension depends on divisibility by 3: when n is divisible by 3, there are 4 fixed points (dimension 2), but otherwise only 1 (the zero state, dimension 0). The Fibonacci sequence over GF(2), with its period of 3, governs this pattern—a surprising bridge between cellular automata and number theory.
 
-for some coefficients α, β, γ ∈ {0, 1}. These include Rule 0 (α=β=γ=0), Rule 204 (β=1, rest 0), Rule 90 (α=γ=1, β=0), and Rule 150 (α=β=γ=1).
+---
 
-For these rules, something remarkable happens: the fixed-point set isn't just a variety — it's a **linear** variety. A subspace. The fixed-point set is closed under addition and scalar multiplication of states. This means its size is always an exact power of 2: if the dimension of the fixed-point subspace is d, then there are exactly 2^d fixed points.
+## Conjugate Duality: A Mirror in the Rule Space
 
-Rule 204 (identity) has d = n: every state is a fixed point, giving 2ⁿ fixed points. Rule 0 has d = 0: only the all-zeros state survives. Rule 90 on 8 cells has d = 2: exactly 4 fixed points. The "dimension" d is a single number that captures the entire complexity of the stable structure.
+A second structural theorem reveals a hidden symmetry among the 256 rules. Define the *conjugate* of a rule g as: ḡ(a, b, c) = 1 + g(1+a, 1+b, 1+c). This operation flips all inputs and the output—it is the algebraic incarnation of "complementing" every cell.
 
-For nonlinear rules, the fixed-point set is still an algebraic variety, but it's no longer a subspace. It can have any size — not necessarily a power of 2. The transition from linear to nonlinear mirrors the transition from solvable geometry (lines, planes) to the wild world of curves and surfaces.
+The duality theorem states: *a state s is a fixed point of rule g if and only if its complement (1 + s) is a fixed point of the conjugate rule ḡ.* The complement map is a bijection between V(g) and V(ḡ), preserving the size and structure of the variety.
 
-## What the Degree Tells Us
+This immediately pairs the 256 rules into 128 conjugate pairs (some rules are self-conjugate, meaning g = ḡ). The fixed-point variety of each partner is isomorphic. This reduces the effective classification space by half and reveals that Rule 110's variety structure is mirrored in its conjugate, Rule 137.
 
-The ANF degree of a rule — 0, 1, 2, or 3 — is a rough measure of its algebraic complexity. Among all 256 rules:
+Self-conjugate rules possess an additional symmetry: their fixed-point sets are invariant under complementation. If s is a fixed point, so is 1 + s. This means the fixed-point variety has a Z/2Z-symmetry, and its structure can be studied "modulo complement."
 
-- 1 rule has the zero polynomial (Rule 0)
-- 1 rule has degree 0 (Rule 255, the constant-1 rule)
-- 14 rules have degree 1 (the linear and affine rules)
-- 112 rules have degree 2
-- 128 rules have degree 3
+---
 
-The degree-3 rules include all the most "interesting" automata: Rule 110 (universal computation), Rule 30 (pseudorandom number generation), Rule 54 (complex emergent behavior). The algebraic geometry becomes richer — and harder to analyze — as the degree increases.
+## The 256-Rule Census
 
-## The Bigger Picture
+Computing the fixed-point variety for all 256 rules on n = 8 cells reveals a rich spectrum. The variety sizes range from 0 (empty, like Rule 51) to 256 (the full space, like Rule 204). The distribution is highly non-uniform: most rules cluster at small fixed-point counts, while a few have large varieties.
 
-This work sits at the intersection of three great mathematical traditions. Cellular automata theory, born from von Neumann's work on self-replicating machines and Wolfram's computational classification. Algebraic geometry, whose roots go back to Descartes and whose modern form was shaped by Grothendieck's revolutionary ideas about schemes and sheaves. And finite field theory, the algebra of codes and cryptography.
+For nonlinear rules (the majority), the fixed-point count need not be a power of 2—the variety is a genuine nonlinear algebraic set, not a linear subspace. Rule 110, the Turing-complete rule, has a polynomial g(a,b,c) = b + bc + ac + abc of degree 3. Its fixed-point variety is a nonlinear variety whose structure encodes the combinatorial complexity of the rule's static configurations.
 
-The bridge between them is surprisingly concrete. Every cellular automaton rule *is* a polynomial map. Every fixed-point set *is* an algebraic variety. The complement-conjugate pairing *is* a group action on the space of varieties. And the dimension of the fixed-point variety *is* a measure of the rule's structural complexity.
+The census confirms the conjugate duality theorem computationally: every rule has exactly as many fixed points as its conjugate, across all tested system sizes.
 
-What makes this connection powerful is that it translates questions about dynamics into questions about geometry. Instead of running a cellular automaton for millions of steps, we can study the polynomial equations that define its equilibria. Instead of classifying rules by their computational behavior — which requires Church-Turing-level analysis — we can classify them by the degree and structure of their defining polynomials, a computation that takes microseconds.
+---
 
-The frontier question remains open: does the dimension of the fixed-point variety correlate with Wolfram's empirical complexity classes? The data suggests intriguing patterns. Class 1 rules (convergent to a single state) tend to have low-dimensional varieties. Class 4 rules (complex, edge-of-chaos) often have higher-dimensional varieties. But the correlation is imperfect, and understanding why is the next great challenge — one that may require new tools from both algebraic geometry and complexity theory.
+## From Cellular Automata to Algebraic Geometry
 
-At the deepest level, this work suggests that cellular automata are not just models of computation. They are geometric objects, living in polynomial spaces over finite fields, carrying algebraic structure that mirrors and illuminates their dynamical behavior. The simplest computers in mathematics turn out to be algebraic varieties in disguise.
+What does this framework buy us? It connects one of the most studied families of discrete dynamical systems—cellular automata—to the powerful machinery of algebraic geometry over finite fields. The fixed-point variety V(f - id) is not an ad hoc construction; it is a genuine affine variety over GF(2), amenable to the tools of Groebner bases, étale cohomology, and the Weil conjectures.
+
+The periodic points (states that return after k steps) form a nested family of varieties V_k ⊇ V_1, a filtration that encodes the full dynamical hierarchy. For linear rules, each V_k is a submodule, and the filtration is a chain of subspaces—a tractable algebraic structure that classical dynamical systems theory cannot directly access.
+
+The polynomial representation theorem—that every local rule is uniquely a multilinear polynomial—is the bridge between the combinatorial world of Wolfram and the algebraic world of Grothendieck. It is not merely a restatement; it is a change of language that opens new tools and new questions.
+
+---
+
+## What Comes Next
+
+Several tantalizing questions emerge. Does the dimension of the fixed-point variety for nonlinear rules correlate with Wolfram's complexity classes? The census data suggest a tendency—Class 1 rules (convergent) tend to have small varieties, Class 4 rules (complex) tend to have larger ones—but the correlation is far from perfect. The dimension is a static invariant; Wolfram's classification is inherently dynamical.
+
+A deeper question: can the *cohomology* of the fixed-point variety distinguish Turing-complete rules from merely chaotic ones? The étale cohomology of varieties over finite fields carries arithmetic information (via the Frobenius action) that has no analog in the naive point-counting approach. If Rule 110's variety has richer cohomological structure than Rule 30's, that would be a genuinely new kind of complexity measure.
+
+Finally, the framework extends naturally to two-dimensional cellular automata, higher-order neighborhoods, and multi-state automata over GF(p) for any prime p. Each generalization brings new polynomial maps, new varieties, and new algebraic invariants. The 256 ECAs are just the beginning—the simplest case of a vast algebraic-geometric landscape of discrete dynamical systems.
+
+The message is clear: behind the dazzling visual patterns of cellular automata lies a precise algebraic structure. The rules are polynomials. The stable configurations are varieties. And the complexity of the system is, in a real mathematical sense, the geometry of its solution space.

@@ -1,231 +1,235 @@
 #!/usr/bin/env python3
 """
-Algorithms for Cellular Automata as Algebraic Geometry over GF(2)
-=================================================================
-Type-hinted implementations of the core algorithms.
+Algorithms for Cellular Automata Algebraic Geometry over GF(2)
+===============================================================
+Type-hinted implementations of core algorithms.
 """
 
-import itertools
-from typing import List, Tuple, Set, Optional
+from typing import List, Tuple, Dict, Optional
+from itertools import product
 
 
-def gf2_add(a: int, b: int) -> int:
-    """Addition in GF(2)."""
-    return (a + b) % 2
-
-
-def gf2_mul(a: int, b: int) -> int:
-    """Multiplication in GF(2)."""
-    return (a * b) % 2
-
-
-def eca_truth_table(rule_num: int) -> List[int]:
-    """Extract the 8-entry truth table from a rule number.
+def eca_local_rule(rule_num: int, left: int, center: int, right: int) -> int:
+    """Apply ECA local rule by extracting bit from rule number.
     
-    Index i = 4*a + 2*b + c maps to g(a,b,c).
+    Args:
+        rule_num: ECA rule number (0-255)
+        left, center, right: Cell values in {0, 1}
+    
+    Returns:
+        New center cell value in {0, 1}
     """
-    return [(rule_num >> i) & 1 for i in range(8)]
+    idx = (left << 2) | (center << 1) | right
+    return (rule_num >> idx) & 1
 
 
-def mobius_inversion_3d(truth_table: List[int]) -> List[int]:
-    """Compute ANF coefficients from truth table via Möbius inversion
-    on the Boolean lattice {0,1}^3.
+def eca_global_step(rule_num: int, state: List[int]) -> List[int]:
+    """Global ECA step with periodic boundary conditions.
     
-    Algorithm: For each subset S ⊆ {a,b,c}, the ANF coefficient for
-    the monomial ∏_{x∈S} x equals the sum (in GF(2)) of f(v) over
-    all v ≤ S in the Boolean lattice.
+    Args:
+        rule_num: ECA rule number (0-255)
+        state: List of cell values, each in {0, 1}
     
-    Complexity: O(2^k) for k variables, here k=3.
+    Returns:
+        Updated state after one step
     """
-    # Subsets of {0,1,2} encoded as bitmasks
-    # Bit 0 = variable a, bit 1 = variable b, bit 2 = variable c
-    coeffs = [0] * 8
-    for mask in range(8):
-        # Sum over all subsets of mask
-        total = 0
-        submask = mask
-        while True:
-            # Convert submask to truth table index
-            a = (submask >> 0) & 1
-            b = (submask >> 1) & 1
-            c = (submask >> 2) & 1
-            idx = a * 4 + b * 2 + c
-            total = gf2_add(total, truth_table[idx])
-            if submask == 0:
-                break
-            submask = (submask - 1) & mask
-        # Reorder: mask bits {a,b,c} -> coefficient index
-        # mask=0->c0, mask=1(a)->c1, mask=2(b)->c2, mask=4(c)->c3,
-        # mask=3(ab)->c4, mask=5(ac)->c5, mask=6(bc)->c6, mask=7(abc)->c7
-        reorder = {0: 0, 1: 1, 2: 2, 4: 3, 3: 4, 5: 5, 6: 6, 7: 7}
-        coeffs[reorder[mask]] = total
-    return coeffs
+    n = len(state)
+    return [
+        eca_local_rule(rule_num, state[(i-1) % n], state[i], state[(i+1) % n])
+        for i in range(n)
+    ]
 
 
-def evaluate_anf(coeffs: List[int], a: int, b: int, c: int) -> int:
-    """Evaluate ANF polynomial at a point."""
-    return gf2_add(
-        gf2_add(
-            gf2_add(coeffs[0], gf2_mul(coeffs[1], a)),
-            gf2_add(gf2_mul(coeffs[2], b), gf2_mul(coeffs[3], c))
-        ),
-        gf2_add(
-            gf2_add(gf2_mul(coeffs[4], gf2_mul(a, b)), gf2_mul(coeffs[5], gf2_mul(a, c))),
-            gf2_add(gf2_mul(coeffs[6], gf2_mul(b, c)), gf2_mul(coeffs[7], gf2_mul(a, gf2_mul(b, c))))
-        )
-    )
-
-
-def anf_degree(coeffs: List[int]) -> int:
-    """Compute the algebraic degree from ANF coefficients."""
-    if coeffs[7]:
-        return 3
-    if any(coeffs[i] for i in [4, 5, 6]):
-        return 2
-    if any(coeffs[i] for i in [1, 2, 3]):
-        return 1
-    if coeffs[0]:
-        return 0
-    return -1
-
-
-def complement_conjugate(rule_num: int) -> int:
-    """Compute the complement-conjugate rule number.
+def compute_algebraic_normal_form(rule_num: int) -> List[int]:
+    """Compute the Algebraic Normal Form (ANF) coefficients.
     
-    g̃(a,b,c) = 1 + g(1+a, 1+b, 1+c) over GF(2).
-    This implements the involution on the 256-element rule space.
+    Every function GF(2)^3 -> GF(2) has a unique multilinear polynomial:
+    g(a,b,c) = c0 + c1*a + c2*b + c3*c + c4*ab + c5*ac + c6*bc + c7*abc
+    
+    Uses Möbius inversion (inclusion-exclusion) over GF(2).
+    
+    Args:
+        rule_num: ECA rule number (0-255)
+    
+    Returns:
+        List of 8 coefficients [c0, c1, ..., c7] in {0, 1}
     """
-    g_table = eca_truth_table(rule_num)
-    new_rule = 0
-    for a, b, c in itertools.product([0, 1], repeat=3):
-        idx = a * 4 + b * 2 + c
-        val = gf2_add(1, g_table[gf2_add(1, a) * 4 + gf2_add(1, b) * 2 + gf2_add(1, c)])
-        new_rule |= (val << idx)
-    return new_rule
-
-
-def fixed_points_bruteforce(rule_num: int, n: int) -> List[Tuple[int, ...]]:
-    """Enumerate all fixed points of an ECA by brute force.
+    def g(a: int, b: int, c: int) -> int:
+        return eca_local_rule(rule_num, a, b, c)
     
-    Returns list of states (as tuples of 0/1 values).
-    Complexity: O(n * 2^n)
+    c = [0] * 8
+    c[0] = g(0,0,0)                                           # constant
+    c[1] = g(0,0,0) ^ g(1,0,0)                                # a
+    c[2] = g(0,0,0) ^ g(0,1,0)                                # b
+    c[3] = g(0,0,0) ^ g(0,0,1)                                # c
+    c[4] = g(0,0,0) ^ g(1,0,0) ^ g(0,1,0) ^ g(1,1,0)         # ab
+    c[5] = g(0,0,0) ^ g(1,0,0) ^ g(0,0,1) ^ g(1,0,1)         # ac
+    c[6] = g(0,0,0) ^ g(0,1,0) ^ g(0,0,1) ^ g(0,1,1)         # bc
+    c[7] = (g(0,0,0) ^ g(1,0,0) ^ g(0,1,0) ^ g(0,0,1) ^
+            g(1,1,0) ^ g(1,0,1) ^ g(0,1,1) ^ g(1,1,1))       # abc
+    return c
+
+
+def find_all_fixed_points(rule_num: int, n: int) -> List[Tuple[int, ...]]:
+    """Find all fixed points of an ECA rule on n cells.
+    
+    Brute-force search over all 2^n states.
+    
+    Args:
+        rule_num: ECA rule number
+        n: Number of cells
+    
+    Returns:
+        List of fixed-point states (as tuples of 0/1 values)
     """
-    g_table = eca_truth_table(rule_num)
-    fixed = []
-    for bits in itertools.product([0, 1], repeat=n):
-        is_fixed = True
-        for i in range(n):
-            left = bits[(i - 1) % n]
-            center = bits[i]
-            right = bits[(i + 1) % n]
-            idx = left * 4 + center * 2 + right
-            if g_table[idx] != center:
-                is_fixed = False
-                break
-        if is_fixed:
-            fixed.append(bits)
-    return fixed
+    fixed_points = []
+    for bits in product([0, 1], repeat=n):
+        state = list(bits)
+        if eca_global_step(rule_num, state) == state:
+            fixed_points.append(bits)
+    return fixed_points
 
 
-def gf2_matrix_kernel_dim(matrix: List[List[int]], n_cols: int) -> int:
-    """Compute the dimension of the kernel of a GF(2) matrix using Gaussian elimination.
+def fixed_point_variety_dimension(rule_num: int, n: int) -> Optional[int]:
+    """Compute the dimension of the fixed-point variety V(f_r - id).
     
-    Returns dim(ker(A)) = n_cols - rank(A).
+    For linear rules, this is the dimension of the kernel of (T - I)
+    where T is the transition matrix. For general rules, this is the
+    log2 of the number of fixed points (which need not be a power of 2
+    for nonlinear rules).
+    
+    Args:
+        rule_num: ECA rule number
+        n: Number of cells
+    
+    Returns:
+        Dimension (log2 of fixed point count), or None if count is not a power of 2
     """
-    m = [row[:] for row in matrix]  # copy
-    n_rows = len(m)
-    pivot_cols: List[int] = []
-    row_idx = 0
-    
-    for col in range(n_cols):
-        # Find pivot
-        found = -1
-        for r in range(row_idx, n_rows):
-            if m[r][col] == 1:
-                found = r
-                break
-        if found == -1:
-            continue
-        # Swap
-        m[row_idx], m[found] = m[found], m[row_idx]
-        pivot_cols.append(col)
-        # Eliminate
-        for r in range(n_rows):
-            if r != row_idx and m[r][col] == 1:
-                for c in range(n_cols):
-                    m[r][c] = gf2_add(m[r][c], m[row_idx][c])
-        row_idx += 1
-    
-    rank = len(pivot_cols)
-    return n_cols - rank
+    count = len(find_all_fixed_points(rule_num, n))
+    if count == 0:
+        return -1  # empty variety
+    if count & (count - 1) == 0:  # power of 2
+        dim = 0
+        while (1 << dim) < count:
+            dim += 1
+        return dim
+    return None  # not a power of 2 (nonlinear rule)
 
 
-def additive_fixed_point_dimension(rule_num: int, n: int) -> int:
-    """For an additive rule, compute the dimension of the fixed-point variety
-    as dim(ker(f - id)) using linear algebra over GF(2).
+def compute_conjugate_rule(rule_num: int) -> int:
+    """Compute the conjugate (complement-dual) of an ECA rule.
     
-    This is the efficient algebraic geometry approach: instead of brute-force
-    enumeration (O(2^n)), we solve a linear system (O(n^3)).
+    The conjugate ḡ satisfies: ḡ(a,b,c) = 1 + g(1+a, 1+b, 1+c) over GF(2).
+    
+    Theorem: s is a fixed point of g iff (1+s) is a fixed point of ḡ.
+    This pairs the 256 rules into 128 conjugate pairs with isomorphic varieties.
+    
+    Args:
+        rule_num: ECA rule number
+    
+    Returns:
+        Conjugate rule number
     """
-    tt = eca_truth_table(rule_num)
-    # Extract linear coefficients: g(a,b,c) = alpha*a + beta*b + gamma*c
-    alpha = gf2_add(tt[0], tt[4])  # g(1,0,0) - g(0,0,0) mod 2
-    beta = gf2_add(tt[0], tt[2])   # g(0,1,0) - g(0,0,0)
-    gamma = gf2_add(tt[0], tt[1])  # g(0,0,1) - g(0,0,0)
-    
-    # Build the matrix (f - id) over GF(2)
-    # f(s)_i = alpha * s_{i-1} + beta * s_i + gamma * s_{i+1}
-    # (f - id)(s)_i = alpha * s_{i-1} + (beta - 1) * s_i + gamma * s_{i+1}
-    # In GF(2), beta - 1 = beta + 1
-    matrix = []
-    for i in range(n):
-        row = [0] * n
-        row[(i - 1) % n] = alpha
-        row[i] = gf2_add(beta, 1)
-        row[(i + 1) % n] = gf2_add(row[(i + 1) % n], gamma)
-        matrix.append(row)
-    
-    return gf2_matrix_kernel_dim(matrix, n)
+    conj = 0
+    for a, b, c in product([0, 1], repeat=3):
+        idx = (a << 2) | (b << 1) | c
+        val = 1 ^ eca_local_rule(rule_num, 1^a, 1^b, 1^c)
+        conj |= (val << idx)
+    return conj
 
 
-def classify_all_rules() -> dict:
-    """Classify all 256 ECA rules by their algebraic properties."""
-    result = {
-        'additive': [],
-        'affine': [],  # constant + linear
-        'quadratic': [],
-        'cubic': [],
-        'complement_pairs': [],
-        'self_conjugate': [],
+def is_linear_rule(rule_num: int) -> bool:
+    """Check if an ECA rule is linear (additive) over GF(2).
+    
+    A rule is linear iff its local function g satisfies:
+    g(0,0,0) = 0 and g(a⊕a', b⊕b', c⊕c') = g(a,b,c) ⊕ g(a',b',c')
+    
+    There are exactly 8 linear rules over GF(2).
+    
+    Args:
+        rule_num: ECA rule number
+    
+    Returns:
+        True if the rule is linear
+    """
+    if eca_local_rule(rule_num, 0, 0, 0) != 0:
+        return False
+    for a, ap, b, bp, c, cp in product([0, 1], repeat=6):
+        lhs = eca_local_rule(rule_num, a^ap, b^bp, c^cp)
+        rhs = eca_local_rule(rule_num, a, b, c) ^ eca_local_rule(rule_num, ap, bp, cp)
+        if lhs != rhs:
+            return False
+    return True
+
+
+def classify_all_rules(n: int = 6) -> Dict[str, List[int]]:
+    """Classify all 256 ECA rules by fixed-point variety properties.
+    
+    Args:
+        n: Number of cells for classification
+    
+    Returns:
+        Dictionary with classification categories
+    """
+    classification: Dict[str, List[int]] = {
+        'empty_variety': [],       # No fixed points
+        'single_point': [],        # Exactly one fixed point
+        'linear_subspace': [],     # Fixed points form a subspace (power-of-2 count)
+        'nonlinear_variety': [],   # Fixed points exist but count not power of 2
+        'full_space': [],          # All states are fixed points
     }
     
     for r in range(256):
-        coeffs = mobius_inversion_3d(eca_truth_table(r))
-        deg = anf_degree(coeffs)
+        fps = find_all_fixed_points(r, n)
+        count = len(fps)
         
-        if coeffs[0] == 0 and deg <= 1:
-            result['additive'].append(r)
-        elif deg <= 1:
-            result['affine'].append(r)
-        elif deg == 2:
-            result['quadratic'].append(r)
+        if count == 0:
+            classification['empty_variety'].append(r)
+        elif count == 1:
+            classification['single_point'].append(r)
+        elif count == 2**n:
+            classification['full_space'].append(r)
+        elif count & (count - 1) == 0:
+            classification['linear_subspace'].append(r)
         else:
-            result['cubic'].append(r)
-        
-        rc = complement_conjugate(r)
-        if r == rc:
-            result['self_conjugate'].append(r)
-        elif r < rc:
-            result['complement_pairs'].append((r, rc))
+            classification['nonlinear_variety'].append(r)
     
-    return result
+    return classification
+
+
+def build_transition_matrix_gf2(rule_num: int, n: int) -> List[List[int]]:
+    """Build the transition matrix for a LINEAR ECA rule over GF(2).
+    
+    For a linear rule g(a,b,c) = αa + βb + γc, the global step is
+    a linear map whose matrix T has entries T_{i,j} determined by the
+    local rule coefficients and the periodic boundary.
+    
+    Args:
+        rule_num: ECA rule number (should be linear)
+        n: Number of cells
+    
+    Returns:
+        n×n transition matrix over GF(2)
+    """
+    # Build by applying the step to standard basis vectors
+    T = []
+    for j in range(n):
+        basis_j = [0] * n
+        basis_j[j] = 1
+        col = eca_global_step(rule_num, basis_j)
+        T.append(col)
+    
+    # Transpose: T[j] is the image of e_j, we want matrix[i][j]
+    matrix = [[T[j][i] for j in range(n)] for i in range(n)]
+    return matrix
 
 
 if __name__ == "__main__":
-    classification = classify_all_rules()
-    print("ECA Algebraic Classification:")
-    for key, val in classification.items():
-        print(f"  {key}: {len(val)} entries")
+    # Quick self-test
+    print("Linear rules:", [r for r in range(256) if is_linear_rule(r)])
+    print("Rule 110 ANF:", compute_algebraic_normal_form(110))
+    print("Conjugate of Rule 110:", compute_conjugate_rule(110))
     
-    print("\nAdditive rules:", classification['additive'])
-    print("Self-conjugate rules:", classification['self_conjugate'])
+    clf = classify_all_rules(6)
+    for cat, rules in clf.items():
+        print(f"{cat}: {len(rules)} rules")
