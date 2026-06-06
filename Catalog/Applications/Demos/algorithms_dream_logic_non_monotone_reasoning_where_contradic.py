@@ -1,313 +1,230 @@
 #!/usr/bin/env python3
 """
-Dream Logic: Algorithms for Paraconsistent Reasoning
+Algorithms for Dream Logic: Paraconsistent Reasoning
 
-Type-hinted implementations of:
-1. Belnap valuation propagation
-2. Dream state management with retraction
-3. Pre-topology construction and validation
+Type-hinted implementations of core algorithms from the formalization.
 """
 
-from enum import Enum
-from typing import Dict, Set, FrozenSet, List, Tuple, Optional, Callable
-from dataclasses import dataclass, field
+from enum import IntEnum
+from typing import Set, Dict, List, Tuple, FrozenSet, Optional
+from dataclasses import dataclass
 
 
-class BelnapVal(Enum):
-    """Four-valued Belnap truth value."""
-    VERUM = "T"
-    FALSUM = "F"
-    BOTH = "B"
-    NEITHER = "N"
-
-    def is_designated(self) -> bool:
-        return self in (BelnapVal.VERUM, BelnapVal.BOTH)
-
-    def neg(self) -> 'BelnapVal':
-        return _NEG_TABLE[self]
-
-    def conj(self, other: 'BelnapVal') -> 'BelnapVal':
-        return _CONJ_TABLE[(self, other)]
-
-    def disj(self, other: 'BelnapVal') -> 'BelnapVal':
-        return _DISJ_TABLE[(self, other)]
-
-    def impl(self, other: 'BelnapVal') -> 'BelnapVal':
-        return self.neg().disj(other)
-
-    def info_le(self, other: 'BelnapVal') -> bool:
-        """Information ordering."""
-        if self == BelnapVal.NEITHER:
-            return True
-        if other == BelnapVal.BOTH:
-            return True
-        return self == other
-
-    def truth_le(self, other: 'BelnapVal') -> bool:
-        """Truth ordering."""
-        if self == BelnapVal.FALSUM:
-            return True
-        if other == BelnapVal.VERUM:
-            return True
-        return self == other
+class TruthValue(IntEnum):
+    """Belnap's four truth values."""
+    NEITHER = 0
+    FALSE = 1
+    TRUE = 2
+    BOTH = 3
 
 
-# Lookup tables for efficiency
-_NEG_TABLE = {
-    BelnapVal.VERUM: BelnapVal.FALSUM,
-    BelnapVal.FALSUM: BelnapVal.VERUM,
-    BelnapVal.BOTH: BelnapVal.BOTH,
-    BelnapVal.NEITHER: BelnapVal.NEITHER,
+# Negation lookup table
+_NEG_TABLE: Dict[TruthValue, TruthValue] = {
+    TruthValue.TRUE: TruthValue.FALSE,
+    TruthValue.FALSE: TruthValue.TRUE,
+    TruthValue.BOTH: TruthValue.BOTH,
+    TruthValue.NEITHER: TruthValue.NEITHER,
 }
 
-_CONJ_TABLE = {
-    (a, b): (
-        b if a == BelnapVal.VERUM else
-        a if b == BelnapVal.VERUM else
-        BelnapVal.FALSUM if a == BelnapVal.FALSUM or b == BelnapVal.FALSUM else
-        BelnapVal.BOTH if a == BelnapVal.BOTH and b == BelnapVal.BOTH else
-        BelnapVal.FALSUM if {a, b} == {BelnapVal.BOTH, BelnapVal.NEITHER} else
-        BelnapVal.NEITHER
-    )
-    for a in BelnapVal for b in BelnapVal
+# Conjunction lookup table (truth-order meet)
+_CONJ_TABLE: Dict[Tuple[TruthValue, TruthValue], TruthValue] = {
+    (TruthValue.FALSE, v): TruthValue.FALSE for v in TruthValue
+} | {
+    (v, TruthValue.FALSE): TruthValue.FALSE for v in TruthValue
+} | {
+    (TruthValue.TRUE, TruthValue.TRUE): TruthValue.TRUE,
+    (TruthValue.TRUE, TruthValue.BOTH): TruthValue.BOTH,
+    (TruthValue.TRUE, TruthValue.NEITHER): TruthValue.NEITHER,
+    (TruthValue.BOTH, TruthValue.TRUE): TruthValue.BOTH,
+    (TruthValue.BOTH, TruthValue.BOTH): TruthValue.BOTH,
+    (TruthValue.BOTH, TruthValue.NEITHER): TruthValue.FALSE,
+    (TruthValue.NEITHER, TruthValue.TRUE): TruthValue.NEITHER,
+    (TruthValue.NEITHER, TruthValue.BOTH): TruthValue.FALSE,
+    (TruthValue.NEITHER, TruthValue.NEITHER): TruthValue.NEITHER,
 }
 
-_DISJ_TABLE = {
-    (a, b): (
-        b if a == BelnapVal.FALSUM else
-        a if b == BelnapVal.FALSUM else
-        BelnapVal.VERUM if a == BelnapVal.VERUM or b == BelnapVal.VERUM else
-        BelnapVal.BOTH if a == BelnapVal.BOTH and b == BelnapVal.BOTH else
-        BelnapVal.VERUM if {a, b} == {BelnapVal.BOTH, BelnapVal.NEITHER} else
-        BelnapVal.NEITHER
-    )
-    for a in BelnapVal for b in BelnapVal
+# Disjunction lookup table (truth-order join)
+_DISJ_TABLE: Dict[Tuple[TruthValue, TruthValue], TruthValue] = {
+    (TruthValue.TRUE, v): TruthValue.TRUE for v in TruthValue
+} | {
+    (v, TruthValue.TRUE): TruthValue.TRUE for v in TruthValue
+} | {
+    (TruthValue.FALSE, TruthValue.FALSE): TruthValue.FALSE,
+    (TruthValue.FALSE, TruthValue.BOTH): TruthValue.BOTH,
+    (TruthValue.FALSE, TruthValue.NEITHER): TruthValue.NEITHER,
+    (TruthValue.BOTH, TruthValue.FALSE): TruthValue.BOTH,
+    (TruthValue.BOTH, TruthValue.BOTH): TruthValue.BOTH,
+    (TruthValue.BOTH, TruthValue.NEITHER): TruthValue.TRUE,
+    (TruthValue.NEITHER, TruthValue.FALSE): TruthValue.NEITHER,
+    (TruthValue.NEITHER, TruthValue.BOTH): TruthValue.TRUE,
+    (TruthValue.NEITHER, TruthValue.NEITHER): TruthValue.NEITHER,
 }
 
 
-@dataclass
+def belnap_neg(v: TruthValue) -> TruthValue:
+    """Belnap negation: T↔F, Both and Neither are fixed points."""
+    return _NEG_TABLE[v]
+
+
+def belnap_conj(a: TruthValue, b: TruthValue) -> TruthValue:
+    """Belnap conjunction (truth-order meet)."""
+    return _CONJ_TABLE[(a, b)]
+
+
+def belnap_disj(a: TruthValue, b: TruthValue) -> TruthValue:
+    """Belnap disjunction (truth-order join)."""
+    return _DISJ_TABLE[(a, b)]
+
+
+def is_designated(v: TruthValue) -> bool:
+    """Check if a truth value is designated (at least true)."""
+    return v in (TruthValue.TRUE, TruthValue.BOTH)
+
+
+@dataclass(frozen=True)
 class DreamState:
-    """
-    A dream belief state with Belnap-valued beliefs and awareness tracking.
+    """A dream state with positive and negative proposition sets."""
+    pos: FrozenSet[int]
+    neg: FrozenSet[int]
 
-    Algorithm: Belief Retraction
-    - Input: dream state s, proposition p
-    - If s.belief[p] == BOTH, set to NEITHER
-    - Preserves consistent fragment (proven in Lean)
-    - Guaranteed to remove the targeted contradiction
-    """
-    beliefs: Dict[str, BelnapVal] = field(default_factory=dict)
-    awareness: Set[str] = field(default_factory=set)
+    @property
+    def contradictions(self) -> FrozenSet[int]:
+        """Propositions that are both true and false."""
+        return self.pos & self.neg
 
-    def contradictions(self) -> Set[str]:
-        """Return the set of contradictory propositions."""
-        return {p for p, v in self.beliefs.items() if v == BelnapVal.BOTH}
+    @property
+    def is_consistent(self) -> bool:
+        """No contradictions."""
+        return len(self.contradictions) == 0
 
-    def consistent_fragment(self) -> Set[str]:
-        """Return the set of classically-valued propositions."""
-        return {p for p, v in self.beliefs.items()
-                if v in (BelnapVal.VERUM, BelnapVal.FALSUM)}
+    def to_bval(self, p: int) -> TruthValue:
+        """Convert proposition's status to a Belnap truth value."""
+        in_pos = p in self.pos
+        in_neg = p in self.neg
+        if in_pos and in_neg:
+            return TruthValue.BOTH
+        elif in_pos:
+            return TruthValue.TRUE
+        elif in_neg:
+            return TruthValue.FALSE
+        else:
+            return TruthValue.NEITHER
 
-    def designated_beliefs(self) -> Set[str]:
-        """Return propositions that are at-least-true."""
-        return {p for p, v in self.beliefs.items() if v.is_designated()}
-
-    def retract(self, prop: str) -> 'DreamState':
-        """
-        Retract a contradictory belief, changing BOTH to NEITHER.
-
-        Properties (formally verified):
-        - Preserves the consistent fragment
-        - Removes the targeted contradiction
-        - Is non-monotone (can reduce designated beliefs)
-        """
-        new_beliefs = dict(self.beliefs)
-        if new_beliefs.get(prop) == BelnapVal.BOTH:
-            new_beliefs[prop] = BelnapVal.NEITHER
-        return DreamState(beliefs=new_beliefs, awareness=set(self.awareness))
-
-    def retract_all(self) -> 'DreamState':
-        """
-        Retract ALL contradictions simultaneously.
-        Converges in one step (each retraction is independent).
-        """
-        new_beliefs = {
-            p: (BelnapVal.NEITHER if v == BelnapVal.BOTH else v)
-            for p, v in self.beliefs.items()
-        }
-        return DreamState(beliefs=new_beliefs, awareness=set(self.awareness))
+    def consistent_pos(self) -> FrozenSet[int]:
+        """Propositions that are true but NOT contradicted."""
+        return self.pos - self.neg
 
 
 @dataclass
-class PreTopology:
-    """
-    A pre-topological space: open sets closed under finite intersection
-    but not necessarily under arbitrary union.
+class DreamFrame:
+    """A dream frame: worlds with accessibility and valuations."""
+    worlds: List[int]
+    access: Dict[int, Set[int]]
+    val: Dict[int, DreamState]
 
-    Algorithm: Pre-Topology Validation
-    - Check empty and full sets are open
-    - Check all pairwise intersections
-    - Check union closure (expected to fail for dream pre-topologies)
-    """
-    universe: FrozenSet[int]
-    open_sets: List[FrozenSet[int]]
+    def beliefs(self, w: int) -> Set[int]:
+        """Compute belief set: propositions true at all accessible worlds."""
+        accessible = self.access.get(w, set())
+        if not accessible:
+            return set()
+        result: Optional[Set[int]] = None
+        for w2 in accessible:
+            world_pos = set(self.val[w2].pos)
+            result = world_pos if result is None else result & world_pos
+        return result or set()
 
-    def is_valid_pretopology(self) -> Tuple[bool, str]:
-        """Verify pre-topology axioms."""
-        # Empty set must be open
-        if frozenset() not in self.open_sets:
-            return False, "Empty set is not open"
+    def is_coherently_open(self, w0: int, s: FrozenSet[int]) -> bool:
+        """Check if s is coherently open at w0."""
+        for w in self.access.get(w0, set()):
+            cp = self.val[w].consistent_pos()
+            if s <= cp:
+                return True
+        return False
 
-        # Universe must be open
-        if self.universe not in self.open_sets:
-            return False, "Universe is not open"
-
-        # Finite intersection closure
-        for i, u in enumerate(self.open_sets):
-            for j, v in enumerate(self.open_sets):
-                if i <= j:
-                    inter = u & v
-                    if inter not in self.open_sets:
-                        return False, f"Intersection {set(u)} ∩ {set(v)} = {set(inter)} is not open"
-
-        return True, "Valid pre-topology"
-
-    def is_topology(self) -> Tuple[bool, Optional[Tuple[FrozenSet[int], FrozenSet[int]]]]:
-        """
-        Check if this pre-topology is a genuine topology.
-        Returns (True, None) if it is, or (False, (U, V)) where U ∪ V is not open.
-        """
-        for i, u in enumerate(self.open_sets):
-            for j, v in enumerate(self.open_sets):
-                if i < j:
-                    union = u | v
-                    if union not in self.open_sets:
-                        return False, (u, v)
-        return True, None
-
-    def contradictory_opens(self) -> List[Tuple[FrozenSet[int], FrozenSet[int]]]:
-        """Find all pairs of open sets whose union is not open."""
+    def coherent_open_sets(self, w0: int, universe: Set[int]) -> List[FrozenSet[int]]:
+        """Enumerate all coherently open subsets of universe at w0."""
         result = []
-        for i, u in enumerate(self.open_sets):
-            for j, v in enumerate(self.open_sets):
-                if i < j:
-                    if (u | v) not in self.open_sets:
-                        result.append((u, v))
+        for size in range(len(universe) + 1):
+            for subset in _powerset_of_size(universe, size):
+                fs = frozenset(subset)
+                if self.is_coherently_open(w0, fs):
+                    result.append(fs)
         return result
 
+    def contradiction_degree(self) -> int:
+        """Maximum contradictions at any single world."""
+        return max(len(self.val[w].contradictions) for w in self.worlds)
 
-def build_dream_pretopology() -> PreTopology:
-    """
-    Construct the canonical dream pre-topology on {0, 1, 2}.
-
-    Open sets: ∅, {0}, {1}, {0,1,2}
-    This is NOT a topology because {0} ∪ {1} = {0,1} is not open.
-    """
-    universe = frozenset({0, 1, 2})
-    open_sets = [
-        frozenset(),
-        frozenset({0}),
-        frozenset({1}),
-        universe,
-    ]
-    return PreTopology(universe=universe, open_sets=open_sets)
+    def paraconsistency_certificate(self) -> Optional[Tuple[int, int]]:
+        """Find (world, prop) witnessing paraconsistency, or None."""
+        for w in self.worlds:
+            for p in self.val[w].contradictions:
+                return (w, p)
+        return None
 
 
-def belnap_propagate(
-    constraints: Dict[str, BelnapVal],
-    rules: List[Tuple[str, str, str]],  # (antecedent, consequent, connective)
-    max_iterations: int = 100
-) -> Dict[str, BelnapVal]:
-    """
-    Propagate Belnap values through a dependency graph.
-
-    Algorithm:
-    1. Initialize all propositions with given constraints
-    2. For each rule (A, B, connective):
-       - Compute connective(val(A), val(B))
-       - Update B's value using information-join
-    3. Repeat until fixpoint or max iterations
-
-    Time complexity: O(n * k) where n = |rules|, k = max iterations
-    """
-    values = dict(constraints)
-
-    for _ in range(max_iterations):
-        changed = False
-        for ant, con, conn_type in rules:
-            if ant not in values or con not in values:
-                continue
-
-            if conn_type == "impl":
-                new_val = values[ant].impl(values[con])
-            elif conn_type == "conj":
-                new_val = values[ant].conj(values[con])
-            elif conn_type == "disj":
-                new_val = values[ant].disj(values[con])
-            else:
-                continue
-
-            # Information-join: take the more informative value
-            old_val = values.get(con, BelnapVal.NEITHER)
-            if new_val != old_val and new_val.info_le(old_val) is False:
-                values[con] = new_val
-                changed = True
-
-        if not changed:
-            break
-
-    return values
+def _powerset_of_size(s: Set[int], k: int) -> List[List[int]]:
+    """Generate all subsets of size k."""
+    items = sorted(s)
+    if k == 0:
+        return [[]]
+    if k > len(items):
+        return []
+    result = []
+    for i, item in enumerate(items):
+        for rest in _powerset_of_size(set(items[i+1:]), k-1):
+            result.append([item] + rest)
+    return result
 
 
-def find_explosion_countermodel(
-    props: List[str],
-    target: str
-) -> Optional[Dict[str, BelnapVal]]:
-    """
-    Find a Belnap valuation where some prop and its negation are designated
-    but the target is not.
+def verify_de_morgan() -> bool:
+    """Verify De Morgan laws hold for all 16 input pairs."""
+    for a in TruthValue:
+        for b in TruthValue:
+            if belnap_neg(belnap_conj(a, b)) != belnap_disj(belnap_neg(a), belnap_neg(b)):
+                return False
+            if belnap_neg(belnap_disj(a, b)) != belnap_conj(belnap_neg(a), belnap_neg(b)):
+                return False
+    return True
 
-    Algorithm: exhaustive search over 4^n valuations.
-    """
-    from itertools import product as iprod
 
-    for vals in iprod(BelnapVal, repeat=len(props)):
-        valuation = dict(zip(props, vals))
-        # Check: exists p such that p and ¬p are both designated
-        has_contradiction = any(
-            v.is_designated() and v.neg().is_designated()
-            for v in valuation.values()
-        )
-        # Check: target is not designated
-        target_not_designated = not valuation[target].is_designated()
+def verify_explosion_fails() -> Tuple[TruthValue, TruthValue]:
+    """Find witness to explosion failure: (v, w) where v and ¬v designated, w not."""
+    for v in TruthValue:
+        if is_designated(v) and is_designated(belnap_neg(v)):
+            for w in TruthValue:
+                if not is_designated(w):
+                    return (v, w)
+    raise AssertionError("Explosion unexpectedly valid!")
 
-        if has_contradiction and target_not_designated:
-            return valuation
 
-    return None
+def compute_union_defect(frame: DreamFrame, w0: int, universe: Set[int]) -> int:
+    """Count pairs of coherently open sets whose union is not coherently open."""
+    opens = frame.coherent_open_sets(w0, universe)
+    defect = 0
+    for i, s in enumerate(opens):
+        for t in opens[i:]:
+            if not frame.is_coherently_open(w0, s | t):
+                defect += 1
+    return defect
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    pt = build_dream_pretopology()
-    valid, msg = pt.is_valid_pretopology()
-    print(f"Pre-topology valid: {valid} ({msg})")
+    # Verify core properties
+    assert verify_de_morgan(), "De Morgan laws failed!"
+    v, w = verify_explosion_fails()
+    print(f"Explosion fails: v={v.name}, ¬v={belnap_neg(v).name} (both designated), "
+          f"w={w.name} (not designated)")
 
-    is_topo, witness = pt.is_topology()
-    print(f"Is topology: {is_topo}")
-    if witness:
-        u, v = witness
-        print(f"  Counterexample: {set(u)} ∪ {set(v)} = {set(u | v)} is not open")
-
-    # Dream state demo
-    ds = DreamState(
-        beliefs={"cat_alive": BelnapVal.BOTH, "sky_blue": BelnapVal.VERUM},
-        awareness={"cat_alive", "sky_blue"}
+    # Compute union defect for complementary contradiction frame
+    frame = DreamFrame(
+        worlds=[0, 1],
+        access={0: {0, 1}, 1: {0, 1}},
+        val={
+            0: DreamState(frozenset({0, 1}), frozenset({0})),
+            1: DreamState(frozenset({0, 1}), frozenset({1})),
+        }
     )
-    print(f"\nContradictions: {ds.contradictions()}")
-    ds2 = ds.retract("cat_alive")
-    print(f"After retraction: {ds2.contradictions()}")
-
-    # Explosion countermodel
-    cm = find_explosion_countermodel(["P", "Q"], "Q")
-    print(f"\nExplosion countermodel: {cm}")
+    defect = compute_union_defect(frame, 0, {0, 1})
+    print(f"Union defect of complementary contradiction frame: {defect}")
+    print(f"Coherently open sets: {frame.coherent_open_sets(0, {0, 1})}")
