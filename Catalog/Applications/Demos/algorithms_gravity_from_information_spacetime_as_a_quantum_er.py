@@ -1,168 +1,190 @@
+#!/usr/bin/env python3
 """
-Algorithms for Holographic Gravity as Quantum Error Correction
-
-Type-hinted implementations of the key computational structures.
+algorithms.py — Core algorithms for quantum error-correcting code analysis
+in the holographic gravity framework.
 """
 
-from typing import Dict, FrozenSet, List, Tuple, Callable
-from itertools import combinations
+from typing import List, Tuple, Dict, Set, Optional, FrozenSet
 import math
 
 
-def compute_entropy_profile(
-    n_sites: int,
-    S_func: Callable[[FrozenSet[int]], float]
-) -> Dict[FrozenSet[int], float]:
-    """Compute the full entropy profile for n boundary sites.
-
-    Args:
-        n_sites: Number of boundary sites
-        S_func: Entropy function on subsets
-
-    Returns:
-        Dictionary mapping each subset to its entropy
+def validate_qecc(n: int, k: int, d: int) -> Dict[str, bool]:
     """
-    profile: Dict[FrozenSet[int], float] = {}
-    sites = list(range(n_sites))
-    for r in range(n_sites + 1):
-        for subset in combinations(sites, r):
-            fs = frozenset(subset)
-            profile[fs] = S_func(fs)
-    return profile
+    Validate a quantum error-correcting code [[n, k, d]].
+
+    Returns a dictionary of satisfied/violated constraints:
+    - 'k_le_n': k ≤ n
+    - 'd_ge_1': d ≥ 1
+    - 'singleton': 2d + k ≤ n + 2
+    - 'bpt': kd² ≤ n (BPT bound)
+    - 'is_mds': 2d + k = n + 2 (MDS condition)
+    """
+    return {
+        'k_le_n': k <= n,
+        'd_ge_1': d >= 1,
+        'singleton': 2 * d + k <= n + 2,
+        'bpt': k * d ** 2 <= n,
+        'is_mds': 2 * d + k == n + 2,
+    }
+
+
+def singleton_deficit(n: int, k: int, d: int) -> int:
+    """Compute the Singleton deficit Δ = (n + 2) - (2d + k)."""
+    return max(0, (n + 2) - (2 * d + k))
+
+
+def entropy(n: int, k: int) -> int:
+    """Entanglement entropy S = n - k."""
+    return n - k
+
+
+def erasure_threshold(n: int, d: int) -> int:
+    """
+    Minimum region size for bulk reconstruction.
+    Returns the threshold s₀ such that reconstruction ↔ s ≥ s₀.
+    """
+    return n - d + 1
+
+
+def reconstruction_phase_diagram(n: int, k: int, d: int) -> List[Dict]:
+    """
+    Compute the full reconstruction phase diagram for a code [[n, k, d]].
+    For each region size s, determines if reconstruction is possible
+    and if the complement can reconstruct.
+    """
+    threshold = erasure_threshold(n, d)
+    results = []
+    for s in range(n + 1):
+        rec = s >= threshold
+        comp_rec = (n - s) >= threshold
+        results.append({
+            'size': s,
+            'reconstructs': rec,
+            'complement_reconstructs': comp_rec,
+            'no_cloning_satisfied': not (rec and comp_rec) if k >= 1 else True,
+        })
+    return results
+
+
+def concatenate_codes(
+    n1: int, k1: int, d1: int,
+    n2: int, k2: int, d2: int,
+) -> Tuple[int, int, int]:
+    """Concatenate two codes: [[n₁n₂, k₁k₂, d₁d₂]]."""
+    return n1 * n2, k1 * k2, d1 * d2
+
+
+def toric_code_params(L: int) -> Tuple[int, int, int]:
+    """Toric code parameters for grid size L: [[2L², 2, L]]."""
+    return 2 * L ** 2, 2, L
+
+
+def happy_code_params(level: int) -> Tuple[int, int, int]:
+    """HaPPY code parameters at level L: [[5(L+1), L+1, 3]]."""
+    return 5 * (level + 1), level + 1, 3
+
+
+def weighted_singleton_bound(weights: List[int], k: int, d: int) -> bool:
+    """
+    Check the weighted Singleton bound: Σwᵢ - k ≥ 2(d-1).
+    All weights must be ≥ 1.
+    """
+    total_weight = sum(weights)
+    return total_weight - k >= 2 * (d - 1)
 
 
 def syndrome_defect(
     S: Dict[FrozenSet[int], float],
     X: FrozenSet[int],
-    Y: FrozenSet[int]
+    Y: FrozenSet[int],
 ) -> float:
-    """Compute syndrome defect δ(X,Y) = S(X) + S(Y) - S(X∩Y) - S(X∪Y).
-
-    This is the discrete curvature between boundary regions X and Y.
-    - δ = 0: flat geometry between X and Y
-    - δ > 0: positive curvature (gravitational interaction)
+    """
+    Compute the syndrome defect for a submodular entropy function S.
+    defect(X, Y) = S(X) + S(Y) - S(X∩Y) - S(X∪Y)
     """
     return S[X] + S[Y] - S[X & Y] - S[X | Y]
 
 
-def mutual_information(
-    S: Dict[FrozenSet[int], float],
-    X: FrozenSet[int],
-    Y: FrozenSet[int]
-) -> float:
-    """Compute mutual information I(X:Y) = S(X) + S(Y) - S(X∪Y)."""
-    return S[X] + S[Y] - S[X | Y]
+def holographic_mutual_info(sA: int, sB: int, sAB: int) -> int:
+    """Mutual information I(A:B) = S(A) + S(B) - S(A∪B)."""
+    return sA + sB - sAB
 
 
-def tripartite_information(
-    S: Dict[FrozenSet[int], float],
-    A: FrozenSet[int],
-    B: FrozenSet[int],
-    C: FrozenSet[int]
-) -> float:
-    """Compute tripartite information I₃(A:B:C).
-
-    I₃ ≤ 0 characterizes holographic (monogamous) entanglement.
-    I₃ > 0 is possible for generic quantum states (e.g., GHZ).
-    """
-    return (S[A] + S[B] + S[C]
-            - S[A | B] - S[A | C] - S[B | C]
-            + S[A | B | C])
-
-
-def total_defect(
-    S: Dict[FrozenSet[int], float],
-    n_sites: int
-) -> float:
-    """Compute total defect Σ_{X,Y} δ(X,Y).
-
-    Total defect = 0 ⟹ flat geometry (rigidity theorem).
-    """
-    all_subsets: List[FrozenSet[int]] = []
-    for r in range(n_sites + 1):
-        for subset in combinations(range(n_sites), r):
-            all_subsets.append(frozenset(subset))
-    return sum(
-        syndrome_defect(S, X, Y)
-        for X in all_subsets
-        for Y in all_subsets
-    )
-
-
-def check_submodularity(
-    S: Dict[FrozenSet[int], float],
-    n_sites: int
-) -> List[Tuple[FrozenSet[int], FrozenSet[int], float]]:
-    """Check submodularity S(X)+S(Y) ≥ S(X∩Y)+S(X∪Y) for all pairs.
-
-    Returns list of violations (X, Y, deficit) where deficit < 0.
-    """
-    violations: List[Tuple[FrozenSet[int], FrozenSet[int], float]] = []
-    all_subsets: List[FrozenSet[int]] = []
-    for r in range(n_sites + 1):
-        for subset in combinations(range(n_sites), r):
-            all_subsets.append(frozenset(subset))
-
-    for X in all_subsets:
-        for Y in all_subsets:
-            deficit = S[X] + S[Y] - S[X & Y] - S[X | Y]
-            if deficit < -1e-10:
-                violations.append((X, Y, deficit))
-    return violations
-
-
-def check_mmi(
-    S: Dict[FrozenSet[int], float],
-    n_sites: int
-) -> List[Tuple[FrozenSet[int], FrozenSet[int], FrozenSet[int], float]]:
-    """Check MMI: I₃(A:B:C) ≤ 0 for all triples.
-
-    Returns list of violations (A, B, C, I₃) where I₃ > 0.
-    """
-    violations = []
-    all_subsets: List[FrozenSet[int]] = []
-    for r in range(n_sites + 1):
-        for subset in combinations(range(n_sites), r):
-            all_subsets.append(frozenset(subset))
-
-    for A in all_subsets:
-        for B in all_subsets:
-            for C in all_subsets:
-                I3 = tripartite_information(S, A, B, C)
-                if I3 > 1e-10:
-                    violations.append((A, B, C, I3))
-    return violations
-
-
-def singleton_bound_check(n: int, k: int, d: int) -> bool:
-    """Check quantum Singleton bound: 2d + k ≤ n + 2."""
-    return 2 * d + k <= n + 2
-
-
-def max_distance_from_area(
+def bekenstein_hawking_entropy(
     area: float,
-    n_qubits: int,
-    planck_area: float = 1.0
+    G: float = 1.0,
 ) -> float:
-    """Maximum code distance given boundary area and qubit count.
+    """Bekenstein-Hawking entropy S = A/(4G)."""
+    return area / (4 * G)
 
-    D ≤ (N - area/(4·l_P²) + 2) / 2
 
-    Under RT: S = area / (4G), and N = area / l_P² in natural units.
+def planck_discretization(
+    area: float,
+    geodesic_dist: float,
+    planck_length: float = 1.0,
+    G: float = 0.25,
+) -> Dict[str, float]:
     """
-    S = area / (4.0 * planck_area)
-    return (n_qubits - S + 2) / 2.0
+    Compute the holographic code parameters from continuous geometry.
 
-
-def rate_distance_curve(n: int) -> List[Tuple[float, float]]:
-    """Compute the rate-distance tradeoff curve for an [[n,k,d]] code.
-
-    Returns list of (rate, relative_distance) pairs on the Singleton bound.
-    rate = k/n, relative_distance = d/n.
+    Returns:
+    - n: number of Planck areas = A/ℓ_P²
+    - k: Bekenstein entropy = A/(4G)
+    - d: code distance = L/(2ℓ_P)
+    - singleton_satisfied: whether 2d + k ≤ n + 2
     """
-    curve: List[Tuple[float, float]] = []
-    for d in range(1, n // 2 + 2):
-        k_max = n + 2 - 2 * d
-        if k_max >= 0:
-            curve.append((k_max / n, d / n))
-    return curve
+    n = area / planck_length ** 2
+    k = area / (4 * G)
+    d = geodesic_dist / (2 * planck_length)
+
+    return {
+        'n': n,
+        'k': k,
+        'd': d,
+        'singleton_satisfied': 2 * d + k <= n + 2,
+        'deficit': max(0, n + 2 - 2 * d - k),
+    }
+
+
+def code_family_analysis(
+    family_name: str,
+    params_fn,
+    L_range: range,
+) -> List[Dict]:
+    """
+    Analyze a code family across a range of parameters.
+    Returns detailed analysis for each family member.
+    """
+    results = []
+    for L in L_range:
+        n, k, d = params_fn(L)
+        delta = singleton_deficit(n, k, d)
+        S = entropy(n, k)
+        threshold = erasure_threshold(n, d)
+        bpt = k * d ** 2
+        results.append({
+            'L': L,
+            'n': n, 'k': k, 'd': d,
+            'entropy': S,
+            'deficit': delta,
+            'threshold': threshold,
+            'bpt_ratio': bpt / n if n > 0 else 0,
+            'is_mds': delta == 0,
+            'bpt_saturated': bpt == n,
+        })
+    return results
+
+
+if __name__ == "__main__":
+    # Example usage
+    print("Toric code family analysis:")
+    results = code_family_analysis("Toric", toric_code_params, range(1, 6))
+    for r in results:
+        print(f"  L={r['L']}: [[{r['n']},{r['k']},{r['d']}]], "
+              f"S={r['entropy']}, Δ={r['deficit']}, BPT={r['bpt_saturated']}")
+
+    print("\nHaPPY code family analysis:")
+    results = code_family_analysis("HaPPY", happy_code_params, range(0, 5))
+    for r in results:
+        print(f"  L={r['L']}: [[{r['n']},{r['k']},{r['d']}]], "
+              f"S={r['entropy']}, Δ={r['deficit']}, MDS={r['is_mds']}")
