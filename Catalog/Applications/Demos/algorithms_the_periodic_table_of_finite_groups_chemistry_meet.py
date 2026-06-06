@@ -1,296 +1,413 @@
 #!/usr/bin/env python3
 """
-Algorithms for the Periodic Table of Finite Groups.
+algorithms.py — Core algorithms for the Group Genome framework.
 
-Type-hinted implementations of the core algorithms used in the
-group-theoretic periodic table classification.
+Provides type-hinted implementations of:
+1. Chemical classification of finite groups
+2. Derived depth computation
+3. Genome construction and comparison
+4. Stability hierarchy verification
 """
 
-from typing import List, Tuple, Dict, Optional
-from dataclasses import dataclass
-from math import gcd, factorial
-from collections import Counter
-from enum import Enum
+from __future__ import annotations
+from dataclasses import dataclass, field
+from enum import Enum, auto
+from typing import List, Set, FrozenSet, Dict, Tuple, Optional, Callable
+from math import gcd
+from functools import reduce
 
 
 # ============================================================
-# Core Types
+# Algorithm 1: Permutation Group Representation
 # ============================================================
 
-class ChemicalSeries(Enum):
-    """Chemical series classification for finite groups."""
-    VACUUM = "Vacuum"           # Trivial group
-    NOBLE_GAS = "Noble Gas"     # Cyclic groups
-    ALKALINE_EARTH = "Alkaline Earth"  # Abelian non-cyclic
-    ALKALI_METAL = "Alkali Metal"      # Nilpotent non-abelian
-    COMPOUND = "Compound"       # Solvable non-nilpotent
-    RADIOACTIVE = "Radioactive" # Non-solvable
+class Permutation:
+    """A permutation on {0, 1, ..., n-1}."""
 
+    def __init__(self, mapping: List[int]):
+        self.n = len(mapping)
+        self.mapping = tuple(mapping)
+        assert set(mapping) == set(range(self.n))
+
+    def __call__(self, i: int) -> int:
+        return self.mapping[i]
+
+    def __mul__(self, other: Permutation) -> Permutation:
+        """Composition: (self * other)(i) = self(other(i))."""
+        assert self.n == other.n
+        return Permutation([self(other(i)) for i in range(self.n)])
+
+    def inverse(self) -> Permutation:
+        inv = [0] * self.n
+        for i, j in enumerate(self.mapping):
+            inv[j] = i
+        return Permutation(inv)
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Permutation):
+            return NotImplemented
+        return self.mapping == other.mapping
+
+    def __hash__(self) -> int:
+        return hash(self.mapping)
+
+    def __repr__(self) -> str:
+        return f"Perm({list(self.mapping)})"
+
+    @staticmethod
+    def identity(n: int) -> Permutation:
+        return Permutation(list(range(n)))
+
+    def order(self) -> int:
+        """Order of this permutation."""
+        p = self
+        e = Permutation.identity(self.n)
+        k = 1
+        while p != e:
+            p = p * self
+            k += 1
+        return k
+
+
+class PermGroup:
+    """A permutation group given by generators."""
+
+    def __init__(self, n: int, generators: List[Permutation]):
+        self.n = n
+        self.generators = generators
+        self._elements: Optional[Set[Permutation]] = None
+
+    @property
+    def elements(self) -> Set[Permutation]:
+        if self._elements is None:
+            self._elements = self._enumerate()
+        return self._elements
+
+    def _enumerate(self) -> Set[Permutation]:
+        """Generate all group elements by closure under multiplication."""
+        elts: Set[Permutation] = {Permutation.identity(self.n)}
+        queue = list(self.generators)
+        while queue:
+            g = queue.pop()
+            if g not in elts:
+                new_elts = set()
+                for h in elts:
+                    for prod in [g * h, h * g]:
+                        if prod not in elts:
+                            new_elts.add(prod)
+                            queue.append(prod)
+                elts.add(g)
+                elts |= new_elts
+        return elts
+
+    def order(self) -> int:
+        return len(self.elements)
+
+    def is_abelian(self) -> bool:
+        elts = list(self.elements)
+        for i, a in enumerate(elts):
+            for b in elts[i+1:]:
+                if a * b != b * a:
+                    return False
+        return True
+
+    def commutator_subgroup(self) -> PermGroup:
+        """Compute [G, G] = ⟨aba⁻¹b⁻¹ | a, b ∈ G⟩."""
+        commutators = set()
+        for a in self.elements:
+            for b in self.elements:
+                c = a * b * a.inverse() * b.inverse()
+                commutators.add(c)
+        return PermGroup(self.n, list(commutators))
+
+
+# ============================================================
+# Algorithm 2: Derived Series and Derived Depth
+# ============================================================
+
+def derived_series(G: PermGroup, max_steps: int = 20) -> List[PermGroup]:
+    """
+    Compute the derived series G = G^(0) ⊇ G^(1) ⊇ G^(2) ⊇ ...
+
+    Pseudocode:
+        series = [G]
+        while |series[-1]| > 1 and len(series) < max_steps:
+            series.append(commutator_subgroup(series[-1]))
+        return series
+    """
+    series = [G]
+    for _ in range(max_steps):
+        current = series[-1]
+        if current.order() <= 1:
+            break
+        next_term = current.commutator_subgroup()
+        series.append(next_term)
+        if next_term.order() == current.order():
+            break  # Stabilized (non-solvable)
+    return series
+
+
+def derived_depth(G: PermGroup) -> Optional[int]:
+    """
+    Compute the derived depth of G.
+    Returns None if G is not solvable.
+
+    Pseudocode:
+        for n = 0, 1, 2, ...:
+            if G^(n) = {e}: return n
+        if series stabilizes at non-trivial group: return None
+    """
+    series = derived_series(G)
+    for i, term in enumerate(series):
+        if term.order() == 1:
+            return i
+    return None  # Not solvable
+
+
+# ============================================================
+# Algorithm 3: Chemical Classification
+# ============================================================
+
+class ChemicalClass(Enum):
+    VACUUM = auto()
+    NOBLE_GAS = auto()
+    ALKALI = auto()
+    ALKALINE_EARTH = auto()
+    HALOGEN = auto()
+    TRANSITION_METAL = auto()
+    COMPOUND = auto()
+
+
+def is_cyclic(G: PermGroup) -> bool:
+    """Check if G is cyclic."""
+    n = G.order()
+    return any(g.order() == n for g in G.elements)
+
+
+def is_nilpotent_by_center(G: PermGroup, max_steps: int = 20) -> bool:
+    """
+    Check nilpotency via upper central series.
+    A finite group is nilpotent iff the upper central series reaches G.
+
+    Simplified check: for small groups, a finite group is nilpotent
+    iff it is the direct product of its Sylow subgroups.
+    Here we use the derived series test: nilpotent groups are solvable
+    and the lower central series terminates.
+    """
+    if G.is_abelian():
+        return True
+
+    # Check via lower central series
+    current = G
+    for _ in range(max_steps):
+        # Compute [G, current]
+        commutators = set()
+        for a in G.elements:
+            for b in current.elements:
+                c = a * b * a.inverse() * b.inverse()
+                commutators.add(c)
+        next_term = PermGroup(G.n, list(commutators))
+        if next_term.order() == 1:
+            return True
+        if next_term.order() == current.order():
+            return False
+        current = next_term
+    return False
+
+
+def is_simple(G: PermGroup) -> bool:
+    """Check if G is simple (no proper normal subgroups)."""
+    if G.order() <= 2:
+        return G.order() == 2  # Trivially: Z/2Z is simple
+    elts = G.elements
+    e = Permutation.identity(G.n)
+
+    # Check all subsets (expensive, only for small groups)
+    # Simplified: check known normal subgroup candidates
+    for g in elts:
+        if g == e:
+            continue
+        # Generate the normal closure of {g}
+        normal_closure = {e}
+        queue = [g]
+        while queue:
+            h = queue.pop()
+            if h not in normal_closure:
+                normal_closure.add(h)
+                for a in elts:
+                    conj = a * h * a.inverse()
+                    if conj not in normal_closure:
+                        queue.append(conj)
+                    prod = h * conj
+                    if prod not in normal_closure:
+                        queue.append(prod)
+                    inv = h.inverse()
+                    if inv not in normal_closure:
+                        queue.append(inv)
+        if 1 < len(normal_closure) < len(elts):
+            return False
+    return True
+
+
+def classify_group(G: PermGroup) -> ChemicalClass:
+    """
+    Classify a permutation group into its chemical class.
+
+    Pseudocode:
+        if |G| ≤ 1: return VACUUM
+        if is_simple(G) and not is_abelian(G): return TRANSITION_METAL
+        if not is_solvable(G): return COMPOUND
+        if not is_nilpotent(G): return HALOGEN
+        if not is_abelian(G): return ALKALINE_EARTH
+        if is_cyclic(G): return NOBLE_GAS
+        return ALKALI
+    """
+    if G.order() <= 1:
+        return ChemicalClass.VACUUM
+
+    abelian = G.is_abelian()
+    simple = is_simple(G)
+
+    if simple and not abelian:
+        return ChemicalClass.TRANSITION_METAL
+
+    depth = derived_depth(G)
+    solvable = depth is not None
+
+    if not solvable:
+        return ChemicalClass.COMPOUND
+
+    nilpotent = is_nilpotent_by_center(G)
+
+    if not nilpotent:
+        return ChemicalClass.HALOGEN
+
+    if not abelian:
+        return ChemicalClass.ALKALINE_EARTH
+
+    if is_cyclic(G):
+        return ChemicalClass.NOBLE_GAS
+
+    return ChemicalClass.ALKALI
+
+
+# ============================================================
+# Algorithm 4: Group Genome Construction
+# ============================================================
 
 @dataclass
-class ReactivityProfile:
-    """Chemical fingerprint of a finite group.
-
-    Captures the center-commutator interaction that determines
-    a group's 'chemical type' in the periodic table analogy.
-    """
+class GroupGenome:
+    """Complete chemical fingerprint of a finite group."""
     name: str
-    group_order: int
-    center_order: int
-    commutator_order: int
-    duality_defect: int  # |Z(G) ∩ [G,G]|
+    order: int
+    chem_class: ChemicalClass
     is_solvable: bool
     is_nilpotent: bool
-    nilpotency_class: int
-    derived_depth: int
+    is_abelian: bool
+    is_cyclic: bool
+    is_simple: bool
+    derived_depth: Optional[int]
+    derived_series_orders: List[int] = field(default_factory=list)
 
-    @property
-    def abelian_defect(self) -> int:
-        """|G|/|Z(G)| — measures non-commutativity."""
-        return self.group_order // self.center_order
-
-    @property
-    def join_order(self) -> int:
-        """|Z(G)·[G,G]| = |Z|·|[G,G]|/|Z∩[G,G]|."""
-        return (self.center_order * self.commutator_order) // self.duality_defect
-
-    @property
-    def duality_ratio(self) -> float:
-        """ρ(G) = |Z(G)·[G,G]|/|G| — coverage ratio."""
-        return self.join_order / self.group_order
-
-    @property
-    def chemical_series(self) -> ChemicalSeries:
-        """Classify group into chemical series."""
-        if self.group_order == 1:
-            return ChemicalSeries.VACUUM
-        if self.center_order == self.group_order:
-            return ChemicalSeries.NOBLE_GAS  # Abelian
-        if self.is_nilpotent:
-            return ChemicalSeries.ALKALI_METAL
-        if self.is_solvable:
-            return ChemicalSeries.COMPOUND
-        return ChemicalSeries.RADIOACTIVE
+    def similarity(self, other: GroupGenome) -> float:
+        """Genome similarity score (0 to 1)."""
+        matches = 0
+        total = 5
+        if self.chem_class == other.chem_class: matches += 1
+        if self.is_solvable == other.is_solvable: matches += 1
+        if self.is_nilpotent == other.is_nilpotent: matches += 1
+        if self.is_abelian == other.is_abelian: matches += 1
+        if self.is_cyclic == other.is_cyclic: matches += 1
+        return matches / total
 
 
-# ============================================================
-# Number-Theoretic Utilities
-# ============================================================
-
-def prime_factorization(n: int) -> Dict[int, int]:
-    """Return prime factorization as {prime: exponent} dict.
-
-    Algorithm: Trial division up to √n.
-    Time complexity: O(√n).
+def compute_genome(G: PermGroup, name: str = "G") -> GroupGenome:
     """
-    factors: Dict[int, int] = {}
-    d = 2
-    while d * d <= n:
-        while n % d == 0:
-            factors[d] = factors.get(d, 0) + 1
-            n //= d
-        d += 1
-    if n > 1:
-        factors[n] = factors.get(n, 0) + 1
-    return factors
+    Compute the complete genome of a permutation group.
 
-
-def omega_big(n: int) -> int:
-    """Ω(n) — number of prime factors with multiplicity.
-
-    This is the 'atomic weight' in the periodic table analogy.
-    The quantitative periodic law states: derivedDepth(G) ≤ Ω(|G|).
+    Pseudocode:
+        1. Compute order, abelianness, cyclicity, simplicity
+        2. Compute derived series → depth, solvability
+        3. Check nilpotency
+        4. Classify into chemical class
+        5. Bundle into genome tuple
     """
-    return sum(prime_factorization(n).values())
+    series = derived_series(G)
+    series_orders = [term.order() for term in series]
+    depth = None
+    for i, term in enumerate(series):
+        if term.order() == 1:
+            depth = i
+            break
 
-
-def omega_small(n: int) -> int:
-    """ω(n) — number of distinct prime divisors.
-
-    This determines the 'valence' of cyclic groups with squarefree order.
-    """
-    return len(prime_factorization(n))
-
-
-def euler_totient(n: int) -> int:
-    """Euler's totient φ(n) = |Aut(ℤ/nℤ)|.
-
-    For prime p: φ(p) = p-1, giving automorphism density (p-1)/p.
-    """
-    result = n
-    p = 2
-    temp = n
-    while p * p <= temp:
-        if temp % p == 0:
-            while temp % p == 0:
-                temp //= p
-            result -= result // p
-        p += 1
-    if temp > 1:
-        result -= result // temp
-    return result
-
-
-# ============================================================
-# Group Classification Algorithms
-# ============================================================
-
-def classify_group(profile: ReactivityProfile) -> Dict[str, any]:
-    """Classify a group and compute all periodic table invariants.
-
-    Returns a dictionary with:
-    - chemical_series: The group's chemical family
-    - abelian_defect: |G|/|Z(G)|
-    - omega: Ω(|G|) — upper bound on derived depth
-    - duality_ratio: coverage of center-commutator join
-    - periodic_law_satisfied: whether derivedDepth ≤ Ω(|G|)
-    """
-    o = omega_big(profile.group_order)
-    return {
-        'chemical_series': profile.chemical_series.value,
-        'abelian_defect': profile.abelian_defect,
-        'omega': o,
-        'duality_ratio': profile.duality_ratio,
-        'periodic_law_satisfied': profile.derived_depth <= o,
-        'aut_density': euler_totient(profile.group_order) / profile.group_order
-            if profile.center_order == profile.group_order else None,
-    }
-
-
-def product_profile(
-    g1: ReactivityProfile,
-    g2: ReactivityProfile,
-    name: Optional[str] = None
-) -> ReactivityProfile:
-    """Compute reactivity profile of G₁ × G₂.
-
-    Uses the proven multiplicativity theorems:
-    - |Z(G×H)| = |Z(G)|·|Z(H)|  (center_card_prod)
-    - |[G×H,G×H]| = |[G,G]|·|[H,H]|  (commutator_card_prod)
-    - abelianDefect(G×H) = abelianDefect(G)·abelianDefect(H)
-    - derivedDepth(G×H) = max(derivedDepth(G), derivedDepth(H))
-    """
-    return ReactivityProfile(
-        name=name or f"{g1.name}×{g2.name}",
-        group_order=g1.group_order * g2.group_order,
-        center_order=g1.center_order * g2.center_order,
-        commutator_order=g1.commutator_order * g2.commutator_order,
-        duality_defect=g1.duality_defect * g2.duality_defect,
-        is_solvable=g1.is_solvable and g2.is_solvable,
-        is_nilpotent=g1.is_nilpotent and g2.is_nilpotent,
-        nilpotency_class=max(g1.nilpotency_class, g2.nilpotency_class),
-        derived_depth=max(g1.derived_depth, g2.derived_depth),
+    return GroupGenome(
+        name=name,
+        order=G.order(),
+        chem_class=classify_group(G),
+        is_solvable=depth is not None,
+        is_nilpotent=is_nilpotent_by_center(G),
+        is_abelian=G.is_abelian(),
+        is_cyclic=is_cyclic(G),
+        is_simple=is_simple(G),
+        derived_depth=depth,
+        derived_series_orders=series_orders,
     )
 
 
-def build_periodic_table(
-    profiles: List[ReactivityProfile]
-) -> Dict[str, List[ReactivityProfile]]:
-    """Organize groups into a periodic table by chemical series.
+# ============================================================
+# Built-in group constructors
+# ============================================================
 
-    Algorithm:
-    1. Classify each group by its chemical series
-    2. Within each series, sort by group order (atomic number)
-    3. Return a dictionary mapping series names to sorted lists
-
-    Pseudocode:
-        table = {}
-        for each group G:
-            series = classify(G)
-            table[series].append(G)
-        for each series in table:
-            sort table[series] by order
-        return table
-    """
-    table: Dict[str, List[ReactivityProfile]] = {}
-    for p in profiles:
-        series = p.chemical_series.value
-        if series not in table:
-            table[series] = []
-        table[series].append(p)
-
-    for series in table:
-        table[series].sort(key=lambda p: p.group_order)
-
-    return table
+def cyclic_group(n: int) -> PermGroup:
+    """Construct the cyclic group Z/nZ as a permutation group."""
+    gen = Permutation([(i + 1) % n for i in range(n)])
+    return PermGroup(n, [gen])
 
 
-def verify_periodic_law(profiles: List[ReactivityProfile]) -> Tuple[int, int]:
-    """Verify quantitative periodic law for a list of profiles.
+def symmetric_group(n: int) -> PermGroup:
+    """Construct S_n."""
+    if n <= 1:
+        return PermGroup(max(n, 1), [Permutation.identity(max(n, 1))])
+    # Generators: (0 1) and (0 1 2 ... n-1)
+    transposition = list(range(n))
+    transposition[0], transposition[1] = 1, 0
+    cycle = [(i + 1) % n for i in range(n)]
+    return PermGroup(n, [Permutation(transposition), Permutation(cycle)])
 
-    Returns (passed, total) counts.
-    The law states: derivedDepth(G) ≤ Ω(|G|) for solvable groups.
-    """
-    passed = 0
-    total = 0
-    for p in profiles:
-        if p.is_solvable and p.group_order > 1:
-            total += 1
-            if p.derived_depth <= omega_big(p.group_order):
-                passed += 1
-    return passed, total
+
+def dihedral_group(n: int) -> PermGroup:
+    """Construct the dihedral group D_n of order 2n."""
+    # Rotation: (0 1 2 ... n-1)
+    rotation = [(i + 1) % n for i in range(n)]
+    # Reflection: reverse
+    reflection = list(range(n - 1, -1, -1))
+    return PermGroup(n, [Permutation(rotation), Permutation(reflection)])
 
 
 # ============================================================
-# Automorphism Density Analysis
-# ============================================================
-
-def automorphism_density_sequence(
-    max_prime: int = 1000
-) -> List[Tuple[int, float]]:
-    """Compute automorphism density (p-1)/p for primes up to max_prime.
-
-    The sequence converges to 1 (noble gas inertness in the limit).
-    """
-    result = []
-    for n in range(2, max_prime + 1):
-        if all(n % d != 0 for d in range(2, int(n**0.5) + 1)):
-            result.append((n, (n - 1) / n))
-    return result
-
-
-# ============================================================
-# Main Demo
+# Demo
 # ============================================================
 
 if __name__ == "__main__":
-    # Build profiles for small groups
-    profiles = [
-        ReactivityProfile("Z_1", 1, 1, 1, 1, True, True, 0, 0),
-        ReactivityProfile("Z_2", 2, 2, 1, 1, True, True, 1, 1),
-        ReactivityProfile("Z_3", 3, 3, 1, 1, True, True, 1, 1),
-        ReactivityProfile("Z_4", 4, 4, 1, 1, True, True, 1, 1),
-        ReactivityProfile("Z_2²", 4, 4, 1, 1, True, True, 1, 1),
-        ReactivityProfile("Z_5", 5, 5, 1, 1, True, True, 1, 1),
-        ReactivityProfile("S_3", 6, 1, 3, 1, True, False, 0, 2),
-        ReactivityProfile("Z_6", 6, 6, 1, 1, True, True, 1, 1),
-        ReactivityProfile("D_4", 8, 2, 2, 2, True, True, 2, 2),
-        ReactivityProfile("Q_8", 8, 2, 2, 2, True, True, 2, 2),
-        ReactivityProfile("A_4", 12, 1, 4, 1, True, False, 0, 3),
-        ReactivityProfile("S_4", 24, 1, 12, 1, True, False, 0, 3),
-        ReactivityProfile("A_5", 60, 1, 60, 1, False, False, 0, 0),
+    print("Group Genome Algorithm Demo")
+    print("=" * 50)
+
+    groups = [
+        ("Z/1Z", cyclic_group(1)),
+        ("Z/3Z", cyclic_group(3)),
+        ("Z/5Z", cyclic_group(5)),
+        ("S₃ = D₃", dihedral_group(3)),
+        ("D₄", dihedral_group(4)),
+        ("S₄", symmetric_group(4)),
     ]
 
-    # Build and display periodic table
-    table = build_periodic_table(profiles)
-    for series, groups in table.items():
-        print(f"\n{series}:")
-        for g in groups:
-            info = classify_group(g)
-            print(f"  {g.name:8s}  |G|={g.group_order:4d}  "
-                  f"defect={info['abelian_defect']:3d}  "
-                  f"Ω={info['omega']:2d}  "
-                  f"ρ={info['duality_ratio']:.3f}")
-
-    # Verify periodic law
-    passed, total = verify_periodic_law(profiles)
-    print(f"\nQuantitative Periodic Law: {passed}/{total} solvable groups verified")
-
-    # Product multiplicativity demo
-    s3 = profiles[6]  # S_3
-    z2 = profiles[1]  # Z_2
-    prod = product_profile(s3, z2)
-    print(f"\nProduct: defect({s3.name})={s3.abelian_defect}, "
-          f"defect({z2.name})={z2.abelian_defect}, "
-          f"defect({prod.name})={prod.abelian_defect} "
-          f"= {s3.abelian_defect}×{z2.abelian_defect}")
+    for name, G in groups:
+        genome = compute_genome(G, name)
+        print(f"\n{name}:")
+        print(f"  Order: {genome.order}")
+        print(f"  Class: {genome.chem_class.name}")
+        print(f"  Solvable: {genome.is_solvable}, Nilpotent: {genome.is_nilpotent}")
+        print(f"  Abelian: {genome.is_abelian}, Cyclic: {genome.is_cyclic}")
+        print(f"  Simple: {genome.is_simple}")
+        print(f"  Derived depth: {genome.derived_depth}")
+        print(f"  Derived series orders: {genome.derived_series_orders}")
