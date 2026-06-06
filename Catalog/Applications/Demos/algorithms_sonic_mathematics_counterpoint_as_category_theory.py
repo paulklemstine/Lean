@@ -1,211 +1,188 @@
 #!/usr/bin/env python3
 """
-Algorithms for Counterpoint Category Theory.
-Type-hinted implementations of the core mathematical structures.
+Counterpoint Category Theory — Algorithms
+
+Type-hinted implementations of key algorithms for analyzing the
+categorical structure of first-species counterpoint.
 """
 
-from typing import List, Set, Tuple, Optional, Dict
-from enum import Enum, auto
+from typing import List, Tuple, Set, Dict, Optional
 from dataclasses import dataclass
+from enum import Enum, auto
 
 
-class ConsInterval(Enum):
-    """Consonant interval classes in first-species counterpoint."""
-    UNISON = 0   # Perfect
-    MIN3 = 3     # Imperfect
-    MAJ3 = 4     # Imperfect
-    FIFTH = 7    # Perfect
-    MIN6 = 8     # Imperfect
-    MAJ6 = 9     # Imperfect
-
-    @property
-    def is_perfect(self) -> bool:
-        return self in (ConsInterval.UNISON, ConsInterval.FIFTH)
-
-    @property
-    def is_imperfect(self) -> bool:
-        return not self.is_perfect
-
-    @property
-    def complement(self) -> 'ConsInterval':
-        """The complement involution: swaps m3↔M6, M3↔m6."""
-        mapping = {
-            ConsInterval.UNISON: ConsInterval.UNISON,
-            ConsInterval.MIN3: ConsInterval.MAJ6,
-            ConsInterval.MAJ3: ConsInterval.MIN6,
-            ConsInterval.FIFTH: ConsInterval.FIFTH,
-            ConsInterval.MIN6: ConsInterval.MAJ3,
-            ConsInterval.MAJ6: ConsInterval.MIN3,
-        }
-        return mapping[self]
-
-    @property
-    def name_short(self) -> str:
-        names = {0: "U", 3: "m3", 4: "M3", 7: "P5", 8: "m6", 9: "M6"}
-        return names[self.value]
+class IntervalType(Enum):
+    PERFECT = auto()
+    IMPERFECT = auto()
+    DISSONANT = auto()
 
 
 class MotionType(Enum):
-    """Types of relative motion between two voices."""
-    PARALLEL = auto()
-    SIMILAR = auto()
     CONTRARY = auto()
     OBLIQUE = auto()
+    SIMILAR = auto()
+    PARALLEL = auto()
 
 
 @dataclass(frozen=True)
-class VLTransition:
-    """A voice leading transition."""
-    source: ConsInterval
-    target: ConsInterval
-    motion: MotionType
+class ConsonantInterval:
+    """A consonant interval in first-species counterpoint."""
+    semitones: int  # 0-11
+    name: str
+    interval_type: IntervalType
+    ratio: Tuple[int, int]  # frequency ratio (numerator, denominator)
+    rank: int  # consonance rank (higher = more consonant)
+
+    def __repr__(self) -> str:
+        return self.name
+
+
+# The six consonant intervals
+UNISON = ConsonantInterval(0, "Unison", IntervalType.PERFECT, (1, 1), 6)
+MIN3 = ConsonantInterval(3, "m3", IntervalType.IMPERFECT, (6, 5), 3)
+MAJ3 = ConsonantInterval(4, "M3", IntervalType.IMPERFECT, (5, 4), 4)
+FIFTH = ConsonantInterval(7, "P5", IntervalType.PERFECT, (3, 2), 5)
+MIN6 = ConsonantInterval(8, "m6", IntervalType.IMPERFECT, (8, 5), 1)
+MAJ6 = ConsonantInterval(9, "M6", IntervalType.IMPERFECT, (5, 3), 2)
+
+ALL_CONSONANCES: List[ConsonantInterval] = [UNISON, MIN3, MAJ3, FIFTH, MIN6, MAJ6]
+CONSONANT_SEMITONES: Set[int] = {c.semitones for c in ALL_CONSONANCES}
+
+
+@dataclass(frozen=True)
+class VoiceLeading:
+    """A voice leading between two consonant intervals."""
+    source: ConsonantInterval
+    target: ConsonantInterval
+    lower_step: int  # semitone motion of lower voice
+    upper_step: int  # semitone motion of upper voice
+
+    @property
+    def motion_type(self) -> MotionType:
+        """Classify the motion type of this voice leading."""
+        return classify_motion(self.lower_step, self.upper_step)
 
     @property
     def is_valid(self) -> bool:
-        """Check first-species validity."""
-        if self.target.is_perfect and self.motion in (MotionType.PARALLEL, MotionType.SIMILAR):
-            return False
+        """Check if this voice leading is valid in first-species counterpoint."""
+        if self.target.interval_type == IntervalType.PERFECT:
+            if self.motion_type == MotionType.PARALLEL:
+                return False
         return True
 
-
-def all_consonant_intervals() -> List[ConsInterval]:
-    """Return all 6 consonant interval classes."""
-    return list(ConsInterval)
-
-
-def all_motion_types() -> List[MotionType]:
-    """Return all 4 motion types."""
-    return list(MotionType)
+    @property
+    def net_motion(self) -> Tuple[int, int]:
+        """Net motion as (lower, upper) pair."""
+        return (self.lower_step, self.upper_step)
 
 
-def counterpoint_hom(src: ConsInterval, tgt: ConsInterval) -> List[MotionType]:
-    """Compute the hom-set from src to tgt: valid motion types."""
-    return [m for m in MotionType if VLTransition(src, tgt, m).is_valid]
+def classify_motion(lower: int, upper: int) -> MotionType:
+    """Classify the motion type of a voice leading."""
+    if lower == upper:
+        if lower == 0:
+            return MotionType.OBLIQUE
+        return MotionType.PARALLEL
+    if lower == 0 or upper == 0:
+        return MotionType.OBLIQUE
+    if lower * upper < 0:
+        return MotionType.CONTRARY
+    return MotionType.SIMILAR
 
 
-def receptivity(interval: ConsInterval) -> int:
-    """Number of valid approach motions to this interval."""
-    return len(counterpoint_hom(ConsInterval.UNISON, interval))
+def interval_inversion(semitones: int) -> int:
+    """Compute the inversion of an interval (negation mod 12)."""
+    return (12 - semitones) % 12
 
 
-def interval_distance(i: ConsInterval, j: ConsInterval) -> int:
-    """Minimum semitone distance between two consonant intervals (mod 12)."""
-    return min((j.value - i.value) % 12, (i.value - j.value) % 12)
+def is_consonant(semitones: int) -> bool:
+    """Check if a semitone value is consonant."""
+    return (semitones % 12) in CONSONANT_SEMITONES
 
 
-def consonant_add(i: ConsInterval, j: ConsInterval) -> Optional[ConsInterval]:
-    """Add two consonant intervals mod 12; return result if consonant."""
-    result = (i.value + j.value) % 12
-    consonant_values = {c.value for c in ConsInterval}
-    if result in consonant_values:
-        return ConsInterval(result)
-    return None
+def enumerate_voice_leadings(
+    source: ConsonantInterval,
+    target: ConsonantInterval,
+    step_bound: int = 7
+) -> List[VoiceLeading]:
+    """Enumerate all valid voice leadings between two intervals within a step bound."""
+    results: List[VoiceLeading] = []
+    required_diff = (target.semitones - source.semitones) % 12
+
+    for dl in range(-step_bound, step_bound + 1):
+        for du in range(-step_bound, step_bound + 1):
+            if (du - dl) % 12 == required_diff:
+                vl = VoiceLeading(source, target, dl, du)
+                if vl.is_valid:
+                    results.append(vl)
+    return results
 
 
-def consonance_adjacent(i: ConsInterval, j: ConsInterval) -> bool:
-    """Check if two intervals sum (mod 12) to a consonance."""
-    return consonant_add(i, j) is not None
-
-
-def enumerate_valid_transitions() -> List[VLTransition]:
-    """Enumerate all valid first-species transitions."""
-    result = []
-    for src in ConsInterval:
-        for tgt in ConsInterval:
-            for m in MotionType:
-                t = VLTransition(src, tgt, m)
-                if t.is_valid:
-                    result.append(t)
-    return result
-
-
-def restriction_factor() -> Tuple[int, int]:
-    """Compute the restriction factor as (valid, total)."""
-    valid = len(enumerate_valid_transitions())
-    total = len(ConsInterval) ** 2 * len(MotionType)
-    return valid, total
-
-
-def consonant_closure_ratio() -> Tuple[int, int]:
-    """Fraction of ordered pairs summing to a consonance."""
-    count = sum(1 for i in ConsInterval for j in ConsInterval
-                if consonance_adjacent(i, j))
-    total = len(ConsInterval) ** 2
-    return count, total
-
-
-def is_consonance_preserving(t: int) -> bool:
-    """Check if transposition by t preserves the consonance set."""
-    consonant_values = {c.value for c in ConsInterval}
-    return all((s + t) % 12 in consonant_values for s in consonant_values)
-
-
-def stabilizer() -> List[int]:
-    """Compute the stabilizer of the consonance set under transposition."""
-    return [t for t in range(12) if is_consonance_preserving(t)]
-
-
-def adjacency_matrix() -> List[List[int]]:
-    """Compute the consonance adjacency matrix."""
-    intervals = list(ConsInterval)
-    n = len(intervals)
-    matrix = [[0] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            if consonance_adjacent(intervals[i], intervals[j]):
-                matrix[i][j] = 1
+def build_transition_matrix(step_bound: int = 7) -> Dict[Tuple[ConsonantInterval, ConsonantInterval], int]:
+    """Build the transition count matrix for voice leadings."""
+    matrix: Dict[Tuple[ConsonantInterval, ConsonantInterval], int] = {}
+    for s in ALL_CONSONANCES:
+        for t in ALL_CONSONANCES:
+            vls = enumerate_voice_leadings(s, t, step_bound)
+            matrix[(s, t)] = len(vls)
     return matrix
 
 
-def transition_matrix() -> Dict[str, List[List[int]]]:
-    """Compute the transition count matrix (how many valid motions from i to j)."""
-    intervals = list(ConsInterval)
-    n = len(intervals)
-    matrix = [[0] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            matrix[i][j] = len(counterpoint_hom(intervals[i], intervals[j]))
-    return {
-        "labels": [c.name_short for c in intervals],
-        "matrix": matrix
-    }
+def oblique_voice_leading(source: ConsonantInterval, target: ConsonantInterval) -> VoiceLeading:
+    """Construct a valid oblique voice leading (lower voice stays, upper moves)."""
+    upper_step = target.semitones - source.semitones
+    return VoiceLeading(source, target, 0, upper_step)
+
+
+def verify_universal_reachability() -> bool:
+    """Verify that every consonant interval can reach every other via valid voice leading."""
+    for s in ALL_CONSONANCES:
+        for t in ALL_CONSONANCES:
+            vl = oblique_voice_leading(s, t)
+            if not vl.is_valid:
+                return False
+    return True
+
+
+def verify_non_subgroup() -> Optional[Tuple[int, int, int]]:
+    """Find a closure failure witnessing that the consonant set is not a subgroup.
+    Returns (a, b, a+b mod 12) where a, b are consonant but a+b is not."""
+    for a in sorted(CONSONANT_SEMITONES):
+        for b in sorted(CONSONANT_SEMITONES):
+            s = (a + b) % 12
+            if s not in CONSONANT_SEMITONES:
+                return (a, b, s)
+    return None
+
+
+def verify_inversion_asymmetry() -> Optional[int]:
+    """Find the consonant interval whose inversion is dissonant.
+    Returns the semitone value, or None if all inversions are consonant."""
+    for i in sorted(CONSONANT_SEMITONES):
+        inv = interval_inversion(i)
+        if inv not in CONSONANT_SEMITONES:
+            return i
+    return None
+
+
+def consonant_sum_mod12() -> int:
+    """Compute the sum of all consonant intervals mod 12."""
+    return sum(CONSONANT_SEMITONES) % 12
+
+
+def consonance_rank_ordering() -> List[ConsonantInterval]:
+    """Return consonant intervals sorted by consonance rank (most consonant first)."""
+    return sorted(ALL_CONSONANCES, key=lambda c: c.rank, reverse=True)
 
 
 if __name__ == "__main__":
-    # Verify key theorems computationally
-    print("Verifying theorems...")
-
-    # Target-only dependence
-    for tgt in ConsInterval:
-        homs = [frozenset(counterpoint_hom(src, tgt)) for src in ConsInterval]
-        assert len(set(homs)) == 1, f"Target-only dependence fails for {tgt}"
-    print("✓ Target-only dependence verified")
-
-    # Complement involution
-    for i in ConsInterval:
-        assert i.complement.complement == i
-    print("✓ Complement involution verified")
-
-    # Exact counting
-    v, t = restriction_factor()
-    assert v == 120 and t == 144
-    print(f"✓ Restriction factor: {v}/{t} = 5/6")
-
-    # Ramsey property
-    from itertools import combinations
-    for a, b, c in combinations(ConsInterval, 3):
-        assert (consonance_adjacent(a, b) or
-                consonance_adjacent(b, c) or
-                consonance_adjacent(a, c))
-    print("✓ Ramsey property verified")
-
-    # Rigidity
-    assert stabilizer() == [0]
-    print("✓ Trivial stabilizer verified")
-
-    # Closure ratio
-    cn, ct = consonant_closure_ratio()
-    assert cn == 23
-    print(f"✓ Consonant closure ratio: {cn}/{ct}")
-
-    print("\nAll theorems verified!")
+    print("Universal reachability:", verify_universal_reachability())
+    print("Non-subgroup witness:", verify_non_subgroup())
+    print("Inversion asymmetry at:", verify_inversion_asymmetry())
+    print("Consonant sum mod 12:", consonant_sum_mod12())
+    print("Consonance ranking:", consonance_rank_ordering())
+    
+    print("\nTransition matrix (step bound = 7):")
+    matrix = build_transition_matrix(7)
+    for s in ALL_CONSONANCES:
+        row = [str(matrix[(s, t)]).rjust(3) for t in ALL_CONSONANCES]
+        print(f"  {s.name:>6s}: {' '.join(row)}")
