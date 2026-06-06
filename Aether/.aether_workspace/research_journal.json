@@ -1510,6 +1510,36 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T12:19:09",
       "title": "Non-Archimedean Probability via Surreal Numbers"
+    },
+    {
+      "cycle_id": "b3069478",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Non-Standard Arithmetic Research\n\n## Synthesis\n\nThis research cycle established a complete formalized framework for non-standard arithmetic via ultrafilters on ℕ, with 25+ sorry-f",
+      "quality_score": 0.654,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T12:51:33",
+      "title": "Alien Mathematics: Non-Standard Arithmetic"
+    },
+    {
+      "cycle_id": "2c08a7e0",
+      "domain": "Novelty",
+      "key_insight": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established the first formally verified mathematical framework for Integrated Information Theory (IIT), proving six key structural theor",
+      "quality_score": 0.3024,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T12:51:59",
+      "title": "Consciousness as Integrated Information"
+    },
+    {
+      "cycle_id": "ff8bd2d8",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle established a formal framework for Ramanujan oracles — ternary prediction functions on mathematical statements — and proved fundamental non-compu",
+      "quality_score": 0.3124,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-06T12:52:51",
+      "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
     }
   ],
   "entries": [
@@ -1555,7 +1585,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T12:19:09",
+  "last_updated": "2026-06-06T12:52:51",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1567,12 +1597,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "98c23273",
-        "quality": 0.39704000000000006,
-        "theorems": 4,
-        "title": "EML Number Theory: Transcendence and Algebraic Independence"
-      },
       {
         "cycle_id": "fd3f7238",
         "quality": 0.3224,
@@ -1626,6 +1650,12 @@
         "quality": 0.33240000000000003,
         "theorems": 5,
         "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
+      },
+      {
+        "cycle_id": "ff8bd2d8",
+        "quality": 0.3124,
+        "theorems": 4,
+        "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
       }
     ],
     "Bridges": [
@@ -1764,18 +1794,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ff64d6c9",
-        "quality": 0.36104,
-        "theorems": 5,
-        "title": "Game of Life Universality"
-      },
-      {
-        "cycle_id": "9208c399",
-        "quality": 0.47448000000000007,
-        "theorems": 4,
-        "title": "Game of Life Universality"
-      },
-      {
         "cycle_id": "7d8ef14f",
         "quality": 0.6573599999999999,
         "theorems": 5,
@@ -1822,6 +1840,18 @@
         "quality": 0.30864,
         "theorems": 5,
         "title": "Non-Archimedean Probability via Surreal Numbers"
+      },
+      {
+        "cycle_id": "b3069478",
+        "quality": 0.654,
+        "theorems": 5,
+        "title": "Alien Mathematics: Non-Standard Arithmetic"
+      },
+      {
+        "cycle_id": "2c08a7e0",
+        "quality": 0.3024,
+        "theorems": 5,
+        "title": "Consciousness as Integrated Information"
       }
     ],
     "Physics": [
