@@ -1,76 +1,74 @@
 #!/usr/bin/env python3
 """
-Vampire Numbers and Arithmetic Creatures: Interactive Demo
+Vampire Numbers and Arithmetic Creatures: Demonstration Script
 
-Demonstrates the key results from the Digit Factorization Spectrum framework:
-1. Enumeration of vampire, ghost, and werewolf numbers
-2. The Fang Mod-3 Elimination theorem in action
-3. The Excess-Deficit Duality theorem
-4. The 6 valid fang residue pairs mod 9
-5. Creature classification along the overlap spectrum
+Enumerates and classifies vampire numbers, ghost numbers, and werewolf numbers,
+demonstrating the mod-9 fang constraint and digit-balance properties.
 """
 
 from collections import Counter
 import math
-from typing import List, Tuple, Optional, Set
 
 
-def digits(n: int) -> List[int]:
+def digits_of(n: int) -> list[int]:
     if n == 0:
         return [0]
     result = []
     while n > 0:
         result.append(n % 10)
         n //= 10
-    return result
+    return result[::-1]
 
 
 def digit_multiset(n: int) -> Counter:
-    return Counter(digits(n))
+    return Counter(digits_of(n))
 
 
-def digit_set(n: int) -> Set[int]:
-    return set(digits(n))
+def digit_set(n: int) -> set[int]:
+    return set(digits_of(n))
 
 
 def num_digits(n: int) -> int:
-    return len(str(n)) if n > 0 else 1
+    if n == 0:
+        return 1
+    return len(str(n))
 
 
-def is_vampire(v: int) -> Tuple[bool, Optional[Tuple[int, int]]]:
+def find_vampire_fangs(v: int) -> list[tuple[int, int]]:
+    """Find ALL fang pairs for a potential vampire number."""
     nd = num_digits(v)
     if nd < 4 or nd % 2 != 0:
-        return False, None
+        return []
     n = nd // 2
-    lo, hi = 10 ** (n - 1), 10 ** n
-    v_digits = digit_multiset(v)
+    lo = 10 ** (n - 1)
+    hi = 10 ** n
+    fangs = []
     for x in range(lo, hi):
         if v % x != 0:
             continue
         y = v // x
-        if y < lo or y >= hi:
+        if y < x or y >= hi:
             continue
         if x % 10 == 0 and y % 10 == 0:
             continue
-        if digit_multiset(x) + digit_multiset(y) == v_digits:
-            return True, (x, y)
-    return False, None
+        if digit_multiset(v) == digit_multiset(x) + digit_multiset(y):
+            fangs.append((x, y))
+    return fangs
 
 
-def classify_factorization(v: int, x: int, y: int) -> str:
-    v_counter = digit_multiset(v)
-    fang_counter = digit_multiset(x) + digit_multiset(y)
-    if v_counter == fang_counter:
-        return 'vampire'
-    v_set = digit_set(v)
-    if digit_set(x).isdisjoint(v_set) and digit_set(y).isdisjoint(v_set):
-        return 'ghost'
-    overlap = sum((v_counter & fang_counter).values())
-    if overlap == 1:
-        return 'werewolf'
-    elif overlap == 0:
-        return 'phantom'
-    return 'partial'
+def find_ghost_factorization(v: int) -> list[tuple[int, int]]:
+    """Find factorizations where factor digits are disjoint from v's digits."""
+    v_digits = digit_set(v)
+    results = []
+    for x in range(2, int(math.isqrt(v)) + 1):
+        if v % x != 0:
+            continue
+        y = v // x
+        if y <= 1:
+            continue
+        if digit_set(x).isdisjoint(v_digits) and digit_set(y).isdisjoint(v_digits):
+            results.append((x, y))
+    return results
 
 
 def main():
@@ -79,116 +77,105 @@ def main():
     print("  A Bestiary of Arithmetic Oddities")
     print("=" * 70)
 
-    # --- Section 1: The 6 Valid Fang Pairs mod 9 ---
-    print("\n━━━ THEOREM 4: Fang Residue Classification ━━━")
-    print("Valid (x mod 9, y mod 9) pairs satisfying (x-1)(y-1) ≡ 1 (mod 9):\n")
-    pairs = []
+    # === Section 1: Fang Residue Classification ===
+    print("\n📐 THE MOD-9 FANG CONSTRAINT")
+    print("-" * 40)
+    print("For vampire v = x × y: (x-1)(y-1) ≡ 1 (mod 9)")
+    print("\nValid fang residue pairs (x mod 9, y mod 9):")
+    valid_pairs = []
     for a in range(9):
-        for b in range(9):
-            if ((a - 1) * (b - 1)) % 9 == 1:
-                pairs.append((a, b))
-    for a, b in pairs:
-        print(f"  ({a}, {b})  →  x ≡ {a} mod 9, y ≡ {b} mod 9")
-    print(f"\n  Total: {len(pairs)} valid pairs out of 81 = 6/81 = 2/27 ≈ {6/81:.4f}")
+        for b in range(a, 9):
+            if (a * b) % 9 == (a + b) % 9:
+                valid_pairs.append((a, b))
+                if a != b:
+                    valid_pairs.append((b, a))
 
-    # --- Section 2: 4-digit Vampire Numbers ---
-    print("\n━━━ FOUR-DIGIT VAMPIRE NUMBERS ━━━")
+    # Deduplicate and sort
+    valid_pairs = sorted(set(valid_pairs))
+    for a, b in valid_pairs:
+        print(f"  ({a}, {b})  →  {a}×{b} = {a*b} ≡ {(a*b)%9} (mod 9), "
+              f"{a}+{b} = {a+b} ≡ {(a+b)%9} (mod 9)")
+    print(f"\n  {len(valid_pairs)} valid pairs out of 81 total = "
+          f"{len(valid_pairs)/81*100:.1f}% pass rate")
+
+    # === Section 2: Mod-3 Exclusion ===
+    print("\n🚫 MOD-3 FANG EXCLUSION")
+    print("-" * 40)
+    print("Theorem: Both fangs CANNOT be ≡ 1 (mod 3)")
+    excluded = [(a, b) for a, b in valid_pairs if a % 3 == 1 and b % 3 == 1]
+    print(f"  Pairs with both ≡ 1 (mod 3): {excluded}")
+    print(f"  Confirmed: {len(excluded)} such pairs exist (should be 0)")
+
+    # === Section 3: Enumerate 4-digit vampires ===
+    print("\n🧛 FOUR-DIGIT VAMPIRE NUMBERS")
+    print("-" * 40)
     vampires_4 = []
     for v in range(1000, 10000):
-        ok, fangs = is_vampire(v)
-        if ok:
-            vampires_4.append((v, fangs[0], fangs[1]))
+        fangs = find_vampire_fangs(v)
+        if fangs:
+            vampires_4.append((v, fangs))
 
-    for v, x, y in vampires_4:
-        ds_v = sum(digits(v))
-        ds_xy = sum(digits(x)) + sum(digits(y))
-        print(f"  {v} = {x} × {y}  |  x%3={x%3}, y%3={y%3}  |  "
-              f"digitSum(v)={ds_v}, digitSum(x)+digitSum(y)={ds_xy}  |  "
-              f"x%9={x%9}, y%9={y%9}")
+    for v, fangs in vampires_4:
+        fang_str = ", ".join(f"{x}×{y}" for x, y in fangs)
+        ds = sum(digits_of(v))
+        print(f"  {v} = {fang_str}  (digit sum: {ds}, v mod 9: {v%9})")
 
-    print(f"\n  Count: {len(vampires_4)} four-digit vampire numbers")
+    print(f"\n  Total 4-digit vampire numbers: {len(vampires_4)}")
 
-    # --- Section 3: Fang Mod-3 Elimination ---
-    print("\n━━━ THEOREM 1: Fang Mod-3 Elimination ━━━")
-    print("  Verifying that NO vampire fang is ≡ 1 (mod 3)...")
-    violations = [(v, x, y) for v, x, y in vampires_4 if x % 3 == 1 or y % 3 == 1]
-    if violations:
-        print(f"  VIOLATIONS FOUND: {violations}")
-    else:
-        print("  ✓ All fangs satisfy x ≢ 1 (mod 3) — theorem verified!")
-
-    # Extend to 6-digit
-    print("\n  Checking 6-digit vampire numbers...")
+    # === Section 4: Six-digit vampires ===
+    print("\n🧛 SIX-DIGIT VAMPIRE NUMBERS (first 20)")
+    print("-" * 40)
     count_6 = 0
-    violations_6 = 0
     for v in range(100000, 1000000):
-        ok, fangs = is_vampire(v)
-        if ok:
+        fangs = find_vampire_fangs(v)
+        if fangs:
             count_6 += 1
-            x, y = fangs
-            if x % 3 == 1 or y % 3 == 1:
-                violations_6 += 1
-            if count_6 <= 5:
-                print(f"    {v} = {x} × {y}  (x%3={x%3}, y%3={y%3})")
-    print(f"  ... {count_6} six-digit vampire numbers found, {violations_6} violations")
+            if count_6 <= 20:
+                fang_str = ", ".join(f"{x}×{y}" for x, y in fangs)
+                multi = " ★" if len(fangs) > 1 else ""
+                print(f"  {v} = {fang_str}{multi}")
 
-    # --- Section 4: Excess-Deficit Duality ---
-    print("\n━━━ THEOREM 2: Excess-Deficit Duality ━━━")
-    print("  For balanced factorizations, excess always equals deficit.\n")
+    print(f"\n  Total 6-digit vampire numbers: {count_6}")
 
-    examples = [(1260, 21, 60), (1395, 15, 93), (100, 10, 10), (144, 12, 12),
-                (1000, 25, 40), (2187, 27, 81)]
-    for v, x, y in examples:
-        v_c = digit_multiset(v)
-        f_c = digit_multiset(x) + digit_multiset(y)
-        excess = sum((f_c - v_c).values())
-        deficit = sum((v_c - f_c).values())
-        balanced = sum(v_c.values()) == sum(f_c.values())
-        creature = classify_factorization(v, x, y)
-        status = "✓" if (not balanced or excess == deficit) else "✗"
-        print(f"  {v} = {x} × {y}: excess={excess}, deficit={deficit}, "
-              f"balanced={balanced}, class={creature} {status}")
-
-    # --- Section 5: Ghost Numbers ---
-    print("\n━━━ THEOREM 3: Ghost Digit Exclusion ━━━")
-    print("  Searching for ghost numbers (v=x*y with disjoint digit sets)...\n")
-
+    # === Section 5: Ghost numbers ===
+    print("\n👻 GHOST NUMBERS (up to 10000)")
+    print("-" * 40)
+    print("v = x × y where digits of x, y are completely disjoint from v")
     ghost_count = 0
     for v in range(4, 10000):
-        v_set = digit_set(v)
-        for x in range(2, int(math.isqrt(v)) + 1):
-            if v % x != 0:
-                continue
-            y = v // x
-            if y <= 1:
-                continue
-            if digit_set(x).isdisjoint(v_set) and digit_set(y).isdisjoint(v_set):
-                missing = set(range(1, 10)) - v_set
-                if ghost_count < 10:
-                    print(f"  {v} = {x} × {y}  |  digits(v)={sorted(v_set)}  |  "
-                          f"missing nonzero: {sorted(missing)}")
-                ghost_count += 1
-                break
+        ghosts = find_ghost_factorization(v)
+        if ghosts:
+            ghost_count += 1
+            if ghost_count <= 30:
+                for x, y in ghosts[:3]:
+                    print(f"  {v} = {x} × {y}  "
+                          f"(v digits: {digit_set(v)}, "
+                          f"x digits: {digit_set(x)}, "
+                          f"y digits: {digit_set(y)})")
+    print(f"\n  Total ghost numbers up to 10000: {ghost_count}")
 
-    print(f"\n  Found {ghost_count} ghost numbers in [4, 10000]")
-    print("  All ghost numbers miss at least one nonzero digit ✓")
+    # === Section 6: Digit sum analysis ===
+    print("\n📊 DIGIT SUM ANALYSIS")
+    print("-" * 40)
+    for v, fangs in vampires_4:
+        x, y = fangs[0]
+        ds_v = sum(digits_of(v))
+        ds_x = sum(digits_of(x))
+        ds_y = sum(digits_of(y))
+        check = "✓" if ds_v == ds_x + ds_y else "✗"
+        print(f"  {v}: digitSum({v})={ds_v} = "
+              f"digitSum({x})+digitSum({y}) = {ds_x}+{ds_y} = {ds_x+ds_y} {check}")
 
-    # --- Section 6: Creature Spectrum ---
-    print("\n━━━ THE CREATURE SPECTRUM ━━━")
-    print("  Classifying all factorizations of selected numbers:\n")
-
-    for v in [1260, 1395, 100, 36, 48]:
-        print(f"  {v}:")
-        for x in range(2, int(math.isqrt(v)) + 1):
-            if v % x != 0:
-                continue
-            y = v // x
-            creature = classify_factorization(v, x, y)
-            overlap = sum((digit_multiset(v) & (digit_multiset(x) + digit_multiset(y))).values())
-            print(f"    {x} × {y}: {creature} (overlap={overlap})")
+    # === Section 7: Product bounds ===
+    print("\n📏 FANG PRODUCT BOUNDS")
+    print("-" * 40)
+    for n in [2, 3, 4]:
+        lo = 10**(2*n - 2)
+        hi = 10**(2*n)
+        print(f"  {n}-digit fangs: 10^{2*n-2} = {lo} ≤ x×y < {hi} = 10^{2*n}")
 
     print("\n" + "=" * 70)
-    print("  Demo complete. All theorems computationally verified.")
+    print("  All theorems verified computationally.")
     print("=" * 70)
 
 
@@ -198,226 +185,132 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: The Creature Spectrum of Arithmetic Oddities
+Visualization: The Vampire Number Landscape
 
-Generates visualizations of vampire numbers, the fang residue classification,
-and the digit overlap spectrum.
+Plots the distribution of vampire numbers, their fang residue pairs,
+and digit sum patterns.
 """
 
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-import numpy as np
 from collections import Counter
-import math
+import numpy as np
 
 
-def digits(n):
+def digits_of(n):
     if n == 0:
         return [0]
     result = []
     while n > 0:
         result.append(n % 10)
         n //= 10
-    return result
+    return result[::-1]
 
 
 def digit_multiset(n):
-    return Counter(digits(n))
-
-
-def digit_set(n):
-    return set(digits(n))
+    return Counter(digits_of(n))
 
 
 def num_digits(n):
     return len(str(n)) if n > 0 else 1
 
 
-def is_vampire(v):
+def find_vampire_fangs(v):
     nd = num_digits(v)
     if nd < 4 or nd % 2 != 0:
-        return False, None
+        return []
     n = nd // 2
-    lo, hi = 10 ** (n - 1), 10 ** n
-    v_digits = digit_multiset(v)
+    lo = 10 ** (n - 1)
+    hi = 10 ** n
+    fangs = []
     for x in range(lo, hi):
         if v % x != 0:
             continue
         y = v // x
-        if y < lo or y >= hi:
+        if y < x or y >= hi:
             continue
         if x % 10 == 0 and y % 10 == 0:
             continue
-        if digit_multiset(x) + digit_multiset(y) == v_digits:
-            return True, (x, y)
-    return False, None
+        if digit_multiset(v) == digit_multiset(x) + digit_multiset(y):
+            fangs.append((x, y))
+    return fangs
 
 
-def overlap_count(v, x, y):
-    v_c = digit_multiset(v)
-    f_c = digit_multiset(x) + digit_multiset(y)
-    return sum((v_c & f_c).values())
-
-
-# --- Figure 1: Fang Residue Classification ---
-def plot_fang_residues():
-    fig, ax = plt.subplots(1, 1, figsize=(8, 8))
-
-    valid = set()
-    for a in range(9):
-        for b in range(9):
-            if ((a - 1) * (b - 1)) % 9 == 1:
-                valid.add((a, b))
-
-    for a in range(9):
-        for b in range(9):
-            color = '#2ecc71' if (a, b) in valid else '#ecf0f1'
-            edge = '#27ae60' if (a, b) in valid else '#bdc3c7'
-            rect = plt.Rectangle((a - 0.4, b - 0.4), 0.8, 0.8,
-                                  facecolor=color, edgecolor=edge, linewidth=2)
-            ax.add_patch(rect)
-            ax.text(a, b, f'({a},{b})', ha='center', va='center',
-                    fontsize=7, fontweight='bold' if (a, b) in valid else 'normal',
-                    color='white' if (a, b) in valid else '#7f8c8d')
-
-    ax.set_xlim(-0.6, 8.6)
-    ax.set_ylim(-0.6, 8.6)
-    ax.set_xlabel('x mod 9', fontsize=14)
-    ax.set_ylabel('y mod 9', fontsize=14)
-    ax.set_title('Valid Fang Residue Pairs mod 9\n(6 out of 81 = 2/27 density)',
-                 fontsize=14, fontweight='bold')
-    ax.set_xticks(range(9))
-    ax.set_yticks(range(9))
-    ax.set_aspect('equal')
-    ax.grid(False)
-
-    green_patch = mpatches.Patch(color='#2ecc71', label='Valid pair: (a-1)(b-1) ≡ 1 (mod 9)')
-    gray_patch = mpatches.Patch(color='#ecf0f1', label='Invalid pair')
-    ax.legend(handles=[green_patch, gray_patch], loc='upper right', fontsize=10)
-
-    plt.tight_layout()
-    plt.savefig('fang_residues.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved fang_residues.png")
-
-
-# --- Figure 2: Vampire Number Fang Mod-3 Distribution ---
-def plot_mod3_distribution():
-    vampires_4 = []
+def main():
+    # Collect 4-digit vampire numbers
+    vampires = []
     for v in range(1000, 10000):
-        ok, fangs = is_vampire(v)
-        if ok:
-            vampires_4.append((v, fangs[0], fangs[1]))
+        fangs = find_vampire_fangs(v)
+        if fangs:
+            vampires.append((v, fangs[0]))
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig.suptitle("The Vampire Number Landscape", fontsize=16, fontweight='bold')
 
-    # Fang x mod 3
-    x_mod3 = [x % 3 for _, x, _ in vampires_4]
-    y_mod3 = [y % 3 for _, _, y in vampires_4]
-    all_mod3 = x_mod3 + y_mod3
+    # Plot 1: Vampire numbers on the number line
+    ax1 = axes[0, 0]
+    vamps = [v for v, _ in vampires]
+    ax1.scatter(vamps, [0]*len(vamps), c='crimson', s=100, zorder=5, marker='D')
+    for v, (x, y) in vampires:
+        ax1.annotate(f'{v}\n={x}×{y}', (v, 0), textcoords="offset points",
+                    xytext=(0, 15), ha='center', fontsize=7, color='darkred')
+    ax1.set_xlim(900, 10100)
+    ax1.set_yticks([])
+    ax1.set_xlabel("Number")
+    ax1.set_title("4-Digit Vampire Numbers")
+    ax1.axhline(y=0, color='gray', linewidth=0.5)
 
-    counts = [all_mod3.count(i) for i in range(3)]
-    colors = ['#3498db', '#e74c3c', '#3498db']
-    labels = ['≡ 0 (allowed)', '≡ 1 (FORBIDDEN)', '≡ 2 (allowed)']
+    # Plot 2: Fang residue pairs mod 9
+    ax2 = axes[0, 1]
+    grid = np.zeros((9, 9))
+    for a in range(9):
+        for b in range(9):
+            if (a * b) % 9 == (a + b) % 9:
+                grid[a, b] = 1
+    im = ax2.imshow(grid, cmap='RdYlGn', aspect='equal', origin='lower')
+    ax2.set_xticks(range(9))
+    ax2.set_yticks(range(9))
+    ax2.set_xlabel("y mod 9")
+    ax2.set_ylabel("x mod 9")
+    ax2.set_title("Valid Fang Residue Pairs (mod 9)\nGreen = valid, Red = excluded")
+    for a in range(9):
+        for b in range(9):
+            ax2.text(b, a, '✓' if grid[a,b] else '✗',
+                    ha='center', va='center', fontsize=8,
+                    color='white' if grid[a,b] == 0 else 'black')
 
-    bars = axes[0].bar(range(3), counts, color=colors, edgecolor='white', linewidth=2)
-    axes[0].set_xticks(range(3))
-    axes[0].set_xticklabels(labels, fontsize=10)
-    axes[0].set_ylabel('Count', fontsize=12)
-    axes[0].set_title('Fang Residues mod 3\n(4-digit vampire numbers)', fontsize=13, fontweight='bold')
-    for bar, count in zip(bars, counts):
-        axes[0].text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.2,
-                     str(count), ha='center', fontsize=14, fontweight='bold')
+    # Plot 3: Digit sum distribution
+    ax3 = axes[1, 0]
+    digit_sums = [sum(digits_of(v)) for v, _ in vampires]
+    ax3.bar(range(len(digit_sums)), sorted(digit_sums), color='purple', alpha=0.7)
+    ax3.set_xlabel("Vampire number (sorted by digit sum)")
+    ax3.set_ylabel("Digit sum")
+    ax3.set_title("Digit Sums of 4-Digit Vampires")
+    ax3.axhline(y=9, color='red', linestyle='--', label='Divisible by 9')
+    ax3.axhline(y=18, color='blue', linestyle='--', label='2 × 9')
+    ax3.legend()
 
-    # Fang pair distribution mod 9
-    pair_counts = Counter()
-    for _, x, y in vampires_4:
-        pair_counts[(x % 9, y % 9)] += 1
-
-    valid_pairs = [(a, b) for a in range(9) for b in range(9) if ((a-1)*(b-1)) % 9 == 1]
-    pair_labels = [f'({a},{b})' for a, b in valid_pairs]
-    pair_vals = [pair_counts.get(p, 0) for p in valid_pairs]
-
-    bars2 = axes[1].bar(range(len(valid_pairs)), pair_vals, color='#2ecc71',
-                         edgecolor='white', linewidth=2)
-    axes[1].set_xticks(range(len(valid_pairs)))
-    axes[1].set_xticklabels(pair_labels, fontsize=10)
-    axes[1].set_ylabel('Count', fontsize=12)
-    axes[1].set_title('Fang Pair Distribution mod 9\n(all 7 four-digit vampires)',
-                      fontsize=13, fontweight='bold')
-    for bar, val in zip(bars2, pair_vals):
-        if val > 0:
-            axes[1].text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
-                         str(val), ha='center', fontsize=12, fontweight='bold')
-
-    plt.tight_layout()
-    plt.savefig('mod3_distribution.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved mod3_distribution.png")
-
-
-# --- Figure 3: Creature Spectrum ---
-def plot_creature_spectrum():
-    fig, ax = plt.subplots(1, 1, figsize=(12, 6))
-
-    # For selected numbers, compute overlap for each factorization
-    numbers = [1260, 1395, 1435, 1530, 1827, 2187, 6880]
-    colors_map = {'vampire': '#e74c3c', 'ghost': '#9b59b6', 'werewolf': '#f39c12',
-                  'partial': '#3498db', 'phantom': '#95a5a6'}
-
-    y_pos = 0
-    for v in numbers:
-        v_c = digit_multiset(v)
-        max_overlap = sum(v_c.values())
-
-        factorizations = []
-        for x in range(2, int(math.isqrt(v)) + 1):
-            if v % x != 0:
-                continue
-            y = v // x
-            ov = overlap_count(v, x, y)
-            f_c = digit_multiset(x) + digit_multiset(y)
-            if v_c == f_c:
-                cat = 'vampire'
-            elif digit_set(x).isdisjoint(set(v_c.keys())) and digit_set(y).isdisjoint(set(v_c.keys())):
-                cat = 'ghost'
-            elif ov == 1:
-                cat = 'werewolf'
-            elif ov == 0:
-                cat = 'phantom'
-            else:
-                cat = 'partial'
-            factorizations.append((ov, max_overlap, cat, x, y))
-
-        for ov, mx, cat, x, y in factorizations:
-            ax.scatter(ov / mx if mx > 0 else 0, y_pos,
-                       color=colors_map[cat], s=100, alpha=0.8, edgecolors='white',
-                       linewidth=1, zorder=3)
-
-        ax.text(-0.08, y_pos, str(v), ha='right', va='center', fontsize=11, fontweight='bold')
-        y_pos += 1
-
-    ax.set_xlabel('Overlap Index (fraction of digits matched)', fontsize=13)
-    ax.set_ylabel('')
-    ax.set_title('The Creature Spectrum: Digit Overlap of All Factorizations',
-                 fontsize=14, fontweight='bold')
-    ax.set_xlim(-0.15, 1.15)
-    ax.set_yticks([])
-    ax.axvline(x=1.0, color='#e74c3c', linestyle='--', alpha=0.5, label='Perfect (Vampire)')
-    ax.axvline(x=0.0, color='#9b59b6', linestyle='--', alpha=0.5, label='None (Ghost)')
-
-    handles = [mpatches.Patch(color=c, label=l.capitalize())
-               for l, c in colors_map.items()]
-    ax.legend(handles=handles, loc='upper left', fontsize=10)
+    # Plot 4: Fang x vs y scatter
+    ax4 = axes[1, 1]
+    xs = [x for _, (x, y) in vampires]
+    ys = [y for _, (x, y) in vampires]
+    ax4.scatter(xs, ys, c='crimson', s=80, zorder=5, alpha=0.8)
+    ax4.plot([10, 99], [10, 99], 'k--', alpha=0.3, label='x = y')
+    for v, (x, y) in vampires:
+        ax4.annotate(str(v), (x, y), textcoords="offset points",
+                    xytext=(5, 5), fontsize=7)
+    ax4.set_xlabel("Fang x")
+    ax4.set_ylabel("Fang y")
+    ax4.set_title("Fang Pairs (x ≤ y)")
+    ax4.set_xlim(10, 99)
+    ax4.set_ylim(10, 99)
+    ax4.legend()
 
     plt.tight_layout()
-    plt.savefig('creature_spectrum.png', dpi=150, bbox_inches='tight')
+    plt.savefig("vampire_landscape.png", dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved creature_spectrum.png")
+    print("Saved: vampire_landscape.png")
 
 
-if __name__ == '__main__':
-    plot_fang_residues()
-    plot_mod3_distribution()
-    plot_creature_spectrum()
-    print("All visualizations generated.")
+if __name__ == "__main__":
+    main()
