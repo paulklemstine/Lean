@@ -1,225 +1,240 @@
 #!/usr/bin/env python3
 """
-EML-KA Algorithms: Constructive Kolmogorov-Arnold Decompositions
-================================================================
+EML-KA Algorithms: Core implementations for EML-Kolmogorov-Arnold representations.
 
-Type-hinted implementations of the core EML-KA algorithms.
+Type-hinted implementations of the mathematical objects formalized in Lean 4.
 """
 
-from typing import List, Tuple, Callable
 import numpy as np
+from typing import List, Tuple, Callable, Optional
 from dataclasses import dataclass
 
-# ---- EML Chain Operations ----
 
 @dataclass
-class EMLOp:
-    """An elementary EML operation."""
-    kind: str  # 'exp', 'log', or 'affine'
-    a: float = 0.0
-    b: float = 0.0
-
-    def eval(self, x: float) -> float:
-        if self.kind == 'exp':
-            return np.exp(x)
-        elif self.kind == 'log':
-            return np.log(x) if x > 0 else float('-inf')
-        elif self.kind == 'affine':
-            return self.a * x + self.b
-        raise ValueError(f"Unknown op kind: {self.kind}")
-
-    def depth(self) -> int:
-        return 0 if self.kind == 'affine' else 1
-
-
-def eval_chain(chain: List[EMLOp], x: float) -> float:
-    """Evaluate an EML chain (outermost operation first)."""
-    result = x
-    for op in reversed(chain):
-        result = op.eval(result)
-    return result
-
-
-def chain_depth(chain: List[EMLOp]) -> int:
-    """Count transcendental operations in a chain."""
-    return sum(op.depth() for op in chain)
-
-
-# ---- EML-KA Decomposition ----
-
-@dataclass
-class EMLKA:
-    """A bivariate EML-KA decomposition with Q terms."""
-    phi1: List[List[EMLOp]]  # Inner chains for x
-    phi2: List[List[EMLOp]]  # Inner chains for y
-    Phi: List[List[EMLOp]]   # Outer chains
-
+class KADecomp:
+    """A weighted Kolmogorov-Arnold decomposition for bivariate functions.
+    
+    Represents f(x,y) = Σ_q w_q * Φ_q(φ₁_q(x) + φ₂_q(y))
+    
+    Attributes:
+        phi1: Inner functions for the first variable
+        phi2: Inner functions for the second variable
+        Phi: Outer functions
+        w: Weights
+    """
+    phi1: List[Callable[[float], float]]
+    phi2: List[Callable[[float], float]]
+    Phi: List[Callable[[float], float]]
+    w: List[float]
+    
     @property
-    def Q(self) -> int:
-        return len(self.phi1)
-
+    def num_terms(self) -> int:
+        return len(self.w)
+    
     def eval(self, x: float, y: float) -> float:
-        """Evaluate the decomposition at (x, y)."""
-        total = 0.0
-        for q in range(self.Q):
-            inner = eval_chain(self.phi1[q], x) + eval_chain(self.phi2[q], y)
-            total += eval_chain(self.Phi[q], inner)
-        return total
-
-    def total_depth(self) -> int:
-        """Maximum total chain depth across all terms."""
-        return max(
-            chain_depth(self.phi1[q]) + chain_depth(self.phi2[q]) + chain_depth(self.Phi[q])
-            for q in range(self.Q)
+        """Evaluate the KA decomposition at (x, y)."""
+        return sum(
+            w_q * Phi_q(phi1_q(x) + phi2_q(y))
+            for w_q, Phi_q, phi1_q, phi2_q 
+            in zip(self.w, self.Phi, self.phi1, self.phi2)
         )
+    
+    def eval_grid(self, xs: np.ndarray, ys: np.ndarray) -> np.ndarray:
+        """Evaluate on a meshgrid."""
+        X, Y = np.meshgrid(xs, ys)
+        result = np.zeros_like(X)
+        for w_q, Phi_q, phi1_q, phi2_q in zip(self.w, self.Phi, self.phi1, self.phi2):
+            inner = np.vectorize(phi1_q)(X) + np.vectorize(phi2_q)(Y)
+            result += w_q * np.vectorize(Phi_q)(inner)
+        return result
 
 
-# ---- Constructive Decompositions ----
-
-def scaled_log(a: float) -> List[EMLOp]:
-    """Chain for x ↦ a · log(x)."""
-    return [EMLOp('affine', a, 0), EMLOp('log')]
-
-
-def mul_emlka() -> EMLKA:
-    """1-term EML-KA for multiplication: x·y = exp(log(x) + log(y))."""
-    return EMLKA(
-        phi1=[[EMLOp('log')]],
-        phi2=[[EMLOp('log')]],
-        Phi=[[EMLOp('exp')]]
+def rpow_monomial_ka(a: float, b: float) -> KADecomp:
+    """Create 1-term EML-KA decomposition for x^a * y^b.
+    
+    Uses the identity: x^a * y^b = exp(a*log(x) + b*log(y))
+    
+    Args:
+        a: Exponent for first variable
+        b: Exponent for second variable
+    
+    Returns:
+        KADecomp with inner functions a*log(·) and b*log(·), outer exp
+    """
+    return KADecomp(
+        phi1=[lambda x, a=a: a * np.log(x)],
+        phi2=[lambda y, b=b: b * np.log(y)],
+        Phi=[np.exp],
+        w=[1.0]
     )
 
 
-def monomial_emlka(a: int, b: int) -> EMLKA:
-    """1-term EML-KA for x^a · y^b."""
-    return EMLKA(
-        phi1=[scaled_log(a)],
-        phi2=[scaled_log(b)],
-        Phi=[[EMLOp('exp')]]
+def power_sum_ka(n: int) -> KADecomp:
+    """Create 2-term EML-KA decomposition for x^n + y^n.
+    
+    Uses: x^n + y^n = exp(n*log(x)) + exp(n*log(y))
+    
+    Args:
+        n: Power for the sum
+    
+    Returns:
+        KADecomp with 2 terms
+    """
+    return KADecomp(
+        phi1=[lambda x, n=n: float(n) * np.log(x), lambda _: 0.0],
+        phi2=[lambda _: 0.0, lambda y, n=n: float(n) * np.log(y)],
+        Phi=[np.exp, np.exp],
+        w=[1.0, 1.0]
     )
 
 
-def div_emlka() -> EMLKA:
-    """1-term EML-KA for x/y."""
-    return EMLKA(
-        phi1=[[EMLOp('log')]],
-        phi2=[[EMLOp('affine', -1, 0), EMLOp('log')]],
-        Phi=[[EMLOp('exp')]]
+def arith_mean_ka() -> KADecomp:
+    """Create 2-term weighted EML-KA for (x+y)/2.
+    
+    Uses: (x+y)/2 = (1/2)*exp(log(x)) + (1/2)*exp(log(y))
+    """
+    return KADecomp(
+        phi1=[np.log, lambda _: 0.0],
+        phi2=[lambda _: 0.0, np.log],
+        Phi=[np.exp, np.exp],
+        w=[0.5, 0.5]
     )
 
 
-def add_emlka() -> EMLKA:
-    """2-term EML-KA for x + y."""
-    return EMLKA(
-        phi1=[[], [EMLOp('affine', 0, 0)]],
-        phi2=[[EMLOp('affine', 0, 0)], []],
-        Phi=[[], []]
+def polynomial_ka(coeffs: List[float], 
+                   exp_a: List[int], 
+                   exp_b: List[int]) -> KADecomp:
+    """Create M-term EML-KA for polynomial Σ c_i * x^a_i * y^b_i.
+    
+    Each monomial c_i * x^a_i * y^b_i becomes one EML-KA term:
+    c_i * exp(a_i * log(x) + b_i * log(y))
+    
+    Args:
+        coeffs: Polynomial coefficients
+        exp_a: Exponents for x
+        exp_b: Exponents for y
+    
+    Returns:
+        KADecomp with len(coeffs) terms
+    """
+    return KADecomp(
+        phi1=[lambda x, a=a: float(a) * np.log(x) for a in exp_a],
+        phi2=[lambda y, b=b: float(b) * np.log(y) for b in exp_b],
+        Phi=[np.exp for _ in coeffs],
+        w=list(coeffs)
     )
 
 
-def polynomial_emlka(
-    coeffs: List[float],
-    exps_a: List[int],
-    exps_b: List[int]
-) -> EMLKA:
+def ka_exp_product(d1: KADecomp, d2: KADecomp) -> KADecomp:
+    """Compute product of two 1-term exp-based KA decompositions.
+    
+    When both use exp as outer function with weight 1:
+    exp(f1+g1) * exp(f2+g2) = exp((f1+f2) + (g1+g2))
+    
+    This demonstrates the multiplicative closure property.
     """
-    M-term EML-KA for Σ c_i · x^a_i · y^b_i.
-
-    Algorithm:
-    1. For each monomial term, create inner chains: slog(a_i), slog(b_i)
-    2. Outer chain: affine(c_i, 0) ∘ exp
-    3. The sum over terms gives the polynomial evaluation
-    """
-    M = len(coeffs)
-    return EMLKA(
-        phi1=[scaled_log(a) for a in exps_a],
-        phi2=[scaled_log(b) for b in exps_b],
-        Phi=[[EMLOp('affine', c, 0), EMLOp('exp')] for c in coeffs]
+    assert d1.num_terms == 1 and d2.num_terms == 1
+    phi1_1, phi1_2 = d1.phi1[0], d2.phi1[0]
+    phi2_1, phi2_2 = d1.phi2[0], d2.phi2[0]
+    return KADecomp(
+        phi1=[lambda x: phi1_1(x) + phi1_2(x)],
+        phi2=[lambda y: phi2_1(y) + phi2_2(y)],
+        Phi=[np.exp],
+        w=[1.0]
     )
 
 
-def power_mean_chain(r: float) -> Callable[[float, float], float]:
+def nvar_monomial_eval(xs: List[float], alphas: List[float]) -> float:
+    """Evaluate n-variable monomial via EML: ∏ x_i^a_i = exp(Σ a_i * log(x_i))"""
+    return np.exp(sum(a * np.log(x) for x, a in zip(xs, alphas)))
+
+
+def log_sum_exp(a: float, b: float) -> float:
+    """Numerically stable log-sum-exp (smooth max)."""
+    m = max(a, b)
+    return m + np.log(np.exp(a - m) + np.exp(b - m))
+
+
+def renyi_power_sum_eml(alpha: float, p: float) -> float:
+    """Rényi power sum via EML-KA: p^α + (1-p)^α = exp(α*log p) + exp(α*log(1-p))"""
+    return np.exp(alpha * np.log(p)) + np.exp(alpha * np.log(1 - p))
+
+
+def am_gm_gap(x: float, y: float) -> float:
+    """Compute AM-GM gap: (x+y)/2 - sqrt(xy), always ≥ 0."""
+    return (x + y) / 2 - np.exp((np.log(x) + np.log(y)) / 2)
+
+
+def eml_ka_complexity(func_type: str) -> dict:
+    """Return EML-KA complexity analysis for standard functions.
+    
+    Args:
+        func_type: One of 'monomial', 'power_sum', 'polynomial', 'addition',
+                  'multiplication', 'division'
+    
+    Returns:
+        Dictionary with complexity info
     """
-    Compute power mean M_r(x,y) = ((x^r + y^r)/2)^(1/r)
-    via EML chains.
-
-    Uses: exp((1/r) · log((exp(r·log(x)) + exp(r·log(y))) / 2))
-    """
-    def compute(x: float, y: float) -> float:
-        u = np.exp(r * np.log(x))  # x^r via EML
-        v = np.exp(r * np.log(y))  # y^r via EML
-        return np.exp((1/r) * np.log((u + v) / 2))
-    return compute
-
-
-# ---- Log-Space Operations ----
-
-def log_encode(x: float, y: float) -> Tuple[float, float]:
-    """Encode (x,y) in log-space."""
-    return (np.log(x), np.log(y))
-
-
-def exp_decode(u: float, v: float) -> Tuple[float, float]:
-    """Decode from log-space."""
-    return (np.exp(u), np.exp(v))
-
-
-def log_sum_exp(x: float, y: float) -> float:
-    """
-    Numerically stable log-sum-exp.
-    Satisfies: max(x,y) ≤ LSE(x,y) ≤ max(x,y) + log(2).
-    """
-    m = max(x, y)
-    return m + np.log(np.exp(x - m) + np.exp(y - m))
-
-
-def fenchel_young_gap(x: float, s: float) -> float:
-    """
-    Fenchel-Young duality gap: exp(x) + s·log(s) - s - x·s.
-    Always ≥ 0, tight at x = log(s).
-    """
-    return np.exp(x) + s * np.log(s) - s - x * s
-
-
-# ---- Verification ----
-
-def verify_decomposition(
-    decomp: EMLKA,
-    target: Callable[[float, float], float],
-    test_points: List[Tuple[float, float]],
-    tol: float = 1e-10
-) -> bool:
-    """Verify an EML-KA decomposition matches a target function."""
-    for x, y in test_points:
-        computed = decomp.eval(x, y)
-        expected = target(x, y)
-        if abs(computed - expected) > tol:
-            print(f"  FAIL at ({x}, {y}): got {computed}, expected {expected}")
-            return False
-    return True
+    info = {
+        'monomial': {
+            'terms': 1, 'depth': 2, 'description': 'x^a * y^b = exp(a*log(x) + b*log(y))',
+            'barrier': False
+        },
+        'multiplication': {
+            'terms': 1, 'depth': 2, 'description': 'x*y = exp(log(x) + log(y))',
+            'barrier': False
+        },
+        'division': {
+            'terms': 1, 'depth': 2, 'description': 'x/y = exp(log(x) - log(y))',
+            'barrier': False
+        },
+        'power_sum': {
+            'terms': 2, 'depth': 2, 'description': 'x^n + y^n requires 2 exp-of-log terms',
+            'barrier': False
+        },
+        'addition': {
+            'terms': 2, 'depth': 2, 'description': 'x+y = exp(log(x)) + exp(log(y))',
+            'barrier': True, 'barrier_proof': 'Cannot be a single monomial c*x^a*y^b'
+        },
+        'polynomial': {
+            'terms': 'M (number of monomials)', 'depth': 2,
+            'description': 'Each monomial is one EML-KA term',
+            'barrier': False
+        }
+    }
+    return info.get(func_type, {'error': f'Unknown function type: {func_type}'})
 
 
 if __name__ == "__main__":
-    test_pts = [(1.5, 2.0), (0.5, 3.0), (2.0, 0.7), (1.0, 1.0)]
-
-    print("Verifying EML-KA decompositions:")
-
-    d_mul = mul_emlka()
-    ok = verify_decomposition(d_mul, lambda x, y: x * y, test_pts)
-    print(f"  Multiplication (Q={d_mul.Q}, depth={d_mul.total_depth()}): {'PASS' if ok else 'FAIL'}")
-
-    d_div = div_emlka()
-    ok = verify_decomposition(d_div, lambda x, y: x / y, test_pts)
-    print(f"  Division (Q={d_div.Q}, depth={d_div.total_depth()}): {'PASS' if ok else 'FAIL'}")
-
-    d_add = add_emlka()
-    ok = verify_decomposition(d_add, lambda x, y: x + y, test_pts)
-    print(f"  Addition (Q={d_add.Q}, depth={d_add.total_depth()}): {'PASS' if ok else 'FAIL'}")
-
-    d_mon = monomial_emlka(2, 3)
-    ok = verify_decomposition(d_mon, lambda x, y: x**2 * y**3, test_pts)
-    print(f"  x²y³ (Q={d_mon.Q}, depth={d_mon.total_depth()}): {'PASS' if ok else 'FAIL'}")
-
-    d_poly = polynomial_emlka([3, 2, 1], [2, 1, 0], [1, 2, 1])
-    ok = verify_decomposition(d_poly, lambda x, y: 3*x**2*y + 2*x*y**2 + y, test_pts)
-    print(f"  3x²y+2xy²+y (Q={d_poly.Q}, depth={d_poly.total_depth()}): {'PASS' if ok else 'FAIL'}")
+    # Test all algorithms
+    print("Testing EML-KA Algorithms...")
+    
+    # Test monomial
+    d = rpow_monomial_ka(2.5, 1.3)
+    x, y = 3.0, 2.0
+    assert abs(d.eval(x, y) - x**2.5 * y**1.3) < 1e-10
+    print("✓ rpow_monomial_ka")
+    
+    # Test power sum
+    d = power_sum_ka(3)
+    assert abs(d.eval(x, y) - (x**3 + y**3)) < 1e-10
+    print("✓ power_sum_ka")
+    
+    # Test arithmetic mean
+    d = arith_mean_ka()
+    assert abs(d.eval(x, y) - (x+y)/2) < 1e-10
+    print("✓ arith_mean_ka")
+    
+    # Test polynomial
+    d = polynomial_ka([3, 2, 1], [2, 1, 1], [1, 3, 0])
+    expected = 3*x**2*y + 2*x*y**3 + x
+    assert abs(d.eval(x, y) - expected) < 1e-10
+    print("✓ polynomial_ka")
+    
+    # Test n-variable
+    result = nvar_monomial_eval([2.0, 3.0, 4.0], [1.0, 2.0, 0.5])
+    expected = 2.0**1 * 3.0**2 * 4.0**0.5
+    assert abs(result - expected) < 1e-10
+    print("✓ nvar_monomial_eval")
+    
+    print("\nAll tests passed!")
