@@ -1,190 +1,217 @@
 #!/usr/bin/env python3
 """
-Algorithms for Recurrence Avoidance Sequences
+Algorithms for Perturbed Fibonacci Sequences
 
-Type-hinted implementations of the core algorithms from the
-Anti-Fibonacci research program.
+Type-hinted implementations of all core algorithms from the theory.
 """
-from typing import Optional
+
+from typing import Callable, List, Tuple
 
 
-def anti_fib_closed(n: int) -> int:
-    """O(1) closed-form computation of the n-th anti-Fibonacci term.
-    
-    Formula: A(n) = ⌊3n/2⌋ + 1
-    
-    This is the n-th positive integer not divisible by 3.
-    
+def fibonacci(n: int) -> int:
+    """Standard Fibonacci number F(n) with F(0)=0, F(1)=1.
+
+    Time: O(n), Space: O(1)
+    """
+    if n <= 0:
+        return 0
+    a, b = 0, 1
+    for _ in range(n - 1):
+        a, b = b, a + b
+    return b
+
+
+def fibonacci_shifted(n: int) -> int:
+    """Shifted Fibonacci: fib'(n) = F(n+1), starting 1, 1, 2, 3, 5, 8, ...
+
+    This is the natural indexing for perturbed Fibonacci sequences.
+    """
+    return fibonacci(n + 1)
+
+
+def perturbed_fibonacci(
+    perturbation: Callable[[int], int],
+    n: int,
+    initial: Tuple[int, int] = (1, 1)
+) -> int:
+    """Compute the n-th term of the perturbed Fibonacci sequence.
+
+    P(0) = initial[0], P(1) = initial[1]
+    P(k+2) = P(k+1) + P(k) + perturbation(k)
+
     Args:
-        n: Non-negative index (0-based)
+        perturbation: Function f: ℕ → ℤ giving the perturbation at each step
+        n: Index to compute
+        initial: Initial values (P(0), P(1))
+
     Returns:
-        The n-th anti-Fibonacci number
+        P(n)
     """
-    return n + n // 2 + 1
+    if n == 0:
+        return initial[0]
+    if n == 1:
+        return initial[1]
+    prev2, prev1 = initial
+    for k in range(2, n + 1):
+        curr = prev1 + prev2 + perturbation(k - 2)
+        prev2, prev1 = prev1, curr
+    return prev1
 
 
-def anti_fib_even(k: int) -> int:
-    """Anti-Fibonacci at even index: A(2k) = 3k + 1."""
-    return 3 * k + 1
+def perturbed_fibonacci_sequence(
+    perturbation: Callable[[int], int],
+    length: int,
+    initial: Tuple[int, int] = (1, 1)
+) -> List[int]:
+    """Compute the first `length` terms of the perturbed Fibonacci sequence.
 
-
-def anti_fib_odd(k: int) -> int:
-    """Anti-Fibonacci at odd index: A(2k+1) = 3k + 2."""
-    return 3 * k + 2
-
-
-def consecutive_sum(n: int) -> int:
-    """Compute the n-th consecutive sum: A(n) + A(n+1).
-    
-    The n-th consecutive sum equals 3(n+1), enumerating all positive
-    multiples of 3 in order.
-    """
-    return anti_fib_closed(n) + anti_fib_closed(n + 1)
-
-
-def greedy_avoidance_sequence(
-    init: tuple[int, int],
-    count: int,
-    operation: str = "add"
-) -> list[int]:
-    """Compute a greedy recurrence avoidance sequence.
-    
-    Given initial pair and a binary operation, produces the lexicographically
-    earliest strictly increasing sequence such that no term equals the
-    operation applied to any previous consecutive pair.
-    
     Args:
-        init: Initial pair (a0, a1) with a0 < a1
-        count: Number of terms to generate
-        operation: One of "add", "mul", "max"
+        perturbation: Function f: ℕ → ℤ
+        length: Number of terms to compute
+        initial: Initial values (P(0), P(1))
+
     Returns:
-        The avoidance sequence
+        List [P(0), P(1), ..., P(length-1)]
     """
-    ops = {
-        "add": lambda a, b: a + b,
-        "mul": lambda a, b: a * b,
-        "max": lambda a, b: max(a, b) + 1,
-    }
-    op = ops[operation]
-    
-    seq = list(init)
-    forbidden: set[int] = {op(init[0], init[1])}
-    
-    for _ in range(count - 2):
-        candidate = seq[-1] + 1
-        while candidate in forbidden:
-            candidate += 1
-        forbidden.add(op(seq[-1], candidate))
-        seq.append(candidate)
-    
-    return seq
+    if length == 0:
+        return []
+    if length == 1:
+        return [initial[0]]
+    result = [initial[0], initial[1]]
+    for k in range(2, length):
+        result.append(result[-1] + result[-2] + perturbation(k - 2))
+    return result
 
 
-def avoidance_density(seq: list[int], N: int) -> float:
-    """Compute the density of a sequence among {1, ..., N}.
-    
-    Returns the fraction of integers in {1, ..., N} that appear in seq.
+def fibonacci_deviation(
+    perturbation: Callable[[int], int],
+    n: int
+) -> int:
+    """Compute the Fibonacci deviation: dev(f, n) = pertFib(f, n) - fib'(n).
+
+    The deviation measures how far the perturbed sequence is from standard Fibonacci.
+    Key property: dev is a LINEAR operator on perturbation functions.
     """
-    terms_below_N = sum(1 for x in seq if 1 <= x <= N)
-    return terms_below_N / N if N > 0 else 0.0
+    return perturbed_fibonacci(perturbation, n) - fibonacci_shifted(n)
 
 
-def shadow_set(seq: list[int], operation: str = "add") -> set[int]:
-    """Compute the shadow (set of consecutive-pair operation results).
-    
-    The shadow consists of all values op(seq[i], seq[i+1]) for consecutive pairs.
+def constant_perturbation_closed_form(c: int, n: int) -> int:
+    """Closed form for constant perturbation c.
+
+    P(n) = (1 + c) * fib'(n) - c
+
+    This is the main structural result: constant perturbation just scales
+    the Fibonacci sequence and shifts it.
     """
-    ops = {
-        "add": lambda a, b: a + b,
-        "mul": lambda a, b: a * b,
-    }
-    op = ops[operation]
-    return {op(seq[i], seq[i+1]) for i in range(len(seq) - 1)}
+    return (1 + c) * fibonacci_shifted(n) - c
 
 
-def is_avoidance_partition(seq: list[int], N: int) -> bool:
-    """Check if a sequence forms an avoidance partition of {1, ..., N}.
-    
-    An avoidance partition means:
-    1. Terms and shadow are disjoint
-    2. Terms ∪ shadow = {1, ..., N}
+def anti_fibonacci(n: int) -> int:
+    """The Anti-Fibonacci sequence: P(n) = 2 * fib'(n) - 1.
+
+    This is the c=1 constant perturbation. Each term exceeds the
+    Fibonacci prediction by exactly 1. The sequence is always odd.
+
+    First terms: 1, 1, 3, 5, 9, 15, 25, 41, 67, 109, ...
     """
-    terms = set(seq)
-    shad = shadow_set(seq)
-    
-    if not terms.isdisjoint(shad):
-        return False
-    
-    covered = terms | shad
-    universe = set(range(1, N + 1))
-    return universe.issubset(covered)
+    return 2 * fibonacci_shifted(n) - 1
 
 
-def inverse_anti_fib(k: int) -> Optional[int]:
-    """Given a positive integer k, return the index n such that A(n) = k,
-    or None if k is divisible by 3 (not in the sequence).
-    
-    If k ≡ 1 (mod 3), then k = 3j + 1, return 2j.
-    If k ≡ 2 (mod 3), then k = 3j + 2, return 2j + 1.
-    If k ≡ 0 (mod 3), return None.
+def recover_perturbation(
+    deviation: Callable[[int], int],
+    n: int
+) -> int:
+    """Recover the perturbation from the deviation sequence.
+
+    f(n) = dev(n+2) - dev(n+1) - dev(n)
+
+    This is the inverse of the deviation map, showing the map is bijective
+    (onto sequences with dev(0) = dev(1) = 0).
     """
-    if k <= 0 or k % 3 == 0:
-        return None
-    r = k % 3
-    j = (k - r) // 3
-    if r == 1:
-        return 2 * j
-    else:  # r == 2
-        return 2 * j + 1
+    return deviation(n + 2) - deviation(n + 1) - deviation(n)
 
 
-def shadow_index(k: int) -> Optional[int]:
-    """Given a positive multiple of 3, return the index n such that
-    A(n) + A(n+1) = k, or None if k is not a positive multiple of 3.
-    
-    If k = 3m with m odd (m = 2j+1), return 2j.
-    If k = 3m with m even (m = 2j+2), return 2j+1.
+def superposition(
+    f: Callable[[int], int],
+    g: Callable[[int], int],
+    n: int
+) -> int:
+    """Verify the superposition principle:
+
+    pertFib(f + g, n) = pertFib(f, n) + pertFib(g, n) - fib'(n)
+
+    Returns the left-hand side (which should equal the right-hand side).
     """
-    if k <= 0 or k % 3 != 0:
-        return None
-    m = k // 3
-    if m % 2 == 1:  # odd
-        j = (m - 1) // 2
-        return 2 * j
-    else:  # even
-        j = m // 2 - 1
-        return 2 * j + 1
+    return perturbed_fibonacci(lambda k: f(k) + g(k), n)
+
+
+def verify_superposition(
+    f: Callable[[int], int],
+    g: Callable[[int], int],
+    max_n: int = 100
+) -> bool:
+    """Verify the superposition principle up to index max_n.
+
+    Returns True if pertFib(f+g, n) = pertFib(f, n) + pertFib(g, n) - fib'(n)
+    holds for all n in [0, max_n].
+    """
+    pf = perturbed_fibonacci_sequence(f, max_n + 1)
+    pg = perturbed_fibonacci_sequence(g, max_n + 1)
+    pfg = perturbed_fibonacci_sequence(lambda k: f(k) + g(k), max_n + 1)
+    fib = [fibonacci_shifted(n) for n in range(max_n + 1)]
+
+    for n in range(max_n + 1):
+        if pfg[n] != pf[n] + pg[n] - fib[n]:
+            return False
+    return True
+
+
+def local_fibonacci_check(
+    perturbation: Callable[[int], int],
+    max_n: int = 100
+) -> List[int]:
+    """Find all indices where the perturbed sequence locally satisfies
+    the Fibonacci recurrence (i.e., where f(n) = 0).
+
+    Returns list of indices n where P(n+2) = P(n+1) + P(n).
+    """
+    return [n for n in range(max_n) if perturbation(n) == 0]
 
 
 if __name__ == "__main__":
-    # Demonstrate algorithms
-    print("Anti-Fibonacci closed form (first 20):")
-    print([anti_fib_closed(n) for n in range(20)])
-    
-    print("\nGreedy avoidance (additive, start (1,2)):")
-    print(greedy_avoidance_sequence((1, 2), 20))
-    
-    print("\nGreedy avoidance (multiplicative, start (2,3)):")
-    print(greedy_avoidance_sequence((2, 3), 20, "mul"))
-    
-    print("\nConsecutive sums (first 15):")
-    print([consecutive_sum(n) for n in range(15)])
-    
-    print("\nShadow set verification:")
-    seq = [anti_fib_closed(n) for n in range(50)]
-    shad = shadow_set(seq)
-    terms = set(seq)
-    print(f"  Terms ∩ Shadow = {terms & shad}")
-    print(f"  All shadow values divisible by 3: {all(s % 3 == 0 for s in shad)}")
-    
-    print("\nInverse mapping test:")
-    for k in range(1, 16):
-        idx = inverse_anti_fib(k)
-        sidx = shadow_index(k)
-        print(f"  k={k:3d}: ", end="")
-        if idx is not None:
-            print(f"A({idx}) = {k}")
-        elif sidx is not None:
-            print(f"A({sidx}) + A({sidx+1}) = {k}  (shadow)")
-        else:
-            print("ERROR: not covered!")
+    # Quick self-test
+    print("Running algorithm self-tests...")
+
+    # Test closed form
+    for c in range(-5, 6):
+        for n in range(20):
+            assert perturbed_fibonacci(lambda _, c=c: c, n) == constant_perturbation_closed_form(c, n), \
+                f"Closed form failed at c={c}, n={n}"
+    print("✓ Constant perturbation closed form verified")
+
+    # Test anti-Fibonacci
+    for n in range(20):
+        af = anti_fibonacci(n)
+        assert af == perturbed_fibonacci(lambda _: 1, n)
+        assert af % 2 == 1, f"Anti-Fibonacci not odd at n={n}"
+    print("✓ Anti-Fibonacci closed form and oddness verified")
+
+    # Test c=-1 fixed point
+    for n in range(50):
+        assert perturbed_fibonacci(lambda _: -1, n) == 1
+    print("✓ c=-1 fixed point verified")
+
+    # Test superposition
+    assert verify_superposition(lambda k: k, lambda k: (-1)**k, 50)
+    assert verify_superposition(lambda k: k**2, lambda _: 3, 50)
+    print("✓ Superposition principle verified")
+
+    # Test recovery
+    test_f = lambda k: 2 * k + 1
+    for n in range(30):
+        dev_f = lambda m: fibonacci_deviation(test_f, m)
+        assert recover_perturbation(dev_f, n) == test_f(n), \
+            f"Recovery failed at n={n}"
+    print("✓ Perturbation recovery verified")
+
+    print("\nAll algorithm self-tests passed! ✓")
