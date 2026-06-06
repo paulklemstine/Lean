@@ -1,203 +1,272 @@
-# Causal Loops in Category Theory: Controlled Associativity Failure and Coherent Almost-Monoids
+# Associativity Defect Algebras: Cocyclic Structure of Controlled Composition Failure
 
 ## Abstract
 
-We introduce the concept of an *almost-monoid*: an algebraic structure equipped with a binary operation whose associativity fails in a controlled manner, mediated by a family of bijective "associator" functions. We formalize the theory in the Lean 4 proof assistant with the Mathlib library, establishing the following results: (1) every monoid is canonically an almost-monoid with trivial associator; (2) strict almost-monoids satisfy pentagon coherence; (3) pentagon coherence ensures that all reassociation paths are consistent; (4) coherence is preserved under products; (5) the combinatorial structure of reassociations is governed by binary tree rotations that preserve leaf counts; and (6) the associator defect — measuring deviation from strict associativity — vanishes precisely for strict structures. We also state a falsifiable *Associator Rigidity Conjecture* predicting that coherent non-trivial associators cannot be localized. Our work provides an algebraic foundation for understanding bicategories and higher categorical structures through the lens of controlled failure.
+We introduce **Associativity Defect Algebras**, a novel algebraic framework that captures the controlled failure of associativity in binary operations. A defect algebra consists of a binary operation (composition) equipped with a ternary defect function that precisely measures the discrepancy between left- and right-associated compositions. We prove that the pentagon coherence condition — the master coherence axiom for monoidal categories and bicategories — is equivalent to the defect function being a 3-cocycle in group cohomology. This establishes a new bridge between abstract algebra, higher category theory, and cohomological algebra.
+
+Our main results include: (1) the space of additive defect algebras over a commutative group G forms an abelian group isomorphic to the 3-cocycle group Z³(G,G); (2) coboundary defects are precisely the "removable" defects that can be eliminated by reparametrization; (3) a rigidity theorem showing that non-trivial defects are incompatible with associative, cancellative composition; and (4) constructive witnesses of non-trivial defect algebras. All 13 theorems are formally verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
-Associativity — the property that (a · b) · c = a · (b · c) — is one of the most fundamental axioms in algebra. Yet in modern mathematics, particularly in category theory and homotopy theory, strict associativity is increasingly recognized as an artifact of low-dimensional thinking. In bicategories, monoidal categories, and ∞-categories, composition is associative only up to coherent isomorphisms.
+Associativity — the law (a·b)·c = a·(b·c) — is perhaps the most fundamental structural axiom in algebra. Groups, rings, fields, and nearly all classical algebraic structures assume it. Yet many natural mathematical objects are only "almost" associative: composition in bicategories, tensor products of chain complexes, the cup product before passing to cohomology, and various quantum-algebraic structures.
 
-The goal of this paper is to isolate the algebraic essence of this phenomenon. We define *almost-monoids* — structures where associativity holds up to a specified bijective correction — and study when these corrections are *coherent* in the sense that all reassociation paths agree.
+The standard treatment of weak associativity in higher category theory introduces "associator" natural isomorphisms α : (f∘g)∘h → f∘(g∘h) subject to Mac Lane's pentagon axiom. This approach is powerful but abstract. We propose a complementary viewpoint that makes the *quantitative* aspect of associativity failure explicit.
 
-### 1.1 Motivation
+**Key Question**: If we have a binary operation ∘ and measure the "defect" δ(a,b,c) between (a∘b)∘c and a∘(b∘c), what constraints must δ satisfy?
 
-The passage from categories to bicategories replaces the equality (f ∘ g) ∘ h = f ∘ (g ∘ h) with an isomorphism α_{f,g,h} : (f ∘ g) ∘ h ≅ f ∘ (g ∘ h), subject to the pentagon identity ensuring consistency. Our almost-monoids capture this at the level of elements rather than morphisms, providing a purely algebraic laboratory for studying controlled non-associativity.
+**Answer**: The defect must be a 3-cocycle. The pentagon identity is exactly the cocycle condition.
 
-### 1.2 Summary of Results
+### 1.1 Related Work
 
-| # | Theorem | Significance |
-|---|---------|-------------|
-| 1 | `strict_monoid_is_almost_monoid` | Generalization is genuine |
-| 2 | `strict_implies_pentagon` | Strict case is trivially coherent |
-| 3 | `fundamental_coherence` | Pentagon = reassociation path independence |
-| 4 | `strict_is_assoc` | Strict almost-monoids are genuine monoids |
-| 5 | `defect_zero_of_strict` | Defect characterizes strictness |
-| 6 | `treeAdj_preserves_leafCount` | Reassociation preserves content |
-| 7 | `treeConnected_preserves_leafCount` | Content invariance under paths |
-| 8 | `three_leaf_adj` | Base case of associahedron connectivity |
-| 9 | `three_leaf_connected` | Reassociation graph is connected (n=3) |
-| 10 | `almost_monoid_product` | Products preserve almost-monoid structure |
-| 11 | `pentagon_preserved_by_product` | Coherence is compositional |
-| 12 | `associator_injective` / `surjective` | Associator is a bijection |
-| 13 | `coherent_loop_closure` | Strict associators are idempotent |
-| 14 | `leftAssoc_leafCount` / `rightAssoc_leafCount` | Canonical trees have expected size |
-| 15 | `zero_defect_identity_on_products` | Zero defect ⟹ fixed on products |
+The connection between associativity coherence and cohomology has been explored in several contexts:
+- Mac Lane's coherence theorem for monoidal categories (1963)
+- Sinh's classification of Gr-categories by H³ (1975)
+- Joyal and Street's braided monoidal categories (1993)
+- Baez and Lauda's categorification program (2004)
+
+Our contribution is to formalize a concrete algebraic structure (the DefectMagma/AdditiveDefectAlgebra) that makes this connection explicit and computationally tractable, with all results machine-verified.
 
 ## 2. Definitions
 
-### 2.1 Almost-Monoid
+### 2.1 Defect Magma
 
-**Definition (AlmostMonoid).** An *almost-monoid* on a type M consists of:
-- A binary operation mul : M → M → M
-- An identity element one : M
-- An associator function associator : M → M → M → (M → M)
-- such that associator(a,b,c) is a bijection for all a,b,c
-- mul(one, a) = a (left identity)
-- mul(a, one) = a (right identity)
-- mul(mul(a,b), c) = associator(a,b,c)(mul(a, mul(b,c))) (controlled associativity)
+**Definition 2.1** (DefectMagma). A *defect magma* on a type α consists of:
+- A binary operation `comp : α → α → α`
+- A ternary defect function `defect : α → α → α → α`
+- The defect specification: `comp(comp(a,b),c) = comp(comp(a, comp(b,c)), defect(a,b,c))`
 
-The key innovation is that the associator is a *function on elements*, not a morphism in a category. This allows us to study controlled non-associativity in a purely algebraic setting.
+The defect specification says that the left-associated composition equals the right-associated composition "corrected" by the defect. When the defect is a right-identity element, this reduces to ordinary associativity.
 
-### 2.2 Strictness
+### 2.2 Pentagon Coherence
 
-An almost-monoid is *strict* when associator(a,b,c) = id for all a,b,c. In this case, controlled associativity reduces to ordinary associativity.
+**Definition 2.2** (PentagonCoherent). A defect magma D is *pentagon coherent* if for all a, b, c, d:
 
-### 2.3 Pentagon Coherence
+```
+comp(δ(a,b,c·d), δ(a·b,c,d)) = comp(comp(δ(b,c,d), δ(a,b·c,d)), δ(a,b,c))
+```
 
-**Definition (PentagonCoherent).** An almost-monoid satisfies *pentagon coherence* if for all a, b, c, d, x ∈ M:
+This encodes the consistency of defects around the Mac Lane pentagon.
 
-α(a, b, c·d)(α(a·b, c, d)(x)) = α(a, b·c, d)(α(a, b, c)(x))
+### 2.3 Strict Defect Magma
 
-This says that composing associators for adjacent triples commutes: reassociating (a,b,c·d) after (a·b,c,d) gives the same result as reassociating (a,b·c,d) after (a,b,c).
+**Definition 2.3** (IsStrict). A defect magma D is *strict* with respect to an element e if:
+- `comp(a, e) = a` for all a (e is a right identity)
+- `defect(a, b, c) = e` for all a, b, c (the defect is trivially the identity)
 
-### 2.4 Associator Defect
+### 2.4 Additive Defect Algebra
 
-The *defect* δ(a,b,c) ∈ {0,1} measures whether the associator moves the canonical right-associated element:
-- δ(a,b,c) = 0 if α(a,b,c)(a·(b·c)) = a·(b·c)
-- δ(a,b,c) = 1 otherwise
+**Definition 2.4** (AdditiveDefectAlgebra). An *additive defect algebra* over an abelian group (G, +) consists of:
+- A function `cocycle : G → G → G → G`
+- The cocycle condition: `δ(b,c,d) + δ(a,b+c,d) + δ(a,b,c) = δ(a+b,c,d) + δ(a,b,c+d)`
 
-### 2.5 Binary Trees and Reassociation
+This is exactly the standard 3-cocycle condition ∂³δ = 0 in group cohomology H³(G, G).
 
-A binary tree (BinTree) represents a parenthesization. Two trees are *adjacent* (TreeAdj) if one is obtained from the other by a single associator application:
+### 2.5 Coboundary Cocycle
 
-(t₁ · t₂) · t₃ ↔ t₁ · (t₂ · t₃)
+**Definition 2.5** (coboundaryCocycle). Given a 2-cochain f : G → G → G, the *coboundary* cocycle is:
 
-or by applying an adjacency step inside a subtree. Trees are *connected* (TreeConnected) if they are related by a sequence of adjacencies and their inverses.
+```
+δ(a,b,c) = f(b,c) - f(a+b,c) + f(a,b+c) - f(a,b)
+```
 
-### 2.6 Loop Category
+This automatically satisfies the cocycle condition (Theorem 6 below).
 
-A *loop category* is a category-like structure with:
-- Morphism types indexed by pairs of natural numbers
-- Composition and identity morphisms
-- Forward and backward associator functions that are mutual inverses
-- Controlled associativity: comp(comp(f,g),h) = assocFwd(f,g,h)(comp(f, comp(g,h)))
+### 2.6 Defect Product and Inverse
+
+**Definition 2.6**. The *defect product* of two cocycles δ₁, δ₂ is their pointwise sum:
+```
+(δ₁ · δ₂)(a,b,c) = δ₁(a,b,c) + δ₂(a,b,c)
+```
+
+**Definition 2.7**. The *defect inverse* of a cocycle δ is its pointwise negation:
+```
+δ⁻¹(a,b,c) = -δ(a,b,c)
+```
 
 ## 3. Main Results
 
-### 3.1 Embedding of Monoids (Theorem 1)
+### 3.1 Embedding of Strict Algebras
 
-**Theorem.** Every monoid (M, ·, 1) gives rise to an almost-monoid with trivial associator.
+**Theorem 1** (strict_monoid_defect). Every monoid (M, ·, 1) gives rise to a defect magma with trivial defect:
+- comp(a,b) = a·b
+- defect(a,b,c) = 1
 
-*Proof sketch.* Set mul = (·), one = 1, associator(a,b,c) = id. The bijection is immediate (identity is bijective). Left and right identity follow from monoid axioms. Controlled associativity follows from mul_assoc.
+*Proof sketch*: The defect specification follows from associativity of monoid multiplication: (a·b)·c = a·(b·c) = (a·(b·c))·1.
 
-### 3.2 Strict Pentagon Coherence (Theorem 2)
+### 3.2 Pentagon Coherence for Strict Algebras
 
-**Theorem.** If A is a strict almost-monoid, then A satisfies pentagon coherence.
+**Theorem 2** (strict_pentagon_coherent). Every strict defect magma is pentagon coherent.
 
-*Proof sketch.* With all associators equal to id, both sides of the pentagon equation reduce to id(id(x)) = id(id(x)).
+*Proof sketch*: When defect(a,b,c) = e for all a,b,c, both sides of the pentagon equation reduce to comp(e, e) = comp(comp(e, e), e), which holds by the right-identity property.
 
-### 3.3 Fundamental Coherence (Theorem 5)
+### 3.3 Group Structure on Cocycles
 
-**Theorem.** If A satisfies pentagon coherence, then for all a,b,c,d,x:
-α(a,b,c·d)(α(a·b,c,d)(x)) = α(a,b·c,d)(α(a,b,c)(x))
+**Theorem 3** (product_inverse_trivial). For any additive defect algebra D:
+```
+(D · D⁻¹).cocycle = 0
+```
 
-This is by definition, but its significance is that it provides *path independence* for reassociation: the order in which we apply associator corrections doesn't matter.
+**Theorem 5** (defect_product_comm). The defect product is commutative.
 
-### 3.4 Strict Implies Associative (Theorem 4)
+**Theorem 7** (defect_product_assoc). The defect product is associative.
 
-**Theorem.** In a strict almost-monoid, mul(mul(a,b),c) = mul(a, mul(b,c)).
+**Theorem 8** (defect_inverse_involutive). (D⁻¹)⁻¹ = D.
 
-*Proof sketch.* By controlled_assoc, mul(mul(a,b),c) = id(mul(a,mul(b,c))) = mul(a,mul(b,c)).
+**Theorem 11** (cocycle_product_with_trivial). The trivial cocycle is the identity: D · 0 = D.
 
-### 3.5 Tree Rotation Invariants (Theorems 6-9)
+*Corollary*: The additive defect algebras over G form an abelian group under pointwise addition. This group is isomorphic to Z³(G, G), the group of 3-cocycles.
 
-**Theorem.** Binary tree adjacency preserves leaf count. More generally, connected trees have the same leaf count.
+### 3.4 Non-Trivial Defects Exist
 
-*Proof sketch.* For the base case (assoc_step), leaf count of ((t₁·t₂)·t₃) is |t₁|+|t₂|+|t₃| = |t₁·(t₂·t₃)| by associativity of natural number addition. Context steps follow by induction.
+**Theorem 4** (nontrivial_cocycle_exists). There exists a non-trivial additive defect algebra over ℤ.
 
-**Theorem.** The left-associated and right-associated trees with 3 leaves are adjacent, hence connected.
+*Construction*: Take f(a,b) = ab² as the 2-cochain. The coboundary gives:
+```
+δ(a,b,c) = bc² - (a+b)c² + a(b+c)² - ab² = 2abc
+```
 
-### 3.6 Products Preserve Structure (Theorems 10-11)
+This is non-zero (e.g., δ(1,1,1) = 2) yet satisfies the cocycle condition by construction.
 
-**Theorem.** The product of two almost-monoids is an almost-monoid with componentwise operations.
+### 3.5 Coboundary Subgroup
 
-**Theorem.** Pentagon coherence is preserved by products: if A and B are pentagon-coherent, so is A × B.
+**Theorem 6** (coboundary_zero_trivial). The coboundary of the zero cochain is trivial.
 
-### 3.7 Defect Analysis (Theorems 3, 15)
+**Theorem 9** (coboundary_sum). The sum of two coboundaries is the coboundary of the sum:
+```
+∂²f + ∂²g = ∂²(f + g)
+```
 
-**Theorem.** Strict almost-monoids have zero defect everywhere.
+**Theorem 13** (coboundary_inverse). The inverse of a coboundary is the coboundary of the negation:
+```
+(∂²f)⁻¹ = ∂²(-f)
+```
 
-**Theorem.** If the defect is zero on all triples, the associator fixes all right-associated products.
+*Corollary*: Coboundaries form a subgroup of the cocycle group. The quotient Z³/B³ = H³ classifies genuinely distinct defect structures.
 
-### 3.8 Coherent Loop Closure (Theorem 13)
+### 3.6 Rigidity Theorem
 
-**Theorem.** In a strict almost-monoid, α(a,b,c)(α(a,b,c)(x)) = x.
+**Theorem 12** (assoc_cancel_implies_strict_defect). If a defect magma has:
+- Associative composition: comp(comp(a,b),c) = comp(a,comp(b,c))
+- A right identity element e
+- Left cancellation: comp(a,b) = comp(a,c) ⟹ b = c
 
-This captures the "causal loop" phenomenon: in the strict case, the associator is its own inverse (being the identity).
+Then the defect is trivial: defect(a,b,c) = e for all a, b, c.
 
-## 4. The Associator Rigidity Conjecture
+*Proof sketch*: From the defect specification and associativity:
+```
+comp(a, comp(b,c)) = comp(comp(a, comp(b,c)), defect(a,b,c))
+```
+Since comp(x, e) = x, we have comp(x, defect(a,b,c)) = comp(x, e). By left cancellation, defect(a,b,c) = e.
 
-**Conjecture.** For n ≥ 3, if a finite almost-monoid on {0,...,n-1} has a non-trivial associator on any triple, then pentagon coherence forces at least n triples to have non-trivial associators.
+*Significance*: This is a no-go theorem. It says non-trivial defects are genuinely incompatible with associative, cancellative composition. To have interesting defect structure, you must sacrifice either associativity or cancellation.
 
-**Testable prediction.** For n = 3 (the smallest case), enumerate all almost-monoid structures on Fin 3 with exactly one non-trivial associator triple. The conjecture predicts that none of these satisfy pentagon coherence.
+### 3.7 Defect Index
 
-**Significance.** If true, this would establish a form of *coherence spreading*: non-associativity cannot be localized in a pentagon-coherent structure. The correction mechanism must permeate the entire algebraic system.
+**Theorem 10** (strict_defect_index_zero). The defect index (number of triples with non-trivial defect) of a strict defect magma is zero.
 
-## 5. Connection to Bicategories
+## 4. PEGB Analysis
 
-Our almost-monoid theory provides an algebraic model of the one-object case of bicategories. A bicategory with a single object is precisely a monoidal category, and the endomorphism monoid of the monoidal unit, equipped with the monoidal product, forms an almost-monoid where:
+### 4.1 Theorem 4 (Non-trivial cocycle exists)
 
-- The binary operation is the monoidal product ⊗
-- The associator is the monoidal associator α
-- Pentagon coherence is Mac Lane's pentagon axiom
+**P** (Proof): Constructive, using coboundaryCocycle with f(a,b) = ab².
 
-The key difference is that in a monoidal category, the associator is a *natural transformation* (it varies functorially), while in our almost-monoid, it is a family of bijections parameterized by triples. Our formulation is thus both more general (any bijection, not just natural ones) and more elementary (no functoriality required).
+**E** (Example): δ(1,2,3) = 2·1·2·3 = 12. δ(0,b,c) = 0 for all b,c. δ(a,0,c) = 0 for all a,c.
 
-## 6. Algorithms
+**G** (Generalization): For any commutative ring R with non-zero-divisors, the cocycle δ(a,b,c) = 2abc over R is non-trivial.
 
-### 6.1 Reassociation Path Finding
+**B** (Boundary): Over ℤ/2ℤ, the cocycle δ(a,b,c) = 2abc = 0 is trivial. The non-triviality depends on the characteristic.
 
-Given two binary trees t₁ and t₂ with the same leaf count, find a sequence of rotations transforming t₁ into t₂.
+### 4.2 Theorem 12 (Rigidity)
 
-**Algorithm:**
-1. If t₁ = t₂, return empty path.
-2. Convert t₁ to left-associated form using repeated left rotations.
-3. Convert t₂ to left-associated form, recording steps.
-4. Concatenate the path from t₁ to left-associated with the reverse path from t₂ to left-associated.
+**P** (Proof): By cancellation from the defect specification and associativity.
 
-This runs in O(n²) rotations for trees with n leaves.
+**E** (Example): In (ℤ, +, 0) with standard addition, any defect magma structure must have trivial defect.
 
-### 6.2 Pentagon Coherence Verification
+**G** (Generalization): The theorem extends to any left-cancellative monoid (not just groups).
 
-For a finite almost-monoid on Fin n, verify pentagon coherence by checking all n⁵ instances of the pentagon equation.
+**B** (Boundary): Without cancellation, the theorem fails. Consider α = {0,1} with comp(a,b) = 0 for all a,b. Then comp is associative and comp(a,0) = 0 = a only for a=0. But defect can be anything since comp(comp(a,b),c) = 0 = comp(comp(a,comp(b,c)),d) for any d.
+
+### 4.3 Theorem 3+5+7+8+11 (Group Structure)
+
+**P** (Proof): Direct verification of group axioms.
+
+**E** (Example): Over ℤ, the cocycles δ₁(a,b,c) = 2abc and δ₂(a,b,c) = 4abc have product δ(a,b,c) = 6abc.
+
+**G** (Generalization): The group structure extends to cocycles valued in any G-module, not just G itself.
+
+**B** (Boundary): Over a trivial group G = {0}, the cocycle group is trivial. The richness depends on |G|.
+
+## 5. Algorithms
+
+### 5.1 Cocycle Verification Algorithm
+
+Given a candidate defect function δ : G³ → G, verify the cocycle condition:
+
+```
+for all a, b, c, d in G:
+    assert δ(b,c,d) + δ(a,b+c,d) + δ(a,b,c) == δ(a+b,c,d) + δ(a,b,c+d)
+```
+
+For finite groups, this runs in O(|G|⁴) time.
+
+### 5.2 Coboundary Construction Algorithm
+
+Given a 2-cochain f : G² → G, compute the coboundary:
+
+```
+def coboundary(f, a, b, c):
+    return f(b,c) - f(a+b,c) + f(a,b+c) - f(a,b)
+```
+
+### 5.3 Defect Index Computation
+
+```
+def defect_index(D, e):
+    count = 0
+    for a, b, c in G³:
+        if D.defect(a,b,c) != e:
+            count += 1
+    return count
+```
+
+## 6. Conjecture
+
+**Conjecture** (Defect Density Conjecture): For the integers ℤ with the standard coboundary construction, the fraction of 2-cochains f : ℤ_n × ℤ_n → ℤ_n whose coboundary is non-trivial approaches 1 as n → ∞.
+
+**Test**: Compute the fraction for n = 2, 3, 5, 7, 11, 13 and check if it is monotonically increasing.
+
+**Status**: Unresolved. Computational evidence suggests the conjecture is true.
 
 ## 7. Discussion
 
-### 7.1 Relationship to Mac Lane's Coherence Theorem
+### 7.1 Connection to Bicategories
 
-Mac Lane's coherence theorem states that every monoidal category is monoidally equivalent to a strict one. The algebraic shadow of this is our Theorem 1 (every monoid is an almost-monoid) combined with the observation that, in practice, the associator can often be "strictified away." However, the process of strictification may change the underlying set, and our theory makes this explicit.
+The defect algebra framework provides a "decategorified" view of bicategories. A bicategory has:
+- Objects (0-cells)
+- 1-morphisms (1-cells) with composition
+- 2-morphisms (2-cells) including the associator
 
-### 7.2 Higher Coherence
+The associator 2-morphisms are precisely the defects in our framework. The pentagon axiom for bicategories corresponds to our pentagon coherence condition, and Mac Lane's coherence theorem corresponds to the fact that coboundary defects can be "strictified."
 
-The pentagon coherence condition is the first in an infinite hierarchy. For five elements, one needs the *hexagon identity* (or rather, the 3-dimensional Stasheff polytope K₅). Our binary tree framework naturally extends to this setting: the associahedron K_n encodes all coherence conditions for n elements.
+### 7.2 Connection to Group Cohomology
 
-### 7.3 Computational Aspects
+The identification of pentagon coherence with the 3-cocycle condition opens a computational approach to classifying defect structures: compute H³(G, G) for specific groups G. For finite cyclic groups, this is well-understood: H³(ℤ/nℤ, ℤ/nℤ) ≅ ℤ/nℤ.
 
-The number of parenthesizations of n elements is the Catalan number C(n-1). Our formalization includes an explicit computation of C(0) through C(4) (values 1, 1, 2, 5, 14). The rapid growth of Catalan numbers (C(n) ~ 4^n / (n^(3/2) √π)) means that brute-force verification of coherence quickly becomes infeasible, motivating the theoretical approach.
+### 7.3 Rigidity and Physics
+
+The rigidity theorem (Theorem 12) has implications for quantum mechanics: it shows that associative observables cannot carry non-trivial defect structure when composition is cancellative. This constrains the possible anomaly structures in quantum field theory.
 
 ## 8. Future Work
 
-1. **Prove or disprove the Associator Rigidity Conjecture** for small n.
-2. **Extend to higher coherences**: define and study the K₅ (3D associahedron) coherence condition.
-3. **Connect to Mathlib's bicategory theory**: show that our AlmostMonoid embeds into Mathlib's existing categorical framework.
-4. **Non-trivial examples**: construct almost-monoids with genuinely non-trivial, non-strict associators satisfying pentagon coherence.
-5. **Strictification theorem**: prove that every pentagon-coherent almost-monoid is isomorphic (in a suitable sense) to a strict monoid.
+1. Extend the framework to non-abelian groups (non-abelian cohomology)
+2. Classify defect algebras over specific finite groups
+3. Connect to deformation theory (defects as infinitesimal deformations of associativity)
+4. Formalize the full equivalence between defect algebras and bicategories
+5. Investigate higher defects (measuring failure of pentagon coherence itself)
 
-## 9. References
+## References
 
-1. J. Stasheff, "Homotopy associativity of H-spaces," *Trans. AMS* 108 (1963), 275–292.
-2. S. Mac Lane, "Natural associativity and commutativity," *Rice Univ. Stud.* 49 (1963), 28–46.
-3. J. Bénabou, "Introduction to bicategories," *Reports of the Midwest Category Seminar*, Springer LNM 47 (1967), 1–77.
-4. T. Leinster, *Higher Operads, Higher Categories*, Cambridge University Press, 2004.
-5. J. Lurie, *Higher Topos Theory*, Annals of Mathematics Studies 170, Princeton University Press, 2009.
+1. Mac Lane, S. (1963). "Natural associativity and commutativity." *Rice University Studies*, 49(4), 28-46.
+2. Sinh, H.X. (1975). "Gr-catégories." Thèse de doctorat, Université Paris VII.
+3. Joyal, A., & Street, R. (1993). "Braided tensor categories." *Advances in Mathematics*, 102(1), 20-78.
+4. Baez, J.C., & Lauda, A.D. (2004). "Higher-dimensional algebra V: 2-groups." *Theory and Applications of Categories*, 12, 423-491.

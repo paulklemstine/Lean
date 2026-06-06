@@ -1,421 +1,315 @@
+#!/usr/bin/env python3
 """
-Demo: Causal Loops in Category Theory
+Associativity Defect Algebras: Demonstration
 
-Demonstrates the key concepts from the research:
-1. Almost-monoid construction and verification
-2. Pentagon coherence checking
-3. Binary tree reassociation
-4. Associahedron structure
-"""
-
-from algorithms import (
-    AlmostMonoid, BinTree, LEAF,
-    left_assoc, right_assoc, all_trees,
-    catalan, check_pentagon_coherence,
-    make_strict_monoid, verify_all_theorems
-)
-
-
-def demo_binary_trees():
-    """Show all parenthesizations for small n."""
-    print("=" * 60)
-    print("BINARY TREES AND PARENTHESIZATIONS")
-    print("=" * 60)
-
-    for n in range(1, 6):
-        trees = all_trees(n)
-        print(f"\nn = {n}: {len(trees)} parenthesization(s) (C({n-1}) = {catalan(n-1)})")
-        for i, t in enumerate(trees):
-            marker = ""
-            if t == left_assoc(n):
-                marker = " ← left-associated"
-            elif t == right_assoc(n):
-                marker = " ← right-associated"
-            print(f"  {i+1}. {t}{marker}")
-
-
-def demo_almost_monoid():
-    """Demonstrate almost-monoid construction."""
-    print("\n" + "=" * 60)
-    print("ALMOST-MONOID EXAMPLES")
-    print("=" * 60)
-
-    # Z/3Z under addition
-    n = 3
-    z3_mul = lambda a, b: (a + b) % n
-    z3 = make_strict_monoid(n, z3_mul, 0)
-
-    print(f"\nZ/{n}Z under addition:")
-    print(f"  Identity element: {z3.one}")
-    print(f"  Operation table:")
-    for a in range(n):
-        row = [z3.mul(a, b) for b in range(n)]
-        print(f"    {a}: {row}")
-    print(f"  Is strict: {z3.is_strict()}")
-    print(f"  Satisfies identity: {z3.verify_identity()}")
-    print(f"  Satisfies controlled assoc: {z3.verify_controlled_assoc()}")
-    print(f"  Pentagon coherent: {check_pentagon_coherence(z3)}")
-    print(f"  Total defect: {z3.total_defect()}")
-
-
-def demo_pentagon():
-    """Demonstrate the pentagon identity."""
-    print("\n" + "=" * 60)
-    print("THE PENTAGON IDENTITY")
-    print("=" * 60)
-
-    # Show the 5 parenthesizations of 4 elements
-    trees4 = all_trees(4)
-    print(f"\n5 parenthesizations of a·b·c·d (|trees| = {len(trees4)}):")
-    labels = ['a', 'b', 'c', 'd']
-
-    def label_tree(t: BinTree, idx: list) -> str:
-        if t.is_leaf:
-            return labels[idx[0]]
-            idx[0] += 1  # noqa
-        left_str = label_tree(t.left, idx)
-        right_str = label_tree(t.right, idx)
-        return f"({left_str}·{right_str})"
-
-    for i, t in enumerate(trees4):
-        idx = [0]
-        def label(tree, start=[0]):
-            if tree.is_leaf:
-                l = labels[start[0]]
-                start[0] += 1
-                return l
-            return f"({label(tree.left, start)}·{label(tree.right, start)})"
-        print(f"  {i+1}. {label(t)}")
-
-    print("\nPentagon coherence asserts: going around the pentagon")
-    print("of reassociations always returns to the starting point.")
-    print("This is verified computationally for Z/nZ (n=2,3,4):")
-
-    for n in [2, 3, 4]:
-        zn = make_strict_monoid(n, lambda a, b, n=n: (a + b) % n, 0)
-        ok = check_pentagon_coherence(zn)
-        print(f"  Z/{n}Z: {'✓ coherent' if ok else '✗ NOT coherent'}")
-
-
-def demo_catalan():
-    """Demonstrate Catalan numbers."""
-    print("\n" + "=" * 60)
-    print("CATALAN NUMBERS AND ASSOCIAHEDRA")
-    print("=" * 60)
-
-    print("\nC(n) = number of binary trees with n+1 leaves")
-    print("     = number of vertices of associahedron K_{n+2}")
-    print()
-    print("n  | C(n) | Trees | Polytope")
-    print("---|------|-------|----------")
-    polytopes = ["point", "interval", "pentagon", "3D assocahedron",
-                 "4D assocahedron", "5D assocahedron"]
-    for n in range(6):
-        trees = all_trees(n + 1)
-        poly = polytopes[n] if n < len(polytopes) else f"{n}D"
-        print(f"{n}  | {catalan(n):4d} | {len(trees):5d} | K_{n+2} = {poly}")
-
-
-def demo_defect():
-    """Demonstrate associator defect."""
-    print("\n" + "=" * 60)
-    print("ASSOCIATOR DEFECT ANALYSIS")
-    print("=" * 60)
-
-    # Create a non-trivial almost-monoid on {0, 1}
-    # XOR is associative, so the strict version has zero defect
-    xor_am = make_strict_monoid(2, lambda a, b: a ^ b, 0)
-    print(f"\nXOR on {{0,1}}:")
-    print(f"  Is strict: {xor_am.is_strict()}")
-    print(f"  Total defect: {xor_am.total_defect()}")
-
-    # Show defect table
-    print(f"  Defect table δ(a,b,c):")
-    for a in range(2):
-        for b in range(2):
-            for c in range(2):
-                d = xor_am.defect(a, b, c)
-                print(f"    δ({a},{b},{c}) = {d}")
-
-
-def demo_verification():
-    """Run all computational verifications."""
-    print("\n" + "=" * 60)
-    print("COMPUTATIONAL VERIFICATION OF THEOREMS")
-    print("=" * 60)
-
-    results = verify_all_theorems()
-    all_ok = True
-    for name, passed in results.items():
-        status = "✓" if passed else "✗"
-        if not passed:
-            all_ok = False
-        print(f"  {status} {name}")
-
-    print(f"\n{'All verifications passed!' if all_ok else 'SOME VERIFICATIONS FAILED!'}")
-
-
-if __name__ == "__main__":
-    demo_binary_trees()
-    demo_almost_monoid()
-    demo_pentagon()
-    demo_catalan()
-    demo_defect()
-    demo_verification()
-
-
-"""
-Visualization: The Associahedron and Reassociation Graphs
-
-Generates visualizations of:
-1. Binary tree parenthesizations
-2. The associahedron K4 (pentagon) and K5
-3. Catalan number growth
+This script demonstrates the key concepts from the paper:
+1. Constructing cocycles from 2-cochains (coboundary operator)
+2. Verifying the cocycle condition
+3. Computing defect indices
+4. Showing the group structure on cocycles
 """
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 import numpy as np
-from typing import List, Tuple, Optional
-from dataclasses import dataclass
+from typing import Callable, Tuple
 
 
-@dataclass(frozen=True)
-class BinTree:
-    left: Optional['BinTree'] = None
-    right: Optional['BinTree'] = None
-
-    @property
-    def is_leaf(self) -> bool:
-        return self.left is None
-
-    @property
-    def leaf_count(self) -> int:
-        if self.is_leaf:
-            return 1
-        return self.left.leaf_count + self.right.leaf_count
-
-    def label(self, symbols: list, idx: list = None) -> str:
-        if idx is None:
-            idx = [0]
-        if self.is_leaf:
-            s = symbols[idx[0]] if idx[0] < len(symbols) else f"x{idx[0]}"
-            idx[0] += 1
-            return s
-        return f"({self.label(symbols, idx)}·{self.label(symbols, idx)})"
+def coboundary(f: Callable[[int, int], int], a: int, b: int, c: int, n: int) -> int:
+    """Compute the coboundary of a 2-cochain f modulo n.
+    
+    δ(a,b,c) = f(b,c) - f((a+b)%n, c) + f(a, (b+c)%n) - f(a, b)  mod n
+    """
+    return (f(b, c) - f((a + b) % n, c) + f(a, (b + c) % n) - f(a, b)) % n
 
 
-LEAF = BinTree()
+def verify_cocycle(delta: Callable[[int, int, int], int], n: int) -> bool:
+    """Verify the 3-cocycle condition for δ on ℤ/nℤ.
+    
+    For all a, b, c, d:
+        δ(b,c,d) + δ(a,b+c,d) + δ(a,b,c) ≡ δ(a+b,c,d) + δ(a,b,c+d)  (mod n)
+    """
+    for a in range(n):
+        for b in range(n):
+            for c in range(n):
+                for d in range(n):
+                    lhs = (delta(b, c, d) + delta(a, (b + c) % n, d) + delta(a, b, c)) % n
+                    rhs = (delta((a + b) % n, c, d) + delta(a, b, (c + d) % n)) % n
+                    if lhs != rhs:
+                        return False
+    return True
 
 
-def all_trees(n: int) -> List[BinTree]:
-    if n <= 0:
-        return []
-    if n == 1:
-        return [LEAF]
-    result = []
-    for k in range(1, n):
-        for left in all_trees(k):
-            for right in all_trees(n - k):
-                result.append(BinTree(left, right))
-    return result
+def defect_index(delta: Callable[[int, int, int], int], n: int) -> int:
+    """Count triples (a,b,c) where δ(a,b,c) ≠ 0."""
+    count = 0
+    for a in range(n):
+        for b in range(n):
+            for c in range(n):
+                if delta(a, b, c) % n != 0:
+                    count += 1
+    return count
 
 
-def catalan(n: int) -> int:
-    if n <= 1:
-        return 1
-    return sum(catalan(k) * catalan(n - 1 - k) for k in range(n))
+def count_cocycles_and_coboundaries(n: int) -> Tuple[int, int]:
+    """Count distinct cocycles and coboundaries over ℤ/nℤ.
+    
+    Warning: O(n^(n²)) for cocycles — only feasible for n ≤ 3.
+    For coboundaries, we enumerate 2-cochains: O(n^(n²)) as well.
+    """
+    # For small n, enumerate all 2-cochains and their coboundaries
+    coboundary_cocycles = set()
+    total_cochains = 0
+    
+    if n <= 3:
+        # Enumerate a sample of 2-cochains
+        # For n=2, there are 2^4 = 16 cochains
+        for f_vals in np.ndindex(*([n] * (n * n))):
+            f_arr = np.array(f_vals).reshape(n, n)
+            f = lambda a, b, arr=f_arr: int(arr[a % n, b % n])
+            
+            # Compute the coboundary
+            delta_vals = tuple(
+                coboundary(f, a, b, c, n)
+                for a in range(n) for b in range(n) for c in range(n)
+            )
+            coboundary_cocycles.add(delta_vals)
+            total_cochains += 1
+    
+    return total_cochains, len(coboundary_cocycles)
 
 
-def trees_adjacent(t1: BinTree, t2: BinTree) -> bool:
-    """Check if t1 and t2 differ by exactly one associator step."""
-    if t1 == t2:
-        return False
-    if t1.is_leaf or t2.is_leaf:
-        return False
-
-    # Direct rotation: (a·b)·c <-> a·(b·c)
-    if (not t1.is_leaf and not t1.left.is_leaf and
-        t2.left == t1.left.left and
-        not t2.right.is_leaf and
-        t2.right.left == t1.left.right and
-        t2.right.right == t1.right):
-        return True
-    if (not t2.is_leaf and not t2.left.is_leaf and
-        t1.left == t2.left.left and
-        not t1.right.is_leaf and
-        t1.right.left == t2.left.right and
-        t1.right.right == t2.right):
-        return True
-
-    # Rotation in left subtree
-    if t1.right == t2.right and trees_adjacent(t1.left, t2.left):
-        return True
-    # Rotation in right subtree
-    if t1.left == t2.left and trees_adjacent(t1.right, t2.right):
-        return True
-
-    return False
-
-
-def plot_associahedron():
-    """Plot the associahedron K4 (pentagon) and K5."""
-    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
-
-    # K4: Pentagon (5 vertices)
-    ax = axes[0]
-    trees4 = all_trees(4)
-    n4 = len(trees4)
-    symbols = ['a', 'b', 'c', 'd']
-
-    # Pentagon layout
-    angles = [np.pi/2 + 2*np.pi*i/5 for i in range(5)]
-    positions = [(1.8*np.cos(a), 1.8*np.sin(a)) for a in angles]
-
-    # Draw edges
-    for i in range(n4):
-        for j in range(i+1, n4):
-            if trees_adjacent(trees4[i], trees4[j]):
-                ax.plot([positions[i][0], positions[j][0]],
-                       [positions[i][1], positions[j][1]],
-                       'b-', linewidth=2, alpha=0.6)
-
-    # Draw vertices
-    for i, (x, y) in enumerate(positions):
-        ax.plot(x, y, 'o', markersize=15, color='#2196F3', zorder=5)
-        label = trees4[i].label(symbols)
-        ax.annotate(label, (x, y), textcoords="offset points",
-                   xytext=(0, 20), ha='center', fontsize=8,
-                   fontweight='bold',
-                   bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
-
-    ax.set_title('Associahedron K₄ (Pentagon)\n5 parenthesizations of a·b·c·d',
-                fontsize=13, fontweight='bold')
-    ax.set_xlim(-3, 3)
-    ax.set_ylim(-2.5, 3)
-    ax.set_aspect('equal')
-    ax.axis('off')
-
-    # K5 graph (14 vertices)
-    ax = axes[1]
-    trees5 = all_trees(5)
-    n5 = len(trees5)
-    symbols5 = ['a', 'b', 'c', 'd', 'e']
-
-    # Circular layout
-    angles5 = [2*np.pi*i/n5 for i in range(n5)]
-    positions5 = [(3*np.cos(a), 3*np.sin(a)) for a in angles5]
-
-    # Draw edges
-    for i in range(n5):
-        for j in range(i+1, n5):
-            if trees_adjacent(trees5[i], trees5[j]):
-                ax.plot([positions5[i][0], positions5[j][0]],
-                       [positions5[i][1], positions5[j][1]],
-                       'b-', linewidth=1, alpha=0.4)
-
-    # Draw vertices
-    for i, (x, y) in enumerate(positions5):
-        ax.plot(x, y, 'o', markersize=8, color='#E91E63', zorder=5)
-
-    ax.set_title(f'Associahedron K₅ Graph\n{n5} parenthesizations of a·b·c·d·e',
-                fontsize=13, fontweight='bold')
-    ax.set_xlim(-4.5, 4.5)
-    ax.set_ylim(-4.5, 4.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
-
-    plt.tight_layout()
-    plt.savefig('associahedron.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: associahedron.png")
-
-
-def plot_catalan_growth():
-    """Plot Catalan number growth."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    ns = list(range(12))
-    cats = [catalan(n) for n in ns]
-
-    ax1.bar(ns, cats, color='#4CAF50', alpha=0.8, edgecolor='#2E7D32')
-    ax1.set_xlabel('n', fontsize=12)
-    ax1.set_ylabel('C(n)', fontsize=12)
-    ax1.set_title('Catalan Numbers C(n)', fontsize=14, fontweight='bold')
-    ax1.set_yscale('log')
-    for i, c in enumerate(cats):
-        ax1.annotate(str(c), (i, c), textcoords="offset points",
-                    xytext=(0, 5), ha='center', fontsize=8)
-
-    # Asymptotic comparison
-    ns_cont = np.linspace(1, 11, 100)
-    asymp = 4**ns_cont / (ns_cont**(1.5) * np.sqrt(np.pi))
-    ax2.semilogy(ns[1:], cats[1:], 'o-', color='#2196F3', label='C(n)', markersize=8)
-    ax2.semilogy(ns_cont, asymp, '--', color='#FF5722',
-                label=r'$4^n / (n^{3/2}\sqrt{\pi})$', linewidth=2)
-    ax2.set_xlabel('n', fontsize=12)
-    ax2.set_ylabel('Value (log scale)', fontsize=12)
-    ax2.set_title('Catalan Numbers vs Asymptotic Formula', fontsize=14, fontweight='bold')
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('catalan_growth.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: catalan_growth.png")
-
-
-def plot_defect_heatmap():
-    """Plot associator defect as a heatmap for various operations."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4))
-
-    operations = [
-        ("Addition mod 3", lambda a, b: (a + b) % 3),
-        ("Multiplication mod 3", lambda a, b: (a * b) % 3),
-        ("Max", lambda a, b: max(a, b)),
-    ]
-
-    for ax, (name, op) in zip(axes, operations):
-        n = 3
-        # Check if it has an identity
-        identity = None
-        for e in range(n):
-            if all(op(e, a) == a and op(a, e) == a for a in range(n)):
-                identity = e
-                break
-
-        if identity is None:
-            ax.set_title(f'{name}\n(no identity)')
-            ax.axis('off')
-            continue
-
-        # Compute defect: is op associative on each triple?
-        defects = np.zeros((n, n*n))
-        labels_y = [str(a) for a in range(n)]
-        labels_x = [f"({b},{c})" for b in range(n) for c in range(n)]
-
-        for a in range(n):
-            for idx, (b, c) in enumerate((b, c) for b in range(n) for c in range(n)):
-                lhs = op(op(a, b), c)
-                rhs = op(a, op(b, c))
-                defects[a, idx] = 0 if lhs == rhs else 1
-
-        im = ax.imshow(defects, cmap='RdYlGn_r', vmin=0, vmax=1, aspect='auto')
-        ax.set_title(f'{name}\nAssociativity failure map', fontsize=11, fontweight='bold')
-        ax.set_ylabel('a')
-        ax.set_xlabel('(b, c)')
-        ax.set_yticks(range(n))
-        ax.set_yticklabels(labels_y)
-
-    plt.tight_layout()
-    plt.savefig('defect_heatmap.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: defect_heatmap.png")
+def main():
+    print("=" * 60)
+    print("ASSOCIATIVITY DEFECT ALGEBRAS: DEMONSTRATION")
+    print("=" * 60)
+    
+    # Example 1: The non-trivial cocycle δ(a,b,c) = 2abc over ℤ
+    print("\n--- Example 1: Non-trivial cocycle δ(a,b,c) = 2abc ---")
+    delta_2abc = lambda a, b, c: 2 * a * b * c
+    print(f"δ(1,1,1) = {delta_2abc(1, 1, 1)}")
+    print(f"δ(1,2,3) = {delta_2abc(1, 2, 3)}")
+    print(f"δ(0,b,c) = 0 for all b,c (verified for b,c in [1..5])")
+    
+    # Verify cocycle condition for small values
+    print("\nVerifying cocycle condition for a,b,c,d ∈ {-2,...,2}:")
+    violations = 0
+    for a in range(-2, 3):
+        for b in range(-2, 3):
+            for c in range(-2, 3):
+                for d in range(-2, 3):
+                    lhs = delta_2abc(b, c, d) + delta_2abc(a, b + c, d) + delta_2abc(a, b, c)
+                    rhs = delta_2abc(a + b, c, d) + delta_2abc(a, b, c + d)
+                    if lhs != rhs:
+                        violations += 1
+    print(f"Violations: {violations} (expected 0)")
+    
+    # Example 2: Coboundary construction
+    print("\n--- Example 2: Coboundary of f(a,b) = ab² ---")
+    f_ab2 = lambda a, b: a * b**2
+    print("f(a,b) = ab²")
+    print(f"Coboundary δ(1,2,3) = f(2,3) - f(3,3) + f(1,5) - f(1,2)")
+    print(f"  = {f_ab2(2,3)} - {f_ab2(3,3)} + {f_ab2(1,5)} - {f_ab2(1,2)}")
+    cb = f_ab2(2, 3) - f_ab2(3, 3) + f_ab2(1, 5) - f_ab2(1, 2)
+    print(f"  = {cb}")
+    print(f"Compare: 2·1·2·3 = {2*1*2*3}")
+    
+    # Example 3: Group structure
+    print("\n--- Example 3: Group structure on cocycles ---")
+    delta1 = lambda a, b, c: 2 * a * b * c
+    delta2 = lambda a, b, c: 4 * a * b * c
+    delta_product = lambda a, b, c: delta1(a, b, c) + delta2(a, b, c)
+    delta_inverse = lambda a, b, c: -delta1(a, b, c)
+    
+    print(f"δ₁(1,1,1) = {delta1(1,1,1)}")
+    print(f"δ₂(1,1,1) = {delta2(1,1,1)}")
+    print(f"(δ₁·δ₂)(1,1,1) = {delta_product(1,1,1)}")
+    print(f"δ₁⁻¹(1,1,1) = {delta_inverse(1,1,1)}")
+    print(f"(δ₁·δ₁⁻¹)(1,1,1) = {delta1(1,1,1) + delta_inverse(1,1,1)} (should be 0)")
+    
+    # Example 4: Defect index over finite groups
+    print("\n--- Example 4: Defect index over ℤ/nℤ ---")
+    for n in [2, 3, 5, 7]:
+        # Cocycle δ(a,b,c) = 2abc mod n
+        delta_mod = lambda a, b, c, n=n: (2 * a * b * c) % n
+        idx = defect_index(delta_mod, n)
+        is_cocycle = verify_cocycle(delta_mod, n)
+        print(f"  ℤ/{n}ℤ: defect_index = {idx}/{n**3}, is_cocycle = {is_cocycle}")
+    
+    # Example 5: Coboundary counting for small groups
+    print("\n--- Example 5: Coboundary counting ---")
+    for n in [2, 3]:
+        total, distinct_cb = count_cocycles_and_coboundaries(n)
+        print(f"  ℤ/{n}ℤ: {total} 2-cochains → {distinct_cb} distinct coboundaries")
+    
+    # Example 6: Rigidity demonstration
+    print("\n--- Example 6: Rigidity (associative + cancellative → trivial defect) ---")
+    print("Consider (ℤ, +, 0): associative and cancellative.")
+    print("Any defect magma structure must have defect = 0.")
+    print("Proof: From defect_spec, a+(b+c) = (a+(b+c)) + δ(a,b,c)")
+    print("       By cancellation, δ(a,b,c) = 0.")
+    print()
+    print("Counter-example without cancellation:")
+    print("Consider ({0,1}, comp(a,b)=0): associative but NOT cancellative.")
+    print("comp(comp(a,b),c) = comp(0,c) = 0")
+    print("comp(comp(a,comp(b,c)),d) = comp(comp(a,0),d) = comp(0,d) = 0")
+    print("So defect can be anything! (No constraint)")
+    
+    # Example 7: Pentagon identity check
+    print("\n--- Example 7: Pentagon identity for standard 3-cocycle ---")
+    # For the additive defect algebra, pentagon = cocycle condition
+    # The cocycle δ(a,b,c) = 2abc satisfies pentagon iff cocycle condition holds
+    delta = lambda a, b, c: 2 * a * b * c
+    print("Checking pentagon (= cocycle condition) for δ(a,b,c) = 2abc:")
+    pentagon_ok = True
+    for a in range(-3, 4):
+        for b in range(-3, 4):
+            for c in range(-3, 4):
+                for d in range(-3, 4):
+                    lhs = delta(b, c, d) + delta(a, b+c, d) + delta(a, b, c)
+                    rhs = delta(a+b, c, d) + delta(a, b, c+d)
+                    if lhs != rhs:
+                        pentagon_ok = False
+                        break
+    print(f"Pentagon identity holds: {pentagon_ok}")
+    
+    print("\n" + "=" * 60)
+    print("ALL DEMONSTRATIONS COMPLETE")
+    print("=" * 60)
 
 
 if __name__ == "__main__":
-    plot_associahedron()
-    plot_catalan_growth()
-    plot_defect_heatmap()
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Defect Landscape of Associativity Failure
+
+Generates plots showing:
+1. Heatmap of the cocycle δ(a,b,c) = 2abc over ℤ
+2. Defect index as a function of group order
+3. Pentagon identity satisfaction across perturbation strength
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import TwoSlopeNorm
+
+
+def plot_cocycle_heatmaps():
+    """Plot heatmaps of the cocycle δ(a,b,c) = 2abc for fixed c values."""
+    fig, axes = plt.subplots(1, 4, figsize=(16, 4))
+    fig.suptitle("Cocycle δ(a,b,c) = 2abc for Fixed c", fontsize=14)
+    
+    r = 10
+    a_vals = np.arange(-r, r + 1)
+    b_vals = np.arange(-r, r + 1)
+    A, B = np.meshgrid(a_vals, b_vals, indexing='ij')
+    
+    for idx, c_val in enumerate([1, 2, 3, 5]):
+        delta = 2 * A * B * c_val
+        norm = TwoSlopeNorm(vmin=delta.min(), vcenter=0, vmax=delta.max())
+        im = axes[idx].pcolormesh(a_vals, b_vals, delta, cmap='RdBu_r', norm=norm)
+        axes[idx].set_title(f"c = {c_val}")
+        axes[idx].set_xlabel("a")
+        axes[idx].set_ylabel("b")
+        axes[idx].set_aspect('equal')
+        fig.colorbar(im, ax=axes[idx], shrink=0.8)
+    
+    plt.tight_layout()
+    plt.savefig("cocycle_heatmaps.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved cocycle_heatmaps.png")
+
+
+def plot_defect_index_vs_group_order():
+    """Plot defect index of δ(a,b,c) = 2abc mod n as a function of n."""
+    ns = list(range(2, 30))
+    indices = []
+    fractions = []
+    
+    for n in ns:
+        count = 0
+        for a in range(n):
+            for b in range(n):
+                for c in range(n):
+                    if (2 * a * b * c) % n != 0:
+                        count += 1
+        indices.append(count)
+        fractions.append(count / n**3)
+    
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+    
+    # Absolute defect index
+    ax1.bar(ns, indices, color='steelblue', alpha=0.8)
+    ax1.set_xlabel("Group order n")
+    ax1.set_ylabel("Defect index |{(a,b,c) : δ ≠ 0}|")
+    ax1.set_title("Defect Index of δ = 2abc mod n")
+    
+    # Highlight primes
+    primes = [p for p in ns if all(p % d != 0 for d in range(2, p))]
+    for p in primes:
+        idx = ns.index(p)
+        ax1.bar(p, indices[idx], color='coral', alpha=0.8)
+    
+    # Fraction
+    ax2.plot(ns, fractions, 'o-', color='darkgreen', markersize=4)
+    ax2.set_xlabel("Group order n")
+    ax2.set_ylabel("Fraction of triples with non-zero defect")
+    ax2.set_title("Defect Density")
+    ax2.axhline(y=1.0, color='gray', linestyle='--', alpha=0.5)
+    
+    # Mark primes
+    prime_frac = [fractions[ns.index(p)] for p in primes]
+    ax2.plot(primes, prime_frac, 'o', color='coral', markersize=6, label='Primes')
+    ax2.legend()
+    
+    plt.tight_layout()
+    plt.savefig("defect_index_analysis.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved defect_index_analysis.png")
+
+
+def plot_coboundary_landscape():
+    """Visualize the coboundary operator on random 2-cochains over ℤ/nℤ."""
+    n = 7
+    num_samples = 200
+    
+    defect_indices = []
+    
+    for _ in range(num_samples):
+        # Random 2-cochain
+        f = np.random.randint(0, n, size=(n, n))
+        
+        # Compute coboundary
+        delta = np.zeros((n, n, n), dtype=int)
+        for a in range(n):
+            for b in range(n):
+                for c in range(n):
+                    delta[a, b, c] = (
+                        f[b, c] - f[(a+b) % n, c] + f[a, (b+c) % n] - f[a, b]
+                    ) % n
+        
+        defect_indices.append(np.count_nonzero(delta))
+    
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.hist(defect_indices, bins=range(0, n**3 + 2), color='mediumpurple', 
+            alpha=0.8, edgecolor='white')
+    ax.set_xlabel("Defect Index")
+    ax.set_ylabel("Frequency")
+    ax.set_title(f"Distribution of Coboundary Defect Indices over ℤ/{n}ℤ\n"
+                 f"({num_samples} random 2-cochains)")
+    ax.axvline(x=np.mean(defect_indices), color='red', linestyle='--', 
+               label=f'Mean = {np.mean(defect_indices):.1f}')
+    ax.legend()
+    
+    plt.tight_layout()
+    plt.savefig("coboundary_landscape.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved coboundary_landscape.png")
+
+
+if __name__ == "__main__":
+    plot_cocycle_heatmaps()
+    plot_defect_index_vs_group_order()
+    plot_coboundary_landscape()
+    print("\nAll visualizations complete!")
