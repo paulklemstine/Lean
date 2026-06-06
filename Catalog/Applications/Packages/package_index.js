@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ce2cd67f",
     "filename": "non_archimedean_probability_via_surreal_numbers.json",
     "pkg_num": 401,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.20744,
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
   {
@@ -12780,8 +12780,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "non_archimedean_probability_via_surreal_numbers",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.20744,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Non-Archimedean Probability via Surreal Numbers"
     }
