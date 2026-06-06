@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "8f3d46f5",
     "filename": "infinite_games_against_death_immortality_strategie.json",
     "pkg_num": 402,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.22840000000000002,
     "title": "Infinite Games Against Death: Immortality Strategies"
   },
   {
@@ -12809,8 +12809,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "infinite_games_against_death_immortality_strategie",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.22840000000000002,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Infinite Games Against Death: Immortality Strategies"
     }

@@ -1,8 +1,4 @@
-import math
-def wronskian(y1, y1p, y2, y2p, x):
-    return y1(x) * y2p(x) - y1p(x) * y2(x)
-
-def abel_wronskian(W0, p_func, x0, x, n_steps=1000):
-    h = (x - x0) / n_steps
-    integral = sum(p_func(x0 + i*h) * h for i in range(n_steps))
-    return W0 * math.exp(-integral)
+def wronskian(y1, y2, x, h=1e-8):
+    dy1 = (y1(x+h) - y1(x-h)) / (2*h)
+    dy2 = (y2(x+h) - y2(x-h)) / (2*h)
+    return y1(x) * dy2 - y2(x) * dy1
