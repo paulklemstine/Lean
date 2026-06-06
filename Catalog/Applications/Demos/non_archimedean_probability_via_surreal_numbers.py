@@ -1,390 +1,367 @@
 #!/usr/bin/env python3
 """
-Surreal Probability: Numerical Demonstrations
+Non-Archimedean Probability Theory — Numerical Demonstrations
 
-Demonstrates the key results of the surreal probability theory:
-1. Infinitesimal perturbation of uniform measures
-2. Dual impossibility theorem (numerical illustration)
-3. Product measures
-4. Bayesian update with near-infinitesimal priors
-5. Information ordering
+This module demonstrates the key results of non-Archimedean probability theory
+using Python's Fraction type for exact arithmetic and symbolic infinitesimals.
 """
 
 from fractions import Fraction
-from typing import List, Dict, Tuple
+from typing import Dict, List, Tuple, Optional
 import math
 
 
-def uniform_measure(n: int) -> List[Fraction]:
-    """Uniform probability measure on n elements."""
-    return [Fraction(1, n)] * n
+# =============================================================================
+# 1. The Archimedean Impossibility
+# =============================================================================
 
-
-def perturbed_measure(n: int, weights: List[int], eps: Fraction) -> List[Fraction]:
+def archimedean_impossibility_demo():
     """
-    Infinitesimally perturbed uniform measure.
+    Demonstrates that in the rationals (an Archimedean field), no uniform
+    probability can assign the same weight to infinitely many points.
     
-    Each element i gets probability 1/n + weights[i] * eps.
-    Weights must sum to 0.
+    For any w > 0, there exists n such that n*w > 1.
     """
-    assert len(weights) == n, f"Need {n} weights, got {len(weights)}"
-    assert sum(weights) == 0, f"Weights must sum to 0, got {sum(weights)}"
-    base = Fraction(1, n)
-    return [base + w * eps for w in weights]
+    print("=" * 70)
+    print("ARCHIMEDEAN IMPOSSIBILITY")
+    print("=" * 70)
+    
+    weights = [Fraction(1, 10**k) for k in range(1, 8)]
+    
+    for w in weights:
+        n_exceed = math.ceil(1 / w) + 1
+        print(f"  w = {w}: n*w > 1 when n = {n_exceed} "
+              f"(n*w = {Fraction(n_exceed) * w})")
+    
+    print("\n  → In ANY Archimedean field, for any w > 0, we can always find n")
+    print("    such that n·w exceeds 1. Infinitesimal probability is impossible.")
+    print()
 
 
-def is_valid_pmf(pmf: List[Fraction]) -> bool:
-    """Check if a pmf is valid: non-negative and sums to 1."""
-    return all(p >= 0 for p in pmf) and sum(pmf) == 1
+# =============================================================================
+# 2. Non-Archimedean Field: Dual Numbers with Lexicographic Order
+# =============================================================================
 
-
-def is_fully_discriminating(pmf: List[Fraction]) -> bool:
-    """Check if all probabilities are distinct."""
-    return len(set(pmf)) == len(pmf)
-
-
-def product_measure(mu: List[Fraction], nu: List[Fraction]) -> Dict[Tuple[int, int], Fraction]:
-    """Product of two probability measures."""
-    result = {}
-    for i, p in enumerate(mu):
-        for j, q in enumerate(nu):
-            result[(i, j)] = p * q
-    return result
-
-
-def conditional_prob(pmf: List[Fraction], event: List[int]) -> Dict[int, Fraction]:
-    """Conditional probability given an event (list of indices)."""
-    total = sum(pmf[i] for i in event)
-    assert total > 0, "Cannot condition on zero-probability event"
-    result = {}
-    for i in range(len(pmf)):
-        if i in event:
-            result[i] = pmf[i] / total
+class NonArchElement:
+    """
+    Represents an element of the non-Archimedean field Q(ε) where ε is
+    infinitesimal. An element is (real_part, infinitesimal_part) meaning
+    real_part + infinitesimal_part * ε.
+    
+    Ordered lexicographically: (a, b) < (c, d) iff a < c, or a = c and b < d.
+    """
+    
+    def __init__(self, real: Fraction, inf: Fraction = Fraction(0)):
+        self.real = real
+        self.inf = inf
+    
+    def __add__(self, other: 'NonArchElement') -> 'NonArchElement':
+        return NonArchElement(self.real + other.real, self.inf + other.inf)
+    
+    def __sub__(self, other: 'NonArchElement') -> 'NonArchElement':
+        return NonArchElement(self.real - other.real, self.inf - other.inf)
+    
+    def __mul__(self, other: 'NonArchElement') -> 'NonArchElement':
+        # (a + bε)(c + dε) = ac + (ad + bc)ε  (ignore ε² terms for simplicity)
+        return NonArchElement(
+            self.real * other.real,
+            self.real * other.inf + self.inf * other.real
+        )
+    
+    def __lt__(self, other: 'NonArchElement') -> bool:
+        if self.real != other.real:
+            return self.real < other.real
+        return self.inf < other.inf
+    
+    def __le__(self, other: 'NonArchElement') -> bool:
+        return self == other or self < other
+    
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, NonArchElement):
+            return NotImplemented
+        return self.real == other.real and self.inf == other.inf
+    
+    def __repr__(self) -> str:
+        if self.inf == 0:
+            return str(self.real)
+        elif self.real == 0:
+            return f"{self.inf}ε"
         else:
-            result[i] = Fraction(0)
-    return result
+            sign = "+" if self.inf > 0 else ""
+            return f"{self.real} {sign} {self.inf}ε"
+    
+    def standard_part(self) -> Fraction:
+        """The standard part map: rounds infinitesimals to 0."""
+        return self.real
+    
+    def is_infinitesimal(self) -> bool:
+        """Check if this element is infinitesimal (real part = 0, inf part > 0)."""
+        return self.real == Fraction(0) and self.inf > Fraction(0)
+    
+    @staticmethod
+    def epsilon() -> 'NonArchElement':
+        return NonArchElement(Fraction(0), Fraction(1))
+    
+    @staticmethod
+    def from_rational(q: Fraction) -> 'NonArchElement':
+        return NonArchElement(q)
 
 
-def bayesian_update(prior: List[Fraction], likelihood: List[Fraction]) -> List[Fraction]:
-    """Bayesian update: posterior ∝ likelihood * prior."""
-    evidence = sum(l * p for l, p in zip(likelihood, prior))
-    assert evidence > 0, "Evidence must be positive"
-    return [(l * p) / evidence for l, p in zip(likelihood, prior)]
+def non_archimedean_demo():
+    """
+    Demonstrates infinitesimal probability on a finite set using Q(ε).
+    """
+    print("=" * 70)
+    print("NON-ARCHIMEDEAN PROBABILITY SPACE")
+    print("=" * 70)
+    
+    eps = NonArchElement.epsilon()
+    
+    print(f"\n  ε = {eps}")
+    print(f"  Is ε infinitesimal? {eps.is_infinitesimal()}")
+    print(f"  Standard part of ε: {eps.standard_part()}")
+    
+    # For any n, n*ε has real part 0, so n*ε < 1
+    for n in [10, 100, 1000, 10**6]:
+        n_eps = NonArchElement(Fraction(0), Fraction(n))
+        one = NonArchElement.from_rational(Fraction(1))
+        print(f"  {n}·ε = {n_eps}, < 1? {n_eps < one}")
+    
+    print("\n  → ε is truly infinitesimal: n·ε < 1 for ALL n.")
+    print()
 
 
-def refines(mu: List[Fraction], nu: List[Fraction]) -> bool:
-    """Check if mu refines nu (preserves all distinctions)."""
-    n = len(mu)
-    for i in range(n):
-        for j in range(i + 1, n):
-            if nu[i] != nu[j] and mu[i] == mu[j]:
-                return False
-    return True
+# =============================================================================
+# 3. Uniform Infinitesimal Measure on Fin n
+# =============================================================================
+
+def uniform_measure_demo():
+    """
+    Constructs uniform measures on finite sets and shows properties.
+    """
+    print("=" * 70)
+    print("UNIFORM INFINITESIMAL MEASURE ON FINITE SETS")
+    print("=" * 70)
+    
+    for n in [3, 5, 10, 100]:
+        w = Fraction(1, n)
+        total = sum(w for _ in range(n))
+        print(f"\n  Fin {n}: weight = 1/{n}, total = {total}")
+        
+        # Show finite additivity
+        if n >= 5:
+            A = list(range(n // 2))
+            B = list(range(n // 2, n))
+            mu_A = sum(w for _ in A)
+            mu_B = sum(w for _ in B)
+            mu_union = sum(w for _ in range(n))
+            print(f"    A = {{0,...,{n//2-1}}}: μ(A) = {mu_A}")
+            print(f"    B = {{{n//2},...,{n-1}}}: μ(B) = {mu_B}")
+            print(f"    μ(A∪B) = {mu_union} = μ(A) + μ(B) = {mu_A + mu_B}")
+    print()
 
 
-def demo_perturbation():
-    """Demonstrate infinitesimal perturbation."""
-    print("=" * 60)
-    print("DEMO 1: Infinitesimal Perturbation")
-    print("=" * 60)
+# =============================================================================
+# 4. The Standard Part Paradox
+# =============================================================================
+
+def standard_part_paradox_demo():
+    """
+    Demonstrates the Standard Part Paradox: if all weights are infinitesimal,
+    their standard parts are all 0, yet must sum to 1.
+    """
+    print("=" * 70)
+    print("THE STANDARD PART PARADOX")
+    print("=" * 70)
     
     n = 5
-    # Use eps = 1/10000 as a "near-infinitesimal"
-    eps = Fraction(1, 10000)
-    weights = [-2, -1, 0, 1, 2]  # Sum = 0
+    eps = NonArchElement.epsilon()
+    weights = [NonArchElement(Fraction(0), Fraction(1, n)) for _ in range(n)]
     
-    uniform = uniform_measure(n)
-    perturbed = perturbed_measure(n, weights, eps)
+    print(f"\n  {n} points, each with weight ε/{n} = {weights[0]}")
     
-    print(f"\nUniform measure on {n} elements:")
-    for i, p in enumerate(uniform):
-        print(f"  P({i}) = {p} = {float(p):.6f}")
-    print(f"  Valid: {is_valid_pmf(uniform)}")
-    print(f"  Fully discriminating: {is_fully_discriminating(uniform)}")
+    total = NonArchElement(Fraction(0), Fraction(0))
+    for w in weights:
+        total = total + w
+    print(f"  Total weight = {total}")
     
-    print(f"\nPerturbed measure (ε = {eps}, weights = {weights}):")
-    for i, p in enumerate(perturbed):
-        print(f"  P({i}) = {p} = {float(p):.10f}")
-    print(f"  Valid: {is_valid_pmf(perturbed)}")
-    print(f"  Fully discriminating: {is_fully_discriminating(perturbed)}")
-    print(f"  Sum = {sum(perturbed)}")
+    # Standard parts
+    std_parts = [w.standard_part() for w in weights]
+    std_total = sum(std_parts)
+    print(f"\n  Standard part of each weight: {std_parts[0]}")
+    print(f"  Sum of standard parts: {std_total}")
+    print(f"  Standard part of total: {total.standard_part()}")
+    
+    print(f"\n  PARADOX: Each st(wᵢ) = 0, so Σ st(wᵢ) = 0")
+    print(f"  But if total = 1 (not ε), then st(Σ wᵢ) = st(1) = 1")
+    print(f"  This means st(Σ wᵢ) ≠ Σ st(wᵢ) when all weights are infinitesimal!")
+    
+    print(f"\n  RESOLUTION (Theorem NAPA.no_infinitesimal_valued):")
+    print(f"  No NAPA can have all infinitesimal weights.")
+    print(f"  An additive standard part map CANNOT coexist with")
+    print(f"  all-infinitesimal probability. This is a fundamental")
+    print(f"  incompatibility theorem.")
+    print()
 
 
-def demo_dual_impossibility():
-    """Demonstrate the dual impossibility theorem numerically."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Dual Impossibility Theorem")
-    print("=" * 60)
+# =============================================================================
+# 5. Bayes' Rule with Infinitesimal Conditioning
+# =============================================================================
+
+def bayes_demo():
+    """
+    Demonstrates Bayes' rule in non-Archimedean probability.
+    """
+    print("=" * 70)
+    print("BAYES' RULE IN NON-ARCHIMEDEAN PROBABILITY")
+    print("=" * 70)
     
-    # Archimedean direction: eps = 0.01, sums diverge
-    eps_arch = 0.01
-    print(f"\nArchimedean direction (ε = {eps_arch}):")
-    print("  Partial sums of uniform ε-probability on ℕ:")
-    for n in [10, 50, 100, 500, 1000]:
-        s = n * eps_arch
-        print(f"  Sum over {n:4d} elements: {s:8.2f} {'> 1 ✗' if s > 1 else '≤ 1 ✓'}")
+    # Example: 4 points with weights 1/2, 1/4, 1/8, 1/8
+    weights = [Fraction(1, 2), Fraction(1, 4), Fraction(1, 8), Fraction(1, 8)]
+    n = len(weights)
     
-    # Non-Archimedean direction: eps "infinitesimal" → eps < 1/(n+1)
-    print(f"\nNon-Archimedean direction (ε < 1/(n+1) for all n):")
-    print("  For any finite set of size n, sum = n·ε < n/(n+1) < 1:")
-    for n in [10, 100, 1000, 10000]:
-        bound = Fraction(n, n + 1)
-        print(f"  n = {n:5d}: n·ε < {bound} = {float(bound):.10f} < 1 ✓")
+    A = {0, 1}  # First two points
+    B = {1, 2}  # Middle two points
+    
+    mu_A = sum(weights[i] for i in A)
+    mu_B = sum(weights[i] for i in B)
+    mu_AB = sum(weights[i] for i in A & B)
+    
+    P_A_given_B = mu_AB / mu_B
+    P_B_given_A = mu_AB / mu_A
+    
+    print(f"\n  Weights: {weights}")
+    print(f"  A = {A}, B = {B}")
+    print(f"  μ(A) = {mu_A}, μ(B) = {mu_B}, μ(A∩B) = {mu_AB}")
+    print(f"  P(A|B) = {P_A_given_B}")
+    print(f"  P(B|A) = {P_B_given_A}")
+    print(f"  P(A|B)·μ(B) = {P_A_given_B * mu_B}")
+    print(f"  P(B|A)·μ(A) = {P_B_given_A * mu_A}")
+    print(f"  Equal? {P_A_given_B * mu_B == P_B_given_A * mu_A} ✓ (Bayes)")
+    print()
 
 
-def demo_product():
-    """Demonstrate product measures."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Product Measure")
-    print("=" * 60)
-    
-    eps = Fraction(1, 10000)
-    mu = perturbed_measure(3, [-1, 0, 1], eps)
-    nu = perturbed_measure(2, [-1, 1], eps)
-    
-    print(f"\nMeasure μ on {{0,1,2}}:")
-    for i, p in enumerate(mu):
-        print(f"  μ({i}) = {float(p):.8f}")
-    
-    print(f"\nMeasure ν on {{0,1}}:")
-    for i, p in enumerate(nu):
-        print(f"  ν({i}) = {float(p):.8f}")
-    
-    prod = product_measure(mu, nu)
-    print(f"\nProduct measure μ×ν on {{0,1,2}}×{{0,1}}:")
-    for (i, j), p in sorted(prod.items()):
-        print(f"  (μ×ν)({i},{j}) = {float(p):.12f}")
-    print(f"  Sum = {sum(prod.values())}")
-    print(f"  Valid: {sum(prod.values()) == 1}")
+# =============================================================================
+# 6. Complementation and Monotonicity
+# =============================================================================
 
-
-def demo_conditional():
-    """Demonstrate conditional probability."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Conditional Probability")
-    print("=" * 60)
+def complementation_demo():
+    """
+    Demonstrates the complementation property μ(Aᶜ) = 1 - μ(A).
+    """
+    print("=" * 70)
+    print("COMPLEMENTATION AND MONOTONICITY")
+    print("=" * 70)
     
-    eps = Fraction(1, 10000)
-    pmf = perturbed_measure(4, [-3, -1, 1, 3], eps)
+    weights = [Fraction(3, 10), Fraction(1, 5), Fraction(1, 10), 
+               Fraction(1, 4), Fraction(3, 20)]
+    n = len(weights)
     
-    print(f"\nMeasure on {{0,1,2,3}}:")
-    for i, p in enumerate(pmf):
-        print(f"  P({i}) = {float(p):.10f}")
+    print(f"\n  Weights: {[str(w) for w in weights]}")
+    print(f"  Total: {sum(weights)}")
     
-    event = [0, 1]
-    cond = conditional_prob(pmf, event)
-    print(f"\nConditional on event {{{', '.join(map(str, event))}}}:")
-    for i, p in cond.items():
-        print(f"  P({i}|event) = {float(p):.10f}")
-    print(f"  Sum over event = {sum(cond[i] for i in event)}")
-
-
-def demo_bayesian():
-    """Demonstrate Bayesian update with near-infinitesimal prior."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Bayesian Update")
-    print("=" * 60)
+    A = {0, 2}
+    mu_A = sum(weights[i] for i in A)
+    complement_A = set(range(n)) - A
+    mu_comp = sum(weights[i] for i in complement_A)
     
-    eps = Fraction(1, 10000)
-    prior = perturbed_measure(3, [-1, 0, 1], eps)
-    likelihood = [Fraction(9, 10), Fraction(1, 10), Fraction(5, 10)]
+    print(f"\n  A = {A}: μ(A) = {mu_A}")
+    print(f"  Aᶜ = {complement_A}: μ(Aᶜ) = {mu_comp}")
+    print(f"  1 - μ(A) = {1 - mu_A}")
+    print(f"  μ(Aᶜ) = 1 - μ(A)? {mu_comp == 1 - mu_A} ✓")
     
-    posterior = bayesian_update(prior, likelihood)
-    
-    print(f"\nPrior (perturbed uniform, ε = {eps}):")
-    for i, p in enumerate(prior):
-        print(f"  P(H{i}) = {float(p):.10f}")
-    
-    print(f"\nLikelihood P(D|Hᵢ):")
-    for i, l in enumerate(likelihood):
-        print(f"  P(D|H{i}) = {float(l):.4f}")
-    
-    print(f"\nPosterior P(Hᵢ|D):")
-    for i, p in enumerate(posterior):
-        print(f"  P(H{i}|D) = {float(p):.10f}")
-    print(f"  Sum = {sum(posterior)}")
-
-
-def demo_information():
-    """Demonstrate information ordering."""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Information Ordering")
-    print("=" * 60)
-    
-    eps = Fraction(1, 10000)
-    uniform = uniform_measure(4)
-    perturbed1 = perturbed_measure(4, [-3, -1, 1, 3], eps)
-    perturbed2 = perturbed_measure(4, [-1, 0, 0, 1], eps)  # Not injective!
-    
-    print(f"\nUniform: {[float(p) for p in uniform]}")
-    print(f"Perturbed1 (injective weights): {[float(p) for p in perturbed1]}")
-    print(f"Perturbed2 (non-injective weights): {[float(p) for p in perturbed2]}")
-    
-    print(f"\nPerturbed1 refines uniform: {refines(perturbed1, uniform)}")
-    print(f"Perturbed2 refines uniform: {refines(perturbed2, uniform)}")
-    print(f"Uniform refines perturbed1: {refines(uniform, perturbed1)}")
-    print(f"Perturbed1 fully discriminating: {is_fully_discriminating(perturbed1)}")
-    print(f"Perturbed2 fully discriminating: {is_fully_discriminating(perturbed2)}")
+    # Monotonicity
+    B = {0, 1, 2}
+    mu_B = sum(weights[i] for i in B)
+    print(f"\n  A = {A} ⊆ B = {B}")
+    print(f"  μ(A) = {mu_A} ≤ μ(B) = {mu_B}? {mu_A <= mu_B} ✓")
+    print()
 
 
 if __name__ == "__main__":
-    demo_perturbation()
-    demo_dual_impossibility()
-    demo_product()
-    demo_conditional()
-    demo_bayesian()
-    demo_information()
+    print("\n" + "█" * 70)
+    print("  NON-ARCHIMEDEAN PROBABILITY THEORY — DEMONSTRATIONS")
+    print("█" * 70 + "\n")
+    
+    archimedean_impossibility_demo()
+    non_archimedean_demo()
+    uniform_measure_demo()
+    standard_part_paradox_demo()
+    bayes_demo()
+    complementation_demo()
+    
+    print("█" * 70)
+    print("  ALL DEMONSTRATIONS COMPLETE")
+    print("█" * 70)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Dual Impossibility Theorem for Surreal Probability
+Visualization: The Archimedean Barrier
 
-Shows both directions of the impossibility:
-1. Archimedean: partial sums of ε diverge (left panel)
-2. Non-Archimedean: partial sums of infinitesimal ε are trapped below 1 (right panel)
+Shows how in Archimedean fields, n·w inevitably exceeds 1 for any w > 0,
+while in non-Archimedean fields, n·ε stays below 1 for all n.
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import numpy as np
 
 
-def plot_dual_impossibility():
+def plot_archimedean_barrier():
+    """Create a visualization of the Archimedean barrier."""
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-    fig.suptitle("Dual Impossibility Theorem for Surreal Probability",
-                 fontsize=16, fontweight='bold', y=0.98)
     
-    # Panel 1: Archimedean direction
-    epsilons = [0.1, 0.05, 0.01, 0.005, 0.001]
-    colors = plt.cm.viridis(np.linspace(0.2, 0.9, len(epsilons)))
+    # Left panel: Archimedean case
+    n_vals = np.arange(1, 51)
     
-    for eps, color in zip(epsilons, colors):
-        n_vals = np.arange(1, int(2.0 / eps) + 10)
-        sums = n_vals * eps
-        ax1.plot(n_vals, sums, color=color, linewidth=2,
-                label=f"ε = {eps}")
+    for w_inv in [5, 10, 20, 50]:
+        w = 1.0 / w_inv
+        cumsum = n_vals * w
+        ax1.plot(n_vals, cumsum, label=f'w = 1/{w_inv}', linewidth=2)
     
-    ax1.axhline(y=1, color='red', linestyle='--', linewidth=2, alpha=0.7,
-               label='Target: sum = 1')
-    ax1.set_xlabel("Number of elements (n)", fontsize=12)
-    ax1.set_ylabel("Partial sum: n · ε", fontsize=12)
-    ax1.set_title("Archimedean Direction\n(ε fixed, n grows → sum diverges)", fontsize=13)
-    ax1.legend(fontsize=9, loc='upper left')
+    ax1.axhline(y=1.0, color='red', linestyle='--', linewidth=2, label='Total = 1')
+    ax1.set_xlabel('Number of points n', fontsize=12)
+    ax1.set_ylabel('n · w (cumulative weight)', fontsize=12)
+    ax1.set_title('Archimedean Field (ℚ, ℝ)\nCumulative weight always exceeds 1', 
+                   fontsize=13, fontweight='bold')
+    ax1.legend(fontsize=10)
     ax1.set_ylim(0, 3)
-    ax1.set_xlim(0, 500)
-    ax1.fill_between([0, 500], 1, 3, alpha=0.1, color='red')
-    ax1.text(250, 2.5, "Sum exceeds 1\n(impossible region)",
-            ha='center', fontsize=11, color='darkred', style='italic')
     ax1.grid(True, alpha=0.3)
     
-    # Panel 2: Non-Archimedean direction
-    n_vals = np.arange(1, 101)
-    bounds = n_vals / (n_vals + 1)
+    # Shade the "forbidden zone" above 1
+    ax1.fill_between(n_vals, 1, 3, alpha=0.1, color='red')
+    ax1.text(25, 2, 'Exceeds total\nmass = 1', ha='center', va='center',
+             fontsize=11, color='red', fontweight='bold')
     
-    ax2.fill_between(n_vals, bounds, 1, alpha=0.15, color='blue',
-                    label='Gap: 1 - n/(n+1)')
-    ax2.plot(n_vals, bounds, 'b-', linewidth=2.5,
-            label='Upper bound: n/(n+1)')
-    ax2.axhline(y=1, color='red', linestyle='--', linewidth=2, alpha=0.7,
-               label='Target: sum = 1')
+    # Right panel: Non-Archimedean case (conceptual)
+    # In non-Archimedean field, n·ε approaches but never reaches 1
+    n_dense = np.linspace(1, 200, 500)
     
-    # Show specific points
-    for n in [5, 10, 25, 50, 100]:
-        if n <= 100:
-            b = n / (n + 1)
-            ax2.plot(n, b, 'ko', markersize=6, zorder=5)
-            ax2.annotate(f'n={n}: {b:.4f}', (n, b),
-                        textcoords="offset points",
-                        xytext=(10, -15 if n % 2 == 0 else 10),
-                        fontsize=8, color='navy')
+    # Use 1 - 1/n as a metaphor for the non-Archimedean behavior
+    ax2.plot(n_dense, 1 - 1/n_dense, color='blue', linewidth=2.5,
+             label='n · ε (conceptual)')
+    ax2.axhline(y=1.0, color='red', linestyle='--', linewidth=2, label='Total = 1')
     
-    ax2.set_xlabel("Number of elements (n)", fontsize=12)
-    ax2.set_ylabel("Upper bound on partial sum", fontsize=12)
-    ax2.set_title("Non-Archimedean Direction\n(ε infinitesimal → sum trapped below 1)", fontsize=13)
-    ax2.legend(fontsize=10, loc='lower right')
-    ax2.set_ylim(0, 1.1)
-    ax2.set_xlim(0, 105)
-    ax2.grid(True, alpha=0.3)
-    ax2.text(50, 0.3, "Sum ≤ n/(n+1) < 1\nfor ALL finite n",
-            ha='center', fontsize=12, color='navy', style='italic',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='lightblue', alpha=0.5))
-    
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
-    plt.savefig("dual_impossibility.png", dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: dual_impossibility.png")
-
-
-def plot_discrimination_power():
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-    fig.suptitle("Discrimination Power of Surreal Probability Measures",
-                 fontsize=16, fontweight='bold', y=0.98)
-    
-    # Panel 1: Uniform vs Perturbed
-    n = 6
-    eps = 0.005
-    weights = [-5, -3, -1, 1, 3, 5]
-    
-    uniform = [1/n] * n
-    perturbed = [1/n + w * eps for w in weights]
-    
-    x = np.arange(n)
-    width = 0.35
-    
-    bars1 = ax1.bar(x - width/2, uniform, width, label='Uniform',
-                   color='steelblue', alpha=0.8, edgecolor='navy')
-    bars2 = ax1.bar(x + width/2, perturbed, width, label='Perturbed (ε-shifted)',
-                   color='coral', alpha=0.8, edgecolor='darkred')
-    
-    ax1.set_xlabel("Element index", fontsize=12)
-    ax1.set_ylabel("Probability", fontsize=12)
-    ax1.set_title("Uniform vs Perturbed Measure\n(6 elements)", fontsize=13)
-    ax1.legend(fontsize=11)
-    ax1.set_xticks(x)
-    ax1.set_xticklabels([f'a{i}' for i in range(n)])
-    ax1.grid(True, alpha=0.3, axis='y')
-    ax1.set_ylim(0, max(perturbed) * 1.3)
-    
-    # Annotate the infinitesimal differences
-    for i in range(n):
-        diff = perturbed[i] - uniform[i]
-        sign = '+' if diff >= 0 else ''
-        ax1.annotate(f'{sign}{diff:.3f}',
-                    (x[i] + width/2, perturbed[i]),
-                    textcoords="offset points", xytext=(0, 5),
-                    fontsize=8, ha='center', color='darkred')
-    
-    # Panel 2: Information content vs epsilon
-    n = 5
-    weights = [-2, -1, 0, 1, 2]
-    epsilons = np.logspace(-6, -1, 50)
-    
-    spreads = [max(1/n + w * e for w in weights) - min(1/n + w * e for w in weights)
-              for e in epsilons]
-    
-    ax2.semilogx(epsilons, spreads, 'b-', linewidth=2.5)
-    ax2.fill_between(epsilons, 0, spreads, alpha=0.2, color='blue')
-    ax2.set_xlabel("ε (infinitesimal parameter)", fontsize=12)
-    ax2.set_ylabel("Spread: max(μ) - min(μ)", fontsize=12)
-    ax2.set_title("Discrimination Spread vs ε\n(grows linearly with ε)", fontsize=13)
+    ax2.set_xlabel('Number of points n', fontsize=12)
+    ax2.set_ylabel('n · ε (cumulative weight)', fontsize=12)
+    ax2.set_title('Non-Archimedean Field (with infinitesimals)\nn · ε < 1 for ALL n', 
+                   fontsize=13, fontweight='bold')
+    ax2.legend(fontsize=10)
+    ax2.set_ylim(0, 1.5)
     ax2.grid(True, alpha=0.3)
     
-    # Mark key points
-    for e in [1e-5, 1e-3, 1e-1]:
-        s = max(1/n + w * e for w in weights) - min(1/n + w * e for w in weights)
-        ax2.plot(e, s, 'ro', markersize=8, zorder=5)
-        ax2.annotate(f'ε={e:.0e}\nspread={s:.4f}',
-                    (e, s), textcoords="offset points",
-                    xytext=(15, 5), fontsize=9,
-                    arrowprops=dict(arrowstyle='->', color='red', lw=1.5))
+    # Shade the safe zone below 1
+    ax2.fill_between(n_dense, 0, 1 - 1/n_dense, alpha=0.1, color='green')
+    ax2.text(100, 0.4, 'Always below\ntotal mass', ha='center', va='center',
+             fontsize=11, color='green', fontweight='bold')
     
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
-    plt.savefig("discrimination_power.png", dpi=150, bbox_inches='tight')
+    plt.tight_layout()
+    plt.savefig('archimedean_barrier.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: discrimination_power.png")
+    print("Saved: archimedean_barrier.png")
 
 
 if __name__ == "__main__":
-    plot_dual_impossibility()
-    plot_discrimination_power()
+    plot_archimedean_barrier()

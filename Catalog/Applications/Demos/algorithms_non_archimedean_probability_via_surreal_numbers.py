@@ -1,234 +1,337 @@
 #!/usr/bin/env python3
 """
-Algorithms for Surreal Probability Theory
+Non-Archimedean Probability Theory — Algorithms
 
-Type-hinted implementations of the core algorithms from the surreal probability
-framework, operating on rational arithmetic for exact computation.
+Type-hinted implementations of the core algorithms for non-Archimedean
+probability measures.
 """
 
 from fractions import Fraction
-from typing import List, Dict, Tuple, Optional, Callable
-import itertools
+from typing import Dict, Set, FrozenSet, List, Tuple, Callable, Optional
+from dataclasses import dataclass
+from functools import reduce
 
 
-def construct_zero_sum_weights(n: int) -> List[int]:
+# =============================================================================
+# Core Types
+# =============================================================================
+
+@dataclass(frozen=True)
+class NonArchElement:
     """
-    Construct a zero-sum weight vector with all distinct entries.
+    Element of the non-Archimedean field Q(ε), represented as a + bε
+    where ε is a formal infinitesimal.
     
-    Algorithm: Use weights (-floor(n/2), ..., -1, 0, 1, ..., ceil(n/2)-1)
-    adjusted to sum to zero.
-    
-    Args:
-        n: Number of elements (must be >= 1)
-    
-    Returns:
-        List of n distinct integers summing to 0
+    Ordered lexicographically on (real, inf).
     """
-    if n == 1:
-        return [0]
-    # Start with -floor((n-1)/2) to ceil((n-1)/2)
-    weights = list(range(-(n - 1) // 2, (n - 1) // 2 + 1))
-    if len(weights) < n:
-        weights.append(weights[-1] + 1)
-    weights = weights[:n]
-    # Adjust last weight to make sum zero
-    weights[-1] = -sum(weights[:-1])
-    return weights
+    real: Fraction
+    inf: Fraction = Fraction(0)
+    
+    def __add__(self, other: 'NonArchElement') -> 'NonArchElement':
+        return NonArchElement(self.real + other.real, self.inf + other.inf)
+    
+    def __sub__(self, other: 'NonArchElement') -> 'NonArchElement':
+        return NonArchElement(self.real - other.real, self.inf - other.inf)
+    
+    def __mul__(self, other: 'NonArchElement') -> 'NonArchElement':
+        return NonArchElement(
+            self.real * other.real,
+            self.real * other.inf + self.inf * other.real
+        )
+    
+    def __truediv__(self, other: 'NonArchElement') -> 'NonArchElement':
+        if other.real == 0:
+            if other.inf == 0:
+                raise ZeroDivisionError
+            # Division by pure infinitesimal: (a + bε) / (cε) = b/c + (a/c)/ε
+            # This takes us out of the first-order infinitesimal ring
+            raise ValueError("Division by pure infinitesimal requires higher-order terms")
+        # (a + bε) / (c + dε) ≈ a/c + (bc - ad)/(c²) ε
+        r = self.real / other.real
+        i = (self.inf * other.real - self.real * other.inf) / (other.real ** 2)
+        return NonArchElement(r, i)
+    
+    def __lt__(self, other: 'NonArchElement') -> bool:
+        return (self.real, self.inf) < (other.real, other.inf)
+    
+    def __le__(self, other: 'NonArchElement') -> bool:
+        return (self.real, self.inf) <= (other.real, other.inf)
+    
+    def __neg__(self) -> 'NonArchElement':
+        return NonArchElement(-self.real, -self.inf)
+    
+    def standard_part(self) -> Fraction:
+        """The standard part map st: Q(ε) → Q."""
+        return self.real
+    
+    def is_infinitesimal(self) -> bool:
+        """True if this element is a positive infinitesimal."""
+        return self.real == 0 and self.inf > 0
+    
+    def is_finite(self) -> bool:
+        """True if the real part is finite (always true for Q(ε))."""
+        return True
+    
+    def __repr__(self) -> str:
+        if self.inf == 0:
+            return f"NAE({self.real})"
+        elif self.real == 0:
+            return f"NAE({self.inf}ε)"
+        else:
+            return f"NAE({self.real} + {self.inf}ε)"
+
+    @staticmethod
+    def zero() -> 'NonArchElement':
+        return NonArchElement(Fraction(0))
+    
+    @staticmethod
+    def one() -> 'NonArchElement':
+        return NonArchElement(Fraction(1))
+    
+    @staticmethod
+    def epsilon() -> 'NonArchElement':
+        return NonArchElement(Fraction(0), Fraction(1))
 
 
-def perturbed_uniform_pmf(
-    n: int,
-    weights: List[int],
-    epsilon: Fraction
-) -> List[Fraction]:
+# =============================================================================
+# Algorithm 1: Finitely Additive Probability Measure
+# =============================================================================
+
+class FinAddProbMeasure:
     """
-    Compute the infinitesimally perturbed uniform PMF.
+    A finitely additive probability measure on a finite set.
     
-    μ(i) = 1/n + w(i) * ε
-    
-    Args:
-        n: Number of elements
-        weights: Zero-sum weight vector
-        epsilon: The infinitesimal (or near-infinitesimal) value
-    
-    Returns:
-        List of probabilities
+    Invariants:
+    - All weights are non-negative
+    - Weights sum to 1
     """
-    base = Fraction(1, n)
-    return [base + Fraction(w) * epsilon for w in weights]
+    
+    def __init__(self, weights: Dict[int, NonArchElement]):
+        """
+        Initialize with a dictionary mapping elements to their weights.
+        
+        Args:
+            weights: Map from element indices to non-negative weights summing to 1.
+        
+        Raises:
+            ValueError: If weights don't sum to 1 or contain negative values.
+        """
+        total = reduce(lambda a, b: a + b, weights.values(), NonArchElement.zero())
+        if total != NonArchElement.one():
+            raise ValueError(f"Weights must sum to 1, got {total}")
+        for k, v in weights.items():
+            if v < NonArchElement.zero():
+                raise ValueError(f"Weight for {k} is negative: {v}")
+        self._weights = dict(weights)
+    
+    def weight(self, element: int) -> NonArchElement:
+        """Get the weight of an element."""
+        return self._weights.get(element, NonArchElement.zero())
+    
+    def measure(self, subset: Set[int]) -> NonArchElement:
+        """
+        Compute the measure of a subset.
+        
+        Algorithm: Sum weights over the subset.
+        Complexity: O(|subset|)
+        """
+        return reduce(
+            lambda a, b: a + b,
+            (self.weight(i) for i in subset),
+            NonArchElement.zero()
+        )
+    
+    def is_uniform(self) -> bool:
+        """Check if this is a uniform measure."""
+        vals = list(self._weights.values())
+        return all(v == vals[0] for v in vals)
+    
+    def is_infinitesimal_valued(self) -> bool:
+        """Check if all weights are infinitesimal."""
+        return all(v.is_infinitesimal() for v in self._weights.values())
+    
+    @property
+    def support(self) -> Set[int]:
+        """The support of the measure."""
+        return {k for k, v in self._weights.items() if v > NonArchElement.zero()}
+    
+    @property
+    def universe(self) -> Set[int]:
+        """The full universe."""
+        return set(self._weights.keys())
 
 
-def product_pmf(
-    mu: List[Fraction],
-    nu: List[Fraction]
-) -> List[List[Fraction]]:
+# =============================================================================
+# Algorithm 2: Uniform Measure Construction
+# =============================================================================
+
+def construct_uniform_measure(n: int) -> FinAddProbMeasure:
     """
-    Compute the product PMF of two measures.
+    Construct a uniform probability measure on {0, 1, ..., n-1}.
     
-    (μ × ν)(i, j) = μ(i) * ν(j)
+    Each point gets weight 1/n.
     
-    Args:
-        mu: First PMF
-        nu: Second PMF
+    Pseudocode:
+        INPUT: n > 0
+        w ← 1/n
+        FOR i = 0 TO n-1:
+            weights[i] ← w
+        VERIFY: Σ weights = 1
+        RETURN FinAddProbMeasure(weights)
     
-    Returns:
-        2D array of product probabilities
+    Complexity: O(n)
     """
-    return [[p * q for q in nu] for p in mu]
+    if n <= 0:
+        raise ValueError("n must be positive")
+    w = NonArchElement(Fraction(1, n))
+    weights = {i: w for i in range(n)}
+    return FinAddProbMeasure(weights)
 
 
-def bayesian_update(
-    prior: List[Fraction],
-    likelihood: List[Fraction]
-) -> List[Fraction]:
-    """
-    Perform Bayesian update.
-    
-    posterior(i) = likelihood(i) * prior(i) / evidence
-    where evidence = Σ likelihood(j) * prior(j)
-    
-    Args:
-        prior: Prior PMF
-        likelihood: Likelihood values P(data | hypothesis_i)
-    
-    Returns:
-        Posterior PMF
-    """
-    evidence = sum(l * p for l, p in zip(likelihood, prior))
-    if evidence <= 0:
-        raise ValueError("Evidence must be positive")
-    return [(l * p) / evidence for l, p in zip(likelihood, prior)]
-
+# =============================================================================
+# Algorithm 3: Conditional Probability
+# =============================================================================
 
 def conditional_probability(
-    pmf: List[Fraction],
-    event: List[int]
-) -> List[Fraction]:
+    mu: FinAddProbMeasure,
+    A: Set[int],
+    B: Set[int]
+) -> NonArchElement:
     """
-    Compute conditional probability P(· | event).
+    Compute P(A | B) = μ(A ∩ B) / μ(B).
     
-    Args:
-        pmf: The probability mass function
-        event: List of indices in the conditioning event
+    In non-Archimedean fields, this is well-defined even when μ(B)
+    is infinitesimal (but nonzero).
     
-    Returns:
-        Conditional PMF (0 outside event)
+    Pseudocode:
+        INPUT: measure μ, events A, B
+        REQUIRE: μ(B) ≠ 0
+        intersection ← A ∩ B
+        RETURN μ(intersection) / μ(B)
+    
+    Complexity: O(|A| + |B|)
     """
-    event_prob = sum(pmf[i] for i in event)
-    if event_prob <= 0:
-        raise ValueError("Cannot condition on zero-probability event")
-    result = [Fraction(0)] * len(pmf)
-    for i in event:
-        result[i] = pmf[i] / event_prob
-    return result
+    mu_B = mu.measure(B)
+    if mu_B == NonArchElement.zero():
+        raise ValueError("Cannot condition on event with zero probability")
+    mu_AB = mu.measure(A & B)
+    return mu_AB / mu_B
 
 
-def discrimination_power(pmf: List[Fraction]) -> int:
+# =============================================================================
+# Algorithm 4: Standard Part Map
+# =============================================================================
+
+def standard_part_measure(
+    mu: FinAddProbMeasure
+) -> Dict[int, Fraction]:
     """
-    Count the number of distinct probability values in the PMF.
+    Apply the standard part map to obtain a real-valued measure.
     
-    A fully discriminating measure has discrimination_power = n.
-    The uniform measure has discrimination_power = 1.
+    Pseudocode:
+        INPUT: non-Archimedean measure μ
+        FOR each element i in universe:
+            st_weights[i] ← st(μ.weight(i))
+        RETURN st_weights
     
-    Args:
-        pmf: Probability mass function
+    Note: The resulting weights may NOT sum to 1 if the original
+    measure is infinitesimal-valued (the Standard Part Paradox).
     
-    Returns:
-        Number of distinct probability values
+    Complexity: O(n)
     """
-    return len(set(pmf))
+    return {i: mu.weight(i).standard_part() for i in mu.universe}
 
 
-def information_content(pmf: List[Fraction]) -> Dict[str, object]:
+# =============================================================================
+# Algorithm 5: Verify Finite Additivity
+# =============================================================================
+
+def verify_finite_additivity(
+    mu: FinAddProbMeasure,
+    A: Set[int],
+    B: Set[int]
+) -> Tuple[bool, str]:
     """
-    Compute information-theoretic properties of a surreal PMF.
+    Verify that μ(A ∪ B) = μ(A) + μ(B) - μ(A ∩ B) (inclusion-exclusion).
+    For disjoint sets, this simplifies to μ(A ∪ B) = μ(A) + μ(B).
     
-    Returns:
-        Dictionary with:
-        - 'discrimination_power': number of distinct probabilities
-        - 'fully_discriminating': whether all probabilities are distinct
-        - 'is_uniform': whether all probabilities are equal
-        - 'max_prob': maximum probability
-        - 'min_prob': minimum probability
-        - 'spread': max_prob - min_prob
+    Pseudocode:
+        INPUT: measure μ, events A, B
+        lhs ← μ(A ∪ B)
+        rhs ← μ(A) + μ(B) - μ(A ∩ B)
+        RETURN lhs == rhs
+    
+    Complexity: O(|A| + |B|)
     """
-    dp = discrimination_power(pmf)
-    max_p = max(pmf)
-    min_p = min(pmf)
-    return {
-        'discrimination_power': dp,
-        'fully_discriminating': dp == len(pmf),
-        'is_uniform': dp == 1,
-        'max_prob': float(max_p),
-        'min_prob': float(min_p),
-        'spread': float(max_p - min_p),
-    }
+    lhs = mu.measure(A | B)
+    mu_A = mu.measure(A)
+    mu_B = mu.measure(B)
+    mu_AB = mu.measure(A & B)
+    rhs = mu_A + mu_B - mu_AB
+    
+    is_disjoint = len(A & B) == 0
+    
+    if lhs == rhs:
+        msg = (f"✓ Additivity holds: μ(A∪B) = {lhs} = μ(A) + μ(B)"
+               + (" - μ(A∩B)" if not is_disjoint else "")
+               + f" = {rhs}")
+        return True, msg
+    else:
+        msg = f"✗ FAILURE: μ(A∪B) = {lhs} ≠ {rhs}"
+        return False, msg
 
 
-def enumerate_valid_weights(n: int, bound: int) -> List[List[int]]:
-    """
-    Enumerate all valid perturbation weight vectors:
-    - n integers, each in [-bound, bound]
-    - summing to 0
-    - all distinct (for full discrimination)
-    
-    Args:
-        n: Number of elements
-        bound: Maximum absolute weight
-    
-    Returns:
-        List of valid weight vectors
-    """
-    valid = []
-    values = range(-bound, bound + 1)
-    for combo in itertools.permutations(values, n):
-        w = list(combo)
-        if sum(w) == 0 and len(set(w)) == n:
-            valid.append(w)
-    return valid
+# =============================================================================
+# Algorithm 6: Archimedean Test
+# =============================================================================
 
-
-def infinitesimal_partial_sums(
-    n_terms: int,
-    eps_bound: Fraction
-) -> List[Tuple[int, Fraction, bool]]:
+def archimedean_test(w: Fraction, max_n: int = 10000) -> Optional[int]:
     """
-    Demonstrate the non-Archimedean impossibility:
-    if ε < 1/(k+1) for all k, then k·ε < k/(k+1) < 1.
+    For a positive rational w, find the smallest n such that n*w ≥ 1.
+    This witnesses the Archimedean property.
     
-    Args:
-        n_terms: Number of terms to compute
-        eps_bound: Upper bound function (here: 1/(k+1))
+    Returns None if w ≤ 0 (no witness exists for non-positive).
     
-    Returns:
-        List of (k, upper_bound_on_sum, sum_less_than_1)
+    Pseudocode:
+        INPUT: w > 0
+        n ← ⌈1/w⌉
+        RETURN n
+    
+    Complexity: O(1)
     """
-    results = []
-    for k in range(1, n_terms + 1):
-        bound = Fraction(k, k + 1)
-        results.append((k, bound, bound < 1))
-    return results
+    if w <= 0:
+        return None
+    import math
+    return math.ceil(Fraction(1) / w)
 
 
 if __name__ == "__main__":
-    print("=== Surreal Probability Algorithms ===\n")
+    # Quick smoke test
+    print("=== Algorithm Smoke Tests ===\n")
     
-    # Construct weights
-    for n in [3, 5, 7]:
-        w = construct_zero_sum_weights(n)
-        print(f"Zero-sum weights for n={n}: {w} (sum={sum(w)})")
+    # Test uniform measure
+    mu = construct_uniform_measure(5)
+    print(f"Uniform(5): weight(0) = {mu.weight(0)}")
+    print(f"  measure({{0,1}}) = {mu.measure({0, 1})}")
+    print(f"  measure(univ) = {mu.measure(mu.universe)}")
     
-    # Enumerate valid weights for small cases
-    print(f"\nValid weight vectors for n=3, bound=2:")
-    valid = enumerate_valid_weights(3, 2)
-    for v in valid[:10]:
-        print(f"  {v}")
-    print(f"  Total: {len(valid)}")
+    # Test finite additivity
+    ok, msg = verify_finite_additivity(mu, {0, 1}, {3, 4})
+    print(f"  {msg}")
     
-    # Information content comparison
-    eps = Fraction(1, 10000)
-    uniform = perturbed_uniform_pmf(4, [0, 0, 0, 0], Fraction(0))
-    perturbed = perturbed_uniform_pmf(4, [-3, -1, 1, 3], eps)
+    ok, msg = verify_finite_additivity(mu, {0, 1, 2}, {2, 3, 4})
+    print(f"  {msg}")
     
-    print(f"\nInformation content (uniform): {information_content(uniform)}")
-    print(f"Information content (perturbed): {information_content(perturbed)}")
+    # Test conditional probability
+    cp = conditional_probability(mu, {0}, {0, 1, 2})
+    print(f"  P({{0}} | {{0,1,2}}) = {cp}")
+    
+    # Test Archimedean witness
+    n = archimedean_test(Fraction(1, 1000))
+    print(f"\n  Archimedean witness for w=1/1000: n = {n}")
+    
+    # Test standard part
+    st = standard_part_measure(mu)
+    print(f"  Standard part: {st}")
+    
+    print("\n=== All smoke tests passed ===")

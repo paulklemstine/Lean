@@ -1,211 +1,270 @@
-# Non-Archimedean Probability via Surreal-Valued Measures: A Formalized Theory
+# Non-Archimedean Probability Theory: Foundations, Structure, and the Standard Part Paradox
 
 ## Abstract
 
-We develop a rigorous theory of finitely additive probability measures valued in linearly ordered fields, with particular attention to fields containing infinitesimal elements. We introduce the novel mathematical structure of *surreal probability measures* — probability mass functions on finite types valued in an arbitrary linearly ordered field satisfying positivity and normalization axioms. Our main contributions are:
-
-1. A **dual impossibility theorem** establishing that uniform infinitesimal probability on countable sets is impossible from two independent directions: the Archimedean direction (sums diverge) and the non-Archimedean direction (sums are trapped below 1).
-
-2. A **discrimination theorem** showing that infinitesimally perturbed measures on finite types can distinguish all singletons, unlike their real-valued counterparts.
-
-3. An **information ordering** on probability measures, with the uniform measure as the unique minimum and infinitesimally perturbed measures as strict upper bounds.
-
-4. Well-defined **conditional probability** and **product measures** in the surreal probability framework.
-
-All results are machine-verified in Lean 4 with the Mathlib library. The formalization encompasses 15+ theorems with complete proofs.
+We develop a theory of finitely additive probability measures valued in linearly ordered fields that may contain infinitesimal elements. We introduce the **Non-Archimedean Probability Algebra (NAPA)**, a novel mathematical structure that packages a non-Archimedean ordered field, a finitely additive probability measure, and a standard part map connecting the two worlds. We prove that the standard laws of probability — finite additivity, complementation, monotonicity, and Bayes' rule — transfer to the non-Archimedean setting. We then establish two fundamental boundary results: (1) **Archimedean Impossibility** — no Archimedean ordered field admits infinitesimal elements, hence infinitesimal probability is impossible in ℚ or ℝ; (2) **The Standard Part Paradox** — no NAPA on a nonempty type can assign infinitesimal weight to every point, because an additive standard part map cannot reconcile pointwise-zero standard parts with a unit-sum total. All results have been formally verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
-Standard probability theory, as axiomatized by Kolmogorov (1933), employs real-valued measures on σ-algebras. A fundamental consequence of this framework is that in continuous probability spaces, every singleton event has measure zero. This creates well-known difficulties:
+### 1.1 Motivation
 
-- Conditional probability P(A|B) = P(A∩B)/P(B) is undefined when P(B) = 0
-- All individual outcomes in continuous spaces are "impossible" yet occur
-- The uniform measure on finite sets assigns identical probability to all elements, providing no discrimination
+Classical (Kolmogorov) probability theory assigns probability zero to individual points in continuous sample spaces. While mathematically consistent, this creates conceptual and technical difficulties:
 
-Non-standard analysis (Robinson, 1966) offers one resolution via hyperreal infinitesimals. Conway's surreal numbers (1976) provide another, richer number system. However, no complete formalized theory of probability in these extended number systems has been developed.
+- **Conditioning paradoxes**: Conditioning on events of probability zero requires special machinery (regular conditional probabilities, disintegration) that is not always well-behaved.
+- **Philosophical concerns**: If P({x}) = 0 for every x, then every outcome that occurs was "impossible."
+- **Applications**: In Bayesian epistemology, prior probabilities of zero create problems for belief revision (Cromwell's rule).
 
-We address this gap by developing surreal probability theory from first principles in a general algebraic setting, proving both possibility and impossibility results.
+Non-Archimedean probability has been explored informally since the work of Bernstein and Wattenberg (1969) on nonstandard probability and more recently by Benci et al. (2013) on numerosity-based probability. However, rigorous machine-verified foundations have been lacking.
+
+### 1.2 Contributions
+
+1. **Definition of FinAddProb**: A finitely additive probability measure on a finite type, parameterized by a linearly ordered field.
+2. **Definition of NAPA**: A novel structure combining non-Archimedean probability with a standard part map.
+3. **Complete proof of the classical probability laws** in the non-Archimedean setting.
+4. **Archimedean Impossibility Theorem**: Formal proof that Archimedean fields cannot contain infinitesimals.
+5. **Infinitesimal Finite Sum Bound**: For any infinitesimal ε and any n ∈ ℕ, n·ε < 1.
+6. **The Standard Part Paradox**: Proof that no NAPA can have all infinitesimal weights.
+7. **Bayes' Rule**: Verification that Bayes' theorem holds for non-Archimedean conditional probability.
+
+### 1.3 Related Work
+
+- **Robinson's nonstandard analysis** (1966): Introduced rigorous infinitesimals via ultraproducts. Our approach is more algebraic, working with abstract ordered fields.
+- **Conway's surreal numbers** (1976): Provides the motivating number system. Our results apply to surreal numbers (as an ordered additive group) but also to any non-Archimedean ordered field.
+- **Benci, Horsten, Wenmackers** (2013): Non-Archimedean probability using numerosity. Their approach uses a different foundation; ours is field-theoretic.
+- **Nelson's Internal Set Theory** (1977): An axiomatic approach to nonstandard analysis. Our work is constructive at the algebraic level.
 
 ## 2. Definitions
 
 ### 2.1 Infinitesimal Elements
 
-**Definition 2.1** (IsInfinitesimal). Let F be a linearly ordered field. An element ε ∈ F is *infinitesimal* if ε > 0 and ε < 1/n for every positive natural number n.
+**Definition 2.1** (Infinitesimal). Let K be a linearly ordered field. An element x ∈ K is *infinitesimal* if:
+- x > 0, and
+- x < 1/n for every positive natural number n.
 
-This definition captures the essential property: infinitesimals are positive but smaller than every standard rational. Real numbers satisfy the Archimedean property, which is precisely the negation of the existence of infinitesimals.
+**Definition 2.2** (Non-Archimedean Field). A linearly ordered field K *has infinitesimals* if there exists an infinitesimal element x ∈ K.
 
-### 2.2 Surreal Probability Measures
+Equivalently, K is non-Archimedean: it violates the Archimedean axiom, which states that for every x > 0, there exists n ∈ ℕ with n·x > 1.
 
-**Definition 2.2** (SurrealProbMeasure). A *surreal probability measure* on a finite type α valued in a linearly ordered field F is a function μ : α → F satisfying:
-1. (Non-negativity) μ(a) ≥ 0 for all a ∈ α
-2. (Normalization) Σ_{a ∈ α} μ(a) = 1
+### 2.2 Finitely Additive Probability Measure
 
-The measure of a subset S ⊆ α is defined as μ(S) = Σ_{a ∈ S} μ(a).
+**Definition 2.3** (FinAddProb). Let α be a finite type and K a linearly ordered field. A *finitely additive probability measure* on α valued in K consists of:
+- A weight function w : α → K
+- Non-negativity: w(a) ≥ 0 for all a ∈ α
+- Normalization: Σ_{a ∈ α} w(a) = 1
 
-### 2.3 Perturbation Weights
+The *measure* of a finset S ⊆ α is μ(S) = Σ_{a ∈ S} w(a).
 
-**Definition 2.3** (PerturbationWeights). A *perturbation weight assignment* on a finite type α is a function w : α → ℤ satisfying Σ_{a ∈ α} w(a) = 0.
+A measure is *uniform* if there exists w₀ such that w(a) = w₀ for all a.
+A measure is *infinitesimal-valued* if w(a) is infinitesimal for every a.
 
-**Definition 2.4** (Perturbed PMF). The *infinitesimally perturbed uniform measure* with perturbation weights w and infinitesimal ε is:
+### 2.3 Non-Archimedean Probability Algebra (NAPA)
 
-μ_w(a) = 1/|α| + w(a) · ε
+**Definition 2.4** (NAPA). A *Non-Archimedean Probability Algebra* on a finite type α over a linearly ordered field K consists of:
+1. A finitely additive probability measure μ on α valued in K
+2. A *standard part map* st : K → ℝ satisfying:
+   - Monotonicity: x ≤ y ⟹ st(x) ≤ st(y)
+   - Preservation of constants: st(0) = 0, st(1) = 1
+   - Additivity: st(x + y) = st(x) + st(y) for all x, y ∈ K
+   - Infinitesimal annihilation: IsInfinitesimal(x) ⟹ st(x) = 0
 
-### 2.4 Information Ordering
+The NAPA structure formalizes the bridge between non-Archimedean and standard probability.
 
-**Definition 2.5** (Refinement). Measure μ *refines* measure ν if for all a, b ∈ α, ν(a) ≠ ν(b) implies μ(a) ≠ μ(b).
+### 2.4 Conditional Probability
 
-**Definition 2.6** (Strictly More Informative). Measure μ is *strictly more informative* than ν if μ refines ν and there exist a, b with μ(a) ≠ μ(b) but ν(a) = ν(b).
+**Definition 2.5** (Conditional Probability). For a finitely additive probability measure μ and events A, B with μ(B) ≠ 0:
 
-**Definition 2.7** (Fully Discriminating). A measure μ is *fully discriminating* if μ(a) ≠ μ(b) for all a ≠ b.
+P(A | B) = μ(A ∩ B) / μ(B)
+
+In non-Archimedean fields, this is well-defined even when μ(B) is infinitesimal.
 
 ## 3. Main Results
 
-### 3.1 Basic Properties
+### 3.1 Classical Properties Transfer
 
-**Theorem 3.1** (Finite Additivity). For any surreal probability measure μ and disjoint subsets S, T:
-μ(S ∪ T) = μ(S) + μ(T)
+**Theorem 3.1** (Measure of Universe). μ(Ω) = 1.
 
-**Theorem 3.2** (Complement Rule). μ(S) + μ(Sᶜ) = 1.
+*Proof.* Direct from the normalization axiom. □
 
-**Theorem 3.3** (Monotonicity). S ⊆ T implies μ(S) ≤ μ(T).
+**Theorem 3.2** (Finite Additivity). If A, B are disjoint finsets, then μ(A ∪ B) = μ(A) + μ(B).
 
-**Theorem 3.4** (Boundedness). μ(a) ≤ 1 for all a, and μ(S) ≤ 1 for all S.
+*Proof.* The sum over A ∪ B splits into sums over A and B when A ∩ B = ∅. This is Finset.sum_union in Mathlib. □
 
-### 3.2 Dual Impossibility Theorem
+**Theorem 3.3** (Complementation). μ(Aᶜ) = 1 - μ(A).
 
-This is our central structural result, establishing that uniform infinitesimal probability on infinite sets fails from two independent directions.
+*Proof.* Since A and Aᶜ are disjoint with A ∪ Aᶜ = Ω, we have 1 = μ(Ω) = μ(A) + μ(Aᶜ) by finite additivity. □
 
-**Theorem 3.5** (Archimedean Impossibility). In an Archimedean field F, for any ε > 0 and B > 0, there exists a finite set S ⊂ ℕ with Σ_{i ∈ S} ε > B.
+**Theorem 3.4** (Monotonicity). If A ⊆ B, then μ(A) ≤ μ(B).
 
-*Proof sketch*: By the Archimedean property, there exists n ∈ ℕ with n > B/ε. Then S = {0, ..., n-1} has Σ_{i ∈ S} ε = nε > B.
+*Proof.* The sum over A is bounded by the sum over B since all terms are non-negative. □
 
-**Theorem 3.6** (Non-Archimedean Impossibility). If ε is infinitesimal, then for ALL finite subsets S ⊂ ℕ, Σ_{i ∈ S} ε < 1.
+**Theorem 3.5** (Bayes' Rule). If μ(A) ≠ 0 and μ(B) ≠ 0, then:
 
-*Proof sketch*: Let n = |S|. Then Σ_{i ∈ S} ε = nε. Since ε < 1/(n+1), we have nε < n/(n+1) < 1.
+P(A|B) · μ(B) = P(B|A) · μ(A)
 
-**Corollary 3.7** (No Real Infinitesimal). There is no infinitesimal in ℝ. This is the Archimedean property stated in our language.
+*Proof.* Both sides equal μ(A ∩ B), using A ∩ B = B ∩ A and the division-multiplication cancellation. □
 
-**PEGB Analysis for the Dual Impossibility Theorem**:
-- **P**roof: Complete Lean 4 proofs of Theorems 3.5, 3.6, and Corollary 3.7
-- **E**xample: In ℝ, ε = 0.001 gives sum over {0,...,1000} = 1.001 > 1 (Archimedean). In a non-Archimedean field, if ε is infinitesimal, sum over {0,...,999} = 1000ε < 1000 · (1/1001) < 1.
-- **G**eneralization: The theorem works for any linearly ordered field, not just ℝ or the surreals. The dual impossibility is purely algebraic.
-- **B**oundary: The finite case escapes both impossibilities — this is precisely what enables our positive constructions.
+### 3.2 Archimedean Impossibility
 
-### 3.3 Construction Theorems
+**Theorem 3.6** (No Infinitesimals in Archimedean Fields). If K is an Archimedean linearly ordered field, then no element of K is infinitesimal.
 
-**Theorem 3.8** (Uniform Measure). For any nonempty finite type α with |α| = n > 0, the function μ(a) = 1/n defines a valid surreal probability measure.
+*Proof.* Let x > 0. By the Archimedean property, there exists n ∈ ℕ with n·x > 1, hence x > 1/n. This means x fails the infinitesimal condition for this n. □
 
-**Theorem 3.9** (Perturbed Sum Preservation). If w is a perturbation weight assignment (weights summing to 0), then Σ_{a ∈ α} (1/n + w(a)ε) = 1.
+**Corollary 3.7.** The fields ℚ and ℝ have no infinitesimals.
 
-**Theorem 3.10** (Discrimination). If w(a) ≠ w(b) and ε ≠ 0, then μ_w(a) ≠ μ_w(b).
+This theorem establishes that infinitesimal probability is a genuinely non-Archimedean phenomenon. It cannot arise in any field that satisfies the Archimedean axiom.
 
-**Theorem 3.11** (Uniform Non-Discrimination). The uniform measure on any type with ≥ 2 elements is NOT fully discriminating.
+### 3.3 Uniform Weight Determination
 
-**PEGB Analysis for Discrimination**:
-- **P**roof: The discrimination proof uses the fact that 1/n + w(a)ε = 1/n + w(b)ε implies (w(a) - w(b))ε = 0, contradicting ε ≠ 0.
-- **E**xample: On {1,2,3} with weights (-1, 0, 1), the perturbed measure gives (1/3 - ε, 1/3, 1/3 + ε) — three distinct values.
-- **G**eneralization: Any injective weight function with zero sum produces a fully discriminating measure.
-- **B**oundary: When ε = 0, discrimination fails and we recover the uniform measure.
+**Theorem 3.8.** If μ is a uniform measure on Fin n (n > 0) with common weight w, then n · w = 1.
 
-### 3.4 Product Measures
+*Proof.* The total 1 = Σ_{i < n} w = n · w. □
 
-**Theorem 3.12** (Product Measure). If μ is a surreal probability on α and ν on β, then (a,b) ↦ μ(a)·ν(b) is a surreal probability on α × β.
+### 3.4 Infinitesimal Finite Sum Bound
 
-### 3.5 Conditional Probability
+**Theorem 3.9** (Infinitesimal Finite Sum Bound). If ε is infinitesimal in a linearly ordered field K, then n · ε < 1 for every n ∈ ℕ.
 
-**Theorem 3.13** (Conditional Normalization). For any positive-measure event E, the conditional probability Σ_{a ∈ E} P(a|E) = 1.
+*Proof.* For n = 0, 0 · ε = 0 < 1. For n > 0, the infinitesimal condition gives ε < 1/(n+1), but more precisely, ε < 1/n (using n itself in the definition), so n · ε < n · (1/n) = 1.
 
-**Theorem 3.14** (Conditional Non-negativity). P(a|E) ≥ 0 for all a.
+More carefully: ε < 1/n by the infinitesimal definition applied to n (when n > 0). Multiplying both sides by n (positive) gives n · ε < 1. □
 
-**PEGB Analysis for Conditional Probability**:
-- **P**roof: P(a|E) = μ(a)/μ(E) for a ∈ E, 0 otherwise. The sum over E gives μ(E)/μ(E) = 1.
-- **E**xample: On {1,2,3} with uniform measure, P(1|{1,2}) = (1/3)/(2/3) = 1/2.
-- **G**eneralization: Works for any event with positive (even infinitesimal) probability — this is the key advantage over real-valued probability.
-- **B**oundary: Fails when μ(E) = 0. But with infinitesimal perturbation, every non-empty event has positive probability.
+This is the positive existence result: infinitesimal weights can be summed over any finite set without exceeding total mass 1.
 
-### 3.6 Information Ordering
+### 3.5 NAPA Standard Part Transfer
 
-**Theorem 3.15** (Refinement Reflexivity). Every measure refines itself.
+**Theorem 3.10.** For any NAPA, the standard part of the weights sum to 1:
 
-**Theorem 3.16** (Refinement Transitivity). Refinement is transitive.
+Σ_{a ∈ α} st(w(a)) = 1
 
-**Theorem 3.17** (Uniform Minimality). The uniform measure is refined by every measure.
+*Proof.* By finite induction using additivity of st:
+st(Σ w(a)) = Σ st(w(a)). Then st(Σ w(a)) = st(1) = 1. □
 
-**Theorem 3.18** (Non-Uniform Strict Superiority). Any non-uniform measure is strictly more informative than the uniform measure.
+**Theorem 3.11.** For any NAPA, st(w(a)) ≥ 0 for all a.
 
-**PEGB Analysis for Information Ordering**:
-- **P**roof: The uniform measure assigns 1/n to all elements, so the antecedent of refinement (ν(a) ≠ ν(b)) is vacuously false.
-- **E**xample: The measure (1/3 - ε, 1/3, 1/3 + ε) on {1,2,3} refines (1/3, 1/3, 1/3) and strictly so.
-- **G**eneralization: The refinement relation defines a partial order on probability measures (modulo the standard proof obligations).
-- **B**oundary: Two measures that disagree on which pairs they distinguish are incomparable under refinement.
+*Proof.* Since w(a) ≥ 0 and st is monotone, st(w(a)) ≥ st(0) = 0. □
 
-### 3.7 Decomposition
+These theorems show that the standard part of a NAPA yields a valid real-valued probability measure (non-negative weights summing to 1).
 
-**Theorem 3.19** (Standard Part Decomposition). Every probability can be decomposed as μ(a) = round(μ(a)) + (μ(a) - round(μ(a))), where round is any rounding function. The second term captures the infinitesimal residual.
+### 3.6 The Standard Part Paradox
 
-## 4. Falsifiable Conjecture
+**Theorem 3.12** (NAPA Incompatibility / Standard Part Paradox). No NAPA on a nonempty type can have all infinitesimal weights.
 
-**Conjecture 4.1**: For any n ≥ 2, the number of distinct fully discriminating surreal probability measures on an n-element set (up to isomorphism of the underlying set) with integer perturbation weights bounded by n is exactly (2n-1)! / (n-1)! · 2^(n-1).
+*Proof.* Assume for contradiction that N is a NAPA on a nonempty type α with N.prob infinitesimal-valued. Then:
 
-**Computational Test**: For n = 2, the conjecture predicts 3!/(1! · 2) = 3 measures. The weight vectors summing to 0 with entries in {-2,-1,0,1,2} and all distinct are: (-1,1), (1,-1), (-2,2), (2,-2). Up to sign, there are 2 equivalence classes. The conjecture appears to need refinement.
+1. For each a ∈ α, st(w(a)) = 0 (by the infinitesimal annihilation axiom).
+2. Therefore Σ st(w(a)) = 0.
+3. But by Theorem 3.10, Σ st(w(a)) = 1.
+4. This gives 0 = 1, a contradiction. □
 
-## 5. Connections to Existing Work
+**Discussion.** This is the deepest result of the paper. It reveals a fundamental incompatibility: an additive standard part map cannot coexist with all-infinitesimal probability weights. The mathematical content is that the standard part map — which is the bridge between non-Archimedean and standard probability — fails to be compatible with "pure infinitesimal" distributions.
 
-### 5.1 Cross-Connection to Tropical Mathematics
+This has several implications:
+- Any non-Archimedean probability measure with a valid standard part map must assign non-infinitesimal weight to at least one point.
+- The standard part of a non-Archimedean measure is NOT obtained by applying the standard part pointwise when all weights are infinitesimal.
+- This parallels the classical result that countable additivity fails for finitely additive measures on ℕ, but in a new, purely algebraic setting.
 
-The surreal probability framework connects to tropical semirings via a logarithmic map. If we take -log of each probability, surreal probability measures map to vectors in the tropical semiring (ℝ ∪ {∞}, min, +). The infinitesimal perturbation ε corresponds to a "tropical perturbation" that breaks degeneracies in the tropical limit.
+## 4. Examples and Boundary Cases
 
-This connects to the existing catalog result `finite_test_family_zero_GL3` from the Tropical module: finite test families for GL(3) can be viewed as discriminating probability measures in the tropical limit.
+### 4.1 Concrete Example: Uniform Measure on Fin 5
 
-### 5.2 Connection to Game Theory
+Let K be any linearly ordered field. The uniform measure on Fin 5 assigns weight w = 1/5 to each element. This is a valid FinAddProb since 5 · (1/5) = 1, all weights are positive.
 
-Conway's surreal numbers arose from combinatorial game theory. Our surreal probability measures can be interpreted as mixed strategies in combinatorial games, where infinitesimal probability perturbations correspond to lexicographic preferences.
+- μ({0, 1}) = 2/5
+- μ({2, 3, 4}) = 3/5
+- μ({0,1} ∪ {2,3,4}) = 1 = 2/5 + 3/5 ✓
 
-## 6. Discussion
+Complementation: μ({0,1}ᶜ) = μ({2,3,4}) = 3/5 = 1 - 2/5 ✓
 
-The dual impossibility theorem is the central discovery of this work. It reveals that surreal probability occupies a precise mathematical niche:
+### 4.2 Generalization: Weighted Measures
 
-- **Too much structure for real numbers**: Infinitesimal discrimination requires non-Archimedean fields
-- **Too much structure for infinite sets**: Even non-Archimedean fields cannot support uniform probability on ℕ
-- **Just right for finite sets**: Finite surreal probability is a consistent, useful extension of standard discrete probability
+The framework generalizes beyond uniform measures. Any non-negative weight function summing to 1 defines a valid FinAddProb. For instance, on Fin 3, the weights (1/2, 1/3, 1/6) form a valid measure.
 
-This positions surreal probability not as a replacement for measure-theoretic probability, but as a refinement of discrete probability that reveals structure invisible to real-valued measures.
+### 4.3 Boundary Case: The Standard Part Paradox
 
-## 7. Algorithms
+Consider a hypothetical NAPA on Fin 3 with weights (ε, ε, 1 - 2ε) where ε is infinitesimal. The standard parts are (0, 0, 1), which sum to 1. This is consistent! The paradox only arises when ALL weights are infinitesimal.
 
-### 7.1 Perturbation Weight Construction
+This boundary case shows the theorem is tight: you can have *some* infinitesimal weights in a NAPA, just not all of them.
 
-Given a finite set of n elements, construct weights w₁, ..., wₙ with Σwᵢ = 0 and all distinct:
+### 4.4 Counterexample: Attempting All-Infinitesimal NAPA
 
-```
-Algorithm: ConstructWeights(n)
-  For i = 1 to n-1: w[i] = i
-  w[n] = -n(n-1)/2
-  Return w
-```
+Suppose we try to define a NAPA on Fin 2 with weights (ε, 1-ε) where ε is infinitesimal. This works! st(ε) = 0, st(1-ε) = 1, and 0 + 1 = 1. Additivity holds.
 
-This produces weights (1, 2, ..., n-1, -n(n-1)/2) which sum to 0 and are all distinct.
+Now try weights (ε, ε) on Fin 2. Then Σ w = 2ε ≠ 1, so this fails to be a probability measure (normalization violated). To make it work, we'd need 2ε = 1, but then ε = 1/2, which is not infinitesimal.
 
-### 7.2 Bayesian Update with Infinitesimal Prior
+## 5. Algorithms
+
+### 5.1 Uniform Measure Construction
+
+**Input**: n > 0
+**Output**: Uniform FinAddProb on Fin n
 
 ```
-Algorithm: InfinitesimalBayes(prior, likelihood, ε)
-  evidence = Σ likelihood[a] * prior[a]
-  For each a:
-    posterior[a] = likelihood[a] * prior[a] / evidence
-  Return posterior
+FUNCTION ConstructUniform(n):
+    w ← 1/n
+    FOR i = 0 TO n-1:
+        weight[i] ← w
+    RETURN FinAddProb(weight)
 ```
+
+Complexity: O(n) time, O(n) space.
+
+### 5.2 Conditional Probability Computation
+
+**Input**: FinAddProb μ, events A, B with μ(B) ≠ 0
+**Output**: P(A|B)
+
+```
+FUNCTION CondProb(μ, A, B):
+    intersection ← A ∩ B
+    μ_intersection ← Σ_{a ∈ intersection} μ.weight(a)
+    μ_B ← Σ_{b ∈ B} μ.weight(b)
+    RETURN μ_intersection / μ_B
+```
+
+Complexity: O(|A| + |B|).
+
+### 5.3 Additivity Verification
+
+**Input**: FinAddProb μ, events A, B
+**Output**: Boolean (whether inclusion-exclusion holds)
+
+```
+FUNCTION VerifyAdditivity(μ, A, B):
+    lhs ← μ(A ∪ B)
+    rhs ← μ(A) + μ(B) - μ(A ∩ B)
+    RETURN lhs == rhs
+```
+
+## 6. Falsifiable Conjecture
+
+**Conjecture 6.1** (Weak NAPA Existence). There exists a non-Archimedean ordered field K and a type α with |α| ≥ 2 such that K admits a NAPA on α where at least one weight is infinitesimal and the standard part map is well-defined.
+
+**Test**: Construct K = ℚ(ε) with ε infinitesimal (ordered so that ε < 1/n for all n), take α = Fin 2, weights (ε, 1-ε), and st the "constant term" map. Verify all NAPA axioms.
+
+**Prediction**: This should succeed, showing that NAMAs with *some* (but not all) infinitesimal weights are constructible. This is consistent with Theorem 3.12 (which only rules out *all* infinitesimal).
+
+## 7. Connection to Existing Results
+
+Our Archimedean Impossibility theorem connects to the broader theme of barrier results in the Aether catalog. The theorem `archimedean_no_infinitesimal` is analogous to impossibility results like `unitary_idempotent_eq_one` (a spectral impossibility) and the Gödel incompleteness barriers. All share the pattern: structural properties of a mathematical system impose hard limits on what can be represented within it.
+
+The finite additivity results connect to the measure-theoretic foundations used in `catoni_bound_well_defined` (PAC-Bayes bounds), providing a potential pathway to extend PAC-Bayes theory to non-Archimedean settings.
 
 ## 8. Future Work
 
-1. **Topological surreal probability**: Define σ-algebras and measurability for surreal-valued functions
-2. **Surreal martingales**: Extend martingale theory to non-Archimedean filtrations
-3. **Game-theoretic applications**: Use surreal probability for lexicographic mixed strategies
-4. **Algorithmic applications**: Exploit infinitesimal perturbation for tie-breaking in probabilistic algorithms
+1. **Extend to infinite types**: Define NAPA for countable and uncountable types using filters and ultrafilters.
+2. **Weaken standard part axioms**: Explore "approximately additive" standard part maps.
+3. **Concrete non-Archimedean fields**: Construct explicit NAPA instances using the Levi-Civita field or hyperreal numbers.
+4. **Applications to Bayesian inference**: Develop a Bayesian updating framework using infinitesimal priors.
+5. **Connection to game theory**: Relate NAPA to surreal-valued game theory and combinatorial game outcomes.
+
+## 9. Conclusion
+
+We have established a rigorous foundation for finitely additive probability in non-Archimedean fields. The classical laws of probability transfer cleanly. The Archimedean Impossibility theorem shows that non-Archimedean structure is necessary for infinitesimal probability. The Standard Part Paradox reveals a fundamental incompatibility between additive standard part maps and all-infinitesimal distributions, precisely delineating the boundary of what is possible.
 
 ## References
 
-- Conway, J. H. (1976). *On Numbers and Games*. Academic Press.
-- Kolmogorov, A. N. (1933). *Grundbegriffe der Wahrscheinlichkeitsrechnung*.
-- Robinson, A. (1966). *Non-Standard Analysis*. North-Holland.
-- Benci, V., Horsten, L., & Wenmackers, S. (2013). Non-Archimedean probability. *Milan Journal of Mathematics*, 81(1), 121-151.
+1. J. H. Conway, *On Numbers and Games*, Academic Press, 1976.
+2. A. Robinson, *Non-standard Analysis*, North-Holland, 1966.
+3. V. Benci, L. Horsten, S. Wenmackers, "Non-Archimedean Probability," *Milan J. Math.*, 81(1):121-151, 2013.
+4. E. Nelson, "Internal Set Theory: A New Approach to Nonstandard Analysis," *Bull. Amer. Math. Soc.*, 83(6):1165-1198, 1977.
+5. A. N. Kolmogorov, *Foundations of the Theory of Probability*, Chelsea, 1933 (English translation 1956).
+6. D. E. Knuth, *Surreal Numbers*, Addison-Wesley, 1974.
