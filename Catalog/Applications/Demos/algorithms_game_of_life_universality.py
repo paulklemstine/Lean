@@ -1,334 +1,320 @@
 #!/usr/bin/env python3
 """
-Algorithms for Cellular Automata Universality
+Algorithms for Signal Collision Algebra Computation
 
-Type-hinted implementations of the core algorithms from the formalization:
-1. Game of Life evolution
-2. NAND circuit evaluation
-3. Simulation complexity algebra
-4. Gadget-based circuit simulation
+Type-hinted implementations of the key algorithms from the paper:
+1. Game of Life step function
+2. Signal Collision Algebra verification
+3. Boolean circuit evaluation via NAND gates
+4. Circuit-to-SCA layout construction
+5. Simulation overhead computation
 """
 
-from dataclasses import dataclass
-from typing import List, Tuple, Dict, Callable, Optional
-import math
+from dataclasses import dataclass, field
+from typing import List, Tuple, Callable, Dict, Optional
+import numpy as np
 
 
 # ============================================================
-# Core Types
+# Algorithm 1: Game of Life Step
 # ============================================================
 
-Grid = Dict[Tuple[int, int], bool]
-
-
-def empty_grid() -> Grid:
-    """The quiescent (all-dead) grid."""
-    return {}
-
-
-def get_cell(grid: Grid, pos: Tuple[int, int]) -> bool:
-    """Get cell value, defaulting to False (dead)."""
-    return grid.get(pos, False)
-
-
-def moore_neighbors(p: Tuple[int, int]) -> List[Tuple[int, int]]:
-    """The 8 Moore neighbors of cell p."""
-    x, y = p
-    return [
-        (x-1, y-1), (x-1, y), (x-1, y+1),
-        (x, y-1),             (x, y+1),
-        (x+1, y-1), (x+1, y), (x+1, y+1)
-    ]
-
-
-def alive_neighbor_count(grid: Grid, p: Tuple[int, int]) -> int:
-    """Count alive neighbors in Moore neighborhood.
-    
-    Invariant: result ≤ 8 (alive_neighbor_count_le)
+def game_of_life_step(grid: np.ndarray) -> np.ndarray:
     """
-    return sum(1 for q in moore_neighbors(p) if get_cell(grid, q))
-
-
-# ============================================================
-# Game of Life
-# ============================================================
-
-def gol_local_rule(grid: Grid, p: Tuple[int, int]) -> bool:
-    """Conway's Game of Life local transition rule.
+    Compute one generation of Conway's Game of Life.
     
-    Matches Lean definition `golLocalRule`:
-    - Live cell with 2 or 3 neighbors survives
-    - Dead cell with exactly 3 neighbors becomes alive
+    Algorithm:
+    1. For each cell, count live Moore neighbors (8-connected)
+    2. Apply birth/survival/death rules:
+       - Birth: dead cell with exactly 3 neighbors → alive
+       - Survival: live cell with 2 or 3 neighbors → alive
+       - Death: all other cases → dead
+    
+    Time complexity: O(n*m) for n×m grid
+    Space complexity: O(n*m)
     """
-    n = alive_neighbor_count(grid, p)
-    if get_cell(grid, p):
-        return n in (2, 3)
-    else:
-        return n == 3
-
-
-def gol_step(grid: Grid) -> Grid:
-    """One step of Game of Life evolution.
+    rows, cols = grid.shape
+    # Pad grid for wraparound (torus topology)
+    padded = np.pad(grid, 1, mode='wrap')
     
-    Matches Lean `golStep`. Properties:
-    - Deterministic (gol_deterministic)
-    - Local: depends only on Moore neighborhood (gol_locality)
-    - Translation-invariant (gol_translation_invariant)
-    """
-    # Find all cells that need checking (alive + their neighbors)
-    candidates: set = set()
-    for pos in grid:
-        if grid[pos]:
-            candidates.add(pos)
-            candidates.update(moore_neighbors(pos))
+    # Count neighbors using convolution
+    neighbor_count = np.zeros_like(grid)
+    for di in [-1, 0, 1]:
+        for dj in [-1, 0, 1]:
+            if di == 0 and dj == 0:
+                continue
+            neighbor_count += padded[1+di:rows+1+di, 1+dj:cols+1+dj]
     
-    new_grid: Grid = {}
-    for p in candidates:
-        if gol_local_rule(grid, p):
-            new_grid[p] = True
-    return new_grid
-
-
-def evolve(grid: Grid, steps: int) -> Grid:
-    """Iterate GoL for n steps. golStep^[n]"""
-    for _ in range(steps):
-        grid = gol_step(grid)
-    return grid
+    # Apply rules
+    birth = (grid == 0) & (neighbor_count == 3)
+    survival = (grid == 1) & ((neighbor_count == 2) | (neighbor_count == 3))
+    return (birth | survival).astype(int)
 
 
 # ============================================================
-# NAND Circuit
+# Algorithm 2: Signal Type and Collision Rule
+# ============================================================
+
+@dataclass
+class SignalType:
+    """A traveling signal with velocity vector and identifier."""
+    velocity: Tuple[int, int]
+    sig_id: int
+    name: str = ""
+
+    def position_at(self, origin: Tuple[int, int], t: int) -> Tuple[int, int]:
+        """Compute signal position at time t given origin."""
+        return (origin[0] + t * self.velocity[0],
+                origin[1] + t * self.velocity[1])
+
+
+@dataclass
+class CollisionRule:
+    """
+    A collision rule: when input signals meet, they produce output signals.
+    
+    The transform function maps input Boolean values to output Boolean values.
+    """
+    inputs: List[SignalType]
+    outputs: List[SignalType]
+    transform: Callable[[List[bool]], List[bool]]
+    delay: int
+    name: str = ""
+
+
+# ============================================================
+# Algorithm 3: Signal Collision Algebra
+# ============================================================
+
+@dataclass
+class SignalCollisionAlgebra:
+    """
+    The Signal Collision Algebra — the central mathematical structure.
+    
+    A complete SCA has:
+    1. NAND gate (functionally complete)
+    2. Fanout (signal duplication)
+    3. Crossing (signal routing)
+    
+    These three primitives suffice for universal computation.
+    """
+    signals: List[SignalType]
+    nand_rule: CollisionRule
+    fanout_rule: CollisionRule
+    crossing_rule: CollisionRule
+    wire_delay: int
+
+    def verify_nand(self) -> bool:
+        """Verify NAND correctness: !(a && b) for all a,b."""
+        for a in [False, True]:
+            for b in [False, True]:
+                result = self.nand_rule.transform([a, b])
+                if result[0] != (not (a and b)):
+                    return False
+        return True
+
+    def verify_fanout(self) -> bool:
+        """Verify fanout: output[0] = output[1] = input[0]."""
+        for v in [False, True]:
+            result = self.fanout_rule.transform([v])
+            if result[0] != v or result[1] != v:
+                return False
+        return True
+
+    def verify_crossing(self) -> bool:
+        """Verify crossing preserves values."""
+        for a in [False, True]:
+            for b in [False, True]:
+                result = self.crossing_rule.transform([a, b])
+                if result[0] != a or result[1] != b:
+                    return False
+        return True
+
+    def is_complete(self) -> bool:
+        """Check all three completeness properties."""
+        return self.verify_nand() and self.verify_fanout() and self.verify_crossing()
+
+
+# ============================================================
+# Algorithm 4: NAND Circuit Evaluation
 # ============================================================
 
 @dataclass
 class NandCircuit:
-    """A Boolean circuit as a DAG of NAND gates.
+    """
+    A Boolean circuit composed of NAND gates in topological order.
     
-    Matches Lean `NandCircuit`. Invariant: topological ordering
-    ensures input1[i], input2[i] < numInputs + i.
+    Wires 0..numInputs-1 are inputs.
+    Wire numInputs+i is the output of gate i.
     """
     num_inputs: int
-    num_gates: int
-    input1: List[int]  # First input wire for each gate
-    input2: List[int]  # Second input wire for each gate
-    output: int        # Output wire index
-    
+    gates: List[Tuple[int, int]]  # (input1_wire, input2_wire)
+    output_wire: int
+
     def eval(self, inputs: List[bool]) -> bool:
-        """Evaluate the circuit on given inputs.
-        
-        Matches Lean `NandCircuit.eval`.
         """
-        assert len(inputs) == self.num_inputs
-        wires = list(inputs) + [False] * self.num_gates
+        Evaluate the circuit on given inputs.
         
-        for g in range(self.num_gates):
-            i1 = self.input1[g]
-            i2 = self.input2[g]
-            wires[self.num_inputs + g] = not (wires[i1] and wires[i2])
+        Algorithm:
+        1. Initialize wire values from inputs
+        2. For each gate in topological order:
+           wire[numInputs + i] = NAND(wire[gate.in1], wire[gate.in2])
+        3. Return wire[output]
         
-        return wires[self.output]
-
-
-# ============================================================
-# NAND Functional Completeness
-# ============================================================
-
-def not_circuit() -> NandCircuit:
-    """NOT gate as a NAND circuit. Verified: nand_as_not."""
-    return NandCircuit(
-        num_inputs=1, num_gates=1,
-        input1=[0], input2=[0], output=1
-    )
-
-
-def and_circuit() -> NandCircuit:
-    """AND gate from two NANDs. Verified: nand_as_and."""
-    return NandCircuit(
-        num_inputs=2, num_gates=2,
-        input1=[0, 2], input2=[1, 2], output=3
-    )
-
-
-def or_circuit() -> NandCircuit:
-    """OR gate from three NANDs. Verified: nand_as_or."""
-    return NandCircuit(
-        num_inputs=2, num_gates=3,
-        input1=[0, 1, 2], input2=[0, 1, 3], output=4
-    )
-
-
-def xor_circuit() -> NandCircuit:
-    """XOR gate from four NANDs. Verified: nand_as_xor.
-    
-    t = NAND(a,b); result = NAND(NAND(a,t), NAND(b,t))
-    """
-    return NandCircuit(
-        num_inputs=2, num_gates=4,
-        input1=[0, 0, 1, 3], input2=[1, 2, 2, 4], output=5
-    )
-
-
-# ============================================================
-# Simulation Complexity Algebra
-# ============================================================
-
-@dataclass
-class SimComplexity:
-    """Simulation complexity measure.
-    
-    Matches Lean `SimComplexity`. Properties:
-    - overhead = spatial² × temporal
-    - Composition is multiplicative (simulation_compose_overhead)
-    - Forms a monoid (overhead_compose_assoc, identity units)
-    """
-    spatial_factor: int
-    temporal_factor: int
-    
-    def __post_init__(self):
-        assert self.spatial_factor > 0
-        assert self.temporal_factor > 0
-    
-    @property
-    def overhead(self) -> int:
-        """Total overhead = spatial² × temporal."""
-        return self.spatial_factor ** 2 * self.temporal_factor
-    
-    @property
-    def log_overhead(self) -> float:
-        """Logarithmic overhead (additive under composition)."""
-        return math.log(self.overhead)
-    
-    def compose(self, other: 'SimComplexity') -> 'SimComplexity':
-        """Compose two simulations.
-        
-        Invariant: composed.overhead == self.overhead * other.overhead
+        Time: O(|gates|)  Space: O(|inputs| + |gates|)
         """
-        return SimComplexity(
-            self.spatial_factor * other.spatial_factor,
-            self.temporal_factor * other.temporal_factor
-        )
-    
-    @staticmethod
-    def identity() -> 'SimComplexity':
-        """Identity simulation (overhead = 1)."""
-        return SimComplexity(1, 1)
+        wires = list(inputs) + [False] * len(self.gates)
+        for i, (a, b) in enumerate(self.gates):
+            wires[self.num_inputs + i] = not (wires[a] and wires[b])
+        return wires[self.output_wire]
 
 
 # ============================================================
-# Computational Density
+# Algorithm 5: Circuit Layout Construction
 # ============================================================
 
 @dataclass
-class ComputationalDensity:
-    """Minimum space-time resources per bit of computation.
-    
-    Matches Lean `ComputationalDensity`.
+class CircuitLayout:
     """
-    cells_per_bit: int
-    steps_per_gate: int
-    
-    def __post_init__(self):
-        assert self.cells_per_bit > 0
-        assert self.steps_per_gate > 0
-    
+    Maps each gate to a time step in the CA simulation.
+    Satisfies causality: inputs available before gate fires.
+    """
+    gate_times: List[int]
+
     @property
-    def efficiency(self) -> float:
-        """Reciprocal of density product. Higher = more efficient."""
-        return 1.0 / (self.cells_per_bit * self.steps_per_gate)
-    
-    @property
-    def density_product(self) -> int:
-        return self.cells_per_bit * self.steps_per_gate
+    def total_time(self) -> int:
+        if not self.gate_times:
+            return 0
+        return max(self.gate_times) + 1
 
 
-# GoL computational density (verified: gol_density_product)
-GOL_DENSITY = ComputationalDensity(cells_per_bit=36, steps_per_gate=30)
-assert GOL_DENSITY.density_product == 1080
+def construct_layout(circuit: NandCircuit, wire_delay: int) -> CircuitLayout:
+    """
+    Construct a causal layout for simulating a circuit via SCA.
+    
+    Algorithm: Assign gate g time = (wire_delay + 1) * g.
+    
+    This satisfies causality because:
+    - Gate g's inputs have index < numInputs + g (topological order)
+    - If input comes from gate g' < g, then time(g') < time(g)
+    
+    Proven in Lean: complete_sca_simulates_circuits
+    """
+    gate_times = [(wire_delay + 1) * i + 1 for i in range(len(circuit.gates))]
+    return CircuitLayout(gate_times=gate_times)
+
+
+def simulation_overhead(wire_delay: int, num_gates: int) -> int:
+    """
+    Upper bound on CA steps for simulation.
+    
+    Formula: (wire_delay + 1) * num_gates + 1
+    
+    This is proven tight (up to constant) by chain_circuit_needs_linear_time.
+    """
+    return (wire_delay + 1) * num_gates + 1
 
 
 # ============================================================
-# Glider
+# Algorithm 6: SCA Product Construction
 # ============================================================
 
-@dataclass
-class Glider:
-    """A glider pattern with bounded speed.
-    
-    Matches Lean `Glider`. Invariant: speed ≤ 1 (speed of light).
+def sca_product(sca1: SignalCollisionAlgebra,
+                sca2: SignalCollisionAlgebra) -> SignalCollisionAlgebra:
     """
-    pattern: List[Tuple[int, int]]
-    velocity: Tuple[int, int]
-    period: int
+    Product of two SCAs. Inherits completeness from sca1.
     
-    def __post_init__(self):
-        assert self.period > 0
-        assert self.velocity != (0, 0)
-        displacement = abs(self.velocity[0]) + abs(self.velocity[1])
-        assert displacement <= self.period, "Speed exceeds light!"
+    Proven in Lean: product_complete
+    """
+    combined_signals = list(set(
+        [(s.velocity, s.sig_id, s.name) for s in sca1.signals] +
+        [(s.velocity, s.sig_id, s.name) for s in sca2.signals]
+    ))
+    signals = [SignalType(v, i, n) for v, i, n in combined_signals]
     
-    @property
-    def speed(self) -> float:
-        """Speed in cells per step (≤ 1 by light speed bound)."""
-        displacement = abs(self.velocity[0]) + abs(self.velocity[1])
-        return displacement / self.period
-
-
-# Standard GoL glider (verified: standard_glider_speed)
-STANDARD_GLIDER = Glider(
-    pattern=[(0,0), (1,0), (2,0), (2,1), (1,2)],
-    velocity=(1, 1),
-    period=4
-)
-assert abs(STANDARD_GLIDER.speed - 0.5) < 1e-10
+    return SignalCollisionAlgebra(
+        signals=signals,
+        nand_rule=sca1.nand_rule,
+        fanout_rule=sca1.fanout_rule,
+        crossing_rule=sca1.crossing_rule,
+        wire_delay=max(sca1.wire_delay, sca2.wire_delay)
+    )
 
 
 # ============================================================
-# Gadget-Based Circuit Simulation
+# Algorithm 7: XOR Circuit Builder (Example)
 # ============================================================
 
-@dataclass
-class GadgetLibrary:
-    """A library of CA gadgets for circuit simulation.
-    
-    Matches Lean `GadgetLibrary`.
+def build_xor_circuit() -> NandCircuit:
     """
-    nand_runtime: int
-    wire_runtime: int
+    Build XOR from NAND gates.
     
-    @property
-    def max_runtime(self) -> int:
-        return max(self.nand_runtime, self.wire_runtime)
+    XOR(a,b) = NAND(NAND(a, NAND(a,b)), NAND(b, NAND(a,b)))
     
-    def simulation_time(self, num_gates: int) -> int:
-        """Upper bound on simulation time for a circuit.
-        
-        Verified: circuit_simulation_time_bound
-        """
-        return num_gates * self.max_runtime
-
-
-def simulate_circuit(
-    lib: GadgetLibrary,
-    circuit: NandCircuit,
-    inputs: List[bool]
-) -> Tuple[bool, int]:
-    """Simulate a NAND circuit using gadgets.
-    
-    Returns (result, time_steps).
-    Time ≤ numGates × maxRuntime (circuit_simulation_time_bound).
+    Gate 0: NAND(a, b)          → wire 2
+    Gate 1: NAND(a, gate0)      → wire 3
+    Gate 2: NAND(b, gate0)      → wire 4
+    Gate 3: NAND(gate1, gate2)  → wire 5 (output)
     """
-    result = circuit.eval(inputs)
-    time = lib.simulation_time(circuit.num_gates)
-    return result, time
+    return NandCircuit(
+        num_inputs=2,
+        gates=[(0, 1), (0, 2), (1, 2), (3, 4)],
+        output_wire=5
+    )
 
+
+def build_half_adder() -> Tuple[NandCircuit, NandCircuit]:
+    """
+    Build a half adder (sum, carry) from NAND gates.
+    
+    sum = XOR(a, b)
+    carry = AND(a, b) = NOT(NAND(a, b)) = NAND(NAND(a,b), NAND(a,b))
+    """
+    xor = build_xor_circuit()
+    carry = NandCircuit(
+        num_inputs=2,
+        gates=[(0, 1), (2, 2)],
+        output_wire=3
+    )
+    return xor, carry
+
+
+# ============================================================
+# Main: Run all algorithms
+# ============================================================
 
 if __name__ == "__main__":
-    # Verify NAND completeness
+    # Build GoL SCA
+    glider = SignalType((1, 1), 0, "glider")
+    antiglider = SignalType((-1, 1), 1, "antiglider")
+    lwss = SignalType((2, 0), 2, "LWSS")
+
+    gol_sca = SignalCollisionAlgebra(
+        signals=[glider, antiglider, lwss],
+        nand_rule=CollisionRule(
+            [glider, antiglider], [glider],
+            lambda inp: [not (inp[0] and inp[1])], 8, "NAND"),
+        fanout_rule=CollisionRule(
+            [glider], [glider, antiglider],
+            lambda inp: [inp[0], inp[0]], 12, "Fanout"),
+        crossing_rule=CollisionRule(
+            [glider, antiglider], [glider, antiglider],
+            lambda inp: [inp[0], inp[1]], 16, "Crossing"),
+        wire_delay=4
+    )
+
+    print("GoL SCA Complete:", gol_sca.is_complete())
+
+    # Build and simulate XOR
+    xor = build_xor_circuit()
+    layout = construct_layout(xor, gol_sca.wire_delay)
+    
+    print(f"\nXOR Circuit: {len(xor.gates)} gates")
+    print(f"Layout times: {layout.gate_times}")
+    print(f"Total simulation time: {layout.total_time}")
+    print(f"Overhead bound: {simulation_overhead(gol_sca.wire_delay, len(xor.gates))}")
+
+    print("\nXOR truth table:")
     for a in [False, True]:
         for b in [False, True]:
-            assert and_circuit().eval([a, b]) == (a and b)
-            assert or_circuit().eval([a, b]) == (a or b)
-            assert xor_circuit().eval([a, b]) == (a ^ b)
-    assert not_circuit().eval([True]) == False
-    assert not_circuit().eval([False]) == True
-    print("All algorithms verified ✓")
+            print(f"  XOR({int(a)}, {int(b)}) = {int(xor.eval([a, b]))}")
