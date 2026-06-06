@@ -1,216 +1,195 @@
+#!/usr/bin/env python3
 """
-Theory Ecosystem: Algorithms for Mathematical Theory Fitness Analysis
-
-Implements the formal theory fitness framework with typed Python classes
-for theory representation, fitness computation, ecosystem simulation,
-and optimal extension analysis.
+Theory Ecosystem Algorithms: Fitness computation, ecosystem simulation,
+and niche analysis.
 """
 
-from __future__ import annotations
-from dataclasses import dataclass
-from fractions import Fraction
-from typing import List, Tuple, Optional, Dict
+from dataclasses import dataclass, field
+from typing import List, Tuple, Dict, Optional
+import math
 
 
-@dataclass(frozen=True)
-class FormalTheory:
-    """A mathematical theory characterized by structural parameters.
-    
-    Attributes:
-        axiom_count: Number of independent axioms (must be > 0)
-        theorem_count: Number of proved theorems
-        connection_count: Number of connections to other theories
-        name: Optional human-readable name
-    """
+@dataclass
+class MathTheory:
+    """A mathematical theory with measurable properties."""
+    name: str
     axiom_count: int
     theorem_count: int
     connection_count: int
-    name: str = "unnamed"
-    
-    def __post_init__(self):
+
+    def fitness(self) -> float:
+        """Compute fitness: connections × theorems / axioms."""
         if self.axiom_count <= 0:
-            raise ValueError(f"axiom_count must be positive, got {self.axiom_count}")
-    
-    @property
-    def fitness(self) -> Fraction:
-        """Compute fitness: connections * theorems / axioms^2"""
-        return Fraction(
-            self.connection_count * self.theorem_count,
-            self.axiom_count ** 2
-        )
-    
-    @property
-    def proof_density(self) -> Fraction:
-        """Compute proof density: theorems / axioms"""
-        return Fraction(self.theorem_count, self.axiom_count)
-    
-    def is_non_degenerate(self) -> bool:
-        """Check if theory has positive theorems and connections."""
-        return self.theorem_count > 0 and self.connection_count > 0
+            raise ValueError("Axiom count must be positive")
+        return (self.connection_count * self.theorem_count) / self.axiom_count
+
+    def niche(self) -> Tuple[int, int]:
+        """Return the niche identifier: (connections, axioms)."""
+        return (self.connection_count, self.axiom_count)
+
+    def productivity(self) -> int:
+        """Raw productivity: connections × theorems."""
+        return self.connection_count * self.theorem_count
 
 
-def is_fertile_extension(t1: FormalTheory, t2: FormalTheory) -> bool:
-    """Check if t2 is a fertile extension of t1.
-    
-    A fertile extension maintains connections and generates theorems
-    faster than the quadratic axiom penalty grows.
+def is_productive_extension(base: MathTheory, ext: MathTheory) -> bool:
+    """Check if ext is a productive extension of base.
+
+    A productive extension has:
+    - Weakly more axioms, theorems, and connections
+    - Strictly higher fitness (cross-multiplication test)
     """
-    return (
-        t2.connection_count >= t1.connection_count
-        and t1.connection_count > 0
-        and t2.theorem_count * t1.axiom_count**2 
-            > t1.theorem_count * t2.axiom_count**2
-    )
+    if not (ext.axiom_count >= base.axiom_count and
+            ext.theorem_count >= base.theorem_count and
+            ext.connection_count >= base.connection_count):
+        return False
+    return (ext.connection_count * ext.theorem_count * base.axiom_count >
+            base.connection_count * base.theorem_count * ext.axiom_count)
 
 
-def fitness_comparison(t1: FormalTheory, t2: FormalTheory) -> int:
-    """Compare fitness using integer arithmetic (no division).
-    
-    Returns:
-        1 if f(t1) > f(t2)
-        -1 if f(t1) < f(t2)
-        0 if f(t1) == f(t2)
+def fitness_gap(base: MathTheory, ext: MathTheory) -> float:
+    """Compute the fitness gap between an extension and its base."""
+    return ext.fitness() - base.fitness()
+
+
+def merge_theories(t1: MathTheory, t2: MathTheory,
+                   name: Optional[str] = None) -> MathTheory:
+    """Merge two theories sharing the same axiom base.
+
+    Assumes same axiom count. Sums theorems and connections.
+    Cross-terms make fitness superadditive.
     """
-    lhs = t1.connection_count * t1.theorem_count * t2.axiom_count**2
-    rhs = t2.connection_count * t2.theorem_count * t1.axiom_count**2
-    if lhs > rhs:
-        return 1
-    elif lhs < rhs:
-        return -1
-    return 0
-
-
-@dataclass(frozen=True)
-class PositionedTheory:
-    """A theory with its ecological niche assignment."""
-    theory: FormalTheory
-    niche: int  # niche identifier
-
-
-def find_survivors(ecosystem: List[PositionedTheory]) -> List[PositionedTheory]:
-    """Find all surviving theories in an ecosystem.
-    
-    A theory survives if no theory in the same niche has higher fitness.
-    
-    Algorithm: O(n) — compute max fitness per niche, filter.
-    """
-    # Find maximum fitness per niche
-    niche_max: Dict[int, Fraction] = {}
-    for pt in ecosystem:
-        f = pt.theory.fitness
-        if pt.niche not in niche_max or f > niche_max[pt.niche]:
-            niche_max[pt.niche] = f
-    
-    # Filter to survivors
-    return [
-        pt for pt in ecosystem
-        if pt.theory.fitness >= niche_max[pt.niche]
-    ]
-
-
-def merge_theories(
-    t1: FormalTheory, 
-    t2: FormalTheory, 
-    shared_axioms: int,
-    name: str = "merged"
-) -> FormalTheory:
-    """Merge two theories with shared axioms.
-    
-    Args:
-        t1, t2: Theories to merge
-        shared_axioms: Number of axioms shared between theories
-        name: Name for the merged theory
-    
-    Returns:
-        Merged theory with combined parameters
-    """
-    if shared_axioms >= t1.axiom_count + t2.axiom_count:
-        raise ValueError("Shared axioms must be less than total axioms")
-    if shared_axioms > min(t1.axiom_count, t2.axiom_count):
-        raise ValueError("Shared axioms cannot exceed either theory's axiom count")
-    
-    return FormalTheory(
-        axiom_count=t1.axiom_count + t2.axiom_count - shared_axioms,
+    if t1.axiom_count != t2.axiom_count:
+        raise ValueError("Can only merge theories with same axiom count")
+    return MathTheory(
+        name=name or f"{t1.name}+{t2.name}",
+        axiom_count=t1.axiom_count,
         theorem_count=t1.theorem_count + t2.theorem_count,
-        connection_count=t1.connection_count + t2.connection_count,
-        name=name
+        connection_count=t1.connection_count + t2.connection_count
     )
 
 
-def axiom_efficiency_threshold(theory: FormalTheory) -> Fraction:
-    """Compute the minimum marginal product (Δc+c)(Δt+t) needed
-    for adding one axiom to increase fitness.
-    
-    Returns the threshold: c * t * (a+1)^2 / a^2
+def cross_term_bonus(t1: MathTheory, t2: MathTheory) -> float:
+    """Compute the cross-term fitness bonus from merging.
+
+    When merging theories with the same axiom base, the fitness gain
+    beyond the sum of individual fitnesses is:
+    (t1.theorems * t2.connections + t2.theorems * t1.connections) / axioms
     """
-    a = theory.axiom_count
-    return Fraction(
-        theory.connection_count * theory.theorem_count * (a + 1)**2,
-        a**2
-    )
+    if t1.axiom_count != t2.axiom_count:
+        raise ValueError("Can only compute cross-term for same axiom count")
+    return (t1.theorem_count * t2.connection_count +
+            t2.theorem_count * t1.connection_count) / t1.axiom_count
 
 
-def optimal_extension(
-    theory: FormalTheory,
-    candidates: List[Tuple[int, int, str]]  # (delta_t, delta_c, name)
-) -> Optional[Tuple[FormalTheory, Fraction]]:
-    """Find the single-axiom extension that maximizes fitness gain.
-    
-    Args:
-        theory: Base theory to extend
-        candidates: List of (theorem_gain, connection_gain, name) tuples
-    
-    Returns:
-        (extended_theory, fitness_gain) or None if no extension improves fitness
+@dataclass
+class TheoryEcosystem:
+    """A collection of mathematical theories forming an ecosystem."""
+    theories: List[MathTheory] = field(default_factory=list)
+
+    def add_theory(self, theory: MathTheory) -> None:
+        self.theories.append(theory)
+
+    def fitness_ranking(self) -> List[Tuple[MathTheory, float]]:
+        """Rank theories by fitness, highest first."""
+        ranked = [(t, t.fitness()) for t in self.theories]
+        ranked.sort(key=lambda x: x[1], reverse=True)
+        return ranked
+
+    def niche_partition(self) -> Dict[Tuple[int, int], List[MathTheory]]:
+        """Partition theories by niche."""
+        partition: Dict[Tuple[int, int], List[MathTheory]] = {}
+        for t in self.theories:
+            n = t.niche()
+            if n not in partition:
+                partition[n] = []
+            partition[n].append(t)
+        return partition
+
+    def check_competitive_exclusion(self) -> List[Tuple[MathTheory, MathTheory]]:
+        """Find pairs violating competitive exclusion (same niche, same fitness,
+        different theorem count). Should always return empty list."""
+        violations = []
+        partition = self.niche_partition()
+        for niche, theories in partition.items():
+            for i, t1 in enumerate(theories):
+                for t2 in theories[i+1:]:
+                    if (abs(t1.fitness() - t2.fitness()) < 1e-10 and
+                            t1.theorem_count != t2.theorem_count and
+                            t1.connection_count > 0):
+                        violations.append((t1, t2))
+        return violations
+
+    def simulate_selection(self, generations: int = 10,
+                           growth_rate: float = 1.1) -> List[List[Tuple[str, float]]]:
+        """Simulate ecosystem dynamics where fitness determines growth.
+
+        Each generation, each theory's theorem count grows proportionally
+        to its relative fitness. Low-fitness theories eventually die out.
+        """
+        history = []
+        current = [MathTheory(t.name, t.axiom_count, t.theorem_count,
+                               t.connection_count) for t in self.theories]
+
+        for gen in range(generations):
+            fitnesses = [t.fitness() for t in current]
+            max_f = max(fitnesses) if fitnesses else 1.0
+            history.append([(t.name, f) for t, f in zip(current, fitnesses)])
+
+            # Growth proportional to relative fitness
+            for i, t in enumerate(current):
+                relative_fitness = fitnesses[i] / max_f if max_f > 0 else 0
+                growth = max(1, int(t.theorem_count * relative_fitness * growth_rate))
+                current[i] = MathTheory(t.name, t.axiom_count, growth,
+                                         t.connection_count)
+
+        return history
+
+
+def optimal_axiom_count(theorems: int, connections: int,
+                        max_axioms: int = 100) -> int:
+    """Find the axiom count that maximizes fitness.
+
+    Since fitness = c*t/a, and c and t are fixed, fitness is maximized
+    by minimizing a. The minimum is a=1 (trivially).
+    But in practice, more axioms enable more theorems and connections.
+    This function finds the optimal tradeoff assuming linear growth.
     """
-    best = None
-    best_gain = Fraction(0)
-    
-    for dt, dc, name in candidates:
-        extended = FormalTheory(
-            axiom_count=theory.axiom_count + 1,
-            theorem_count=theory.theorem_count + dt,
-            connection_count=theory.connection_count + dc,
-            name=name
-        )
-        gain = extended.fitness - theory.fitness
-        if gain > best_gain:
-            best = extended
-            best_gain = gain
-    
-    if best is None:
-        return None
-    return best, best_gain
+    best_a = 1
+    best_fitness = connections * theorems
+    for a in range(1, max_axioms + 1):
+        # Model: theorems grow as t * sqrt(a), connections grow as c * log(a+1)
+        t = int(theorems * math.sqrt(a))
+        c = int(connections * math.log(a + 1))
+        f = c * t / a
+        if f > best_fitness:
+            best_fitness = f
+            best_a = a
+    return best_a
 
 
-def red_queen_critical_exponent() -> int:
-    """Return the critical exponent for the Red Queen effect.
-    
-    For theory families T(a) = (a, α·a^β, c):
-    - β < 2: fitness decreases with axiom count
-    - β = 2: fitness is constant  
-    - β > 2: fitness increases with axiom count
-    """
-    return 2
+if __name__ == "__main__":
+    # Build ecosystem
+    eco = TheoryEcosystem()
+    eco.add_theory(MathTheory("Peano Arithmetic", 5, 500, 30))
+    eco.add_theory(MathTheory("ZFC", 9, 1000, 50))
+    eco.add_theory(MathTheory("ZFC+LC", 12, 1800, 120))
+    eco.add_theory(MathTheory("Category Theory", 4, 600, 80))
+    eco.add_theory(MathTheory("Type Theory", 7, 900, 70))
 
+    print("Fitness Ranking:")
+    for t, f in eco.fitness_ranking():
+        print(f"  {t.name:<25} fitness = {f:.2f}")
 
-def simulate_ecosystem_dynamics(
-    ecosystem: List[PositionedTheory],
-    rounds: int = 100
-) -> List[List[PositionedTheory]]:
-    """Simulate competitive dynamics by iteratively removing dominated theories.
-    
-    In each round, theories with below-maximum fitness in their niche
-    are eliminated. Returns the history of ecosystem states.
-    """
-    history = [list(ecosystem)]
-    current = list(ecosystem)
-    
-    for _ in range(rounds):
-        survivors = find_survivors(current)
-        if len(survivors) == len(current):
-            break  # equilibrium reached
-        current = survivors
-        history.append(list(current))
-    
-    return history
+    print("\nNiche Partition:")
+    for niche, theories in eco.niche_partition().items():
+        names = ", ".join(t.name for t in theories)
+        print(f"  Niche {niche}: {names}")
+
+    print(f"\nCompetitive exclusion violations: {len(eco.check_competitive_exclusion())}")
+
+    print("\nSimulation (5 generations):")
+    history = eco.simulate_selection(5)
+    for i, gen in enumerate(history):
+        top = max(gen, key=lambda x: x[1])
+        print(f"  Gen {i}: top = {top[0]} (fitness {top[1]:.2f})")

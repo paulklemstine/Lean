@@ -1,440 +1,344 @@
 #!/usr/bin/env python3
 """
-Theory Ecosystem Demo: Numerical Examples and Demonstrations
+Theory Ecosystem Dynamics: Numerical Demonstrations
 
-Demonstrates the key results from the Theory Ecosystem framework:
-1. Fitness computation for ZFC and ZFC + Large Cardinals
-2. Non-monotonicity of fitness under naive extension
-3. Red Queen effect visualization
-4. Competitive exclusion in a sample ecosystem
-5. Shared axioms boost analysis
+Demonstrates the fitness function for mathematical theories, the productive
+extension theorem, competitive exclusion, and superadditivity of fitness
+under theory merging.
 """
 
-from fractions import Fraction
-from algorithms import (
-    FormalTheory, PositionedTheory, is_fertile_extension,
-    fitness_comparison, find_survivors, merge_theories,
-    axiom_efficiency_threshold, optimal_extension,
-    simulate_ecosystem_dynamics
-)
+from dataclasses import dataclass
+from typing import List
+
+
+@dataclass
+class MathTheory:
+    """A mathematical theory modeled as a species in an ecosystem."""
+    name: str
+    axiom_count: int
+    theorem_count: int
+    connection_count: int
+
+    @property
+    def fitness(self) -> float:
+        """fitness(T) = connections × theorems / axioms"""
+        if self.axiom_count == 0:
+            return 0.0
+        return (self.connection_count * self.theorem_count) / self.axiom_count
+
+    @property
+    def productivity(self) -> int:
+        return self.connection_count * self.theorem_count
+
+    def is_productive_extension_of(self, base: 'MathTheory') -> bool:
+        """Check if self is a productive extension of base."""
+        if not (self.axiom_count >= base.axiom_count and
+                self.theorem_count >= base.theorem_count and
+                self.connection_count >= base.connection_count):
+            return False
+        return (self.connection_count * self.theorem_count * base.axiom_count >
+                base.connection_count * base.theorem_count * self.axiom_count)
 
 
 def demo_zfc_comparison():
-    """Demo 1: ZFC vs ZFC + Large Cardinals fitness comparison."""
+    """Demonstrate ZFC vs ZFC + Large Cardinals fitness comparison."""
     print("=" * 60)
     print("DEMO 1: ZFC vs ZFC + Large Cardinals")
     print("=" * 60)
-    
-    zfc = FormalTheory(9, 1000, 50, "ZFC")
-    zfc_lc = FormalTheory(12, 3000, 150, "ZFC+LC")
-    
+
+    zfc = MathTheory("ZFC", axiom_count=9, theorem_count=1000, connection_count=50)
+    zfc_lc = MathTheory("ZFC+LC", axiom_count=12, theorem_count=1800, connection_count=120)
+
     print(f"\n{zfc.name}:")
-    print(f"  Axioms: {zfc.axiom_count}, Theorems: {zfc.theorem_count}, "
-          f"Connections: {zfc.connection_count}")
-    print(f"  Fitness: {zfc.fitness} ≈ {float(zfc.fitness):.2f}")
-    print(f"  Proof Density: {zfc.proof_density} ≈ {float(zfc.proof_density):.2f}")
-    
+    print(f"  Axioms: {zfc.axiom_count}")
+    print(f"  Theorems: {zfc.theorem_count}")
+    print(f"  Connections: {zfc.connection_count}")
+    print(f"  Fitness: {zfc.fitness:.2f}")
+    print(f"  Productivity: {zfc.productivity}")
+
     print(f"\n{zfc_lc.name}:")
-    print(f"  Axioms: {zfc_lc.axiom_count}, Theorems: {zfc_lc.theorem_count}, "
-          f"Connections: {zfc_lc.connection_count}")
-    print(f"  Fitness: {zfc_lc.fitness} ≈ {float(zfc_lc.fitness):.2f}")
-    print(f"  Proof Density: {zfc_lc.proof_density} ≈ {float(zfc_lc.proof_density):.2f}")
-    
-    ratio = zfc_lc.fitness / zfc.fitness
-    print(f"\n  Fitness ratio (ZFC+LC / ZFC): {ratio} ≈ {float(ratio):.2f}x")
-    print(f"  ZFC+LC is a fertile extension: {is_fertile_extension(zfc, zfc_lc)}")
-    print(f"  Fitness comparison: {fitness_comparison(zfc_lc, zfc)} "
-          "(1 = ZFC+LC wins)")
+    print(f"  Axioms: {zfc_lc.axiom_count}")
+    print(f"  Theorems: {zfc_lc.theorem_count}")
+    print(f"  Connections: {zfc_lc.connection_count}")
+    print(f"  Fitness: {zfc_lc.fitness:.2f}")
+    print(f"  Productivity: {zfc_lc.productivity}")
+
+    print(f"\n  Fitness ratio (ZFC+LC / ZFC): {zfc_lc.fitness / zfc.fitness:.2f}x")
+    print(f"  Axiom increase: {(zfc_lc.axiom_count / zfc.axiom_count - 1) * 100:.0f}%")
+    print(f"  Productive extension? {zfc_lc.is_productive_extension_of(zfc)}")
+    print(f"  Cross-multiplication check: {zfc_lc.connection_count * zfc_lc.theorem_count * zfc.axiom_count}"
+          f" > {zfc.connection_count * zfc.theorem_count * zfc_lc.axiom_count}")
 
 
-def demo_non_monotonicity():
-    """Demo 2: Fitness non-monotonicity."""
+def demo_theory_landscape():
+    """Show a landscape of mathematical theories and their fitness."""
     print("\n" + "=" * 60)
-    print("DEMO 2: Fitness Non-Monotonicity (Bigger ≠ Fitter)")
+    print("DEMO 2: Mathematical Theory Landscape")
     print("=" * 60)
-    
-    t1 = FormalTheory(2, 100, 10, "Lean")
-    t2 = FormalTheory(10, 150, 12, "Bloated")
-    
-    print(f"\n{t1.name} theory: ({t1.axiom_count}, {t1.theorem_count}, "
-          f"{t1.connection_count})")
-    print(f"  Fitness: {t1.fitness} = {float(t1.fitness):.1f}")
-    
-    print(f"\n{t2.name} theory: ({t2.axiom_count}, {t2.theorem_count}, "
-          f"{t2.connection_count})")
-    print(f"  Fitness: {t2.fitness} = {float(t2.fitness):.1f}")
-    
-    print(f"\n  {t2.name} has MORE axioms: {t2.axiom_count} > {t1.axiom_count} ✓")
-    print(f"  {t2.name} has MORE theorems: {t2.theorem_count} > {t1.theorem_count} ✓")
-    print(f"  {t2.name} has MORE connections: {t2.connection_count} > "
-          f"{t1.connection_count} ✓")
-    print(f"  Yet {t2.name} has LESS fitness: {float(t2.fitness):.1f} < "
-          f"{float(t1.fitness):.1f} ✗")
-    print(f"  Fitness ratio: {float(t1.fitness / t2.fitness):.1f}x difference!")
+
+    theories = [
+        MathTheory("Peano Arithmetic", 5, 500, 30),
+        MathTheory("ZFC", 9, 1000, 50),
+        MathTheory("ZFC + Large Cardinals", 12, 1800, 120),
+        MathTheory("Category Theory", 4, 600, 80),
+        MathTheory("Type Theory (HoTT)", 7, 900, 70),
+        MathTheory("Euclidean Geometry", 5, 300, 20),
+        MathTheory("Abstract Algebra", 6, 800, 60),
+        MathTheory("Topology", 8, 700, 55),
+    ]
+
+    theories.sort(key=lambda t: t.fitness, reverse=True)
+
+    print(f"\n{'Theory':<25} {'Axioms':>7} {'Thms':>6} {'Conns':>6} {'Fitness':>10}")
+    print("-" * 60)
+    for t in theories:
+        print(f"{t.name:<25} {t.axiom_count:>7} {t.theorem_count:>6} "
+              f"{t.connection_count:>6} {t.fitness:>10.2f}")
 
 
-def demo_red_queen():
-    """Demo 3: Red Queen effect — linear growth kills fitness."""
+def demo_superadditivity():
+    """Demonstrate that merging theories is fitness-superadditive."""
     print("\n" + "=" * 60)
-    print("DEMO 3: The Red Queen Effect")
+    print("DEMO 3: Superadditivity of Fitness Under Merging")
     print("=" * 60)
-    
-    base_r, base_c = 10, 5
-    
-    print(f"\nTheory family: T(a) = (a, {base_r}a, {base_c})")
-    print(f"{'Axioms':>8} {'Theorems':>10} {'Fitness':>12} {'Change':>10}")
-    print("-" * 44)
-    
-    prev_fitness = None
-    for a in [1, 2, 4, 8, 16, 32]:
-        t = FormalTheory(a, a * base_r, base_c, f"T({a})")
-        change = ""
-        if prev_fitness is not None:
-            ratio = t.fitness / prev_fitness
-            change = f"{float(ratio):.3f}x"
-        prev_fitness = t.fitness
-        print(f"{a:>8} {a * base_r:>10} {float(t.fitness):>12.2f} {change:>10}")
-    
-    print(f"\nRed Queen threshold: to maintain fitness when doubling axioms,")
-    print(f"theorems must grow by 4x (not 2x). The critical exponent is 2.")
-    
-    print(f"\nVerification with superlinear growth (β = 2.5):")
-    print(f"{'Axioms':>8} {'Theorems':>10} {'Fitness':>12}")
-    print("-" * 34)
-    for a in [1, 2, 4, 8]:
-        t_count = max(1, int(a ** 2.5))
-        t = FormalTheory(a, t_count, base_c, f"T({a})")
-        print(f"{a:>8} {t_count:>10} {float(t.fitness):>12.2f}")
+
+    t1 = MathTheory("Number Theory", 5, 400, 30)
+    t2 = MathTheory("Algebraic Geometry", 5, 350, 25)
+    merged = MathTheory("Arithmetic Geometry", 5,
+                        t1.theorem_count + t2.theorem_count,
+                        t1.connection_count + t2.connection_count)
+
+    cross_term = (t1.theorem_count * t2.connection_count +
+                  t2.theorem_count * t1.connection_count) / t1.axiom_count
+
+    print(f"\n{t1.name}: fitness = {t1.fitness:.2f}")
+    print(f"{t2.name}: fitness = {t2.fitness:.2f}")
+    print(f"Sum of individual fitnesses: {t1.fitness + t2.fitness:.2f}")
+    print(f"\n{merged.name} (merged): fitness = {merged.fitness:.2f}")
+    print(f"Cross-term bonus: {cross_term:.2f}")
+    print(f"Superadditivity gap: {merged.fitness - t1.fitness - t2.fitness:.2f}")
+    print(f"Fitness gain from unification: {((merged.fitness / (t1.fitness + t2.fitness)) - 1) * 100:.1f}%")
+
+
+def demo_scaling():
+    """Demonstrate quadratic scaling of fitness."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Quadratic Scaling of Fitness")
+    print("=" * 60)
+
+    base = MathTheory("Base", 5, 100, 10)
+    print(f"\nBase theory: fitness = {base.fitness:.2f}")
+    print(f"\nScaling theorems and connections by factor k:")
+    print(f"  {'k':>3} {'Theorems':>10} {'Connections':>12} {'Fitness':>10} {'k² × base':>10}")
+    for k in range(1, 6):
+        scaled = MathTheory(f"Scaled(k={k})", 5, k * 100, k * 10)
+        print(f"  {k:>3} {scaled.theorem_count:>10} {scaled.connection_count:>12} "
+              f"{scaled.fitness:>10.2f} {k**2 * base.fitness:>10.2f}")
 
 
 def demo_competitive_exclusion():
-    """Demo 4: Competitive exclusion in a sample ecosystem."""
+    """Show competitive exclusion: same niche → same fitness → same theorem count."""
     print("\n" + "=" * 60)
-    print("DEMO 4: Competitive Exclusion")
+    print("DEMO 5: Competitive Exclusion Principle")
     print("=" * 60)
-    
-    ecosystem = [
-        PositionedTheory(FormalTheory(5, 500, 20, "GroupTheory"), niche=0),
-        PositionedTheory(FormalTheory(5, 600, 25, "RingTheory"), niche=0),
-        PositionedTheory(FormalTheory(3, 200, 15, "GraphTheory"), niche=1),
-        PositionedTheory(FormalTheory(4, 300, 12, "CombTheory"), niche=1),
-        PositionedTheory(FormalTheory(8, 800, 30, "Topology"), niche=2),
-    ]
-    
-    print("\nInitial ecosystem:")
-    for pt in ecosystem:
-        f = pt.theory.fitness
-        print(f"  [{pt.niche}] {pt.theory.name}: fitness = "
-              f"{float(f):.2f}")
-    
-    survivors = find_survivors(ecosystem)
-    print(f"\nSurvivors (after competitive exclusion):")
-    for pt in survivors:
-        f = pt.theory.fitness
-        print(f"  [{pt.niche}] {pt.theory.name}: fitness = "
-              f"{float(f):.2f}")
-    
-    eliminated = [pt for pt in ecosystem if pt not in survivors]
-    print(f"\nEliminated:")
-    for pt in eliminated:
-        f = pt.theory.fitness
-        winner = [s for s in survivors if s.niche == pt.niche][0]
-        print(f"  [{pt.niche}] {pt.theory.name} (fitness {float(f):.2f}) "
-              f"< {winner.theory.name} (fitness {float(winner.theory.fitness):.2f})")
 
+    print("\nTwo theories in the same niche (same connections, same axioms):")
+    t1 = MathTheory("Theory A", 7, 500, 40)
+    t2 = MathTheory("Theory B", 7, 500, 40)
+    t3 = MathTheory("Theory C", 7, 600, 40)
 
-def demo_shared_axioms():
-    """Demo 5: Shared axioms boost fitness of merged theories."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Shared Axioms Boost (Unification Dividend)")
-    print("=" * 60)
-    
-    t1 = FormalTheory(5, 300, 20, "Algebra")
-    t2 = FormalTheory(4, 200, 15, "Topology")
-    
-    print(f"\n{t1.name}: fitness = {float(t1.fitness):.2f}")
-    print(f"{t2.name}: fitness = {float(t2.fitness):.2f}")
-    
-    print(f"\nMerge fitness by shared axiom count:")
-    print(f"{'Shared':>8} {'Total Axioms':>14} {'Fitness':>10} {'Gain':>10}")
-    print("-" * 46)
-    
-    prev_f = None
-    for s in range(5):  # 0 to 4 shared axioms
-        merged = merge_theories(t1, t2, s, f"Merged(s={s})")
-        f = merged.fitness
-        gain = ""
-        if prev_f is not None:
-            gain = f"+{float(f - prev_f):.2f}"
-        prev_f = f
-        print(f"{s:>8} {merged.axiom_count:>14} {float(f):>10.2f} {gain:>10}")
-    
-    print(f"\nMore shared axioms → fewer total axioms → higher fitness")
-    print(f"This is the 'unification dividend': discovering shared")
-    print(f"foundations makes both theories fitter.")
+    print(f"  {t1.name}: axioms={t1.axiom_count}, conns={t1.connection_count}, "
+          f"thms={t1.theorem_count}, fitness={t1.fitness:.2f}")
+    print(f"  {t2.name}: axioms={t2.axiom_count}, conns={t2.connection_count}, "
+          f"thms={t2.theorem_count}, fitness={t2.fitness:.2f}")
+    print(f"  Same niche, same fitness → theorem counts must be equal: "
+          f"{t1.theorem_count == t2.theorem_count}")
 
-
-def demo_axiom_efficiency():
-    """Demo 6: Axiom efficiency threshold."""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Axiom Efficiency Threshold")
-    print("=" * 60)
-    
-    theory = FormalTheory(5, 400, 25, "BaseTheory")
-    threshold = axiom_efficiency_threshold(theory)
-    
-    print(f"\nBase theory: ({theory.axiom_count}, {theory.theorem_count}, "
-          f"{theory.connection_count})")
-    print(f"  Current fitness: {float(theory.fitness):.2f}")
-    print(f"  Threshold for 1-axiom extension: (c+Δc)(t+Δt) must exceed "
-          f"{float(threshold):.2f}")
-    
-    candidates = [
-        (50, 5, "Weak Extension"),
-        (200, 10, "Moderate Extension"),
-        (500, 20, "Strong Extension"),
-        (1000, 50, "Powerful Extension"),
-    ]
-    
-    print(f"\n{'Extension':>20} {'(Δt, Δc)':>10} {'New Fitness':>12} {'Improves?':>10}")
-    print("-" * 56)
-    
-    for dt, dc, name in candidates:
-        ext = FormalTheory(
-            theory.axiom_count + 1,
-            theory.theorem_count + dt,
-            theory.connection_count + dc,
-            name
-        )
-        improves = ext.fitness > theory.fitness
-        print(f"{name:>20} ({dt},{dc:>3}) {float(ext.fitness):>12.2f} "
-              f"{'✓' if improves else '✗':>10}")
+    print(f"\n  {t3.name}: axioms={t3.axiom_count}, conns={t3.connection_count}, "
+          f"thms={t3.theorem_count}, fitness={t3.fitness:.2f}")
+    print(f"  Same niche as A but different fitness → can coexist temporarily")
+    print(f"  But C dominates A (higher fitness), so A will be excluded")
 
 
 if __name__ == "__main__":
     demo_zfc_comparison()
-    demo_non_monotonicity()
-    demo_red_queen()
+    demo_theory_landscape()
+    demo_superadditivity()
+    demo_scaling()
     demo_competitive_exclusion()
-    demo_shared_axioms()
-    demo_axiom_efficiency()
-    
-    print("\n" + "=" * 60)
-    print("All demos completed successfully.")
-    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization 2: Ecosystem Competition and Competitive Exclusion
-
-Shows how theories compete within niches and illustrates the competitive
-exclusion principle through ecosystem dynamics simulation.
+Theory Ecosystem Visualization: Fitness landscape and dynamics.
+Standalone script using matplotlib.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 
 
-def compute_fitness(axioms, theorems, connections):
-    """Compute fitness = connections * theorems / axioms^2"""
-    return connections * theorems / (axioms ** 2)
-
-
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-    
-    # Plot 1: Theory comparison bar chart
-    ax = axes[0]
-    theories = [
-        ("ZFC", 9, 1000, 50),
-        ("ZFC+LC", 12, 3000, 150),
-        ("Lean (2,100,10)", 2, 100, 10),
-        ("Bloated (10,150,12)", 10, 150, 12),
-        ("Balanced (5,500,25)", 5, 500, 25),
-    ]
-    
-    names = [t[0] for t in theories]
-    fitnesses = [compute_fitness(t[1], t[2], t[3]) for t in theories]
-    colors = ['steelblue', 'darkblue', 'green', 'red', 'orange']
-    
-    bars = ax.barh(names, fitnesses, color=colors)
-    ax.set_xlabel('Fitness')
-    ax.set_title('Theory Fitness Comparison')
-    ax.set_xscale('log')
-    
-    for bar, f in zip(bars, fitnesses):
-        ax.text(f * 1.1, bar.get_y() + bar.get_height()/2,
-                f'{f:.1f}', va='center', fontsize=9)
-    
-    # Plot 2: Competitive exclusion dynamics
-    ax = axes[1]
-    
-    # Simulate ecosystem with 3 niches
-    niche_data = {
-        'Niche 0\n(Foundations)': [
-            ("ZFC", compute_fitness(9, 1000, 50)),
-            ("ZFC+LC", compute_fitness(12, 3000, 150)),
-            ("NF", compute_fitness(6, 200, 15)),
-        ],
-        'Niche 1\n(Algebra)': [
-            ("Group Th.", compute_fitness(4, 800, 30)),
-            ("Ring Th.", compute_fitness(5, 600, 25)),
-            ("Monoid Th.", compute_fitness(3, 200, 10)),
-        ],
-        'Niche 2\n(Geometry)': [
-            ("Diff. Geom.", compute_fitness(6, 700, 35)),
-            ("Alg. Geom.", compute_fitness(7, 900, 40)),
-            ("Euclidean", compute_fitness(5, 300, 12)),
-        ],
+def plot_fitness_landscape():
+    """Plot the fitness landscape of mathematical theories."""
+    theories = {
+        "Peano\nArithmetic": (5, 500, 30),
+        "ZFC": (9, 1000, 50),
+        "ZFC +\nLarge Cardinals": (12, 1800, 120),
+        "Category\nTheory": (4, 600, 80),
+        "Type Theory\n(HoTT)": (7, 900, 70),
+        "Euclidean\nGeometry": (5, 300, 20),
+        "Abstract\nAlgebra": (6, 800, 60),
+        "Topology": (8, 700, 55),
     }
-    
-    y_pos = 0
-    y_positions = []
-    y_labels = []
-    
-    for niche_name, theories in niche_data.items():
-        max_f = max(f for _, f in theories)
-        for name, f in theories:
-            is_survivor = (f == max_f)
-            color = 'green' if is_survivor else 'lightcoral'
-            alpha = 1.0 if is_survivor else 0.6
-            ax.barh(y_pos, f, color=color, alpha=alpha, edgecolor='black', linewidth=0.5)
-            label = f"{name} ({f:.0f})"
-            if is_survivor:
-                label += " ★"
-            ax.text(f + max_f * 0.02, y_pos, label, va='center', fontsize=8)
-            y_positions.append(y_pos)
-            y_pos += 1
-        y_pos += 0.5  # gap between niches
-    
-    ax.set_yticks([])
-    ax.set_xlabel('Fitness')
-    ax.set_title('Competitive Exclusion\n(★ = survivor, red = eliminated)')
-    
-    # Add niche labels
-    niche_starts = [0, 3.5, 7]
-    for start, name in zip(niche_starts, niche_data.keys()):
-        ax.text(-ax.get_xlim()[1] * 0.15, start + 1, name,
-                va='center', ha='center', fontsize=9, fontweight='bold')
-    
-    # Plot 3: Merge fitness vs shared axioms
-    ax = axes[2]
-    
-    # Two theories being merged
-    a1, t1, c1 = 6, 400, 20
-    a2, t2, c2 = 5, 300, 15
-    
-    shared_range = range(0, min(a1, a2) + 1)
-    merge_fitnesses = []
-    for s in shared_range:
-        total_a = a1 + a2 - s
-        total_t = t1 + t2
-        total_c = c1 + c2
-        merge_fitnesses.append(compute_fitness(total_a, total_t, total_c))
-    
-    ax.plot(list(shared_range), merge_fitnesses, 'bo-', markersize=10, linewidth=2)
-    ax.fill_between(list(shared_range), merge_fitnesses, alpha=0.2, color='blue')
-    ax.set_xlabel('Shared Axiom Count')
-    ax.set_ylabel('Merged Theory Fitness')
-    ax.set_title(f'Unification Dividend\n(Merging ({a1},{t1},{c1}) + ({a2},{t2},{c2}))')
-    ax.grid(True, alpha=0.3)
-    
-    for s, f in zip(shared_range, merge_fitnesses):
-        ax.annotate(f'{f:.1f}', (s, f), textcoords="offset points",
-                   xytext=(0, 10), ha='center', fontsize=9)
-    
+
+    names = list(theories.keys())
+    axioms = [theories[n][0] for n in names]
+    theorems = [theories[n][1] for n in names]
+    connections = [theories[n][2] for n in names]
+    fitness = [c * t / a for a, t, c in zip(axioms, theorems, connections)]
+
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+
+    # Left: Bubble chart - axioms vs connections, size = theorems, color = fitness
+    ax1 = axes[0]
+    scatter = ax1.scatter(axioms, connections, s=[t/2 for t in theorems],
+                          c=fitness, cmap='plasma', alpha=0.7, edgecolors='black', linewidth=1)
+    for i, name in enumerate(names):
+        ax1.annotate(name, (axioms[i], connections[i]),
+                    textcoords="offset points", xytext=(10, 5),
+                    fontsize=8, ha='left')
+    ax1.set_xlabel("Axiom Count", fontsize=12)
+    ax1.set_ylabel("Connection Count", fontsize=12)
+    ax1.set_title("Theory Ecosystem: Fitness Landscape", fontsize=14)
+    plt.colorbar(scatter, ax=ax1, label="Fitness")
+
+    # Right: Bar chart of fitness
+    ax2 = axes[1]
+    sorted_idx = np.argsort(fitness)[::-1]
+    sorted_names = [names[i] for i in sorted_idx]
+    sorted_fitness = [fitness[i] for i in sorted_idx]
+    colors = plt.cm.plasma(np.linspace(0.2, 0.9, len(sorted_names)))
+
+    bars = ax2.barh(range(len(sorted_names)), sorted_fitness, color=colors,
+                    edgecolor='black', linewidth=0.5)
+    ax2.set_yticks(range(len(sorted_names)))
+    ax2.set_yticklabels(sorted_names, fontsize=9)
+    ax2.set_xlabel("Fitness (connections × theorems / axioms)", fontsize=12)
+    ax2.set_title("Theory Fitness Ranking", fontsize=14)
+    ax2.invert_yaxis()
+
+    # Annotate ZFC vs ZFC+LC comparison
+    for i, (name, f) in enumerate(zip(sorted_names, sorted_fitness)):
+        ax2.text(f + 200, i, f"{f:.0f}", va='center', fontsize=9)
+
     plt.tight_layout()
-    plt.savefig('ecosystem_dynamics.png', dpi=150, bbox_inches='tight')
-    print("Saved ecosystem_dynamics.png")
+    plt.savefig("theory_fitness_landscape.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: theory_fitness_landscape.png")
+
+
+def plot_scaling_and_superadditivity():
+    """Plot quadratic scaling and superadditivity."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Left: Quadratic scaling
+    ax1 = axes[0]
+    base_fitness = 10 * 100 / 5  # c=10, t=100, a=5
+    ks = np.arange(1, 8)
+    scaled_fitness = [k**2 * base_fitness for k in ks]
+    linear_fitness = [k * base_fitness for k in ks]
+
+    ax1.plot(ks, scaled_fitness, 'o-', color='#e74c3c', linewidth=2,
+             markersize=8, label='Actual fitness (k² scaling)')
+    ax1.plot(ks, linear_fitness, 's--', color='#3498db', linewidth=2,
+             markersize=6, label='Linear scaling (hypothetical)')
+    ax1.fill_between(ks, linear_fitness, scaled_fitness, alpha=0.15, color='#e74c3c')
+    ax1.set_xlabel("Scale factor k", fontsize=12)
+    ax1.set_ylabel("Fitness", fontsize=12)
+    ax1.set_title("Quadratic Scaling of Fitness", fontsize=14)
+    ax1.legend(fontsize=10)
+    ax1.grid(True, alpha=0.3)
+
+    # Right: Superadditivity
+    ax2 = axes[1]
+    a = 5
+    t_range = np.arange(50, 500, 50)
+    c1, c2 = 20, 15
+    t1_base = 200
+
+    superadditive_gaps = []
+    for t2 in t_range:
+        f1 = c1 * t1_base / a
+        f2 = c2 * t2 / a
+        f_merged = (c1 + c2) * (t1_base + t2) / a
+        gap = f_merged - f1 - f2
+        superadditive_gaps.append(gap)
+
+    ax2.bar(range(len(t_range)), superadditive_gaps, color='#2ecc71',
+            edgecolor='black', linewidth=0.5)
+    ax2.set_xticks(range(len(t_range)))
+    ax2.set_xticklabels([str(t) for t in t_range], fontsize=8)
+    ax2.set_xlabel("Theorem count of Theory 2", fontsize=12)
+    ax2.set_ylabel("Superadditivity bonus", fontsize=12)
+    ax2.set_title("Cross-Term Fitness Bonus from Merging", fontsize=14)
+    ax2.grid(True, alpha=0.3, axis='y')
+
+    plt.tight_layout()
+    plt.savefig("theory_scaling_superadditivity.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: theory_scaling_superadditivity.png")
+
+
+def plot_ecosystem_dynamics():
+    """Simulate and plot ecosystem dynamics over generations."""
+    import math
+
+    theories = [
+        ("Peano Arithmetic", 5, 500, 30),
+        ("ZFC", 9, 1000, 50),
+        ("ZFC+LC", 12, 1800, 120),
+        ("Category Theory", 4, 600, 80),
+        ("Type Theory", 7, 900, 70),
+    ]
+
+    generations = 15
+    history = {name: [] for name, _, _, _ in theories}
+
+    current = [(name, a, t, c) for name, a, t, c in theories]
+
+    for gen in range(generations):
+        fitnesses = [(c * t / a) for _, a, t, c in current]
+        max_f = max(fitnesses)
+        for i, (name, a, t, c) in enumerate(current):
+            history[name].append(fitnesses[i])
+        # Evolve: theorem count grows proportional to relative fitness
+        new_current = []
+        for i, (name, a, t, c) in enumerate(current):
+            rel = fitnesses[i] / max_f
+            new_t = max(1, int(t * (0.9 + 0.2 * rel)))
+            new_current.append((name, a, new_t, c))
+        current = new_current
+
+    fig, ax = plt.subplots(figsize=(12, 7))
+    colors = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#f39c12']
+    for i, (name, _, _, _) in enumerate(theories):
+        ax.plot(range(generations), history[name], 'o-', color=colors[i],
+                linewidth=2, markersize=5, label=name)
+
+    ax.set_xlabel("Generation", fontsize=12)
+    ax.set_ylabel("Fitness", fontsize=12)
+    ax.set_title("Theory Ecosystem Dynamics: Fitness Over Generations", fontsize=14)
+    ax.legend(fontsize=10, loc='upper left')
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig("theory_ecosystem_dynamics.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: theory_ecosystem_dynamics.png")
 
 
 if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization 1: Theory Fitness Landscape
-
-Generates a heatmap showing how fitness varies with axiom count and theorem count
-for fixed connection count, revealing the non-monotonicity and phase structure.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def compute_fitness(axioms: np.ndarray, theorems: np.ndarray, connections: int) -> np.ndarray:
-    """Compute fitness = connections * theorems / axioms^2"""
-    return connections * theorems / (axioms ** 2)
-
-
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-    
-    # Plot 1: Fitness heatmap
-    ax = axes[0]
-    axiom_range = np.arange(1, 21)
-    theorem_range = np.arange(0, 501, 5)
-    A, T = np.meshgrid(axiom_range, theorem_range)
-    F = compute_fitness(A, T, connections=10)
-    
-    im = ax.pcolormesh(A, T, F, shading='auto', cmap='viridis')
-    plt.colorbar(im, ax=ax, label='Fitness')
-    ax.set_xlabel('Axiom Count')
-    ax.set_ylabel('Theorem Count')
-    ax.set_title('Fitness Landscape (c=10)')
-    
-    # Mark ZFC and ZFC+LC
-    zfc_f = compute_fitness(9, 1000, 50)
-    zfc_lc_f = compute_fitness(12, 3000, 150)
-    
-    # Plot 2: Red Queen effect - fitness vs axiom count for different growth rates
-    ax = axes[1]
-    axioms = np.arange(1, 31)
-    c = 10
-    
-    for beta, label, color in [(1.0, 'β=1 (linear)', 'red'),
-                                (1.5, 'β=1.5', 'orange'),
-                                (2.0, 'β=2 (critical)', 'blue'),
-                                (2.5, 'β=2.5', 'green'),
-                                (3.0, 'β=3 (cubic)', 'purple')]:
-        theorems = axioms ** beta
-        fitness = c * theorems / axioms ** 2
-        ax.plot(axioms, fitness, label=label, color=color, linewidth=2)
-    
-    ax.set_xlabel('Axiom Count')
-    ax.set_ylabel('Fitness')
-    ax.set_title('Red Queen Effect: Critical Exponent β*=2')
-    ax.legend(fontsize=9)
-    ax.set_yscale('log')
-    ax.grid(True, alpha=0.3)
-    
-    # Plot 3: Fitness scaling - k^2 law
-    ax = axes[2]
-    k_values = np.arange(1, 11)
-    base_fitness = compute_fitness(5, 100, 10)
-    
-    actual = [compute_fitness(5, k * 100, k * 10) for k in k_values]
-    predicted = [k**2 * base_fitness for k in k_values]
-    
-    ax.plot(k_values, actual, 'bo-', label='Actual fitness', markersize=8)
-    ax.plot(k_values, predicted, 'r--', label='k² × base', linewidth=2)
-    ax.set_xlabel('Scaling Factor k')
-    ax.set_ylabel('Fitness')
-    ax.set_title('Fitness Scaling Law: f(kT) = k²f(T)')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('fitness_landscape.png', dpi=150, bbox_inches='tight')
-    print("Saved fitness_landscape.png")
-
-
-if __name__ == "__main__":
-    main()
+    plot_fitness_landscape()
+    plot_scaling_and_superadditivity()
+    plot_ecosystem_dynamics()
