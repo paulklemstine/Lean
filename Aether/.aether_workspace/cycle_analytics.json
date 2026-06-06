@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-06T15:17:37.020955+00:00",
+  "last_updated": "2026-06-06T15:56:37.792808+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -10703,6 +10703,76 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T15:17:36.921618+00:00",
       "title": "Sonic Mathematics: Counterpoint as Category Theory"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4316,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 218,
+      "domain": "Applications",
+      "duration_seconds": 6970.6102912425995,
+      "end_time": 1780761336.0206213,
+      "files_integrated": 5,
+      "job_id": "1ae396bb",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6431,
+        "cross_domain": 0.85,
+        "grade": "substantial",
+        "importance": 0.4088,
+        "novelty": 0.77,
+        "proof_depth": 0.2539,
+        "usefulness": 0.552
+      },
+      "quality_score": 0.30735999999999997,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780754365.41033,
+      "strategy_count": 187,
+      "theorem_count": 3,
+      "timestamp": "2026-06-06T15:56:37.604458+00:00",
+      "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4316,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 220,
+      "domain": "Applications",
+      "duration_seconds": 4935.823118209839,
+      "end_time": 1780761337.021358,
+      "files_integrated": 5,
+      "job_id": "e8c0d633",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.62,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6511,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.4903,
+        "novelty": 0.77,
+        "proof_depth": 0.3704,
+        "usefulness": 0.6352
+      },
+      "quality_score": 0.22840000000000002,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780756401.1982398,
+      "strategy_count": 187,
+      "theorem_count": 7,
+      "timestamp": "2026-06-06T15:56:37.672245+00:00",
+      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
     }
   ]
 }

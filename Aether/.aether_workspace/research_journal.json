@@ -1590,6 +1590,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T15:17:36",
       "title": "Sonic Mathematics: Counterpoint as Category Theory"
+    },
+    {
+      "cycle_id": "1ae396bb",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Transfinite Cellular Automata\n\n## Synthesis\n\nThis research cycle established a formalized framework for cellular automata evolving over ordinal time, proving structural theorems a",
+      "quality_score": 0.30735999999999997,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-06-06T15:56:06",
+      "title": "Cellular Automata at the Ordinals: Transfinite Computation"
     }
   ],
   "entries": [
@@ -1635,7 +1645,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T15:17:36",
+  "last_updated": "2026-06-06T15:56:06",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1647,12 +1657,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "ba001e63",
-        "quality": 0.63888,
-        "theorems": 5,
-        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-      },
       {
         "cycle_id": "87ee6989",
         "quality": 0.31904,
@@ -1706,6 +1710,12 @@
         "quality": 0.37096000000000007,
         "theorems": 5,
         "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+      },
+      {
+        "cycle_id": "1ae396bb",
+        "quality": 0.30735999999999997,
+        "theorems": 3,
+        "title": "Cellular Automata at the Ordinals: Transfinite Computation"
       }
     ],
     "Bridges": [
