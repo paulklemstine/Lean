@@ -1,262 +1,384 @@
 #!/usr/bin/env python3
 """
-Algorithms for Reflective Operator Algebras
+Algorithms for Self-Referential Type Theory
 
-Implements the core computational procedures from the ROA framework:
-1. Cantor diagonal construction
-2. Kleene chain iteration
-3. Diagonal tower generation
-4. Fixed point detection on finite lattices
+Implements the core mathematical algorithms from the formalization:
+1. Lawvere diagonal construction
+2. Predicate jump operator
+3. Knaster-Tarski least/greatest fixed point computation
+4. Fixed point spectrum analysis
+5. Hierarchy level computation
 """
 
-from typing import Callable, List, Set, FrozenSet, Optional, TypeVar, Generic
+from typing import (
+    TypeVar, Callable, Set, FrozenSet, Optional,
+    List, Dict, Tuple, Generic, Any
+)
 from dataclasses import dataclass
+from enum import Enum
 import math
+import functools
 
 T = TypeVar('T')
+S = TypeVar('S')
 
+
+# ─────────────────────────────────────────────────────────────
+# Algorithm 1: Lawvere Diagonal Construction
+# ─────────────────────────────────────────────────────────────
+
+def lawvere_diagonal(
+    phi: Callable[[T], Callable[[T], S]],
+    f: Callable[[S], S],
+    domain: List[T]
+) -> Callable[[T], S]:
+    """
+    Construct the Lawvere diagonal: d(a) = f(φ(a)(a)).
+
+    Given an enumeration φ : A → (A → B) and a transformation f : B → B,
+    produces a function d : A → B that is NOT in the range of φ
+    (provided f has no fixed point).
+
+    Pseudocode:
+        LAWVERE-DIAGONAL(φ, f, A):
+            for each a ∈ A:
+                d(a) ← f(φ(a)(a))
+            return d
+
+    Args:
+        phi: Enumeration function A → (A → B)
+        f: Endomorphism B → B (ideally fixed-point-free)
+        domain: Elements of A
+
+    Returns:
+        The diagonal function d : A → B
+    """
+    values: Dict[Any, Any] = {}
+    for a in domain:
+        values[a] = f(phi(a)(a))
+    return lambda x: values[x]
+
+
+def verify_diagonal_escapes(
+    phi: Callable[[T], Callable[[T], S]],
+    diagonal: Callable[[T], S],
+    domain: List[T]
+) -> bool:
+    """
+    Verify that the diagonal function is not in the range of φ.
+
+    Returns True if for every a ∈ domain, φ(a) ≠ diagonal.
+    """
+    for a in domain:
+        if all(phi(a)(x) == diagonal(x) for x in domain):
+            return False  # diagonal IS in range — should not happen!
+    return True
+
+
+# ─────────────────────────────────────────────────────────────
+# Algorithm 2: Predicate Jump Operator
+# ─────────────────────────────────────────────────────────────
+
+def predicate_jump(
+    enum: Callable[[int], Callable[[int], bool]],
+    n: int
+) -> Callable[[int], bool]:
+    """
+    Compute the predicate jump of an enumeration.
+
+    The jump J(k) = ¬enum(k)(k) is the simplest form of the
+    diagonal construction. It always produces a predicate
+    outside the enumeration.
+
+    Pseudocode:
+        PREDICATE-JUMP(enum, n):
+            for k = 0 to n-1:
+                J(k) ← NOT enum(k)(k)
+            return J
+
+    Args:
+        enum: Enumeration of predicates on {0,...,n-1}
+        n: Size of domain
+
+    Returns:
+        The jump predicate J : {0,...,n-1} → Bool
+    """
+    jump_values = {k: not enum(k)(k) for k in range(n)}
+    return lambda k: jump_values[k]
+
+
+def iterate_jump(
+    initial_enum: Callable[[int], Callable[[int], bool]],
+    n: int,
+    levels: int
+) -> List[Callable[[int], bool]]:
+    """
+    Iterate the predicate jump to generate hierarchy levels.
+
+    Each level produces a predicate that escapes all previous levels.
+
+    Returns:
+        List of predicates, one per hierarchy level
+    """
+    hierarchy: List[Callable[[int], bool]] = []
+    current_enum = initial_enum
+
+    for level in range(levels):
+        jump = predicate_jump(current_enum, n)
+        hierarchy.append(jump)
+
+        # Extend enumeration to include the jump at next level
+        prev_enum = current_enum
+        prev_jump = jump
+        def new_enum(k: int, pe=prev_enum, pj=prev_jump, lv=level) -> Callable[[int], bool]:
+            if k == lv:
+                return pj
+            return pe(k)
+        current_enum = new_enum
+
+    return hierarchy
+
+
+# ─────────────────────────────────────────────────────────────
+# Algorithm 3: Knaster-Tarski Fixed Point Computation
+# ─────────────────────────────────────────────────────────────
+
+def knaster_tarski_lfp(
+    f: Callable[[FrozenSet[T]], FrozenSet[T]],
+    universe: FrozenSet[T]
+) -> FrozenSet[T]:
+    """
+    Compute the least fixed point of a monotone map on P(universe).
+
+    The lfp is computed as the intersection of all pre-fixed points:
+    lfp(f) = ⋂ {S ⊆ universe | f(S) ⊆ S}
+
+    Pseudocode:
+        KNASTER-TARSKI-LFP(f, U):
+            result ← U
+            for each S ⊆ U:
+                if f(S) ⊆ S:
+                    result ← result ∩ S
+            return result
+
+    For large universes, use iterative refinement instead:
+        KNASTER-TARSKI-LFP-ITERATIVE(f, U):
+            x ← ∅
+            repeat:
+                x' ← f(x)
+                if x' = x: return x
+                x ← x'
+
+    Args:
+        f: Monotone function on subsets of universe
+        universe: The ground set
+
+    Returns:
+        The least fixed point of f
+    """
+    # Iterative computation (works for continuous f)
+    current = frozenset()
+    while True:
+        next_val = f(current)
+        if next_val == current:
+            return current
+        current = next_val
+        # Safety: on finite sets this always terminates
+        if len(current) > len(universe):
+            raise RuntimeError("f is not monotone or universe is wrong")
+
+
+def knaster_tarski_gfp(
+    f: Callable[[FrozenSet[T]], FrozenSet[T]],
+    universe: FrozenSet[T]
+) -> FrozenSet[T]:
+    """
+    Compute the greatest fixed point of a monotone map on P(universe).
+
+    gfp(f) = ⋃ {S ⊆ universe | S ⊆ f(S)}
+
+    Uses the dual iterative approach, starting from the universe.
+    """
+    current = universe
+    while True:
+        next_val = f(current)
+        if next_val == current:
+            return current
+        current = next_val
+
+
+def all_fixed_points(
+    f: Callable[[FrozenSet[T]], FrozenSet[T]],
+    universe: FrozenSet[T]
+) -> List[FrozenSet[T]]:
+    """
+    Enumerate all fixed points of f on P(universe) by brute force.
+    Only feasible for small universes (|universe| ≤ ~15).
+    """
+    from itertools import combinations
+    elements = list(universe)
+    fps: List[FrozenSet[T]] = []
+
+    for r in range(len(elements) + 1):
+        for combo in combinations(elements, r):
+            s = frozenset(combo)
+            if f(s) == s:
+                fps.append(s)
+
+    return fps
+
+
+# ─────────────────────────────────────────────────────────────
+# Algorithm 4: Fixed Point Spectrum Analysis
+# ─────────────────────────────────────────────────────────────
 
 @dataclass
-class KleeneResult:
-    """Result of Kleene chain computation."""
-    chain: List[float]
-    limit: float
-    convergence_step: int
-    is_fixed_point: bool
-
-
-def cantor_diagonal(
-    encoding: dict[int, dict[int, bool]],
+class FixedPointSpectrum:
+    """Analysis of fixed point properties of an endomorphism."""
     domain_size: int
-) -> dict[int, bool]:
+    total_endomorphisms: int
+    with_fixed_points: int
+    fixed_point_free: int
+    max_fixed_points: int
+    avg_fixed_points: float
+
+
+def analyze_fixed_point_spectrum(n: int) -> FixedPointSpectrum:
     """
-    Construct the Cantor diagonal witness for a given encoding.
-    
-    Given f : {0,...,n-1} -> ({0,...,n-1} -> Bool), returns the predicate
-    d(x) = ¬f(x)(x), which is guaranteed not to be in range(f).
-    
-    Algorithm:
-        FOR each x in {0,...,n-1}:
-            d(x) := NOT f(x)(x)
-        RETURN d
-    
-    Time complexity: O(n)
-    Space complexity: O(n)
-    
-    Args:
-        encoding: Dictionary mapping i to {j: bool} representing f(i)(j)
-        domain_size: Size n of the domain
-    
+    Analyze the fixed point spectrum of all endomorphisms on {0,...,n-1}.
+
+    Pseudocode:
+        SPECTRUM(n):
+            total ← n^n
+            fp_free ← D(n) = Σ_{k=0}^{n} (-1)^k * C(n,k) * (n-k)^n
+            with_fp ← total - fp_free
+            return (total, with_fp, fp_free)
+
+    Uses inclusion-exclusion for the count of fixed-point-free maps.
+    """
+    domain = list(range(n))
+    total = n ** n
+
+    # Count fixed-point-free maps by inclusion-exclusion
+    # Number of maps f:{0,...,n-1}→{0,...,n-1} with no fixed point
+    fp_free = 0
+    for k in range(n + 1):
+        sign = (-1) ** k
+        binom = math.comb(n, k)
+        fp_free += sign * binom * (n - k) ** n
+
+    with_fp = total - fp_free
+
+    # Average number of fixed points
+    # E[|Fix(f)|] = Σ_i P(f(i)=i) = n * (1/n) = 1 for uniform random f
+    avg_fp = 1.0  # Always exactly 1 by linearity of expectation
+
+    return FixedPointSpectrum(
+        domain_size=n,
+        total_endomorphisms=total,
+        with_fixed_points=with_fp,
+        fixed_point_free=fp_free,
+        max_fixed_points=n,
+        avg_fixed_points=avg_fp
+    )
+
+
+def count_derangements(n: int) -> int:
+    """
+    Count derangements (fixed-point-free permutations) of n elements.
+    D(n) = n! * Σ_{k=0}^{n} (-1)^k / k!
+    """
+    result = 0
+    factorial_n = math.factorial(n)
+    for k in range(n + 1):
+        result += ((-1) ** k) * factorial_n // math.factorial(k)
+    return result
+
+
+# ─────────────────────────────────────────────────────────────
+# Algorithm 5: Self-Reference Hierarchy Level Computation
+# ─────────────────────────────────────────────────────────────
+
+def compute_hierarchy_level(
+    predicate: Callable[[int], bool],
+    oracle_levels: List[Callable[[int], Callable[[int], bool]]],
+    n: int
+) -> int:
+    """
+    Determine the hierarchy level of a predicate.
+
+    A predicate is at level k if it can be defined using an oracle
+    for level k-1 but not level k-2. Level 0 predicates are
+    "computable" (decidable without oracles).
+
+    This is a finite approximation of the arithmetical hierarchy.
+
+    Pseudocode:
+        HIERARCHY-LEVEL(P, oracles, n):
+            for level = 0, 1, 2, ...:
+                if P is in range of oracles[level]:
+                    return level
+            return ∞  (P transcends all levels)
+    """
+    pred_values = tuple(predicate(k) for k in range(n))
+
+    for level, oracle_enum in enumerate(oracle_levels):
+        for idx in range(n):
+            oracle_values = tuple(oracle_enum(idx)(k) for k in range(n))
+            if oracle_values == pred_values:
+                return level
+
+    return len(oracle_levels)  # Beyond all known levels
+
+
+# ─────────────────────────────────────────────────────────────
+# Algorithm 6: Fixed Point Transport
+# ─────────────────────────────────────────────────────────────
+
+def fixed_point_transport(
+    f: Callable[[T], T],
+    g: Callable[[T], T],
+    domain: List[T]
+) -> Tuple[Set[T], Set[T], Dict[T, T]]:
+    """
+    Compute fixed points of g∘f and f∘g, and verify the transport map.
+
+    By our theorem, f maps Fix(g∘f) into Fix(f∘g).
+
+    Pseudocode:
+        TRANSPORT(f, g, domain):
+            Fix_gf ← {x ∈ domain | g(f(x)) = x}
+            Fix_fg ← {x ∈ domain | f(g(x)) = x}
+            for x ∈ Fix_gf:
+                assert f(x) ∈ Fix_fg
+            return (Fix_gf, Fix_fg, transport_map)
+
     Returns:
-        Dictionary mapping x to bool representing the diagonal witness
+        (Fix(g∘f), Fix(f∘g), transport_map: x ↦ f(x) for x ∈ Fix(g∘f))
     """
-    return {x: not encoding[x][x] for x in range(domain_size)}
+    fix_gf = {x for x in domain if g(f(x)) == x}
+    fix_fg = {x for x in domain if f(g(x)) == x}
 
+    transport = {}
+    for x in fix_gf:
+        fx = f(x)
+        assert fx in fix_fg, f"Transport failed: f({x}) = {fx} ∉ Fix(f∘g)"
+        transport[x] = fx
 
-def kleene_chain(
-    operator: Callable[[float], float],
-    bottom: float = 0.0,
-    max_iterations: int = 1000,
-    tolerance: float = 1e-12
-) -> KleeneResult:
-    """
-    Compute the Kleene ascending chain F^n(⊥) and detect convergence.
-    
-    Algorithm:
-        x_0 := ⊥
-        FOR n = 1, 2, ...:
-            x_n := F(x_{n-1})
-            IF |x_n - x_{n-1}| < ε:
-                RETURN (chain, x_n, n, F(x_n) ≈ x_n)
-        RETURN (chain, x_last, max_iter, False)
-    
-    Time complexity: O(max_iterations)
-    Space complexity: O(max_iterations) for the chain
-    
-    Args:
-        operator: Monotone function F
-        bottom: The bottom element ⊥
-        max_iterations: Maximum number of iterations
-        tolerance: Convergence threshold
-    
-    Returns:
-        KleeneResult with chain, limit, and convergence info
-    """
-    chain = [bottom]
-    x = bottom
-    
-    for n in range(1, max_iterations + 1):
-        x_new = operator(x)
-        chain.append(x_new)
-        
-        if abs(x_new - x) < tolerance:
-            is_fp = abs(operator(x_new) - x_new) < tolerance
-            return KleeneResult(chain, x_new, n, is_fp)
-        
-        x = x_new
-    
-    return KleeneResult(chain, x, max_iterations, False)
-
-
-def diagonal_tower(
-    base_encoding: dict[int, dict[int, bool]],
-    domain_size: int,
-    num_levels: int
-) -> List[dict[int, bool]]:
-    """
-    Construct the diagonal tower: iterated diagonal witnesses.
-    
-    Algorithm:
-        d_0 := cantor_diagonal(f)
-        FOR k = 1, 2, ..., num_levels-1:
-            d_k(x) := NOT d_{k-1}(x) for all x
-        RETURN [d_0, d_1, ..., d_{num_levels-1}]
-    
-    Time complexity: O(n * num_levels)
-    Space complexity: O(n * num_levels)
-    
-    Args:
-        base_encoding: The initial encoding f
-        domain_size: Size of the domain
-        num_levels: Number of tower levels to compute
-    
-    Returns:
-        List of predicates, one per level
-    """
-    tower = [cantor_diagonal(base_encoding, domain_size)]
-    
-    for _ in range(1, num_levels):
-        prev = tower[-1]
-        tower.append({x: not prev[x] for x in range(domain_size)})
-    
-    return tower
-
-
-def find_fixed_points_finite_lattice(
-    operator: Callable[[FrozenSet[int]], FrozenSet[int]],
-    universe_size: int
-) -> List[FrozenSet[int]]:
-    """
-    Find all fixed points of a monotone operator on P({0,...,n-1}).
-    
-    Algorithm:
-        fixed := []
-        FOR each subset S of {0,...,n-1}:
-            IF F(S) = S:
-                fixed.append(S)
-        RETURN fixed
-    
-    Time complexity: O(2^n * cost(F))
-    Space complexity: O(2^n)
-    
-    Args:
-        operator: Monotone function on subsets
-        universe_size: Size n of the universe
-    
-    Returns:
-        List of fixed-point subsets
-    """
-    fixed_points = []
-    
-    for mask in range(2 ** universe_size):
-        S = frozenset(i for i in range(universe_size) if mask & (1 << i))
-        if operator(S) == S:
-            fixed_points.append(S)
-    
-    return fixed_points
-
-
-def reflective_depth(
-    operator: Callable[[FrozenSet[int]], FrozenSet[int]],
-    target: FrozenSet[int],
-    universe_size: int,
-    max_depth: int = 100
-) -> Optional[int]:
-    """
-    Compute the reflective depth of a target element.
-    
-    The reflective depth is the smallest n such that F^n(⊥) ⊇ target.
-    
-    Algorithm:
-        S := ∅ (= ⊥ in P(universe))
-        FOR n = 0, 1, 2, ...:
-            IF target ⊆ S:
-                RETURN n
-            S := F(S)
-        RETURN None (not reachable)
-    
-    Args:
-        operator: Monotone function on subsets
-        target: The element whose depth we want
-        universe_size: Size of the universe
-        max_depth: Maximum iterations
-    
-    Returns:
-        The reflective depth, or None if not reachable
-    """
-    S = frozenset()
-    
-    for n in range(max_depth + 1):
-        if target <= S:
-            return n
-        S = operator(S)
-    
-    return None
-
-
-def verify_self_ref_impossibility(max_n: int = 30) -> List[dict]:
-    """
-    Verify that n = 2^n has no solutions for small n.
-    
-    Args:
-        max_n: Check up to this value
-    
-    Returns:
-        List of results for each n
-    """
-    results = []
-    for n in range(max_n + 1):
-        power = 2 ** n
-        results.append({
-            'n': n,
-            'two_to_n': power,
-            'equal': n == power,
-            'ratio': power / n if n > 0 else float('inf'),
-            'gap': power - n
-        })
-    return results
+    return fix_gf, fix_fg, transport
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    print("Testing Cantor diagonal...")
-    enc = {i: {j: (i + j) % 2 == 0 for j in range(4)} for i in range(4)}
-    diag = cantor_diagonal(enc, 4)
-    for i in range(4):
-        assert any(enc[i][j] != diag[j] for j in range(4)), \
-            f"Diagonal should differ from f({i})"
-    print("  ✓ Diagonal is not in range")
-    
-    print("Testing Kleene chain...")
-    result = kleene_chain(lambda x: (x + 1) / 2, 0.0)
-    assert abs(result.limit - 1.0) < 1e-10
-    assert result.is_fixed_point
-    print(f"  ✓ Converged to {result.limit} in {result.convergence_step} steps")
-    
-    print("Testing diagonal tower...")
-    tower = diagonal_tower(enc, 4, 5)
-    for k in range(4):
-        assert tower[k] != tower[k + 1], f"Adjacent levels should differ"
-    print(f"  ✓ All {len(tower)} levels are pairwise-adjacent distinct")
-    
-    print("Testing finite lattice fixed points...")
-    def upward_close(S: FrozenSet[int]) -> FrozenSet[int]:
-        if not S:
-            return frozenset({0})
-        m = max(S)
-        return S | frozenset({m + 1}) if m < 3 else S
-    fps = find_fixed_points_finite_lattice(upward_close, 4)
-    assert len(fps) > 0
-    print(f"  ✓ Found {len(fps)} fixed points: {[set(fp) for fp in fps]}")
-    
-    print("\nAll tests passed!")
+    print("=== Fixed Point Spectrum Analysis ===")
+    for n in range(1, 7):
+        spec = analyze_fixed_point_spectrum(n)
+        pct = spec.with_fixed_points / spec.total_endomorphisms * 100
+        print(f"  |S|={n}: {spec.total_endomorphisms} endos, "
+              f"{spec.with_fixed_points} with FP ({pct:.1f}%), "
+              f"{spec.fixed_point_free} FP-free")
+
+    print("\n=== Derangement Counts ===")
+    for n in range(1, 11):
+        d = count_derangements(n)
+        ratio = d / math.factorial(n)
+        print(f"  D({n}) = {d}, D({n})/{n}! = {ratio:.6f} → 1/e ≈ {1/math.e:.6f}")

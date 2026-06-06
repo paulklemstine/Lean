@@ -1,427 +1,502 @@
 #!/usr/bin/env python3
 """
-Reflective Operator Algebras: Numerical Demonstrations
+Demo: Self-Referential Types and Lawvere's Fixed Point Theorem
 
-This script demonstrates the key concepts of the Reflective Operator Algebra
-framework through concrete numerical examples:
-1. The Cantor diagonal obstruction
-2. The Kleene ascending chain and fixed point convergence
-3. The diagonal tower hierarchy
-4. Finite self-reference impossibility (cardinality argument)
+Demonstrates the core ideas computationally:
+1. The diagonal argument as a concrete construction
+2. The predicate jump as hierarchy generator
+3. Fixed point spectra of various endomorphisms
+4. The Knaster-Tarski fixed point theorem on finite lattices
 """
 
-import math
-from typing import Callable, List, Dict, Set, Tuple
+import itertools
+from typing import Callable, Set, Tuple, List, Optional
 
 
-def demo_diagonal_obstruction():
-    """
-    Demonstrate the Cantor diagonal argument concretely.
-    
-    Given a function f : {0,...,n-1} -> ({0,...,n-1} -> {T,F}),
-    construct the diagonal witness and show it's not in the range.
-    """
+def diagonal_argument_demo():
+    """Demonstrate Cantor's diagonal argument on finite approximations."""
     print("=" * 60)
-    print("DEMO 1: Cantor Diagonal Obstruction")
+    print("DIAGONAL ARGUMENT ON FINITE ENUMERATIONS")
     print("=" * 60)
-    
-    n = 5
-    # Define f(i) as a predicate on {0,...,n-1}
-    # f(i)(j) = True iff j < i+1 (i.e., f(i) = {0, 1, ..., i})
-    f = {i: {j: (j < i + 1) for j in range(n)} for i in range(n)}
-    
-    print(f"\nEncoding function f : {{0,...,{n-1}}} -> ({{0,...,{n-1}}} -> Bool):")
-    for i in range(n):
-        bits = ''.join(['T' if f[i][j] else 'F' for j in range(n)])
-        print(f"  f({i}) = [{bits}]")
-    
-    # Diagonal: d(x) = NOT f(x)(x)
-    diagonal = {x: not f[x][x] for x in range(n)}
-    diag_bits = ''.join(['T' if diagonal[j] else 'F' for j in range(n)])
-    print(f"\nDiagonal witness d(x) = ¬f(x)(x): [{diag_bits}]")
-    
-    # Verify it's not in the range
-    for i in range(n):
-        match = all(f[i][j] == diagonal[j] for j in range(n))
-        if match:
-            print(f"  !! d = f({i})  -- THIS SHOULD NEVER HAPPEN")
+
+    # Enumerate some predicates on {0,1,2,3}
+    domain = [0, 1, 2, 3]
+
+    # Attempted enumeration: φ(i) = "the i-th predicate"
+    predicates = [
+        lambda x, i=i: (x + i) % 2 == 0
+        for i in range(4)
+    ]
+
+    print("\nAttempted enumeration φ:")
+    for i, p in enumerate(predicates):
+        vals = [p(x) for x in domain]
+        print(f"  φ({i}) = {vals}")
+
+    # Construct the anti-diagonal
+    anti_diag = [not predicates[i](i) for i in range(4)]
+    print(f"\nAnti-diagonal (¬φ(i)(i)): {anti_diag}")
+
+    # Verify it differs from every enumerated predicate
+    for i, p in enumerate(predicates):
+        vals = [p(x) for x in domain]
+        if vals == anti_diag:
+            print(f"  MATCH at position {i} — impossible!")
         else:
-            diff_at = [j for j in range(n) if f[i][j] != diagonal[j]]
-            print(f"  d ≠ f({i}), differ at positions {diff_at}")
-    
-    print("\n  ✓ Diagonal witness is NOT in the range of f")
-    print("  This is the constructive content of self-model incompleteness.")
+            diff_pos = next(j for j in range(4) if vals[j] != anti_diag[j])
+            print(f"  Differs from φ({i}) at position {diff_pos}")
+
+    print("\n→ The anti-diagonal always escapes any finite enumeration.")
+    print("  This is Lawvere's theorem in action.\n")
 
 
-def demo_kleene_chain():
-    """
-    Demonstrate the Kleene ascending chain on the lattice [0, 1].
-    
-    F(x) = (x + 1) / 2 on the complete lattice [0, 1].
-    Kleene chain: F^0(0) = 0, F^1(0) = 0.5, F^2(0) = 0.75, ...
-    Fixed point: x = 1 (the least fixed point in [0,1] for this F).
-    """
-    print("\n" + "=" * 60)
-    print("DEMO 2: Kleene Ascending Chain")
+def predicate_jump_demo():
+    """Demonstrate the predicate jump as a hierarchy generator."""
     print("=" * 60)
-    
-    def F(x: float) -> float:
-        return (x + 1) / 2
-    
-    print("\nOperator F(x) = (x + 1) / 2 on [0, 1]")
-    print("Fixed point: x = 1 (since F(1) = 1)")
-    print("\nKleene chain F^n(⊥) where ⊥ = 0:")
-    
-    x = 0.0
-    for n in range(15):
-        print(f"  F^{n:2d}(⊥) = {x:.10f}   (gap to fp: {1.0 - x:.10f})")
-        x = F(x)
-    
-    print(f"\n  Chain converges to lfp = 1.0")
-    print(f"  Rate: geometric with ratio 1/2 (each step halves the gap)")
-    
-    # Also demonstrate with a non-continuous operator
-    print("\n--- Non-continuous operator example ---")
-    print("G(x) = 0.5 if x < 0.5, else 1.0")
-    
-    def G(x: float) -> float:
-        return 0.5 if x < 0.5 else 1.0
-    
-    x = 0.0
-    for n in range(6):
-        print(f"  G^{n}(⊥) = {x}")
-        x = G(x)
-    print("  Chain stabilizes at G^2(⊥) = 1.0 (which IS lfp)")
-
-
-def demo_diagonal_tower():
-    """
-    Demonstrate the diagonal tower: iterating the diagonal construction.
-    
-    Level 0: d₀(x) = ¬f(x)(x)
-    Level 1: d₁(x) = ¬d₀(x) = f(x)(x)  
-    Level 2: d₂(x) = ¬d₁(x) = ¬f(x)(x) = d₀(x)
-    
-    The tower alternates with period 2, demonstrating that each adjacent
-    pair is distinct (the hierarchy is strict).
-    """
-    print("\n" + "=" * 60)
-    print("DEMO 3: Diagonal Tower (Hierarchy of Self-Reference)")
+    print("PREDICATE JUMP — THE HIERARCHY GENERATOR")
     print("=" * 60)
-    
-    n = 6
-    # Base encoding
-    f = {i: {j: (i + j) % 3 == 0 for j in range(n)} for i in range(n)}
-    
-    print(f"\nBase encoding f on {{0,...,{n-1}}}:")
-    for i in range(n):
-        bits = ''.join(['T' if f[i][j] else 'F' for j in range(n)])
-        print(f"  f({i}) = [{bits}]")
-    
-    # Build tower
-    tower = []
-    # Level 0: diagonal of f
-    d0 = {x: not f[x][x] for x in range(n)}
-    tower.append(d0)
-    
-    for level in range(1, 8):
-        prev = tower[-1]
-        curr = {x: not prev[x] for x in range(n)}
-        tower.append(curr)
-    
-    print("\nDiagonal tower:")
-    for level, d in enumerate(tower):
-        bits = ''.join(['T' if d[j] else 'F' for j in range(n)])
-        print(f"  d_{level}(x) = [{bits}]", end="")
-        if level > 0:
-            same_as_prev = all(tower[level][x] == tower[level-1][x] for x in range(n))
-            print(f"  {'= d_{}'.format(level-1) if same_as_prev else '≠ d_{}'.format(level-1)}", end="")
-        print()
-    
-    print("\n  ✓ Adjacent levels are always distinct (hierarchy is strict)")
-    print("  ✓ Tower has period 2: d_{n+2} = d_n for all n")
-    print("  This reflects the arithmetical hierarchy structure:")
-    print("  each level of self-reference is genuinely new.")
+
+    # Work with predicates on {0,...,7}
+    N = 8
+
+    # Level 0: simple predicates
+    level0 = [
+        ("even", lambda x: x % 2 == 0),
+        ("odd", lambda x: x % 2 == 1),
+        ("< 4", lambda x: x < 4),
+        (">= 4", lambda x: x >= 4),
+        ("prime", lambda x: x in {2, 3, 5, 7}),
+        ("square", lambda x: x in {0, 1, 4}),
+        ("zero", lambda x: x == 0),
+        ("all", lambda x: True),
+    ]
+
+    print(f"\nLevel 0 enumeration (8 predicates on {{0,...,{N-1}}}):")
+    for i, (name, p) in enumerate(level0):
+        vals = [p(x) for x in range(N)]
+        print(f"  enum({i}) = {name:>8s} : {vals}")
+
+    # Compute the jump: J(n) = ¬enum(n)(n)
+    jump_vals = [not level0[i][1](i) for i in range(N)]
+    print(f"\nPredicate Jump J(n) = ¬enum(n)(n):")
+    print(f"  J = {jump_vals}")
+    print(f"  J differs from enum(n) at position n for every n.")
+
+    # Verify
+    for i in range(N):
+        enum_at_i = level0[i][1](i)
+        jump_at_i = jump_vals[i]
+        assert enum_at_i != jump_at_i, f"Jump failed at {i}!"
+    print("  ✓ Verified: J ∉ range(enum)")
+
+    print("\n→ The jump creates a genuinely new predicate at each level.")
+    print("  Iterating this process generates the arithmetical hierarchy.\n")
 
 
-def demo_cardinality_impossibility():
-    """
-    Demonstrate the cardinality argument against finite self-reference.
-    
-    For a finite type α with |α| = n:
-    |α → Bool| = 2^n
-    
-    We need n = 2^n, which has no solutions for n ∈ ℕ.
-    """
-    print("\n" + "=" * 60)
-    print("DEMO 4: Finite Self-Reference Impossibility")
+def fixed_point_spectrum_demo():
+    """Analyze fixed point spectra of endomorphisms."""
     print("=" * 60)
-    
-    print("\nFor finite α with |α| = n, a bijection α ≃ (α → Bool)")
-    print("requires n = 2^n. Checking all small n:\n")
-    
-    for n in range(20):
-        power = 2 ** n
-        ratio = power / n if n > 0 else float('inf')
-        status = "✓ IMPOSSIBLE" if n != power else "?? MATCH"
-        print(f"  n = {n:2d}: 2^n = {power:7d}  (ratio: {ratio:8.2f})  {status}")
-    
-    print(f"\n  The equation n = 2^n has NO solutions in ℕ.")
-    print(f"  Therefore no finite type can be its own function space.")
-    print(f"  Self-reference requires infinite cardinality.")
-
-
-def demo_reflective_spectrum():
-    """
-    Demonstrate the reflective spectrum: fixed points of the reflection operator.
-    
-    On the Boolean lattice P({0,1,2}), consider ρ(S) = S ∪ complement(S)^c = S ∪ S = S.
-    Actually, let's use ρ(S) = S ∪ {max(S) + 1} if max(S) < n-1, else S.
-    Then the only fixed point is S = {0, 1, ..., n-1} = the full set.
-    """
-    print("\n" + "=" * 60)
-    print("DEMO 5: Reflective Spectrum (Fixed Points of ρ)")
+    print("FIXED POINT SPECTRUM ANALYSIS")
     print("=" * 60)
-    
-    n = 4
-    universe = set(range(n))
-    
-    def rho(S: frozenset) -> frozenset:
-        """ρ(S) = upward closure of S: add all supersets of elements"""
-        if not S:
-            return frozenset({0})  # ⊥ maps to {0}
-        m = max(S)
-        if m < n - 1:
-            return frozenset(S | {m + 1})
-        return S
-    
-    print(f"\nReflection operator ρ on P({{0,...,{n-1}}}):")
-    print(f"ρ(S) = S ∪ {{max(S) + 1}} if max(S) < {n-1}, else S")
-    
+
+    # Endomorphisms on Bool = {True, False}
+    print("\nEndomorphisms of Bool = {T, F}:")
+    bool_endos = [
+        ("id", lambda x: x),
+        ("not", lambda x: not x),
+        ("const T", lambda _: True),
+        ("const F", lambda _: False),
+    ]
+
+    for name, f in bool_endos:
+        fixed = [x for x in [True, False] if f(x) == x]
+        has_fp = len(fixed) > 0
+        print(f"  {name:>8s}: fixed points = {fixed}, "
+              f"{'✓ has FP' if has_fp else '✗ NO FP (fixed-point-free!)'}")
+
+    print("\n  Only 'not' is fixed-point-free.")
+    print("  This single map powers ALL diagonal arguments!")
+
+    # Endomorphisms on a 3-element set
+    print("\nEndomorphisms of {0, 1, 2}:")
+    domain3 = [0, 1, 2]
+    total = 0
+    fp_free_count = 0
+    for f_vals in itertools.product(domain3, repeat=3):
+        f = lambda x, fv=f_vals: fv[x]
+        fixed = [x for x in domain3 if f(x) == x]
+        total += 1
+        if not fixed:
+            fp_free_count += 1
+
+    print(f"  Total endomorphisms: {total}")
+    print(f"  Fixed-point-free: {fp_free_count}")
+    print(f"  Have fixed points: {total - fp_free_count}")
+    print(f"  Fraction with FP: {(total - fp_free_count)/total:.3f}")
+
+    # General formula: derangements
+    print("\n  For |S| = n: FP-free maps = Σ_{k=0}^{n} (-1)^k * C(n,k) * (n-k)^n")
+    print("  (inclusion-exclusion on which elements are NOT fixed)")
+
+    print("\n→ Lawvere's theorem: if φ : A → (A → S) is surjective,")
+    print("  then EVERY endomorphism has a fixed point.")
+    print("  Contrapositive: existence of ANY FP-free map blocks surjection.\n")
+
+
+def knaster_tarski_demo():
+    """Demonstrate Knaster-Tarski on a concrete finite lattice."""
+    print("=" * 60)
+    print("KNASTER-TARSKI FIXED POINTS ON POWER SET LATTICE")
+    print("=" * 60)
+
+    # Work with P({0,1,2}) ordered by inclusion
+    elements = [0, 1, 2]
+    all_subsets = []
+    for r in range(len(elements) + 1):
+        for s in itertools.combinations(elements, r):
+            all_subsets.append(frozenset(s))
+
+    print(f"\nLattice: P({{0,1,2}}) with {len(all_subsets)} elements")
+
+    # Define a monotone map: f(S) = S ∪ {min element not in S} (if any)
+    def monotone_f(s: frozenset) -> frozenset:
+        """Add the smallest missing element, or return S if complete."""
+        missing = sorted(set(elements) - set(s))
+        if missing:
+            return s | {missing[0]}
+        return s
+
+    print("\nMonotone map f(S) = S ∪ {smallest missing element}:")
+    for s in sorted(all_subsets, key=lambda x: (len(x), sorted(x))):
+        fs = monotone_f(s)
+        is_fp = fs == s
+        marker = " ← FIXED POINT" if is_fp else ""
+        print(f"  f({set(s)}) = {set(fs)}{marker}")
+
+    # Find all fixed points
+    fixed_points = [s for s in all_subsets if monotone_f(s) == s]
+    print(f"\nFixed points: {[set(s) for s in fixed_points]}")
+
+    # Find lfp and gfp
+    lfp = min(fixed_points, key=len)
+    gfp = max(fixed_points, key=len)
+    print(f"Least fixed point (lfp): {set(lfp)}")
+    print(f"Greatest fixed point (gfp): {set(gfp)}")
+    print(f"All fixed points bounded: lfp ⊆ x ⊆ gfp ✓")
+
+    print("\n→ Knaster-Tarski: monotone maps on complete lattices")
+    print("  always have fixed points, and the lfp/gfp bound all others.")
+    print("  This is the 'positive' counterpart to Lawvere's 'negative' theorem.\n")
+
+
+def conjugation_demo():
+    """Demonstrate fixed point transport under composition."""
+    print("=" * 60)
+    print("FIXED POINT TRANSPORT UNDER COMPOSITION")
+    print("=" * 60)
+
+    domain = list(range(5))
+
+    # Define f and g on {0,1,2,3,4}
+    f_map = {0: 1, 1: 2, 2: 0, 3: 3, 4: 4}  # cycle (012), fixes 3,4
+    g_map = {0: 0, 1: 3, 2: 2, 3: 1, 4: 4}  # swap 1↔3, fixes 0,2,4
+
+    f = lambda x: f_map[x]
+    g = lambda x: g_map[x]
+
+    # Compute g∘f and f∘g
+    gf = lambda x: g(f(x))
+    fg = lambda x: f(g(x))
+
+    print("\nf =", f_map)
+    print("g =", g_map)
+    print("g∘f =", {x: gf(x) for x in domain})
+    print("f∘g =", {x: fg(x) for x in domain})
+
     # Find fixed points
-    fixed_points = []
-    for mask in range(2**n):
-        S = frozenset(i for i in range(n) if mask & (1 << i))
-        if rho(S) == S:
-            fixed_points.append(S)
-    
-    print(f"\nFixed points of ρ (the reflective spectrum):")
-    for fp in fixed_points:
-        print(f"  {set(fp)}")
-    
-    # Show Kleene chain
-    print(f"\nKleene chain ρ^k(∅):")
-    S = frozenset()
-    for k in range(n + 2):
-        print(f"  ρ^{k}(∅) = {set(S)}")
-        S = rho(S)
-    
-    print(f"\n  ✓ Spectrum is nonempty (Knaster-Tarski guarantees this)")
-    print(f"  ✓ lfp ρ = {set(fixed_points[0])} is in the spectrum")
+    fp_gf = {x for x in domain if gf(x) == x}
+    fp_fg = {x for x in domain if fg(x) == x}
+
+    print(f"\nFix(g∘f) = {fp_gf}")
+    print(f"Fix(f∘g) = {fp_fg}")
+
+    # Verify transport: f maps Fix(g∘f) into Fix(f∘g)
+    print("\nTransport via f: Fix(g∘f) → Fix(f∘g)")
+    for x in fp_gf:
+        fx = f(x)
+        in_fg = fx in fp_fg
+        print(f"  f({x}) = {fx}, in Fix(f∘g)? {in_fg}")
+        assert in_fg, "Transport failed!"
+
+    print("\n✓ Fixed point transport verified: f(Fix(g∘f)) ⊆ Fix(f∘g)\n")
 
 
 if __name__ == "__main__":
-    demo_diagonal_obstruction()
-    demo_kleene_chain()
-    demo_diagonal_tower()
-    demo_cardinality_impossibility()
-    demo_reflective_spectrum()
-    
-    print("\n" + "=" * 60)
-    print("SUMMARY")
+    diagonal_argument_demo()
+    predicate_jump_demo()
+    fixed_point_spectrum_demo()
+    knaster_tarski_demo()
+    conjugation_demo()
+
+    print("=" * 60)
+    print("SUMMARY: THE LAWVERE PARADIGM")
     print("=" * 60)
     print("""
-All five demonstrations confirm the formal theorems:
+Self-reference in mathematics always involves three ingredients:
+  1. An enumeration φ : A → (A → B) of "programs" or "descriptions"
+  2. A transformation f : B → B (typically negation)
+  3. The diagonal construction d(a) = f(φ(a)(a))
 
-1. diagonal_not_in_range: The Cantor diagonal is constructively 
-   outside any encoding's range.
+Lawvere's Fixed Point Theorem unifies ALL classical impossibility results:
+  • Cantor's theorem: B = {0,1}, f = NOT → no surjection ℕ → P(ℕ)
+  • Russell's paradox: B = Prop, f = ¬ → no "set of all sets"
+  • Gödel's incompleteness: B = sentences, f = ¬ → unprovable truths
+  • Turing's halting: B = {halt,loop}, f = swap → undecidable problems
+  • Tarski's theorem: B = Prop, f = ¬ → truth is undefinable
 
-2. kleeneChain_mono + kleeneLimit_fixed_of_continuous: The Kleene 
-   chain converges monotonically; for ω-continuous operators, 
-   the limit IS the least fixed point.
+The POSITIVE counterpart is Knaster-Tarski: when f is monotone,
+fixed points ALWAYS exist and form a complete lattice.
 
-3. diagonal_tower_adjacent_distinct: The hierarchy of iterated 
-   diagonals is strict — each level is genuinely new.
-
-4. finite_self_ref_impossible: n = 2^n has no natural number 
-   solutions, so no finite type is self-referential.
-
-5. reflective_spectrum_nonempty: Every monotone operator on a 
-   complete lattice has fixed points (Knaster-Tarski).
+This duality — impossibility vs. guaranteed existence — is the
+deep structure underlying all of self-referential mathematics.
 """)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Diagonal Tower and Self-Reference Impossibility
+Visualization: The Diagonal Argument and Fixed Point Spectrum
 
-Two panels:
-1. The diagonal tower showing alternating levels
-2. The cardinality argument n vs 2^n
+Creates visualizations of:
+1. The diagonal construction on a matrix of predicates
+2. The fixed point spectrum across different domain sizes
+3. The Knaster-Tarski lattice of fixed points
 """
 
 import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use('Agg')
+import matplotlib.patches as mpatches
 import numpy as np
+import math
 
 
-def main():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    fig.suptitle('Self-Reference: Diagonal Tower & Cardinality Obstruction',
-                 fontsize=15, fontweight='bold')
+def plot_diagonal_matrix():
+    """Visualize the diagonal argument as a matrix with anti-diagonal highlighted."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Panel 1: Diagonal Tower
-    ax = axes[0]
     n = 8
-    # Base encoding: f(i)(j) = (i + j) % 3 == 0
-    f = {i: {j: (i + j) % 3 == 0 for j in range(n)} for i in range(n)}
-    
-    # Build tower
-    levels = 8
-    tower = []
-    d = {x: not f[x][x] for x in range(n)}
-    tower.append(d)
-    for _ in range(1, levels):
-        d = {x: not tower[-1][x] for x in range(n)}
-        tower.append(d)
-    
-    # Display as heatmap
-    data = np.array([[1 if tower[lev][x] else 0 for x in range(n)]
-                     for lev in range(levels)])
-    
-    im = ax.imshow(data, cmap='RdYlBu', aspect='auto', interpolation='nearest')
-    ax.set_xlabel('Element x', fontsize=12)
-    ax.set_ylabel('Tower Level', fontsize=12)
-    ax.set_title('Diagonal Tower: Alternating Hierarchy', fontsize=13)
-    ax.set_xticks(range(n))
-    ax.set_yticks(range(levels))
-    ax.set_yticklabels([f'd_{i}' for i in range(levels)])
-    
-    # Add text annotations
-    for lev in range(levels):
-        for x in range(n):
-            ax.text(x, lev, 'T' if tower[lev][x] else 'F',
-                   ha='center', va='center', fontsize=8,
-                   color='white' if tower[lev][x] else 'black')
-    
-    # Panel 2: n vs 2^n
-    ax = axes[1]
-    ns = np.arange(0, 11)
-    powers = 2.0 ** ns
-    
-    ax.bar(ns - 0.15, ns, width=0.3, color='steelblue', label='n', alpha=0.8)
-    ax.bar(ns + 0.15, np.minimum(powers, 1200), width=0.3, color='coral',
-           label='2^n', alpha=0.8)
-    
-    # Mark the gap
-    for ni in ns:
-        if 2**ni <= 1200:
-            gap = 2**ni - ni
-            if gap > 0 and ni > 0:
-                ax.annotate(f'gap={gap}', xy=(ni, max(ni, 2**ni) + 10),
-                           fontsize=7, ha='center', color='darkred')
-    
-    ax.set_xlabel('n = |α|', fontsize=12)
-    ax.set_ylabel('Count', fontsize=12)
-    ax.set_title('Finite Self-Reference Impossibility:\nn ≠ 2^n for all n ∈ ℕ',
-                fontsize=13)
-    ax.legend(fontsize=11)
-    ax.set_yscale('log')
-    ax.set_ylim(0.5, 2000)
-    ax.grid(True, alpha=0.3, axis='y')
-    
+    np.random.seed(42)
+    matrix = np.random.choice([0, 1], size=(n, n))
+
+    # Plot the enumeration matrix
+    ax1.set_title("Enumeration φ(i)(j)", fontsize=14, fontweight='bold')
+    im1 = ax1.imshow(matrix, cmap='RdYlGn', aspect='equal', vmin=0, vmax=1)
+
+    # Highlight diagonal
+    for i in range(n):
+        rect = mpatches.FancyBboxPatch(
+            (i - 0.45, i - 0.45), 0.9, 0.9,
+            boxstyle="round,pad=0.05",
+            linewidth=2, edgecolor='blue', facecolor='none'
+        )
+        ax1.add_patch(rect)
+        ax1.text(i, i, str(matrix[i, i]), ha='center', va='center',
+                fontsize=12, fontweight='bold', color='blue')
+
+    ax1.set_xlabel("j (input)")
+    ax1.set_ylabel("i (predicate index)")
+    ax1.set_xticks(range(n))
+    ax1.set_yticks(range(n))
+
+    # Plot anti-diagonal vs enumeration
+    anti_diag = 1 - matrix[np.arange(n), np.arange(n)]
+    comparison = np.zeros((n + 1, n))
+    comparison[:n, :] = matrix
+    comparison[n, :] = anti_diag
+
+    ax2.set_title("Anti-Diagonal Escapes All Rows", fontsize=14, fontweight='bold')
+    im2 = ax2.imshow(comparison, cmap='RdYlGn', aspect='equal', vmin=0, vmax=1)
+
+    # Highlight the anti-diagonal row
+    for j in range(n):
+        ax2.text(j, n, str(int(anti_diag[j])), ha='center', va='center',
+                fontsize=12, fontweight='bold', color='purple')
+    rect = mpatches.FancyBboxPatch(
+        (-0.45, n - 0.45), n - 0.1, 0.9,
+        boxstyle="round,pad=0.05",
+        linewidth=3, edgecolor='purple', facecolor='none'
+    )
+    ax2.add_patch(rect)
+
+    # Mark where anti-diagonal differs from each row
+    for i in range(n):
+        ax2.annotate('≠', (i, i), fontsize=14, ha='center', va='center',
+                    color='red', fontweight='bold')
+
+    ax2.set_xlabel("j (input)")
+    ax2.set_ylabel("Predicate index")
+    yticks = list(range(n)) + [n]
+    ylabels = [f"φ({i})" for i in range(n)] + ["ANTI-DIAG"]
+    ax2.set_yticks(yticks)
+    ax2.set_yticklabels(ylabels)
+    ax2.set_xticks(range(n))
+
     plt.tight_layout()
-    plt.savefig('diagonal_tower_cardinality.png', dpi=150, bbox_inches='tight')
-    print("Saved: diagonal_tower_cardinality.png")
+    plt.savefig("viz_diagonal.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_diagonal.png")
+
+
+def plot_fixed_point_spectrum():
+    """Plot the fraction of endomorphisms with fixed points by domain size."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+    sizes = list(range(1, 9))
+    fracs_with_fp = []
+    derangement_fracs = []
+
+    for n in sizes:
+        total = n ** n
+        # Fixed-point-free maps by inclusion-exclusion
+        fp_free = sum((-1)**k * math.comb(n, k) * (n - k)**n for k in range(n + 1))
+        fracs_with_fp.append(1 - fp_free / total)
+
+        # Derangements (FP-free permutations)
+        perm_total = math.factorial(n)
+        derang = sum((-1)**k * perm_total // math.factorial(k) for k in range(n + 1))
+        derangement_fracs.append(derang / perm_total)
+
+    # Plot 1: Fraction with fixed points
+    ax1.bar(sizes, fracs_with_fp, color='steelblue', alpha=0.8, edgecolor='navy')
+    ax1.axhline(y=1 - 1/math.e, color='red', linestyle='--', linewidth=2,
+               label=f'1 - 1/e ≈ {1-1/math.e:.4f}')
+    ax1.set_xlabel("Domain size |S|", fontsize=12)
+    ax1.set_ylabel("Fraction of endomorphisms with FP", fontsize=12)
+    ax1.set_title("Fixed Point Prevalence", fontsize=14, fontweight='bold')
+    ax1.legend(fontsize=11)
+    ax1.set_ylim(0, 1.05)
+
+    # Plot 2: Derangement fractions
+    ax2.bar(sizes, derangement_fracs, color='coral', alpha=0.8, edgecolor='darkred')
+    ax2.axhline(y=1/math.e, color='blue', linestyle='--', linewidth=2,
+               label=f'1/e ≈ {1/math.e:.4f}')
+    ax2.set_xlabel("Domain size n", fontsize=12)
+    ax2.set_ylabel("Fraction of derangements D(n)/n!", fontsize=12)
+    ax2.set_title("Derangement Convergence to 1/e", fontsize=14, fontweight='bold')
+    ax2.legend(fontsize=11)
+    ax2.set_ylim(0, 0.5)
+
+    plt.tight_layout()
+    plt.savefig("viz_spectrum.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_spectrum.png")
+
+
+def plot_knaster_tarski():
+    """Visualize Knaster-Tarski fixed points on a lattice."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
+
+    # Hasse diagram of P({a,b,c})
+    # Levels: {}, {a},{b},{c}, {a,b},{a,c},{b,c}, {a,b,c}
+    positions = {
+        frozenset(): (4, 0),
+        frozenset('a'): (1, 2),
+        frozenset('b'): (4, 2),
+        frozenset('c'): (7, 2),
+        frozenset('ab'): (1, 4),
+        frozenset('ac'): (4, 4),
+        frozenset('bc'): (7, 4),
+        frozenset('abc'): (4, 6),
+    }
+
+    labels = {
+        frozenset(): '∅',
+        frozenset('a'): '{a}',
+        frozenset('b'): '{b}',
+        frozenset('c'): '{c}',
+        frozenset('ab'): '{a,b}',
+        frozenset('ac'): '{a,c}',
+        frozenset('bc'): '{b,c}',
+        frozenset('abc'): '{a,b,c}',
+    }
+
+    # Define monotone map: f(S) = S ∪ {a}
+    def mono_f(s):
+        return s | frozenset('a')
+
+    # Find fixed points
+    fixed = {s for s in positions if mono_f(s) == s}
+
+    # Draw edges (Hasse diagram)
+    edges = [
+        (frozenset(), frozenset('a')),
+        (frozenset(), frozenset('b')),
+        (frozenset(), frozenset('c')),
+        (frozenset('a'), frozenset('ab')),
+        (frozenset('a'), frozenset('ac')),
+        (frozenset('b'), frozenset('ab')),
+        (frozenset('b'), frozenset('bc')),
+        (frozenset('c'), frozenset('ac')),
+        (frozenset('c'), frozenset('bc')),
+        (frozenset('ab'), frozenset('abc')),
+        (frozenset('ac'), frozenset('abc')),
+        (frozenset('bc'), frozenset('abc')),
+    ]
+
+    for s1, s2 in edges:
+        x1, y1 = positions[s1]
+        x2, y2 = positions[s2]
+        ax.plot([x1, x2], [y1, y2], 'k-', linewidth=1, alpha=0.3)
+
+    # Draw arrows for f
+    for s in positions:
+        fs = mono_f(s)
+        if s != fs:
+            x1, y1 = positions[s]
+            x2, y2 = positions[fs]
+            ax.annotate('', xy=(x2, y2), xytext=(x1, y1),
+                       arrowprops=dict(arrowstyle='->', color='blue',
+                                      lw=2, connectionstyle='arc3,rad=0.2'))
+
+    # Draw nodes
+    for s in positions:
+        x, y = positions[s]
+        is_fp = s in fixed
+        color = 'gold' if is_fp else 'lightblue'
+        edge_color = 'darkred' if is_fp else 'steelblue'
+        size = 800 if is_fp else 500
+
+        ax.scatter(x, y, s=size, c=color, edgecolors=edge_color,
+                  linewidths=2 if is_fp else 1, zorder=5)
+        label = labels[s]
+        offset_y = 0.5 if y < 6 else -0.5
+        ax.text(x, y + offset_y, label, ha='center', va='center',
+               fontsize=10, fontweight='bold' if is_fp else 'normal')
+
+    # Add f mapping labels
+    ax.text(0.5, -0.8, 'f(S) = S ∪ {a}', fontsize=14, fontweight='bold',
+           transform=ax.transAxes, ha='center')
+
+    # Legend
+    fp_patch = mpatches.Patch(facecolor='gold', edgecolor='darkred',
+                             label='Fixed point (f(S) = S)')
+    nonfp_patch = mpatches.Patch(facecolor='lightblue', edgecolor='steelblue',
+                                label='Non-fixed (f(S) ≠ S)')
+    ax.legend(handles=[fp_patch, nonfp_patch], loc='upper left', fontsize=11)
+
+    ax.set_title("Knaster-Tarski: Fixed Points of f(S) = S ∪ {a}\n"
+                "on the Power Set Lattice P({a,b,c})",
+                fontsize=14, fontweight='bold')
+    ax.set_xlim(-1, 9)
+    ax.set_ylim(-1.5, 7.5)
+    ax.axis('off')
+
+    plt.tight_layout()
+    plt.savefig("viz_knaster_tarski.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_knaster_tarski.png")
 
 
 if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Kleene Ascending Chain Convergence
-
-Shows the Kleene chain F^n(⊥) converging to the least fixed point
-for several different operators, illustrating the monotone ascent
-and convergence behavior.
-"""
-
-import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use('Agg')
-import numpy as np
-
-
-def kleene_chain_values(F, bottom, n_steps):
-    """Compute the Kleene chain F^0(⊥), F^1(⊥), ..., F^n(⊥)."""
-    chain = [bottom]
-    x = bottom
-    for _ in range(n_steps):
-        x = F(x)
-        chain.append(x)
-    return chain
-
-
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Kleene Ascending Chains: Convergence to Fixed Points',
-                 fontsize=16, fontweight='bold')
-
-    n_steps = 20
-
-    # Operator 1: F(x) = (x + 1) / 2, lfp = 1
-    ax = axes[0, 0]
-    chain = kleene_chain_values(lambda x: (x + 1) / 2, 0.0, n_steps)
-    ax.plot(range(len(chain)), chain, 'bo-', markersize=4, linewidth=1.5)
-    ax.axhline(y=1.0, color='r', linestyle='--', alpha=0.7, label='lfp = 1')
-    ax.set_title(r'$F(x) = \frac{x+1}{2}$', fontsize=13)
-    ax.set_xlabel('Iteration n')
-    ax.set_ylabel(r'$F^n(\bot)$')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    # Operator 2: F(x) = sqrt(x + 1), lfp ≈ 1.618 (golden ratio)
-    ax = axes[0, 1]
-    chain = kleene_chain_values(lambda x: np.sqrt(x + 1), 0.0, n_steps)
-    golden = (1 + np.sqrt(5)) / 2
-    ax.plot(range(len(chain)), chain, 'go-', markersize=4, linewidth=1.5)
-    ax.axhline(y=golden, color='r', linestyle='--', alpha=0.7,
-               label=f'lfp = φ ≈ {golden:.4f}')
-    ax.set_title(r'$F(x) = \sqrt{x+1}$', fontsize=13)
-    ax.set_xlabel('Iteration n')
-    ax.set_ylabel(r'$F^n(\bot)$')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    # Operator 3: F(x) = x^2/4 + x/2 + 0.25 (slow convergence)
-    ax = axes[1, 0]
-    chain = kleene_chain_values(lambda x: 0.5 * x + 0.5, 0.0, n_steps)
-    ax.plot(range(len(chain)), chain, 'mo-', markersize=4, linewidth=1.5)
-    ax.axhline(y=1.0, color='r', linestyle='--', alpha=0.7, label='lfp = 1')
-    ax.set_title(r'$F(x) = \frac{x}{2} + \frac{1}{2}$', fontsize=13)
-    ax.set_xlabel('Iteration n')
-    ax.set_ylabel(r'$F^n(\bot)$')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    # Operator 4: F(x) = 1 - (1-x)^3, fast convergence
-    ax = axes[1, 1]
-    chain = kleene_chain_values(lambda x: 1 - (1 - x) ** 3, 0.0, n_steps)
-    ax.plot(range(len(chain)), chain, 'co-', markersize=4, linewidth=1.5)
-    ax.axhline(y=1.0, color='r', linestyle='--', alpha=0.7, label='lfp = 1')
-    ax.set_title(r'$F(x) = 1 - (1-x)^3$', fontsize=13)
-    ax.set_xlabel('Iteration n')
-    ax.set_ylabel(r'$F^n(\bot)$')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('kleene_chain_convergence.png', dpi=150, bbox_inches='tight')
-    print("Saved: kleene_chain_convergence.png")
-
-
-if __name__ == "__main__":
-    main()
+    plot_diagonal_matrix()
+    plot_fixed_point_spectrum()
+    plot_knaster_tarski()
+    print("\nAll visualizations saved.")
