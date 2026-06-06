@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "60d4a2f7",
     "filename": "speculative_category_theory_as_the_dna_of_mathemat.json",
     "pkg_num": 400,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.20104,
     "title": "Category Theory as the DNA of Mathematics: Theory Genomes, Morita Equivalence, and Mutation Algebras"
   },
   {
@@ -12751,8 +12751,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "speculative_category_theory_as_the_dna_of_mathemat",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.20104,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Category Theory as the DNA of Mathematics: Theory Genomes, Morita Equivalence, and Mutation Algebras"
     }

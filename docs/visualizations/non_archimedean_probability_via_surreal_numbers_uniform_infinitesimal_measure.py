@@ -1,0 +1,1 @@
+def uniform_measure(epsilon, n): return n * epsilon

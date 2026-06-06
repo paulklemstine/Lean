@@ -1430,6 +1430,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-06T07:09:33",
       "title": "EML Differential Algebra: Closure Properties"
+    },
+    {
+      "cycle_id": "eac997cc",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Non-Archimedean Probability Theory\n\n## Synthesis\n\nThis research cycle established a precise algebraic characterization of when infinitesimal probability is possible: an ordered ad",
+      "quality_score": 0.5353600000000001,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T07:42:34",
+      "title": "Non-Archimedean Probability via Surreal Numbers"
     }
   ],
   "entries": [
@@ -1475,7 +1485,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T07:09:33",
+  "last_updated": "2026-06-06T07:42:34",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1684,12 +1694,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6b757900",
-        "quality": 0.30144000000000004,
-        "theorems": 5,
-        "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-      },
-      {
         "cycle_id": "f26a920a",
         "quality": 0.45936,
         "theorems": 5,
@@ -1741,6 +1745,12 @@
         "cycle_id": "22827c52",
         "quality": 0.51088,
         "theorems": 4,
+        "title": "Non-Archimedean Probability via Surreal Numbers"
+      },
+      {
+        "cycle_id": "eac997cc",
+        "quality": 0.5353600000000001,
+        "theorems": 5,
         "title": "Non-Archimedean Probability via Surreal Numbers"
       }
     ],

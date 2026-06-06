@@ -1,0 +1,1 @@
+def archimedean_witness(epsilon, bound): import math; return math.ceil(bound / epsilon) + 1
