@@ -1,179 +1,168 @@
 """
-Algorithms for Holographic Code Tower Analysis
+Algorithms for Holographic Gravity as Quantum Error Correction
 
-Type-hinted implementations of the key algorithms from the research.
+Type-hinted implementations of the key computational structures.
 """
 
-from dataclasses import dataclass
-from typing import Optional
+from typing import Dict, FrozenSet, List, Tuple, Callable
+from itertools import combinations
+import math
 
 
-@dataclass
-class QECCParams:
-    """Parameters of a quantum error-correcting code [[n, k, d]]."""
-    n: int  # physical qubits
-    k: int  # logical qubits
-    d: int  # code distance
-
-    def __post_init__(self) -> None:
-        assert self.k <= self.n, f"k={self.k} > n={self.n}"
-        assert self.d >= 1, f"d={self.d} < 1"
-        assert self.k + 2 * self.d <= self.n + 2, \
-            f"Singleton bound violated: {self.k} + 2*{self.d} > {self.n} + 2"
-
-    @property
-    def is_mds(self) -> bool:
-        return self.k + 2 * self.d == self.n + 2
-
-    @property
-    def defect(self) -> int:
-        return self.n + 2 - (self.k + 2 * self.d)
-
-    @property
-    def singleton_entropy(self) -> float:
-        return (self.n - self.k) / 2
-
-    @property
-    def redundancy(self) -> int:
-        return self.n - self.k
-
-    @property
-    def recon_threshold(self) -> int:
-        return self.n - self.d + 1
-
-    @property
-    def rate(self) -> float:
-        return self.k / self.n if self.n > 0 else 0.0
-
-
-@dataclass
-class HolographicCodeTower:
-    """A holographic code tower: layered family of QECC codes."""
-    codes: list[QECCParams]
-
-    def __post_init__(self) -> None:
-        assert len(self.codes) >= 1, "Tower must have at least 1 layer"
-        k0 = self.codes[0].k
-        for i, c in enumerate(self.codes):
-            assert c.k == k0, f"Layer {i} has k={c.k} != k0={k0}"
-        for i in range(len(self.codes) - 1):
-            assert self.codes[i].d < self.codes[i + 1].d, \
-                f"Distance not strictly increasing: d[{i}]={self.codes[i].d} >= d[{i+1}]={self.codes[i+1].d}"
-
-    @property
-    def height(self) -> int:
-        return len(self.codes)
-
-    @property
-    def logical_dim(self) -> int:
-        return self.codes[0].k
-
-    @property
-    def is_fully_mds(self) -> bool:
-        return all(c.is_mds for c in self.codes)
-
-    def block_at(self, l: int) -> int:
-        return self.codes[l].n
-
-    def dist_at(self, l: int) -> int:
-        return self.codes[l].d
-
-    def curvature(self, l: int) -> int:
-        """Discrete curvature at interior layer l."""
-        assert 0 < l < self.height - 1, f"Layer {l} is not interior"
-        return self.block_at(l + 1) - 2 * self.block_at(l) + self.block_at(l - 1)
-
-    def distance_curvature(self, l: int) -> int:
-        """Discrete curvature of the distance sequence at layer l."""
-        assert 0 < l < self.height - 1
-        return self.dist_at(l + 1) - 2 * self.dist_at(l) + self.dist_at(l - 1)
-
-    def verify_curvature_identity(self) -> bool:
-        """Verify κ_n = 2κ_d at all interior layers (only valid for MDS towers)."""
-        if not self.is_fully_mds:
-            return False
-        for l in range(1, self.height - 1):
-            if self.curvature(l) != 2 * self.distance_curvature(l):
-                return False
-        return True
-
-
-def construct_mds_tower(k: int, distances: list[int]) -> HolographicCodeTower:
-    """Construct an MDS holographic code tower from logical dim and distance sequence.
+def compute_entropy_profile(
+    n_sites: int,
+    S_func: Callable[[FrozenSet[int]], float]
+) -> Dict[FrozenSet[int], float]:
+    """Compute the full entropy profile for n boundary sites.
 
     Args:
-        k: Number of logical qubits (constant across layers)
-        distances: Strictly increasing sequence of code distances
+        n_sites: Number of boundary sites
+        S_func: Entropy function on subsets
 
     Returns:
-        A fully MDS HolographicCodeTower
+        Dictionary mapping each subset to its entropy
     """
-    codes = [QECCParams(n=k + 2 * d - 2, k=k, d=d) for d in distances]
-    return HolographicCodeTower(codes)
+    profile: Dict[FrozenSet[int], float] = {}
+    sites = list(range(n_sites))
+    for r in range(n_sites + 1):
+        for subset in combinations(sites, r):
+            fs = frozenset(subset)
+            profile[fs] = S_func(fs)
+    return profile
 
 
-def construct_toric_tower(l_range: range) -> HolographicCodeTower:
-    """Construct a tower from toric code family [[2L², 2, L]].
+def syndrome_defect(
+    S: Dict[FrozenSet[int], float],
+    X: FrozenSet[int],
+    Y: FrozenSet[int]
+) -> float:
+    """Compute syndrome defect δ(X,Y) = S(X) + S(Y) - S(X∩Y) - S(X∪Y).
 
-    Note: This is NOT an MDS tower (toric codes have positive defect for L ≥ 3).
+    This is the discrete curvature between boundary regions X and Y.
+    - δ = 0: flat geometry between X and Y
+    - δ > 0: positive curvature (gravitational interaction)
     """
-    codes = [QECCParams(n=2 * L ** 2, k=2, d=L) for L in l_range]
-    return HolographicCodeTower(codes)
+    return S[X] + S[Y] - S[X & Y] - S[X | Y]
 
 
-def complementary_recovery_analysis(code: QECCParams) -> dict[str, int]:
-    """Analyze complementary recovery for a code.
+def mutual_information(
+    S: Dict[FrozenSet[int], float],
+    X: FrozenSet[int],
+    Y: FrozenSet[int]
+) -> float:
+    """Compute mutual information I(X:Y) = S(X) + S(Y) - S(X∪Y)."""
+    return S[X] + S[Y] - S[X | Y]
 
-    Returns dict with recovery threshold, and for MDS codes,
-    the critical region size for complementary recovery.
+
+def tripartite_information(
+    S: Dict[FrozenSet[int], float],
+    A: FrozenSet[int],
+    B: FrozenSet[int],
+    C: FrozenSet[int]
+) -> float:
+    """Compute tripartite information I₃(A:B:C).
+
+    I₃ ≤ 0 characterizes holographic (monogamous) entanglement.
+    I₃ > 0 is possible for generic quantum states (e.g., GHZ).
     """
-    result = {
-        "n": code.n,
-        "k": code.k,
-        "d": code.d,
-        "recon_threshold": code.recon_threshold,
-        "erasure_capacity": code.d - 1,
-        "is_mds": code.is_mds,
-    }
-    if code.is_mds:
-        result["mds_critical_size"] = (code.n + code.k) // 2 + 1
-    return result
+    return (S[A] + S[B] + S[C]
+            - S[A | B] - S[A | C] - S[B | C]
+            + S[A | B | C])
 
 
-def bekenstein_singleton_check(code: QECCParams) -> dict[str, float]:
-    """Verify the Bekenstein-Singleton correspondence for a code."""
-    area = 2 * (code.n - code.k)
-    s_bh = area / 4
-    s_singleton = code.singleton_entropy
-    return {
-        "area": area,
-        "S_BH": s_bh,
-        "S_singleton": s_singleton,
-        "match": abs(s_bh - s_singleton) < 1e-10,
-        "S_equals_d_minus_1": abs(s_singleton - (code.d - 1)) < 1e-10 if code.is_mds else None,
-    }
+def total_defect(
+    S: Dict[FrozenSet[int], float],
+    n_sites: int
+) -> float:
+    """Compute total defect Σ_{X,Y} δ(X,Y).
 
-
-def page_entropy(code: QECCParams, s: int) -> float:
-    """Page curve entropy for a boundary subregion of size s.
-
-    Returns min(s, n-s, singleton_entropy).
+    Total defect = 0 ⟹ flat geometry (rigidity theorem).
     """
-    return min(float(s), min(float(code.n - s), code.singleton_entropy))
+    all_subsets: List[FrozenSet[int]] = []
+    for r in range(n_sites + 1):
+        for subset in combinations(range(n_sites), r):
+            all_subsets.append(frozenset(subset))
+    return sum(
+        syndrome_defect(S, X, Y)
+        for X in all_subsets
+        for Y in all_subsets
+    )
 
 
-if __name__ == "__main__":
-    # Example usage
-    tower = construct_mds_tower(k=1, distances=[3, 4, 5, 6, 7])
-    print(f"MDS Tower (k=1, d=3..7): fully MDS = {tower.is_fully_mds}")
-    print(f"Curvature identity holds: {tower.verify_curvature_identity()}")
+def check_submodularity(
+    S: Dict[FrozenSet[int], float],
+    n_sites: int
+) -> List[Tuple[FrozenSet[int], FrozenSet[int], float]]:
+    """Check submodularity S(X)+S(Y) ≥ S(X∩Y)+S(X∪Y) for all pairs.
 
-    for l in range(1, tower.height - 1):
-        print(f"  Layer {l}: κ_n={tower.curvature(l)}, "
-              f"2κ_d={2*tower.distance_curvature(l)}")
+    Returns list of violations (X, Y, deficit) where deficit < 0.
+    """
+    violations: List[Tuple[FrozenSet[int], FrozenSet[int], float]] = []
+    all_subsets: List[FrozenSet[int]] = []
+    for r in range(n_sites + 1):
+        for subset in combinations(range(n_sites), r):
+            all_subsets.append(frozenset(subset))
 
-    # Toric code tower
-    toric = construct_toric_tower(range(2, 8))
-    print(f"\nToric Tower: fully MDS = {toric.is_fully_mds}")
-    for l in range(1, toric.height - 1):
-        print(f"  Layer {l} (L={l+2}): κ_n={toric.curvature(l)}, defect={toric.codes[l].defect}")
+    for X in all_subsets:
+        for Y in all_subsets:
+            deficit = S[X] + S[Y] - S[X & Y] - S[X | Y]
+            if deficit < -1e-10:
+                violations.append((X, Y, deficit))
+    return violations
+
+
+def check_mmi(
+    S: Dict[FrozenSet[int], float],
+    n_sites: int
+) -> List[Tuple[FrozenSet[int], FrozenSet[int], FrozenSet[int], float]]:
+    """Check MMI: I₃(A:B:C) ≤ 0 for all triples.
+
+    Returns list of violations (A, B, C, I₃) where I₃ > 0.
+    """
+    violations = []
+    all_subsets: List[FrozenSet[int]] = []
+    for r in range(n_sites + 1):
+        for subset in combinations(range(n_sites), r):
+            all_subsets.append(frozenset(subset))
+
+    for A in all_subsets:
+        for B in all_subsets:
+            for C in all_subsets:
+                I3 = tripartite_information(S, A, B, C)
+                if I3 > 1e-10:
+                    violations.append((A, B, C, I3))
+    return violations
+
+
+def singleton_bound_check(n: int, k: int, d: int) -> bool:
+    """Check quantum Singleton bound: 2d + k ≤ n + 2."""
+    return 2 * d + k <= n + 2
+
+
+def max_distance_from_area(
+    area: float,
+    n_qubits: int,
+    planck_area: float = 1.0
+) -> float:
+    """Maximum code distance given boundary area and qubit count.
+
+    D ≤ (N - area/(4·l_P²) + 2) / 2
+
+    Under RT: S = area / (4G), and N = area / l_P² in natural units.
+    """
+    S = area / (4.0 * planck_area)
+    return (n_qubits - S + 2) / 2.0
+
+
+def rate_distance_curve(n: int) -> List[Tuple[float, float]]:
+    """Compute the rate-distance tradeoff curve for an [[n,k,d]] code.
+
+    Returns list of (rate, relative_distance) pairs on the Singleton bound.
+    rate = k/n, relative_distance = d/n.
+    """
+    curve: List[Tuple[float, float]] = []
+    for d in range(1, n // 2 + 2):
+        k_max = n + 2 - 2 * d
+        if k_max >= 0:
+            curve.append((k_max / n, d / n))
+    return curve
