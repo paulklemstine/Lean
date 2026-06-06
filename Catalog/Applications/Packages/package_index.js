@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2abe8e77",
     "filename": "langlands_for_toddlers_galois_groups_as_shapes_aut.json",
     "pkg_num": 400,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.1912,
     "title": "Langlands for Toddlers: Gauss Sums as Shape-Color Intertwiners"
   },
   {
@@ -12751,8 +12751,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "langlands_for_toddlers_galois_groups_as_shapes_aut",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.1912,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Langlands for Toddlers: Gauss Sums as Shape-Color Intertwiners"
     }
