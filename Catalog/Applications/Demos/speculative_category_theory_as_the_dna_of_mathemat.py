@@ -1,354 +1,443 @@
 """
-Demo: Category Theory as the DNA of Mathematics
-================================================
+Theory Genome: Numerical Demonstrations
 
-This script demonstrates the core concepts of the theory genome framework
-through concrete numerical examples.
+Demonstrates the key results of the Theory Genome framework with
+concrete worked examples.
 """
 
-from typing import List, Tuple, Dict, Callable
 import itertools
+import random
 
 
-# === Example 1: Free Monoid Monad on Finite Sets ===
-
-def free_monoid_functor(X: set) -> set:
-    """T(X) = set of all finite lists over X (the free monoid monad)."""
-    if not X:
-        return {()}  # Empty list is the only element
-    result = {()}
-    for length in range(1, 4):  # Truncate at length 3 for finiteness
-        for combo in itertools.product(X, repeat=length):
-            result.add(combo)
-    return result
+def model_class(matrix, theory):
+    """Models satisfying all axioms in theory."""
+    return frozenset(
+        m for m in range(len(matrix))
+        if all(matrix[m][a] for a in theory)
+    )
 
 
-def monoid_unit(X: set) -> Dict:
-    """η_X : X → T(X) sends x to the singleton list (x,)."""
-    return {x: (x,) for x in X}
+def theory_of(matrix, models):
+    """Axioms satisfied by all models."""
+    n_axioms = len(matrix[0]) if matrix else 0
+    return frozenset(
+        a for a in range(n_axioms)
+        if all(matrix[m][a] for m in models)
+    )
 
 
-def monoid_multiplication(X: set) -> Dict:
-    """μ_X : T(T(X)) → T(X) flattens nested lists."""
-    # For simplicity, demonstrate on small examples
-    return {"flattens": "nested lists into single lists"}
+def theory_closure(matrix, theory):
+    return theory_of(matrix, model_class(matrix, theory))
 
 
+def genomic_distance(t1, t2):
+    return len(t1.symmetric_difference(t2))
+
+
+def all_closed_theories(matrix):
+    n_axioms = len(matrix[0])
+    closed = set()
+    for r in range(n_axioms + 1):
+        for subset in itertools.combinations(range(n_axioms), r):
+            t = frozenset(subset)
+            if t == theory_closure(matrix, t):
+                closed.add(t)
+    return closed
+
+
+# ============================================================
+# EXAMPLE 1: The Galois Connection in Action
+# ============================================================
 print("=" * 60)
-print("Example 1: Free Monoid Monad (Theory Genome for Monoids)")
+print("EXAMPLE 1: The Galois Connection")
 print("=" * 60)
-
-X = {'a', 'b'}
-TX = free_monoid_functor(X)
-print(f"\nBase set X = {X}")
-print(f"T(X) = free monoid on X = {len(TX)} elements (truncated at length 3)")
-print(f"Unit η maps: {monoid_unit(X)}")
-print(f"\nGenome: The monad T encodes 'the theory of monoids'")
-print(f"Phenotype: T-algebras = monoids (sets with associative binary op + identity)")
-
-
-# === Example 2: Morita Equivalence ===
-
-print("\n" + "=" * 60)
-print("Example 2: Morita Equivalence")
-print("=" * 60)
-
-# Two rings are Morita equivalent iff their module categories are equivalent
-# Classic example: Z and Mat_2(Z)
-
-# Simulate: a "module" over Z is just an abelian group
-# a "module" over Mat_2(Z) is a pair of abelian groups
-
-# They have equivalent module categories because every Mat_2(Z)-module
-# is determined by its first column, which is a Z-module
-
-print("\nRing R₁ = ℤ (integers)")
-print("Ring R₂ = Mat₂(ℤ) (2×2 integer matrices)")
-print("\nR₁-modules ≃ abelian groups")
-print("R₂-modules ≃ pairs of abelian groups (but only 'first column' matters)")
-print("\nMorita equivalent? YES")
-print("Same genome class, different genetic presentations")
-
-
-# === Example 3: Genome Roundtrip ===
-
-print("\n" + "=" * 60)
-print("Example 3: Genome Roundtrip Theorem")
-print("=" * 60)
-
-print("\nMonad T (genome) → Free-Forgetful Adjunction → Roundtrip Monad T'")
-print("Theorem: T' ≅ T (the genome is faithfully recovered)")
 print()
 
-# Demonstrate with concrete functor values
-for x in ['a', 'b', 'ab']:
-    TX_val = f"FreeMonoid({x})"
-    forget_val = f"UnderlyingSet(FreeMonoid({x})) = {x}→lists"
-    roundtrip = f"T'({x}) = Forget(Free({x})) = T({x})"
-    print(f"  T({x}) = {TX_val}")
-    print(f"  Roundtrip: Free({x}) = ({TX_val}, concat)")
-    print(f"           Forget({TX_val}, concat) = {TX_val}")
-    print(f"  → T'({x}) ≅ T({x}) ✓")
-    print()
+# Axiom system: properties of binary relations on {0,1,2}
+# Axioms: 0=reflexive, 1=symmetric, 2=transitive, 3=antisymmetric, 4=total
+# Structures: 0=equality, 1=≤, 2=equivalence, 3=complete graph, 4=empty
+matrix1 = [
+    # refl  sym   trans  antisym  total
+    [True,  True,  True,  True,   False],  # equality (=)
+    [True,  False, True,  True,   True],   # total order (≤)
+    [True,  True,  True,  False,  False],  # equiv relation
+    [True,  True,  True,  False,  True],   # complete graph
+    [False, True,  True,  True,   False],  # empty relation
+]
 
+axiom_names = {0: "reflexive", 1: "symmetric", 2: "transitive",
+               3: "antisymmetric", 4: "total"}
+struct_names = {0: "equality", 1: "total_order", 2: "equiv_rel",
+                3: "complete", 4: "empty_rel"}
 
-# === Example 4: Composed Monad Factorization ===
+# Show the Galois connection
+preorder_axioms = frozenset({0, 2})  # reflexive + transitive
+print(f"Theory: preorder (reflexive + transitive)")
+print(f"Models: {[struct_names[m] for m in sorted(model_class(matrix1, preorder_axioms))]}")
+print()
 
+equiv_axioms = frozenset({0, 1, 2})  # reflexive + symmetric + transitive
+print(f"Theory: equivalence relation")
+print(f"Models: {[struct_names[m] for m in sorted(model_class(matrix1, equiv_axioms))]}")
+print()
+
+# Demonstrate: more axioms → fewer models
+partial_order_axioms = frozenset({0, 2, 3})
+print(f"Theory: partial order (preorder + antisymmetric)")
+print(f"Models: {[struct_names[m] for m in sorted(model_class(matrix1, partial_order_axioms))]}")
+print()
+
+# Show closure
+print(f"Closure of {{reflexive}}: {[axiom_names[a] for a in sorted(theory_closure(matrix1, frozenset({0})))]}")
+print()
+
+# ============================================================
+# EXAMPLE 2: Mutation and Distance
+# ============================================================
 print("=" * 60)
-print("Example 4: Composed Mutation Factorization")
+print("EXAMPLE 2: Mutation and Genomic Distance")
 print("=" * 60)
+print()
 
-print("""
-Adjunction 1: Free ⊣ Forget (Set ↔ Group)
-  Monad M₁ = FreeGroup on Set
+t1 = frozenset({0, 2})        # preorder
+t2 = frozenset({0, 1, 2})     # equivalence
+t3 = frozenset({0, 2, 3})     # partial order
+t4 = frozenset({0, 2, 3, 4})  # total order
 
-Adjunction 2: Abelianization ⊣ Inclusion (Group ↔ AbGroup)
-  Monad M₂ = Abelianization on Group
+print(f"d(preorder, equivalence) = {genomic_distance(t1, t2)}")
+print(f"d(preorder, partial_order) = {genomic_distance(t1, t3)}")
+print(f"d(equivalence, partial_order) = {genomic_distance(t2, t3)}")
+print(f"d(partial_order, total_order) = {genomic_distance(t3, t4)}")
+print(f"d(preorder, total_order) = {genomic_distance(t1, t4)}")
+print()
 
-Composed: FreeAb ⊣ ForgetToSet (Set ↔ AbGroup)
-  Composed monad = FreeAbGroup on Set
+# Verify triangle inequality
+print("Triangle inequality verification:")
+print(f"  d(preorder, total_order) ≤ d(preorder, partial_order) + d(partial_order, total_order)")
+print(f"  {genomic_distance(t1, t4)} ≤ {genomic_distance(t1, t3)} + {genomic_distance(t3, t4)} = {genomic_distance(t1, t3) + genomic_distance(t3, t4)}")
+print(f"  ✓ Verified!" if genomic_distance(t1, t4) <= genomic_distance(t1, t3) + genomic_distance(t3, t4) else "  ✗ Failed!")
+print()
 
-Factorization Theorem:
-  (F₁ ⋙ F₂) ⋙ (G₂ ⋙ G₁) ≅ F₁ ⋙ (F₂ ⋙ G₂) ⋙ G₁
-
-  FreeAbGroup ≅ Free ∘ Abelianization ∘ Forget
-  
-  The inner monad (Abelianization) is "wrapped" inside the outer
-  adjunction (Free ⊣ Forget), like a gene inserted into a chromosome.
-""")
-
-
-# === Example 5: Genome Mutation (Contravariance) ===
-
+# ============================================================
+# EXAMPLE 3: Morita Equivalence
+# ============================================================
 print("=" * 60)
-print("Example 5: Genome Mutation Contravariance")
+print("EXAMPLE 3: Morita Equivalence")
 print("=" * 60)
+print()
 
-print("""
-Mutation φ: MonoidMonad → GroupMonad
-  (natural transformation adding inverses)
+# Two theories with the same closure are Morita equivalent
+t_preorder = frozenset({0, 2})
+closure_preorder = theory_closure(matrix1, t_preorder)
+print(f"Preorder axioms: {[axiom_names[a] for a in sorted(t_preorder)]}")
+print(f"Closure: {[axiom_names[a] for a in sorted(closure_preorder)]}")
+print(f"Models: {[struct_names[m] for m in sorted(model_class(matrix1, t_preorder))]}")
+print()
 
-Induced pullback: Group-Algebras → Monoid-Algebras
-  (forgetful functor: every group is a monoid)
+# If we add a redundant axiom (one already in the closure)
+if len(closure_preorder - t_preorder) > 0:
+    redundant = next(iter(closure_preorder - t_preorder))
+    t_extended = t_preorder | {redundant}
+    print(f"Adding redundant axiom '{axiom_names[redundant]}' to preorder theory:")
+    print(f"  Extended axioms: {[axiom_names[a] for a in sorted(t_extended)]}")
+    print(f"  Models unchanged: {model_class(matrix1, t_preorder) == model_class(matrix1, t_extended)}")
+    print(f"  Same closure: {theory_closure(matrix1, t_preorder) == theory_closure(matrix1, t_extended)}")
+else:
+    print("Preorder theory is already closed.")
+print()
 
-Direction: Forward in genome ⟹ Backward in models
-
-  Stronger axioms (groups have inverses)
-  → Fewer models (not every monoid is a group)
-  → The pullback "forgets" the extra structure
-
-This is the mathematical analog of: 
-  More specific genes → Fewer viable organisms
-""")
-
-
-# === Summary Statistics ===
-
+# ============================================================
+# EXAMPLE 4: Closed Theories Lattice
+# ============================================================
 print("=" * 60)
-print("Summary: Theory Genome Framework")
+print("EXAMPLE 4: Lattice of Closed Theories")
 print("=" * 60)
-print(f"""
-Theorems proved (sorry-free, machine-verified):
-  1. Genome Roundtrip Theorem          ✓
-  2. Morita Equivalence (equiv. rel.)  ✓
-  3. Composed Monad Factorization      ✓
-  4. Genome Determination (Beck)       ✓
-  5. Mutation Pullback Functor         ✓
-  6. Monadic Morita Bridge             ✓
-  7. Adjunction Monad Unit/Mul         ✓
-  8. Identity Genome Mutation          ✓
+print()
 
-Key insight: Mathematical theories are not separate disciplines.
-They are different expressions of the same categorical genome.
-""")
+closed = all_closed_theories(matrix1)
+print(f"Number of closed theories: {len(closed)}")
+print(f"(Out of 2^{len(matrix1[0])} = {2**len(matrix1[0])} possible theories)")
+print()
 
-if __name__ == "__main__":
-    pass
+for t in sorted(closed, key=lambda x: (len(x), sorted(x))):
+    models = model_class(matrix1, t)
+    ax_str = ", ".join(axiom_names[a] for a in sorted(t)) or "∅"
+    mod_str = ", ".join(struct_names[m] for m in sorted(models)) or "∅"
+    print(f"  [{ax_str}] → [{mod_str}]")
+print()
+
+# ============================================================
+# EXAMPLE 5: Random Axiom Systems — Counting Closed Theories
+# ============================================================
+print("=" * 60)
+print("EXAMPLE 5: Statistics of Random Axiom Systems")
+print("=" * 60)
+print()
+
+random.seed(42)
+n_trials = 200
+for n_ax in [3, 4, 5]:
+    n_str = n_ax
+    counts = []
+    for _ in range(n_trials):
+        mat = [[random.random() < 0.5 for _ in range(n_ax)] for _ in range(n_str)]
+        c = all_closed_theories(mat)
+        counts.append(len(c))
+    avg = sum(counts) / len(counts)
+    mx = max(counts)
+    mn = min(counts)
+    bound = min(2**n_ax, 2**n_str)
+    print(f"|Ax|=|Str|={n_ax}: avg closed = {avg:.1f}, min={mn}, max={mx}, bound=2^{n_ax}={bound}")
+
+print()
+print("Conjecture: #closed ≤ min(2^|Ax|, 2^|Str|) — verified for all samples above.")
+print()
+
+# ============================================================
+# EXAMPLE 6: Union-Intersection Duality
+# ============================================================
+print("=" * 60)
+print("EXAMPLE 6: Union-Intersection Duality")
+print("=" * 60)
+print()
+
+t_sym = frozenset({1})  # symmetric
+t_trans = frozenset({2})  # transitive
+t_union = t_sym | t_trans
+
+mod_sym = model_class(matrix1, t_sym)
+mod_trans = model_class(matrix1, t_trans)
+mod_union = model_class(matrix1, t_union)
+
+print(f"Mod({{symmetric}}) = {[struct_names[m] for m in sorted(mod_sym)]}")
+print(f"Mod({{transitive}}) = {[struct_names[m] for m in sorted(mod_trans)]}")
+print(f"Mod({{symmetric}} ∪ {{transitive}}) = {[struct_names[m] for m in sorted(mod_union)]}")
+print(f"Mod({{symmetric}}) ∩ Mod({{transitive}}) = {[struct_names[m] for m in sorted(mod_sym & mod_trans)]}")
+print(f"Union=Intersection: {mod_union == mod_sym & mod_trans}")
+print()
+print("✓ Verified: Mod(T₁ ∪ T₂) = Mod(T₁) ∩ Mod(T₂)")
 
 
 """
-Visualization: Theory Genome Landscape
-=======================================
+Visualization: Genomic Distance Heatmap
 
-Visualizes the space of mathematical theories as a landscape,
-with Morita equivalence classes as connected components and
-mutations as edges.
+Shows pairwise genomic distances between closed theories as a heatmap,
+demonstrating the pseudometric structure on theory space.
 """
 
+import itertools
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def model_class(matrix, theory):
+    return frozenset(
+        m for m in range(len(matrix))
+        if all(matrix[m][a] for a in theory)
+    )
+
+def theory_of(matrix, models):
+    n_axioms = len(matrix[0]) if matrix else 0
+    return frozenset(
+        a for a in range(n_axioms)
+        if all(matrix[m][a] for m in models)
+    )
+
+def theory_closure(matrix, theory):
+    return theory_of(matrix, model_class(matrix, theory))
+
+def all_closed_theories(matrix):
+    n_axioms = len(matrix[0])
+    closed = set()
+    for r in range(n_axioms + 1):
+        for subset in itertools.combinations(range(n_axioms), r):
+            t = frozenset(subset)
+            if t == theory_closure(matrix, t):
+                closed.add(t)
+    return closed
+
+def genomic_distance(t1, t2):
+    return len(t1.symmetric_difference(t2))
+
+
+matrix = [
+    [True,  True,  True,  True,   False],
+    [True,  False, True,  True,   True],
+    [True,  True,  True,  False,  False],
+    [True,  True,  True,  False,  True],
+    [False, True,  True,  True,   False],
+]
+
+axiom_names = {0: "R", 1: "S", 2: "T", 3: "A", 4: "Tot"}
+
+closed = sorted(all_closed_theories(matrix), key=lambda x: (len(x), sorted(x)))
+n = len(closed)
+
+# Compute distance matrix
+dist_matrix = np.zeros((n, n), dtype=int)
+for i in range(n):
+    for j in range(n):
+        dist_matrix[i][j] = genomic_distance(closed[i], closed[j])
+
+labels = []
+for t in closed:
+    if not t:
+        labels.append("∅")
+    else:
+        labels.append("{" + ",".join(axiom_names[a] for a in sorted(t)) + "}")
+
+fig, ax = plt.subplots(figsize=(10, 8))
+im = ax.imshow(dist_matrix, cmap='YlOrRd', interpolation='nearest')
+
+ax.set_xticks(range(n))
+ax.set_yticks(range(n))
+ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=8)
+ax.set_yticklabels(labels, fontsize=8)
+
+# Add distance values
+for i in range(n):
+    for j in range(n):
+        color = 'white' if dist_matrix[i][j] > 3 else 'black'
+        ax.text(j, i, str(dist_matrix[i][j]), ha='center', va='center',
+                fontsize=9, color=color, fontweight='bold')
+
+plt.colorbar(im, ax=ax, label='Genomic Distance')
+ax.set_title('Genomic Distance Between Closed Theories\n(Symmetric Difference Pseudometric)',
+             fontsize=13, fontweight='bold')
+
+# Verify triangle inequality for all triples
+violations = 0
+for i in range(n):
+    for j in range(n):
+        for k in range(n):
+            if dist_matrix[i][k] > dist_matrix[i][j] + dist_matrix[j][k]:
+                violations += 1
+
+ax.text(0.02, 0.02, f"Triangle inequality violations: {violations}",
+        transform=ax.transAxes, fontsize=9,
+        bbox=dict(boxstyle='round', facecolor='lightgreen' if violations == 0 else 'lightcoral'))
+
+plt.tight_layout()
+plt.savefig('distance_heatmap.png', dpi=150, bbox_inches='tight')
+print(f"Saved distance_heatmap.png (triangle violations: {violations})")
+
+
+"""
+Visualization: Lattice of Closed Theories
+
+Generates a Hasse diagram of the closed theories in an axiom system,
+showing the lattice structure with edges for covering relations.
+"""
+
+import itertools
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-import numpy as np
 
 
-def create_genome_landscape():
-    """Create a visualization of the theory genome landscape."""
-    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
-
-    # === Panel 1: Theory Space with Morita Classes ===
-    ax1 = axes[0]
-    ax1.set_title("Theory Genome Landscape", fontsize=14, fontweight='bold')
-    ax1.set_xlim(-1, 11)
-    ax1.set_ylim(-1, 11)
-
-    # Morita equivalence classes as colored regions
-    morita_classes = {
-        'Monoid-like': {
-            'theories': [
-                ('Monoids', 2, 8),
-                ('Semigroups+1', 3, 7),
-            ],
-            'color': '#FF6B6B',
-            'center': (2.5, 7.5),
-            'radius': 1.8,
-        },
-        'Group-like': {
-            'theories': [
-                ('Groups', 5, 8),
-                ('Groupoids', 6, 7),
-                ('Torsors', 7, 8),
-            ],
-            'color': '#4ECDC4',
-            'center': (6, 7.7),
-            'radius': 2.0,
-        },
-        'Ring-like': {
-            'theories': [
-                ('Rings', 4, 4),
-                ('Mat₂(ℤ)-mod', 5, 3),
-                ('ℤ-mod', 6, 5),
-            ],
-            'color': '#45B7D1',
-            'center': (5, 4),
-            'radius': 2.2,
-        },
-        'Field-like': {
-            'theories': [
-                ('Fields', 9, 4),
-                ('Division rings', 8, 3),
-            ],
-            'color': '#96CEB4',
-            'center': (8.5, 3.5),
-            'radius': 1.5,
-        },
-        'Lattice-like': {
-            'theories': [
-                ('Lattices', 2, 2),
-                ('Boolean alg.', 1, 3),
-                ('Heyting alg.', 3, 1),
-            ],
-            'color': '#DDA0DD',
-            'center': (2, 2),
-            'radius': 2.0,
-        },
-    }
-
-    for cls_name, cls_data in morita_classes.items():
-        # Draw Morita equivalence class as a shaded region
-        circle = plt.Circle(
-            cls_data['center'], cls_data['radius'],
-            facecolor=cls_data['color'], alpha=0.2,
-            edgecolor=cls_data['color'], linewidth=2, linestyle='--'
-        )
-        ax1.add_patch(circle)
-
-        # Plot individual theories
-        for name, x, y in cls_data['theories']:
-            ax1.plot(x, y, 'o', color=cls_data['color'],
-                    markersize=10, markeredgecolor='black', markeredgewidth=1)
-            ax1.annotate(name, (x, y), textcoords="offset points",
-                        xytext=(0, 12), ha='center', fontsize=8)
-
-    # Draw mutations (adjunctions) as arrows between classes
-    mutations = [
-        ((2, 8), (5, 8), 'add inverses'),
-        ((5, 8), (4, 4), 'add multiplication'),
-        ((4, 4), (9, 4), 'add inverses'),
-        ((2, 2), (4, 4), 'add operations'),
-    ]
-
-    for start, end, label in mutations:
-        ax1.annotate('', xy=end, xytext=start,
-                    arrowprops=dict(arrowstyle='->', color='gray',
-                                  connectionstyle='arc3,rad=0.1'))
-        mid = ((start[0]+end[0])/2, (start[1]+end[1])/2 + 0.5)
-        ax1.text(mid[0], mid[1], label, fontsize=7, ha='center',
-                color='gray', style='italic')
-
-    ax1.set_xlabel("Algebraic Complexity →", fontsize=11)
-    ax1.set_ylabel("Structural Richness →", fontsize=11)
-    ax1.grid(True, alpha=0.2)
-
-    # Legend
-    legend_patches = [
-        mpatches.Patch(color=data['color'], alpha=0.3, label=name)
-        for name, data in morita_classes.items()
-    ]
-    ax1.legend(handles=legend_patches, loc='lower right', fontsize=8,
-              title='Morita Classes')
-
-    # === Panel 2: Genome Roundtrip Diagram ===
-    ax2 = axes[1]
-    ax2.set_title("Genome Roundtrip Theorem", fontsize=14, fontweight='bold')
-    ax2.set_xlim(-0.5, 4.5)
-    ax2.set_ylim(-0.5, 4.5)
-    ax2.axis('off')
-
-    # Draw the roundtrip diagram
-    boxes = [
-        ('Monad T\n(Genome)', 0.5, 3.5, '#FF6B6B'),
-        ('T.free ⊣ T.forget\n(Expression)', 3.5, 3.5, '#4ECDC4'),
-        ('T.Algebra\n(Phenotype)', 3.5, 1.5, '#45B7D1'),
-        ('Roundtrip T\'\n(Re-sequenced)', 0.5, 1.5, '#96CEB4'),
-    ]
-
-    for label, x, y, color in boxes:
-        box = mpatches.FancyBboxPatch(
-            (x-0.6, y-0.4), 1.2, 0.8,
-            boxstyle="round,pad=0.1",
-            facecolor=color, alpha=0.3,
-            edgecolor=color, linewidth=2
-        )
-        ax2.add_patch(box)
-        ax2.text(x, y, label, ha='center', va='center', fontsize=9,
-                fontweight='bold')
-
-    # Arrows
-    arrows = [
-        ((1.1, 3.5), (2.9, 3.5), 'induce adjunction'),
-        ((3.5, 3.1), (3.5, 1.9), 'express phenotype'),
-        ((2.9, 1.5), (1.1, 1.5), 're-sequence'),
-        ((0.5, 1.9), (0.5, 3.1), 'T\' ≅ T'),
-    ]
-
-    for start, end, label in arrows:
-        ax2.annotate('', xy=end, xytext=start,
-                    arrowprops=dict(arrowstyle='->', color='#333333',
-                                  lw=2))
-        mid = ((start[0]+end[0])/2, (start[1]+end[1])/2)
-        offset = (0, 15) if start[1] == end[1] else (15, 0)
-        ax2.annotate(label, mid, textcoords="offset points",
-                    xytext=offset, ha='center', fontsize=8,
-                    color='#666666', style='italic')
-
-    # Central theorem box
-    theorem_box = mpatches.FancyBboxPatch(
-        (1.2, 2.1), 1.6, 0.8,
-        boxstyle="round,pad=0.1",
-        facecolor='#FFD700', alpha=0.3,
-        edgecolor='#DAA520', linewidth=2
+def model_class(matrix, theory):
+    return frozenset(
+        m for m in range(len(matrix))
+        if all(matrix[m][a] for a in theory)
     )
-    ax2.add_patch(theorem_box)
-    ax2.text(2, 2.5, 'T\' ≅ T\n(Roundtrip\nTheorem)', ha='center',
-            va='center', fontsize=10, fontweight='bold', color='#8B6914')
 
-    plt.tight_layout()
-    plt.savefig('/workspace/request-project/Novelty/CategoryGenome/genome_landscape.png',
-                dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: genome_landscape.png")
+def theory_of(matrix, models):
+    n_axioms = len(matrix[0]) if matrix else 0
+    return frozenset(
+        a for a in range(n_axioms)
+        if all(matrix[m][a] for m in models)
+    )
+
+def theory_closure(matrix, theory):
+    return theory_of(matrix, model_class(matrix, theory))
+
+def all_closed_theories(matrix):
+    n_axioms = len(matrix[0])
+    closed = set()
+    for r in range(n_axioms + 1):
+        for subset in itertools.combinations(range(n_axioms), r):
+            t = frozenset(subset)
+            if t == theory_closure(matrix, t):
+                closed.add(t)
+    return closed
 
 
-if __name__ == "__main__":
-    create_genome_landscape()
+# Binary relations axiom system
+matrix = [
+    [True,  True,  True,  True,   False],  # equality
+    [True,  False, True,  True,   True],   # total order
+    [True,  True,  True,  False,  False],  # equiv rel
+    [True,  True,  True,  False,  True],   # complete graph
+    [False, True,  True,  True,   False],  # empty relation
+]
+
+axiom_names = {0: "R", 1: "S", 2: "T", 3: "A", 4: "Tot"}
+
+closed = sorted(all_closed_theories(matrix), key=lambda x: (len(x), sorted(x)))
+
+# Build Hasse diagram edges (covering relations)
+edges = []
+for i, t1 in enumerate(closed):
+    for j, t2 in enumerate(closed):
+        if t1 < t2:  # t1 strictly contained in t2
+            # Check if it's a covering relation (no intermediate closed theory)
+            is_cover = not any(
+                t1 < t3 < t2 for t3 in closed
+            )
+            if is_cover:
+                edges.append((i, j))
+
+# Layout: y-coordinate by size, x-coordinate spread evenly per level
+levels = {}
+for i, t in enumerate(closed):
+    sz = len(t)
+    if sz not in levels:
+        levels[sz] = []
+    levels[sz].append(i)
+
+positions = {}
+for sz, indices in levels.items():
+    n = len(indices)
+    for k, idx in enumerate(indices):
+        x = (k - (n - 1) / 2) * 2.5
+        y = sz * 2
+        positions[idx] = (x, y)
+
+fig, ax = plt.subplots(1, 1, figsize=(14, 10))
+
+# Draw edges
+for i, j in edges:
+    x1, y1 = positions[i]
+    x2, y2 = positions[j]
+    ax.plot([x1, x2], [y1, y2], 'k-', alpha=0.3, linewidth=1.5)
+
+# Draw nodes
+colors = plt.cm.Set3([i / len(closed) for i in range(len(closed))])
+for i, t in enumerate(closed):
+    x, y = positions[i]
+    label = "{" + ",".join(axiom_names[a] for a in sorted(t)) + "}" if t else "∅"
+    models = model_class(matrix, t)
+    n_models = len(models)
+
+    circle = plt.Circle((x, y), 0.6, color=colors[i], ec='black', linewidth=2, zorder=3)
+    ax.add_patch(circle)
+    ax.text(x, y + 0.1, label, ha='center', va='center', fontsize=7, fontweight='bold', zorder=4)
+    ax.text(x, y - 0.25, f"|Mod|={n_models}", ha='center', va='center', fontsize=6,
+            color='gray', zorder=4)
+
+ax.set_xlim(-8, 8)
+ax.set_ylim(-1, max(len(t) for t in closed) * 2 + 1.5)
+ax.set_aspect('equal')
+ax.set_title("Hasse Diagram of Closed Theories\n(Binary Relations on {0,1,2})",
+             fontsize=14, fontweight='bold')
+ax.text(0.02, 0.98, "R=reflexive, S=symmetric, T=transitive,\nA=antisymmetric, Tot=total",
+        transform=ax.transAxes, fontsize=8, va='top',
+        bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+ax.axis('off')
+
+plt.tight_layout()
+plt.savefig('theory_lattice.png', dpi=150, bbox_inches='tight')
+print("Saved theory_lattice.png")

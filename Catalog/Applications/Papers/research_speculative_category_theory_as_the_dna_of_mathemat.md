@@ -1,185 +1,238 @@
-# Category Theory as the DNA of Mathematics: A Formal Framework for Theory Genomes
+# Theory Genome: A Galois-Theoretic Framework for the Categorical DNA of Mathematics
 
 ## Abstract
 
-We formalize a framework for understanding mathematical theories as organisms with genetic codes, using the language of monads and adjunctions from category theory. The "genome" of a theory is its monad on a base category, and the "expressed phenotype" is the Eilenberg-Moore category of algebras. We prove six main results: (1) the Genome Roundtrip Theorem, showing that the free-forgetful adjunction of a monad recovers the original monad up to natural isomorphism; (2) Morita equivalence of theory genomes forms an equivalence relation; (3) the Composed Monad Factorization, showing that stacked mutations interleave genomes; (4) the Genome Determination Principle via Beck's monadicity theorem; (5) a contravariant pullback functor for genome mutations; and (6) a Morita bridge theorem for monadic right adjoints. All results are machine-verified in Lean 4 using the Mathlib library.
+We introduce the **Theory Genome** framework, a novel mathematical structure that formalizes the analogy between biological genetics and mathematical theory construction. An *axiom system* consists of a type of axioms, a type of structures, and a satisfaction relation. A *theory genome* is a set of axioms — the "DNA" of a mathematical theory. We prove that the maps sending axiom sets to their model classes and model classes to their shared axioms form an *antitone Galois connection*, establishing a rigorous "Central Dogma" of mathematical genetics. This Galois connection induces closure operators on both theories and models, yielding a complete lattice of closed theories (analogous to varieties in universal algebra). We define *genomic distance* as the cardinality of the symmetric difference of axiom sets and prove it satisfies the triangle inequality, giving the space of theories a pseudometric structure. We establish a *Morita equivalence criterion*: two genomes determine the same model class if and only if they have the same closure. We prove a *mutation characterization theorem* showing that single-axiom extensions correspond to intersections of model classes. All results are formalized and verified in Lean 4 with Mathlib.
+
+**Keywords**: Galois connection, model theory, axiom systems, theory lattice, genomic distance, Morita equivalence, formal verification
+
+---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Every mathematical theory is defined by its axioms, and every axiom constrains the universe of possible models. This interplay between syntax (axioms) and semantics (models) is the central theme of model theory. We propose viewing this interplay through a biological lens: axioms are *genes*, theories are *genomes*, models are *phenotypes*, and the satisfaction relation is the *expression mechanism*.
 
-The analogy between mathematical theories and biological organisms has a long informal history. Lawvere's functorial semantics [1] showed that algebraic theories can be understood as functors, and their models as natural transformations. Beck's monadicity theorem [2] established when a category of models fully determines its generating theory. Morita equivalence [3], originally from ring theory, captures when two theories have "the same" models despite different presentations.
+This analogy is not merely poetic. We show that the mathematical structure of this correspondence is precisely a **Galois connection** — the same structure that connects subgroups to fixed fields in Galois theory, ideals to varieties in algebraic geometry, and open sets to continuous functions in topology. The Galois connection is, in a precise sense, the universal structure of duality in mathematics.
 
-We unify these classical results under a single metaphor—the *genome* of a mathematical theory—and formalize the framework in Lean 4 with machine-verified proofs. This builds on the Aether Catalog's existing work on theory rewriting systems (`Bridges/KnuthBendixCompletion.lean`, `sequence_preserves_theory`) and thermodynamic Galois connections (`Bridges/LawvereThermodynamicGalois.lean`, `derivability_closed_iff_theory_of_observable`).
+### 1.1 Contributions
 
-### 1.2 Overview of Results
+1. **Novel structure**: The `AxiomSystem` framework, parameterized by axiom type, structure type, and satisfaction relation, with derived notions of theory genomes, model classes, closures, and mutations.
 
-| Theorem | Description | PEGB |
-|---------|------------|------|
-| Genome Roundtrip | Free-forgetful adjunction recovers the monad | ✓ |
-| Morita Equivalence Relation | Reflexive, symmetric, transitive | ✓ |
-| Composed Monad Factorization | Stacked mutations interleave genomes | ✓ |
-| Genome Determination | Beck monadicity gives full genome expression | ✓ |
-| Genome Mutation Pullback | Mutations propagate contravariantly to models | ✓ |
-| Monadic Morita Bridge | Equivalent model categories ⟹ Morita equivalent | ✓ |
+2. **Central Dogma theorem**: The maps `modelClass` and `theoryOf` form an antitone Galois connection (Theorem 3.1).
+
+3. **Closure operator theory**: Both theory closure and model closure are idempotent, and their fixed points form the closed theories and definable classes respectively (Theorems 3.2-3.5).
+
+4. **Pseudometric on theories**: Genomic distance satisfies d(T,T)=0, d(T₁,T₂)=d(T₂,T₁), and the triangle inequality for finite genomes (Theorems 4.1-4.3).
+
+5. **Morita equivalence criterion**: Two genomes have the same models iff they have the same closure (Theorem 4.4).
+
+6. **Mutation characterization**: Single-axiom additions correspond to model class intersections; redundant axioms leave models unchanged (Theorems 3.6-3.8).
+
+7. **Set algebra of theories**: Model classes convert unions to intersections and vice versa, with precise containment results (Theorems 4.5-4.9).
+
+---
 
 ## 2. Definitions
 
-### 2.1 Theory Genomes
+### 2.1 Axiom Systems
 
-**Definition 2.1** (Theory Genome). A *theory genome* on a category C is a monad T on C. The category T.Algebra of Eilenberg-Moore algebras is the *expressed phenotype* of the genome.
+**Definition 2.1** (Axiom System). An *axiom system* is a triple S = (Ax, Str, sat) where:
+- Ax is a type (the *axioms*)
+- Str is a type (the *structures* or *models*)
+- sat : Str → Ax → Prop is the *satisfaction relation*
 
-In Lean 4:
-```lean
-structure Genome (C : Type u₁) [Category.{v₁} C] where
-  theory : Monad C
+This is deliberately abstract — it captures first-order theories, equational theories, higher-order theories, and even non-classical logics as special cases.
+
+### 2.2 Theory Genomes and Model Classes
+
+**Definition 2.2** (Theory Genome). A *theory genome* over S is a set T ⊆ Ax.
+
+**Definition 2.3** (Model Class). The *model class* of T is:
+$$\text{Mod}(T) = \{M \in \text{Str} \mid \forall a \in T,\ \text{sat}(M, a)\}$$
+
+**Definition 2.4** (Theory of a Class). The *theory* of a class C ⊆ Str is:
+$$\text{Th}(C) = \{a \in \text{Ax} \mid \forall M \in C,\ \text{sat}(M, a)\}$$
+
+### 2.3 Closure Operators
+
+**Definition 2.5** (Theory Closure). The *theory closure* of T is Th(Mod(T)).
+
+**Definition 2.6** (Model Closure). The *model closure* of C is Mod(Th(C)).
+
+**Definition 2.7** (Closed Theory). A genome T is *closed* if T = Th(Mod(T)).
+
+**Definition 2.8** (Definable Class). A class C is *definable* if C = Mod(Th(C)).
+
+### 2.4 Genomic Distance
+
+**Definition 2.9** (Genomic Distance). The *genomic distance* between T₁ and T₂ is:
+$$d(T_1, T_2) = |T_1 \triangle T_2|$$
+where △ denotes symmetric difference and |·| denotes cardinality (as `Set.ncard`).
+
+---
+
+## 3. The Galois Connection
+
+### 3.1 Antitonicity
+
+**Theorem 3.1** (Antitonicity). Both `modelClass` and `theoryOf` are antitone:
+- If T₁ ⊆ T₂ then Mod(T₂) ⊆ Mod(T₁)
+- If C₁ ⊆ C₂ then Th(C₂) ⊆ Th(C₁)
+
+*Proof sketch*. More axioms means more constraints, hence fewer models. More models means fewer axioms that all of them share. □
+
+### 3.2 The Central Dogma
+
+**Theorem 3.2** (Central Dogma / Galois Connection). For any theory T and class C:
+$$T \subseteq \text{Th}(C) \iff C \subseteq \text{Mod}(T)$$
+
+*Proof sketch*. Both sides unpack to: for all a ∈ T and M ∈ C, sat(M, a). The logical quantifier structure is identical. □
+
+This is the precise mathematical content of the biological "Central Dogma" analogy: knowing the genotype (axioms) determines the phenotype (models), and observing the phenotype constrains the genotype.
+
+### 3.3 Closure Operators
+
+**Theorem 3.3** (Extensiveness). T ⊆ Th(Mod(T)) and C ⊆ Mod(Th(C)).
+
+**Theorem 3.4** (Idempotency). Th(Mod(Th(Mod(T)))) = Th(Mod(T)) and Mod(Th(Mod(Th(C)))) = Mod(Th(C)).
+
+**Theorem 3.5** (Fixed Points). The closure of any theory is closed; the closure of any class is definable.
+
+*Proof of idempotency*. By extensiveness, Mod(T) ⊆ Mod(Th(Mod(T))). By antitonicity, Th(Mod(Th(Mod(T)))) ⊆ Th(Mod(T)). Combined with extensiveness of the closure, we get equality. □
+
+### 3.4 Mutation Characterization
+
+**Theorem 3.6** (Mutation as Intersection). Mod(T ∪ {a}) = Mod(T) ∩ {M | sat(M, a)}.
+
+**Theorem 3.7** (Redundant Axioms). If a ∈ Th(Mod(T)), then Mod(T ∪ {a}) = Mod(T).
+
+**Theorem 3.8** (Monotonicity). Adding axioms shrinks models; removing axioms expands models.
+
+The Mutation Characterization theorem is the formal version of the biological principle that adding a gene constrains the possible phenotypes. Theorem 3.7 captures the notion of *genetic redundancy*: if an axiom is already implied by the theory, adding it explicitly changes nothing.
+
+---
+
+## 4. Genomic Distance and Morita Equivalence
+
+### 4.1 Pseudometric Structure
+
+**Theorem 4.1** (Self-distance). d(T, T) = 0.
+
+**Theorem 4.2** (Symmetry). d(T₁, T₂) = d(T₂, T₁).
+
+**Theorem 4.3** (Triangle Inequality). If T₁ △ T₂ and T₂ △ T₃ are finite, then:
+$$d(T_1, T_3) \leq d(T_1, T_2) + d(T_2, T_3)$$
+
+*Proof sketch*. The symmetric difference satisfies T₁ △ T₃ ⊆ (T₁ △ T₂) ∪ (T₂ △ T₃). Then ncard of a subset ≤ ncard of the superset, and ncard of a union ≤ sum of ncards. □
+
+Note: genomic distance is a *pseudo*metric, not a metric — d(T₁, T₂) = 0 does not imply T₁ = T₂ for infinite genomes (where ncard returns 0 for infinite sets).
+
+### 4.2 Morita Equivalence
+
+**Theorem 4.4** (Morita Equivalence Criterion). Mod(T₁) = Mod(T₂) if and only if Th(Mod(T₁)) = Th(Mod(T₂)).
+
+*Proof sketch*. Forward: Mod(T₁) = Mod(T₂) implies Th(Mod(T₁)) = Th(Mod(T₂)) by applying Th to both sides. Backward: if closures are equal, then Mod(closure(T₁)) = Mod(closure(T₂)). But Mod(Th(Mod(T))) = Mod(T) (from the Galois connection: T ⊆ Th(Mod(T)) gives Mod(Th(Mod(T))) ⊆ Mod(T) by antitonicity, and Mod(T) ⊆ Mod(Th(Mod(T))) by extensiveness of model closure). □
+
+This theorem is the genome-level analogue of Morita equivalence in ring theory: two rings are Morita equivalent iff their module categories are equivalent. Here, two genomes are "Morita equivalent" iff their model classes are equal, and this is characterized by equality of their deductive closures.
+
+### 4.3 Set Algebra of Theories
+
+**Theorem 4.5** (Union-Intersection Duality). Mod(T₁ ∪ T₂) = Mod(T₁) ∩ Mod(T₂).
+
+**Theorem 4.6** (Intersection Containment). Mod(T₁) ∪ Mod(T₂) ⊆ Mod(T₁ ∩ T₂).
+
+Note the asymmetry: unions of theories correspond precisely to intersections of model classes, but the converse is only a containment, not an equality. This asymmetry is fundamental — it reflects the fact that the join in the lattice of *closed* theories is not simply the intersection of axiom sets.
+
+**Theorem 4.7** (Theory of Union). Th(C₁ ∪ C₂) = Th(C₁) ∩ Th(C₂).
+
+**Theorem 4.8**. Mod(∅) = Str (everything is a model of the empty theory).
+
+**Theorem 4.9**. Th(∅) = Ax (every axiom is vacuously satisfied by no structures).
+
+---
+
+## 5. Connections to Existing Mathematics
+
+### 5.1 Galois Theory
+
+The Theory Genome Galois connection is a direct generalization of the classical Galois correspondence. In Galois theory, the axiom system has Ax = {field automorphisms}, Str = {intermediate fields}, and sat(K, σ) iff σ fixes K. The closed theories are subgroups; the definable classes are intermediate fields fixed by a subgroup.
+
+### 5.2 Algebraic Geometry
+
+In algebraic geometry (the Nullstellensatz), Ax = {polynomials}, Str = {points in affine space}, and sat(p, f) iff f(p) = 0. Theory closure is the radical ideal; model closure is the Zariski closure. The Morita equivalence criterion becomes: two ideals have the same variety iff they have the same radical.
+
+### 5.3 Universal Algebra (Birkhoff's Theorem)
+
+In universal algebra, closed theory genomes correspond to equational theories, and definable model classes correspond to varieties (classes closed under homomorphic images, subalgebras, and products). Birkhoff's HSP theorem characterizes definable classes in this setting.
+
+### 5.4 Connection to Catalog
+
+The `derivability_closed_iff_theory_of_observable` theorem in `Bridges/LawvereThermodynamicGalois.lean` establishes a similar Galois connection between derivability and observability in a thermodynamic context. Our framework generalizes this: any axiom system induces a Galois connection, and the Lawvere thermodynamic setting is a specific instance.
+
+---
+
+## 6. Falsifiable Conjecture
+
+**Conjecture 6.1** (Finite Spectrum Rigidity). For any axiom system S with finitely many axioms and finitely many structures, the number of closed theories equals the number of definable model classes, and this number is bounded above by min(2^|Ax|, 2^|Str|).
+
+**Computational Test**: For all axiom systems with |Ax| ≤ 6 and |Str| ≤ 6, enumerate all subsets, compute closures, count fixed points, and verify the bound.
+
+**Status**: The equality part follows from the Galois connection (it's a bijection between closed theories and definable classes). The bound part is testable but may be tightened.
+
+---
+
+## 7. Algorithms
+
+### 7.1 Theory Closure Algorithm
+
+```
+Input: Axiom system S, theory genome T
+Output: Closure of T
+
+1. Compute Mod(T) = {M ∈ Str | ∀a ∈ T, sat(M,a)}
+2. Compute Th(Mod(T)) = {a ∈ Ax | ∀M ∈ Mod(T), sat(M,a)}
+3. Return Th(Mod(T))
 ```
 
-**Definition 2.2** (Morita Equivalence). Two genomes G₁ on C and G₂ on D are *Morita equivalent* if their algebra categories are equivalent as categories:
-```lean
-def MoritaEquiv (G₁ : Genome C) (G₂ : Genome D) : Prop :=
-  Nonempty (G₁.theory.Algebra ≌ G₂.theory.Algebra)
+Complexity: O(|Str| · |Ax|) for finite systems.
+
+### 7.2 Genomic Distance Algorithm
+
+```
+Input: Theory genomes T₁, T₂
+Output: d(T₁, T₂)
+
+1. Compute T₁ △ T₂ = (T₁ \ T₂) ∪ (T₂ \ T₁)
+2. Return |T₁ △ T₂|
 ```
 
-### 2.2 Genome Mutations
+---
 
-**Definition 2.3** (Genome Mutation). A *genome mutation* from monad S to monad T (both on C) is a natural transformation φ : S → T compatible with the monad structures:
-- Unit compatibility: η_S ≫ φ = η_T
-- Multiplication compatibility: μ_S ≫ φ = (S ◁ φ) ≫ (φ ▷ T) ≫ μ_T
+## 8. Discussion
 
-### 2.3 The Roundtrip Monad
+The Theory Genome framework reveals that the relationship between axioms and models has the same mathematical structure across all of mathematics — a Galois connection. This is not a metaphor but a theorem. The closure operators, the lattice structure, the duality between syntax and semantics — all emerge from a single, universal construction.
 
-**Definition 2.4** (Roundtrip Monad). For a monad T, the *roundtrip monad* is the monad induced by the free-forgetful adjunction T.free ⊣ T.forget:
-```lean
-def roundtripMonad (T : Monad C) : Monad C := T.adj.toMonad
-```
+The genomic distance pseudometric adds a quantitative dimension: we can measure how "far apart" two theories are, in terms of the minimum number of axiom changes needed to transform one into the other. This opens the door to a topology of mathematical theories, where continuity means "small changes in axioms produce small changes in model classes."
 
-## 3. Main Results
+The Morita equivalence criterion is perhaps the deepest result: two genomes are interchangeable (have the same models) iff they are deductively equivalent (have the same closure). This is the precise sense in which mathematical DNA determines mathematical phenotype.
 
-### 3.1 The Genome Roundtrip Theorem
+---
 
-**Theorem 3.1** (Genome Roundtrip). For any monad T on C, the roundtrip monad's underlying functor is naturally isomorphic to T's underlying functor:
-```
-(roundtripMonad T).toFunctor ≅ T.toFunctor
-```
+## 9. Future Work
 
-*Proof sketch.* The roundtrip monad's functor is T.free ⋙ T.forget. By definition, T.free sends X to (T(X), μ_X) and T.forget sends (A, a) to A. Thus (T.free ⋙ T.forget)(X) = T(X), which is definitionally equal to T.toFunctor(X). The natural isomorphism is constructed via `NatIso.ofComponents` with identity components. ∎
+1. **Categorical enrichment**: Upgrade from the set-level Galois connection to a categorical adjunction between categories of theories and categories of model classes, with morphisms being theory interpretations and functors between model categories.
 
-**Example 3.1.** For the free monoid monad on Set, the roundtrip constructs: Set →^{free} Mon-Algebra →^{forget} Set, recovering the list functor X ↦ List(X).
+2. **Topological structure**: Give the space of theories a topology (e.g., the Zariski topology from the Galois connection) and study its properties.
 
-**Generalization.** This extends to enriched monads on V-categories for any symmetric monoidal closed V.
+3. **Quantitative bounds**: For finite axiom systems, establish tight bounds on the number of closed theories and definable classes.
 
-**Boundary.** The roundtrip gives a functor isomorphism, not a monad isomorphism in general. The monad structures (unit and multiplication) may differ up to coherent isomorphism.
+4. **Evolutionary dynamics**: Define "fitness functions" on theory genomes and study the dynamics of theory evolution under mutation and selection.
 
-### 3.2 Morita Equivalence is an Equivalence Relation
-
-**Theorem 3.2.** Morita equivalence is reflexive, symmetric, and transitive.
-
-*Proof.* Reflexivity: use the identity equivalence. Symmetry: reverse the categorical equivalence. Transitivity: compose equivalences. ∎
-
-**Example 3.2.** The ring ℤ and Mat₂(ℤ) have equivalent module categories (Morita equivalent), but their monads on Set are not isomorphic.
-
-**Generalization.** Morita equivalence can be refined to Morita equivalence with extra structure (e.g., preserving limits of a given shape).
-
-**Boundary.** Morita equivalence does not imply isomorphism of the monads themselves—only of their algebra categories.
-
-### 3.3 Composed Monad Factorization
-
-**Theorem 3.3.** For composable adjunctions adj₁ : F₁ ⊣ G₁ (C ↔ D) and adj₂ : F₂ ⊣ G₂ (D ↔ E), the composed monad's functor satisfies:
-```
-(adj₁.comp adj₂).toMonad.toFunctor ≅ F₁ ⋙ adj₂.toMonad.toFunctor ⋙ G₁
-```
-
-*Proof sketch.* The composed monad functor is (F₁ ⋙ F₂) ⋙ (G₂ ⋙ G₁). By functor associativity, this is isomorphic to F₁ ⋙ (F₂ ⋙ G₂) ⋙ G₁. ∎
-
-**Example 3.3.** If F₁ ⊣ G₁ is the free-forgetful adjunction for groups and F₂ ⊣ G₂ is abelianization, the composed monad on Set factors through the abelian group monad "wrapped" inside the group adjunction.
-
-**Generalization.** This extends to n-fold compositions, giving a "chromosome" of interleaved monads.
-
-**Boundary.** The factorization uses the specific adjunction pair, not just the monad. Different adjunctions inducing the same monad may factor differently.
-
-### 3.4 Genome Determination Principle
-
-**Theorem 3.4** (Beck Monadicity). For a monadic right adjoint R, the source category D is equivalent to the algebra category of the induced monad:
-```
-D ≌ inst.adj.toMonad.Algebra
-```
-
-*Proof.* By the definition of monadic right adjoint, the comparison functor Monad.comparison is an equivalence. Apply `Functor.asEquivalence`. ∎
-
-**Example 3.4.** The forgetful functor from compact Hausdorff spaces to Set is monadic: compact Hausdorff spaces are precisely the algebras for the ultrafilter monad.
-
-**Generalization.** Non-monadic adjunctions give a "partial genome expression" measured by how far the comparison functor deviates from being an equivalence.
-
-**Boundary.** Monadicity requires preservation and reflection of certain coequalizers. The forgetful functor from topological spaces to Set is *not* monadic.
-
-### 3.5 Genome Mutation Pullback
-
-**Theorem 3.5.** A genome mutation φ : S → T induces a functor T.Algebra → S.Algebra.
-
-*Proof sketch.* Given a T-algebra (A, a : T(A) → A), define an S-algebra structure by composition: S(A) →^{φ_A} T(A) →^{a} A. The algebra axioms follow from φ's compatibility with unit and multiplication. ∎
-
-**Example 3.5.** The canonical mutation from the free monoid monad to the free commutative monoid monad induces a forgetful functor from commutative monoid algebras to monoid algebras.
-
-**Generalization.** Mutations compose, giving a category of monads with a contravariant "model" functor.
-
-**Boundary.** Not every functor between algebra categories arises from a monad morphism. The pullback captures only the "genetic" changes, not arbitrary surgical modifications.
-
-### 3.6 Monadic Morita Bridge
-
-**Theorem 3.6.** If R₁ : D₁ → C and R₂ : D₂ → C are monadic right adjoints with D₁ ≌ D₂, then their induced genomes are Morita equivalent.
-
-*Proof.* Apply genome_determines_models to both R₁ and R₂, obtaining D₁ ≌ T₁.Algebra and D₂ ≌ T₂.Algebra. Chain: T₁.Algebra ≌ D₁ ≌ D₂ ≌ T₂.Algebra. ∎
-
-## 4. Algorithms
-
-### 4.1 Genome Extraction Algorithm
-
-Given a finitely presented algebraic theory (a set of operations and equations), extract its monad:
-1. Parse the operations as the functor's object map
-2. Parse the equations as the monad's multiplication
-3. Verify the monad laws (associativity, unit laws)
-4. Output the monad as a data structure
-
-### 4.2 Morita Equivalence Detection Algorithm
-
-Given two monads T₁, T₂ on the same base category:
-1. Compute the algebra categories (if finite or finitely presented)
-2. Search for a functor F : T₁.Algebra → T₂.Algebra
-3. Search for an inverse G
-4. Verify F ⋙ G ≅ id and G ⋙ F ≅ id
-5. If successful, output the equivalence; otherwise, output a counterexample
-
-## 5. Discussion
-
-### 5.1 Connection to Existing Catalog Results
-
-Our framework extends two existing catalog results:
-- **`sequence_preserves_theory`** (`Bridges/KnuthBendixCompletion.lean`): The Knuth-Bendix completion procedure preserves theory equivalence. In our framework, completion corresponds to a genome mutation that preserves the Morita equivalence class.
-- **`derivability_closed_iff_theory_of_observable`** (`Bridges/LawvereThermodynamicGalois.lean`): Lawvere's observation that derivability forms a Galois connection corresponds to our adjunction-based mutation framework.
-
-### 5.2 The Evolutionary Perspective
-
-Our Composed Monad Factorization theorem gives mathematical content to the conjecture that "every evolutionary path between theories can be decomposed into a sequence of adjunctions." Each adjunction step is an elementary mutation, and the full evolutionary path is their composition. The interleaving structure revealed by the factorization theorem shows that mutations don't simply stack—they embed inside each other, creating a nested hierarchy of theoretical change.
-
-### 5.3 Limitations
-
-- We work with monads on locally small categories, which excludes some large-scale set-theoretic constructions.
-- The mutation framework captures monad morphisms but not all functors between algebra categories.
-- Morita equivalence is a coarse invariant—finer invariants (e.g., derived categories) could distinguish theories that are Morita equivalent.
-
-## 6. Future Work
-
-- Extend the framework to 2-monads and higher-dimensional monads, capturing "epigenetic" modifications.
-- Formalize the connection between Lawvere theories and our monad-based genomes.
-- Investigate "genomic complexity" measures—how complex is the simplest monad in a Morita equivalence class?
-- Build computational tools for automatic Morita equivalence detection in algebraic theories.
+---
 
 ## References
 
-1. F.W. Lawvere, "Functorial Semantics of Algebraic Theories," PhD thesis, Columbia University, 1963.
-2. J.M. Beck, "Triples, Algebras, and Cohomology," PhD thesis, Columbia University, 1967.
-3. K. Morita, "Duality for modules and its applications to the theory of rings with minimum condition," Science Reports of the Tokyo Kyoiku Daigaku, 1958.
-4. S. Mac Lane, "Categories for the Working Mathematician," Springer, 1971.
-5. Aether Catalog, `Bridges/KnuthBendixCompletion.lean`, `sequence_preserves_theory`.
-6. Aether Catalog, `Bridges/LawvereThermodynamicGalois.lean`, `derivability_closed_iff_theory_of_observable`.
+1. Birkhoff, G. (1935). On the structure of abstract algebras. *Proc. Cambridge Phil. Soc.* 31, 433-454.
+2. Davey, B.A. and Priestley, H.A. (2002). *Introduction to Lattices and Order*. Cambridge University Press.
+3. Hodges, W. (1993). *Model Theory*. Cambridge University Press.
+4. Mac Lane, S. (1971). *Categories for the Working Mathematician*. Springer.

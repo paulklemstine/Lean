@@ -1,335 +1,158 @@
 """
-Algorithms for the Theory Genome Framework
-===========================================
+Theory Genome: Algorithms for Computing with Axiom Systems
 
-Type-hinted implementations of the core algorithms from the research.
+Type-hinted implementations of the core Theory Genome operations.
 """
 
-from typing import (
-    TypeVar, Generic, List, Tuple, Dict, Set, Optional, Callable,
-    FrozenSet
-)
-from dataclasses import dataclass, field
-from abc import ABC, abstractmethod
+from typing import FrozenSet, Set, Callable, Tuple
+import itertools
 
 
-# === Core Types ===
+class AxiomSystem:
+    """An axiom system with finite axioms, structures, and a satisfaction relation."""
 
-Obj = TypeVar('Obj')
-Mor = TypeVar('Mor')
+    def __init__(
+        self,
+        axioms: Set[int],
+        structures: Set[int],
+        sat: Callable[[int, int], bool],
+    ):
+        self.axioms = frozenset(axioms)
+        self.structures = frozenset(structures)
+        self.sat = sat  # sat(structure, axiom) -> bool
+
+    def model_class(self, theory: FrozenSet[int]) -> FrozenSet[int]:
+        """Compute the model class of a theory: all structures satisfying every axiom."""
+        return frozenset(
+            m for m in self.structures
+            if all(self.sat(m, a) for a in theory)
+        )
+
+    def theory_of(self, models: FrozenSet[int]) -> FrozenSet[int]:
+        """Compute the theory of a model class: all axioms satisfied by every model."""
+        return frozenset(
+            a for a in self.axioms
+            if all(self.sat(m, a) for m in models)
+        )
+
+    def theory_closure(self, theory: FrozenSet[int]) -> FrozenSet[int]:
+        """Compute the closure of a theory: Th(Mod(T))."""
+        return self.theory_of(self.model_class(theory))
+
+    def model_closure(self, models: FrozenSet[int]) -> FrozenSet[int]:
+        """Compute the closure of a model class: Mod(Th(C))."""
+        return self.model_class(self.theory_of(models))
+
+    def genomic_distance(self, t1: FrozenSet[int], t2: FrozenSet[int]) -> int:
+        """Compute the genomic distance: |T1 △ T2|."""
+        return len(t1.symmetric_difference(t2))
+
+    def is_closed(self, theory: FrozenSet[int]) -> bool:
+        """Check if a theory is closed (equals its closure)."""
+        return theory == self.theory_closure(theory)
+
+    def is_definable(self, models: FrozenSet[int]) -> bool:
+        """Check if a model class is definable (equals its closure)."""
+        return models == self.model_closure(models)
+
+    def all_closed_theories(self) -> Set[FrozenSet[int]]:
+        """Enumerate all closed theories."""
+        closed = set()
+        for r in range(len(self.axioms) + 1):
+            for subset in itertools.combinations(self.axioms, r):
+                theory = frozenset(subset)
+                if self.is_closed(theory):
+                    closed.add(theory)
+        return closed
+
+    def all_definable_classes(self) -> Set[FrozenSet[int]]:
+        """Enumerate all definable model classes."""
+        definable = set()
+        for r in range(len(self.structures) + 1):
+            for subset in itertools.combinations(self.structures, r):
+                models = frozenset(subset)
+                if self.is_definable(models):
+                    definable.add(models)
+        return definable
+
+    def mutation_effect(self, theory: FrozenSet[int], axiom: int) -> Tuple[FrozenSet[int], FrozenSet[int]]:
+        """Compute the effect of adding an axiom: returns (new_models, lost_models)."""
+        old_models = self.model_class(theory)
+        new_theory = theory | {axiom}
+        new_models = self.model_class(new_theory)
+        lost = old_models - new_models
+        return new_models, lost
 
 
-@dataclass(frozen=True)
-class Category(Generic[Obj, Mor]):
-    """A small category represented by objects, morphisms, and composition."""
-    objects: FrozenSet[Obj]
-    morphisms: Dict[Tuple[Obj, Obj], Set[Mor]]
-    compose: Callable[[Mor, Mor], Mor]
-    identity: Callable[[Obj], Mor]
+def satisfaction_matrix_to_system(matrix: list[list[bool]]) -> AxiomSystem:
+    """Create an axiom system from a satisfaction matrix.
 
-
-@dataclass(frozen=True)
-class Functor(Generic[Obj, Mor]):
-    """A functor between categories."""
-    obj_map: Callable[[Obj], Obj]
-    mor_map: Callable[[Mor], Mor]
-
-
-@dataclass
-class NatTrans:
-    """A natural transformation between functors."""
-    components: Dict  # object -> morphism
-
-
-@dataclass
-class Monad:
-    """A monad on a category (theory genome).
-
-    Attributes:
-        functor: The endofunctor T : C → C
-        unit: The unit η : Id → T
-        multiplication: The multiplication μ : T² → T
+    matrix[m][a] = True means structure m satisfies axiom a.
     """
-    functor: Functor
-    unit: NatTrans
-    multiplication: NatTrans
+    n_structures = len(matrix)
+    n_axioms = len(matrix[0]) if matrix else 0
 
+    def sat(m: int, a: int) -> bool:
+        return matrix[m][a]
 
-@dataclass
-class Algebra:
-    """An algebra for a monad (expressed phenotype).
-
-    Attributes:
-        carrier: The underlying object
-        structure_map: The algebra map a : T(A) → A
-    """
-    carrier: object
-    structure_map: Callable
-
-
-@dataclass
-class GenomeMutation:
-    """A monad morphism φ : S → T (genome mutation).
-
-    Attributes:
-        source: Source monad S
-        target: Target monad T
-        morphism: Natural transformation S → T
-    """
-    source: Monad
-    target: Monad
-    morphism: NatTrans
-
-
-# === Algorithm 1: Genome Extraction ===
-
-def extract_genome(
-    operations: List[Tuple[str, int]],  # (name, arity)
-    equations: List[Tuple[str, str]],   # (lhs, rhs) as string expressions
-) -> Dict:
-    """Extract a theory genome from a presentation.
-
-    Given a set of operations (with arities) and equations,
-    constructs the corresponding monad structure.
-
-    Args:
-        operations: List of (operation_name, arity) pairs
-        equations: List of (lhs_expression, rhs_expression) equations
-
-    Returns:
-        Dictionary describing the monad structure
-
-    Example:
-        >>> extract_genome(
-        ...     operations=[("mul", 2), ("inv", 1), ("e", 0)],
-        ...     equations=[("mul(mul(x,y),z)", "mul(x,mul(y,z))"),
-        ...                ("mul(e,x)", "x"),
-        ...                ("mul(inv(x),x)", "e")]
-        ... )
-        {'theory': 'Group', 'operations': 3, 'equations': 3,
-         'functor': 'FreeGroup', 'genome_complexity': 6}
-    """
-    genome = {
-        'operations': len(operations),
-        'equations': len(equations),
-        'operation_names': [op[0] for op in operations],
-        'max_arity': max(a for _, a in operations) if operations else 0,
-        'genome_complexity': len(operations) + len(equations),
-        'functor': f"Free({'/'.join(op[0] for op in operations)})",
-    }
-
-    # Classify the theory
-    has_binary = any(a == 2 for _, a in operations)
-    has_unary = any(a == 1 for _, a in operations)
-    has_nullary = any(a == 0 for _, a in operations)
-
-    if has_binary and has_unary and has_nullary:
-        genome['theory'] = 'Group-like'
-    elif has_binary and has_nullary:
-        genome['theory'] = 'Monoid-like'
-    elif has_binary:
-        genome['theory'] = 'Semigroup-like'
-    else:
-        genome['theory'] = 'General'
-
-    return genome
-
-
-# === Algorithm 2: Morita Equivalence Detection ===
-
-def detect_morita_equivalence(
-    algebras_1: List[Algebra],
-    algebras_2: List[Algebra],
-    hom_counter_1: Callable[[Algebra, Algebra], int],
-    hom_counter_2: Callable[[Algebra, Algebra], int],
-) -> Dict:
-    """Detect Morita equivalence between two theories.
-
-    Uses the hom-set cardinality matrix as a Morita invariant.
-    Two theories are Morita equivalent iff their algebra categories
-    have equivalent hom-set structures.
-
-    Args:
-        algebras_1: List of algebras for theory 1
-        algebras_2: List of algebras for theory 2
-        hom_counter_1: Function counting homomorphisms in theory 1
-        hom_counter_2: Function counting homomorphisms in theory 2
-
-    Returns:
-        Dictionary with equivalence status and evidence
-    """
-    # Compute hom matrices
-    n1, n2 = len(algebras_1), len(algebras_2)
-
-    hom_matrix_1 = [
-        [hom_counter_1(a, b) for b in algebras_1]
-        for a in algebras_1
-    ]
-    hom_matrix_2 = [
-        [hom_counter_2(a, b) for b in algebras_2]
-        for a in algebras_2
-    ]
-
-    # Check basic invariants
-    result: Dict = {
-        'theory_1_algebra_count': n1,
-        'theory_2_algebra_count': n2,
-        'hom_matrix_1': hom_matrix_1,
-        'hom_matrix_2': hom_matrix_2,
-    }
-
-    # Necessary condition: same number of isomorphism classes
-    if n1 != n2:
-        result['morita_equivalent'] = False
-        result['reason'] = 'Different number of algebra isomorphism classes'
-        return result
-
-    # Check if hom matrices have the same multiset of row sums
-    row_sums_1 = sorted(sum(row) for row in hom_matrix_1)
-    row_sums_2 = sorted(sum(row) for row in hom_matrix_2)
-
-    if row_sums_1 != row_sums_2:
-        result['morita_equivalent'] = False
-        result['reason'] = 'Different hom-set structure (row sums differ)'
-        return result
-
-    result['morita_equivalent'] = 'possibly (invariants match)'
-    result['evidence'] = 'Hom-set row sums match'
-    return result
-
-
-# === Algorithm 3: Genome Mutation Pullback ===
-
-def pullback_algebra(
-    mutation: GenomeMutation,
-    algebra: Algebra,
-) -> Algebra:
-    """Pull back a T-algebra along a mutation φ : S → T to get an S-algebra.
-
-    The pullback structure map is: S(A) →^{φ_A} T(A) →^{a} A
-
-    Args:
-        mutation: The genome mutation φ : S → T
-        algebra: A T-algebra (A, a)
-
-    Returns:
-        An S-algebra with the same carrier but pulled-back structure
-    """
-    # New structure map: compose φ with the original
-    def new_structure(s_value):
-        t_value = mutation.morphism.components[algebra.carrier](s_value)
-        return algebra.structure_map(t_value)
-
-    return Algebra(
-        carrier=algebra.carrier,
-        structure_map=new_structure
+    return AxiomSystem(
+        axioms=set(range(n_axioms)),
+        structures=set(range(n_structures)),
+        sat=sat,
     )
 
 
-# === Algorithm 4: Composed Monad Factorization ===
+def random_axiom_system(n_axioms: int, n_structures: int, p: float = 0.5) -> AxiomSystem:
+    """Generate a random axiom system with Bernoulli(p) satisfaction."""
+    import random
+    matrix = [
+        [random.random() < p for _ in range(n_axioms)]
+        for _ in range(n_structures)
+    ]
+    return satisfaction_matrix_to_system(matrix)
 
-def compose_adjunctions(
-    adj1: Tuple[Functor, Functor],  # (F₁, G₁)
-    adj2: Tuple[Functor, Functor],  # (F₂, G₂)
-) -> Dict:
-    """Compute the composed adjunction and its monad factorization.
-
-    Given adj₁ : F₁ ⊣ G₁ and adj₂ : F₂ ⊣ G₂, computes:
-    - The composed adjunction (F₁∘F₂) ⊣ (G₂∘G₁)
-    - The factorization: composed monad ≅ F₁ ∘ (inner monad) ∘ G₁
-
-    Args:
-        adj1: First adjunction pair (left, right)
-        adj2: Second adjunction pair (left, right)
-
-    Returns:
-        Dictionary describing the factorization
-    """
-    F1, G1 = adj1
-    F2, G2 = adj2
-
-    return {
-        'composed_left': 'F₁ ∘ F₂',
-        'composed_right': 'G₂ ∘ G₁',
-        'composed_monad': '(F₁ ∘ F₂) ∘ (G₂ ∘ G₁)',
-        'factorization': 'F₁ ∘ (F₂ ∘ G₂) ∘ G₁',
-        'inner_monad': 'F₂ ∘ G₂ (monad of adj₂)',
-        'wrapping': 'Inner monad is wrapped by outer adjunction F₁ ⊣ G₁',
-    }
-
-
-# === Algorithm 5: Genome Complexity Measure ===
-
-def genome_complexity(
-    operations: List[Tuple[str, int]],
-    equations: List[Tuple[str, str]],
-) -> Dict:
-    """Compute the genomic complexity of a theory.
-
-    Complexity measures:
-    - Operation count: number of primitive operations
-    - Equation count: number of axioms
-    - Total complexity: sum of operation arities + equation count
-    - Kolmogorov estimate: compressed description length
-
-    Args:
-        operations: List of (name, arity) pairs
-        equations: List of (lhs, rhs) equation pairs
-
-    Returns:
-        Dictionary of complexity measures
-    """
-    total_arity = sum(a for _, a in operations)
-    eq_complexity = sum(len(l) + len(r) for l, r in equations)
-
-    return {
-        'operation_count': len(operations),
-        'equation_count': len(equations),
-        'total_arity': total_arity,
-        'equation_complexity': eq_complexity,
-        'genomic_complexity': total_arity + len(equations),
-        'description_length': total_arity + eq_complexity,
-    }
-
-
-# === Demo ===
 
 if __name__ == "__main__":
-    # Extract genomes for common theories
-    group_genome = extract_genome(
-        operations=[("mul", 2), ("inv", 1), ("e", 0)],
-        equations=[
-            ("mul(mul(x,y),z)", "mul(x,mul(y,z))"),
-            ("mul(e,x)", "x"),
-            ("mul(x,e)", "x"),
-            ("mul(inv(x),x)", "e"),
-            ("mul(x,inv(x))", "e"),
-        ]
-    )
+    # Example: Group theory axiom system (simplified)
+    # Axioms: 0=closure, 1=associativity, 2=identity, 3=inverses, 4=commutativity
+    # Structures: 0=trivial, 1=Z2, 2=Z3, 3=S3, 4=Z4, 5=semigroup{0,1}
+    matrix = [
+        # clos  assoc ident inv  comm
+        [True,  True,  True,  True,  True],   # trivial group
+        [True,  True,  True,  True,  True],   # Z2
+        [True,  True,  True,  True,  True],   # Z3
+        [True,  True,  True,  True,  False],  # S3 (non-abelian)
+        [True,  True,  True,  True,  True],   # Z4
+        [True,  True,  False, False, True],   # commutative semigroup
+    ]
 
-    ring_genome = extract_genome(
-        operations=[("add", 2), ("mul", 2), ("neg", 1), ("zero", 0), ("one", 0)],
-        equations=[
-            ("add(add(x,y),z)", "add(x,add(y,z))"),
-            ("add(zero,x)", "x"),
-            ("add(neg(x),x)", "zero"),
-            ("add(x,y)", "add(y,x)"),
-            ("mul(mul(x,y),z)", "mul(x,mul(y,z))"),
-            ("mul(one,x)", "x"),
-            ("mul(x,one)", "x"),
-            ("mul(x,add(y,z))", "add(mul(x,y),mul(x,z))"),
-        ]
-    )
+    S = satisfaction_matrix_to_system(matrix)
 
-    print("Group genome:", group_genome)
-    print("Ring genome:", ring_genome)
+    # Demonstrate key operations
+    group_axioms = frozenset({0, 1, 2, 3})      # group theory
+    abelian_axioms = frozenset({0, 1, 2, 3, 4})  # abelian group theory
 
-    gc = genome_complexity(
-        operations=[("mul", 2), ("inv", 1), ("e", 0)],
-        equations=[
-            ("mul(mul(x,y),z)", "mul(x,mul(y,z))"),
-            ("mul(e,x)", "x"),
-            ("mul(inv(x),x)", "e"),
-        ]
-    )
-    print("Group genomic complexity:", gc)
+    print("=== Theory Genome Framework Demo ===\n")
+
+    print(f"Group axioms: {set(group_axioms)}")
+    print(f"Models of group theory: {set(S.model_class(group_axioms))}")
+
+    print(f"\nAbelian group axioms: {set(abelian_axioms)}")
+    print(f"Models of abelian group theory: {set(S.model_class(abelian_axioms))}")
+
+    print(f"\nGenomic distance (group → abelian): {S.genomic_distance(group_axioms, abelian_axioms)}")
+
+    print(f"\nClosure of group axioms: {set(S.theory_closure(group_axioms))}")
+    print(f"Is group theory closed? {S.is_closed(group_axioms)}")
+
+    # Mutation effect
+    new_models, lost = S.mutation_effect(group_axioms, 4)
+    print(f"\nMutation: adding commutativity to group theory")
+    print(f"  New model class: {set(new_models)}")
+    print(f"  Lost models: {set(lost)}")
+
+    # Count closed theories
+    closed = S.all_closed_theories()
+    print(f"\nNumber of closed theories: {len(closed)}")
+    for t in sorted(closed, key=lambda x: (len(x), sorted(x))):
+        print(f"  {set(t)} → models: {set(S.model_class(t))}")
