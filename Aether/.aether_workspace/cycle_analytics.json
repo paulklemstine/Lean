@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-06T19:52:38.536407+00:00",
+  "last_updated": "2026-06-06T20:25:54.488990+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -11543,6 +11543,76 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T19:52:38.433465+00:00",
       "title": "Infinite Games Against Death: Immortality Strategies"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6233,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 238,
+      "domain": "Applications",
+      "duration_seconds": 12009.316220998764,
+      "end_time": 1780777494.9189854,
+      "files_integrated": 6,
+      "job_id": "deb69d4b",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.76,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7798,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.7036,
+        "novelty": 0.9443,
+        "proof_depth": 0.6004,
+        "usefulness": 0.7752
+      },
+      "quality_score": 0.17076666666666668,
+      "sorry_count": 1,
+      "sorry_density": 0.16666666666666666,
+      "start_time": 1780765485.6027644,
+      "strategy_count": 187,
+      "theorem_count": 6,
+      "timestamp": "2026-06-06T20:25:54.270650+00:00",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5483,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 251,
+      "domain": "Applications",
+      "duration_seconds": 3911.134550333023,
+      "end_time": 1780777495.968426,
+      "files_integrated": 5,
+      "job_id": "6ee4fa6a",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.8,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7058,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.5568,
+        "novelty": 0.89,
+        "proof_depth": 0.4139,
+        "usefulness": 0.657
+      },
+      "quality_score": 0.20840000000000003,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780773584.8338757,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T20:25:54.380322+00:00",
+      "title": "Aleph-1 Surface: Geometry Between Dimensions"
     }
   ]
 }

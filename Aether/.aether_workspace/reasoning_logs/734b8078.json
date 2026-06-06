@@ -1,0 +1,22 @@
+{
+  "checkpoints": [
+    {
+      "elapsed_seconds": 0.9,
+      "percent_complete": 0.0,
+      "status": "SUBMITTED",
+      "timestamp": "2026-06-06T20:26:14"
+    }
+  ],
+  "completed_at": "",
+  "domain": "Novelty",
+  "error": "",
+  "final_percent": 0.0,
+  "final_status": "",
+  "has_files": false,
+  "job_id": "734b8078",
+  "project_id": "9075d7e9-2215-47b8-8b88-6f148efe7fbb",
+  "prompt_length": 24924,
+  "stages": [],
+  "submitted_at": "2026-06-06T20:26:14",
+  "total_duration_seconds": 0.0
+}

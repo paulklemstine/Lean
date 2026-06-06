@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6ee4fa6a",
     "filename": "aleph_1_surface_geometry_between_dimensions.json",
     "pkg_num": 402,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.20840000000000003,
     "title": "Aleph-1 Surface: Geometry Between Dimensions"
   },
   {
@@ -12809,8 +12809,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "aleph_1_surface_geometry_between_dimensions",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.20840000000000003,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Aleph-1 Surface: Geometry Between Dimensions"
     }
