@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-06T11:47:10.894403+00:00",
+  "last_updated": "2026-06-06T12:19:34.596739+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -10016,6 +10016,76 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T11:47:10.801444+00:00",
       "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5655,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 195,
+      "domain": "Novelty",
+      "duration_seconds": 8058.816274166107,
+      "end_time": 1780748316.4045982,
+      "files_integrated": 5,
+      "job_id": "e792ecc6",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.74,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7165,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.5863,
+        "novelty": 0.95,
+        "proof_depth": 0.4304,
+        "usefulness": 0.6652
+      },
+      "quality_score": 0.30864,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780740257.588324,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T12:19:34.359204+00:00",
+      "title": "Non-Archimedean Probability via Surreal Numbers"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.576,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 200,
+      "domain": "Novelty",
+      "duration_seconds": 5910.570676088333,
+      "end_time": 1780748317.4123385,
+      "files_integrated": 5,
+      "job_id": "3204e7f0",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.88,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.688,
+        "cross_domain": 1.0,
+        "grade": "substantial",
+        "importance": 0.4416,
+        "novelty": 0.9426,
+        "proof_depth": 0.2269,
+        "usefulness": 0.6135
+      },
+      "quality_score": 0.24624000000000001,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780742406.8416624,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T12:19:34.497238+00:00",
+      "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
     }
   ]
 }

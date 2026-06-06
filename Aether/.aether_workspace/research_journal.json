@@ -1500,6 +1500,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T11:13:09",
       "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
+    },
+    {
+      "cycle_id": "e792ecc6",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Non-Archimedean Probability Theory\n\n## Synthesis\n\nThis research cycle established the algebraic foundations of non-Archimedean probability theory by formalizing two novel structur",
+      "quality_score": 0.30864,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T12:19:09",
+      "title": "Non-Archimedean Probability via Surreal Numbers"
     }
   ],
   "entries": [
@@ -1545,7 +1555,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T11:13:09",
+  "last_updated": "2026-06-06T12:19:09",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1754,12 +1764,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3034e0f5",
-        "quality": 0.35440000000000005,
-        "theorems": 4,
-        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-      },
-      {
         "cycle_id": "ff64d6c9",
         "quality": 0.36104,
         "theorems": 5,
@@ -1812,6 +1816,12 @@
         "quality": 0.40176,
         "theorems": 5,
         "title": "Sonic Mathematics: Counterpoint as Category Theory"
+      },
+      {
+        "cycle_id": "e792ecc6",
+        "quality": 0.30864,
+        "theorems": 5,
+        "title": "Non-Archimedean Probability via Surreal Numbers"
       }
     ],
     "Physics": [

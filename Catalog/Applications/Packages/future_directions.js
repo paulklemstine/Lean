@@ -2344,6 +2344,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Research Directions\n\n## Synthesis\n\nThis cycle established a suite of structural theorems about chip-firing on complete graphs K_n, building on the Baker-Norine foundations in `EML/BakerNorine.lean` and `Algebra/GraphRiemannRoch/Defs.lean`. The key discovery is that the chip-firing dynamics on K_n decomposes into three interlocking structures: (1) a **conservation law** (\u03941 = 0, i.e., fire-all triviality), which implies (2) a **complement firing duality** (firing all-but-v = anti-firing v), which together with (3) the **S_n symmetry** (permutation equivariance of linear equivalence) forces the canonical divisor to have maximal structural regularity.\n\nThe most promising cross-domain connection is the bridge between the **spectral gap theorem** (Laplacian kernel = constants on K_n) and **tropical information theory** (`Bridges/TropicalInformationTheory.lean`). The spectral gap of K_n controls both the mixing time of random walks and the convergence rate of chip-firing stabilization. This suggests a deeper connection between the rank function in Baker-Norine theory and channel capacity in information theory \u2014 where the \"capacity\" of a graph G measures how much information can be transmitted through chip-firing. The complete graph K_n achieves maximal capacity (by `capacity_tight_for_complete_graph`), and our spectral gap theorem provides the structural explanation: the Laplacian kernel being 1-dimensional means there is exactly one \"conservation law\" (total chip count), maximizing the degrees of freedom for redistribution.\n\nThe direction with the highest breakthrough potential is **Direction 1** (full Baker-Norine formalization), because it would be the first complete machine-verified proof of the graph Riemann-Roch theorem, connecting the combinatorial chip-firing world to the algebraic geometry of tropical curves with full logical certainty.\n\n---\n\n### Direction 1: Full Baker-Norine Riemann-Roch Formalization via Dhar's Algorithm\n\n**Conjecture**: The Baker-Norine Riemann-Roch theorem `r(D) \u2212 r(K_G \u2212 D) = deg(D) + 1 \u2212 g` can be fully formalized in Lean 4 for connected simple graphs by formalizing Dhar's burning algorithm and proving the existence and uniqueness of q-reduced divisors in each linear equivalence class.\n\n**Test**: Prove the sorry in `Speculative/AutoResearch/BakerNorine.lean:baker_norine_riemann_roch`. The proof requires:\n1. Formalize Dhar's burning algorithm as a decidable procedure.\n2. Prove that Dhar's algorithm correctly identifies q-reduced divisors.\n3. Prove that every linear equivalence class contains exactly one q-reduced divisor (for connected graphs).\n4. Derive the rank formula: r(D) = deg(D_q) \u2212 D_q(q) where D_q is the q-reduced representative of D.\n5. Use the q-reduced characterization to prove the Riemann-Roch identity.\n\n**Impact**: This would be the first full machine-verified proof of the graph Riemann-Roch theorem. It would validate the entire Baker-Norine theory and provide a foundation for formalizing tropical Riemann-Roch, the Abel-Jacobi map, and the tropical Torelli theorem.\n\n**Catalog References**: `Speculative/AutoResearch/BakerNorine.lean`, `EML/BakerNorine.lean`, `Novelty/ChipFireDuality.lean`\n\n**Proof Strategy**: The key difficulty is the rank computation. Baker-Norine's original proof uses Dhar's burning algorithm to characterize q-reduced divisors, then shows that the map D \u21a6 K \u2212 D sends the q-reduced representative of D to a configuration from which one can read off r(K\u2212D). The proof requires careful bookkeeping of subset-firing operations and the \"superstable\" characterization. Our `qReduced_unique` theorem in `EML/BakerNorine.lean` (uniqueness of q-reduced representatives) provides a key building block. Decompose into: (a) Dhar's algorithm terminates and is correct, (b) q-reduced divisors characterize rank, (c) the complement formula r(K\u2212D) relates to the q-reduced form of K\u2212D.\n\n**Domain Bridges**: Chip-firing \u2194 tropical algebraic geometry \u2194 combinatorial optimization\n\n**Lineage**: Builds on `EML/BakerNorine.lean` (q-reduced divisor uniqueness, structural theorems) and this cycle's complement duality and spectral gap results.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Kirchhoff's Matrix-Tree Theorem and Jacobian Group Structure\n\n**Conjecture**: The Jacobian group Jac(K_n) = \u2124^n / Im(Laplacian) is isomorphic to (\u2124/n\u2124)^{n-2}, and |Jac(K_n)| = n^{n-2} (Cayley's formula). More generally, for any connected graph G, |Jac(G)| equals the number of spanning trees of G.\n\n**Test**: Formalize the Laplacian matrix of a graph as an element of `Matrix (Fin n) (Fin n) \u2124`. Compute det(L[q]) (any cofactor of the Laplacian) for K_n and show it equals n^{n-2}. This requires Mathlib's `Matrix.det` and `Matrix.submatrix` machinery.\n\n**Impact**: The matrix-tree theorem is one of the most beautiful results connecting linear algebra, graph theory, and combinatorics. A formalization would connect chip-firing theory to determinantal theory and provide a bridge to the theory of electrical networks (where the Kirchhoff matrix governs current flow).\n\n**Catalog References**: `Novelty/ChipFireDuality.lean`, `EML/BakerNorine.lean`\n\n**Proof Strategy**: (a) Define the Laplacian matrix L_G, (b) prove L_G is singular with rank n-1 for connected graphs, (c) prove that any (n-1)\u00d7(n-1) cofactor det(L[q]) equals the number of spanning trees (via the Cauchy-Binet formula and the incidence matrix factorization L = BB^T), (d) for K_n, evaluate det(L[q]) = n^{n-2} using the known eigenvalues (0 with mult 1, n with mult n-1).\n\n**Domain Bridges**: Graph theory \u2194 linear algebra \u2194 electrical networks \u2194 random walks\n\n**Lineage**: Extends the Laplacian kernel characterization from this cycle (Direction connects spectral analysis to counting).\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Tropical Riemann-Roch on Metric Graphs\n\n**Conjecture**: The Baker-Norine theorem extends to metric graphs (tropical curves) where edges have positive real lengths. For a tropical curve \u0393 of genus g with metric structure, the rank function r(D) satisfies the same Riemann-Roch formula r(D) \u2212 r(K_\u0393 \u2212 D) = deg(D) + 1 \u2212 g, where K_\u0393 is the canonical divisor of the metric graph.\n\n**Test**: Define a `TropicalCurve` structure as a finite graph with edge lengths in \u211d_{>0}. Define divisors as formal sums of points on the curve (not just vertices). Prove Riemann-Roch for cycle graphs with specified edge lengths as a first test case.\n\n**Impact**: This would bridge the discrete Baker-Norine theory (which works on combinatorial graphs) to the continuous tropical geometry (which works on metric graphs). The gap between these is one of the main obstacles in tropical algebraic geometry.\n\n**Catalog References**: `Bridges/TropicalInformationTheory.lean`, `Tropical/GL3_ReconstructionFromRank2LeviProfiles.lean`, `Novelty/ChipFireDuality.lean`\n\n**Proof Strategy**: The key new ingredient is the theory of \"break divisors\" (Mikhalkin-Zharkov) which parametrize the Jacobian of a tropical curve. Define the tropical Jacobian as \u211d^g / \u039b where \u039b is the period lattice, prove it is a g-dimensional torus, and use the Abel-Jacobi map to reduce Riemann-Roch to a volume computation.\n\n**Domain Bridges**: Graph combinatorics \u2194 tropical geometry \u2194 algebraic geometry \u2194 complex analysis\n\n**Lineage**: Extends Baker-Norine from discrete to continuous, building on the structural foundations established in this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Chip-Firing and Neural Network Dynamics\n\n**Conjecture**: The chip-firing stabilization process on a graph G converges to the unique recurrent configuration in O(n \u00b7 max(D)) firings, where n = |V| and max(D) is the maximum chip count. On K_n, the convergence is O(n \u00b7 max(D)/n) = O(max(D)) due to the maximal spectral gap.\n\n**Test**: Formalize the sandpile model on K_n: define \"superstable\" and \"recurrent\" configurations, prove they are in bijection with spanning trees (hence counted by n^{n-2}), and give explicit convergence bounds using the spectral gap.\n\n**Impact**: Chip-firing dynamics model information propagation in neural networks, where \"chips\" represent activation signals and \"firing\" represents neuronal activation. The spectral gap controls how quickly the network reaches equilibrium \u2014 explaining why fully-connected networks (analogous to K_n) converge fastest but are computationally expensive.\n\n**Catalog References**: `MachineLearning/PrimeWindowComplex/Theorems.lean`, `Novelty/ChipFireDuality.lean`\n\n**Proof Strategy**: (a) Define superstable configurations as complements of q-reduced divisors, (b) prove the bijection with spanning trees using Dhar's algorithm, (c) bound the number of firings using the chip count and spectral gap, (d) for K_n, use the explicit eigenvalue n to get the optimal bound.\n\n**Domain Bridges**: Graph combinatorics \u2194 machine learning \u2194 statistical physics (sandpile criticality)\n\n**Lineage**: Extends the spectral gap theorem from this cycle to a convergence rate analysis.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Riemann-Roch for Signed Graphs and Gain Graphs\n\n**Conjecture**: The Baker-Norine Riemann-Roch theorem extends to signed graphs (where each edge has a sign \u00b11) with a modified Laplacian. The genus of a signed graph G_\u03c3 is g(G_\u03c3) = |E| \u2212 |V| + c(G_\u03c3), where c(G_\u03c3) counts connected components of the \"positive subgraph.\" The canonical divisor becomes K_{G_\u03c3}(v) = deg\u207a(v) \u2212 deg\u207b(v) \u2212 2 where deg\u00b1 count positive/negative incident edges.\n\n**Test**: Define signed graphs in Lean 4, compute the modified Laplacian, and verify the genus formula for small examples. Then attempt to prove Riemann-Roch for signed cycle graphs.\n\n**Impact**: Signed graphs appear naturally in social network analysis (friend/enemy edges), physics (frustrated spin systems), and algebraic topology (representing cohomology with twisted coefficients). A Riemann-Roch theorem for signed graphs would connect these applications to the deep algebraic structure of the Baker-Norine theory.\n\n**Catalog References**: `Novelty/ChipFireDuality.lean`, `EML/BakerNorine.lean`\n\n**Proof Strategy**: Adapt Baker-Norine's proof by modifying the Laplacian: for signed graphs, the Laplacian entry L(v,w) = \u2212sign(e) for edge e between v and w, and L(v,v) = deg(v). The key challenge is defining \"linear equivalence\" correctly \u2014 chip-firing on a negative edge should subtract (not add) a chip from the neighbor.\n\n**Domain Bridges**: Graph theory \u2194 algebraic topology \u2194 social network analysis \u2194 statistical physics\n\n**Lineage**: Generalizes Baker-Norine from simple graphs to signed graphs, preserving the duality structure discovered in this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0830",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3204e7f0",
+    "status": "available",
+    "timestamp": "2026-06-06T12:19:32.610347+00:00",
+    "title": "Suite of structural theorems about chip-firing on compl"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -4233,7 +4248,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37aee44a",
     "description": "A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA rules of radius r on alphabet A is a group under composition, isomorphic to a subgroup of S_{|A|^{2r+1}}. Specifically, the reversibility group G(r, A) is the subgroup of S_{|A|^{2r+1}} generated by the local rules of all reversible CAs of radius r. Conjecture: for binary CAs (A = {0, 1}) with radius r, G(r, {0, 1}) = S_{2^{2r+1}} for r >= 2. This means that any permutation of the 2^{2r+1} possible local neighborhoods can be achieved by composing reversible CA rules. For r = 1 (elementary CAs), G(1, {0, 1}) is a proper subgroup of S_8, and its structure is related to the 256 elementary CA rules. Conjecture: G(1, {0, 1}) has order 8! / 4 = 10080, consisting of the permutations that commute with the shift operator. Test: enumerate all 256 elementary CA rules, identify the reversible ones (Rule 15, 51, 85, 170, 204, 240), compute the group generated by their local rules, and verify the structure. Impact: reversible CAs form a group whose structure determines the landscape of reversible computation.",
     "domains": [
       "Novelty",
@@ -4243,7 +4258,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.686157+00:00",
     "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
   },
@@ -4923,7 +4938,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Computational Complexity as Physical Law"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb1d2524",
     "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
     "domains": [
       "Novelty"
@@ -4932,7 +4947,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.123707+00:00",
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
   },
@@ -4952,7 +4967,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },
   {
-    "consumed_by_exp_id": "51d93a26",
+    "consumed_by_exp_id": "",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
     "domains": [
       "Novelty",
@@ -4962,7 +4977,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.311824+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
@@ -4997,7 +5012,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
-    "consumed_by_exp_id": "4c34a6d6",
+    "consumed_by_exp_id": "",
     "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
     "domains": [
       "Novelty",
@@ -5007,7 +5022,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.662181+00:00",
     "title": "Speculative: Category Theory as the DNA of Mathematics"
   },
