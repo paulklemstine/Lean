@@ -1,240 +1,232 @@
-# Coherent Paradox Systems: A Formal Framework for Paradoxes as Theorems
+# Dialectical Algebras: A Bilattice Framework for Paradox-Tolerant Logic
 
 ## Abstract
 
-We introduce **Coherent Paradox Systems** (CPS), a novel algebraic framework based on Belnap's four-valued logic (FDE) in which the Liar sentence, Russell's paradox, and Berry's paradox are provable theorems rather than contradictions. A CPS is a paraconsistent theory over a finite sentence space where paradoxes coexist with both purely true and purely false sentences, with inconsistency bounded and controlled.
+We introduce **dialectical algebras**, a novel algebraic structure that formalizes how truth and information interact in paraconsistent logics. A dialectical algebra consists of a set with two partial orderings — a truth ordering and a knowledge ordering — together with an involutive negation that reverses truth and preserves knowledge. We prove that the negation fixpoints (the "paradoxical" elements) form a sublattice in the knowledge ordering but not in the truth ordering, revealing that paradoxes are information-theoretically coherent but truth-theoretically incoherent. We establish a Dialectical Collapse Theorem showing that excluded middle is incompatible with non-trivial fixpoint structure, providing an algebraic proof that paradox tolerance requires non-classical logic. We introduce the dialectical rank as a quantitative measure of a theory's distance from classicality, prove it equals the number of paradoxical sentences, and show it is bounded in non-trivial theories. All results are formalized and machine-verified in Lean 4 with Mathlib.
 
-We prove seven main results: (1) **Dialectheia Stability** — the set of B-valued sentences is closed under negation, conjunction, and disjunction; (2) **Fixed-Point Characterization** — self-referential paradox occurs iff the truth value is B or N; (3) **Self-Soundness** — every CPS is self-sound for its T∨B-valued sentences, breaking through the Gödelian ceiling; (4) **Classical Exclusion** — bivalent logic simultaneously excludes all three paradoxes; (5) **Paradox-Soundness Duality** — the maximal sound provable set has size equal to trueDegree + dialetheiaDegree; (6) **Value Partition** — the four truth-value counts exactly partition the sentence space; (7) **Minimal CPS Existence** — a CPS exists on exactly 3 sentences.
-
-All results are formalized and machine-verified in Lean 4 with Mathlib, producing complete proofs with no axioms beyond propext, Classical.choice, and Quot.sound.
+**Keywords**: paraconsistent logic, bilattices, Belnap's four-valued logic, paradoxes, De Morgan algebras, fixpoint theory
 
 ## 1. Introduction
 
-The three classical paradoxes — the Liar ("This sentence is false"), Russell's paradox (the set of all non-self-membered sets), and Berry's paradox (the smallest undefinable number) — have driven foundational crises since antiquity. The standard resolution excludes paradoxes through type-theoretic restrictions, hierarchical truth predicates, or axiomatic limitations on comprehension.
+The Liar paradox ("this sentence is false"), Russell's paradox (the set of all sets not containing themselves), and Berry's paradox ("the least number not definable in fewer than twenty words") have challenged logical foundations for over a century. Classical logic resolves these paradoxes by restricting the language: type theory prevents self-reference, ZFC restricts set comprehension, and formal definitions of definability avoid Berry's construction.
 
-We propose an alternative: a framework where paradoxes are *features, not bugs*. Building on Belnap's four-valued logic [1] and Priest's dialetheism [2], we construct the **Coherent Paradox System** (CPS), a formal structure where all three paradoxes coexist with ordinary mathematical reasoning, controlled inconsistency is algebraically well-behaved, and the system proves its own soundness.
+An alternative approach, pioneered by da Costa [1974], Priest [2006], and Belnap [1977], accepts the paradoxes as legitimate theorems of a non-classical logic. In Belnap's four-valued logic FDE, truth values include **Both** (simultaneously true and false) and **Neither** (neither true nor false), alongside the classical values **True** and **False**. The Liar sentence receives value Both, Russell's set has Both-valued self-membership, and Berry's paradox reduces to the pigeonhole principle applied to definability functions.
 
-### 1.1 Contributions
+The present work contributes a new algebraic framework — **dialectical algebras** — that captures the structural properties of such paradox-tolerant systems. Our main contributions are:
 
-Our main contributions are:
+1. A formal definition of dialectical algebras as bilattice-like structures with involution
+2. The Fixpoint Sublattice Theorem (§4)
+3. The Dialectical Collapse Theorem (§5)
+4. The dialectical rank and its characterization (§6)
+5. Paradox independence and product representation (§7)
+6. Complete machine verification in Lean 4
 
-1. **A novel mathematical structure** (CPS) with a complete set of axioms and a rich theory.
-2. **Dialectheia closure theorems** showing paradoxes form an algebraically closed subsystem.
-3. **A self-soundness result** demonstrating that CPS breaks the Gödelian ceiling by accepting controlled inconsistency.
-4. **Sharp bounds** on the inconsistency degree: 1 ≤ dialetheiaDegree ≤ n − 2.
-5. **Complete machine-verified proofs** of all results in Lean 4.
+## 2. Preliminaries: Belnap's Four-Valued Logic
 
-## 2. Definitions
+### 2.1 The Four Values
 
-### 2.1 Four-Valued Truth Space
+We define BVal = {T, F, B, N} with predicates:
+- `isTrue(v)` = true iff v ∈ {T, B}
+- `isFalse(v)` = true iff v ∈ {F, B}
 
-**Definition 2.1** (CPSBelnapVal). The truth space is the four-element set {T, F, B, N} with:
-- `isTrue(v) = true` iff v ∈ {T, B}
-- `isFalse(v) = true` iff v ∈ {F, B}  
-- `neg(T) = F, neg(F) = T, neg(B) = B, neg(N) = N`
-- `conj` and `disj` defined by the standard FDE truth tables
+Negation is the involution neg : BVal → BVal mapping T ↔ F, B ↦ B, N ↦ N.
 
-**Key Property**: B is the unique value that is both at-least-true and at-least-false. This makes it the *unique paradox enabler*.
+### 2.2 Truth and Knowledge Orderings
 
-### 2.2 Paraconsistent Theory
+BVal carries two partial orderings:
 
-**Definition 2.2** (CPSTheory). A CPSTheory over a type S consists of:
-- A truth predicate `truth : S → CPSBelnapVal`
-- Sentence operations `sentNeg`, `sentConj`, `sentDisj`
-- Homomorphism axioms: truth respects all connectives
+**Truth ordering** (≤_t): F ≤_t N, F ≤_t B, N ≤_t T, B ≤_t T. The values N and B are incomparable. This captures "degree of truth."
 
-**Definition 2.3** (CPSHasLiar). A Liar sentence L in a CPSTheory T satisfies `truth(L) = truth(¬L)`.
+**Knowledge ordering** (≤_k): N ≤_k T, N ≤_k F, T ≤_k B, F ≤_k B. The values T and F are incomparable. This captures "degree of information."
 
-### 2.3 Coherent Paradox System
+Both orderings make BVal into a bounded lattice. The truth lattice has operations tMeet (conjunction) and tJoin (disjunction). The knowledge lattice has operations kMeet (consensus) and kJoin (gullibility/accept-all).
 
-**Definition 2.4** (CoherentParadoxSystem). A CPS on Fin n consists of:
-- A CPSTheory on Fin n
-- A Liar sentence with truth value B
-- Existence of at least one T-valued sentence
-- Existence of at least one F-valued sentence
+### 2.3 Product Decomposition
 
-**Definition 2.5** (Degree functions):
-- `dialetheiaDegree(C)` = |{s : truth(s) = B}|
-- `trueDegree(C)` = |{s : truth(s) = T}|  
-- `falseDegree(C)` = |{s : truth(s) = F}|
-- `gapDegree(C)` = |{s : truth(s) = N}|
+**Theorem (Bilattice Isomorphism).** The map φ : BVal → Bool × Bool defined by
+  φ(T) = (true, false), φ(F) = (false, true), φ(B) = (true, true), φ(N) = (false, false)
+is a bijection with inverse
+  ψ(true, false) = T, ψ(false, true) = F, ψ(true, true) = B, ψ(false, false) = N.
 
-## 3. Main Results
+Under this decomposition:
+- Negation is swap: φ(neg(v)) = swap(φ(v)) = (π₂(φ(v)), π₁(φ(v)))
+- Knowledge ordering is componentwise: v ≤_k w iff φ(v).1 ≤ φ(w).1 ∧ φ(v).2 ≤ φ(w).2
+- Fixpoints of negation are {(a,a) : a ∈ Bool} = {N, B}
 
-### 3.1 Dialectheia Stability (Theorem 1)
+## 3. Dialectical Algebras
 
-**Theorem 3.1** (cps_dialectheia_neg_stable). If truth(s) = B, then truth(¬s) = B.
+**Definition.** A *dialectical algebra* is a tuple (α, ≤_t, ≤_k, neg, ⊥_t, ⊤_t, ⊥_k, ⊤_k) where:
 
-*Proof sketch*: By the homomorphism axiom, truth(¬s) = neg(truth(s)) = neg(B) = B. ∎
+1. (α, ≤_t) and (α, ≤_k) are bounded partial orders
+2. neg : α → α is an involution (neg ∘ neg = id)
+3. neg reverses ≤_t: a ≤_t b implies neg(b) ≤_t neg(a)
+4. neg preserves ≤_k: a ≤_k b implies neg(a) ≤_k neg(b)
+5. neg(⊥_k) = ⊥_k and neg(⊤_k) = ⊤_k (knowledge extremes are fixpoints)
+6. ⊥_k ≠ ⊤_k (non-triviality)
 
-**Theorem 3.2** (cps_dialectheia_conj_stable). If truth(s) = truth(t) = B, then truth(s ∧ t) = B.
+The **fixpoint set** Fix(neg) = {a ∈ α : neg(a) = a} is called the *dialectical core*.
 
-**Theorem 3.3** (cps_dialectheia_disj_stable). If truth(s) = truth(t) = B, then truth(s ∨ t) = B.
+**Proposition.** Fix(neg) contains at least two distinct elements (⊥_k and ⊤_k).
 
-**PEGB Analysis**:
-- **P**roof: Direct from homomorphism axioms and truth table computation.
-- **E**xample: In the minimal CPS on 3 elements (sentence 0 = B), neg(0) = 0, confirming B ↦ B.
-- **G**eneralization: For any n-valued logic with a negation fixed point f, the f-valued sentences are closed under all unary operations preserving f.
-- **B**oundary: Fails for conj(B, N) = F — mixing B with N breaks closure.
+BelnapVal with the orderings and negation defined in §2 forms the canonical four-element dialectical algebra.
 
-### 3.2 Fixed-Point Characterization (Theorem 2)
+## 4. The Fixpoint Sublattice Theorem
 
-**Theorem 3.4** (cps_paradox_iff_neg_fixed). `truth(s) = truth(¬s)` iff `truth(s) ∈ {B, N}`.
+**Theorem 1 (Fixpoint Sublattice).** In BVal, if neg(a) = a and neg(b) = b, then:
+  (a) neg(kMeet(a,b)) = kMeet(a,b)
+  (b) neg(kJoin(a,b)) = kJoin(a,b)
 
-This completely characterizes self-referential paradox: a sentence can be self-contradictory iff its truth value is a fixed point of negation.
+That is, Fix(neg) is closed under kMeet and kJoin, forming a sublattice of (BVal, ≤_k).
 
-**PEGB Analysis**:
-- **P**roof: Forward: case analysis on truth(s), noting only B and N satisfy v = neg(v). Backward: direct substitution.
-- **E**xample: The Liar with truth value B satisfies truth(L) = B = neg(B) = truth(¬L). ✓
-- **G**eneralization: In any algebra with involution σ, fixed points of σ are the elements admitting self-referential structure.
-- **B**oundary: In 3-valued logic {T, F, B}, only B is a fixed point. In {T, F, N}, only N. The existence of BOTH B and N as fixed points is unique to 4-valued logic.
+**Proof sketch.** By the fixpoint classification (Proposition below), Fix(neg) = {B, N}. Direct computation: kMeet(B,B) = B, kMeet(B,N) = N, kMeet(N,N) = N; kJoin(B,B) = B, kJoin(B,N) = B, kJoin(N,N) = N. All results are in {B,N}. ∎
 
-### 3.3 Self-Soundness (Theorem 3)
+**Theorem 2 (Truth Non-Closure).** Fix(neg) is NOT closed under tMeet or tJoin:
+  tMeet(B,N) = F ∉ Fix(neg), tJoin(B,N) = T ∉ Fix(neg).
 
-**Theorem 3.5** (cps_self_sound). Every CPS is self-sound for {s : truth(s) ∈ {T, B}}.
+**Interpretation.** Paradoxical values form a coherent information structure (knowledge sublattice) but an incoherent truth structure. This reflects a deep asymmetry: paradoxes carry well-defined information content (maximal or minimal) but ill-defined truth content.
 
-**Definition**: A theory is self-sound for a provable set P if ∀ s ∈ P, isTrue(truth(s)) = true.
+### PEGB for Theorem 1
 
-The proof is immediate: both T and B are at-least-true. This is the core insight — B satisfies the soundness predicate despite being contradictory. Gödel's incompleteness theorem tells us classical systems cannot prove their own soundness. CPS breaks this barrier by relaxing the truth requirement from bivalence to "at-least-true."
+**Proof:** Complete formal proof by case analysis on fixpoint values (verified in Lean 4).
 
-**PEGB Analysis**:
-- **P**roof: Definitional — T and B both satisfy isTrue.
-- **E**xample: Minimal CPS: provable set = {sentence 0 (B), sentence 1 (T)}. Both are at-least-true. ✓
-- **G**eneralization: Any logic with a "designated" set D closed under the truth predicate admits self-soundness for D-valued sentences.
-- **B**oundary: Fails if any provable sentence has value N (isTrue(N) = false). Self-soundness requires excluding gap-valued sentences from the provable set.
+**Example:** In a theory where the Liar has value B and a gap sentence has value N, their consensus (kMeet) is N (neither source confirms the claim) and their union (kJoin) is B (at least one source confirms). Both results are still paradoxical.
 
-### 3.4 Classical Exclusion (Theorem 4)
+**Generalization:** For any finite product BVal^n, the fixpoint set of componentwise negation is {B,N}^n, which is a sublattice of the componentwise knowledge ordering. This generalizes from 4 elements to 4^n.
 
-**Theorem 3.6** (cps_classical_no_liar). If every sentence is T or F, no Liar sentence exists.
+**Boundary:** The sublattice property fails for truth operations. This is sharp: ANY pair of operations (one knowledge, one truth) that forms a lattice on Fix(neg) must agree with the knowledge operations.
 
-**Corollary**: Classical logic simultaneously excludes Liar, Russell, and Berry paradoxes — this is one structural constraint, not three separate ones.
+## 5. The Dialectical Collapse Theorem
 
-### 3.5 Paradox-Soundness Duality (Theorem 5)
+**Theorem 3 (Dialectical Collapse).** Let D be a dialectical algebra satisfying excluded middle (every element is ⊤_t or ⊥_t). Then D is inconsistent (no such algebra exists).
 
-**Theorem 3.7** (cps_paradox_soundness_duality).
-`|{s : truth(s) ∈ {T, B}}| = trueDegree + dialetheiaDegree`
+**Proof.** Suppose every element is ⊤_t or ⊥_t. Then ⊥_k ∈ {⊤_t, ⊥_t} and ⊤_k ∈ {⊤_t, ⊥_t}. Since ⊥_k ≠ ⊤_k, one equals ⊤_t and the other ⊥_t.
 
-*Proof*: The T-filter and B-filter are disjoint (T ≠ B). Their union equals the T∨B-filter. Apply card_union_of_disjoint. ∎
+Case: ⊥_k = ⊤_t, ⊤_k = ⊥_t. Then neg(⊤_t) = neg(⊥_k) = ⊥_k = ⊤_t and neg(⊥_t) = neg(⊤_k) = ⊤_k = ⊥_t. So neg fixes both ⊤_t and ⊥_t. But ⊥_t ≤_t ⊤_t implies neg(⊤_t) ≤_t neg(⊥_t), i.e., ⊤_t ≤_t ⊥_t. Combined with ⊥_t ≤_t ⊤_t, antisymmetry gives ⊥_t = ⊤_t, so ⊥_k = ⊤_k, contradicting non-triviality.
 
-### 3.6 Value Partition (Theorem 6)
+The case ⊥_k = ⊥_t, ⊤_k = ⊤_t is symmetric. ∎
 
-**Theorem 3.8** (cps_value_partition).
-`trueDegree + falseDegree + dialetheiaDegree + gapDegree = n`
+**Significance.** This provides an algebraic proof that paradox tolerance requires non-classical logic. It is not merely that classical logic *happens* not to tolerate paradoxes — it *cannot* tolerate them while maintaining the bilattice structure.
 
-*Proof*: Every element of Fin n receives exactly one truth value. The four filter sets are pairwise disjoint and exhaust Finset.univ. ∎
+### PEGB for Theorem 3
 
-### 3.7 Bounds (Theorems 7-8)
+**Proof:** Formal proof by case analysis on the EM assignments to ⊥_k and ⊤_k.
 
-**Theorem 3.9** (CoherentParadoxSystem.min_size). Every CPS has n ≥ 3.
+**Example:** In BVal, excluded middle demands every value be T or F. But B and N exist and are neither. Attempting to collapse B to T or F destroys its fixpoint property (neg(T) ≠ T, neg(F) ≠ F).
 
-*Proof*: The Liar (B), true (T), and false (F) sentences are distinct. ∎
+**Generalization:** The same argument applies to any dialectical algebra, not just BVal. Any bounded involution algebra with distinct knowledge extremes that are fixpoints cannot satisfy excluded middle.
 
-**Theorem 3.10** (cps_max_dialectheia). `dialetheiaDegree ≤ n − 2`.
+**Boundary:** If we drop the requirement ⊥_k ≠ ⊤_k, excluded middle becomes compatible (this is exactly classical logic where ⊥_k = ⊤_k, collapsing to two elements).
 
-*Proof*: The T and F witnesses are distinct non-B elements. ∎
+## 6. Dialectical Rank
 
-### 3.8 Minimal CPS Existence (Theorem 9)
+**Definition.** The *dialectical rank* of a value v ∈ BVal is rank(v) = 1 if neg(v) = v, else 0. The dialectical rank of a theory with truth function τ : Fin(n) → BVal is Σᵢ rank(τ(i)).
 
-**Theorem 3.11** (cps_minimal_exists). There exists a CPS on Fin 3.
+**Theorem 4 (Rank Characterization).** rank(v) > 0 iff neg(v) = v.
 
-*Proof*: Construct truth(0) = B, truth(1) = T, truth(2) = F, with sentNeg mapping 0 ↦ 0, 1 ↦ 2, 2 ↦ 1. Connectives are defined to satisfy the homomorphism axioms (verified by exhaustive case analysis). ∎
+**Theorem 5 (Rank = Paradox Count).** The dialectical rank of a theory equals |{i : neg(τ(i)) = τ(i)}|, the number of paradoxical sentences.
 
-### 3.9 Additional Results
+**Theorem 6 (Rank Zero = Classical).** A theory has dialectical rank 0 iff every sentence has value T or F (the theory is classical).
 
-**Theorem 3.12** (cps_sound_paradox_must_be_B). A negation fixed point that is at-least-true must be B. This characterizes B as the *unique paradox enabler*.
+### PEGB for Theorem 5
 
-**Theorem 3.13** (cps_explosion_fails). B ∧ ¬B = B ≠ T. Explosion fails: contradictions don't yield arbitrary truths.
+**Proof:** Convert the sum of 0/1 indicators to a filter cardinality using Finset.sum_boole-style reasoning.
 
-**Theorem 3.14** (cps_excluded_middle_fails). ∃ v, (v ∨ ¬v).isTrue = false. Excluded middle fails (witness: v = N).
+**Example:** A theory on 5 sentences with values (T, B, F, N, T) has rank 2 (sentences 2 and 4 are paradoxical).
 
-**Theorem 3.15** (cps_paraconsistent_advantage). If a theory has B-valued sentences, the set of non-N sentences strictly exceeds the set of T∨F sentences.
+**Generalization:** For theories over arbitrary dialectical algebras (not just BVal), the rank generalizes to the number of fixpoint-valued sentences.
 
-## 4. The B-Value as Universal Fixed Point
+**Boundary:** The rank is bounded above by n (all sentences paradoxical) and below by 0 (classical theory). The bound n is achieved by the all-B or all-N theory.
 
-A deeper analysis reveals that B plays a unique structural role:
+## 7. Paradox Independence
 
-1. **Negation fixed point**: neg(B) = B
-2. **Conjunction absorber**: conj(B, B) = B  
-3. **Disjunction absorber**: disj(B, B) = B
-4. **At-least-true**: isTrue(B) = true
-5. **At-least-false**: isFalse(B) = true
+**Definition.** Two paradoxical sentences s₁, s₂ (with neg-fixpoint values) are *independent* if they are distinct and have different truth values.
 
-No other value in any standard multi-valued logic simultaneously satisfies all five properties. This makes B the *canonical paradox value* — the unique truth value that can host self-referential contradictions while maintaining soundness.
+**Theorem 7 (Independence Classification).** Independent paradoxical sentences must have values {B, N} — one is a glut, the other a gap.
 
-## 5. Algorithms
+**Corollary.** In BVal, there are at most two independent paradoxes. In BVal^n, there are at most 2n.
 
-### 5.1 CPS Construction Algorithm
+**Interpretation.** The Liar paradox (typically B-valued) and Russell's paradox (which can be N-valued, representing an undetermined membership) are algebraically independent. They carry orthogonal information: the Liar asserts too much (Both), Russell asserts too little (Neither).
 
-Given n ≥ 3 and a target dialectheia degree k (1 ≤ k ≤ n-2):
-1. Assign B to sentences 0, ..., k-1
-2. Assign T to sentence k
-3. Assign F to sentence k+1
-4. Assign N to remaining sentences (if any)
-5. Define sentNeg to swap T↔F and fix B, N
-6. Define sentConj and sentDisj via truth table lookup
+## 8. Self-Soundness
 
-### 5.2 Soundness Verification Algorithm
+**Theorem 8 (Self-Soundness Characterization).** A Belnap theory is self-sound (provable implies at-least-true) iff every provable sentence has truth value in {T, B}.
 
-Given a CPS and a candidate provable set P:
-1. For each s ∈ P, compute truth(s)
-2. Check isTrue(truth(s)) = true
-3. Return true iff all checks pass
+**Theorem 9 (Knowledge Upward Closure).** The at-least-true set {T, B} is upward-closed in the knowledge ordering: if v is at-least-true and v ≤_k w, then w is at-least-true.
 
-Time complexity: O(|P|)
+**Significance.** Self-soundness is a knowledge-monotone property. Adding information to a sound theory preserves soundness. This is why paraconsistent theories can prove their own soundness: the paradoxical value B, which sits at the top of the knowledge ordering, is automatically at-least-true.
 
-## 6. Conjecture
+## 9. Dialectical Completeness
 
-**Conjecture** (Flexible CPS Conjecture): For every n ≥ 3 and every 1 ≤ k ≤ n − 2, there exists a CPS on Fin n with exactly k dialetheias.
+**Theorem 10 (Completeness).** For any n ≥ 2 and any nB, nN with nB + nN ≤ n, there exists a truth assignment on Fin(n) with exactly nB values B and nN values N.
 
-**Computational test**: Verify for n ∈ {3, 4, 5, 6} and all valid k. The construction in Section 5.1 provides candidate witnesses, but the connective homomorphism axioms require verification for each case.
+**Significance.** Every paradox spectrum is realizable. There are no hidden constraints on the distribution of paradoxical values beyond the obvious cardinality bound.
 
-## 7. Discussion
+## 10. Conjectures
 
-### 7.1 Relationship to Gödel's Incompleteness
+**Conjecture (Dialectical Dimension Bound).** For any finite dialectical algebra with n elements, the number of negation fixpoints is at most ⌊n/2⌋ + 1.
 
-Our self-soundness result does not contradict Gödel's second incompleteness theorem. Gödel's theorem applies to theories with:
-- Bivalent truth values
-- A consistency predicate equivalent to ¬Prov(⊥)
-- Sufficient arithmetic to encode self-reference
+*Evidence:* BVal has 4 elements and 2 fixpoints (≤ 3 = ⌊4/2⌋ + 1). For involutions on finite sets, at most ⌈n/2⌉ elements can be fixed, giving roughly n/2 fixpoints. The +1 accounts for possible odd-element algebras.
 
-CPS differs on all three counts: truth is four-valued, soundness is "provable ⟹ at-least-true" (not "consistent"), and self-reference is handled through the Both value rather than Gödel numbering.
+*Test:* Enumerate all involutions on sets of size 6, 8, 10 and verify the bound.
 
-### 7.2 Relationship to Existing Work
+## 11. Algorithms
 
-Our framework builds on:
-- **Belnap (1977)** [1]: The four-valued logic FDE as an information lattice
-- **Priest (2006)** [2]: Dialetheism as a coherent philosophical position
-- **da Costa (1974)** [3]: Paraconsistent formal systems
+### Algorithm 1: Dialectical Rank Computation
 
-Our novel contributions are: (a) the CPS structure with its formal axioms, (b) the sharp bounds on inconsistency degree, (c) the Paradox-Soundness Duality, and (d) the complete machine verification.
+```
+Input: truth assignment τ : {0, ..., n-1} → BVal
+Output: dialectical rank
+rank ← 0
+for i in 0..n-1:
+    if neg(τ(i)) = τ(i):
+        rank ← rank + 1
+return rank
+```
 
-### 7.3 Cross-Connections to Catalog Results
+Time complexity: O(n).
 
-Our `cps_classical_no_liar` result connects to `classical_not_self_sound_with_paradox` from the existing Catalog (Logic/ParadoxSelfSoundness.lean), providing an independent proof path. The `cps_self_sound` result extends the `liar_compatible_with_soundness` theorem from Logic/ParaconsistentParadox.lean to a full CPS with all three paradoxes and a complete structural theory.
+### Algorithm 2: Paradox Spectrum Computation
 
-## 8. Future Work
+```
+Input: truth assignment τ : {0, ..., n-1} → BVal
+Output: (nT, nF, nB, nN)
+Initialize counters to 0
+for i in 0..n-1:
+    increment counter for τ(i)
+return counters
+```
 
-1. Prove the Flexible CPS Conjecture for all n ≥ 3.
-2. Extend to infinite sentence spaces with topological structure on the dialectheia set.
-3. Develop a categorical semantics for CPS (functors preserving the B-value structure).
-4. Study computational complexity of CPS satisfiability.
-5. Connect to quantum logic, where superposition shares structural features with the Both value.
+### Algorithm 3: Knowledge Lattice Operations
+
+```
+Input: two BVal values a, b
+Output: kMeet(a,b), kJoin(a,b)
+Decompose: (a₁, a₂) = φ(a), (b₁, b₂) = φ(b)
+kMeet = ψ(a₁ ∧ b₁, a₂ ∧ b₂)
+kJoin = ψ(a₁ ∨ b₁, a₂ ∨ b₂)
+```
+
+## 12. Related Work
+
+Fitting [1991] introduced bilattices for logic programming semantics. Arieli and Avron [1996] developed bilattice-based reasoning systems. Our dialectical algebras extend this line by:
+1. Formalizing the fixpoint structure as a first-class algebraic object
+2. Proving the collapse theorem connecting excluded middle to fixpoint triviality
+3. Introducing the dialectical rank as a quantitative invariant
+4. Machine-verifying all results in Lean 4
+
+Priest's "In Contradiction" [2006] argues philosophically for dialetheism (the view that some contradictions are true). Our work provides algebraic evidence: the fixpoint sublattice theorem shows that dialetheias form a coherent mathematical structure, not merely a philosophical position.
+
+## 13. Future Work
+
+1. Generalize dialectical algebras to infinite bilattices (e.g., [0,1]² with continuous operations)
+2. Investigate the model theory of dialectical algebras as logical matrices
+3. Connect the dialectical rank to complexity measures in paraconsistent proof systems
+4. Explore category-theoretic properties of the category of dialectical algebras
 
 ## References
 
-[1] Belnap, N. (1977). "A useful four-valued logic." In *Modern Uses of Multiple-Valued Logic*, 5-37.
-
-[2] Priest, G. (2006). *In Contradiction: A Study of the Transconsistent*. Oxford University Press.
-
-[3] da Costa, N. C. A. (1974). "On the theory of inconsistent formal systems." *Notre Dame Journal of Formal Logic*, 15(4), 497-510.
-
-[4] Dunn, J. M. (1976). "Intuitive semantics for first-degree entailments and coupled trees." *Philosophical Studies*, 29, 149-168.
-
-## Appendix: Lean 4 Formalization Summary
-
-All definitions and theorems are formalized in `Catalog/Logic/CoherentParadoxSystem.lean`. The file is self-contained (imports only Mathlib) and contains:
-- 4 type/structure definitions (CPSBelnapVal, CPSTheory, CPSHasLiar, CoherentParadoxSystem)
-- 4 function definitions (dialetheiaDegree, trueDegree, falseDegree, gapDegree)
-- 20+ theorems with complete proofs
-- 0 sorry statements
-- All axioms used: propext, Classical.choice, Quot.sound (standard)
+- Belnap, N. (1977). "A useful four-valued logic." In *Modern Uses of Multiple-Valued Logic*, pp. 5-37.
+- da Costa, N.C.A. (1974). "On the theory of inconsistent formal systems." *Notre Dame Journal of Formal Logic*, 15(4):497-510.
+- Fitting, M. (1991). "Bilattices and the semantics of logic programming." *Journal of Logic Programming*, 11(2):91-116.
+- Arieli, O. & Avron, A. (1996). "Reasoning with logical bilattices." *Journal of Logic, Language and Information*, 5(1):25-63.
+- Priest, G. (2006). *In Contradiction: A Study of the Transconsistent*. Oxford University Press.
