@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "fdd336e6",
     "filename": "the_library_of_babel_combinatorics_of_the_universa.json",
     "pkg_num": 401,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5592800000000001,
     "title": "The Library of Babel as a Hamming Space: Coding-Theoretic Bounds and Catalog Impossibility"
   },
   {
@@ -12780,8 +12780,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "the_library_of_babel_combinatorics_of_the_universa",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5592800000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Library of Babel as a Hamming Space: Coding-Theoretic Bounds and Catalog Impossibility"
     }

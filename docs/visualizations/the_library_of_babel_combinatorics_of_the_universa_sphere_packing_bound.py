@@ -1,5 +1,3 @@
-def sphere_packing_bound(A, L, min_dist):
-    from math import comb
-    r = (min_dist - 1) // 2
-    ball = sum(comb(L, i) * (A - 1) ** i for i in range(r + 1))
-    return A ** L // ball
+def sphere_packing_bound(A: int, L: int, d: int) -> int:
+    r = (d - 1) // 2
+    return A ** L // hamming_ball_volume(A, L, r)
