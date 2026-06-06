@@ -1,239 +1,241 @@
-#!/usr/bin/env python3
 """
-Tropical Min-Plus Encryption: Core Algorithms
-===============================================
-Type-hinted implementations of all tropical cryptographic primitives.
+Tropical (Min-Plus) Cryptography: Core Algorithms
+
+Type-hinted implementations of tropical matrix operations and the
+Tropical Diffie-Hellman key exchange protocol.
 """
 
-from typing import List, Tuple, Optional
-import numpy as np
-from numpy.typing import NDArray
-from itertools import permutations
+from typing import List, Optional, Tuple
+import math
+
+# Tropical infinity
+INF = float('inf')
+
+# Type alias: a tropical matrix is a list of lists of floats (or int)
+TropMat = List[List[float]]
 
 
-Matrix = NDArray[np.float64]
-Vector = NDArray[np.float64]
+def trop_add(a: float, b: float) -> float:
+    """Tropical addition: min(a, b)."""
+    return min(a, b)
 
 
-def tropical_mat_mul(A: Matrix, B: Matrix) -> Matrix:
-    """Tropical (min-plus) matrix multiplication.
-    
-    (A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj})
-    
-    Complexity: O(n³) for n×n matrices.
-    
-    Args:
-        A: n×m matrix
-        B: m×p matrix
-    
-    Returns:
-        n×p matrix where each entry is the minimum-weight path.
+def trop_mul(a: float, b: float) -> float:
+    """Tropical multiplication: a + b (with infinity handling)."""
+    if a == INF or b == INF:
+        return INF
+    return a + b
+
+
+def trop_mat_mul(A: TropMat, B: TropMat) -> TropMat:
     """
-    n, m = A.shape
-    _, p = B.shape
-    C = np.full((n, p), np.inf)
+    Tropical matrix multiplication: (A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj}).
+    
+    Equivalent to one step of all-pairs shortest path extension.
+    Time complexity: O(n³).
+    """
+    n = len(A)
+    C: TropMat = [[INF] * n for _ in range(n)]
     for i in range(n):
-        for j in range(p):
-            for k in range(m):
-                C[i, j] = min(C[i, j], A[i, k] + B[k, j])
+        for j in range(n):
+            for k in range(n):
+                val = trop_mul(A[i][k], B[k][j])
+                C[i][j] = trop_add(C[i][j], val)
     return C
 
 
-def tropical_mat_pow(A: Matrix, k: int) -> Matrix:
-    """Tropical matrix power via repeated squaring.
-    
-    Computes A^{⊗k} = A ⊗ A ⊗ ... ⊗ A (k times).
-    
-    Complexity: O(n³ log k) via repeated squaring.
-    
-    Args:
-        A: n×n square matrix
-        k: positive integer exponent
-    
-    Returns:
-        A^{⊗k} in the tropical semiring.
+def trop_mat_identity(n: int) -> TropMat:
     """
-    if k <= 0:
-        raise ValueError("Exponent must be positive")
-    if k == 1:
-        return A.copy()
+    Tropical identity matrix: 0 on diagonal, ∞ elsewhere.
     
-    # Repeated squaring
-    result = None
-    base = A.copy()
-    while k > 0:
-        if k % 2 == 1:
-            result = base.copy() if result is None else tropical_mat_mul(result, base)
-        base = tropical_mat_mul(base, base)
-        k //= 2
-    return result  # type: ignore
-
-
-def tropical_permanent(A: Matrix) -> Tuple[float, Tuple[int, ...]]:
-    """Compute the tropical permanent (optimal assignment).
-    
-    tropPerm(A) = min_{σ ∈ Sₙ} Σᵢ A(i, σ(i))
-    
-    This is the assignment problem. Complexity: O(n!) brute force,
-    O(n³) via Hungarian algorithm (not implemented here).
-    
-    Args:
-        A: n×n square matrix
-    
-    Returns:
-        (value, optimal_permutation) tuple.
+    In min-plus: staying at a vertex costs 0, no edge between distinct vertices.
     """
-    n = A.shape[0]
-    best_val = np.inf
-    best_perm: Tuple[int, ...] = tuple(range(n))
-    
-    for perm in permutations(range(n)):
-        val = sum(A[i, perm[i]] for i in range(n))
-        if val < best_val:
-            best_val = val
-            best_perm = perm
-    
-    return float(best_val), best_perm
-
-
-def tropical_spectral_gap(A: Matrix) -> float:
-    """Compute the tropical spectral gap.
-    
-    Gap = (2nd smallest permutation sum) - (smallest permutation sum).
-    
-    A large gap means the optimal assignment is well-separated from
-    sub-optimal ones, making the cipher more resistant to perturbation attacks.
-    
-    Args:
-        A: n×n square matrix
-    
-    Returns:
-        Non-negative spectral gap value.
-    """
-    n = A.shape[0]
-    vals = set()
-    for perm in permutations(range(n)):
-        val = sum(A[i, perm[i]] for i in range(n))
-        vals.add(val)
-    
-    sorted_vals = sorted(vals)
-    if len(sorted_vals) <= 1:
-        return 0.0
-    return sorted_vals[1] - sorted_vals[0]
-
-
-def tropical_vec_mul(A: Matrix, v: Vector) -> Vector:
-    """Tropical matrix-vector multiplication.
-    
-    (A ⊗ v)_i = min_j (A_{ij} + v_j)
-    
-    Args:
-        A: n×n matrix
-        v: n-vector
-    
-    Returns:
-        n-vector result.
-    """
-    n = A.shape[0]
-    result = np.full(n, np.inf)
+    I: TropMat = [[INF] * n for _ in range(n)]
     for i in range(n):
-        for j in range(n):
-            result[i] = min(result[i], A[i, j] + v[j])
+        I[i][i] = 0
+    return I
+
+
+def trop_mat_pow(A: TropMat, k: int) -> TropMat:
+    """
+    Tropical matrix power via repeated squaring: A^{⊗k}.
+    
+    Computes the minimum-weight k-step path matrix.
+    Time complexity: O(n³ log k).
+    
+    Algorithm:
+      1. Initialize result = I (tropical identity)
+      2. While k > 0:
+         a. If k is odd, result = result ⊗ A
+         b. A = A ⊗ A
+         c. k = k >> 1
+    """
+    n = len(A)
+    result = trop_mat_identity(n)
+    base = [row[:] for row in A]  # Deep copy
+    while k > 0:
+        if k & 1:
+            result = trop_mat_mul(result, base)
+        base = trop_mat_mul(base, base)
+        k >>= 1
     return result
 
 
+def trop_trace(A: TropMat) -> float:
+    """
+    Tropical trace: min of diagonal entries.
+    
+    Represents the minimum-weight closed walk of the given length
+    visiting any single vertex.
+    """
+    return min(A[i][i] for i in range(len(A)))
+
+
+def kleene_star(A: TropMat, max_steps: Optional[int] = None) -> TropMat:
+    """
+    Tropical Kleene star: A* = I ⊕ A ⊕ A² ⊕ ... ⊕ A^{n-1}.
+    
+    Computes the all-pairs shortest path matrix (Floyd-Warshall equivalent).
+    Converges in at most n steps for matrices without negative cycles.
+    
+    Args:
+        A: Square tropical matrix (weighted adjacency matrix).
+        max_steps: Maximum number of iterations (default: n).
+    
+    Returns:
+        The shortest-path closure matrix.
+    """
+    n = len(A)
+    if max_steps is None:
+        max_steps = n
+    
+    result = trop_mat_identity(n)
+    power = trop_mat_identity(n)
+    
+    for step in range(1, max_steps + 1):
+        power = trop_mat_mul(power, A)
+        # Tropical addition (entrywise min)
+        for i in range(n):
+            for j in range(n):
+                result[i][j] = trop_add(result[i][j], power[i][j])
+    
+    return result
+
+
+def trop_eigenvalue_estimate(A: TropMat, max_k: int = 100) -> float:
+    """
+    Estimate the tropical eigenvalue (minimum mean cycle weight).
+    
+    λ(A) = lim_{k→∞} tr(A^k) / k = min_k tr(A^k) / k.
+    
+    This is the key quantity for the eigenvalue attack on TDLP.
+    """
+    n = len(A)
+    best = INF
+    power = trop_mat_identity(n)
+    
+    for k in range(1, max_k + 1):
+        power = trop_mat_mul(power, A)
+        tr = trop_trace(power)
+        if tr != INF:
+            mean = tr / k
+            best = min(best, mean)
+    
+    return best
+
+
+def eigenvalue_attack(A: TropMat, B: TropMat) -> Optional[int]:
+    """
+    Eigenvalue attack on the Tropical Discrete Logarithm Problem.
+    
+    Given A and B = A^k, attempt to recover k using the fact that
+    tr(A^k) ≈ k * λ(A) for the tropical eigenvalue λ(A).
+    
+    For diagonal matrices, this is exact: k = B_{ii} / A_{ii}.
+    For general matrices, uses the trace-based estimator.
+    
+    Returns:
+        Estimated value of k, or None if attack fails.
+    """
+    n = len(A)
+    
+    # Strategy 1: Diagonal attack
+    for i in range(n):
+        if A[i][i] != 0 and A[i][i] != INF:
+            if B[i][i] != INF:
+                k_est = B[i][i] / A[i][i]
+                if k_est == int(k_est) and k_est > 0:
+                    # Verify
+                    k = int(k_est)
+                    if trop_mat_pow(A, k) == B:
+                        return k
+    
+    # Strategy 2: Trace-based attack
+    lambda_A = trop_eigenvalue_estimate(A, max_k=n)
+    if lambda_A != INF and lambda_A != 0:
+        tr_B = trop_trace(B)
+        if tr_B != INF:
+            k_est = tr_B / lambda_A
+            for k in [int(k_est), int(k_est) + 1, max(0, int(k_est) - 1)]:
+                if k > 0 and trop_mat_pow(A, k) == B:
+                    return k
+    
+    # Strategy 3: Brute force (for small k)
+    power = trop_mat_identity(n)
+    for k in range(1, 1000):
+        power = trop_mat_mul(power, A)
+        if power == B:
+            return k
+    
+    return None
+
+
 class TropicalDiffieHellman:
-    """Tropical Diffie-Hellman key exchange protocol.
+    """
+    Tropical Diffie-Hellman Key Exchange Protocol.
     
     Protocol:
-    1. Public: generator matrix G (n×n over ℤ)
-    2. Alice: picks secret a, publishes G^a
-    3. Bob: picks secret b, publishes G^b
-    4. Shared key: G^{a+b} = G^a ⊗ G^b = G^b ⊗ G^a
-    
-    Security: based on the Tropical Discrete Logarithm Problem (TDLP).
+      1. Public parameters: generator matrix G ∈ TropMat(n)
+      2. Alice: picks secret a, publishes G^a
+      3. Bob: picks secret b, publishes G^b
+      4. Shared key: G^{a+b} = (G^a)^1 ⊗ G^b... 
+         Wait — in tropical DH, the shared key is G^{ab}:
+         Alice computes (G^b)^a, Bob computes (G^a)^b.
+         Both equal G^{ab} since tropical matrix powers commute.
     """
     
-    def __init__(self, n: int, bound: int = 100, seed: Optional[int] = None):
-        """Initialize with matrix dimension n and entry bound."""
-        if seed is not None:
-            np.random.seed(seed)
-        self.n = n
-        self.generator = np.random.randint(-bound, bound + 1, (n, n)).astype(float)
+    def __init__(self, generator: TropMat):
+        self.generator = generator
+        self.n = len(generator)
     
-    def generate_keypair(self, secret: int) -> Matrix:
-        """Generate public key from secret exponent."""
-        return tropical_mat_pow(self.generator, secret)
+    def public_key(self, secret: int) -> TropMat:
+        """Compute public key G^secret."""
+        return trop_mat_pow(self.generator, secret)
     
-    def compute_shared_key(self, own_key: Matrix, other_public: Matrix) -> Matrix:
-        """Compute shared key from own public key and other's public key."""
-        return tropical_mat_mul(own_key, other_public)
+    def shared_key(self, my_secret: int, their_public: TropMat) -> TropMat:
+        """Compute shared key (their_public)^{my_secret}."""
+        return trop_mat_pow(their_public, my_secret)
     
-    def verify_agreement(self, alice_secret: int, bob_secret: int) -> bool:
+    def verify_correctness(self, a: int, b: int) -> bool:
         """Verify that both parties compute the same shared key."""
-        G_a = self.generate_keypair(alice_secret)
-        G_b = self.generate_keypair(bob_secret)
-        
-        alice_shared = self.compute_shared_key(G_a, G_b)
-        bob_shared = self.compute_shared_key(G_b, G_a)
-        
-        return np.allclose(alice_shared, bob_shared)
+        pub_a = self.public_key(a)
+        pub_b = self.public_key(b)
+        key_alice = self.shared_key(a, pub_b)
+        key_bob = self.shared_key(b, pub_a)
+        return key_alice == key_bob
 
 
-class TropicalPermanentCipher:
-    """Novel encryption scheme based on the tropical permanent.
-    
-    Key insight: the sub-multiplicativity of the tropical permanent
-    (tropPerm(A⊗B) ≤ tropPerm(A) + tropPerm(B)) creates a one-way
-    information funnel. Each tropical multiplication loses structural
-    information about the factors.
-    
-    The spectral gap measures the security margin — a larger gap
-    means the optimal assignment is more isolated, making the
-    cipher harder to break.
-    """
-    
-    def __init__(self, n: int, bound: int = 50, seed: Optional[int] = None):
-        if seed is not None:
-            np.random.seed(seed)
-        self.n = n
-        self.base = np.random.randint(-bound, bound + 1, (n, n)).astype(float)
-    
-    def encrypt(self, message: Vector, key_exp: int) -> Vector:
-        """Encrypt a message vector using tropical matrix power."""
-        key_matrix = tropical_mat_pow(self.base, key_exp)
-        return tropical_vec_mul(key_matrix, message)
-    
-    def security_analysis(self) -> dict:
-        """Analyze the security of the base matrix."""
-        perm_val, perm_opt = tropical_permanent(self.base)
-        gap = tropical_spectral_gap(self.base)
-        
-        return {
-            "matrix_size": self.n,
-            "tropical_permanent": perm_val,
-            "optimal_assignment": perm_opt,
-            "spectral_gap": gap,
-            "key_space_bits": self.n * self.n * 7,  # log2(100) ≈ 7 bits per entry
-            "estimated_security_bits": min(self.n * self.n * 7 // 2, 256),
-        }
-
-
-if __name__ == "__main__":
-    # Quick verification
-    dh = TropicalDiffieHellman(n=5, seed=42)
-    assert dh.verify_agreement(7, 11), "DH key agreement failed!"
-    print("✓ Tropical Diffie-Hellman key agreement verified")
-    
-    cipher = TropicalPermanentCipher(n=4, seed=42)
-    analysis = cipher.security_analysis()
-    print(f"✓ Security analysis: {analysis}")
-    
-    # Verify sub-multiplicativity
-    A = np.random.RandomState(42).randint(-5, 6, (4, 4)).astype(float)
-    B = np.random.RandomState(43).randint(-5, 6, (4, 4)).astype(float)
-    pa, _ = tropical_permanent(A)
-    pb, _ = tropical_permanent(B)
-    pab, _ = tropical_permanent(tropical_mat_mul(A, B))
-    assert pab <= pa + pb + 1e-10, f"Sub-multiplicativity violated: {pab} > {pa} + {pb}"
-    print(f"✓ Sub-multiplicativity verified: {pab} ≤ {pa} + {pb} = {pa+pb}")
+def generate_random_tropical_matrix(n: int, max_val: int = 100,
+                                     inf_prob: float = 0.1) -> TropMat:
+    """Generate a random n×n tropical matrix for testing."""
+    import random
+    A: TropMat = []
+    for i in range(n):
+        row = []
+        for j in range(n):
+            if random.random() < inf_prob:
+                row.append(INF)
+            else:
+                row.append(random.randint(0, max_val))
+        A.append(row)
+    return A
