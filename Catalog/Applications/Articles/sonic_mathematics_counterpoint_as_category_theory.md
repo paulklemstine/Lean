@@ -1,94 +1,84 @@
-# The Hidden Geometry of Counterpoint
+# The Hidden Mathematics of Harmony: Why Parallel Fifths Sound Wrong
 
-## How a 300-year-old music theory rule turns out to be pure mathematics
-
-When Johann Joseph Fux published his *Gradus ad Parnassum* in 1725, he codified rules that had governed European music for centuries. His most famous prohibition — no parallel fifths, no parallel octaves — has been drilled into composition students ever since. The rule feels arbitrary, a relic of aesthetic preference frozen in pedagogy.
-
-But what if it isn't arbitrary at all? What if Fux's rules, stripped of their musical clothing, reveal a geometric structure hiding in the chromatic circle?
+*How a 300-year-old music rule reveals deep structures in mathematics*
 
 ---
 
-## The Consonant Intervals
+Every music student learns the rule on day one of counterpoint class: **no parallel fifths**. When two voices move in the same direction by the same amount and land on a perfect fifth, the result sounds hollow, mechanical, lifeless. Composers from Palestrina to Bach followed this rule religiously. But why? What makes this particular combination of motion and interval so problematic?
 
-Start with the basics. In Western music, two simultaneous notes form an *interval* — the distance between them measured in semitones. Some intervals sound stable and pleasing (consonant), while others sound tense and restless (dissonant). In first-species counterpoint, only six consonant intervals are permitted:
+The answer, it turns out, lies not just in acoustics or aesthetics, but in the mathematical structure of the rule system itself. When you translate the counterpoint rules of Johann Joseph Fux — the 18th-century theorist whose textbook trained Haydn, Mozart, and Beethoven — into the language of modern mathematics, something remarkable emerges: the prohibition on parallel fifths is not an arbitrary stylistic preference. It is a structural necessity that creates a precise mathematical asymmetry, one that can be described exactly using the tools of category theory and order theory.
 
-| Interval | Semitones | Type |
-|----------|-----------|------|
-| Unison | 0 | Perfect |
-| Minor third | 3 | Imperfect |
-| Major third | 4 | Imperfect |
-| Perfect fifth | 7 | Perfect |
-| Minor sixth | 8 | Imperfect |
-| Major sixth | 9 | Imperfect |
+## The Six Consonances
 
-These six intervals are the "objects" of our mathematical universe. The question is: how can you move between them?
+In first-species counterpoint — the simplest form, where two voices move note against note — every vertical interval must be **consonant**. There are exactly six consonant interval classes: the perfect unison (0 semitones), the minor third (3), the major third (4), the perfect fifth (7), the minor sixth (8), and the major sixth (9).
 
-## Voice Leading as Motion
+These six divide cleanly into two families. The **perfect consonances** — the unison and the fifth — are acoustically stable, almost static in character. The **imperfect consonances** — the thirds and sixths — are warmer, more dynamic, and carry the forward motion of the music.
 
-In counterpoint, two voices (a bass line and a soprano line) move simultaneously. Each voice moves by some number of semitones — perhaps one step up, two steps down, or staying put. Together, these paired motions constitute a *voice leading* that transforms one consonant interval into another.
+Between any two consecutive beats, the voice motion falls into one of four types:
+- **Parallel**: both voices move in the same direction by the same distance
+- **Similar**: same direction, different distances
+- **Contrary**: opposite directions
+- **Oblique**: one voice stays put
 
-Not all motions are permitted. Fux's central prohibition: **parallel motion to a perfect consonance is forbidden**. You cannot have both voices moving by the same amount and arrive at a unison or a perfect fifth. This rule, taught in every music theory class worldwide, seems to be about aesthetics. But mathematically, it defines a *transition structure* — a graph whose vertices are consonant intervals and whose edges are permitted voice leadings.
+Fux's rule, precisely stated: **parallel motion to a perfect consonance is forbidden.** You cannot approach a unison or a fifth with both voices moving in lockstep.
 
-## The Three Worlds
+## 132 Out of 144
 
-Consider what happens when voices can only move by one semitone at a time — the smallest possible step. Under this constraint, something remarkable occurs.
+Here is where the mathematics gets interesting. If we list every possible transition — every triple of (source interval, target interval, motion type) — there are exactly 6 × 6 × 4 = 144 possibilities. Fux's rule eliminates exactly 12 of them: the 6 source intervals × 2 perfect targets × 1 forbidden motion type. This leaves **132 permitted transitions**.
 
-The six consonant intervals split into exactly three isolated groups:
-- **{Unison}** — completely alone
-- **{Minor third, Major third}** — connected only to each other
-- **{Perfect fifth, Minor sixth, Major sixth}** — a trio
+Twelve out of 144 — barely 8% of the total. Such a small constraint, yet it transforms the entire character of the music. The question is: what mathematical structure does this constraint create?
 
-These three groups cannot communicate at all through semitone motion. A minor third can become a major third (or vice versa), but it cannot reach a perfect fifth no matter what the voices do. This partition isn't imposed by any rule — it emerges from the geometry of the chromatic circle combined with the consonance constraint.
+## The Dichotomy Principle
 
-The partition has a musical interpretation that would have delighted Fux: it separates intervals by *quality class*. Unison stands alone. Thirds form a pair. The fifth and its upper neighbors form a family. The mathematics discovers what musicians have always felt — these intervals belong to different worlds.
+The answer reveals a clean and beautiful decomposition. A transition is permitted if and only if at least one of these conditions holds:
 
-## The Bridge Theorem
+1. The target interval is **imperfect** (any motion type works), OR
+2. The motion type is **not parallel** (any target works).
 
-Now expand the permitted motion to whole tones — each voice can move by up to two semitones. The three isolated worlds suddenly begin to connect. Most transitions become possible, but not all. Four pairs of intervals remain stubbornly separated:
+This is the **Dichotomy Principle**: the counterpoint rules create a partition of the transition space into two overlapping regions. The imperfect consonances enjoy complete freedom — all four motion types are available for approaching them. The perfect consonances have a single restriction: no parallel approach.
 
-- Unison ↔ Perfect fifth
-- Minor third ↔ Minor sixth
-- Minor third ↔ Major sixth  
-- Major third ↔ Major sixth
+In the language of fiber bundles, the "fiber" over each consonant interval (the set of motion types that can reach it) has size 4 for imperfect consonances and size 3 for perfect ones. This fiber decomposition gives us the arithmetic: 6 sources × (4 imperfect targets × 4 motions + 2 perfect targets × 3 motions) = 6 × (16 + 6) = 132.
 
-Here comes the surprise. Measure the distance between each blocked pair along the chromatic circle (the shortest path through the twelve pitch classes). The distances are 5, 5, 6, and 5 respectively. Every allowed pair has distance 4 or less. Every blocked pair has distance 5 or more.
+## The Complement Symmetry
 
-**The Metric Bridge Theorem**: *At whole-tone step bounds, a valid counterpoint transition exists between two consonant intervals if and only if their chromatic circle distance is at most 4.*
+There is a natural symmetry hiding in the consonant intervals. Minor thirds and major sixths are **octave complements**: 3 + 9 = 12 semitones. Similarly, major thirds and minor sixths complement each other: 4 + 8 = 12. This complement involution — swapping m3 with M6, and M3 with m6 — preserves the counterpoint rules exactly. If a transition from A to B by motion M is permitted, then the complemented transition (from A's complement to B's complement by the same motion) is also permitted.
 
-This is a purely geometric statement. There is no mention of parallel fifths, no reference to voice leading rules, no musical aesthetics. It says: the counterpoint transition structure at the whole-tone scale is completely determined by a simple distance threshold on the chromatic circle.
+The perfect consonances are fixed points of this involution: the unison maps to itself, and so does the fifth. The four imperfect consonances form two orbits of size 2.
 
-And here is the deeper surprise: **Fux's rule about parallel motion contributes nothing**. At whole-tone steps, the step-size constraint alone is sufficient to block all the transitions that would have been forbidden by the parallel motion rule anyway. The centuries-old prohibition, at this scale, is a shadow cast by geometry — a consequence, not a cause.
+What's surprising is that this involution is **order-reversing** on the imperfect consonances. If we rank intervals by consonance quality (with perfect consonances at the top), then complementation flips the ordering among the thirds and sixths. A "high-ranking" third corresponds to a "low-ranking" sixth, and vice versa. This is a mathematical shadow of the musical fact that inversion — flipping a melody upside down — transforms the harmonic character of a passage in a specific, predictable way.
 
-## The Diameter of Counterpoint
+## The Parallel Subgraph
 
-Even though four pairs of consonant intervals cannot transition directly at whole-tone steps, every pair can reach every other through an intermediary. The unison cannot reach the perfect fifth directly, but the path Unison → Minor third → Perfect fifth works perfectly. In the language of graph theory, the transition graph has *diameter exactly 2*.
+If we restrict ourselves to only parallel motion, the transition structure becomes dramatically different. Out of 36 possible source-target pairs, only 24 are permitted — exactly those targeting imperfect consonances. The parallel-motion subgraph is a bipartite-like structure: you can reach any imperfect consonance from anywhere, but you can **never** reach a perfect consonance.
 
-This means that counterpoint at the whole-tone scale has a remarkably tight structure. No matter which consonant interval you start from, no matter where you want to go, you are at most two steps away. The "distance" of counterpoint is not the distance of music, but the distance of mathematics.
+This is the graph-theoretic expression of a profound musical reality: parallel motion, by preserving intervals exactly, locks voices together too tightly. When voices are locked in parallel at a perfect consonance — with its strong, stable acoustic profile — the result sounds like two voices collapsing into one. The independence of the voices, which is the entire point of counterpoint, is lost.
 
-## The Completeness Threshold
+## 2,904 Valid Paths
 
-What happens if we allow even larger steps? At minor-third bounds (each voice moving by up to three semitones), something dramatic occurs: every transition becomes valid. All 36 directed transitions between the six consonant intervals are permitted. The counterpoint graph becomes complete — a fully connected network where everything reaches everything.
+When we extend the analysis to two-step progressions — sequences of three consonant intervals connected by two transitions — the filtering effect compounds. Out of 6³ × 4² = 3,456 potential two-step paths, exactly 2,904 survive the counterpoint rules. The passage rate drops from 132/144 ≈ 91.7% for single transitions to 2,904/3,456 ≈ 84.0% for two-step paths.
 
-The completeness threshold is exactly 3. Below it, the graph has structure — holes, blocked paths, distinct neighborhoods. At 3 and above, all structure vanishes into universal connectivity.
+This declining passage rate has a musical interpretation: the longer a counterpoint exercise, the more the rules constrain the composer's choices. The 12 forbidden transitions, tiny as they are, create a cascading effect that progressively narrows the space of valid compositions. This is the mathematical source of the creative tension that makes counterpoint both challenging and rewarding.
 
-This is a phase transition. Below the threshold, geometry governs motion. Above it, geometry becomes irrelevant. The threshold itself — three semitones, a minor third — is one of the most fundamental intervals in music. It is not a coincidence.
+## The Strict Rule: Tightening the Screws
 
-## A Hidden Asymmetry
+Fux's basic rule forbids only parallel motion to perfect consonances. But many teachers add a stricter prohibition: no **similar** motion to perfect consonances either. This eliminates "hidden fifths" and "hidden octaves," where voices approach a perfect consonance from the same direction even at different speeds.
 
-One more result reveals how deep the mathematics runs. Consider the *inversion* map: replace every interval by its complement (the number of semitones needed to complete an octave). Under inversion, a minor third (3 semitones) becomes a major sixth (9 semitones), and vice versa. A major third (4) becomes a minor sixth (8).
+Under the strict rule, the number of forbidden transitions doubles from 12 to 24, and the permitted count drops to 120. The fiber over perfect consonances shrinks from 3 to 2: only contrary and oblique motion can approach them. The passage rate for single transitions drops to 120/144 ≈ 83.3%.
 
-But the perfect fifth (7 semitones) inverts to 5 semitones — the *perfect fourth*. And here is the critical asymmetry: **the perfect fourth is not a consonance in counterpoint**. The consonant set is not closed under inversion.
+The strict rule has a clean order-theoretic interpretation: under strict rules, perfect consonances can only be approached by motion types that actively change direction (contrary) or hold a voice steady (oblique). Both are forms of "independent" voice behavior. The strict rule, in essence, demands that voices approaching a perfect consonance must demonstrate their independence through their motion.
 
-This mathematical fact underlies one of the most debated distinctions in music theory: why is the perfect fifth consonant but the perfect fourth (at least in two-voice counterpoint) treated as dissonant? The answer isn't just aesthetic — it's structural. The consonant intervals, viewed as a subset of the cyclic group ℤ₁₂, have an inherent asymmetry that no amount of retuning can erase.
+## The Diatonic Wrinkle
 
-## What This Means
+When we specialize from abstract interval classes to a specific scale — say, C major — the structure acquires a wonderful complication. Not all generic fifths are perfect: the fifth from B to F spans only 6 semitones (a tritone), not the 7 of a perfect fifth. Out of 49 possible pairs of C-major scale degrees, only 27 produce consonant intervals — just over half. The tritone, the notorious *diabolus in musica*, is the wrench in the gears.
 
-These results suggest that the rules of counterpoint, far from being arbitrary conventions, are consequences of the geometric structure of the chromatic circle. The prohibition on parallel fifths, the classification of intervals into perfect and imperfect, even the special status of the minor third — all of these can be understood as projections of a single mathematical structure onto the plane of musical practice.
+This is where abstract mathematics meets concrete music. The 27/49 consonance density of the diatonic scale is not too sparse (which would make consonance rare and hard to achieve) nor too dense (which would make dissonance rare and hard to create tension). It sits in a sweet spot that gives composers enough consonance to work with, enough dissonance to create drama, and enough variety to sustain interest over a full composition.
 
-The implications extend beyond music. The chromatic circle ℤ₁₂ is a cyclic group, and the consonant intervals form a specific subset with rich algebraic properties. The transition graphs at various step bounds form a filtration — a nested sequence of structures that reveals progressively more of the underlying symmetry. This filtration appears naturally in other areas of mathematics: topology (simplicial complexes filtered by scale), data science (persistent homology), and theoretical physics (renormalization group flow).
+## What the Mathematics Teaches Us
 
-Music didn't invent this structure. Mathematics didn't discover it. They both found the same truth, from different directions, centuries apart.
+The formalization of counterpoint as a mathematical structure reveals something that centuries of music theory had only intuited: the prohibition on parallel fifths is not a quirk of taste. It is the minimal constraint that creates a meaningful asymmetry between perfect and imperfect consonances, preserving voice independence while allowing maximal compositional freedom.
 
----
+The mathematics also reveals what is **not** constrained. Contrary motion is universally permitted — there is never a reason to avoid it. Oblique motion is equally free. Even similar motion is unrestricted under the basic rule. The counterpoint system is, in a precise sense, as permissive as possible while still enforcing the one structural requirement that defines the art: that voices must remain independent, especially when they arrive at the most acoustically transparent intervals.
 
-*The mathematical results described in this article have been verified with complete machine-checked proofs. The Metric Bridge Theorem, Diameter Theorem, Completeness Threshold, and Consonance Asymmetry are all formally established. These results extend previous work on harmonic music theory and create new connections between music theory, metric geometry, and category theory.*
+This is, perhaps, the deepest lesson: great art constrains just enough to create structure, and no more. The counterpoint rules, formalized as mathematics, show us exactly where that boundary lies — 12 forbidden transitions out of 144, creating 132 permitted paths, a complement symmetry, an order-reversing involution, and a declining passage rate that turns a simple prohibition into an entire universe of compositional possibility.
+
+The notes care about mathematics. Mathematics, it turns out, cares about the notes.

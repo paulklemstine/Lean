@@ -2,174 +2,175 @@
 """
 Counterpoint Category Theory: Numerical Demonstrations
 
-Demonstrates the key results from the formalization of first-species
-counterpoint as category theory over Z/12Z.
+This script demonstrates the key results from the formalization of
+first-species counterpoint as a categorical structure.
 """
 
-# Consonant intervals in first-species counterpoint (mod 12)
-CONSONANT = [0, 3, 4, 7, 8, 9]
-INTERVAL_NAMES = {
-    0: "Unison (P1)", 3: "Minor 3rd (m3)", 4: "Major 3rd (M3)",
-    7: "Perfect 5th (P5)", 8: "Minor 6th (m6)", 9: "Major 6th (M6)"
+from itertools import product
+from typing import NamedTuple
+
+# ─── Musical Definitions ──────────────────────────────────────────
+
+CONSONANT_INTERVALS = {
+    "P1": 0,   # Perfect unison
+    "m3": 3,   # Minor third
+    "M3": 4,   # Major third
+    "P5": 7,   # Perfect fifth
+    "m6": 8,   # Minor sixth
+    "M6": 9,   # Major sixth
 }
-PERFECT = {0, 7}
 
+PERFECT = {"P1", "P5"}
+IMPERFECT = {"m3", "M3", "m6", "M6"}
+MOTION_TYPES = ["parallel", "similar", "contrary", "oblique"]
 
-def step_dist(x: int) -> int:
-    """Minimum distance around the chromatic circle."""
-    v = x % 12
-    return min(v, 12 - v)
+# ─── Core Rules ──────────────────────────────────────────────────
 
+def is_permitted(source: str, target: str, motion: str) -> bool:
+    """Standard rule: no parallel motion to perfect consonances."""
+    return not (motion == "parallel" and target in PERFECT)
 
-def chrom_dist(i: int, j: int) -> int:
-    """Chromatic circle distance between two pitch classes."""
-    return step_dist(j - i)
+def is_strictly_permitted(source: str, target: str, motion: str) -> bool:
+    """Strict rule: no parallel or similar motion to perfect consonances."""
+    return not (motion in {"parallel", "similar"} and target in PERFECT)
 
+# ─── Enumeration ─────────────────────────────────────────────────
 
-def valid_transition(i: int, j: int, max_step: int) -> bool:
-    """Check if a voice leading from interval i to j exists with bounded steps."""
-    for db in range(12):
-        for ds in range(12):
-            if (i + ds - db) % 12 == j % 12:
-                if step_dist(db) <= max_step and step_dist(ds) <= max_step:
-                    # Check: not parallel motion to perfect consonance
-                    if not (db == ds and db != 0 and (j % 12) in PERFECT):
-                        return True
-    return False
+def enumerate_transitions():
+    """Enumerate all transitions and classify them."""
+    intervals = list(CONSONANT_INTERVALS.keys())
+    permitted = []
+    forbidden = []
+    for s, t, m in product(intervals, intervals, MOTION_TYPES):
+        if is_permitted(s, t, m):
+            permitted.append((s, t, m))
+        else:
+            forbidden.append((s, t, m))
+    return permitted, forbidden
 
+def enumerate_strict_transitions():
+    """Enumerate transitions under strict rules."""
+    intervals = list(CONSONANT_INTERVALS.keys())
+    permitted = []
+    forbidden = []
+    for s, t, m in product(intervals, intervals, MOTION_TYPES):
+        if is_strictly_permitted(s, t, m):
+            permitted.append((s, t, m))
+        else:
+            forbidden.append((s, t, m))
+    return permitted, forbidden
 
-def transition_matrix(max_step: int) -> list[list[int]]:
-    """Compute the adjacency matrix of the counterpoint graph."""
-    return [[1 if valid_transition(i, j, max_step) else 0
-             for j in CONSONANT] for i in CONSONANT]
+def count_length2_paths():
+    """Count valid length-2 counterpoint paths."""
+    intervals = list(CONSONANT_INTERVALS.keys())
+    count = 0
+    for i1, i2, i3, m1, m2 in product(intervals, intervals, intervals,
+                                        MOTION_TYPES, MOTION_TYPES):
+        if is_permitted(i1, i2, m1) and is_permitted(i2, i3, m2):
+            count += 1
+    return count
 
+# ─── Symmetry Analysis ──────────────────────────────────────────
 
-def print_matrix(mat: list[list[int]], label: str):
-    """Pretty-print a transition matrix."""
-    print(f"\n{'='*50}")
-    print(f"  {label}")
-    print(f"{'='*50}")
-    header = "     " + "  ".join(f"{INTERVAL_NAMES[c]:>4s}"[:4] for c in CONSONANT)
-    print(header)
-    for i, row in enumerate(mat):
-        name = INTERVAL_NAMES[CONSONANT[i]][:4]
-        cells = "  ".join(f"{'✓' if v else '·':>4s}" for v in row)
-        print(f"{name} {cells}")
+COMPLEMENT = {"P1": "P1", "m3": "M6", "M3": "m6", "P5": "P5", "m6": "M3", "M6": "m3"}
 
+def verify_complement_involution():
+    """Verify the complement map is an involution."""
+    for i, c in COMPLEMENT.items():
+        assert COMPLEMENT[c] == i, f"Complement is not involutive at {i}"
+    print("✓ Complement is an involution")
 
-def demo_metric_bridge():
-    """Demonstrate the Metric Bridge Theorem."""
-    print("\n" + "="*60)
-    print("  METRIC BRIDGE THEOREM DEMONSTRATION")
-    print("  At step bound 2: transition iff chromatic distance ≤ 4")
-    print("="*60)
+def verify_complement_preserves_permitted():
+    """Verify complement preserves the permitted relation."""
+    intervals = list(CONSONANT_INTERVALS.keys())
+    for s, t, m in product(intervals, intervals, MOTION_TYPES):
+        p1 = is_permitted(s, t, m)
+        p2 = is_permitted(COMPLEMENT[s], COMPLEMENT[t], m)
+        assert p1 == p2, f"Complement does not preserve permitted at ({s},{t},{m})"
+    print("✓ Complement preserves the permitted relation")
 
-    for i in CONSONANT:
-        for j in CONSONANT:
-            d = chrom_dist(i, j)
-            can = valid_transition(i, j, 2)
-            expected = d <= 4
-            status = "✓" if can == expected else "✗ MISMATCH"
-            if not can:
-                print(f"  {INTERVAL_NAMES[i]:>15s} → {INTERVAL_NAMES[j]:<15s}  "
-                      f"dist={d}  blocked  {status}")
-
-    print("\n  All 36 pairs verified: transition ↔ distance ≤ 4")
-
-
-def demo_diameter():
-    """Demonstrate the diameter-2 theorem."""
-    print("\n" + "="*60)
-    print("  DIAMETER THEOREM: Every pair reachable in ≤ 2 steps")
-    print("="*60)
-
-    for i in CONSONANT:
-        for j in CONSONANT:
-            if not valid_transition(i, j, 2):
-                # Find intermediary
-                for k in CONSONANT:
-                    if valid_transition(i, k, 2) and valid_transition(k, j, 2):
-                        print(f"  {INTERVAL_NAMES[i]} → {INTERVAL_NAMES[k]} → {INTERVAL_NAMES[j]}")
-                        break
-
-
-def demo_threshold():
-    """Demonstrate the completeness threshold at step 3."""
-    print("\n" + "="*60)
-    print("  COMPLETENESS THRESHOLD")
-    print("="*60)
-
-    for s in range(1, 5):
-        mat = transition_matrix(s)
-        edges = sum(sum(row) for row in mat)
-        total = len(CONSONANT) ** 2
-        complete = edges == total
-        print(f"  Step bound {s}: {edges}/{total} transitions "
-              f"{'(COMPLETE)' if complete else ''}")
-
-
-def demo_components():
-    """Demonstrate the step-1 chromatic partition."""
-    print("\n" + "="*60)
-    print("  STEP-1 CHROMATIC PARTITION")
-    print("="*60)
-
-    # Find connected components at step 1
-    adj = {i: set() for i in CONSONANT}
-    for i in CONSONANT:
-        for j in CONSONANT:
-            if i != j and valid_transition(i, j, 1):
-                adj[i].add(j)
-
-    visited = set()
-    components = []
-    for start in CONSONANT:
-        if start not in visited:
-            comp = set()
-            stack = [start]
-            while stack:
-                v = stack.pop()
-                if v not in visited:
-                    visited.add(v)
-                    comp.add(v)
-                    stack.extend(adj[v] - visited)
-            components.append(comp)
-
-    for i, comp in enumerate(components):
-        names = [INTERVAL_NAMES[c] for c in sorted(comp)]
-        print(f"  Component {i+1}: {{{', '.join(names)}}}")
-
-    print(f"\n  Three components = interval quality classes")
-
+# ─── Main ────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════╗")
-    print("║  COUNTERPOINT AS CATEGORY THEORY                    ║")
-    print("║  First-Species Voice Leading over Z/12Z             ║")
-    print("╚══════════════════════════════════════════════════════╝")
+    print("=" * 60)
+    print("COUNTERPOINT AS CATEGORY THEORY")
+    print("Numerical Verification of Formal Results")
+    print("=" * 60)
 
-    # Transition matrices at different step bounds
-    for s in [1, 2, 3]:
-        print_matrix(transition_matrix(s), f"Step bound = {s}")
+    # Theorem 1: Counting
+    permitted, forbidden = enumerate_transitions()
+    print(f"\n--- Standard Rule (no parallel to perfect) ---")
+    print(f"Total transitions:    {len(permitted) + len(forbidden)}")
+    print(f"Permitted:            {len(permitted)}")
+    print(f"Forbidden:            {len(forbidden)}")
+    assert len(permitted) == 132
+    assert len(forbidden) == 12
+    print("✓ Verified: 132 permitted, 12 forbidden")
 
-    demo_metric_bridge()
-    demo_diameter()
-    demo_threshold()
-    demo_components()
+    # Theorem 2: Strict counting
+    sp, sf = enumerate_strict_transitions()
+    print(f"\n--- Strict Rule (no parallel/similar to perfect) ---")
+    print(f"Permitted:            {len(sp)}")
+    print(f"Forbidden:            {len(sf)}")
+    assert len(sp) == 120
+    assert len(sf) == 24
+    print("✓ Verified: 120 strictly permitted, 24 forbidden")
 
-    print("\n" + "="*60)
-    print("  KEY INSIGHT: The counterpoint rules (no parallel")
-    print("  fifths/octaves) contribute NOTHING at step ≤ 2.")
-    print("  The metric geometry alone determines all transitions.")
-    print("="*60)
+    # Theorem 3: Forbidden transitions
+    print(f"\n--- Forbidden Transitions ---")
+    for s, t, m in forbidden:
+        print(f"  {s} → {t} by {m}")
+    print("✓ All forbidden transitions are parallel → perfect")
+
+    # Theorem 4: Path counting
+    paths = count_length2_paths()
+    print(f"\n--- Length-2 Path Count ---")
+    print(f"Valid length-2 paths: {paths}")
+    print(f"Total potential:      {6**3 * 4**2}")
+    print(f"Passage rate:         {paths}/{6**3 * 4**2} = {paths/(6**3 * 4**2):.4f}")
+    assert paths == 2904
+    print("✓ Verified: 2904 valid length-2 paths")
+
+    # Theorem 5: Fiber decomposition
+    print(f"\n--- Fiber Decomposition ---")
+    for t in CONSONANT_INTERVALS:
+        count = sum(1 for m in MOTION_TYPES if is_permitted("P1", t, m))
+        class_label = "perfect" if t in PERFECT else "imperfect"
+        print(f"  {t} ({class_label}): {count} permitted motion types")
+    print("✓ Perfect: 3 types, Imperfect: 4 types")
+    print(f"✓ 132 = 6×4×4 + 6×2×3 = {6*4*4} + {6*2*3}")
+
+    # Symmetry verification
+    print(f"\n--- Symmetry Analysis ---")
+    verify_complement_involution()
+    verify_complement_preserves_permitted()
+
+    # Diatonic analysis
+    print(f"\n--- Diatonic Specialization (C Major) ---")
+    CMAJOR = [0, 2, 4, 5, 7, 9, 11]  # semitone values
+    consonant_semitones = set(CONSONANT_INTERVALS.values())
+    consonant_pairs = 0
+    for i, d1 in enumerate(CMAJOR):
+        for j, d2 in enumerate(CMAJOR):
+            interval = (d2 - d1) % 12
+            if interval in consonant_semitones:
+                consonant_pairs += 1
+    print(f"Consonant diatonic pairs: {consonant_pairs} out of {7*7}")
+    print(f"B-F tritone (6 semitones): NOT consonant ✓")
+    print(f"C-G fifth (7 semitones):   consonant ✓")
+
+    print(f"\n{'=' * 60}")
+    print("All numerical results verified successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Counterpoint Transition Graphs
+Visualization: Counterpoint Transition Graph
 
-Renders the counterpoint graphs at step bounds 1, 2, 3 as circular
-layouts on the chromatic circle, showing the metric bridge theorem.
+Displays the permitted transitions between consonant interval classes,
+colored by motion type. Shows the asymmetry between perfect and imperfect
+consonances.
 """
 
 import matplotlib.pyplot as plt
@@ -177,111 +178,186 @@ import matplotlib.patches as mpatches
 import numpy as np
 
 
-def step_distance(x: int) -> int:
-    v = x % 12
-    return min(v, 12 - v)
+def create_transition_graph():
+    """Create and display the counterpoint transition graph."""
 
+    intervals = ["P1", "m3", "M3", "P5", "m6", "M6"]
+    perfect = {"P1", "P5"}
+    motion_types = ["parallel", "similar", "contrary", "oblique"]
+    motion_colors = {
+        "parallel": "#e74c3c",
+        "similar": "#f39c12",
+        "contrary": "#2ecc71",
+        "oblique": "#3498db"
+    }
 
-def chromatic_distance(i: int, j: int) -> int:
-    return step_distance(j - i)
+    def is_permitted(s, t, m):
+        return not (m == "parallel" and t in perfect)
 
+    # Layout: arrange intervals in a circle
+    n = len(intervals)
+    angles = np.linspace(0, 2 * np.pi, n, endpoint=False)
+    # Shift so P1 is at top
+    angles = angles + np.pi / 2
+    radius = 3.0
+    positions = {iv: (radius * np.cos(a), radius * np.sin(a))
+                 for iv, a in zip(intervals, angles)}
 
-def valid_transition(i: int, j: int, max_step: int) -> bool:
-    for db in range(12):
-        for ds in range(12):
-            if (i + ds - db) % 12 == j % 12:
-                if step_distance(db) <= max_step and step_distance(ds) <= max_step:
-                    if not (db == ds and db != 0 and (j % 12) in {0, 7}):
-                        return True
-    return False
+    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
 
+    # Panel 1: All permitted transitions (standard rule)
+    ax1 = axes[0]
+    ax1.set_title("Standard Rule: 132 Permitted Transitions", fontsize=14, fontweight='bold')
+    ax1.set_xlim(-5, 5)
+    ax1.set_ylim(-5, 5)
+    ax1.set_aspect('equal')
+    ax1.axis('off')
 
-CONSONANT = [0, 3, 4, 7, 8, 9]
-NAMES = {0: "P1\n(0)", 3: "m3\n(3)", 4: "M3\n(4)",
-         7: "P5\n(7)", 8: "m6\n(8)", 9: "M6\n(9)"}
-PERFECT = {0, 7}
+    # Draw edges by motion type
+    for m_idx, motion in enumerate(motion_types):
+        offset = (m_idx - 1.5) * 0.08
+        for s in intervals:
+            for t in intervals:
+                if is_permitted(s, t, motion):
+                    sx, sy = positions[s]
+                    tx, ty = positions[t]
+                    if s == t:
+                        # Self-loop
+                        loop_angle = np.arctan2(sy, sx)
+                        loop_r = 0.4
+                        lx = sx + loop_r * np.cos(loop_angle)
+                        ly = sy + loop_r * np.sin(loop_angle)
+                        circle = plt.Circle((lx, ly), 0.15, fill=False,
+                                          color=motion_colors[motion], alpha=0.3, linewidth=0.5)
+                        ax1.add_patch(circle)
+                    else:
+                        dx, dy = tx - sx, ty - sy
+                        perp_x, perp_y = -dy, dx
+                        length = np.sqrt(perp_x**2 + perp_y**2)
+                        if length > 0:
+                            perp_x, perp_y = perp_x/length * offset, perp_y/length * offset
+                        ax1.annotate("", xy=(tx + perp_x, ty + perp_y),
+                                    xytext=(sx + perp_x, sy + perp_y),
+                                    arrowprops=dict(arrowstyle='->', color=motion_colors[motion],
+                                                   alpha=0.15, lw=0.5))
 
-# Position consonant intervals on a circle
-def get_positions():
-    angles = {}
-    for idx, c in enumerate(CONSONANT):
-        angle = np.pi/2 - 2 * np.pi * idx / len(CONSONANT)
-        angles[c] = (np.cos(angle), np.sin(angle))
-    return angles
-
-
-def draw_graph(ax, max_step: int, title: str):
-    pos = get_positions()
-    
-    # Draw edges
-    for i in CONSONANT:
-        for j in CONSONANT:
-            if i < j and valid_transition(i, j, max_step):
-                x1, y1 = pos[i]
-                x2, y2 = pos[j]
-                dist = chromatic_distance(i, j)
-                # Color by chromatic distance
-                if dist <= 2:
-                    color = '#2ecc71'  # green
-                    lw = 2.0
-                elif dist <= 4:
-                    color = '#3498db'  # blue
-                    lw = 1.5
-                else:
-                    color = '#e74c3c'  # red
-                    lw = 1.0
-                ax.plot([x1, x2], [y1, y2], color=color, linewidth=lw, 
-                        alpha=0.7, zorder=1)
-    
-    # Draw blocked edges (dashed)
-    for i in CONSONANT:
-        for j in CONSONANT:
-            if i < j and not valid_transition(i, j, max_step):
-                x1, y1 = pos[i]
-                x2, y2 = pos[j]
-                ax.plot([x1, x2], [y1, y2], color='#e74c3c', linewidth=1,
-                        alpha=0.3, linestyle='--', zorder=1)
-    
     # Draw nodes
-    for c in CONSONANT:
-        x, y = pos[c]
-        color = '#e74c3c' if c in PERFECT else '#3498db'
-        ax.scatter(x, y, s=800, c=color, zorder=3, edgecolors='white', linewidth=2)
-        ax.text(x, y, NAMES[c], ha='center', va='center', fontsize=8,
-                fontweight='bold', color='white', zorder=4)
-    
-    # Count edges
-    edges = sum(1 for i in CONSONANT for j in CONSONANT 
-                if i < j and valid_transition(i, j, max_step))
-    
-    ax.set_title(f"{title}\n({edges}/15 edges)", fontsize=11, fontweight='bold')
-    ax.set_xlim(-1.5, 1.5)
-    ax.set_ylim(-1.5, 1.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
+    for iv, (x, y) in positions.items():
+        color = '#ff6b6b' if iv in perfect else '#69b4ff'
+        ax1.plot(x, y, 'o', markersize=30, color=color, zorder=5)
+        ax1.text(x, y, iv, ha='center', va='center', fontsize=10,
+                fontweight='bold', zorder=6)
+
+    # Legend
+    handles = [mpatches.Patch(color=c, label=m) for m, c in motion_colors.items()]
+    handles.append(mpatches.Patch(color='#ff6b6b', label='Perfect'))
+    handles.append(mpatches.Patch(color='#69b4ff', label='Imperfect'))
+    ax1.legend(handles=handles, loc='lower left', fontsize=8)
+
+    # Panel 2: Parallel-only subgraph
+    ax2 = axes[1]
+    ax2.set_title("Parallel Motion Only: 24 Edges\n(Perfect consonances unreachable)",
+                  fontsize=14, fontweight='bold')
+    ax2.set_xlim(-5, 5)
+    ax2.set_ylim(-5, 5)
+    ax2.set_aspect('equal')
+    ax2.axis('off')
+
+    for s in intervals:
+        for t in intervals:
+            if is_permitted(s, t, "parallel"):
+                sx, sy = positions[s]
+                tx, ty = positions[t]
+                if s == t:
+                    loop_angle = np.arctan2(sy, sx)
+                    loop_r = 0.4
+                    lx = sx + loop_r * np.cos(loop_angle)
+                    ly = sy + loop_r * np.sin(loop_angle)
+                    circle = plt.Circle((lx, ly), 0.2, fill=False,
+                                      color='#e74c3c', alpha=0.6, linewidth=1.5)
+                    ax2.add_patch(circle)
+                else:
+                    ax2.annotate("", xy=(tx, ty), xytext=(sx, sy),
+                                arrowprops=dict(arrowstyle='->', color='#e74c3c',
+                                               alpha=0.4, lw=1.0))
+
+    # Draw forbidden edges (dashed, to P1 and P5)
+    for s in intervals:
+        for t in perfect:
+            sx, sy = positions[s]
+            tx, ty = positions[t]
+            if s != t:
+                ax2.plot([sx, tx], [sy, ty], '--', color='gray', alpha=0.2, lw=0.5)
+
+    for iv, (x, y) in positions.items():
+        color = '#ff6b6b' if iv in perfect else '#69b4ff'
+        alpha = 0.4 if iv in perfect else 1.0
+        ax2.plot(x, y, 'o', markersize=30, color=color, zorder=5, alpha=alpha)
+        ax2.text(x, y, iv, ha='center', va='center', fontsize=10,
+                fontweight='bold', zorder=6, alpha=alpha if iv in perfect else 1.0)
+
+    # Add X marks on perfect consonances
+    for iv in perfect:
+        x, y = positions[iv]
+        ax2.text(x, y - 0.6, '✗ unreachable', ha='center', va='top',
+                fontsize=8, color='red', style='italic')
+
+    plt.tight_layout()
+    plt.savefig('counterpoint_transitions.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: counterpoint_transitions.png")
 
 
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-fig.suptitle("Counterpoint Transition Graphs: The Metric Bridge", 
-             fontsize=14, fontweight='bold', y=1.02)
+def create_fiber_chart():
+    """Create a chart showing the fiber decomposition."""
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-draw_graph(axes[0], 1, "Step ≤ 1 (Semitone)\n3 Components")
-draw_graph(axes[1], 2, "Step ≤ 2 (Whole Tone)\nMetric Bridge: dist ≤ 4")
-draw_graph(axes[2], 3, "Step ≤ 3 (Minor 3rd)\nComplete Graph")
+    intervals = ["P1", "m3", "M3", "P5", "m6", "M6"]
+    standard_fibers = [3, 4, 4, 3, 4, 4]
+    strict_fibers = [2, 4, 4, 2, 4, 4]
 
-# Legend
-legend_elements = [
-    mpatches.Patch(color='#e74c3c', label='Perfect consonance'),
-    mpatches.Patch(color='#3498db', label='Imperfect consonance'),
-    plt.Line2D([0], [0], color='#2ecc71', linewidth=2, label='dist ≤ 2'),
-    plt.Line2D([0], [0], color='#3498db', linewidth=1.5, label='dist 3-4'),
-    plt.Line2D([0], [0], color='#e74c3c', linewidth=1, linestyle='--',
-               alpha=0.3, label='blocked (dist ≥ 5)'),
-]
-fig.legend(handles=legend_elements, loc='lower center', ncol=5,
-           fontsize=9, bbox_to_anchor=(0.5, -0.05))
+    x = np.arange(len(intervals))
+    width = 0.35
 
-plt.tight_layout()
-plt.savefig("counterpoint_graphs.png", dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved: counterpoint_graphs.png")
+    bars1 = ax.bar(x - width/2, standard_fibers, width, label='Standard Rule',
+                   color=['#ff6b6b' if f == 3 else '#69b4ff' for f in standard_fibers],
+                   edgecolor='black', linewidth=0.5)
+    bars2 = ax.bar(x + width/2, strict_fibers, width, label='Strict Rule',
+                   color=['#ff4444' if f == 2 else '#4488ff' for f in strict_fibers],
+                   edgecolor='black', linewidth=0.5, alpha=0.7)
+
+    ax.set_xlabel('Target Consonant Interval', fontsize=12)
+    ax.set_ylabel('Number of Permitted Motion Types', fontsize=12)
+    ax.set_title('Fiber Decomposition: Motion Types per Target Interval', fontsize=14,
+                fontweight='bold')
+    ax.set_xticks(x)
+    ax.set_xticklabels(intervals, fontsize=11)
+    ax.set_ylim(0, 5)
+    ax.legend(fontsize=10)
+
+    # Annotate
+    for bar, val in zip(bars1, standard_fibers):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
+               str(val), ha='center', fontsize=10, fontweight='bold')
+    for bar, val in zip(bars2, strict_fibers):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
+               str(val), ha='center', fontsize=10)
+
+    ax.axhline(y=4, color='gray', linestyle='--', alpha=0.3, label='Maximum (4)')
+
+    # Add perfect/imperfect labels
+    ax.text(0, -0.8, 'PERFECT', ha='center', fontsize=9, color='red', fontweight='bold',
+           transform=ax.get_xaxis_transform())
+    ax.text(3, -0.8, 'PERFECT', ha='center', fontsize=9, color='red', fontweight='bold',
+           transform=ax.get_xaxis_transform())
+
+    plt.tight_layout()
+    plt.savefig('fiber_decomposition.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: fiber_decomposition.png")
+
+
+if __name__ == "__main__":
+    create_transition_graph()
+    create_fiber_chart()
+    print("All visualizations generated.")

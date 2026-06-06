@@ -1,238 +1,208 @@
-# First-Species Counterpoint as Metric Category Theory
+# First-Species Counterpoint as a Finite Category: Structural Characterization and Order-Theoretic Bridge
 
 ## Abstract
 
-We formalize the voice leading rules of first-species counterpoint (Fux, 1725) as a parameterized family of graphs on the consonant intervals of ℤ₁₂, indexed by a step-size bound. Our main result, the **Metric Bridge Theorem**, establishes that at step bound 2 (whole-tone motion), the transition graph is exactly the ball graph of radius 4 on the consonant intervals in the chromatic circle metric. This characterization is purely geometric — the prohibition on parallel perfect consonances, the central rule of counterpoint, contributes nothing at this scale. We further establish: (1) a **Chromatic Partition** into three connected components {0}, {3,4}, {7,8,9} at step bound 1, reflecting the musicological classification by interval quality; (2) a **Diameter Theorem** showing the step-2 graph has diameter exactly 2; (3) a **Completeness Threshold** at step bound 3, above which all transitions are valid; (4) a **Consonance Asymmetry** showing the consonant set is not closed under the inversion map on ℤ₁₂. All results are formalized as machine-verified proofs in Lean 4 with the Mathlib library.
+We formalize the rules of Fux's first-species counterpoint as a finite category where objects are the six consonant interval classes and morphisms are permitted voice-leading transitions tagged by motion type. We prove a complete structural characterization: a transition is forbidden if and only if it uses parallel motion to a perfect consonance (Theorem 4.1). This dichotomy creates a precise asymmetry between perfect and imperfect consonances with exact numerical consequences: 132 of 144 transitions are permitted under the standard rule, 120 under the strict rule. We establish that the octave complement involution preserves the permitted relation and reverses the consonance order on imperfect intervals. We compute the number of valid length-2 paths (2,904) and prove a passage rate of 121/144. All results are formalized and verified in Lean 4 with Mathlib.
+
+**Keywords**: counterpoint, category theory, finite categories, music theory, order theory, Fux's rules
 
 ## 1. Introduction
 
-The rules of first-species counterpoint, systematized by Fux in *Gradus ad Parnassum* (1725), have been the foundation of Western musical composition pedagogy for three centuries. These rules specify which intervals between two simultaneously sounding voices are consonant, and which transitions between consecutive intervals are permitted. The central prohibition — no parallel motion to perfect consonances (unison, fifth, octave) — has been taught as an aesthetic principle.
+Species counterpoint, codified by Johann Joseph Fux in *Gradus ad Parnassum* (1725), provides strict rules governing the simultaneous motion of two or more melodic voices. The simplest case — first-species counterpoint — requires that at each beat, two voices form a consonant interval, and that the voice motions between successive beats satisfy certain constraints.
 
-Recent work in mathematical music theory (Tymoczko, 2011; Fiore & Satyendra, 2005) has applied geometric and algebraic tools to voice leading, viewing chord spaces as orbifolds and voice leadings as paths. However, the specific categorical structure of Fux's counterpoint rules has not been fully explored.
+Despite its importance in music theory, counterpoint has received relatively little attention from the perspective of abstract algebra and category theory. Prior work has modeled voice leading as elements of a metric space (Tymoczko, 2006), as operations on pitch-class sets (Forte, 1973), and as morphisms in a groupoid (Fiore & Satyendra, 2005). The catalog result `MusicalCounterpoint` in the Aether system formalizes voice leading cost as an L¹ seminorm on the lattice Fin n → ℤ.
 
-In this paper, we show that the counterpoint rules, when formalized as transition predicates on ℤ₁₂ = ℤ/12ℤ, yield a parameterized family of graphs with surprisingly clean metric characterizations. The key insight is that the voice leading constraints, combined with step-size bounds, produce structures that can be described entirely in terms of the chromatic circle distance — without reference to the musical prohibition on parallel motion.
+Our contribution is different in character: we work at the level of **interval classes** rather than individual pitches, treating the transition system as a finite category. This abstraction reveals clean structural results that are invisible at the pitch level.
 
-### 1.1 Contributions
+### 1.1 Existing Work Extended
 
-1. **Metric Bridge Theorem** (Theorem 3.1): Complete metric characterization of step-2 transitions
-2. **Chromatic Partition** (Theorem 2.1): Three-component decomposition at step 1
-3. **Diameter Theorem** (Theorem 4.1): Exact diameter of the step-2 graph
-4. **Completeness Threshold** (Theorem 5.1): Sharp threshold at step 3
-5. **Consonance Asymmetry** (Theorem 6.1): Non-closure under inversion
-6. All results machine-verified in Lean 4 (approximately 250 lines of formalized mathematics)
-
-### 1.2 Catalog References
-
-This work extends the consonant interval analysis from `FINAL/Pythagorean/HarmonicMusicTheory.lean` (specifically `root_triple_consonant_intervals`) to a full categorical treatment, and connects to the categorical completion framework in `FINAL/Bridges/KnuthBendixCompletion.lean` (`finished_rules_eq_theory`).
+We build upon two catalog results:
+- **`Catalog/Algebra/MusicalCounterpoint.lean`**: Voice leading cost theory, establishing the L¹ seminorm structure and lattice-cost interaction. Our work complements this by characterizing *which* voice leadings are permitted, not just their cost.
+- **`Catalog/Pythagorean/HarmonicMusicTheory.lean`**: Pythagorean consonance ratios and the root triple classification. Our work connects these consonance classifications to the categorical structure of counterpoint.
 
 ## 2. Definitions
 
-### 2.1 The Chromatic Group
+### 2.1 Consonant Interval Classes
 
-We work over ℤ₁₂ = ℤ/12ℤ, the cyclic group of order 12, representing the twelve chromatic pitch classes.
+**Definition 2.1.** A *consonant interval class* is one of the six elements of the set
 
-**Definition 2.1** (Step Distance). For x ∈ ℤ₁₂, define
-$$\text{stepDist}(x) = \min(x.\text{val}, 12 - x.\text{val})$$
-where x.val ∈ {0, 1, ..., 11} is the canonical representative.
+  CI = {P1, m3, M3, P5, m6, M6}
 
-**Definition 2.2** (Chromatic Distance). For i, j ∈ ℤ₁₂, define
-$$d(i, j) = \text{stepDist}(j - i)$$
+with semitone values 0, 3, 4, 7, 8, 9 respectively (mod 12).
 
-**Proposition 2.1.** Chromatic distance is a metric on ℤ₁₂ (symmetric, non-negative, triangle inequality, identity of indiscernibles).
+**Definition 2.2.** The *consonance classification* partitions CI into:
+- Perfect consonances: Perf = {P1, P5}
+- Imperfect consonances: Imp = {m3, M3, m6, M6}
 
-*Proof.* Symmetry is verified formally in `chromDist_symm`. The remaining properties follow from the definition. □
+### 2.2 Motion Types
 
-### 2.2 Consonant Intervals
+**Definition 2.3.** The four *motion types* are:
 
-**Definition 2.3** (Consonant Set). The set of consonant intervals is
-$$\mathcal{C} = \{0, 3, 4, 7, 8, 9\} \subset \mathbb{Z}_{12}$$
+  MT = {parallel, similar, contrary, oblique}
 
-representing unison (0), minor third (3), major third (4), perfect fifth (7), minor sixth (8), and major sixth (9).
+**Definition 2.4.** A *counterpoint transition* is a triple (s, t, m) ∈ CI × CI × MT, where s is the source interval, t is the target interval, and m is the motion type.
 
-**Definition 2.4** (Perfect/Imperfect Partition). The consonant set decomposes as
-$$\mathcal{C} = \mathcal{P} \sqcup \mathcal{I}, \quad \mathcal{P} = \{0, 7\}, \quad \mathcal{I} = \{3, 4, 8, 9\}$$
+### 2.3 The Permitted Relation
 
-**Proposition 2.2.** |𝒞| = 6, |𝒫| = 2, |ℐ| = 4. (Formally: `consonant_card`, `perfect_card`, `imperfect_card`.)
+**Definition 2.5 (Standard Rule).** A transition (s, t, m) is *permitted* if ¬(m = parallel ∧ t ∈ Perf).
 
-### 2.3 Voice Leadings and Transitions
+**Definition 2.6 (Strict Rule).** A transition (s, t, m) is *strictly permitted* if ¬(m ∈ {parallel, similar} ∧ t ∈ Perf).
 
-**Definition 2.5** (Valid Transition). For i, j ∈ 𝒞 and step bound s ∈ ℕ, define
-$$\text{VT}(i, j, s) \iff i, j \in \mathcal{C} \wedge \exists \delta_b, \delta_s \in \mathbb{Z}_{12}: \quad j = i + \delta_s - \delta_b \wedge \text{stepDist}(\delta_b) \leq s \wedge \text{stepDist}(\delta_s) \leq s \wedge \neg(\delta_b = \delta_s \wedge \delta_b \neq 0 \wedge j \in \mathcal{P})$$
+### 2.4 The Complement Involution
 
-The predicate VT(i, j, s) captures: "there exists a voice leading with bass step δ_b and soprano step δ_s, both of step distance at most s, producing the interval change j - i, and not constituting parallel motion to a perfect consonance."
+**Definition 2.7.** The *complement involution* γ: CI → CI is defined by:
+- γ(P1) = P1, γ(P5) = P5 (fixed points)
+- γ(m3) = M6, γ(M6) = m3 (orbit 1)
+- γ(M3) = m6, γ(m6) = M3 (orbit 2)
 
-**Proposition 2.3.** VT is decidable for all arguments. (Formal: `Decidable` instance for `ValidTransition`.)
+This reflects octave complementarity: the semitone values of γ(i) and i sum to 12 for imperfect consonances.
 
-### 2.4 The Counterpoint Graph
+### 2.5 The Consonance Rank
 
-**Definition 2.6** (Counterpoint Graph). For step bound s, define the graph G_s = (𝒞, E_s) where
-$$E_s = \{(i, j) \in \mathcal{C} \times \mathcal{C} \mid \text{VT}(i, j, s)\}$$
+**Definition 2.8.** The *consonance rank* ρ: CI → {0,...,5} is the injective function:
+- ρ(m6) = 0, ρ(M6) = 1, ρ(m3) = 2, ρ(M3) = 3, ρ(P5) = 4, ρ(P1) = 5
 
-## 3. The Metric Bridge Theorem
+This induces a linear order on CI with perfect consonances at the top.
 
-**Theorem 3.1** (Metric Bridge). For all i, j ∈ 𝒞,
-$$\text{VT}(i, j, 2) \iff d(i, j) \leq 4$$
+## 3. The Thin Category
 
-*Proof.* (⇐) Given d(i, j) ≤ 4, we construct explicit voice leadings. Since the maximum interval change achievable with step-2 motions is |δ_s - δ_b| ≤ 4 (achieved by δ_b = 0, δ_s = d(i,j) or vice versa), and the parallel motion constraint is automatically satisfied when using oblique motion (δ_b = 0), the transition is valid.
+**Theorem 3.1 (Completeness).** For any s, t ∈ CI, there exists m ∈ MT such that (s, t, m) is permitted.
 
-(⇒) If d(i, j) ≥ 5, then the minimum |δ_s - δ_b| needed to achieve the interval change j - i exceeds 4, which requires either stepDist(δ_b) > 2 or stepDist(δ_s) > 2.
+*Proof sketch.* Take m = contrary. Contrary motion is always permitted since the forbidden set requires m = parallel (or m ∈ {parallel, similar} under strict rules). ∎
 
-The formal proof is by finite enumeration over ℤ₁₂ × ℤ₁₂ × 𝒞 × 𝒞 (decidable). □
+**Corollary 3.2.** The thin category generated by the permitted relation is the complete category K₆ on 6 objects, under both standard and strict rules.
 
-**Corollary 3.2** (Redundancy of Parallel Rule at Step 2). The transition set at step 2 is identical whether or not the parallel motion prohibition is enforced. The counterpoint rule is "invisible" at whole-tone scale.
+This means that at the level of interval-class transitions (ignoring motion types), counterpoint imposes no restriction: any consonant interval can follow any other. The interesting structure lives in the motion types.
 
-*Proof.* The metric characterization d(i,j) ≤ 4 makes no reference to the parallel rule. Formally, one verifies that no transition blocked by the parallel rule at step 2 would have been achievable otherwise — the step constraint alone is sufficient. □
+## 4. Main Results
 
-**Remark.** This is the paper's main contribution. It shows that centuries of musical pedagogy about "why parallel fifths sound bad" are, at the whole-tone motion scale, consequences of geometry rather than aesthetics. The prohibition is a shadow of the metric structure.
+### 4.1 The Forbidden Transition Characterization
 
-### 3.1 PEGB Analysis
+**Theorem 4.1 (Dichotomy).** A transition (s, t, m) is permitted if and only if t ∈ Imp ∨ m ≠ parallel.
 
-- **Proof**: Complete formal proof via decidable finite verification in `step2_iff_chromDist_le_four`
-- **Example**: The pair (0, 7) — unison to fifth — has chromatic distance 5, exceeding the threshold. Indeed, to change the interval by 7 (or equivalently 5) with steps bounded by 2, one needs δ_s - δ_b ≡ 7 (mod 12). With |δ_b|₁₂ ≤ 2 and |δ_s|₁₂ ≤ 2, the maximum achievable change is 4.
-- **Generalization**: For step bound s, we conjecture VT(i, j, s) ↔ d(i, j) ≤ 2s, whenever the parallel motion rule is non-binding. This holds for s = 1, 2, 3.
-- **Boundary**: The characterization breaks down if we add the strict Fux rule (no *similar* motion to perfect consonances, not just parallel). It also fails over non-chromatic (diatonic) pitch spaces where the metric is non-uniform.
+*Proof.* By the definition of `isPermitted`, the transition is forbidden iff m = parallel ∧ t.isPerfect. By De Morgan, it is permitted iff m ≠ parallel ∨ ¬t.isPerfect, i.e., m ≠ parallel ∨ t ∈ Imp. ∎
 
-## 4. The Diameter Theorem
+**Theorem 4.2 (Strict Dichotomy).** Under strict rules, (s, t, m) is permitted iff t ∈ Imp ∨ (m = contrary ∨ m = oblique).
 
-**Theorem 4.1** (Diameter). The graph G₂ has diameter exactly 2.
+### 4.2 Counting Results
 
-*Proof.* Upper bound: for any i, j ∈ 𝒞, there exists k ∈ 𝒞 with VT(i, k, 2) and VT(k, j, 2). Formally verified in `step2_diameter_le_two`.
+**Theorem 4.3.** |Permitted| = 132, |Forbidden| = 12 (standard rule).
 
-Lower bound: VT(0, 7, 2) is false (chromatic distance 5 > 4). Formally: `step2_not_direct_0_7`.
+*Proof.* Forbidden transitions have form (s, t, parallel) where t ∈ Perf. There are |CI| × |Perf| × 1 = 6 × 2 × 1 = 12 such triples. ∎
 
-The witness path for the hardest case: 0 → 3 → 7 (Unison → Minor Third → Perfect Fifth). Formally: `step2_path_0_3_7`. □
+**Theorem 4.4.** |StrictlyPermitted| = 120, |StrictlyForbidden| = 24 (strict rule).
 
-### 4.1 PEGB Analysis
+**Theorem 4.5 (Fiber Decomposition).**
+- For t ∈ Imp: the fiber |{m : (s,t,m) permitted}| = 4 for all s.
+- For t ∈ Perf: the fiber = 3 (standard) or 2 (strict).
 
-- **Proof**: Constructive existence of intermediaries, plus non-existence of direct paths
-- **Example**: P1(0) → m3(3) → P5(7). Chromatic distances: d(0,3) = 3 ≤ 4 ✓, d(3,7) = 4 ≤ 4 ✓
-- **Generalization**: We conjecture that for all s ≥ 2, the diameter of G_s is at most 2 (since G₃ is complete with diameter 1, and G₂ has diameter 2)
-- **Boundary**: At s = 1, the graph is disconnected (infinite diameter between components)
+The total decomposes as: 132 = 6 × 4 × 4 + 6 × 2 × 3.
 
-## 5. The Completeness Threshold
+### 4.3 The Complement Involution
 
-**Theorem 5.1** (Threshold). G₂ is not complete (∃ i,j ∈ 𝒞: ¬VT(i,j,2)), but G₃ is complete (∀ i,j ∈ 𝒞: VT(i,j,3)). The threshold for completeness is exactly s = 3.
+**Theorem 4.6 (Complement Preservation).** For all transitions t, isPermitted(t) = isPermitted(γ(t)), where γ acts componentwise on source and target.
 
-*Proof.* Non-completeness of G₂: the pair (0, 7) is not connected. Completeness of G₃: verified by finite enumeration. Formally: `completeness_threshold`. □
+*Proof.* Since γ preserves the perfect/imperfect classification (Lemma: γ(Perf) = Perf, γ(Imp) = Imp), and the permitted predicate depends only on the motion type and the target's classification, the result follows. ∎
 
-This threshold has musical significance: the minor third (3 semitones) is the smallest interval that "unlocks" the entire counterpoint space. Below it, geometry constrains composition. Above it, all consonant progressions are available.
+**Theorem 4.7 (Fixed Points).** γ(i) = i iff i ∈ Perf.
 
-### 5.1 PEGB Analysis
+**Theorem 4.8 (Order Reversal).** For i, j ∈ Imp: ρ(i) ≤ ρ(j) iff ρ(γ(j)) ≤ ρ(γ(i)).
 
-- **Proof**: Combination of counterexample (for s=2) and exhaustive verification (for s=3)
-- **Example**: At s = 2, four pairs are blocked. At s = 3, even the hardest pair (0,7) at distance 5 is reachable: use δ_b = 0, δ_s = 5 (with stepDist(5) = min(5,7) = 5 > 3... wait, 7 = 0 + 7 = 0 + δ_s - δ_b, so δ_s - δ_b ≡ 7. With δ_b = -3 ≡ 9 and δ_s = 4: stepDist(9) = 3, stepDist(4) = 4 > 3. Better: δ_b = 2, δ_s = 9: stepDist(2) = 2, stepDist(9) = 3 ✓)
-- **Generalization**: What is the completeness threshold for other consonance sets?
-- **Boundary**: The threshold depends critically on the choice of consonant set
+### 4.4 Path Counting
 
-## 6. Consonance Asymmetry
+**Theorem 4.9.** The number of valid length-2 paths (sequences i₁ →[m₁] i₂ →[m₂] i₃) is 2,904 out of 3,456 total, giving a passage rate of 121/144 ≈ 84.0%.
 
-**Theorem 6.1** (Non-Closure). The consonant set 𝒞 is not closed under the negation map x ↦ -x on ℤ₁₂. Specifically, -(7) ≡ 5 (mod 12), and 5 ∉ 𝒞.
+### 4.5 The Parallel Subgraph
 
-*Proof.* Direct computation. Formally: `fifth_neg_dissonant`, `consonant_not_neg_closed`. □
+**Theorem 4.10 (Parallel Reachability).** Under parallel motion alone, parallelReachable(s, t) = true iff t ∈ Imp.
 
-**Theorem 6.2** (Imperfect Closure). The imperfect consonance set ℐ = {3, 4, 8, 9} IS closed under negation: the inversion sends m3 ↔ M6 and M3 ↔ m6.
+This means the parallel-motion subgraph has exactly 24 edges (6 × 4 = 24, all targeting imperfect consonances), and perfect consonances are unreachable by parallel motion from any source.
 
-*Proof.* Formally: `imperfect_neg_closed`. □
+**Theorem 4.11 (Parallel Subgraph Structure).** The parallel-only subgraph is a bipartite-like graph: CI → Imp is complete (24 edges), and CI → Perf is empty (0 edges).
 
-This asymmetry has deep musical significance. The perfect fourth (5 semitones) — the inversion of the perfect fifth — occupies a famously ambiguous position in music theory, treated sometimes as consonant and sometimes as dissonant. Our result shows this ambiguity is structural: the fourth is the *unique* inversion of a consonance that falls outside the consonant set.
+### 4.6 The Order-Theoretic Bridge
 
-### 6.1 PEGB Analysis
+**Theorem 4.12.** Parallel motion to t is permitted iff ρ(t) < ρ(p) for all p ∈ Perf, i.e., iff t is strictly below the perfect consonance threshold.
 
-- **Proof**: Direct computation in ℤ₁₂
-- **Example**: 7 ↦ -7 ≡ 5 (mod 12). The perfect fourth (5) is the only interval that breaks closure.
-- **Generalization**: Which subsets of ℤ_n are closed under negation? This connects to the theory of self-complementary sets in combinatorics.
-- **Boundary**: In some theoretical frameworks (e.g., extended consonance in jazz), the fourth IS consonant, and the consonant set becomes inversion-closed.
+This connects the counterpoint prohibition to the consonance order: parallel motion cannot "reach the top" of the consonance hierarchy.
 
-## 7. Chromatic Partition
+**Theorem 4.13.** The standard-to-strict transition removes exactly 1 motion type per perfect target (similar) and 0 per imperfect target, reducing fibers from 3→2 (perfect) and leaving 4→4 (imperfect) unchanged.
 
-**Theorem 7.1** (Three Components). The graph G₁ has exactly three connected components:
-1. {0} — the unison, isolated
-2. {3, 4} — the thirds, mutually reachable
-3. {7, 8, 9} — the upper consonances, mutually reachable
+### 4.7 Diatonic Specialization
 
-*Proof.* Connectivity within components: formally verified (e.g., `step1_thirds`, `step1_upper`). Separation between components: formally verified (`step1_unison_isolated`, `step1_separated`). □
+**Theorem 4.14.** In the C major diatonic scale (7 notes), exactly 27 of 49 ordered pairs of scale degrees form consonant intervals.
 
-### 7.1 PEGB Analysis
+**Theorem 4.15.** The B-F tritone (6 semitones) is the unique generic fifth that fails to be a perfect fifth, giving the diatonic scale its characteristic tension.
 
-- **Proof**: Exhaustive verification of all within-component and between-component pairs
-- **Example**: m3 ↔ M3 at step 1 uses the voice leading δ_b = 0, δ_s = 1 (oblique motion, one semitone up in soprano)
-- **Generalization**: The partition {0}, {3,4}, {7,8,9} corresponds to the level sets of the "interval class" function in music theory. Do other consonance systems yield analogous partitions?
-- **Boundary**: The partition is specific to step 1; at step 2 the graph becomes connected
+## 5. The Interval Change Bridge
 
-## 8. Categorical Interpretation
+We connect our abstract transition system to the concrete voice-leading theory of `MusicalCounterpoint.lean`.
 
-### 8.1 Non-Transitivity
+**Definition 5.1.** The *interval change* from a two-voice motion (b, s) (bass and soprano motions in semitones) is Δ = s - b.
 
-**Theorem 8.1** (Non-Preorder). The relation VT(·, ·, 2) is reflexive and symmetric but NOT transitive. The witness: VT(0, 3, 2), VT(3, 7, 2), ¬VT(0, 7, 2).
+**Theorem 5.2.** Parallel motion (b = s) gives Δ = 0: the interval is preserved.
 
-This means the free category generated by G₂ is strictly richer than a preorder. It has non-trivial path structure: the composition of two morphisms can fail to equal any single morphism.
+**Theorem 5.3.** Contrary motion (b = -s) gives |Δ| = 2|s|: the interval changes maximally.
 
-### 8.2 The Free Category
+**Theorem 5.4.** The interval change is additive under composition: Δ(m₁ + m₂) = Δ(m₁) + Δ(m₂).
 
-The free category 𝐅(G₂) has:
-- **Objects**: The 6 consonant intervals
-- **Morphisms**: Finite directed paths in G₂
-- **Composition**: Path concatenation
-- **Identity**: Length-0 paths
+These results bridge our categorical perspective (which transitions are permitted) with the metric perspective (what is the cost of a voice leading).
 
-Since G₂ is connected with diameter 2, the hom-sets are all non-empty (every pair of objects is connected). The non-transitivity means that 𝐅(G₂) is NOT equivalent to the codiscrete category on 6 objects — it has genuine categorical structure.
+## 6. PEGB Analysis
 
-### 8.3 The Phase Transition
+### Theorem 4.1: Dichotomy Principle
+- **Proof**: Complete structural proof by case analysis on motion type and target class.
+- **Example**: (P1, M3, parallel) is permitted (imperfect target). (P1, P5, parallel) is forbidden (perfect target, parallel motion).
+- **Generalization**: The dichotomy extends naturally to n-voice counterpoint, where the forbidden transitions involve parallel motion between any pair of voices arriving at a perfect interval.
+- **Boundary**: The dichotomy breaks when we consider chromatic alterations that change the consonance classification of intervals (e.g., augmented unisons, diminished fifths).
 
-At step 3, 𝐅(G₃) degenerates to the codiscrete (chaotic) category on 6 objects, since every direct transition is valid. The passage from s = 2 to s = 3 is a categorical phase transition: from a structured category with non-trivial path algebra to a trivial equivalence relation.
+### Theorem 4.6: Complement Preservation
+- **Proof**: Structural proof using the fact that complement preserves the perfect/imperfect classification.
+- **Example**: If (m3, M3, contrary) is permitted, then (M6, m6, contrary) is also permitted.
+- **Generalization**: In n-tone equal temperament (n ≠ 12), the complement involution generalizes to the map i ↦ n - i, and similar preservation results hold whenever the consonance classification respects this involution.
+- **Boundary**: In just intonation (non-equal temperament), the complement involution does not preserve consonance classes because the inversion of a just major third (5/4) gives a just minor sixth (8/5), which has different tuning properties.
 
-## 9. The Forbidden Graph
+### Theorem 4.9: Path Counting (2,904)
+- **Proof**: Exhaustive enumeration verified by native_decide.
+- **Example**: P1 →[contrary] M3 →[parallel] m6 is valid. P1 →[parallel] P5 →[contrary] m3 is invalid (first step forbidden).
+- **Generalization**: For length-n paths, the passage rate approaches (132/144)ⁿ ≈ 0.917ⁿ as n → ∞, assuming independence (which is exact here since the rule depends only on each transition individually).
+- **Boundary**: For length-k paths with k > 2, the exact count requires matrix exponentiation of the 6×6 transition matrix restricted to each motion type.
 
-The complement of G₂ — the graph of blocked transitions — consists of exactly 4 undirected edges:
-- (0, 7): distance 5
-- (3, 8): distance 5
-- (3, 9): distance 6
-- (4, 9): distance 5
+### Theorem 4.10: Parallel Reachability
+- **Proof**: Structural proof by the dichotomy principle restricted to parallel motion.
+- **Example**: m3 →[parallel] M3 is permitted. m3 →[parallel] P5 is forbidden.
+- **Generalization**: For any subset S ⊆ MT of motion types, the reachable set is either all of CI (if S contains contrary or oblique) or only Imp (if S = {parallel} or S = {parallel, similar} under strict rules).
+- **Boundary**: In three-voice counterpoint, parallel motion between voices 1 and 2 is independent of voices 2 and 3, so the reachability analysis decomposes into pairwise constraints.
 
-This graph has the structure of a tree: 0-7 (isolated edge) and 8-3-9-4 (path of length 3). Its chromatic number is 2, and it is a forest with two components.
+## 7. Discussion
 
-**Proposition 9.1.** All blocked pairs at step 2 have chromatic distance ≥ 5, and all pairs at distance ≤ 4 are allowed. (Formally: `blocked_pairs_distances`.)
+### 7.1 Why This Matters
 
-## 10. Discussion
+The formalization reveals that Fux's counterpoint rules have a remarkably clean mathematical structure. The prohibition on parallel fifths is not an arbitrary aesthetic choice — it is the minimal constraint that creates a nontrivial asymmetry between perfect and imperfect consonances. The resulting system is:
 
-### 10.1 Musical Implications
+1. **Maximally permissive**: 91.7% of transitions survive (132/144).
+2. **Structurally clean**: The dichotomy principle gives a complete, two-clause characterization.
+3. **Symmetric**: The complement involution preserves the structure.
+4. **Compositionally rich**: Even with only 12 forbidden transitions, the cascading effect creates 552 forbidden length-2 paths.
 
-The Metric Bridge Theorem suggests that the prohibition on parallel perfect consonances, far from being an independent aesthetic principle, is a consequence of geometric constraints at the whole-tone motion scale. This does not diminish the musical importance of the rule — it deepens our understanding of why the rule "works": it aligns with a natural metric structure.
+### 7.2 Connection to Existing Work
 
-### 10.2 Connections to Other Areas
+Our results complement the voice-leading cost theory from the catalog. Where the cost theory asks "how expensive is this voice leading?", our category theory asks "is this voice leading permitted at all?". The two perspectives are orthogonal: cost is a continuous measure on the space of all voice motions, while permission is a binary predicate on the finite set of interval-class transitions.
 
-- **Persistent homology**: The filtration G₁ ⊂ G₂ ⊂ G₃ = K₆ of counterpoint graphs by step bound is analogous to a Vietoris-Rips filtration on a metric space. The "birth" and "death" of topological features (components merging, cycles forming) encode the multi-scale structure of counterpoint.
+The bridge between them lies in Theorem 5.2: parallel motion has zero interval change. This means the forbidden transitions are precisely those with zero cost in the interval-change metric — the "free" transitions that would preserve intervals without any harmonic effort. Banning them forces composers to do harmonic work at every step, which is the compositional essence of counterpoint.
 
-- **Poset theory**: The original conjecture asked whether the counterpoint category is equivalent to a thin category from a 12-element poset. Our results show this is false: the step-2 category is not a preorder (non-transitive), and the step-3 category is trivially a preorder (the codiscrete one). The interesting structure lies between.
+## 8. Future Work
 
-- **Graph theory**: The counterpoint graphs G_s are unit disk graphs on the consonant intervals embedded in the chromatic circle. The Metric Bridge Theorem is the statement that G₂ equals the unit disk graph at radius 4.
-
-### 10.3 The Original Conjecture
-
-The motivating conjecture — that the first-species counterpoint category is equivalent to a thin category from a 12-element poset — is **disproved**. The step-2 transition relation is not transitive (Theorem 8.1), so it cannot be a preorder, and therefore cannot arise from any poset. The correct structure is a graph category, not a thin category.
-
-However, the disproof is informative: it reveals that the non-transitivity of counterpoint is a genuine structural feature, not an artifact of the formalization. The "obstacle to transitivity" — the pair (Unison, Perfect Fifth) — is musically the most fundamental interval relationship, and its resistance to direct step-2 voice leading is a deep property of the consonance geometry.
-
-## 11. Future Work
-
-1. **Diatonic counterpoint**: Restrict to the 7-note diatonic scale, where available step sizes depend on position. The metric characterization may break down.
-
-2. **Higher species**: Second-species (two notes against one) and third-species (four against one) introduce passing tones and neighbor tones. How does the categorical structure change?
-
-3. **Persistent counterpoint homology**: Compute the persistent homology of the filtration G₁ ⊂ G₂ ⊂ ... and interpret barcodes musically.
-
-4. **Generalized consonance sets**: Study other subsets of ℤ_n as "consonance sets" and characterize which give metric transition graphs.
+1. **Multi-voice extension**: Extend the category to 3- and 4-voice counterpoint, where pairwise constraints create a richer structure.
+2. **Second and third species**: Model passing tones, neighbor tones, and rhythmic variety as higher morphisms.
+3. **Chromatic counterpoint**: Extend to the full 12-tone chromatic scale, where the consonance classification changes.
+4. **Compositional algorithms**: Use the category structure to generate valid counterpoint automatically, optimizing the voice-leading cost from the catalog.
+5. **Tropical counterpoint**: Connect to the tropical semiring framework in `Catalog/Tropical/TropicalHypergraphCounterpoint.lean`.
 
 ## References
 
-1. Fux, J.J. *Gradus ad Parnassum*. Vienna, 1725.
-2. Tymoczko, D. *A Geometry of Music*. Oxford University Press, 2011.
-3. Fiore, T.M. & Satyendra, R. "Generalized Contextual Groups." *Music Theory Online*, 2005.
-4. Mazzola, G. *The Topos of Music*. Birkhäuser, 2002.
-5. Cohn, R. "Neo-Riemannian Operations, Parsimonious Trichords, and Their Tonnetz Representations." *Journal of Music Theory*, 1997.
-
-### Catalog References
-
-- `FINAL/Pythagorean/HarmonicMusicTheory.lean`: `root_triple_consonant_intervals` — consonant interval analysis
-- `FINAL/Bridges/KnuthBendixCompletion.lean`: `finished_rules_eq_theory` — categorical completion framework
-- `Novelty/CounterpointCategory.lean`: All formal results of this paper
+1. Fux, J.J. (1725). *Gradus ad Parnassum*. Vienna.
+2. Tymoczko, D. (2006). The geometry of musical chords. *Science*, 313(5783), 72-74.
+3. Fiore, T.M. & Satyendra, R. (2005). Generalized contextual groups. *Music Theory Online*, 11(3).
+4. `Catalog/Algebra/MusicalCounterpoint.lean` — Voice leading cost as L¹ seminorm.
+5. `Catalog/Pythagorean/HarmonicMusicTheory.lean` — Pythagorean consonance ratios.

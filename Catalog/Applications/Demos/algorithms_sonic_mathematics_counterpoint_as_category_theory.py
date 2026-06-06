@@ -1,236 +1,272 @@
 #!/usr/bin/env python3
 """
-Algorithms for Counterpoint Category Theory
+algorithms.py — Type-hinted implementations of the counterpoint category algorithms.
 
-Type-hinted implementations of the core algorithms used in the
-formalization of first-species counterpoint as category theory.
+Provides:
+  1. CounterpointCategory: enumeration and classification of transitions
+  2. PathEnumerator: counting and generating valid counterpoint paths
+  3. SymmetryAnalyzer: complement involution and order analysis
+  4. DiatonicSpecializer: diatonic scale consonance analysis
 """
 
-from typing import Optional
+from dataclasses import dataclass
+from enum import Enum, auto
+from typing import List, Tuple, Set, Dict, Iterator
 
 
-# === Core Types ===
+class ConsInterval(Enum):
+    """The six consonant interval classes (mod octave)."""
+    P1 = 0   # Perfect unison
+    m3 = 3   # Minor third
+    M3 = 4   # Major third
+    P5 = 7   # Perfect fifth
+    m6 = 8   # Minor sixth
+    M6 = 9   # Major sixth
 
-PitchClass = int  # Elements of Z/12Z
-Interval = int    # Consonant interval (0, 3, 4, 7, 8, 9)
-StepBound = int   # Maximum step size for voice leading
+    @property
+    def is_perfect(self) -> bool:
+        return self in (ConsInterval.P1, ConsInterval.P5)
 
-CONSONANT_INTERVALS: list[Interval] = [0, 3, 4, 7, 8, 9]
-PERFECT_CONSONANCES: set[Interval] = {0, 7}
-IMPERFECT_CONSONANCES: set[Interval] = {3, 4, 8, 9}
+    @property
+    def is_imperfect(self) -> bool:
+        return not self.is_perfect
 
+    @property
+    def complement(self) -> 'ConsInterval':
+        """The octave complement involution."""
+        return {
+            ConsInterval.P1: ConsInterval.P1,
+            ConsInterval.m3: ConsInterval.M6,
+            ConsInterval.M3: ConsInterval.m6,
+            ConsInterval.P5: ConsInterval.P5,
+            ConsInterval.m6: ConsInterval.M3,
+            ConsInterval.M6: ConsInterval.m3,
+        }[self]
 
-# === Algorithm 1: Step Distance ===
-
-def step_distance(x: PitchClass) -> int:
-    """
-    Compute the minimum step distance for a pitch class motion.
-    
-    Pseudocode:
-        stepDist(x) = min(x mod 12, 12 - (x mod 12))
-    
-    This gives the shortest path around the chromatic circle.
-    """
-    v = x % 12
-    return min(v, 12 - v)
-
-
-# === Algorithm 2: Chromatic Distance ===
-
-def chromatic_distance(i: Interval, j: Interval) -> int:
-    """
-    Compute chromatic circle distance between two intervals.
-    
-    Pseudocode:
-        chromDist(i, j) = stepDist(j - i)
-    """
-    return step_distance(j - i)
-
-
-# === Algorithm 3: Valid Transition Check ===
-
-def is_valid_transition(i: Interval, j: Interval, max_step: StepBound) -> bool:
-    """
-    Check if a valid voice leading exists from interval i to j.
-    
-    Pseudocode:
-        validTransition(i, j, s):
-            for δb in Z/12Z:
-                for δs in Z/12Z:
-                    if j ≡ i + δs - δb (mod 12)
-                       AND stepDist(δb) ≤ s
-                       AND stepDist(δs) ≤ s
-                       AND NOT (δb = δs ≠ 0 AND j ∈ Perfect):
-                        return True
-            return False
-    
-    Time complexity: O(144) = O(1) since the search space is bounded.
-    """
-    if i not in CONSONANT_INTERVALS or j not in CONSONANT_INTERVALS:
-        return False
-    
-    for db in range(12):
-        for ds in range(12):
-            if (i + ds - db) % 12 == j % 12:
-                if step_distance(db) <= max_step and step_distance(ds) <= max_step:
-                    if not (db == ds and db != 0 and j % 12 in PERFECT_CONSONANCES):
-                        return True
-    return False
+    @property
+    def consonance_rank(self) -> int:
+        """Higher = more consonant."""
+        return {
+            ConsInterval.m6: 0, ConsInterval.M6: 1,
+            ConsInterval.m3: 2, ConsInterval.M3: 3,
+            ConsInterval.P5: 4, ConsInterval.P1: 5,
+        }[self]
 
 
-# === Algorithm 4: Metric Bridge (O(1) shortcut) ===
-
-def metric_bridge_check(i: Interval, j: Interval) -> bool:
-    """
-    O(1) check for step-2 transitions using the Metric Bridge Theorem.
-    
-    Pseudocode:
-        metricBridge(i, j) = chromDist(i, j) ≤ 4
-    
-    This is equivalent to is_valid_transition(i, j, 2) but runs in O(1)
-    instead of O(144), thanks to the Metric Bridge Theorem.
-    """
-    return chromatic_distance(i, j) <= 4
+class MotionType(Enum):
+    """The four types of contrapuntal motion."""
+    PARALLEL = auto()
+    SIMILAR = auto()
+    CONTRARY = auto()
+    OBLIQUE = auto()
 
 
-# === Algorithm 5: Find Shortest Path ===
+@dataclass(frozen=True)
+class CPTransition:
+    """A counterpoint transition: (source, target, motion)."""
+    source: ConsInterval
+    target: ConsInterval
+    motion: MotionType
 
-def find_shortest_path(
-    i: Interval, j: Interval, max_step: StepBound
-) -> Optional[list[Interval]]:
-    """
-    Find shortest path in the counterpoint graph using BFS.
-    
-    Pseudocode:
-        BFS from i, exploring valid transitions at step bound s.
-        Returns shortest path [i, ..., j] or None if unreachable.
-    
-    By the Diameter Theorem, at step bound 2, paths have length ≤ 2.
-    At step bound 3+, all direct paths exist (length 1).
-    """
-    from collections import deque
-    
-    if i == j:
-        return [i]
-    
-    queue: deque[list[Interval]] = deque([[i]])
-    visited: set[Interval] = {i}
-    
-    while queue:
-        path = queue.popleft()
-        current = path[-1]
-        
-        for next_interval in CONSONANT_INTERVALS:
-            if next_interval not in visited:
-                if is_valid_transition(current, next_interval, max_step):
-                    new_path = path + [next_interval]
-                    if next_interval == j:
-                        return new_path
-                    visited.add(next_interval)
-                    queue.append(new_path)
-    
-    return None
+    def is_permitted(self) -> bool:
+        """Standard rule: no parallel motion to perfect consonances."""
+        return not (self.motion == MotionType.PARALLEL and self.target.is_perfect)
+
+    def is_strictly_permitted(self) -> bool:
+        """Strict rule: no parallel/similar to perfect consonances."""
+        return not (
+            self.motion in (MotionType.PARALLEL, MotionType.SIMILAR)
+            and self.target.is_perfect
+        )
 
 
-# === Algorithm 6: Connected Components ===
+class CounterpointCategory:
+    """The finite category of first-species counterpoint transitions."""
 
-def find_components(max_step: StepBound) -> list[set[Interval]]:
-    """
-    Find connected components of the counterpoint graph.
-    
-    Pseudocode:
-        Standard DFS/BFS component finding on the transition graph.
-    
-    Results by step bound:
-        Step 1: {0}, {3,4}, {7,8,9}  (3 components)
-        Step 2: {0,3,4,7,8,9}        (1 component, connected)
-        Step 3+: {0,3,4,7,8,9}       (1 component, complete)
-    """
-    remaining = set(CONSONANT_INTERVALS)
-    components: list[set[Interval]] = []
-    
-    while remaining:
-        start = min(remaining)
-        component: set[Interval] = set()
-        stack = [start]
-        
-        while stack:
-            v = stack.pop()
-            if v in remaining:
-                remaining.discard(v)
-                component.add(v)
-                for w in CONSONANT_INTERVALS:
-                    if w in remaining and is_valid_transition(v, w, max_step):
-                        stack.append(w)
-        
-        components.append(component)
-    
-    return components
+    def __init__(self, strict: bool = False) -> None:
+        self.strict = strict
+        self._transitions: List[CPTransition] = []
+        self._permitted: List[CPTransition] = []
+        self._forbidden: List[CPTransition] = []
+        self._build()
 
+    def _build(self) -> None:
+        for s in ConsInterval:
+            for t in ConsInterval:
+                for m in MotionType:
+                    tr = CPTransition(s, t, m)
+                    self._transitions.append(tr)
+                    check = tr.is_strictly_permitted() if self.strict else tr.is_permitted()
+                    if check:
+                        self._permitted.append(tr)
+                    else:
+                        self._forbidden.append(tr)
 
-# === Algorithm 7: Transition Matrix ===
+    @property
+    def total_count(self) -> int:
+        return len(self._transitions)
 
-def transition_matrix(max_step: StepBound) -> list[list[bool]]:
-    """
-    Compute the full adjacency matrix of the counterpoint graph.
-    
-    Returns a 6×6 boolean matrix indexed by CONSONANT_INTERVALS.
-    """
-    return [
-        [is_valid_transition(i, j, max_step) for j in CONSONANT_INTERVALS]
-        for i in CONSONANT_INTERVALS
-    ]
+    @property
+    def permitted_count(self) -> int:
+        return len(self._permitted)
 
+    @property
+    def forbidden_count(self) -> int:
+        return len(self._forbidden)
 
-# === Algorithm 8: Graph Diameter ===
+    def permitted_transitions(self) -> List[CPTransition]:
+        return list(self._permitted)
 
-def compute_diameter(max_step: StepBound) -> int:
-    """
-    Compute the diameter of the counterpoint graph.
-    Uses all-pairs BFS.
-    """
-    max_dist = 0
-    for i in CONSONANT_INTERVALS:
-        for j in CONSONANT_INTERVALS:
-            path = find_shortest_path(i, j, max_step)
-            if path is None:
-                return float('inf')  # type: ignore
-            max_dist = max(max_dist, len(path) - 1)
-    return max_dist
+    def forbidden_transitions(self) -> List[CPTransition]:
+        return list(self._forbidden)
+
+    def fiber_size(self, target: ConsInterval) -> int:
+        """Number of permitted motion types for a given target."""
+        return sum(
+            1 for m in MotionType
+            if (CPTransition(ConsInterval.P1, target, m).is_strictly_permitted()
+                if self.strict
+                else CPTransition(ConsInterval.P1, target, m).is_permitted())
+        )
+
+    def adjacency_matrix(self, motion: MotionType) -> Dict[Tuple[ConsInterval, ConsInterval], bool]:
+        """Which source-target pairs are reachable via a specific motion type."""
+        result: Dict[Tuple[ConsInterval, ConsInterval], bool] = {}
+        for s in ConsInterval:
+            for t in ConsInterval:
+                tr = CPTransition(s, t, motion)
+                check = tr.is_strictly_permitted() if self.strict else tr.is_permitted()
+                result[(s, t)] = check
+        return result
 
 
-# === Verification ===
+class PathEnumerator:
+    """Enumerate and count valid counterpoint paths of given length."""
 
-def verify_metric_bridge() -> bool:
-    """Verify the Metric Bridge Theorem for all consonant pairs."""
-    for i in CONSONANT_INTERVALS:
-        for j in CONSONANT_INTERVALS:
-            brute = is_valid_transition(i, j, 2)
-            metric = metric_bridge_check(i, j)
-            if brute != metric:
-                return False
-    return True
+    def __init__(self, strict: bool = False) -> None:
+        self.strict = strict
+
+    def is_valid_step(self, s: ConsInterval, t: ConsInterval, m: MotionType) -> bool:
+        tr = CPTransition(s, t, m)
+        return tr.is_strictly_permitted() if self.strict else tr.is_permitted()
+
+    def count_paths(self, length: int) -> int:
+        """Count valid paths of given length (number of transitions)."""
+        if length == 0:
+            return len(ConsInterval)
+        intervals = list(ConsInterval)
+        motions = list(MotionType)
+        count = 0
+        # For length 1, count valid single transitions
+        if length == 1:
+            for s in intervals:
+                for t in intervals:
+                    for m in motions:
+                        if self.is_valid_step(s, t, m):
+                            count += 1
+            return count
+        # For length 2
+        if length == 2:
+            for i1 in intervals:
+                for i2 in intervals:
+                    for i3 in intervals:
+                        for m1 in motions:
+                            for m2 in motions:
+                                if (self.is_valid_step(i1, i2, m1) and
+                                    self.is_valid_step(i2, i3, m2)):
+                                    count += 1
+            return count
+        raise ValueError(f"Length {length} not efficiently supported")
+
+    def passage_rate(self, length: int) -> float:
+        """Fraction of potential paths that are valid."""
+        valid = self.count_paths(length)
+        total = len(ConsInterval) ** (length + 1) * len(MotionType) ** length
+        return valid / total
+
+
+class SymmetryAnalyzer:
+    """Analyze symmetries of the counterpoint transition system."""
+
+    @staticmethod
+    def fixed_points() -> List[ConsInterval]:
+        """Intervals fixed by the complement involution."""
+        return [i for i in ConsInterval if i.complement == i]
+
+    @staticmethod
+    def orbits() -> List[Tuple[ConsInterval, ConsInterval]]:
+        """Non-trivial orbits of the complement involution."""
+        seen: Set[ConsInterval] = set()
+        orbits = []
+        for i in ConsInterval:
+            if i not in seen and i.complement != i:
+                orbits.append((i, i.complement))
+                seen.add(i)
+                seen.add(i.complement)
+        return orbits
+
+    @staticmethod
+    def verify_order_reversing() -> bool:
+        """Check complement reverses order on imperfect consonances."""
+        imperfect = [i for i in ConsInterval if i.is_imperfect]
+        for i in imperfect:
+            for j in imperfect:
+                if i.consonance_rank <= j.consonance_rank:
+                    if not (j.complement.consonance_rank <= i.complement.consonance_rank):
+                        return False
+        return True
+
+
+class DiatonicSpecializer:
+    """Analyze consonance in specific diatonic scales."""
+
+    SCALES: Dict[str, List[int]] = {
+        "C_major": [0, 2, 4, 5, 7, 9, 11],
+        "A_minor": [9, 11, 0, 2, 4, 5, 7],
+        "G_major": [7, 9, 11, 0, 2, 4, 6],
+    }
+
+    CONSONANT_SEMITONES = {i.value for i in ConsInterval}
+
+    @classmethod
+    def consonant_pairs(cls, scale_name: str) -> List[Tuple[int, int]]:
+        """Find all consonant pairs in a given scale."""
+        scale = cls.SCALES[scale_name]
+        pairs = []
+        for i, d1 in enumerate(scale):
+            for j, d2 in enumerate(scale):
+                interval = (d2 - d1) % 12
+                if interval in cls.CONSONANT_SEMITONES:
+                    pairs.append((i, j))
+        return pairs
+
+    @classmethod
+    def consonance_density(cls, scale_name: str) -> float:
+        """Fraction of dyads that are consonant."""
+        pairs = cls.consonant_pairs(scale_name)
+        total = len(cls.SCALES[scale_name]) ** 2
+        return len(pairs) / total
 
 
 if __name__ == "__main__":
-    print("Verifying Metric Bridge Theorem...", end=" ")
-    assert verify_metric_bridge(), "FAILED"
-    print("✓ Verified for all 36 pairs")
-    
-    print("\nGraph diameters:")
-    for s in [1, 2, 3]:
-        d = compute_diameter(s)
-        print(f"  Step bound {s}: diameter = {d}")
-    
-    print("\nConnected components:")
-    for s in [1, 2, 3]:
-        comps = find_components(s)
-        print(f"  Step bound {s}: {len(comps)} component(s) — {comps}")
-    
-    print("\nShortest paths for blocked pairs at step 2:")
-    blocked = [(0, 7), (3, 8), (3, 9), (4, 9)]
-    for i, j in blocked:
-        path = find_shortest_path(i, j, 2)
-        names = {0: "P1", 3: "m3", 4: "M3", 7: "P5", 8: "m6", 9: "M6"}
-        path_str = " → ".join(names[p] for p in path) if path else "unreachable"
-        print(f"  {names[i]} → {names[j]}: {path_str}")
+    # Demo
+    cat = CounterpointCategory(strict=False)
+    print(f"Standard: {cat.permitted_count} permitted, {cat.forbidden_count} forbidden")
+
+    cat_strict = CounterpointCategory(strict=True)
+    print(f"Strict:   {cat_strict.permitted_count} permitted, {cat_strict.forbidden_count} forbidden")
+
+    pe = PathEnumerator()
+    print(f"Length-2 paths: {pe.count_paths(2)}")
+    print(f"Passage rate:   {pe.passage_rate(2):.4f}")
+
+    sa = SymmetryAnalyzer()
+    print(f"Fixed points:   {[i.name for i in sa.fixed_points()]}")
+    print(f"Orbits:         {[(a.name, b.name) for a, b in sa.orbits()]}")
+    print(f"Order-reversing: {sa.verify_order_reversing()}")
+
+    ds = DiatonicSpecializer()
+    for scale in ["C_major", "A_minor"]:
+        density = ds.consonance_density(scale)
+        pairs = len(ds.consonant_pairs(scale))
+        print(f"{scale}: {pairs}/49 consonant pairs ({density:.1%})")
