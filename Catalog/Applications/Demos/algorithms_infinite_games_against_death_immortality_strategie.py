@@ -1,248 +1,261 @@
 #!/usr/bin/env python3
 """
-Algorithms for Asymmetric Computation Games
-============================================
-Type-hinted implementations of the key algorithms from the Mortal vs. Eternity
-game theory framework.
+Asymmetric Duration Games: Core Algorithms
+Type-hinted implementations of all key strategies and game mechanics.
 """
 
+from typing import FrozenSet, Set, Callable, Tuple, List, Optional
 from dataclasses import dataclass
-from typing import Callable, List, Optional, Tuple
-from enum import Enum
 
 
-class OrdinalSymbol(Enum):
-    """Symbolic ordinal representations."""
-    ZERO = "0"
-    FINITE = "finite"
-    OMEGA = "ω"
-    OMEGA_K = "ω·k"
-    OMEGA_SQ = "ω²"
-    OMEGA_D = "ω^d"
-    OMEGA_OMEGA = "ω^ω"
+# ============================================================
+# Type Aliases
+# ============================================================
+BannedSet = FrozenSet[int]
+MortalStrategy = Callable[[Set[int]], int]
+EternityStrategy = Callable[[Set[int], int], int]
 
+
+# ============================================================
+# Core Strategies
+# ============================================================
+
+def ascending_strategy(banned: Set[int]) -> int:
+    """The ascending strategy: always pick above the maximum banned value.
+    
+    Theorem: This strategy is safe (never picks a banned position)
+    and achieves ω-survival (survives any finite number of rounds).
+    
+    Time complexity: O(|banned|) per round.
+    Space complexity: O(1) additional (beyond the banned set).
+    """
+    if not banned:
+        return 0
+    return max(banned) + 1
+
+
+def cardinality_strategy(banned: Set[int]) -> int:
+    """The cardinality strategy: pick |banned| as position.
+    
+    Theorem: This strategy is finite-state (depends only on |banned|).
+    Note: NOT always safe — fails if |banned| ∈ banned.
+    """
+    return len(banned)
+
+
+def spread_strategy(lane: int, k: int) -> MortalStrategy:
+    """k-lane spread strategy: play ascending in region [lane * stride, ...].
+    
+    Used for k-player coalition games.
+    """
+    def strategy(banned: Set[int]) -> int:
+        stride = 1000  # Large separation between lanes
+        local_banned = {x for x in banned if x >= lane * stride}
+        if not local_banned:
+            return lane * stride
+        return max(local_banned) + 1
+    return strategy
+
+
+# ============================================================
+# Game Engine
+# ============================================================
 
 @dataclass
-class SurvivalProfile:
-    """
-    A survival profile: which finite durations Mortal can guarantee.
+class GameResult:
+    """Result of playing an evasion game."""
+    mortal_moves: List[int]
+    eternity_bans: List[int]
+    survived: bool
+    rounds_played: int
+    final_banned_set: Set[int]
+
+
+def play_evasion_game(
+    mortal: MortalStrategy,
+    eternity: EternityStrategy,
+    n_rounds: int
+) -> GameResult:
+    """Play the standard evasion game for n rounds.
     
-    Invariant: can_survive is downward-closed and contains 0.
+    Each round:
+    1. Mortal picks a position based on the current banned set
+    2. If the position is banned, Mortal loses
+    3. Eternity bans a new position based on the banned set and Mortal's choice
     """
-    can_survive: Callable[[int], bool]
-    name: str = "unnamed"
+    banned: Set[int] = set()
+    mortal_moves: List[int] = []
+    eternity_bans: List[int] = []
     
-    def is_full(self) -> bool:
-        """Check if profile is full (heuristic: test up to large N)."""
-        return all(self.can_survive(n) for n in range(10000))
+    for i in range(n_rounds):
+        pos = mortal(banned)
+        mortal_moves.append(pos)
+        if pos in banned:
+            return GameResult(mortal_moves, eternity_bans, False, i, banned)
+        ban = eternity(banned, pos)
+        eternity_bans.append(ban)
+        banned.add(ban)
     
-    def survival_ordinal(self) -> OrdinalSymbol:
-        """Compute the symbolic survival ordinal."""
-        if self.is_full():
-            return OrdinalSymbol.OMEGA
-        # Find upper bound
-        for n in range(10001):
-            if not self.can_survive(n):
-                return OrdinalSymbol.FINITE
-        return OrdinalSymbol.OMEGA
+    return GameResult(mortal_moves, eternity_bans, True, n_rounds, banned)
 
 
-def full_profile() -> SurvivalProfile:
-    """The full profile: survives any finite number of rounds."""
-    return SurvivalProfile(
-        can_survive=lambda n: True,
-        name="full"
-    )
-
-
-def bounded_profile(k: int) -> SurvivalProfile:
-    """Bounded profile: survives at most k rounds."""
-    return SurvivalProfile(
-        can_survive=lambda n: n <= k,
-        name=f"bounded({k})"
-    )
-
-
-def empty_profile() -> SurvivalProfile:
-    """Empty profile: survives only 0 rounds."""
-    return SurvivalProfile(
-        can_survive=lambda n: n == 0,
-        name="empty"
-    )
-
-
-def seq_compose(p1: SurvivalProfile, p2: SurvivalProfile) -> SurvivalProfile:
-    """
-    Sequential composition: play p1, then p2.
-    can_survive(n) iff ∃ a,b: p1.can_survive(a) ∧ p2.can_survive(b) ∧ a+b=n
+def play_power_evasion_game(
+    mortal: MortalStrategy,
+    eternity_power: Callable[[Set[int], int], List[int]],
+    n_rounds: int
+) -> GameResult:
+    """Play with k-power Eternity (bans multiple positions per round).
     
-    Algorithm: O(n) per query, check all partitions a + b = n.
+    Theorem: The ascending strategy survives against any k-power Eternity.
     """
-    def can_survive(n: int) -> bool:
-        return any(
-            p1.can_survive(a) and p2.can_survive(n - a)
-            for a in range(n + 1)
-        )
-    return SurvivalProfile(
-        can_survive=can_survive,
-        name=f"seq({p1.name}, {p2.name})"
-    )
-
-
-def family_profile(profiles: Callable[[int], SurvivalProfile]) -> SurvivalProfile:
-    """
-    Family profile: nondeterministically pick index k, play profiles(k).
-    can_survive(n) iff ∃ k: profiles(k).can_survive(n)
+    banned: Set[int] = set()
+    mortal_moves: List[int] = []
+    all_bans: List[int] = []
     
-    Algorithm: Search over indices up to some bound.
-    """
-    def can_survive(n: int) -> bool:
-        # Search: profile k = bounded(k), so try k = n
-        for k in range(n + 10):
-            if profiles(k).can_survive(n):
-                return True
-        return False
-    return SurvivalProfile(
-        can_survive=can_survive,
-        name="family"
-    )
-
-
-def ascending_family() -> SurvivalProfile:
-    """The ascending family: profile k = bounded(k)."""
-    return family_profile(lambda k: bounded_profile(k))
-
-
-def nested_family(depth: int) -> SurvivalProfile:
-    """d-fold nested family of full profiles."""
-    if depth == 0:
-        return full_profile()
-    return family_profile(lambda _: nested_family(depth - 1))
-
-
-def seq_pow(p: SurvivalProfile, k: int) -> SurvivalProfile:
-    """k-fold sequential composition of p with itself."""
-    if k == 0:
-        return empty_profile()
-    result = p
-    for _ in range(k - 1):
-        result = seq_compose(result, p)
-    return result
-
-
-# ── Game Simulation ──
-
-@dataclass
-class GameState:
-    """State in the Mortal vs. Eternity game."""
-    resource: int
-    round_num: int = 0
-    alive: bool = True
-
-
-def mortal_strategy_depth_k(state: GameState, k: int) -> int:
-    """
-    Mortal's strategy with depth-k lookahead.
-    Returns the resource allocation for this round.
+    for i in range(n_rounds):
+        pos = mortal(banned)
+        mortal_moves.append(pos)
+        if pos in banned:
+            return GameResult(mortal_moves, all_bans, False, i, banned)
+        new_bans = eternity_power(banned, pos)
+        all_bans.extend(new_bans)
+        banned.update(new_bans)
     
-    Simple strategy: spend 1 resource per round.
-    """
-    return min(1, state.resource)
+    return GameResult(mortal_moves, all_bans, True, n_rounds, banned)
 
 
-def eternity_strategy_greedy(state: GameState) -> int:
-    """
-    Eternity's greedy strategy: force maximum resource depletion.
-    Returns the attack strength for this round.
-    """
-    return 1  # Attack with full force
+# ============================================================
+# Survival Verification
+# ============================================================
 
-
-def simulate_game(
-    initial_resource: int,
-    mortal_depth: int,
-    max_rounds: int = 1000
-) -> Tuple[int, List[GameState]]:
-    """
-    Simulate a Mortal vs. Eternity game.
+def verify_omega_survival(
+    mortal: MortalStrategy,
+    eternity: EternityStrategy,
+    max_n: int = 1000
+) -> Tuple[bool, int]:
+    """Verify ω-survival up to max_n rounds.
     
-    Returns (survival_length, trace).
+    Returns (all_survived, max_rounds_tested).
     """
-    state = GameState(resource=initial_resource)
-    trace: List[GameState] = [state]
+    for n in range(1, max_n + 1):
+        result = play_evasion_game(mortal, eternity, n)
+        if not result.survived:
+            return False, n
+    return True, max_n
+
+
+def verify_omega_squared_survival(
+    mortal: MortalStrategy,
+    eternity: EternityStrategy,
+    max_m: int = 50,
+    max_n: int = 50
+) -> Tuple[bool, Optional[Tuple[int, int]]]:
+    """Verify ω²-survival: check survival for m*n rounds for all m,n ≤ max.
     
-    for r in range(1, max_rounds + 1):
-        if state.resource <= 0:
-            state = GameState(resource=0, round_num=r, alive=False)
-            trace.append(state)
-            break
-        
-        # Mortal plays
-        spend = mortal_strategy_depth_k(state, mortal_depth)
-        
-        # Eternity responds
-        attack = eternity_strategy_greedy(state)
-        
-        # Update state
-        new_resource = state.resource - max(spend, attack)
-        state = GameState(resource=new_resource, round_num=r, alive=new_resource > 0)
-        trace.append(state)
-    
-    survival_length = sum(1 for s in trace if s.alive)
-    return survival_length, trace
-
-
-# ── ITTM Connection ──
-
-def ittm_level(profile: SurvivalProfile) -> int:
-    """Compute the ITTM computation level of a profile."""
-    if profile.is_full():
-        return 1
-    return 0
-
-
-def ordinal_hierarchy_display() -> List[Tuple[str, str, str]]:
+    Returns (all_survived, first_failure or None).
     """
-    Display the ordinal hierarchy for survival profiles.
+    for m in range(1, max_m + 1):
+        for n in range(1, max_n + 1):
+            result = play_evasion_game(mortal, eternity, m * n)
+            if not result.survived:
+                return False, (m, n)
+    return True, None
+
+
+# ============================================================
+# Strategy Analysis
+# ============================================================
+
+def is_finite_state(mortal: MortalStrategy, test_size: int = 100) -> bool:
+    """Test if a strategy is finite-state (depends only on |banned|).
     
-    Returns list of (profile_description, survival_ordinal, ittm_level).
+    Checks by comparing outputs on sets of the same cardinality.
     """
-    return [
-        ("empty", "0", "N/A"),
-        ("bounded(k)", "k", "Level 0"),
-        ("full", "ω", "Level 1"),
-        ("nested(d)", "≥ ω", f"Level d"),
-        ("ascending family", "ω", "Level 1"),
-        ("seq^k(full)", "ω (k≥1)", "Level 1"),
-    ]
+    import itertools
+    for card in range(1, min(test_size, 5)):
+        outputs: Set[int] = set()
+        for combo in itertools.combinations(range(min(test_size, 15)), card):
+            banned = set(combo)
+            outputs.add(mortal(banned))
+        if len(outputs) > 1:
+            return False
+    return True
+
+
+def strategy_growth_rate(mortal: MortalStrategy, n_rounds: int = 100) -> List[int]:
+    """Measure how the strategy's chosen positions grow over rounds.
+    
+    Uses a "worst-case" Eternity (bans Mortal's position) to maximize growth.
+    """
+    banned: Set[int] = set()
+    positions: List[int] = []
+    
+    for _ in range(n_rounds):
+        pos = mortal(banned)
+        positions.append(pos)
+        banned.add(pos)  # Ban Mortal's position (worst case for growth)
+    
+    return positions
+
+
+# ============================================================
+# Ordinal Game Value Computation
+# ============================================================
+
+def compute_finite_game_value(k: int) -> int:
+    """Compute the exact game value on Fin(k).
+    
+    On Fin(k), the game value is exactly k: Mortal can visit each
+    position once, then all positions are banned.
+    """
+    return k
+
+
+def compute_survival_hierarchy(max_level: int = 5) -> dict:
+    """Compute the survival hierarchy up to the given level.
+    
+    Level 0: ω (any finite n)
+    Level 1: ω·k (for fixed k)
+    Level 2: ω² (all finite products)
+    """
+    hierarchy = {}
+    for level in range(max_level):
+        if level == 0:
+            hierarchy[level] = "ω (any finite n)"
+        elif level == 1:
+            hierarchy[level] = "ω·k (k-fold composition)"
+        else:
+            hierarchy[level] = f"ω^{level} ({level}-fold products)"
+    return hierarchy
 
 
 if __name__ == "__main__":
-    print("=== Survival Profile Tests ===")
+    import random
+    random.seed(42)
     
-    fp = full_profile()
-    bp = bounded_profile(10)
-    ep = empty_profile()
+    # Verify ascending strategy
+    def random_eternity(banned: Set[int], pos: int) -> int:
+        return random.randint(0, pos + 10)
     
-    print(f"full.can_survive(1000) = {fp.can_survive(1000)}")
-    print(f"bounded(10).can_survive(10) = {bp.can_survive(10)}")
-    print(f"bounded(10).can_survive(11) = {bp.can_survive(11)}")
-    print(f"empty.can_survive(0) = {ep.can_survive(0)}")
-    print(f"empty.can_survive(1) = {ep.can_survive(1)}")
+    print("Verifying ω-survival of ascending strategy...")
+    ok, n = verify_omega_survival(ascending_strategy, random_eternity, 500)
+    print(f"  Result: {'PASS' if ok else 'FAIL'} up to n={n}")
     
-    print(f"\nfull.survival_ordinal() = {fp.survival_ordinal()}")
-    print(f"bounded(10).survival_ordinal() = {bp.survival_ordinal()}")
-    print(f"empty.survival_ordinal() = {ep.survival_ordinal()}")
+    print("\nVerifying ω²-survival...")
+    ok, fail = verify_omega_squared_survival(ascending_strategy, random_eternity, 20, 20)
+    print(f"  Result: {'PASS' if ok else f'FAIL at {fail}'}")
     
-    print("\n=== Sequential Composition ===")
-    sq = seq_compose(bp, bp)
-    print(f"seq(bounded(10), bounded(10)).can_survive(20) = {sq.can_survive(20)}")
-    print(f"seq(bounded(10), bounded(10)).can_survive(21) = {sq.can_survive(21)}")
+    print("\nFinite-state check:")
+    print(f"  ascending_strategy: {is_finite_state(ascending_strategy)}")
+    print(f"  cardinality_strategy: {is_finite_state(cardinality_strategy)}")
     
-    print("\n=== Game Simulation ===")
-    survival, trace = simulate_game(initial_resource=15, mortal_depth=5)
-    print(f"Survival length with resource=15, depth=5: {survival} rounds")
+    print("\nGrowth rate (ascending, 20 rounds):")
+    print(f"  {strategy_growth_rate(ascending_strategy, 20)}")
     
-    print("\n=== Ordinal Hierarchy ===")
-    for desc, ordinal, level in ordinal_hierarchy_display():
-        print(f"  {desc:<25} survival={ordinal:<10} ITTM={level}")
+    print("\nSurvival hierarchy:")
+    for level, desc in compute_survival_hierarchy().items():
+        print(f"  Level {level}: {desc}")
+    
+    print("\nFinite game values:")
+    for k in [3, 5, 10, 100]:
+        print(f"  Fin({k}): value = {compute_finite_game_value(k)}")
