@@ -1230,6 +1230,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T01:28:48",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+    },
+    {
+      "cycle_id": "59a5ed98",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tangled Hierarchies Research Program\n\n## Synthesis\n\nThis research cycle established a rigorous formalization of tangled hierarchies in provability logic, centered on the novel con",
+      "quality_score": 0.6123999999999999,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T02:04:43",
+      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
     }
   ],
   "entries": [
@@ -1275,7 +1285,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-06T01:28:48",
+  "last_updated": "2026-06-06T02:04:43",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1287,12 +1297,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "a2ddc296",
-        "quality": 0.31936,
-        "theorems": 5,
-        "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-      },
       {
         "cycle_id": "474f6165",
         "quality": 0.39760000000000006,
@@ -1346,6 +1350,12 @@
         "quality": 0.30664,
         "theorems": 4,
         "title": "EML Number Theory: Transcendence and Algebraic Independence"
+      },
+      {
+        "cycle_id": "59a5ed98",
+        "quality": 0.6123999999999999,
+        "theorems": 5,
+        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
       }
     ],
     "Bridges": [
