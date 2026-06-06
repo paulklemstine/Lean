@@ -1,266 +1,228 @@
 #!/usr/bin/env python3
 """
-Integrated Information Theory — Core Algorithms
+Causal Integration Algebra — Core Algorithms
 
-Type-hinted implementations of IIT computational primitives,
-corresponding to the Lean 4 formalization in Novelty/IIT/.
+Type-hinted implementations of the key algorithms from the
+Causal Integration framework for Integrated Information Theory.
 """
 
-from typing import Set, Tuple, List, Optional, Dict, FrozenSet
-import itertools
-from dataclasses import dataclass, field
+from typing import List, Tuple, Set, Optional, Dict
+from itertools import combinations
+import numpy as np
 
 
-# ============================================================
-# Type Definitions
-# ============================================================
+class CausalNetwork:
+    """A weighted directed graph representing a causal system.
 
-Edge = Tuple[int, int]
-Cut = Tuple[bool, ...]  # Assignment of nodes to {True, False}
-
-
-@dataclass(frozen=True)
-class CausalGraph:
-    """A directed graph representing a causal system.
-
-    Corresponds to `IIT.CausalGraph n` in Lean.
+    Attributes:
+        n: Number of nodes (components)
+        weights: n×n non-negative weight matrix (w[i][j] = causal influence i→j)
     """
-    n: int
-    edges: FrozenSet[Edge]
+
+    def __init__(self, weights: np.ndarray) -> None:
+        assert weights.ndim == 2
+        assert weights.shape[0] == weights.shape[1]
+        assert np.all(weights >= 0), "Weights must be non-negative"
+        self.n: int = weights.shape[0]
+        self.weights: np.ndarray = weights.copy()
 
     @classmethod
-    def from_edges(cls, n: int, edges: Set[Edge]) -> 'CausalGraph':
-        return cls(n=n, edges=frozenset(edges))
+    def complete(cls, n: int, weight: float = 1.0) -> "CausalNetwork":
+        """Create a complete graph with uniform weight (no self-loops)."""
+        W = np.full((n, n), weight) - weight * np.eye(n)
+        return cls(W)
 
     @classmethod
-    def empty(cls, n: int) -> 'CausalGraph':
-        """The empty graph (no edges). Corresponds to `IIT.empty n`."""
-        return cls(n=n, edges=frozenset())
+    def zero(cls, n: int) -> "CausalNetwork":
+        """Create the zero network (no connections)."""
+        return cls(np.zeros((n, n)))
 
     @classmethod
-    def complete(cls, n: int) -> 'CausalGraph':
-        """Complete directed graph. Corresponds to `IIT.completeCG n`."""
-        return cls(n=n, edges=frozenset((i, j) for i in range(n) for j in range(n)))
+    def block_diagonal(cls, blocks: List[np.ndarray]) -> "CausalNetwork":
+        """Create a block-diagonal network from component weight matrices."""
+        n = sum(b.shape[0] for b in blocks)
+        W = np.zeros((n, n))
+        offset = 0
+        for block in blocks:
+            k = block.shape[0]
+            W[offset:offset+k, offset:offset+k] = block
+            offset += k
+        return cls(W)
 
-    def complement(self) -> 'CausalGraph':
-        """Complement graph. Corresponds to `IIT.complement`."""
-        all_edges = frozenset((i, j) for i in range(self.n) for j in range(self.n))
-        return CausalGraph(n=self.n, edges=all_edges - self.edges)
-
-    def is_subgraph_of(self, other: 'CausalGraph') -> bool:
-        """Check if self is a subgraph of other."""
-        return self.n == other.n and self.edges <= other.edges
-
-    def add_edge(self, e: Edge) -> 'CausalGraph':
-        """Add a single edge."""
-        return CausalGraph(n=self.n, edges=self.edges | {e})
+    def is_symmetric(self) -> bool:
+        """Check if the network has symmetric weights."""
+        return np.allclose(self.weights, self.weights.T)
 
 
-@dataclass(frozen=True)
-class Subsystem:
-    """A subsystem with associated integration value.
+def cross_weight(net: CausalNetwork, S: Set[int]) -> float:
+    """Compute the total directed weight from S to its complement.
 
-    Corresponds to `IIT.Subsystem n`.
+    Algorithm: Sum w[i][j] for all i ∈ S, j ∉ S.
+    Time complexity: O(n²)
+
+    Args:
+        net: The causal network
+        S: A subset of nodes {0, ..., n-1}
+
+    Returns:
+        The cross-weight from S to Sᶜ
     """
-    nodes: FrozenSet[int]
-    phi_val: int
-
-    def overlaps(self, other: 'Subsystem') -> bool:
-        """Check if two subsystems share nodes."""
-        return bool(self.nodes & other.nodes)
+    S_comp = set(range(net.n)) - S
+    return sum(net.weights[i, j] for i in S for j in S_comp)
 
 
-# ============================================================
-# Algorithm 1: Cut Value Computation
-# ============================================================
+def cut_value(net: CausalNetwork, S: Set[int]) -> float:
+    """Compute the bidirectional cut value of partition (S, Sᶜ).
 
-def cut_value(graph: CausalGraph, cut: Cut) -> int:
-    """Count edges crossing a cut.
+    cut(S) = cross(S → Sᶜ) + cross(Sᶜ → S)
 
-    Corresponds to `IIT.cutValue`.
+    This measures the total causal flow disrupted by partitioning at S.
 
-    Time complexity: O(|E|)
-    Space complexity: O(1)
+    Args:
+        net: The causal network
+        S: A subset of nodes
+
+    Returns:
+        The bidirectional cut value
     """
-    return sum(1 for (i, j) in graph.edges if cut[i] != cut[j])
+    return cross_weight(net, S) + cross_weight(net, set(range(net.n)) - S)
 
 
-def is_nontrivial(cut: Cut) -> bool:
-    """Check if a cut is non-trivial (both sides non-empty).
+def total_weight(net: CausalNetwork) -> float:
+    """Sum of all edge weights in the network.
 
-    Corresponds to `IIT.Cut.nontrivial`.
+    Returns:
+        Total weight ∑_{i,j} w[i][j]
     """
-    return any(cut) and not all(cut)
+    return float(np.sum(net.weights))
 
 
-# ============================================================
-# Algorithm 2: Phi Computation (Exact, Exponential)
-# ============================================================
+def compute_phi(net: CausalNetwork) -> Tuple[float, Optional[Set[int]]]:
+    """Compute integrated information Φ (minimum non-trivial cut).
 
-def enumerate_nontrivial_cuts(n: int) -> List[Cut]:
-    """Enumerate all non-trivial cuts on n nodes.
+    Algorithm: Exhaustive enumeration over all 2^n - 2 non-trivial subsets.
+    Time complexity: O(2^n · n²)
 
-    Corresponds to `IIT.ntCuts`.
+    For large n, use approximate algorithms (e.g., spectral methods).
 
-    Time complexity: O(2^n)
-    Space complexity: O(2^n)
+    Args:
+        net: The causal network (n ≥ 2)
+
+    Returns:
+        Tuple of (Φ value, minimizing partition set)
     """
-    return [c for c in itertools.product([True, False], repeat=n)
-            if is_nontrivial(c)]
+    assert net.n >= 2, "Need at least 2 nodes for Φ"
+    best_cut = float('inf')
+    best_S: Optional[Set[int]] = None
+
+    for size in range(1, net.n):
+        for combo in combinations(range(net.n), size):
+            S = set(combo)
+            cv = cut_value(net, S)
+            if cv < best_cut:
+                best_cut = cv
+                best_S = S
+
+    return best_cut, best_S
 
 
-def compute_phi(graph: CausalGraph) -> int:
-    """Compute integrated information Phi exactly.
+def is_block_diagonal(net: CausalNetwork, S: Set[int]) -> bool:
+    """Check if network is block-diagonal w.r.t. partition (S, Sᶜ).
 
-    Corresponds to `IIT.phi`.
-
-    Pseudocode:
-        Phi(G) = min over all non-trivial cuts c of cut_value(G, c)
-
-    Time complexity: O(2^n * |E|)
-    Space complexity: O(2^n)
-
-    Note: This is NP-hard in general (graph min-cut for directed graphs).
-    For small n, exhaustive enumeration is tractable.
+    Returns True iff no edges cross between S and Sᶜ in either direction.
     """
-    if graph.n < 2:
-        raise ValueError("Phi requires n >= 2")
+    S_comp = set(range(net.n)) - S
+    for i in S:
+        for j in S_comp:
+            if net.weights[i, j] != 0 or net.weights[j, i] != 0:
+                return False
+    return True
 
-    cuts = enumerate_nontrivial_cuts(graph.n)
-    return min(cut_value(graph, c) for c in cuts)
 
+def weight_decomposition(net: CausalNetwork, S: Set[int]) -> Dict[str, float]:
+    """Decompose total weight into cut + internal components.
 
-# ============================================================
-# Algorithm 3: Disconnection Detection
-# ============================================================
+    Theorem: totalWeight = cutValue(S) + internal(S) + internal(Sᶜ)
 
-def is_disconnected(graph: CausalGraph) -> bool:
-    """Check if graph has a zero-value non-trivial cut.
-
-    Corresponds to `IIT.CausalGraph.disconnected`.
-
-    By phi_eq_zero_iff_disconnected: returns True iff Phi = 0.
+    Returns:
+        Dictionary with 'total', 'cut', 'internal_S', 'internal_Sc'
     """
-    for cut in enumerate_nontrivial_cuts(graph.n):
-        if cut_value(graph, cut) == 0:
-            return True
-    return False
+    S_comp = set(range(net.n)) - S
+    tw = total_weight(net)
+    cv = cut_value(net, S)
+    iw_S = sum(net.weights[i, j] for i in S for j in S)
+    iw_Sc = sum(net.weights[i, j] for i in S_comp for j in S_comp)
+
+    return {
+        'total': tw,
+        'cut': cv,
+        'internal_S': iw_S,
+        'internal_Sc': iw_Sc,
+        'decomposition_holds': abs(tw - (cv + iw_S + iw_Sc)) < 1e-10
+    }
 
 
-# ============================================================
-# Algorithm 4: Disjoint Union
-# ============================================================
+def find_decomposition(net: CausalNetwork) -> Optional[Set[int]]:
+    """Find a non-trivial partition with zero cut (if exists).
 
-def disjoint_union(g1: CausalGraph, g2: CausalGraph) -> CausalGraph:
-    """Construct the disjoint union of two causal graphs.
+    If Φ = 0, such a partition exists by the Disconnected theorem.
 
-    Corresponds to `IIT.djUnion`.
-
-    Nodes of g2 are shifted by g1.n.
+    Returns:
+        A set S with cutValue(S) = 0, or None if network is integrated.
     """
-    shifted_edges = frozenset((i + g1.n, j + g1.n) for (i, j) in g2.edges)
-    return CausalGraph(n=g1.n + g2.n, edges=g1.edges | shifted_edges)
+    for size in range(1, net.n):
+        for combo in combinations(range(net.n), size):
+            S = set(combo)
+            if cut_value(net, S) == 0:
+                return S
+    return None
 
 
-# ============================================================
-# Algorithm 5: Exclusion Postulate
-# ============================================================
+def phi_spectrum(net: CausalNetwork) -> List[Tuple[Set[int], float]]:
+    """Compute cut values for ALL non-trivial partitions, sorted.
 
-def find_maximal_subsystem(
-    systems: List[Subsystem],
-    target: Subsystem
-) -> Optional[Subsystem]:
-    """Find the subsystem with maximum Phi among those overlapping target.
+    Returns the full "integration spectrum" — useful for understanding
+    the landscape of possible decompositions.
 
-    Implements the exclusion postulate search:
-    returns the unique maximally-integrated overlapping subsystem.
+    Returns:
+        List of (partition, cut_value) sorted by cut value ascending.
     """
-    overlapping = [s for s in systems if s.overlaps(target)]
-    if not overlapping:
-        return None
-    return max(overlapping, key=lambda s: s.phi_val)
+    results: List[Tuple[Set[int], float]] = []
+    for size in range(1, net.n):
+        for combo in combinations(range(net.n), size):
+            S = set(combo)
+            results.append((S, cut_value(net, S)))
 
-
-def verify_exclusion(systems: List[Subsystem]) -> Dict[str, any]:
-    """Verify the exclusion postulate: overlapping maximal subsystems
-    have equal Phi values.
-
-    Returns a report of findings.
-    """
-    results: Dict[str, any] = {"violations": [], "verified_pairs": 0}
-
-    for i, s1 in enumerate(systems):
-        for j, s2 in enumerate(systems):
-            if i >= j:
-                continue
-            if not s1.overlaps(s2):
-                continue
-
-            # Check if both are maximal among their overlapping neighbors
-            is_max_1 = all(t.phi_val <= s1.phi_val
-                          for t in systems if t.overlaps(s1))
-            is_max_2 = all(t.phi_val <= s2.phi_val
-                          for t in systems if t.overlaps(s2))
-
-            if is_max_1 and is_max_2:
-                results["verified_pairs"] += 1
-                if s1.phi_val != s2.phi_val:
-                    results["violations"].append((s1, s2))
-
+    results.sort(key=lambda x: x[1])
     return results
 
 
-# ============================================================
-# Algorithm 6: Phi Per Node (Normalized Integration)
-# ============================================================
-
-def phi_per_node(graph: CausalGraph) -> float:
-    """Compute normalized integration: Phi / n.
-
-    Corresponds to `IIT.phiPerNode`.
-    """
-    return compute_phi(graph) / graph.n
-
-
-# ============================================================
-# Algorithm 7: Integration Landscape
-# ============================================================
-
-def integration_landscape(n: int, max_samples: int = 1000) -> Dict[int, int]:
-    """Survey the distribution of Phi values across graphs on n nodes.
-
-    Returns a histogram: phi_value -> count.
-    """
-    possible_edges = [(i, j) for i in range(n) for j in range(n) if i != j]
-    histogram: Dict[int, int] = {}
-
-    count = 0
-    for num_edges in range(len(possible_edges) + 1):
-        for edge_combo in itertools.combinations(possible_edges, num_edges):
-            if count >= max_samples:
-                break
-            g = CausalGraph.from_edges(n, set(edge_combo))
-            p = compute_phi(g)
-            histogram[p] = histogram.get(p, 0) + 1
-            count += 1
-        if count >= max_samples:
-            break
-
-    return histogram
-
-
 if __name__ == "__main__":
-    # Quick test
-    g = CausalGraph.from_edges(3, {(0, 1), (1, 2), (2, 0)})
-    print(f"Triangle: Phi = {compute_phi(g)}")
-    print(f"Disconnected: {is_disconnected(g)}")
-    print(f"Phi per node: {phi_per_node(g):.2f}")
+    # Example usage
+    print("=== Causal Integration Algebra ===\n")
 
-    g_empty = CausalGraph.empty(3)
-    print(f"\nEmpty: Phi = {compute_phi(g_empty)}")
-    print(f"Disconnected: {is_disconnected(g_empty)}")
+    # Example 1: Complete graph
+    G = CausalNetwork.complete(4)
+    phi_val, phi_cut = compute_phi(G)
+    print(f"Complete K₄: Φ = {phi_val}, cut = {phi_cut}")
 
-    g1 = CausalGraph.from_edges(2, {(0, 1), (1, 0)})
-    g2 = CausalGraph.from_edges(2, {(0, 1)})
-    gu = disjoint_union(g1, g2)
-    print(f"\nDisjoint union: Phi = {compute_phi(gu)}")
+    # Example 2: Disconnected
+    G2 = CausalNetwork.block_diagonal([
+        np.array([[0, 1], [1, 0]]),
+        np.array([[0, 2], [2, 0]])
+    ])
+    phi_val2, _ = compute_phi(G2)
+    print(f"Block-diagonal: Φ = {phi_val2}")
+    dec = find_decomposition(G2)
+    print(f"  Disconnection at: {dec}")
+
+    # Example 3: Integration spectrum
+    G3 = CausalNetwork(np.array([
+        [0, 3, 1, 0],
+        [2, 0, 0, 1],
+        [0, 1, 0, 5],
+        [1, 0, 4, 0]
+    ], dtype=float))
+    print(f"\nIntegration spectrum for 4-node network:")
+    for S, cv in phi_spectrum(G3)[:5]:
+        print(f"  {S}: cut = {cv:.1f}")
