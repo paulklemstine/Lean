@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-06T20:59:46.048892+00:00",
+  "last_updated": "2026-06-06T21:32:39.698417+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -11670,6 +11670,76 @@
       "theorem_count": 0,
       "timestamp": "2026-06-06T20:59:45.965771+00:00",
       "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6021,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 245,
+      "domain": "Applications",
+      "duration_seconds": 9964.051801919937,
+      "end_time": 1780781500.4842126,
+      "files_integrated": 5,
+      "job_id": "aa79e64b",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8161,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7069,
+        "novelty": 0.95,
+        "proof_depth": 0.6027,
+        "usefulness": 0.8014
+      },
+      "quality_score": 0.31880000000000003,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780771536.4324107,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T21:32:39.607434+00:00",
+      "title": "EML Universal Approximation"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4944,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 255,
+      "domain": "Applications",
+      "duration_seconds": 5878.120279073715,
+      "end_time": 1780781502.407069,
+      "files_integrated": 6,
+      "job_id": "55060155",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.94,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6804,
+        "cross_domain": 1.0,
+        "grade": "substantial",
+        "importance": 0.4092,
+        "novelty": 0.95,
+        "proof_depth": 0.1774,
+        "usefulness": 0.5887
+      },
+      "quality_score": 0.29104,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780775624.28679,
+      "strategy_count": 187,
+      "theorem_count": 7,
+      "timestamp": "2026-06-06T21:32:39.651746+00:00",
+      "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
     }
   ]
 }

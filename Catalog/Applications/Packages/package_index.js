@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "55060155",
     "filename": "proofs_as_dags_the_directed_acyclic_graph_structur.json",
     "pkg_num": 402,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.29104,
     "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
@@ -12809,8 +12809,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "proofs_as_dags_the_directed_acyclic_graph_structur",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.29104,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
     }
