@@ -1,231 +1,174 @@
 #!/usr/bin/env python3
 """
-Library of Babel: Core Algorithms
+Algorithms for the Library of Babel.
 
-Type-hinted implementations of the key algorithms from the research.
+Type-hinted implementations of key algorithms from the research.
 """
 
-from typing import List, Dict, Tuple, Optional, Callable, Set
 import math
+from typing import List, Dict, Tuple, Optional, Callable
+from dataclasses import dataclass
 
 
-def hamming_distance(x: List[int], y: List[int]) -> int:
+@dataclass
+class BabelBook:
+    """A book in the Library of Babel."""
+    symbols: List[int]
+    alphabet_size: int
+
+    def __post_init__(self):
+        assert all(0 <= s < self.alphabet_size for s in self.symbols)
+
+    @property
+    def length(self) -> int:
+        return len(self.symbols)
+
+
+def hamming_distance(b1: BabelBook, b2: BabelBook) -> int:
+    """Compute the Hamming distance between two books.
+
+    Time complexity: O(N)
+    Space complexity: O(1)
     """
-    Compute the Hamming distance between two words.
+    assert b1.length == b2.length
+    assert b1.alphabet_size == b2.alphabet_size
+    return sum(1 for s1, s2 in zip(b1.symbols, b2.symbols) if s1 != s2)
 
-    Time complexity: O(n) where n = len(x) = len(y)
 
-    Args:
-        x: First word (list of symbol indices)
-        y: Second word (list of symbol indices)
+def hamming_ball_volume(alpha: int, n: int, t: int) -> int:
+    """Compute the volume of a Hamming ball of radius t.
 
-    Returns:
-        Number of positions where x and y differ
+    V(n, t) = Σ_{k=0}^{t} C(n, k) * (α-1)^k
+
+    Time complexity: O(t)
     """
-    assert len(x) == len(y), "Words must have equal length"
-    return sum(1 for a, b in zip(x, y) if a != b)
+    return sum(math.comb(n, k) * (alpha - 1) ** k for k in range(t + 1))
 
 
-def hamming_ball_volume(n: int, k: int, r: int) -> int:
+def singleton_bound(alpha: int, n: int, d: int) -> int:
+    """Compute the Singleton bound on code size.
+
+    A code with minimum distance d has at most α^(N-d+1) codewords.
+    Achieved by MDS codes (e.g., Reed-Solomon).
+
+    Time complexity: O(1)
     """
-    Compute the volume (cardinality) of a Hamming ball.
+    return alpha ** (n - d + 1)
 
-    V(n, k, r) = sum_{i=0}^{r} C(n, i) * (k-1)^i
 
-    Args:
-        n: Word length
-        k: Alphabet size
-        r: Ball radius
+def sphere_packing_bound(alpha: int, n: int, d: int) -> float:
+    """Compute the sphere-packing (Hamming) bound on code size.
 
-    Returns:
-        Number of words within Hamming distance r of any center
+    |C| ≤ α^N / V(N, ⌊(d-1)/2⌋)
+
+    Time complexity: O(d)
     """
-    total = 0
-    for i in range(min(r, n) + 1):
-        total += math.comb(n, i) * (k - 1) ** i
-    return total
+    t = (d - 1) // 2
+    vol = hamming_ball_volume(alpha, n, t)
+    return alpha ** n / vol
 
 
-def hamming_bound(n: int, k: int, t: int) -> int:
+def compressible_fraction(alpha: int, n: int, m: int) -> float:
+    """Compute the maximum fraction of books compressible to length M.
+
+    At most α^M / α^N = α^{-(N-M)} books are compressible.
+
+    Time complexity: O(1)
     """
-    Compute the Hamming (sphere-packing) bound for error-correcting codes.
+    return alpha ** (m - n)
 
-    For a code with minimum distance d = 2t + 1, the maximum code size is
-    at most k^n / V(n, k, t).
 
-    Args:
-        n: Codeword length
-        k: Alphabet size
-        t: Error-correction capability (t = (d-1)/2)
+def symbol_spectrum(book: BabelBook) -> Dict[int, int]:
+    """Compute the symbol frequency spectrum of a book.
 
-    Returns:
-        Upper bound on code size
+    Time complexity: O(N)
     """
-    vol = hamming_ball_volume(n, k, t)
-    return k ** n // vol
+    spectrum: Dict[int, int] = {}
+    for s in book.symbols:
+        spectrum[s] = spectrum.get(s, 0) + 1
+    return spectrum
 
 
-def entropy_profile(word: List[int], max_scale: Optional[int] = None) -> Dict[int, int]:
+def is_uniform(book: BabelBook) -> bool:
+    """Check if a book has uniform symbol distribution.
+
+    Time complexity: O(N)
     """
-    Compute the entropy profile of a word at multiple scales.
+    spec = symbol_spectrum(book)
+    if not spec:
+        return True
+    values = list(spec.values())
+    return all(v == values[0] for v in values)
 
-    For each scale s, counts the number of distinct s-grams
-    (contiguous substrings of length s).
 
-    Args:
-        word: Input word as list of symbol indices
-        max_scale: Maximum scale to compute (default: min(len(word), 20))
+@dataclass
+class CompressionScheme:
+    """A faithful compression scheme."""
+    compress: Callable[[BabelBook], BabelBook]
+    decompress: Callable[[BabelBook], BabelBook]
 
-    Returns:
-        Dictionary mapping scale s to number of distinct s-grams
+    def verify_faithful(self, book: BabelBook) -> bool:
+        """Verify compress(decompress(b)) == b for a specific book."""
+        compressed = self.compress(book)
+        decompressed = self.decompress(compressed)
+        return decompressed.symbols == book.symbols
+
+
+def apply_coord_permutation(book: BabelBook, perm: List[int]) -> BabelBook:
+    """Apply a coordinate permutation to a book.
+
+    Theorem: This is a Hamming isometry (coord_perm_isometry).
+
+    Time complexity: O(N)
     """
-    n = len(word)
-    if max_scale is None:
-        max_scale = min(n, 20)
-
-    profile: Dict[int, int] = {}
-    for s in range(1, max_scale + 1):
-        if s > n:
-            break
-        sgrams: Set[Tuple[int, ...]] = set()
-        for i in range(n - s + 1):
-            sgrams.add(tuple(word[i:i + s]))
-        profile[s] = len(sgrams)
-    return profile
+    return BabelBook(
+        symbols=[book.symbols[perm[i]] for i in range(book.length)],
+        alphabet_size=book.alphabet_size
+    )
 
 
-def is_maximally_complex(
-    word: List[int],
-    alphabet_size: int,
-    threshold: int
-) -> bool:
+def apply_symbol_permutation(
+    book: BabelBook, perm: List[int]
+) -> BabelBook:
+    """Apply a symbol permutation to all positions of a book.
+
+    Theorem: This is a Hamming isometry (symbol_perm_isometry).
+
+    Time complexity: O(N)
     """
-    Check if a word is maximally complex up to a given threshold.
+    return BabelBook(
+        symbols=[perm[s] for s in book.symbols],
+        alphabet_size=book.alphabet_size
+    )
 
-    A word is maximally complex at threshold t if for all 1 ≤ s ≤ t,
-    the number of distinct s-grams equals min(n - s + 1, k^s).
 
-    Args:
-        word: Input word
-        alphabet_size: Size of the alphabet
-        threshold: Maximum scale to check
+def apply_pointwise_permutation(
+    book: BabelBook, perms: List[List[int]]
+) -> BabelBook:
+    """Apply position-dependent symbol permutations.
 
-    Returns:
-        True if the word is maximally complex at all scales up to threshold
+    Theorem: This is a Hamming isometry (pointwise_perm_isometry).
+
+    Time complexity: O(N)
     """
-    n = len(word)
-    profile = entropy_profile(word, threshold)
-
-    for s in range(1, threshold + 1):
-        if s > n:
-            return False
-        expected = min(n - s + 1, alphabet_size ** s)
-        if profile.get(s, 0) != expected:
-            return False
-    return True
+    return BabelBook(
+        symbols=[perms[i][book.symbols[i]] for i in range(book.length)],
+        alphabet_size=book.alphabet_size
+    )
 
 
-def compressibility_ratio(
-    compress: Callable[[List[int]], List[int]],
-    decompress: Callable[[List[int]], List[int]],
-    words: List[List[int]]
-) -> float:
-    """
-    Compute the fraction of words that are compressible under a scheme.
-
-    A word w is compressible if decompress(compress(w)) == w.
-
-    Args:
-        compress: Compression function
-        decompress: Decompression function
-        words: List of words to test
-
-    Returns:
-        Fraction of words that roundtrip successfully
-    """
-    if not words:
-        return 0.0
-    compressible = sum(1 for w in words if decompress(compress(w)) == w)
-    return compressible / len(words)
-
-
-def expected_hamming_distance(n: int, k: int) -> float:
-    """
-    Compute the expected Hamming distance between two random words.
-
-    E[d_H(x, y)] = n * (k-1) / k
-
-    Args:
-        n: Word length
-        k: Alphabet size
-
-    Returns:
-        Expected Hamming distance
-    """
-    return n * (k - 1) / k
-
-
-def hamming_distance_std(n: int, k: int) -> float:
-    """
-    Compute the standard deviation of Hamming distance between random words.
-
-    Std[d_H(x, y)] = sqrt(n * (k-1) / k^2)
-
-    Args:
-        n: Word length
-        k: Alphabet size
-
-    Returns:
-        Standard deviation of Hamming distance
-    """
-    return math.sqrt(n * (k - 1) / k ** 2)
-
-
-def hamming_distance_exact_count(n: int, k: int, d: int) -> int:
-    """
-    Compute the exact number of words at Hamming distance d from a fixed word.
-
-    Count = C(n, d) * (k-1)^d
-
-    Args:
-        n: Word length
-        k: Alphabet size
-        d: Target Hamming distance
-
-    Returns:
-        Number of words at exactly distance d
-    """
-    if d < 0 or d > n:
-        return 0
-    return math.comb(n, d) * (k - 1) ** d
-
-
-def library_statistics() -> Dict[str, object]:
-    """
-    Compute key statistics for the Library of Babel.
-
-    Returns:
-        Dictionary with library statistics
-    """
-    n = 410 * 3200  # book length
-    k = 25  # alphabet size
-
-    return {
-        "alphabet_size": k,
-        "book_length": n,
-        "library_size_log10": n * math.log10(k),
-        "expected_hamming_distance": expected_hamming_distance(n, k),
-        "hamming_distance_std": hamming_distance_std(n, k),
-        "fraction_compressible_1char": k ** (n - 1) / k ** n,
-        "incompressible_fraction_lower_bound": 1 - 1 / k,
-    }
+def log_library_size(alpha: int, n: int) -> float:
+    """Compute log₁₀ of library size = N · log₁₀(α)."""
+    return n * math.log10(alpha)
 
 
 if __name__ == "__main__":
-    stats = library_statistics()
-    print("Library of Babel Statistics:")
-    for key, value in stats.items():
-        if isinstance(value, float):
-            print(f"  {key}: {value:.4f}")
-        else:
-            print(f"  {key}: {value}")
+    # Quick self-test
+    b1 = BabelBook([0, 1, 2, 0, 1], 3)
+    b2 = BabelBook([0, 1, 0, 0, 2], 3)
+    print(f"Hamming distance: {hamming_distance(b1, b2)}")
+    print(f"Spectrum b1: {symbol_spectrum(b1)}")
+    print(f"Is uniform b1: {is_uniform(b1)}")
+    print(f"Singleton bound (3,5,3): {singleton_bound(3, 5, 3)}")
+    print(f"Sphere-packing bound (2,7,3): {sphere_packing_bound(2, 7, 3)}")
+    print(f"Hamming ball V(7,1): {hamming_ball_volume(2, 7, 1)}")
