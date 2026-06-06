@@ -1,278 +1,232 @@
-# EML Differential Rings: Algebraic Foundations for Differential Galois Theory of Exponential-Logarithmic ODEs
+# Formalized Differential Galois Theory for EML Differential Equations
 
 ## Abstract
 
-We introduce the **EML Differential Ring**, a novel algebraic structure that axiomatizes the interaction between derivations and exponential-logarithmic maps. This structure provides the natural algebraic setting for studying ordinary differential equations whose coefficients are EML (Exponential-Multiplicative-Logarithmic) functions. We establish Abel's identity for the Wronskian in full generality within this framework, prove SL(2)-invariance of the Wronskian under solution-space automorphisms, derive the Riccati reduction from exponential substitution, and prove that the Galois determinant factors through the Wronskian. We formalize the EML tower hierarchy as a measure of transcendental complexity and connect it to obstructions to EML-solvability. All main results are verified in Lean 4 with complete machine-checked proofs, yielding 15+ sorry-free theorems across three interconnected files.
+We present a formalization in Lean 4 of the differential Galois-theoretic obstruction to EML (exponential-multiplicative-logarithmic) solvability of second-order linear ODEs. Our main contributions are:
 
-**Keywords**: Differential Galois theory, EML functions, Wronskian, Abel's identity, Airy equation, Riccati equation, differential algebra, formal verification.
+1. **Abel's Identity** for the Wronskian of second-order linear ODEs, in both differential and integral forms, with consequences for linear independence of solutions.
+2. **Perfect groups are not solvable**: a clean proof that non-trivial perfect groups (G = [G,G]) have non-terminating derived series.
+3. **Differential ring axiomatics**: a formalization of differential rings with proofs of the Leibniz rule consequences (D(0)=0, D(1)=0, D(-a)=-D(a), the power rule).
+4. **Kovacic algorithm framework**: a decision-theoretic formalization of the four cases, with proof that Case 4 (SL(2) Galois group) excludes EML solutions.
+5. **Airy equation obstructions**: proofs that no constant, monomial, or exponential function satisfies Airy's equation nontrivially, formalizing special cases of the general non-solvability result.
 
----
+The formalization comprises approximately 600 lines of Lean 4 code across four files, with 25+ proved theorems and only one remaining sorry (the full structural induction for the main Airy theorem).
+
+**Building upon**: `EML/EMLv17Core.lean` (eml function definitions), `Bridges/GaloisNeuralCorrespondence.lean` (prime_degree_divides_galois_order), `Algebra/ProofSpectra/Core.lean` (galois_connection_theory_variety).
 
 ## 1. Introduction
 
-The question of which differential equations admit closed-form solutions has been a central theme in mathematics since the work of Liouville, Picard, and Vessiot in the 19th century. Differential Galois theory provides the definitive framework: a linear ODE has "Liouvillian" solutions (expressible via exponentials, logarithms, integrals, and algebraic operations) if and only if the connected component of its differential Galois group is solvable.
+### 1.1 Background
 
-Despite its theoretical elegance, the formalization of differential Galois theory in proof assistants has been limited. The existing Mathlib library contains extensive algebraic and analytic machinery but lacks the specific structures needed for differential algebra with exponential maps.
+The problem of determining when a differential equation has solutions expressible in terms of elementary functions has a rich history going back to Liouville (1833). The modern formulation uses differential Galois theory, developed by Kolchin (1948) and refined by Singer and others.
 
-In this paper, we introduce the **EML Differential Ring** — a commutative ring equipped with a derivation D, an exponential map E, and a logarithmic map L, satisfying compatibility axioms that capture the chain rule for exponential-logarithmic compositions. This structure is the algebraic core of the theory.
+A function is **EML** (elementary) if it can be built from constants, the identity function, and the operations of addition, multiplication, negation, reciprocal, exponentiation, and logarithm through finite composition. The central question: given an ODE y'' + p(x)y' + q(x)y = 0 with EML coefficients p, q, when are the solutions also EML?
 
-### 1.1 Main Contributions
+The answer is governed by the **differential Galois group** — an algebraic group acting on the solution space. The Kolchin-Singer theorem states: a Picard-Vessiot extension is Liouvillian (EML) if and only if the identity component of its differential Galois group is solvable.
 
-1. **Novel algebraic structure** (Definition 2.1): The EMLDiffRing class, with 8 axioms capturing the interaction between D, E, and L.
+### 1.2 Main Results
 
-2. **Abel's Identity** (Theorem 3.1): For solutions y₁, y₂ of y'' + py' + qy = 0 in any EML differential ring, D(W(y₁,y₂)) = -p · W(y₁,y₂).
+We formalize the following chain of reasoning:
 
-3. **SL(2)-Invariance** (Theorem 4.1): The Wronskian is preserved by SL(2) transformations of the solution basis.
+$$\text{SL}(2,\mathbb{C}) \text{ perfect} \implies \text{not solvable} \implies \text{no EML solutions for Airy}$$
 
-4. **Galois Determinant Factorization** (Theorem 4.2): W(σ(y₁),σ(y₂)) = det(σ) · W(y₁,y₂) for constant matrices σ.
+More precisely:
 
-5. **Riccati Reduction** (Theorem 3.3): If E(u) solves y'' + qy = 0, then (D²u + (Du)²) · E(u) + q · E(u) = 0.
+**Theorem (perfect_not_solvable).** If G is a non-trivial perfect group (⁅⊤,⊤⁆ = ⊤), then G is not solvable (the derived series never terminates at ⊥).
 
-6. **Wronskian Determines p** (Theorem 3.2): In a domain, the p-coefficient is uniquely determined by the solution space (via the Wronskian).
+**Theorem (abel_identity).** If y₁, y₂ are solutions of y'' + p(x)y' + q(x)y = 0, then the Wronskian W = y₁y₂' - y₁'y₂ satisfies W'(x) = -p(x)W(x).
 
-7. **EML Tower Structure** (Definition 5.1, Theorem 5.1): A hierarchy measuring transcendental complexity, with tower height implying EML-elementarity.
+**Theorem (abel_identity_integral).** The Wronskian satisfies W(x) = W(x₀) · exp(-∫_{x₀}^x p(t) dt).
 
----
+**Theorem (wronskian_nonzero_everywhere).** If the Wronskian is nonzero at any point, it is nonzero everywhere.
 
-## 2. The EML Differential Ring
+**Theorem (airy_no_const_solution, airy_no_monomial_solution, airy_no_exp_linear_solution).** No nontrivial constant, monomial x^n (n ≥ 1), or exponential exp(ax) satisfies Airy's equation y'' = xy.
 
-### 2.1 Definition
+## 2. EML Expression Formalization
 
-**Definition 2.1** (EMLDiffRing). An *EML Differential Ring* is a tuple (R, +, ·, D, E, L) where (R, +, ·) is a commutative ring and D, E, L : R → R satisfy:
+### 2.1 Syntax
 
-1. **D-additivity**: D(a + b) = D(a) + D(b)
-2. **Leibniz rule**: D(a · b) = D(a) · b + a · D(b)
-3. **D kills unity**: D(1) = 0
-4. **E-L inverse**: E(L(a)) = a for all a
-5. **L-E inverse**: L(E(a)) = a for all a
-6. **Exponential chain rule**: D(E(a)) = D(a) · E(a)
-7. **E fixes zero**: E(0) = 1
-8. **E homomorphism**: E(a + b) = E(a) · E(b)
+We define EML expressions as an inductive type:
 
-The axioms are minimal in the sense that all standard consequences (D(0) = 0, D(-a) = -D(a), E(a) is a unit, etc.) can be derived from them.
+```
+inductive EMLExpr : Type
+  | const : ℝ → EMLExpr
+  | var : EMLExpr
+  | add : EMLExpr → EMLExpr → EMLExpr
+  | mul : EMLExpr → EMLExpr → EMLExpr
+  | neg : EMLExpr → EMLExpr
+  | inv : EMLExpr → EMLExpr
+  | exp : EMLExpr → EMLExpr
+  | log : EMLExpr → EMLExpr
+```
 
-### 2.2 Basic Consequences
+### 2.2 Syntactic Differentiation
 
-**Proposition 2.2**. In any EML differential ring:
-- D(0) = 0
-- D(-a) = -D(a)
-- D(a - b) = D(a) - D(b)
-- E(a) · E(-a) = 1 (E(a) is always a unit)
+Formal differentiation is defined recursively, implementing the chain rule, product rule, and the derivatives of exp and log. The key structural theorem is:
 
-*All proved in Lean 4 without sorry.*
+**Theorem (diff_elHeight_le).** The EL-height (maximal nesting depth of exp/log) does not increase under differentiation: elHeight(diff(e)) ≤ elHeight(e).
 
-### 2.3 Design Rationale
+This is proved by structural induction and captures the fundamental algebraic insight that differentiation preserves the transcendental complexity of EML expressions. The exp and log operations cancel in a precise sense: differentiating exp(f) yields f'·exp(f), which has the same EL-height as exp(f); differentiating log(f) yields f'/f, which has strictly lower EL-height.
 
-The axiom system is chosen to be both sufficient for differential Galois theory and compatible with concrete models. The prototypical model is the field of meromorphic functions on a simply connected domain in ℂ, with D = d/dz, E = exp, L = log. However, the abstract framework applies more broadly to differential fields in the sense of Kolchin.
+### 2.3 Evaluation and Closure
 
-We note that the L-E and E-L inverse axioms are stronger than what holds in general (log is only a partial inverse of exp on ℂ). This is deliberate: we work in the algebraic setting where these are formal operations satisfying the stated identities.
+We define evaluation of EML expressions and prove that the class of EML functions is closed under addition, multiplication, exponentiation, and logarithm — establishing that EML functions form an algebra.
 
----
+## 3. Abel's Identity and the Wronskian
 
-## 3. The Wronskian and Abel's Identity
+### 3.1 The Second-Order Linear ODE
 
-### 3.1 Definition and Basic Properties
+We formalize a second-order linear ODE y'' + p(x)y' + q(x)y = 0 as a structure containing coefficients p, q, with solutions specified by providing explicit derivative witnesses satisfying HasDerivAt.
 
-**Definition 3.1**. The *Wronskian* of y₁, y₂ ∈ R is W(y₁, y₂) := y₁ · D(y₂) - y₂ · D(y₁).
+### 3.2 Abel's Identity (Differential Form)
 
-**Proposition 3.1**. The Wronskian satisfies:
-- Antisymmetry: W(y₁, y₂) = -W(y₂, y₁)
-- Self-annihilation: W(y, y) = 0
-- Additivity: W(y₁ + y₂, z) = W(y₁, z) + W(y₂, z)
+**Theorem.** If y₁, y₂ are solutions, then at each point x:
+$$\text{HasDerivAt}(W, -p(x) \cdot W(x), x)$$
 
-### 3.2 Abel's Identity
+*Proof.* By the product rule:
+$$W'(x) = y_1'y_2' + y_1 y_2'' - y_1'' y_2 - y_1' y_2'$$
+$$= y_1 y_2'' - y_1'' y_2$$
 
-**Theorem 3.1** (Abel's Identity). If y₁ and y₂ both satisfy D(D(y)) = -(p · D(y)) - q · y, then D(W(y₁, y₂)) = -(p · W(y₁, y₂)).
+Substituting the ODE (y'' = -py' - qy):
+$$= y_1(-py_2' - qy_2) - (-py_1' - qy_1)y_2$$
+$$= -p(y_1 y_2' - y_1' y_2) = -pW$$
 
-*Proof.* Direct computation using the Leibniz rule:
-D(W) = D(y₁ · D(y₂) - y₂ · D(y₁))
-     = D(y₁)·D(y₂) + y₁·D²(y₂) - D(y₂)·D(y₁) - y₂·D²(y₁)
-     = y₁·D²(y₂) - y₂·D²(y₁)
-     = y₁·(-p·D(y₂) - q·y₂) - y₂·(-p·D(y₁) - q·y₁)
-     = -p·(y₁·D(y₂) - y₂·D(y₁))
-     = -p·W  ∎
+The formal proof uses `HasDerivAt.sub`, `HasDerivAt.mul`, and `linear_combination` to close the algebraic identity. □
 
-**Corollary 3.1**. When p = 0, D(W) = 0, so the Wronskian is a "constant" (killed by D). This is the case for Airy's equation y'' = xy.
+### 3.3 Abel's Identity (Integral Form)
 
-### 3.3 Wronskian Determines p
+**Theorem.** $W(x) = W(x_0) \cdot \exp\left(-\int_{x_0}^x p(t)\,dt\right)$
 
-**Theorem 3.2**. In a domain (no zero divisors), if y₁, y₂ solve both y'' + p₁y' + qy = 0 and y'' + p₂y' + qy = 0 with W(y₁,y₂) ≠ 0, then p₁ = p₂.
+*Proof.* Define h(x) = W(x) · exp(∫_{x₀}^x p(t) dt). Show h'(x) = 0 using the differential form of Abel's identity and the fundamental theorem of calculus. Conclude h is constant: h(x) = h(x₀) = W(x₀). □
 
-*Proof.* Abel gives D(W) = -p₁W = -p₂W. Since W ≠ 0 and R has no zero divisors, p₁ = p₂. ∎
+### 3.4 Consequences
 
-### 3.4 The Riccati Reduction
+- **Wronskian nonzero everywhere**: Since exp is never zero, W(x₀) ≠ 0 implies W(x) ≠ 0 for all x.
+- **Wronskian zero from dependence**: If y₂ = cy₁, then W = 0 identically.
 
-**Theorem 3.3**. If E(u) solves y'' + qy = 0 (with p = 0), then (D²u + (Du)²)·E(u) + q·E(u) = 0.
+## 4. The Galois Obstruction
 
-*Proof.* Compute using the chain rule D(E(u)) = D(u)·E(u) and the Leibniz rule for D(D(u)·E(u)). ∎
+### 4.1 Perfect Groups and Solvability
 
-This is the algebraic content of the classical reduction: the substitution y = exp(∫v dx) converts y'' + qy = 0 to the Riccati equation v' + v² + q = 0.
+A group G is **perfect** if ⁅G,G⁆ = G (the commutator subgroup is the whole group). We prove:
 
----
+**Theorem (derivedSeries_perfect).** For a perfect group, derivedSeries G n = ⊤ for all n.
 
-## 4. Differential Galois Theory
+*Proof.* By induction. Base: derivedSeries G 0 = ⊤ by definition. Step: derivedSeries G (n+1) = ⁅derivedSeries G n, derivedSeries G n⁆ = ⁅⊤,⊤⁆ = ⊤ by perfectness and the inductive hypothesis. □
 
-### 4.1 SL(2)-Invariance
+**Corollary (perfect_not_solvable).** A non-trivial perfect group is not solvable.
 
-**Theorem 4.1** (SL(2)-Invariance). For differentiable functions y₁, y₂ : ℝ → ℝ and a matrix σ = [a,b;c,d] with ad - bc = 1:
+For the application: SL(2,ℂ) is perfect (every element is a product of commutators, since SL(2) over any algebraically closed field of characteristic ≠ 2 has this property). Therefore SL(2,ℂ) is not solvable, and by the Kolchin-Singer theorem, any ODE with differential Galois group SL(2,ℂ) has no EML solutions.
 
-W(ay₁ + by₂, cy₁ + dy₂) = W(y₁, y₂)
+### 4.2 Differential Rings
 
-*Proof.* Expand using linearity of the derivative, and use det(σ) = 1. The result is (ad - bc) · W(y₁, y₂) = W(y₁, y₂). ∎
+We axiomatize differential rings and derive fundamental consequences of the Leibniz rule:
 
-### 4.2 Galois Determinant Factorization
+- D(0) = 0 (from D(0+0) = D(0) + D(0))
+- D(1) = 0 (from D(1·1) = 2·D(1))
+- D(-a) = -D(a) (from D(a + (-a)) = 0)
+- D(a^(n+1)) = (n+1)·a^n·D(a) (by induction using D_mul)
 
-**Theorem 4.2**. In an EML differential ring, for constants a, b, c, d (with D(a) = D(b) = D(c) = D(d) = 0):
+### 4.3 The Kovacic Algorithm
 
-W(ay₁ + by₂, cy₁ + dy₂) = (ad - bc) · W(y₁, y₂)
+We formalize the four cases of Kovacic's algorithm as an inductive type and prove the decision-theoretic structure: Case 4 implies no Liouvillian solutions (by definition of the algorithm's classification).
 
-This shows the Wronskian transforms by the determinant character of GL(2). In the abstract setting, this is proved by expanding the Wronskian using D_add, D_mul, and the constancy hypotheses.
+## 5. Airy's Equation
 
-### 4.3 Galois Determinant is Constant
+### 5.1 The Equation
 
-**Theorem 4.3**. If a, b, c, d are constants (killed by D), then D(ad - bc) = 0.
+Airy's equation y'' = xy is one of the simplest second-order linear ODEs with a variable coefficient. Its solutions, the Airy functions Ai(x) and Bi(x), arise in:
+- Quantum mechanics (WKB approximation near turning points)
+- Optics (diffraction near caustics)
+- Fluid dynamics (Stokes phenomenon)
 
-This completes the algebraic picture: the Galois group determinant is itself a constant of the derivation.
+### 5.2 Non-Elementary Obstructions
 
----
+We prove three special cases of the general non-solvability result:
 
-## 5. EML Towers and Transcendental Complexity
+1. **No nontrivial constant solution**: If y = c ≠ 0, then y'' = 0 ≠ xc for x ≠ 0.
 
-### 5.1 Definition
+2. **No monomial solution x^n (n ≥ 1)**: The ODE y'' = xy requires n(n-1)x^{n-2} = x^{n+1}. For n=1: 0 = x², impossible at x=1. For n≥2: degree n-2 ≠ n+1.
 
-**Definition 5.1** (EML Tower Height). We define inductively:
-- Constants (D(c) = 0) have height 0.
-- Sums and products of elements of heights n, m have height max(n, m).
-- E(a) and L(a) for height-n element a have height n + 1.
+3. **No exponential solution exp(ax)**: The ODE requires a²exp(ax) = x·exp(ax), hence a² = x for all x, which is impossible.
 
-### 5.2 Properties
+### 5.3 The Growth Rate Perspective
 
-**Theorem 5.1**. Every element of finite tower height is EML-elementary.
+We formalize the asymptotic growth of EML functions through an iterated exponential hierarchy. The Airy function has asymptotic growth involving exp(2x^{3/2}/3), where the 3/2 exponent is not a natural number (proved: three_halves_not_nat). This fractional power arises from the WKB analysis and reflects the transcendental nature of Airy solutions.
 
-**Conjecture 5.1** (EML Tower Separation). There exist elements that are EML-elementary but require arbitrarily large tower height. Specifically, the iterated exponential exp^(n)(x) = exp(exp(...exp(x)...)) has tower height exactly n.
+### 5.4 The Full Result (Statement)
 
----
+The complete theorem — that no nontrivial EML expression satisfies Airy's equation — is stated but left as a formal conjecture (sorry), as it requires the full bridge between the syntactic EMLExpr formalization and the analytic differential Galois theory. This bridge requires:
+1. Semantic correctness of syntactic differentiation
+2. The Kolchin-Singer theorem in full generality
+3. SL(2,ℂ) perfectness (computational group theory)
 
-## 6. Solution Space Structure
+## 6. Cross-Domain Bridge
 
-### 6.1 Vector Space Properties
+### 6.1 Algebraic vs. Differential Galois Theory
 
-We prove that the solution space of y'' + py' + qy = 0 in an EML differential ring has the following closure properties:
+We formalize the structural parallel between:
+- **Abel-Ruffini**: S₅ not solvable ⟹ quintic not solvable by radicals
+- **Kovacic-Kolchin-Singer**: SL(2,ℂ) not solvable ⟹ Airy not solvable by EML
 
-- **Zero**: The zero element is always a solution.
-- **Scalar multiplication**: If y is a solution and D(c) = 0, then cy is a solution.
-- **Addition**: If y₁, y₂ are solutions, so is y₁ + y₂.
+Both are instances of the Tannakian principle: the Galois group controls constructibility. We capture this as a `GaloisObstructionPrinciple` structure and prove the basic logical consequence (modus tollens on solvability).
 
-These are the axioms of a module over the ring of constants ker(D).
+### 6.2 Connection to Existing Catalog
 
-### 6.2 First-Order Equations
+Our `perfect_not_solvable` theorem generalizes the non-solvability results used in `Bridges/GaloisNeuralCorrespondence.lean` (prime_degree_divides_galois_order) by providing the abstract group-theoretic foundation. The differential ring formalization extends `Algebra/ProofSpectra/Core.lean` (galois_connection_theory_variety) to the differential setting.
 
-For first-order equations D(y) = ay with D(a) = 0, we prove:
-- y = E(a·t) is a solution when D(t) = 1 (Theorem 6.1).
-- The Wronskian of E(a₁t) and E(a₂t) is (a₂ - a₁)·E(a₁t)·E(a₂t) (Theorem 6.2).
+## 7. Summary of Formal Results
 
----
+| Theorem | File | Status |
+|---------|------|--------|
+| diff_elHeight_le | DiffEqCore.lean | ✓ Proved |
+| eval_const_zero, eval_var, eval_add, eval_mul | DiffEqCore.lean | ✓ Proved |
+| isEML_const, isEML_id, isEML_add, isEML_mul, isEML_exp, isEML_log | DiffEqCore.lean | ✓ Proved |
+| abel_identity | AbelWronskian.lean | ✓ Proved |
+| abel_identity_integral | AbelWronskian.lean | ✓ Proved |
+| wronskian_antisymm | AbelWronskian.lean | ✓ Proved |
+| wronskian_nonzero_everywhere | AbelWronskian.lean | ✓ Proved |
+| wronskian_zero_of_dep | AbelWronskian.lean | ✓ Proved |
+| perfect_not_solvable | GaloisObstruction.lean | ✓ Proved |
+| derivedSeries_perfect | GaloisObstruction.lean | ✓ Proved |
+| D_zero, D_one, D_neg, D_pow_succ | GaloisObstruction.lean | ✓ Proved |
+| galois_obstruction_no_eml | GaloisObstruction.lean | ✓ Proved |
+| kovacic_case4_full_galois | GaloisObstruction.lean | ✓ Proved |
+| three_halves_not_nat | AiryNoEML.lean | ✓ Proved |
+| polynomial_growth_is_iter_exp_zero | AiryNoEML.lean | ✓ Proved |
+| airy_no_const_solution | AiryNoEML.lean | ✓ Proved |
+| airy_no_monomial_solution | AiryNoEML.lean | ✓ Proved |
+| airy_no_exp_linear_solution | AiryNoEML.lean | ✓ Proved |
+| airy_no_nontrivial_eml_solution | AiryNoEML.lean | ✗ Sorry |
 
-## 7. The Airy Equation
+## 8. PEGB Analysis
 
-### 7.1 Formalization
+### P (Proof): Abel's Identity
+Complete formal proof using HasDerivAt, product rule, and linear_combination for the algebraic closure step.
 
-Airy's equation y'' = xy is formalized as IsAirySolution(y) ↔ ∀x, deriv(deriv y) x = x · y(x).
+### E (Example): Airy's Equation
+Concrete verification that constants, monomials, and exponentials fail to satisfy y'' = xy. The polynomial case uses degree counting; the exponential case uses the impossibility of a²=x.
 
-### 7.2 EML Non-Solvability (Informal)
+### G (Generalization): Perfect → Not Solvable
+The abstract theorem applies to any perfect group, not just SL(2,ℂ). This encompasses all simple groups, and more generally any group generated by its commutators. The generalization to higher-order ODEs would involve SL(n,ℂ) for n > 2.
 
-The differential Galois group of Airy's equation is SL(2,ℂ). The proof proceeds in three steps:
+### B (Boundary): Where the Obstruction Breaks
+The Kovacic algorithm's Case 1 (reducible Galois group) is where EML solutions *do* exist. The boundary between solvable and non-solvable is precisely at the structure of the coefficient function's poles. Adding a single pole of the right type can change the equation from Case 4 to Case 1.
 
-1. Since p = 0, the Wronskian is constant (by Abel's identity).
-2. The Wronskian value W = 1/π ≠ 0, so the Galois group has determinant 1.
-3. The Riccati equation v' + v² - x = 0 has movable poles, showing the group cannot be reducible or dihedral.
-4. Therefore G⁰ = SL(2,ℂ), which is non-solvable, and Airy has no Liouvillian solutions.
+## 9. Future Work
 
-### 7.3 Growth-Theoretic Perspective
-
-We define HasEMLGrowth as the property that |f(x)| ≤ C·exp(x^n) for some C, n. We verify that constants and exp have EML growth. Airy functions, by contrast, have growth ~ exp(2x^(3/2)/3) · x^(-1/4), which while fitting our EML growth bound, cannot be achieved by any finite EML expression.
-
----
-
-## 8. Algorithms
-
-### 8.1 Wronskian Computation
-
-Given numerical solutions y₁, y₂, the Wronskian can be computed as W(x) = y₁(x)·y₂'(x) - y₂(x)·y₁'(x) using finite differences.
-
-### 8.2 Abel's Formula
-
-For the equation y'' + py' + qy = 0, Abel's formula gives W(x) = W(x₀)·exp(-∫_{x₀}^{x} p(t) dt), which can be evaluated by numerical quadrature.
-
-### 8.3 Kovacic's Algorithm (Outline)
-
-For second-order linear ODEs with rational coefficients, Kovacic's algorithm decides whether the equation has Liouvillian solutions:
-1. Compute the possible forms of the Galois group (finite, dihedral, reducible, or SL(2)).
-2. For each case, search for solutions of the corresponding algebraic equations.
-3. If all cases fail, the equation has no Liouvillian (hence no EML) solutions.
-
----
-
-## 9. Falsifiable Conjecture
-
-**Conjecture** (EML Riccati Pole Obstruction): A second-order linear ODE y'' + q(x)y = 0 with polynomial q of degree ≥ 1 has no EML solution if and only if the associated Riccati equation v' + v² + q = 0 has movable poles that are dense in certain sectors of the complex plane.
-
-**Testable prediction**: For q(x) = x^n with n ≥ 1, the Riccati equation v' + v² + x^n = 0 should have movable poles with angular density that increases with n. Specifically, for the Airy case n = 1, poles should cluster along the rays arg(z) = π/3 and arg(z) = -π/3 in the complex plane.
-
-**Computational test**: Numerically integrate the Riccati equation in the complex plane and count poles in angular sectors. If the pole density fails to increase with n, the conjecture is false.
-
----
-
-## 10. Connections to Existing Catalog
-
-Our work connects to several existing results in the Catalog:
-
-- **EML Closure Operator** (`Catalog/EML/GaloisDuality.lean`): The EMLGenerated' inductive and EMLClosure' definitions provide the foundation for our IsEMLElementary predicate. Our EMLTowerHeight refines this with a complexity measure.
-
-- **EML Functional Calculus** (`Catalog/EML/EMLFunctionalCalculus.lean`): The Stone-Weierstrass-type results show that EML functions are dense in continuous functions. Our work shows that this density is *not* exact: specific ODE solutions (like Airy) escape the EML class entirely.
-
-- **Galois Theory** (`Bridges/GaloisNeuralCorrespondence.lean`): The `prime_degree_divides_galois_order` theorem connects polynomial Galois theory to our differential Galois framework.
-
----
-
-## 11. PEGB Analysis
-
-### Theorem: Abel's Identity (wronskian_abel)
-
-- **P**roof: Complete Lean 4 proof by direct computation using D_sub, D_mul, and the IsSolution hypotheses.
-- **E**xample: For Airy's equation (p=0), Abel gives W'=0, confirmed numerically: W(Ai,Bi) = 1/π at all points.
-- **G**eneralization: Works in any EML differential ring, not just ℝ. The abstract formulation applies to p-adic, adelic, and formal power series settings.
-- **B**oundary: When p is not continuous, Abel's identity holds pointwise but the Wronskian may not be differentiable. When p has poles, the Wronskian has essential singularities.
-
-### Theorem: Galois Determinant Factorization (galois_det_from_wronskian)
-
-- **P**roof: Expand W using D_add, D_mul, and constancy hypotheses D(a)=D(b)=D(c)=D(d)=0.
-- **E**xample: For Airy with SL(2) matrix [2,1;1,1] (det=1), W(2·Ai+Bi, Ai+Bi) = W(Ai,Bi).
-- **G**eneralization: The factorization W ↦ det(σ)·W extends to GL(n) for nth-order equations, where the Wronskian is an n×n determinant.
-- **B**oundary: Fails when the matrix entries are not constants (D(a)≠0). In that case, the transformation introduces correction terms involving D(a), D(b), etc.
-
-### Theorem: Wronskian Determines p (wronskian_determines_p)
-
-- **P**roof: From Abel, -p₁W = D(W) = -p₂W. Cancel W (using NoZeroDivisors) to get p₁ = p₂.
-- **E**xample: The equation y''+2y'+y=0 (p=2) has Wronskian W=Ce^(-2x). Any other equation with the same solutions must have p=2.
-- **G**eneralization: For nth-order equations, the first n-1 coefficients are determined by the solution space.
-- **B**oundary: Requires W ≠ 0 (linearly independent solutions) and NoZeroDivisors (works in fields and integral domains, fails in Z/6Z).
-
----
-
-## 12. Future Work
-
-1. Full formalization of Kovacic's algorithm in Lean 4.
-2. Extension to higher-order linear ODEs and the general GL(n) theory.
-3. Connection to the Stokes phenomenon and resurgence theory for Airy-type equations.
-4. Computational classification of all second-order linear ODEs with polynomial coefficients of degree ≤ 5.
-
----
+1. Complete the semantic correctness proof for syntactic differentiation of EML expressions
+2. Formalize SL(2,ℂ) perfectness as a concrete group-theoretic computation
+3. Full Kovacic algorithm implementation and correctness proof
+4. Extension to systems of first-order ODEs
+5. Painlevé transcendents and higher-order non-elementary functions
 
 ## References
 
-1. Kaplansky, I. *An Introduction to Differential Algebra*. Hermann, 1957.
-2. Kolchin, E. R. *Differential Algebra and Algebraic Groups*. Academic Press, 1973.
-3. van der Put, M., Singer, M. F. *Galois Theory of Linear Differential Equations*. Springer, 2003.
-4. Kovacic, J. J. "An algorithm for solving second order linear homogeneous differential equations." *J. Symbolic Comput.* 2(1), 1986.
-5. Singer, M. F. "Liouvillian solutions of n-th order homogeneous linear differential equations." *Amer. J. Math.* 103, 1981.
+1. Abel, N.H. (1824). Mémoire sur les équations algébriques.
+2. Galois, É. (1832). Mémoire sur les conditions de résolubilité des équations par radicaux.
+3. Liouville, J. (1833). Sur la détermination des intégrales.
+4. Kolchin, E.R. (1948). Algebraic matric groups and the Picard-Vessiot theory.
+5. Kovacic, J.J. (1986). An algorithm for solving second order linear homogeneous differential equations. *J. Symbolic Computation*, 2, 3-43.
+6. Singer, M.F. (1981). Liouvillian solutions of linear differential equations with Liouvillian coefficients.
+7. van der Put, M. & Singer, M.F. (2003). *Galois Theory of Linear Differential Equations*. Springer.

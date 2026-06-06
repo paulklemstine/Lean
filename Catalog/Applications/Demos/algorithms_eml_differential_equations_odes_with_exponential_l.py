@@ -1,267 +1,302 @@
-#!/usr/bin/env python3
 """
-EML Differential Equations: Core Algorithms
+Algorithms for EML Differential Equations
 
-Type-hinted implementations of the key algorithms from the
-EML Differential Ring theory.
+Type-hinted implementations of:
+1. Kovacic algorithm (simplified)
+2. EML expression differentiation
+3. Wronskian computation
+4. Growth rate classification
 """
 
-from typing import Callable, Tuple, List, Optional
-import numpy as np
+from __future__ import annotations
+from dataclasses import dataclass
+from enum import Enum, auto
+from typing import Callable, Optional, Tuple
+import math
 
 
-# Type aliases
-RealFunc = Callable[[float], float]
-VectorFunc = Callable[[float], np.ndarray]
+# ============================================================
+# EML Expression Type
+# ============================================================
+
+class EMLExprType(Enum):
+    CONST = auto()
+    VAR = auto()
+    ADD = auto()
+    MUL = auto()
+    NEG = auto()
+    INV = auto()
+    EXP = auto()
+    LOG = auto()
 
 
-def wronskian(y1: RealFunc, y2: RealFunc, x: float, h: float = 1e-8) -> float:
-    """
-    Compute the Wronskian W(y1, y2) at point x using numerical differentiation.
+@dataclass
+class EMLExpr:
+    """An EML (Exponential-Multiplicative-Logarithmic) expression."""
+    kind: EMLExprType
+    value: Optional[float] = None
+    left: Optional['EMLExpr'] = None
+    right: Optional['EMLExpr'] = None
 
-    W(y1, y2)(x) = y1(x) * y2'(x) - y2(x) * y1'(x)
+    @staticmethod
+    def const(c: float) -> 'EMLExpr':
+        return EMLExpr(EMLExprType.CONST, value=c)
+    
+    @staticmethod
+    def var() -> 'EMLExpr':
+        return EMLExpr(EMLExprType.VAR)
+    
+    @staticmethod
+    def add(a: 'EMLExpr', b: 'EMLExpr') -> 'EMLExpr':
+        return EMLExpr(EMLExprType.ADD, left=a, right=b)
+    
+    @staticmethod
+    def mul(a: 'EMLExpr', b: 'EMLExpr') -> 'EMLExpr':
+        return EMLExpr(EMLExprType.MUL, left=a, right=b)
+    
+    @staticmethod
+    def neg(a: 'EMLExpr') -> 'EMLExpr':
+        return EMLExpr(EMLExprType.NEG, left=a)
+    
+    @staticmethod
+    def inv(a: 'EMLExpr') -> 'EMLExpr':
+        return EMLExpr(EMLExprType.INV, left=a)
+    
+    @staticmethod
+    def exp(a: 'EMLExpr') -> 'EMLExpr':
+        return EMLExpr(EMLExprType.EXP, left=a)
+    
+    @staticmethod
+    def log(a: 'EMLExpr') -> 'EMLExpr':
+        return EMLExpr(EMLExprType.LOG, left=a)
 
-    Args:
-        y1: First solution function
-        y2: Second solution function
-        x: Point of evaluation
-        h: Step size for numerical differentiation
+    def evaluate(self, x: float) -> float:
+        """Evaluate the expression at a point."""
+        if self.kind == EMLExprType.CONST:
+            return self.value
+        elif self.kind == EMLExprType.VAR:
+            return x
+        elif self.kind == EMLExprType.ADD:
+            return self.left.evaluate(x) + self.right.evaluate(x)
+        elif self.kind == EMLExprType.MUL:
+            return self.left.evaluate(x) * self.right.evaluate(x)
+        elif self.kind == EMLExprType.NEG:
+            return -self.left.evaluate(x)
+        elif self.kind == EMLExprType.INV:
+            v = self.left.evaluate(x)
+            return 1.0 / v if v != 0 else float('inf')
+        elif self.kind == EMLExprType.EXP:
+            return math.exp(self.left.evaluate(x))
+        elif self.kind == EMLExprType.LOG:
+            v = self.left.evaluate(x)
+            return math.log(v) if v > 0 else float('-inf')
+        raise ValueError(f"Unknown expression type: {self.kind}")
 
-    Returns:
-        Wronskian value at x
-    """
-    dy1 = (y1(x + h) - y1(x - h)) / (2 * h)
-    dy2 = (y2(x + h) - y2(x - h)) / (2 * h)
-    return y1(x) * dy2 - y2(x) * dy1
+    def differentiate(self) -> 'EMLExpr':
+        """Syntactic differentiation using standard rules."""
+        if self.kind == EMLExprType.CONST:
+            return EMLExpr.const(0)
+        elif self.kind == EMLExprType.VAR:
+            return EMLExpr.const(1)
+        elif self.kind == EMLExprType.ADD:
+            return EMLExpr.add(self.left.differentiate(), self.right.differentiate())
+        elif self.kind == EMLExprType.MUL:
+            # Product rule: (fg)' = f'g + fg'
+            return EMLExpr.add(
+                EMLExpr.mul(self.left.differentiate(), self.right),
+                EMLExpr.mul(self.left, self.right.differentiate())
+            )
+        elif self.kind == EMLExprType.NEG:
+            return EMLExpr.neg(self.left.differentiate())
+        elif self.kind == EMLExprType.INV:
+            # (1/f)' = -f'/f²
+            return EMLExpr.neg(
+                EMLExpr.mul(
+                    self.left.differentiate(),
+                    EMLExpr.mul(EMLExpr.inv(self.left), EMLExpr.inv(self.left))
+                )
+            )
+        elif self.kind == EMLExprType.EXP:
+            # (exp(f))' = f' * exp(f)
+            return EMLExpr.mul(self.left.differentiate(), EMLExpr.exp(self.left))
+        elif self.kind == EMLExprType.LOG:
+            # (log(f))' = f'/f
+            return EMLExpr.mul(self.left.differentiate(), EMLExpr.inv(self.left))
+        raise ValueError(f"Unknown expression type: {self.kind}")
+
+    def el_height(self) -> int:
+        """Compute the EL-height (max nesting depth of exp/log)."""
+        if self.kind in (EMLExprType.CONST, EMLExprType.VAR):
+            return 0
+        elif self.kind in (EMLExprType.ADD, EMLExprType.MUL):
+            return max(self.left.el_height(), self.right.el_height())
+        elif self.kind in (EMLExprType.NEG, EMLExprType.INV):
+            return self.left.el_height()
+        elif self.kind in (EMLExprType.EXP, EMLExprType.LOG):
+            return self.left.el_height() + 1
+        return 0
+
+
+# ============================================================
+# Wronskian and Abel's Identity
+# ============================================================
+
+def wronskian(
+    y1: Callable[[float], float],
+    y2: Callable[[float], float],
+    y1p: Callable[[float], float],
+    y2p: Callable[[float], float],
+    x: float
+) -> float:
+    """Compute the Wronskian W(x) = y1(x)*y2'(x) - y1'(x)*y2(x)."""
+    return y1(x) * y2p(x) - y1p(x) * y2(x)
 
 
 def abel_wronskian(
-    p: RealFunc,
     W0: float,
+    p: Callable[[float], float],
     x0: float,
     x: float,
     n_steps: int = 1000
 ) -> float:
+    """Compute W(x) = W(x0) * exp(-∫_{x0}^x p(t) dt) numerically.
+    
+    Uses Simpson's rule for the integral.
     """
-    Compute the Wronskian using Abel's formula:
-    W(x) = W(x0) * exp(-∫_{x0}^{x} p(t) dt)
-
-    Uses composite Simpson's rule for the integral.
-
-    Args:
-        p: The p-coefficient in y'' + p*y' + q*y = 0
-        W0: Initial Wronskian value W(x0)
-        x0: Initial point
-        x: Target point
-        n_steps: Number of integration steps
-
-    Returns:
-        Wronskian value at x via Abel's formula
-    """
-    # Composite Simpson's rule for ∫p
-    t = np.linspace(x0, x, 2 * n_steps + 1)
-    dt = (x - x0) / (2 * n_steps)
-    values = np.array([p(ti) for ti in t])
-
-    integral = dt / 3 * (
-        values[0] + values[-1] +
-        4 * np.sum(values[1::2]) +
-        2 * np.sum(values[2:-1:2])
-    )
-
-    return W0 * np.exp(-integral)
-
-
-def riccati_solve(
-    q: RealFunc,
-    v0: float,
-    x_span: Tuple[float, float],
-    n_steps: int = 10000
-) -> Tuple[np.ndarray, np.ndarray]:
-    """
-    Solve the Riccati equation v' + v² + q = 0 using RK4.
-
-    This is the reduction of y'' + q*y = 0 via y = exp(∫v dx).
-
-    Args:
-        q: The q-coefficient
-        v0: Initial value v(x0)
-        x_span: (x_start, x_end)
-        n_steps: Number of steps
-
-    Returns:
-        (x_array, v_array): Solution arrays
-    """
-    x0, x1 = x_span
-    h = (x1 - x0) / n_steps
-    x = np.zeros(n_steps + 1)
-    v = np.zeros(n_steps + 1)
-    x[0] = x0
-    v[0] = v0
-
-    def f(t: float, vt: float) -> float:
-        return -(vt ** 2) - q(t)
-
+    # Numerical integration of p from x0 to x
+    h = (x - x0) / n_steps
+    integral = 0.0
     for i in range(n_steps):
-        k1 = f(x[i], v[i])
-        k2 = f(x[i] + h/2, v[i] + h*k1/2)
-        k3 = f(x[i] + h/2, v[i] + h*k2/2)
-        k4 = f(x[i] + h, v[i] + h*k3)
-        v[i+1] = v[i] + h/6 * (k1 + 2*k2 + 2*k3 + k4)
-        x[i+1] = x[i] + h
-
-        # Detect blow-up (Riccati pole)
-        if abs(v[i+1]) > 1e10:
-            return x[:i+2], v[:i+2]
-
-    return x, v
+        t0 = x0 + i * h
+        t1 = t0 + h
+        tm = (t0 + t1) / 2
+        integral += (h / 6) * (p(t0) + 4 * p(tm) + p(t1))
+    
+    return W0 * math.exp(-integral)
 
 
-def sl2_transform(
-    y1: np.ndarray,
-    y2: np.ndarray,
-    matrix: Tuple[float, float, float, float]
-) -> Tuple[np.ndarray, np.ndarray]:
-    """
-    Apply an SL(2) transformation to a pair of solutions.
+# ============================================================
+# Kovacic Algorithm (Simplified)
+# ============================================================
 
-    [y1_new]   [a b] [y1]
-    [y2_new] = [c d] [y2]
+class KovacicCase(Enum):
+    """The four cases of the Kovacic algorithm."""
+    CASE_1 = 1  # Reducible (triangular Galois group)
+    CASE_2 = 2  # Imprimitive (dihedral Galois group)
+    CASE_3 = 3  # Finite (platonic Galois group)
+    CASE_4 = 4  # Full SL(2) (no Liouvillian solution)
 
+
+@dataclass
+class Pole:
+    """A pole of a rational function."""
+    location: complex  # ∞ represented as float('inf')
+    order: int
+    coefficient: complex  # leading coefficient
+
+
+def kovacic_classify(poles: list[Pole]) -> KovacicCase:
+    """Simplified Kovacic case classification based on pole structure.
+    
+    This is a simplified version that handles common cases:
+    - If all poles have even order: could be Cases 1, 2, or 3
+    - If any pole has odd order > 1: eliminates Cases 2 and 3
+    - Full classification requires additional residue analysis
+    
     Args:
-        y1, y2: Original solution arrays
-        matrix: (a, b, c, d) with ad - bc = 1
-
+        poles: List of poles with their orders
+    
     Returns:
-        (y1_new, y2_new): Transformed solutions
+        The Kovacic case classification
     """
-    a, b, c, d = matrix
-    det = a * d - b * c
-    if abs(det - 1.0) > 1e-6:
-        raise ValueError(f"Matrix determinant {det} ≠ 1 (not in SL(2))")
+    has_odd_order = any(p.order % 2 == 1 and p.order > 1 for p in poles)
+    max_order = max((p.order for p in poles), default=0)
+    
+    if has_odd_order:
+        # Odd order poles (> 1) eliminate Cases 2 and 3
+        # Need further analysis for Case 1 vs Case 4
+        # For simplicity, classify as Case 4 (conservative)
+        return KovacicCase.CASE_4
+    
+    if max_order <= 2:
+        # Low-order poles: likely Case 1
+        return KovacicCase.CASE_1
+    
+    # Default: Case 4 (most conservative)
+    return KovacicCase.CASE_4
 
-    return a * y1 + b * y2, c * y1 + d * y2
 
-
-def eml_tower_height(expr: str) -> int:
+def kovacic_airy() -> KovacicCase:
+    """Apply Kovacic algorithm to Airy's equation y'' = xy.
+    
+    r(x) = x has:
+    - No finite poles
+    - A pole of order 3 at infinity (x ~ 1/t², so r = 1/t² has order 3)
+    
+    The odd order at infinity rules out Cases 2 and 3.
+    Case 1 analysis also fails.
+    Result: Case 4 (full SL(2), no Liouvillian solutions).
     """
-    Compute the EML tower height of a symbolic expression.
+    # Pole at infinity with order 3
+    poles = [Pole(location=complex('inf'), order=3, coefficient=1)]
+    
+    result = kovacic_classify(poles)
+    assert result == KovacicCase.CASE_4, "Airy equation should be Case 4"
+    return result
 
-    Tower height 0: constants, polynomials
-    Tower height n+1: exp(height-n) or log(height-n)
 
-    Args:
-        expr: String representation of the expression
+# ============================================================
+# Growth Rate Classification
+# ============================================================
 
-    Returns:
-        Tower height
+class GrowthClass(Enum):
+    """Growth rate classification for EML functions."""
+    POLYNOMIAL = 0      # |f(x)| ≤ C * x^n
+    EXPONENTIAL = 1     # |f(x)| ≤ C * exp(x^n)
+    DOUBLE_EXP = 2      # |f(x)| ≤ C * exp(exp(x^n))
+    SUPER_EXP = 3       # Higher iterated exponentials
+
+
+def classify_growth(expr: EMLExpr) -> GrowthClass:
+    """Classify the growth rate of an EML expression.
+    
+    The growth class is bounded by the EL-height:
+    - EL-height 0: polynomial growth
+    - EL-height 1: exponential growth
+    - EL-height 2: double exponential growth
+    - EL-height k: k-fold iterated exponential growth
     """
-    # Simple recursive parser
-    expr = expr.strip()
-
-    if expr.startswith("exp(") and expr.endswith(")"):
-        inner = expr[4:-1]
-        return eml_tower_height(inner) + 1
-
-    if expr.startswith("log(") and expr.endswith(")"):
-        inner = expr[4:-1]
-        return eml_tower_height(inner) + 1
-
-    # Check for nested operations
-    if "exp(" in expr or "log(" in expr:
-        # Find the maximum tower height among subexpressions
-        max_h = 0
-        i = 0
-        while i < len(expr):
-            for prefix in ["exp(", "log("]:
-                if expr[i:].startswith(prefix):
-                    depth = 1
-                    j = i + len(prefix)
-                    while j < len(expr) and depth > 0:
-                        if expr[j] == '(':
-                            depth += 1
-                        elif expr[j] == ')':
-                            depth -= 1
-                        j += 1
-                    sub = expr[i:j]
-                    max_h = max(max_h, eml_tower_height(sub))
-                    i = j
-                    break
-            else:
-                i += 1
-        return max_h
-
-    # Base case: polynomial expression
-    return 0
+    h = expr.el_height()
+    if h == 0:
+        return GrowthClass.POLYNOMIAL
+    elif h == 1:
+        return GrowthClass.EXPONENTIAL
+    elif h == 2:
+        return GrowthClass.DOUBLE_EXP
+    else:
+        return GrowthClass.SUPER_EXP
 
 
-def classify_ode_solvability(
-    p: RealFunc,
-    q: RealFunc,
-    x_test: List[float]
-) -> dict:
-    """
-    Heuristic classification of 2nd-order linear ODE solvability.
-
-    Uses numerical invariants to guess whether y'' + p*y' + q*y = 0
-    might have EML solutions.
-
-    Args:
-        p: Coefficient of y'
-        q: Coefficient of y
-        x_test: Test points for evaluation
-
-    Returns:
-        Dictionary with classification results
-    """
-    results: dict = {
-        "p_zero": all(abs(p(x)) < 1e-10 for x in x_test),
-        "q_polynomial_degree": None,
-        "abel_integral_eml": None,
-        "classification": "unknown"
-    }
-
-    # Check if q is a polynomial (finite differences stabilize)
-    q_vals = [q(x) for x in x_test]
-    for deg in range(10):
-        diffs = q_vals
-        for _ in range(deg + 1):
-            diffs = [diffs[i+1] - diffs[i] for i in range(len(diffs) - 1)]
-            if not diffs:
-                break
-        if diffs and all(abs(d) < 1e-6 for d in diffs):
-            results["q_polynomial_degree"] = deg
-            break
-
-    # Classification heuristics
-    if results["p_zero"] and results["q_polynomial_degree"] == 1:
-        results["classification"] = "Airy-type (likely non-EML)"
-    elif results["p_zero"] and results["q_polynomial_degree"] == 0:
-        results["classification"] = "Constant coefficient (EML-solvable)"
-    elif results["q_polynomial_degree"] is not None:
-        results["classification"] = "Polynomial coefficient (requires Kovacic)"
-
-    return results
-
+# ============================================================
+# Main demonstration
+# ============================================================
 
 if __name__ == "__main__":
-    # Quick test
-    print("Testing Wronskian computation...")
-    W = wronskian(np.sin, np.cos, 1.0)
-    print(f"  W(sin, cos)(1) = {W:.10f} (should be ≈ -1)")
-
-    print("\nTesting EML tower heights...")
-    examples = ["x^2 + 3", "exp(x)", "log(x)", "exp(exp(x))", "exp(x*log(x))"]
-    for e in examples:
-        print(f"  height('{e}') = {eml_tower_height(e)}")
-
-    print("\nTesting ODE classification...")
-    x_test = list(np.linspace(0.5, 5, 20))
-
-    # Airy equation: p=0, q=-x
-    result = classify_ode_solvability(lambda x: 0, lambda x: -x, x_test)
-    print(f"  Airy (y''=xy): {result['classification']}")
-
-    # Constant coefficient: p=0, q=1
-    result = classify_ode_solvability(lambda x: 0, lambda x: 1, x_test)
-    print(f"  y''+y=0: {result['classification']}")
+    # Demo: Kovacic classification
+    print("Kovacic classification of Airy's equation:", kovacic_airy())
+    
+    # Demo: EML expression manipulation
+    # f(x) = exp(x²)
+    x = EMLExpr.var()
+    x_sq = EMLExpr.mul(x, x)
+    exp_x_sq = EMLExpr.exp(x_sq)
+    
+    print(f"\nf(x) = exp(x²)")
+    print(f"  f(1) = {exp_x_sq.evaluate(1):.6f}")
+    print(f"  EL-height = {exp_x_sq.el_height()}")
+    print(f"  Growth class = {classify_growth(exp_x_sq)}")
+    
+    f_prime = exp_x_sq.differentiate()
+    print(f"  f'(1) = {f_prime.evaluate(1):.6f}")
+    print(f"  EL-height of f' = {f_prime.el_height()}")
+    print(f"  (should be ≤ {exp_x_sq.el_height()})")
