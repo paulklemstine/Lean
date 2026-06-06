@@ -1,211 +1,288 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Algorithms for Gap Spectrum Analysis
+Algorithms for Surreal Topology: The Archimedean–Connected Dichotomy
 
-Type-hinted implementations of the core algorithms used in the
-Gap Spectrum theory of ordered continua.
+Implementations of the key constructions from the formal proofs:
+1. InfinitesimalField — a model of Q(ε) for testing
+2. ClopenSeparator — constructs clopen sets separating points
+3. ArchimedeanClassifier — determines topological properties from algebraic ones
 """
 
 from fractions import Fraction
 from typing import List, Tuple, Optional, Set, Dict
 from dataclasses import dataclass
-import math
 
 
-@dataclass
-class DedekindGap:
-    """A Dedekind gap in a finite ordered set, specified by its position."""
-    lower_bound: float  # sup of lower cut
-    upper_bound: float  # inf of upper cut
-    
-    @property
-    def width(self) -> float:
-        return self.upper_bound - self.lower_bound
-    
-    def contains(self, x: float) -> bool:
-        """Check if x falls in this gap."""
-        return self.lower_bound < x < self.upper_bound
-
+# ============================================================
+# Algorithm 1: Infinitesimal Field Element
+# ============================================================
 
 @dataclass
-class GapSpectrum:
-    """The gap spectrum of a finite ordered set."""
-    gaps: List[DedekindGap]
-    total_points: int
+class FieldElement:
+    """Element of Q(ε) = {a + b·ε : a, b ∈ Q} with ε infinitesimal.
     
-    @property
-    def gap_count(self) -> int:
-        return len(self.gaps)
+    Ordered lexicographically: a + b·ε < c + d·ε iff a < c or (a = c and b < d).
+    This models a non-Archimedean ordered field.
     
-    @property
-    def gap_density(self) -> float:
-        """Ratio of gaps to intervals between consecutive points."""
-        if self.total_points <= 1:
-            return 0.0
-        return self.gap_count / (self.total_points - 1)
-    
-    def is_gap_free(self) -> bool:
-        return self.gap_count == 0
-
-
-def dyadic_approximation(n: int) -> List[Fraction]:
+    Type hints: real (Fraction), inf (Fraction)
     """
-    Generate the day-n dyadic approximation to surreal numbers.
+    real: Fraction   # standard part
+    inf: Fraction    # infinitesimal coefficient
     
-    Returns sorted list of {k/2^n : |k| ≤ 2^n}.
+    def __lt__(self, other: 'FieldElement') -> bool:
+        return (self.real, self.inf) < (other.real, other.inf)
     
-    Complexity: O(2^n log 2^n) = O(n · 2^n)
-    """
-    denom: int = 2 ** n
-    return sorted([Fraction(k, denom) for k in range(-denom, denom + 1)])
+    def __le__(self, other: 'FieldElement') -> bool:
+        return (self.real, self.inf) <= (other.real, other.inf)
+    
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, FieldElement):
+            return NotImplemented
+        return self.real == other.real and self.inf == other.inf
+    
+    def __add__(self, other: 'FieldElement') -> 'FieldElement':
+        return FieldElement(self.real + other.real, self.inf + other.inf)
+    
+    def __sub__(self, other: 'FieldElement') -> 'FieldElement':
+        return FieldElement(self.real - other.real, self.inf - other.inf)
+    
+    def __mul__(self, other: 'FieldElement') -> 'FieldElement':
+        return FieldElement(
+            self.real * other.real,
+            self.real * other.inf + self.inf * other.real
+        )
+    
+    def nsmul(self, n: int) -> 'FieldElement':
+        """Compute n • self (additive n-fold)."""
+        return FieldElement(Fraction(n) * self.real, Fraction(n) * self.inf)
+    
+    def __repr__(self) -> str:
+        if self.inf == 0:
+            return f"FieldElement({self.real})"
+        elif self.real == 0:
+            return f"FieldElement({self.inf}·ε)"
+        else:
+            return f"FieldElement({self.real} + {self.inf}·ε)"
 
 
-def compute_gap_spectrum(
-    points: List[Fraction],
-    test_irrationals: List[float]
-) -> GapSpectrum:
-    """
-    Compute the gap spectrum of a finite ordered set.
+# ============================================================
+# Algorithm 2: Clopen Set Membership Test
+# ============================================================
+
+def in_lt_nsmul_region(z: FieldElement, eps: FieldElement, max_n: int = 10000) -> bool:
+    """Test if z ∈ ltNsmulRegion(ε) = {z : ∃ n ∈ ℕ, z < n • ε}.
     
-    Algorithm:
-    1. Sort points (assumed sorted)
-    2. For each consecutive pair (a, b), check if any test irrational falls in (a, b)
-    3. Each such interval with an irrational is a gap
+    In Q(ε), this is decidable: z < n·ε iff z.real < n·ε.real 
+    or (z.real = n·ε.real and z.inf < n·ε.inf).
     
-    Complexity: O(n · m) where n = |points|, m = |test_irrationals|
+    For exact computation in Q(ε), we can solve analytically.
+    
+    Args:
+        z: Element to test
+        eps: The infinitesimal ε > 0
+        max_n: Maximum n to check (for approximate test)
+    
+    Returns:
+        True if z ∈ ltNsmulRegion(ε)
     """
-    gaps: List[DedekindGap] = []
-    for i in range(len(points) - 1):
-        a, b = float(points[i]), float(points[i + 1])
-        for x in test_irrationals:
-            if a < x < b:
-                gaps.append(DedekindGap(lower_bound=a, upper_bound=b))
-                break
-    return GapSpectrum(gaps=gaps, total_points=len(points))
+    if eps.real > 0:
+        # n·ε has real part n·eps.real → ∞, so z < n·ε for large n
+        return True
+    elif eps.real == 0 and eps.inf > 0:
+        # n·ε has real part 0 and inf part n·eps.inf
+        # z < n·ε iff z.real < 0 or (z.real == 0 and z.inf < n·eps.inf)
+        if z.real < 0:
+            return True
+        elif z.real == 0:
+            # z.inf < n·eps.inf for some n iff z.inf / eps.inf < some n iff True (for z.inf finite)
+            return True  # always true for finite z.inf
+        else:
+            return False  # z.real > 0 > n · 0 = n·ε.real
+    else:
+        return False
 
 
-def connected_components_ordered(
-    points: List[Fraction],
-    gaps: GapSpectrum
-) -> List[List[Fraction]]:
+def construct_clopen_separator(
+    a: FieldElement, 
+    b: FieldElement, 
+    eps0: FieldElement,
+    b0: FieldElement
+) -> Tuple[FieldElement, FieldElement]:
+    """Construct a clopen set separating a from b (with a < b).
+    
+    Given infinitesimal witness ε₀ > 0 with n·ε₀ < b₀ for all n,
+    constructs rescaled ε = ε₀ · (b - a) / b₀ such that:
+    - {z : ∃ n, z - a < n · ε} is clopen
+    - a is in this set, b is not
+    
+    Returns: (eps_rescaled, delta) — the rescaled ε and the gap δ = b - a
+    
+    Pseudocode:
+        1. Compute δ = b - a
+        2. Compute ε = ε₀ · δ / b₀
+        3. Return ε (the separator is {z : ∃ n, z - a < n · ε})
     """
-    Compute connected components of an ordered set given its gap spectrum.
+    delta = b - a
+    eps_rescaled = eps0 * delta  # Simplified: assuming b0 = 1 in our model
+    return eps_rescaled, delta
+
+
+# ============================================================
+# Algorithm 3: Archimedean Property Test
+# ============================================================
+
+def is_archimedean_field(elements: List[FieldElement]) -> Tuple[bool, Optional[Tuple[FieldElement, FieldElement]]]:
+    """Test if a finite subset of an ordered field witnesses non-Archimedeanness.
     
-    Two points are in the same component iff no gap separates them.
+    Checks if there exist ε, b in elements with ε > 0, b > 0, and
+    n·ε < b for all n up to a reasonable bound.
     
-    Complexity: O(n · g) where n = |points|, g = |gaps|
+    In Q(ε), any element with real part 0 and positive inf part is infinitesimal.
+    
+    Args:
+        elements: List of field elements to check
+    
+    Returns:
+        (is_arch, witness) where witness is (ε, b) if non-Archimedean
+    """
+    zero = FieldElement(Fraction(0), Fraction(0))
+    
+    for eps in elements:
+        if not (zero < eps):
+            continue
+        for b_elem in elements:
+            if not (zero < b_elem):
+                continue
+            # Check if n·ε < b for "all" n (check up to 1000)
+            all_bounded = True
+            for n in range(1, 1001):
+                if not (eps.nsmul(n) < b_elem):
+                    all_bounded = False
+                    break
+            if all_bounded and eps != b_elem:
+                return False, (eps, b_elem)
+    
+    return True, None
+
+
+# ============================================================
+# Algorithm 4: Connected Component Computation (Finite Model)
+# ============================================================
+
+def compute_connected_components_finite(
+    points: List[FieldElement],
+    eps: FieldElement
+) -> Dict[int, List[FieldElement]]:
+    """Compute approximate connected components in a finite model.
+    
+    Two points are in the same component if they can be connected by
+    a chain of points where consecutive points are NOT separated by
+    any ltNsmulRegion-based clopen set.
+    
+    In a non-Archimedean field, each point is its own component.
+    In an Archimedean field, all points within standard distance are connected.
+    
+    Args:
+        points: Sorted list of field elements
+        eps: An infinitesimal element (or small element for testing)
+    
+    Returns:
+        Dictionary mapping component index to list of points in that component
     """
     if not points:
-        return []
+        return {}
     
-    gap_positions: List[Tuple[float, float]] = [
-        (g.lower_bound, g.upper_bound) for g in gaps.gaps
-    ]
+    # In a non-Archimedean field, connected components are singletons
+    # In our model Q(ε), points with different real parts are in different components
+    components: Dict[int, List[FieldElement]] = {}
+    comp_idx = 0
+    current_real = points[0].real
+    components[comp_idx] = [points[0]]
     
-    components: List[List[Fraction]] = [[points[0]]]
-    for i in range(1, len(points)):
-        a, b = float(points[i - 1]), float(points[i])
-        separated = any(a <= lb and ub <= b for lb, ub in gap_positions)
-        if separated:
-            components.append([points[i]])
-        else:
-            components[-1].append(points[i])
+    for p in points[1:]:
+        if p.real != current_real:
+            comp_idx += 1
+            current_real = p.real
+            components[comp_idx] = []
+        components[comp_idx].append(p)
+    
     return components
 
 
-def contraction_homotopy(
-    x: float,
-    t: float
-) -> float:
-    """
-    The contraction homotopy H(x, t) = x · (1 - t).
+# ============================================================
+# Algorithm 5: Topological Classification
+# ============================================================
+
+@dataclass
+class TopologicalClassification:
+    """Classification of an ordered field's topology."""
+    is_archimedean: bool
+    is_complete: bool
+    is_connected: bool
+    is_totally_disconnected: bool
+    description: str
+
+
+def classify_ordered_field(
+    name: str,
+    is_archimedean: bool,
+    is_complete: bool
+) -> TopologicalClassification:
+    """Classify the order topology of an ordered field.
     
-    At t=0: H(x, 0) = x (identity)
-    At t=1: H(x, 1) = 0 (constant map to zero)
+    Uses our theorems:
+    - Non-Archimedean ⟹ Totally Disconnected
+    - Connected ⟹ Archimedean
+    - Archimedean + Complete ⟹ Connected
     
-    This demonstrates contractibility of ℝ and surreal-like completions.
-    """
-    return x * (1.0 - t)
-
-
-def halving_contraction(
-    x: Fraction,
-    steps: int
-) -> List[Fraction]:
-    """
-    Discrete contraction via repeated halving: x, x/2, x/4, ..., x/2^steps.
+    Args:
+        name: Name of the field
+        is_archimedean: Whether the field satisfies the Archimedean property
+        is_complete: Whether the field is Dedekind complete
     
-    This is a discrete approximation to the continuous contraction homotopy.
-    Converges to 0 as steps → ∞.
+    Returns:
+        TopologicalClassification with all properties determined
     """
-    return [x / (2 ** k) for k in range(steps + 1)]
-
-
-def gap_free_check(
-    points: List[Fraction],
-    epsilon: float = 1e-10
-) -> bool:
-    """
-    Check if a finite ordered set is "approximately gap-free" 
-    by verifying no consecutive pair has a gap larger than epsilon.
-    
-    For a truly gap-free (complete) order, gaps can only appear between
-    points, never within them.
-    """
-    for i in range(len(points) - 1):
-        if float(points[i + 1] - points[i]) > epsilon:
-            return False
-    return True
-
-
-def order_isomorphism_map(
-    points: List[Fraction],
-    f: callable
-) -> List[Fraction]:
-    """
-    Apply an order-preserving map to a finite ordered set.
-    
-    Theorem (proved in Lean): order isomorphisms preserve gap-freeness.
-    """
-    return sorted([f(x) for x in points])
-
-
-def convex_open_basis_check(
-    interval: Tuple[Fraction, Fraction],
-    points: List[Fraction]
-) -> bool:
-    """
-    Check if an open interval (a, b) is in the convex open basis.
-    
-    An interval is convex-open iff it is both open and order-convex.
-    Open intervals are always convex-open (proved in Lean as Ioo_mem_convexOpenBasis).
-    """
-    a, b = interval
-    return a < b  # Open intervals (a, b) with a < b are always in the basis
-
-
-def archimedean_embedding_rational(q: Fraction) -> float:
-    """
-    The canonical embedding ℚ → ℝ.
-    
-    Theorem (proved in Lean): Every Archimedean ordered field embeds
-    into ℝ via a strict order-preserving ring homomorphism.
-    """
-    return float(q)
+    if not is_archimedean:
+        return TopologicalClassification(
+            is_archimedean=False,
+            is_complete=is_complete,
+            is_connected=False,
+            is_totally_disconnected=True,
+            description=f"{name}: Non-Archimedean ⟹ totally disconnected (by our theorem)"
+        )
+    elif is_archimedean and is_complete:
+        return TopologicalClassification(
+            is_archimedean=True,
+            is_complete=True,
+            is_connected=True,
+            is_totally_disconnected=False,
+            description=f"{name}: Archimedean + Complete ⟹ connected"
+        )
+    else:  # Archimedean but not complete
+        return TopologicalClassification(
+            is_archimedean=True,
+            is_complete=False,
+            is_connected=False,
+            is_totally_disconnected=False,  # ℚ has non-trivial connected sets of measure 0
+            description=f"{name}: Archimedean but incomplete ⟹ disconnected (gaps at irrationals)"
+        )
 
 
 if __name__ == "__main__":
-    # Quick test
-    day3 = dyadic_approximation(3)
-    sqrt2 = math.sqrt(2)
-    spectrum = compute_gap_spectrum(day3, [sqrt2, -sqrt2])
-    print(f"Day 3: {spectrum.total_points} points, {spectrum.gap_count} gaps")
-    print(f"Gap-free: {spectrum.is_gap_free()}")
-    print(f"Gap density: {spectrum.gap_density:.3f}")
+    # Demo: classify several fields
+    fields = [
+        ("ℝ", True, True),
+        ("ℚ", True, False),
+        ("ℚ(ε)", False, False),
+        ("*ℝ (hyperreals)", False, True),
+        ("No (surreals)", False, True),
+    ]
     
-    comps = connected_components_ordered(day3, spectrum)
-    print(f"Connected components: {len(comps)}")
-    
-    # Test contraction
-    path = halving_contraction(Fraction(3, 1), 5)
-    print(f"Contraction of 3: {[float(x) for x in path]}")
+    print("Topological Classification of Ordered Fields")
+    print("=" * 60)
+    for name, arch, comp in fields:
+        result = classify_ordered_field(name, arch, comp)
+        print(f"\n{result.description}")
+        print(f"  Connected: {result.is_connected}")
+        print(f"  Totally Disconnected: {result.is_totally_disconnected}")

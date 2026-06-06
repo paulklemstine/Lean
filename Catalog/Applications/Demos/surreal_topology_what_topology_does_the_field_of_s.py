@@ -1,267 +1,217 @@
 #!/usr/bin/env python3
 """
-demo.py — Gap Spectrum: Topological Invariants for Ordered Continua
+Demo: Surreal Topology — The Archimedean–Connected Dichotomy
 
-Demonstrates key concepts:
-1. Dyadic approximations to surreal numbers (finite "days")
-2. Gap counting in finite ordered sets
-3. Connected component analysis
-4. Contractibility visualization via halving homotopy
+Demonstrates the key constructions from the formal proof:
+1. The clopen set construction for non-Archimedean fields
+2. How the "infinitesimal region" partitions the field
+3. The rescaling trick for total disconnectedness
 """
 
 from fractions import Fraction
-from typing import List, Tuple, Set
-import math
+from typing import List, Tuple
 
+# ============================================================
+# 1. Simulating a Non-Archimedean Ordered Field
+# ============================================================
+# We use rational functions Q(t) with t "infinitesimal"
+# Elements are (a, b) representing a + b*t where t → 0+
 
-def dyadic_approx(n: int, bound: int = 4) -> List[Fraction]:
-    """Generate dyadic rationals of precision n in [-bound, bound]: {k/2^n : |k| <= bound*2^n}."""
-    denom = 2 ** n
-    limit = bound * denom
-    return sorted([Fraction(k, denom) for k in range(-limit, limit + 1)])
-
-
-def count_gaps(points: List[Fraction], irrationals: List[float]) -> int:
-    """
-    Count Dedekind gaps in a finite ordered set relative to known irrationals.
-    A gap exists between consecutive points a, b if there's an irrational in (a, b).
-    """
-    gaps = 0
-    for i in range(len(points) - 1):
-        a, b = float(points[i]), float(points[i + 1])
-        for x in irrationals:
-            if a < x < b:
-                gaps += 1
-                break
-    return gaps
-
-
-def connected_components(points: List[Fraction], gap_positions: List[float]) -> List[List[Fraction]]:
-    """
-    Compute connected components of a finite point set with gaps.
-    Points in the same component have no gap between them.
-    """
-    if not points:
-        return []
-    components = [[points[0]]]
-    for i in range(1, len(points)):
-        a, b = float(points[i - 1]), float(points[i])
-        has_gap = any(a < x < b for x in gap_positions)
-        if has_gap:
-            components.append([points[i]])
+class InfinitesimalField:
+    """Simple model of Q(epsilon): rationals extended by an infinitesimal.
+    Elements are a + b*epsilon where epsilon is infinitesimally small.
+    Order: a + b*eps < c + d*eps iff a < c, or (a == c and b < d)."""
+    
+    def __init__(self, real: Fraction, inf: Fraction = Fraction(0)):
+        self.real = real  # "standard part"
+        self.inf = inf    # coefficient of epsilon
+    
+    def __repr__(self):
+        if self.inf == 0:
+            return f"{self.real}"
+        elif self.real == 0:
+            return f"{self.inf}·ε"
         else:
-            components[-1].append(points[i])
-    return components
+            sign = "+" if self.inf > 0 else "-"
+            return f"{self.real} {sign} {abs(self.inf)}·ε"
+    
+    def __lt__(self, other):
+        if self.real != other.real:
+            return self.real < other.real
+        return self.inf < other.inf
+    
+    def __le__(self, other):
+        return self == other or self < other
+    
+    def __eq__(self, other):
+        return self.real == other.real and self.inf == other.inf
+    
+    def __add__(self, other):
+        return InfinitesimalField(self.real + other.real, self.inf + other.inf)
+    
+    def __sub__(self, other):
+        return InfinitesimalField(self.real - other.real, self.inf - other.inf)
+    
+    def __mul__(self, other):
+        # (a + bε)(c + dε) ≈ ac + (ad + bc)ε  (ignoring ε² terms)
+        return InfinitesimalField(
+            self.real * other.real,
+            self.real * other.inf + self.inf * other.real
+        )
+    
+    def nsmul(self, n: int):
+        """n • self = self + self + ... + self (n times)"""
+        return InfinitesimalField(n * self.real, n * self.inf)
 
 
-def contraction_path(q: Fraction, steps: int) -> List[Fraction]:
-    """
-    Compute the contraction-to-zero path: q, q/2, q/4, ..., q/2^steps.
-    This demonstrates contractibility of ℝ (and surreal-like structures).
-    """
-    return [q / (2 ** i) for i in range(steps + 1)]
+# ============================================================
+# 2. Demonstrating the Clopen Set
+# ============================================================
+
+def demo_clopen_construction():
+    """Shows that ltNsmulRegion(ε) is a proper clopen subset."""
+    print("=" * 60)
+    print("DEMO 1: The Clopen Set Construction")
+    print("=" * 60)
+    
+    eps = InfinitesimalField(Fraction(0), Fraction(1))  # ε
+    one = InfinitesimalField(Fraction(1))                # 1
+    zero = InfinitesimalField(Fraction(0))               # 0
+    
+    print(f"\nε = {eps}")
+    print(f"1 = {one}")
+    print(f"\nChecking: is n·ε < 1 for various n?")
+    
+    for n in [1, 5, 10, 100, 1000000]:
+        neps = eps.nsmul(n)
+        print(f"  {n}·ε = {neps}, {n}·ε < 1? {neps < one}")
+    
+    print(f"\n→ For ALL n ∈ ℕ: n·ε < 1. This witnesses ¬Archimedean.")
+    
+    # The clopen set
+    print(f"\nltNsmulRegion(ε) = {{z : ∃ n, z < n·ε}}")
+    
+    test_points = [
+        InfinitesimalField(Fraction(0)),
+        InfinitesimalField(Fraction(0), Fraction(1, 2)),   # ε/2
+        InfinitesimalField(Fraction(0), Fraction(3)),       # 3ε
+        InfinitesimalField(Fraction(1, 2)),                  # 1/2
+        InfinitesimalField(Fraction(1)),                      # 1
+        InfinitesimalField(Fraction(-1)),                     # -1
+    ]
+    
+    print(f"\nMembership in ltNsmulRegion(ε):")
+    for z in test_points:
+        # z ∈ ltNsmulRegion(ε) iff z.real < 0 or (z.real == 0)
+        # Since n·ε has real part 0 for all n, z < n·ε iff z.real < 0
+        # or (z.real == 0 and z.inf < n for some n)
+        in_set = z.real < 0 or (z.real == 0)  # since for z.real==0, z.inf < n for large n
+        print(f"  z = {str(z):>12s}: in ltNsmulRegion? {in_set}")
+    
+    print(f"\n→ ltNsmulRegion(ε) = {{z : real_part(z) ≤ 0}} ∪ {{z : real_part(z) = 0, inf_part(z) < n for some n}}")
+    print(f"  This set is CLOPEN: open (union of rays) AND closed (complement is open).")
+    print(f"  It contains 0 but not 1 → PROPER clopen subset → NOT CONNECTED!")
 
 
-def main():
-    print("=" * 70)
-    print("GAP SPECTRUM: Topological Invariants for Ordered Continua")
-    print("=" * 70)
+# ============================================================
+# 3. Demonstrating the Separation Trick
+# ============================================================
+
+def demo_separation():
+    """Shows how to separate any two points with a clopen set."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Clopen Separation of Arbitrary Points")
+    print("=" * 60)
     
-    # Demo 1: Dyadic approximations (surreal number "days")
-    print("\n--- Demo 1: Surreal Number Day Structure ---")
-    for n in range(5):
-        day_n = dyadic_approx(n)
-        print(f"Day {n}: {len(day_n)} elements, range [{day_n[0]}, {day_n[-1]}]")
-        if n <= 2:
-            print(f"  Elements: {[str(x) for x in day_n]}")
+    eps = InfinitesimalField(Fraction(0), Fraction(1))
     
-    # Demo 2: Gap counting
-    print("\n--- Demo 2: Gap Counting (√2 as test irrational) ---")
-    sqrt2 = math.sqrt(2)
-    irrationals = [sqrt2, -sqrt2, math.pi, -math.pi, math.e, -math.e]
+    # Separate a = 1/3 from b = 2/3
+    a = InfinitesimalField(Fraction(1, 3))
+    b = InfinitesimalField(Fraction(2, 3))
+    delta = b - a  # = 1/3
     
-    for n in range(8):
-        day_n = dyadic_approx(n)
-        gaps = count_gaps(day_n, irrationals)
-        print(f"Day {n}: {len(day_n)} points, {gaps} gaps detected "
-              f"(gap density: {gaps / max(1, len(day_n) - 1):.3f})")
+    print(f"\nSeparating a = {a} from b = {b}")
+    print(f"δ = b - a = {delta}")
     
-    # Demo 3: Connected components
-    print("\n--- Demo 3: Connected Components at Day 3 ---")
-    day3 = dyadic_approx(3)
-    comps = connected_components(day3, [sqrt2, -sqrt2])
-    print(f"With gaps at ±√2: {len(comps)} connected components")
-    for i, comp in enumerate(comps):
-        print(f"  Component {i}: [{comp[0]}, {comp[-1]}] ({len(comp)} points)")
+    # Rescaled infinitesimal: ε' = ε * δ (in our model, this has real part 0, inf part 1/3)
+    eps_rescaled = eps * delta
+    print(f"Rescaled ε' = ε · δ = {eps_rescaled}")
     
-    # Demo 4: Contraction paths (contractibility)
-    print("\n--- Demo 4: Contraction to Zero (Contractibility) ---")
-    test_points = [Fraction(3, 1), Fraction(-5, 2), Fraction(7, 4)]
-    for q in test_points:
-        path = contraction_path(q, 8)
-        print(f"  {q} → {' → '.join(str(float(p))[:8] for p in path[:5])} → ... → {float(path[-1]):.6f}")
+    print(f"\nCheck: n · ε' < δ for all n?")
+    for n in [1, 10, 100]:
+        neps = eps_rescaled.nsmul(n)
+        print(f"  {n} · ε' = {neps}, < δ = {delta}? {neps < delta}")
     
-    # Demo 5: Gap spectrum growth
-    print("\n--- Demo 5: Gap Spectrum Growth Rate ---")
-    print("Prediction: gaps grow as O(2^n) with precision n")
-    all_irrationals = [sqrt2, -sqrt2, math.pi, -math.pi, math.e, -math.e,
-                       math.sqrt(3), -math.sqrt(3), math.sqrt(5), -math.sqrt(5)]
-    for n in range(10):
-        day_n = dyadic_approx(n)
-        gaps = count_gaps(day_n, all_irrationals)
-        predicted = min(len(all_irrationals), 2 * (2**n))
-        print(f"  n={n}: actual_gaps={gaps}, total_points={len(day_n)}, "
-              f"max_possible={len(all_irrationals)}")
+    print(f"\nClopen set S = {{z : ∃ n, z - a < n · ε'}}")
+    print(f"  a ∈ S: a - a = 0 < ε' ✓")
+    print(f"  b ∉ S: b - a = δ > n·ε' for all n ✓")
+    print(f"\n→ a and b are SEPARATED by a clopen set!")
+
+
+# ============================================================
+# 4. The Archimedean-Connected Classification
+# ============================================================
+
+def demo_classification():
+    """Shows the classification of ordered fields by Archimedean/Connected."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: The Archimedean–Connected Classification")
+    print("=" * 60)
     
-    # Demo 6: Gap-Connectivity Duality verification
-    print("\n--- Demo 6: Gap-Connectivity Duality ---")
-    print("Theorem: Connected ↔ Gap-free")
-    print(f"  ℝ: gap-free=True, connected=True  ✓")
-    print(f"  ℚ: gap-free=False (√2 gap), connected=False  ✓")
-    print(f"  ℤ: gaps exist (e.g., between 0 and 1), connected=False  ✓")
+    fields = [
+        ("ℝ (reals)", True, True, True),
+        ("ℚ (rationals)", True, False, False),
+        ("ℚ(ε) (with infinitesimal)", False, False, True),
+        ("*ℝ (hyperreals)", False, False, True),
+        ("No (surreal numbers)", False, False, True),
+        ("ℝ((t)) (Laurent series)", False, False, True),
+    ]
     
-    # Demo 7: Order isomorphism preserves gaps
-    print("\n--- Demo 7: Order Isomorphism Invariance ---")
-    print("f: ℚ → ℚ, x ↦ 2x preserves gap structure")
-    day2 = dyadic_approx(2)
-    doubled = sorted([2 * x for x in day2])
-    gaps_orig = count_gaps(day2, [sqrt2])
-    gaps_doubled = count_gaps(doubled, [2 * sqrt2])
-    print(f"  Original: {gaps_orig} gap(s) around √2")
-    print(f"  Doubled:  {gaps_doubled} gap(s) around 2√2")
-    print(f"  Gap count preserved: {gaps_orig == gaps_doubled}  ✓")
+    print(f"\n{'Field':<30} {'Archimedean':<15} {'Complete':<12} {'Connected':<12} {'Tot. Disconn.':<15}")
+    print("-" * 84)
+    for name, arch, complete, has_inf in fields:
+        connected = arch and complete
+        tot_disc = has_inf  # non-Archimedean → totally disconnected
+        print(f"{name:<30} {'Yes' if arch else 'No':<15} {'Yes' if complete else 'No':<12} "
+              f"{'Yes' if connected else 'No':<12} {'Yes' if tot_disc else '—':<15}")
     
-    print("\n" + "=" * 70)
-    print("All demonstrations complete.")
-    print("Key insight: The gap spectrum is a complete topological invariant")
-    print("for ordered spaces — it determines connectedness precisely.")
-    print("=" * 70)
+    print(f"\nKey insight: Connected ⟹ Archimedean (our theorem)")
+    print(f"            Archimedean + Complete ⟹ Connected")
+    print(f"            Non-Archimedean ⟹ Totally Disconnected (our strengthened theorem)")
+
+
+# ============================================================
+# 5. Counting Clopen Sets
+# ============================================================
+
+def demo_clopen_density():
+    """Shows the density of clopen sets in non-Archimedean fields."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Density of Clopen Separations")
+    print("=" * 60)
+    
+    print("\nIn a non-Archimedean field, for any a < b, there is a clopen")
+    print("set S with a ∈ S and b ∉ S. The construction uses rescaling.")
+    print()
+    
+    # Show that between any two "surreal-like" numbers, there's a clopen gap
+    pairs = [
+        (Fraction(0), Fraction(1)),
+        (Fraction(1, 2), Fraction(1, 2) + Fraction(1, 1000000)),
+        (Fraction(3, 7), Fraction(3, 7) + Fraction(1, 10**12)),
+    ]
+    
+    for a, b in pairs:
+        delta = b - a
+        print(f"  a = {float(a):.10f}, b = {float(b):.10f}")
+        print(f"  δ = b - a = {delta}")
+        print(f"  Clopen separator: {{z : ∃n, z - a < n · (ε · δ)}}")
+        print(f"  (where ε is any infinitesimal)")
+        print()
 
 
 if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-viz_gap_spectrum.py — Visualization of Gap Spectrum Theory
-
-Creates plots showing:
-1. Dyadic approximation growth
-2. Gap counting vs precision
-3. Contraction homotopy
-4. Connected component structure
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from fractions import Fraction
-import math
-import numpy as np
-
-
-def dyadic_approx(n):
-    denom = 2 ** n
-    return sorted([Fraction(k, denom) for k in range(-denom, denom + 1)])
-
-
-def count_gaps(points, irrationals):
-    gaps = 0
-    gap_positions = []
-    for i in range(len(points) - 1):
-        a, b = float(points[i]), float(points[i + 1])
-        for x in irrationals:
-            if a < x < b:
-                gaps += 1
-                gap_positions.append((a, b, x))
-                break
-    return gaps, gap_positions
-
-
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Gap Spectrum: Topological Invariants for Ordered Continua',
-                 fontsize=14, fontweight='bold')
-
-    # Plot 1: Dyadic approximation growth
-    ax1 = axes[0, 0]
-    ns = list(range(9))
-    sizes = [len(dyadic_approx(n)) for n in ns]
-    ax1.bar(ns, sizes, color='steelblue', alpha=0.8)
-    ax1.set_xlabel('Day n')
-    ax1.set_ylabel('Number of dyadic rationals')
-    ax1.set_title('Surreal Number Day Structure')
-    ax1.set_yscale('log')
-    for i, s in enumerate(sizes):
-        ax1.annotate(str(s), (ns[i], s), ha='center', va='bottom', fontsize=8)
-
-    # Plot 2: Gap detection vs precision
-    ax2 = axes[0, 1]
-    irrationals = [math.sqrt(2), -math.sqrt(2), math.pi, -math.pi,
-                   math.e, -math.e, math.sqrt(3), -math.sqrt(3)]
-    gap_counts = []
-    for n in range(9):
-        day_n = dyadic_approx(n)
-        gc, _ = count_gaps(day_n, irrationals)
-        gap_counts.append(gc)
-    ax2.plot(ns, gap_counts, 'ro-', linewidth=2, markersize=8)
-    ax2.axhline(y=len(irrationals), color='gray', linestyle='--',
-                label=f'Max possible ({len(irrationals)})')
-    ax2.set_xlabel('Precision n')
-    ax2.set_ylabel('Gaps detected')
-    ax2.set_title('Gap Detection vs Precision')
-    ax2.legend()
-
-    # Plot 3: Contraction homotopy
-    ax3 = axes[1, 0]
-    t_values = np.linspace(0, 1, 50)
-    x_values = [3, -2, 1.5, -0.5, 4]
-    colors = plt.cm.viridis(np.linspace(0, 1, len(x_values)))
-    for x0, c in zip(x_values, colors):
-        paths = [x0 * (1 - t) for t in t_values]
-        ax3.plot(t_values, paths, color=c, linewidth=2, label=f'x₀ = {x0}')
-    ax3.set_xlabel('t (homotopy parameter)')
-    ax3.set_ylabel('H(x, t) = x(1-t)')
-    ax3.set_title('Contractibility of ℝ')
-    ax3.legend(fontsize=8)
-    ax3.axhline(y=0, color='black', linewidth=0.5)
-
-    # Plot 4: Connected components at day 3
-    ax4 = axes[1, 1]
-    day3 = dyadic_approx(3)
-    sqrt2 = math.sqrt(2)
-    _, gap_pos = count_gaps(day3, [sqrt2, -sqrt2])
-    
-    # Color points by component
-    float_points = [float(p) for p in day3]
-    component_colors = []
-    component_id = 0
-    cmap = plt.cm.Set1
-    
-    for i, p in enumerate(float_points):
-        if i > 0:
-            a, b = float_points[i-1], p
-            if any(a < g[2] < b for g in gap_pos):
-                component_id += 1
-        component_colors.append(cmap(component_id % 9))
-    
-    ax4.scatter(float_points, [0]*len(float_points), c=component_colors,
-                s=30, zorder=5)
-    # Mark gaps
-    for a, b, g in gap_pos:
-        ax4.axvspan(a, b, alpha=0.2, color='red')
-        ax4.axvline(x=g, color='red', linestyle=':', alpha=0.5)
-    ax4.set_xlabel('Value')
-    ax4.set_title(f'Connected Components at Day 3 (gaps at ±√2)')
-    ax4.set_yticks([])
-    ax4.axhline(y=0, color='gray', linewidth=0.5)
-
-    plt.tight_layout()
-    plt.savefig('gap_spectrum_visualization.png', dpi=150, bbox_inches='tight')
-    print("Saved gap_spectrum_visualization.png")
-
-
-if __name__ == "__main__":
-    main()
+    demo_clopen_construction()
+    demo_separation()
+    demo_classification()
+    demo_clopen_density()
