@@ -1,217 +1,188 @@
 #!/usr/bin/env python3
 """
 EML Fixed-Point Algorithms
+===========================
 
 Type-hinted implementations of the core algorithms from the EML fixed-point theory.
-Each algorithm comes with certified convergence guarantees proven in Lean 4.
 """
 
 import math
-from typing import Tuple, List, Optional, Callable
+from typing import Callable, Tuple, Optional, List
+from dataclasses import dataclass
 
 
-def eml_operator(a: float, c: float) -> Callable[[float], float]:
+@dataclass
+class ContractionScheme:
+    """A contraction scheme: function + invariant interval + contraction constant.
+
+    Packages a function f : R -> R with an invariant interval [lo, hi] and a
+    contraction constant rho in [0, 1), together with the certificate that
+    f maps the interval to itself and is rho-Lipschitz.
     """
-    Construct the EML operator T(x) = exp(a) * log(x + c).
+    f: Callable[[float], float]
+    lo: float
+    hi: float
+    rho: float
 
-    Args:
-        a: Exponential scaling parameter
-        c: Logarithmic shift parameter (must satisfy c > 0 for positivity)
+    def validate(self, x: float) -> bool:
+        """Check if x is in the invariant interval."""
+        return self.lo <= x <= self.hi
 
-    Returns:
-        A callable implementing T(x).
+    def iterate(self, x0: float, n: int) -> List[float]:
+        """Run n iterations starting from x0."""
+        assert self.validate(x0), f"x0={x0} not in [{self.lo}, {self.hi}]"
+        seq = [x0]
+        x = x0
+        for _ in range(n):
+            x = self.f(x)
+            seq.append(x)
+        return seq
 
-    The operator is well-defined for x > -c.
+    def find_fixed_point(self, x0: float, tol: float = 1e-15,
+                         max_iter: int = 10000) -> Tuple[float, int]:
+        """Find the fixed point by iteration."""
+        assert self.validate(x0), f"x0={x0} not in [{self.lo}, {self.hi}]"
+        x = x0
+        for i in range(max_iter):
+            x_new = self.f(x)
+            if abs(x_new - x) < tol:
+                return x_new, i + 1
+            x = x_new
+        return x, max_iter
+
+    def error_bound(self, x0: float, n: int, xstar: float) -> float:
+        """A priori error bound: rho^n * |x0 - xstar|."""
+        return self.rho ** n * abs(x0 - xstar)
+
+    def compose(self, other: 'ContractionScheme') -> 'ContractionScheme':
+        """Compose two contraction schemes on the same interval."""
+        assert abs(self.lo - other.lo) < 1e-10 and abs(self.hi - other.hi) < 1e-10
+        return ContractionScheme(
+            f=lambda x, s=self, o=other: s.f(o.f(x)),
+            lo=self.lo,
+            hi=self.hi,
+            rho=self.rho * other.rho
+        )
+
+
+def eml_operator(a: float, b: float, c: float) -> Callable[[float], float]:
+    """Create an EML operator f(x) = exp(a) * log(b*x + c)."""
+    ea = math.exp(a)
+    return lambda x: ea * math.log(b * x + c)
+
+
+def eml_derivative(a: float, b: float, c: float) -> Callable[[float], float]:
+    """Create the derivative of the EML operator: f'(x) = exp(a) * b / (b*x + c)."""
+    ea = math.exp(a)
+    return lambda x: ea * b / (b * x + c)
+
+
+def eml_spectral_rate(a: float, b: float, c: float, xstar: float) -> float:
+    """Compute the spectral contraction rate |f'(x*)| at the fixed point."""
+    return abs(math.exp(a) * b / (b * xstar + c))
+
+
+def eml_contraction_scheme(
+    a: float, b: float, c: float,
+    lo: float, hi: float
+) -> Optional[ContractionScheme]:
+    """Try to construct an EML contraction scheme on [lo, hi].
+
+    Returns None if the contraction condition fails.
     """
-    exp_a = math.exp(a)
-    def T(x: float) -> float:
-        return exp_a * math.log(x + c)
-    return T
+    f = eml_operator(a, b, c)
+    fp = eml_derivative(a, b, c)
+
+    # Check positivity of log argument
+    if b * lo + c <= 0:
+        return None
+
+    # Compute supremum of |f'| on [lo, hi]
+    # f'(x) = exp(a) * b / (b*x + c) is monotonically decreasing when b > 0
+    # so the supremum is at lo
+    if b > 0:
+        rho = abs(fp(lo))
+    elif b < 0:
+        rho = abs(fp(hi))
+    else:
+        rho = 0.0
+
+    if rho >= 1:
+        return None
+
+    # Check maps_to: f([lo, hi]) ⊆ [lo, hi]
+    # Check at endpoints and a few interior points
+    test_points = [lo, hi, (lo + hi) / 2]
+    for x in test_points:
+        fx = f(x)
+        if fx < lo - 1e-10 or fx > hi + 1e-10:
+            return None
+
+    return ContractionScheme(f=f, lo=lo, hi=hi, rho=rho)
 
 
-def eml_contraction_constant(a: float, c: float, L: float) -> float:
-    """
-    Compute the contraction constant K = exp(a) / (L + c).
+def parameter_sweep(
+    b: float, c: float,
+    a_values: List[float],
+    x0: float = 1.0
+) -> List[Tuple[float, Optional[float], Optional[float]]]:
+    """Sweep over parameter a, finding fixed points and contraction rates.
 
-    This is the sharp Lipschitz constant of the EML operator on [L, ∞).
-    The operator is a contraction iff K < 1, i.e., exp(a) < L + c.
-
-    Args:
-        a: Exponential scaling parameter
-        c: Logarithmic shift
-        L: Left endpoint of the domain
-
-    Returns:
-        The contraction constant K.
-    """
-    return math.exp(a) / (L + c)
-
-
-def check_contraction(a: float, c: float, L: float = 0.0) -> Tuple[bool, float]:
-    """
-    Check whether the EML operator is a contraction on [L, ∞).
-
-    Returns (is_contraction, K) where K is the contraction constant.
-
-    Theorem (Lean 4 verified):
-        If 0 < a < 1 and c ≥ 3, then K < 1 (eml_small_param_contraction).
-        More generally, K < 1 iff exp(a) < L + c (eml_K_lt_one).
-    """
-    K = eml_contraction_constant(a, c, L)
-    return K < 1, K
-
-
-def fixed_point_iteration(
-    a: float,
-    c: float,
-    x0: float,
-    tol: float = 1e-12,
-    max_iter: int = 10000
-) -> Tuple[float, List[float], int]:
-    """
-    Compute the fixed point of T(x) = exp(a) * log(x + c) by iteration.
-
-    Theorem (Lean 4 verified):
-        If K = exp(a)/(L+c) < 1 and x0 ≥ L with L+c > 0, the iterates
-        x_{n+1} = T(x_n) converge to the unique fixed point x* satisfying
-        x* = exp(a) * log(x* + c), at geometric rate:
-        |x_n - x*| ≤ K^n * |x_0 - x*|.
-        (eml_iteration_geometric_bound, eml_fixed_point_unique)
-
-    Args:
-        a: Exponential scaling parameter
-        c: Logarithmic shift
-        x0: Starting point (must satisfy x0 + c > 0)
-        tol: Convergence tolerance
-        max_iter: Maximum iterations
-
-    Returns:
-        (fixed_point, history, iterations)
-    """
-    T = eml_operator(a, c)
-    x = x0
-    history = [x]
-
-    for i in range(max_iter):
-        x_new = T(x)
-        history.append(x_new)
-        if abs(x_new - x) < tol:
-            return x_new, history, i + 1
-        x = x_new
-
-    return x, history, max_iter
-
-
-def spectral_analysis(
-    a: float,
-    c: float,
-    x_star: float
-) -> dict:
-    """
-    Compute the spectral-dynamical quantities at a fixed point.
-
-    Theorem (Lean 4 verified):
-        At a fixed point x*, the derivative equals exp(a)/(x*+c),
-        and the contraction rate satisfies the self-consistency relation:
-        |T'(x*)| = x* / ((x*+c) * log(x*+c))
-        (eml_spectral_contraction_bridge, eml_contraction_rate_at_fixedpoint)
-
-    Args:
-        a: Exponential scaling parameter
-        c: Logarithmic shift
-        x_star: The fixed point
-
-    Returns:
-        Dictionary with spectral quantities.
-    """
-    deriv = math.exp(a) / (x_star + c)
-    log_val = math.log(x_star + c)
-    rate_alt = x_star / ((x_star + c) * log_val) if log_val != 0 else float('inf')
-
-    return {
-        'derivative': deriv,
-        'spectral_radius': abs(deriv),
-        'is_stable': abs(deriv) < 1,
-        'contraction_rate_alt': rate_alt,
-        'self_consistency_error': abs(deriv - rate_alt),
-        'asymptotic_convergence_factor': abs(deriv),
-        'bits_per_iteration': -math.log2(abs(deriv)) if abs(deriv) > 0 else float('inf'),
-    }
-
-
-def parameter_space_scan(
-    a_range: Tuple[float, float] = (0.01, 2.0),
-    c_range: Tuple[float, float] = (0.5, 10.0),
-    n_points: int = 50
-) -> List[dict]:
-    """
-    Scan the (a, c) parameter space to classify EML dynamics.
-
-    For each (a, c) pair, determines:
-    - Whether the operator is a contraction (K < 1)
-    - The fixed point (if it converges)
-    - The spectral radius at the fixed point
-
-    Returns:
-        List of dictionaries with parameter space data.
+    Returns list of (a, xstar_or_None, rho_or_None).
     """
     results = []
-    da = (a_range[1] - a_range[0]) / n_points
-    dc = (c_range[1] - c_range[0]) / n_points
-
-    for i in range(n_points + 1):
-        for j in range(n_points + 1):
-            a = a_range[0] + i * da
-            c = c_range[0] + j * dc
-
-            is_contraction, K = check_contraction(a, c)
-
-            if is_contraction:
-                try:
-                    x_star, _, iters = fixed_point_iteration(a, c, 1.0, max_iter=500)
-                    spec = spectral_analysis(a, c, x_star)
-                    results.append({
-                        'a': a, 'c': c, 'K': K,
-                        'is_contraction': True,
-                        'x_star': x_star,
-                        'spectral_radius': spec['spectral_radius'],
-                        'iterations': iters,
-                    })
-                except (ValueError, OverflowError):
-                    results.append({
-                        'a': a, 'c': c, 'K': K,
-                        'is_contraction': True,
-                        'x_star': None,
-                        'spectral_radius': None,
-                        'iterations': None,
-                    })
-            else:
-                results.append({
-                    'a': a, 'c': c, 'K': K,
-                    'is_contraction': False,
-                    'x_star': None,
-                    'spectral_radius': None,
-                    'iterations': None,
-                })
-
+    for a in a_values:
+        f = eml_operator(a, b, c)
+        try:
+            # Simple iteration to find fixed point
+            x = x0
+            for _ in range(10000):
+                x_new = f(x)
+                if abs(x_new - x) < 1e-15:
+                    break
+                x = x_new
+            xstar = x
+            rho = eml_spectral_rate(a, b, c, xstar)
+            results.append((a, xstar, rho))
+        except (ValueError, OverflowError):
+            results.append((a, None, None))
     return results
 
 
+def lyapunov_trajectory(
+    scheme: ContractionScheme,
+    x0: float,
+    xstar: float,
+    n: int
+) -> List[Tuple[float, float, float]]:
+    """Track the Lyapunov function V(x) = (x - x*)² along the iteration.
+
+    Returns list of (x_n, V(x_n), V(x_n)/V(x_{n-1})).
+    """
+    trajectory = []
+    x = x0
+    v = (x - xstar) ** 2
+    trajectory.append((x, v, float('nan')))
+    for _ in range(n):
+        v_prev = v
+        x = scheme.f(x)
+        v = (x - xstar) ** 2
+        ratio = v / v_prev if v_prev > 1e-30 else float('nan')
+        trajectory.append((x, v, ratio))
+    return trajectory
+
+
 if __name__ == "__main__":
-    print("EML Fixed-Point Algorithms")
-    print("=" * 50)
+    # Example: EML with a=0.5, b=1, c=2
+    scheme = eml_contraction_scheme(0.5, 1.0, 2.0, 0.5, 5.0)
+    if scheme:
+        xstar, iters = scheme.find_fixed_point(1.0)
+        print(f"Fixed point: {xstar:.15f} (found in {iters} iterations)")
+        print(f"Contraction rate: {scheme.rho:.10f}")
+        print(f"Error after 10 iters: {scheme.error_bound(1.0, 10, xstar):.2e}")
 
-    # Example: find fixed point for a=0.5, c=3.0
-    a, c = 0.5, 3.0
-    is_contr, K = check_contraction(a, c)
-    print(f"\nParameters: a={a}, c={c}")
-    print(f"Contraction: {is_contr}, K={K:.6f}")
-
-    x_star, history, iters = fixed_point_iteration(a, c, 1.0)
-    print(f"Fixed point: x* = {x_star:.15f}")
-    print(f"Iterations: {iters}")
-
-    spec = spectral_analysis(a, c, x_star)
-    print(f"\nSpectral analysis at fixed point:")
-    for key, val in spec.items():
-        print(f"  {key}: {val}")
+        # Lyapunov trajectory
+        traj = lyapunov_trajectory(scheme, 3.0, xstar, 10)
+        print("\nLyapunov trajectory:")
+        for i, (x, v, r) in enumerate(traj):
+            print(f"  n={i}: x={x:.10f}, V={v:.2e}, ratio={r:.6f}")
