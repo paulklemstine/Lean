@@ -1,77 +1,84 @@
-/-
-Copyright (c) 2024. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
--/
 import Mathlib
 
 /-!
-# Non-Archimedean Probability: Definitions
+# Neural Hodge Theory: Core Definitions
 
-This module defines the framework for finitely additive measures valued in
-ordered algebraic structures, with emphasis on the non-Archimedean case
-where infinitesimal probabilities become meaningful.
-
-## Main Definitions
-
-* `IsAdditivelyInfinitesimal` — an element is infinitesimal if it is positive but
-  all natural multiples are bounded by a given element.
-* `HasInfinitesimal` — a structure has infinitesimal elements.
-* `uniformFinsetMeasure` — the uniform finitely additive measure assigning
-  weight `ε` to each singleton.
-* `FinAddMeasure` — a structure for finitely additive measures on
-  `Finset α` valued in an ordered additive commutative monoid.
-
-## Key Insight
-
-The Archimedean property is *exactly* the obstruction to assigning uniform
-positive infinitesimal probability to points. In an Archimedean ordered field,
-any positive element ε satisfies n·ε > 1 for some n, so a uniform measure
-on n points would exceed total mass 1. In a non-Archimedean ordered field
-(like the surreals), infinitesimals exist that never accumulate past any
-standard positive number, enabling genuine infinitesimal probability.
+Combinatorial-algebraic framework for analyzing the topological complexity
+of ReLU neural network decision surfaces.
 -/
 
-open Finset
+open Finset BigOperators
 
-/-! ## Infinitesimal Elements -/
+/-! ## Abstract f-vector -/
 
-/-- An element `x` of an ordered additive commutative monoid is **additively
-infinitesimal** with respect to a bound `b` if `x` is positive and
-`n • x ≤ b` for every natural number `n`. -/
-def IsAdditivelyInfinitesimal {M : Type*} [AddCommMonoid M] [PartialOrder M] (x b : M) : Prop :=
-  0 < x ∧ ∀ n : ℕ, n • x ≤ b
+/-- An abstract f-vector of dimension at most `d`. The value `f k` represents
+    the number of k-dimensional faces of a polyhedral complex. -/
+structure FVectorData (d : ℕ) where
+  /-- Number of faces of each dimension -/
+  f : Fin (d + 1) → ℕ
 
-/-- The non-Archimedean condition: there exist positive elements whose
-natural multiples never exceed a given bound. -/
-def HasInfinitesimal {M : Type*} [AddCommMonoid M] [PartialOrder M] (b : M) : Prop :=
-  ∃ x : M, IsAdditivelyInfinitesimal x b
+namespace FVectorData
 
-/-! ## Uniform Finset Measure -/
+variable {d : ℕ}
 
-/-- The uniform Finset measure assigning weight `ε` to each element.
-For a finite set S, μ(S) = |S| • ε. -/
-def uniformFinsetMeasure {M : Type*} [AddCommMonoid M]
-    (ε : M) {α : Type*} (S : Finset α) : M :=
-  S.card • ε
+/-- Total number of faces across all dimensions. -/
+def totalFaces (v : FVectorData d) : ℕ :=
+  ∑ i : Fin (d + 1), v.f i
 
-/-! ## Finitely Additive Measure -/
+/-- Euler characteristic: χ = Σ_k (-1)^k f_k. -/
+noncomputable def eulerChar (v : FVectorData d) : ℤ :=
+  ∑ i : Fin (d + 1), (-1 : ℤ) ^ (i : ℕ) * (v.f i : ℤ)
 
-/-- A finitely additive measure on `Finset α` valued in an ordered
-additive commutative monoid. -/
-structure FinAddMeasure (α : Type*) (M : Type*)
-    [DecidableEq α] [AddCommMonoid M] [PartialOrder M] where
-  /-- The measure function -/
-  toFun : Finset α → M
-  /-- Empty set has measure zero -/
-  empty : toFun ∅ = 0
-  /-- Finite additivity: measure of disjoint union is sum of measures -/
-  add_disjoint : ∀ (S T : Finset α), Disjoint S T → toFun (S ∪ T) = toFun S + toFun T
-  /-- Non-negativity -/
-  nonneg : ∀ (S : Finset α), 0 ≤ toFun S
+end FVectorData
 
-/-- A finitely additive measure is a **probability premeasure** if its values
-are bounded by a total mass. -/
-def FinAddMeasure.IsBoundedBy {α : Type*} {M : Type*}
-    [DecidableEq α] [AddCommMonoid M] [PartialOrder M]
-    (μ : FinAddMeasure α M) (b : M) : Prop :=
-  ∀ S : Finset α, μ.toFun S ≤ b
+/-! ## Network Architecture -/
+
+/-- Architecture of a feedforward ReLU network.
+    The network maps ℝ^inputDim → ℝ through `numLayers` hidden layers. -/
+structure ReluNetArch where
+  /-- Input space dimension -/
+  inputDim : ℕ
+  /-- Number of hidden layers -/
+  numLayers : ℕ
+  /-- Width of each hidden layer -/
+  layerWidths : Fin numLayers → ℕ
+  /-- All layers have positive width -/
+  widths_pos : ∀ i, 0 < layerWidths i
+  /-- Input dimension is positive -/
+  input_pos : 0 < inputDim
+
+namespace ReluNetArch
+
+/-- Total number of hidden neurons. -/
+def totalNeurons (arch : ReluNetArch) : ℕ :=
+  ∑ i : Fin arch.numLayers, arch.layerWidths i
+
+end ReluNetArch
+
+/-! ## Zaslavsky Bound -/
+
+/-- The Zaslavsky bound: maximum number of regions created by `m` hyperplanes
+    in ℝⁿ in general position. Equal to Σ_{k=0}^{n} C(m, k). -/
+def zaslavskyBound (m n : ℕ) : ℕ :=
+  ∑ k ∈ range (n + 1), m.choose k
+
+/-- Region bound for a single layer: the Zaslavsky bound applied to a layer
+    of width w in input dimension n. -/
+def layerRegionBound (n w : ℕ) : ℕ := zaslavskyBound w n
+
+/-- The multiplicative region bound for a full network: product of per-layer bounds.
+    This is the Montúfar-Pascanu-Cho-Bengio bound. -/
+def networkRegionBound (arch : ReluNetArch) : ℕ :=
+  ∏ i : Fin arch.numLayers, layerRegionBound arch.inputDim (arch.layerWidths i)
+
+/-- The "Hodge-type" bound for a network with ≥ 2 layers.
+    For indices (p, q), bounds the (p,q)-component by
+    C(w_first, p) · C(w_last, q) · Π_{middle layers} w_i. -/
+noncomputable def hodgeBound (arch : ReluNetArch) (p q : ℕ) : ℕ :=
+  if h : arch.numLayers ≥ 2 then
+    let w₁ := arch.layerWidths ⟨0, by omega⟩
+    let wL := arch.layerWidths ⟨arch.numLayers - 1, by omega⟩
+    w₁.choose p * wL.choose q *
+      ∏ i : Fin (arch.numLayers - 2),
+        arch.layerWidths ⟨(i : ℕ) + 1, by omega⟩
+  else 1
