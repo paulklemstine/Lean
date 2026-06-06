@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d013b493",
     "filename": "counterfactual_number_theory_what_if_primes_were_r.json",
     "pkg_num": 399,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.43664000000000003,
     "title": "Counterfactual Number Theory: The Factorization Spectrum"
   },
   {
@@ -12722,8 +12722,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "counterfactual_number_theory_what_if_primes_were_r",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.43664000000000003,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Counterfactual Number Theory: The Factorization Spectrum"
     }

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-06T02:04:44.191778+00:00",
+  "last_updated": "2026-06-06T02:39:57.089171+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -8279,6 +8279,76 @@
       "theorem_count": 5,
       "timestamp": "2026-06-06T02:04:44.073587+00:00",
       "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7141,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 147,
+      "domain": "Applications",
+      "duration_seconds": 6265.007835149765,
+      "end_time": 1780713534.6232576,
+      "files_integrated": 5,
+      "job_id": "bfcc4295",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.9141,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9319,
+        "novelty": 0.95,
+        "proof_depth": 0.9241,
+        "usefulness": 0.9621
+      },
+      "quality_score": 0.31856,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780707269.6154225,
+      "strategy_count": 187,
+      "theorem_count": 4,
+      "timestamp": "2026-06-06T02:39:56.409704+00:00",
+      "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3943,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 151,
+      "domain": "Applications",
+      "duration_seconds": 4126.214393615723,
+      "end_time": 1780713535.6841938,
+      "files_integrated": 5,
+      "job_id": "d013b493",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.76,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7718,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.6845,
+        "novelty": 0.95,
+        "proof_depth": 0.5707,
+        "usefulness": 0.7604
+      },
+      "quality_score": 0.43664000000000003,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780709409.4698002,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-06T02:39:56.553520+00:00",
+      "title": "Counterfactual Number Theory: What If Primes Were Random?"
     }
   ]
 }
