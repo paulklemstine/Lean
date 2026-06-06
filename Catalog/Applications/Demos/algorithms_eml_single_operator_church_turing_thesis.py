@@ -1,343 +1,307 @@
 #!/usr/bin/env python3
 """
-EML Church-Turing Thesis: Core Algorithms
+EML Single-Operator Compilation: Core Algorithms
 
-Type-hinted implementations of EML expression evaluation, compilation,
-and approximation algorithms.
+Type-hinted implementations of the compilation, decompilation,
+and analysis algorithms for the EML Church-Turing thesis.
 """
 
 from __future__ import annotations
 from dataclasses import dataclass
-from enum import Enum, auto
-from typing import Callable, Dict, List, Optional, Tuple
+from typing import Optional, Union
 import math
 
 
 # ============================================================
-# EML Expression AST
+# Expression AST Types
 # ============================================================
 
-class EMLNodeType(Enum):
-    VAR = auto()
-    CONST = auto()
-    ADD = auto()
-    MUL = auto()
-    SUB = auto()
-    DIV = auto()
-    EXP = auto()
-    LOG = auto()
+@dataclass(frozen=True)
+class UVar:
+    """Variable node in UExpr."""
+    pass
+
+@dataclass(frozen=True)
+class UConst:
+    """Constant node in UExpr."""
+    value: float
+
+@dataclass(frozen=True)
+class UBinOp:
+    """Binary operation in UExpr."""
+    op: str  # 'add', 'sub', 'mul', 'div'
+    left: UExpr
+    right: UExpr
+
+@dataclass(frozen=True)
+class UExp:
+    """Exponential node in UExpr."""
+    arg: UExpr
+
+@dataclass(frozen=True)
+class ULog:
+    """Logarithm node in UExpr."""
+    arg: UExpr
+
+UExpr = Union[UVar, UConst, UBinOp, UExp, ULog]
 
 
-@dataclass
-class EMLExpr:
-    """An expression in the EML (Exp-Multiply-Log) language."""
-    node_type: EMLNodeType
-    value: Optional[float] = None      # For CONST
-    var_index: Optional[int] = None    # For VAR
-    left: Optional[EMLExpr] = None     # For binary ops
-    right: Optional[EMLExpr] = None    # For binary ops
-    child: Optional[EMLExpr] = None    # For unary ops (EXP, LOG)
+@dataclass(frozen=True)
+class EVar:
+    """Variable node in EMLExpr."""
+    pass
 
-    @staticmethod
-    def var(i: int) -> EMLExpr:
-        return EMLExpr(EMLNodeType.VAR, var_index=i)
+@dataclass(frozen=True)
+class EConst:
+    """Constant node in EMLExpr."""
+    value: float
 
-    @staticmethod
-    def const(c: float) -> EMLExpr:
-        return EMLExpr(EMLNodeType.CONST, value=c)
+@dataclass(frozen=True)
+class EBinOp:
+    """Binary operation in EMLExpr (add, sub, mul, div)."""
+    op: str
+    left: EMLExpr
+    right: EMLExpr
 
-    @staticmethod
-    def add(a: EMLExpr, b: EMLExpr) -> EMLExpr:
-        return EMLExpr(EMLNodeType.ADD, left=a, right=b)
+@dataclass(frozen=True)
+class EEML:
+    """The eml primitive: eml(x, y) = exp(x) - log(y)."""
+    left: EMLExpr
+    right: EMLExpr
 
-    @staticmethod
-    def mul(a: EMLExpr, b: EMLExpr) -> EMLExpr:
-        return EMLExpr(EMLNodeType.MUL, left=a, right=b)
+EMLExpr = Union[EVar, EConst, EBinOp, EEML]
 
-    @staticmethod
-    def sub(a: EMLExpr, b: EMLExpr) -> EMLExpr:
-        return EMLExpr(EMLNodeType.SUB, left=a, right=b)
 
-    @staticmethod
-    def div(a: EMLExpr, b: EMLExpr) -> EMLExpr:
-        return EMLExpr(EMLNodeType.DIV, left=a, right=b)
+# ============================================================
+# Algorithm 1: Compilation (UExpr → EMLExpr)
+# ============================================================
 
-    @staticmethod
-    def exp(e: EMLExpr) -> EMLExpr:
-        return EMLExpr(EMLNodeType.EXP, child=e)
+def compile_to_eml(expr: UExpr) -> EMLExpr:
+    """
+    Compile a UExpr to an EMLExpr using eml as the sole transcendental primitive.
 
-    @staticmethod
-    def log(e: EMLExpr) -> EMLExpr:
-        return EMLExpr(EMLNodeType.LOG, child=e)
+    Key translations:
+    - exp(e) → eml(compile(e), 1)     [since eml(x,1) = exp(x) - log(1) = exp(x)]
+    - log(e) → 1 - eml(0, compile(e)) [since eml(0,y) = exp(0) - log(y) = 1 - log(y)]
 
-    def eval(self, sigma: Dict[int, float]) -> float:
-        """Evaluate the expression given variable assignment sigma."""
-        if self.node_type == EMLNodeType.VAR:
-            return sigma.get(self.var_index, 0.0)
-        elif self.node_type == EMLNodeType.CONST:
-            return self.value
-        elif self.node_type == EMLNodeType.ADD:
-            return self.left.eval(sigma) + self.right.eval(sigma)
-        elif self.node_type == EMLNodeType.MUL:
-            return self.left.eval(sigma) * self.right.eval(sigma)
-        elif self.node_type == EMLNodeType.SUB:
-            return self.left.eval(sigma) - self.right.eval(sigma)
-        elif self.node_type == EMLNodeType.DIV:
-            r = self.right.eval(sigma)
-            return self.left.eval(sigma) / r if r != 0 else float('inf')
-        elif self.node_type == EMLNodeType.EXP:
-            v = self.child.eval(sigma)
-            return math.exp(min(v, 700))  # Prevent overflow
-        elif self.node_type == EMLNodeType.LOG:
-            v = self.child.eval(sigma)
-            return math.log(v) if v > 0 else 0.0  # Lean convention: log(x) = 0 for x ≤ 0
-        else:
-            raise ValueError(f"Unknown node type: {self.node_type}")
+    Complexity: O(n) time and space, where n = size of input expression.
+    Size bound: output size ≤ 4 × input size.
+    Rank: output eml_rank = input transcendence_rank (exact).
+    """
+    if isinstance(expr, UVar):
+        return EVar()
+    elif isinstance(expr, UConst):
+        return EConst(expr.value)
+    elif isinstance(expr, UBinOp):
+        return EBinOp(expr.op, compile_to_eml(expr.left), compile_to_eml(expr.right))
+    elif isinstance(expr, UExp):
+        # exp(e) = eml(e, 1)
+        return EEML(compile_to_eml(expr.arg), EConst(1.0))
+    elif isinstance(expr, ULog):
+        # log(e) = 1 - eml(0, e)
+        return EBinOp('sub', EConst(1.0), EEML(EConst(0.0), compile_to_eml(expr.arg)))
+    else:
+        raise TypeError(f"Unknown UExpr type: {type(expr)}")
 
-    @property
-    def depth(self) -> int:
-        """Transcendental nesting depth."""
-        if self.node_type in (EMLNodeType.VAR, EMLNodeType.CONST):
-            return 0
-        elif self.node_type in (EMLNodeType.ADD, EMLNodeType.MUL, EMLNodeType.SUB, EMLNodeType.DIV):
-            return max(self.left.depth, self.right.depth)
-        elif self.node_type in (EMLNodeType.EXP, EMLNodeType.LOG):
-            return self.child.depth + 1
-        return 0
 
-    @property
-    def size(self) -> int:
-        """Total number of nodes."""
-        if self.node_type in (EMLNodeType.VAR, EMLNodeType.CONST):
-            return 1
-        elif self.node_type in (EMLNodeType.ADD, EMLNodeType.MUL, EMLNodeType.SUB, EMLNodeType.DIV):
-            return self.left.size + self.right.size + 1
-        elif self.node_type in (EMLNodeType.EXP, EMLNodeType.LOG):
-            return self.child.size + 1
+# ============================================================
+# Algorithm 2: Decompilation (EMLExpr → UExpr)
+# ============================================================
+
+def decompile_from_eml(expr: EMLExpr) -> UExpr:
+    """
+    Decompile an EMLExpr back to a UExpr by expanding each eml node.
+
+    Key translation:
+    - eml(e1, e2) → exp(decompile(e1)) - log(decompile(e2))
+
+    Complexity: O(n) time and space.
+    Size bound: output size ≤ 3 × input size.
+    Rank: output transcendence_rank = 2 × input eml_rank.
+    """
+    if isinstance(expr, EVar):
+        return UVar()
+    elif isinstance(expr, EConst):
+        return UConst(expr.value)
+    elif isinstance(expr, EBinOp):
+        return UBinOp(expr.op, decompile_from_eml(expr.left), decompile_from_eml(expr.right))
+    elif isinstance(expr, EEML):
+        # eml(e1, e2) = exp(e1) - log(e2)
+        return UBinOp('sub', UExp(decompile_from_eml(expr.left)),
+                       ULog(decompile_from_eml(expr.right)))
+    else:
+        raise TypeError(f"Unknown EMLExpr type: {type(expr)}")
+
+
+# ============================================================
+# Algorithm 3: Partial Evaluation
+# ============================================================
+
+def eval_uexpr(expr: UExpr, x: float) -> Optional[float]:
+    """Evaluate a UExpr at x, returning None for undefined operations."""
+    if isinstance(expr, UVar):
+        return x
+    elif isinstance(expr, UConst):
+        return expr.value
+    elif isinstance(expr, UBinOp):
+        v1 = eval_uexpr(expr.left, x)
+        v2 = eval_uexpr(expr.right, x)
+        if v1 is None or v2 is None:
+            return None
+        if expr.op == 'add': return v1 + v2
+        if expr.op == 'sub': return v1 - v2
+        if expr.op == 'mul': return v1 * v2
+        if expr.op == 'div':
+            return v1 / v2 if v2 != 0 else None
+    elif isinstance(expr, UExp):
+        v = eval_uexpr(expr.arg, x)
+        if v is not None:
+            try:
+                return math.exp(v)
+            except OverflowError:
+                return float('inf')
+        return None
+    elif isinstance(expr, ULog):
+        v = eval_uexpr(expr.arg, x)
+        return math.log(v) if v is not None and v > 0 else None
+    return None
+
+
+def eval_emlexpr(expr: EMLExpr, x: float) -> Optional[float]:
+    """Evaluate an EMLExpr at x, returning None for undefined operations."""
+    if isinstance(expr, EVar):
+        return x
+    elif isinstance(expr, EConst):
+        return expr.value
+    elif isinstance(expr, EBinOp):
+        v1 = eval_emlexpr(expr.left, x)
+        v2 = eval_emlexpr(expr.right, x)
+        if v1 is None or v2 is None:
+            return None
+        if expr.op == 'add': return v1 + v2
+        if expr.op == 'sub': return v1 - v2
+        if expr.op == 'mul': return v1 * v2
+        if expr.op == 'div':
+            return v1 / v2 if v2 != 0 else None
+    elif isinstance(expr, EEML):
+        v1 = eval_emlexpr(expr.left, x)
+        v2 = eval_emlexpr(expr.right, x)
+        if v1 is not None and v2 is not None and v2 > 0:
+            try:
+                return math.exp(v1) - math.log(v2)
+            except OverflowError:
+                return float('inf')
+        return None
+    return None
+
+
+# ============================================================
+# Algorithm 4: Expression Metrics
+# ============================================================
+
+def expr_size(expr: Union[UExpr, EMLExpr]) -> int:
+    """Count nodes in expression tree."""
+    if isinstance(expr, (UVar, EVar, UConst, EConst)):
         return 1
+    elif isinstance(expr, UBinOp):
+        return 1 + expr_size(expr.left) + expr_size(expr.right)
+    elif isinstance(expr, EBinOp):
+        return 1 + expr_size(expr.left) + expr_size(expr.right)
+    elif isinstance(expr, (UExp, ULog)):
+        return 1 + expr_size(expr.arg)
+    elif isinstance(expr, EEML):
+        return 1 + expr_size(expr.left) + expr_size(expr.right)
+    return 0
 
-    @property
-    def transc_count(self) -> int:
-        """Number of exp/log nodes."""
-        if self.node_type in (EMLNodeType.VAR, EMLNodeType.CONST):
-            return 0
-        elif self.node_type in (EMLNodeType.ADD, EMLNodeType.MUL, EMLNodeType.SUB, EMLNodeType.DIV):
-            return self.left.transc_count + self.right.transc_count
-        elif self.node_type in (EMLNodeType.EXP, EMLNodeType.LOG):
-            return self.child.transc_count + 1
+
+def transcendence_rank(expr: UExpr) -> int:
+    """Count exp/log nodes in UExpr."""
+    if isinstance(expr, (UVar, UConst)):
         return 0
+    elif isinstance(expr, UBinOp):
+        return transcendence_rank(expr.left) + transcendence_rank(expr.right)
+    elif isinstance(expr, (UExp, ULog)):
+        return 1 + transcendence_rank(expr.arg)
+    return 0
 
-    def subst(self, i: int, e_prime: EMLExpr) -> EMLExpr:
-        """Substitute variable i with expression e_prime."""
-        if self.node_type == EMLNodeType.VAR:
-            return e_prime if self.var_index == i else self
-        elif self.node_type == EMLNodeType.CONST:
-            return self
-        elif self.node_type in (EMLNodeType.ADD, EMLNodeType.MUL, EMLNodeType.SUB, EMLNodeType.DIV):
-            new_left = self.left.subst(i, e_prime)
-            new_right = self.right.subst(i, e_prime)
-            return EMLExpr(self.node_type, left=new_left, right=new_right)
-        elif self.node_type in (EMLNodeType.EXP, EMLNodeType.LOG):
-            new_child = self.child.subst(i, e_prime)
-            return EMLExpr(self.node_type, child=new_child)
-        return self
 
-    def __repr__(self) -> str:
-        if self.node_type == EMLNodeType.VAR:
-            return f"x{self.var_index}"
-        elif self.node_type == EMLNodeType.CONST:
-            return f"{self.value}"
-        elif self.node_type == EMLNodeType.ADD:
-            return f"({self.left} + {self.right})"
-        elif self.node_type == EMLNodeType.MUL:
-            return f"({self.left} * {self.right})"
-        elif self.node_type == EMLNodeType.SUB:
-            return f"({self.left} - {self.right})"
-        elif self.node_type == EMLNodeType.DIV:
-            return f"({self.left} / {self.right})"
-        elif self.node_type == EMLNodeType.EXP:
-            return f"exp({self.child})"
-        elif self.node_type == EMLNodeType.LOG:
-            return f"log({self.child})"
-        return "?"
+def eml_rank(expr: EMLExpr) -> int:
+    """Count eml nodes in EMLExpr."""
+    if isinstance(expr, (EVar, EConst)):
+        return 0
+    elif isinstance(expr, EBinOp):
+        return eml_rank(expr.left) + eml_rank(expr.right)
+    elif isinstance(expr, EEML):
+        return 1 + eml_rank(expr.left) + eml_rank(expr.right)
+    return 0
+
+
+def expr_depth(expr: Union[UExpr, EMLExpr]) -> int:
+    """Compute depth of expression tree."""
+    if isinstance(expr, (UVar, EVar, UConst, EConst)):
+        return 0
+    elif isinstance(expr, UBinOp):
+        return 1 + max(expr_depth(expr.left), expr_depth(expr.right))
+    elif isinstance(expr, EBinOp):
+        return 1 + max(expr_depth(expr.left), expr_depth(expr.right))
+    elif isinstance(expr, (UExp, ULog)):
+        return 1 + expr_depth(expr.arg)
+    elif isinstance(expr, EEML):
+        return 1 + max(expr_depth(expr.left), expr_depth(expr.right))
+    return 0
 
 
 # ============================================================
-# EML Compilation: Functions → EML Expressions
+# Algorithm 5: Verification
 # ============================================================
 
-def compile_polynomial(coeffs: List[float]) -> EMLExpr:
+def verify_compilation_correctness(
+    expr: UExpr,
+    test_points: list[float],
+    tolerance: float = 1e-10
+) -> tuple[bool, list[str]]:
     """
-    Compile a polynomial p(x) = coeffs[0] + coeffs[1]*x + coeffs[2]*x² + ...
-    into an EML expression using Horner's method.
-    
-    Algorithm (Horner's method):
-        p(x) = c₀ + x(c₁ + x(c₂ + ... + x·cₙ))
-    
-    This produces an EML expression of depth 0 (purely algebraic) and
-    size O(n) where n is the degree.
+    Verify that compile(expr) is semantically equivalent to expr
+    at the given test points.
+
+    Returns (success, messages).
     """
-    if not coeffs:
-        return EMLExpr.const(0.0)
-    
-    x = EMLExpr.var(0)
-    # Horner's method: start from highest degree
-    result = EMLExpr.const(coeffs[-1])
-    for i in range(len(coeffs) - 2, -1, -1):
-        result = EMLExpr.add(EMLExpr.const(coeffs[i]), EMLExpr.mul(x, result))
-    
-    return result
+    compiled = compile_to_eml(expr)
+    messages = []
+    all_ok = True
 
+    for x in test_points:
+        v_orig = eval_uexpr(expr, x)
+        v_comp = eval_emlexpr(compiled, x)
 
-def compile_power(n: int) -> EMLExpr:
-    """
-    Compile x^n via exp(n * log(x)).
-    Produces an EML expression of depth 2.
-    """
-    x = EMLExpr.var(0)
-    return EMLExpr.exp(EMLExpr.mul(EMLExpr.const(float(n)), EMLExpr.log(x)))
+        if v_orig is None and v_comp is None:
+            messages.append(f"  x={x}: both undefined ✓")
+        elif v_orig is not None and v_comp is not None:
+            if abs(v_orig - v_comp) <= tolerance:
+                messages.append(f"  x={x}: {v_orig:.8f} == {v_comp:.8f} ✓")
+            else:
+                messages.append(f"  x={x}: {v_orig:.8f} != {v_comp:.8f} ✗")
+                all_ok = False
+        else:
+            messages.append(f"  x={x}: orig={v_orig}, comp={v_comp} ✗ (definedness mismatch)")
+            all_ok = False
 
-
-def compile_product() -> EMLExpr:
-    """
-    Compile x₀ * x₁ via exp(log(x₀) + log(x₁)).
-    Produces an EML expression of depth 2.
-    """
-    return EMLExpr.exp(EMLExpr.add(EMLExpr.log(EMLExpr.var(0)), EMLExpr.log(EMLExpr.var(1))))
-
-
-def compile_reciprocal() -> EMLExpr:
-    """
-    Compile 1/x₀ via exp(-log(x₀)).
-    Produces an EML expression of depth 2.
-    """
-    return EMLExpr.exp(EMLExpr.sub(EMLExpr.const(0.0), EMLExpr.log(EMLExpr.var(0))))
-
-
-def compile_sqrt() -> EMLExpr:
-    """
-    Compile √x₀ via exp(log(x₀) / 2).
-    Produces an EML expression of depth 2.
-    """
-    return EMLExpr.exp(EMLExpr.div(EMLExpr.log(EMLExpr.var(0)), EMLExpr.const(2.0)))
-
-
-# ============================================================
-# Function Approximation
-# ============================================================
-
-def chebyshev_nodes(n: int, a: float, b: float) -> List[float]:
-    """Compute n Chebyshev nodes on [a, b]."""
-    return [
-        (a + b) / 2 + (b - a) / 2 * math.cos((2*k + 1) * math.pi / (2*n))
-        for k in range(n)
-    ]
-
-
-def chebyshev_coefficients(f: Callable[[float], float], n: int, a: float, b: float) -> List[float]:
-    """
-    Compute polynomial coefficients for Chebyshev interpolation of f on [a, b].
-    Returns coefficients in monomial basis.
-    """
-    nodes = chebyshev_nodes(n, a, b)
-    values = [f(x) for x in nodes]
-    
-    # Convert to monomial coefficients via Newton's divided differences
-    # (simplified for small n)
-    coeffs = list(values)
-    for j in range(1, n):
-        for i in range(n - 1, j - 1, -1):
-            coeffs[i] = (coeffs[i] - coeffs[i-1]) / (nodes[i] - nodes[i-j])
-    
-    # Convert from Newton form to monomial form
-    mono = [0.0] * n
-    mono[0] = coeffs[0]
-    
-    # Build up: each step multiplies by (x - nodes[k])
-    running = [0.0] * n
-    running[0] = 1.0
-    
-    for k in range(1, n):
-        # Multiply running by (x - nodes[k-1])
-        new_running = [0.0] * n
-        for i in range(k, 0, -1):
-            new_running[i] = running[i-1]
-        for i in range(k + 1):
-            new_running[i] -= nodes[k-1] * running[i]
-        running = new_running
-        
-        for i in range(n):
-            mono[i] += coeffs[k] * running[i]
-    
-    return mono
-
-
-def approximate_function(f: Callable[[float], float], a: float, b: float, 
-                          degree: int) -> EMLExpr:
-    """
-    Approximate f on [a, b] by a polynomial EML expression of given degree.
-    
-    Algorithm:
-        1. Compute Chebyshev interpolation nodes.
-        2. Evaluate f at these nodes.
-        3. Compute polynomial coefficients.
-        4. Compile polynomial to EML expression via Horner's method.
-    
-    The result is an EML expression of depth 0 (purely algebraic)
-    with size O(degree).
-    """
-    coeffs = chebyshev_coefficients(f, degree, a, b)
-    return compile_polynomial(coeffs)
-
-
-# ============================================================
-# Complexity Analysis
-# ============================================================
-
-def analyze_expression(e: EMLExpr) -> Dict[str, int]:
-    """Compute complexity metrics for an EML expression."""
-    return {
-        "size": e.size,
-        "depth": e.depth,
-        "transc_count": e.transc_count,
-        "depth_le_transc": int(e.depth <= e.transc_count),
-        "transc_le_size": int(e.transc_count <= e.size),
-    }
+    return all_ok, messages
 
 
 if __name__ == "__main__":
-    # Demo: compile and evaluate
-    print("=== EML Expression Compilation ===\n")
-    
-    # Polynomial 3x² + 2x + 1
-    poly = compile_polynomial([1.0, 2.0, 3.0])
-    print(f"Polynomial 3x² + 2x + 1:")
-    print(f"  Expression: {poly}")
-    print(f"  Metrics: {analyze_expression(poly)}")
-    print(f"  eval(x=2): {poly.eval({0: 2.0})} (expected: {3*4 + 2*2 + 1})")
-    
-    # Power x^5
-    power = compile_power(5)
-    print(f"\nPower x⁵ (via exp-log):")
-    print(f"  Expression: {power}")
-    print(f"  Metrics: {analyze_expression(power)}")
-    print(f"  eval(x=3): {power.eval({0: 3.0})} (expected: {3**5})")
-    
-    # Product
-    prod = compile_product()
-    print(f"\nProduct x₀ × x₁ (via exp-log):")
-    print(f"  Expression: {prod}")
-    print(f"  Metrics: {analyze_expression(prod)}")
-    print(f"  eval(x₀=3, x₁=7): {prod.eval({0: 3.0, 1: 7.0})} (expected: 21)")
-    
-    # Approximate sin(x) on [-π, π]
-    print(f"\n=== Function Approximation ===\n")
-    sin_approx = approximate_function(math.sin, -math.pi, math.pi, 15)
-    print(f"sin(x) approximation (degree 15):")
-    print(f"  Metrics: {analyze_expression(sin_approx)}")
-    
-    test_points = [0.0, 0.5, 1.0, math.pi/2]
-    for x in test_points:
-        approx_val = sin_approx.eval({0: x})
-        exact_val = math.sin(x)
-        print(f"  x={x:.4f}: approx={approx_val:.8f}, exact={exact_val:.8f}, error={abs(approx_val-exact_val):.2e}")
+    # Quick self-test
+    expr = UBinOp('add', UExp(UVar()), ULog(UVar()))
+    compiled = compile_to_eml(expr)
+    decompiled = decompile_from_eml(compiled)
+
+    print(f"Original:    {expr}")
+    print(f"Compiled:    {compiled}")
+    print(f"Decompiled:  {decompiled}")
+    print(f"Size: {expr_size(expr)} → {expr_size(compiled)} → {expr_size(decompiled)}")
+    print(f"Rank: {transcendence_rank(expr)} → {eml_rank(compiled)}")
+
+    ok, msgs = verify_compilation_correctness(expr, [0.5, 1.0, 2.0, 5.0])
+    print(f"\nVerification: {'PASS' if ok else 'FAIL'}")
+    for m in msgs:
+        print(m)

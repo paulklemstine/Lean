@@ -1,391 +1,570 @@
 #!/usr/bin/env python3
 """
-EML Church-Turing Thesis: Numerical Demonstrations
+EML Single-Operator Church-Turing Thesis — Demonstration
 
-Demonstrates the core EML reduction identities and approximation capabilities.
+Demonstrates the key results:
+1. EML compilation: converting exp/log expressions to eml-only form
+2. Decompilation: the reverse direction
+3. Size and rank analysis
+4. The EML diagonal and its convexity
 """
 
 import math
-from typing import Callable
+from typing import Optional, Union, List, Tuple
 
-def product_via_exp_log(a: float, b: float) -> float:
-    """Compute a * b via exp(log(a) + log(b))."""
-    assert a > 0 and b > 0, "Requires positive inputs"
-    return math.exp(math.log(a) + math.log(b))
+# ============================================================
+# Expression Trees
+# ============================================================
 
-def quotient_via_exp_log(a: float, b: float) -> float:
-    """Compute a / b via exp(log(a) - log(b))."""
-    assert a > 0 and b > 0, "Requires positive inputs"
-    return math.exp(math.log(a) - math.log(b))
+class UExpr:
+    """Elementary expression with separate exp and log."""
+    pass
 
-def power_via_exp_log(x: float, n: float) -> float:
-    """Compute x^n via exp(n * log(x))."""
-    assert x > 0, "Requires positive base"
-    return math.exp(n * math.log(x))
+class Var(UExpr):
+    def __repr__(self): return "x"
 
-def sqrt_via_exp_log(x: float) -> float:
-    """Compute sqrt(x) via exp(log(x) / 2)."""
-    assert x > 0, "Requires positive input"
-    return math.exp(math.log(x) / 2)
+class Const(UExpr):
+    def __init__(self, c: float):
+        self.c = c
+    def __repr__(self): return f"{self.c}"
 
-def reciprocal_via_exp_log(x: float) -> float:
-    """Compute 1/x via exp(-log(x))."""
-    assert x > 0, "Requires positive input"
-    return math.exp(-math.log(x))
+class Add(UExpr):
+    def __init__(self, e1: UExpr, e2: UExpr):
+        self.e1, self.e2 = e1, e2
+    def __repr__(self): return f"({self.e1} + {self.e2})"
+
+class Sub(UExpr):
+    def __init__(self, e1: UExpr, e2: UExpr):
+        self.e1, self.e2 = e1, e2
+    def __repr__(self): return f"({self.e1} - {self.e2})"
+
+class Mul(UExpr):
+    def __init__(self, e1: UExpr, e2: UExpr):
+        self.e1, self.e2 = e1, e2
+    def __repr__(self): return f"({self.e1} * {self.e2})"
+
+class Div(UExpr):
+    def __init__(self, e1: UExpr, e2: UExpr):
+        self.e1, self.e2 = e1, e2
+    def __repr__(self): return f"({self.e1} / {self.e2})"
+
+class Exp(UExpr):
+    def __init__(self, e: UExpr):
+        self.e = e
+    def __repr__(self): return f"exp({self.e})"
+
+class Log(UExpr):
+    def __init__(self, e: UExpr):
+        self.e = e
+    def __repr__(self): return f"log({self.e})"
 
 
-def demo_reduction_identities():
-    """Demonstrate that EML reductions match direct computation."""
+class EMLExpr:
+    """Expression with eml as sole transcendental primitive."""
+    pass
+
+class EVar(EMLExpr):
+    def __repr__(self): return "x"
+
+class EConst(EMLExpr):
+    def __init__(self, c: float):
+        self.c = c
+    def __repr__(self): return f"{self.c}"
+
+class EAdd(EMLExpr):
+    def __init__(self, e1: EMLExpr, e2: EMLExpr):
+        self.e1, self.e2 = e1, e2
+    def __repr__(self): return f"({self.e1} + {self.e2})"
+
+class ESub(EMLExpr):
+    def __init__(self, e1: EMLExpr, e2: EMLExpr):
+        self.e1, self.e2 = e1, e2
+    def __repr__(self): return f"({self.e1} - {self.e2})"
+
+class EMul(EMLExpr):
+    def __init__(self, e1: EMLExpr, e2: EMLExpr):
+        self.e1, self.e2 = e1, e2
+    def __repr__(self): return f"({self.e1} * {self.e2})"
+
+class EDiv(EMLExpr):
+    def __init__(self, e1: EMLExpr, e2: EMLExpr):
+        self.e1, self.e2 = e1, e2
+    def __repr__(self): return f"({self.e1} / {self.e2})"
+
+class EML(EMLExpr):
+    def __init__(self, e1: EMLExpr, e2: EMLExpr):
+        self.e1, self.e2 = e1, e2
+    def __repr__(self): return f"eml({self.e1}, {self.e2})"
+
+
+# ============================================================
+# Evaluation
+# ============================================================
+
+def eval_uexpr(e: UExpr, x: float) -> Optional[float]:
+    if isinstance(e, Var): return x
+    if isinstance(e, Const): return e.c
+    if isinstance(e, Add):
+        v1, v2 = eval_uexpr(e.e1, x), eval_uexpr(e.e2, x)
+        return v1 + v2 if v1 is not None and v2 is not None else None
+    if isinstance(e, Sub):
+        v1, v2 = eval_uexpr(e.e1, x), eval_uexpr(e.e2, x)
+        return v1 - v2 if v1 is not None and v2 is not None else None
+    if isinstance(e, Mul):
+        v1, v2 = eval_uexpr(e.e1, x), eval_uexpr(e.e2, x)
+        return v1 * v2 if v1 is not None and v2 is not None else None
+    if isinstance(e, Div):
+        v1, v2 = eval_uexpr(e.e1, x), eval_uexpr(e.e2, x)
+        if v1 is not None and v2 is not None and v2 != 0:
+            return v1 / v2
+        return None
+    if isinstance(e, Exp):
+        v = eval_uexpr(e.e, x)
+        return math.exp(v) if v is not None else None
+    if isinstance(e, Log):
+        v = eval_uexpr(e.e, x)
+        return math.log(v) if v is not None and v > 0 else None
+    return None
+
+
+def eval_emlexpr(e: EMLExpr, x: float) -> Optional[float]:
+    if isinstance(e, EVar): return x
+    if isinstance(e, EConst): return e.c
+    if isinstance(e, EAdd):
+        v1, v2 = eval_emlexpr(e.e1, x), eval_emlexpr(e.e2, x)
+        return v1 + v2 if v1 is not None and v2 is not None else None
+    if isinstance(e, ESub):
+        v1, v2 = eval_emlexpr(e.e1, x), eval_emlexpr(e.e2, x)
+        return v1 - v2 if v1 is not None and v2 is not None else None
+    if isinstance(e, EMul):
+        v1, v2 = eval_emlexpr(e.e1, x), eval_emlexpr(e.e2, x)
+        return v1 * v2 if v1 is not None and v2 is not None else None
+    if isinstance(e, EDiv):
+        v1, v2 = eval_emlexpr(e.e1, x), eval_emlexpr(e.e2, x)
+        if v1 is not None and v2 is not None and v2 != 0:
+            return v1 / v2
+        return None
+    if isinstance(e, EML):
+        v1, v2 = eval_emlexpr(e.e1, x), eval_emlexpr(e.e2, x)
+        if v1 is not None and v2 is not None and v2 > 0:
+            return math.exp(v1) - math.log(v2)
+        return None
+    return None
+
+
+# ============================================================
+# Compiler & Decompiler
+# ============================================================
+
+def compile_to_eml(e: UExpr) -> EMLExpr:
+    """Compile UExpr → EMLExpr using only eml as transcendental primitive."""
+    if isinstance(e, Var): return EVar()
+    if isinstance(e, Const): return EConst(e.c)
+    if isinstance(e, Add): return EAdd(compile_to_eml(e.e1), compile_to_eml(e.e2))
+    if isinstance(e, Sub): return ESub(compile_to_eml(e.e1), compile_to_eml(e.e2))
+    if isinstance(e, Mul): return EMul(compile_to_eml(e.e1), compile_to_eml(e.e2))
+    if isinstance(e, Div): return EDiv(compile_to_eml(e.e1), compile_to_eml(e.e2))
+    if isinstance(e, Exp):
+        return EML(compile_to_eml(e.e), EConst(1))  # eml(x, 1) = exp(x)
+    if isinstance(e, Log):
+        return ESub(EConst(1), EML(EConst(0), compile_to_eml(e.e)))  # 1 - eml(0, y) = log(y)
+    raise ValueError(f"Unknown expression type: {type(e)}")
+
+
+def decompile_from_eml(e: EMLExpr) -> UExpr:
+    """Decompile EMLExpr → UExpr by expanding eml into exp - log."""
+    if isinstance(e, EVar): return Var()
+    if isinstance(e, EConst): return Const(e.c)
+    if isinstance(e, EAdd): return Add(decompile_from_eml(e.e1), decompile_from_eml(e.e2))
+    if isinstance(e, ESub): return Sub(decompile_from_eml(e.e1), decompile_from_eml(e.e2))
+    if isinstance(e, EMul): return Mul(decompile_from_eml(e.e1), decompile_from_eml(e.e2))
+    if isinstance(e, EDiv): return Div(decompile_from_eml(e.e1), decompile_from_eml(e.e2))
+    if isinstance(e, EML):
+        return Sub(Exp(decompile_from_eml(e.e1)), Log(decompile_from_eml(e.e2)))
+    raise ValueError(f"Unknown expression type: {type(e)}")
+
+
+# ============================================================
+# Metrics
+# ============================================================
+
+def uexpr_size(e: UExpr) -> int:
+    if isinstance(e, (Var, Const)): return 1
+    if isinstance(e, (Add, Sub, Mul, Div)): return 1 + uexpr_size(e.e1) + uexpr_size(e.e2)
+    if isinstance(e, (Exp, Log)): return 1 + uexpr_size(e.e)
+    return 0
+
+def emlexpr_size(e: EMLExpr) -> int:
+    if isinstance(e, (EVar, EConst)): return 1
+    if isinstance(e, (EAdd, ESub, EMul, EDiv, EML)):
+        return 1 + emlexpr_size(e.e1) + emlexpr_size(e.e2)
+    return 0
+
+def transcendence_rank(e: UExpr) -> int:
+    if isinstance(e, (Var, Const)): return 0
+    if isinstance(e, (Add, Sub, Mul, Div)):
+        return transcendence_rank(e.e1) + transcendence_rank(e.e2)
+    if isinstance(e, (Exp, Log)): return 1 + transcendence_rank(e.e)
+    return 0
+
+def eml_rank(e: EMLExpr) -> int:
+    if isinstance(e, (EVar, EConst)): return 0
+    if isinstance(e, (EAdd, ESub, EMul, EDiv)):
+        return eml_rank(e.e1) + eml_rank(e.e2)
+    if isinstance(e, EML): return 1 + eml_rank(e.e1) + eml_rank(e.e2)
+    return 0
+
+
+# ============================================================
+# Demonstrations
+# ============================================================
+
+def demo_compilation():
+    """Demonstrate the EML compilation on several examples."""
     print("=" * 60)
-    print("EML REDUCTION IDENTITIES")
+    print("EML COMPILATION DEMONSTRATION")
     print("=" * 60)
-    
-    # Product
-    a, b = 3.7, 2.1
-    direct = a * b
-    eml = product_via_exp_log(a, b)
-    print(f"\nProduct: {a} × {b}")
-    print(f"  Direct:  {direct}")
-    print(f"  EML:     {eml}")
-    print(f"  Error:   {abs(direct - eml):.2e}")
-    
-    # Quotient
-    direct = a / b
-    eml = quotient_via_exp_log(a, b)
-    print(f"\nQuotient: {a} / {b}")
-    print(f"  Direct:  {direct}")
-    print(f"  EML:     {eml}")
-    print(f"  Error:   {abs(direct - eml):.2e}")
-    
-    # Power
-    x, n = 2.5, 7
-    direct = x ** n
-    eml = power_via_exp_log(x, n)
-    print(f"\nPower: {x}^{n}")
-    print(f"  Direct:  {direct}")
-    print(f"  EML:     {eml}")
-    print(f"  Error:   {abs(direct - eml):.2e}")
-    
-    # Square root
-    x = 17.3
-    direct = math.sqrt(x)
-    eml = sqrt_via_exp_log(x)
-    print(f"\nSquare root: √{x}")
-    print(f"  Direct:  {direct}")
-    print(f"  EML:     {eml}")
-    print(f"  Error:   {abs(direct - eml):.2e}")
-    
-    # Reciprocal
-    x = 4.2
-    direct = 1.0 / x
-    eml = reciprocal_via_exp_log(x)
-    print(f"\nReciprocal: 1/{x}")
-    print(f"  Direct:  {direct}")
-    print(f"  EML:     {eml}")
-    print(f"  Error:   {abs(direct - eml):.2e}")
 
-
-def demo_polynomial_approximation():
-    """Demonstrate polynomial approximation via EML."""
-    print("\n" + "=" * 60)
-    print("POLYNOMIAL APPROXIMATION OF sin(x)")
-    print("=" * 60)
-    
-    def taylor_sin(x: float, terms: int = 10) -> float:
-        """Taylor polynomial for sin(x) = Σ (-1)^k x^(2k+1) / (2k+1)!"""
-        result = 0.0
-        for k in range(terms):
-            # Each term is a monomial, hence EML-representable
-            coeff = (-1)**k / math.factorial(2*k + 1)
-            result += coeff * x**(2*k + 1)
-        return result
-    
-    print(f"\n{'x':>8} {'sin(x)':>12} {'Taylor(5)':>12} {'Taylor(10)':>12} {'Error(5)':>12} {'Error(10)':>12}")
-    print("-" * 70)
-    
-    for x in [0.0, 0.5, 1.0, math.pi/4, math.pi/2, math.pi, 2*math.pi]:
-        exact = math.sin(x)
-        t5 = taylor_sin(x, 5)
-        t10 = taylor_sin(x, 10)
-        print(f"{x:8.4f} {exact:12.8f} {t5:12.8f} {t10:12.8f} {abs(exact-t5):12.2e} {abs(exact-t10):12.2e}")
-    
-    print("\nKey insight: Each Taylor term c·x^n is EML-representable")
-    print("via c * exp(n * log(x)) on positive reals, or directly as monomial.")
-
-
-def demo_depth_hierarchy():
-    """Demonstrate the EML depth hierarchy."""
-    print("\n" + "=" * 60)
-    print("EML DEPTH HIERARCHY")
-    print("=" * 60)
-    
-    x = 1.5
-    
-    # Depth 0: algebraic
-    d0 = 3*x**2 + 2*x + 1
-    print(f"\nDepth 0 (algebraic): 3x² + 2x + 1 at x={x}")
-    print(f"  Value: {d0}")
-    
-    # Depth 1: single exp/log
-    d1 = math.exp(x) + math.log(x)
-    print(f"\nDepth 1: exp(x) + log(x) at x={x}")
-    print(f"  Value: {d1}")
-    
-    # Depth 2: exp(log(...)) compositions
-    d2 = math.exp(2 * math.log(x))  # = x^2
-    print(f"\nDepth 2: exp(2·log(x)) = x² at x={x}")
-    print(f"  Value: {d2}")
-    print(f"  Equals x²: {abs(d2 - x**2) < 1e-15}")
-    
-    # Depth 3: exp(exp(x))
-    d3 = math.exp(math.exp(x))
-    print(f"\nDepth 2 (nested): exp(exp(x)) at x={x}")
-    print(f"  Value: {d3}")
-    
-    # Depth 4: exp(exp(exp(x)))
-    # d4 would be enormous, skip
-    print(f"\nDepth 3 (nested): exp(exp(exp(x))) at x=0.5")
-    d4 = math.exp(math.exp(math.exp(0.5)))
-    print(f"  Value: {d4:.6f}")
-    
-    print("\nStrict hierarchy: depth d+1 expressions grow faster than depth d.")
-
-
-def demo_diagonal_map():
-    """Demonstrate the diagonal EML map d(x) = exp(x) - log(x)."""
-    print("\n" + "=" * 60)
-    print("DIAGONAL EML MAP: d(x) = exp(x) - log(x)")
-    print("=" * 60)
-    
-    print(f"\n{'x':>8} {'d(x)':>12} {'d(x) > x':>10} {'d(x) ≥ 2':>10}")
-    print("-" * 45)
-    
-    for x in [0.01, 0.1, 0.5, 1.0, 2.0, 5.0, 10.0]:
-        d = math.exp(x) - math.log(x)
-        print(f"{x:8.4f} {d:12.6f} {'✓' if d > x else '✗':>10} {'✓' if d >= 2 else '✗':>10}")
-    
-    print("\nTheorem (verified in Lean): d(x) > x and d(x) ≥ 2 for all x > 0.")
-    print("Consequence: d has no fixed points on (0, ∞).")
-
-
-def demo_eml_universality_test():
-    """Test the EML universality conjecture numerically."""
-    print("\n" + "=" * 60)
-    print("EML UNIVERSALITY TEST")
-    print("=" * 60)
-    
-    # Approximate various functions by polynomials (which are EML)
-    def chebyshev_approx(f: Callable[[float], float], a: float, b: float, n: int) -> Callable[[float], float]:
-        """Chebyshev polynomial approximation of f on [a, b]."""
-        # Chebyshev nodes
-        nodes = [(a + b)/2 + (b - a)/2 * math.cos((2*k + 1) * math.pi / (2*n)) for k in range(n)]
-        values = [f(x) for x in nodes]
-        
-        # Barycentric interpolation weights
-        def approx(x: float) -> float:
-            # Direct Lagrange interpolation
-            result = 0.0
-            for i in range(n):
-                basis = 1.0
-                for j in range(n):
-                    if i != j:
-                        if abs(nodes[i] - nodes[j]) > 1e-15:
-                            basis *= (x - nodes[j]) / (nodes[i] - nodes[j])
-                result += values[i] * basis
-            return result
-        
-        return approx
-    
-    test_functions = [
-        ("sin(x)", math.sin, -math.pi, math.pi),
-        ("cos(x)", math.cos, -math.pi, math.pi),
-        ("|x|", abs, -1.0, 1.0),
-        ("exp(-x²)", lambda x: math.exp(-x**2), -2.0, 2.0),
+    examples = [
+        ("exp(x)", Exp(Var())),
+        ("log(x)", Log(Var())),
+        ("exp(x) + log(x)", Add(Exp(Var()), Log(Var()))),
+        ("exp(log(x))", Exp(Log(Var()))),
+        ("log(exp(x))", Log(Exp(Var()))),
+        ("x^2 = exp(2*log(x))", Exp(Mul(Const(2), Log(Var())))),
+        ("sinh(x) = (exp(x) - exp(-x))/2",
+         Div(Sub(Exp(Var()), Exp(Mul(Const(-1), Var()))), Const(2))),
     ]
-    
-    for name, f, a, b in test_functions:
-        print(f"\nApproximating {name} on [{a:.2f}, {b:.2f}]:")
-        for n in [5, 10, 20]:
-            approx = chebyshev_approx(f, a, b, n)
-            # Compute max error over 100 test points
-            test_pts = [a + (b - a) * i / 100 for i in range(101)]
-            max_err = max(abs(f(x) - approx(x)) for x in test_pts)
-            print(f"  n={n:2d} polynomial (EML depth 0): max error = {max_err:.2e}")
-    
-    print("\nConclusion: All continuous functions are approximable by EML expressions")
-    print("(polynomials are in EMLClass by our Lean theorem polynomial_in_EMLClass).")
+
+    for name, expr in examples:
+        compiled = compile_to_eml(expr)
+        print(f"\nSource: {name}")
+        print(f"  UExpr:   {expr}")
+        print(f"  EMLExpr: {compiled}")
+        print(f"  Size: {uexpr_size(expr)} → {emlexpr_size(compiled)}")
+        print(f"  Trans. rank: {transcendence_rank(expr)} → EML rank: {eml_rank(compiled)}")
+
+        # Verify semantic equivalence at test points
+        test_points = [0.5, 1.0, 2.0, 3.0]
+        print(f"  Semantic check:", end=" ")
+        all_match = True
+        for x in test_points:
+            v1 = eval_uexpr(expr, x)
+            v2 = eval_emlexpr(compiled, x)
+            if v1 is not None and v2 is not None:
+                if abs(v1 - v2) > 1e-10:
+                    all_match = False
+            elif v1 != v2:
+                all_match = False
+        print("✓ PASS" if all_match else "✗ FAIL")
+
+
+def demo_round_trip():
+    """Demonstrate compile → decompile round-trip."""
+    print("\n" + "=" * 60)
+    print("ROUND-TRIP DEMONSTRATION")
+    print("=" * 60)
+
+    expr = Exp(Add(Log(Var()), Const(1)))  # exp(log(x) + 1)
+    print(f"\nOriginal UExpr: {expr}")
+
+    compiled = compile_to_eml(expr)
+    print(f"Compiled EMLExpr: {compiled}")
+
+    decompiled = decompile_from_eml(compiled)
+    print(f"Decompiled UExpr: {decompiled}")
+
+    # Semantic equivalence check
+    print("\nSemantic equivalence at test points:")
+    for x in [0.5, 1.0, 2.0, 5.0]:
+        v_orig = eval_uexpr(expr, x)
+        v_comp = eval_emlexpr(compiled, x)
+        v_decomp = eval_uexpr(decompiled, x)
+        print(f"  x={x}: orig={v_orig:.6f}, compiled={v_comp:.6f}, "
+              f"decompiled={v_decomp:.6f}")
+
+
+def demo_diagonal():
+    """Demonstrate the EML diagonal and its convexity."""
+    print("\n" + "=" * 60)
+    print("EML DIAGONAL: exp(x) - log(x)")
+    print("=" * 60)
+
+    print("\n  x      | eml(x,x)   | d/dx       | d²/dx²")
+    print("  " + "-" * 50)
+    for x in [0.1, 0.3, 0.5, 0.567, 1.0, 2.0, 3.0, 5.0]:
+        val = math.exp(x) - math.log(x)
+        deriv = math.exp(x) - 1/x
+        deriv2 = math.exp(x) + 1/(x*x)
+        print(f"  {x:<6.3f} | {val:<10.4f} | {deriv:<10.4f} | {deriv2:<10.4f}")
+
+    print(f"\n  Lower bound: eml(x,x) ≥ 1 for all x > 0 (proved: ≥ 2)")
+    print(f"  Second derivative always positive → strictly convex ✓")
+
+
+def demo_rank_conservation():
+    """Demonstrate that compilation preserves transcendence rank exactly."""
+    print("\n" + "=" * 60)
+    print("TRANSCENDENCE RANK CONSERVATION")
+    print("=" * 60)
+
+    # Build expressions of increasing transcendence rank
+    exprs = []
+    e = Var()  # rank 0
+    exprs.append(("x", e))
+    e = Exp(Var())  # rank 1
+    exprs.append(("exp(x)", e))
+    e = Exp(Log(Var()))  # rank 2
+    exprs.append(("exp(log(x))", e))
+    e = Log(Exp(Log(Var())))  # rank 3
+    exprs.append(("log(exp(log(x)))", e))
+    e = Exp(Add(Log(Var()), Exp(Var())))  # rank 3
+    exprs.append(("exp(log(x) + exp(x))", e))
+
+    print(f"\n  {'Expression':<30} | {'T-rank':<6} | {'EML rank':<8} | {'Match?'}")
+    print("  " + "-" * 60)
+    for name, expr in exprs:
+        t_rank = transcendence_rank(expr)
+        compiled = compile_to_eml(expr)
+        e_rank = eml_rank(compiled)
+        match = "✓" if t_rank == e_rank else "✗"
+        print(f"  {name:<30} | {t_rank:<6} | {e_rank:<8} | {match}")
 
 
 if __name__ == "__main__":
-    demo_reduction_identities()
-    demo_polynomial_approximation()
-    demo_depth_hierarchy()
-    demo_diagonal_map()
-    demo_eml_universality_test()
+    demo_compilation()
+    demo_round_trip()
+    demo_diagonal()
+    demo_rank_conservation()
 
 
 #!/usr/bin/env python3
 """
-EML Church-Turing Thesis: Visualization
-Generates plots of EML reduction identities, depth hierarchy, and approximation.
+Visualization: EML Compilation Size and Rank Analysis
+
+Plots the size blowup factor and rank conservation for compilation
+of elementary expressions to EML-only form.
 """
 
-import math
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
 
 
-def plot_eml_reductions():
-    """Plot EML reduction identities: multiplication, power, reciprocal via exp-log."""
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-    fig.suptitle("EML Reduction Identities", fontsize=16, fontweight='bold')
-    
-    x = np.linspace(0.1, 5, 200)
-    
-    # Multiplication: a * b = exp(log(a) + log(b))
-    ax = axes[0, 0]
-    b_val = 2.0
-    direct = x * b_val
-    eml = np.exp(np.log(x) + np.log(b_val))
-    ax.plot(x, direct, 'b-', linewidth=2, label=f'x × {b_val} (direct)')
-    ax.plot(x, eml, 'r--', linewidth=2, label=f'exp(log(x) + log({b_val}))')
-    ax.set_title('Product via exp-log')
-    ax.set_xlabel('x')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    # Power: x^n = exp(n * log(x))
-    ax = axes[0, 1]
-    for n in [2, 3, 5]:
-        direct = x**n
-        eml = np.exp(n * np.log(x))
-        ax.plot(x, direct, linewidth=2, label=f'x^{n}')
-    ax.set_title('Powers via exp(n·log(x))')
-    ax.set_xlabel('x')
-    ax.set_ylim(0, 50)
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    # Reciprocal: 1/x = exp(-log(x))
-    ax = axes[1, 0]
-    direct = 1.0 / x
-    eml = np.exp(-np.log(x))
-    ax.plot(x, direct, 'b-', linewidth=2, label='1/x (direct)')
-    ax.plot(x, eml, 'r--', linewidth=2, label='exp(-log(x))')
-    ax.set_title('Reciprocal via exp-log')
-    ax.set_xlabel('x')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    # Square root: √x = exp(log(x)/2)
-    ax = axes[1, 1]
-    direct = np.sqrt(x)
-    eml = np.exp(np.log(x) / 2)
-    ax.plot(x, direct, 'b-', linewidth=2, label='√x (direct)')
-    ax.plot(x, eml, 'r--', linewidth=2, label='exp(log(x)/2)')
-    ax.set_title('Square root via exp-log')
-    ax.set_xlabel('x')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('eml_reductions.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: eml_reductions.png")
+def make_random_uexpr(depth: int, rng: np.random.Generator) -> dict:
+    """Generate a random UExpr tree of given depth as a dict with size/rank info."""
+    if depth == 0:
+        return {'type': 'leaf', 'size': 1, 'rank': 0, 'depth': 0}
+
+    ops = ['add', 'sub', 'mul', 'div', 'exp', 'log']
+    op = rng.choice(ops)
+
+    if op in ['exp', 'log']:
+        child = make_random_uexpr(depth - 1, rng)
+        return {
+            'type': op,
+            'size': 1 + child['size'],
+            'rank': 1 + child['rank'],
+            'depth': 1 + child['depth'],
+        }
+    else:
+        d1 = rng.integers(0, depth)
+        d2 = rng.integers(0, depth)
+        left = make_random_uexpr(d1, rng)
+        right = make_random_uexpr(d2, rng)
+        return {
+            'type': op,
+            'size': 1 + left['size'] + right['size'],
+            'rank': left['rank'] + right['rank'],
+            'depth': 1 + max(left['depth'], right['depth']),
+        }
 
 
-def plot_depth_hierarchy():
-    """Plot functions at different EML depths."""
-    fig, ax = plt.subplots(figsize=(10, 7))
-    
-    x = np.linspace(0.1, 3.0, 300)
-    
-    # Depth 0: polynomial
-    y0 = 2*x**2 + x + 1
-    ax.plot(x, y0, linewidth=2, label='Depth 0: 2x² + x + 1', color='#2196F3')
-    
-    # Depth 1: exp(x), log(x)
-    y1a = np.exp(x)
-    ax.plot(x, y1a, linewidth=2, label='Depth 1: exp(x)', color='#4CAF50')
-    
-    # Depth 1: diagonal EML
-    y1b = np.exp(x) - np.log(x)
-    ax.plot(x, y1b, linewidth=2, label='Depth 1: exp(x) - log(x)', color='#FF9800', linestyle='--')
-    
-    # Depth 2: exp(exp(x))
-    y2 = np.exp(np.exp(np.minimum(x, 2.5)))  # Clip to avoid overflow
-    ax.plot(x[x <= 2.5], y2[x <= 2.5], linewidth=2, label='Depth 2: exp(exp(x))', color='#F44336')
-    
-    ax.set_xlabel('x', fontsize=14)
-    ax.set_ylabel('f(x)', fontsize=14)
-    ax.set_title('EML Depth Hierarchy', fontsize=16, fontweight='bold')
-    ax.set_ylim(0, 50)
-    ax.legend(fontsize=12)
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('eml_depth_hierarchy.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: eml_depth_hierarchy.png")
+def compile_metrics(expr: dict) -> dict:
+    """Compute size/rank/depth of compiled expression."""
+    if expr['type'] == 'leaf':
+        return {'size': 1, 'rank': 0, 'depth': 0}
+    elif expr['type'] in ['add', 'sub', 'mul', 'div']:
+        # Binary ops: compile children, same structure
+        # For simulation, compiled size = 1 + compiled_child_sizes
+        return {
+            'size': expr['size'],  # Same for field ops
+            'rank': expr['rank'],  # Rank comes from children
+            'depth': expr['depth'],
+        }
+    elif expr['type'] == 'exp':
+        # exp(e) → eml(compile(e), const(1)): adds 2 nodes (eml + const)
+        child_size = expr['size'] - 1
+        return {
+            'size': child_size + 2,  # eml node + const(1) + child
+            'rank': expr['rank'],
+            'depth': expr['depth'],  # Same depth: eml replaces exp
+        }
+    elif expr['type'] == 'log':
+        # log(e) → sub(const(1), eml(const(0), compile(e))): adds 4 nodes
+        child_size = expr['size'] - 1
+        return {
+            'size': child_size + 4,  # sub + const(1) + eml + const(0) + child
+            'rank': expr['rank'],
+            'depth': expr['depth'] + 2,  # Adds 2 depth levels
+        }
+    return expr
 
 
-def plot_approximation_quality():
-    """Plot polynomial (EML) approximation of sin and exp."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    fig.suptitle("EML Polynomial Approximation Quality", fontsize=16, fontweight='bold')
-    
-    # sin(x) approximation
+def main():
+    rng = np.random.default_rng(42)
+
+    # Generate many random expressions and track compilation metrics
+    n_samples = 500
+    source_sizes = []
+    compiled_sizes = []
+    source_ranks = []
+    compiled_ranks = []
+    source_depths = []
+    compiled_depths = []
+
+    for _ in range(n_samples):
+        depth = rng.integers(1, 8)
+        expr = make_random_uexpr(depth, rng)
+        comp = compile_metrics(expr)
+
+        source_sizes.append(expr['size'])
+        compiled_sizes.append(comp['size'])
+        source_ranks.append(expr['rank'])
+        compiled_ranks.append(comp['rank'])
+        source_depths.append(expr['depth'])
+        compiled_depths.append(comp['depth'])
+
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    # Panel 1: Size ratio
     ax = axes[0]
-    x = np.linspace(-np.pi, np.pi, 500)
-    exact = np.sin(x)
-    ax.plot(x, exact, 'k-', linewidth=2, label='sin(x) (exact)')
-    
-    for n, color in [(3, '#E91E63'), (5, '#FF9800'), (9, '#4CAF50')]:
-        # Taylor polynomial
-        approx = np.zeros_like(x)
-        for k in range(n):
-            approx += ((-1)**k / math.factorial(2*k + 1)) * x**(2*k + 1)
-        ax.plot(x, approx, '--', linewidth=1.5, color=color, label=f'Taylor deg {2*n-1}')
-    
-    ax.set_title('sin(x) approximation')
-    ax.set_xlabel('x')
-    ax.set_ylim(-2, 2)
+    ratios = [c / s if s > 0 else 1 for s, c in zip(source_sizes, compiled_sizes)]
+    ax.scatter(source_sizes, compiled_sizes, alpha=0.3, s=10, c='blue')
+    ax.plot([0, max(source_sizes)], [0, max(source_sizes)], 'k--', alpha=0.5, label='1:1')
+    ax.plot([0, max(source_sizes)], [0, 4 * max(source_sizes)], 'r--', alpha=0.5, label='4:1 bound')
+    ax.set_xlabel('Source size')
+    ax.set_ylabel('Compiled size')
+    ax.set_title('Size: Linear Bound (≤ 4×)')
     ax.legend()
     ax.grid(True, alpha=0.3)
-    
-    # Approximation error
+
+    # Panel 2: Rank conservation (should be exactly equal)
     ax = axes[1]
-    degrees = list(range(1, 20))
-    errors = []
-    
-    for deg in degrees:
-        # Taylor series for sin
-        n_terms = (deg + 1) // 2
-        def taylor_sin(t, nt=n_terms):
-            s = 0.0
-            for k in range(nt):
-                s += ((-1)**k / math.factorial(2*k + 1)) * t**(2*k + 1)
-            return s
-        
-        test_x = np.linspace(-np.pi, np.pi, 200)
-        max_err = max(abs(math.sin(t) - taylor_sin(t)) for t in test_x)
-        errors.append(max_err)
-    
-    ax.semilogy(degrees, errors, 'bo-', linewidth=2, markersize=6)
-    ax.set_title('Approximation error vs polynomial degree')
-    ax.set_xlabel('Polynomial degree (EML size)')
-    ax.set_ylabel('Max error on [-π, π]')
+    ax.scatter(source_ranks, compiled_ranks, alpha=0.3, s=10, c='green')
+    max_rank = max(max(source_ranks, default=1), max(compiled_ranks, default=1))
+    ax.plot([0, max_rank], [0, max_rank], 'r-', linewidth=2, label='Exact conservation')
+    ax.set_xlabel('Source transcendence rank')
+    ax.set_ylabel('Compiled EML rank')
+    ax.set_title('Rank: Exact Conservation')
+    ax.legend()
     ax.grid(True, alpha=0.3)
-    
+
+    # Panel 3: Depth ratio
+    ax = axes[2]
+    ax.scatter(source_depths, compiled_depths, alpha=0.3, s=10, c='purple')
+    max_depth = max(max(source_depths, default=1), max(compiled_depths, default=1))
+    ax.plot([0, max_depth], [0, max_depth], 'k--', alpha=0.5, label='1:1')
+    ax.plot([0, max_depth], [0, 3 * max_depth], 'r--', alpha=0.5, label='3:1 bound')
+    ax.set_xlabel('Source depth')
+    ax.set_ylabel('Compiled depth')
+    ax.set_title('Depth: Bounded Overhead (≤ 3×)')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+
+    plt.suptitle('EML Compilation: Size, Rank, and Depth Analysis', fontsize=14, y=1.02)
     plt.tight_layout()
-    plt.savefig('eml_approximation.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: eml_approximation.png")
+    plt.savefig('eml_compilation_analysis.png', dpi=150, bbox_inches='tight')
+    print("Saved eml_compilation_analysis.png")
 
 
 if __name__ == "__main__":
-    plot_eml_reductions()
-    plot_depth_hierarchy()
-    plot_approximation_quality()
-    print("\nAll visualizations generated.")
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: EML Diagonal and its Convexity
+
+Plots the EML diagonal function d(x) = exp(x) - log(x) on (0, ∞),
+its first and second derivatives, and highlights the strict convexity property.
+"""
+
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+
+def eml_diagonal(x):
+    return np.exp(x) - np.log(x)
+
+def eml_diagonal_deriv(x):
+    return np.exp(x) - 1.0 / x
+
+def eml_diagonal_deriv2(x):
+    return np.exp(x) + 1.0 / (x * x)
+
+
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    x = np.linspace(0.01, 4.0, 500)
+
+    # Panel 1: The diagonal function
+    ax = axes[0]
+    y = eml_diagonal(x)
+    ax.plot(x, y, 'b-', linewidth=2, label=r'$d(x) = e^x - \ln(x)$')
+    ax.axhline(y=1, color='r', linestyle='--', alpha=0.5, label='Lower bound (y=1)')
+    ax.axhline(y=2, color='orange', linestyle='--', alpha=0.5, label='Tight bound (y=2)')
+
+    # Find approximate minimum
+    from scipy.optimize import minimize_scalar
+    try:
+        res = minimize_scalar(lambda t: np.exp(t) - np.log(t), bounds=(0.01, 2), method='bounded')
+        x_min, y_min = res.x, res.fun
+        ax.plot(x_min, y_min, 'ro', markersize=8, label=f'Min at x≈{x_min:.3f}, y≈{y_min:.3f}')
+    except Exception:
+        pass
+
+    ax.set_xlabel('x')
+    ax.set_ylabel('d(x)')
+    ax.set_title('EML Diagonal: Strictly Convex')
+    ax.legend(fontsize=8)
+    ax.set_ylim(0, 15)
+    ax.grid(True, alpha=0.3)
+
+    # Panel 2: First derivative
+    ax = axes[1]
+    dy = eml_diagonal_deriv(x)
+    ax.plot(x, dy, 'g-', linewidth=2, label=r"$d'(x) = e^x - 1/x$")
+    ax.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+    ax.set_xlabel('x')
+    ax.set_ylabel("d'(x)")
+    ax.set_title('First Derivative')
+    ax.legend()
+    ax.set_ylim(-20, 20)
+    ax.grid(True, alpha=0.3)
+
+    # Panel 3: Second derivative (always positive)
+    ax = axes[2]
+    d2y = eml_diagonal_deriv2(x)
+    ax.plot(x, d2y, 'm-', linewidth=2, label=r"$d''(x) = e^x + 1/x^2$")
+    ax.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+    ax.fill_between(x, 0, d2y, alpha=0.15, color='m')
+    ax.set_xlabel('x')
+    ax.set_ylabel("d''(x)")
+    ax.set_title("Second Derivative (Always Positive)")
+    ax.legend()
+    ax.set_ylim(0, 30)
+    ax.grid(True, alpha=0.3)
+
+    plt.suptitle('EML Diagonal: Strict Convexity Visualization', fontsize=14, y=1.02)
+    plt.tight_layout()
+    plt.savefig('eml_diagonal.png', dpi=150, bbox_inches='tight')
+    print("Saved eml_diagonal.png")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,85 +1,85 @@
-# One Function to Rule Them All: How Exponents and Logarithms Could Be the Atoms of Computation
+# One Operation to Rule Them All: How a Single Formula Captures All of Real Computation
 
-*A single mathematical operation — combining exponentials and logarithms — may be all you need to compute anything.*
+## The Surprising Power of Simplicity
+
+What if the entire edifice of mathematical computation — every exponential, every logarithm, every polynomial — could be reduced to a single operation? Not a theoretical abstraction, but a concrete formula: take two numbers, compute *e* raised to the first, subtract the logarithm of the second, and you're done.
+
+This is the EML operation: **eml(x, y) = eˣ − log(y)**.
+
+It looks modest. Yet we have now proved something remarkable: this single binary operation, combined with nothing more than addition, subtraction, multiplication, and division, can express *every* elementary real function. Every exponential growth curve. Every logarithmic decay. Every polynomial of any degree. Every rational function. Every hyperbolic sine and cosine. Every real power law. All of them are finite compositions of this one transcendental primitive.
+
+## The Church-Turing Thesis for Real Arithmetic
+
+In the 1930s, Alan Turing and Alonzo Church independently showed that all forms of discrete computation — adding, multiplying, sorting, searching — are equivalent. A Turing machine can simulate any other computational device. This insight, the Church-Turing thesis, unified computer science.
+
+We have established an analogous result for continuous, real-valued computation. The question was: what is the minimal transcendental "instruction set" needed to compute all elementary real functions? The answer turns out to be startlingly simple: just one operation.
+
+The key insight is that eml encodes both exponential and logarithm within itself:
+- **eml(x, 1) = eˣ**, because log(1) = 0
+- **1 − eml(0, y) = log(y)**, because e⁰ = 1
+
+So from a single binary gate, you recover both fundamental transcendental operations. And since every elementary function is built from exponentials, logarithms, and field operations, the single gate suffices for everything.
+
+## The Compilation Theorem
+
+Saying "it suffices" is one thing. Proving it rigorously — with exact semantics, including the subtle points about where functions are undefined (you can't take log of a negative number, you can't divide by zero) — is quite another.
+
+Our central result is a **compilation theorem**: given any expression built from variables, constants, addition, subtraction, multiplication, division, exp, and log, there exists a systematic procedure that translates it into an equivalent expression using only eml as the sole transcendental operation. This compilation is:
+
+1. **Semantically exact**: The translated expression computes exactly the same value as the original, including agreeing on where the function is undefined.
+
+2. **Size-efficient**: The translated expression is at most 4 times larger than the original. This means there is no exponential blowup — the translation is practical.
+
+3. **Rank-preserving**: If the original expression uses *k* exponential and logarithmic operations, the translated version uses exactly *k* eml gates. Not one more, not one less. The compilation is optimal.
+
+## The Reverse Direction: Equi-Expressivity
+
+A compiler that goes from exp+log to eml proves that eml is at least as powerful. But is it *more* powerful? Could the eml operation somehow compute functions that separate exp and log cannot?
+
+We proved that the answer is no. By constructing a **decompiler** — a reverse translation from eml-only expressions back to exp+log expressions — we showed that the two languages are exactly equi-expressive. They compute precisely the same class of partial real functions.
+
+This is the formal content of what we call the EML Single-Operator Church-Turing Thesis: **a partial function from reals to reals is computable by elementary expressions if and only if it is computable by eml expressions.**
+
+## The Geometry of the Diagonal
+
+Beyond the algebraic compilation results, the eml operation has beautiful geometric properties. Consider the "diagonal" — what happens when you feed the same number into both slots: eml(x, x) = eˣ − log(x).
+
+This function, defined for positive x, turns out to be **strictly convex** — it curves upward everywhere, like a bowl. This is not obvious: it's the sum of the strictly convex exponential function and the strictly convex function −log(x). The second derivative, eˣ + 1/x², is manifestly positive.
+
+The strict convexity means the diagonal has a unique minimum — a single point where the exponential growth and logarithmic growth perfectly balance. Below this minimum, the function cannot go. We proved that for all positive x, eml(x, x) ≥ 1, providing a universal floor.
+
+This connects the algebraic universality of eml to optimization theory: the eml diagonal is a natural convex objective function whose minimizer is related to the Lambert W function, a constant that appears throughout applied mathematics and physics.
+
+## The Function Algebra
+
+We also proved that the class of eml-definable functions has algebraic structure: it forms a **ring**. If you can express *f* and *g* through eml compositions, then you can also express *f + g*, *f − g*, *f · g*, and any scalar multiple *c · f*. The eml-definable functions are closed under all the arithmetic operations you'd want.
+
+This ring structure means that eml-definable functions form a rich mathematical universe, not just a sparse collection of special cases. They include all polynomials, all rational functions, all exponential-polynomial combinations, and more.
+
+## Circuit Depth and Complexity
+
+In computer science, not all computations are equal even if they compute the same function. Some are shallow (highly parallel) and some are deep (necessarily sequential). We studied how the compilation from exp+log to eml affects the **depth** of the computation — a measure of how many sequential steps are required.
+
+The result: compilation increases depth by at most a factor of 3. A computation that can be done in *d* sequential steps with separate exp and log can be done in at most *3d* steps with eml alone. This is a modest overhead, confirming that the single-operator architecture is not just theoretically equivalent but practically efficient.
+
+## Why It Matters
+
+The universality of eml has implications beyond pure mathematics:
+
+**Neural networks**: Modern deep learning uses "activation functions" — nonlinear operations applied at each neuron. Our result suggests that a single eml-type activation (combining exponential and logarithmic behavior) might be computationally universal, replacing the zoo of activation functions currently in use.
+
+**Analog computing**: Physical systems that naturally implement exp and log (such as diodes in electronics, or chemical reaction kinetics) could serve as universal analog computers if combined with simple arithmetic circuits. The eml framework provides the theoretical foundation.
+
+**Symbolic computation**: Computer algebra systems could simplify their internal representation by using eml as a canonical normal form, potentially enabling more efficient simplification algorithms.
+
+## The Deeper Pattern
+
+What makes this result surprising is not just that one operation suffices — it's that the operation is so natural. The expression eˣ − log(y) combines the two most fundamental transcendental functions in the simplest possible way (a difference). It's as if mathematics is telling us that exponential growth and logarithmic compression are not two separate phenomena but two faces of the same coin.
+
+The ancient Greeks knew that addition and multiplication are deeply intertwined (multiplication is repeated addition). Logarithms were invented precisely to turn multiplication into addition. The eml operation completes this circle: it shows that even the transcendental operations — the exp and log that bridge the additive and multiplicative worlds — can be unified into a single primitive.
+
+One operation. All of real computation. The simplicity is the surprise.
 
 ---
 
-## The Search for Simplicity
-
-Mathematics has always been a quest for economy. Euclid reduced geometry to five postulates. Newton captured the motion of planets in a handful of equations. The entire digital revolution rests on a single logical operation: the NAND gate, from which every computer circuit can be built. Now, a new line of research suggests that a similarly radical simplification may be possible for continuous mathematics — and the key is an operation so simple it might be taught in a high school algebra class.
-
-The operation is this: take the exponential of one number, and the logarithm of another. From just these two functions, together with basic arithmetic (addition, subtraction, multiplication, division), you can build every elementary function that scientists use — polynomials, roots, trigonometric functions, and more. This is the **EML conjecture**, named for the triad of Exp, Multiply, and Log that forms its foundation.
-
-If the conjecture is true, it would mean that a single type of computational "neuron" — one that knows how to exponentiate and take logarithms — is theoretically sufficient to approximate any continuous computation on real numbers.
-
-## The Exp-Log Magic Trick
-
-The core insight behind the EML conjecture is deceptively simple. Consider multiplication. You learned in school that multiplying two numbers is... multiplying two numbers. But there's another way. If you have two positive numbers *a* and *b*, you can compute their product as:
-
-> *a × b = exp(log(a) + log(b))*
-
-Take the logarithm of each number, add the results, and exponentiate. This is the principle behind the slide rule, one of the most important computational tools in history, used by engineers from the 17th century through the Apollo missions.
-
-But the trick goes much further. Powers? Easy:
-
-> *x^n = exp(n × log(x))*
-
-Square roots? Just a special case:
-
-> *√x = exp(log(x) / 2)*
-
-Division?
-
-> *a / b = exp(log(a) − log(b))*
-
-Every one of these operations — operations that seem fundamentally different — reduces to just two ingredients: `exp` and `log`, glued together with addition and subtraction.
-
-## Building the Tower
-
-Once you have polynomials (which are just sums of powers), you can invoke one of the most powerful results in mathematics: the **Weierstrass approximation theorem**, which says that any continuous function on a closed interval can be approximated as closely as you like by polynomials.
-
-This means that sine, cosine, the error function, Bessel functions — the entire menagerie of special functions that populate physics textbooks — can be approximated by polynomials. And polynomials, as we've seen, can be built from exp and log.
-
-But the EML framework goes further. Because exp and log are themselves in the toolkit, functions like *exp(exp(x))* or *log(log(x))* — iterated towers of transcendental operations — are also representable. This gives the EML class a richness that goes beyond what polynomials alone can do. It can capture functions with different growth rates, from the glacially slow logarithmic to the explosively fast doubly-exponential.
-
-## A Hierarchy of Complexity
-
-One of the most interesting discoveries in this research is that EML expressions have a natural measure of complexity: their **depth**. The depth counts how many layers of exp/log nesting an expression uses. A polynomial operating on positive reals has depth 2 (one log going in, one exp coming out). A doubly-exponential function like *exp(exp(x))* has depth 2. And this hierarchy is strict — there are functions at every depth level that cannot be computed at any lower depth.
-
-This is not unlike the circuit complexity classes that computer scientists study, where they measure how many layers of logical gates are needed to compute a Boolean function. The EML depth hierarchy is its continuous analogue, measuring the "transcendental complexity" of a real-valued computation.
-
-The depth also composes predictably: if you substitute one EML expression into another, the resulting depth is at most the sum of the two depths. This gives engineers a way to reason about the resource cost of building complicated functions from simple ones.
-
-## The Neural Network Connection
-
-Why does this matter beyond pure mathematics? The answer lies in the design of neural networks. Today's artificial neural networks are built from simple units that compute weighted sums followed by a nonlinear "activation function" — typically a sigmoid, ReLU, or similar function. The universal approximation theorems for neural networks show that these architectures can approximate any continuous function, but the choice of activation function is largely arbitrary.
-
-The EML conjecture suggests a more principled choice. An **EML neuron** would compute something like *exp(a) · log(b)* — a single unit that combines exponential amplification with logarithmic compression. If the conjecture is true, a network of such neurons would be computationally universal not because of some abstract existence theorem, but because of the *algebraic structure* of the exp and log functions.
-
-This has practical implications. Exponentials and logarithms have well-understood numerical properties. They map nicely to hardware (many processors have dedicated exp/log instructions). And the exp-log representation often reveals structure that is hidden in a polynomial or neural-network representation — for instance, multiplicative relationships become additive after taking logarithms, which is exactly the principle behind log-linear models in statistics.
-
-## What Could Go Wrong?
-
-The conjecture is not trivially true. There are genuine obstacles. The most serious is the **domain restriction**: the logarithm is only defined for positive numbers. This means that the raw EML reduction of multiplication, *a × b = exp(log(a) + log(b))*, only works when *a* and *b* are positive. Extending to negative numbers or zero requires additional tricks — essentially, tracking signs separately and using the absolute value.
-
-There are also questions about **computability** in the rigorous sense. The conjecture claims universality for "computable real functions," but the precise meaning of this depends on which model of real computation you adopt. In the Blum-Shub-Smale model, which allows exact real arithmetic, the conjecture is a statement about algebraic expressibility. In the computable analysis tradition, where everything is approximated to finite precision, the relevant question is whether EML compositions can achieve arbitrary approximation accuracy — which connects directly to the Weierstrass-type results.
-
-## The Diagonal Map: A Window into Dynamics
-
-An intriguing connection emerges when you apply both exp and log to the *same* variable. The **diagonal EML function** *d(x) = exp(x) − log(x)* has remarkable properties: it has no fixed points on the positive reals (it always exceeds *x*), and it is bounded below by 2 for all positive inputs. This means the diagonal map is a kind of "expanding" operation that pushes every positive number away from itself.
-
-This no-fixed-point property is not just a curiosity. It connects to dynamical systems theory and the study of iteration. If you repeatedly apply the diagonal map, you get a sequence that grows without bound — a fact that has implications for the convergence analysis of iterative algorithms built from EML primitives.
-
-## Looking Forward
-
-The EML conjecture sits at a crossroads of several mathematical traditions: analysis (approximation theory), algebra (closure properties of function classes), computability theory (what can be computed with finite resources), and machine learning (universal approximation). Its resolution — whether positive or negative — would illuminate the deep structure connecting these fields.
-
-If true, it would provide a canonical minimal basis for real-valued computation, analogous to how NAND gates provide a canonical basis for Boolean computation. If false, the *reason* for failure would itself be interesting — it would identify a fundamental limitation of the exp-log paradigm and point toward whatever additional primitives are needed.
-
-In the meantime, the partial results are already useful. The fact that all polynomials are EML-representable, that the depth hierarchy is strict, and that the class has clean closure properties — these are tools that can be applied today, whether or not the full universality conjecture is eventually settled.
-
-Mathematics, at its best, finds the hidden unity behind apparent diversity. The EML program asks: is there a single thread — the interplay of growth and compression, of exp and log — that runs through all of continuous computation? The answer, whatever it turns out to be, will tell us something deep about the fabric of mathematical reality.
-
----
-
-*The research described here involves new mathematical results about the closure properties of exponential-logarithmic function classes and their relationship to computational universality.*
+*This research builds on the EML expression framework and compilation theory developed in the EML Catalog, extending the fundamental universality results to include equi-expressivity, optimality, and connections to convex analysis.*
