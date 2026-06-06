@@ -2149,6 +2149,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: L-Function Oracle Theory\n\n## Synthesis\n\nThis cycle established a rigorous algebraic foundation for L-function oracle theory, proving 23 theorems across two modules. The key discovery is that **multiplicativity is the information-theoretic mechanism** underlying L-function power: the zero locus is a divisibility ideal, non-vanishing at primes implies global non-vanishing, and the prime zero set generates the entire zero locus.\n\nThe most promising cross-domain connection emerged between oracle theory (idempotent projections, truth sets, diagonal separation) and multiplicative number theory (completely multiplicative functions, zero loci, Euler products). The support projection bridges these domains: it converts a multiplicative function into an idempotent oracle whose truth set encodes the function's support. This bridge opens the door to importing the full machinery of fixed-point theory (from the Catalog's `Computation/OmniscientOracle.lean`) into the multiplicative setting.\n\nThe highest breakthrough potential lies in Direction 1 (Character Orthogonality), because formalizing character orthogonality in Lean 4 would unlock Dirichlet's theorem on primes in arithmetic progressions \u2014 one of the crown jewels of analytic number theory \u2014 as a formal theorem. The algebraic infrastructure (completely multiplicative functions, zero propagation, non-vanishing extraction) is now in place; what remains is the group-theoretic character theory.\n\n---\n\n### Direction 1: Character Orthogonality and Dirichlet's Theorem\n\n**Conjecture**: For a finite abelian group G and its dual group \u011c, the orthogonality relations \u2211_{\u03c7 \u2208 \u011c} \u03c7(g) = |G| \u00b7 \u03b4(g, e) can be formalized in Lean 4 using Mathlib's `ZMod` and `AddChar`/`MulChar` infrastructure, and used to derive Dirichlet's theorem on primes in arithmetic progressions (contingent on L(1, \u03c7) \u2260 0 for non-principal \u03c7).\n\n**Test**: Define Dirichlet characters as `MulChar (ZMod n) \u2102`, prove the orthogonality sum formula, and derive the equidistribution of primes in arithmetic progressions assuming the non-vanishing of L(1, \u03c7).\n\n**Impact**: If successful, this would be the first full formalization of Dirichlet's theorem connecting L-function non-vanishing to prime distribution. If the orthogonality formalization fails (due to missing Mathlib API), it identifies a concrete gap in the formal library.\n\n**Catalog References**: `Novelty/LFunctionOracle.lean` (ComplMult, non-vanishing extraction), `Catalog/Computation/OmniscientOracle.lean` (oracle framework)\n\n**Proof Strategy**: \n1. Define Dirichlet characters as `MulChar (ZMod n) \u2102` \n2. Prove orthogonality: \u2211_{a : ZMod n} \u03c7(a) \u00b7 \u03c8(a)\u207b\u00b9 = n \u00b7 \u03b4(\u03c7, \u03c8) using Mathlib's `MulChar.sum_eq_zero_of_ne_one`\n3. Define the Dirichlet L-function as a formal series\n4. State the non-vanishing theorem L(1, \u03c7) \u2260 0 as an axiom and derive equidistribution\n\n**Domain Bridges**: Number Theory \u2194 Harmonic Analysis (character sums are Fourier transforms on finite groups)\n\n**Lineage**: Builds on `ComplMult.nonvanishing_of_prime_nonvanishing` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Oracle Complexity Classes and Relativized Separation\n\n**Conjecture**: The classes P^O, NP^O, and coNP^O (relativized to an oracle O that evaluates a completely multiplicative function) satisfy P^O \u228a NP^O when the multiplicative function has infinitely many prime zeros, because the factoring problem is in NP^O but (conjecturally) not in P^O.\n\n**Test**: Define P^O and NP^O as sets of languages decidable/verifiable in polynomial time with oracle access. Prove that factoring is in NP^O for any multiplicative oracle O (the factors are witnesses). Attempt to prove a separation using the diagonal method from our `oracle_family_incomplete` theorem.\n\n**Impact**: A formal relativized separation P^O \u2260 NP^O would establish that oracle access to L-functions doesn't trivialize NP. This would formalize the intuition that \"L-functions are powerful but not omnipotent.\"\n\n**Catalog References**: `Novelty/OracleHierarchy.lean` (oracle_family_incomplete, query_pigeonhole), `Catalog/MachineLearning/Hypercomputation.lean` (oracle_diagonal_theorem)\n\n**Proof Strategy**: \n1. Define polynomial-time oracle Turing machines in Lean 4 (or use an abstract encoding)\n2. Define P^O and NP^O as classes of decision problems\n3. Show factoring \u2208 NP^O (witnesses are factor pairs)\n4. Use a counting argument: P^O machines make poly(n) oracle calls, each returning O(1) bits, so P^O \u2286 P/poly, and diagonalize against P/poly\n\n**Domain Bridges**: Computational Complexity \u2194 Number Theory (L-functions as oracles for complexity classes)\n\n**Lineage**: Extends `oracle_family_incomplete` and `query_pigeonhole` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Euler Product Convergence in Lean 4\n\n**Conjecture**: The Euler product \u220f_p (1 - f(p)/p^s)^{-1} converges absolutely for Re(s) > 1 when f is a bounded completely multiplicative function, and its value equals the Dirichlet series \u2211_n f(n)/n^s.\n\n**Test**: Formalize the Euler product as a `HasProd` statement in Mathlib. Prove convergence using the comparison test with \u2211 1/n^\u03c3 for \u03c3 > 1. Verify the identity L(s, \u03c7) = \u220f_p (1 - \u03c7(p)p^{-s})^{-1} as a formal equality of infinite products and series.\n\n**Impact**: This would provide the first formal connection between the algebraic oracle framework (ComplMult) and the analytic L-function theory. It would enable formal statements about the Riemann zeta function's Euler product.\n\n**Catalog References**: `Novelty/LFunctionOracle.lean` (ComplMult, prime_power_value)\n\n**Proof Strategy**: \n1. Define the partial Euler products \u220f_{p \u2264 N} (1 - f(p)/p^s)^{-1}\n2. Expand each factor as a geometric series: (1 - x)^{-1} = \u2211 x^k\n3. Show the product of geometric series equals the sum over smooth numbers\n4. Take N \u2192 \u221e and show the smooth number sums converge to the full Dirichlet series\n5. Use `HasProd` and `HasSum` from Mathlib's topology library\n\n**Domain Bridges**: Algebra (multiplicative functions) \u2194 Analysis (infinite products and series)\n\n**Lineage**: Directly extends `ComplMult.prime_power_value` \u2014 the identity f(p^k) = f(p)^k is what makes each Euler factor a geometric series.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Tropical L-Functions and Min-Plus Oracle Theory\n\n**Conjecture**: There exists a meaningful \"tropical L-function\" defined over the min-plus semiring (\u211d \u222a {\u221e}, min, +) where the Euler product becomes a tropical product (sum of min-plus series). The zeros of the tropical L-function correspond to tropical roots (non-differentiability points), and these tropical zeros approximate the locations of classical L-function zeros.\n\n**Test**: Define the tropicalization of a Dirichlet series as val(\u2211 a_n/n^s) = min_n(val(a_n) + s\u00b7log n). Compute tropical zeros for \u03b6(s) and compare with known zero locations. Prove that the tropical Euler product identity holds in the min-plus semiring.\n\n**Impact**: If tropical zeros approximate classical zeros, this would provide a new computational approach to the Riemann Hypothesis via tropical geometry. If the approximation fails, it reveals which aspects of L-function theory are inherently non-tropical.\n\n**Catalog References**: `Catalog/Tropical/` (tropical optimization framework), `Novelty/LFunctionOracle.lean` (ComplMult framework)\n\n**Proof Strategy**: \n1. Define the min-plus semiring in Lean 4\n2. Define tropical Dirichlet series as functions \u211d \u2192 \u211d \u222a {\u221e}\n3. Prove the tropical Euler product identity: tropicalization of products equals min-plus sum of tropicalizations\n4. Compute tropical zeros as corners of piecewise-linear functions\n5. Compare with numerical data on Riemann zeros\n\n**Domain Bridges**: Number Theory \u2194 Tropical Geometry (tropicalization of L-functions)\n\n**Lineage**: Bridges the `Tropical/` catalog with `Novelty/LFunctionOracle.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Squarefree Density and Multiplicative Oracle Efficiency\n\n**Conjecture**: The density of squarefree numbers (6/\u03c0\u00b2) determines the \"efficiency\" of a multiplicative oracle: the fraction of inputs on which prime values alone suffice to determine the function value. For general inputs (non-squarefree), the oracle needs prime *power* values, which require additional computation.\n\n**Test**: Prove that the natural density of squarefree numbers is 6/\u03c0\u00b2 = 1/\u03b6(2) in Lean 4. Use this to quantify: for a random n \u2208 [1, N], the probability that F.f(n) is determined by {F.f(p) : p prime, p | n} alone is asymptotically 6/\u03c0\u00b2.\n\n**Impact**: This connects the abstract squarefree determination theorem to a concrete efficiency measure. It also connects to the Riemann zeta function via \u03b6(2) = \u03c0\u00b2/6, bridging our oracle theory to the analytic theory of \u03b6.\n\n**Catalog References**: `Novelty/OracleHierarchy.lean` (squarefree_determined), `Catalog/Algebra/Basic.lean`\n\n**Proof Strategy**: \n1. Use inclusion-exclusion: the probability that p\u00b2 | n for a random n \u2208 [1, N] is ~1/p\u00b2\n2. By Euler product: \u220f_p (1 - 1/p\u00b2) = 1/\u03b6(2) = 6/\u03c0\u00b2\n3. Formalize the density computation using Mathlib's `Finset.filter` and asymptotic analysis\n4. Connect to the squarefree determination theorem\n\n**Domain Bridges**: Multiplicative Oracle Theory \u2194 Analytic Number Theory (density estimates via \u03b6-values)\n\n**Lineage**: Directly extends `ComplMult.squarefree_determined` from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0817",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a026ded2",
+    "status": "available",
+    "timestamp": "2026-06-06T08:17:50.595703+00:00",
+    "title": "Rigorous algebraic foundation for L-function oracle the"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -2928,7 +2943,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
   {
-    "consumed_by_exp_id": "1cfbcab2",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -2938,7 +2953,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -3303,7 +3318,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
-    "consumed_by_exp_id": "ac3f9a7e",
+    "consumed_by_exp_id": "",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domains": [
       "Algebra",
@@ -3313,7 +3328,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.181414+00:00",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
@@ -3573,7 +3588,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
-    "consumed_by_exp_id": "97879ae4",
+    "consumed_by_exp_id": "fdd336e6",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -4802,7 +4817,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
-    "consumed_by_exp_id": "72b15f5e",
+    "consumed_by_exp_id": "",
     "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
     "domains": [
       "Novelty",
@@ -4812,7 +4827,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.662181+00:00",
     "title": "Speculative: Category Theory as the DNA of Mathematics"
   },

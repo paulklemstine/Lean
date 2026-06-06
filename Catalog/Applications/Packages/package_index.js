@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a026ded2",
     "filename": "the_l_function_oracle_what_if_we_could_compute_l_f.json",
     "pkg_num": 400,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.19616,
     "title": "L-Function Oracle Theory: Multiplicative Extraction, Oracle Hierarchies, and Information-Theoretic Barriers"
   },
   {
@@ -12751,8 +12751,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "the_l_function_oracle_what_if_we_could_compute_l_f",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.19616,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "L-Function Oracle Theory: Multiplicative Extraction, Oracle Hierarchies, and Information-Theoretic Barriers"
     }
