@@ -1170,6 +1170,16 @@
       "theorem_count": 4,
       "timestamp": "2026-06-05T23:42:46",
       "title": "Sonic Mathematics: Counterpoint as Category Theory"
+    },
+    {
+      "cycle_id": "ea6b6347",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tropical Activation Complexes\n\n## Synthesis\n\nThis cycle established the **Tropical Activation Complex (TAC)** as a rigorous mathematical framework linking neural network architect",
+      "quality_score": 0.43479999999999996,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-06T00:17:26",
+      "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
     }
   ],
   "entries": [
@@ -1215,7 +1225,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-05T23:42:46",
+  "last_updated": "2026-06-06T00:17:26",
   "open_questions": [],
   "research_threads": {
     "Algebra": [
@@ -1227,12 +1237,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "396279f8",
-        "quality": 0.35840000000000005,
-        "theorems": 4,
-        "title": "EML Differential Algebra: Closure Properties"
-      },
       {
         "cycle_id": "30139a0b",
         "quality": 0.34744,
@@ -1286,6 +1290,12 @@
         "quality": 0.46984000000000004,
         "theorems": 5,
         "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+      },
+      {
+        "cycle_id": "ea6b6347",
+        "quality": 0.43479999999999996,
+        "theorems": 6,
+        "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
       }
     ],
     "Bridges": [

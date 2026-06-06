@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "8d7a2b01",
     "filename": "speculative_mathematics_as_an_evolving_ecosystem.json",
     "pkg_num": 397,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.278,
     "title": "Mathematical Theory Ecosystems: Fitness, Competition, and the Competitive Exclusion Principle"
   },
   {
@@ -12664,8 +12664,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "speculative_mathematics_as_an_evolving_ecosystem",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.278,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Mathematical Theory Ecosystems: Fitness, Competition, and the Competitive Exclusion Principle"
     }
