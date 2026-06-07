@@ -1,228 +1,207 @@
-#!/usr/bin/env python3
 """
 Causal Integration Algebra — Core Algorithms
 
-Type-hinted implementations of the key algorithms from the
-Causal Integration framework for Integrated Information Theory.
+Implements the key algorithms for computing integrated information Φ
+and related quantities on causal systems (weighted directed graphs).
+
+All functions are type-hinted and self-contained.
 """
 
-from typing import List, Tuple, Set, Optional, Dict
-from itertools import combinations
-import numpy as np
+from typing import List, Tuple, Optional
+import itertools
 
 
-class CausalNetwork:
-    """A weighted directed graph representing a causal system.
-
-    Attributes:
-        n: Number of nodes (components)
-        weights: n×n non-negative weight matrix (w[i][j] = causal influence i→j)
-    """
-
-    def __init__(self, weights: np.ndarray) -> None:
-        assert weights.ndim == 2
-        assert weights.shape[0] == weights.shape[1]
-        assert np.all(weights >= 0), "Weights must be non-negative"
-        self.n: int = weights.shape[0]
-        self.weights: np.ndarray = weights.copy()
-
-    @classmethod
-    def complete(cls, n: int, weight: float = 1.0) -> "CausalNetwork":
-        """Create a complete graph with uniform weight (no self-loops)."""
-        W = np.full((n, n), weight) - weight * np.eye(n)
-        return cls(W)
-
-    @classmethod
-    def zero(cls, n: int) -> "CausalNetwork":
-        """Create the zero network (no connections)."""
-        return cls(np.zeros((n, n)))
-
-    @classmethod
-    def block_diagonal(cls, blocks: List[np.ndarray]) -> "CausalNetwork":
-        """Create a block-diagonal network from component weight matrices."""
-        n = sum(b.shape[0] for b in blocks)
-        W = np.zeros((n, n))
-        offset = 0
-        for block in blocks:
-            k = block.shape[0]
-            W[offset:offset+k, offset:offset+k] = block
-            offset += k
-        return cls(W)
-
-    def is_symmetric(self) -> bool:
-        """Check if the network has symmetric weights."""
-        return np.allclose(self.weights, self.weights.T)
-
-
-def cross_weight(net: CausalNetwork, S: Set[int]) -> float:
-    """Compute the total directed weight from S to its complement.
-
-    Algorithm: Sum w[i][j] for all i ∈ S, j ∉ S.
-    Time complexity: O(n²)
-
+def create_causal_system(n: int, weights: List[List[float]]) -> List[List[float]]:
+    """Create and validate a causal system (weight matrix).
+    
     Args:
-        net: The causal network
-        S: A subset of nodes {0, ..., n-1}
-
+        n: Number of elements
+        weights: n×n matrix of causal weights (nonneg, zero diagonal)
+    
     Returns:
-        The cross-weight from S to Sᶜ
+        Validated weight matrix
+    
+    Raises:
+        ValueError: If weights violate causal system axioms
     """
-    S_comp = set(range(net.n)) - S
-    return sum(net.weights[i, j] for i in S for j in S_comp)
+    if len(weights) != n or any(len(row) != n for row in weights):
+        raise ValueError(f"Weight matrix must be {n}×{n}")
+    for i in range(n):
+        if weights[i][i] != 0:
+            raise ValueError(f"Self-weight must be zero: w[{i}][{i}] = {weights[i][i]}")
+        for j in range(n):
+            if weights[i][j] < 0:
+                raise ValueError(f"Weights must be nonneg: w[{i}][{j}] = {weights[i][j]}")
+    return [row[:] for row in weights]
 
 
-def cut_value(net: CausalNetwork, S: Set[int]) -> float:
-    """Compute the bidirectional cut value of partition (S, Sᶜ).
-
-    cut(S) = cross(S → Sᶜ) + cross(Sᶜ → S)
-
-    This measures the total causal flow disrupted by partitioning at S.
-
+def flow_between(
+    weights: List[List[float]], 
+    a_set: set, 
+    b_set: set
+) -> float:
+    """Compute total causal flow from set A to set B.
+    
     Args:
-        net: The causal network
-        S: A subset of nodes
-
+        weights: n×n weight matrix
+        a_set: Source vertex set
+        b_set: Target vertex set
+    
     Returns:
-        The bidirectional cut value
+        Sum of w(i,j) for i in A, j in B
     """
-    return cross_weight(net, S) + cross_weight(net, set(range(net.n)) - S)
+    return sum(weights[i][j] for i in a_set for j in b_set)
 
 
-def total_weight(net: CausalNetwork) -> float:
-    """Sum of all edge weights in the network.
-
-    Returns:
-        Total weight ∑_{i,j} w[i][j]
-    """
-    return float(np.sum(net.weights))
-
-
-def compute_phi(net: CausalNetwork) -> Tuple[float, Optional[Set[int]]]:
-    """Compute integrated information Φ (minimum non-trivial cut).
-
-    Algorithm: Exhaustive enumeration over all 2^n - 2 non-trivial subsets.
-    Time complexity: O(2^n · n²)
-
-    For large n, use approximate algorithms (e.g., spectral methods).
-
+def cross_info(weights: List[List[float]], a_set: set, n: int) -> float:
+    """Compute cross-information of bipartition (A, A^c).
+    
     Args:
-        net: The causal network (n ≥ 2)
-
+        weights: n×n weight matrix
+        a_set: One side of the bipartition
+        n: Total number of elements
+    
     Returns:
-        Tuple of (Φ value, minimizing partition set)
+        flow(A, A^c) + flow(A^c, A)
     """
-    assert net.n >= 2, "Need at least 2 nodes for Φ"
-    best_cut = float('inf')
-    best_S: Optional[Set[int]] = None
-
-    for size in range(1, net.n):
-        for combo in combinations(range(net.n), size):
-            S = set(combo)
-            cv = cut_value(net, S)
-            if cv < best_cut:
-                best_cut = cv
-                best_S = S
-
-    return best_cut, best_S
+    complement = set(range(n)) - a_set
+    return flow_between(weights, a_set, complement) + flow_between(weights, complement, a_set)
 
 
-def is_block_diagonal(net: CausalNetwork, S: Set[int]) -> bool:
-    """Check if network is block-diagonal w.r.t. partition (S, Sᶜ).
-
-    Returns True iff no edges cross between S and Sᶜ in either direction.
-    """
-    S_comp = set(range(net.n)) - S
-    for i in S:
-        for j in S_comp:
-            if net.weights[i, j] != 0 or net.weights[j, i] != 0:
-                return False
-    return True
-
-
-def weight_decomposition(net: CausalNetwork, S: Set[int]) -> Dict[str, float]:
-    """Decompose total weight into cut + internal components.
-
-    Theorem: totalWeight = cutValue(S) + internal(S) + internal(Sᶜ)
-
+def compute_phi(weights: List[List[float]], n: int) -> Tuple[float, Optional[set]]:
+    """Compute integrated information Φ (minimum bipartition cost).
+    
+    Uses brute-force enumeration over all non-trivial bipartitions.
+    Time complexity: O(2^n · n^2)
+    
+    Args:
+        weights: n×n weight matrix
+        n: Number of elements
+    
     Returns:
-        Dictionary with 'total', 'cut', 'internal_S', 'internal_Sc'
+        (phi_value, minimizing_partition) where partition is the set A
+        achieving the minimum, or None if n ≤ 1
     """
-    S_comp = set(range(net.n)) - S
-    tw = total_weight(net)
-    cv = cut_value(net, S)
-    iw_S = sum(net.weights[i, j] for i in S for j in S)
-    iw_Sc = sum(net.weights[i, j] for i in S_comp for j in S_comp)
+    if n <= 1:
+        return (0.0, None)
+    
+    best_phi = float('inf')
+    best_partition = None
+    
+    # Enumerate all non-empty proper subsets (up to complement symmetry)
+    for size in range(1, n):
+        for subset in itertools.combinations(range(n), size):
+            a_set = set(subset)
+            ci = cross_info(weights, a_set, n)
+            if ci < best_phi:
+                best_phi = ci
+                best_partition = a_set
+    
+    return (best_phi, best_partition)
 
-    return {
-        'total': tw,
-        'cut': cv,
-        'internal_S': iw_S,
-        'internal_Sc': iw_Sc,
-        'decomposition_holds': abs(tw - (cv + iw_S + iw_Sc)) < 1e-10
-    }
+
+def compute_total_weight(weights: List[List[float]], n: int) -> float:
+    """Compute total weight of all edges."""
+    return sum(weights[i][j] for i in range(n) for j in range(n))
 
 
-def find_decomposition(net: CausalNetwork) -> Optional[Set[int]]:
-    """Find a non-trivial partition with zero cut (if exists).
+def symmetrize(weights: List[List[float]], n: int) -> List[List[float]]:
+    """Symmetrize a causal system: w_sym(i,j) = (w(i,j) + w(j,i)) / 2."""
+    return [[(weights[i][j] + weights[j][i]) / 2 for j in range(n)] for i in range(n)]
 
-    If Φ = 0, such a partition exists by the Disconnected theorem.
 
+def scale(weights: List[List[float]], n: int, c: float) -> List[List[float]]:
+    """Scale all weights by constant c ≥ 0."""
+    if c < 0:
+        raise ValueError("Scale factor must be nonneg")
+    return [[c * weights[i][j] for j in range(n)] for i in range(n)]
+
+
+def direct_sum(
+    w1: List[List[float]], n1: int,
+    w2: List[List[float]], n2: int
+) -> Tuple[List[List[float]], int]:
+    """Compute direct sum of two causal systems.
+    
     Returns:
-        A set S with cutValue(S) = 0, or None if network is integrated.
+        (combined_weights, n1 + n2)
     """
-    for size in range(1, net.n):
-        for combo in combinations(range(net.n), size):
-            S = set(combo)
-            if cut_value(net, S) == 0:
-                return S
-    return None
+    n = n1 + n2
+    result = [[0.0] * n for _ in range(n)]
+    for i in range(n1):
+        for j in range(n1):
+            result[i][j] = w1[i][j]
+    for i in range(n2):
+        for j in range(n2):
+            result[n1 + i][n1 + j] = w2[i][j]
+    return (result, n)
 
 
-def phi_spectrum(net: CausalNetwork) -> List[Tuple[Set[int], float]]:
-    """Compute cut values for ALL non-trivial partitions, sorted.
-
-    Returns the full "integration spectrum" — useful for understanding
-    the landscape of possible decompositions.
-
+def compute_inter_part_flow(
+    weights: List[List[float]], 
+    n: int, 
+    assignment: List[int]
+) -> float:
+    """Compute inter-part flow for a k-partition.
+    
+    Args:
+        weights: n×n weight matrix
+        n: Number of elements
+        assignment: List mapping each element to its part (0-indexed)
+    
     Returns:
-        List of (partition, cut_value) sorted by cut value ascending.
+        Total weight of edges between different parts
     """
-    results: List[Tuple[Set[int], float]] = []
-    for size in range(1, net.n):
-        for combo in combinations(range(net.n), size):
-            S = set(combo)
-            results.append((S, cut_value(net, S)))
-
-    results.sort(key=lambda x: x[1])
-    return results
+    return sum(
+        weights[i][j]
+        for i in range(n) for j in range(n)
+        if assignment[i] != assignment[j]
+    )
 
 
-if __name__ == "__main__":
-    # Example usage
-    print("=== Causal Integration Algebra ===\n")
+def compute_integration_spectrum(
+    weights: List[List[float]], n: int, max_k: Optional[int] = None
+) -> List[float]:
+    """Compute the integration spectrum [Φ_2, Φ_3, ..., Φ_k].
+    
+    Φ_k = minimum inter-part flow over all surjective k-partitions.
+    Warning: Exponential in n and k. Only feasible for small systems.
+    
+    Args:
+        weights: n×n weight matrix
+        n: Number of elements
+        max_k: Maximum k to compute (default: n)
+    
+    Returns:
+        List of Φ_k values for k = 2, 3, ..., max_k
+    """
+    if max_k is None:
+        max_k = n
+    max_k = min(max_k, n)
+    
+    spectrum = []
+    for k in range(2, max_k + 1):
+        best = float('inf')
+        # Enumerate all surjective assignments of n elements to k parts
+        for assignment in itertools.product(range(k), repeat=n):
+            # Check surjectivity
+            if len(set(assignment)) < k:
+                continue
+            flow = compute_inter_part_flow(weights, n, list(assignment))
+            best = min(best, flow)
+        spectrum.append(best)
+    
+    return spectrum
 
-    # Example 1: Complete graph
-    G = CausalNetwork.complete(4)
-    phi_val, phi_cut = compute_phi(G)
-    print(f"Complete K₄: Φ = {phi_val}, cut = {phi_cut}")
 
-    # Example 2: Disconnected
-    G2 = CausalNetwork.block_diagonal([
-        np.array([[0, 1], [1, 0]]),
-        np.array([[0, 2], [2, 0]])
-    ])
-    phi_val2, _ = compute_phi(G2)
-    print(f"Block-diagonal: Φ = {phi_val2}")
-    dec = find_decomposition(G2)
-    print(f"  Disconnection at: {dec}")
-
-    # Example 3: Integration spectrum
-    G3 = CausalNetwork(np.array([
-        [0, 3, 1, 0],
-        [2, 0, 0, 1],
-        [0, 1, 0, 5],
-        [1, 0, 4, 0]
-    ], dtype=float))
-    print(f"\nIntegration spectrum for 4-node network:")
-    for S, cv in phi_spectrum(G3)[:5]:
-        print(f"  {S}: cut = {cv:.1f}")
+def is_disconnected(weights: List[List[float]], n: int) -> Tuple[bool, Optional[set]]:
+    """Check if a causal system is disconnected.
+    
+    Returns:
+        (is_disconnected, witnessing_partition) where partition is the set A
+        with cross_info(A) = 0, or None if connected.
+    """
+    phi, partition = compute_phi(weights, n)
+    if phi == 0 and partition is not None:
+        return (True, partition)
+    return (False, None)
