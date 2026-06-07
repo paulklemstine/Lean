@@ -2449,6 +2449,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Topology of Argumentation\n\n## Synthesis\n\nThis research cycle established a rigorous connection between Dung's argumentation frameworks and algebraic topology by proving that conflict-free sets form a simplicial complex and deriving structural theorems about its relationship to argumentation semantics. The most significant discovery is the **topological-semantic gap**: the conflict-free complex (topology) is invariant under reversing attack directions, while the preferred extensions (semantics) are not. This means the topology captures only the symmetric conflict structure, not the asymmetric power dynamics.\n\nThe disproof of the Euler characteristic conjecture is informative: it shows that no simple formula relates the topological invariant \u03c7(K(AF)) to the extension count. However, the cone theorem suggests that frameworks with isolated arguments have trivial topology, concentrating topological complexity in the \"contested\" subframework. The most promising cross-domain connection is to Mathlib's theory of simplicial complexes and to the independent set complex literature from combinatorial topology, particularly the Lov\u00e1sz-Kozlov program connecting chromatic numbers to independence complex topology.\n\nThe highest breakthrough potential lies in Direction 1 (persistent homology), which would create a temporal dimension to argumentation topology \u2014 tracking how the \"shape\" of a debate changes as arguments are added or removed. This connects to applied topology (TDA) and could have practical applications in tracking the evolution of real-world debates.\n\n---\n\n### Direction 1: Persistent Homology of Evolving Argumentation Frameworks\n\n**Conjecture**: Given a sequence of argumentation frameworks AF_0 \u2282 AF_1 \u2282 ... \u2282 AF_n (where arguments are progressively added), the persistence diagram of the filtered conflict-free complex detects \"robust\" structural features \u2014 holes that persist across many additions \u2014 and these correspond to semantically meaningful debate cycles. Specifically, a 1-cycle with persistence \u2265 k indicates an odd-length attack cycle that persists through at least k argument additions.\n\n**Test**: Implement the filtered complex for growing frameworks on 10\u201320 arguments. Compute persistence diagrams using standard TDA libraries. Check whether long-persistence 1-cycles correspond to odd attack cycles (which are known to create multiple preferred extensions in Dung's theory).\n\n**Impact**: If true, this creates a practical tool for analyzing real-world debates: persistence diagrams would summarize the \"shape history\" of a debate, identifying robust structural features that aren't artifacts of the argument ordering. If false, it reveals that topological persistence and semantic persistence are fundamentally different notions \u2014 also valuable.\n\n**Catalog References**: `Bridges/SubdIntegralityGap.lean` (independent set methods), `EML/AdvancedTheory.lean` (lattice-theoretic constructions)\n\n**Proof Strategy**: Define a filtration on K(AF) by argument addition time. Use the simplicial complex property (Theorem 3.1) to show each inclusion K(AF_i) \u21aa K(AF_{i+1}) is a simplicial map. Apply the persistent homology functor. For the cycle correspondence, use the odd-cycle characterization of preferred extensions.\n\n**Domain Bridges**: Algebraic Topology (persistence theory) \u2194 AI (argumentation semantics) \u2194 Applied Mathematics (topological data analysis)\n\n**Lineage**: Extends the simplicial complex structure proved in this cycle. Builds on the direction invariance theorem (which constrains what persistent features can detect).\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Betti Numbers and Extension Counting\n\n**Conjecture**: For any argumentation framework AF = (A, R) where the conflict graph G(AF) is triangle-free (no three arguments are pairwise in conflict), the first Betti number \u03b2_1(K(AF)) provides a lower bound on the number of preferred extensions: |preferred extensions| \u2265 \u03b2_1(K(AF)) + 1. Intuitively, each independent 1-cycle in the conflict-free complex forces a \"choice\" that creates distinct extensions.\n\n**Test**: Enumerate all argumentation frameworks on \u2264 7 arguments with triangle-free conflict graphs. Compute \u03b2_1 using Smith normal form. Count preferred extensions. Verify the inequality for all cases. If a counterexample exists, characterize the failure cases and propose a corrected bound.\n\n**Impact**: A proven lower bound connecting Betti numbers to extension count would be the first quantitative bridge between topological invariants and argumentation semantics. It would show that topology is not merely a structural curiosity but provides genuine computational information about the framework.\n\n**Catalog References**: `Novelty/ArgumentationTopology.lean` (the argumentation complex), `Bridges/SubdIntegralityGap.lean` (independent set bounds)\n\n**Proof Strategy**: For triangle-free graphs, the independence complex has a known structure (related to the neighborhood complex). Use the Mayer-Vietoris sequence to decompose \u03b2_1. Each 1-cycle corresponds to an even-length alternating path in the conflict graph. Show that distinct cycles lead to distinct maximal independent sets.\n\n**Domain Bridges**: Combinatorial Topology (Betti numbers) \u2194 Graph Theory (independence complexes) \u2194 AI (extension counting)\n\n**Lineage**: Extends the Euler characteristic counterexample, which shows that \u03c7 alone is insufficient. \u03b2_1 may succeed where \u03c7 failed.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Weighted Argumentation and Filtered Complexes\n\n**Conjecture**: Given a weighted argumentation framework (A, R, w) where w: R \u2192 \u211d_{>0} assigns strengths to attacks, define the sublevel complex K_t = {S \u2286 A : S is conflict-free in (A, R_t)} where R_t = {(a,b) \u2208 R : w(a,b) \u2265 t}. Then the Euler characteristic \u03c7(K_t) is a piecewise-constant, non-decreasing step function of t, with jumps at the attack weights. Moreover, the total number of jumps equals |R| minus the number of attacks in cycles.\n\n**Test**: Construct 20 weighted frameworks with 5-8 arguments. Compute \u03c7(K_t) for all critical values of t. Verify the piecewise-constant property and the step count formula.\n\n**Impact**: Weighted frameworks model real-world debates where some attacks are stronger than others. The filtered complex captures this gradation, and the monotonicity of \u03c7 would mean that removing weaker attacks only simplifies the topology (never creates new holes).\n\n**Catalog References**: `Novelty/ArgumentationTopology.lean` (conflict-free complex structure), `Bridges/MatroidCertificatePhaseTransition.lean` (phase transitions in combinatorial structures)\n\n**Proof Strategy**: Show that R_{t_1} \u2287 R_{t_2} for t_1 \u2264 t_2 implies K_{t_1} \u2286 K_{t_2} (fewer attacks = more conflict-free sets). This gives a filtration. For Euler characteristic monotonicity, use the inclusion-exclusion formula and the fact that each new face (from removing an attack) contributes +1 or -1 depending on parity.\n\n**Domain Bridges**: Algebraic Topology (filtered complexes) \u2194 Optimization (weighted graphs) \u2194 AI (gradual argumentation)\n\n**Lineage**: Directly extends the conflict-free complex structure. The monotonicity would strengthen the cone theorem (Direction 1 in this cycle).\n\n**Ambition**: extension\n\n---\n\n### Direction 4: The Admissible Sub-Complex and its Homotopy Type\n\n**Conjecture**: The admissible sub-complex K_adm(AF) \u2286 K(AF) (whose faces are the admissible sets) is contractible if and only if AF has a unique preferred extension. Equivalently, multiple preferred extensions correspond to non-trivial topology of K_adm.\n\n**Test**: Enumerate all argumentation frameworks on \u2264 6 arguments. Compute K_adm and its homotopy type (via discrete Morse theory or direct computation). Check whether contractibility of K_adm implies uniqueness of the preferred extension and vice versa.\n\n**Impact**: This would provide a topological characterization of \"well-definedness\" in argumentation \u2014 frameworks with a unique coherent position have trivial admissible topology. It connects to decision theory (when is a rational choice uniquely determined?).\n\n**Catalog References**: `Novelty/ArgumentationTopology.lean` (admissible_insert, admissible_is_face), `Logic/` (hierarchy collapse results as analogy for uniqueness)\n\n**Proof Strategy**: The forward direction (contractible \u2192 unique preferred): if K_adm is contractible, it has a unique maximal face (by the Morse-theoretic analysis). For the reverse, use the admissible growth theorem to show that a unique preferred extension implies all admissible sets chain up to it.\n\n**Domain Bridges**: Homotopy Theory \u2194 Decision Theory \u2194 AI Reasoning\n\n**Lineage**: Extends the admissible growth theorem and the structural gap between conflict-free and admissible complexes.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Argumentation Complexes and Matroid Theory\n\n**Conjecture**: The conflict-free complex K(AF) is a matroid complex (i.e., satisfies the matroid exchange axiom) if and only if the conflict graph G(AF) is a comparability graph (transitively orientable). This would connect argumentation topology to the rich theory of matroid polytopes and optimize extension computation for this class.\n\n**Test**: Classify all graphs on \u2264 6 vertices as comparability or non-comparability. For each, check whether the independence complex satisfies the matroid exchange axiom. Verify the equivalence.\n\n**Impact**: Matroid complexes have extremely well-behaved topology (shellable, hence Cohen-Macaulay). If the conjecture holds, it identifies a large class of argumentation frameworks where topological analysis is tractable and the Betti numbers have closed-form expressions.\n\n**Catalog References**: `Bridges/MatroidCertificatePhaseTransition.lean` (matroid theory), `Novelty/ArgumentationTopology.lean` (conflict-free complex)\n\n**Proof Strategy**: The independence complex of a graph is a matroid complex iff the graph is perfect (by the perfect graph theorem and matroid characterization). Comparability graphs are perfect (Dilworth's theorem). Check whether all perfect graphs give matroid independence complexes.\n\n**Domain Bridges**: Matroid Theory \u2194 Graph Theory (perfect graphs) \u2194 AI (argumentation)\n\n**Lineage**: Bridges the argumentation complex to the matroid theory already present in the Catalog.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0886",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "42b51ea3",
+    "status": "available",
+    "timestamp": "2026-06-07T00:19:53.285581+00:00",
+    "title": "Rigorous connection between Dung's argumentati"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -3603,7 +3618,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
-    "consumed_by_exp_id": "7206cbe2",
+    "consumed_by_exp_id": "",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domains": [
       "Algebra",
@@ -3613,7 +3628,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.181414+00:00",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
@@ -3678,7 +3693,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Consciousness as Integrated Information"
   },
   {
-    "consumed_by_exp_id": "3dddd691",
+    "consumed_by_exp_id": "",
     "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
     "domains": [
       "Speculative",
@@ -3688,7 +3703,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.177474+00:00",
     "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
@@ -4248,7 +4263,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "18ab247f",
     "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal \u2014 they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
     "domains": [
       "Novelty",
@@ -4258,7 +4273,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.626049+00:00",
     "title": "The Category Theory of Jokes: Universal Properties of Humor"
   },
@@ -4368,7 +4383,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
   },
   {
-    "consumed_by_exp_id": "4ab2bbb1",
+    "consumed_by_exp_id": "",
     "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
     "domains": [
       "Novelty",
@@ -4378,7 +4393,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.695662+00:00",
     "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
@@ -4608,7 +4623,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
   },
   {
-    "consumed_by_exp_id": "5c80a04f",
+    "consumed_by_exp_id": "",
     "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
     "domains": [
       "Novelty",
@@ -4618,7 +4633,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.846057+00:00",
     "title": "Isomorphisms of Meaning: When Structures Collide"
   },

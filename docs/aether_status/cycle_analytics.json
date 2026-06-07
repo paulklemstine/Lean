@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-06T23:46:40.720206+00:00",
+  "last_updated": "2026-06-07T00:19:57.801243+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -12160,6 +12160,41 @@
       "theorem_count": 4,
       "timestamp": "2026-06-06T23:46:40.675077+00:00",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.432,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 269,
+      "domain": "Novelty",
+      "duration_seconds": 3977.338061571121,
+      "end_time": 1780791564.2326355,
+      "files_integrated": 5,
+      "job_id": "42b51ea3",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.74,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8145,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.815,
+        "novelty": 0.9239,
+        "proof_depth": 0.7683,
+        "usefulness": 0.8342
+      },
+      "quality_score": 0.4728,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780787586.894574,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T00:19:57.738301+00:00",
+      "title": "The Topology of Argumentation: Why Debates Have Holes"
     }
   ]
 }
