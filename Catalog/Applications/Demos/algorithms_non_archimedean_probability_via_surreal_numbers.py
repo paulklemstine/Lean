@@ -2,214 +2,301 @@
 """
 Non-Archimedean Probability: Core Algorithms
 
-Type-hinted implementations of the key algorithms for surreal-valued
-finitely additive probability measures.
+Type-hinted implementations of the key constructions from the formalization.
 """
 
+from typing import Dict, List, Tuple, Optional, TypeVar, Generic, Callable
 from dataclasses import dataclass
-from typing import FrozenSet, TypeVar, Generic, Dict, Optional, Set
 from fractions import Fraction
+import math
 
 T = TypeVar('T')
 
 
-@dataclass(frozen=True)
-class SurrealNum:
-    """A surreal-like number a + b·ε where ε is infinitesimal.
-    
-    Represents elements of ℝ((ε)), the field of formal Laurent series
-    in one infinitesimal ε. For probability theory, this gives us a 
-    non-Archimedean ordered field where infinitesimal probabilities exist.
+@dataclass
+class InfinitesimalNumber:
     """
-    real: Fraction
-    infml: Fraction = Fraction(0)
-    
-    def __add__(self, other: 'SurrealNum') -> 'SurrealNum':
-        return SurrealNum(self.real + other.real, self.infml + other.infml)
-    
-    def __sub__(self, other: 'SurrealNum') -> 'SurrealNum':
-        return SurrealNum(self.real - other.real, self.infml - other.infml)
-    
-    def __mul__(self, other: 'SurrealNum') -> 'SurrealNum':
-        return SurrealNum(
-            self.real * other.real,
-            self.real * other.infml + self.infml * other.real
+    Represents a number of the form a + b·ε + c·ε² where ε is infinitesimal.
+    Truncated at second order for practical computation.
+
+    In the surreal number field, ε = 1/ω where ω is the first infinite ordinal.
+    """
+    standard: Fraction  # The standard (real) part
+    first_order: Fraction  # Coefficient of ε
+    second_order: Fraction  # Coefficient of ε²
+
+    @staticmethod
+    def from_standard(x: Fraction) -> 'InfinitesimalNumber':
+        """Create a standard (non-infinitesimal) number."""
+        return InfinitesimalNumber(x, Fraction(0), Fraction(0))
+
+    @staticmethod
+    def epsilon() -> 'InfinitesimalNumber':
+        """The canonical infinitesimal ε."""
+        return InfinitesimalNumber(Fraction(0), Fraction(1), Fraction(0))
+
+    def __add__(self, other: 'InfinitesimalNumber') -> 'InfinitesimalNumber':
+        return InfinitesimalNumber(
+            self.standard + other.standard,
+            self.first_order + other.first_order,
+            self.second_order + other.second_order
         )
-    
-    def __truediv__(self, other: 'SurrealNum') -> 'SurrealNum':
-        if other.real != 0:
-            r = self.real / other.real
-            i = (self.infml * other.real - self.real * other.infml) / (other.real * other.real)
-            return SurrealNum(r, i)
-        elif other.infml != 0:
-            return SurrealNum(self.infml / other.infml, Fraction(0))
-        raise ZeroDivisionError
-    
-    def __le__(self, other: 'SurrealNum') -> bool:
-        if self.real != other.real:
-            return self.real < other.real
-        return self.infml <= other.infml
-    
-    def __lt__(self, other: 'SurrealNum') -> bool:
-        if self.real != other.real:
-            return self.real < other.real
-        return self.infml < other.infml
-    
-    def is_infinitesimal(self) -> bool:
-        return self.real == 0 and self.infml > 0
-    
+
+    def __sub__(self, other: 'InfinitesimalNumber') -> 'InfinitesimalNumber':
+        return InfinitesimalNumber(
+            self.standard - other.standard,
+            self.first_order - other.first_order,
+            self.second_order - other.second_order
+        )
+
+    def __mul__(self, other: 'InfinitesimalNumber') -> 'InfinitesimalNumber':
+        return InfinitesimalNumber(
+            self.standard * other.standard,
+            self.standard * other.first_order + self.first_order * other.standard,
+            self.standard * other.second_order + self.first_order * other.first_order
+            + self.second_order * other.standard
+        )
+
+    def __truediv__(self, other: 'InfinitesimalNumber') -> 'InfinitesimalNumber':
+        if other.standard == 0:
+            if other.first_order == 0:
+                raise ZeroDivisionError("Division by zero")
+            # Dividing by bε: result has 1/ε terms (infinite)
+            raise ValueError("Division by pure infinitesimal yields infinite result")
+        inv_std = Fraction(1) / other.standard
+        # (a + bε + cε²) / (d + eε + fε²)
+        # = (a/d) + ((b·d - a·e)/d²)ε + higher order
+        a, b, c = self.standard, self.first_order, self.second_order
+        d, e, f = other.standard, other.first_order, other.second_order
+        std = a * inv_std
+        fo = (b * d - a * e) / (d * d)
+        so = (c * d * d - b * d * e - a * d * f + a * e * e) / (d * d * d)
+        return InfinitesimalNumber(std, fo, so)
+
     def is_positive(self) -> bool:
-        return self > SurrealNum(Fraction(0))
-    
+        if self.standard > 0:
+            return True
+        if self.standard == 0 and self.first_order > 0:
+            return True
+        if self.standard == 0 and self.first_order == 0:
+            return self.second_order > 0
+        return False
+
+    def is_infinitesimal(self) -> bool:
+        return self.standard == 0 and self.is_positive()
+
     def __repr__(self) -> str:
-        if self.infml == 0:
-            return str(self.real)
-        elif self.real == 0:
-            return f"{self.infml}·ε"
-        else:
-            sign = "+" if self.infml > 0 else "-"
-            return f"{self.real} {sign} {abs(self.infml)}·ε"
+        parts = []
+        if self.standard != 0:
+            parts.append(str(self.standard))
+        if self.first_order != 0:
+            parts.append(f"{self.first_order}ε")
+        if self.second_order != 0:
+            parts.append(f"{self.second_order}ε²")
+        return " + ".join(parts) if parts else "0"
 
 
-ZERO = SurrealNum(Fraction(0))
-ONE = SurrealNum(Fraction(1))
-EPS = SurrealNum(Fraction(0), Fraction(1))
-
-
-class FinAddProb(Generic[T]):
-    """Finitely additive probability measure valued in SurrealNum.
-    
-    Algorithm: Store explicit probabilities for singletons.
-    For any finite set, compute by summing singleton probabilities.
-    For complements, use μ(Aᶜ) = 1 - μ(A).
-    
-    Pseudocode:
-        INIT(weights: Dict[T, SurrealNum]):
-            Verify all weights ≥ 0
-            Verify sum(weights) = 1
-            Store weights
-        
-        MEASURE(A: Set[T]):
-            return sum(weights[x] for x in A)
-        
-        COND_PROB(A: Set[T], B: Set[T]):
-            Verify μ(B) > 0
-            return μ(A ∩ B) / μ(B)
+class InfProbSpace(Generic[T]):
     """
-    
-    def __init__(self, weights: Dict[T, SurrealNum]):
-        for x, w in weights.items():
-            assert w.is_positive() or w == ZERO, f"Negative weight for {x}"
-        total = ZERO
-        for w in weights.values():
-            total = total + w
-        assert total == ONE, f"Total probability {total} ≠ 1"
-        self._weights = dict(weights)
-    
-    def measure(self, subset: Set[T]) -> SurrealNum:
-        """Compute μ(A) = Σ_{x ∈ A} weight(x)."""
-        result = ZERO
-        for x in subset:
-            if x in self._weights:
-                result = result + self._weights[x]
-        return result
-    
-    def cond_prob(self, A: Set[T], B: Set[T]) -> SurrealNum:
-        """Compute P(A | B) = μ(A ∩ B) / μ(B)."""
-        mu_B = self.measure(B)
-        assert mu_B.is_positive(), "Cannot condition on measure-zero event"
-        mu_AB = self.measure(A & B)
-        return mu_AB / mu_B
-    
-    def complement_measure(self, A: Set[T]) -> SurrealNum:
-        """Compute μ(Aᶜ) = 1 - μ(A)."""
-        return ONE - self.measure(A)
-    
-    def verify_additivity(self, A: Set[T], B: Set[T]) -> bool:
-        """Verify μ(A ∪ B) = μ(A) + μ(B) when A ∩ B = ∅."""
-        if A & B:
-            return False  # Not disjoint
-        mu_union = self.measure(A | B)
-        mu_sum = self.measure(A) + self.measure(B)
-        return mu_union == mu_sum
-    
-    def verify_inclusion_exclusion(self, A: Set[T], B: Set[T]) -> bool:
-        """Verify μ(A ∪ B) + μ(A ∩ B) = μ(A) + μ(B)."""
-        lhs = self.measure(A | B) + self.measure(A & B)
-        rhs = self.measure(A) + self.measure(B)
-        return lhs == rhs
+    An infinitesimal probability space over a finite sample space.
 
+    Implements the InfProbSpace structure from the Lean formalization:
+    - prob : Ω → F (probability mass function)
+    - prob_nonneg : ∀ x, 0 ≤ prob x
+    - prob_total : ∑ x, prob x = 1
 
-class NonArchProb(FinAddProb[T]):
-    """Non-Archimedean probability space where all singletons
-    have infinitesimal positive probability.
-    
-    For finite sample spaces of size n, assigns each point
-    probability 1/n (which is not infinitesimal).
-    
-    For "virtual infinite" spaces, assigns ε to each point.
-    The total is n·ε where n is the number of tracked points,
-    which is infinitesimal — requiring a "background" measure
-    of 1 - n·ε for untracked points.
+    Algorithm: Direct construction with validation.
+    Time complexity: O(|Ω|) for construction, O(|A|) for event probability.
     """
-    
-    @classmethod
-    def uniform_finite(cls, elements: Set[T]) -> 'NonArchProb[T]':
-        """Create uniform probability on a finite set."""
-        n = len(elements)
-        p = SurrealNum(Fraction(1, n))
-        weights = {x: p for x in elements}
-        return cls(weights)
-    
-    @classmethod
-    def infinitesimal_uniform(cls, elements: Set[T]) -> 'NonArchProb[T]':
-        """Create measure with infinitesimal point probabilities.
-        
-        Assigns ε/|elements| to each element and a background
-        real-valued probability to make the total 1.
+
+    def __init__(self, outcomes: List[T], probs: List[InfinitesimalNumber]):
         """
-        n = len(elements)
-        point_prob = SurrealNum(Fraction(1, n))
-        weights = {x: point_prob for x in elements}
-        return cls(weights)
+        Construct a probability space.
+
+        Preconditions (checked):
+        1. len(outcomes) == len(probs)
+        2. All probabilities are non-negative
+        3. Probabilities sum to 1
+        """
+        if len(outcomes) != len(probs):
+            raise ValueError("Outcomes and probabilities must have equal length")
+
+        for i, p in enumerate(probs):
+            if not (p.is_positive() or p == InfinitesimalNumber.from_standard(Fraction(0))):
+                raise ValueError(f"Probability {i} is negative: {p}")
+
+        total = InfinitesimalNumber.from_standard(Fraction(0))
+        for p in probs:
+            total = total + p
+        if total.standard != Fraction(1) or total.first_order != Fraction(0):
+            raise ValueError(f"Probabilities sum to {total}, not 1")
+
+        self._outcomes = outcomes
+        self._probs = {o: p for o, p in zip(outcomes, probs)}
+
+    def prob(self, x: T) -> InfinitesimalNumber:
+        """Return the probability of outcome x."""
+        return self._probs.get(x, InfinitesimalNumber.from_standard(Fraction(0)))
+
+    def event_prob(self, event: List[T]) -> InfinitesimalNumber:
+        """
+        Compute P(A) = ∑_{x ∈ A} prob(x).
+
+        Corresponds to InfProbSpace.eventProb in the formalization.
+        """
+        result = InfinitesimalNumber.from_standard(Fraction(0))
+        for x in event:
+            result = result + self.prob(x)
+        return result
+
+    def cond_prob(self, a: List[T], b: List[T]) -> InfinitesimalNumber:
+        """
+        Compute P(A|B) = P(A∩B) / P(B).
+
+        Precondition: P(B) > 0 (guaranteed by full support for non-empty B).
+        Corresponds to InfProbSpace.condProb in the formalization.
+        """
+        b_set = set(b)
+        intersection = [x for x in a if x in b_set]
+        return self.event_prob(intersection) / self.event_prob(b)
+
+    def is_full_support(self) -> bool:
+        """Check if every outcome has strictly positive probability."""
+        return all(p.is_positive() for p in self._probs.values())
+
+    def has_infinitesimal_support(self) -> bool:
+        """Check if every outcome has infinitesimal probability."""
+        return all(p.is_infinitesimal() for p in self._probs.values())
+
+    @staticmethod
+    def uniform(n: int, field: str = "rational") -> 'InfProbSpace[int]':
+        """
+        Construct the uniform probability space on {0, 1, ..., n-1}.
+
+        Corresponds to InfProbSpace.uniform in the formalization.
+        """
+        if n <= 0:
+            raise ValueError("Need at least 1 outcome")
+        p = InfinitesimalNumber.from_standard(Fraction(1, n))
+        return InfProbSpace(list(range(n)), [p] * n)
+
+    @staticmethod
+    def mixture(
+        mu: 'InfProbSpace[T]',
+        nu: 'InfProbSpace[T]',
+        t: Fraction
+    ) -> 'InfProbSpace[T]':
+        """
+        Construct the mixture t·μ + (1-t)·ν.
+
+        Precondition: 0 ≤ t ≤ 1.
+        Corresponds to InfProbSpace.mixture in the formalization.
+        """
+        t_inf = InfinitesimalNumber.from_standard(t)
+        one_minus_t = InfinitesimalNumber.from_standard(Fraction(1) - t)
+        outcomes = mu._outcomes
+        probs = [t_inf * mu.prob(x) + one_minus_t * nu.prob(x) for x in outcomes]
+        return InfProbSpace(outcomes, probs)
+
+    @staticmethod
+    def product(
+        mu: 'InfProbSpace[T]',
+        nu: 'InfProbSpace'
+    ) -> 'InfProbSpace[Tuple]':
+        """
+        Construct the product probability space μ ⊗ ν.
+
+        Corresponds to InfProbSpace.product in the formalization.
+        """
+        outcomes = [(x, y) for x in mu._outcomes for y in nu._outcomes]
+        probs = [mu.prob(x) * nu.prob(y) for x in mu._outcomes for y in nu._outcomes]
+        return InfProbSpace(outcomes, probs)
 
 
-def demonstrate_singleton_conditional():
-    """Demonstrate the Singleton Conditional Probability Theorem."""
-    # Create uniform probability on {1,...,5}
-    elements = {1, 2, 3, 4, 5}
-    P = NonArchProb.uniform_finite(elements)
-    
-    A = {1, 2, 3}  # Event A
-    
-    # P(A | {2}) should be 1 (since 2 ∈ A)
-    result_in = P.cond_prob(A, {2})
-    print(f"P(A | {{2}}) = {result_in}")  # Expected: 1
-    
-    # P(A | {5}) should be 0 (since 5 ∉ A)
-    result_out = P.cond_prob(A, {5})
-    print(f"P(A | {{5}}) = {result_out}")  # Expected: 0
+def verify_bayes_theorem(
+    space: InfProbSpace[T],
+    a: List[T],
+    b: List[T]
+) -> Tuple[InfinitesimalNumber, InfinitesimalNumber, bool]:
+    """
+    Verify Bayes' theorem: P(A|B)·P(B) = P(B|A)·P(A).
+
+    Returns (LHS, RHS, are_equal).
+    Corresponds to InfProbSpace.bayes_theorem in the formalization.
+    """
+    pa = space.event_prob(a)
+    pb = space.event_prob(b)
+    pab = space.cond_prob(a, b)
+    pba = space.cond_prob(b, a)
+
+    lhs = pab * pb
+    rhs = pba * pa
+
+    equal = (lhs.standard == rhs.standard and
+             lhs.first_order == rhs.first_order)
+    return lhs, rhs, equal
 
 
-def demonstrate_bayes():
-    """Demonstrate Bayes' theorem."""
-    elements = {1, 2, 3, 4, 5, 6}
-    P = NonArchProb.uniform_finite(elements)
-    
-    A = {1, 2, 3, 4}
-    B = {3, 4, 5}
-    
-    # Bayes: P(A|B)·P(B) = P(B|A)·P(A)
-    lhs = P.cond_prob(A, B) * P.measure(B)
-    rhs = P.cond_prob(B, A) * P.measure(A)
-    print(f"P(A|B)·P(B) = {lhs}")
-    print(f"P(B|A)·P(A) = {rhs}")
-    print(f"Bayes verified: {lhs == rhs}")
+def archimedean_witness(eps: Fraction) -> int:
+    """
+    Given ε > 0, find the smallest n such that n·ε ≥ 1.
+    This witnesses the Archimedean property and proves ε is not infinitesimal.
 
+    Corresponds to InfProbSpace.archimedean_no_infinitesimal in the formalization.
+    """
+    if eps <= 0:
+        raise ValueError("Need ε > 0")
+    n = 1
+    while Fraction(n) * eps < 1:
+        n += 1
+    return n
+
+
+# ============================================================
+# Main: Run demonstrations
+# ============================================================
 
 if __name__ == "__main__":
-    print("=== Singleton Conditional Probability ===")
-    demonstrate_singleton_conditional()
-    print()
-    print("=== Bayes' Theorem ===")
-    demonstrate_bayes()
+    print("=== Algorithm Demonstrations ===\n")
+
+    # 1. Uniform space
+    print("1. Uniform probability on 5 points:")
+    u5 = InfProbSpace.uniform(5)
+    print(f"   P(0) = {u5.prob(0)}")
+    print(f"   P({{0,1,2}}) = {u5.event_prob([0,1,2])}")
+    print(f"   Full support: {u5.is_full_support()}")
+
+    # 2. Bayes verification
+    print("\n2. Bayes' theorem verification:")
+    lhs, rhs, eq = verify_bayes_theorem(u5, [0, 1], [1, 2, 3])
+    print(f"   A = {{0,1}}, B = {{1,2,3}}")
+    print(f"   P(A|B)·P(B) = {lhs}")
+    print(f"   P(B|A)·P(A) = {rhs}")
+    print(f"   Equal: {eq}")
+
+    # 3. Archimedean witness
+    print("\n3. Archimedean witnesses:")
+    for eps in [Fraction(1, 10), Fraction(1, 1000), Fraction(1, 1000000)]:
+        n = archimedean_witness(eps)
+        print(f"   ε = {eps}: n = {n}, nε = {Fraction(n) * eps}")
+
+    # 4. Mixture
+    print("\n4. Mixture of distributions:")
+    fair = InfProbSpace.uniform(2)
+    biased = InfProbSpace(
+        [0, 1],
+        [InfinitesimalNumber.from_standard(Fraction(3, 4)),
+         InfinitesimalNumber.from_standard(Fraction(1, 4))]
+    )
+    mix = InfProbSpace.mixture(fair, biased, Fraction(1, 2))
+    print(f"   Fair: P(0) = {fair.prob(0)}")
+    print(f"   Biased: P(0) = {biased.prob(0)}")
+    print(f"   50-50 mixture: P(0) = {mix.prob(0)}")
+
+    # 5. Product space
+    print("\n5. Product space:")
+    coin = InfProbSpace.uniform(2)
+    dice = InfProbSpace.uniform(6)
+    prod = InfProbSpace.product(coin, dice)
+    print(f"   Coin × Dice: P((0,0)) = {prod.prob((0, 0))}")
+    print(f"   P(heads, even) = {prod.event_prob([(0, i) for i in range(0, 6, 2)])}")
