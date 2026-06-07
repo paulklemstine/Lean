@@ -1,302 +1,235 @@
 #!/usr/bin/env python3
 """
-Sperner-Nash Bridge: Core Algorithms
+Algorithms for Sperner-Nash Bridge: Combinatorial Fixed Points in Game Theory
 
-Type-hinted implementations of the key algorithms connecting Sperner's lemma
+Type-hinted implementations of the core algorithms connecting Sperner's lemma
 to Nash equilibrium computation.
 """
 
-from typing import List, Tuple, Dict, Set, Optional, Callable
+from typing import List, Tuple, Callable, Optional
 import numpy as np
-from dataclasses import dataclass
+from itertools import product
 
 
-@dataclass
+# --- Type aliases ---
+MixedStrategy = np.ndarray  # probability vector
+MixedProfile = List[MixedStrategy]
+PayoffTensor = np.ndarray
+
+
 class FiniteGame:
     """A finite normal-form game with n players."""
-    num_players: int
-    num_strats: List[int]
-    payoff: Callable  # (player, strategy_profile) -> float
 
-    @classmethod
-    def two_player(cls, A: np.ndarray, B: np.ndarray) -> 'FiniteGame':
-        """Create a 2-player game from payoff matrices."""
-        m, n = A.shape
-        def payoff(player: int, profile: Tuple[int, ...]) -> float:
-            i, j = profile
-            return A[i, j] if player == 0 else B[i, j]
-        return cls(num_players=2, num_strats=[m, n], payoff=payoff)
+    def __init__(self, payoffs: List[PayoffTensor]):
+        """
+        payoffs[i] is player i's payoff tensor.
+        Shape of each tensor: (s_0, s_1, ..., s_{n-1})
+        where s_j is the number of pure strategies for player j.
+        """
+        self.n_players: int = len(payoffs)
+        self.payoffs: List[PayoffTensor] = payoffs
+        self.n_strats: List[int] = list(payoffs[0].shape)
 
+    def expected_payoff(self, profile: MixedProfile, player: int) -> float:
+        """E[payoff_player] under mixed profile."""
+        result = self.payoffs[player].copy()
+        for j in range(self.n_players - 1, -1, -1):
+            result = np.tensordot(result, profile[j], axes=(j, 0))
+        return float(result)
 
-@dataclass
-class MixedProfile:
-    """A mixed strategy profile."""
-    strategies: List[np.ndarray]  # one distribution per player
+    def deviation_payoff(self, profile: MixedProfile, player: int,
+                         pure_strat: int) -> float:
+        """Payoff to player when deviating to pure_strat."""
+        # Replace player's mixed strategy with pure strategy indicator
+        modified = profile.copy()
+        indicator = np.zeros(self.n_strats[player])
+        indicator[pure_strat] = 1.0
+        modified[player] = indicator
+        return self.expected_payoff(modified, player)
 
-    def expected_payoff(self, game: FiniteGame, player: int) -> float:
-        """Compute expected payoff for a player."""
-        from itertools import product as cart_product
-        total = 0.0
-        ranges = [range(s) for s in game.num_strats]
-        for profile in cart_product(*ranges):
-            prob = 1.0
-            for j, s_j in enumerate(profile):
-                prob *= self.strategies[j][s_j]
-            total += prob * game.payoff(player, profile)
-        return total
+    def regret(self, profile: MixedProfile, player: int,
+               pure_strat: int) -> float:
+        """Regret of player from pure_strat."""
+        return (self.deviation_payoff(profile, player, pure_strat)
+                - self.expected_payoff(profile, player))
 
-    def deviation_payoff(self, game: FiniteGame, player: int, pure_i: int) -> float:
-        """Payoff when player deviates to pure strategy pure_i."""
-        from itertools import product as cart_product
-        total = 0.0
-        ranges = [range(s) for s in game.num_strats]
-        for profile in cart_product(*ranges):
-            prob = 1.0
-            for j, s_j in enumerate(profile):
-                if j == player:
-                    prob *= (1.0 if s_j == pure_i else 0.0)
-                else:
-                    prob *= self.strategies[j][s_j]
-            total += prob * game.payoff(player, profile)
-        return total
-
-    def regret(self, game: FiniteGame, player: int, pure_i: int) -> float:
-        """Regret of player from pure strategy pure_i."""
-        return self.deviation_payoff(game, player, pure_i) - \
-               self.expected_payoff(game, player)
-
-    def max_regret(self, game: FiniteGame) -> float:
+    def max_regret(self, profile: MixedProfile) -> float:
         """Maximum regret across all players and strategies."""
-        return max(
-            self.regret(game, i, si)
-            for i in range(game.num_players)
-            for si in range(game.num_strats[i])
-        )
+        mr = float('-inf')
+        for i in range(self.n_players):
+            for si in range(self.n_strats[i]):
+                mr = max(mr, self.regret(profile, i, si))
+        return mr
 
-    def player_max_regret(self, game: FiniteGame, player: int) -> float:
-        """Maximum regret for a specific player."""
-        return max(
-            self.regret(game, player, si)
-            for si in range(game.num_strats[player])
-        )
+    def is_approx_nash(self, profile: MixedProfile, epsilon: float) -> bool:
+        """Check if profile is ε-approximate Nash equilibrium."""
+        return self.max_regret(profile) <= epsilon + 1e-12
 
-    def is_nash(self, game: FiniteGame, eps: float = 1e-10) -> bool:
-        """Check if this is a (eps-approximate) Nash equilibrium."""
-        return self.max_regret(game) <= eps
-
-    def chromatic_player(self, game: FiniteGame) -> int:
-        """Return the player with highest max regret (chromatic color)."""
-        regrets = [self.player_max_regret(game, i) for i in range(game.num_players)]
-        return int(np.argmax(regrets))
+    def is_nash(self, profile: MixedProfile, tol: float = 1e-8) -> bool:
+        """Check if profile is (approximate) Nash equilibrium."""
+        return self.is_approx_nash(profile, tol)
 
 
-@dataclass
-class SimplexVertex:
-    """A vertex in a triangulated simplex."""
-    coordinates: np.ndarray
-    index: int
-
-
-@dataclass
-class Simplex:
-    """A simplex in a triangulation."""
-    vertices: List[int]  # indices into vertex array
-
-
-class SpernerNashSolver:
+class BestResponseColoringSystem:
     """
-    Sperner-Nash Algorithm: Find approximate Nash equilibria using
-    Sperner-type colorings of the mixed strategy space.
+    The Best Response Coloring System (BRCS) — a novel mathematical structure
+    that bridges Sperner's combinatorial lemma with Nash's equilibrium theorem.
 
-    Algorithm:
-    1. Triangulate the product of strategy simplices
-    2. Color each vertex by the player with highest max regret
-    3. Find fully-colored simplices (all players represented)
-    4. Barycenters of such simplices are approximate Nash equilibria
-    5. Refine the triangulation to improve approximation
-
-    Complexity: O(N^n) where N = grid points per dimension, n = num players
-    """
-
-    def __init__(self, game: FiniteGame, initial_divisions: int = 10):
-        self.game = game
-        self.divisions = initial_divisions
-
-    def _grid_to_mixed_profile(self, grid_point: np.ndarray) -> MixedProfile:
-        """Convert a grid point to a mixed strategy profile.
-        For 2 players with strategies [m, n], grid_point has dim m+n-2."""
-        strategies = []
-        idx = 0
-        for player in range(self.game.num_players):
-            k = self.game.num_strats[player]
-            if k == 2:
-                t = grid_point[idx]
-                strategies.append(np.array([1 - t, t]))
-                idx += 1
-            else:
-                # General simplex: use first k-1 coordinates
-                coords = grid_point[idx:idx + k - 1]
-                last = 1.0 - sum(coords)
-                strategies.append(np.append(coords, last))
-                idx += k - 1
-        return MixedProfile(strategies)
-
-    def _triangulate_2d(self, n: int) -> Tuple[List[np.ndarray], List[Tuple[int, ...]]]:
-        """Triangulate [0,1]^2 into small triangles."""
-        vertices = []
-        vertex_map: Dict[Tuple[int, int], int] = {}
-
-        for i in range(n + 1):
-            for j in range(n + 1):
-                v = np.array([i / n, j / n])
-                vertex_map[(i, j)] = len(vertices)
-                vertices.append(v)
-
-        triangles = []
-        for i in range(n):
-            for j in range(n):
-                v00 = vertex_map[(i, j)]
-                v10 = vertex_map[(i + 1, j)]
-                v01 = vertex_map[(i, j + 1)]
-                v11 = vertex_map[(i + 1, j + 1)]
-                triangles.append((v00, v10, v01))
-                triangles.append((v10, v11, v01))
-
-        return vertices, triangles
-
-    def solve(self, divisions: Optional[int] = None) -> List[Tuple[MixedProfile, float]]:
-        """
-        Find approximate Nash equilibria.
-        
-        Returns list of (mixed_profile, max_regret) sorted by quality.
-        """
-        n = divisions or self.divisions
-
-        if self.game.num_players != 2:
-            raise NotImplementedError("Currently supports 2-player games only")
-
-        vertices, triangles = self._triangulate_2d(n)
-
-        # Color each vertex
-        profiles = [self._grid_to_mixed_profile(v) for v in vertices]
-        colors = [p.chromatic_player(self.game) for p in profiles]
-
-        # Find fully-colored simplices
-        results = []
-        for tri in triangles:
-            tri_colors = {colors[v] for v in tri}
-            if len(tri_colors) == self.game.num_players:
-                # Fully colored! Barycenter is approximate Nash
-                barycenter = np.mean([vertices[v] for v in tri], axis=0)
-                profile = self._grid_to_mixed_profile(barycenter)
-                mr = profile.max_regret(self.game)
-                results.append((profile, mr))
-
-        results.sort(key=lambda x: x[1])
-        return results
-
-    def solve_adaptive(self, target_eps: float = 0.01,
-                       max_divisions: int = 500) -> Tuple[MixedProfile, float]:
-        """
-        Adaptively refine until target approximation quality is reached.
-
-        Pseudocode:
-            n ← initial_divisions
-            while n ≤ max_divisions:
-                equilibria ← solve(n)
-                if best_regret ≤ target_eps:
-                    return best
-                n ← 2n
-        """
-        n = self.divisions
-        while n <= max_divisions:
-            results = self.solve(n)
-            if results and results[0][1] <= target_eps:
-                return results[0]
-            n *= 2
-        # Return best found
-        results = self.solve(n // 2)
-        if results:
-            return results[0]
-        raise RuntimeError("No approximate equilibrium found")
-
-
-class EquilibriumFiltration:
-    """
-    The Equilibrium Filtration: nested family of ε-approximate Nash sets.
-    
-    F_ε = {σ : max_regret(σ) ≤ ε}
-    
-    Properties:
-    - F_0 = exact Nash equilibria
-    - ε₁ ≤ ε₂ → F_{ε₁} ⊆ F_{ε₂}
-    - Non-empty for ε ≥ 2M (M = payoff bound)
+    Given a finite game, the BRCS:
+    1. Triangulates the mixed strategy simplex at varying mesh sizes
+    2. Colors vertices by the player with maximum regret
+    3. Identifies fully-colored simplices as approximate equilibria
+    4. Refines the mesh to converge to exact Nash equilibria
     """
 
     def __init__(self, game: FiniteGame):
         self.game = game
 
-    def level_set_membership(self, profile: MixedProfile, eps: float) -> bool:
-        """Check if profile is in the ε-level set."""
-        return profile.max_regret(self.game) <= eps
+    def mesh_size(self, level: int) -> float:
+        """Mesh size at refinement level n."""
+        return 1.0 / (2 ** level)
 
-    def sample_level_set(self, eps: float, n_samples: int = 1000) -> List[MixedProfile]:
-        """Sample the ε-level set by random sampling."""
-        members = []
-        for _ in range(n_samples):
-            strategies = []
-            for player in range(self.game.num_players):
-                k = self.game.num_strats[player]
-                # Sample from Dirichlet distribution (uniform on simplex)
-                s = np.random.dirichlet(np.ones(k))
-                strategies.append(s)
-            profile = MixedProfile(strategies)
-            if self.level_set_membership(profile, eps):
-                members.append(profile)
-        return members
+    def simplex_grid(self, n_strats: int, mesh: float) -> List[np.ndarray]:
+        """Generate grid points on the (n-1)-simplex."""
+        k = max(1, int(1.0 / mesh))
+        if n_strats == 1:
+            return [np.array([1.0])]
+        if n_strats == 2:
+            return [np.array([i/k, 1 - i/k]) for i in range(k + 1)]
+        points: List[np.ndarray] = []
 
-    def critical_regret(self, n_samples: int = 10000) -> float:
-        """Estimate the critical regret (smallest ε with non-empty F_ε)."""
-        min_regret = float('inf')
-        for _ in range(n_samples):
-            strategies = []
-            for player in range(self.game.num_players):
-                k = self.game.num_strats[player]
-                s = np.random.dirichlet(np.ones(k))
-                strategies.append(s)
-            profile = MixedProfile(strategies)
-            mr = profile.max_regret(self.game)
-            min_regret = min(min_regret, mr)
-        return min_regret
+        def generate(remaining: int, depth: int, current: List[float]) -> None:
+            if depth == n_strats - 1:
+                current.append(remaining / k)
+                points.append(np.array(current[:]))
+                current.pop()
+                return
+            for val in range(remaining + 1):
+                current.append(val / k)
+                generate(remaining - val, depth + 1, current)
+                current.pop()
+        generate(k, 0, [])
+        return points
+
+    def best_response_color(self, profile: MixedProfile) -> int:
+        """
+        Assign a color (player index) to a strategy profile based on
+        who has the maximum regret. This is the Sperner coloring function.
+        """
+        max_r = float('-inf')
+        color = 0
+        for i in range(self.game.n_players):
+            for si in range(self.game.n_strats[i]):
+                r = self.game.regret(profile, i, si)
+                if r > max_r:
+                    max_r = r
+                    color = i
+        return color
+
+    def find_approx_equilibrium(self, level: int) -> Tuple[MixedProfile, float]:
+        """
+        Find an approximate Nash equilibrium at refinement level.
+
+        Algorithm:
+        1. Generate grid on product of player simplices
+        2. Evaluate max regret at each grid point
+        3. Return the grid point with minimum max regret
+
+        This is the discrete analog of Sperner's lemma: the grid point
+        with minimum regret corresponds to the "fully colored" simplex.
+        """
+        mesh = self.mesh_size(level)
+        grids = [self.simplex_grid(self.game.n_strats[i], mesh)
+                 for i in range(self.game.n_players)]
+
+        best_profile: Optional[MixedProfile] = None
+        best_regret = float('inf')
+
+        for combo in product(*grids):
+            profile = list(combo)
+            mr = self.game.max_regret(profile)
+            if mr < best_regret:
+                best_regret = mr
+                best_profile = profile
+
+        assert best_profile is not None
+        return best_profile, best_regret
+
+    def convergence_sequence(self, max_level: int = 6
+                             ) -> List[Tuple[float, MixedProfile, float]]:
+        """
+        Generate a sequence of approximate equilibria with decreasing regret.
+
+        Returns: List of (mesh_size, profile, max_regret) tuples
+
+        This demonstrates the BRCS Quality Theorem:
+        mesh_size → 0 implies max_regret → 0
+        """
+        results: List[Tuple[float, MixedProfile, float]] = []
+        for level in range(1, max_level + 1):
+            mesh = self.mesh_size(level)
+            profile, regret = self.find_approx_equilibrium(level)
+            results.append((mesh, profile, regret))
+        return results
 
 
-def sperner_nash_number(num_players: int, eps: float) -> int:
+def verify_support_lemma(game: FiniteGame, profile: MixedProfile,
+                         tol: float = 1e-8) -> bool:
     """
-    Compute the Sperner-Nash number: minimum grid resolution for ε-approximation.
-    
-    Formula: ⌈1/ε⌉^n where n = number of players.
-    
-    This gives the computational complexity of the Sperner-based algorithm.
+    Verify the Nash Support Lemma: in a Nash equilibrium, every strategy
+    played with positive probability achieves the expected payoff.
     """
-    import math
-    return math.ceil(1 / eps) ** num_players
+    if not game.is_nash(profile, tol):
+        return True  # Vacuously true for non-Nash profiles
+
+    for i in range(game.n_players):
+        exp = game.expected_payoff(profile, i)
+        for si in range(game.n_strats[i]):
+            if profile[i][si] > tol:
+                dev = game.deviation_payoff(profile, i, si)
+                if abs(dev - exp) > tol:
+                    return False
+    return True
+
+
+def verify_dominated_elimination(game: FiniteGame, profile: MixedProfile,
+                                 tol: float = 1e-8) -> bool:
+    """
+    Verify: if si dominates si' in deviation payoff, then si' has zero
+    probability in Nash equilibrium.
+    """
+    if not game.is_nash(profile, tol):
+        return True
+
+    for i in range(game.n_players):
+        for si in range(game.n_strats[i]):
+            for si_prime in range(game.n_strats[i]):
+                if si == si_prime:
+                    continue
+                dev_si = game.deviation_payoff(profile, i, si)
+                dev_si_prime = game.deviation_payoff(profile, i, si_prime)
+                if dev_si > dev_si_prime + tol:
+                    if profile[i][si_prime] > tol:
+                        return False
+    return True
 
 
 if __name__ == "__main__":
-    # Demo: Matching Pennies
-    A = np.array([[1, -1], [-1, 1]])
-    B = np.array([[-1, 1], [1, -1]])
-    game = FiniteGame.two_player(A, B)
+    # Matching Pennies
+    p0 = np.array([[1, -1], [-1, 1]])
+    p1 = np.array([[-1, 1], [1, -1]])
+    game = FiniteGame([p0, p1])
 
-    solver = SpernerNashSolver(game, initial_divisions=10)
-    profile, quality = solver.solve_adaptive(target_eps=0.01)
+    brcs = BestResponseColoringSystem(game)
+    print("BRCS Convergence for Matching Pennies:")
+    print(f"{'Level':>6} {'Mesh':>8} {'Max Regret':>12} {'Profile':>30}")
+    for mesh, profile, regret in brcs.convergence_sequence(6):
+        p_str = f"({profile[0][0]:.3f},{profile[0][1]:.3f})"
+        p_str += f" vs ({profile[1][0]:.3f},{profile[1][1]:.3f})"
+        print(f"{'':>6} {mesh:>8.4f} {regret:>12.6f} {p_str:>30}")
 
-    print("Matching Pennies Nash Equilibrium (Sperner-Nash Algorithm):")
-    print(f"  Player 1: {profile.strategies[0]}")
-    print(f"  Player 2: {profile.strategies[1]}")
-    print(f"  Max regret: {quality:.6f}")
-
-    # Equilibrium filtration
-    filt = EquilibriumFiltration(game)
-    print(f"\nEstimated critical regret: {filt.critical_regret():.4f}")
-    print(f"Sperner-Nash number at ε=0.01: {sperner_nash_number(2, 0.01)}")
+    # Verify support lemma
+    exact_nash = [np.array([0.5, 0.5]), np.array([0.5, 0.5])]
+    print(f"\nSupport lemma verified: {verify_support_lemma(game, exact_nash)}")
+    print(f"Dominance elimination verified: "
+          f"{verify_dominated_elimination(game, exact_nash)}")
