@@ -1,263 +1,221 @@
-#!/usr/bin/env python3
 """
-Deflection Algebras: Core Algorithms
+Categorical Humor Theory: Core Algorithms
 
-Type-hinted implementations of the key algorithms from the Deflection Algebra theory.
+Type-hinted implementations of the mathematical algorithms from the formal theory.
 """
 
 import numpy as np
-from typing import Callable, List, Tuple, Optional
 from dataclasses import dataclass
-
-
-# ============================================================================
-# Core Types
-# ============================================================================
-
-Point = np.ndarray
-ExpectationOp = Callable[[Point], Point]
+from typing import List, Tuple, Optional, Callable
+import math
 
 
 @dataclass
-class DeflectionSpace:
-    """A metric space with an expectation operator."""
-    dim: int
-    expect: ExpectationOp
-    lipschitz_constant: Optional[float] = None
-    contraction_constant: Optional[float] = None
-    fixed_point: Optional[Point] = None
+class Joke:
+    """A joke in a metric space: (setup, expected, punchline)."""
+    setup: np.ndarray
+    expected: np.ndarray
+    punchline: np.ndarray
+
+    def humor(self) -> float:
+        """Humor = dist(expected, punchline)."""
+        return float(np.linalg.norm(self.expected - self.punchline))
+
+    def tension(self) -> float:
+        """Tension = dist(setup, expected)."""
+        return float(np.linalg.norm(self.setup - self.expected))
+
+    def arc(self) -> float:
+        """Arc = dist(setup, punchline)."""
+        return float(np.linalg.norm(self.setup - self.punchline))
+
+    def is_geodesic(self, tol: float = 1e-10) -> bool:
+        """Check if joke is geodesic: tension + humor = arc."""
+        return abs(self.tension() + self.humor() - self.arc()) < tol
 
 
-@dataclass
-class DeflectionMorphism:
-    """A morphism between deflection spaces."""
-    map_fn: Callable[[Point], Point]
-    bound: float
-    source: DeflectionSpace
-    target: DeflectionSpace
+def operator_surprise(T: np.ndarray, x: np.ndarray) -> float:
+    """Surprise of linear operator T at point x: ||Tx - x||."""
+    return float(np.linalg.norm(T @ x - x))
 
 
-@dataclass
-class DeflectionAnalysis:
-    """Results of analyzing a point's deflection properties."""
-    point: Point
-    expected: Point
-    deflection: float
-    fixpoint_dist: Optional[float] = None
-    upper_bound: Optional[float] = None
-    lower_bound: Optional[float] = None
+def operator_surprise_bound(T: np.ndarray, x: np.ndarray) -> float:
+    """Upper bound: ||T - I|| * ||x||."""
+    I = np.eye(T.shape[0])
+    return float(np.linalg.norm(T - I, ord=2) * np.linalg.norm(x))
 
 
-# ============================================================================
-# Algorithm 1: Deflection Computation
-# ============================================================================
-
-def compute_deflection(x: Point, E: ExpectationOp) -> float:
+def optimal_joke_search(
+    expected: np.ndarray,
+    candidates: np.ndarray,
+) -> Tuple[np.ndarray, float]:
     """
-    Compute the deflection δ(x) = ‖E(x) - x‖.
+    Find the punchline maximizing humor from a set of candidates.
 
-    Time complexity: O(d) where d = dim(x)
-    Space complexity: O(d)
+    Algorithm: O(n) scan over candidates.
+    Theorem: optimal_joke_exists guarantees existence in compact spaces.
+
+    Args:
+        expected: The expected resolution point.
+        candidates: Array of shape (n, d) of candidate punchlines.
+
+    Returns:
+        (best_punchline, max_humor)
     """
-    return float(np.linalg.norm(E(x) - x))
+    dists = np.linalg.norm(candidates - expected, axis=1)
+    best_idx = np.argmax(dists)
+    return candidates[best_idx], float(dists[best_idx])
 
 
-# ============================================================================
-# Algorithm 2: Contraction-Deflection Analysis
-# ============================================================================
-
-def contraction_analysis(
-    x: Point,
-    E: ExpectationOp,
-    k: float,
-    fixed_point: Point
-) -> DeflectionAnalysis:
+def joke_refiner_iterate(
+    refine: Callable[[np.ndarray], np.ndarray],
+    x0: np.ndarray,
+    n_iters: int,
+    contractivity: float,
+) -> List[Tuple[np.ndarray, float]]:
     """
-    Compute bilateral bounds between deflection and fixed-point distance.
+    Iterate a joke refiner and track humor decay.
 
-    Given a k-contraction E with known fixed point p:
-    - Upper bound: δ(x) ≤ (1+k) · d(x, p)
-    - Lower bound: d(x, p) ≤ δ(x) / (1-k)
+    Theorem: refiner_geometric_bound guarantees
+    dist(x_n, x_{n+1}) ≤ c^n * dist(x_0, x_1).
 
-    Time complexity: O(d)
+    Args:
+        refine: Contraction mapping on punchlines.
+        x0: Initial punchline.
+        n_iters: Number of iterations.
+        contractivity: Contraction factor c ∈ [0, 1).
+
+    Returns:
+        List of (point, distance_to_next) pairs.
     """
-    ex = E(x)
-    defl = float(np.linalg.norm(ex - x))
-    fp_dist = float(np.linalg.norm(x - fixed_point))
+    trajectory = []
+    x = x0.copy()
+    for i in range(n_iters):
+        x_next = refine(x)
+        d = float(np.linalg.norm(x - x_next))
+        trajectory.append((x.copy(), d))
+        bound = contractivity**i * float(np.linalg.norm(x0 - refine(x0)))
+        assert d <= bound + 1e-10, f"Bound violated at step {i}: {d} > {bound}"
+        x = x_next
+    return trajectory
 
-    return DeflectionAnalysis(
-        point=x,
-        expected=ex,
-        deflection=defl,
-        fixpoint_dist=fp_dist,
-        upper_bound=(1 + k) * fp_dist,
-        lower_bound=defl / (1 - k) if k < 1 else float('inf')
+
+def comedy_cauchy_schwarz_check(humors: np.ndarray) -> Tuple[float, float, bool]:
+    """
+    Verify Comedy Cauchy-Schwarz: (Σ hᵢ)² ≤ n · Σ hᵢ².
+
+    Args:
+        humors: Array of humor values.
+
+    Returns:
+        (lhs, rhs, satisfied)
+    """
+    n = len(humors)
+    lhs = float(np.sum(humors))**2
+    rhs = n * float(np.sum(humors**2))
+    return lhs, rhs, lhs <= rhs + 1e-10
+
+
+def humor_convex_combination(
+    expected: np.ndarray,
+    p1: np.ndarray,
+    p2: np.ndarray,
+    t: float,
+) -> Tuple[float, float]:
+    """
+    Compute humor of convex combination and its bound.
+
+    Theorem: humor_convex_combination guarantees
+    dist(e, (1-t)p₁ + tp₂) ≤ (1-t)*dist(e,p₁) + t*dist(e,p₂).
+
+    Returns:
+        (actual_humor, bound)
+    """
+    p_blend = (1 - t) * p1 + t * p2
+    actual = float(np.linalg.norm(expected - p_blend))
+    bound = (1 - t) * float(np.linalg.norm(expected - p1)) + \
+            t * float(np.linalg.norm(expected - p2))
+    return actual, bound
+
+
+def humor_half_life(h0: float, r: float, epsilon: float) -> int:
+    """
+    Compute the humor half-life: smallest n such that r^n * h0 < epsilon.
+
+    Theorem: humor_half_life_exists guarantees this exists for 0 < r < 1.
+
+    Args:
+        h0: Initial humor (positive).
+        r: Decay rate (0 < r < 1).
+        epsilon: Threshold.
+
+    Returns:
+        n: Number of retellings until humor drops below epsilon.
+    """
+    if h0 <= 0 or r <= 0 or r >= 1 or epsilon <= 0:
+        raise ValueError("Need h0 > 0, 0 < r < 1, epsilon > 0")
+    # r^n * h0 < epsilon  =>  n > log(epsilon/h0) / log(r)
+    n = math.ceil(math.log(epsilon / h0) / math.log(r))
+    return max(0, n)
+
+
+def compose_jokes(j1: Joke, j2: Joke) -> Joke:
+    """
+    Compose two jokes (j1's punchline = j2's setup).
+
+    Theorem: compose_humor_bound gives
+    humor(j1∘j2) ≤ humor(j1) + tension(j2) + humor(j2).
+
+    Returns:
+        Composed joke.
+    """
+    return Joke(
+        setup=j1.setup,
+        expected=j1.expected,
+        punchline=j2.punchline,
     )
 
 
-# ============================================================================
-# Algorithm 3: Geometric Decay Estimation
-# ============================================================================
-
-def estimate_contraction_constant(
-    x: Point,
-    E: ExpectationOp,
-    n_iterations: int = 20
-) -> Tuple[float, List[float]]:
+def midpoint_factorize(expected: np.ndarray, punchline: np.ndarray) -> np.ndarray:
     """
-    Estimate the contraction constant by observing geometric decay.
+    Compute the comedic midpoint: (e + p) / 2.
 
-    Iterates E starting from x, records deflections, and fits
-    an exponential decay model δₙ ≈ k^n · δ₀.
+    Theorem: midpoint_humor_half shows dist(e, mid) = dist(e, p) / 2.
+    Theorem: midpoint_equidistant shows dist(e, mid) = dist(mid, p).
 
-    Returns: (estimated_k, deflection_sequence)
-    Time complexity: O(n_iterations · d)
+    Returns:
+        Midpoint vector.
     """
-    deflections: List[float] = []
-    y = x.copy()
-
-    for _ in range(n_iterations):
-        d = compute_deflection(y, E)
-        deflections.append(d)
-        y = E(y)
-
-    # Estimate k from consecutive ratios
-    ratios = []
-    for i in range(1, len(deflections)):
-        if deflections[i - 1] > 1e-15:
-            ratios.append(deflections[i] / deflections[i - 1])
-
-    estimated_k = float(np.median(ratios)) if ratios else 0.0
-    return estimated_k, deflections
+    return (expected + punchline) / 2
 
 
-# ============================================================================
-# Algorithm 4: Deflection Energy Computation
-# ============================================================================
-
-def compute_deflection_energy(
-    points: List[Point],
-    E: ExpectationOp
-) -> Tuple[float, float, float]:
+def humor_spectrum(jokes: List[Joke]) -> np.ndarray:
     """
-    Compute deflection energy, total deflection, and verify Cauchy-Schwarz.
+    Compute the humor spectrum of a joke collection.
 
-    Returns: (total_deflection, deflection_energy, cauchy_schwarz_ratio)
-    where cauchy_schwarz_ratio = T² / (n · E) ≤ 1
+    Returns sorted humor values (descending).
     """
-    n = len(points)
-    deflections = [compute_deflection(p, E) for p in points]
-
-    total = sum(deflections)
-    energy = sum(d ** 2 for d in deflections)
-    ratio = total ** 2 / (n * energy) if n * energy > 0 else 0.0
-
-    return total, energy, ratio
-
-
-# ============================================================================
-# Algorithm 5: Deflection Spectrum
-# ============================================================================
-
-def compute_deflection_spectrum(
-    points: List[Point],
-    E: ExpectationOp
-) -> List[float]:
-    """
-    Compute the sorted deflection spectrum of a finite point set.
-
-    Returns deflections in sorted order (ascending).
-    """
-    deflections = sorted(compute_deflection(p, E) for p in points)
-    return deflections
-
-
-# ============================================================================
-# Algorithm 6: Morphism Composition and Bound Verification
-# ============================================================================
-
-def compose_morphisms(
-    f: DeflectionMorphism,
-    g: DeflectionMorphism
-) -> DeflectionMorphism:
-    """
-    Compose two deflection morphisms g ∘ f with bound B_g · B_f.
-    """
-    return DeflectionMorphism(
-        map_fn=lambda x: g.map_fn(f.map_fn(x)),
-        bound=g.bound * f.bound,
-        source=f.source,
-        target=g.target
-    )
-
-
-def verify_morphism_bound(
-    morphism: DeflectionMorphism,
-    test_points: List[Point],
-    tolerance: float = 1e-10
-) -> Tuple[bool, float]:
-    """
-    Verify that a morphism satisfies its deflection bound on test points.
-
-    Returns: (is_valid, max_observed_ratio)
-    """
-    max_ratio = 0.0
-    E_source = morphism.source.expect
-    E_target = morphism.target.expect
-
-    for x in test_points:
-        d_source = compute_deflection(x, E_source)
-        d_target = compute_deflection(morphism.map_fn(x), E_target)
-
-        if d_source > tolerance:
-            ratio = d_target / d_source
-            max_ratio = max(max_ratio, ratio)
-
-    return max_ratio <= morphism.bound + tolerance, max_ratio
-
-
-# ============================================================================
-# Algorithm 7: Lipschitz Constant Estimation
-# ============================================================================
-
-def estimate_lipschitz_constant(
-    E: ExpectationOp,
-    test_points: List[Point],
-    n_pairs: int = 1000
-) -> float:
-    """
-    Estimate the Lipschitz constant of E by sampling pairs of points.
-
-    Returns: estimated Lipschitz constant K
-    """
-    max_ratio = 0.0
-    rng = np.random.RandomState(42)
-
-    for _ in range(n_pairs):
-        i, j = rng.choice(len(test_points), 2, replace=False)
-        x, y = test_points[i], test_points[j]
-
-        d_xy = np.linalg.norm(x - y)
-        if d_xy < 1e-15:
-            continue
-
-        d_exy = np.linalg.norm(E(x) - E(y))
-        max_ratio = max(max_ratio, d_exy / d_xy)
-
-    return max_ratio
+    humors = np.array([j.humor() for j in jokes])
+    return np.sort(humors)[::-1]
 
 
 if __name__ == "__main__":
     # Quick self-test
-    E = lambda x: 0.5 * x
-    x = np.array([4.0, 3.0])
+    j = Joke(
+        setup=np.array([0.0, 0.0]),
+        expected=np.array([1.0, 0.0]),
+        punchline=np.array([0.0, 2.0]),
+    )
+    print(f"Joke humor: {j.humor():.3f}")
+    print(f"Joke tension: {j.tension():.3f}")
+    print(f"Joke arc: {j.arc():.3f}")
+    print(f"Is geodesic: {j.is_geodesic()}")
 
-    print(f"Deflection of {x} = {compute_deflection(x, E):.4f}")
+    # Cauchy-Schwarz test
+    humors = np.array([1.0, 2.0, 3.0, 4.0, 5.0])
+    lhs, rhs, ok = comedy_cauchy_schwarz_check(humors)
+    print(f"Cauchy-Schwarz: {lhs:.1f} ≤ {rhs:.1f} : {ok}")
 
-    analysis = contraction_analysis(x, E, k=0.5, fixed_point=np.zeros(2))
-    print(f"Fixed-point distance: {analysis.fixpoint_dist:.4f}")
-    print(f"Upper bound: {analysis.upper_bound:.4f}")
-    print(f"Lower bound: {analysis.lower_bound:.4f}")
-
-    k_est, seq = estimate_contraction_constant(x, E)
-    print(f"Estimated contraction constant: {k_est:.4f}")
+    # Half-life
+    n = humor_half_life(100.0, 0.9, 1.0)
+    print(f"Half-life (h0=100, r=0.9, ε=1): {n} retellings")

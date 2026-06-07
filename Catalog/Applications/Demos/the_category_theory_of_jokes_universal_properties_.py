@@ -1,423 +1,324 @@
-#!/usr/bin/env python3
 """
-Deflection Algebras: Numerical Demonstrations
-
-This script demonstrates the key theorems from the Deflection Algebra theory
-with concrete numerical examples.
-"""
-
-import numpy as np
-from typing import Callable, List, Tuple
-
-# ============================================================================
-# Core Definitions
-# ============================================================================
-
-def deflection(x: np.ndarray, E: Callable) -> float:
-    """Compute deflection δ(x) = d(E(x), x)."""
-    return float(np.linalg.norm(E(x) - x))
-
-
-def deflection_energy(points: List[np.ndarray], E: Callable) -> float:
-    """Compute deflection energy: Σ δ(pᵢ)²."""
-    return sum(deflection(p, E) ** 2 for p in points)
-
-
-def total_deflection(points: List[np.ndarray], E: Callable) -> float:
-    """Compute total deflection: Σ δ(pᵢ)."""
-    return sum(deflection(p, E) for p in points)
-
-
-# ============================================================================
-# Demo 1: Idempotent Zero Lemma
-# ============================================================================
-
-def demo_idempotent_zero():
-    """Demonstrate that E(E(x)) = E(x) implies δ(E(x)) = 0."""
-    print("=" * 60)
-    print("DEMO 1: Idempotent Zero Lemma")
-    print("=" * 60)
-
-    # E = floor function (idempotent)
-    E = lambda x: np.floor(x)
-
-    test_points = [np.array([1.7]), np.array([3.14]), np.array([-0.5]),
-                   np.array([100.999])]
-
-    for x in test_points:
-        ex = E(x)
-        d_x = deflection(x, E)
-        d_ex = deflection(ex, E)
-        print(f"  x = {x[0]:8.3f}, E(x) = {ex[0]:8.3f}, "
-              f"δ(x) = {d_x:.3f}, δ(E(x)) = {d_ex:.10f}")
-        assert d_ex < 1e-10, "Idempotent zero lemma violated!"
-
-    print("  ✓ All E-images have zero deflection\n")
-
-
-# ============================================================================
-# Demo 2: Deflection Lipschitz Theorem
-# ============================================================================
-
-def demo_lipschitz():
-    """Demonstrate |δ(x) - δ(y)| ≤ (1+K) · d(x,y)."""
-    print("=" * 60)
-    print("DEMO 2: Deflection Lipschitz Theorem")
-    print("=" * 60)
-
-    K = 0.5
-    E = lambda x: K * x  # K-Lipschitz expectation
-
-    np.random.seed(42)
-    pairs = [(np.random.randn(3), np.random.randn(3)) for _ in range(1000)]
-
-    max_ratio = 0.0
-    for x, y in pairs:
-        d_xy = np.linalg.norm(x - y)
-        if d_xy < 1e-10:
-            continue
-        delta_diff = abs(deflection(x, E) - deflection(y, E))
-        ratio = delta_diff / d_xy
-        max_ratio = max(max_ratio, ratio)
-
-    print(f"  K = {K}")
-    print(f"  Theoretical bound: 1 + K = {1 + K}")
-    print(f"  Maximum observed ratio |δ(x)-δ(y)|/d(x,y) = {max_ratio:.6f}")
-    print(f"  ✓ Bound satisfied: {max_ratio:.6f} ≤ {1+K}\n")
-
-
-# ============================================================================
-# Demo 3: Contraction-Deflection Equivalence
-# ============================================================================
-
-def demo_contraction_equivalence():
-    """Demonstrate bilateral bounds between δ and d(x, fixpoint)."""
-    print("=" * 60)
-    print("DEMO 3: Contraction-Deflection Equivalence")
-    print("=" * 60)
-
-    k = 0.3
-    E = lambda x: k * x  # Fixed point at origin
-    p = np.zeros(2)
-
-    np.random.seed(123)
-    for _ in range(5):
-        x = np.random.randn(2) * 5
-        d_xp = np.linalg.norm(x - p)
-        d_ex = deflection(x, E)
-
-        upper_bound = (1 + k) * d_xp
-        lower_ratio = d_ex / (1 - k) if (1 - k) > 0 else float('inf')
-
-        print(f"  x = ({x[0]:6.2f}, {x[1]:6.2f})")
-        print(f"    d(x,p) = {d_xp:.4f}")
-        print(f"    δ(x)   = {d_ex:.4f}")
-        print(f"    Upper: δ ≤ (1+k)·d(x,p) = {upper_bound:.4f}  "
-              f"({'✓' if d_ex <= upper_bound + 1e-10 else '✗'})")
-        print(f"    Lower: d(x,p) ≤ δ/(1-k) = {lower_ratio:.4f}  "
-              f"({'✓' if d_xp <= lower_ratio + 1e-10 else '✗'})")
-
-    print()
-
-
-# ============================================================================
-# Demo 4: Geometric Deflection Decay
-# ============================================================================
-
-def demo_geometric_decay():
-    """Demonstrate d(E(Eⁿ(x)), Eⁿ(x)) ≤ kⁿ · d(E(x), x)."""
-    print("=" * 60)
-    print("DEMO 4: Geometric Deflection Decay")
-    print("=" * 60)
-
-    k = 0.6
-    E = lambda x: k * x
-    x = np.array([10.0, 7.0, -3.0])
-
-    initial_deflection = deflection(x, E)
-    print(f"  Contraction constant k = {k}")
-    print(f"  Initial deflection δ(x) = {initial_deflection:.6f}")
-    print(f"  {'n':>4s}  {'δ(Eⁿ(x))':>12s}  {'kⁿ·δ(x)':>12s}  {'Ratio':>8s}")
-
-    y = x.copy()
-    for n in range(10):
-        d_n = deflection(y, E)
-        bound = k ** n * initial_deflection
-        ratio = d_n / initial_deflection if initial_deflection > 0 else 0
-        print(f"  {n:4d}  {d_n:12.6f}  {bound:12.6f}  {ratio:8.6f}")
-        assert d_n <= bound + 1e-10, "Geometric decay violated!"
-        y = E(y)
-
-    print("  ✓ Geometric decay confirmed\n")
-
-
-# ============================================================================
-# Demo 5: Cauchy-Schwarz for Deflection
-# ============================================================================
-
-def demo_cauchy_schwarz():
-    """Demonstrate T² ≤ n · E for deflection."""
-    print("=" * 60)
-    print("DEMO 5: Cauchy-Schwarz for Deflection")
-    print("=" * 60)
-
-    E = lambda x: np.round(x)  # Nearest integer projection
-
-    np.random.seed(999)
-    for n in [3, 10, 50]:
-        points = [np.random.randn(2) * 3 for _ in range(n)]
-        T = total_deflection(points, E)
-        energy = deflection_energy(points, E)
-
-        print(f"  n = {n:3d}: T² = {T**2:10.4f}, n·E = {n * energy:10.4f}, "
-              f"T²/(n·E) = {T**2 / (n * energy):.4f} ≤ 1.0  ✓")
-
-    print()
-
-
-# ============================================================================
-# Demo 6: Deflection Morphism Composition
-# ============================================================================
-
-def demo_morphism_composition():
-    """Demonstrate that composed morphism bounds multiply."""
-    print("=" * 60)
-    print("DEMO 6: Deflection Morphism Composition")
-    print("=" * 60)
-
-    # Two deflection spaces with different expectations
-    E1 = lambda x: 0.5 * x  # R² with E₁(x) = x/2
-    E2 = lambda x: 0.3 * x  # R² with E₂(x) = 0.3x
-
-    # Morphism f: multiply by 2 (bound = 2 since it doubles distances)
-    f = lambda x: 2 * x
-    B_f = 2.0
-
-    # Morphism g: multiply by 0.5 (bound = 0.5)
-    g = lambda x: 0.5 * x
-    B_g = 0.5
-
-    np.random.seed(42)
-    x = np.random.randn(3)
-
-    d_x = deflection(x, E1)
-    d_fx = deflection(f(x), E2)
-    d_gfx = deflection(g(f(x)), E1)
-
-    print(f"  δ_X(x)    = {d_x:.4f}")
-    print(f"  δ_Y(f(x)) = {d_fx:.4f} ≤ B_f · δ_X(x) = {B_f * d_x:.4f}")
-    print(f"  δ_Z(g∘f(x)) = {d_gfx:.4f} ≤ B_g·B_f · δ_X(x) = {B_g * B_f * d_x:.4f}")
-    print()
-
-
-# ============================================================================
-# Demo 7: Mean Deflection Monotonicity
-# ============================================================================
-
-def demo_mean_monotonicity():
-    """Demonstrate that contractions decrease total deflection."""
-    print("=" * 60)
-    print("DEMO 7: Mean Deflection Monotonicity")
-    print("=" * 60)
-
-    k = 0.4
-    E = lambda x: k * x
-
-    np.random.seed(77)
-    points = [np.random.randn(2) * 5 for _ in range(20)]
-
-    # Original total deflection
-    T0 = sum(np.linalg.norm(E(E(p)) - E(p)) for p in points)
-    T1 = sum(np.linalg.norm(E(p) - p) for p in points)
-
-    print(f"  k = {k}")
-    print(f"  Σ d(E(E(pᵢ)), E(pᵢ)) = {T0:.4f}")
-    print(f"  k · Σ d(E(pᵢ), pᵢ)   = {k * T1:.4f}")
-    print(f"  Ratio = {T0 / (k * T1):.4f} ≤ 1.0  ✓")
-    print()
-
-
-# ============================================================================
-# Main
-# ============================================================================
-
-if __name__ == "__main__":
-    print("\n" + "=" * 60)
-    print("  DEFLECTION ALGEBRAS: NUMERICAL DEMONSTRATIONS")
-    print("=" * 60 + "\n")
-
-    demo_idempotent_zero()
-    demo_lipschitz()
-    demo_contraction_equivalence()
-    demo_geometric_decay()
-    demo_cauchy_schwarz()
-    demo_morphism_composition()
-    demo_mean_monotonicity()
-
-    print("All demonstrations completed successfully!")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Deflection Space Geometry
-
-Generates plots showing the key properties of deflection spaces:
-1. Deflection field visualization
-2. Geometric decay under iteration
-3. Cauchy-Schwarz bound tightness
+Categorical Humor Theory: Demonstrations
+
+This script demonstrates the key mathematical results from the formal theory:
+1. Comedy Triangle Inequality visualization
+2. Humor convexity in ℝ²
+3. Joke contraction principle (iterative decay)
+4. Comedy Cauchy-Schwarz bound
+5. Optimal joke existence in compact spaces
 """
 
 import numpy as np
+from typing import Tuple, List
+
+def humor(expected: np.ndarray, punchline: np.ndarray) -> float:
+    """Humor = dist(expected, punchline)"""
+    return float(np.linalg.norm(expected - punchline))
+
+def tension(setup: np.ndarray, expected: np.ndarray) -> float:
+    """Tension = dist(setup, expected)"""
+    return float(np.linalg.norm(setup - expected))
+
+def arc(setup: np.ndarray, punchline: np.ndarray) -> float:
+    """Arc = dist(setup, punchline)"""
+    return float(np.linalg.norm(setup - punchline))
+
+
+# Demo 1: Fundamental Theorem of Comedy
+print("=" * 60)
+print("DEMO 1: Fundamental Theorem of Comedy")
+print("=" * 60)
+
+setup = np.array([0.0, 0.0])
+expected = np.array([3.0, 0.0])
+punchline = np.array([1.0, 4.0])
+
+h = humor(expected, punchline)
+t = tension(setup, expected)
+a = arc(setup, punchline)
+
+print(f"Setup:    {setup}")
+print(f"Expected: {expected}")
+print(f"Punchline: {punchline}")
+print(f"Tension = {t:.3f}, Humor = {h:.3f}, Arc = {a:.3f}")
+print(f"arc ≤ tension + humor: {a:.3f} ≤ {t + h:.3f} ✓" if a <= t + h + 1e-10 else "FAIL")
+print(f"humor ≤ arc + tension: {h:.3f} ≤ {a + t:.3f} ✓" if h <= a + t + 1e-10 else "FAIL")
+print(f"tension ≤ arc + humor: {t:.3f} ≤ {a + h:.3f} ✓" if t <= a + h + 1e-10 else "FAIL")
+
+
+# Demo 2: Humor Convexity
+print("\n" + "=" * 60)
+print("DEMO 2: Humor Convexity")
+print("=" * 60)
+
+e = np.array([0.0, 0.0])
+p1 = np.array([4.0, 0.0])
+p2 = np.array([0.0, 4.0])
+
+for t_val in [0.0, 0.25, 0.5, 0.75, 1.0]:
+    p_blend = (1 - t_val) * p1 + t_val * p2
+    h_blend = humor(e, p_blend)
+    h_bound = (1 - t_val) * humor(e, p1) + t_val * humor(e, p2)
+    print(f"t={t_val:.2f}: humor(blend)={h_blend:.3f} ≤ convex_bound={h_bound:.3f} "
+          f"{'✓' if h_blend <= h_bound + 1e-10 else '✗'}")
+
+
+# Demo 3: Joke Contraction Principle
+print("\n" + "=" * 60)
+print("DEMO 3: Humor Contraction (Geometric Decay)")
+print("=" * 60)
+
+contractivity = 0.7
+initial_humor = 10.0
+print(f"Initial humor: {initial_humor}, contractivity: {contractivity}")
+for n in range(15):
+    decayed = contractivity**n * initial_humor
+    bound = contractivity**n * initial_humor
+    print(f"  n={n:2d}: humor = {decayed:.4f}, bound = {bound:.4f}")
+    if decayed < 0.01:
+        print(f"  → Humor dropped below 0.01 at retelling {n}")
+        break
+
+
+# Demo 4: Comedy Cauchy-Schwarz
+print("\n" + "=" * 60)
+print("DEMO 4: Comedy Cauchy-Schwarz")
+print("=" * 60)
+
+for trial in range(5):
+    np.random.seed(42 + trial)
+    n = 10
+    humors = np.random.exponential(2.0, n)
+    lhs = np.sum(humors)**2
+    rhs = n * np.sum(humors**2)
+    print(f"Trial {trial+1}: (Σhᵢ)² = {lhs:.2f} ≤ n·Σhᵢ² = {rhs:.2f} "
+          f"{'✓' if lhs <= rhs + 1e-10 else '✗'} (ratio = {lhs/rhs:.3f})")
+
+
+# Demo 5: Optimal Joke in Compact Space
+print("\n" + "=" * 60)
+print("DEMO 5: Optimal Joke in [0,1]²")
+print("=" * 60)
+
+expected_pt = np.array([0.3, 0.4])
+# Search over a fine grid (approximating compact space)
+best_humor = 0
+best_p = None
+for x in np.linspace(0, 1, 1000):
+    for y in np.linspace(0, 1, 1000):
+        p = np.array([x, y])
+        h = humor(expected_pt, p)
+        if h > best_humor:
+            best_humor = h
+            best_p = p.copy()
+
+print(f"Expected point: {expected_pt}")
+print(f"Optimal punchline: {best_p}")
+print(f"Maximum humor: {best_humor:.4f}")
+print(f"Diameter of [0,1]²: {np.sqrt(2):.4f}")
+print(f"Humor ≤ diameter: {best_humor <= np.sqrt(2) + 1e-6}")
+
+
+# Demo 6: Humor Dilation
+print("\n" + "=" * 60)
+print("DEMO 6: Humor Dilation (Exaggeration)")
+print("=" * 60)
+
+e = np.array([0.0, 0.0])
+p = np.array([1.0, 1.0])
+original_humor = humor(e, p)
+print(f"Original humor: {original_humor:.3f}")
+for t in [1.0, 1.5, 2.0, 3.0, 5.0, 10.0]:
+    dilated = e + t * (p - e)
+    dilated_humor = humor(e, dilated)
+    print(f"  t={t:5.1f}: dilated_humor = {dilated_humor:.3f} "
+          f"(ratio = {dilated_humor/original_humor:.1f}x) "
+          f"≥ original: {'✓' if dilated_humor >= original_humor - 1e-10 else '✗'}")
+
+
+# Demo 7: Midpoint Factorization
+print("\n" + "=" * 60)
+print("DEMO 7: Midpoint Factorization")
+print("=" * 60)
+
+e = np.array([1.0, 2.0])
+p = np.array([5.0, 6.0])
+mid = 0.5 * e + 0.5 * p
+d_e_mid = humor(e, mid)
+d_mid_p = humor(mid, p)
+d_e_p = humor(e, p)
+print(f"Expected: {e}, Punchline: {p}")
+print(f"Midpoint: {mid}")
+print(f"dist(e, mid) = {d_e_mid:.4f}")
+print(f"dist(mid, p) = {d_mid_p:.4f}")
+print(f"dist(e, p)/2 = {d_e_p/2:.4f}")
+print(f"Equidistant: {abs(d_e_mid - d_mid_p) < 1e-10} ✓")
+print(f"Half humor: {abs(d_e_mid - d_e_p/2) < 1e-10} ✓")
+
+print("\n" + "=" * 60)
+print("All demos complete!")
+print("=" * 60)
+
+
+"""
+Visualization: The Comedy Landscape
+
+Shows humor as a function of punchline position in ℝ²,
+with the expected point fixed. Demonstrates convexity and
+optimal joke existence.
+"""
+
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
+from matplotlib import cm
+
+# Setup
+expected = np.array([0.3, 0.4])
+
+# Create grid
+x = np.linspace(0, 1, 200)
+y = np.linspace(0, 1, 200)
+X, Y = np.meshgrid(x, y)
+
+# Compute humor (distance from expected)
+H = np.sqrt((X - expected[0])**2 + (Y - expected[1])**2)
+
+# Find optimal punchline
+max_idx = np.unravel_index(np.argmax(H), H.shape)
+optimal = np.array([X[max_idx], Y[max_idx]])
+max_humor = H[max_idx]
+
+# Plot
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# Left: contour plot
+ax1 = axes[0]
+cs = ax1.contourf(X, Y, H, levels=20, cmap='YlOrRd')
+plt.colorbar(cs, ax=ax1, label='Humor')
+ax1.plot(*expected, 'b*', markersize=15, label='Expected')
+ax1.plot(*optimal, 'g^', markersize=12, label=f'Optimal (H={max_humor:.2f})')
+ax1.set_xlabel('Punchline x')
+ax1.set_ylabel('Punchline y')
+ax1.set_title('Comedy Landscape: Humor = dist(expected, punchline)')
+ax1.legend()
+ax1.set_aspect('equal')
+
+# Right: convexity demo
+ax2 = axes[1]
+p1 = np.array([0.9, 0.1])
+p2 = np.array([0.1, 0.9])
+ts = np.linspace(0, 1, 100)
+blend_humors = []
+bound_humors = []
+h1 = np.linalg.norm(expected - p1)
+h2 = np.linalg.norm(expected - p2)
+
+for t in ts:
+    p_blend = (1 - t) * p1 + t * p2
+    blend_humors.append(np.linalg.norm(expected - p_blend))
+    bound_humors.append((1 - t) * h1 + t * h2)
+
+ax2.plot(ts, blend_humors, 'b-', linewidth=2, label='Actual humor')
+ax2.plot(ts, bound_humors, 'r--', linewidth=2, label='Convex bound')
+ax2.fill_between(ts, blend_humors, bound_humors, alpha=0.2, color='green',
+                  label='Convexity gap')
+ax2.set_xlabel('Interpolation parameter t')
+ax2.set_ylabel('Humor')
+ax2.set_title('Humor Convexity: actual ≤ convex combination')
+ax2.legend()
+ax2.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('comedy_landscape.png', dpi=150, bbox_inches='tight')
+print("Saved comedy_landscape.png")
 
 
-def deflection_field():
-    """Plot the deflection field for E(x) = 0.5·x on ℝ²."""
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+"""
+Visualization: Humor Contraction and Decay
 
-    # Grid
-    x = np.linspace(-5, 5, 50)
-    y = np.linspace(-5, 5, 50)
-    X, Y = np.meshgrid(x, y)
+Shows geometric decay of humor under repeated joke retelling,
+demonstrating the contraction principle and half-life theorem.
+"""
 
-    # Deflection = ‖E(x) - x‖ = ‖0.5x - x‖ = 0.5‖x‖
-    D = 0.5 * np.sqrt(X**2 + Y**2)
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
-    # Panel 1: Deflection heatmap
-    ax = axes[0]
-    c = ax.contourf(X, Y, D, levels=20, cmap='viridis')
-    plt.colorbar(c, ax=ax, label='Deflection δ(x)')
-    ax.set_title('Deflection Field: E(x) = x/2', fontsize=12)
-    ax.set_xlabel('x₁')
-    ax.set_ylabel('x₂')
-    ax.plot(0, 0, 'r*', markersize=15, label='Fixed point')
-    ax.legend()
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-    # Panel 2: Deflection vs distance to fixed point
-    ax = axes[1]
-    r = np.linspace(0, 7, 100)
-    defl = 0.5 * r
-    upper = 1.5 * r
-    lower = r  # d(x,p) ≤ δ/(1-k) = δ/0.5 = 2δ, so δ ≥ 0.5·d(x,p)
+# Plot 1: Geometric decay for different contraction factors
+ax1 = axes[0]
+n_iters = 30
+ns = np.arange(n_iters)
+h0 = 10.0
 
-    ax.fill_between(r, 0.5 * r, 1.5 * r, alpha=0.2, color='blue',
-                     label='Feasible region')
-    ax.plot(r, defl, 'b-', linewidth=2, label='Actual δ(x) = ‖x‖/2')
-    ax.plot(r, upper, 'r--', linewidth=1, label='Upper: (1+k)·d(x,p)')
-    ax.plot(r, 0.5 * r, 'g--', linewidth=1, label='Lower: (1-k)·d(x,p)')
-    ax.set_xlabel('d(x, fixed point)', fontsize=11)
-    ax.set_ylabel('Deflection δ(x)', fontsize=11)
-    ax.set_title('Contraction-Deflection Equivalence', fontsize=12)
-    ax.legend(fontsize=9)
+for c in [0.3, 0.5, 0.7, 0.85, 0.95]:
+    humors = [h0 * c**n for n in ns]
+    ax1.plot(ns, humors, '-o', markersize=3, label=f'c={c}')
 
-    # Panel 3: Vector field showing E displacement
-    ax = axes[2]
-    xg = np.linspace(-4, 4, 12)
-    yg = np.linspace(-4, 4, 12)
-    Xg, Yg = np.meshgrid(xg, yg)
-    U = 0.5 * Xg - Xg  # E(x) - x
-    V = 0.5 * Yg - Yg
-    M = np.sqrt(U**2 + V**2)
-    M[M == 0] = 1
+ax1.axhline(y=0.1, color='red', linestyle=':', label='ε = 0.1')
+ax1.set_xlabel('Retelling number n')
+ax1.set_ylabel('Humor h₀ · cⁿ')
+ax1.set_title('Humor Geometric Decay')
+ax1.legend(fontsize=8)
+ax1.set_yscale('log')
+ax1.grid(True, alpha=0.3)
 
-    ax.quiver(Xg, Yg, U/M, V/M, M, cmap='coolwarm', scale=25)
-    ax.plot(0, 0, 'k*', markersize=15)
-    ax.set_title('Deflection Vectors: x → E(x)', fontsize=12)
-    ax.set_xlabel('x₁')
-    ax.set_ylabel('x₂')
-    ax.set_aspect('equal')
+# Plot 2: Half-life as function of contraction factor
+ax2 = axes[1]
+import math
+cs = np.linspace(0.01, 0.99, 100)
+h0_val = 100.0
+epsilon = 1.0
+half_lives = [math.ceil(math.log(epsilon / h0_val) / math.log(c)) for c in cs]
 
-    plt.tight_layout()
-    plt.savefig('deflection_field.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: deflection_field.png")
+ax2.plot(cs, half_lives, 'b-', linewidth=2)
+ax2.set_xlabel('Contraction factor c')
+ax2.set_ylabel('Half-life (retellings)')
+ax2.set_title(f'Humor Half-Life (h₀={h0_val}, ε={epsilon})')
+ax2.grid(True, alpha=0.3)
+ax2.set_ylim(0, 100)
 
+# Plot 3: Cauchy-Schwarz tightness
+ax3 = axes[2]
+n_vals = range(2, 51)
+ratios_uniform = []
+ratios_skewed = []
+ratios_random = []
 
-def geometric_decay_plot():
-    """Plot geometric decay of deflection under iteration."""
-    fig, ax = plt.subplots(figsize=(10, 6))
+for n in n_vals:
+    # Uniform: all equal
+    h_unif = np.ones(n)
+    r_u = np.sum(h_unif)**2 / (n * np.sum(h_unif**2))
+    ratios_uniform.append(r_u)
 
-    for k in [0.3, 0.5, 0.7, 0.9]:
-        E = lambda x, k=k: k * x
-        x0 = np.array([10.0])
-        deflections = []
-        y = x0.copy()
-        for n in range(20):
-            deflections.append(float(np.abs(E(y) - y)))
-            y = E(y)
+    # Skewed: one large, rest small
+    h_skew = np.zeros(n)
+    h_skew[0] = 10.0
+    h_skew[1:] = 0.1
+    r_s = np.sum(h_skew)**2 / (n * np.sum(h_skew**2))
+    ratios_skewed.append(r_s)
 
-        ns = np.arange(len(deflections))
-        ax.semilogy(ns, deflections, 'o-', label=f'k = {k}', markersize=4)
-        ax.semilogy(ns, deflections[0] * k ** ns, '--', alpha=0.5,
-                     label=f'k^n · δ₀ (k={k})')
+    # Random
+    np.random.seed(42)
+    h_rand = np.random.exponential(1.0, n)
+    r_r = np.sum(h_rand)**2 / (n * np.sum(h_rand**2))
+    ratios_random.append(r_r)
 
-    ax.set_xlabel('Iteration n', fontsize=12)
-    ax.set_ylabel('Deflection δ(Eⁿ(x))', fontsize=12)
-    ax.set_title('Geometric Deflection Decay', fontsize=14)
-    ax.legend(ncol=2, fontsize=9)
-    ax.grid(True, alpha=0.3)
+ax3.plot(list(n_vals), ratios_uniform, 'g-', linewidth=2, label='Uniform (tight)')
+ax3.plot(list(n_vals), ratios_random, 'b-', linewidth=2, label='Random (typical)')
+ax3.plot(list(n_vals), ratios_skewed, 'r-', linewidth=2, label='Skewed (loose)')
+ax3.axhline(y=1.0, color='black', linestyle=':', label='CS bound = 1')
+ax3.set_xlabel('Number of jokes n')
+ax3.set_ylabel('(Σhᵢ)² / (n·Σhᵢ²)')
+ax3.set_title('Comedy Cauchy-Schwarz Tightness')
+ax3.legend(fontsize=8)
+ax3.grid(True, alpha=0.3)
 
-    plt.tight_layout()
-    plt.savefig('geometric_decay.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: geometric_decay.png")
-
-
-def cauchy_schwarz_tightness():
-    """Plot how tight the Cauchy-Schwarz bound is for various distributions."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    ns = range(2, 101)
-    ratios_uniform = []
-    ratios_concentrated = []
-    ratios_random = []
-
-    rng = np.random.RandomState(42)
-
-    for n in ns:
-        # Uniform: all deflections equal
-        d_uniform = np.ones(n)
-        T = d_uniform.sum()
-        E_val = (d_uniform ** 2).sum()
-        ratios_uniform.append(T ** 2 / (n * E_val))
-
-        # Concentrated: one large, rest small
-        d_conc = np.zeros(n)
-        d_conc[0] = n
-        T = d_conc.sum()
-        E_val = (d_conc ** 2).sum()
-        ratios_concentrated.append(T ** 2 / (n * E_val))
-
-        # Random
-        d_rand = rng.exponential(1, n)
-        T = d_rand.sum()
-        E_val = (d_rand ** 2).sum()
-        ratios_random.append(T ** 2 / (n * E_val))
-
-    ax.plot(list(ns), ratios_uniform, 'b-', linewidth=2,
-            label='Uniform (all equal) — TIGHT')
-    ax.plot(list(ns), ratios_concentrated, 'r-', linewidth=2,
-            label='Concentrated (one large)')
-    ax.plot(list(ns), ratios_random, 'g-', alpha=0.7, linewidth=1,
-            label='Random (exponential)')
-    ax.axhline(y=1, color='k', linestyle='--', alpha=0.5, label='Bound: T²/(n·E) ≤ 1')
-
-    ax.set_xlabel('Number of points n', fontsize=12)
-    ax.set_ylabel('T² / (n · E)', fontsize=12)
-    ax.set_title('Cauchy-Schwarz Tightness for Deflection', fontsize=14)
-    ax.legend(fontsize=10)
-    ax.set_ylim(-0.05, 1.15)
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('cauchy_schwarz_tightness.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: cauchy_schwarz_tightness.png")
-
-
-if __name__ == "__main__":
-    deflection_field()
-    geometric_decay_plot()
-    cauchy_schwarz_tightness()
-    print("\nAll visualizations generated!")
+plt.tight_layout()
+plt.savefig('humor_contraction.png', dpi=150, bbox_inches='tight')
+print("Saved humor_contraction.png")
