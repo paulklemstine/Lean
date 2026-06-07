@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2b9ffe59",
     "filename": "non_well_founded_proofs_proofs_that_reference_them.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.3992,
     "title": "Convergent Self-Reference: An Ordinal Stratification Theory for Non-Well-Founded Proofs"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "non_well_founded_proofs_proofs_that_reference_them",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.3992,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Convergent Self-Reference: An Ordinal Stratification Theory for Non-Well-Founded Proofs"
     }

@@ -1870,6 +1870,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T02:01:15",
       "title": "Infinite Games Against Death: Immortality Strategies"
+    },
+    {
+      "cycle_id": "2b9ffe59",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Convergent Self-Reference Theory\n\n## Synthesis\n\nThis research cycle established the **Convergence Stratification** theory, revealing that monotonicity is the precise algebraic div",
+      "quality_score": 0.3992,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T03:06:49",
+      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
     }
   ],
   "entries": [
@@ -1915,7 +1925,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-07T02:01:15",
+  "last_updated": "2026-06-07T03:06:49",
   "open_questions": [
     {
       "context": "sorry",
@@ -1935,12 +1945,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "f16c8283",
-        "quality": 0.3312,
-        "theorems": 4,
-        "title": "Speculative: Mathematics as an Evolving Ecosystem"
-      },
       {
         "cycle_id": "aa79e64b",
         "quality": 0.31880000000000003,
@@ -1994,6 +1998,12 @@
         "quality": 0.67744,
         "theorems": 5,
         "title": "Infinite Games Against Death: Immortality Strategies"
+      },
+      {
+        "cycle_id": "2b9ffe59",
+        "quality": 0.3992,
+        "theorems": 5,
+        "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
       }
     ],
     "Bridges": [

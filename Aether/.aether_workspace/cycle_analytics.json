@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-07T02:34:13.028904+00:00",
+  "last_updated": "2026-06-07T03:06:49.858324+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -12580,6 +12580,41 @@
       "theorem_count": 34,
       "timestamp": "2026-06-07T02:34:12.976584+00:00",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6217,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 276,
+      "domain": "Applications",
+      "duration_seconds": 7953.14679312706,
+      "end_time": 1780801577.9251,
+      "files_integrated": 5,
+      "job_id": "2b9ffe59",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.7,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8907,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9469,
+        "novelty": 0.95,
+        "proof_depth": 0.9456,
+        "usefulness": 0.9728
+      },
+      "quality_score": 0.3992,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780793624.778307,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T03:06:49.801091+00:00",
+      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
     }
   ]
 }
