@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9092c870",
     "filename": "eml_quantum_activation_functions.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.28184,
     "title": "Quantum EML Activation Functions: Phase Neurons and the Unitarity Locus"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "eml_quantum_activation_functions",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.28184,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Quantum EML Activation Functions: Phase Neurons and the Unitarity Locus"
     }
