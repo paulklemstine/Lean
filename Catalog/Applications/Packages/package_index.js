@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "39bcb173",
     "filename": "non_desarguesian_worlds_geometry_without_desargues.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.41080000000000005,
     "title": "Non-Desarguesian Worlds: The Nucleus Spectrum"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "non_desarguesian_worlds_geometry_without_desargues",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.41080000000000005,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Non-Desarguesian Worlds: The Nucleus Spectrum"
     }
