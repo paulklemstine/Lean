@@ -1,298 +1,248 @@
+#!/usr/bin/env python3
 """
-Algorithms for the Adjunction Genome: Computational Models of Mathematical Mutations
+Theory Genome Algorithms: Type-hinted implementations of core algorithms.
 
-This module implements the core algorithms for classifying and composing
-adjunctions, computing Galois closures, and analyzing mutation spectra.
+Provides:
+1. Axiom closure computation
+2. Genome distance calculation
+3. Mutation path finding
+4. Theory spectrum enumeration
+5. Galois connection verification
 """
 
-from enum import Enum
-from dataclasses import dataclass
-from typing import Callable, TypeVar, Generic, Optional, Set, Tuple, List, Dict
-import itertools
-
-# ============================================================
-# Mutation Type Classification
-# ============================================================
-
-class MutationType(Enum):
-    """Classification of adjunctions by mutation severity."""
-    EQUIVALENCE = "equivalence"      # Both unit and counit are iso
-    REFLECTIVE = "reflective"        # Only counit is iso (gene deletion)
-    COREFLECTIVE = "coreflective"    # Only unit is iso (gene insertion)
-    GENERAL = "general"              # Neither is iso (full mutation)
-
-    def __repr__(self) -> str:
-        return f"MutationType.{self.name}"
+from typing import Callable, FrozenSet, List, Set, Tuple, Dict, Optional
+from dataclasses import dataclass, field
+from itertools import combinations, chain
 
 
-def classify_mutation(unit_is_iso: bool, counit_is_iso: bool) -> MutationType:
-    """Classify an adjunction by its mutation type.
-
-    Args:
-        unit_is_iso: Whether the unit natural transformation is an isomorphism.
-        counit_is_iso: Whether the counit natural transformation is an isomorphism.
-
-    Returns:
-        The mutation type classification.
-    """
-    if unit_is_iso and counit_is_iso:
-        return MutationType.EQUIVALENCE
-    elif counit_is_iso:
-        return MutationType.REFLECTIVE
-    elif unit_is_iso:
-        return MutationType.COREFLECTIVE
-    else:
-        return MutationType.GENERAL
+# Type aliases
+Element = int
+Predicate = Callable[[Element], bool]
+PredicateSet = FrozenSet[int]  # indices into a predicate list
 
 
-# ============================================================
-# Finite Category (for concrete computation)
-# ============================================================
+@dataclass(frozen=True)
+class TheoryGenome:
+    """A theory genome: a set of axiom indices over a finite universe."""
+    axiom_indices: FrozenSet[int]
+    universe: FrozenSet[Element]
+    predicate_list: Tuple[Predicate, ...]
 
-@dataclass
-class FiniteCategory:
-    """A finite category represented by objects and morphism sets.
+    def models(self) -> FrozenSet[Element]:
+        """Compute the model set."""
+        preds = [self.predicate_list[i] for i in self.axiom_indices]
+        return frozenset(
+            x for x in self.universe
+            if all(p(x) for p in preds)
+        )
 
-    Objects are integers 0..n-1.
-    Morphisms are represented as (source, target, label) triples.
-    """
-    n_objects: int
-    morphisms: Dict[Tuple[int, int], List[str]]
-    composition: Dict[Tuple[str, str], str]  # (f, g) -> g ∘ f
-    identities: Dict[int, str]
+    def axiom_closure(self) -> FrozenSet[int]:
+        """Compute the axiom closure: all predicates satisfied by every model."""
+        m = self.models()
+        return frozenset(
+            i for i in range(len(self.predicate_list))
+            if all(self.predicate_list[i](x) for x in m)
+        ) if m else frozenset(range(len(self.predicate_list)))
 
-    def hom(self, a: int, b: int) -> List[str]:
-        """Get the set of morphisms from a to b."""
-        return self.morphisms.get((a, b), [])
+    def extend(self, extra: FrozenSet[int]) -> 'TheoryGenome':
+        """Extend the theory by adding axioms."""
+        return TheoryGenome(
+            axiom_indices=self.axiom_indices | extra,
+            universe=self.universe,
+            predicate_list=self.predicate_list
+        )
 
-
-# ============================================================
-# Galois Connection
-# ============================================================
-
-T = TypeVar('T')
-S = TypeVar('S')
-
-
-@dataclass
-class GaloisConnection(Generic[T, S]):
-    """A Galois connection between two partially ordered sets.
-
-    l: T -> S (left adjoint / lower adjoint)
-    u: S -> T (right adjoint / upper adjoint)
-
-    Satisfying: l(a) <= b iff a <= u(b)
-    """
-    l: Callable[[T], S]
-    u: Callable[[S], T]
-    le_domain: Callable[[T, T], bool]
-    le_codomain: Callable[[S, S], bool]
-
-    def closure(self, a: T) -> T:
-        """Compute the Galois closure u(l(a))."""
-        return self.u(self.l(a))
-
-    def kernel(self, b: S) -> S:
-        """Compute the Galois kernel l(u(b))."""
-        return self.l(self.u(b))
-
-    def is_closed(self, a: T) -> bool:
-        """Check if a is a fixed point of the closure."""
-        return self.closure(a) == a
-
-    def verify_unit(self, a: T) -> bool:
-        """Verify a <= u(l(a))."""
-        return self.le_domain(a, self.closure(a))
-
-    def verify_counit(self, b: S) -> bool:
-        """Verify l(u(b)) <= b."""
-        return self.le_codomain(self.kernel(b), b)
-
-    def verify_idempotent(self, a: T) -> bool:
-        """Verify u(l(u(l(a)))) = u(l(a))."""
-        cl_a = self.closure(a)
-        cl_cl_a = self.closure(cl_a)
-        return cl_a == cl_cl_a
+    def is_closed(self) -> bool:
+        """Check if the theory is closed (axioms == axiom closure)."""
+        return self.axiom_indices == self.axiom_closure()
 
 
-# ============================================================
-# Adjunction Chain Composition
-# ============================================================
-
-@dataclass
-class AdjunctionData:
-    """Data representing a finite adjunction between finite categories.
-
-    The hom-set bijection Hom(F(X), Y) ≅ Hom(X, G(Y)) is stored explicitly.
-    """
-    source: FiniteCategory
-    target: FiniteCategory
-    F_obj: Dict[int, int]  # Object map of F
-    G_obj: Dict[int, int]  # Object map of G
-    unit: Dict[int, str]   # η_X : X -> GF(X)
-    counit: Dict[int, str] # ε_Y : FG(Y) -> Y
-    unit_is_iso: Dict[int, bool]   # Whether η_X is iso
-    counit_is_iso: Dict[int, bool] # Whether ε_Y is iso
-
-    def mutation_type(self) -> MutationType:
-        """Classify this adjunction's mutation type."""
-        all_unit_iso = all(self.unit_is_iso.values())
-        all_counit_iso = all(self.counit_is_iso.values())
-        return classify_mutation(all_unit_iso, all_counit_iso)
-
-
-def compose_adjunctions(adj1: AdjunctionData, adj2: AdjunctionData) -> Dict:
-    """Compose two adjunctions: (F₁⋙F₂) ⊣ (G₂⋙G₁).
-
-    Returns:
-        Dictionary with composite adjunction data.
-    """
-    # Compose object maps
-    F_comp = {x: adj2.F_obj[adj1.F_obj[x]] for x in adj1.F_obj}
-    G_comp = {y: adj1.G_obj[adj2.G_obj[y]] for y in adj2.G_obj}
-
-    return {
-        "F_composite": F_comp,
-        "G_composite": G_comp,
-        "source_mutation": adj1.mutation_type(),
-        "target_mutation": adj2.mutation_type(),
-    }
-
-
-# ============================================================
-# Mutation Spectrum Analysis
-# ============================================================
-
-def mutation_spectrum_stats(adjunctions: List[AdjunctionData]) -> Dict[MutationType, int]:
-    """Compute the distribution of mutation types in a collection of adjunctions.
-
-    Args:
-        adjunctions: List of adjunction data.
-
-    Returns:
-        Dictionary mapping mutation types to counts.
-    """
-    counts: Dict[MutationType, int] = {mt: 0 for mt in MutationType}
-    for adj in adjunctions:
-        counts[adj.mutation_type()] += 1
-    return counts
-
-
-# ============================================================
-# Galois Connection Examples
-# ============================================================
-
-def subgroup_closure_galois(group_size: int) -> GaloisConnection[frozenset, frozenset]:
-    """Create the Galois connection for subgroup lattice of Z_n.
-
-    l: subsets -> subgroups (closure to generated subgroup)
-    u: subgroups -> subsets (forgetful inclusion)
-    """
-    def generate_subgroup(s: frozenset) -> frozenset:
-        """Generate the subgroup of Z_n containing s."""
-        if not s:
-            return frozenset({0})
-        # Find gcd of all elements
-        from math import gcd
-        from functools import reduce
-        g = reduce(gcd, s)
-        if g == 0:
-            return frozenset({0})
-        return frozenset(i for i in range(group_size) if i % g == 0)
-
-    def include(s: frozenset) -> frozenset:
-        """Include subgroup as a subset."""
-        return s
-
-    return GaloisConnection(
-        l=generate_subgroup,
-        u=include,
-        le_domain=lambda a, b: a.issubset(b),
-        le_codomain=lambda a, b: a.issubset(b),
+def theory_of(elements: FrozenSet[Element],
+              predicates: Tuple[Predicate, ...]) -> FrozenSet[int]:
+    """Compute the theory generated by a set of elements."""
+    if not elements:
+        return frozenset(range(len(predicates)))
+    return frozenset(
+        i for i in range(len(predicates))
+        if all(predicates[i](x) for x in elements)
     )
 
 
-def divisibility_galois() -> GaloisConnection[int, int]:
-    """Create the Galois connection for divisibility on positive integers.
+def genome_distance(t1: TheoryGenome, t2: TheoryGenome) -> int:
+    """Compute the genome distance (cardinality of symmetric difference of closures)."""
+    c1 = t1.axiom_closure()
+    c2 = t2.axiom_closure()
+    return len(c1.symmetric_difference(c2))
 
-    l(a) = a (identity on objects)
-    u(b) = b (identity on objects)
-    a | b iff a | b
 
-    More interesting: l = (*k), u = gcd(-, k) for fixed k.
+def genome_distance_set(t1: TheoryGenome, t2: TheoryGenome) -> FrozenSet[int]:
+    """Compute the genome distance as a set of differing predicate indices."""
+    c1 = t1.axiom_closure()
+    c2 = t2.axiom_closure()
+    return c1.symmetric_difference(c2)
+
+
+def verify_galois_adjunction(
+    s: FrozenSet[Element],
+    axiom_indices: FrozenSet[int],
+    universe: FrozenSet[Element],
+    predicates: Tuple[Predicate, ...]
+) -> bool:
+    """Verify: S ⊆ models(Ax) ↔ Ax ⊆ theoryOf(S)."""
+    t = TheoryGenome(axiom_indices, universe, predicates)
+    m = t.models()
+    th = theory_of(s, predicates)
+
+    lhs = s <= m
+    rhs = axiom_indices <= th
+    return lhs == rhs
+
+
+def mutation_fiber(
+    base: TheoryGenome,
+    new_axioms: FrozenSet[int]
+) -> Tuple[FrozenSet[Element], Dict[Element, List[int]]]:
     """
-    k = 6  # Fixed multiplier
+    Compute the mutation fiber: lost models and their axiom violations.
 
-    def multiply_k(a: int) -> int:
-        return a * k
+    Returns:
+        (lost_models, violations) where violations maps each lost model
+        to the list of new axiom indices it violates.
+    """
+    extended = base.extend(new_axioms)
+    base_models = base.models()
+    ext_models = extended.models()
+    lost = base_models - ext_models
 
-    def div_by_gcd(b: int) -> int:
-        from math import gcd
-        g = gcd(b, k)
-        return b // g
+    violations: Dict[Element, List[int]] = {}
+    for x in lost:
+        violations[x] = [
+            i for i in new_axioms
+            if not base.predicate_list[i](x)
+        ]
+    return lost, violations
 
-    return GaloisConnection(
-        l=multiply_k,
-        u=div_by_gcd,
-        le_domain=lambda a, b: a <= b,
-        le_codomain=lambda a, b: a <= b,
+
+def find_mutation_path(
+    t1: TheoryGenome,
+    t2: TheoryGenome
+) -> List[TheoryGenome]:
+    """
+    Find a mutation path: sequence of theories where each consecutive
+    pair differs by exactly one axiom.
+
+    Uses the symmetric difference to determine which axioms to toggle.
+    """
+    diff = t1.axiom_indices.symmetric_difference(t2.axiom_indices)
+    path = [t1]
+    current_axioms = set(t1.axiom_indices)
+
+    for ax_idx in sorted(diff):
+        if ax_idx in t2.axiom_indices:
+            current_axioms.add(ax_idx)
+        else:
+            current_axioms.discard(ax_idx)
+        path.append(TheoryGenome(
+            frozenset(current_axioms),
+            t1.universe,
+            t1.predicate_list
+        ))
+
+    return path
+
+
+def enumerate_spectrum(
+    base: TheoryGenome
+) -> List[TheoryGenome]:
+    """Enumerate all closed sub-theories of a given theory."""
+    n = len(base.predicate_list)
+    closed_theories = []
+
+    for size in range(n + 1):
+        for subset in combinations(range(n), size):
+            candidate = TheoryGenome(
+                frozenset(subset),
+                base.universe,
+                base.predicate_list
+            )
+            if candidate.axiom_indices <= base.axiom_indices and candidate.is_closed():
+                closed_theories.append(candidate)
+
+    return closed_theories
+
+
+def verify_triangle_inequality(
+    t1: TheoryGenome,
+    t2: TheoryGenome,
+    t3: TheoryGenome
+) -> Tuple[bool, int, int, int]:
+    """Verify triangle inequality d(t1,t3) ≤ d(t1,t2) + d(t2,t3)."""
+    d12 = genome_distance(t1, t2)
+    d23 = genome_distance(t2, t3)
+    d13 = genome_distance(t1, t3)
+    return d13 <= d12 + d23, d12, d23, d13
+
+
+def verify_idempotence(t: TheoryGenome) -> Tuple[bool, bool]:
+    """
+    Verify idempotence of both closure operators.
+    Returns (models_idempotent, axioms_idempotent).
+    """
+    # models(axiomClosure(T)) == models(T)
+    closure = t.axiom_closure()
+    closed_theory = TheoryGenome(closure, t.universe, t.predicate_list)
+    models_idem = closed_theory.models() == t.models()
+
+    # theoryOf(modelClosure(S)) == theoryOf(S)
+    m = t.models()
+    th = theory_of(m, t.predicate_list)
+    model_closure = TheoryGenome(th, t.universe, t.predicate_list).models()
+    axioms_idem = theory_of(model_closure, t.predicate_list) == th
+
+    return models_idem, axioms_idem
+
+
+# --- Main demo ---
+if __name__ == "__main__":
+    universe = frozenset(range(8))
+
+    predicates = (
+        lambda x: x % 2 == 0,   # 0: even
+        lambda x: x > 0,        # 1: positive
+        lambda x: x < 6,        # 2: < 6
+        lambda x: x != 0,       # 3: nonzero
+        lambda x: x < 4,        # 4: < 4
+        lambda x: x in {1,2,4}, # 5: power of 2
+        lambda x: x % 3 == 0,   # 6: multiple of 3
+        lambda x: x in {2,3,5,7}, # 7: prime
     )
+    pred_names = ["even", "pos", "<6", "≠0", "<4", "pow2", "3|x", "prime"]
 
+    t_even = TheoryGenome(frozenset({0}), universe, predicates)
+    t_pos = TheoryGenome(frozenset({1}), universe, predicates)
+    t_prime = TheoryGenome(frozenset({7}), universe, predicates)
 
-# ============================================================
-# Evolutionary Path Analysis
-# ============================================================
+    print("=== Genome Distance Demo ===")
+    print(f"d(even, pos) = {genome_distance(t_even, t_pos)}")
+    print(f"d(even, prime) = {genome_distance(t_even, t_prime)}")
+    print(f"d(pos, prime) = {genome_distance(t_pos, t_prime)}")
 
-@dataclass
-class EvolutionaryPath:
-    """A sequence of adjunctions forming an evolutionary path between theories."""
-    steps: List[MutationType]
+    ok, d12, d23, d13 = verify_triangle_inequality(t_even, t_pos, t_prime)
+    print(f"Triangle: d(even,prime)={d13} ≤ d(even,pos)+d(pos,prime)={d12+d23}: {ok}")
 
-    @property
-    def length(self) -> int:
-        return len(self.steps)
+    print("\n=== Idempotence Verification ===")
+    for name, t in [("even", t_even), ("pos", t_pos), ("prime", t_prime)]:
+        mi, ai = verify_idempotence(t)
+        print(f"  {name}: models_idem={mi}, axioms_idem={ai}")
 
-    @property
-    def has_equivalence(self) -> bool:
-        return MutationType.EQUIVALENCE in self.steps
+    print("\n=== Mutation Path ===")
+    path = find_mutation_path(t_even, t_prime)
+    for i, step in enumerate(path):
+        axiom_names = [pred_names[j] for j in sorted(step.axiom_indices)]
+        print(f"  Step {i}: axioms={axiom_names}, models={sorted(step.models())}")
 
-    @property
-    def mutation_complexity(self) -> int:
-        """Count non-trivial mutations (not equivalences)."""
-        return sum(1 for s in self.steps if s != MutationType.EQUIVALENCE)
-
-    def simplify(self) -> 'EvolutionaryPath':
-        """Remove trivial (equivalence) steps."""
-        return EvolutionaryPath([s for s in self.steps if s != MutationType.EQUIVALENCE])
-
-    def factorize(self) -> Dict[MutationType, int]:
-        """Factor the path into mutation type counts."""
-        counts: Dict[MutationType, int] = {}
-        for s in self.steps:
-            counts[s] = counts.get(s, 0) + 1
-        return counts
-
-
-def all_paths(n_steps: int) -> List[EvolutionaryPath]:
-    """Generate all possible evolutionary paths of given length."""
-    types = list(MutationType)
-    paths = []
-    for combo in itertools.product(types, repeat=n_steps):
-        paths.append(EvolutionaryPath(list(combo)))
-    return paths
-
-
-def path_statistics(n_steps: int) -> Dict:
-    """Compute statistics over all evolutionary paths of given length."""
-    paths = all_paths(n_steps)
-    complexities = [p.mutation_complexity for p in paths]
-    return {
-        "n_paths": len(paths),
-        "avg_complexity": sum(complexities) / len(complexities) if complexities else 0,
-        "max_complexity": max(complexities) if complexities else 0,
-        "trivial_paths": sum(1 for p in paths if p.mutation_complexity == 0),
-        "type_distribution": {
-            mt.name: sum(1 for p in paths if mt in p.steps)
-            for mt in MutationType
-        },
-    }
+    print("\n=== Mutation Fiber ===")
+    lost, violations = mutation_fiber(t_pos, frozenset({0}))  # add "even" to "positive"
+    print(f"  Adding 'even' to 'positive': lost models = {sorted(lost)}")
+    for x, v in sorted(violations.items()):
+        print(f"    {x} violates: {[pred_names[i] for i in v]}")

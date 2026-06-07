@@ -1,215 +1,216 @@
-# The Adjunction Genome: A Structural Theory of Mathematical Mutations
+# The Theory Genome: Galois Connections, Closure Operators, and Metrics on the Space of Mathematical Theories
 
 ## Abstract
 
-We develop a formal theory of *mathematical mutations* — transformations between mathematical theories modeled as adjunctions between categories. We introduce the *mutation spectrum*, classifying adjunctions into four types (equivalence, reflective, coreflective, general) based on the isomorphism properties of their unit and counit natural transformations. We prove that equivalences correspond precisely to "zero mutations" where both unit and counit are isomorphisms, that reflective subcategory embeddings (gene deletions) compose, and that every adjunction generates a well-behaved monad capturing the theory's self-image under mutation. We establish a bridge to order theory through Galois connections, proving that the associated closure operators are idempotent and characterizing their fixed points. All results are formalized and verified in Lean 4 with Mathlib, yielding 18 machine-checked theorems.
+We introduce the *Theory Genome* framework, a formal mathematical structure that treats the axiom set of a mathematical theory as its genetic code. We prove that the axiom–model correspondence forms a Galois connection, yielding closure operators on both axiom sets and model sets, with full idempotence. We establish that theory extensions (mutations) decompose model sets as intersections, compose associatively and commutatively, and that the "fiber" of a mutation precisely characterizes which models are lost. We define a genome distance via symmetric difference of axiom closures and prove it satisfies all pseudometric axioms. We prove that closed theories are uniquely determined by their models — a result connecting to Morita equivalence. All results are formally verified in Lean 4 with Mathlib.
+
+**Keywords**: Galois connections, closure operators, model theory, category theory, theory morphisms, metric spaces, formal verification
 
 ## 1. Introduction
 
-Category theory, since its introduction by Eilenberg and Mac Lane, has served as a unifying language for mathematics. The central insight — that mathematical structures are best understood through their morphisms rather than their elements — has led to profound connections across algebra, topology, geometry, and logic.
+The organizing question of this work is: *What is the natural geometry of the space of mathematical theories?* Every mathematical theory — groups, rings, topological spaces, partial orders — is determined by a set of axioms. These axioms select, from a universe of potential structures, exactly those that satisfy them. We call this axiom set the *genome* of the theory.
 
-In this paper, we develop the metaphor of the *adjunction genome*: the idea that adjunctions between categories serve as the "base pairs" of mathematical DNA, encoding how theories relate, transform, and evolve. While this metaphor has been implicit in category theory since Kan's introduction of adjoint functors, we make it precise through a systematic classification and structural analysis.
+The genome metaphor is not merely illustrative. We prove that the axiom–model correspondence has the exact algebraic structure of a Galois connection, the same structure underlying Galois theory of field extensions, Stone duality, and formal concept analysis. From this single structural fact, a rich theory flows: closure operators, a complete lattice of closed theories, a pseudometric on the theory space, and a characterization of theory equivalence.
 
-### 1.1 Relation to Existing Work
+### 1.1 Related Work
 
-This work builds on several threads in the existing catalog:
+The axiom–model Galois connection is implicit in Birkhoff's variety theorem (1935) and was made explicit in formal concept analysis (Wille, 1982). Our contribution is the systematic development of the *metric* and *evolutionary* aspects: the genome distance, mutation fibers, and decomposition results. The categorical perspective on theory morphisms connects to Lawvere's functorial semantics (1963) and Makkai–Reyes' categorical logic.
 
-- **`Bridges/KnuthBendixCompletion.lean`** (`sequence_preserves_theory`): Establishes that sequences of theory transformations preserve theory structure. Our adjunction chain composition theorem (Theorem 4.1) generalizes this to arbitrary categorical settings.
-- **`Bridges/LawvereThermodynamicGalois.lean`** (`derivability_closed_iff_theory_of_observable`): Connects logical derivability to Galois connections. Our Galois closure theorems (Section 5) provide the categorical underpinning.
-- **`Bridges/OverlapClassRigidity.lean`** (`overlapDegree_le_one_iff`): The classification of overlap degrees mirrors our mutation spectrum classification.
+## 2. Definitions
 
-### 1.2 Contributions
+### 2.1 Theory Genome
 
-1. **Mutation Spectrum** (Section 3): A four-type classification of adjunctions based on unit/counit isomorphism properties.
-2. **Equivalence Characterization** (Theorem 3.1): An adjunction is an equivalence iff it is a "zero mutation."
-3. **Monad Laws** (Section 4): The adjunction-generated monad satisfies both unit laws, establishing the coherence of round-trip mutations.
-4. **Galois Bridge** (Section 5): Galois closures are idempotent, and their fixed points are exactly the range of the right adjoint — connecting the dynamic (mutation) and static (fixpoint) views.
-5. **Composition Theorems** (Section 6): Reflective subcategory inclusions compose, and theory mutations chain coherently.
-6. **Structural Invariance** (Section 7): Right adjoints preserve terminal objects; left adjoints preserve initial objects.
+**Definition 2.1** (Theory Genome). A *theory genome* over a type α is a pair T = (α, Ax) where Ax ⊆ (α → Prop) is a set of axioms (predicates on α).
 
-## 2. Preliminaries
+**Definition 2.2** (Models). The *model set* of T is:
+$$\text{models}(T) = \{x \in \alpha \mid \forall P \in \text{Ax}, P(x)\}$$
 
-### 2.1 Categories and Functors
+**Definition 2.3** (Theory of a Set). For S ⊆ α, the *theory generated by S* is:
+$$\text{theoryOf}(S) = \{P : \alpha \to \text{Prop} \mid \forall x \in S, P(x)\}$$
 
-We work in the framework of Mathlib's category theory library. A *category* C consists of a type of objects with morphism sets between them, satisfying associativity and identity laws. A *functor* F : C → D maps objects and morphisms while preserving composition and identities.
+### 2.2 Theory Morphisms
 
-### 2.2 Adjunctions
+**Definition 2.4** (Theory Morphism). A *morphism* from T₁ to T₂ is evidence that T₁.axioms ⊆ T₂.axioms. This makes the collection of theories a preorder category.
 
-An *adjunction* F ⊣ G between functors F : C → D and G : D → C consists of:
-- A **unit** η : id_C → G ∘ F
-- A **counit** ε : F ∘ G → id_D
+### 2.3 Theory Extension
 
-satisfying the **triangle identities**:
-- ε_{FX} ∘ F(η_X) = id_{FX} for all X in C
-- G(ε_Y) ∘ η_{GY} = id_{GY} for all Y in D
+**Definition 2.5** (Extension). The *extension* of T by extra axioms is T.extend(extra) = (α, Ax ∪ extra).
 
-### 2.3 Galois Connections
+### 2.4 Axiom Closure
 
-A *Galois connection* between preorders (α, ≤) and (β, ≤) consists of monotone functions l : α → β and u : β → α satisfying: l(a) ≤ b ↔ a ≤ u(b).
+**Definition 2.6** (Axiom Closure). The *axiom closure* of T is axiomClosure(T) = theoryOf(models(T)) — the set of all predicates satisfied by every model.
 
-## 3. The Mutation Spectrum
+### 2.5 Genome Distance
 
-### 3.1 Classification
+**Definition 2.7** (Genome Distance). The *genome distance* between T₁ and T₂ is:
+$$d(T_1, T_2) = (\text{cl}(T_1) \setminus \text{cl}(T_2)) \cup (\text{cl}(T_2) \setminus \text{cl}(T_1))$$
+where cl denotes the axiom closure.
 
-We classify adjunctions into four mutation types:
+### 2.6 Theory Fiber
 
-| Type | Unit | Counit | Interpretation |
-|------|------|--------|----------------|
-| Equivalence | Iso | Iso | Zero mutation |
-| Reflective | — | Iso | Gene deletion |
-| Coreflective | Iso | — | Gene insertion |
-| General | — | — | Full mutation |
+**Definition 2.8** (Theory Fiber). A *theory fiber* from T₁ to T₂ consists of a set of new axioms such that T₂.axioms = T₁.axioms ∪ newAxioms. It captures the "kernel" of a theory extension.
 
-### 3.2 The Equivalence Characterization
+## 3. Main Results
 
-**Theorem 3.1** (`adjunction_equiv_iff_zero_mutation`). *An adjunction F ⊣ G satisfies: both unit and counit are componentwise isomorphisms if and only if F is an equivalence of categories.*
+### 3.1 The Fundamental Galois Connection
 
-*Proof sketch.* (→) If all unit components are iso, F is faithful and full (by cancellation). If all counit components are iso, F is essentially surjective (every Y ≅ F(G(Y))). Together, F is an equivalence. (←) If F is an equivalence, the adjunction unit and counit coincide with the equivalence's unit and counit isos.
+**Theorem 3.1** (Genome Galois Adjunction). For any set S ⊆ α and axiom set Ax:
+$$S \subseteq \text{models}(\text{Ax}) \iff \text{Ax} \subseteq \text{theoryOf}(S)$$
 
-**Corollary** (`equivalence_unit_is_iso`, `equivalence_counit_is_iso`). Every equivalence produces an adjunction with isomorphic unit and counit components.
+*Proof sketch*. (→) If every element of S satisfies every axiom in Ax, then every axiom in Ax is a property shared by all elements of S. (←) If every axiom in Ax is shared by all elements of S, then every element of S satisfies every axiom. □
 
-This characterization is the foundation of the mutation spectrum: it tells us exactly when a theory transformation preserves all information.
+**Theorem 3.2** (Galois Connection). The pair (theoryOf, models) forms a GaloisConnection in the sense of Mathlib, between Set α and (Set (α → Prop))ᵒᵈ.
 
-### 3.3 The Identity as Zero Mutation
+This is the foundational result from which all others flow.
 
-**Theorem 3.2** (`identity_adjunction_unit_eq`, `identity_adjunction_counit_eq`). *The identity adjunction id ⊣ id on any category C has unit = id and counit = id.*
+### 3.2 Closure Operator Properties
 
-This is the "ground state" — the mutation that changes nothing.
+**Theorem 3.3** (Extensiveness). T.axioms ⊆ axiomClosure(T) and S ⊆ modelClosure(S).
 
-## 4. The Monad: A Theory's Self-Map
+*Proof*. Follows from the Galois adjunction applied to the identity inclusion. □
 
-### 4.1 Triangle Identities
+**Theorem 3.4** (Idempotence of Model Closure). models(axiomClosure(T)) = models(T).
 
-**Theorem 4.1** (`adjunction_triangle_left`). *For any adjunction F ⊣ G, F(η_X) ≫ ε_{FX} = id_{FX}.*
+*Proof*. (⊆) By extensiveness and antitonicity. (⊇) If x ∈ models(T) and P ∈ axiomClosure(T) = theoryOf(models(T)), then P(x) since x ∈ models(T). □
 
-**Theorem 4.2** (`adjunction_triangle_right`). *For any adjunction F ⊣ G, η_{GY} ≫ G(ε_Y) = id_{GY}.*
+**Theorem 3.5** (Idempotence of Axiom Closure). theoryOf(modelClosure(S)) = theoryOf(S).
 
-These are the "conservation laws" of the adjunction genome.
+*Proof*. (⊆) By extensiveness of modelClosure and antitonicity of theoryOf. (⊇) If P ∈ theoryOf(S) and x ∈ modelClosure(S), then x satisfies all predicates in theoryOf(S), including P. □
 
-### 4.2 Monad Laws
+**PEGB for Theorem 3.4**:
+- **P**roof: Complete formal proof in Lean 4.
+- **E**xample: Consider α = ℤ and Ax = {λ x, x > 0}. Then models = ℤ⁺, axiomClosure = {P | ∀ n > 0, P n} (all properties of positive integers), and models(axiomClosure) = ℤ⁺ again.
+- **G**eneralization: The idempotence holds for any Galois connection, not just the axiom–model one. This is a general property of closure operators arising from Galois connections.
+- **B**oundary: The closure operator is NOT idempotent before composition: in general, theoryOf(S) ≠ theoryOf(theoryOf(S)) because theoryOf maps sets of elements to sets of predicates, so iterated application changes types.
 
-Every adjunction F ⊣ G generates a monad (T, η, μ) where T = G ∘ F, η is the adjunction unit, and μ_X = G(ε_{FX}).
+### 3.3 Antitonicity
 
-**Theorem 4.3** (`adjunction_monad_left_unit`). *η_{T(X)} ≫ μ_X = id, i.e., η_{GFX} ≫ G(ε_{FX}) = id.*
+**Theorem 3.6** (Antitonicity of Models). If T₁.axioms ⊆ T₂.axioms, then T₂.models ⊆ T₁.models.
 
-**Theorem 4.4** (`adjunction_monad_right_unit`). *T(η_X) ≫ μ_X = id, i.e., G(F(η_X)) ≫ G(ε_{FX}) = id.*
+**Theorem 3.7** (Antitonicity of TheoryOf). If S₁ ⊆ S₂, then theoryOf(S₂) ⊆ theoryOf(S₁).
 
-### 4.3 Comonad and Naturality
+These establish that both maps in the Galois connection are antitone, as required.
 
-**Theorem 4.5** (`adjunction_monad_unit_natural`). *The monad unit is natural: f ≫ η_Y = η_X ≫ GF(f).*
+### 3.4 Mutation Algebra
 
-**Theorem 4.6** (`adjunction_comonad_counit_natural`). *The comonad counit is natural: FG(f) ≫ ε_Y = ε_X ≫ f.*
+**Theorem 3.8** (Extension as Intersection). (T.extend extra).models = T.models ∩ models(extra).
 
-## 5. The Galois Bridge
+*Proof*. An element satisfies all axioms in Ax ∪ extra iff it satisfies all in Ax and all in extra. □
 
-### 5.1 Order-Theoretic Shadows
+**PEGB for Theorem 3.8**:
+- **P**roof: Formal Lean proof via set extensionality.
+- **E**xample: T = group theory, extra = {commutativity}. Then models(T.extend extra) = abelian groups = groups ∩ commutative magmas.
+- **G**eneralization: For any family of extensions, models(T.extend (⋃ᵢ eᵢ)) = T.models ∩ ⋂ᵢ models(eᵢ).
+- **B**oundary: The intersection can be empty (inconsistent theory). For example, extending with {λ x, P x} and {λ x, ¬P x} gives ∅.
 
-Every adjunction between thin categories (preorders viewed as categories) corresponds to a Galois connection. This bridge connects our categorical theory to classical order theory.
+**Theorem 3.9** (Composition of Extensions). (T.extend e₁).extend e₂ = T.extend (e₁ ∪ e₂).
 
-**Theorem 5.1** (`galois_connection_unit_le`). *For a Galois connection (l, u), a ≤ u(l(a)) for all a.* (The order-theoretic unit.)
+**Theorem 3.10** (Commutativity of Extensions). (T.extend e₁).extend e₂ = (T.extend e₂).extend e₁.
 
-**Theorem 5.2** (`galois_connection_counit_le`). *l(u(b)) ≤ b for all b.* (The order-theoretic counit.)
+### 3.5 Genome Distance
 
-### 5.2 Closure Idempotence
+**Theorem 3.11** (Pseudometric Properties). The genome distance satisfies:
+1. d(T, T) = ∅ (zero self-distance)
+2. d(T₁, T₂) = d(T₂, T₁) (symmetry)
+3. d(T₁, T₃) ⊆ d(T₁, T₂) ∪ d(T₂, T₃) (triangle inequality)
 
-**Theorem 5.3** (`galois_closure_idempotent`). *For a Galois connection (l, u) between partial orders, u(l(u(l(a)))) = u(l(a)).*
+**PEGB for Theorem 3.11**:
+- **P**roof: Self-distance and symmetry are immediate. Triangle inequality follows from set-theoretic reasoning: if P ∈ cl(T₁)\cl(T₃), then either P ∈ cl(T₂) (so P ∈ cl(T₂)\cl(T₃)) or P ∉ cl(T₂) (so P ∈ cl(T₁)\cl(T₂)).
+- **E**xample: d(groups, abelian groups) = the logical consequences of commutativity that don't follow from general group axioms.
+- **G**eneralization: This construction works for any pair of closure operators on a common universe, not just axiom–model closures.
+- **B**oundary: The distance is a pseudometric, not a metric: d(T₁, T₂) = ∅ does not imply T₁ = T₂ (they may have different axioms but the same closure). It IS a metric on closed theories, by the uniqueness theorem.
 
-*Proof.* By antisymmetry. The ≥ direction: u(l(a)) ≤ u(l(u(l(a)))) follows from the unit inequality applied to u(l(a)). The ≤ direction: l(u(l(a))) ≤ l(a) by the counit inequality, so u(l(u(l(a)))) ≤ u(l(a)) by monotonicity of u.
+### 3.6 Theory Fibers
 
-This is the order-theoretic shadow of the monad associativity law. It means: *once a genome stabilizes, it stays stable.*
+**Theorem 3.12** (Fiber Characterization). If T₂ = T₁.extend(newAxioms), then:
+$$T_1.\text{models} \setminus T_2.\text{models} = \{x \in T_1.\text{models} \mid \exists P \in \text{newAxioms}, \neg P(x)\}$$
 
-### 5.3 Fixed Point Characterization
+This precisely characterizes the "casualties" of a theory mutation: an existing model is lost if and only if it violates at least one new axiom. There are no collateral losses.
 
-**Theorem 5.4** (`galois_closure_fixed_iff`). *u(l(a)) = a if and only if a ∈ range(u).*
+**PEGB for Theorem 3.12**:
+- **P**roof: Formal proof using the definition of extension and model membership.
+- **E**xample: Mutating monoid theory with commutativity loses exactly the non-commutative monoids.
+- **G**eneralization: For multiple new axioms, the lost models partition according to which new axiom they first violate (in some well-ordering).
+- **B**oundary: If newAxioms are all consequences of existing axioms, no models are lost (the fiber is empty).
 
-*Proof.* (→) If u(l(a)) = a, then a = u(l(a)) ∈ range(u). (←) If a = u(b), then u(l(a)) = u(l(u(b))). By the counit inequality, l(u(b)) ≤ b, so u(l(u(b))) ≤ u(b) = a. The reverse follows from the unit inequality.
+### 3.7 Closed Theory Uniqueness
 
-**Interpretation:** The "stable genomes" — elements fixed by the mutation cycle — are exactly those expressible in the simpler theory. This connects the dynamic view (applying mutations) with the static view (characterizing fixed points).
+**Theorem 3.13** (Uniqueness of Closed Theories). If T₁ and T₂ are both closed and have the same models, then T₁ = T₂.
 
-### 5.4 Monotonicity
+**Theorem 3.14** (Closure is Closed). For any theory T, axiomClosure(T) is a closed theory.
 
-**Theorem 5.5** (`galois_closure_monotone`). *The closure u ∘ l is monotone.*
+**Theorem 3.15** (Same Models ⟹ Same Closure). If T₁.models = T₂.models, then axiomClosure(T₁) = axiomClosure(T₂).
 
-This follows immediately from the composition of monotone functions.
+### 3.8 Contravariant Functoriality
 
-## 6. Composition and Evolutionary Paths
+**Theorem 3.16** (Models as Contravariant Functor). Theory morphisms compose (forming a category), and the models map reverses inclusions contravariantly. If T₁ → T₂ → T₃, then models(T₃) ⊆ models(T₁).
 
-### 6.1 Adjunction Composition
+## 4. Conjectures
 
-**Theorem 6.1** (`adjunction_comp_exists`). *Given F₁ ⊣ G₁ : C ⇄ D and F₂ ⊣ G₂ : D ⇄ E, the composite (F₁ ⋙ F₂) ⊣ (G₂ ⋙ G₁) is an adjunction C ⇄ E.*
+### 4.1 Decomposition Conjecture
 
-This is fundamental: evolutionary paths compose. Two successive mutations yield a single well-defined mutation.
+**Conjecture 4.1**. Every finite symmetric difference between theory genomes can be decomposed into a sequence of elementary point mutations (single-axiom changes). Moreover, the length of this decomposition equals the cardinality of the symmetric difference.
 
-### 6.2 Reflective Composition
+**Testable prediction**: For any two finitely axiomatized theories T₁ and T₂ with |Ax₁ Δ Ax₂| = n, there exists a path of n theories T₁ = S₀, S₁, ..., Sₙ = T₂ where each consecutive pair differs by exactly one axiom.
 
-**Theorem 6.2** (`reflective_composition_counit`). *If the counits of adj₁ and adj₂ are isomorphisms at the relevant components, then the counit of the composite adjunction is also an isomorphism.*
+### 4.2 Morita Genome Conjecture
 
-**Interpretation:** Gene deletions compose. If theory D is a simplification of C, and theory E is a simplification of D, then E is a simplification of C.
+**Conjecture 4.2**. Two closed theories are Morita-equivalent (have equivalent model categories) if and only if they have the same axiom closure. Equivalently, for closed theories, categorical equivalence of models implies identity of axioms.
 
-### 6.3 Equivalence Composition
+## 5. Algorithms
 
-**Theorem 6.3** (`equiv_comp_symm_is_equiv`). *For any equivalence e : C ≌ D, the composite e.trans(e.symm) is an equivalence.*
+### 5.1 Axiom Closure Computation
 
-This confirms that applying a zero mutation and its reverse yields a zero mutation — round-trip invariance.
+Given a finite axiom set and a computable universe, the axiom closure can be computed by:
+1. Enumerate all models (elements satisfying all axioms).
+2. For each candidate predicate, check if all models satisfy it.
+3. Return the set of all universally satisfied predicates.
 
-## 7. Structural Invariance
+Complexity: O(|universe| × |candidates|) for finite universes.
 
-### 7.1 Terminal Object Preservation
+### 5.2 Genome Distance Computation
 
-**Theorem 7.1** (`right_adjoint_terminal_morphism`). *If D has a terminal object ⊤, then for any X in C, there exists a morphism X → G(⊤).*
+For finitely axiomatized theories over finite universes:
+1. Compute axiom closures for both theories.
+2. Compute the symmetric difference.
+3. Return the cardinality.
 
-*Proof.* By the adjunction correspondence, Hom(X, G(⊤)) ≅ Hom(F(X), ⊤). Since ⊤ is terminal, Hom(F(X), ⊤) is nonempty. Transport via the adjunction bijection.
+### 5.3 Mutation Path Finding
 
-### 7.2 Initial Object Preservation
+Given two theories with finite symmetric difference:
+1. Compute Ax₁ Δ Ax₂.
+2. Order the differing axioms arbitrarily.
+3. Construct intermediate theories by adding/removing one axiom at a time.
 
-**Theorem 7.2** (`left_adjoint_initial_morphism`). *If C has an initial object ⊥, then for any Y in D, there exists a morphism F(⊥) → Y.*
+## 6. Discussion
 
-*Proof.* The dual argument: compose the initial morphism ⊥ → G(Y) with the adjunction counit.
+### 6.1 Connection to Existing Work
 
-## 8. Discussion
+The genome framework connects to several existing catalog results:
 
-### 8.1 The PEGB Analysis
+- **Lawvere Thermodynamic Galois** (`Bridges/LawvereThermodynamicGalois.lean`): The `derivability_closed_iff_theory_of_observable` theorem establishes a Galois connection between derivability and observability. Our axiom–model Galois connection is a concrete instance of the same abstract pattern, showing that the thermodynamic duality is a special case of the theory genome duality.
 
-**P (Proof):** All 18 theorems are fully machine-verified in Lean 4.
+- **Knuth-Bendix Completion** (`Bridges/KnuthBendixCompletion.lean`): The `sequence_preserves_theory` theorem shows that certain transformations preserve theories. Our extension composition theorem (Theorem 3.9) generalizes this: any sequence of axiom additions preserves the inclusion relationship, and the order doesn't matter (Theorem 3.10).
 
-**E (Example):** The Galois connection between subsets and their closures in topology: taking the closure of a set and then the interior gives a regular open set. Applying this again gives the same set — idempotence (Theorem 5.3). The fixed points are exactly the regular open sets — characterization (Theorem 5.4).
+### 6.2 Limitations
 
-**G (Generalization):** Our framework naturally generalizes to enriched categories, 2-categories, and ∞-categories. The mutation spectrum extends: in a 2-categorical setting, there are additional levels of "partial equivalence" based on whether the unit and counit are equivalences, isomorphisms, or merely natural transformations.
+The current framework treats axioms as predicates on a fixed type α. A more general treatment would allow theory morphisms to change the underlying type (via functors between categories). This is the step from propositional to functorial semantics.
 
-**B (Boundary):** The framework breaks down for:
-- Large categories where size issues prevent forming functor categories
-- Categories without enough limits/colimits for the structural invariance theorems
-- Higher categorical settings where coherence conditions become significantly more complex
+### 6.3 The Metric Space of Theories
 
-### 8.2 Cross-Domain Bridge
+The genome distance defines a genuine pseudometric on theories. The quotient by zero-distance identifies theories with the same axiom closure, yielding a metric space. The topology of this metric space — its connected components, its dimensionality, its curvature — is largely unexplored.
 
-The Galois connection bridge (Section 5) connects category theory to order theory. But the same framework applies to:
-- **Logic:** Syntax-semantics adjunctions (the categorical semantics of type theory)
-- **Topology:** The adjunction between discrete and indiscrete topologies
-- **Algebra:** Free-forgetful adjunctions (free groups, polynomial rings)
-- **Computation:** The Curry-Howard-Lambek correspondence
+## 7. Future Work
 
-### 8.3 Relation to Morita Equivalence
-
-Two algebraic theories are *Morita equivalent* if their categories of models are equivalent. Our Theorem 3.1 gives a precise criterion: the model functor between theories must produce adjunctions where both unit and counit are isomorphisms. The mutation spectrum then classifies all possible relationships between theories, not just equivalences.
-
-## 9. Future Work
-
-1. **Enriched Adjunction Genome:** Extend the mutation spectrum to V-enriched categories for various enrichment bases V.
-2. **Higher Mutations:** Classify 2-adjunctions and their mutation types in the 2-categorical setting.
-3. **Computational Complexity of Mutations:** For finitely presented categories, what is the complexity of determining the mutation type?
-4. **Evolutionary Dynamics:** Model the space of all theories on a fixed signature as a category, with adjunctions as morphisms, and study its global structure.
-
-## 10. Conclusion
-
-We have formalized the metaphor of "mathematical DNA" into a rigorous framework. Adjunctions are the base pairs, the unit and counit are the measurements of information loss, and the mutation spectrum classifies how severely a theory change affects its structure. The monad laws ensure coherence, the Galois bridge connects to order theory, and the composition theorems show that evolutionary paths are well-defined. All 18 theorems are machine-verified, providing a solid foundation for further development of the adjunction genome theory.
+1. **Categorical enrichment**: Upgrade theory morphisms from mere subset inclusions to functors, yielding a 2-category of theories.
+2. **Quantitative genome distance**: For theories over finite universes, compute the genome distance as a natural number and study its distribution.
+3. **Theory phylogenetics**: Construct phylogenetic trees of mathematical theories using genome distances.
+4. **Infinite-dimensional genome spaces**: Study the topology when the axiom set is infinite.
+5. **Algorithmic theory discovery**: Use the mutation framework to systematically explore neighboring theories.
 
 ## References
 
-1. S. Eilenberg and S. Mac Lane, "General theory of natural equivalences," *Trans. AMS*, 1945.
-2. D.M. Kan, "Adjoint functors," *Trans. AMS*, 1958.
-3. S. Mac Lane, *Categories for the Working Mathematician*, Springer, 1971.
-4. `Bridges/KnuthBendixCompletion.lean` — `sequence_preserves_theory`
-5. `Bridges/LawvereThermodynamicGalois.lean` — `derivability_closed_iff_theory_of_observable`
-6. `Bridges/OverlapClassRigidity.lean` — `overlapDegree_le_one_iff`
-7. `Algebra/IntegerEnergy/Main.lean` — `isNPotent_two_iff_idempotent`
+1. G. Birkhoff, "On the structure of abstract algebras," *Proc. Cambridge Philos. Soc.* 31 (1935), 433–454.
+2. F.W. Lawvere, "Functorial Semantics of Algebraic Theories," *Proc. Natl. Acad. Sci.* 50 (1963), 869–872.
+3. R. Wille, "Restructuring lattice theory: an approach based on hierarchies of concepts," in *Ordered Sets* (1982), 445–470.
+4. M. Makkai and G.E. Reyes, *First Order Categorical Logic*, Springer (1977).
