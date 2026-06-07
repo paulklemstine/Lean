@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f9e13226",
     "filename": "eml_fixed_point_theorem_exp_log_iteration_converge.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.25464,
     "title": "EML Fixed-Point Theorem: Contraction Mapping Analysis of exp-log Iterations"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "eml_fixed_point_theorem_exp_log_iteration_converge",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.25464,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Fixed-Point Theorem: Contraction Mapping Analysis of exp-log Iterations"
     }
