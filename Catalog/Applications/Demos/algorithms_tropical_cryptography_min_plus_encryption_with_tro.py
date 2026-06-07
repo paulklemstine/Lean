@@ -1,24 +1,23 @@
+#!/usr/bin/env python3
 """
-Tropical (Min-Plus) Cryptography: Core Algorithms
+Tropical Cryptography: Core Algorithms
 
-Type-hinted implementations of tropical matrix operations and the
-Tropical Diffie-Hellman key exchange protocol.
+Type-hinted implementations of tropical matrix operations,
+Diffie-Hellman key exchange, and security analysis tools.
 """
 
-from typing import List, Optional, Tuple
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import Optional, List, Tuple
 import math
 
-# Tropical infinity
 INF = float('inf')
 
-# Type alias: a tropical matrix is a list of lists of floats (or int)
-TropMat = List[List[float]]
-
+# --- Core Tropical Arithmetic ---
 
 def trop_add(a: float, b: float) -> float:
     """Tropical addition: min(a, b)."""
     return min(a, b)
-
 
 def trop_mul(a: float, b: float) -> float:
     """Tropical multiplication: a + b (with infinity handling)."""
@@ -26,216 +25,195 @@ def trop_mul(a: float, b: float) -> float:
         return INF
     return a + b
 
+# --- Tropical Matrix Operations ---
 
-def trop_mat_mul(A: TropMat, B: TropMat) -> TropMat:
-    """
-    Tropical matrix multiplication: (A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj}).
-    
-    Equivalent to one step of all-pairs shortest path extension.
-    Time complexity: O(n³).
-    """
-    n = len(A)
-    C: TropMat = [[INF] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                val = trop_mul(A[i][k], B[k][j])
-                C[i][j] = trop_add(C[i][j], val)
-    return C
+Matrix = List[List[float]]
 
+def make_matrix(n: int, fill: float = INF) -> Matrix:
+    """Create an n×n matrix filled with a given value."""
+    return [[fill] * n for _ in range(n)]
 
-def trop_mat_identity(n: int) -> TropMat:
-    """
-    Tropical identity matrix: 0 on diagonal, ∞ elsewhere.
-    
-    In min-plus: staying at a vertex costs 0, no edge between distinct vertices.
-    """
-    I: TropMat = [[INF] * n for _ in range(n)]
+def identity_matrix(n: int) -> Matrix:
+    """Tropical identity: 0 on diagonal, ∞ elsewhere."""
+    I = make_matrix(n, INF)
     for i in range(n):
         I[i][i] = 0
     return I
 
-
-def trop_mat_pow(A: TropMat, k: int) -> TropMat:
-    """
-    Tropical matrix power via repeated squaring: A^{⊗k}.
-    
-    Computes the minimum-weight k-step path matrix.
-    Time complexity: O(n³ log k).
-    
-    Algorithm:
-      1. Initialize result = I (tropical identity)
-      2. While k > 0:
-         a. If k is odd, result = result ⊗ A
-         b. A = A ⊗ A
-         c. k = k >> 1
-    """
+def trop_mat_mul(A: Matrix, B: Matrix) -> Matrix:
+    """Tropical matrix multiplication: (A⊗B)_ij = min_k(A_ik + B_kj)."""
     n = len(A)
-    result = trop_mat_identity(n)
-    base = [row[:] for row in A]  # Deep copy
-    while k > 0:
-        if k & 1:
-            result = trop_mat_mul(result, base)
-        base = trop_mat_mul(base, base)
-        k >>= 1
-    return result
+    C = make_matrix(n, INF)
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                C[i][j] = trop_add(C[i][j], trop_mul(A[i][k], B[k][j]))
+    return C
 
+def trop_mat_add(A: Matrix, B: Matrix) -> Matrix:
+    """Tropical matrix addition: (A⊕B)_ij = min(A_ij, B_ij)."""
+    n = len(A)
+    return [[trop_add(A[i][j], B[i][j]) for j in range(n)] for i in range(n)]
 
-def trop_trace(A: TropMat) -> float:
-    """
-    Tropical trace: min of diagonal entries.
-    
-    Represents the minimum-weight closed walk of the given length
-    visiting any single vertex.
-    """
+def trop_mat_pow(A: Matrix, k: int) -> Matrix:
+    """Tropical matrix power via repeated squaring: O(n³ log k)."""
+    n = len(A)
+    if k == 0:
+        return identity_matrix(n)
+    if k == 1:
+        return [row[:] for row in A]
+    if k % 2 == 0:
+        half = trop_mat_pow(A, k // 2)
+        return trop_mat_mul(half, half)
+    else:
+        return trop_mat_mul(A, trop_mat_pow(A, k - 1))
+
+def trop_trace(A: Matrix) -> float:
+    """Tropical trace: min of diagonal entries."""
     return min(A[i][i] for i in range(len(A)))
 
-
-def kleene_star(A: TropMat, max_steps: Optional[int] = None) -> TropMat:
-    """
-    Tropical Kleene star: A* = I ⊕ A ⊕ A² ⊕ ... ⊕ A^{n-1}.
-    
-    Computes the all-pairs shortest path matrix (Floyd-Warshall equivalent).
-    Converges in at most n steps for matrices without negative cycles.
-    
-    Args:
-        A: Square tropical matrix (weighted adjacency matrix).
-        max_steps: Maximum number of iterations (default: n).
-    
-    Returns:
-        The shortest-path closure matrix.
-    """
+def matrices_equal(A: Matrix, B: Matrix) -> bool:
+    """Check if two tropical matrices are equal."""
     n = len(A)
-    if max_steps is None:
-        max_steps = n
-    
-    result = trop_mat_identity(n)
-    power = trop_mat_identity(n)
-    
-    for step in range(1, max_steps + 1):
-        power = trop_mat_mul(power, A)
-        # Tropical addition (entrywise min)
-        for i in range(n):
-            for j in range(n):
-                result[i][j] = trop_add(result[i][j], power[i][j])
-    
+    return all(A[i][j] == B[i][j] for i in range(n) for j in range(n))
+
+# --- Kleene Star (All-Pairs Shortest Paths) ---
+
+def kleene_prefix(A: Matrix, k: int) -> Matrix:
+    """Compute I ⊕ A ⊕ A² ⊕ ... ⊕ A^k."""
+    n = len(A)
+    result = identity_matrix(n)
+    Ai = [row[:] for row in A]
+    for _ in range(k):
+        result = trop_mat_add(result, Ai)
+        Ai = trop_mat_mul(A, Ai)
     return result
 
-
-def trop_eigenvalue_estimate(A: TropMat, max_k: int = 100) -> float:
-    """
-    Estimate the tropical eigenvalue (minimum mean cycle weight).
-    
-    λ(A) = lim_{k→∞} tr(A^k) / k = min_k tr(A^k) / k.
-    
-    This is the key quantity for the eigenvalue attack on TDLP.
-    """
+def kleene_star(A: Matrix) -> Matrix:
+    """Compute A* = I ⊕ A ⊕ A² ⊕ ... (converges for non-negative matrices).
+    Uses n iterations (sufficient for n×n matrices without negative cycles)."""
     n = len(A)
-    best = INF
-    power = trop_mat_identity(n)
-    
+    return kleene_prefix(A, n)
+
+# --- Stagnation Detection ---
+
+def detect_stagnation(A: Matrix, max_k: int = 10000) -> Optional[int]:
+    """Find the stagnation index: smallest k with A^k = A^(k+1).
+    Returns None if stagnation is not detected within max_k iterations."""
+    n = len(A)
+    Ak = [row[:] for row in A]
     for k in range(1, max_k + 1):
-        power = trop_mat_mul(power, A)
-        tr = trop_trace(power)
-        if tr != INF:
-            mean = tr / k
-            best = min(best, mean)
-    
-    return best
-
-
-def eigenvalue_attack(A: TropMat, B: TropMat) -> Optional[int]:
-    """
-    Eigenvalue attack on the Tropical Discrete Logarithm Problem.
-    
-    Given A and B = A^k, attempt to recover k using the fact that
-    tr(A^k) ≈ k * λ(A) for the tropical eigenvalue λ(A).
-    
-    For diagonal matrices, this is exact: k = B_{ii} / A_{ii}.
-    For general matrices, uses the trace-based estimator.
-    
-    Returns:
-        Estimated value of k, or None if attack fails.
-    """
-    n = len(A)
-    
-    # Strategy 1: Diagonal attack
-    for i in range(n):
-        if A[i][i] != 0 and A[i][i] != INF:
-            if B[i][i] != INF:
-                k_est = B[i][i] / A[i][i]
-                if k_est == int(k_est) and k_est > 0:
-                    # Verify
-                    k = int(k_est)
-                    if trop_mat_pow(A, k) == B:
-                        return k
-    
-    # Strategy 2: Trace-based attack
-    lambda_A = trop_eigenvalue_estimate(A, max_k=n)
-    if lambda_A != INF and lambda_A != 0:
-        tr_B = trop_trace(B)
-        if tr_B != INF:
-            k_est = tr_B / lambda_A
-            for k in [int(k_est), int(k_est) + 1, max(0, int(k_est) - 1)]:
-                if k > 0 and trop_mat_pow(A, k) == B:
-                    return k
-    
-    # Strategy 3: Brute force (for small k)
-    power = trop_mat_identity(n)
-    for k in range(1, 1000):
-        power = trop_mat_mul(power, A)
-        if power == B:
+        Ak1 = trop_mat_mul(A, Ak)
+        if matrices_equal(Ak, Ak1):
             return k
-    
+        Ak = Ak1
     return None
 
+# --- Diagonal TDLP Attack ---
 
-class TropicalDiffieHellman:
-    """
-    Tropical Diffie-Hellman Key Exchange Protocol.
+def diagonal_tdlp_attack(D: Matrix, Dk: Matrix) -> Optional[int]:
+    """Recover exponent k from diagonal matrix D and D^k.
+    Returns k if recoverable, None otherwise."""
+    n = len(D)
+    for i in range(n):
+        d = D[i][i]
+        dk = Dk[i][i]
+        if d != INF and d != 0 and dk != INF:
+            k = dk / d
+            if k == int(k) and k > 0:
+                return int(k)
+    return None
+
+# --- Tropical Diffie-Hellman Key Exchange ---
+
+@dataclass
+class TropicalDHKeyExchange:
+    """Tropical Diffie-Hellman key exchange protocol."""
+    n: int              # Matrix size
+    B: int              # Entry bound
+    G: Matrix           # Public generator matrix
     
-    Protocol:
-      1. Public parameters: generator matrix G ∈ TropMat(n)
-      2. Alice: picks secret a, publishes G^a
-      3. Bob: picks secret b, publishes G^b
-      4. Shared key: G^{a+b} = (G^a)^1 ⊗ G^b... 
-         Wait — in tropical DH, the shared key is G^{ab}:
-         Alice computes (G^b)^a, Bob computes (G^a)^b.
-         Both equal G^{ab} since tropical matrix powers commute.
-    """
+    @staticmethod
+    def setup(n: int, B: int = 100) -> 'TropicalDHKeyExchange':
+        """Generate public parameters."""
+        import random
+        G = [[random.randint(0, B) for _ in range(n)] for _ in range(n)]
+        return TropicalDHKeyExchange(n=n, B=B, G=G)
     
-    def __init__(self, generator: TropMat):
-        self.generator = generator
-        self.n = len(generator)
+    def generate_public_key(self, secret: int) -> Matrix:
+        """Compute G^⊗secret."""
+        return trop_mat_pow(self.G, secret)
     
-    def public_key(self, secret: int) -> TropMat:
-        """Compute public key G^secret."""
-        return trop_mat_pow(self.generator, secret)
+    def compute_shared_key(self, other_public: Matrix, my_secret: int) -> Matrix:
+        """Compute (other_public)^⊗my_secret."""
+        return trop_mat_pow(other_public, my_secret)
     
-    def shared_key(self, my_secret: int, their_public: TropMat) -> TropMat:
-        """Compute shared key (their_public)^{my_secret}."""
-        return trop_mat_pow(their_public, my_secret)
+    def key_space_size(self) -> float:
+        """Compute log2 of the key space size: n² * log2(B+1)."""
+        return self.n * self.n * math.log2(self.B + 1)
     
     def verify_correctness(self, a: int, b: int) -> bool:
-        """Verify that both parties compute the same shared key."""
-        pub_a = self.public_key(a)
-        pub_b = self.public_key(b)
-        key_alice = self.shared_key(a, pub_b)
-        key_bob = self.shared_key(b, pub_a)
-        return key_alice == key_bob
+        """Verify that G^(ab) computed both ways gives the same result."""
+        Ga = self.generate_public_key(a)
+        Gb = self.generate_public_key(b)
+        alice_key = self.compute_shared_key(Gb, a)
+        bob_key = self.compute_shared_key(Ga, b)
+        return matrices_equal(alice_key, bob_key)
+
+# --- Security Analysis ---
+
+@dataclass
+class SecurityAnalysis:
+    """Analyze security properties of a tropical DH instance."""
+    
+    @staticmethod
+    def stagnation_security(A: Matrix, security_bits: int = 128) -> dict:
+        """Analyze whether the matrix's stagnation index provides adequate security."""
+        k0 = detect_stagnation(A, max_k=min(2**20, 2**security_bits))
+        if k0 is not None:
+            effective_bits = math.log2(k0) if k0 > 0 else 0
+            secure = effective_bits >= security_bits
+        else:
+            effective_bits = float('inf')
+            secure = True
+        return {
+            'stagnation_index': k0,
+            'effective_bits': effective_bits,
+            'target_bits': security_bits,
+            'secure': secure
+        }
+    
+    @staticmethod
+    def diagonal_vulnerability(A: Matrix) -> bool:
+        """Check if the matrix is diagonal (trivially breakable)."""
+        n = len(A)
+        for i in range(n):
+            for j in range(n):
+                if i != j and A[i][j] != INF:
+                    return False
+        return True
+    
+    @staticmethod
+    def trace_attack(A: Matrix, Ak: Matrix) -> Optional[float]:
+        """Attempt to recover k using tropical trace comparison.
+        Returns k estimate if the trace gives useful information."""
+        trA = trop_trace(A)
+        trAk = trop_trace(Ak)
+        if trA != INF and trA != 0 and trAk != INF:
+            return trAk / trA
+        return None
+
+# --- Tropical Convex Combination ---
+
+def trop_lin_comb(a: float, b: float, x: List[float], y: List[float]) -> List[float]:
+    """Tropical linear combination: min(a + x_i, b + y_i) for each i."""
+    return [trop_add(trop_mul(a, xi), trop_mul(b, yi)) for xi, yi in zip(x, y)]
 
 
-def generate_random_tropical_matrix(n: int, max_val: int = 100,
-                                     inf_prob: float = 0.1) -> TropMat:
-    """Generate a random n×n tropical matrix for testing."""
-    import random
-    A: TropMat = []
-    for i in range(n):
-        row = []
-        for j in range(n):
-            if random.random() < inf_prob:
-                row.append(INF)
-            else:
-                row.append(random.randint(0, max_val))
-        A.append(row)
-    return A
+if __name__ == "__main__":
+    # Quick test
+    dh = TropicalDHKeyExchange.setup(n=4, B=50)
+    assert dh.verify_correctness(7, 13), "DH correctness failed!"
+    print(f"Key space: 2^{dh.key_space_size():.1f} bits")
+    print(f"Stagnation: {detect_stagnation(dh.G, max_k=200)}")
+    print("All tests passed!")

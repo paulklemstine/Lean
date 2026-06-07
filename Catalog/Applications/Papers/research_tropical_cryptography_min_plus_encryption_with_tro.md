@@ -1,268 +1,230 @@
-# Structural Cryptanalysis of Tropical Diffie-Hellman: Five Algebraic Attacks on the Min-Plus Discrete Logarithm
+# Tropical Cryptography: Min-Plus Encryption with Tropical Matrices
 
 ## Abstract
 
-We present a systematic structural analysis of the Tropical Discrete Logarithm Problem (TDLP), the computational hardness assumption underlying tropical (min-plus) Diffie-Hellman key exchange. We prove five fundamental structural weaknesses of the TDLP using formally verified mathematics: (1) per-vertex diagonal subadditivity of tropical matrix powers, connecting walk concatenation in weighted graphs to algebraic invariant extraction; (2) trivial solvability for diagonal matrices via the tropical eigenvalue formula; (3) graph-matrix duality establishing that tropical cryptanalysis reduces to polynomial-time shortest-path computation; (4) eventual periodicity of tropical power orbits for bounded matrices; and (5) monotonicity of Kleene star prefixes, giving shortest-path convergence bounds. Together, these results demonstrate that the TDLP possesses too much algebraic structure to serve as a secure cryptographic primitive. All theorems are machine-verified in Lean 4 with zero unproven lemmas.
+We develop a rigorous algebraic framework for tropical (min-plus) cryptography, extending known results on tropical Diffie-Hellman key exchange with three novel contributions formalized in Lean 4. First, we prove a **power stagnation theorem**: if A^k = A^(k+1) for a tropical matrix A, then A^m = A^k for all m ≥ k, establishing a sharp phase transition in the tropical discrete logarithm problem (TDLP). Second, we prove that **diagonal tropical matrices are completely insecure** against TDLP attacks, and that **conjugation cannot repair this vulnerability** — (PAP⁻¹)^k = PA^kP⁻¹ transfers any spectral attack through basis changes. Third, we establish the **Kleene prefix monotonicity theorem** connecting tropical matrix powers to shortest-path fixpoint theory, and prove a **pigeonhole orbit finiteness** theorem bounding the cycle structure. All results are machine-verified with zero sorries, building on and extending the existing tropical post-quantum cryptography catalog.
 
-**Keywords**: tropical algebra, min-plus semiring, discrete logarithm problem, post-quantum cryptography, shortest paths, Kleene star, cryptanalysis
+**Keywords**: tropical algebra, min-plus semiring, post-quantum cryptography, discrete logarithm, Kleene star, shortest paths
 
 ## 1. Introduction
 
 ### 1.1 Background
 
-The tropical (min-plus) semiring (ℤ ∪ {∞}, min, +) has found applications across combinatorial optimization, algebraic geometry, and theoretical computer science. In 2014, Grigoriev and Shpilrain [1] proposed using tropical matrix algebra as a foundation for cryptographic protocols, specifically a Diffie-Hellman key exchange based on the Tropical Discrete Logarithm Problem (TDLP): given an n×n tropical matrix A and B = A^{⊗k}, recover k.
+The tropical semiring (ℤ ∪ {∞}, min, +) — where "addition" is min and "multiplication" is ordinary addition — provides a natural algebraic framework for shortest-path problems and optimization [1]. In this setting, matrix multiplication computes shortest paths: (A ⊗ B)_{ij} = min_k(A_{ik} + B_{kj}), and the k-th power A^⊗k gives k-hop shortest paths.
 
-The TDLP has apparent computational asymmetry: tropical matrix exponentiation via repeated squaring runs in O(n³ log k) time, while naive enumeration of k is exponential. This asymmetry, combined with the non-commutativity of tropical matrix multiplication, suggested cryptographic potential.
+The tropical Diffie-Hellman key exchange [2] exploits the computational asymmetry between tropical matrix powering (efficient via repeated squaring, O(n³ log k)) and the tropical discrete logarithm problem (TDLP): given A and A^⊗k, recover k.
 
-### 1.2 Contributions
+### 1.2 Our Contributions
 
-We prove that the TDLP has five independent structural weaknesses, each providing an efficient attack strategy:
+We make three novel contributions, all formally verified in Lean 4:
 
-1. **Walk Concatenation Attack** (Theorem 3.1): The diagonal entry (A^{m+k})_{ii} satisfies a subadditivity inequality that enables linear invariant extraction.
+1. **Power Stagnation Theory** (§3): We prove that tropical matrix power sequences exhibit sharp stagnation — once A^k = A^(k+1), all subsequent powers equal A^k. This constrains TDLP security by showing that the effective exponent space is bounded by the stagnation index.
 
-2. **Eigenvalue Attack** (Theorems 4.1–4.2): For diagonal matrices, the TDLP is trivially solvable. For general matrices, tropical eigenvalues grow linearly with the exponent.
+2. **Diagonal Vulnerability and Conjugation Invariance** (§4): We prove that diagonal tropical matrices admit trivially solvable TDLP (reducible to integer division), and that conjugation P·A·P⁻¹ commutes with power-taking, so conjugation cannot mask this vulnerability.
 
-3. **Graph Reduction Attack** (Theorem 5.1): The exact correspondence between tropical matrices and weighted digraphs reduces the TDLP to polynomial-time shortest-path problems.
+3. **Kleene Star Convergence and Orbit Structure** (§5): We formalize the monotone convergence of Kleene prefix sums and prove orbit finiteness via a combinatorial pigeonhole argument.
 
-4. **Orbit Periodicity Attack** (Theorem 6.1): Bounded tropical matrices have eventually periodic power orbits, collapsing the TDLP to modular arithmetic.
+### 1.3 Relation to Existing Work
 
-5. **Kleene Star Convergence Attack** (Theorems 7.1–7.2): Kleene star prefixes converge monotonically, bounding the effective orbit size.
+This work builds directly on the verified tropical post-quantum cryptography catalog:
+- `Cryptography/TropicalPostQuantum.lean`: 24 theorems including DH correctness, orbit theory, birthday bounds
+- `Cryptography/TropicalPostQuantumPrimitives.lean`: 30+ theorems on min-plus semiring foundations, tropical determinants, spectral theory
+- `Bridges/MinPlusVerificationCore.lean`: distributivity and semiring axioms
 
-All results are formally verified in Lean 4 using Mathlib, with no unproven lemmas (`sorry`-free).
-
-### 1.3 Related Work
-
-Grigoriev and Shpilrain [1] introduced tropical cryptography and proposed several protocols. Subsequent work by Kotov and Ushakov [2] identified specific attack strategies for certain matrix classes. Our contribution extends this line of work by providing a *complete structural analysis* with machine-verified proofs, connecting the cryptographic weaknesses to fundamental properties of tropical algebra.
+Our results extend these foundations with structural depth — moving from "tropical DH is correct" to "here are the precise conditions under which it is secure or insecure."
 
 ## 2. Preliminaries
 
-### 2.1 Tropical Semiring
+### 2.1 The Tropical Semiring
 
-The **tropical semiring** (ℤ ∪ {∞}, ⊕, ⊗) is defined by:
-- a ⊕ b = min(a, b) (tropical addition)
-- a ⊗ b = a + b (tropical multiplication)
-- Additive identity: ∞ (since min(a, ∞) = a)
-- Multiplicative identity: 0 (since a + 0 = a)
+We work with TropZ := Tropical (WithTop ℤ), where:
+- Tropical addition: a ⊕ b = Tropical.trop (min (Tropical.untrop a) (Tropical.untrop b))
+- Tropical multiplication: a ⊗ b = a + b (lifted from ℤ addition)
+- Additive identity: 0 = Tropical.trop ⊤ (infinity)
+- Multiplicative identity: 1 = Tropical.trop 0
 
-Key property: tropical addition is **idempotent** (a ⊕ a = a), so the tropical semiring is NOT a ring. There are no additive inverses.
+Key properties:
+- **Idempotency**: a ⊕ a = a (proved as `tropMatZ_add_self`)
+- **No additive inverses**: For a ≠ ⊤, there is no b with a ⊕ b = 0 (proved as `trop_no_additive_inverse`)
+- **Lattice structure**: a ⊕ b = a ⊓ b in the natural order (proved as `trop_add_is_inf`)
 
 ### 2.2 Tropical Matrices
 
-A **tropical matrix** A ∈ TropMat(n) is an n×n matrix over the tropical semiring. Tropical matrix multiplication follows the standard formula with tropical operations:
-
+TropMatZ n := Matrix (Fin n) (Fin n) TropZ. Multiplication follows the min-plus rule:
 (A ⊗ B)_{ij} = ⊕_k (A_{ik} ⊗ B_{kj}) = min_k (A_{ik} + B_{kj})
 
-**Graph interpretation**: A tropical matrix A is the weighted adjacency matrix of a directed graph G_A. Entry A_{ij} is the weight of the edge from vertex i to vertex j (with ∞ representing absence). The product (A ⊗ B)_{ij} gives the minimum-weight 2-step path from i to j through any intermediate vertex.
+The power A^⊗k uses Lean's built-in `pow` on the matrix monoid, inheriting associativity and identity properties.
 
-**Tropical powers**: A^{⊗k} gives the minimum-weight k-step path matrix. Entry (A^k)_{ij} is the minimum total weight over all k-step walks from i to j.
+### 2.3 Tropical Trace
 
-### 2.3 The TDLP and Tropical Diffie-Hellman
+We define tropTraceZ(A) = ⊕_i A_{ii} = min_i A_{ii}, the tropical analog of the matrix trace. This captures the minimum diagonal entry — the shortest self-loop in the graph interpretation.
 
-**Tropical Discrete Logarithm Problem (TDLP)**: Given A, B ∈ TropMat(n) with B = A^{⊗k} for some k ∈ ℕ, find k.
+## 3. Power Stagnation Theory
 
-**Tropical Diffie-Hellman Protocol**:
-1. Public: generator G ∈ TropMat(n)
-2. Alice: secret a, publishes G^a
-3. Bob: secret b, publishes G^b
-4. Shared key: G^{ab} = (G^a)^b = (G^b)^a
+### 3.1 The Stagnation Theorem
 
-Correctness follows from (G^a)^b = G^{ab} = G^{ba} = (G^b)^a (formally verified as `trop_dh_correctness`).
+**Theorem 3.1** (trop_power_stagnation). *Let A be an n×n tropical matrix. If A^k = A^(k+1) for some k ∈ ℕ, then A^m = A^k for all m ≥ k.*
 
-### 2.4 Formalization
+*Proof sketch.* By induction on the difference m - k. If m = k, trivial. For m > k, write A^m = A^(m-1) · A. By the induction hypothesis, A^(m-1) = A^k. So A^m = A^k · A = A^(k+1) = A^k. □
 
-We work in Lean 4 with Mathlib. The tropical integer type is `Tropical (WithTop ℤ)`, which Mathlib equips with a `CommSemiring` instance. Tropical matrices are `Matrix (Fin n) (Fin n) (Tropical (WithTop ℤ))`, inheriting matrix algebra from Mathlib's semiring-based matrix theory.
+**Corollary 3.2** (trop_power_stagnation_shift). *If A^k = A^(k+1), then A^k = A^(k+p) for all p ∈ ℕ.*
 
-## 3. Walk Concatenation Attack
+### 3.2 Cryptographic Implications
 
-### 3.1 Per-Vertex Diagonal Subadditivity
+The stagnation theorem reveals that the tropical DLP has a fundamentally different character from the classical DLP:
 
-**Theorem 3.1** (`trop_power_diag_subadditive`): *For any tropical matrix A and vertex i,*
+1. **Finite effective key space**: Even if the nominal key space is {0, 1, ..., 2^λ}, the effective key space is {0, 1, ..., k₀} where k₀ is the stagnation index. All exponents beyond k₀ produce identical ciphertexts.
 
-(A^{m+k})_{ii} ≤ (A^m)_{ii} ⊗ (A^k)_{ii}
+2. **Monotone convergence**: The Kleene prefix sum (Theorem 5.1) shows that entries decrease monotonically, providing an efficient stagnation detector.
 
-*That is, the minimum-weight (m+k)-step closed walk at i is bounded by the tropical product (underlying sum) of the minimum-weight m-step and k-step closed walks at i.*
-
-**Proof sketch**: A^{m+k} = A^m ⊗ A^k (by `pow_add`). The (i,i) entry of the product is:
-
-(A^{m+k})_{ii} = ⊕_j ((A^m)_{ij} ⊗ (A^k)_{ji}) = min_j ((A^m)_{ij} + (A^k)_{ji})
-
-Since this is a minimum over all intermediate vertices j, it is ≤ the j = i term: (A^m)_{ii} + (A^k)_{ii}. The formal proof uses `Finset.inf_le` (membership of i in the universal finset).
-
-**Corollary 3.2** (`trop_power_diag_doubling`): (A^{2k})_{ii} ≤ (A^k)_{ii} ⊗ (A^k)_{ii}.
-
-### 3.2 Cryptanalytic Consequence
-
-By iterating the subadditivity inequality, for each vertex i the sequence k ↦ (A^k)_{ii} is subadditive (in the underlying ℤ arithmetic). By Fekete's lemma:
-
-lim_{k→∞} (A^k)_{ii} / k = inf_k (A^k)_{ii} / k = λ_i(A)
-
-This limit λ_i(A) is the **tropical eigenvalue at vertex i**, equal to the minimum mean weight of any cycle passing through i. Given B = A^k, the attacker computes B_{ii} / A_{ii} to estimate k (for matrices where the diagonal is informative).
+3. **Parameter selection**: Security requires matrices whose stagnation index exceeds the security parameter. This connects to the combinatorial structure of the underlying weighted digraph.
 
 ### 3.3 PEGB Analysis
 
-- **P (Proof)**: Fully verified in Lean 4 using `Finset.inf_le` on the tropical matrix product expansion.
-- **E (Example)**: For A = diag(3, 7, 11, 5) and k = 137: (A^137)_{00} = 137 × 3 = 411, so k = 411/3 = 137. ✓
-- **G (Generalization)**: The subadditivity extends to *any* idempotent semiring where the sum is the lattice meet. This covers max-plus, min-plus, and Boolean semirings. The natural next level is subadditivity for *off-diagonal* entries with intermediate vertex constraints.
-- **B (Boundary)**: The inequality becomes trivial when A has many ∞ entries (no finite paths). It fails to distinguish k₁ from k₂ when the orbit is periodic.
+- **Proof**: Complete Lean 4 proof by induction on Nat.le.
+- **Example**: The 2×2 matrix A = [[0, 1], [1, 0]] (swap permutation) has A² = I ≠ A but never stagnates (orbit period 2). The matrix B = [[0, 0], [0, 0]] has B¹ = B² (stagnation at k=1).
+- **Generalization**: The stagnation theorem holds for any monoid where a^k = a^(k+1) implies all higher powers equal a^k. This extends beyond tropical matrices to any "eventually idempotent" algebraic setting.
+- **Boundary**: Stagnation does NOT occur for matrices with negative-weight cycles (the entries decrease without bound in classical arithmetic, though in Tropical(WithTop ℤ) they are bounded below by the smallest cycle weight).
 
-## 4. Eigenvalue Attack
+## 4. Diagonal Vulnerability
 
-### 4.1 Diagonal Matrix Power Formula
+### 4.1 The Diagonal Power Formula
 
-**Theorem 4.1** (`trop_diag_power_entry`): *For a diagonal tropical matrix D = diag(d₁, ..., d_n) and any k ∈ ℕ:*
+**Theorem 4.1** (trop_diagonal_power_entry). *For a diagonal tropical matrix D = diag(d₁, ..., d_n), the k-th power satisfies (D^k)_{ii} = d_i^k (= k · untrop(d_i) in the underlying integer arithmetic).*
 
-(D^k)_{ii} = tropZ(k · d_i)
+### 4.2 Conjugation Does Not Help
 
-*The k-th power of a diagonal tropical matrix scales each diagonal entry by k.*
+**Theorem 4.2** (trop_conjugation_power_commute). *For any tropical matrices A, P, P⁻¹ with PP⁻¹ = I and P⁻¹P = I:*
+*(P · A · P⁻¹)^k = P · A^k · P⁻¹*
 
-**Proof sketch**: Induction on k. The base case (k = 0) gives the identity. The inductive step uses the fact that multiplying by a diagonal matrix selects the diagonal term (off-diagonal entries are ∞, the tropical zero, which annihilates under tropical multiplication).
+This means that if A is diagonal (or diagonalizable over the tropical semiring), conjugation by any invertible matrix P does not hide the diagonal structure. An attacker can:
 
-### 4.2 TDLP Solvability for Diagonal Matrices
-
-**Theorem 4.2** (`trop_diag_attack_recovers_k`): *If D = diag(d₁, ..., d_n) with d_i ≠ 0 for some i, then the TDLP has a unique solution: k₁ = k₂ whenever D^{k₁} = D^{k₂}.*
-
-**Proof sketch**: From D^{k₁} = D^{k₂} at entry (i,i): k₁ · d_i = k₂ · d_i. Since d_i ≠ 0, cancel to get k₁ = k₂.
+1. Compute the tropical eigenvalues of the public matrix (equivalent to finding shortest cycles).
+2. Divide the eigenvalue of A^k by the eigenvalue of A to recover k.
 
 ### 4.3 PEGB Analysis
 
-- **P**: Both theorems fully verified. Theorem 4.1 uses induction with `Finset.sum_eq_single`. Theorem 4.2 uses injectivity of multiplication by nonzero integers.
-- **E**: D = diag(3, 7), k = 50. D^50 = diag(150, 350). Attack: 150/3 = 50. ✓
-- **G**: For block-diagonal matrices, the attack works on each block independently. For *triangular* matrices, the diagonal determines the eigenvalues, and a similar attack applies.
-- **B**: The attack fails for matrices with d_i = 0 for all i (the identity matrix). It also fails for matrices with all entries ∞ (the zero matrix).
+- **Proof**: Both theorems proved by induction on k, using matrix multiplication associativity.
+- **Example**: D = diag(trop 3, trop 5). D² = diag(trop 6, trop 10). k = 6/3 = 2.
+- **Generalization**: Any matrix conjugate to a diagonal matrix is insecure. The "security gap" is measured by the distance from diagonalizability in an appropriate tropical metric.
+- **Boundary**: Non-diagonalizable tropical matrices (analogous to non-diagonalizable matrices in classical linear algebra) may resist this attack. The tropical Jordan normal form theory is underdeveloped.
 
-## 5. Graph-Matrix Duality
+## 5. Kleene Star and Orbit Structure
 
-### 5.1 Exact Correspondence
+### 5.1 Kleene Prefix Monotonicity
 
-**Theorem 5.1** (`trop_graph_matrix_roundtrip`, `trop_matrix_graph_roundtrip`): *The functions*
+**Definition.** tropKleenePrefix(A, k) = I ⊕ A ⊕ A² ⊕ ... ⊕ A^k.
 
-toTropMat : WeightedDigraph(n) → TropMat(n)
-tropMatToDigraph : TropMat(n) → WeightedDigraph(n)
+**Theorem 5.1** (tropKleenePrefix_antitone). *For all k, i, j:*
+*tropKleenePrefix(A, k+1)_{ij} ≤ tropKleenePrefix(A, k)_{ij}*
 
-*are mutually inverse. Every tropical matrix uniquely encodes a weighted directed graph, and conversely.*
+*Proof.* tropKleenePrefix(A, k+1) = tropKleenePrefix(A, k) ⊕ A^(k+1). Since a ⊕ b = min(a, b) ≤ a, the result follows. □
 
-### 5.2 Cryptanalytic Consequence
+### 5.2 Orbit Finiteness via Pigeonhole
 
-This duality means the TDLP is equivalent to: "Given a weighted graph G and the k-step shortest path matrix, recover k." Since shortest-path problems are solvable in polynomial time (Bellman-Ford: O(n³), Floyd-Warshall: O(n³)), and since the Kleene star converges in n steps, the TDLP reduces to comparing A^k against the finite orbit {A^1, ..., A^n}.
+**Theorem 5.2** (trop_pigeonhole_orbit). *For any function f : ℕ → α where α is a finite type, there exist i < j with j ≤ |α| and f(i) = f(j).*
 
-### 5.3 Product Entry Bound
+**Corollary.** For n×n tropical matrices over a finite entry set of size B, the orbit {A^k : k ∈ ℕ} has period dividing B^(n²).
 
-**Theorem 5.2** (`tropTr_mul_le_diag`): *For any tropical matrices A, B and vertex i:*
+### 5.3 Trace Permutation Invariance
 
-(A ⊗ B)_{ii} ≤ A_{ii} ⊗ B_{ii}
+**Theorem 5.3** (trop_trace_perm_invariant). *For any tropical matrix A and permutation σ, tr⊕(A ∘ σ) = tr⊕(A).*
 
-*The diagonal of a product is bounded by the product of diagonals.*
+This shows that the trace — a natural attack vector for TDLP — is invariant under index permutation, meaning the attacker need not know the "canonical" ordering of rows/columns.
 
-This formalizes the observation that the shortest 2-step closed walk at i (which may use off-diagonal entries for a shortcut) is at most as long as the direct self-loop.
+### 5.4 PEGB Analysis
 
-## 6. Orbit Periodicity
+- **Proof**: Monotonicity from lattice properties; pigeonhole from finiteness of the image.
+- **Example**: For a 2×2 matrix over {0, 1, ⊤}, there are 3⁴ = 81 possible matrices, so the orbit period divides 81.
+- **Generalization**: The Kleene star convergence connects to the Bellman-Ford algorithm — tropical A* is precisely the all-pairs shortest path matrix.
+- **Boundary**: For matrices over ℤ (unbounded entries), orbits need not be finite. The stagnation theorem gives a different stopping criterion.
 
-### 6.1 Eventually Periodic Orbits
+## 6. The Master Security Theorem
 
-**Theorem 6.1** (`trop_bounded_orbit_periodic`): *If A^{q+p} = A^q for some q, p with p > 0, then for all k ≥ q:*
+**Theorem 6.1** (tropical_dh_master_security). *Tropical Diffie-Hellman satisfies:*
+1. *Correctness: G^(ab) = G^(ba)*
+2. *Homomorphism: G^(a+b) = G^a · G^b*
+3. *Commutativity: G^a · G^b = G^b · G^a*
+4. *Identity: G^0 = I*
 
-A^k = A^{q + ((k - q) mod p)}
+This establishes the complete algebraic foundation for tropical DH, combining results from the existing catalog (DH correctness) with our new structural analysis.
 
-**Proof sketch**: First establish by induction that A^q · A^{mp} = A^q for all m ∈ ℕ. Then decompose k - q = p · ⌊(k-q)/p⌋ + (k-q) mod p and apply the periodic identity.
+## 7. Cross-Domain Bridge: Tropical Algebra and Order Theory
 
-### 6.2 Cryptanalytic Consequence
+Our results reveal a deep connection between tropical cryptography and order theory. The key insight is:
 
-For matrices with bounded integer entries (say, in {0, 1, ..., B}), the matrix monoid TropMat(n, B) is finite with at most (B + 2)^{n²} elements (including ∞). By the pigeonhole principle, any orbit must become periodic with preperiod q ≤ (B+2)^{n²} and period p | (B+2)^{n²}!.
+**Tropical addition is lattice meet**: a ⊕ b = a ⊓ b in the natural order on WithTop ℤ.
 
-In practice, orbits stabilize much faster. For typical random tropical matrices, the orbit period is O(n), making the TDLP solvable in O(n⁴) time (n orbit steps × n³ per multiplication).
+This means:
+1. The Kleene prefix is a descending chain in the product lattice of matrix entries.
+2. Stagnation corresponds to reaching a fixpoint of the lattice endomorphism x ↦ x ⊓ f(x).
+3. Security analysis can leverage lattice-theoretic tools (chain conditions, Knaster-Tarski fixpoint).
 
-### 6.3 PEGB Analysis
+This bridge connects tropical cryptography not to lattice-based cryptography (which uses geometric lattices like ℤⁿ) but to order-theoretic lattices (complete lattice structures on semiring elements). The distinction is important: lattice-based crypto relies on the hardness of finding short vectors in geometric lattices, while our order-theoretic connection concerns the convergence behavior of algebraic sequences.
 
-- **P**: Verified using induction on the period multiplier. The key step uses `pow_add` and `pow_mul` to decompose the exponent.
-- **E**: G = [[0,3,7],[2,0,5],[4,1,0]]. G^2 = G^3 = G^4 = ..., so period = 1, preperiod = 2. The TDLP has no unique solution for k ≥ 2.
-- **G**: The periodicity result generalizes to any finitely generated monoid with descending chain condition. The tropical matrix monoid satisfies DCC because the tropical order on finite matrices is a well-partial-order.
-- **B**: For unbounded entries (matrices over all of ℤ ∪ {∞}), orbits may be infinite and aperiodic. The periodicity attack fails in this case, but the eigenvalue attack still applies.
+## 8. Algorithms
 
-## 7. Kleene Star Convergence
+### 8.1 Tropical Matrix Power (Repeated Squaring)
 
-### 7.1 Monotone Improvement
+```
+Input: n×n tropical matrix A, exponent k
+Output: A^⊗k
 
-**Theorem 7.1** (`kleenePrefix_antitone`): *For any tropical matrix A:*
+function TropPow(A, k):
+    if k = 0: return I_n (tropical identity)
+    if k is even: return TropPow(A ⊗ A, k/2)
+    return A ⊗ TropPow(A, k-1)
+```
+Complexity: O(n³ log k) tropical operations.
 
-K(A, k+1)_{ij} ≤ K(A, k)_{ij}
+### 8.2 Tropical DH Key Exchange
 
-*where K(A, k) = I ⊕ A ⊕ A² ⊕ ... ⊕ A^k is the Kleene prefix sum.*
+```
+Setup: Choose random n×n tropical matrix G with entries in {0,...,B}
+Alice: Choose random a ∈ {1,...,N}; publish G^⊗a
+Bob:   Choose random b ∈ {1,...,N}; publish G^⊗b
+Shared key: G^⊗(ab) = (G^⊗a)^⊗b = (G^⊗b)^⊗a
+```
 
-**Proof**: K(A, k+1) = K(A, k) ⊕ A^{k+1}. Since a ⊕ b ≤ a in the tropical order (tropical sum is the meet), K(A, k+1)_{ij} ≤ K(A, k)_{ij}. The formal proof is `min_le_left`.
+### 8.3 Stagnation Detection
 
-### 7.2 Power Dominance
+```
+Input: n×n tropical matrix A
+Output: Stagnation index k₀
 
-**Theorem 7.2** (`kleenePrefix_le_power`): *The Kleene prefix is at most any individual power:*
+k ← 1
+Ak ← A
+while True:
+    Ak1 ← A ⊗ Ak
+    if Ak1 = Ak: return k
+    Ak ← Ak1
+    k ← k + 1
+```
 
-K(A, k+1)_{ij} ≤ (A^{k+1})_{ij}
+## 9. Discussion and Future Work
 
-**Proof**: K(A, k+1) = K(A, k) ⊕ A^{k+1} ≤ A^{k+1} by `min_le_right`.
+### 9.1 Open Problems
 
-### 7.3 Cryptanalytic Consequence
+1. **Tight stagnation bounds**: What is the maximum stagnation index for n×n matrices over {0,...,B}? We conjecture it is O(nB), related to the longest shortest path in the graph.
 
-The Kleene prefix K(A, n-1) computes the all-pairs shortest path matrix in O(n⁴) time. For k ≥ n, A^k contributes no new information beyond what K(A, n-1) already captures (assuming no negative cycles). This means the effective key space is at most n, regardless of the nominal exponent k.
+2. **Tropical Jordan normal form**: Can every tropical matrix be "approximately diagonalized"? If so, all TDLP instances reduce to the diagonal case.
 
-## 8. Master Theorem
+3. **Quantum attacks**: Does Grover's algorithm provide better than quadratic speedup for TDLP? The lack of additive inverses may prevent quantum Fourier transform-based attacks.
 
-**Theorem 8.1** (`tropical_five_weaknesses`): *For any tropical matrix A ∈ TropMat(n):*
+4. **Non-commutative extensions**: Using tropical matrix conjugation A ↦ XAX⁻¹ instead of powering may provide security even for diagonalizable matrices.
 
-1. ∀ i j, A^i ⊗ A^j = A^j ⊗ A^i (abelian orbit)
-2. ∀ k, A^k ⊕ A^k = A^k (idempotent addition)
-3. ∀ a b, A^{a+b} = A^a ⊗ A^b (homomorphism)
-4. A^0 = I (identity)
-5. ∀ a b, (A^a)^b = (A^b)^a (DH correctness)
+### 9.2 Limitations
 
-These five properties together show that the tropical power orbit has abelian group-like structure (after the preperiodic phase), eliminating the non-abelian hardness that was the original motivation for tropical cryptography.
-
-## 9. Discussion
-
-### 9.1 Comparison with Classical DLP
-
-| Property | Classical DLP (ℤ/pℤ)* | Tropical DLP |
-|----------|----------------------|--------------|
-| Group structure | Cyclic, non-decomposable | Abelian, decomposable |
-| Eigenvalue invariant | None (discrete) | Linear: λ(A^k) = kλ(A) |
-| Path decomposition | No analog | Subadditive walks |
-| Orbit structure | Full cyclic group | Rapidly periodic |
-| Best classical attack | Index calculus: L_p(1/3) | Polynomial: O(n⁴) |
-| Quantum speedup needed? | Yes (Shor's) | No (classical suffices) |
-
-### 9.2 Can Tropical Cryptography Be Saved?
-
-The structural attacks exploit three specific features: (a) linearity of tropical eigenvalues, (b) decomposability of walks, and (c) finite orbit size. A modified tropical scheme might survive if it could break one of these. Possibilities include:
-
-1. **Tropical polynomials** instead of matrix powers (non-linear iteration)
-2. **Masked tropical operations** with noise injection
-3. **Tropical matrices over non-Archimedean fields** (destroying eigenvalue linearity)
-
-### 9.3 Broader Impact
-
-The tropical DLP analysis provides a template for evaluating algebraic cryptographic proposals: formalize the algebra, look for efficiently computable invariants that grow linearly with the secret, and check if the orbit structure collapses. This methodology applies to any semiring-based cryptosystem.
-
-## 10. Formalization Summary
-
-| Theorem | Lean Name | Axioms Used |
-|---------|-----------|-------------|
-| Diagonal subadditivity | `trop_power_diag_subadditive` | propext, choice, quot |
-| Diagonal power formula | `trop_diag_power_entry` | propext, choice, quot |
-| TDLP diagonal attack | `trop_diag_attack_recovers_k` | propext, choice, quot |
-| Orbit periodicity | `trop_bounded_orbit_periodic` | propext, choice, quot |
-| Graph-matrix duality | `trop_graph_matrix_roundtrip` | propext, quot |
-| Kleene antitone | `kleenePrefix_antitone` | propext, choice, quot |
-| Master theorem | `tropical_five_weaknesses` | propext, choice, quot |
-
-All 20 theorems compile without `sorry` and use only standard axioms (propext, Classical.choice, Quot.sound).
+The stagnation theorem shows that TDLP is always solvable in time O(k₀ · n³), where k₀ is the stagnation index. For security, k₀ must exceed 2^λ where λ is the security parameter. Whether random tropical matrices achieve this is an open question.
 
 ## References
 
-[1] Grigoriev, D. & Shpilrain, V. "Tropical cryptography." *Communications in Algebra* 42.6 (2014): 2624–2632.
+[1] Maclagan, D. and Sturmfels, B. *Introduction to Tropical Geometry*. Graduate Studies in Mathematics, vol. 161, AMS, 2015.
 
-[2] Kotov, M. & Ushakov, A. "Analysis of a key exchange protocol based on tropical matrix algebra." *Journal of Mathematical Cryptology* 12.3 (2018): 137–141.
+[2] Grigoriev, D. and Shpilrain, V. "Tropical cryptography." *Communications in Algebra* 42.6 (2014): 2624-2632.
 
-[3] Butkovič, P. *Max-linear Systems: Theory and Algorithms.* Springer, 2010.
+[3] Catalog results: `Cryptography/TropicalPostQuantum.lean` (24 theorems), `Cryptography/TropicalPostQuantumPrimitives.lean` (30+ theorems).
 
-[4] Gaubert, S. "Théorie des systèmes linéaires dans les dioïdes." Thèse, École des Mines de Paris, 1992.
+[4] Butkovič, P. *Max-linear Systems: Theory and Algorithms*. Springer Monographs in Mathematics, 2010.
 
-[5] Simon, I. "Recognizable sets with multiplicities in the tropical semiring." *Mathematical Foundations of Computer Science 1988*, Springer, 1988.
-
-[6] Pin, J.-E. "Tropical semirings." *Idempotency* (Bristol, 1994), Cambridge Univ. Press, 1998.
+[5] Simon, I. "Recognizable sets with multiplicities in the tropical semiring." *MFCS 1988*, Springer LNCS 324, pp. 107-120.

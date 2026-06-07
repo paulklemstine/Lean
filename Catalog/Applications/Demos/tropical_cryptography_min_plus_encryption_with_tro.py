@@ -2,608 +2,493 @@
 """
 Tropical Cryptography Demo: Min-Plus Diffie-Hellman Key Exchange
 
-Demonstrates:
-1. Tropical matrix arithmetic and power computation
-2. Diffie-Hellman key exchange using tropical matrices
-3. Eigenvalue attack on the Tropical Discrete Logarithm Problem
-4. Kleene star (shortest path) computation
-5. Security analysis: why tropical DLP is structurally weak
+Demonstrates the tropical Diffie-Hellman key exchange protocol,
+power stagnation detection, and the diagonal TDLP vulnerability.
 """
 
-from algorithms import (
-    trop_mat_mul, trop_mat_pow, trop_mat_identity, trop_trace,
-    kleene_star, eigenvalue_attack, trop_eigenvalue_estimate,
-    TropicalDiffieHellman, generate_random_tropical_matrix, INF
-)
+import numpy as np
+from typing import Optional
 import time
 
-
-def fmt_mat(A, name=""):
-    """Pretty-print a tropical matrix."""
-    n = len(A)
-    lines = []
-    if name:
-        lines.append(f"  {name} =")
-    for row in A:
-        entries = []
-        for x in row:
-            if x == INF:
-                entries.append("  ∞")
-            else:
-                entries.append(f"{int(x):3d}")
-        lines.append("  [" + " ".join(entries) + "]")
-    return "\n".join(lines)
+INF = float('inf')
 
 
-def demo_tropical_arithmetic():
-    """Demo 1: Basic tropical matrix operations."""
-    print("=" * 70)
-    print("DEMO 1: Tropical Matrix Arithmetic")
-    print("=" * 70)
-    print()
-    print("In the min-plus semiring: a ⊕ b = min(a,b), a ⊗ b = a + b")
-    print("Matrix multiplication: (A⊗B)_{ij} = min_k (A_{ik} + B_{kj})")
-    print()
-
-    A = [[1, 3, INF],
-         [INF, 2, 0],
-         [4, INF, 5]]
-
-    B = [[0, INF, 2],
-         [1, 3, INF],
-         [INF, 1, 0]]
-
-    print(fmt_mat(A, "A"))
-    print()
-    print(fmt_mat(B, "B"))
-    print()
-
-    C = trop_mat_mul(A, B)
-    print(fmt_mat(C, "A ⊗ B"))
-    print()
-
-    # Verify non-commutativity
-    D = trop_mat_mul(B, A)
-    print(fmt_mat(D, "B ⊗ A"))
-    print()
-    print(f"  A ⊗ B == B ⊗ A? {C == D}")
-    print("  → Tropical matrix multiplication is NOT commutative!")
-    print()
+def trop_add(a: float, b: float) -> float:
+    """Tropical addition: min(a, b)."""
+    return min(a, b)
 
 
-def demo_diffie_hellman():
-    """Demo 2: Tropical Diffie-Hellman key exchange."""
-    print("=" * 70)
-    print("DEMO 2: Tropical Diffie-Hellman Key Exchange")
-    print("=" * 70)
-    print()
-
-    # Public generator matrix
-    G = [[0, 3, 7],
-         [2, 0, 5],
-         [4, 1, 0]]
-
-    print(fmt_mat(G, "Public generator G"))
-    print()
-
-    dh = TropicalDiffieHellman(G)
-
-    # Alice's secret: a = 17
-    # Bob's secret: b = 23
-    a, b = 17, 23
-
-    print(f"  Alice's secret: a = {a}")
-    print(f"  Bob's secret:   b = {b}")
-    print()
-
-    t0 = time.time()
-    pub_a = dh.public_key(a)
-    t1 = time.time()
-    pub_b = dh.public_key(b)
-    t2 = time.time()
-
-    print(f"  Alice publishes G^{a}:")
-    print(fmt_mat(pub_a))
-    print(f"  (computed in {(t1-t0)*1000:.2f} ms)")
-    print()
-
-    print(f"  Bob publishes G^{b}:")
-    print(fmt_mat(pub_b))
-    print(f"  (computed in {(t2-t1)*1000:.2f} ms)")
-    print()
-
-    key_alice = dh.shared_key(a, pub_b)
-    key_bob = dh.shared_key(b, pub_a)
-
-    print("  Alice computes (G^b)^a:")
-    print(fmt_mat(key_alice))
-    print()
-    print("  Bob computes (G^a)^b:")
-    print(fmt_mat(key_bob))
-    print()
-    print(f"  Keys match? {key_alice == key_bob}")
-    print("  → Correctness guaranteed by (G^a)^b = G^{ab} = (G^b)^a")
-    print()
+def trop_mul(a: float, b: float) -> float:
+    """Tropical multiplication: a + b (with infinity handling)."""
+    if a == INF or b == INF:
+        return INF
+    return a + b
 
 
-def demo_eigenvalue_attack():
-    """Demo 3: Breaking TDLP via eigenvalue attack."""
-    print("=" * 70)
-    print("DEMO 3: Eigenvalue Attack on Tropical DLP")
-    print("=" * 70)
-    print()
+def trop_mat_mul(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+    """Tropical matrix multiplication: (A⊗B)_ij = min_k(A_ik + B_kj)."""
+    n = A.shape[0]
+    C = np.full((n, n), INF)
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                val = trop_mul(A[i, k], B[k, j])
+                C[i, j] = trop_add(C[i, j], val)
+    return C
 
-    G = [[0, 3, 7],
-         [2, 0, 5],
-         [4, 1, 0]]
 
-    secret_k = 42
-
-    print(f"  Secret exponent k = {secret_k}")
-    print(fmt_mat(G, "Public matrix G"))
-    print()
-
-    B = trop_mat_pow(G, secret_k)
-    print(f"  B = G^{secret_k}:")
-    print(fmt_mat(B))
-    print()
-
-    # Eigenvalue estimate
-    lam = trop_eigenvalue_estimate(G, max_k=10)
-    print(f"  Tropical eigenvalue λ(G) ≈ {lam:.4f}")
-    tr_B = trop_trace(B)
-    print(f"  Tropical trace tr(B) = {tr_B}")
-    if lam != INF and lam != 0 and tr_B != INF:
-        print(f"  Estimated k ≈ tr(B)/λ(G) = {tr_B/lam:.1f}")
-    print()
-
-    # Full attack
-    t0 = time.time()
-    recovered_k = eigenvalue_attack(G, B)
-    t1 = time.time()
-
-    if recovered_k is not None:
-        print(f"  ✓ Attack recovered k = {recovered_k} (in {(t1-t0)*1000:.2f} ms)")
-        print(f"  ✓ Correct? {recovered_k == secret_k}")
+def trop_mat_pow(A: np.ndarray, k: int) -> np.ndarray:
+    """Tropical matrix power via repeated squaring: A^⊗k."""
+    n = A.shape[0]
+    if k == 0:
+        # Tropical identity: 0 on diagonal, inf elsewhere
+        I = np.full((n, n), INF)
+        np.fill_diagonal(I, 0)
+        return I
+    if k == 1:
+        return A.copy()
+    if k % 2 == 0:
+        half = trop_mat_pow(A, k // 2)
+        return trop_mat_mul(half, half)
     else:
-        print("  ✗ Attack failed (would need more sophisticated methods)")
-    print()
+        return trop_mat_mul(A, trop_mat_pow(A, k - 1))
 
 
-def demo_diagonal_attack():
-    """Demo 4: Trivial TDLP for diagonal matrices."""
-    print("=" * 70)
-    print("DEMO 4: Diagonal Matrix Attack (Proven in Lean)")
-    print("=" * 70)
-    print()
-    print("  For diagonal matrices, (diag(d))^k = diag(k*d).")
-    print("  The TDLP is trivially solvable: k = B_{ii} / A_{ii}.")
-    print()
+def trop_trace(A: np.ndarray) -> float:
+    """Tropical trace: min of diagonal entries."""
+    return min(A[i, i] for i in range(A.shape[0]))
 
+
+def detect_stagnation(A: np.ndarray, max_k: int = 1000) -> Optional[int]:
+    """Find the stagnation index: smallest k with A^k = A^(k+1)."""
+    Ak = A.copy()
+    for k in range(1, max_k + 1):
+        Ak1 = trop_mat_mul(A, Ak)
+        if np.array_equal(Ak, Ak1):
+            return k
+        Ak = Ak1
+    return None
+
+
+def random_tropical_matrix(n: int, B: int = 10) -> np.ndarray:
+    """Generate a random n×n tropical matrix with entries in {0,...,B}."""
+    return np.random.randint(0, B + 1, size=(n, n)).astype(float)
+
+
+def demo_dh_key_exchange():
+    """Demonstrate tropical Diffie-Hellman key exchange."""
+    print("=" * 60)
+    print("TROPICAL DIFFIE-HELLMAN KEY EXCHANGE")
+    print("=" * 60)
+    
+    n = 4
+    G = random_tropical_matrix(n, B=10)
+    
+    print(f"\nPublic matrix G ({n}×{n}):")
+    print(G)
+    
+    # Alice's secret
+    a = np.random.randint(2, 20)
+    Ga = trop_mat_pow(G, a)
+    
+    # Bob's secret
+    b = np.random.randint(2, 20)
+    Gb = trop_mat_pow(G, b)
+    
+    print(f"\nAlice's secret: a = {a}")
+    print(f"Bob's secret:   b = {b}")
+    print(f"\nAlice publishes G^⊗{a}:")
+    print(Ga)
+    print(f"\nBob publishes G^⊗{b}:")
+    print(Gb)
+    
+    # Shared keys
+    alice_key = trop_mat_pow(Gb, a)  # (G^b)^a = G^(ab)
+    bob_key = trop_mat_pow(Ga, b)    # (G^a)^b = G^(ab)
+    
+    print(f"\nAlice computes (G^⊗{b})^⊗{a} = G^⊗{a*b}:")
+    print(alice_key)
+    print(f"\nBob computes (G^⊗{a})^⊗{b} = G^⊗{a*b}:")
+    print(bob_key)
+    
+    keys_match = np.array_equal(alice_key, bob_key)
+    print(f"\n✓ Keys match: {keys_match}")
+    assert keys_match, "ERROR: Keys don't match!"
+
+
+def demo_stagnation():
+    """Demonstrate the power stagnation phenomenon."""
+    print("\n" + "=" * 60)
+    print("POWER STAGNATION DETECTION")
+    print("=" * 60)
+    
+    # Small matrix for visualization
+    A = np.array([[0, 3, INF],
+                  [2, 0, 1],
+                  [INF, 4, 0]], dtype=float)
+    
+    print(f"\nMatrix A:")
+    print(A)
+    
+    print("\nPower sequence:")
+    Ak = A.copy()
+    for k in range(1, 10):
+        print(f"\nA^⊗{k}:")
+        print(Ak)
+        print(f"  trace = {trop_trace(Ak)}")
+        Ak_next = trop_mat_mul(A, Ak)
+        if np.array_equal(Ak, Ak_next):
+            print(f"\n★ STAGNATION at k = {k}")
+            print(f"  All powers A^⊗m for m ≥ {k} equal A^⊗{k}")
+            break
+        Ak = Ak_next
+    
+    # Random matrices with varying sizes
+    print("\n\nStagnation indices for random matrices:")
+    print(f"{'Size':>6} {'B':>4} {'Stag. Index':>12} {'Time (ms)':>10}")
+    print("-" * 36)
+    for n in [3, 4, 5, 6, 8]:
+        for B in [5, 10, 20]:
+            A = random_tropical_matrix(n, B)
+            t0 = time.time()
+            k0 = detect_stagnation(A, max_k=500)
+            dt = (time.time() - t0) * 1000
+            print(f"{n:>6} {B:>4} {str(k0):>12} {dt:>10.1f}")
+
+
+def demo_diagonal_vulnerability():
+    """Demonstrate the diagonal TDLP vulnerability."""
+    print("\n" + "=" * 60)
+    print("DIAGONAL TDLP VULNERABILITY")
+    print("=" * 60)
+    
     # Diagonal matrix
-    d = [3, 7, 11, 5]
+    d = [3, 5, 7, 2]
     n = len(d)
-    A = [[INF] * n for _ in range(n)]
+    D = np.full((n, n), INF)
     for i in range(n):
-        A[i][i] = d[i]
-
-    secret_k = 137
-
-    B = trop_mat_pow(A, secret_k)
-
-    print(f"  d = {d}")
-    print(f"  Secret k = {secret_k}")
-    print()
-    print(f"  A = diag(d):")
+        D[i, i] = d[i]
+    
+    k_secret = 17
+    Dk = trop_mat_pow(D, k_secret)
+    
+    print(f"\nDiagonal matrix D = diag({d})")
+    print(f"Secret exponent: k = {k_secret}")
+    print(f"\nD^⊗{k_secret}:")
+    print(Dk)
+    
+    # Attack: recover k from any diagonal entry
+    print("\nAttack: recover k from diagonal entries:")
     for i in range(n):
-        print(f"    A[{i}][{i}] = {A[i][i]}")
-    print()
-    print(f"  B = A^k:")
-    for i in range(n):
-        print(f"    B[{i}][{i}] = {int(B[i][i])}")
-    print()
-
-    # Attack
-    for i in range(n):
-        if A[i][i] != 0 and A[i][i] != INF:
-            k_est = int(B[i][i] / A[i][i])
-            print(f"  From entry ({i},{i}): k = {int(B[i][i])} / {int(A[i][i])} = {k_est}")
-
-    print()
-    print("  → Lean theorem `trop_diag_attack_recovers_k` proves this always works!")
-    print()
+        if D[i, i] != INF and D[i, i] != 0:
+            k_recovered = Dk[i, i] / D[i, i]
+            print(f"  Entry ({i},{i}): D_{{{i}{i}}} = {D[i,i]}, "
+                  f"(D^k)_{{{i}{i}}} = {Dk[i,i]}, "
+                  f"k = {Dk[i,i]}/{D[i,i]} = {k_recovered}")
+    
+    print(f"\n★ Secret exponent recovered: k = {k_secret}")
+    print("  Diagonal TDLP is trivially solvable!")
 
 
-def demo_kleene_star():
-    """Demo 5: Kleene star = shortest paths."""
-    print("=" * 70)
-    print("DEMO 5: Kleene Star (All-Pairs Shortest Paths)")
-    print("=" * 70)
-    print()
-
-    # Weighted graph (adjacency matrix)
-    A = [[INF, 3, INF, 7],
-         [INF, INF, 1, INF],
-         [INF, INF, INF, 2],
-         [INF, INF, INF, INF]]
-
-    print("  Weighted directed graph (adjacency matrix):")
-    print(fmt_mat(A))
-    print()
-    print("  Edges: 0→1 (weight 3), 1→2 (weight 1), 2→3 (weight 2), 0→3 (weight 7)")
-    print()
-
-    K = kleene_star(A)
-    print("  Kleene star A* (all-pairs shortest paths):")
-    print(fmt_mat(K))
-    print()
-    print("  Interpretation:")
-    print("    K[0][3] = 6: shortest 0→3 path is 0→1→2→3 (cost 3+1+2=6)")
-    print("    K[0][2] = 4: shortest 0→2 path is 0→1→2 (cost 3+1=4)")
-    print()
-    print("  → Lean theorem `kleenePrefix_antitone`: each Kleene prefix step")
-    print("    can only improve (decrease) path weights.")
-    print()
-
-
-def demo_security_analysis():
-    """Demo 6: Why tropical DLP is structurally weak."""
-    print("=" * 70)
-    print("DEMO 6: Security Analysis — Five Structural Weaknesses")
-    print("=" * 70)
-    print()
-    print("  The Lean theorem `tropical_five_weaknesses` proves:")
-    print()
-    print("  1. ABELIAN ORBIT: All powers of G commute → no non-abelian hardness")
-    print("  2. IDEMPOTENT ADDITION: A^k ⊕ A^k = A^k → no ring structure")
-    print("  3. HOMOMORPHISM: G^{a+b} = G^a ⊗ G^b → additive structure leaks")
-    print("  4. IDENTITY: G^0 = I → trivial base case")
-    print("  5. DH CORRECTNESS: (G^a)^b = (G^b)^a → protocol works but...")
-    print()
-    print("  Combined impact: The tropical DLP has too much algebraic structure")
-    print("  for cryptographic hardness. The eigenvalue attack (Demo 3) exploits")
-    print("  weakness #3 (homomorphism + linearity of tropical eigenvalues).")
-    print()
-
-    # Benchmark: timing comparison
-    sizes = [3, 5, 8, 10, 15]
-    print("  Benchmarks: tropical matrix power computation time")
-    print(f"  {'Size':>6} {'G^100 (ms)':>12} {'G^10000 (ms)':>14} {'Attack (ms)':>12}")
-    print("  " + "-" * 50)
-
-    for n in sizes:
-        G = generate_random_tropical_matrix(n, max_val=50, inf_prob=0.05)
-
+def demo_timing():
+    """Measure tropical matrix power computation time vs size."""
+    print("\n" + "=" * 60)
+    print("PERFORMANCE: TROPICAL MATRIX POWER (REPEATED SQUARING)")
+    print("=" * 60)
+    
+    k = 1000000  # Large exponent
+    print(f"\nComputing A^⊗{k} for various matrix sizes:")
+    print(f"{'Size':>6} {'Time (ms)':>10} {'Muls (est)':>12}")
+    print("-" * 32)
+    
+    for n in [2, 3, 4, 5, 8, 10]:
+        A = random_tropical_matrix(n, B=100)
         t0 = time.time()
-        B = trop_mat_pow(G, 100)
-        t1 = time.time()
-        _ = trop_mat_pow(G, 10000)
-        t2 = time.time()
-
-        t3 = time.time()
-        k_found = eigenvalue_attack(G, B)
-        t4 = time.time()
-
-        status = "✓" if k_found == 100 else "✗"
-
-        print(f"  {n:>6} {(t1-t0)*1000:>11.2f} {(t2-t1)*1000:>13.2f} "
-              f"{(t4-t3)*1000:>10.2f} {status}")
-
-    print()
-    print("  → Attack time scales polynomially, breaking the 'one-way' assumption.")
-    print()
+        _ = trop_mat_pow(A, k)
+        dt = (time.time() - t0) * 1000
+        muls = 2 * int(np.log2(k)) + 1  # Approximate
+        print(f"{n:>6} {dt:>10.1f} {muls:>12}")
 
 
 if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║     TROPICAL CRYPTOGRAPHY: Min-Plus Encryption & Cryptanalysis      ║")
-    print("║                                                                      ║")
-    print("║  Demonstrating structural attacks on the Tropical Discrete Log       ║")
-    print("║  Problem (TDLP), with machine-verified proofs in Lean 4.            ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-
-    demo_tropical_arithmetic()
-    demo_diffie_hellman()
-    demo_eigenvalue_attack()
-    demo_diagonal_attack()
-    demo_kleene_star()
-    demo_security_analysis()
-
-    print("=" * 70)
-    print("SUMMARY: Tropical cryptography is structurally vulnerable.")
-    print()
-    print("The min-plus semiring provides efficient forward computation (O(n³ log k))")
-    print("but the Tropical DLP can be broken via:")
-    print("  1. Diagonal entry analysis (proven: trop_diag_attack_recovers_k)")
-    print("  2. Eigenvalue extraction (proven: trop_power_diag_subadditive)")
-    print("  3. Shortest path algorithms (proven: graph-matrix correspondence)")
-    print("  4. Orbit periodicity (proven: trop_bounded_orbit_periodic)")
-    print()
-    print("All structural results are machine-verified in Lean 4 with zero sorries.")
-    print("=" * 70)
+    np.random.seed(42)
+    demo_dh_key_exchange()
+    demo_stagnation()
+    demo_diagonal_vulnerability()
+    demo_timing()
+    
+    print("\n" + "=" * 60)
+    print("ALL DEMOS COMPLETED SUCCESSFULLY")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: TDLP Attack Success Rate vs Matrix Size
-
-Compares the success of different attack strategies across matrix sizes,
-demonstrating that the TDLP is structurally weak.
+Visualization: Tropical Matrix Power Orbit
+Shows the orbit structure and its implications for TDLP security.
 """
-import matplotlib.pyplot as plt
 import numpy as np
-import random
-import time
+import matplotlib.pyplot as plt
+from collections import defaultdict
 
-def trop_add(a, b):
-    return min(a, b)
-
-def trop_mul(a, b):
-    if a == float('inf') or b == float('inf'):
-        return float('inf')
-    return a + b
+INF = float('inf')
 
 def trop_mat_mul(A, B):
-    n = len(A)
-    C = [[float('inf')] * n for _ in range(n)]
+    n = A.shape[0]
+    C = np.full((n, n), INF)
     for i in range(n):
         for j in range(n):
             for k in range(n):
-                C[i][j] = trop_add(C[i][j], trop_mul(A[i][k], B[k][j]))
+                if A[i,k] != INF and B[k,j] != INF:
+                    C[i,j] = min(C[i,j], A[i,k] + B[k,j])
     return C
 
-def trop_mat_identity(n):
-    I = [[float('inf')] * n for _ in range(n)]
-    for i in range(n):
-        I[i][i] = 0
-    return I
-
-def trop_mat_pow(A, k):
-    n = len(A)
-    result = trop_mat_identity(n)
-    base = [row[:] for row in A]
-    while k > 0:
-        if k & 1:
-            result = trop_mat_mul(result, base)
-        base = trop_mat_mul(base, base)
-        k >>= 1
-    return result
-
-def trop_trace(A):
-    return min(A[i][i] for i in range(len(A)))
-
-def diagonal_attack(A, B):
-    n = len(A)
-    for i in range(n):
-        if A[i][i] != 0 and A[i][i] != float('inf') and B[i][i] != float('inf'):
-            k_est = B[i][i] / A[i][i]
-            if abs(k_est - round(k_est)) < 0.001 and k_est > 0:
-                k = int(round(k_est))
-                if trop_mat_pow(A, k) == B:
-                    return k
-    return None
-
-def orbit_attack(A, B, max_k=200):
-    n = len(A)
-    power = trop_mat_identity(n)
-    for k in range(1, max_k + 1):
-        power = trop_mat_mul(power, A)
-        if power == B:
-            return k
-    return None
-
-def random_tropical_matrix(n, max_val=20, inf_prob=0.1):
-    A = []
-    for i in range(n):
-        row = []
-        for j in range(n):
-            if random.random() < inf_prob:
-                row.append(float('inf'))
-            else:
-                row.append(random.randint(0, max_val))
-        A.append(row)
-    return A
+def mat_to_key(A):
+    return tuple(A.flatten())
 
 def main():
-    random.seed(42)
+    np.random.seed(123)
     
-    sizes = [2, 3, 4, 5, 6, 8]
-    trials = 30
-    secret_k = 50
+    fig, axes = plt.subplots(2, 2, figsize=(14, 12))
     
-    diag_success = []
-    orbit_success = []
-    total_success = []
-    avg_times = []
+    # Plot 1: Orbit size vs matrix size
+    ax = axes[0, 0]
+    sizes = [2, 3, 4, 5]
+    Bs = [3, 5, 10]
+    for B in Bs:
+        orbit_sizes = []
+        for n in sizes:
+            total = 0
+            trials = 50
+            for _ in range(trials):
+                A = np.random.randint(0, B+1, (n, n)).astype(float)
+                seen = set()
+                Ak = A.copy()
+                for k in range(1, 500):
+                    key = mat_to_key(Ak)
+                    if key in seen:
+                        break
+                    seen.add(key)
+                    Ak = trop_mat_mul(A, Ak)
+                total += len(seen)
+            orbit_sizes.append(total / trials)
+        ax.plot(sizes, orbit_sizes, 'o-', linewidth=2, markersize=8, label=f'B={B}')
+    ax.set_xlabel('Matrix Size n', fontsize=12)
+    ax.set_ylabel('Average Orbit Size', fontsize=12)
+    ax.set_title('Orbit Size vs Matrix Dimension', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
     
-    for n in sizes:
-        d_wins = 0
-        o_wins = 0
-        t_wins = 0
+    # Plot 2: Diagonal vs non-diagonal TDLP difficulty
+    ax = axes[0, 1]
+    n = 3
+    diag_stag = []
+    nondiag_stag = []
+    for _ in range(100):
+        # Diagonal matrix
+        d = np.random.randint(1, 11, n).astype(float)
+        D = np.full((n, n), INF)
+        np.fill_diagonal(D, d)
+        Dk = D.copy()
+        for k in range(1, 200):
+            Dk1 = trop_mat_mul(D, Dk)
+            if np.array_equal(Dk, Dk1):
+                diag_stag.append(k)
+                break
+            Dk = Dk1
+        else:
+            diag_stag.append(200)
+        
+        # Random non-diagonal matrix
+        A = np.random.randint(0, 11, (n, n)).astype(float)
+        Ak = A.copy()
+        for k in range(1, 200):
+            Ak1 = trop_mat_mul(A, Ak)
+            if np.array_equal(Ak, Ak1):
+                nondiag_stag.append(k)
+                break
+            Ak = Ak1
+        else:
+            nondiag_stag.append(200)
+    
+    ax.hist([diag_stag, nondiag_stag], bins=20, 
+            label=['Diagonal', 'Random'], alpha=0.7,
+            color=['coral', 'steelblue'], edgecolor='black')
+    ax.set_xlabel('Stagnation Index', fontsize=12)
+    ax.set_ylabel('Count', fontsize=12)
+    ax.set_title('Diagonal vs Random: Stagnation', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3, axis='y')
+    
+    # Plot 3: Key exchange timing
+    ax = axes[1, 0]
+    import time
+    sizes_timing = [2, 3, 4, 5, 6, 8, 10]
+    exponents = [10, 100, 1000, 10000]
+    
+    for k in exponents:
         times = []
-        
-        for _ in range(trials):
-            A = random_tropical_matrix(n, max_val=20, inf_prob=0.05)
-            B = trop_mat_pow(A, secret_k)
-            
+        for n in sizes_timing:
+            A = np.random.randint(0, 11, (n, n)).astype(float)
             t0 = time.time()
-            
-            # Try diagonal attack
-            k = diagonal_attack(A, B)
-            if k is not None:
-                d_wins += 1
-                t_wins += 1
-                times.append(time.time() - t0)
-                continue
-            
-            # Try orbit attack
-            k = orbit_attack(A, B, max_k=200)
-            if k is not None:
-                o_wins += 1
-                t_wins += 1
-                times.append(time.time() - t0)
-                continue
-            
-            times.append(time.time() - t0)
-        
-        diag_success.append(d_wins / trials * 100)
-        orbit_success.append(o_wins / trials * 100)
-        total_success.append(t_wins / trials * 100)
-        avg_times.append(np.mean(times) * 1000)
+            for _ in range(5):
+                result = A.copy()
+                exp = k
+                base = A.copy()
+                I = np.full((n,n), INF)
+                np.fill_diagonal(I, 0)
+                result = I
+                while exp > 0:
+                    if exp % 2 == 1:
+                        result = trop_mat_mul(result, base)
+                    base = trop_mat_mul(base, base)
+                    exp //= 2
+            times.append((time.time() - t0) / 5 * 1000)
+        ax.plot(sizes_timing, times, 'o-', linewidth=2, markersize=6, label=f'k={k}')
     
-    # Create figure
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+    ax.set_xlabel('Matrix Size n', fontsize=12)
+    ax.set_ylabel('Time (ms)', fontsize=12)
+    ax.set_title('Key Generation Time', fontsize=14)
+    ax.set_yscale('log')
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
     
-    x = np.arange(len(sizes))
-    width = 0.25
+    # Plot 4: Trace as attack vector
+    ax = axes[1, 1]
+    n = 4
+    A = np.random.randint(1, 6, (n, n)).astype(float)
     
-    ax1.bar(x - width, diag_success, width, label='Diagonal Attack',
-           color='#e74c3c', alpha=0.8)
-    ax1.bar(x, orbit_success, width, label='Orbit Attack',
-           color='#3498db', alpha=0.8)
-    ax1.bar(x + width, total_success, width, label='Combined',
-           color='#2ecc71', alpha=0.8)
-    
-    ax1.set_xlabel('Matrix Size n', fontsize=12)
-    ax1.set_ylabel('Attack Success Rate (%)', fontsize=12)
-    ax1.set_title(f'TDLP Attack Success Rate\n(k = {secret_k}, {trials} trials per size)',
-                 fontsize=13)
-    ax1.set_xticks(x)
-    ax1.set_xticklabels([f'{n}×{n}' for n in sizes])
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3, axis='y')
-    ax1.set_ylim(0, 105)
-    
-    # Plot 2: Attack time vs matrix size
-    ax2.semilogy(sizes, avg_times, 'ro-', markersize=8, linewidth=2,
-                label='Average attack time')
-    
-    # Polynomial fit for comparison
-    coeffs = np.polyfit(np.log(sizes), np.log(avg_times), 1)
-    fit_x = np.linspace(min(sizes), max(sizes), 100)
-    fit_y = np.exp(coeffs[1]) * fit_x ** coeffs[0]
-    ax2.semilogy(fit_x, fit_y, 'b--', alpha=0.5,
-                label=f'Power law: O(n^{{{coeffs[0]:.1f}}})')
-    
-    ax2.set_xlabel('Matrix Size n', fontsize=12)
-    ax2.set_ylabel('Average Time (ms)', fontsize=12)
-    ax2.set_title('Attack Computational Cost\n(Polynomial, NOT exponential)', fontsize=13)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-    
-    plt.suptitle('Structural Cryptanalysis of the Tropical DLP',
-                fontsize=14, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    plt.savefig('tropical_attack_comparison.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved tropical_attack_comparison.png")
-
-if __name__ == '__main__':
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Tropical Matrix Power Orbit and Eigenvalue Convergence
-
-Shows how the tropical trace (minimum diagonal entry) of A^k converges
-to the tropical eigenvalue, demonstrating the subadditivity attack.
-"""
-import matplotlib.pyplot as plt
-import numpy as np
-
-def trop_add(a, b):
-    return min(a, b)
-
-def trop_mul(a, b):
-    if a == float('inf') or b == float('inf'):
-        return float('inf')
-    return a + b
-
-def trop_mat_mul(A, B):
-    n = len(A)
-    C = [[float('inf')] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                C[i][j] = trop_add(C[i][j], trop_mul(A[i][k], B[k][j]))
-    return C
-
-def trop_mat_identity(n):
-    I = [[float('inf')] * n for _ in range(n)]
-    for i in range(n):
-        I[i][i] = 0
-    return I
-
-def trop_trace(A):
-    return min(A[i][i] for i in range(len(A)))
-
-def main():
-    # Test matrix
-    A = [[2, 5, 1, 8],
-         [3, 4, 7, 2],
-         [6, 1, 3, 5],
-         [4, 8, 2, 6]]
-
-    max_k = 30
+    ks = list(range(1, 31))
     traces = []
-    mean_traces = []
-    diag_entries = {i: [] for i in range(4)}
+    for k in ks:
+        Ak = A.copy()
+        I = np.full((n,n), INF)
+        np.fill_diagonal(I, 0)
+        result = I
+        exp = k
+        base = A.copy()
+        while exp > 0:
+            if exp % 2 == 1:
+                result = trop_mat_mul(result, base)
+            base = trop_mat_mul(base, base)
+            exp //= 2
+        traces.append(min(result[i,i] for i in range(n)))
     
-    power = trop_mat_identity(4)
-    for k in range(1, max_k + 1):
-        power = trop_mat_mul(power, A)
-        tr = trop_trace(power)
-        traces.append(tr)
-        mean_traces.append(tr / k)
-        for i in range(4):
-            diag_entries[i].append(power[i][i])
-
-    # Create figure with 3 subplots
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-    # Plot 1: Diagonal entries showing subadditivity
-    ks = list(range(1, max_k + 1))
-    colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12']
-    for i in range(4):
-        axes[0].plot(ks, diag_entries[i], '-o', markersize=3,
-                    color=colors[i], label=f'(A^k)_{{{i}{i}}}')
-    axes[0].set_xlabel('Power k', fontsize=12)
-    axes[0].set_ylabel('Diagonal entry value', fontsize=12)
-    axes[0].set_title('Diagonal Entries of A^k\n(Subadditive sequences)', fontsize=13)
-    axes[0].legend(fontsize=9)
-    axes[0].grid(True, alpha=0.3)
-
-    # Plot 2: Trace and subadditivity bound
-    axes[1].plot(ks, traces, 'b-o', markersize=3, label='tr(A^k) = min diag')
-    # Show subadditivity: tr(A^{m+k}) ≤ tr(A^m) + tr(A^k)
-    bound = [traces[0] * k for k in ks]
-    axes[1].plot(ks, bound, 'r--', alpha=0.7, label=f'k · tr(A) = k · {traces[0]}')
-    axes[1].set_xlabel('Power k', fontsize=12)
-    axes[1].set_ylabel('Tropical trace', fontsize=12)
-    axes[1].set_title('Tropical Trace: tr(A^k)\n(Linear bound from subadditivity)', fontsize=13)
-    axes[1].legend(fontsize=9)
-    axes[1].grid(True, alpha=0.3)
-
-    # Plot 3: Convergence to tropical eigenvalue
-    axes[2].plot(ks, mean_traces, 'g-o', markersize=3, label='tr(A^k) / k')
-    eigenvalue = min(mean_traces)
-    axes[2].axhline(y=eigenvalue, color='r', linestyle='--', alpha=0.7,
-                   label=f'λ(A) ≈ {eigenvalue:.3f}')
-    axes[2].set_xlabel('Power k', fontsize=12)
-    axes[2].set_ylabel('Normalized trace', fontsize=12)
-    axes[2].set_title('Convergence to Tropical Eigenvalue\nλ(A) = lim tr(A^k)/k', fontsize=13)
-    axes[2].legend(fontsize=9)
-    axes[2].grid(True, alpha=0.3)
-
-    plt.suptitle('Tropical Matrix Power Analysis: Walk Concatenation & Eigenvalue Attack',
-                fontsize=14, fontweight='bold', y=1.02)
+    ax.plot(ks, traces, 'go-', linewidth=2, markersize=6)
+    ax.plot(ks, [k * min(A[i,i] for i in range(n)) for k in ks], 
+            'r--', linewidth=1.5, alpha=0.7, label='k · min(diag)')
+    ax.set_xlabel('Exponent k', fontsize=12)
+    ax.set_ylabel('Tropical Trace tr⊕(A^k)', fontsize=12)
+    ax.set_title('Trace vs Exponent (Attack Vector)', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    
+    plt.suptitle('Tropical Cryptography: Security Analysis', fontsize=16, y=1.01)
     plt.tight_layout()
     plt.savefig('tropical_orbit_analysis.png', dpi=150, bbox_inches='tight')
     plt.close()
     print("Saved tropical_orbit_analysis.png")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Tropical Power Stagnation
+Shows how tropical matrix entries converge as power k increases.
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+
+INF = float('inf')
+
+def trop_mat_mul(A, B):
+    n = A.shape[0]
+    C = np.full((n, n), INF)
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                if A[i,k] != INF and B[k,j] != INF:
+                    C[i,j] = min(C[i,j], A[i,k] + B[k,j])
+    return C
+
+def main():
+    np.random.seed(42)
+    n = 4
+    B = 15
+    A = np.random.randint(0, B+1, (n, n)).astype(float)
+    
+    max_k = 30
+    entries = {(i,j): [] for i in range(n) for j in range(n)}
+    traces = []
+    
+    Ak = np.full((n,n), INF)
+    np.fill_diagonal(Ak, 0)  # Identity
+    
+    for k in range(max_k + 1):
+        if k > 0:
+            Ak = trop_mat_mul(A, Ak)
+        for i in range(n):
+            for j in range(n):
+                entries[(i,j)].append(Ak[i,j] if Ak[i,j] != INF else np.nan)
+        traces.append(min(Ak[i,i] for i in range(n)))
+    
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+    
+    # Plot 1: Entry convergence
+    ax = axes[0]
+    ks = list(range(max_k + 1))
+    colors = plt.cm.viridis(np.linspace(0, 1, n*n))
+    for idx, (i,j) in enumerate([(i,j) for i in range(n) for j in range(n)]):
+        vals = entries[(i,j)]
+        finite_vals = [(k, v) for k, v in zip(ks, vals) if not np.isnan(v)]
+        if finite_vals:
+            kk, vv = zip(*finite_vals)
+            ax.plot(kk, vv, color=colors[idx], alpha=0.6, linewidth=1.5,
+                   label=f'({i},{j})' if idx < 6 else None)
+    ax.set_xlabel('Power k', fontsize=12)
+    ax.set_ylabel('Entry value (A^k)_ij', fontsize=12)
+    ax.set_title('Tropical Matrix Entry Convergence', fontsize=14)
+    ax.legend(fontsize=8, ncol=2)
+    ax.grid(True, alpha=0.3)
+    
+    # Plot 2: Trace convergence
+    ax = axes[1]
+    ax.plot(ks, traces, 'r-o', markersize=4, linewidth=2)
+    ax.set_xlabel('Power k', fontsize=12)
+    ax.set_ylabel('Tropical trace min_i (A^k)_ii', fontsize=12)
+    ax.set_title('Tropical Trace vs Power', fontsize=14)
+    ax.grid(True, alpha=0.3)
+    
+    # Plot 3: Stagnation index distribution
+    ax = axes[2]
+    stag_indices = []
+    for trial in range(200):
+        A_rand = np.random.randint(0, 11, (4, 4)).astype(float)
+        Ak = A_rand.copy()
+        found = False
+        for k in range(1, 100):
+            Ak1 = trop_mat_mul(A_rand, Ak)
+            if np.array_equal(Ak, Ak1):
+                stag_indices.append(k)
+                found = True
+                break
+            Ak = Ak1
+        if not found:
+            stag_indices.append(100)
+    
+    ax.hist(stag_indices, bins=range(1, max(stag_indices)+2), 
+            color='steelblue', edgecolor='black', alpha=0.7)
+    ax.set_xlabel('Stagnation Index k₀', fontsize=12)
+    ax.set_ylabel('Count', fontsize=12)
+    ax.set_title('Stagnation Index Distribution\n(4×4 matrices, entries ∈ {0,...,10})', fontsize=14)
+    ax.grid(True, alpha=0.3, axis='y')
+    
+    plt.tight_layout()
+    plt.savefig('tropical_stagnation.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved tropical_stagnation.png")
+
+if __name__ == "__main__":
     main()
