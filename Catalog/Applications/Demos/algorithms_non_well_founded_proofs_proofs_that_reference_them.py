@@ -1,261 +1,296 @@
 #!/usr/bin/env python3
 """
-Algorithms for Non-Well-Founded Proof Systems
+Algorithms for Convergent Self-Reference Theory
 
-Type-hinted implementations of the core algorithms for computing
-circularity gaps, classifying propositions, and analyzing proof systems.
+Type-hinted implementations of the core algorithms:
+1. Kleene chain computation
+2. Convergence index computation
+3. Stratum partitioning
+4. Tropical semiring operations
+5. Horn clause proof system
 """
 
-from __future__ import annotations
+from typing import TypeVar, Callable, Optional, List, Tuple, Set, Dict
 from dataclasses import dataclass
-from typing import Callable, FrozenSet, Iterator, List, Optional, Set, Tuple
+from math import inf
+
+T = TypeVar('T')
 
 
-# Type aliases
-PropSet = FrozenSet[int]
-DeriveFn = Callable[[PropSet], PropSet]
+# ============================================================
+# Algorithm 1: Kleene Chain Computation
+# ============================================================
 
-
-@dataclass(frozen=True)
-class ProofSystem:
-    """A proof system over finite propositions.
-
-    Attributes:
-        universe: The set of all propositions.
-        derive: Monotone derivation operator.
+def compute_kleene_chain(
+    F: Callable[[T], T],
+    bot: T,
+    max_steps: int
+) -> List[T]:
     """
-    universe: PropSet
-    derive: DeriveFn
+    Compute the Kleene chain F^0(⊥), F^1(⊥), ..., F^n(⊥).
 
-    def verify_monotonicity(self, sample_size: int = 100) -> bool:
-        """Spot-check monotonicity: S ⊆ T → derive(S) ⊆ derive(T)."""
-        import random
-        elems = sorted(self.universe)
-        for _ in range(sample_size):
-            k1 = random.randint(0, len(elems))
-            k2 = random.randint(k1, len(elems))
-            s = frozenset(random.sample(elems, k1))
-            t = s | frozenset(random.sample(elems, min(k2, len(elems))))
-            if not self.derive(s) <= self.derive(t):
-                return False
-        return True
+    Pseudocode:
+        x ← ⊥
+        chain ← [x]
+        for i in 1..max_steps:
+            x ← F(x)
+            chain.append(x)
+            if x = chain[-2]: break
+        return chain
 
-
-@dataclass(frozen=True)
-class CircularityAnalysis:
-    """Complete analysis of a proof system's circularity structure."""
-    lfp: PropSet
-    gfp: PropSet
-    gap: PropSet
-    safe_elements: PropSet
-    self_referential_elements: PropSet
-    lfp_depth: dict[int, int]  # element -> iteration step when it entered lfp
-    gfp_depth: dict[int, int]  # element -> iteration step when it left gfp approx
-
-
-def compute_lfp(derive: DeriveFn, universe: PropSet,
-                max_iter: int = 1000) -> Tuple[PropSet, List[PropSet]]:
-    """Compute the least fixed point by ascending Kleene iteration.
+    Args:
+        F: Monotone operator
+        bot: Bottom element of the lattice
+        max_steps: Maximum number of iterations
 
     Returns:
-        (lfp, trace) where trace[i] = derive^i(∅).
+        List of Kleene chain values
     """
-    trace: List[PropSet] = [frozenset()]
-    current = frozenset()
-    for _ in range(max_iter):
-        next_val = derive(current)
-        trace.append(next_val)
-        if next_val == current:
-            return current, trace
-        current = next_val
-    return current, trace
-
-
-def compute_gfp(derive: DeriveFn, universe: PropSet,
-                max_iter: int = 1000) -> Tuple[PropSet, List[PropSet]]:
-    """Compute the greatest fixed point by descending Kleene iteration.
-
-    Returns:
-        (gfp, trace) where trace[i] = derive^i(universe).
-    """
-    trace: List[PropSet] = [universe]
-    current = universe
-    for _ in range(max_iter):
-        next_val = derive(current)
-        trace.append(next_val)
-        if next_val == current:
-            return current, trace
-        current = next_val
-    return current, trace
-
-
-def compute_circularity_gap(ps: ProofSystem) -> Tuple[PropSet, PropSet, PropSet]:
-    """Compute the circularity gap.
-
-    Returns:
-        (gap, lfp, gfp) where gap = gfp \\ lfp.
-    """
-    lfp, _ = compute_lfp(ps.derive, ps.universe)
-    gfp, _ = compute_gfp(ps.derive, ps.universe)
-    return gfp - lfp, lfp, gfp
-
-
-def classify_element(derive: DeriveFn, a: int,
-                      universe: PropSet) -> Tuple[bool, bool]:
-    """Classify an element as safe and/or self-referential.
-
-    Returns:
-        (is_safe, is_self_referential)
-    """
-    # Check safety: a ∈ derive(S) → a ∈ S for all S ⊆ universe
-    is_safe = True
-    for mask in range(1 << len(universe)):
-        elems = sorted(universe)
-        s = frozenset(elems[i] for i in range(len(elems)) if mask & (1 << i))
-        if a in derive(s) and a not in s:
-            is_safe = False
+    chain: List[T] = [bot]
+    x = bot
+    for _ in range(max_steps):
+        x = F(x)
+        chain.append(x)
+        if x == chain[-2]:
             break
-
-    # Check self-referentiality
-    is_selfref = is_safe and (a in derive(frozenset([a])))
-    return is_safe, is_selfref
+    return chain
 
 
-def full_analysis(ps: ProofSystem) -> CircularityAnalysis:
-    """Perform complete circularity analysis of a proof system.
-
-    Computes lfp, gfp, gap, safety classification, and depth measures.
+def find_fixed_point(
+    F: Callable[[T], T],
+    bot: T,
+    max_steps: int = 1000
+) -> Tuple[Optional[int], T]:
     """
-    lfp, lfp_trace = compute_lfp(ps.derive, ps.universe)
-    gfp, gfp_trace = compute_gfp(ps.derive, ps.universe)
-    gap = gfp - lfp
+    Find the least fixed point of F by Kleene iteration.
 
-    # Classify elements
-    safe = set()
-    selfref = set()
-    for a in ps.universe:
-        s, sr = classify_element(ps.derive, a, ps.universe)
-        if s:
-            safe.add(a)
-        if sr:
-            selfref.add(a)
+    Pseudocode:
+        x ← ⊥; k ← 0
+        repeat:
+            x' ← F(x)
+            if x' = x: return (k, x)
+            x ← x'; k ← k + 1
+        return (None, x)
 
-    # Compute lfp depth (when element first appears in ascending sequence)
-    lfp_depth: dict[int, int] = {}
-    for a in lfp:
-        for i, step in enumerate(lfp_trace):
-            if a in step:
-                lfp_depth[a] = i
-                break
-
-    # Compute gfp depth (when element first disappears in descending sequence)
-    gfp_depth: dict[int, int] = {}
-    for a in ps.universe - gfp:
-        for i, step in enumerate(gfp_trace):
-            if a not in step:
-                gfp_depth[a] = i
-                break
-
-    return CircularityAnalysis(
-        lfp=lfp,
-        gfp=gfp,
-        gap=gap,
-        safe_elements=frozenset(safe),
-        self_referential_elements=frozenset(selfref),
-        lfp_depth=lfp_depth,
-        gfp_depth=gfp_depth,
-    )
-
-
-def find_post_fixed_points(ps: ProofSystem) -> List[PropSet]:
-    """Find all post-fixed points (self-consistent theories).
-
-    For small universes only (exponential in |universe|).
+    Returns:
+        (stabilization_index, fixed_point) or (None, last_value) if doesn't converge
     """
-    elems = sorted(ps.universe)
-    result: List[PropSet] = []
-    for mask in range(1 << len(elems)):
-        s = frozenset(elems[i] for i in range(len(elems)) if mask & (1 << i))
-        if s <= ps.derive(s):
-            result.append(s)
-    return result
-
-
-def verify_union_closure(ps: ProofSystem,
-                         post_fixed: List[PropSet]) -> bool:
-    """Verify that post-fixed points are closed under union (Theorem 7)."""
-    for i, s1 in enumerate(post_fixed):
-        for s2 in post_fixed[i + 1:]:
-            union = s1 | s2
-            if not union <= ps.derive(union):
-                return False
-    return True
+    x = bot
+    for k in range(max_steps):
+        x_next = F(x)
+        if x_next == x:
+            return k, x
+        x = x_next
+    return None, x
 
 
 # ============================================================
-# Factory functions for common proof systems
+# Algorithm 2: Convergence Index Computation
 # ============================================================
 
-def identity_system(n: int) -> ProofSystem:
-    """Create the identity proof system on {0, ..., n-1}."""
-    universe = frozenset(range(n))
-    return ProofSystem(universe=universe, derive=lambda s: s)
+def convergence_index(
+    F: Callable[[T], T],
+    bot: T,
+    le: Callable[[T, T], bool],
+    target: T,
+    max_steps: int = 1000
+) -> Optional[int]:
+    """
+    Compute the convergence index of `target` under operator F.
+
+    Pseudocode:
+        x ← ⊥; k ← 0
+        repeat:
+            if target ≤ x: return k
+            x ← F(x); k ← k + 1
+        return ∞
+
+    Args:
+        F: Monotone operator
+        bot: Bottom element
+        le: Partial order comparison
+        target: Element whose convergence index to compute
+        max_steps: Maximum iterations
+
+    Returns:
+        Convergence index k, or None if not reached
+    """
+    x = bot
+    for k in range(max_steps):
+        if le(target, x):
+            return k
+        x = F(x)
+    return None
 
 
-def constant_system(n: int, axioms: PropSet) -> ProofSystem:
-    """Create a constant proof system."""
-    universe = frozenset(range(n))
-    return ProofSystem(universe=universe, derive=lambda s: axioms)
+# ============================================================
+# Algorithm 3: Stratum Partitioning
+# ============================================================
+
+def compute_strata(
+    F: Callable[[T], T],
+    bot: T,
+    elements: List[T],
+    le: Callable[[T, T], bool],
+    max_steps: int = 100
+) -> Dict[int, List[T]]:
+    """
+    Partition elements into convergence strata.
+
+    Returns dict mapping stratum index to list of elements in that stratum.
+    Elements not reached within max_steps are placed in stratum -1.
+    """
+    strata: Dict[int, List[T]] = {}
+    assigned: Set[int] = set()
+
+    x = bot
+    prev_x = None
+
+    for k in range(max_steps):
+        new_elements = []
+        for i, elem in enumerate(elements):
+            if i not in assigned and le(elem, x):
+                new_elements.append(elem)
+                assigned.add(i)
+
+        if new_elements:
+            strata[k] = new_elements
+
+        x_next = F(x)
+        if x_next == x:
+            break
+        prev_x = x
+        x = x_next
+
+    # Unassigned elements
+    unassigned = [elements[i] for i in range(len(elements)) if i not in assigned]
+    if unassigned:
+        strata[-1] = unassigned
+
+    return strata
 
 
-def union_axiom_system(n: int, axioms: PropSet) -> ProofSystem:
-    """Create a union-axiom proof system."""
-    universe = frozenset(range(n))
-    return ProofSystem(universe=universe, derive=lambda s: s | axioms)
+# ============================================================
+# Algorithm 4: Tropical Semiring
+# ============================================================
+
+@dataclass
+class TropicalIndex:
+    """Tropical convergence index: element of ℕ ∪ {∞}."""
+    value: float  # Use float('inf') for ⊤
+
+    @staticmethod
+    def zero() -> 'TropicalIndex':
+        """Additive identity (∞ = unreachable)."""
+        return TropicalIndex(inf)
+
+    @staticmethod
+    def one() -> 'TropicalIndex':
+        """Multiplicative identity (0 = axiom)."""
+        return TropicalIndex(0)
+
+    def __add__(self, other: 'TropicalIndex') -> 'TropicalIndex':
+        """Tropical addition = min."""
+        return TropicalIndex(min(self.value, other.value))
+
+    def __mul__(self, other: 'TropicalIndex') -> 'TropicalIndex':
+        """Tropical multiplication = +."""
+        if self.value == inf or other.value == inf:
+            return TropicalIndex(inf)
+        return TropicalIndex(self.value + other.value)
+
+    def __repr__(self) -> str:
+        return "∞" if self.value == inf else str(int(self.value))
 
 
-def induction_system(n: int) -> ProofSystem:
-    """Create an induction-like system: 0 is axiom, x → x+1."""
-    universe = frozenset(range(n))
-    def derive(s: PropSet) -> PropSet:
-        result = s | frozenset([0])
-        for x in s:
-            if x + 1 < n:
-                result = result | frozenset([x + 1])
-        return result
-    return ProofSystem(universe=universe, derive=derive)
+# ============================================================
+# Algorithm 5: Horn Clause Proof System
+# ============================================================
+
+@dataclass
+class HornClause:
+    """A Horn clause: premises -> conclusion."""
+    premises: List[int]  # Indices of premise propositions
+    conclusion: int  # Index of conclusion proposition
+
+
+def horn_clause_step(
+    n: int,
+    clauses: List[HornClause],
+    state: Tuple[bool, ...]
+) -> Tuple[bool, ...]:
+    """
+    One step of Horn clause closure.
+
+    For each proposition p, p is true if:
+    - p was already true, OR
+    - some clause with conclusion p has all premises true
+
+    This operator is monotone by construction.
+    """
+    result = list(state)
+    for clause in clauses:
+        if all(state[p] for p in clause.premises):
+            result[clause.conclusion] = True
+    return tuple(result)
+
+
+def horn_clause_fixed_point(
+    n: int,
+    clauses: List[HornClause]
+) -> Tuple[bool, ...]:
+    """Compute the least fixed point of a Horn clause system."""
+    step = lambda s: horn_clause_step(n, clauses, s)
+    _, fp = find_fixed_point(step, tuple([False] * n), max_steps=n + 1)
+    return fp
+
+
+# ============================================================
+# Algorithm 6: Convergence-Divergence Classifier
+# ============================================================
+
+def classify_self_reference(
+    F: Callable[[T], T],
+    bot: T,
+    max_steps: int = 100
+) -> str:
+    """
+    Classify a function as convergent or divergent.
+
+    Returns:
+        "convergent(N)" where N is the stabilization index, or
+        "divergent" if no stabilization found
+    """
+    x = bot
+    for k in range(max_steps):
+        x_next = F(x)
+        if x_next == x:
+            return f"convergent({k})"
+        x = x_next
+    return "divergent"
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    ps = identity_system(5)
-    analysis = full_analysis(ps)
-    print(f"Identity system (n=5):")
-    print(f"  lfp = {sorted(analysis.lfp)}")
-    print(f"  gfp = {sorted(analysis.gfp)}")
-    print(f"  gap = {sorted(analysis.gap)}")
-    print(f"  safe = {sorted(analysis.safe_elements)}")
-    print(f"  self-ref = {sorted(analysis.self_referential_elements)}")
-    assert analysis.gap == ps.universe
-    assert analysis.safe_elements == ps.universe
-    assert analysis.self_referential_elements == ps.universe
-    print("  ✓ All assertions passed")
+    # Example: Horn clause system
+    clauses = [
+        HornClause([], 0),       # Axiom: P0
+        HornClause([0], 1),      # P0 -> P1
+        HornClause([1], 2),      # P1 -> P2
+        HornClause([0, 2], 3),   # P0, P2 -> P3
+    ]
 
-    ps2 = constant_system(5, frozenset([0, 1]))
-    analysis2 = full_analysis(ps2)
-    print(f"\nConstant system (n=5, axioms={{0,1}}):")
-    print(f"  lfp = {sorted(analysis2.lfp)}")
-    print(f"  gfp = {sorted(analysis2.gfp)}")
-    print(f"  gap = {sorted(analysis2.gap)}")
-    assert len(analysis2.gap) == 0
-    print("  ✓ Gap is empty (as expected)")
+    fp = horn_clause_fixed_point(4, clauses)
+    print(f"Horn clause fixed point: {fp}")
 
-    ps3 = induction_system(8)
-    analysis3 = full_analysis(ps3)
-    print(f"\nInduction system (n=8):")
-    print(f"  lfp = {sorted(analysis3.lfp)}")
-    print(f"  gfp = {sorted(analysis3.gfp)}")
-    print(f"  gap = {sorted(analysis3.gap)}")
-    print(f"  lfp_depth = {analysis3.lfp_depth}")
-    assert len(analysis3.gap) == 0
-    print("  ✓ Gap is empty (complete induction)")
+    # Convergence indices
+    step = lambda s: horn_clause_step(4, clauses, s)
+    chain = compute_kleene_chain(step, (False,) * 4, 10)
+    for i, c in enumerate(chain):
+        print(f"  Step {i}: {c}")
+
+    # Tropical arithmetic
+    a = TropicalIndex(2)
+    b = TropicalIndex(3)
+    c = TropicalIndex(5)
+    print(f"\nTropical: {a} ⊗ ({b} ⊕ {c}) = {a * (b + c)}")
+    print(f"Tropical: ({a} ⊗ {b}) ⊕ ({a} ⊗ {c}) = {(a * b) + (a * c)}")
