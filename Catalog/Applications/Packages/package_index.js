@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a23b9ae9",
     "filename": "the_aperiodic_monotile_one_shape_to_tile_them_all.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.46144,
     "title": "Algebraic Foundations of the Aperiodic Monotile: Pisot Numbers, Pell Equations, and the Hat Spectrum"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_aperiodic_monotile_one_shape_to_tile_them_all",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.46144,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Algebraic Foundations of the Aperiodic Monotile: Pisot Numbers, Pell Equations, and the Hat Spectrum"
     }
