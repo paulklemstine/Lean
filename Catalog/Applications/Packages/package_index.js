@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "b97d4417",
     "filename": "counterfactual_number_theory_what_if_primes_were_r.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.35944,
     "title": "Counterfactual Number Theory: Factorization Systems and the Axiomatic Inevitability of Primes"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "counterfactual_number_theory_what_if_primes_were_r",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.35944,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Counterfactual Number Theory: Factorization Systems and the Axiomatic Inevitability of Primes"
     }

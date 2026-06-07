@@ -1,2 +1,1 @@
-def retained_information(alpha, depth, K):
-    return alpha ** depth * K
+def retained_info(alpha, l, K): return alpha**l * K
