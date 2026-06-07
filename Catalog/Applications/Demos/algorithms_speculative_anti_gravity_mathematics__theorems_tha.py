@@ -2,224 +2,203 @@
 """
 Anti-Gravity Mathematics: Core Algorithms
 
-Type-hinted implementations of the key algorithms for computing anti-gravity
-properties of theorem dependency graphs.
+Type-hinted implementations of the key algorithms for computing
+gravitational weight, anti-gravity indices, and spectral analysis
+of theorem dependency graphs.
 """
 
-from typing import Dict, FrozenSet, List, Optional, Set, Tuple
+from __future__ import annotations
+from collections import defaultdict, deque
 from dataclasses import dataclass, field
+from typing import Optional
 
 
 @dataclass
-class GravitationalDerivationSystem:
-    """A Gravitational Derivation System: a DAG with proof-effort annotations.
+class TheoremNode:
+    """A node in a theorem dependency graph."""
+    id: int
+    name: str
+    proof_length: int  # Number of derivation steps
+    dependencies: list[int] = field(default_factory=list)  # IDs this depends on
 
-    Attributes:
-        vertices: Set of theorem identifiers
-        dependencies: Dict mapping each vertex to its direct dependents
-        proof_effort: Dict mapping each vertex to its proof complexity measure
+
+@dataclass
+class ProofLeverageLattice:
     """
-    vertices: Set[int]
-    dependencies: Dict[int, Set[int]]
-    proof_effort: Dict[int, int]
-
+    The Proof Leverage Lattice (PLL): a DAG with proof complexity data.
+    
+    Novel mathematical structure that captures the relationship between
+    theorem dependency structure and proof complexity.
+    """
+    nodes: dict[int, TheoremNode]
+    _adjacency: dict[int, list[int]] = field(default_factory=lambda: defaultdict(list))
+    _weight_cache: dict[int, int] = field(default_factory=dict)
+    
     def __post_init__(self) -> None:
-        for v in self.vertices:
-            assert self.proof_effort.get(v, 0) > 0, f"Effort must be positive for vertex {v}"
-            if v not in self.dependencies:
-                self.dependencies[v] = set()
-
-    @property
-    def n(self) -> int:
-        """Number of theorems in the system."""
-        return len(self.vertices)
-
-    def direct_weight(self, v: int) -> int:
-        """Number of direct dependents of theorem v."""
-        return len(self.dependencies.get(v, set()))
-
-    def total_direct_weight(self) -> int:
-        """Sum of all direct weights = number of dependency edges."""
-        return sum(self.direct_weight(v) for v in self.vertices)
-
-    def total_effort(self) -> int:
-        """Sum of all proof efforts."""
-        return sum(self.proof_effort[v] for v in self.vertices)
-
-    def is_anti_gravitational(self, v: int) -> bool:
-        """Check if theorem v is anti-gravitational (weight > effort)."""
-        return self.direct_weight(v) > self.proof_effort[v]
-
-    def is_k_anti_gravitational(self, v: int, k: int) -> bool:
-        """Check if theorem v is k-anti-gravitational (weight > k * effort)."""
-        return self.direct_weight(v) > k * self.proof_effort[v]
-
-    def anti_gravity_set(self) -> Set[int]:
-        """Return the set of all anti-gravitational theorems."""
-        return {v for v in self.vertices if self.is_anti_gravitational(v)}
-
-    def k_anti_gravity_set(self, k: int) -> Set[int]:
-        """Return the set of all k-anti-gravitational theorems."""
-        return {v for v in self.vertices if self.is_k_anti_gravitational(v, k)}
-
-    def anti_gravity_fraction(self) -> float:
-        """Fraction of theorems that are anti-gravitational."""
-        if self.n == 0:
+        """Build forward adjacency (dependency → dependent)."""
+        self._adjacency = defaultdict(list)
+        for node in self.nodes.values():
+            for dep in node.dependencies:
+                self._adjacency[dep].append(node.id)
+    
+    def reachable_set(self, v: int) -> set[int]:
+        """Compute the set of all vertices reachable from v via forward edges."""
+        if v in self._weight_cache:
+            return set()  # Simplified; see weight() for caching
+        visited: set[int] = {v}
+        queue: deque[int] = deque([v])
+        while queue:
+            u = queue.popleft()
+            for w in self._adjacency.get(u, []):
+                if w not in visited:
+                    visited.add(w)
+                    queue.append(w)
+        return visited
+    
+    def weight(self, v: int) -> int:
+        """Gravitational weight: |reachable_set(v)|."""
+        if v not in self._weight_cache:
+            self._weight_cache[v] = len(self.reachable_set(v))
+        return self._weight_cache[v]
+    
+    def total_weight(self) -> int:
+        """Sum of all gravitational weights."""
+        return sum(self.weight(v) for v in self.nodes)
+    
+    def total_proof_length(self) -> int:
+        """Sum of all proof lengths."""
+        return sum(n.proof_length for n in self.nodes.values())
+    
+    def knowledge_leverage_ratio(self) -> float:
+        """totalWeight / totalProofLength — the global leverage."""
+        tpl = self.total_proof_length()
+        return self.total_weight() / tpl if tpl > 0 else float('inf')
+    
+    def anti_gravity_index(self, v: int) -> float:
+        """Anti-gravity index of vertex v: weight / proofLength."""
+        pl = self.nodes[v].proof_length
+        return self.weight(v) / pl if pl > 0 else float('inf')
+    
+    def is_anti_gravity(self, v: int, tau: int) -> bool:
+        """Check if v is τ-anti-gravity: weight(v) ≥ τ * proofLength(v)."""
+        return self.weight(v) >= tau * self.nodes[v].proof_length
+    
+    def anti_gravity_set(self, tau: int) -> set[int]:
+        """The set of all τ-anti-gravity vertices."""
+        return {v for v in self.nodes if self.is_anti_gravity(v, tau)}
+    
+    def gravitational_spectrum(self) -> list[float]:
+        """
+        The gravitational spectrum: sorted list of anti-gravity indices.
+        
+        This is the novel invariant of the PLL that captures the distribution
+        of information leverage across the theorem space.
+        """
+        indices = [self.anti_gravity_index(v) for v in self.nodes]
+        return sorted(indices, reverse=True)
+    
+    def spectral_gap(self) -> float:
+        """Gap between max and min anti-gravity indices."""
+        spectrum = self.gravitational_spectrum()
+        if not spectrum:
             return 0.0
-        return len(self.anti_gravity_set()) / self.n
+        return spectrum[0] - spectrum[-1]
+    
+    def find_keystones(self, top_k: int = 5) -> list[tuple[int, float]]:
+        """
+        Find the top-k keystone theorems: those with highest anti-gravity index.
+        
+        These are the theorems that provide the most mathematical leverage
+        per unit of proof complexity.
+        """
+        scored = [(v, self.anti_gravity_index(v)) for v in self.nodes]
+        scored.sort(key=lambda x: -x[1])
+        return scored[:top_k]
+    
+    def in_degree(self, v: int) -> int:
+        """Number of theorems that v directly depends on."""
+        return len(self.nodes[v].dependencies)
+    
+    def out_degree(self, v: int) -> int:
+        """Number of theorems that directly depend on v."""
+        return len(self._adjacency.get(v, []))
+    
+    def sources(self) -> set[int]:
+        """Vertices with in-degree 0 (axioms)."""
+        return {v for v in self.nodes if self.in_degree(v) == 0}
 
-    def gravitational_spectrum(self) -> List[int]:
-        """The gravitational spectrum: sorted list of all weights."""
-        return sorted([self.direct_weight(v) for v in self.vertices], reverse=True)
 
-    def max_weight(self) -> int:
-        """Maximum direct weight across all theorems."""
-        if not self.vertices:
-            return 0
-        return max(self.direct_weight(v) for v in self.vertices)
-
-    def min_effort(self) -> int:
-        """Minimum proof effort across all theorems."""
-        if not self.vertices:
-            return 0
-        return min(self.proof_effort[v] for v in self.vertices)
-
-    def surplus(self) -> int:
-        """Weight surplus: total_weight - total_effort."""
-        return self.total_direct_weight() - self.total_effort()
-
-    def has_surplus(self) -> bool:
-        """Whether the system has positive surplus (guarantees anti-gravity)."""
-        return self.surplus() > 0
-
-
-def find_anti_gravity_witness(gds: GravitationalDerivationSystem) -> Optional[int]:
-    """Find an anti-gravitational node if one exists.
-
-    Algorithm: Anti-Gravity Pigeonhole (constructive version)
-    Complexity: O(n) where n = number of vertices
-
-    Returns the first anti-gravitational node found, or None.
-    By the pigeonhole theorem, if total_effort < total_weight, this always succeeds.
+def verify_pigeonhole_theorem(pll: ProofLeverageLattice) -> bool:
     """
-    for v in gds.vertices:
-        if gds.is_anti_gravitational(v):
-            return v
-    return None
-
-
-def compute_anti_gravity_profile(
-    gds: GravitationalDerivationSystem
-) -> Dict[str, object]:
-    """Compute a comprehensive anti-gravity profile of the system.
-
-    Returns a dictionary with:
-    - n: number of theorems
-    - total_weight: sum of all weights
-    - total_effort: sum of all efforts
-    - surplus: weight - effort
-    - ag_count: number of anti-gravity nodes
-    - ag_fraction: fraction of anti-gravity nodes
-    - max_weight: maximum weight
-    - min_effort: minimum effort
-    - spectrum: sorted weight distribution
-    - max_k: highest k for which k-anti-gravity nodes exist
+    Verify Theorem 3 (Pigeonhole Leverage): ∃ v, weight(v) * n ≥ totalWeight.
+    
+    This is guaranteed by our formal proof for all nonempty PLLs.
     """
-    spectrum = gds.gravitational_spectrum()
-    max_w = gds.max_weight()
-    min_e = gds.min_effort()
-
-    # Find maximum k
-    max_k = 0
-    if min_e > 0 and max_w > 0:
-        max_k = max_w // min_e - (0 if max_w % min_e > 0 else 1)
-        # Verify
-        while max_k > 0 and not gds.k_anti_gravity_set(max_k):
-            max_k -= 1
-
-    return {
-        "n": gds.n,
-        "total_weight": gds.total_direct_weight(),
-        "total_effort": gds.total_effort(),
-        "surplus": gds.surplus(),
-        "ag_count": len(gds.anti_gravity_set()),
-        "ag_fraction": gds.anti_gravity_fraction(),
-        "max_weight": max_w,
-        "min_effort": min_e,
-        "spectrum": spectrum,
-        "max_k": max_k,
-        "has_surplus": gds.has_surplus(),
-    }
+    n = len(pll.nodes)
+    if n == 0:
+        return True  # Vacuously true
+    tw = pll.total_weight()
+    return any(pll.weight(v) * n >= tw for v in pll.nodes)
 
 
-def verify_pigeonhole_theorem(gds: GravitationalDerivationSystem) -> bool:
-    """Verify the Anti-Gravity Pigeonhole Theorem on a concrete instance.
-
-    Returns True if the theorem's prediction holds:
-    total_effort < total_weight => anti_gravity_set is nonempty.
+def verify_markov_bound(pll: ProofLeverageLattice, w: int) -> bool:
     """
-    if gds.total_effort() < gds.total_direct_weight():
-        return len(gds.anti_gravity_set()) > 0
-    return True  # Theorem makes no claim when there's no surplus
-
-
-def verify_weight_monotonicity(
-    gds1: GravitationalDerivationSystem,
-    gds2: GravitationalDerivationSystem,
-) -> bool:
-    """Verify weight monotonicity: if gds1.deps ⊆ gds2.deps, then weights increase.
-
-    Both systems must have the same vertex set.
+    Verify Theorem 4 (Markov): |{v : weight(v) ≥ w}| * w ≤ totalWeight.
     """
-    assert gds1.vertices == gds2.vertices
-    for v in gds1.vertices:
-        if not gds1.dependencies[v].issubset(gds2.dependencies[v]):
-            return True  # Precondition not met, theorem doesn't apply
-        if gds1.direct_weight(v) > gds2.direct_weight(v):
-            return False
+    high_weight_count = sum(1 for v in pll.nodes if pll.weight(v) >= w)
+    return high_weight_count * w <= pll.total_weight()
+
+
+def verify_density_bound(pll: ProofLeverageLattice, tau: int) -> bool:
+    """
+    Verify Theorem 5 (Density): If totalWeight ≥ τ * totalProofLength,
+    then anti_gravity_set(τ) is nonempty.
+    """
+    if pll.total_weight() >= tau * pll.total_proof_length():
+        return len(pll.anti_gravity_set(tau)) > 0
+    return True  # Hypothesis not met
+
+
+def verify_spectral_monotonicity(pll: ProofLeverageLattice, tau1: int, tau2: int) -> bool:
+    """
+    Verify Theorem 8 (Monotonicity): τ₁ ≤ τ₂ → AG(τ₂) ⊆ AG(τ₁).
+    """
+    if tau1 <= tau2:
+        return pll.anti_gravity_set(tau2).issubset(pll.anti_gravity_set(tau1))
     return True
 
 
-def verify_effort_scaling(
-    gds: GravitationalDerivationSystem, k: int
-) -> bool:
-    """Verify that scaling efforts by k ≥ 1 shrinks the anti-gravity set."""
-    if k < 1:
-        return True
-
-    scaled = GravitationalDerivationSystem(
-        vertices=gds.vertices,
-        dependencies={v: set(deps) for v, deps in gds.dependencies.items()},
-        proof_effort={v: k * e for v, e in gds.proof_effort.items()},
-    )
-
-    return scaled.anti_gravity_set().issubset(gds.anti_gravity_set())
-
-
+# ============================================================
+# Demonstration
+# ============================================================
 if __name__ == "__main__":
-    # Example: a small dependency graph
-    vertices = {0, 1, 2, 3, 4}
-    deps = {
-        0: {1, 2, 3, 4},  # Theorem 0 is a foundation (high weight)
-        1: {3, 4},
-        2: {4},
-        3: set(),
-        4: set(),
-    }
-    efforts = {0: 1, 1: 2, 2: 3, 3: 1, 4: 1}
-
-    gds = GravitationalDerivationSystem(vertices, deps, efforts)
-    profile = compute_anti_gravity_profile(gds)
-
-    print("Anti-Gravity Profile:")
-    for key, value in profile.items():
-        if key != "spectrum":
-            print(f"  {key}: {value}")
-    print(f"  spectrum: {profile['spectrum']}")
-
-    print(f"\nPigeonhole theorem verified: {verify_pigeonhole_theorem(gds)}")
-
-    witness = find_anti_gravity_witness(gds)
-    if witness is not None:
-        print(f"Anti-gravity witness: theorem {witness} "
-              f"(weight={gds.direct_weight(witness)}, effort={gds.proof_effort[witness]})")
+    import random
+    random.seed(42)
+    
+    # Build a sample PLL
+    nodes = {}
+    n = 50
+    for i in range(n):
+        pl = max(1, int(random.paretovariate(1.5)))
+        deps = random.sample(range(i), min(random.randint(0, 3), i)) if i > 0 else []
+        nodes[i] = TheoremNode(id=i, name=f"thm_{i}", proof_length=pl, dependencies=deps)
+    
+    pll = ProofLeverageLattice(nodes=nodes)
+    
+    print(f"PLL with {n} vertices")
+    print(f"Total weight: {pll.total_weight()}")
+    print(f"Total proof length: {pll.total_proof_length()}")
+    print(f"Knowledge leverage ratio: {pll.knowledge_leverage_ratio():.3f}")
+    print(f"Spectral gap: {pll.spectral_gap():.3f}")
+    
+    print(f"\nKeystones: {pll.find_keystones()}")
+    print(f"Sources (axioms): {pll.sources()}")
+    
+    # Verify all theorems
+    print(f"\nPigeonhole check: {verify_pigeonhole_theorem(pll)}")
+    for w in [1, 5, 10]:
+        print(f"Markov bound (w={w}): {verify_markov_bound(pll, w)}")
+    for tau in range(5):
+        print(f"Density bound (τ={tau}): {verify_density_bound(pll, tau)}")
+    for t1, t2 in [(0,1), (1,2), (0,3)]:
+        print(f"Monotonicity ({t1}≤{t2}): {verify_spectral_monotonicity(pll, t1, t2)}")
