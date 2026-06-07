@@ -1,183 +1,251 @@
-# Retrocausal Heyting Algebras: Nuclei, Temporal Adjunctions, and the Intuitionistic Character of Time-Reversed Logic
+# Retrocausal Nucleus Theory: Intuitionistic Logic from Backward-in-Time Reasoning
 
 ## Abstract
 
-We formalize the mathematical theory of retrocausal logical structures, where implications can flow backward in time. Starting from a Galois connection (T, R) modeling forward and backward temporal propagation, we show that the composition R∘T forms a nucleus on the underlying lattice when T preserves finite meets. The fixed points of this nucleus carry a Heyting algebra structure via the retrocausal implication j(a ⇨ b), and we prove the fundamental adjunction: c ⊓ a ≤ b if and only if c ≤ j(a ⇨ b) for fixed points a, b, c. We construct a concrete 3-element Heyting algebra demonstrating that the law of excluded middle fails on fixed points, while proving that a temporal form of excluded middle — R(T(a)) ⊔ R(T(aᶜ)) = ⊤ — holds whenever the base algebra is Boolean. The temporal operators □ = R∘T and ◇ = T∘R are shown to satisfy S4 modal axioms and temporal coherence laws. We formalize an algebraic CPT symmetry structure and prove that the CPT composition is involutive under pairwise commutativity. All results are machine-verified in Lean 4 with the Mathlib library.
+We introduce **retrocausal nuclei** — closure operators on Heyting algebras that decompose as R ∘ T where (T, R) is a Galois connection and T preserves finite meets. We prove that the closure j = R ∘ T is a nucleus (meet-preserving closure operator), that its fixed points form a Heyting algebra where the law of excluded middle generically fails, and that a temporal form of excluded middle nevertheless holds in Boolean base algebras. We formalize temporal implication, prove temporal modus ponens, establish temporal coherence laws (T∘R∘T = T, R∘T∘R = R), and prove a retrocausal interpolation theorem. We connect to the CPT theorem from physics by proving that three pairwise-commuting involutions compose to an involution. All results are machine-verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
-The relationship between temporal structure and logical character has been a recurring theme across mathematics, physics, and philosophy. In locale theory, nuclei (closure operators preserving finite meets) provide the mechanism for passing from a frame to a quotient frame, and the resulting fixed-point lattice is always a Heyting algebra — potentially lacking the law of excluded middle present in the original Boolean algebra. In physics, the CPT theorem establishes that any Lorentz-invariant quantum field theory is invariant under the combined action of charge conjugation, parity reversal, and time reversal.
+The study of closure operators and nuclei has a long history in lattice theory and pointfree topology [Johnstone 1982]. A *nucleus* on a frame L is a function j : L → L that is inflationary (a ≤ j(a)), idempotent (j(j(a)) = j(a)), and meet-preserving (j(a ⊓ b) = j(a) ⊓ j(b)). The fixed points of a nucleus form a frame, and the correspondence between nuclei and sublocales is one of the central results of locale theory.
 
-This paper connects these two traditions by interpreting the nucleus construction in temporal terms. A Galois connection (T, R) models forward temporal propagation T and backward (retrocausal) propagation R, with the adjunction T(a) ≤ b ⟺ a ≤ R(b) capturing their duality. The composition R∘T acts as a temporal closure operator, and we show it is a nucleus when T preserves meets — a condition satisfied by frame homomorphisms.
+In this paper, we study nuclei that arise from Galois connections — specifically, from pairs (T, R) where T is a "forward temporal propagation" operator and R is a "backward (retrocausal) propagation" operator. The Galois connection T ⊣ R encodes the duality between forward and backward reasoning. When T preserves finite meets, the composition j = R ∘ T is a nucleus, and its fixed-point lattice supports intuitionistic (but not classical) reasoning.
+
+This setup has a natural temporal interpretation:
+- T(a) represents the consequences of proposition a propagated forward in time
+- R(b) represents the causes sufficient to produce proposition b
+- j(a) = R(T(a)) represents the "retrocausal completion" of a — what is determined about the past given what the future will be
 
 ### 1.1 Main Contributions
 
-1. **Retrocausal Implication** (§3): We define j(a ⇨ b) as the retrocausal Heyting implication and prove the fundamental adjunction theorem showing fixed points form a Heyting algebra.
+1. **RetrocausalNucleus structure** (Definition 3.1): A novel algebraic structure combining a Galois connection with meet-preservation.
 
-2. **LEM Failure** (§5): We construct a concrete 3-element Heyting algebra (modeling the fixed-point lattice of a retrocausal nucleus) where the law of excluded middle fails: mid ⊔ midᶜ ≠ ⊤.
+2. **Nucleus property** (Theorem 3.2): j = R ∘ T preserves binary meets, yielding a nucleus.
 
-3. **Temporal Excluded Middle** (§6): We prove that R(T(a)) ⊔ R(T(aᶜ)) = ⊤ in any Boolean algebra equipped with a Galois connection, showing that temporal closure restores classical behavior.
+3. **Temporal implication** (Definition 4.1): A new connective a →_τ b := R(T(a) ⇨ T(b)) with temporal modus ponens.
 
-4. **Modal S4 Structure** (§4): The operators □ = R∘T and ◇ = T∘R satisfy S4 axioms (idempotence) and temporal coherence laws (T∘R∘T = T, R∘T∘R = R).
+4. **Temporal excluded middle** (Theorem 5.1): j(a) ⊔ j(aᶜ) = ⊤ in Boolean base algebras.
 
-5. **CPT Algebra** (§7): We formalize CPT triples as three involutions and prove: (a) commutativity implies involutivity of CPT; (b) involutivity of CPT implies CPT = TPC.
+5. **LEM failure** (Theorem 6.1): The three-element chain provides a concrete counterexample.
+
+6. **Temporal coherence** (Theorems 3.4-3.5): T∘R∘T = T and R∘T∘R = R.
+
+7. **CPT involution** (Theorem 7.1): Pairwise-commuting involutions compose to an involution.
+
+8. **Retrocausal interpolation** (Theorem 8.1): Fixed-point inequalities factor through the temporal domain.
+
+9. **Morphism preservation** (Theorem 9.1): Retrocausal morphisms preserve fixed points.
 
 ## 2. Preliminaries
 
 ### 2.1 Galois Connections
 
-A **Galois connection** between preordered sets (α, ≤) consists of monotone functions T, R : α → α satisfying T(a) ≤ b ⟺ a ≤ R(b) for all a, b. Standard consequences:
-- a ≤ R(T(a)) (extensiveness of R∘T)
-- T(R(b)) ≤ b (contractiveness of T∘R)  
-- T∘R∘T = T, R∘T∘R = R (coherence)
-- R∘T is idempotent, T∘R is idempotent
+A **Galois connection** between preorders (A, ≤) and (B, ≤) is a pair of monotone functions l : A → B and u : B → A satisfying l(a) ≤ b ⟺ a ≤ u(b) for all a ∈ A, b ∈ B. We write l ⊣ u. Key properties:
+- l preserves all existing suprema
+- u preserves all existing infima
+- a ≤ u(l(a)) (unit)
+- l(u(b)) ≤ b (counit)
+- l∘u∘l = l and u∘l∘u = u
 
-### 2.2 Nuclei
+### 2.2 Heyting Algebras
 
-A **nucleus** on a semilattice (α, ⊓) is a function j : α → α satisfying:
-- j(a ⊓ b) = j(a) ⊓ j(b) (meet preservation)
-- j(j(a)) = j(a) (idempotence, follows from j(j(a)) ≤ j(a))
-- a ≤ j(a) (extensiveness)
+A **Heyting algebra** is a bounded lattice with a binary operation ⇨ (Heyting implication) satisfying a ⊓ b ≤ c ⟺ a ≤ b ⇨ c. The negation is defined as ¬a := a ⇨ ⊥. A Heyting algebra is Boolean if and only if ¬¬a = a for all a (equivalently, a ⊔ ¬a = ⊤).
 
-The fixed points Fix(j) = {a | j(a) = a} form a sublattice of α. When α is a Heyting algebra, Fix(j) inherits a Heyting algebra structure with implication a ⇨_j b := j(a ⇨ b).
+### 2.3 Nuclei
 
-### 2.3 Heyting Algebras
+A **nucleus** on a lattice L is a function j : L → L that is:
+- Inflationary: a ≤ j(a)
+- Idempotent: j(j(a)) = j(a)  
+- Meet-preserving: j(a ⊓ b) = j(a) ⊓ j(b)
 
-A **Heyting algebra** is a bounded lattice with an operation ⇨ satisfying: c ⊓ a ≤ b ⟺ c ≤ a ⇨ b. The complement is ¬a := a ⇨ ⊥. Unlike Boolean algebras, Heyting algebras need not satisfy a ⊔ ¬a = ⊤.
+The fixed points Fix(j) = {a ∈ L | j(a) = a} form a lattice with ⊓ inherited from L and ⊔ defined by a ⊔_j b = j(a ⊔ b).
 
-## 3. The Retrocausal Implication
+## 3. The Retrocausal Nucleus
 
-**Definition 3.1.** Given a nucleus ν on a Heyting algebra α, the *retrocausal implication* is:
-$$a \Rightarrow_\nu b := \nu(a \Rightarrow b)$$
+### Definition 3.1 (RetrocausalNucleus)
+A **retrocausal nucleus** on a Heyting algebra (L, ≤, ⊓, ⊔, ⇨, ⊥, ⊤) is a triple (T, R, gc) where:
+- T : L → L is the forward temporal propagation
+- R : L → L is the retrocausal (backward) propagation
+- gc : GaloisConnection T R is the adjunction T ⊣ R
+- T preserves binary meets: T(a ⊓ b) = T(a) ⊓ T(b)
 
-**Theorem 3.2** (Nucleus Heyting Adjunction). *For fixed points a, b, c of ν:*
-$$c \wedge a \leq b \iff c \leq a \Rightarrow_\nu b$$
+The **retrocausal closure** is j := R ∘ T.
 
-*Proof sketch.* 
-(⇒): If c ⊓ a ≤ b, then c ≤ a ⇨ b by the Heyting adjunction in the base algebra. Since c is a fixed point, c = ν(c) ≤ ν(a ⇨ b) by monotonicity of ν.
+### Theorem 3.2 (Nucleus Property)
+*The retrocausal closure j = R ∘ T preserves binary meets.*
 
-(⇐): If c ≤ ν(a ⇨ b), then c ⊓ a = ν(c) ⊓ ν(a) = ν(c ⊓ a) ≤ ν((a ⇨ b) ⊓ a) ≤ ν(b) = b, using meet preservation and the modus ponens inequality (a ⇨ b) ⊓ a ≤ b. □
+**Proof.** j(a ⊓ b) = R(T(a ⊓ b)) = R(T(a) ⊓ T(b)) [by T_inf] = R(T(a)) ⊓ R(T(b)) [by GaloisConnection.u_inf] = j(a) ⊓ j(b). □
 
-This theorem is the key result establishing that retrocausal logic is intuitionistic: the fixed-point lattice carries a Heyting algebra structure, but need not be Boolean.
+### Theorem 3.3 (Idempotency)
+*j(j(a)) = j(a).*
 
-## 4. Temporal Modalities
+**Proof.** For ≤: R(T(R(T(a)))) ≤ R(T(a)) follows from R-monotonicity applied to the counit T(R(T(a))) ≤ T(a). For ≥: j(a) ≤ j(j(a)) by j-monotonicity applied to the unit a ≤ j(a). □
 
-**Definition 4.1.** For a Galois connection (T, R):
-- The *box* modality: □a := R(T(a)) (temporal necessity)
-- The *diamond* modality: ◇a := T(R(a)) (temporal possibility)
+### Theorem 3.4 (Temporal Coherence — Forward)
+*T(R(T(a))) = T(a).*
 
-**Theorem 4.2** (S4 Axioms). *For any Galois connection on a partial order:*
-1. □□a = □a (S4 for necessity)
-2. ◇◇a = ◇a (S4 for possibility)
-3. a ≤ □a (T axiom for necessity)
-4. ◇a ≤ a (dual T axiom for possibility)
+**Proof.** le_antisymm of the counit T(R(T(a))) ≤ T(a) and T-monotonicity applied to the unit a ≤ R(T(a)). □
 
-*Proof.* For (1): □□a = R(T(R(T(a)))) and by right coherence R∘T∘R = R, this equals R(T(a)) = □a. For (2): similarly by left coherence T∘R∘T = T. Properties (3) and (4) are the unit and counit of the adjunction. □
+### Theorem 3.5 (Temporal Coherence — Backward)
+*R(T(R(a))) = R(a).*
 
-**Theorem 4.3** (K Axiom). *□(a ⊓ b) ≤ □a ⊓ □b.*
+**Proof.** Dual to 3.4: le_antisymm of R-monotonicity applied to the counit and the unit. □
 
-*Proof.* By monotonicity: a ⊓ b ≤ a implies R(T(a ⊓ b)) ≤ R(T(a)), and similarly for b. □
+## 4. Temporal Implication
 
-**Theorem 4.4** (Temporal Coherence Laws).
-1. T(R(T(a))) = T(a) (left coherence)
-2. R(T(R(a))) = R(a) (right coherence)
+### Definition 4.1 (Temporal Implication)
+The **temporal implication** is defined as:
 
-These laws express that forward and backward propagation are *coherent*: a round trip through the opposite direction doesn't change the outcome.
+a →_τ b := R(T(a) ⇨ T(b))
 
-## 5. LEM Failure on Fixed Points
+The **temporal negation** is ¬_τ a := R(T(a) ⇨ ⊥).
 
-**Construction 5.1.** The three-element chain {⊥ < mid < ⊤} carries a Heyting algebra structure with:
-- a ⇨ b = ⊤ if a ≤ b, and a ⇨ b = b otherwise
-- ¬a = ⊤ if a = ⊥, and ¬a = ⊥ otherwise
+### Theorem 4.2 (Temporal Modus Ponens)
+*(a →_τ b) ⊓ j(a) ≤ j(b).*
 
-**Theorem 5.2** (LEM Failure). *In the three-element chain, mid ⊔ midᶜ ≠ ⊤.*
+**Proof.**
+R(T(a) ⇨ T(b)) ⊓ R(T(a)) = R((T(a) ⇨ T(b)) ⊓ T(a)) [by gc.u_inf]
+≤ R(T(b)) [by R-monotonicity and himp_inf_le: (x ⇨ y) ⊓ x ≤ y]
+= j(b). □
 
-*Proof.* midᶜ = mid ⇨ ⊥ = ⊥ (since mid > ⊥). Then mid ⊔ ⊥ = mid ≠ ⊤. □
+### Theorem 4.3 (Monotonicity Properties)
+- *a →_τ b is antitone in a*: If a ≤ b then (b →_τ c) ≤ (a →_τ c).
+- *a →_τ b is monotone in b*: If b ≤ c then (a →_τ b) ≤ (a →_τ c).
 
-**Theorem 5.3** (Double Negation Failure). *¬¬mid ≠ mid.*
+**Proof.** Both follow from R-monotonicity composed with the corresponding monotonicity of ⇨ (himp_le_himp_right and himp_le_himp_left) and T-monotonicity. □
 
-*Proof.* ¬mid = ⊥, so ¬¬mid = ¬⊥ = ⊤ ≠ mid. □
+## 5. Temporal Excluded Middle
 
-The three-element chain arises naturally as the fixed-point lattice of a nucleus on a Boolean algebra. For instance, on the power set lattice P({0,1}), the nucleus j(S) = S ∪ {0,1} if 0 ∈ S, j(S) = S otherwise, has fixed points {∅, {1}, {0,1}}, which form exactly the three-element chain.
+### Theorem 5.1 (Temporal Excluded Middle)
+*If L is a Boolean algebra, then j(a) ⊔ j(aᶜ) = ⊤.*
 
-## 6. Temporal Excluded Middle
+**Proof.** By extensiveness, a ≤ j(a) and aᶜ ≤ j(aᶜ). Thus ⊤ = a ⊔ aᶜ ≤ j(a) ⊔ j(aᶜ) ≤ ⊤. □
 
-**Theorem 6.1** (Temporal Excluded Middle). *In any Boolean algebra with a Galois connection (T, R):*
-$$R(T(a)) \lor R(T(a^c)) = \top$$
+**Remark.** This is a two-level result: classical logic at the base implies a temporal form of excluded middle at the quotient level, even though the quotient itself may be non-Boolean.
 
-*Proof.* By extensiveness, a ≤ R(T(a)) and aᶜ ≤ R(T(aᶜ)). Therefore:
-$$R(T(a)) \lor R(T(a^c)) \geq a \lor a^c = \top$$
-Since x ≤ ⊤ for all x, we conclude R(T(a)) ⊔ R(T(aᶜ)) = ⊤. □
+## 6. LEM Failure: The Three-Chain Counterexample
 
-This theorem reveals the fundamental asymmetry of retrocausal logic: while the propositional level (fixed points) may fail LEM, the temporal level (closure applied to complementary pairs) always satisfies it. The closure operator "classicalizes" the temporal fragment.
+### The Chain3 Heyting Algebra
 
-## 7. CPT Symmetry
+Define Chain3 = {⊥, mid, ⊤} with the obvious linear order. The Heyting implication is:
+- ⊥ ⇨ _ = ⊤
+- mid ⇨ ⊥ = ⊥, mid ⇨ mid = ⊤, mid ⇨ ⊤ = ⊤
+- ⊤ ⇨ c = c
 
-**Definition 7.1.** A *CPT triple* on a type α consists of three involutions C, P, T : α → α.
+The negation is ¬⊥ = ⊤, ¬mid = ⊥, ¬⊤ = ⊥.
 
-**Theorem 7.2.** *If C, P, T pairwise commute, then C∘P∘T is an involution.*
+### Theorem 6.1 (LEM Failure)
+*There exists a ∈ Chain3 such that a ⊔ aᶜ ≠ ⊤.*
 
-*Proof.* (C∘P∘T)² = C(P(T(C(P(T(x)))))) = C(P(C(T(P(T(x)))))) [by CT comm] = C(C(P(T(P(T(x)))))) [by CP comm] = P(T(P(T(x)))) [by C²=id] = P(P(T(T(x)))) [by PT comm] = T(T(x)) [by P²=id] = x [by T²=id]. □
+**Proof.** Take a = mid. Then mid ⊔ ¬mid = mid ⊔ ⊥ = mid ≠ ⊤. □
 
-**Theorem 7.3** (CPT Reversal). *If C∘P∘T is an involution, then C∘P∘T = T∘P∘C.*
+### Theorem 6.2 (Double Negation Elimination Failure)
+*There exists a ∈ Chain3 such that ¬¬a ≠ a.*
 
-*Proof.* Set f = C∘P∘T. Since f is involutive, f = f⁻¹. The inverse of C∘P∘T is T⁻¹∘P⁻¹∘C⁻¹ = T∘P∘C (each being its own inverse). Hence C∘P∘T = T∘P∘C. 
+**Proof.** Take a = mid. Then ¬¬mid = ¬⊥ = ⊤ ≠ mid. □
 
-More concretely: apply involutivity to T(P(C(a))). Then f(f(T(P(C(a))))) = T(P(C(a))). But f(T(P(C(a)))) = C(P(T(T(P(C(a)))))) = C(P(P(C(a)))) = C(C(a)) = a. So f(a) = T(P(C(a))), i.e., C(P(T(a))) = T(P(C(a))). □
+### PEGB Analysis
 
-## 8. From Galois Connections to Nuclei
+- **Proof**: Complete, verified in Lean 4.
+- **Example**: Chain3 with mid as the witness.
+- **Generalization**: Any n-element chain with n ≥ 3 exhibits LEM failure for the middle elements. More generally, any non-trivial Heyting algebra quotient (non-Boolean frame) fails LEM.
+- **Boundary**: On the 2-element Boolean algebra {⊥, ⊤}, every element satisfies LEM. The 3-element chain is the *minimal* counterexample.
 
-**Theorem 8.1.** *If (T, R) is a Galois connection on a semilattice and T preserves binary meets, then R∘T is a nucleus.*
+## 7. CPT Duality
 
-*Proof.* Extensiveness and idempotence follow from the Galois connection. For meet preservation: R(T(a ⊓ b)) = R(T(a) ⊓ T(b)) [by T preserving meets] = R(T(a)) ⊓ R(T(b)) [by R preserving meets as a right adjoint]. □
+### Definition 7.1 (CPT System)
+A **CPT system** on a type α is a triple (C, P, T) of involutions: C∘C = id, P∘P = id, T∘T = id.
 
-This theorem provides the bridge from temporal Galois connections to the Heyting algebra structure of fixed points, completing the logical picture: a meet-preserving temporal propagation operator naturally produces an intuitionistic quotient.
+### Theorem 7.1 (CPT Involution)
+*If C, P, T pairwise commute, then the composition CPT = C ∘ P ∘ T is an involution.*
 
-## 9. The Retrocausal Frame Construction
+**Proof.** CPT(CPT(a)) = C(P(T(C(P(T(a)))))) = ... (by successive application of commutativity and involutivity) = a. □
 
-We also define retrocausal Kripke frames — structures with both a temporal partial order and a retrocausal accessibility relation constrained to flow backward in time. The upward-closed sets in such a frame form a Heyting algebra, providing a semantic model for retrocausal intuitionistic logic.
+### Theorem 7.2 (CPT Reversal)
+*Under pairwise commutativity, C∘P∘T = T∘P∘C.*
 
-**Definition 9.1.** A *retrocausal frame* (W, ≤, R) consists of:
-- A set of worlds W
-- A temporal preorder ≤ on W
-- A retrocausal accessibility relation R on W
-- The constraint: if R(w₁, w₂) then w₁ ≤ w₂ (access flows backward in time)
+**Proof.** C(P(T(a))) = C(T(P(a))) [by PT-comm] = T(C(P(a))) [by CT-comm] = T(P(C(a))) [by CP-comm]. □
 
-The upward-closed subsets of W form a Heyting algebra under set-theoretic operations, providing a concrete model for the abstract theory developed above.
+### PEGB Analysis
 
-## 10. Falsifiable Conjecture
+- **Proof**: Complete.
+- **Example**: On ℤ/2ℤ × ℤ/2ℤ × ℤ/2ℤ, take C(a,b,c) = (1-a,b,c), P(a,b,c) = (a,1-b,c), T(a,b,c) = (a,b,1-c). These commute and CPT is an involution.
+- **Generalization**: The result holds for any group generated by three commuting involutions — the group is (ℤ/2ℤ)³.
+- **Boundary**: Without commutativity, CPT need not be an involution.
 
-**Conjecture 10.1** (Nucleus Spectrum Bound). *For any nucleus ν on the power set lattice P(Fin(n)), the number of fixed points satisfies |Fix(ν)| ≤ 2^(n-1) + 1.*
+## 8. Retrocausal Interpolation
 
-**Rationale.** The meet-preservation condition j(a ⊓ b) = j(a) ⊓ j(b) forces structural constraints on which subsets can be identified. In particular, j(a) ⊓ j(aᶜ) = j(⊥) = ⊥ (since j is extensive and preserves meets with ⊥), which constrains complementary pairs.
+### Theorem 8.1 (Retrocausal Interpolation)
+*For a ≤ b between fixed points of j, there exists c such that T(a) ≤ c ≤ T(b) and a ≤ R(c) ≤ b.*
 
-**Test.** Enumerate all nuclei on P(Fin(3)) (the 256-element Boolean algebra) and count fixed points. If any nucleus has more than 5 fixed points, the conjecture is false.
+**Proof.** Take c = T(a). Then T(a) ≤ T(a) trivially, T(a) ≤ T(b) by T-monotonicity, R(T(a)) = a by the fixed-point hypothesis, and a ≤ b by assumption. □
 
-## 11. Discussion
+### PEGB Analysis
 
-### 11.1 Physical Interpretation
+- **Proof**: Complete.
+- **Example**: On the identity nucleus, every element is a fixed point, and T(a) = a is the interpolant.
+- **Generalization**: The interpolant can be chosen as T(a), T(b), or any element in between. For richer Galois connections, the set of valid interpolants forms a lattice interval.
+- **Boundary**: The interpolant c = T(a) is always valid but may not be the "best" choice. The tighter interpolant c = T(a) ⊔ T(b) ⊓ ... may give a sharper factorization.
 
-The mathematical results formalize a precise sense in which retrocausal physical theories require intuitionistic reasoning. Any system where information propagates both forward and backward in time, with these propagations forming a Galois connection, generates a nucleus whose fixed points — the "temporally stable" propositions — form a Heyting algebra. Classical reasoning (LEM) holds at the temporal level but fails at the propositional level.
+## 9. Retrocausal Morphisms
 
-### 11.2 Connection to Quantum Mechanics
+### Definition 9.1 (Retrocausal Morphism)
+A **retrocausal morphism** (ν₁, α) → (ν₂, β) is a monotone function f : α → β commuting with both T and R: f ∘ T₁ = T₂ ∘ f and f ∘ R₁ = R₂ ∘ f.
 
-The transactional interpretation of quantum mechanics models quantum events as "handshakes" between forward-traveling offer waves and backward-traveling confirmation waves. This has the structure of a Galois connection, and our results predict that the logic of stable quantum propositions should be intuitionistic — a prediction consistent with the quantum logic tradition initiated by Birkhoff and von Neumann.
+### Theorem 9.1 (Fixed-Point Preservation)
+*A retrocausal morphism maps fixed points to fixed points.*
 
-### 11.3 The S4 Modal Structure
+**Proof.** If j₁(a) = a, then j₂(f(a)) = R₂(T₂(f(a))) = R₂(f(T₁(a))) = f(R₁(T₁(a))) = f(j₁(a)) = f(a). □
 
-The automatic emergence of S4 modal axioms from the Galois connection structure connects retrocausal logic to the extensive mathematical literature on modal logic and topology. The S4 axioms characterize the logic of topological interior and closure operators, and our results show this connection is not accidental but forced by the temporal adjunction.
+## 10. Fixed-Point Characterization
 
-## 12. Future Work
+### Theorem 10.1
+*An element a is a fixed point of j if and only if a is in the range of R.*
 
-1. Extend the CPT algebraic theory to include the full structure of the Lorentz group.
-2. Investigate whether the nucleus spectrum bound conjecture holds, and if so, characterize the extremal nuclei.
-3. Connect the retrocausal frame construction to concrete quantum mechanical systems.
-4. Develop the categorical perspective: retrocausal structures as enriched categories.
+**Proof.** (→) If j(a) = R(T(a)) = a, then a = R(T(a)) is in the range of R. (←) If a = R(b), then j(a) = R(T(R(b))) = R(b) = a by the temporal coherence law R∘T∘R = R. □
+
+### Theorem 10.2
+*The infimum of two fixed points is a fixed point.*
+
+**Proof.** j(a ⊓ b) = j(a) ⊓ j(b) = a ⊓ b by the nucleus property and fixed-point hypothesis. □
+
+## 11. Falsifiable Conjecture
+
+**Conjecture**: For any retrocausal nucleus ν on a finite Boolean algebra with n atoms, |Fix(j)| divides 2^n. Moreover, |Fix(j)| = 2^n if and only if j = id.
+
+**Test**: Enumerate all Galois connections on Bool^3 (the 8-element Boolean algebra) and count fixed points.
+
+**Partial evidence**: The identity nucleus has 2^n fixed points. Non-trivial nuclei on Chain3 have 3 fixed points (not dividing 2^n = 2 for the 2-atom case, so this conjecture needs refinement).
+
+## 12. Discussion
+
+### 12.1 Relation to Existing Work
+
+Retrocausal nuclei are a specialization of the general theory of nuclei on frames [Johnstone 1982]. The novel contribution is the *decomposition* of the nucleus as R ∘ T, which gives temporal structure to the quotient. This connects to:
+
+- **Modal logic**: T and R can be viewed as ◇ (possibility/future) and □ (necessity/past) operators, with the Galois connection encoding the S4 axiom.
+- **Kripke semantics**: The fixed points of j correspond to "temporally complete" propositions in a Kripke frame.
+- **Quantum logic**: The Heyting algebra of fixed points shares structural features with the lattice of closed subspaces of a Hilbert space.
+
+### 12.2 Physical Interpretation
+
+The CPT involution theorem (Theorem 7.1) provides an algebraic skeleton for the physical CPT theorem. While we do not formalize the full quantum field theoretic content, the algebraic structure — three commuting involutions composing to an involution — captures the essential symmetry.
+
+The temporal coherence laws T∘R∘T = T and R∘T∘R = R encode the consistency of retrocausal reasoning: no paradoxes arise from alternating between forward and backward propagation.
+
+## 13. Conclusion
+
+We have introduced retrocausal nuclei as a new algebraic structure for reasoning about backward-in-time implication. The key findings are:
+
+1. Retrocausal logic is inherently intuitionistic (LEM fails).
+2. Temporal excluded middle holds in Boolean base algebras.
+3. Temporal coherence prevents causal paradoxes.
+4. CPT symmetry has a pure algebraic formulation.
+
+All results are formalized and machine-verified in Lean 4 with Mathlib, providing the highest level of mathematical certainty.
 
 ## References
 
-1. Birkhoff, G. and von Neumann, J. "The Logic of Quantum Mechanics." *Annals of Mathematics*, 1936.
-2. Cramer, J.G. "The Transactional Interpretation of Quantum Mechanics." *Reviews of Modern Physics*, 1986.
-3. Johnstone, P.T. *Stone Spaces.* Cambridge University Press, 1982.
-4. Mac Lane, S. and Moerdijk, I. *Sheaves in Geometry and Logic.* Springer, 1994.
-5. Price, H. *Time's Arrow and Archimedes' Point.* Oxford University Press, 1996.
+1. Johnstone, P.T. (1982). *Stone Spaces*. Cambridge University Press.
+2. Mac Lane, S. (1971). *Categories for the Working Mathematician*. Springer.
+3. Streater, R.F. and Wightman, A.S. (1964). *PCT, Spin and Statistics, and All That*. W.A. Benjamin.
+4. Troelstra, A.S. and van Dalen, D. (1988). *Constructivism in Mathematics*. North-Holland.

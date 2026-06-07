@@ -1,281 +1,188 @@
 #!/usr/bin/env python3
 """
-Retrocausal Mathematics: Core Algorithms
+Retrocausal Nucleus Theory — Algorithms
 
-Type-hinted implementations of the key mathematical structures:
-1. Heyting algebras (general and 3-element)
-2. Nucleus construction and fixed-point computation
-3. Galois connection from adjoint operators
-4. Temporal modalities (box and diamond)
-5. CPT triple verification
+Type-hinted implementations of the core algorithms:
+1. Retrocausal closure computation
+2. Fixed-point enumeration
+3. Temporal implication evaluation
+4. CPT composition
 """
 
-from __future__ import annotations
+from typing import Callable, TypeVar, Set, FrozenSet, Tuple, List, Optional
 from dataclasses import dataclass
-from typing import TypeVar, Generic, Callable, Set, FrozenSet, Dict, List, Tuple, Optional
 
 T = TypeVar('T')
 
 
-# ============================================================
-# Heyting Algebra
-# ============================================================
-
 @dataclass
-class HeytingAlgebra(Generic[T]):
-    """A finite Heyting algebra specified by its elements and operations."""
-    elements: List[T]
-    le: Callable[[T, T], bool]
-    sup: Callable[[T, T], T]
-    inf: Callable[[T, T], T]
-    himp: Callable[[T, T], T]
-    bot: T
-    top: T
-
-    def compl(self, a: T) -> T:
-        """Heyting complement: ¬a = a ⇨ ⊥."""
-        return self.himp(a, self.bot)
-
-    def lem_holds(self, a: T) -> bool:
-        """Check if a ⊔ ¬a = ⊤."""
-        return self.sup(a, self.compl(a)) == self.top
-
-    def verify_adjunction(self) -> bool:
-        """Verify: c ⊓ a ≤ b ⟺ c ≤ a ⇨ b for all a, b, c."""
-        for a in self.elements:
-            for b in self.elements:
-                for c in self.elements:
-                    lhs = self.le(self.inf(c, a), b)
-                    rhs = self.le(c, self.himp(a, b))
-                    if lhs != rhs:
-                        return False
-        return True
-
-
-def three_element_heyting() -> HeytingAlgebra[int]:
-    """The 3-element chain {0 < 1 < 2} as a Heyting algebra."""
-    return HeytingAlgebra(
-        elements=[0, 1, 2],
-        le=lambda a, b: a <= b,
-        sup=max,
-        inf=min,
-        himp=lambda a, b: 2 if a <= b else b,
-        bot=0,
-        top=2,
-    )
-
-
-# ============================================================
-# Nucleus
-# ============================================================
-
-@dataclass
-class Nucleus(Generic[T]):
-    """A nucleus on a semilattice: extensive, idempotent, meet-preserving."""
-    j: Callable[[T], T]
-    elements: List[T]
-    inf: Callable[[T, T], T]
-    le: Callable[[T, T], bool]
-
-    def is_valid(self) -> bool:
-        """Verify all nucleus axioms."""
-        for a in self.elements:
-            # Extensive
-            if not self.le(a, self.j(a)):
-                return False
-            # Idempotent
-            if self.j(self.j(a)) != self.j(a):
-                return False
-            for b in self.elements:
-                # Meet preservation
-                if self.j(self.inf(a, b)) != self.inf(self.j(a), self.j(b)):
-                    return False
-        return True
-
-    def fixed_points(self) -> List[T]:
-        """Return the fixed points of the nucleus."""
-        return [a for a in self.elements if self.j(a) == a]
-
-    def fixed_point_count(self) -> int:
-        """Count fixed points."""
-        return len(self.fixed_points())
-
-
-def enumerate_nuclei_powerset(n: int) -> List[Nucleus[FrozenSet[int]]]:
-    """Enumerate all nuclei on the power set P(Fin(n))."""
-    from itertools import combinations, product as iproduct
-
-    universe = frozenset(range(n))
-    subsets: List[FrozenSet[int]] = []
-    for r in range(n + 1):
-        for combo in combinations(range(n), r):
-            subsets.append(frozenset(combo))
-
-    def le(a: FrozenSet[int], b: FrozenSet[int]) -> bool:
-        return a.issubset(b)
-
-    def inf(a: FrozenSet[int], b: FrozenSet[int]) -> FrozenSet[int]:
-        return a & b
-
-    nuclei: List[Nucleus[FrozenSet[int]]] = []
-
-    # For small n, enumerate all functions j: subsets → subsets
-    for values in iproduct(subsets, repeat=len(subsets)):
-        j_dict = dict(zip(subsets, values))
-        j_func = lambda x, d=j_dict: d[x]
-        nuc = Nucleus(j=j_func, elements=subsets, inf=inf, le=le)
-        if nuc.is_valid():
-            nuclei.append(nuc)
-
-    return nuclei
-
-
-# ============================================================
-# Galois Connection
-# ============================================================
-
-@dataclass
-class GaloisConnection(Generic[T]):
-    """A Galois connection T ⊣ R on a partially ordered set."""
-    T_func: Callable[[T], T]
-    R_func: Callable[[T], T]
-    elements: List[T]
-    le: Callable[[T, T], bool]
+class GaloisConnection:
+    """A Galois connection between power set lattices over a finite universe."""
+    universe: FrozenSet[int]
+    l: Callable[[FrozenSet[int]], FrozenSet[int]]  # Left adjoint (forward)
+    u: Callable[[FrozenSet[int]], FrozenSet[int]]  # Right adjoint (backward)
 
     def verify(self) -> bool:
-        """Verify: T(a) ≤ b ⟺ a ≤ R(b)."""
-        for a in self.elements:
-            for b in self.elements:
-                lhs = self.le(self.T_func(a), b)
-                rhs = self.le(a, self.R_func(b))
-                if lhs != rhs:
+        """Verify the Galois connection property: l(a) ⊆ b ⟺ a ⊆ u(b)."""
+        all_sets = self._all_subsets()
+        for a in all_sets:
+            for b in all_sets:
+                if a.issubset(self.u(b)) != self.l(a).issubset(b):
                     return False
         return True
 
-    def box(self, a: T) -> T:
-        """□a = R(T(a))."""
-        return self.R_func(self.T_func(a))
+    def _all_subsets(self) -> List[FrozenSet[int]]:
+        """Generate all subsets of the universe."""
+        result = [frozenset()]
+        for x in self.universe:
+            result = result + [s | {x} for s in result]
+        return result
 
-    def diamond(self, a: T) -> T:
-        """◇a = T(R(a))."""
-        return self.T_func(self.R_func(a))
-
-    def verify_s4_box(self) -> bool:
-        """□□a = □a for all a."""
-        return all(self.box(self.box(a)) == self.box(a) for a in self.elements)
-
-    def verify_s4_diamond(self) -> bool:
-        """◇◇a = ◇a for all a."""
-        return all(self.diamond(self.diamond(a)) == self.diamond(a)
-                   for a in self.elements)
-
-    def verify_left_coherence(self) -> bool:
-        """T(R(T(a))) = T(a) for all a."""
-        return all(
-            self.T_func(self.R_func(self.T_func(a))) == self.T_func(a)
-            for a in self.elements
-        )
-
-    def verify_right_coherence(self) -> bool:
-        """R(T(R(a))) = R(a) for all a."""
-        return all(
-            self.R_func(self.T_func(self.R_func(a))) == self.R_func(a)
-            for a in self.elements
-        )
-
-    def temporal_em(self, a: T, compl: Callable[[T], T], top: T,
-                    sup: Callable[[T, T], T]) -> bool:
-        """Check R(T(a)) ⊔ R(T(aᶜ)) = ⊤."""
-        return sup(self.box(a), self.box(compl(a))) == top
-
-
-# ============================================================
-# CPT Triple
-# ============================================================
 
 @dataclass
-class CPTTriple(Generic[T]):
-    """A CPT triple: three involutions on a type."""
-    C: Callable[[T], T]
-    P: Callable[[T], T]
-    T_op: Callable[[T], T]  # 'T' conflicts with TypeVar
-    elements: List[T]
+class RetrocausalNucleus:
+    """A retrocausal nucleus on a power set lattice."""
+    gc: GaloisConnection
 
-    def verify_involutions(self) -> Tuple[bool, bool, bool]:
-        """Check C², P², T² = id."""
-        c_inv = all(self.C(self.C(x)) == x for x in self.elements)
-        p_inv = all(self.P(self.P(x)) == x for x in self.elements)
-        t_inv = all(self.T_op(self.T_op(x)) == x for x in self.elements)
-        return c_inv, p_inv, t_inv
+    def j(self, s: FrozenSet[int]) -> FrozenSet[int]:
+        """The retrocausal closure: j = R ∘ T."""
+        return self.gc.u(self.gc.l(s))
 
-    def compose(self, x: T) -> T:
-        """CPT(x) = C(P(T(x)))."""
-        return self.C(self.P(self.T_op(x)))
+    def is_fixed_point(self, s: FrozenSet[int]) -> bool:
+        """Check if s is a fixed point of j."""
+        return self.j(s) == s
 
-    def is_cpt_involutive(self) -> bool:
-        """Check if CPT is an involution."""
-        return all(self.compose(self.compose(x)) == x for x in self.elements)
+    def fixed_points(self) -> List[FrozenSet[int]]:
+        """Enumerate all fixed points."""
+        return [s for s in self.gc._all_subsets() if self.is_fixed_point(s)]
 
-    def cpt_equals_tpc(self) -> bool:
-        """Check if CPT = TPC."""
-        def tpc(x: T) -> T:
-            return self.T_op(self.P(self.C(x)))
-        return all(self.compose(x) == tpc(x) for x in self.elements)
-
-    def pairwise_commute(self) -> Tuple[bool, bool, bool]:
-        """Check pairwise commutativity of C, P, T."""
-        cp = all(self.C(self.P(x)) == self.P(self.C(x)) for x in self.elements)
-        ct = all(self.C(self.T_op(x)) == self.T_op(self.C(x)) for x in self.elements)
-        pt = all(self.P(self.T_op(x)) == self.T_op(self.P(x)) for x in self.elements)
-        return cp, ct, pt
-
-
-# ============================================================
-# Algorithm: Retrocausal Heyting Implication
-# ============================================================
-
-def retrocausal_himp(
-    nucleus_j: Callable[[T], T],
-    himp: Callable[[T, T], T],
-    a: T, b: T
-) -> T:
-    """
-    Compute the retrocausal Heyting implication: j(a ⇨ b).
-
-    Algorithm:
-    1. Compute the base Heyting implication a ⇨ b
-    2. Apply the nucleus j to close under temporal completion
-    
-    This is the key operation that lifts intuitionistic implication
-    through the temporal closure operator.
-    """
-    return nucleus_j(himp(a, b))
-
-
-def verify_retrocausal_adjunction(
-    ha: HeytingAlgebra[T],
-    nucleus_j: Callable[[T], T],
-) -> bool:
-    """
-    Verify the nucleus Heyting adjunction on fixed points:
-    c ⊓ a ≤ b ⟺ c ≤ j(a ⇨ b) for fixed points a, b, c.
-    """
-    fixed = [x for x in ha.elements if nucleus_j(x) == x]
-    for a in fixed:
-        for b in fixed:
-            for c in fixed:
-                lhs = ha.le(ha.inf(c, a), b)
-                rhs = ha.le(c, retrocausal_himp(nucleus_j, ha.himp, a, b))
-                if lhs != rhs:
+    def verify_nucleus_property(self) -> bool:
+        """Verify j(a ∩ b) = j(a) ∩ j(b) for all a, b."""
+        all_sets = self.gc._all_subsets()
+        for a in all_sets:
+            for b in all_sets:
+                if self.j(a & b) != self.j(a) & self.j(b):
                     return False
-    return True
+        return True
+
+    def verify_idempotent(self) -> bool:
+        """Verify j(j(a)) = j(a) for all a."""
+        return all(self.j(self.j(s)) == self.j(s) for s in self.gc._all_subsets())
+
+    def verify_extensive(self) -> bool:
+        """Verify a ⊆ j(a) for all a."""
+        return all(s.issubset(self.j(s)) for s in self.gc._all_subsets())
+
+    def verify_temporal_coherence(self) -> bool:
+        """Verify T∘R∘T = T and R∘T∘R = R for all elements."""
+        all_sets = self.gc._all_subsets()
+        T, R = self.gc.l, self.gc.u
+        for s in all_sets:
+            if T(R(T(s))) != T(s):
+                return False
+            if R(T(R(s))) != R(s):
+                return False
+        return True
+
+
+def temporal_implication(
+    nu: RetrocausalNucleus,
+    a: FrozenSet[int],
+    b: FrozenSet[int],
+    himp: Callable[[FrozenSet[int], FrozenSet[int]], FrozenSet[int]]
+) -> FrozenSet[int]:
+    """Compute the temporal implication a →_τ b = R(T(a) ⇨ T(b))."""
+    return nu.gc.u(himp(nu.gc.l(a), nu.gc.l(b)))
+
+
+def temporal_excluded_middle(
+    nu: RetrocausalNucleus,
+    a: FrozenSet[int]
+) -> bool:
+    """Check if j(a) ∪ j(aᶜ) = universe."""
+    compl = nu.gc.universe - a
+    return (nu.j(a) | nu.j(compl)) == nu.gc.universe
+
+
+@dataclass
+class CPTSystem:
+    """A CPT system: three involutions on a finite set."""
+    C: Callable[[tuple], tuple]
+    P: Callable[[tuple], tuple]
+    Tr: Callable[[tuple], tuple]
+
+    def cpt(self, a: tuple) -> tuple:
+        """The CPT composition."""
+        return self.C(self.P(self.Tr(a)))
+
+    def verify_involutions(self, elements: List[tuple]) -> bool:
+        """Verify C, P, T are involutions."""
+        for f in [self.C, self.P, self.Tr]:
+            if not all(f(f(a)) == a for a in elements):
+                return False
+        return True
+
+    def verify_commutativity(self, elements: List[tuple]) -> bool:
+        """Verify pairwise commutativity."""
+        for f, g in [(self.C, self.P), (self.C, self.Tr), (self.P, self.Tr)]:
+            if not all(f(g(a)) == g(f(a)) for a in elements):
+                return False
+        return True
+
+    def verify_cpt_involution(self, elements: List[tuple]) -> bool:
+        """Verify CPT ∘ CPT = id."""
+        return all(self.cpt(self.cpt(a)) == a for a in elements)
+
+
+def build_projection_nucleus(n: int, keep: FrozenSet[int]) -> RetrocausalNucleus:
+    """
+    Build a retrocausal nucleus on P({0,...,n-1}) by projection.
+
+    T(S) = S ∩ keep (projection onto a subset)
+    R(U) = U ∪ (universe \ keep) (right adjoint: add back the complement)
+    
+    This satisfies the nucleus property because T preserves meets:
+    T(A ∩ B) = (A ∩ B) ∩ keep = (A ∩ keep) ∩ (B ∩ keep) = T(A) ∩ T(B)
+    """
+    universe = frozenset(range(n))
+    complement = universe - keep
+
+    def T(s: FrozenSet[int]) -> FrozenSet[int]:
+        return s & keep
+
+    def R(s: FrozenSet[int]) -> FrozenSet[int]:
+        return s | complement
+
+    gc = GaloisConnection(universe=universe, l=T, u=R)
+    return RetrocausalNucleus(gc=gc)
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    ha = three_element_heyting()
-    assert ha.verify_adjunction(), "Adjunction failed"
-    assert not ha.lem_holds(1), "LEM should fail for mid"
-    assert ha.lem_holds(0), "LEM should hold for bot"
-    assert ha.lem_holds(2), "LEM should hold for top"
-    print("All algorithm self-tests passed.")
+    # Demo: build and verify a retrocausal nucleus
+    nu = build_projection_nucleus(3, frozenset({0, 1}))
+
+    print("Galois connection verified:", nu.gc.verify())
+    print("Nucleus property verified:", nu.verify_nucleus_property())
+    print("Idempotent verified:", nu.verify_idempotent())
+    print("Extensive verified:", nu.verify_extensive())
+    print("Temporal coherence verified:", nu.verify_temporal_coherence())
+
+    print("\nFixed points:")
+    for fp in nu.fixed_points():
+        print(f"  {set(fp) if fp else '∅'}")
+
+    print("\nTemporal excluded middle:")
+    for s in nu.gc._all_subsets():
+        print(f"  j({set(s) if s else '∅'}) ∪ j(complement) = universe: {temporal_excluded_middle(nu, s)}")
+
+    # CPT demo
+    cpt = CPTSystem(
+        C=lambda a: (1 - a[0], a[1], a[2]),
+        P=lambda a: (a[0], 1 - a[1], a[2]),
+        Tr=lambda a: (a[0], a[1], 1 - a[2])
+    )
+    elements = [(i, j, k) for i in range(2) for j in range(2) for k in range(2)]
+    print("\nCPT system on (Z/2)³:")
+    print(f"  Involutions: {cpt.verify_involutions(elements)}")
+    print(f"  Commutativity: {cpt.verify_commutativity(elements)}")
+    print(f"  CPT involution: {cpt.verify_cpt_involution(elements)}")
