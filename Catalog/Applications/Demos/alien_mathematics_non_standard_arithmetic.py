@@ -1,444 +1,346 @@
 #!/usr/bin/env python3
 """
-demo.py — Non-Standard Arithmetic: Ultrapower Demonstrations
+Saturating Arithmetic: Numerical Demonstrations
 
-Demonstrates key concepts from the formalized non-standard arithmetic:
-1. Free ultrafilter simulation (via density-1 sets)
-2. Standard part computation
-3. Overspill/underspill behavior
-4. Growth rate comparisons (polynomial vs exponential)
-5. Fermat's little theorem verification
-6. Prime counting in non-standard intervals
+Demonstrates the key theorems about saturating natural number arithmetic,
+including the surprising preservation of distributivity.
 """
 
-import math
-from typing import List, Tuple, Callable
+def sat_add(N: int, a: int, b: int) -> int:
+    """Saturating addition: min(a + b, N)"""
+    return min(a + b, N)
 
+def sat_mul(N: int, a: int, b: int) -> int:
+    """Saturating multiplication: min(a * b, N)"""
+    return min(a * b, N)
 
-def is_cofinite(S: set, N: int) -> bool:
-    """Check if S contains all but finitely many elements of {0,...,N-1}."""
-    complement = set(range(N)) - S
-    return len(complement) < math.sqrt(N)  # heuristic
-
-
-def simulate_ultrafilter_membership(predicate: Callable[[int], bool],
-                                     N: int = 10000) -> float:
-    """Simulate whether {i | predicate(i)} is 'U-large' by computing density.
-    For a free ultrafilter, cofinite sets are always large."""
-    count = sum(1 for i in range(N) if predicate(i))
-    return count / N
-
-
-def demo_standard_part():
-    """Demonstrate the standard part map for bounded sequences."""
+def demo_distributivity():
+    """Demonstrate that distributivity holds in saturating arithmetic."""
     print("=" * 60)
-    print("DEMO 1: Standard Part Map")
+    print("THEOREM: Saturating Distributivity")
+    print("sat_mul(N, a, sat_add(N, b, c)) = sat_add(N, sat_mul(N, a, b), sat_mul(N, a, c))")
     print("=" * 60)
-    print()
 
-    # A bounded sequence: f(i) = i mod 7
-    # In the ultrapower, this has a unique standard part (one of 0,...,6)
-    f = lambda i: i % 7
-    N = 10000
-
-    # Count which value appears most frequently (simulating U-selection)
-    counts = {}
-    for i in range(N):
-        v = f(i)
-        counts[v] = counts.get(v, 0) + 1
-
-    print(f"Sequence f(i) = i mod 7, checking {N} terms:")
-    for v in sorted(counts.keys()):
-        density = counts[v] / N
-        print(f"  f(i) = {v}: density = {density:.4f}")
-    print()
-    print("Each residue class has density ~1/7 ≈ 0.1429")
-    print("The ultrafilter selects EXACTLY ONE — which one depends on U.")
-    print("This is the standard part: st([f]) ∈ {0,1,...,6}")
-    print()
-
-
-def demo_fermat_transfer():
-    """Verify Fermat's Little Theorem transfer for sequences."""
-    print("=" * 60)
-    print("DEMO 2: Fermat's Little Theorem Transfer")
-    print("=" * 60)
-    print()
-
-    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
-
-    print("Verifying a^p ≡ a (mod p) for various (a, p):")
-    for p in primes:
+    # Test for various N values
+    for N in [5, 10, 20, 100]:
         violations = 0
-        for a in range(100):
-            if pow(a, p, p) != a % p:
-                violations += 1
-        print(f"  p = {p:3d}: violations in a ∈ {{0,...,99}}: {violations}")
-
+        total = 0
+        for a in range(N + 1):
+            for b in range(N + 1):
+                for c in range(N + 1):
+                    lhs = sat_mul(N, a, sat_add(N, b, c))
+                    rhs = sat_add(N, sat_mul(N, a, b), sat_mul(N, a, c))
+                    total += 1
+                    if lhs != rhs:
+                        violations += 1
+        print(f"  N = {N:3d}: tested {total:8d} triples, violations = {violations}")
     print()
-    print("In the ultrapower: for ANY sequence p(i) of primes,")
-    print("a(i)^p(i) ≡ a(i) (mod p(i)) holds U-almost-everywhere.")
-    print("This is our fermat_little_transfer theorem.")
-    print()
 
-
-def demo_wilson_transfer():
-    """Verify Wilson's theorem transfer."""
+def demo_associativity():
+    """Demonstrate associativity of both operations."""
     print("=" * 60)
-    print("DEMO 3: Wilson's Theorem Transfer")
+    print("THEOREM: Saturating Associativity")
     print("=" * 60)
+
+    for N in [5, 10, 20]:
+        add_violations = 0
+        mul_violations = 0
+        total = 0
+        for a in range(N + 1):
+            for b in range(N + 1):
+                for c in range(N + 1):
+                    total += 1
+                    if sat_add(N, sat_add(N, a, b), c) != sat_add(N, a, sat_add(N, b, c)):
+                        add_violations += 1
+                    if sat_mul(N, sat_mul(N, a, b), c) != sat_mul(N, a, sat_mul(N, b, c)):
+                        mul_violations += 1
+        print(f"  N = {N:3d}: add violations = {add_violations}, mul violations = {mul_violations}")
     print()
 
-    print("Wilson's theorem: p prime ⟹ (p-1)! ≡ -1 (mod p)")
-    print()
-    for p in [2, 3, 5, 7, 11, 13]:
-        factorial_val = math.factorial(p - 1)
-        remainder = factorial_val % p
-        print(f"  p = {p:3d}: ({p-1})! = {factorial_val:>10d}, "
-              f"({p-1})! mod {p} = {remainder}, "
-              f"({p-1})! + 1 mod {p} = {(factorial_val + 1) % p}")
-
-    # Composites fail
-    print()
-    print("Composites FAIL Wilson's test (boundary case):")
-    for n in [4, 6, 8, 9, 10, 12]:
-        factorial_val = math.factorial(n - 1)
-        print(f"  n = {n:3d}: ({n-1})! + 1 mod {n} = {(factorial_val + 1) % n} ≠ 0")
-    print()
-
-
-def demo_exp_dominates_poly():
-    """Demonstrate that exponential dominates polynomial in *ℕ."""
+def demo_idempotents():
+    """Demonstrate idempotent classification."""
     print("=" * 60)
-    print("DEMO 4: Exponential Dominates Polynomial")
+    print("THEOREM: Idempotent Classification")
     print("=" * 60)
+
+    for N in [5, 10, 20]:
+        add_idemp = [a for a in range(N + 1) if sat_add(N, a, a) == a]
+        mul_idemp = [a for a in range(N + 1) if sat_mul(N, a, a) == a]
+        print(f"  N = {N:3d}: additive idempotents = {add_idemp}")
+        print(f"         multiplicative idempotents = {mul_idemp}")
     print()
 
-    for k in [1, 2, 3, 5, 10, 20]:
-        # Find the crossover point where 2^i > i^k
-        crossover = None
-        for i in range(1, 10000):
-            if 2**i > i**k:
-                crossover = i
-                break
-        print(f"  k = {k:3d}: 2^i > i^k for all i ≥ {crossover}")
-        if crossover and crossover < 100:
-            print(f"           At crossover: 2^{crossover} = {2**crossover}, "
-                  f"{crossover}^{k} = {crossover**k}")
-
-    print()
-    print("In *ℕ: 2^ω > ω^k for ANY standard k.")
-    print("The complement {i | i^k ≥ 2^i} is FINITE, hence not in U.")
-    print("This is our exp_dominates_poly_nonstandard theorem.")
-    print()
-
-
-def demo_prime_counting():
-    """Demonstrate non-standard prime counting."""
+def demo_cancellation_failure():
+    """Demonstrate cancellation failure."""
     print("=" * 60)
-    print("DEMO 5: Non-Standard Prime Counting π*(ω)")
+    print("THEOREM: Cancellation Failure")
     print("=" * 60)
+
+    N = 10
+    print(f"  N = {N}")
+    print(f"  Additive: sat_add({N}, 8, 5) = {sat_add(N, 8, 5)}, sat_add({N}, 9, 5) = {sat_add(N, 9, 5)}")
+    print(f"  But 8 ≠ 9! Cancellation fails because both sums overflow to {N}")
+    print()
+    print(f"  Multiplicative: sat_mul({N}, 3, 4) = {sat_mul(N, 3, 4)}, sat_mul({N}, 4, 4) = {sat_mul(N, 4, 4)}")
+    print(f"  But 3 ≠ 4! Both products overflow to {N}")
     print()
 
-    # π(n) for various n
-    def prime_count(n):
-        if n < 2:
-            return 0
-        sieve = [True] * (n + 1)
-        sieve[0] = sieve[1] = False
-        for i in range(2, int(n**0.5) + 1):
-            if sieve[i]:
-                for j in range(i*i, n + 1, i):
-                    sieve[j] = False
-        return sum(sieve)
-
-    print("Standard prime counting function π(n):")
-    for n in [10, 100, 1000, 10000, 100000]:
-        pi_n = prime_count(n)
-        ratio = pi_n / n if n > 0 else 0
-        ln_ratio = n / math.log(n) if n > 1 else 0
-        print(f"  π({n:>6d}) = {pi_n:>5d}, "
-              f"π(n)/n = {ratio:.4f}, "
-              f"n/ln(n) = {ln_ratio:.1f}")
-
-    print()
-    print("In *ℕ: π*(ω) is non-standard-infinite (exceeds every standard number)")
-    print("but π*(ω)/ω is infinitesimal (less than every positive standard rational)")
-    print("This captures the Prime Number Theorem non-standardly!")
-    print()
-
-
-def demo_internal_induction():
-    """Demonstrate internal vs external induction."""
+def demo_safe_region_density():
+    """Compute the density of the safe region."""
     print("=" * 60)
-    print("DEMO 6: Internal Induction")
+    print("THEOREM: Safe Region Density")
     print("=" * 60)
+
+    for N in [10, 50, 100, 500, 1000]:
+        safe_add = sum(1 for a in range(N + 1) for b in range(N + 1) if a + b <= N)
+        total = (N + 1) ** 2
+        density = safe_add / total
+        theoretical = (N + 1) * (N + 2) / 2 / total
+        print(f"  N = {N:4d}: safe pairs = {safe_add:8d}/{total:8d}, "
+              f"density = {density:.4f} (theoretical: {theoretical:.4f})")
+    print(f"  Limit as N → ∞: density → 1/2 = 0.5000")
     print()
 
-    print("Internal induction: for sequence-definable predicates P(i, m),")
-    print("if P(i, 0) holds U-a.e. and P(i, n) → P(i, n+1) holds U-a.e.,")
-    print("then P(i, m) holds U-a.e. for EVERY standard m.")
-    print()
-    print("Example: P(i, m) = 'i^m ≤ 2^i'")
-    print()
-
-    for m in [0, 1, 2, 5, 10, 20]:
-        # {i | i^m ≤ 2^i} is cofinite
-        exceptions = [i for i in range(1, 10000) if i**m > 2**i]
-        if exceptions:
-            max_exc = max(exceptions)
-            print(f"  m = {m:3d}: P(i, m) fails for i ∈ [1, {max_exc}], "
-                  f"holds for i ≥ {max_exc + 1}")
-        else:
-            print(f"  m = {m:3d}: P(i, m) holds for ALL i ≥ 1")
-
-    print()
-    print("EXTERNAL failure: the predicate 'i is standard' satisfies induction")
-    print("(0 is standard, n standard → n+1 standard) but does NOT hold for all")
-    print("elements of *ℕ — the non-standard ω is not standard!")
-    print("This is because 'is standard' is not definable by sequences.")
-    print()
-
-
-def demo_underspill():
-    """Demonstrate the underspill principle."""
+def demo_absorption():
+    """Demonstrate the absorbing element N."""
     print("=" * 60)
-    print("DEMO 7: Underspill Principle")
+    print("THEOREM: N is Absorbing ('Infinity')")
     print("=" * 60)
+
+    N = 10
+    print(f"  N = {N}")
+    for a in range(N + 1):
+        assert sat_add(N, N, a) == N, f"Absorption failed for a={a}"
+    print(f"  ✓ sat_add({N}, {N}, a) = {N} for all a ∈ [0, {N}]")
+
+    for a in range(1, N + 1):
+        assert sat_mul(N, N, a) == N, f"Absorption failed for a={a}"
+    print(f"  ✓ sat_mul({N}, {N}, a) = {N} for all a ∈ [1, {N}]")
+    print(f"  ⚠ sat_mul({N}, {N}, 0) = {sat_mul(N, N, 0)} (zero annihilates)")
     print()
 
-    print("Underspill: If P(i) ∨ (i < n) is U-large for all standard n,")
-    print("then P(i) is U-large.")
-    print()
-    print("Intuition: if P holds for all 'infinite' elements and the set")
-    print("of non-P elements is bounded by every standard number, then")
-    print("the set of non-P elements must be empty (U-a.e.).")
-    print()
+def demo_saturation_map():
+    """Demonstrate the saturation map as semiring homomorphism."""
+    print("=" * 60)
+    print("THEOREM: Saturation Map Preserves Operations")
+    print("=" * 60)
 
-    # Example: P(i) = "i is not a perfect square"
-    N = 10000
-    def is_perfect_square(i):
-        s = int(math.isqrt(i))
-        return s * s == i
-
-    non_squares = sum(1 for i in range(N) if not is_perfect_square(i))
-    print(f"P(i) = 'i is not a perfect square':")
-    print(f"  In {{0,...,{N-1}}}: {non_squares}/{N} = {non_squares/N:.4f} satisfy P")
-    print(f"  Perfect squares ≤ {N}: {int(math.isqrt(N)) + 1}")
-    print(f"  Since perfect squares have density 0, {{i | P(i)}} is cofinite → U-large")
+    N = 10
+    print(f"  N = {N}")
+    print(f"  σ_N(x) = min(x, N)")
     print()
 
+    # Test additive preservation
+    violations_add = 0
+    violations_mul = 0
+    for a in range(2 * N + 1):
+        for b in range(2 * N + 1):
+            sigma_sum = min(a + b, N)
+            sum_sigma = sat_add(N, min(a, N), min(b, N))
+            if sigma_sum != sum_sigma:
+                violations_add += 1
+
+            sigma_prod = min(a * b, N)
+            prod_sigma = sat_mul(N, min(a, N), min(b, N))
+            if sigma_prod != prod_sigma:
+                violations_mul += 1
+
+    print(f"  Additive preservation σ(a+b) = σ(a) ⊕ σ(b): violations = {violations_add}")
+    print(f"  Multiplicative preservation σ(a·b) = σ(a) ⊗ σ(b): violations = {violations_mul}")
+    print()
+
+def demo_non_archimedean():
+    """Demonstrate the non-Archimedean property."""
+    print("=" * 60)
+    print("THEOREM: Non-Archimedean Property")
+    print("=" * 60)
+
+    N = 100
+    a = 7
+    print(f"  N = {N}, a = {a}")
+    print(f"  Standard ℕ: 7 + 7 + 7 + ... grows without bound")
+    print(f"  SatNat {N}: repeated sat_add stays ≤ {N}")
+
+    acc = 0
+    for k in range(30):
+        acc = sat_add(N, acc, a)
+        std = a * (k + 1)
+        print(f"    k = {k+1:2d}: sat = {acc:3d}, standard = {std:3d}")
+        if acc == N:
+            print(f"    ⟨saturated at k = {k+1}⟩")
+            break
+    print()
 
 if __name__ == "__main__":
-    demo_standard_part()
-    demo_fermat_transfer()
-    demo_wilson_transfer()
-    demo_exp_dominates_poly()
-    demo_prime_counting()
-    demo_internal_induction()
-    demo_underspill()
-
-    print("=" * 60)
+    demo_distributivity()
+    demo_associativity()
+    demo_idempotents()
+    demo_cancellation_failure()
+    demo_safe_region_density()
+    demo_absorption()
+    demo_saturation_map()
+    demo_non_archimedean()
     print("All demonstrations complete.")
-    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-viz_nonstandard.py — Visualization of Non-Standard Arithmetic
+Visualization: Saturating Arithmetic Phase Diagram
 
-Generates plots illustrating key results from the formalization:
-1. Polynomial vs Exponential growth (exp_dominates_poly_nonstandard)
-2. Prime counting function transfer
-3. Standard part map illustration
+Generates heatmaps showing the safe/overflow regions for saturating operations,
+demonstrating the sharp phase transition that underlies the distributivity proof.
 """
 
-import math
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import numpy as np
 
 
-def sieve_primes(n):
-    """Simple sieve of Eratosthenes."""
-    if n < 2:
-        return []
-    is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i*i, n + 1, i):
-                is_prime[j] = False
-    return [i for i in range(n + 1) if is_prime[i]]
+def sat_add(N, a, b):
+    return min(a + b, N)
 
 
-def prime_count(n):
-    """Count primes up to n."""
-    return len(sieve_primes(n))
+def sat_mul(N, a, b):
+    return min(a * b, N)
 
 
-def plot_growth_comparison():
-    """Plot polynomial vs exponential growth rates."""
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        import numpy as np
-    except ImportError:
-        print("matplotlib/numpy not available, skipping plot")
-        return
+def plot_safe_region(N=20):
+    """Plot the safe region for saturating addition."""
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: log-scale comparison
+    # Plot 1: Safe region for addition
     ax = axes[0]
-    x = np.arange(1, 60)
-    for k in [1, 2, 3, 5, 10]:
-        y = x.astype(float)**k
-        ax.semilogy(x, y, label=f'$n^{{{k}}}$', linewidth=1.5)
-    y_exp = 2.0**x
-    ax.semilogy(x, y_exp, 'k--', label='$2^n$', linewidth=2.5)
-
-    ax.set_xlabel('n', fontsize=12)
-    ax.set_ylabel('Value (log scale)', fontsize=12)
-    ax.set_title('Polynomial vs Exponential Growth\n'
-                 r'In ${}^*\mathbb{N}$: $\omega^k < 2^\omega$ for all standard $k$',
-                 fontsize=13)
+    grid = np.zeros((N + 1, N + 1))
+    for a in range(N + 1):
+        for b in range(N + 1):
+            grid[a, b] = 1 if a + b <= N else 0
+    im = ax.imshow(grid, origin='lower', cmap='RdYlGn', vmin=0, vmax=1,
+                   extent=[-0.5, N + 0.5, -0.5, N + 0.5])
+    ax.set_xlabel('b', fontsize=12)
+    ax.set_ylabel('a', fontsize=12)
+    ax.set_title(f'Safe Region: Addition (N={N})\nGreen = a+b ≤ N', fontsize=13)
+    ax.plot([0, N], [N, 0], 'k--', linewidth=2, label='a+b = N')
     ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
 
-    # Right: ratio i^k / 2^i → 0
+    # Plot 2: Safe region for multiplication
     ax = axes[1]
-    x = np.arange(1, 100)
-    for k in [1, 2, 3, 5, 10]:
-        ratio = x.astype(float)**k / 2.0**x
-        # Clip very small values for display
-        ratio = np.clip(ratio, 1e-30, None)
-        ax.semilogy(x, ratio, label=f'$n^{{{k}}}/2^n$', linewidth=1.5)
-
-    ax.set_xlabel('n', fontsize=12)
-    ax.set_ylabel('Ratio (log scale)', fontsize=12)
-    ax.set_title(r'$n^k / 2^n \to 0$: Why $\{i \mid i^k \geq 2^i\}$ is finite',
-                 fontsize=13)
+    grid = np.zeros((N + 1, N + 1))
+    for a in range(N + 1):
+        for b in range(N + 1):
+            grid[a, b] = 1 if a * b <= N else 0
+    im = ax.imshow(grid, origin='lower', cmap='RdYlGn', vmin=0, vmax=1,
+                   extent=[-0.5, N + 0.5, -0.5, N + 0.5])
+    ax.set_xlabel('b', fontsize=12)
+    ax.set_ylabel('a', fontsize=12)
+    ax.set_title(f'Safe Region: Multiplication (N={N})\nGreen = a·b ≤ N', fontsize=13)
+    # Hyperbola a*b = N
+    b_vals = np.linspace(1, N, 200)
+    a_vals = N / b_vals
+    ax.plot(b_vals, a_vals, 'k--', linewidth=2, label='a·b = N')
+    ax.set_xlim(-0.5, N + 0.5)
+    ax.set_ylim(-0.5, N + 0.5)
     ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(bottom=1e-30)
+
+    # Plot 3: Distributivity verification
+    ax = axes[2]
+    # For fixed a, show |LHS - RHS| for distributivity
+    a_fixed = N // 2
+    grid = np.zeros((N + 1, N + 1))
+    for b in range(N + 1):
+        for c in range(N + 1):
+            lhs = sat_mul(N, a_fixed, sat_add(N, b, c))
+            rhs = sat_add(N, sat_mul(N, a_fixed, b), sat_mul(N, a_fixed, c))
+            grid[b, c] = abs(lhs - rhs)
+    im = ax.imshow(grid, origin='lower', cmap='hot_r', vmin=0, vmax=max(1, grid.max()),
+                   extent=[-0.5, N + 0.5, -0.5, N + 0.5])
+    ax.set_xlabel('c', fontsize=12)
+    ax.set_ylabel('b', fontsize=12)
+    ax.set_title(f'Distributivity Defect (a={a_fixed}, N={N})\n|a⊗(b⊕c) - (a⊗b)⊕(a⊗c)|', fontsize=13)
+    plt.colorbar(im, ax=ax, label='Defect')
 
     plt.tight_layout()
-    plt.savefig('growth_comparison.png', dpi=150, bbox_inches='tight')
-    print("Saved growth_comparison.png")
+    plt.savefig('sat_arith_phase_diagram.png', dpi=150, bbox_inches='tight')
     plt.close()
+    print("Saved sat_arith_phase_diagram.png")
 
 
-def plot_prime_counting():
-    """Plot prime counting function and non-standard extension."""
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        import numpy as np
-    except ImportError:
-        print("matplotlib/numpy not available, skipping plot")
-        return
+def plot_idempotent_landscape(N=15):
+    """Visualize idempotent elements across different N values."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: π(n) vs n/ln(n)
+    # Additive idempotents
     ax = axes[0]
-    ns = list(range(2, 5001))
-    primes = sieve_primes(5000)
-    pi_vals = []
-    count = 0
-    p_idx = 0
-    for n in ns:
-        while p_idx < len(primes) and primes[p_idx] <= n:
-            count += 1
-            p_idx += 1
-        pi_vals.append(count)
+    max_N = N
+    for n in range(1, max_N + 1):
+        for a in range(n + 1):
+            if sat_add(n, a, a) == a:
+                ax.plot(n, a, 'go', markersize=8, alpha=0.7)
+            else:
+                ax.plot(n, a, 'r.', markersize=2, alpha=0.3)
+    ax.set_xlabel('N (bound)', fontsize=12)
+    ax.set_ylabel('a (element)', fontsize=12)
+    ax.set_title('Additive Idempotents: a⊕a = a\nGreen = idempotent', fontsize=13)
+    ax.plot(range(1, max_N + 1), range(1, max_N + 1), 'g--', alpha=0.5, label='a = N')
+    ax.axhline(y=0, color='g', linestyle='--', alpha=0.5, label='a = 0')
+    ax.legend(fontsize=10)
 
-    x = np.array(ns)
-    ax.plot(x, pi_vals, 'b-', label=r'$\pi(n)$', linewidth=1.5)
-    ax.plot(x, x / np.log(x), 'r--', label=r'$n/\ln(n)$', linewidth=1.5)
-    ax.set_xlabel('n', fontsize=12)
-    ax.set_ylabel('Count', fontsize=12)
-    ax.set_title(r'Prime Counting: $\pi(n) \sim n/\ln(n)$' + '\n'
-                 r'Transfers to ${}^*\mathbb{N}$: $\pi^*(\omega) \sim \omega/\ln(\omega)$',
-                 fontsize=13)
+    # Multiplicative idempotents
+    ax = axes[1]
+    for n in range(1, max_N + 1):
+        for a in range(n + 1):
+            if sat_mul(n, a, a) == a:
+                ax.plot(n, a, 'bo', markersize=8, alpha=0.7)
+            else:
+                ax.plot(n, a, 'r.', markersize=2, alpha=0.3)
+    ax.set_xlabel('N (bound)', fontsize=12)
+    ax.set_ylabel('a (element)', fontsize=12)
+    ax.set_title('Multiplicative Idempotents: a⊗a = a\nBlue = idempotent', fontsize=13)
+    ax.plot(range(1, max_N + 1), range(1, max_N + 1), 'b--', alpha=0.5, label='a = N')
+    ax.axhline(y=0, color='b', linestyle='--', alpha=0.5, label='a = 0')
+    ax.axhline(y=1, color='b', linestyle='--', alpha=0.5, label='a = 1')
+    ax.legend(fontsize=10)
+
+    plt.tight_layout()
+    plt.savefig('sat_arith_idempotents.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved sat_arith_idempotents.png")
+
+
+def plot_density_convergence():
+    """Plot the convergence of safe region density to 1/2."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    Ns = list(range(1, 201))
+    add_densities = []
+    mul_densities = []
+
+    for N in Ns:
+        # Additive safe count: pairs (a,b) in [0,N]^2 with a+b <= N
+        safe_add = (N + 1) * (N + 2) // 2
+        total = (N + 1) ** 2
+        add_densities.append(safe_add / total)
+
+        # Multiplicative safe count
+        safe_mul = sum(1 for a in range(N + 1) for b in range(N + 1) if a * b <= N)
+        mul_densities.append(safe_mul / total)
+
+    ax.plot(Ns, add_densities, 'b-', linewidth=2, label='Addition safe density')
+    ax.plot(Ns, mul_densities, 'r-', linewidth=2, label='Multiplication safe density')
+    ax.axhline(y=0.5, color='b', linestyle='--', alpha=0.5, label='Limit (add) = 1/2')
+    ax.set_xlabel('N (bound)', fontsize=12)
+    ax.set_ylabel('Density of safe region', fontsize=12)
+    ax.set_title('Convergence of Safe Region Density\nas N → ∞', fontsize=14)
     ax.legend(fontsize=11)
     ax.grid(True, alpha=0.3)
 
-    # Right: π(n)/n → 0 (density of primes)
-    ax = axes[1]
-    density = np.array(pi_vals) / x
-    ax.plot(x, density, 'g-', linewidth=1.5)
-    ax.axhline(y=0, color='k', linestyle='-', alpha=0.3)
-    ax.set_xlabel('n', fontsize=12)
-    ax.set_ylabel(r'$\pi(n)/n$', fontsize=12)
-    ax.set_title(r'Prime Density $\pi(n)/n \to 0$' + '\n'
-                 r'In ${}^*\mathbb{N}$: $\pi^*(\omega)/\omega$ is infinitesimal',
-                 fontsize=13)
-    ax.grid(True, alpha=0.3)
-
     plt.tight_layout()
-    plt.savefig('prime_counting.png', dpi=150, bbox_inches='tight')
-    print("Saved prime_counting.png")
+    plt.savefig('sat_arith_density.png', dpi=150, bbox_inches='tight')
     plt.close()
-
-
-def plot_standard_part():
-    """Illustrate the standard part map."""
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        import numpy as np
-    except ImportError:
-        print("matplotlib/numpy not available, skipping plot")
-        return
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: a bounded sequence and its "standard part"
-    ax = axes[0]
-    np.random.seed(42)
-    N = 200
-    # Sequence f(i) that is "mostly 3" with some noise
-    f_vals = np.array([3 if i % 7 != 0 else (i % 5) for i in range(N)])
-
-    ax.scatter(range(N), f_vals, s=8, alpha=0.6, c='blue')
-    ax.axhline(y=3, color='red', linewidth=2, linestyle='--', label='st([f]) = 3')
-    ax.set_xlabel('Index i', fontsize=12)
-    ax.set_ylabel('f(i)', fontsize=12)
-    ax.set_title('Standard Part Map\n'
-                 'Bounded [f] has unique standard value st([f])',
-                 fontsize=13)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(-0.5, 6.5)
-
-    # Right: Histogram of values showing U-selection
-    ax = axes[1]
-    values, counts = np.unique(f_vals, return_counts=True)
-    colors = ['red' if v == 3 else 'lightblue' for v in values]
-    ax.bar(values, counts / N, color=colors, edgecolor='black', width=0.6)
-    ax.set_xlabel('Value', fontsize=12)
-    ax.set_ylabel('Frequency', fontsize=12)
-    ax.set_title('Value Distribution\n'
-                 'Ultrafilter selects the dominant value',
-                 fontsize=13)
-    ax.grid(True, alpha=0.3, axis='y')
-
-    # Annotate
-    for v, c in zip(values, counts):
-        if c / N > 0.1:
-            ax.annotate(f'{c/N:.2f}', (v, c/N + 0.02),
-                       ha='center', fontsize=10)
-
-    plt.tight_layout()
-    plt.savefig('standard_part.png', dpi=150, bbox_inches='tight')
-    print("Saved standard_part.png")
-    plt.close()
+    print("Saved sat_arith_density.png")
 
 
 if __name__ == "__main__":
-    plot_growth_comparison()
-    plot_prime_counting()
-    plot_standard_part()
+    plot_safe_region(N=20)
+    plot_idempotent_landscape(N=15)
+    plot_density_convergence()
     print("All visualizations generated.")

@@ -1,289 +1,213 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Non-Standard Arithmetic Algorithms
+Saturating Arithmetic: Algorithms and Data Structures
 
-Type-hinted implementations of key algorithms from the non-standard
-arithmetic formalization:
-
-1. UltrafilterSimulator — simulates ultrafilter membership via density
-2. StandardPartComputer — computes standard parts of bounded sequences
-3. OverspillDetector — detects when overspill applies
-4. TransferVerifier — verifies number-theoretic transfers
-5. GrowthClassifier — classifies growth rates in the ultrapower
+Type-hinted implementations of saturating arithmetic operations,
+the saturation map, and analysis tools.
 """
 
-from typing import Callable, Optional, List, Tuple, Dict, Set
+from typing import Tuple, List, Optional
 from dataclasses import dataclass
-import math
+from math import gcd
 
 
 @dataclass
-class UltrafilterResult:
-    """Result of an ultrafilter membership test."""
-    is_large: bool
-    density: float
-    finite_complement: bool
-    complement_bound: Optional[int]
+class SatNat:
+    """A natural number bounded by a capacity N."""
+    val: int
+    bound: int
+
+    def __post_init__(self):
+        assert 0 <= self.val <= self.bound, f"val={self.val} not in [0, {self.bound}]"
+
+    def __repr__(self) -> str:
+        return f"SatNat({self.val}, N={self.bound})"
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, SatNat):
+            return NotImplemented
+        return self.val == other.val and self.bound == other.bound
+
+    def __add__(self, other: 'SatNat') -> 'SatNat':
+        assert self.bound == other.bound
+        return SatNat(min(self.val + other.val, self.bound), self.bound)
+
+    def __mul__(self, other: 'SatNat') -> 'SatNat':
+        assert self.bound == other.bound
+        return SatNat(min(self.val * other.val, self.bound), self.bound)
+
+    def is_absorbing(self) -> bool:
+        """Check if this element is the absorbing element N."""
+        return self.val == self.bound
+
+    def is_additive_idempotent(self) -> bool:
+        """Check if x + x = x in saturating arithmetic."""
+        result = self + self
+        return result.val == self.val
+
+    def is_multiplicative_idempotent(self) -> bool:
+        """Check if x * x = x in saturating arithmetic."""
+        result = self * self
+        return result.val == self.val
 
 
-class UltrafilterSimulator:
-    """Simulates a free ultrafilter on ℕ via density/cofiniteness.
-
-    A free ultrafilter U on ℕ satisfies:
-    - ∅ ∉ U
-    - If A ∈ U and A ⊆ B, then B ∈ U (upward closed)
-    - If A ∈ U and B ∈ U, then A ∩ B ∈ U (closed under finite intersection)
-    - For all A, exactly one of A ∈ U or Aᶜ ∈ U (ultrafilter property)
-    - No singleton {n} ∈ U (free/non-principal)
-
-    Consequence: all cofinite sets are in U.
+def saturating_add(N: int, a: int, b: int) -> int:
     """
+    Saturating addition: min(a + b, N).
 
-    def __init__(self, sample_size: int = 100000):
-        self.sample_size = sample_size
-
-    def test_membership(self, predicate: Callable[[int], bool]) -> UltrafilterResult:
-        """Test whether {i | predicate(i)} is 'U-large'.
-
-        For cofinite sets, this is definite. For other sets, we report density.
-        """
-        true_count = 0
-        max_false = -1
-        false_count = 0
-
-        for i in range(self.sample_size):
-            if predicate(i):
-                true_count += 1
-            else:
-                false_count += 1
-                max_false = i
-
-        density = true_count / self.sample_size
-        finite_complement = (false_count < math.sqrt(self.sample_size))
-        complement_bound = max_false if finite_complement else None
-
-        return UltrafilterResult(
-            is_large=(density > 0.5),  # heuristic
-            density=density,
-            finite_complement=finite_complement,
-            complement_bound=complement_bound
-        )
-
-
-class StandardPartComputer:
-    """Computes standard parts of bounded ultrapower elements.
-
-    Given f: ℕ → ℕ with f(i) ≤ N for U-almost-all i, finds the
-    unique n such that f(i) = n for U-almost-all i.
-
-    Algorithm:
-    1. Compute value frequencies in {0, ..., N}
-    2. The value with frequency closest to 1/1 (in the limit) is the standard part
-    3. For genuine ultrafilters, exactly one value has U-large preimage
-
+    Algorithm: O(1) time and space.
     Pseudocode:
-        INPUT: f: ℕ → ℕ, bound N
-        counts ← array of size N+1, initialized to 0
-        FOR i = 0 TO sample_size:
-            IF f(i) ≤ N: counts[f(i)] += 1
-        RETURN argmax(counts)
+        return min(a + b, N)
     """
-
-    def __init__(self, sample_size: int = 100000):
-        self.sample_size = sample_size
-
-    def compute(self, f: Callable[[int], int], bound: int) -> Tuple[int, float]:
-        """Returns (standard_part, confidence).
-
-        confidence is the fraction of samples where f(i) = standard_part.
-        For a genuine ultrafilter, confidence → 1 as sample_size → ∞
-        for the U-selected value.
-        """
-        counts: Dict[int, int] = {}
-        total = 0
-
-        for i in range(self.sample_size):
-            v = f(i)
-            if v <= bound:
-                counts[v] = counts.get(v, 0) + 1
-                total += 1
-
-        if not counts:
-            raise ValueError("No values in range [0, N]")
-
-        best_val = max(counts, key=counts.get)  # type: ignore
-        confidence = counts[best_val] / total if total > 0 else 0.0
-
-        return best_val, confidence
+    return min(a + b, N)
 
 
-class TransferVerifier:
-    """Verifies that number-theoretic identities transfer to sequences.
-
-    Implements pointwise checking of:
-    - Fermat's Little Theorem: a^p ≡ a (mod p) for prime p
-    - Wilson's Theorem: (p-1)! ≡ -1 (mod p) for prime p
-    - GCD divisibility: gcd(a,b) | a and gcd(a,b) | b
+def saturating_mul(N: int, a: int, b: int) -> int:
     """
+    Saturating multiplication: min(a * b, N).
 
-    @staticmethod
-    def verify_fermat(a_seq: Callable[[int], int],
-                      p_seq: Callable[[int], int],
-                      n_samples: int = 10000) -> Tuple[int, int]:
-        """Returns (successes, total_primes) for Fermat's Little Theorem."""
-        successes = 0
-        total_primes = 0
-
-        for i in range(n_samples):
-            p = p_seq(i)
-            a = a_seq(i)
-            if p >= 2 and all(p % d != 0 for d in range(2, min(p, int(p**0.5) + 2))):
-                total_primes += 1
-                if pow(a, p, p) == a % p:
-                    successes += 1
-
-        return successes, total_primes
-
-    @staticmethod
-    def verify_wilson(p_seq: Callable[[int], int],
-                      n_samples: int = 1000) -> Tuple[int, int]:
-        """Returns (successes, total_primes) for Wilson's Theorem."""
-        successes = 0
-        total_primes = 0
-
-        for i in range(n_samples):
-            p = p_seq(i)
-            if p >= 2 and p <= 1000 and all(p % d != 0 for d in range(2, min(p, int(p**0.5) + 2))):
-                total_primes += 1
-                fact = math.factorial(p - 1)
-                if (fact + 1) % p == 0:
-                    successes += 1
-
-        return successes, total_primes
-
-    @staticmethod
-    def verify_gcd_divisibility(a_seq: Callable[[int], int],
-                                 b_seq: Callable[[int], int],
-                                 n_samples: int = 10000) -> Tuple[int, int]:
-        """Returns (successes, total) for GCD divisibility."""
-        successes = 0
-        total = n_samples
-
-        for i in range(n_samples):
-            a, b = a_seq(i), b_seq(i)
-            g = math.gcd(a, b)
-            if (g == 0 or (a % g == 0 and b % g == 0)):
-                successes += 1
-
-        return successes, total
-
-
-class GrowthClassifier:
-    """Classifies growth rates of sequences for ultrapower ordering.
-
-    In the ultrapower *ℕ, the ordering [f] < [g] iff {i | f(i) < g(i)} ∈ U.
-    For cofinite sets (which are in every free ultrafilter), this means
-    f(i) < g(i) for all sufficiently large i.
-
-    Algorithm:
-        INPUT: f, g: ℕ → ℕ
-        crossover ← smallest i such that f(i) < g(i) for all j ≥ i
-        IF crossover exists: f ≤* g (eventually dominated)
-        ELSE: incomparable or f >* g
+    Algorithm: O(1) time and space.
+    Pseudocode:
+        return min(a * b, N)
     """
+    return min(a * b, N)
 
-    @staticmethod
-    def find_crossover(f: Callable[[int], int],
-                       g: Callable[[int], int],
-                       max_search: int = 100000) -> Optional[int]:
-        """Find the point after which f(i) < g(i) always holds."""
-        last_violation = -1
 
-        for i in range(max_search):
-            if f(i) >= g(i):
-                last_violation = i
+def saturation_map(N: int, x: int) -> int:
+    """
+    The saturation map σ_N: ℕ → SatNat N.
+    σ_N(x) = min(x, N).
 
-        if last_violation == -1:
-            return 0
-        elif last_violation < max_search - 100:
-            return last_violation + 1
-        else:
-            return None
+    This is a semiring homomorphism: σ(a+b) = σ(a) ⊕ σ(b)
+    and σ(a·b) = σ(a) ⊗ σ(b).
+    """
+    return min(x, N)
 
-    @staticmethod
-    def classify_pair(f: Callable[[int], int],
-                      g: Callable[[int], int],
-                      f_name: str = "f",
-                      g_name: str = "g") -> str:
-        """Classify the ultrapower ordering of f and g."""
-        fg_cross = GrowthClassifier.find_crossover(f, g)
-        gf_cross = GrowthClassifier.find_crossover(g, f)
 
-        if fg_cross is not None and gf_cross is None:
-            return f"[{f_name}] < [{g_name}] in *ℕ (crossover at {fg_cross})"
-        elif gf_cross is not None and fg_cross is None:
-            return f"[{g_name}] < [{f_name}] in *ℕ (crossover at {gf_cross})"
-        elif fg_cross is not None and gf_cross is not None:
-            return f"[{f_name}] = [{g_name}] in *ℕ (eventually equal)"
-        else:
-            return f"Cannot determine ordering within search range"
+def safe_region_count_add(N: int) -> int:
+    """
+    Count the number of pairs (a, b) ∈ [0, N]² where
+    saturating addition agrees with standard addition.
+
+    The safe region is {(a,b) : a + b ≤ N}, which has
+    exactly (N+1)(N+2)/2 elements.
+
+    Algorithm: O(1) by formula.
+    """
+    return (N + 1) * (N + 2) // 2
+
+
+def safe_region_density_add(N: int) -> float:
+    """
+    Density of the safe region for addition.
+    Approaches 1/2 as N → ∞.
+    """
+    return safe_region_count_add(N) / (N + 1) ** 2
+
+
+def saturation_depth_add(a: int, b: int) -> int:
+    """
+    Minimum N such that sat_add(N, a, b) = a + b.
+    This is the 'arithmetic depth' of the addition a + b.
+    """
+    return a + b
+
+
+def saturation_depth_mul(a: int, b: int) -> int:
+    """
+    Minimum N such that sat_mul(N, a, b) = a * b.
+    """
+    return a * b
+
+
+def find_additive_idempotents(N: int) -> List[int]:
+    """
+    Find all additive idempotents: elements x with sat_add(N, x, x) = x.
+    By our theorem, these are exactly {0, N}.
+
+    Algorithm: O(1) by theorem.
+    """
+    if N == 0:
+        return [0]
+    return [0, N]
+
+
+def find_multiplicative_idempotents(N: int) -> List[int]:
+    """
+    Find all multiplicative idempotents: elements x with sat_mul(N, x, x) = x.
+    By our theorem:
+    - N = 0: {0}
+    - N = 1: {0, 1}
+    - N ≥ 2: {0, 1, N}
+
+    Algorithm: O(1) by theorem.
+    """
+    if N == 0:
+        return [0]
+    elif N == 1:
+        return [0, 1]
+    else:
+        return [0, 1, N]
+
+
+def verify_distributivity(N: int) -> Tuple[bool, Optional[Tuple[int, int, int]]]:
+    """
+    Exhaustively verify distributivity for SatNat N.
+    Returns (True, None) if it holds for all triples, or
+    (False, (a, b, c)) for a counterexample.
+
+    Our theorem proves this always returns (True, None),
+    but this function serves as a computational sanity check.
+    """
+    for a in range(N + 1):
+        for b in range(N + 1):
+            for c in range(N + 1):
+                lhs = saturating_mul(N, a, saturating_add(N, b, c))
+                rhs = saturating_add(N, saturating_mul(N, a, b), saturating_mul(N, a, c))
+                if lhs != rhs:
+                    return False, (a, b, c)
+    return True, None
+
+
+def polynomial_safe_bound(coefficients: List[int], degree: int, num_vars: int) -> int:
+    """
+    Estimate the minimum N such that evaluating a polynomial
+    of given degree and coefficients on inputs in [0, K]
+    stays within the safe region.
+
+    For a polynomial of degree d with coefficient sum C evaluated
+    on inputs ≤ K, the output is ≤ C · K^d. So we need N ≥ C · K^d.
+    """
+    coeff_sum = sum(abs(c) for c in coefficients)
+    # For the polynomial identity to transfer, we need the max evaluation ≤ N
+    return coeff_sum  # Base bound; multiply by K^d for inputs in [0, K]
 
 
 if __name__ == "__main__":
-    # Demo: Growth classification
-    classifier = GrowthClassifier()
+    # Quick self-tests
+    N = 10
 
-    print("Growth Rate Classification in *ℕ:")
-    print("-" * 50)
+    # Test SatNat class
+    x = SatNat(3, N)
+    y = SatNat(4, N)
+    z = x + y
+    assert z.val == 7, f"Expected 7, got {z.val}"
 
-    # i^2 vs 2^i
-    result = classifier.classify_pair(
-        lambda i: i**2, lambda i: 2**i,
-        "ω²", "2^ω"
-    )
-    print(f"  {result}")
+    x = SatNat(8, N)
+    y = SatNat(5, N)
+    z = x + y
+    assert z.val == N, f"Expected {N}, got {z.val}"
 
-    # i^10 vs 2^i
-    result = classifier.classify_pair(
-        lambda i: i**10, lambda i: 2**i,
-        "ω¹⁰", "2^ω"
-    )
-    print(f"  {result}")
+    # Test idempotent classification
+    assert find_additive_idempotents(10) == [0, 10]
+    assert find_multiplicative_idempotents(10) == [0, 1, 10]
 
-    # i! vs i^i
-    result = classifier.classify_pair(
-        lambda i: math.factorial(i) if i < 200 else 10**1000,
-        lambda i: i**i if i > 0 and i < 200 else 1,
-        "ω!", "ω^ω"
-    )
-    print(f"  {result}")
+    # Test safe region
+    assert safe_region_count_add(10) == 66  # (11)(12)/2
 
-    print()
+    # Verify distributivity for small N
+    for n in range(8):
+        ok, _ = verify_distributivity(n)
+        assert ok, f"Distributivity failed for N={n}"
 
-    # Demo: Transfer verification
-    verifier = TransferVerifier()
-
-    print("Transfer Verification:")
-    print("-" * 50)
-
-    # Fermat with p(i) = i-th prime
-    primes_list = []
-    for n in range(2, 100000):
-        if all(n % d != 0 for d in range(2, int(n**0.5) + 1)):
-            primes_list.append(n)
-        if len(primes_list) >= 10000:
-            break
-
-    succ, total = verifier.verify_fermat(
-        lambda i: i * 3 + 7,
-        lambda i: primes_list[i] if i < len(primes_list) else 2,
-        n_samples=min(5000, len(primes_list))
-    )
-    print(f"  Fermat's Little Theorem: {succ}/{total} verified (should be 100%)")
-
-    succ, total = verifier.verify_gcd_divisibility(
-        lambda i: i * 6 + 12,
-        lambda i: i * 10 + 20,
-        n_samples=10000
-    )
-    print(f"  GCD Divisibility: {succ}/{total} verified (should be 100%)")
+    print("All self-tests passed.")
