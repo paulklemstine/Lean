@@ -1,243 +1,197 @@
-# Non-Standard Arithmetic via Ultrapowers: Transfer, Overspill, and Topological Bridges
+# Non-Standard Arithmetic via Ultrapowers: Construction, Transfer, and Boundaries
 
 ## Abstract
 
-We formalize the ultrapower construction of non-standard natural numbers *ℕ = ℕ^ℕ/U and prove a comprehensive suite of theorems characterizing which properties of ℕ transfer to the ultrapower and which fail. Our main contributions are:
-
-1. **Existence of infinite elements**: We prove that every free ultrafilter on ℕ produces an ultrapower containing elements strictly exceeding every standard natural number, establishing the non-Archimedean character of *ℕ.
-
-2. **Overspill and Underspill Principles**: We formalize overspill — if a decidable property P holds for all standard naturals, then {i | ∀k ≤ i, P(k)} ∈ U — and its dual, underspill.
-
-3. **Complete first-order transfer**: We prove transfer of commutativity, associativity, distributivity, the zero-product property, divisibility closure, GCD properties, infinitude of primes, and Bertrand's postulate to the ultrapower.
-
-4. **Second-order failure**: We exhibit descending chains in *ℕ from infinite elements, demonstrating failure of the well-ordering principle.
-
-5. **Topological bridge**: We prove existence, uniqueness, and additivity of ultrafilter limits for bounded sequences, connecting *ℕ to the Stone-Čech compactification βℕ.
-
-All results are fully formalized in Lean 4 with Mathlib, producing 19 sorry-free theorems. This deepens the existing catalog results in `Bridges/DependentUltraproduct.lean` and `Bridges/NonArchimedeanComputation.lean`.
+We develop a comprehensive formalization of non-standard arithmetic through ultrapower constructions over free ultrafilters on ℕ. We prove: (1) the ultrapower ℕ* = ∏ℕ/U carries algebraic structure inherited from ℕ via well-definedness of pointwise operations; (2) the standard embedding ι: ℕ → ℕ* is injective but not surjective, with the diagonal element ω = [id] exceeding every standard natural; (3) the **overspill principle** — if P(n) holds for all standard n, there exists a non-standard bound N such that P holds for all k ≤ N; (4) the **well-ordering failure** — ℕ* contains nonempty subsets with no minimum, precisely characterizing the boundary between first-order and second-order properties; (5) a **bounded-infinite dichotomy** with a standard part theorem for bounded elements; and (6) closure properties of infinite elements under arithmetic operations. All results are machine-verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
-### 1.1 Background
+Non-standard models of arithmetic, first constructed rigorously by Skolem (1934) and developed systematically by Robinson (1960), provide a powerful lens through which to examine the expressive power of first-order theories. The ultrapower construction, based on Łoś's fundamental theorem (1955), offers the most concrete and computable approach to building non-standard models.
 
-Non-standard analysis, introduced by Robinson [1966], provides an alternative foundation for analysis using infinitesimal and infinite numbers. The ultrapower construction gives a concrete model-theoretic realization: given an index set I and an ultrafilter U on I, the ultrapower ∏_U A of a structure A consists of equivalence classes of I-indexed sequences, where two sequences are identified iff they agree on a U-large set.
+This work extends the existing catalog of ultraproduct results in `Bridges/DependentUltraproduct.lean`, which established the dependent ultraproduct construction, ultrafilter pigeonhole, boolean transfer, and ring operation compatibility. We deepen these foundations in several directions:
 
-### 1.2 Catalog Context
+1. **Generalization**: From general dependent ultraproducts to the specific ultrapower ℕ* = ℕ^ℕ/U, developing the ordered algebraic structure.
+2. **Strengthening**: From boolean transfer to the full overspill principle, a quantitative strengthening that captures the internal/external boundary.
+3. **Bridge**: Connecting ultrafilter combinatorics to the compactness theorem of first-order logic, showing how model-theoretic compactness emerges from set-theoretic ultrafilter properties.
 
-This work deepens and extends several existing catalog results:
+### Catalog References
 
-- **`Bridges/DependentUltraproduct.lean`**: Establishes ultrafilter combinatorics (`ultrafilter_pigeonhole`, `ultrafilter_transfer_and/or`), the ultraproduct setoid, characteristic transfer, and iterated conjunction transfer. Our work extends this by:
-  - Building the full *ℕ construction with arithmetic operations
-  - Proving overspill and underspill (the key non-standard principles)
-  - Demonstrating second-order failure (well-ordering)
-  - Bridging to topology (ultrafilter limits)
+- `Bridges/DependentUltraproduct.lean`: `ultrafilter_transfer_and`, `ultrafilter_bounded_forall_transfer`, `ultraproduct_zero_product_transfer`
+- `Bridges/NonArchimedeanComputation.lean`: `padic_arithmetic_depth_bound`
 
-- **`Bridges/NonArchimedeanComputation.lean`**: Studies p-adic arithmetic depth bounds and Hensel lifting. Our work complements this by showing the ultrapower construction is an independent source of non-Archimedean structure, connecting via the common theme of "non-Archimedean implies richer arithmetic."
+## 2. Definitions
 
-- **`Bridges/SurrealTopologyDeep.lean`** (`archimedean_bound`): Our `ultrapower_not_archimedean` theorem shows the Archimedean property is a genuine obstacle — it fails in ultrapowers, requiring fundamentally different proof strategies.
+### 2.1. Ultrafilter Equivalence
 
-### 1.3 Organization
+**Definition (NatUltraEq).** Given an ultrafilter U on ℕ, two sequences f, g : ℕ → ℕ are *U-equivalent*, written f ~_U g, if {i ∈ ℕ | f(i) = g(i)} ∈ U.
 
-§2 reviews the ultrapower construction. §3 proves existence of infinite elements. §4 establishes overspill and underspill. §5 covers algebraic transfer. §6 shows second-order failure. §7 develops the topological bridge. §8 discusses applications and future directions.
+**Theorem (natUltraEq_equiv).** U-equivalence is an equivalence relation. Reflexivity follows from ℕ ∈ U; symmetry from closure under supersets; transitivity from the finite intersection property.
 
-## 2. The Ultrapower Construction
+### 2.2. The Ultrapower ℕ*
 
-### 2.1 Ultrafilter Equivalence
+**Definition (NatStar).** The ultrapower ℕ* = (ℕ → ℕ)/~_U is the quotient of the space of ℕ-valued sequences by U-equivalence.
 
-**Definition 2.1** (UltraNatEq). For an ultrafilter U on a type I, two sequences f, g : I → ℕ are *U-equivalent*, written f ≈_U g, iff {i ∈ I | f(i) = g(i)} ∈ U.
+**Definition (NatStar.std).** The *standard embedding* ι: ℕ → ℕ* sends n to the equivalence class of the constant sequence (n, n, n, ...).
 
-**Proposition 2.2**. UltraNatEq is an equivalence relation: reflexive (trivially), symmetric (by commutativity of equality), and transitive (by the filter intersection property).
+**Definition (NatStar.omega).** The *diagonal element* ω ∈ ℕ* is the equivalence class of the identity function id: ℕ → ℕ.
 
-**Definition 2.3** (NonstdNat). The *non-standard natural numbers* are defined as:
+### 2.3. Free Ultrafilters
+
+**Definition (IsFreeUltrafilter).** An ultrafilter U on ℕ is *free* if no singleton {n} belongs to U.
+
+This is equivalent to requiring that every cofinite set belongs to U, and to the non-existence of a *principal* element.
+
+### 2.4. Boundedness and Infiniteness
+
+**Definition (IsBounded).** An element [f] ∈ ℕ* is *bounded* if there exists n ∈ ℕ such that {i | f(i) ≤ n} ∈ U.
+
+**Definition (IsInfiniteElem).** An element [f] ∈ ℕ* is *infinite* if for all n ∈ ℕ, {i | n < f(i)} ∈ U.
+
+## 3. Main Results
+
+### 3.1. Well-Definedness of Arithmetic Operations
+
+**Theorem (natStar_add_welldef, natStar_mul_welldef).** Pointwise addition and multiplication respect U-equivalence:
+- If f₁ ~_U g₁ and f₂ ~_U g₂, then (f₁ + f₂) ~_U (g₁ + g₂)
+- If f₁ ~_U g₁ and f₂ ~_U g₂, then (f₁ · f₂) ~_U (g₁ · g₂)
+
+*Proof sketch.* The intersection {i | f₁(i) = g₁(i)} ∩ {i | f₂(i) = g₂(i)} ∈ U, and on this set the operations agree.
+
+### 3.2. The Non-Archimedean Property
+
+**Theorem (omega_exceeds_standard).** For any free ultrafilter U and any n ∈ ℕ, the diagonal element ω satisfies [const_n] ≤_U ω, i.e., {i | n ≤ i} ∈ U.
+
+**Theorem (omega_not_standard).** For any free ultrafilter U and any n ∈ ℕ, ω ≠ ι(n) in ℕ*.
+
+*Proof.* If ω = ι(n), then {i | n = i} = {n} ∈ U, contradicting freeness of U.
+
+**PEGB Analysis:**
+- **P**roof: Complete, using freeness to show tail sets {i ≥ n} are U-large.
+- **E**xample: For the principal ultrafilter at 42, const_7 would NOT be exceeded by ω (since only position 42 matters). This shows freeness is essential.
+- **G**eneralization: The same argument works for any linearly ordered type replacing ℕ, with an appropriate notion of "free" ultrafilter.
+- **B**oundary: For principal ultrafilters, ω is just the ordinary number p (the principal element), so the non-Archimedean property fails completely.
+
+### 3.3. The Overspill Principle
+
+**Theorem (overspill_principle).** Let U be a free ultrafilter on ℕ, and let P: ℕ → ℕ → Prop be such that for every n, {i | P(i, n)} ∈ U. Then there exists f: ℕ → ℕ such that:
+1. For all n, {i | n ≤ f(i)} ∈ U (f grows without U-bound)
+2. {i | ∀ k ≤ f(i), P(i, k)} ∈ U (P holds for all k up to the "non-standard" bound f(i))
+
+*Proof sketch.* For each i, define f(i) = sup{n | ∀ k ≤ n, P(i, k)}, taking f(i) = i when the supremum is i itself. The set A_n = {i | ∀ k ≤ n, P(i, k)} is in U for each n (by finite intersection of {i | P(i, k)} for k ≤ n). On A_n, we have f(i) ≥ n, so {i | n ≤ f(i)} ⊇ A_n ∈ U. By construction, ∀ k ≤ f(i), P(i, k) holds everywhere.
+
+**PEGB Analysis:**
+- **P**roof: The formalized proof uses Nat.sSup with careful handling of bounded sets.
+- **E**xample: Take P(i, n) = "i > n". Then {i | i > n} ∈ U for all n (by freeness). The overspill gives f with ∀ k ≤ f(i), i > k. Since f(i) can be taken as i itself, this recovers the diagonal.
+- **G**eneralization: The overspill principle generalizes to ultrapowers over any directed set, not just ℕ. In the non-standard reals, it becomes the key tool for deriving Bolzano-Weierstrass and other compactness results.
+- **B**oundary: Overspill fails for second-order properties. "P(n) = (n is standard)" holds for all standard n but cannot hold for any non-standard n, because "being standard" is not expressible in first-order logic.
+
+### 3.4. Well-Ordering Failure
+
+**Theorem (no_least_infinite_element).** If [f] is infinite in ℕ* (i.e., ∀ n, {i | n < f(i)} ∈ U), then [f - 1] is also infinite: ∀ n, {i | n < f(i) - 1} ∈ U.
+
+**Theorem (infinite_elements_no_minimum).** For any infinite [f] ∈ ℕ*, there exists [g] with:
+1. [g] is infinite
+2. [g] ≤_U [f]
+3. [g] ≠ [f] in ℕ*
+
+*Proof sketch.* Take g = f - 1 (pointwise predecessor). Infiniteness follows from the previous theorem. The ordering g ≤ f is immediate from Nat.sub_le. Non-equality: if f - 1 =_U f, then on a U-large set f(i) - 1 = f(i), which requires f(i) = 0. But {i | 0 < f(i)} ∈ U by infiniteness, contradiction.
+
+**PEGB Analysis:**
+- **P**roof: Uses `Nat.lt_pred_iff` for the predecessor bound.
+- **E**xample: Starting from ω = [id], the sequence ω, ω-1, ω-2, ... gives an infinite descending chain: [id], [id - 1], [id - 2], ..., each still infinite.
+- **G**eneralization: This argument extends to show ℕ* has no well-ordered cofinal subset, and that the order type of ℕ* is ω + (ω* + ω) · η where η is the order type of ℚ.
+- **B**oundary: Among *bounded* elements, well-ordering is restored — the standard part map recovers the well-ordering of ℕ.
+
+### 3.5. Boolean Transfer
+
+**Theorem (ultrafilter_transfer_neg).** {i | ¬P(i)} ∈ U iff {i | P(i)} ∉ U.
+
+**Theorem (ultrafilter_transfer_imp).** If {i | P(i) → Q(i)} ∈ U and {i | P(i)} ∈ U, then {i | Q(i)} ∈ U.
+
+**Theorem (ultrafilter_transfer_iff).** If {i | P(i) ↔ Q(i)} ∈ U, then {i | P(i)} ∈ U iff {i | Q(i)} ∈ U.
+
+**Theorem (ultrafilter_deMorgan_and).** If {i | ¬(P(i) ∧ Q(i))} ∈ U, then {i | ¬P(i)} ∈ U ∨ {i | ¬Q(i)} ∈ U.
+
+These results, extending the conjunction and disjunction transfer from the catalog, complete the boolean algebra of transferred properties. Together they show that the collection of U-valid properties forms a **maximal consistent theory** — a complete first-order theory.
+
+### 3.6. Bounded-Infinite Dichotomy and Standard Part
+
+**Theorem (bounded_or_infinite).** Every element of ℕ* is either bounded or infinite.
+
+**Theorem (bounded_has_standard_value).** Every bounded element [f] has a unique standard value m ∈ ℕ such that {i | f(i) = m} ∈ U. This m is the **standard part** of [f].
+
+*Proof sketch.* If {i | f(i) ≤ n} ∈ U, then f takes values in the finite set {0, ..., n} on a U-large set. By the ultrafilter finite union property, some specific value m ≤ n has {i | f(i) = m} ∈ U.
+
+### 3.7. Closure of Infinite Elements
+
+**Theorem (infinite_add_infinite).** If [f] and [g] are infinite, so is [f + g].
+
+**Theorem (infinite_mul_infinite).** If [f] and [g] are infinite, so is [f · g].
+
+These show that the infinite elements form an ideal-like structure closed under the arithmetic operations, though they do not form a true ideal (since infinite + bounded is still infinite, and 0 is not infinite).
+
+### 3.8. Compactness Bridge
+
+**Theorem (finite_compactness_base).** For any ultrafilter U and any finite list of properties, if each property holds on a U-large set, then all properties hold simultaneously on a U-large set.
+
+This is the ultrafilter-theoretic core of the model-theoretic compactness theorem, establishing the bridge between:
+- **Logic**: Compactness of first-order logic
+- **Algebra**: Ultraproduct construction (Łoś's theorem)
+- **Topology**: Compactness of Stone spaces of Boolean algebras
+
+## 4. Algorithm: Ultrapower Arithmetic Simulator
+
 ```
-NonstdNat(U) := (I → ℕ) / ≈_U
+Algorithm: UltrapowerEval(U, expr, samples)
+Input: Free ultrafilter U (approximated by density), expression expr over ℕ*, sample size N
+Output: Standard part (if bounded) or "INFINITE"
+
+1. Generate N random indices i₁, ..., iₙ
+2. For each index iⱼ, evaluate expr(iⱼ) using pointwise arithmetic
+3. Compute histogram H of values
+4. If max(H) / N > threshold:
+     return mode(H)   // Standard part
+5. If values grow without bound:
+     return "INFINITE"
+6. return "UNDETERMINED"
 ```
 
-### 2.2 Arithmetic Operations
+## 5. Discussion
 
-Addition and multiplication are defined pointwise and shown to be well-defined on equivalence classes:
+### 5.1. Depth of Extension
 
-- `add([f], [g]) := [λ i. f(i) + g(i)]`
-- `mul([f], [g]) := [λ i. f(i) * g(i)]`
+Our work deepens the catalog's `DependentUltraproduct.lean` results in three ways:
 
-Well-definedness follows from the filter intersection property: if f₁ ≈ f₂ and g₁ ≈ g₂, then the set where both equalities hold is in U, and on this set the operations agree.
+1. **From general to specific**: The catalog establishes ultraproduct machinery for arbitrary families K(i). We specialize to the ultrapower K(i) = ℕ for all i, unlocking the ordered structure and well-ordering analysis that require homogeneity.
 
-### 2.3 Standard Embedding
+2. **From boolean to quantitative transfer**: The catalog's `ultrafilter_transfer_and/or` handle propositional connectives. Our overspill principle handles *bounded quantifiers*, a qualitative leap that captures the internal/external distinction.
 
-**Definition 2.4** (stdEmb). The *standard embedding* ι : ℕ → *ℕ sends n to the constant sequence [λ i. n].
+3. **From construction to limitation**: The catalog proves what transfers. We prove what *doesn't* transfer (well-ordering), identifying the precise boundary between first-order and second-order expressibility.
 
-## 3. Existence of Infinite Elements (PEGB)
+### 5.2. The First-Order / Second-Order Boundary
 
-### 3.1 Free Ultrafilter Properties
+The well-ordering failure theorem is perhaps our deepest result. It shows that:
+- All first-order consequences of Peano arithmetic hold in ℕ*
+- The second-order property of well-ordering fails
+- Induction *schemes* (one instance per formula) hold, but the *principle* (one statement quantifying over all subsets) fails
 
-**Theorem 3.1** (free_ultrafilter_cofinite). If U is a free ultrafilter on ℕ (meaning {n}ᶜ ∈ U for all n), then Sᶜ ∈ U for every finite set S.
+This has profound implications for the foundations of mathematics: the Peano axioms, as usually stated in second-order logic, characterize ℕ uniquely. But their first-order fragments have uncountably many non-isomorphic models.
 
-*Proof*. By induction on the finiteness of S. For ∅, the complement is univ ∈ U. For S ∪ {a}, the complement is Sᶜ ∩ {a}ᶜ, which is in U by the filter intersection property. □
+### 5.3. Connections to p-adic Arithmetic
 
-**Theorem 3.2** (free_ultrafilter_Ici). For a free ultrafilter U and any n, {i | i ≥ n} ∈ U.
+The catalog's `NonArchimedeanComputation.lean` establishes depth bounds for p-adic arithmetic. Our non-Archimedean results for ℕ* complement this: both p-adic numbers and ℕ* are non-Archimedean, but for different reasons. In ℤ_p, the non-Archimedean property comes from the ultrametric inequality |a + b| ≤ max(|a|, |b|). In ℕ*, it comes from the ultrafilter construction. The bridge between these two notions of "non-Archimedean" — metric vs. order-theoretic — is a promising direction for future work.
 
-*Proof*. By induction: the base case {i | i ≥ 0} = univ ∈ U. For the step, {i | i ≥ n+1} = {i | i ≥ n} ∩ {n}ᶜ. □
+## 6. Future Work
 
-**Theorem 3.3** (free_ultrafilter_large_infinite). Every U-large set under a free ultrafilter is infinite.
+1. **Łoś's theorem for quantifier-free formulas**: Extend boolean transfer to handle terms and atomic formulas systematically.
+2. **Internal vs. external sets**: Formalize the distinction between internal sets (those definable in the ultrapower) and external sets (like "the set of standard naturals").
+3. **Non-standard analysis**: Use the ultrapower of ℤ or ℝ to develop infinitesimal calculus.
+4. **Connection to forcing**: Explore the relationship between ultrapower constructions and Cohen forcing in set theory.
 
-*Proof*. If S ∈ U and S is finite, then Sᶜ ∈ U by Theorem 3.1, giving S ∩ Sᶜ ∈ U, but S ∩ Sᶜ = ∅ ∉ U. □
+## 7. References
 
-### 3.2 The Main Existence Theorem
-
-**Theorem 3.4** (exists_infinite_element). For any free ultrafilter U on ℕ and any n ∈ ℕ, {i | n < i} ∈ U.
-
-- **Proof**: {i | n < i} = {i | i ≥ n+1} ∈ U by Theorem 3.2.
-- **Example**: The identity function id : ℕ → ℕ, viewed in the ultrapower, represents an element exceeding every standard n.
-- **Generalization**: This works for any free ultrafilter on any infinite type, not just ℕ.
-- **Boundary**: For a *principal* ultrafilter (concentrating on a point a), the ultrapower is isomorphic to ℕ and contains no infinite elements.
-
-**Corollary 3.5** (diagonal_not_standard). The class [id] ≠ ι(n) for any standard n.
-
-**Theorem 3.6** (sum_infinite_is_infinite). If [f] and [g] are both infinite, then [f+g] is infinite.
-
-## 4. Overspill and Underspill (PEGB)
-
-### 4.1 The Overspill Principle
-
-**Theorem 4.1** (overspill_nat). Let U be a free ultrafilter on ℕ, P a decidable predicate. If P(n) holds for all n ∈ ℕ, then {i | ∀ k ≤ i, P(k)} ∈ U.
-
-- **Proof**: Since P holds universally, the set {i | ∀ k ≤ i, P(k)} = univ ∈ U.
-- **Example**: P(n) := "n > 0 → ∃ prime p with n < p ≤ 2n" holds for all standard n (Bertrand). By overspill, it holds for some non-standard N — there's a "non-standard prime" between N and 2N.
-- **Generalization**: Overspill extends to any ultrapower of a linearly ordered structure with internal predicates.
-- **Boundary**: Fails for *external* predicates. "n is standard" holds for all standard n but not for any infinite element.
-
-### 4.2 Underspill
-
-**Theorem 4.2** (underspill_nat). If {i | ∀ k ≤ i, P(k)} ∉ U, then ∃ n ∈ ℕ with ¬P(n).
-
-*Proof*. Contrapositive of overspill: if P held for all standard n, the set would be univ ∈ U. □
-
-## 5. Algebraic Transfer
-
-### 5.1 Universal Identities
-
-**Theorem 5.1**. The following identities hold in *ℕ (i.e., the relevant set is U-large for any U):
-- (a) `transfer_add_comm`: f + g = g + f
-- (b) `transfer_mul_comm`: f × g = g × f  
-- (c) `transfer_add_assoc`: (f + g) + h = f + (g + h)
-- (d) `transfer_distrib`: f × (g + h) = f × g + f × h
-
-*Proof*. In each case, the set where the identity holds is all of I (by the corresponding identity in ℕ), hence univ ∈ U. □
-
-### 5.2 The Zero-Product Property
-
-**Theorem 5.2** (transfer_zero_product). If {i | f(i) × g(i) = 0} ∈ U, then {i | f(i) = 0} ∈ U or {i | g(i) = 0} ∈ U.
-
-*Proof*. The zero set is a subset of {f = 0} ∪ {g = 0} by Nat.mul_eq_zero. By the ultrafilter prime ideal property, one factor is U-large. □
-
-This is the key "integral domain" property and is significantly deeper than the universal identities — it uses the ultrafilter's maximality.
-
-### 5.3 Divisibility Transfer
-
-**Theorem 5.3** (transfer_dvd_add). If d | f and d | g U-a.e., then d | (f + g) U-a.e.
-
-**Theorem 5.4** (transfer_gcd_divides). gcd(a, b) | a U-a.e. (always, since Nat.gcd_dvd_left is universal).
-
-### 5.4 Number-Theoretic Transfer
-
-**Theorem 5.5** (transfer_infinite_primes). For any standard bound n, the set {i | ∃ prime p > n with p ≤ i} is U-large.
-
-*Proof*. By Euclid's theorem, fix a prime p₀ > n. Then {i | i ≥ p₀} ⊆ target set, and {i | i ≥ p₀} ∈ U by Theorem 3.2. □
-
-**Theorem 5.6** (transfer_bertrand). The set {i | i ≥ 1 → ∃ prime p with i < p ≤ 2i} is U-large.
-
-*Proof*. By Bertrand's postulate (Nat.exists_prime_lt_and_le_two_mul in Mathlib), the property holds for all i ≥ 1, so the set is univ. □
-
-This is a PEGB result:
-- **Proof**: Uses Mathlib's formalization of Bertrand's postulate.
-- **Example**: For a non-standard N, there's a non-standard prime between N and 2N.
-- **Generalization**: Any first-order consequence of Peano arithmetic transfers.
-- **Boundary**: The *proof* of Bertrand uses strong induction (second-order), but the *statement* is first-order — this distinction is the heart of the transfer principle.
-
-## 6. Second-Order Failure
-
-### 6.1 Descending Chains
-
-**Theorem 6.1** (descending_from_infinite). If [f] is an infinite element, then for all n:
-{i | f(i) − (n+1) < f(i) − n} ∈ U.
-
-*Proof*. On {i | f(i) > n+1} ∈ U (by infiniteness), the ℕ-subtraction f(i)−(n+1) < f(i)−n. □
-
-This demonstrates a *descending chain* in *ℕ: [f] > [f]−1 > [f]−2 > ⋯, each step witnessed on a U-large set. In standard ℕ, any such chain must reach 0 and terminate. In *ℕ, it can continue indefinitely from an infinite starting point.
-
-**Consequence**: The well-ordering principle fails for "internal" subsets of *ℕ. This is the canonical example of a second-order property that doesn't transfer.
-
-### 6.2 The Non-Archimedean Structure
-
-**Theorem 6.2** (ultrapower_not_archimedean). There exists f : ℕ → ℕ such that ∀ n, {i | n < f(i)} ∈ U.
-
-**Theorem 6.3** (infinite_minus_one_infinite). If [f] is infinite, so is [f−1].
-
-**Theorem 6.4** (infinite_mul_standard). If [f] is infinite and k > 0, then [k·f] is infinite.
-
-These show the infinite elements form a rich, convex, multiplicatively closed ideal in *ℕ.
-
-## 7. Topological Bridge: Ultrafilter Limits
-
-### 7.1 Existence
-
-**Theorem 7.1** (ultrafilter_limit_exists). For any bounded sequence f : ℕ → [0,1] and ultrafilter U on ℕ, there exists L ∈ [0,1] such that for all ε > 0, {i | |f(i) − L| < ε} ∈ U.
-
-*Proof*. The pushforward ultrafilter U.map(f) has [0,1] in its filter. By compactness of [0,1] (IsCompact.ultrafilter_le_nhds in Mathlib), some L is a limit point. □
-
-This connects non-standard arithmetic to the Stone-Čech compactification: each ultrafilter U determines a point in βℕ, and the evaluation map f ↦ lim_U(f) gives the Stone-Čech extension of bounded functions.
-
-### 7.2 Uniqueness
-
-**Theorem 7.2** (ultrafilter_limit_unique). Ultrafilter limits are unique.
-
-*Proof*. If L₁ ≠ L₂, let ε = |L₁ − L₂|/2. The sets {|f−L₁| < ε} and {|f−L₂| < ε} are both U-large, hence intersect, but the triangle inequality gives |L₁−L₂| < 2ε = |L₁−L₂|. □
-
-### 7.3 Homomorphism Property
-
-**Theorem 7.3** (ultrafilter_limit_add). lim_U(f + g) = lim_U(f) + lim_U(g).
-
-*Proof*. Standard ε/2 argument using the filter intersection property. □
-
-- **Example**: For f(i) = 1/i → 0 and g(i) = 1/(i+1) → 0, the sum converges to 0.
-- **Generalization**: The limit map extends to a ring homomorphism ℓ^∞(ℕ) → ℝ, which is a *character* (multiplicative linear functional) on the Banach algebra of bounded sequences.
-- **Boundary**: Unbounded sequences don't have ultrafilter limits in ℝ; one must pass to the extended reals or a compactification.
-
-## 8. Cross-Domain Connections
-
-### 8.1 Non-Standard Analysis ↔ p-adic Analysis
-
-Both the ultrapower *ℕ and the p-adic integers ℤ_p are non-Archimedean. In the ultrapower, an infinite element N satisfies N > n for all standard n. In ℤ_p, the element p^n becomes "small" as n grows. These are dual manifestations of the same phenomenon: extending a number system beyond the Archimedean boundary.
-
-The catalog result `padic_arithmetic_depth_bound` (Bridges/NonArchimedeanComputation.lean) shows computational depth bounds for p-adic arithmetic: vdepth(f + g) ≤ max(vdepth(f), vdepth(g)) + 1. Our infinite element theorems (sum_infinite_is_infinite, infinite_mul_standard) are the non-standard analog: arithmetic operations preserve the "infinite" stratum.
-
-### 8.2 Non-Standard Arithmetic ↔ Combinatorics
-
-The overspill principle has deep combinatorial consequences. By applying overspill to finite Ramsey-type statements, one can often extract non-standard witnesses and then "transfer back" to get standard combinatorial results. The conjecture in the existing `DependentUltraproduct.lean` (UltrafilterRamseyAP) proposes that this technique yields arithmetic progressions in ultrafilter-selected color classes.
-
-### 8.3 Ultrafilter Limits ↔ Functional Analysis
-
-Our ultrafilter limit theorems connect to the Gelfand representation of commutative Banach algebras. The space of ultrafilters on ℕ is the Gelfand spectrum of ℓ^∞(ℕ), and each ultrafilter determines a character (maximal ideal). The ultrafilter limit is precisely the evaluation of this character — a fact that bridges non-standard arithmetic, topology, and operator algebra.
-
-## 9. Summary of Contributions
-
-| Theorem | Category | Depth |
-|---------|----------|-------|
-| `exists_infinite_element` | Non-Archimedean | Construction of infinite elements |
-| `overspill_nat` | Transfer | Key non-standard principle |
-| `underspill_nat` | Transfer | Dual of overspill |
-| `transfer_bertrand` | Number theory | Deep theorem transfer |
-| `transfer_zero_product` | Algebra | Integral domain transfer |
-| `descending_from_infinite` | Second-order failure | Well-ordering breakdown |
-| `ultrafilter_limit_exists` | Topology | Compactness application |
-| `ultrafilter_limit_unique` | Topology | Hausdorff separation |
-| `ultrafilter_limit_add` | Topology-Algebra | Ring homomorphism |
-
-## References
-
-1. Robinson, A. *Non-Standard Analysis*. North-Holland, 1966.
-2. Goldblatt, R. *Lectures on the Hyperreals*. Springer GTM 188, 1998.
-3. Chang, C.C. and Keisler, H.J. *Model Theory*. North-Holland, 1990.
-4. `Bridges/DependentUltraproduct.lean` — Ultrafilter transfer and ultraproduct ring operations.
-5. `Bridges/NonArchimedeanComputation.lean` — p-adic arithmetic depth bounds.
-6. `Bridges/SurrealTopologyDeep.lean` — Archimedean bound theorem.
+1. Robinson, A. (1960). *Non-standard Analysis*. North-Holland.
+2. Łoś, J. (1955). Quelques remarques, théorèmes et problèmes sur les classes définissables d'algèbres. *Mathematical Interpretation of Formal Systems*, 98-113.
+3. Skolem, T. (1934). Über die Nicht-charakterisierbarkeit der Zahlenreihe mittels endlich oder abzählbar unendlich vieler Aussagen mit ausschließlich Zahlenvariablen. *Fundamenta Mathematicae*, 23, 150-161.
+4. Goldblatt, R. (1998). *Lectures on the Hyperreals*. Springer.
+5. Chang, C.C. and Keisler, H.J. (1990). *Model Theory*. North-Holland.
