@@ -1,16 +1,16 @@
 """
-Vampire Numbers and Arithmetic Creatures: Algorithms
+Algorithms for Vampire Numbers and Arithmetic Creatures
 
-Type-hinted implementations of vampire number detection, enumeration,
-and mod-9 sieve algorithms.
+Type-hinted implementations for enumerating and classifying vampire numbers,
+ghost numbers, werewolf numbers, and computing creature spectra.
 """
 
-from typing import List, Tuple, Set, Optional
 from collections import Counter
+from typing import List, Tuple, Optional, Dict, Set
 
 
-def digits(n: int) -> List[int]:
-    """Return the list of decimal digits of n (least significant first)."""
+def digits_of(n: int) -> List[int]:
+    """Return the list of decimal digits of n."""
     if n == 0:
         return [0]
     result = []
@@ -22,7 +22,12 @@ def digits(n: int) -> List[int]:
 
 def digit_multiset(n: int) -> Counter:
     """Return the multiset (Counter) of decimal digits of n."""
-    return Counter(digits(n))
+    return Counter(digits_of(n))
+
+
+def digit_set(n: int) -> Set[int]:
+    """Return the set of distinct decimal digits of n."""
+    return set(digits_of(n))
 
 
 def num_digits(n: int) -> int:
@@ -36,151 +41,158 @@ def num_digits(n: int) -> int:
     return count
 
 
-def is_vampire(v: int) -> bool:
-    """
-    Check if v is a vampire number.
-    
-    A vampire number has 2n digits and can be factored as v = x * y
-    where x, y each have n digits and the multiset of digits of v
-    equals the union of digit multisets of x and y.
+def is_vampire(v: int) -> Optional[Tuple[int, int]]:
+    """Check if v is a vampire number. Returns (x, y) fangs if yes, None otherwise.
+
+    A vampire number v has 2n digits (n >= 2) and v = x * y where:
+    - x, y each have n digits
+    - The digit multiset of v equals the combined digit multisets of x, y
+    - Not both x and y end in 0
     """
     nd = num_digits(v)
     if nd < 4 or nd % 2 != 0:
-        return False
+        return None
     n = nd // 2
     lo = 10 ** (n - 1)
     hi = 10 ** n
+    dv = digit_multiset(v)
     for x in range(lo, hi):
         if v % x != 0:
             continue
         y = v // x
         if y < lo or y >= hi:
             continue
+        if x > y:
+            break
         if x % 10 == 0 and y % 10 == 0:
             continue
-        if sorted(digits(v)) == sorted(digits(x) + digits(y)):
-            return True
-    return False
+        if digit_multiset(x) + digit_multiset(y) == dv:
+            return (x, y)
+    return None
 
 
-def find_fangs(v: int) -> List[Tuple[int, int]]:
-    """Find all fang pairs (x, y) with x <= y for a vampire number v."""
-    nd = num_digits(v)
-    if nd < 4 or nd % 2 != 0:
-        return []
-    n = nd // 2
-    lo = 10 ** (n - 1)
-    hi = 10 ** n
-    fangs = []
-    for x in range(lo, hi):
-        if v % x != 0:
-            continue
-        y = v // x
-        if y < x or y >= hi:
-            continue
-        if x % 10 == 0 and y % 10 == 0:
-            continue
-        if sorted(digits(v)) == sorted(digits(x) + digits(y)):
-            fangs.append((x, y))
-    return fangs
+def creature_spectrum(v: int, x: int, y: int) -> Dict[str, int]:
+    """Compute the creature spectrum of the factorization v = x * y.
 
-
-def vampire_mod9_sieve(v: int) -> bool:
+    Returns a dict with keys 'overlap', 'deficit', 'surplus':
+    - overlap = |digitMultiset(v) ∩ (digitMultiset(x) + digitMultiset(y))|
+    - deficit = |digitMultiset(v) \\ (digitMultiset(x) + digitMultiset(y))|
+    - surplus = |(digitMultiset(x) + digitMultiset(y)) \\ digitMultiset(v)|
     """
-    Fast mod-9 pre-filter for vampire numbers.
-    
-    Uses the theorem: if v = x * y is a vampire factorization,
-    then x * y ≡ x + y (mod 9), i.e., (x-1)(y-1) ≡ 1 (mod 9).
-    
-    Valid residue pairs mod 9: (0,0), (2,2), (3,6), (5,8), (6,3), (8,5).
-    This eliminates ~92.6% of candidates immediately.
+    dv = digit_multiset(v)
+    dxy = digit_multiset(x) + digit_multiset(y)
+    overlap = sum((dv & dxy).values())
+    deficit = sum((dv - dxy).values())
+    surplus = sum((dxy - dv).values())
+    return {'overlap': overlap, 'deficit': deficit, 'surplus': surplus}
+
+
+def is_ghost(v: int, x: int, y: int) -> bool:
+    """Check if v = x * y is a ghost-type factorization.
+
+    Ghost: digit sets of x and y are completely disjoint from digit set of v.
     """
-    valid_pairs = {(0, 0), (2, 2), (3, 6), (5, 8), (6, 3), (8, 5)}
-    r = v % 9
-    # Check if v's residue is compatible with any valid pair
-    for a, b in valid_pairs:
-        if (a * b) % 9 == r:
-            return True
-    return False
+    dv = digit_set(v)
+    dx = digit_set(x)
+    dy = digit_set(y)
+    return len(dv & dx) == 0 and len(dv & dy) == 0
 
 
-def enumerate_vampires(lo: int, hi: int) -> List[int]:
-    """Enumerate all vampire numbers in [lo, hi]."""
-    return [v for v in range(lo, hi + 1) if is_vampire(v)]
-
-
-def is_ghost_number(v: int) -> bool:
-    """
-    Check if v is a ghost number: v = x * y where digit sets of x and y
-    are completely disjoint from the digit set of v.
-    """
-    v_digits = set(digits(v))
-    for x in range(2, int(v ** 0.5) + 1):
+def find_ghost_factorizations(v: int) -> List[Tuple[int, int]]:
+    """Find all ghost-type factorizations of v."""
+    results = []
+    dv = digit_set(v)
+    for x in range(2, int(v**0.5) + 1):
         if v % x != 0:
             continue
         y = v // x
         if y <= 1:
             continue
-        x_digits = set(digits(x))
-        y_digits = set(digits(y))
-        if v_digits.isdisjoint(x_digits) and v_digits.isdisjoint(y_digits):
-            return True
-    return False
+        dx = digit_set(x)
+        dy = digit_set(y)
+        if len(dv & dx) == 0 and len(dv & dy) == 0:
+            results.append((x, y))
+    return results
 
 
-def vampire_density(n_digits: int) -> float:
+def is_werewolf(v: int, x: int, y: int) -> bool:
+    """Check if v = x * y is a werewolf-type factorization.
+
+    Werewolf: the combined digit multiset of x and y shares exactly
+    one digit (with multiplicity) with v's digit multiset.
     """
-    Compute the density of vampire numbers among n_digits-digit numbers.
-    n_digits must be even and >= 4.
+    dv = digit_multiset(v)
+    dxy = digit_multiset(x) + digit_multiset(y)
+    overlap = sum((dv & dxy).values())
+    return overlap == 1
+
+
+def valid_fang_residues_mod9() -> List[Tuple[int, int]]:
+    """Enumerate all valid fang residue pairs (a, b) mod 9.
+
+    The constraint is a*b ≡ a+b (mod 9), equivalently (a-1)(b-1) ≡ 1 (mod 9).
     """
-    if n_digits < 4 or n_digits % 2 != 0:
-        return 0.0
-    lo = 10 ** (n_digits - 1)
-    hi = 10 ** n_digits - 1
-    count = sum(1 for v in range(lo, hi + 1) if is_vampire(v))
-    return count / (hi - lo + 1)
+    pairs = []
+    for a in range(9):
+        for b in range(9):
+            if (a * b) % 9 == (a + b) % 9:
+                pairs.append((a, b))
+    return pairs
 
 
-def mod9_valid_pairs() -> Set[Tuple[int, int]]:
+def enumerate_vampires(limit: int) -> List[Tuple[int, int, int]]:
+    """Enumerate all vampire numbers up to limit.
+
+    Returns list of (v, x, y) tuples.
     """
-    Compute all pairs (a, b) in Z/9Z x Z/9Z satisfying a*b ≡ a+b (mod 9).
-    Equivalently, (a-1)(b-1) ≡ 1 (mod 9).
-    """
-    return {(a, b) for a in range(9) for b in range(9)
-            if (a * b) % 9 == (a + b) % 9}
+    vampires = []
+    # Only check 4-digit, 6-digit, 8-digit numbers
+    nd = 4
+    while 10**(nd-1) < limit:
+        n = nd // 2
+        lo = 10**(n-1)
+        hi = 10**n
+        v_lo = max(10**(nd-1), lo * lo)
+        v_hi = min(limit, 10**nd)
+        for x in range(lo, hi):
+            y_lo = max(lo, (v_lo + x - 1) // x)
+            y_hi = min(hi - 1, (v_hi - 1) // x)
+            if y_lo > y_hi:
+                continue
+            for y in range(max(x, y_lo), y_hi + 1):
+                v = x * y
+                if v >= v_hi or v < v_lo:
+                    continue
+                if x % 10 == 0 and y % 10 == 0:
+                    continue
+                dv = digit_multiset(v)
+                dxy = digit_multiset(x) + digit_multiset(y)
+                if dv == dxy:
+                    vampires.append((v, x, y))
+        nd += 2
+    vampires.sort()
+    return vampires
 
 
-def digit_count_polynomial(n: int) -> dict:
-    """
-    Return the digit-counting polynomial P_n(X) = sum of X^d for each digit d.
-    Represented as {exponent: coefficient}.
-    """
-    poly: dict = {}
-    for d in digits(n):
-        poly[d] = poly.get(d, 0) + 1
-    return poly
+def enumerate_ghosts(limit: int) -> List[Tuple[int, int, int]]:
+    """Enumerate ghost-type factorizations up to limit."""
+    ghosts = []
+    for v in range(4, limit):
+        for x in range(2, int(v**0.5) + 1):
+            if v % x != 0:
+                continue
+            y = v // x
+            if y <= 1:
+                continue
+            if is_ghost(v, x, y):
+                ghosts.append((v, x, y))
+                break  # just one factorization per v
+    return ghosts
 
 
-if __name__ == "__main__":
-    # Verify mod-9 valid pairs
-    pairs = mod9_valid_pairs()
-    print(f"Valid mod-9 pairs: {sorted(pairs)}")
-    print(f"Count: {len(pairs)} out of 81 = {len(pairs)/81:.4f}")
-    
-    # Find 4-digit vampire numbers
-    vampires_4 = enumerate_vampires(1000, 9999)
-    print(f"\n4-digit vampire numbers ({len(vampires_4)}):")
-    for v in vampires_4:
-        fangs = find_fangs(v)
-        print(f"  {v} = {' = '.join(f'{x} × {y}' for x, y in fangs)}")
-    
-    # Check some 6-digit vampires
-    print("\nSample 6-digit vampire numbers:")
-    count_6 = 0
-    for v in range(100000, 200000):
-        if is_vampire(v):
-            fangs = find_fangs(v)
-            print(f"  {v} = {' = '.join(f'{x} × {y}' for x, y in fangs)}")
-            count_6 += 1
-            if count_6 >= 10:
-                break
+def vampire_density(k: int) -> float:
+    """Compute the density of vampire numbers in [10^(2k), 10^(2k+2))."""
+    lo = 10**(2*k)
+    hi = 10**(2*k + 2)
+    count = len([v for v, _, _ in enumerate_vampires(hi) if v >= lo])
+    return count / (hi - lo)

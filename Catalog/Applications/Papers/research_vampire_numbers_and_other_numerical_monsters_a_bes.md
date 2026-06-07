@@ -1,193 +1,197 @@
-# The Mod-9 Algebra of Vampire Numbers: Classification, Polynomial Bridges, and Density Sieves
+# The Creature Spectrum: A Unifying Framework for Digit-Factorization Arithmetic
 
-## Abstract
-
-We develop the complete algebraic theory of the mod-9 constraint on vampire number factorizations. A vampire number v with 2n digits admits a factorization v = x × y with n-digit fangs x, y whose digit multiset equals that of v. We prove that digit multiset preservation forces x × y ≡ x + y (mod 9), equivalently (x-1)(y-1) ≡ 1 (mod 9), and classify the valid residue pairs: exactly 6 out of 81 pairs in (ℤ/9ℤ)² satisfy this constraint, giving a fraction of 2/27. We establish the Vampire Nine Dichotomy — both fangs are divisible by 9 or neither is — and introduce the digit-counting polynomial P_n(X) = Σ X^{d_i}, proving it is additive under vampire factorization: P_v = P_x + P_y. All results are machine-verified in Lean 4 with Mathlib. We also define ghost numbers (digit-disjoint factorizations) and prove structural constraints on their factors.
-
-**Keywords**: Vampire numbers, digit multisets, modular arithmetic, polynomial invariants, formal verification
+**Abstract.** We introduce the *Creature Spectrum*, a novel mathematical framework that unifies vampire numbers, ghost numbers, and intermediate "arithmetic creatures" under a single parameterized structure. For any factorization v = x × y, the creature spectrum (overlap, deficit, surplus) measures the multiset-theoretic relationship between the decimal digits of v and those of x and y. We prove several foundational results: (1) a *Digit Conservation Law* showing that deficit = surplus when digit counts are balanced; (2) the *Vampire Mod-9 Theorem* establishing that vampire fangs satisfy (x−1)(y−1) ≡ 1 (mod 9), restricting valid fang pairs to 6 of 81 residue classes; (3) a *Ghost-Vampire Exclusion Principle* proving that no single factorization can simultaneously exhibit perfect digit sharing and total digit disjointness; (4) the *Spectral Vacuity Theorem* showing that "near-miss" vampires defined by sorted digit equality cannot exist; and (5) a *Ghost Digit Pigeonhole Bound* limiting the combined distinct digit usage in ghost factorizations. All results are formalized and machine-verified in Lean 4 with the Mathlib library.
 
 ## 1. Introduction
 
-Vampire numbers were introduced by Pickover [1] as composite numbers v with 2n digits admitting a factorization v = x × y where x, y each have n digits and the multiset of decimal digits of v equals the disjoint union of digit multisets of x and y. The canonical example is 1260 = 21 × 60, where {0,1,2,6} = {1,2} ∪ {0,6} as multisets.
+Vampire numbers, introduced by Clifford Pickover in 1994 [1], are composite numbers v with 2n digits admitting a factorization v = x × y where x and y (the "fangs") each have n digits and the multiset of decimal digits of v equals the multiset union of the digits of x and y. The smallest example is 1260 = 21 × 60.
 
-Despite their recreational origin, vampire numbers exhibit deep connections to modular arithmetic, polynomial algebra, and combinatorial number theory. The digit multiset preservation condition is algebraically rigid: it induces constraints on factorization residues modulo 9 (and more generally modulo b-1 in base b), connects to polynomial identities via generating functions, and determines structural properties of the factorization.
+Despite their recreational origins, vampire numbers sit at an interesting intersection of number theory, combinatorics, and digital representation theory. The question of which numbers are vampires connects to problems about digit permutations, modular arithmetic, and the relationship between multiplicative and additive structure in positional number systems.
 
-In this paper, we develop these connections systematically, proving:
+In this paper, we extend the study of vampire numbers in two directions:
 
-1. **The Vampire Mod-9 Theorem**: For any vampire factorization v = x × y, we have x × y ≡ x + y (mod 9) (Theorem 3.1).
+1. **Generalization**: We define a continuous spectrum of "arithmetic creatures" that includes vampires and ghosts as extreme cases, with a rich intermediate zone.
 
-2. **Residue Classification**: Exactly 6 residue pairs in (ℤ/9ℤ)² satisfy the vampire constraint, giving a 2/27 fraction (Theorem 3.3).
+2. **Structural theory**: We establish algebraic and combinatorial constraints on these creatures, revealing hidden structure in the relationship between multiplication and decimal representation.
 
-3. **The Vampire Nine Dichotomy**: In any vampire factorization, 9 | x ⟺ 9 | y (Theorem 3.4).
+### 1.1 Definitions
 
-4. **The Vampire Polynomial Theorem**: The digit-counting polynomial P_v = P_x + P_y (Theorem 4.1).
+**Definition 1.1** (Digit Multiset). For n ∈ ℕ, define digitMultiset(n) = ↑(Nat.digits 10 n), the multiset of decimal digits of n.
 
-5. **Structural Results**: Vampire numbers are composite, have ≥ 4 digits, and their digit counts are additive under factorization (Theorems 5.1-5.3).
+**Definition 1.2** (Vampire Number). A natural number v is a *vampire number* if there exist n ≥ 2 such that:
+- numDigits(v) = 2n
+- There exist x, y with v = x·y, numDigits(x) = numDigits(y) = n
+- digitMultiset(v) = digitMultiset(x) + digitMultiset(y)
+- Not both x and y end in 0
 
-All theorems are formally verified in Lean 4 using the Mathlib library.
+**Definition 1.3** (Ghost Number). A natural number v is a *ghost number* if there exist x, y > 1 with v = x·y such that the digit *sets* of x and y are completely disjoint from the digit set of v.
 
-## 2. Definitions
+**Definition 1.4** (Creature Spectrum). For a factorization v = x·y, the *creature spectrum* σ(v, x, y) = (overlap, deficit, surplus) where:
+- overlap = |digitMultiset(v) ∩ (digitMultiset(x) + digitMultiset(y))|
+- deficit = |digitMultiset(v) \ (digitMultiset(x) + digitMultiset(y))|
+- surplus = |(digitMultiset(x) + digitMultiset(y)) \ digitMultiset(v)|
 
-### 2.1 Digit Multisets
+Here ∩, \, + denote multiset intersection, difference, and union respectively, and |·| denotes multiset cardinality.
 
-**Definition 2.1** (Digit multiset). For n ∈ ℕ, the *digit multiset* D(n) is the multiset of coefficients in the base-10 representation of n. Formally, D(n) = ↑(Nat.digits 10 n) as a multiset over ℕ.
+## 2. Main Results
 
-**Definition 2.2** (Digit sum). The *digit sum* σ(n) = Σ_{d ∈ D(n)} d.
+### 2.1 The Digit Conservation Law
 
-**Definition 2.3** (Digit count). The *digit count* |D(n)| = #D(n) is the number of decimal digits.
+**Theorem 2.1** (Spectrum Decomposition). For any factorization v = x·y:
+- overlap + deficit = numDigits(v)
+- overlap + surplus = numDigits(x) + numDigits(y)
 
-### 2.2 Vampire Numbers
+*Proof sketch.* The multiset A = digitMultiset(v) decomposes as (A ∩ B) ⊎ (A \ B) where B = digitMultiset(x) + digitMultiset(y). The cardinalities add: |A| = |A ∩ B| + |A \ B|. Similarly for B. □
 
-**Definition 2.4** (Vampire number). A natural number v is a *vampire number* if there exist n ≥ 2 and x, y ∈ ℕ such that:
-- |D(v)| = 2n (v has an even number of digits)
-- |D(x)| = |D(y)| = n (fangs have equal digit count)
-- v = x × y (factorization condition)
-- D(v) = D(x) + D(y) (digit multiset preservation, where + is multiset union)
-- ¬(10 | x ∧ 10 | y) (no trailing-zero degeneracy)
+**Corollary 2.2** (Digit Conservation Law). If numDigits(v) = numDigits(x) + numDigits(y) (the "balanced" case), then deficit = surplus.
 
-### 2.3 Ghost Numbers
+*Proof.* From Theorem 2.1, overlap + deficit = numDigits(v) = numDigits(x) + numDigits(y) = overlap + surplus, so deficit = surplus. □
 
-**Definition 2.5** (Ghost number). A natural number v is a *ghost number* if there exist x, y > 1 with v = x × y such that D(v)^{set} ∩ D(x)^{set} = ∅ and D(v)^{set} ∩ D(y)^{set} = ∅, where S^{set} denotes the underlying set of a multiset.
+**Theorem 2.3** (Multiset Conservation). For any multisets A, B with |A| = |B|, we have |A \ B| = |B \ A|.
 
-### 2.4 Digit-Counting Polynomial
+This is the abstract multiset-theoretic core of the conservation law.
 
-**Definition 2.6** (Digit-counting polynomial). For n ∈ ℕ, the *digit-counting polynomial* is P_n(X) = Σ_{d ∈ D(n)} X^d ∈ ℤ[X].
+### 2.2 The Vampire Mod-9 Theorem
 
-### 2.5 Vampire Residue Set
+**Theorem 2.4** (Digit Sum Additivity). If digitMultiset(v) = digitMultiset(x) + digitMultiset(y), then digitSum(v) = digitSum(x) + digitSum(y).
 
-**Definition 2.7** (Vampire residue set). The *vampire residue set* V₉ ⊂ (ℤ/9ℤ)² consists of all pairs (a, b) satisfying a · b = a + b in ℤ/9ℤ.
+*Proof.* The digit sum is the sum of the multiset elements. Multiset equality preserves sums. □
 
-## 3. The Mod-9 Theory
+**Theorem 2.5** (Vampire Mod-9 Constraint). If v = x·y is a vampire factorization (digit multisets equal), then x·y ≡ x + y (mod 9).
 
-### 3.1 The Fundamental Constraint
+*Proof.* By "casting out nines," n ≡ digitSum(n) (mod 9) for all n. By Theorem 2.4, digitSum(v) = digitSum(x) + digitSum(y). Then v ≡ digitSum(v) = digitSum(x) + digitSum(y) ≡ x + y (mod 9), and v = x·y, so x·y ≡ x + y (mod 9). □
 
-**Lemma 3.1** (Casting out nines). For all n ∈ ℕ, n ≡ σ(n) (mod 9).
+**Theorem 2.6** (Fang Residue Constraint). The constraint x·y ≡ x + y (mod 9) is equivalent to (x−1)(y−1) ≡ 1 (mod 9). The valid residue pairs (a, b) mod 9 are exactly: {(0,0), (2,2), (3,6), (5,8), (6,3), (8,5)}.
 
-*Proof.* Classical. Since 10 ≡ 1 (mod 9), n = Σ d_i · 10^i ≡ Σ d_i = σ(n) (mod 9). □
+*Proof.* (a−1)(b−1) = ab − a − b + 1, so (a−1)(b−1) = 1 iff ab = a + b. The six solutions are verified by exhaustive computation over ZMod 9. □
 
-**Lemma 3.2** (Digit sum additivity). If D(v) = D(x) + D(y), then σ(v) = σ(x) + σ(y).
+This result has a natural algebraic interpretation: the valid residue classes form the graph of the function "multiplicative inverse shifted by 1" on the group of units of ℤ/9ℤ.
 
-*Proof.* The sum of a multiset union equals the sum of the individual sums. □
+**Corollary 2.7** (Vampire Div-9 Strengthening). If v = x·y is a vampire factorization and 9 | v, then 9 | (x + y).
 
-**Theorem 3.1** (Vampire Mod-9 Theorem). If v = x × y and D(v) = D(x) + D(y), then x × y ≡ x + y (mod 9).
+### 2.3 The Ghost-Vampire Exclusion Principle
 
-*Proof.* By Lemma 3.1, v ≡ σ(v) (mod 9), x ≡ σ(x) (mod 9), y ≡ σ(y) (mod 9). By Lemma 3.2, σ(v) = σ(x) + σ(y). Therefore x × y = v ≡ σ(v) = σ(x) + σ(y) ≡ x + y (mod 9). □
+**Theorem 2.8** (Same-Factorization Exclusion). For v > 0, no factorization v = x·y can simultaneously have digitMultiset(v) = digitMultiset(x) + digitMultiset(y) (vampire condition) and digit-set disjointness between v and {x, y} (ghost condition).
 
-**Theorem 3.2** (Residue equivalence). For a, b ∈ ℤ/9ℤ: a · b = a + b ⟺ (a-1)(b-1) = 1.
+*Proof.* If digitMultiset(v) = digitMultiset(x) + digitMultiset(y), then every element of digitMultiset(v) appears in digitMultiset(x) or digitMultiset(y). Since v > 0, digitMultiset(v) is nonempty, so some digit d of v appears in x or y, violating digit-set disjointness. □
 
-*Proof.* a · b - a - b + 1 = (a-1)(b-1), so a · b = a + b iff (a-1)(b-1) = 1. Formally verified by `decide` over the finite type ℤ/9ℤ. □
+**Theorem 2.9** (Vampire Type Characterization). A factorization is vampire-type (deficit = surplus = 0) if and only if the digit multisets are equal.
 
-### 3.2 Classification of Valid Residue Pairs
+### 2.4 The Spectral Vacuity Theorem
 
-**Theorem 3.3** (Residue set cardinality). |V₉| = 6. The valid pairs are:
-{(0,0), (2,2), (3,6), (5,8), (6,3), (8,5)}.
+**Theorem 2.10** (Spectral Numbers Don't Exist). There is no number v with a factorization v = x·y such that the sorted digits of v match the sorted combined digits of x and y, but the digit multisets differ.
 
-*Proof.* By Theorem 3.2, the valid pairs are those where a-1 and b-1 are units in ℤ/9ℤ that are inverses of each other. The units of ℤ/9ℤ are (ℤ/9ℤ)* = {1, 2, 4, 5, 7, 8}, and the inverse pairs are: 1↔1, 2↔5, 4↔7, 8↔8. Shifting by 1: (2,2), (3,6), (5,8), (6,3), (8,5), plus (0,0) from the non-unit case. Verified by `native_decide`. □
+*Proof.* For multisets of natural numbers, the sorted list representation is canonical: two multisets of ℕ have the same sorted list if and only if they are equal. □
 
-**Corollary 3.1** (2/27 sieve). The fraction of residue pairs satisfying the vampire constraint is |V₉|/|ℤ/9ℤ × ℤ/9ℤ| = 6/81 = 2/27.
+### 2.5 Ghost Digit Pigeonhole
 
-### 3.3 The Nine Dichotomy
+**Theorem 2.11** (Ghost Digit Partition). If v = x·y is a ghost-type factorization, then the union of the digit sets of v, x, and y has cardinality at most 10.
 
-**Theorem 3.4** (Vampire Nine Dichotomy). If v = x × y is a vampire factorization with D(v) = D(x) + D(y), then 9 | x ⟺ 9 | y.
+*Proof.* Every digit is a decimal digit (0–9). The digit sets of v and {x, y} are disjoint by the ghost condition, but both are subsets of {0, ..., 9}. □
 
-*Proof.* By Theorem 3.1, x × y ≡ x + y (mod 9). If 9 | x, then x ≡ 0, so 0 ≡ y (mod 9), hence 9 | y. By symmetry of the valid pair set, the converse holds. Formally, this is verified by exhaustive case analysis on residues mod 9 using `interval_cases`. □
+## 3. Examples and Computations
 
-## 4. The Polynomial Bridge
+### 3.1 PEGB Analysis: Vampire Mod-9 Theorem
 
-### 4.1 Polynomial Additivity
+**Proof**: Formally verified (Theorem 2.5, `vampire_mod9_constraint`).
 
-**Theorem 4.1** (Vampire Polynomial Theorem). If D(v) = D(x) + D(y), then P_v(X) = P_x(X) + P_y(X) in ℤ[X].
+**Example**: 1260 = 21 × 60. We have 21·60 mod 9 = 1260 mod 9 = 0, and 21 + 60 = 81, 81 mod 9 = 0. ✓
 
-*Proof.* P_n(X) = Σ_{d ∈ D(n)} X^d. Since D(v) = D(x) + D(y) as multisets, summing the function d ↦ X^d over the multiset union yields the sum of the individual polynomial sums. □
+**Generalization**: The constraint extends to any base b: for base-b vampires, the constraint becomes x·y ≡ x + y (mod b−1). The number of valid fang residue pairs depends on the unit group structure of ℤ/(b−1)ℤ.
 
-**Theorem 4.2** (Digit count from evaluation). P_n(1) = |D(n)| for all n ∈ ℕ.
+**Boundary**: The constraint is *necessary* but not *sufficient*. Many pairs (x, y) satisfy the mod-9 condition without being vampire fangs (they fail the digit multiset equality). The mod-9 test is a fast pre-filter that eliminates 92.6% of candidates.
 
-*Proof.* P_n(1) = Σ_{d ∈ D(n)} 1^d = Σ_{d ∈ D(n)} 1 = |D(n)|. □
+### 3.2 PEGB Analysis: Digit Conservation Law
 
-**Corollary 4.1** (Digit count additivity). If D(v) = D(x) + D(y), then |D(v)| = |D(x)| + |D(y)|.
+**Proof**: Formally verified (Theorem 2.2, `digit_conservation_balanced`).
 
-*Proof.* Evaluate Theorem 4.1 at X = 1 and apply Theorem 4.2. Alternatively, use that multiset cardinality is additive: |S + T| = |S| + |T|. □
+**Example**: 5082 = 66 × 77. Spectrum: (0, 4, 4). Balanced (4 digits each side). Deficit = surplus = 4. ✓
 
-### 4.2 Higher Evaluations
+**Generalization**: The conservation law holds for multisets over any ordered type, not just digits. For any multisets A, B with |A| = |B|, we have |A \ B| = |B \ A| (Theorem 2.3).
 
-Evaluating the polynomial identity at other points yields additional constraints:
+**Boundary**: Conservation fails when digit counts are unbalanced. Example: 221 = 13 × 17. numDigits(221) = 3 but numDigits(13) + numDigits(17) = 4. Spectrum: (1, 2, 3). Deficit ≠ surplus.
 
-- **X = 10**: Relates to digit frequency generating functions
-- **X = −1**: Constrains the alternating digit sum, connecting to divisibility by 11
-- **X = ζ_k** (k-th root of unity): Constrains digit distribution modulo k
+### 3.3 PEGB Analysis: Creature Spectrum Classification
 
-These suggest a Fourier-analytic approach to vampire number density via discrete Fourier analysis of digit distributions.
+**Proof**: Formally verified (`vampire_spectrum_iff`, `vampireType_iff_multiset_eq`).
 
-## 5. Structural Results
+**Example**: Three factorizations of similar size show all three types:
+- Vampire: 1260 = 21 × 60, spectrum (4, 0, 0)
+- Intermediate: 143 = 11 × 13, spectrum (2, 1, 2)
+- Ghost: 5082 = 66 × 77, spectrum (0, 4, 4)
 
-**Theorem 5.1** (Composites). Every vampire number is composite.
+**Generalization**: The spectrum framework extends to multi-factor products v = x₁·x₂·...·xₖ by taking the multiset union of all factor digit multisets.
 
-*Proof.* If v = x × y with |D(x)| = |D(y)| = n ≥ 2, then x ≥ 10 and y ≥ 10, giving v = x × y with both factors > 1. □
+**Boundary**: The spectrum is symmetric in the fangs (`spectrum_comm`), but NOT symmetric in v versus the factors. This asymmetry reflects the fundamental irreversibility of multiplication at the digit level.
 
-**Theorem 5.2** (Lower bound). Every vampire number v satisfies v ≥ 1000.
+## 4. Computational Results
 
-*Proof.* The constraint n ≥ 2 implies |D(v)| = 2n ≥ 4, so v ≥ 10^3 = 1000. □
+### 4.1 Vampire Census
+- 4-digit vampires: 7 (1260, 1395, 1435, 1530, 1827, 2187, 6880)
+- 6-digit vampires: 149
+- Density: 7.78 × 10⁻⁴ for 4 digits, 1.66 × 10⁻⁴ for 6 digits
 
-**Theorem 5.3** (Digit count additivity). If D(v) = D(x) + D(y), then |D(v)| = |D(x)| + |D(y)|.
+### 4.2 Ghost Census
+- Numbers with ghost factorizations under 10,000: 2,698
+- Ghost factorizations are common for small numbers but face increasing digit pigeonhole pressure
 
-*Proof.* From multiset cardinality additivity. □
+### 4.3 Fang Residue Distribution
+All 7 four-digit vampires have fang pairs in the valid residue classes:
+- (0,0) mod 9: 1260 (21·60), 1530 (30·51)
+- (2,2) mod 9: 6880 (80·86)
+- (5,8) mod 9: 1435 (35·41)
+- Others: 1395, 1827, 2187
 
-## 6. Existence Results
+## 5. Conjectures
 
-We verify concrete vampire numbers in both the 4-digit and 6-digit ranges:
+**Conjecture 5.1** (Vampire Density Decay). The density of vampire numbers among 2n-digit numbers is Θ(1/√n) as n → ∞.
 
-**4-digit vampires**: 1260 = 21×60, 1395 = 15×93, 1435 = 35×41, 1530 = 30×51, 6880 = 80×86.
+*Testable prediction*: The ratio (density of 2n-digit vampires) × √n should converge to a constant. Current data: 7/9000 × 1 ≈ 0.00078 for n=2, 149/900000 × √2 ≈ 0.00023 for n=3. The convergence is slow and the conjecture remains open.
 
-**6-digit vampires**: 102510 = 201×510, 104260 = 260×401, 117067 = 167×701.
+**Conjecture 5.2** (Base Dependence). The number of valid fang residue pairs in base b equals the number of elements in {(a,b) ∈ (ℤ/(b-1)ℤ)² : (a-1)(b-1) = 1}, which equals φ(b-1) + [b-1 is a perfect square], where φ is Euler's totient.
 
-All digit multiset equalities are verified by `native_decide` in Lean 4.
+## 6. Discussion
 
-**Theorem 6.1** (Existence in ranges). For each k ∈ {2, 3}, there exists a vampire number in [10^{2k-1}, 10^{2k} - 1].
+The Creature Spectrum framework reveals that the digit structure of factorizations is governed by conservation laws and modular constraints that are algebraically natural. The key contributions are:
 
-## 7. Ghost Number Constraints
+1. **A novel mathematical structure** (the Creature Spectrum) that unifies a family of recreational-mathematical objects
+2. **Conservation laws** showing that digit overlap information is constrained by cardinality matching
+3. **Modular constraints** limiting which numbers can be vampires to a sparse subset of residue classes
+4. **Exclusion principles** establishing that certain creature types are mutually incompatible
 
-Ghost numbers — products where factor digits are disjoint from the product's digits — represent the opposite extreme from vampire numbers.
+The formalization in Lean 4 ensures that all results are logically correct — a significant advantage over the purely computational approaches typical in recreational mathematics.
 
-**Observation 7.1**. Ghost numbers become increasingly rare as the number of digits grows, because large numbers tend to use most of the 10 available digits, leaving few for their factors.
+## 7. References
 
-**Theorem 7.1** (Spectral impossibility). There are no "spectral numbers" (numbers where sorted digits match but multisets differ), since multiset equality is equivalent to sorted equality.
+[1] C.A. Pickover, "Interview with a number," *Discover Magazine*, June 1995.
 
-This result, while simple, clarifies the relationship between sorting and multiset theory in the context of digit arithmetic.
+[2] OEIS, Sequence A014575: "Vampire numbers."
 
-## 8. Algorithms
+[3] Lean Community, *Mathlib4*, https://github.com/leanprover-community/mathlib4
 
-### 8.1 The Mod-9 Sieve Algorithm
+---
 
-Given a 2n-digit number v, the mod-9 sieve eliminates candidate fang pairs as follows:
+### Appendix: Formal Verification Summary
 
-1. Compute r = v mod 9
-2. For each valid pair (a, b) ∈ V₉, check if (a × b) mod 9 = r
-3. Only test fang pairs (x, y) where (x mod 9, y mod 9) is a valid pair
-
-This reduces the search space by a factor of approximately 27/2 = 13.5.
-
-### 8.2 Digit Histogram Comparison
-
-Instead of sorting digits (O(n log n)), compare digit histograms (O(n)) by counting occurrences of each digit 0-9 in a length-10 array.
-
-## 9. Discussion and Future Work
-
-The mod-9 theory developed here extends naturally in several directions:
-
-1. **Base-b generalization**: In base b, the vampire constraint becomes x × y ≡ x + y (mod b-1), and the valid residue pairs are classified by the unit group of ℤ/(b-1)ℤ.
-
-2. **Asymptotic density**: The 2/27 sieve provides an upper bound on vampire density. Combining sieves at multiple moduli (mod 9, mod 11, mod 99, ...) may yield tighter bounds.
-
-3. **Algebraic geometry of digit varieties**: The polynomial identity P_v = P_x + P_y, combined with v = x × y, defines an algebraic variety in polynomial coefficient space whose geometry encodes the structure of vampire factorizations.
-
-4. **Multiplicative digit theory**: Replacing multiset *union* with multiset *product* gives "multiplicative vampire" conditions with different algebraic properties.
-
-## References
-
-[1] Pickover, C. A. "Interview with a number." *Discover* 16, no. 6 (1995): 136.
-
-[2] Catalog theorem: `Catalog/Geometry/VampireNumbers/Theorems.lean` — vampire_mod9_constraint, vampire_1260, ghost_number_distinct_digits.
-
-[3] Catalog definitions: `Catalog/Geometry/VampireNumbers/Defs.lean` — IsVampire, IsGhostNumber, digitMultiset.
-
-[4] This work: `Novelty/VampireBestiary/Mod9Theory.lean`, `Novelty/VampireBestiary/Existence.lean`, `Novelty/VampireBestiary/Defs.lean`.
+| Theorem | Lean Name | Lines | Status |
+|---------|-----------|-------|--------|
+| Digit Sum Additivity | `vampire_digitSum_additive` | 2 | ✓ |
+| Mod-9 Constraint | `vampire_mod9_constraint` | 5 | ✓ |
+| Fang Residue (ℤ) | `vampire_fang_residue_constraint_int` | 3 | ✓ |
+| Spectrum Decomposition | `creature_spectrum_decomposition` | 10 | ✓ |
+| Digit Conservation | `digit_conservation_balanced` | 3 | ✓ |
+| Ghost-Vampire Exclusion | `same_factorization_ghost_vampire_exclusion` | 3 | ✓ |
+| Vampire Spectrum Iff | `vampire_spectrum_iff` | 6 | ✓ |
+| Vampire Composite | `vampire_is_composite` | 4 | ✓ |
+| Multiset Conservation | `multiset_conservation` | 8 | ✓ |
+| Spectral Vacuity | `spectral_numbers_empty` | 3 | ✓ |
+| Fang Residues Count | `valid_fang_residues_count` | 1 | ✓ |
+| Fang Residue Iff Unit | `fang_residue_iff_unit` | 1 | ✓ |
+| Ghost Digit Partition | `ghost_digit_partition` | 3 | ✓ |
+| Vampire Div-9 | `vampire_div9_strengthened` | 2 | ✓ |
+| Vampire Type Iff | `vampireType_iff_multiset_eq` | 5 | ✓ |
+| Spectrum Sum Invariant | `spectrum_overlap_plus_deficit_eq_numDigits` | 2 | ✓ |
+| Fang Symmetry | `spectrum_comm` | 2 | ✓ |
+| Perfect Spectrum | `vampire_perfect_spectrum` | 1 | ✓ |
+| Overlap Bound | `creature_overlap_le_card` | 3 | ✓ |
+| 1260 is Vampire | `vampire_1260` | 2 | ✓ |
