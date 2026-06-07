@@ -1,303 +1,363 @@
-#!/usr/bin/env python3
 """
-Transseries Demo: Numerical Examples of Asymptotic Dominance
+Transseries: Numerical Demonstrations
 
-Demonstrates the key theorems from the transseries formalization:
-1. Exponential dominates polynomial
-2. Double-exponential dominates exponential
-3. Logarithmic negligibility
-4. EML diagonal gap
-5. Iterated exp-log cancellation
+This demo illustrates the core results of the Graded Transseries Algebra:
+1. Exponential Dominance: exp(x) / x^n → ∞
+2. Three-Level Hierarchy: log ≪ polynomial ≪ exponential
+3. Double-Exponential Dominance: exp(exp(x)) ≫ exp(αx)
+4. Asymptotic Comparison for same-level transmonomials
+5. Depth filtration and classification
 """
 
 import math
-from typing import Tuple
+from typing import List, Tuple
 
+# ============================================================
+# Growth Level and Transseries Data Structures
+# ============================================================
 
-def growth_level_eval(depth: int, exponent: float, x: float) -> float:
-    """Evaluate a growth level (depth, exponent) at x.
+class GrowthLevel:
+    """A growth level (depth, exponent) representing a transmonomial's
+    asymptotic growth rate."""
     
-    depth=0: x^exponent
-    depth>0: exp^depth(x^exponent)
-    depth<0: log^|depth|(x^exponent)
-    """
-    val = x ** exponent
-    if depth > 0:
-        for _ in range(depth):
-            val = math.exp(min(val, 700))  # clamp to avoid overflow
-    elif depth < 0:
-        for _ in range(-depth):
-            if val > 0:
-                val = math.log(val)
+    def __init__(self, depth: int, exponent: float):
+        self.depth = depth
+        self.exponent = exponent
+    
+    def __repr__(self):
+        if self.depth == 0:
+            return f"x^{self.exponent}"
+        elif self.depth == 1:
+            return f"exp({self.exponent}x)"
+        elif self.depth == -1:
+            return f"log(x)^{self.exponent}"
+        elif self.depth == 2:
+            return f"exp({self.exponent}·exp(x))"
+        else:
+            return f"GL({self.depth}, {self.exponent})"
+    
+    def __lt__(self, other):
+        """Lexicographic order: depth dominates."""
+        if self.depth != other.depth:
+            return self.depth < other.depth
+        return self.exponent < other.exponent
+    
+    def exp_shift(self):
+        return GrowthLevel(self.depth + 1, self.exponent)
+    
+    def log_shift(self):
+        return GrowthLevel(self.depth - 1, self.exponent)
+    
+    def evaluate(self, x: float) -> float:
+        """Evaluate the transmonomial at x."""
+        try:
+            if self.depth == 0:
+                return x ** self.exponent
+            elif self.depth == 1:
+                return math.exp(self.exponent * x)
+            elif self.depth == -1:
+                return math.log(x) ** self.exponent if x > 0 else 0
+            elif self.depth == 2:
+                return math.exp(self.exponent * math.exp(x))
+            elif self.depth == -2:
+                return math.log(math.log(x)) ** self.exponent if x > math.e else 0
             else:
-                return float('-inf')
-    return val
+                return x ** self.exponent  # fallback
+        except (OverflowError, ValueError):
+            return float('inf')
 
 
-def demo_exp_dominates_poly():
-    """Theorem: exp(x) / x^n → ∞ for all n."""
+class TransTerm:
+    """A single term: coefficient × transmonomial."""
+    def __init__(self, coeff: float, level: GrowthLevel):
+        self.coeff = coeff
+        self.level = level
+    
+    def __repr__(self):
+        return f"{self.coeff}·{self.level}"
+    
+    def evaluate(self, x: float) -> float:
+        return self.coeff * self.level.evaluate(x)
+
+
+class Transseries:
+    """A transseries: finite formal sum of transmonomial terms."""
+    
+    def __init__(self, terms: List[TransTerm]):
+        self.terms = terms
+    
+    def __repr__(self):
+        return " + ".join(str(t) for t in self.terms)
+    
+    def evaluate(self, x: float) -> float:
+        return sum(t.evaluate(x) for t in self.terms)
+    
+    def depth_shift_up(self):
+        return Transseries([TransTerm(t.coeff, t.level.exp_shift()) for t in self.terms])
+    
+    def depth_shift_down(self):
+        return Transseries([TransTerm(t.coeff, t.level.log_shift()) for t in self.terms])
+    
+    def is_power_series(self):
+        return all(t.level.depth == 0 for t in self.terms)
+    
+    def is_purely_exponential(self):
+        return all(t.level.depth > 0 for t in self.terms)
+    
+    def classify(self) -> str:
+        depths = set(t.level.depth for t in self.terms)
+        if not depths:
+            return "zero"
+        if all(d == 0 for d in depths):
+            return "power series"
+        if all(d > 0 for d in depths):
+            return "purely exponential"
+        if all(d < 0 for d in depths):
+            return "purely logarithmic"
+        return "mixed"
+
+
+# ============================================================
+# Demo 1: Exponential Dominance
+# ============================================================
+
+def demo_exponential_dominance():
     print("=" * 60)
-    print("THEOREM 3.1: Exponential Dominates Polynomial")
-    print("  exp(x) / x^(n+1) → ∞ as x → ∞")
+    print("DEMO 1: Exponential Dominance")
+    print("exp(x) / x^n → ∞ as x → ∞")
     print("=" * 60)
     
-    for n in [1, 5, 10, 20]:
-        print(f"\n  n = {n}:")
-        for x in [10, 50, 100, 200]:
-            ratio = math.exp(x) / (x ** (n + 1))
-            print(f"    x = {x:>4}: exp(x)/x^{n+1} = {ratio:.2e}")
+    for n in [2, 5, 10]:
+        print(f"\n  exp(x) / x^{n}:")
+        for x in [10, 50, 100, 500, 1000]:
+            try:
+                ratio = math.exp(x) / (x ** n)
+                print(f"    x = {x:>5}: {ratio:.2e}")
+            except OverflowError:
+                print(f"    x = {x:>5}: overflow (→ ∞)")
 
 
-def demo_double_exp_separation():
-    """Theorem: exp(exp(x)) / exp(cx) → ∞ for all c."""
+# ============================================================
+# Demo 2: Three-Level Hierarchy
+# ============================================================
+
+def demo_three_level_hierarchy():
     print("\n" + "=" * 60)
-    print("THEOREM 3.3: Double-Exponential Dominates Exponential")
-    print("  exp(exp(x)) / exp(cx) → ∞ for all c")
+    print("DEMO 2: Three-Level Hierarchy")
+    print("log(x) ≪ x ≪ exp(x)")
     print("=" * 60)
     
-    for c in [1, 10, 100]:
-        print(f"\n  c = {c}:")
+    print("\n  x / log(x):")
+    for x in [10, 100, 1000, 10000, 100000]:
+        ratio = x / math.log(x)
+        print(f"    x = {x:>7}: {ratio:.2f}")
+    
+    print("\n  exp(x) / x:")
+    for x in [5, 10, 20, 50, 100]:
+        try:
+            ratio = math.exp(x) / x
+            print(f"    x = {x:>5}: {ratio:.2e}")
+        except OverflowError:
+            print(f"    x = {x:>5}: overflow (→ ∞)")
+
+
+# ============================================================
+# Demo 3: Double-Exponential Dominance
+# ============================================================
+
+def demo_double_exponential():
+    print("\n" + "=" * 60)
+    print("DEMO 3: Double-Exponential Dominance")
+    print("exp(exp(x)) / exp(αx) → ∞ for any α")
+    print("=" * 60)
+    
+    for alpha in [1, 10, 100]:
+        print(f"\n  exp(exp(x)) / exp({alpha}x):")
         for x in [3, 5, 7, 10]:
-            # exp(exp(x) - cx) to avoid overflow
-            exponent = math.exp(x) - c * x
-            print(f"    x = {x:>2}: exp(exp(x)-{c}x) = exp({exponent:.1f})"
-                  f" [≈ 10^{exponent/math.log(10):.0f}]")
+            try:
+                # exp(exp(x) - αx) to avoid overflow
+                exponent = math.exp(x) - alpha * x
+                if exponent > 700:
+                    print(f"    x = {x:>3}: > 10^300 (→ ∞)")
+                else:
+                    ratio = math.exp(exponent)
+                    print(f"    x = {x:>3}: {ratio:.2e}")
+            except OverflowError:
+                print(f"    x = {x:>3}: overflow (→ ∞)")
 
 
-def demo_log_negligibility():
-    """Theorem: log(x) / x^α → 0 for α > 0."""
+# ============================================================
+# Demo 4: Asymptotic Comparison at Same Level
+# ============================================================
+
+def demo_same_level_comparison():
     print("\n" + "=" * 60)
-    print("THEOREM 3.5: Log Negligible vs Any Power")
-    print("  log(x) / x^α → 0 for α > 0")
+    print("DEMO 4: Asymptotic Comparison (Same Growth Level)")
+    print("(c₁·m(x)) / (c₂·m(x)) → c₁/c₂")
     print("=" * 60)
     
-    for alpha in [0.01, 0.1, 0.5, 1.0]:
-        print(f"\n  α = {alpha}:")
-        for x in [10, 100, 1000, 10000, 1e6]:
-            ratio = math.log(x) / (x ** alpha)
-            print(f"    x = {x:>8.0f}: log(x)/x^{alpha} = {ratio:.6f}")
+    c1, c2 = 3.0, 5.0
+    g = GrowthLevel(1, 1)  # exp(x)
+    
+    print(f"\n  T₁ = {c1}·exp(x), T₂ = {c2}·exp(x)")
+    print(f"  Expected ratio: {c1}/{c2} = {c1/c2}")
+    
+    for x in [1, 5, 10, 50, 100]:
+        t1 = c1 * g.evaluate(x)
+        t2 = c2 * g.evaluate(x)
+        ratio = t1 / t2 if t2 != 0 else float('inf')
+        print(f"    x = {x:>5}: ratio = {ratio:.6f}")
 
 
-def demo_diagonal_gap():
-    """Theorem: exp(x) - log(x) ≥ 2 for x > 0, with equality never achieved."""
+# ============================================================
+# Demo 5: Depth Filtration and Classification
+# ============================================================
+
+def demo_depth_filtration():
     print("\n" + "=" * 60)
-    print("THEOREM 5.4-5.5: EML Diagonal Gap")
-    print("  exp(x) - log(x) ≥ 2 for x > 0, strict for x ≠ 1")
+    print("DEMO 5: Depth Filtration and Classification Shift")
     print("=" * 60)
     
-    print("\n  Searching for minimum of exp(x) - log(x) on (0, ∞):")
-    min_val = float('inf')
-    min_x = 0
-    for i in range(1, 10000):
-        x = i * 0.001
-        val = math.exp(x) - math.log(x)
-        if val < min_val:
-            min_val = val
-            min_x = x
+    # A power series: 3x² + 5x
+    T = Transseries([
+        TransTerm(3, GrowthLevel(0, 2)),
+        TransTerm(5, GrowthLevel(0, 1))
+    ])
+    print(f"\n  T = {T}")
+    print(f"  Classification: {T.classify()}")
     
-    print(f"    Minimum found at x ≈ {min_x:.4f}: f(x) = {min_val:.6f}")
-    print(f"    Gap above 2: {min_val - 2:.6f}")
+    # Shift up
+    T_up = T.depth_shift_up()
+    print(f"\n  depthShiftUp(T) = {T_up}")
+    print(f"  Classification: {T_up.classify()}")
     
-    print("\n  Sample values:")
-    for x in [0.01, 0.1, 0.5, 1.0, 2.0, 5.0, 10.0]:
-        val = math.exp(x) - math.log(x)
-        print(f"    x = {x:>5.2f}: exp(x) - log(x) = {val:.4f} (gap = {val - 2:.4f})")
+    # Shift down
+    T_down = T.depth_shift_down()
+    print(f"\n  depthShiftDown(T) = {T_down}")
+    print(f"  Classification: {T_down.classify()}")
+    
+    # Verify involution
+    T_round = T_up.depth_shift_down()
+    print(f"\n  depthShiftDown(depthShiftUp(T)) = {T_round}")
+    print(f"  Same as T? Levels match: "
+          f"{all(a.level.depth == b.level.depth and a.level.exponent == b.level.exponent for a, b in zip(T.terms, T_round.terms))}")
 
 
-def demo_exp_log_cancellation():
-    """Theorem: exp(exp(log(log(x)))) = x for x > 1."""
+# ============================================================
+# Demo 6: Mixed Transseries Evaluation
+# ============================================================
+
+def demo_mixed_transseries():
     print("\n" + "=" * 60)
-    print("THEOREM 4.1: Iterated Exp-Log Cancellation")
-    print("  exp(exp(log(log(x)))) = x for x > 1")
+    print("DEMO 6: Mixed Transseries Evaluation")
+    print("T = 2·exp(x) + 3·x² - log(x)")
     print("=" * 60)
     
-    print("\n  Verification:")
-    for x in [2, 3, 5, 10, 100, 1000, 1e6]:
-        result = math.exp(math.exp(math.log(math.log(x))))
-        error = abs(result - x) / x
-        print(f"    x = {x:>8.0f}: exp(exp(log(log(x)))) = {result:.6f}, "
-              f"relative error = {error:.2e}")
-
-
-def demo_growth_level_hierarchy():
-    """Demonstrate the growth level hierarchy at a fixed x."""
-    print("\n" + "=" * 60)
-    print("GROWTH LEVEL HIERARCHY at x = 10")
-    print("=" * 60)
+    T = Transseries([
+        TransTerm(2, GrowthLevel(1, 1)),
+        TransTerm(3, GrowthLevel(0, 2)),
+        TransTerm(-1, GrowthLevel(-1, 1))
+    ])
     
-    levels = [
-        (-2, 1.0, "log(log(x))"),
-        (-1, 0.5, "log(√x)"),
-        (-1, 1.0, "log(x)"),
-        (-1, 2.0, "log(x²)"),
-        (0, 0.5, "√x"),
-        (0, 1.0, "x"),
-        (0, 2.0, "x²"),
-        (0, 10.0, "x^10"),
-        (1, 0.5, "exp(√x)"),
-        (1, 1.0, "exp(x)"),
-    ]
-    
-    x = 10.0
-    print(f"\n  {'Level':>12} | {'Function':>12} | {'Value':>15}")
-    print("  " + "-" * 45)
-    for depth, exp, name in levels:
-        val = growth_level_eval(depth, exp, x)
-        print(f"  ({depth:>2}, {exp:>3.1f})  | {name:>12} | {val:>15.2f}")
+    print(f"\n  Terms: {T}")
+    for x in [2, 5, 10, 20, 50]:
+        val = T.evaluate(x)
+        exp_part = 2 * math.exp(x)
+        poly_part = 3 * x**2
+        log_part = -math.log(x)
+        print(f"  x = {x:>3}: T(x) = {val:.2e}  "
+              f"[exp: {exp_part:.2e}, poly: {poly_part:.2e}, log: {log_part:.2f}]")
+        if exp_part > 0:
+            print(f"           exp contribution: {100*exp_part/val:.1f}%")
 
+
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == "__main__":
-    demo_exp_dominates_poly()
-    demo_double_exp_separation()
-    demo_log_negligibility()
-    demo_diagonal_gap()
-    demo_exp_log_cancellation()
-    demo_growth_level_hierarchy()
+    print("TRANSSERIES: Asymptotic Expansions Beyond Power Series")
+    print("Numerical Demonstrations of Core Theorems")
+    print()
+    
+    demo_exponential_dominance()
+    demo_three_level_hierarchy()
+    demo_double_exponential()
+    demo_same_level_comparison()
+    demo_depth_filtration()
+    demo_mixed_transseries()
     
     print("\n" + "=" * 60)
-    print("All demonstrations completed successfully.")
+    print("All demonstrations complete.")
     print("=" * 60)
 
 
-#!/usr/bin/env python3
-"""Visualization: Asymptotic Dominance Hierarchy
+"""
+Visualization: The Transseries Growth Hierarchy
 
-Plots the fundamental asymptotic comparisons:
-1. exp(x) vs x^n for various n
-2. exp(exp(x)) vs exp(cx) 
-3. The EML diagonal gap
+Plots the three-level hierarchy: log(x) ≪ x ≪ exp(x),
+showing how each level dominates the previous one.
 """
 
 import numpy as np
 
-def plot_exp_vs_poly():
-    """Plot exp(x)/x^n for various n, showing exp dominance."""
+def create_growth_hierarchy_plot():
+    """Create and save the growth hierarchy visualization."""
     try:
+        import matplotlib
+        matplotlib.use('Agg')
         import matplotlib.pyplot as plt
     except ImportError:
-        print("matplotlib not available, skipping plot")
+        print("matplotlib not available; skipping visualization.")
         return
-    
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    
-    # Panel 1: exp(x) vs polynomials
+
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+    # Panel 1: The three levels
+    x = np.linspace(1.1, 20, 500)
+
     ax = axes[0]
-    x = np.linspace(0, 20, 500)
-    ax.plot(x, np.exp(x), 'r-', linewidth=2, label='exp(x)')
-    for n in [2, 4, 6, 8]:
-        ax.plot(x, x**n, '--', linewidth=1, label=f'x^{n}')
-    ax.set_yscale('log')
-    ax.set_xlabel('x')
-    ax.set_ylabel('f(x) [log scale]')
-    ax.set_title('Exp vs Polynomial')
-    ax.legend(fontsize=8)
-    ax.set_ylim(1, 1e15)
-    ax.grid(True, alpha=0.3)
-    
-    # Panel 2: Ratios exp(x)/x^n
-    ax = axes[1]
-    x = np.linspace(1, 30, 500)
-    for n in [1, 3, 5, 10]:
-        with np.errstate(divide='ignore', invalid='ignore'):
-            ratio = np.exp(x) / x**(n+1)
-        ax.plot(x, ratio, linewidth=1.5, label=f'exp(x)/x^{n+1}')
-    ax.set_yscale('log')
-    ax.set_xlabel('x')
-    ax.set_ylabel('Ratio [log scale]')
-    ax.set_title('Exponential Dominance Ratios')
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
-    
-    # Panel 3: EML diagonal gap
-    ax = axes[2]
-    x = np.linspace(0.01, 5, 1000)
-    gap = np.exp(x) - np.log(x)
-    ax.plot(x, gap, 'b-', linewidth=2, label='exp(x) - log(x)')
-    ax.axhline(y=2, color='r', linestyle='--', linewidth=1, label='Lower bound = 2')
-    ax.set_xlabel('x')
-    ax.set_ylabel('exp(x) - log(x)')
-    ax.set_title('EML Diagonal Gap ≥ 2')
-    ax.legend()
-    ax.set_ylim(0, 15)
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('dominance_hierarchy.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: dominance_hierarchy.png")
-
-
-def plot_log_negligibility():
-    """Plot log(x)/x^α for various α, showing log negligibility."""
-    try:
-        import matplotlib.pyplot as plt
-    except ImportError:
-        print("matplotlib not available, skipping plot")
-        return
-    
-    fig, ax = plt.subplots(figsize=(8, 5))
-    x = np.linspace(1.1, 1000, 2000)
-    
-    for alpha in [0.01, 0.05, 0.1, 0.5, 1.0]:
-        ratio = np.log(x) / x**alpha
-        ax.plot(x, ratio, linewidth=1.5, label=f'α = {alpha}')
-    
-    ax.axhline(y=0, color='k', linestyle='-', linewidth=0.5)
-    ax.set_xlabel('x')
-    ax.set_ylabel('log(x) / x^α')
-    ax.set_title('Logarithmic Negligibility: log(x)/x^α → 0')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('log_negligibility.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: log_negligibility.png")
-
-
-def plot_growth_hierarchy():
-    """Plot the full growth level hierarchy."""
-    try:
-        import matplotlib.pyplot as plt
-    except ImportError:
-        print("matplotlib not available, skipping plot")
-        return
-    
-    fig, ax = plt.subplots(figsize=(10, 6))
-    x = np.linspace(1.5, 5, 500)
-    
-    functions = [
-        (lambda x: np.log(np.log(x)), 'log(log(x))', (-2, 1), 'C0'),
-        (lambda x: np.log(x), 'log(x)', (-1, 1), 'C1'),
-        (lambda x: np.sqrt(x), '√x', (0, 0.5), 'C2'),
-        (lambda x: x, 'x', (0, 1), 'C3'),
-        (lambda x: x**2, 'x²', (0, 2), 'C4'),
-        (lambda x: np.exp(np.sqrt(x)), 'exp(√x)', (1, 0.5), 'C5'),
-        (lambda x: np.exp(x), 'exp(x)', (1, 1), 'C6'),
-    ]
-    
-    for func, name, level, color in functions:
-        with np.errstate(invalid='ignore'):
-            y = func(x)
-            mask = np.isfinite(y) & (y > 0) & (y < 1e6)
-            ax.plot(x[mask], y[mask], linewidth=2, color=color,
-                   label=f'{name}  [{level}]')
-    
-    ax.set_yscale('log')
+    ax.plot(x, np.log(x), label=r'$\log(x)$', color='#2196F3', linewidth=2)
+    ax.plot(x, x, label=r'$x$', color='#4CAF50', linewidth=2)
+    ax.plot(x, np.exp(x/5), label=r'$e^{x/5}$', color='#F44336', linewidth=2)
     ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('f(x) [log scale]', fontsize=12)
-    ax.set_title('Growth Level Hierarchy: Transseries Classification', fontsize=14)
-    ax.legend(fontsize=9, loc='upper left')
+    ax.set_ylabel('f(x)', fontsize=12)
+    ax.set_title('Three Growth Levels', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.set_ylim(0, 30)
     ax.grid(True, alpha=0.3)
-    
+
+    # Panel 2: Dominance ratios
+    x2 = np.linspace(2, 100, 500)
+
+    ax = axes[1]
+    ax.plot(x2, x2 / np.log(x2), label=r'$x / \log(x)$', color='#4CAF50', linewidth=2)
+    ax.plot(x2, np.exp(x2/20) / x2, label=r'$e^{x/20} / x$', color='#F44336', linewidth=2)
+    ax.set_xlabel('x', fontsize=12)
+    ax.set_ylabel('Ratio', fontsize=12)
+    ax.set_title('Dominance Ratios → ∞', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.set_ylim(0, 50)
+    ax.grid(True, alpha=0.3)
+
+    # Panel 3: exp(x)/x^n for various n
+    x3 = np.linspace(1, 30, 500)
+
+    ax = axes[2]
+    for n in [1, 2, 5, 10]:
+        ratio = np.exp(x3) / (x3 ** n)
+        ax.semilogy(x3, ratio, label=f'$e^x / x^{{{n}}}$', linewidth=2)
+    ax.set_xlabel('x', fontsize=12)
+    ax.set_ylabel('Ratio (log scale)', fontsize=12)
+    ax.set_title('Exponential Dominance', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+
     plt.tight_layout()
     plt.savefig('growth_hierarchy.png', dpi=150, bbox_inches='tight')
-    plt.close()
     print("Saved: growth_hierarchy.png")
+    plt.close()
 
 
 if __name__ == "__main__":
-    plot_exp_vs_poly()
-    plot_log_negligibility()
-    plot_growth_hierarchy()
-    print("All visualizations generated.")
+    create_growth_hierarchy_plot()
