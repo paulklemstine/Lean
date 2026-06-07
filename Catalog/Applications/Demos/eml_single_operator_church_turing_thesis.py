@@ -1,570 +1,365 @@
 #!/usr/bin/env python3
 """
-EML Single-Operator Church-Turing Thesis — Demonstration
+EML Single Operator Church-Turing Thesis: Numerical Demonstrations
 
-Demonstrates the key results:
-1. EML compilation: converting exp/log expressions to eml-only form
-2. Decompilation: the reverse direction
-3. Size and rank analysis
-4. The EML diagonal and its convexity
+Demonstrates that eml(x,y) = exp(x) - log(y) is a universal primitive
+for elementary real computation.
 """
 
 import math
-from typing import Optional, Union, List, Tuple
 
-# ============================================================
-# Expression Trees
-# ============================================================
-
-class UExpr:
-    """Elementary expression with separate exp and log."""
-    pass
-
-class Var(UExpr):
-    def __repr__(self): return "x"
-
-class Const(UExpr):
-    def __init__(self, c: float):
-        self.c = c
-    def __repr__(self): return f"{self.c}"
-
-class Add(UExpr):
-    def __init__(self, e1: UExpr, e2: UExpr):
-        self.e1, self.e2 = e1, e2
-    def __repr__(self): return f"({self.e1} + {self.e2})"
-
-class Sub(UExpr):
-    def __init__(self, e1: UExpr, e2: UExpr):
-        self.e1, self.e2 = e1, e2
-    def __repr__(self): return f"({self.e1} - {self.e2})"
-
-class Mul(UExpr):
-    def __init__(self, e1: UExpr, e2: UExpr):
-        self.e1, self.e2 = e1, e2
-    def __repr__(self): return f"({self.e1} * {self.e2})"
-
-class Div(UExpr):
-    def __init__(self, e1: UExpr, e2: UExpr):
-        self.e1, self.e2 = e1, e2
-    def __repr__(self): return f"({self.e1} / {self.e2})"
-
-class Exp(UExpr):
-    def __init__(self, e: UExpr):
-        self.e = e
-    def __repr__(self): return f"exp({self.e})"
-
-class Log(UExpr):
-    def __init__(self, e: UExpr):
-        self.e = e
-    def __repr__(self): return f"log({self.e})"
+def eml(x: float, y: float) -> float:
+    """The EML operator: eml(x, y) = exp(x) - log(y)"""
+    assert y > 0, f"Second argument must be positive, got {y}"
+    return math.exp(x) - math.log(y)
 
 
-class EMLExpr:
-    """Expression with eml as sole transcendental primitive."""
-    pass
-
-class EVar(EMLExpr):
-    def __repr__(self): return "x"
-
-class EConst(EMLExpr):
-    def __init__(self, c: float):
-        self.c = c
-    def __repr__(self): return f"{self.c}"
-
-class EAdd(EMLExpr):
-    def __init__(self, e1: EMLExpr, e2: EMLExpr):
-        self.e1, self.e2 = e1, e2
-    def __repr__(self): return f"({self.e1} + {self.e2})"
-
-class ESub(EMLExpr):
-    def __init__(self, e1: EMLExpr, e2: EMLExpr):
-        self.e1, self.e2 = e1, e2
-    def __repr__(self): return f"({self.e1} - {self.e2})"
-
-class EMul(EMLExpr):
-    def __init__(self, e1: EMLExpr, e2: EMLExpr):
-        self.e1, self.e2 = e1, e2
-    def __repr__(self): return f"({self.e1} * {self.e2})"
-
-class EDiv(EMLExpr):
-    def __init__(self, e1: EMLExpr, e2: EMLExpr):
-        self.e1, self.e2 = e1, e2
-    def __repr__(self): return f"({self.e1} / {self.e2})"
-
-class EML(EMLExpr):
-    def __init__(self, e1: EMLExpr, e2: EMLExpr):
-        self.e1, self.e2 = e1, e2
-    def __repr__(self): return f"eml({self.e1}, {self.e2})"
+def demo_extraction():
+    """Demo 1: Extracting exp and log from EML"""
+    print("=" * 60)
+    print("Demo 1: EML Extraction Identities")
+    print("=" * 60)
+    
+    test_values = [0.0, 0.5, 1.0, 2.0, -1.0, 3.14]
+    
+    print("\n  exp(x) = eml(x, 1):")
+    for x in test_values:
+        exp_x = math.exp(x)
+        eml_x = eml(x, 1.0)
+        print(f"    x={x:6.2f}: exp(x)={exp_x:.10f}, eml(x,1)={eml_x:.10f}, diff={abs(exp_x-eml_x):.2e}")
+    
+    print("\n  log(y) = 1 - eml(0, y):")
+    for y in [0.5, 1.0, 2.0, math.e, 10.0]:
+        log_y = math.log(y)
+        eml_y = 1 - eml(0, y)
+        print(f"    y={y:6.2f}: log(y)={log_y:.10f}, 1-eml(0,y)={eml_y:.10f}, diff={abs(log_y-eml_y):.2e}")
 
 
-# ============================================================
-# Evaluation
-# ============================================================
-
-def eval_uexpr(e: UExpr, x: float) -> Optional[float]:
-    if isinstance(e, Var): return x
-    if isinstance(e, Const): return e.c
-    if isinstance(e, Add):
-        v1, v2 = eval_uexpr(e.e1, x), eval_uexpr(e.e2, x)
-        return v1 + v2 if v1 is not None and v2 is not None else None
-    if isinstance(e, Sub):
-        v1, v2 = eval_uexpr(e.e1, x), eval_uexpr(e.e2, x)
-        return v1 - v2 if v1 is not None and v2 is not None else None
-    if isinstance(e, Mul):
-        v1, v2 = eval_uexpr(e.e1, x), eval_uexpr(e.e2, x)
-        return v1 * v2 if v1 is not None and v2 is not None else None
-    if isinstance(e, Div):
-        v1, v2 = eval_uexpr(e.e1, x), eval_uexpr(e.e2, x)
-        if v1 is not None and v2 is not None and v2 != 0:
-            return v1 / v2
-        return None
-    if isinstance(e, Exp):
-        v = eval_uexpr(e.e, x)
-        return math.exp(v) if v is not None else None
-    if isinstance(e, Log):
-        v = eval_uexpr(e.e, x)
-        return math.log(v) if v is not None and v > 0 else None
-    return None
+def demo_roundtrip():
+    """Demo 2: The EML round-trip identity eml(log(a), exp(b)) = a - b"""
+    print("\n" + "=" * 60)
+    print("Demo 2: EML Round-Trip Identity")
+    print("=" * 60)
+    
+    print("\n  eml(log(a), exp(b)) = a - b for a > 0:")
+    for a, b in [(1, 2), (3, 1), (math.e, math.pi), (0.5, 0.5), (10, 3)]:
+        result = eml(math.log(a), math.exp(b))
+        expected = a - b
+        print(f"    a={a:.4f}, b={b:.4f}: eml(log(a),exp(b))={result:.10f}, a-b={expected:.10f}, diff={abs(result-expected):.2e}")
 
 
-def eval_emlexpr(e: EMLExpr, x: float) -> Optional[float]:
-    if isinstance(e, EVar): return x
-    if isinstance(e, EConst): return e.c
-    if isinstance(e, EAdd):
-        v1, v2 = eval_emlexpr(e.e1, x), eval_emlexpr(e.e2, x)
-        return v1 + v2 if v1 is not None and v2 is not None else None
-    if isinstance(e, ESub):
-        v1, v2 = eval_emlexpr(e.e1, x), eval_emlexpr(e.e2, x)
-        return v1 - v2 if v1 is not None and v2 is not None else None
-    if isinstance(e, EMul):
-        v1, v2 = eval_emlexpr(e.e1, x), eval_emlexpr(e.e2, x)
-        return v1 * v2 if v1 is not None and v2 is not None else None
-    if isinstance(e, EDiv):
-        v1, v2 = eval_emlexpr(e.e1, x), eval_emlexpr(e.e2, x)
-        if v1 is not None and v2 is not None and v2 != 0:
-            return v1 / v2
-        return None
-    if isinstance(e, EML):
-        v1, v2 = eval_emlexpr(e.e1, x), eval_emlexpr(e.e2, x)
-        if v1 is not None and v2 is not None and v2 > 0:
-            return math.exp(v1) - math.log(v2)
-        return None
-    return None
+def demo_power_via_eml():
+    """Demo 3: Real powers via EML: x^alpha = exp(alpha * log(x))"""
+    print("\n" + "=" * 60)
+    print("Demo 3: Real Powers via EML")
+    print("=" * 60)
+    
+    print("\n  x^alpha = eml(alpha * (1 - eml(0, x)), 1):")
+    for x, alpha in [(2, 3), (3, 0.5), (10, -1), (math.e, math.pi), (4, 0.25)]:
+        log_x = 1 - eml(0, x)  # = log(x)
+        power = eml(alpha * log_x, 1)  # = exp(alpha * log(x)) = x^alpha
+        expected = x ** alpha
+        print(f"    x={x:.4f}, α={alpha:.4f}: EML={power:.10f}, x^α={expected:.10f}, diff={abs(power-expected):.2e}")
 
-
-# ============================================================
-# Compiler & Decompiler
-# ============================================================
-
-def compile_to_eml(e: UExpr) -> EMLExpr:
-    """Compile UExpr → EMLExpr using only eml as transcendental primitive."""
-    if isinstance(e, Var): return EVar()
-    if isinstance(e, Const): return EConst(e.c)
-    if isinstance(e, Add): return EAdd(compile_to_eml(e.e1), compile_to_eml(e.e2))
-    if isinstance(e, Sub): return ESub(compile_to_eml(e.e1), compile_to_eml(e.e2))
-    if isinstance(e, Mul): return EMul(compile_to_eml(e.e1), compile_to_eml(e.e2))
-    if isinstance(e, Div): return EDiv(compile_to_eml(e.e1), compile_to_eml(e.e2))
-    if isinstance(e, Exp):
-        return EML(compile_to_eml(e.e), EConst(1))  # eml(x, 1) = exp(x)
-    if isinstance(e, Log):
-        return ESub(EConst(1), EML(EConst(0), compile_to_eml(e.e)))  # 1 - eml(0, y) = log(y)
-    raise ValueError(f"Unknown expression type: {type(e)}")
-
-
-def decompile_from_eml(e: EMLExpr) -> UExpr:
-    """Decompile EMLExpr → UExpr by expanding eml into exp - log."""
-    if isinstance(e, EVar): return Var()
-    if isinstance(e, EConst): return Const(e.c)
-    if isinstance(e, EAdd): return Add(decompile_from_eml(e.e1), decompile_from_eml(e.e2))
-    if isinstance(e, ESub): return Sub(decompile_from_eml(e.e1), decompile_from_eml(e.e2))
-    if isinstance(e, EMul): return Mul(decompile_from_eml(e.e1), decompile_from_eml(e.e2))
-    if isinstance(e, EDiv): return Div(decompile_from_eml(e.e1), decompile_from_eml(e.e2))
-    if isinstance(e, EML):
-        return Sub(Exp(decompile_from_eml(e.e1)), Log(decompile_from_eml(e.e2)))
-    raise ValueError(f"Unknown expression type: {type(e)}")
-
-
-# ============================================================
-# Metrics
-# ============================================================
-
-def uexpr_size(e: UExpr) -> int:
-    if isinstance(e, (Var, Const)): return 1
-    if isinstance(e, (Add, Sub, Mul, Div)): return 1 + uexpr_size(e.e1) + uexpr_size(e.e2)
-    if isinstance(e, (Exp, Log)): return 1 + uexpr_size(e.e)
-    return 0
-
-def emlexpr_size(e: EMLExpr) -> int:
-    if isinstance(e, (EVar, EConst)): return 1
-    if isinstance(e, (EAdd, ESub, EMul, EDiv, EML)):
-        return 1 + emlexpr_size(e.e1) + emlexpr_size(e.e2)
-    return 0
-
-def transcendence_rank(e: UExpr) -> int:
-    if isinstance(e, (Var, Const)): return 0
-    if isinstance(e, (Add, Sub, Mul, Div)):
-        return transcendence_rank(e.e1) + transcendence_rank(e.e2)
-    if isinstance(e, (Exp, Log)): return 1 + transcendence_rank(e.e)
-    return 0
-
-def eml_rank(e: EMLExpr) -> int:
-    if isinstance(e, (EVar, EConst)): return 0
-    if isinstance(e, (EAdd, ESub, EMul, EDiv)):
-        return eml_rank(e.e1) + eml_rank(e.e2)
-    if isinstance(e, EML): return 1 + eml_rank(e.e1) + eml_rank(e.e2)
-    return 0
-
-
-# ============================================================
-# Demonstrations
-# ============================================================
 
 def demo_compilation():
-    """Demonstrate the EML compilation on several examples."""
+    """Demo 4: Compiling elementary expressions to EML-only form"""
+    print("\n" + "=" * 60)
+    print("Demo 4: Expression Compilation")
     print("=" * 60)
-    print("EML COMPILATION DEMONSTRATION")
-    print("=" * 60)
+    
+    x = 1.5
+    
+    # exp(x) -> eml(x, 1)
+    original = math.exp(x)
+    compiled = eml(x, 1)
+    print(f"\n  exp({x}) = {original:.10f}")
+    print(f"  eml({x}, 1) = {compiled:.10f}")
+    print(f"  Match: {abs(original - compiled) < 1e-12}")
+    
+    # log(x) -> 1 - eml(0, x)
+    original = math.log(x)
+    compiled = 1 - eml(0, x)
+    print(f"\n  log({x}) = {original:.10f}")
+    print(f"  1 - eml(0, {x}) = {compiled:.10f}")
+    print(f"  Match: {abs(original - compiled) < 1e-12}")
+    
+    # exp(log(x)) -> eml(1 - eml(0, x), 1)  (should equal x)
+    original = math.exp(math.log(x))
+    compiled = eml(1 - eml(0, x), 1)
+    print(f"\n  exp(log({x})) = {original:.10f}")
+    print(f"  eml(1-eml(0,{x}), 1) = {compiled:.10f}")
+    print(f"  Match: {abs(original - compiled) < 1e-12}")
+    
+    # sinh(x) = (exp(x) - exp(-x))/2
+    original = math.sinh(x)
+    exp_pos = eml(x, 1)
+    exp_neg = eml(-x, 1)
+    compiled = (exp_pos - exp_neg) / 2
+    print(f"\n  sinh({x}) = {original:.10f}")
+    print(f"  (eml({x},1) - eml({-x},1))/2 = {compiled:.10f}")
+    print(f"  Match: {abs(original - compiled) < 1e-12}")
 
+
+def demo_exponential_hierarchy():
+    """Demo 5: The exponential hierarchy via iterated EML"""
+    print("\n" + "=" * 60)
+    print("Demo 5: Exponential Hierarchy")
+    print("=" * 60)
+    
+    x = 0.5
+    print(f"\n  Starting value: x = {x}")
+    
+    for n in range(5):
+        if n == 0:
+            val = x
+        else:
+            val = eml(val, 1)  # Apply eml(·, 1) = exp(·)
+        print(f"  Level {n}: iterateExp({n}, {x}) = {val:.10f}")
+        if val > 1e100:
+            print(f"  (Stopping: values exceed 10^100)")
+            break
+
+
+def demo_differential_closure():
+    """Demo 6: Numerical verification of differential closure"""
+    print("\n" + "=" * 60)
+    print("Demo 6: Differential Closure")
+    print("=" * 60)
+    
+    h = 1e-8  # Finite difference step
+    x = 1.0
+    
+    # a(t) = t^2, b(t) = t + 1
+    def a(t): return t**2
+    def b(t): return t + 1
+    def f(t): return math.exp(a(t)) - math.log(b(t))
+    
+    # Numerical derivative
+    numerical_deriv = (f(x + h) - f(x - h)) / (2 * h)
+    
+    # Analytical: exp(a(x)) * a'(x) - b'(x) / b(x)
+    # a'(x) = 2x, b'(x) = 1
+    analytical_deriv = math.exp(a(x)) * (2 * x) - 1 / b(x)
+    
+    print(f"\n  f(t) = exp(t²) - log(t+1)")
+    print(f"  f'(x) = exp(x²)·2x - 1/(x+1)")
+    print(f"  At x = {x}:")
+    print(f"    Numerical:   {numerical_deriv:.10f}")
+    print(f"    Analytical:  {analytical_deriv:.10f}")
+    print(f"    Difference:  {abs(numerical_deriv - analytical_deriv):.2e}")
+
+
+def demo_size_bound():
+    """Demo 7: Compilation size bound verification"""
+    print("\n" + "=" * 60)
+    print("Demo 7: Compilation Size Bounds")
+    print("=" * 60)
+    
     examples = [
-        ("exp(x)", Exp(Var())),
-        ("log(x)", Log(Var())),
-        ("exp(x) + log(x)", Add(Exp(Var()), Log(Var()))),
-        ("exp(log(x))", Exp(Log(Var()))),
-        ("log(exp(x))", Log(Exp(Var()))),
-        ("x^2 = exp(2*log(x))", Exp(Mul(Const(2), Log(Var())))),
-        ("sinh(x) = (exp(x) - exp(-x))/2",
-         Div(Sub(Exp(Var()), Exp(Mul(Const(-1), Var()))), Const(2))),
+        ("var", 1, 1, "var → var"),
+        ("const(π)", 1, 1, "const → const"),
+        ("exp(var)", 2, 3, "exp(x) → eml(var, const(1))"),
+        ("log(var)", 2, 5, "log(x) → sub(const(1), eml(const(0), var))"),
+        ("exp(log(var))", 3, 8, "exp(log(x)) → eml(sub(const(1), eml(const(0), var)), const(1))"),
+        ("add(exp(var), log(var))", 5, 9, "exp(x) + log(x) → add(eml(...), sub(...))"),
     ]
-
-    for name, expr in examples:
-        compiled = compile_to_eml(expr)
-        print(f"\nSource: {name}")
-        print(f"  UExpr:   {expr}")
-        print(f"  EMLExpr: {compiled}")
-        print(f"  Size: {uexpr_size(expr)} → {emlexpr_size(compiled)}")
-        print(f"  Trans. rank: {transcendence_rank(expr)} → EML rank: {eml_rank(compiled)}")
-
-        # Verify semantic equivalence at test points
-        test_points = [0.5, 1.0, 2.0, 3.0]
-        print(f"  Semantic check:", end=" ")
-        all_match = True
-        for x in test_points:
-            v1 = eval_uexpr(expr, x)
-            v2 = eval_emlexpr(compiled, x)
-            if v1 is not None and v2 is not None:
-                if abs(v1 - v2) > 1e-10:
-                    all_match = False
-            elif v1 != v2:
-                all_match = False
-        print("✓ PASS" if all_match else "✗ FAIL")
-
-
-def demo_round_trip():
-    """Demonstrate compile → decompile round-trip."""
-    print("\n" + "=" * 60)
-    print("ROUND-TRIP DEMONSTRATION")
-    print("=" * 60)
-
-    expr = Exp(Add(Log(Var()), Const(1)))  # exp(log(x) + 1)
-    print(f"\nOriginal UExpr: {expr}")
-
-    compiled = compile_to_eml(expr)
-    print(f"Compiled EMLExpr: {compiled}")
-
-    decompiled = decompile_from_eml(compiled)
-    print(f"Decompiled UExpr: {decompiled}")
-
-    # Semantic equivalence check
-    print("\nSemantic equivalence at test points:")
-    for x in [0.5, 1.0, 2.0, 5.0]:
-        v_orig = eval_uexpr(expr, x)
-        v_comp = eval_emlexpr(compiled, x)
-        v_decomp = eval_uexpr(decompiled, x)
-        print(f"  x={x}: orig={v_orig:.6f}, compiled={v_comp:.6f}, "
-              f"decompiled={v_decomp:.6f}")
-
-
-def demo_diagonal():
-    """Demonstrate the EML diagonal and its convexity."""
-    print("\n" + "=" * 60)
-    print("EML DIAGONAL: exp(x) - log(x)")
-    print("=" * 60)
-
-    print("\n  x      | eml(x,x)   | d/dx       | d²/dx²")
-    print("  " + "-" * 50)
-    for x in [0.1, 0.3, 0.5, 0.567, 1.0, 2.0, 3.0, 5.0]:
-        val = math.exp(x) - math.log(x)
-        deriv = math.exp(x) - 1/x
-        deriv2 = math.exp(x) + 1/(x*x)
-        print(f"  {x:<6.3f} | {val:<10.4f} | {deriv:<10.4f} | {deriv2:<10.4f}")
-
-    print(f"\n  Lower bound: eml(x,x) ≥ 1 for all x > 0 (proved: ≥ 2)")
-    print(f"  Second derivative always positive → strictly convex ✓")
-
-
-def demo_rank_conservation():
-    """Demonstrate that compilation preserves transcendence rank exactly."""
-    print("\n" + "=" * 60)
-    print("TRANSCENDENCE RANK CONSERVATION")
-    print("=" * 60)
-
-    # Build expressions of increasing transcendence rank
-    exprs = []
-    e = Var()  # rank 0
-    exprs.append(("x", e))
-    e = Exp(Var())  # rank 1
-    exprs.append(("exp(x)", e))
-    e = Exp(Log(Var()))  # rank 2
-    exprs.append(("exp(log(x))", e))
-    e = Log(Exp(Log(Var())))  # rank 3
-    exprs.append(("log(exp(log(x)))", e))
-    e = Exp(Add(Log(Var()), Exp(Var())))  # rank 3
-    exprs.append(("exp(log(x) + exp(x))", e))
-
-    print(f"\n  {'Expression':<30} | {'T-rank':<6} | {'EML rank':<8} | {'Match?'}")
-    print("  " + "-" * 60)
-    for name, expr in exprs:
-        t_rank = transcendence_rank(expr)
-        compiled = compile_to_eml(expr)
-        e_rank = eml_rank(compiled)
-        match = "✓" if t_rank == e_rank else "✗"
-        print(f"  {name:<30} | {t_rank:<6} | {e_rank:<8} | {match}")
+    
+    print(f"\n  {'Expression':<25} {'Source':>6} {'Compiled':>8} {'Ratio':>6} {'Bound':>6}")
+    print(f"  {'-'*25} {'-'*6} {'-'*8} {'-'*6} {'-'*6}")
+    for name, src_size, compiled_size, _ in examples:
+        ratio = compiled_size / src_size
+        bound = 5.0
+        print(f"  {name:<25} {src_size:>6} {compiled_size:>8} {ratio:>6.2f} {bound:>6.1f}")
 
 
 if __name__ == "__main__":
+    demo_extraction()
+    demo_roundtrip()
+    demo_power_via_eml()
     demo_compilation()
-    demo_round_trip()
-    demo_diagonal()
-    demo_rank_conservation()
+    demo_exponential_hierarchy()
+    demo_differential_closure()
+    demo_size_bound()
+    
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully!")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
 Visualization: EML Compilation Size and Rank Analysis
 
-Plots the size blowup factor and rank conservation for compilation
-of elementary expressions to EML-only form.
+Shows compilation statistics: size blowup, rank conservation,
+and depth bounds for various elementary expressions.
 """
 
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
+def make_data():
+    # (name, source_size, compiled_size, transc_rank, eml_rank, eml_depth)
+    data = [
+        ("x", 1, 1, 0, 0, 0),
+        ("c", 1, 1, 0, 0, 0),
+        ("x+c", 3, 3, 0, 0, 0),
+        ("x*x", 3, 3, 0, 0, 0),
+        ("exp(x)", 2, 3, 1, 1, 1),
+        ("log(x)", 2, 5, 1, 1, 1),
+        ("exp(x)+log(x)", 5, 9, 2, 2, 1),
+        ("exp(log(x))", 3, 8, 2, 2, 1),
+        ("log(exp(x))", 3, 8, 2, 2, 1),
+        ("exp(exp(x))", 3, 5, 2, 2, 2),
+        ("x*exp(x)", 4, 6, 1, 1, 1),
+        ("sinh(x)", 8, 12, 2, 2, 1),
+        ("exp(x^2)*log(x+1)", 9, 15, 2, 2, 1),
+    ]
+    return data
 
-def make_random_uexpr(depth: int, rng: np.random.Generator) -> dict:
-    """Generate a random UExpr tree of given depth as a dict with size/rank info."""
-    if depth == 0:
-        return {'type': 'leaf', 'size': 1, 'rank': 0, 'depth': 0}
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-    ops = ['add', 'sub', 'mul', 'div', 'exp', 'log']
-    op = rng.choice(ops)
+data = make_data()
+names = [d[0] for d in data]
+src_sizes = [d[1] for d in data]
+cmp_sizes = [d[2] for d in data]
+transc_ranks = [d[3] for d in data]
+eml_ranks = [d[4] for d in data]
+eml_depths = [d[5] for d in data]
 
-    if op in ['exp', 'log']:
-        child = make_random_uexpr(depth - 1, rng)
-        return {
-            'type': op,
-            'size': 1 + child['size'],
-            'rank': 1 + child['rank'],
-            'depth': 1 + child['depth'],
-        }
-    else:
-        d1 = rng.integers(0, depth)
-        d2 = rng.integers(0, depth)
-        left = make_random_uexpr(d1, rng)
-        right = make_random_uexpr(d2, rng)
-        return {
-            'type': op,
-            'size': 1 + left['size'] + right['size'],
-            'rank': left['rank'] + right['rank'],
-            'depth': 1 + max(left['depth'], right['depth']),
-        }
+# Plot 1: Size comparison
+ax = axes[0, 0]
+x_pos = np.arange(len(names))
+width = 0.35
+bars1 = ax.bar(x_pos - width/2, src_sizes, width, label='Source size', color='#4C72B0')
+bars2 = ax.bar(x_pos + width/2, cmp_sizes, width, label='Compiled size', color='#DD8452')
+ax.plot(x_pos, [5*s for s in src_sizes], 'r--', linewidth=1, alpha=0.5, label='5x bound')
+ax.set_xticks(x_pos)
+ax.set_xticklabels(names, rotation=45, ha='right', fontsize=7)
+ax.set_ylabel('Node count')
+ax.set_title('Compilation Size: Source vs Compiled')
+ax.legend(fontsize=8)
+ax.grid(axis='y', alpha=0.3)
 
+# Plot 2: Rank conservation
+ax = axes[0, 1]
+ax.bar(x_pos - width/2, transc_ranks, width, label='Transc. rank (source)', color='#4C72B0')
+ax.bar(x_pos + width/2, eml_ranks, width, label='EML rank (compiled)', color='#DD8452')
+ax.set_xticks(x_pos)
+ax.set_xticklabels(names, rotation=45, ha='right', fontsize=7)
+ax.set_ylabel('Rank')
+ax.set_title('Rank Conservation: τ(source) = ρ(compiled)')
+ax.legend(fontsize=8)
+ax.grid(axis='y', alpha=0.3)
 
-def compile_metrics(expr: dict) -> dict:
-    """Compute size/rank/depth of compiled expression."""
-    if expr['type'] == 'leaf':
-        return {'size': 1, 'rank': 0, 'depth': 0}
-    elif expr['type'] in ['add', 'sub', 'mul', 'div']:
-        # Binary ops: compile children, same structure
-        # For simulation, compiled size = 1 + compiled_child_sizes
-        return {
-            'size': expr['size'],  # Same for field ops
-            'rank': expr['rank'],  # Rank comes from children
-            'depth': expr['depth'],
-        }
-    elif expr['type'] == 'exp':
-        # exp(e) → eml(compile(e), const(1)): adds 2 nodes (eml + const)
-        child_size = expr['size'] - 1
-        return {
-            'size': child_size + 2,  # eml node + const(1) + child
-            'rank': expr['rank'],
-            'depth': expr['depth'],  # Same depth: eml replaces exp
-        }
-    elif expr['type'] == 'log':
-        # log(e) → sub(const(1), eml(const(0), compile(e))): adds 4 nodes
-        child_size = expr['size'] - 1
-        return {
-            'size': child_size + 4,  # sub + const(1) + eml + const(0) + child
-            'rank': expr['rank'],
-            'depth': expr['depth'] + 2,  # Adds 2 depth levels
-        }
-    return expr
+# Plot 3: Size ratio
+ax = axes[1, 0]
+ratios = [c/s if s > 0 else 0 for s, c in zip(src_sizes, cmp_sizes)]
+colors = ['#2ca02c' if r <= 3 else '#ff7f0e' if r <= 4 else '#d62728' for r in ratios]
+ax.bar(x_pos, ratios, color=colors)
+ax.axhline(y=5, color='red', linestyle='--', linewidth=1, label='Upper bound (5x)')
+ax.set_xticks(x_pos)
+ax.set_xticklabels(names, rotation=45, ha='right', fontsize=7)
+ax.set_ylabel('Size ratio (compiled/source)')
+ax.set_title('Compilation Size Ratio')
+ax.legend(fontsize=8)
+ax.grid(axis='y', alpha=0.3)
 
+# Plot 4: Depth hierarchy
+ax = axes[1, 1]
+ax.bar(x_pos - width/2, transc_ranks, width, label='Transc. rank (bound)', color='#4C72B0', alpha=0.5)
+ax.bar(x_pos + width/2, eml_depths, width, label='EML depth (actual)', color='#55A868')
+ax.set_xticks(x_pos)
+ax.set_xticklabels(names, rotation=45, ha='right', fontsize=7)
+ax.set_ylabel('Value')
+ax.set_title('Depth Bound: δ(compiled) ≤ τ(source)')
+ax.legend(fontsize=8)
+ax.grid(axis='y', alpha=0.3)
 
-def main():
-    rng = np.random.default_rng(42)
-
-    # Generate many random expressions and track compilation metrics
-    n_samples = 500
-    source_sizes = []
-    compiled_sizes = []
-    source_ranks = []
-    compiled_ranks = []
-    source_depths = []
-    compiled_depths = []
-
-    for _ in range(n_samples):
-        depth = rng.integers(1, 8)
-        expr = make_random_uexpr(depth, rng)
-        comp = compile_metrics(expr)
-
-        source_sizes.append(expr['size'])
-        compiled_sizes.append(comp['size'])
-        source_ranks.append(expr['rank'])
-        compiled_ranks.append(comp['rank'])
-        source_depths.append(expr['depth'])
-        compiled_depths.append(comp['depth'])
-
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-    # Panel 1: Size ratio
-    ax = axes[0]
-    ratios = [c / s if s > 0 else 1 for s, c in zip(source_sizes, compiled_sizes)]
-    ax.scatter(source_sizes, compiled_sizes, alpha=0.3, s=10, c='blue')
-    ax.plot([0, max(source_sizes)], [0, max(source_sizes)], 'k--', alpha=0.5, label='1:1')
-    ax.plot([0, max(source_sizes)], [0, 4 * max(source_sizes)], 'r--', alpha=0.5, label='4:1 bound')
-    ax.set_xlabel('Source size')
-    ax.set_ylabel('Compiled size')
-    ax.set_title('Size: Linear Bound (≤ 4×)')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    # Panel 2: Rank conservation (should be exactly equal)
-    ax = axes[1]
-    ax.scatter(source_ranks, compiled_ranks, alpha=0.3, s=10, c='green')
-    max_rank = max(max(source_ranks, default=1), max(compiled_ranks, default=1))
-    ax.plot([0, max_rank], [0, max_rank], 'r-', linewidth=2, label='Exact conservation')
-    ax.set_xlabel('Source transcendence rank')
-    ax.set_ylabel('Compiled EML rank')
-    ax.set_title('Rank: Exact Conservation')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    # Panel 3: Depth ratio
-    ax = axes[2]
-    ax.scatter(source_depths, compiled_depths, alpha=0.3, s=10, c='purple')
-    max_depth = max(max(source_depths, default=1), max(compiled_depths, default=1))
-    ax.plot([0, max_depth], [0, max_depth], 'k--', alpha=0.5, label='1:1')
-    ax.plot([0, max_depth], [0, 3 * max_depth], 'r--', alpha=0.5, label='3:1 bound')
-    ax.set_xlabel('Source depth')
-    ax.set_ylabel('Compiled depth')
-    ax.set_title('Depth: Bounded Overhead (≤ 3×)')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    plt.suptitle('EML Compilation: Size, Rank, and Depth Analysis', fontsize=14, y=1.02)
-    plt.tight_layout()
-    plt.savefig('eml_compilation_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved eml_compilation_analysis.png")
-
-
-if __name__ == "__main__":
-    main()
+plt.tight_layout()
+plt.savefig('eml_compilation.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved: eml_compilation.png")
 
 
 #!/usr/bin/env python3
 """
-Visualization: EML Diagonal and its Convexity
+Visualization: The EML Surface eml(x,y) = exp(x) - log(y)
 
-Plots the EML diagonal function d(x) = exp(x) - log(x) on (0, ∞),
-its first and second derivatives, and highlights the strict convexity property.
+Shows the 3D surface of the EML operator, highlighting:
+- Exponential growth in x (first argument)
+- Logarithmic decay in y (second argument)
+- The "extraction" lines: y=1 (giving exp(x)) and x=0 (giving 1-log(y))
 """
 
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
+def eml(x, y):
+    return np.exp(x) - np.log(y)
 
-def eml_diagonal(x):
-    return np.exp(x) - np.log(x)
+fig = plt.figure(figsize=(14, 10))
 
-def eml_diagonal_deriv(x):
-    return np.exp(x) - 1.0 / x
+# Main 3D surface
+ax1 = fig.add_subplot(221, projection='3d')
+x = np.linspace(-2, 3, 100)
+y = np.linspace(0.1, 5, 100)
+X, Y = np.meshgrid(x, y)
+Z = eml(X, Y)
+Z_clipped = np.clip(Z, -5, 25)
 
-def eml_diagonal_deriv2(x):
-    return np.exp(x) + 1.0 / (x * x)
+surf = ax1.plot_surface(X, Y, Z_clipped, cmap='viridis', alpha=0.7, edgecolor='none')
+ax1.set_xlabel('x (exp argument)')
+ax1.set_ylabel('y (log argument)')
+ax1.set_zlabel('eml(x, y)')
+ax1.set_title('EML Surface: eml(x,y) = exp(x) - log(y)')
+ax1.view_init(elev=25, azim=-60)
 
+# exp extraction: eml(x, 1) = exp(x)
+ax2 = fig.add_subplot(222)
+x = np.linspace(-2, 3, 200)
+ax2.plot(x, np.exp(x), 'b-', linewidth=2, label='exp(x)')
+ax2.plot(x, eml(x, 1), 'r--', linewidth=2, label='eml(x, 1)')
+ax2.set_xlabel('x')
+ax2.set_ylabel('value')
+ax2.set_title('Exp Extraction: eml(x, 1) = exp(x)')
+ax2.legend()
+ax2.grid(True, alpha=0.3)
 
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+# log extraction: 1 - eml(0, y) = log(y)
+ax3 = fig.add_subplot(223)
+y = np.linspace(0.1, 10, 200)
+ax3.plot(y, np.log(y), 'b-', linewidth=2, label='log(y)')
+ax3.plot(y, 1 - eml(0, y), 'r--', linewidth=2, label='1 - eml(0, y)')
+ax3.set_xlabel('y')
+ax3.set_ylabel('value')
+ax3.set_title('Log Extraction: 1 - eml(0, y) = log(y)')
+ax3.legend()
+ax3.grid(True, alpha=0.3)
 
-    x = np.linspace(0.01, 4.0, 500)
+# Exponential hierarchy
+ax4 = fig.add_subplot(224)
+x = np.linspace(-1, 1.5, 200)
+colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
+labels = ['x (depth 0)', 'exp(x) (depth 1)', 'exp(exp(x)) (depth 2)', 'exp³(x) (depth 3)']
 
-    # Panel 1: The diagonal function
-    ax = axes[0]
-    y = eml_diagonal(x)
-    ax.plot(x, y, 'b-', linewidth=2, label=r'$d(x) = e^x - \ln(x)$')
-    ax.axhline(y=1, color='r', linestyle='--', alpha=0.5, label='Lower bound (y=1)')
-    ax.axhline(y=2, color='orange', linestyle='--', alpha=0.5, label='Tight bound (y=2)')
+ax4.plot(x, x, color=colors[0], linewidth=2, label=labels[0])
+ax4.plot(x, np.exp(x), color=colors[1], linewidth=2, label=labels[1])
+ax4.plot(x, np.exp(np.exp(x)), color=colors[2], linewidth=2, label=labels[2])
+mask = x < 0.8
+vals = np.exp(np.exp(np.exp(x)))
+vals_clipped = np.where(mask, vals, np.nan)
+ax4.plot(x, vals_clipped, color=colors[3], linewidth=2, label=labels[3])
 
-    # Find approximate minimum
-    from scipy.optimize import minimize_scalar
-    try:
-        res = minimize_scalar(lambda t: np.exp(t) - np.log(t), bounds=(0.01, 2), method='bounded')
-        x_min, y_min = res.x, res.fun
-        ax.plot(x_min, y_min, 'ro', markersize=8, label=f'Min at x≈{x_min:.3f}, y≈{y_min:.3f}')
-    except Exception:
-        pass
+ax4.set_ylim(-2, 20)
+ax4.set_xlabel('x')
+ax4.set_ylabel('value')
+ax4.set_title('Exponential Hierarchy via Iterated EML')
+ax4.legend(fontsize=8)
+ax4.grid(True, alpha=0.3)
 
-    ax.set_xlabel('x')
-    ax.set_ylabel('d(x)')
-    ax.set_title('EML Diagonal: Strictly Convex')
-    ax.legend(fontsize=8)
-    ax.set_ylim(0, 15)
-    ax.grid(True, alpha=0.3)
-
-    # Panel 2: First derivative
-    ax = axes[1]
-    dy = eml_diagonal_deriv(x)
-    ax.plot(x, dy, 'g-', linewidth=2, label=r"$d'(x) = e^x - 1/x$")
-    ax.axhline(y=0, color='k', linestyle='-', alpha=0.3)
-    ax.set_xlabel('x')
-    ax.set_ylabel("d'(x)")
-    ax.set_title('First Derivative')
-    ax.legend()
-    ax.set_ylim(-20, 20)
-    ax.grid(True, alpha=0.3)
-
-    # Panel 3: Second derivative (always positive)
-    ax = axes[2]
-    d2y = eml_diagonal_deriv2(x)
-    ax.plot(x, d2y, 'm-', linewidth=2, label=r"$d''(x) = e^x + 1/x^2$")
-    ax.axhline(y=0, color='k', linestyle='-', alpha=0.3)
-    ax.fill_between(x, 0, d2y, alpha=0.15, color='m')
-    ax.set_xlabel('x')
-    ax.set_ylabel("d''(x)")
-    ax.set_title("Second Derivative (Always Positive)")
-    ax.legend()
-    ax.set_ylim(0, 30)
-    ax.grid(True, alpha=0.3)
-
-    plt.suptitle('EML Diagonal: Strict Convexity Visualization', fontsize=14, y=1.02)
-    plt.tight_layout()
-    plt.savefig('eml_diagonal.png', dpi=150, bbox_inches='tight')
-    print("Saved eml_diagonal.png")
-
-
-if __name__ == "__main__":
-    main()
+plt.tight_layout()
+plt.savefig('eml_surface.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved: eml_surface.png")

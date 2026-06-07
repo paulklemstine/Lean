@@ -1,307 +1,341 @@
 #!/usr/bin/env python3
 """
-EML Single-Operator Compilation: Core Algorithms
+EML Single Operator Church-Turing Thesis: Algorithms
 
-Type-hinted implementations of the compilation, decompilation,
-and analysis algorithms for the EML Church-Turing thesis.
+Type-hinted implementations of the EML compiler and related algorithms.
 """
 
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Optional, Union
+from typing import Optional, Callable
 import math
 
 
 # ============================================================
-# Expression AST Types
+# §1. Expression Types
 # ============================================================
 
-@dataclass(frozen=True)
-class UVar:
-    """Variable node in UExpr."""
+class UExpr:
+    """Source expression with separate exp and log nodes."""
     pass
 
-@dataclass(frozen=True)
-class UConst:
-    """Constant node in UExpr."""
+@dataclass
+class Var(UExpr):
+    """The variable x."""
+    pass
+
+@dataclass 
+class Const(UExpr):
+    """A real constant."""
     value: float
 
-@dataclass(frozen=True)
-class UBinOp:
-    """Binary operation in UExpr."""
-    op: str  # 'add', 'sub', 'mul', 'div'
+@dataclass
+class Add(UExpr):
     left: UExpr
     right: UExpr
 
-@dataclass(frozen=True)
-class UExp:
-    """Exponential node in UExpr."""
+@dataclass
+class Sub(UExpr):
+    left: UExpr
+    right: UExpr
+
+@dataclass
+class Mul(UExpr):
+    left: UExpr
+    right: UExpr
+
+@dataclass
+class Div(UExpr):
+    left: UExpr
+    right: UExpr
+
+@dataclass
+class Exp(UExpr):
     arg: UExpr
 
-@dataclass(frozen=True)
-class ULog:
-    """Logarithm node in UExpr."""
+@dataclass
+class Log(UExpr):
     arg: UExpr
 
-UExpr = Union[UVar, UConst, UBinOp, UExp, ULog]
 
-
-@dataclass(frozen=True)
-class EVar:
-    """Variable node in EMLExpr."""
+class EMLExpr:
+    """Target expression with eml as sole transcendental primitive."""
     pass
 
-@dataclass(frozen=True)
-class EConst:
-    """Constant node in EMLExpr."""
+@dataclass
+class EVar(EMLExpr):
+    pass
+
+@dataclass
+class EConst(EMLExpr):
     value: float
 
-@dataclass(frozen=True)
-class EBinOp:
-    """Binary operation in EMLExpr (add, sub, mul, div)."""
-    op: str
+@dataclass
+class EAdd(EMLExpr):
     left: EMLExpr
     right: EMLExpr
 
-@dataclass(frozen=True)
-class EEML:
-    """The eml primitive: eml(x, y) = exp(x) - log(y)."""
+@dataclass
+class ESub(EMLExpr):
     left: EMLExpr
     right: EMLExpr
 
-EMLExpr = Union[EVar, EConst, EBinOp, EEML]
+@dataclass
+class EMul(EMLExpr):
+    left: EMLExpr
+    right: EMLExpr
+
+@dataclass
+class EDiv(EMLExpr):
+    left: EMLExpr
+    right: EMLExpr
+
+@dataclass
+class EML(EMLExpr):
+    """eml(left, right) = exp(left) - log(right)"""
+    left: EMLExpr
+    right: EMLExpr
 
 
 # ============================================================
-# Algorithm 1: Compilation (UExpr → EMLExpr)
+# §2. The Compiler
 # ============================================================
 
 def compile_to_eml(expr: UExpr) -> EMLExpr:
     """
-    Compile a UExpr to an EMLExpr using eml as the sole transcendental primitive.
-
-    Key translations:
-    - exp(e) → eml(compile(e), 1)     [since eml(x,1) = exp(x) - log(1) = exp(x)]
-    - log(e) → 1 - eml(0, compile(e)) [since eml(0,y) = exp(0) - log(y) = 1 - log(y)]
-
-    Complexity: O(n) time and space, where n = size of input expression.
-    Size bound: output size ≤ 4 × input size.
-    Rank: output eml_rank = input transcendence_rank (exact).
+    Compile a UExpr to an equivalent EMLExpr.
+    
+    Translation rules:
+    - exp(e) → eml(compile(e), const(1))        [since exp(x) = eml(x, 1)]
+    - log(e) → sub(const(1), eml(const(0), compile(e)))  [since log(y) = 1 - eml(0, y)]
+    - All other nodes preserved structurally.
+    
+    Time complexity: O(|expr|)
+    Space complexity: O(|expr|)
     """
-    if isinstance(expr, UVar):
+    if isinstance(expr, Var):
         return EVar()
-    elif isinstance(expr, UConst):
+    elif isinstance(expr, Const):
         return EConst(expr.value)
-    elif isinstance(expr, UBinOp):
-        return EBinOp(expr.op, compile_to_eml(expr.left), compile_to_eml(expr.right))
-    elif isinstance(expr, UExp):
+    elif isinstance(expr, Add):
+        return EAdd(compile_to_eml(expr.left), compile_to_eml(expr.right))
+    elif isinstance(expr, Sub):
+        return ESub(compile_to_eml(expr.left), compile_to_eml(expr.right))
+    elif isinstance(expr, Mul):
+        return EMul(compile_to_eml(expr.left), compile_to_eml(expr.right))
+    elif isinstance(expr, Div):
+        return EDiv(compile_to_eml(expr.left), compile_to_eml(expr.right))
+    elif isinstance(expr, Exp):
         # exp(e) = eml(e, 1)
-        return EEML(compile_to_eml(expr.arg), EConst(1.0))
-    elif isinstance(expr, ULog):
+        return EML(compile_to_eml(expr.arg), EConst(1.0))
+    elif isinstance(expr, Log):
         # log(e) = 1 - eml(0, e)
-        return EBinOp('sub', EConst(1.0), EEML(EConst(0.0), compile_to_eml(expr.arg)))
+        return ESub(EConst(1.0), EML(EConst(0.0), compile_to_eml(expr.arg)))
     else:
-        raise TypeError(f"Unknown UExpr type: {type(expr)}")
+        raise ValueError(f"Unknown expression type: {type(expr)}")
 
 
 # ============================================================
-# Algorithm 2: Decompilation (EMLExpr → UExpr)
-# ============================================================
-
-def decompile_from_eml(expr: EMLExpr) -> UExpr:
-    """
-    Decompile an EMLExpr back to a UExpr by expanding each eml node.
-
-    Key translation:
-    - eml(e1, e2) → exp(decompile(e1)) - log(decompile(e2))
-
-    Complexity: O(n) time and space.
-    Size bound: output size ≤ 3 × input size.
-    Rank: output transcendence_rank = 2 × input eml_rank.
-    """
-    if isinstance(expr, EVar):
-        return UVar()
-    elif isinstance(expr, EConst):
-        return UConst(expr.value)
-    elif isinstance(expr, EBinOp):
-        return UBinOp(expr.op, decompile_from_eml(expr.left), decompile_from_eml(expr.right))
-    elif isinstance(expr, EEML):
-        # eml(e1, e2) = exp(e1) - log(e2)
-        return UBinOp('sub', UExp(decompile_from_eml(expr.left)),
-                       ULog(decompile_from_eml(expr.right)))
-    else:
-        raise TypeError(f"Unknown EMLExpr type: {type(expr)}")
-
-
-# ============================================================
-# Algorithm 3: Partial Evaluation
+# §3. Evaluation
 # ============================================================
 
 def eval_uexpr(expr: UExpr, x: float) -> Optional[float]:
-    """Evaluate a UExpr at x, returning None for undefined operations."""
-    if isinstance(expr, UVar):
+    """Evaluate a UExpr at x. Returns None on domain errors."""
+    if isinstance(expr, Var):
         return x
-    elif isinstance(expr, UConst):
+    elif isinstance(expr, Const):
         return expr.value
-    elif isinstance(expr, UBinOp):
-        v1 = eval_uexpr(expr.left, x)
-        v2 = eval_uexpr(expr.right, x)
-        if v1 is None or v2 is None:
+    elif isinstance(expr, Add):
+        l = eval_uexpr(expr.left, x)
+        r = eval_uexpr(expr.right, x)
+        return l + r if l is not None and r is not None else None
+    elif isinstance(expr, Sub):
+        l = eval_uexpr(expr.left, x)
+        r = eval_uexpr(expr.right, x)
+        return l - r if l is not None and r is not None else None
+    elif isinstance(expr, Mul):
+        l = eval_uexpr(expr.left, x)
+        r = eval_uexpr(expr.right, x)
+        return l * r if l is not None and r is not None else None
+    elif isinstance(expr, Div):
+        l = eval_uexpr(expr.left, x)
+        r = eval_uexpr(expr.right, x)
+        if l is None or r is None or r == 0:
             return None
-        if expr.op == 'add': return v1 + v2
-        if expr.op == 'sub': return v1 - v2
-        if expr.op == 'mul': return v1 * v2
-        if expr.op == 'div':
-            return v1 / v2 if v2 != 0 else None
-    elif isinstance(expr, UExp):
+        return l / r
+    elif isinstance(expr, Exp):
         v = eval_uexpr(expr.arg, x)
-        if v is not None:
-            try:
-                return math.exp(v)
-            except OverflowError:
-                return float('inf')
-        return None
-    elif isinstance(expr, ULog):
+        if v is None:
+            return None
+        try:
+            return math.exp(v)
+        except OverflowError:
+            return None
+    elif isinstance(expr, Log):
         v = eval_uexpr(expr.arg, x)
-        return math.log(v) if v is not None and v > 0 else None
+        if v is None or v <= 0:
+            return None
+        return math.log(v)
     return None
 
 
 def eval_emlexpr(expr: EMLExpr, x: float) -> Optional[float]:
-    """Evaluate an EMLExpr at x, returning None for undefined operations."""
+    """Evaluate an EMLExpr at x. Returns None on domain errors."""
     if isinstance(expr, EVar):
         return x
     elif isinstance(expr, EConst):
         return expr.value
-    elif isinstance(expr, EBinOp):
-        v1 = eval_emlexpr(expr.left, x)
-        v2 = eval_emlexpr(expr.right, x)
-        if v1 is None or v2 is None:
+    elif isinstance(expr, EAdd):
+        l = eval_emlexpr(expr.left, x)
+        r = eval_emlexpr(expr.right, x)
+        return l + r if l is not None and r is not None else None
+    elif isinstance(expr, ESub):
+        l = eval_emlexpr(expr.left, x)
+        r = eval_emlexpr(expr.right, x)
+        return l - r if l is not None and r is not None else None
+    elif isinstance(expr, EMul):
+        l = eval_emlexpr(expr.left, x)
+        r = eval_emlexpr(expr.right, x)
+        return l * r if l is not None and r is not None else None
+    elif isinstance(expr, EDiv):
+        l = eval_emlexpr(expr.left, x)
+        r = eval_emlexpr(expr.right, x)
+        if l is None or r is None or r == 0:
             return None
-        if expr.op == 'add': return v1 + v2
-        if expr.op == 'sub': return v1 - v2
-        if expr.op == 'mul': return v1 * v2
-        if expr.op == 'div':
-            return v1 / v2 if v2 != 0 else None
-    elif isinstance(expr, EEML):
-        v1 = eval_emlexpr(expr.left, x)
-        v2 = eval_emlexpr(expr.right, x)
-        if v1 is not None and v2 is not None and v2 > 0:
-            try:
-                return math.exp(v1) - math.log(v2)
-            except OverflowError:
-                return float('inf')
-        return None
+        return l / r
+    elif isinstance(expr, EML):
+        l = eval_emlexpr(expr.left, x)
+        r = eval_emlexpr(expr.right, x)
+        if l is None or r is None or r <= 0:
+            return None
+        try:
+            return math.exp(l) - math.log(r)
+        except OverflowError:
+            return None
     return None
 
 
 # ============================================================
-# Algorithm 4: Expression Metrics
+# §4. Complexity Measures
 # ============================================================
 
-def expr_size(expr: Union[UExpr, EMLExpr]) -> int:
-    """Count nodes in expression tree."""
-    if isinstance(expr, (UVar, EVar, UConst, EConst)):
+def size_uexpr(expr: UExpr) -> int:
+    """Count nodes in a UExpr."""
+    if isinstance(expr, (Var, Const)):
         return 1
-    elif isinstance(expr, UBinOp):
-        return 1 + expr_size(expr.left) + expr_size(expr.right)
-    elif isinstance(expr, EBinOp):
-        return 1 + expr_size(expr.left) + expr_size(expr.right)
-    elif isinstance(expr, (UExp, ULog)):
-        return 1 + expr_size(expr.arg)
-    elif isinstance(expr, EEML):
-        return 1 + expr_size(expr.left) + expr_size(expr.right)
+    elif isinstance(expr, (Add, Sub, Mul, Div)):
+        return 1 + size_uexpr(expr.left) + size_uexpr(expr.right)
+    elif isinstance(expr, (Exp, Log)):
+        return 1 + size_uexpr(expr.arg)
     return 0
 
+def size_emlexpr(expr: EMLExpr) -> int:
+    """Count nodes in an EMLExpr."""
+    if isinstance(expr, (EVar, EConst)):
+        return 1
+    elif isinstance(expr, (EAdd, ESub, EMul, EDiv, EML)):
+        return 1 + size_emlexpr(expr.left) + size_emlexpr(expr.right)
+    return 0
 
-def transcendence_rank(expr: UExpr) -> int:
-    """Count exp/log nodes in UExpr."""
-    if isinstance(expr, (UVar, UConst)):
+def transc_rank(expr: UExpr) -> int:
+    """Count exp/log nodes in a UExpr."""
+    if isinstance(expr, (Var, Const)):
         return 0
-    elif isinstance(expr, UBinOp):
-        return transcendence_rank(expr.left) + transcendence_rank(expr.right)
-    elif isinstance(expr, (UExp, ULog)):
-        return 1 + transcendence_rank(expr.arg)
+    elif isinstance(expr, (Add, Sub, Mul, Div)):
+        return transc_rank(expr.left) + transc_rank(expr.right)
+    elif isinstance(expr, (Exp, Log)):
+        return 1 + transc_rank(expr.arg)
     return 0
-
 
 def eml_rank(expr: EMLExpr) -> int:
-    """Count eml nodes in EMLExpr."""
+    """Count eml nodes in an EMLExpr."""
     if isinstance(expr, (EVar, EConst)):
         return 0
-    elif isinstance(expr, EBinOp):
+    elif isinstance(expr, (EAdd, ESub, EMul, EDiv)):
         return eml_rank(expr.left) + eml_rank(expr.right)
-    elif isinstance(expr, EEML):
+    elif isinstance(expr, EML):
         return 1 + eml_rank(expr.left) + eml_rank(expr.right)
     return 0
 
-
-def expr_depth(expr: Union[UExpr, EMLExpr]) -> int:
-    """Compute depth of expression tree."""
-    if isinstance(expr, (UVar, EVar, UConst, EConst)):
+def eml_depth(expr: EMLExpr) -> int:
+    """Maximum nesting depth of eml nodes."""
+    if isinstance(expr, (EVar, EConst)):
         return 0
-    elif isinstance(expr, UBinOp):
-        return 1 + max(expr_depth(expr.left), expr_depth(expr.right))
-    elif isinstance(expr, EBinOp):
-        return 1 + max(expr_depth(expr.left), expr_depth(expr.right))
-    elif isinstance(expr, (UExp, ULog)):
-        return 1 + expr_depth(expr.arg)
-    elif isinstance(expr, EEML):
-        return 1 + max(expr_depth(expr.left), expr_depth(expr.right))
+    elif isinstance(expr, (EAdd, ESub, EMul, EDiv)):
+        return max(eml_depth(expr.left), eml_depth(expr.right))
+    elif isinstance(expr, EML):
+        return 1 + max(eml_depth(expr.left), eml_depth(expr.right))
     return 0
 
 
 # ============================================================
-# Algorithm 5: Verification
+# §5. Pretty Printing
 # ============================================================
 
-def verify_compilation_correctness(
-    expr: UExpr,
-    test_points: list[float],
-    tolerance: float = 1e-10
-) -> tuple[bool, list[str]]:
-    """
-    Verify that compile(expr) is semantically equivalent to expr
-    at the given test points.
+def show_uexpr(expr: UExpr) -> str:
+    if isinstance(expr, Var): return "x"
+    elif isinstance(expr, Const): return f"{expr.value:.4g}"
+    elif isinstance(expr, Add): return f"({show_uexpr(expr.left)} + {show_uexpr(expr.right)})"
+    elif isinstance(expr, Sub): return f"({show_uexpr(expr.left)} - {show_uexpr(expr.right)})"
+    elif isinstance(expr, Mul): return f"({show_uexpr(expr.left)} * {show_uexpr(expr.right)})"
+    elif isinstance(expr, Div): return f"({show_uexpr(expr.left)} / {show_uexpr(expr.right)})"
+    elif isinstance(expr, Exp): return f"exp({show_uexpr(expr.arg)})"
+    elif isinstance(expr, Log): return f"log({show_uexpr(expr.arg)})"
+    return "?"
 
-    Returns (success, messages).
-    """
+def show_emlexpr(expr: EMLExpr) -> str:
+    if isinstance(expr, EVar): return "x"
+    elif isinstance(expr, EConst): return f"{expr.value:.4g}"
+    elif isinstance(expr, EAdd): return f"({show_emlexpr(expr.left)} + {show_emlexpr(expr.right)})"
+    elif isinstance(expr, ESub): return f"({show_emlexpr(expr.left)} - {show_emlexpr(expr.right)})"
+    elif isinstance(expr, EMul): return f"({show_emlexpr(expr.left)} * {show_emlexpr(expr.right)})"
+    elif isinstance(expr, EDiv): return f"({show_emlexpr(expr.left)} / {show_emlexpr(expr.right)})"
+    elif isinstance(expr, EML): return f"eml({show_emlexpr(expr.left)}, {show_emlexpr(expr.right)})"
+    return "?"
+
+
+# ============================================================
+# §6. Verification
+# ============================================================
+
+def verify_compilation(expr: UExpr, test_points: list[float]) -> bool:
+    """Verify that compilation preserves semantics at test points."""
     compiled = compile_to_eml(expr)
-    messages = []
-    all_ok = True
-
     for x in test_points:
-        v_orig = eval_uexpr(expr, x)
-        v_comp = eval_emlexpr(compiled, x)
-
-        if v_orig is None and v_comp is None:
-            messages.append(f"  x={x}: both undefined ✓")
-        elif v_orig is not None and v_comp is not None:
-            if abs(v_orig - v_comp) <= tolerance:
-                messages.append(f"  x={x}: {v_orig:.8f} == {v_comp:.8f} ✓")
-            else:
-                messages.append(f"  x={x}: {v_orig:.8f} != {v_comp:.8f} ✗")
-                all_ok = False
-        else:
-            messages.append(f"  x={x}: orig={v_orig}, comp={v_comp} ✗ (definedness mismatch)")
-            all_ok = False
-
-    return all_ok, messages
+        orig = eval_uexpr(expr, x)
+        comp = eval_emlexpr(compiled, x)
+        if orig is None and comp is None:
+            continue
+        if orig is None or comp is None:
+            return False
+        if abs(orig - comp) > 1e-10:
+            return False
+    return True
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    expr = UBinOp('add', UExp(UVar()), ULog(UVar()))
-    compiled = compile_to_eml(expr)
-    decompiled = decompile_from_eml(compiled)
-
-    print(f"Original:    {expr}")
-    print(f"Compiled:    {compiled}")
-    print(f"Decompiled:  {decompiled}")
-    print(f"Size: {expr_size(expr)} → {expr_size(compiled)} → {expr_size(decompiled)}")
-    print(f"Rank: {transcendence_rank(expr)} → {eml_rank(compiled)}")
-
-    ok, msgs = verify_compilation_correctness(expr, [0.5, 1.0, 2.0, 5.0])
-    print(f"\nVerification: {'PASS' if ok else 'FAIL'}")
-    for m in msgs:
-        print(m)
+    # Test the compiler
+    test_exprs: list[tuple[str, UExpr]] = [
+        ("exp(x)", Exp(Var())),
+        ("log(x)", Log(Var())),
+        ("exp(x) + log(x)", Add(Exp(Var()), Log(Var()))),
+        ("exp(log(x))", Exp(Log(Var()))),
+        ("x^2", Mul(Var(), Var())),
+        ("sinh(x)", Div(Sub(Exp(Var()), Exp(Mul(Const(-1), Var()))), Const(2))),
+    ]
+    
+    test_points = [0.5, 1.0, 1.5, 2.0, math.e]
+    
+    for name, expr in test_exprs:
+        compiled = compile_to_eml(expr)
+        src_size = size_uexpr(expr)
+        cmp_size = size_emlexpr(compiled)
+        src_rank = transc_rank(expr)
+        cmp_rank = eml_rank(compiled)
+        ok = verify_compilation(expr, test_points)
+        
+        print(f"  {name:<25} | size: {src_size} → {cmp_size} (ratio {cmp_size/src_size:.1f})")
+        print(f"  {'':25} | rank: {src_rank} → {cmp_rank} (conserved: {src_rank == cmp_rank})")
+        print(f"  {'':25} | correct: {ok}")
+        print(f"  {'':25} | compiled: {show_emlexpr(compiled)}")
+        print()
