@@ -2509,6 +2509,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Non-Archimedean Probability Theory\n\n## Synthesis\n\nThis research cycle established the mathematical foundations for probability theory in non-Archimedean ordered fields, with Conway's surreal numbers as the primary example. The key discovery is that the Archimedean property is the *precise* obstruction to infinitesimal probabilities \u2014 and that this obstruction can be formally overcome by working in surreal numbers, which we proved to be non-Archimedean via the ordinal embedding of \u03c9\u2080.\n\nThe most promising cross-domain connection emerged between **game theory** and **probability theory**: the two-level measure construction mirrors the structure of combinatorial games where one player (the \"bulk\") has overwhelming advantage, while the remaining players have infinitesimal influence. This game-probability bridge is the direction with the highest breakthrough potential because it could unify Nash equilibrium theory (which uses mixed strategies = probability measures) with Conway's game theory in a single formal framework.\n\nOur results connect to the Catalog's `sum_ne_zero_of_same_sign_and_exists_ne_zero` (positivity of sums) and conceptually to `exists_fixed_point_on_orbit_with_bound` (the defect of an infinitesimal measure as a \"renormalization\" quantity). The formal verification of 27 theorems without any `sorry` provides a solid foundation for future cycles.\n\n---\n\n### Direction 1: Surreal-Valued Integration Theory\n\n**Conjecture**: There exists a surreal-valued \"integral\" operator on step functions f : [0,1]_fin \u2192 Surreal (where [0,1]_fin is a finite partition of [0,1]) that is linear, monotone, and agrees with the standard Riemann integral for real-valued functions. Moreover, if f assigns infinitesimal value \u03b5 to each partition element, the integral converges to a well-defined surreal value as the partition refines.\n\n**Test**: Construct the integral for step functions on Fin n and prove linearity and monotonicity. Then show that for the constant function f \u2261 \u03b5 on Fin n, the integral equals n \u00b7 \u03b5 (which is infinitesimal for true infinitesimal \u03b5). Verify that refining the partition (n \u2192 2n) does not change the integral of real-valued functions.\n\n**Impact**: If true, this opens the door to continuous surreal probability measures. If false, the specific failure mode (loss of monotonicity? failure of linearity?) would reveal deep structural constraints on non-Archimedean integration.\n\n**Catalog References**: `Novelty/SurrealProbability/Defs.lean`, `Novelty/SurrealProbability/Theorems.lean`\n\n**Proof Strategy**: \n1. Define step functions as `Fin n \u2192 Surreal` paired with a partition.\n2. Define the integral as the weighted sum \u03a3 f(i) \u00b7 \u03bc(partition_i).\n3. Prove linearity by distributivity of multiplication over addition in CommRing Surreal.\n4. Prove monotonicity using IsStrictOrderedRing.\n5. The key challenge is the refinement limit \u2014 this requires a notion of surreal-valued limits.\n\n**Domain Bridges**: Integration theory \u2194 Measure theory \u2194 Surreal game theory\n\n**Lineage**: Builds on `two_level_measure_exists`, `measure_finite_additivity`, `surreal_not_archimedean`\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Game-Theoretic Nash Equilibrium in Surreal Numbers\n\n**Conjecture**: For any finite two-player zero-sum game with payoff matrix M \u2208 Surreal^{m\u00d7n}, there exists a surreal-valued mixed strategy Nash equilibrium. Moreover, if the payoffs include infinitesimal perturbations (M' = M + \u03b5\u0394), the equilibrium strategies converge to those of M as \u03b5 \u2192 0 in a suitable sense.\n\n**Test**: Formalize 2\u00d72 matrix games with surreal payoffs. Construct the equilibrium explicitly using the minimax formula (which requires Surreal to have enough field-like structure \u2014 at minimum, division by nonzero elements). Verify the equilibrium conditions. Then perturb by \u03b5 and check stability.\n\n**Impact**: If true, this provides a formal framework for \"trembling hand\" refinements in game theory, where infinitesimal mistakes are modeled by surreal perturbations rather than limits. If false, the failure would likely come from Surreal not having a full Field instance \u2014 identifying exactly what algebraic operations are needed would guide future Mathlib formalization of surreal division.\n\n**Catalog References**: `Novelty/SurrealProbability/Advanced.lean` (two_outcome_determined), `FINAL/Pythagorean/LorentzianAggregateAntiCancel.lean`\n\n**Proof Strategy**:\n1. Define mixed strategies as FinAddProb (Fin m) Surreal (requires Field Surreal, which isn't in Mathlib \u2014 may need CommRing workaround).\n2. Define expected payoff using surreal multiplication.\n3. For 2\u00d72 games, solve explicitly.\n4. Use the two_outcome_determined theorem as the base case.\n\n**Domain Bridges**: Game theory \u2194 Probability theory \u2194 Surreal arithmetic\n\n**Lineage**: Builds on `two_outcome_determined`, `FinAddProb`, `surreal_not_archimedean`\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Tropical Probability via Surreal Valuation\n\n**Conjecture**: There exists a natural \"valuation\" map v : Surreal\u22650 \u2192 \u211d \u222a {+\u221e} (mapping infinitesimals to their \"order of smallness\") such that the pushforward of a surreal probability measure under v yields a tropical probability measure \u2014 one where probabilities are combined by min (for union of independent events) rather than addition.\n\n**Test**: Define v(\u03b5^k) = k for an infinitesimal \u03b5 and extend. Verify that v(\u03bc(A \u222a B)) = min(v(\u03bc(A)), v(\u03bc(B))) for disjoint events A, B with infinitesimal measures.\n\n**Impact**: If true, this would create a formal bridge between surreal probability and tropical geometry, showing that tropical probability is the \"shadow\" of surreal probability under the infinitesimal valuation. This connects to the Catalog's tropical results in `FINAL/Tropical/TropicalAdditiveCombinatorics.lean`.\n\n**Catalog References**: `FINAL/Tropical/TropicalAdditiveCombinatorics.lean`, `Tropical/GL3FiniteTestFamily.lean`\n\n**Proof Strategy**:\n1. Define the valuation on monomial surreals \u03b5^k as v(\u03b5^k) = k.\n2. Show v is a group homomorphism from (Surreal>0, \u00b7) to (\u211d, +).\n3. Prove the min property for disjoint unions.\n4. Connect to existing tropical semiring formalization.\n\n**Domain Bridges**: Surreal probability \u2194 Tropical geometry \u2194 Combinatorics\n\n**Lineage**: Builds on `infinitesimal_squared_smaller`, `infinitesimal_defect_pos`\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Countable Additivity Obstruction in Non-Archimedean Fields\n\n**Conjecture**: In any non-Archimedean ordered field F, there is NO countably additive probability measure \u03bc : P(\u2115) \u2192 F that assigns positive weight to every singleton. Specifically, if \u03bc({n}) = \u03b5\u2099 > 0 for all n and \u03a3 \u03b5\u2099 converges in F, then the Archimedean property must hold for {\u03b5\u2099} \u2014 contradicting the assumption that F is non-Archimedean.\n\n**Test**: Formalize the statement for F = Surreal (or an abstract non-Archimedean field). Attempt to prove it by showing that convergence of \u03a3 \u03b5\u2099 implies an Archimedean-like bound. If the conjecture is FALSE, construct a counterexample.\n\n**Impact**: If true, this is a deep impossibility result showing that finitely additive (not countably additive) measures are the natural framework for non-Archimedean probability. If false, the counterexample would be groundbreaking \u2014 a countably additive surreal probability measure on \u2115 with positive point masses.\n\n**Catalog References**: `Novelty/SurrealProbability/Theorems.lean`, `FINAL/Tropical/TropicalAdditiveCombinatorics.lean` (no_finite_bound_if_counterexample_exists)\n\n**Proof Strategy**:\n1. Define \"convergent series\" in a non-Archimedean ordered field.\n2. Show that if \u03a3 \u03b5\u2099 = 1 with all \u03b5\u2099 > 0, then for any \u03b5 > 0, only finitely many \u03b5\u2099 > \u03b5.\n3. This implies \u03b5\u2099 \u2192 0, which in a non-Archimedean field means the \u03b5\u2099 are eventually infinitesimal relative to any standard element.\n4. But then \u03a3 \u03b5\u2099 should be at most countably many infinitesimals, which is still infinitesimal (if this can be shown).\n\n**Domain Bridges**: Measure theory \u2194 Non-Archimedean analysis \u2194 Set theory\n\n**Lineage**: Builds on `archimedean_no_infinitesimal`, `surreal_not_archimedean`\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Bayesian Inference with Infinitesimal Priors\n\n**Conjecture**: For a finite hypothesis space H = {h\u2081, ..., h\u2099} with surreal-valued prior probabilities, if the prior assigns infinitesimal probability \u03b5 to hypothesis h\u2096 and standard probability to the others, then after observing evidence E with P(E|h\u2096) \u226b P(E|h\u1d62) for i \u2260 k, the posterior probability of h\u2096 can become standard (non-infinitesimal). Quantitatively: if P(E|h\u2096)/P(E|h\u1d62) > 1/\u03b5 for all i \u2260 k, then P(h\u2096|E) > 1/2.\n\n**Test**: Formalize in Lean using our FinAddProb and condProb definitions. Construct a specific example with n = 3, \u03b5 = surreal infinitesimal, and verify the posterior computation using bayes_formula.\n\n**Impact**: If true, this shows that Bayesian reasoning can \"rescue\" hypotheses from infinitesimal prior probability given sufficiently strong evidence \u2014 a result with philosophical implications for the problem of old evidence and zero-prior hypotheses in Bayesian epistemology. If false, it would mean that infinitesimal priors are \"too small\" to ever recover, which is also informative.\n\n**Catalog References**: `Novelty/SurrealProbability/Advanced.lean` (bayes_formula, cond_prob_self_eq_one)\n\n**Proof Strategy**:\n1. Set up a 3-element hypothesis space with FinAddProb.\n2. Define evidence E as a subset with specified likelihoods.\n3. Compute posterior using bayes_formula.\n4. Show that the ratio of likelihoods overwhelms the prior ratio.\n5. The key algebraic step: dividing a standard number by an infinitesimal to get something > 1.\n\n**Domain Bridges**: Probability theory \u2194 Bayesian epistemology \u2194 Philosophy of science\n\n**Lineage**: Builds on `bayes_formula`, `two_level_measure_exists`, `cond_prob_univ`\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0997",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a58f8af8",
+    "status": "available",
+    "timestamp": "2026-06-07T23:49:20.792467+00:00",
+    "title": "Mathematical foundations for probability the"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -3648,7 +3663,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
-    "consumed_by_exp_id": "9b89ab8a",
+    "consumed_by_exp_id": "",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domains": [
       "Algebra",
@@ -3658,7 +3673,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.181414+00:00",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
@@ -4338,7 +4353,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },
   {
-    "consumed_by_exp_id": "ae21737b",
+    "consumed_by_exp_id": "",
     "description": "The Robertson-Seymour theorem states that the set of finite graphs is well-quasi-ordered by the minor relation: any infinite sequence of graphs contains two where one is a minor of the other. This implies that any minor-closed graph property is characterized by a finite set of forbidden minors. Conjecture: the same theorem holds for representable matroids over any finite field. Specifically, for any finite field F_q, the set of F_q-representable matroids is well-quasi-ordered by the matroid minor relation. This would generalize the Robertson-Seymour theorem from graphs (F_2-representable matroids) to all finite fields. The conjecture is known to fail for general matroids (by the existence of infinite antichains of non-representable matroids), but for F_q-representable matroids with q <= 3, it is open. Conjecture: for F_3 (ternary matroids), the set of excluded minors for representability is finite. The current known excluded minors for F_3 are: the Fano matroid F_7, its dual F_7*, and the non-Pappus matroid. Test: enumerate ternary matroids of rank 3 on 9 elements, verify that all but the known excluded minors are F_3-representable. Impact: Robertson-Seymour for matroids would unify graph minor theory and matroid theory under a single well-quasi-ordering theorem.",
     "domains": [
       "Novelty",
@@ -4348,7 +4363,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.667149+00:00",
     "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
   },
@@ -4593,7 +4608,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "94343d31",
     "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
     "domains": [
       "Novelty",
@@ -4603,7 +4618,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.814374+00:00",
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
@@ -4728,7 +4743,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cellular Automata at the Ordinals: Transfinite Computation"
   },
   {
-    "consumed_by_exp_id": "163ba986",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own G\u00f6del sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
     "domains": [
       "Novelty",
@@ -4738,7 +4753,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.889380+00:00",
     "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
   },

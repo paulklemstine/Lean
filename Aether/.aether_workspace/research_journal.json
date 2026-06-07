@@ -2,16 +2,6 @@
   "breakthroughs": [],
   "cycle_log": [
     {
-      "cycle_id": "21038de9",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established a rigorous bridge between spectral graph theory and adversarial robustness in neural networks. The core discovery is that th",
-      "quality_score": 0.4996,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-05T00:32:15",
-      "title": "Spectral Graph Theory Meets Network Robustness"
-    },
-    {
       "cycle_id": "0745dd05",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions: Self-Referential Type Theory and Beyond\n\n## Synthesis\n\nThis research cycle established a complete formal framework for self-referential types grounded in Lawvere's fixed point the",
@@ -2000,6 +1990,16 @@
       "theorem_count": 4,
       "timestamp": "2026-06-07T23:15:22",
       "title": "Counterfactual Number Theory: What If Primes Were Random?"
+    },
+    {
+      "cycle_id": "a58f8af8",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Non-Archimedean Probability Theory\n\n## Synthesis\n\nThis research cycle established the mathematical foundations for probability theory in non-Archimedean ordered fields, with Conwa",
+      "quality_score": 0.5612,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T23:49:22",
+      "title": "Non-Archimedean Probability via Surreal Numbers"
     }
   ],
   "entries": [
@@ -2045,7 +2045,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-07T23:15:22",
+  "last_updated": "2026-06-07T23:49:22",
   "open_questions": [
     {
       "context": "sorry",
@@ -2269,12 +2269,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "cbbdc1b6",
-        "quality": 0.43600000000000005,
-        "theorems": 5,
-        "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-      },
-      {
         "cycle_id": "1d4faca5",
         "quality": 0.32320000000000004,
         "theorems": 5,
@@ -2327,6 +2321,12 @@
         "quality": 0.35944,
         "theorems": 4,
         "title": "Counterfactual Number Theory: What If Primes Were Random?"
+      },
+      {
+        "cycle_id": "a58f8af8",
+        "quality": 0.5612,
+        "theorems": 5,
+        "title": "Non-Archimedean Probability via Surreal Numbers"
       }
     ],
     "Physics": [
