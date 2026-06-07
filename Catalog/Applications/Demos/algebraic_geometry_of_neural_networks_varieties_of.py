@@ -1,458 +1,298 @@
 #!/usr/bin/env python3
 """
-Tropical Neural Algebra: Demonstration
+Demo: Tropical Geometry of Neural Network Decision Boundaries
 
-Shows how ReLU networks compute tropical rational functions and how
-decision boundary complexity grows with network architecture.
+Demonstrates the key results:
+1. ReLU networks compute piecewise linear functions
+2. Decision boundaries are tropical hypersurfaces
+3. Depth creates exponentially more linear regions than width
+4. The tropical degree bounds the decision boundary complexity
 """
 
 import numpy as np
 
-def relu(x):
-    """ReLU activation: max(x, 0)"""
+def relu(x: np.ndarray) -> np.ndarray:
+    """ReLU activation function."""
     return np.maximum(x, 0)
 
-def tropical_max(a, b):
-    """Tropical sum in max-plus algebra"""
-    return np.maximum(a, b)
+def single_layer_network(x: np.ndarray, W: np.ndarray, b: np.ndarray) -> np.ndarray:
+    """Single hidden layer ReLU network: f(x) = sum_i relu(w_i * x + b_i)."""
+    return np.sum(relu(np.outer(x, np.ones(W.shape[0])) * W + b), axis=1)
 
-def tropical_add(a, b):
-    """Tropical product in max-plus algebra (= classical addition)"""
-    return a + b
+def count_linear_regions_1d(f, x_range: tuple, n_samples: int = 100000) -> int:
+    """Count linear regions of a 1D piecewise linear function by detecting slope changes."""
+    xs = np.linspace(x_range[0], x_range[1], n_samples)
+    ys = np.array([f(x) for x in xs])
+    # Compute slopes between consecutive points
+    slopes = np.diff(ys) / np.diff(xs)
+    # Count slope changes (up to numerical tolerance)
+    slope_changes = np.sum(np.abs(np.diff(slopes)) > 1e-6)
+    return int(slope_changes + 1)
 
-# ============================================================
-# Demo 1: ReLU as Tropical Polynomial
-# ============================================================
-print("=" * 60)
-print("Demo 1: ReLU = Tropical Polynomial (2 pieces)")
-print("=" * 60)
+def deep_relu_network_1d(x: float, weights: list, biases: list) -> float:
+    """
+    Deep ReLU network: f(x) = W_L * relu(W_{L-1} * relu(... relu(W_1 * x + b_1) ...) + b_{L-1}) + b_L
+    weights[i] is a (w_{i+1}, w_i) matrix, biases[i] is a (w_{i+1},) vector.
+    """
+    h = np.array([x])
+    for W, b in zip(weights[:-1], biases[:-1]):
+        h = relu(W @ h + b)
+    return float(weights[-1] @ h + biases[-1])
 
-x = np.linspace(-3, 3, 7)
-print(f"x       = {x}")
-print(f"relu(x) = {relu(x)}")
-print(f"max(x,0)= {np.maximum(x, 0)}")
-print(f"(x+|x|)/2 = {(x + np.abs(x)) / 2}")
-print("All three are identical: relu_abs_identity ✓")
+def demo_depth_separation():
+    """Demonstrate that depth creates exponentially more linear regions."""
+    print("=" * 60)
+    print("DEPTH SEPARATION DEMONSTRATION")
+    print("=" * 60)
+    
+    # Compare: depth-1 with 6 neurons vs depth-3 with 2 neurons per layer
+    # Depth-1: at most 6+1 = 7 regions
+    # Depth-3: at most (2+1)^3 = 27 regions
+    
+    np.random.seed(42)
+    
+    # Depth-1 network with 6 neurons
+    W1 = np.random.randn(6)
+    b1 = np.random.randn(6)
+    out_w1 = np.random.randn(6)
+    f_shallow = lambda x: np.dot(out_w1, relu(W1 * x + b1))
+    
+    # Depth-3 network with 2 neurons per layer
+    W_deep = [
+        np.random.randn(2, 1),
+        np.random.randn(2, 2),
+        np.random.randn(2, 2),
+        np.random.randn(1, 2)
+    ]
+    b_deep = [np.random.randn(2), np.random.randn(2), np.random.randn(2), np.random.randn(1)]
+    f_deep = lambda x: deep_relu_network_1d(x, W_deep, b_deep)
+    
+    shallow_regions = count_linear_regions_1d(f_shallow, (-10, 10))
+    deep_regions = count_linear_regions_1d(f_deep, (-10, 10))
+    
+    print(f"\nShallow network (depth=1, width=6):")
+    print(f"  Total neurons: 6")
+    print(f"  Theoretical max regions: {6 + 1}")
+    print(f"  Observed regions: {shallow_regions}")
+    
+    print(f"\nDeep network (depth=3, width=2):")
+    print(f"  Total neurons: 6")
+    print(f"  Theoretical max regions: {(2+1)**3}")
+    print(f"  Observed regions: {deep_regions}")
+    
+    print(f"\nDepth advantage ratio: {(2+1)**3 / (6+1):.1f}x theoretical")
 
-# ============================================================
-# Demo 2: Tropical Dequantization Identity
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 2: Tropical Dequantization")
-print("  max(a, b) = b + max(a - b, 0)")
-print("=" * 60)
+def demo_tropical_degree():
+    """Show how tropical degree relates to network architecture."""
+    print("\n" + "=" * 60)
+    print("TROPICAL DEGREE BOUNDS")
+    print("=" * 60)
+    
+    print("\nFor a depth-L, width-w network:")
+    print(f"{'L':>3} {'w':>3} {'(w+1)^L':>12} {'2^(wL)':>12} {'Ratio':>8}")
+    print("-" * 42)
+    for L in [1, 2, 3, 4, 5]:
+        for w in [2, 4, 8]:
+            montufar = (w + 1) ** L
+            exponential = 2 ** (w * L)
+            ratio = exponential / montufar if montufar > 0 else float('inf')
+            print(f"{L:>3} {w:>3} {montufar:>12} {exponential:>12} {ratio:>8.1f}")
 
-a, b = 3.0, 5.0
-lhs = max(a, b)
-rhs = b + max(a - b, 0)
-print(f"max({a}, {b}) = {lhs}")
-print(f"{b} + max({a}-{b}, 0) = {rhs}")
-print(f"Identity verified: {lhs == rhs}")
+def demo_decision_boundary():
+    """Demonstrate decision boundary structure."""
+    print("\n" + "=" * 60)
+    print("DECISION BOUNDARY ANALYSIS")
+    print("=" * 60)
+    
+    np.random.seed(123)
+    
+    for depth in [1, 2, 3, 4]:
+        width = 3
+        # Build random deep network
+        weights = []
+        biases = []
+        in_dim = 1
+        for _ in range(depth):
+            weights.append(np.random.randn(width, in_dim))
+            biases.append(np.random.randn(width))
+            in_dim = width
+        weights.append(np.random.randn(1, width))
+        biases.append(np.random.randn(1))
+        
+        f = lambda x, w=weights, b=biases: deep_relu_network_1d(x, w, b)
+        
+        # Count zero crossings
+        xs = np.linspace(-10, 10, 100000)
+        ys = np.array([f(x) for x in xs])
+        sign_changes = np.sum(np.diff(np.sign(ys)) != 0)
+        regions = count_linear_regions_1d(f, (-10, 10))
+        
+        print(f"\nDepth={depth}, Width={width}:")
+        print(f"  Theoretical max regions: {(width+1)**depth}")
+        print(f"  Observed regions: {regions}")
+        print(f"  Zero crossings (decision boundary): {sign_changes}")
+        print(f"  Tropical degree bound: {(width+1)**depth - 1}")
 
-# ============================================================
-# Demo 3: Single Layer Region Bound
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 3: Single Layer Region Bound = 2^w")
-print("=" * 60)
+def demo_convexity_barrier():
+    """Show that single-layer networks compute convex functions."""
+    print("\n" + "=" * 60)
+    print("CONVEXITY BARRIER (XOR IMPOSSIBILITY)")
+    print("=" * 60)
+    
+    # Single layer with positive output weights: always convex
+    np.random.seed(42)
+    W = np.array([1.0, -1.0, 0.5])
+    b = np.array([-1.0, 0.5, -0.3])
+    out_w = np.abs(np.random.randn(3))  # positive weights
+    
+    f = lambda x: np.dot(out_w, relu(W * x + b))
+    
+    xs = np.linspace(-5, 5, 1000)
+    ys = np.array([f(x) for x in xs])
+    
+    # Check convexity: f((x+y)/2) <= (f(x) + f(y))/2
+    violations = 0
+    for i in range(0, len(xs) - 2, 2):
+        mid = f((xs[i] + xs[i+2]) / 2)
+        avg = (ys[i] + ys[i+2]) / 2
+        if mid > avg + 1e-10:
+            violations += 1
+    
+    print(f"\nSingle-layer network with positive output weights:")
+    print(f"  Convexity violations: {violations} (expected: 0)")
+    print(f"  This means the zero set is an interval (at most)")
+    print(f"  → Cannot represent XOR-like decision boundaries!")
+    print(f"  → Need depth ≥ 2 to break the convexity barrier")
 
-for w in range(1, 8):
-    bound = 2 ** w
-    print(f"  Width w={w}: at most {bound} linear regions")
+if __name__ == "__main__":
+    demo_depth_separation()
+    demo_tropical_degree()
+    demo_decision_boundary()
+    demo_convexity_barrier()
+    
+    print("\n" + "=" * 60)
+    print("KEY INSIGHT: Neural network decision boundaries are tropical")
+    print("hypersurfaces. The tropical degree (algebraic complexity)")
+    print("grows as (w+1)^L — exponentially in depth but polynomially")
+    print("in width. This explains why deep networks are exponentially")
+    print("more expressive than shallow ones.")
+    print("=" * 60)
 
-# ============================================================
-# Demo 4: Deep Network Region Bound
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 4: Deep Network Region Bound = 2^(sum of widths)")
-print("=" * 60)
 
-architectures = [
-    [10],           # 1 layer, width 10
-    [5, 5],         # 2 layers, width 5 each
-    [3, 3, 4],      # 3 layers
-    [2, 2, 2, 2, 2],# 5 layers, width 2 each
+#!/usr/bin/env python3
+"""Visualization: Depth Separation in ReLU Networks.
+
+Shows how depth creates exponentially more linear regions than width,
+demonstrating the tropical degree gap between deep and shallow networks.
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
+
+
+def relu(x):
+    return np.maximum(x, 0)
+
+
+def deep_relu_1d(x, weights, biases):
+    h = np.array([x])
+    for W, b in zip(weights[:-1], biases[:-1]):
+        h = relu(W @ h + b)
+    return float(weights[-1] @ h + biases[-1])
+
+
+def make_network(widths, seed=42):
+    rng = np.random.RandomState(seed)
+    weights, biases = [], []
+    in_dim = 1
+    for w in widths:
+        weights.append(rng.randn(w, in_dim))
+        biases.append(rng.randn(w))
+        in_dim = w
+    weights.append(rng.randn(1, in_dim))
+    biases.append(rng.randn(1))
+    return weights, biases
+
+
+def count_regions(f, xmin=-10, xmax=10, n=100000):
+    xs = np.linspace(xmin, xmax, n)
+    ys = np.array([f(x) for x in xs])
+    slopes = np.diff(ys) / np.diff(xs)
+    return int(np.sum(np.abs(np.diff(slopes)) > 1e-6) + 1)
+
+
+fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+fig.suptitle('Depth Separation: ReLU Networks as Tropical Polynomials', fontsize=16)
+
+configs = [
+    ([6], 'Shallow: 1×6'),
+    ([3, 3], 'Medium: 2×3'),
+    ([2, 2, 2], 'Deep: 3×2'),
+    ([4, 4], 'Wide: 2×4'),
+    ([2, 2, 2, 2], 'Deeper: 4×2'),
+    ([2, 2, 2, 2, 2], 'Deepest: 5×2'),
 ]
 
-for widths in architectures:
-    total_w = sum(widths)
-    bound = 2 ** total_w
-    print(f"  Widths {widths}: total_width={total_w}, bound=2^{total_w}={bound}")
+xs = np.linspace(-5, 5, 10000)
 
-# ============================================================
-# Demo 5: Depth Amplification via Zaslavsky
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 5: Zaslavsky Bound vs Naive Bound")
-print("  Zaslavsky: sum_{j=0}^{min(n,w)} C(w,j)")
-print("  Naive: 2^w")
-print("=" * 60)
-
-from math import comb
-
-def zaslavsky_bound(n, w):
-    return sum(comb(w, j) for j in range(min(n, w) + 1))
-
-n = 2  # dimension
-for w in [2, 4, 8, 16, 32]:
-    zas = zaslavsky_bound(n, w)
-    naive = 2 ** w
-    ratio = zas / naive
-    print(f"  n={n}, w={w}: Zaslavsky={zas}, Naive=2^{w}={naive}, ratio={ratio:.6f}")
-
-print("\n  Key insight: When w >> n, Zaslavsky is polynomial in w (O(w^n))")
-print("  while naive bound is exponential (2^w).")
-print("  This is WHY depth helps: each layer has w_i << n_effective,")
-print("  so the per-layer bound is small, but they multiply!")
-
-# ============================================================
-# Demo 6: Bend Count Growth with Depth
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 6: Bend Count Growth (Univariate)")
-print("  After L layers of single neurons: 2^L - 1 bends")
-print("=" * 60)
-
-for L in range(1, 11):
-    bends = 2 ** L - 1
-    print(f"  Depth L={L}: at most {bends} bends (breakpoints)")
-
-# ============================================================
-# Demo 7: Concrete 2D Decision Boundary
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 7: Concrete 2D Network Decision Boundary")
-print("=" * 60)
-
-def two_layer_network(x1, x2):
-    """A simple 2-layer ReLU network: R^2 -> R"""
-    # Layer 1: 3 neurons
-    h1 = relu(x1 + x2 - 1)
-    h2 = relu(-x1 + x2)
-    h3 = relu(x1 - x2 + 0.5)
-    # Layer 2: linear readout
-    return h1 - h2 + 0.5 * h3 - 0.3
-
-# Sample the decision boundary
-grid = np.linspace(-2, 2, 1000)
-boundary_points = []
-for x1 in grid:
-    for x2 in grid:
-        val = two_layer_network(x1, x2)
-        if abs(val) < 0.01:
-            boundary_points.append((x1, x2))
-
-print(f"  Network: 2 inputs, 3 hidden neurons (1 layer), 1 output")
-print(f"  Activation patterns: 2^3 = 8 possible")
-print(f"  Found {len(boundary_points)} approximate boundary points")
-print(f"  Decision boundary is piecewise linear (tropical hypersurface)")
-
-# Count distinct activation patterns
-patterns = set()
-for x1 in np.linspace(-2, 2, 100):
-    for x2 in np.linspace(-2, 2, 100):
-        p1 = int(x1 + x2 - 1 >= 0)
-        p2 = int(-x1 + x2 >= 0)
-        p3 = int(x1 - x2 + 0.5 >= 0)
-        patterns.add((p1, p2, p3))
-
-print(f"  Distinct activation patterns observed: {len(patterns)}")
-print(f"  (out of maximum 2^3 = 8)")
-
-# ============================================================
-# Demo 8: Tropical Representation Verification
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 8: Verifying Tropical Rational Representation")
-print("=" * 60)
-
-# f(x) = relu(x) - relu(-x) = |x| as tropical rational
-x = np.linspace(-3, 3, 7)
-f_tropical = relu(x) - relu(-x)  # tropical rational form
-f_identity = x  # should be x (since relu(x) - relu(-x) = x)
-print(f"x = {x}")
-print(f"relu(x) - relu(-x) = {f_tropical}")
-print(f"x = {f_identity}")
-print(f"Identity: relu(x) - relu(-x) = x ✓")
-
-print("\n" + "=" * 60)
-print("All demonstrations complete!")
-print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Decision Boundaries as Tropical Hypersurfaces
-
-Creates a visualization of how ReLU network decision boundaries
-form piecewise linear (tropical) hypersurfaces, and how their
-complexity grows with network architecture.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
-
-def relu(x):
-    return np.maximum(x, 0)
-
-def network_eval(x1, x2, architecture="simple"):
-    """Evaluate different network architectures."""
-    if architecture == "simple":
-        # 1 hidden layer, 3 neurons
-        h1 = relu(x1 + x2 - 1)
-        h2 = relu(-x1 + x2)
-        h3 = relu(x1 - x2 + 0.5)
-        return h1 - h2 + 0.5 * h3 - 0.3
-    elif architecture == "deep":
-        # 2 hidden layers, 3+2 neurons
-        h1 = relu(x1 + x2 - 1)
-        h2 = relu(-x1 + x2)
-        h3 = relu(x1 - x2 + 0.5)
-        g1 = relu(h1 - h2 + 0.3)
-        g2 = relu(-h1 + 0.5 * h3 - 0.2)
-        return g1 - g2 + 0.1
-    elif architecture == "wide":
-        # 1 hidden layer, 6 neurons
-        h1 = relu(x1 + x2 - 1)
-        h2 = relu(-x1 + x2)
-        h3 = relu(x1 - x2 + 0.5)
-        h4 = relu(-x1 - x2 + 1.5)
-        h5 = relu(2*x1 - x2 - 0.5)
-        h6 = relu(-x1 + 2*x2 - 0.8)
-        return h1 - h2 + 0.5*h3 - 0.3*h4 + 0.7*h5 - 0.4*h6 - 0.2
-    return 0
-
-def activation_pattern(x1, x2, architecture="simple"):
-    """Compute activation pattern as integer."""
-    if architecture == "simple":
-        p1 = int(x1 + x2 - 1 >= 0)
-        p2 = int(-x1 + x2 >= 0)
-        p3 = int(x1 - x2 + 0.5 >= 0)
-        return p1 * 4 + p2 * 2 + p3
-    elif architecture == "wide":
-        p1 = int(x1 + x2 - 1 >= 0)
-        p2 = int(-x1 + x2 >= 0)
-        p3 = int(x1 - x2 + 0.5 >= 0)
-        p4 = int(-x1 - x2 + 1.5 >= 0)
-        p5 = int(2*x1 - x2 - 0.5 >= 0)
-        p6 = int(-x1 + 2*x2 - 0.8 >= 0)
-        return p1*32 + p2*16 + p3*8 + p4*4 + p5*2 + p6
-    return 0
-
-fig, axes = plt.subplots(2, 2, figsize=(14, 12))
-fig.suptitle("Decision Boundaries as Tropical Hypersurfaces", fontsize=16, fontweight='bold')
-
-resolution = 500
-x = np.linspace(-3, 3, resolution)
-y = np.linspace(-3, 3, resolution)
-X, Y = np.meshgrid(x, y)
-
-# Plot 1: Simple network - decision boundary
-ax = axes[0, 0]
-Z = np.vectorize(lambda a, b: network_eval(a, b, "simple"))(X, Y)
-ax.contourf(X, Y, Z, levels=50, cmap='RdBu_r', alpha=0.8)
-ax.contour(X, Y, Z, levels=[0], colors='black', linewidths=2)
-ax.set_title("1 Layer, 3 Neurons\n(Decision Boundary = Tropical Curve)", fontsize=11)
-ax.set_xlabel("x₁")
-ax.set_ylabel("x₂")
-
-# Plot 2: Activation regions
-ax = axes[0, 1]
-P = np.vectorize(lambda a, b: activation_pattern(a, b, "simple"))(X, Y)
-cmap = plt.cm.get_cmap('tab20', int(P.max()) + 1)
-ax.pcolormesh(X, Y, P, cmap=cmap, shading='auto')
-Z = np.vectorize(lambda a, b: network_eval(a, b, "simple"))(X, Y)
-ax.contour(X, Y, Z, levels=[0], colors='white', linewidths=2)
-n_patterns = len(np.unique(P))
-ax.set_title(f"Activation Regions: {n_patterns} / 2³=8 patterns\n(Each color = one linear region)", fontsize=11)
-ax.set_xlabel("x₁")
-ax.set_ylabel("x₂")
-
-# Plot 3: Deep network
-ax = axes[1, 0]
-Z = np.vectorize(lambda a, b: network_eval(a, b, "deep"))(X, Y)
-ax.contourf(X, Y, Z, levels=50, cmap='RdBu_r', alpha=0.8)
-ax.contour(X, Y, Z, levels=[0], colors='black', linewidths=2)
-ax.set_title("2 Layers (3+2 Neurons)\n(More complex tropical curve)", fontsize=11)
-ax.set_xlabel("x₁")
-ax.set_ylabel("x₂")
-
-# Plot 4: Wide network
-ax = axes[1, 1]
-Z = np.vectorize(lambda a, b: network_eval(a, b, "wide"))(X, Y)
-ax.contourf(X, Y, Z, levels=50, cmap='RdBu_r', alpha=0.8)
-ax.contour(X, Y, Z, levels=[0], colors='black', linewidths=2)
-P = np.vectorize(lambda a, b: activation_pattern(a, b, "wide"))(X, Y)
-n_patterns = len(np.unique(P))
-ax.set_title(f"1 Layer, 6 Neurons ({n_patterns} / 2⁶=64 regions)\n(Wider = more complex boundary)", fontsize=11)
-ax.set_xlabel("x₁")
-ax.set_ylabel("x₂")
+for idx, (widths, title) in enumerate(configs):
+    ax = axes[idx // 3][idx % 3]
+    W, B = make_network(widths)
+    f = lambda x, w=W, b=B: deep_relu_1d(x, w, b)
+    ys = np.array([f(x) for x in xs])
+    
+    regions = count_regions(f, -5, 5)
+    theoretical = 1
+    for w in widths:
+        theoretical *= (w + 1)
+    
+    ax.plot(xs, ys, 'b-', linewidth=1.5)
+    ax.axhline(y=0, color='r', linestyle='--', alpha=0.5, label='Decision boundary')
+    
+    # Mark zero crossings
+    for i in range(len(ys) - 1):
+        if ys[i] * ys[i+1] < 0:
+            x_cross = xs[i] - ys[i] * (xs[i+1] - xs[i]) / (ys[i+1] - ys[i])
+            ax.axvline(x=x_cross, color='g', alpha=0.3, linewidth=0.5)
+    
+    ax.set_title(f'{title}\nRegions: {regions}/{theoretical} (obs/max)')
+    ax.set_xlabel('x')
+    ax.set_ylabel('f(x)')
+    ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig("decision_boundaries.png", dpi=150, bbox_inches='tight')
-print("Saved decision_boundaries.png")
-plt.close()
+plt.savefig('/workspace/request-project/Novelty/depth_separation.png', dpi=150)
+print("Saved: depth_separation.png")
 
-# ============================================================
-# Second figure: Zaslavsky bound comparison
-# ============================================================
-from math import comb
+# Second figure: region count scaling
+fig2, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+fig2.suptitle('Tropical Degree Scaling with Network Architecture', fontsize=14)
 
-def zaslavsky(n, w):
-    return sum(comb(w, j) for j in range(min(n, w) + 1))
+# Left: regions vs depth for fixed width
+depths = range(1, 8)
+for w in [2, 3, 4]:
+    regions = [(w + 1) ** L for L in depths]
+    ax1.semilogy(list(depths), regions, 'o-', label=f'width={w}', markersize=6)
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+ax1.set_xlabel('Depth L')
+ax1.set_ylabel('Max Linear Regions (log scale)')
+ax1.set_title('Exponential Growth with Depth')
+ax1.legend()
+ax1.grid(True, alpha=0.3)
 
-# Left: Zaslavsky vs naive
-ax = axes[0]
-widths = range(1, 21)
-for n in [1, 2, 3, 5]:
-    zas = [zaslavsky(n, w) for w in widths]
-    ax.plot(widths, zas, 'o-', label=f'Zaslavsky (n={n})', markersize=4)
+# Right: parameter efficiency
+for w in [2, 3, 4, 8]:
+    depths_list = list(range(1, 10))
+    efficiency = [L * np.log2(w + 1) / (w * (L + 1) + L) for L in depths_list]
+    ax2.plot(depths_list, efficiency, 'o-', label=f'width={w}', markersize=6)
 
-naive = [2**w for w in widths]
-ax.plot(widths, naive, 'k--', label='Naive 2^w', linewidth=2)
-ax.set_yscale('log')
-ax.set_xlabel('Width w')
-ax.set_ylabel('Region count bound')
-ax.set_title('Zaslavsky Refinement of Region Bound')
-ax.legend()
-ax.grid(True, alpha=0.3)
-
-# Right: Depth amplification
-ax = axes[1]
-total_W = 12
-depths = range(1, 13)
-for n in [2, 3, 5]:
-    bounds = []
-    for L in depths:
-        w_per_layer = total_W // L
-        if w_per_layer == 0:
-            bounds.append(1)
-        else:
-            # Product of Zaslavsky bounds
-            bound = 1
-            for _ in range(L):
-                bound *= zaslavsky(n, w_per_layer)
-            bounds.append(bound)
-    ax.plot(list(depths), bounds, 'o-', label=f'Zaslavsky (n={n})', markersize=4)
-
-ax.axhline(y=2**total_W, color='k', linestyle='--', label=f'Naive 2^{total_W}')
-ax.set_yscale('log')
-ax.set_xlabel('Depth L (total width W=12 fixed)')
-ax.set_ylabel('Region count bound')
-ax.set_title('Depth Amplification Effect\n(Same total width, varying depth)')
-ax.legend()
-ax.grid(True, alpha=0.3)
+ax2.set_xlabel('Depth L')
+ax2.set_ylabel('Bits of expressiveness per parameter')
+ax2.set_title('Parameter Efficiency: Deep > Shallow')
+ax2.legend()
+ax2.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig("zaslavsky_bounds.png", dpi=150, bbox_inches='tight')
-print("Saved zaslavsky_bounds.png")
-plt.close()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Tropical Algebra of Neural Networks
-
-Shows the tropical polynomial structure of ReLU networks:
-1. Single neuron as 2-piece tropical polynomial
-2. Layer composition and piece multiplication  
-3. Bend count growth with depth
-4. Tropical duality: decision boundary = agreement set
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-def relu(x):
-    return np.maximum(x, 0)
-
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-fig.suptitle("Tropical Algebra of ReLU Networks", fontsize=16, fontweight='bold')
-
-x = np.linspace(-3, 3, 1000)
-
-# Plot 1: ReLU as tropical polynomial
-ax = axes[0, 0]
-ax.plot(x, relu(x), 'b-', linewidth=2, label='relu(x) = max(x, 0)')
-ax.plot(x, x, 'r--', alpha=0.5, label='piece 1: x')
-ax.plot(x, np.zeros_like(x), 'g--', alpha=0.5, label='piece 2: 0')
-ax.axvline(x=0, color='orange', linestyle=':', linewidth=2, label='bend point')
-ax.fill_between(x, relu(x), alpha=0.1, color='blue')
-ax.set_title("ReLU = 2-Piece Tropical Polynomial\nmax(x, 0) with 1 bend", fontsize=11)
-ax.set_xlabel("x")
-ax.set_ylabel("f(x)")
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
-
-# Plot 2: Composition increases bends
-ax = axes[0, 1]
-f1 = relu(x)  # 1 bend
-f2 = relu(relu(2*x - 1) - relu(-x + 0.5))  # more bends
-f3_inner = relu(x) + relu(x - 1) - relu(x - 2)
-f3 = relu(f3_inner - 0.5)  # even more bends
-
-ax.plot(x, f1, 'b-', linewidth=2, label='depth 1: 1 bend')
-ax.plot(x, f2, 'r-', linewidth=2, label='depth 2: ≤3 bends')
-ax.plot(x, f3, 'g-', linewidth=2, label='depth 2 (wider): ≤5 bends')
-ax.set_title("Bend Count Growth with Depth\n(Each composition multiplies complexity)", fontsize=11)
-ax.set_xlabel("x")
-ax.set_ylabel("f(x)")
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
-
-# Plot 3: Tropical duality - agreement set
-ax = axes[1, 0]
-# f(x) = p(x) - q(x), boundary is where p = q
-p = np.maximum(x + 1, np.maximum(-x + 2, 0.5 * np.ones_like(x)))
-q = np.maximum(0.5 * x + 0.5, np.maximum(-0.5 * x + 1.5, np.ones_like(x)))
-f = p - q
-
-ax.plot(x, p, 'b-', linewidth=2, label='p(x) = tropical poly 1')
-ax.plot(x, q, 'r-', linewidth=2, label='q(x) = tropical poly 2')
-ax.plot(x, f, 'k-', linewidth=2, label='f(x) = p(x) - q(x)')
-ax.axhline(y=0, color='gray', linestyle=':', alpha=0.5)
-
-# Mark agreement points (decision boundary)
-for i in range(1, len(x)):
-    if (p[i-1] - q[i-1]) * (p[i] - q[i]) <= 0:
-        # Linear interpolation for crossing point
-        t = (q[i-1] - p[i-1]) / ((p[i] - p[i-1]) - (q[i] - q[i-1]))
-        x_cross = x[i-1] + t * (x[i] - x[i-1])
-        y_cross = p[i-1] + t * (p[i] - p[i-1])
-        ax.plot(x_cross, y_cross, 'ko', markersize=10, zorder=5)
-        ax.plot(x_cross, 0, 'k^', markersize=10, zorder=5)
-
-ax.set_title("Tropical Duality\nBoundary = {x : p(x) = q(x)}", fontsize=11)
-ax.set_xlabel("x")
-ax.set_ylabel("value")
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
-
-# Plot 4: Exponential bend growth
-ax = axes[1, 1]
-depths = range(1, 11)
-bends_single = [2**L - 1 for L in depths]
-bends_width2 = [3**L - 1 for L in depths]  # width 2 per layer
-bends_width3 = [4**L - 1 for L in depths]  # width 3 per layer
-
-ax.semilogy(depths, bends_single, 'bo-', label='width 1: 2^L - 1', markersize=6)
-ax.semilogy(depths, bends_width2, 'rs-', label='width 2: 3^L - 1', markersize=6)
-ax.semilogy(depths, bends_width3, 'g^-', label='width 3: 4^L - 1', markersize=6)
-
-# Region bound
-regions = [2**(L*3) for L in depths]
-ax.semilogy(depths, regions, 'k--', label='regions 2^(3L)', linewidth=2)
-
-ax.set_title("Exponential Complexity Growth\n(Bends and regions vs depth)", fontsize=11)
-ax.set_xlabel("Depth L")
-ax.set_ylabel("Count")
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig("tropical_algebra.png", dpi=150, bbox_inches='tight')
-print("Saved tropical_algebra.png")
-plt.close()
+plt.savefig('/workspace/request-project/Novelty/scaling_analysis.png', dpi=150)
+print("Saved: scaling_analysis.png")
