@@ -1,305 +1,296 @@
 #!/usr/bin/env python3
 """
-Sheaf-Theoretic Data Integration: Core Algorithms
+Sheaf Defect Complex: Algorithms for Database Consistency Analysis
 
-Type-hinted implementations of the sheaf imputation algorithms
-formalized in the Lean 4 proofs.
+Type-hinted implementations of the core algorithms from the sheaf-theoretic
+framework for database consistency.
 """
 
-from typing import Optional, Dict, Tuple, List, Set, TypeVar, Generic
+from typing import Optional, List, Tuple, Dict, Set
 from dataclasses import dataclass
 import math
 
-T = TypeVar('T')
-Position = Tuple[int, int]
+
+# ============================================================
+# Core Data Structures
+# ============================================================
+
+@dataclass
+class PartialDB:
+    """A partial database with optional values at each position."""
+    data: List[List[Optional[int]]]
+
+    @property
+    def n_rows(self) -> int:
+        return len(self.data)
+
+    @property
+    def n_cols(self) -> int:
+        return len(self.data[0]) if self.data else 0
+
+    def get(self, r: int, c: int) -> Optional[int]:
+        return self.data[r][c]
+
+    def domain(self) -> Set[Tuple[int, int]]:
+        """Set of positions where values are defined."""
+        return {(r, c) for r in range(self.n_rows)
+                for c in range(self.n_cols) if self.data[r][c] is not None}
 
 
 @dataclass
-class PartialDatabase(Generic[T]):
-    """A partial database: grid positions mapped to optional values."""
-    nrows: int
-    ncols: int
-    data: Dict[Position, Optional[T]]
+class WeightedPDB:
+    """A partial database with confidence weights."""
+    db: PartialDB
+    weights: List[List[float]]
 
-    @classmethod
-    def empty(cls, nrows: int, ncols: int) -> 'PartialDatabase[T]':
-        return cls(nrows, ncols, {(r, c): None for r in range(nrows) for c in range(ncols)})
-
-    @classmethod
-    def from_values(cls, nrows: int, ncols: int, values: Dict[Position, T]) -> 'PartialDatabase[T]':
-        data = {(r, c): values.get((r, c)) for r in range(nrows) for c in range(ncols)}
-        return cls(nrows, ncols, data)
-
-    def domain(self) -> Set[Position]:
-        return {p for p, v in self.data.items() if v is not None}
-
-    def is_global_section(self) -> bool:
-        return all(v is not None for v in self.data.values())
+    def weight(self, r: int, c: int) -> float:
+        return self.weights[r][c]
 
 
-def consistent_pair(db1: PartialDatabase[T], db2: PartialDatabase[T]) -> bool:
+@dataclass
+class SheafDefectComplex:
+    """The Sheaf Defect Complex: captures position-resolved consistency information."""
+    family: List[PartialDB]
+    threshold: int
+
+    def hot_spots(self) -> Set[Tuple[int, int]]:
+        """Positions with defect exceeding the threshold."""
+        n_rows = self.family[0].n_rows if self.family else 0
+        n_cols = self.family[0].n_cols if self.family else 0
+        spots = set()
+        for r in range(n_rows):
+            for c in range(n_cols):
+                if position_defect(self.family, r, c) > self.threshold:
+                    spots.add((r, c))
+        return spots
+
+    def cold_set(self) -> Set[Tuple[int, int]]:
+        """Positions with defect at or below the threshold."""
+        n_rows = self.family[0].n_rows if self.family else 0
+        n_cols = self.family[0].n_cols if self.family else 0
+        all_pos = {(r, c) for r in range(n_rows) for c in range(n_cols)}
+        return all_pos - self.hot_spots()
+
+
+# ============================================================
+# Core Algorithms
+# ============================================================
+
+def disagree(a: PartialDB, b: PartialDB, r: int, c: int) -> int:
     """
-    Check if two partial databases are consistent (agree on overlaps).
+    Binary disagreement indicator at position (r, c).
 
-    Algorithm: ConsistentPair
-    Pseudocode:
-      for each position p in domain(db1) ∩ domain(db2):
-        if db1[p] ≠ db2[p]: return False
-      return True
+    Returns 1 if both databases have defined but different values at (r, c),
+    0 otherwise.
+
+    Complexity: O(1)
     """
-    for pos in db1.data:
-        v1, v2 = db1.data.get(pos), db2.data.get(pos)
-        if v1 is not None and v2 is not None and v1 != v2:
-            return False
+    va, vb = a.get(r, c), b.get(r, c)
+    if va is not None and vb is not None and va != vb:
+        return 1
+    return 0
+
+
+def position_defect(family: List[PartialDB], r: int, c: int) -> int:
+    """
+    Compute the position defect at (r, c) for a family of databases.
+
+    The position defect is the total number of pairwise disagreements at
+    this position across all database pairs.
+
+    Complexity: O(n²) where n = len(family)
+    """
+    n = len(family)
+    total = 0
+    for i in range(n):
+        for j in range(n):
+            total += disagree(family[i], family[j], r, c)
+    return total
+
+
+def defect_vector(family: List[PartialDB]) -> Dict[Tuple[int, int], int]:
+    """
+    Compute the full defect vector: position-defect for every position.
+
+    Returns a dictionary mapping (row, col) to defect count.
+
+    Complexity: O(n² × R × C) where n = |family|, R = rows, C = cols
+    """
+    if not family:
+        return {}
+    n_rows, n_cols = family[0].n_rows, family[0].n_cols
+    result: Dict[Tuple[int, int], int] = {}
+    for r in range(n_rows):
+        for c in range(n_cols):
+            d = position_defect(family, r, c)
+            result[(r, c)] = d
+    return result
+
+
+def total_defect(family: List[PartialDB]) -> int:
+    """
+    Total defect = sum of position defects = coboundary norm.
+
+    By the Defect Decomposition Theorem, this equals the coboundary norm
+    (summing over pairs first, then positions).
+
+    Complexity: O(n² × R × C)
+    """
+    return sum(defect_vector(family).values())
+
+
+def defect_laplacian(family: List[PartialDB]) -> int:
+    """
+    Sum of squared position defects.
+
+    The Laplacian satisfies: Laplacian ≥ Total Defect, with equality
+    iff all nonzero defects equal 1.
+
+    Complexity: O(n² × R × C)
+    """
+    return sum(d ** 2 for d in defect_vector(family).values())
+
+
+def is_consistent(a: PartialDB, b: PartialDB) -> bool:
+    """Check if two partial databases are consistent (agree on overlap)."""
+    for r in range(a.n_rows):
+        for c in range(a.n_cols):
+            if disagree(a, b, r, c) == 1:
+                return False
     return True
 
 
-def gluing_map(db1: PartialDatabase[T], db2: PartialDatabase[T]) -> PartialDatabase[T]:
+def family_sheaf(family: List[PartialDB]) -> bool:
+    """Check if a family satisfies the sheaf condition (pairwise consistency)."""
+    n = len(family)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if not is_consistent(family[i], family[j]):
+                return False
+    return True
+
+
+def glue(a: PartialDB, b: PartialDB) -> PartialDB:
     """
-    Glue two partial databases (prefer db1 where both defined).
+    Glue two partial databases, preferring the first where both are defined.
 
-    Algorithm: GluingMap
-    Pseudocode:
-      for each position p:
-        result[p] = db1[p] if db1[p] is defined, else db2[p]
+    When a and b are consistent, the result extends both.
+
+    Complexity: O(R × C)
     """
-    result_data: Dict[Position, Optional[T]] = {}
-    all_positions = set(db1.data.keys()) | set(db2.data.keys())
-    for pos in all_positions:
-        v1 = db1.data.get(pos)
-        result_data[pos] = v1 if v1 is not None else db2.data.get(pos)
-    return PartialDatabase(
-        max(db1.nrows, db2.nrows),
-        max(db1.ncols, db2.ncols),
-        result_data
-    )
+    n_rows, n_cols = a.n_rows, a.n_cols
+    result = []
+    for r in range(n_rows):
+        row = []
+        for c in range(n_cols):
+            va = a.get(r, c)
+            row.append(va if va is not None else b.get(r, c))
+        result.append(row)
+    return PartialDB(result)
 
 
-def fold_glue(dbs: List[PartialDatabase[T]]) -> PartialDatabase[T]:
+def consistency_probability(rate: float, constraints: int) -> float:
     """
-    Fold-glue a list of partial databases from left.
+    Compute P(consistent) = (1 - rate)^constraints.
 
-    Algorithm: FoldGlue
-    Pseudocode:
-      acc = empty_db
-      for db in dbs:
-        acc = glue(acc, db)
-      return acc
-
-    Theorem: If dbs are pairwise consistent and cover all positions,
-    the result is a global section (foldGlue_global_of_covering).
+    By the Probability Product Rule, this factors multiplicatively
+    over independent constraint sets.
     """
-    if not dbs:
-        return PartialDatabase.empty(0, 0)
-    nrows = max(db.nrows for db in dbs)
-    ncols = max(db.ncols for db in dbs)
-    acc = PartialDatabase.empty(nrows, ncols)
-    for db in dbs:
-        acc = gluing_map(acc, db)
-    return acc
+    if rate >= 1.0:
+        return 0.0 if constraints > 0 else 1.0
+    return (1.0 - rate) ** constraints
 
 
-def coboundary_norm(dbs: List[PartialDatabase[T]]) -> int:
+def overlap_constraint_count(n_databases: int, n_rows: int, n_cols: int) -> int:
+    """Number of overlap constraints: C(n,2) × R × C."""
+    return n_databases * (n_databases - 1) // 2 * n_rows * n_cols
+
+
+def sheaf_imputation(observed: PartialDB,
+                     candidates: List[List[int]]) -> Tuple[List[int], int]:
     """
-    Compute the coboundary norm: total disagreements across all pairs.
+    Find the closest global section (complete database row) to observed data.
 
-    Algorithm: CoboundaryNorm
-    Pseudocode:
-      norm = 0
-      for i, j in all_pairs(dbs):
-        for position p:
-          if dbs[i][p] and dbs[j][p] are both defined and differ:
-            norm += 1
-      return norm
-
-    Theorem: norm = 0 ⟺ sheaf condition (coboundary_zero_iff_sheaf).
+    Returns the best candidate and its imputation cost (number of disagreements
+    with observed data).
     """
-    norm = 0
-    for db1 in dbs:
-        for db2 in dbs:
-            for pos in db1.data:
-                v1, v2 = db1.data.get(pos), db2.data.get(pos)
-                if v1 is not None and v2 is not None and v1 != v2:
-                    norm += 1
-    return norm
-
-
-def sheaf_imputation(
-    observed: PartialDatabase[T],
-    candidates: List[PartialDatabase[T]]
-) -> Optional[PartialDatabase[T]]:
-    """
-    Find the best candidate that extends the observed data.
-
-    Algorithm: SheafImputation
-    Pseudocode:
-      best_cost = ∞
-      best_candidate = None
-      for candidate in candidates:
-        cost = count disagreements between observed and candidate on observed's domain
-        if cost < best_cost:
-          best_cost = cost
-          best_candidate = candidate
-      return best_candidate
-
-    Theorem: cost = 0 ⟺ candidate extends observed (imputation_zero_iff_extends).
-    """
+    best_candidate = candidates[0]
     best_cost = float('inf')
-    best_candidate = None
+
     for candidate in candidates:
         cost = 0
-        for pos, obs_val in observed.data.items():
-            if obs_val is not None:
-                cand_val = candidate.data.get(pos)
-                if cand_val is not None and obs_val != cand_val:
-                    cost += 1
+        for c in range(observed.n_cols):
+            v = observed.get(0, c)
+            if v is not None and v != candidate[c]:
+                cost += 1
         if cost < best_cost:
             best_cost = cost
             best_candidate = candidate
-    return best_candidate
+
+    return best_candidate, int(best_cost)
 
 
-def consistency_probability(r: float, n_constraints: int) -> float:
-    """
-    Compute P(consistent) = (1-r)^C.
-
-    Algorithm: ConsistencyProbability
-    Pseudocode:
-      return (1 - r) ^ n_constraints
-
-    Theorems:
-      - Strict monotonicity: more constraints → lower probability
-      - Log-linearity: log P = C · log(1-r)
-      - Exponential decay: P → 0 as C → ∞
-    """
-    if r <= 0:
-        return 1.0
-    if r >= 1:
-        return 0.0 if n_constraints > 0 else 1.0
-    return (1 - r) ** n_constraints
+def weighted_disagree(a: WeightedPDB, b: WeightedPDB,
+                      r: int, c: int) -> float:
+    """Confidence-weighted disagreement at position (r, c)."""
+    d = disagree(a.db, b.db, r, c)
+    return a.weight(r, c) * b.weight(r, c) * d
 
 
-def overlap_constraint_count(n_dbs: int, nrows: int, ncols: int) -> int:
-    """
-    Count overlap constraints: C = n(n-1)/2 × (nrows × ncols).
-
-    Algorithm: OverlapConstraintCount
-    Pseudocode:
-      return n * (n - 1) / 2 * nrows * ncols
-    """
-    return n_dbs * (n_dbs - 1) // 2 * (nrows * ncols)
-
-
-@dataclass
-class FeatureDatabase(Generic[T]):
-    """A database restricted to a subset of features (columns)."""
-    nrows: int
-    feature_set: Set[int]
-    data: Dict[Tuple[int, int], T]  # (row, feature) -> value
-
-    def restrict(self, subset: Set[int]) -> 'FeatureDatabase[T]':
-        """Restrict to a smaller feature subset."""
-        assert subset <= self.feature_set, "subset must be contained in feature_set"
-        new_data = {(r, f): v for (r, f), v in self.data.items() if f in subset}
-        return FeatureDatabase(self.nrows, subset, new_data)
-
-    def feature_consistent(self, other: 'FeatureDatabase[T]') -> bool:
-        """Check consistency on the intersection of feature sets."""
-        overlap = self.feature_set & other.feature_set
-        for r in range(self.nrows):
-            for f in overlap:
-                v1 = self.data.get((r, f))
-                v2 = other.data.get((r, f))
-                if v1 is not None and v2 is not None and v1 != v2:
-                    return False
-        return True
+def weighted_coboundary_norm(family: List[WeightedPDB]) -> float:
+    """Total weighted coboundary norm."""
+    if not family:
+        return 0.0
+    n = len(family)
+    n_rows = family[0].db.n_rows
+    n_cols = family[0].db.n_cols
+    total = 0.0
+    for i in range(n):
+        for j in range(n):
+            for r in range(n_rows):
+                for c in range(n_cols):
+                    total += weighted_disagree(family[i], family[j], r, c)
+    return total
 
 
-def feature_glue(
-    db_s: FeatureDatabase[T],
-    db_t: FeatureDatabase[T]
-) -> FeatureDatabase[T]:
-    """
-    Glue two feature databases on S ∪ T.
+# ============================================================
+# Main demonstration
+# ============================================================
 
-    Precondition: db_s and db_t are feature-consistent.
+if __name__ == "__main__":
+    import random
+    random.seed(42)
 
-    Algorithm: FeatureGlue
-    Pseudocode:
-      for each (row, feature) in S ∪ T:
-        if feature ∈ S: result[row, feature] = db_s[row, feature]
-        else: result[row, feature] = db_t[row, feature]
-    """
-    combined_features = db_s.feature_set | db_t.feature_set
-    combined_data: Dict[Tuple[int, int], T] = {}
-    for r in range(max(db_s.nrows, db_t.nrows)):
-        for f in combined_features:
-            if f in db_s.feature_set and (r, f) in db_s.data:
-                combined_data[(r, f)] = db_s.data[(r, f)]
-            elif f in db_t.feature_set and (r, f) in db_t.data:
-                combined_data[(r, f)] = db_t.data[(r, f)]
-    return FeatureDatabase(max(db_s.nrows, db_t.nrows), combined_features, combined_data)
+    # Create example databases
+    db1 = PartialDB([[1, None, 3], [None, 2, 1]])
+    db2 = PartialDB([[1, 2, None], [4, 2, None]])
+    db3 = PartialDB([[None, 2, 3], [4, None, 1]])
 
+    family = [db1, db2, db3]
 
-class SheafFiltration(Generic[T]):
-    """
-    A sheaf filtration: sequence of increasingly refined partial databases.
+    print("Example: 3 partial databases over 2×3 grid")
+    for i, db in enumerate(family):
+        print(f"  DB{i}: {db.data}")
 
-    Invariants (proved in Lean):
-      - Monotone: level[i] ⊆ level[j] for i ≤ j (information grows)
-      - Consistent: all levels are pairwise consistent (sheaf condition)
-    """
+    print(f"\nFamily satisfies sheaf condition? {family_sheaf(family)}")
+    print(f"Total defect: {total_defect(family)}")
+    print(f"Defect Laplacian: {defect_laplacian(family)}")
 
-    def __init__(self, levels: List[PartialDatabase[T]]):
-        self.levels = levels
-        self._validate()
+    dv = defect_vector(family)
+    print(f"Defect vector: {dv}")
 
-    def _validate(self):
-        for i in range(len(self.levels)):
-            for j in range(i + 1, len(self.levels)):
-                assert consistent_pair(self.levels[i], self.levels[j]), \
-                    f"Levels {i} and {j} are not consistent!"
-                # Check monotonicity
-                for pos in self.levels[i].data:
-                    vi = self.levels[i].data[pos]
-                    vj = self.levels[j].data[pos]
-                    if vi is not None:
-                        assert vj == vi, \
-                            f"Monotonicity violated at {pos}: level {i} has {vi}, level {j} has {vj}"
+    complex = SheafDefectComplex(family, threshold=2)
+    print(f"Hot spots (threshold=2): {complex.hot_spots()}")
+    print(f"Cold set: {complex.cold_set()}")
 
-    def is_complete(self) -> bool:
-        return len(self.levels) > 0 and self.levels[-1].is_global_section()
+    # Gluing demo
+    g12 = glue(db1, db2)
+    print(f"\nGlue(DB0, DB1): {g12.data}")
+    print(f"Consistent(DB0, DB1)? {is_consistent(db1, db2)}")
 
-    @classmethod
-    def from_consistent_list(cls, dbs: List[PartialDatabase[T]]) -> 'SheafFiltration[T]':
-        """Build a filtration by progressive fold-gluing."""
-        if not dbs:
-            return cls([])
-        nrows = max(db.nrows for db in dbs)
-        ncols = max(db.ncols for db in dbs)
-        levels = []
-        acc = PartialDatabase.empty(nrows, ncols)
-        for db in dbs:
-            acc = gluing_map(acc, db)
-            levels.append(PartialDatabase(nrows, ncols, dict(acc.data)))
-        return cls(levels)
-
-
-if __name__ == '__main__':
-    # Quick self-test
-    db1 = PartialDatabase.from_values(2, 2, {(0, 0): 1, (0, 1): 2})
-    db2 = PartialDatabase.from_values(2, 2, {(0, 1): 2, (1, 0): 3})
-    db3 = PartialDatabase.from_values(2, 2, {(1, 0): 3, (1, 1): 4})
-
-    assert consistent_pair(db1, db2)
-    assert consistent_pair(db2, db3)
-    assert consistent_pair(db1, db3)
-
-    result = fold_glue([db1, db2, db3])
-    assert result.is_global_section()
-    print("All self-tests passed!")
-
-    # Consistency probability
-    for c in [10, 100, 1000]:
-        p = consistency_probability(0.3, c)
-        print(f"P(consistent, r=0.3, C={c}) = {p:.6e}")
+    # Probability decay
+    print(f"\nConsistency probability examples:")
+    for n, k in [(5, 10), (10, 50), (20, 100)]:
+        C = overlap_constraint_count(3, k, n)
+        p = consistency_probability(0.1, C)
+        print(f"  n={n}, k={k}: C={C}, P={p:.6e}")
