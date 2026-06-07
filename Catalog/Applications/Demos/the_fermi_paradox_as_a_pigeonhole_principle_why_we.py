@@ -1,271 +1,314 @@
 #!/usr/bin/env python3
 """
-Cascade Filter Demo: The Mathematics of Cosmic Silence
+Demo: The Fermi Paradox as a Pigeonhole Principle
 
-Demonstrates the key theorems from the Cascade Filter framework
-applied to the Fermi paradox.
+Numerical demonstrations of the filter cascade model for cosmic silence.
+Each demo corresponds to a formally verified theorem.
 """
 
 import math
-import random
 
-def cascade_throughput(probs: list[float]) -> float:
-    """Product of all stage probabilities."""
-    result = 1.0
-    for p in probs:
-        result *= p
-    return result
-
-def expected_survivors(base_pop: float, probs: list[float]) -> float:
-    """Expected survivors = base_population × throughput."""
-    return base_pop * cascade_throughput(probs)
-
-def cofactor(probs: list[float], i: int) -> float:
-    """Product of all probabilities EXCEPT stage i."""
-    result = 1.0
-    for j, p in enumerate(probs):
-        if j != i:
-            result *= p
-    return result
-
-def drake_equation(R_star=1.5, f_p=0.5, n_e=0.01, f_l=0.01,
-                   f_i=0.01, f_c=0.01, L=100) -> float:
-    """Drake equation: expected detectable civilizations."""
-    return R_star * f_p * n_e * f_l * f_i * f_c * L
+def drake_expected(num_planets: float, filter_probs: list[float]) -> float:
+    """Compute the expected number of civilizations: N * prod(p_i)."""
+    prod = 1.0
+    for p in filter_probs:
+        prod *= p
+    return num_planets * prod
 
 
-# ──────────────────────────────────────────────────────────
-# Example 1: Pessimistic Drake Equation
-# ──────────────────────────────────────────────────────────
-print("=" * 60)
-print("EXAMPLE 1: Pessimistic Drake Equation")
-print("=" * 60)
+def demo_pessimistic_drake():
+    """Demo 1: Pessimistic Drake equation gives E << 1."""
+    print("=" * 60)
+    print("DEMO 1: Pessimistic Drake Equation")
+    print("=" * 60)
+    
+    # Conservative estimates for each filter step
+    filters = {
+        "Star formation rate (per year)": 1.5,
+        "Fraction with planets": 0.5,
+        "Habitable planets per star": 0.01,
+        "Fraction developing life": 0.01,
+        "Fraction developing intelligence": 0.01,
+        "Fraction developing technology": 0.01,
+        "Civilizational lifetime (years)": 100,
+    }
+    
+    N = 1.0  # Normalize: compute per-year-of-observation
+    result = N
+    for name, val in filters.items():
+        result *= val
+        print(f"  {name}: {val}")
+    
+    print(f"\n  Expected civilizations: {result:.2e}")
+    print(f"  This is {'<< 1' if result < 1 else '>= 1'}: "
+          f"{'silence expected' if result < 1 else 'contact expected'}")
+    
+    # With 10^10 habitable planets
+    N_planets = 1e10
+    per_planet = 0.01 * 0.01 * 0.01 * 0.01  # product of biological filters
+    E = N_planets * per_planet
+    print(f"\n  With 10^10 planets and per-planet prob = {per_planet:.2e}:")
+    print(f"  E = {E:.2e}")
+    print()
 
-N = drake_equation()
-print(f"Parameters: R*=1.5, f_p=0.5, n_e=0.01, f_l=0.01, f_i=0.01, f_c=0.01, L=100")
-print(f"Drake N = {N:.2e}")
-print(f"N < 1? {N < 1} ✓ (Theorem: pessimistic_drake_lt_one)")
-print()
 
-# ──────────────────────────────────────────────────────────
-# Example 2: Cascade Filter Power Bound
-# ──────────────────────────────────────────────────────────
-print("=" * 60)
-print("EXAMPLE 2: Uniform Power Bound (throughput_le_pow)")
-print("=" * 60)
+def demo_filter_concentration():
+    """Demo 2: Filter concentration — the Great Filter must be somewhere."""
+    print("=" * 60)
+    print("DEMO 2: Filter Concentration (Multiplicative Pigeonhole)")
+    print("=" * 60)
+    
+    epsilon = 1e-12  # total filter probability
+    k = 7  # number of filter steps
+    
+    min_factor = epsilon ** (1.0 / k)
+    print(f"  Total filter probability: {epsilon:.2e}")
+    print(f"  Number of filter steps: {k}")
+    print(f"  At least one step must have probability ≤ ε^(1/k) = {min_factor:.6f}")
+    print(f"  This means at least one step passes with prob ≤ {min_factor*100:.4f}%")
+    print()
+    
+    # Show that distributing the filter equally gives each step this probability
+    equal_prob = epsilon ** (1.0 / k)
+    print(f"  If all steps have equal probability: p = {equal_prob:.6f}")
+    print(f"  Verification: p^{k} = {equal_prob**k:.2e} ≈ {epsilon:.2e}")
+    print()
 
-for n_stages in [3, 5, 7, 10, 15]:
+
+def demo_exponential_decay():
+    """Demo 3: Exponential filter decay."""
+    print("=" * 60)
+    print("DEMO 3: Exponential Filter Decay")
+    print("=" * 60)
+    
+    p = 0.1  # each step passes with 10% probability
+    N = 1e10  # 10 billion habitable planets
+    
+    print(f"  Per-step probability: p = {p}")
+    print(f"  Number of planets: N = {N:.2e}")
+    print(f"  {'k':>4s} {'p^k':>15s} {'N * p^k':>15s} {'E < 1?':>8s}")
+    print(f"  {'-'*4} {'-'*15} {'-'*15} {'-'*8}")
+    
+    for k in range(1, 15):
+        pk = p ** k
+        E = N * pk
+        print(f"  {k:4d} {pk:15.2e} {E:15.2e} {'Yes' if E < 1 else 'No':>8s}")
+    
+    # Find critical k
+    k_crit = math.ceil(math.log(1/N) / math.log(p))
+    print(f"\n  Critical k (E < 1 when k ≥ {k_crit}): {k_crit} filter steps needed")
+    print()
+
+
+def demo_temporal_pigeonhole():
+    """Demo 4: Temporal non-overlap."""
+    print("=" * 60)
+    print("DEMO 4: Temporal Pigeonhole")
+    print("=" * 60)
+    
+    T = 13.8e9  # age of universe in years
+    
+    scenarios = [
+        ("Optimistic", 100, 1e6),
+        ("Moderate", 10, 1e4),
+        ("Pessimistic", 3, 1e3),
+    ]
+    
+    for name, n, L in scenarios:
+        frac = n * L / T
+        print(f"  {name}: n={n} civilizations, L={L:.0e} yr lifetime")
+        print(f"    Occupied fraction: {frac:.2e}")
+        print(f"    Temporal overlap: {'likely' if frac > 0.01 else 'extremely unlikely'}")
+    print()
+
+
+def demo_pigeonhole_poisson_bridge():
+    """Demo 5: Comparing linear (pigeonhole) and exponential (Poisson) bounds."""
+    print("=" * 60)
+    print("DEMO 5: Pigeonhole-Poisson Bridge")
+    print("=" * 60)
+    
+    print(f"  {'λ':>8s} {'1-λ (linear)':>14s} {'e^(-λ) (Poisson)':>18s} {'Gap':>10s}")
+    print(f"  {'-'*8} {'-'*14} {'-'*18} {'-'*10}")
+    
+    for lam in [0.001, 0.01, 0.1, 0.3, 0.5, 0.7, 0.9, 0.99, 1.0]:
+        linear = 1 - lam
+        poisson = math.exp(-lam)
+        gap = poisson - linear
+        print(f"  {lam:8.3f} {linear:14.6f} {poisson:18.6f} {gap:10.6f}")
+    
+    print(f"\n  Key insight: 1 - λ ≤ e^(-λ) always holds (proved in Lean).")
+    print(f"  The pigeonhole bound is conservative; Poisson gives tighter silence probability.")
+    print()
+
+
+def demo_spatial_isolation():
+    """Demo 6: Spatial isolation via volume fractions."""
+    print("=" * 60)
+    print("DEMO 6: Spatial Isolation")
+    print("=" * 60)
+    
+    R = 4.4e10  # observable universe radius in light-years
+    
+    comm_ranges = [100, 1000, 1e4, 1e5, 1e6]
+    n_civs = 100  # optimistic: 100 civilizations
+    
+    print(f"  Universe radius: {R:.2e} ly")
+    print(f"  Assumed civilizations: {n_civs}")
+    print(f"\n  {'Range (ly)':>12s} {'(r/R)^3':>15s} {'n*(r/R)^3':>12s} {'Detectable?':>12s}")
+    print(f"  {'-'*12} {'-'*15} {'-'*12} {'-'*12}")
+    
+    for r in comm_ranges:
+        frac = (r / R) ** 3
+        expected = n_civs * frac
+        print(f"  {r:12.0e} {frac:15.2e} {expected:12.2e} "
+              f"{'Possible' if expected > 0.01 else 'No':>12s}")
+    print()
+
+
+def demo_fermi_silence_theorem():
+    """Demo 7: The Grand Synthesis."""
+    print("=" * 60)
+    print("DEMO 7: Fermi Silence Theorem — Grand Synthesis")
+    print("=" * 60)
+    
+    N = 1e10
     p = 0.1
-    throughput = p ** n_stages
-    print(f"  {n_stages} stages, each p=0.1: throughput ≤ {throughput:.2e}")
+    
+    print(f"  N = {N:.2e} habitable planets")
+    print(f"  Per-step filter probability: p = {p}")
+    
+    for k in [5, 7, 10, 15, 20]:
+        E = N * p**k
+        silence_prob = max(0, 1 - E)
+        print(f"\n  k = {k} filter steps:")
+        print(f"    E[civilizations] = {E:.2e}")
+        print(f"    P(silence) ≥ 1 - E = {silence_prob:.10f}")
+        print(f"    Next step: E[k+1] = {N * p**(k+1):.2e} (factor {p}x smaller)")
+    print()
 
-print()
-print("With 7 stages (Drake) and p=0.1 each: throughput ≤ 10^{-7}")
-print("This is the 'silence_of_uniform_filter' theorem in action.")
-print()
 
-# ──────────────────────────────────────────────────────────
-# Example 3: Sensitivity Analysis (bottleneck_dominates)
-# ──────────────────────────────────────────────────────────
-print("=" * 60)
-print("EXAMPLE 3: Sensitivity Analysis — Bottleneck Dominates")
-print("=" * 60)
-
-probs = [0.5, 0.8, 0.001, 0.3, 0.9, 0.7, 0.6]
-print(f"Stage probabilities: {probs}")
-print(f"Throughput: {cascade_throughput(probs):.6e}")
-print()
-print("Cofactors (sensitivity to each stage):")
-for i in range(len(probs)):
-    c = cofactor(probs, i)
-    print(f"  Stage {i} (p={probs[i]}): cofactor = {c:.6e}")
-
-bottleneck = min(range(len(probs)), key=lambda i: probs[i])
-print(f"\nBottleneck: stage {bottleneck} (p={probs[bottleneck]})")
-print(f"Bottleneck cofactor: {cofactor(probs, bottleneck):.6e}")
-print(f"This is the LARGEST cofactor — improving the bottleneck helps most.")
-print(f"(Theorem: bottleneck_dominates)")
-print()
-
-# ──────────────────────────────────────────────────────────
-# Example 4: Exponential Silence (Phase Transition)
-# ──────────────────────────────────────────────────────────
-print("=" * 60)
-print("EXAMPLE 4: Exponential Silence — Phase Transition")
-print("=" * 60)
-
-B = 1e22  # ~number of stars in observable universe
-p = 0.1
-print(f"Base population: B = {B:.0e}")
-print(f"Per-stage probability: p = {p}")
-print()
-
-for n in range(1, 30):
-    E = B * p**n
-    marker = " ← SILENCE THRESHOLD" if n == 23 else ""
-    if n <= 5 or n >= 20 or abs(n - 23) <= 2:
-        print(f"  n={n:2d}: E[survivors] = {E:.2e}{marker}")
-    elif n == 6:
-        print(f"  ...")
-
-print()
-print(f"Critical stage count n* ≈ log(B)/log(1/p) = {math.log(B)/math.log(1/p):.1f}")
-print(f"With n > n*, silence is guaranteed. (Theorem: exponential_silence)")
-print()
-
-# ──────────────────────────────────────────────────────────
-# Example 5: Monte Carlo — Silence is Generic
-# ──────────────────────────────────────────────────────────
-print("=" * 60)
-print("EXAMPLE 5: Monte Carlo — Log-Uniform Drake Parameters")
-print("=" * 60)
-
-random.seed(42)
-N_SAMPLES = 1_000_000
-n_silence = 0
-n_factors = 7
-
-for _ in range(N_SAMPLES):
-    # Draw each Drake factor from log-uniform on [10^-6, 1]
-    factors = [10 ** random.uniform(-6, 0) for _ in range(n_factors)]
-    # Base rate ~ 1.5 (star formation × lifetime normalization)
-    N_val = 1.5 * cascade_throughput(factors) * 1e10  # generous base
-    if N_val < 1:
-        n_silence += 1
-
-p_silence = n_silence / N_SAMPLES
-print(f"Samples: {N_SAMPLES:,}")
-print(f"Fraction with N < 1 (silence): {p_silence:.4f} ({p_silence*100:.2f}%)")
-print(f"Conjecture: P(silence) > 0.99 → {'CONFIRMED' if p_silence > 0.99 else 'REFUTED'}")
-print()
-
-# ──────────────────────────────────────────────────────────
-# Example 6: Birthday Bound (Injection Count)
-# ──────────────────────────────────────────────────────────
-print("=" * 60)
-print("EXAMPLE 6: Birthday Bound — Injection Count")
-print("=" * 60)
-
-def desc_factorial(n, k):
-    result = 1
-    for i in range(k):
-        result *= (n - i)
-    return result
-
-for k in [2, 5, 10, 23]:
-    n = 365
-    injections = desc_factorial(n, k)
-    total = n**k
-    p_no_collision = injections / total
-    p_collision = 1 - p_no_collision
-    print(f"  k={k:2d} items in n={n} slots: P(collision) = {p_collision:.4f}")
-
-print()
-print("(Theorem: injection_count)")
-
-# ──────────────────────────────────────────────────────────
-# Summary
-# ──────────────────────────────────────────────────────────
-print()
-print("=" * 60)
-print("SUMMARY: The Fermi Paradox is Not a Paradox")
-print("=" * 60)
-print("""
-The cascade filter framework shows that cosmic silence is the 
-EXPECTED outcome, not a puzzle requiring exotic explanations:
-
-1. Each Drake factor independently reduces probability (throughput_le_pow)
-2. The bottleneck factor dominates sensitivity (bottleneck_dominates)
-3. Enough stages guarantee silence exponentially (exponential_silence)
-4. Conservative estimates give E[N] < 10^{-6} (pessimistic_drake_lt_one)
-5. Silence is the generic outcome for uncertain parameters (Monte Carlo)
-
-The Fermi paradox is the anti-pigeonhole principle in action:
-too few civilizations, too many planets, too much space.
-""")
+if __name__ == "__main__":
+    demo_pessimistic_drake()
+    demo_filter_concentration()
+    demo_exponential_decay()
+    demo_temporal_pigeonhole()
+    demo_pigeonhole_poisson_bridge()
+    demo_spatial_isolation()
+    demo_fermi_silence_theorem()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Cascade Filter Phase Transition
+Visualization: Filter Cascade Decay
 
-Shows how expected survivors decrease exponentially with the number of
-filter stages, illustrating the phase transition from "many civilizations"
-to "cosmic silence."
+Shows how the expected number of civilizations decays exponentially
+with each additional filter step, for various per-step probabilities.
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 
-def cascade_expected(B: float, p: float, n_stages: np.ndarray) -> np.ndarray:
-    return B * p ** n_stages
 
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+def plot_filter_cascade():
+    """Plot exponential decay of E[N] with filter steps."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    N = 1e10  # 10 billion habitable planets
+    k_values = np.arange(0, 25)
+    
+    # Left panel: E[N] vs k for various p
+    ax = axes[0]
+    for p in [0.5, 0.3, 0.1, 0.05, 0.01]:
+        E_values = [N * p**k for k in k_values]
+        ax.semilogy(k_values, E_values, 'o-', label=f'p = {p}', markersize=3)
+    
+    ax.axhline(y=1, color='red', linestyle='--', linewidth=2, label='E = 1 (silence threshold)')
+    ax.set_xlabel('Number of Filter Steps (k)', fontsize=12)
+    ax.set_ylabel('Expected Civilizations E[N]', fontsize=12)
+    ax.set_title('Exponential Filter Decay', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.set_ylim(1e-20, 1e15)
+    ax.grid(True, alpha=0.3)
+    
+    # Right panel: Silence probability vs lambda
+    ax = axes[1]
+    lam_values = np.linspace(0.001, 2, 200)
+    linear = 1 - lam_values
+    poisson = np.exp(-lam_values)
+    
+    ax.plot(lam_values, poisson, 'b-', linewidth=2, label='Poisson: $e^{-\\lambda}$')
+    ax.plot(lam_values, np.maximum(linear, 0), 'r--', linewidth=2, 
+            label='Pigeonhole: $1 - \\lambda$')
+    ax.fill_between(lam_values, np.maximum(linear, 0), poisson, 
+                     alpha=0.2, color='green', label='Gap (Poisson tighter)')
+    
+    ax.axvline(x=1, color='gray', linestyle=':', linewidth=1)
+    ax.set_xlabel('Expected Count (λ)', fontsize=12)
+    ax.set_ylabel('P(silence)', fontsize=12)
+    ax.set_title('Pigeonhole–Poisson Bridge', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.set_xlim(0, 2)
+    ax.set_ylim(0, 1.05)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('filter_cascade_visualization.png', dpi=150, bbox_inches='tight')
+    print("Saved: filter_cascade_visualization.png")
 
-# Panel 1: Phase transition for different base populations
-ax = axes[0]
-p = 0.1
-stages = np.arange(0, 30)
-for log_B, color in [(5, '#2196F3'), (10, '#4CAF50'), (15, '#FF9800'), (22, '#F44336')]:
-    B = 10.0 ** log_B
-    E = cascade_expected(B, p, stages)
-    n_star = int(np.ceil(log_B / np.log10(1/p)))
-    ax.semilogy(stages, E, color=color, linewidth=2, label=f'B = 10$^{{{log_B}}}$')
-    ax.axvline(n_star, color=color, linestyle=':', alpha=0.5)
 
-ax.axhline(1.0, color='black', linestyle='--', linewidth=1, alpha=0.7, label='Silence threshold')
-ax.set_xlabel('Number of filter stages (n)', fontsize=12)
-ax.set_ylabel('Expected survivors E[N]', fontsize=12)
-ax.set_title('Phase Transition to Silence\n(each stage p = 0.1)', fontsize=13)
-ax.legend(fontsize=9)
-ax.set_ylim(1e-10, 1e25)
-ax.grid(True, alpha=0.3)
+def plot_temporal_pigeonhole():
+    """Plot temporal coverage fraction."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    T = 13.8e9  # cosmic time in years
+    n_values = np.arange(1, 101)
+    
+    for L in [1e3, 1e4, 1e5, 1e6, 1e7]:
+        fractions = [n * L / T for n in n_values]
+        ax.plot(n_values, fractions, '-', linewidth=2, label=f'L = {L:.0e} yr')
+    
+    ax.axhline(y=1, color='red', linestyle='--', linewidth=2, label='Full coverage')
+    ax.set_xlabel('Number of Civilizations (n)', fontsize=12)
+    ax.set_ylabel('Temporal Coverage Fraction (nL/T)', fontsize=12)
+    ax.set_title('Temporal Pigeonhole: When Do Civilizations Overlap?', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.set_yscale('log')
+    ax.set_ylim(1e-8, 10)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('temporal_pigeonhole_visualization.png', dpi=150, bbox_inches='tight')
+    print("Saved: temporal_pigeonhole_visualization.png")
 
-# Panel 2: Sensitivity analysis
-ax = axes[1]
-probs = [0.5, 0.8, 0.001, 0.3, 0.9, 0.7, 0.6]
-labels = ['f_p', 'n_e', 'f_l', 'f_i', 'f_c', 'R*', 'L']
-cofactors = []
-for i in range(len(probs)):
-    c = 1.0
-    for j, p in enumerate(probs):
-        if j != i:
-            c *= p
-    cofactors.append(c)
 
-colors = ['#2196F3'] * len(probs)
-bottleneck = np.argmax(cofactors)
-colors[bottleneck] = '#F44336'
+def plot_filter_concentration():
+    """Plot the Great Filter concentration bound."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    k_values = range(2, 21)
+    
+    for eps in [1e-6, 1e-9, 1e-12, 1e-15, 1e-20]:
+        bounds = [eps ** (1.0 / k) for k in k_values]
+        ax.plot(list(k_values), bounds, 'o-', markersize=4,
+                label=f'ε = {eps:.0e}')
+    
+    ax.set_xlabel('Number of Filter Steps (k)', fontsize=12)
+    ax.set_ylabel('Min Single-Step Probability (ε^{1/k})', fontsize=12)
+    ax.set_title('Filter Concentration: How Severe Must the Great Filter Be?', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.set_yscale('log')
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('filter_concentration_visualization.png', dpi=150, bbox_inches='tight')
+    print("Saved: filter_concentration_visualization.png")
 
-ax.barh(range(len(probs)), cofactors, color=colors, edgecolor='white', linewidth=0.5)
-ax.set_yticks(range(len(probs)))
-ax.set_yticklabels([f'{labels[i]} (p={probs[i]})' for i in range(len(probs))])
-ax.set_xlabel('Cofactor (sensitivity)', fontsize=12)
-ax.set_title('Sensitivity Dominance\n(red = bottleneck)', fontsize=13)
-ax.set_xscale('log')
-ax.grid(True, alpha=0.3, axis='x')
 
-# Panel 3: Monte Carlo distribution
-ax = axes[2]
-np.random.seed(42)
-n_samples = 100_000
-n_factors = 7
-log_products = np.zeros(n_samples)
-for _ in range(n_factors):
-    log_products += np.random.uniform(-6, 0, n_samples)
-
-log_N = np.log10(1.5e10) + log_products
-ax.hist(log_N, bins=100, density=True, color='#673AB7', alpha=0.7, edgecolor='white', linewidth=0.3)
-ax.axvline(0, color='#F44336', linewidth=2, linestyle='--', label='N = 1 (silence threshold)')
-fraction_above = np.mean(log_N > 0)
-ax.set_xlabel('log₁₀(N)', fontsize=12)
-ax.set_ylabel('Density', fontsize=12)
-ax.set_title(f'Distribution of Drake N\n(log-uniform priors, P(N>1) = {fraction_above:.4f})', fontsize=13)
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('cascade_filter_visualization.png', dpi=150, bbox_inches='tight')
-print("Saved: cascade_filter_visualization.png")
+if __name__ == "__main__":
+    plot_filter_cascade()
+    plot_temporal_pigeonhole()
+    plot_filter_concentration()

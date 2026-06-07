@@ -1,202 +1,180 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Core algorithms for the Cascade Filter framework.
+Algorithms for Fermi Paradox Filter Cascade Analysis
 
-Type-hinted implementations of the mathematical structures and algorithms
-developed in the Lean 4 formalization.
+Type-hinted implementations of the core mathematical algorithms.
 """
 
-from __future__ import annotations
-from dataclasses import dataclass
 import math
-
-
-@dataclass
-class CascadeFilter:
-    """A cascade filter with n independent probability-reducing stages.
-    
-    Attributes:
-        stage_probs: List of per-stage probabilities in [0, 1].
-        base_population: The initial population / base rate.
-    """
-    stage_probs: list[float]
-    base_population: float
-
-    def __post_init__(self) -> None:
-        for i, p in enumerate(self.stage_probs):
-            if not (0.0 <= p <= 1.0):
-                raise ValueError(f"Stage {i} probability {p} not in [0, 1]")
-        if self.base_population < 0:
-            raise ValueError(f"Base population {self.base_population} is negative")
-
-    @property
-    def stages(self) -> int:
-        """Number of filter stages."""
-        return len(self.stage_probs)
-
-    def throughput(self) -> float:
-        """Product of all stage probabilities (Lean: CascadeFilter.throughput)."""
-        result = 1.0
-        for p in self.stage_probs:
-            result *= p
-        return result
-
-    def expected_survivors(self) -> float:
-        """Expected survivors = base × throughput (Lean: CascadeFilter.expectedSurvivors)."""
-        return self.base_population * self.throughput()
-
-    def cofactor(self, i: int) -> float:
-        """Product of all probabilities except stage i (Lean: CascadeFilter.cofactor)."""
-        result = 1.0
-        for j, p in enumerate(self.stage_probs):
-            if j != i:
-                result *= p
-        return result
-
-    def bottleneck_index(self) -> int:
-        """Index of the stage with smallest probability (the bottleneck).
-        
-        By the bottleneck_dominates theorem, this stage has the highest
-        cofactor and thus the highest absolute sensitivity.
-        """
-        return min(range(self.stages), key=lambda i: self.stage_probs[i])
-
-    def sensitivity_ranking(self) -> list[tuple[int, float, float]]:
-        """Return stages sorted by sensitivity (cofactor), highest first.
-        
-        Returns list of (stage_index, probability, cofactor).
-        """
-        data = [(i, self.stage_probs[i], self.cofactor(i)) for i in range(self.stages)]
-        data.sort(key=lambda x: -x[2])  # Sort by cofactor descending
-        return data
-
-    def silence_threshold(self) -> float | None:
-        """If all stages have same probability p, return the critical p
-        such that expected_survivors = 1. Returns None for non-uniform filters."""
-        if self.stages == 0 or self.base_population <= 0:
-            return None
-        # B * p^n = 1 => p = B^(-1/n)
-        return self.base_population ** (-1.0 / self.stages)
-
-    @staticmethod
-    def uniform(n_stages: int, p: float, base_population: float) -> CascadeFilter:
-        """Create a uniform cascade filter (all stages have same probability)."""
-        return CascadeFilter([p] * n_stages, base_population)
-
-    @staticmethod
-    def critical_stage_count(p: float, base_population: float) -> int:
-        """Minimum number of stages for silence (E[survivors] < 1).
-        
-        n* = ceil(log(B) / log(1/p))
-        """
-        if p <= 0 or p >= 1 or base_population <= 1:
-            return 0
-        return math.ceil(math.log(base_population) / math.log(1 / p))
+from dataclasses import dataclass
 
 
 @dataclass
 class DrakeParams:
-    """Parameters for the Drake equation."""
-    star_formation: float = 1.5
-    fraction_planets: float = 0.5
-    habitable_planets: float = 0.01
-    fraction_life: float = 0.01
-    fraction_intelligence: float = 0.01
-    fraction_technology: float = 0.01
-    civilization_lifetime: float = 100.0
-
-    def drake_n(self) -> float:
-        """Expected number of detectable civilizations."""
-        return (self.star_formation * self.fraction_planets *
-                self.habitable_planets * self.fraction_life *
-                self.fraction_intelligence * self.fraction_technology *
-                self.civilization_lifetime)
-
-    def to_cascade_filter(self) -> CascadeFilter:
-        """Convert to a CascadeFilter representation.
-        
-        The non-probability factors (star_formation, civilization_lifetime)
-        are absorbed into the base_population.
-        """
-        return CascadeFilter(
-            stage_probs=[
-                self.fraction_planets,
-                self.habitable_planets,
-                self.fraction_life,
-                self.fraction_intelligence,
-                self.fraction_technology,
-            ],
-            base_population=self.star_formation * self.civilization_lifetime
-        )
-
-
-def birthday_collision_probability(k: int, n: int) -> float:
-    """Probability that k items in n slots have at least one collision.
+    """Drake equation parameters as a filter cascade."""
+    num_planets: float
+    filter_probs: list[float]
     
-    Uses the exact formula: P(collision) = 1 - n!/(n^k * (n-k)!)
-    Related to Lean theorem: injection_count
+    def expected_civilizations(self) -> float:
+        """E[N] = num_planets * prod(filter_probs)."""
+        prod = 1.0
+        for p in self.filter_probs:
+            prod *= p
+        return self.num_planets * prod
+    
+    def silence_probability_lower_bound(self) -> float:
+        """Lower bound on P(silence) via Markov's inequality: max(0, 1 - E[N])."""
+        E = self.expected_civilizations()
+        return max(0.0, 1.0 - E)
+    
+    def poisson_silence_probability(self) -> float:
+        """Poisson estimate of P(silence) = e^{-E[N]}."""
+        E = self.expected_civilizations()
+        return math.exp(-E)
+
+
+def filter_concentration(filter_probs: list[float]) -> tuple[float, int]:
     """
-    if k > n:
-        return 1.0
-    if k <= 1:
-        return 0.0
-    # Compute P(no collision) = prod_{i=0}^{k-1} (1 - i/n)
-    p_no_collision = 1.0
-    for i in range(k):
-        p_no_collision *= (1.0 - i / n)
-    return 1.0 - p_no_collision
+    Find the most restrictive filter step.
+    
+    Returns (min_prob, index) — the Great Filter location.
+    By the Filter Concentration Theorem, this step has probability
+    at most eps^(1/k) where eps = product of all probabilities.
+    """
+    if not filter_probs:
+        return (1.0, -1)
+    
+    min_prob = min(filter_probs)
+    min_idx = filter_probs.index(min_prob)
+    return (min_prob, min_idx)
 
 
-def descending_factorial(n: int, k: int) -> int:
-    """n * (n-1) * ... * (n-k+1)"""
-    result = 1
-    for i in range(k):
-        result *= (n - i)
-    return result
+def critical_filter_count(num_planets: float, per_step_prob: float) -> int:
+    """
+    Compute the minimum number of filter steps k such that
+    num_planets * per_step_prob^k < 1.
+    
+    Returns k = ceil(log(1/num_planets) / log(per_step_prob)).
+    """
+    if per_step_prob >= 1.0 or per_step_prob <= 0.0:
+        raise ValueError("per_step_prob must be in (0, 1)")
+    if num_planets <= 0:
+        raise ValueError("num_planets must be positive")
+    
+    return math.ceil(math.log(1.0 / num_planets) / math.log(per_step_prob))
 
 
-# ──────────────────────────────────────────────────────────
-# Monte Carlo silence estimator
-# ──────────────────────────────────────────────────────────
-def monte_carlo_silence_probability(
-    n_factors: int = 7,
-    log_min: float = -6.0,
-    log_max: float = 0.0,
-    base_rate: float = 1.5e10,
-    n_samples: int = 100_000,
-    seed: int = 42,
+def temporal_overlap_probability(
+    n_civilizations: int,
+    lifetime_years: float,
+    cosmic_time_years: float = 13.8e9
 ) -> float:
-    """Estimate P(N < 1) when each Drake factor is log-uniform on [10^log_min, 10^log_max].
-    
-    Tests the conjecture that silence is the generic outcome for uncertain Drake parameters.
     """
-    import random
-    rng = random.Random(seed)
-    n_silence = 0
-    for _ in range(n_samples):
-        throughput = 1.0
-        for _ in range(n_factors):
-            throughput *= 10 ** rng.uniform(log_min, log_max)
-        if base_rate * throughput < 1:
-            n_silence += 1
-    return n_silence / n_samples
+    Compute the occupied fraction of cosmic time.
+    
+    If n * L / T < 1, temporal overlap is unlikely (pigeonhole).
+    Returns the occupied fraction n * L / T.
+    """
+    return n_civilizations * lifetime_years / cosmic_time_years
+
+
+def spatial_detection_fraction(
+    comm_range_ly: float,
+    universe_radius_ly: float = 4.4e10,
+    dimension: int = 3
+) -> float:
+    """
+    Compute the fraction of the universe within communication range.
+    
+    Returns (r/R)^d where r = comm_range, R = universe_radius, d = dimension.
+    """
+    return (comm_range_ly / universe_radius_ly) ** dimension
+
+
+def bayesian_filter_update(
+    prior_probs: list[float],
+    observed_passed: list[bool]
+) -> list[float]:
+    """
+    Bayesian update of Great Filter location probabilities.
+    
+    Given prior probabilities for each step being the Great Filter,
+    and observations of which steps have been passed, compute the
+    posterior probabilities.
+    
+    Steps that have been passed get posterior probability 0.
+    Remaining steps are rescaled by 1/(1 - sum of eliminated probs).
+    """
+    eliminated_mass = sum(
+        p for p, passed in zip(prior_probs, observed_passed) if passed
+    )
+    remaining_mass = 1.0 - eliminated_mass
+    
+    if remaining_mass <= 0:
+        # All steps passed — no Great Filter
+        return [0.0] * len(prior_probs)
+    
+    posterior = []
+    for p, passed in zip(prior_probs, observed_passed):
+        if passed:
+            posterior.append(0.0)
+        else:
+            posterior.append(p / remaining_mass)
+    
+    return posterior
+
+
+def multi_scale_expected(
+    n_galaxies: float,
+    n_stars_per_galaxy: float,
+    n_planets_per_star: float,
+    galactic_filter: float,
+    stellar_filter: float,
+    planetary_filter: float
+) -> float:
+    """
+    Multi-scale Drake equation: filters at galactic, stellar, and planetary levels.
+    
+    E[N] = N_g * N_s * N_p * p_g * p_s * p_p
+    """
+    return (n_galaxies * n_stars_per_galaxy * n_planets_per_star *
+            galactic_filter * stellar_filter * planetary_filter)
+
+
+def pigeonhole_poisson_comparison(lam: float) -> dict[str, float]:
+    """
+    Compare pigeonhole (linear) and Poisson (exponential) silence bounds.
+    
+    Returns both bounds and the gap between them.
+    """
+    linear = 1.0 - lam  # Pigeonhole/Markov bound
+    poisson = math.exp(-lam)  # Poisson probability
+    
+    return {
+        "lambda": lam,
+        "linear_bound": linear,
+        "poisson_probability": poisson,
+        "gap": poisson - linear,
+        "ratio": poisson / linear if linear > 0 else float('inf'),
+    }
 
 
 if __name__ == "__main__":
-    # Demo: Pessimistic Drake
-    drake = DrakeParams()
-    print(f"Pessimistic Drake N = {drake.drake_n():.2e}")
-
-    # Demo: Cascade filter
-    cf = drake.to_cascade_filter()
-    print(f"Cascade throughput = {cf.throughput():.2e}")
-    print(f"Expected survivors = {cf.expected_survivors():.2e}")
-    print(f"Bottleneck: stage {cf.bottleneck_index()}")
-
-    # Demo: Critical stage count
-    n_star = CascadeFilter.critical_stage_count(0.1, 1e22)
-    print(f"Critical stages for B=10^22, p=0.1: n* = {n_star}")
-
-    # Demo: Monte Carlo
-    p_silence = monte_carlo_silence_probability()
-    print(f"Monte Carlo P(silence): {p_silence:.4f}")
+    # Quick test
+    params = DrakeParams(
+        num_planets=1e10,
+        filter_probs=[0.01, 0.01, 0.01, 0.01]
+    )
+    print(f"Drake E[N] = {params.expected_civilizations():.2e}")
+    print(f"P(silence) >= {params.silence_probability_lower_bound():.6f}")
+    print(f"P_Poisson(silence) = {params.poisson_silence_probability():.6f}")
+    print(f"Critical k (p=0.1): {critical_filter_count(1e10, 0.1)}")
+    
+    # Bayesian update
+    prior = [0.1, 0.1, 0.2, 0.3, 0.3]
+    passed = [True, True, False, False, False]
+    posterior = bayesian_filter_update(prior, passed)
+    print(f"\nBayesian update:")
+    print(f"  Prior: {prior}")
+    print(f"  Passed: {passed}")
+    print(f"  Posterior: {[f'{p:.3f}' for p in posterior]}")
