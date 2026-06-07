@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "25c4ffc0",
     "filename": "the_category_theory_of_jokes_universal_properties_.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.18624000000000002,
     "title": "The Category Theory of Jokes: Universal Properties of Humor"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_category_theory_of_jokes_universal_properties_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.18624000000000002,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Category Theory of Jokes: Universal Properties of Humor"
     }
