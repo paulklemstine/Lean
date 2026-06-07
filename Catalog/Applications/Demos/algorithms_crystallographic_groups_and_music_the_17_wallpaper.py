@@ -1,277 +1,325 @@
 #!/usr/bin/env python3
 """
-Crystallographic Rhythm Theory: Core Algorithms
+Crystallographic Rhythm Theory — Algorithms
 
-Type-hinted implementations of the key algorithms for:
-1. Rhythmic Interaction Tensor computation
-2. Autocorrelation spectrum analysis
-3. Wallpaper symmetry detection for 2D drum patterns
-4. Rhythm classification by symmetry type
+Type-hinted implementations of the core algorithms for:
+1. Euler's totient function and crystallographic restriction
+2. Binary necklace enumeration (Burnside's lemma)
+3. Rhythm symmetry classification
+4. Drum pattern symmetry detection
 """
-from typing import List, Tuple, Dict, Set, Optional
-from enum import Enum
-import math
+
+from math import gcd
+from itertools import product as cartprod
+from typing import Optional
 
 
-class WallpaperType(Enum):
-    """The 17 wallpaper group types with their musical interpretations."""
-    P1 = ("p1", 1, False, False, "Free rhythm")
-    P2 = ("p2", 2, False, False, "Call-and-response")
-    PM = ("pm", 1, True, False, "Palindrome")
-    PG = ("pg", 1, False, True, "Canon")
-    CM = ("cm", 1, True, True, "Round")
-    PMM = ("pmm", 2, True, False, "Bilateral palindrome")
-    PMG = ("pmg", 2, True, True, "Inverted canon")
-    PGG = ("pgg", 2, False, True, "Double canon")
-    CMM = ("cmm", 2, True, True, "Round + palindrome")
-    P4 = ("p4", 4, False, False, "4-bar cycle")
-    P4M = ("p4m", 4, True, False, "Variations on a theme")
-    P4G = ("p4g", 4, True, True, "Inverted variations")
-    P3 = ("p3", 3, False, False, "3-bar blues")
-    P3M1 = ("p3m1", 3, True, False, "3-fold + mirrors")
-    P31M = ("p31m", 3, True, True, "3-fold + glides")
-    P6 = ("p6", 6, False, False, "Whole-tone symmetry")
-    P6M = ("p6m", 6, True, True, "Maximal symmetry")
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 1: Euler's Totient and Crystallographic Restriction
+# ═══════════════════════════════════════════════════════════════
 
-    def __init__(self, name: str, rot_order: int,
-                 has_mirror: bool, has_glide: bool, description: str):
-        self.type_name = name
-        self.rot_order = rot_order
-        self.has_mirror = has_mirror
-        self.has_glide = has_glide
-        self.description = description
-
-
-def compute_rit(f: List[int], g: List[int]) -> List[int]:
+def euler_totient(n: int) -> int:
     """
-    Compute the Rhythmic Interaction Tensor I(f,g).
+    Compute Euler's totient function φ(n).
 
-    Algorithm: For each lag k in {0, ..., n-1}, count positions j
-    where f[j] = 1 and g[(j+k) mod n] = 1.
+    φ(n) = n · ∏_{p|n} (1 - 1/p)
 
-    Time complexity: O(n²)
-
-    Args:
-        f: First rhythm as binary list
-        g: Second rhythm as binary list
-
-    Returns:
-        List of n interaction values I(f,g)(0), ..., I(f,g)(n-1)
+    Time complexity: O(√n)
     """
-    n = len(f)
-    assert len(g) == n, "Rhythms must have the same period"
-    result = []
-    for k in range(n):
-        count = sum(f[j] * g[(j + k) % n] for j in range(n))
-        result.append(count)
+    if n <= 0:
+        return 0
+    result = n
+    p = 2
+    temp = n
+    while p * p <= temp:
+        if temp % p == 0:
+            while temp % p == 0:
+                temp //= p
+            result -= result // p
+        p += 1
+    if temp > 1:
+        result -= result // temp
     return result
 
 
-def compute_autocorrelation(rhythm: List[int]) -> List[int]:
+def is_crystallographic_order(n: int) -> bool:
     """
-    Compute the autocorrelation spectrum R(k) = I(f,f)(k).
+    Check if n is a crystallographic order.
 
-    The autocorrelation is always palindromic: R(k) = R(n-k).
+    A positive integer n is crystallographic iff φ(n) ≤ 2,
+    which holds iff n ∈ {1, 2, 3, 4, 6}.
 
-    Args:
-        rhythm: Binary rhythm as list of 0s and 1s
-
-    Returns:
-        Autocorrelation values R(0), ..., R(n-1)
+    Time complexity: O(1)
     """
-    return compute_rit(rhythm, rhythm)
+    return n in {1, 2, 3, 4, 6}
 
 
-def detect_rotation_symmetry(rhythm: List[int]) -> List[int]:
+def crystallographic_orders_up_to(d: int) -> list[int]:
     """
-    Find all rotation symmetry shifts of a cyclic rhythm.
+    Find all n with φ(n) ≤ d.
 
-    A shift s is a symmetry if f[(j+s) mod n] = f[j] for all j.
+    For d=2, returns {1,2,3,4,6} (2D crystallographic restriction).
+    For d=4, returns {1,2,3,4,5,6,8,10,12} (4D restriction).
 
-    Args:
-        rhythm: Binary rhythm
-
-    Returns:
-        List of symmetry shifts (always includes 0)
+    Time complexity: O(N√N) where N is the largest output value.
     """
-    n = len(rhythm)
-    shifts = []
-    for s in range(n):
-        if all(rhythm[(j + s) % n] == rhythm[j] for j in range(n)):
-            shifts.append(s)
-    return shifts
+    # Upper bound: φ(n) > √(n/2) for n > 6, so n < 2(d+1)² suffices
+    upper = max(2 * (d + 1) ** 2, 30)
+    return [n for n in range(1, upper + 1) if euler_totient(n) <= d]
 
 
-def detect_mirror_symmetry(rhythm: List[int]) -> bool:
-    """Check if rhythm equals its retrograde."""
-    n = len(rhythm)
-    return all(rhythm[j] == rhythm[(-j) % n] for j in range(n))
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 2: Binary Necklace Enumeration
+# ═══════════════════════════════════════════════════════════════
 
-
-def classify_1d_symmetry(rhythm: List[int]) -> Dict[str, any]:
+def necklace_count_prime(p: int) -> int:
     """
-    Classify the symmetry profile of a 1D cyclic rhythm.
+    Count distinct binary necklaces of prime length p.
 
-    Returns dict with:
-    - weight: onset count
-    - rotation_shifts: list of symmetry shifts
-    - rotation_order: order of the rotation subgroup
-    - is_palindromic: whether rhythm has mirror symmetry
-    - min_period: minimal period
+    N(p) = (2^p + 2p - 2) / p
+
+    By Fermat's little theorem, this is always an integer.
+
+    Time complexity: O(log p) for the power computation.
     """
-    n = len(rhythm)
-    shifts = detect_rotation_symmetry(rhythm)
-    rot_order = len(shifts)
-    min_period = n // rot_order if rot_order > 0 else n
-
-    return {
-        "weight": sum(rhythm),
-        "rotation_shifts": shifts,
-        "rotation_order": rot_order,
-        "is_palindromic": detect_mirror_symmetry(rhythm),
-        "min_period": min_period,
-    }
+    return (pow(2, p) + 2 * p - 2) // p
 
 
-def classify_2d_symmetry(
-    grid: List[List[int]]
-) -> Dict[str, bool]:
+def necklace_count_general(n: int) -> int:
     """
-    Classify symmetry of a 2D drum pattern (m × n grid).
+    Count distinct binary necklaces of length n (Burnside formula).
 
-    Detects:
-    - time_mirror: g(-t, p) = g(t, p) for all t, p
-    - pitch_mirror: g(t, -p) = g(t, p) for all t, p
-    - rotation_2: g(-t, -p) = g(t, p) for all t, p
+    N(n) = (1/n) · Σ_{d|n} φ(n/d) · 2^d
 
-    Args:
-        grid: 2D binary array (list of lists)
-
-    Returns:
-        Dict of detected symmetries
+    Time complexity: O(d(n) · √n) where d(n) is the number of divisors.
     """
-    m = len(grid)
-    if m == 0:
-        return {"time_mirror": True, "pitch_mirror": True, "rotation_2": True}
-    n = len(grid[0])
-
-    time_mirror = all(
-        grid[(-t) % m][p] == grid[t][p]
-        for t in range(m) for p in range(n)
-    )
-    pitch_mirror = all(
-        grid[t][(-p) % n] == grid[t][p]
-        for t in range(m) for p in range(n)
-    )
-    rotation_2 = all(
-        grid[(-t) % m][(-p) % n] == grid[t][p]
-        for t in range(m) for p in range(n)
-    )
-
-    return {
-        "time_mirror": time_mirror,
-        "pitch_mirror": pitch_mirror,
-        "rotation_2": rotation_2,
-        "double_mirror_implies_rotation": (
-            not (time_mirror and pitch_mirror) or rotation_2
-        ),
-    }
-
-
-def verify_interaction_properties(
-    f: List[int], g: List[int]
-) -> Dict[str, bool]:
-    """
-    Verify the key algebraic properties of the Rhythmic Interaction Tensor.
-
-    Checks:
-    1. Skew symmetry: I(f,g)(k) = I(g,f)(-k)
-    2. Weight product sum: Σ I(f,g)(k) = w(f)·w(g)
-    3. Autocorrelation palindromicity (for self-interaction)
-    4. Weight-square sum (for self-interaction)
-
-    Args:
-        f, g: Binary rhythms of the same period
-
-    Returns:
-        Dict mapping property names to verification results
-    """
-    n = len(f)
-    I_fg = compute_rit(f, g)
-    I_gf = compute_rit(g, f)
-    R_f = compute_autocorrelation(f)
-    w_f = sum(f)
-    w_g = sum(g)
-
-    return {
-        "skew_symmetry": all(
-            I_fg[k] == I_gf[(-k) % n] for k in range(n)
-        ),
-        "weight_product_sum": sum(I_fg) == w_f * w_g,
-        "autocorr_palindromic": all(
-            R_f[k] == R_f[(-k) % n] for k in range(n)
-        ),
-        "weight_square_sum": sum(R_f) == w_f ** 2,
-    }
-
-
-def necklace_count(n: int) -> int:
-    """
-    Count distinct binary necklaces of length n (rhythms up to rotation).
-
-    Uses Burnside's lemma: (1/n) Σ_{d|n} φ(n/d) · 2^d
-
-    This counts the number of essentially different cyclic rhythms.
-    """
-    if n == 0:
-        return 1
-
-    def euler_phi(k: int) -> int:
-        result = k
-        p = 2
-        temp = k
-        while p * p <= temp:
-            if temp % p == 0:
-                while temp % p == 0:
-                    temp //= p
-                result -= result // p
-            p += 1
-        if temp > 1:
-            result -= result // temp
-        return result
-
+    if n <= 0:
+        return 0
     total = 0
     for d in range(1, n + 1):
         if n % d == 0:
-            total += euler_phi(n // d) * (2 ** d)
+            total += euler_totient(n // d) * pow(2, d)
     return total // n
 
 
+def canonical_necklace(bits: tuple[int, ...]) -> tuple[int, ...]:
+    """
+    Return the canonical (lexicographically smallest) rotation of a binary string.
+
+    Time complexity: O(n²) where n = len(bits).
+    """
+    n = len(bits)
+    return min(bits[i:] + bits[:i] for i in range(n))
+
+
+def enumerate_necklaces(n: int) -> list[tuple[int, ...]]:
+    """
+    Enumerate all distinct binary necklaces of length n.
+
+    Returns necklaces in sorted order.
+
+    Time complexity: O(2^n · n) — exponential, for small n only.
+    """
+    seen: set[tuple[int, ...]] = set()
+    result: list[tuple[int, ...]] = []
+    for bits in cartprod([0, 1], repeat=n):
+        canon = canonical_necklace(bits)
+        if canon not in seen:
+            seen.add(canon)
+            result.append(canon)
+    return sorted(result)
+
+
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 3: Rhythm Symmetry Classification
+# ═══════════════════════════════════════════════════════════════
+
+def has_kfold_symmetry(rhythm: tuple[int, ...], k: int) -> bool:
+    """
+    Check if a rhythm has k-fold rotational symmetry.
+
+    A rhythm f of length n has k-fold symmetry if f(i) = f((i + n/k) mod n)
+    for all i. Requires k | n.
+
+    Time complexity: O(n).
+    """
+    n = len(rhythm)
+    if k <= 0 or n % k != 0:
+        return False
+    shift = n // k
+    return all(rhythm[i] == rhythm[(i + shift) % n] for i in range(n))
+
+
+def symmetry_order(rhythm: tuple[int, ...]) -> int:
+    """
+    Find the maximum rotational symmetry order of a rhythm.
+
+    Returns the largest k such that the rhythm has k-fold symmetry.
+
+    Time complexity: O(n · d(n)) where d(n) is the number of divisors.
+    """
+    n = len(rhythm)
+    max_k = 1
+    for k in range(2, n + 1):
+        if n % k == 0 and has_kfold_symmetry(rhythm, k):
+            max_k = k
+    return max_k
+
+
+def is_palindromic(rhythm: tuple[int, ...]) -> bool:
+    """Check if a rhythm is palindromic (mirror-symmetric)."""
+    return rhythm == rhythm[::-1]
+
+
+def classify_rhythm(rhythm: tuple[int, ...]) -> dict[str, object]:
+    """
+    Classify a rhythm by its symmetry properties.
+
+    Returns a dictionary with symmetry information.
+    """
+    n = len(rhythm)
+    k = symmetry_order(rhythm)
+    onset = sum(rhythm)
+    return {
+        "length": n,
+        "onset_count": onset,
+        "onset_density": onset / n if n > 0 else 0,
+        "symmetry_order": k,
+        "is_palindromic": is_palindromic(rhythm),
+        "information_bits": n // k,
+        "canonical_form": canonical_necklace(rhythm),
+    }
+
+
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 4: Drum Pattern (2D) Symmetry Detection
+# ═══════════════════════════════════════════════════════════════
+
+DrumGrid = list[list[int]]  # m × n grid of 0s and 1s
+
+
+def has_time_mirror(grid: DrumGrid) -> bool:
+    """Check if a drum pattern has time-mirror symmetry."""
+    m = len(grid)
+    return all(grid[i] == grid[m - 1 - i] for i in range(m // 2 + 1))
+
+
+def has_pitch_mirror(grid: DrumGrid) -> bool:
+    """Check if a drum pattern has pitch-mirror symmetry."""
+    if not grid:
+        return True
+    n = len(grid[0])
+    return all(
+        all(grid[i][j] == grid[i][n - 1 - j] for j in range(n // 2 + 1))
+        for i in range(len(grid))
+    )
+
+
+def has_rotation_180(grid: DrumGrid) -> bool:
+    """Check if a drum pattern has 180° rotational symmetry."""
+    m = len(grid)
+    if m == 0:
+        return True
+    n = len(grid[0])
+    return all(
+        grid[i][j] == grid[m - 1 - i][n - 1 - j]
+        for i in range(m) for j in range(n)
+    )
+
+
+def classify_drum_pattern(grid: DrumGrid) -> str:
+    """
+    Classify a drum pattern by its 2D symmetry type.
+
+    Returns the wallpaper type (simplified: p1, p2, pm, pmm, or pg).
+    """
+    tm = has_time_mirror(grid)
+    pm_ = has_pitch_mirror(grid)
+    r2 = has_rotation_180(grid)
+
+    if tm and pm_:
+        return "pmm"  # Double mirror (implies rotation)
+    elif tm:
+        return "pm (time)"
+    elif pm_:
+        return "pm (pitch)"
+    elif r2:
+        return "p2"
+    else:
+        return "p1"
+
+
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 5: Wallpaper Type Database
+# ═══════════════════════════════════════════════════════════════
+
+WALLPAPER_TYPES = {
+    "p1":   {"rotation_order": 1, "has_mirror": False, "has_glide": False,
+             "musical_name": "Free rhythm"},
+    "p2":   {"rotation_order": 2, "has_mirror": False, "has_glide": False,
+             "musical_name": "Call-and-response"},
+    "pm":   {"rotation_order": 1, "has_mirror": True,  "has_glide": False,
+             "musical_name": "Palindrome"},
+    "pg":   {"rotation_order": 1, "has_mirror": False, "has_glide": True,
+             "musical_name": "Canon"},
+    "cm":   {"rotation_order": 1, "has_mirror": True,  "has_glide": True,
+             "musical_name": "Round"},
+    "pmm":  {"rotation_order": 2, "has_mirror": True,  "has_glide": False,
+             "musical_name": "Bilateral palindrome"},
+    "pmg":  {"rotation_order": 2, "has_mirror": True,  "has_glide": True,
+             "musical_name": "Inverted canon"},
+    "pgg":  {"rotation_order": 2, "has_mirror": False, "has_glide": True,
+             "musical_name": "Double canon"},
+    "cmm":  {"rotation_order": 2, "has_mirror": True,  "has_glide": True,
+             "musical_name": "Round + palindrome"},
+    "p4":   {"rotation_order": 4, "has_mirror": False, "has_glide": False,
+             "musical_name": "4-bar cycle"},
+    "p4m":  {"rotation_order": 4, "has_mirror": True,  "has_glide": False,
+             "musical_name": "Variations on a theme"},
+    "p4g":  {"rotation_order": 4, "has_mirror": True,  "has_glide": True,
+             "musical_name": "Inverted variations"},
+    "p3":   {"rotation_order": 3, "has_mirror": False, "has_glide": False,
+             "musical_name": "3-bar blues"},
+    "p3m1": {"rotation_order": 3, "has_mirror": True,  "has_glide": False,
+             "musical_name": "3-fold + mirrors"},
+    "p31m": {"rotation_order": 3, "has_mirror": False, "has_glide": True,
+             "musical_name": "3-fold + glides"},
+    "p6":   {"rotation_order": 6, "has_mirror": False, "has_glide": False,
+             "musical_name": "Whole-tone scale symmetry"},
+    "p6m":  {"rotation_order": 6, "has_mirror": True,  "has_glide": True,
+             "musical_name": "Maximal symmetry"},
+}
+
+
 if __name__ == "__main__":
-    # Verify all properties on example rhythms
-    print("=== Algorithmic Verification ===\n")
+    # Verify crystallographic restriction
+    cryst = crystallographic_orders_up_to(2)
+    print(f"Crystallographic orders (φ(n) ≤ 2): {cryst}")
+    assert cryst == [1, 2, 3, 4, 6]
 
-    # Son Clave pattern
-    clave = [1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0]
-    print(f"Son Clave: {clave}")
-    sym = classify_1d_symmetry(clave)
-    print(f"  Symmetry: {sym}")
+    # Verify necklace counts
+    for p in [2, 3, 5, 7]:
+        formula = necklace_count_prime(p)
+        general = necklace_count_general(p)
+        enumerated = len(enumerate_necklaces(p))
+        assert formula == general == enumerated
+        print(f"N({p}) = {formula} (verified 3 ways)")
 
-    # 3-against-4 polyrhythm
-    f3 = [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0]
-    f4 = [1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0]
-    props = verify_interaction_properties(f3, f4)
-    print(f"\n3-vs-4 polyrhythm interaction properties:")
-    for name, ok in props.items():
-        print(f"  {name}: {'✓' if ok else '✗'}")
+    # Classify some rhythms
+    bossa = (1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0)
+    four_on_floor = (1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+    clave = (1, 0, 0, 1, 0, 0, 1, 0)
 
-    # Necklace counting
-    print("\nDistinct cyclic rhythms by period:")
-    for n in range(1, 17):
-        print(f"  n={n:2d}: {necklace_count(n):6d} necklaces")
+    for name, rhythm in [("Bossa nova", bossa), ("Four-on-floor", four_on_floor), ("Clave", clave)]:
+        info = classify_rhythm(rhythm)
+        print(f"\n{name}: {rhythm}")
+        print(f"  Symmetry order: {info['symmetry_order']}")
+        print(f"  Palindromic: {info['is_palindromic']}")
+        print(f"  Information bits: {info['information_bits']}")
 
-    # 2D grid classification
-    grid = [[1,0,0,1], [0,1,1,0], [0,1,1,0], [1,0,0,1]]
-    print(f"\n4×4 symmetric grid classification:")
-    for k, v in classify_2d_symmetry(grid).items():
-        print(f"  {k}: {v}")
+    # Double mirror theorem demo
+    grid = [[1, 0, 1], [0, 1, 0], [1, 0, 1]]
+    wtype = classify_drum_pattern(grid)
+    print(f"\nDrum pattern {grid} → {wtype}")
+    assert has_rotation_180(grid), "Double mirror should imply rotation"
+    print("Double mirror → rotation verified!")
