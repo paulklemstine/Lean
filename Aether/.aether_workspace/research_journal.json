@@ -2,16 +2,6 @@
   "breakthroughs": [],
   "cycle_log": [
     {
-      "cycle_id": "e993c5ba",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Tropical Centralizer Cryptography\n\n## Synthesis\n\nThis research cycle established the **tropical centralizer sub-semiring** as a novel algebraic structure and proved it serves as a",
-      "quality_score": 0.69584,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-04T06:40:47",
-      "title": "Tropical Cryptography: Min-Plus Diffie-Hellman"
-    },
-    {
       "cycle_id": "303278ac",
       "domain": "Computation",
       "key_insight": "# Future Directions: Multi-Objective Refinement Systems\n\n## Synthesis\n\nThis research cycle introduced **Multi-Objective Refinement Systems (MORS)** — a framework that extends single-objective proof re",
@@ -2000,6 +1990,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T09:37:50",
       "title": "Speculative: Category Theory as the DNA of Mathematics"
+    },
+    {
+      "cycle_id": "21c68fe5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle established a rigorous framework for **Mortality Games** — asymmetric two-player games between a finite player (Mortal) and a transfinite adversa",
+      "quality_score": 0.3044,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T10:11:30",
+      "title": "Infinite Games Against Death: Immortality Strategies"
     }
   ],
   "entries": [
@@ -2045,7 +2045,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-07T09:37:50",
+  "last_updated": "2026-06-07T10:11:30",
   "open_questions": [
     {
       "context": "sorry",
@@ -2269,12 +2269,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "4e7ad73a",
-        "quality": 0.32664000000000004,
-        "theorems": 5,
-        "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proo"
-      },
-      {
         "cycle_id": "bf666f9c",
         "quality": 0.3264,
         "theorems": 6,
@@ -2327,6 +2321,12 @@
         "quality": 0.59064,
         "theorems": 4,
         "title": "Alien Mathematics: Non-Standard Arithmetic"
+      },
+      {
+        "cycle_id": "21c68fe5",
+        "quality": 0.3044,
+        "theorems": 5,
+        "title": "Infinite Games Against Death: Immortality Strategies"
       }
     ],
     "Physics": [
