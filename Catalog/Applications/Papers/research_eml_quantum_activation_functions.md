@@ -1,186 +1,229 @@
-# The Quantum Activation Algebra: Bridging Unitary Phase Gates and Amplitude Control in Neural Networks
+# Quantum EML Activation Functions: Surjectivity, Phase-Amplitude Factorization, and the Classical Bridge
 
 ## Abstract
 
-We introduce the **Quantum Activation Algebra (QAA)**, a novel mathematical structure that parameterizes complex-valued neural network activations through a two-parameter family:
+We introduce the **quantum EML (Exponential-Minus-Logarithm) activation function**, a complex-valued extension of the classical EML activation `eml(x,y) = exp(x) - log(y)` obtained by replacing the real exponential with a unitary phase rotation exp(iθ) and the logarithmic input with a complex argument 1 + ri. We define the quantum EML neuron as
 
-$$\text{qact}(\theta, \phi) = e^{i\theta} \cdot (1 + i\phi), \quad \theta, \phi \in \mathbb{R}.$$
+$$\text{qeml}(\theta, r) = e^{i\theta} \cdot \log(1 + ri)$$
 
-This function decomposes into a *phase gate* $e^{i\theta}$ (unitary) and an *amplitude factor* $(1 + i\phi)$ (non-unitary for $\phi \neq 0$), providing a smooth interpolation between unitary quantum operations and general linear maps. We prove 30+ theorems about this structure, including:
-
-1. **Spectral Gap Identity**: $\|\text{qact}(\theta, \phi)\|^2 = 1 + \phi^2$, establishing that $\phi^2$ is the unitarity defect.
-2. **Image Characterization**: The image of qact is exactly the closed exterior of the unit disk $\{z \in \mathbb{C} : |z| \geq 1\}$.
-3. **Spectral Gap Pinching**: For $|\phi| \leq 1$, the spectral gap $\sqrt{1+\phi^2} - 1$ lies between $\phi^2/3$ and $\phi^2/2$.
-4. **Depth Amplification**: $n$-layer composition has norm $({\sqrt{1+\phi^2}})^n$, growing exponentially.
-5. **Gauge Invariance**: The unitarity defect is independent of the phase parameter.
-6. **Information Additivity**: The information content $\log(1+\phi^2)$ is additive under independent layer composition.
-
-All results are formalized and verified in Lean 4 with Mathlib.
+and prove three main results: (1) **Phase-amplitude factorization** — the norm of qeml(θ,r) depends only on r, establishing a natural U(1)-fibration structure; (2) **Surjectivity** — the map (θ,r) ↦ qeml(θ,r) is surjective onto ℂ, the scalar analog of the SU(2) coverage conjecture for quantum neural networks; and (3) **Classical bridge** — the complex EML ceml(z₁,z₂) = exp(z₁) - log(z₂) restricted to real inputs recovers the classical EML identically. All results are formalized and verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
-Quantum computing and classical neural networks operate in fundamentally different mathematical frameworks. Quantum gates are unitary operators ($UU^\dagger = I$), preserving probability amplitudes, while classical activation functions (ReLU, sigmoid, etc.) are non-unitary maps that introduce nonlinearity through amplitude changes.
+The EML activation function `eml(x,y) = exp(x) - log(y)` has emerged as a mathematically rich building block for neural network architectures. Its algebraic properties — including the chain cancellation `exp(log(x)) = x`, monotonicity in both arguments, and convexity structure — make it particularly amenable to theoretical analysis.
 
-The Exponential-Multiplicative-Logarithmic (EML) framework [catalog references] provides a bridge through its core operation $\text{eml}(x,y) = e^x - \log y$, which interleaves exponential and logarithmic transformations. We extend this to the complex domain, defining the **quantum EML activation**:
+A natural question arises when considering quantum extensions: if the exponential and logarithm are the fundamental operations of classical EML, what happens when we replace them with their quantum analogs? In quantum mechanics, the exponential of an imaginary Hermitian operator exp(iH) produces a unitary transformation, while the complex logarithm provides the necessary nonlinearity. This motivates the **quantum EML conjecture**: that quantum EML neurons, defined via unitary exponentials and complex logarithms, can implement arbitrary quantum operations.
 
-$$\text{qact}(\theta, \phi) = e^{i\theta} \cdot (1 + i\phi).$$
-
-This is a principled choice: $e^{i\theta}$ is the simplest unitary operation (a phase rotation), and $(1 + i\phi)$ is the simplest linear departure from the identity. The product captures the interplay between quantum coherence (controlled by $\theta$) and classical information gain (controlled by $\phi$).
+In this paper, we establish the scalar (single-complex-number) version of this conjecture. Our main result is that the quantum EML neuron qeml(θ,r) = exp(iθ) · log(1 + ri) is surjective onto ℂ. This provides the foundational case for the matrix-valued conjecture about SU(2) coverage.
 
 ## 2. Definitions
 
-### 2.1 The Quantum EML Activation
+### 2.1 Quantum EML Activation
 
-**Definition 1** (Quantum Activation). For $\theta, \phi \in \mathbb{R}$, define:
-$$\text{qact}(\theta, \phi) = e^{i\theta} \cdot (1 + i\phi) \in \mathbb{C}.$$
+**Definition 1** (Quantum EML). For θ, r ∈ ℝ, the *quantum EML activation function* is
+$$\text{qeml}(\theta, r) = e^{i\theta} \cdot \log(1 + ri)$$
+where log denotes the principal branch of the complex logarithm.
 
-**Definition 2** (Amplitude-squared). $A(\phi) = 1 + \phi^2$.
+**Definition 2** (Complex EML). For z₁, z₂ ∈ ℂ, the *complex EML function* is
+$$\text{ceml}(z_1, z_2) = e^{z_1} - \log(z_2)$$
+generalizing the classical `eml(x,y) = exp(x) - log(y)`.
 
-**Definition 3** (Spectral Gap). $\Delta(\phi) = \sqrt{1 + \phi^2} - 1$.
+**Definition 3** (Quantum EML Norm). The *quantum EML norm function* is
+$$\|\text{qeml}\|(r) = \|\log(1 + ri)\|$$
+which controls the radial component of the quantum EML output.
 
-**Definition 4** (Information Content). $I(\phi) = \log(1 + \phi^2)$.
+### 2.2 Slit Plane Membership
 
-**Definition 5** (Unitarity Defect). $D(\theta, \phi) = \|\text{qact}(\theta,\phi)\|^2 - 1$.
+A key technical prerequisite is that the input 1 + ri always lies in the complex slit plane (the complement of the negative real axis), ensuring the principal logarithm is well-defined and analytic.
 
-**Definition 6** (Multi-layer Activation). For parameters $\{(\theta_i, \phi_i)\}_{i=1}^n$:
-$$\text{qactLayer}_n = \prod_{i=1}^n \text{qact}(\theta_i, \phi_i).$$
+**Lemma 1** (Slit Plane Membership). For all r ∈ ℝ, 1 + ri ∈ slitPlane.
 
-### 2.2 The Quantum Activation Algebra (QAA)
+*Proof.* Re(1 + ri) = 1 > 0. ∎
 
-**Definition 7** (QActivation). A `QActivation` is a pair $q = (\theta, \phi) \in \mathbb{R}^2$ with:
-- Evaluation: $q.\text{eval} = \text{qact}(\theta, \phi)$
-- Norm: $q.\text{norm} = \sqrt{1 + \phi^2}$
-- Identity: $\mathbf{1} = (0, 0)$, satisfying $\mathbf{1}.\text{eval} = 1$
-- Composition: defined via the norm-multiplicative rule $(1 + \phi_{\text{comp}}) = \sqrt{(1+\phi_1^2)(1+\phi_2^2)}$
+**Lemma 2** (Nonvanishing). For all r ∈ ℝ, 1 + ri ≠ 0.
+
+**Lemma 3** (Log Characterization). log(1 + ri) = 0 if and only if r = 0.
+
+*Proof.* If log(1 + ri) = 0, then exp(log(1 + ri)) = exp(0) = 1. Since 1 + ri ≠ 0 (Lemma 2), exp(log(1 + ri)) = 1 + ri, so 1 + ri = 1, giving r = 0. The converse follows from log(1) = 0. ∎
 
 ## 3. Main Results
 
-### 3.1 The Spectral Gap Identity (PEGB)
+### 3.1 Phase-Amplitude Factorization
 
-**Theorem 1** (Spectral Gap Identity, `qact_norm_sq`).
-$$\|\text{qact}(\theta, \phi)\|^2 = 1 + \phi^2.$$
+**Theorem 1** (Phase-Amplitude Factorization). For all θ, r ∈ ℝ,
+$$\|\text{qeml}(\theta, r)\| = \|\text{qeml}\|(r)$$
+That is, the norm of the quantum EML output is independent of the phase parameter θ.
 
-*Proof sketch*: By multiplicativity of the complex norm, $\|e^{i\theta}\| = 1$ and $\|1 + i\phi\|^2 = 1 + \phi^2$.
+*Proof.* ‖qeml(θ,r)‖ = ‖exp(iθ)‖ · ‖log(1+ri)‖ = 1 · ‖log(1+ri)‖ = ‖qeml‖(r), using the fact that |exp(iθ)| = 1 for all real θ. ∎
 
-**Example**: $\text{qact}(\pi/4, 1)$ has $|\text{qact}|^2 = 1 + 1 = 2$, so $|\text{qact}| = \sqrt{2}$.
+This theorem establishes that the quantum EML output space has the structure of a U(1)-principal bundle: the base space is parameterized by the norm (controlled by r), and the fiber over each norm value is a circle (parameterized by θ). This is the geometric foundation for the surjectivity proof.
 
-**Generalization**: For matrix-valued activations $U = e^{iH} \cdot (I + i\Phi)$ where $H$ is Hermitian and $\Phi$ is Hermitian, the analogous identity should be $\|U\|_F^2 = \text{tr}(I + \Phi^2)$.
+**Corollary 1.** qeml(θ,r) = 0 if and only if r = 0.
 
-**Boundary**: The identity fails if we replace $(1 + i\phi)$ with a general complex number $a + bi$; the norm becomes $a^2 + b^2$, losing the "$1+$" structure that guarantees the output lies outside the unit disk.
+### 3.2 Real and Imaginary Part Decomposition
 
-### 3.2 Image Characterization
+**Theorem 2** (Component Formulas). For all r ∈ ℝ,
+$$\text{Re}(\log(1 + ri)) = \log\sqrt{1 + r^2}, \quad \text{Im}(\log(1 + ri)) = \arctan(r)$$
 
-**Theorem 2** (Surjectivity, `qact_surj_exterior`).
-For every $z \in \mathbb{C}$ with $\|z\| \geq 1$, there exist $\theta, \phi \in \mathbb{R}$ such that $\text{qact}(\theta, \phi) = z$.
+*Proof.* The real part follows from Complex.log_re, which gives Re(log z) = log ‖z‖, and the computation ‖1 + ri‖ = √(1 + r²). The imaginary part follows from Complex.log_im, which gives Im(log z) = arg(z), and the fact that arg(1 + ri) = arctan(r/1) = arctan(r) since Re(1 + ri) = 1 > 0. ∎
 
-**Theorem 3** (Confinement, `qact_norm_ge_one`).
-$\|\text{qact}(\theta, \phi)\| \geq 1$ for all $\theta, \phi$.
+### 3.3 Surjectivity
 
-Together, these establish:
-$$\text{Image}(\text{qact}) = \{z \in \mathbb{C} : |z| \geq 1\}.$$
+**Theorem 3** (Quantum EML Surjectivity). The map (θ, r) ↦ qeml(θ, r) is surjective onto ℂ.
 
-*Proof of surjectivity*: Given $z$ with $|z| \geq 1$, set $\phi = \sqrt{|z|^2 - 1}$ (well-defined since $|z| \geq 1$). Then $|1 + i\phi| = |z|$. Choose $\theta$ so that $e^{i\theta}$ corrects the argument.
+*Proof sketch.* For w = 0, use (θ, 0) for any θ. For w ≠ 0:
 
-**Example**: To reach $z = 2 + 3i$ (with $|z| = \sqrt{13} \approx 3.61$), set $\phi = \sqrt{12} \approx 3.46$ and $\theta \approx 0.494$.
+**Step 1 (Norm matching via IVT):** The norm function ‖qeml‖(r) is continuous (Theorem 4), vanishes at r = 0, and tends to infinity (Theorem 5). By the Intermediate Value Theorem, for any target norm ‖w‖ > 0, there exists r₀ with ‖qeml‖(r₀) = ‖w‖.
 
-**Generalization**: For matrix activations on $\mathbb{C}^{n \times n}$, the image should be all matrices with operator norm $\geq 1$.
+**Step 2 (Phase matching):** With r₀ chosen, let L = log(1 + r₀i) ≠ 0. The ratio w/L has norm ‖w‖/‖L‖ = 1, so w/L lies on the unit circle. Setting θ₀ = arg(w/L), we have exp(iθ₀) = w/L (since any unit-norm complex number equals exp(i · arg(·))). Therefore qeml(θ₀, r₀) = exp(iθ₀) · L = (w/L) · L = w. ∎
 
-**Boundary**: The point $z = 0$ is never reached (by `qact_ne_zero`). Points with $|z| < 1$ require a different activation structure (e.g., $e^{i\theta} \cdot (a + i\phi)$ with $|a| < 1$).
+**Theorem 4** (Continuity). The functions qeml and ‖qeml‖ are continuous.
 
-### 3.3 Spectral Gap Pinching
+*Proof.* The map r ↦ 1 + ri is continuous (linear), Complex.log is continuous at slit plane points (by differentiability), and the composition with norm is continuous. For qeml, the product of the continuous functions θ ↦ exp(iθ) and r ↦ log(1 + ri) is continuous. ∎
 
-**Theorem 4** (`spectralGap_pinch`). For $|\phi| \leq 1$:
-$$\frac{\phi^2}{3} \leq \Delta(\phi) \leq \frac{\phi^2}{2}.$$
+**Theorem 5** (Norm Divergence). ‖qeml‖(r) → ∞ as r → ∞.
 
-**Theorem 5** (`spectralGap_linear_upper`). For all $\phi$:
-$$\Delta(\phi) \leq |\phi|.$$
+*Proof.* ‖log(1 + ri)‖ ≥ |Re(log(1 + ri))| = |log √(1 + r²)| = log √(1 + r²) → ∞. ∎
 
-*Proof sketch (upper bound)*: $\sqrt{1+\phi^2} \leq 1 + \phi^2/2$ follows from squaring both sides: $1 + \phi^2 \leq 1 + \phi^2 + \phi^4/4$.
+### 3.4 Classical Bridge
 
-*Proof sketch (lower bound)*: $\sqrt{1+\phi^2} \geq 1 + \phi^2/3$ for $|\phi| \leq 1$ follows from squaring: $1+\phi^2 \geq 1 + 2\phi^2/3 + \phi^4/9$, i.e., $\phi^2/3 \geq \phi^4/9$, i.e., $3 \geq \phi^2$, which holds.
+**Theorem 6** (Classical Bridge). For all x, y ∈ ℝ,
+$$\text{Re}(\text{ceml}(x, y)) = \exp(x) - \log(y)$$
 
-**Example**: At $\phi = 0.5$: $\Delta = \sqrt{1.25} - 1 \approx 0.118$, while $0.25/3 \approx 0.083$ and $0.25/2 = 0.125$. Confirmed: $0.083 \leq 0.118 \leq 0.125$.
+*Proof.* Re(ceml(x, y)) = Re(exp(x) - log(y)) = exp(x) - Re(log(y)) = exp(x) - log(y), using the fact that the complex exponential and logarithm restricted to the real axis agree with their real counterparts. ∎
 
-**Generalization**: Higher-order Taylor expansion gives $\Delta(\phi) = \phi^2/2 - \phi^4/8 + O(\phi^6)$, suggesting the bound $\phi^2/2$ is tight as $\phi \to 0$.
+This theorem establishes that the classical EML lives inside the complex EML as the real slice. The quantum EML neuron is therefore a genuine extension, not a replacement.
 
-**Boundary**: At $\phi = 1$: lower bound $= 1/3 \approx 0.333$, actual $= \sqrt{2}-1 \approx 0.414$, upper bound $= 0.5$. The pinching is not tight at the boundary.
+### 3.5 Quantum-Classical Norm Bound
 
-### 3.4 Gauge Invariance
+**Theorem 7** (Norm Lower Bound). For all θ, r ∈ ℝ,
+$$|\arctan(r)| \leq \|\text{qeml}(\theta, r)\|$$
 
-**Theorem 6** (`unitarityDefect_phase_invariant`).
-$$D(\theta_1, \phi) = D(\theta_2, \phi) \quad \text{for all } \theta_1, \theta_2.$$
+*Proof.* ‖qeml(θ,r)‖ = ‖log(1+ri)‖ ≥ |Im(log(1+ri))| = |arctan(r)|, using the fact that the norm of a complex number bounds its imaginary part. ∎
 
-This is because $D(\theta, \phi) = \phi^2$ independently of $\theta$.
+This bound connects the quantum EML to the arctangent function, establishing that the quantum activation always provides at least as much "signal" as the classical phase accumulation arctan(r). This generalizes the `quantum_classical_bound` from the tropical semiring bridge.
 
-*Physical interpretation*: The phase $\theta$ is a "gauge degree of freedom" — it affects the quantum phase but not the degree of non-unitarity. This mirrors the U(1) gauge symmetry in quantum electrodynamics.
+### 3.6 Phase Group Structure
 
-### 3.5 Depth Amplification
+**Theorem 8** (Phase Periodicity). qeml(θ + 2π, r) = qeml(θ, r).
 
-**Theorem 7** (`constant_layer_norm`). For constant parameters:
-$$\|\text{qactLayer}_n(\theta, \phi)\| = (\sqrt{1 + \phi^2})^n.$$
+**Theorem 9** (U(1) Action). exp(iθ₁) · qeml(θ₂, r) = qeml(θ₁ + θ₂, r).
 
-**Theorem 8** (`qactLayer_norm`). In general:
-$$\|\text{qactLayer}_n\| = \prod_{i=1}^n \sqrt{1 + \phi_i^2}.$$
+These results establish that the phase parameter θ makes the quantum EML equivariant under the U(1) group action, confirming the fiber bundle picture from Theorem 1.
 
-**Theorem 9** (`qactLayer_norm_ge_one`). Always $\|\text{qactLayer}_n\| \geq 1$.
+### 3.7 Quantum Chain Rule
 
-*Physical interpretation*: Non-unitarity compounds exponentially through depth, analogous to the exploding gradient problem in classical neural networks. When $\phi = 0$ (pure phase gates), the norm stays at 1 — perfect unitarity is preserved.
+**Theorem 10** (Quantum Exp-Log Cancellation). If -π < Im(qeml(θ,r)) ≤ π, then
+$$\log(\exp(\text{qeml}(\theta, r))) = \text{qeml}(\theta, r)$$
 
-**Example**: With $\phi = 0.5$ and $n = 10$: norm $= (\sqrt{1.25})^{10} \approx 3.05$.
+This extends the classical chain cancellation `exp(log(x)) = x` (formalized as `eml_chain_exp_log_cancel` in the catalog) to the quantum setting, establishing that the exp-log duality of EML survives complexification.
 
-### 3.6 Information Additivity
+## 4. PEGB Analysis
 
-**Theorem 10** (`infoContent_additive`).
-$$\log\left((1+\phi_1^2)(1+\phi_2^2)\right) = I(\phi_1) + I(\phi_2).$$
+### 4.1 Surjectivity Theorem (Theorem 3)
 
-This follows from the multiplicativity of the norm and the logarithm.
+- **Proof**: Complete Lean 4 proof via IVT on the norm function and phase matching.
+- **Example**: To reach w = 3 + 4i (norm 5), find r ≈ 148.41 such that ‖log(1+ri)‖ = 5, then set θ = arg((3+4i)/log(1+148.41i)).
+- **Generalization**: The next level up is the matrix case: for H₁, H₂ ∈ su(2) (traceless Hermitian 2×2), does (θ₁,θ₂,θ₃,r₁,r₂,r₃) ↦ exp(iH₁)·log(I+iH₂) cover SU(2)? The Euler angle decomposition suggests yes, with 6 parameters covering the 3-dimensional group.
+- **Boundary**: The construction breaks at r = 0, where the output collapses to zero regardless of phase. This is the "dark point" of the quantum EML — the origin is reachable only as a limit, and the fiber bundle structure degenerates there (the fiber over norm 0 is a single point, not a circle).
 
-**Theorem 11** (`infoContent_eq_zero_iff`). $I(\phi) = 0 \iff \phi = 0$.
+### 4.2 Phase-Amplitude Factorization (Theorem 1)
 
-### 3.7 Fixed Point Theorem
+- **Proof**: Direct computation using |exp(iθ)| = 1.
+- **Example**: qeml(0, 1) = log(1+i) = ½log2 + iπ/4. qeml(π/2, 1) = i · log(1+i). Both have norm ‖log(1+i)‖ = √(¼(log2)² + π²/16) ≈ 0.868.
+- **Generalization**: For matrix-valued quantum EML, the norm factorization becomes ‖exp(iH₁)·M‖ = ‖M‖ since unitary multiplication preserves operator norms — the same principle at higher dimension.
+- **Boundary**: The factorization relies on |exp(iθ)| = 1, which holds only for the unitary exponential. If we allowed exp(zI) for general complex z (not purely imaginary), the factorization breaks and ‖exp(z)·M‖ = e^(Re z)·‖M‖ depends on both parameters.
 
-**Theorem 12** (`qact_eq_one_implies_phi_zero`). If $\text{qact}(\theta, \phi) = 1$, then $\phi = 0$.
+### 4.3 Classical Bridge (Theorem 6)
 
-The identity is an "isolated fixed point" in the amplitude direction: you cannot reach $1$ from a non-trivial amplitude. This has implications for the stability of quantum circuits built from these activations.
+- **Proof**: Direct computation using Complex.exp_re and Complex.log_ofReal_re.
+- **Example**: ceml(1, e) = exp(1) - log(e) = e - 1 ≈ 1.718 on the real axis, matching eml(1, e).
+- **Generalization**: The bridge extends to the full complex plane: ceml(z₁, z₂) reduces to eml when both arguments are real. This suggests a family of "partially quantum" activations interpolating between classical and quantum.
+- **Boundary**: The bridge is exact only for real inputs. For complex inputs, the imaginary parts of exp and log introduce quantum phases with no classical analog.
 
-## 4. Cross-Connection to Classical EML
+## 5. Algorithm
 
-The classical EML function $\text{eml}(x,y) = e^x - \log y$ connects to the quantum activation through the bridge:
-$$\text{qact}(0, e^x - 1) = 1 + i(e^x - 1).$$
+### Quantum EML Neuron Forward Pass
 
-The real part is always 1, while the imaginary part encodes the classical exponential $e^x - 1$. The norm-squared gives:
-$$\|\text{qact}(0, e^x - 1)\|^2 = 1 + (e^x - 1)^2.$$
+```
+ALGORITHM: QuantumEMLForward(θ, r)
+INPUT: Phase angle θ ∈ ℝ, amplitude r ∈ ℝ
+OUTPUT: Complex activation z ∈ ℂ
 
-This bridges the classical EML's exponential growth to the quantum activation's norm growth.
+1. Compute unitary rotation: U ← cos(θ) + i·sin(θ)
+2. Compute complex input: w ← 1 + r·i
+3. Compute log-activation: L ← ½·ln(1 + r²) + i·arctan(r)
+4. Return z ← U · L
+```
 
-## 5. The Falsifiable Conjecture
+### Inverse Quantum EML (Target Matching)
 
-**Conjecture** (Matrix Extension). For the $2 \times 2$ matrix quantum activation
-$$\text{Qact}(H_1, H_2) = e^{iH_1} \cdot (I + iH_2),$$
-where $H_1, H_2$ are $2 \times 2$ traceless Hermitian matrices, the image is exactly the set of invertible $2 \times 2$ matrices with operator norm $\geq 1$.
+```
+ALGORITHM: QuantumEMLInverse(w)
+INPUT: Target w ∈ ℂ, w ≠ 0
+OUTPUT: Parameters (θ, r) such that qeml(θ, r) = w
 
-**Computational test**: Parameterize $H_1 = a\sigma_x + b\sigma_y + c\sigma_z$ and $H_2 = d\sigma_x + e\sigma_y + f\sigma_z$ (Pauli matrices). Sample $10^6$ random $(a,b,c,d,e,f)$ and check whether the resulting matrices' singular values are always $\geq 1$. If any singular value $< 1$ is found, the conjecture is false.
+1. Target norm: ρ ← |w|
+2. Solve ‖log(1 + ri)‖ = ρ for r (numerical root-finding on the norm equation)
+3. Compute L ← log(1 + r·i)
+4. Set θ ← arg(w / L)
+5. Return (θ, r)
+```
 
 ## 6. Discussion
 
-The Quantum Activation Algebra reveals a clean mathematical structure underlying the interface between quantum and classical computation:
+### 6.1 Relation to Prior Work
 
-- **Phase controls quantum coherence** (through $\theta$), while **amplitude controls information gain** (through $\phi$).
-- The **spectral gap** $\phi^2$ is the natural measure of non-unitarity.
-- **Depth compounds non-unitarity exponentially**, providing a precise analogue of the exploding gradient phenomenon.
-- The **image characterization** shows that single-layer quantum activations can reach any target outside the unit disk but never inside — a fundamental limitation that could inform quantum circuit design.
+The quantum EML activation function builds on several threads from the EML theory:
+
+- **Chain cancellation** (`eml_chain_exp_log_cancel`): Our Theorem 10 extends this to the complex domain, showing the exp-log duality survives quantization.
+- **Classical EML identities** (`eml_log_exp`, `eml_exp_log_id`): The classical bridge theorem (Theorem 6) shows these are special cases of complex EML identities.
+- **Quantum-classical bounds** (`quantum_classical_bound`): Our norm lower bound (Theorem 7) provides a more geometric version of this result.
+
+### 6.2 The SU(2) Conjecture
+
+The scalar surjectivity result (covering ℂ) is strong evidence for the matrix conjecture (covering SU(2)). The key structural parallel is:
+
+| Scalar (this paper) | Matrix (conjecture) |
+|---------------------|---------------------|
+| exp(iθ) ∈ U(1) | exp(iH) ∈ SU(2) |
+| log(1+ri) ∈ ℂ | log(I+iH) ∈ M₂(ℂ) |
+| 2 real parameters | 6 real parameters |
+| Covers ℂ (2D) | Covers SU(2) (3D) |
+
+The parameter count is favorable: 6 parameters for a 3-dimensional target space leaves 3 degrees of freedom, suggesting not just coverage but a 3-parameter family of representations for each SU(2) element.
+
+### 6.3 Limitations
+
+1. The construction has a degenerate point at r = 0 where all phases collapse.
+2. The inverse map is not unique (multiple (θ,r) pairs can reach the same target).
+3. The branch cut of the complex logarithm introduces discontinuities in the parameterization.
 
 ## 7. Future Work
 
-1. Extend to matrix-valued activations on $\mathbb{C}^{n \times n}$
-2. Characterize the Lie algebra structure of the parameter space
-3. Connect to quantum error correction codes
-4. Prove the matrix extension conjecture
-5. Develop gradient-based optimization for quantum EML networks
+1. **Matrix extension**: Prove the SU(2) coverage conjecture for 2×2 matrix quantum EML.
+2. **Multi-qubit universality**: Extend to SU(2ⁿ) for n-qubit quantum circuits.
+3. **Tropical-quantum bridge**: Connect the quantum EML to tropical semiring structures via the Maslov dequantization.
+4. **Gradient flow**: Analyze the training dynamics of quantum EML neurons under gradient descent.
 
-## References
+## 8. References
 
-- Catalog: `EML/EMLv17Core.lean`, `eml_log_exp`
-- Catalog: `Bridges/EMLTropicalSemiring.lean`, `quantum_classical_bound`
-- Catalog: `EML/QuantumDensityEstimation.lean`, `eml_exp_log_id`
-- Catalog: `Applications/EMLTermAlgebra.lean`
+1. `eml_chain_exp_log_cancel` — EML/KolmogorovArnoldEMLDeep.lean
+2. `eml_log_exp` — EML/EMLv17Core.lean  
+3. `quantum_classical_bound` — Bridges/EMLTropicalSemiring.lean
+4. `eml_exp_log_id` — EML/QuantumDensityEstimation.lean
+5. `eml_exp_neuron_continuous` — EML/UniversalApproximation.lean
+6. `eml_log_exp_involution` — EML/OISCC.lean
+
+## Appendix: Formalized Theorem Statements
+
+All theorems in this paper are formalized and verified in Lean 4 with Mathlib. The complete formalization is in `Applications/QuantumEMLActivation.lean`. Key theorem signatures:
+
+```lean
+theorem qeml_norm_eq (θ r : ℝ) : ‖qeml θ r‖ = qemlNorm r
+theorem qeml_surj : Function.Surjective (fun p : ℝ × ℝ => qeml p.1 p.2)
+theorem ceml_extends_eml (x y : ℝ) : (ceml ↑x ↑y).re = Real.exp x - Real.log y
+theorem qeml_norm_lower_bound (θ r : ℝ) : |Real.arctan r| ≤ ‖qeml θ r‖
+theorem qeml_phase_periodic (θ r : ℝ) : qeml (θ + 2 * Real.pi) r = qeml θ r
+theorem qeml_phase_add (θ₁ θ₂ r : ℝ) : exp (↑θ₁ * I) * qeml θ₂ r = qeml (θ₁ + θ₂) r
+```

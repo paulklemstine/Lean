@@ -1,139 +1,199 @@
 #!/usr/bin/env python3
 """
-Quantum EML Activation Function — Interactive Demo
+Quantum EML Activation Function — Numerical Demonstrations
 
-Demonstrates the Quantum Activation Algebra (QAA):
-  qact(θ, φ) = exp(iθ) · (1 + iφ)
-
-Key properties verified numerically:
-  - ‖qact(θ,φ)‖² = 1 + φ² (Spectral Gap Identity)
-  - Image = {z ∈ ℂ : |z| ≥ 1} (Exterior Disk Coverage)
-  - Unitarity defect = φ² (Gauge Invariant)
-  - Information content = log(1+φ²) (Additive under composition)
+Demonstrates the key theorems from the Lean formalization:
+1. Phase-amplitude factorization: |qeml(θ,r)| depends only on r
+2. Surjectivity: every complex number is reachable
+3. Classical bridge: ceml restricted to reals = classical eml
+4. Norm lower bound: |arctan(r)| ≤ |qeml(θ,r)|
 """
 
 import numpy as np
-from typing import Tuple
 
-def qact(theta: float, phi: float) -> complex:
-    """Quantum EML activation: exp(iθ) · (1 + iφ)"""
-    return np.exp(1j * theta) * (1 + 1j * phi)
 
-def spectral_gap(phi: float) -> float:
-    """How far the activation departs from unitarity."""
-    return np.sqrt(1 + phi**2) - 1
+def qeml(theta: float, r: float) -> complex:
+    """Quantum EML activation: exp(iθ) · log(1 + ri)"""
+    return np.exp(1j * theta) * np.log(1 + r * 1j)
 
-def info_content(phi: float) -> float:
-    """Information content in nats."""
-    return np.log(1 + phi**2)
 
-def unitarity_defect(theta: float, phi: float) -> float:
-    """Unitarity defect = |qact|² - 1 = φ²."""
-    return abs(qact(theta, phi))**2 - 1
+def ceml(z1: complex, z2: complex) -> complex:
+    """Complex EML: exp(z1) - log(z2)"""
+    return np.exp(z1) - np.log(z2)
 
-def qact_layer(params: list) -> complex:
-    """n-layer quantum activation: product of individual activations."""
-    result = 1.0 + 0j
-    for theta, phi in params:
-        result *= qact(theta, phi)
-    return result
 
-def inverse_qact(z: complex) -> Tuple[float, float]:
-    """Find (θ, φ) such that qact(θ, φ) = z, for |z| ≥ 1."""
-    r = abs(z)
-    assert r >= 1.0 - 1e-10, f"|z| = {r} < 1, not in image"
-    phi = np.sqrt(max(0, r**2 - 1))
-    w = z / (1 + 1j * phi)
-    theta = np.angle(w)
-    return theta, phi
+def qeml_norm(r: float) -> float:
+    """Quantum EML norm function: ‖log(1 + ri)‖"""
+    return abs(np.log(1 + r * 1j))
+
+
+def qeml_inverse(w: complex, tol: float = 1e-12) -> tuple:
+    """Find (θ, r) such that qeml(θ, r) ≈ w (inverse map)."""
+    if abs(w) < tol:
+        return (0.0, 0.0)
+    target_norm = abs(w)
+    # Binary search for r such that qeml_norm(r) = target_norm
+    lo, hi = 0.0, 1.0
+    while qeml_norm(hi) < target_norm:
+        hi *= 2
+    for _ in range(100):
+        mid = (lo + hi) / 2
+        if qeml_norm(mid) < target_norm:
+            lo = mid
+        else:
+            hi = mid
+    r = (lo + hi) / 2
+    L = np.log(1 + r * 1j)
+    theta = np.angle(w / L)
+    return (theta, r)
+
+
+def demo_phase_amplitude_factorization():
+    """Theorem 1: ‖qeml(θ,r)‖ = qeml_norm(r) — independent of θ."""
+    print("=" * 60)
+    print("DEMO 1: Phase-Amplitude Factorization")
+    print("  Theorem: ‖qeml(θ,r)‖ depends only on r, not θ")
+    print("=" * 60)
+    for r in [0.5, 1.0, 2.0, 5.0]:
+        norms = [abs(qeml(theta, r)) for theta in np.linspace(0, 2 * np.pi, 20)]
+        expected = qeml_norm(r)
+        max_dev = max(abs(n - expected) for n in norms)
+        print(f"  r={r:5.1f}: qeml_norm = {expected:.6f}, "
+              f"max deviation over 20 phases: {max_dev:.2e}")
+    print()
+
+
+def demo_surjectivity():
+    """Theorem 3: Every w ∈ ℂ is in the range of qeml."""
+    print("=" * 60)
+    print("DEMO 2: Surjectivity — Every ℂ target is reachable")
+    print("=" * 60)
+    targets = [0.0, 1.0, -1.0, 1j, 3 + 4j, -2 - 7j, 0.001 + 0.002j, 100 + 200j]
+    for w in targets:
+        theta, r = qeml_inverse(w)
+        result = qeml(theta, r)
+        error = abs(result - w)
+        wstr = str(w)
+        print(f"  Target: {wstr:>16s}  ->  qeml({theta:+.4f}, {r:.4f}) = "
+              f"{result.real:+.4f}{result.imag:+.4f}i  "
+              f"error: {error:.2e}")
+    print()
+
+
+def demo_classical_bridge():
+    """Theorem 6: ceml(x,y).real = exp(x) - log(y) for real x,y."""
+    print("=" * 60)
+    print("DEMO 3: Classical Bridge — ceml restricted to ℝ = eml")
+    print("=" * 60)
+    for x, y in [(0, 1), (1, np.e), (2, 0.5), (-1, 3)]:
+        complex_result = ceml(complex(x), complex(y)).real
+        classical_result = np.exp(x) - np.log(y)
+        error = abs(complex_result - classical_result)
+        print(f"  x={x:+.1f}, y={y:.2f}: ceml.real = {complex_result:.6f}, "
+              f"eml = {classical_result:.6f}, error = {error:.2e}")
+    print()
+
+
+def demo_norm_lower_bound():
+    """Theorem 7: |arctan(r)| ≤ ‖qeml(θ,r)‖"""
+    print("=" * 60)
+    print("DEMO 4: Norm Lower Bound — |arctan(r)| ≤ ‖qeml(θ,r)‖")
+    print("=" * 60)
+    for r in [0.1, 0.5, 1.0, 2.0, 5.0, 10.0, 100.0]:
+        bound = abs(np.arctan(r))
+        for theta in np.linspace(0, 2 * np.pi, 10):
+            norm = abs(qeml(theta, r))
+            assert bound <= norm + 1e-10, f"Bound violated at θ={theta}, r={r}"
+        norm_at_0 = abs(qeml(0, r))
+        ratio = norm_at_0 / bound if bound > 0 else float('inf')
+        print(f"  r={r:6.1f}: |arctan(r)| = {bound:.6f}, "
+              f"‖qeml(0,r)‖ = {norm_at_0:.6f}, ratio = {ratio:.3f}")
+    print()
+
+
+def demo_component_formulas():
+    """Theorem 2: Re(log(1+ri)) = log√(1+r²), Im(log(1+ri)) = arctan(r)"""
+    print("=" * 60)
+    print("DEMO 5: Component Formulas")
+    print("=" * 60)
+    for r in [0, 0.5, 1, 2, 5, -3]:
+        L = np.log(1 + r * 1j)
+        expected_re = np.log(np.sqrt(1 + r**2))
+        expected_im = np.arctan(r)
+        print(f"  r={r:+.1f}: Re = {L.real:+.6f} (expected {expected_re:+.6f}), "
+              f"Im = {L.imag:+.6f} (expected {expected_im:+.6f})")
+    print()
+
+
+if __name__ == "__main__":
+    print("\n" + "=" * 60)
+    print("  QUANTUM EML ACTIVATION FUNCTION — NUMERICAL DEMOS")
+    print("=" * 60 + "\n")
+
+    demo_phase_amplitude_factorization()
+    demo_surjectivity()
+    demo_classical_bridge()
+    demo_norm_lower_bound()
+    demo_component_formulas()
+
+    print("All demos completed successfully!")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Quantum EML Norm Function and Lower Bound
+
+Shows qemlNorm(r) = ‖log(1+ri)‖ alongside its components and the arctan lower bound.
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def qeml_norm(r):
+    return np.abs(np.log(1 + r * 1j))
 
 
 def main():
-    print("=" * 60)
-    print("QUANTUM EML ACTIVATION ALGEBRA — NUMERICAL DEMO")
-    print("=" * 60)
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Demo 1: Spectral Gap Identity
-    print("\n--- Demo 1: Spectral Gap Identity ---")
-    print("‖qact(θ,φ)‖² = 1 + φ²\n")
-    for theta in [0, np.pi/4, np.pi/2, np.pi]:
-        for phi in [0, 0.5, 1.0, 2.0]:
-            z = qact(theta, phi)
-            norm_sq = abs(z)**2
-            expected = 1 + phi**2
-            print(f"  θ={theta:.3f}, φ={phi:.1f}: "
-                  f"|qact|² = {norm_sq:.6f}, 1+φ² = {expected:.6f}, "
-                  f"match = {np.isclose(norm_sq, expected)}")
+    r = np.linspace(-20, 20, 1000)
+    r_pos = np.linspace(0.01, 20, 500)
 
-    # Demo 2: Unitarity characterization
-    print("\n--- Demo 2: Unit Circle iff φ=0 ---")
-    print("|qact(θ,φ)| = 1  ⟺  φ = 0\n")
-    for phi in [0, 0.01, 0.1, 1.0]:
-        z = qact(1.234, phi)
-        print(f"  φ={phi:.2f}: |qact| = {abs(z):.6f}, "
-              f"on unit circle = {np.isclose(abs(z), 1.0)}")
+    # Panel 1: Norm function and its components
+    ax = axes[0]
+    norm_vals = qeml_norm(r)
+    re_part = 0.5 * np.log(1 + r**2)
+    im_part = np.arctan(r)
 
-    # Demo 3: Surjectivity onto exterior disk
-    print("\n--- Demo 3: Surjectivity onto {z : |z| ≥ 1} ---")
-    print("Given z with |z| ≥ 1, find (θ,φ) with qact(θ,φ) = z\n")
-    test_points = [1+0j, 0+1j, -1+0j, 2+3j, 1+1j, 5-2j]
-    for z in test_points:
-        if abs(z) < 1:
-            continue
-        theta, phi = inverse_qact(z)
-        recovered = qact(theta, phi)
-        print(f"  z = {z:.3f}: θ={theta:.4f}, φ={phi:.4f}, "
-              f"qact(θ,φ) = {recovered:.3f}, "
-              f"match = {np.isclose(recovered, z)}")
+    ax.plot(r, norm_vals, 'b-', linewidth=2, label='‖log(1+ri)‖ (full norm)')
+    ax.plot(r, re_part, 'r--', linewidth=1.5, label='½log(1+r²) (real part)')
+    ax.plot(r, np.abs(im_part), 'g-.', linewidth=1.5, label='|arctan(r)| (lower bound)')
+    ax.fill_between(r, np.abs(im_part), norm_vals, alpha=0.1, color='blue',
+                    label='Gap above bound')
+    ax.set_xlabel('r')
+    ax.set_ylabel('Value')
+    ax.set_title('Quantum EML Norm: Components and Lower Bound')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(0, 5)
 
-    # Demo 4: Information content additivity
-    print("\n--- Demo 4: Information Content Additivity ---")
-    print("log((1+φ₁²)(1+φ₂²)) = log(1+φ₁²) + log(1+φ₂²)\n")
-    for phi1, phi2 in [(0.5, 1.0), (1.0, 2.0), (0.3, 0.7)]:
-        lhs = np.log((1+phi1**2) * (1+phi2**2))
-        rhs = info_content(phi1) + info_content(phi2)
-        print(f"  φ₁={phi1:.1f}, φ₂={phi2:.1f}: "
-              f"log(prod) = {lhs:.6f}, sum(logs) = {rhs:.6f}, "
-              f"match = {np.isclose(lhs, rhs)}")
+    # Panel 2: Norm function showing divergence (proves tendsto_atTop)
+    ax = axes[1]
+    r_large = np.linspace(0, 1000, 2000)
+    ax.plot(r_large, qeml_norm(r_large), 'b-', linewidth=2, label='‖log(1+ri)‖')
+    ax.plot(r_large, 0.5 * np.log(1 + r_large**2), 'r--', linewidth=1.5,
+            label='½log(1+r²) (→ ∞)')
+    ax.set_xlabel('r')
+    ax.set_ylabel('qemlNorm(r)')
+    ax.set_title('Norm Divergence (proves tendsto_atTop)')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
 
-    # Demo 5: Spectral gap pinching
-    print("\n--- Demo 5: Spectral Gap Pinching ---")
-    print("For |φ| ≤ 1: φ²/3 ≤ spectralGap(φ) ≤ φ²/2\n")
-    for phi in np.linspace(0, 1, 11):
-        gap = spectral_gap(phi)
-        lower = phi**2 / 3
-        upper = phi**2 / 2
-        within = lower <= gap + 1e-10 and gap <= upper + 1e-10
-        print(f"  φ={phi:.1f}: gap={gap:.6f}, "
-              f"φ²/3={lower:.6f}, φ²/2={upper:.6f}, "
-              f"pinched = {within}")
-
-    # Demo 6: Depth amplification
-    print("\n--- Demo 6: Depth Amplification ---")
-    print("n-layer norm = (√(1+φ²))^n\n")
-    phi = 0.5
-    for n in range(1, 8):
-        params = [(np.random.uniform(0, 2*np.pi), phi) for _ in range(n)]
-        layer = qact_layer(params)
-        actual_norm = abs(layer)
-        predicted = np.sqrt(1 + phi**2)**n
-        print(f"  n={n}: |layer| = {actual_norm:.6f}, "
-              f"(√(1+φ²))^n = {predicted:.6f}, "
-              f"match = {np.isclose(actual_norm, predicted)}")
-
-    # Demo 7: Gauge invariance of unitarity defect
-    print("\n--- Demo 7: Unitarity Defect Gauge Invariance ---")
-    print("unitarityDefect(θ₁, φ) = unitarityDefect(θ₂, φ) = φ²\n")
-    phi = 1.5
-    for theta in [0, 0.5, 1.0, np.pi, 3.0]:
-        defect = unitarity_defect(theta, phi)
-        print(f"  θ={theta:.2f}: defect = {defect:.6f}, "
-              f"φ² = {phi**2:.6f}, "
-              f"match = {np.isclose(defect, phi**2)}")
-
-    print("\n" + "=" * 60)
-    print("ALL DEMOS PASSED — QUANTUM EML ACTIVATION VERIFIED")
-    print("=" * 60)
+    plt.suptitle('Quantum EML Norm Analysis', fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    plt.savefig('Applications/qeml_norm_analysis.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: Applications/qeml_norm_analysis.png")
 
 
 if __name__ == "__main__":
@@ -142,119 +202,82 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: Depth Amplification in Multi-Layer Quantum Activations.
+Visualization: Quantum EML Surjectivity
+
+Shows how qeml(θ, r) covers the complex plane as θ and r vary.
+Demonstrates the U(1)-fibration structure: circles of constant r,
+rays of constant θ.
 """
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-
-def qact(theta, phi):
-    return np.exp(1j * theta) * (1 + 1j * phi)
-
-# Figure: Depth amplification
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# Panel 1: Norm growth with depth
-ax1 = axes[0]
-depths = range(1, 16)
-for phi in [0.1, 0.3, 0.5, 1.0, 2.0]:
-    norms = [np.sqrt(1 + phi**2)**n for n in depths]
-    ax1.semilogy(list(depths), norms, 'o-', linewidth=2, markersize=4,
-                 label=f'φ={phi:.1f}')
-
-ax1.axhline(y=1, color='k', linestyle='--', alpha=0.5, label='Unitarity (|z|=1)')
-ax1.set_xlabel('Number of layers n', fontsize=12)
-ax1.set_ylabel('Layer norm ‖layer‖', fontsize=12)
-ax1.set_title('Depth Amplification: ‖layer‖ = (√(1+φ²))ⁿ', fontsize=14)
-ax1.legend(fontsize=10)
-ax1.grid(True, alpha=0.3)
-
-# Panel 2: Information content scaling
-ax2 = axes[1]
-phi_vals = np.linspace(0.01, 3, 200)
-info_1 = [np.log(1 + p**2) for p in phi_vals]
-info_2 = [2 * np.log(1 + p**2) for p in phi_vals]
-info_5 = [5 * np.log(1 + p**2) for p in phi_vals]
-info_10 = [10 * np.log(1 + p**2) for p in phi_vals]
-
-ax2.plot(phi_vals, info_1, linewidth=2, label='n=1 layer')
-ax2.plot(phi_vals, info_2, linewidth=2, label='n=2 layers')
-ax2.plot(phi_vals, info_5, linewidth=2, label='n=5 layers')
-ax2.plot(phi_vals, info_10, linewidth=2, label='n=10 layers')
-
-ax2.set_xlabel('φ (amplitude parameter)', fontsize=12)
-ax2.set_ylabel('Total information content (nats)', fontsize=12)
-ax2.set_title('Information Content: n · log(1+φ²)', fontsize=14)
-ax2.legend(fontsize=10)
-ax2.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('quantum_eml_depth.png', dpi=150, bbox_inches='tight')
-print("Saved: quantum_eml_depth.png")
+import matplotlib.cm as cm
 
 
-#!/usr/bin/env python3
-"""
-Visualization: Spectral Gap Pinching and Image of the Quantum Activation.
-"""
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
+def qeml(theta, r):
+    return np.exp(1j * theta) * np.log(1 + r * 1j)
 
-def qact(theta, phi):
-    return np.exp(1j * theta) * (1 + 1j * phi)
 
-def spectral_gap(phi):
-    return np.sqrt(1 + phi**2) - 1
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
-# Figure 1: Spectral Gap Pinching
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    # Panel 1: Circles of constant r (varying θ)
+    ax = axes[0]
+    r_values = [0.5, 1, 2, 3, 5, 8, 15]
+    thetas = np.linspace(0, 2 * np.pi, 200)
+    colors = cm.viridis(np.linspace(0.1, 0.9, len(r_values)))
+    for r, c in zip(r_values, colors):
+        z = qeml(thetas, r)
+        ax.plot(z.real, z.imag, color=c, linewidth=1.5, label=f'r={r}')
+    ax.set_xlabel('Re(qeml)')
+    ax.set_ylabel('Im(qeml)')
+    ax.set_title('Constant-r curves (U(1) orbits)')
+    ax.legend(fontsize=8)
+    ax.set_aspect('equal')
+    ax.grid(True, alpha=0.3)
+    ax.axhline(y=0, color='k', linewidth=0.5)
+    ax.axvline(x=0, color='k', linewidth=0.5)
 
-phi_vals = np.linspace(-2, 2, 500)
-gap_vals = [spectral_gap(p) for p in phi_vals]
-lower_vals = [p**2 / 3 for p in phi_vals]
-upper_vals = [p**2 / 2 for p in phi_vals]
-linear_upper = [abs(p) for p in phi_vals]
+    # Panel 2: Rays of constant θ (varying r)
+    ax = axes[1]
+    theta_values = np.linspace(0, 2 * np.pi, 13)[:-1]
+    r_range = np.linspace(0.01, 20, 300)
+    colors2 = cm.hsv(np.linspace(0, 1, len(theta_values), endpoint=False))
+    for theta, c in zip(theta_values, colors2):
+        z = qeml(theta, r_range)
+        ax.plot(z.real, z.imag, color=c, linewidth=1, alpha=0.8,
+                label=f'θ={theta:.1f}')
+    ax.set_xlabel('Re(qeml)')
+    ax.set_ylabel('Im(qeml)')
+    ax.set_title('Constant-θ curves (radial rays)')
+    ax.set_aspect('equal')
+    ax.grid(True, alpha=0.3)
+    ax.axhline(y=0, color='k', linewidth=0.5)
+    ax.axvline(x=0, color='k', linewidth=0.5)
+    ax.set_xlim(-5, 5)
+    ax.set_ylim(-5, 5)
 
-ax1 = axes[0]
-ax1.fill_between(phi_vals, lower_vals, upper_vals, alpha=0.2, color='blue',
-                  label='Pinching region (φ²/3, φ²/2)')
-ax1.plot(phi_vals, gap_vals, 'r-', linewidth=2, label='spectralGap(φ) = √(1+φ²)−1')
-ax1.plot(phi_vals, lower_vals, 'b--', linewidth=1, label='φ²/3 (lower bound)')
-ax1.plot(phi_vals, upper_vals, 'g--', linewidth=1, label='φ²/2 (upper bound)')
-ax1.plot(phi_vals, linear_upper, 'k:', linewidth=1, label='|φ| (global upper bound)')
-ax1.set_xlabel('φ (amplitude parameter)', fontsize=12)
-ax1.set_ylabel('Spectral Gap', fontsize=12)
-ax1.set_title('Spectral Gap Pinching Theorem', fontsize=14)
-ax1.legend(fontsize=9)
-ax1.set_xlim(-2, 2)
-ax1.set_ylim(0, 2)
-ax1.grid(True, alpha=0.3)
+    # Panel 3: Dense coverage
+    ax = axes[2]
+    N = 5000
+    thetas_rand = np.random.uniform(0, 2 * np.pi, N)
+    r_rand = np.random.exponential(3, N)
+    z = qeml(thetas_rand, r_rand)
+    ax.scatter(z.real, z.imag, s=1, alpha=0.3, c=np.abs(z), cmap='plasma')
+    ax.set_xlabel('Re(qeml)')
+    ax.set_ylabel('Im(qeml)')
+    ax.set_title('Random sampling: full ℂ coverage')
+    ax.set_aspect('equal')
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(-6, 6)
+    ax.set_ylim(-6, 6)
 
-# Figure 2: Image of qact in the complex plane
-ax2 = axes[1]
-thetas = np.linspace(0, 2*np.pi, 200)
-for phi in [0, 0.5, 1.0, 1.5, 2.0]:
-    z_vals = [qact(t, phi) for t in thetas]
-    xs = [z.real for z in z_vals]
-    ys = [z.imag for z in z_vals]
-    label = f'φ={phi:.1f} (|z|={np.sqrt(1+phi**2):.2f})'
-    ax2.plot(xs, ys, linewidth=1.5, label=label)
+    plt.suptitle('Quantum EML Surjectivity: qeml(θ, r) = exp(iθ) · log(1 + ri)',
+                 fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    plt.savefig('Applications/qeml_surjectivity.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: Applications/qeml_surjectivity.png")
 
-circle = plt.Circle((0, 0), 1, fill=False, color='red', linewidth=2,
-                      linestyle='--', label='Unit circle')
-ax2.add_patch(circle)
-ax2.set_xlabel('Re(z)', fontsize=12)
-ax2.set_ylabel('Im(z)', fontsize=12)
-ax2.set_title('Image of qact(θ, φ) = exp(iθ)·(1+iφ)', fontsize=14)
-ax2.set_aspect('equal')
-ax2.legend(fontsize=8, loc='upper left')
-ax2.set_xlim(-3.5, 3.5)
-ax2.set_ylim(-3.5, 3.5)
-ax2.grid(True, alpha=0.3)
 
-plt.tight_layout()
-plt.savefig('quantum_eml_spectral_gap.png', dpi=150, bbox_inches='tight')
-print("Saved: quantum_eml_spectral_gap.png")
+if __name__ == "__main__":
+    main()

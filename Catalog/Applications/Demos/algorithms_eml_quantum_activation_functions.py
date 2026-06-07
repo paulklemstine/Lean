@@ -1,179 +1,192 @@
 #!/usr/bin/env python3
 """
-Quantum EML Activation Algebra — Core Algorithms
+Quantum EML Activation Functions — Algorithm Implementations
 
-Type-hinted implementations of the Quantum Activation Algebra (QAA).
+Type-hinted implementations of the quantum EML neuron and related algorithms.
 """
 
 import numpy as np
-from dataclasses import dataclass
-from typing import List, Tuple, Optional
+from typing import Tuple, Optional
 
 
-@dataclass
-class QActivation:
-    """A quantum activation parameterized by phase θ and amplitude φ."""
-    phase: float
-    amplitude: float
-
-    def eval(self) -> complex:
-        """Evaluate to a complex number: exp(iθ) · (1 + iφ)."""
-        return np.exp(1j * self.phase) * (1 + 1j * self.amplitude)
-
-    def norm(self) -> float:
-        """Output norm: √(1 + φ²)."""
-        return np.sqrt(1 + self.amplitude**2)
-
-    def spectral_gap(self) -> float:
-        """Departure from unitarity: √(1+φ²) - 1."""
-        return self.norm() - 1
-
-    def info_content(self) -> float:
-        """Information content in nats: log(1+φ²)."""
-        return np.log(1 + self.amplitude**2)
-
-    def unitarity_defect(self) -> float:
-        """Unitarity defect: φ²."""
-        return self.amplitude**2
-
-    def is_unitary(self, tol: float = 1e-10) -> bool:
-        """Check if activation is unitary (φ = 0)."""
-        return abs(self.amplitude) < tol
-
-
-def compose(q1: QActivation, q2: QActivation) -> QActivation:
-    """Compose two quantum activations by multiplying their evaluations.
-
-    Algorithm:
-        1. Compute product z = q1.eval() * q2.eval()
-        2. Extract amplitude from |z|: amplitude = √(|z|² - 1)
-        3. Extract phase from arg(z/(1+iφ))
-
-    The composed amplitude satisfies (1+amplitude)² = (1+a₁²)(1+a₂²).
+def qeml(theta: float, r: float) -> complex:
     """
-    z = q1.eval() * q2.eval()
-    r = abs(z)
-    new_amplitude = np.sqrt(max(0, r**2 - 1))
-    w = z / (1 + 1j * new_amplitude)
-    new_phase = np.angle(w)
-    return QActivation(phase=new_phase, amplitude=new_amplitude)
-
-
-def layer_eval(activations: List[QActivation]) -> complex:
-    """Evaluate a multi-layer quantum activation (product).
-
-    Algorithm:
-        result ← 1
-        for each activation q in layer:
-            result ← result × q.eval()
-        return result
-
-    Norm factorizes: |layer| = ∏ |q_i| = ∏ √(1+φ_i²)
+    Quantum EML activation function.
+    
+    Computes exp(iθ) · log(1 + ri), the scalar quantum analog of the
+    classical EML activation eml(x,y) = exp(x) - log(y).
+    
+    Args:
+        theta: Phase parameter (radians)
+        r: Amplitude parameter
+    
+    Returns:
+        Complex activation value
     """
-    result = 1.0 + 0j
-    for q in activations:
-        result *= q.eval()
-    return result
+    return np.exp(1j * theta) * np.log(1 + r * 1j)
 
 
-def layer_norm(activations: List[QActivation]) -> float:
-    """Compute multi-layer norm without evaluating (avoids overflow).
-
-    Algorithm: |layer| = ∏ √(1+φ_i²) = exp(½ · Σ log(1+φ_i²))
+def ceml(z1: complex, z2: complex) -> complex:
     """
-    log_norm = sum(0.5 * np.log(1 + q.amplitude**2) for q in activations)
-    return np.exp(log_norm)
-
-
-def inverse_qact(z: complex) -> Optional[QActivation]:
-    """Find QActivation q such that q.eval() = z.
-
-    Algorithm:
-        1. Compute r = |z|
-        2. If r < 1, return None (not in image)
-        3. Set φ = √(r² - 1)
-        4. Set θ = arg(z/(1+iφ))
-
-    Returns None if |z| < 1 (not in image of qact).
+    Complex EML function.
+    
+    Computes exp(z1) - log(z2), the complex extension of
+    eml(x,y) = exp(x) - log(y).
+    
+    Args:
+        z1: First complex input
+        z2: Second complex input (must be nonzero for log)
+    
+    Returns:
+        Complex EML value
     """
-    r = abs(z)
-    if r < 1 - 1e-10:
-        return None
-    phi = np.sqrt(max(0, r**2 - 1))
-    w = z / (1 + 1j * phi)
-    theta = np.angle(w)
-    return QActivation(phase=theta, amplitude=phi)
+    return np.exp(z1) - np.log(z2)
 
 
-def spectral_gap_bounds(phi: float) -> Tuple[float, float]:
-    """Compute tight bounds on the spectral gap.
-
-    For |φ| ≤ 1: φ²/3 ≤ spectralGap(φ) ≤ φ²/2
-    For all φ:   0 ≤ spectralGap(φ) ≤ |φ|
-
-    Returns (lower_bound, upper_bound).
+def qeml_norm(r: float) -> float:
     """
-    gap = np.sqrt(1 + phi**2) - 1
-    if abs(phi) <= 1:
-        return (phi**2 / 3, phi**2 / 2)
-    else:
-        return (0, abs(phi))
-
-
-def quantum_classical_bridge(x: float) -> dict:
-    """Bridge between classical EML and quantum activation.
-
-    Classical EML: eml(x, y) = exp(x) - log(y)
-    Quantum bridge: qact(0, exp(x)-1) has:
-      - Re = 1
-      - Im = exp(x) - 1
-      - |qact|² = 1 + (exp(x)-1)²
-
-    Returns dict with classical and quantum quantities.
+    Quantum EML norm function.
+    
+    Computes ‖log(1 + ri)‖ = √((½log(1+r²))² + (arctan r)²).
+    This is the radial component of the quantum EML, independent of phase.
+    
+    Args:
+        r: Amplitude parameter
+    
+    Returns:
+        Non-negative norm value
     """
-    q = QActivation(phase=0, amplitude=np.exp(x) - 1)
-    z = q.eval()
-    return {
-        'classical_exp': np.exp(x),
-        'quantum_re': z.real,
-        'quantum_im': z.imag,
-        'quantum_norm_sq': abs(z)**2,
-        'info_content': q.info_content(),
-        'spectral_gap': q.spectral_gap(),
-    }
+    return float(abs(np.log(1 + r * 1j)))
 
 
-def depth_amplification_rate(phi: float, n: int) -> float:
-    """Compute the amplification rate for n layers with constant φ.
-
-    Rate = (√(1+φ²))^n
-
-    This grows exponentially when φ ≠ 0, analogous to
-    exploding gradients in classical neural networks.
+def qeml_components(r: float) -> Tuple[float, float]:
     """
-    return np.sqrt(1 + phi**2)**n
+    Decompose log(1 + ri) into real and imaginary parts.
+    
+    Returns (log√(1+r²), arctan(r)), the amplitude and phase
+    accumulation of the quantum EML at zero phase.
+    
+    Args:
+        r: Amplitude parameter
+    
+    Returns:
+        Tuple of (real_part, imaginary_part)
+    """
+    return (0.5 * np.log(1 + r**2), float(np.arctan(r)))
 
 
-if __name__ == "__main__":
-    # Quick test
-    q1 = QActivation(phase=np.pi/4, amplitude=1.0)
-    q2 = QActivation(phase=np.pi/3, amplitude=0.5)
+def qeml_inverse(
+    w: complex,
+    tol: float = 1e-12,
+    max_iter: int = 100
+) -> Tuple[float, float]:
+    """
+    Inverse quantum EML: find (θ, r) such that qeml(θ, r) = w.
+    
+    Uses binary search on the norm function (guaranteed to converge
+    by the Intermediate Value Theorem, as proven in Lean) followed
+    by phase matching.
+    
+    Args:
+        w: Target complex number
+        tol: Convergence tolerance
+        max_iter: Maximum iterations for binary search
+    
+    Returns:
+        Tuple (theta, r) such that qeml(theta, r) ≈ w
+    """
+    if abs(w) < tol:
+        return (0.0, 0.0)
+    
+    target_norm = abs(w)
+    
+    # Binary search for r: find r such that qeml_norm(r) = target_norm
+    lo, hi = 0.0, 1.0
+    while qeml_norm(hi) < target_norm:
+        hi *= 2
+    
+    for _ in range(max_iter):
+        mid = (lo + hi) / 2
+        if qeml_norm(mid) < target_norm:
+            lo = mid
+        else:
+            hi = mid
+        if hi - lo < tol:
+            break
+    
+    r = (lo + hi) / 2
+    L = np.log(1 + r * 1j)
+    theta = float(np.angle(w / L))
+    
+    return (theta, r)
 
-    print(f"q1 = exp(i·{q1.phase:.3f}) · (1 + i·{q1.amplitude:.1f})")
-    print(f"q1.eval() = {q1.eval():.4f}")
-    print(f"q1.norm() = {q1.norm():.4f}")
-    print(f"q1.spectral_gap() = {q1.spectral_gap():.4f}")
-    print(f"q1.info_content() = {q1.info_content():.4f}")
-    print(f"q1.is_unitary() = {q1.is_unitary()}")
-    print()
 
-    q3 = compose(q1, q2)
-    print(f"compose(q1, q2).norm() = {q3.norm():.4f}")
-    print(f"Expected: {q1.norm() * q2.norm():.4f}")
-    print()
+def qeml_layer(
+    x: np.ndarray,
+    weights: np.ndarray,
+    biases: np.ndarray,
+    thetas: np.ndarray
+) -> np.ndarray:
+    """
+    Forward pass of a quantum EML neural network layer.
+    
+    Computes Σ_j w_j · qeml(θ_j, r_j · x + b_j) for each input x.
+    
+    Args:
+        x: Input array of shape (batch_size,)
+        weights: Complex weights of shape (n_neurons,)
+        biases: Real biases of shape (n_neurons,)
+        thetas: Phase parameters of shape (n_neurons,)
+    
+    Returns:
+        Complex output array of shape (batch_size,)
+    """
+    # Compute r_j * x + b_j for all neurons and inputs
+    r_vals = np.outer(x, np.ones(len(biases))) + biases[np.newaxis, :]
+    
+    # Compute qeml for each neuron
+    activations = np.exp(1j * thetas[np.newaxis, :]) * np.log(1 + r_vals * 1j)
+    
+    # Weighted sum
+    return activations @ weights
 
-    z = 2 + 3j
-    q_inv = inverse_qact(z)
-    if q_inv:
-        print(f"inverse_qact({z}) = (θ={q_inv.phase:.4f}, φ={q_inv.amplitude:.4f})")
-        print(f"Verification: qact(θ,φ) = {q_inv.eval():.4f}")
+
+def quantum_classical_bridge_check(
+    x: float, y: float
+) -> Tuple[float, float, float]:
+    """
+    Verify the classical bridge theorem numerically.
+    
+    Returns (ceml_real_part, classical_eml, absolute_error).
+    
+    Args:
+        x: Real input for exp
+        y: Positive real input for log
+    
+    Returns:
+        Tuple of (complex_result, classical_result, error)
+    """
+    complex_result = ceml(complex(x), complex(y)).real
+    classical_result = np.exp(x) - np.log(y)
+    error = abs(complex_result - classical_result)
+    return (complex_result, classical_result, error)
+
+
+def norm_bound_verification(
+    theta: float, r: float
+) -> Tuple[float, float, bool]:
+    """
+    Verify the norm lower bound |arctan(r)| ≤ ‖qeml(θ,r)‖.
+    
+    Returns (arctan_bound, qeml_norm_value, bound_satisfied).
+    
+    Args:
+        theta: Phase parameter
+        r: Amplitude parameter
+    
+    Returns:
+        Tuple of (lower_bound, actual_norm, is_satisfied)
+    """
+    bound = abs(np.arctan(r))
+    norm = abs(qeml(theta, r))
+    return (bound, norm, bound <= norm + 1e-15)
