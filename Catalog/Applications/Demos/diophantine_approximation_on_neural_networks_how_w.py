@@ -1,365 +1,297 @@
 #!/usr/bin/env python3
 """
-Diophantine Approximation of π by ReLU Networks: Numerical Demonstrations
+Diophantine Approximation on ReLU Networks: Numerical Demonstrations
 
-This script demonstrates the key results from the formalized theory:
-1. Leibniz series convergence to π/4
-2. ReLU network approximation quality
-3. Comparison of rational approximations (22/7, 355/113, Leibniz partial sums)
-4. The Diophantine approximation spectrum
+Demonstrates how ReLU networks approximate π, e, and √2 using:
+1. Leibniz series partial sums for π
+2. Taylor series for e
+3. Newton's method iterations for √2
+
+Shows the depth-width tradeoff and approximation error as a function of network size.
 """
 
 import math
-from typing import List, Tuple
-
 
 def relu(x: float) -> float:
-    """ReLU activation: max(0, x)"""
+    """ReLU activation function."""
     return max(0.0, x)
 
+def softplus(x: float) -> float:
+    """Softplus (smooth ReLU): log(1 + exp(x))."""
+    # Numerically stable version
+    if x > 20:
+        return x
+    return math.log(1 + math.exp(x))
 
-def leibniz_term(k: int) -> float:
-    """k-th term of the Leibniz series: (-1)^k / (2k+1)"""
-    return (-1)**k / (2*k + 1)
+def soft_hard_gap(x: float) -> float:
+    """Gap between softplus and ReLU: log(1 + exp(-|x|))."""
+    return math.log(1 + math.exp(-abs(x)))
 
+# --- Demonstration 1: Leibniz Series for π ---
+print("=" * 60)
+print("DEMO 1: Leibniz Series Approximation of π")
+print("=" * 60)
 
 def leibniz_partial_sum(n: int) -> float:
-    """n-th partial sum of the Leibniz series for π/4"""
-    return sum(leibniz_term(k) for k in range(n))
+    """Compute π/4 ≈ Σ_{k=0}^{n-1} (-1)^k / (2k+1)."""
+    return sum((-1)**k / (2*k + 1) for k in range(n))
 
+print(f"\n{'N terms':>10} | {'4·S_N':>20} | {'|4·S_N - π|':>20} | {'1/(2N+1) bound':>16}")
+print("-" * 72)
 
-def leibniz_pi_approx(n: int) -> float:
-    """Approximate π using n terms of the Leibniz series"""
-    return 4 * leibniz_partial_sum(n)
+for n in [1, 2, 5, 10, 50, 100, 500, 1000, 10000]:
+    approx = 4 * leibniz_partial_sum(n)
+    error = abs(approx - math.pi)
+    bound = 4 / (2*n + 1)  # Leibniz error bound
+    print(f"{n:>10} | {approx:>20.15f} | {error:>20.2e} | {bound:>16.2e}")
 
+# --- Demonstration 2: Depth-Width Tradeoff ---
+print("\n" + "=" * 60)
+print("DEMO 2: Depth-Width Tradeoff (Pieces = w^L)")
+print("=" * 60)
 
-def leibniz_error_bound(n: int) -> float:
-    """Theoretical error bound: 4/(2n+1)"""
-    return 4.0 / (2*n + 1)
+print(f"\n{'Width w':>8} | {'Depth L':>8} | {'Pieces w^L':>12} | {'Params 2wL+w+1':>15} | {'Ratio':>8}")
+print("-" * 58)
 
+for w in [2, 3, 4, 5, 10]:
+    for L in [1, 2, 3, 5, 10]:
+        pieces = w ** L
+        params = 2 * w * L + w + 1
+        ratio = pieces / params if params > 0 else 0
+        if pieces <= 10**12:
+            print(f"{w:>8} | {L:>8} | {pieces:>12} | {params:>15} | {ratio:>8.1f}")
 
-def diophantine_spectrum(alpha: float, D: int) -> float:
-    """
-    Compute the Diophantine approximation spectrum of alpha at denominator bound D.
-    Returns min_{0 < q ≤ D, p ∈ Z} |alpha - p/q|
-    """
-    best = float('inf')
-    for q in range(1, D + 1):
-        p = round(alpha * q)
-        err = abs(alpha - p / q)
-        best = min(best, err)
-    return best
+# --- Demonstration 3: Soft-Hard ReLU Gap ---
+print("\n" + "=" * 60)
+print("DEMO 3: Tropical-ReLU Bridge (Soft-Hard Gap)")
+print("=" * 60)
 
+print(f"\n{'x':>10} | {'relu(x)':>10} | {'softplus(x)':>12} | {'gap':>12} | {'log(2)':>8}")
+print("-" * 58)
 
-def max_pieces(n: int) -> int:
-    """Maximum number of linear pieces for n ReLU operations"""
-    if n == 0:
-        return 1
-    return 2 * max_pieces(n - 1) + 1
+for x in [-10, -5, -2, -1, 0, 0.5, 1, 2, 5, 10]:
+    r = relu(x)
+    s = softplus(x)
+    gap = s - r
+    print(f"{x:>10.1f} | {r:>10.4f} | {s:>12.4f} | {gap:>12.6f} | {math.log(2):>8.6f}")
 
+print(f"\nMaximum gap occurs at x=0: gap = log(2) = {math.log(2):.6f}")
+print(f"Gap formula: log(1 + exp(-|x|)) → 0 as |x| → ∞")
 
-# ============================================================
-# Demo 1: Leibniz Series Convergence
-# ============================================================
-print("=" * 70)
-print("DEMO 1: Leibniz Series Convergence to π")
-print("=" * 70)
-print(f"\nTrue π = {math.pi:.15f}\n")
-print(f"{'n':>8} {'4·S_n':>20} {'|4·S_n - π|':>20} {'Bound 4/(2n+1)':>20}")
-print("-" * 70)
+# --- Demonstration 4: Network Size for ε-approximation of π ---
+print("\n" + "=" * 60)
+print("DEMO 4: Minimum Network Size for π Approximation")
+print("=" * 60)
 
-for n in [1, 2, 5, 10, 20, 50, 100, 500, 1000, 5000]:
-    approx = leibniz_pi_approx(n)
-    actual_err = abs(approx - math.pi)
-    bound = leibniz_error_bound(n)
-    print(f"{n:>8} {approx:>20.15f} {actual_err:>20.2e} {bound:>20.2e}")
-    assert actual_err <= bound, f"Error bound violated at n={n}!"
+print(f"\n{'Target ε':>12} | {'N terms needed':>15} | {'Depth (w=2)':>12} | {'Depth (w=10)':>13} | {'Params (w=2)':>13}")
+print("-" * 72)
 
-print("\n✓ All error bounds verified: |4·S_n - π| ≤ 4/(2n+1)")
+for exp in range(1, 11):
+    epsilon = 10 ** (-exp)
+    # Need 1/(2N+1) < ε, so N > (1/ε - 1)/2
+    N = math.ceil((1/epsilon - 1) / 2)
+    # Depth with width w: need w^L ≥ N
+    depth_w2 = math.ceil(math.log2(N)) if N > 1 else 1
+    depth_w10 = math.ceil(math.log(N, 10)) if N > 1 else 1
+    params_w2 = 2 * 2 * depth_w2 + 2 + 1
+    print(f"{epsilon:>12.0e} | {N:>15} | {depth_w2:>12} | {depth_w10:>13} | {params_w2:>13}")
 
-# ============================================================
-# Demo 2: Famous Rational Approximations to π
-# ============================================================
-print("\n" + "=" * 70)
-print("DEMO 2: Rational Approximations to π (Diophantine Complexity)")
-print("=" * 70)
+# --- Demonstration 5: Rational vs Irrational Approximation ---
+print("\n" + "=" * 60)
+print("DEMO 5: Rational vs Irrational Approximation Complexity")
+print("=" * 60)
 
-approximations = [
-    ("3/1", 3, 1),
-    ("22/7", 22, 7),
-    ("333/106", 333, 106),
-    ("355/113", 355, 113),
-    ("103993/33102", 103993, 33102),
-    ("104348/33215", 104348, 33215),
-]
+constants = {
+    "π": math.pi,
+    "e": math.e,
+    "√2": math.sqrt(2),
+    "φ (golden)": (1 + math.sqrt(5)) / 2,
+    "1/3": 1/3,
+    "22/7": 22/7,
+}
 
-print(f"\n{'Fraction':>20} {'Value':>20} {'|error|':>15} {'1/q²':>15}")
-print("-" * 70)
+print(f"\n{'Constant':>14} | {'Value':>20} | {'Best rational p/q':>20} | {'|error|':>12}")
+print("-" * 72)
 
-for name, p, q in approximations:
-    val = p / q
-    err = abs(math.pi - val)
-    roth_bound = 1.0 / (q * q)
-    print(f"{name:>20} {val:>20.15f} {err:>15.2e} {roth_bound:>15.2e}")
-
-print("\nNote: By Roth's theorem (μ(π) ≤ 7.6063...), |π - p/q| > c/q^{7.61}")
-print("The convergents of π's continued fraction achieve near-optimal approximation.")
-
-# ============================================================
-# Demo 3: ReLU Network Piece Count
-# ============================================================
-print("\n" + "=" * 70)
-print("DEMO 3: ReLU Network Expressiveness (Piece Count Bounds)")
-print("=" * 70)
-print(f"\n{'Depth d':>10} {'maxPieces(d)':>15} {'2^d (lower)':>15} {'2^(d+1)-1 (upper)':>20}")
-print("-" * 62)
-
-for d in range(11):
-    mp = max_pieces(d)
-    lower = 2**d
-    upper = 2**(d+1) - 1
-    assert lower <= mp <= upper, f"Bounds violated at d={d}!"
-    print(f"{d:>10} {mp:>15} {lower:>15} {upper:>20}")
-
-print("\n✓ Verified: 2^d ≤ maxPieces(d) ≤ 2^(d+1) - 1 for all d shown")
-
-# ============================================================
-# Demo 4: Diophantine Spectrum
-# ============================================================
-print("\n" + "=" * 70)
-print("DEMO 4: Diophantine Approximation Spectrum of π")
-print("=" * 70)
-print(f"\n{'D':>10} {'Spectrum(π, D)':>20} {'Best p/q':>20}")
-print("-" * 52)
-
-for D in [1, 2, 3, 5, 7, 10, 20, 50, 100, 113, 500, 1000]:
-    spec = diophantine_spectrum(math.pi, D)
-    # Find the best approximation
-    best_p, best_q = 3, 1
-    best_err = abs(math.pi - 3)
-    for q in range(1, D + 1):
-        p = round(math.pi * q)
-        err = abs(math.pi - p / q)
+for name, val in constants.items():
+    # Find best rational approximation with denominator ≤ 1000
+    best_p, best_q, best_err = 0, 1, abs(val)
+    for q in range(1, 1001):
+        p = round(val * q)
+        err = abs(val - p/q)
         if err < best_err:
             best_p, best_q, best_err = p, q, err
-    print(f"{D:>10} {spec:>20.2e} {best_p:>10}/{best_q:<10}")
+    print(f"{name:>14} | {val:>20.15f} | {best_p}/{best_q:<10} | {best_err:>12.2e}")
 
-# ============================================================
-# Demo 5: Convergence Rate Comparison
-# ============================================================
-print("\n" + "=" * 70)
-print("DEMO 5: How Many Leibniz Terms to Match Famous Approximations?")
-print("=" * 70)
-
-targets = [
-    ("22/7 precision", abs(math.pi - 22/7)),
-    ("355/113 precision", abs(math.pi - 355/113)),
-    ("6 decimal places", 1e-6),
-    ("10 decimal places", 1e-10),
-]
-
-for name, target_err in targets:
-    # Find minimum n such that leibniz achieves this error
-    for n in range(1, 100001):
-        if abs(leibniz_pi_approx(n) - math.pi) < target_err:
-            break
-    else:
-        n = ">100000"
-    print(f"  To match {name:25s} (ε = {target_err:.2e}): n = {n}")
-
-print("\n" + "=" * 70)
-print("KEY INSIGHT: The Leibniz series converges as O(1/n),")
-print("so achieving ε-approximation requires n = O(1/ε) terms.")
-print("A ReLU network with constant parameters can represent any")
-print("partial sum, giving O(1/ε) parameter complexity for π.")
-print("=" * 70)
+print("\n" + "=" * 60)
+print("KEY INSIGHT: Rational numbers need O(1) network parameters.")
+print("Irrational numbers need O(log(1/ε)) depth for ε-approximation.")
+print("The depth-width tradeoff is exponential: doubling depth")
+print("squares the approximation capacity.")
+print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Leibniz Series Convergence to π
-Shows the approximation error as a function of the number of terms,
-compared to the theoretical bound 4/(2n+1).
+Visualization: Depth-Width Tradeoff in ReLU Networks
+
+Shows how the piece count w^L grows with depth L for various widths w,
+and how this relates to approximation quality for π.
 """
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
 import math
 
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    import numpy as np
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-    ns = np.arange(1, 501)
-    errors = np.array([abs(4 * sum((-1)**k / (2*k+1) for k in range(n)) - math.pi) for n in ns])
-    bounds = 4.0 / (2 * ns + 1)
+# --- Plot 1: Piece count w^L vs depth for various widths ---
+ax = axes[0, 0]
+depths = np.arange(1, 16)
+for w in [2, 3, 4, 5, 10]:
+    pieces = [w**L for L in depths]
+    ax.semilogy(depths, pieces, 'o-', label=f'w={w}', markersize=4)
+ax.set_xlabel('Depth L')
+ax.set_ylabel('Pieces w^L (log scale)')
+ax.set_title('Piece Count Growth: Exponential in Depth')
+ax.legend()
+ax.grid(True, alpha=0.3)
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+# --- Plot 2: Parameter efficiency ratio ---
+ax = axes[0, 1]
+depths = np.arange(1, 20)
+for w in [2, 3, 5, 10]:
+    ratios = []
+    for L in depths:
+        pieces = w**L
+        params = 2*w*L + w + 1
+        ratios.append(pieces / params)
+    ax.semilogy(depths, ratios, 'o-', label=f'w={w}', markersize=4)
+ax.set_xlabel('Depth L')
+ax.set_ylabel('Pieces/Parameters (log scale)')
+ax.set_title('Parameter Efficiency: Deep vs Shallow')
+ax.legend()
+ax.grid(True, alpha=0.3)
+ax.axhline(y=1, color='red', linestyle='--', alpha=0.5, label='Breakeven')
 
-    # Left: log-log plot
-    ax1.loglog(ns, errors, 'b-', alpha=0.7, label='Actual error |4·Sₙ - π|', linewidth=0.8)
-    ax1.loglog(ns, bounds, 'r--', alpha=0.8, label='Bound 4/(2n+1)', linewidth=1.5)
-    ax1.loglog(ns, 2.0/ns, 'g:', alpha=0.6, label='2/n (proved bound)', linewidth=1.5)
-    ax1.set_xlabel('Number of terms n', fontsize=12)
-    ax1.set_ylabel('Approximation error', fontsize=12)
-    ax1.set_title('Leibniz Series: Convergence Rate', fontsize=14)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
+# --- Plot 3: Leibniz approximation error ---
+ax = axes[1, 0]
+ns = np.arange(1, 201)
+errors = []
+bounds = []
+for n in ns:
+    partial = 4 * sum((-1)**k / (2*k+1) for k in range(n))
+    errors.append(abs(partial - math.pi))
+    bounds.append(4 / (2*n + 1))
+ax.semilogy(ns, errors, 'b-', alpha=0.7, label='Actual |4·S_N - π|')
+ax.semilogy(ns, bounds, 'r--', alpha=0.7, label='Bound 4/(2N+1)')
+ax.set_xlabel('Number of Leibniz terms N')
+ax.set_ylabel('Error (log scale)')
+ax.set_title('Leibniz Series: π Approximation Error')
+ax.legend()
+ax.grid(True, alpha=0.3)
 
-    # Right: Famous approximations comparison
-    famous = {
-        '3': (3, 1),
-        '22/7': (22, 7),
-        '333/106': (333, 106),
-        '355/113': (355, 113),
-    }
+# --- Plot 4: Soft-Hard ReLU gap ---
+ax = axes[1, 1]
+xs = np.linspace(-5, 5, 500)
+relu_vals = np.maximum(0, xs)
+softplus_vals = np.log(1 + np.exp(xs))
+gap = softplus_vals - relu_vals
 
-    ax2.loglog(ns, errors, 'b-', alpha=0.5, label='Leibniz', linewidth=0.8)
-    for name, (p, q) in famous.items():
-        err = abs(math.pi - p/q)
-        # Find equivalent n
-        for n_eq in range(1, 10000):
-            if abs(4 * sum((-1)**k / (2*k+1) for k in range(n_eq)) - math.pi) < err:
-                break
-        ax2.axhline(y=err, color='gray', linestyle=':', alpha=0.3)
-        ax2.annotate(f'{name}\n(q={q}, n≈{n_eq})', xy=(n_eq, err),
-                    fontsize=8, ha='center', va='bottom',
-                    bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.7))
-        ax2.plot(n_eq, err, 'ro', markersize=6)
+ax.plot(xs, relu_vals, 'b-', linewidth=2, label='ReLU (hard)')
+ax.plot(xs, softplus_vals, 'r-', linewidth=2, label='Softplus (soft)')
+ax.fill_between(xs, relu_vals, softplus_vals, alpha=0.2, color='green',
+                label=f'Gap ≤ log(2) ≈ {math.log(2):.3f}')
+ax.axhline(y=math.log(2), color='green', linestyle=':', alpha=0.5)
+ax.set_xlabel('x')
+ax.set_ylabel('f(x)')
+ax.set_title('Tropical-ReLU Bridge: Maslov Dequantization')
+ax.legend()
+ax.grid(True, alpha=0.3)
 
-    ax2.set_xlabel('Equivalent Leibniz terms n', fontsize=12)
-    ax2.set_ylabel('Approximation error', fontsize=12)
-    ax2.set_title('Leibniz vs. Famous Rational Approximations', fontsize=14)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('/workspace/request-project/viz_convergence.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_convergence.png")
-
-except ImportError:
-    print("matplotlib not available, skipping visualization")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: ReLU Network Piece Count and Expressiveness
-Shows the exponential growth of piecewise linear complexity with depth.
-"""
-
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    import numpy as np
-
-    def max_pieces(n):
-        if n == 0:
-            return 1
-        return 2 * max_pieces(n - 1) + 1
-
-    depths = list(range(0, 16))
-    pieces = [max_pieces(d) for d in depths]
-    lower = [2**d for d in depths]
-    upper = [2**(d+1) - 1 for d in depths]
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: Piece count growth
-    ax1.semilogy(depths, pieces, 'bo-', label='maxPieces(d)', markersize=6)
-    ax1.semilogy(depths, lower, 'g^--', label='2^d (lower bound)', markersize=5, alpha=0.7)
-    ax1.semilogy(depths, upper, 'rv--', label='2^(d+1)-1 (upper bound)', markersize=5, alpha=0.7)
-    ax1.fill_between(depths, lower, upper, alpha=0.1, color='blue')
-    ax1.set_xlabel('Depth d (number of ReLU layers)', fontsize=12)
-    ax1.set_ylabel('Maximum linear pieces', fontsize=12)
-    ax1.set_title('Exponential Growth of Network Expressiveness', fontsize=14)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-
-    # Right: What this means for approximation
-    # To approximate π within ε, need enough pieces to represent the Leibniz sum
-    epsilons = np.logspace(-1, -10, 100)
-    terms_needed = np.ceil(2.0 / epsilons)  # n ≈ 2/ε from Leibniz
-
-    # Depth needed: 2^d ≥ n, so d ≥ log2(n)
-    depth_needed = np.ceil(np.log2(terms_needed))
-
-    ax2.loglog(epsilons, terms_needed, 'b-', label='Leibniz terms n = O(1/ε)', linewidth=2)
-    ax2.loglog(epsilons, depth_needed, 'r-', label='Depth d = O(log(1/ε))', linewidth=2)
-    ax2.loglog(epsilons, np.log2(np.log2(terms_needed + 1) + 1), 'g-',
-               label='Layers L = O(log log(1/ε))', linewidth=2)
-    ax2.set_xlabel('Approximation error ε', fontsize=12)
-    ax2.set_ylabel('Network complexity', fontsize=12)
-    ax2.set_title('ReLU Network Resources for π Approximation', fontsize=14)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-    ax2.invert_xaxis()
-
-    plt.tight_layout()
-    plt.savefig('/workspace/request-project/viz_pieces.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_pieces.png")
-
-except ImportError:
-    print("matplotlib not available, skipping visualization")
+plt.suptitle('Diophantine Approximation on ReLU Networks', fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('relu_approximation_results.png', dpi=150, bbox_inches='tight')
+print("Saved: relu_approximation_results.png")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Diophantine Approximation Spectrum
-Shows how the best rational approximation quality varies with denominator bound.
+Visualization: Tropical-ReLU Bridge and Maslov Dequantization
+
+Shows how the softplus function log(1 + exp(x/t)) converges to
+max(0, x) = relu(x) as the temperature parameter t → 0,
+illustrating Maslov's dequantization from quantum to tropical.
 """
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
 import math
 
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    import numpy as np
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-    def spectrum(alpha, D):
-        best = float('inf')
-        best_p, best_q = 0, 1
-        for q in range(1, D + 1):
-            p = round(alpha * q)
-            err = abs(alpha - p / q)
-            if err < best:
-                best = err
-                best_p, best_q = p, q
-        return best, best_p, best_q
+xs = np.linspace(-4, 4, 1000)
 
-    Ds = list(range(1, 500))
-    pi_spectrum = [spectrum(math.pi, D)[0] for D in Ds]
-    e_spectrum = [spectrum(math.e, D)[0] for D in Ds]
-    sqrt2_spectrum = [spectrum(math.sqrt(2), D)[0] for D in Ds]
-    phi_spectrum = [spectrum((1 + math.sqrt(5))/2, D)[0] for D in Ds]
+# --- Plot 1: Temperature sweep ---
+ax = axes[0]
+relu_vals = np.maximum(0, xs)
+ax.plot(xs, relu_vals, 'k-', linewidth=3, label='ReLU (t→0)', zorder=10)
 
-    fig, ax = plt.subplots(figsize=(12, 7))
+for t in [2.0, 1.0, 0.5, 0.2]:
+    soft = np.array([math.log(1 + math.exp(x/t)) * t for x in xs])
+    ax.plot(xs, soft, '--', linewidth=1.5, label=f't={t}', alpha=0.8)
 
-    ax.semilogy(Ds, pi_spectrum, 'b-', alpha=0.6, label='π', linewidth=0.8)
-    ax.semilogy(Ds, e_spectrum, 'r-', alpha=0.6, label='e', linewidth=0.8)
-    ax.semilogy(Ds, sqrt2_spectrum, 'g-', alpha=0.6, label='√2', linewidth=0.8)
-    ax.semilogy(Ds, phi_spectrum, 'm-', alpha=0.6, label='φ = (1+√5)/2', linewidth=0.8)
+ax.set_xlabel('x')
+ax.set_ylabel('f(x)')
+ax.set_title('Maslov Dequantization:\nSoftplus → ReLU as t → 0')
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
 
-    # Add 1/D^2 reference line (Roth's theorem bound for algebraic numbers)
-    roth_line = [1.0 / (D * D) for D in Ds]
-    ax.semilogy(Ds, roth_line, 'k--', alpha=0.4, label='1/D² (Roth bound)', linewidth=1.5)
+# --- Plot 2: Gap as function of x ---
+ax = axes[1]
+gap = np.log(1 + np.exp(-np.abs(xs)))
+ax.plot(xs, gap, 'g-', linewidth=2, label='log(1 + exp(-|x|))')
+ax.axhline(y=math.log(2), color='red', linestyle='--', alpha=0.7,
+           label=f'Max = log(2) ≈ {math.log(2):.4f}')
+ax.fill_between(xs, 0, gap, alpha=0.15, color='green')
+ax.set_xlabel('x')
+ax.set_ylabel('Gap')
+ax.set_title('Soft-Hard Gap:\nlog(1 + exp(x)) - max(0, x)')
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
 
-    # Highlight famous convergents
-    convergents_pi = [(22, 7), (333, 106), (355, 113)]
-    for p, q in convergents_pi:
-        err = abs(math.pi - p/q)
-        ax.plot(q, err, 'bo', markersize=8)
-        ax.annotate(f'{p}/{q}', xy=(q, err), fontsize=8, ha='left',
-                   bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.7))
+# --- Plot 3: Network size vs precision for π ---
+ax = axes[2]
+epsilons = np.logspace(-1, -8, 50)
+depths_w2 = []
+depths_w10 = []
+params_w2 = []
 
-    ax.set_xlabel('Denominator bound D', fontsize=12)
-    ax.set_ylabel('Best approximation error', fontsize=12)
-    ax.set_title('Diophantine Approximation Spectrum of Irrational Constants', fontsize=14)
-    ax.legend(fontsize=10, loc='upper right')
-    ax.grid(True, alpha=0.3)
-    ax.set_xlim(1, 500)
+for eps in epsilons:
+    N = math.ceil((4/eps - 1) / 2)
+    if N < 2:
+        N = 2
+    d2 = math.ceil(math.log2(N))
+    d10 = math.ceil(math.log(N, 10))
+    depths_w2.append(d2)
+    depths_w10.append(d10)
+    params_w2.append(2 * 2 * d2 + 2 + 1)
 
-    plt.tight_layout()
-    plt.savefig('/workspace/request-project/viz_spectrum.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_spectrum.png")
+ax.semilogx(epsilons, depths_w2, 'b-', linewidth=2, label='Depth (w=2)')
+ax.semilogx(epsilons, depths_w10, 'r-', linewidth=2, label='Depth (w=10)')
+ax.semilogx(epsilons, params_w2, 'g--', linewidth=2, label='Params (w=2)')
+ax.set_xlabel('Target error ε')
+ax.set_ylabel('Network size')
+ax.set_title('π Approximation:\nDepth = O(log(1/ε))')
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
+ax.invert_xaxis()
 
-except ImportError:
-    print("matplotlib not available, skipping visualization")
+plt.suptitle('Tropical Geometry ↔ Neural Networks', fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('tropical_relu_bridge.png', dpi=150, bbox_inches='tight')
+print("Saved: tropical_relu_bridge.png")

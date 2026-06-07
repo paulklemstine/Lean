@@ -2,265 +2,174 @@
 """
 Algorithms for Diophantine ReLU Approximation Theory
 
-Type-hinted implementations of the key algorithms from the research.
+Type-hinted implementations of the core algorithms connecting
+ReLU network architecture to approximation quality.
 """
 
-from typing import Callable, List, Tuple, Optional
-from dataclasses import dataclass
+from typing import Tuple, List, Optional
 import math
 
 
-# ============================================================
-# Algorithm 1: ReLU Expression Evaluator
-# ============================================================
-
-@dataclass
-class ReLUExpr:
-    """Abstract syntax tree for ReLU expressions."""
-    kind: str  # 'const', 'var', 'relu', 'add', 'smul'
-    value: Optional[float] = None  # for const and smul
-    children: Optional[List['ReLUExpr']] = None
-
-    @staticmethod
-    def const(c: float) -> 'ReLUExpr':
-        return ReLUExpr(kind='const', value=c)
-
-    @staticmethod
-    def var() -> 'ReLUExpr':
-        return ReLUExpr(kind='var')
-
-    @staticmethod
-    def relu(e: 'ReLUExpr') -> 'ReLUExpr':
-        return ReLUExpr(kind='relu', children=[e])
-
-    @staticmethod
-    def add(e1: 'ReLUExpr', e2: 'ReLUExpr') -> 'ReLUExpr':
-        return ReLUExpr(kind='add', children=[e1, e2])
-
-    @staticmethod
-    def smul(c: float, e: 'ReLUExpr') -> 'ReLUExpr':
-        return ReLUExpr(kind='smul', value=c, children=[e])
-
-    def eval(self, x: float) -> float:
-        """Evaluate the expression at input x."""
-        if self.kind == 'const':
-            return self.value
-        elif self.kind == 'var':
-            return x
-        elif self.kind == 'relu':
-            return max(0.0, self.children[0].eval(x))
-        elif self.kind == 'add':
-            return self.children[0].eval(x) + self.children[1].eval(x)
-        elif self.kind == 'smul':
-            return self.value * self.children[0].eval(x)
-        raise ValueError(f"Unknown kind: {self.kind}")
-
-    def relu_count(self) -> int:
-        """Count the number of ReLU operations."""
-        if self.kind == 'relu':
-            return 1 + self.children[0].relu_count()
-        elif self.kind in ('add',):
-            return sum(c.relu_count() for c in self.children)
-        elif self.kind == 'smul':
-            return self.children[0].relu_count()
-        return 0
-
-    def param_count(self) -> int:
-        """Count the number of parameters."""
-        if self.kind == 'const':
-            return 1
-        elif self.kind == 'var':
-            return 0
-        elif self.kind == 'relu':
-            return self.children[0].param_count()
-        elif self.kind == 'add':
-            return sum(c.param_count() for c in self.children)
-        elif self.kind == 'smul':
-            return 1 + self.children[0].param_count()
-        return 0
-
-    def depth(self) -> int:
-        """Depth of the expression tree."""
-        if self.kind in ('const', 'var'):
-            return 0
-        elif self.kind == 'relu':
-            return 1 + self.children[0].depth()
-        elif self.kind == 'add':
-            return max(c.depth() for c in self.children)
-        elif self.kind == 'smul':
-            return self.children[0].depth()
-        return 0
-
-    def size(self) -> int:
-        """Total AST size."""
-        if self.kind in ('const', 'var'):
-            return 1
-        elif self.kind in ('relu', 'smul'):
-            return 1 + self.children[0].size()
-        elif self.kind == 'add':
-            return 1 + sum(c.size() for c in self.children)
-        return 1
+def relu(x: float) -> float:
+    """ReLU activation: max(0, x)."""
+    return max(0.0, x)
 
 
-# ============================================================
-# Algorithm 2: Leibniz π Approximation via ReLU Expressions
-# ============================================================
-
-def build_leibniz_relu_expr(n: int) -> ReLUExpr:
+def softplus(x: float, temperature: float = 1.0) -> float:
+    """Softplus (smooth ReLU): (1/t) * log(1 + exp(t*x)).
+    
+    As temperature → ∞, softplus → relu (tropical limit / Maslov dequantization).
     """
-    Build a ReLU expression that computes 4 * Σ_{k=0}^{n-1} (-1)^k / (2k+1).
+    tx = temperature * x
+    if tx > 20:
+        return x  # Avoid overflow
+    return math.log(1 + math.exp(tx)) / temperature
 
-    This uses only constant nodes (no ReLU activations needed for constants),
-    achieving O(1/n) approximation error for π.
 
-    Pseudocode:
-        1. Compute the Leibniz partial sum S_n = Σ (-1)^k/(2k+1)
-        2. Return const(4 * S_n) as a ReLU expression
+def soft_hard_gap(x: float) -> float:
+    """Gap between softplus and ReLU.
+    
+    Returns log(1 + exp(-|x|)), which is:
+    - Maximized at x=0 where gap = log(2)
+    - Tends to 0 as |x| → ∞
     """
-    partial_sum = sum((-1)**k / (2*k + 1) for k in range(n))
-    return ReLUExpr.const(4 * partial_sum)
+    return math.log(1 + math.exp(-abs(x)))
 
 
-def build_relu_pi_network(n: int) -> ReLUExpr:
+def leibniz_term(k: int) -> float:
+    """k-th term of the Leibniz series: (-1)^k / (2k+1)."""
+    return ((-1) ** k) / (2 * k + 1)
+
+
+def leibniz_partial_sum(n: int) -> float:
+    """n-th partial sum of Leibniz series for π/4."""
+    return sum(leibniz_term(k) for k in range(n))
+
+
+def leibniz_pi_approx(n: int) -> float:
+    """Approximate π using n terms of the Leibniz series."""
+    return 4.0 * leibniz_partial_sum(n)
+
+
+def min_terms_for_epsilon(epsilon: float) -> int:
+    """Minimum number of Leibniz terms for |4·S_N - π| < ε.
+    
+    Error bound: |4·S_N - π| ≤ 4/(2N+1).
+    So we need 4/(2N+1) < ε, i.e., N > (4/ε - 1)/2.
     """
-    Build a ReLU expression that constructs π approximation using
-    the sum-of-terms architecture (demonstrating compositional structure).
+    return math.ceil((4.0 / epsilon - 1) / 2)
 
-    Each term (-1)^k/(2k+1) is represented as a const node,
-    and they are summed using add nodes.
 
-    Returns a tree with O(n) nodes, 0 ReLU activations, and
-    approximation error ≤ 4/(2n+1).
+def piece_count(width: int, depth: int) -> int:
+    """Maximum number of linear pieces in a depth-L width-w ReLU network."""
+    return width ** depth
+
+
+def param_count(width: int, depth: int) -> int:
+    """Parameter count of a 1D→1D ReLU network with given width and depth.
+    
+    Each layer: w weights + w biases = 2w parameters.
+    Output layer: w weights + 1 bias.
+    Total: depth * 2w + w + 1.
     """
-    if n == 0:
-        return ReLUExpr.const(0.0)
-
-    # Build term-by-term
-    terms = [ReLUExpr.const(4 * (-1)**k / (2*k + 1)) for k in range(n)]
-
-    # Build balanced binary tree of additions for depth O(log n)
-    while len(terms) > 1:
-        new_terms = []
-        for i in range(0, len(terms) - 1, 2):
-            new_terms.append(ReLUExpr.add(terms[i], terms[i+1]))
-        if len(terms) % 2 == 1:
-            new_terms.append(terms[-1])
-        terms = new_terms
-
-    return terms[0]
+    return depth * width * 2 + width + 1
 
 
-# ============================================================
-# Algorithm 3: Diophantine Approximation Spectrum
-# ============================================================
-
-def diophantine_spectrum(alpha: float, D: int) -> Tuple[float, int, int]:
+def min_depth_for_pieces(width: int, target_pieces: int) -> int:
+    """Minimum depth to achieve at least target_pieces linear pieces.
+    
+    Need w^L ≥ target_pieces, so L ≥ log_w(target_pieces).
     """
-    Compute the Diophantine approximation spectrum of alpha at denominator D.
+    if width <= 1:
+        return target_pieces  # Width 1 = affine, can't add pieces
+    return math.ceil(math.log(target_pieces) / math.log(width))
 
-    Returns (best_error, best_p, best_q) where p/q is the best rational
-    approximation with 0 < q ≤ D.
 
-    Pseudocode:
-        1. For each q in {1, ..., D}:
-            a. Find p = round(α * q)
-            b. Compute err = |α - p/q|
-        2. Return the (err, p, q) minimizing err
+def min_network_for_pi_approx(
+    epsilon: float, width: int = 2
+) -> Tuple[int, int, int]:
+    """Minimum network spec (width, depth, params) for ε-approximation of π.
+    
+    Returns (width, depth, param_count).
+    
+    Strategy: Use Leibniz series.
+    1. Need N ≥ 4/(2ε) terms → O(1/ε) terms
+    2. Need depth L ≥ log_w(N) to store N pieces
+    3. Parameter count = 2wL + w + 1
     """
-    best_err = float('inf')
-    best_p, best_q = 0, 1
-    for q in range(1, D + 1):
-        p = round(alpha * q)
-        err = abs(alpha - p / q)
+    n_terms = min_terms_for_epsilon(epsilon)
+    depth = min_depth_for_pieces(width, n_terms)
+    params = param_count(width, depth)
+    return (width, depth, params)
+
+
+def depth_width_efficiency_ratio(width: int, depth: int) -> float:
+    """Ratio of pieces to parameters: w^L / (2wL + w + 1).
+    
+    This ratio grows exponentially with depth, demonstrating
+    the exponential advantage of depth over width.
+    """
+    pieces = piece_count(width, depth)
+    params = param_count(width, depth)
+    return pieces / params
+
+
+def best_rational_approx(
+    target: float, max_denom: int = 1000
+) -> Tuple[int, int, float]:
+    """Find best rational approximation p/q to target with q ≤ max_denom.
+    
+    Uses brute force (for demonstration). Returns (p, q, error).
+    A ReLU network with rational weights can represent p/q exactly.
+    """
+    best_p, best_q, best_err = 0, 1, abs(target)
+    for q in range(1, max_denom + 1):
+        p = round(target * q)
+        err = abs(target - p / q)
         if err < best_err:
-            best_err = err
-            best_p, best_q = p, q
-    return best_err, best_p, best_q
+            best_p, best_q, best_err = p, q, err
+    return best_p, best_q, best_err
 
 
-def continued_fraction_convergents(alpha: float, max_terms: int = 20) -> List[Tuple[int, int]]:
-    """
-    Compute convergents of the continued fraction expansion of alpha.
-    These give the best rational approximations in the sense of
-    minimizing |α - p/q| * q.
-
-    Pseudocode:
-        1. Initialize h_{-1} = 1, h_0 = a_0, k_{-1} = 0, k_0 = 1
-        2. For each continued fraction coefficient a_i:
-            h_i = a_i * h_{i-1} + h_{i-2}
-            k_i = a_i * k_{i-1} + k_{i-2}
-        3. Return list of (h_i, k_i)
+def continued_fraction_convergents(
+    x: float, max_terms: int = 20
+) -> List[Tuple[int, int]]:
+    """Compute continued fraction convergents of x.
+    
+    These give the best rational approximations (by Dirichlet's theorem).
+    The convergent p_n/q_n satisfies |x - p_n/q_n| < 1/q_n^2.
     """
     convergents = []
-    x = alpha
-    h_prev, h_curr = 1, int(x)
-    k_prev, k_curr = 0, 1
-    convergents.append((h_curr, k_curr))
-
-    for _ in range(max_terms - 1):
-        frac = x - int(x)
-        if abs(frac) < 1e-12:
+    a = math.floor(x)
+    p_prev, p_curr = 1, a
+    q_prev, q_curr = 0, 1
+    convergents.append((p_curr, q_curr))
+    
+    remainder = x - a
+    for _ in range(max_terms):
+        if abs(remainder) < 1e-15:
             break
-        x = 1.0 / frac
-        a = int(x)
-        h_prev, h_curr = h_curr, a * h_curr + h_prev
-        k_prev, k_curr = k_curr, a * k_curr + k_prev
-        convergents.append((h_curr, k_curr))
-
+        remainder = 1.0 / remainder
+        a = math.floor(remainder)
+        p_prev, p_curr = p_curr, a * p_curr + p_prev
+        q_prev, q_curr = q_curr, a * q_curr + q_prev
+        convergents.append((p_curr, q_curr))
+        remainder = remainder - a
+    
     return convergents
 
 
-# ============================================================
-# Algorithm 4: Piece Count Analysis
-# ============================================================
-
-def max_pieces(n: int) -> int:
-    """
-    Maximum number of linear pieces for n ReLU operations.
-    Satisfies the recurrence: maxPieces(0) = 1, maxPieces(n+1) = 2*maxPieces(n) + 1.
-    Closed form: maxPieces(n) = 2^(n+1) - 1.
-    """
-    if n == 0:
-        return 1
-    return 2 * max_pieces(n - 1) + 1
-
-
-def verify_piece_bound(n: int) -> bool:
-    """Verify that 2^n ≤ maxPieces(n) ≤ 2^(n+1) - 1."""
-    mp = max_pieces(n)
-    return 2**n <= mp <= 2**(n+1) - 1
-
-
-# ============================================================
-# Main: Run all algorithms
-# ============================================================
-
 if __name__ == "__main__":
-    # Test ReLU expression algebra
-    print("Testing ReLU Expression Algebra...")
-    e = build_leibniz_relu_expr(100)
-    print(f"  Leibniz(100) at x=1: {e.eval(1):.15f}")
-    print(f"  True π:              {math.pi:.15f}")
-    print(f"  Error:               {abs(e.eval(1) - math.pi):.2e}")
-    print(f"  ReLU count:          {e.relu_count()}")
-    print(f"  Param count:         {e.param_count()}")
-
-    # Test tree construction
-    print("\nTesting Tree Construction...")
-    tree = build_relu_pi_network(100)
-    print(f"  Tree(100) at x=1:    {tree.eval(1):.15f}")
-    print(f"  Error:               {abs(tree.eval(1) - math.pi):.2e}")
-    print(f"  ReLU count:          {tree.relu_count()}")
-    print(f"  Tree size:           {tree.size()}")
-    print(f"  Tree depth:          {tree.depth()}")
-
-    # Test continued fractions
-    print("\nContinued Fraction Convergents of π:")
+    print("=== Diophantine ReLU Approximation Algorithms ===\n")
+    
+    # Test π approximation
+    for eps_exp in range(1, 8):
+        eps = 10 ** (-eps_exp)
+        w, d, p = min_network_for_pi_approx(eps)
+        print(f"ε = 10^{-eps_exp}: width={w}, depth={d}, params={p}, "
+              f"pieces={piece_count(w, d)}, efficiency={depth_width_efficiency_ratio(w, d):.1f}")
+    
+    print("\n--- Continued fraction convergents of π ---")
     for p, q in continued_fraction_convergents(math.pi, 10):
-        print(f"  {p}/{q} = {p/q:.15f}, error = {abs(math.pi - p/q):.2e}")
-
-    # Verify piece count bounds
-    print("\nVerifying piece count bounds...")
-    for n in range(15):
-        assert verify_piece_bound(n), f"Failed at n={n}"
-    print("  All bounds verified for n = 0..14")
+        err = abs(math.pi - p/q)
+        print(f"  {p}/{q} = {p/q:.15f}, error = {err:.2e}")
