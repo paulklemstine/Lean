@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "62fdd270",
     "filename": "speculative_ramanujan_style_intuition_as_formaliza.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.27224000000000004,
     "title": "The Ramanujan Oracle: Non-Computability of Approximate Mathematical Truth"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "speculative_ramanujan_style_intuition_as_formaliza",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.27224000000000004,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Ramanujan Oracle: Non-Computability of Approximate Mathematical Truth"
     }
