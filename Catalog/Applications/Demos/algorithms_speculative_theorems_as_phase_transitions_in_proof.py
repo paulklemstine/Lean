@@ -1,199 +1,258 @@
-#!/usr/bin/env python3
 """
 Algorithms for Phase Transitions in Proof Space
 
-Type-hinted implementations of the key algorithms from the formalized theory.
+Type-hinted implementations of the core algorithms from the formalization.
 """
 
+from typing import Dict, List, Set, Tuple, Optional
 import math
-from typing import Tuple, List, Optional
-from dataclasses import dataclass
 
 
-@dataclass
-class ProofSystem:
-    """A formal proof system characterized by alphabet size and max proof length."""
-    b: int  # alphabet size (≥ 2)
-    k: int  # maximum proof length
-
-    def __post_init__(self) -> None:
-        assert self.b >= 2, f"Alphabet size must be ≥ 2, got {self.b}"
-        assert self.k >= 0, f"Max proof length must be ≥ 0, got {self.k}"
-
-    @property
-    def proof_bound(self) -> int:
-        """Upper bound on number of distinct proofs: b^(k+1)."""
-        return self.b ** (self.k + 1)
-
-    @property
-    def critical_threshold(self) -> int:
-        """Critical complexity threshold n_c = k + 1."""
-        return self.k + 1
-
-    def stmt_space(self, n: int) -> int:
-        """Number of statements of length exactly n."""
-        return self.b ** n
-
-    def coverage_ratio(self, n: int) -> float:
-        """Provability order parameter: proof_bound / stmt_space(n)."""
-        return self.proof_bound / self.stmt_space(n) if n > 0 else float('inf')
-
-    def entropy_gap(self, n: int) -> float:
-        """Information-theoretic entropy gap in nats."""
-        return max(0.0, (n - self.k - 1) * math.log(self.b))
-
-    def hausdorff_dimension(self, n: int) -> float:
-        """Proof space dimension (k+1)/n."""
-        return (self.k + 1) / n if n > 0 else float('inf')
-
-    def is_complete_phase(self, n: int) -> bool:
-        """Whether complexity n is in the complete (ordered) phase."""
-        return n <= self.critical_threshold
-
-    def composite_proof_bound(self, m: int) -> int:
-        """Effective proof bound with m levels of composition."""
-        return self.b ** ((self.k + 1) * m)
-
-    def composite_threshold(self, m: int) -> int:
-        """Critical threshold with m composition levels."""
-        return (self.k + 1) * m
-
-
-def detect_phase_transition(system: ProofSystem,
-                            n_range: range) -> Optional[int]:
+def proof_ball(
+    adj: Dict[int, Set[int]],
+    axioms: Set[int],
+    k: int
+) -> Set[int]:
     """
-    Detect the phase transition point in the given range.
+    Compute the proof ball of radius k around axiom set.
 
-    Returns the first n where coverage_ratio drops below 1,
-    or None if no transition occurs in the range.
+    Args:
+        adj: Adjacency dict mapping vertex -> set of out-neighbors
+        axioms: Initial set of axiom vertices
+        k: Number of derivation steps
 
-    Algorithm: Linear scan with early termination.
-    Complexity: O(|n_range|)
+    Returns:
+        Set of all vertices reachable within k steps.
     """
-    for n in n_range:
-        if not system.is_complete_phase(n):
-            return n
-    return None
+    ball = set(axioms)
+    for _ in range(k):
+        neighbors = set()
+        for v in ball:
+            neighbors |= adj.get(v, set())
+        new_ball = ball | neighbors
+        if new_ball == ball:
+            break  # Saturation
+        ball = new_ball
+    return ball
 
 
-def compute_boltzmann_parameters(system: ProofSystem) -> Tuple[float, float]:
+def proof_density(
+    adj: Dict[int, Set[int]],
+    axioms: Set[int],
+    universe_size: int,
+    k: int
+) -> float:
     """
-    Compute the Boltzmann distribution parameters.
+    Compute the proof density ρ(k) = |Ball(S,k)| / |V|.
 
-    Returns (beta, T) where:
-    - beta = log(b) is the inverse temperature
-    - T = 1/log(b) is the temperature
+    Args:
+        adj: Adjacency dict
+        axioms: Initial axiom set
+        universe_size: Total number of vertices |V|
+        k: Number of steps
 
-    The proof density at complexity n is:
-        rho(n) = exp(-beta * (n - n_c))
+    Returns:
+        Fraction of reachable statements at step k.
     """
-    beta = math.log(system.b)
-    T = 1.0 / beta
-    return beta, T
+    ball = proof_ball(adj, axioms, k)
+    return len(ball) / universe_size
 
 
-def proof_density_profile(system: ProofSystem,
-                          n_max: int) -> List[Tuple[int, float]]:
+def vertex_expansion(
+    adj: Dict[int, Set[int]],
+    subset: Set[int],
+    universe_size: int
+) -> float:
     """
-    Compute the proof density profile for n = 0, 1, ..., n_max.
+    Compute the vertex expansion ratio h for a subset S.
 
-    Returns list of (n, density) pairs where density = min(1, coverage_ratio(n)).
+    h = |∂S| / |S| where ∂S = outNeighbors(S) \ S.
 
-    Algorithm: Direct computation.
-    Complexity: O(n_max)
+    Args:
+        adj: Adjacency dict
+        subset: The set S
+        universe_size: Total |V|
+
+    Returns:
+        Expansion ratio, or 0 if S is empty.
     """
-    profile: List[Tuple[int, float]] = []
-    for n in range(n_max + 1):
-        ratio = system.coverage_ratio(n)
-        density = min(1.0, ratio)
-        profile.append((n, density))
-    return profile
+    if not subset:
+        return 0.0
+    boundary = set()
+    for v in subset:
+        for u in adj.get(v, set()):
+            if u not in subset:
+                boundary.add(u)
+    return len(boundary) / len(subset)
 
 
-def optimal_proof_search_budget(system: ProofSystem,
-                                n: int,
-                                verification_cost: int = 1) -> int:
+def critical_step(
+    adj: Dict[int, Set[int]],
+    axioms: Set[int],
+    universe_size: int
+) -> int:
     """
-    Compute the optimal proof search budget for statements of complexity n.
+    Find the critical step k_c where density first exceeds 1/2.
 
-    The budget is proportional to the entropy gap:
-        budget = b^(n - n_c) * verification_cost
+    This is the phase transition point.
 
-    This is the minimum number of proof candidates that must be examined
-    to have a chance of finding a proof via brute-force search.
+    Args:
+        adj: Adjacency dict
+        axioms: Initial axiom set
+        universe_size: Total |V|
+
+    Returns:
+        The critical step k_c, or -1 if density never exceeds 1/2.
     """
-    if system.is_complete_phase(n):
-        return verification_cost  # One verification suffices in complete phase
-    delta = n - system.critical_threshold
-    return system.b ** delta * verification_cost
+    ball = set(axioms)
+    for k in range(universe_size + 1):
+        if 2 * len(ball) > universe_size:
+            return k
+        neighbors = set()
+        for v in ball:
+            neighbors |= adj.get(v, set())
+        new_ball = ball | neighbors
+        if new_ball == ball:
+            return -1  # Stabilized below 1/2
+        ball = new_ball
+    return -1
 
 
-def phase_diagram(b_range: range,
-                  k_range: range) -> List[Tuple[int, int, int]]:
+def density_trajectory(
+    adj: Dict[int, Set[int]],
+    axioms: Set[int],
+    universe_size: int,
+    max_steps: int
+) -> List[float]:
     """
-    Compute the phase diagram: critical threshold for each (b, k) pair.
+    Compute the full density trajectory ρ(0), ρ(1), ..., ρ(max_steps).
 
-    Returns list of (b, k, n_c) triples.
+    Args:
+        adj: Adjacency dict
+        axioms: Initial axiom set
+        universe_size: Total |V|
+        max_steps: Maximum number of steps
+
+    Returns:
+        List of density values at each step.
     """
-    diagram: List[Tuple[int, int, int]] = []
-    for b in b_range:
-        for k in k_range:
-            if b >= 2:
-                system = ProofSystem(b=b, k=k)
-                diagram.append((b, k, system.critical_threshold))
-    return diagram
+    densities = []
+    ball = set(axioms)
+    for k in range(max_steps + 1):
+        densities.append(len(ball) / universe_size)
+        neighbors = set()
+        for v in ball:
+            neighbors |= adj.get(v, set())
+        new_ball = ball | neighbors
+        if new_ball == ball:
+            # Stabilized: fill rest with same value
+            densities.extend([densities[-1]] * (max_steps - k))
+            break
+        ball = new_ball
+    return densities
 
 
-def incompleteness_certificate(system: ProofSystem,
-                               n: int) -> Optional[Tuple[int, int, int]]:
+def entropy_rate(
+    adj: Dict[int, Set[int]],
+    axioms: Set[int],
+    max_steps: int
+) -> List[float]:
     """
-    Generate an incompleteness certificate for complexity n.
+    Compute the entropy rate at each step.
 
-    If n > n_c, returns (proof_count, stmt_count, deficit) proving
-    that at least `deficit` statements are unprovable.
-    Returns None if n ≤ n_c (no incompleteness at this level).
+    entropy_rate(k) = log(|Ball(k+1)|) - log(|Ball(k)|)
+
+    Args:
+        adj: Adjacency dict
+        axioms: Initial axiom set
+        max_steps: Maximum number of steps
+
+    Returns:
+        List of entropy rates.
     """
-    if system.is_complete_phase(n):
-        return None
-    proof_count = system.proof_bound
-    stmt_count = system.stmt_space(n)
-    deficit = stmt_count - proof_count
-    return (proof_count, stmt_count, deficit)
+    ball = set(axioms)
+    sizes = [len(ball)]
+    for k in range(max_steps):
+        neighbors = set()
+        for v in ball:
+            neighbors |= adj.get(v, set())
+        ball = ball | neighbors
+        sizes.append(len(ball))
+
+    rates = []
+    for i in range(len(sizes) - 1):
+        if sizes[i] > 0 and sizes[i + 1] > 0:
+            rates.append(math.log(sizes[i + 1]) - math.log(sizes[i]))
+        else:
+            rates.append(0.0)
+    return rates
 
 
-def composition_analysis(system: ProofSystem,
-                         target_n: int,
-                         max_levels: int = 20) -> Optional[int]:
+def saturation_analysis(
+    adj: Dict[int, Set[int]],
+    axioms: Set[int],
+    universe_size: int
+) -> Tuple[bool, int, float]:
     """
-    Find the minimum number of composition levels needed to make
-    complexity n reachable (i.e., to push n_c above target_n).
+    Determine if the system is complete or incomplete.
 
-    Returns the minimum m such that (k+1)*m ≥ target_n, or None
-    if max_levels is insufficient.
+    Returns:
+        (is_complete, saturation_step, final_density)
     """
-    for m in range(1, max_levels + 1):
-        if system.composite_threshold(m) >= target_n:
-            return m
-    return None
+    ball = set(axioms)
+    for k in range(universe_size + 1):
+        neighbors = set()
+        for v in ball:
+            neighbors |= adj.get(v, set())
+        new_ball = ball | neighbors
+        if len(new_ball) == universe_size:
+            return (True, k + 1, 1.0)
+        if new_ball == ball:
+            return (False, k, len(ball) / universe_size)
+        ball = new_ball
+    return (False, universe_size, len(ball) / universe_size)
 
 
-if __name__ == "__main__":
-    # Example usage
-    S = ProofSystem(b=2, k=10)
-    print(f"Proof system: b={S.b}, k={S.k}")
-    print(f"Critical threshold: n_c = {S.critical_threshold}")
-    print(f"Proof bound: {S.proof_bound}")
+def generate_expander_graph(n: int, degree: int = 3) -> Dict[int, Set[int]]:
+    """
+    Generate a random regular graph (approximate expander).
 
-    beta, T = compute_boltzmann_parameters(S)
-    print(f"Boltzmann parameters: β={beta:.4f}, T={T:.4f}")
+    Args:
+        n: Number of vertices
+        degree: Out-degree of each vertex
 
-    transition = detect_phase_transition(S, range(1, 20))
-    print(f"Phase transition detected at n = {transition}")
+    Returns:
+        Adjacency dict.
+    """
+    import random
+    adj: Dict[int, Set[int]] = {i: set() for i in range(n)}
+    for i in range(n):
+        targets = set()
+        while len(targets) < degree:
+            t = random.randint(0, n - 1)
+            if t != i:
+                targets.add(t)
+        adj[i] = targets
+    return adj
 
-    cert = incompleteness_certificate(S, 15)
-    if cert:
-        proofs, stmts, deficit = cert
-        print(f"Incompleteness at n=15: {proofs} proofs < {stmts} statements, deficit={deficit}")
 
-    levels = composition_analysis(S, 100)
-    print(f"Composition levels needed for n=100: m={levels}")
+def generate_incomplete_system(n: int) -> Dict[int, Set[int]]:
+    """
+    Generate a derivation system that is provably incomplete:
+    two disconnected components.
+
+    Args:
+        n: Total number of vertices (must be ≥ 4)
+
+    Returns:
+        Adjacency dict where vertices 0..n//2-1 form one component.
+    """
+    half = n // 2
+    adj: Dict[int, Set[int]] = {i: set() for i in range(n)}
+    # First component: chain
+    for i in range(half - 1):
+        adj[i].add(i + 1)
+    # Second component: chain
+    for i in range(half, n - 1):
+        adj[i].add(i + 1)
+    return adj

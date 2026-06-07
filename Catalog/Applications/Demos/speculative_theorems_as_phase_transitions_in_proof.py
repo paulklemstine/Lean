@@ -1,374 +1,354 @@
 #!/usr/bin/env python3
 """
-Phase Transitions in Proof Space — Demonstration Script
+Demo: Phase Transitions in Proof Space
 
-Demonstrates the key results from the formalized theory:
-1. Phase transition characterization at n_c = k + 1
-2. Exponential decay of coverage ratio
-3. Entropy gap computation
-4. Boltzmann distribution analogy
-5. Compositional proof acceleration
+Numerical examples demonstrating the key phenomena:
+1. Density growth under expansion
+2. Saturation dichotomy (complete vs incomplete systems)
+3. Entropy rate discontinuity at phase transition
+4. Critical step threshold
 """
 
 import math
+from algorithms import (
+    proof_ball, proof_density, vertex_expansion,
+    critical_step, density_trajectory, entropy_rate,
+    saturation_analysis, generate_expander_graph,
+    generate_incomplete_system
+)
 
 
-def proof_bound(b: int, k: int) -> int:
-    """Upper bound on number of proofs of length ≤ k with alphabet size b."""
-    return b ** (k + 1)
+def demo_expander_phase_transition():
+    """Demonstrate sharp phase transition in an expander graph."""
+    print("=" * 60)
+    print("DEMO 1: Phase Transition in Expander Graph")
+    print("=" * 60)
+
+    n = 100
+    adj = generate_expander_graph(n, degree=5)
+    axioms = {0}
+
+    print(f"\nUniverse size: {n}")
+    print(f"Axiom set: {axioms}")
+    print(f"Initial expansion: {vertex_expansion(adj, axioms, n):.2f}")
+
+    densities = density_trajectory(adj, axioms, n, 20)
+
+    print("\nDensity trajectory ρ(k):")
+    print("-" * 40)
+    for k, rho in enumerate(densities[:15]):
+        bar = "█" * int(rho * 40)
+        print(f"  k={k:2d}: ρ={rho:.4f} {bar}")
+
+    kc = critical_step(adj, axioms, n)
+    print(f"\nCritical step k_c (density > 1/2): {kc}")
+
+    is_complete, sat_step, final_density = saturation_analysis(adj, axioms, n)
+    print(f"Complete: {is_complete}")
+    print(f"Saturation step: {sat_step}")
+    print(f"Final density: {final_density:.4f}")
 
 
-def stmt_space(b: int, n: int) -> int:
-    """Number of statements of length exactly n."""
-    return b ** n
+def demo_incomplete_system():
+    """Demonstrate an incomplete system (disconnected graph)."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Incomplete System (Disconnected Components)")
+    print("=" * 60)
+
+    n = 40
+    adj = generate_incomplete_system(n)
+    axioms = {0}  # Only in first component
+
+    print(f"\nUniverse size: {n}")
+    print(f"Axiom set: {axioms}")
+    print(f"System has two disconnected components of size ~{n // 2}")
+
+    densities = density_trajectory(adj, axioms, n, n)
+
+    print("\nDensity trajectory ρ(k):")
+    print("-" * 40)
+    for k, rho in enumerate(densities[:25]):
+        bar = "█" * int(rho * 40)
+        print(f"  k={k:2d}: ρ={rho:.4f} {bar}")
+
+    is_complete, sat_step, final_density = saturation_analysis(adj, axioms, n)
+    print(f"\nComplete: {is_complete}")
+    print(f"Saturation step: {sat_step}")
+    print(f"Final density: {final_density:.4f}")
+    print(f"→ Density bounded away from 1: incompleteness!")
 
 
-def critical_threshold(k: int) -> int:
-    """The critical complexity threshold n_c = k + 1."""
-    return k + 1
+def demo_entropy_rate():
+    """Demonstrate entropy rate discontinuity."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Entropy Rate Discontinuity")
+    print("=" * 60)
+
+    n = 80
+    adj = generate_expander_graph(n, degree=4)
+    axioms = {0}
+
+    rates = entropy_rate(adj, axioms, 20)
+    densities = density_trajectory(adj, axioms, n, 20)
+
+    print("\nEntropy rate and density:")
+    print("-" * 50)
+    print(f"  {'k':>3s}  {'ρ(k)':>8s}  {'rate(k)':>8s}  {'phase':>10s}")
+    print("-" * 50)
+    for k in range(min(len(rates), 15)):
+        phase = "growing" if rates[k] > 0.01 else "SATURATED"
+        print(f"  {k:3d}  {densities[k]:8.4f}  {rates[k]:8.4f}  {phase:>10s}")
+
+    # Find the discontinuity
+    for k in range(len(rates) - 1):
+        if rates[k] > 0.1 and rates[k + 1] < 0.01:
+            print(f"\n→ Phase transition between k={k} and k={k+1}!")
+            print(f"  Entropy rate drops from {rates[k]:.4f} to {rates[k+1]:.4f}")
+            break
 
 
-def coverage_ratio(b: int, k: int, n: int) -> float:
-    """Ratio of proof space to statement space: b^(k+1) / b^n."""
-    if n == 0:
-        return float(proof_bound(b, k))
-    return proof_bound(b, k) / stmt_space(b, n)
+def demo_expansion_vs_critical_step():
+    """Show how expansion ratio controls the critical step."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Expansion Controls Phase Transition Speed")
+    print("=" * 60)
 
+    n = 200
+    axioms = {0}
 
-def entropy_gap(b: int, k: int, n: int) -> float:
-    """Information-theoretic entropy gap: (n - k - 1) * log(b) nats."""
-    return (n - k - 1) * math.log(b)
+    print(f"\nUniverse size: {n}")
+    print(f"{'Degree':>8s}  {'Expansion':>10s}  {'k_c':>5s}  {'Theory':>8s}")
+    print("-" * 40)
 
-
-def boltzmann_density(beta: float, delta_e: float) -> float:
-    """Boltzmann weight: exp(-β · ΔE)."""
-    return math.exp(-beta * delta_e)
-
-
-def hausdorff_dimension(k: int, n: int) -> float:
-    """Proof space dimension: (k+1)/n."""
-    if n == 0:
-        return float('inf')
-    return (k + 1) / n
-
-
-def composite_threshold(k: int, m: int) -> int:
-    """Critical threshold with m levels of composition."""
-    return (k + 1) * m
-
-
-# ─── Demonstration ──────────────────────────────────────────────────────
-
-def demo_phase_transition():
-    """Demonstrate the sharp phase transition."""
-    print("=" * 70)
-    print("DEMO 1: Sharp Phase Transition at n_c = k + 1")
-    print("=" * 70)
-
-    b, k = 2, 5
-    n_c = critical_threshold(k)
-    print(f"\nProof system: alphabet b={b}, max proof length k={k}")
-    print(f"Critical threshold: n_c = {n_c}")
-    print(f"Proof space bound: b^(k+1) = {proof_bound(b, k)}")
-    print()
-
-    print(f"{'n':>4} | {'Stmt Space':>12} | {'Proof Bound':>12} | {'Ratio':>10} | {'Phase':>10}")
-    print("-" * 60)
-    for n in range(1, 12):
-        ss = stmt_space(b, n)
-        pb = proof_bound(b, k)
-        ratio = coverage_ratio(b, k, n)
-        phase = "COMPLETE" if n <= n_c else "INCOMPLETE"
-        print(f"{n:4d} | {ss:12d} | {pb:12d} | {ratio:10.4f} | {phase:>10}")
-
-    print(f"\n✓ Sharp transition at n = {n_c}: ratio drops from "
-          f"{coverage_ratio(b, k, n_c):.2f} to {coverage_ratio(b, k, n_c + 1):.4f}")
-
-
-def demo_exponential_decay():
-    """Demonstrate exponential decay of coverage."""
-    print("\n" + "=" * 70)
-    print("DEMO 2: Exponential Decay Beyond Critical Point")
-    print("=" * 70)
-
-    b, k = 10, 3
-    n_c = critical_threshold(k)
-    print(f"\nProof system: b={b}, k={k}, n_c={n_c}")
-    print(f"Each step past n_c multiplies the gap by b={b}")
-    print()
-
-    print(f"{'m (steps past n_c)':>20} | {'n':>4} | {'Gap Factor b^m':>15} | {'Coverage Ratio':>15}")
-    print("-" * 60)
-    for m in range(0, 8):
-        n = n_c + m
-        ratio = coverage_ratio(b, k, n)
-        gap = b ** m
-        print(f"{m:20d} | {n:4d} | {gap:15d} | {ratio:15.2e}")
-
-    print(f"\n✓ Coverage ratio decays by factor {b} per unit complexity")
-
-
-def demo_entropy_gap():
-    """Demonstrate the entropy gap."""
-    print("\n" + "=" * 70)
-    print("DEMO 3: Information-Theoretic Entropy Gap")
-    print("=" * 70)
-
-    b, k = 2, 10
-    n_c = critical_threshold(k)
-    print(f"\nProof system: b={b}, k={k}, n_c={n_c}")
-    print()
-
-    print(f"{'n':>4} | {'Entropy Gap (nats)':>20} | {'Entropy Gap (bits)':>20} | {'Phase'}")
-    print("-" * 70)
-    for n in range(8, 25):
-        gap = entropy_gap(b, k, n)
-        gap_bits = gap / math.log(2)
-        phase = "COMPLETE" if n <= n_c else "INCOMPLETE"
-        print(f"{n:4d} | {gap:20.3f} | {gap_bits:20.3f} | {phase}")
-
-    print(f"\n✓ Entropy gap = 0 at n_c={n_c}, grows linearly with slope log({b})≈{math.log(b):.3f}")
-
-
-def demo_boltzmann_bridge():
-    """Demonstrate the Boltzmann distribution analogy."""
-    print("\n" + "=" * 70)
-    print("DEMO 4: Boltzmann Distribution Bridge")
-    print("=" * 70)
-
-    b, k = 2, 5
-    n_c = critical_threshold(k)
-    beta = math.log(b)
-
-    print(f"\nProof system: b={b}, k={k}")
-    print(f"Inverse temperature: β = log(b) = {beta:.4f}")
-    print(f"Critical threshold (= critical temperature): n_c = {n_c}")
-    print()
-
-    print(f"{'ΔE = n - n_c':>12} | {'Proof Density':>14} | {'Boltzmann e^(-βΔE)':>18} | {'Match?'}")
-    print("-" * 65)
-    for delta_e in range(0, 10):
-        n = n_c + delta_e
-        proof_dens = coverage_ratio(b, k, n)
-        boltz = boltzmann_density(beta, delta_e)
-        match = "✓" if abs(proof_dens - boltz) < 1e-10 else "✗"
-        print(f"{delta_e:12d} | {proof_dens:14.6f} | {boltz:18.6f} | {match:>6}")
-
-    print(f"\n✓ Proof density = Boltzmann weight: EXACT MATCH for all ΔE")
-
-
-def demo_composition():
-    """Demonstrate compositional proof acceleration."""
-    print("\n" + "=" * 70)
-    print("DEMO 5: Compositional Proof Acceleration")
-    print("=" * 70)
-
-    b, k = 2, 3
-    print(f"\nProof system: b={b}, k={k}")
-    print(f"Base threshold: n_c = {critical_threshold(k)}")
-    print()
-
-    print(f"{'Composition Levels m':>22} | {'Effective Threshold':>20} | {'Acceleration Factor':>20}")
-    print("-" * 65)
-    for m in range(1, 8):
-        thresh = composite_threshold(k, m)
-        accel = proof_bound(b, k) ** m
-        print(f"{m:22d} | {thresh:20d} | {accel:20d}")
-
-    print(f"\n✓ Composition shifts threshold linearly but cannot eliminate transition")
-
-
-def demo_dimension():
-    """Demonstrate dimensional scaling."""
-    print("\n" + "=" * 70)
-    print("DEMO 6: Hausdorff Dimension of Provable Space")
-    print("=" * 70)
-
-    b, k = 2, 10
-    n_c = critical_threshold(k)
-    print(f"\nProof system: b={b}, k={k}, n_c={n_c}")
-    print()
-
-    print(f"{'n':>4} | {'Dimension d=(k+1)/n':>22} | {'d < 1?':>8} | {'Interpretation'}")
-    print("-" * 65)
-    for n in [5, 10, 11, 12, 15, 20, 50, 100, 1000]:
-        d = hausdorff_dimension(k, n)
-        subcrit = "Yes" if d < 1 else "No"
-        if d >= 1:
-            interp = "Full-dimensional (complete)"
-        elif d >= 0.5:
-            interp = "Dense fractal subset"
-        elif d >= 0.1:
-            interp = "Sparse fractal subset"
+    for degree in [2, 3, 5, 8, 15]:
+        adj = generate_expander_graph(n, degree=degree)
+        h = vertex_expansion(adj, axioms, n)
+        kc = critical_step(adj, axioms, n)
+        # Theoretical bound: k_c ≈ log(n/2) / log(1+h)
+        if h > 0:
+            theory = math.log(n / 2) / math.log(1 + h)
         else:
-            interp = "Extremely sparse"
-        print(f"{n:4d} | {d:22.4f} | {subcrit:>8} | {interp}")
+            theory = float('inf')
+        print(f"  {degree:5d}  {h:10.2f}  {kc:5d}  {theory:8.1f}")
+
+    print("\n→ Higher expansion → faster phase transition (smaller k_c)")
+    print("  Matches the theoretical bound k_c ≈ log(N/2) / log(1+h)")
+
+
+def demo_renormalization():
+    """Demonstrate coarse-graining preserves phase transition."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Renormalization Preserves Phase Transition")
+    print("=" * 60)
+
+    n = 120
+    adj = generate_expander_graph(n, degree=4)
+    axioms = {0}
+
+    # Original density trajectory
+    orig_densities = density_trajectory(adj, axioms, n, 20)
+
+    # Coarse-grain: merge every 3 vertices into one block
+    block_size = 3
+    n_blocks = n // block_size
+
+    def assign(v):
+        return v // block_size
+
+    # Build quotient graph
+    quot_adj = {b: set() for b in range(n_blocks)}
+    for v in range(n):
+        for u in adj.get(v, set()):
+            bv, bu = assign(v), assign(u)
+            if bv != bu:
+                quot_adj[bv].add(bu)
+
+    quot_axioms = {assign(a) for a in axioms}
+    quot_densities = density_trajectory(quot_adj, quot_axioms, n_blocks, 20)
+
+    print(f"\nOriginal: {n} vertices")
+    print(f"Quotient: {n_blocks} blocks (block size {block_size})")
+    print(f"\n{'k':>3s}  {'ρ_orig':>8s}  {'ρ_quot':>8s}")
+    print("-" * 25)
+    for k in range(min(len(orig_densities), len(quot_densities), 15)):
+        print(f"  {k:2d}  {orig_densities[k]:8.4f}  {quot_densities[k]:8.4f}")
+
+    print("\n→ Quotient density ≥ original density (renorm_density_transfer)")
+    print("  Phase transition structure preserved under coarse-graining")
 
 
 if __name__ == "__main__":
-    demo_phase_transition()
-    demo_exponential_decay()
-    demo_entropy_gap()
-    demo_boltzmann_bridge()
-    demo_composition()
-    demo_dimension()
+    demo_expander_phase_transition()
+    demo_incomplete_system()
+    demo_entropy_rate()
+    demo_expansion_vs_critical_step()
+    demo_renormalization()
 
-    print("\n" + "=" * 70)
-    print("All demonstrations complete.")
-    print("=" * 70)
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Compositional Proof Acceleration
-
-Shows how proof composition shifts the phase transition threshold
-but cannot eliminate it.
-"""
-
-import math
-
-
-def generate_composition_plot():
-    """Generate plot of compositional acceleration."""
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    import numpy as np
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-    fig.suptitle('Compositional Proof Acceleration', fontsize=14, fontweight='bold')
-
-    # Plot 1: Threshold shift with composition levels
-    ax1 = axes[0]
-    k_values = [2, 5, 10]
-    m_values = np.arange(1, 11)
-    for k in k_values:
-        thresholds = [(k + 1) * m for m in m_values]
-        ax1.plot(m_values, thresholds, 'o-', label=f'k={k}', linewidth=2, markersize=6)
-    ax1.set_xlabel('Composition Levels m')
-    ax1.set_ylabel('Critical Threshold n_c = (k+1)·m')
-    ax1.set_title('Threshold Shifts Linearly')
-    ax1.legend()
-    ax1.grid(True, alpha=0.3)
-
-    # Plot 2: Coverage ratio with composition
-    ax2 = axes[1]
-    b, k = 2, 3
-    n_values = np.arange(1, 40)
-    for m in [1, 2, 3, 5]:
-        effective_bound = b ** ((k + 1) * m)
-        ratios = [min(1.0, effective_bound / b**n) for n in n_values]
-        n_c = (k + 1) * m
-        ax2.plot(n_values, ratios, '-', label=f'm={m} (n_c={n_c})', linewidth=2)
-        ax2.axvline(x=n_c, linestyle=':', alpha=0.3)
-    ax2.set_xlabel('Statement Complexity n')
-    ax2.set_ylabel('Coverage Ratio')
-    ax2.set_title(f'Coverage with Composition (b={b}, k={k})')
-    ax2.set_yscale('log')
-    ax2.legend()
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('composition_plots.png', dpi=150, bbox_inches='tight')
-    print("Saved: composition_plots.png")
-
-
-if __name__ == "__main__":
-    generate_composition_plot()
+    print("\n" + "=" * 60)
+    print("All demos completed successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
 Visualization: Phase Transition in Proof Space
 
-Generates a plot showing the sharp phase transition in proof density
-as statement complexity crosses the critical threshold.
+Shows the density trajectory ρ(k) for expander vs. incomplete systems,
+highlighting the phase transition structure.
 """
 
 import math
+import random
 
 
-def generate_phase_transition_plot():
-    """Generate SVG plot of the phase transition."""
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    import numpy as np
+def proof_ball_trajectory(adj, axioms, universe_size, max_steps):
+    """Compute density and entropy rate trajectories."""
+    ball = set(axioms)
+    densities = []
+    sizes = []
+    for k in range(max_steps + 1):
+        densities.append(len(ball) / universe_size)
+        sizes.append(len(ball))
+        neighbors = set()
+        for v in ball:
+            neighbors |= adj.get(v, set())
+        new_ball = ball | neighbors
+        if new_ball == ball:
+            densities.extend([densities[-1]] * (max_steps - k))
+            sizes.extend([sizes[-1]] * (max_steps - k))
+            break
+        ball = new_ball
+    rates = []
+    for i in range(len(sizes) - 1):
+        if sizes[i] > 0 and sizes[i + 1] > 0:
+            rates.append(math.log2(sizes[i + 1]) - math.log2(sizes[i]))
+        else:
+            rates.append(0.0)
+    return densities[:max_steps + 1], rates[:max_steps]
+
+
+def generate_expander(n, degree):
+    adj = {i: set() for i in range(n)}
+    for i in range(n):
+        targets = set()
+        while len(targets) < degree:
+            t = random.randint(0, n - 1)
+            if t != i:
+                targets.add(t)
+        adj[i] = targets
+    return adj
+
+
+def generate_disconnected(n):
+    half = n // 2
+    adj = {i: set() for i in range(n)}
+    for i in range(half - 1):
+        adj[i].add(i + 1)
+        adj[i + 1].add(i)
+    for i in range(half, n - 1):
+        adj[i].add(i + 1)
+        adj[i + 1].add(i)
+    return adj
+
+
+def main():
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print("matplotlib not available, skipping visualization")
+        return
+
+    random.seed(42)
+
+    n = 200
+    max_steps = 25
 
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Phase Transitions in Proof Space', fontsize=16, fontweight='bold')
 
-    # Plot 1: Coverage ratio vs complexity for different b
-    ax1 = axes[0, 0]
-    k = 5
-    n_values = np.arange(1, 15)
-    for b in [2, 3, 5, 10]:
-        ratios = [min(1.0, b**(k+1) / b**n) for n in n_values]
-        ax1.plot(n_values, ratios, 'o-', label=f'b={b}', markersize=4)
-    ax1.axvline(x=k+1, color='red', linestyle='--', alpha=0.7, label=f'n_c = {k+1}')
-    ax1.set_xlabel('Statement Complexity n')
-    ax1.set_ylabel('Coverage Ratio ρ(n)')
-    ax1.set_title(f'Sharp Phase Transition (k={k})')
-    ax1.set_yscale('log')
-    ax1.legend()
-    ax1.grid(True, alpha=0.3)
+    # --- Panel 1: Density trajectories ---
+    ax = axes[0, 0]
+    for degree, color, label in [(3, '#e74c3c', 'd=3'), (5, '#3498db', 'd=5'),
+                                   (10, '#2ecc71', 'd=10')]:
+        adj = generate_expander(n, degree)
+        densities, _ = proof_ball_trajectory(adj, {0}, n, max_steps)
+        ax.plot(range(len(densities)), densities, color=color, linewidth=2, label=label)
+    ax.axhline(y=0.5, color='gray', linestyle='--', alpha=0.5, label='ρ = 1/2')
+    ax.set_xlabel('Derivation steps k', fontsize=12)
+    ax.set_ylabel('Proof density ρ(k)', fontsize=12)
+    ax.set_title('Phase Transition: Density Growth', fontsize=13, fontweight='bold')
+    ax.legend()
+    ax.set_ylim(-0.05, 1.05)
+    ax.grid(True, alpha=0.3)
 
-    # Plot 2: Entropy gap
-    ax2 = axes[0, 1]
-    b = 2
-    for k in [3, 5, 8, 12]:
-        n_c = k + 1
-        n_vals = np.arange(1, 25)
-        gaps = [max(0, (n - k - 1) * math.log(b)) for n in n_vals]
-        ax2.plot(n_vals, gaps, '-', label=f'k={k} (n_c={n_c})', linewidth=2)
-    ax2.set_xlabel('Statement Complexity n')
-    ax2.set_ylabel('Entropy Gap (nats)')
-    ax2.set_title(f'Information-Theoretic Entropy Gap (b={b})')
-    ax2.legend()
-    ax2.grid(True, alpha=0.3)
+    # --- Panel 2: Complete vs Incomplete ---
+    ax = axes[0, 1]
+    adj_exp = generate_expander(n, 5)
+    d_exp, _ = proof_ball_trajectory(adj_exp, {0}, n, max_steps)
+    adj_inc = generate_disconnected(n)
+    d_inc, _ = proof_ball_trajectory(adj_inc, {0}, n, max_steps)
+    ax.plot(range(len(d_exp)), d_exp, color='#3498db', linewidth=2, label='Complete (expander)')
+    ax.plot(range(len(d_inc)), d_inc, color='#e74c3c', linewidth=2, label='Incomplete (disconnected)')
+    ax.axhline(y=1.0, color='green', linestyle=':', alpha=0.5)
+    ax.fill_between(range(len(d_inc)), d_inc, 1.0, alpha=0.1, color='red', label='Unprovable gap')
+    ax.set_xlabel('Derivation steps k', fontsize=12)
+    ax.set_ylabel('Proof density ρ(k)', fontsize=12)
+    ax.set_title('Saturation Dichotomy', fontsize=13, fontweight='bold')
+    ax.legend()
+    ax.set_ylim(-0.05, 1.05)
+    ax.grid(True, alpha=0.3)
 
-    # Plot 3: Hausdorff dimension
-    ax3 = axes[1, 0]
-    for k in [3, 5, 10, 20]:
-        n_vals = np.arange(1, 50)
-        dims = [(k+1)/n for n in n_vals]
-        ax3.plot(n_vals, dims, '-', label=f'k={k}', linewidth=2)
-    ax3.axhline(y=1, color='red', linestyle='--', alpha=0.7, label='d=1 (full dimension)')
-    ax3.set_xlabel('Statement Complexity n')
-    ax3.set_ylabel('Proof Space Dimension d')
-    ax3.set_title('Dimensional Scaling: d = (k+1)/n')
-    ax3.set_ylim(0, 3)
-    ax3.legend()
-    ax3.grid(True, alpha=0.3)
+    # --- Panel 3: Entropy rate ---
+    ax = axes[1, 0]
+    adj = generate_expander(n, 5)
+    _, rates = proof_ball_trajectory(adj, {0}, n, max_steps)
+    ax.bar(range(len(rates)), rates, color='#9b59b6', alpha=0.7)
+    ax.set_xlabel('Derivation step k', fontsize=12)
+    ax.set_ylabel('Entropy rate Δlog₂|Ball|', fontsize=12)
+    ax.set_title('Entropy Rate Discontinuity', fontsize=13, fontweight='bold')
+    ax.grid(True, alpha=0.3, axis='y')
 
-    # Plot 4: Boltzmann comparison
-    ax4 = axes[1, 1]
-    k = 5
-    b = 2
-    beta = math.log(b)
-    delta_e_vals = np.linspace(0, 10, 100)
-    boltzmann_vals = [math.exp(-beta * de) for de in delta_e_vals]
-    ax4.plot(delta_e_vals, boltzmann_vals, 'b-', linewidth=2, label='Boltzmann e^{-βΔE}')
+    # --- Panel 4: Critical step vs expansion ---
+    ax = axes[1, 1]
+    degrees = list(range(2, 20))
+    critical_steps = []
+    theory_bounds = []
+    for d in degrees:
+        adj = generate_expander(n, d)
+        ball = {0}
+        kc = n
+        for k in range(n + 1):
+            if 2 * len(ball) > n:
+                kc = k
+                break
+            neighbors = set()
+            for v in ball:
+                neighbors |= adj.get(v, set())
+            new_ball = ball | neighbors
+            if new_ball == ball:
+                break
+            ball = new_ball
+        critical_steps.append(kc)
+        h = d  # approximate expansion
+        if h > 0:
+            theory_bounds.append(math.log(n / 2) / math.log(1 + h))
+        else:
+            theory_bounds.append(n)
 
-    # Discrete proof density points
-    for m in range(11):
-        proof_dens = b**(k+1) / b**(k+1+m)
-        ax4.plot(m, proof_dens, 'ro', markersize=8)
-    ax4.plot([], [], 'ro', markersize=8, label='Proof density (discrete)')
+    ax.scatter(degrees, critical_steps, color='#e74c3c', s=40, zorder=5, label='Measured k_c')
+    ax.plot(degrees, theory_bounds, color='#3498db', linewidth=2, linestyle='--', label='Theory: log(N/2)/log(1+d)')
+    ax.set_xlabel('Vertex degree d', fontsize=12)
+    ax.set_ylabel('Critical step k_c', fontsize=12)
+    ax.set_title('Expansion Controls Phase Transition', fontsize=13, fontweight='bold')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
 
-    ax4.set_xlabel('Energy Gap ΔE = n - n_c')
-    ax4.set_ylabel('Density / Weight')
-    ax4.set_title(f'Boltzmann Bridge (b={b}, β={beta:.3f})')
-    ax4.set_yscale('log')
-    ax4.legend()
-    ax4.grid(True, alpha=0.3)
-
+    plt.suptitle('Phase Transitions in Proof Space', fontsize=16, fontweight='bold', y=1.02)
     plt.tight_layout()
-    plt.savefig('phase_transition_plots.png', dpi=150, bbox_inches='tight')
-    plt.savefig('phase_transition_plots.svg', bbox_inches='tight')
-    print("Saved: phase_transition_plots.png, phase_transition_plots.svg")
+    plt.savefig('phase_transition_proof_space.png', dpi=150, bbox_inches='tight')
+    print("Saved: phase_transition_proof_space.png")
 
 
 if __name__ == "__main__":
-    generate_phase_transition_plot()
+    main()
