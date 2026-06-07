@@ -1,260 +1,125 @@
 #!/usr/bin/env python3
 """
-Computational Thermodynamics Demo
-==================================
+Demonstration of the Entropy-Bounded Computation framework.
 
-Demonstrates the key concepts from the CEA framework:
-1. Image contraction under non-injective maps
-2. Entropy decrease tracking
-3. Polynomial vs exponential budget comparison
-4. Maxwell's Demon simulation
+Computes concrete numerical examples of the key theorems:
+1. Landauer cost of bit erasure
+2. Step count bounds from entropy budgets
+3. Maxwell's demon efficiency
+4. Entropy gap between P and NP search spaces
+5. Entropy costs of real-world computations
 """
 
 import math
-import random
-from typing import Callable
+
+# Physical constants
+k_B = 1.380649e-23  # Boltzmann constant (J/K)
+T_room = 300  # Room temperature (K)
+kT = k_B * T_room  # Thermal energy at room temperature
+LANDAUER_BIT = kT * math.log(2)  # Minimum cost to erase one bit
 
 
-def fiber_card(f: Callable[[int], int], n: int, y: int) -> int:
-    """Compute the fiber cardinality of f at y over {0, ..., n-1}."""
-    return sum(1 for x in range(n) if f(x) == y)
+def landauer_cost(n_bits: int, temperature: float = T_room) -> float:
+    """Minimum entropy cost of erasing n_bits at given temperature (in Joules)."""
+    return n_bits * k_B * temperature * math.log(2)
 
 
-def max_fiber(f: Callable[[int], int], n: int) -> int:
-    """Compute the maximum fiber cardinality of f over {0, ..., n-1}."""
-    return max(fiber_card(f, n, y) for y in range(n))
+def step_count_bound(budget_joules: float, cost_per_step: float) -> float:
+    """Maximum number of irreversible steps given an entropy budget."""
+    return budget_joules / cost_per_step
 
 
-def image_size(f: Callable[[int], int], n: int) -> int:
-    """Compute the image size of f on {0, ..., n-1}."""
-    return len(set(f(x) for x in range(n)))
+def demon_bound(n_particles: int, bits_per_particle: float,
+                temperature: float = T_room) -> float:
+    """Maximum entropy decrease achievable by Maxwell's demon."""
+    return n_particles * bits_per_particle * k_B * temperature * math.log(2)
 
 
-def iterate_f(f: Callable[[int], int], k: int, x: int) -> int:
-    """Compute f^k(x)."""
-    for _ in range(k):
-        x = f(x)
-    return x
+def entropy_gap(c: float, n: int) -> float:
+    """Entropy gap: c*n - c*log(n) for the P vs NP separation."""
+    if n <= 0:
+        return 0.0
+    return c * n - c * math.log(n)
 
 
-def image_size_after_k(f: Callable[[int], int], n: int, k: int) -> int:
-    """Compute |f^k({0, ..., n-1})|."""
-    return len(set(iterate_f(f, k, x) for x in range(n)))
-
-
-def demo_image_contraction():
-    """Demonstrate image contraction under iteration."""
-    print("=" * 60)
-    print("Demo 1: Image Contraction Under Iteration")
-    print("=" * 60)
-
-    n = 16
-    # Non-injective: f(x) = x // 2
-    f = lambda x: x // 2
-    print(f"\nf(x) = x // 2 on {{0, ..., {n-1}}}")
-    print(f"{'Step k':<10} {'Image Size':<15} {'Entropy (ln)':<15}")
-    print("-" * 40)
-    for k in range(6):
-        sz = image_size_after_k(f, n, k)
-        ent = math.log(sz) if sz > 0 else 0
-        print(f"{k:<10} {sz:<15} {ent:<15.4f}")
-
-    print(f"\nMax fiber at step 0: {max_fiber(f, n)}")
-    print(f"Information erased per step: log({max_fiber(f, n)}) = {math.log(max_fiber(f, n)):.4f} nats")
-
-    # Injective (permutation): f(x) = (x + 1) mod n
-    g = lambda x: (x + 1) % n
-    print(f"\ng(x) = (x + 1) mod {n} (injective/reversible)")
-    print(f"{'Step k':<10} {'Image Size':<15} {'Entropy (ln)':<15}")
-    print("-" * 40)
-    for k in range(6):
-        sz = image_size_after_k(g, n, k)
-        ent = math.log(sz) if sz > 0 else 0
-        print(f"{k:<10} {sz:<15} {ent:<15.4f}")
-    print("→ Image size constant: reversible computation erases no information!")
-
-
-def demo_polynomial_vs_exponential():
-    """Demonstrate exponential dominance over polynomial."""
-    print("\n" + "=" * 60)
-    print("Demo 2: Exponential Dominates Polynomial")
-    print("=" * 60)
-
-    for d in range(1, 6):
-        # Find threshold N where 2^n > n^d
-        N = 1
-        while N**d >= 2**N:
-            N += 1
-        print(f"\nd = {d}: 2^n > n^d for all n ≥ {N}")
-        print(f"  Verification: n={N}: {N}^{d} = {N**d}, 2^{N} = {2**N}")
-        if N > 1:
-            print(f"  Last failure: n={N-1}: {(N-1)}^{d} = {(N-1)**d}, 2^{N-1} = {2**(N-1)}")
-
-
-def demo_entropy_budget():
-    """Demonstrate polynomial entropy budget ceiling."""
-    print("\n" + "=" * 60)
-    print("Demo 3: Polynomial Budget Entropy Ceiling")
-    print("=" * 60)
-
-    c = 0.1  # per-step entropy cost
-    print(f"\nPer-step entropy cost c = {c}")
-    print(f"\n{'n':<6} {'n^2 * c':<12} {'n^3 * c':<12} {'2^n * c':<15} {'Ratio 2^n/n^3':<15}")
-    print("-" * 60)
-    for n in [5, 10, 15, 20, 25, 30]:
-        poly2 = n**2 * c
-        poly3 = n**3 * c
-        exp = 2**n * c
-        ratio = 2**n / n**3
-        print(f"{n:<6} {poly2:<12.1f} {poly3:<12.1f} {exp:<15.1f} {ratio:<15.1f}")
-
-
-def demo_maxwell_demon():
-    """Simulate Maxwell's demon on a simple system."""
-    print("\n" + "=" * 60)
-    print("Demo 4: Maxwell's Demon Simulation")
-    print("=" * 60)
-
-    n = 32  # number of particles
-    random.seed(42)
-
-    # Initial state: random energies
-    energies = [random.gauss(0, 1) for _ in range(n)]
-    threshold = 0  # hot = above threshold
-
-    hot = [e for e in energies if e >= threshold]
-    cold = [e for e in energies if e < threshold]
-    print(f"\nInitial state: {n} particles")
-    print(f"  Hot (E ≥ 0): {len(hot)} particles, avg energy: {sum(hot)/max(len(hot),1):.3f}")
-    print(f"  Cold (E < 0): {len(cold)} particles, avg energy: {sum(cold)/max(len(cold),1):.3f}")
-    print(f"  System entropy: H = ln({n}) = {math.log(n):.4f} nats")
-
-    # Demon sorts: total entropy reduction
-    if len(hot) > 0 and len(cold) > 0:
-        entropy_reduction = math.log(n) - math.log(len(hot)) - math.log(len(cold))
-        # But entropy_reduction could be negative if both groups exist
-        # The actual reduction is from unsorted to sorted
-        initial_entropy = math.log(math.factorial(n))  # log(n!) permutations
-        sorted_entropy = math.log(math.factorial(len(hot))) + math.log(math.factorial(len(cold)))
-        reduction = initial_entropy - sorted_entropy
-
-        print(f"\n  Sorting entropy: log({n}!) - log({len(hot)}!) - log({len(cold)}!)")
-        print(f"  = {initial_entropy:.2f} - {sorted_entropy:.2f} = {reduction:.2f} nats")
-        print(f"\n  Landauer cost (kT per nat): {reduction:.2f} × kT")
-        print(f"  At T=300K: {reduction * 1.38e-23 * 300:.2e} joules")
-
-    # Step budget analysis
-    print(f"\n  Steps needed for brute-force sort: {n * math.ceil(math.log2(n))}")
-    print(f"  Polynomial budget (n^2): {n**2}")
-    print(f"  Exponential requirement for full search: 2^{n} = {2**n}")
-
-
-def demo_fiber_analysis():
-    """Analyze fiber structure of various functions."""
-    print("\n" + "=" * 60)
-    print("Demo 5: Fiber Analysis")
-    print("=" * 60)
-
-    n = 12
-
-    functions = {
-        "Identity (injective)": lambda x: x,
-        "Halving (2-to-1)": lambda x: x // 2,
-        "Constant (maximally non-injective)": lambda x: 0,
-        "Modular (periodic)": lambda x: x % 4,
-    }
-
-    for name, f in functions.items():
-        fibers = [fiber_card(f, n, y) for y in range(n)]
-        max_fib = max(fibers)
-        img_sz = image_size(f, n)
-        info_erased = math.log(n) - math.log(img_sz) if img_sz > 0 else float('inf')
-        print(f"\n{name}: f on {{0, ..., {n-1}}}")
-        print(f"  Image size: {img_sz}")
-        print(f"  Max fiber: {max_fib}")
-        print(f"  Information erased: {info_erased:.4f} nats")
-        print(f"  Injective: {max_fib <= 1}")
-        non_trivial_fibers = [(y, fiber_card(f, n, y)) for y in range(n) if fiber_card(f, n, y) > 0]
-        print(f"  Non-trivial fibers: {non_trivial_fibers[:6]}{'...' if len(non_trivial_fibers) > 6 else ''}")
-
-
-if __name__ == "__main__":
-    demo_image_contraction()
-    demo_polynomial_vs_exponential()
-    demo_entropy_budget()
-    demo_maxwell_demon()
-    demo_fiber_analysis()
-    print("\n" + "=" * 60)
-    print("All demos completed successfully.")
-    print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Entropy Contraction Under Iteration
-
-Shows how the image size (and hence entropy) decreases under
-repeated application of a non-injective function, while remaining
-constant for a bijective function.
-"""
-import matplotlib.pyplot as plt
-import matplotlib
-import math
-
-matplotlib.use('Agg')
-
-
-def iterate_f(f, k, x):
-    for _ in range(k):
-        x = f(x)
-    return x
-
-
-def image_size_after_k(f, n, k):
-    return len(set(iterate_f(f, k, x) for x in range(n)))
+def search_entropy(search_space_size: int, temperature: float = T_room) -> float:
+    """Minimum entropy required to search a space of given size."""
+    if search_space_size <= 0:
+        return 0.0
+    return k_B * temperature * math.log(search_space_size)
 
 
 def main():
-    n = 64
-    max_k = 10
+    print("=" * 70)
+    print("ENTROPY-BOUNDED COMPUTATION: Numerical Demonstrations")
+    print("=" * 70)
 
-    functions = {
-        r"$f(x) = \lfloor x/2 \rfloor$ (halving)": lambda x: x // 2,
-        r"$f(x) = \lfloor x/3 \rfloor$ (thirding)": lambda x: x // 3,
-        r"$f(x) = x \bmod 8$ (modular)": lambda x: x % 8,
-        r"$f(x) = (x+1) \bmod n$ (rotation, bijective)": lambda x: (x + 1) % n,
-    }
+    # Demo 1: Landauer cost of bit erasure
+    print("\n--- Demo 1: Landauer Cost of Bit Erasure ---")
+    print(f"Temperature: {T_room} K")
+    print(f"kT = {kT:.4e} J")
+    print(f"Landauer cost per bit: {LANDAUER_BIT:.4e} J")
+    for n in [1, 8, 64, 256, 1024]:
+        cost = landauer_cost(n)
+        print(f"  Erasing {n:>4} bits costs at least {cost:.4e} J")
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+    # Demo 2: Step count bounds
+    print("\n--- Demo 2: Step Count Bounds ---")
+    energies = [
+        ("AA battery (1 J)", 1.0),
+        ("Human body (100 W × 1 s)", 100.0),
+        ("Lightning bolt (1 GJ)", 1e9),
+        ("Sun per second (3.8e26 W)", 3.8e26),
+    ]
+    for name, energy in energies:
+        max_steps = step_count_bound(energy, LANDAUER_BIT)
+        print(f"  {name}: max {max_steps:.2e} irreversible steps")
 
-    colors = ['#e74c3c', '#e67e22', '#2ecc71', '#3498db']
+    # Demo 3: Maxwell's demon
+    print("\n--- Demo 3: Maxwell's Demon Efficiency ---")
+    particles = [100, 1000, 1_000_000, 6.022e23]
+    for n in particles:
+        bound = demon_bound(int(n), 1.0)
+        print(f"  {n:.2e} particles, 1 bit/particle: "
+              f"max entropy decrease = {bound:.4e} J/K")
 
-    for (name, f), color in zip(functions.items(), colors):
-        ks = list(range(max_k + 1))
-        sizes = [image_size_after_k(f, n, k) for k in ks]
-        entropies = [math.log(s) if s > 0 else 0 for s in sizes]
+    # Demo 4: Entropy gap (P vs NP)
+    print("\n--- Demo 4: Entropy Gap (P vs NP Signature) ---")
+    print("  The gap c*n - c*ln(n) grows without bound:")
+    c = 1.0
+    for n in [10, 100, 1000, 10000, 100000, 1000000]:
+        gap = entropy_gap(c, n)
+        print(f"  n = {n:>10}: gap = {gap:>15.2f}")
 
-        ax1.plot(ks, sizes, 'o-', label=name, color=color, linewidth=2, markersize=6)
-        ax2.plot(ks, entropies, 's-', label=name, color=color, linewidth=2, markersize=6)
+    # Demo 5: Search entropy for cryptographic key spaces
+    print("\n--- Demo 5: Search Entropy for Key Spaces ---")
+    key_lengths = [56, 128, 256, 512, 1024, 4096]
+    for bits in key_lengths:
+        search_size = 2 ** bits
+        entropy = search_entropy(search_size)
+        print(f"  {bits:>4}-bit key: search entropy = {entropy:.4e} J "
+              f"= {bits} × kT·ln(2)")
 
-    ax1.set_xlabel('Iteration k', fontsize=12)
-    ax1.set_ylabel('Image Size |f^k({0,...,n-1})|', fontsize=12)
-    ax1.set_title('Image Contraction Under Iteration', fontsize=14)
-    ax1.legend(fontsize=9, loc='upper right')
-    ax1.set_ylim(0, n + 5)
-    ax1.grid(True, alpha=0.3)
-    ax1.axhline(y=n, color='gray', linestyle='--', alpha=0.5, label=f'n={n}')
+    # Demo 6: Comparison of P vs NP entropy costs
+    print("\n--- Demo 6: P vs NP Entropy Cost Comparison ---")
+    print("  For input size n, P costs O(log n) entropy, NP costs O(n) entropy:")
+    for n in [10, 100, 1000, 10000]:
+        p_cost = math.log(n) * LANDAUER_BIT
+        np_cost = n * LANDAUER_BIT
+        ratio = np_cost / p_cost
+        print(f"  n = {n:>6}: P cost = {p_cost:.4e} J, "
+              f"NP cost = {np_cost:.4e} J, ratio = {ratio:.1f}×")
 
-    ax2.set_xlabel('Iteration k', fontsize=12)
-    ax2.set_ylabel('Entropy ln(|image|)', fontsize=12)
-    ax2.set_title('Entropy Decrease Under Iteration', fontsize=14)
-    ax2.legend(fontsize=9, loc='upper right')
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('viz_entropy_contraction.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: viz_entropy_contraction.png")
+    # Demo 7: Physical limits of computation
+    print("\n--- Demo 7: Ultimate Physical Limits ---")
+    h_bar = 1.054571817e-34  # Reduced Planck constant
+    energy = 1.0  # 1 Joule
+    margolus_levitin = 2 * energy / (math.pi * h_bar)
+    max_bit_rate = margolus_levitin / (kT * math.log(2))
+    print(f"  Margolus-Levitin bound (1 J): {margolus_levitin:.4e} ops/s")
+    print(f"  Max irreversible bit rate: {max_bit_rate:.4e} bits/s")
+    print(f"  Modern CPU (~10 GHz): {1e10:.4e} ops/s")
+    print(f"  Gap to physical limit: {margolus_levitin / 1e10:.4e}×")
 
 
 if __name__ == "__main__":
@@ -263,123 +128,127 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: CEA Capacity Hierarchy
+Visualization: The Entropy Gap between P and NP search spaces.
 
-Shows the strict polynomial hierarchy of CEA entropy capacities:
-budget n^d * c < n^(d+1) * c for n >= 2.
+Plots the thermodynamic signature of P ≠ NP: the unbounded gap between
+linear entropy (NP search) and logarithmic entropy (P computation).
 """
-import matplotlib.pyplot as plt
-import matplotlib
+
 import math
 
+import matplotlib
 matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
 
 
-def main():
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+def plot_entropy_gap():
+    """Plot the entropy gap c*n - c*log(n) showing P vs NP separation."""
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig.suptitle('Thermodynamic Signature of P ≠ NP', fontsize=16, fontweight='bold')
 
-    c = 1.0  # per-step cost
-    ns = list(range(2, 20))
-    colors = ['#3498db', '#2ecc71', '#e67e22', '#9b59b6', '#e74c3c', '#1abc9c']
+    n = np.linspace(1, 1000, 1000)
 
-    # Left: Capacity hierarchy
-    for d, color in zip(range(1, 7), colors):
-        capacities = [n**d * c for n in ns]
-        ax1.plot(ns, capacities, 'o-', color=color, linewidth=2,
-                 markersize=4, label=f'd={d}: $n^{d} \\cdot c$')
+    # Panel 1: NP vs P entropy costs
+    ax = axes[0, 0]
+    np_cost = n  # Linear: n bits
+    p_cost = np.log(n)  # Logarithmic: log(n) bits
+    ax.plot(n, np_cost, 'r-', linewidth=2, label='NP search: n bits')
+    ax.plot(n, p_cost, 'b-', linewidth=2, label='P computation: log(n) bits')
+    ax.fill_between(n, p_cost, np_cost, alpha=0.2, color='orange',
+                     label='Entropy gap')
+    ax.set_xlabel('Input size n')
+    ax.set_ylabel('Entropy cost (bits)')
+    ax.set_title('NP vs P Entropy Costs')
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
 
-    ax1.set_xlabel('Base n', fontsize=12)
-    ax1.set_ylabel('Entropy Capacity ($n^d \\cdot c$)', fontsize=12)
-    ax1.set_title('CEA Polynomial Capacity Hierarchy', fontsize=14)
-    ax1.set_yscale('log')
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
+    # Panel 2: Entropy gap growth
+    ax = axes[0, 1]
+    gap = n - np.log(n)
+    ax.plot(n, gap, 'purple', linewidth=2)
+    ax.set_xlabel('Input size n')
+    ax.set_ylabel('Gap: n - log(n)')
+    ax.set_title('Entropy Gap (grows without bound)')
+    ax.grid(True, alpha=0.3)
+    # Add annotations for specific values
+    for n_val in [100, 500, 900]:
+        g = n_val - math.log(n_val)
+        ax.annotate(f'n={n_val}\ngap={g:.0f}',
+                    xy=(n_val, g), fontsize=8,
+                    arrowprops=dict(arrowstyle='->', color='gray'),
+                    xytext=(n_val - 100, g + 100))
 
-    # Right: Gap between consecutive levels
-    for d, color in zip(range(1, 6), colors):
-        gaps = [(n**(d+1) * c - n**d * c) / (n**d * c) for n in ns]
-        ax2.plot(ns, gaps, 's-', color=color, linewidth=2,
-                 markersize=4, label=f'$(n^{{{d+1}}} - n^{d}) / n^{d}$')
+    # Panel 3: Step count bounds for different budgets
+    ax = axes[1, 0]
+    budgets = [100, 500, 1000, 5000]
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
+    c_range = np.linspace(0.1, 10, 200)
+    for budget, color in zip(budgets, colors):
+        max_steps = budget / c_range
+        ax.plot(c_range, max_steps, color=color, linewidth=2,
+                label=f'Budget = {budget} bits')
+    ax.set_xlabel('Cost per step (bits)')
+    ax.set_ylabel('Maximum steps')
+    ax.set_title('Step Count Bound: n ≤ B/c')
+    ax.legend(fontsize=9)
+    ax.set_yscale('log')
+    ax.grid(True, alpha=0.3)
 
-    ax2.set_xlabel('Base n', fontsize=12)
-    ax2.set_ylabel('Relative Capacity Gap', fontsize=12)
-    ax2.set_title('Relative Gap Between Hierarchy Levels', fontsize=14)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
+    # Panel 4: Maxwell's demon efficiency
+    ax = axes[1, 1]
+    n_particles = np.arange(1, 101)
+    for bits in [0.5, 1.0, 2.0, 4.0]:
+        max_decrease = n_particles * bits  # in units of kT·ln(2)
+        ax.plot(n_particles, max_decrease, linewidth=2,
+                label=f'{bits} bits/particle')
+    ax.set_xlabel('Number of particles')
+    ax.set_ylabel('Max entropy decrease (kT·ln2 units)')
+    ax.set_title("Maxwell's Demon: Entropy Bound")
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('viz_hierarchy.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: viz_hierarchy.png")
+    plt.savefig('entropy_gap_visualization.png', dpi=150, bbox_inches='tight')
+    print("Saved: entropy_gap_visualization.png")
+
+
+def plot_landauer_hierarchy():
+    """Plot the Landauer cost hierarchy for different computations."""
+    fig, ax = plt.subplots(figsize=(12, 6))
+
+    n = np.arange(2, 100)
+
+    # Different computation types and their entropy costs
+    computations = [
+        ('Reversible (bijective)', np.zeros_like(n, dtype=float), '#2ca02c'),
+        ('Binary search: log₂(n)', np.log2(n), '#1f77b4'),
+        ('Sorting: n·log₂(n)', n * np.log2(n), '#ff7f0e'),
+        ('Quadratic: n²', n**2, '#d62728'),
+        ('Exponential: 2ⁿ', 2.0**np.minimum(n, 30), '#9467bd'),  # cap for display
+    ]
+
+    for name, cost, color in computations:
+        ax.plot(n, cost, color=color, linewidth=2.5, label=name)
+
+    ax.set_xlabel('Input size n', fontsize=12)
+    ax.set_ylabel('Landauer cost (bits)', fontsize=12)
+    ax.set_title('Thermodynamic Cost Hierarchy of Computations', fontsize=14)
+    ax.set_yscale('log')
+    ax.set_ylim(0.5, 1e10)
+    ax.legend(fontsize=10, loc='upper left')
+    ax.grid(True, alpha=0.3)
+
+    # Annotate the P/NP boundary
+    ax.axhline(y=1e6, color='gray', linestyle='--', alpha=0.5)
+    ax.text(50, 2e6, 'Typical entropy budget', fontsize=10, color='gray',
+            ha='center')
+
+    plt.tight_layout()
+    plt.savefig('landauer_hierarchy.png', dpi=150, bbox_inches='tight')
+    print("Saved: landauer_hierarchy.png")
 
 
 if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Polynomial vs Exponential Growth
-
-Shows the thermodynamic barrier: for any polynomial degree d,
-2^n eventually dominates n^d, meaning exponential entropy
-requirements exceed polynomial computational budgets.
-"""
-import matplotlib.pyplot as plt
-import matplotlib
-import math
-
-matplotlib.use('Agg')
-
-
-def main():
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    ns = list(range(1, 25))
-    colors_poly = ['#3498db', '#2ecc71', '#e67e22', '#9b59b6', '#e74c3c']
-
-    # Left: absolute values
-    exp_vals = [2**n for n in ns]
-    ax1.plot(ns, exp_vals, 'k-', linewidth=3, label=r'$2^n$ (exponential)', zorder=5)
-
-    for d, color in zip(range(1, 6), colors_poly):
-        poly_vals = [n**d for n in ns]
-        ax1.plot(ns, poly_vals, '--', color=color, linewidth=2, label=f'$n^{d}$')
-
-    ax1.set_xlabel('n', fontsize=12)
-    ax1.set_ylabel('Value', fontsize=12)
-    ax1.set_title('Exponential vs Polynomial Growth', fontsize=14)
-    ax1.set_yscale('log')
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-
-    # Right: ratio n^d / 2^n → 0
-    ns_long = list(range(1, 40))
-    for d, color in zip(range(1, 6), colors_poly):
-        ratios = [n**d / 2**n for n in ns_long]
-        ax2.plot(ns_long, ratios, '-', color=color, linewidth=2, label=f'$n^{d}/2^n$')
-
-    ax2.set_xlabel('n', fontsize=12)
-    ax2.set_ylabel(r'$n^d / 2^n$', fontsize=12)
-    ax2.set_title(r'Ratio $n^d/2^n \to 0$ (Exponential Dominance)', fontsize=14)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-    ax2.axhline(y=0, color='black', linewidth=0.5)
-
-    # Mark thresholds
-    for d, color in zip(range(1, 6), colors_poly):
-        N = 1
-        while N**d >= 2**N:
-            N += 1
-        ax2.axvline(x=N, color=color, linestyle=':', alpha=0.5)
-        ax2.annotate(f'N={N}', xy=(N, 0.01), fontsize=8, color=color,
-                     ha='center', va='bottom')
-
-    plt.tight_layout()
-    plt.savefig('viz_poly_vs_exp.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: viz_poly_vs_exp.png")
-
-
-if __name__ == "__main__":
-    main()
+    plot_entropy_gap()
+    plot_landauer_hierarchy()

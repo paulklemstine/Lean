@@ -1,203 +1,248 @@
 #!/usr/bin/env python3
 """
-Computational Thermodynamics Algorithms
-========================================
+Algorithms for the Entropy-Bounded Computation framework.
 
-Type-hinted implementations of the core algorithms from the CEA framework.
+Type-hinted implementations of the core computational structures
+and algorithms, including entropy budget tracking, Maxwell's demon
+simulation, and entropy-optimal search.
 """
 
-from __future__ import annotations
 import math
 from dataclasses import dataclass
-from typing import Callable, List, Tuple, Set, Optional
+from typing import List, Optional, Callable, TypeVar, Generic
+
+T = TypeVar('T')
+
+# Physical constants
+K_BOLTZMANN: float = 1.380649e-23  # J/K
+PLANCK_REDUCED: float = 1.054571817e-34  # J·s
 
 
 @dataclass
-class CEA:
-    """Computational Entropy Automaton.
+class LandauerCost:
+    """Represents the Landauer cost of an operation in units of kT·ln(2)."""
+    bits_erased: float
 
-    A finite-state machine with a step budget and per-step entropy cost,
-    modeling computation as a physical process with thermodynamic constraints.
+    def joules(self, temperature: float = 300.0) -> float:
+        """Convert to Joules at given temperature."""
+        return self.bits_erased * K_BOLTZMANN * temperature * math.log(2)
+
+    def __add__(self, other: 'LandauerCost') -> 'LandauerCost':
+        return LandauerCost(self.bits_erased + other.bits_erased)
+
+
+@dataclass
+class EntropyBudgetSystem:
     """
-    n: int                          # State space size |σ|
-    step: Callable[[int], int]      # Transition function σ → σ
-    step_budget: int                # Maximum steps allowed
-    entropy_cost: float             # Per-step Landauer cost (≥ 0)
+    Models a computational system with a finite entropy budget.
+
+    Each step has a non-negative entropy cost, and the total cost
+    must not exceed the budget.
+    """
+    step_costs: List[float]  # Cost per step in bits
+    budget: float  # Total budget in bits
 
     def __post_init__(self) -> None:
-        assert self.n > 0, "State space must be nonempty"
-        assert self.step_budget >= 0, "Budget must be nonneg"
-        assert self.entropy_cost >= 0, "Entropy cost must be nonneg (Landauer bound)"
+        assert all(c >= 0 for c in self.step_costs), "All costs must be non-negative"
+        assert self.budget > 0, "Budget must be positive"
+        assert sum(self.step_costs) <= self.budget, "Total cost exceeds budget"
 
-    def iterate(self, k: int, x: int) -> int:
-        """Compute step^k(x)."""
-        for _ in range(k):
-            x = self.step(x)
-        return x
+    @property
+    def num_steps(self) -> int:
+        return len(self.step_costs)
 
-    def total_entropy_cost(self, k: int) -> float:
-        """Total entropy cost of k steps."""
-        return k * self.entropy_cost
+    @property
+    def total_cost(self) -> float:
+        return sum(self.step_costs)
 
-    def image_size(self, k: int) -> int:
-        """Compute |step^k({0, ..., n-1})|."""
-        return len({self.iterate(k, x) for x in range(self.n)})
+    def remaining_budget(self) -> float:
+        return self.budget - self.total_cost
 
-    def is_reversible(self) -> bool:
-        """Check if the step function is bijective (reversible)."""
-        image = {self.step(x) for x in range(self.n)}
-        return len(image) == self.n
+    def can_add_step(self, cost: float) -> bool:
+        return cost >= 0 and self.total_cost + cost <= self.budget
 
-    def is_erasing(self) -> bool:
-        """Check if the step function is not injective (erasing)."""
-        return not self.is_reversible()
-
-    def fiber_card(self, y: int) -> int:
-        """Compute |{x : step(x) = y}|."""
-        return sum(1 for x in range(self.n) if self.step(x) == y)
-
-    def max_fiber(self) -> int:
-        """Maximum fiber cardinality (measures non-injectivity)."""
-        return max(self.fiber_card(y) for y in range(self.n))
-
-    def entropy_profile(self, max_steps: Optional[int] = None) -> List[Tuple[int, int, float]]:
-        """Compute (step, image_size, entropy) for each step up to budget.
-
-        Returns list of (k, |img(step^k)|, ln(|img(step^k)|)).
-        """
-        steps = max_steps or self.step_budget
-        profile: List[Tuple[int, int, float]] = []
-        for k in range(steps + 1):
-            sz = self.image_size(k)
-            ent = math.log(sz) if sz > 0 else 0.0
-            profile.append((k, sz, ent))
-        return profile
-
-    def stabilization_point(self) -> int:
-        """Find the step k₀ where image size stabilizes.
-
-        By the antitone property, image sizes form a non-increasing
-        sequence bounded below by 1, so stabilization is guaranteed
-        within |σ| steps.
-        """
-        prev_size = self.n
-        for k in range(1, self.n + 1):
-            curr_size = self.image_size(k)
-            if curr_size == prev_size:
-                return k - 1
-            prev_size = curr_size
-        return self.n
+    @staticmethod
+    def max_steps(budget: float, min_cost_per_step: float) -> int:
+        """Maximum number of steps given budget and minimum per-step cost."""
+        assert min_cost_per_step > 0
+        return int(budget / min_cost_per_step)
 
 
 @dataclass
-class MaxwellDemon(CEA):
-    """A Maxwell Demon: a CEA with a state classifier.
-
-    The demon classifies states as 'hot' or 'cold' and attempts
-    to sort them, reducing entropy.
+class MaxwellDemon:
     """
-    is_hot: Callable[[int], bool] = lambda x: x % 2 == 0
+    Models Maxwell's demon with Landauer constraints.
 
-    def hot_count(self) -> int:
-        """Number of 'hot' states."""
-        return sum(1 for x in range(self.n) if self.is_hot(x))
+    The demon observes particles, gaining information, and uses that
+    information to sort particles. The entropy decrease is bounded by
+    the information cost times kT·ln(2).
+    """
+    num_particles: int
+    info_bits_per_particle: float
+    entropy_decrease_per_particle: float
+    temperature: float  # Kelvin
 
-    def cold_count(self) -> int:
-        """Number of 'cold' states."""
-        return self.n - self.hot_count()
+    def __post_init__(self) -> None:
+        assert self.temperature > 0
+        assert self.info_bits_per_particle >= 0
+        kT_ln2 = K_BOLTZMANN * self.temperature * math.log(2)
+        assert self.entropy_decrease_per_particle <= (
+            self.info_bits_per_particle * kT_ln2
+        ), "Landauer constraint violated"
 
-    def sorting_entropy_cost(self) -> float:
-        """Minimum entropy cost to fully sort hot from cold.
+    @property
+    def total_info(self) -> float:
+        return self.num_particles * self.info_bits_per_particle
 
-        This is log(n!) - log(h!) - log(c!) where h = hot count, c = cold count.
-        """
-        h = self.hot_count()
-        c = self.cold_count()
-        if h == 0 or c == 0:
+    @property
+    def total_entropy_decrease(self) -> float:
+        return self.num_particles * self.entropy_decrease_per_particle
+
+    @property
+    def kT_ln2(self) -> float:
+        return K_BOLTZMANN * self.temperature * math.log(2)
+
+    def efficiency(self) -> float:
+        """Ratio of actual entropy decrease to Landauer limit."""
+        limit = self.total_info * self.kT_ln2
+        if limit == 0:
             return 0.0
-        return (math.lgamma(self.n + 1) - math.lgamma(h + 1) - math.lgamma(c + 1))
+        return self.total_entropy_decrease / limit
 
 
-def find_exp_dominance_threshold(d: int) -> int:
-    """Find the smallest N such that n^d < 2^n for all n ≥ N.
+class EntropyOptimalSearch(Generic[T]):
+    """
+    Search algorithm that minimizes entropy production.
 
-    Implements the constructive content of exp_dominates_poly.
+    Uses binary search to find an element, tracking Landauer cost
+    of each comparison.
+    """
+
+    def __init__(self, candidates: List[T], budget_bits: float,
+                 temperature: float = 300.0):
+        self.candidates = candidates
+        self.budget_bits = budget_bits
+        self.temperature = temperature
+        self.bits_used: float = 0.0
+        self.comparisons: int = 0
+
+    def search(self, predicate: Callable[[T], bool]) -> Optional[T]:
+        """
+        Binary search using predicate, tracking entropy cost.
+
+        Each comparison costs 1 bit of entropy.
+        Returns None if budget exhausted before finding result.
+        """
+        lo, hi = 0, len(self.candidates) - 1
+
+        while lo <= hi:
+            if self.bits_used + 1 > self.budget_bits:
+                return None  # Budget exhausted
+
+            mid = (lo + hi) // 2
+            self.bits_used += 1  # Each comparison costs 1 bit
+            self.comparisons += 1
+
+            if predicate(self.candidates[mid]):
+                hi = mid - 1
+            else:
+                lo = mid + 1
+
+        if lo < len(self.candidates):
+            return self.candidates[lo]
+        return None
+
+    def entropy_used_joules(self) -> float:
+        return self.bits_used * K_BOLTZMANN * self.temperature * math.log(2)
+
+    def entropy_efficiency(self) -> float:
+        """Fraction of budget used."""
+        return self.bits_used / self.budget_bits if self.budget_bits > 0 else 0
+
+
+def entropy_gap(c: float, n: int) -> float:
+    """
+    Compute the entropy gap c*n - c*log(n).
+
+    This quantity grows without bound (Theorem 12),
+    representing the thermodynamic signature of P ≠ NP.
+    """
+    if n <= 0:
+        return 0.0
+    return c * n - c * math.log(n)
+
+
+def find_entropy_gap_witness(c: float, M: float) -> int:
+    """
+    Find the smallest n such that c*n - c*log(n) > M.
+
+    This is the constructive version of the entropy gap theorem.
     """
     n = 1
-    while n ** d >= 2 ** n:
+    while entropy_gap(c, n) <= M:
         n += 1
-    # Verify for a few more values
-    for check in range(n, n + 100):
-        assert check ** d < 2 ** check, f"Failed at n={check}"
+        if n > 10**9:
+            raise ValueError(f"No witness found below 10^9 for c={c}, M={M}")
     return n
 
 
-def polynomial_hierarchy_capacity(n: int, d: int, c: float) -> float:
-    """Compute the entropy capacity of a CEA with budget n^d and cost c.
-
-    Capacity = n^d * c
+def compute_sorting_landauer_cost(n: int) -> float:
     """
-    return (n ** d) * c
+    Compute the minimum Landauer cost of comparison-based sorting.
 
-
-def composition_bound(k1: int, c1: float, k2: int, c2: float) -> float:
-    """Upper bound on total entropy cost of composing two CEAs.
-
-    Returns (k1 + k2) * max(c1, c2).
+    Returns the cost in bits: ceil(log2(n!)).
     """
-    return (k1 + k2) * max(c1, c2)
+    if n <= 1:
+        return 0.0
+    log2_factorial = sum(math.log2(i) for i in range(1, n + 1))
+    return math.ceil(log2_factorial)
 
 
-def entropy_rate(total_reduction: float, total_steps: int) -> float:
-    """Average entropy reduction per step."""
-    if total_steps == 0:
-        return float('inf')
-    return total_reduction / total_steps
+def reversible_computation_demo(n: int) -> bool:
+    """
+    Demonstrate that reversible computation has zero Landauer cost.
 
+    Applies a permutation and its inverse, showing f(g(x)) = x for all x.
+    """
+    # A reversible computation: cyclic shift
+    forward = [(i + 1) % n for i in range(n)]
+    backward = [(i - 1) % n for i in range(n)]
 
-# Pseudocode for the CEA simulation algorithm:
-CEA_SIMULATION_PSEUDOCODE = """
-Algorithm: CEA Entropy Profile Computation
-Input: Transition function f, state space size n, max steps K
-Output: Entropy profile [(k, |img(f^k)|, H(f^k))]
-
-1. Initialize image ← {0, 1, ..., n-1}
-2. For k = 0 to K:
-   a. Compute image_k = f^k(image) = {f^k(x) : x ∈ {0,...,n-1}}
-   b. Record (k, |image_k|, ln(|image_k|))
-3. Return profile
-
-Complexity: O(K × n) time, O(n) space
-Correctness: By imageSize_antitone, |image_k| is non-increasing
-"""
-
-DOMINANCE_THRESHOLD_PSEUDOCODE = """
-Algorithm: Exponential Dominance Threshold
-Input: Polynomial degree d
-Output: Threshold N such that n^d < 2^n for all n ≥ N
-
-1. Set n ← 1
-2. While n^d ≥ 2^n:
-   a. n ← n + 1
-3. Return n
-
-Correctness: By exp_dominates_poly, this terminates.
-The loop body runs at most O(d · 2^d) times.
-"""
+    # Verify: forward(backward(x)) = x for all x
+    for x in range(n):
+        if forward[backward[x]] != x:
+            return False
+    # Verify: backward(forward(x)) = x for all x
+    for x in range(n):
+        if backward[forward[x]] != x:
+            return False
+    return True
 
 
 if __name__ == "__main__":
-    # Example: non-injective CEA
-    cea = CEA(n=16, step=lambda x: x // 2, step_budget=10, entropy_cost=0.5)
-    print("CEA Profile (f(x) = x // 2):")
-    for k, sz, ent in cea.entropy_profile(max_steps=6):
-        print(f"  Step {k}: image={sz}, entropy={ent:.4f}")
-    print(f"  Stabilization point: {cea.stabilization_point()}")
-    print(f"  Max fiber: {cea.max_fiber()}")
-    print(f"  Reversible: {cea.is_reversible()}")
+    # Demo: entropy-optimal search
+    candidates = list(range(1000))
+    searcher = EntropyOptimalSearch(candidates, budget_bits=20)
+    target = 42
+    result = searcher.search(lambda x: x >= target)
+    print(f"Search for {target} in [0..999]:")
+    print(f"  Found: {result}")
+    print(f"  Comparisons: {searcher.comparisons}")
+    print(f"  Bits used: {searcher.bits_used}")
+    print(f"  Theoretical minimum: {math.ceil(math.log2(1000))}")
+    print(f"  Entropy used: {searcher.entropy_used_joules():.4e} J")
 
-    # Example: dominance thresholds
-    print("\nExponential Dominance Thresholds:")
-    for d in range(1, 8):
-        N = find_exp_dominance_threshold(d)
-        print(f"  d={d}: N={N} (2^{N} = {2**N} > {N}^{d} = {N**d})")
+    # Demo: entropy gap witnesses
+    print("\nEntropy gap witnesses (c=1):")
+    for M in [10, 100, 1000]:
+        n = find_entropy_gap_witness(1.0, M)
+        print(f"  M={M}: smallest n = {n}, gap = {entropy_gap(1.0, n):.2f}")
+
+    # Demo: sorting Landauer cost
+    print("\nSorting Landauer cost (bits):")
+    for n in [2, 4, 8, 16, 32, 64]:
+        cost = compute_sorting_landauer_cost(n)
+        print(f"  n={n:>2}: ceil(log2(n!)) = {cost:.0f} bits")
+
+    # Demo: reversible computation
+    print(f"\nReversible computation (n=10): {reversible_computation_demo(10)}")
