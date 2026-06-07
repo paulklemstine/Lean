@@ -1,1 +1,1 @@
-viz_archimedean_barrier.py
+visualize_probability.py

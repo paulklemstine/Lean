@@ -2,26 +2,6 @@
   "breakthroughs": [],
   "cycle_log": [
     {
-      "cycle_id": "35340a8e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Digit-Morphic Factorization Theory\n\n## Synthesis\n\nThis research cycle established the **Digit-Morphic Factorization** framework, generalizing vampire numbers from base 10 to arbit",
-      "quality_score": 0.40456000000000003,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-04T12:37:08",
-      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-    },
-    {
-      "cycle_id": "854de7e7",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Tropical Min-Plus Encryption\n\n## Synthesis\n\nThis research cycle established rigorous foundations for tropical (min-plus) cryptography by introducing the **Tropical Permanent** as",
-      "quality_score": 0.39144,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-06-04T13:09:39",
-      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-    },
-    {
       "cycle_id": "0c08b2ae",
       "domain": "Applications",
       "key_insight": "# Future Directions: Systolic Quantum Error Correction\n\n## Synthesis\n\nThis research cycle established the **Systolic Code** framework, proving that F₂ chain complexes canonically produce CSS quantum c",
@@ -2000,6 +1980,26 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T13:42:40",
       "title": "Game of Life Universality"
+    },
+    {
+      "cycle_id": "91bd5c98",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Bayesian Werewolf and Social Deduction Game Theory\n\n## Synthesis\n\nThis research cycle established the structural theory of the random elimination win probability in Werewolf/Mafia",
+      "quality_score": 0.4424,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-07T14:51:03",
+      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+    },
+    {
+      "cycle_id": "58986935",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Tropical Neural Algebra\n\n## Synthesis\n\nThis research cycle established the **Tropical Neural Algebra** framework, proving that ReLU network decision boundaries are tropical hypers",
+      "quality_score": 0.37744,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T14:51:30",
+      "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
     }
   ],
   "entries": [
@@ -2045,7 +2045,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-07T13:42:40",
+  "last_updated": "2026-06-07T14:51:30",
   "open_questions": [
     {
       "context": "sorry",
@@ -2072,12 +2072,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "316e947f",
-        "quality": 0.3792,
-        "theorems": 5,
-        "title": "EML Single Operator Church-Turing Thesis"
-      },
       {
         "cycle_id": "0d8660e9",
         "quality": 0.4496,
@@ -2131,6 +2125,12 @@
         "quality": 0.5404,
         "theorems": 6,
         "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
+      },
+      {
+        "cycle_id": "91bd5c98",
+        "quality": 0.4424,
+        "theorems": 4,
+        "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
       }
     ],
     "Bridges": [
@@ -2269,12 +2269,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0ab82e9f",
-        "quality": 0.4416,
-        "theorems": 5,
-        "title": "Isomorphisms of Meaning: When Structures Collide"
-      },
-      {
         "cycle_id": "fbc73d45",
         "quality": 0.4084,
         "theorems": 5,
@@ -2327,6 +2321,12 @@
         "quality": 0.45464000000000004,
         "theorems": 5,
         "title": "Game of Life Universality"
+      },
+      {
+        "cycle_id": "58986935",
+        "quality": 0.37744,
+        "theorems": 5,
+        "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
       }
     ],
     "Physics": [
