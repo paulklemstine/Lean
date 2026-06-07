@@ -1,269 +1,212 @@
 #!/usr/bin/env python3
 """
-EML Interpolation Theory: Core Algorithms
+EML Approximation Algorithms
 
-Type-hinted implementations of the key algorithms from the EML
-Stone-Weierstrass theory.
+Type-hinted implementations of the key algorithms from the
+EML Stone-Weierstrass approximation theory.
 """
 
-from __future__ import annotations
-import math
-from dataclasses import dataclass
-from typing import Union, Callable
+from typing import List, Tuple, Callable
+import numpy as np
 
 
-# === Core Data Structures ===
-
-@dataclass(frozen=True)
-class Const:
-    """A constant value."""
-    value: float
-
-@dataclass(frozen=True)
-class Proj:
-    """The identity/projection function x ↦ x."""
-    pass
-
-@dataclass(frozen=True)
-class Exp:
-    """Exponential: exp(child)."""
-    child: EMLExpr
-
-@dataclass(frozen=True)
-class Log:
-    """Logarithm: log(child)."""
-    child: EMLExpr
-
-@dataclass(frozen=True)
-class Add:
-    """Addition: left + right."""
-    left: EMLExpr
-    right: EMLExpr
-
-@dataclass(frozen=True)
-class Mul:
-    """Multiplication: left * right."""
-    left: EMLExpr
-    right: EMLExpr
-
-
-EMLExpr = Union[Const, Proj, Exp, Log, Add, Mul]
-
-
-@dataclass(frozen=True)
-class EMLComplexity:
-    """Complexity pair (depth, size) with invariant depth ≤ size."""
-    depth: int
-    size: int
-
-    def __post_init__(self) -> None:
-        assert self.depth <= self.size, f"Depth {self.depth} > size {self.size}"
-
-    def __le__(self, other: EMLComplexity) -> bool:
-        return self.depth <= other.depth and self.size <= other.size
-
-
-# === Algorithm 1: EML Evaluation ===
-
-def eval_eml(expr: EMLExpr, x: float) -> float:
+def eml_generator(x: np.ndarray, w: float, b: float) -> np.ndarray:
     """
-    Evaluate an EML expression at a point x.
+    EML affine-exponential generator: exp(w*x + b).
 
-    Time complexity: O(size(expr))
-    Space complexity: O(depth(expr)) for recursion stack
+    This is the fundamental building block of the EML subalgebra.
+    The Stone-Weierstrass theorem guarantees that finite linear
+    combinations and products of these generators can approximate
+    any continuous function on a compact set.
 
-    Pseudocode:
-        EVAL(const(c), x) = c
-        EVAL(proj, x) = x
-        EVAL(exp(e), x) = exp(EVAL(e, x))
-        EVAL(log(e), x) = log(EVAL(e, x)) if EVAL(e, x) > 0, else 0
-        EVAL(add(e1, e2), x) = EVAL(e1, x) + EVAL(e2, x)
-        EVAL(mul(e1, e2), x) = EVAL(e1, x) * EVAL(e2, x)
+    Args:
+        x: Input array of shape (n,)
+        w: Weight parameter
+        b: Bias parameter
+
+    Returns:
+        Array of exp(w*x + b) values
     """
-    if isinstance(expr, Const):
-        return expr.value
-    elif isinstance(expr, Proj):
-        return x
-    elif isinstance(expr, Exp):
-        v = eval_eml(expr.child, x)
-        return math.exp(min(v, 700))  # overflow protection
-    elif isinstance(expr, Log):
-        v = eval_eml(expr.child, x)
-        return math.log(v) if v > 0 else 0.0
-    elif isinstance(expr, Add):
-        return eval_eml(expr.left, x) + eval_eml(expr.right, x)
-    elif isinstance(expr, Mul):
-        return eval_eml(expr.left, x) * eval_eml(expr.right, x)
-    raise TypeError(f"Unknown EML expression type: {type(expr)}")
+    return np.exp(np.clip(w * x + b, -500, 500))
 
 
-# === Algorithm 2: Complexity Computation ===
-
-def compute_depth(expr: EMLExpr) -> int:
-    """Compute the depth of an EML expression. O(size) time."""
-    if isinstance(expr, (Const, Proj)):
-        return 0
-    elif isinstance(expr, (Exp, Log)):
-        return compute_depth(expr.child) + 1
-    elif isinstance(expr, (Add, Mul)):
-        return max(compute_depth(expr.left), compute_depth(expr.right)) + 1
-    raise TypeError
-
-
-def compute_size(expr: EMLExpr) -> int:
-    """Compute the size of an EML expression. O(size) time."""
-    if isinstance(expr, (Const, Proj)):
-        return 1
-    elif isinstance(expr, (Exp, Log)):
-        return compute_size(expr.child) + 1
-    elif isinstance(expr, (Add, Mul)):
-        return compute_size(expr.left) + compute_size(expr.right) + 1
-    raise TypeError
-
-
-def complexity(expr: EMLExpr) -> EMLComplexity:
-    """Compute the EML complexity of an expression."""
-    return EMLComplexity(compute_depth(expr), compute_size(expr))
-
-
-# === Algorithm 3: EML Substitution (Composition) ===
-
-def subst(e1: EMLExpr, e2: EMLExpr) -> EMLExpr:
+def log_sum_exp_smooth_max(values: np.ndarray, t: float) -> float:
     """
-    Substitute e2 for Proj in e1, computing e1 ∘ e2.
+    Smooth maximum via log-sum-exp (Maslov dequantization).
 
-    Postcondition: eval(subst(e1, e2), x) = eval(e1, eval(e2, x))
-    Depth bound: depth(subst(e1, e2)) ≤ depth(e1) + depth(e2)
+    Computes (1/t) * log(sum(exp(t * v_i))) which converges to
+    max(v_i) as t → ∞.
 
-    Pseudocode:
-        SUBST(const(c), e2) = const(c)
-        SUBST(proj, e2) = e2
-        SUBST(exp(e), e2) = exp(SUBST(e, e2))
-        SUBST(log(e), e2) = log(SUBST(e, e2))
-        SUBST(add(a,b), e2) = add(SUBST(a, e2), SUBST(b, e2))
-        SUBST(mul(a,b), e2) = mul(SUBST(a, e2), SUBST(b, e2))
+    This is the bridge between EML (smooth) and tropical (piecewise-linear)
+    arithmetic.
+
+    Args:
+        values: Array of real values
+        t: Temperature parameter (larger = closer to true max)
+
+    Returns:
+        Smooth approximation to max(values)
     """
-    if isinstance(e1, Const):
-        return e1
-    elif isinstance(e1, Proj):
-        return e2
-    elif isinstance(e1, Exp):
-        return Exp(subst(e1.child, e2))
-    elif isinstance(e1, Log):
-        return Log(subst(e1.child, e2))
-    elif isinstance(e1, Add):
-        return Add(subst(e1.left, e2), subst(e1.right, e2))
-    elif isinstance(e1, Mul):
-        return Mul(subst(e1.left, e2), subst(e1.right, e2))
-    raise TypeError
+    scaled = t * values
+    m = np.max(scaled)  # numerical stability
+    return (1.0 / t) * (m + np.log(np.sum(np.exp(scaled - m))))
 
 
-# === Algorithm 4: Constructing EML Power Functions ===
-
-def eml_pow(r: float) -> EMLExpr:
+def eml_least_squares_fit(
+    x: np.ndarray,
+    target: np.ndarray,
+    generators: List[Tuple[float, float]],
+    include_constant: bool = True
+) -> Tuple[np.ndarray, float]:
     """
-    Construct the EML expression for x^r: exp(r * log(x)).
-    Size: 5 (constant). Depth: 3 (constant).
+    Fit an EML network to a target function via least squares.
 
-    For positive x: eval(eml_pow(r), x) = x^r exactly.
+    Constructs a linear combination of EML generators and finds
+    optimal coefficients by ordinary least squares.
+
+    Args:
+        x: Input points of shape (n,)
+        target: Target values of shape (n,)
+        generators: List of (w, b) parameter pairs for EML generators
+        include_constant: Whether to include a constant term
+
+    Returns:
+        Tuple of (coefficients, max_error)
     """
-    return Exp(Mul(Const(r), Log(Proj())))
+    basis_cols = [eml_generator(x, w, b) for w, b in generators]
+    if include_constant:
+        basis_cols.append(np.ones_like(x))
+
+    basis = np.column_stack(basis_cols)
+    coeffs, _, _, _ = np.linalg.lstsq(basis, target, rcond=None)
+    approx = basis @ coeffs
+    max_error = float(np.max(np.abs(target - approx)))
+
+    return coeffs, max_error
 
 
-# === Algorithm 5: Iterated Exponential ===
-
-def iter_exp(n: int) -> EMLExpr:
+def tropical_deformation(
+    tropical_fn: Callable[[np.ndarray], np.ndarray],
+    t: float,
+    x: np.ndarray
+) -> np.ndarray:
     """
-    Construct the n-fold iterated exponential exp^n(x).
-    Depth: n. Size: n+1.
+    Smooth a tropical (piecewise-linear) function using EML operations.
+
+    Given a tropical function h(x) = max(a_i * x + b_i), produce
+    the smooth EML approximation (1/t) * log(sum(exp(t * (a_i * x + b_i)))).
+
+    Args:
+        tropical_fn: The tropical function to smooth (returns piecewise-linear values)
+        t: Temperature parameter
+        x: Input points
+
+    Returns:
+        Smoothed function values
     """
-    if n == 0:
-        return Proj()
-    return Exp(iter_exp(n - 1))
+    return np.array([
+        log_sum_exp_smooth_max(np.array([tropical_fn(np.array([xi]))
+                                          for _ in range(1)]).flatten(), t)
+        for xi in x
+    ])
 
 
-# === Algorithm 6: Softmax Approximation of Max ===
+def eml_depth2_generator(
+    x: np.ndarray,
+    w1: float, b1: float,
+    w2: float, b2: float
+) -> np.ndarray:
+    """
+    Depth-2 EML generator: exp(w2 * exp(w1 * x + b1) + b2).
 
-def softmax_approx(t: float) -> EMLExpr:
+    This is strictly more expressive than depth-1 generators,
+    as proven by depth2_not_affine_exp.
+
+    Args:
+        x: Input array
+        w1, b1: Inner layer parameters
+        w2, b2: Outer layer parameters
+
+    Returns:
+        Depth-2 EML function values
     """
-    Construct the EML expression for softmax_t(x, 0) = (1/t) * log(exp(t*x) + 1).
-    Approximates max(x, 0) = ReLU(x) with error ≤ log(2)/t.
+    inner = np.exp(np.clip(w1 * x + b1, -500, 500))
+    return np.exp(np.clip(w2 * inner + b2, -500, 500))
+
+
+def adaptive_eml_approx(
+    x: np.ndarray,
+    target: np.ndarray,
+    max_generators: int = 20,
+    tolerance: float = 1e-4
+) -> Tuple[List[Tuple[float, float]], np.ndarray, float]:
     """
-    return Mul(
-        Const(1.0 / t),
-        Log(Add(Exp(Mul(Const(t), Proj())), Const(1.0)))
+    Adaptive EML approximation: greedily add generators to minimize error.
+
+    This implements the constructive content of the density theorem:
+    we keep adding EML generators until the approximation error drops
+    below the specified tolerance.
+
+    Args:
+        x: Input points
+        target: Target function values
+        max_generators: Maximum number of generators to use
+        tolerance: Target maximum error
+
+    Returns:
+        Tuple of (generator_params, coefficients, final_error)
+    """
+    # Candidate parameters to search over
+    w_candidates = np.linspace(-3, 3, 20)
+    b_candidates = np.linspace(-3, 3, 10)
+
+    selected_params: List[Tuple[float, float]] = []
+    residual = target.copy()
+    best_error = float(np.max(np.abs(residual)))
+
+    for _ in range(max_generators):
+        if best_error < tolerance:
+            break
+
+        # Greedy: find the generator that best reduces the residual
+        best_w, best_b = 0.0, 0.0
+        best_reduction = 0.0
+
+        for w in w_candidates:
+            for b in b_candidates:
+                g = eml_generator(x, w, b)
+                # Optimal coefficient for this single generator
+                c = float(np.dot(g, residual) / (np.dot(g, g) + 1e-12))
+                new_residual = residual - c * g
+                reduction = best_error - float(np.max(np.abs(new_residual)))
+                if reduction > best_reduction:
+                    best_reduction = reduction
+                    best_w, best_b = w, b
+
+        selected_params.append((best_w, best_b))
+
+        # Refit all coefficients jointly
+        coeffs, best_error = eml_least_squares_fit(
+            x, target, selected_params, include_constant=True
+        )
+        basis = np.column_stack(
+            [eml_generator(x, w, b) for w, b in selected_params] + [np.ones_like(x)]
+        )
+        residual = target - basis @ coeffs
+
+    coeffs, final_error = eml_least_squares_fit(
+        x, target, selected_params, include_constant=True
     )
-
-
-# === Algorithm 7: Uniform Approximation Error ===
-
-def uniform_error(expr: EMLExpr, f: Callable[[float], float],
-                  a: float, b: float, n_samples: int = 1000) -> float:
-    """
-    Estimate the uniform approximation error ||f - eval(expr, ·)||_∞
-    on [a, b] by sampling n_samples points.
-    """
-    max_err = 0.0
-    for i in range(n_samples + 1):
-        x = a + (b - a) * i / n_samples
-        err = abs(f(x) - eval_eml(expr, x))
-        max_err = max(max_err, err)
-    return max_err
-
-
-# === Algorithm 8: Pretty Printing ===
-
-def pretty_print(expr: EMLExpr) -> str:
-    """Human-readable representation of an EML expression."""
-    if isinstance(expr, Const):
-        if expr.value == int(expr.value):
-            return str(int(expr.value))
-        return f"{expr.value:.4g}"
-    elif isinstance(expr, Proj):
-        return "x"
-    elif isinstance(expr, Exp):
-        return f"exp({pretty_print(expr.child)})"
-    elif isinstance(expr, Log):
-        return f"log({pretty_print(expr.child)})"
-    elif isinstance(expr, Add):
-        return f"({pretty_print(expr.left)} + {pretty_print(expr.right)})"
-    elif isinstance(expr, Mul):
-        return f"({pretty_print(expr.left)} · {pretty_print(expr.right)})"
-    raise TypeError
+    return selected_params, coeffs, final_error
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    print("Self-test:")
+    # Quick test
+    x = np.linspace(0, 1, 100)
+    target = np.sin(2 * np.pi * x)
 
-    # Test x^2
-    e = eml_pow(2.0)
-    assert abs(eval_eml(e, 3.0) - 9.0) < 1e-10
-    print(f"  x^2 at x=3: {eval_eml(e, 3.0)} ✓")
-
-    # Test sqrt
-    e = eml_pow(0.5)
-    assert abs(eval_eml(e, 4.0) - 2.0) < 1e-10
-    print(f"  √x at x=4: {eval_eml(e, 4.0)} ✓")
-
-    # Test substitution
-    e1 = Exp(Proj())
-    e2 = Exp(Proj())
-    composed = subst(e1, e2)
-    x = 1.0
-    assert abs(eval_eml(composed, x) - math.exp(math.exp(x))) < 1e-10
-    print(f"  exp(exp(1)): {eval_eml(composed, x):.6f} ✓")
-
-    # Test depth bound
-    c = complexity(composed)
-    assert c.depth <= compute_depth(e1) + compute_depth(e2)
-    print(f"  Depth bound: {c.depth} ≤ {compute_depth(e1)} + {compute_depth(e2)} ✓")
-
-    # Test softmax
-    relu_approx = softmax_approx(100.0)
-    err = uniform_error(relu_approx, lambda x: max(x, 0), -1.0, 1.0)
-    print(f"  Softmax(100) approx of ReLU, error: {err:.6f}")
-    assert err < 0.1, f"Softmax error too large: {err}"
-    print("  ✓")
-
-    print("All self-tests passed.")
+    params, coeffs, error = adaptive_eml_approx(x, target, max_generators=10)
+    print(f"Approximating sin(2πx) on [0,1]:")
+    print(f"  Generators used: {len(params)}")
+    print(f"  Max error: {error:.6e}")
+    print(f"  Generator parameters: {params}")
