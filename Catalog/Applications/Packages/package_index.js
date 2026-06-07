@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "8e5814ae",
     "filename": "isomorphisms_of_meaning_when_structures_collide.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.37224,
     "title": "Semantic Fiber Theory: When Isomorphic Structures Diverge in Meaning"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 112,
       "id": "isomorphisms_of_meaning_when_structures_collide",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.37224,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Semantic Fiber Theory: When Isomorphic Structures Diverge in Meaning"
     }
