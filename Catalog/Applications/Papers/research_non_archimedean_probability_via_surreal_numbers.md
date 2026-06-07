@@ -1,212 +1,212 @@
-# Non-Archimedean Probability Spaces: Infinitesimal Probabilities with Universal Conditioning
+# Non-Archimedean Probability via Surreal Numbers: Infinitesimal Measures and the Archimedean Barrier
 
 ## Abstract
 
-We introduce the **Non-Archimedean Probability Space (NAProbSpace)**, a mathematical structure that extends classical finite probability theory to arbitrary linearly ordered fields, enabling well-defined infinitesimal probabilities. Our central innovation is the *regularity axiom*: every outcome in the sample space has strictly positive probability, eliminating the measure-zero pathologies that plague standard probability theory. We formalize this structure in Lean 4 with complete machine-verified proofs of 25+ theorems, including finite additivity, inclusion-exclusion, Bayes' theorem, the law of total probability, and a characterization of when infinitesimal point masses can exist. We prove that the real numbers are the unique (up to isomorphism) Archimedean ordered field, and that non-Archimedean fields are precisely those where NAProbSpaces can support "large" sample spaces with infinitesimal point masses. This work provides a rigorous foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal number theory.
+We develop a rigorous framework for finitely additive probability measures valued in non-Archimedean ordered fields, encompassing surreal numbers and hyperreal fields. We prove five main results: (1) Archimedean fields admit no infinitesimal elements, establishing the fundamental obstruction to uniform point masses; (2) uniform infinitesimal weighting defines a well-behaved finitely additive measure; (3) conditional probabilities computed with infinitesimal weights are independent of the choice of infinitesimal — a "universality" result; (4) products of infinitesimals form a natural stratification of higher-order infinitesimals; and (5) the Archimedean property is precisely equivalent to the impossibility of universal point masses bounded by 1 on arbitrarily large finite sets. All results are formalized and verified in Lean 4 with Mathlib.
 
-**Keywords**: non-Archimedean probability, infinitesimal probability, surreal numbers, Borel paradox, regular conditional probability, formal verification
-
----
+**Keywords**: surreal numbers, non-Archimedean probability, infinitesimal measures, finitely additive measures, Archimedean property
 
 ## 1. Introduction
 
-### 1.1 The Problem of Measure-Zero Events
+### 1.1 Motivation
 
-Classical probability theory, built on Kolmogorov's axioms, suffers from a fundamental defect: in any continuous probability distribution on an uncountable space, every singleton event {ω} has probability zero. This makes the conditional probability P(A | {ω}) = P(A ∩ {ω}) / P({ω}) = 0/0 — undefined.
+Standard probability theory, built on the real-valued Kolmogorov axioms, faces a well-known conceptual difficulty: in continuous probability spaces, individual points necessarily receive probability zero. This leads to philosophical paradoxes (every outcome is "impossible" yet one occurs) and technical complications (conditioning on measure-zero events requires limits or disintegration).
 
-This is not merely a technical inconvenience. The Borel paradox demonstrates that attempts to define conditional probability on measure-zero events lead to contradictions: the "conditional distribution" of a point on the sphere depends on the choice of parametrization, violating the intuition that probability should be an intrinsic property.
+A natural resolution is to work in number systems that contain infinitesimals — positive numbers smaller than every standard positive real. Such systems include Conway's surreal numbers [Conway 1976], Robinson's hyperreals [Robinson 1966], and various ultrapowers. In these non-Archimedean ordered fields, one can assign genuinely positive (albeit infinitesimal) probability to individual points.
 
-### 1.2 Prior Approaches
+### 1.2 Prior Work
 
-Several approaches have been proposed to resolve this issue:
+The idea of infinitesimal probabilities has been explored in several contexts:
 
-1. **Regular conditional distributions** (Kolmogorov, 1933): Define P(A | B) via the Radon-Nikodym derivative. This works measure-theoretically but loses the intuitive P(A ∩ B)/P(B) formula.
+- **Nonstandard analysis**: Loeb [1975] constructed standard probability measures from internal hyperfinite counting measures. Nelson [1987] developed "radically elementary probability theory" using the IST axioms.
+- **Conditional probability**: Krauss [1968] and Rényi [1970] proposed axiomatizations of conditional probability that avoid measure-zero conditioning issues.
+- **Surreal numbers**: Conway [1976] established the algebraic and order-theoretic properties of surreal numbers. Ehrlich [2012] proved they form a universal ordered field.
 
-2. **Nonstandard analysis** (Robinson, 1966; Loeb, 1975): Use hyperreal numbers to assign infinitesimal probabilities. Loeb measures provide a bridge back to standard measure theory.
+Our contribution is to formalize the precise relationship between the Archimedean property and the existence of uniform infinitesimal measures, proving that non-Archimedean fields are exactly those that support "universal point masses."
 
-3. **Lexicographic probability** (Blume, Brandenburger, Dekel, 1991): Use lexicographically ordered probability systems to handle conditioning on unlikely events.
+### 1.3 Overview of Results
 
-### 1.3 Our Contribution
+We work over an abstract ordered field F (with instances `[Field F] [LinearOrder F] [IsStrictOrderedRing F]`) to capture all non-Archimedean ordered fields simultaneously. Our main results:
 
-We introduce a clean algebraic framework — **NAProbSpace** — that:
-
-- Works over *any* linearly ordered field F, not just ℝ or *ℝ
-- Maintains the intuitive P(A | B) = P(A ∩ B)/P(B) formula for ALL nonempty B
-- Proves that this is consistent and well-behaved (finite additivity, Bayes, total probability)
-- Characterizes precisely when infinitesimal probabilities are possible (non-Archimedean fields)
-- Is fully formalized in Lean 4 with machine-verified proofs
-
----
+| Theorem | Statement |
+|---------|-----------|
+| Archimedean Barrier | Archimedean fields have no infinitesimals |
+| Finite Additivity | Uniform ε-weighting is finitely additive |
+| Conditional Universality | P_ε(A\|B) = \|A∩B\|/\|B\|, independent of ε |
+| Infinitesimal Stratification | ε² is higher-order infinitesimal; (n+1)·ε² < ε |
+| Archimedean-Measure Duality | Archimedean ⟺ ∃N, N·ε ≥ 1 for all ε > 0 |
 
 ## 2. Definitions
 
 ### 2.1 Infinitesimal Elements
 
-**Definition 2.1** (Infinitesimal). An element x of an ordered field F is *infinitesimal* if x > 0 and x < 1/n for every positive natural number n.
+**Definition 2.1** (Infinitesimal). An element ε of an ordered field F is *infinitesimal* if:
+1. ε > 0
+2. ε < 1/(n+1) for every natural number n
 
-**Definition 2.2** (Non-Archimedean Field). A linearly ordered field F is *non-Archimedean* if it contains an infinitesimal element.
+**Definition 2.2** (Non-Archimedean Field). A field F *has infinitesimals* if there exists ε ∈ F with ε infinitesimal.
 
-### 2.2 Non-Archimedean Probability Space
+In Lean 4:
+```lean
+def IsInfinitesimal (ε : F) : Prop :=
+  0 < ε ∧ ∀ n : ℕ, ε < 1 / (↑n + 1)
 
-**Definition 2.3** (NAProbSpace). A *Non-Archimedean Probability Space* over a linearly ordered field F and a finite type Ω consists of:
-- A probability mass function prob : Ω → F
-- *Non-negativity*: prob(ω) ≥ 0 for all ω
-- *Regularity*: prob(ω) > 0 for all ω
-- *Normalization*: Σ_ω prob(ω) = 1
+def HasInfinitesimal (F : Type*) [...] : Prop :=
+  ∃ ε : F, IsInfinitesimal ε
+```
 
-### 2.3 Derived Notions
+### 2.2 Finitely Additive Measures
 
-**Event probability**: P(A) = Σ_{ω ∈ A} prob(ω) for A ⊆ Ω
+**Definition 2.3** (Finitely Additive Measure). A *finitely additive measure* on a type α valued in F is a function μ : Finset α → F satisfying:
+1. μ(∅) = 0
+2. μ(S ∪ T) = μ(S) + μ(T) whenever S, T are disjoint
 
-**Conditional probability**: P(A | B) = P(A ∩ B) / P(B) for nonempty B
+**Definition 2.4** (Uniform Infinitesimal Measure). For ε ∈ F, the *uniform ε-measure* is:
+μ_ε(S) = |S| · ε
 
-**Independence**: A and B are independent if P(A ∩ B) = P(A) · P(B)
-
----
+**Definition 2.5** (Conditional Probability). For a measure μ and sets A, B:
+P(A|B) = μ(A ∩ B) / μ(B)
 
 ## 3. Main Results
 
-### 3.1 Basic Properties
+### 3.1 Theorem 1: The Archimedean Barrier
 
-**Theorem 3.1** (Finite Additivity). For disjoint events A, B:
-P(A ∪ B) = P(A) + P(B)
+**Theorem 3.1** (archimedean_no_infinitesimal). *If F is Archimedean, then F has no infinitesimals.*
 
-**Theorem 3.2** (Inclusion-Exclusion). For any events A, B:
-P(A ∪ B) = P(A) + P(B) - P(A ∩ B)
+*Proof sketch.* Suppose ε is infinitesimal. By the Archimedean property, there exists n ∈ ℕ with n > 1/ε, i.e., ε > 1/n. But IsInfinitesimal gives ε < 1/n. Contradiction. □
 
-**Theorem 3.3** (Complement Rule). P(Aᶜ) = 1 - P(A)
+**PEGB Analysis:**
+- **P**roof: Verified in Lean 4. Uses `exists_nat_gt` and `one_div_le_one_div_of_le`.
+- **E**xample: In ℝ, take any ε > 0. Then ⌈1/ε⌉ · ε ≥ 1, so ε is not infinitesimal.
+- **G**eneralization: This extends to any Archimedean ordered group (not just fields).
+- **B**oundary: Breaks for non-Archimedean fields like hyperreals ℝ* where 1/ω is a genuine infinitesimal.
 
-**Theorem 3.4** (Monotonicity). A ⊆ B implies P(A) ≤ P(B)
+### 3.2 Theorem 2: Finitely Additive Infinitesimal Measures
 
-*Proof sketch*: These follow directly from properties of finite sums over ordered fields. Monotonicity uses the non-negativity of prob. □
+**Theorem 3.2** (uniform_inf_measure_additive). *For any ε ∈ F and disjoint S, T:*
+*μ_ε(S ∪ T) = μ_ε(S) + μ_ε(T)*
 
-### 3.2 Regularity and Universal Conditioning
+**Theorem 3.3** (uniform_inf_measure_strictly_positive). *If ε > 0, then μ_ε(S) > 0 for all nonempty S.*
 
-**Theorem 3.5** (Regularity). Every nonempty event has strictly positive probability: A ≠ ∅ implies P(A) > 0.
+*Proof sketch.* Additivity follows from |S ∪ T| = |S| + |T| for disjoint sets and distributivity of scalar multiplication over addition. Strict positivity follows from |S| ≥ 1 for nonempty S. □
 
-*Proof*: Since each prob(ω) > 0 and A is nonempty, P(A) = Σ_{ω ∈ A} prob(ω) > 0 by positivity of finite sums. □
+**PEGB Analysis:**
+- **P**roof: Verified in Lean 4.
+- **E**xample: On Fin 5 with ε, μ_ε({0,1,2}) = 3ε, μ_ε({3,4}) = 2ε, and μ_ε(Fin 5) = 5ε = 3ε + 2ε.
+- **G**eneralization: Extends to weighted (non-uniform) measures with arbitrary positive weight functions.
+- **B**oundary: Does not extend to σ-additivity on countably infinite sets, as the countable sum of infinitesimals need not converge in the order topology.
 
-**Corollary 3.6** (Universal Conditioning). For every nonempty event B, the conditional probability P(· | B) is well-defined.
+### 3.3 Theorem 3: Infinitesimal Universality of Conditional Probability
 
-This is the key advantage of NAProbSpace: there are no "measure-zero" events except the empty set, so conditional probability never involves division by zero.
+**Theorem 3.4** (conditional_probability_rational). *For any ε > 0 and nonempty B:*
+*P_ε(A|B) = |A ∩ B| / |B|*
 
-### 3.3 Bayes' Theorem
+*Proof sketch.* By definition, P_ε(A|B) = μ_ε(A∩B)/μ_ε(B) = (|A∩B|·ε)/(|B|·ε). Since ε > 0, it cancels in the ratio. □
 
-**Theorem 3.7** (Bayes). For nonempty events A, B:
-P(A | B) · P(B) = P(B | A) · P(A)
+This is the central insight: **the choice of infinitesimal is irrelevant for relative comparisons**. Whether we use ε = 1/ω, ε = 1/ω², or any other infinitesimal, the conditional probabilities are identical rational numbers. Non-Archimedean probability extends standard probability rather than contradicting it.
 
-*Proof sketch*: Both sides equal P(A ∩ B), using div_mul_cancel and the commutativity of intersection. □
+**PEGB Analysis:**
+- **P**roof: Verified in Lean 4 using `grind` tactic.
+- **E**xample: On Fin 6, P_ε({0,1}|{0,1,2}) = 2/3 regardless of ε.
+- **G**eneralization: For non-uniform weights w, conditional probability becomes Σ_{x∈A∩B} w(x) / Σ_{x∈B} w(x), still independent of any global infinitesimal scaling factor.
+- **B**oundary: If weights vary by infinitesimal amounts (not just a global scale), universality can fail — the specific infinitesimal structure matters.
 
-### 3.4 Law of Total Probability
+### 3.4 Theorem 4: Infinitesimal Stratification
 
-**Theorem 3.8** (Total Probability — Intersection Form).
-P(A) = P(A ∩ B) + P(A ∩ Bᶜ)
+**Theorem 3.5** (infinitesimal_sq_is_infinitesimal). *If ε is infinitesimal, then ε² is infinitesimal.*
 
-**Theorem 3.9** (Total Probability — Conditional Form). For nonempty B, Bᶜ:
-P(A) = P(A | B) · P(B) + P(A | Bᶜ) · P(Bᶜ)
+**Theorem 3.6** (infinitesimal_sq_dominated). *If ε is infinitesimal, then (n+1)·ε² < ε for all n ∈ ℕ.*
 
-### 3.5 Chain Rule
+**Theorem 3.7** (infinitesimal_mul_infinitesimal). *The product of two infinitesimals is infinitesimal.*
 
-**Theorem 3.10** (Chain Rule). For nonempty B:
-P(A ∩ B) = P(A | B) · P(B)
+*Proof sketch.* For Theorem 3.6: (n+1)·ε² = ((n+1)·ε)·ε. Since ε < 1/(n+1), we have (n+1)·ε < 1, so ((n+1)·ε)·ε < 1·ε = ε. □
 
-**Theorem 3.11** (Triple Chain Rule). For nonempty B ∩ C and C:
-P(A ∩ B ∩ C) = P(A | B ∩ C) · P(B | C) · P(C)
+This gives a natural **filtration of infinitesimal orders**:
+```
+ε ≫ ε² ≫ ε³ ≫ ε⁴ ≫ ...
+```
+where ε^(k+1) is dominated by ε^k in the sense that any finite multiple of ε^(k+1) is less than ε^k.
 
-### 3.6 Archimedean Characterization
+**PEGB Analysis:**
+- **P**roof: Verified in Lean 4 using nlinarith and positivity.
+- **E**xample: In the hyperreals, 1/ω ≫ 1/ω² ≫ 1/ω³. The notation ω^(-k) forms a filtration.
+- **G**eneralization: The ideal of infinitesimals forms a maximal ideal in the valuation ring, and the filtration corresponds to the valuation filtration.
+- **B**oundary: The stratification is discrete (indexed by ℕ). In some non-Archimedean fields, there are infinitesimals between ε^k and ε^(k+1) — the filtration doesn't capture all infinitesimal structure.
 
-**Theorem 3.12** (ℝ is Archimedean). The real numbers contain no infinitesimal elements.
+### 3.5 Theorem 5: Archimedean-Measure Duality
 
-*Proof sketch*: Suppose ε > 0 is infinitesimal. By the Archimedean property of ℝ, there exists n ∈ ℕ with 1/ε < n, i.e., ε > 1/n, contradicting ε < 1/n. □
+**Theorem 3.8** (archimedean_measure_bound). *In an Archimedean field, for any ε > 0, there exists N with N·ε ≥ 1.*
 
-**Theorem 3.13** (Minimum Probability Bound). In any NAProbSpace on Ω, there exists ω₀ such that prob(ω₀) ≤ 1/|Ω|.
+**Theorem 3.9** (non_archimedean_universal_bound). *If ε is infinitesimal, then n·ε < 1 for all n ∈ ℕ.*
 
-*Proof sketch*: By contradiction. If all prob(ω) > 1/|Ω|, then Σ prob > |Ω| · (1/|Ω|) = 1, contradicting normalization. □
+Together, these establish a duality: the Archimedean property is equivalent to the assertion that no single positive weight can serve as a "universal point mass" that keeps the total measure below 1 for arbitrarily large finite sets.
 
-**Theorem 3.14** (Non-Archimedean Detection). If all probabilities in a NAProbSpace are infinitesimal and |Ω| > 1, then the underlying field is non-Archimedean.
+**PEGB Analysis:**
+- **P**roof: Verified in Lean 4.
+- **E**xample: In ℝ, ε = 0.01 gives N = 100 with 100·ε = 1. In hyperreals, ε = 1/ω gives n·ε = n/ω < 1 for all standard n.
+- **G**eneralization: This extends to characterize Archimedean ordered groups (not just fields).
+- **B**oundary: The duality is specific to finite additivity. For σ-additivity, even non-Archimedean fields face obstructions related to completeness and convergence of series.
 
-### 3.7 Pushforward Measure
+### 3.6 Bridge Theorem: Anti-Cancellation and Measure Positivity
 
-**Theorem 3.15** (Pushforward). For a surjective function f : Ω → Ω', the pushforward (f_*μ)(ω') = Σ_{f(ω)=ω'} μ(ω) defines a NAProbSpace on Ω'.
+**Theorem 3.10** (positive_weight_measure_nonzero). *If all weights are positive, the measure of any nonempty set is positive.*
 
----
+This connects to the catalog result `sum_ne_zero_of_same_sign_and_exists_ne_zero` (FINAL/Pythagorean/LorentzianAggregateAntiCancel.lean): the anti-cancellation principle for same-sign sums is precisely the measure-theoretic statement that positive weights yield positive measures. In the infinitesimal setting, this guarantees that even infinitesimal measures are genuinely non-zero — they detect events that zero-probability measures cannot.
 
-## 4. The Uniform Distribution and Infinitesimals
+## 4. Algorithms
 
-**Theorem 4.1** (Uniform NAProbSpace). For any nonempty finite type Ω, the uniform distribution prob(ω) = 1/|Ω| defines a NAProbSpace.
+### 4.1 Infinitesimal Measure Computation
 
-**Theorem 4.2** (Uniform Event Probability). In the uniform distribution, P(A) = |A|/|Ω|.
-
-**Key Insight**: When F is non-Archimedean and |Ω| = N where N is "infinite" (in the sense that 1/N is infinitesimal), the uniform distribution assigns infinitesimal probability to each point yet still sums to 1. This is precisely the surreal-valued probability measure conjectured in the research direction.
-
----
-
-## 5. Connection to Surreal Numbers
-
-Conway's surreal numbers form the largest ordered field. In particular, they contain:
-- All real numbers
-- Infinitesimal elements (e.g., 1/ω where ω is the first infinite ordinal)
-- Infinite elements
-
-Our NAProbSpace framework is designed to work over any ordered field, including (when fully formalized) the surreal numbers. The key results:
-
-1. Over ℝ, NAProbSpaces exist but probabilities cannot be infinitesimal
-2. Over surreal numbers, NAProbSpaces can have infinitesimal point masses
-3. All probability identities (Bayes, total probability, etc.) transfer automatically
-
-This validates the research conjecture: there exists a surreal-valued probability measure where every point has positive (infinitesimal) probability.
-
----
-
-## 6. Discussion
-
-### 6.1 Comparison with Nonstandard Analysis
-
-Our approach differs from Loeb measures in several ways:
-- **Algebraic, not model-theoretic**: We work directly over ordered fields, not ultrapower constructions
-- **Constructive**: The uniform distribution is explicitly defined, not obtained via transfer
-- **Field-agnostic**: The theory works over any ordered field, not just hyperreals
-
-### 6.2 Limitations
-
-- **Finite sample spaces only**: Our current formalization handles finite Ω. Extending to infinite sample spaces requires a theory of infinite sums in non-Archimedean fields.
-- **No σ-additivity**: We prove finite additivity but not countable additivity. In non-Archimedean settings, the right notion of infinite additivity is an open question.
-
-### 6.3 Future Work
-
-1. **Infinite NAProbSpaces**: Extend to countably and uncountably infinite sample spaces
-2. **Integration theory**: Develop surreal-valued integration
-3. **Game-theoretic probability**: Connect to Conway's game theory
-4. **Applications**: Apply to decision theory under extreme uncertainty
-
----
-
-## 7. Formalization Details
-
-The complete formalization consists of two Lean 4 files:
-- `Defs.lean` (≈230 lines): Core definitions and 17 theorems
-- `Advanced.lean` (≈140 lines): Advanced results including independence, chain rules, pushforward, and 10+ additional theorems
-
-All proofs are complete (no `sorry`) and verified by the Lean 4 type checker. The formalization uses Mathlib's ordered algebra infrastructure.
-
-### Key Lean Definitions
-
-```lean
-structure NAProbSpace (F : Type*) [Field F] [LinearOrder F] [IsStrictOrderedRing F]
-    (Ω : Type*) [DecidableEq Ω] [Fintype Ω] where
-  prob : Ω → F
-  prob_nonneg : ∀ ω, 0 ≤ prob ω
-  prob_pos : ∀ ω, 0 < prob ω  -- The key regularity axiom
-  total_one : ∑ ω : Ω, prob ω = 1
+```
+Algorithm: UniformInfinitesimalMeasure(S, ε)
+Input: Finite set S, infinitesimal weight ε
+Output: μ_ε(S)
+1. Return |S| · ε
 ```
 
----
+### 4.2 Non-Archimedean Conditional Probability
+
+```
+Algorithm: InfinitesimalConditionalProbability(A, B)
+Input: Finite sets A, B with B nonempty
+Output: P(A|B) (independent of ε)
+1. Return |A ∩ B| / |B|
+```
+
+The key insight is that Algorithm 4.2 requires no knowledge of ε — the infinitesimal cancels. This makes non-Archimedean conditional probability computationally equivalent to classical combinatorial probability.
+
+## 5. Discussion
+
+### 5.1 Relationship to Nonstandard Analysis
+
+Our framework is closely related to Nelson's IST approach and Loeb's measure construction, but with important differences. We work *within* the non-Archimedean field rather than taking a standard part. This preserves infinitesimal distinctions that the Loeb measure collapses.
+
+### 5.2 The Integration Problem
+
+The main open question is extending finite additivity to something like σ-additivity or integration. For countable sets, the obvious approach (sum the series) faces convergence issues in the order topology. For uncountable sets like [0,1], the situation is even more delicate — one needs a theory of surreal-valued integration that remains largely undeveloped.
+
+### 5.3 Connection to Game Theory
+
+Conway's surreal numbers arise naturally from combinatorial games. The finitely additive measures we construct could serve as "value functions" on mixed strategies, allowing infinitesimal advantages in games to be quantified probabilistically.
+
+## 6. Future Work
+
+1. **Surreal integration**: Develop an integration theory for surreal-valued functions, extending the uniform measures to continuous domains.
+2. **σ-additivity**: Characterize which non-Archimedean fields support countably additive infinitesimal measures.
+3. **Non-Archimedean Bayes**: Develop a full Bayesian inference framework with infinitesimal priors.
+4. **Valuation filtration**: Connect the infinitesimal stratification to the valuation theory of non-Archimedean fields.
+5. **Categorical framework**: Formulate non-Archimedean probability in terms of monad theory on the category of non-Archimedean fields.
 
 ## References
 
-1. A.N. Kolmogorov, *Foundations of the Theory of Probability*, 1933.
-2. J.H. Conway, *On Numbers and Games*, Academic Press, 1976.
-3. A. Robinson, *Non-Standard Analysis*, North-Holland, 1966.
-4. P.A. Loeb, "Conversion from nonstandard to standard measure spaces and applications in probability theory," *Trans. AMS*, 1975.
-5. L. Blume, A. Brandenburger, E. Dekel, "Lexicographic probabilities and choice under uncertainty," *Econometrica*, 1991.
-6. Mathlib Community, *Mathlib: the Lean mathematical library*, https://leanprover-community.github.io/mathlib4_docs/.
+- Conway, J.H. (1976). *On Numbers and Games*. Academic Press.
+- Ehrlich, P. (2012). "The absolute arithmetic continuum and the unification of all numbers great and small." *Bulletin of Symbolic Logic*, 18(1), 1-45.
+- Loeb, P.A. (1975). "Conversion from nonstandard to standard measure spaces and applications in probability theory." *Transactions of the AMS*, 211, 113-122.
+- Nelson, E. (1987). *Radically Elementary Probability Theory*. Princeton University Press.
+- Robinson, A. (1966). *Non-Standard Analysis*. North-Holland.
+
+### Catalog References
+
+- `FINAL/Pythagorean/LorentzianAggregateAntiCancel.lean`: `sum_ne_zero_of_same_sign_and_exists_ne_zero` — the anti-cancellation principle for same-sign sums, which we extend to measure positivity.
+- `Novelty/SurrealProbability/Defs.lean`: Core definitions of infinitesimals, finitely additive measures, and conditional probability.
+- `Novelty/SurrealProbability/Theorems.lean`: All twelve verified theorems.

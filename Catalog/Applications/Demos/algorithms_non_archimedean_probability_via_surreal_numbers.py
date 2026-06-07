@@ -1,239 +1,182 @@
-#!/usr/bin/env python3
 """
-Algorithms for Non-Archimedean Probability Spaces
+Non-Archimedean Probability: Core Algorithms
 
-Type-hinted implementations of the core mathematical constructions
-from our formalization.
+Type-hinted implementations of the key algorithms from the research.
 """
 
 from fractions import Fraction
-from typing import Callable, Dict, FrozenSet, Generic, List, Optional, Set, TypeVar
+from typing import FrozenSet, Set, Dict, TypeVar, Callable
 
 T = TypeVar('T')
 
 
-class NAProbSpace(Generic[T]):
-    """A Non-Archimedean Probability Space over a finite sample space.
-
-    Probability values are represented as Fraction for exact arithmetic,
-    modeling an ordered field. All point probabilities are strictly positive
-    (the regularity axiom), and the total probability is exactly 1.
-
-    Attributes:
-        omega: The sample space as a frozenset.
-        prob: A dictionary mapping each outcome to its probability.
+def uniform_inf_measure(epsilon: Fraction, S: Set[T]) -> Fraction:
     """
+    Compute the uniform infinitesimal measure of a finite set.
 
-    def __init__(self, prob: Dict[T, Fraction]) -> None:
-        """Initialize a NAProbSpace from a probability mass function.
-
-        Args:
-            prob: Dict mapping each outcome to its (positive) probability.
-
-        Raises:
-            ValueError: If probabilities are not positive or don't sum to 1.
-        """
-        if not prob:
-            raise ValueError("Sample space must be nonempty")
-        for omega, p in prob.items():
-            if p <= 0:
-                raise ValueError(f"Probability of {omega} is {p} ≤ 0 (regularity violated)")
-        total = sum(prob.values())
-        if total != Fraction(1):
-            raise ValueError(f"Total probability is {total}, not 1")
-        self.omega: FrozenSet[T] = frozenset(prob.keys())
-        self.prob: Dict[T, Fraction] = dict(prob)
-
-    @classmethod
-    def uniform(cls, elements: Set[T]) -> 'NAProbSpace[T]':
-        """Create a uniform NAProbSpace where each element has equal probability.
-
-        Args:
-            elements: The sample space.
-
-        Returns:
-            A uniform NAProbSpace.
-        """
-        n = len(elements)
-        if n == 0:
-            raise ValueError("Sample space must be nonempty")
-        p = Fraction(1, n)
-        return cls({e: p for e in elements})
-
-    def event_prob(self, event: Set[T]) -> Fraction:
-        """Compute the probability of an event (subset of Ω).
-
-        P(A) = Σ_{ω ∈ A} P({ω})
-
-        Args:
-            event: A subset of the sample space.
-
-        Returns:
-            The probability of the event.
-        """
-        return sum(self.prob[omega] for omega in event if omega in self.prob)
-
-    def cond_prob(self, a: Set[T], b: Set[T]) -> Fraction:
-        """Compute conditional probability P(A | B).
-
-        P(A | B) = P(A ∩ B) / P(B)
-
-        In NAProbSpace, this is always well-defined for nonempty B
-        because regularity guarantees P(B) > 0.
-
-        Args:
-            a: The event to condition.
-            b: The conditioning event (must be nonempty).
-
-        Returns:
-            The conditional probability P(A | B).
-
-        Raises:
-            ValueError: If B is empty.
-        """
-        if not b:
-            raise ValueError("Cannot condition on empty event")
-        pb = self.event_prob(b)
-        if pb == 0:
-            raise ValueError("Conditioning event has zero probability")
-        return self.event_prob(a & b) / pb
-
-    def is_independent(self, a: Set[T], b: Set[T]) -> bool:
-        """Check if events A and B are independent.
-
-        A and B are independent iff P(A ∩ B) = P(A) · P(B).
-
-        Args:
-            a: First event.
-            b: Second event.
-
-        Returns:
-            True if A and B are independent.
-        """
-        return self.event_prob(a & b) == self.event_prob(a) * self.event_prob(b)
-
-    def bayes_verify(self, a: Set[T], b: Set[T]) -> bool:
-        """Verify Bayes' theorem: P(A|B)·P(B) = P(B|A)·P(A).
-
-        Args:
-            a: First event (nonempty).
-            b: Second event (nonempty).
-
-        Returns:
-            True if Bayes' theorem holds (always True for NAProbSpace).
-        """
-        if not a or not b:
-            return True  # Vacuously true
-        lhs = self.cond_prob(a, b) * self.event_prob(b)
-        rhs = self.cond_prob(b, a) * self.event_prob(a)
-        return lhs == rhs
-
-    def total_probability_verify(self, a: Set[T], b: Set[T]) -> bool:
-        """Verify the Law of Total Probability.
-
-        P(A) = P(A|B)·P(B) + P(A|Bᶜ)·P(Bᶜ)
-
-        Args:
-            a: The event.
-            b: The partitioning event (neither empty nor full).
-
-        Returns:
-            True if the law holds (always True for NAProbSpace).
-        """
-        if not b or b == self.omega:
-            return True
-        bc = self.omega - b
-        lhs = self.event_prob(a)
-        rhs = (self.cond_prob(a, b) * self.event_prob(b) +
-               self.cond_prob(a, bc) * self.event_prob(bc))
-        return lhs == rhs
-
-    def pushforward(self, f: Callable[[T], T], codomain: Set[T]) -> 'NAProbSpace[T]':
-        """Compute the pushforward measure along f.
-
-        (f_*μ)(ω') = Σ_{ω : f(ω) = ω'} μ(ω)
-
-        Args:
-            f: A function from Ω to Ω'.
-            codomain: The codomain (must equal the range of f).
-
-        Returns:
-            The pushforward NAProbSpace.
-        """
-        new_prob: Dict[T, Fraction] = {}
-        for omega_prime in codomain:
-            new_prob[omega_prime] = sum(
-                self.prob[omega] for omega in self.omega if f(omega) == omega_prime
-            )
-        return NAProbSpace(new_prob)
-
-
-def is_infinitesimal(x: Fraction, bound: int = 1000) -> bool:
-    """Check if a fraction is 'infinitesimal-like' (smaller than 1/n for all n ≤ bound).
-
-    In exact arithmetic with Fraction, true infinitesimals don't exist in ℚ.
-    This function checks if x < 1/n for all positive n up to bound.
+    μ_ε(S) = |S| · ε
 
     Args:
-        x: The value to check.
-        bound: Check against 1/n for n = 1, ..., bound.
+        epsilon: The infinitesimal weight (positive element of the field)
+        S: A finite set
 
     Returns:
-        True if x is positive and smaller than 1/n for all tested n.
+        The measure |S| · ε
     """
-    if x <= 0:
+    return len(S) * epsilon
+
+
+def weighted_measure(weights: Dict[T, Fraction], S: Set[T]) -> Fraction:
+    """
+    Compute the weighted measure of a finite set.
+
+    μ_w(S) = Σ_{x ∈ S} w(x)
+
+    Args:
+        weights: Weight function mapping elements to field values
+        S: A finite set (subset of the weight function's domain)
+
+    Returns:
+        The sum of weights over S
+    """
+    return sum(weights.get(x, Fraction(0)) for x in S)
+
+
+def conditional_probability(
+    measure: Callable[[Set[T]], Fraction],
+    A: Set[T],
+    B: Set[T]
+) -> Fraction:
+    """
+    Compute conditional probability P(A|B) = μ(A∩B) / μ(B).
+
+    For uniform infinitesimal measures, this equals |A∩B|/|B|,
+    independent of the infinitesimal (universality theorem).
+
+    Args:
+        measure: A finitely additive measure function
+        A: The event to condition on
+        B: The conditioning event (must have positive measure)
+
+    Returns:
+        P(A|B) = μ(A∩B) / μ(B)
+
+    Raises:
+        ZeroDivisionError: if μ(B) = 0
+    """
+    return measure(A & B) / measure(B)
+
+
+def is_infinitesimal(epsilon: Fraction, bound: int = 10000) -> bool:
+    """
+    Test whether ε satisfies the infinitesimal condition up to bound n.
+
+    An element ε is infinitesimal if:
+    1. ε > 0
+    2. ε < 1/(n+1) for all n ∈ ℕ
+
+    In a rational (Archimedean) field, this always returns False for
+    sufficiently large bound. In a genuine non-Archimedean field,
+    it would return True for all bounds.
+
+    Args:
+        epsilon: Element to test
+        bound: Maximum n to check
+
+    Returns:
+        True if ε > 0 and ε < 1/(n+1) for all n ≤ bound
+    """
+    if epsilon <= 0:
         return False
-    return all(x < Fraction(1, n) for n in range(1, bound + 1))
+    return all(epsilon < Fraction(1, n + 1) for n in range(bound))
 
 
-def construct_uniform_naprobspace(n: int) -> NAProbSpace[int]:
-    """Construct a uniform NAProbSpace on {0, 1, ..., n-1}.
+def archimedean_bound(epsilon: Fraction) -> int:
+    """
+    Find the smallest N such that N · ε ≥ 1.
+
+    By the Archimedean property of ℚ, such N always exists for ε > 0.
+    This is Theorem 5 (archimedean_measure_bound).
 
     Args:
-        n: Size of the sample space.
+        epsilon: A positive rational number
 
     Returns:
-        A uniform NAProbSpace.
+        Smallest N with N · ε ≥ 1
     """
-    return NAProbSpace.uniform(set(range(n)))
+    if epsilon <= 0:
+        raise ValueError("epsilon must be positive")
+    N = 1
+    while N * epsilon < 1:
+        N += 1
+    return N
 
 
-def inclusion_exclusion(
-    mu: NAProbSpace[T], a: Set[T], b: Set[T]
-) -> Dict[str, Fraction]:
-    """Compute all terms of the inclusion-exclusion formula.
+def infinitesimal_stratification(
+    epsilon: Fraction,
+    order: int
+) -> Fraction:
+    """
+    Compute ε^order, the order-k infinitesimal.
+
+    By Theorem 4, if ε is infinitesimal, then ε^k is infinitesimal
+    for all k ≥ 1, and ε^{k+1} is dominated by ε^k:
+    (n+1) · ε^{k+1} < ε^k for all n.
+
+    Args:
+        epsilon: The base infinitesimal
+        order: The power k ≥ 1
 
     Returns:
-        Dict with P(A), P(B), P(A∩B), P(A∪B), and verification.
+        ε^k
     """
-    pa = mu.event_prob(a)
-    pb = mu.event_prob(b)
-    pab = mu.event_prob(a & b)
-    paub = mu.event_prob(a | b)
-    ie = pa + pb - pab
+    result = Fraction(1)
+    for _ in range(order):
+        result *= epsilon
+    return result
 
-    return {
-        "P(A)": pa,
-        "P(B)": pb,
-        "P(A∩B)": pab,
-        "P(A∪B)": paub,
-        "P(A)+P(B)-P(A∩B)": ie,
-        "verified": paub == ie,
-    }
+
+def verify_finite_additivity(
+    epsilon: Fraction,
+    S: Set[int],
+    T: Set[int]
+) -> bool:
+    """
+    Verify that μ_ε(S∪T) = μ_ε(S) + μ_ε(T) for disjoint S, T.
+
+    This is Theorem 2 (uniform_inf_measure_additive).
+
+    Args:
+        epsilon: Weight parameter
+        S, T: Disjoint finite sets
+
+    Returns:
+        True if additivity holds (always True for disjoint sets)
+    """
+    if S & T:
+        raise ValueError("Sets must be disjoint")
+    lhs = uniform_inf_measure(epsilon, S | T)
+    rhs = uniform_inf_measure(epsilon, S) + uniform_inf_measure(epsilon, T)
+    return lhs == rhs
 
 
 if __name__ == "__main__":
-    # Quick test
-    mu = NAProbSpace.uniform({1, 2, 3, 4, 5, 6})
-    print("Uniform die:")
-    print(f"  P({{1,2,3}}) = {mu.event_prob({1, 2, 3})}")
-    print(f"  P({{1}}|{{1,2,3}}) = {mu.cond_prob({1}, {1, 2, 3})}")
-    print(f"  Bayes verified: {mu.bayes_verify({1, 2}, {2, 3, 4})}")
-    print(f"  Total prob verified: {mu.total_probability_verify({1, 2, 3}, {2, 3, 4, 5})}")
+    # Quick verification
+    eps = Fraction(1, 10**9)
 
-    # Large space
-    N = 10000
-    mu_large = construct_uniform_naprobspace(N)
-    print(f"\nUniform on {{0,...,{N-1}}}:")
-    print(f"  P({{0}}) = {mu_large.prob[0]} = {float(mu_large.prob[0]):.2e}")
-    print(f"  'Infinitesimal-like' (< 1/n for n ≤ 100): {is_infinitesimal(mu_large.prob[0], 100)}")
+    # Finite additivity
+    S, T = {0, 1, 2}, {3, 4}
+    assert verify_finite_additivity(eps, S, T)
+
+    # Conditional universality
+    A, B = {0, 1}, {0, 1, 2, 3}
+    for N in [7, 100, 10**6]:
+        e = Fraction(1, N)
+        mu = lambda s, e=e: uniform_inf_measure(e, s)
+        cp = conditional_probability(mu, A, B)
+        assert cp == Fraction(1, 2)  # |A∩B|/|B| = 2/4 = 1/2
+
+    # Archimedean bound
+    assert archimedean_bound(Fraction(1, 100)) == 100
+
+    print("All algorithm tests passed.")
