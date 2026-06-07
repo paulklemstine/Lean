@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-07T07:54:00.470470+00:00",
+  "last_updated": "2026-06-07T08:28:22.734062+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -13464,6 +13464,76 @@
       "theorem_count": 4,
       "timestamp": "2026-06-07T07:54:00.418292+00:00",
       "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6831,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 304,
+      "domain": "Applications",
+      "duration_seconds": 8103.201179265976,
+      "end_time": 1780820843.2608116,
+      "files_integrated": 5,
+      "job_id": "8ae75815",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.88,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8151,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7322,
+        "novelty": 0.95,
+        "proof_depth": 0.6389,
+        "usefulness": 0.8195
+      },
+      "quality_score": 0.2508,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780812740.0596323,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T08:28:22.591176+00:00",
+      "title": "EML Quantum Activation Functions"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4713,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 307,
+      "domain": "Novelty",
+      "duration_seconds": 6029.997886896133,
+      "end_time": 1780820843.741376,
+      "files_integrated": 5,
+      "job_id": "148e7bab",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.56,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6433,
+        "cross_domain": 1.0,
+        "grade": "substantial",
+        "importance": 0.4114,
+        "novelty": 0.95,
+        "proof_depth": 0.1806,
+        "usefulness": 0.5903
+      },
+      "quality_score": 0.28664,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780814813.743489,
+      "strategy_count": 187,
+      "theorem_count": 6,
+      "timestamp": "2026-06-07T08:28:22.679398+00:00",
+      "title": "Non-Archimedean Probability via Surreal Numbers"
     }
   ]
 }
