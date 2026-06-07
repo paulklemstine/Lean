@@ -1,24 +1,22 @@
 #!/usr/bin/env python3
 """
-Algorithms for EML Special Functions
+Algorithms: EML Special Functions
 
-Type-hinted implementations of the key mathematical objects and algorithms
-studied in the Lean 4 formalization.
+Type-hinted implementations of the core algorithms from the research.
 """
 
 from typing import List, Tuple, Callable
 import math
-from fractions import Fraction
 
 
-def pochhammer_rising(a: float, n: int) -> float:
+def rising_factorial(a: float, n: int) -> float:
     """
-    Rising factorial (Pochhammer symbol): (a)_n = a(a+1)...(a+n-1).
+    Compute the Pochhammer symbol (rising factorial).
 
-    Algorithm: Direct iterative multiplication.
-    Complexity: O(n) multiplications.
+    (a)_n = a * (a+1) * ... * (a+n-1)
 
-    Corresponds to Lean definition `pochhammer_rising`.
+    Time: O(n)
+    Space: O(1)
     """
     result = 1.0
     for k in range(n):
@@ -26,154 +24,164 @@ def pochhammer_rising(a: float, n: int) -> float:
     return result
 
 
-def hypergeometric_2F1(a: float, b: float, c: float, z: float,
-                       tol: float = 1e-15, max_terms: int = 500) -> float:
+def hypergeometric_2f1(a: float, b: float, c: float, z: float,
+                        tol: float = 1e-15, max_terms: int = 1000) -> float:
     """
-    Gauss hypergeometric function ₂F₁(a, b; c; z) for |z| < 1.
+    Compute ₂F₁(a, b; c; z) via direct series summation.
 
-    Algorithm: Direct series summation with ratio test termination.
-    Each term is computed from the previous via the recurrence:
-        term_{n+1} = term_n · (a+n)(b+n) / ((c+n)(n+1)) · z
+    Uses the recurrence: c_{n+1} = c_n * (a+n)(b+n) / ((c+n)(n+1))
 
-    This recurrence is equivalent to Gauss's hypergeometric ODE
-    (Theorem: gauss_hypergeom_recurrence).
+    Convergence: |z| < 1 (radius of convergence = 1 by Theorem 23)
+    Special cases:
+        - 2F1(a, b; c; 0) = 1  (Theorem 7)
+        - 2F1(0, b; c; z) = 1  (Theorem 8)
+        - 2F1(-m, b; c; z) = polynomial of degree m  (Theorem 25)
 
-    Pseudocode:
-        s ← 1, t ← 1
-        for n = 0, 1, 2, ...
-            s ← s + t
-            t ← t · (a+n)(b+n) / ((c+n)(n+1)) · z
-            if |t| < tol: break
-        return s
+    Args:
+        a, b, c: Parameters (c must not be 0, -1, -2, ...)
+        z: Argument (|z| < 1 for convergence)
+        tol: Convergence tolerance
+        max_terms: Maximum number of terms
 
-    Corresponds to Lean definition `hypergeom_partial_sum`.
+    Returns:
+        Approximate value of 2F1(a, b; c; z)
     """
-    if abs(z) >= 1.0:
-        raise ValueError(f"|z| = {abs(z)} >= 1; series diverges")
-    if c <= 0 and c == int(c):
-        raise ValueError(f"c = {c} is a non-positive integer; (c)_n = 0")
+    if abs(z) >= 1:
+        raise ValueError(f"|z| = {abs(z)} >= 1: series may not converge")
 
-    total = 0.0
+    total = 1.0
     term = 1.0
+
     for n in range(max_terms):
-        total += term
-        if abs(term) < tol * abs(total) and n > 0:
-            break
         term *= (a + n) * (b + n) / ((c + n) * (n + 1)) * z
+        total += term
+        if abs(term) < tol * abs(total):
+            break
+
     return total
 
 
-def bernoulli_numbers(N: int) -> List[Fraction]:
+def eml_operator(x: float, y: float) -> float:
     """
-    Compute Bernoulli numbers B_0, ..., B_N using the recursive definition.
+    The EML operator: eml(x, y) = exp(x) - log(y).
 
-    Algorithm: Akiyama-Tanigawa algorithm (iterative).
-    Complexity: O(N²).
-
-    Used in Theorem: zeta_at_neg_integers.
+    Properties (from Lean proofs):
+        - Differentiable in x everywhere (Theorem 17a)
+        - Differentiable in y for y != 0 (Theorem 17b)
+        - Strictly monotone increasing in x
+        - Singularity only at y = 0 (log branch point)
     """
-    B: List[Fraction] = [Fraction(0)] * (N + 1)
-    B[0] = Fraction(1)
-    for m in range(1, N + 1):
-        B[m] = Fraction(0)
-        for k in range(m):
-            binom = math.comb(m + 1, k)
-            B[m] -= Fraction(binom) * B[k]
-        B[m] /= Fraction(m + 1)
-    return B
+    if y <= 0:
+        raise ValueError(f"y = {y} <= 0: log(y) undefined")
+    return math.exp(x) - math.log(y)
 
 
-def zeta_negative_integer(k: int) -> Fraction:
+def eml_diagonal(z: float) -> float:
     """
-    Compute ζ(-k) = (-1)^k · B_{k+1} / (k+1).
+    EML diagonal: emlDiag(z) = exp(z) - log(z).
 
-    Uses Bernoulli numbers (Theorem: zeta_at_neg_integers).
+    Smooth on (0, ∞) (Theorem 16).
     """
-    B = bernoulli_numbers(k + 1)
-    return Fraction((-1)**k) * B[k + 1] / Fraction(k + 1)
+    if z <= 0:
+        raise ValueError(f"z = {z} <= 0: log(z) undefined")
+    return math.exp(z) - math.log(z)
 
 
-def gamma_deligne(s: complex) -> complex:
+def log_gamma_decomposition(n: int) -> List[float]:
     """
-    Deligne Gamma factor Γ_ℝ(s) = π^(-s/2) · Γ(s/2).
+    Decompose log(n!) into individual log terms (Theorem 9).
 
-    This appears in the Gamma-Zeta bridge:
-        ζ(s) = ξ(s) / Γ_ℝ(s)
-
-    Corresponds to Lean theorem `deligne_gamma_def`.
+    Returns the list [log(1), log(2), ..., log(n)] whose sum equals log(n!).
     """
-    import cmath
-    half_s = s / 2
-    # Use math.gamma for real part, extend to complex via Stirling
-    if isinstance(s, (int, float)):
-        return math.pi ** (-s/2) * math.gamma(s/2)
-    else:
-        # Placeholder for complex gamma
-        raise NotImplementedError("Complex gamma not implemented; use scipy.special.gamma")
+    return [math.log(k + 1) for k in range(n)]
 
 
-def pochhammer_gamma_relation(a: float, n: int) -> Tuple[float, float]:
+def classify_singularity(spectrum_type: str) -> dict:
     """
-    Verify (a)_n · Γ(a) = Γ(a+n) numerically.
+    Classify a singularity type in the EML framework.
 
-    Returns (LHS, RHS) for comparison.
-    Corresponds to Lean theorem `pochhammer_gamma_relation`.
+    EML Singularity Types:
+        - 'removable': Function extends continuously (meromorphic ✓, EML-compatible ✓)
+        - 'pole': Finite-order blow-up (meromorphic ✓, EML-compatible ✓)
+        - 'logBranch': Log branch point (meromorphic ✗, EML-compatible ✓)
+        - 'essential': Essential singularity (meromorphic ✗, EML-compatible ✗)
+
+    Returns dict with classification properties.
     """
-    lhs = pochhammer_rising(a, n) * math.gamma(a)
-    rhs = math.gamma(a + n)
-    return (lhs, rhs)
+    classifications = {
+        'removable': {'meromorphic': True, 'eml_compatible': True,
+                      'description': 'Fictitious singularity, function extends continuously'},
+        'pole': {'meromorphic': True, 'eml_compatible': True,
+                 'description': 'Finite-order blow-up, controlled by Laurent expansion'},
+        'logBranch': {'meromorphic': False, 'eml_compatible': True,
+                      'description': 'Logarithmic branch point, multi-valued but EML-handled'},
+        'essential': {'meromorphic': False, 'eml_compatible': False,
+                      'description': 'Casorati-Weierstrass behavior, outside EML class'},
+    }
+
+    if spectrum_type not in classifications:
+        raise ValueError(f"Unknown singularity type: {spectrum_type}")
+
+    return classifications[spectrum_type]
 
 
-def gauss_ode_verify(a: float, b: float, c: float,
-                     z: float, h: float = 1e-6) -> Tuple[float, float]:
+def stirling_lower_bound(n: int) -> Tuple[float, float]:
     """
-    Numerically verify Gauss's hypergeometric ODE:
-        z(1-z)y'' + [c - (a+b+1)z]y' - ab·y = 0
+    Compute Stirling lower bound and actual log(n!) (Theorem 11).
 
-    for y = ₂F₁(a, b; c; z).
-
-    Returns (residual, relative_error).
+    Returns (lower_bound, actual) where lower_bound = n*log(n) - n + 1.
     """
-    y = hypergeometric_2F1(a, b, c, z)
-    y_plus = hypergeometric_2F1(a, b, c, z + h)
-    y_minus = hypergeometric_2F1(a, b, c, z - h)
-
-    yp = (y_plus - y_minus) / (2 * h)       # y'
-    ypp = (y_plus - 2*y + y_minus) / (h**2)  # y''
-
-    residual = z * (1 - z) * ypp + (c - (a + b + 1) * z) * yp - a * b * y
-    rel_error = abs(residual) / max(abs(y), 1e-15)
-
-    return (residual, rel_error)
+    if n < 1:
+        raise ValueError("n must be >= 1")
+    lower = n * math.log(n) - n + 1
+    actual = math.log(math.factorial(n))
+    return lower, actual
 
 
-def reflection_formula_verify(z: float) -> Tuple[float, float]:
+def pochhammer_eml_representation(a: float, n: int) -> List[float]:
     """
-    Verify Γ(z)·Γ(1-z) = π/sin(πz) numerically.
+    Express rising factorial factors through EML (Theorems 13-14).
 
-    Returns (LHS, RHS).
-    Corresponds to Lean theorem `gamma_reflection`.
+    Each factor (a+k) of (a)_n satisfies:
+        eml'(log(a+k), 1) = a + k
+
+    Returns the list of factors and their EML representations.
     """
-    lhs = math.gamma(z) * math.gamma(1 - z)
-    rhs = math.pi / math.sin(math.pi * z)
-    return (lhs, rhs)
+    if a <= 0:
+        raise ValueError("a must be positive for log decomposition")
+
+    factors = []
+    for k in range(n):
+        val = a + k
+        eml_val = eml_operator(math.log(val), 1)
+        factors.append({
+            'k': k,
+            'factor': val,
+            'eml_representation': eml_val,
+            'log_component': math.log(val),
+        })
+    return factors
 
 
 if __name__ == "__main__":
+    # Quick verification
     print("=== Algorithm Verification ===\n")
 
-    # Test hypergeometric
-    print("₂F₁(0.5, 1; 1.5; 0.5):", hypergeometric_2F1(0.5, 1, 1.5, 0.5))
-    print("Expected (arcsin(√0.5)/√0.5):", math.asin(math.sqrt(0.5)) / math.sqrt(0.5))
+    print("2F1(1/2, 1; 3/2; z^2) = arcsin(z)/z")
+    z = 0.5
+    h = hypergeometric_2f1(0.5, 1, 1.5, z**2)
+    expected = math.asin(z) / z
+    print(f"  2F1(1/2, 1; 3/2; {z}^2) = {h:.10f}")
+    print(f"  arcsin({z})/{z} = {expected:.10f}")
+    print(f"  Error: {abs(h - expected):.2e}\n")
 
-    # Test Gauss ODE
-    res, err = gauss_ode_verify(0.5, 1.0, 1.5, 0.3)
-    print(f"\nGauss ODE residual at z=0.3: {res:.2e}, relative error: {err:.2e}")
+    print("Singularity classification:")
+    for stype in ['removable', 'pole', 'logBranch', 'essential']:
+        info = classify_singularity(stype)
+        print(f"  {stype:12s}: meromorphic={info['meromorphic']}, "
+              f"eml_compatible={info['eml_compatible']}")
 
-    # Test reflection
-    lhs, rhs = reflection_formula_verify(0.25)
-    print(f"\nReflection at z=0.25: LHS={lhs:.10f}, RHS={rhs:.10f}")
-
-    # Test Bernoulli
-    B = bernoulli_numbers(10)
-    print(f"\nBernoulli numbers: B_0={B[0]}, B_1={B[1]}, B_2={B[2]}, B_4={B[4]}, B_6={B[6]}")
+    print("\nStirling bounds:")
+    for n in [5, 10, 20, 50]:
+        lower, actual = stirling_lower_bound(n)
+        print(f"  n={n:2d}: bound={lower:.2f}, actual={actual:.2f}, gap={actual-lower:.3f}")

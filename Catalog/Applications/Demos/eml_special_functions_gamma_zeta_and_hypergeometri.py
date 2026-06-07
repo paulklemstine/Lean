@@ -1,393 +1,309 @@
 #!/usr/bin/env python3
 """
-Demo: EML Special Functions — Gamma, Zeta, and Hypergeometric
+Demo: EML Special Functions — Gamma, Hypergeometric, and Singularity Classification
 
-Numerical demonstrations of the key relationships proved in Lean 4:
-1. Gamma function poles and the reflection formula
-2. Riemann zeta special values via Bernoulli numbers
-3. Hypergeometric ₂F₁ series convergence
-4. The Pochhammer-Gamma bridge
+Numerical demonstrations of the theorems proved in Lean 4.
 """
 
 import math
-from fractions import Fraction
+from typing import List, Tuple
 
-# ============================================================
-# 1. Gamma function at integer points and poles
-# ============================================================
-
-def gamma_factorial_check():
-    """Verify Γ(n+1) = n! for small n (Theorem: gamma_nat_factorial)"""
-    print("=" * 60)
-    print("Theorem: Γ(n+1) = n!")
-    print("=" * 60)
-    for n in range(10):
-        gamma_val = math.gamma(n + 1)
-        factorial_val = math.factorial(n)
-        print(f"  Γ({n+1}) = {gamma_val:.6f},  {n}! = {factorial_val},  match: {abs(gamma_val - factorial_val) < 1e-10}")
-    print()
-
-def gamma_reflection_check():
-    """Verify Γ(z)·Γ(1-z) = π/sin(πz) (Theorem: gamma_reflection)"""
-    print("=" * 60)
-    print("Theorem: Γ(z)·Γ(1-z) = π/sin(πz)")
-    print("=" * 60)
-    for z in [0.25, 0.5, 0.75, 1.5, 2.3, 0.1]:
-        lhs = math.gamma(z) * math.gamma(1 - z)
-        rhs = math.pi / math.sin(math.pi * z)
-        print(f"  z = {z}: LHS = {lhs:.10f}, RHS = {rhs:.10f}, diff = {abs(lhs-rhs):.2e}")
-    print()
-
-# ============================================================
-# 2. Pochhammer symbol and its relationship to Gamma
-# ============================================================
-
-def pochhammer(a, n):
-    """Rising factorial: (a)_n = a(a+1)...(a+n-1)"""
+def rising_factorial(a: float, n: int) -> float:
+    """Pochhammer symbol (a)_n = a(a+1)...(a+n-1)."""
     result = 1.0
     for k in range(n):
         result *= (a + k)
     return result
 
-def pochhammer_gamma_check():
-    """Verify (a)_n · Γ(a) = Γ(a+n) (Theorem: pochhammer_gamma_relation)"""
-    print("=" * 60)
-    print("Theorem: (a)_n · Γ(a) = Γ(a+n)")
-    print("=" * 60)
-    for a in [1.5, 2.0, 0.5, 3.7]:
-        for n in [0, 1, 3, 5]:
-            lhs = pochhammer(a, n) * math.gamma(a)
-            rhs = math.gamma(a + n)
-            print(f"  a={a}, n={n}: (a)_n·Γ(a) = {lhs:.8f}, Γ(a+n) = {rhs:.8f}, diff = {abs(lhs-rhs):.2e}")
-    print()
+def hypergeom_coeff(a: float, b: float, c: float, n: int) -> float:
+    """Hypergeometric coefficient c_n = (a)_n(b)_n / ((c)_n * n!)."""
+    return rising_factorial(a, n) * rising_factorial(b, n) / (rising_factorial(c, n) * math.factorial(n))
 
-def pochhammer_one_factorial_check():
-    """Verify (1)_n = n! (Theorem: pochhammer_one_eq_factorial)"""
-    print("=" * 60)
-    print("Theorem: (1)_n = n!")
-    print("=" * 60)
-    for n in range(10):
-        poch = pochhammer(1, n)
-        fact = math.factorial(n)
-        print(f"  (1)_{n} = {poch:.0f},  {n}! = {fact},  match: {abs(poch - fact) < 1e-10}")
-    print()
+def hypergeom_2f1_partial(a: float, b: float, c: float, z: float, N: int) -> float:
+    """Partial sum of 2F1(a,b;c;z) up to N terms."""
+    return sum(hypergeom_coeff(a, b, c, n) * z**n for n in range(N))
+
+def eml(x: float, y: float) -> float:
+    """EML operator: exp(x) - log(y)."""
+    return math.exp(x) - math.log(y)
+
+def eml_diag(z: float) -> float:
+    """EML diagonal: exp(z) - log(z)."""
+    return math.exp(z) - math.log(z)
 
 # ============================================================
-# 3. Hypergeometric ₂F₁ series
+# Demo 1: Log-Gamma decomposition (Theorem 9)
 # ============================================================
-
-def hypergeom_2F1(a, b, c, z, N=50):
-    """Compute ₂F₁(a,b;c;z) via partial sums"""
-    total = 0.0
-    term = 1.0  # n=0 term
-    for n in range(N):
-        total += term
-        # Ratio: term_{n+1}/term_n = (a+n)(b+n)/((c+n)(n+1)) * z
-        if abs(c + n) < 1e-15:
-            break
-        term *= (a + n) * (b + n) / ((c + n) * (n + 1)) * z
-    return total
-
-def hypergeom_111_check():
-    """Verify ₂F₁(1,1;1;z) = 1/(1-z) for |z| < 1 (Theorem: hypergeom_111_term_eq)"""
-    print("=" * 60)
-    print("Theorem: ₂F₁(1,1;1;z) = 1/(1-z)  for |z| < 1")
-    print("=" * 60)
-    for z in [0.1, 0.3, 0.5, 0.7, 0.9, -0.5]:
-        hyp = hypergeom_2F1(1, 1, 1, z, N=100)
-        exact = 1.0 / (1.0 - z)
-        print(f"  z = {z:5.1f}: ₂F₁ = {hyp:.10f}, 1/(1-z) = {exact:.10f}, diff = {abs(hyp-exact):.2e}")
-    print()
-
-def hypergeom_special_values():
-    """Known special values of ₂F₁"""
-    print("=" * 60)
-    print("Special values of ₂F₁")
-    print("=" * 60)
-    # ₂F₁(1, b; b; z) = 1/(1-z) (a=1, c=b cancellation)
-    for b in [2.0, 3.5, 0.5]:
-        z = 0.3
-        hyp = hypergeom_2F1(1, b, b, z)
-        exact = 1.0 / (1.0 - z)
-        print(f"  ₂F₁(1, {b}, {b}, {z}) = {hyp:.10f}, 1/(1-z) = {exact:.10f}")
-
-    # ₂F₁(a, b; c; 0) = 1
-    for a, b, c in [(2, 3, 5), (0.5, 1.5, 2.5)]:
-        hyp = hypergeom_2F1(a, b, c, 0)
-        print(f"  ₂F₁({a}, {b}, {c}, 0) = {hyp:.10f} (should be 1)")
-    print()
+print("=" * 60)
+print("Demo 1: Log-Gamma Decomposition (Theorem 9)")
+print("log(n!) = sum_{k=0}^{n-1} log(k+1)")
+print("=" * 60)
+for n in range(1, 8):
+    lhs = math.log(math.factorial(n))
+    rhs = sum(math.log(k + 1) for k in range(n))
+    print(f"  n={n}: log({n}!) = {lhs:.6f},  sum = {rhs:.6f},  diff = {abs(lhs-rhs):.2e}")
 
 # ============================================================
-# 4. Zeta function special values
+# Demo 2: Stirling lower bound (Theorem 11)
 # ============================================================
-
-def bernoulli_numbers(N):
-    """Compute Bernoulli numbers B_0, ..., B_N"""
-    B = [Fraction(0)] * (N + 1)
-    B[0] = Fraction(1)
-    for m in range(1, N + 1):
-        B[m] = Fraction(0)
-        for k in range(m):
-            B[m] -= Fraction(math.comb(m, k)) * B[k] / Fraction(m - k + 1)
-    return B
-
-def zeta_negative_integers():
-    """Verify ζ(-k) = (-1)^k · B_{k+1}/(k+1) (Theorem: zeta_at_neg_integers)"""
-    print("=" * 60)
-    print("Theorem: ζ(-k) = (-1)^k · B_{k+1}/(k+1)")
-    print("=" * 60)
-    B = bernoulli_numbers(12)
-    for k in range(11):
-        zeta_val = (-1)**k * B[k+1] / (k+1)
-        print(f"  ζ(-{k}) = {float(zeta_val):12.6f}  (B_{k+1} = {B[k+1]})")
-    print()
+print("\n" + "=" * 60)
+print("Demo 2: Stirling Lower Bound (Theorem 11)")
+print("n*log(n) - n + 1 <= log(n!)")
+print("=" * 60)
+for n in range(1, 12):
+    lower = n * math.log(n) - n + 1
+    actual = math.log(math.factorial(n))
+    gap = actual - lower
+    print(f"  n={n:2d}: lower={lower:8.3f}, log(n!)={actual:8.3f}, gap={gap:.3f}")
 
 # ============================================================
-# 5. Gamma-Zeta bridge
+# Demo 3: Hypergeometric 2F1 values (Theorems 7, 8)
 # ============================================================
-
-def gamma_zeta_bridge_demo():
-    """Demonstrate ζ(s) = ξ(s) / Γ_ℝ(s) structure"""
-    print("=" * 60)
-    print("Gamma-Zeta Bridge: Γ_ℝ(s) = π^(-s/2) · Γ(s/2)")
-    print("=" * 60)
-    for s in [2, 4, 6, 8]:
-        gamma_R = math.pi ** (-s/2) * math.gamma(s/2)
-        print(f"  Γ_ℝ({s}) = π^(-{s}/2) · Γ({s}/2) = {gamma_R:.10f}")
-    print()
+print("\n" + "=" * 60)
+print("Demo 3: Hypergeometric 2F1 Values")
+print("=" * 60)
+print(f"  2F1(1, 1; 2; 0) = {hypergeom_2f1_partial(1, 1, 2, 0, 50):.6f}  (should be 1)")
+print(f"  2F1(0, 3; 2; 0.5) = {hypergeom_2f1_partial(0, 3, 2, 0.5, 50):.6f}  (should be 1)")
+print(f"  2F1(1, 1; 2; 0.5) = {hypergeom_2f1_partial(1, 1, 2, 0.5, 50):.6f}  (= -log(1-0.5)/0.5 = {-math.log(0.5)/0.5:.6f})")
 
 # ============================================================
-# 6. Gauss's recurrence
+# Demo 4: Hypergeometric ratio convergence (Theorem 23)
 # ============================================================
-
-def gauss_recurrence_check():
-    """Verify (n+1)(c+n) · term(n+1) = (a+n)(b+n) · term(n)"""
-    print("=" * 60)
-    print("Theorem: Gauss's hypergeometric recurrence")
-    print("(n+1)(c+n) · aₙ₊₁ = (a+n)(b+n) · aₙ  (at z=1)")
-    print("=" * 60)
-    a, b, c = 0.5, 1.5, 2.5
-
-    def term(n):
-        return pochhammer(a, n) * pochhammer(b, n) / (pochhammer(c, n) * math.factorial(n))
-
-    for n in range(8):
-        lhs = (n + 1) * (c + n) * term(n + 1)
-        rhs = (a + n) * (b + n) * term(n)
-        print(f"  n={n}: LHS = {lhs:.10f}, RHS = {rhs:.10f}, diff = {abs(lhs-rhs):.2e}")
-    print()
+print("\n" + "=" * 60)
+print("Demo 4: Hypergeometric Ratio Convergence (Theorem 23)")
+print("(a+n)(b+n)/((c+n)(n+1)) -> 1")
+print("=" * 60)
+a, b, c = 2.5, 3.7, 1.2
+for n in [1, 5, 10, 50, 100, 1000]:
+    ratio = (a + n) * (b + n) / ((c + n) * (n + 1))
+    print(f"  n={n:4d}: ratio = {ratio:.8f}")
 
 # ============================================================
-# Main
+# Demo 5: Rising factorial vanishing (Theorem 24)
 # ============================================================
+print("\n" + "=" * 60)
+print("Demo 5: Rising Factorial Vanishing at -m (Theorem 24)")
+print("risingFactorial(-m, n) = 0 for n > m")
+print("=" * 60)
+for m in range(4):
+    vals = [rising_factorial(-m, n) for n in range(m + 3)]
+    print(f"  m={m}: (−{m})_n for n=0..{m+2}: {vals}")
 
-if __name__ == "__main__":
-    print("EML Special Functions: Gamma, Zeta, and Hypergeometric")
-    print("=" * 60)
-    print()
+# ============================================================
+# Demo 6: Gamma > log for natural numbers (Theorem 26)
+# ============================================================
+print("\n" + "=" * 60)
+print("Demo 6: Gamma(n) > log(n) for n >= 1 (Theorem 26)")
+print("=" * 60)
+for n in range(1, 10):
+    gamma_n = math.gamma(n)
+    log_n = math.log(n) if n > 0 else 0
+    print(f"  n={n}: Gamma({n}) = {gamma_n:10.4f},  log({n}) = {log_n:.4f},  diff = {gamma_n - log_n:.4f}")
 
-    gamma_factorial_check()
-    gamma_reflection_check()
-    pochhammer_one_factorial_check()
-    pochhammer_gamma_check()
-    hypergeom_111_check()
-    hypergeom_special_values()
-    zeta_negative_integers()
-    gamma_zeta_bridge_demo()
-    gauss_recurrence_check()
+# ============================================================
+# Demo 7: EML-Pochhammer connection (Theorem 13)
+# ============================================================
+print("\n" + "=" * 60)
+print("Demo 7: EML recovers Pochhammer factors (Theorem 13)")
+print("eml'(log(a+k), 1) = a + k")
+print("=" * 60)
+a_val = 2.5
+for k in range(6):
+    target = a_val + k
+    eml_val = eml(math.log(target), 1)
+    print(f"  a={a_val}, k={k}: eml'(log({target}), 1) = {eml_val:.6f} == {target}")
 
-    print("All numerical demonstrations completed successfully.")
+# ============================================================
+# Demo 8: Disproved conjecture — Gamma(x)-log(x) NOT monotone on (1,∞)
+# ============================================================
+print("\n" + "=" * 60)
+print("Demo 8: Disproved Conjecture — f(x) = Gamma(x) - log(x)")
+print("f is NOT monotone on (1, ∞): it decreases then increases")
+print("=" * 60)
+import numpy as np
+xs = [1.0, 1.2, 1.5, 1.8, 2.0, 2.2, 2.5, 3.0, 4.0, 5.0]
+for x in xs:
+    fx = math.gamma(x) - math.log(x)
+    print(f"  x={x:.1f}: Gamma({x:.1f}) - log({x:.1f}) = {fx:.6f}")
+
+print("\n" + "=" * 60)
+print("All demonstrations complete.")
+print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Gamma and Zeta Singularity Structure
+Visualization: Gamma-EML Bridge and Stirling Bound
 
-Creates plots showing the pole/zero structure of the Gamma function,
-Riemann zeta function, and their connection through the Deligne Gamma factor.
+Shows the log-gamma decomposition and Stirling lower bound.
 """
-
-import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.colors import LogNorm
+import numpy as np
 import math
 
+def plot_gamma_eml_bridge():
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+    fig.suptitle('Gamma-EML Bridge: Factorials, Stirling, and the Disproved Conjecture', fontsize=13, fontweight='bold')
 
-def plot_gamma_magnitude():
-    """Plot |Γ(x + iy)| showing poles at non-positive integers."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Real line plot
+    # Panel 1: Log-gamma decomposition
     ax = axes[0]
-    x_ranges = [(-4.9, -4.1), (-3.9, -3.1), (-2.9, -2.1), (-1.9, -1.1),
-                (-0.9, -0.1), (0.1, 5.0)]
-    for xmin, xmax in x_ranges:
-        x = np.linspace(xmin, xmax, 200)
-        y = np.array([math.gamma(xi) if xi > 0 or xi != int(xi) else np.nan for xi in x])
-        valid = np.isfinite(y) & (np.abs(y) < 20)
-        ax.plot(x[valid], y[valid], 'b-', linewidth=1.5)
+    ns = range(1, 12)
+    log_factorials = [math.log(math.factorial(n)) for n in ns]
+    cumulative = []
+    for n in ns:
+        cumulative.append(sum(math.log(k + 1) for k in range(n)))
+
+    ax.bar(list(ns), log_factorials, alpha=0.6, color='#2196F3', label='log(n!)')
+    ax.plot(list(ns), cumulative, 'ro-', linewidth=2, markersize=6, label='Σ log(k+1)')
+    ax.set_xlabel('n')
+    ax.set_ylabel('Value')
+    ax.set_title('Log-Gamma = Sum of Logs (Thm 9)')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+
+    # Panel 2: Stirling lower bound
+    ax = axes[1]
+    ns = range(1, 20)
+    actuals = [math.log(math.factorial(n)) for n in ns]
+    bounds = [n * math.log(n) - n + 1 for n in ns]
+    stirling = [n * math.log(n) - n + 0.5 * math.log(2 * math.pi * n) for n in ns]
+
+    ax.plot(list(ns), actuals, 'b-o', linewidth=2, markersize=4, label='log(n!)')
+    ax.plot(list(ns), bounds, 'r--s', linewidth=1.5, markersize=3, label='n·log(n) − n + 1 (lower bound)')
+    ax.plot(list(ns), stirling, 'g-.^', linewidth=1.5, markersize=3, label='Stirling approx')
+    ax.fill_between(list(ns), bounds, actuals, alpha=0.1, color='blue')
+    ax.set_xlabel('n')
+    ax.set_ylabel('Value')
+    ax.set_title('Stirling Lower Bound (Thm 11)')
+    ax.legend(fontsize=8)
+    ax.grid(True, alpha=0.3)
+
+    # Panel 3: Disproved conjecture — f(x) = Gamma(x) - log(x)
+    ax = axes[2]
+    from scipy.special import gamma as gamma_fn
+    x = np.linspace(1.01, 5, 500)
+    y = gamma_fn(x) - np.log(x)
+    ax.plot(x, y, 'purple', linewidth=2, label='Γ(x) − log(x)')
+
+    # Mark the minimum
+    min_idx = np.argmin(y)
+    x_min, y_min = x[min_idx], y[min_idx]
+    ax.plot(x_min, y_min, 'ro', markersize=10, zorder=5, label=f'Minimum at x≈{x_min:.2f}')
+    ax.axhline(y=0, color='gray', linewidth=0.5)
+
+    # Mark integer values
+    for n in range(1, 6):
+        gn = math.gamma(n)
+        ln = math.log(n) if n > 0 else 0
+        ax.plot(n, gn - ln, 'ks', markersize=6)
+        ax.annotate(f'n={n}: {gn-ln:.2f}', xy=(n, gn-ln), xytext=(n+0.1, gn-ln+0.3),
+                   fontsize=7)
+
+    ax.set_xlabel('x')
+    ax.set_ylabel('Γ(x) − log(x)')
+    ax.set_title('Disproved: NOT monotone on (1,∞)')
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('gamma_eml_bridge.png', dpi=150, bbox_inches='tight')
+    print("Saved gamma_eml_bridge.png")
+
+if __name__ == "__main__":
+    plot_gamma_eml_bridge()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: EML Singularity Spectrum Classification
+
+Shows the Gamma function with its singularity spectrum overlaid.
+"""
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.special import gamma as gamma_fn
+
+def plot_singularity_spectrum():
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig.suptitle('EML Singularity Spectrum: Gamma, EML, and Classification', fontsize=14, fontweight='bold')
+
+    # Panel 1: Gamma function with poles marked
+    ax = axes[0, 0]
+    xs = []
+    ys = []
+    for segment_start, segment_end in [(-4.99, -4.01), (-3.99, -3.01), (-2.99, -2.01),
+                                         (-1.99, -1.01), (-0.99, -0.01), (0.01, 5.0)]:
+        x = np.linspace(segment_start, segment_end, 200)
+        y = gamma_fn(x)
+        y = np.clip(y, -10, 10)
+        ax.plot(x, y, 'b-', linewidth=1.5)
+
+    # Mark poles
+    for n in range(5):
+        ax.axvline(x=-n, color='red', linestyle='--', alpha=0.5, linewidth=0.8)
+        ax.plot(-n, 0, 'ro', markersize=8, zorder=5)
+        ax.annotate(f'pole\norder 1', xy=(-n, 0), xytext=(-n+0.15, 6-n),
+                   fontsize=7, color='red', alpha=0.8)
 
     ax.set_xlim(-5, 5)
     ax.set_ylim(-10, 10)
-    ax.axhline(y=0, color='gray', linewidth=0.5)
-    ax.axvline(x=0, color='gray', linewidth=0.5)
-    for n in range(0, 6):
-        ax.axvline(x=-n, color='red', linewidth=0.5, linestyle='--', alpha=0.5)
+    ax.set_title('Γ(x): Meromorphic Singularity Spectrum')
     ax.set_xlabel('x')
     ax.set_ylabel('Γ(x)')
-    ax.set_title('Γ(x) on the real line\nPoles at 0, -1, -2, -3, ...')
-
-    # Complex plane |Γ(z)|
-    ax = axes[1]
-    x = np.linspace(-4.5, 4.5, 400)
-    y = np.linspace(-3, 3, 300)
-    X, Y = np.meshgrid(x, y)
-
-    # Compute |Γ(z)| using scipy if available, else lgamma
-    Z = np.zeros_like(X)
-    for i in range(X.shape[0]):
-        for j in range(X.shape[1]):
-            try:
-                z = complex(X[i,j], Y[i,j])
-                # Use log-gamma for stability
-                lgz = complex(math.lgamma(X[i,j])) if Y[i,j] == 0 else None
-                if lgz is not None:
-                    Z[i,j] = math.exp(lgz.real)
-                else:
-                    # Stirling approximation for complex gamma
-                    z = complex(X[i,j], Y[i,j])
-                    if X[i,j] > 0.5:
-                        # Use reflection if needed
-                        log_abs = (X[i,j] - 0.5) * math.log(abs(z)) - Y[i,j] * np.angle(z) - X[i,j]
-                        Z[i,j] = min(math.exp(min(log_abs, 50)), 1e20)
-                    else:
-                        # Reflection formula: |Γ(z)| = π / (|sin(πz)| · |Γ(1-z)|)
-                        Z[i,j] = 1.0  # placeholder
-            except (ValueError, OverflowError):
-                Z[i,j] = 1e20
-
-    Z = np.clip(Z, 1e-5, 1e5)
-    im = ax.pcolormesh(X, Y, Z, norm=LogNorm(vmin=0.01, vmax=100),
-                       cmap='hot', shading='auto')
-    for n in range(0, 5):
-        ax.plot(-n, 0, 'wo', markersize=8, markeredgecolor='cyan', markeredgewidth=2)
-    plt.colorbar(im, ax=ax, label='|Γ(z)|')
-    ax.set_xlabel('Re(z)')
-    ax.set_ylabel('Im(z)')
-    ax.set_title('|Γ(z)| in the complex plane\n○ = poles (non-positive integers)')
-
-    plt.tight_layout()
-    plt.savefig('/workspace/request-project/Applications/gamma_structure.png', dpi=150)
-    plt.close()
-    print("Saved: gamma_structure.png")
-
-
-def plot_hypergeometric_convergence():
-    """Plot ₂F₁ partial sums showing convergence for |z| < 1."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Convergence of partial sums
-    ax = axes[0]
-    z_vals = [0.3, 0.5, 0.7, 0.9]
-    colors = ['blue', 'green', 'orange', 'red']
-    a, b, c = 0.5, 1.0, 1.5
-
-    for z, color in zip(z_vals, colors):
-        partial_sums = []
-        total = 0.0
-        term = 1.0
-        for n in range(30):
-            total += term
-            partial_sums.append(total)
-            term *= (a + n) * (b + n) / ((c + n) * (n + 1)) * z
-        ax.plot(range(30), partial_sums, color=color, label=f'z = {z}', linewidth=1.5)
-        ax.axhline(y=partial_sums[-1], color=color, linewidth=0.5, linestyle='--', alpha=0.3)
-
-    ax.set_xlabel('Number of terms N')
-    ax.set_ylabel('Partial sum S_N')
-    ax.set_title(f'₂F₁({a}, {b}; {c}; z) partial sums')
-    ax.legend()
+    ax.axhline(y=0, color='gray', linewidth=0.5)
     ax.grid(True, alpha=0.3)
 
-    # ₂F₁(1,1;1;z) = 1/(1-z) comparison
-    ax = axes[1]
-    z = np.linspace(-0.95, 0.95, 200)
-    exact = 1.0 / (1.0 - z)
-
-    for N in [3, 5, 10, 20]:
-        approx = np.zeros_like(z)
-        for i, zi in enumerate(z):
-            total = 0.0
-            for n in range(N):
-                total += zi**n
-            approx[i] = total
-        ax.plot(z, approx, label=f'N = {N}', linewidth=1.2)
-
-    ax.plot(z, exact, 'k--', label='1/(1-z)', linewidth=2, alpha=0.5)
+    # Panel 2: EML diagonal
+    ax = axes[0, 1]
+    z = np.linspace(0.01, 4, 500)
+    eml_diag = np.exp(z) - np.log(z)
+    ax.plot(z, eml_diag, 'g-', linewidth=2, label='emlDiag(z) = eˣ − ln(z)')
+    ax.axvline(x=0, color='red', linestyle='--', alpha=0.7, label='log branch point at z=0')
+    ax.fill_between(z, eml_diag, alpha=0.1, color='green')
+    ax.set_xlim(-0.5, 4)
+    ax.set_ylim(0, 20)
+    ax.set_title('EML Diagonal: Smooth on (0, ∞)')
     ax.set_xlabel('z')
-    ax.set_ylabel('₂F₁(1,1;1;z)')
-    ax.set_ylim(-5, 20)
-    ax.set_title('₂F₁(1,1;1;z) → 1/(1-z)\n(Theorem: hypergeom_111_term_eq)')
-    ax.legend()
+    ax.set_ylabel('emlDiag(z)')
+    ax.legend(fontsize=9)
     ax.grid(True, alpha=0.3)
 
-    plt.tight_layout()
-    plt.savefig('/workspace/request-project/Applications/hypergeometric_convergence.png', dpi=150)
-    plt.close()
-    print("Saved: hypergeometric_convergence.png")
+    # Panel 3: Singularity type hierarchy
+    ax = axes[1, 0]
+    categories = ['Removable', 'Pole', 'Log Branch', 'Essential']
+    meromorphic = [1, 1, 0, 0]
+    eml_compat = [1, 1, 1, 0]
+    x_pos = np.arange(len(categories))
+    width = 0.35
+    bars1 = ax.bar(x_pos - width/2, meromorphic, width, label='Meromorphic', color='#2196F3', alpha=0.8)
+    bars2 = ax.bar(x_pos + width/2, eml_compat, width, label='EML-Compatible', color='#4CAF50', alpha=0.8)
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels(categories)
+    ax.set_ylabel('Membership (1 = yes)')
+    ax.set_title('Singularity Type Hierarchy')
+    ax.legend()
+    ax.set_ylim(0, 1.3)
 
-
-def plot_pochhammer_gamma_bridge():
-    """Visualize the Pochhammer-Gamma relation (a)_n = Γ(a+n)/Γ(a)."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Pochhammer growth for various a
-    ax = axes[0]
-    ns = list(range(15))
-    for a in [0.5, 1.0, 1.5, 2.0, 3.0]:
-        poch_vals = [1.0]
-        val = 1.0
-        for n in range(1, 15):
-            val *= (a + n - 1)
-            poch_vals.append(val)
-        ax.semilogy(ns, poch_vals, 'o-', label=f'a = {a}', markersize=4)
-
+    # Panel 4: Hypergeometric ratio convergence
+    ax = axes[1, 1]
+    a, b, c = 2.5, 3.7, 1.2
+    ns = np.arange(1, 101)
+    ratios = (a + ns) * (b + ns) / ((c + ns) * (ns + 1))
+    ax.plot(ns, ratios, 'purple', linewidth=2, label=f'(a+n)(b+n)/((c+n)(n+1))\na={a}, b={b}, c={c}')
+    ax.axhline(y=1, color='red', linestyle='--', alpha=0.7, label='Limit = 1')
     ax.set_xlabel('n')
-    ax.set_ylabel('(a)_n')
-    ax.set_title('Pochhammer symbol (a)_n growth')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    # Verification of (a)_n · Γ(a) = Γ(a+n)
-    ax = axes[1]
-    a_vals = np.linspace(0.1, 4.0, 100)
-    for n in [1, 3, 5, 8]:
-        errors = []
-        for a in a_vals:
-            lhs = 1.0
-            for k in range(n):
-                lhs *= (a + k)
-            lhs *= math.gamma(a)
-            rhs = math.gamma(a + n)
-            errors.append(abs(lhs - rhs) / max(abs(rhs), 1e-15))
-        ax.semilogy(a_vals, errors, label=f'n = {n}', linewidth=1.5)
-
-    ax.set_xlabel('a')
-    ax.set_ylabel('Relative error')
-    ax.set_title('Pochhammer-Gamma relation accuracy\n(a)_n · Γ(a) = Γ(a+n)')
-    ax.legend()
+    ax.set_ylabel('Ratio')
+    ax.set_title('Hypergeometric Ratio → 1 (Theorem 23)')
+    ax.legend(fontsize=9)
     ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('/workspace/request-project/Applications/pochhammer_gamma_bridge.png', dpi=150)
-    plt.close()
-    print("Saved: pochhammer_gamma_bridge.png")
-
+    plt.savefig('singularity_spectrum.png', dpi=150, bbox_inches='tight')
+    print("Saved singularity_spectrum.png")
 
 if __name__ == "__main__":
-    plot_gamma_magnitude()
-    plot_hypergeometric_convergence()
-    plot_pochhammer_gamma_bridge()
-    print("\nAll visualizations generated.")
+    plot_singularity_spectrum()
