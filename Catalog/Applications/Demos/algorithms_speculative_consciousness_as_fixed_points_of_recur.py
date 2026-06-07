@@ -1,193 +1,219 @@
 #!/usr/bin/env python3
 """
-Algorithms for Self-Referential Type Theory
+Algorithms for Reflective Type Algebras
 
-Type-hinted implementations of the core algorithms from the formalization.
+Type-hinted implementations of the core computational procedures
+for working with RTAs on finite lattices.
 """
 
-from typing import TypeVar, Callable, Generic, Optional
+from typing import TypeVar, Callable, Set, Optional, List, Tuple, Generic
 from dataclasses import dataclass
-import math
+from functools import reduce
 
 T = TypeVar('T')
 
 
 @dataclass
-class ReflectionSystem(Generic[T]):
-    """A reflection system: a monotone inflationary operator on a complete lattice."""
-    phi: Callable[[T], T]
-    bottom: T
-    le: Callable[[T, T], bool]  # partial order
-
-    def reflection_hierarchy(self, n: int) -> list[T]:
-        """Compute levels 0..n of the reflection hierarchy.
-
-        Algorithm:
-            level[0] = ⊥
-            level[k+1] = Φ(level[k])
-
-        Returns the full hierarchy as a list.
-        """
-        levels = [self.bottom]
-        for _ in range(n):
-            levels.append(self.phi(levels[-1]))
-        return levels
-
-    def approximate_lfp(self, max_iter: int = 1000, tol: float = 1e-12) -> tuple[T, int]:
-        """Approximate the least fixed point by iterating Φ from ⊥.
-
-        Returns (approximate_lfp, number_of_iterations).
-        Stops when |Φ(x) - x| < tol (for numeric types).
-        """
-        x = self.bottom
-        for i in range(max_iter):
-            y = self.phi(x)
-            try:
-                if abs(y - x) < tol:  # type: ignore
-                    return y, i + 1
-            except TypeError:
-                if y == x:
-                    return y, i + 1
-            x = y
-        return x, max_iter
-
-    def is_fixed_point(self, x: T, tol: float = 1e-12) -> bool:
-        """Check if x is a fixed point of Φ."""
-        y = self.phi(x)
-        try:
-            return abs(y - x) < tol  # type: ignore
-        except TypeError:
-            return y == x
-
-    def is_godelian(self, lfp: T, gfp: T) -> bool:
-        """Check if the system is Gödelian (lfp < gfp)."""
-        return self.le(lfp, gfp) and lfp != gfp
-
-
-@dataclass
-class TypeUniverse(Generic[T]):
-    """A type universe with coding function."""
-    extension: Callable[[T], set[T]]
-    universe: set[T]
-
-    def diagonal(self) -> set[T]:
-        """Compute the diagonal set: {a | a ∉ extension(a)}.
-
-        Algorithm: iterate over universe, test self-membership.
-
-        This set is provably not representable by any code (Theorem 6).
-        """
-        return {a for a in self.universe if a not in self.extension(a)}
-
-    def codiagonal(self) -> set[T]:
-        """Compute the codiagonal set: {a | a ∈ extension(a)}.
-
-        The complement of the diagonal in the universe.
-        """
-        return {a for a in self.universe if a in self.extension(a)}
-
-    def verify_partition(self) -> bool:
-        """Verify the self-membership partition theorem (Theorem 17).
-
-        Returns True iff diagonal ∪ codiagonal = universe and
-        diagonal ∩ codiagonal = ∅.
-        """
-        d = self.diagonal()
-        cd = self.codiagonal()
-        return d | cd == self.universe and len(d & cd) == 0
-
-    def is_representable(self, S: set[T]) -> Optional[T]:
-        """Check if a set S is representable; return the code if so."""
-        for a in self.universe:
-            if self.extension(a) == S:
-                return a
-        return None
-
-
-@dataclass
-class InvariantStructure(Generic[T]):
-    """An invariant structure: a collection of subsets closed under intersection."""
-    carrier: list[frozenset[T]]
-    universe: frozenset[T]
-
-    def closure(self, S: frozenset[T]) -> frozenset[T]:
-        """Compute the closure of S: intersection of all carrier members ⊇ S.
-
-        Algorithm:
-            cl(S) = ⋂{T ∈ carrier | S ⊆ T}
-
-        Time complexity: O(|carrier| × |universe|)
-        """
-        containing = [C for C in self.carrier if S <= C]
-        if not containing:
-            return self.universe
-        result = containing[0]
-        for C in containing[1:]:
-            result = result & C
-        return result
-
-    def is_closed(self, S: frozenset[T]) -> bool:
-        """Check if S is a fixed point of the closure (S ∈ carrier)."""
-        return self.closure(S) == S
-
-    def verify_fixedpoint_characterization(self) -> bool:
-        """Verify Theorem 16: {S | cl(S) = S} = carrier.
-
-        Enumerates all subsets (exponential in |universe|).
-        """
-        # Generate all subsets
-        elems = list(self.universe)
-        n = len(elems)
-        fixed_points = set()
-        for mask in range(2**n):
-            S = frozenset(elems[i] for i in range(n) if (mask >> i) & 1)
-            if self.is_closed(S):
-                fixed_points.add(S)
-        return fixed_points == set(self.carrier)
-
-
-def hierarchy_convergence_rate(phi: Callable[[float], float],
-                               fixed_point: float,
-                               levels: int = 50) -> list[float]:
-    """Measure convergence rate of the reflection hierarchy to the fixed point.
-
-    Returns list of |level(n) - lfp| for n = 0, ..., levels.
+class ReflectiveTypeAlgebra(Generic[T]):
+    """A Reflective Type Algebra on a finite lattice.
+    
+    Attributes:
+        elements: All elements of the lattice
+        le: Partial order relation
+        bot: Bottom element
+        top: Top element
+        sup: Join operation
+        inf: Meet operation
+        phi: Type-forming operator (monotone)
+        rho: Reflection operator (monotone, commutes with phi)
     """
-    errors = []
-    x = 0.0
-    for _ in range(levels + 1):
-        errors.append(abs(x - fixed_point))
-        x = phi(x)
-    return errors
+    elements: List[T]
+    le: Callable[[T, T], bool]
+    bot: T
+    top: T
+    sup: Callable[[T, T], T]
+    inf: Callable[[T, T], T]
+    phi: Callable[[T, T], T]  # Actually T -> T but keeping generic
+    rho: Callable[[T, T], T]
 
 
-# Example usage
+def kleene_chain(phi: Callable[[T], T], bot: T, max_steps: int = 100) -> List[T]:
+    """Compute the Kleene chain: ⊥, Φ(⊥), Φ²(⊥), ...
+    
+    Terminates when a fixed point is reached or max_steps exceeded.
+    
+    Algorithm:
+        x₀ = ⊥
+        x_{n+1} = Φ(xₙ)
+        Stop when x_{n+1} = xₙ
+    
+    Returns: List of chain elements [x₀, x₁, ..., x_fp]
+    """
+    chain: List[T] = [bot]
+    for _ in range(max_steps):
+        next_val = phi(chain[-1])
+        chain.append(next_val)
+        if next_val == chain[-2]:
+            break
+    return chain
+
+
+def find_fixed_points(phi: Callable[[T], T], elements: List[T]) -> List[T]:
+    """Find all fixed points of Φ in a finite lattice.
+    
+    Algorithm: Brute-force check Φ(x) = x for each element.
+    
+    Returns: List of fixed points
+    """
+    return [x for x in elements if phi(x) == x]
+
+
+def lawvere_witness(
+    encode: Callable[[T, T], T],
+    f: Callable[[T], T],
+    elements: List[T]
+) -> Optional[T]:
+    """Find the Lawvere fixed-point witness.
+    
+    Given e : α → (α → β) and f : β → β, find a such that f(e(a)(a)) = e(a)(a).
+    
+    Algorithm:
+        1. Compute g(x) = f(e(x)(x)) for each x
+        2. Find a such that e(a) = g (surjectivity witness)
+        3. Return a
+    
+    Returns: The witness a, or None if e is not surjective enough
+    """
+    # Compute g
+    g = {x: f(encode(x, x)) for x in elements}
+    
+    # Find a such that e(a) agrees with g on all inputs
+    for a in elements:
+        if all(encode(a, x) == g[x] for x in elements):
+            return a
+    return None
+
+
+def cantor_anti_diagonal(
+    encode: Callable[[int, int], bool],
+    n: int
+) -> Callable[[int], bool]:
+    """Construct Cantor's anti-diagonal predicate.
+    
+    Given e : {0,...,n-1} → ({0,...,n-1} → Bool),
+    returns D(i) = ¬e(i)(i).
+    
+    This predicate provably differs from e(a) for every a.
+    
+    Algorithm:
+        D(i) = not e(i, i)
+    """
+    return lambda i: not encode(i, i)
+
+
+def reflection_depth(
+    phi: Callable[[T], T],
+    bot: T,
+    x: T,
+    le: Callable[[T, T], bool],
+    max_depth: int = 100
+) -> Optional[int]:
+    """Compute the reflection depth of an element.
+    
+    The reflection depth of x is the least n such that Φⁿ(⊥) ≥ x.
+    
+    Algorithm:
+        Iterate the Kleene chain until Φⁿ(⊥) ≥ x or max_depth reached.
+    
+    Returns: The depth n, or None if not reached within max_depth
+    """
+    current = bot
+    for n in range(max_depth + 1):
+        if le(x, current):
+            return n
+        current = phi(current)
+    return None
+
+
+def strict_hierarchy_check(
+    phi: Callable[[T], T],
+    bot: T,
+    lt: Callable[[T, T], bool],
+    max_depth: int = 100
+) -> Tuple[bool, int]:
+    """Check if the Kleene chain is strictly increasing.
+    
+    Algorithm:
+        Compute chain and verify chain[n] < chain[n+1] at each step.
+    
+    Returns: (is_strict, depth_where_equality_first_occurs)
+    """
+    chain = kleene_chain(phi, bot, max_depth)
+    for i in range(len(chain) - 1):
+        if not lt(chain[i], chain[i + 1]):
+            return (False, i)
+    return (True, len(chain) - 1)
+
+
+def interval_fixed_point(
+    phi: Callable[[T], T],
+    le: Callable[[T, T], bool],
+    elements: List[T],
+    b: T,
+    a: T
+) -> Optional[T]:
+    """Find a fixed point in the interval [b, a].
+    
+    Preconditions: Φ(a) ≤ a, b ≤ Φ(b), b ≤ a.
+    
+    Algorithm:
+        Take the greatest post-fixed point in [b, a].
+        By Knaster-Tarski, this is a fixed point.
+    
+    Returns: A fixed point in [b, a], or None
+    """
+    interval = [x for x in elements if le(b, x) and le(x, a)]
+    fps = [x for x in interval if phi(x) == x]
+    return fps[0] if fps else None
+
+
+# ============================================================
+# Demo: Power Set Lattice
+# ============================================================
+
+def demo_powerset_rta():
+    """Demonstrate algorithms on the power set lattice P({0,1,2,3})."""
+    U = frozenset({0, 1, 2, 3})
+    elements = [frozenset(s) for i in range(2**len(U)) 
+                for s in [frozenset(j for j in U if i & (1 << j))]]
+    
+    def phi(S: frozenset) -> frozenset:
+        remaining = U - S
+        return S | frozenset({min(remaining)}) if remaining else S
+    
+    # Kleene chain
+    chain = kleene_chain(phi, frozenset(), 10)
+    print("Kleene chain:")
+    for i, s in enumerate(chain):
+        print(f"  Step {i}: {set(s) if s else set()}")
+    
+    # Fixed points
+    fps = find_fixed_points(phi, elements)
+    print(f"\nFixed points: {[set(s) for s in fps]}")
+    
+    # Reflection depth
+    for test in [frozenset(), frozenset({0}), frozenset({0, 1}), U]:
+        d = reflection_depth(phi, frozenset(), test,
+                            lambda a, b: a.issubset(b))
+        print(f"  Depth of {set(test) if test else set()}: {d}")
+    
+    # Strict hierarchy
+    is_strict, depth = strict_hierarchy_check(
+        phi, frozenset(),
+        lambda a, b: a.issubset(b) and a != b
+    )
+    print(f"\nStrict hierarchy: {is_strict} (up to depth {depth})")
+
+
 if __name__ == "__main__":
-    # Example 1: Golden ratio as lfp
-    R = ReflectionSystem(
-        phi=lambda x: math.sqrt(x + 1),
-        bottom=0.0,
-        le=lambda a, b: a <= b
-    )
-
-    lfp, iters = R.approximate_lfp()
-    golden = (1 + math.sqrt(5)) / 2
-    print(f"LFP of sqrt(x+1): {lfp:.10f} (golden ratio: {golden:.10f})")
-    print(f"Converged in {iters} iterations")
-
-    # Example 2: Diagonal
-    ext_map = {0: {1, 2}, 1: {0, 1}, 2: {2}, 3: {0, 3}, 4: {1, 4}}
-    U = TypeUniverse(
-        extension=lambda a: ext_map.get(a, set()),
-        universe={0, 1, 2, 3, 4}
-    )
-    print(f"\nDiagonal: {sorted(U.diagonal())}")
-    print(f"Partition valid: {U.verify_partition()}")
-
-    # Example 3: Invariant structure
-    IS = InvariantStructure(
-        carrier=[frozenset(), frozenset({0}), frozenset({0,1}), frozenset({0,1,2})],
-        universe=frozenset({0, 1, 2})
-    )
-    print(f"\nClosure of {{1}}: {set(IS.closure(frozenset({1})))}")
-    print(f"Fixed point characterization valid: {IS.verify_fixedpoint_characterization()}")
+    demo_powerset_rta()
