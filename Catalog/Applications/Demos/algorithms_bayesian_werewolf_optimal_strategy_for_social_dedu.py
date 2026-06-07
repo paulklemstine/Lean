@@ -1,282 +1,301 @@
 #!/usr/bin/env python3
 """
-Bayesian Werewolf: Core algorithms for optimal strategy computation.
+Bayesian Werewolf: Core Algorithms
 
-Type-hinted implementations of the game-theoretic algorithms formalized
-in our Lean 4 proofs.
+Type-hinted implementations of the key mathematical objects and algorithms
+formalized in the Lean 4 proofs.
 """
+
 from fractions import Fraction
-from functools import lru_cache
-from typing import List, Tuple, Optional
+from typing import Dict, List, Optional, Tuple
+from dataclasses import dataclass
 import math
 
 
-# =============================================================================
-# Core Game Model
-# =============================================================================
+# ============================================================
+# §1. Game State
+# ============================================================
 
+@dataclass(frozen=True)
 class WerewolfState:
-    """Immutable game state: (werewolves, villagers)."""
-
-    def __init__(self, w: int, v: int) -> None:
-        self.w = w
-        self.v = v
+    """A Werewolf game state: (villagers, werewolves)."""
+    villagers: int
+    werewolves: int
 
     @property
-    def total(self) -> int:
-        return self.w + self.v
+    def total_players(self) -> int:
+        return self.villagers + self.werewolves
 
     @property
-    def active(self) -> bool:
-        return self.w > 0 and self.w < self.v
+    def wolf_fraction(self) -> Fraction:
+        if self.total_players == 0:
+            return Fraction(0)
+        return Fraction(self.werewolves, self.total_players)
+
+    @property
+    def is_game_over(self) -> bool:
+        return self.werewolves == 0 or self.werewolves >= self.villagers
 
     @property
     def villagers_win(self) -> bool:
-        return self.w == 0 and self.v > 0
+        return self.werewolves == 0 and self.villagers > 0
 
     @property
-    def werewolves_win(self) -> bool:
-        return self.v <= self.w and self.w > 0
+    def wolves_win(self) -> bool:
+        return self.werewolves >= self.villagers and self.werewolves > 0
 
-    @property
-    def wolf_fraction(self) -> float:
-        return self.w / self.total if self.total > 0 else 0.0
+    def after_correct_elimination(self) -> 'WerewolfState':
+        """State after eliminating a wolf (day) and losing a villager (night)."""
+        return WerewolfState(self.villagers - 1, self.werewolves - 1)
 
-    def __repr__(self) -> str:
-        return f"WerewolfState(w={self.w}, v={self.v})"
+    def after_wrong_elimination(self) -> 'WerewolfState':
+        """State after eliminating a villager (day) and losing another (night)."""
+        return WerewolfState(self.villagers - 2, self.werewolves)
 
 
-# =============================================================================
-# Algorithm 1: Exact Win Probability via Markov Chain Absorption
-# =============================================================================
+# ============================================================
+# §2. Win Probability (exact rational arithmetic)
+# ============================================================
 
-@lru_cache(maxsize=None)
-def win_probability(w: int, v: int) -> Fraction:
-    """Compute exact villager win probability under random elimination.
+_win_prob_cache: Dict[Tuple[int, int], Fraction] = {}
 
-    Uses the Markov chain recurrence:
-        P(0, v) = 1             (v > 0)
-        P(w, v) = 0             (w ≥ v, w > 0)
-        P(w, v) = w/(w+v) · P(w-1, v-1) + v/(w+v) · P(w, v-2)
+def win_probability(state: WerewolfState) -> Fraction:
+    """Exact win probability under random elimination strategy.
 
-    Time complexity: O(w * v)
-    Space complexity: O(w * v) with memoization
+    Algorithm: Dynamic programming on the game tree.
+    Complexity: O(v * w) time and space.
 
-    Args:
-        w: Number of werewolves
-        v: Number of villagers
-
-    Returns:
-        Exact win probability as a Fraction
+    Matches the Lean 4 definition `winProb` exactly.
     """
+    key = (state.villagers, state.werewolves)
+    if key in _win_prob_cache:
+        return _win_prob_cache[key]
+
+    v, w = state.villagers, state.werewolves
+
     if w == 0:
-        return Fraction(1) if v > 0 else Fraction(0)
-    if w >= v or v <= 1:
-        return Fraction(0)
-    n = Fraction(w + v)
-    return (Fraction(w) / n) * win_probability(w - 1, v - 1) + \
-           (Fraction(v) / n) * win_probability(w, v - 2)
-
-
-# =============================================================================
-# Algorithm 2: Bayesian Posterior Update
-# =============================================================================
-
-def bayesian_update(
-    priors: List[float],
-    likelihoods: List[float],
-) -> List[float]:
-    """Update werewolf probabilities given new evidence.
-
-    Implements Bayes' rule: P(W_i | E) ∝ P(E | W_i) · P(W_i)
-
-    Args:
-        priors: Prior probability of each player being a werewolf
-        likelihoods: P(evidence | player i is werewolf) for each player
-
-    Returns:
-        Posterior probabilities (normalized)
-    """
-    n = len(priors)
-    assert len(likelihoods) == n, "Priors and likelihoods must have same length"
-
-    unnormalized = [p * l for p, l in zip(priors, likelihoods)]
-    total = sum(unnormalized)
-
-    if total == 0:
-        return [1.0 / n] * n  # Uniform fallback
-
-    return [u / total for u in unnormalized]
-
-
-# =============================================================================
-# Algorithm 3: Information Advantage Computation
-# =============================================================================
-
-def information_advantage(w: int, v: int) -> float:
-    """Compute the information advantage ratio: 1 / P(w, v).
-
-    This measures how many times more likely perfect-information players
-    are to win compared to random-elimination players.
-
-    Args:
-        w: Number of werewolves
-        v: Number of villagers
-
-    Returns:
-        Information advantage ratio (≥ 1 for winnable games)
-    """
-    p = win_probability(w, v)
-    if p == 0:
-        return float('inf')
-    return float(Fraction(1) / p)
-
-
-# =============================================================================
-# Algorithm 4: Wolf Fraction Trajectory
-# =============================================================================
-
-def wolf_fraction_trajectory(
-    w: int, v: int, outcomes: List[bool]
-) -> List[float]:
-    """Compute wolf fraction after each round.
-
-    Args:
-        w: Initial werewolves
-        v: Initial villagers
-        outcomes: True = correct vote (wolf eliminated), False = incorrect
-
-    Returns:
-        List of wolf fractions after each round (including initial)
-    """
-    trajectory = [w / (w + v) if w + v > 0 else 0.0]
-
-    for correct in outcomes:
-        if correct:
-            w -= 1
-            v -= 1  # night kill
-        else:
-            v -= 2  # wrong vote + night kill
-
-        if w + v > 0:
-            trajectory.append(w / (w + v))
-        else:
-            trajectory.append(0.0)
-
-        if w <= 0 or w >= v:
-            break
-
-    return trajectory
-
-
-# =============================================================================
-# Algorithm 5: Perfect Play Trajectory
-# =============================================================================
-
-def perfect_play_trajectory(k: int, v0: int) -> List[Tuple[int, int]]:
-    """Generate the game state trajectory under perfect play.
-
-    Under perfect play, each round:
-    1. Day: correctly eliminate one werewolf
-    2. Night: werewolves kill one villager
-
-    Args:
-        k: Number of werewolves
-        v0: Number of initial villagers
-
-    Returns:
-        List of (wolves, villagers) states from start to villager victory
-    """
-    assert 2 * k < k + v0, "Need 2k < n for villagers to win"
-
-    trajectory = [(k, v0)]
-    w, v = k, v0
-
-    for _ in range(k):
-        w -= 1  # day: eliminate wolf
-        v -= 1  # night: lose villager
-        trajectory.append((w, v))
-
-    return trajectory
-
-
-# =============================================================================
-# Algorithm 6: Configuration Counting
-# =============================================================================
-
-def werewolf_configs(n: int, k: int) -> int:
-    """Number of possible werewolf configurations: C(n, k)."""
-    return math.comb(n, k)
-
-
-def configs_after_elimination(
-    n: int, k: int, correct: bool
-) -> Tuple[int, int]:
-    """Configuration count after one elimination.
-
-    Args:
-        n: Current total players
-        k: Current werewolves
-        correct: True if a werewolf was eliminated
-
-    Returns:
-        (new_configs, new_n) tuple
-    """
-    if correct:
-        return math.comb(n - 1, k - 1), n - 1
+        result = Fraction(1)
+    elif v <= w:
+        result = Fraction(0)
     else:
-        return math.comb(n - 1, k), n - 1
+        total = v + w
+        # Probability of correctly eliminating a wolf
+        p_correct = Fraction(w, total)
+        # Probability of incorrectly eliminating a villager
+        p_wrong = Fraction(v, total)
+
+        # After correct: remove wolf, night kills villager → (v-1, w-1)
+        if w == 1:
+            correct_value = Fraction(1)  # Last wolf eliminated
+        else:
+            correct_value = win_probability(
+                WerewolfState(v - 1, w - 1))
+
+        # After wrong: remove villager, night kills another → (v-2, w)
+        next_wrong = WerewolfState(v - 2, w)
+        if next_wrong.villagers <= next_wrong.werewolves:
+            wrong_value = Fraction(0)
+        else:
+            wrong_value = win_probability(next_wrong)
+
+        result = p_correct * correct_value + p_wrong * wrong_value
+
+    _win_prob_cache[key] = result
+    return result
 
 
-# =============================================================================
-# Algorithm 7: BFT Threshold Analysis
-# =============================================================================
+# ============================================================
+# §3. Parity Defect
+# ============================================================
 
-def bft_analysis(n: int, k: int) -> dict:
-    """Analyze the game state relative to the BFT threshold.
+def parity_defect(v: int, w: int) -> Optional[Fraction]:
+    """The parity defect D(v, w) = P(v, w) / P(v+1, w).
 
-    The Byzantine Fault Tolerance threshold is w/n > 1/3.
-    Below this threshold, the game is in the "safe zone."
-    Above it, a single incorrect vote can be fatal.
+    When D > 1, the parity paradox is active: having one fewer
+    villager is actually better!
 
-    Args:
-        n: Total players
-        k: Werewolves
+    Returns None if P(v+1, w) = 0.
+    """
+    p_next = win_probability(WerewolfState(v + 1, w))
+    if p_next == 0:
+        return None
+    return win_probability(WerewolfState(v, w)) / p_next
+
+
+# ============================================================
+# §4. Even-Odd Decomposition
+# ============================================================
+
+def even_win_prob(m: int) -> Fraction:
+    """E(m) = P(2m, 1): the even subsequence for w=1."""
+    return win_probability(WerewolfState(2 * m, 1))
+
+def odd_win_prob(m: int) -> Fraction:
+    """O(m) = P(2m+1, 1): the odd subsequence for w=1."""
+    return win_probability(WerewolfState(2 * m + 1, 1))
+
+
+# ============================================================
+# §5. Bayesian Update
+# ============================================================
+
+@dataclass
+class BayesianBelief:
+    """Bayesian belief state: probability each player is a werewolf."""
+    probs: List[float]
+
+    @classmethod
+    def uniform_prior(cls, n: int, k: int) -> 'BayesianBelief':
+        """Create uniform prior: each player has probability k/n."""
+        return cls(probs=[k / n] * n)
+
+    def update(self, eliminated_idx: int, was_wolf: bool,
+               night_killed_idx: int) -> 'BayesianBelief':
+        """Update beliefs after a round of play.
+
+        Parameters:
+            eliminated_idx: index of player eliminated during day
+            was_wolf: whether the eliminated player was a werewolf
+            night_killed_idx: index of player killed at night
+        """
+        n = len(self.probs)
+        remaining = [i for i in range(n)
+                    if i != eliminated_idx and i != night_killed_idx]
+
+        if was_wolf:
+            # Eliminated a wolf: remaining wolves = k-1 among v-1 players
+            total_wolf_prob = sum(self.probs[i] for i in remaining)
+            if total_wolf_prob > 0:
+                new_probs = [self.probs[i] / total_wolf_prob *
+                           (total_wolf_prob - self.probs[eliminated_idx])
+                           if i in remaining else 0.0
+                           for i in range(n)]
+            else:
+                new_probs = [0.0] * n
+        else:
+            # Eliminated a villager: remaining wolves = k among v-2 players
+            total_wolf_prob = sum(self.probs[i] for i in remaining)
+            if total_wolf_prob > 0:
+                scale = 1.0 / (1.0 - self.probs[eliminated_idx] -
+                              self.probs[night_killed_idx])
+                new_probs = [self.probs[i] * scale if i in remaining else 0.0
+                           for i in range(n)]
+            else:
+                new_probs = [0.0] * n
+
+        return BayesianBelief(probs=new_probs)
+
+    @property
+    def entropy(self) -> float:
+        """Shannon entropy of the belief state."""
+        return sum(binary_entropy(p) for p in self.probs)
+
+    def most_suspicious(self, alive: List[int]) -> int:
+        """Return the alive player with highest wolf probability."""
+        return max(alive, key=lambda i: self.probs[i])
+
+
+def binary_entropy(p: float) -> float:
+    """Binary entropy H(p) = -p log₂(p) - (1-p) log₂(1-p)."""
+    if p <= 0 or p >= 1:
+        return 0.0
+    return -(p * math.log2(p) + (1 - p) * math.log2(1 - p))
+
+
+# ============================================================
+# §6. Information Gain Ratio
+# ============================================================
+
+def information_gain_ratio(v: int, w: int, accuracy: float) -> float:
+    """How much better than random: accuracy * (v+w) / w.
+
+    Random strategy achieves ratio 1.0.
+    Any informed strategy has ratio > 1.0.
+    """
+    if w == 0 or v + w == 0:
+        return 1.0
+    return accuracy * (v + w) / w
+
+
+# ============================================================
+# §7. Game Simulation
+# ============================================================
+
+def simulate_game(n: int, k: int, strategy: str = "random",
+                  rng=None) -> Tuple[bool, List[WerewolfState]]:
+    """Simulate a single Werewolf game.
+
+    Parameters:
+        n: total players
+        k: number of werewolves
+        strategy: "random" or "bayesian"
+        rng: random number generator (for reproducibility)
 
     Returns:
-        Dictionary with threshold analysis results
+        (villagers_won, trajectory of states)
     """
-    v = n - k
-    return {
-        "n": n,
-        "k": k,
-        "v": v,
-        "wolf_fraction": k / n if n > 0 else 0,
-        "bft_threshold": 1 / 3,
-        "in_safe_zone": 3 * k < n,
-        "in_critical_zone": v <= 2 * k,
-        "margin": v - 2 * k,
-        "rounds_to_crisis": max(0, (v - 2 * k) // 2) if k > 0 else v,
-    }
+    import random
+    if rng is None:
+        rng = random.Random()
+
+    v, w = n - k, k
+    trajectory = [WerewolfState(v, w)]
+
+    while True:
+        state = trajectory[-1]
+        if state.is_game_over:
+            return state.villagers_win, trajectory
+
+        # Day phase: eliminate a player
+        total = state.total_players
+        if rng.random() < state.werewolves / total:
+            # Hit a wolf
+            if state.werewolves == 1:
+                trajectory.append(WerewolfState(state.villagers, 0))
+                return True, trajectory
+            new_state = state.after_correct_elimination()
+        else:
+            # Hit a villager
+            new_state = state.after_wrong_elimination()
+
+        if new_state.is_game_over:
+            trajectory.append(new_state)
+        else:
+            trajectory.append(new_state)
+
+
+def estimate_win_probability(n: int, k: int,
+                             num_games: int = 100000,
+                             seed: int = 42) -> float:
+    """Monte Carlo estimate of villager win probability."""
+    import random
+    rng = random.Random(seed)
+    wins = sum(1 for _ in range(num_games)
+               if simulate_game(n, k, rng=rng)[0])
+    return wins / num_games
 
 
 if __name__ == "__main__":
-    # Demo: compute and display key results
-    print("Win Probabilities:")
-    for w, v in [(1, 2), (1, 4), (2, 5), (3, 8)]:
-        p = win_probability(w, v)
-        print(f"  P({w},{v}) = {p} ≈ {float(p):.4f}")
+    # Verify exact values match Lean
+    print("Exact win probabilities (matching Lean 4):")
+    test_cases = [
+        (2, 1, Fraction(1, 3)),
+        (3, 1, Fraction(1, 4)),
+        (4, 1, Fraction(7, 15)),
+        (5, 1, Fraction(3, 8)),
+        (6, 1, Fraction(19, 35)),
+        (3, 2, Fraction(2, 15)),
+        (5, 2, Fraction(8, 35)),
+    ]
+    for v, w, expected in test_cases:
+        actual = win_probability(WerewolfState(v, w))
+        status = "✓" if actual == expected else "✗"
+        print(f"  P({v}, {w}) = {actual} = {float(actual):.6f}  {status}")
 
-    print("\nInformation Advantages:")
-    for w, v in [(1, 2), (2, 5), (3, 8)]:
-        adv = information_advantage(w, v)
-        print(f"  Advantage({w},{v}) = {adv:.2f}x")
-
-    print("\nPerfect Play (k=2, v=5):")
-    for state in perfect_play_trajectory(2, 5):
-        print(f"  {state}")
-
-    print("\nBFT Analysis (n=7, k=2):")
-    analysis = bft_analysis(7, 2)
-    for key, value in analysis.items():
-        print(f"  {key}: {value}")
+    # Monte Carlo verification
+    print("\nMonte Carlo vs Exact (10^5 games each):")
+    for v, w in [(5, 1), (5, 2), (7, 2), (7, 3)]:
+        exact = float(win_probability(WerewolfState(v, w)))
+        mc = estimate_win_probability(v + w, w)
+        print(f"  P({v},{w}): exact={exact:.4f}, MC={mc:.4f}, "
+              f"error={abs(exact-mc):.4f}")
