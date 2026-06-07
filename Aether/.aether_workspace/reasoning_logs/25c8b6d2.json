@@ -1,0 +1,22 @@
+{
+  "checkpoints": [
+    {
+      "elapsed_seconds": 0.9,
+      "percent_complete": 0.0,
+      "status": "SUBMITTED",
+      "timestamp": "2026-06-07T09:03:42"
+    }
+  ],
+  "completed_at": "",
+  "domain": "Applications",
+  "error": "",
+  "final_percent": 0.0,
+  "final_status": "",
+  "has_files": false,
+  "job_id": "25c8b6d2",
+  "project_id": "0036528c-dfaf-41de-8424-9c6ce01791cb",
+  "prompt_length": 22158,
+  "stages": [],
+  "submitted_at": "2026-06-07T09:03:42",
+  "total_duration_seconds": 0.0
+}

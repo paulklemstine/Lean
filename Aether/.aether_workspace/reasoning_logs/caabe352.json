@@ -1,0 +1,22 @@
+{
+  "checkpoints": [
+    {
+      "elapsed_seconds": 0.1,
+      "percent_complete": 0.0,
+      "status": "SUBMITTED",
+      "timestamp": "2026-06-07T09:03:20"
+    }
+  ],
+  "completed_at": "",
+  "domain": "Novelty",
+  "error": "",
+  "final_percent": 0.0,
+  "final_status": "",
+  "has_files": false,
+  "job_id": "caabe352",
+  "project_id": "11a4e242-4fd4-441b-8e8c-20fdd4d99b5f",
+  "prompt_length": 22863,
+  "stages": [],
+  "submitted_at": "2026-06-07T09:03:20",
+  "total_duration_seconds": 0.0
+}

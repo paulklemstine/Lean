@@ -2,36 +2,6 @@
   "breakthroughs": [],
   "cycle_log": [
     {
-      "cycle_id": "15dd528a",
-      "domain": "Shared",
-      "key_insight": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established the information-geometric foundations of EML statistical manifolds, proving 17 theorems about Fisher information, Bregman di",
-      "quality_score": 0.36056,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-04T04:22:54",
-      "title": "EML Information Geometry: Fisher Information of exp-log Models"
-    },
-    {
-      "cycle_id": "9b922fe2",
-      "domain": "Geometry",
-      "key_insight": "# Future Research Directions: Galaxy Decompositions and Ordered Field Rigidity\n\n## Synthesis\n\nThis research cycle established the **Archimedean-Connectedness Bridge**: a linearly ordered field with th",
-      "quality_score": 0.50264,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-04T04:32:04",
-      "title": "Fundamental algebraic-topological bridge: **th"
-    },
-    {
-      "cycle_id": "17d2f5c5",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle introduced the Accuracy-Parameterized Elimination Game (APEG), a novel mathematical structure for analyzing social deduction games like Werewolf/",
-      "quality_score": 0.48656,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-04T05:33:32",
-      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-    },
-    {
       "cycle_id": "af7ecea0",
       "domain": "Bridges",
       "key_insight": "# Future Directions: Gravity from Information\n\n## Synthesis\n\nThis research cycle established the **Einstein Decomposition Theorem**: every entropy functional S on a discrete code spacetime splits as S",
@@ -2000,6 +1970,36 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T07:53:35",
       "title": "Isomorphisms of Meaning: When Structures Collide"
+    },
+    {
+      "cycle_id": "fbc73d45",
+      "domain": "Novelty",
+      "key_insight": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established **Reachability Fragility Theory (RFT)** — a formally verified framework for analyzing the dependency structure of directed a",
+      "quality_score": 0.4084,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T09:02:03",
+      "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+    },
+    {
+      "cycle_id": "db3d3e5e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Sheaf-Theoretic Data Integration\n\n## Synthesis\n\nThis research cycle established the algebraic and topological foundations for sheaf-theoretic data integration, proving that (1) co",
+      "quality_score": 0.68664,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T09:02:31",
+      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+    },
+    {
+      "cycle_id": "d3e0f9ca",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: CSS Codes as Cohomology\n\n## Synthesis\n\nThis research cycle established a rigorous, machine-verified bridge between CSS quantum error-correcting codes and homological algebra. We p",
+      "quality_score": 0.4636,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-07T09:02:58",
+      "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
     }
   ],
   "entries": [
@@ -2045,7 +2045,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-07T07:53:35",
+  "last_updated": "2026-06-07T09:02:58",
   "open_questions": [
     {
       "context": "sorry",
@@ -2072,12 +2072,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "6c23eddb",
-        "quality": 0.4348,
-        "theorems": 6,
-        "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
-      },
       {
         "cycle_id": "4ab2bbb1",
         "quality": 0.39984000000000003,
@@ -2131,6 +2125,12 @@
         "quality": 0.3328,
         "theorems": 5,
         "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+      },
+      {
+        "cycle_id": "d3e0f9ca",
+        "quality": 0.4636,
+        "theorems": 4,
+        "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
       }
     ],
     "Bridges": [
@@ -2269,18 +2269,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3dddd691",
-        "quality": 0.6472,
-        "theorems": 5,
-        "title": "Alien Mathematics: Non-Standard Arithmetic"
-      },
-      {
-        "cycle_id": "faf156a9",
-        "quality": 0.34064000000000005,
-        "theorems": 6,
-        "title": "The Library of Babel: Combinatorics of the Universal Library"
-      },
-      {
         "cycle_id": "971b6af3",
         "quality": 0.66472,
         "theorems": 5,
@@ -2327,6 +2315,18 @@
         "quality": 0.4416,
         "theorems": 5,
         "title": "Isomorphisms of Meaning: When Structures Collide"
+      },
+      {
+        "cycle_id": "fbc73d45",
+        "quality": 0.4084,
+        "theorems": 5,
+        "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+      },
+      {
+        "cycle_id": "db3d3e5e",
+        "quality": 0.68664,
+        "theorems": 5,
+        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
       }
     ],
     "Physics": [
