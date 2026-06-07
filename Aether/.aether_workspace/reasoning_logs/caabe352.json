@@ -5,6 +5,12 @@
       "percent_complete": 0.0,
       "status": "SUBMITTED",
       "timestamp": "2026-06-07T09:03:20"
+    },
+    {
+      "elapsed_seconds": 1988.7,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-07T09:36:28"
     }
   ],
   "completed_at": "",
@@ -16,7 +22,13 @@
   "job_id": "caabe352",
   "project_id": "11a4e242-4fd4-441b-8e8c-20fdd4d99b5f",
   "prompt_length": 22863,
-  "stages": [],
+  "stages": [
+    {
+      "at_elapsed_seconds": 1988.7,
+      "from": "SUBMITTED",
+      "to": "RUNNING"
+    }
+  ],
   "submitted_at": "2026-06-07T09:03:20",
   "total_duration_seconds": 0.0
 }
