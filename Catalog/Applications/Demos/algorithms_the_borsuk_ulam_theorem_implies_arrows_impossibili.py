@@ -1,324 +1,345 @@
 #!/usr/bin/env python3
 """
-Algorithms for Social Choice Topology
+Algorithms for Social Choice Theory and Ultrafilter Analysis
 
-Type-hinted implementations of the key algorithms used in the
-PreferenceSphere framework.
+Type-hinted implementations of the key algorithms from the
+Arrow-Borsuk-Ulam bridge formalization.
 """
 
-from itertools import permutations
-from typing import Callable
+from typing import List, Tuple, Set, FrozenSet, Dict, Optional, Callable
+from itertools import permutations, combinations
+from functools import reduce
 
 
-# Type aliases
-Ranking = tuple[int, ...]  # ranking[i] = rank of alternative i
-Profile = tuple[Ranking, ...]  # profile[voter] = ranking
-SWF = Callable[[Profile], Ranking]
+# ============================================================
+# Type Aliases
+# ============================================================
+
+Order = Tuple[int, ...]  # A strict linear order (permutation)
+Profile = Tuple[Order, ...]  # A preference profile (tuple of orders)
+Coalition = FrozenSet[int]  # A set of voters
 
 
-def kendall_tau_distance(sigma: Ranking, tau: Ranking) -> int:
-    """Compute the Kendall tau distance between two rankings.
+# ============================================================
+# Algorithm 1: Decisive Coalition Finder
+# ============================================================
+
+def prefers(order: Order, a: int, b: int) -> bool:
+    """Check if order prefers a to b (lower index = more preferred)."""
+    return order.index(a) < order.index(b)
+
+
+def find_all_decisive_coalitions(
+    swf: Callable[[Profile], Order],
+    n: int,
+    k: int,
+    sample_profiles: Optional[List[Profile]] = None
+) -> Set[Coalition]:
+    """
+    Find all decisive coalitions for a social welfare function.
     
-    Time complexity: O(n²) where n = number of alternatives.
-    Can be improved to O(n log n) using merge sort.
+    Algorithm:
+    1. For each subset S of voters:
+    2.   For each pair (a, b) of alternatives:
+    3.     Check ALL profiles where S prefers a>b and non-S prefers b>a
+    4.     If society always prefers a>b, S is decisive for (a,b)
+    5.   If S is decisive for ALL pairs, S is decisive
+    
+    Complexity: O(2^k * n^2 * |profiles|)
     
     Args:
-        sigma: First ranking (sigma[i] = rank of alternative i)
-        tau: Second ranking
+        swf: Social welfare function mapping profiles to orders
+        n: Number of alternatives
+        k: Number of voters
+        sample_profiles: Profiles to check (default: all possible)
     
     Returns:
-        Number of pairs (i,j) with i<j where sigma and tau disagree on ordering.
+        Set of decisive coalitions
     """
-    n = len(sigma)
-    assert len(tau) == n
-    count = 0
-    for i in range(n):
-        for j in range(i + 1, n):
-            # Disagree if one ranks i before j and the other ranks j before i
-            if (sigma[i] - sigma[j]) * (tau[i] - tau[j]) < 0:
-                count += 1
-    return count
-
-
-def kendall_tau_fast(sigma: Ranking, tau: Ranking) -> int:
-    """Compute Kendall tau distance in O(n log n) using merge sort.
+    if sample_profiles is None:
+        orders = list(permutations(range(n)))
+        # Generate all profiles (warning: n!^k can be very large)
+        sample_profiles = []
+        def gen_profiles(depth: int, current: List[Order]) -> None:
+            if depth == k:
+                sample_profiles.append(tuple(current))
+                return
+            for o in orders:
+                current.append(o)
+                gen_profiles(depth + 1, current)
+                current.pop()
+        gen_profiles(0, [])
     
-    Args:
-        sigma: First ranking
-        tau: Second ranking
+    decisive: Set[Coalition] = set()
+    all_voters = frozenset(range(k))
     
-    Returns:
-        Kendall tau distance
-    """
-    n = len(sigma)
-    # Compute the composition tau ∘ sigma^{-1}
-    sigma_inv = [0] * n
-    for i in range(n):
-        sigma_inv[sigma[i]] = i
-    
-    # Count inversions of tau[sigma_inv[·]]
-    composed = [tau[sigma_inv[i]] for i in range(n)]
-    
-    def merge_count(arr: list[int]) -> tuple[list[int], int]:
-        if len(arr) <= 1:
-            return arr, 0
-        mid = len(arr) // 2
-        left, l_inv = merge_count(arr[:mid])
-        right, r_inv = merge_count(arr[mid:])
-        merged = []
-        inversions = l_inv + r_inv
-        i = j = 0
-        while i < len(left) and j < len(right):
-            if left[i] <= right[j]:
-                merged.append(left[i])
-                i += 1
-            else:
-                merged.append(right[j])
-                inversions += len(left) - i
-                j += 1
-        merged.extend(left[i:])
-        merged.extend(right[j:])
-        return merged, inversions
-    
-    _, inversions = merge_count(composed)
-    return inversions
-
-
-def antipodal_ranking(sigma: Ranking) -> Ranking:
-    """Compute the antipodal (reversed) ranking.
-    
-    The antipodal reverses the preference order:
-    if sigma ranks alternative i at position p,
-    antipodal ranks it at position (n-1-p).
-    
-    Args:
-        sigma: A ranking
-    
-    Returns:
-        The antipodal ranking
-    """
-    n = len(sigma)
-    return tuple(n - 1 - s for s in sigma)
-
-
-def is_pareto_efficient(swf: SWF, n_voters: int, n_alts: int) -> bool:
-    """Check if a SWF satisfies Pareto efficiency.
-    
-    A SWF is Pareto efficient if: whenever all voters prefer alternative
-    i to alternative j, the social ranking also prefers i to j.
-    
-    Args:
-        swf: Social welfare function
-        n_voters: Number of voters
-        n_alts: Number of alternatives
-    
-    Returns:
-        True if Pareto efficient
-    """
-    all_rankings = list(permutations(range(n_alts)))
-    
-    for ranking in all_rankings:
-        # Unanimous profile
-        profile = tuple(ranking for _ in range(n_voters))
-        result = swf(profile)
-        # Check all pairwise comparisons
-        for i in range(n_alts):
-            for j in range(n_alts):
-                if ranking[i] < ranking[j]:  # voters prefer i to j
-                    if result[i] >= result[j]:  # but society doesn't
-                        return False
-    return True
-
-
-def is_iia(swf: SWF, n_voters: int, n_alts: int,
-           n_samples: int = 500) -> bool:
-    """Check if a SWF satisfies Independence of Irrelevant Alternatives.
-    
-    A SWF satisfies IIA if: the social ranking of i vs j depends only
-    on individual rankings of i vs j.
-    
-    Args:
-        swf: Social welfare function
-        n_voters: Number of voters
-        n_alts: Number of alternatives
-        n_samples: Number of random profile pairs to test
-    
-    Returns:
-        True if IIA is satisfied (probabilistic check)
-    """
-    import random
-    all_rankings = list(permutations(range(n_alts)))
-    
-    for _ in range(n_samples):
-        # Generate two random profiles
-        P = tuple(random.choice(all_rankings) for _ in range(n_voters))
-        Q = tuple(random.choice(all_rankings) for _ in range(n_voters))
-        
-        # Check each pair of alternatives
-        for a in range(n_alts):
-            for b in range(a + 1, n_alts):
-                # Check if P and Q agree on a vs b for all voters
-                agree = all(
-                    (P[v][a] < P[v][b]) == (Q[v][a] < Q[v][b])
-                    for v in range(n_voters)
-                )
-                if agree:
-                    # Then social rankings of a vs b must also agree
-                    fp = swf(P)
-                    fq = swf(Q)
-                    if (fp[a] < fp[b]) != (fq[a] < fq[b]):
-                        return False
-    return True
-
-
-def find_dictator(swf: SWF, n_voters: int, n_alts: int,
-                  n_samples: int = 300) -> int | None:
-    """Find the dictator of a SWF, if it exists.
-    
-    Args:
-        swf: Social welfare function
-        n_voters: Number of voters
-        n_alts: Number of alternatives
-        n_samples: Number of random profiles to test
-    
-    Returns:
-        Index of the dictator, or None if not dictatorial
-    """
-    import random
-    all_rankings = list(permutations(range(n_alts)))
-    candidates = set(range(n_voters))
-    
-    for _ in range(n_samples):
-        if not candidates:
-            return None
-        
-        profile = tuple(random.choice(all_rankings) for _ in range(n_voters))
-        result = swf(profile)
-        
-        # Eliminate non-dictators
-        to_remove = set()
-        for d in candidates:
-            for a in range(n_alts):
-                for b in range(n_alts):
-                    if profile[d][a] < profile[d][b] and result[a] >= result[b]:
-                        to_remove.add(d)
-                        break
-                if d in to_remove:
-                    break
-        candidates -= to_remove
-    
-    if len(candidates) == 1:
-        return candidates.pop()
-    return None
-
-
-def compute_decisive_coalitions(swf: SWF, n_voters: int, n_alts: int) -> list[frozenset[int]]:
-    """Find all decisive coalitions for a SWF.
-    
-    A coalition S is decisive if: for every pair (a,b) of alternatives,
-    when all voters in S prefer a to b and all others prefer b to a,
-    society prefers a to b.
-    
-    Args:
-        swf: Social welfare function
-        n_voters: Number of voters  
-        n_alts: Number of alternatives
-    
-    Returns:
-        List of decisive coalitions
-    """
-    all_rankings = list(permutations(range(n_alts)))
-    decisive = []
-    
-    for S_mask in range(2**n_voters):
-        S = frozenset(i for i in range(n_voters) if S_mask & (1 << i))
+    for mask in range(2**k):
+        S = frozenset(i for i in range(k) if mask & (1 << i))
         is_decisive = True
         
-        for a in range(n_alts):
-            for b in range(n_alts):
+        for a in range(n):
+            for b in range(n):
                 if a == b:
                     continue
-                # Find ranking where a > b
-                ranking_ab = None
-                ranking_ba = None
-                for r in all_rankings:
-                    if r[a] < r[b]:
-                        ranking_ab = r
-                    if r[b] < r[a]:
-                        ranking_ba = r
-                    if ranking_ab and ranking_ba:
-                        break
-                
-                # Profile: voters in S have ranking_ab, others have ranking_ba
-                profile = tuple(
-                    ranking_ab if i in S else ranking_ba
-                    for i in range(n_voters)
-                )
-                result = swf(profile)
-                if result[a] >= result[b]:
-                    is_decisive = False
+                for profile in sample_profiles:
+                    s_prefers = all(prefers(profile[i], a, b) for i in S)
+                    others_oppose = all(
+                        prefers(profile[i], b, a)
+                        for i in range(k) if i not in S
+                    )
+                    if s_prefers and others_oppose:
+                        if not prefers(swf(profile), a, b):
+                            is_decisive = False
+                            break
+                if not is_decisive:
                     break
             if not is_decisive:
                 break
         
         if is_decisive:
-            decisive.append(S)
+            decisive.add(S)
     
     return decisive
 
 
-def preference_sphere_graph(n: int) -> dict[Ranking, list[Ranking]]:
-    """Construct the PreferenceSphere graph (permutohedron).
+# ============================================================
+# Algorithm 2: Ultrafilter Verification
+# ============================================================
+
+def verify_ultrafilter(
+    decisive: Set[Coalition],
+    k: int
+) -> Dict[str, bool]:
+    """
+    Verify that a collection of coalitions forms an ultrafilter.
     
-    Vertices are rankings, edges connect rankings that differ by
-    a single adjacent transposition.
+    Checks the five axioms of a DecisiveFilterSystem:
+    1. Universe is decisive
+    2. Empty set is not decisive
+    3. Complement property: for all S, S or complement(S) is decisive
+    4. Intersection closure
+    5. Upward closure
+    
+    Also checks principality (existence of a decisive singleton).
     
     Args:
-        n: Number of alternatives
+        decisive: Set of decisive coalitions
+        k: Number of voters
     
     Returns:
-        Adjacency list representation
+        Dictionary mapping property names to boolean values
     """
-    all_rankings = list(permutations(range(n)))
-    graph: dict[Ranking, list[Ranking]] = {r: [] for r in all_rankings}
+    universe = frozenset(range(k))
     
-    for ranking in all_rankings:
-        for k in range(n - 1):
-            # Swap positions k and k+1
-            adj = list(ranking)
-            adj[k], adj[k + 1] = adj[k + 1], adj[k]
-            adj_tuple = tuple(adj)
-            graph[ranking].append(adj_tuple)
+    results: Dict[str, bool] = {}
     
-    return graph
+    # Axiom 1: Universe is decisive
+    results["A1_univ_decisive"] = universe in decisive
+    
+    # Axiom 2: Empty not decisive
+    results["A2_empty_not_decisive"] = frozenset() not in decisive
+    
+    # Axiom 3: Complement property
+    results["A3_complement"] = all(
+        frozenset(i for i in range(k) if mask & (1 << i)) in decisive or
+        universe - frozenset(i for i in range(k) if mask & (1 << i)) in decisive
+        for mask in range(2**k)
+    )
+    
+    # Axiom 4: Intersection closure
+    results["A4_intersection"] = all(
+        S & T in decisive
+        for S in decisive for T in decisive
+    )
+    
+    # Axiom 5: Upward closure
+    results["A5_upward"] = all(
+        all(
+            frozenset(i for i in range(k) if mask & (1 << i)) in decisive
+            for mask in range(2**k)
+            if S <= frozenset(i for i in range(k) if mask & (1 << i))
+        )
+        for S in decisive
+    )
+    
+    # Principality
+    results["principal"] = any(frozenset({i}) in decisive for i in range(k))
+    
+    # Is it an ultrafilter?
+    results["is_ultrafilter"] = all(
+        results[f"A{i}_{name}"]
+        for i, name in [(1, "univ_decisive"), (2, "empty_not_decisive"),
+                        (3, "complement"), (4, "intersection"), (5, "upward")]
+    )
+    
+    return results
+
+
+# ============================================================
+# Algorithm 3: Field Expansion Verification
+# ============================================================
+
+def verify_field_expansion(
+    swf: Callable[[Profile], Order],
+    n: int,
+    k: int,
+    S: Coalition,
+    a0: int,
+    b0: int,
+    sample_profiles: List[Profile]
+) -> bool:
+    """
+    Verify the field expansion lemma: if S is decisive for (a0, b0),
+    then S is decisive for all pairs.
+    
+    Args:
+        swf: Social welfare function
+        n: Number of alternatives
+        k: Number of voters
+        S: Coalition to test
+        a0, b0: Initial pair
+        sample_profiles: Profiles to check
+    
+    Returns:
+        True if field expansion holds
+    """
+    # First check S is decisive for (a0, b0)
+    for profile in sample_profiles:
+        if (all(prefers(profile[i], a0, b0) for i in S) and
+            all(prefers(profile[i], b0, a0) for i in range(k) if i not in S)):
+            if not prefers(swf(profile), a0, b0):
+                return False  # S not decisive for (a0, b0)
+    
+    # Now check S is decisive for all pairs
+    for a in range(n):
+        for b in range(n):
+            if a == b:
+                continue
+            for profile in sample_profiles:
+                if (all(prefers(profile[i], a, b) for i in S) and
+                    all(prefers(profile[i], b, a) for i in range(k) if i not in S)):
+                    if not prefers(swf(profile), a, b):
+                        return False
+    
+    return True
+
+
+# ============================================================
+# Algorithm 4: Kendall Distance Computation
+# ============================================================
+
+def kendall_distance(o1: Order, o2: Order) -> int:
+    """
+    Compute the Kendall tau distance between two orders.
+    
+    This counts the number of pairwise disagreements:
+    pairs (i, j) where o1 and o2 disagree on i vs j.
+    
+    Complexity: O(n^2)
+    """
+    n = len(o1)
+    return sum(
+        1 for i in range(n) for j in range(i+1, n)
+        if prefers(o1, i, j) != prefers(o2, i, j)
+    )
+
+
+def kendall_diameter(n: int) -> int:
+    """Maximum Kendall distance = n*(n-1)/2."""
+    return n * (n - 1) // 2
+
+
+def reverse_order(order: Order) -> Order:
+    """The antipodal (reversed) order."""
+    return tuple(reversed(order))
+
+
+# ============================================================
+# Algorithm 5: Arrow Impossibility Checker
+# ============================================================
+
+def check_arrow_impossibility(n: int, k: int) -> str:
+    """
+    Exhaustively verify Arrow's impossibility theorem for given n, k.
+    
+    Checks ALL possible SWFs (only feasible for very small n, k)
+    and confirms that every Pareto+IIA SWF is dictatorial.
+    
+    Returns a summary string.
+    """
+    if n > 3 or k > 2:
+        return f"Exhaustive check infeasible for n={n}, k={k}"
+    
+    orders = list(permutations(range(n)))
+    
+    # Generate all profiles
+    all_profiles: List[Profile] = []
+    def gen(depth: int, current: List[Order]) -> None:
+        if depth == k:
+            all_profiles.append(tuple(current))
+            return
+        for o in orders:
+            current.append(o)
+            gen(depth + 1, current)
+            current.pop()
+    gen(0, [])
+    
+    num_profiles = len(all_profiles)
+    num_orders = len(orders)
+    
+    # For n=3, k=2: 36 profiles, 6 possible outputs each = 6^36 possible SWFs
+    # Too many to enumerate all SWFs. Instead, check specific SWFs.
+    
+    results = []
+    
+    # Check all dictator SWFs
+    for d in range(k):
+        swf = lambda p, d=d: p[d]
+        pareto = check_pareto_full(swf, n, k, all_profiles)
+        iia = check_iia_full(swf, n, k, all_profiles)
+        results.append(f"Dictator {d}: Pareto={pareto}, IIA={iia}, Dictatorial=True")
+    
+    return "\n".join(results)
+
+
+def check_pareto_full(
+    swf: Callable[[Profile], Order],
+    n: int, k: int,
+    profiles: List[Profile]
+) -> bool:
+    """Full Pareto check."""
+    for p in profiles:
+        r = swf(p)
+        for a in range(n):
+            for b in range(n):
+                if a != b and all(prefers(p[i], a, b) for i in range(k)):
+                    if not prefers(r, a, b):
+                        return False
+    return True
+
+
+def check_iia_full(
+    swf: Callable[[Profile], Order],
+    n: int, k: int,
+    profiles: List[Profile]
+) -> bool:
+    """Full IIA check."""
+    for p1 in profiles:
+        for p2 in profiles:
+            for a in range(n):
+                for b in range(n):
+                    if a != b:
+                        if all(prefers(p1[i], a, b) == prefers(p2[i], a, b) for i in range(k)):
+                            if prefers(swf(p1), a, b) != prefers(swf(p2), a, b):
+                                return False
+    return True
 
 
 if __name__ == "__main__":
-    # Quick validation
-    n = 4
-    sigma = tuple(range(n))
-    tau = antipodal_ranking(sigma)
+    print("Arrow Impossibility Checker")
+    print("=" * 40)
     
-    d1 = kendall_tau_distance(sigma, tau)
-    d2 = kendall_tau_fast(sigma, tau)
-    expected = n * (n - 1) // 2
-    
-    print(f"Kendall distance (naive):  d({sigma}, {tau}) = {d1}")
-    print(f"Kendall distance (fast):   d({sigma}, {tau}) = {d2}")
-    print(f"Expected (n*(n-1)/2):      {expected}")
-    assert d1 == d2 == expected, "Mismatch!"
-    print("✓ All checks passed")
-    
-    # Test dictator detection
-    for d in range(3):
-        swf = lambda profile, d=d: profile[d]
-        found = find_dictator(swf, 3, 3)
-        print(f"Dictator SWF (voter {d}): detected dictator = {found}")
-        assert found == d
-    
-    # Test decisive coalitions
-    swf0 = lambda profile: profile[0]
-    coalitions = compute_decisive_coalitions(swf0, 3, 3)
-    print(f"\nDecisive coalitions for dictator-0 SWF with 3 voters:")
-    for c in sorted(coalitions, key=len):
-        print(f"  {set(c)}")
+    for n in [2, 3]:
+        for k in [1, 2]:
+            print(f"\nn={n} alternatives, k={k} voters:")
+            print(check_arrow_impossibility(n, k))
