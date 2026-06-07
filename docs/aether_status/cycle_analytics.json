@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-07T12:00:03.357096+00:00",
+  "last_updated": "2026-06-07T12:34:29.211909+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -14164,6 +14164,76 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T12:00:03.250170+00:00",
       "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4464,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 332,
+      "domain": "Novelty",
+      "duration_seconds": 5999.62766456604,
+      "end_time": 1780835613.862635,
+      "files_integrated": 5,
+      "job_id": "89a62d78",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.8,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6694,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.4656,
+        "novelty": 0.9417,
+        "proof_depth": 0.2616,
+        "usefulness": 0.5808
+      },
+      "quality_score": 0.29296,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780829614.2349703,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T12:34:29.110109+00:00",
+      "title": "The Aperiodic Monotile: One Shape to Tile Them All"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4683,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 333,
+      "domain": "Applications",
+      "duration_seconds": 4040.2094855308533,
+      "end_time": 1780835615.6265974,
+      "files_integrated": 5,
+      "job_id": "abe91576",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.68,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6503,
+        "cross_domain": 0.85,
+        "grade": "substantial",
+        "importance": 0.4721,
+        "novelty": 0.95,
+        "proof_depth": 0.2672,
+        "usefulness": 0.5586
+      },
+      "quality_score": 0.26944,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780831575.4171119,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T12:34:29.163848+00:00",
+      "title": "Aleph-1 Surface: Geometry Between Dimensions"
     }
   ]
 }

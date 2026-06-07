@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "abe91576",
     "filename": "aleph_1_surface_geometry_between_dimensions.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.26944,
     "title": "Ordinal-Indexed Filtration Spaces: Transfinite Geometry and Obstruction Theorems"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "aleph_1_surface_geometry_between_dimensions",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.26944,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Ordinal-Indexed Filtration Spaces: Transfinite Geometry and Obstruction Theorems"
     }
