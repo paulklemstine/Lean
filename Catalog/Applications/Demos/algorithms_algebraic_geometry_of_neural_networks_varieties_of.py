@@ -1,257 +1,295 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tropical Neural Variety Analysis
+Tropical Neural Algebra: Algorithms
 
-Type-hinted implementations of the core algorithms for analyzing
-ReLU neural network decision boundaries as tropical varieties.
+Type-hinted implementations of the core algorithms for computing
+tropical rational representations of ReLU networks, counting linear
+regions, and analyzing decision boundaries.
 """
 
-from typing import List, Tuple, Dict, Set, Optional
-from dataclasses import dataclass
-import math
+from typing import List, Tuple, Optional, Set
+import numpy as np
+from dataclasses import dataclass, field
 
 
 @dataclass
-class NeuralArchitecture:
-    """Specifies a ReLU network architecture by layer widths."""
-    input_dim: int
-    hidden_widths: List[int]
-    output_dim: int
+class MaxOfAffine:
+    """A tropical polynomial: max of k affine functions on R^n.
+    
+    Represents f(x) = max_i (a_i · x + b_i) for i = 1, ..., k.
+    """
+    slopes: np.ndarray  # Shape (k, n): each row is a coefficient vector
+    biases: np.ndarray  # Shape (k,): bias for each affine piece
+    
+    @property
+    def num_pieces(self) -> int:
+        return self.slopes.shape[0]
+    
+    @property
+    def input_dim(self) -> int:
+        return self.slopes.shape[1]
+    
+    def eval(self, x: np.ndarray) -> float:
+        """Evaluate at point x ∈ R^n."""
+        return float(np.max(self.slopes @ x + self.biases))
+    
+    def eval_batch(self, X: np.ndarray) -> np.ndarray:
+        """Evaluate at multiple points. X shape: (m, n)."""
+        return np.max(X @ self.slopes.T + self.biases, axis=1)
+    
+    def active_piece(self, x: np.ndarray) -> int:
+        """Return the index of the active piece at x."""
+        return int(np.argmax(self.slopes @ x + self.biases))
 
+
+@dataclass
+class TropicalRational:
+    """A tropical rational function: difference of two tropical polynomials.
+    
+    f(x) = p(x) - q(x) where p, q are MaxOfAffine.
+    Represents an arbitrary piecewise linear function.
+    """
+    numerator: MaxOfAffine
+    denominator: MaxOfAffine
+    
+    def eval(self, x: np.ndarray) -> float:
+        return self.numerator.eval(x) - self.denominator.eval(x)
+    
+    def decision_boundary(self, X: np.ndarray, threshold: float = 1e-6) -> np.ndarray:
+        """Find approximate decision boundary points from a grid."""
+        vals = np.abs(self.numerator.eval_batch(X) - self.denominator.eval_batch(X))
+        return X[vals < threshold]
+
+
+@dataclass 
+class ReluNeuron:
+    """A single ReLU neuron: x ↦ max(w · x + b, 0)."""
+    weights: np.ndarray  # Shape (n,)
+    bias: float
+    
+    def eval(self, x: np.ndarray) -> float:
+        return float(max(np.dot(self.weights, x) + self.bias, 0.0))
+    
+    def to_tropical(self) -> MaxOfAffine:
+        """Convert to a 2-piece tropical polynomial."""
+        n = len(self.weights)
+        slopes = np.vstack([self.weights, np.zeros(n)])
+        biases = np.array([self.bias, 0.0])
+        return MaxOfAffine(slopes, biases)
+
+
+@dataclass
+class ReluLayer:
+    """A ReLU layer: w neurons mapping R^n → R^w."""
+    neurons: List[ReluNeuron]
+    
+    @property
+    def width(self) -> int:
+        return len(self.neurons)
+    
+    def eval(self, x: np.ndarray) -> np.ndarray:
+        return np.array([n.eval(x) for n in self.neurons])
+    
+    def activation_pattern(self, x: np.ndarray) -> Tuple[bool, ...]:
+        """Return the activation pattern at point x."""
+        return tuple(
+            np.dot(n.weights, x) + n.bias >= 0 
+            for n in self.neurons
+        )
+
+
+@dataclass
+class ReluNetwork:
+    """A deep ReLU network with linear readout."""
+    layers: List[ReluLayer]
+    readout_weights: np.ndarray  # Shape (w_L,)
+    readout_bias: float
+    
     @property
     def depth(self) -> int:
-        """Number of hidden layers."""
-        return len(self.hidden_widths)
-
+        return len(self.layers)
+    
+    @property
+    def widths(self) -> List[int]:
+        return [layer.width for layer in self.layers]
+    
     @property
     def total_width(self) -> int:
-        """Sum of all hidden layer widths."""
-        return sum(self.hidden_widths)
+        return sum(self.widths)
+    
+    def eval(self, x: np.ndarray) -> float:
+        """Forward pass."""
+        h = x
+        for layer in self.layers:
+            h = layer.eval(h)
+        return float(np.dot(self.readout_weights, h) + self.readout_bias)
+    
+    def region_bound(self) -> int:
+        """Upper bound on the number of linear regions: 2^(total_width)."""
+        return 2 ** self.total_width
+    
+    def full_activation_pattern(self, x: np.ndarray) -> List[Tuple[bool, ...]]:
+        """Return the activation pattern across all layers."""
+        patterns = []
+        h = x
+        for layer in self.layers:
+            patterns.append(layer.activation_pattern(h))
+            h = layer.eval(h)
+        return patterns
 
-    @property
-    def width_product(self) -> int:
-        """Product of hidden layer widths (tropical degree)."""
-        result = 1
-        for w in self.hidden_widths:
-            result *= w
-        return result
 
-
-@dataclass
-class TropicalNeuralComplex:
+def zaslavsky_bound(n: int, w: int) -> int:
+    """Zaslavsky's bound: number of regions from w hyperplanes in R^n.
+    
+    Returns sum_{j=0}^{min(n,w)} C(w, j).
     """
-    The Tropical Neural Complex: a combinatorial structure encoding
-    the algebraic-geometric properties of a ReLU network's decision boundary.
+    from math import comb
+    return sum(comb(w, j) for j in range(min(n, w) + 1))
 
-    Novel mathematical structure introduced in this research.
+
+def refined_region_bound(input_dim: int, widths: List[int]) -> int:
+    """Refined region bound using Zaslavsky at each layer.
+    
+    For each layer i, the effective dimension is min(input_dim, w_{i-1}).
+    The bound is prod_i zaslavsky(n_eff_i, w_i).
     """
-    arch: NeuralArchitecture
-
-    @property
-    def folding_number(self) -> int:
-        """Maximum number of linear regions = 2^(total width)."""
-        return 2 ** self.arch.total_width
-
-    @property
-    def tropical_degree(self) -> int:
-        """Tropical polynomial degree = product of layer widths."""
-        return self.arch.width_product
-
-    @property
-    def boundary_facet_bound(self) -> int:
-        """Maximum codimension-1 facets of the decision boundary."""
-        return self.folding_number - 1
-
-    @property
-    def singularity_bound(self) -> int:
-        """Maximum singular points on the decision boundary."""
-        result = 1
-        for w in self.arch.hidden_widths:
-            result *= math.comb(w, 2)
-        return result
-
-    @property
-    def spectral_gap(self) -> float:
-        """Tropical spectral gap measuring depth advantage."""
-        if not self.arch.hidden_widths:
-            return 0.0
-        L = self.arch.depth
-        avg_w = self.arch.total_width / L
-        if avg_w <= 1:
-            return 0.0
-        return L * math.log2(avg_w) - math.log2(L * avg_w)
+    bound = 1
+    current_dim = input_dim
+    for w in widths:
+        bound *= zaslavsky_bound(current_dim, w)
+        current_dim = w
+    return bound
 
 
-def compose_complexes(c1: TropicalNeuralComplex,
-                       c2: TropicalNeuralComplex) -> TropicalNeuralComplex:
+def count_activation_regions(network: ReluNetwork, 
+                             grid_points: np.ndarray) -> int:
+    """Count distinct activation patterns by sampling.
+    
+    Returns a lower bound on the number of linear regions.
     """
-    Compose two tropical neural complexes (stack networks).
+    patterns: Set[Tuple] = set()
+    for x in grid_points:
+        pattern = tuple(
+            tuple(p) for p in network.full_activation_pattern(x)
+        )
+        patterns.add(pattern)
+    return len(patterns)
 
-    Theorem (proved in Lean): composition multiplies both
-    folding numbers and tropical degrees.
+
+def bend_count_after_depth(L: int) -> int:
+    """Number of bends after L layers of single neurons: 2^L - 1."""
+    return 2 ** L - 1
+
+
+def network_to_tropical_rational(network: ReluNetwork) -> Optional[TropicalRational]:
+    """Convert a univariate single-layer network to tropical rational form.
+    
+    Works for networks with input_dim=1 and depth=1.
     """
-    combined_arch = NeuralArchitecture(
-        input_dim=c1.arch.input_dim,
-        hidden_widths=c1.arch.hidden_widths + c2.arch.hidden_widths,
-        output_dim=c2.arch.output_dim
+    if network.depth != 1:
+        return None
+    
+    layer = network.layers[0]
+    w = layer.width
+    
+    # Each neuron gives max(a_i * x + b_i, 0)
+    # The output is sum_j readout_j * max(a_j * x + b_j, 0) + readout_bias
+    # This is a tropical rational function
+    
+    pos_slopes = []
+    pos_biases = []
+    neg_slopes = []
+    neg_biases = []
+    
+    for j, neuron in enumerate(layer.neurons):
+        r = network.readout_weights[j]
+        if r >= 0:
+            pos_slopes.append(r * neuron.weights)
+            pos_biases.append(r * neuron.bias)
+        else:
+            neg_slopes.append(-r * neuron.weights)
+            neg_biases.append(-r * neuron.bias)
+    
+    # Add the constant readout bias to the positive part
+    if len(pos_slopes) == 0:
+        pos_slopes = [np.zeros(1)]
+        pos_biases = [network.readout_bias]
+    else:
+        pos_biases[0] += network.readout_bias
+    
+    if len(neg_slopes) == 0:
+        neg_slopes = [np.zeros(1)]
+        neg_biases = [0.0]
+    
+    numer = MaxOfAffine(
+        np.array(pos_slopes).reshape(-1, network.layers[0].neurons[0].weights.shape[0]),
+        np.array(pos_biases)
     )
-    return TropicalNeuralComplex(arch=combined_arch)
+    denom = MaxOfAffine(
+        np.array(neg_slopes).reshape(-1, network.layers[0].neurons[0].weights.shape[0]),
+        np.array(neg_biases)
+    )
+    
+    return TropicalRational(numer, denom)
 
 
-def optimal_depth_for_budget(total_width: int, min_layer_width: int = 2) -> Tuple[int, List[int]]:
-    """
-    Find the depth that maximizes tropical degree for a given total width budget.
+# ============================================================
+# Algorithm: Decision Boundary Extraction
+# ============================================================
 
-    By AM-GM, equal layer widths maximize the product.
-    The optimal depth L satisfies w = W/L, maximizing (W/L)^L.
-    The maximum of x^(W/x) occurs at x = W/e, so optimal depth ≈ W/e.
-
-    Returns (optimal_depth, optimal_widths).
-    """
-    best_degree = 0
-    best_config: Tuple[int, List[int]] = (1, [total_width])
-
-    for L in range(1, total_width + 1):
-        w = total_width // L
-        if w < min_layer_width:
-            break
-        remainder = total_width - w * L
-        widths = [w] * L
-        # Distribute remainder
-        for i in range(remainder):
-            widths[i] += 1
-
-        degree = 1
-        for wi in widths:
-            degree *= wi
-
-        if degree > best_degree:
-            best_degree = degree
-            best_config = (L, widths)
-
-    return best_config
-
-
-def depth_width_tradeoff_table(total_width: int) -> List[Dict[str, float]]:
-    """
-    Generate a table showing the depth-width tradeoff for a fixed total width.
-
-    Returns list of dicts with keys: depth, width_per_layer, tropical_degree,
-    folding_number, spectral_gap, efficiency_ratio.
-    """
-    results = []
-    for L in range(1, total_width + 1):
-        w = total_width // L
-        if w < 1:
-            break
-        arch = NeuralArchitecture(input_dim=2, hidden_widths=[w] * L, output_dim=1)
-        tnc = TropicalNeuralComplex(arch=arch)
-
-        results.append({
-            'depth': L,
-            'width_per_layer': w,
-            'tropical_degree': tnc.tropical_degree,
-            'folding_number': tnc.folding_number,
-            'spectral_gap': tnc.spectral_gap,
-            'efficiency_ratio': tnc.tropical_degree / max(1, L * w),
-        })
-    return results
-
-
-def analyze_architecture(arch: NeuralArchitecture) -> Dict[str, float]:
-    """
-    Complete analysis of a neural architecture's tropical properties.
-
-    Returns a dictionary with all computed invariants.
-    """
-    tnc = TropicalNeuralComplex(arch=arch)
-    return {
-        'depth': arch.depth,
-        'total_width': arch.total_width,
-        'folding_number': tnc.folding_number,
-        'tropical_degree': tnc.tropical_degree,
-        'boundary_facet_bound': tnc.boundary_facet_bound,
-        'singularity_bound': tnc.singularity_bound,
-        'spectral_gap': tnc.spectral_gap,
-        'log2_tropical_degree': math.log2(tnc.tropical_degree) if tnc.tropical_degree > 0 else 0,
-        'log2_folding_number': math.log2(tnc.folding_number) if tnc.folding_number > 0 else 0,
-    }
-
-
-def compare_architectures(archs: List[NeuralArchitecture]) -> List[Dict[str, float]]:
-    """Compare multiple architectures on all tropical invariants."""
-    return [analyze_architecture(arch) for arch in archs]
-
-
-# ---- Activation Pattern Algorithms ----
-
-ActivationPattern = Tuple[bool, ...]
-FullPattern = Tuple[ActivationPattern, ...]
-
-
-def enumerate_activation_patterns(width: int) -> List[ActivationPattern]:
-    """Enumerate all 2^w activation patterns for a layer of width w."""
-    if width == 0:
-        return [()]
-    patterns = []
-    for i in range(2 ** width):
-        pattern = tuple(bool((i >> j) & 1) for j in range(width))
-        patterns.append(pattern)
-    return patterns
-
-
-def pattern_distance(p1: ActivationPattern, p2: ActivationPattern) -> int:
-    """Hamming distance between two activation patterns."""
-    return sum(a != b for a, b in zip(p1, p2))
-
-
-def adjacent_patterns(p: ActivationPattern) -> List[ActivationPattern]:
-    """Get all patterns that differ in exactly one neuron (Hamming distance 1)."""
-    result = []
-    for i in range(len(p)):
-        flipped = list(p)
-        flipped[i] = not flipped[i]
-        result.append(tuple(flipped))
-    return result
-
-
-def boundary_graph_edges(widths: List[int]) -> int:
-    """
-    Count the number of boundary-crossing edges in the activation pattern graph.
-
-    Each edge connects two patterns differing in one neuron, representing
-    a potential decision boundary facet.
-
-    Theorem (proved): This equals total_width * 2^(total_width - 1).
-    """
-    W = sum(widths)
-    if W == 0:
-        return 0
-    return W * (2 ** (W - 1))
+def extract_decision_boundary_2d(
+    network: ReluNetwork,
+    x_range: Tuple[float, float] = (-3, 3),
+    y_range: Tuple[float, float] = (-3, 3),
+    resolution: int = 500,
+    threshold: float = 0.01
+) -> np.ndarray:
+    """Extract the decision boundary of a 2D network by grid sampling."""
+    x = np.linspace(*x_range, resolution)
+    y = np.linspace(*y_range, resolution)
+    boundary = []
+    
+    for xi in x:
+        for yi in y:
+            val = network.eval(np.array([xi, yi]))
+            if abs(val) < threshold:
+                boundary.append([xi, yi])
+    
+    return np.array(boundary) if boundary else np.empty((0, 2))
 
 
 if __name__ == "__main__":
-    # Example: Compare common architectures
-    archs = [
-        NeuralArchitecture(2, [8], 1),
-        NeuralArchitecture(2, [4, 4], 1),
-        NeuralArchitecture(2, [2, 2, 2, 2], 1),
-        NeuralArchitecture(2, [16], 1),
-        NeuralArchitecture(2, [4, 4, 4, 4], 1),
-    ]
-
-    print("Architecture Comparison:")
-    print(f"{'Config':<20} {'Depth':>6} {'TotW':>6} {'TropDeg':>10} {'FoldNum':>12} {'Gap':>8}")
-    print("-" * 65)
-
-    for arch in archs:
-        info = analyze_architecture(arch)
-        config = f"{arch.input_dim}→{'→'.join(str(w) for w in arch.hidden_widths)}→{arch.output_dim}"
-        print(f"{config:<20} {info['depth']:>6.0f} {info['total_width']:>6.0f} "
-              f"{info['tropical_degree']:>10.0f} {info['folding_number']:>12.0f} "
-              f"{info['spectral_gap']:>8.2f}")
-
-    print("\nOptimal depth for budget W=16:")
-    opt_depth, opt_widths = optimal_depth_for_budget(16)
-    print(f"  Depth = {opt_depth}, Widths = {opt_widths}, "
-          f"Tropical Degree = {math.prod(opt_widths)}")
+    # Example: create a 2-layer network and analyze it
+    np.random.seed(42)
+    
+    # Network: R^2 -> 4 hidden -> 3 hidden -> 1 output
+    layer1 = ReluLayer([
+        ReluNeuron(np.array([1.0, 1.0]), -1.0),
+        ReluNeuron(np.array([-1.0, 1.0]), 0.0),
+        ReluNeuron(np.array([1.0, -1.0]), 0.5),
+        ReluNeuron(np.array([-1.0, -1.0]), 1.0),
+    ])
+    
+    layer2 = ReluLayer([
+        ReluNeuron(np.array([1.0, -1.0, 0.5, 0.0]), 0.0),
+        ReluNeuron(np.array([0.0, 1.0, -1.0, 1.0]), -0.5),
+        ReluNeuron(np.array([-1.0, 0.0, 1.0, -1.0]), 0.3),
+    ])
+    
+    network = ReluNetwork(
+        layers=[layer1, layer2],
+        readout_weights=np.array([1.0, -1.0, 0.5]),
+        readout_bias=-0.2
+    )
+    
+    print("Network architecture:", network.widths)
+    print(f"Depth: {network.depth}")
+    print(f"Total width: {network.total_width}")
+    print(f"Region bound (naive): 2^{network.total_width} = {network.region_bound()}")
+    print(f"Region bound (Zaslavsky): {refined_region_bound(2, network.widths)}")
+    
+    # Count regions by sampling
+    grid = np.random.uniform(-3, 3, (10000, 2))
+    n_regions = count_activation_regions(network, grid)
+    print(f"Observed regions (sampled): {n_regions}")
+    print(f"Ratio observed/bound: {n_regions / network.region_bound():.4f}")
