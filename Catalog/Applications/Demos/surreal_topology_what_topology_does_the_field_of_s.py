@@ -1,217 +1,313 @@
 #!/usr/bin/env python3
 """
-Demo: Surreal Topology — The Archimedean–Connected Dichotomy
+Demo: Surreal Topology — Visualizing the Completeness-Connectedness Bridge
 
-Demonstrates the key constructions from the formal proof:
-1. The clopen set construction for non-Archimedean fields
-2. How the "infinitesimal region" partitions the field
-3. The rescaling trick for total disconnectedness
+Demonstrates:
+1. Gap detection in dyadic rational approximations
+2. Connected component computation for finite ordered sets
+3. The contrast between ℚ-like (totally disconnected) and ℝ-like (connected) spaces
 """
 
 from fractions import Fraction
-from typing import List, Tuple
+import math
 
-# ============================================================
-# 1. Simulating a Non-Archimedean Ordered Field
-# ============================================================
-# We use rational functions Q(t) with t "infinitesimal"
-# Elements are (a, b) representing a + b*t where t → 0+
 
-class InfinitesimalField:
-    """Simple model of Q(epsilon): rationals extended by an infinitesimal.
-    Elements are a + b*epsilon where epsilon is infinitesimally small.
-    Order: a + b*eps < c + d*eps iff a < c, or (a == c and b < d)."""
+def dyadic_rationals(n: int) -> list[Fraction]:
+    """Generate dyadic rationals k/2^n for |k| ≤ 2^n, sorted."""
+    bound = 2**n
+    return sorted(set(Fraction(k, bound) for k in range(-bound, bound + 1)))
+
+
+def find_gaps(points: list[Fraction], threshold: float = 0.1) -> list[tuple[Fraction, Fraction, float]]:
+    """Find gaps in a finite ordered set exceeding a threshold."""
+    gaps = []
+    for i in range(len(points) - 1):
+        gap_size = float(points[i + 1] - points[i])
+        if gap_size > threshold:
+            gaps.append((points[i], points[i + 1], gap_size))
+    return sorted(gaps, key=lambda x: -x[2])
+
+
+def connected_components_threshold(points: list[float], epsilon: float) -> list[list[float]]:
+    """Compute approximate connected components using ε-threshold.
     
-    def __init__(self, real: Fraction, inf: Fraction = Fraction(0)):
-        self.real = real  # "standard part"
-        self.inf = inf    # coefficient of epsilon
-    
-    def __repr__(self):
-        if self.inf == 0:
-            return f"{self.real}"
-        elif self.real == 0:
-            return f"{self.inf}·ε"
+    Two points are in the same component if they can be connected
+    by a chain of points each within ε of the next.
+    """
+    if not points:
+        return []
+    sorted_pts = sorted(points)
+    components = [[sorted_pts[0]]]
+    for p in sorted_pts[1:]:
+        if p - components[-1][-1] <= epsilon:
+            components[-1].append(p)
         else:
-            sign = "+" if self.inf > 0 else "-"
-            return f"{self.real} {sign} {abs(self.inf)}·ε"
-    
-    def __lt__(self, other):
-        if self.real != other.real:
-            return self.real < other.real
-        return self.inf < other.inf
-    
-    def __le__(self, other):
-        return self == other or self < other
-    
-    def __eq__(self, other):
-        return self.real == other.real and self.inf == other.inf
-    
-    def __add__(self, other):
-        return InfinitesimalField(self.real + other.real, self.inf + other.inf)
-    
-    def __sub__(self, other):
-        return InfinitesimalField(self.real - other.real, self.inf - other.inf)
-    
-    def __mul__(self, other):
-        # (a + bε)(c + dε) ≈ ac + (ad + bc)ε  (ignoring ε² terms)
-        return InfinitesimalField(
-            self.real * other.real,
-            self.real * other.inf + self.inf * other.real
-        )
-    
-    def nsmul(self, n: int):
-        """n • self = self + self + ... + self (n times)"""
-        return InfinitesimalField(n * self.real, n * self.inf)
+            components.append([p])
+    return components
 
 
-# ============================================================
-# 2. Demonstrating the Clopen Set
-# ============================================================
+def contraction_homotopy(x: float, t: float) -> float:
+    """H(x, t) = (1-t) * x — contracts ℝ to the origin."""
+    return (1 - t) * x
 
-def demo_clopen_construction():
-    """Shows that ltNsmulRegion(ε) is a proper clopen subset."""
+
+def demonstrate_gap_bridge():
+    """Demonstrate the Dedekind Gap Bridge: gaps ↔ disconnectedness."""
     print("=" * 60)
-    print("DEMO 1: The Clopen Set Construction")
+    print("THE DEDEKIND GAP BRIDGE")
+    print("Gaps in the order ↔ Disconnectedness of the topology")
     print("=" * 60)
     
-    eps = InfinitesimalField(Fraction(0), Fraction(1))  # ε
-    one = InfinitesimalField(Fraction(1))                # 1
-    zero = InfinitesimalField(Fraction(0))               # 0
+    # ℚ has gaps (at irrationals)
+    print("\n--- ℚ-like spaces: gaps everywhere ---")
+    rationals_approx = [Fraction(p, q) for q in range(1, 20) for p in range(-2*q, 2*q+1)]
+    rationals_approx = sorted(set(rationals_approx))
+    rationals_in_unit = [r for r in rationals_approx if 0 < r < 1]
     
-    print(f"\nε = {eps}")
-    print(f"1 = {one}")
-    print(f"\nChecking: is n·ε < 1 for various n?")
+    # Check for gap at √2/2 ≈ 0.7071
+    sqrt2_over_2 = math.sqrt(2) / 2
+    below = [float(r) for r in rationals_in_unit if float(r) < sqrt2_over_2]
+    above = [float(r) for r in rationals_in_unit if float(r) > sqrt2_over_2]
     
-    for n in [1, 5, 10, 100, 1000000]:
-        neps = eps.nsmul(n)
-        print(f"  {n}·ε = {neps}, {n}·ε < 1? {neps < one}")
+    if below and above:
+        gap = above[0] - below[-1]
+        print(f"  Gap at √2/2 ≈ {sqrt2_over_2:.4f}")
+        print(f"  Largest rational below: {below[-1]:.4f}")
+        print(f"  Smallest rational above: {above[0]:.4f}")
+        print(f"  Gap size: {gap:.6f}")
+        print(f"  → This gap DISCONNECTS the rationals!")
     
-    print(f"\n→ For ALL n ∈ ℕ: n·ε < 1. This witnesses ¬Archimedean.")
+    # ℝ has no gaps
+    print("\n--- ℝ-like spaces: no gaps ---")
+    reals_approx = sorted([i * 0.001 for i in range(1, 1000)])
+    gaps = find_gaps([Fraction(r).limit_denominator(10000) for r in reals_approx], 0.002)
+    print(f"  Approximation with 999 evenly-spaced points in (0,1)")
+    print(f"  Gaps exceeding 0.002: {len(gaps)}")
+    print(f"  → Dense approximation has NO significant gaps")
     
-    # The clopen set
-    print(f"\nltNsmulRegion(ε) = {{z : ∃ n, z < n·ε}}")
+    # Connected components
+    print("\n--- Connected Components ---")
+    rat_points = [float(r) for r in rationals_in_unit[:30]]
+    for eps in [0.001, 0.01, 0.05]:
+        comps = connected_components_threshold(rat_points, eps)
+        print(f"  ε = {eps}: {len(comps)} connected components "
+              f"(max size: {max(len(c) for c in comps)})")
     
-    test_points = [
-        InfinitesimalField(Fraction(0)),
-        InfinitesimalField(Fraction(0), Fraction(1, 2)),   # ε/2
-        InfinitesimalField(Fraction(0), Fraction(3)),       # 3ε
-        InfinitesimalField(Fraction(1, 2)),                  # 1/2
-        InfinitesimalField(Fraction(1)),                      # 1
-        InfinitesimalField(Fraction(-1)),                     # -1
-    ]
-    
-    print(f"\nMembership in ltNsmulRegion(ε):")
-    for z in test_points:
-        # z ∈ ltNsmulRegion(ε) iff z.real < 0 or (z.real == 0)
-        # Since n·ε has real part 0 for all n, z < n·ε iff z.real < 0
-        # or (z.real == 0 and z.inf < n for some n)
-        in_set = z.real < 0 or (z.real == 0)  # since for z.real==0, z.inf < n for large n
-        print(f"  z = {str(z):>12s}: in ltNsmulRegion? {in_set}")
-    
-    print(f"\n→ ltNsmulRegion(ε) = {{z : real_part(z) ≤ 0}} ∪ {{z : real_part(z) = 0, inf_part(z) < n for some n}}")
-    print(f"  This set is CLOPEN: open (union of rays) AND closed (complement is open).")
-    print(f"  It contains 0 but not 1 → PROPER clopen subset → NOT CONNECTED!")
+    print(f"\n  As ε → 0, every point becomes its own component")
+    print(f"  → Total disconnectedness of ℚ!")
 
 
-# ============================================================
-# 3. Demonstrating the Separation Trick
-# ============================================================
-
-def demo_separation():
-    """Shows how to separate any two points with a clopen set."""
+def demonstrate_contraction():
+    """Demonstrate contractibility of ℝ."""
     print("\n" + "=" * 60)
-    print("DEMO 2: Clopen Separation of Arbitrary Points")
+    print("CONTRACTIBILITY OF ℝ")
+    print("H(x, t) = (1-t)·x contracts ℝ to the origin")
     print("=" * 60)
     
-    eps = InfinitesimalField(Fraction(0), Fraction(1))
+    test_points = [-3.0, -1.5, -0.5, 0.0, 0.5, 1.5, 3.0]
+    times = [0.0, 0.25, 0.5, 0.75, 1.0]
     
-    # Separate a = 1/3 from b = 2/3
-    a = InfinitesimalField(Fraction(1, 3))
-    b = InfinitesimalField(Fraction(2, 3))
-    delta = b - a  # = 1/3
-    
-    print(f"\nSeparating a = {a} from b = {b}")
-    print(f"δ = b - a = {delta}")
-    
-    # Rescaled infinitesimal: ε' = ε * δ (in our model, this has real part 0, inf part 1/3)
-    eps_rescaled = eps * delta
-    print(f"Rescaled ε' = ε · δ = {eps_rescaled}")
-    
-    print(f"\nCheck: n · ε' < δ for all n?")
-    for n in [1, 10, 100]:
-        neps = eps_rescaled.nsmul(n)
-        print(f"  {n} · ε' = {neps}, < δ = {delta}? {neps < delta}")
-    
-    print(f"\nClopen set S = {{z : ∃ n, z - a < n · ε'}}")
-    print(f"  a ∈ S: a - a = 0 < ε' ✓")
-    print(f"  b ∉ S: b - a = δ > n·ε' for all n ✓")
-    print(f"\n→ a and b are SEPARATED by a clopen set!")
-
-
-# ============================================================
-# 4. The Archimedean-Connected Classification
-# ============================================================
-
-def demo_classification():
-    """Shows the classification of ordered fields by Archimedean/Connected."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: The Archimedean–Connected Classification")
-    print("=" * 60)
-    
-    fields = [
-        ("ℝ (reals)", True, True, True),
-        ("ℚ (rationals)", True, False, False),
-        ("ℚ(ε) (with infinitesimal)", False, False, True),
-        ("*ℝ (hyperreals)", False, False, True),
-        ("No (surreal numbers)", False, False, True),
-        ("ℝ((t)) (Laurent series)", False, False, True),
-    ]
-    
-    print(f"\n{'Field':<30} {'Archimedean':<15} {'Complete':<12} {'Connected':<12} {'Tot. Disconn.':<15}")
-    print("-" * 84)
-    for name, arch, complete, has_inf in fields:
-        connected = arch and complete
-        tot_disc = has_inf  # non-Archimedean → totally disconnected
-        print(f"{name:<30} {'Yes' if arch else 'No':<15} {'Yes' if complete else 'No':<12} "
-              f"{'Yes' if connected else 'No':<12} {'Yes' if tot_disc else '—':<15}")
-    
-    print(f"\nKey insight: Connected ⟹ Archimedean (our theorem)")
-    print(f"            Archimedean + Complete ⟹ Connected")
-    print(f"            Non-Archimedean ⟹ Totally Disconnected (our strengthened theorem)")
-
-
-# ============================================================
-# 5. Counting Clopen Sets
-# ============================================================
-
-def demo_clopen_density():
-    """Shows the density of clopen sets in non-Archimedean fields."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Density of Clopen Separations")
-    print("=" * 60)
-    
-    print("\nIn a non-Archimedean field, for any a < b, there is a clopen")
-    print("set S with a ∈ S and b ∉ S. The construction uses rescaling.")
+    print(f"\n  {'x':>6} | ", end="")
+    for t in times:
+        print(f"  t={t:<4} |", end="")
     print()
+    print("  " + "-" * 55)
     
-    # Show that between any two "surreal-like" numbers, there's a clopen gap
-    pairs = [
-        (Fraction(0), Fraction(1)),
-        (Fraction(1, 2), Fraction(1, 2) + Fraction(1, 1000000)),
-        (Fraction(3, 7), Fraction(3, 7) + Fraction(1, 10**12)),
-    ]
-    
-    for a, b in pairs:
-        delta = b - a
-        print(f"  a = {float(a):.10f}, b = {float(b):.10f}")
-        print(f"  δ = b - a = {delta}")
-        print(f"  Clopen separator: {{z : ∃n, z - a < n · (ε · δ)}}")
-        print(f"  (where ε is any infinitesimal)")
+    for x in test_points:
+        print(f"  {x:>6.1f} | ", end="")
+        for t in times:
+            h = contraction_homotopy(x, t)
+            print(f"  {h:>5.2f} |", end="")
         print()
+    
+    print(f"\n  At t=1, all points map to 0: ℝ contracts to a point!")
+    print(f"  → π₁(ℝ) = 0 (trivial fundamental group)")
+
+
+def demonstrate_cantor_isomorphism():
+    """Demonstrate Cantor's theorem: all countable dense orders ≅ ℚ."""
+    print("\n" + "=" * 60)
+    print("CANTOR'S ISOMORPHISM THEOREM")
+    print("All countable dense linear orders without endpoints ≅ ℚ")
+    print("=" * 60)
+    
+    # Dyadic rationals ≅ ℚ
+    for n in range(2, 7):
+        dyadics = dyadic_rationals(n)
+        dyadics_in_unit = [d for d in dyadics if 0 < d < 1]
+        if len(dyadics_in_unit) >= 2:
+            mg = max(float(dyadics_in_unit[i+1] - dyadics_in_unit[i]) for i in range(len(dyadics_in_unit)-1))
+            print(f"  Day {n}: {len(dyadics_in_unit)} dyadic rationals in (0,1), max gap = {mg:.4f}")
+        else:
+            print(f"  Day {n}: {len(dyadics_in_unit)} dyadic rationals in (0,1)")
+    
+    print(f"\n  As n → ∞, dyadics become dense → isomorphic to ℚ")
+    print(f"  → All are TOTALLY DISCONNECTED (Theorem 7)")
+
+
+def main():
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  SURREAL TOPOLOGY: The Shape of Ordered Continua       ║")
+    print("║  Demonstrating the Completeness-Connectedness Bridge   ║")
+    print("╚══════════════════════════════════════════════════════════╝\n")
+    
+    demonstrate_gap_bridge()
+    demonstrate_contraction()
+    demonstrate_cantor_isomorphism()
+    
+    print("\n" + "=" * 60)
+    print("SUMMARY: THE COMPLETENESS-CONNECTEDNESS BRIDGE")
+    print("=" * 60)
+    print("""
+  ┌─────────────────────┬────────────────────────┐
+  │ Order Property      │ Topological Property   │
+  ├─────────────────────┼────────────────────────┤
+  │ Has Dedekind gaps   │ Disconnected           │
+  │ No Dedekind gaps    │ Connected              │
+  │ Cond. complete+dense│ Locally connected      │
+  │ Complete field+TVS  │ Contractible           │
+  │ Countable + dense   │ Totally disconnected   │
+  └─────────────────────┴────────────────────────┘
+  
+  The surreal numbers, being gap-free, are connected.
+  Being complete, they are contractible.
+  Their topology is the simplest possible: a point.
+""")
 
 
 if __name__ == "__main__":
-    demo_clopen_construction()
-    demo_separation()
-    demo_classification()
-    demo_clopen_density()
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: The Dedekind Gap Bridge
+Shows how gaps in the rationals correspond to disconnections.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from fractions import Fraction
+import math
+
+
+def plot_gap_bridge():
+    """Create the main gap bridge visualization."""
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig.suptitle("The Dedekind Gap Bridge: Completeness ↔ Connectedness", 
+                 fontsize=16, fontweight='bold')
+    
+    # Panel 1: ℚ with gaps visible
+    ax1 = axes[0, 0]
+    rats = sorted(set(Fraction(p, q) for q in range(1, 30) 
+                      for p in range(-2*q, 2*q+1)))
+    rats_01 = [float(r) for r in rats if 0 < r < 2]
+    ax1.scatter(rats_01, [0]*len(rats_01), s=1, c='blue', alpha=0.5)
+    
+    # Highlight gap at √2
+    sqrt2 = math.sqrt(2)
+    ax1.axvline(x=sqrt2, color='red', linestyle='--', linewidth=2, 
+                label=f'√2 ≈ {sqrt2:.4f}')
+    ax1.axvspan(sqrt2 - 0.02, sqrt2 + 0.02, alpha=0.3, color='red',
+                label='Dedekind gap')
+    ax1.set_title('ℚ: Gaps at every irrational → Totally Disconnected')
+    ax1.set_xlabel('x')
+    ax1.legend(fontsize=8)
+    ax1.set_yticks([])
+    
+    # Panel 2: ℝ with no gaps
+    ax2 = axes[0, 1]
+    x_real = np.linspace(0, 2, 10000)
+    ax2.scatter(x_real, [0]*len(x_real), s=0.1, c='green', alpha=0.3)
+    ax2.axvline(x=sqrt2, color='green', linestyle='-', linewidth=2,
+                label=f'√2 ∈ ℝ (no gap!)')
+    ax2.set_title('ℝ: No gaps → Connected (Contractible)')
+    ax2.set_xlabel('x')
+    ax2.legend(fontsize=8)
+    ax2.set_yticks([])
+    
+    # Panel 3: Connected components of ℚ at various ε
+    ax3 = axes[1, 0]
+    epsilons = np.logspace(-3, -0.5, 50)
+    n_components = []
+    test_rats = sorted(set(float(Fraction(p, q)) for q in range(1, 25) 
+                           for p in range(1, q)))
+    test_rats = [r for r in test_rats if 0 < r < 1]
+    
+    for eps in epsilons:
+        count = 1
+        for i in range(len(test_rats) - 1):
+            if test_rats[i+1] - test_rats[i] > eps:
+                count += 1
+        n_components.append(count)
+    
+    ax3.semilogx(epsilons, n_components, 'b-', linewidth=2)
+    ax3.set_title('ℚ: Connected Components vs. ε-threshold')
+    ax3.set_xlabel('ε (threshold)')
+    ax3.set_ylabel('Number of components')
+    ax3.axhline(y=len(test_rats), color='r', linestyle='--', alpha=0.5,
+                label=f'n={len(test_rats)} (totally disconnected)')
+    ax3.axhline(y=1, color='g', linestyle='--', alpha=0.5,
+                label='1 (connected)')
+    ax3.legend(fontsize=8)
+    ax3.grid(True, alpha=0.3)
+    
+    # Panel 4: Contraction homotopy
+    ax4 = axes[1, 1]
+    t_values = np.linspace(0, 1, 100)
+    x_starts = [-3, -2, -1, -0.5, 0.5, 1, 2, 3]
+    colors = plt.cm.RdYlBu(np.linspace(0, 1, len(x_starts)))
+    
+    for x0, color in zip(x_starts, colors):
+        trajectory = [(1 - t) * x0 for t in t_values]
+        ax4.plot(t_values, trajectory, color=color, linewidth=2, alpha=0.7)
+    
+    ax4.scatter([1]*len(x_starts), [0]*len(x_starts), c='black', s=50, 
+                zorder=5, label='All contract to 0')
+    ax4.set_title('ℝ is Contractible: H(x,t) = (1-t)·x')
+    ax4.set_xlabel('t (time)')
+    ax4.set_ylabel('H(x, t)')
+    ax4.legend(fontsize=8)
+    ax4.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('gap_bridge.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved gap_bridge.png")
+
+
+def plot_dyadic_convergence():
+    """Show dyadic rationals converging to the reals."""
+    fig, axes = plt.subplots(1, 4, figsize=(16, 3))
+    fig.suptitle("Dyadic Approximations: Day n → Connected as n → ∞", 
+                 fontsize=14, fontweight='bold')
+    
+    for idx, n in enumerate([1, 2, 4, 8]):
+        ax = axes[idx]
+        denom = 2**n
+        dyadics = [k/denom for k in range(-denom, denom+1) if -1 <= k/denom <= 1]
+        
+        # Plot points
+        ax.scatter(dyadics, [0]*len(dyadics), s=max(1, 20-2*n), 
+                   c='blue', alpha=0.6)
+        
+        # Compute max gap
+        gaps = [dyadics[i+1] - dyadics[i] for i in range(len(dyadics)-1)]
+        max_gap = max(gaps) if gaps else 0
+        
+        ax.set_title(f'Day {n}\n{len(dyadics)} pts, max gap={max_gap:.4f}',
+                     fontsize=10)
+        ax.set_xlim(-1.1, 1.1)
+        ax.set_yticks([])
+    
+    plt.tight_layout()
+    plt.savefig('dyadic_convergence.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved dyadic_convergence.png")
+
+
+if __name__ == "__main__":
+    plot_gap_bridge()
+    plot_dyadic_convergence()
