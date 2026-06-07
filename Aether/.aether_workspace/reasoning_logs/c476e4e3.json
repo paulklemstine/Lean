@@ -1,22 +1,22 @@
 {
   "checkpoints": [
     {
-      "elapsed_seconds": 0.2,
+      "elapsed_seconds": 0.4,
       "percent_complete": 0.0,
       "status": "SUBMITTED",
-      "timestamp": "2026-06-06T14:15:52"
+      "timestamp": "2026-06-07T07:54:23"
     }
   ],
   "completed_at": "",
-  "domain": "Computation",
+  "domain": "Novelty",
   "error": "",
   "final_percent": 0.0,
   "final_status": "",
   "has_files": false,
-  "job_id": "9a68031a",
-  "project_id": "13a34c54-5f65-4e98-a6b2-57b0b4035b7a",
-  "prompt_length": 25300,
+  "job_id": "c476e4e3",
+  "project_id": "ef0d3f80-9817-4e7b-a292-2a1cfa7444ff",
+  "prompt_length": 22018,
   "stages": [],
-  "submitted_at": "2026-06-06T14:15:52",
+  "submitted_at": "2026-06-07T07:54:23",
   "total_duration_seconds": 0.0
 }
