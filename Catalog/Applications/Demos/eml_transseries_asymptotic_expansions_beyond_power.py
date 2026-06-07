@@ -1,264 +1,205 @@
 """
-Transseries Demo: Asymptotic Expansions Beyond Power Series
+Transseries Growth Hierarchy — Demonstration
 
-Demonstrates the transseries hierarchy and dominance ordering
-through concrete numerical examples.
+This script demonstrates the key concepts from the formalization:
+1. Growth level comparison
+2. Shift operators
+3. Formal differentiation
+4. Growth valuation
+5. Asymptotic evaluation
 """
+
 import math
-from typing import List, Tuple
+from typing import NamedTuple, Optional
 
-# ── TransLevel evaluation ──────────────────────────────────────────────
-def eval_level(level: int, x: float) -> float:
-    """Evaluate a transseries level at x.
-    Level k means: apply exp k times (k>0) or log |k| times (k<0) to x."""
-    if level == 0:
-        return x
-    elif level > 0:
-        result = x
-        for _ in range(level):
-            result = math.exp(min(result, 700))  # overflow guard
-        return result
-    else:
-        result = x
-        for _ in range(abs(level)):
-            if result <= 0:
-                return float('-inf')
-            result = math.log(result)
-        return result
-
-
-# ── TransMonomial ──────────────────────────────────────────────────────
-class TransMonomial:
-    """A monomial (level, exponent) representing eval_level(x)^exponent."""
-    def __init__(self, level: int, exponent: float):
-        self.level = level
-        self.exponent = exponent
-
-    def eval(self, x: float) -> float:
-        base = eval_level(self.level, x)
-        if base <= 0 and self.exponent != int(self.exponent):
-            return 0.0
-        return base ** self.exponent
+class GrowthLevel(NamedTuple):
+    """A growth level (level, exponent) representing an asymptotic class."""
+    level: int
+    exponent: float
 
     def __repr__(self):
-        level_names = {0: "x", 1: "exp(x)", 2: "exp(exp(x))",
-                       -1: "log(x)", -2: "log(log(x))"}
-        base = level_names.get(self.level, f"level_{self.level}(x)")
+        if self.level > 0:
+            base = "exp" + ("^" + str(self.level) if self.level > 1 else "") + "(x)"
+        elif self.level == 0:
+            base = "x"
+        else:
+            base = "log" + ("^" + str(-self.level) if -self.level > 1 else "") + "(x)"
         if self.exponent == 1:
             return base
         return f"{base}^{self.exponent}"
 
 
-# ── TransTerm ──────────────────────────────────────────────────────────
-class TransTerm:
-    def __init__(self, coeff: float, monomial: TransMonomial):
-        self.coeff = coeff
-        self.monomial = monomial
-
-    def eval(self, x: float) -> float:
-        return self.coeff * self.monomial.eval(x)
-
-    def __repr__(self):
-        if self.coeff == 1:
-            return repr(self.monomial)
-        return f"{self.coeff}·{self.monomial}"
+def dominates(g1: GrowthLevel, g2: GrowthLevel) -> bool:
+    """Check if g1 is dominated by g2 (g1 grows slower)."""
+    return g1.level < g2.level or (g1.level == g2.level and g1.exponent < g2.exponent)
 
 
-# ── FormalTransseries ──────────────────────────────────────────────────
-class FormalTransseries:
-    def __init__(self, terms: List[TransTerm]):
-        self.terms = terms
-
-    def eval(self, x: float) -> float:
-        return sum(t.eval(x) for t in self.terms)
-
-    def __repr__(self):
-        if not self.terms:
-            return "0"
-        return " + ".join(repr(t) for t in self.terms)
+def exp_shift(g: GrowthLevel) -> GrowthLevel:
+    """Exponential shift: raise the level by 1."""
+    return GrowthLevel(g.level + 1, g.exponent)
 
 
-def main():
-    print("=" * 70)
-    print("TRANSSERIES: ASYMPTOTIC EXPANSIONS BEYOND POWER SERIES")
-    print("=" * 70)
-
-    # ── Example 1: Level Hierarchy ─────────────────────────────────────
-    print("\n── Example 1: Level Hierarchy ──")
-    print("Evaluating different levels at x = 10:")
-    for level in [-2, -1, 0, 1]:
-        val = eval_level(level, 10.0)
-        level_names = {-2: "log(log(x))", -1: "log(x)", 0: "x", 1: "exp(x)"}
-        print(f"  Level {level:+d} [{level_names[level]:>12s}]: {val:.6e}")
-
-    # ── Example 2: Dominance Gap ───────────────────────────────────────
-    print("\n── Example 2: Exponential Dominance Gap ──")
-    print("x^α / exp(x) as x grows (α = 100):")
-    for x in [10, 50, 100, 200, 500]:
-        ratio = (x ** 100) / math.exp(x) if x < 710 else 0
-        print(f"  x = {x:>4d}: x^100 / exp(x) = {ratio:.6e}")
-
-    # ── Example 3: Log Dominated by Powers ─────────────────────────────
-    print("\n── Example 3: log(x) Dominated by x^ε (ε = 0.01) ──")
-    for x in [10, 100, 1000, 10000, 100000]:
-        ratio = math.log(x) / (x ** 0.01)
-        print(f"  x = {x:>6d}: log(x) / x^0.01 = {ratio:.6f}")
-
-    # ── Example 4: Three-Level Transseries ─────────────────────────────
-    print("\n── Example 4: Three-Level Transseries ──")
-    T = FormalTransseries([
-        TransTerm(1.0, TransMonomial(1, 1)),    # exp(x)
-        TransTerm(-2.0, TransMonomial(0, 3)),   # -2x³
-        TransTerm(0.5, TransMonomial(-1, 2)),   # 0.5·log(x)²
-    ])
-    print(f"  T(x) = {T}")
-    for x in [1.0, 2.0, 5.0, 10.0]:
-        print(f"  T({x}) = {T.eval(x):.6e}")
-
-    # ── Example 5: Succ/Pred Cancellation ──────────────────────────────
-    print("\n── Example 5: Level Arithmetic ──")
-    for l in [-3, -1, 0, 2, 5]:
-        succ = l + 1
-        pred = l - 1
-        print(f"  level {l:+d}: succ = {succ:+d}, pred = {pred:+d}, "
-              f"succ(pred) = {pred+1:+d}, pred(succ) = {succ-1:+d}")
-
-    # ── Example 6: Asymptotic Comparison ───────────────────────────────
-    print("\n── Example 6: Asymptotic Comparison Theorem ──")
-    print("Two transseries with same terms give same values:")
-    T1 = FormalTransseries([
-        TransTerm(3.0, TransMonomial(1, 1)),
-        TransTerm(-1.0, TransMonomial(0, 2)),
-    ])
-    T2 = FormalTransseries([
-        TransTerm(3.0, TransMonomial(1, 1)),
-        TransTerm(-1.0, TransMonomial(0, 2)),
-    ])
-    for x in [1.0, 5.0, 10.0]:
-        v1, v2 = T1.eval(x), T2.eval(x)
-        print(f"  x = {x}: T1 = {v1:.6e}, T2 = {v2:.6e}, diff = {abs(v1-v2):.2e}")
-
-    # ── Example 7: Valuation (Leading Level) ───────────────────────────
-    print("\n── Example 7: Leading Level as Valuation ──")
-    examples = [
-        ("exp(x) - x²", FormalTransseries([
-            TransTerm(1.0, TransMonomial(1, 1)),
-            TransTerm(-1.0, TransMonomial(0, 2)),
-        ])),
-        ("x³ + log(x)", FormalTransseries([
-            TransTerm(1.0, TransMonomial(0, 3)),
-            TransTerm(1.0, TransMonomial(-1, 1)),
-        ])),
-        ("5·log(log(x))", FormalTransseries([
-            TransTerm(5.0, TransMonomial(-2, 1)),
-        ])),
-    ]
-    for name, T in examples:
-        leading = T.terms[0].monomial.level if T.terms else None
-        print(f"  {name:>20s}: leading level = {leading}")
-
-    print("\n" + "=" * 70)
-    print("All examples demonstrate key transseries properties proved in Lean 4.")
-    print("=" * 70)
+def log_shift(g: GrowthLevel) -> GrowthLevel:
+    """Logarithmic shift: lower the level by 1."""
+    return GrowthLevel(g.level - 1, g.exponent)
 
 
-if __name__ == "__main__":
-    main()
+def formal_deriv_level(g: GrowthLevel) -> GrowthLevel:
+    """Formal derivative of a growth level monomial."""
+    if g.level > 0:
+        return g  # Exponentials are fixed points!
+    else:
+        return GrowthLevel(g.level, g.exponent - 1)
 
 
-"""
-Visualization: Transseries Level Dominance Hierarchy
-
-Plots different transseries levels on a log scale to show
-the exponential dominance gaps between levels.
-"""
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-import math
-
-def eval_level(level: int, x: float) -> float:
+def eval_base(level: int, x: float) -> float:
+    """Evaluate the base function at x for a given level."""
     if level == 0:
         return x
     elif level > 0:
         result = x
         for _ in range(level):
-            result = math.exp(min(result, 700))
+            result = math.exp(min(result, 700))  # Clamp to avoid overflow
         return result
     else:
         result = x
-        for _ in range(abs(level)):
-            if result <= 0:
-                return float('nan')
-            result = math.log(result)
+        for _ in range(-level):
+            if result > 0:
+                result = math.log(result)
+            else:
+                return float('-inf')
         return result
 
-def main():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Panel 1: Level hierarchy
-    ax1 = axes[0]
-    x_vals = np.linspace(2.1, 8, 200)
+def eval_growth(g: GrowthLevel, x: float) -> float:
+    """Evaluate a growth level monomial at x."""
+    base = eval_base(g.level, x)
+    if base <= 0 and g.exponent != int(g.exponent):
+        return 0.0
+    try:
+        return base ** g.exponent
+    except (OverflowError, ValueError):
+        return float('inf')
 
-    levels_and_labels = [
-        (-2, "log(log(x))", "#e74c3c"),
-        (-1, "log(x)", "#e67e22"),
-        (0, "x", "#2ecc71"),
-        (1, "exp(x)", "#3498db"),
-    ]
 
-    for level, label, color in levels_and_labels:
-        y_vals = []
-        for x in x_vals:
-            y = eval_level(level, x)
-            y_vals.append(y if y > 0 else float('nan'))
-        ax1.semilogy(x_vals, y_vals, label=label, color=color, linewidth=2.5)
+# === DEMONSTRATIONS ===
 
-    ax1.set_xlabel("x", fontsize=13)
-    ax1.set_ylabel("f(x)  [log scale]", fontsize=13)
-    ax1.set_title("Transseries Level Hierarchy", fontsize=14, fontweight='bold')
-    ax1.legend(fontsize=12)
-    ax1.grid(True, alpha=0.3)
-    ax1.set_ylim(1e-2, 1e4)
+print("=" * 60)
+print("TRANSSERIES GROWTH HIERARCHY — DEMONSTRATION")
+print("=" * 60)
 
-    # Panel 2: Dominance ratios
-    ax2 = axes[1]
-    x_vals2 = np.linspace(1, 30, 300)
+# 1. Growth Level Comparison
+print("\n--- 1. Growth Level Comparison ---")
+levels = [
+    GrowthLevel(-2, 1),   # log(log(x))
+    GrowthLevel(-1, 1),   # log(x)
+    GrowthLevel(-1, 2),   # log(x)^2
+    GrowthLevel(0, 0.5),  # √x
+    GrowthLevel(0, 1),    # x
+    GrowthLevel(0, 2),    # x^2
+    GrowthLevel(1, 1),    # exp(x)
+    GrowthLevel(1, 2),    # exp(x)^2
+    GrowthLevel(2, 1),    # exp(exp(x))
+]
 
-    # x^10 / exp(x) → 0
-    ratio1 = [x**10 / math.exp(x) for x in x_vals2]
-    ax2.plot(x_vals2, ratio1, label=r"$x^{10} / e^x$", color="#3498db", linewidth=2)
+print("Ordering of growth levels (ascending):")
+for i, g in enumerate(levels):
+    if i > 0:
+        assert dominates(levels[i-1], levels[i]), f"Order violation: {levels[i-1]} vs {levels[i]}"
+        print(f"  {levels[i-1]}  <  {g}")
 
-    # log(x) / x^0.5 → 0
-    ratio2 = [math.log(x) / x**0.5 for x in x_vals2]
-    ax2.plot(x_vals2, ratio2, label=r"$\log(x) / x^{0.5}$", color="#e67e22", linewidth=2)
+# 2. Shift Operators
+print("\n--- 2. Shift Operators ---")
+g = GrowthLevel(0, 2)  # x^2
+print(f"  Start:     {g}")
+print(f"  ExpShift:  {exp_shift(g)}")
+print(f"  LogShift:  {log_shift(g)}")
+print(f"  Exp∘Log:   {exp_shift(log_shift(g))}  (should equal start)")
+print(f"  Log∘Exp:   {log_shift(exp_shift(g))}  (should equal start)")
+assert exp_shift(log_shift(g)) == g, "Cancellation failed!"
+assert log_shift(exp_shift(g)) == g, "Cancellation failed!"
+print("  ✓ Shift cancellation verified")
 
-    # x / exp(x) → 0
-    ratio3 = [x / math.exp(x) for x in x_vals2]
-    ax2.plot(x_vals2, ratio3, label=r"$x / e^x$", color="#2ecc71", linewidth=2)
+# 3. Formal Differentiation
+print("\n--- 3. Formal Differentiation (Exp-Poly Dichotomy) ---")
+poly = GrowthLevel(0, 5)  # x^5
+exp_g = GrowthLevel(1, 1)  # exp(x)
 
-    ax2.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
-    ax2.set_xlabel("x", fontsize=13)
-    ax2.set_ylabel("Ratio", fontsize=13)
-    ax2.set_title("Dominance Gaps → 0", fontsize=14, fontweight='bold')
-    ax2.legend(fontsize=12)
-    ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(-0.5, 5)
+print(f"  Polynomial x^5 under iterated differentiation:")
+g = poly
+for k in range(7):
+    print(f"    D^{k}: {g}  (exponent = {g.exponent})")
+    g = formal_deriv_level(g)
 
-    plt.tight_layout()
-    plt.savefig("Applications/transseries_dominance.png", dpi=150, bbox_inches='tight')
-    print("Saved: Applications/transseries_dominance.png")
+print(f"\n  Exponential exp(x) under iterated differentiation:")
+g = exp_g
+for k in range(5):
+    print(f"    D^{k}: {g}")
+    g = formal_deriv_level(g)
+print("  ✓ Exponential is FIXED POINT — invariant under all derivatives!")
 
-if __name__ == "__main__":
-    main()
+# 4. Growth Valuation
+print("\n--- 4. Growth Valuation ---")
+
+class TransTerm(NamedTuple):
+    coeff: float
+    gl: GrowthLevel
+
+def growth_valuation(terms: list) -> Optional[int]:
+    if not terms:
+        return None  # ⊥
+    return terms[0].gl.level
+
+# Example transseries: 3·exp(x) + 2·x^2 - 0.5·log(x)
+ts = [
+    TransTerm(3.0, GrowthLevel(1, 1)),
+    TransTerm(2.0, GrowthLevel(0, 2)),
+    TransTerm(-0.5, GrowthLevel(-1, 1)),
+]
+print(f"  Transseries: 3·exp(x) + 2·x² - 0.5·log(x)")
+print(f"  Growth valuation: {growth_valuation(ts)}")
+print(f"  (Level 1 = exponential scale, dominated by exp(x) term)")
+
+# 5. Asymptotic Evaluation
+print("\n--- 5. Asymptotic Evaluation ---")
+x_values = [10, 100, 1000]
+test_levels = [
+    GrowthLevel(-1, 1),  # log(x)
+    GrowthLevel(0, 1),   # x
+    GrowthLevel(0, 2),   # x^2
+    GrowthLevel(1, 1),   # exp(x)
+]
+
+print(f"  {'Level':<20} {'x=10':<15} {'x=100':<15} {'x=1000':<15}")
+print(f"  {'-'*65}")
+for g in test_levels:
+    vals = [eval_growth(g, x) for x in x_values]
+    formatted = [f"{v:.4g}" if abs(v) < 1e20 else "∞" for v in vals]
+    print(f"  {str(g):<20} {formatted[0]:<15} {formatted[1]:<15} {formatted[2]:<15}")
+
+# 6. Depth Spectrum
+print("\n--- 6. Depth Spectrum & Complexity ---")
+ts_terms = [
+    TransTerm(1.0, GrowthLevel(2, 1)),   # exp(exp(x))
+    TransTerm(-1.0, GrowthLevel(0, 3)),  # -x^3
+    TransTerm(0.5, GrowthLevel(-1, 1)),  # 0.5·log(x)
+]
+depths = {abs(t.gl.level) for t in ts_terms}
+complexity = len(ts_terms) + sum(abs(t.gl.level) for t in ts_terms)
+print(f"  Transseries: exp(exp(x)) - x³ + 0.5·log(x)")
+print(f"  Depth spectrum: {sorted(depths)}")
+print(f"  Complexity: {complexity} (3 terms + depths 2+0+1 = 6)")
+
+print("\n" + "=" * 60)
+print("All demonstrations passed successfully!")
+print("=" * 60)
 
 
 """
-Visualization: Transseries Evaluation and Comparison
+Visualization: Growth Level Hierarchy
 
-Shows how a three-level transseries decomposes into its constituent
-terms and demonstrates the asymptotic comparison theorem.
+Shows the dramatic separation between growth levels by plotting
+eval(g, x) for various growth levels on a log-scale.
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -266,61 +207,178 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 
+
+def eval_base(level: int, x: float) -> float:
+    if level == 0:
+        return x
+    elif level > 0:
+        result = x
+        for _ in range(level):
+            result = math.exp(min(result, 500))
+        return result
+    else:
+        result = x
+        for _ in range(-level):
+            if result > 0:
+                result = math.log(max(result, 1e-300))
+            else:
+                return 1e-300
+        return max(result, 1e-300)
+
+
+def eval_growth(level: int, exponent: float, x: float) -> float:
+    base = eval_base(level, x)
+    if base <= 0:
+        return 1e-300
+    try:
+        return base ** exponent
+    except (OverflowError, ValueError):
+        return 1e300
+
+
 def main():
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Panel 1: Three-level decomposition
+    # Left panel: log-scale comparison of growth levels
     ax1 = axes[0]
-    x_vals = np.linspace(0.5, 4, 300)
+    x = np.linspace(2, 10, 200)
 
-    # T(x) = exp(x) - 2x³ + 0.5·log(x)²
-    exp_part = np.exp(x_vals)
-    poly_part = -2 * x_vals**3
-    log_part = 0.5 * np.log(np.maximum(x_vals, 1e-10))**2
-    total = exp_part + poly_part + log_part
+    growth_levels = [
+        (-2, 1, "log(log(x))", "#2196F3"),
+        (-1, 1, "log(x)", "#4CAF50"),
+        (0, 0.5, "√x", "#FF9800"),
+        (0, 1, "x", "#F44336"),
+        (0, 2, "x²", "#9C27B0"),
+        (1, 0.5, "exp(x)^0.5", "#795548"),
+        (1, 1, "exp(x)", "#E91E63"),
+    ]
 
-    ax1.plot(x_vals, exp_part, label=r"$e^x$", color="#3498db",
-             linewidth=2, linestyle='--')
-    ax1.plot(x_vals, poly_part, label=r"$-2x^3$", color="#e67e22",
-             linewidth=2, linestyle='--')
-    ax1.plot(x_vals, log_part, label=r"$0.5 \cdot \log^2(x)$", color="#2ecc71",
-             linewidth=2, linestyle='--')
-    ax1.plot(x_vals, total, label=r"$T(x) = e^x - 2x^3 + 0.5\log^2(x)$",
-             color="#e74c3c", linewidth=3)
+    for level, exp, label, color in growth_levels:
+        y = [eval_growth(level, exp, xi) for xi in x]
+        y_clipped = [min(max(yi, 1e-5), 1e15) for yi in y]
+        ax1.semilogy(x, y_clipped, label=label, color=color, linewidth=2)
 
-    ax1.set_xlabel("x", fontsize=13)
-    ax1.set_ylabel("f(x)", fontsize=13)
-    ax1.set_title("Three-Level Transseries Decomposition", fontsize=14,
-                  fontweight='bold')
-    ax1.legend(fontsize=10, loc='upper left')
+    ax1.set_xlabel("x", fontsize=12)
+    ax1.set_ylabel("Growth Level Evaluation (log scale)", fontsize=12)
+    ax1.set_title("Growth Hierarchy: Each Level Dominates All Below", fontsize=13)
+    ax1.legend(fontsize=9, loc="upper left")
+    ax1.set_ylim(1e-2, 1e15)
     ax1.grid(True, alpha=0.3)
-    ax1.set_ylim(-100, 150)
 
-    # Panel 2: Asymptotic comparison — ratio of terms
+    # Right panel: Derivative behavior
     ax2 = axes[1]
-    x_vals2 = np.linspace(1, 15, 300)
+    derivs_poly = list(range(8))
+    poly_exponents = [5.0 - k for k in derivs_poly]
 
-    # Ratio: poly term / exp term → 0
-    ratio_poly = np.abs(-2 * x_vals2**3) / np.exp(x_vals2)
-    # Ratio: log term / poly term → 0
-    ratio_log = np.abs(0.5 * np.log(x_vals2)**2) / np.abs(2 * x_vals2**3)
+    derivs_exp = list(range(8))
+    exp_exponents = [1.0] * 8
 
-    ax2.semilogy(x_vals2, ratio_poly, label=r"$|{-2x^3}| / e^x$",
-                 color="#e67e22", linewidth=2.5)
-    ax2.semilogy(x_vals2, ratio_log, label=r"$0.5\log^2(x) / 2x^3$",
-                 color="#2ecc71", linewidth=2.5)
+    ax2.plot(derivs_poly, poly_exponents, 'o-', color="#F44336",
+             linewidth=2, markersize=8, label="x⁵ (polynomial)")
+    ax2.plot(derivs_exp, exp_exponents, 's-', color="#E91E63",
+             linewidth=2, markersize=8, label="exp(x) (exponential)")
 
-    ax2.set_xlabel("x", fontsize=13)
-    ax2.set_ylabel("Ratio  [log scale]", fontsize=13)
-    ax2.set_title("Adjacent-Level Dominance Ratios → 0",
-                  fontsize=14, fontweight='bold')
-    ax2.legend(fontsize=11)
+    ax2.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
+    ax2.fill_between(derivs_poly, 0, poly_exponents, alpha=0.1, color="#F44336")
+
+    ax2.set_xlabel("Number of derivatives k", fontsize=12)
+    ax2.set_ylabel("Exponent after k derivatives", fontsize=12)
+    ax2.set_title("Exp-Poly Dichotomy Under Differentiation", fontsize=13)
+    ax2.legend(fontsize=10)
     ax2.grid(True, alpha=0.3)
+    ax2.annotate("Exponentials:\nFIXED POINT",
+                 xy=(4, 1), fontsize=10, color="#E91E63",
+                 ha='center', va='bottom')
+    ax2.annotate("Polynomials:\nEROSIVE",
+                 xy=(4, -1), fontsize=10, color="#F44336",
+                 ha='center', va='top')
 
     plt.tight_layout()
-    plt.savefig("Applications/transseries_evaluation.png", dpi=150,
-                bbox_inches='tight')
-    print("Saved: Applications/transseries_evaluation.png")
+    plt.savefig("Applications/growth_hierarchy.png", dpi=150, bbox_inches='tight')
+    print("Saved: Applications/growth_hierarchy.png")
+
+
+if __name__ == "__main__":
+    main()
+
+
+"""
+Visualization: Shift Operators on the Growth Level Lattice
+
+Shows the self-similar structure of the growth hierarchy
+under exponential and logarithmic shifts.
+"""
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def main():
+    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
+
+    levels = range(-3, 4)
+    exponents = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+
+    level_labels = {
+        -3: "log³(x)", -2: "log²(x)", -1: "log(x)",
+        0: "x", 1: "exp(x)", 2: "exp²(x)", 3: "exp³(x)"
+    }
+
+    # Draw the lattice points
+    for l in levels:
+        for e in exponents:
+            color = '#2196F3' if l < 0 else ('#4CAF50' if l == 0 else '#F44336')
+            ax.scatter(l, e, c=color, s=80, zorder=5, edgecolors='black', linewidths=0.5)
+
+    # Draw shift arrows
+    for l in range(-3, 3):
+        for e in [1.0, 2.0]:
+            ax.annotate("",
+                        xy=(l + 1, e), xytext=(l, e),
+                        arrowprops=dict(arrowstyle="->", color="#E91E63",
+                                        lw=1.5, alpha=0.6))
+
+    for l in range(-2, 4):
+        for e in [1.5, 2.5]:
+            ax.annotate("",
+                        xy=(l - 1, e), xytext=(l, e),
+                        arrowprops=dict(arrowstyle="->", color="#9C27B0",
+                                        lw=1.5, alpha=0.6))
+
+    # Labels
+    for l, label in level_labels.items():
+        ax.text(l, -0.2, label, ha='center', va='top', fontsize=9,
+                fontweight='bold', color='black')
+
+    ax.set_xlabel("Integer Level ℓ", fontsize=13)
+    ax.set_ylabel("Real Exponent α", fontsize=13)
+    ax.set_title("Growth Level Lattice with Shift Operators", fontsize=14)
+
+    # Legend
+    from matplotlib.lines import Line2D
+    legend_elements = [
+        Line2D([0], [0], marker='o', color='w', markerfacecolor='#2196F3',
+               markersize=10, label='Logarithmic (ℓ < 0)'),
+        Line2D([0], [0], marker='o', color='w', markerfacecolor='#4CAF50',
+               markersize=10, label='Polynomial (ℓ = 0)'),
+        Line2D([0], [0], marker='o', color='w', markerfacecolor='#F44336',
+               markersize=10, label='Exponential (ℓ > 0)'),
+        Line2D([0], [0], color='#E91E63', lw=2, label='expShift →'),
+        Line2D([0], [0], color='#9C27B0', lw=2, label='← logShift'),
+    ]
+    ax.legend(handles=legend_elements, fontsize=10, loc='upper left')
+
+    ax.set_xlim(-3.5, 3.5)
+    ax.set_ylim(-0.5, 3.5)
+    ax.grid(True, alpha=0.2)
+    ax.axvline(x=-0.5, color='gray', linestyle=':', alpha=0.3)
+    ax.axvline(x=0.5, color='gray', linestyle=':', alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig("Applications/shift_operators.png", dpi=150, bbox_inches='tight')
+    print("Saved: Applications/shift_operators.png")
+
 
 if __name__ == "__main__":
     main()

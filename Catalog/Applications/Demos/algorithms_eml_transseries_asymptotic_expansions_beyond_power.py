@@ -1,252 +1,238 @@
 """
-Transseries Algorithms: Core operations on formal asymptotic expansions.
+Transseries Growth Hierarchy — Algorithms
 
-Type-hinted implementations of transseries construction, evaluation,
-normalization, and dominance comparison.
+Type-hinted implementations of the key algorithms from the formalization.
 """
+
 from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import List, Optional, Tuple
+from dataclasses import dataclass
+from typing import Optional
 import math
 
 
-@dataclass(frozen=True)
-class TransLevel:
-    """A level in the transseries hierarchy, encoded as an integer.
-    Negative = iterated log, 0 = x, positive = iterated exp."""
-    value: int
+@dataclass(frozen=True, order=False)
+class GrowthLevel:
+    """A growth level (level, exponent) in the transseries hierarchy.
 
-    @staticmethod
-    def var() -> TransLevel:
-        return TransLevel(0)
-
-    @staticmethod
-    def exp_level(n: int = 1) -> TransLevel:
-        return TransLevel(n)
-
-    @staticmethod
-    def log_level(n: int = 1) -> TransLevel:
-        return TransLevel(-n)
-
-    def succ(self) -> TransLevel:
-        return TransLevel(self.value + 1)
-
-    def pred(self) -> TransLevel:
-        return TransLevel(self.value - 1)
-
-    def depth(self) -> int:
-        return abs(self.value)
-
-    def eval(self, x: float) -> float:
-        """Evaluate this level at x."""
-        if self.value == 0:
-            return x
-        elif self.value > 0:
-            result = x
-            for _ in range(self.value):
-                result = math.exp(min(result, 700))
-            return result
-        else:
-            result = x
-            for _ in range(abs(self.value)):
-                if result <= 0:
-                    return float('-inf')
-                result = math.log(result)
-            return result
-
-    def __lt__(self, other: TransLevel) -> bool:
-        return self.value < other.value
-
-    def __le__(self, other: TransLevel) -> bool:
-        return self.value <= other.value
-
-    def __repr__(self) -> str:
-        names = {0: "x", 1: "exp", 2: "exp²", -1: "log", -2: "log²"}
-        return names.get(self.value, f"L({self.value})")
-
-
-@dataclass(frozen=True)
-class TransMonomial:
-    """A monomial: level^exponent."""
-    level: TransLevel
+    Lexicographically ordered: first by level (int), then by exponent (float).
+    """
+    level: int
     exponent: float
 
-    def eval(self, x: float) -> float:
-        base = self.level.eval(x)
-        if base <= 0 and self.exponent != int(self.exponent):
-            return 0.0
+    def __lt__(self, other: GrowthLevel) -> bool:
+        return (self.level, self.exponent) < (other.level, other.exponent)
+
+    def __le__(self, other: GrowthLevel) -> bool:
+        return (self.level, self.exponent) <= (other.level, other.exponent)
+
+    def __repr__(self) -> str:
+        if self.level > 0:
+            base = f"exp{'(' * self.level}x{')'* self.level}"
+        elif self.level == 0:
+            base = "x"
+        else:
+            base = f"log{'(' * (-self.level)}x{')' * (-self.level)}"
+        if self.exponent == 1.0:
+            return base
+        return f"({base})^{self.exponent}"
+
+    def exp_shift(self) -> GrowthLevel:
+        """Apply exponential shift: raise level by 1."""
+        return GrowthLevel(self.level + 1, self.exponent)
+
+    def log_shift(self) -> GrowthLevel:
+        """Apply logarithmic shift: lower level by 1."""
+        return GrowthLevel(self.level - 1, self.exponent)
+
+    def depth(self) -> int:
+        """Absolute nesting depth."""
+        return abs(self.level)
+
+    def formal_deriv(self) -> GrowthLevel:
+        """Formal derivative level.
+
+        Exponentials (level > 0) are fixed points.
+        Polynomials/logarithms decrease exponent by 1.
+        """
+        if self.level > 0:
+            return self
+        return GrowthLevel(self.level, self.exponent - 1)
+
+    def eval_at(self, x: float) -> float:
+        """Evaluate the growth level monomial at x."""
+        base = x
+        if self.level > 0:
+            for _ in range(self.level):
+                base = math.exp(min(base, 700))
+        elif self.level < 0:
+            for _ in range(-self.level):
+                if base > 0:
+                    base = math.log(base)
+                else:
+                    return 0.0
         try:
             return base ** self.exponent
         except (OverflowError, ValueError):
-            return float('inf')
-
-    def dominates(self, other: TransMonomial) -> bool:
-        """True if self grows faster than other asymptotically."""
-        if self.level.value != other.level.value:
-            return self.level.value > other.level.value
-        return self.exponent > other.exponent
-
-    def __repr__(self) -> str:
-        if self.exponent == 1:
-            return repr(self.level)
-        return f"{self.level}^{self.exponent}"
+            return float('inf') if base > 0 else 0.0
 
 
-@dataclass
+@dataclass(frozen=True)
 class TransTerm:
-    """A term: coefficient × monomial."""
+    """A term in a transseries: coefficient × growth level."""
     coeff: float
-    monomial: TransMonomial
+    gl: GrowthLevel
 
-    def eval(self, x: float) -> float:
-        return self.coeff * self.monomial.eval(x)
-
-    def __repr__(self) -> str:
-        if self.coeff == 1:
-            return repr(self.monomial)
-        if self.coeff == -1:
-            return f"-{self.monomial}"
-        return f"{self.coeff}·{self.monomial}"
+    def eval_at(self, x: float) -> float:
+        return self.coeff * self.gl.eval_at(x)
 
 
 @dataclass
-class FormalTransseries:
-    """A formal transseries: finite list of terms in decreasing dominance order."""
-    terms: List[TransTerm] = field(default_factory=list)
+class Transseries:
+    """A leveled transseries: finite list of terms in decreasing order."""
+    terms: list[TransTerm]
 
-    def eval(self, x: float) -> float:
-        """Evaluate at x (finite sum)."""
-        return sum(t.eval(x) for t in self.terms)
+    @staticmethod
+    def zero() -> Transseries:
+        return Transseries([])
 
-    def is_normalized(self) -> bool:
-        """Check if terms are in strictly decreasing dominance order
-        with nonzero coefficients."""
-        for t in self.terms:
-            if t.coeff == 0:
-                return False
+    @staticmethod
+    def monomial(c: float, gl: GrowthLevel) -> Transseries:
+        return Transseries([TransTerm(c, gl)])
+
+    def eval_at(self, x: float) -> float:
+        return sum(t.eval_at(x) for t in self.terms)
+
+    def scale(self, c: float) -> Transseries:
+        return Transseries([TransTerm(c * t.coeff, t.gl) for t in self.terms])
+
+    def growth_valuation(self) -> Optional[int]:
+        """Non-archimedean growth valuation: leading level or None (⊥)."""
+        if not self.terms:
+            return None
+        return self.terms[0].gl.level
+
+    def leading_sign(self) -> int:
+        """Sign of the leading coefficient: -1, 0, or 1."""
+        if not self.terms:
+            return 0
+        c = self.terms[0].coeff
+        if c > 0:
+            return 1
+        elif c < 0:
+            return -1
+        return 0
+
+    def depth_spectrum(self) -> set[int]:
+        """Set of depths appearing in the transseries."""
+        return {t.gl.depth() for t in self.terms}
+
+    def complexity(self) -> int:
+        """Complexity measure: length + sum of depths."""
+        return len(self.terms) + sum(t.gl.depth() for t in self.terms)
+
+    def is_well_ordered(self) -> bool:
+        """Check if growth levels are in strictly decreasing order."""
         for i in range(len(self.terms) - 1):
-            if not self.terms[i].monomial.dominates(self.terms[i + 1].monomial):
+            if not (self.terms[i + 1].gl < self.terms[i].gl):
                 return False
         return True
 
-    def leading_level(self) -> Optional[TransLevel]:
-        """The leading (dominant) level, or None if empty."""
-        if not self.terms:
-            return None
-        return self.terms[0].monomial.level
+    def is_normalized(self) -> bool:
+        """Check well-ordered and all coefficients nonzero."""
+        return self.is_well_ordered() and all(t.coeff != 0 for t in self.terms)
 
-    def leading_term(self) -> Optional[TransTerm]:
-        if not self.terms:
-            return None
-        return self.terms[0]
-
-    def scale(self, c: float) -> FormalTransseries:
-        """Scale all coefficients by c."""
-        return FormalTransseries([
-            TransTerm(c * t.coeff, t.monomial) for t in self.terms
-        ])
-
-    @staticmethod
-    def normalize(terms: List[TransTerm]) -> FormalTransseries:
-        """Sort terms by decreasing dominance and remove zero coefficients.
-
-        Algorithm:
-        1. Filter out zero-coefficient terms
-        2. Sort by (level desc, exponent desc)
-        3. Merge terms with same monomial
-        """
-        # Filter zeros
-        nonzero = [t for t in terms if t.coeff != 0]
-
-        # Sort by decreasing dominance
-        nonzero.sort(
-            key=lambda t: (-t.monomial.level.value, -t.monomial.exponent)
-        )
-
-        # Merge same monomials
-        merged: List[TransTerm] = []
-        for t in nonzero:
-            if (merged and
-                merged[-1].monomial.level == t.monomial.level and
-                merged[-1].monomial.exponent == t.monomial.exponent):
-                merged[-1] = TransTerm(
-                    merged[-1].coeff + t.coeff, t.monomial
-                )
-            else:
-                merged.append(TransTerm(t.coeff, t.monomial))
-
-        # Remove any that became zero after merging
-        merged = [t for t in merged if t.coeff != 0]
-
-        return FormalTransseries(merged)
-
-    @staticmethod
-    def add(t1: FormalTransseries, t2: FormalTransseries) -> FormalTransseries:
-        """Add two transseries (with normalization)."""
-        return FormalTransseries.normalize(t1.terms + t2.terms)
-
-    @staticmethod
-    def of_monomial(c: float, level: int, exp: float) -> FormalTransseries:
-        return FormalTransseries([
-            TransTerm(c, TransMonomial(TransLevel(level), exp))
-        ])
-
-    def __repr__(self) -> str:
-        if not self.terms:
-            return "0"
-        return " + ".join(repr(t) for t in self.terms)
+    def has_level_gap(self) -> bool:
+        """Check if consecutive terms have different integer levels."""
+        for i in range(len(self.terms) - 1):
+            if self.terms[i].gl.level == self.terms[i + 1].gl.level:
+                return False
+        return True
 
 
-def dominance_comparison(t1: FormalTransseries, t2: FormalTransseries,
-                          test_points: List[float]) -> List[Tuple[float, float, float]]:
-    """Compare two transseries at multiple points.
+def compare_transseries(t1: Transseries, t2: Transseries) -> int:
+    """Compare two normalized transseries.
 
-    Returns list of (x, t1(x), t2(x)) tuples.
+    Returns:
+        -1 if t1 < t2 asymptotically
+         0 if they are equal
+         1 if t1 > t2 asymptotically
 
-    Algorithm (Dominance Comparison):
-    1. Evaluate both transseries at each test point
-    2. Compare leading terms to determine asymptotic winner
-    3. Return evaluation data for analysis
+    Algorithm: Compare leading terms lexicographically.
     """
-    results = []
-    for x in test_points:
-        v1 = t1.eval(x)
-        v2 = t2.eval(x)
-        results.append((x, v1, v2))
-    return results
+    i = 0
+    while i < len(t1.terms) and i < len(t2.terms):
+        g1, g2 = t1.terms[i].gl, t2.terms[i].gl
+        c1, c2 = t1.terms[i].coeff, t2.terms[i].coeff
+
+        if g1.level != g2.level:
+            return 1 if g1.level > g2.level else -1
+        if g1.exponent != g2.exponent:
+            return 1 if g1.exponent > g2.exponent else -1
+        if c1 != c2:
+            return 1 if c1 > c2 else -1
+        i += 1
+
+    if len(t1.terms) > len(t2.terms):
+        return 1 if t1.terms[i].coeff > 0 else -1
+    elif len(t2.terms) > len(t1.terms):
+        return -1 if t2.terms[i].coeff > 0 else 1
+    return 0
 
 
-def asymptotic_ratio(t1: FormalTransseries, t2: FormalTransseries,
-                      test_points: List[float]) -> List[Tuple[float, float]]:
-    """Compute ratio t1(x)/t2(x) at test points.
+def formal_differentiate(ts: Transseries) -> Transseries:
+    """Formal differentiation of a transseries.
 
-    Algorithm (Asymptotic Ratio):
-    1. For each x, compute t1(x) and t2(x)
-    2. Return ratio (handling division by zero)
+    Applies the formal derivative level map to each term:
+    - Exponential terms (level > 0): unchanged
+    - Polynomial/log terms: exponent decreases by 1, coeff scaled by exponent
     """
-    results = []
-    for x in test_points:
-        v1 = t1.eval(x)
-        v2 = t2.eval(x)
-        if abs(v2) < 1e-300:
-            ratio = float('inf') if v1 > 0 else float('-inf') if v1 < 0 else 0
+    new_terms = []
+    for t in ts.terms:
+        if t.gl.level > 0:
+            new_terms.append(t)
         else:
-            ratio = v1 / v2
-        results.append((x, ratio))
-    return results
+            new_coeff = t.coeff * t.gl.exponent
+            new_gl = t.gl.formal_deriv()
+            if new_coeff != 0:
+                new_terms.append(TransTerm(new_coeff, new_gl))
+    return Transseries(new_terms)
+
+
+def iter_exp_shift(n: int, g: GrowthLevel) -> GrowthLevel:
+    """Apply n exponential shifts."""
+    result = g
+    for _ in range(n):
+        result = result.exp_shift()
+    return result
+
+
+def iter_formal_deriv(k: int, g: GrowthLevel) -> GrowthLevel:
+    """Apply k formal derivatives to a growth level."""
+    result = g
+    for _ in range(k):
+        result = result.formal_deriv()
+    return result
 
 
 if __name__ == "__main__":
     # Quick self-test
-    T = FormalTransseries.of_monomial(1.0, 1, 1)  # exp(x)
-    print(f"exp(10) via transseries: {T.eval(10):.6e}")
-    print(f"exp(10) via math:        {math.exp(10):.6e}")
+    g = GrowthLevel(0, 2)
+    assert g.exp_shift().log_shift() == g
+    assert g.log_shift().exp_shift() == g
 
-    T2 = FormalTransseries.normalize([
-        TransTerm(1.0, TransMonomial(TransLevel(1), 1)),   # exp(x)
-        TransTerm(-2.0, TransMonomial(TransLevel(0), 3)),  # -2x³
-        TransTerm(0.5, TransMonomial(TransLevel(-1), 2)),  # 0.5·log²(x)
+    g_exp = GrowthLevel(1, 1)
+    for k in range(10):
+        assert iter_formal_deriv(k, g_exp) == g_exp, "Exp fixpoint failed!"
+
+    g_poly = GrowthLevel(0, 5)
+    assert iter_formal_deriv(3, g_poly) == GrowthLevel(0, 2)
+
+    ts = Transseries([
+        TransTerm(1.0, GrowthLevel(1, 1)),
+        TransTerm(2.0, GrowthLevel(0, 2)),
     ])
-    print(f"\nThree-level: {T2}")
-    print(f"Normalized: {T2.is_normalized()}")
-    print(f"T2(10) = {T2.eval(10):.6e}")
+    assert ts.growth_valuation() == 1
+    assert ts.is_well_ordered()
+    assert ts.complexity() == 3
+
+    print("All self-tests passed!")
