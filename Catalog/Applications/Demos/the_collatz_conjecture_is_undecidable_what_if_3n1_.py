@@ -1,383 +1,493 @@
 #!/usr/bin/env python3
 """
-Collatz Affine Map Algebra — Demonstration
-
-Demonstrates the Affine Reconstruction Theorem and related results.
+Collatz Orbit Structure Demo
+=============================
+Demonstrates the key results from the Collatz proof barrier research:
+1. Orbit tree structure and merging
+2. Parity word affine encoding
+3. Syracuse acceleration
+4. Stopping time distribution
 """
+
+from fractions import Fraction
+from typing import List, Tuple
 
 
 def collatz_step(n: int) -> int:
-    """Standard Collatz step."""
+    """The Collatz step function T(n)."""
     return n // 2 if n % 2 == 0 else 3 * n + 1
 
 
-def collatz_iter(k: int, n: int) -> int:
-    """Apply k Collatz steps to n."""
-    for _ in range(k):
+def collatz_orbit(n: int, max_steps: int = 10000) -> List[int]:
+    """Compute the Collatz orbit of n until reaching 1 or max_steps."""
+    orbit = [n]
+    while n != 1 and len(orbit) < max_steps:
         n = collatz_step(n)
-    return n
+        orbit.append(n)
+    return orbit
 
 
-def collatz_trajectory(n: int, max_steps: int = 1000) -> list[int]:
-    """Full trajectory until reaching 1 or max_steps."""
-    traj = [n]
-    while n != 1 and len(traj) < max_steps:
-        n = collatz_step(n)
-        traj.append(n)
-    return traj
+def syracuse(n: int) -> int:
+    """The Syracuse function S(n) = (3n+1)/2 for odd n."""
+    assert n % 2 == 1, f"Syracuse requires odd input, got {n}"
+    return (3 * n + 1) // 2
 
 
-def parity_vec(k: int, n: int) -> list[int]:
-    """Parity vector of the first k iterates."""
-    vec = []
-    val = n
+def parity_word(n: int, k: int) -> List[bool]:
+    """Extract the parity word: True if the i-th iterate is odd."""
+    word = []
     for _ in range(k):
-        vec.append(val % 2)
-        val = collatz_step(val)
-    return vec
+        word.append(n % 2 == 1)
+        n = collatz_step(n)
+    return word
 
 
-def build_affine_map(parity_vector: list[int]) -> tuple[int, int, int]:
-    """Build the Collatz Affine Map from a parity vector.
-
-    Returns (numerator, offset, denominator) such that
-    T^k(n) * denom = num * n + offset.
+def affine_encode(word: List[bool]) -> Tuple[Fraction, Fraction]:
+    """Compute (multiplier, offset) for a parity word over Q.
+    
+    The word is in chronological order: word[i] = parity at step i.
+    The encoding gives affine_image(n) = mult * n + off = T^k(n).
     """
-    a, b, d = 1, 0, 1
-    for p in parity_vector:
-        if p == 0:  # even step
-            d *= 2
-        else:       # odd step
-            a, b = 3 * a, 3 * b + d
-    return a, b, d
+    mult = Fraction(1)
+    off = Fraction(0)
+    for b in word:
+        if b:  # odd step: x -> 3x + 1
+            mult = 3 * mult
+            off = 3 * off + 1
+        else:  # even step: x -> x/2
+            mult = mult / 2
+            off = off / 2
+    return mult, off
 
 
-def verify_reconstruction(n: int, k: int) -> bool:
-    """Verify the Affine Reconstruction Theorem for given n, k."""
-    pvec = parity_vec(k, n)
-    a, b, d = build_affine_map(pvec)
-    iterate = collatz_iter(k, n)
-    return iterate * d == a * n + b
+def verify_affine_encoding(n: int, k: int) -> bool:
+    """Verify that the affine encoding correctly predicts the k-th iterate."""
+    word = parity_word(n, k)
+    mult, off = affine_encode(word)
+    predicted = mult * n + off
+    # Compute actual k-th iterate
+    actual = n
+    for _ in range(k):
+        actual = collatz_step(actual)
+    return predicted == actual
 
 
-def demo_reconstruction():
-    """Demonstrate the Affine Reconstruction Theorem."""
+def stopping_time(n: int, max_steps: int = 100000) -> int:
+    """Compute the stopping time (steps to reach 1)."""
+    steps = 0
+    while n != 1 and steps < max_steps:
+        n = collatz_step(n)
+        steps += 1
+    return steps if n == 1 else -1
+
+
+def demo_orbit_merge():
+    """Demonstrate the orbit merge theorem."""
     print("=" * 60)
-    print("AFFINE RECONSTRUCTION THEOREM DEMO")
+    print("DEMO 1: Orbit Merge Theorem")
     print("=" * 60)
-    print()
+    print("\nIf two orbits meet, they merge permanently.\n")
 
-    test_cases = [(7, 5), (27, 10), (31, 8), (97, 15), (1000003, 20)]
+    a, b = 7, 15
+    orbit_a = collatz_orbit(a)
+    orbit_b = collatz_orbit(b)
 
-    for n, k in test_cases:
-        pvec = parity_vec(k, n)
-        a, b, d = build_affine_map(pvec)
-        iterate = collatz_iter(k, n)
-        verified = iterate * d == a * n + b
-        odd_count = sum(pvec)
-        even_count = k - odd_count
+    # Find first common value
+    set_a = set(orbit_a)
+    for i, v in enumerate(orbit_b):
+        if v in set_a:
+            j = orbit_a.index(v)
+            print(f"Orbit of {a}: {orbit_a[:j+3]}...")
+            print(f"Orbit of {b}: {orbit_b[:i+3]}...")
+            print(f"\nMerge point: orbit_a[{j}] = orbit_b[{i}] = {v}")
+            print(f"After merge: orbit_a[{j}:] == orbit_b[{i}:]? "
+                  f"{orbit_a[j:] == orbit_b[i:]}")
+            break
 
-        print(f"n = {n}, k = {k}")
-        print(f"  Parity vector: {''.join('O' if p else 'E' for p in pvec)}")
-        print(f"  Odd steps: {odd_count}, Even steps: {even_count}")
-        print(f"  Affine map: ({a}, {b}, {d})")
-        print(f"  T^{k}({n}) = {iterate}")
-        print(f"  Check: {iterate} * {d} = {iterate * d}")
-        print(f"         {a} * {n} + {b} = {a * n + b}")
-        print(f"  Reconstruction: {'✓ VERIFIED' if verified else '✗ FAILED'}")
-        print(f"  Numerator = 3^{odd_count} = {3**odd_count}: {'✓' if a == 3**odd_count else '✗'}")
-        print(f"  Denominator = 2^{even_count} = {2**even_count}: {'✓' if d == 2**even_count else '✗'}")
+
+def demo_parity_encoding():
+    """Demonstrate the affine parity encoding."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Affine Parity Encoding")
+    print("=" * 60)
+    print("\nEach parity word defines an affine map over Q.\n")
+
+    for n in [7, 27, 97]:
+        orbit = collatz_orbit(n)
+        k = min(10, len(orbit) - 1)
+        word = parity_word(n, k)
+        mult, off = affine_encode(word)
+        print(f"n = {n}, parity word (first {k} steps): "
+              f"{''.join('O' if b else 'E' for b in word)}")
+        print(f"  Multiplier = {mult} = 3^{sum(word)}/2^{k}")
+        print(f"  Offset = {off}")
+        print(f"  Predicted T^{k}({n}) = {mult}·{n} + {off} = {mult * n + off}")
+        print(f"  Actual T^{k}({n}) = {orbit[k]}")
+        print(f"  Match: {int(mult * n + off) == orbit[k]}")
         print()
 
 
-def demo_density_bound():
-    """Demonstrate the odd step density bound."""
+def demo_composition_law():
+    """Demonstrate the composition law for parity words."""
     print("=" * 60)
-    print("ODD STEP DENSITY BOUND DEMO")
+    print("DEMO 3: Composition Law")
     print("=" * 60)
-    print()
-    print("Theorem: #odd_steps * 2 ≤ k + 1 (at most ⌈k/2⌉ odd steps)")
-    print()
+    print("\naffine_image(w1 ++ w2, q) = affine_image(w1, affine_image(w2, q))\n")
 
-    for n in range(2, 50):
-        traj = collatz_trajectory(n)
-        k = len(traj) - 1  # number of steps
-        if k < 2:
-            continue
-        pvec = parity_vec(k, n)
-        odd_count = sum(pvec)
-        bound_holds = odd_count * 2 <= k + 1
-        ratio = odd_count / k if k > 0 else 0
+    n = 27
+    w_full = parity_word(n, 8)
+    w1 = w_full[:4]
+    w2 = w_full[4:]
 
-        if not bound_holds:
-            print(f"  n={n}: BOUND VIOLATED! odd={odd_count}, k={k}")
-        elif n <= 20:
-            print(f"  n={n:3d}: k={k:3d}, odd={odd_count:3d}, "
-                  f"ratio={ratio:.3f}, bound={'tight' if odd_count * 2 == k + 1 else 'slack'}")
+    m_full, o_full = affine_encode(w_full)
+    m1, o1 = affine_encode(w1)
+    m2, o2 = affine_encode(w2)
 
-    print()
-    print("  (No violations found — theorem confirmed computationally)")
-    print()
+    result_full = m_full * n + o_full
+    result_composed = m1 * (m2 * n + o2) + o1
+
+    print(f"w_full = {''.join('O' if b else 'E' for b in w_full)}")
+    print(f"w1 = {''.join('O' if b else 'E' for b in w1)}, "
+          f"w2 = {''.join('O' if b else 'E' for b in w2)}")
+    print(f"\nDirect: mult(w_full) = {m_full}, off(w_full) = {o_full}")
+    # Chronological composition: w2 wraps around w1
+    print(f"Composed: mult(w2)·mult(w1) = {m2 * m1}, "
+          f"mult(w2)·off(w1) + off(w2) = {m2 * o1 + o2}")
+    print(f"\nMultiplier match: {m_full == m2 * m1}")
+    print(f"Offset match: {o_full == m2 * o1 + o2}")
+    result_composed = m2 * (m1 * n + o1) + o2
+    print(f"Result match: {result_full == result_composed} "
+          f"(both = {result_full})")
 
 
-def demo_power_of_2():
-    """Demonstrate that 2^k reaches 1 in exactly k steps."""
+def demo_parity_ratio():
+    """Demonstrate the parity ratio bound."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Parity Ratio Bound")
     print("=" * 60)
-    print("POWERS OF 2 STOPPING TIME")
-    print("=" * 60)
-    print()
+    print("\nOdd steps ≤ ⌈k/2⌉ in any orbit segment.\n")
 
-    for k in range(1, 15):
-        n = 2**k
-        result = collatz_iter(k, n)
-        traj = [n]
-        v = n
-        for _ in range(k):
-            v = collatz_step(v)
-            traj.append(v)
-
-        print(f"  2^{k:2d} = {n:6d} → " + " → ".join(str(x) for x in traj[:min(8, len(traj))]) +
-              (f" → ... → {traj[-1]}" if len(traj) > 8 else "") +
-              f"  (reaches 1 in {k} steps: {'✓' if result == 1 else '✗'})")
-    print()
+    for n in [3, 7, 27, 97, 871]:
+        orbit = collatz_orbit(n)
+        k = min(20, len(orbit) - 1)
+        odd_count = sum(1 for i in range(k) if orbit[i] % 2 == 1)
+        bound = (k + 1) // 2
+        print(f"n={n:4d}, k={k:2d}: odd_steps={odd_count:2d}, "
+              f"bound=⌈{k}/2⌉={bound:2d}, "
+              f"satisfies: {odd_count <= bound}")
 
 
-def demo_mersenne():
-    """Demonstrate Mersenne number behavior."""
-    print("=" * 60)
-    print("MERSENNE NUMBERS: FIRST STEP")
+def demo_stopping_times():
+    """Demonstrate stopping time distribution."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Stopping Time Distribution")
     print("=" * 60)
     print()
 
-    for k in range(1, 12):
-        n = 2**k - 1
-        step = collatz_step(n)
-        expected = 3 * n + 1
-        print(f"  2^{k:2d} - 1 = {n:5d} → T({n}) = {step} = 3·{n}+1 = {expected}: "
-              f"{'✓' if step == expected else '✗'}")
-    print()
+    for N in [100, 1000, 10000]:
+        times = [stopping_time(n) for n in range(1, N + 1)]
+        max_t = max(times)
+        avg_t = sum(times) / len(times)
+        import math
+        log_N = math.log2(N)
+        ratio = max_t / (log_N ** 2)
+        print(f"N={N:6d}: max_stop={max_t:4d}, avg={avg_t:.1f}, "
+              f"max/(log₂N)²={ratio:.2f}")
 
 
-def demo_parity_realizability():
-    """Test the parity vector realizability conjecture."""
+def demo_no_cycles():
+    """Demonstrate the no-fixed-point and no-2-cycle theorems."""
+    print("\n" + "=" * 60)
+    print("DEMO 6: No Fixed Points or 2-Cycles")
     print("=" * 60)
-    print("PARITY VECTOR REALIZABILITY CONJECTURE")
-    print("=" * 60)
     print()
 
-    from itertools import product
+    print("Checking T(n) ≠ n for n = 2..1000:")
+    fixed = [n for n in range(2, 1001) if collatz_step(n) == n]
+    print(f"  Fixed points found: {fixed if fixed else 'None'}")
 
-    for k in range(1, 13):
-        # Generate all valid parity vectors (no consecutive 1s)
-        valid_count = 0
-        realized_count = 0
-
-        def gen_valid(length):
-            if length == 0:
-                yield []
-                return
-            for vec in gen_valid(length - 1):
-                yield vec + [0]
-                if not vec or vec[-1] == 0:
-                    yield vec + [1]
-
-        for vec in gen_valid(k):
-            valid_count += 1
-            # Try to find n that realizes this parity vector
-            found = False
-            for n in range(1, 5000):
-                if parity_vec(k, n) == vec:
-                    realized_count += 1
-                    found = True
-                    break
-
-        print(f"  k={k:2d}: {realized_count}/{valid_count} valid vectors realized "
-              f"(search up to n=5000) {'✓ ALL' if realized_count == valid_count else '✗ MISSING'}")
-    print()
+    print("\nChecking T(T(n)) ≠ n for n = 2..1000:")
+    two_cycles = [n for n in range(2, 1001)
+                  if collatz_step(collatz_step(n)) == n]
+    print(f"  2-cycles found: {two_cycles if two_cycles else 'None'}")
 
 
 if __name__ == "__main__":
-    demo_reconstruction()
-    demo_density_bound()
-    demo_power_of_2()
-    demo_mersenne()
-    demo_parity_realizability()
+    demo_orbit_merge()
+    demo_parity_encoding()
+    demo_composition_law()
+    demo_parity_ratio()
+    demo_stopping_times()
+    demo_no_cycles()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Collatz Affine Map — Trajectory and Parity Structure
+Visualization: Collatz Orbit Tree Structure
+=============================================
+Shows how Collatz orbits merge into a tree structure rooted at 1.
 """
-import matplotlib
-matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 
 
-def collatz_step(n):
+def collatz_step(n: int) -> int:
     return n // 2 if n % 2 == 0 else 3 * n + 1
 
 
-def collatz_trajectory(n, max_steps=1000):
-    traj = [n]
-    while n != 1 and len(traj) < max_steps:
+def collatz_orbit(n: int) -> list:
+    orbit = [n]
+    while n != 1 and len(orbit) < 500:
         n = collatz_step(n)
-        traj.append(n)
-    return traj
+        orbit.append(n)
+    return orbit
 
 
-def parity_vec(n, k):
-    vec = []
-    val = n
-    for _ in range(k):
-        vec.append(val % 2)
-        val = collatz_step(val)
-    return vec
+def build_tree(max_n: int = 30) -> dict:
+    """Build the Collatz tree: edges from n to T(n)."""
+    edges = {}
+    for n in range(2, max_n + 1):
+        edges[n] = collatz_step(n)
+    return edges
 
 
-def build_affine_map(pvec):
-    a, b, d = 1, 0, 1
-    for p in pvec:
-        if p == 0:
-            d *= 2
-        else:
-            a, b = 3 * a, 3 * b + d
-    return a, b, d
+def plot_orbit_tree():
+    """Plot the Collatz tree for small values."""
+    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
 
+    # Left: Orbits of several numbers showing merging
+    ax = axes[0]
+    colors = plt.cm.Set1(np.linspace(0, 1, 8))
+    starts = [3, 7, 15, 27, 9, 6, 11, 19]
 
-def plot_trajectory_with_parity():
-    """Plot Collatz trajectories colored by parity."""
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    for i, n in enumerate(starts):
+        orbit = collatz_orbit(n)[:25]
+        ax.plot(range(len(orbit)), orbit, '-o', color=colors[i],
+                markersize=3, linewidth=1.5, label=f'n={n}', alpha=0.8)
 
-    for idx, n_start in enumerate([27, 97, 871, 6171]):
-        ax = axes[idx // 2][idx % 2]
-        traj = collatz_trajectory(n_start)
-        steps = list(range(len(traj)))
-        colors = ['red' if t % 2 == 1 else 'blue' for t in traj]
+    ax.set_xlabel('Step', fontsize=12)
+    ax.set_ylabel('Value', fontsize=12)
+    ax.set_title('Collatz Orbits Merge Into Shared Paths', fontsize=14)
+    ax.legend(loc='upper right', fontsize=9)
+    ax.set_yscale('log')
+    ax.grid(True, alpha=0.3)
 
-        ax.scatter(steps, traj, c=colors, s=8, alpha=0.7)
-        ax.plot(steps, traj, 'k-', alpha=0.2, linewidth=0.5)
-        ax.set_title(f'n = {n_start} ({len(traj)-1} steps)', fontsize=12)
-        ax.set_xlabel('Step')
-        ax.set_ylabel('Value')
-        ax.set_yscale('log')
+    # Right: Stopping time distribution
+    ax = axes[1]
+    N = 1000
+    times = []
+    for n in range(1, N + 1):
+        orbit = collatz_orbit(n)
+        times.append(len(orbit) - 1)
 
-        # Add parity ratio annotation
-        pvec = parity_vec(n_start, len(traj) - 1)
-        odd_count = sum(pvec)
-        ratio = odd_count / len(pvec) if pvec else 0
-        ax.annotate(f'Odd ratio: {ratio:.3f}\nOdd steps: {odd_count}/{len(pvec)}',
-                    xy=(0.95, 0.95), xycoords='axes fraction',
-                    ha='right', va='top', fontsize=9,
-                    bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    ax.scatter(range(1, N + 1), times, s=1, c=times, cmap='viridis', alpha=0.6)
+    ax.set_xlabel('Starting Value n', fontsize=12)
+    ax.set_ylabel('Stopping Time', fontsize=12)
+    ax.set_title('Stopping Times: The Landscape of Difficulty', fontsize=14)
+    ax.grid(True, alpha=0.3)
 
-    fig.suptitle('Collatz Trajectories (Red = Odd, Blue = Even)', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('collatz_trajectories.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved collatz_trajectories.png")
-
-
-def plot_odd_ratio_distribution():
-    """Plot the distribution of odd step ratios across many starting values."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    ratios = []
-    stopping_times = []
-
-    for n in range(2, 10001):
-        traj = collatz_trajectory(n)
-        if traj[-1] == 1:
-            k = len(traj) - 1
-            pvec = parity_vec(n, k)
-            odd_count = sum(pvec)
-            ratio = odd_count / k if k > 0 else 0
-            ratios.append(ratio)
-            stopping_times.append(k)
-
-    ax1.hist(ratios, bins=80, color='steelblue', edgecolor='navy', alpha=0.7)
-    ax1.axvline(x=np.log(2)/np.log(3), color='red', linestyle='--', linewidth=2,
-                label=f'log(2)/log(3) ≈ {np.log(2)/np.log(3):.4f}')
-    ax1.axvline(x=0.5, color='green', linestyle='--', linewidth=2,
-                label='Density bound: 0.5')
-    ax1.set_xlabel('Odd Step Ratio s/k')
-    ax1.set_ylabel('Count')
-    ax1.set_title('Distribution of Odd Step Ratios (n = 2 to 10000)')
-    ax1.legend()
-
-    # s vs t scatter
-    s_vals = []
-    t_vals = []
-    for n in range(2, 5001):
-        traj = collatz_trajectory(n)
-        if traj[-1] == 1:
-            k = len(traj) - 1
-            pvec = parity_vec(n, k)
-            s = sum(pvec)
-            t = k - s
-            s_vals.append(s)
-            t_vals.append(t)
-
-    ax2.scatter(s_vals, t_vals, s=3, alpha=0.3, color='purple')
-    # Add the critical line s*log(3) = t*log(2), i.e., t = s*log(3)/log(2)
-    s_line = np.linspace(0, max(s_vals), 100)
-    t_line = s_line * np.log(3) / np.log(2)
-    ax2.plot(s_line, t_line, 'r--', linewidth=2, label='3^s = 2^t (critical line)')
-    ax2.set_xlabel('Odd steps (s)')
-    ax2.set_ylabel('Even steps (t)')
-    ax2.set_title('(s, t) Pairs for Trajectories to 1')
-    ax2.legend()
+    # Add bound line
+    x = np.arange(2, N + 1)
+    bound = 6 * np.log2(x) ** 2
+    ax.plot(x, bound, 'r--', alpha=0.5, label='6·(log₂ n)²')
+    ax.legend(fontsize=10)
 
     plt.tight_layout()
-    plt.savefig('collatz_density.png', dpi=150, bbox_inches='tight')
+    plt.savefig('collatz_orbit_tree.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved collatz_density.png")
+    print("Saved: collatz_orbit_tree.png")
 
 
-def plot_affine_map_coefficients():
-    """Plot the growth of affine map coefficients along trajectories."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+def plot_parity_encoding():
+    """Visualize the parity word encoding and multiplier distribution."""
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 
-    for n_start in [27]:
-        traj = collatz_trajectory(n_start)
-        k = len(traj) - 1
+    # Left: Parity words as binary patterns
+    ax = axes[0]
+    starts = [27, 31, 41, 47, 63, 73, 97, 111]
+    k = 30
 
-        nums = []
-        offsets = []
-        denoms = []
+    for i, n in enumerate(starts):
+        orbit = collatz_orbit(n)[:k + 1]
+        parities = [1 if v % 2 == 1 else 0 for v in orbit[:k]]
+        for j, p in enumerate(parities):
+            color = '#d32f2f' if p == 1 else '#1976d2'
+            ax.add_patch(plt.Rectangle((j, len(starts) - 1 - i), 1, 0.8,
+                                       facecolor=color, edgecolor='white',
+                                       linewidth=0.5))
 
-        for j in range(1, k + 1):
-            pvec = parity_vec(n_start, j)
-            a, b, d = build_affine_map(pvec)
-            nums.append(np.log2(a) if a > 0 else 0)
-            offsets.append(np.log2(b) if b > 0 else 0)
-            denoms.append(np.log2(d) if d > 0 else 0)
+    ax.set_xlim(0, k)
+    ax.set_ylim(-0.5, len(starts))
+    ax.set_xlabel('Step', fontsize=12)
+    ax.set_ylabel('Starting Value', fontsize=12)
+    ax.set_yticks([len(starts) - 1 - i + 0.4 for i in range(len(starts))])
+    ax.set_yticklabels([str(n) for n in starts])
+    ax.set_title('Parity Words (Red=Odd, Blue=Even)', fontsize=14)
 
-        steps = list(range(1, k + 1))
+    red_patch = mpatches.Patch(color='#d32f2f', label='Odd')
+    blue_patch = mpatches.Patch(color='#1976d2', label='Even')
+    ax.legend(handles=[red_patch, blue_patch], loc='upper right')
 
-        axes[0].plot(steps, nums, 'r-', linewidth=1)
-        axes[0].set_title('log₂(numerator) = s·log₂(3)')
-        axes[0].set_xlabel('Steps (k)')
-        axes[0].set_ylabel('log₂(a)')
+    # Right: Multiplier values for different word lengths
+    ax = axes[1]
+    from fractions import Fraction
 
-        axes[1].plot(steps, offsets, 'g-', linewidth=1)
-        axes[1].set_title('log₂(offset)')
-        axes[1].set_xlabel('Steps (k)')
-        axes[1].set_ylabel('log₂(b)')
+    for n in [7, 27, 97, 231]:
+        mults = []
+        orbit = collatz_orbit(n)
+        for length in range(1, min(40, len(orbit))):
+            word = [v % 2 == 1 for v in orbit[:length]]
+            s = sum(word)
+            mult = float(Fraction(3, 1) ** s / Fraction(2, 1) ** length)
+            mults.append(mult)
+        ax.plot(range(1, len(mults) + 1), mults, '-', linewidth=1.5,
+                label=f'n={n}', alpha=0.8)
 
-        axes[2].plot(steps, denoms, 'b-', linewidth=1)
-        axes[2].set_title('log₂(denominator) = t')
-        axes[2].set_xlabel('Steps (k)')
-        axes[2].set_ylabel('log₂(d)')
+    ax.axhline(y=1, color='black', linestyle='--', alpha=0.5, label='mult=1')
+    ax.set_xlabel('Word Length k', fontsize=12)
+    ax.set_ylabel('Multiplier 3^s / 2^k', fontsize=12)
+    ax.set_title('Multiplier Decay Along Orbits', fontsize=14)
+    ax.set_yscale('log')
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
 
-    fig.suptitle(f'Affine Map Coefficients for n = 27 ({k} steps)', fontsize=13, fontweight='bold')
     plt.tight_layout()
-    plt.savefig('collatz_affine_coefficients.png', dpi=150, bbox_inches='tight')
+    plt.savefig('collatz_parity_encoding.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved collatz_affine_coefficients.png")
+    print("Saved: collatz_parity_encoding.png")
 
 
 if __name__ == "__main__":
-    plot_trajectory_with_parity()
-    plot_odd_ratio_distribution()
-    plot_affine_map_coefficients()
+    plot_orbit_tree()
+    plot_parity_encoding()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Collatz Proof Barriers
+=======================================
+Shows the growth of stopping times and the bounded-universal gap.
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+
+
+def collatz_step(n: int) -> int:
+    return n // 2 if n % 2 == 0 else 3 * n + 1
+
+
+def stopping_time(n: int) -> int:
+    steps = 0
+    while n != 1 and steps < 100000:
+        n = collatz_step(n)
+        steps += 1
+    return steps
+
+
+def peak_value(n: int) -> int:
+    peak = n
+    while n != 1 and peak < 10**15:
+        n = collatz_step(n)
+        peak = max(peak, n)
+    return peak
+
+
+def plot_proof_barrier():
+    """Visualize the gap between bounded verification and universal proof."""
+    fig, axes = plt.subplots(2, 2, figsize=(16, 12))
+
+    # Top-left: Max stopping time growth
+    ax = axes[0, 0]
+    Ns = [10, 50, 100, 500, 1000, 5000, 10000]
+    max_times = []
+    for N in Ns:
+        max_t = max(stopping_time(n) for n in range(1, N + 1))
+        max_times.append(max_t)
+
+    ax.plot(Ns, max_times, 'bo-', markersize=6, linewidth=2, label='max σ(n), n≤N')
+    # Fit log^2
+    log_vals = [math.log2(N) for N in Ns]
+    coeffs = np.polyfit([l**2 for l in log_vals], max_times, 1)
+    fit_x = np.linspace(min(Ns), max(Ns), 100)
+    fit_y = [coeffs[0] * math.log2(x)**2 + coeffs[1] for x in fit_x]
+    ax.plot(fit_x, fit_y, 'r--', alpha=0.7,
+            label=f'Fit: {coeffs[0]:.1f}·(log₂N)² + {coeffs[1]:.0f}')
+    ax.set_xlabel('N', fontsize=12)
+    ax.set_ylabel('Max Stopping Time', fontsize=12)
+    ax.set_title('Maximum Stopping Time Growth', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+
+    # Top-right: Peak value distribution
+    ax = axes[0, 1]
+    N = 500
+    peaks = [(n, peak_value(n)) for n in range(1, N + 1)]
+    ns, pvs = zip(*peaks)
+    ax.scatter(ns, pvs, s=3, c='darkblue', alpha=0.5)
+    ax.set_xlabel('Starting Value n', fontsize=12)
+    ax.set_ylabel('Peak Value', fontsize=12)
+    ax.set_title('Peak Values: How High Do Orbits Climb?', fontsize=14)
+    ax.set_yscale('log')
+    ax.grid(True, alpha=0.3)
+
+    # Bottom-left: Residue class behavior mod 4
+    ax = axes[1, 0]
+    categories = {
+        '0 mod 4': [], '1 mod 4': [], '2 mod 4': [], '3 mod 4': []
+    }
+    for n in range(1, 1001):
+        st = stopping_time(n)
+        categories[f'{n % 4} mod 4'].append(st)
+
+    positions = range(4)
+    data = [categories[f'{i} mod 4'] for i in range(4)]
+    bp = ax.boxplot(data, labels=['0 mod 4', '1 mod 4', '2 mod 4', '3 mod 4'],
+                    patch_artist=True)
+    colors = ['#42a5f5', '#ef5350', '#42a5f5', '#ef5350']
+    for patch, color in zip(bp['boxes'], colors):
+        patch.set_facecolor(color)
+        patch.set_alpha(0.6)
+    ax.set_xlabel('Residue Class mod 4', fontsize=12)
+    ax.set_ylabel('Stopping Time', fontsize=12)
+    ax.set_title('Stopping Times by Residue Class mod 4', fontsize=14)
+
+    # Bottom-right: 2-adic valuation of 3n+1 for odd n
+    ax = axes[1, 1]
+    odd_ns = list(range(1, 2001, 2))
+    v2s = []
+    for n in odd_ns:
+        val = 3 * n + 1
+        v = 0
+        while val % 2 == 0:
+            val //= 2
+            v += 1
+        v2s.append(v)
+
+    ax.scatter(odd_ns, v2s, s=2, c=v2s, cmap='plasma', alpha=0.6)
+    ax.set_xlabel('Odd n', fontsize=12)
+    ax.set_ylabel('ν₂(3n+1)', fontsize=12)
+    ax.set_title('2-Adic Valuation of 3n+1: Halving Depth', fontsize=14)
+    ax.grid(True, alpha=0.3)
+
+    # Add distribution inset
+    inset = ax.inset_axes([0.6, 0.5, 0.35, 0.45])
+    vals, counts = np.unique(v2s, return_counts=True)
+    inset.bar(vals, counts / len(v2s), color='purple', alpha=0.7)
+    expected = [0.5**v for v in vals]
+    inset.plot(vals, expected, 'r--', label='2^{-v}')
+    inset.set_xlabel('v₂', fontsize=8)
+    inset.set_ylabel('frequency', fontsize=8)
+    inset.set_title('Distribution', fontsize=9)
+
+    plt.tight_layout()
+    plt.savefig('collatz_proof_barrier.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: collatz_proof_barrier.png")
+
+
+if __name__ == "__main__":
+    plot_proof_barrier()
