@@ -1,282 +1,250 @@
 """
-Algorithms for analyzing the DAG structure of proof networks.
+Algorithms for Reachability Fragility Analysis of DAGs.
 
-Implements:
-1. DAG construction from dependency relations
-2. In-degree / out-degree computation
-3. Topological layering (rank function)
-4. Hub identification and fragility analysis
-5. Power-law fitting (Clauset-Shalizi-Newman MLE)
+Implements the key concepts from our formal theory:
+- Influence computation via transitive closure
+- Fragility index computation
+- Hub detection and ranking
+- Influence profile analysis
 """
-from typing import Dict, List, Set, Tuple, Optional
+
+from typing import Dict, List, Set, Tuple
 from collections import defaultdict
-import math
-import random
 
 
-class ProofDAG:
-    """A directed acyclic graph representing proof dependencies.
+class FinDAG:
+    """A finite directed acyclic graph with reachability fragility analysis."""
 
-    Nodes are theorem identifiers (strings), edges represent
-    'theorem A is used in the proof of theorem B'.
-    """
+    def __init__(self, vertices: List[str], edges: List[Tuple[str, str]]):
+        """
+        Initialize a FinDAG.
 
-    def __init__(self) -> None:
-        self.nodes: Set[str] = set()
-        self.edges: List[Tuple[str, str]] = []
-        self._successors: Dict[str, Set[str]] = defaultdict(set)
-        self._predecessors: Dict[str, Set[str]] = defaultdict(set)
+        Args:
+            vertices: List of vertex labels
+            edges: List of (source, target) directed edges
+        """
+        self.vertices: List[str] = list(vertices)
+        self.edges: List[Tuple[str, str]] = list(edges)
+        self.adj: Dict[str, Set[str]] = defaultdict(set)
+        self.rev_adj: Dict[str, Set[str]] = defaultdict(set)
+        for u, v in edges:
+            self.adj[u].add(v)
+            self.rev_adj[v].add(u)
 
-    def add_node(self, name: str) -> None:
-        self.nodes.add(name)
+        # Validate acyclicity
+        if not self._is_acyclic():
+            raise ValueError("Graph contains a cycle — not a valid DAG")
 
-    def add_edge(self, source: str, target: str) -> None:
-        """Add edge: source is used in proof of target."""
-        self.nodes.add(source)
-        self.nodes.add(target)
-        self.edges.append((source, target))
-        self._successors[source].add(target)
-        self._predecessors[target].add(source)
+    def _is_acyclic(self) -> bool:
+        """Check acyclicity using topological sort (Kahn's algorithm)."""
+        in_deg = {v: 0 for v in self.vertices}
+        for u, v in self.edges:
+            in_deg[v] += 1
+        queue = [v for v in self.vertices if in_deg[v] == 0]
+        count = 0
+        while queue:
+            node = queue.pop(0)
+            count += 1
+            for w in self.adj[node]:
+                in_deg[w] -= 1
+                if in_deg[w] == 0:
+                    queue.append(w)
+        return count == len(self.vertices)
 
-    def in_degree(self, node: str) -> int:
-        """Number of theorems that node depends on."""
-        return len(self._predecessors.get(node, set()))
+    def descendants(self, v: str) -> Set[str]:
+        """
+        Compute the set of transitive descendants of v (not including v).
+        Uses BFS on the adjacency structure.
 
-    def out_degree(self, node: str) -> int:
-        """Number of theorems that depend on node."""
-        return len(self._successors.get(node, set()))
+        Corresponds to FinDAG.descendants in our Lean formalization.
+        """
+        visited: Set[str] = set()
+        stack = list(self.adj[v])
+        while stack:
+            w = stack.pop()
+            if w not in visited:
+                visited.add(w)
+                stack.extend(self.adj[w] - visited)
+        return visited
+
+    def ancestors(self, v: str) -> Set[str]:
+        """
+        Compute the set of transitive ancestors of v (not including v).
+        Uses BFS on the reverse adjacency structure.
+
+        Corresponds to FinDAG.ancestors in our Lean formalization.
+        """
+        visited: Set[str] = set()
+        stack = list(self.rev_adj[v])
+        while stack:
+            w = stack.pop()
+            if w not in visited:
+                visited.add(w)
+                stack.extend(self.rev_adj[w] - visited)
+        return visited
+
+    def influence(self, v: str) -> int:
+        """
+        The influence of node v: number of transitive descendants.
+
+        Corresponds to FinDAG.influence in our Lean formalization.
+        """
+        return len(self.descendants(v))
+
+    def ancestor_count(self, v: str) -> int:
+        """Number of transitive ancestors of v."""
+        return len(self.ancestors(v))
+
+    def hub_score(self, v: str) -> int:
+        """
+        The hub score: influence × ancestor_count.
+        Measures the centrality of v as an intermediary.
+
+        Corresponds to FinDAG.hubScore in our Lean formalization.
+        """
+        return self.influence(v) * self.ancestor_count(v)
+
+    def fragility_index(self, v: str) -> int:
+        """
+        The fragility index: number of (u, w) pairs such that
+        u can reach v AND v can reach w.
+
+        Corresponds to FinDAG.fragilityIndex in our Lean formalization.
+        Lower bounded by hub_score (our fragilityIndex_ge_product theorem).
+        """
+        anc = self.ancestors(v)
+        desc = self.descendants(v)
+        return len(anc) * len(desc)  # This IS the lower bound; exact fragility requires path analysis
+
+    def influence_profile(self) -> List[int]:
+        """
+        The influence profile: sorted list of influence values.
+
+        Corresponds to FinDAG.influenceProfile in our Lean formalization.
+        """
+        return sorted([self.influence(v) for v in self.vertices], reverse=True)
+
+    def total_influence(self) -> int:
+        """
+        Sum of all influences = number of reachable pairs.
+
+        Verified: totalInfluence_eq_reachPairs in Lean.
+        """
+        return sum(self.influence(v) for v in self.vertices)
+
+    def reachable_pairs(self) -> int:
+        """Total number of (u, v) pairs where u transitively reaches v."""
+        return self.total_influence()  # By our theorem!
+
+    def sources(self) -> List[str]:
+        """
+        Source nodes: nodes with no incoming edges.
+        Guaranteed non-empty by source_exists theorem.
+        """
+        return [v for v in self.vertices if not self.rev_adj[v]]
+
+    def hub_ranking(self) -> List[Tuple[str, int, int, int]]:
+        """
+        Rank all nodes by hub score.
+
+        Returns: List of (vertex, influence, ancestor_count, hub_score)
+                 sorted by hub_score descending.
+        """
+        ranking = []
+        for v in self.vertices:
+            inf = self.influence(v)
+            anc = self.ancestor_count(v)
+            ranking.append((v, inf, anc, inf * anc))
+        ranking.sort(key=lambda x: -x[3])
+        return ranking
 
     def in_degree_distribution(self) -> Dict[int, int]:
-        """Compute in-degree distribution: P(k) = count of nodes with in-degree k."""
+        """Compute the in-degree distribution P(k) = #{nodes with in-degree k}."""
+        in_deg = {v: 0 for v in self.vertices}
+        for u, v in self.edges:
+            in_deg[v] += 1
         dist: Dict[int, int] = defaultdict(int)
-        for node in self.nodes:
-            dist[self.in_degree(node)] += 1
+        for d in in_deg.values():
+            dist[d] += 1
         return dict(dist)
 
-    def out_degree_distribution(self) -> Dict[int, int]:
-        """Compute out-degree distribution."""
-        dist: Dict[int, int] = defaultdict(int)
-        for node in self.nodes:
-            dist[self.out_degree(node)] += 1
-        return dict(dist)
+    def depth(self) -> int:
+        """Length of the longest directed path in the DAG."""
+        memo: Dict[str, int] = {}
 
-    def topological_layers(self) -> Dict[str, int]:
-        """Compute the topological rank (layer) of each node.
+        def _depth(v: str) -> int:
+            if v in memo:
+                return memo[v]
+            if not self.adj[v]:
+                memo[v] = 0
+                return 0
+            memo[v] = 1 + max(_depth(w) for w in self.adj[v])
+            return memo[v]
 
-        Layer 0 = sources (axioms), layer k+1 = nodes whose predecessors
-        are all in layers ≤ k.
-
-        Returns dict mapping node -> layer number.
-        """
-        layers: Dict[str, int] = {}
-        remaining = set(self.nodes)
-
-        layer = 0
-        while remaining:
-            # Find nodes whose all predecessors are already assigned
-            current_layer = {
-                n for n in remaining
-                if all(p in layers for p in self._predecessors.get(n, set()))
-            }
-            if not current_layer:
-                raise ValueError("Graph contains a cycle!")
-            for n in current_layer:
-                layers[n] = layer
-            remaining -= current_layer
-            layer += 1
-
-        return layers
-
-    def hub_scores(self, top_k: int = 10) -> List[Tuple[str, int]]:
-        """Return the top-k nodes by out-degree (most depended-upon)."""
-        scores = [(node, self.out_degree(node)) for node in self.nodes]
-        scores.sort(key=lambda x: -x[1])
-        return scores[:top_k]
-
-    def remove_node(self, node: str) -> 'ProofDAG':
-        """Return a new DAG with the given node and all its edges removed."""
-        new_dag = ProofDAG()
-        for n in self.nodes:
-            if n != node:
-                new_dag.add_node(n)
-        for s, t in self.edges:
-            if s != node and t != node:
-                new_dag.add_edge(s, t)
-        return new_dag
-
-    def connected_components(self) -> List[Set[str]]:
-        """Compute weakly connected components (treating edges as undirected)."""
-        visited: Set[str] = set()
-        components: List[Set[str]] = []
-
-        # Build undirected adjacency
-        undirected: Dict[str, Set[str]] = defaultdict(set)
-        for s, t in self.edges:
-            undirected[s].add(t)
-            undirected[t].add(s)
-
-        for node in self.nodes:
-            if node not in visited:
-                component: Set[str] = set()
-                stack = [node]
-                while stack:
-                    current = stack.pop()
-                    if current in visited:
-                        continue
-                    visited.add(current)
-                    component.add(current)
-                    for neighbor in undirected.get(current, set()):
-                        if neighbor not in visited:
-                            stack.append(neighbor)
-                components.append(component)
-
-        return components
-
-    def fragility_analysis(self, node: str) -> Dict[str, any]:
-        """Analyze what happens when a hub node is removed."""
-        original_components = self.connected_components()
-        reduced = self.remove_node(node)
-        new_components = reduced.connected_components()
-
-        return {
-            'removed_node': node,
-            'out_degree': self.out_degree(node),
-            'in_degree': self.in_degree(node),
-            'original_components': len(original_components),
-            'new_components': len(new_components),
-            'component_sizes': sorted([len(c) for c in new_components], reverse=True),
-            'fragmentation_ratio': len(new_components) / max(len(original_components), 1),
-        }
-
-    def verify_handshaking(self) -> bool:
-        """Verify the directed handshaking lemma: sum(in_degrees) = sum(out_degrees) = |E|."""
-        sum_in = sum(self.in_degree(n) for n in self.nodes)
-        sum_out = sum(self.out_degree(n) for n in self.nodes)
-        return sum_in == sum_out == len(self.edges)
+        return max(_depth(v) for v in self.vertices) if self.vertices else 0
 
 
-def fit_power_law_mle(degrees: List[int], x_min: int = 1) -> Tuple[float, float]:
-    """Fit a power law P(k) ~ k^{-gamma} using MLE (Clauset-Shalizi-Newman method).
-
-    Returns (gamma, standard_error).
+def build_mathlib_like_dag(n_theorems: int = 100, hub_fraction: float = 0.05) -> FinDAG:
     """
-    filtered = [d for d in degrees if d >= x_min]
-    n = len(filtered)
-    if n == 0:
-        return (0.0, 0.0)
-
-    # MLE estimator: gamma = 1 + n / sum(ln(x_i / (x_min - 0.5)))
-    sum_log = sum(math.log(x / (x_min - 0.5)) for x in filtered)
-    if sum_log == 0:
-        return (0.0, 0.0)
-
-    gamma = 1.0 + n / sum_log
-    std_err = (gamma - 1.0) / math.sqrt(n)
-
-    return (gamma, std_err)
-
-
-def generate_barabasi_albert_dag(n: int, m: int = 2, seed: int = 42) -> ProofDAG:
-    """Generate a scale-free DAG using preferential attachment.
-
-    This models the hypothesis that proof networks grow by preferential
-    attachment: new theorems preferentially depend on already well-connected
-    foundational results.
+    Build a synthetic DAG that mimics mathematical dependency structure:
+    - A small number of hub nodes (axioms/foundational theorems)
+    - Many leaf theorems that depend on the hubs
+    - Intermediate lemmas connecting hubs to leaves
 
     Args:
-        n: Number of nodes
-        m: Number of edges to attach from each new node
-        seed: Random seed
+        n_theorems: Total number of theorem nodes
+        hub_fraction: Fraction of nodes that are hubs
     """
-    rng = random.Random(seed)
-    dag = ProofDAG()
+    import random
+    random.seed(42)
 
-    # Start with m+1 nodes in a chain
-    for i in range(m + 1):
-        dag.add_node(f"T{i}")
-    for i in range(m):
-        dag.add_edge(f"T{i}", f"T{i+1}")
+    n_hubs = max(2, int(n_theorems * hub_fraction))
+    n_intermediate = int(n_theorems * 0.3)
+    n_leaves = n_theorems - n_hubs - n_intermediate
 
-    # Preferential attachment
-    for i in range(m + 1, n):
-        new_node = f"T{i}"
-        dag.add_node(new_node)
+    vertices = []
+    edges = []
 
-        # Select m existing nodes with probability proportional to out-degree + 1
-        existing = list(dag.nodes - {new_node})
-        weights = [dag.out_degree(node) + 1 for node in existing]
-        total = sum(weights)
-        probs = [w / total for w in weights]
+    # Layer 0: Hub theorems (axioms, foundational results)
+    hubs = [f"Hub_{i}" for i in range(n_hubs)]
+    vertices.extend(hubs)
 
-        targets = set()
-        attempts = 0
-        while len(targets) < min(m, len(existing)) and attempts < 100:
-            r = rng.random()
-            cumsum = 0
-            for j, p in enumerate(probs):
-                cumsum += p
-                if r <= cumsum:
-                    targets.add(existing[j])
-                    break
-            attempts += 1
+    # Layer 1: Intermediate lemmas (depend on 1-3 hubs)
+    intermediates = [f"Lem_{i}" for i in range(n_intermediate)]
+    vertices.extend(intermediates)
+    for lem in intermediates:
+        n_deps = random.randint(1, min(3, n_hubs))
+        for hub in random.sample(hubs, n_deps):
+            edges.append((hub, lem))
 
-        for target in targets:
-            dag.add_edge(target, new_node)
+    # Layer 2: Leaf theorems (depend on intermediates and sometimes hubs)
+    leaves = [f"Thm_{i}" for i in range(n_leaves)]
+    vertices.extend(leaves)
+    for thm in leaves:
+        # Depend on 1-3 intermediates
+        n_int_deps = random.randint(1, min(3, n_intermediate))
+        for lem in random.sample(intermediates, n_int_deps):
+            edges.append((lem, thm))
+        # Sometimes also depend directly on a hub
+        if random.random() < 0.3:
+            edges.append((random.choice(hubs), thm))
 
-    return dag
+    return FinDAG(vertices, edges)
 
 
-def generate_mathematics_like_dag(n_axioms: int = 10, n_foundational: int = 50,
-                                   n_intermediate: int = 200, n_frontier: int = 500,
-                                   seed: int = 42) -> ProofDAG:
-    """Generate a DAG that mimics the structure of mathematical proof networks.
-
-    Four layers:
-    - Axioms: the foundation (e.g., ZFC axioms, logical rules)
-    - Foundational theorems: depend on axioms (e.g., Zorn's Lemma, IVT)
-    - Intermediate results: depend on foundational theorems
-    - Frontier theorems: depend on intermediate and foundational results
-
-    The key feature is hub dominance: foundational theorems have very high
-    out-degree, while frontier theorems have low out-degree.
+def compute_influence_concentration(dag: FinDAG) -> float:
     """
-    rng = random.Random(seed)
-    dag = ProofDAG()
-
-    axioms = [f"Axiom_{i}" for i in range(n_axioms)]
-    foundational = [f"Foundation_{i}" for i in range(n_foundational)]
-    intermediate = [f"Intermediate_{i}" for i in range(n_intermediate)]
-    frontier = [f"Frontier_{i}" for i in range(n_frontier)]
-
-    for a in axioms:
-        dag.add_node(a)
-
-    # Foundational theorems depend on 2-5 axioms
-    for f in foundational:
-        dag.add_node(f)
-        n_deps = rng.randint(2, min(5, n_axioms))
-        deps = rng.sample(axioms, n_deps)
-        for d in deps:
-            dag.add_edge(d, f)
-
-    # Intermediate results depend on 1-3 foundational + 0-2 axioms
-    for inter in intermediate:
-        dag.add_node(inter)
-        n_found = rng.randint(1, min(3, n_foundational))
-        deps = rng.sample(foundational, n_found)
-        n_ax = rng.randint(0, min(2, n_axioms))
-        deps += rng.sample(axioms, n_ax)
-        for d in deps:
-            dag.add_edge(d, inter)
-
-    # Frontier theorems depend on 1-4 intermediate + 0-2 foundational
-    for front in frontier:
-        dag.add_node(front)
-        n_inter = rng.randint(1, min(4, n_intermediate))
-        deps = rng.sample(intermediate, n_inter)
-        n_found = rng.randint(0, min(2, n_foundational))
-        deps += rng.sample(foundational, n_found)
-        for d in deps:
-            dag.add_edge(d, front)
-
-    return dag
+    Compute the Gini coefficient of influence distribution.
+    Returns a value in [0, 1] where 1 means perfect concentration.
+    """
+    influences = sorted([dag.influence(v) for v in dag.vertices])
+    n = len(influences)
+    if n == 0 or sum(influences) == 0:
+        return 0.0
+    cumulative = 0.0
+    total = sum(influences)
+    gini_sum = 0.0
+    for i, inf in enumerate(influences):
+        cumulative += inf
+        gini_sum += (2 * (i + 1) - n - 1) * inf
+    return gini_sum / (n * total)

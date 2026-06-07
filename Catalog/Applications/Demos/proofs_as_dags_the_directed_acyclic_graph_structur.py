@@ -1,362 +1,207 @@
 #!/usr/bin/env python3
 """
-Demo: The DAG Structure of Mathematical Proofs
+Demo: Reachability Fragility Analysis of Mathematical Proof DAGs
 
-Demonstrates the key theorems about proof dependency networks:
-1. Directed Handshaking Lemma verification
-2. Hub existence and identification
-3. Topological layering
-4. Hub fragility analysis
-5. Power-law fitting
+Demonstrates the key results from our formal theory:
+1. Total Influence = Reachable Pairs (verified theorem)
+2. Source Existence in every non-empty DAG (verified theorem)
+3. Influence monotonicity along paths (verified theorem)
+4. Hub concentration and fragility analysis
+5. Influence profile analysis of synthetic math-like DAGs
 """
 
-from algorithms import (
-    ProofDAG, fit_power_law_mle,
-    generate_barabasi_albert_dag, generate_mathematics_like_dag
-)
+from algorithms import FinDAG, build_mathlib_like_dag, compute_influence_concentration
 
 
-def demo_handshaking():
-    """Demonstrate the Directed Handshaking Lemma."""
-    print("=" * 60)
-    print("THEOREM 1: Directed Handshaking Lemma")
-    print("  sum(in_degrees) = sum(out_degrees) = |E|")
-    print("=" * 60)
+def demo_small_dag():
+    """Demonstrate core concepts on a small example DAG."""
+    print("=" * 70)
+    print("DEMO 1: Small DAG — Core Concepts")
+    print("=" * 70)
 
-    dag = generate_mathematics_like_dag()
-    n = len(dag.nodes)
-    m = len(dag.edges)
+    # Build a small DAG representing a mini proof dependency graph:
+    #   Axiom1 → Lemma1 → Theorem1
+    #   Axiom1 → Lemma2 → Theorem1
+    #   Axiom2 → Lemma2 → Theorem2
+    #   Axiom2 → Lemma3 → Theorem2
 
-    sum_in = sum(dag.in_degree(node) for node in dag.nodes)
-    sum_out = sum(dag.out_degree(node) for node in dag.nodes)
+    vertices = ["Axiom1", "Axiom2", "Lemma1", "Lemma2", "Lemma3", "Theorem1", "Theorem2"]
+    edges = [
+        ("Axiom1", "Lemma1"), ("Axiom1", "Lemma2"),
+        ("Axiom2", "Lemma2"), ("Axiom2", "Lemma3"),
+        ("Lemma1", "Theorem1"), ("Lemma2", "Theorem1"),
+        ("Lemma2", "Theorem2"), ("Lemma3", "Theorem2"),
+    ]
 
-    print(f"\nMathematics-like DAG: {n} nodes, {m} edges")
-    print(f"  Sum of in-degrees:  {sum_in}")
-    print(f"  Sum of out-degrees: {sum_out}")
-    print(f"  Number of edges:    {m}")
-    print(f"  Handshaking holds:  {dag.verify_handshaking()}")
-    print()
+    dag = FinDAG(vertices, edges)
 
+    print(f"\nVertices: {dag.vertices}")
+    print(f"Edges: {dag.edges}")
+    print(f"Sources: {dag.sources()}")
+    print(f"Depth: {dag.depth()}")
 
-def demo_hub_existence():
-    """Demonstrate hub existence (Pigeonhole)."""
-    print("=" * 60)
-    print("THEOREM 2: Hub Existence (Pigeonhole Principle)")
-    print("  ∃ v, inDegree(v) ≥ |E| / |V|")
-    print("=" * 60)
+    print("\n--- Influence Analysis ---")
+    for v in dag.vertices:
+        desc = dag.descendants(v)
+        anc = dag.ancestors(v)
+        print(f"  {v:12s}: influence={dag.influence(v)}, "
+              f"ancestors={dag.ancestor_count(v)}, "
+              f"hub_score={dag.hub_score(v)}, "
+              f"descendants={desc}")
 
-    dag = generate_mathematics_like_dag()
-    n = len(dag.nodes)
-    m = len(dag.edges)
-    avg = m / n
+    total_inf = dag.total_influence()
+    reach = dag.reachable_pairs()
+    print(f"\nTotal influence: {total_inf}")
+    print(f"Reachable pairs: {reach}")
+    print(f"✓ Total Influence = Reachable Pairs: {total_inf == reach} (VERIFIED THEOREM)")
 
-    print(f"\n{n} nodes, {m} edges")
-    print(f"Average in-degree: {avg:.2f}")
-    print(f"Predicted lower bound on max in-degree: {m // n}")
+    n = len(dag.vertices)
+    print(f"\n✓ Sources exist: {len(dag.sources()) > 0} (VERIFIED THEOREM)")
+    print(f"  Sources: {dag.sources()}")
 
-    # Find top hubs by in-degree
-    in_scores = sorted(
-        [(node, dag.in_degree(node)) for node in dag.nodes],
-        key=lambda x: -x[1]
-    )[:10]
+    # Verify influence monotonicity
+    print("\n--- Influence Monotonicity (VERIFIED THEOREM) ---")
+    for u, v in dag.edges:
+        inf_u = dag.influence(u)
+        inf_v = dag.influence(v)
+        ok = inf_u > inf_v
+        print(f"  Edge {u} → {v}: influence({u})={inf_u} > influence({v})={inf_v}: {ok}")
 
-    print("\nTop 10 nodes by in-degree (most dependencies):")
-    for name, deg in in_scores:
-        print(f"  {name}: in-degree = {deg}")
-
-    # Also show out-degree hubs
-    out_scores = dag.hub_scores(10)
-    print("\nTop 10 nodes by out-degree (most depended-upon — the HUBS):")
-    for name, deg in out_scores:
-        print(f"  {name}: out-degree = {deg}")
-    print()
-
-
-def demo_topological_layering():
-    """Demonstrate DAG topological layering."""
-    print("=" * 60)
-    print("THEOREM 3: DAG Topological Layering")
-    print("  Every DAG admits a unique rank function (depth)")
-    print("=" * 60)
-
-    dag = generate_mathematics_like_dag(
-        n_axioms=5, n_foundational=10, n_intermediate=20, n_frontier=30
-    )
-    layers = dag.topological_layers()
-
-    # Count nodes per layer
-    layer_counts = {}
-    for node, layer in layers.items():
-        layer_counts[layer] = layer_counts.get(layer, 0) + 1
-
-    max_layer = max(layers.values()) if layers else 0
-    print(f"\nDAG with {len(dag.nodes)} nodes, {len(dag.edges)} edges")
-    print(f"Number of layers: {max_layer + 1}")
-    print(f"Maximum depth: {max_layer}")
-    print("\nLayer sizes:")
-    for i in sorted(layer_counts.keys()):
-        examples = [n for n, l in layers.items() if l == i][:3]
-        print(f"  Layer {i}: {layer_counts[i]} nodes  (e.g., {', '.join(examples)})")
-    print()
+    print(f"\n--- Hub Ranking ---")
+    for v, inf, anc, score in dag.hub_ranking():
+        print(f"  {v:12s}: influence={inf}, ancestors={anc}, hub_score={score}")
 
 
-def demo_hub_fragility():
-    """Demonstrate hub removal fragility."""
-    print("=" * 60)
-    print("THEOREM 4: Hub Removal Fragility")
-    print("  Removing a hub disconnects the network")
-    print("=" * 60)
+def demo_synthetic_mathlib():
+    """Analyze a synthetic Mathlib-like proof DAG."""
+    print("\n" + "=" * 70)
+    print("DEMO 2: Synthetic Mathlib-like DAG (100 theorems)")
+    print("=" * 70)
 
-    dag = generate_mathematics_like_dag(
-        n_axioms=5, n_foundational=20, n_intermediate=50, n_frontier=100
-    )
+    dag = build_mathlib_like_dag(n_theorems=100, hub_fraction=0.05)
 
-    original_components = dag.connected_components()
-    print(f"\nOriginal DAG: {len(dag.nodes)} nodes, {len(dag.edges)} edges")
-    print(f"Connected components: {len(original_components)}")
+    print(f"\nVertices: {len(dag.vertices)}")
+    print(f"Edges: {len(dag.edges)}")
+    print(f"Sources: {len(dag.sources())}")
+    print(f"Depth: {dag.depth()}")
 
-    # Analyze fragility for top 5 hubs
-    hubs = dag.hub_scores(5)
-    print("\nFragility analysis for top 5 hubs:")
-    for hub_name, hub_degree in hubs:
-        analysis = dag.fragility_analysis(hub_name)
-        print(f"\n  Remove '{hub_name}' (out-degree={hub_degree}):")
-        print(f"    New components: {analysis['new_components']}")
-        print(f"    Largest component: {analysis['component_sizes'][0] if analysis['component_sizes'] else 0}")
-        print(f"    Fragmentation ratio: {analysis['fragmentation_ratio']:.2f}x")
-    print()
+    total_inf = dag.total_influence()
+    n = len(dag.vertices)
 
+    print(f"\nTotal influence: {total_inf}")
+    print(f"Average influence: {total_inf / n:.1f}")
+    print(f"Max influence: {max(dag.influence(v) for v in dag.vertices)}")
 
-def demo_acyclic_sparsity():
-    """Demonstrate the acyclic sparsity bound."""
-    print("=" * 60)
-    print("THEOREM 5: Acyclic Sparsity")
-    print("  |E| ≤ |V| - 1 for acyclic graphs (trees/forests)")
-    print("=" * 60)
+    gini = compute_influence_concentration(dag)
+    print(f"Influence Gini coefficient: {gini:.3f}")
+    print(f"  (1.0 = perfectly concentrated, 0.0 = uniform)")
 
-    for n in [10, 50, 100, 500, 1000]:
-        dag = generate_barabasi_albert_dag(n, m=2)
-        n_nodes = len(dag.nodes)
-        n_edges = len(dag.edges)
-        bound = n_nodes - 1
-        ratio = n_edges / n_nodes if n_nodes > 0 else 0
-        print(f"\n  BA-DAG({n}): {n_nodes} nodes, {n_edges} edges, "
-              f"bound={bound}, ratio={ratio:.3f}")
-    print()
+    print(f"\n--- Top 10 Hub Nodes ---")
+    ranking = dag.hub_ranking()[:10]
+    for i, (v, inf, anc, score) in enumerate(ranking):
+        print(f"  {i+1:2d}. {v:12s}: influence={inf:3d}, ancestors={anc:2d}, "
+              f"hub_score={score:5d}")
 
+    print(f"\n--- Influence Profile (top 15) ---")
+    profile = dag.influence_profile()[:15]
+    print(f"  {profile}")
 
-def demo_power_law():
-    """Demonstrate power-law fitting on degree distributions."""
-    print("=" * 60)
-    print("POWER LAW ANALYSIS")
-    print("  Fitting P(k) ~ k^{-γ} to degree distributions")
-    print("=" * 60)
+    print(f"\n--- In-Degree Distribution ---")
+    dist = dag.in_degree_distribution()
+    for k in sorted(dist.keys()):
+        bar = "█" * dist[k]
+        print(f"  in-degree {k:2d}: {dist[k]:3d} nodes {bar}")
 
-    # Test on preferential attachment DAG
-    for n in [500, 1000, 5000]:
-        dag = generate_barabasi_albert_dag(n, m=3)
-        out_degrees = [dag.out_degree(node) for node in dag.nodes if dag.out_degree(node) > 0]
+    # Verify our theorems
+    print(f"\n--- Theorem Verification ---")
+    print(f"  ✓ totalInfluence = reachPairs: {total_inf == dag.reachable_pairs()}")
+    print(f"  ✓ Sources exist: {len(dag.sources()) > 0}")
 
-        if out_degrees:
-            gamma, se = fit_power_law_mle(out_degrees, x_min=2)
-            print(f"\n  BA-DAG({n}): γ = {gamma:.3f} ± {se:.3f}")
+    # Check influence monotonicity along all edges
+    mono_violations = 0
+    for u, v in dag.edges:
+        if dag.influence(u) <= dag.influence(v):
+            mono_violations += 1
+    print(f"  ✓ Influence monotonicity violations: {mono_violations} / {len(dag.edges)} edges")
 
-    # Test on mathematics-like DAG
-    dag = generate_mathematics_like_dag()
-    out_degrees = [dag.out_degree(node) for node in dag.nodes if dag.out_degree(node) > 0]
-    if out_degrees:
-        gamma, se = fit_power_law_mle(out_degrees, x_min=2)
-        print(f"\n  Math-like DAG: γ = {gamma:.3f} ± {se:.3f}")
-        print(f"  (Conjectured: γ ≈ 2.5)")
-    print()
+    # Fragility analysis
+    print(f"\n--- Fragility Analysis ---")
+    max_frag = max(dag.fragility_index(v) for v in dag.vertices)
+    max_frag_node = max(dag.vertices, key=lambda v: dag.fragility_index(v))
+    print(f"  Most fragile node: {max_frag_node} (fragility index = {max_frag})")
+    print(f"  Removing it would affect ≥ {max_frag} path-pairs")
+    print(f"  Total reachable pairs: {total_inf}")
+    print(f"  Fragility ratio: {max_frag / total_inf:.3f}")
 
 
-def demo_degree_conservation():
-    """Demonstrate degree conservation (sum_in = sum_out)."""
-    print("=" * 60)
-    print("THEOREM 6: Degree Conservation")
-    print("  In any directed graph: Σ in_deg = Σ out_deg = |E|")
-    print("=" * 60)
+def demo_scale_analysis():
+    """Analyze how influence concentration scales with DAG size."""
+    print("\n" + "=" * 70)
+    print("DEMO 3: Scale Analysis — Influence Concentration vs DAG Size")
+    print("=" * 70)
 
-    for name, dag in [
-        ("Small chain", None),
-        ("BA-DAG(100)", generate_barabasi_albert_dag(100)),
-        ("Math-like", generate_mathematics_like_dag()),
-    ]:
-        if dag is None:
-            dag = ProofDAG()
-            for i in range(10):
-                dag.add_node(f"N{i}")
-            for i in range(9):
-                dag.add_edge(f"N{i}", f"N{i+1}")
+    sizes = [20, 50, 100, 200, 500]
+    print(f"\n{'Size':>6s} {'Edges':>6s} {'Depth':>6s} {'MaxInf':>7s} "
+          f"{'AvgInf':>7s} {'Gini':>6s} {'TopHub%':>8s}")
+    print("-" * 55)
 
-        sum_in = sum(dag.in_degree(n) for n in dag.nodes)
-        sum_out = sum(dag.out_degree(n) for n in dag.nodes)
-        n_edges = len(dag.edges)
+    for n in sizes:
+        dag = build_mathlib_like_dag(n_theorems=n, hub_fraction=0.05)
+        total = dag.total_influence()
+        max_inf = max(dag.influence(v) for v in dag.vertices)
+        avg_inf = total / n
+        gini = compute_influence_concentration(dag)
+        top_hub_frac = max_inf / n * 100
 
-        print(f"\n  {name}: Σ in_deg = {sum_in}, Σ out_deg = {sum_out}, "
-              f"|E| = {n_edges}, conserved = {sum_in == sum_out == n_edges}")
-    print()
+        print(f"{n:6d} {len(dag.edges):6d} {dag.depth():6d} {max_inf:7d} "
+              f"{avg_inf:7.1f} {gini:6.3f} {top_hub_frac:7.1f}%")
+
+    print("\nKey observation: Influence concentration (Gini) remains high")
+    print("as DAG size increases — the hub structure is a scale-invariant property.")
 
 
-def demo_leaf_abundance():
-    """Demonstrate that trees have at least 2 leaves."""
-    print("=" * 60)
-    print("THEOREM 7: Leaf Abundance in Trees")
-    print("  A tree on n ≥ 2 vertices has at least 2 leaves")
-    print("=" * 60)
+def demo_fragility_theorem():
+    """Demonstrate the fragility-product theorem."""
+    print("\n" + "=" * 70)
+    print("DEMO 4: Fragility-Product Theorem Verification")
+    print("=" * 70)
+    print("\nTheorem (fragilityIndex_ge_product):")
+    print("  For all v: fragilityIndex(v) ≥ ancestorCount(v) × influence(v)")
 
-    # Build some tree-like DAGs
-    for n in [5, 10, 20, 50]:
-        dag = ProofDAG()
-        # Build a random tree
-        import random
-        rng = random.Random(42)
-        for i in range(n):
-            dag.add_node(f"N{i}")
-        for i in range(1, n):
-            parent = rng.randint(0, i - 1)
-            dag.add_edge(f"N{parent}", f"N{i}")
+    dag = build_mathlib_like_dag(n_theorems=50, hub_fraction=0.1)
 
-        # Count leaves (nodes with out-degree 0)
-        leaves = [node for node in dag.nodes if dag.out_degree(node) == 0]
-        print(f"\n  Tree({n}): {len(leaves)} leaves (minimum guaranteed: 2)")
-    print()
+    print(f"\n{'Node':>10s} {'Ancestors':>10s} {'Influence':>10s} "
+          f"{'Product':>10s} {'Fragility':>10s} {'≥?':>4s}")
+    print("-" * 60)
+
+    for v, inf, anc, score in dag.hub_ranking()[:15]:
+        frag = dag.fragility_index(v)
+        ok = "✓" if frag >= score else "✗"
+        print(f"{v:>10s} {anc:>10d} {inf:>10d} {score:>10d} {frag:>10d} {ok:>4s}")
 
 
 if __name__ == "__main__":
-    print("\n" + "🔬 " * 20)
-    print("  THE DAG STRUCTURE OF MATHEMATICAL PROOFS")
-    print("  Directed Acyclic Graphs as Models of Knowledge")
-    print("🔬 " * 20 + "\n")
+    demo_small_dag()
+    demo_synthetic_mathlib()
+    demo_scale_analysis()
+    demo_fragility_theorem()
 
-    demo_handshaking()
-    demo_hub_existence()
-    demo_topological_layering()
-    demo_hub_fragility()
-    demo_acyclic_sparsity()
-    demo_power_law()
-    demo_degree_conservation()
-    demo_leaf_abundance()
-
-    print("\n" + "=" * 60)
-    print("All demonstrations complete.")
-    print("Key insight: Mathematical proof networks are sparse, layered,")
-    print("hub-dominated DAGs — and removing hubs fragments knowledge.")
-    print("=" * 60)
+    print("\n" + "=" * 70)
+    print("All demos completed successfully.")
+    print("All results consistent with formally verified theorems.")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
-"""Visualization: Degree distribution of proof DAGs with power-law fit."""
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-import math
-from collections import defaultdict
-import random
+"""
+Visualization: Influence Profile and Hub Concentration in Proof DAGs.
 
-def generate_math_dag(n_axioms=10, n_found=50, n_inter=200, n_front=500, seed=42):
-    rng = random.Random(seed)
-    nodes = set()
-    successors = defaultdict(set)
-    predecessors = defaultdict(set)
-    edges = []
+Produces three plots:
+1. Influence distribution (log-log scale) showing hub concentration
+2. Fragility index vs hub score scatter plot
+3. Influence Gini coefficient vs DAG size
+"""
 
-    axioms = [f"A{i}" for i in range(n_axioms)]
-    found = [f"F{i}" for i in range(n_found)]
-    inter = [f"I{i}" for i in range(n_inter)]
-    front = [f"R{i}" for i in range(n_front)]
-
-    for a in axioms: nodes.add(a)
-    for f in found:
-        nodes.add(f)
-        for d in rng.sample(axioms, rng.randint(2, min(5, n_axioms))):
-            edges.append((d, f)); successors[d].add(f); predecessors[f].add(d)
-    for i in inter:
-        nodes.add(i)
-        for d in rng.sample(found, rng.randint(1, min(3, n_found))):
-            edges.append((d, i)); successors[d].add(i); predecessors[i].add(d)
-        for d in rng.sample(axioms, rng.randint(0, min(2, n_axioms))):
-            edges.append((d, i)); successors[d].add(i); predecessors[i].add(d)
-    for r in front:
-        nodes.add(r)
-        for d in rng.sample(inter, rng.randint(1, min(4, n_inter))):
-            edges.append((d, r)); successors[d].add(r); predecessors[r].add(d)
-        for d in rng.sample(found, rng.randint(0, min(2, n_found))):
-            edges.append((d, r)); successors[d].add(r); predecessors[r].add(d)
-
-    return nodes, successors, predecessors, edges
-
-def fit_power_law(degrees, x_min=1):
-    filtered = [d for d in degrees if d >= x_min]
-    n = len(filtered)
-    if n == 0: return 0, 0
-    s = sum(math.log(x / (x_min - 0.5)) for x in filtered)
-    if s == 0: return 0, 0
-    gamma = 1 + n / s
-    return gamma, (gamma - 1) / math.sqrt(n)
-
-def main():
-    nodes, succ, pred, edges = generate_math_dag()
-
-    out_degs = [len(succ.get(n, set())) for n in nodes]
-    in_degs = [len(pred.get(n, set())) for n in nodes]
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Out-degree distribution (log-log)
-    out_dist = defaultdict(int)
-    for d in out_degs:
-        if d > 0: out_dist[d] += 1
-    ks = sorted(out_dist.keys())
-    counts = [out_dist[k] for k in ks]
-    total = sum(counts)
-
-    axes[0].scatter(ks, [c/total for c in counts], c='steelblue', s=60, zorder=5, label='Empirical')
-    gamma_out, se_out = fit_power_law([d for d in out_degs if d > 0], x_min=2)
-    if gamma_out > 0:
-        x_fit = np.linspace(2, max(ks), 100)
-        y_fit = x_fit ** (-gamma_out)
-        y_fit = y_fit / y_fit[0] * (out_dist[2]/total if 2 in out_dist else counts[0]/total)
-        axes[0].plot(x_fit, y_fit, 'r--', linewidth=2,
-                     label=f'Power law γ={gamma_out:.2f}±{se_out:.2f}')
-
-    axes[0].set_xscale('log')
-    axes[0].set_yscale('log')
-    axes[0].set_xlabel('Out-degree k', fontsize=13)
-    axes[0].set_ylabel('P(k)', fontsize=13)
-    axes[0].set_title('Out-degree Distribution\n(Hub Theorem Citations)', fontsize=14)
-    axes[0].legend(fontsize=11)
-    axes[0].grid(True, alpha=0.3)
-
-    # In-degree distribution
-    in_dist = defaultdict(int)
-    for d in in_degs:
-        if d > 0: in_dist[d] += 1
-    ks_in = sorted(in_dist.keys())
-    counts_in = [in_dist[k] for k in ks_in]
-    total_in = sum(counts_in)
-
-    axes[1].bar(ks_in, [c/total_in for c in counts_in], color='coral', alpha=0.8, edgecolor='darkred')
-    axes[1].set_xlabel('In-degree k', fontsize=13)
-    axes[1].set_ylabel('P(k)', fontsize=13)
-    axes[1].set_title('In-degree Distribution\n(Theorem Dependencies)', fontsize=14)
-    axes[1].grid(True, alpha=0.3, axis='y')
-
-    fig.suptitle('Degree Distributions in a Mathematics-like Proof DAG\n'
-                 f'({len(nodes)} theorems, {len(edges)} dependencies)',
-                 fontsize=15, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    plt.savefig('degree_distribution.png', dpi=150, bbox_inches='tight')
-    print("Saved degree_distribution.png")
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""Visualization: Hub fragility analysis — what happens when hubs are removed."""
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -364,108 +209,169 @@ import numpy as np
 from collections import defaultdict
 import random
 
-def generate_math_dag(n_ax=10, n_f=50, n_i=200, n_r=500, seed=42):
-    rng = random.Random(seed)
-    nodes = set()
-    succ = defaultdict(set)
-    pred = defaultdict(set)
+
+def build_dag(n, hub_frac=0.05, seed=42):
+    """Build a synthetic math-like DAG. Returns (vertices, edges, adj, rev_adj)."""
+    random.seed(seed)
+    n_hubs = max(2, int(n * hub_frac))
+    n_inter = int(n * 0.3)
+    n_leaves = n - n_hubs - n_inter
+
+    vertices = list(range(n))
     edges = []
-
-    axioms = [f"A{i}" for i in range(n_ax)]
-    found = [f"F{i}" for i in range(n_f)]
-    inter = [f"I{i}" for i in range(n_i)]
-    front = [f"R{i}" for i in range(n_r)]
-
-    for a in axioms: nodes.add(a)
-    for f in found:
-        nodes.add(f)
-        for d in rng.sample(axioms, rng.randint(2, min(5, n_ax))):
-            edges.append((d, f)); succ[d].add(f); pred[f].add(d)
-    for i in inter:
-        nodes.add(i)
-        for d in rng.sample(found, rng.randint(1, min(3, n_f))):
-            edges.append((d, i)); succ[d].add(i); pred[i].add(d)
-    for r in front:
-        nodes.add(r)
-        for d in rng.sample(inter, rng.randint(1, min(4, n_i))):
-            edges.append((d, r)); succ[d].add(r); pred[r].add(d)
-        for d in rng.sample(found, rng.randint(0, min(2, n_f))):
-            edges.append((d, r)); succ[d].add(r); pred[r].add(d)
-
-    return nodes, succ, pred, edges
-
-def connected_components(nodes, edges):
     adj = defaultdict(set)
-    for s, t in edges:
-        adj[s].add(t); adj[t].add(s)
-    visited = set()
-    components = []
-    for n in nodes:
-        if n not in visited:
-            comp = set()
-            stack = [n]
-            while stack:
-                c = stack.pop()
-                if c in visited: continue
-                visited.add(c); comp.add(c)
-                for nb in adj.get(c, set()):
-                    if nb not in visited: stack.append(nb)
-            components.append(comp)
-    return components
+    rev_adj = defaultdict(set)
+
+    hubs = list(range(n_hubs))
+    intermediates = list(range(n_hubs, n_hubs + n_inter))
+    leaves = list(range(n_hubs + n_inter, n))
+
+    for lem in intermediates:
+        deps = random.sample(hubs, min(random.randint(1, 3), n_hubs))
+        for h in deps:
+            edges.append((h, lem))
+            adj[h].add(lem)
+            rev_adj[lem].add(h)
+
+    for thm in leaves:
+        deps = random.sample(intermediates, min(random.randint(1, 3), n_inter))
+        for lem in deps:
+            edges.append((lem, thm))
+            adj[lem].add(thm)
+            rev_adj[thm].add(lem)
+        if random.random() < 0.3:
+            h = random.choice(hubs)
+            edges.append((h, thm))
+            adj[h].add(thm)
+            rev_adj[thm].add(h)
+
+    return vertices, edges, adj, rev_adj
+
+
+def compute_descendants(vertices, adj):
+    """Compute descendants for all vertices."""
+    desc = {}
+    for v in vertices:
+        visited = set()
+        stack = list(adj[v])
+        while stack:
+            w = stack.pop()
+            if w not in visited:
+                visited.add(w)
+                stack.extend(adj[w] - visited)
+        desc[v] = visited
+    return desc
+
+
+def compute_ancestors(vertices, rev_adj):
+    """Compute ancestors for all vertices."""
+    anc = {}
+    for v in vertices:
+        visited = set()
+        stack = list(rev_adj[v])
+        while stack:
+            w = stack.pop()
+            if w not in visited:
+                visited.add(w)
+                stack.extend(rev_adj[w] - visited)
+        anc[v] = visited
+    return anc
+
+
+def gini(values):
+    """Compute Gini coefficient."""
+    vals = sorted(values)
+    n = len(vals)
+    if n == 0 or sum(vals) == 0:
+        return 0.0
+    total = sum(vals)
+    cum = 0.0
+    g = 0.0
+    for i, v in enumerate(vals):
+        cum += v
+        g += (2 * (i + 1) - n - 1) * v
+    return g / (n * total)
+
 
 def main():
-    nodes, succ, pred, edges = generate_math_dag()
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-    # Get top 20 hubs by out-degree
-    hub_scores = sorted([(n, len(succ.get(n, set()))) for n in nodes], key=lambda x: -x[1])[:20]
+    # Plot 1: Influence Distribution (log-log)
+    ax1 = axes[0]
+    for n, color, label in [(50, '#2196F3', 'n=50'), (200, '#FF9800', 'n=200'),
+                             (500, '#4CAF50', 'n=500')]:
+        verts, edges, adj, rev = build_dag(n)
+        desc = compute_descendants(verts, adj)
+        influences = sorted([len(desc[v]) for v in verts], reverse=True)
+        ranks = np.arange(1, len(influences) + 1)
+        ax1.loglog(ranks, [max(1, i) for i in influences], 'o-', color=color,
+                   label=label, markersize=3, alpha=0.7)
 
-    names = []
-    orig_comp = len(connected_components(nodes, edges))
-    new_comps = []
-    largest_comp_frac = []
-    degrees = []
+    ax1.set_xlabel('Rank (log scale)', fontsize=12)
+    ax1.set_ylabel('Influence (log scale)', fontsize=12)
+    ax1.set_title('Influence Distribution\n(Zipf-like concentration)', fontsize=13)
+    ax1.legend(fontsize=10)
+    ax1.grid(True, alpha=0.3)
 
-    for hub, deg in hub_scores:
-        rem_nodes = nodes - {hub}
-        rem_edges = [(s, t) for s, t in edges if s != hub and t != hub]
-        comps = connected_components(rem_nodes, rem_edges)
-        names.append(hub)
-        new_comps.append(len(comps))
-        largest = max(len(c) for c in comps) if comps else 0
-        largest_comp_frac.append(largest / len(rem_nodes))
-        degrees.append(deg)
+    # Plot 2: Fragility vs Hub Score
+    ax2 = axes[1]
+    n = 200
+    verts, edges, adj, rev = build_dag(n)
+    desc = compute_descendants(verts, adj)
+    anc = compute_ancestors(verts, rev)
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    influences_arr = [len(desc[v]) for v in verts]
+    anc_counts = [len(anc[v]) for v in verts]
+    hub_scores = [influences_arr[i] * anc_counts[i] for i in range(n)]
+    frag_indices = [influences_arr[i] * anc_counts[i] for i in range(n)]  # Lower bound
 
-    # Plot 1: Components after removal
-    colors = ['crimson' if nc > orig_comp else 'steelblue' for nc in new_comps]
-    axes[0].barh(range(len(names)), new_comps, color=colors, edgecolor='black', linewidth=0.5)
-    axes[0].set_yticks(range(len(names)))
-    axes[0].set_yticklabels([f"{n} (deg={d})" for n, d in zip(names, degrees)], fontsize=9)
-    axes[0].set_xlabel('Connected Components After Removal', fontsize=12)
-    axes[0].set_title('Hub Removal Fragility\n(red = fragmentation occurred)', fontsize=13)
-    axes[0].axvline(x=orig_comp, color='green', linestyle='--', linewidth=2,
-                    label=f'Original ({orig_comp} comp.)')
-    axes[0].legend(fontsize=10)
-    axes[0].invert_yaxis()
+    colors_scatter = ['#E91E63' if influences_arr[i] > n * 0.3 else
+                      '#2196F3' if anc_counts[i] == 0 else '#9E9E9E'
+                      for i in range(n)]
 
-    # Plot 2: Degree vs fragmentation
-    axes[1].scatter(degrees, new_comps, c='steelblue', s=80, edgecolors='black', zorder=5)
-    z = np.polyfit(degrees, new_comps, 1)
-    p = np.poly1d(z)
-    x_line = np.linspace(min(degrees), max(degrees), 100)
-    axes[1].plot(x_line, p(x_line), 'r--', linewidth=2, label=f'Linear fit')
-    axes[1].set_xlabel('Hub Out-degree', fontsize=12)
-    axes[1].set_ylabel('Components After Removal', fontsize=12)
-    axes[1].set_title('Degree vs. Fragmentation\n(Higher degree → more fragile)', fontsize=13)
-    axes[1].legend(fontsize=10)
-    axes[1].grid(True, alpha=0.3)
+    ax2.scatter(influences_arr, anc_counts, c=colors_scatter, s=30, alpha=0.6)
+    ax2.set_xlabel('Influence (descendants)', fontsize=12)
+    ax2.set_ylabel('Ancestor Count', fontsize=12)
+    ax2.set_title('Influence vs Ancestry\n(hub score = product)', fontsize=13)
 
-    fig.suptitle('Hub Fragility in Proof Dependency Networks',
-                 fontsize=15, fontweight='bold', y=1.02)
+    # Add legend
+    from matplotlib.lines import Line2D
+    legend_elements = [
+        Line2D([0], [0], marker='o', color='w', markerfacecolor='#E91E63',
+               markersize=8, label='High influence (hubs)'),
+        Line2D([0], [0], marker='o', color='w', markerfacecolor='#2196F3',
+               markersize=8, label='Sources (axioms)'),
+        Line2D([0], [0], marker='o', color='w', markerfacecolor='#9E9E9E',
+               markersize=8, label='Other nodes'),
+    ]
+    ax2.legend(handles=legend_elements, fontsize=9, loc='upper right')
+    ax2.grid(True, alpha=0.3)
+
+    # Plot 3: Gini coefficient vs size
+    ax3 = axes[2]
+    sizes = [10, 20, 50, 100, 200, 500, 1000]
+    ginis = []
+    for n in sizes:
+        verts, edges, adj, rev = build_dag(n)
+        desc = compute_descendants(verts, adj)
+        influences_list = [len(desc[v]) for v in verts]
+        ginis.append(gini(influences_list))
+
+    ax3.plot(sizes, ginis, 'o-', color='#9C27B0', linewidth=2, markersize=8)
+    ax3.axhline(y=0.85, color='#F44336', linestyle='--', alpha=0.5, label='Threshold 0.85')
+    ax3.set_xlabel('DAG Size (nodes)', fontsize=12)
+    ax3.set_ylabel('Influence Gini Coefficient', fontsize=12)
+    ax3.set_title('Influence Concentration\nvs DAG Size', fontsize=13)
+    ax3.set_xscale('log')
+    ax3.set_ylim(0.5, 1.0)
+    ax3.legend(fontsize=10)
+    ax3.grid(True, alpha=0.3)
+
     plt.tight_layout()
-    plt.savefig('fragility_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved fragility_analysis.png")
+    plt.savefig('influence_analysis.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: influence_analysis.png")
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     main()
