@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e45036a6",
     "filename": "speculative_consciousness_as_fixed_points_of_recur.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.2892,
     "title": "Reflective Type Algebras: Self-Referential Types as Fixed Points"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "speculative_consciousness_as_fixed_points_of_recur",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.2892,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Reflective Type Algebras: Self-Referential Types as Fixed Points"
     }
