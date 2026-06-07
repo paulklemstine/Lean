@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f1624e30",
     "filename": "retrocausal_mathematics_where_effects_precede_caus.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.394,
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 292,
       "id": "retrocausal_mathematics_where_effects_precede_caus",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.394,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Retrocausal Mathematics: Where Effects Precede Causes"
     }

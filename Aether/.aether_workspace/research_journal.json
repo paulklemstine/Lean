@@ -1960,6 +1960,26 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T06:11:32",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "cycle_id": "f18d283e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Causal Integration Algebra\n\n## Synthesis\n\nThis cycle established the **Causal Integration Algebra** — a rigorous lattice-theoretic formalization of Integrated Information Theory t",
+      "quality_score": 0.36504000000000003,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-07T06:46:01",
+      "title": "Consciousness as Integrated Information"
+    },
+    {
+      "cycle_id": "f1624e30",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Retrocausal Mathematics\n\n## Synthesis\n\nThis research cycle established a rigorous mathematical foundation for retrocausal logic through Galois connections, proving that any retroc",
+      "quality_score": 0.394,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T06:46:34",
+      "title": "Retrocausal Mathematics: Where Effects Precede Causes"
     }
   ],
   "entries": [
@@ -2005,7 +2025,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-07T06:11:32",
+  "last_updated": "2026-06-07T06:46:34",
   "open_questions": [
     {
       "context": "sorry",
@@ -2032,12 +2052,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "e996a671",
-        "quality": 0.38880000000000003,
-        "theorems": 4,
-        "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-      },
       {
         "cycle_id": "d2366b55",
         "quality": 0.35856,
@@ -2090,6 +2104,12 @@
         "cycle_id": "0d8660e9",
         "quality": 0.4496,
         "theorems": 6,
+        "title": "Retrocausal Mathematics: Where Effects Precede Causes"
+      },
+      {
+        "cycle_id": "f1624e30",
+        "quality": 0.394,
+        "theorems": 5,
         "title": "Retrocausal Mathematics: Where Effects Precede Causes"
       }
     ],
@@ -2229,12 +2249,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "d5d08f3f",
-        "quality": 0.386,
-        "theorems": 5,
-        "title": "Sonic Mathematics: Counterpoint as Category Theory"
-      },
-      {
         "cycle_id": "320647bd",
         "quality": 0.33464000000000005,
         "theorems": 5,
@@ -2287,6 +2301,12 @@
         "quality": 0.35216000000000003,
         "theorems": 5,
         "title": "The Library of Babel: Combinatorics of the Universal Library"
+      },
+      {
+        "cycle_id": "f18d283e",
+        "quality": 0.36504000000000003,
+        "theorems": 6,
+        "title": "Consciousness as Integrated Information"
       }
     ],
     "Physics": [
