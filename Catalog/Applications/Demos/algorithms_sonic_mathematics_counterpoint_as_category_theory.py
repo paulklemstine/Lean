@@ -1,188 +1,310 @@
 #!/usr/bin/env python3
 """
-Counterpoint Category Theory — Algorithms
+Algorithms for Counterpoint Category Theory
 
-Type-hinted implementations of key algorithms for analyzing the
-categorical structure of first-species counterpoint.
+Type-hinted implementations of the core algorithms used in analyzing
+the categorical structure of first-species counterpoint.
 """
 
-from typing import List, Tuple, Set, Dict, Optional
-from dataclasses import dataclass
-from enum import Enum, auto
+from math import gcd
+from typing import Optional
+from dataclasses import dataclass, field
 
 
-class IntervalType(Enum):
-    PERFECT = auto()
-    IMPERFECT = auto()
-    DISSONANT = auto()
+# ============================================================
+# Algorithm 1: Consonance Classification via Group Theory
+# ============================================================
+
+def additive_order(k: int, n: int) -> int:
+    """
+    Compute the additive order of k in Z/nZ.
+
+    The additive order is the smallest positive integer m such that
+    m * k ≡ 0 (mod n). Equivalently, ord(k) = n / gcd(n, k).
+
+    Args:
+        k: Element of Z/nZ
+        n: Modulus (must be positive)
+
+    Returns:
+        The additive order of k in Z/nZ
+    """
+    if n <= 0:
+        raise ValueError("Modulus must be positive")
+    k = k % n
+    if k == 0:
+        return 1
+    return n // gcd(n, k)
 
 
-class MotionType(Enum):
-    CONTRARY = auto()
-    OBLIQUE = auto()
-    SIMILAR = auto()
-    PARALLEL = auto()
+def classify_consonance(interval: int, n: int = 12,
+                        consonant_set: Optional[set[int]] = None) -> str:
+    """
+    Classify a consonant interval as perfect or imperfect using
+    the group-theoretic characterization.
+
+    An interval is perfect iff its additive order in Z/nZ is 1 (trivial)
+    or n (generates the full group).
+
+    Args:
+        interval: Interval in semitones
+        n: Size of the pitch class group (default 12 for standard tuning)
+        consonant_set: Set of consonant intervals (default: {0,3,4,7,8,9})
+
+    Returns:
+        'perfect', 'imperfect', or 'dissonant'
+    """
+    if consonant_set is None:
+        consonant_set = {0, 3, 4, 7, 8, 9}
+
+    interval = interval % n
+    if interval not in consonant_set:
+        return 'dissonant'
+
+    order = additive_order(interval, n)
+    if order == 1 or order == n:
+        return 'perfect'
+    else:
+        return 'imperfect'
 
 
-@dataclass(frozen=True)
-class ConsonantInterval:
-    """A consonant interval in first-species counterpoint."""
-    semitones: int  # 0-11
-    name: str
-    interval_type: IntervalType
-    ratio: Tuple[int, int]  # frequency ratio (numerator, denominator)
-    rank: int  # consonance rank (higher = more consonant)
+# ============================================================
+# Algorithm 2: Transition Graph Construction
+# ============================================================
 
-    def __repr__(self) -> str:
-        return self.name
+@dataclass
+class TransitionGraph:
+    """
+    The counterpoint transition graph.
 
+    Vertices are consonant intervals. An edge from i to j exists iff
+    the voice leading from interval i to interval j is valid in
+    first-species counterpoint.
 
-# The six consonant intervals
-UNISON = ConsonantInterval(0, "Unison", IntervalType.PERFECT, (1, 1), 6)
-MIN3 = ConsonantInterval(3, "m3", IntervalType.IMPERFECT, (6, 5), 3)
-MAJ3 = ConsonantInterval(4, "M3", IntervalType.IMPERFECT, (5, 4), 4)
-FIFTH = ConsonantInterval(7, "P5", IntervalType.PERFECT, (3, 2), 5)
-MIN6 = ConsonantInterval(8, "m6", IntervalType.IMPERFECT, (8, 5), 1)
-MAJ6 = ConsonantInterval(9, "M6", IntervalType.IMPERFECT, (5, 3), 2)
+    The key rule: parallel motion (i → i) is forbidden for perfect consonances.
+    All other transitions between consonant intervals are valid.
+    """
+    n: int = 12
+    consonant: set[int] = field(default_factory=lambda: {0, 3, 4, 7, 8, 9})
+    perfect: set[int] = field(default_factory=lambda: {0, 7})
 
-ALL_CONSONANCES: List[ConsonantInterval] = [UNISON, MIN3, MAJ3, FIFTH, MIN6, MAJ6]
-CONSONANT_SEMITONES: Set[int] = {c.semitones for c in ALL_CONSONANCES}
+    def is_valid_transition(self, src: int, tgt: int) -> bool:
+        """Check if the transition from src to tgt is valid."""
+        src, tgt = src % self.n, tgt % self.n
+        if src not in self.consonant or tgt not in self.consonant:
+            return False
+        if src == tgt and src in self.perfect:
+            return False
+        return True
 
+    def all_valid_transitions(self) -> list[tuple[int, int]]:
+        """Enumerate all valid transitions."""
+        return [(s, t) for s in sorted(self.consonant)
+                for t in sorted(self.consonant)
+                if self.is_valid_transition(s, t)]
 
-@dataclass(frozen=True)
-class VoiceLeading:
-    """A voice leading between two consonant intervals."""
-    source: ConsonantInterval
-    target: ConsonantInterval
-    lower_step: int  # semitone motion of lower voice
-    upper_step: int  # semitone motion of upper voice
+    def adjacency_matrix(self) -> list[list[int]]:
+        """Return the adjacency matrix of the transition graph."""
+        vertices = sorted(self.consonant)
+        idx = {v: i for i, v in enumerate(vertices)}
+        m = len(vertices)
+        matrix = [[0] * m for _ in range(m)]
+        for s, t in self.all_valid_transitions():
+            matrix[idx[s]][idx[t]] = 1
+        return matrix
 
-    @property
-    def motion_type(self) -> MotionType:
-        """Classify the motion type of this voice leading."""
-        return classify_motion(self.lower_step, self.upper_step)
-
-    @property
-    def is_valid(self) -> bool:
-        """Check if this voice leading is valid in first-species counterpoint."""
-        if self.target.interval_type == IntervalType.PERFECT:
-            if self.motion_type == MotionType.PARALLEL:
+    def is_strongly_connected(self) -> bool:
+        """Check if every vertex can reach every other vertex."""
+        vertices = sorted(self.consonant)
+        if not vertices:
+            return True
+        for start in vertices:
+            # BFS from start
+            visited = {start}
+            queue = [start]
+            while queue:
+                curr = queue.pop(0)
+                for v in vertices:
+                    if v not in visited and self.is_valid_transition(curr, v):
+                        visited.add(v)
+                        queue.append(v)
+            if visited != set(vertices):
                 return False
         return True
 
-    @property
-    def net_motion(self) -> Tuple[int, int]:
-        """Net motion as (lower, upper) pair."""
-        return (self.lower_step, self.upper_step)
+
+# ============================================================
+# Algorithm 3: Subgroup Diamond Construction
+# ============================================================
+
+def cyclic_subgroup(k: int, n: int) -> frozenset[int]:
+    """Compute the cyclic subgroup ⟨k⟩ in Z/nZ."""
+    return frozenset((m * k) % n for m in range(n))
 
 
-def classify_motion(lower: int, upper: int) -> MotionType:
-    """Classify the motion type of a voice leading."""
-    if lower == upper:
-        if lower == 0:
-            return MotionType.OBLIQUE
-        return MotionType.PARALLEL
-    if lower == 0 or upper == 0:
-        return MotionType.OBLIQUE
-    if lower * upper < 0:
-        return MotionType.CONTRARY
-    return MotionType.SIMILAR
+def subgroup_diamond(consonant_set: set[int], n: int = 12) -> dict:
+    """
+    Construct the subgroup diamond from consonant intervals.
+
+    Returns a dictionary mapping each distinct subgroup to its generators
+    and inclusion relationships.
+    """
+    subgroups: dict[frozenset[int], list[int]] = {}
+    for k in sorted(consonant_set):
+        sg = cyclic_subgroup(k, n)
+        if sg not in subgroups:
+            subgroups[sg] = []
+        subgroups[sg].append(k)
+
+    # Build Hasse diagram (immediate containment)
+    sorted_sgs = sorted(subgroups.keys(), key=len)
+    hasse: dict[frozenset[int], list[frozenset[int]]] = {sg: [] for sg in sorted_sgs}
+
+    for i, sg1 in enumerate(sorted_sgs):
+        for sg2 in sorted_sgs[i+1:]:
+            if sg1 < sg2:  # strict subset
+                # Check if there's an intermediate subgroup
+                is_immediate = True
+                for sg3 in sorted_sgs:
+                    if sg1 < sg3 < sg2:
+                        is_immediate = False
+                        break
+                if is_immediate:
+                    hasse[sg1].append(sg2)
+
+    return {
+        'subgroups': {tuple(sorted(sg)): gens for sg, gens in subgroups.items()},
+        'hasse_edges': [(tuple(sorted(s)), tuple(sorted(t)))
+                        for s, ts in hasse.items() for t in ts],
+        'num_elements': len(subgroups),
+        'is_diamond': len(subgroups) == 4  # Expected for standard consonances
+    }
 
 
-def interval_inversion(semitones: int) -> int:
-    """Compute the inversion of an interval (negation mod 12)."""
-    return (12 - semitones) % 12
+# ============================================================
+# Algorithm 4: Rigidity Check
+# ============================================================
+
+def check_rigidity(consonant_set: set[int], n: int = 12) -> dict:
+    """
+    Check if the consonance set is rigid under Aut(Z/nZ).
+
+    An automorphism of Z/nZ is multiplication by a unit u (gcd(u, n) = 1).
+    The consonance set is rigid if only u = 1 preserves it.
+
+    Returns:
+        Dictionary with units, their images of the consonance set,
+        and which ones preserve it.
+    """
+    units = [u for u in range(n) if gcd(u, n) == 1]
+    results = {}
+
+    for u in units:
+        image = frozenset((u * k) % n for k in consonant_set)
+        preserves = image == frozenset(consonant_set)
+        results[u] = {
+            'image': sorted(image),
+            'preserves': preserves
+        }
+
+    preserving_units = [u for u, r in results.items() if r['preserves']]
+
+    return {
+        'units': units,
+        'results': results,
+        'preserving_units': preserving_units,
+        'is_rigid': preserving_units == [1],
+        'automorphism_group_order': len(preserving_units)
+    }
 
 
-def is_consonant(semitones: int) -> bool:
-    """Check if a semitone value is consonant."""
-    return (semitones % 12) in CONSONANT_SEMITONES
+# ============================================================
+# Algorithm 5: Generalized Counterpoint Systems
+# ============================================================
+
+def analyze_counterpoint_system(n: int, consonant_set: set[int],
+                                 perfect_set: set[int]) -> dict:
+    """
+    Analyze a generalized counterpoint system over Z/nZ.
+
+    This generalizes the standard 12-TET system to arbitrary equal temperaments.
+
+    Args:
+        n: Number of pitch classes
+        consonant_set: Set of consonant intervals
+        perfect_set: Set of perfect consonances (subset of consonant_set)
+
+    Returns:
+        Complete analysis of the system
+    """
+    imperfect_set = consonant_set - perfect_set
+
+    # Check the perfect ↔ extreme order characterization
+    extreme_order = set()
+    for k in consonant_set:
+        order = additive_order(k, n)
+        if order == 1 or order == n:
+            extreme_order.add(k)
+
+    characterization_holds = extreme_order == perfect_set
+
+    # Check complement closure
+    complement_closed = all((-k) % n in consonant_set for k in consonant_set)
+    complement_exceptions = [k for k in consonant_set if (-k) % n not in consonant_set]
+
+    # Build transition graph
+    graph = TransitionGraph(n, consonant_set, perfect_set)
+    num_transitions = len(graph.all_valid_transitions())
+    connected = graph.is_strongly_connected()
+
+    # Diamond structure
+    diamond = subgroup_diamond(consonant_set, n)
+
+    # Rigidity
+    rigidity = check_rigidity(consonant_set, n)
+
+    return {
+        'n': n,
+        'consonant_count': len(consonant_set),
+        'perfect_count': len(perfect_set),
+        'imperfect_count': len(imperfect_set),
+        'perfect_iff_extreme_order': characterization_holds,
+        'complement_closed': complement_closed,
+        'complement_exceptions': complement_exceptions,
+        'transition_count': num_transitions,
+        'strongly_connected': connected,
+        'diamond_elements': diamond['num_elements'],
+        'is_diamond': diamond['is_diamond'],
+        'is_rigid': rigidity['is_rigid'],
+    }
 
 
-def enumerate_voice_leadings(
-    source: ConsonantInterval,
-    target: ConsonantInterval,
-    step_bound: int = 7
-) -> List[VoiceLeading]:
-    """Enumerate all valid voice leadings between two intervals within a step bound."""
-    results: List[VoiceLeading] = []
-    required_diff = (target.semitones - source.semitones) % 12
+# ============================================================
+# Main: Run all analyses
+# ============================================================
 
-    for dl in range(-step_bound, step_bound + 1):
-        for du in range(-step_bound, step_bound + 1):
-            if (du - dl) % 12 == required_diff:
-                vl = VoiceLeading(source, target, dl, du)
-                if vl.is_valid:
-                    results.append(vl)
-    return results
+if __name__ == '__main__':
+    print("Standard 12-TET Analysis:")
+    print("-" * 40)
+    result = analyze_counterpoint_system(12, {0, 3, 4, 7, 8, 9}, {0, 7})
+    for k, v in result.items():
+        print(f"  {k}: {v}")
 
+    print()
+    print("Exploring other equal temperaments:")
+    print()
 
-def build_transition_matrix(step_bound: int = 7) -> Dict[Tuple[ConsonantInterval, ConsonantInterval], int]:
-    """Build the transition count matrix for voice leadings."""
-    matrix: Dict[Tuple[ConsonantInterval, ConsonantInterval], int] = {}
-    for s in ALL_CONSONANCES:
-        for t in ALL_CONSONANCES:
-            vls = enumerate_voice_leadings(s, t, step_bound)
-            matrix[(s, t)] = len(vls)
-    return matrix
-
-
-def oblique_voice_leading(source: ConsonantInterval, target: ConsonantInterval) -> VoiceLeading:
-    """Construct a valid oblique voice leading (lower voice stays, upper moves)."""
-    upper_step = target.semitones - source.semitones
-    return VoiceLeading(source, target, 0, upper_step)
-
-
-def verify_universal_reachability() -> bool:
-    """Verify that every consonant interval can reach every other via valid voice leading."""
-    for s in ALL_CONSONANCES:
-        for t in ALL_CONSONANCES:
-            vl = oblique_voice_leading(s, t)
-            if not vl.is_valid:
-                return False
-    return True
-
-
-def verify_non_subgroup() -> Optional[Tuple[int, int, int]]:
-    """Find a closure failure witnessing that the consonant set is not a subgroup.
-    Returns (a, b, a+b mod 12) where a, b are consonant but a+b is not."""
-    for a in sorted(CONSONANT_SEMITONES):
-        for b in sorted(CONSONANT_SEMITONES):
-            s = (a + b) % 12
-            if s not in CONSONANT_SEMITONES:
-                return (a, b, s)
-    return None
-
-
-def verify_inversion_asymmetry() -> Optional[int]:
-    """Find the consonant interval whose inversion is dissonant.
-    Returns the semitone value, or None if all inversions are consonant."""
-    for i in sorted(CONSONANT_SEMITONES):
-        inv = interval_inversion(i)
-        if inv not in CONSONANT_SEMITONES:
-            return i
-    return None
-
-
-def consonant_sum_mod12() -> int:
-    """Compute the sum of all consonant intervals mod 12."""
-    return sum(CONSONANT_SEMITONES) % 12
-
-
-def consonance_rank_ordering() -> List[ConsonantInterval]:
-    """Return consonant intervals sorted by consonance rank (most consonant first)."""
-    return sorted(ALL_CONSONANCES, key=lambda c: c.rank, reverse=True)
-
-
-if __name__ == "__main__":
-    print("Universal reachability:", verify_universal_reachability())
-    print("Non-subgroup witness:", verify_non_subgroup())
-    print("Inversion asymmetry at:", verify_inversion_asymmetry())
-    print("Consonant sum mod 12:", consonant_sum_mod12())
-    print("Consonance ranking:", consonance_rank_ordering())
-    
-    print("\nTransition matrix (step bound = 7):")
-    matrix = build_transition_matrix(7)
-    for s in ALL_CONSONANCES:
-        row = [str(matrix[(s, t)]).rjust(3) for t in ALL_CONSONANCES]
-        print(f"  {s.name:>6s}: {' '.join(row)}")
+    # 19-TET (meantone-like): consonances at 0, 5, 6, 11, 13, 14
+    # (approximations of standard consonances)
+    for n_tet, cons, perf in [
+        (19, {0, 5, 6, 11, 13, 14}, {0, 11}),
+        (24, {0, 6, 8, 14, 16, 18}, {0, 14}),
+        (7, {0, 2, 4}, {0, 4}),  # Diatonic "scale" as Z/7Z
+    ]:
+        print(f"  {n_tet}-TET with consonances {sorted(cons)}, perfect {sorted(perf)}:")
+        r = analyze_counterpoint_system(n_tet, cons, perf)
+        holds = "✓" if r['perfect_iff_extreme_order'] else "✗"
+        print(f"    Perfect ↔ extreme order: {holds}")
+        print(f"    Transitions: {r['transition_count']}, Connected: {r['strongly_connected']}")
+        print(f"    Rigid: {r['is_rigid']}, Diamond elements: {r['diamond_elements']}")
+        print()
