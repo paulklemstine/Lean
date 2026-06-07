@@ -1,191 +1,164 @@
 #!/usr/bin/env python3
 """
-Semantic Fiber Theory — Core Algorithms
+Semantic Bundles — Core Algorithms
 
-Type-hinted implementations of the key algorithms from the theory.
+Type-hinted implementations of the key algorithms from the semantic bundle theory.
 """
 
-from typing import TypeVar, Dict, Set, List, Tuple, Callable, Optional, FrozenSet
+from typing import Callable, Optional
 from itertools import permutations
+from collections import Counter
+from math import log2
 from dataclasses import dataclass
-from math import factorial
-
-A = TypeVar('A')
-S = TypeVar('S')
-T = TypeVar('T')
 
 
-@dataclass(frozen=True)
-class DecoratedType:
-    """A type equipped with a meaning function."""
-    elements: FrozenSet[int]
-    meaning: Dict[int, str]
-
-    def opacity_index(self) -> int:
-        """Compute the opacity index = |range(meaning)|."""
-        return len(set(self.meaning.values()))
-
-    def is_faithful(self) -> bool:
-        """Check if the decoration is injective."""
-        vals = list(self.meaning.values())
-        return len(vals) == len(set(vals))
-
-    def is_constant(self) -> bool:
-        """Check if the decoration is constant."""
-        vals = list(self.meaning.values())
-        return len(set(vals)) <= 1
-
-    def semantic_kernel(self) -> List[FrozenSet[int]]:
-        """Compute the semantic kernel: equivalence classes of same-meaning elements."""
-        classes: Dict[str, Set[int]] = {}
-        for x, m in self.meaning.items():
-            classes.setdefault(m, set()).add(x)
-        return [frozenset(c) for c in classes.values()]
-
-    def compose(self, f: Callable[[str], str]) -> 'DecoratedType':
-        """Compose the meaning function with f, yielding a coarser decoration."""
-        new_meaning = {x: f(m) for x, m in self.meaning.items()}
-        return DecoratedType(self.elements, new_meaning)
+BinOp = Callable[[int, int], int]
 
 
-def is_meaning_preserving(dt: DecoratedType, perm: Dict[int, int]) -> bool:
-    """Check if a permutation preserves the meaning function."""
-    return all(dt.meaning[perm[x]] == dt.meaning[x] for x in dt.elements)
+@dataclass
+class DecoratedMagma:
+    """A finite decorated magma: carrier {0, ..., n-1} with operation and labeling."""
+    n: int
+    op: BinOp
+    label: list[int]
+
+    def __post_init__(self) -> None:
+        assert len(self.label) == self.n
 
 
-def meaning_preserving_subgroup(dt: DecoratedType) -> List[Dict[int, int]]:
-    """Compute all meaning-preserving permutations (the automorphism subgroup)."""
-    elems = sorted(dt.elements)
-    result = []
-    for p in permutations(elems):
-        perm = dict(zip(elems, p))
-        if is_meaning_preserving(dt, perm):
-            result.append(perm)
-    return result
-
-
-def is_decorated_equiv(
-    d1: DecoratedType,
-    d2: DecoratedType,
-    bijection: Dict[int, int]
-) -> bool:
-    """Check if a bijection is a decorated equivalence between d1 and d2."""
-    if set(bijection.keys()) != d1.elements:
-        return False
-    if set(bijection.values()) != d2.elements:
-        return False
-    return all(d2.meaning[bijection[x]] == d1.meaning[x] for x in d1.elements)
-
-
-def find_decorated_equiv(
-    d1: DecoratedType,
-    d2: DecoratedType
-) -> Optional[Dict[int, int]]:
-    """Find a decorated equivalence between d1 and d2, or None if none exists."""
-    if d1.opacity_index() != d2.opacity_index():
-        return None
-    if set(d1.meaning.values()) != set(d2.meaning.values()):
-        return None
-
-    elems1 = sorted(d1.elements)
-    elems2 = sorted(d2.elements)
-    if len(elems1) != len(elems2):
-        return None
-
-    for p in permutations(elems2):
-        bijection = dict(zip(elems1, p))
-        if is_decorated_equiv(d1, d2, bijection):
-            return bijection
-    return None
-
-
-def find_cycles(n: int, perm: Tuple[int, ...]) -> List[List[int]]:
-    """Find the cycle decomposition of a permutation on {0, ..., n-1}."""
-    visited: Set[int] = set()
-    cycles: List[List[int]] = []
-    for start in range(n):
-        if start not in visited:
-            cycle: List[int] = []
-            x = start
-            while x not in visited:
-                visited.add(x)
-                cycle.append(x)
-                x = perm[x]
+def cycle_decomposition(perm: tuple[int, ...], n: int) -> list[list[int]]:
+    """Decompose a permutation into disjoint cycles."""
+    visited = [False] * n
+    cycles: list[list[int]] = []
+    for i in range(n):
+        if not visited[i]:
+            cycle = []
+            j = i
+            while not visited[j]:
+                visited[j] = True
+                cycle.append(j)
+                j = perm[j]
             cycles.append(cycle)
     return cycles
 
 
-def burnside_count(n: int, k: int) -> int:
+def is_operation_preserving(op1: BinOp, op2: BinOp, n: int, perm: tuple[int, ...]) -> bool:
+    """Check if perm : {0,...,n-1} -> {0,...,n-1} preserves the operation."""
+    for x in range(n):
+        for y in range(n):
+            if perm[op1(x, y)] != op2(perm[x], perm[y]):
+                return False
+    return True
+
+
+def automorphism_group(D: DecoratedMagma) -> list[tuple[int, ...]]:
+    """Compute the automorphism group of D's underlying operation."""
+    return [
+        p for p in permutations(range(D.n))
+        if is_operation_preserving(D.op, D.op, D.n, p)
+    ]
+
+
+def algebraic_isomorphisms(D1: DecoratedMagma, D2: DecoratedMagma) -> list[tuple[int, ...]]:
+    """Find all algebraic isomorphisms from D1 to D2."""
+    assert D1.n == D2.n
+    return [
+        p for p in permutations(range(D1.n))
+        if is_operation_preserving(D1.op, D2.op, D1.n, p)
+    ]
+
+
+def semantic_isomorphisms(D1: DecoratedMagma, D2: DecoratedMagma) -> list[tuple[int, ...]]:
+    """Find all semantic isomorphisms from D1 to D2."""
+    return [
+        p for p in algebraic_isomorphisms(D1, D2)
+        if all(D1.label[x] == D2.label[p[x]] for x in range(D1.n))
+    ]
+
+
+def are_algebraically_isomorphic(D1: DecoratedMagma, D2: DecoratedMagma) -> bool:
+    """Test algebraic isomorphism."""
+    return len(algebraic_isomorphisms(D1, D2)) > 0
+
+
+def are_semantically_isomorphic(D1: DecoratedMagma, D2: DecoratedMagma) -> bool:
+    """Test semantic isomorphism."""
+    return len(semantic_isomorphisms(D1, D2)) > 0
+
+
+def is_rigid(D: DecoratedMagma) -> bool:
+    """Test if D is semantically rigid (trivial automorphism group)."""
+    auts = automorphism_group(D)
+    return len(auts) == 1 and auts[0] == tuple(range(D.n))
+
+
+def semantic_diversity(D: DecoratedMagma) -> int:
+    """Compute the semantic diversity of D."""
+    return len(set(D.label))
+
+
+def semantic_spectrum(D: DecoratedMagma) -> list[int]:
+    """Compute the semantic spectrum of D (sorted label frequencies)."""
+    return sorted(Counter(D.label).values(), reverse=True)
+
+
+def semantic_orbit_count(D: DecoratedMagma, k: int) -> int:
+    """Count semantically distinct labelings of D's operation with k label values.
+
+    Uses Burnside's lemma: count = (1/|Aut|) * Σ_{φ∈Aut} k^{cycles(φ)}
     """
-    Count equivalence classes of decorations Fin(n) → Fin(k)
-    under the action of Sym(n), using Burnside's lemma.
+    auts = automorphism_group(D)
+    total = 0
+    for aut in auts:
+        cycles = len(cycle_decomposition(aut, D.n))
+        total += k ** cycles
+    return total // len(auts)
 
-    Returns (1/|Sym(n)|) * Σ_{σ ∈ Sym(n)} k^{c(σ)}
-    where c(σ) is the number of cycles of σ.
+
+def semantic_entropy(D: DecoratedMagma, k: int) -> float:
+    """Compute the semantic entropy H(D, k) = log₂(orbit_count)."""
+    orbits = semantic_orbit_count(D, k)
+    return log2(orbits) if orbits > 0 else 0.0
+
+
+def truth_meaning_gap(
+    D1: DecoratedMagma,
+    D2: DecoratedMagma,
+    phi: Callable[[int], int],
+    truth: Callable[[int], bool],
+) -> tuple[bool, bool]:
+    """Check truth preservation and meaning preservation of phi.
+
+    Returns (truth_preserved, meaning_preserved).
     """
-    total_fixed = 0
-    for p in permutations(range(n)):
-        cycles = find_cycles(n, p)
-        total_fixed += k ** len(cycles)
-    return total_fixed // factorial(n)
+    truth_ok = all(
+        not truth(D1.label[x]) or truth(D2.label[phi(x)])
+        for x in range(D1.n)
+    )
+    meaning_ok = all(
+        D1.label[x] == D2.label[phi(x)]
+        for x in range(D1.n)
+    )
+    return truth_ok, meaning_ok
 
 
-def opacity_spectrum(n: int, k: int) -> Dict[int, int]:
-    """
-    Compute the distribution of opacity indices across all
-    decorations Fin(n) → Fin(k).
-
-    Returns a dictionary mapping opacity_index → count.
-    """
-    from itertools import product as cartprod
-    spectrum: Dict[int, int] = {}
-    for decoration in cartprod(range(k), repeat=n):
-        oi = len(set(decoration))
-        spectrum[oi] = spectrum.get(oi, 0) + 1
-    return spectrum
-
-
-def semantic_distance(d1: DecoratedType, d2: DecoratedType) -> float:
-    """
-    Compute a semantic distance between two decorated types on the same carrier.
-    Defined as the fraction of elements with different meanings.
-    """
-    assert d1.elements == d2.elements
-    total = len(d1.elements)
-    if total == 0:
-        return 0.0
-    diff = sum(1 for x in d1.elements if d1.meaning[x] != d2.meaning[x])
-    return diff / total
-
-
-# --- Example usage ---
+# =============================================================
+# Example usage
+# =============================================================
 
 if __name__ == "__main__":
-    # Create a decorated type
-    dt = DecoratedType(
-        elements=frozenset({0, 1, 2, 3}),
-        meaning={0: 'A', 1: 'B', 2: 'A', 3: 'C'}
-    )
+    xor = lambda a, b: (a + b) % 2
 
-    print(f"Decorated type: {dt.meaning}")
-    print(f"Opacity index: {dt.opacity_index()}")
-    print(f"Faithful: {dt.is_faithful()}")
-    print(f"Constant: {dt.is_constant()}")
-    print(f"Semantic kernel: {dt.semantic_kernel()}")
+    D_id = DecoratedMagma(2, xor, [0, 1])
+    D_swap = DecoratedMagma(2, xor, [1, 0])
 
-    # Meaning-preserving subgroup
-    subgroup = meaning_preserving_subgroup(dt)
-    print(f"\nMeaning-preserving permutations: {len(subgroup)} / {factorial(4)}")
-    print(f"Restriction ratio: {factorial(4) / len(subgroup):.1f}x")
+    print(f"Rigid(D_id): {is_rigid(D_id)}")
+    print(f"AlgIso: {are_algebraically_isomorphic(D_id, D_swap)}")
+    print(f"SemIso: {are_semantically_isomorphic(D_id, D_swap)}")
+    print(f"Diversity(D_id): {semantic_diversity(D_id)}")
+    print(f"Spectrum(D_id): {semantic_spectrum(D_id)}")
+    print(f"Orbits(XOR, k=2): {semantic_orbit_count(D_id, 2)}")
+    print(f"Entropy(XOR, k=2): {semantic_entropy(D_id, 2):.2f} bits")
 
-    # Burnside enumeration
-    print("\nBurnside enumeration (n, k) → classes:")
-    for n in range(1, 5):
-        for k in [2, 3]:
-            print(f"  ({n}, {k}): {burnside_count(n, k)} classes")
-
-    # Opacity spectrum
-    print("\nOpacity spectrum for n=3, k=3:")
-    spec = opacity_spectrum(3, 3)
-    for oi in sorted(spec):
-        print(f"  Opacity {oi}: {spec[oi]} decorations")
+    tp, mp = truth_meaning_gap(D_id, D_swap, lambda x: x, lambda v: v != 0)
+    print(f"Truth preserved: {tp}, Meaning preserved: {mp}")

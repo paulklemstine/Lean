@@ -1,278 +1,207 @@
-# Semantic Fiber Theory: Decorated Equivalences and the Opacity of Isomorphisms
+# Semantic Bundles: A Formal Theory of Meaning Divergence in Isomorphic Structures
 
 ## Abstract
 
-We introduce **Semantic Fiber Theory**, a mathematical framework that formalizes when structural isomorphisms fail to preserve semantic content. Given a type α equipped with a meaning function m : α → S, we define *decorated equivalences* as bijections commuting with meaning, and study the resulting category. Our main contributions are: (1) the **Opacity Existence Theorem**, showing that non-trivial semantic spaces always admit opaque pairs — structurally isomorphic but semantically non-equivalent objects; (2) the **Range Invariance Theorem**, identifying the range of the meaning function as the fundamental decorated-equivalence invariant; (3) the **Automorphism Restriction Theorem**, proving that meaning-preserving automorphisms form a proper subgroup of the full symmetry group; (4) the **Semantic Collapse Theorem**, establishing a pigeonhole bound on faithful decorations; (5) the **Semantic Coarsening Theorem**, showing that post-composition can only reduce semantic resolution. We construct the **Semantic Fiber Category** and prove the forgetful functor to Type is faithful but not full. All results are formally verified in Lean 4 with Mathlib.
+We introduce **semantic bundles** — algebraic structures equipped with interpretation maps into semantic spaces — and develop a formal theory distinguishing algebraic from semantic isomorphism. Our central result, the **Separation Theorem**, proves constructively that algebraically isomorphic structures can be semantically non-isomorphic: the notion of "meaning" captured by labeling is irreducible to algebraic structure. We establish that semantic isomorphism strictly refines algebraic isomorphism, characterize when the two coincide (the **Rigidity Theorem**), and introduce computable semantic invariants (diversity, spectrum) that detect semantic structure invisible to algebraic analysis. All results are machine-verified.
 
-**Keywords**: decorated equivalence, semantic fiber, opacity index, meaning-preserving morphism, automorphism restriction, categorical semantics
+**Keywords**: decorated magma, semantic isomorphism, algebraic invariant, rigidity, transfer principle, Burnside orbit counting
 
 ---
 
 ## 1. Introduction
 
-The notion that isomorphic mathematical structures are "the same" is foundational to modern mathematics. Category theory, in particular, treats isomorphic objects as interchangeable. Yet practitioners frequently encounter situations where two isomorphic structures carry different "meanings" — different colorings, labelings, interpretations, or physical significance.
+A fundamental observation in mathematics is that isomorphic structures are "the same" from the viewpoint of abstract algebra. The transfer principle allows us to move results freely between isomorphic objects. Yet mathematicians routinely distinguish between isomorphic structures based on context, interpretation, or "meaning" — consider the difference between ℤ/12ℤ as a model of clock arithmetic versus modular arithmetic in cryptography.
 
-This paper develops a systematic theory of **decorated types** — structures equipped with meaning functions — and studies when structural isomorphisms lift to *decorated equivalences* that preserve meaning. The gap between structural and decorated equivalence, which we call **opacity**, turns out to have rich mathematical structure.
+We formalize this distinction by introducing **semantic bundles**: pairs consisting of an algebraic structure and an interpretation function. We then define two levels of equivalence — algebraic isomorphism (ignoring interpretations) and semantic isomorphism (preserving interpretations) — and prove that the gap between them is genuine and irreducible.
 
-### 1.1 Motivation
+### 1.1 Related Work
 
-Several classical examples motivate our framework:
-
-1. **Graph coloring**: Two graphs may be isomorphic as abstract graphs while admitting non-isomorphic proper colorings.
-2. **Physical interpretation**: Mathematically isomorphic equations (e.g., heat and diffusion) carry different physical meanings.
-3. **Analogical reasoning**: Hofstadter's Copycat architecture [1] maps between structures that are isomorphic in some respects but semantically distinct in others.
-4. **Model theory**: Two elementarily equivalent structures may satisfy different sentences in extended languages.
+The transfer principle in model theory (cf. Keisler's ultrapower theorem) establishes that elementarily equivalent structures satisfy the same first-order sentences. Our work shows that semantic content — formalized as a labeling function — lies outside the scope of such transfer. This connects to philosophical work on the "intended interpretation" problem in mathematical structuralism (Benacerraf, Shapiro) and to Hofstadter's work on analogical reasoning in the Copycat architecture, where structural isomorphisms between domains must be augmented with pragmatic "slippage" to capture meaningful analogies.
 
 ### 1.2 Contributions
 
-We make the following contributions:
-
-- **Novel mathematical structure**: The `DecoratedType` and `DecoratedEquiv` framework, along with the Semantic Fiber Category.
-- **14 formally verified theorems** covering existence, invariance, automorphism restriction, collapse, coarsening, and categorical properties.
-- **The opacity index**: A new numerical invariant measuring semantic richness.
-- **Cross-connections**: Links to group theory (automorphism subgroups), combinatorics (fiber cardinality), information theory (coarsening), and category theory (faithful/full functors).
+1. **Definition**: The semantic bundle (decorated magma) as a mathematical object.
+2. **Separation Theorem**: Constructive proof that AlgIso ≠ SemIso.
+3. **Rigidity Theorem**: Complete characterization of when AlgIso = SemIso.
+4. **Semantic Invariants**: Diversity and spectrum as computable semantic quantities.
+5. **Truth-Meaning Gap**: Formal proof that truth preservation ≠ meaning preservation.
+6. **Non-Algebraicity of Diversity**: Proof that semantic diversity is not an algebraic invariant.
 
 ---
 
 ## 2. Definitions
 
-### 2.1 Decorated Types
+### 2.1 Decorated Magma
 
-**Definition 2.1** (Decorated Type). A *decorated type* over a type α with semantic space S is a pair (α, m) where m : α → S is a function called the *meaning function*.
+**Definition 2.1** (Decorated Magma). A *decorated magma* over types α and β is a triple (α, ⊕, ℓ) where:
+- ⊕ : α × α → α is a binary operation (the *algebraic structure*)
+- ℓ : α → β is a function (the *semantic labeling*)
 
-```
-structure DecoratedType (α : Type*) (S : Type*) where
-  meaning : α → S
-```
+We denote the set of decorated magmas over (α, β) by DM(α, β).
 
-### 2.2 Decorated Equivalences
+### 2.2 Algebraic and Semantic Isomorphism
 
-**Definition 2.2** (Decorated Equivalence). A *decorated equivalence* between (α, m₁) and (β, m₂) is an equivalence e : α ≃ β such that m₂ ∘ e = m₁, i.e., for all x : α, m₂(e(x)) = m₁(x).
+**Definition 2.2** (Algebraic Isomorphism). Two decorated magmas D₁ = (α, ⊕₁, ℓ₁) and D₂ = (α, ⊕₂, ℓ₂) are *algebraically isomorphic* if there exists a bijection φ : α ≃ α such that:
 
-We prove that decorated equivalence is an equivalence relation (reflexive, symmetric, transitive).
+    φ(x ⊕₁ y) = φ(x) ⊕₂ φ(y)   for all x, y ∈ α
 
-### 2.3 Opacity
+**Definition 2.3** (Semantic Isomorphism). D₁ and D₂ are *semantically isomorphic* if there exists φ : α ≃ α satisfying both the algebraic condition AND:
 
-**Definition 2.3** (Opaque Pair). Two decorated types D₁ and D₂ are *opaque* relative to an equivalence e : α ≃ β if there exists x : α such that D₂.meaning(e(x)) ≠ D₁.meaning(x).
+    ℓ₁(x) = ℓ₂(φ(x))   for all x ∈ α
 
-**Definition 2.4** (Opacity Index). The *opacity index* of a decorated type D is the cardinality of the range of its meaning function:
+### 2.3 Semantic Rigidity
 
-  opacityIndex(D) = |range(m)|
+**Definition 2.4** (Semantic Rigidity). A decorated magma D is *semantically rigid* if the identity is the only automorphism of its underlying operation:
 
-### 2.4 The Semantic Kernel
+    ∀ φ : α ≃ α, (∀ x y, φ(x ⊕ y) = φ(x) ⊕ φ(y)) → φ = id
 
-**Definition 2.5** (Semantic Kernel). The *semantic kernel* of a decorated type D is the equivalence relation ∼ on α where x ∼ y iff m(x) = m(y).
+### 2.4 Semantic Invariants
+
+**Definition 2.5** (Semantic Diversity). For a finite decorated magma D = (α, ⊕, ℓ) with α finite:
+
+    div(D) = |{ℓ(a) : a ∈ α}|
+
+**Definition 2.6** (Semantic Spectrum). The multiset of label frequencies:
+
+    spec(D) = ⟨|ℓ⁻¹(b)| : b ∈ Im(ℓ)⟩
 
 ---
 
 ## 3. Main Results
 
-### 3.1 Opacity Existence (Theorem A)
+### 3.1 The Refinement Theorem
 
-**Theorem 3.1** (Opacity Existence). For any type α with an element a : α and semantic space S with two distinct values s₁ ≠ s₂, there exist decorated types D₁, D₂ on α such that the identity equivalence is opaque.
+**Theorem 3.1** (Semantic Refinement). *Semantic isomorphism implies algebraic isomorphism.*
 
-*Proof sketch*: Take D₁ with constant meaning s₁ and D₂ with constant meaning s₂. Then the identity maps a to a, but D₂.meaning(a) = s₂ ≠ s₁ = D₁.meaning(a). □
+*Proof.* If φ witnesses SemIso(D₁, D₂), then in particular φ preserves the operation, witnessing AlgIso(D₁, D₂). □
 
-**PEGB Analysis**:
-- **Proof**: Constructive witness with constant decorations.
-- **Example**: On Bool with meanings {0, 1}, the decorations "all-0" and "all-1" are opaque under id.
-- **Generalization**: For |S| = k, there are k(k−1)/2 opaque pairs of constant decorations.
-- **Boundary**: When |S| = 1, no opaque pairs exist — this is the unique case where opacity vanishes.
+This establishes SemIso as a refinement of AlgIso. The converse fails:
 
-### 3.2 Range Invariance (Theorem B)
+### 3.2 The Separation Theorem
 
-**Theorem 3.2** (Range Invariance). If D₁ and D₂ are related by a decorated equivalence e, then range(m₂) = range(m₁).
+**Theorem 3.2** (Separation). *There exist decorated magmas D₁, D₂ ∈ DM(Fin 2, Fin 2) such that AlgIso(D₁, D₂) and ¬SemIso(D₁, D₂).*
 
-*Proof sketch*: Since e is bijective and m₂ ∘ e = m₁, we have range(m₁) = range(m₂ ∘ e) = m₂(range(e)) = m₂(β) = range(m₂). □
+*Proof sketch.* Let ⊕ = XOR (addition mod 2). Define:
+- D₁ = (Fin 2, ⊕, id)
+- D₂ = (Fin 2, ⊕, x ↦ 1-x)
 
-**PEGB Analysis**:
-- **Proof**: Uses surjectivity of equivalences and functoriality of range.
-- **Example**: Decorations {a↦1, b↦2} and {a↦2, b↦1} have the same range {1,2}.
-- **Generalization**: For any decorated-equivalence invariant functor F, F(range) is preserved.
-- **Boundary**: The converse fails: equal ranges do not imply decorated equivalence.
+**AlgIso**: The identity bijection preserves XOR.
 
-### 3.3 Automorphism Restriction (Theorem C)
+**¬SemIso**: Any automorphism φ of (Fin 2, XOR) must satisfy φ(0) = φ(0 ⊕ 0) = φ(0) ⊕ φ(0) = 0 (since x ⊕ x = 0 in Fin 2). So φ(0) = 0, and since φ is a bijection on {0,1}, we get φ = id. But then ℓ₁(0) = 0 ≠ 1 = ℓ₂(0), contradiction. □
 
-**Theorem 3.3** (Automorphism Restriction). The set of meaning-preserving permutations of a decorated type forms a subgroup of Aut(α).
+### 3.3 The Rigidity Theorem
 
-*Proof sketch*: Closure under identity (trivial), composition (functorial), and inverse (by substitution y = σ⁻¹(x) in m(σ(y)) = m(y)). □
+**Theorem 3.3** (Rigidity). *Let D₁ be a semantically rigid decorated magma with the same operation as D₂. Then:*
+- *SemIso(D₁, D₂) ⟹ ℓ₁ = ℓ₂*
+- *ℓ₁ = ℓ₂ ⟹ SemIso(D₁, D₂)*
 
-### 3.4 Semantic Fiber Cardinality (Theorem D)
+*Proof.* For the forward direction: if φ witnesses SemIso and D₁.op = D₂.op, then φ is an automorphism of D₁'s operation. By rigidity, φ = id. Then the semantic condition gives ℓ₁ = ℓ₂.
 
-**Theorem 3.4** (Semantic Fiber Cardinality). The number of decorations from Fin(n) to Fin(k) is k^n.
+For the reverse: if ℓ₁ = ℓ₂ and ops are equal, the identity witnesses SemIso. □
 
-This is a counting result, but its significance lies in context: it gives the size of the *semantic fiber* over a given type.
+**Corollary 3.4** (Maximum Diversity for Rigid Structures). *If D₁ is rigid and ℓ₁ ≠ ℓ₂, then ¬SemIso(D₁, D₂).*
 
-### 3.5 Opacity Index Properties (Theorems E-F)
+### 3.4 Transfer Invariance
 
-**Theorem 3.5** (Opacity Index Positivity). For nonempty types with finite-range decorations, the opacity index is positive.
+**Theorem 3.5** (Transfer). *Any isomorphism-invariant property of operations is preserved by algebraic isomorphism. Formally: if P is an algebraic property such that conjugation by any bijection preserves P, then AlgIso(D₁, D₂) ∧ P(D₁.op) implies P(D₂.op).*
 
-**Theorem 3.6** (Opacity Index Invariance). The opacity index is invariant under decorated equivalence.
+### 3.5 Semantic Properties Do Not Transfer
 
-**Theorem 3.7** (Faithful Maximum Opacity). A faithful (injective) decoration achieves opacity index equal to |α|.
+**Theorem 3.6** (Semantic Non-Transfer). *There exists a semantic property P such that P(D₁) ∧ AlgIso(D₁, D₂) ∧ ¬P(D₂).*
 
-### 3.6 Semantic Collapse (Theorem G)
+*Proof.* Take P(D) := (D.label(0) = 0). This holds for D_id but fails for D_swap, even though they are algebraically isomorphic. □
 
-**Theorem 3.8** (Semantic Collapse). If |S| < |α|, no faithful decoration exists.
+### 3.6 The Truth-Meaning Gap
 
-*Proof sketch*: By the pigeonhole principle, an injective function α → S requires |α| ≤ |S|. □
+**Theorem 3.7** (Truth Implies Meaning). *Meaning preservation implies truth preservation for any truth predicate.*
 
-**PEGB Analysis**:
-- **Proof**: Contrapositive of Fintype.card_le_of_injective.
-- **Example**: No injective coloring of 5 vertices with 3 colors exists.
-- **Generalization**: The minimum number of collisions is ⌈|α|/|S|⌉ - 1 per element.
-- **Boundary**: At |S| = |α|, faithful decorations exist (by injection) but are not unique.
+**Theorem 3.8** (Truth ≠ Meaning). *There exist D₁, D₂, φ, and a truth predicate where φ is truth-preserving but not meaning-preserving.*
 
-### 3.7 Semantic Coarsening (Theorem H)
+*Proof.* Use D_id, D_swap, φ = id, truth = (fun _ => True). Truth is trivially preserved, but meaning is not (label mismatch at 0). □
 
-**Theorem 3.9** (Semantic Coarsening). For finite-range decorations, composition with any function cannot increase the opacity index.
+### 3.7 Semantic Diversity is Non-Algebraic
 
-*Proof sketch*: range(f ∘ m) = f(range(m)), and |f(S)| ≤ |S| for any function f. □
+**Theorem 3.9** (Non-Algebraicity of Diversity). *Algebraic isomorphism does not preserve semantic diversity: there exist AlgIso(D₁, D₂) with div(D₁) ≠ div(D₂).*
 
-**PEGB Analysis**:
-- **Proof**: Uses Set.ncard_image_le.
-- **Example**: Composing a 3-color decoration with a 2-color map reduces opacity from 3 to ≤ 2.
-- **Generalization**: Repeated composition forms a non-increasing sequence of opacity indices.
-- **Boundary**: Injective f preserves opacity exactly; only non-injective f can decrease it.
+*Proof.* On Fin 2 with the zero operation: D₁ = (const 0, id) has div = 2, while D₂ = (const 0, const 0) has div = 1. They are algebraically isomorphic via the identity. □
 
-### 3.8 Categorical Properties (Theorems I-J)
+### 3.8 Semantic Invariants
 
-**Theorem 3.10** (Forgetful Functor Faithfulness). The forgetful functor from the Semantic Fiber Category to Type is faithful.
+**Theorem 3.10** (Diversity Invariance). *Semantic isomorphism preserves semantic diversity.*
 
-**Theorem 3.11** (Forgetful Functor Not Full). The forgetful functor is not full: there exist structural maps that do not preserve meaning.
+**Theorem 3.11** (Spectrum Invariance). *Semantic isomorphism preserves the semantic spectrum.*
 
-### 3.9 Kernel Refinement (Theorem K)
-
-**Theorem 3.12** (Kernel Refinement). If f : S → T is injective, the semantic kernel of D.compose(f) equals the semantic kernel of D.
-
-### 3.10 Transparency and Strictness (Theorems L-M)
-
-**Theorem 3.13** (Constant Decoration Transparency). Constant decorations are fully transparent: every permutation preserves a constant meaning function.
-
-**Theorem 3.14** (Swap Non-Preservation). Swapping two elements with distinct meanings does not preserve meaning.
+*Proof sketch for spectrum.* Given φ witnessing SemIso, we have ℓ₁ = ℓ₂ ∘ φ. Since φ is a bijection, the image multisets of ℓ₁ and ℓ₂ are permutations of each other, and for each label value b, the fibers ℓ₁⁻¹(b) and ℓ₂⁻¹(b) have equal cardinality (as φ maps one bijectively to the other). □
 
 ---
 
-## 4. The Semantic Fiber Category
+## 4. Connection to Oracle Truth Preservation
 
-### 4.1 Construction
+The catalog contains theorems establishing that oracles preserve truth (`oracle_preserves_truth`, `grav_oracle_preserves_truth`). Our Truth-Meaning Gap (Theorems 3.7-3.8) provides the theoretical framework for understanding these results: an oracle is a truth-preserving map that operates at the structural level. Our results prove that such maps cannot, in general, preserve the semantic content of the structures they act on.
 
-Objects: Pairs (α, m) where α is a type and m : α → S.
-Morphisms: Functions f : α → β with m₂ ∘ f = m₁.
-Identity: The identity function.
-Composition: Function composition (associativity is automatic).
-
-### 4.2 The Forgetful Functor
-
-The forgetful functor U : SemFib(S) → Type sends (α, m) to α and f to f. We prove:
-
-- **Faithful**: U reflects equality of morphisms (Theorem 3.10).
-- **Not full**: U does not surject onto morphisms (Theorem 3.11).
-
-This gap — faithful but not full — is the categorical essence of semantic opacity.
+This connects to Hofstadter's Copycat architecture: an analogy-making system must not only find structural correspondences (algebraic isomorphisms) but also evaluate semantic compatibility — whether the labels "make sense" under the correspondence. Our separation theorem proves that this semantic evaluation is a genuinely additional computational task, not reducible to structural matching.
 
 ---
 
-## 5. Connections and Applications
+## 5. The Isomorphism of Isomorphisms
 
-### 5.1 Group Theory
+Given two algebraically isomorphic decorated magmas, the space of algebraic isomorphisms between them forms a torsor for the automorphism group. We further stratify this space by **semantic compatibility**: an algebraic isomorphism φ is semantically compatible if it also preserves labels.
 
-The automorphism restriction theorem (§3.3) connects to the theory of permutation group actions. The meaning-preserving subgroup can be viewed as the stabilizer of the decoration under the natural action of Sym(α) on the space of decorations Sᵅ.
+**Definition 5.1** (Semantic Compatibility). An equivalence φ : α ≃ α is semantically compatible with (D₁, D₂) if it preserves both the operation and the labeling.
 
-### 5.2 Information Theory
+**Theorem 5.2.** SemIso(D₁, D₂) iff there exists a semantically compatible algebraic isomorphism.
 
-The coarsening theorem (§3.7) is an information-theoretic result: post-processing cannot increase information content. The opacity index plays the role of entropy, and the semantic kernel plays the role of the information channel.
-
-### 5.3 Analogical Reasoning
-
-Hofstadter's Copycat architecture [1] identifies analogies as structural mappings between different domains. In our framework, an analogy is a decorated equivalence where the semantic spaces of the two decorated types differ. The opacity phenomenon formalizes when a plausible analogy (structural map) fails to preserve the intended meaning — explaining why some analogies are "good" and others are "misleading."
-
-### 5.4 Cross-Connection to Existing Catalog
-
-The opacity phenomenon connects to the oracle preservation theorems in the Aether Catalog. The `oracle_preserves_truth` theorem (Computation/OmniscientOracle.lean) shows that oracles preserve truth values. In our framework, truth values are a special case of meaning functions (m : α → Bool), and oracle preservation is a special case of decorated morphism compatibility. The key difference: oracles preserve truth (a 2-valued meaning) but need not preserve richer meanings (k-valued for k > 2).
+This gives a precise meaning to "isomorphism of isomorphisms": we classify the isomorphisms themselves by their semantic content, creating a higher-order structure on the space of structural correspondences.
 
 ---
 
 ## 6. Algorithms
 
-### 6.1 Computing the Opacity Index
+### 6.1 Semantic Isomorphism Testing
 
-```
-Algorithm ComputeOpacityIndex(D):
-  Input: Decorated type D = (α, m) with finite α
-  Output: Opacity index
-  S ← {}
-  for x in α:
-    S ← S ∪ {m(x)}
-  return |S|
-```
+For finite decorated magmas on n elements:
+1. Enumerate all n! permutations (or use graph isomorphism techniques).
+2. For each permutation, check operation preservation.
+3. For surviving permutations, check label preservation.
+4. Report SemIso iff any permutation passes both checks.
 
-### 6.2 Testing Decorated Equivalence
+Complexity: O(n! · n²) in the naive case, reducible to graph isomorphism complexity via encoding.
 
-```
-Algorithm TestDecoratedEquiv(D₁, D₂, e):
-  Input: Decorated types D₁ = (α, m₁), D₂ = (β, m₂), equiv e : α ≃ β
-  Output: Boolean
-  for x in α:
-    if m₂(e(x)) ≠ m₁(x):
-      return False
-  return True
-```
+### 6.2 Semantic Invariant Computation
 
-### 6.3 Computing the Meaning-Preserving Subgroup
+Computing diversity and spectrum:
+1. Compute Im(ℓ) = {ℓ(a) : a ∈ α}.
+2. Diversity = |Im(ℓ)|.
+3. For each b ∈ Im(ℓ), compute |ℓ⁻¹(b)|.
+4. Spectrum = multiset of these cardinalities.
 
-```
-Algorithm MeaningPreservingSubgroup(D):
-  Input: Decorated type D = (α, m) with finite α
-  Output: Set of permutations preserving meaning
-  H ← {}
-  for σ in Sym(α):
-    if ∀x: m(σ(x)) = m(x):
-      H ← H ∪ {σ}
-  return H
-```
+Complexity: O(n log n) with hash maps.
 
 ---
 
-## 7. Conjectures
+## 7. Future Directions
 
-**Conjecture 7.1** (Semantic Burnside). For a finite type α of size n with decorations in a set S of size k, the number of semantically distinct decorations modulo Aut(α) equals:
+1. **Complete Semantic Invariants**: Is the spectrum complete? Characterize exactly when two decorated magmas have the same spectrum but are semantically non-isomorphic.
 
-  (1/|Aut(α)|) Σ_{σ ∈ Aut(α)} k^{|Fix(σ)|}
+2. **Semantic Bundles over Groups**: When the algebraic structure is a group, the automorphism group acts naturally on labelings. Burnside's lemma gives the number of orbits (= semantically distinct structures). Extend to profinite groups and continuous labelings.
 
-This is Burnside's lemma applied to the action of Aut(α) on S^α. We conjecture that this formula extends to decorated equivalence classes in the Semantic Fiber Category.
+3. **Semantic Entropy**: Define H(D) = log₂(number of semantic equivalence classes of relabelings of D). Study its properties as a measure of "semantic capacity."
 
-**Computational test**: For n = 3, k = 2, the formula gives (2³ + 3·2 + 2·2⁰)/6 = (8 + 6 + 2)/6 ≈ 2.67... Hmm, this should give an integer. For S₃ acting on {0,1}³: identity fixes all 8, three transpositions fix 4 each, two 3-cycles fix 2 each. Total: (8 + 4 + 4 + 4 + 2 + 2)/6 = 24/6 = 4. The four classes are: {000}, {001, 010, 100}, {011, 101, 110}, {111}.
+4. **Categorical Semantics**: Formalize the category of semantic bundles and study its categorical properties (limits, colimits, adjunctions with the forgetful functor to magmas).
 
----
-
-## 8. Discussion
-
-### 8.1 Limitations
-
-The current framework treats meaning as a function to a fixed semantic space. In practice, meaning may be relational (depending on context) or intensional (depending on the mode of presentation, not just the referent). Extending the framework to handle these richer notions of meaning is a natural direction.
-
-### 8.2 Relation to Model Theory
-
-The semantic kernel (Definition 2.5) is closely related to the theory of definable equivalence relations in model theory. The opacity phenomenon is a special case of the observation that elementary equivalence does not imply isomorphism — but our framework provides quantitative tools (the opacity index, the meaning-preserving subgroup) that go beyond the qualitative distinction.
+5. **Computational Complexity**: What is the complexity of the semantic isomorphism problem? It reduces to a constrained version of graph isomorphism — is it equivalent, or strictly easier/harder?
 
 ---
 
-## 9. Future Work
+## 8. Conclusion
 
-1. **Semantic sheaves**: Extend the fiber construction to a sheaf over a topological space of contexts.
-2. **Quantitative opacity**: Develop a metric on the space of decorations, measuring "how opaque" a pair is.
-3. **Computational complexity**: Determine the complexity of computing the meaning-preserving subgroup.
-4. **Higher-categorical generalization**: Extend to ∞-categories where morphisms between morphisms carry their own semantic content.
+The semantic bundle framework provides a precise mathematical answer to the question "when do isomorphic structures mean the same thing?" The answer is: exactly when the isomorphism respects the interpretation, which for rigid structures means exactly when the interpretations are identical. The gap between structure and meaning is not philosophical vagueness but a theorem with a constructive proof.
 
 ---
 
 ## References
 
-[1] Hofstadter, D. R. (1995). *Fluid Concepts and Creative Analogies*. Basic Books.
-
-[2] Mac Lane, S. (1998). *Categories for the Working Mathematician*. Springer.
-
-[3] Marker, D. (2002). *Model Theory: An Introduction*. Springer.
-
-[4] Burnside, W. (1897). *Theory of Groups of Finite Order*. Cambridge University Press.
+1. Benacerraf, P. (1965). "What Numbers Could Not Be." *The Philosophical Review*, 74(1), 47-73.
+2. Hofstadter, D. (1995). *Fluid Concepts and Creative Analogies*. Basic Books.
+3. Mac Lane, S. (1998). *Categories for the Working Mathematician*. Springer.
+4. The Univalent Foundations Program (2013). *Homotopy Type Theory*. Institute for Advanced Study.

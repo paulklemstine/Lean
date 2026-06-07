@@ -1,381 +1,368 @@
 #!/usr/bin/env python3
 """
-Semantic Fiber Theory — Demonstration Script
+Semantic Bundles — Interactive Demo
 
-Demonstrates the core concepts: decorated types, opacity, automorphism
-restriction, semantic coarsening, and Burnside enumeration.
+Demonstrates the core concepts from the Semantic Bundle theory:
+1. Algebraic vs semantic isomorphism on concrete examples
+2. Semantic diversity and spectrum computation
+3. Orbit counting under automorphism groups
 """
 
 from itertools import permutations, product
 from collections import Counter
-from math import factorial
+from math import factorial, log2
 
 
-def compute_opacity_index(meaning: dict) -> int:
-    """Compute the opacity index = |range(meaning)|."""
-    return len(set(meaning.values()))
+def xor_op(a: int, b: int) -> int:
+    """XOR operation on {0, 1}."""
+    return (a + b) % 2
 
 
-def is_meaning_preserving(meaning: dict, perm: dict) -> bool:
-    """Check if a permutation preserves the meaning function."""
-    return all(meaning[perm[x]] == meaning[x] for x in meaning)
+def is_alg_iso(op1, op2, n: int, perm: tuple) -> bool:
+    """Check if permutation `perm` is an algebraic isomorphism from op1 to op2."""
+    for x in range(n):
+        for y in range(n):
+            if perm[op1(x, y)] != op2(perm[x], perm[y]):
+                return False
+    return True
 
 
-def meaning_preserving_subgroup(elements: list, meaning: dict) -> list:
-    """Compute all meaning-preserving permutations."""
-    result = []
-    for p in permutations(elements):
-        perm = dict(zip(elements, p))
-        if is_meaning_preserving(meaning, perm):
-            result.append(perm)
-    return result
+def is_sem_iso(op1, op2, label1, label2, n: int, perm: tuple) -> bool:
+    """Check if permutation is a semantic isomorphism."""
+    if not is_alg_iso(op1, op2, n, perm):
+        return False
+    for x in range(n):
+        if label1[x] != label2[perm[x]]:
+            return False
+    return True
 
 
-def is_decorated_equiv(m1: dict, m2: dict, bijection: dict) -> bool:
-    """Check if a bijection is a decorated equivalence."""
-    return all(m2[bijection[x]] == m1[x] for x in m1)
+def find_automorphisms(op, n: int) -> list:
+    """Find all automorphisms of (n-element set, op)."""
+    auts = []
+    for perm in permutations(range(n)):
+        if is_alg_iso(op, op, n, perm):
+            auts.append(perm)
+    return auts
 
 
-def count_decoration_classes(n: int, k: int) -> int:
+def semantic_diversity(label: list) -> int:
+    """Number of distinct label values."""
+    return len(set(label))
+
+
+def semantic_spectrum(label: list) -> list:
+    """Sorted list of label frequencies."""
+    return sorted(Counter(label).values(), reverse=True)
+
+
+def count_semantic_orbits(op, n: int, k: int) -> int:
+    """Count semantically distinct labelings using Burnside's lemma.
+
+    op: binary operation on {0, ..., n-1}
+    n: size of carrier
+    k: number of label values {0, ..., k-1}
     """
-    Count equivalence classes of decorations Fin(n) -> Fin(k)
-    under the action of Sym(n), using Burnside's lemma.
-    """
-    elements = list(range(n))
+    auts = find_automorphisms(op, n)
     total_fixed = 0
-    perm_count = 0
-
-    for p in permutations(elements):
-        perm_count += 1
-        # Count decorations fixed by this permutation
-        # A decoration f is fixed by p iff f(p(i)) = f(i) for all i
-        # This means f is constant on each cycle of p
-        cycles = find_cycles(elements, p)
-        fixed = k ** len(cycles)
-        total_fixed += fixed
-
-    return total_fixed // perm_count
+    for aut in auts:
+        # Count labelings fixed by this automorphism
+        # A labeling l is fixed by aut iff l[x] = l[aut[x]] for all x
+        # This means l must be constant on each cycle of aut
+        cycles = _cycle_count(aut, n)
+        total_fixed += k ** cycles
+    return total_fixed // len(auts)
 
 
-def find_cycles(elements: list, perm: tuple) -> list:
-    """Find the cycle decomposition of a permutation."""
-    visited = set()
-    cycles = []
-    for start in elements:
-        if start not in visited:
-            cycle = []
-            x = start
-            while x not in visited:
-                visited.add(x)
-                cycle.append(x)
-                x = perm[x]
-            cycles.append(cycle)
+def _cycle_count(perm: tuple, n: int) -> int:
+    """Count cycles in a permutation."""
+    visited = [False] * n
+    cycles = 0
+    for i in range(n):
+        if not visited[i]:
+            cycles += 1
+            j = i
+            while not visited[j]:
+                visited[j] = True
+                j = perm[j]
     return cycles
 
 
-def demo_opacity_existence():
-    """Demonstrate Theorem A: Opacity Existence."""
-    print("=" * 60)
-    print("DEMO 1: Opacity Existence Theorem")
-    print("=" * 60)
+# =============================================================
+# DEMO 1: The Separation Theorem
+# =============================================================
+print("=" * 60)
+print("DEMO 1: THE SEPARATION THEOREM")
+print("=" * 60)
+print()
 
-    elements = ['a', 'b', 'c']
-    D1 = {x: 'red' for x in elements}
-    D2 = {x: 'blue' for x in elements}
+n = 2
+label_id = [0, 1]  # identity labeling
+label_swap = [1, 0]  # swapped labeling
 
-    print(f"\nType: {elements}")
-    print(f"D1 meanings: {D1}")
-    print(f"D2 meanings: {D2}")
-    print(f"\nIdentity equivalence is opaque:")
-    for x in elements:
-        same = D2[x] == D1[x]
-        print(f"  D2(id({x})) = {D2[x]} {'==' if same else '!='} {D1[x]} = D1({x})")
+print(f"Structure: (Fin 2, XOR)")
+print(f"D_id:   op = XOR, label = {label_id}")
+print(f"D_swap: op = XOR, label = {label_swap}")
+print()
 
-    print(f"\n=> Opaque pair exists! (D2(a) = blue ≠ red = D1(a))")
+# Find all algebraic isomorphisms
+alg_isos = []
+for perm in permutations(range(n)):
+    if is_alg_iso(xor_op, xor_op, n, perm):
+        alg_isos.append(perm)
 
+print(f"Algebraic isomorphisms from D_id to D_swap: {alg_isos}")
 
-def demo_range_invariance():
-    """Demonstrate Theorem B: Range Invariance."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Range Invariance Theorem")
-    print("=" * 60)
+# Check semantic isomorphisms
+sem_isos = []
+for perm in permutations(range(n)):
+    if is_sem_iso(xor_op, xor_op, label_id, label_swap, n, perm):
+        sem_isos.append(perm)
 
-    D1 = {0: 'α', 1: 'β', 2: 'γ'}
-    # Equivalence: 0↔1, 1↔2, 2↔0 (cyclic)
-    e = {0: 1, 1: 2, 2: 0}
-    D2 = {e[x]: D1[x] for x in D1}  # D2 that makes e a decorated equiv
+print(f"Semantic isomorphisms from D_id to D_swap: {sem_isos}")
+print()
+print(f"AlgIso(D_id, D_swap): {len(alg_isos) > 0}")
+print(f"SemIso(D_id, D_swap): {len(sem_isos) > 0}")
+print(f"→ SEPARATION: Algebraically isomorphic but semantically distinct!")
+print()
 
-    print(f"\nD1 meanings: {D1}")
-    print(f"D2 meanings: {D2}")
-    print(f"Equivalence: {e}")
-    print(f"\nRange(D1) = {set(D1.values())}")
-    print(f"Range(D2) = {set(D2.values())}")
-    print(f"Ranges equal: {set(D1.values()) == set(D2.values())}")
-    print(f"\nVerifying decorated equivalence:")
-    for x in D1:
-        print(f"  D2(e({x})) = D2({e[x]}) = {D2[e[x]]} == {D1[x]} = D1({x})")
+# =============================================================
+# DEMO 2: Rigidity and Automorphism Groups
+# =============================================================
+print("=" * 60)
+print("DEMO 2: RIGIDITY AND AUTOMORPHISM GROUPS")
+print("=" * 60)
+print()
 
+# XOR on Fin 2
+auts_xor = find_automorphisms(xor_op, 2)
+print(f"Aut(Fin 2, XOR) = {auts_xor}")
+print(f"|Aut| = {len(auts_xor)}")
+print(f"Rigid: {len(auts_xor) == 1}")
+print()
 
-def demo_automorphism_restriction():
-    """Demonstrate Theorem C: Automorphism Restriction."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Automorphism Restriction Theorem")
-    print("=" * 60)
+# Addition on Fin 3
+def add3(a, b): return (a + b) % 3
+auts_z3 = find_automorphisms(add3, 3)
+print(f"Aut(Z/3Z, +) = {auts_z3}")
+print(f"|Aut| = {len(auts_z3)}")
+print(f"Rigid: {len(auts_z3) == 1}")
+print()
 
-    elements = [0, 1, 2]
-    meaning = {0: 'red', 1: 'red', 2: 'blue'}
+# Addition on Fin 4
+def add4(a, b): return (a + b) % 4
+auts_z4 = find_automorphisms(add4, 4)
+print(f"Aut(Z/4Z, +) = {auts_z4}")
+print(f"|Aut| = {len(auts_z4)}")
+print(f"Rigid: {len(auts_z4) == 1}")
+print()
 
-    all_perms = list(permutations(elements))
-    preserving = meaning_preserving_subgroup(elements, meaning)
+# =============================================================
+# DEMO 3: Semantic Orbit Counting
+# =============================================================
+print("=" * 60)
+print("DEMO 3: SEMANTIC ORBIT COUNTING (BURNSIDE)")
+print("=" * 60)
+print()
 
-    print(f"\nElements: {elements}")
-    print(f"Meaning: {meaning}")
-    print(f"\nTotal permutations: |Sym(3)| = {len(all_perms)}")
-    print(f"Meaning-preserving: {len(preserving)}")
-    print(f"\nMeaning-preserving permutations:")
-    for p in preserving:
-        perm_list = [p[x] for x in elements]
-        print(f"  {elements} → {perm_list}")
+for name, op, sz in [("XOR/Fin2", xor_op, 2), ("Z/3Z", add3, 3), ("Z/4Z", add4, 4)]:
+    for k in [2, 3]:
+        orbits = count_semantic_orbits(op, sz, k)
+        total = k ** sz
+        aut_size = len(find_automorphisms(op, sz))
+        print(f"{name}, k={k}: {orbits} semantic classes "
+              f"(of {total} total labelings, |Aut|={aut_size})")
+    print()
 
-    print(f"\nRestriction factor: {len(all_perms)}/{len(preserving)} = "
-          f"{len(all_perms)/len(preserving):.0f}")
-    print(f"(Only {len(preserving)}/{len(all_perms)} permutations preserve meaning)")
+# =============================================================
+# DEMO 4: Semantic Diversity and Spectrum
+# =============================================================
+print("=" * 60)
+print("DEMO 4: SEMANTIC INVARIANTS")
+print("=" * 60)
+print()
 
+examples = [
+    ("D_id", [0, 1]),
+    ("D_swap", [1, 0]),
+    ("D_const", [0, 0]),
+    ("D_all_diff (Fin 3)", [0, 1, 2]),
+    ("D_two_same (Fin 3)", [0, 0, 1]),
+]
 
-def demo_semantic_collapse():
-    """Demonstrate Theorem G: Semantic Collapse."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Semantic Collapse Theorem")
-    print("=" * 60)
+for name, label in examples:
+    div = semantic_diversity(label)
+    spec = semantic_spectrum(label)
+    print(f"{name}: label={label}, diversity={div}, spectrum={spec}")
 
-    for n, k in [(5, 3), (4, 2), (10, 5)]:
-        print(f"\n|α| = {n}, |S| = {k}: ", end="")
-        if k < n:
-            print(f"No faithful decoration exists ({k} < {n})")
-            # Show pigeonhole
-            print(f"  Any decoration must have at least "
-                  f"{n - k} collisions (same meaning for different elements)")
-        else:
-            print(f"Faithful decorations exist ({k} >= {n})")
+print()
 
+# =============================================================
+# DEMO 5: Truth-Meaning Gap
+# =============================================================
+print("=" * 60)
+print("DEMO 5: TRUTH-MEANING GAP")
+print("=" * 60)
+print()
 
-def demo_burnside_enumeration():
-    """Demonstrate the Burnside enumeration conjecture."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Burnside Enumeration of Semantic Classes")
-    print("=" * 60)
+# truth predicate: always true (matches formal proof)
+def truth(x): return True
 
-    for n in range(1, 6):
-        for k in [2, 3]:
-            classes = count_decoration_classes(n, k)
-            total = k ** n
-            print(f"  n={n}, k={k}: {total} decorations, "
-                  f"{classes} equivalence classes")
+phi = lambda x: x  # identity map
+d1_label = label_id
+d2_label = label_swap
 
+truth_preserved = all(
+    not truth(d1_label[x]) or truth(d2_label[phi(x)])
+    for x in range(2)
+)
+meaning_preserved = all(
+    d1_label[x] == d2_label[phi(x)]
+    for x in range(2)
+)
 
-def demo_coarsening():
-    """Demonstrate Theorem H: Semantic Coarsening."""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Semantic Coarsening Theorem")
-    print("=" * 60)
+print(f"D_id labels: {d1_label}")
+print(f"D_swap labels: {d2_label}")
+print(f"φ = identity")
+print(f"Truth predicate: 'is nonzero'")
+print(f"Truth preserved: {truth_preserved}")
+print(f"Meaning preserved: {meaning_preserved}")
+print(f"→ GAP: Truth is preserved but meaning is not!")
+print()
 
-    elements = list(range(6))
+# =============================================================
+# DEMO 6: Semantic Entropy
+# =============================================================
+print("=" * 60)
+print("DEMO 6: SEMANTIC ENTROPY")
+print("=" * 60)
+print()
 
-    # Original decoration with 4 distinct meanings
-    D = {0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'A', 5: 'B'}
-    opacity_D = compute_opacity_index(D)
-
-    # Coarsen: map A,B -> X and C,D -> Y
-    coarsen = {'A': 'X', 'B': 'X', 'C': 'Y', 'D': 'Y'}
-    D_coarse = {x: coarsen[D[x]] for x in elements}
-    opacity_coarse = compute_opacity_index(D_coarse)
-
-    print(f"\nOriginal decoration: {D}")
-    print(f"Opacity index: {opacity_D}")
-    print(f"\nCoarsening map: {coarsen}")
-    print(f"Coarsened decoration: {D_coarse}")
-    print(f"Opacity index: {opacity_coarse}")
-    print(f"\nCoarsening reduced opacity: {opacity_D} → {opacity_coarse} "
-          f"({'✓' if opacity_coarse <= opacity_D else '✗'} ≤)")
-
-    # Further coarsen to constant
-    D_const = {x: 'Z' for x in elements}
-    opacity_const = compute_opacity_index(D_const)
-    print(f"\nFurther coarsening to constant: {D_const}")
-    print(f"Opacity index: {opacity_const}")
-    print(f"Monotone chain: {opacity_D} ≥ {opacity_coarse} ≥ {opacity_const}")
-
-
-if __name__ == "__main__":
-    demo_opacity_existence()
-    demo_range_invariance()
-    demo_automorphism_restriction()
-    demo_semantic_collapse()
-    demo_burnside_enumeration()
-    demo_coarsening()
-    print("\n" + "=" * 60)
-    print("All demonstrations complete.")
-    print("=" * 60)
+for name, op, sz in [("XOR/Fin2", xor_op, 2), ("Z/3Z", add3, 3), ("Z/4Z", add4, 4)]:
+    aut_size = len(find_automorphisms(op, sz))
+    for k in [2, 3]:
+        orbits = count_semantic_orbits(op, sz, k)
+        entropy = log2(orbits) if orbits > 0 else 0
+        max_entropy = sz * log2(k)
+        print(f"{name}, k={k}: H = {entropy:.2f} bits "
+              f"(max = {max_entropy:.2f}, |Aut|={aut_size})")
+    print()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Opacity Index Distribution and Automorphism Restriction
+Visualization: Semantic Landscape of Decorated Magmas
 
-Shows how the opacity index distributes across decorations,
-and how the meaning-preserving subgroup shrinks with more varied meanings.
+Shows how the semantic orbit count varies with group size and label count.
 """
-
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from itertools import permutations, product as cartprod
-from math import factorial
+from itertools import permutations
+from math import log2
 
 
-def find_cycles(n, perm):
-    visited = set()
-    cycles = []
-    for start in range(n):
-        if start not in visited:
-            cycle = []
-            x = start
-            while x not in visited:
-                visited.add(x)
-                cycle.append(x)
-                x = perm[x]
-            cycles.append(cycle)
-    return cycles
-
-
-def burnside_count(n, k):
-    total = 0
+def find_automorphisms_modular(n):
+    """Find automorphisms of (Z/nZ, +)."""
+    auts = []
     for p in permutations(range(n)):
-        total += k ** len(find_cycles(n, p))
-    return total // factorial(n)
+        ok = True
+        for x in range(n):
+            for y in range(n):
+                if p[(x + y) % n] != (p[x] + p[y]) % n:
+                    ok = False
+                    break
+            if not ok:
+                break
+        if ok:
+            auts.append(p)
+    return auts
 
 
-def opacity_spectrum(n, k):
-    spectrum = {}
-    for dec in cartprod(range(k), repeat=n):
-        oi = len(set(dec))
-        spectrum[oi] = spectrum.get(oi, 0) + 1
-    return spectrum
+def cycle_count(perm, n):
+    visited = [False] * n
+    c = 0
+    for i in range(n):
+        if not visited[i]:
+            c += 1
+            j = i
+            while not visited[j]:
+                visited[j] = True
+                j = perm[j]
+    return c
 
 
-def meaning_preserving_count(n, meaning):
-    count = 0
-    elems = list(range(n))
-    for p in permutations(elems):
-        if all(meaning[p[x]] == meaning[x] for x in elems):
-            count += 1
-    return count
+def orbit_count(auts, n, k):
+    total = 0
+    for aut in auts:
+        total += k ** cycle_count(aut, n)
+    return total // len(auts)
 
 
-def plot_opacity_spectrum():
-    fig, axes = plt.subplots(1, 3, figsize=(14, 4))
+# Compute data
+ns = range(2, 7)
+ks = [2, 3, 4]
 
-    for idx, (n, k) in enumerate([(4, 4), (5, 3), (6, 2)]):
-        spec = opacity_spectrum(n, k)
-        ois = sorted(spec.keys())
-        counts = [spec[oi] for oi in ois]
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-        axes[idx].bar(ois, counts, color=plt.cm.viridis(np.linspace(0.2, 0.8, len(ois))),
-                      edgecolor='black', linewidth=0.5)
-        axes[idx].set_xlabel('Opacity Index', fontsize=11)
-        axes[idx].set_ylabel('Number of Decorations', fontsize=11)
-        axes[idx].set_title(f'n={n}, k={k} (total={k**n})', fontsize=12)
-        axes[idx].set_xticks(ois)
+for idx, k in enumerate(ks):
+    ax = axes[idx]
+    orbit_counts = []
+    total_counts = []
+    aut_sizes = []
 
-        # Add Burnside class count
-        bc = burnside_count(n, k)
-        axes[idx].text(0.95, 0.95, f'{bc} equiv classes',
-                       transform=axes[idx].transAxes, ha='right', va='top',
-                       fontsize=9, bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    for n in ns:
+        auts = find_automorphisms_modular(n)
+        orb = orbit_count(auts, n, k)
+        orbit_counts.append(orb)
+        total_counts.append(k ** n)
+        aut_sizes.append(len(auts))
 
-    fig.suptitle('Opacity Index Distribution Across Decorations', fontsize=14, y=1.02)
-    plt.tight_layout()
-    plt.savefig('opacity_spectrum.png', dpi=150, bbox_inches='tight')
-    print("Saved opacity_spectrum.png")
+    x = list(ns)
+    ax.bar(x, total_counts, alpha=0.3, color='steelblue', label='Total labelings')
+    ax.bar(x, orbit_counts, alpha=0.8, color='coral', label='Semantic classes')
 
-
-def plot_automorphism_restriction():
-    fig, ax = plt.subplots(figsize=(8, 5))
-
-    n = 4
-    k_values = range(1, 5)
-
-    for k in k_values:
-        # For each possible opacity index, compute average |Aut_m|
-        opacity_to_aut = {}
-        for dec in cartprod(range(k), repeat=n):
-            meaning = {i: dec[i] for i in range(n)}
-            oi = len(set(dec))
-            aut_size = meaning_preserving_count(n, meaning)
-            if oi not in opacity_to_aut:
-                opacity_to_aut[oi] = []
-            opacity_to_aut[oi].append(aut_size)
-
-        ois = sorted(opacity_to_aut.keys())
-        avg_auts = [np.mean(opacity_to_aut[oi]) for oi in ois]
-
-        ax.plot(ois, avg_auts, 'o-', label=f'k={k}', markersize=6)
-
-    ax.axhline(y=factorial(n), color='red', linestyle='--', alpha=0.5,
-               label=f'|Sym({n})| = {factorial(n)}')
-    ax.set_xlabel('Opacity Index', fontsize=12)
-    ax.set_ylabel('Average |Aut_meaning|', fontsize=12)
-    ax.set_title(f'Automorphism Restriction (n={n}): Higher Opacity → Smaller Aut Group',
-                 fontsize=13)
+    ax.set_xlabel('Group size n (Z/nZ)')
+    ax.set_ylabel('Count')
+    ax.set_title(f'k = {k} labels')
     ax.legend()
     ax.set_yscale('log')
-    ax.grid(True, alpha=0.3)
 
-    plt.tight_layout()
-    plt.savefig('automorphism_restriction.png', dpi=150, bbox_inches='tight')
-    print("Saved automorphism_restriction.png")
+    for i, n in enumerate(ns):
+        ax.annotate(f'|Aut|={aut_sizes[i]}',
+                   (n, orbit_counts[i]),
+                   textcoords="offset points",
+                   xytext=(0, 10),
+                   ha='center', fontsize=7)
 
+fig.suptitle('Semantic Diversity: Total Labelings vs Semantically Distinct Classes\n'
+             'for cyclic groups Z/nZ', fontsize=13, fontweight='bold')
+plt.tight_layout()
+plt.savefig('semantic_landscape.png', dpi=150, bbox_inches='tight')
+print("Saved semantic_landscape.png")
 
-def plot_coarsening_chains():
-    fig, ax = plt.subplots(figsize=(8, 5))
+# Second plot: entropy gap
+fig2, ax2 = plt.subplots(figsize=(8, 5))
 
-    n = 5
-    np.random.seed(42)
+for k in ks:
+    entropies = []
+    max_entropies = []
+    for n in ns:
+        auts = find_automorphisms_modular(n)
+        orb = orbit_count(auts, n, k)
+        entropies.append(log2(orb) if orb > 0 else 0)
+        max_entropies.append(n * log2(k))
 
-    for trial in range(8):
-        # Random decoration with k=5
-        k = 5
-        dec = [np.random.randint(0, k) for _ in range(n)]
-        chain = [len(set(dec))]
+    ax2.plot(list(ns), entropies, 'o-', label=f'H(Z/nZ, k={k})', linewidth=2)
+    ax2.plot(list(ns), max_entropies, '--', alpha=0.4, label=f'Max (k={k})')
 
-        # Repeatedly coarsen by merging two random values
-        current_dec = list(dec)
-        while len(set(current_dec)) > 1:
-            vals = list(set(current_dec))
-            if len(vals) < 2:
-                break
-            # Merge first two values
-            merge_from = vals[0]
-            merge_to = vals[1]
-            current_dec = [merge_to if x == merge_from else x for x in current_dec]
-            chain.append(len(set(current_dec)))
-
-        ax.plot(range(len(chain)), chain, 'o-', alpha=0.7, markersize=5)
-
-    ax.set_xlabel('Coarsening Step', fontsize=12)
-    ax.set_ylabel('Opacity Index', fontsize=12)
-    ax.set_title('Semantic Coarsening: Opacity Index is Monotonically Non-Increasing',
-                 fontsize=13)
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('coarsening_chains.png', dpi=150, bbox_inches='tight')
-    print("Saved coarsening_chains.png")
-
-
-if __name__ == "__main__":
-    plot_opacity_spectrum()
-    plot_automorphism_restriction()
-    plot_coarsening_chains()
-    print("\nAll visualizations generated.")
+ax2.set_xlabel('Group size n')
+ax2.set_ylabel('Semantic Entropy (bits)')
+ax2.set_title('Semantic Entropy vs Maximum Entropy\n'
+              'Gap = information lost to automorphism symmetry')
+ax2.legend()
+ax2.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig('semantic_entropy.png', dpi=150, bbox_inches='tight')
+print("Saved semantic_entropy.png")
