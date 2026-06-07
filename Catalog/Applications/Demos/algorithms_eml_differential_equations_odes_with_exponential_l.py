@@ -1,302 +1,195 @@
+#!/usr/bin/env python3
 """
-Algorithms for EML Differential Equations
+Algorithms for EML Differential Operator Theory
 
-Type-hinted implementations of:
-1. Kovacic algorithm (simplified)
-2. EML expression differentiation
-3. Wronskian computation
-4. Growth rate classification
+Type-hinted implementations of key algorithms from the EML differential
+operator framework.
 """
 
-from __future__ import annotations
+from typing import Callable, Tuple, List, Optional
+import numpy as np
 from dataclasses import dataclass
-from enum import Enum, auto
-from typing import Callable, Optional, Tuple
-import math
-
-
-# ============================================================
-# EML Expression Type
-# ============================================================
-
-class EMLExprType(Enum):
-    CONST = auto()
-    VAR = auto()
-    ADD = auto()
-    MUL = auto()
-    NEG = auto()
-    INV = auto()
-    EXP = auto()
-    LOG = auto()
 
 
 @dataclass
-class EMLExpr:
-    """An EML (Exponential-Multiplicative-Logarithmic) expression."""
-    kind: EMLExprType
-    value: Optional[float] = None
-    left: Optional['EMLExpr'] = None
-    right: Optional['EMLExpr'] = None
+class EMLDiffOperator:
+    """Second-order linear ODE: y'' + p(x)y' + q(x)y = 0."""
+    p: Callable[[float], float]
+    q: Callable[[float], float]
 
-    @staticmethod
-    def const(c: float) -> 'EMLExpr':
-        return EMLExpr(EMLExprType.CONST, value=c)
-    
-    @staticmethod
-    def var() -> 'EMLExpr':
-        return EMLExpr(EMLExprType.VAR)
-    
-    @staticmethod
-    def add(a: 'EMLExpr', b: 'EMLExpr') -> 'EMLExpr':
-        return EMLExpr(EMLExprType.ADD, left=a, right=b)
-    
-    @staticmethod
-    def mul(a: 'EMLExpr', b: 'EMLExpr') -> 'EMLExpr':
-        return EMLExpr(EMLExprType.MUL, left=a, right=b)
-    
-    @staticmethod
-    def neg(a: 'EMLExpr') -> 'EMLExpr':
-        return EMLExpr(EMLExprType.NEG, left=a)
-    
-    @staticmethod
-    def inv(a: 'EMLExpr') -> 'EMLExpr':
-        return EMLExpr(EMLExprType.INV, left=a)
-    
-    @staticmethod
-    def exp(a: 'EMLExpr') -> 'EMLExpr':
-        return EMLExpr(EMLExprType.EXP, left=a)
-    
-    @staticmethod
-    def log(a: 'EMLExpr') -> 'EMLExpr':
-        return EMLExpr(EMLExprType.LOG, left=a)
+    def discriminant(self, x: float) -> float:
+        """Local discriminant Δ(x) = p(x)² - 4q(x)."""
+        return self.p(x) ** 2 - 4 * self.q(x)
 
-    def evaluate(self, x: float) -> float:
-        """Evaluate the expression at a point."""
-        if self.kind == EMLExprType.CONST:
-            return self.value
-        elif self.kind == EMLExprType.VAR:
-            return x
-        elif self.kind == EMLExprType.ADD:
-            return self.left.evaluate(x) + self.right.evaluate(x)
-        elif self.kind == EMLExprType.MUL:
-            return self.left.evaluate(x) * self.right.evaluate(x)
-        elif self.kind == EMLExprType.NEG:
-            return -self.left.evaluate(x)
-        elif self.kind == EMLExprType.INV:
-            v = self.left.evaluate(x)
-            return 1.0 / v if v != 0 else float('inf')
-        elif self.kind == EMLExprType.EXP:
-            return math.exp(self.left.evaluate(x))
-        elif self.kind == EMLExprType.LOG:
-            v = self.left.evaluate(x)
-            return math.log(v) if v > 0 else float('-inf')
-        raise ValueError(f"Unknown expression type: {self.kind}")
-
-    def differentiate(self) -> 'EMLExpr':
-        """Syntactic differentiation using standard rules."""
-        if self.kind == EMLExprType.CONST:
-            return EMLExpr.const(0)
-        elif self.kind == EMLExprType.VAR:
-            return EMLExpr.const(1)
-        elif self.kind == EMLExprType.ADD:
-            return EMLExpr.add(self.left.differentiate(), self.right.differentiate())
-        elif self.kind == EMLExprType.MUL:
-            # Product rule: (fg)' = f'g + fg'
-            return EMLExpr.add(
-                EMLExpr.mul(self.left.differentiate(), self.right),
-                EMLExpr.mul(self.left, self.right.differentiate())
-            )
-        elif self.kind == EMLExprType.NEG:
-            return EMLExpr.neg(self.left.differentiate())
-        elif self.kind == EMLExprType.INV:
-            # (1/f)' = -f'/f²
-            return EMLExpr.neg(
-                EMLExpr.mul(
-                    self.left.differentiate(),
-                    EMLExpr.mul(EMLExpr.inv(self.left), EMLExpr.inv(self.left))
-                )
-            )
-        elif self.kind == EMLExprType.EXP:
-            # (exp(f))' = f' * exp(f)
-            return EMLExpr.mul(self.left.differentiate(), EMLExpr.exp(self.left))
-        elif self.kind == EMLExprType.LOG:
-            # (log(f))' = f'/f
-            return EMLExpr.mul(self.left.differentiate(), EMLExpr.inv(self.left))
-        raise ValueError(f"Unknown expression type: {self.kind}")
-
-    def el_height(self) -> int:
-        """Compute the EL-height (max nesting depth of exp/log)."""
-        if self.kind in (EMLExprType.CONST, EMLExprType.VAR):
-            return 0
-        elif self.kind in (EMLExprType.ADD, EMLExprType.MUL):
-            return max(self.left.el_height(), self.right.el_height())
-        elif self.kind in (EMLExprType.NEG, EMLExprType.INV):
-            return self.left.el_height()
-        elif self.kind in (EMLExprType.EXP, EMLExprType.LOG):
-            return self.left.el_height() + 1
-        return 0
+    def gauge_transform_q(self, x: float, dp: Optional[Callable[[float], float]] = None) -> float:
+        """Gauge-transformed potential Q(x) = q - p'/2 - p²/4.
+        Requires p'(x); if not provided, computes numerically."""
+        if dp is None:
+            h = 1e-8
+            dp_val = (self.p(x + h) - self.p(x - h)) / (2 * h)
+        else:
+            dp_val = dp(x)
+        return self.q(x) - dp_val / 2 - self.p(x) ** 2 / 4
 
 
-# ============================================================
-# Wronskian and Abel's Identity
-# ============================================================
+def eml(x: float, y: float) -> float:
+    """The EML function: eml(x, y) = exp(x) - log(y)."""
+    return np.exp(x) - np.log(y)
 
-def wronskian(
+
+def eml_diag(z: float) -> float:
+    """Diagonal EML: d(z) = exp(z) - log(z)."""
+    return np.exp(z) - np.log(z)
+
+
+def compute_wronskian(
     y1: Callable[[float], float],
     y2: Callable[[float], float],
-    y1p: Callable[[float], float],
-    y2p: Callable[[float], float],
-    x: float
+    x: float,
+    h: float = 1e-8
 ) -> float:
-    """Compute the Wronskian W(x) = y1(x)*y2'(x) - y1'(x)*y2(x)."""
-    return y1(x) * y2p(x) - y1p(x) * y2(x)
+    """Compute the Wronskian W(y₁, y₂)(x) numerically.
+
+    W = y₁(x) · y₂'(x) - y₂(x) · y₁'(x)
+    """
+    dy1 = (y1(x + h) - y1(x - h)) / (2 * h)
+    dy2 = (y2(x + h) - y2(x - h)) / (2 * h)
+    return y1(x) * dy2 - y2(x) * dy1
 
 
-def abel_wronskian(
+def abel_wronskian_formula(
     W0: float,
     p: Callable[[float], float],
     x0: float,
     x: float,
     n_steps: int = 1000
 ) -> float:
-    """Compute W(x) = W(x0) * exp(-∫_{x0}^x p(t) dt) numerically.
-    
-    Uses Simpson's rule for the integral.
+    """Compute W(x) = W(x₀) · exp(-∫_{x₀}^{x} p(t) dt) via Abel's identity.
+
+    Uses trapezoidal rule for numerical integration.
     """
-    # Numerical integration of p from x0 to x
-    h = (x - x0) / n_steps
-    integral = 0.0
+    t = np.linspace(x0, x, n_steps + 1)
+    dt = (x - x0) / n_steps
+    p_vals = np.array([p(ti) for ti in t])
+    integral = np.trapz(p_vals, dx=dt)
+    return W0 * np.exp(-integral)
+
+
+def solve_second_order_ode(
+    L: EMLDiffOperator,
+    y0: float,
+    yp0: float,
+    x_span: Tuple[float, float],
+    n_steps: int = 10000
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Solve y'' + p(x)y' + q(x)y = 0 with RK4.
+
+    Returns (x_array, y_array, yp_array).
+    """
+    x0, x1 = x_span
+    h = (x1 - x0) / n_steps
+    xs = np.linspace(x0, x1, n_steps + 1)
+    ys = np.zeros(n_steps + 1)
+    yps = np.zeros(n_steps + 1)
+    ys[0] = y0
+    yps[0] = yp0
+
+    def f(x: float, y: float, yp: float) -> Tuple[float, float]:
+        return yp, -L.p(x) * yp - L.q(x) * y
+
     for i in range(n_steps):
-        t0 = x0 + i * h
-        t1 = t0 + h
-        tm = (t0 + t1) / 2
-        integral += (h / 6) * (p(t0) + 4 * p(tm) + p(t1))
-    
-    return W0 * math.exp(-integral)
+        xi = xs[i]
+        yi, ypi = ys[i], yps[i]
+
+        k1_y, k1_yp = f(xi, yi, ypi)
+        k2_y, k2_yp = f(xi + h/2, yi + h*k1_y/2, ypi + h*k1_yp/2)
+        k3_y, k3_yp = f(xi + h/2, yi + h*k2_y/2, ypi + h*k2_yp/2)
+        k4_y, k4_yp = f(xi + h, yi + h*k3_y, ypi + h*k3_yp)
+
+        ys[i+1] = yi + h * (k1_y + 2*k2_y + 2*k3_y + k4_y) / 6
+        yps[i+1] = ypi + h * (k1_yp + 2*k2_yp + 2*k3_yp + k4_yp) / 6
+
+    return xs, ys, yps
 
 
-# ============================================================
-# Kovacic Algorithm (Simplified)
-# ============================================================
-
-class KovacicCase(Enum):
-    """The four cases of the Kovacic algorithm."""
-    CASE_1 = 1  # Reducible (triangular Galois group)
-    CASE_2 = 2  # Imprimitive (dihedral Galois group)
-    CASE_3 = 3  # Finite (platonic Galois group)
-    CASE_4 = 4  # Full SL(2) (no Liouvillian solution)
-
-
-@dataclass
-class Pole:
-    """A pole of a rational function."""
-    location: complex  # ∞ represented as float('inf')
-    order: int
-    coefficient: complex  # leading coefficient
+def find_zeros(x: np.ndarray, y: np.ndarray) -> List[float]:
+    """Find approximate zeros of y by linear interpolation."""
+    zeros = []
+    for i in range(len(y) - 1):
+        if y[i] * y[i+1] < 0:
+            # Linear interpolation
+            x_zero = x[i] - y[i] * (x[i+1] - x[i]) / (y[i+1] - y[i])
+            zeros.append(x_zero)
+        elif y[i] == 0:
+            zeros.append(x[i])
+    return zeros
 
 
-def kovacic_classify(poles: list[Pole]) -> KovacicCase:
-    """Simplified Kovacic case classification based on pole structure.
-    
-    This is a simplified version that handles common cases:
-    - If all poles have even order: could be Cases 1, 2, or 3
-    - If any pole has odd order > 1: eliminates Cases 2 and 3
-    - Full classification requires additional residue analysis
-    
-    Args:
-        poles: List of poles with their orders
-    
-    Returns:
-        The Kovacic case classification
+def verify_sturm_separation(
+    L: EMLDiffOperator,
+    ic1: Tuple[float, float],
+    ic2: Tuple[float, float],
+    x_span: Tuple[float, float],
+    n_steps: int = 50000
+) -> Tuple[List[float], List[float], bool]:
+    """Verify Sturm separation: zeros of two linearly independent solutions interlace.
+
+    Returns (zeros_1, zeros_2, interlacing_holds).
     """
-    has_odd_order = any(p.order % 2 == 1 and p.order > 1 for p in poles)
-    max_order = max((p.order for p in poles), default=0)
-    
-    if has_odd_order:
-        # Odd order poles (> 1) eliminate Cases 2 and 3
-        # Need further analysis for Case 1 vs Case 4
-        # For simplicity, classify as Case 4 (conservative)
-        return KovacicCase.CASE_4
-    
-    if max_order <= 2:
-        # Low-order poles: likely Case 1
-        return KovacicCase.CASE_1
-    
-    # Default: Case 4 (most conservative)
-    return KovacicCase.CASE_4
+    xs, y1, _ = solve_second_order_ode(L, ic1[0], ic1[1], x_span, n_steps)
+    _, y2, _ = solve_second_order_ode(L, ic2[0], ic2[1], x_span, n_steps)
+
+    z1 = find_zeros(xs, y1)
+    z2 = find_zeros(xs, y2)
+
+    # Check interlacing: between any two consecutive zeros of y1,
+    # there should be exactly one zero of y2
+    interlacing = True
+    for i in range(len(z1) - 1):
+        count = sum(1 for z in z2 if z1[i] < z < z1[i+1])
+        if count != 1:
+            interlacing = False
+            break
+
+    return z1, z2, interlacing
 
 
-def kovacic_airy() -> KovacicCase:
-    """Apply Kovacic algorithm to Airy's equation y'' = xy.
-    
-    r(x) = x has:
-    - No finite poles
-    - A pole of order 3 at infinity (x ~ 1/t², so r = 1/t² has order 3)
-    
-    The odd order at infinity rules out Cases 2 and 3.
-    Case 1 analysis also fails.
-    Result: Case 4 (full SL(2), no Liouvillian solutions).
+def classify_behavior(L: EMLDiffOperator, x: float) -> str:
+    """Classify local behavior of ODE solutions using the discriminant.
+
+    Δ > 0: exponential behavior (two real characteristic roots)
+    Δ = 0: critical (repeated root)
+    Δ < 0: oscillatory behavior (complex conjugate roots)
     """
-    # Pole at infinity with order 3
-    poles = [Pole(location=complex('inf'), order=3, coefficient=1)]
-    
-    result = kovacic_classify(poles)
-    assert result == KovacicCase.CASE_4, "Airy equation should be Case 4"
-    return result
-
-
-# ============================================================
-# Growth Rate Classification
-# ============================================================
-
-class GrowthClass(Enum):
-    """Growth rate classification for EML functions."""
-    POLYNOMIAL = 0      # |f(x)| ≤ C * x^n
-    EXPONENTIAL = 1     # |f(x)| ≤ C * exp(x^n)
-    DOUBLE_EXP = 2      # |f(x)| ≤ C * exp(exp(x^n))
-    SUPER_EXP = 3       # Higher iterated exponentials
-
-
-def classify_growth(expr: EMLExpr) -> GrowthClass:
-    """Classify the growth rate of an EML expression.
-    
-    The growth class is bounded by the EL-height:
-    - EL-height 0: polynomial growth
-    - EL-height 1: exponential growth
-    - EL-height 2: double exponential growth
-    - EL-height k: k-fold iterated exponential growth
-    """
-    h = expr.el_height()
-    if h == 0:
-        return GrowthClass.POLYNOMIAL
-    elif h == 1:
-        return GrowthClass.EXPONENTIAL
-    elif h == 2:
-        return GrowthClass.DOUBLE_EXP
+    disc = L.discriminant(x)
+    if disc > 1e-10:
+        return "exponential"
+    elif disc < -1e-10:
+        return "oscillatory"
     else:
-        return GrowthClass.SUPER_EXP
+        return "critical"
 
 
-# ============================================================
-# Main demonstration
-# ============================================================
+# ── Prebuilt operators ───────────────────────────────────────────────
+
+AIRY_OPERATOR = EMLDiffOperator(p=lambda x: 0, q=lambda x: -x)
+EXP_OPERATOR = EMLDiffOperator(p=lambda x: 0, q=lambda x: -np.exp(x))
+
+def eml_operator(c: float) -> EMLDiffOperator:
+    """ODE: y'' + eml(x, c) y' = 0."""
+    return EMLDiffOperator(p=lambda x: eml(x, c), q=lambda x: 0)
+
 
 if __name__ == "__main__":
-    # Demo: Kovacic classification
-    print("Kovacic classification of Airy's equation:", kovacic_airy())
-    
-    # Demo: EML expression manipulation
-    # f(x) = exp(x²)
-    x = EMLExpr.var()
-    x_sq = EMLExpr.mul(x, x)
-    exp_x_sq = EMLExpr.exp(x_sq)
-    
-    print(f"\nf(x) = exp(x²)")
-    print(f"  f(1) = {exp_x_sq.evaluate(1):.6f}")
-    print(f"  EL-height = {exp_x_sq.el_height()}")
-    print(f"  Growth class = {classify_growth(exp_x_sq)}")
-    
-    f_prime = exp_x_sq.differentiate()
-    print(f"  f'(1) = {f_prime.evaluate(1):.6f}")
-    print(f"  EL-height of f' = {f_prime.el_height()}")
-    print(f"  (should be ≤ {exp_x_sq.el_height()})")
+    # Demo: Airy equation Sturm separation
+    z1, z2, ok = verify_sturm_separation(
+        AIRY_OPERATOR, (1.0, 0.0), (0.0, 1.0), (-15, 0), 100000
+    )
+    print(f"Airy equation zeros (sol 1): {[f'{z:.3f}' for z in z1[:6]]}")
+    print(f"Airy equation zeros (sol 2): {[f'{z:.3f}' for z in z2[:6]]}")
+    print(f"Interlacing holds: {ok}")
+
+    # Demo: Airy discriminant sign change
+    for x_val in [-5, -1, 0, 1, 5]:
+        print(f"Airy discriminant at x={x_val}: Δ={AIRY_OPERATOR.discriminant(x_val):.1f} "
+              f"→ {classify_behavior(AIRY_OPERATOR, x_val)}")
