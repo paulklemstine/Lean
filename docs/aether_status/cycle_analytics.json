@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-07T10:51:25.824729+00:00",
+  "last_updated": "2026-06-07T11:25:55.041757+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -13989,6 +13989,41 @@
       "theorem_count": 3,
       "timestamp": "2026-06-07T10:51:25.775768+00:00",
       "title": "Isomorphisms of Meaning: When Structures Collide"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.648,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 320,
+      "domain": "Novelty",
+      "duration_seconds": 8477.558168172836,
+      "end_time": 1780831521.152698,
+      "files_integrated": 5,
+      "job_id": "9df8bce3",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.82,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.768,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.6388,
+        "novelty": 0.9433,
+        "proof_depth": 0.5083,
+        "usefulness": 0.7541
+      },
+      "quality_score": 0.2816,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780823043.5945299,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T11:25:54.983234+00:00",
+      "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
     }
   ]
 }

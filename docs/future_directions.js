@@ -2269,6 +2269,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Synthesis\n\nThis cycle established a rigorous formalization of Baker-Norine chip-firing theory on finite graphs, with deep specializations to complete graphs K_n and formal derivations of key consequences of the Riemann-Roch theorem (Riemann's inequality, canonical rank = g\u22121, Serre duality, double duality). The most promising cross-domain connection is the **bridge between combinatorial chip-firing and tropical geometry**: the Baker-Norine theorem is the Riemann-Roch theorem for tropical curves, and our formalized Laplacian/linear equivalence framework provides the algebraic backbone for tropical divisor theory.\n\nThe computational verification revealed that the gonality of K_n exceeds 2 for n \u2265 4, suggesting that the Brill-Noether theory of complete graphs is richer than initially expected. The effectiveness transition of the canonical divisor at n = 3 connects to the classical distinction between rational (g = 0) and non-rational (g \u2265 1) curves. The degree conservation laws (laplacian_degree_zero, chipFire_preserves_degree) were the easiest to formalize but serve as the foundation for all deeper results.\n\nThe highest breakthrough potential lies in **Direction 1** (tropical Brill-Noether for complete graphs), which would characterize the full landscape of achievable ranks on K_n and connect to the classical Brill-Noether theorem via specialization. This would bridge combinatorics, algebraic geometry, and tropical geometry in a single framework.\n\n---\n\n### Direction 1: Tropical Brill-Noether Theory for Complete Graphs\n\n**Conjecture**: The Brill-Noether number \u03c1(g, r, d) = g \u2212 (r+1)(g\u2212d+r) exactly characterizes the existence of divisors of degree d and rank \u2265 r on K_n (where g = (n\u22121)(n\u22122)/2). Specifically: K_n has a divisor of degree d and rank \u2265 r if and only if \u03c1(g, r, d) \u2265 0.\n\n**Test**: Compute the rank of all divisor classes of each degree d \u2208 [0, 2g\u22122] on K_n for n = 3, 4, 5, 6. Check whether the maximum achievable rank matches the Brill-Noether prediction. The gonality (minimum degree with rank \u2265 1) should be \u230an/2\u230b + 1 by Cools-Draisma-Payne-Robeva.\n\n**Impact**: If true, this would confirm the Brill-Noether conjecture for the complete graph \u2014 a deep structural result that mirrors the classical Brill-Noether theorem for smooth curves. If false, the failure would identify which divisor classes on K_n violate the Brill-Noether bound, revealing new phenomena unique to discrete geometry.\n\n**Catalog References**: `Catalog/EML/BakerNorine.lean`, `Catalog/Tropical/CompleteGraph.lean`, `Novelty/CompleteGraphChipFiring.lean`\n\n**Proof Strategy**: \n1. Formalize the Brill-Noether number \u03c1(g, r, d) = g \u2212 (r+1)(g\u2212d+r)\n2. Use the symmetry group S_n acting on divisors of K_n to reduce the search space\n3. Establish that the gonality of K_n is \u230a(n+2)/2\u230b using explicit constructions\n4. Prove the upper bound r(D) \u2264 \u03c1(g, r, d) using Clifford's inequality and specialization\n\n**Domain Bridges**: Combinatorics (chip-firing on symmetric graphs) \u2194 Algebraic Geometry (Brill-Noether theory on curves) \u2194 Tropical Geometry (tropical linear series)\n\n**Lineage**: Builds on `genus_complete_graph`, `canonical_complete_graph`, `rank_canonical_complete`, and `clifford_inequality` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: q-Reduced Divisors and Dhar's Burning Algorithm\n\n**Conjecture**: Dhar's burning algorithm can be fully formalized in Lean 4, yielding a constructive proof that every divisor class has a unique q-reduced representative, which in turn provides a constructive proof of the Baker-Norine Riemann-Roch theorem (eliminating our current axiomatization).\n\n**Test**: Formalize the burning algorithm as a decidable procedure. Prove termination (the algorithm always reaches a fixed point in at most |V| \u2212 1 steps). Prove uniqueness of the q-reduced form. Then derive Baker-Norine RR from the existence and uniqueness of q-reduced divisors.\n\n**Impact**: A fully constructive proof of Baker-Norine RR in Lean 4 would be a first in formalized mathematics. The q-reduced divisor approach also yields efficient algorithms (O(|V|\u00b2) time) for rank computation, enabling large-scale experiments.\n\n**Catalog References**: `Catalog/EML/BakerNorine.lean` (IsQReduced definition), `Novelty/ChipFiringDefs.lean`\n\n**Proof Strategy**:\n1. Formalize Dhar's burning as a function `V \u2192 Divisor \u2192 Finset V` (the set of unburned vertices)\n2. Prove that firing the unburned set strictly reduces a potential function (lexicographic ordering)\n3. Prove termination using well-founded induction on the potential\n4. Prove uniqueness: two q-reduced divisors in the same class must be equal\n5. Derive Baker-Norine: for any D, its q-reduced form D_q satisfies r(D) = D_q(q) if effective, \u22121 otherwise\n\n**Domain Bridges**: Algorithms (burning algorithm, sandpile models) \u2194 Combinatorics (q-reduced divisors) \u2194 Algebraic Geometry (Riemann-Roch)\n\n**Lineage**: Extends the definitions in `Novelty/ChipFiringDefs.lean` and would replace the hypothesis-based approach in `Novelty/CompleteGraphChipFiring.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Chip-Firing on Weighted Graphs and Metric Graphs\n\n**Conjecture**: The Baker-Norine theory extends to weighted graphs (where each edge has a positive integer weight), with the canonical divisor K(v) = \u03a3_{e\u220bv} w(e) \u2212 2, the genus g = \u03a3_e w(e) \u2212 |V| + 1, and the Riemann-Roch formula r(D) \u2212 r(K\u2212D) = deg(D) + 1 \u2212 g. The rank on a weighted graph equals the rank on the corresponding subdivision (where each edge of weight w is replaced by a path of w edges).\n\n**Test**: Implement weighted chip-firing and verify Riemann-Roch on weighted complete graphs and weighted cycles. Check that subdivision preserves rank. The genus of the weighted K_n with all weights w should be w \u00b7 n(n\u22121)/2 \u2212 n + 1.\n\n**Impact**: This bridges finite chip-firing to tropical geometry, where metric graphs (graphs with real-valued edge lengths) are the central objects. The weighted version is the discrete approximation to the tropical Riemann-Roch theorem of Gathmann-Kerber and Mikhalkin-Zharkov.\n\n**Catalog References**: `Catalog/Tropical/ChipFiring/Defs.lean`, `Catalog/Tropical/DivisorTheory.lean`\n\n**Proof Strategy**:\n1. Define weighted graph divisors: modify the Laplacian to account for edge weights\n2. Define the weighted canonical divisor K(v) = weighted_deg(v) \u2212 2\n3. Prove deg(K) = 2g \u2212 2 for weighted genus\n4. Verify that subdivision is rank-preserving\n5. State and prove the weighted Baker-Norine theorem\n\n**Domain Bridges**: Discrete Mathematics (weighted graphs) \u2194 Tropical Geometry (metric graphs) \u2194 Analysis (heat equation on graphs)\n\n**Lineage**: Generalizes the complete graph results in this cycle to the weighted setting.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: The Jacobian Group and Abel-Jacobi Map\n\n**Conjecture**: The Jacobian group Jac(K_n) (the quotient of degree-0 divisors by principal divisors) is isomorphic to \u2124^{n\u22121} / Im(L), where L is the reduced Laplacian of K_n. For the complete graph, |Jac(K_n)| = n^{n\u22122} (Kirchhoff's matrix-tree theorem), and the Abel-Jacobi map \u03c6: V \u2192 Jac(K_n) given by \u03c6(v) = [v \u2212 v\u2080] is an embedding.\n\n**Test**: Compute Jac(K_n) explicitly for n = 3, 4, 5 using Smith normal form of the Laplacian. Verify that |Jac(K_n)| equals the number of spanning trees. Prove the Abel-Jacobi embedding for K_n using the symmetry group.\n\n**Impact**: The Jacobian connects chip-firing to the theory of abelian sandpiles, parking functions, and the Kirchhoff matrix-tree theorem. The embedding result is the graph analogue of the Abel-Jacobi theorem for Riemann surfaces.\n\n**Catalog References**: `Novelty/ChipFiringDefs.lean`, `Catalog/EML/BakerNorine.lean`\n\n**Proof Strategy**:\n1. Define the Jacobian as the quotient Div\u2070(G) / Prin(G)\n2. Compute the Smith normal form of the Laplacian of K_n\n3. Use Kirchhoff's theorem to show |Jac(K_n)| = n^{n\u22122}\n4. Define the Abel-Jacobi map and prove injectivity on vertices\n\n**Domain Bridges**: Algebra (group theory, Smith normal form) \u2194 Combinatorics (spanning trees, parking functions) \u2194 Algebraic Geometry (Abel-Jacobi theory)\n\n**Lineage**: Builds on the Laplacian and linear equivalence formalized in `Novelty/ChipFiringDefs.lean` and `Novelty/ChipFiringTheorems.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Spectral Methods and the Chip-Firing Zeta Function\n\n**Conjecture**: The Ihara zeta function of K_n, defined as \u03b6_{K_n}(u) = \u03a0_{[C]} (1 \u2212 u^{|C|})^{\u22121} (product over prime cycles C), satisfies the determinantal formula \u03b6_{K_n}(u)^{\u22121} = (1 \u2212 u\u00b2)^{g\u22121} det(I \u2212 Au + (n\u22122)u\u00b2I), where A is the adjacency matrix of K_n. The poles of \u03b6_{K_n} encode the eigenvalues of the Laplacian, which in turn control the rate of convergence of chip-firing to equilibrium.\n\n**Test**: Compute the Ihara zeta function for K_3, K_4, K_5 and verify the determinantal formula. Relate the spectral gap of the Laplacian (which is n for K_n) to the mixing time of chip-firing random walks.\n\n**Impact**: This connects chip-firing dynamics to spectral graph theory and number theory (via the analogy between the Ihara zeta and the Riemann zeta function). The spectral gap controls how quickly a random chip-firing process converges, with implications for MCMC sampling on graph divisor spaces.\n\n**Catalog References**: `Catalog/Algebra/SpectralGraphTheory.lean` (if exists), `Novelty/ChipFiringTheorems.lean`\n\n**Proof Strategy**:\n1. Define the Ihara zeta function for simple graphs\n2. Prove the Bass-Hashimoto determinantal formula\n3. Specialize to K_n using the known eigenvalues (n\u22121 with multiplicity 1, \u22121 with multiplicity n\u22121)\n4. Relate the spectral gap to chip-firing convergence rates\n\n**Domain Bridges**: Number Theory (zeta functions) \u2194 Spectral Theory (graph eigenvalues) \u2194 Probability (mixing times) \u2194 Combinatorics (chip-firing)\n\n**Lineage**: Connects the Laplacian structure formalized in this cycle to spectral theory.\n\n**Ambition**: grand_challenge\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0937",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9df8bce3",
+    "status": "available",
+    "timestamp": "2026-06-07T11:25:53.452163+00:00",
+    "title": "Rigorous formalization of Baker-Norine chip-firing theo"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -2868,7 +2883,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "3b1c94b3",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -2878,7 +2893,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -3393,7 +3408,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mathematical foundations of a holographic co"
   },
   {
-    "consumed_by_exp_id": "fdba2951",
+    "consumed_by_exp_id": "",
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domains": [
       "Computation",
@@ -3403,7 +3418,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3699999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.254223+00:00",
     "title": "Game of Life Universality"
   },
@@ -3423,7 +3438,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
-    "consumed_by_exp_id": "466edb89",
+    "consumed_by_exp_id": "",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domains": [
       "Algebra",
@@ -3433,7 +3448,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.181414+00:00",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
@@ -3483,7 +3498,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hawking Radiation: Information Paradox Formalized"
   },
   {
-    "consumed_by_exp_id": "52c9bc28",
+    "consumed_by_exp_id": "",
     "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
     "domains": [
       "Speculative",
@@ -3493,7 +3508,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
   },
@@ -3978,7 +3993,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
   },
   {
-    "consumed_by_exp_id": "6a5d1edf",
+    "consumed_by_exp_id": "",
     "description": "The Fermi paradox asks: if intelligent life is common, where is everyone? The pigeonhole principle answers: if there are more pigeons than holes, at least one hole contains more than one pigeon. Apply this to the cosmos: there are approximately 10^22 stars in the observable universe (pigeons) and approximately 10^10 habitable-zone planets (holes). By the pigeonhole principle, at least one habitable planet contains at least 10^12 stars' worth of interest... wait, that's the wrong way around. Correct: there are ~10^10 habitable planets (pigeons) and ~4.5 billion years of time (holes). By the pigeonhole principle, at least one time period of one year contains at least 2 habitable planets developing intelligence. But we observe zero contacts. Conjecture: The resolution is that intelligent life is NOT common \u2014 the expected number of technological civilizations in the observable universe is less than 1. More precisely: if we model the Drake equation with honest probability estimates, P(technological civilization per habitable planet) < 10^{-10}, making the expected number of civilizations < 10^0 = 1. The Fermi paradox is not a paradox at all \u2014 it is the pigeonhole principle correctly predicting that with very few pigeons (civilizations) and very many holes (planets + time), most holes are empty. Test: compute the Drake equation with conservative estimates and verify that E[civilizations] < 1. Impact: we are alone because probability says so. The universe is mostly empty because that's what the math predicts.",
     "domains": [
       "Novelty",
@@ -3988,12 +4003,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.571054+00:00",
     "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
   },
   {
-    "consumed_by_exp_id": "89a62d78",
+    "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
     "domains": [
       "Novelty",
@@ -4003,7 +4018,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.581649+00:00",
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
@@ -4638,7 +4653,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "abe91576",
     "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
     "domains": [
       "Novelty",
@@ -4648,7 +4663,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:31.030197+00:00",
     "title": "Aleph-1 Surface: Geometry Between Dimensions"
   },
