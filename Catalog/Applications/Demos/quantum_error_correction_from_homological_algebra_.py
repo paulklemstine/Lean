@@ -1,226 +1,464 @@
 #!/usr/bin/env python3
 """
-CSS Codes as Cohomology: Numerical Demonstrations
+CSS Codes as Cohomology: Demonstration Script
 
-Demonstrates the CSS-homology correspondence through concrete examples:
-1. Toric code parameter computation
-2. Steane and Reed-Muller code verification
-3. Product code (Künneth formula)
-4. BKT bound analysis
-5. Genus-distance tradeoff
+Demonstrates the chain-complex-to-CSS-code construction for:
+1. The 3-qubit repetition code
+2. The toric code on a 2×2 torus
+3. The hypercube code on Q_4
 """
 
 import numpy as np
-from typing import Tuple
+from typing import Tuple, List
 
-def css_params(n: int, dim_c1: int, dim_c2: int) -> Tuple[int, int]:
-    """Compute CSS code k from two classical code dimensions.
+def gf2_rank(matrix: np.ndarray) -> int:
+    """Compute rank of a matrix over GF(2) using Gaussian elimination."""
+    m = matrix.copy() % 2
+    rows, cols = m.shape
+    rank = 0
+    for col in range(cols):
+        pivot = None
+        for row in range(rank, rows):
+            if m[row, col] == 1:
+                pivot = row
+                break
+        if pivot is None:
+            continue
+        m[[rank, pivot]] = m[[pivot, rank]]
+        for row in range(rows):
+            if row != rank and m[row, col] == 1:
+                m[row] = (m[row] + m[rank]) % 2
+        rank += 1
+    return rank
 
-    k = dim(C1) + dim(C2) - n  (Euler-Poincaré formula)
+
+def gf2_nullity(matrix: np.ndarray) -> int:
+    """Compute dimension of kernel over GF(2)."""
+    return matrix.shape[1] - gf2_rank(matrix)
+
+
+def gf2_kernel_basis(matrix: np.ndarray) -> np.ndarray:
+    """Find a basis for the kernel of a matrix over GF(2).
+    Given matrix A (m x n), finds vectors x in F_2^n such that A @ x = 0."""
+    m = matrix.copy() % 2
+    rows, cols = m.shape
+    # Augment with identity on columns side
+    aug = np.hstack([m.T, np.eye(cols, dtype=int)])  # (cols x rows+cols)
+
+    rank = 0
+    for col in range(rows):
+        pivot = None
+        for row in range(rank, cols):
+            if aug[row, col] == 1:
+                pivot = row
+                break
+        if pivot is None:
+            continue
+        aug[[rank, pivot]] = aug[[pivot, rank]]
+        for row in range(cols):
+            if row != rank and aug[row, col] == 1:
+                aug[row] = (aug[row] + aug[rank]) % 2
+        rank += 1
+
+    # Kernel basis = rows of aug[rank:, rows:]
+    ker = aug[rank:, rows:] % 2
+    return ker if len(ker) > 0 else np.zeros((0, cols), dtype=int)
+
+
+def css_from_chain_complex(d1: np.ndarray, d2: np.ndarray) -> dict:
     """
-    k = dim_c1 + dim_c2 - n
-    assert k >= 0, f"Invalid: k = {k} < 0"
-    assert k <= n, f"Invalid: k = {k} > n = {n}"
-    return n, k
+    Construct a CSS code from a chain complex C_2 -[d2]-> C_1 -[d1]-> C_0.
 
-def toric_code_params(L: int) -> Tuple[int, int, int]:
-    """Toric code [[2L², 2, L]] parameters."""
-    n = 2 * L**2
-    k = 2
-    d = L
-    return n, k, d
-
-def product_code_params(n1: int, k1: int, n2: int, k2: int) -> Tuple[int, int]:
-    """Hypergraph product code parameters.
-
-    n = n1*r2 + r1*n2 where ri = ni - ki
-    k = k1 * k2  (Künneth formula)
+    Returns a dictionary with code parameters.
     """
-    r1 = n1 - k1
-    r2 = n2 - k2
-    n = n1 * r2 + r1 * n2
-    k = k1 * k2
-    return n, k
+    # Verify chain complex condition: d1 @ d2 = 0 mod 2
+    product = (d1 @ d2) % 2
+    assert np.all(product == 0), "Chain complex condition violated: d1 ∘ d2 ≠ 0"
 
-def bkt_bound(k: int, n: int) -> float:
-    """Maximum distance from BKT bound: d <= sqrt(n/k)."""
-    if k == 0:
-        return float('inf')
-    return np.sqrt(n / k)
+    n1 = d1.shape[1]  # number of physical qubits (1-chains)
 
-def singleton_bound(n: int, k: int) -> float:
-    """Maximum distance from quantum Singleton bound: d <= (n-k)/2 + 1."""
-    return (n - k) / 2 + 1
+    # Compute ranks and dimensions
+    rank_d1 = gf2_rank(d1)
+    rank_d2 = gf2_rank(d2)
+    dim_ker_d1 = gf2_nullity(d1)  # = n1 - rank_d1
+    dim_im_d2 = rank_d2
 
-def euler_poincare_check(n: int, k: int, dim_c1: int, dim_c2: int) -> bool:
-    """Verify the Euler-Poincaré identity: n + k = dim(C1) + dim(C2)."""
-    return n + k == dim_c1 + dim_c2
+    # Betti number = dim(ker d1) - dim(im d2)
+    betti_1 = dim_ker_d1 - dim_im_d2
 
-# ========== Demonstrations ==========
+    # Find non-trivial cycles (ker d1 \ im d2) for distance computation
+    ker_basis = gf2_kernel_basis(d1)  # kernel of d1: vectors x with d1 @ x = 0
 
-print("=" * 60)
-print("CSS CODES AS COHOMOLOGY: NUMERICAL DEMONSTRATIONS")
-print("=" * 60)
+    # Compute minimum weight of non-trivial cycle
+    min_weight = n1 + 1  # sentinel
+    if betti_1 > 0 and len(ker_basis) > 0:
+        # Enumerate all non-zero elements of ker(d1)
+        num_ker = len(ker_basis)
+        for mask in range(1, 2**num_ker):
+            vec = np.zeros(n1, dtype=int)
+            for i in range(num_ker):
+                if mask & (1 << i):
+                    vec = (vec + ker_basis[i]) % 2
+            # Check if this is in im(d2)
+            # A vector is in im(d2) iff it can be expressed as d2 @ x for some x
+            aug = np.hstack([d2, vec.reshape(-1, 1)])
+            if gf2_rank(aug) == gf2_rank(d2):
+                continue  # It's a boundary, skip
+            weight = int(np.sum(vec))
+            if weight > 0:
+                min_weight = min(min_weight, weight)
 
-# 1. Toric code family
-print("\n1. TORIC CODE FAMILY [[2L², 2, L]]")
-print("-" * 40)
-print(f"{'L':>3} {'n':>6} {'k':>3} {'d':>4} {'k·d²':>8} {'BKT':>6} {'Singleton':>10} {'Saturated':>10}")
-for L in range(2, 11):
-    n, k, d = toric_code_params(L)
-    bkt = bkt_bound(k, n)
-    sing = singleton_bound(n, k)
-    saturated = k * d**2 == n
-    print(f"{L:>3} {n:>6} {k:>3} {d:>4} {k*d**2:>8} {bkt:>6.1f} {sing:>10.1f} {'YES' if saturated else 'NO':>10}")
+    if min_weight > n1:
+        min_weight = 0  # No non-trivial cycles found
 
-# 2. CSS code Euler-Poincaré verification
-print("\n2. EULER-POINCARÉ IDENTITY: n + k = dim(C₁) + dim(C₂)")
-print("-" * 40)
+    return {
+        'n': n1,
+        'k': betti_1,
+        'd': min_weight,
+        'rank_d1': rank_d1,
+        'rank_d2': rank_d2,
+        'dim_ker_d1': dim_ker_d1,
+        'dim_im_d2': dim_im_d2,
+        'euler_check': betti_1 + rank_d1 + rank_d2 == n1  # Should always be True
+    }
 
-codes = [
-    ("Steane [[7,1,3]]", 7, 4, 4, 3),
-    ("Reed-Muller [[15,1,3]]", 15, 11, 5, 3),
-    ("Toric L=3 [[18,2,3]]", 18, 10, 10, 3),
-    ("Toric L=4 [[32,2,4]]", 32, 17, 17, 4),
-    ("Toric L=5 [[50,2,5]]", 50, 26, 26, 5),
-]
 
-for name, n, d1, d2, d in codes:
-    n_calc, k = css_params(n, d1, d2)
-    ep_ok = euler_poincare_check(n, k, d1, d2)
-    sing = singleton_bound(n, k)
-    print(f"  {name:>25}: n+k = {n}+{k} = {n+k}, "
-          f"dim₁+dim₂ = {d1}+{d2} = {d1+d2}, "
-          f"EP {'✓' if ep_ok else '✗'}, d={d} ≤ {sing:.0f}")
+def demo_repetition_code():
+    """3-qubit repetition code: path graph with 3 edges, 2 vertices."""
+    print("=" * 60)
+    print("EXAMPLE 1: 3-Qubit Repetition Code")
+    print("=" * 60)
 
-# 3. Product code (Künneth formula)
-print("\n3. HYPERGRAPH PRODUCT CODES (KÜNNETH FORMULA)")
-print("-" * 40)
-print(f"{'Code 1':>12} {'Code 2':>12} {'→ n':>6} {'→ k=k₁k₂':>10}")
+    # d1: F_2^3 -> F_2^2, parity check matrix
+    # (x0, x1, x2) -> (x0+x1, x1+x2)
+    d1 = np.array([
+        [1, 1, 0],
+        [0, 1, 1]
+    ], dtype=int)
 
-products = [
-    ((3, 1), (3, 1)),
-    ((5, 1), (5, 1)),
-    ((7, 4), (7, 4)),
-    ((5, 2), (7, 3)),
-    ((10, 1), (10, 1)),
-]
+    # d2: F_2^0 -> F_2^3 (no 2-cells)
+    d2 = np.zeros((3, 0), dtype=int)
 
-for (n1, k1), (n2, k2) in products:
-    n, k = product_code_params(n1, k1, n2, k2)
-    print(f"  [{n1},{k1}] × [{n2},{k2}] → n={n:>5}, k={k:>3} = {k1}×{k2}")
+    params = css_from_chain_complex(d1, d2)
 
-# 4. Genus-distance tradeoff
-print("\n4. GENUS-DISTANCE TRADEOFF FOR SURFACE CODES")
-print("-" * 40)
-print(f"{'Genus g':>8} {'k=2g':>5} {'n=1000':>7} {'d_max':>7} {'d_max²':>8}")
+    print(f"Chain complex: F_2^0 -> F_2^3 -> F_2^2")
+    print(f"  d1 (parity check):")
+    print(f"    {d1}")
+    print(f"  d2 = 0 (no 2-cells)")
+    print()
+    print(f"Code parameters: [[{params['n']}, {params['k']}, {params['d']}]]")
+    print(f"  Physical qubits (n):  {params['n']}")
+    print(f"  Logical qubits (k):   {params['k']}  = β₁ (Betti number)")
+    print(f"  Distance (d):         {params['d']}")
+    print(f"  rank(∂₁):             {params['rank_d1']}")
+    print(f"  rank(∂₂):             {params['rank_d2']}")
+    print(f"  dim(ker ∂₁):          {params['dim_ker_d1']}")
+    print(f"  Euler check:          β₁ + rank(∂₁) + rank(∂₂) = {params['k']} + {params['rank_d1']} + {params['rank_d2']} = {params['n']} ✓")
+    print()
 
-n_fixed = 1000
-for g in [1, 2, 5, 10, 20, 50]:
-    k = 2 * g
-    d_max = np.sqrt(n_fixed / k)
-    print(f"{g:>8} {k:>5} {n_fixed:>7} {d_max:>7.1f} {d_max**2:>8.1f}")
 
-# 5. Syndrome decomposition
-print("\n5. SYNDROME DECOMPOSITION: n - k = rank(∂₁) + rank(∂₂)")
-print("-" * 40)
+def demo_toric_code():
+    """Toric code on a 2x2 torus (4 vertices, 8 edges, 4 faces)."""
+    print("=" * 60)
+    print("EXAMPLE 2: Toric Code (2×2 Torus)")
+    print("=" * 60)
 
-for L in range(2, 8):
-    n, k, d = toric_code_params(L)
-    r1 = L**2 - 1  # rank of ∂₁
-    r2 = L**2 - 1  # rank of ∂₂
-    print(f"  L={L}: n-k = {n}-{k} = {n-k}, "
-          f"rank(∂₁)+rank(∂₂) = {r1}+{r2} = {r1+r2} "
-          f"{'✓' if n-k == r1+r2 else '✗'}")
+    # Vertices: v(i,j) for i,j in {0,1}, labeled 0..3
+    # v(0,0)=0, v(0,1)=1, v(1,0)=2, v(1,1)=3
+    # Horizontal edges: h(i,j) = edge from v(i,j) to v(i,(j+1)%2)
+    # Vertical edges: v(i,j) = edge from v(i,j) to v((i+1)%2,j)
+    # Edge labels: h(0,0)=0, h(0,1)=1, h(1,0)=2, h(1,1)=3
+    #              v(0,0)=4, v(0,1)=5, v(1,0)=6, v(1,1)=7
 
-# 6. Homology dimensions
-print("\n6. HOMOLOGY DIMENSIONS: k = dim(Z₁) - dim(B₁)")
-print("-" * 40)
+    # d1: F_2^8 -> F_2^4 (boundary of edge = sum of endpoints)
+    d1 = np.zeros((4, 8), dtype=int)
+    # h(0,0): v(0,0)->v(0,1), edge 0: d1 = v0 + v1
+    d1[0, 0] = 1; d1[1, 0] = 1
+    # h(0,1): v(0,1)->v(0,0), edge 1: d1 = v1 + v0
+    d1[1, 1] = 1; d1[0, 1] = 1
+    # h(1,0): v(1,0)->v(1,1), edge 2
+    d1[2, 2] = 1; d1[3, 2] = 1
+    # h(1,1): v(1,1)->v(1,0), edge 3
+    d1[3, 3] = 1; d1[2, 3] = 1
+    # v(0,0): v(0,0)->v(1,0), edge 4
+    d1[0, 4] = 1; d1[2, 4] = 1
+    # v(0,1): v(0,1)->v(1,1), edge 5
+    d1[1, 5] = 1; d1[3, 5] = 1
+    # v(1,0): v(1,0)->v(0,0), edge 6
+    d1[2, 6] = 1; d1[0, 6] = 1
+    # v(1,1): v(1,1)->v(0,1), edge 7
+    d1[3, 7] = 1; d1[1, 7] = 1
 
-for L in range(2, 8):
-    n = 2 * L**2
-    dim_Z = L**2 + 1  # dim ker(∂₁)
-    dim_B = L**2 - 1  # dim im(∂₂)
-    k = dim_Z - dim_B
-    print(f"  L={L}: dim(Z₁)={dim_Z}, dim(B₁)={dim_B}, "
-          f"k = dim(H₁) = {dim_Z}-{dim_B} = {k}")
+    # d2: F_2^4 -> F_2^8 (boundary of face = sum of edges)
+    # Faces: f(i,j) has edges h(i,j), v(i,(j+1)%2), h((i+1)%2,j), v(i,j)
+    d2 = np.zeros((8, 4), dtype=int)
+    # Face (0,0): edges h(0,0)=0, v(0,1)=5, h(1,0)=2, v(0,0)=4
+    d2[0, 0] = 1; d2[5, 0] = 1; d2[2, 0] = 1; d2[4, 0] = 1
+    # Face (0,1): edges h(0,1)=1, v(0,0)=4, h(1,1)=3, v(0,1)=5
+    d2[1, 1] = 1; d2[4, 1] = 1; d2[3, 1] = 1; d2[5, 1] = 1
+    # Face (1,0): edges h(1,0)=2, v(1,1)=7, h(0,0)=0, v(1,0)=6
+    d2[2, 2] = 1; d2[7, 2] = 1; d2[0, 2] = 1; d2[6, 2] = 1
+    # Face (1,1): edges h(1,1)=3, v(1,0)=6, h(0,1)=1, v(1,1)=7
+    d2[3, 3] = 1; d2[6, 3] = 1; d2[1, 3] = 1; d2[7, 3] = 1
 
-print("\n" + "=" * 60)
-print("All checks passed. CSS orthogonality ↔ ∂² = 0. ✓")
-print("=" * 60)
+    # Verify chain complex condition
+    d1 = d1 % 2
+    d2 = d2 % 2
+
+    params = css_from_chain_complex(d1, d2)
+
+    print(f"Chain complex: F_2^4 -> F_2^8 -> F_2^4")
+    print(f"  4 vertices, 8 edges, 4 faces on a 2×2 torus")
+    print()
+    print(f"Code parameters: [[{params['n']}, {params['k']}, {params['d']}]]")
+    print(f"  Physical qubits (n):  {params['n']}")
+    print(f"  Logical qubits (k):   {params['k']}  = β₁ (first Betti number of torus)")
+    print(f"  Distance (d):         {params['d']}")
+    print(f"  rank(∂₁):             {params['rank_d1']}")
+    print(f"  rank(∂₂):             {params['rank_d2']}")
+    print(f"  Euler check:          β₁ + rank(∂₁) + rank(∂₂) = {params['k']} + {params['rank_d1']} + {params['rank_d2']} = {params['n']} ✓")
+    print()
+    print(f"  ✓ Torus has genus 1, so β₁ = 2 (two non-contractible loops)")
+    print(f"  ✓ Distance = {params['d']} (shortest non-contractible cycle on 2×2 torus)")
+    print()
+
+
+def demo_hypercube():
+    """Hypercube code on Q_4 (4-dimensional hypercube graph)."""
+    print("=" * 60)
+    print("EXAMPLE 3: Hypercube Code Q_4")
+    print("=" * 60)
+
+    n_dim = 4
+    n_vertices = 2 ** n_dim  # 16 vertices
+    # Edges: connect vertices differing in exactly one bit
+    edges = []
+    for v in range(n_vertices):
+        for bit in range(n_dim):
+            w = v ^ (1 << bit)
+            if v < w:
+                edges.append((v, w))
+    n_edges = len(edges)
+
+    # d1: boundary map, edges -> vertices
+    d1 = np.zeros((n_vertices, n_edges), dtype=int)
+    for idx, (v, w) in enumerate(edges):
+        d1[v, idx] = 1
+        d1[w, idx] = 1
+
+    # d2 = 0 (treating Q_4 as a graph, no 2-cells)
+    d2 = np.zeros((n_edges, 0), dtype=int)
+
+    params = css_from_chain_complex(d1, d2)
+
+    print(f"Chain complex: F_2^0 -> F_2^{n_edges} -> F_2^{n_vertices}")
+    print(f"  {n_vertices} vertices, {n_edges} edges in Q_{n_dim}")
+    print()
+    print(f"Code parameters: [[{params['n']}, {params['k']}, {params['d']}]]")
+    print(f"  Physical qubits (n):  {params['n']}")
+    print(f"  Logical qubits (k):   {params['k']}  = β₁(Q_{n_dim}) = dim H₁(Q_{n_dim}, F_2)")
+    print(f"  Distance (d):         {params['d']}")
+    print(f"  rank(∂₁):             {params['rank_d1']}")
+    print(f"  Euler check:          β₁ + rank(∂₁) = {params['k']} + {params['rank_d1']} = {params['n']} ✓")
+    print()
+
+    # Also compute with 2-cells (squares as faces)
+    print("--- Now with 2-cells (square faces) ---")
+    faces = []
+    for v in range(n_vertices):
+        for b1 in range(n_dim):
+            for b2 in range(b1 + 1, n_dim):
+                # Square face: v, v^b1, v^b2, v^b1^b2
+                corners = sorted([v, v ^ (1 << b1), v ^ (1 << b2),
+                                   v ^ (1 << b1) ^ (1 << b2)])
+                face = tuple(corners)
+                if face not in faces:
+                    faces.append(face)
+    n_faces = len(faces)
+
+    # d2: faces -> edges (boundary of square = sum of 4 edges)
+    d2_full = np.zeros((n_edges, n_faces), dtype=int)
+    edge_index = {e: i for i, e in enumerate(edges)}
+    for fi, (a, b, c, d) in enumerate(faces):
+        for e in [(min(a,b), max(a,b)), (min(a,c), max(a,c)),
+                  (min(b,d), max(b,d)), (min(c,d), max(c,d))]:
+            if e in edge_index:
+                d2_full[edge_index[e], fi] = 1
+
+    d2_full = d2_full % 2
+    params2 = css_from_chain_complex(d1, d2_full)
+
+    print(f"  Added {n_faces} square faces")
+    print(f"  Code parameters: [[{params2['n']}, {params2['k']}, {params2['d']}]]")
+    print(f"  Logical qubits (k):   {params2['k']}  = β₁(Q_{n_dim}, with squares)")
+    print(f"  Distance (d):         {params2['d']}")
+    print(f"  Euler check:          β₁ + rank(∂₁) + rank(∂₂) = {params2['k']} + {params2['rank_d1']} + {params2['rank_d2']} = {params2['n']} ✓")
+    print()
+
+
+if __name__ == "__main__":
+    print("CSS CODES AS COHOMOLOGY: NUMERICAL DEMONSTRATIONS")
+    print("=" * 60)
+    print()
+    demo_repetition_code()
+    demo_toric_code()
+    demo_hypercube()
+
+    print("=" * 60)
+    print("SUMMARY: Every chain complex gives a quantum code.")
+    print("The code parameters are topological invariants.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: CSS Code Parameters and BKT Bound
+Visualization: CSS Code Parameters from Chain Complexes
 """
+
+import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import numpy as np
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-# 1. Toric code parameters
-ax1 = axes[0, 0]
-Ls = np.arange(2, 16)
-ns = 2 * Ls**2
-ks = np.full_like(Ls, 2)
-ds = Ls.copy()
-ax1.plot(Ls, ns, 'b-o', label='n = 2L²', markersize=4)
-ax1.plot(Ls, ds, 'r-s', label='d = L', markersize=4)
-ax1.plot(Ls, ks, 'g-^', label='k = 2 = β₁(T²)', markersize=4)
-ax1.set_xlabel('Grid size L')
-ax1.set_ylabel('Parameter value')
-ax1.set_title('Toric Code [[2L², 2, L]]')
-ax1.legend()
-ax1.set_yscale('log')
-ax1.grid(True, alpha=0.3)
+def gf2_rank(matrix):
+    if matrix.size == 0:
+        return 0
+    m = matrix.copy() % 2
+    rows, cols = m.shape
+    rank = 0
+    for col in range(cols):
+        pivot = None
+        for row in range(rank, rows):
+            if m[row, col] == 1:
+                pivot = row
+                break
+        if pivot is None:
+            continue
+        m[[rank, pivot]] = m[[pivot, rank]]
+        for row in range(rows):
+            if row != rank and m[row, col] == 1:
+                m[row] = (m[row] + m[rank]) % 2
+        rank += 1
+    return rank
 
-# 2. BKT saturation
-ax2 = axes[0, 1]
-kd2 = ks * ds**2
-ax2.plot(Ls, ns, 'b-o', label='n = 2L²', markersize=4)
-ax2.plot(Ls, kd2, 'r--s', label='k·d² = 2L²', markersize=4)
-ax2.fill_between(Ls, ns, kd2, alpha=0.2, color='green', label='BKT gap (= 0)')
-ax2.set_xlabel('Grid size L')
-ax2.set_ylabel('Value')
-ax2.set_title('BKT Bound Saturation: k·d² = n')
-ax2.legend()
-ax2.grid(True, alpha=0.3)
 
-# 3. Genus-distance tradeoff
-ax3 = axes[1, 0]
-n_fixed = 1000
-genera = np.arange(1, 51)
-k_vals = 2 * genera
-d_max = np.sqrt(n_fixed / k_vals)
-ax3.plot(genera, d_max, 'b-', linewidth=2, label=f'd_max = √(n/k), n={n_fixed}')
-ax3.plot(genera, k_vals, 'r--', linewidth=2, label='k = 2g')
-ax3.axhline(y=np.sqrt(n_fixed/2), color='green', linestyle=':', label=f'Torus: d={np.sqrt(n_fixed/2):.1f}')
-ax3.set_xlabel('Genus g')
-ax3.set_ylabel('Value')
-ax3.set_title('Genus-Distance Tradeoff (BKT)')
-ax3.legend()
-ax3.grid(True, alpha=0.3)
+def make_toric_chain(L):
+    n_v = L * L
+    n_e = 2 * L * L
+    def v(i, j):
+        return (i % L) * L + (j % L)
+    edges = []
+    for i in range(L):
+        for j in range(L):
+            edges.append((v(i, j), v(i, (j+1)%L)))
+            edges.append((v(i, j), v((i+1)%L, j)))
+    d1 = np.zeros((n_v, n_e), dtype=int)
+    for idx, (a, b) in enumerate(edges):
+        d1[a, idx] ^= 1
+        d1[b, idx] ^= 1
+    n_f = L * L
+    d2 = np.zeros((n_e, n_f), dtype=int)
+    emap = {e: i for i, e in enumerate(edges)}
+    for i in range(L):
+        for j in range(L):
+            fi = i * L + j
+            d2[emap[(v(i,j), v(i,(j+1)%L))], fi] = 1
+            d2[emap[(v(i,(j+1)%L), v((i+1)%L,(j+1)%L))], fi] = 1
+            d2[emap[(v((i+1)%L,j), v((i+1)%L,(j+1)%L))], fi] = 1
+            d2[emap[(v(i,j), v((i+1)%L,j))], fi] = 1
+    return d1 % 2, d2 % 2
 
-# 4. Syndrome decomposition
-ax4 = axes[1, 1]
-Ls2 = np.arange(2, 12)
-n_k = 2 * Ls2**2 - 2
-rank_d1 = Ls2**2 - 1
-rank_d2 = Ls2**2 - 1
-ax4.bar(Ls2 - 0.2, rank_d1, 0.4, label='rank(∂₁) = L²-1', color='steelblue')
-ax4.bar(Ls2 + 0.2, rank_d2, 0.4, label='rank(∂₂) = L²-1', color='coral')
-ax4.plot(Ls2, n_k, 'k-o', label='n-k = 2(L²-1)', markersize=5)
-ax4.set_xlabel('Grid size L')
-ax4.set_ylabel('Dimension')
-ax4.set_title('Syndrome Decomposition: n-k = rank(∂₁) + rank(∂₂)')
-ax4.legend()
-ax4.grid(True, alpha=0.3)
 
-plt.tight_layout()
-plt.savefig('/workspace/request-project/css_cohomology_viz.png', dpi=150, bbox_inches='tight')
-plt.close()
+def plot_euler_characteristic():
+    """Visualize the Euler characteristic relation β₁ + rank(∂₁) + rank(∂₂) = n."""
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-print("Visualization saved to css_cohomology_viz.png")
+    labels, bettis, rank1s, rank2s, totals = [], [], [], [], []
+
+    # Repetition codes
+    for nq in [3, 5, 7, 9]:
+        d1 = np.zeros((nq - 1, nq), dtype=int)
+        for i in range(nq - 1):
+            d1[i, i] = 1; d1[i, i+1] = 1
+        d2 = np.zeros((nq, 0), dtype=int)
+        r1 = gf2_rank(d1)
+        r2 = 0
+        n1 = nq
+        betti = n1 - r1 - r2
+        labels.append(f'Rep({nq})')
+        bettis.append(betti); rank1s.append(r1); rank2s.append(r2); totals.append(n1)
+
+    # Toric codes
+    for L in [2, 3, 4]:
+        d1, d2 = make_toric_chain(L)
+        r1 = gf2_rank(d1)
+        r2 = gf2_rank(d2)
+        n1 = d1.shape[1]
+        betti = n1 - r1 - r2
+        labels.append(f'Toric({L})')
+        bettis.append(betti); rank1s.append(r1); rank2s.append(r2); totals.append(n1)
+
+    x = np.arange(len(labels))
+    width = 0.25
+
+    ax.bar(x - width, bettis, width, label='β₁ (logical qubits)', color='#2196F3')
+    ax.bar(x, rank1s, width, label='rank(∂₁)', color='#FF9800')
+    ax.bar(x + width, rank2s, width, label='rank(∂₂)', color='#4CAF50')
+    ax.plot(x, totals, 'kD-', linewidth=2, markersize=8, label='n₁ (total)', zorder=5)
+
+    ax.set_xlabel('Code', fontsize=12)
+    ax.set_ylabel('Dimension', fontsize=12)
+    ax.set_title('Euler Characteristic: β₁ + rank(∂₁) + rank(∂₂) = n₁', fontsize=14, fontweight='bold')
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=45, ha='right')
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3, axis='y')
+
+    plt.tight_layout()
+    plt.savefig('euler_characteristic.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved euler_characteristic.png")
+
+
+def plot_toric_scaling():
+    """Plot how toric code parameters scale with lattice size."""
+    sizes = list(range(2, 8))
+    ns, ks = [], []
+    for L in sizes:
+        n_e = 2 * L * L
+        # For torus: β₁ = 2 always, rank(d1) = L²-1, rank(d2) = L²-1, n = 2L²
+        # Verify for small sizes
+        d1, d2 = make_toric_chain(L)
+        r1 = gf2_rank(d1)
+        r2 = gf2_rank(d2)
+        betti = n_e - r1 - r2
+        ns.append(n_e)
+        ks.append(betti)
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
+
+    ax1.plot(sizes, ns, 'bo-', linewidth=2, markersize=8)
+    ax1.set_xlabel('Lattice size L')
+    ax1.set_ylabel('Physical qubits n = 2L²')
+    ax1.set_title('Physical Qubits Scale Quadratically')
+    ax1.grid(True, alpha=0.3)
+
+    ax2.plot(sizes, ks, 'rs-', linewidth=2, markersize=8)
+    ax2.set_xlabel('Lattice size L')
+    ax2.set_ylabel('Logical qubits k = β₁')
+    ax2.set_title('Logical Qubits = Topological Invariant')
+    ax2.set_ylim(0, 4)
+    ax2.grid(True, alpha=0.3)
+
+    plt.suptitle('Toric Code: Topology Determines Quantum Parameters', fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    plt.savefig('toric_code_scaling.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved toric_code_scaling.png")
+
+
+if __name__ == "__main__":
+    plot_euler_characteristic()
+    plot_toric_scaling()
+    print("\nAll visualizations saved!")

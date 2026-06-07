@@ -1,14 +1,45 @@
 #!/usr/bin/env python3
 """
-algorithms.py — CSS-Cohomology Code Construction Algorithms
+CSS Codes as Cohomology: Core Algorithms
 
-Type-hinted implementations of the core algorithms connecting
-CSS codes to chain complex homology over F₂.
+Type-hinted implementations of the chain-complex-to-CSS-code construction.
 """
 
+from __future__ import annotations
 import numpy as np
-from typing import Tuple, List, Optional
 from dataclasses import dataclass
+from typing import Optional, List, Tuple
+
+
+@dataclass
+class ChainComplex:
+    """A 3-term chain complex C_2 -[d2]-> C_1 -[d1]-> C_0 over GF(2).
+
+    Attributes:
+        d1: Matrix representing the boundary map d1 (n0 x n1)
+        d2: Matrix representing the boundary map d2 (n1 x n2)
+    """
+    d1: np.ndarray  # shape (n0, n1)
+    d2: np.ndarray  # shape (n1, n2)
+
+    def __post_init__(self) -> None:
+        self.d1 = self.d1 % 2
+        self.d2 = self.d2 % 2
+        product = (self.d1 @ self.d2) % 2
+        if not np.all(product == 0):
+            raise ValueError("Chain complex condition violated: d1 ∘ d2 ≠ 0 mod 2")
+
+    @property
+    def n0(self) -> int:
+        return self.d1.shape[0]
+
+    @property
+    def n1(self) -> int:
+        return self.d1.shape[1]
+
+    @property
+    def n2(self) -> int:
+        return self.d2.shape[1]
 
 
 @dataclass
@@ -17,369 +48,324 @@ class CSSCode:
 
     Attributes:
         n: Number of physical qubits
-        k: Number of logical qubits
-        d: Code distance (minimum weight of non-trivial cycle/cocycle)
-        H_X: X-stabilizer check matrix (rX × n over F₂)
-        H_Z: Z-stabilizer check matrix (rZ × n over F₂)
+        k: Number of logical qubits (= first Betti number)
+        d: Code distance (minimum weight of non-trivial logical operator)
+        hx: X-check matrix (stabilizer generators for X errors)
+        hz: Z-check matrix (stabilizer generators for Z errors)
     """
     n: int
     k: int
     d: int
-    H_X: np.ndarray  # shape (rX, n)
-    H_Z: np.ndarray  # shape (rZ, n)
+    hx: np.ndarray  # X-check matrix
+    hz: np.ndarray  # Z-check matrix (= d2.T for chain complex CSS)
 
 
-@dataclass
-class ChainComplex:
-    """A 3-term chain complex C₂ →[∂₂] C₁ →[∂₁] C₀ over F₂.
+def gf2_rank(matrix: np.ndarray) -> int:
+    """Compute the rank of a matrix over GF(2).
 
-    Attributes:
-        d1: Boundary map ∂₁ as a matrix (dim C₀ × dim C₁) over F₂
-        d2: Boundary map ∂₂ as a matrix (dim C₁ × dim C₂) over F₂
-    """
-    d1: np.ndarray  # shape (dim_C0, dim_C1)
-    d2: np.ndarray  # shape (dim_C1, dim_C2)
-
-    def verify_sq_zero(self) -> bool:
-        """Check ∂₁ ∘ ∂₂ = 0 (mod 2)."""
-        product = (self.d1 @ self.d2) % 2
-        return np.all(product == 0)
-
-    @property
-    def dim_C0(self) -> int:
-        return self.d1.shape[0]
-
-    @property
-    def dim_C1(self) -> int:
-        return self.d1.shape[1]
-
-    @property
-    def dim_C2(self) -> int:
-        return self.d2.shape[1]
-
-
-def f2_rank(M: np.ndarray) -> int:
-    """Compute the rank of a matrix over F₂ using Gaussian elimination.
+    Uses Gaussian elimination with partial pivoting.
+    Time complexity: O(min(m,n) * m * n) where m x n is the matrix shape.
 
     Args:
-        M: Matrix with entries in {0, 1}.
+        matrix: Integer matrix to compute rank of
 
     Returns:
-        Rank of M over F₂.
+        Rank of the matrix over GF(2)
     """
-    M = M.copy().astype(int) % 2
-    rows, cols = M.shape
+    if matrix.size == 0:
+        return 0
+    m = matrix.copy() % 2
+    rows, cols = m.shape
     rank = 0
     for col in range(cols):
-        # Find pivot
-        pivot = None
+        pivot: Optional[int] = None
         for row in range(rank, rows):
-            if M[row, col] == 1:
+            if m[row, col] == 1:
                 pivot = row
                 break
         if pivot is None:
             continue
-        # Swap
-        M[[rank, pivot]] = M[[pivot, rank]]
-        # Eliminate
+        m[[rank, pivot]] = m[[pivot, rank]]
         for row in range(rows):
-            if row != rank and M[row, col] == 1:
-                M[row] = (M[row] + M[rank]) % 2
+            if row != rank and m[row, col] == 1:
+                m[row] = (m[row] + m[rank]) % 2
         rank += 1
     return rank
 
 
-def f2_nullity(M: np.ndarray) -> int:
-    """Compute the nullity (dimension of kernel) of M over F₂."""
-    return M.shape[1] - f2_rank(M)
+def gf2_kernel(matrix: np.ndarray) -> np.ndarray:
+    """Compute a basis for the kernel of a matrix over GF(2).
 
-
-def chain_complex_to_css(cc: ChainComplex) -> Tuple[int, int, int, int]:
-    """Extract CSS code parameters from a chain complex.
-
-    The CSS code has:
-    - n = dim(C₁) = number of columns of ∂₁ = number of rows of ∂₂
-    - k = dim(H₁) = dim(ker ∂₁) - dim(im ∂₂) = nullity(∂₁) - rank(∂₂)
-    - sX = rank(∂₁)  (X-syndrome dimension)
-    - sZ = rank(∂₂)  (Z-syndrome dimension)
+    Args:
+        matrix: Integer matrix (m x n)
 
     Returns:
-        (n, k, sX, sZ)
+        Matrix whose rows form a basis for ker(matrix) over GF(2).
+        Shape is (nullity, n).
     """
-    assert cc.verify_sq_zero(), "∂₁ ∘ ∂₂ ≠ 0: not a valid chain complex"
+    if matrix.size == 0:
+        n = matrix.shape[1] if len(matrix.shape) > 1 else 0
+        return np.eye(n, dtype=int)
 
-    n = cc.dim_C1
-    rank_d1 = f2_rank(cc.d1)
-    rank_d2 = f2_rank(cc.d2)
-    dim_Z = n - rank_d1       # dim(ker ∂₁)
-    dim_B = rank_d2            # dim(im ∂₂)
-    k = dim_Z - dim_B          # dim(H₁) = dim(Z₁/B₁)
+    m = matrix.copy() % 2
+    rows, cols = m.shape
 
-    return n, k, rank_d1, rank_d2
+    # Augment with identity for tracking
+    aug = np.hstack([m.T, np.eye(cols, dtype=int)])  # (cols x rows+cols)
+
+    rank = 0
+    for col in range(rows):
+        pivot = None
+        for row in range(rank, cols):
+            if aug[row, col] == 1:
+                pivot = row
+                break
+        if pivot is None:
+            continue
+        aug[[rank, pivot]] = aug[[pivot, rank]]
+        for row in range(cols):
+            if row != rank and aug[row, col] == 1:
+                aug[row] = (aug[row] + aug[rank]) % 2
+        rank += 1
+
+    # Kernel basis = rows of aug[rank:, rows:]
+    ker = aug[rank:, rows:] % 2
+    return ker
 
 
-def build_toric_complex(L: int) -> ChainComplex:
-    """Build the chain complex of the L×L torus.
+def chain_to_css(chain: ChainComplex) -> CSSCode:
+    """Convert a chain complex to a CSS code.
 
-    Vertices: L² (indexed by (i,j))
-    Edges: 2L² (L² horizontal + L² vertical)
-    Faces: L² (indexed by (i,j))
+    Algorithm:
+    1. Compute ker(d1) = cycle space (logical space)
+    2. Compute im(d2) = boundary space (stabilizer)
+    3. Logical qubits k = dim(ker d1) - dim(im d2) = β₁
+    4. Distance = minimum weight of non-trivial cycle
 
-    ∂₁: maps edges to their boundary vertices (mod 2)
-    ∂₂: maps faces to their boundary edges (mod 2)
+    Args:
+        chain: A 3-term chain complex over GF(2)
 
     Returns:
-        ChainComplex with d1 of shape (L², 2L²) and d2 of shape (2L², L²)
+        The corresponding CSS code
     """
-    V = L * L   # vertices
-    E = 2 * V   # edges: [0..V-1] horizontal, [V..2V-1] vertical
-    F = V       # faces
+    n1 = chain.n1
+    rank_d1 = gf2_rank(chain.d1)
+    rank_d2 = gf2_rank(chain.d2)
 
-    d1 = np.zeros((V, E), dtype=int)  # ∂₁ : C₁ → C₀
-    d2 = np.zeros((E, F), dtype=int)  # ∂₂ : C₂ → C₁
+    dim_ker = n1 - rank_d1
+    betti_1 = dim_ker - rank_d2  # First Betti number
 
-    def vidx(i: int, j: int) -> int:
-        return (i % L) * L + (j % L)
+    # Compute minimum distance
+    distance = _compute_distance(chain.d1, chain.d2, n1)
 
-    def h_eidx(i: int, j: int) -> int:
-        """Horizontal edge at (i,j)."""
-        return (i % L) * L + (j % L)
+    return CSSCode(
+        n=n1,
+        k=betti_1,
+        d=distance,
+        hx=chain.d1,
+        hz=chain.d2.T % 2
+    )
 
-    def v_eidx(i: int, j: int) -> int:
-        """Vertical edge at (i,j)."""
-        return V + (i % L) * L + (j % L)
 
-    # ∂₁: boundary of edges
-    for i in range(L):
-        for j in range(L):
-            # Horizontal edge (i,j): boundary = v(i,j) + v(i,j+1)
-            he = h_eidx(i, j)
-            d1[vidx(i, j), he] = (d1[vidx(i, j), he] + 1) % 2
-            d1[vidx(i, (j+1) % L), he] = (d1[vidx(i, (j+1) % L), he] + 1) % 2
+def _compute_distance(d1: np.ndarray, d2: np.ndarray, n: int) -> int:
+    """Compute minimum weight of non-trivial cycle.
 
-            # Vertical edge (i,j): boundary = v(i,j) + v(i+1,j)
-            ve = v_eidx(i, j)
-            d1[vidx(i, j), ve] = (d1[vidx(i, j), ve] + 1) % 2
-            d1[vidx((i+1) % L, j), ve] = (d1[vidx((i+1) % L, j), ve] + 1) % 2
+    Enumerates all elements of ker(d1) and checks which are not in im(d2).
+    For large kernels, uses sampling.
 
-    # ∂₂: boundary of faces
-    for i in range(L):
-        for j in range(L):
-            f = vidx(i, j)  # face index
-            # Face (i,j) has boundary:
-            # bottom horizontal (i,j), top horizontal (i+1,j)
-            # left vertical (i,j), right vertical (i,j+1)
-            d2[h_eidx(i, j), f] = (d2[h_eidx(i, j), f] + 1) % 2
-            d2[h_eidx((i+1) % L, j), f] = (d2[h_eidx((i+1) % L, j), f] + 1) % 2
-            d2[v_eidx(i, j), f] = (d2[v_eidx(i, j), f] + 1) % 2
-            d2[v_eidx(i, (j+1) % L), f] = (d2[v_eidx(i, (j+1) % L), f] + 1) % 2
+    Args:
+        d1: Boundary map d1
+        d2: Boundary map d2
+        n: Ambient dimension
 
+    Returns:
+        Minimum Hamming weight of a non-trivial element of ker(d1)/im(d2)
+    """
+    ker_basis = gf2_kernel(d1)
+    if len(ker_basis) == 0:
+        return 0
+
+    rank_d2 = gf2_rank(d2)
+    num_ker = len(ker_basis)
+
+    if num_ker > 20:
+        # For large kernels, sample randomly
+        return _sample_distance(ker_basis, d2, n, num_samples=10000)
+
+    min_weight = n + 1
+    for mask in range(1, 2**num_ker):
+        vec = np.zeros(n, dtype=int)
+        for i in range(num_ker):
+            if mask & (1 << i):
+                vec = (vec + ker_basis[i]) % 2
+
+        # Check if in im(d2)
+        if d2.shape[1] > 0:
+            aug = np.hstack([d2, vec.reshape(-1, 1)])
+            if gf2_rank(aug) == rank_d2:
+                continue  # Boundary, skip
+
+        weight = int(np.sum(vec))
+        if weight > 0:
+            min_weight = min(min_weight, weight)
+
+    return min_weight if min_weight <= n else 0
+
+
+def _sample_distance(ker_basis: np.ndarray, d2: np.ndarray,
+                      n: int, num_samples: int) -> int:
+    """Estimate distance by random sampling of kernel elements."""
+    rank_d2 = gf2_rank(d2)
+    num_ker = len(ker_basis)
+    min_weight = n + 1
+
+    rng = np.random.default_rng(42)
+    for _ in range(num_samples):
+        coeffs = rng.integers(0, 2, size=num_ker)
+        if np.sum(coeffs) == 0:
+            continue
+        vec = (coeffs @ ker_basis) % 2
+        if d2.shape[1] > 0:
+            aug = np.hstack([d2, vec.reshape(-1, 1)])
+            if gf2_rank(aug) == rank_d2:
+                continue
+        weight = int(np.sum(vec))
+        if weight > 0:
+            min_weight = min(min_weight, weight)
+
+    return min_weight if min_weight <= n else 0
+
+
+def make_repetition_code(n_qubits: int) -> ChainComplex:
+    """Construct the n-qubit repetition code as a chain complex.
+
+    The path graph with n edges and n-1 vertices.
+    d1(x_i) = v_i + v_{i+1} (parity check).
+
+    Args:
+        n_qubits: Number of physical qubits (edges)
+
+    Returns:
+        Chain complex for the repetition code
+    """
+    d1 = np.zeros((n_qubits - 1, n_qubits), dtype=int)
+    for i in range(n_qubits - 1):
+        d1[i, i] = 1
+        d1[i, i + 1] = 1
+    d2 = np.zeros((n_qubits, 0), dtype=int)
     return ChainComplex(d1=d1, d2=d2)
 
 
-def hypergraph_product(H1: np.ndarray, H2: np.ndarray) -> ChainComplex:
-    """Build the hypergraph product chain complex from two classical codes.
+def make_toric_code(L: int) -> ChainComplex:
+    """Construct the toric code on an L×L torus.
 
-    Given parity-check matrices H1 (r1 × n1) and H2 (r2 × n2),
-    constructs the product chain complex with:
-    - C₁ has dimension n1*r2 + r1*n2 (physical qubits)
-    - ∂₁ = [H1 ⊗ I_r2 | I_r1 ⊗ H2^T]  (X-checks)
-    - ∂₂ = [I_n1 ⊗ H2 | H1^T ⊗ I_n2]^T (Z-checks, as boundary map)
+    Args:
+        L: Linear size of the torus
 
     Returns:
-        ChainComplex
+        Chain complex for the L×L toric code
     """
-    r1, n1 = H1.shape
-    r2, n2 = H2.shape
+    n_vertices = L * L
+    n_edges = 2 * L * L  # L^2 horizontal + L^2 vertical
 
-    # ∂₁ = [H1 ⊗ I_{r2}, I_{r1} ⊗ H2^T]
-    # Shape: (r1*r2) × (n1*r2 + r1*n2)
-    block1 = np.kron(H1, np.eye(r2, dtype=int))  # r1*r2 × n1*r2
-    block2 = np.kron(np.eye(r1, dtype=int), H2.T)  # r1*r2 × r1*n2
-    d1 = np.hstack([block1, block2]) % 2
+    def vertex(i: int, j: int) -> int:
+        return (i % L) * L + (j % L)
 
-    # ∂₂ = [I_{n1} ⊗ H2; H1^T ⊗ I_{n2}]
-    # Shape: (n1*r2 + r1*n2) × (n1*n2)
-    block3 = np.kron(np.eye(n1, dtype=int), H2)   # n1*r2 × n1*n2
-    block4 = np.kron(H1.T, np.eye(n2, dtype=int))  # r1*n2 × n1*n2... wait
-    # Actually: block4 shape is r1*n2 × ... hmm
-    # Let me reconsider. The hypergraph product has:
-    # d2 maps C2 → C1 where C2 has dim n1*n2
-    # Top block: I_{n1} ⊗ H2 has shape (n1*r2) × (n1*n2)
-    # Bottom block: H1^T ⊗ I_{n2} has shape (r1*n2) × (n1*n2)... H1^T is n1×r1
-    # So H1^T ⊗ I_{n2} has shape (n1*n2) × (r1*n2). That's wrong dimension.
+    edges: List[Tuple[int, int, str]] = []  # (v1, v2, direction)
+    for i in range(L):
+        for j in range(L):
+            edges.append((vertex(i, j), vertex(i, (j + 1) % L), 'h'))
+            edges.append((vertex(i, j), vertex((i + 1) % L, j), 'v'))
 
-    # Correction: The product complex is:
-    # C0 = F2^{r1*r2}
-    # C1 = F2^{n1*r2} ⊕ F2^{r1*n2}
-    # C2 = F2^{n1*n2}
-    # d2: C2 → C1, top part is I_{n1} ⊗ H2 (n1*r2 × n1*n2), bottom is H1^T ⊗ I_{n2} (wait...)
-    # H1 is r1 × n1, so H1^T is n1 × r1. Then H1^T ⊗ I_{n2} is (n1*n2) × (r1*n2).
-    # We need d2 to have shape (n1*r2 + r1*n2) × (n1*n2).
-    # Bottom block should be r1*n2 × n1*n2. So we need H1^T transposed? No.
-    # Actually it should be: (H1^T)^T ⊗ I = H1 ⊗ I ... no that gives r1*n2 × n1*n2.
+    d1 = np.zeros((n_vertices, n_edges), dtype=int)
+    for idx, (v1, v2, _) in enumerate(edges):
+        d1[v1, idx] = (d1[v1, idx] + 1) % 2
+        d1[v2, idx] = (d1[v2, idx] + 1) % 2
 
-    # The standard hypergraph product:
-    # d_X = [H1 ⊗ I, I ⊗ H2^T]  (check matrix)
-    # d_Z = [I ⊗ H2, H1^T ⊗ I]  (check matrix)
-    # d_X · d_Z^T = H1⊗H2^T + H1⊗H2^T = 0 (mod 2)
+    # Faces: each plaquette (i,j) has boundary h(i,j) + v(i,j+1) + h(i+1,j) + v(i,j)
+    n_faces = L * L
+    d2 = np.zeros((n_edges, n_faces), dtype=int)
 
-    # As a chain complex: d1 = d_X, d2 = d_Z^T
-    # d_Z^T has shape (n1*r2 + r1*n2) × (r1*r2 + n1*n2) ... that seems too big
+    edge_map = {}
+    for idx, (v1, v2, d) in enumerate(edges):
+        edge_map[(v1, v2, d)] = idx
 
-    # Let me use the simpler version:
-    # d2 = [I_{n1} ⊗ H2^T; H1^T ⊗ I_{n2}]^T ... this is getting complicated.
-    # For simplicity, let me just construct d1 and d2 so that d1 @ d2 = 0.
+    for i in range(L):
+        for j in range(L):
+            fi = i * L + j
+            # Top: horizontal (i, j)
+            d2[edge_map[(vertex(i, j), vertex(i, (j+1)%L), 'h')], fi] = 1
+            # Right: vertical (i, j+1 mod L)... actually let's use the edge directly
+            d2[edge_map[(vertex(i, (j+1)%L), vertex((i+1)%L, (j+1)%L), 'v')], fi] = 1
+            # Bottom: horizontal (i+1, j)
+            d2[edge_map[(vertex((i+1)%L, j), vertex((i+1)%L, (j+1)%L), 'h')], fi] = 1
+            # Left: vertical (i, j)
+            d2[edge_map[(vertex(i, j), vertex((i+1)%L, j), 'v')], fi] = 1
 
-    # Actually, the CSS code has H_X = d1 and H_Z such that H_X H_Z^T = 0.
-    # The Z-check matrix is d_Z = [I ⊗ H2, H1^T ⊗ I]
-    # H_Z^T shape: needs to be (n1*r2+r1*n2) × (n1*n2 + r1*r2)
-
-    # This is getting complex. Let me just verify with the simpler approach:
-    # Return only d1 and verify params.
-
-    # For the CSS perspective, we just need the H_X and H_Z matrices.
-    H_X = d1
-    H_Z_block1 = np.kron(np.eye(n1, dtype=int), H2)  # n1*r2 × n1*n2... wait
-    # I_n1 ⊗ H2: shape n1*r2 × n1*n2
-
-    # OK let me be more careful:
-    # H_Z = [I_{n1} ⊗ H2, H1^T ⊗ I_{n2}]
-    # shape: ?? × (n1*r2 + r1*n2)
-    # I_{n1} ⊗ H2 has shape (n1*r2) × (n1*n2) -- maps n1*n2 → n1*r2 part of C1
-    # H1^T ⊗ I_{n2} has shape (n1*n2) × (r1*n2) ... no, H1^T is n1×r1
-    # So H1^T ⊗ I_{n2} is (n1*n2) × (r1*n2)
-
-    # Hmm, the rows don't match. Let me look at this differently.
-    # The CSS code from the product has:
-    # n_phys = n1*r2 + r1*n2
-    # H_X is (r1*r2 × n_phys)
-    # H_Z is (n1*n2 × n_phys) ... that can't be right either since n1*n2 >> n_phys typically
-
-    # The correct construction has d2 with appropriate dimensions.
-    # For now, let me just return the d1 matrix and use a dummy d2 for the chain complex.
-
-    # Actually the simplest correct formulation:
-    # d2^T = H_Z = [I_{n1} ⊗ H2, H1^T ⊗ I_{n2}]
-    # This has shape (max dim) × (n1*r2 + r1*n2)
-    # But the two blocks have different first dimensions...
-
-    # Skip the full construction and just compute parameters
-    n_phys = n1 * r2 + r1 * n2
-    k = (n1 - f2_rank(H1)) * (n2 - f2_rank(H2))
-
-    # Return a dummy chain complex with correct params
-    return ChainComplex(d1=d1, d2=np.zeros((d1.shape[1], 1), dtype=int))
+    return ChainComplex(d1=d1 % 2, d2=d2 % 2)
 
 
-def css_from_classical(H: np.ndarray) -> Tuple[int, int]:
-    """CSS code from a self-orthogonal code (H · H^T = 0 mod 2).
+def make_hypercube(dim: int) -> ChainComplex:
+    """Construct the chain complex of the dim-dimensional hypercube graph.
 
-    Returns (n, k) where k = n - 2*rank(H).
+    Args:
+        dim: Dimension of the hypercube
+
+    Returns:
+        Chain complex (graph only, no higher-dimensional cells)
     """
-    n = H.shape[1]
-    r = f2_rank(H)
-    k = n - 2 * r
-    return n, k
+    n_vertices = 2 ** dim
+    edges: List[Tuple[int, int]] = []
+    for v in range(n_vertices):
+        for bit in range(dim):
+            w = v ^ (1 << bit)
+            if v < w:
+                edges.append((v, w))
+    n_edges = len(edges)
+
+    d1 = np.zeros((n_vertices, n_edges), dtype=int)
+    for idx, (v, w) in enumerate(edges):
+        d1[v, idx] = 1
+        d1[w, idx] = 1
+
+    d2 = np.zeros((n_edges, 0), dtype=int)
+    return ChainComplex(d1=d1 % 2, d2=d2 % 2)
 
 
-def compute_min_weight_cycle(cc: ChainComplex) -> Optional[int]:
-    """Compute the minimum weight of a non-trivial 1-cycle.
+def euler_characteristic_check(chain: ChainComplex) -> bool:
+    """Verify the Euler characteristic relation β₁ + rank(d1) + rank(d2) = n1.
 
-    A cycle is a vector in ker(∂₁). It is trivial if it is in im(∂₂).
-    The minimum weight of a non-trivial cycle is the X-distance of the CSS code.
+    Args:
+        chain: A chain complex
 
-    This is exponential in n; only practical for small codes.
+    Returns:
+        True if the Euler relation holds
     """
-    n = cc.dim_C1
+    code = chain_to_css(chain)
+    rank_d1 = gf2_rank(chain.d1)
+    rank_d2 = gf2_rank(chain.d2)
+    return code.k + rank_d1 + rank_d2 == chain.n1
 
-    if n > 20:
-        return None  # Too large
-
-    # Find basis for ker(∂₁)
-    # and basis for im(∂₂)
-    rank_d1 = f2_rank(cc.d1)
-    dim_Z = n - rank_d1
-    rank_d2 = f2_rank(cc.d2)
-
-    k = dim_Z - rank_d2
-    if k == 0:
-        return None  # No non-trivial cycles
-
-    # Brute force: enumerate all non-zero vectors in F₂^n, check if cycle, check if boundary
-    min_weight = n + 1
-
-    for v_int in range(1, 2**n):
-        v = np.array([(v_int >> i) & 1 for i in range(n)], dtype=int)
-
-        # Check if cycle: d1 @ v = 0 mod 2
-        if np.any((cc.d1 @ v) % 2 != 0):
-            continue
-
-        # Check if boundary: is v in im(d2)?
-        # Augment d2 with v and check if rank increases
-        aug = np.hstack([cc.d2, v.reshape(-1, 1)])
-        if f2_rank(aug) == rank_d2:
-            continue  # v is in im(d2), so it's a boundary
-
-        # Non-trivial cycle found
-        weight = np.sum(v)
-        min_weight = min(min_weight, weight)
-
-    return min_weight if min_weight <= n else None
-
-
-# ========== Main Demo ==========
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("CSS-COHOMOLOGY ALGORITHMS")
-    print("=" * 60)
+    # Verify algorithms on examples
+    print("Algorithm verification:")
 
-    # Build toric code chain complexes and verify parameters
-    print("\nToric Code Chain Complex Verification:")
-    print("-" * 50)
+    rep3 = make_repetition_code(3)
+    css3 = chain_to_css(rep3)
+    print(f"  Repetition(3): [[{css3.n}, {css3.k}, {css3.d}]]")
+    assert css3.k == 1, f"Expected k=1, got k={css3.k}"
+    assert euler_characteristic_check(rep3), "Euler check failed"
 
-    for L in range(2, 6):
-        cc = build_toric_complex(L)
+    toric2 = make_toric_code(2)
+    css_toric = chain_to_css(toric2)
+    print(f"  Toric(2×2):    [[{css_toric.n}, {css_toric.k}, {css_toric.d}]]")
+    assert css_toric.k == 2, f"Expected k=2, got k={css_toric.k}"
+    assert euler_characteristic_check(toric2), "Euler check failed"
 
-        # Verify ∂² = 0
-        sq_zero = cc.verify_sq_zero()
+    q4 = make_hypercube(4)
+    css_q4 = chain_to_css(q4)
+    print(f"  Hypercube(4):  [[{css_q4.n}, {css_q4.k}, {css_q4.d}]]")
+    assert euler_characteristic_check(q4), "Euler check failed"
 
-        # Extract CSS parameters
-        n, k, r1, r2 = chain_complex_to_css(cc)
-
-        print(f"  L={L}: ∂²=0? {sq_zero}, [[{n}, {k}, ?]], "
-              f"rank(∂₁)={r1}, rank(∂₂)={r2}, "
-              f"n-k={n-k}, r1+r2={r1+r2}")
-
-    # Compute actual distance for small toric codes
-    print("\nMinimum Weight Cycle (Distance) Computation:")
-    print("-" * 50)
-
-    for L in [2, 3]:
-        cc = build_toric_complex(L)
-        d = compute_min_weight_cycle(cc)
-        expected = L
-        print(f"  L={L}: computed d = {d}, expected d = {expected}, "
-              f"match = {d == expected}")
-
-    # Self-orthogonal code example: Steane code H matrix
-    print("\nSteane Code (self-orthogonal [7,4,3] Hamming):")
-    print("-" * 50)
-
-    H_steane = np.array([
-        [1, 0, 0, 1, 0, 1, 1],
-        [0, 1, 0, 1, 1, 0, 1],
-        [0, 0, 1, 0, 1, 1, 1],
-    ], dtype=int)
-
-    # Check self-orthogonality
-    orth = (H_steane @ H_steane.T) % 2
-    print(f"  H · H^T mod 2 = {orth.tolist()} (all zeros = self-orthogonal)")
-    n, k = css_from_classical(H_steane)
-    print(f"  CSS parameters: [[{n}, {k}]]")
-
-    print("\n" + "=" * 60)
-    print("Algorithm demonstrations complete.")
-    print("=" * 60)
+    print("\n  All checks passed! ✓")
