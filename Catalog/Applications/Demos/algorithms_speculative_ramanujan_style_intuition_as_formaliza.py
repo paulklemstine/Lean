@@ -1,300 +1,254 @@
 #!/usr/bin/env python3
 """
-Ramanujan Oracle Framework — Algorithms Module
+Algorithms for Ramanujan Oracle Non-Computability Theory
 
 Type-hinted implementations of the core algorithms from the research.
 """
 
-from typing import Callable, Dict, List, Optional, Set, Tuple
-from enum import Enum
-from dataclasses import dataclass, field
+from typing import List, Tuple, Optional, Callable
 import math
+import itertools
 
 
-class OracleResponse(Enum):
-    """Three-valued oracle response type."""
-    TRUE = "true"
-    FALSE = "false"
-    UNKNOWN = "unknown"
+# ============================================================
+# Algorithm 1: Oracle Space Enumeration
+# ============================================================
 
-
-@dataclass
-class RamanujanOracle:
-    """A Ramanujan Oracle: a sound prediction device for a truth set.
-
-    The oracle predicts truth values with guaranteed soundness —
-    definite predictions are always correct. The oracle may abstain
-    (respond UNKNOWN) on any input.
+def enumerate_oracles(N: int) -> List[Tuple[int, ...]]:
     """
-    predict: Callable[[int], OracleResponse]
-    truth_set: Callable[[int], bool]
-
-    def is_sound_on(self, n: int) -> bool:
-        """Check if the oracle is sound on input n."""
-        p = self.predict(n)
-        t = self.truth_set(n)
-        if p == OracleResponse.TRUE:
-            return t
-        elif p == OracleResponse.FALSE:
-            return not t
-        return True  # UNKNOWN is always sound
-
-    def coverage(self, N: int) -> float:
-        """Compute coverage ratio on [0, N)."""
-        if N == 0:
-            return 0.0
-        definite = sum(1 for n in range(N) if self.predict(n) != OracleResponse.UNKNOWN)
-        return definite / N
-
-    def accuracy(self, N: int) -> float:
-        """Compute accuracy on definite predictions in [0, N)."""
-        correct = 0
-        total = 0
-        for n in range(N):
-            p = self.predict(n)
-            if p != OracleResponse.UNKNOWN:
-                total += 1
-                t = self.truth_set(n)
-                if (p == OracleResponse.TRUE) == t:
-                    correct += 1
-        return correct / total if total > 0 else 1.0
+    Enumerate all 3^N possible oracles on N statements.
+    
+    Each oracle is a tuple of N values, each in {0, 1, 2}
+    representing {true, false, unknown}.
+    
+    Args:
+        N: Number of statements
+    
+    Returns:
+        List of all 3^N oracle tuples
+    
+    Complexity: O(N * 3^N) time, O(N) per oracle
+    """
+    return list(itertools.product(range(3), repeat=N))
 
 
-@dataclass
-class OracleEvaluation:
-    """Result of evaluating an oracle on a finite domain."""
-    accuracy: float
-    coverage: float
-    correct: int
-    wrong: int
-    abstain: int
-    is_sound: bool
-    soundness_violations: List[int] = field(default_factory=list)
+# ============================================================
+# Algorithm 2: Program Space Enumeration
+# ============================================================
+
+def enumerate_programs(b: int, k: int) -> List[Tuple[int, ...]]:
+    """
+    Enumerate all b^k possible programs of length k over alphabet of size b.
+    
+    Args:
+        b: Alphabet size
+        k: Maximum program length
+    
+    Returns:
+        List of all b^k program tuples
+    """
+    return list(itertools.product(range(b), repeat=k))
 
 
-def evaluate_oracle(
-    oracle: RamanujanOracle,
+# ============================================================
+# Algorithm 3: Oracle Accuracy Computation
+# ============================================================
+
+def oracle_accuracy(
+    oracle: Tuple[int, ...],
+    truth: Tuple[int, ...],
+) -> int:
+    """
+    Compute the accuracy of an oracle relative to ground truth.
+    
+    Accuracy = number of positions where oracle agrees with truth.
+    
+    Args:
+        oracle: Oracle output tuple
+        truth: Ground truth tuple
+    
+    Returns:
+        Number of agreeing positions
+    """
+    assert len(oracle) == len(truth)
+    return sum(1 for o, t in zip(oracle, truth) if o == t)
+
+
+def is_accurate(
+    oracle: Tuple[int, ...],
+    truth: Tuple[int, ...],
+    max_errors: int,
+) -> bool:
+    """
+    Check if an oracle is (N - max_errors)-accurate.
+    
+    Args:
+        oracle: Oracle output tuple
+        truth: Ground truth tuple  
+        max_errors: Maximum allowed disagreements
+    
+    Returns:
+        True if oracle disagrees with truth on at most max_errors positions
+    """
+    N = len(oracle)
+    return oracle_accuracy(oracle, truth) >= N - max_errors
+
+
+# ============================================================
+# Algorithm 4: Non-Covered Oracle Detection
+# ============================================================
+
+def find_uncovered_oracle(
     N: int,
-    verbose: bool = False
-) -> OracleEvaluation:
-    """Evaluate a Ramanujan Oracle on the domain [0, N).
-
-    Algorithm:
-    1. For each n in [0, N), query the oracle
-    2. Compare with ground truth
-    3. Compute accuracy, coverage, and soundness
-
-    Time complexity: O(N * (T_predict + T_truth))
-    Space complexity: O(N) for violation tracking
+    programs: List[Tuple[int, ...]],
+) -> Optional[Tuple[int, ...]]:
     """
-    correct = wrong = abstain = 0
-    violations: List[int] = []
-
-    for n in range(N):
-        prediction = oracle.predict(n)
-        truth = oracle.truth_set(n)
-
-        if prediction == OracleResponse.UNKNOWN:
-            abstain += 1
-        elif (prediction == OracleResponse.TRUE) == truth:
-            correct += 1
-        else:
-            wrong += 1
-            violations.append(n)
-
-    total_definite = correct + wrong
-    accuracy = correct / total_definite if total_definite > 0 else 1.0
-    coverage = total_definite / N if N > 0 else 0.0
-
-    return OracleEvaluation(
-        accuracy=accuracy,
-        coverage=coverage,
-        correct=correct,
-        wrong=wrong,
-        abstain=abstain,
-        is_sound=(wrong == 0),
-        soundness_violations=violations
-    )
-
-
-def cofinite_agree(
-    f: Callable[[int], bool],
-    g: Callable[[int], bool],
-    N: int
-) -> Tuple[int, List[int]]:
-    """Detect cofinite agreement between two Boolean functions.
-
-    Algorithm:
-    1. Check f(n) == g(n) for each n in [0, N)
-    2. Return count and list of disagreements
-
-    If the number of disagreements is finite (and N is large enough
-    to capture all of them), the functions cofinitely agree.
-
-    Returns: (number of disagreements, list of disagreement points)
+    Find an oracle not covered by any program in the list.
+    
+    Uses exhaustive search over 3^N oracles.
+    
+    Args:
+        N: Number of statements
+        programs: List of oracle outputs (each a tuple of length N)
+    
+    Returns:
+        An oracle tuple not in programs, or None if all are covered
     """
-    disagreements = [n for n in range(N) if f(n) != g(n)]
-    return len(disagreements), disagreements
+    program_set = set(programs)
+    for oracle in itertools.product(range(3), repeat=N):
+        if oracle not in program_set:
+            return oracle
+    return None
 
 
-def oracle_space_size(N: int, k: int = 3) -> int:
-    """Compute the number of possible k-valued oracle functions on N inputs.
+# ============================================================
+# Algorithm 5: Cantor Diagonal Construction
+# ============================================================
 
-    This is the Ramanujan Counting Bound: exactly k^N.
-
-    For k=3 (true/false/unknown) and N statements:
-    - N=10: 59,049 oracles
-    - N=20: 3,486,784,401 oracles
-    - N=100: ~ 5.15 × 10^47 oracles
-
-    The computable oracles are countable (ℵ₀), so for infinite N,
-    "most" oracles are non-computable.
+def cantor_diagonal(
+    enumeration: Callable[[int], Callable[[int], int]],
+    length: int,
+) -> Tuple[int, ...]:
     """
-    return k ** N
-
-
-@dataclass
-class GradedOracleHierarchy:
-    """A graded oracle hierarchy with strictly increasing decision power.
-
-    Each level n has a set of decidable statements (encoded as integers).
-    The hierarchy satisfies:
-    - Monotonicity: level_set(m) ⊆ level_set(n) for m ≤ n
-    - Strictness: level_set(n) ⊊ level_set(n+1) for all n
+    Construct a function that differs from every function in an enumeration.
+    
+    Given f: ℕ → (ℕ → Fin 3), constructs g such that g(n) ≠ f(n)(n)
+    for all n < length.
+    
+    Args:
+        enumeration: Function mapping index to oracle function
+        length: Number of positions to construct
+    
+    Returns:
+        Tuple of length `length` differing from enumeration at each diagonal
     """
-    level_set: Callable[[int], Set[int]]
-    max_level: int
-
-    def is_monotone(self, N: int) -> bool:
-        """Verify monotonicity on [0, N) up to max_level."""
-        for m in range(self.max_level):
-            for n in range(m + 1, self.max_level + 1):
-                if not self.level_set(m).issubset(self.level_set(n)):
-                    return False
-        return True
-
-    def is_strict(self, N: int) -> bool:
-        """Verify strictness up to max_level."""
-        for n in range(self.max_level):
-            if not (self.level_set(n + 1) - self.level_set(n)):
-                return False
-        return True
-
-    def estimate_level(self, statement: int) -> Optional[int]:
-        """Estimate the minimum level needed to decide a statement."""
-        for level in range(self.max_level + 1):
-            if statement in self.level_set(level):
-                return level
-        return None  # beyond available levels
+    result = []
+    for n in range(length):
+        fnn = enumeration(n)(n)
+        # Choose a value different from f(n)(n)
+        gn = 1 if fnn == 0 else 0
+        result.append(gn)
+    return tuple(result)
 
 
-def oracle_guided_search(
-    oracle: Callable[[int], OracleResponse],
-    candidates: List[int],
-    truth: Callable[[int], bool]
-) -> Tuple[List[int], int]:
-    """Oracle-guided proof search: use predictions to prioritize candidates.
+# ============================================================
+# Algorithm 6: Gap Ratio Computation
+# ============================================================
 
-    Algorithm:
-    1. Query the oracle on all candidates
-    2. Sort: TRUE predictions first, then UNKNOWN, then FALSE
-    3. Search in this order
-
-    The oracle acts as a heuristic: if sound, TRUE predictions are
-    guaranteed correct, so checking them first finds solutions faster.
-
-    Returns: (found truths, number of oracle queries)
+def compute_gap_table(
+    b: int,
+    max_k: int,
+    max_N: int,
+) -> List[Tuple[int, int, float, bool]]:
     """
-    # Query oracle on all candidates
-    predictions = [(c, oracle(c)) for c in candidates]
-
-    # Sort by prediction confidence
-    priority = {
-        OracleResponse.TRUE: 0,    # check these first
-        OracleResponse.UNKNOWN: 1,  # then these
-        OracleResponse.FALSE: 2     # last resort
-    }
-    predictions.sort(key=lambda x: priority[x[1]])
-
-    # Search in priority order
-    found: List[int] = []
-    queries = len(candidates)
-
-    for candidate, prediction in predictions:
-        if truth(candidate):
-            found.append(candidate)
-
-    return found, queries
-
-
-def proof_prediction_duality_table(
-    N_values: List[int],
-    proof_alphabet: int = 2,
-    oracle_alphabet: int = 3
-) -> List[Dict[str, float]]:
-    """Generate the proof-prediction duality table.
-
-    For each N, computes:
-    - Proof space size: proof_alphabet^N
-    - Oracle space size: oracle_alphabet^N
-    - Ratio: oracle/proof
-    - Log ratio: log2(oracle/proof)
+    Compute the gap ratio 3^N / b^k for a range of parameters.
+    
+    Args:
+        b: Alphabet size for programs
+        max_k: Maximum program length
+        max_N: Maximum number of statements
+    
+    Returns:
+        List of (k, N, ratio, oracle_exceeds) tuples
     """
     results = []
-    for N in N_values:
-        proofs = proof_alphabet ** N
-        oracles = oracle_alphabet ** N
-        ratio = oracles / proofs if proofs > 0 else float('inf')
-        log_ratio = N * math.log2(oracle_alphabet / proof_alphabet)
-        results.append({
-            "N": N,
-            "proof_space": proofs,
-            "oracle_space": oracles,
-            "ratio": ratio,
-            "log2_ratio": log_ratio
-        })
+    for k in range(1, max_k + 1):
+        for N in range(1, max_N + 1):
+            oracle_count = 3 ** N
+            program_count = b ** k
+            ratio = oracle_count / program_count
+            exceeds = oracle_count > program_count
+            results.append((k, N, ratio, exceeds))
     return results
 
 
-# ── Utility: Primality Oracle ─────────────────────────────────────────────
-def make_primality_oracle(
-    confidence_threshold: int = 50
-) -> RamanujanOracle:
-    """Create a Ramanujan Oracle for primality testing.
+# ============================================================
+# Algorithm 7: Minimum N Threshold
+# ============================================================
 
-    The oracle uses trial division for n < confidence_threshold
-    and abstains for larger values (simulating limited intuition).
+def threshold_N(b: int, k: int) -> int:
     """
-    def is_prime(n: int) -> bool:
-        if n < 2:
-            return False
-        for i in range(2, int(n**0.5) + 1):
-            if n % i == 0:
-                return False
-        return True
+    Find minimum N such that 3^N > b^k.
+    
+    Args:
+        b: Alphabet size
+        k: Program length
+    
+    Returns:
+        Minimum N where oracle space exceeds program space
+    """
+    if b <= 1:
+        return 1
+    target = k * math.log(b) / math.log(3)
+    N = math.ceil(target)
+    # Verify and adjust
+    while 3 ** N <= b ** k:
+        N += 1
+    return N
 
-    def predict(n: int) -> OracleResponse:
-        if n < confidence_threshold:
-            return OracleResponse.TRUE if is_prime(n) else OracleResponse.FALSE
-        return OracleResponse.UNKNOWN
 
-    return RamanujanOracle(predict=predict, truth_set=is_prime)
+# ============================================================
+# Algorithm 8: Accuracy Distribution
+# ============================================================
+
+def accuracy_distribution(
+    N: int,
+    truth: Tuple[int, ...],
+) -> dict:
+    """
+    Compute the distribution of accuracies across all 3^N oracles.
+    
+    Args:
+        N: Number of statements
+        truth: Ground truth tuple
+    
+    Returns:
+        Dictionary mapping accuracy level to count of oracles achieving it
+    """
+    dist: dict = {i: 0 for i in range(N + 1)}
+    for oracle in itertools.product(range(3), repeat=N):
+        acc = oracle_accuracy(oracle, truth)
+        dist[acc] += 1
+    return dist
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    oracle = make_primality_oracle(confidence_threshold=30)
-    result = evaluate_oracle(oracle, 100)
-    print(f"Primality Oracle (threshold=30):")
-    print(f"  Accuracy: {result.accuracy:.2%}")
-    print(f"  Coverage: {result.coverage:.2%}")
-    print(f"  Sound: {result.is_sound}")
-    print(f"  Correct: {result.correct}, Wrong: {result.wrong}, Abstain: {result.abstain}")
-    print()
-
-    # Duality table
-    table = proof_prediction_duality_table([1, 5, 10, 20, 50])
-    print("Proof-Prediction Duality:")
-    for row in table:
-        print(f"  N={row['N']:3d}: proofs={row['proof_space']:>15,d}, "
-              f"oracles={row['oracle_space']:>15,d}, ratio={row['ratio']:.2f}")
+    # Quick test
+    print("Oracle space for N=5:", len(enumerate_oracles(5)), "= 3^5 =", 3**5)
+    
+    truth = (0, 1, 0, 1, 0)
+    dist = accuracy_distribution(5, truth)
+    print(f"\nAccuracy distribution for N=5, truth={truth}:")
+    for acc, count in sorted(dist.items()):
+        print(f"  Accuracy {acc}: {count} oracles ({count/3**5*100:.1f}%)")
+    
+    # Cantor diagonal demo
+    def enum(n):
+        return lambda m: (n + m) % 3
+    
+    diag = cantor_diagonal(enum, 10)
+    print(f"\nCantor diagonal (first 10): {diag}")
+    print("Verification:")
+    for n in range(10):
+        fnn = enum(n)(n)
+        print(f"  f({n})({n}) = {fnn}, g({n}) = {diag[n]}, differ: {fnn != diag[n]}")
