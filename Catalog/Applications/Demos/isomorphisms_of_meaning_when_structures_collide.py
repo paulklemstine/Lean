@@ -1,368 +1,475 @@
 #!/usr/bin/env python3
 """
-Semantic Bundles — Interactive Demo
+Semantic Isomorphism Theory — Interactive Demonstrations
 
-Demonstrates the core concepts from the Semantic Bundle theory:
-1. Algebraic vs semantic isomorphism on concrete examples
-2. Semantic diversity and spectrum computation
-3. Orbit counting under automorphism groups
+Demonstrates the core concepts:
+1. Semantic equivalence detection via histogram invariants
+2. Semantic distance computation between colorings
+3. Chromatic stabilizer computation
 """
 
-from itertools import permutations, product
+from itertools import permutations
 from collections import Counter
-from math import factorial, log2
+from typing import Callable, List, Tuple, Dict
 
 
-def xor_op(a: int, b: int) -> int:
-    """XOR operation on {0, 1}."""
-    return (a + b) % 2
+def coloring_histogram(coloring: List[int]) -> Dict[int, int]:
+    """Compute the color histogram (multiset of color values)."""
+    return dict(Counter(coloring))
 
 
-def is_alg_iso(op1, op2, n: int, perm: tuple) -> bool:
-    """Check if permutation `perm` is an algebraic isomorphism from op1 to op2."""
-    for x in range(n):
-        for y in range(n):
-            if perm[op1(x, y)] != op2(perm[x], perm[y]):
-                return False
-    return True
-
-
-def is_sem_iso(op1, op2, label1, label2, n: int, perm: tuple) -> bool:
-    """Check if permutation is a semantic isomorphism."""
-    if not is_alg_iso(op1, op2, n, perm):
-        return False
-    for x in range(n):
-        if label1[x] != label2[perm[x]]:
-            return False
-    return True
-
-
-def find_automorphisms(op, n: int) -> list:
-    """Find all automorphisms of (n-element set, op)."""
-    auts = []
-    for perm in permutations(range(n)):
-        if is_alg_iso(op, op, n, perm):
-            auts.append(perm)
-    return auts
-
-
-def semantic_diversity(label: list) -> int:
-    """Number of distinct label values."""
-    return len(set(label))
-
-
-def semantic_spectrum(label: list) -> list:
-    """Sorted list of label frequencies."""
-    return sorted(Counter(label).values(), reverse=True)
-
-
-def count_semantic_orbits(op, n: int, k: int) -> int:
-    """Count semantically distinct labelings using Burnside's lemma.
-
-    op: binary operation on {0, ..., n-1}
-    n: size of carrier
-    k: number of label values {0, ..., k-1}
+def are_semantically_equivalent(c1: List[int], c2: List[int]) -> Tuple[bool, list]:
     """
-    auts = find_automorphisms(op, n)
-    total_fixed = 0
-    for aut in auts:
-        # Count labelings fixed by this automorphism
-        # A labeling l is fixed by aut iff l[x] = l[aut[x]] for all x
-        # This means l must be constant on each cycle of aut
-        cycles = _cycle_count(aut, n)
-        total_fixed += k ** cycles
-    return total_fixed // len(auts)
+    Check if two colorings are semantically equivalent.
+    Returns (is_equivalent, witnessing_permutation_or_empty).
+    """
+    n = len(c1)
+    assert len(c2) == n, "Colorings must have same length"
+
+    # Quick check: histograms must match
+    if coloring_histogram(c1) != coloring_histogram(c2):
+        return False, []
+
+    # Enumerate all permutations (brute force for small n)
+    for perm in permutations(range(n)):
+        if all(c1[i] == c2[perm[i]] for i in range(n)):
+            return True, list(perm)
+
+    return False, []
 
 
-def _cycle_count(perm: tuple, n: int) -> int:
-    """Count cycles in a permutation."""
-    visited = [False] * n
-    cycles = 0
-    for i in range(n):
-        if not visited[i]:
-            cycles += 1
-            j = i
-            while not visited[j]:
-                visited[j] = True
-                j = perm[j]
-    return cycles
+def semantic_distance(c1: List[int], c2: List[int]) -> int:
+    """
+    Compute the semantic distance: minimum disagreements over all permutations.
+    """
+    n = len(c1)
+    assert len(c2) == n
+
+    min_disagreements = n  # upper bound
+    for perm in permutations(range(n)):
+        disagreements = sum(1 for i in range(n) if c1[i] != c2[perm[i]])
+        min_disagreements = min(min_disagreements, disagreements)
+        if min_disagreements == 0:
+            break
+
+    return min_disagreements
 
 
-# =============================================================
-# DEMO 1: The Separation Theorem
-# =============================================================
-print("=" * 60)
-print("DEMO 1: THE SEPARATION THEOREM")
-print("=" * 60)
-print()
+def chromatic_stabilizer(coloring: List[int]) -> List[Tuple[int, ...]]:
+    """
+    Compute the chromatic stabilizer: all permutations preserving the coloring.
+    """
+    n = len(coloring)
+    stabilizer = []
+    for perm in permutations(range(n)):
+        if all(coloring[perm[i]] == coloring[i] for i in range(n)):
+            stabilizer.append(perm)
+    return stabilizer
 
-n = 2
-label_id = [0, 1]  # identity labeling
-label_swap = [1, 0]  # swapped labeling
 
-print(f"Structure: (Fin 2, XOR)")
-print(f"D_id:   op = XOR, label = {label_id}")
-print(f"D_swap: op = XOR, label = {label_swap}")
-print()
+def semantic_equivalence_classes(n: int, num_colors: int) -> List[List[Tuple[int, ...]]]:
+    """
+    Partition all colorings of {0,...,n-1} with `num_colors` colors
+    into semantic equivalence classes.
+    """
+    from itertools import product as cart_product
 
-# Find all algebraic isomorphisms
-alg_isos = []
-for perm in permutations(range(n)):
-    if is_alg_iso(xor_op, xor_op, n, perm):
-        alg_isos.append(perm)
+    all_colorings = list(cart_product(range(num_colors), repeat=n))
+    visited = set()
+    classes = []
 
-print(f"Algebraic isomorphisms from D_id to D_swap: {alg_isos}")
+    for coloring in all_colorings:
+        if coloring in visited:
+            continue
+        # Find the orbit of this coloring under all permutations
+        orbit = set()
+        for perm in permutations(range(n)):
+            permuted = tuple(coloring[perm[i]] for i in range(n))
+            orbit.add(permuted)
+        classes.append(sorted(orbit))
+        visited.update(orbit)
 
-# Check semantic isomorphisms
-sem_isos = []
-for perm in permutations(range(n)):
-    if is_sem_iso(xor_op, xor_op, label_id, label_swap, n, perm):
-        sem_isos.append(perm)
+    return classes
 
-print(f"Semantic isomorphisms from D_id to D_swap: {sem_isos}")
-print()
-print(f"AlgIso(D_id, D_swap): {len(alg_isos) > 0}")
-print(f"SemIso(D_id, D_swap): {len(sem_isos) > 0}")
-print(f"→ SEPARATION: Algebraically isomorphic but semantically distinct!")
-print()
 
-# =============================================================
-# DEMO 2: Rigidity and Automorphism Groups
-# =============================================================
-print("=" * 60)
-print("DEMO 2: RIGIDITY AND AUTOMORPHISM GROUPS")
-print("=" * 60)
-print()
+# ═══════════════════════════════════════════════════════════════
+# DEMONSTRATION 1: The Semantic Gap
+# ═══════════════════════════════════════════════════════════════
 
-# XOR on Fin 2
-auts_xor = find_automorphisms(xor_op, 2)
-print(f"Aut(Fin 2, XOR) = {auts_xor}")
-print(f"|Aut| = {len(auts_xor)}")
-print(f"Rigid: {len(auts_xor) == 1}")
-print()
+print("=" * 70)
+print("DEMONSTRATION 1: The Semantic Gap Theorem")
+print("=" * 70)
 
-# Addition on Fin 3
-def add3(a, b): return (a + b) % 3
-auts_z3 = find_automorphisms(add3, 3)
-print(f"Aut(Z/3Z, +) = {auts_z3}")
-print(f"|Aut| = {len(auts_z3)}")
-print(f"Rigid: {len(auts_z3) == 1}")
-print()
+c1 = [0, 0, 1]  # "mostly off" — two 0s, one 1
+c2 = [0, 1, 1]  # "mostly on"  — one 0, two 1s
 
-# Addition on Fin 4
-def add4(a, b): return (a + b) % 4
-auts_z4 = find_automorphisms(add4, 4)
-print(f"Aut(Z/4Z, +) = {auts_z4}")
-print(f"|Aut| = {len(auts_z4)}")
-print(f"Rigid: {len(auts_z4) == 1}")
-print()
+print(f"\nColoring 1 (gapColor₁): {c1}")
+print(f"Coloring 2 (gapColor₂): {c2}")
+print(f"\nHistogram of c1: {coloring_histogram(c1)}")
+print(f"Histogram of c2: {coloring_histogram(c2)}")
 
-# =============================================================
-# DEMO 3: Semantic Orbit Counting
-# =============================================================
-print("=" * 60)
-print("DEMO 3: SEMANTIC ORBIT COUNTING (BURNSIDE)")
-print("=" * 60)
-print()
+equiv, witness = are_semantically_equivalent(c1, c2)
+print(f"\nSemantically equivalent? {equiv}")
+print(f"Semantic distance: {semantic_distance(c1, c2)}")
+print("\n→ The histograms differ, so no permutation can transform one into the other.")
+print("  This is the Semantic Gap: isomorphic structures carry irreconcilable meanings.")
 
-for name, op, sz in [("XOR/Fin2", xor_op, 2), ("Z/3Z", add3, 3), ("Z/4Z", add4, 4)]:
-    for k in [2, 3]:
-        orbits = count_semantic_orbits(op, sz, k)
-        total = k ** sz
-        aut_size = len(find_automorphisms(op, sz))
-        print(f"{name}, k={k}: {orbits} semantic classes "
-              f"(of {total} total labelings, |Aut|={aut_size})")
-    print()
+# ═══════════════════════════════════════════════════════════════
+# DEMONSTRATION 2: Semantic Distance as a Pseudometric
+# ═══════════════════════════════════════════════════════════════
 
-# =============================================================
-# DEMO 4: Semantic Diversity and Spectrum
-# =============================================================
-print("=" * 60)
-print("DEMO 4: SEMANTIC INVARIANTS")
-print("=" * 60)
-print()
+print("\n" + "=" * 70)
+print("DEMONSTRATION 2: Semantic Distance Pseudometric")
+print("=" * 70)
 
-examples = [
-    ("D_id", [0, 1]),
-    ("D_swap", [1, 0]),
-    ("D_const", [0, 0]),
-    ("D_all_diff (Fin 3)", [0, 1, 2]),
-    ("D_two_same (Fin 3)", [0, 0, 1]),
+# Colorings of Fin 4
+colorings = [
+    [0, 0, 1, 1],  # A
+    [0, 1, 0, 1],  # B
+    [0, 1, 1, 0],  # C
+    [1, 1, 0, 0],  # D
+    [0, 0, 0, 1],  # E
 ]
 
-for name, label in examples:
-    div = semantic_diversity(label)
-    spec = semantic_spectrum(label)
-    print(f"{name}: label={label}, diversity={div}, spectrum={spec}")
+labels = "ABCDE"
+print("\nSemantic distance matrix:")
+print(f"     {'  '.join(labels)}")
+for i, ci in enumerate(colorings):
+    row = [semantic_distance(ci, cj) for cj in colorings]
+    print(f"  {labels[i]}  {'  '.join(str(d) for d in row)}")
 
-print()
+print("\nKey observations:")
+print("  • d(X,X) = 0 for all X (reflexivity)")
+print("  • d(X,Y) = d(Y,X) for all X,Y (symmetry)")
+print("  • A,B,C,D all have histogram {0:2, 1:2} — some are equivalent!")
 
-# =============================================================
-# DEMO 5: Truth-Meaning Gap
-# =============================================================
-print("=" * 60)
-print("DEMO 5: TRUTH-MEANING GAP")
-print("=" * 60)
-print()
+for i in range(len(colorings)):
+    for j in range(i + 1, len(colorings)):
+        eq, w = are_semantically_equivalent(colorings[i], colorings[j])
+        if eq:
+            print(f"  • {labels[i]} ≡ {labels[j]} via permutation {w}")
 
-# truth predicate: always true (matches formal proof)
-def truth(x): return True
+# ═══════════════════════════════════════════════════════════════
+# DEMONSTRATION 3: Chromatic Stabilizer and Symmetry Breaking
+# ═══════════════════════════════════════════════════════════════
 
-phi = lambda x: x  # identity map
-d1_label = label_id
-d2_label = label_swap
+print("\n" + "=" * 70)
+print("DEMONSTRATION 3: Chromatic Stabilizer — Symmetry Breaking")
+print("=" * 70)
 
-truth_preserved = all(
-    not truth(d1_label[x]) or truth(d2_label[phi(x)])
-    for x in range(2)
-)
-meaning_preserved = all(
-    d1_label[x] == d2_label[phi(x)]
-    for x in range(2)
-)
+test_colorings = [
+    ("Constant",        [0, 0, 0]),
+    ("Two colors",      [0, 0, 1]),
+    ("Injective",       [0, 1, 2]),
+    ("Alternating-4",   [0, 1, 0, 1]),
+    ("Block-4",         [0, 0, 1, 1]),
+]
 
-print(f"D_id labels: {d1_label}")
-print(f"D_swap labels: {d2_label}")
-print(f"φ = identity")
-print(f"Truth predicate: 'is nonzero'")
-print(f"Truth preserved: {truth_preserved}")
-print(f"Meaning preserved: {meaning_preserved}")
-print(f"→ GAP: Truth is preserved but meaning is not!")
-print()
+import math
 
-# =============================================================
-# DEMO 6: Semantic Entropy
-# =============================================================
-print("=" * 60)
-print("DEMO 6: SEMANTIC ENTROPY")
-print("=" * 60)
-print()
+for name, coloring in test_colorings:
+    stab = chromatic_stabilizer(coloring)
+    n = len(coloring)
+    full_aut_size = math.factorial(n)
+    print(f"\n  {name}: {coloring}")
+    print(f"    |Stab| = {len(stab)}, |Aut| = {full_aut_size}, "
+          f"index = {full_aut_size // len(stab)}")
+    print(f"    Symmetry broken: {100 * (1 - len(stab) / full_aut_size):.0f}%")
 
-for name, op, sz in [("XOR/Fin2", xor_op, 2), ("Z/3Z", add3, 3), ("Z/4Z", add4, 4)]:
-    aut_size = len(find_automorphisms(op, sz))
-    for k in [2, 3]:
-        orbits = count_semantic_orbits(op, sz, k)
-        entropy = log2(orbits) if orbits > 0 else 0
-        max_entropy = sz * log2(k)
-        print(f"{name}, k={k}: H = {entropy:.2f} bits "
-              f"(max = {max_entropy:.2f}, |Aut|={aut_size})")
-    print()
+print("\n→ Injective colorings break ALL symmetry (|Stab| = 1).")
+print("  Constant colorings preserve ALL symmetry (|Stab| = |Aut|).")
+print("  This is the Chromatic Rigidity Theorem in action.")
+
+# ═══════════════════════════════════════════════════════════════
+# DEMONSTRATION 4: Counting Semantic Equivalence Classes
+# ═══════════════════════════════════════════════════════════════
+
+print("\n" + "=" * 70)
+print("DEMONSTRATION 4: Semantic Equivalence Classes (Burnside Counting)")
+print("=" * 70)
+
+for n in range(1, 5):
+    for k in range(1, min(n + 2, 4)):
+        classes = semantic_equivalence_classes(n, k)
+        total = k ** n
+        print(f"  |Fin {n}| with {k} colors: "
+              f"{total} colorings → {len(classes)} semantic classes")
+
+print("\n→ The number of classes grows much slower than the number of colorings.")
+print("  This is because structural symmetries identify many colorings.")
+
+# ═══════════════════════════════════════════════════════════════
+# DEMONSTRATION 5: Transfer Obstruction
+# ═══════════════════════════════════════════════════════════════
+
+print("\n" + "=" * 70)
+print("DEMONSTRATION 5: Transfer Obstruction")
+print("=" * 70)
+
+# Property: "element 0 has color true"
+c_true_at_0 = [1, 0]   # true at position 0
+c_false_at_0 = [0, 1]  # false at position 0
+
+print(f"\n  c₁ = {c_true_at_0} — element 0 is colored 1 (true)")
+print(f"  c₂ = {c_false_at_0} — element 0 is colored 0 (false)")
+
+equiv, witness = are_semantically_equivalent(c_true_at_0, c_false_at_0)
+print(f"\n  Semantically equivalent? {equiv} (via swap {witness})")
+print(f"  But P(c₁) = True, P(c₂) = False for P = 'color of element 0 is 1'")
+print("\n→ Point-evaluation is NOT transferable across semantic equivalence.")
+print("  Structural isomorphisms destroy point-specific meaning.")
+
+# Property: "all elements same color" — this IS transferable
+c_const = [1, 1]
+c_mixed = [0, 1]
+print(f"\n  Constant coloring {c_const}: all same color? True")
+print(f"  Mixed coloring {c_mixed}: all same color? False")
+print(f"  These are NOT semantically equivalent (distance = {semantic_distance(c_const, c_mixed)})")
+print("→ 'All same color' IS transferable: it's preserved by all permutations.")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Semantic Landscape of Decorated Magmas
+Visualization: Burnside Class Counting
 
-Shows how the semantic orbit count varies with group size and label count.
+Shows how the number of semantic equivalence classes grows
+compared to the total number of colorings, demonstrating
+the dramatic compression effect of structural symmetry.
 """
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from itertools import permutations
-from math import log2
+import math
 
 
-def find_automorphisms_modular(n):
-    """Find automorphisms of (Z/nZ, +)."""
-    auts = []
-    for p in permutations(range(n)):
-        ok = True
-        for x in range(n):
-            for y in range(n):
-                if p[(x + y) % n] != (p[x] + p[y]) % n:
-                    ok = False
-                    break
-            if not ok:
-                break
-        if ok:
-            auts.append(p)
-    return auts
+def count_semantic_classes_burnside(n, k):
+    """Count classes using Burnside's lemma."""
+    total_fixed = 0
+    for perm in permutations(range(n)):
+        visited = [False] * n
+        num_cycles = 0
+        for i in range(n):
+            if not visited[i]:
+                num_cycles += 1
+                j = i
+                while not visited[j]:
+                    visited[j] = True
+                    j = perm[j]
+        total_fixed += k ** num_cycles
+    return total_fixed // math.factorial(n)
 
 
-def cycle_count(perm, n):
-    visited = [False] * n
-    c = 0
-    for i in range(n):
-        if not visited[i]:
-            c += 1
-            j = i
-            while not visited[j]:
-                visited[j] = True
-                j = perm[j]
-    return c
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
+# Left: Classes vs total colorings
+ax = axes[0]
+for k in [2, 3, 4]:
+    ns = range(1, 8)
+    totals = [k**n for n in ns]
+    classes = [count_semantic_classes_burnside(n, k) for n in ns]
 
-def orbit_count(auts, n, k):
-    total = 0
-    for aut in auts:
-        total += k ** cycle_count(aut, n)
-    return total // len(auts)
+    ax.semilogy(list(ns), totals, '--', alpha=0.4, color=f'C{k-2}')
+    ax.semilogy(list(ns), classes, 'o-', linewidth=2, color=f'C{k-2}',
+                label=f'k={k}')
 
+ax.set_xlabel('n (number of elements)', fontsize=12)
+ax.set_ylabel('Count (log scale)', fontsize=12)
+ax.set_title('Semantic Classes vs Total Colorings\n(dashed = total, solid = classes)',
+             fontsize=14)
+ax.legend(fontsize=11)
+ax.grid(True, alpha=0.3)
 
-# Compute data
-ns = range(2, 7)
-ks = [2, 3, 4]
-
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-for idx, k in enumerate(ks):
-    ax = axes[idx]
-    orbit_counts = []
-    total_counts = []
-    aut_sizes = []
-
+# Right: Compression ratio
+ax = axes[1]
+for k in [2, 3, 4]:
+    ns = range(1, 8)
+    ratios = []
     for n in ns:
-        auts = find_automorphisms_modular(n)
-        orb = orbit_count(auts, n, k)
-        orbit_counts.append(orb)
-        total_counts.append(k ** n)
-        aut_sizes.append(len(auts))
+        total = k ** n
+        classes = count_semantic_classes_burnside(n, k)
+        ratios.append(classes / total)
 
-    x = list(ns)
-    ax.bar(x, total_counts, alpha=0.3, color='steelblue', label='Total labelings')
-    ax.bar(x, orbit_counts, alpha=0.8, color='coral', label='Semantic classes')
+    ax.plot(list(ns), ratios, 'o-', linewidth=2, label=f'k={k}')
 
-    ax.set_xlabel('Group size n (Z/nZ)')
-    ax.set_ylabel('Count')
-    ax.set_title(f'k = {k} labels')
-    ax.legend()
-    ax.set_yscale('log')
+ax.set_xlabel('n (number of elements)', fontsize=12)
+ax.set_ylabel('Classes / Total colorings', fontsize=12)
+ax.set_title('Semantic Compression Ratio\n(lower = more symmetry reduction)', fontsize=14)
+ax.legend(fontsize=11)
+ax.grid(True, alpha=0.3)
+ax.set_ylim(0, 1.05)
 
-    for i, n in enumerate(ns):
-        ax.annotate(f'|Aut|={aut_sizes[i]}',
-                   (n, orbit_counts[i]),
-                   textcoords="offset points",
-                   xytext=(0, 10),
-                   ha='center', fontsize=7)
-
-fig.suptitle('Semantic Diversity: Total Labelings vs Semantically Distinct Classes\n'
-             'for cyclic groups Z/nZ', fontsize=13, fontweight='bold')
 plt.tight_layout()
-plt.savefig('semantic_landscape.png', dpi=150, bbox_inches='tight')
-print("Saved semantic_landscape.png")
+plt.savefig('burnside_classes.png', dpi=150)
+print("Saved: burnside_classes.png")
 
-# Second plot: entropy gap
-fig2, ax2 = plt.subplots(figsize=(8, 5))
 
-for k in ks:
-    entropies = []
-    max_entropies = []
-    for n in ns:
-        auts = find_automorphisms_modular(n)
-        orb = orbit_count(auts, n, k)
-        entropies.append(log2(orb) if orb > 0 else 0)
-        max_entropies.append(n * log2(k))
+#!/usr/bin/env python3
+"""
+Visualization: Semantic Distance Heatmap
 
-    ax2.plot(list(ns), entropies, 'o-', label=f'H(Z/nZ, k={k})', linewidth=2)
-    ax2.plot(list(ns), max_entropies, '--', alpha=0.4, label=f'Max (k={k})')
+Shows the semantic distance matrix between all 2-colorings of Fin 4,
+grouped by semantic equivalence class.
+"""
 
-ax2.set_xlabel('Group size n')
-ax2.set_ylabel('Semantic Entropy (bits)')
-ax2.set_title('Semantic Entropy vs Maximum Entropy\n'
-              'Gap = information lost to automorphism symmetry')
-ax2.legend()
-ax2.grid(True, alpha=0.3)
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from itertools import permutations, product as cart_product
+
+
+def semantic_distance(c1, c2):
+    n = len(c1)
+    best = n
+    for perm in permutations(range(n)):
+        d = sum(1 for i in range(n) if c1[i] != c2[perm[i]])
+        best = min(best, d)
+        if best == 0:
+            return 0
+    return best
+
+
+def histogram_sig(c):
+    from collections import Counter
+    return tuple(sorted(Counter(c).values()))
+
+
+# Generate all 2-colorings of Fin 4
+n, k = 4, 2
+all_colorings = list(cart_product(range(k), repeat=n))
+
+# Sort by histogram signature for visual grouping
+all_colorings.sort(key=lambda c: (histogram_sig(c), c))
+
+# Compute distance matrix
+N = len(all_colorings)
+dist_matrix = np.zeros((N, N), dtype=int)
+for i in range(N):
+    for j in range(i, N):
+        d = semantic_distance(list(all_colorings[i]), list(all_colorings[j]))
+        dist_matrix[i, j] = d
+        dist_matrix[j, i] = d
+
+# Plot
+fig, ax = plt.subplots(figsize=(10, 8))
+im = ax.imshow(dist_matrix, cmap='YlOrRd', interpolation='nearest')
+ax.set_title('Semantic Distance Between 2-Colorings of Fin 4\n'
+             '(Sorted by histogram signature)', fontsize=14)
+ax.set_xlabel('Coloring index')
+ax.set_ylabel('Coloring index')
+
+# Add colorbar
+cbar = plt.colorbar(im, ax=ax)
+cbar.set_label('Semantic Distance', fontsize=12)
+
+# Add coloring labels on axes
+labels = [''.join(str(x) for x in c) for c in all_colorings]
+ax.set_xticks(range(N))
+ax.set_xticklabels(labels, rotation=90, fontsize=7)
+ax.set_yticks(range(N))
+ax.set_yticklabels(labels, fontsize=7)
+
+# Draw block boundaries for histogram classes
+sigs = [histogram_sig(c) for c in all_colorings]
+boundaries = []
+for i in range(1, N):
+    if sigs[i] != sigs[i-1]:
+        boundaries.append(i - 0.5)
+for b in boundaries:
+    ax.axhline(y=b, color='blue', linewidth=1.5, linestyle='--', alpha=0.7)
+    ax.axvline(x=b, color='blue', linewidth=1.5, linestyle='--', alpha=0.7)
+
 plt.tight_layout()
-plt.savefig('semantic_entropy.png', dpi=150, bbox_inches='tight')
-print("Saved semantic_entropy.png")
+plt.savefig('semantic_distance_heatmap.png', dpi=150)
+print("Saved: semantic_distance_heatmap.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Chromatic Stabilizer Spectrum
+
+Shows how the stabilizer size varies across different colorings,
+illustrating the symmetry-breaking effect of semantic content.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from itertools import permutations, product as cart_product
+from collections import Counter
+import math
+
+
+def stabilizer_size(coloring):
+    """Compute |Stab(c)| = product of (multiplicity)! for each color."""
+    hist = Counter(coloring)
+    result = 1
+    for count in hist.values():
+        result *= math.factorial(count)
+    return result
+
+
+def stabilizer_index(coloring):
+    """Compute [Sym(n) : Stab(c)] = n! / |Stab(c)|."""
+    n = len(coloring)
+    return math.factorial(n) // stabilizer_size(coloring)
+
+
+# Parameters
+max_n = 6
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# Left plot: Distribution of stabilizer sizes for n=5, k=3
+n, k = 5, 3
+all_colorings = list(cart_product(range(k), repeat=n))
+stab_sizes = [stabilizer_size(list(c)) for c in all_colorings]
+unique_sizes = sorted(set(stab_sizes))
+size_counts = Counter(stab_sizes)
+
+ax = axes[0]
+bars = ax.bar(range(len(unique_sizes)),
+              [size_counts[s] for s in unique_sizes],
+              color='steelblue', alpha=0.8)
+ax.set_xticks(range(len(unique_sizes)))
+ax.set_xticklabels([str(s) for s in unique_sizes])
+ax.set_xlabel('|Stab(c)|', fontsize=12)
+ax.set_ylabel('Number of colorings', fontsize=12)
+ax.set_title(f'Stabilizer Size Distribution\n(n={n}, k={k})', fontsize=14)
+ax.set_yscale('log')
+
+# Add percentage labels
+total = len(all_colorings)
+for bar, s in zip(bars, unique_sizes):
+    count = size_counts[s]
+    pct = 100 * count / total
+    if pct > 0.5:
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height(),
+                f'{pct:.0f}%', ha='center', va='bottom', fontsize=8)
+
+# Right plot: Symmetry breaking ratio vs number of colors
+ax = axes[1]
+for n in range(3, max_n + 1):
+    k_range = range(1, n + 2)
+    avg_indices = []
+    for k in k_range:
+        all_c = list(cart_product(range(k), repeat=n))
+        indices = [stabilizer_index(list(c)) for c in all_c]
+        avg_indices.append(np.mean(indices))
+
+    ax.plot(list(k_range), avg_indices, 'o-', label=f'n={n}', linewidth=2)
+
+ax.set_xlabel('Number of colors (k)', fontsize=12)
+ax.set_ylabel('Average orbit size [Sym(n):Stab(c)]', fontsize=12)
+ax.set_title('Average Symmetry Breaking\nvs Number of Colors', fontsize=14)
+ax.legend(fontsize=10)
+ax.set_yscale('log')
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('stabilizer_spectrum.png', dpi=150)
+print("Saved: stabilizer_spectrum.png")

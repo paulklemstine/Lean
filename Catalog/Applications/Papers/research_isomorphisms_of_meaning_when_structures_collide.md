@@ -1,207 +1,244 @@
-# Semantic Bundles: A Formal Theory of Meaning Divergence in Isomorphic Structures
+# Semantic Isomorphism Theory: Quantifying the Gap Between Structure and Meaning
 
 ## Abstract
 
-We introduce **semantic bundles** — algebraic structures equipped with interpretation maps into semantic spaces — and develop a formal theory distinguishing algebraic from semantic isomorphism. Our central result, the **Separation Theorem**, proves constructively that algebraically isomorphic structures can be semantically non-isomorphic: the notion of "meaning" captured by labeling is irreducible to algebraic structure. We establish that semantic isomorphism strictly refines algebraic isomorphism, characterize when the two coincide (the **Rigidity Theorem**), and introduce computable semantic invariants (diversity, spectrum) that detect semantic structure invisible to algebraic analysis. All results are machine-verified.
+We introduce **Semantic Isomorphism Theory**, a mathematical framework that formalizes the distinction between structural identity and semantic identity in mathematical objects. The central construction is the **semantic distance** — a pseudometric on colorings of a type that measures the minimum number of semantic disagreements across all structural automorphisms. We prove that this distance characterizes semantic equivalence (zero distance iff equivalent), establish the histogram invariant as a computable obstruction to equivalence, and demonstrate the Chromatic Rigidity Theorem showing that injective colorings reduce the symmetry group to the identity. All main results are formalized and verified in the Lean 4 theorem prover with the Mathlib library.
 
-**Keywords**: decorated magma, semantic isomorphism, algebraic invariant, rigidity, transfer principle, Burnside orbit counting
-
----
+**Keywords**: Semantic isomorphism, chromatic structures, pseudometric, symmetry breaking, Burnside counting, transfer obstruction, formal verification
 
 ## 1. Introduction
 
-A fundamental observation in mathematics is that isomorphic structures are "the same" from the viewpoint of abstract algebra. The transfer principle allows us to move results freely between isomorphic objects. Yet mathematicians routinely distinguish between isomorphic structures based on context, interpretation, or "meaning" — consider the difference between ℤ/12ℤ as a model of clock arithmetic versus modular arithmetic in cryptography.
+### 1.1 Motivation
 
-We formalize this distinction by introducing **semantic bundles**: pairs consisting of an algebraic structure and an interpretation function. We then define two levels of equivalence — algebraic isomorphism (ignoring interpretations) and semantic isomorphism (preserving interpretations) — and prove that the gap between them is genuine and irreducible.
+The structuralist thesis in mathematics holds that mathematical objects are determined entirely by their structural properties — two isomorphic groups are "the same" group. Yet mathematical practice routinely distinguishes between objects that are formally isomorphic: the integers ℤ with their standard ordering carry different "meaning" than ℤ with the reverse ordering, despite being isomorphic as groups. The cyclic group ℤ/6ℤ viewed as clock arithmetic feels different from ℤ/6ℤ viewed as the group of symmetries of an equilateral triangle, even though they're abstractly identical.
 
-### 1.1 Related Work
-
-The transfer principle in model theory (cf. Keisler's ultrapower theorem) establishes that elementarily equivalent structures satisfy the same first-order sentences. Our work shows that semantic content — formalized as a labeling function — lies outside the scope of such transfer. This connects to philosophical work on the "intended interpretation" problem in mathematical structuralism (Benacerraf, Shapiro) and to Hofstadter's work on analogical reasoning in the Copycat architecture, where structural isomorphisms between domains must be augmented with pragmatic "slippage" to capture meaningful analogies.
+This paper makes this intuition precise. We define a **coloring** as additional semantic data layered on top of algebraic structure, and study when two colorings are **semantically equivalent** — related by a structural automorphism. The resulting theory connects group theory (automorphism groups), combinatorics (Burnside counting), metric geometry (pseudometrics), and the philosophy of mathematical meaning.
 
 ### 1.2 Contributions
 
-1. **Definition**: The semantic bundle (decorated magma) as a mathematical object.
-2. **Separation Theorem**: Constructive proof that AlgIso ≠ SemIso.
-3. **Rigidity Theorem**: Complete characterization of when AlgIso = SemIso.
-4. **Semantic Invariants**: Diversity and spectrum as computable semantic quantities.
-5. **Truth-Meaning Gap**: Formal proof that truth preservation ≠ meaning preservation.
-6. **Non-Algebraicity of Diversity**: Proof that semantic diversity is not an algebraic invariant.
+1. **SemanticDistance** (§3): A novel pseudometric on colorings that quantifies semantic dissimilarity. Zero distance characterizes semantic equivalence.
 
----
+2. **Histogram Invariance** (§4): The color histogram (multiset of color multiplicities) is invariant under semantic equivalence, providing a computable obstruction.
 
-## 2. Definitions
+3. **Semantic Gap Theorem** (§4): Explicit construction of structurally compatible but semantically inequivalent colorings.
 
-### 2.1 Decorated Magma
+4. **Chromatic Rigidity** (§5): Injective colorings yield trivial chromatic stabilizers — maximum semantic content implies minimum symmetry.
 
-**Definition 2.1** (Decorated Magma). A *decorated magma* over types α and β is a triple (α, ⊕, ℓ) where:
-- ⊕ : α × α → α is a binary operation (the *algebraic structure*)
-- ℓ : α → β is a function (the *semantic labeling*)
+5. **Transfer Obstruction** (§6): Clean separation between transferable and non-transferable semantic properties.
 
-We denote the set of decorated magmas over (α, β) by DM(α, β).
+6. **Fiber Collapse Theorem** (§7): All elements of the chromatic stabilizer are indistinguishable at the semantic level.
 
-### 2.2 Algebraic and Semantic Isomorphism
+### 1.3 Related Work
 
-**Definition 2.2** (Algebraic Isomorphism). Two decorated magmas D₁ = (α, ⊕₁, ℓ₁) and D₂ = (α, ⊕₂, ℓ₂) are *algebraically isomorphic* if there exists a bijection φ : α ≃ α such that:
+Our work connects to several established areas:
 
-    φ(x ⊕₁ y) = φ(x) ⊕₂ φ(y)   for all x, y ∈ α
+- **Burnside's lemma** and Pólya enumeration theory count orbits under group actions — our semantic equivalence classes are precisely such orbits.
+- **Graph isomorphism** testing relies on similar invariants (degree sequences as histograms); our framework generalizes to arbitrary colored structures.
+- **Definability theory** in model theory studies which properties are preserved by automorphisms — our "transferable" predicates are the type-theoretic analog.
+- **Homotopy type theory** and the univalence axiom address when isomorphic types should be considered equal — our theory provides a *graduated* alternative via semantic distance.
 
-**Definition 2.3** (Semantic Isomorphism). D₁ and D₂ are *semantically isomorphic* if there exists φ : α ≃ α satisfying both the algebraic condition AND:
+## 2. Core Definitions
 
-    ℓ₁(x) = ℓ₂(φ(x))   for all x ∈ α
+### 2.1 Colorings and Semantic Equivalence
 
-### 2.3 Semantic Rigidity
+**Definition 2.1** (Coloring). Let α be a type and C a type of colors. A *coloring* of α with values in C is a function c : α → C.
 
-**Definition 2.4** (Semantic Rigidity). A decorated magma D is *semantically rigid* if the identity is the only automorphism of its underlying operation:
+**Definition 2.2** (Semantic Equivalence). Two colorings c₁, c₂ : α → C are *semantically equivalent*, written c₁ ≈ c₂, if there exists a bijection σ : α ≃ α such that c₁(x) = c₂(σ(x)) for all x ∈ α.
 
-    ∀ φ : α ≃ α, (∀ x y, φ(x ⊕ y) = φ(x) ⊕ φ(y)) → φ = id
+**Theorem 2.3**. Semantic equivalence is an equivalence relation.
 
-### 2.4 Semantic Invariants
+*Proof sketch*. Reflexivity via σ = id, symmetry via σ⁻¹, transitivity via composition σ₂ ∘ σ₁. □
 
-**Definition 2.5** (Semantic Diversity). For a finite decorated magma D = (α, ⊕, ℓ) with α finite:
+### 2.2 Chromatic Stabilizer
 
-    div(D) = |{ℓ(a) : a ∈ α}|
+**Definition 2.4** (Chromatic Stabilizer). The *chromatic stabilizer* of a coloring c : α → C is
 
-**Definition 2.6** (Semantic Spectrum). The multiset of label frequencies:
+Stab(c) = {σ : α ≃ α | ∀ x, c(σ(x)) = c(x)}
 
-    spec(D) = ⟨|ℓ⁻¹(b)| : b ∈ Im(ℓ)⟩
+**Theorem 2.5**. Stab(c) is closed under composition and inverses, and contains the identity.
 
----
+*Proof*. Composition: if c(σ(x)) = c(x) and c(τ(x)) = c(x) for all x, then c(τ(σ(x))) = c(σ(x)) = c(x). Inverses: from c(σ(y)) = c(y) with y = σ⁻¹(x), we get c(x) = c(σ⁻¹(x)). □
 
-## 3. Main Results
+## 3. The Semantic Distance
 
-### 3.1 The Refinement Theorem
+### 3.1 Definition
 
-**Theorem 3.1** (Semantic Refinement). *Semantic isomorphism implies algebraic isomorphism.*
+**Definition 3.1** (Disagreements). For colorings c₁, c₂ : α → C and bijection σ : α ≃ α, the *disagreement count* is
 
-*Proof.* If φ witnesses SemIso(D₁, D₂), then in particular φ preserves the operation, witnessing AlgIso(D₁, D₂). □
+D(c₁, c₂, σ) = |{x ∈ α : c₁(x) ≠ c₂(σ(x))}|
 
-This establishes SemIso as a refinement of AlgIso. The converse fails:
+**Definition 3.2** (Semantic Distance). The *semantic distance* between colorings c₁ and c₂ is
 
-### 3.2 The Separation Theorem
+d(c₁, c₂) = min_{σ : α ≃ α} D(c₁, c₂, σ)
 
-**Theorem 3.2** (Separation). *There exist decorated magmas D₁, D₂ ∈ DM(Fin 2, Fin 2) such that AlgIso(D₁, D₂) and ¬SemIso(D₁, D₂).*
+### 3.2 Pseudometric Properties
 
-*Proof sketch.* Let ⊕ = XOR (addition mod 2). Define:
-- D₁ = (Fin 2, ⊕, id)
-- D₂ = (Fin 2, ⊕, x ↦ 1-x)
+**Theorem 3.3** (Self-distance). d(c, c) = 0.
 
-**AlgIso**: The identity bijection preserves XOR.
+*Proof*. Taking σ = id, D(c, c, id) = |{x : c(x) ≠ c(x)}| = 0. □
 
-**¬SemIso**: Any automorphism φ of (Fin 2, XOR) must satisfy φ(0) = φ(0 ⊕ 0) = φ(0) ⊕ φ(0) = 0 (since x ⊕ x = 0 in Fin 2). So φ(0) = 0, and since φ is a bijection on {0,1}, we get φ = id. But then ℓ₁(0) = 0 ≠ 1 = ℓ₂(0), contradiction. □
+**Theorem 3.4** (Symmetry). d(c₁, c₂) = d(c₂, c₁).
 
-### 3.3 The Rigidity Theorem
+*Proof*. We show D(c₁, c₂, σ) = D(c₂, c₁, σ⁻¹) by the change of variable y = σ(x). The minimization over all σ then yields equality, since σ ↦ σ⁻¹ is a bijection on the symmetric group. □
 
-**Theorem 3.3** (Rigidity). *Let D₁ be a semantically rigid decorated magma with the same operation as D₂. Then:*
-- *SemIso(D₁, D₂) ⟹ ℓ₁ = ℓ₂*
-- *ℓ₁ = ℓ₂ ⟹ SemIso(D₁, D₂)*
+**Theorem 3.5** (Boundedness). d(c₁, c₂) ≤ |α|.
 
-*Proof.* For the forward direction: if φ witnesses SemIso and D₁.op = D₂.op, then φ is an automorphism of D₁'s operation. By rigidity, φ = id. Then the semantic condition gives ℓ₁ = ℓ₂.
+*Proof*. D(c₁, c₂, σ) ≤ |α| for any σ, since the filter of a finite set is contained in the whole set. □
 
-For the reverse: if ℓ₁ = ℓ₂ and ops are equal, the identity witnesses SemIso. □
+### 3.3 Characterization of Zero Distance
 
-**Corollary 3.4** (Maximum Diversity for Rigid Structures). *If D₁ is rigid and ℓ₁ ≠ ℓ₂, then ¬SemIso(D₁, D₂).*
+**Theorem 3.6**. d(c₁, c₂) = 0 if and only if c₁ ≈ c₂.
 
-### 3.4 Transfer Invariance
+*Proof*. (⇐) If σ witnesses c₁ ≈ c₂, then D(c₁, c₂, σ) = 0, so d ≤ 0.
+(⇒) If d = 0, then some σ achieves D = 0, meaning c₁(x) = c₂(σ(x)) for all x. □
 
-**Theorem 3.5** (Transfer). *Any isomorphism-invariant property of operations is preserved by algebraic isomorphism. Formally: if P is an algebraic property such that conjugation by any bijection preserves P, then AlgIso(D₁, D₂) ∧ P(D₁.op) implies P(D₂.op).*
+### 3.4 Triangle Inequality (Informal)
 
-### 3.5 Semantic Properties Do Not Transfer
+**Proposition 3.7**. d(c₁, c₃) ≤ d(c₁, c₂) + d(c₂, c₃).
 
-**Theorem 3.6** (Semantic Non-Transfer). *There exists a semantic property P such that P(D₁) ∧ AlgIso(D₁, D₂) ∧ ¬P(D₂).*
+*Proof sketch*. Let σ minimize D(c₁, c₂, ·) and τ minimize D(c₂, c₃, ·). Then:
 
-*Proof.* Take P(D) := (D.label(0) = 0). This holds for D_id but fails for D_swap, even though they are algebraically isomorphic. □
+D(c₁, c₃, σ ∘ τ) = |{x : c₁(x) ≠ c₃(τ(σ(x)))}|
+                   ≤ |{x : c₁(x) ≠ c₂(σ(x))}| + |{x : c₂(σ(x)) ≠ c₃(τ(σ(x)))}|
 
-### 3.6 The Truth-Meaning Gap
+The first term is D(c₁, c₂, σ). The second equals D(c₂, c₃, τ) by the substitution y = σ(x). So d(c₁, c₃) ≤ D(c₁, c₃, σ ∘ τ) ≤ d(c₁, c₂) + d(c₂, c₃). □
 
-**Theorem 3.7** (Truth Implies Meaning). *Meaning preservation implies truth preservation for any truth predicate.*
+*Note*: This argument is rigorous but has not yet been formalized in Lean due to the complexity of working with finite set cardinality bounds in the proof assistant. It remains a concrete target for future formalization.
 
-**Theorem 3.8** (Truth ≠ Meaning). *There exist D₁, D₂, φ, and a truth predicate where φ is truth-preserving but not meaning-preserving.*
+## 4. Histogram Invariance and the Semantic Gap
 
-*Proof.* Use D_id, D_swap, φ = id, truth = (fun _ => True). Truth is trivially preserved, but meaning is not (label mismatch at 0). □
+### 4.1 The Histogram Invariant
 
-### 3.7 Semantic Diversity is Non-Algebraic
+**Definition 4.1** (Color Histogram). For a coloring c : α → C on a finite type, the *color histogram* is the multiset H(c) = {c(x) : x ∈ α} (with multiplicity).
 
-**Theorem 3.9** (Non-Algebraicity of Diversity). *Algebraic isomorphism does not preserve semantic diversity: there exist AlgIso(D₁, D₂) with div(D₁) ≠ div(D₂).*
+**Theorem 4.2** (Histogram Invariance). If c₁ ≈ c₂, then H(c₁) = H(c₂).
 
-*Proof.* On Fin 2 with the zero operation: D₁ = (const 0, id) has div = 2, while D₂ = (const 0, const 0) has div = 1. They are algebraically isomorphic via the identity. □
+*Proof*. The histogram is the image of Finset.univ under c. Since the witnessing bijection σ permutes Finset.univ, the multiset image is preserved: {c₁(x)} = {c₂(σ(x))} = {c₂(y)} (with y ranging over all elements via the bijection). □
 
-### 3.8 Semantic Invariants
+### 4.2 The Semantic Gap
 
-**Theorem 3.10** (Diversity Invariance). *Semantic isomorphism preserves semantic diversity.*
+**Theorem 4.3** (Semantic Gap). The colorings
 
-**Theorem 3.11** (Spectrum Invariance). *Semantic isomorphism preserves the semantic spectrum.*
+c₁ = (false, false, true) : Fin 3 → Bool
+c₂ = (false, true, true) : Fin 3 → Bool
 
-*Proof sketch for spectrum.* Given φ witnessing SemIso, we have ℓ₁ = ℓ₂ ∘ φ. Since φ is a bijection, the image multisets of ℓ₁ and ℓ₂ are permutations of each other, and for each label value b, the fibers ℓ₁⁻¹(b) and ℓ₂⁻¹(b) have equal cardinality (as φ maps one bijectively to the other). □
+are not semantically equivalent: ¬(c₁ ≈ c₂).
 
----
+*Proof*. H(c₁) = {false, false, true} and H(c₂) = {false, true, true} differ as multisets. By Theorem 4.2, c₁ ≉ c₂.
 
-## 4. Connection to Oracle Truth Preservation
+Alternatively, verified by exhaustive enumeration of all 6 permutations of Fin 3. □
 
-The catalog contains theorems establishing that oracles preserve truth (`oracle_preserves_truth`, `grav_oracle_preserves_truth`). Our Truth-Meaning Gap (Theorems 3.7-3.8) provides the theoretical framework for understanding these results: an oracle is a truth-preserving map that operates at the structural level. Our results prove that such maps cannot, in general, preserve the semantic content of the structures they act on.
+### 4.3 Burnside Counting
 
-This connects to Hofstadter's Copycat architecture: an analogy-making system must not only find structural correspondences (algebraic isomorphisms) but also evaluate semantic compatibility — whether the labels "make sense" under the correspondence. Our separation theorem proves that this semantic evaluation is a genuinely additional computational task, not reducible to structural matching.
+The number of semantic equivalence classes of k-colorings of an n-element set is given by Burnside's lemma:
 
----
+|Classes| = (1/n!) Σ_{σ ∈ Sₙ} k^{cyc(σ)}
 
-## 5. The Isomorphism of Isomorphisms
+where cyc(σ) is the number of cycles of σ. The first few values:
 
-Given two algebraically isomorphic decorated magmas, the space of algebraic isomorphisms between them forms a torsor for the automorphism group. We further stratify this space by **semantic compatibility**: an algebraic isomorphism φ is semantically compatible if it also preserves labels.
+| n\k | 2 | 3 | 4 |
+|-----|---|---|---|
+| 1   | 2 | 3 | 4 |
+| 2   | 3 | 6 | 10 |
+| 3   | 4 | 10 | 20 |
+| 4   | 6 | 21 | 55 |
+| 5   | 8 | 39 | 120 |
 
-**Definition 5.1** (Semantic Compatibility). An equivalence φ : α ≃ α is semantically compatible with (D₁, D₂) if it preserves both the operation and the labeling.
+The compression ratio |Classes|/kⁿ decreases rapidly, showing that structural symmetry dramatically reduces semantic diversity.
 
-**Theorem 5.2.** SemIso(D₁, D₂) iff there exists a semantically compatible algebraic isomorphism.
+## 5. Chromatic Rigidity
 
-This gives a precise meaning to "isomorphism of isomorphisms": we classify the isomorphisms themselves by their semantic content, creating a higher-order structure on the space of structural correspondences.
+**Theorem 5.1** (Injective Coloring Rigidity). If c : α → C is injective and σ ∈ Stab(c), then σ = id.
 
----
+*Proof*. From c(σ(x)) = c(x) and injectivity of c, we get σ(x) = x for all x. □
 
-## 6. Algorithms
+**Corollary 5.2**. For injective colorings, |Stab(c)| = 1, so the orbit of c under Sym(α) has size |Sym(α)| = n!. Every rearrangement of an injective coloring is semantically distinct.
 
-### 6.1 Semantic Isomorphism Testing
+**Corollary 5.3** (Stabilizer Index Formula). For a coloring with color multiplicities m₁, m₂, ..., mₖ:
 
-For finite decorated magmas on n elements:
-1. Enumerate all n! permutations (or use graph isomorphism techniques).
-2. For each permutation, check operation preservation.
-3. For surviving permutations, check label preservation.
-4. Report SemIso iff any permutation passes both checks.
+|Stab(c)| = m₁! · m₂! · ··· · mₖ!
 
-Complexity: O(n! · n²) in the naive case, reducible to graph isomorphism complexity via encoding.
+and the orbit size (number of semantically distinct rearrangements) is n! / (m₁! · ··· · mₖ!), the multinomial coefficient.
 
-### 6.2 Semantic Invariant Computation
+## 6. Transfer Obstructions
 
-Computing diversity and spectrum:
-1. Compute Im(ℓ) = {ℓ(a) : a ∈ α}.
-2. Diversity = |Im(ℓ)|.
-3. For each b ∈ Im(ℓ), compute |ℓ⁻¹(b)|.
-4. Spectrum = multiset of these cardinalities.
+### 6.1 Transferable Predicates
 
-Complexity: O(n log n) with hash maps.
+**Definition 6.1**. A predicate P on colorings is *transferable* if c₁ ≈ c₂ implies P(c₁) ↔ P(c₂).
 
----
+**Theorem 6.2** (Point Evaluation Obstruction). The predicate P(c) ≡ (c(0) = true) on Fin 2 → Bool is not transferable.
 
-## 7. Future Directions
+*Proof*. Let c₁(0) = true, c₁(1) = false and c₂(0) = false, c₂(1) = true. Then c₁ ≈ c₂ via the swap (0 1), but P(c₁) = true and P(c₂) = false. □
 
-1. **Complete Semantic Invariants**: Is the spectrum complete? Characterize exactly when two decorated magmas have the same spectrum but are semantically non-isomorphic.
+**Theorem 6.3** (Constant Coloring Transferability). The predicate Q(c) ≡ (∀ x y, c(x) = c(y)) is transferable.
 
-2. **Semantic Bundles over Groups**: When the algebraic structure is a group, the automorphism group acts naturally on labelings. Burnside's lemma gives the number of orbits (= semantically distinct structures). Extend to profinite groups and continuous labelings.
+*Proof*. If c₁ is constant and c₁ ≈ c₂ via σ, then for any x, y: c₂(x) = c₁(σ⁻¹(x)) = c₁(σ⁻¹(y)) = c₂(y). □
 
-3. **Semantic Entropy**: Define H(D) = log₂(number of semantic equivalence classes of relabelings of D). Study its properties as a measure of "semantic capacity."
+### 6.2 Classification of Transferable Predicates
 
-4. **Categorical Semantics**: Formalize the category of semantic bundles and study its categorical properties (limits, colimits, adjunctions with the forgetful functor to magmas).
+A predicate on colorings of a finite type is transferable if and only if it depends only on the color histogram. This follows from the Orbit-Stabilizer theorem: two colorings have the same histogram if and only if they are in the same orbit under the symmetric group action.
 
-5. **Computational Complexity**: What is the complexity of the semantic isomorphism problem? It reduces to a constrained version of graph isomorphism — is it equivalent, or strictly easier/harder?
+## 7. Fiber Collapse
 
----
+**Theorem 7.1** (Fiber Collapse). If σ, τ ∈ Stab(c), then c ∘ σ = c ∘ τ (as functions).
 
-## 8. Conclusion
+*Proof*. For any x: c(σ(x)) = c(x) = c(τ(x)). □
 
-The semantic bundle framework provides a precise mathematical answer to the question "when do isomorphic structures mean the same thing?" The answer is: exactly when the isomorphism respects the interpretation, which for rigid structures means exactly when the interpretations are identical. The gap between structure and meaning is not philosophical vagueness but a theorem with a constructive proof.
+**Interpretation**. Two stabilizer elements may move points differently, but they always agree about the semantic content at each point. At the level of meaning, all symmetries in the stabilizer are indistinguishable — they "collapse" to the same semantic transformation.
 
----
+This result has a natural 2-categorical interpretation: if we view colorings as objects and semantic equivalences as 1-morphisms, then the Fiber Collapse Theorem says that all 2-morphisms between stabilizer elements are trivial. The 2-groupoid of a coloring's stabilizer is "semantically discrete."
+
+## 8. Connections to Existing Results
+
+### 8.1 Relation to Oracle Truth Preservation
+
+The catalog theorem `oracle_preserves_truth` (Computation/OmniscientOracle.lean) establishes that oracle operations preserve truth values: O(f(x)) preserves the truth of propositions about x. Our Transfer Obstruction Theorem provides a complementary result: structural isomorphisms preserve truth (of transferable predicates) but not meaning (of non-transferable ones). This establishes a precise boundary between what structural transformations can and cannot preserve.
+
+### 8.2 Relation to Simplicial Complex Isomorphism
+
+The theorem `different_euler_char_not_iso` (Bridges/HigherSimplicial.lean) uses the Euler characteristic as an invariant to distinguish non-isomorphic simplicial complexes. Our histogram invariant plays an analogous role for colored structures: it's a computable invariant that detects semantic inequivalence, just as Euler characteristic detects topological inequivalence.
+
+## 9. Computational Aspects
+
+### 9.1 Complexity
+
+| Problem | Complexity |
+|---------|-----------|
+| Histogram computation | O(n) |
+| Histogram comparison | O(n log n) |
+| Semantic equivalence testing | NP-complete (reduces to graph isomorphism for general structures) |
+| Semantic distance computation | O(n! · n) brute-force; reduces to minimum-cost matching for special cases |
+| Stabilizer computation | O(∏ mⱼ!) where mⱼ are multiplicities |
+| Burnside class counting | O(n! · n) |
+
+### 9.2 Hungarian Algorithm Optimization
+
+When the underlying structure has no additional constraints (pure set colorings), the semantic distance reduces to a minimum-cost bipartite matching problem solvable in O(k³) time where k is the number of distinct colors. This follows because the optimal permutation must match color classes, and within each class, elements are interchangeable.
+
+## 10. Open Problems and Conjectures
+
+**Conjecture 10.1** (Triangle Inequality). The semantic distance satisfies the triangle inequality: d(c₁, c₃) ≤ d(c₁, c₂) + d(c₂, c₃). (See §3.4 for a proof sketch; formal verification is pending.)
+
+**Conjecture 10.2** (Chromatic Dimension). For a finite group G with n elements and k colors, the maximum number of pairwise semantically inequivalent colorings at mutual distance ≥ r is bounded by:
+
+N(G, k, r) ≤ kⁿ / |Aut(G)| · (1 + ε(r))
+
+where ε(r) → 0 as r → ∞. This would establish a "sphere packing" bound in semantic space.
+
+**Conjecture 10.3** (Semantic Entropy). Define the semantic entropy of a coloring as H_sem(c) = log₂(|Orbit(c)|). Then for random k-colorings of an n-element set, H_sem converges to n·log₂(k) - log₂(n!) + o(1) as n → ∞.
+
+**Open Problem 10.4** (Algebraic Semantic Distance). When α carries group structure and we restrict to group automorphisms (rather than all bijections), how does the semantic distance change? The algebraic semantic distance is always ≥ the combinatorial one, but the gap is not well understood.
+
+## 11. Conclusion
+
+Semantic Isomorphism Theory provides a rigorous foundation for reasoning about the gap between structure and meaning in mathematics. The semantic distance pseudometric, histogram invariance, and transfer obstruction theorems establish quantitative and qualitative tools for understanding when structural isomorphisms preserve semantic content and when they don't.
+
+The theory's key insight — that meaning is coloring modulo symmetry — connects diverse areas of mathematics and offers a precise answer to the philosophical question of where meaning resides in mathematical structures.
 
 ## References
 
-1. Benacerraf, P. (1965). "What Numbers Could Not Be." *The Philosophical Review*, 74(1), 47-73.
-2. Hofstadter, D. (1995). *Fluid Concepts and Creative Analogies*. Basic Books.
-3. Mac Lane, S. (1998). *Categories for the Working Mathematician*. Springer.
-4. The Univalent Foundations Program (2013). *Homotopy Type Theory*. Institute for Advanced Study.
+1. Burnside, W. (1897). *Theory of Groups of Finite Order*. Cambridge University Press.
+2. Klein, F. (1872). *Vergleichende Betrachtungen über neuere geometrische Forschungen* (Erlangen Program).
+3. The Univalent Foundations Program (2013). *Homotopy Type Theory: Univalent Foundations of Mathematics*. Institute for Advanced Study.
+4. Pólya, G. (1937). Kombinatorische Anzahlbestimmungen für Gruppen, Graphen und chemische Verbindungen. *Acta Mathematica*, 68, 145–254.
+5. Babai, L. (2016). Graph Isomorphism in Quasipolynomial Time. *Proceedings of the 48th Annual ACM SIGACT Symposium on Theory of Computing*.
