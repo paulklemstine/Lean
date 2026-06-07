@@ -1,225 +1,347 @@
 #!/usr/bin/env python3
 """
-Algorithms for EML (Exponential-Multiply-Logarithm) Network Approximation
+algorithms.py — Type-hinted implementations of EML algorithms.
 
-Type-hinted implementations of the core algorithms from the research.
+Provides:
+1. EML Term evaluation and construction
+2. Monomial term builder (constant-depth x^n)
+3. Polynomial-to-EML conversion
+4. EML depth/size analysis
 """
 
-import numpy as np
-from typing import Callable, Optional
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import Union, List, Callable
+from math import exp, log, factorial
+from abc import ABC, abstractmethod
 
 
-def build_exp_vandermonde(
-    x: np.ndarray,
-    degree: int
-) -> np.ndarray:
+# =============================================================
+# EML Term Abstract Syntax Tree
+# =============================================================
+
+class Term(ABC):
+    """Abstract base class for EML terms."""
+
+    @abstractmethod
+    def eval(self, x: float) -> float:
+        """Evaluate the term at x."""
+        ...
+
+    @abstractmethod
+    def depth(self) -> int:
+        """Compute the depth (maximum nesting) of the term."""
+        ...
+
+    @abstractmethod
+    def size(self) -> int:
+        """Compute the size (number of nodes) of the term."""
+        ...
+
+    @abstractmethod
+    def to_str(self) -> str:
+        """Pretty-print the term."""
+        ...
+
+
+@dataclass
+class Const(Term):
+    """Constant term."""
+    c: float
+
+    def eval(self, x: float) -> float:
+        return self.c
+
+    def depth(self) -> int:
+        return 0
+
+    def size(self) -> int:
+        return 1
+
+    def to_str(self) -> str:
+        return f"{self.c}"
+
+
+@dataclass
+class Var(Term):
+    """Variable term."""
+
+    def eval(self, x: float) -> float:
+        return x
+
+    def depth(self) -> int:
+        return 0
+
+    def size(self) -> int:
+        return 1
+
+    def to_str(self) -> str:
+        return "x"
+
+
+@dataclass
+class Exp(Term):
+    """Exponential: exp(inner)."""
+    inner: Term
+
+    def eval(self, x: float) -> float:
+        return exp(self.inner.eval(x))
+
+    def depth(self) -> int:
+        return self.inner.depth() + 1
+
+    def size(self) -> int:
+        return self.inner.size() + 1
+
+    def to_str(self) -> str:
+        return f"exp({self.inner.to_str()})"
+
+
+@dataclass
+class Log(Term):
+    """Logarithm: log(inner). Requires inner > 0 for faithful evaluation."""
+    inner: Term
+
+    def eval(self, x: float) -> float:
+        val = self.inner.eval(x)
+        if val <= 0:
+            raise ValueError(f"Log of non-positive value: {val}")
+        return log(val)
+
+    def depth(self) -> int:
+        return self.inner.depth() + 1
+
+    def size(self) -> int:
+        return self.inner.size() + 1
+
+    def to_str(self) -> str:
+        return f"log({self.inner.to_str()})"
+
+
+@dataclass
+class Add(Term):
+    """Addition: left + right."""
+    left: Term
+    right: Term
+
+    def eval(self, x: float) -> float:
+        return self.left.eval(x) + self.right.eval(x)
+
+    def depth(self) -> int:
+        return max(self.left.depth(), self.right.depth()) + 1
+
+    def size(self) -> int:
+        return self.left.size() + self.right.size() + 1
+
+    def to_str(self) -> str:
+        return f"({self.left.to_str()} + {self.right.to_str()})"
+
+
+@dataclass
+class Mul(Term):
+    """Multiplication: left * right."""
+    left: Term
+    right: Term
+
+    def eval(self, x: float) -> float:
+        return self.left.eval(x) * self.right.eval(x)
+
+    def depth(self) -> int:
+        return max(self.left.depth(), self.right.depth()) + 1
+
+    def size(self) -> int:
+        return self.left.size() + self.right.size() + 1
+
+    def to_str(self) -> str:
+        return f"({self.left.to_str()} × {self.right.to_str()})"
+
+
+# =============================================================
+# Algorithm 1: Monomial Construction (depth 3)
+# =============================================================
+
+def monomial_term(n: int) -> Term:
     """
-    Build the exponential Vandermonde matrix.
+    Construct the EML term for x^n = exp(n * log(x)).
 
-    Given points x_1, ..., x_n and degree d, constructs the matrix:
-        V[i, j] = exp(j * x_i)   for i = 0..n-1, j = 0..d
+    Algorithm:
+        MONOMIAL(n):
+            return exp(mul(const(n), log(var)))
 
-    This replaces the standard Vandermonde matrix x_i^j with
-    exponential monomials, enabling EML approximation.
+    Properties:
+        - depth = 3 (constant, independent of n)
+        - size = 5 (constant, independent of n)
+        - Evaluates to x^n for x > 0
 
-    Args:
-        x: Array of evaluation points, shape (n,)
-        degree: Maximum exponent degree d
-
-    Returns:
-        Vandermonde-like matrix of shape (n, d+1)
+    This is the Monomial Depth Theorem in algorithmic form.
     """
-    return np.column_stack([np.exp(k * x) for k in range(degree + 1)])
+    return Exp(Mul(Const(float(n)), Log(Var())))
 
 
-def eml_least_squares(
-    f: Callable[[np.ndarray], np.ndarray],
-    degree: int,
-    interval: tuple[float, float] = (0.0, 1.0),
-    n_points: int = 1000
-) -> tuple[np.ndarray, float]:
+# =============================================================
+# Algorithm 2: Polynomial to EML conversion
+# =============================================================
+
+def polynomial_to_eml(coeffs: List[float]) -> Term:
     """
-    Find the best EML approximation of degree d to f on [a, b].
+    Convert a polynomial p(x) = sum(coeffs[i] * x^i) to an EML term.
 
-    Solves: min_{c_0, ..., c_d} ||f - sum_j c_j exp(j*x)||_2
+    Uses the monomial depth theorem: each x^i = exp(i * log(x)) has
+    depth 3. The polynomial is then a sum of scaled monomials.
 
-    This is the computational realization of the density theorem:
-    as degree → ∞, the error → 0 for any continuous f.
+    The sum uses a balanced binary tree for minimal depth overhead.
 
-    Args:
-        f: Target function
-        degree: Number of exponential monomials minus 1
-        interval: Domain [a, b]
-        n_points: Number of grid points for least squares
+    Properties:
+        - Each monomial has depth 3
+        - Total depth = 3 + ceil(log2(len(nonzero_coeffs))) + 1
+        - Total size = O(len(coeffs))
 
-    Returns:
-        (coefficients, sup_norm_error)
+    Algorithm:
+        POLY_TO_EML(coeffs):
+            terms = []
+            for i, c in enumerate(coeffs):
+                if c != 0:
+                    terms.append(mul(const(c), MONOMIAL(i)))
+            return BINARY_SUM(terms)
     """
-    a, b = interval
-    x = np.linspace(a, b, n_points)
-    V = build_exp_vandermonde(x, degree)
-    y = f(x)
+    # Build individual monomial terms
+    terms: List[Term] = []
+    for i, c in enumerate(coeffs):
+        if c != 0.0:
+            if i == 0:
+                terms.append(Const(c))
+            else:
+                terms.append(Mul(Const(c), monomial_term(i)))
 
-    coeffs, _, _, _ = np.linalg.lstsq(V, y, rcond=None)
-    approx = V @ coeffs
-    error = float(np.max(np.abs(approx - y)))
+    if not terms:
+        return Const(0.0)
 
-    return coeffs, error
+    # Binary tree summation for minimal depth
+    while len(terms) > 1:
+        new_terms: List[Term] = []
+        for j in range(0, len(terms), 2):
+            if j + 1 < len(terms):
+                new_terms.append(Add(terms[j], terms[j + 1]))
+            else:
+                new_terms.append(terms[j])
+        terms = new_terms
+
+    return terms[0]
 
 
-def eml_evaluate(
-    coeffs: np.ndarray,
-    x: np.ndarray
-) -> np.ndarray:
+# =============================================================
+# Algorithm 3: EML Evaluation with positivity tracking
+# =============================================================
+
+def safe_eval(term: Term, x: float) -> tuple[float, bool]:
     """
-    Evaluate an EML polynomial at given points.
+    Evaluate an EML term with positivity tracking.
 
-    Computes: sum_{k=0}^{d} coeffs[k] * exp(k * x)
+    Returns (value, is_positive) where is_positive indicates whether
+    the result is guaranteed positive (safe for further log application).
 
-    Args:
-        coeffs: Coefficient array of shape (d+1,)
-        x: Evaluation points
-
-    Returns:
-        Function values at x
+    Algorithm:
+        SAFE_EVAL(t, x):
+            match t:
+                const(c) → return (c, c > 0)
+                var → return (x, x > 0)
+                exp(s) → (v, _) = SAFE_EVAL(s, x); return (exp(v), True)
+                log(s) → (v, p) = SAFE_EVAL(s, x)
+                          if not p: raise error
+                          return (log(v), v > 1)
+                add(s,t) → ... return (vs + vt, vs + vt > 0)
+                mul(s,t) → ... return (vs * vt, vs > 0 and vt > 0)
     """
-    result = np.zeros_like(x, dtype=float)
-    for k, c in enumerate(coeffs):
-        result += c * np.exp(k * x)
+    if isinstance(term, Const):
+        return (term.c, term.c > 0)
+    elif isinstance(term, Var):
+        return (x, x > 0)
+    elif isinstance(term, Exp):
+        v, _ = safe_eval(term.inner, x)
+        return (exp(v), True)  # exp is always positive
+    elif isinstance(term, Log):
+        v, p = safe_eval(term.inner, x)
+        if not p or v <= 0:
+            raise ValueError(f"Log applied to non-positive value {v}")
+        return (log(v), v > 1.0)
+    elif isinstance(term, Add):
+        vl, _ = safe_eval(term.left, x)
+        vr, _ = safe_eval(term.right, x)
+        s = vl + vr
+        return (s, s > 0)
+    elif isinstance(term, Mul):
+        vl, pl = safe_eval(term.left, x)
+        vr, pr = safe_eval(term.right, x)
+        return (vl * vr, pl and pr)
+    else:
+        raise TypeError(f"Unknown term type: {type(term)}")
+
+
+# =============================================================
+# Algorithm 4: Depth analysis
+# =============================================================
+
+def depth_histogram(term: Term) -> dict[int, int]:
+    """
+    Compute a histogram of node counts by depth level.
+
+    Returns {depth: count} mapping each depth level to the number
+    of nodes at that level in the term tree.
+    """
+    result: dict[int, int] = {}
+
+    def walk(t: Term, level: int) -> None:
+        result[level] = result.get(level, 0) + 1
+        if isinstance(t, (Exp, Log)):
+            walk(t.inner, level + 1)
+        elif isinstance(t, (Add, Mul)):
+            walk(t.left, level + 1)
+            walk(t.right, level + 1)
+
+    walk(term, 0)
     return result
 
 
-def adaptive_eml_approximation(
-    f: Callable[[np.ndarray], np.ndarray],
-    epsilon: float,
-    interval: tuple[float, float] = (0.0, 1.0),
-    max_degree: int = 100,
-    n_points: int = 2000
-) -> tuple[np.ndarray, int, float]:
-    """
-    Adaptively find EML approximation to within epsilon.
-
-    Increases degree until the sup-norm error drops below epsilon.
-    By the Stone-Weierstrass density theorem, this is guaranteed
-    to terminate for continuous f (given sufficient numerical precision).
-
-    Args:
-        f: Target continuous function
-        epsilon: Desired approximation accuracy
-        interval: Domain [a, b]
-        max_degree: Maximum degree to try
-        n_points: Grid resolution
-
-    Returns:
-        (coefficients, degree_used, achieved_error)
-    """
-    for d in range(1, max_degree + 1):
-        coeffs, error = eml_least_squares(f, d, interval, n_points)
-        if error < epsilon:
-            return coeffs, d, error
-
-    # Return best found even if epsilon not achieved
-    return coeffs, max_degree, error
-
-
-def separation_witness(
-    x: float,
-    y: float
-) -> tuple[float, float]:
-    """
-    Compute the separation witness for two distinct points.
-
-    By the injective generator theorem, exp(x) != exp(y) whenever x != y.
-    Returns (exp(x), exp(y)) as the separating values.
-
-    This is the constructive content of the separation property
-    used in the Stone-Weierstrass proof.
-
-    Args:
-        x: First point
-        y: Second point (must differ from x)
-
-    Returns:
-        (exp(x), exp(y)) — guaranteed distinct when x != y
-    """
-    assert x != y, "Points must be distinct for separation"
-    return np.exp(x), np.exp(y)
-
-
-def exp_composition_chain(
-    x: np.ndarray,
-    depth: int
-) -> np.ndarray:
-    """
-    Compute the depth-d composition exp^(d)(x) = exp(exp(...exp(x)...)).
-
-    By the composition depth theorem, each exp^(d) individually
-    generates a dense algebra — but deeper compositions grow
-    dramatically faster, suggesting a depth hierarchy.
-
-    Args:
-        x: Input points
-        depth: Number of exp applications
-
-    Returns:
-        exp^(d)(x)
-    """
-    result = x.copy().astype(float)
-    for _ in range(depth):
-        # Clip to prevent overflow
-        result = np.clip(result, -500, 500)
-        result = np.exp(result)
-    return result
-
-
-def condition_number_comparison(
-    n: int,
-    activations: Optional[dict[str, Callable]] = None
-) -> dict[str, float]:
-    """
-    Compare condition numbers of Vandermonde matrices for different activations.
-
-    For each activation σ, builds the matrix M[i,j] = σ(x_i)^j
-    and computes its condition number. Lower condition numbers
-    indicate better numerical stability for approximation.
-
-    Args:
-        n: Matrix size (n×n)
-        activations: Dict of activation name -> function.
-            Defaults to exp, tanh, sigmoid.
-
-    Returns:
-        Dict of activation name -> condition number
-    """
-    if activations is None:
-        activations = {
-            "exp": np.exp,
-            "tanh": np.tanh,
-            "sigmoid": lambda x: 1 / (1 + np.exp(-x)),
-        }
-
-    x = np.linspace(0.01, 0.99, n)
-    results = {}
-
-    for name, sigma in activations.items():
-        V = np.column_stack([sigma(x)**j for j in range(n)])
-        try:
-            results[name] = float(np.linalg.cond(V))
-        except np.linalg.LinAlgError:
-            results[name] = float('inf')
-
-    return results
-
+# =============================================================
+# Main: demonstrate algorithms
+# =============================================================
 
 if __name__ == "__main__":
-    # Quick test
-    f = lambda x: np.sin(2 * np.pi * x)
-    coeffs, degree, error = adaptive_eml_approximation(f, epsilon=1e-6)
-    print(f"Approximated sin(2πx) to error {error:.2e} using degree {degree}")
+    print("Algorithm 1: Monomial Construction")
+    print("-" * 40)
+    for n in [1, 2, 10, 100]:
+        t = monomial_term(n)
+        val = t.eval(2.0)
+        print(f"  x^{n} at x=2: {val:.6f} (true: {2.0**n:.6f}), "
+              f"depth={t.depth()}, size={t.size()}")
 
-    # Condition number comparison
-    for n in [5, 10, 20]:
-        conds = condition_number_comparison(n)
-        print(f"\nCondition numbers (n={n}):")
-        for name, cond in sorted(conds.items()):
-            print(f"  {name:>10}: {cond:.2e}")
+    print()
+    print("Algorithm 2: Polynomial to EML")
+    print("-" * 40)
+    # p(x) = 1 + 2x + 3x^2
+    coeffs = [1.0, 2.0, 3.0]
+    t = polynomial_to_eml(coeffs)
+    print(f"  p(x) = 1 + 2x + 3x²")
+    print(f"  EML: {t.to_str()}")
+    print(f"  depth={t.depth()}, size={t.size()}")
+    for x in [1.0, 2.0, 3.0]:
+        eml_val = t.eval(x)
+        true_val = sum(c * x**i for i, c in enumerate(coeffs))
+        print(f"  p({x}) = {true_val:.4f}, EML = {eml_val:.4f}")
+
+    print()
+    print("Algorithm 3: Safe Evaluation")
+    print("-" * 40)
+    t = monomial_term(3)
+    for x in [0.5, 1.0, 2.0, 10.0]:
+        val, pos = safe_eval(t, x)
+        print(f"  x^3 at x={x}: value={val:.6f}, positive={pos}")
+
+    print()
+    print("Algorithm 4: Depth Histogram")
+    print("-" * 40)
+    t = polynomial_to_eml([1.0, 0.0, -0.5, 0.0, 0.0416667])
+    hist = depth_histogram(t)
+    print(f"  cos(x) Taylor approx: {t.to_str()}")
+    for d in sorted(hist):
+        print(f"    Level {d}: {hist[d]} nodes")
