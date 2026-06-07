@@ -1,207 +1,331 @@
 #!/usr/bin/env python3
 """
-Tangled Hierarchies: Core Algorithms
+Tangled Hierarchies: Algorithms
+================================
 
-Type-hinted implementations of provability lattice operations
-and consistency tower computations.
+Type-hinted implementations of key algorithms for GL frame analysis,
+model checking, and tangling detection.
 """
 
-from typing import Set, List, Callable, Tuple, Optional
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Callable, Optional
 
+
+# ============================================================
+# Data Structures
+# ============================================================
 
 @dataclass
 class GLFrame:
-    """A GL (Gödel-Löb) frame: finite set of worlds with transitive,
-    irreflexive accessibility relation."""
-    worlds: Set[int]
-    accessible: Callable[[int, int], bool]  # R(w, v)
-    
-    def successors(self, w: int) -> Set[int]:
-        return {v for v in self.worlds if self.accessible(w, v)}
-    
-    def box(self, S: Set[int]) -> Set[int]:
-        """□S = {w : all successors of w are in S}"""
-        return {w for w in self.worlds if self.successors(w) <= S}
-    
-    def diamond(self, S: Set[int]) -> Set[int]:
-        """◇S = {w : some successor of w is in S}"""
-        return {w for w in self.worlds if self.successors(w) & S}
-    
-    def box_iter(self, n: int, S: Set[int]) -> Set[int]:
-        """□ⁿS: iterate box n times."""
-        result = S
-        for _ in range(n):
-            result = self.box(result)
-        return result
-    
-    def soundness_element(self, S: Set[int]) -> Set[int]:
-        """snd(S) = (□S)ᶜ ∪ S"""
-        return (self.worlds - self.box(S)) | S
-    
-    def snd_iter(self, n: int, S: Set[int]) -> Set[int]:
-        """Iterate soundness n times."""
-        result = S
-        for _ in range(n):
-            result = self.soundness_element(result)
-        return result
-    
-    def consistency_tower(self, max_depth: int) -> List[Set[int]]:
-        """Compute the first max_depth levels of the consistency tower.
-        conTower(n) = (□^(n+1)⊥)ᶜ"""
-        tower = []
-        for n in range(max_depth):
-            box_iter_bot = self.box_iter(n + 1, set())
-            tower.append(self.worlds - box_iter_bot)
-        return tower
-    
-    def provability_tower(self, max_depth: int) -> List[Set[int]]:
-        """Compute the first max_depth levels of the provability tower.
-        boxIter(n, ⊥)"""
-        tower = [set()]
-        for n in range(max_depth):
-            tower.append(self.box(tower[-1]))
-        return tower
-    
-    def tangling_rank(self, w: int) -> int:
-        """Compute the well-founded rank of world w.
-        The rank of a world is 1 + max rank of its successors."""
-        succs = self.successors(w)
-        if not succs:
-            return 0
-        return 1 + max(self.tangling_rank(v) for v in succs)
-    
-    def tangling_spectrum(self) -> dict:
-        """Compute the tangling spectrum: {world: rank}"""
-        return {w: self.tangling_rank(w) for w in self.worlds}
-    
-    def is_world_sound(self, w: int) -> bool:
-        """Check if world w is sound: for all valuations and formulas,
-        if w forces □φ then w forces φ.
-        
-        Equivalent to: w has no R-successors (in the semantic sense,
-        a world is sound iff it cannot reach any world)."""
-        return len(self.successors(w)) == 0
-    
-    def sound_worlds(self) -> Set[int]:
-        """Return the set of all sound worlds."""
-        return {w for w in self.worlds if self.is_world_sound(w)}
+    """A Gödel-Löb frame: worlds with transitive, acyclic accessibility."""
+    worlds: list[int]
+    edges: set[tuple[int, int]]
+
+    def successors(self, w: int) -> list[int]:
+        """All worlds accessible from w."""
+        return [v for v in self.worlds if (w, v) in self.edges]
+
+    def predecessors(self, w: int) -> list[int]:
+        """All worlds that can access w."""
+        return [v for v in self.worlds if (v, w) in self.edges]
 
 
-def linear_gl_frame(n: int) -> GLFrame:
-    """Create a linear GL frame on n worlds: 0 < 1 < ... < n-1."""
-    return GLFrame(
-        worlds=set(range(n)),
-        accessible=lambda w, v: w < v
-    )
+class MFormula:
+    """Base class for modal formulas."""
+    pass
+
+@dataclass
+class Var(MFormula):
+    name: str
+
+@dataclass
+class Bot(MFormula):
+    pass
+
+@dataclass
+class Imp(MFormula):
+    left: MFormula
+    right: MFormula
+
+@dataclass
+class BoxF(MFormula):
+    inner: MFormula
 
 
-def tree_gl_frame(depth: int) -> GLFrame:
-    """Create a binary tree GL frame of given depth.
-    Worlds are labeled by binary strings (as integers).
+def neg(phi: MFormula) -> MFormula:
+    return Imp(phi, Bot())
+
+def top() -> MFormula:
+    return neg(Bot())
+
+def con() -> MFormula:
+    return neg(BoxF(Bot()))
+
+def loeb_formula(phi: MFormula) -> MFormula:
+    return Imp(BoxF(Imp(BoxF(phi), phi)), BoxF(phi))
+
+
+# ============================================================
+# Algorithm 1: GL Frame Verification
+# ============================================================
+
+def verify_gl_frame(frame: GLFrame) -> tuple[bool, str]:
     """
-    worlds = set()
-    next_id = [0]
-    
-    def build_tree(d: int) -> int:
-        w = next_id[0]
-        next_id[0] += 1
-        worlds.add(w)
-        if d > 0:
-            left = build_tree(d - 1)
-            right = build_tree(d - 1)
-            children[w] = {left, right}
-        else:
-            children[w] = set()
-        return w
-    
-    children: dict = {}
-    root = build_tree(depth)
-    
-    # Compute transitive closure
-    def descendants(w: int) -> Set[int]:
-        result = set()
-        for c in children.get(w, set()):
-            result.add(c)
-            result |= descendants(c)
-        return result
-    
-    desc_cache = {w: descendants(w) for w in worlds}
-    
-    return GLFrame(
-        worlds=worlds,
-        accessible=lambda w, v: v in desc_cache.get(w, set())
-    )
+    Verify that a frame is a valid GL frame.
+
+    Checks:
+    1. Irreflexivity: no self-loops
+    2. Transitivity: R(u,v) ∧ R(v,w) → R(u,w)
+    3. Acyclicity: no directed cycles (equivalent to converse well-foundedness)
+
+    Returns (is_valid, reason).
+    Time complexity: O(n³) for transitivity, O(n + |E|) for acyclicity.
+    """
+    # 1. Irreflexivity
+    for w in frame.worlds:
+        if (w, w) in frame.edges:
+            return False, f"Self-loop at world {w}"
+
+    # 2. Transitivity
+    for u in frame.worlds:
+        for v in frame.worlds:
+            if (u, v) not in frame.edges:
+                continue
+            for w in frame.worlds:
+                if (v, w) in frame.edges and (u, w) not in frame.edges:
+                    return False, f"Transitivity fails: R({u},{v}) and R({v},{w}) but not R({u},{w})"
+
+    # 3. Acyclicity (topological sort)
+    in_degree = {w: 0 for w in frame.worlds}
+    for (u, v) in frame.edges:
+        in_degree[v] += 1
+
+    queue = [w for w in frame.worlds if in_degree[w] == 0]
+    processed = 0
+
+    while queue:
+        w = queue.pop(0)
+        processed += 1
+        for v in frame.successors(w):
+            in_degree[v] -= 1
+            if in_degree[v] == 0:
+                queue.append(v)
+
+    if processed != len(frame.worlds):
+        return False, "Frame contains a cycle (not converse well-founded)"
+
+    return True, "Valid GL frame"
 
 
-def verify_loeb_axiom(frame: GLFrame, valuation: Set[int]) -> bool:
-    """Verify Löb's axiom □(□φ → φ) → □φ for a specific valuation.
-    
-    Args:
-        frame: A GL frame
-        valuation: Set of worlds where φ is true
-    
+# ============================================================
+# Algorithm 2: Model Checking
+# ============================================================
+
+def model_check(
+    frame: GLFrame,
+    valuation: Callable[[str, int], bool],
+    w: int,
+    phi: MFormula
+) -> bool:
+    """
+    Check whether world w forces formula phi.
+
+    Implements the recursive Kripke forcing relation:
+    - w ⊩ p     iff V(p)(w)
+    - w ⊩ ⊥     iff False
+    - w ⊩ φ→ψ   iff (w ⊩ φ) implies (w ⊩ ψ)
+    - w ⊩ □φ    iff ∀v, R(w,v) → v ⊩ φ
+
+    Time complexity: O(|W| · |φ|) where |φ| is formula size.
+    """
+    if isinstance(phi, Var):
+        return valuation(phi.name, w)
+    elif isinstance(phi, Bot):
+        return False
+    elif isinstance(phi, Imp):
+        left_val = model_check(frame, valuation, w, phi.left)
+        if not left_val:
+            return True  # False → anything is True
+        return model_check(frame, valuation, w, phi.right)
+    elif isinstance(phi, BoxF):
+        return all(
+            model_check(frame, valuation, v, phi.inner)
+            for v in frame.successors(w)
+        )
+    raise ValueError(f"Unknown formula type: {type(phi)}")
+
+
+# ============================================================
+# Algorithm 3: Tangling Depth Computation
+# ============================================================
+
+def compute_rdepth(frame: GLFrame, w: int, memo: Optional[dict[int, int]] = None) -> int:
+    """
+    Compute the R-depth (tangling depth) of world w.
+
+    The depth is the length of the longest R-chain from w.
+    Terminal worlds have depth 0.
+
+    Uses memoization for efficiency.
+    Time complexity: O(|W| + |E|) with memoization.
+    """
+    if memo is None:
+        memo = {}
+    if w in memo:
+        return memo[w]
+
+    succs = frame.successors(w)
+    if not succs:
+        memo[w] = 0
+        return 0
+
+    depth = 1 + max(compute_rdepth(frame, v, memo) for v in succs)
+    memo[w] = depth
+    return depth
+
+
+# ============================================================
+# Algorithm 4: Tangling Dichotomy Detection
+# ============================================================
+
+def detect_tangling(
+    frame: GLFrame,
+    w: int
+) -> tuple[str, Optional[str]]:
+    """
+    Determine the tangling status of world w.
+
     Returns:
-        True if the Löb axiom holds for this valuation
+    - ("TERMINAL", None) if w has no successors
+    - ("TANGLED", explanation) if w has successors and therefore
+      must have unprovable soundness formulas
+
+    This implements the tangling dichotomy theorem.
     """
-    box_phi = frame.box(valuation)
-    # □φ → φ at world w means: w ∉ □φ or w ∈ φ
-    imp_set = (frame.worlds - box_phi) | valuation
-    box_imp = frame.box(imp_set)
-    # □(□φ → φ) → □φ means: box_imp ⊆ box_phi
-    return box_imp <= box_phi
+    succs = frame.successors(w)
+    if not succs:
+        return "TERMINAL", None
+
+    # World has successors → it's tangled
+    # Verify by checking that □(□⊥ → ⊥) fails under trivial valuation
+    V_false: Callable[[str, int], bool] = lambda name, w: False
+    box_con = BoxF(Imp(BoxF(Bot()), Bot()))
+    can_prove_con = model_check(frame, V_false, w, box_con)
+
+    if not can_prove_con:
+        return "TANGLED", (
+            f"World {w} has successors {succs} and cannot prove □(□⊥→⊥) "
+            f"(second incompleteness theorem)"
+        )
+    else:
+        # This shouldn't happen for a consistent world in a GL frame
+        return "TANGLED", (
+            f"World {w} has successors {succs}. Under trivial valuation, "
+            f"it proves □(□⊥→⊥) but this means it proves □⊥ by Löb, "
+            f"i.e., it is inconsistent."
+        )
 
 
-def verify_second_incompleteness(frame: GLFrame) -> bool:
-    """Verify the semantic second incompleteness theorem:
-    no sound, consistent world proves its own consistency.
-    
-    Returns True if the theorem holds (no counterexample found).
+# ============================================================
+# Algorithm 5: Iterated Consistency Hierarchy
+# ============================================================
+
+def build_iter_con(n: int) -> MFormula:
+    """Build the iterated consistency formula Con^n."""
+    if n == 0:
+        return top()
+    return neg(BoxF(neg(build_iter_con(n - 1))))
+
+
+def analyze_consistency_hierarchy(
+    frame: GLFrame,
+    w: int,
+    max_level: int = 10
+) -> list[tuple[int, bool]]:
     """
-    box_bot = frame.box(set())
-    # Sound for ⊥: worlds not in □⊥
-    sound_worlds = frame.worlds - box_bot
-    # Consistent: worlds not in ⊥ (all worlds)
-    consistent = frame.worlds
-    # Can prove own soundness: worlds in □(□⊥ → ⊥) = □(sound_for_bot)
-    box_sound = frame.box(sound_worlds)
-    
-    for w in sound_worlds & consistent:
-        if w in box_sound:
-            return False  # Counterexample!
-    return True
+    Analyze which levels of the iterated consistency hierarchy
+    world w satisfies.
 
-
-def compute_tangling_ceiling(frame: GLFrame, start: Set[int], 
-                              max_iter: int = 100) -> Tuple[Set[int], int]:
-    """Compute the tangling ceiling: iterate snd until stabilization.
-    
-    Returns (ceiling_set, num_iterations).
+    Returns list of (level, satisfies) pairs.
     """
-    current = start
-    for i in range(max_iter):
-        next_set = frame.soundness_element(current)
-        if next_set == current:
-            return current, i
-        current = next_set
-    return current, max_iter
+    V_false: Callable[[str, int], bool] = lambda name, w: False
+    results = []
+    for n in range(max_level):
+        formula = build_iter_con(n)
+        result = model_check(frame, V_false, w, formula)
+        results.append((n, result))
+        if not result:
+            break  # Higher levels will also fail
+    return results
 
+
+# ============================================================
+# Algorithm 6: Disjoint Union Construction
+# ============================================================
+
+def disjoint_union(frame1: GLFrame, frame2: GLFrame, offset: int = 1000) -> GLFrame:
+    """
+    Construct the disjoint union of two GL frames.
+
+    Worlds from frame2 are offset to avoid collision.
+    No cross-edges are added.
+    """
+    worlds2 = [w + offset for w in frame2.worlds]
+    edges2 = {(u + offset, v + offset) for (u, v) in frame2.edges}
+
+    return GLFrame(
+        worlds=frame1.worlds + worlds2,
+        edges=frame1.edges | edges2
+    )
+
+
+# ============================================================
+# Main: Run all algorithms
+# ============================================================
 
 if __name__ == "__main__":
-    # Demo: linear frame
-    frame = linear_gl_frame(6)
-    print("Linear GL Frame on 6 worlds")
-    print(f"Tangling spectrum: {frame.tangling_spectrum()}")
-    print(f"Provability tower: {[sorted(s) for s in frame.provability_tower(8)]}")
-    print(f"Consistency tower: {[sorted(s) for s in frame.consistency_tower(8)]}")
-    print(f"Löb axiom verified: {verify_loeb_axiom(frame, {3, 4, 5})}")
-    print(f"Second incompleteness verified: {verify_second_incompleteness(frame)}")
-    
-    ceiling, iters = compute_tangling_ceiling(frame, {5})
-    print(f"Tangling ceiling from {{5}}: {sorted(ceiling)} (after {iters} iterations)")
-    
-    # Demo: tree frame
-    tree = tree_gl_frame(3)
-    print(f"\nBinary tree GL frame (depth 3): {len(tree.worlds)} worlds")
-    print(f"Second incompleteness verified: {verify_second_incompleteness(tree)}")
-    print(f"Tangling spectrum: {tree.tangling_spectrum()}")
+    # Create test frame
+    frame = GLFrame(
+        worlds=[0, 1, 2, 3, 4],
+        edges={(i, j) for i in range(5) for j in range(i + 1, 5)}
+    )
+
+    print("=" * 50)
+    print("GL Frame Verification")
+    print("=" * 50)
+    valid, reason = verify_gl_frame(frame)
+    print(f"Valid: {valid}, Reason: {reason}")
+
+    print("\n" + "=" * 50)
+    print("Tangling Depth")
+    print("=" * 50)
+    memo: dict[int, int] = {}
+    for w in frame.worlds:
+        d = compute_rdepth(frame, w, memo)
+        print(f"  rdepth({w}) = {d}")
+
+    print("\n" + "=" * 50)
+    print("Tangling Dichotomy")
+    print("=" * 50)
+    for w in frame.worlds:
+        status, explanation = detect_tangling(frame, w)
+        print(f"  World {w}: {status}")
+        if explanation:
+            print(f"    {explanation}")
+
+    print("\n" + "=" * 50)
+    print("Consistency Hierarchy at World 0")
+    print("=" * 50)
+    hierarchy = analyze_consistency_hierarchy(frame, 0)
+    for level, satisfies in hierarchy:
+        print(f"  Con^{level}: {'✓' if satisfies else '✗'}")
+
+    print("\n" + "=" * 50)
+    print("Disjoint Union")
+    print("=" * 50)
+    frame_a = GLFrame(worlds=[0, 1], edges={(0, 1)})
+    frame_b = GLFrame(worlds=[0, 1, 2], edges={(0, 1), (0, 2), (1, 2)})
+    union = disjoint_union(frame_a, frame_b)
+    valid, reason = verify_gl_frame(union)
+    print(f"Union valid: {valid}")
+    print(f"Union worlds: {union.worlds}")
