@@ -1860,6 +1860,16 @@
       "theorem_count": 7,
       "timestamp": "2026-06-07T01:27:34",
       "title": "Isomorphisms of Meaning: When Structures Collide"
+    },
+    {
+      "cycle_id": "030b1b0e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Ordinal Survival Games\n\n## Synthesis\n\nThis research cycle established a rigorous framework for **ordinal survival games** between Mortal (finite branching) and Eternity (reactive",
+      "quality_score": 0.67744,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T02:01:15",
+      "title": "Infinite Games Against Death: Immortality Strategies"
     }
   ],
   "entries": [
@@ -1905,7 +1915,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-07T01:27:34",
+  "last_updated": "2026-06-07T02:01:15",
   "open_questions": [
     {
       "context": "sorry",
@@ -1925,12 +1935,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "8ba285ca",
-        "quality": 0.36904000000000003,
-        "theorems": 7,
-        "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-      },
       {
         "cycle_id": "f16c8283",
         "quality": 0.3312,
@@ -1984,6 +1988,12 @@
         "quality": 0.4588,
         "theorems": 7,
         "title": "Isomorphisms of Meaning: When Structures Collide"
+      },
+      {
+        "cycle_id": "030b1b0e",
+        "quality": 0.67744,
+        "theorems": 5,
+        "title": "Infinite Games Against Death: Immortality Strategies"
       }
     ],
     "Bridges": [

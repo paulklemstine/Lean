@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "030b1b0e",
     "filename": "infinite_games_against_death_immortality_strategie.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.67744,
     "title": "Ordinal Survival Games: Mortal vs Eternity"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "infinite_games_against_death_immortality_strategie",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.67744,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Ordinal Survival Games: Mortal vs Eternity"
     }
