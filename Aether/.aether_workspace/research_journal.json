@@ -1880,6 +1880,46 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T03:06:49",
       "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+    },
+    {
+      "cycle_id": "814d2b5a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Social Choice as Topology\n\n## Synthesis\n\nThis research cycle established the **PreferenceSphere** as a formal bridge between discrete social choice theory (Arrow's impossibility)",
+      "quality_score": 0.41600000000000004,
+      "sorry_count": 1,
+      "theorem_count": 8,
+      "timestamp": "2026-06-07T03:39:36",
+      "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
+    },
+    {
+      "cycle_id": "faf156a9",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Library of Babel Combinatorics\n\n## Synthesis\n\nThis research cycle established a comprehensive formal theory of universal information spaces, proving 20+ theorems about the Library",
+      "quality_score": 0.34064000000000005,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-07T03:40:02",
+      "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "cycle_id": "971b6af3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Substitution Spectra and Aperiodic Tiling Theory\n\n## Synthesis\n\nThis research cycle established the **substitution spectrum** as a novel algebraic framework for studying parameter",
+      "quality_score": 0.66472,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T03:40:28",
+      "title": "The Aperiodic Monotile: One Shape to Tile Them All"
+    },
+    {
+      "cycle_id": "4e7ad73a",
+      "domain": "Novelty",
+      "key_insight": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established the **Proof Channel** as a novel mathematical structure that reframes proof search as a channel coding problem. The five mai",
+      "quality_score": 0.32664000000000004,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T03:41:27",
+      "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
     }
   ],
   "entries": [
@@ -1925,7 +1965,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-07T03:06:49",
+  "last_updated": "2026-06-07T03:41:27",
   "open_questions": [
     {
       "context": "sorry",
@@ -1933,6 +1973,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-06-06T17:37:23"
+    },
+    {
+      "context": "sorry",
+      "cycle_id": "814d2b5a",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-06-07T03:39:36"
     }
   ],
   "research_threads": {
@@ -1945,12 +1992,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "aa79e64b",
-        "quality": 0.31880000000000003,
-        "theorems": 5,
-        "title": "EML Universal Approximation"
-      },
       {
         "cycle_id": "fe03a028",
         "quality": 0.42824000000000007,
@@ -2004,6 +2045,12 @@
         "quality": 0.3992,
         "theorems": 5,
         "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+      },
+      {
+        "cycle_id": "814d2b5a",
+        "quality": 0.41600000000000004,
+        "theorems": 8,
+        "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
       }
     ],
     "Bridges": [
@@ -2142,24 +2189,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "26c6d56c",
-        "quality": 0.37184000000000006,
-        "theorems": 7,
-        "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-      },
-      {
-        "cycle_id": "ddd6ad11",
-        "quality": 0.47719999999999996,
-        "theorems": 5,
-        "title": "Consciousness as Integrated Information"
-      },
-      {
-        "cycle_id": "851c68fb",
-        "quality": 0.31464000000000003,
-        "theorems": 7,
-        "title": "Infinite Games Against Death: Immortality Strategies"
-      },
-      {
         "cycle_id": "2cb52ecf",
         "quality": 0.54096,
         "theorems": 4,
@@ -2200,6 +2229,24 @@
         "quality": 0.6472,
         "theorems": 5,
         "title": "Alien Mathematics: Non-Standard Arithmetic"
+      },
+      {
+        "cycle_id": "faf156a9",
+        "quality": 0.34064000000000005,
+        "theorems": 6,
+        "title": "The Library of Babel: Combinatorics of the Universal Library"
+      },
+      {
+        "cycle_id": "971b6af3",
+        "quality": 0.66472,
+        "theorems": 5,
+        "title": "The Aperiodic Monotile: One Shape to Tile Them All"
+      },
+      {
+        "cycle_id": "4e7ad73a",
+        "quality": 0.32664000000000004,
+        "theorems": 5,
+        "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proo"
       }
     ],
     "Physics": [
