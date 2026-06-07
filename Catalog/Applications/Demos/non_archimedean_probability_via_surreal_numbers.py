@@ -1,202 +1,274 @@
+#!/usr/bin/env python3
 """
 Non-Archimedean Probability: Numerical Demonstrations
 
-Demonstrates the key theorems using rational arithmetic to simulate
-infinitesimal behavior. We use 1/N for large N as a stand-in for
-infinitesimals, showing how the theorems manifest computationally.
+Demonstrates key properties of infinitesimal probability measures using
+a concrete model: formal Laurent series in an infinitesimal ε.
 """
 
 from fractions import Fraction
-from itertools import combinations
-from typing import List, Set, Tuple
+from typing import FrozenSet, Set
 
 
-def is_approximately_infinitesimal(eps: Fraction, max_n: int = 1000) -> bool:
-    """Check if eps < 1/(n+1) for all n up to max_n."""
-    return all(eps < Fraction(1, n + 1) for n in range(max_n))
+class InfinitesimalNumber:
+    """Represents a number of the form a + b*ε where ε is infinitesimal.
+    
+    This is the simplest non-Archimedean ordered field extending Q:
+    the field Q(ε) with ε positive and smaller than all positive rationals.
+    """
+    
+    def __init__(self, real_part: Fraction = Fraction(0), 
+                 infinitesimal_part: Fraction = Fraction(0)):
+        self.real = real_part
+        self.inf = infinitesimal_part
+    
+    def __add__(self, other):
+        return InfinitesimalNumber(self.real + other.real, self.inf + other.inf)
+    
+    def __sub__(self, other):
+        return InfinitesimalNumber(self.real - other.real, self.inf - other.inf)
+    
+    def __mul__(self, other):
+        # (a + bε)(c + dε) = ac + (ad + bc)ε + bdε² ≈ ac + (ad+bc)ε
+        # We truncate at order ε (ignoring ε² terms, which are "more infinitesimal")
+        return InfinitesimalNumber(
+            self.real * other.real,
+            self.real * other.inf + self.inf * other.real
+        )
+    
+    def __truediv__(self, other):
+        if other.real != 0:
+            # (a + bε) / (c + dε) = (a/c) + (b/c - ad/c²)ε
+            r = self.real / other.real
+            i = (self.inf * other.real - self.real * other.inf) / (other.real ** 2)
+            return InfinitesimalNumber(r, i)
+        elif other.inf != 0:
+            # Division by pure infinitesimal: (a + bε) / (dε) = a/d * ε⁻¹ + b/d
+            # This goes to infinity; return the leading term
+            return InfinitesimalNumber(self.inf / other.inf, Fraction(0))
+        else:
+            raise ZeroDivisionError("Division by zero")
+    
+    def __gt__(self, other):
+        if self.real != other.real:
+            return self.real > other.real
+        return self.inf > other.inf
+    
+    def __eq__(self, other):
+        if isinstance(other, InfinitesimalNumber):
+            return self.real == other.real and self.inf == other.inf
+        return NotImplemented
+    
+    def __repr__(self):
+        if self.inf == 0:
+            return f"{self.real}"
+        elif self.real == 0:
+            return f"{self.inf}ε"
+        else:
+            sign = "+" if self.inf > 0 else "-"
+            return f"{self.real} {sign} {abs(self.inf)}ε"
+    
+    def is_infinitesimal(self) -> bool:
+        """True if this number is positive but smaller than all positive rationals."""
+        return self.real == 0 and self.inf > 0
+    
+    def standard_part(self) -> Fraction:
+        """The real part, discarding infinitesimal terms."""
+        return self.real
 
 
-def uniform_measure(eps: Fraction, S: Set[int]) -> Fraction:
-    """Uniform infinitesimal measure: μ_ε(S) = |S| · ε"""
-    return len(S) * eps
+# Convenience constructors
+ZERO = InfinitesimalNumber(Fraction(0), Fraction(0))
+ONE = InfinitesimalNumber(Fraction(1), Fraction(0))
+EPSILON = InfinitesimalNumber(Fraction(0), Fraction(1))
 
 
-def conditional_probability(eps: Fraction, A: Set[int], B: Set[int]) -> Fraction:
-    """Conditional probability P_ε(A|B) = μ_ε(A∩B) / μ_ε(B)"""
-    if not B:
-        raise ValueError("Cannot condition on empty set")
-    return uniform_measure(eps, A & B) / uniform_measure(eps, B)
+def infinitesimal_measure(epsilon: InfinitesimalNumber, 
+                          subset: FrozenSet[int],
+                          universe: FrozenSet[int] = None) -> InfinitesimalNumber:
+    """Compute μ_ε(A) = |A| · ε"""
+    n = len(subset)
+    result = ZERO
+    for _ in range(n):
+        result = result + epsilon
+    return result
 
 
-def demonstrate_archimedean_barrier():
-    """Theorem 1: In ℚ (Archimedean), no infinitesimal exists."""
+def conditional_prob(epsilon: InfinitesimalNumber,
+                     a: FrozenSet[int], b: FrozenSet[int]) -> InfinitesimalNumber:
+    """Compute P(A|B) = μ_ε(A ∩ B) / μ_ε(B)"""
+    intersection = a & b
+    return infinitesimal_measure(epsilon, intersection) / infinitesimal_measure(epsilon, b)
+
+
+def demo_impossibility():
+    """Demo 1: No real uniform probability on infinite sets."""
     print("=" * 60)
-    print("THEOREM 1: Archimedean Barrier")
-    print("=" * 60)
-    print()
-
-    for N in [10, 100, 1000, 10**6]:
-        eps = Fraction(1, N)
-        # Find n where (n+1)*eps >= 1
-        n_bound = N - 1  # (N-1+1) * (1/N) = 1
-        print(f"  ε = 1/{N}:")
-        print(f"    {n_bound + 1} · ε = {(n_bound + 1) * eps} ≥ 1  ✓")
-        print(f"    Not infinitesimal: fails at n = {n_bound}")
-    print()
-    print("  → In ℚ (or ℝ), every positive number eventually exceeds 1/(n+1).")
-    print()
-
-
-def demonstrate_finite_additivity():
-    """Theorem 2: Uniform measure is finitely additive."""
-    print("=" * 60)
-    print("THEOREM 2: Finite Additivity")
-    print("=" * 60)
-    print()
-
-    eps = Fraction(1, 10**9)  # Very small but not infinitesimal
-    S = {0, 1, 2, 3}
-    T = {4, 5, 6}
-
-    mu_S = uniform_measure(eps, S)
-    mu_T = uniform_measure(eps, T)
-    mu_ST = uniform_measure(eps, S | T)
-
-    print(f"  ε = 1/10⁹")
-    print(f"  S = {S}, T = {T}")
-    print(f"  μ(S) = {len(S)}ε = {mu_S}")
-    print(f"  μ(T) = {len(T)}ε = {mu_T}")
-    print(f"  μ(S∪T) = {len(S | T)}ε = {mu_ST}")
-    print(f"  μ(S) + μ(T) = {mu_S + mu_T}")
-    print(f"  μ(S∪T) = μ(S) + μ(T)? {mu_ST == mu_S + mu_T}  ✓")
-    print()
-
-
-def demonstrate_conditional_universality():
-    """Theorem 3: Conditional probability is independent of ε."""
-    print("=" * 60)
-    print("THEOREM 3: Infinitesimal Universality")
-    print("=" * 60)
-    print()
-
-    A = {0, 1, 2}
-    B = {1, 2, 3, 4, 5}
-    print(f"  A = {A}, B = {B}")
-    print(f"  A ∩ B = {A & B}")
-    print(f"  |A ∩ B| / |B| = {len(A & B)} / {len(B)} = {Fraction(len(A & B), len(B))}")
-    print()
-
-    for N in [10, 1000, 10**6, 10**12, 10**100]:
-        eps = Fraction(1, N)
-        cp = conditional_probability(eps, A, B)
-        label = f"10^{len(str(N))-1}" if N > 100 else str(N)
-        print(f"  ε = 1/{label:>12s}:  P(A|B) = {cp}")
-
-    # All the same!
-    print()
-    eps_values = [Fraction(1, N) for N in [7, 13, 997, 10**6]]
-    cps = [conditional_probability(eps, A, B) for eps in eps_values]
-    print(f"  All conditional probabilities equal? {len(set(cps)) == 1}  ✓")
-    print(f"  Value: {cps[0]} (= |A∩B|/|B| = 2/5)")
-    print()
-
-
-def demonstrate_infinitesimal_stratification():
-    """Theorem 4: ε² ≪ ε (higher-order infinitesimal)."""
-    print("=" * 60)
-    print("THEOREM 4: Infinitesimal Stratification")
-    print("=" * 60)
-    print()
-
-    N = 10**6
-    eps = Fraction(1, N)
-    eps_sq = eps * eps
-
-    print(f"  ε = 1/{N}")
-    print(f"  ε² = 1/{N**2}")
-    print()
-
-    for n in [1, 10, 100, 1000]:
-        ratio = (n + 1) * eps_sq
-        print(f"  (n+1)·ε² for n={n}: {float(ratio):.2e}  < ε = {float(eps):.2e}?  {ratio < eps}  ✓")
-
-    print()
-    print(f"  Key: ε²/ε = ε = {float(eps):.2e} → 0 as ε → 0")
-    print(f"  The ratio shrinks, showing ε² is 'doubly infinitesimal'")
-    print()
-
-
-def demonstrate_archimedean_measure_duality():
-    """Theorem 5: Archimedean ↔ no universal point mass."""
-    print("=" * 60)
-    print("THEOREM 5: Archimedean-Measure Duality")
+    print("DEMO 1: Impossibility of Real Uniform Probability")
     print("=" * 60)
     print()
-
-    print("  Archimedean side (ℚ):")
-    for eps_denom in [10, 100, 1000]:
-        eps = Fraction(1, eps_denom)
-        N_bound = eps_denom  # N·ε ≥ 1
-        print(f"    ε = 1/{eps_denom}: need N ≥ {N_bound} for N·ε ≥ 1")
-
+    print("Attempting to assign probability ε to each natural number...")
+    print("For any ε > 0, we need n·ε ≤ 1 for all n.")
     print()
-    print("  Non-Archimedean side (simulated with ε = 1/10¹⁰⁰):")
-    eps = Fraction(1, 10**100)
-    for n in [1, 10**10, 10**50, 10**99]:
-        val = n * eps
-        print(f"    n = 10^{len(str(n))-1}: n·ε = {float(val):.2e} < 1?  True")
-
+    
+    for eps in [Fraction(1, 10), Fraction(1, 100), Fraction(1, 1000000)]:
+        n_break = int(1 / eps) + 1
+        print(f"  ε = {eps}: fails at n = {n_break}, since {n_break}·{eps} = {n_break * eps} > 1")
+    
     print()
-    print("  In a truly non-Archimedean field, n·ε < 1 for ALL finite n.")
+    print("CONCLUSION: No positive real ε works. The Archimedean property")
+    print("of ℝ prevents uniform probability on infinite sets.")
     print()
 
 
-def demonstrate_bridge_theorem():
-    """Bridge: Positive weights give positive measures."""
+def demo_finite_additivity():
+    """Demo 2: Finite additivity of infinitesimal measures."""
     print("=" * 60)
-    print("BRIDGE: Positive Weight Anti-Cancellation")
+    print("DEMO 2: Finite Additivity of Infinitesimal Measures")
     print("=" * 60)
     print()
-
-    eps = Fraction(1, 10**15)
-    weights = {i: eps * (i + 1) for i in range(5)}
-
-    print(f"  Weights: w(i) = (i+1) · ε where ε = 1/10¹⁵")
-    for i, w in weights.items():
-        print(f"    w({i}) = {float(w):.2e}")
-
-    for subset_size in range(1, 6):
-        for S in [set(range(subset_size))]:
-            total = sum(weights[i] for i in S)
-            print(f"  μ({S}) = {float(total):.2e} > 0? {total > 0}  ✓")
+    
+    A = frozenset({1, 2, 3})
+    B = frozenset({4, 5})
+    AuB = A | B
+    
+    eps = EPSILON
+    mu_A = infinitesimal_measure(eps, A)
+    mu_B = infinitesimal_measure(eps, B)
+    mu_AuB = infinitesimal_measure(eps, AuB)
+    mu_sum = mu_A + mu_B
+    
+    print(f"  A = {set(A)}, B = {set(B)}")
+    print(f"  A ∪ B = {set(AuB)}")
+    print(f"  μ(A) = {mu_A}")
+    print(f"  μ(B) = {mu_B}")
+    print(f"  μ(A) + μ(B) = {mu_sum}")
+    print(f"  μ(A ∪ B) = {mu_AuB}")
+    print(f"  μ(A ∪ B) = μ(A) + μ(B)? {mu_AuB == mu_sum}")
     print()
-    print("  → All nonempty sets get strictly positive measure,")
-    print("    even with infinitesimal weights. (Anti-cancellation)")
+
+
+def demo_normalization():
+    """Demo 3: Normalization to probability 1."""
+    print("=" * 60)
+    print("DEMO 3: Normalization — Total Mass = 1")
+    print("=" * 60)
+    print()
+    
+    for n in [3, 5, 10, 100]:
+        universe = frozenset(range(n))
+        eps = InfinitesimalNumber(Fraction(1, n), Fraction(0))
+        total = infinitesimal_measure(eps, universe)
+        print(f"  n = {n}: ε = 1/{n}, μ(Ω) = {total}")
+    
+    print()
+    print("  With ε = 1/n, every n-element space has total mass exactly 1.")
+    print()
+
+
+def demo_conditional_probability():
+    """Demo 4: Conditional probability reduces to counting."""
+    print("=" * 60)
+    print("DEMO 4: Conditional Probability = Counting Formula")
+    print("=" * 60)
+    print()
+    
+    universe = frozenset({1, 2, 3, 4, 5, 6})  # Die roll
+    A = frozenset({2, 4, 6})  # Even
+    B = frozenset({1, 2, 3, 4})  # ≤ 4
+    
+    eps = EPSILON
+    p_cond = conditional_prob(eps, A, B)
+    
+    intersection = A & B
+    classical = Fraction(len(intersection), len(B))
+    
+    print(f"  Ω = {set(universe)} (fair die)")
+    print(f"  A = {set(A)} (even)")
+    print(f"  B = {set(B)} (≤ 4)")
+    print(f"  A ∩ B = {set(intersection)}")
+    print(f"  P(A|B) via infinitesimals = {p_cond}")
+    print(f"  P(A|B) via counting = |A∩B|/|B| = {len(intersection)}/{len(B)} = {classical}")
+    print(f"  Match? {p_cond.standard_part() == classical}")
+    print()
+    
+    # Conditioning on a singleton — impossible in standard theory!
+    C = frozenset({3})
+    p_singleton = conditional_prob(eps, A, C)
+    print(f"  Conditioning on singleton: P(even | {{3}}) = {p_singleton}")
+    print(f"  (In standard probability, this requires measure-theoretic machinery)")
+    print()
+
+
+def demo_dichotomy():
+    """Demo 5: Archimedean vs Non-Archimedean."""
+    print("=" * 60)
+    print("DEMO 5: The Infinitesimal Dichotomy")
+    print("=" * 60)
+    print()
+    
+    print("  Q (rationals): Archimedean — no infinitesimals")
+    print("    For any q > 0, there exists n with 1/n ≤ q:")
+    for q in [Fraction(1, 100), Fraction(1, 10**6), Fraction(1, 10**12)]:
+        n = int(1 / q)
+        print(f"      q = {q}, n = {n}, 1/{n} = {Fraction(1, n)} ≤ {q}? {Fraction(1, n) <= q}")
+    
+    print()
+    print("  Q(ε) (rationals with infinitesimal): Non-Archimedean")
+    print(f"    ε = {EPSILON}")
+    print(f"    ε > 0? {EPSILON > ZERO}")
+    print(f"    ε is infinitesimal? {EPSILON.is_infinitesimal()}")
+    print(f"    For any n, n·ε = {InfinitesimalNumber(Fraction(0), Fraction(1000000))} < 1")
+    print()
+
+
+def demo_anti_cancellation():
+    """Demo 6: Anti-cancellation principle."""
+    print("=" * 60)
+    print("DEMO 6: Anti-Cancellation — Positive Sums Stay Positive")
+    print("=" * 60)
+    print()
+    
+    weights = [EPSILON, EPSILON, EPSILON, EPSILON, EPSILON]
+    total = ZERO
+    for w in weights:
+        total = total + w
+    
+    print(f"  Weights: [{', '.join(str(w) for w in weights)}]")
+    print(f"  Sum = {total}")
+    print(f"  Sum > 0? {total > ZERO}")
+    print()
+    print("  Even though each weight is infinitesimal, their sum is positive.")
+    print("  This is the algebraic engine behind infinitesimal probability.")
     print()
 
 
 if __name__ == "__main__":
-    print()
     print("╔══════════════════════════════════════════════════════════╗")
     print("║  NON-ARCHIMEDEAN PROBABILITY: NUMERICAL DEMONSTRATIONS  ║")
     print("╚══════════════════════════════════════════════════════════╝")
     print()
+    
+    demo_impossibility()
+    demo_finite_additivity()
+    demo_normalization()
+    demo_conditional_probability()
+    demo_dichotomy()
+    demo_anti_cancellation()
+    
+    print("=" * 60)
+    print("All demonstrations complete.")
+    print("Key insight: Infinitesimal probability resolves the tension")
+    print("between equal weights and finite total mass by moving to")
+    print("non-Archimedean ordered fields.")
 
-    demonstrate_archimedean_barrier()
-    demonstrate_finite_additivity()
-    demonstrate_conditional_universality()
-    demonstrate_infinitesimal_stratification()
-    demonstrate_archimedean_measure_duality()
-    demonstrate_bridge_theorem()
 
-    print("All demonstrations completed successfully.")
-
-
+#!/usr/bin/env python3
 """
-Visualization: Infinitesimal Stratification
+Visualization: Non-Archimedean vs Standard Probability
 
-Shows how powers of an infinitesimal create a hierarchy of scales,
-using log-scale plots with 1/N as a stand-in for infinitesimals.
+Compares standard real-valued probability (where point masses = 0)
+with infinitesimal probability (where point masses = ε > 0).
 """
 
 import matplotlib
@@ -204,79 +276,139 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-
-def plot_infinitesimal_stratification():
-    """Plot the hierarchy ε ≫ ε² ≫ ε³ for various ε values."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: stratification for fixed ε, varying order
+def plot_archimedean_barrier():
+    """Plot showing how n·ε exceeds 1 for any real ε > 0."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    
+    # Left: n*ε vs n for various ε
     ax1 = axes[0]
-    N_values = [10, 100, 1000, 10000]
-    orders = range(1, 6)
-
-    for N in N_values:
-        eps = 1.0 / N
-        values = [eps**k for k in orders]
-        ax1.semilogy(list(orders), values, 'o-', label=f'ε = 1/{N}', markersize=8)
-
-    ax1.set_xlabel('Order k', fontsize=14)
-    ax1.set_ylabel('ε^k (log scale)', fontsize=14)
-    ax1.set_title('Infinitesimal Stratification\nε ≫ ε² ≫ ε³ ≫ ...', fontsize=16)
-    ax1.legend(fontsize=12)
+    ns = np.arange(1, 50)
+    for eps in [0.1, 0.05, 0.02, 0.01]:
+        values = ns * eps
+        ax1.plot(ns, values, label=f'ε = {eps}', linewidth=2)
+    ax1.axhline(y=1, color='red', linestyle='--', linewidth=2, label='Total mass = 1')
+    ax1.set_xlabel('Number of points n', fontsize=12)
+    ax1.set_ylabel('n · ε', fontsize=12)
+    ax1.set_title('Archimedean Barrier: n·ε always exceeds 1', fontsize=13)
+    ax1.legend(fontsize=10)
+    ax1.set_ylim(0, 2.5)
     ax1.grid(True, alpha=0.3)
-
-    # Right: domination bound (n+1)·ε² < ε
+    
+    # Right: Infinitesimal measure stays bounded
     ax2 = axes[1]
-    n_range = np.arange(1, 101)
-
-    for N in [10, 50, 200, 1000]:
+    ns = np.arange(1, 100)
+    # Simulate infinitesimal: use 1/N for large N
+    for N in [100, 1000, 10000]:
         eps = 1.0 / N
-        lhs = (n_range + 1) * eps**2
-        ax2.semilogy(n_range, lhs, '-', label=f'(n+1)·ε² (ε=1/{N})', alpha=0.8)
-        ax2.axhline(y=eps, linestyle='--', alpha=0.4)
+        values = ns * eps
+        ax2.plot(ns, values, label=f'ε = 1/{N} (→ 1/ω)', linewidth=2, alpha=0.7)
+    ax2.axhline(y=1, color='red', linestyle='--', linewidth=2, label='Total mass = 1')
+    ax2.set_xlabel('Number of points n', fontsize=12)
+    ax2.set_ylabel('n · ε', fontsize=12)
+    ax2.set_title('Non-Archimedean: n·ε stays infinitesimal for finite n', fontsize=13)
+    ax2.legend(fontsize=10)
+    ax2.set_ylim(0, 1.2)
+    ax2.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('archimedean_barrier.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: archimedean_barrier.png")
 
-    ax2.set_xlabel('n', fontsize=14)
-    ax2.set_ylabel('Value (log scale)', fontsize=14)
-    ax2.set_title('Domination: (n+1)·ε² < ε\nfor all n (Theorem 4)', fontsize=16)
+
+def plot_measure_comparison():
+    """Plot comparing standard vs infinitesimal measures."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    
+    # Left: Standard probability on [0,1] — point masses are 0
+    ax1 = axes[0]
+    x_points = np.linspace(0, 1, 20)
+    ax1.stem(x_points, np.zeros_like(x_points), linefmt='b-', markerfmt='bo', basefmt='b-')
+    ax1.fill_between([0, 1], 0, 1, alpha=0.2, color='blue', label='Density = 1')
+    ax1.axhline(y=1, color='blue', linestyle='-', alpha=0.5)
+    ax1.set_xlabel('x ∈ [0,1]', fontsize=12)
+    ax1.set_ylabel('P({x})', fontsize=12)
+    ax1.set_title('Standard: P({x}) = 0 for all x', fontsize=13)
+    ax1.set_ylim(-0.1, 1.5)
+    ax1.legend(fontsize=10)
+    ax1.grid(True, alpha=0.3)
+    ax1.annotate('Each point has\nprobability ZERO', xy=(0.5, 0), xytext=(0.5, 0.7),
+                fontsize=11, ha='center', arrowprops=dict(arrowstyle='->', color='red'),
+                color='red', fontweight='bold')
+    
+    # Right: Infinitesimal probability — point masses are ε > 0
+    ax2 = axes[1]
+    n = 20
+    x_points = np.linspace(0, 1, n)
+    eps_display = 0.05  # Visual representation of infinitesimal
+    ax2.stem(x_points, np.full_like(x_points, eps_display), 
+             linefmt='g-', markerfmt='go', basefmt='g-')
+    ax2.axhline(y=eps_display, color='green', linestyle='--', alpha=0.5, 
+                label=f'ε = 1/{n} (infinitesimal)')
+    ax2.set_xlabel('x ∈ Ω', fontsize=12)
+    ax2.set_ylabel('P({x})', fontsize=12)
+    ax2.set_title(f'Infinitesimal: P({{x}}) = ε > 0 for all x', fontsize=13)
+    ax2.set_ylim(-0.01, 0.15)
     ax2.legend(fontsize=10)
     ax2.grid(True, alpha=0.3)
-
+    ax2.annotate('Each point has\nprobability ε > 0!', xy=(0.5, eps_display), 
+                xytext=(0.5, 0.12),
+                fontsize=11, ha='center', arrowprops=dict(arrowstyle='->', color='green'),
+                color='green', fontweight='bold')
+    
     plt.tight_layout()
-    plt.savefig('stratification.png', dpi=150, bbox_inches='tight')
+    plt.savefig('measure_comparison.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved stratification.png")
+    print("Saved: measure_comparison.png")
 
 
-def plot_archimedean_duality():
-    """Plot the Archimedean barrier: N·ε vs 1."""
+def plot_conditional_probability():
+    """Plot showing conditional probability computation."""
     fig, ax = plt.subplots(figsize=(10, 6))
-
-    N_range = np.arange(1, 201)
-
-    for eps_inv in [20, 50, 100, 200]:
-        eps = 1.0 / eps_inv
-        vals = N_range * eps
-        ax.plot(N_range, vals, '-', label=f'N·ε (ε=1/{eps_inv})', linewidth=2)
-
-    ax.axhline(y=1, color='red', linestyle='--', linewidth=2, label='Threshold = 1')
-    ax.fill_between(N_range, 1, 2, alpha=0.1, color='red')
-
-    ax.set_xlabel('N (number of points)', fontsize=14)
-    ax.set_ylabel('Total measure N·ε', fontsize=14)
-    ax.set_title('Archimedean Barrier: N·ε Eventually Exceeds 1\n'
-                 '(Theorem 5: No universal point mass in Archimedean fields)',
-                 fontsize=14)
-    ax.legend(fontsize=12)
-    ax.set_ylim(0, 2)
-    ax.grid(True, alpha=0.3)
-
+    
+    # Universe = {1,...,6}, A = even, B = ≤ 4
+    universe = range(1, 7)
+    A = {2, 4, 6}
+    B = {1, 2, 3, 4}
+    AnB = A & B
+    
+    colors = []
+    for x in universe:
+        if x in AnB:
+            colors.append('#2ecc71')  # green: in both
+        elif x in A:
+            colors.append('#3498db')  # blue: only in A
+        elif x in B:
+            colors.append('#e74c3c')  # red: only in B
+        else:
+            colors.append('#95a5a6')  # gray: neither
+    
+    bars = ax.bar(list(universe), [1]*6, color=colors, edgecolor='black', linewidth=1.5)
+    
+    ax.set_xlabel('Element', fontsize=12)
+    ax.set_ylabel('Weight (ε)', fontsize=12)
+    ax.set_title('P(Even | ≤ 4) = |A∩B| / |B| = 2/4 = 1/2\n'
+                 'Infinitesimals cancel in the ratio!', fontsize=13)
+    
+    # Legend
+    from matplotlib.patches import Patch
+    legend_elements = [
+        Patch(facecolor='#2ecc71', edgecolor='black', label='A∩B (even AND ≤4)'),
+        Patch(facecolor='#3498db', edgecolor='black', label='A only (even, >4)'),
+        Patch(facecolor='#e74c3c', edgecolor='black', label='B only (odd, ≤4)'),
+    ]
+    ax.legend(handles=legend_elements, fontsize=10, loc='upper right')
+    ax.set_xticks(list(universe))
+    ax.grid(True, alpha=0.3, axis='y')
+    
     plt.tight_layout()
-    plt.savefig('archimedean_duality.png', dpi=150, bbox_inches='tight')
+    plt.savefig('conditional_probability.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved archimedean_duality.png")
+    print("Saved: conditional_probability.png")
 
 
 if __name__ == "__main__":
-    plot_infinitesimal_stratification()
-    plot_archimedean_duality()
-    print("All visualizations generated.")
+    plot_archimedean_barrier()
+    plot_measure_comparison()
+    plot_conditional_probability()
+    print("\nAll visualizations generated!")
