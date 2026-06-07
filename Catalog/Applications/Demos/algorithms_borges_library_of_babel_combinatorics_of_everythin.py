@@ -1,174 +1,261 @@
 #!/usr/bin/env python3
 """
-Algorithms for the Library of Babel.
+algorithms.py — Core algorithms for the Library of Babel combinatorics.
 
-Type-hinted implementations of key algorithms from the research.
+Type-hinted implementations of the key mathematical structures and algorithms.
 """
 
-import math
-from typing import List, Dict, Tuple, Optional, Callable
+from __future__ import annotations
+from typing import Callable, Sequence
 from dataclasses import dataclass
+import math
+import itertools
 
 
-@dataclass
-class BabelBook:
-    """A book in the Library of Babel."""
-    symbols: List[int]
-    alphabet_size: int
+# =============================================================================
+# Core Types
+# =============================================================================
 
-    def __post_init__(self):
-        assert all(0 <= s < self.alphabet_size for s in self.symbols)
+Book = tuple[int, ...]  # A book: tuple of symbol indices
+Substitution = Callable[[int], int]  # An alphabet endomorphism
+
+
+@dataclass(frozen=True)
+class BabelSpace:
+    """The space of all books over a given alphabet and length."""
+    alpha: int  # alphabet size
+    N: int      # book length
 
     @property
-    def length(self) -> int:
-        return len(self.symbols)
+    def cardinality(self) -> int:
+        """Total number of books: α^N."""
+        return self.alpha ** self.N
+
+    @property
+    def cardinality_log10(self) -> float:
+        """Number of decimal digits in the cardinality."""
+        return self.N * math.log10(self.alpha)
 
 
-def hamming_distance(b1: BabelBook, b2: BabelBook) -> int:
-    """Compute the Hamming distance between two books.
+# =============================================================================
+# Hamming Distance
+# =============================================================================
 
-    Time complexity: O(N)
-    Space complexity: O(1)
-    """
-    assert b1.length == b2.length
-    assert b1.alphabet_size == b2.alphabet_size
-    return sum(1 for s1, s2 in zip(b1.symbols, b2.symbols) if s1 != s2)
-
-
-def hamming_ball_volume(alpha: int, n: int, t: int) -> int:
-    """Compute the volume of a Hamming ball of radius t.
-
-    V(n, t) = Σ_{k=0}^{t} C(n, k) * (α-1)^k
-
-    Time complexity: O(t)
-    """
-    return sum(math.comb(n, k) * (alpha - 1) ** k for k in range(t + 1))
-
-
-def singleton_bound(alpha: int, n: int, d: int) -> int:
-    """Compute the Singleton bound on code size.
-
-    A code with minimum distance d has at most α^(N-d+1) codewords.
-    Achieved by MDS codes (e.g., Reed-Solomon).
-
-    Time complexity: O(1)
-    """
-    return alpha ** (n - d + 1)
-
-
-def sphere_packing_bound(alpha: int, n: int, d: int) -> float:
-    """Compute the sphere-packing (Hamming) bound on code size.
-
-    |C| ≤ α^N / V(N, ⌊(d-1)/2⌋)
-
-    Time complexity: O(d)
-    """
-    t = (d - 1) // 2
-    vol = hamming_ball_volume(alpha, n, t)
-    return alpha ** n / vol
-
-
-def compressible_fraction(alpha: int, n: int, m: int) -> float:
-    """Compute the maximum fraction of books compressible to length M.
-
-    At most α^M / α^N = α^{-(N-M)} books are compressible.
-
-    Time complexity: O(1)
-    """
-    return alpha ** (m - n)
-
-
-def symbol_spectrum(book: BabelBook) -> Dict[int, int]:
-    """Compute the symbol frequency spectrum of a book.
+def hamming_distance(b1: Book, b2: Book) -> int:
+    """Compute Hamming distance between two books.
 
     Time complexity: O(N)
     """
-    spectrum: Dict[int, int] = {}
-    for s in book.symbols:
-        spectrum[s] = spectrum.get(s, 0) + 1
-    return spectrum
+    if len(b1) != len(b2):
+        raise ValueError("Books must have equal length")
+    return sum(1 for x, y in zip(b1, b2) if x != y)
 
 
-def is_uniform(book: BabelBook) -> bool:
-    """Check if a book has uniform symbol distribution.
+def hamming_ball_volume(alpha: int, N: int, r: int) -> int:
+    """Exact volume of a Hamming ball of radius r in Book(α, N).
+
+    |B(b, r)| = Σ_{k=0}^{r} C(N, k) (α-1)^k
+    """
+    return sum(math.comb(N, k) * (alpha - 1) ** k for k in range(r + 1))
+
+
+# =============================================================================
+# Substitution Algebra
+# =============================================================================
+
+def apply_substitution(sigma: dict[int, int], book: Book) -> Book:
+    """Apply an alphabet substitution to a book.
 
     Time complexity: O(N)
     """
-    spec = symbol_spectrum(book)
-    if not spec:
-        return True
-    values = list(spec.values())
-    return all(v == values[0] for v in values)
+    return tuple(sigma[c] for c in book)
 
+
+def compose_substitutions(sigma: dict[int, int], tau: dict[int, int]) -> dict[int, int]:
+    """Compose two substitutions: (σ ∘ τ)(c) = σ(τ(c)).
+
+    Time complexity: O(α)
+    """
+    return {c: sigma[tau[c]] for c in tau}
+
+
+def is_injective(sigma: dict[int, int]) -> bool:
+    """Check if a substitution is injective.
+
+    Time complexity: O(α)
+    """
+    return len(set(sigma.values())) == len(sigma)
+
+
+# =============================================================================
+# Orbit Computation
+# =============================================================================
+
+def compute_orbit(book: Book, alpha: int) -> set[Book]:
+    """Compute the full substitution orbit of a book.
+
+    Time complexity: O(α^α · N)
+    """
+    orbit: set[Book] = set()
+    for sub_tuple in itertools.product(range(alpha), repeat=alpha):
+        sigma = dict(enumerate(sub_tuple))
+        orbit.add(apply_substitution(sigma, book))
+    return orbit
+
+
+def symbol_diversity(book: Book) -> int:
+    """Number of distinct symbols used in a book.
+
+    Time complexity: O(N)
+    """
+    return len(set(book))
+
+
+def predicted_orbit_size(alpha: int, diversity: int) -> int:
+    """Predicted orbit size from the Orbit-Diversity Conjecture.
+
+    Returns α^(d) = α! / (α - d)! (falling factorial).
+    """
+    return math.perm(alpha, diversity)
+
+
+# =============================================================================
+# Compression Analysis
+# =============================================================================
 
 @dataclass
 class CompressionScheme:
     """A faithful compression scheme."""
-    compress: Callable[[BabelBook], BabelBook]
-    decompress: Callable[[BabelBook], BabelBook]
+    compress: Callable[[Book], Book]
+    decompress: Callable[[Book], Book]
 
-    def verify_faithful(self, book: BabelBook) -> bool:
-        """Verify compress(decompress(b)) == b for a specific book."""
-        compressed = self.compress(book)
-        decompressed = self.decompress(compressed)
-        return decompressed.symbols == book.symbols
+    def verify_faithful(self, books: Sequence[Book]) -> bool:
+        """Verify faithfulness on a set of test books."""
+        return all(self.decompress(self.compress(b)) == b for b in books)
 
 
-def apply_coord_permutation(book: BabelBook, perm: List[int]) -> BabelBook:
-    """Apply a coordinate permutation to a book.
+def compressible_fraction_bound(alpha: int, N: int, M: int) -> float:
+    """Upper bound on the fraction of compressible books.
 
-    Theorem: This is a Hamming isometry (coord_perm_isometry).
+    At most α^M books can be compressed to length M,
+    out of α^N total books. Fraction ≤ α^(M-N).
+    """
+    if M >= N:
+        return 1.0
+    return alpha ** (M - N)
+
+
+def incompressible_count_lower_bound(alpha: int, N: int, M: int) -> int:
+    """Lower bound on the number of incompressible books.
+
+    At least α^N - α^M books cannot be faithfully compressed to length M.
+    """
+    if M >= N:
+        return 0
+    return alpha ** N - alpha ** M
+
+
+# =============================================================================
+# Spectrum Analysis
+# =============================================================================
+
+def symbol_frequencies(book: Book, alpha: int) -> list[int]:
+    """Compute the frequency of each symbol in a book.
+
+    Returns a list of length α where freq[c] = |{i : book[i] = c}|.
+    Time complexity: O(N)
+    """
+    freq = [0] * alpha
+    for c in book:
+        freq[c] += 1
+    return freq
+
+
+def is_uniform(book: Book, alpha: int) -> bool:
+    """Check if a book uses all symbols with equal frequency.
 
     Time complexity: O(N)
     """
-    return BabelBook(
-        symbols=[book.symbols[perm[i]] for i in range(book.length)],
-        alphabet_size=book.alphabet_size
-    )
+    freq = symbol_frequencies(book, alpha)
+    return len(set(freq)) <= 1
 
 
-def apply_symbol_permutation(
-    book: BabelBook, perm: List[int]
-) -> BabelBook:
-    """Apply a symbol permutation to all positions of a book.
+# =============================================================================
+# Hamming Graph
+# =============================================================================
 
-    Theorem: This is a Hamming isometry (symbol_perm_isometry).
+def hamming_path(b1: Book, b2: Book) -> list[Book]:
+    """Construct an explicit Hamming path from b1 to b2.
 
-    Time complexity: O(N)
+    Changes one position at a time, in order.
+    Time complexity: O(N²) for the path construction.
     """
-    return BabelBook(
-        symbols=[perm[s] for s in book.symbols],
-        alphabet_size=book.alphabet_size
-    )
+    path = [b1]
+    current = list(b1)
+    for i in range(len(b1)):
+        if current[i] != b2[i]:
+            current[i] = b2[i]
+            path.append(tuple(current))
+    return path
 
 
-def apply_pointwise_permutation(
-    book: BabelBook, perms: List[List[int]]
-) -> BabelBook:
-    """Apply position-dependent symbol permutations.
+def hamming_diameter(alpha: int, N: int) -> int:
+    """The diameter of the Hamming graph.
 
-    Theorem: This is a Hamming isometry (pointwise_perm_isometry).
-
-    Time complexity: O(N)
+    Equals N when α ≥ 2, else 0.
     """
-    return BabelBook(
-        symbols=[perms[i][book.symbols[i]] for i in range(book.length)],
-        alphabet_size=book.alphabet_size
-    )
+    if alpha < 2 or N < 1:
+        return 0
+    return N
 
 
-def log_library_size(alpha: int, n: int) -> float:
-    """Compute log₁₀ of library size = N · log₁₀(α)."""
-    return n * math.log10(alpha)
+# =============================================================================
+# Topological Analysis
+# =============================================================================
+
+def cylinder_set(alpha: int, N: int, position: int, symbol: int) -> set[Book]:
+    """Enumerate the cylinder set C(position, symbol) for small spaces.
+
+    Only practical for small α and N.
+    """
+    result: set[Book] = set()
+    for book in itertools.product(range(alpha), repeat=N):
+        if book[position] == symbol:
+            result.add(book)
+    return result
+
+
+def verify_clopen_separation(alpha: int, N: int) -> bool:
+    """Verify clopen separation for all distinct pairs in Book(α, N).
+
+    For every pair of distinct books, find a cylinder set separating them.
+    Only practical for small α and N.
+    """
+    books = list(itertools.product(range(alpha), repeat=N))
+    for i, b1 in enumerate(books):
+        for b2 in books[i+1:]:
+            # Find a separating position
+            separated = False
+            for pos in range(N):
+                if b1[pos] != b2[pos]:
+                    separated = True
+                    break
+            if not separated:
+                return False  # Should never happen for distinct books
+    return True
 
 
 if __name__ == "__main__":
     # Quick self-test
-    b1 = BabelBook([0, 1, 2, 0, 1], 3)
-    b2 = BabelBook([0, 1, 0, 0, 2], 3)
+    space = BabelSpace(alpha=25, N=1_312_000)
+    print(f"Library of Babel: {space.cardinality_log10:.0f} decimal digits")
+
+    b1 = (0, 1, 2, 0, 1)
+    b2 = (0, 2, 2, 1, 1)
     print(f"Hamming distance: {hamming_distance(b1, b2)}")
-    print(f"Spectrum b1: {symbol_spectrum(b1)}")
-    print(f"Is uniform b1: {is_uniform(b1)}")
-    print(f"Singleton bound (3,5,3): {singleton_bound(3, 5, 3)}")
-    print(f"Sphere-packing bound (2,7,3): {sphere_packing_bound(2, 7, 3)}")
-    print(f"Hamming ball V(7,1): {hamming_ball_volume(2, 7, 1)}")
+    print(f"Path: {hamming_path(b1, b2)}")
+    print(f"Diversity of b1: {symbol_diversity(b1)}")
+
+    orbit = compute_orbit((0, 1, 0), alpha=3)
+    print(f"Orbit of (0,1,0) in Book(3,3): size={len(orbit)}, "
+          f"predicted={predicted_orbit_size(3, symbol_diversity((0,1,0)))}")
