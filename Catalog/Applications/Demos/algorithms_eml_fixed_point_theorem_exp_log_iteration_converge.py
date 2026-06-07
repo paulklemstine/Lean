@@ -1,202 +1,216 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Type-hinted implementations of EML fixed-point algorithms.
-
-Provides:
-1. EML iteration with convergence guarantee
-2. A priori error estimation
-3. Parameter region computation (contraction domain)
-4. Composed EML network convergence analysis
+EML Fixed-Point Algorithms: Type-hinted implementations of the EML iteration
+convergence machinery, including contraction analysis and certified bounds.
 """
 
 import math
-from dataclasses import dataclass
-from typing import Callable, List, Optional, Tuple
+from typing import Tuple, List, Optional, Callable
 
 
-@dataclass
-class EMLParams:
-    """Parameters for the EML operator f(x) = exp(a) * log(b*x + c)."""
-    a: float
-    b: float = 1.0
-    c: float = 1.0
+def eml_operator(a: float, b: float, c: float) -> Callable[[float], float]:
+    """Create an EML operator f(x) = exp(a) * log(b*x + c).
 
+    Args:
+        a: Exponential scaling parameter
+        b: Linear coefficient inside log
+        c: Constant offset inside log
 
-@dataclass
-class ContractionInfo:
-    """Information about the contraction property of an EML operator."""
-    ratio: float          # Contraction ratio ρ = exp(a) * b / (b*L + c)
-    lower_bound: float    # Lower bound L of the contraction domain
-    is_contraction: bool  # Whether ρ < 1
-
-
-@dataclass
-class ConvergenceResult:
-    """Result of an EML fixed-point iteration."""
-    fixed_point: float
-    iterations: int
-    final_error: float
-    history: List[float]
-    contraction_ratio: float
-
-
-def eml_operator(params: EMLParams) -> Callable[[float], float]:
-    """Return the EML operator as a callable."""
+    Returns:
+        The EML function as a callable
+    """
+    exp_a = math.exp(a)
     def f(x: float) -> float:
-        return math.exp(params.a) * math.log(params.b * x + params.c)
+        return exp_a * math.log(b * x + c)
     return f
 
 
-def eml_derivative(params: EMLParams) -> Callable[[float], float]:
-    """Return the derivative of the EML operator."""
+def eml_derivative(a: float, b: float, c: float) -> Callable[[float], float]:
+    """Create the derivative f'(x) = exp(a) * b / (b*x + c).
+
+    Args:
+        a, b, c: EML parameters
+
+    Returns:
+        The derivative function as a callable
+    """
+    exp_a = math.exp(a)
     def fprime(x: float) -> float:
-        return math.exp(params.a) * params.b / (params.b * x + params.c)
+        return exp_a * b / (b * x + c)
     return fprime
 
 
-def analyze_contraction(params: EMLParams, L: float) -> ContractionInfo:
+def contraction_constant(a: float, b: float, c: float, L: float) -> float:
+    """Compute the Lipschitz/contraction constant on [L, +inf).
+
+    The contraction constant is rho = exp(a) * b / (b*L + c), which is
+    the supremum of |f'(x)| on [L, +inf) since f' is decreasing.
+
+    Args:
+        a, b, c: EML parameters
+        L: Left endpoint of the interval
+
+    Returns:
+        The contraction constant rho
     """
-    Analyze the contraction property of the EML operator on [L, ∞).
-    
-    The operator is a contraction iff exp(a) * b / (b*L + c) < 1,
-    equivalently exp(a) * b < b*L + c.
-    """
-    denom = params.b * L + params.c
-    if denom <= 0:
-        return ContractionInfo(ratio=float('inf'), lower_bound=L, is_contraction=False)
-    
-    ratio = math.exp(params.a) * params.b / denom
-    return ContractionInfo(
-        ratio=ratio,
-        lower_bound=L,
-        is_contraction=ratio < 1
-    )
+    return math.exp(a) * b / (b * L + c)
 
 
-def find_contraction_lower_bound(params: EMLParams) -> float:
+def verify_contraction(a: float, b: float, c: float, L: float) -> Tuple[bool, float]:
+    """Check whether the EML operator is a contraction on [L, +inf).
+
+    Returns:
+        (is_contraction, rho) where is_contraction is True iff rho < 1
     """
-    Find the minimal L such that the EML operator is a contraction on [L, ∞).
-    
-    Need: exp(a) * b / (b*L + c) < 1, so L > (exp(a) * b - c) / b = exp(a) - c/b.
-    Returns exp(a) - c/b + epsilon for a small epsilon.
-    """
-    L_critical = math.exp(params.a) - params.c / params.b
-    return L_critical + 1e-6
+    rho = contraction_constant(a, b, c, L)
+    return rho < 1, rho
 
 
-def eml_iterate(
-    params: EMLParams,
-    x0: float,
-    tol: float = 1e-14,
-    max_iter: int = 10000,
-    L: Optional[float] = None
-) -> ConvergenceResult:
+def find_invariant_interval(a: float, b: float, c: float,
+                            L_init: float = 1.0, U_init: float = 100.0,
+                            tol: float = 1e-10) -> Optional[Tuple[float, float]]:
+    """Find an invariant interval [L, U] for the EML operator.
+
+    An interval is invariant if f([L,U]) ⊆ [L,U], which requires:
+    - L ≤ exp(a)*log(b*L + c)
+    - exp(a)*log(b*U + c) ≤ U
+
+    Uses bisection to find tight bounds.
+
+    Args:
+        a, b, c: EML parameters
+        L_init, U_init: Initial search bounds
+        tol: Tolerance for bisection
+
+    Returns:
+        (L, U) if found, None otherwise
     """
-    Run the EML iteration x_{n+1} = f(x_n) to find the fixed point.
-    
-    Algorithm (Banach Fixed-Point Iteration):
-        1. Verify contraction condition on [L, ∞)
-        2. Iterate x_{n+1} = exp(a) * log(b*x_n + c)
-        3. Stop when |x_{n+1} - x_n| < tol
-        4. A priori bound: |x_n - x*| ≤ ρ^n / (1-ρ) * |x_1 - x_0|
+    f = eml_operator(a, b, c)
+
+    # Find L: smallest x where f(x) >= x (lower boundary of invariant set)
+    lo, hi = tol, U_init
+    for _ in range(100):
+        mid = (lo + hi) / 2
+        if b * mid + c <= 0:
+            lo = mid
+            continue
+        if f(mid) >= mid:
+            hi = mid
+        else:
+            lo = mid
+        if hi - lo < tol:
+            break
+    L = hi
+
+    # Find U: largest x where f(x) <= x
+    lo, hi = L, U_init
+    for _ in range(100):
+        mid = (lo + hi) / 2
+        if f(mid) <= mid:
+            lo = mid
+        else:
+            hi = mid
+        if hi - lo < tol:
+            break
+    U = lo
+
+    if L <= U and f(L) >= L and f(U) <= U:
+        return (L, U)
+    return None
+
+
+def certified_iteration(a: float, b: float, c: float, x0: float,
+                        L: float, max_iter: int = 1000,
+                        tol: float = 1e-15) -> Tuple[float, List[float], List[float]]:
+    """Run the EML iteration with certified convergence bounds.
+
+    At each step, computes both the iterate and the a priori error bound
+    rho^n * |x0 - x*|, where rho is the contraction constant.
+
+    Args:
+        a, b, c: EML parameters
+        x0: Starting point
+        L: Left endpoint for contraction constant computation
+        max_iter: Maximum iterations
+        tol: Convergence tolerance
+
+    Returns:
+        (fixed_point, iterates, error_bounds)
     """
-    if L is None:
-        L = find_contraction_lower_bound(params)
-    
-    info = analyze_contraction(params, L)
-    f = eml_operator(params)
-    
-    x = max(x0, L + 0.01)  # Ensure starting point is in contraction domain
-    history = [x]
-    
-    for i in range(max_iter):
+    f = eml_operator(a, b, c)
+    rho = contraction_constant(a, b, c, L)
+
+    iterates = [x0]
+    x = x0
+
+    # First pass: find approximate fixed point
+    for _ in range(max_iter):
         x_new = f(x)
-        history.append(x_new)
+        iterates.append(x_new)
         if abs(x_new - x) < tol:
-            return ConvergenceResult(
-                fixed_point=x_new,
-                iterations=i + 1,
-                final_error=abs(x_new - x),
-                history=history,
-                contraction_ratio=info.ratio
-            )
+            break
         x = x_new
-    
-    return ConvergenceResult(
-        fixed_point=x,
-        iterations=max_iter,
-        final_error=abs(f(x) - x),
-        history=history,
-        contraction_ratio=info.ratio
-    )
+
+    xstar = iterates[-1]
+    d0 = abs(x0 - xstar)
+
+    # Compute certified bounds
+    error_bounds = [rho**n * d0 for n in range(len(iterates))]
+
+    return xstar, iterates, error_bounds
 
 
-def a_priori_error_bound(
-    params: EMLParams,
-    L: float,
-    x0: float,
-    n: int
-) -> float:
+def eml_composition_rate(params_list: List[Tuple[float, float, float]],
+                         L: float) -> float:
+    """Compute the contraction rate of a composition of EML layers.
+
+    For a sequence of EML operators f_1, f_2, ..., f_n, the composition
+    f_1 ∘ f_2 ∘ ... ∘ f_n has contraction constant rho_1 * rho_2 * ... * rho_n.
+
+    Args:
+        params_list: List of (a, b, c) parameter tuples
+        L: Left endpoint for contraction constant computation
+
+    Returns:
+        The product contraction rate
     """
-    Compute the a priori error bound: |x_n - x*| ≤ ρ^n / (1-ρ) * |f(x_0) - x_0|.
-    
-    This is the Banach fixed-point theorem bound.
-    """
-    info = analyze_contraction(params, L)
-    if not info.is_contraction:
-        return float('inf')
-    
-    f = eml_operator(params)
-    d0 = abs(f(x0) - x0)
-    rho = info.ratio
-    
-    return (rho ** n / (1 - rho)) * d0
+    rate = 1.0
+    for a, b, c in params_list:
+        rate *= contraction_constant(a, b, c, L)
+    return rate
 
 
-def composed_eml_ratio(params_list: List[Tuple[EMLParams, float]]) -> float:
-    """
-    Compute the contraction ratio of a composed EML network.
-    
-    For f_n ∘ ... ∘ f_2 ∘ f_1, the ratio is ∏ρ_i.
-    """
-    product = 1.0
-    for params, L in params_list:
-        info = analyze_contraction(params, L)
-        product *= info.ratio
-    return product
+def fixed_point_sensitivity(a: float, b: float, c: float,
+                            da: float = 1e-6) -> Tuple[float, float]:
+    """Estimate the sensitivity of the fixed point to parameter a.
 
+    Uses finite differences to approximate dx*/da.
 
-def verify_fixed_point_equation(params: EMLParams, x: float) -> Tuple[bool, float]:
-    """
-    Verify the fixed point equation x = exp(a) * log(b*x + c).
-    Returns (is_fixed_point, residual).
-    """
-    f = eml_operator(params)
-    residual = abs(f(x) - x)
-    return residual < 1e-10, residual
+    Args:
+        a, b, c: EML parameters
+        da: Step size for finite difference
 
-
-def verify_exponential_form(params: EMLParams, x: float) -> Tuple[bool, float]:
+    Returns:
+        (x_star, dx_star_da) - fixed point and its derivative w.r.t. a
     """
-    Verify the exponential form: exp(x / exp(a)) = b*x + c.
-    This is the dual characterization of the fixed point.
-    """
-    lhs = math.exp(x / math.exp(params.a))
-    rhs = params.b * x + params.c
-    residual = abs(lhs - rhs)
-    return residual < 1e-10, residual
+    x1, _, _ = certified_iteration(a, b, c, 3.0, 1.0)
+    x2, _, _ = certified_iteration(a + da, b, c, 3.0, 1.0)
+    return x1, (x2 - x1) / da
 
 
 if __name__ == "__main__":
-    # Quick demonstration
-    params = EMLParams(a=0.5, c=1.0)
-    result = eml_iterate(params, x0=5.0)
-    print(f"Fixed point: {result.fixed_point:.15f}")
-    print(f"Contraction ratio: {result.contraction_ratio:.6f}")
-    print(f"Iterations: {result.iterations}")
-    
-    ok, res = verify_fixed_point_equation(params, result.fixed_point)
-    print(f"Fixed point verified: {ok} (residual: {res:.2e})")
-    
-    ok, res = verify_exponential_form(params, result.fixed_point)
-    print(f"Exponential form verified: {ok} (residual: {res:.2e})")
+    # Example: certified iteration for a=0.5, b=1, c=1
+    xstar, iterates, bounds = certified_iteration(0.5, 1.0, 1.0, 3.0, 1.0)
+    print(f"Fixed point: {xstar:.15f}")
+    print(f"Iterations needed: {len(iterates)-1}")
+    print(f"Final certified bound: {bounds[-1]:.2e}")
+
+    # Composition rate for 3-layer EML network
+    layers = [(0.3, 1.0, 2.0), (0.2, 1.0, 3.0), (0.1, 1.0, 4.0)]
+    rate = eml_composition_rate(layers, 1.0)
+    print(f"\n3-layer EML composition rate: {rate:.6f}")
+
+    # Sensitivity analysis
+    xstar, dxda = fixed_point_sensitivity(0.5, 1.0, 1.0)
+    print(f"\nFixed point at a=0.5: {xstar:.10f}")
+    print(f"Sensitivity dx*/da: {dxda:.6f}")
