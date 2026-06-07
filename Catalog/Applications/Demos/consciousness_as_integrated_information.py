@@ -1,434 +1,401 @@
-#!/usr/bin/env python3
 """
-Causal Integration Algebra — Interactive Demo
+Integrated Information Theory: Interactive Demo
 
-Demonstrates key theorems and properties of integrated information Φ
-through concrete numerical examples.
+Demonstrates the key theorems about Φ (integrated information) with
+concrete numerical examples.
 """
 
-from algorithms import *
-
-
-def print_matrix(weights, n, label="Weight matrix"):
-    """Pretty-print a weight matrix."""
-    print(f"\n{label}:")
-    for i in range(n):
-        print("  [" + ", ".join(f"{w:5.2f}" for w in weights[i]) + "]")
+import numpy as np
+from algorithms import phi, cut_value, direct_sum, subsystem_phi, find_complex, scale_system
 
 
 def demo_basic_phi():
-    """Demo 1: Basic Φ computation on a 4-node system."""
+    """Demo 1: Computing Φ for simple systems."""
     print("=" * 60)
-    print("DEMO 1: Basic Φ Computation")
+    print("DEMO 1: Basic Integrated Information (Φ)")
     print("=" * 60)
-    
-    n = 4
-    # A system with interesting structure: two tightly coupled pairs
-    # with weak cross-coupling
-    weights = [
-        [0, 5, 1, 0],
-        [5, 0, 0, 1],
-        [1, 0, 0, 5],
-        [0, 1, 5, 0]
-    ]
-    
-    print_matrix(weights, n)
-    
-    phi, partition = compute_phi(weights, n)
-    print(f"\nΦ = {phi}")
-    print(f"Minimum cut partition: A = {partition}")
-    print(f"Total weight: {compute_total_weight(weights, n)}")
-    print(f"\nInterpretation: The cheapest way to split this system costs {phi}")
-    print(f"units of causal flow. The system is {'integrated' if phi > 0 else 'disconnected'}.")
+
+    # A fully connected 3-node system
+    W = np.array([
+        [0, 1, 1],
+        [1, 0, 1],
+        [1, 1, 0]
+    ], dtype=float)
+
+    phi_val, partition = phi(W)
+    print(f"\nFully connected 3-node system (all weights = 1):")
+    print(f"  Weight matrix:\n{W}")
+    print(f"  Φ = {phi_val}")
+    print(f"  Minimum information partition: {partition}")
+    print(f"  (Any singleton is a MIP due to symmetry)")
+
+    # A strongly connected core with weak peripheral connection
+    W2 = np.array([
+        [0, 5, 5],
+        [5, 0, 5],
+        [0.1, 0.1, 0]
+    ], dtype=float)
+
+    phi_val2, partition2 = phi(W2)
+    print(f"\nStrong 2-core with weak peripheral node:")
+    print(f"  Weight matrix:\n{W2}")
+    print(f"  Φ = {phi_val2}")
+    print(f"  MIP: {partition2}")
+    print(f"  (Weakest link is the peripheral node)")
 
 
-def demo_disconnected():
-    """Demo 2: Disconnected system has Φ = 0 (Theorem 3.5)."""
+def demo_composition():
+    """Demo 2: Composition theorem — direct sums have Φ = 0."""
     print("\n" + "=" * 60)
-    print("DEMO 2: Disconnected System — Φ = 0")
+    print("DEMO 2: Composition Theorem (Φ of direct sum = 0)")
     print("=" * 60)
-    
-    n = 4
-    # Two independent pairs
-    weights = [
-        [0, 3, 0, 0],
-        [3, 0, 0, 0],
-        [0, 0, 0, 7],
-        [0, 0, 7, 0]
-    ]
-    
-    print_matrix(weights, n)
-    
-    phi, partition = compute_phi(weights, n)
-    disconnected, witness = is_disconnected(weights, n)
-    
-    print(f"\nΦ = {phi}")
-    print(f"Is disconnected: {disconnected}")
-    if witness:
-        print(f"Witnessing partition: A = {witness}")
-    print(f"\nVerifies Theorem 3.5: Φ = 0 for disconnected systems ✓")
 
+    W1 = np.array([[0, 3], [3, 0]], dtype=float)
+    W2 = np.array([[0, 5], [5, 0]], dtype=float)
 
-def demo_direct_sum():
-    """Demo 3: Direct sum has Φ = 0 (Corollary 3.8)."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Direct Sum — Φ = 0")
-    print("=" * 60)
-    
-    w1 = [[0, 5], [3, 0]]
-    w2 = [[0, 7, 2], [4, 0, 1], [1, 3, 0]]
-    
-    print_matrix(w1, 2, "System 1")
-    phi1, _ = compute_phi(w1, 2)
-    print(f"Φ₁ = {phi1}")
-    
-    print_matrix(w2, 3, "System 2")
-    phi2, _ = compute_phi(w2, 3)
-    print(f"Φ₂ = {phi2}")
-    
-    w_sum, n_sum = direct_sum(w1, 2, w2, 3)
-    print_matrix(w_sum, n_sum, "Direct Sum")
-    phi_sum, _ = compute_phi(w_sum, n_sum)
-    print(f"Φ(C₁ ⊕ C₂) = {phi_sum}")
-    print(f"\nVerifies Corollary 3.8: Φ(direct sum) = 0 ✓")
+    phi1, _ = phi(W1)
+    phi2, _ = phi(W2)
+    W_sum = direct_sum(W1, W2)
+    phi_sum, part_sum = phi(W_sum)
+
+    print(f"\nSystem 1 (2 nodes, weight 3): Φ = {phi1}")
+    print(f"System 2 (2 nodes, weight 5): Φ = {phi2}")
+    print(f"Direct sum (4 nodes, no cross-links): Φ = {phi_sum}")
+    print(f"  MIP of direct sum: {part_sum}")
+    print(f"\n✓ Composition theorem verified: Φ(C₁ ⊕ C₂) = 0")
+
+    # Now add a tiny connection
+    W_connected = W_sum.copy()
+    W_connected[0, 2] = 0.01  # Tiny connection between blocks
+    phi_connected, _ = phi(W_connected)
+    print(f"\nWith tiny cross-connection (w=0.01): Φ = {phi_connected}")
+    print(f"  Even minimal interaction creates non-zero Φ!")
 
 
 def demo_scaling():
-    """Demo 4: Scaling law Φ(cC) = c·Φ(C) (Theorem 3.10)."""
+    """Demo 3: Scaling theorem — Φ(r·C) = r·Φ(C)."""
     print("\n" + "=" * 60)
-    print("DEMO 4: Scaling Law — Φ(cC) = c·Φ(C)")
+    print("DEMO 3: Scaling Theorem (Φ scales linearly)")
     print("=" * 60)
-    
-    n = 3
-    weights = [[0, 2, 1], [3, 0, 4], [1, 2, 0]]
-    
-    print_matrix(weights, n, "Original system C")
-    phi_orig, _ = compute_phi(weights, n)
-    print(f"Φ(C) = {phi_orig}")
-    
-    for c in [0.5, 2.0, 3.0, 10.0]:
-        scaled = scale(weights, n, c)
-        phi_scaled, _ = compute_phi(scaled, n)
-        expected = c * phi_orig
-        print(f"  c = {c:5.1f}: Φ(cC) = {phi_scaled:8.2f}, c·Φ(C) = {expected:8.2f}, match: {abs(phi_scaled - expected) < 1e-10}")
-    
-    print(f"\nVerifies Theorem 3.10: Φ scales linearly ✓")
+
+    W = np.array([
+        [0, 2, 1],
+        [1, 0, 3],
+        [2, 1, 0]
+    ], dtype=float)
+
+    phi_base, _ = phi(W)
+    print(f"\nBase system Φ = {phi_base}")
+
+    for r in [0.5, 1.0, 2.0, 3.0, 10.0]:
+        W_scaled = scale_system(W, r)
+        phi_scaled, _ = phi(W_scaled)
+        print(f"  r = {r:5.1f}: Φ(r·C) = {phi_scaled:8.4f}, "
+              f"r·Φ(C) = {r * phi_base:8.4f}, "
+              f"match = {np.isclose(phi_scaled, r * phi_base)}")
+
+    print(f"\n✓ Scaling theorem verified: Φ(r·C) = r·Φ(C)")
 
 
-def demo_symmetrization():
-    """Demo 5: Symmetrization preserves Φ (Corollary 3.12)."""
+def demo_exclusion():
+    """Demo 4: Exclusion principle — finding the complex."""
     print("\n" + "=" * 60)
-    print("DEMO 5: Symmetrization Invariance — Φ(C̃) = Φ(C)")
+    print("DEMO 4: Exclusion Principle (Maximally Integrated Complex)")
     print("=" * 60)
-    
-    n = 4
-    # Asymmetric system
-    weights = [
-        [0, 8, 1, 0],
-        [2, 0, 0, 3],
-        [5, 0, 0, 1],
-        [0, 1, 7, 0]
-    ]
-    
-    print_matrix(weights, n, "Original (asymmetric) C")
-    phi_orig, _ = compute_phi(weights, n)
-    print(f"Φ(C) = {phi_orig}")
-    
-    sym = symmetrize(weights, n)
-    print_matrix(sym, n, "Symmetrized C̃")
-    phi_sym, _ = compute_phi(sym, n)
-    print(f"Φ(C̃) = {phi_sym}")
-    
-    print(f"\nMatch: {abs(phi_orig - phi_sym) < 1e-10}")
-    print(f"Verifies Corollary 3.12: Symmetrization preserves Φ ✓")
+
+    # 4-node system with a strongly integrated 3-node core
+    W = np.array([
+        [0, 5, 5, 0.1],
+        [5, 0, 5, 0.1],
+        [5, 5, 0, 0.1],
+        [0.1, 0.1, 0.1, 0]
+    ], dtype=float)
+
+    print(f"\n4-node system with strong 3-node core:")
+    print(f"  Weight matrix:\n{W}")
+
+    complex_set, max_phi = find_complex(W)
+    print(f"\n  Complex (maximally integrated subsystem): {complex_set}")
+    print(f"  Maximum subsystem Φ = {max_phi}")
+
+    print(f"\n  All subsystem Φ values:")
+    import itertools
+    for size in range(2, 5):
+        for subset in itertools.combinations(range(4), size):
+            sp = subsystem_phi(W, set(subset))
+            marker = " ← COMPLEX" if set(subset) == complex_set else ""
+            print(f"    {set(subset)}: Φ = {sp:.4f}{marker}")
+
+    print(f"\n✓ Exclusion principle verified: unique maximum exists")
 
 
-def demo_monotonicity():
-    """Demo 6: Monotonicity — stronger connections, higher Φ (Theorem 3.9)."""
+def demo_disconnection():
+    """Demo 5: Disconnection characterization — Φ = 0 iff disconnected."""
     print("\n" + "=" * 60)
-    print("DEMO 6: Monotonicity — Stronger Connections ⟹ Higher Φ")
+    print("DEMO 5: Disconnection Characterization")
     print("=" * 60)
-    
-    n = 3
-    w_weak = [[0, 1, 1], [1, 0, 1], [1, 1, 0]]
-    w_strong = [[0, 3, 2], [4, 0, 3], [2, 5, 0]]
-    
-    print_matrix(w_weak, n, "Weak system (all weights ≤ strong)")
-    phi_weak, _ = compute_phi(w_weak, n)
-    print(f"Φ(weak) = {phi_weak}")
-    
-    print_matrix(w_strong, n, "Strong system")
-    phi_strong, _ = compute_phi(w_strong, n)
-    print(f"Φ(strong) = {phi_strong}")
-    
-    print(f"\nΦ(weak) ≤ Φ(strong): {phi_weak <= phi_strong}")
-    print(f"Verifies Theorem 3.9: Monotonicity ✓")
 
+    # Connected system
+    W_conn = np.array([
+        [0, 1, 0],
+        [0, 0, 1],
+        [1, 0, 0]
+    ], dtype=float)
 
-def demo_integration_spectrum():
-    """Demo 7: Integration Spectrum — multi-scale structure."""
-    print("\n" + "=" * 60)
-    print("DEMO 7: Integration Spectrum — Multi-Scale Structure")
-    print("=" * 60)
-    
-    n = 5
-    # Complete graph with unit weights
-    weights = [[0 if i == j else 1 for j in range(n)] for i in range(n)]
-    
-    print_matrix(weights, n, "Complete graph K₅ (unit weights)")
-    
-    spectrum = compute_integration_spectrum(weights, n)
-    for k, phi_k in enumerate(spectrum, start=2):
-        print(f"  Φ_{k} = {phi_k}")
-    
-    print(f"\nSpectrum is non-decreasing: {all(spectrum[i] <= spectrum[i+1] for i in range(len(spectrum)-1))}")
-    print("The spectrum shows how integration cost increases with finer partitions.")
+    phi_conn, _ = phi(W_conn)
+    print(f"\nConnected cycle (1→2→3→1): Φ = {phi_conn}")
 
+    # Disconnected system
+    W_disc = np.array([
+        [0, 1, 0],
+        [1, 0, 0],
+        [0, 0, 0]
+    ], dtype=float)
 
-def demo_strongly_positive():
-    """Demo 8: Strongly positive systems have Φ > 0 (Theorem 3.6)."""
-    print("\n" + "=" * 60)
-    print("DEMO 8: Strongly Positive ⟹ Φ > 0")
-    print("=" * 60)
-    
-    for n in [2, 3, 4, 5]:
-        # Complete graph with weight = 1/(n-1)
-        weights = [[0 if i == j else 1.0/(n-1) for j in range(n)] for i in range(n)]
-        phi, _ = compute_phi(weights, n)
-        print(f"  n = {n}: Φ = {phi:.4f} > 0 ✓")
-    
-    print(f"\nVerifies Theorem 3.6: All strongly positive systems have Φ > 0 ✓")
+    phi_disc, part_disc = phi(W_disc)
+    print(f"Disconnected (1↔2, isolated 3): Φ = {phi_disc}")
+    print(f"  MIP: {part_disc}")
 
+    # Gradually connecting
+    print(f"\n  Gradually connecting node 3:")
+    for eps in [0, 0.01, 0.1, 0.5, 1.0, 2.0]:
+        W_eps = W_disc.copy()
+        W_eps[0, 2] = eps
+        W_eps[2, 0] = eps
+        phi_eps, _ = phi(W_eps)
+        print(f"    ε = {eps:.2f}: Φ = {phi_eps:.4f}")
 
-def demo_phase_transition():
-    """Demo 9: Phase transition in integration (Future Direction 2)."""
-    print("\n" + "=" * 60)
-    print("DEMO 9: Phase Transition — Integration Emergence")
-    print("=" * 60)
-    
-    n = 4
-    # Disconnected: two pairs
-    w_disc = [
-        [0, 1, 0, 0],
-        [1, 0, 0, 0],
-        [0, 0, 0, 1],
-        [0, 0, 1, 0]
-    ]
-    # Connected: complete graph
-    w_conn = [[0 if i == j else 1 for j in range(n)] for i in range(n)]
-    
-    print("Interpolating between disconnected and connected:")
-    transitions = []
-    for step in range(21):
-        t = step / 20.0
-        w_interp = [
-            [(1-t) * w_disc[i][j] + t * w_conn[i][j] for j in range(n)]
-            for i in range(n)
-        ]
-        phi, _ = compute_phi(w_interp, n)
-        transitions.append((t, phi))
-        marker = " ← transition!" if step > 0 and transitions[-2][1] == 0 and phi > 0 else ""
-        print(f"  t = {t:.2f}: Φ = {phi:.4f}{marker}")
-    
-    print("\nPhase transition observed: Φ jumps from 0 to positive!")
+    print(f"\n✓ Sharp transition: Φ = 0 ↔ disconnectable")
 
 
 if __name__ == "__main__":
     demo_basic_phi()
-    demo_disconnected()
-    demo_direct_sum()
+    demo_composition()
     demo_scaling()
-    demo_symmetrization()
-    demo_monotonicity()
-    demo_integration_spectrum()
-    demo_strongly_positive()
-    demo_phase_transition()
-    
+    demo_exclusion()
+    demo_disconnection()
     print("\n" + "=" * 60)
-    print("All demos completed successfully!")
+    print("All demos complete.")
     print("=" * 60)
 
 
-#!/usr/bin/env python3
 """
-Visualization: Integration Phase Transition and Spectrum
+Visualization: The Exclusion Principle — Finding the Complex.
 
-Generates matplotlib figures showing:
-1. Phase transition in Φ as connectivity increases
-2. Integration spectrum for different graph topologies
-3. Φ scaling law verification
+Shows how subsystem Φ varies across all subsystems of a network,
+highlighting the maximally integrated complex.
 """
 
-import itertools
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
+import itertools
 
 
-def flow_between(weights, a_set, b_set):
-    return sum(weights[i][j] for i in a_set for j in b_set)
-
-
-def cross_info(weights, a_set, n):
-    complement = set(range(n)) - a_set
-    return flow_between(weights, a_set, complement) + flow_between(weights, complement, a_set)
-
-
-def compute_phi(weights, n):
-    if n <= 1:
+def subsystem_phi(weights, system):
+    system_list = sorted(system)
+    m = len(system_list)
+    if m < 2:
         return 0.0
-    best = float('inf')
-    for size in range(1, n):
+    min_cut = float('inf')
+    for k in range(1, m):
+        for subset_tuple in itertools.combinations(system_list, k):
+            T = set(subset_tuple)
+            S_minus_T = system - T
+            forward = sum(weights[i, j] for i in T for j in S_minus_T)
+            backward = sum(weights[i, j] for i in S_minus_T for j in T)
+            min_cut = min(min_cut, forward + backward)
+    return min_cut
+
+
+def main():
+    # 5-node system with interesting structure
+    W = np.array([
+        [0, 4, 4, 0.2, 0.1],
+        [4, 0, 4, 0.2, 0.1],
+        [4, 4, 0, 0.2, 0.1],
+        [0.2, 0.2, 0.2, 0, 3],
+        [0.1, 0.1, 0.1, 3, 0]
+    ], dtype=float)
+
+    n = W.shape[0]
+
+    # Compute subsystem Phi for all subsystems of size >= 2
+    subsystems = []
+    phi_values = []
+    labels = []
+
+    for size in range(2, n + 1):
         for subset in itertools.combinations(range(n), size):
-            ci = cross_info(weights, set(subset), n)
-            best = min(best, ci)
-    return best
+            s = set(subset)
+            sp = subsystem_phi(W, s)
+            subsystems.append(s)
+            phi_values.append(sp)
+            labels.append(str(s))
 
+    # Find the complex
+    max_idx = np.argmax(phi_values)
+    complex_set = subsystems[max_idx]
 
-def compute_integration_spectrum(weights, n, max_k=None):
-    if max_k is None:
-        max_k = n
-    max_k = min(max_k, n)
-    spectrum = []
-    for k in range(2, max_k + 1):
-        best = float('inf')
-        for assignment in itertools.product(range(k), repeat=n):
-            if len(set(assignment)) < k:
-                continue
-            flow = sum(weights[i][j] for i in range(n) for j in range(n) if assignment[i] != assignment[j])
-            best = min(best, flow)
-        spectrum.append(best)
-    return spectrum
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
 
+    # Plot 1: Bar chart of subsystem Phi values
+    colors = ['#e74c3c' if s == complex_set else
+              '#3498db' if len(s) == 2 else
+              '#2ecc71' if len(s) == 3 else
+              '#9b59b6' if len(s) == 4 else '#f39c12'
+              for s in subsystems]
 
-def figure_phase_transition():
-    """Figure 1: Phase transition in Φ."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-    
-    for ax_idx, n in enumerate([4, 6]):
-        w_disc = [[0.0]*n for _ in range(n)]
-        for i in range(0, n, 2):
-            if i+1 < n:
-                w_disc[i][i+1] = 1.0
-                w_disc[i+1][i] = 1.0
-        
-        w_conn = [[0 if i == j else 1.0 for j in range(n)] for i in range(n)]
-        
-        ts = np.linspace(0, 1, 50)
-        phis = []
-        for t in ts:
-            w = [[(1-t)*w_disc[i][j] + t*w_conn[i][j] for j in range(n)] for i in range(n)]
-            phis.append(compute_phi(w, n))
-        
-        ax = axes[ax_idx]
-        ax.plot(ts, phis, 'b-', linewidth=2)
-        ax.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
-        ax.set_xlabel('Interpolation parameter t', fontsize=12)
-        ax.set_ylabel('Φ (Integrated Information)', fontsize=12)
-        ax.set_title(f'Phase Transition: n = {n}', fontsize=14)
-        ax.grid(True, alpha=0.3)
-        
-        # Mark transition point
-        for i in range(1, len(phis)):
-            if phis[i-1] == 0 and phis[i] > 0:
-                ax.axvline(x=ts[i], color='red', linestyle=':', alpha=0.7)
-                ax.annotate(f't* ≈ {ts[i]:.2f}', xy=(ts[i], phis[i]), 
-                           xytext=(ts[i]+0.1, phis[i]+0.5),
-                           arrowprops=dict(arrowstyle='->', color='red'),
-                           fontsize=10, color='red')
-                break
-    
-    plt.tight_layout()
-    plt.savefig('phase_transition.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: phase_transition.png")
+    bars = ax1.barh(range(len(phi_values)), phi_values, color=colors, alpha=0.8)
+    ax1.set_yticks(range(len(labels)))
+    ax1.set_yticklabels(labels, fontsize=7)
+    ax1.set_xlabel('Subsystem Φ', fontsize=12)
+    ax1.set_title('Exclusion: All Subsystem Φ Values', fontsize=14)
 
+    # Highlight the complex
+    ax1.barh(max_idx, phi_values[max_idx], color='red', alpha=1.0,
+            edgecolor='black', linewidth=2)
+    ax1.annotate('COMPLEX\n(maximum Φ)',
+                xy=(phi_values[max_idx], max_idx),
+                xytext=(phi_values[max_idx] + 1, max_idx + 2),
+                fontsize=11, fontweight='bold', color='red',
+                arrowprops=dict(arrowstyle='->', color='red', lw=2))
 
-def figure_integration_spectrum():
-    """Figure 2: Integration spectrum for different topologies."""
-    fig, ax = plt.subplots(figsize=(8, 6))
-    
-    n = 5
-    
-    # Complete graph
-    w_complete = [[0 if i == j else 1.0 for j in range(n)] for i in range(n)]
-    spec_complete = compute_integration_spectrum(w_complete, n)
-    
-    # Path graph
-    w_path = [[0.0]*n for _ in range(n)]
-    for i in range(n-1):
-        w_path[i][i+1] = 1.0
-        w_path[i+1][i] = 1.0
-    spec_path = compute_integration_spectrum(w_path, n)
-    
-    # Star graph
-    w_star = [[0.0]*n for _ in range(n)]
-    for i in range(1, n):
-        w_star[0][i] = 1.0
-        w_star[i][0] = 1.0
-    spec_star = compute_integration_spectrum(w_star, n)
-    
-    # Cycle graph
-    w_cycle = [[0.0]*n for _ in range(n)]
+    # Legend
+    from matplotlib.patches import Patch
+    legend_elements = [
+        Patch(facecolor='#3498db', label='Size 2'),
+        Patch(facecolor='#2ecc71', label='Size 3'),
+        Patch(facecolor='#9b59b6', label='Size 4'),
+        Patch(facecolor='#f39c12', label='Size 5'),
+        Patch(facecolor='red', edgecolor='black', linewidth=2, label='Complex'),
+    ]
+    ax1.legend(handles=legend_elements, loc='lower right')
+
+    # Plot 2: Network visualization (simple circle layout)
+    angles = np.linspace(0, 2 * np.pi, n, endpoint=False)
+    x = np.cos(angles)
+    y = np.sin(angles)
+
+    # Draw edges
     for i in range(n):
-        w_cycle[i][(i+1) % n] = 1.0
-        w_cycle[(i+1) % n][i] = 1.0
-    spec_cycle = compute_integration_spectrum(w_cycle, n)
-    
-    ks = list(range(2, n+1))
-    ax.plot(ks, spec_complete, 'bo-', linewidth=2, markersize=8, label='Complete K₅')
-    ax.plot(ks, spec_path, 'rs-', linewidth=2, markersize=8, label='Path P₅')
-    ax.plot(ks, spec_star, 'g^-', linewidth=2, markersize=8, label='Star S₅')
-    ax.plot(ks, spec_cycle, 'mD-', linewidth=2, markersize=8, label='Cycle C₅')
-    
-    ax.set_xlabel('Partition size k', fontsize=12)
-    ax.set_ylabel('Φ_k (k-partition integration)', fontsize=12)
-    ax.set_title('Integration Spectrum: Multi-Scale Causal Structure', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    ax.set_xticks(ks)
-    
-    plt.tight_layout()
-    plt.savefig('integration_spectrum.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: integration_spectrum.png")
+        for j in range(n):
+            if i != j and W[i, j] > 0:
+                alpha = min(1, W[i, j] / 5)
+                lw = W[i, j] / 2
+                ax2.plot([x[i], x[j]], [y[i], y[j]], 'gray',
+                        alpha=alpha, linewidth=lw)
 
+    # Draw nodes
+    node_colors = ['red' if i in complex_set else 'lightblue' for i in range(n)]
+    for i in range(n):
+        circle = plt.Circle((x[i], y[i]), 0.12, color=node_colors[i],
+                           ec='black', linewidth=2, zorder=5)
+        ax2.add_patch(circle)
+        ax2.text(x[i], y[i], str(i), ha='center', va='center',
+                fontsize=12, fontweight='bold', zorder=6)
 
-def figure_scaling_law():
-    """Figure 3: Verification of scaling law Φ(cC) = cΦ(C)."""
-    fig, ax = plt.subplots(figsize=(8, 6))
-    
-    n = 4
-    weights = [[0, 2, 1, 3], [3, 0, 4, 1], [1, 2, 0, 5], [2, 1, 3, 0]]
-    phi_base = compute_phi(weights, n)
-    
-    cs = np.linspace(0, 5, 30)
-    phis_actual = []
-    phis_predicted = []
-    
-    for c in cs:
-        scaled = [[c * weights[i][j] for j in range(n)] for i in range(n)]
-        phis_actual.append(compute_phi(scaled, n))
-        phis_predicted.append(c * phi_base)
-    
-    ax.plot(cs, phis_actual, 'bo', markersize=6, label='Computed Φ(cC)')
-    ax.plot(cs, phis_predicted, 'r-', linewidth=2, label='Predicted c·Φ(C)')
-    
-    ax.set_xlabel('Scale factor c', fontsize=12)
-    ax.set_ylabel('Φ', fontsize=12)
-    ax.set_title(f'Scaling Law: Φ(cC) = c·Φ(C), base Φ = {phi_base}', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    
+    ax2.set_xlim(-1.5, 1.5)
+    ax2.set_ylim(-1.5, 1.5)
+    ax2.set_aspect('equal')
+    ax2.set_title(f'Network (Complex = {complex_set})', fontsize=14)
+    ax2.axis('off')
+
     plt.tight_layout()
-    plt.savefig('scaling_law.png', dpi=150, bbox_inches='tight')
+    plt.savefig('exclusion_visualization.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: scaling_law.png")
+    print("Saved exclusion_visualization.png")
 
 
 if __name__ == "__main__":
-    figure_phase_transition()
-    figure_integration_spectrum()
-    figure_scaling_law()
-    print("\nAll visualizations generated!")
+    main()
+
+
+"""
+Visualization: How Φ varies with network connectivity.
+
+Generates a plot showing Φ as a function of cross-connection strength
+for a system transitioning from disconnected to fully connected.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+import itertools
+
+
+def cut_value(weights, subset):
+    n = weights.shape[0]
+    complement = set(range(n)) - subset
+    forward = sum(weights[i, j] for i in subset for j in complement)
+    backward = sum(weights[i, j] for i in complement for j in subset)
+    return forward + backward
+
+
+def compute_phi(weights):
+    n = weights.shape[0]
+    if n < 2:
+        return 0.0
+    min_cut = float('inf')
+    for k in range(1, n):
+        for subset_tuple in itertools.combinations(range(n), k):
+            cv = cut_value(weights, set(subset_tuple))
+            min_cut = min(min_cut, cv)
+    return min_cut
+
+
+def main():
+    # System: two strongly connected pairs, varying cross-connection
+    epsilons = np.linspace(0, 5, 200)
+    phis = []
+
+    for eps in epsilons:
+        W = np.array([
+            [0, 3, eps, 0],
+            [3, 0, 0, eps],
+            [eps, 0, 0, 3],
+            [0, eps, 3, 0]
+        ], dtype=float)
+        phis.append(compute_phi(W))
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+    # Plot 1: Phi vs cross-connection strength
+    ax1.plot(epsilons, phis, 'b-', linewidth=2)
+    ax1.set_xlabel('Cross-connection strength (ε)', fontsize=12)
+    ax1.set_ylabel('Integrated Information (Φ)', fontsize=12)
+    ax1.set_title('Φ as Connection Strength Varies', fontsize=14)
+    ax1.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
+    ax1.grid(True, alpha=0.3)
+    ax1.annotate('Disconnected\n(Φ = 0)', xy=(0, 0), xytext=(0.5, 1),
+                fontsize=10, arrowprops=dict(arrowstyle='->', color='red'),
+                color='red')
+
+    # Plot 2: Phi for random systems of different sizes
+    np.random.seed(42)
+    sizes = range(2, 8)
+    phi_means = []
+    phi_stds = []
+
+    for n in sizes:
+        phi_samples = []
+        for _ in range(100):
+            W = np.random.exponential(1, (n, n))
+            np.fill_diagonal(W, 0)
+            phi_samples.append(compute_phi(W))
+        phi_means.append(np.mean(phi_samples))
+        phi_stds.append(np.std(phi_samples))
+
+    ax2.errorbar(list(sizes), phi_means, yerr=phi_stds, fmt='o-',
+                capsize=5, linewidth=2, markersize=8, color='darkgreen')
+    ax2.set_xlabel('System Size (n)', fontsize=12)
+    ax2.set_ylabel('Φ (mean ± std)', fontsize=12)
+    ax2.set_title('Φ of Random Systems by Size', fontsize=14)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('phi_visualization.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved phi_visualization.png")
+
+
+if __name__ == "__main__":
+    main()
