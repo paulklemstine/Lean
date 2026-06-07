@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2d7514a5",
     "filename": "speculative_computational_complexity_as_physical_l.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.3514400000000001,
     "title": "Computational Complexity as Physical Law: A Thermodynamic Framework"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "speculative_computational_complexity_as_physical_l",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.3514400000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Computational Complexity as Physical Law: A Thermodynamic Framework"
     }

@@ -1980,6 +1980,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T06:46:34",
       "title": "Retrocausal Mathematics: Where Effects Precede Causes"
+    },
+    {
+      "cycle_id": "2d7514a5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Computational Complexity as Physical Law\n\n## Synthesis\n\nThis research cycle established the **Entropy-Bounded Computation (EBC)** framework, which formalizes the connection betwee",
+      "quality_score": 0.3514400000000001,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-07T07:20:21",
+      "title": "Speculative: Computational Complexity as Physical Law"
     }
   ],
   "entries": [
@@ -2025,7 +2035,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-07T06:46:34",
+  "last_updated": "2026-06-07T07:20:21",
   "open_questions": [
     {
       "context": "sorry",
@@ -2249,12 +2259,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "320647bd",
-        "quality": 0.33464000000000005,
-        "theorems": 5,
-        "title": "Non-Archimedean Probability via Surreal Numbers"
-      },
-      {
         "cycle_id": "42b51ea3",
         "quality": 0.4728,
         "theorems": 5,
@@ -2307,6 +2311,12 @@
         "quality": 0.36504000000000003,
         "theorems": 6,
         "title": "Consciousness as Integrated Information"
+      },
+      {
+        "cycle_id": "2d7514a5",
+        "quality": 0.3514400000000001,
+        "theorems": 4,
+        "title": "Speculative: Computational Complexity as Physical Law"
       }
     ],
     "Physics": [

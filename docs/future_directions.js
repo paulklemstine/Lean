@@ -2449,6 +2449,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Computational Complexity as Physical Law\n\n## Synthesis\n\nThis research cycle established the **Entropy-Bounded Computation (EBC)** framework, which formalizes the connection between computational complexity and thermodynamics through Landauer's principle. The central result is the **entropy gap theorem**: the thermodynamic cost gap between polynomial and exponential search grows without bound, providing a physical interpretation of the P \u2260 NP conjecture. The framework consists of five interconnected structures (EntropyBudgetSystem, MaxwellDemon, ReversibleComputation, IrreversibleStep, ComplexityEntropyDuality) with 13 formally verified theorems.\n\nThe most promising cross-domain connection is between the **Maxwell's demon bound** (from the Shared/CryptoEntropyBridges catalog) and **computational search complexity**. Our demon composition theorem shows that thermodynamic irreversibility composes additively across computational agents, which connects to both cryptographic security (breaking keys requires entropy proportional to key length) and the polynomial hierarchy (each level requires strictly more entropy). The entropy gap theorem provides the mathematical foundation for a physically-grounded complexity theory.\n\nThe highest breakthrough potential lies in **Direction 1 (Quantum Entropy Budget)**: quantum computation is fundamentally reversible except for measurement, suggesting that the EBC framework should yield tighter bounds for quantum complexity classes. If the quantum extension shows that BQP has a different entropy profile than P, it would provide a new approach to the BQP vs. P question \u2014 one grounded in physics rather than pure combinatorics.\n\n---\n\n### Direction 1: Quantum Entropy Budget and the Measurement Bottleneck\n\n**Conjecture**: In a quantum extension of the EBC framework, the entropy cost of a quantum computation is determined entirely by the number of measurements, not the number of unitary gates. Formally: for a quantum circuit with U unitary gates and M measurements, the total Landauer cost is exactly M \u00b7 kT \u00b7 ln(2), independent of U. This implies that BQP computations with polynomially many measurements have polynomial entropy cost, while QMA-hard problems require exponentially many measurements under standard complexity assumptions.\n\n**Test**: \n1. Formalize a `QuantumEntropyBudgetSystem` where steps are either unitary (cost 0) or measurement (cost kT\u00b7ln(2)).\n2. Prove that the total cost equals the measurement count times the Landauer unit.\n3. Implement Grover's algorithm and Shor's algorithm in the framework and compute their entropy costs.\n4. Compare: Grover uses O(\u221aN) measurements, Shor uses O(n\u00b2) measurements. Check whether these match empirical predictions.\n\n**Impact**: If true, this gives a clean physical characterization of quantum advantage: quantum computers are powerful not because they compute differently, but because they defer entropy production until measurement. This would connect BQP to a physical resource (measurement budget) rather than an abstract computational model. If false, it reveals that quantum coherence has hidden entropy costs, challenging the deferred measurement principle.\n\n**Catalog References**: `Shared/CryptoEntropyBridges.lean` (maxwell_demon_bound), `Speculative/ComplexityPhysics/Theorems.lean` (step_count_bounded_by_budget, reversible_comp_is_id)\n\n**Proof Strategy**: \n1. Define `QuantumStep` as either `Unitary (cost = 0)` or `Measurement (cost = kT\u00b7ln(2))`.\n2. Prove cost additivity via the existing demon_composition_cost pattern.\n3. For the measurement bottleneck theorem, show that any quantum circuit can be rearranged (by the deferred measurement principle) to have all measurements at the end, concentrating all entropy cost.\n4. Connect to BQP by bounding the measurement count for polynomial-time quantum algorithms.\n\n**Domain Bridges**: Computation (entropy budget) \u2194 Physics (quantum measurement) \u2194 Cryptography (post-quantum security)\n\n**Lineage**: Builds on entropy_gap_unbounded, step_count_bounded_by_budget, reversible_comp_is_id from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Entropy Complexity Classes and the Thermodynamic Polynomial Hierarchy\n\n**Conjecture**: Define ENTROPY(f(n)) as the class of problems solvable with total Landauer cost at most f(n) \u00b7 kT \u00b7 ln(2). Then:\n1. P \u2286 ENTROPY(n^c) for some constant c depending on the problem.\n2. NP \u2286 ENTROPY(2^n) but NP \u2284 ENTROPY(n^c) for any c (assuming P \u2260 NP).\n3. The entropy hierarchy ENTROPY(n) \u228a ENTROPY(n\u00b2) \u228a ENTROPY(n\u00b3) \u228a ... is strict.\n4. ENTROPY(log n) = L (logarithmic space).\n\nPart (3) is the most surprising claim: it asserts that entropy complexity has no \"speed-up\" theorem \u2014 you cannot simulate n\u00b2 entropy with n entropy, even approximately.\n\n**Test**:\n1. Formalize ENTROPY(f) as a complexity class within the EBC framework.\n2. Prove the containments P \u2286 ENTROPY(n^c) by analyzing standard algorithms.\n3. For part (3), attempt to prove a hierarchy theorem using diagonalization.\n4. Test computationally: implement sorting algorithms (merge sort vs. bubble sort) and measure their actual Landauer costs. Merge sort should use O(n log n) entropy; bubble sort O(n\u00b2).\n\n**Impact**: If the entropy hierarchy is strict, it provides a new complexity hierarchy that is *physically meaningful* \u2014 each level corresponds to a different thermodynamic regime. This would be the first complexity hierarchy with a direct physical interpretation. If not strict, it means entropy can be \"recycled\" in unexpected ways.\n\n**Catalog References**: `Speculative/ComplexityPhysics/Theorems.lean` (entropy_budget_monotone, entropy_gap_unbounded), `Computation/InfoEfficientAlgorithms.lean` (InfoEfficientAlgorithm)\n\n**Proof Strategy**: \n1. Define ENTROPY(f) formally as `{L | \u2203 EBS with budget = f(n) that decides L}`.\n2. For P \u2286 ENTROPY(n^c): any P algorithm makes poly(n) steps, each costing at most 1 bit.\n3. For hierarchy strictness: adapt the time hierarchy theorem proof, using the entropy gap theorem to show that more entropy budget allows solving strictly more problems.\n4. The diagonalization argument: construct a language L_k that can be decided with n^(k+1) entropy but not n^k entropy.\n\n**Domain Bridges**: Computation (complexity classes) \u2194 Physics (entropy budget) \u2194 Logic (hierarchy theorems)\n\n**Lineage**: Directly extends entropy_budget_monotone and entropy_gap_unbounded.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Landauer Cost of Specific Algorithms\n\n**Conjecture**: The Landauer cost of comparison-based sorting of n elements is exactly \u2308log\u2082(n!)\u2309 \u00b7 kT \u00b7 ln(2), matching the information-theoretic lower bound. Any sorting algorithm that uses fewer comparisons than \u2308log\u2082(n!)\u2309 must use non-comparison operations that cost additional entropy. In other words, the Landauer cost provides an independent proof of the \u03a9(n log n) comparison-based sorting lower bound.\n\n**Test**:\n1. Formalize comparison-based sorting in the EBC framework, where each comparison is an IrreversibleStep that halves the search space.\n2. Prove that \u2308log\u2082(n!)\u2309 comparisons are necessary via the entropy budget.\n3. Implement merge sort and quicksort in the framework and verify their entropy costs match the theoretical predictions.\n4. Check boundary case: for n = 1, cost should be 0; for n = 2, cost should be kT\u00b7ln(2).\n\n**Impact**: This would be the first formally verified proof that the sorting lower bound is a *physical law*, not just an information-theoretic bound. It demonstrates that the EBC framework can recover known complexity bounds from thermodynamic principles.\n\n**Catalog References**: `Speculative/ComplexityPhysics/Foundations.lean` (IrreversibleStep, landauerCost), `Speculative/ComplexityPhysics/Theorems.lean` (one_bit_erasure_cost, step_count_bounded_by_budget)\n\n**Proof Strategy**:\n1. Model a comparison as an IrreversibleStep from Fin(n!) (permutation space) to two halves.\n2. After k comparisons, the remaining search space has size at most n!/2^k.\n3. The search terminates when the space has size 1, requiring k \u2265 log\u2082(n!).\n4. Each comparison costs kT\u00b7ln(2) by one_bit_erasure_cost, giving total cost \u2265 \u2308log\u2082(n!)\u2309 \u00b7 kT\u00b7ln(2).\n\n**Domain Bridges**: Computation (sorting algorithms) \u2194 Physics (Landauer cost) \u2194 EML (information theory)\n\n**Lineage**: Builds on IrreversibleStep, one_bit_erasure_cost, step_count_bounded_by_budget.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Reversible Computing and Bennett's Pebble Game\n\n**Conjecture**: In the EBC framework, any irreversible computation of T steps on S space can be made reversible using O(T \u00b7 S) time and O(S \u00b7 log T) space (Bennett's result). Formalizing this in the EBC framework gives: the entropy cost of simulating an irreversible computation reversibly is exactly 0, but the time overhead is multiplicative. This creates a time-entropy tradeoff: you can eliminate entropy cost entirely at the price of a polynomial time increase.\n\n**Test**:\n1. Formalize Bennett's pebble game in Lean as a ReversibleComputation.\n2. Prove that the reversible simulation has zero Landauer cost (using reversible_comp_is_id).\n3. Prove the time overhead bound: the reversible simulation takes O(T \u00b7 S) steps.\n4. Test: implement a reversible AND gate using Toffoli gates and verify zero entropy cost.\n\n**Impact**: This direction explores the *escape hatch* from the entropy budget: reversible computing avoids Landauer costs but pays in time. The time-entropy tradeoff is fundamental to understanding whether thermodynamics truly constrains complexity or merely introduces overhead.\n\n**Catalog References**: `Speculative/ComplexityPhysics/Foundations.lean` (ReversibleComputation), `Speculative/ComplexityPhysics/Theorems.lean` (reversible_comp_is_id, reversible_involution)\n\n**Proof Strategy**:\n1. Define a `PebbleGame` structure modeling Bennett's construction.\n2. Show the pebble game produces a ReversibleComputation.\n3. Count the number of pebbling steps to get the time bound.\n4. Use reversible_comp_is_id to show zero entropy cost.\n\n**Domain Bridges**: Computation (reversible circuits) \u2194 Physics (entropy-free computation) \u2194 Cryptography (side-channel resistance)\n\n**Lineage**: Extends reversible_comp_is_id and ReversibleComputation.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Entropy Production Rate and Computational Speed Limits\n\n**Conjecture**: There exists a fundamental speed limit on computation analogous to the Margolus-Levitin bound: no physical system can perform more than 2E/(\u03c0\u210f) irreversible operations per second, where E is the system's energy above ground state. Combined with the Landauer cost per operation, this gives a maximum computational throughput of 2E/(\u03c0\u210f \u00b7 kT \u00b7 ln 2) irreversible bits per second. For a 1-watt computer at room temperature, this is approximately 4.4 \u00d7 10\u00b3\u00b9 bit operations per second.\n\n**Test**:\n1. Formalize the Margolus-Levitin bound as an axiom in the EBC framework.\n2. Derive the maximum bit rate from the bound and Landauer's principle.\n3. Compute the maximum bit rate for realistic parameters (1W, 300K, 1 kg).\n4. Compare with actual computer performance (modern CPUs achieve ~10\u00b9\u2070 ops/sec, far below the limit).\n\n**Impact**: This connects the EBC framework to quantum mechanics (Margolus-Levitin) and gives absolute physical limits on computation. The gap between current computers and the physical limit (~10\u00b2\u00b9 factor) suggests enormous room for improvement in computational efficiency.\n\n**Catalog References**: `Speculative/ComplexityPhysics/Theorems.lean` (step_count_bounded_by_budget), `Shared/CryptoEntropyBridges.lean` (maxwell_demon_bound)\n\n**Proof Strategy**:\n1. Introduce the Margolus-Levitin bound as a parameter in EntropyBudgetSystem.\n2. Derive budget = (2E \u00b7 \u03c4) / (\u03c0\u210f \u00b7 kT \u00b7 ln 2) from the bound.\n3. Apply step_count_bounded_by_budget with c = kT\u00b7ln(2).\n4. Compute explicit values for standard physical parameters.\n\n**Domain Bridges**: Physics (quantum speed limits) \u2194 Computation (throughput bounds) \u2194 EML (information rates)\n\n**Lineage**: Builds on step_count_bounded_by_budget and the full EBC framework.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0917",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2d7514a5",
+    "status": "available",
+    "timestamp": "2026-06-07T07:20:19.455139+00:00",
+    "title": "**Entropy-Bounded Computation (EBC)** framew"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -3228,7 +3243,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
   {
-    "consumed_by_exp_id": "d5bf05c1",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -3238,7 +3253,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -3603,7 +3618,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
-    "consumed_by_exp_id": "148e7bab",
+    "consumed_by_exp_id": "",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domains": [
       "Algebra",
@@ -3613,7 +3628,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.181414+00:00",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
@@ -4188,7 +4203,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fbc73d45",
     "description": "Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a scale-free structure: the in-degree distribution follows a power law P(k) ~ k^{-gamma} with gamma \u2248 2.5. This means most theorems are proved from a small number of foundational results (the 'hubs'), and there are exponentially many theorems that depend on these hubs. The top 10 hub theorems in mathematics are: (1) Zorn's Lemma, (2) The Intermediate Value Theorem, (3) The Fundamental Theorem of Calculus, (4) The Sylow Theorems, (5) The Baire Category Theorem, (6) Hahn-Banach Theorem, (7) Urysohn's Lemma, (8) The Pigeonhole Principle, (9) Induction, (10) The Law of Excluded Middle. Conjecture: removing any of the top 10 hubs disconnects the proof DAG into at least 2 large components, each containing more than 10% of all theorems. This means mathematics is fragile: removing one foundational theorem makes many other theorems unprovable. Test: construct the proof DAG from Lean 4's Mathlib (all proofs and their dependencies), compute the in-degree distribution, and verify the power law. Impact: mathematics is a scale-free network, and its most important theorems are its most connected nodes \u2014 the hubs that hold the entire structure together.",
     "domains": [
       "Novelty",
@@ -4198,7 +4213,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.585396+00:00",
     "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
@@ -4608,7 +4623,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
   },
   {
-    "consumed_by_exp_id": "0ab82e9f",
+    "consumed_by_exp_id": "",
     "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
     "domains": [
       "Novelty",
@@ -4618,7 +4633,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.846057+00:00",
     "title": "Isomorphisms of Meaning: When Structures Collide"
   },
@@ -5132,7 +5147,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Topological Data Analysis of Theorem Networks"
   },
   {
-    "consumed_by_exp_id": "7f2e5755",
+    "consumed_by_exp_id": "",
     "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
     "domains": [
       "Novelty",
@@ -5142,7 +5157,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.838633+00:00",
     "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
   },
