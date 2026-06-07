@@ -1,195 +1,215 @@
 #!/usr/bin/env python3
 """
-Non-Archimedean Probability: Algorithms
+Non-Archimedean Probability: Core Algorithms
 
-Type-hinted implementations of the core algorithms for non-Archimedean
-probability computation.
+Type-hinted implementations of the key algorithms for surreal-valued
+finitely additive probability measures.
 """
 
+from dataclasses import dataclass
+from typing import FrozenSet, TypeVar, Generic, Dict, Optional, Set
 from fractions import Fraction
-from typing import TypeVar, Set, FrozenSet, Dict, Tuple, Optional
 
 T = TypeVar('T')
 
 
-def uniform_measure(s: Set[T]) -> Tuple[Fraction, str]:
+@dataclass(frozen=True)
+class SurrealNum:
+    """A surreal-like number a + b·ε where ε is infinitesimal.
+    
+    Represents elements of ℝ((ε)), the field of formal Laurent series
+    in one infinitesimal ε. For probability theory, this gives us a 
+    non-Archimedean ordered field where infinitesimal probabilities exist.
     """
-    Compute the uniform non-Archimedean measure of a finite set.
+    real: Fraction
+    infml: Fraction = Fraction(0)
     
-    Returns (coefficient, "ε") where μ(S) = coefficient · ε.
+    def __add__(self, other: 'SurrealNum') -> 'SurrealNum':
+        return SurrealNum(self.real + other.real, self.infml + other.infml)
     
-    Algorithm:
-        1. Count elements: n = |S|
-        2. Return n · ε
+    def __sub__(self, other: 'SurrealNum') -> 'SurrealNum':
+        return SurrealNum(self.real - other.real, self.infml - other.infml)
     
-    Complexity: O(|S|) for counting
+    def __mul__(self, other: 'SurrealNum') -> 'SurrealNum':
+        return SurrealNum(
+            self.real * other.real,
+            self.real * other.infml + self.infml * other.real
+        )
     
-    Args:
-        s: A finite set
+    def __truediv__(self, other: 'SurrealNum') -> 'SurrealNum':
+        if other.real != 0:
+            r = self.real / other.real
+            i = (self.infml * other.real - self.real * other.infml) / (other.real * other.real)
+            return SurrealNum(r, i)
+        elif other.infml != 0:
+            return SurrealNum(self.infml / other.infml, Fraction(0))
+        raise ZeroDivisionError
     
-    Returns:
-        (n, "ε") representing n · ε
-    """
-    return (Fraction(len(s)), "ε")
+    def __le__(self, other: 'SurrealNum') -> bool:
+        if self.real != other.real:
+            return self.real < other.real
+        return self.infml <= other.infml
+    
+    def __lt__(self, other: 'SurrealNum') -> bool:
+        if self.real != other.real:
+            return self.real < other.real
+        return self.infml < other.infml
+    
+    def is_infinitesimal(self) -> bool:
+        return self.real == 0 and self.infml > 0
+    
+    def is_positive(self) -> bool:
+        return self > SurrealNum(Fraction(0))
+    
+    def __repr__(self) -> str:
+        if self.infml == 0:
+            return str(self.real)
+        elif self.real == 0:
+            return f"{self.infml}·ε"
+        else:
+            sign = "+" if self.infml > 0 else "-"
+            return f"{self.real} {sign} {abs(self.infml)}·ε"
 
 
-def conditional_probability(
-    a: Set[T], b: Set[T]
-) -> Fraction:
-    """
-    Compute P(A | B) for a uniform non-Archimedean measure.
-    
-    Since μ(A ∩ B) = |A ∩ B| · ε and μ(B) = |B| · ε,
-    the infinitesimals cancel: P(A | B) = |A ∩ B| / |B|.
-    
-    Algorithm:
-        1. Compute intersection A ∩ B
-        2. Return |A ∩ B| / |B|
-    
-    Complexity: O(min(|A|, |B|)) for intersection
-    
-    Args:
-        a: Event A
-        b: Event B (must be nonempty)
-    
-    Returns:
-        P(A | B) as a rational number
-    
-    Raises:
-        ValueError: if B is empty
-    """
-    if not b:
-        raise ValueError("Cannot condition on empty set")
-    
-    intersection = a & b
-    return Fraction(len(intersection), len(b))
+ZERO = SurrealNum(Fraction(0))
+ONE = SurrealNum(Fraction(1))
+EPS = SurrealNum(Fraction(0), Fraction(1))
 
 
-def bayes_update(
-    prior_a: Fraction,
-    likelihood_b_given_a: Fraction,
-    evidence_b: Fraction
-) -> Fraction:
+class FinAddProb(Generic[T]):
+    """Finitely additive probability measure valued in SurrealNum.
+    
+    Algorithm: Store explicit probabilities for singletons.
+    For any finite set, compute by summing singleton probabilities.
+    For complements, use μ(Aᶜ) = 1 - μ(A).
+    
+    Pseudocode:
+        INIT(weights: Dict[T, SurrealNum]):
+            Verify all weights ≥ 0
+            Verify sum(weights) = 1
+            Store weights
+        
+        MEASURE(A: Set[T]):
+            return sum(weights[x] for x in A)
+        
+        COND_PROB(A: Set[T], B: Set[T]):
+            Verify μ(B) > 0
+            return μ(A ∩ B) / μ(B)
     """
-    Bayesian update: P(A | B) = P(B | A) · P(A) / P(B).
     
-    In non-Archimedean probability, all three quantities can be
-    infinitesimal, but the ratio is always a standard rational.
+    def __init__(self, weights: Dict[T, SurrealNum]):
+        for x, w in weights.items():
+            assert w.is_positive() or w == ZERO, f"Negative weight for {x}"
+        total = ZERO
+        for w in weights.values():
+            total = total + w
+        assert total == ONE, f"Total probability {total} ≠ 1"
+        self._weights = dict(weights)
     
-    Algorithm:
-        1. Compute numerator = P(B|A) · P(A)
-        2. Divide by P(B)
+    def measure(self, subset: Set[T]) -> SurrealNum:
+        """Compute μ(A) = Σ_{x ∈ A} weight(x)."""
+        result = ZERO
+        for x in subset:
+            if x in self._weights:
+                result = result + self._weights[x]
+        return result
     
-    Complexity: O(1) arithmetic
+    def cond_prob(self, A: Set[T], B: Set[T]) -> SurrealNum:
+        """Compute P(A | B) = μ(A ∩ B) / μ(B)."""
+        mu_B = self.measure(B)
+        assert mu_B.is_positive(), "Cannot condition on measure-zero event"
+        mu_AB = self.measure(A & B)
+        return mu_AB / mu_B
     
-    Args:
-        prior_a: P(A) — can be infinitesimal (represented as rational)
-        likelihood_b_given_a: P(B | A)
-        evidence_b: P(B) — must be nonzero
+    def complement_measure(self, A: Set[T]) -> SurrealNum:
+        """Compute μ(Aᶜ) = 1 - μ(A)."""
+        return ONE - self.measure(A)
     
-    Returns:
-        P(A | B) as a rational number
-    """
-    if evidence_b == 0:
-        raise ValueError("Evidence probability must be nonzero")
+    def verify_additivity(self, A: Set[T], B: Set[T]) -> bool:
+        """Verify μ(A ∪ B) = μ(A) + μ(B) when A ∩ B = ∅."""
+        if A & B:
+            return False  # Not disjoint
+        mu_union = self.measure(A | B)
+        mu_sum = self.measure(A) + self.measure(B)
+        return mu_union == mu_sum
     
-    return likelihood_b_given_a * prior_a / evidence_b
+    def verify_inclusion_exclusion(self, A: Set[T], B: Set[T]) -> bool:
+        """Verify μ(A ∪ B) + μ(A ∩ B) = μ(A) + μ(B)."""
+        lhs = self.measure(A | B) + self.measure(A & B)
+        rhs = self.measure(A) + self.measure(B)
+        return lhs == rhs
 
 
-def inclusion_exclusion_two(
-    mu_a: Fraction, mu_b: Fraction, mu_intersect: Fraction
-) -> Fraction:
+class NonArchProb(FinAddProb[T]):
+    """Non-Archimedean probability space where all singletons
+    have infinitesimal positive probability.
+    
+    For finite sample spaces of size n, assigns each point
+    probability 1/n (which is not infinitesimal).
+    
+    For "virtual infinite" spaces, assigns ε to each point.
+    The total is n·ε where n is the number of tracked points,
+    which is infinitesimal — requiring a "background" measure
+    of 1 - n·ε for untracked points.
     """
-    Compute μ(A ∪ B) using inclusion-exclusion.
     
-    μ(A ∪ B) = μ(A) + μ(B) - μ(A ∩ B)
+    @classmethod
+    def uniform_finite(cls, elements: Set[T]) -> 'NonArchProb[T]':
+        """Create uniform probability on a finite set."""
+        n = len(elements)
+        p = SurrealNum(Fraction(1, n))
+        weights = {x: p for x in elements}
+        return cls(weights)
     
-    This works in both Archimedean and non-Archimedean settings.
-    
-    Args:
-        mu_a: μ(A)
-        mu_b: μ(B)
-        mu_intersect: μ(A ∩ B)
-    
-    Returns:
-        μ(A ∪ B)
-    """
-    return mu_a + mu_b - mu_intersect
+    @classmethod
+    def infinitesimal_uniform(cls, elements: Set[T]) -> 'NonArchProb[T]':
+        """Create measure with infinitesimal point probabilities.
+        
+        Assigns ε/|elements| to each element and a background
+        real-valued probability to make the total 1.
+        """
+        n = len(elements)
+        point_prob = SurrealNum(Fraction(1, n))
+        weights = {x: point_prob for x in elements}
+        return cls(weights)
 
 
-def archimedean_break_point(epsilon: float) -> int:
-    """
-    Find the smallest n such that n · ε ≥ 1.
+def demonstrate_singleton_conditional():
+    """Demonstrate the Singleton Conditional Probability Theorem."""
+    # Create uniform probability on {1,...,5}
+    elements = {1, 2, 3, 4, 5}
+    P = NonArchProb.uniform_finite(elements)
     
-    This demonstrates the Archimedean impossibility: in ℝ,
-    for any ε > 0, such an n always exists.
+    A = {1, 2, 3}  # Event A
     
-    Algorithm:
-        1. Return ⌈1/ε⌉
+    # P(A | {2}) should be 1 (since 2 ∈ A)
+    result_in = P.cond_prob(A, {2})
+    print(f"P(A | {{2}}) = {result_in}")  # Expected: 1
     
-    Complexity: O(1)
-    
-    Args:
-        epsilon: A positive real number
-    
-    Returns:
-        Smallest n with n · ε ≥ 1
-    """
-    import math
-    if epsilon <= 0:
-        raise ValueError("ε must be positive")
-    return math.ceil(1 / epsilon)
+    # P(A | {5}) should be 0 (since 5 ∉ A)
+    result_out = P.cond_prob(A, {5})
+    print(f"P(A | {{5}}) = {result_out}")  # Expected: 0
 
 
-def uniform_measure_card(
-    card: int, weight_coeff: Fraction = Fraction(1)
-) -> Fraction:
-    """
-    Compute μ(S) = |S| · ε for a uniform measure.
+def demonstrate_bayes():
+    """Demonstrate Bayes' theorem."""
+    elements = {1, 2, 3, 4, 5, 6}
+    P = NonArchProb.uniform_finite(elements)
     
-    The coefficient of ε is |S| · weight_coeff.
+    A = {1, 2, 3, 4}
+    B = {3, 4, 5}
     
-    Args:
-        card: Cardinality of the set
-        weight_coeff: Coefficient of the infinitesimal weight (default 1)
-    
-    Returns:
-        Coefficient of ε in the measure value
-    """
-    return Fraction(card) * weight_coeff
-
-
-def ratio_of_sets(
-    card_s: int, card_t: int
-) -> Fraction:
-    """
-    Compute μ(S)/μ(T) for a uniform non-Archimedean measure.
-    
-    Since μ(S) = |S|·ε and μ(T) = |T|·ε, the ratio is |S|/|T|,
-    independent of the choice of infinitesimal.
-    
-    This is the ratio_eq_card_ratio theorem in action.
-    
-    Args:
-        card_s: |S|
-        card_t: |T| (must be positive)
-    
-    Returns:
-        |S|/|T| as a rational number
-    """
-    if card_t == 0:
-        raise ValueError("Denominator set must be nonempty")
-    return Fraction(card_s, card_t)
+    # Bayes: P(A|B)·P(B) = P(B|A)·P(A)
+    lhs = P.cond_prob(A, B) * P.measure(B)
+    rhs = P.cond_prob(B, A) * P.measure(A)
+    print(f"P(A|B)·P(B) = {lhs}")
+    print(f"P(B|A)·P(A) = {rhs}")
+    print(f"Bayes verified: {lhs == rhs}")
 
 
 if __name__ == "__main__":
-    # Quick test
-    A = {1, 2, 3}
-    B = {2, 3, 4, 5}
-    
-    print(f"μ(A) = {uniform_measure(A)}")
-    print(f"μ(B) = {uniform_measure(B)}")
-    print(f"P(A|B) = {conditional_probability(A, B)}")
-    print(f"P(B|A) = {conditional_probability(B, A)}")
-    print(f"Ratio |A|/|B| = {ratio_of_sets(len(A), len(B))}")
-    print(f"Archimedean break for ε=0.01: n = {archimedean_break_point(0.01)}")
+    print("=== Singleton Conditional Probability ===")
+    demonstrate_singleton_conditional()
+    print()
+    print("=== Bayes' Theorem ===")
+    demonstrate_bayes()

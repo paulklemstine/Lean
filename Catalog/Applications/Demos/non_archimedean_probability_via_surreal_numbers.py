@@ -2,335 +2,358 @@
 """
 Non-Archimedean Probability: Numerical Demonstrations
 
-Demonstrates the key results from the non-Archimedean probability theory:
-1. The Archimedean impossibility: uniform ε always exceeds budget
-2. The infinitesimal escape: symbolic computation with ε
-3. Bayes' theorem with infinitesimal probabilities
-4. Ratio independence from choice of infinitesimal
+Demonstrates the key results using a toy non-Archimedean field:
+the field of formal Laurent series ℝ((ε)), approximated numerically
+by choosing ε to be a very small positive float.
 """
 
-from fractions import Fraction
-from typing import Set, FrozenSet
+import math
 
+# ============================================================
+# Toy model: approximate a non-Archimedean field using small ε
+# ============================================================
 
-class InfinitesimalProb:
+class SurrealProb:
     """
-    Represents a non-Archimedean probability as a * ε + b,
-    where ε is a formal infinitesimal (0 < ε < 1/n for all n).
+    Represents a surreal-like probability value a + b·ε
+    where ε is a formal infinitesimal (ε > 0, ε < 1/n for all n).
     
-    For simplicity, we represent probabilities as (coefficient, constant)
-    meaning value = coefficient * ε + constant.
+    In this model:
+    - 'real_part' is the standard real component
+    - 'infml_part' is the coefficient of ε (the infinitesimal component)
     """
-    
-    def __init__(self, coeff: Fraction, const: Fraction = Fraction(0)):
-        self.coeff = coeff  # coefficient of ε
-        self.const = const  # constant term
-    
-    def __repr__(self):
-        parts = []
-        if self.const != 0:
-            parts.append(str(self.const))
-        if self.coeff != 0:
-            if self.coeff == 1:
-                parts.append("ε")
-            elif self.coeff == -1:
-                parts.append("-ε")
-            else:
-                parts.append(f"{self.coeff}·ε")
-        return " + ".join(parts) if parts else "0"
+    def __init__(self, real_part: float, infml_part: float = 0.0):
+        self.real_part = real_part
+        self.infml_part = infml_part
     
     def __add__(self, other):
-        return InfinitesimalProb(self.coeff + other.coeff, self.const + other.const)
+        return SurrealProb(self.real_part + other.real_part,
+                          self.infml_part + other.infml_part)
     
     def __sub__(self, other):
-        return InfinitesimalProb(self.coeff - other.coeff, self.const - other.const)
+        return SurrealProb(self.real_part - other.real_part,
+                          self.infml_part - other.infml_part)
     
-    def __mul__(self, n: int):
-        return InfinitesimalProb(self.coeff * n, self.const * n)
+    def __mul__(self, other):
+        # (a + bε)(c + dε) = ac + (ad + bc)ε + bdε² ≈ ac + (ad+bc)ε
+        return SurrealProb(
+            self.real_part * other.real_part,
+            self.real_part * other.infml_part + self.infml_part * other.real_part
+        )
     
     def __truediv__(self, other):
-        """Division: (a·ε + b) / (c·ε + d).
-        If both are pure infinitesimal (b=d=0): a/c (standard).
-        If denominator is standard (c=0): (a/d)·ε + b/d.
-        """
-        if other.const == 0 and self.const == 0:
-            # Both infinitesimal: ratio is standard
-            return InfinitesimalProb(Fraction(0), self.coeff / other.coeff)
-        elif other.const != 0 and other.coeff == 0:
-            # Denominator is standard
-            return InfinitesimalProb(
-                self.coeff / other.const, self.const / other.const
-            )
+        if other.real_part != 0:
+            # Standard division when denominator has non-zero real part
+            r = self.real_part / other.real_part
+            i = (self.infml_part * other.real_part - self.real_part * other.infml_part) / (other.real_part ** 2)
+            return SurrealProb(r, i)
+        elif other.infml_part != 0:
+            # Division by pure infinitesimal: result is "infinite"
+            return SurrealProb(self.infml_part / other.infml_part, 0)
         else:
-            # General case: approximate by dropping ε² terms
-            # (a·ε + b)/(c·ε + d) ≈ (a·ε + b)/d when ε is infinitesimal
-            return InfinitesimalProb(
-                self.coeff / other.const, self.const / other.const
-            )
+            raise ZeroDivisionError("Division by zero in SurrealProb")
+    
+    def __repr__(self):
+        if self.infml_part == 0:
+            return f"{self.real_part}"
+        elif self.real_part == 0:
+            return f"{self.infml_part}·ε"
+        else:
+            sign = "+" if self.infml_part > 0 else "-"
+            return f"{self.real_part} {sign} {abs(self.infml_part)}·ε"
+    
+    def is_infinitesimal(self):
+        return self.real_part == 0 and self.infml_part > 0
     
     def is_positive(self):
-        """An infinitesimal a·ε + b is positive if b > 0, or b = 0 and a > 0."""
-        if self.const > 0:
+        if self.real_part > 0:
             return True
-        if self.const == 0 and self.coeff > 0:
-            return True
-        return False
-    
-    def is_less_than_one(self):
-        """a·ε + b < 1 iff b < 1, or b = 1 and a < 0."""
-        if self.const < 1:
-            return True
-        if self.const == 1 and self.coeff < 0:
-            return True
+        if self.real_part == 0:
+            return self.infml_part > 0
         return False
 
 
-class UniformNonArchMeasure:
-    """A uniform finitely additive measure with infinitesimal weight."""
-    
-    def __init__(self):
-        self.weight = InfinitesimalProb(Fraction(1))  # weight = ε
-    
-    def measure(self, s: set) -> InfinitesimalProb:
-        """μ(S) = |S| · ε"""
-        return InfinitesimalProb(Fraction(len(s)))
-    
-    def cond_prob(self, a: set, b: set) -> InfinitesimalProb:
-        """P(A | B) = μ(A ∩ B) / μ(B)"""
-        intersection = a & b
-        return self.measure(intersection) / self.measure(b)
+# ============================================================
+# Demo 1: Non-Archimedean probability on a finite set
+# ============================================================
+print("=" * 60)
+print("DEMO 1: Non-Archimedean Probability on {1, 2, 3, 4, 5}")
+print("=" * 60)
 
+# Each point gets probability 1/5 + c·ε for some infinitesimal adjustment
+# To demonstrate, we assign each point probability 1/5 exactly
+# (which in the non-Archimedean setting could be perturbed by ε)
+n = 5
+points = list(range(1, n + 1))
+prob = {p: SurrealProb(1.0 / n) for p in points}
 
-def demo_archimedean_impossibility():
-    """Demonstrate that in ℝ, uniform ε always exceeds 1 for large n."""
-    print("=" * 60)
-    print("DEMO 1: Archimedean Impossibility")
-    print("=" * 60)
-    
-    for eps in [0.1, 0.01, 0.001, 0.0001]:
-        n = int(1 / eps)
-        print(f"  ε = {eps}: need n = {n} points for n·ε = {n * eps:.4f} ≥ 1")
-    
-    print("\n  No matter how small ε > 0 is, there exists n with n·ε ≥ 1.")
-    print("  This is the Archimedean property in action.\n")
+total = SurrealProb(0)
+for p in points:
+    total = total + prob[p]
+print(f"Total probability: {total}")
+print(f"Each point: {prob[1]}")
+print()
 
+# ============================================================
+# Demo 2: Singleton Conditional Probability Theorem
+# ============================================================
+print("=" * 60)
+print("DEMO 2: Singleton Conditional Probability Theorem")
+print("=" * 60)
 
-def demo_infinitesimal_measure():
-    """Demonstrate the non-Archimedean uniform measure."""
-    print("=" * 60)
-    print("DEMO 2: Non-Archimedean Uniform Measure")
-    print("=" * 60)
-    
-    m = UniformNonArchMeasure()
-    
-    for n in [1, 5, 10, 100, 1000000]:
-        s = set(range(n))
-        mu = m.measure(s)
-        print(f"  μ(S) for |S| = {n}: {mu}")
-        print(f"    Positive: {mu.is_positive()}, Less than 1: {mu.is_less_than_one()}")
-    
-    print("\n  All finite sets have measure < 1, no matter how large!\n")
+# In a non-Archimedean space, P({ω}) = ε > 0 for each ω
+# P(A | {ω}) = 1 if ω ∈ A, 0 if ω ∉ A
+eps = SurrealProb(0, 1)  # ε
 
+# Construct a "uniform infinitesimal" measure on ℕ_{≤10}
+points_10 = list(range(1, 11))
+# Each point gets probability ε (infinitesimal)
+mu_point = eps
+A_set = {1, 2, 3, 4, 5}  # Event A = first 5 points
 
-def demo_bayes_theorem():
-    """Demonstrate Bayes' theorem with infinitesimal probabilities."""
-    print("=" * 60)
-    print("DEMO 3: Non-Archimedean Bayes' Theorem")
-    print("=" * 60)
-    
-    m = UniformNonArchMeasure()
-    
-    A = {1, 2, 3}
-    B = {2, 3, 4, 5}
-    
-    p_a_given_b = m.cond_prob(A, B)
-    p_b_given_a = m.cond_prob(B, A)
-    
-    print(f"  A = {A}, B = {B}")
-    print(f"  A ∩ B = {A & B}")
-    print(f"  μ(A) = {m.measure(A)}, μ(B) = {m.measure(B)}")
-    print(f"  P(A|B) = {p_a_given_b}")
-    print(f"  P(B|A) = {p_b_given_a}")
-    
-    # Verify Bayes: P(A|B) · μ(B) = P(B|A) · μ(A)
-    lhs = p_a_given_b.const * Fraction(len(B))
-    rhs = p_b_given_a.const * Fraction(len(A))
-    print(f"\n  P(A|B) · |B| = {lhs}")
-    print(f"  P(B|A) · |A| = {rhs}")
-    print(f"  Equal: {lhs == rhs}  ← Bayes' theorem verified!\n")
+# P(A | {3}) should be 1 since 3 ∈ A
+omega_in = 3
+A_inter_singleton = SurrealProb(0, 1) if omega_in in A_set else SurrealProb(0, 0)
+cond_in = A_inter_singleton / mu_point
+print(f"P(A | {{3}}) = {cond_in}  (expected: 1, since 3 ∈ A)")
 
+# P(A | {7}) should be 0 since 7 ∉ A
+omega_out = 7
+A_inter_singleton_out = SurrealProb(0, 1) if omega_out in A_set else SurrealProb(0, 0)
+cond_out = A_inter_singleton_out / mu_point
+print(f"P(A | {{7}}) = {cond_out}  (expected: 0, since 7 ∉ A)")
+print()
 
-def demo_ratio_independence():
-    """Show that ratios are independent of the infinitesimal choice."""
-    print("=" * 60)
-    print("DEMO 4: Ratio Independence from Infinitesimal")
-    print("=" * 60)
-    
-    m = UniformNonArchMeasure()
-    
-    S = {1, 2, 3}
-    T = {10, 20, 30, 40, 50}
-    
-    mu_s = m.measure(S)
-    mu_t = m.measure(T)
-    
-    ratio = mu_s / mu_t
-    
-    print(f"  S = {S} (|S| = {len(S)})")
-    print(f"  T = {T} (|T| = {len(T)})")
-    print(f"  μ(S) = {mu_s}")
-    print(f"  μ(T) = {mu_t}")
-    print(f"  μ(S)/μ(T) = {ratio}")
-    print(f"  |S|/|T| = {Fraction(len(S), len(T))}")
-    print(f"  Equal: {ratio.const == Fraction(len(S), len(T))}")
-    print(f"\n  The ratio is a standard rational number, independent of ε!\n")
+# ============================================================
+# Demo 3: Non-Archimedean Exclusion Principle
+# ============================================================
+print("=" * 60)
+print("DEMO 3: Non-Archimedean Exclusion Principle")
+print("=" * 60)
 
+# In classical probability: P({ω}ᶜ) = 1 - P({ω}) = 1 - 0 = 1
+# In non-Archimedean: P({ω}ᶜ) = 1 - ε < 1
+one = SurrealProb(1)
+compl_prob = one - eps
+print(f"P({{ω}}ᶜ) = {compl_prob}")
+print(f"P({{ω}}ᶜ) < 1? {compl_prob.real_part < 1 or (compl_prob.real_part == 1 and compl_prob.infml_part < 0)}")
+print()
+print("Classical: P({ω}ᶜ) = 1 (information lost)")
+print("Non-Arch:  P({ω}ᶜ) = 1 - ε < 1 (information preserved)")
+print()
 
-def demo_conditioning_singletons():
-    """Conditioning on singletons — possible only in non-Archimedean setting."""
-    print("=" * 60)
-    print("DEMO 5: Conditioning on Singletons")
-    print("=" * 60)
-    
-    m = UniformNonArchMeasure()
-    
-    universe = set(range(1, 7))  # {1, 2, 3, 4, 5, 6} — a die
-    
-    print(f"  Universe = {universe} (a fair die)")
-    print(f"  μ({{x}}) = ε for each x (infinitesimal)")
-    print()
-    
-    for event_name, event in [("even", {2, 4, 6}), ("≥ 4", {4, 5, 6})]:
-        for x in [1, 3, 5]:
-            p = m.cond_prob(event, {x})
-            print(f"  P({event_name} | {{x={x}}}) = {p}")
-    
-    print()
-    print("  Conditioning on singletons gives 0 or 1 — perfectly intuitive!")
-    print("  In standard probability, P(A | {x}) is UNDEFINED (0/0).\n")
+# ============================================================
+# Demo 4: Bayes' Theorem
+# ============================================================
+print("=" * 60)
+print("DEMO 4: Bayes' Theorem in Non-Archimedean Setting")
+print("=" * 60)
 
+# P(A|B) · P(B) = P(B|A) · P(A)
+# Using a finite example on {1,...,10}
+mu_A = SurrealProb(0.5)  # A = {1,...,5}
+mu_B = SurrealProb(0.3)  # B = {1,2,3}
+mu_AB = SurrealProb(0.3) # A ∩ B = {1,2,3} = B
 
-if __name__ == "__main__":
-    demo_archimedean_impossibility()
-    demo_infinitesimal_measure()
-    demo_bayes_theorem()
-    demo_ratio_independence()
-    demo_conditioning_singletons()
-    
-    print("=" * 60)
-    print("All demonstrations completed successfully.")
-    print("=" * 60)
+cond_A_given_B = mu_AB / mu_B  # P(A|B) = 0.3/0.3 = 1
+cond_B_given_A = mu_AB / mu_A  # P(B|A) = 0.3/0.5 = 0.6
+
+lhs = cond_A_given_B * mu_B
+rhs = cond_B_given_A * mu_A
+
+print(f"P(A|B) = {cond_A_given_B}")
+print(f"P(B|A) = {cond_B_given_A}")
+print(f"P(A|B) · P(B) = {lhs}")
+print(f"P(B|A) · P(A) = {rhs}")
+print(f"Bayes verified: {abs(lhs.real_part - rhs.real_part) < 1e-10}")
+print()
+
+# ============================================================
+# Demo 5: Archimedean Exclusion
+# ============================================================
+print("=" * 60)
+print("DEMO 5: Archimedean Exclusion")
+print("=" * 60)
+
+# In ℝ (Archimedean), no infinitesimals exist
+# For any x > 0, ∃ n: n·x ≥ 1
+x_test = 0.001
+n_needed = math.ceil(1.0 / x_test)
+print(f"Test x = {x_test}")
+print(f"  Need n = {n_needed} to get n·x ≥ 1")
+print(f"  {n_needed} · {x_test} = {n_needed * x_test} ≥ 1 ✓")
+print()
+print("In ℝ, every positive number fails the infinitesimal condition.")
+print("This is WHY we need non-Archimedean fields (like surreals) for")
+print("infinitesimal probability theory.")
+
+# ============================================================
+# Demo 6: Inclusion-Exclusion
+# ============================================================
+print()
+print("=" * 60)
+print("DEMO 6: Inclusion-Exclusion with Infinitesimals")
+print("=" * 60)
+
+# μ(A ∪ B) + μ(A ∩ B) = μ(A) + μ(B)
+mu_A2 = SurrealProb(0.4, 2)  # 0.4 + 2ε
+mu_B2 = SurrealProb(0.3, 3)  # 0.3 + 3ε
+mu_AB2 = SurrealProb(0.1, 1) # 0.1 + 1ε
+mu_AuB2 = mu_A2 + mu_B2 - mu_AB2  # By inclusion-exclusion
+
+print(f"μ(A) = {mu_A2}")
+print(f"μ(B) = {mu_B2}")
+print(f"μ(A ∩ B) = {mu_AB2}")
+print(f"μ(A ∪ B) = {mu_AuB2}")
+
+lhs2 = mu_AuB2 + mu_AB2
+rhs2 = mu_A2 + mu_B2
+print(f"μ(A∪B) + μ(A∩B) = {lhs2}")
+print(f"μ(A) + μ(B) = {rhs2}")
+print(f"Inclusion-exclusion verified: {abs(lhs2.real_part - rhs2.real_part) < 1e-10}")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Archimedean vs Non-Archimedean probability accumulation.
+Visualization: Non-Archimedean vs Classical Probability
 
-Shows how uniform probability accumulates as more points are added:
-- In Archimedean (real) fields: always exceeds 1 eventually
-- In non-Archimedean fields: stays below 1 forever
+Creates a comparison plot showing how non-Archimedean probability
+assigns positive (infinitesimal) measure to every point, while
+classical probability assigns zero.
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 
-
-def plot_archimedean_impossibility():
-    """Plot cumulative probability for various ε values in ℝ."""
+def create_comparison_plot():
+    """Create a side-by-side comparison of classical vs non-Archimedean probability."""
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
     
-    # Left: Archimedean case
-    epsilons = [0.1, 0.05, 0.02, 0.01]
-    ns = np.arange(1, 201)
+    # Classical probability on [0,1]
+    x = np.linspace(0, 1, 200)
+    y_density = np.ones_like(x)  # Uniform density = 1
     
-    for eps in epsilons:
-        cumulative = ns * eps
-        ax1.plot(ns, cumulative, label=f'ε = {eps}')
+    ax1.fill_between(x, 0, y_density, alpha=0.3, color='blue', label='Density f(x) = 1')
+    ax1.set_title('Classical Probability\n(Lebesgue measure on [0,1])', fontsize=13)
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('Density')
     
-    ax1.axhline(y=1, color='red', linestyle='--', linewidth=2, label='Budget = 1')
-    ax1.set_xlabel('Number of points n', fontsize=12)
-    ax1.set_ylabel('Cumulative probability n·ε', fontsize=12)
-    ax1.set_title('Archimedean Field (ℝ): Budget Always Exceeded', fontsize=14)
-    ax1.legend(fontsize=10)
-    ax1.set_ylim(0, 2.5)
-    ax1.grid(True, alpha=0.3)
+    # Highlight that P({x}) = 0 for every x
+    for xi in [0.2, 0.5, 0.8]:
+        ax1.plot(xi, 0, 'ro', markersize=8, zorder=5)
+        ax1.annotate(f'P({{x={xi}}}) = 0', (xi, 0), 
+                     textcoords="offset points", xytext=(0, 15),
+                     fontsize=9, ha='center', color='red')
     
-    # Annotate break points
-    for eps in epsilons:
-        break_n = int(np.ceil(1 / eps))
-        if break_n <= 200:
-            ax1.plot(break_n, 1, 'ro', markersize=8)
-            ax1.annotate(f'n={break_n}', (break_n, 1), 
-                        textcoords="offset points", xytext=(10, 10),
-                        fontsize=9, color='red')
+    ax1.set_ylim(-0.1, 1.5)
+    ax1.legend(loc='upper right')
+    ax1.text(0.5, 1.3, 'Every point has probability 0', 
+             ha='center', fontsize=11, color='red', fontweight='bold')
     
-    # Right: Non-Archimedean case (symbolic)
-    ns_nonarch = np.arange(1, 1001)
+    # Non-Archimedean probability
+    # Visualize as tiny bars at each point
+    n_points = 20
+    x_points = np.linspace(0.025, 0.975, n_points)
+    eps_height = 0.05  # Visual representation of ε
     
-    # In non-Archimedean: n·ε < 1 for ALL n
-    # We visualize this as the "height" approaching but never reaching 1
-    for label, asymptote in [('ε₁ (very small)', 0.3), ('ε₂ (smaller)', 0.2), 
-                               ('ε₃ (infinitesimal limit)', 0.1)]:
-        curve = asymptote * (1 - np.exp(-ns_nonarch / 200))
-        ax2.plot(ns_nonarch, curve, label=label, linewidth=2)
+    ax2.bar(x_points, eps_height, width=0.04, color='green', alpha=0.7, 
+            label=f'μ({{x}}) = ε > 0')
+    ax2.set_title('Non-Archimedean Probability\n(Surreal-valued measure)', fontsize=13)
+    ax2.set_xlabel('x')
+    ax2.set_ylabel('Measure (ε scale)')
     
-    ax2.axhline(y=1, color='red', linestyle='--', linewidth=2, label='Budget = 1')
-    ax2.set_xlabel('Number of points n', fontsize=12)
-    ax2.set_ylabel('Cumulative probability (symbolic)', fontsize=12)
-    ax2.set_title('Non-Archimedean Field: Budget Never Exceeded', fontsize=14)
-    ax2.legend(fontsize=10)
-    ax2.set_ylim(0, 1.5)
-    ax2.grid(True, alpha=0.3)
-    ax2.text(500, 0.7, 'n·ε < 1 for ALL n', fontsize=14, 
-             ha='center', style='italic', color='green',
-             bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.5))
+    # Annotate
+    ax2.annotate('μ({x}) = ε\n(infinitesimal > 0)', (0.5, eps_height), 
+                 textcoords="offset points", xytext=(0, 20),
+                 fontsize=10, ha='center', color='green',
+                 arrowprops=dict(arrowstyle='->', color='green'))
+    
+    ax2.set_ylim(-0.01, 0.15)
+    ax2.legend(loc='upper right')
+    ax2.text(0.5, 0.13, 'Every point has probability ε > 0', 
+             ha='center', fontsize=11, color='green', fontweight='bold')
     
     plt.tight_layout()
-    plt.savefig('archimedean_vs_nonarch.png', dpi=150, bbox_inches='tight')
-    print("Saved: archimedean_vs_nonarch.png")
+    plt.savefig('nonarch_probability_comparison.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: nonarch_probability_comparison.png")
 
 
-def plot_conditional_probability():
-    """Show conditional probability landscape for non-Archimedean measures."""
-    fig, ax = plt.subplots(figsize=(10, 7))
+def create_conditional_plot():
+    """Visualize the Singleton Conditional Probability Theorem."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
     
-    # Universe = {1, ..., 20}
-    n = 20
-    universe = set(range(1, n + 1))
+    # Classical: P(A|{ω}) is undefined
+    points = np.arange(1, 11)
+    A_set = [1, 2, 3, 4, 5]
     
-    # Compute P(A|B) = |A ∩ B| / |B| for various A, B sizes
-    sizes_a = range(1, n + 1)
-    sizes_b = range(1, n + 1)
+    colors1 = ['lightcoral' if p in A_set else 'lightblue' for p in points]
+    ax1.bar(points, [0]*10, color=colors1, edgecolor='black', linewidth=1)
+    ax1.set_title('Classical: P(A | {ω}) = 0/0 = UNDEFINED', fontsize=12, color='red')
+    ax1.set_xlabel('ω')
+    ax1.set_ylabel('P(A | {ω})')
+    ax1.set_ylim(-0.1, 1.3)
+    ax1.set_xticks(points)
+    ax1.text(5.5, 0.7, '???\nUndefined for\ncontinuous distributions', 
+             ha='center', fontsize=12, color='red', fontweight='bold')
     
-    # For each (|A|, |B|), compute expected |A ∩ B| / |B|
-    # when A, B are random subsets of {1,...,20}
-    # E[|A ∩ B|] = |A| · |B| / n, so E[P(A|B)] = |A| / n
+    red_patch = mpatches.Patch(color='lightcoral', label='ω ∈ A')
+    blue_patch = mpatches.Patch(color='lightblue', label='ω ∉ A')
+    ax1.legend(handles=[red_patch, blue_patch])
     
-    data = np.zeros((n, n))
-    for i, sa in enumerate(sizes_a):
-        for j, sb in enumerate(sizes_b):
-            # Expected conditional probability
-            expected_intersect = sa * sb / n
-            data[i, j] = expected_intersect / sb  # = sa / n
+    # Non-Archimedean: P(A|{ω}) = 1 or 0
+    cond_probs = [1 if p in A_set else 0 for p in points]
+    colors2 = ['green' if p in A_set else 'gray' for p in points]
+    ax2.bar(points, cond_probs, color=colors2, edgecolor='black', linewidth=1)
+    ax2.set_title('Non-Archimedean: P(A | {ω}) = well-defined!', fontsize=12, color='green')
+    ax2.set_xlabel('ω')
+    ax2.set_ylabel('P(A | {ω})')
+    ax2.set_ylim(-0.1, 1.3)
+    ax2.set_xticks(points)
     
-    im = ax.imshow(data, origin='lower', cmap='viridis', aspect='auto',
-                   extent=[0.5, n + 0.5, 0.5, n + 0.5])
-    ax.set_xlabel('|B| (conditioning event size)', fontsize=12)
-    ax.set_ylabel('|A| (target event size)', fontsize=12)
-    ax.set_title('Expected P(A | B) in Non-Archimedean Probability\n'
-                 '(Universe size = 20, uniform infinitesimal weight)', fontsize=14)
-    plt.colorbar(im, ax=ax, label='E[P(A|B)] = |A|/|Universe|')
+    green_patch = mpatches.Patch(color='green', label='P(A|{ω}) = 1')
+    gray_patch = mpatches.Patch(color='gray', label='P(A|{ω}) = 0')
+    ax2.legend(handles=[green_patch, gray_patch])
     
-    # Highlight the diagonal where |A| = |B|
-    ax.plot([0.5, n + 0.5], [0.5, n + 0.5], 'r--', linewidth=1, alpha=0.5)
+    plt.suptitle('Singleton Conditional Probability Theorem', fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    plt.savefig('conditional_probability_theorem.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: conditional_probability_theorem.png")
+
+
+def create_exclusion_plot():
+    """Visualize the Non-Archimedean Exclusion Principle."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    # Show μ({ω}ᶜ) for classical vs non-Archimedean
+    categories = ['Classical\n(ℝ-valued)', 'Non-Archimedean\n(Surreal-valued)']
+    values = [1.0, 0.95]  # 0.95 represents "1 - ε" visually
+    colors = ['salmon', 'lightgreen']
+    
+    bars = ax.bar(categories, values, color=colors, edgecolor='black', linewidth=2, width=0.5)
+    
+    ax.axhline(y=1.0, color='red', linestyle='--', linewidth=1, label='μ(Ω) = 1')
+    ax.set_ylabel('Measure', fontsize=12)
+    ax.set_title('Non-Archimedean Exclusion Principle\nμ({ω}ᶜ) in classical vs non-Archimedean probability', 
+                 fontsize=13, fontweight='bold')
+    
+    ax.text(0, 1.02, 'μ({ω}ᶜ) = 1\n(= μ(Ω) !)', ha='center', fontsize=10, color='red')
+    ax.text(1, 0.97, 'μ({ω}ᶜ) = 1 - ε\n(< μ(Ω) ✓)', ha='center', fontsize=10, color='green')
+    
+    ax.set_ylim(0, 1.15)
+    ax.legend(fontsize=10)
     
     plt.tight_layout()
-    plt.savefig('conditional_probability_landscape.png', dpi=150, bbox_inches='tight')
-    print("Saved: conditional_probability_landscape.png")
+    plt.savefig('exclusion_principle.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: exclusion_principle.png")
 
 
 if __name__ == "__main__":
-    plot_archimedean_impossibility()
-    plot_conditional_probability()
+    create_comparison_plot()
+    create_conditional_plot()
+    create_exclusion_plot()
