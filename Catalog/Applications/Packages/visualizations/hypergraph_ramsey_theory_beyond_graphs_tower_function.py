@@ -1,4 +1,4 @@
-def tower(base, height):
-    if height == 0:
-        return 1
-    return base ** tower(base, height - 1)
+def tower(k: int, n: int) -> int:
+    if k == 0:
+        return n
+    return 2 ** tower(k - 1, n)
