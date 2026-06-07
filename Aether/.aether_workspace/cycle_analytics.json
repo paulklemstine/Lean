@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-07T02:01:16.008713+00:00",
+  "last_updated": "2026-06-07T02:34:13.028904+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -12510,6 +12510,76 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T02:01:15.959742+00:00",
       "title": "Infinite Games Against Death: Immortality Strategies"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5849,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 278,
+      "domain": "Applications",
+      "duration_seconds": 3919.298360109329,
+      "end_time": 1780799594.3401818,
+      "files_integrated": 5,
+      "job_id": "88a6652d",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.7,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7819,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.6981,
+        "novelty": 0.9443,
+        "proof_depth": 0.5926,
+        "usefulness": 0.7963
+      },
+      "quality_score": 0.28800000000000003,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780795675.0418217,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T02:34:12.921736+00:00",
+      "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7203,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 279,
+      "domain": "Applications",
+      "duration_seconds": 3900.498699903488,
+      "end_time": 1780799594.6222773,
+      "files_integrated": 5,
+      "job_id": "0cb797ac",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.56,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8338,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.8968,
+        "novelty": 0.95,
+        "proof_depth": 0.874,
+        "usefulness": 0.887
+      },
+      "quality_score": 0.28759999999999997,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780795694.1235774,
+      "strategy_count": 187,
+      "theorem_count": 34,
+      "timestamp": "2026-06-07T02:34:12.976584+00:00",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
   ]
 }

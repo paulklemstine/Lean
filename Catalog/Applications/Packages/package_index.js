@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0cb797ac",
     "filename": "eml_transseries_asymptotic_expansions_beyond_power.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.28759999999999997,
     "title": "Graded Transseries Algebras: Asymptotic Expansions Beyond Power Series"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.28759999999999997,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Graded Transseries Algebras: Asymptotic Expansions Beyond Power Series"
     }
