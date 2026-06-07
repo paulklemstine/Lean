@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d9ab58b1",
     "filename": "the_spectral_gap_of_sudoku_when_puzzles_become_pha.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.27504,
     "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_spectral_gap_of_sudoku_when_puzzles_become_pha",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.27504,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
     }

@@ -2,16 +2,6 @@
   "breakthroughs": [],
   "cycle_log": [
     {
-      "cycle_id": "082b48f5",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions: Tropical Satake Isomorphism\n\n## Synthesis\n\nThis research cycle established the algebraic foundations of the tropical Satake isomorphism for GL_n. The central discovery is that the",
-      "quality_score": 0.50544,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-04T19:40:21",
-      "title": "Tropical Satake Isomorphism for GL_n"
-    },
-    {
       "cycle_id": "db1ae093",
       "domain": "Applications",
       "key_insight": "# Future Directions: Infinite Chess on the Hilbert Board\n\n## Synthesis\n\nThis research cycle established a formal theory of chess on the d-dimensional infinite board ℤ^d (the \"Hilbert Board\"), proving",
@@ -2000,6 +1990,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T20:04:53",
       "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+    },
+    {
+      "cycle_id": "842fcb52",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: EML Approximation Filtration\n\n## Synthesis\n\nThis research cycle established the **EML Approximation Filtration** — a triple-indexed family F(d, s, ε) of function classes stratifie",
+      "quality_score": 0.3516,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T20:52:41",
+      "title": "EML Universal Approximation"
     }
   ],
   "entries": [
@@ -2045,7 +2045,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-07T20:04:53",
+  "last_updated": "2026-06-07T20:52:41",
   "open_questions": [
     {
       "context": "sorry",
@@ -2072,12 +2072,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "8bff9669",
-        "quality": 0.5404,
-        "theorems": 6,
-        "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
-      },
       {
         "cycle_id": "91bd5c98",
         "quality": 0.4424,
@@ -2131,6 +2125,12 @@
         "quality": 0.3692000000000001,
         "theorems": 5,
         "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+      },
+      {
+        "cycle_id": "842fcb52",
+        "quality": 0.3516,
+        "theorems": 5,
+        "title": "EML Universal Approximation"
       }
     ],
     "Bridges": [
