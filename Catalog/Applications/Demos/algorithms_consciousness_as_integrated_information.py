@@ -1,149 +1,197 @@
 """
-Integrated Information Theory: Core Algorithms
+Algorithms for Causal Integration Theory
 
-Implements the mathematical framework for computing integrated information (Φ)
-on finite causal systems represented as weighted directed graphs.
+Type-hinted implementations of the core algorithms for computing
+integrated information (Φ) and the Integration Complex.
 """
 
-from typing import List, Tuple, Set, FrozenSet
+from typing import List, Set, Tuple, Optional
 import itertools
-import numpy as np
 
 
-def cut_value(weights: np.ndarray, subset: Set[int]) -> float:
-    """
-    Compute the cut value of a bipartition.
-
-    The cut value measures the total causal influence crossing a partition,
-    in both directions. For a subset S and its complement Sᶜ:
-
-        cut(S) = Σ_{i∈S, j∈Sᶜ} w(i,j) + Σ_{i∈Sᶜ, j∈S} w(i,j)
+def cut_weight(weight: List[List[float]], S: Set[int]) -> float:
+    """Compute the bidirectional cut weight of subset S.
 
     Args:
-        weights: n×n non-negative weight matrix
-        subset: set of indices forming one side of the bipartition
+        weight: n×n weight matrix (weight[i][j] = causal influence from i to j)
+        S: subset of node indices
 
     Returns:
-        Total weight of edges crossing the partition (both directions)
+        Total weight of edges crossing the partition (S, Sᶜ)
     """
-    n = weights.shape[0]
-    complement = set(range(n)) - subset
-    forward = sum(weights[i, j] for i in subset for j in complement)
-    backward = sum(weights[i, j] for i in complement for j in subset)
+    n = len(weight)
+    Sc = set(range(n)) - S
+    forward = sum(weight[i][j] for i in S for j in Sc)
+    backward = sum(weight[i][j] for i in Sc for j in S)
     return forward + backward
 
 
-def phi(weights: np.ndarray) -> Tuple[float, Set[int]]:
-    """
-    Compute the integrated information Φ of a causal system.
-
-    Φ is the minimum cut value over all non-trivial bipartitions —
-    the cheapest way to split the system into disconnected parts.
+def compute_phi(weight: List[List[float]]) -> Tuple[float, Optional[Set[int]]]:
+    """Compute integrated information Φ and the minimum information partition.
 
     Args:
-        weights: n×n non-negative weight matrix
+        weight: n×n nonnegative weight matrix
 
     Returns:
-        Tuple of (Φ value, minimizing partition)
+        (phi_value, minimizing_subset) or (0, None) if n < 2
     """
-    n = weights.shape[0]
+    n = len(weight)
     if n < 2:
-        return 0.0, set()
+        return 0.0, None
 
     min_cut = float('inf')
-    min_partition: Set[int] = set()
+    min_partition: Optional[Set[int]] = None
 
-    # Iterate over all non-trivial subsets (2^n - 2 possibilities)
-    for k in range(1, n):
-        for subset_tuple in itertools.combinations(range(n), k):
-            subset = set(subset_tuple)
-            cv = cut_value(weights, subset)
-            if cv < min_cut:
-                min_cut = cv
-                min_partition = subset
+    # Enumerate all nontrivial subsets (nonempty, not full)
+    for r in range(1, n):
+        for subset in itertools.combinations(range(n), r):
+            S = set(subset)
+            cw = cut_weight(weight, S)
+            if cw < min_cut:
+                min_cut = cw
+                min_partition = S
 
     return min_cut, min_partition
 
 
-def subsystem_phi(weights: np.ndarray, system: Set[int]) -> float:
-    """
-    Compute the integrated information of a subsystem.
+def integration_complex(weight: List[List[float]], threshold: float) -> List[Set[int]]:
+    """Compute the Integration Complex at a given threshold.
+
+    Returns all nontrivial subsets with cut weight strictly above the threshold.
 
     Args:
-        weights: n×n weight matrix of the full system
-        system: set of indices defining the subsystem
+        weight: n×n nonnegative weight matrix
+        threshold: integration threshold t
 
     Returns:
-        Φ value of the subsystem
+        List of subsets in the Integration Complex ℐ_t
     """
-    system_list = sorted(system)
-    m = len(system_list)
-    if m < 2:
+    n = len(weight)
+    complex_sets: List[Set[int]] = []
+
+    for r in range(1, n):
+        for subset in itertools.combinations(range(n), r):
+            S = set(subset)
+            cw = cut_weight(weight, S)
+            if cw > threshold:
+                complex_sets.append(S)
+
+    return complex_sets
+
+
+def integration_spectrum(weight: List[List[float]]) -> List[Tuple[Set[int], float]]:
+    """Compute the full integration spectrum: all (subset, cutWeight) pairs.
+
+    Args:
+        weight: n×n nonnegative weight matrix
+
+    Returns:
+        Sorted list of (subset, cut_weight) pairs, ascending by cut weight
+    """
+    n = len(weight)
+    spectrum: List[Tuple[Set[int], float]] = []
+
+    for r in range(1, n):
+        for subset in itertools.combinations(range(n), r):
+            S = set(subset)
+            cw = cut_weight(weight, S)
+            spectrum.append((S, cw))
+
+    spectrum.sort(key=lambda x: x[1])
+    return spectrum
+
+
+def is_reducible(weight: List[List[float]]) -> Tuple[bool, Optional[Set[int]]]:
+    """Check if a network is reducible (has a nontrivial zero-cut partition).
+
+    Args:
+        weight: n×n nonnegative weight matrix
+
+    Returns:
+        (is_reducible, separating_subset)
+    """
+    n = len(weight)
+    for r in range(1, n):
+        for subset in itertools.combinations(range(n), r):
+            S = set(subset)
+            if cut_weight(weight, S) == 0.0:
+                return True, S
+    return False, None
+
+
+def stoer_wagner_approx_phi(weight: List[List[float]]) -> float:
+    """Approximate Φ using minimum s-t cut enumeration.
+
+    For symmetric networks, this gives the exact minimum cut.
+    For asymmetric networks, provides an upper bound.
+
+    Args:
+        weight: n×n nonnegative weight matrix
+
+    Returns:
+        Approximate Φ value
+    """
+    n = len(weight)
+    if n < 2:
         return 0.0
 
+    # Symmetrize for min-cut
+    sym = [[weight[i][j] + weight[j][i] for j in range(n)] for i in range(n)]
+
+    # Simple implementation: merge vertices iteratively
+    # (Stoer-Wagner algorithm)
+    vertices = list(range(n))
+    merged: dict = {i: {i} for i in range(n)}
     min_cut = float('inf')
-    for k in range(1, m):
-        for subset_tuple in itertools.combinations(system_list, k):
-            T = set(subset_tuple)
-            S_minus_T = system - T
-            forward = sum(weights[i, j] for i in T for j in S_minus_T)
-            backward = sum(weights[i, j] for i in S_minus_T for j in T)
-            cv = forward + backward
-            min_cut = min(min_cut, cv)
+
+    adj = {i: {j: sym[i][j] for j in range(n) if j != i} for i in range(n)}
+
+    while len(vertices) > 1:
+        # MinimumCutPhase
+        A = {vertices[0]}
+        candidates = set(vertices[1:])
+        last_added = vertices[0]
+        second_last = vertices[0]
+
+        while candidates:
+            # Find most tightly connected vertex
+            best_v = None
+            best_w = -1.0
+            for v in candidates:
+                w_sum = sum(adj.get(v, {}).get(u, 0.0) for u in A)
+                if w_sum > best_w:
+                    best_w = w_sum
+                    best_v = v
+            second_last = last_added
+            last_added = best_v
+            A.add(best_v)
+            candidates.remove(best_v)
+
+        # Cut of the phase = weight of last added
+        cut_of_phase = sum(adj.get(last_added, {}).get(u, 0.0) for u in vertices if u != last_added)
+        min_cut = min(min_cut, cut_of_phase)
+
+        # Merge last_added into second_last
+        for v in vertices:
+            if v != last_added and v != second_last:
+                w1 = adj.get(second_last, {}).get(v, 0.0)
+                w2 = adj.get(last_added, {}).get(v, 0.0)
+                if second_last in adj and v in adj[second_last]:
+                    adj[second_last][v] = w1 + w2
+                elif second_last in adj:
+                    adj[second_last][v] = w2
+                if v in adj and second_last in adj[v]:
+                    adj[v][second_last] = w1 + w2
+                elif v in adj:
+                    adj[v][second_last] = w2
+
+        # Remove last_added
+        if last_added in adj:
+            del adj[last_added]
+        for v in adj:
+            if last_added in adj[v]:
+                del adj[v][last_added]
+        merged[second_last] = merged[second_last] | merged[last_added]
+        vertices.remove(last_added)
 
     return min_cut
-
-
-def find_complex(weights: np.ndarray) -> Tuple[Set[int], float]:
-    """
-    Find the maximally integrated subsystem (the "complex").
-
-    This implements the exclusion principle: among all subsystems of size ≥ 2,
-    find the one with the maximum integrated information.
-
-    Args:
-        weights: n×n weight matrix
-
-    Returns:
-        Tuple of (complex indices, maximum Φ)
-    """
-    n = weights.shape[0]
-    max_phi = -float('inf')
-    max_system: Set[int] = set()
-
-    for size in range(2, n + 1):
-        for subset_tuple in itertools.combinations(range(n), size):
-            system = set(subset_tuple)
-            sp = subsystem_phi(weights, system)
-            if sp > max_phi:
-                max_phi = sp
-                max_system = system
-
-    return max_system, max_phi
-
-
-def direct_sum(w1: np.ndarray, w2: np.ndarray) -> np.ndarray:
-    """
-    Compute the direct sum (block-diagonal) of two weight matrices.
-
-    The direct sum has no cross-connections between the two blocks,
-    so by the composition theorem, its Φ = 0.
-
-    Args:
-        w1: n₁×n₁ weight matrix
-        w2: n₂×n₂ weight matrix
-
-    Returns:
-        (n₁+n₂)×(n₁+n₂) block-diagonal weight matrix
-    """
-    n1, n2 = w1.shape[0], w2.shape[0]
-    result = np.zeros((n1 + n2, n1 + n2))
-    result[:n1, :n1] = w1
-    result[n1:, n1:] = w2
-    return result
-
-
-def scale_system(weights: np.ndarray, r: float) -> np.ndarray:
-    """Scale all weights by a non-negative factor."""
-    assert r >= 0, "Scaling factor must be non-negative"
-    return r * weights
