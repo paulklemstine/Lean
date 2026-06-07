@@ -1,365 +1,288 @@
 #!/usr/bin/env python3
 """
-Persistent Homology of Prime Numbers: Demonstration Script
+Persistent Homology of Prime Numbers — Demonstration
 
-Computes and visualizes the H₀ persistent homology of the prime point cloud.
-Shows that the barcode is exactly the gap sequence, total persistence = diameter,
-and that H₁ is trivially zero for 1D point clouds.
+Computes the H₀ barcode (prime gaps) of the prime point cloud
+and compares with the Poisson/exponential prediction from
+Cramér's probabilistic model.
 """
 
 import math
 from collections import Counter
 
-
-def sieve_of_eratosthenes(n: int) -> list[int]:
-    """Return all primes up to n."""
-    if n < 2:
-        return []
-    is_prime = [True] * (n + 1)
+def sieve_of_eratosthenes(limit):
+    """Return list of primes up to limit."""
+    is_prime = [True] * (limit + 1)
     is_prime[0] = is_prime[1] = False
-    for i in range(2, int(n**0.5) + 1):
+    for i in range(2, int(limit**0.5) + 1):
         if is_prime[i]:
-            for j in range(i*i, n + 1, i):
+            for j in range(i*i, limit + 1, i):
                 is_prime[j] = False
-    return [i for i in range(2, n + 1) if is_prime[i]]
+    return [i for i in range(2, limit + 1) if is_prime[i]]
+
+def compute_gaps(primes):
+    """Compute consecutive gaps between primes."""
+    return [primes[i+1] - primes[i] for i in range(len(primes) - 1)]
+
+def h0_barcode(primes):
+    """The H₀ barcode: list of bars (birth=0, death=gap)."""
+    gaps = compute_gaps(primes)
+    return [(0, g) for g in gaps]
+
+def num_components(gaps, epsilon):
+    """Number of connected components at scale epsilon."""
+    return 1 + sum(1 for g in gaps if g > epsilon)
+
+def gap_distribution_analysis(primes, label=""):
+    """Analyze the distribution of prime gaps (H₀ bar lengths)."""
+    gaps = compute_gaps(primes)
+    N = primes[-1]
+    mean_gap = sum(gaps) / len(gaps)
+    predicted_mean = math.log(N)  # Prime Number Theorem prediction
+
+    print(f"\n{'='*60}")
+    print(f"H₀ Barcode Analysis: Primes up to {N} {label}")
+    print(f"{'='*60}")
+    print(f"Number of primes: {len(primes)}")
+    print(f"Number of bars (gaps): {len(gaps)}")
+    print(f"Mean bar length (actual):    {mean_gap:.4f}")
+    print(f"Mean bar length (predicted): {predicted_mean:.4f}")
+    print(f"Ratio (actual/predicted):    {mean_gap/predicted_mean:.4f}")
+    print(f"Max bar length:              {max(gaps)}")
+    print(f"Min bar length:              {min(gaps)}")
+
+    # Gap distribution
+    gap_counts = Counter(gaps)
+    print(f"\nGap distribution (top 10):")
+    for gap, count in sorted(gap_counts.items(), key=lambda x: -x[1])[:10]:
+        pct = 100 * count / len(gaps)
+        print(f"  gap={gap:3d}: {count:6d} ({pct:5.1f}%)")
+
+    # Twin prime count (gap=2)
+    twin_count = gap_counts.get(2, 0)
+    print(f"\nTwin prime pairs (gap=2): {twin_count}")
+
+    # Component count at various scales
+    print(f"\nComponents at various scales:")
+    for eps in [1, 2, 4, 6, 10, 20, 50, 100]:
+        nc = num_components(gaps, eps)
+        print(f"  ε={eps:4d}: {nc:6d} components")
+
+    # Parity check (all gaps of primes > 2 should be even)
+    gaps_after_2 = gaps[1:]  # exclude gap between 2 and 3
+    odd_gaps = [g for g in gaps_after_2 if g % 2 != 0]
+    print(f"\nParity verification (gaps after p=3):")
+    print(f"  Total gaps: {len(gaps_after_2)}")
+    print(f"  Even gaps:  {len(gaps_after_2) - len(odd_gaps)}")
+    print(f"  Odd gaps:   {len(odd_gaps)} (should be 0)")
+
+    return gaps
 
 
-def gap_sequence(primes: list[int]) -> list[int]:
-    """Compute the gap sequence (= H₀ barcode) of a sorted list."""
+def exponential_fit_test(gaps, N):
+    """Test whether gap distribution matches exponential(log N)."""
+    mean = sum(gaps) / len(gaps)
+    predicted_mean = math.log(N)
+
+    # Kolmogorov-Smirnov style comparison
+    sorted_gaps = sorted(gaps)
+    n = len(sorted_gaps)
+
+    # Empirical CDF vs Exponential CDF
+    max_diff = 0
+    for i, g in enumerate(sorted_gaps):
+        empirical = (i + 1) / n
+        theoretical = 1 - math.exp(-g / predicted_mean)
+        max_diff = max(max_diff, abs(empirical - theoretical))
+
+    print(f"\nExponential fit test (Cramér model prediction):")
+    print(f"  Sample mean:     {mean:.4f}")
+    print(f"  Predicted mean:  {predicted_mean:.4f}")
+    print(f"  KS statistic:    {max_diff:.4f}")
+    print(f"  KS threshold (α=0.05): {1.36/math.sqrt(n):.4f}")
+    if max_diff < 1.36 / math.sqrt(n):
+        print(f"  Result: CONSISTENT with exponential distribution")
+    else:
+        print(f"  Result: DEVIATES from exponential (expected — primes have structure)")
+
+
+def persistence_diagram(gaps):
+    """Print the persistence diagram: (birth, death) pairs."""
+    print(f"\nPersistence Diagram (first 20 bars, sorted by length):")
+    bars = sorted([(0, g) for g in gaps], key=lambda x: -x[1])
+    for i, (b, d) in enumerate(bars[:20]):
+        bar = '█' * min(d, 60)
+        print(f"  [{b}, {d:3d}) |{bar}")
+
+
+if __name__ == "__main__":
+    print("PERSISTENT HOMOLOGY OF PRIME NUMBERS")
+    print("The Topology of Arithmetic")
+    print("=" * 60)
+
+    # Analysis at multiple scales
+    for limit in [1000, 10000, 100000]:
+        primes = sieve_of_eratosthenes(limit)
+        gaps = gap_distribution_analysis(primes, f"(N={limit})")
+        exponential_fit_test(gaps, limit)
+        if limit <= 10000:
+            persistence_diagram(gaps)
+
+    # Demonstrate the key theorem: components at scale 0 = n
+    primes_20 = sieve_of_eratosthenes(100)
+    gaps_20 = compute_gaps(primes_20)
+    print(f"\n{'='*60}")
+    print("THEOREM VERIFICATION: components_at_zero_eq_size")
+    print(f"Primes up to 100: {primes_20}")
+    print(f"n = {len(primes_20)}")
+    print(f"Components at ε=0: {num_components(gaps_20, 0)} (should be {len(primes_20)})")
+
+    # Demonstrate monotonicity
+    print(f"\nTHEOREM VERIFICATION: components_mono")
+    for eps in range(0, 15):
+        nc = num_components(gaps_20, eps)
+        print(f"  ε={eps:2d}: {nc:2d} components", end="")
+        if eps > 0:
+            prev = num_components(gaps_20, eps - 1)
+            assert nc <= prev, "Monotonicity violated!"
+            if nc < prev:
+                print(" ← merger!", end="")
+        print()
+
+    print(f"\n{'='*60}")
+    print("All theorem verifications passed!")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: H₀ Barcode of the Prime Point Cloud
+
+Produces a barcode diagram showing the persistent homology
+of the first N primes, with bars colored by gap parity.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import math
+
+
+def sieve_primes(limit):
+    is_prime = [True] * (limit + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(limit**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i*i, limit + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, limit + 1) if is_prime[i]]
+
+
+def prime_gaps(primes):
     return [primes[i+1] - primes[i] for i in range(len(primes) - 1)]
 
 
-def components_at_scale(gaps: list[int], epsilon: int) -> int:
-    """Number of connected components at filtration parameter epsilon."""
-    return 1 + sum(1 for g in gaps if g > epsilon)
+def plot_barcode(primes, max_bars=80, save_path="barcode.png"):
+    gaps = prime_gaps(primes)
+    bars = sorted(enumerate(gaps), key=lambda x: -x[1])[:max_bars]
 
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 10),
+                                    gridspec_kw={'width_ratios': [3, 1]})
 
-def total_persistence(gaps: list[int]) -> int:
-    """Total persistence = sum of all bar lengths."""
-    return sum(gaps)
+    # Barcode diagram
+    for rank, (idx, gap) in enumerate(bars):
+        color = '#e74c3c' if gap == 2 else ('#3498db' if gap % 2 == 0 else '#2ecc71')
+        label = None
+        if gap == 2 and rank == 0:
+            label = 'Twin prime gap (2)'
+        ax1.barh(rank, gap, left=0, height=0.7, color=color, alpha=0.8,
+                edgecolor='white', linewidth=0.5)
 
+    ax1.set_xlabel('Scale ε (bar length = prime gap)', fontsize=12)
+    ax1.set_ylabel('Bar index (sorted by length)', fontsize=12)
+    ax1.set_title(f'H₀ Barcode: Persistent Homology of Primes up to {primes[-1]}',
+                  fontsize=14, fontweight='bold')
+    ax1.invert_yaxis()
 
-def gap_spectrum(gaps: list[int]) -> dict[int, int]:
-    """Distribution of gap sizes (histogram of the barcode)."""
-    return dict(Counter(gaps))
-
-
-def persistence_landscape(gaps: list[int], epsilon: int) -> int:
-    """Persistence landscape λ₁(ε): count of bars > ε."""
-    return sum(1 for g in gaps if g > epsilon)
-
-
-def betti_integral(gaps: list[int]) -> int:
-    """Verify the Betti curve integral formula: ∑ λ₁(ε) = total persistence."""
-    if not gaps:
-        return 0
-    max_gap = max(gaps)
-    return sum(persistence_landscape(gaps, eps) for eps in range(max_gap))
-
-
-def main():
-    print("=" * 70)
-    print("PERSISTENT HOMOLOGY OF PRIME NUMBERS")
-    print("=" * 70)
-
-    # Demo 1: Small example
-    print("\n--- Demo 1: Primes up to 30 ---")
-    primes = sieve_of_eratosthenes(30)
-    gaps = gap_sequence(primes)
-    print(f"Primes: {primes}")
-    print(f"Gap sequence (= H₀ barcode): {gaps}")
-    print(f"Total persistence: {total_persistence(gaps)}")
-    print(f"Diameter (last - first): {primes[-1] - primes[0]}")
-    print(f"✓ Total persistence = diameter: {total_persistence(gaps) == primes[-1] - primes[0]}")
-
-    print(f"\nComponents at various scales:")
-    for eps in [0, 1, 2, 4, 6]:
-        print(f"  ε = {eps}: {components_at_scale(gaps, eps)} components")
-
-    print(f"\nGap spectrum: {gap_spectrum(gaps)}")
-
-    # Demo 2: Betti integral formula verification
-    print("\n--- Demo 2: Betti Integral Formula ---")
-    integral = betti_integral(gaps)
-    total = total_persistence(gaps)
-    print(f"∑ λ₁(ε) from ε=0 to max_gap-1 = {integral}")
-    print(f"Total persistence = {total}")
-    print(f"✓ Betti integral formula: {integral == total}")
-
-    # Demo 3: Larger prime cloud
-    print("\n--- Demo 3: Primes up to 1000 ---")
-    primes = sieve_of_eratosthenes(1000)
-    gaps = gap_sequence(primes)
-    spectrum = gap_spectrum(gaps)
-    print(f"Number of primes: {len(primes)}")
-    print(f"Number of bars: {len(gaps)}")
-    print(f"Total persistence: {total_persistence(gaps)} (= {primes[-1]} - {primes[0]})")
-    print(f"Max gap (connectivity threshold): {max(gaps)}")
-    print(f"Mean gap: {sum(gaps)/len(gaps):.2f}")
-    print(f"Expected mean gap (log N): {math.log(1000):.2f}")
-
-    print(f"\nGap spectrum (sorted):")
-    for gap_size in sorted(spectrum.keys()):
-        count = spectrum[gap_size]
-        bar = "█" * count
-        print(f"  gap {gap_size:3d}: {count:3d} {bar}")
-
-    # Demo 4: Twin prime detection
-    print("\n--- Demo 4: Twin Prime Detection ---")
-    twin_count = spectrum.get(2, 0)
-    print(f"Bars of length 2 (twin primes): {twin_count}")
-    print(f"Bars of length 4 (cousin primes): {spectrum.get(4, 0)}")
-    print(f"Bars of length 6 (sexy primes): {spectrum.get(6, 0)}")
-
-    # Demo 5: Gap parity
-    print("\n--- Demo 5: Gap Parity ---")
-    odd_gaps = [g for g in gaps if g % 2 == 1]
-    even_gaps = [g for g in gaps if g % 2 == 0]
-    print(f"Odd gaps: {len(odd_gaps)} (should be exactly 1, which is gap 3-2=1)")
-    print(f"Even gaps: {len(even_gaps)}")
-    print(f"The unique odd gap: {odd_gaps}")
-    print(f"✓ All gaps except first are even: {odd_gaps == [1]}")
-
-    # Demo 6: H₁ triviality
-    print("\n--- Demo 6: H₁ Triviality for 1D Point Clouds ---")
-    print("For any 1D point cloud, the Rips complex at every scale is a")
-    print("disjoint union of cliques (complete subgraphs).")
-    print("Key property: if points[i] and points[k] are connected (i < k),")
-    print("then ALL intermediate points[j] (i ≤ j ≤ k) are pairwise connected.")
-    print("Cliques are contractible → H_k = 0 for all k ≥ 1.")
-    print()
-    print("DISPROOF: The conjecture that H₁ detects twin primes is FALSE.")
-    print("Twin primes create H₀ bars of length 2, not H₁ features.")
-
-    # Demo 7: Comparison with Poisson process
-    print("\n--- Demo 7: Poisson Process Comparison ---")
-    for N in [100, 1000, 10000, 100000]:
-        primes_N = sieve_of_eratosthenes(N)
-        if len(primes_N) < 2:
-            continue
-        gaps_N = gap_sequence(primes_N)
-        mean_gap = sum(gaps_N) / len(gaps_N)
-        log_N = math.log(N)
-        print(f"  N={N:>7d}: mean gap = {mean_gap:.3f}, log(N) = {log_N:.3f}, "
-              f"ratio = {mean_gap/log_N:.4f}")
-
-    print("\n" + "=" * 70)
-    print("All demonstrations completed successfully.")
-    print("=" * 70)
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Prime Number Barcode and Betti Curve
-
-Produces three subplots:
-1. H₀ barcode of the prime point cloud
-2. Betti curve β₀(ε)
-3. Gap spectrum (histogram of bar lengths)
-"""
-
-import math
-
-
-def sieve(n):
-    if n < 2:
-        return []
-    is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i*i, n + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, n + 1) if is_prime[i]]
-
-
-def gap_sequence(pts):
-    return [pts[i+1] - pts[i] for i in range(len(pts) - 1)]
-
-
-def main():
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        import matplotlib.patches as mpatches
-    except ImportError:
-        print("matplotlib not available, skipping visualization")
-        return
-
-    N = 200
-    primes = sieve(N)
-    gaps = gap_sequence(primes)
-
-    fig, axes = plt.subplots(3, 1, figsize=(14, 12))
-
-    # Plot 1: Barcode
-    ax1 = axes[0]
-    colors_map = {1: '#e74c3c', 2: '#2ecc71', 4: '#3498db', 6: '#9b59b6'}
-    for idx, g in enumerate(gaps):
-        color = colors_map.get(g, '#95a5a6')
-        ax1.barh(idx, g, left=0, height=0.8, color=color, alpha=0.8)
-
-    patches = [
-        mpatches.Patch(color='#e74c3c', label='Gap 1 (2→3, unique odd)'),
-        mpatches.Patch(color='#2ecc71', label='Gap 2 (twin primes)'),
-        mpatches.Patch(color='#3498db', label='Gap 4 (cousin primes)'),
-        mpatches.Patch(color='#9b59b6', label='Gap 6 (sexy primes)'),
-        mpatches.Patch(color='#95a5a6', label='Other gaps'),
+    # Add legend
+    from matplotlib.lines import Line2D
+    legend_elements = [
+        Line2D([0], [0], color='#e74c3c', lw=6, label='Twin prime gap (2)'),
+        Line2D([0], [0], color='#3498db', lw=6, label='Even gap (> 2)'),
+        Line2D([0], [0], color='#2ecc71', lw=6, label='Gap = 1 (only 2→3)'),
     ]
-    ax1.legend(handles=patches, loc='upper right', fontsize=8)
-    ax1.set_xlabel('Bar length (= prime gap)')
-    ax1.set_ylabel('Bar index')
-    ax1.set_title(f'H₀ Barcode of Prime Point Cloud (primes up to {N})')
+    ax1.legend(handles=legend_elements, loc='lower right', fontsize=10)
 
-    # Plot 2: Betti curve
-    ax2 = axes[1]
-    max_gap = max(gaps)
-    epsilons = list(range(max_gap + 2))
-    betti = [1 + sum(1 for g in gaps if g > eps) for eps in epsilons]
-    ax2.step(epsilons, betti, where='post', color='#2c3e50', linewidth=2)
-    ax2.fill_between(epsilons, betti, step='post', alpha=0.15, color='#3498db')
-    ax2.axhline(y=1, color='red', linestyle='--', alpha=0.5, label='Single component')
-    ax2.set_xlabel('Scale ε')
-    ax2.set_ylabel('β₀(ε) = # components')
-    ax2.set_title('Betti Curve: Connected Components vs. Scale')
-    ax2.legend()
-
-    # Annotate key scales
-    ax2.annotate('Twin primes\nmerge at ε=2', xy=(2, betti[2]),
-                xytext=(4, betti[2] + 5),
-                arrowprops=dict(arrowstyle='->', color='green'),
-                fontsize=8, color='green')
-
-    # Plot 3: Gap spectrum
-    ax3 = axes[2]
+    # Gap distribution histogram
     from collections import Counter
-    spectrum = Counter(gaps)
-    gap_sizes = sorted(spectrum.keys())
-    counts = [spectrum[g] for g in gap_sizes]
-    colors = [colors_map.get(g, '#95a5a6') for g in gap_sizes]
-    ax3.bar(gap_sizes, counts, color=colors, edgecolor='black', linewidth=0.5)
-    ax3.set_xlabel('Gap size')
-    ax3.set_ylabel('Count')
-    ax3.set_title('Gap Spectrum (Histogram of H₀ Barcode)')
+    gap_counts = Counter(gaps)
+    gap_vals = sorted(gap_counts.keys())
+    counts = [gap_counts[g] for g in gap_vals]
 
-    # Mark even/odd
-    ax3.annotate('Unique odd gap', xy=(1, spectrum.get(1, 0)),
-                xytext=(3, spectrum.get(1, 0) + 1),
-                arrowprops=dict(arrowstyle='->', color='red'),
-                fontsize=8, color='red')
+    colors = ['#e74c3c' if g == 2 else '#3498db' for g in gap_vals]
+    ax2.barh(gap_vals, counts, color=colors, alpha=0.8, edgecolor='white')
+    ax2.set_xlabel('Frequency', fontsize=12)
+    ax2.set_ylabel('Gap size', fontsize=12)
+    ax2.set_title('Gap Distribution', fontsize=14, fontweight='bold')
+
+    # Add mean line
+    mean_gap = sum(gaps) / len(gaps)
+    predicted = math.log(primes[-1])
+    ax2.axhline(y=mean_gap, color='red', linestyle='--', alpha=0.7,
+                label=f'Mean gap: {mean_gap:.1f}')
+    ax2.axhline(y=predicted, color='green', linestyle='--', alpha=0.7,
+                label=f'log(N): {predicted:.1f}')
+    ax2.legend(fontsize=9)
 
     plt.tight_layout()
-    plt.savefig('prime_barcode.png', dpi=150, bbox_inches='tight')
-    print(f"Saved prime_barcode.png")
+    plt.savefig(save_path, dpi=150, bbox_inches='tight')
+    print(f"Saved barcode visualization to {save_path}")
+    plt.close()
+
+
+def plot_component_staircase(primes, save_path="staircase.png"):
+    gaps = prime_gaps(primes)
+    max_gap = max(gaps)
+
+    epsilons = list(range(0, max_gap + 2))
+    components = [1 + sum(1 for g in gaps if g > eps) for eps in epsilons]
+
+    fig, ax = plt.subplots(figsize=(12, 6))
+    ax.step(epsilons, components, where='post', color='#2c3e50', linewidth=2)
+    ax.fill_between(epsilons, components, step='post', alpha=0.1, color='#3498db')
+
+    # Mark transition points
+    unique_gaps = sorted(set(gaps))
+    for g in unique_gaps:
+        nc = 1 + sum(1 for gap in gaps if gap > g)
+        ax.plot(g, nc, 'o', color='#e74c3c', markersize=6, zorder=5)
+
+    ax.set_xlabel('Scale ε', fontsize=12)
+    ax.set_ylabel('Number of Components', fontsize=12)
+    ax.set_title(f'Component Staircase: H₀ of Primes up to {primes[-1]}',
+                fontsize=14, fontweight='bold')
+    ax.set_xlim(-0.5, max_gap + 1)
+    ax.grid(True, alpha=0.3)
+
+    # Annotate key transitions
+    ax.annotate(f'ε=0: {len(primes)} components\n(each prime isolated)',
+               xy=(0, len(primes)), xytext=(max_gap*0.3, len(primes)*0.9),
+               fontsize=9, arrowprops=dict(arrowstyle='->', color='gray'))
+    ax.annotate(f'ε={max_gap}: 1 component\n(all connected)',
+               xy=(max_gap, 1), xytext=(max_gap*0.6, len(primes)*0.3),
+               fontsize=9, arrowprops=dict(arrowstyle='->', color='gray'))
+
+    plt.tight_layout()
+    plt.savefig(save_path, dpi=150, bbox_inches='tight')
+    print(f"Saved staircase visualization to {save_path}")
+    plt.close()
 
 
 if __name__ == "__main__":
-    main()
+    primes = sieve_primes(1000)
+    plot_barcode(primes, max_bars=60, save_path="barcode.png")
+    plot_component_staircase(primes, save_path="staircase.png")
 
-
-#!/usr/bin/env python3
-"""
-Visualization: Persistence Landscape and Poisson Comparison
-
-1. Persistence landscape λ₁(ε) showing the integral = total persistence
-2. Comparison of prime gap distribution with exponential (Poisson) model
-"""
-
-import math
-
-
-def sieve(n):
-    if n < 2:
-        return []
-    is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i*i, n + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, n + 1) if is_prime[i]]
-
-
-def gap_sequence(pts):
-    return [pts[i+1] - pts[i] for i in range(len(pts) - 1)]
-
-
-def main():
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        import numpy as np
-    except ImportError:
-        print("matplotlib/numpy not available, skipping visualization")
-        return
-
-    N = 10000
-    primes = sieve(N)
-    gaps = gap_sequence(primes)
-
-    fig, axes = plt.subplots(2, 1, figsize=(14, 10))
-
-    # Plot 1: Persistence landscape with integral shading
-    ax1 = axes[0]
-    max_gap = max(gaps)
-    epsilons = list(range(max_gap + 1))
-    landscape = [sum(1 for g in gaps if g > eps) for eps in epsilons]
-
-    ax1.step(epsilons, landscape, where='post', color='#2c3e50', linewidth=2)
-    ax1.fill_between(epsilons, landscape, step='post', alpha=0.2, color='#e74c3c')
-
-    total = sum(gaps)
-    integral = sum(landscape[:max_gap])
-    ax1.set_xlabel('Scale ε')
-    ax1.set_ylabel('λ₁(ε) = # bars > ε')
-    ax1.set_title(f'Persistence Landscape (primes up to {N})\n'
-                  f'Shaded area = ∑λ₁(ε) = {integral} = total persistence = {total}')
-    ax1.annotate(f'Betti Integral Formula:\n∑λ₁(ε) = ∑bars = {total}',
-                xy=(max_gap//2, max(landscape)//2),
-                fontsize=12, ha='center',
-                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-
-    # Plot 2: Gap distribution vs exponential (Cramer's model)
-    ax2 = axes[1]
-    from collections import Counter
-    spectrum = Counter(gaps)
-
-    # Normalize gaps by log(N) for comparison with exponential
-    log_N = math.log(N)
-    normalized_gaps = [g / log_N for g in gaps]
-
-    # Histogram of normalized gaps
-    bins = np.linspace(0, max(normalized_gaps) + 0.5, 30)
-    ax2.hist(normalized_gaps, bins=bins, density=True, alpha=0.7,
-             color='#3498db', edgecolor='black', linewidth=0.5,
-             label='Prime gaps / log(N)')
-
-    # Exponential distribution (Cramer's model prediction)
-    x = np.linspace(0, max(normalized_gaps) + 0.5, 200)
-    exp_pdf = np.exp(-x)
-    ax2.plot(x, exp_pdf, 'r-', linewidth=2,
-             label=f'Exp(1) density (Cramér model)')
-
-    ax2.set_xlabel('Normalized gap g / log(N)')
-    ax2.set_ylabel('Density')
-    ax2.set_title(f'Prime Gap Distribution vs. Poisson Prediction (N = {N})')
-    ax2.legend()
-
-    mean_norm = np.mean(normalized_gaps)
-    ax2.annotate(f'Mean normalized gap: {mean_norm:.3f}\n(Cramér predicts: 1.000)',
-                xy=(2, 0.5), fontsize=10,
-                bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.5))
-
-    plt.tight_layout()
-    plt.savefig('persistence_landscape.png', dpi=150, bbox_inches='tight')
-    print(f"Saved persistence_landscape.png")
-
-
-if __name__ == "__main__":
-    main()
+    # Also do a larger scale
+    primes_large = sieve_primes(10000)
+    plot_barcode(primes_large, max_bars=80, save_path="barcode_10k.png")

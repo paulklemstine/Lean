@@ -1,215 +1,183 @@
 #!/usr/bin/env python3
 """
-Algorithms for Persistent Homology of 1D Point Clouds.
+Algorithms for Persistent Homology of Prime Point Clouds
 
-Type-hinted implementations of the core algorithms for computing
-H₀ persistent homology of finite point clouds on the real line.
+Type-hinted implementations of the core algorithms used in
+the persistent homology analysis of prime numbers.
 """
 
-from typing import NamedTuple
-from collections import Counter
+from typing import List, Tuple, Dict, Optional
 import math
 
 
-class Bar(NamedTuple):
-    """A bar in the persistence barcode."""
-    birth: float
-    death: float
-    length: float
+def sieve_primes(limit: int) -> List[int]:
+    """Sieve of Eratosthenes returning all primes up to limit.
 
-
-class ArithPersistenceSig(NamedTuple):
-    """Arithmetic Persistence Signature: bundles topological and arithmetic data."""
-    num_points: int
-    bars: list[int]
-    total_persistence: int
-    max_bar: int
-    gap_spectrum: dict[int, int]
-
-
-def sieve(n: int) -> list[int]:
-    """Sieve of Eratosthenes."""
-    if n < 2:
-        return []
-    is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i*i, n + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, n + 1) if is_prime[i]]
-
-
-def compute_gap_sequence(points: list[int]) -> list[int]:
-    """
-    Compute the gap sequence of a sorted list of points.
-
-    For a sorted list [a₁, a₂, ..., aₙ], returns [a₂-a₁, a₃-a₂, ..., aₙ-aₙ₋₁].
-    This IS the H₀ barcode of the 1D Rips filtration.
-
-    Time complexity: O(n)
+    Time complexity: O(n log log n)
     Space complexity: O(n)
     """
-    return [points[i+1] - points[i] for i in range(len(points) - 1)]
+    if limit < 2:
+        return []
+    is_prime = [True] * (limit + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(limit**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i*i, limit + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, limit + 1) if is_prime[i]]
 
 
-def compute_components(gaps: list[int], epsilon: float) -> int:
+def prime_gaps(primes: List[int]) -> List[int]:
+    """Compute consecutive prime gaps.
+
+    Each gap g_i = p_{i+1} - p_i is the death time of bar i
+    in the H₀ barcode.
     """
-    Compute the number of connected components at filtration parameter epsilon.
+    return [primes[i+1] - primes[i] for i in range(len(primes) - 1)]
 
-    For a 1D sorted point cloud, two consecutive points are in the same
-    component iff their gap ≤ epsilon.
 
-    Time complexity: O(n)
+def h0_barcode(primes: List[int]) -> List[Tuple[int, int]]:
+    """Compute the H₀ persistent barcode of a 1D point cloud.
+
+    For points on the real line, H₀ bars are determined entirely
+    by consecutive gaps. Bar i is born at 0 and dies at gap_i.
+
+    Returns: List of (birth, death) pairs.
+    """
+    gaps = prime_gaps(primes)
+    return [(0, g) for g in gaps]
+
+
+def count_components(gaps: List[int], epsilon: int) -> int:
+    """Count connected components at scale epsilon.
+
+    Theorem (Component-Gap Correspondence):
+        components(ε) = 1 + #{i : gap_i > ε}
+
+    This is the core link between persistent H₀ and prime gaps.
     """
     if not gaps:
-        return 1 if gaps is not None else 0
+        return 0
     return 1 + sum(1 for g in gaps if g > epsilon)
 
 
-def compute_betti_curve(gaps: list[int]) -> list[tuple[int, int]]:
+def persistence_diagram(primes: List[int]) -> List[Tuple[int, int]]:
+    """Compute the persistence diagram for H₀.
+
+    The persistence diagram plots (birth, death) for each bar.
+    For the prime point cloud, all births are at 0, so the diagram
+    is just the set of points (0, gap_i).
     """
-    Compute the Betti curve β₀(ε) for all integer scales.
+    return h0_barcode(primes)
 
-    Returns list of (epsilon, num_components) pairs.
-    The curve is antitone (non-increasing) and stabilizes at 1.
 
-    Time complexity: O(n * max_gap)
+def total_persistence(primes: List[int], p: float = 1.0) -> float:
+    """Compute the total p-persistence of the H₀ barcode.
+
+    Total p-persistence = Σ |death_i - birth_i|^p = Σ gap_i^p
+
+    For p=1, this equals the sum of all prime gaps = p_n - p_1.
     """
-    if not gaps:
-        return [(0, 1)]
-    max_gap = max(gaps)
-    return [(eps, compute_components(gaps, eps)) for eps in range(max_gap + 1)]
+    gaps = prime_gaps(primes)
+    return sum(g**p for g in gaps)
 
 
-def compute_persistence_landscape(gaps: list[int]) -> list[tuple[int, int]]:
+def gap_count_function(primes: List[int]) -> Dict[int, int]:
+    """Count occurrences of each gap size.
+
+    Returns a dictionary mapping gap sizes to their frequencies.
+    This is the empirical distribution of H₀ bar lengths.
     """
-    Compute the persistence landscape λ₁(ε).
+    from collections import Counter
+    return dict(Counter(prime_gaps(primes)))
 
-    λ₁(ε) = number of bars strictly greater than ε.
-    Total persistence = ∑ λ₁(ε) (Betti integral formula).
 
-    Time complexity: O(n * max_gap)
+def component_staircase(primes: List[int]) -> List[Tuple[int, int]]:
+    """Compute the component count staircase function.
+
+    Returns (epsilon, components) pairs at each transition point.
+    The staircase is constant between consecutive gap values
+    (proved in components_constant_between_gaps).
     """
-    if not gaps:
-        return []
-    max_gap = max(gaps)
-    return [(eps, sum(1 for g in gaps if g > eps)) for eps in range(max_gap)]
+    gaps = prime_gaps(primes)
+    unique_gaps = sorted(set(gaps))
+
+    staircase = [(0, len(primes))]  # ε=0: each prime is its own component
+    for eps in unique_gaps:
+        nc = count_components(gaps, eps)
+        staircase.append((eps, nc))
+
+    return staircase
 
 
-def compute_aps(points: list[int]) -> ArithPersistenceSig:
+def exponential_cdf(x: float, mean: float) -> float:
+    """CDF of the exponential distribution with given mean."""
+    if x < 0:
+        return 0.0
+    return 1.0 - math.exp(-x / mean)
+
+
+def ks_statistic(gaps: List[int], predicted_mean: float) -> float:
+    """Kolmogorov-Smirnov statistic comparing gap distribution
+    to exponential(predicted_mean).
+
+    This tests Cramér's conjecture that prime gaps follow
+    an exponential distribution with mean ≈ log(N).
     """
-    Construct the Arithmetic Persistence Signature of a sorted point cloud.
+    sorted_gaps = sorted(gaps)
+    n = len(sorted_gaps)
+    max_diff = 0.0
+    for i, g in enumerate(sorted_gaps):
+        empirical = (i + 1) / n
+        theoretical = exponential_cdf(g, predicted_mean)
+        max_diff = max(max_diff, abs(empirical - theoretical))
+    return max_diff
 
-    The APS bundles:
-    - Topological data (barcode, Betti curve)
-    - Arithmetic data (gap parity, gap bounds)
-    - Analytic data (total persistence, mean gap)
 
-    Time complexity: O(n)
+def bertrand_gap_bound(p: int) -> int:
+    """Upper bound on the gap after prime p, from Bertrand's postulate.
+
+    Bertrand's postulate: ∀ n ≥ 1, ∃ prime q with n < q ≤ 2n.
+    Therefore the next prime after p is at most 2p, giving gap < p.
     """
-    gaps = compute_gap_sequence(points)
-    return ArithPersistenceSig(
-        num_points=len(points),
-        bars=gaps,
-        total_persistence=sum(gaps),
-        max_bar=max(gaps) if gaps else 0,
-        gap_spectrum=dict(Counter(gaps))
-    )
+    return p  # gap < p, so p is an upper bound
 
 
-def verify_betti_integral(gaps: list[int]) -> bool:
+def even_gap_verification(primes: List[int]) -> Tuple[int, int]:
+    """Verify that all gaps between primes > 2 are even.
+
+    Returns (total_gaps_checked, violations_found).
+    By our theorem gap_between_odd_primes, violations should be 0.
     """
-    Verify the Betti integral formula: ∑_{ε=0}^{M-1} λ₁(ε) = ∑ bars.
+    gaps_to_check = [(primes[i], primes[i+1] - primes[i])
+                     for i in range(len(primes) - 1)
+                     if primes[i] > 2]
+    violations = sum(1 for _, g in gaps_to_check if g % 2 != 0)
+    return len(gaps_to_check), violations
 
-    This is a key theorem proved formally in Lean 4.
 
-    Time complexity: O(n * max_gap)
+def factorial_gap_witness(M: int) -> Tuple[int, int]:
+    """Find a composite run of length ≥ M using the factorial construction.
+
+    The numbers (M+1)!+2, (M+1)!+3, ..., (M+1)!+(M+1) are all composite.
+    This witnesses our theorem exists_large_prime_gap.
     """
-    if not gaps:
-        return True
-    max_gap = max(gaps)
-    integral = sum(sum(1 for g in gaps if g > eps) for eps in range(max_gap))
-    return integral == sum(gaps)
-
-
-def verify_total_persistence(points: list[int]) -> bool:
-    """
-    Verify the total persistence identity: ∑ gaps = last - first.
-
-    Telescoping sum identity proved formally in Lean 4.
-
-    Time complexity: O(n)
-    """
-    if len(points) < 2:
-        return True
-    gaps = compute_gap_sequence(points)
-    return sum(gaps) == points[-1] - points[0]
-
-
-def verify_gap_parity(primes: list[int]) -> bool:
-    """
-    Verify that all prime gaps except the first (3-2=1) are even.
-
-    For primes p, q > 2, both are odd, so q - p is even.
-    Proved formally in Lean 4.
-
-    Time complexity: O(n)
-    """
-    gaps = compute_gap_sequence(primes)
-    if not gaps:
-        return True
-    # First gap (3-2=1) can be odd
-    return all(g % 2 == 0 for g in gaps[1:])
-
-
-def verify_downward_closure(points: list[int], epsilon: float) -> bool:
-    """
-    Verify the 1D Rips downward closure property:
-    If points[i] and points[k] are connected (|p_i - p_k| ≤ ε),
-    then all intermediate points are pairwise connected.
-
-    This is the key property that makes H₁ = 0 for 1D point clouds.
-    Proved formally in Lean 4.
-
-    Time complexity: O(n²)
-    """
-    n = len(points)
-    for i in range(n):
-        for k in range(i + 2, n):
-            if abs(points[k] - points[i]) <= epsilon:
-                # Check all intermediate pairs
-                for j in range(i + 1, k):
-                    if abs(points[j] - points[i]) > epsilon:
-                        return False
-                    if abs(points[k] - points[j]) > epsilon:
-                        return False
-    return True
-
-
-def prime_aps(n: int) -> ArithPersistenceSig:
-    """
-    Compute the Arithmetic Persistence Signature of primes up to n.
-
-    Time complexity: O(n log log n) for sieve + O(π(n)) for APS
-    """
-    return compute_aps(sieve(n))
+    n = M + 1
+    factorial = math.factorial(n)
+    start = factorial + 2
+    end_ = factorial + n
+    return start, end_
 
 
 if __name__ == "__main__":
-    # Verify all properties for primes up to 10000
-    primes = sieve(10000)
-    gaps = compute_gap_sequence(primes)
+    primes = sieve_primes(10000)
+    print(f"Primes up to 10000: {len(primes)} primes")
+    print(f"Component staircase (first 10 transitions):")
+    for eps, nc in component_staircase(primes)[:10]:
+        print(f"  ε={eps}: {nc} components")
 
-    print("Verification of formally proved properties:")
-    print(f"  Total persistence identity: {verify_total_persistence(primes)}")
-    print(f"  Betti integral formula: {verify_betti_integral(gaps)}")
-    print(f"  Gap parity: {verify_gap_parity(primes)}")
-    print(f"  Downward closure (ε=10): {verify_downward_closure(primes[:50], 10)}")
+    total, violations = even_gap_verification(primes)
+    print(f"\nEven gap verification: {total} gaps checked, {violations} violations")
 
-    aps = prime_aps(10000)
-    print(f"\nAPS for primes up to 10000:")
-    print(f"  Points: {aps.num_points}")
-    print(f"  Total persistence: {aps.total_persistence}")
-    print(f"  Max bar: {aps.max_bar}")
-    print(f"  Top gap sizes: {sorted(aps.gap_spectrum.items(), key=lambda x: -x[1])[:5]}")
+    ks = ks_statistic(prime_gaps(primes), math.log(10000))
+    print(f"\nKS statistic vs Exp(log 10000): {ks:.4f}")
