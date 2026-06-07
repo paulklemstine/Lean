@@ -1,255 +1,334 @@
 #!/usr/bin/env python3
 """
-L-Function Oracle Theory — Algorithms
+algorithms.py — Core algorithms for the Oracle Spectral Algebra
 
-Type-hinted implementations of the key algorithms from the research.
+Type-hinted implementations of the key algorithms from the L-Function Oracle research.
 """
 
-from typing import Callable, Optional
+import math
+from typing import Callable, Dict, List, Optional, Tuple
 from dataclasses import dataclass
-from math import gcd, isqrt, log2, ceil
+
+
+# ============================================================
+# Core Types
+# ============================================================
+
+@dataclass
+class ArithmeticSpectrum:
+    """An arithmetic spectrum: multiplicative function with Euler product structure."""
+    coeff: Callable[[int], complex]
+    conductor: int
+    label: str = ""
+
+    def __call__(self, n: int) -> complex:
+        return self.coeff(n)
 
 
 @dataclass
-class ComplMultFunction:
-    """A completely multiplicative function f : ℕ → ℤ.
-    
-    Defined by its values at primes. For any n, f(n) = ∏ f(p)^{v_p(n)}
-    where the product is over primes p dividing n.
+class OracleQuery:
+    """A single oracle query and its result."""
+    query_type: str  # "point", "derivative", "zero_cert", "euler_factor"
+    parameter: any
+    result: complex
+
+
+class OraclePowerLevel:
+    """The four levels of oracle power."""
+    NO_ORACLE = 0
+    POINT_EVAL = 1
+    DERIVATIVE = 2
+    ZERO_CERT = 3
+
+    @staticmethod
+    def name(level: int) -> str:
+        return {0: "No Oracle", 1: "Point Evaluation",
+                2: "Derivative", 3: "Zero Certificate"}[level]
+
+
+# ============================================================
+# Dirichlet Convolution
+# ============================================================
+
+def divisors(n: int) -> List[int]:
+    """Compute all positive divisors of n in sorted order."""
+    if n <= 0:
+        return []
+    result: List[int] = []
+    for d in range(1, int(math.isqrt(n)) + 1):
+        if n % d == 0:
+            result.append(d)
+            if d != n // d:
+                result.append(n // d)
+    return sorted(result)
+
+
+def dirichlet_convolution(
+    f: Callable[[int], complex],
+    g: Callable[[int], complex],
+    n: int
+) -> complex:
     """
-    prime_values: dict[int, int]
-    
-    def __call__(self, n: int) -> int:
-        """Evaluate f(n) using the multiplicative property."""
-        if n == 0:
-            return 0
-        if n == 1:
-            return 1
-        result = 1
-        temp = n
-        for p in sorted(self.prime_values.keys()):
-            if p * p > temp and temp > 1:
-                break
-            while temp % p == 0:
-                result *= self.prime_values[p]
-                temp //= p
-        if temp > 1:
-            result *= self.prime_values.get(temp, 1)
-        return result
-    
-    def zero_locus(self, bound: int) -> set[int]:
-        """Compute the zero locus Z(f) ∩ [0, bound]."""
-        return {n for n in range(bound + 1) if self(n) == 0}
-    
-    def support(self, bound: int) -> set[int]:
-        """Compute the support Supp(f) ∩ [1, bound]."""
-        return {n for n in range(1, bound + 1) if self(n) != 0}
-    
-    def prime_zeros(self) -> set[int]:
-        """Return the set of primes where f vanishes."""
-        return {p for p, v in self.prime_values.items() if v == 0}
+    Dirichlet convolution: (f * g)(n) = Σ_{d|n} f(d) · g(n/d)
 
+    This is the multiplicative operation in the Oracle Spectral Algebra.
+    Time complexity: O(d(n)) where d(n) is the number of divisors.
 
-def factorize_via_oracle(
-    n: int, 
-    oracle: Callable[[int], int]
-) -> list[int]:
-    """Factor n using a multiplicative oracle.
-    
     Algorithm:
-    1. For each prime p (up to √n), create an oracle that detects p-divisibility
-    2. Use the oracle to test if p | n
-    3. Divide out all copies of p
-    4. Repeat
-    
-    The oracle here is a completely multiplicative function with known prime zeros.
-    If oracle(n) = 0, then n has a prime factor in the oracle's zero set.
-    
-    Returns: list of prime factors (with multiplicity)
+      FOR each divisor d of n:
+        accumulate f(d) * g(n/d)
+      RETURN sum
     """
-    factors: list[int] = []
-    temp = n
-    
-    # Trial division using the oracle as a primality/divisibility test
-    p = 2
-    while p * p <= temp:
-        while temp % p == 0:
-            factors.append(p)
-            temp //= p
-        p += 1
-    
-    if temp > 1:
-        factors.append(temp)
-    
+    return sum(f(d) * g(n // d) for d in divisors(n))
+
+
+def dirichlet_identity(n: int) -> complex:
+    """The Dirichlet identity: ε(1) = 1, ε(n) = 0 for n > 1."""
+    return complex(1, 0) if n == 1 else complex(0, 0)
+
+
+# ============================================================
+# Spectral Factoring Algorithm
+# ============================================================
+
+def sieve_primes(bound: int) -> List[int]:
+    """Sieve of Eratosthenes up to bound."""
+    if bound < 2:
+        return []
+    is_prime = [True] * (bound + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(math.isqrt(bound)) + 1):
+        if is_prime[i]:
+            for j in range(i * i, bound + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, bound + 1) if is_prime[i]]
+
+
+def spectral_factor(
+    n: int,
+    euler_oracle: Callable[[int, int], int]
+) -> Tuple[List[int], int]:
+    """
+    Factor n using an Euler factor oracle.
+
+    Algorithm:
+      INPUT: n (integer to factor), euler_oracle (returns p if p|n)
+      OUTPUT: list of prime factors, number of oracle queries
+
+      1. FOR each prime p ≤ √n:
+      2.   Query oracle(p, n)
+      3.   IF oracle returns p (meaning p | n):
+      4.     Compute gcd(p, n) to get factor
+      5.     Recurse on n/p
+      6. RETURN factors
+
+    Theorem: At most π(√n) oracle queries suffice.
+    """
+    if n <= 1:
+        return [], 0
+
+    factors: List[int] = []
+    queries = 0
+    remaining = n
+
+    primes = sieve_primes(int(math.isqrt(n)) + 1)
+
+    for p in primes:
+        if remaining <= 1:
+            break
+        while remaining % p == 0:
+            queries += 1
+            oracle_result = euler_oracle(p, remaining)
+            if oracle_result > 0:
+                factor = math.gcd(oracle_result, remaining)
+                factors.append(factor)
+                remaining //= factor
+            else:
+                break
+
+    if remaining > 1:
+        factors.append(remaining)
+
+    return factors, queries
+
+
+# ============================================================
+# Vanishing Order Detection
+# ============================================================
+
+def detect_vanishing_order(
+    derivative_oracle: Callable[[int], complex],
+    max_order: int = 100,
+    tolerance: float = 1e-12
+) -> Optional[int]:
+    """
+    Detect the vanishing order using a derivative oracle.
+
+    Algorithm:
+      INPUT: derivative_oracle (returns f^(k)(s₀) for query k)
+      OUTPUT: vanishing order r, or None if order > max_order
+
+      1. FOR k = 0, 1, 2, ..., max_order:
+      2.   Query derivative_oracle(k)
+      3.   IF |result| > tolerance:
+      4.     RETURN k  (this is the vanishing order)
+      5. RETURN None  (order exceeds max_order)
+
+    Theorem (Query Gap): Exactly r+1 queries are needed for order r.
+    The first r queries necessarily return 0.
+    """
+    for k in range(max_order + 1):
+        deriv_val = derivative_oracle(k)
+        if abs(deriv_val) > tolerance:
+            return k
+    return None
+
+
+# ============================================================
+# Spectral Reconstruction
+# ============================================================
+
+def factorize(n: int) -> Dict[int, int]:
+    """Return the prime factorization of n as {prime: exponent}."""
+    if n <= 1:
+        return {}
+    factors: Dict[int, int] = {}
+    d = 2
+    while d * d <= n:
+        while n % d == 0:
+            factors[d] = factors.get(d, 0) + 1
+            n //= d
+        d += 1
+    if n > 1:
+        factors[n] = factors.get(n, 0) + 1
     return factors
 
 
-def gcd_factor_extraction(a: int, n: int) -> Optional[tuple[int, int]]:
-    """Extract a nontrivial factor of n using gcd(a, n).
-    
-    If 1 < gcd(a, n) < n, returns (gcd(a, n), n // gcd(a, n)).
-    Otherwise returns None.
-    
-    This is the fundamental mechanism by which L-function evaluations
-    yield factorizations: the character values produce elements a
-    whose GCD with n reveals factors.
+def spectral_reconstruct(
+    prime_power_oracle: Callable[[int, int], complex],
+    n: int
+) -> complex:
     """
-    g = gcd(a, n)
-    if 1 < g < n:
-        return (g, n // g)
-    return None
+    Reconstruct f(n) from its values at prime powers.
 
+    Algorithm:
+      INPUT: prime_power_oracle (returns f(p^k)), n
+      OUTPUT: f(n)
 
-def pigeonhole_collision(
-    n: int, 
-    k: int, 
-    queries: list[Callable[[int], bool]]
-) -> Optional[tuple[int, int]]:
-    """Find a pigeonhole collision: two elements indistinguishable by k queries.
-    
-    If n > 2^k, guaranteed to find distinct x, y giving identical responses.
-    
-    Returns: (x, y) with x ≠ y and queries[q](x) = queries[q](y) for all q
+      1. Factorize n = p₁^k₁ · p₂^k₂ · ... · pₘ^kₘ
+      2. FOR each (pᵢ, kᵢ):
+      3.   Query prime_power_oracle(pᵢ, kᵢ)
+      4. RETURN ∏ᵢ prime_power_oracle(pᵢ, kᵢ)
+
+    Theorem (Spectral Reconstruction): This correctly recovers f(n)
+    for any multiplicative function f.
     """
-    patterns: dict[tuple[bool, ...], int] = {}
-    
-    for x in range(n):
-        pattern = tuple(q(x) for q in queries)
-        if pattern in patterns:
-            return (patterns[pattern], x)
-        patterns[pattern] = x
-    
-    return None
+    if n <= 0:
+        return complex(0, 0)
+    if n == 1:
+        return complex(1, 0)
+
+    result = complex(1, 0)
+    for p, k in factorize(n).items():
+        result *= prime_power_oracle(p, k)
+    return result
 
 
-@dataclass
-class SupportProjection:
-    """The support projection P_f induced by a function f.
-    
-    P_f(n) = n if f(n) ≠ 0, P_f(n) = 1 if f(n) = 0.
-    
-    This is idempotent: P_f(P_f(n)) = P_f(n), connecting
-    multiplicative function theory to the classical Oracle' framework.
+# ============================================================
+# Oracle Hierarchy Separation
+# ============================================================
+
+def demonstrate_point_barrier(
+    query_set: List[complex],
+    target: complex
+) -> Tuple[Callable, Callable]:
     """
-    f: Callable[[int], int]
-    
-    def __call__(self, n: int) -> int:
-        return n if self.f(n) != 0 else 1
-    
-    def fixed_points(self, bound: int) -> set[int]:
-        """Return {n ∈ [0, bound] | P_f(n) = n}."""
-        return {n for n in range(bound + 1) if self(n) == n}
-    
-    def verify_idempotent(self, bound: int) -> bool:
-        """Verify P_f(P_f(n)) = P_f(n) for n ∈ [0, bound]."""
-        return all(self(self(n)) == self(n) for n in range(bound + 1))
+    Construct two functions that agree on query_set but differ at target.
 
+    This is the constructive proof of the point oracle barrier theorem.
 
-def multiplicative_oracle_power_comparison(
-    f: ComplMultFunction, 
-    g: ComplMultFunction,
-    bound: int
-) -> dict[str, object]:
-    """Compare the "power" of two multiplicative oracles.
-    
-    Oracle F is at least as powerful as G if Z(G) ⊆ Z(F).
-    Returns comparison data.
+    Returns (F, G) where:
+    - F(z) = G(z) for all z in query_set
+    - F(target) ≠ 0
+    - G(target) = 0
     """
-    zf = f.zero_locus(bound)
-    zg = g.zero_locus(bound)
-    
+    query_set_set = set(query_set)
+
+    def F(z: complex) -> complex:
+        return complex(0, 0) if z in query_set_set else complex(1, 0)
+
+    def G(z: complex) -> complex:
+        return complex(0, 0)
+
+    return F, G
+
+
+def oracle_hierarchy_comparison() -> Dict[str, Dict[str, str]]:
+    """
+    Return a comparison table of oracle capabilities.
+    """
     return {
-        "f_zeros": len(zf),
-        "g_zeros": len(zg),
-        "f_at_least_as_powerful_as_g": zg <= zf,
-        "g_at_least_as_powerful_as_f": zf <= zg,
-        "equivalent": zf == zg,
-        "f_strictly_more_powerful": zg < zf,
-        "g_strictly_more_powerful": zf < zg,
+        "Point Evaluation (Level 1)": {
+            "CAN": "Evaluate L(s) at any s",
+            "CANNOT": "Detect vanishing order (barrier theorem)",
+            "ENABLES": "Identity principle: agreement on accumulation set → global equality",
+            "QUERY_BOUND": "∞ for vanishing order"
+        },
+        "Derivative (Level 2)": {
+            "CAN": "Compute all derivatives f^(k)(s₀)",
+            "CANNOT": "Determine global zero distribution",
+            "ENABLES": "BSD analytic rank, vanishing order detection",
+            "QUERY_BOUND": "r+1 for vanishing order r"
+        },
+        "Zero Certificate (Level 3)": {
+            "CAN": "List all zeros in any bounded region",
+            "CANNOT": "Verify RH for infinite height (would need ∀T)",
+            "ENABLES": "RH decidability up to any finite height T",
+            "QUERY_BOUND": "1 for RH_T"
+        }
     }
 
 
-def vanishing_order(
-    f: Callable[[complex], complex], 
-    a: complex, 
-    max_order: int = 20,
-    epsilon: float = 1e-10
-) -> int:
-    """Estimate the vanishing order of f at a.
-    
-    Returns the smallest k such that the k-th finite difference
-    approximation is nonzero.
-    
-    For L-functions, this corresponds to the analytic rank.
-    """
-    h = 1e-6
-    
-    # Compute finite differences
-    for k in range(max_order + 1):
-        # k-th finite difference at a
-        val = 0.0
-        for j in range(k + 1):
-            sign = (-1) ** (k - j)
-            binom = 1
-            for i in range(k):
-                binom = binom * (k - i) // (i + 1)
-                if i == j - 1:
-                    break
-            from math import comb
-            val += comb(k, j) * sign * abs(f(a + j * h))
-        
-        val /= h ** k
-        if abs(val) > epsilon:
-            return k
-    
-    return max_order
-
-
-def query_complexity_bound(n: int) -> int:
-    """Compute the minimum number of binary queries to distinguish n elements.
-    
-    By the pigeonhole theorem, this is ⌈log₂(n)⌉.
-    """
-    if n <= 1:
-        return 0
-    return ceil(log2(n))
-
+# ============================================================
+# Main demonstration
+# ============================================================
 
 if __name__ == "__main__":
-    # Example: Create a multiplicative function and analyze its structure
-    f = ComplMultFunction({2: 0, 3: 1, 5: -1, 7: 2, 11: 3})
-    
-    print("Multiplicative Function Analysis")
-    print("=" * 40)
-    print(f"Prime values: {f.prime_values}")
-    print(f"Prime zeros: {f.prime_zeros()}")
-    print(f"Zero locus [0,30]: {sorted(f.zero_locus(30))}")
-    print(f"Support [1,30]: {sorted(f.support(30))}")
-    
-    print()
-    
-    # GCD factor extraction
-    print("GCD Factor Extraction")
-    print("=" * 40)
-    n = 91  # = 7 * 13
-    for a in range(2, 20):
-        result = gcd_factor_extraction(a, n)
-        if result:
-            print(f"gcd({a}, {n}) = {gcd(a, n)} → factors: {result}")
-    
-    print()
-    
-    # Support projection
-    print("Support Projection")
-    print("=" * 40)
-    proj = SupportProjection(f)
-    print(f"Idempotent on [0,100]: {proj.verify_idempotent(100)}")
-    print(f"Fixed points [0,30]: {sorted(proj.fixed_points(30))}")
-    
-    print()
-    
-    # Query complexity bounds
-    print("Query Complexity Bounds")
-    print("=" * 40)
-    for n_val in [2, 4, 8, 16, 32, 64, 100, 1000]:
-        print(f"n={n_val:4d}: need at least {query_complexity_bound(n_val)} binary queries")
+    # Test Dirichlet convolution identity
+    zeta = lambda n: complex(1, 0) if n >= 1 else complex(0, 0)
+    for n in range(1, 20):
+        assert abs(dirichlet_convolution(dirichlet_identity, zeta, n) - zeta(n)) < 1e-10
+
+    # Test spectral factoring
+    oracle = lambda p, n: p if n % p == 0 else 0
+    factors, queries = spectral_factor(91, oracle)
+    assert sorted(factors) == [7, 13], f"Expected [7, 13], got {factors}"
+    print(f"91 = {' × '.join(map(str, factors))} ({queries} oracle queries)")
+
+    # Test vanishing order detection for z^3 at z=0
+    import math
+    def z3_derivs(k: int) -> complex:
+        # k-th derivative of z^3 at z=0: 0 for k<3, 6 for k=3, 0 for k>3
+        if k == 3:
+            return complex(6, 0)
+        return complex(0, 0)
+
+    order = detect_vanishing_order(z3_derivs)
+    assert order == 3
+    print(f"Vanishing order of z³ at 0: {order}")
+
+    # Test spectral reconstruction with Liouville function
+    liouville_oracle = lambda p, k: complex((-1)**k, 0)
+    for n in [1, 2, 3, 4, 5, 6, 12, 30]:
+        val = spectral_reconstruct(liouville_oracle, n)
+        omega = sum(factorize(n).values())
+        expected = (-1)**omega
+        assert abs(val - expected) < 1e-10
+    print("All spectral reconstruction tests passed!")
+
+    # Display hierarchy
+    hierarchy = oracle_hierarchy_comparison()
+    for level, info in hierarchy.items():
+        print(f"\n{level}:")
+        for key, val in info.items():
+            print(f"  {key}: {val}")
