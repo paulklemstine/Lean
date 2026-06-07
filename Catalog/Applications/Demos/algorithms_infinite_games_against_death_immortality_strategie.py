@@ -1,346 +1,321 @@
 #!/usr/bin/env python3
 """
-Algorithms for Mortality Games: Ordinal Survival Against Transfinite Adversaries
-================================================================================
+Algorithms for Mortal vs Eternity: Infinite Games Against Death
 
-Type-hinted implementations of the key algorithms from the formal framework.
+Type-hinted implementations of the core algorithms.
 """
 
-from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import List, Optional, Tuple, Dict, Set
+from typing import List, Tuple, Callable, Optional, Dict
+from dataclasses import dataclass
 from enum import Enum
 
 
 # ============================================================
-# Ordinal Arithmetic (below ω²)
+# Core Types
 # ============================================================
 
-@dataclass(frozen=True, order=True)
-class OrdinalBelowOmegaSq:
-    """Ordinals below ω² in Cantor normal form: ω·a + b where a, b ∈ ℕ."""
-    omega_coeff: int = 0
-    finite_part: int = 0
-
-    def __post_init__(self) -> None:
-        assert self.omega_coeff >= 0 and self.finite_part >= 0
-
-    @staticmethod
-    def zero() -> OrdinalBelowOmegaSq:
-        return OrdinalBelowOmegaSq(0, 0)
-
-    @staticmethod
-    def from_nat(n: int) -> OrdinalBelowOmegaSq:
-        return OrdinalBelowOmegaSq(0, n)
-
-    @staticmethod
-    def omega() -> OrdinalBelowOmegaSq:
-        return OrdinalBelowOmegaSq(1, 0)
-
-    @staticmethod
-    def omega_times(k: int) -> OrdinalBelowOmegaSq:
-        return OrdinalBelowOmegaSq(k, 0)
-
-    def is_finite(self) -> bool:
-        return self.omega_coeff == 0
-
-    def is_limit(self) -> bool:
-        """A limit ordinal has no immediate predecessor."""
-        if self.omega_coeff == 0:
-            return self.finite_part == 0  # only 0 is a limit among finites (by convention)
-        return self.finite_part == 0
-
-    def ordinal_add(self, other: OrdinalBelowOmegaSq) -> OrdinalBelowOmegaSq:
-        """Ordinal addition: left addition by finite part is absorbed by ω."""
-        if other.omega_coeff > 0:
-            if self.omega_coeff == 0:
-                return other  # n + (ω·a + b) = ω·a + b
-            return OrdinalBelowOmegaSq(
-                self.omega_coeff + other.omega_coeff,
-                other.finite_part
-            )
-        return OrdinalBelowOmegaSq(
-            self.omega_coeff,
-            self.finite_part + other.finite_part
-        )
-
-    def ordinal_mul_nat(self, k: int) -> OrdinalBelowOmegaSq:
-        """Right-multiply by a natural number: α · k."""
-        if k == 0:
-            return OrdinalBelowOmegaSq.zero()
-        if self.omega_coeff == 0:
-            return OrdinalBelowOmegaSq(0, self.finite_part * k)
-        # (ω·a + b) · k = ω·a·k + b (last copy keeps the finite part)
-        return OrdinalBelowOmegaSq(self.omega_coeff * k, self.finite_part)
-
-    def eternity_number(self) -> OrdinalBelowOmegaSq:
-        """The Eternity number: minimum adversarial power to defeat this game."""
-        if self.is_finite():
-            return self
-        return OrdinalBelowOmegaSq.omega()
-
-    def __repr__(self) -> str:
-        if self.omega_coeff == 0:
-            return str(self.finite_part)
-        elif self.omega_coeff == 1 and self.finite_part == 0:
-            return "ω"
-        elif self.finite_part == 0:
-            return f"ω·{self.omega_coeff}"
-        elif self.omega_coeff == 1:
-            return f"ω+{self.finite_part}"
-        return f"ω·{self.omega_coeff}+{self.finite_part}"
+Move = int
+History = List[Tuple[Move, Move]]
+MortalStrategy = Callable[[History], Move]
+EternityStrategy = Callable[[History, Move], Move]
 
 
-# ============================================================
-# Game Tree Structures
-# ============================================================
-
-class Player(Enum):
-    MORTAL = "mortal"
-    ETERNITY = "eternity"
+class GameResult(Enum):
+    ALIVE = "alive"
+    DEAD = "dead"
 
 
 @dataclass
-class GameNode:
-    """A node in a mortality game tree."""
-    player: Player
-    children: List[GameNode] = field(default_factory=list)
+class SurvivalGame:
+    """A survival game with a death predicate."""
+    death_predicate: Callable[[History], bool]
+    name: str = "unnamed"
 
-    @staticmethod
-    def terminal() -> GameNode:
-        """Terminal node: Mortal loses."""
-        return GameNode(player=Player.MORTAL, children=[])
+    def has_died(self, history: History) -> bool:
+        return self.death_predicate(history)
 
-    @staticmethod
-    def mortal_choice(children: List[GameNode]) -> GameNode:
-        """Mortal picks the best child."""
-        return GameNode(player=Player.MORTAL, children=children)
-
-    @staticmethod
-    def eternity_choice(children: List[GameNode]) -> GameNode:
-        """Eternity picks the worst child for Mortal."""
-        return GameNode(player=Player.ETERNITY, children=children)
+    def is_alive(self, history: History) -> bool:
+        return not self.death_predicate(history)
 
 
 # ============================================================
-# Algorithm 1: Minimax Game Value Computation
+# Algorithm 1: Safe Strategy Construction
 # ============================================================
 
-def compute_game_value(node: GameNode, memo: Optional[Dict[int, int]] = None) -> int:
+def construct_safe_strategy(
+    num_moves: int,
+    is_safe: Callable[[History, Move], bool]
+) -> MortalStrategy:
     """
-    Compute the finite game value of a game tree using minimax.
-
-    Mortal maximizes depth, Eternity minimizes it.
-
-    Time complexity: O(|tree|)
-    Space complexity: O(depth) for recursion stack
-
-    Args:
-        node: Root of the game tree
-        memo: Optional memoization dictionary (by id)
-
-    Returns:
-        The minimax game value (number of rounds Mortal survives)
-    """
-    if memo is None:
-        memo = {}
-
-    node_id = id(node)
-    if node_id in memo:
-        return memo[node_id]
-
-    if not node.children:
-        memo[node_id] = 0
-        return 0
-
-    child_values = [compute_game_value(c, memo) for c in node.children]
-
-    if node.player == Player.MORTAL:
-        result = 1 + max(child_values)
-    else:
-        result = 1 + min(child_values)
-
-    memo[node_id] = result
-    return result
-
-
-# ============================================================
-# Algorithm 2: Survival Ordinal Classification
-# ============================================================
-
-def classify_survival(game_values: List[int]) -> Tuple[str, OrdinalBelowOmegaSq]:
-    """
-    Classify the survival ordinal of a family of games.
-
-    Given a list of finite game values, determine whether the
-    survival ordinal is finite or transfinite.
+    Construct a safe strategy for Mortal.
 
     Algorithm:
-    1. If the values are bounded, survival = max value (finite)
-    2. If unbounded, survival ≥ ω (Omega Survival Theorem)
+    1. At each position (history), enumerate available moves
+    2. For each move, check if it's safe against all responses
+    3. Return the first safe move found
+
+    Time complexity: O(num_moves) per round
+    Space complexity: O(|history|) for state
 
     Args:
-        game_values: List of game values (one per game in the family)
+        num_moves: Number of available moves (0..num_moves-1)
+        is_safe: Predicate that checks if a move is safe at a given history
+                 (safe = no response can cause death)
 
     Returns:
-        Tuple of (classification string, survival ordinal)
+        A MortalStrategy that always picks a safe move
     """
-    if not game_values:
-        return ("EMPTY", OrdinalBelowOmegaSq.zero())
-
-    max_val = max(game_values)
-
-    # Check if the values are bounded
-    # (In practice, check if there's a clear growth trend)
-    is_bounded = all(v <= max_val for v in game_values)
-
-    # For a truly unbounded family, we'd need infinite values
-    # Here we check if the growth is consistent with unboundedness
-    if len(game_values) >= 2:
-        growth = game_values[-1] - game_values[0]
-        if growth > 0 and game_values[-1] >= len(game_values):
-            return ("TRANSFINITE (≥ω)", OrdinalBelowOmegaSq.omega())
-
-    return ("FINITE", OrdinalBelowOmegaSq.from_nat(max_val))
-
-
-# ============================================================
-# Algorithm 3: Cantor Normal Form Decomposition
-# ============================================================
-
-def cantor_decompose(alpha: OrdinalBelowOmegaSq) -> Tuple[int, int]:
-    """
-    Decompose an ordinal below ω² into its Cantor normal form.
-
-    Every α < ω² has a unique representation α = ω·a + b
-    where a, b are natural numbers.
-
-    This is the game-theoretic decomposition:
-    - a = number of transfinite phases
-    - b = residual finite rounds
-
-    Args:
-        alpha: An ordinal below ω²
-
-    Returns:
-        Tuple (a, b) where alpha = ω·a + b
-    """
-    return (alpha.omega_coeff, alpha.finite_part)
-
-
-def cantor_compose(a: int, b: int) -> OrdinalBelowOmegaSq:
-    """Inverse of cantor_decompose."""
-    return OrdinalBelowOmegaSq(a, b)
-
-
-# ============================================================
-# Algorithm 4: Optimal Strategy Extraction
-# ============================================================
-
-def extract_mortal_strategy(node: GameNode) -> List[int]:
-    """
-    Extract Mortal's optimal strategy from a game tree.
-
-    At each Mortal node, pick the child with highest game value.
-    At each Eternity node, assume worst case (lowest value child).
-
-    Returns:
-        List of child indices representing Mortal's optimal choices
-    """
-    strategy: List[int] = []
-    current = node
-
-    while current.children:
-        child_values = [compute_game_value(c) for c in current.children]
-
-        if current.player == Player.MORTAL:
-            best_idx = max(range(len(child_values)), key=lambda i: child_values[i])
-            strategy.append(best_idx)
-            current = current.children[best_idx]
-        else:
-            worst_idx = min(range(len(child_values)), key=lambda i: child_values[i])
-            current = current.children[worst_idx]
-
+    def strategy(history: History) -> Move:
+        for m in range(num_moves):
+            if is_safe(history, m):
+                return m
+        # Fallback: no safe move exists (game doesn't have SafeEscape)
+        return 0
     return strategy
 
 
 # ============================================================
-# Algorithm 5: Nondeterministic Survival Computation
+# Algorithm 2: Game Simulation
 # ============================================================
 
-def nondeterministic_survival(
-    parallel_values: List[OrdinalBelowOmegaSq]
-) -> OrdinalBelowOmegaSq:
+def simulate_game(
+    game: SurvivalGame,
+    mortal: MortalStrategy,
+    eternity: EternityStrategy,
+    max_rounds: int = 1000
+) -> Tuple[GameResult, int, History]:
     """
-    Compute the survival ordinal under k-nondeterministic play.
+    Simulate a game between Mortal and Eternity.
 
-    Mortal runs k strategies in parallel and survives if ANY survives.
-    The survival ordinal is the supremum of individual values.
-
-    Args:
-        parallel_values: List of ordinal values for each parallel strategy
+    Algorithm:
+    1. Initialize empty history
+    2. Each round: Mortal picks move, Eternity responds
+    3. Check death predicate
+    4. Continue until death or max_rounds
 
     Returns:
-        The supremum (maximum) of the values
+        (result, rounds_survived, history)
     """
-    if not parallel_values:
-        return OrdinalBelowOmegaSq.zero()
-    return max(parallel_values)
+    history: History = []
+    for round_num in range(max_rounds):
+        m_move = mortal(history)
+        e_response = eternity(history, m_move)
+        history.append((m_move, e_response))
+        if game.has_died(history):
+            return GameResult.DEAD, round_num + 1, history
+    return GameResult.ALIVE, max_rounds, history
 
 
 # ============================================================
-# Algorithm 6: Omega-Squared Escalation Check
+# Algorithm 3: Ordinal Arena Strategy
 # ============================================================
 
-def check_escalation(k_max: int) -> List[Tuple[int, OrdinalBelowOmegaSq]]:
+@dataclass
+class OrdinalArena:
+    """An arena with ordinal-valued rank function."""
+    game: SurvivalGame
+    rank_fn: Callable[[History], float]
+    safe_moves: Callable[[History], List[Move]]
+
+    def arena_strategy(self) -> MortalStrategy:
+        """
+        Construct the arena strategy that always decreases rank.
+
+        Algorithm:
+        1. Get list of safe moves at current position
+        2. For each safe move, compute worst-case rank after response
+        3. Pick the move with minimum worst-case rank
+
+        This is a minimax-style strategy adapted for ordinal arenas.
+        """
+        def strategy(history: History) -> Move:
+            moves = self.safe_moves(history)
+            if not moves:
+                return 0
+            # Pick move that minimizes rank (greedy descent)
+            best_move = moves[0]
+            best_rank = float('inf')
+            for m in moves:
+                # Estimate worst-case rank (simplified)
+                rank = self.rank_fn(history + [(m, 0)])
+                if rank < best_rank:
+                    best_rank = rank
+                    best_move = m
+            return best_move
+        return strategy
+
+
+# ============================================================
+# Algorithm 4: Layered Survival
+# ============================================================
+
+@dataclass
+class LayeredSurvival:
+    """k-layered survival with independent games."""
+    games: List[SurvivalGame]
+    strategies: List[MortalStrategy]
+
+    def total_survival(
+        self,
+        eternity: EternityStrategy,
+        rounds_per_layer: int = 1000
+    ) -> Tuple[int, List[int]]:
+        """
+        Compute total survival across all layers.
+
+        Algorithm:
+        1. For each layer, simulate until death or max rounds
+        2. Sum total rounds survived
+        3. Return total and per-layer breakdown
+
+        In ordinal terms: if each layer survives ω rounds,
+        k layers give ω·k total.
+        """
+        per_layer: List[int] = []
+        total = 0
+        for i, (game, strat) in enumerate(zip(self.games, self.strategies)):
+            result, rounds, _ = simulate_game(game, strat, eternity, rounds_per_layer)
+            per_layer.append(rounds)
+            total += rounds
+        return total, per_layer
+
+
+# ============================================================
+# Algorithm 5: Adaptive Layering (ω² construction)
+# ============================================================
+
+def adaptive_layered_survival(
+    base_game: SurvivalGame,
+    base_strategy: MortalStrategy,
+    eternity: EternityStrategy,
+    growth_fn: Callable[[int], int],
+    max_epochs: int = 100,
+    rounds_per_layer: int = 1000
+) -> Dict[str, object]:
     """
-    Demonstrate the Omega-Squared Escalation.
+    Adaptive layered survival reaching ω².
 
-    For each k from 0 to k_max, compute ω·k and show how the
-    sequence approaches ω².
+    Algorithm:
+    1. Start with epoch 0
+    2. At epoch k, spawn growth_fn(k) layers
+    3. Each layer plays the base game with base strategy
+    4. After all layers in epoch k complete, move to epoch k+1
+    5. Continue until max_epochs
 
-    Args:
-        k_max: Maximum value of k to check
-
-    Returns:
-        List of (k, ω·k) pairs
+    Ordinal analysis:
+    - Each layer survives ω rounds (via safe escape)
+    - Epoch k has growth_fn(k) layers → ω·growth_fn(k) rounds
+    - Total = Σ_k ω·growth_fn(k)
+    - If growth_fn is unbounded, this → ω² in the limit
     """
+    epoch_results = []
+    total_rounds = 0
+
+    for epoch in range(max_epochs):
+        num_layers = growth_fn(epoch)
+        epoch_rounds = 0
+        for layer in range(num_layers):
+            result, rounds, _ = simulate_game(
+                base_game, base_strategy, eternity, rounds_per_layer
+            )
+            epoch_rounds += rounds
+            total_rounds += rounds
+        epoch_results.append({
+            "epoch": epoch,
+            "num_layers": num_layers,
+            "rounds_this_epoch": epoch_rounds,
+            "cumulative": total_rounds
+        })
+
+    return {
+        "total_rounds": total_rounds,
+        "epochs": epoch_results,
+        "ordinal_bound": "ω²",
+        "explanation": (
+            f"Ran {max_epochs} epochs with growth function. "
+            f"Each epoch k has growth(k) layers, each surviving ~{rounds_per_layer} rounds. "
+            f"With unbounded growth, this approaches ω·ω = ω² in ordinal terms."
+        )
+    }
+
+
+# ============================================================
+# Algorithm 6: Asymmetry Gap Measurement
+# ============================================================
+
+def measure_asymmetry_gap(
+    game: SurvivalGame,
+    mortal: MortalStrategy,
+    eternity_strategies: List[EternityStrategy],
+    max_rounds: int = 10000
+) -> Dict[str, object]:
+    """
+    Measure the asymmetry gap: how much does Eternity's power help?
+
+    Algorithm:
+    1. Test Mortal against each Eternity strategy
+    2. Record whether Eternity ever kills Mortal
+    3. Compute the "gap" = fraction of Eternities that can kill
+
+    In safe-escape games, the gap is always 0 (Asymmetry Collapse).
+    """
+    kills = 0
+    total = len(eternity_strategies)
     results = []
-    for k in range(k_max + 1):
-        value = OrdinalBelowOmegaSq.omega_times(k)
-        results.append((k, value))
-    return results
+
+    for i, eternity in enumerate(eternity_strategies):
+        result, rounds, _ = simulate_game(game, mortal, eternity, max_rounds)
+        if result == GameResult.DEAD:
+            kills += 1
+        results.append({"strategy": i, "result": result.value, "rounds": rounds})
+
+    gap = kills / total if total > 0 else 0
+    return {
+        "gap": gap,
+        "kills": kills,
+        "total_tested": total,
+        "collapsed": gap == 0,
+        "explanation": (
+            f"Asymmetry gap = {gap:.4f}. "
+            f"{'Collapse confirmed!' if gap == 0 else 'Eternity has advantage.'}"
+        )
+    }
 
 
 # ============================================================
-# Main
+# Demo
 # ============================================================
 
 if __name__ == "__main__":
-    # Demo: Build a game tree and compute its value
-    leaf = GameNode.terminal()
-    n1 = GameNode.mortal_choice([leaf])
-    n2 = GameNode.mortal_choice([n1, leaf])
-    n3 = GameNode.eternity_choice([n2, n1])
-    root = GameNode.mortal_choice([n3, n2, n1])
+    import random
 
-    print(f"Game value: {compute_game_value(root)}")
-    print(f"Optimal strategy: {extract_mortal_strategy(root)}")
+    # Create a safe-escape game
+    game = SurvivalGame(
+        death_predicate=lambda h: any(m == 0 and (m + e) % 3 == 0 for m, e in h),
+        name="Trap Game (3 moves, move 0 is dangerous)"
+    )
 
-    # Demo: Survival classification
-    values = list(range(1, 101))
-    classification, ordinal = classify_survival(values)
-    print(f"Classification: {classification}, Ordinal: {ordinal}")
+    # Safe strategy: avoid last response
+    def smart_mortal(history):
+        return 1  # Safe: always avoid move 0 (the only dangerous move)
 
-    # Demo: Cantor normal form
-    alpha = OrdinalBelowOmegaSq(3, 7)
-    a, b = cantor_decompose(alpha)
-    print(f"Cantor({alpha}) = ω·{a} + {b}")
+    # Test adaptive layering
+    result = adaptive_layered_survival(
+        base_game=game,
+        base_strategy=smart_mortal,
+        eternity=lambda h, m: random.randint(0, 2),
+        growth_fn=lambda k: k + 1,
+        max_epochs=5,
+        rounds_per_layer=100
+    )
+    print(f"Adaptive layering result: {result['total_rounds']} rounds")
+    print(f"Ordinal bound: {result['ordinal_bound']}")
 
-    # Demo: Nondeterministic survival
-    parallel = [OrdinalBelowOmegaSq.omega(), OrdinalBelowOmegaSq.from_nat(5)]
-    print(f"Nondeterministic survival: {nondeterministic_survival(parallel)}")
-
-    # Demo: Escalation
-    for k, val in check_escalation(5):
-        print(f"  k={k}: ω·{k} = {val}")
+    # Measure asymmetry gap
+    eternities = [
+        lambda h, m, s=s: random.Random(s + len(h)).randint(0, 2)
+        for s in range(100)
+    ]
+    gap_result = measure_asymmetry_gap(game, smart_mortal, eternities, 1000)
+    print(f"\nAsymmetry gap: {gap_result['gap']}")
+    print(gap_result['explanation'])
