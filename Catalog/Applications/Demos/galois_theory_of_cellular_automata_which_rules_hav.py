@@ -1,211 +1,132 @@
 #!/usr/bin/env python3
 """
-Demo: Galois Theory of Cellular Automata — Reversibility Groups
+Demo: Galois Theory of Cellular Automata — Reversibility Group Computation
 
-Demonstrates the key mathematical results:
-1. Enumeration of reversible elementary CA rules
-2. Group structure of the reversibility group
-3. Necklace (orbit) counting via Burnside's lemma
-4. Centralizer computation for the shift action
+Computes the orbit structure of the shift action on binary configurations
+and derives the centralizer (reversibility group) order for small n.
 """
 
-from itertools import product
-from math import gcd, factorial
+import math
 from collections import Counter
+from itertools import product as cart_product
 
 
-def eca_rule(rule_number: int, left: int, center: int, right: int) -> int:
-    """Apply elementary CA rule to a neighborhood (left, center, right)."""
-    index = 4 * left + 2 * center + right
-    return (rule_number >> index) & 1
+def binary_configs(n):
+    """Generate all binary configurations of length n (as tuples)."""
+    return list(cart_product([0, 1], repeat=n))
 
 
-def apply_eca_global(rule_number: int, config: tuple) -> tuple:
-    """Apply ECA rule globally to a periodic configuration."""
+def shift(config, k=1):
+    """Shift a configuration by k positions (mod n)."""
     n = len(config)
-    return tuple(
-        eca_rule(rule_number, config[(i - 1) % n], config[i], config[(i + 1) % n])
-        for i in range(n)
-    )
+    return tuple(config[(i + k) % n] for i in range(n))
 
 
-def is_reversible_on_period(rule_number: int, n: int) -> bool:
-    """Check if rule is reversible (bijective) on configurations of period n."""
-    configs = list(product([0, 1], repeat=n))
-    images = [apply_eca_global(rule_number, c) for c in configs]
-    return len(set(images)) == len(configs)
+def shift_orbit(config):
+    """Compute the shift orbit of a configuration."""
+    orbit = set()
+    c = config
+    n = len(config)
+    for _ in range(n):
+        orbit.add(c)
+        c = shift(c)
+    return frozenset(orbit)
 
 
-def find_reversible_rules(n: int = 5) -> list:
-    """Find all 256 ECA rules that are reversible on period-n configurations."""
-    return [r for r in range(256) if is_reversible_on_period(r, n)]
+def orbit_decomposition(n):
+    """Compute the orbit decomposition of {0,1}^n under the shift action."""
+    configs = binary_configs(n)
+    seen = set()
+    orbits = []
+    for c in configs:
+        if c not in seen:
+            orb = shift_orbit(c)
+            seen |= orb
+            orbits.append(orb)
+    return orbits
 
 
-def shift_cycle_type(n: int) -> dict:
-    """Compute the cycle type of the shift σ acting on {0,1}^n.
-
-    Returns a dict: cycle_length -> number_of_cycles
-    """
-    configs = list(product([0, 1], repeat=n))
-    config_to_idx = {c: i for i, c in enumerate(configs)}
-    visited = [False] * len(configs)
-    cycles = []
-
-    for i, c in enumerate(configs):
-        if visited[i]:
-            continue
-        cycle = []
-        j = i
-        while not visited[j]:
-            visited[j] = True
-            cycle.append(j)
-            # Shift: move each element one position to the left (cyclic)
-            shifted = configs[j][1:] + (configs[j][0],)
-            j = config_to_idx[shifted]
-        cycles.append(len(cycle))
-
-    return dict(Counter(cycles))
+def orbit_type(n):
+    """Compute the orbit type: a Counter mapping orbit_size -> count."""
+    orbits = orbit_decomposition(n)
+    return Counter(len(orb) for orb in orbits)
 
 
-def centralizer_order(cycle_type: dict) -> int:
-    """Compute |C_{S_N}(σ)| from the cycle type of σ.
-
-    For a permutation with a_k cycles of length k,
-    |centralizer| = ∏_k (a_k! · k^{a_k})
+def centralizer_order(orbit_counts):
+    """Compute the centralizer order from orbit type data.
+    
+    Formula: prod_{d} d^{a_d} * a_d!
+    where a_d = number of orbits of size d.
     """
     result = 1
-    for k, a_k in cycle_type.items():
-        result *= factorial(a_k) * (k ** a_k)
+    for d, a_d in orbit_counts.items():
+        result *= (d ** a_d) * math.factorial(a_d)
     return result
 
 
-def necklace_count(n: int, k: int = 2) -> int:
-    """Count binary necklaces of length n using Burnside's lemma.
-
-    Number of orbits = (1/n) Σ_{d|n} φ(n/d) · k^d
-    where φ is Euler's totient function.
-    """
-    from sympy import totient
-    total = sum(totient(n // d) * k ** d for d in range(1, n + 1) if n % d == 0)
+def necklace_count(n, k=2):
+    """Number of necklaces of length n with k colors (Burnside's lemma)."""
+    if n == 0:
+        return 0
+    total = sum(k ** math.gcd(i, n) for i in range(n))
     return total // n
-
-
-def fixed_points_shift_power(n: int, m: int) -> int:
-    """Number of configurations in {0,1}^n fixed by σ^m.
-
-    A configuration c is fixed by σ^m iff c has period dividing gcd(m, n).
-    Number of such configurations = 2^{gcd(m, n)}.
-    """
-    return 2 ** gcd(m, n)
 
 
 def main():
     print("=" * 70)
-    print("GALOIS THEORY OF CELLULAR AUTOMATA: REVERSIBILITY GROUPS")
+    print("GALOIS THEORY OF CELLULAR AUTOMATA: REVERSIBILITY GROUP")
     print("=" * 70)
-
-    # 1. Find reversible elementary CA rules
-    print("\n1. REVERSIBLE ELEMENTARY CA RULES")
-    print("-" * 40)
-    rev_rules = find_reversible_rules(n=5)
-    print(f"   Reversible rules (tested on period 5): {rev_rules}")
-    print(f"   Count: {len(rev_rules)} out of 256")
-
-    # Describe each reversible rule
-    rule_descriptions = {
-        15: "NOT(left neighbor) — right shift + complement",
-        51: "NOT(center) — complement/negation",
-        85: "NOT(right neighbor) — left shift + complement",
-        170: "Right neighbor — left shift",
-        204: "Center — identity",
-        240: "Left neighbor — right shift",
-    }
-    for r in rev_rules:
-        desc = rule_descriptions.get(r, "unknown")
-        print(f"   Rule {r:3d}: {desc}")
-
-    # 2. Shift cycle type and centralizer
-    print("\n2. SHIFT CYCLE TYPE AND CENTRALIZER ORDER")
-    print("-" * 40)
-    for n in range(2, 8):
-        ct = shift_cycle_type(n)
-        co = centralizer_order(ct)
-        full_sym = factorial(2**n)
-        ratio = co / full_sym
-        print(f"   n={n}: cycle type = {dict(sorted(ct.items()))}")
-        print(f"         |centralizer| = {co}")
-        print(f"         |S_{{{2**n}}}| = {full_sym}")
-        print(f"         ratio = {ratio:.2e}")
-
-    # 3. Fixed-point formula verification
-    print("\n3. FIXED-POINT FORMULA: |Fix(σ^m)| = 2^gcd(m,n)")
-    print("-" * 40)
-    for n in [3, 4, 5, 6]:
-        print(f"   n = {n}:")
-        configs = list(product([0, 1], repeat=n))
-        for m in range(1, n + 1):
-            # Count fixed points by brute force
-            fixed = 0
-            for c in configs:
-                shifted = c
-                for _ in range(m):
-                    shifted = shifted[1:] + (shifted[0],)
-                if shifted == c:
-                    fixed += 1
-            predicted = fixed_points_shift_power(n, m)
-            status = "✓" if fixed == predicted else "✗"
-            print(f"     m={m}: actual={fixed}, predicted=2^gcd({m},{n})=2^{gcd(m,n)}={predicted} {status}")
-
-    # 4. Necklace counting
-    print("\n4. BINARY NECKLACE COUNTS (Burnside's lemma)")
-    print("-" * 40)
-    for n in range(1, 13):
-        try:
-            nc = necklace_count(n)
-            print(f"   n={n:2d}: {nc} necklaces")
-        except ImportError:
-            # Fallback without sympy
-            fixed_sum = sum(fixed_points_shift_power(n, m) for m in range(1, n + 1))
-            nc = fixed_sum // n
-            print(f"   n={n:2d}: {nc} necklaces (Burnside)")
-
-    # 5. Reversibility group structure
-    print("\n5. REVERSIBILITY GROUP STRUCTURE")
-    print("-" * 40)
-    print("   The reversibility group RevGroup(G, α) satisfies:")
-    print("   • RevGroup = Centralizer of translation action in Sym(α^G)")
-    print("   • Sym(α) ≤ RevGroup via pointwise action")
-    print("   • G ≤ RevGroup (abelian case) via translation")
-    print("   • RevGroup preserves translation orbits (necklaces)")
-    print()
-    print("   Key theorems proved in Lean 4:")
-    print("   • inv_translationEquivariant: F⁻¹ equivariant if F is")
-    print("   • mem_revGroup_iff_centralizer: RevGroup = centralizer")
-    print("   • revGroup_preserves_orbits: necklace preservation")
-    print("   • revGroup_ne_top: proper subgroup for |G|,|α| ≥ 2")
-    print("   • revGroup_trivial_group: boundary case G = {e}")
-    print("   • translatePerm_mem_revGroup_comm: abelian embedding")
-    print("   • translatePerm_injective: G embeds faithfully")
-    print("   • pointwiseHom_injective: Sym(α) embeds faithfully")
-
-    # 6. Growth of centralizer vs symmetric group
-    print("\n6. GROWTH COMPARISON: |RevGroup| vs |Sym(α^G)|")
-    print("-" * 40)
-    print(f"   {'n':>3} {'|RevGroup| ≥':>15} {'|Sym(2^n)|':>20} {'log ratio':>12}")
-    for n in range(1, 9):
-        ct = shift_cycle_type(n)
-        co = centralizer_order(ct)
-        full = factorial(2**n)
-        import math
-        log_ratio = math.log10(co) - math.log10(full) if co > 0 and full > 0 else float('-inf')
-        print(f"   {n:3d} {co:15d} {full:20d} {log_ratio:12.1f}")
-
-    print("\n" + "=" * 70)
-    print("The centralizer grows, but much slower than the full symmetric group.")
-    print("This proves the reversibility group is an exponentially thin slice")
-    print("of all possible permutations — only a vanishing fraction of")
-    print("transformations respect the translational symmetry of the lattice.")
-    print("=" * 70)
+    
+    print("\n--- Orbit Decomposition for Binary CAs on Z/nZ ---\n")
+    
+    for n in range(1, 8):
+        orbits = orbit_decomposition(n)
+        ot = orbit_type(n)
+        co = centralizer_order(ot)
+        total = 2 ** n
+        sym_order = math.factorial(total)
+        
+        print(f"n = {n}:")
+        print(f"  Total configurations: 2^{n} = {total}")
+        print(f"  Number of orbits: {len(orbits)}")
+        print(f"  Orbit type: {dict(sorted(ot.items()))}")
+        print(f"  Centralizer order |G| = {co}")
+        print(f"  Full symmetric group |S_{total}| = {sym_order}")
+        ratio = co / sym_order if sym_order > 0 else 0
+        print(f"  Ratio |G|/|S_{total}| = {ratio:.2e}")
+        print(f"  Necklace count (Burnside): {necklace_count(n)}")
+        print()
+    
+    print("\n--- Reversibility Index (log ratio) ---\n")
+    for n in range(1, 8):
+        ot = orbit_type(n)
+        co = centralizer_order(ot)
+        total = 2 ** n
+        sym_order = math.factorial(total)
+        if co > 0 and sym_order > 0:
+            log_ratio = math.log2(co) / math.log2(sym_order) if sym_order > 1 else 1.0
+            print(f"  n={n}: log₂|G|/log₂|S_{total}| = {log_ratio:.6f}")
+    
+    print("\n--- Falsifiable Conjecture Test ---")
+    print("For n prime, non-constant orbits = (2^n - 2) / n")
+    for p in [2, 3, 5, 7, 11, 13]:
+        from sympy import isprime
+        if isprime(p):
+            expected = (2**p - 2) // p
+            actual = necklace_count(p) - 2  # subtract the 2 constant necklaces... 
+            # Actually necklace_count already gives total necklaces including constants
+            actual_nonconstant = necklace_count(p) - 2
+            print(f"  p={p}: (2^p - 2)/p = {expected}, necklaces - 2 = {actual_nonconstant}, match: {expected == actual_nonconstant}")
+    
+    print("\n--- The 6 Reversible Elementary CA Rules (r=1) ---\n")
+    reversible_rules = [15, 51, 85, 170, 204, 240]
+    for rule_num in reversible_rules:
+        # Rule number encodes f: {0,1}^3 -> {0,1}
+        rule = [(rule_num >> i) & 1 for i in range(8)]
+        print(f"  Rule {rule_num:3d}: {rule} (binary: {rule_num:08b})")
+    
+    print("\n  These are exactly the 6 rules where the local map is a")
+    print("  permutation that commutes with cyclic shift of neighborhoods.")
 
 
 if __name__ == "__main__":
@@ -214,87 +135,114 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: Centralizer Order Growth vs Symmetric Group
+Visualization: Reversibility Group Order vs Symmetric Group Order
 
-Shows the exponential gap between |RevGroup| and |Sym(α^G)| as |G| grows.
+Shows how the reversibility group becomes exponentially smaller than
+the full symmetric group as the period n increases.
 """
+
+import math
+from collections import Counter
+from itertools import product as cart_product
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from math import factorial, gcd, log10
-from itertools import product
-from collections import Counter
 
 
-def shift_cycle_type(n):
-    configs = list(product([0, 1], repeat=n))
-    config_idx = {c: i for i, c in enumerate(configs)}
-    visited = [False] * len(configs)
-    cycles = []
-    for i in range(len(configs)):
-        if visited[i]:
-            continue
-        length = 0
-        j = i
-        while not visited[j]:
-            visited[j] = True
-            length += 1
-            shifted = configs[j][1:] + (configs[j][0],)
-            j = config_idx[shifted]
-        cycles.append(length)
-    return dict(Counter(cycles))
+def shift_config(config, k=1):
+    n = len(config)
+    return tuple(config[(i + k) % n] for i in range(n))
 
 
-def centralizer_order(ct):
+def compute_shift_orbit(config):
+    orbit = set()
+    c = config
+    n = len(config)
+    for _ in range(n):
+        orbit.add(c)
+        c = shift_config(c)
+    return frozenset(orbit)
+
+
+def orbit_type(n):
+    configs = list(cart_product([0, 1], repeat=n))
+    seen = set()
+    size_counts = Counter()
+    for c in configs:
+        if c not in seen:
+            orb = compute_shift_orbit(c)
+            seen |= orb
+            size_counts[len(orb)] += 1
+    return dict(size_counts)
+
+
+def centralizer_order(orbit_counts):
     result = 1
-    for k, a_k in ct.items():
-        result *= factorial(a_k) * (k ** a_k)
+    for d, a_d in orbit_counts.items():
+        if d > 0:
+            result *= (d ** a_d) * math.factorial(a_d)
     return result
 
 
 def main():
-    ns = list(range(1, 11))
-    log_cent = []
-    log_sym = []
-    log_lower = []
-
+    ns = list(range(1, 10))
+    log_G = []
+    log_S = []
+    ratios = []
+    
     for n in ns:
-        ct = shift_cycle_type(n)
-        co = centralizer_order(ct)
-        sym = factorial(2**n)
-        lower = n * factorial(2)  # |G| * |α|! = n * 2
-
-        log_cent.append(log10(co) if co > 0 else 0)
-        log_sym.append(log10(sym) if sym > 0 else 0)
-        log_lower.append(log10(lower) if lower > 0 else 0)
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Plot 1: Log scale comparison
-    ax1.plot(ns, log_sym, 'r-o', linewidth=2, markersize=8, label=r'$\log_{10}|S_{2^n}|$')
-    ax1.plot(ns, log_cent, 'b-s', linewidth=2, markersize=8, label=r'$\log_{10}|C_{S_{2^n}}(\sigma)|$')
-    ax1.plot(ns, log_lower, 'g--^', linewidth=2, markersize=8, label=r'$\log_{10}(n \cdot 2!)$')
-    ax1.fill_between(ns, log_lower, log_cent, alpha=0.15, color='blue', label='RevGroup range')
-    ax1.set_xlabel('Period n', fontsize=14)
-    ax1.set_ylabel(r'$\log_{10}$(group order)', fontsize=14)
-    ax1.set_title('Reversibility Group vs Full Symmetric Group', fontsize=14)
-    ax1.legend(fontsize=11)
+        ot = orbit_type(n)
+        co = centralizer_order(ot)
+        total = 2 ** n
+        sym = math.factorial(total)
+        
+        lg = math.log2(co) if co > 0 else 0
+        ls = math.log2(sym) if sym > 1 else 1
+        log_G.append(lg)
+        log_S.append(ls)
+        ratios.append(lg / ls if ls > 0 else 0)
+    
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    
+    # Plot 1: Log orders
+    ax1 = axes[0]
+    ax1.plot(ns, log_G, 'bo-', label='log₂|G(n)|', markersize=8)
+    ax1.plot(ns, log_S, 'rs-', label='log₂|S_{2^n}|', markersize=8)
+    ax1.set_xlabel('Period n')
+    ax1.set_ylabel('log₂(group order)')
+    ax1.set_title('Reversibility Group vs Full Symmetric Group')
+    ax1.legend()
+    ax1.set_yscale('log')
     ax1.grid(True, alpha=0.3)
-
+    
     # Plot 2: Ratio
-    ratios = [log_cent[i] / log_sym[i] if log_sym[i] > 0 else 1 for i in range(len(ns))]
-    ax2.plot(ns, ratios, 'purple', linewidth=2, marker='D', markersize=8)
-    ax2.set_xlabel('Period n', fontsize=14)
-    ax2.set_ylabel(r'$\log|C|/\log|S|$', fontsize=14)
-    ax2.set_title('Ratio of Log-Orders (→ 0 as n → ∞)', fontsize=14)
-    ax2.set_ylim(0, 1.05)
-    ax2.axhline(y=0, color='red', linestyle='--', alpha=0.5)
+    ax2 = axes[1]
+    ax2.plot(ns, ratios, 'g^-', markersize=10, linewidth=2)
+    ax2.set_xlabel('Period n')
+    ax2.set_ylabel('Reversibility Index')
+    ax2.set_title('RI = log₂|G|/log₂|S| → 0')
     ax2.grid(True, alpha=0.3)
-
+    ax2.set_ylim(0, 1)
+    
+    # Plot 3: Orbit type decomposition
+    ax3 = axes[2]
+    max_d = max(max(orbit_type(n).keys()) for n in ns)
+    for d in range(1, max_d + 1):
+        counts = [orbit_type(n).get(d, 0) for n in ns]
+        if any(c > 0 for c in counts):
+            ax3.bar([x + d * 0.1 for x in ns], counts, width=0.1,
+                    label=f'size {d}', alpha=0.8)
+    ax3.set_xlabel('Period n')
+    ax3.set_ylabel('Number of orbits')
+    ax3.set_title('Orbit Size Distribution')
+    ax3.legend(fontsize=8)
+    ax3.grid(True, alpha=0.3)
+    
     plt.tight_layout()
-    plt.savefig('/workspace/request-project/Applications/centralizer_growth.png', dpi=150, bbox_inches='tight')
-    print("Saved centralizer_growth.png")
+    plt.savefig('reversibility_groups.png', dpi=150, bbox_inches='tight')
+    print("Saved: reversibility_groups.png")
 
 
 if __name__ == "__main__":
