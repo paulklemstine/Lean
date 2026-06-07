@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-07T14:51:30.886748+00:00",
+  "last_updated": "2026-06-07T15:25:27.953139+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -14654,6 +14654,41 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T14:51:30.831604+00:00",
       "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6895,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 346,
+      "domain": "Applications",
+      "duration_seconds": 4055.280427455902,
+      "end_time": 1780845892.0923595,
+      "files_integrated": 5,
+      "job_id": "f86024ae",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.8,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.851,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.8338,
+        "novelty": 0.9433,
+        "proof_depth": 0.7869,
+        "usefulness": 0.8935
+      },
+      "quality_score": 0.29184,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780841836.811932,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T15:25:27.869326+00:00",
+      "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
     }
   ]
 }

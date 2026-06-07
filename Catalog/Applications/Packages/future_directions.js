@@ -2554,6 +2554,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established a rigorous algebraic-topological framework for jigsaw puzzle assembly, proving that the constraint graph of any rectangular grid has Euler characteristic 2 (topologically spherical), that constraints are superadditive under grid merging, and that the complement permutation is an odd permutation. The most surprising discovery is the connection between the complement involution's sign and constraint propagation parity \u2014 a bridge between permutation group theory and combinatorial complexity that has not been explored in the literature.\n\nThe most promising cross-domain connection is between puzzle constraint graphs and tropical geometry. The constraint density analysis shows puzzle graphs live in the same universality class as 4-regular planar graphs, and the min-plus algebra naturally extends Boolean edge compatibility to a richer algebraic setting. This connection to the Catalog's tropical semiring work (`Tropical/FormulaDefinability.lean`) could yield fundamentally new proof techniques for complexity bounds.\n\nThe highest breakthrough potential lies in Direction 1 (Toroidal Puzzles), because the change in Euler characteristic from 2 to 0 represents a topological phase transition that may correspond to a computational complexity transition \u2014 potentially the first known example of complexity changing with the topology of the constraint structure.\n\n---\n\n### Direction 1: Toroidal Jigsaw Puzzles and Complexity Phase Transitions\n\n**Conjecture**: Jigsaw puzzle assembly on a toroidal grid (periodic boundary conditions in both directions) has fundamentally different complexity from rectangular grid puzzles. Specifically: the constraint graph of an m\u00d7n toroidal grid has Euler characteristic 0 (genus 1), and the homological structure introduces a \u2124\u00b2 symmetry that may make the problem fixed-parameter tractable with respect to the genus.\n\n**Test**: (a) Prove that the Euler characteristic of the toroidal constraint graph is 0 by computing V = mn, E = 2mn, F = mn, giving \u03c7 = mn \u2212 2mn + mn = 0. (b) Construct a specific 3-SAT instance whose puzzle reduction on a torus has a solution that does not exist on the plane, or prove that the set of solvable instances is identical. (c) Implement a transfer matrix algorithm for toroidal puzzles and measure empirical complexity scaling.\n\n**Impact**: If toroidal puzzles are in a lower complexity class, this would be the first example of topology directly determining computational complexity \u2014 a result connecting algebraic topology to complexity theory in a novel way. If the complexity is unchanged, this proves that the NP-hardness of puzzles is a local (edge-compatibility) phenomenon, not a global (topological) one.\n\n**Catalog References**: `Applications/JigsawTopology.lean` (euler_char_grid), `Catalog/EML/JigsawAlgebra.lean` (PuzzleAlphabet), `Tropical/FormulaDefinability.lean` (tropical formulas)\n\n**Proof Strategy**: Start by formalizing the toroidal grid as a function g : \u2124/m\u2124 \u2192 \u2124/n\u2124 \u2192 JPiece with wrap-around compatibility. Compute the Euler characteristic using the standard formula for torus cell complexes. For the complexity analysis, attempt to reduce the toroidal case to a graph coloring problem on a torus and apply known results on planar vs toroidal graph coloring complexity.\n\n**Domain Bridges**: Topology (Euler characteristic, genus) \u2194 Complexity Theory (FPT, parameterized complexity) \u2194 Algebra (homology groups of constraint complexes)\n\n**Lineage**: Builds on euler_char_grid and the constraint density bridge from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Puzzle Algebras and Min-Plus Assembly\n\n**Conjecture**: Replacing the Boolean edge compatibility (tab \u2194 blank) with tropical (min-plus) compatibility \u2014 where edge values are real numbers and two edges \"fit\" if their tropical sum (min) equals a target value \u2014 yields a puzzle algebra where assembly corresponds to finding a tropical curve. The tropical puzzle problem is in P (polynomial time), despite the Boolean version being NP-complete.\n\n**Test**: (a) Define TropicalPiece with edges valued in \u211d\u222a{\u221e} and tropical compatibility: edges (a, b) are compatible if min(a, b) = threshold. (b) Show that tropical assembly of a 1\u00d7n grid reduces to a shortest-path problem (hence polynomial). (c) Find the exact boundary between tropical (P) and Boolean (NP-complete) in a parameterized family of puzzle algebras.\n\n**Impact**: Would establish a concrete \"algebraic phase transition\" in complexity: the same combinatorial structure (grid assembly) transitions from P to NP-complete as the edge algebra changes from tropical to Boolean. This connects to the broader question of which algebraic structures admit efficient constraint satisfaction.\n\n**Catalog References**: `Tropical/FormulaDefinability.lean` (tropical_formula_iff_recognizable_and_deriv_closed), `Catalog/EML/JigsawAlgebra.lean` (PuzzleAlphabet)\n\n**Proof Strategy**: Formalize TropicalPuzzleAlphabet as a PuzzleAlphabet where EdgeLabel = \u211d\u222a{\u221e} with compl(x) = threshold \u2212 x. Assembly validity becomes a system of linear tropical equations, solvable by tropical linear algebra (Gaubert-Plus algorithm). The key lemma is that tropical compatibility is transitive (unlike Boolean), which breaks the NP-hardness reduction.\n\n**Domain Bridges**: Tropical Geometry \u2194 Complexity Theory \u2194 Optimization (shortest paths, linear programming)\n\n**Lineage**: Builds on the PuzzleAlphabet abstraction and the clause_sat_iff_tab encoding from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Hexagonal and Penrose Tilings\n\n**Conjecture**: The constraint superadditivity theorem generalizes to hexagonal grids, but with a larger constant: merging two hexagonal grids creates at least 2m new constraints (vs m for rectangular). For Penrose tilings (aperiodic), superadditivity is strict \u2014 the inequality gap grows logarithmically with grid size.\n\n**Test**: (a) Define HexPiece with 6 edges and hexagonal grid assembly. (b) Prove the hexagonal superadditivity bound. (c) For Penrose tilings, compute the constraint count for the first 5 inflation levels and check whether the superadditivity gap grows as conjectured.\n\n**Impact**: Extends the theory from rectangular grids to the two other fundamental planar tilings (hexagonal and aperiodic), establishing whether the algebraic structure of puzzle assembly depends on the tiling geometry or is universal.\n\n**Catalog References**: `Bridges/LocalCyclePressure.lean` (isTree_iff_connected_and_edgecount), `Applications/JigsawTopology.lean` (constraint_superadditive)\n\n**Proof Strategy**: For hexagonal grids, the internal edge count formula is E(m,n) = 3mn \u2212 m \u2212 n (each cell has 6 edges, but each internal edge is shared). Superadditivity follows from the same algebraic argument as the rectangular case. For Penrose tilings, use the substitution rule to derive a recurrence for the constraint count.\n\n**Domain Bridges**: Geometry (tilings, aperiodic order) \u2194 Algebra (constraint counting) \u2194 Number Theory (Penrose tiling frequencies involve the golden ratio)\n\n**Lineage**: Direct extension of constraint_superadditive and internal_edges_quadratic.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: The Permutation Group of Puzzle Rotations\n\n**Conjecture**: The group of symmetries of a valid n\u00d7n puzzle assembly (rotations, reflections, and piece permutations that preserve validity) is always a subgroup of the wreath product S_n \u2240 \u2124/4\u2124, and for \"generic\" puzzles (where all edge types are non-flat), the symmetry group is trivial.\n\n**Test**: (a) Formalize the symmetry group as the automorphism group of the constraint graph with labeled edges. (b) Prove that for n \u2265 3 with all distinct edge labels, the symmetry group is trivial. (c) Construct a maximally symmetric puzzle (all pieces identical except boundary) and compute its symmetry group.\n\n**Impact**: Connects puzzle theory to group theory in a novel way: the complement permutation being odd (sign \u22121) implies constraints on which symmetries are possible. A generic triviality result would explain why real jigsaw puzzles have unique solutions.\n\n**Catalog References**: `Applications/JigsawTopology.lean` (complement_is_odd_perm, orbit_partition)\n\n**Proof Strategy**: Use the orbit-stabilizer theorem on the constraint graph automorphism group. The key insight is that the odd sign of the complement permutation forces any automorphism to preserve the tab/blank distinction, severely restricting the possible symmetries. For generic puzzles, show that distinct edge labels force all automorphisms to be the identity.\n\n**Domain Bridges**: Group Theory (wreath products, permutation signs) \u2194 Combinatorics (graph automorphisms) \u2194 Topology (constraint graph symmetry)\n\n**Lineage**: Builds on complement_is_odd_perm and the orbit partition theorem.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Counting Valid Assemblies via Transfer Matrices\n\n**Conjecture**: The number of valid 1\u00d7n grid assemblies over the standard 3-element alphabet is exactly 3\u00b72^(n\u22121) for n \u2265 1. For m\u00d7n grids with m \u2265 2, the count grows as \u0398(\u03bb\u2081^n) where \u03bb\u2081 is the largest eigenvalue of a transfer matrix of size 3^m \u00d7 3^m.\n\n**Test**: (a) Prove the exact count for 1\u00d7n grids by induction: the first cell has 3 choices, each subsequent cell has exactly 2 (the complement of the previous right edge determines the left edge, and only 2 of 3 edge types produce a valid complement). (b) Construct the transfer matrix for m=2 and compute its eigenvalues. (c) Derive asymptotic bounds on the number of valid assemblies for square n\u00d7n grids.\n\n**Impact**: Would give the first exact counting formula for puzzle assemblies, connecting puzzle theory to statistical mechanics (transfer matrix methods originated in the study of lattice models). The eigenvalue analysis would reveal whether there is a \"phase transition\" in assembly density.\n\n**Catalog References**: `Applications/JigsawTopology.lean` (one_row_assembly_bound, linear_grid_edges), `Bridges/PartitionMatroidStability.lean` (two_block_leaf_has_one_positive_eigenvalue)\n\n**Proof Strategy**: For the 1\u00d7n case, induction on n. Base case: 1\u00d71 grid has 3^4 = 81 possible pieces, but we count distinct right-edge assignments: 3 choices. Inductive step: each new cell's left edge is determined by the complement of the previous right edge, leaving 3 choices for the remaining 3 edges, but the right edge has only 3 choices, giving a branching factor of 3. Wait \u2014 we need to be more precise about what we're counting (pieces vs edge assignments). Formalize carefully.\n\n**Domain Bridges**: Combinatorics (counting) \u2194 Linear Algebra (eigenvalues) \u2194 Statistical Physics (transfer matrices, partition functions)\n\n**Lineage**: Builds on one_row_assembly_bound and the assembly validity characterization.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0956",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f86024ae",
+    "status": "available",
+    "timestamp": "2026-06-07T15:25:26.234104+00:00",
+    "title": "Rigorous algebraic-topological framework for j"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -3333,7 +3348,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
   {
-    "consumed_by_exp_id": "0f2e9c2e",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -3343,7 +3358,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -3783,7 +3798,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Consciousness as Integrated Information"
   },
   {
-    "consumed_by_exp_id": "ed90a12c",
+    "consumed_by_exp_id": "",
     "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
     "domains": [
       "Speculative",
@@ -3793,7 +3808,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.177474+00:00",
     "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
@@ -4473,7 +4488,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1d4faca5",
     "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
     "domains": [
       "Novelty",
@@ -4483,7 +4498,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.695662+00:00",
     "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
@@ -4608,7 +4623,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
   },
   {
-    "consumed_by_exp_id": "93c28aa5",
+    "consumed_by_exp_id": "",
     "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
     "domains": [
       "Novelty",
@@ -4618,7 +4633,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.782446+00:00",
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
@@ -5147,7 +5162,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
   },
   {
-    "consumed_by_exp_id": "cbbdc1b6",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
     "domains": [
       "Novelty",
@@ -5157,7 +5172,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.221954+00:00",
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f86024ae",
     "filename": "the_mathematics_of_jigsaw_puzzles_np_completeness_.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.29184,
     "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Constraint Graph Topology"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_mathematics_of_jigsaw_puzzles_np_completeness_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.29184,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Constraint Graph Topology"
     }
