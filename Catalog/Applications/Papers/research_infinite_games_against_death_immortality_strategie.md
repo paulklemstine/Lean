@@ -1,169 +1,209 @@
-# Ordinal Survival Games: Mortal vs Eternity in Finite-State Adversarial Dynamics
+# Mortality Games: Ordinal Survival Against Transfinite Adversaries
 
 ## Abstract
 
-We introduce and study **survival games** — two-player sequential games between Mortal (finite branching) and Eternity (reactive adversary) — where Mortal's objective is to maximize the number of rounds survived before reaching a "death" state. We prove three main results: (1) the **ω-Survival Theorem**, establishing that in finite-state games, the ability to survive any finite horizon implies the existence of a single universally surviving strategy (survival ordinal ≥ ω); (2) the **ω²-Survival Theorem**, showing that hierarchical game composition multiplies survival ordinals; and (3) a **Game-Computation Bridge** connecting deterministic survival games to transfinite cellular automaton computation depth. All results are formalized and verified in Lean 4 with Mathlib.
-
-**Keywords**: Infinite games, survival strategies, ordinal game values, transfinite computation, König's lemma, cellular automata
+We introduce the **SurvivalArena**, a novel mathematical structure formalizing asymmetric two-player games between a finite player (Mortal) and an adversary with transfinite computational power (Eternity). The central invariant is the **survival ordinal** — the ordinal-valued game rank measuring how many rounds Mortal can guarantee surviving against optimal Eternity play. We establish five main results: (1) the **Omega Survival Theorem**, showing that unbounded finite game values yield transfinite survival ≥ ω; (2) the **Mortality Dichotomy**, proving that survival ordinals are either finite or ≥ ω with no intermediate values; (3) the **Omega-Squared Escalation**, demonstrating that bounded nondeterminism elevates survival to ω²; (4) the **Finite Absorption Principle**, showing that finite head-starts and finite multiplicative factors are absorbed by transfinite survival; and (5) the **Cantor Normal Form decomposition** of game ordinals below ω². All results are formalized and verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-The study of infinite games has a rich history in mathematical logic, beginning with Gale and Stewart's determinacy theorem (1953) and extending through Martin's Borel determinacy (1975) and the theory of Wadge degrees. Most of this theory concerns *winning conditions* — characterizing which player has a winning strategy in games of perfect information.
+The study of infinite games has a rich history in set theory (Gale-Stewart, Martin's determinacy), combinatorial game theory (Conway's surreal numbers), and theoretical computer science (Infinite Time Turing Machines). However, the specific question of *how long a finite player can survive against a transfinite adversary* has not been systematically formalized.
 
-We take a different perspective, focusing not on *who wins* but on *how long the loser can survive*. This shift from binary (win/lose) to quantitative (survival ordinal) outcomes reveals rich structure in the space of game strategies and connects game theory to transfinite computation.
-
-Our work extends the catalog result `transfinite_evasion_finite_bound` (Computation/Evasion.lean), which establishes finite bounds on evasion games. We show that these bounds arise from a general structural principle: the finiteness of the strategy space in finite-state games forces the descending chain condition on surviving strategy sets, yielding a universal strategy via compactness.
+This paper introduces a framework — the **SurvivalArena** — that precisely captures this asymmetry. The key insight is that survival duration is naturally measured by ordinal numbers, and the algebraic structure of ordinals (ordinal addition, multiplication, and the Cantor normal form) directly encodes the strategic structure of the game.
 
 ### 1.2 Related Work
 
-**Infinite game theory**: Gale-Stewart games, Borel determinacy, and the Wadge hierarchy study determinacy and complexity of winning conditions. Our survival ordinals provide a finer quantitative measure.
+- **Gale-Stewart games** (1953): Established determinacy for open and closed games on ω.
+- **Infinite Time Turing Machines** (Hamkins-Lewis, 2000): Formalized computation that runs for transfinitely many steps.
+- **Ordinal game theory**: The use of ordinal rankings in combinatorial game theory, particularly Sprague-Grundy theory.
+- **Transfinite computation depth** (Catalog: `Computation/TransfiniteCADepth.lean`): Prior work in our catalog establishing `bounded_implies_finite` for cellular automata depth.
+- **Evasion strategies** (Catalog: `Computation/Evasion.lean`): `transfinite_evasion_finite_bound` connecting evasion games to ordinal bounds.
 
-**Transfinite computation**: Hamkins and Lewis (2000) introduced Infinite Time Turing Machines (ITTMs), which compute through ordinal time steps. Our Game-Computation Bridge connects game-theoretic survival depth to ITTM computation depth.
+### 1.3 Contributions
 
-**Cellular automata**: The transfinite CA framework (TransfiniteCA.lean in the catalog) evolves CAs through limit ordinals. Our bridge theorem shows that CA computation depth equals the survival ordinal of the corresponding game.
+1. A novel mathematical structure (`SurvivalArena`, `OrdinalGameTree`) formalizing mortality games.
+2. The **Survival Ladder** — a universal construction mapping any ordinal to a canonical game with that survival value.
+3. Five major theorems with full PEGB analysis (Proof, Example, Generalization, Boundary).
+4. The **Eternity Number** — a novel invariant classifying adversarial difficulty.
+5. Complete formal verification in Lean 4.
 
 ## 2. Definitions
 
-### 2.1 Survival Games
+### 2.1 SurvivalArena
 
-**Definition 2.1** (Survival Game). A *survival game* G = (S, m, e, δ, A, m⁺, e⁺) consists of:
-- A type S of *states*
-- Natural numbers m, e ≥ 1 (*mortal arity* and *eternity arity*)
-- A transition function δ : S × Fin(m) × Fin(e) → S
-- A predicate A : S → Prop (*alive* states)
-- Proofs m⁺ : m > 0 and e⁺ : e > 0
+**Definition 2.1** (SurvivalArena). A *SurvivalArena* is a tuple (S, M, E, η) where:
+- S is a type of game states
+- M : S → Finset S assigns finitely many moves to each state (Mortal's choices)
+- E : S → Set S assigns a response set to each state (Eternity's responses)
+- η : nonemptiness condition ensuring Eternity always has a response when Mortal has a move
 
-**Definition 2.2** (Strategies). A *Mortal strategy* is a function σ_M : S → Fin(m). An *Eternity strategy* is a function σ_E : S × Fin(m) → Fin(e).
+The finiteness constraint on Mortal's moves (M : S → **Finset** S) is the crucial asymmetry — Eternity's responses form an arbitrary set, potentially of any cardinality.
 
-**Definition 2.3** (Play Sequence). Given strategies σ_M, σ_E and initial state s₀, the *play sequence* is:
-- play(0) = s₀
-- play(n+1) = δ(play(n), σ_M(play(n)), σ_E(play(n), σ_M(play(n))))
+### 2.2 OrdinalGameTree
 
-**Definition 2.4** (n-Survival). Mortal *survives n rounds* under (σ_M, σ_E) from s₀ if A(play(k)) for all k ≤ n.
+**Definition 2.2** (OrdinalGameTree). An *OrdinalGameTree* is a tuple (b, E, η) where:
+- b : ℕ is the number of Mortal's root choices
+- E : Fin b → Set Ordinal assigns to each Mortal choice a set of ordinal-valued Eternity responses
+- η : ∀ i, (E i).Nonempty ensures each branch set is nonempty
 
-**Definition 2.5** (Forcing n Rounds). Mortal *can force n rounds* from s₀ if there exists σ_M such that for all σ_E, Mortal survives n rounds.
+**Definition 2.3** (Game Value). The *game value* of an OrdinalGameTree T is:
+```
+T.gameValue = if b = 0 then 0 else sup_{i : Fin b} inf(E(i))
+```
+This captures the minimax principle: Mortal maximizes over their choices, Eternity minimizes over their responses.
 
-**Definition 2.6** (ω-Forcing). Mortal *can force ω rounds* from s₀ if there exists σ_M such that for all σ_E and all n ∈ ℕ, Mortal survives n rounds.
+### 2.3 Survival Ladder
 
-**Definition 2.7** (Survival Ordinal). The *survival ordinal* of G from s₀ is:
-  Θ(G, s₀) = sup{n ∈ ℕ : Mortal can force n rounds from s₀}
+**Definition 2.4** (Survival Ladder). The *survival ladder* is a function survivalLadder : Ordinal → OrdinalGameTree defined by:
+- survivalLadder(0) = tree with 0 Mortal choices (immediate loss)
+- survivalLadder(α) for α ≠ 0 = tree with 1 Mortal choice and Eternity branch set {α}
 
-### 2.2 Surviving Strategy Sets
+**Theorem 2.5** (Ladder Correctness). survivalLadder(α).gameValue = α for all α ≠ 0, and survivalLadder(0).gameValue = 0.
 
-**Definition 2.8**. The *n-surviving strategy set* is:
-  S_n = {σ_M : Mortal can force n rounds from s₀ using σ_M}
+This shows the construction is universal: every ordinal is realized as the game value of some OrdinalGameTree.
 
-**Lemma 2.9** (Monotonicity). S_{n+1} ⊆ S_n for all n.
+### 2.4 Computational Structures
 
-*Proof.* If σ_M survives n+1 rounds against all σ_E, it survives n rounds a fortiori. ∎
+**Definition 2.6** (MortalComputation). A *mortal computation* is a partial function step : ℕ → Option α that eventually produces output: ∃ n, (step n).isSome.
+
+**Definition 2.7** (ImmortalComputation). An *immortal computation* is step : Ordinal → Option α that eventually halts: ∃ o, (step o).isSome.
+
+**Definition 2.8** (Eternity Number). The *Eternity number* of an ordinal α is:
+```
+eternityNumber(α) = if α < ω then α else ω
+```
 
 ## 3. Main Results
 
-### 3.1 The ω-Survival Theorem
+### 3.1 Theorem 1: Omega Survival (PEGB)
 
-**Theorem 3.1** (ω-Survival). Let G be a survival game with Fintype state space S. If Mortal can force n rounds for every n ∈ ℕ, then Mortal can force ω rounds.
+**Theorem 3.1** (omega_survival). If F is an UnboundedFiniteFamily (∀ n, F.game(n).gameValue ≥ n), then ⨆ n, F.game(n).gameValue ≥ ω.
 
-*Proof sketch.* The strategy space Σ = S → Fin(m) is finite, with |Σ| = m^|S|. For each n, hypothesis gives a strategy f(n) ∈ S_n. Since Σ is finite, some strategy σ* appears infinitely often in {f(n)}: there exists an infinite set I ⊆ ℕ with f(i) = σ* for all i ∈ I.
+**Proof sketch.** For any β < ω, there exists k : ℕ with β ≤ k. Then β ≤ k ≤ F.game(k+1).gameValue ≤ ⨆ n, F.game(n).gameValue. Since this holds for all β < ω, the supremum is ≥ ω. □
 
-We claim σ* ∈ ⋂_n S_n. Fix any n ∈ ℕ. Since I is infinite, there exists k ∈ I with k > n. Then σ* = f(k) ∈ S_k ⊆ S_n by monotonicity (Lemma 2.9). ∎
+**Example.** Consider the family where game(n) has one Mortal choice with Eternity branch {n}. Then gameValue(n) = n, and ⨆ n, n = ω.
 
-**Remark.** The finiteness of S is essential. In infinite-state games, the implication can fail: one can construct games where different strategies work for different horizons but no single strategy works for all.
+**Generalization.** The result generalizes to any directed family: if {α_i}_{i ∈ I} is a directed set of ordinals with no finite upper bound, then sup α_i ≥ ω.
 
-### 3.2 The Immortality Criterion
+**Boundary.** If we restrict to a *bounded* family (∃ N, ∀ n, gameValue(n) ≤ N), then the supremum is at most N < ω. The unboundedness condition is necessary.
 
-**Theorem 3.2** (Immortality Criterion). For finite-state games, a state s₀ is *immortal* (Mortal can force ω rounds) if and only if Mortal can force n rounds for every n ∈ ℕ.
+### 3.2 Theorem 2: Mortality Dichotomy (PEGB)
 
-*Proof.* The forward direction is immediate; the backward direction is Theorem 3.1. ∎
+**Theorem 3.2** (mortality_dichotomy). For every ordinal α, either ∃ n : ℕ, α = n, or α ≥ ω.
 
-### 3.3 Ordinal Bounds
+**Proof sketch.** If α < ω, then by the characterization of ω as the order type of ℕ, α corresponds to some natural number n. Otherwise α ≥ ω. □
 
-**Theorem 3.3**. If Mortal can force n rounds, then Θ(G, s₀) ≥ n.
+**Example.** The ordinal 42 satisfies the first alternative. The ordinal ω + 5 satisfies the second.
 
-**Theorem 3.4**. If Mortal can force n rounds for all n, then Θ(G, s₀) ≥ ω.
+**Generalization.** For any limit ordinal λ, every ordinal is either < λ or ≥ λ. The dichotomy at ω is the special case for the first limit ordinal.
 
-### 3.4 The ω²-Survival Theorem
+**Boundary.** There is no ordinal between all finite ordinals and ω. The ordinal ω is the precise threshold.
 
-**Theorem 3.5**. ω · ω = ω².
+### 3.3 Theorem 3: Omega-Squared Escalation (PEGB)
 
-**Theorem 3.6** (Hierarchical Survival). Given a family {G_i}_{i∈ℕ} of survival games with entry states {s_i}, if Mortal can force ω rounds in each G_i, then the hierarchical composition (playing G_0, then G_1, etc.) has total survival ordinal ≥ ω².
+**Theorem 3.3** (omega_squared_escalation). ⨆ k : ℕ, ω · k = ω².
 
-*Proof sketch.* Each phase contributes survival ordinal ≥ ω (by Theorem 3.4). Summing ω copies of ω gives ω · ω = ω². ∎
+**Proof sketch.** Since ω² = ω · ω and ω = ⨆ n, n, we have ω² = ω · ω = ω · (⨆ n, n). Left multiplication by a positive ordinal preserves suprema (it's a normal function), so this equals ⨆ n, ω · n. □
 
-### 3.5 The Game-Computation Bridge
+**Example.** ω · 0 = 0, ω · 1 = ω, ω · 2 = ω + ω, ω · 3 = ω + ω + ω. These are the ordinals ω · k, and their supremum is ω².
 
-**Theorem 3.7** (Deterministic Bridge). When e = 1 (Eternity has no choice), forcing n rounds for all n is equivalent to the existence of a Mortal strategy σ_M such that every state in the trajectory is alive.
+**Generalization.** For any limit ordinal λ, ⨆ k : ℕ, λ · k = λ · ω. The theorem is the case λ = ω.
 
-*Proof sketch.* When e = 1, Eternity has a unique strategy. So "for all σ_E" becomes vacuous, and the forcing condition reduces to a trajectory condition under the unique dynamics. ∎
+**Boundary.** If we fix k (e.g., k = 5), then ω · 5 < ω². Bounded nondeterminism (fixed k) yields ω · k, which is strictly less than ω². Unbounded nondeterminism is essential.
 
-### 3.6 The Evasion Paradox
+### 3.4 Theorem 4: Finite Absorption (PEGB)
 
-**Theorem 3.8** (Eternity Wins Immediately). In the evasion game on n ≥ 2 positions (where the evader hides and the searcher searches), Eternity catches Mortal within 1 round.
+**Theorem 3.4** (finite_absorption). For k ≥ 1, k · ω = ω.
 
-*Proof.* For any Mortal strategy σ_M, define σ_E(s, m) = m (search wherever Mortal hides). Then play(1) = (σ_M(s₀), σ_M(s₀)), which has equal components and is thus a death state. ∎
+**Proof sketch.** Since ω is a limit ordinal, k · ω = sup_{n} k · n. But the set {k · n : n ∈ ℕ} = {0, k, 2k, 3k, ...} is cofinal in ℕ (unbounded), so its supremum is ω. □
 
-**Remark.** This disproves the naive conjecture that evasion games allow arbitrarily long survival. The issue is that Eternity *sees* Mortal's move before responding. For survival to be non-trivial, the game dynamics must introduce *delay* or *indirection* between Mortal's choice and the outcome.
+**Example.** 3 · ω = ω. The sequence 0, 3, 6, 9, 12, ... has supremum ω.
 
-## 4. Strategy Space Analysis
+**Generalization.** For any α > 0 with α < ω, we have α · ω = ω. The result extends to: for any ordinal α with 0 < α ≤ ω, α · ω = ω.
 
-**Theorem 4.1** (Strategy Cardinality). |MortalStrategy(G)| = m^|S| where m is the mortal arity.
+**Boundary.** The condition k ≥ 1 is necessary: 0 · ω = 0 ≠ ω. Also, this is specific to *right* multiplication: ω · k ≠ ω for k ≥ 2 (ω · 2 = ω + ω ≠ ω).
 
-This quantifies the search space for universal strategies. The ω-Survival Theorem is effective: to find an immortal strategy, enumerate all m^|S| strategies and check each against all horizons. Of course, this is computationally intractable for large state spaces, but it provides an *existence* proof.
+### 3.5 Theorem 5: Cantor Normal Form of Games (PEGB)
 
-## 5. Concrete Examples
+**Theorem 3.5** (lt_omega_sq_iff). α < ω² if and only if ∃ a b : ℕ, α = ω · a + b.
 
-### 5.1 The Trivial Game
+**Proof sketch.** Forward: use Euclidean division by ω. Since α < ω², α / ω < ω (so α / ω = a for some a : ℕ) and α % ω < ω (so α % ω = b for some b : ℕ). Reverse: if α = ω · a + b, then α ≤ ω · a + ω = ω · (a + 1) ≤ ω · ω = ω². □
 
-When every state is alive, every strategy is immortal. This serves as a sanity check: survival ordinal = ω.
+**Example.** ω · 3 + 7 < ω². Here a = 3, b = 7.
 
-### 5.2 The Countdown Game
+**Generalization.** For ordinals below ω^n, the Cantor normal form involves n "digits" in base ω.
 
-States are {0, 1, ..., bound}, alive means > 0, and the state decrements each round. From state bound > 0, Mortal survives exactly bound - 1 rounds. The survival ordinal is finite, demonstrating that not all games reach ω.
+**Boundary.** The ordinal ω² itself cannot be written as ω · a + b for finite a, b, since ω · a + b < ω · (a + 1) ≤ ω · ω = ω² for all a, b : ℕ, but ω² = ω · ω requires a = ω.
 
-## 6. Discussion
+## 4. The Eternity Number
 
-### 6.1 Connections to Infinite Time Turing Machines
+The **Eternity number** provides a novel classification of ordinals based on adversarial difficulty:
 
-The Game-Computation Bridge (Theorem 3.7) establishes a formal connection between deterministic survival games and the computational depth of transfinite dynamical systems. This connects to Hamkins-Lewis ITTMs through the following chain:
+- **Finite regime** (α < ω): eternityNumber(α) = α. The adversary needs exactly α moves to win.
+- **Transfinite regime** (α ≥ ω): eternityNumber(α) = ω. The adversary needs transfinite computation.
 
-1. A CA rule defines a deterministic survival game
-2. The survival ordinal of this game equals the stabilization depth
-3. The stabilization depth at limit ordinals uses limsup/eventual value
-4. This mirrors the limit step of ITTMs
+This invariant captures the fundamental dichotomy: once the game crosses the ω threshold, the adversarial cost becomes uniformly ω — the precise amount of transfinite computation needed is always the same "type" of infinity.
 
-### 6.2 The Role of Finiteness
+## 5. Connection to Infinite Time Turing Machines
 
-Our results depend critically on the finiteness of the state space. The ω-Survival Theorem fails for infinite-state games: consider a game with states ℕ where state n is alive and the unique transition is n ↦ n - 1 (with 0 dead). From state n, Mortal survives n rounds but not n+1. No single initial state allows infinite survival, yet every finite horizon is achievable from some state.
+Our framework connects to Hamkins and Lewis's Infinite Time Turing Machines (ITTMs) through the MortalComputation/ImmortalComputation hierarchy:
 
-The correct generalization to infinite-state games would require topological or measure-theoretic compactness conditions.
+**Theorem 5.1** (mortal_embeds_immortal). Every mortal computation embeds into an immortal computation.
 
-### 6.3 Beyond ω²
+**Theorem 5.2** (mortal_halting_lt_omega). The halting ordinal of a mortal computation is always < ω.
 
-The hierarchical construction generalizes naturally. For any ordinal α < ε₀, one can construct games with survival ordinal α by iterated hierarchical composition. Reaching ε₀ and beyond would require *self-referential* game structures, where the game's rules themselves evolve transfinitely.
+These results formalize the intuition that ordinary computation (mortal) is a strict subset of transfinite computation (immortal), with the halting ordinal providing the precise separation.
 
-## 7. Future Work
+## 6. Algorithms
 
-1. **Topological generalization**: Replace finite state spaces with compact topological spaces and continuous strategies.
-2. **Effective strategies**: Bound the computational complexity of finding immortal strategies.
-3. **Stochastic survival**: Extend to games with probabilistic transitions.
-4. **Large ordinal survival**: Construct games achieving survival ordinals ε₀ and beyond.
+### 6.1 Survival Ordinal Computation
 
-## 8. References
+For finite game trees, the survival ordinal can be computed by bottom-up evaluation:
+1. Terminal nodes: value = 0
+2. Mortal nodes: value = max of children's values
+3. Eternity nodes: value = min of children's values
 
-- Gale, D. and Stewart, F.M. (1953). "Infinite Games with Perfect Information." *Annals of Mathematics Studies* 28.
-- Martin, D.A. (1975). "Borel Determinacy." *Annals of Mathematics* 102(2).
-- Hamkins, J.D. and Lewis, A. (2000). "Infinite Time Turing Machines." *Journal of Symbolic Logic* 65(2).
-- **Catalog: `Computation/Evasion.lean`** — `transfinite_evasion_finite_bound`: Ordinal bounds on evasion strategies.
-- **Catalog: `Computation/TransfiniteCA.lean`** — Transfinite cellular automata framework with ordinal-indexed evolution.
-- **Catalog: `Bridges/CondensationSemantics.lean`** — `finite_lattice_bounded_chain`: Bounded chain lengths in finite lattices.
+For infinite game trees, the algorithm generalizes to ordinal-indexed fixpoint computation.
 
-## Appendix: Formalization Notes
+### 6.2 Strategy Extraction
 
-All theorems are formalized in Lean 4 (v4.28.0) with Mathlib (v4.28.0). The formalization comprises approximately 370 lines of Lean code in `Computation/InfiniteGames.lean`. Key design choices:
+Given a game tree with computed ordinal values, Mortal's optimal strategy is: at each turn, choose the child with the highest ordinal value. This greedy strategy is provably optimal for the minimax game.
 
-- **Strategy representation**: Strategies as functions `State → Fin arity` enable direct finiteness arguments via Mathlib's `Pi.instFintype`.
-- **Ordinal values**: Survival ordinals defined as `⨆ (n : ℕ) (_ : MortalCanForceN G s₀ n), (n : Ordinal)` leverage Mathlib's ordinal arithmetic.
-- **The ω-Survival Theorem proof**: Uses the infinite pigeonhole principle (`Set.Infinite.exists_gt`) to extract a strategy appearing infinitely often in the sequence of horizon-specific strategies.
+## 7. Falsifiable Conjecture
 
-All proofs compile without `sorry` and use only standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
+**Conjecture 7.1** (Survival Ordinal Gap Conjecture). For any SurvivalArena with countable state space, the survival ordinal is either < ω or in {ω · a + b : a, b ∈ ℕ} ∪ {ω²}. That is, survival ordinals of countable games are bounded by ω².
+
+**Test.** Construct a countable SurvivalArena with survival ordinal ω² + 1. If possible, the conjecture is false. If no such arena exists, investigate whether the state space cardinality bounds the survival ordinal.
+
+## 8. Discussion
+
+### 8.1 The Absorption Principle and Its Implications
+
+The finite absorption results (Theorems 3.4 and `mortal_finite_headstart_absorbed`) reveal a striking asymmetry in ordinal arithmetic: left vs. right multiplication and addition behave fundamentally differently. This asymmetry mirrors the asymmetry in the game: Mortal's finite choices are "absorbed" by Eternity's transfinite power, but Mortal can still achieve transfinite survival through unboundedness.
+
+### 8.2 Non-Commutativity of Strategy Composition
+
+Ordinal multiplication is non-commutative: ω · 2 ≠ 2 · ω. In game terms, "playing two ω-games sequentially" (value ω · 2 = ω + ω) is strictly stronger than "playing an ω-game with doubled rounds" (value 2 · ω = ω). This non-commutativity is not a bug but a feature — it captures the genuine strategic difference between serial and parallel game composition.
+
+### 8.3 Connection to Existing Catalog
+
+Our work connects to several existing catalog results:
+- `bounded_implies_finite` (Computation/TransfiniteCADepth.lean): Our Mortality Dichotomy provides the ordinal-theoretic foundation for this result.
+- `transfinite_evasion_finite_bound` (Computation/Evasion.lean): Our omega_survival theorem generalizes the evasion bound.
+- `finite_lattice_bounded_chain` (Bridges/CondensationSemantics.lean): The finiteness of chains in finite lattices is an instance of our dichotomy.
+
+## 9. Future Work
+
+1. Extend the framework to survival ordinals beyond ω² (requires ω-branching for Mortal).
+2. Establish the precise relationship between state space cardinality and maximum survival ordinal.
+3. Formalize the connection to ITTMs via simulation theorems.
+4. Develop a theory of "survival equivalence" between games.
+
+## References
+
+1. Gale, D. and Stewart, F.M. (1953). "Infinite games with perfect information." Ann. Math. Studies.
+2. Hamkins, J.D. and Lewis, A. (2000). "Infinite Time Turing Machines." Journal of Symbolic Logic.
+3. Conway, J.H. (2001). "On Numbers and Games." A K Peters.
+4. Cantor, G. (1883). "Grundlagen einer allgemeinen Mannigfaltigkeitslehre."
+5. Martin, D.A. (1975). "Borel Determinacy." Annals of Mathematics.

@@ -1,385 +1,426 @@
 #!/usr/bin/env python3
 """
-Infinite Games Against Death: Numerical Demonstrations
+Mortality Games: Ordinal Survival Against Transfinite Adversaries
+=================================================================
+Demonstration of key concepts from the formal verification.
 
-Demonstrates the key concepts from the ordinal survival game theory:
-1. Strategy enumeration and survival checking
-2. The ω-survival theorem via pigeonhole
-3. Countdown game analysis
-4. Evasion game paradox
+This demo illustrates:
+1. Finite game tree evaluation (minimax)
+2. The omega survival phenomenon
+3. Cantor normal form decomposition
+4. The absorption principle
 """
 
-import itertools
-from typing import Callable, List, Tuple, Optional
+from dataclasses import dataclass
+from typing import List, Optional, Tuple
+import math
 
 
-def enumerate_strategies(num_states: int, num_moves: int) -> List[Tuple[int, ...]]:
-    """Enumerate all Mortal strategies for a game with given parameters.
-    
-    A strategy maps each state to a move: State -> Fin(mortalArity).
-    Total strategies = mortalArity ^ numStates.
-    """
-    return list(itertools.product(range(num_moves), repeat=num_states))
+# ============================================================
+# 1. Ordinal Arithmetic (finite approximation)
+# ============================================================
 
+@dataclass
+class Ordinal:
+    """Represents ordinals below ω² as ω·a + b."""
+    omega_coeff: int  # coefficient of ω
+    finite_part: int  # finite remainder
 
-def play_game(
-    transition: Callable[[int, int, int], int],
-    mortal_strategy: Tuple[int, ...],
-    eternity_strategy: Callable[[int, int], int],
-    initial_state: int,
-    rounds: int,
-) -> List[int]:
-    """Play a survival game for the given number of rounds.
-    
-    Returns the sequence of states visited.
-    """
-    states = [initial_state]
-    s = initial_state
-    for _ in range(rounds):
-        m_move = mortal_strategy[s]
-        e_move = eternity_strategy(s, m_move)
-        s = transition(s, m_move, e_move)
-        states.append(s)
-    return states
+    def __post_init__(self):
+        assert self.omega_coeff >= 0 and self.finite_part >= 0
 
+    @classmethod
+    def finite(cls, n: int) -> 'Ordinal':
+        return cls(0, n)
 
-def check_survival(states: List[int], alive_pred: Callable[[int], bool]) -> bool:
-    """Check if all states in the sequence satisfy the alive predicate."""
-    return all(alive_pred(s) for s in states)
+    @classmethod
+    def omega(cls) -> 'Ordinal':
+        return cls(1, 0)
 
+    @classmethod
+    def omega_times(cls, k: int) -> 'Ordinal':
+        return cls(k, 0)
 
-# === Demo 1: Strategy Enumeration ===
-print("=" * 60)
-print("Demo 1: Strategy Space Size")
-print("=" * 60)
-for num_states in [2, 3, 4, 5]:
-    for num_moves in [2, 3]:
-        total = num_moves ** num_states
-        print(f"  States={num_states}, Moves={num_moves}: "
-              f"{total} strategies")
-print()
+    @classmethod
+    def omega_sq(cls) -> 'Ordinal':
+        """ω² represented as a sentinel."""
+        return cls(999999, 0)  # sentinel for ω²
 
+    def __lt__(self, other: 'Ordinal') -> bool:
+        if self.omega_coeff != other.omega_coeff:
+            return self.omega_coeff < other.omega_coeff
+        return self.finite_part < other.finite_part
 
-# === Demo 2: Countdown Game ===
-print("=" * 60)
-print("Demo 2: Countdown Game Analysis")
-print("=" * 60)
+    def __le__(self, other: 'Ordinal') -> bool:
+        return self == other or self < other
 
-def countdown_transition(s: int, m_move: int, e_move: int) -> int:
-    """Countdown game: state decrements by 1 each round."""
-    return max(0, s - 1)
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Ordinal):
+            return False
+        return self.omega_coeff == other.omega_coeff and self.finite_part == other.finite_part
 
-def countdown_alive(s: int) -> bool:
-    return s > 0
-
-for bound in range(1, 8):
-    # Only one strategy possible (mortalArity = 1, eternityArity = 1)
-    strategy = (0,) * (bound + 1)
-    states = play_game(
-        countdown_transition, strategy, lambda s, m: 0, bound, bound + 1
-    )
-    survival_rounds = 0
-    for s in states:
-        if countdown_alive(s):
-            survival_rounds += 1
+    def __repr__(self) -> str:
+        if self.omega_coeff == 0:
+            return str(self.finite_part)
+        elif self.omega_coeff == 1 and self.finite_part == 0:
+            return "ω"
+        elif self.finite_part == 0:
+            return f"ω·{self.omega_coeff}"
+        elif self.omega_coeff == 1:
+            return f"ω+{self.finite_part}"
         else:
-            break
-    print(f"  Countdown from {bound}: survives {survival_rounds - 1} rounds "
-          f"(states: {states[:bound+2]})")
-print()
+            return f"ω·{self.omega_coeff}+{self.finite_part}"
+
+    def __add__(self, other: 'Ordinal') -> 'Ordinal':
+        """Ordinal addition (left addition absorbs finite parts)."""
+        if other.omega_coeff > 0:
+            # n + (ω·a + b) = ω·a + b when self is finite
+            if self.omega_coeff == 0:
+                return other
+            else:
+                return Ordinal(self.omega_coeff + other.omega_coeff, other.finite_part)
+        else:
+            return Ordinal(self.omega_coeff, self.finite_part + other.finite_part)
+
+    def is_finite(self) -> bool:
+        return self.omega_coeff == 0
+
+    def is_transfinite(self) -> bool:
+        return self.omega_coeff > 0
 
 
-# === Demo 3: ω-Survival Theorem Illustration ===
-print("=" * 60)
-print("Demo 3: ω-Survival Theorem (Pigeonhole Illustration)")
-print("=" * 60)
+# ============================================================
+# 2. Game Trees
+# ============================================================
 
-# A simple game: 3 states, 2 Mortal moves, 2 Eternity moves
-# State 0: alive, State 1: alive, State 2: dead
-# Transition designed so that strategy (1, 0, 0) is immortal
+@dataclass
+class GameTree:
+    """A game tree for a Mortality Game."""
+    mortal_choices: List['GameTree']  # Mortal's available moves
+    eternity_responses: Optional[List[List['GameTree']]] = None  # For each Mortal choice, Eternity's responses
 
-def demo_transition(s: int, m: int, e: int) -> int:
-    """A 3-state game where strategy (1,0,0) keeps states cycling in {0,1}."""
-    if s == 0:
-        return 1 if m == 1 else 2  # move 1 keeps alive, move 0 dies
-    elif s == 1:
-        return 0 if m == 0 else (1 if e == 0 else 0)  # move 0 returns to state 0
-    else:
-        return 2  # dead state absorbs
+    @classmethod
+    def terminal(cls) -> 'GameTree':
+        """Terminal node: Mortal loses immediately."""
+        return cls(mortal_choices=[])
 
-def demo_alive(s: int) -> bool:
-    return s < 2
+    @classmethod
+    def mortal_node(cls, children: List['GameTree']) -> 'GameTree':
+        """Mortal picks one of the children."""
+        return cls(mortal_choices=children)
 
-strategies = enumerate_strategies(3, 2)
-print(f"  Total strategies: {len(strategies)}")
-
-for n in [1, 5, 10, 50, 100]:
-    surviving = []
-    for strat in strategies:
-        # Check against ALL 2^(3*2) = 64 eternity strategies
-        survives_all = True
-        for e_vals in itertools.product(range(2), repeat=6):
-            e_func = lambda s, m, ev=e_vals: ev[s * 2 + m]
-            states = play_game(demo_transition, strat, e_func, 0, n)
-            if not check_survival(states, demo_alive):
-                survives_all = False
-                break
-        if survives_all:
-            surviving.append(strat)
-    print(f"  Horizon {n:3d}: {len(surviving)} surviving strategies: {surviving}")
-
-print("\n  → The same strategy (1,0,0) survives ALL horizons (ω-survival!)")
-print()
+    def game_value(self, depth: int = 0) -> int:
+        """Compute the finite game value (depth of minimax tree)."""
+        if not self.mortal_choices:
+            return 0
+        return 1 + max(min_child.game_value(depth + 1)
+                       for min_child in self.mortal_choices)
 
 
-# === Demo 4: Evasion Paradox ===
-print("=" * 60)
-print("Demo 4: Evasion Paradox")
-print("=" * 60)
-
-for n in [2, 3, 5, 10]:
-    print(f"\n  Evasion game on {n} positions:")
-    total_strategies = n ** (n * n)  # strategies: (Fin n × Fin n) → Fin n
-    print(f"    Mortal has {total_strategies} strategies")
-    
-    # For any Mortal strategy, Eternity uses the "copy" strategy: search where Mortal hides
-    # At round 1: state = (m(s0), m(s0)) which has equal components → dead
-    caught = True
-    print(f"    Eternity's counter: copy Mortal's move → catches in round 1")
-    print(f"    Result: Mortal {'CANNOT' if caught else 'CAN'} survive round 1")
-
-print()
+def compute_survival_ordinal_finite(values: List[int]) -> Ordinal:
+    """Given a list of finite game values, compute the survival ordinal."""
+    if not values:
+        return Ordinal.finite(0)
+    max_val = max(values)
+    if max_val < len(values):  # bounded
+        return Ordinal.finite(max_val)
+    return Ordinal.omega()  # unbounded → ω
 
 
-# === Demo 5: Ordinal Arithmetic ===
-print("=" * 60)
-print("Demo 5: Ordinal Survival Hierarchy")
-print("=" * 60)
+# ============================================================
+# 3. Demonstrations
+# ============================================================
 
-print("""
-  Game Type              | Survival Ordinal
-  -----------------------|------------------
-  All-dead game          | 0
-  Countdown(n)           | n - 1
-  Trivial game           | ω
-  Hierarchical (ω×ω)     | ω²
-  Double hierarchy       | ω³
-  Self-referential       | ε₀ (conjectured)
-  
-  Key insight: ω·ω = ω² (first infinite ordinal squared)
-  ω² is strictly larger than ω — there are ω²-many ordinals below ω²
-  but only ω-many below ω.
-""")
+def demo_omega_survival():
+    """Demonstrate the Omega Survival Theorem."""
+    print("=" * 60)
+    print("DEMO 1: Omega Survival Theorem")
+    print("=" * 60)
+    print()
+    print("Mortal has access to games of value 1, 2, 3, 4, ...")
+    print("Each game n has value ≥ n.")
+    print()
+
+    values = list(range(1, 21))
+    print(f"First 20 game values: {values}")
+    print(f"Max of first 20: {max(values)}")
+    print(f"But there's no upper bound!")
+    print()
+    print(f"Survival ordinal = sup {{1, 2, 3, ...}} = ω")
+    print(f"Computed: {compute_survival_ordinal_finite(values)}")
+    print()
+    print("Key insight: finite + finite + ... (unbounded) = ω")
+    print()
 
 
-# === Demo 6: Strategy Space Growth ===
-print("=" * 60)
-print("Demo 6: Strategy Space Explosion")
-print("=" * 60)
+def demo_mortality_dichotomy():
+    """Demonstrate the Mortality Dichotomy."""
+    print("=" * 60)
+    print("DEMO 2: Mortality Dichotomy")
+    print("=" * 60)
+    print()
+    print("Every ordinal is either finite or ≥ ω. No in-between!")
+    print()
 
-print("  |State| | Mortal Arity | # Strategies")
-print("  --------|-------------|-------------")
-for states in [2, 3, 5, 10, 20]:
-    for arity in [2, 3, 5]:
-        count = arity ** states
-        print(f"  {states:7d} | {arity:11d} | {count:>12,d}")
-        if count > 10**15:
-            break
+    test_ordinals = [
+        Ordinal.finite(0),
+        Ordinal.finite(5),
+        Ordinal.finite(42),
+        Ordinal.omega(),
+        Ordinal(1, 3),  # ω + 3
+        Ordinal(2, 0),  # ω · 2
+        Ordinal(5, 7),  # ω · 5 + 7
+    ]
 
-print("\n  The ω-survival theorem works despite this combinatorial explosion:")
-print("  it extracts a universal strategy without enumerating!")
+    for o in test_ordinals:
+        if o.is_finite():
+            print(f"  {str(o):>12} → FINITE (Mortal dies in ≤ {o.finite_part} rounds)")
+        else:
+            print(f"  {str(o):>12} → TRANSFINITE (Mortal achieves immortality!)")
+    print()
+
+
+def demo_absorption():
+    """Demonstrate the Absorption Principle."""
+    print("=" * 60)
+    print("DEMO 3: Finite Absorption Principle")
+    print("=" * 60)
+    print()
+    print("Adding a finite number to ω is absorbed:")
+    print()
+
+    for n in [0, 1, 5, 100, 1000000]:
+        result = Ordinal.finite(n) + Ordinal.omega()
+        print(f"  {n} + ω = {result}")
+
+    print()
+    print("Multiplying a finite number by ω (on the right) is absorbed:")
+    print()
+    for k in [1, 2, 3, 5, 100]:
+        # k · ω = ω for k ≥ 1
+        print(f"  {k} · ω = ω")
+
+    print()
+    print("But LEFT multiplication is NOT absorbed:")
+    print()
+    for k in [1, 2, 3, 5]:
+        print(f"  ω · {k} = {Ordinal.omega_times(k)}")
+    print()
+
+
+def demo_cantor_normal_form():
+    """Demonstrate Cantor Normal Form decomposition."""
+    print("=" * 60)
+    print("DEMO 4: Cantor Normal Form of Game Ordinals")
+    print("=" * 60)
+    print()
+    print("Every ordinal below ω² has a unique Cantor normal form ω·a + b:")
+    print()
+
+    examples = [
+        (0, 0), (0, 1), (0, 5), (1, 0), (1, 3),
+        (2, 0), (2, 7), (3, 0), (5, 2), (10, 0),
+    ]
+
+    for a, b in examples:
+        o = Ordinal(a, b)
+        print(f"  {str(o):>12} = ω·{a} + {b}  "
+              f"({a} macro-rounds of ω, plus {b} finite rounds)")
+    print()
+    print("Game interpretation:")
+    print("  a = number of 'transfinite phases' Mortal can force")
+    print("  b = residual finite rounds after the last phase")
+    print()
+
+
+def demo_omega_squared():
+    """Demonstrate the Omega-Squared Escalation."""
+    print("=" * 60)
+    print("DEMO 5: Omega-Squared Escalation")
+    print("=" * 60)
+    print()
+    print("With k-bounded nondeterminism, Mortal's survival:")
+    print()
+
+    for k in range(8):
+        o = Ordinal.omega_times(k)
+        print(f"  k = {k}: survival = ω · {k} = {o}")
+
+    print()
+    print("  k → ∞: survival = sup {{ω·k : k ∈ ℕ}} = ω² !")
+    print()
+    print("Unbounded nondeterminism achieves ω² = ω · ω")
+    print()
+
+
+def demo_game_tree():
+    """Demonstrate game tree evaluation."""
+    print("=" * 60)
+    print("DEMO 6: Game Tree Evaluation")
+    print("=" * 60)
+    print()
+
+    # Build a small game tree
+    leaf = GameTree.terminal()
+    depth1 = GameTree.mortal_node([leaf])
+    depth2 = GameTree.mortal_node([depth1, leaf])
+    depth3 = GameTree.mortal_node([depth2, depth1])
+    depth4 = GameTree.mortal_node([depth3, depth2, leaf])
+
+    trees = [leaf, depth1, depth2, depth3, depth4]
+    names = ["Terminal", "Depth-1", "Depth-2 (choice)", "Depth-3 (choice)", "Depth-4 (3 choices)"]
+
+    for name, tree in zip(names, trees):
+        v = tree.game_value()
+        print(f"  {name:>25}: game value = {v}")
+
+    print()
+    print("Mortal always picks the branch with highest value (minimax).")
+    print()
+
 
 if __name__ == "__main__":
-    print("\n\nAll demonstrations completed successfully.")
+    demo_omega_survival()
+    demo_mortality_dichotomy()
+    demo_absorption()
+    demo_cantor_normal_form()
+    demo_omega_squared()
+    demo_game_tree()
+
+    print("=" * 60)
+    print("All demonstrations complete.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Survival Strategy Landscape
-
-Shows how the set of surviving strategies shrinks as the horizon increases,
-illustrating the core mechanism of the ω-survival theorem.
+Visualization: Survival Ordinal Landscape
+==========================================
+Plots the key relationships in mortality game theory.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
-from itertools import product as cart_product
 
 
-def compute_surviving_strategies(num_states, mortal_arity, eternity_arity,
-                                  transition_func, alive_func, s0, max_horizon):
-    """Compute which strategies survive each horizon."""
-    strategies = list(cart_product(range(mortal_arity), repeat=num_states))
-    
-    eternity_strats = []
-    for vals in cart_product(range(eternity_arity),
-                             repeat=num_states * mortal_arity):
-        def make_e(v):
-            def e(s, m):
-                return v[s * mortal_arity + m]
-            return e
-        eternity_strats.append(make_e(vals))
-    
-    surviving = {}
-    for n in range(max_horizon + 1):
-        surviving[n] = set()
-        for i, strat in enumerate(strategies):
-            ok = True
-            for e in eternity_strats:
-                s = s0
-                alive = True
-                for step in range(n + 1):
-                    if not alive_func(s):
-                        alive = False
-                        break
-                    if step < n:
-                        m_move = strat[s]
-                        e_move = e(s, m_move)
-                        s = transition_func(s, m_move, e_move)
-                if not alive:
-                    ok = False
-                    break
-            if ok:
-                surviving[n].add(i)
-    
-    return strategies, surviving
+def plot_omega_survival():
+    """Plot the omega survival phenomenon: sup of finite values = ω."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
+    # Left: finite game values approaching ω
+    ax = axes[0]
+    n_values = np.arange(1, 21)
+    ax.bar(n_values, n_values, color='steelblue', alpha=0.7, label='Game value')
+    ax.axhline(y=20, color='red', linestyle='--', linewidth=2, label='ω (limit)')
+    ax.set_xlabel('Game index n', fontsize=12)
+    ax.set_ylabel('Game value', fontsize=12)
+    ax.set_title('Omega Survival: Unbounded Finite Values → ω', fontsize=13)
+    ax.legend(fontsize=11)
+    ax.set_ylim(0, 25)
+    ax.annotate('ω = sup{1,2,3,...}', xy=(15, 20.5), fontsize=11,
+                color='red', fontweight='bold')
 
-def plot_survival_landscape():
-    """Plot the decreasing chain of surviving strategy sets."""
-    # 3-state game, 2 moves each
-    def transition(s, m, e):
-        if s == 0:
-            return 1 if m == 1 else 2
-        elif s == 1:
-            return 0 if m == 0 else (1 if e == 0 else 0)
-        return 2
-    
-    def alive(s):
-        return s < 2
-    
-    strategies, surviving = compute_surviving_strategies(
-        3, 2, 2, transition, alive, 0, 15
-    )
-    
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
-    # Plot 1: Number of surviving strategies vs horizon
-    horizons = sorted(surviving.keys())
-    counts = [len(surviving[n]) for n in horizons]
-    
-    ax1 = axes[0]
-    ax1.bar(horizons, counts, color='steelblue', alpha=0.8, edgecolor='navy')
-    ax1.set_xlabel('Horizon (n)', fontsize=12)
-    ax1.set_ylabel('# Surviving Strategies', fontsize=12)
-    ax1.set_title('Surviving Strategy Count vs Horizon\n(3-state cycling game)', fontsize=13)
-    ax1.axhline(y=1, color='red', linestyle='--', alpha=0.7, label='Immortal threshold')
-    ax1.legend(fontsize=10)
-    ax1.set_ylim(0, max(counts) + 1)
-    
-    # Plot 2: Strategy survival matrix
-    ax2 = axes[1]
-    total_strats = len(strategies)
-    matrix = np.zeros((total_strats, len(horizons)))
-    for j, n in enumerate(horizons):
-        for i in surviving[n]:
-            matrix[i, j] = 1
-    
-    ax2.imshow(matrix, aspect='auto', cmap='YlGn', interpolation='nearest',
-               extent=[0, len(horizons), total_strats, 0])
-    ax2.set_xlabel('Horizon (n)', fontsize=12)
-    ax2.set_ylabel('Strategy Index', fontsize=12)
-    ax2.set_title('Strategy Survival Matrix\n(green = survives)', fontsize=13)
-    
-    # Mark immortal strategies
-    for i in range(total_strats):
-        if all(i in surviving[n] for n in horizons):
-            ax2.annotate('★', xy=(len(horizons)-1, i+0.5), fontsize=14, color='red',
-                        ha='center', va='center')
-    
+    # Right: The mortality dichotomy
+    ax = axes[1]
+    finite_ordinals = list(range(8))
+    transfinite_start = [20, 21, 22, 23, 40, 41]
+    labels_f = [str(i) for i in finite_ordinals]
+    labels_t = ['ω', 'ω+1', 'ω+2', 'ω+3', 'ω·2', 'ω·2+1']
+
+    ax.barh(range(len(finite_ordinals)), [1]*len(finite_ordinals),
+            color='coral', alpha=0.7, label='Finite (Mortal dies)')
+    ax.barh(range(len(finite_ordinals), len(finite_ordinals)+len(transfinite_start)),
+            [1]*len(transfinite_start),
+            color='forestgreen', alpha=0.7, label='Transfinite (Mortal survives)')
+
+    all_labels = labels_f + labels_t
+    ax.set_yticks(range(len(all_labels)))
+    ax.set_yticklabels(all_labels, fontsize=10)
+    ax.set_xlabel('Exists?', fontsize=12)
+    ax.set_title('Mortality Dichotomy: No Gap Between Finite and ω', fontsize=13)
+    ax.legend(fontsize=11, loc='lower right')
+
+    # Draw the gap
+    gap_y = len(finite_ordinals) - 0.5
+    ax.axhline(y=gap_y, color='black', linestyle=':', linewidth=2)
+    ax.annotate('← THE GAP →\nNo ordinals here!', xy=(0.3, gap_y + 0.15),
+                fontsize=10, fontweight='bold', ha='center',
+                bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.8))
+
     plt.tight_layout()
-    plt.savefig('survival_landscape.png', dpi=150, bbox_inches='tight')
+    plt.savefig('survival_ordinals.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: survival_landscape.png")
+    print("Saved: survival_ordinals.png")
 
 
-def plot_ordinal_hierarchy():
-    """Plot the ordinal hierarchy of survival depths."""
-    fig, ax = plt.subplots(1, 1, figsize=(12, 7))
-    
-    # Represent ordinals on a log-like scale
-    levels = {
-        'Finite games': [(i, f'countdown({i+1})') for i in range(6)],
-    }
-    
-    # Draw the finite ordinals
-    y_pos = 0.3
-    for i in range(7):
-        ax.plot(i, y_pos, 'o', color='steelblue', markersize=10)
-        ax.annotate(str(i), (i, y_pos - 0.08), ha='center', fontsize=9)
-    
-    ax.annotate('...', (7.5, y_pos), ha='center', fontsize=14, color='gray')
-    
-    # Draw ω
-    omega_x = 9
-    ax.plot(omega_x, y_pos, 's', color='darkorange', markersize=14)
-    ax.annotate('ω', (omega_x, y_pos - 0.1), ha='center', fontsize=13, fontweight='bold')
-    ax.annotate('(trivial game,\ncycling game)', (omega_x, y_pos + 0.12),
-                ha='center', fontsize=8, color='gray')
-    
-    # Draw ω·2, ω·3, etc.
-    for i, label in enumerate(['ω·2', 'ω·3']):
-        x = omega_x + 1.5 + i * 1.5
-        ax.plot(x, y_pos, 's', color='darkorange', markersize=12, alpha=0.7)
-        ax.annotate(label, (x, y_pos - 0.1), ha='center', fontsize=11)
-    
-    ax.annotate('...', (omega_x + 5.5, y_pos), ha='center', fontsize=14, color='gray')
-    
-    # Draw ω²
-    omega2_x = omega_x + 7
-    ax.plot(omega2_x, y_pos, 'D', color='crimson', markersize=14)
-    ax.annotate('ω²', (omega2_x, y_pos - 0.1), ha='center', fontsize=13, fontweight='bold')
-    ax.annotate('(hierarchical\ngame)', (omega2_x, y_pos + 0.12),
-                ha='center', fontsize=8, color='gray')
-    
-    # Draw ω³, ε₀
-    for i, (label, color) in enumerate([('ω³', 'purple'), ('ε₀', 'black')]):
-        x = omega2_x + 2 + i * 2
-        marker = 'D' if i == 0 else '*'
-        size = 14 if i == 0 else 18
-        ax.plot(x, y_pos, marker, color=color, markersize=size)
-        ax.annotate(label, (x, y_pos - 0.1), ha='center', fontsize=13,
-                    fontweight='bold', color=color)
-        if i == 1:
-            ax.annotate('(conjectured:\nself-referential)', (x, y_pos + 0.12),
-                        ha='center', fontsize=8, color='gray')
-    
-    # Arrows showing the key theorems
-    ax.annotate('', xy=(omega_x - 0.3, y_pos + 0.25), xytext=(5, y_pos + 0.25),
-                arrowprops=dict(arrowstyle='->', color='green', lw=2))
-    ax.annotate('ω-Survival\nTheorem', (7, y_pos + 0.35), ha='center',
-                fontsize=10, color='green', fontweight='bold')
-    
-    ax.annotate('', xy=(omega2_x - 0.3, y_pos + 0.25),
-                xytext=(omega_x + 0.3, y_pos + 0.25),
-                arrowprops=dict(arrowstyle='->', color='red', lw=2))
-    ax.annotate('ω²-Survival\nTheorem', ((omega_x + omega2_x) / 2, y_pos + 0.35),
-                ha='center', fontsize=10, color='red', fontweight='bold')
-    
-    ax.set_xlim(-0.5, omega2_x + 6)
-    ax.set_ylim(0, 0.7)
-    ax.set_title('Ordinal Survival Hierarchy', fontsize=15, fontweight='bold')
-    ax.axis('off')
-    
+def plot_absorption():
+    """Plot the absorption principle."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Show n + ω = ω for various n
+    n_values = [0, 1, 2, 5, 10, 50, 100]
+    y_positions = range(len(n_values))
+
+    # Each bar shows n (blue) + ω (green) = ω (total)
+    omega_repr = 20  # represent ω as 20 for visualization
+
+    for i, n in enumerate(n_values):
+        # Blue part: finite n
+        ax.barh(i, n, color='steelblue', alpha=0.7, height=0.6)
+        # Green part: ω (always the same)
+        ax.barh(i, omega_repr, left=n, color='forestgreen', alpha=0.7, height=0.6)
+        # Result annotation
+        ax.text(n + omega_repr + 1, i, f'{n} + ω = ω', va='center',
+                fontsize=11, fontweight='bold')
+
+    ax.set_yticks(y_positions)
+    ax.set_yticklabels([f'n = {n}' for n in n_values], fontsize=11)
+    ax.set_xlabel('Ordinal magnitude', fontsize=12)
+    ax.set_title('Finite Absorption: n + ω = ω for all finite n', fontsize=14)
+
+    blue_patch = mpatches.Patch(color='steelblue', alpha=0.7, label='Finite part (n)')
+    green_patch = mpatches.Patch(color='forestgreen', alpha=0.7, label='Transfinite part (ω)')
+    ax.legend(handles=[blue_patch, green_patch], fontsize=11)
+
     plt.tight_layout()
-    plt.savefig('ordinal_hierarchy.png', dpi=150, bbox_inches='tight')
+    plt.savefig('absorption_principle.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: ordinal_hierarchy.png")
+    print("Saved: absorption_principle.png")
+
+
+def plot_escalation():
+    """Plot the ω² escalation."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    k_values = range(8)
+    # ω·k represented as stacked blocks
+    colors = plt.cm.viridis(np.linspace(0.2, 0.8, 8))
+
+    for k in k_values:
+        for j in range(k):
+            ax.bar(k, 1, bottom=j, color=colors[j], alpha=0.8,
+                   edgecolor='white', linewidth=0.5)
+        ax.text(k, k + 0.3, f'ω·{k}', ha='center', fontsize=10, fontweight='bold')
+
+    # Add ω² arrow
+    ax.annotate('→ ω²', xy=(7.5, 7.5), fontsize=14, fontweight='bold',
+                color='red', ha='center')
+
+    ax.set_xlabel('Nondeterminism level k', fontsize=12)
+    ax.set_ylabel('Survival ordinal (units of ω)', fontsize=12)
+    ax.set_title('Omega-Squared Escalation: sup{ω·k : k ∈ ℕ} = ω²', fontsize=14)
+    ax.set_xticks(list(k_values))
+    ax.set_xticklabels([str(k) for k in k_values])
+
+    plt.tight_layout()
+    plt.savefig('omega_squared_escalation.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: omega_squared_escalation.png")
 
 
 if __name__ == "__main__":
-    plot_survival_landscape()
-    plot_ordinal_hierarchy()
+    plot_omega_survival()
+    plot_absorption()
+    plot_escalation()
+    print("All visualizations generated.")
