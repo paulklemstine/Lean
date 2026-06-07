@@ -1,161 +1,200 @@
+#!/usr/bin/env python3
 """
-Argumentation Framework Algorithms
-===================================
-
-Type-hinted implementations of the core algorithms from the
-formalization of argumentation topology.
+Algorithms for argumentation topology.
+Type-hinted implementations of core computational procedures.
 """
 
-from typing import Set, Dict, List, Tuple, Optional, FrozenSet
 from itertools import combinations
+from typing import Set, FrozenSet, List, Tuple, Optional, Dict
+from collections import defaultdict
 
 
-class ArgFramework:
-    """An argumentation framework AF = (A, R)."""
+def conflict_free_sets(
+    args: Set[int],
+    attacks: Set[Tuple[int, int]]
+) -> List[FrozenSet[int]]:
+    """
+    Compute all conflict-free subsets of an argumentation framework.
 
-    def __init__(self, args: Set[str], attacks: Set[Tuple[str, str]]):
-        self.args = args
-        self.attacks = attacks
-        self._attack_dict: Dict[str, Set[str]] = {a: set() for a in args}
-        self._attacked_by: Dict[str, Set[str]] = {a: set() for a in args}
-        for a, b in attacks:
-            self._attack_dict[a].add(b)
-            self._attacked_by[b].add(a)
+    Algorithm: Generate all subsets and filter by conflict-freeness.
+    Complexity: O(2^n * n^2) where n = |args|.
 
-    def is_conflict_free(self, S: FrozenSet[str]) -> bool:
-        """Check if S is conflict-free (no internal attacks)."""
+    Args:
+        args: Set of argument identifiers.
+        attacks: Set of (attacker, target) pairs.
+
+    Returns:
+        List of all conflict-free subsets, ordered by size.
+    """
+    attack_set = set(attacks)
+    result: List[FrozenSet[int]] = []
+    args_list = sorted(args)
+
+    for r in range(len(args_list) + 1):
+        for combo in combinations(args_list, r):
+            S = frozenset(combo)
+            conflict = False
+            for a in S:
+                for b in S:
+                    if (a, b) in attack_set:
+                        conflict = True
+                        break
+                if conflict:
+                    break
+            if not conflict:
+                result.append(S)
+
+    return result
+
+
+def admissible_sets(
+    args: Set[int],
+    attacks: Set[Tuple[int, int]]
+) -> List[FrozenSet[int]]:
+    """
+    Compute all admissible subsets.
+
+    A set S is admissible if:
+    1. It is conflict-free.
+    2. For every attacker b of any a ∈ S, some c ∈ S attacks b.
+
+    Args:
+        args: Set of argument identifiers.
+        attacks: Set of (attacker, target) pairs.
+
+    Returns:
+        List of all admissible subsets.
+    """
+    # Build attack maps
+    attacked_by: Dict[int, Set[int]] = defaultdict(set)
+    for a, b in attacks:
+        attacked_by[b].add(a)
+
+    attack_set = set(attacks)
+    cf_sets = conflict_free_sets(args, attacks)
+    result: List[FrozenSet[int]] = []
+
+    for S in cf_sets:
+        admissible = True
         for a in S:
-            for b in S:
-                if (a, b) in self.attacks:
-                    return False
-        return True
-
-    def defends(self, S: FrozenSet[str], a: str) -> bool:
-        """Check if S defends argument a."""
-        for b in self._attacked_by.get(a, set()):
-            if not any((c, b) in self.attacks for c in S):
-                return False
-        return True
-
-    def is_admissible(self, S: FrozenSet[str]) -> bool:
-        """Check if S is admissible (conflict-free + self-defending)."""
-        if not self.is_conflict_free(S):
-            return False
-        return all(self.defends(S, a) for a in S)
-
-    def defense_op(self, S: FrozenSet[str]) -> FrozenSet[str]:
-        """The defense operator F(S) = {a | S defends a}."""
-        return frozenset(a for a in self.args if self.defends(S, a))
-
-    def grounded_extension(self) -> FrozenSet[str]:
-        """Compute the grounded extension via iterated defense operator."""
-        current: FrozenSet[str] = frozenset()
-        while True:
-            next_set = self.defense_op(current)
-            if next_set == current:
-                return current
-            current = next_set
-
-    def defense_chain(self, max_steps: Optional[int] = None) -> List[FrozenSet[str]]:
-        """Compute the full defense chain until stabilization."""
-        if max_steps is None:
-            max_steps = len(self.args) + 1
-        chain: List[FrozenSet[str]] = []
-        current: FrozenSet[str] = frozenset()
-        for _ in range(max_steps):
-            current = self.defense_op(current)
-            chain.append(current)
-            if len(chain) >= 2 and chain[-1] == chain[-2]:
+            for b in attacked_by.get(a, set()):
+                # b attacks a; need some c in S that attacks b
+                if not any((c, b) in attack_set for c in S):
+                    admissible = False
+                    break
+            if not admissible:
                 break
-        return chain
+        if admissible:
+            result.append(S)
 
-    def defense_depth(self, a: str) -> int:
-        """Compute the defense depth of argument a.
-        Returns -1 if a is not in the grounded extension."""
-        chain = self.defense_chain()
-        for i, layer in enumerate(chain):
-            if a in layer:
-                return i
-        return -1
-
-    def all_conflict_free_sets(self) -> List[FrozenSet[str]]:
-        """Enumerate all conflict-free sets (the argumentation complex)."""
-        result: List[FrozenSet[str]] = [frozenset()]
-        args_list = sorted(self.args)
-        for k in range(1, len(args_list) + 1):
-            for combo in combinations(args_list, k):
-                s = frozenset(combo)
-                if self.is_conflict_free(s):
-                    result.append(s)
-        return result
-
-    def preferred_extensions(self) -> List[FrozenSet[str]]:
-        """Compute all preferred extensions (maximal admissible sets)."""
-        admissible: List[FrozenSet[str]] = []
-        args_list = sorted(self.args)
-        for k in range(len(args_list), -1, -1):
-            for combo in combinations(args_list, k):
-                s = frozenset(combo)
-                if self.is_admissible(s):
-                    admissible.append(s)
-        # Filter to maximal
-        preferred: List[FrozenSet[str]] = []
-        for s in admissible:
-            if not any(s < t for t in admissible):
-                if s not in preferred:
-                    preferred.append(s)
-        return preferred
-
-    def stable_extensions(self) -> List[FrozenSet[str]]:
-        """Compute all stable extensions."""
-        result: List[FrozenSet[str]] = []
-        args_list = sorted(self.args)
-        for k in range(len(args_list), -1, -1):
-            for combo in combinations(args_list, k):
-                s = frozenset(combo)
-                if not self.is_conflict_free(s):
-                    continue
-                # Check every outsider is attacked
-                outside = self.args - s
-                if all(any((c, a) in self.attacks for c in s) for a in outside):
-                    result.append(s)
-        return result
-
-    def euler_characteristic(self) -> int:
-        """Compute the Euler characteristic of the conflict-free complex.
-        χ = Σ (-1)^k · f_k where f_k = # faces of dimension k."""
-        cf_sets = self.all_conflict_free_sets()
-        chi = 0
-        for s in cf_sets:
-            if len(s) > 0:  # Exclude empty set for unreduced
-                chi += (-1) ** (len(s) - 1)
-        return chi
-
-    def verify_euler_conjecture(self) -> Tuple[bool, Dict]:
-        """Test the Euler characteristic conjecture:
-        χ(K(AF)) = |preferred| - |grounded|."""
-        chi = self.euler_characteristic()
-        n_pref = len(self.preferred_extensions())
-        g_size = len(self.grounded_extension())
-        conjectured = n_pref - g_size
-        return chi == conjectured, {
-            'euler_char': chi,
-            'n_preferred': n_pref,
-            'grounded_size': g_size,
-            'conjectured': conjectured,
-            'match': chi == conjectured,
-        }
+    return result
 
 
-def generate_random_af(n: int, p: float, seed: int = 42) -> ArgFramework:
-    """Generate a random argumentation framework with n arguments and
-    attack probability p."""
-    import random
-    random.seed(seed)
-    args = {f"a{i}" for i in range(n)}
-    attacks: Set[Tuple[str, str]] = set()
-    for a in sorted(args):
-        for b in sorted(args):
-            if a != b and random.random() < p:
-                attacks.add((a, b))
-    return ArgFramework(args, attacks)
+def preferred_extensions(
+    args: Set[int],
+    attacks: Set[Tuple[int, int]]
+) -> List[FrozenSet[int]]:
+    """
+    Compute preferred extensions (maximal admissible sets).
+
+    Algorithm: Compute all admissible sets, then filter for maximality.
+    """
+    adm = admissible_sets(args, attacks)
+    result: List[FrozenSet[int]] = []
+    for S in adm:
+        if not any(S < T for T in adm):
+            result.append(S)
+    return result
+
+
+def grounded_extension(
+    args: Set[int],
+    attacks: Set[Tuple[int, int]]
+) -> FrozenSet[int]:
+    """
+    Compute the grounded extension via least fixed point iteration.
+
+    Start with ∅ and repeatedly add arguments that are defended
+    by the current set, until convergence.
+    """
+    attacked_by: Dict[int, Set[int]] = defaultdict(set)
+    for a, b in attacks:
+        attacked_by[b].add(a)
+
+    attack_set = set(attacks)
+    current: Set[int] = set()
+    changed = True
+
+    while changed:
+        changed = False
+        for a in args:
+            if a not in current:
+                # Check if current defends a
+                defended = True
+                for b in attacked_by.get(a, set()):
+                    if not any((c, b) in attack_set for c in current):
+                        defended = False
+                        break
+                if defended:
+                    current.add(a)
+                    changed = True
+
+    return frozenset(current)
+
+
+def euler_characteristic(
+    args: Set[int],
+    attacks: Set[Tuple[int, int]]
+) -> int:
+    """
+    Compute the Euler characteristic of the conflict-free complex.
+
+    χ = Σ_{d=-1}^{max_dim} (-1)^d * f_d
+
+    where f_d = number of faces of dimension d.
+    """
+    faces = conflict_free_sets(args, attacks)
+    if not faces:
+        return 0
+
+    max_dim = max(len(f) for f in faces) - 1
+    chi = 0
+    for d in range(-1, max_dim + 1):
+        count = sum(1 for f in faces if len(f) == d + 1)
+        chi += ((-1) ** d) * count
+    return chi
+
+
+def f_vector(
+    args: Set[int],
+    attacks: Set[Tuple[int, int]]
+) -> List[int]:
+    """
+    Compute the f-vector of the conflict-free complex.
+
+    f_i = number of faces of dimension i, starting from i = -1 (empty face).
+    """
+    faces = conflict_free_sets(args, attacks)
+    if not faces:
+        return []
+
+    max_dim = max(len(f) for f in faces) - 1
+    return [sum(1 for f in faces if len(f) == d + 1) for d in range(-1, max_dim + 1)]
+
+
+def is_cone(
+    args: Set[int],
+    attacks: Set[Tuple[int, int]]
+) -> Optional[int]:
+    """
+    Check if the conflict-free complex is a cone. If so, return the apex vertex.
+
+    A complex is a cone over vertex v if v appears in every maximal face.
+    This happens when v is isolated (no attacks to/from v, no self-attack).
+    """
+    for v in args:
+        # Check if v is isolated
+        if any(a == v or b == v for a, b in attacks):
+            continue
+        return v
+    return None
