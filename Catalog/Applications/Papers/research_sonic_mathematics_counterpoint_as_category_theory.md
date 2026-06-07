@@ -1,193 +1,225 @@
-# The Fux Category: First-Species Counterpoint as a Categorical Structure
+# Counterpoint as Category Theory: The Algebraic Structure of Consonant Voice Leading
 
 ## Abstract
 
-We formalize the rules of Fux's first-species counterpoint as a category where objects are consonant interval classes in ℤ/12ℤ and morphisms are permitted voice leadings labeled by motion type. The resulting structure — the **Fux Category** — exhibits remarkable algebraic properties. We prove that: (1) the consonant set {0, 3, 4, 7, 8, 9} is spectrally complete (its pairwise differences cover all of ℤ/12ℤ) but NOT closed under inversion (the Perfect Fourth Anomaly); (2) Fux's constraint removes exactly 12 of 144 labeled transitions, yielding a {3,4}-valued adjacency matrix with uniform outgoing degree 22; (3) valid transitions compose to valid transitions, establishing the categorical structure; (4) the consonant set generates ℤ/12ℤ as an additive group. All results are machine-verified in Lean 4 with Mathlib.
+We formalize first-species counterpoint (Fux, 1725) as an algebraic structure on the cyclic group ℤ/12ℤ, proving five structural theorems about the consonant intervals {0, 3, 4, 7, 8, 9} and the voice-leading morphisms between them. Our main results are: (1) the consonant intervals break the inversion symmetry of ℤ/12ℤ at exactly one point — the fourth/fifth pair — characterizing this as the unique structural defect; (2) the imperfect consonances {3, 4, 8, 9} form an inversion-closed subset, reflecting the musical duality of thirds and sixths; (3) the minor and major thirds generate all of ℤ/12ℤ, connecting consonance theory to the arithmetic of coprime integers; (4) the counterpoint transition relation is total — any consonant interval can reach any other via a valid voice leading; and (5) the tension ordering on consonant intervals forms a graded poset isomorphic to the ordinal sum **1 + 1 + 4**. These results formalize previously informal musical intuitions as precise algebraic statements and establish bridges between music theory, group theory, order theory, and category theory. All results are machine-verified in Lean 4 with Mathlib.
 
-**Keywords**: music theory, category theory, counterpoint, Fux, ℤ/12ℤ, interval classes, formal verification
-
----
+**Keywords**: counterpoint, voice leading, category theory, group theory, ZMod 12, consonance, order theory
 
 ## 1. Introduction
 
-The connection between mathematics and music is ancient — Pythagoras, Euler, and Helmholtz all explored it. However, most mathematical treatments of music theory focus on *tuning systems* (frequency ratios, temperaments) or *pitch-class set theory* (combinatorics of note collections). The *compositional constraints* of counterpoint — the rules governing how voices move relative to each other — have received comparatively little algebraic attention.
+### 1.1 Motivation
 
-In this paper, we formalize Fux's first-species counterpoint (note-against-note, two voices) as a categorical structure. The key insight is that counterpoint rules define a directed multigraph (quiver) on consonant interval classes, and the path category of this quiver has non-trivial algebraic properties.
+The theory of counterpoint — the art of combining simultaneous melodic lines — has been formalized since at least Fux's *Gradus ad Parnassum* (1725). Yet the algebraic content of counterpoint rules has only recently begun to be explored systematically, primarily through the work of Mazzola (2002), Tymoczko (2011), and the neo-Riemannian school (Cohn, 1998).
 
-### 1.1 Related Work
+We adopt a novel approach: treating the consonant intervals as a distinguished subset of the cyclic group ℤ/12ℤ and analyzing its algebraic properties, then building a categorical framework for voice leading over this substrate. This connects three mathematical areas:
 
-Mazzola's *The Topos of Music* (2002) applies category theory to music at a high level of abstraction. Tymoczko's *A Geometry of Music* (2011) uses geometric and topological methods. Our approach is more concrete: we define a specific finite category with 6 objects and 132 generating morphisms, prove exact combinatorial properties, and verify everything in a proof assistant.
+- **Group theory**: ℤ/12ℤ as the pitch-class group, subgroup generation, and automorphism structure
+- **Order theory**: partial orders on consonant intervals encoding musical tension and resolution
+- **Category theory**: voice leadings as morphisms in a category whose composition law reflects contrapuntal sequence
 
-The catalog theorem `root_triple_consonant_intervals` from the Pythagorean music theory formalization establishes that Pythagorean triple ratios (3:4:5) yield consonant intervals. Our work builds on this by studying the *transition structure* among consonant intervals under counterpoint constraints.
+### 1.2 Prior Work
+
+The connection between music and mathematics is ancient (Pythagoras, Euler, Helmholtz). Modern algebraic music theory begins with Babbitt (1960) and Lewin (1987), who introduced group-theoretic frameworks for pitch-class analysis. Mazzola (2002) developed a topos-theoretic approach to music theory. Tymoczko (2011) introduced geometric models of voice-leading spaces. Our work differs in focusing specifically on the *counterpoint rules* as algebraic constraints, rather than on pitch-class sets or voice-leading geometry.
+
+The existing catalog result `root_triple_consonant_intervals` (in `Catalog/Pythagorean/HarmonicMusicTheory.lean`) establishes that Pythagorean triples yield consonant frequency ratios. We extend this by analyzing the interval-class structure directly in ℤ/12ℤ, shifting from frequency ratios to pitch-class group theory.
+
+### 1.3 Contributions
+
+1. **Consonance Asymmetry Theorem**: Formal proof that consonant intervals break inversion symmetry at exactly one point.
+2. **Generation Theorem**: Proof that minor and major thirds generate all of ℤ/12ℤ.
+3. **Totality Theorem**: Proof that the counterpoint transition graph is complete.
+4. **Tension Poset**: Construction and analysis of the graded partial order on consonant intervals.
+5. **No-Parallel-Perfect Theorem**: Formalization of the fundamental counterpoint rule as a categorical constraint.
 
 ## 2. Definitions
 
-### 2.1 Consonant Interval Classes
+### 2.1 The Chromatic Group
 
-**Definition 2.1.** The set of *consonant interval classes* in 12-tone equal temperament is
-$$C = \{0, 3, 4, 7, 8, 9\} \subset \mathbb{Z}/12\mathbb{Z}$$
-where 0 = unison/octave, 3 = minor third, 4 = major third, 7 = perfect fifth, 8 = minor sixth, 9 = major sixth.
+The **chromatic group** is ℤ/12ℤ, the cyclic group of order 12. Elements represent pitch classes modulo octave equivalence. Addition represents transposition.
 
-**Definition 2.2.** An interval class $c \in C$ is *perfect* if $c \in \{0, 7\}$ and *imperfect* if $c \in \{3, 4, 8, 9\}$.
+### 2.2 Consonant Intervals
 
-### 2.2 Motion Types
+The **consonant intervals** of first-species two-voice counterpoint are:
 
-**Definition 2.3.** A *motion type* is one of: contrary, oblique, similar, or parallel.
+| Name | Semitones | Frequency Ratio | Type |
+|------|-----------|-----------------|------|
+| Unison | 0 | 1:1 | Perfect |
+| Minor Third | 3 | 6:5 | Imperfect |
+| Major Third | 4 | 5:4 | Imperfect |
+| Perfect Fifth | 7 | 3:2 | Perfect |
+| Minor Sixth | 8 | 8:5 | Imperfect |
+| Major Sixth | 9 | 5:3 | Imperfect |
 
-### 2.3 The Fux Quiver
+Formally: **C** = {0, 3, 4, 7, 8, 9} ⊂ ℤ/12ℤ.
 
-**Definition 2.4.** The *Fux Quiver* $Q$ has:
-- **Objects**: $\text{Ob}(Q) = C$ (the six consonant interval classes)
-- **Edges**: For each $(s, t, m) \in C \times C \times \text{Motion}$, there is an edge $s \xrightarrow{m} t$ iff $\text{fuxValid}(s, t, m) = \text{true}$.
+The **perfect consonances** are **P** = {0, 7} and the **imperfect consonances** are **I** = {3, 4, 8, 9}, with **C** = **P** ⊔ **I** (disjoint union).
 
-**Definition 2.5.** A transition $(s, t, m)$ is *Fux-valid* iff it is NOT the case that $t$ is perfect AND $m$ is parallel. Formally:
-$$\text{fuxValid}(s, t, m) = \neg(t.\text{isPerfect} \wedge m = \text{parallel})$$
+The **dissonant intervals** are **D** = {1, 2, 5, 6, 10, 11} = ℤ/12ℤ \ **C**.
 
-### 2.4 The Fux Category
+### 2.3 Interval Inversion
 
-**Definition 2.6.** The *Fux Category* $\mathcal{F}$ is the free category on the Fux Quiver $Q$. Its objects are consonant intervals, and its morphisms are finite paths of Fux-valid transitions.
+The **inversion** (octave complement) of an interval *i* is −*i* in ℤ/12ℤ. This is the involution *ι* : ℤ/12ℤ → ℤ/12ℤ defined by *ι*(*i*) = 12 − *i*.
+
+### 2.4 Voice Leadings
+
+A **voice leading** is a pair (*s_U*, *s_L*) ∈ (ℤ/12ℤ)² specifying the motion of the upper and lower voices. The **interval change** is Δ = *s_U* − *s_L*.
+
+A voice leading is **parallel** if *s_U* = *s_L*, and **stationary** if *s_U* = *s_L* = 0.
+
+### 2.5 First-Species Validity
+
+A voice leading (*s_U*, *s_L*) from interval *i* to interval *j* is **valid** if:
+1. Δ = *j* − *i*
+2. If *j* ∈ **P** and the motion is parallel, then it is stationary.
+
+This formalizes the prohibition of parallel perfect consonances (parallel fifths and parallel unisons/octaves).
+
+### 2.6 Tension Level
+
+The **tension ranking** τ : **C** → {0, 1, 2} assigns:
+- τ(0) = 0 (unison: maximum stability)
+- τ(7) = 1 (fifth: stable)
+- τ(*i*) = 2 for *i* ∈ **I** (imperfect: mobile)
 
 ## 3. Main Results
 
-### 3.1 Consonant-Dissonant Partition
+### 3.1 Theorem: Consonance-Dissonance Partition
 
-**Theorem 3.1** (Consonant-Dissonant Partition). $\mathbb{Z}/12\mathbb{Z}$ partitions into the consonant set $C = \{0,3,4,7,8,9\}$ and the dissonant set $D = \{1,2,5,6,10,11\}$, each of cardinality 6.
+**Theorem** (consonant_dissonant_partition). *The sets* **C** *and* **D** *partition* ℤ/12ℤ: **C** ∪ **D** = ℤ/12ℤ and **C** ∩ **D** = ∅.
 
-*Proof.* By enumeration (verified by `decide` in Lean). □
+*Proof*. Direct computation. |**C**| = |**D**| = 6, and their union is all of ℤ/12ℤ. ∎
 
-### 3.2 Inversion Asymmetry
+**PEGB Analysis**:
+- **Proof**: Verified by `native_decide` over `Finset (ZMod 12)`.
+- **Example**: The partition separates the "harsh" intervals (seconds, tritone, sevenths) from the "smooth" ones.
+- **Generalization**: For any n-tone equal temperament system, a consonance set partitions ℤ/nℤ into consonant and dissonant subsets. The question of which partition properties hold (equal size, inversion symmetry, generation) varies dramatically with n.
+- **Boundary**: In 19-TET, 24-TET, or other microtonal systems, the "consonant" set is no longer well-defined by simple frequency ratios, and the partition may not be equal.
 
-**Definition 3.2.** The *interval inversion* is the map $\iota: n \mapsto (12-n) \bmod 12$ on $\mathbb{Z}/12\mathbb{Z}$.
+### 3.2 Theorem: Consonance Inversion Asymmetry
 
-**Theorem 3.3** (Inversion Asymmetry). The consonant set $C$ is NOT closed under interval inversion: $\iota(7) = 5 \notin C$.
+**Theorem** (consonance_inversion_asymmetry). *The consonant set is not closed under inversion:* ι(**C**) ≠ **C**.
 
-*Proof.* Direct computation. The perfect fifth (7) inverts to the perfect fourth (5), which is dissonant in two-voice counterpoint. □
+**Theorem** (fourth_unique_dissonant_with_consonant_inversion). *The perfect fourth (5 semitones) is the unique dissonant interval with a consonant inversion:* if *d* ∈ **D** and ι(*d*) ∈ **C**, then *d* = 5.
 
-**Theorem 3.4** (Imperfect Inversion Closure). The imperfect consonant set $\{3,4,8,9\}$ IS closed under $\iota$: $\iota(3) = 9$, $\iota(4) = 8$.
+*Proof sketch*. The inversion of the fifth is the fourth: ι(7) = 5. Since 5 ∉ **C** but 7 ∈ **C**, we have ι(**C**) ≠ **C**. For uniqueness, check all six elements of **D**: ι(1) = 11 ∉ **C**, ι(2) = 10 ∉ **C**, ι(5) = 7 ∈ **C**, ι(6) = 6 ∉ **C**, ι(10) = 2 ∉ **C**, ι(11) = 1 ∉ **C**. Only *d* = 5 satisfies both conditions. ∎
 
-*Proof.* By enumeration. □
+**PEGB Analysis**:
+- **Proof**: Verified by `native_decide`.
+- **Example**: The fourth (5 semitones) sounds consonant in isolation but is treated as dissonant in two-voice counterpoint. This theorem shows this treatment is the *unique* symmetry defect.
+- **Generalization**: In three-or-more-voice counterpoint, the fourth becomes consonant, and the extended consonance set {0, 3, 4, 5, 7, 8, 9} IS inversion-closed. Our theorem characterizes the exact cost of the two-voice restriction.
+- **Boundary**: In non-12-TET systems, the "fourth" may not be a single element, and the uniqueness result fails.
 
-**Remark 3.5.** The asymmetry is confined to perfect consonances. The perfect fourth anomaly — where the fourth is consonant in chords of three or more voices but dissonant in two-voice counterpoint — has its precise algebraic counterpart in Theorems 3.3 and 3.4.
+### 3.3 Theorem: Imperfect Inversion Closure
 
-### 3.3 Transition Counting
+**Theorem** (imperfect_inversion_closed). *The imperfect consonances are closed under inversion:* ι(**I**) = **I**.
 
-**Theorem 3.6** (Transition Count). Of 144 total labeled transitions, exactly 132 are Fux-valid and 12 are forbidden.
+*Proof*. Direct computation: ι(3) = 9, ι(4) = 8, ι(8) = 4, ι(9) = 3, all in **I**. ∎
 
-*Proof.* The forbidden transitions are $\{(s, t, \text{parallel}) : s \in C, t \in \{0, 7\}\}$, giving $|C| \times |\{0,7\}| = 6 \times 2 = 12$. □
+### 3.4 Theorem: Thirds Generate the Chromatic Scale
 
-**Theorem 3.7** (Adjacency Dichotomy). For any source $s$ and target $t$, the number of valid motion types is:
-$$\text{transitionCount}(s, t) = \begin{cases} 3 & \text{if } t \text{ is perfect} \\ 4 & \text{if } t \text{ is imperfect} \end{cases}$$
+**Theorem** (thirds_generate_all). *The additive subgroup of* ℤ/12ℤ *generated by {3, 4} equals all of* ℤ/12ℤ.
 
-*Proof.* If $t$ is imperfect, all 4 motion types are valid (no constraint applies). If $t$ is perfect, parallel is forbidden, leaving 3. □
+*Proof*. Since gcd(3, 4) = 1, the element 1 = 4 − 3 lies in the closure of {3, 4}. Since 1 generates ℤ/12ℤ (it has additive order 12), the closure is ⊤. ∎
 
-### 3.4 Regularity Properties
+**PEGB Analysis**:
+- **Proof**: Constructive: for each *n* ∈ ℤ/12ℤ, exhibit integers *a*, *b* with *n* = *a*·3 + *b*·4.
+- **Example**: To reach 1: 1 = 4 − 3. To reach 2: 2 = 2·4 − 2·3. To reach 5: 5 = 3 + 4 − 2·3 + 4 = 3·4 − 4·3 + 8 − 3... more directly, 5 = 2·4 − 3.
+- **Generalization**: For any *m*-TET system, the consonances generate ℤ/*m*ℤ iff the GCD of their semitone values divides *m*. For 12-TET, gcd(3,4) = 1 divides 12, confirming generation.
+- **Boundary**: In 6-TET (whole-tone scale), {3, 4} maps to {3, 4} in ℤ/6ℤ with gcd(3,4) = 1, so generation still holds. But in 8-TET, {3, 4} in ℤ/8ℤ has gcd(3,4) = 1, so it also generates. The property fails only when the consonant intervals share a common factor with the chromatic cardinality.
 
-**Theorem 3.8** (Uniform Outgoing). Every consonant interval has exactly 22 valid outgoing transitions: $\text{out}(s) = 4 \times 4 + 3 \times 2 = 22$.
+### 3.5 Theorem: Counterpoint Transition Totality
 
-**Theorem 3.9** (Imperfect Advantage). Every imperfect consonance has 24 valid incoming transitions, while every perfect consonance has only 18. The ratio is $\frac{24}{18} = \frac{4}{3}$.
+**Theorem** (counterpoint_transition_total). *For any consonant intervals i, j, there exists a valid voice leading from i to j.*
 
-*Proof.* Incoming count for target $t$: if $t$ is imperfect, all $6 \times 4 = 24$ transitions are valid. If $t$ is perfect, $6 \times 3 = 18$ (parallel forbidden from each source). □
+*Proof*. Construct the voice leading (*j* − *i*, 0) (oblique motion with stationary lower voice). The interval change is (*j* − *i*) − 0 = *j* − *i*, as required. If *j* ∈ **P** and the motion is parallel, then *j* − *i* = 0, so *i* = *j* and both voices are stationary — the validity condition is satisfied. ∎
 
-### 3.5 Composition Preservation
+**PEGB Analysis**:
+- **Proof**: Constructive witness: oblique motion with stationary bass.
+- **Example**: From a fifth (7) to a minor third (3): the upper voice moves by 3 − 7 = −4 ≡ 8 (mod 12) while the lower voice stays.
+- **Generalization**: This extends to *any* set of rules that permits oblique motion. The totality holds because oblique motion is never parallel — so the parallel-perfect prohibition doesn't apply.
+- **Boundary**: If we add the "hidden fifths" rule (no similar motion to perfect consonances), totality still holds (use contrary motion). If we add a stepwise-motion constraint (voices move by at most a second), totality fails — not all transitions are achievable in one step.
 
-**Theorem 3.10** (Composition Preservation). If $t_2$ is Fux-valid, then for any $t_1$, the composition $t_1 \circ t_2$ (with composed motion type) is also Fux-valid.
+### 3.6 Theorem: The Tension Poset
 
-*Proof.* The composed motion is $m_1 \circ m_2$, where the composition operation on motion types satisfies: $m_1 \circ m_2 = \text{parallel}$ iff $m_1 = m_2 = \text{parallel}$. If $t_2$ is valid and targets a perfect consonance, then $m_2 \neq \text{parallel}$, so $m_1 \circ m_2 \neq \text{parallel}$. If $t_2$ targets an imperfect consonance, validity is automatic. □
+**Theorem** (tension_fiber_sizes). *The tension ranking has fibers of size 1, 1, and 4 at levels 0, 1, and 2 respectively.*
 
-**Corollary 3.11.** The Fux Category $\mathcal{F}$ is well-defined: it is the path category of the Fux Quiver.
+**Theorem** (tension_rank_determines_class). *If two consonant intervals have the same tension rank, they are either equal or both imperfect.*
 
-### 3.6 Spectral Completeness
+The tension poset is the ordinal sum **1 + 1 + 4**: a total order on the first two levels (unison < fifth) with a four-element antichain at the top. This structure captures the musical principle that resolution flows from imperfect consonances through the fifth to the unison.
 
-**Theorem 3.12** (Spectral Completeness). The set of pairwise differences $\{a - b \bmod 12 : a, b \in C\}$ equals all of $\mathbb{Z}/12\mathbb{Z}$.
+### 3.7 Theorem: No Parallel Perfect Consonances
 
-*Proof.* By enumeration: the 36 pairwise differences include all 12 residues. □
+**Theorem** (no_parallel_fifths). *No non-stationary parallel voice leading is valid at interval 7 (the perfect fifth).*
 
-### 3.7 Generation
+**Theorem** (no_parallel_unisons). *Same for interval 0 (the unison).*
 
-**Theorem 3.13** (Generation). The additive subgroup of $\mathbb{Z}/12\mathbb{Z}$ generated by $C = \{0, 3, 4, 7, 8, 9\}$ is $\mathbb{Z}/12\mathbb{Z}$ itself.
+**Theorem** (parallel_imperfect_allowed). *Parallel motion IS valid at any imperfect consonance.*
 
-*Proof.* Since $4, 3 \in C$, we have $4 - 3 = 1$ in the generated subgroup. Since $1$ generates $\mathbb{Z}/12\mathbb{Z}$, the result follows. □
+These three theorems together formalize the fundamental asymmetry of the counterpoint rules: the prohibition applies *only* to perfect consonances, creating a dichotomy between the "rigid" perfect consonances and the "flexible" imperfect ones.
 
-### 3.8 Tritone Uniqueness
+### 3.8 Bridge Result: Consonance and Modular Arithmetic
 
-**Theorem 3.14** (Tritone Uniqueness). The tritone (6 semitones) is the unique non-zero element of $\mathbb{Z}/12\mathbb{Z}$ that is both self-inverse ($\iota(6) = 6$) and dissonant ($6 \notin C$).
+**Theorem** (consonant_residues_mod3). *The consonant intervals map surjectively onto* ℤ/3ℤ *under the natural projection* ℤ/12ℤ → ℤ/3ℤ.
 
-*Proof.* The self-inverse elements are $\{0, 6\}$ (solutions to $2n \equiv 0 \pmod{12}$). Of these, only 6 is non-zero, and $6 \notin C$. □
+This connects consonance theory to the subgroup lattice of ℤ/12ℤ: the consonant intervals are "evenly distributed" with respect to the mod-3 subgroup structure. Since 12 = 4 × 3, this captures the relationship between the augmented triad (multiples of 4, generating the ℤ/3ℤ quotient) and the consonant intervals.
 
-### 3.9 Forbidden Transition Characterization
+**Theorem** (consonant_sum). *The sum of all consonant intervals in* ℤ/12ℤ *equals 7 (the perfect fifth).*
 
-**Theorem 3.15** (Forbidden Characterization). A transition $(s, t, m)$ is forbidden iff $t$ is perfect and $m$ is parallel. Every forbidden transition targets either the unison or the perfect fifth.
+The arithmetic center of consonance is the fifth — the interval that structures the circle of fifths and the dominant-tonic relationship in tonal music.
 
-### 3.10 Diatonic Completeness
+## 4. The Counterpoint Category
 
-**Theorem 3.16** (Diatonic Intervallical Completeness). The C major diatonic scale $\{0,2,4,5,7,9,11\} \subset \mathbb{Z}/12\mathbb{Z}$ is intervallically complete: its pairwise difference set covers all of $\mathbb{Z}/12\mathbb{Z}$.
+### 4.1 Objects and Morphisms
 
-## 4. The PEGB Analysis
+The **counterpoint category** Cpt has:
+- **Objects**: The six consonant intervals
+- **Morphisms** Hom(*i*, *j*): The set of valid voice leadings from *i* to *j*
 
-### 4.1 Inversion Asymmetry (PEGB)
+### 4.2 Composition
 
-- **Proof**: Machine-verified; `inversion_asymmetry` in Lean.
-- **Example**: $\iota(7) = 5 \notin C$. The perfect fifth inverts to the dissonant perfect fourth.
-- **Generalization**: For any $n > 2$, define consonance in $\mathbb{Z}/n\mathbb{Z}$ by a subset $C_n$. The inversion closure property $\iota(C_n) \subseteq C_n$ depends on the specific consonance theory. In the Pythagorean system (based on 3:2 ratios), this asymmetry persists for all even $n \geq 12$.
-- **Boundary**: In 24-TET (quarter tones), the inversion of the "fifth" (14 quarter-tones ≈ 7 semitones) is 10 quarter-tones, a different interval class. The asymmetry may or may not persist depending on which intervals are classified as consonant.
+Composition of voice leadings (*s_U*, *s_L*) and (*t_U*, *t_L*) is (*s_U* + *t_U*, *s_L* + *t_L*). We prove this is associative with identity (0, 0).
 
-### 4.2 Composition Preservation (PEGB)
+### 4.3 Structure Theorem
 
-- **Proof**: `fux_composition_valid` verified by `native_decide` over all $144 \times 144$ pairs.
-- **Example**: A contrary-motion step to a fifth, followed by an oblique step to a third, composes to a valid contrary step from the source to the third.
-- **Generalization**: Replace the Fux constraint with ANY constraint of the form "motion type $m$ is forbidden for targets in set $T \subseteq C$." The composition preservation holds whenever the motion composition table satisfies: $m_1 \circ m_2 \in F \Rightarrow m_2 \in F$, where $F$ is the set of forbidden motions. This is equivalent to saying each forbidden motion is a right-ideal element of the motion monoid.
-- **Boundary**: If we add the stronger "no similar motion to a perfect consonance" rule (forbidding both parallel AND similar), composition preservation FAILS: similar ∘ similar = similar, and the constraint is not absorbed.
+By the Transition Totality Theorem, every hom-set is non-empty. The category Cpt is therefore a connected groupoid-like structure (though not a groupoid — not every morphism has an inverse within the valid set).
 
-### 4.3 Adjacency Dichotomy (PEGB)
+The key structural insight: Cpt is NOT a thin category. Between any two consonant intervals, there are (in general) multiple valid voice leadings. The original conjecture that Cpt is equivalent to a thin category on a 12-element poset is **refuted** — the morphism spaces are too rich.
 
-- **Proof**: `adjacency_dichotomy` proved by case analysis on `isPerfect`.
-- **Example**: The row for "major third → X" is [3, 4, 4, 3, 4, 4].
-- **Generalization**: For $k$ forbidden motion types targeting $p$ perfect consonances among $c$ total consonant intervals, the adjacency matrix has entries from $\{|\text{Motion}| - k, |\text{Motion}|\}$ and uniform outgoing degree $c \cdot |\text{Motion}| - k \cdot p$.
-- **Boundary**: If ALL motion types were forbidden for perfect targets ($k = 4$), the matrix would have entries from $\{0, 4\}$ and the quiver would disconnect into two components: perfect and imperfect.
+However, the **quotient** of Cpt by the equivalence relation "same interval change" IS thin (since the interval change *j* − *i* is determined by the objects). This quotient is exactly the preorder category of the total relation on **C** — the indiscrete category on 6 objects. This is a precise categorical statement: the *reachability structure* of counterpoint is trivial (everything reaches everything), while the *voice-leading space* is rich.
 
-### 4.4 Spectral Completeness (PEGB)
+## 5. Discussion
 
-- **Proof**: `consonant_spectrum_complete` verified by `native_decide`.
-- **Example**: $9 - 4 = 5$, $4 - 3 = 1$, $3 - 0 = 3$ — each difference fills a slot.
-- **Generalization**: A subset $S \subseteq \mathbb{Z}/n\mathbb{Z}$ is spectrally complete iff $|S| \geq \lceil\sqrt{n}\rceil$ (pigeonhole gives this as a sufficient condition for large $|S|$, though not necessary). For $|S| = 6$ in $\mathbb{Z}/12\mathbb{Z}$, spectral completeness is not guaranteed (consider $\{0,1,2,3,4,5\}$ — differences only give $\{0,1,2,3,4,5,7,8,9,10,11\}$, which IS complete). Determining the minimum $|S|$ for spectral completeness in $\mathbb{Z}/n\mathbb{Z}$ is related to additive number theory.
-- **Boundary**: The pentatonic scale $\{0, 2, 4, 7, 9\}$ (5 elements) also achieves spectral completeness. But $\{0, 1, 2, 3\}$ (4 elements) does not: its difference set is $\{0, 1, 2, 3, 9, 10, 11\}$, missing $\{4, 5, 6, 7, 8\}$.
+### 5.1 The Fourth-Fifth Asymmetry as a Design Principle
 
-## 5. Falsifiable Conjecture
+Our characterization of the fourth as the unique "broken symmetry element" provides a new perspective on one of music theory's oldest debates. The treatment of the fourth as dissonant in two-voice counterpoint is not arbitrary — it is the minimal departure from inversion symmetry that separates the "grounding" intervals (perfect consonances, used for beginnings and endings) from the "driving" intervals (imperfect consonances, providing forward motion).
 
-**Conjecture 5.1** (Consonance Persistence under Temperament Extension). For any even $n \geq 12$ and the "natural consonant set" $C_n$ defined by intervals with frequency ratios of small-integer form (complexity ≤ 10), the Fux quiver of $C_n$ (forbidding parallel motion to perfect consonances) satisfies:
-1. The adjacency matrix remains $\{k-1, k\}$-valued for some $k$.
-2. Composition preservation holds.
+### 5.2 Generation and the PLR Group
 
-**Test**: Compute $C_n$ for $n \in \{12, 19, 24, 31, 53\}$ using just-intonation frequency ratio approximations. For each, enumerate all transitions and check properties (1) and (2). This can be done computationally in O(|C_n|² × |Motion|) time.
+The theorem that {3, 4} generates ℤ/12ℤ connects our work to neo-Riemannian theory. The three operations P (Parallel), L (Leading-tone exchange), and R (Relative) generate a group acting on major and minor triads. Our generation theorem shows that the underlying interval arithmetic already contains this generative power at the level of single intervals, before any triadic structure is imposed.
 
-## 6. Connections to the Catalog
+### 5.3 The Tension Poset and Directed Music
 
-Our work connects to:
+The graded poset **1 + 1 + 4** on consonant intervals provides a formal model of musical tension. In tonal music, phrases typically move from stable intervals (beginning on a unison or fifth) through mobile intervals (thirds and sixths) and back to stability. Our poset captures this as a *directed graph* with a natural flow from top (mobile) to bottom (stable).
 
-1. **`root_triple_consonant_intervals`** (Pythagorean/HarmonicMusicTheory): The consonance of intervals derived from the (3,4,5) triple (ratios 4:3 = perfect fourth, 5:4 = major third) directly feeds our consonant set. The major third (4 semitones) and perfect fourth (5 semitones) are the pair that generates the inversion asymmetry.
+## 6. Future Work
 
-2. **`MusicalCounterpoint`** (Algebra): The existing formalization treats counterpoint as a constraint satisfaction problem with an L¹ cost function. Our categorical approach complements this by studying the *transition structure* rather than the *optimization problem*.
+1. **Higher species**: Extend the category to second, third, and fourth species counterpoint, where rhythmic displacement creates new morphism types.
+2. **Microtonal generalization**: Characterize consonance sets in ℤ/nℤ for arbitrary n and identify which structural properties (generation, inversion closure, partition equality) persist.
+3. **The hidden fifths rule**: Formalize similar-motion restrictions and analyze how they refine the morphism spaces without destroying totality.
+4. **Triadic extension**: Lift the interval-level analysis to three-note chords, connecting to the PLR group and neo-Riemannian theory.
+5. **Spectral counterpoint**: Bridge to the Pythagorean triple framework in `HarmonicMusicTheory.lean`, connecting interval-class algebra to frequency-ratio arithmetic.
 
-3. **`finished_rules_eq_theory`** (Bridges/KnuthBendixCompletion): The Fux rules can be viewed as a rewriting system on interval sequences, with the forbidden transitions as reduction rules. The completion procedure could potentially be applied to derive additional constraints.
+## 7. References
 
-## 7. Discussion
+1. Fux, J.J. *Gradus ad Parnassum*. Vienna, 1725.
+2. Mazzola, G. *The Topos of Music*. Birkhäuser, 2002.
+3. Tymoczko, D. *A Geometry of Music*. Oxford University Press, 2011.
+4. Cohn, R. "Introduction to Neo-Riemannian Theory." *Journal of Music Theory* 42(2), 1998.
+5. Lewin, D. *Generalized Musical Intervals and Transformations*. Yale, 1987.
 
-The Fux Category reveals that the rules of first-species counterpoint are not arbitrary pedagogical conventions but encode precise algebraic structure. The {3,4}-valued adjacency matrix, the composition preservation theorem, and the inversion asymmetry are three faces of the same phenomenon: perfect consonances are acoustically special, and this specialness creates exactly one algebraic irregularity in an otherwise uniform structure.
+### Catalog References
 
-The 22-22 outgoing regularity is particularly striking: despite the asymmetric constraint (which treats targets differently based on perfectness), every *source* interval sees exactly the same number of available transitions. This outgoing regularity is a form of "fairness" built into the counterpoint system — no starting interval is more constrained than any other.
-
-## 8. Future Work
-
-See FUTURE_DIRECTIONS.md for detailed research directions. Key open questions:
-
-1. **Higher-species counterpoint**: How does the categorical structure change when we add passing tones (second species), suspensions (fourth species), or florid counterpoint (fifth species)?
-2. **Multi-voice extension**: With $n > 2$ voices, the interval space becomes $C^{\binom{n}{2}}$, and the constraints become more complex. Does composition preservation survive?
-3. **Non-Western consonance**: Different musical traditions define consonance differently. How does the category theory adapt?
-4. **Spectral geometry**: The Fux Quiver defines a directed graph. What are its spectral properties (eigenvalues of the adjacency matrix)? How do they relate to harmonic properties?
-
-## References
-
-1. Fux, J.J. *Gradus ad Parnassum* (1725).
-2. Mazzola, G. *The Topos of Music* (2002).
-3. Tymoczko, D. *A Geometry of Music* (2011).
-4. Forte, A. *The Structure of Atonal Music* (1973).
+- `Catalog/Pythagorean/HarmonicMusicTheory.lean` — `root_triple_consonant_intervals`: Establishes consonance of Pythagorean triple frequency ratios.
+- `Catalog/Tropical/VoiceLeading.lean` — Voice leading formalization in the tropical semiring context.
+- `Catalog/Tropical/TropicalHypergraphCounterpoint.lean` — Hypergraph model of contrapuntal constraints.
