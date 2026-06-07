@@ -1,212 +1,207 @@
 #!/usr/bin/env python3
 """
-EML Approximation Algorithms
+Algorithms for EML Network Construction and Approximation
 
-Type-hinted implementations of the key algorithms from the
-EML Stone-Weierstrass approximation theory.
+Type-hinted implementations of the core algorithms from the
+Stone-Weierstrass EML density theorem.
 """
 
 from typing import List, Tuple, Callable
 import numpy as np
+from dataclasses import dataclass
+from enum import Enum
 
 
-def eml_generator(x: np.ndarray, w: float, b: float) -> np.ndarray:
+class EMLOpType(Enum):
+    """Elementary operation types in an EML chain."""
+    EXP = "exp"
+    LOG = "log"
+    ADD = "add"
+    MUL = "mul"
+
+
+@dataclass
+class EMLOp:
+    """A single EML operation with optional parameter."""
+    op_type: EMLOpType
+    param: float = 0.0
+
+    def eval(self, x: float) -> float:
+        """Evaluate this operation at x."""
+        if self.op_type == EMLOpType.EXP:
+            return np.exp(x)
+        elif self.op_type == EMLOpType.LOG:
+            return np.log(x) if x > 0 else float('-inf')
+        elif self.op_type == EMLOpType.ADD:
+            return x + self.param
+        elif self.op_type == EMLOpType.MUL:
+            return x * self.param
+        raise ValueError(f"Unknown op type: {self.op_type}")
+
+
+@dataclass
+class EMLChain:
     """
-    EML affine-exponential generator: exp(w*x + b).
-
-    This is the fundamental building block of the EML subalgebra.
-    The Stone-Weierstrass theorem guarantees that finite linear
-    combinations and products of these generators can approximate
-    any continuous function on a compact set.
-
-    Args:
-        x: Input array of shape (n,)
-        w: Weight parameter
-        b: Bias parameter
-
-    Returns:
-        Array of exp(w*x + b) values
+    An EML chain: a sequence of elementary operations.
+    Evaluated right-to-left (last op applied first to input).
     """
-    return np.exp(np.clip(w * x + b, -500, 500))
+    ops: List[EMLOp]
+
+    def eval(self, x: float) -> float:
+        """Evaluate the chain at x."""
+        result = x
+        for op in reversed(self.ops):
+            result = op.eval(result)
+        return result
+
+    def depth(self) -> int:
+        """Transcendental depth: count of exp and log operations."""
+        return sum(1 for op in self.ops
+                   if op.op_type in (EMLOpType.EXP, EMLOpType.LOG))
+
+    def compose(self, other: 'EMLChain') -> 'EMLChain':
+        """Compose two chains: self ∘ other."""
+        return EMLChain(self.ops + other.ops)
 
 
-def log_sum_exp_smooth_max(values: np.ndarray, t: float) -> float:
+def make_affine_exp(a: float, b: float) -> EMLChain:
     """
-    Smooth maximum via log-sum-exp (Maslov dequantization).
+    Build chain computing exp(a*x + b).
+    Depth: 1 (one transcendental operation).
 
-    Computes (1/t) * log(sum(exp(t * v_i))) which converges to
-    max(v_i) as t → ∞.
-
-    This is the bridge between EML (smooth) and tropical (piecewise-linear)
-    arithmetic.
-
-    Args:
-        values: Array of real values
-        t: Temperature parameter (larger = closer to true max)
-
-    Returns:
-        Smooth approximation to max(values)
+    Algorithm:
+    1. Multiply by a
+    2. Add b
+    3. Apply exp
     """
-    scaled = t * values
-    m = np.max(scaled)  # numerical stability
-    return (1.0 / t) * (m + np.log(np.sum(np.exp(scaled - m))))
-
-
-def eml_least_squares_fit(
-    x: np.ndarray,
-    target: np.ndarray,
-    generators: List[Tuple[float, float]],
-    include_constant: bool = True
-) -> Tuple[np.ndarray, float]:
-    """
-    Fit an EML network to a target function via least squares.
-
-    Constructs a linear combination of EML generators and finds
-    optimal coefficients by ordinary least squares.
-
-    Args:
-        x: Input points of shape (n,)
-        target: Target values of shape (n,)
-        generators: List of (w, b) parameter pairs for EML generators
-        include_constant: Whether to include a constant term
-
-    Returns:
-        Tuple of (coefficients, max_error)
-    """
-    basis_cols = [eml_generator(x, w, b) for w, b in generators]
-    if include_constant:
-        basis_cols.append(np.ones_like(x))
-
-    basis = np.column_stack(basis_cols)
-    coeffs, _, _, _ = np.linalg.lstsq(basis, target, rcond=None)
-    approx = basis @ coeffs
-    max_error = float(np.max(np.abs(target - approx)))
-
-    return coeffs, max_error
-
-
-def tropical_deformation(
-    tropical_fn: Callable[[np.ndarray], np.ndarray],
-    t: float,
-    x: np.ndarray
-) -> np.ndarray:
-    """
-    Smooth a tropical (piecewise-linear) function using EML operations.
-
-    Given a tropical function h(x) = max(a_i * x + b_i), produce
-    the smooth EML approximation (1/t) * log(sum(exp(t * (a_i * x + b_i)))).
-
-    Args:
-        tropical_fn: The tropical function to smooth (returns piecewise-linear values)
-        t: Temperature parameter
-        x: Input points
-
-    Returns:
-        Smoothed function values
-    """
-    return np.array([
-        log_sum_exp_smooth_max(np.array([tropical_fn(np.array([xi]))
-                                          for _ in range(1)]).flatten(), t)
-        for xi in x
+    return EMLChain([
+        EMLOp(EMLOpType.EXP),
+        EMLOp(EMLOpType.ADD, b),
+        EMLOp(EMLOpType.MUL, a),
     ])
 
 
-def eml_depth2_generator(
+def make_power(n: int) -> EMLChain:
+    """
+    Build chain computing x^n for x > 0.
+    Uses: x^n = exp(n * log(x))
+    Depth: 2 (one exp + one log).
+
+    Algorithm:
+    1. Apply log
+    2. Multiply by n
+    3. Apply exp
+    """
+    return EMLChain([
+        EMLOp(EMLOpType.EXP),
+        EMLOp(EMLOpType.MUL, float(n)),
+        EMLOp(EMLOpType.LOG),
+    ])
+
+
+def eml_least_squares_approx(
+    target: Callable[[np.ndarray], np.ndarray],
+    interval: Tuple[float, float],
+    n_terms: int,
+    n_samples: int = 500
+) -> Tuple[List[float], List[EMLChain]]:
+    """
+    Approximate target function using n_terms EML basis functions.
+
+    Returns coefficients and the basis chains.
+    The approximation is: f(x) ≈ Σ c_k * exp(k * x)
+
+    Algorithm (Stone-Weierstrass constructive approximation):
+    1. Sample target at n_samples points
+    2. Build EML basis {exp(k*x) : k = 0, ..., n_terms-1}
+    3. Solve least-squares for optimal coefficients
+    4. Return coefficients and chains
+
+    Complexity: O(n_samples * n_terms) for matrix construction,
+                O(n_terms^2 * n_samples) for least-squares solve.
+    """
+    a, b = interval
+    x_samples = np.linspace(a, b, n_samples)
+    y_samples = target(x_samples)
+
+    # Build basis matrix
+    basis = np.column_stack([np.exp(k * x_samples) for k in range(n_terms)])
+
+    # Solve least squares
+    coeffs, _, _, _ = np.linalg.lstsq(basis, y_samples, rcond=None)
+
+    # Build chains
+    chains = [make_affine_exp(float(k), 0.0) for k in range(n_terms)]
+
+    return coeffs.tolist(), chains
+
+
+def separation_witness(x: float, y: float) -> Tuple[float, float]:
+    """
+    Given x ≠ y, find parameters (a, b) such that
+    exp(a*x + b) ≠ exp(a*y + b).
+
+    By injectivity of exp, we just need a*x + b ≠ a*y + b,
+    i.e., a ≠ 0 and x ≠ y. So a=1, b=0 always works.
+
+    Returns: (a, b) such that exp(ax+b) separates x from y.
+    """
+    assert x != y, "Points must be distinct"
+    return (1.0, 0.0)
+
+
+def lipschitz_width_bound(
+    lipschitz_const: float,
+    interval_length: float,
+    epsilon: float
+) -> int:
+    """
+    Compute the number of EML basis functions needed to
+    epsilon-approximate an L-Lipschitz function on an interval of given length.
+
+    Width bound: N = ⌈L * |b-a| / (2ε)⌉
+
+    This is the Jackson-type rate for EML networks.
+    """
+    assert lipschitz_const > 0
+    assert interval_length > 0
+    assert epsilon > 0
+    return int(np.ceil(lipschitz_const * interval_length / (2 * epsilon)))
+
+
+def multivariate_separation_witness(
     x: np.ndarray,
-    w1: float, b1: float,
-    w2: float, b2: float
-) -> np.ndarray:
+    y: np.ndarray
+) -> int:
     """
-    Depth-2 EML generator: exp(w2 * exp(w1 * x + b1) + b2).
+    Given x ≠ y in R^n, find coordinate i such that
+    exp(x_i) ≠ exp(y_i).
 
-    This is strictly more expressive than depth-1 generators,
-    as proven by depth2_not_affine_exp.
+    Since x ≠ y, there exists i with x_i ≠ y_i.
+    Since exp is injective, exp(x_i) ≠ exp(y_i).
 
-    Args:
-        x: Input array
-        w1, b1: Inner layer parameters
-        w2, b2: Outer layer parameters
-
-    Returns:
-        Depth-2 EML function values
+    Returns: index i of a separating coordinate.
     """
-    inner = np.exp(np.clip(w1 * x + b1, -500, 500))
-    return np.exp(np.clip(w2 * inner + b2, -500, 500))
-
-
-def adaptive_eml_approx(
-    x: np.ndarray,
-    target: np.ndarray,
-    max_generators: int = 20,
-    tolerance: float = 1e-4
-) -> Tuple[List[Tuple[float, float]], np.ndarray, float]:
-    """
-    Adaptive EML approximation: greedily add generators to minimize error.
-
-    This implements the constructive content of the density theorem:
-    we keep adding EML generators until the approximation error drops
-    below the specified tolerance.
-
-    Args:
-        x: Input points
-        target: Target function values
-        max_generators: Maximum number of generators to use
-        tolerance: Target maximum error
-
-    Returns:
-        Tuple of (generator_params, coefficients, final_error)
-    """
-    # Candidate parameters to search over
-    w_candidates = np.linspace(-3, 3, 20)
-    b_candidates = np.linspace(-3, 3, 10)
-
-    selected_params: List[Tuple[float, float]] = []
-    residual = target.copy()
-    best_error = float(np.max(np.abs(residual)))
-
-    for _ in range(max_generators):
-        if best_error < tolerance:
-            break
-
-        # Greedy: find the generator that best reduces the residual
-        best_w, best_b = 0.0, 0.0
-        best_reduction = 0.0
-
-        for w in w_candidates:
-            for b in b_candidates:
-                g = eml_generator(x, w, b)
-                # Optimal coefficient for this single generator
-                c = float(np.dot(g, residual) / (np.dot(g, g) + 1e-12))
-                new_residual = residual - c * g
-                reduction = best_error - float(np.max(np.abs(new_residual)))
-                if reduction > best_reduction:
-                    best_reduction = reduction
-                    best_w, best_b = w, b
-
-        selected_params.append((best_w, best_b))
-
-        # Refit all coefficients jointly
-        coeffs, best_error = eml_least_squares_fit(
-            x, target, selected_params, include_constant=True
-        )
-        basis = np.column_stack(
-            [eml_generator(x, w, b) for w, b in selected_params] + [np.ones_like(x)]
-        )
-        residual = target - basis @ coeffs
-
-    coeffs, final_error = eml_least_squares_fit(
-        x, target, selected_params, include_constant=True
-    )
-    return selected_params, coeffs, final_error
+    diffs = np.abs(x - y)
+    return int(np.argmax(diffs))
 
 
 if __name__ == "__main__":
     # Quick test
-    x = np.linspace(0, 1, 100)
-    target = np.sin(2 * np.pi * x)
+    chain = make_power(3)
+    print(f"x^3 chain depth: {chain.depth()}")
+    print(f"2^3 = {chain.eval(2.0)} (expected: 8.0)")
 
-    params, coeffs, error = adaptive_eml_approx(x, target, max_generators=10)
-    print(f"Approximating sin(2πx) on [0,1]:")
-    print(f"  Generators used: {len(params)}")
-    print(f"  Max error: {error:.6e}")
-    print(f"  Generator parameters: {params}")
+    chain2 = make_affine_exp(1.0, 0.0)
+    print(f"exp(x) chain depth: {chain2.depth()}")
+    print(f"exp(1) = {chain2.eval(1.0)} (expected: {np.e})")
+
+    # Separation
+    a, b = separation_witness(1.0, 2.0)
+    print(f"Separation witness for (1, 2): a={a}, b={b}")
+    print(f"  exp({a}*1 + {b}) = {np.exp(a*1+b):.4f}")
+    print(f"  exp({a}*2 + {b}) = {np.exp(a*2+b):.4f}")
+
+    # Width bound
+    N = lipschitz_width_bound(1.0, 2.0, 0.01)
+    print(f"Width for L=1, length=2, eps=0.01: {N}")

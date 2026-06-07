@@ -1,271 +1,106 @@
 #!/usr/bin/env python3
 """
-EML Stone-Weierstrass: Demonstration of Exp-Log Network Approximation Theory
+Demo: EML Network Approximation via Stone-Weierstrass
 
-This script demonstrates:
-1. EML generators and their separation property
-2. Approximation of continuous functions by EML networks
-3. The tropical (Maslov) deformation limit
-4. Depth hierarchy: depth-2 vs depth-1 expressiveness
+Demonstrates that finite combinations of exp with +, *, and scalar multiplication
+can approximate any continuous function on a compact interval.
 """
 
 import numpy as np
 
-def eml_generator(x: np.ndarray, w: float, b: float) -> np.ndarray:
-    """EML affine-exponential generator: exp(w*x + b)"""
-    return np.exp(w * x + b)
+def eml_basis(x, k):
+    """k-th EML basis function: exp(k*x) normalized."""
+    return np.exp(k * x)
 
-def log_sum_exp(a: float, b: float, t: float) -> float:
-    """Smoothed max: (1/t) * log(exp(t*a) + exp(t*b))"""
-    # Numerically stable computation
-    m = max(t * a, t * b)
-    return (1/t) * (m + np.log(np.exp(t*a - m) + np.exp(t*b - m)))
-
-def demo_separation():
-    """Demonstrate that EML generators separate points."""
-    print("=" * 60)
-    print("Demo 1: EML Separation Property")
-    print("=" * 60)
-    x, y = 1.0, 2.0
-    print(f"Points: x = {x}, y = {y}")
-    print(f"exp(x) = {np.exp(x):.6f}, exp(y) = {np.exp(y):.6f}")
-    print(f"exp(x) ≠ exp(y): {np.exp(x) != np.exp(y)}")
-    print()
-
-    # Multiple generators
-    params = [(1, 0), (2, -1), (0.5, 3)]
-    for w, b in params:
-        gx = eml_generator(np.array([x]), w, b)[0]
-        gy = eml_generator(np.array([y]), w, b)[0]
-        print(f"  exp({w}*x + {b}): g({x}) = {gx:.4f}, g({y}) = {gy:.4f}, separated: {gx != gy}")
-    print()
+def eml_approx(x, target_fn, n_terms=10, interval=(-1, 1)):
+    """
+    Approximate target_fn on interval using n_terms EML basis functions.
+    Uses least-squares fitting of sum of c_k * exp(k*x).
+    """
+    a, b = interval
+    # Sample points for fitting
+    n_samples = max(100, 5 * n_terms)
+    x_fit = np.linspace(a, b, n_samples)
+    y_fit = target_fn(x_fit)
+    
+    # Build basis matrix
+    A = np.column_stack([eml_basis(x_fit, k) for k in range(n_terms)])
+    
+    # Least squares solve
+    coeffs, _, _, _ = np.linalg.lstsq(A, y_fit, rcond=None)
+    
+    # Evaluate approximation
+    A_eval = np.column_stack([eml_basis(x, k) for k in range(n_terms)])
+    return A_eval @ coeffs, coeffs
 
 def demo_approximation():
-    """Demonstrate EML approximation of target functions."""
-    print("=" * 60)
-    print("Demo 2: EML Approximation of x² on [0, 1]")
-    print("=" * 60)
-
-    x = np.linspace(0, 1, 100)
-    target = x**2
-
-    # Simple EML approximation using linear combination of generators
-    # f(x) ≈ c₁*exp(w₁*x+b₁) + c₂*exp(w₂*x+b₂) + c₃
-    # Fit by least squares on sample points
-    from numpy.linalg import lstsq
-
-    # Basis functions
-    basis = np.column_stack([
-        eml_generator(x, 1.0, 0.0),
-        eml_generator(x, -1.0, 0.0),
-        eml_generator(x, 2.0, -1.0),
-        eml_generator(x, 0.5, 0.5),
-        np.ones_like(x)
-    ])
-
-    coeffs, _, _, _ = lstsq(basis, target, rcond=None)
-    approx = basis @ coeffs
-    error = np.max(np.abs(target - approx))
-
-    print(f"  Using 4 EML generators + constant")
-    print(f"  Coefficients: {coeffs}")
-    print(f"  Max error: {error:.6e}")
-    print(f"  Mean error: {np.mean(np.abs(target - approx)):.6e}")
-    print()
-
-def demo_tropical_limit():
-    """Demonstrate the Maslov dequantization: log-sum-exp → max."""
-    print("=" * 60)
-    print("Demo 3: Tropical Limit (Maslov Dequantization)")
-    print("=" * 60)
-
-    a, b = 2.0, 5.0
-    print(f"  a = {a}, b = {b}, max(a,b) = {max(a,b)}")
-    print()
-    print(f"  {'t':>10s}  {'(1/t)·log(exp(ta)+exp(tb))':>30s}  {'|error|':>10s}")
-    print(f"  {'-'*10}  {'-'*30}  {'-'*10}")
-
-    for t in [0.1, 0.5, 1, 2, 5, 10, 50, 100, 1000]:
-        val = log_sum_exp(a, b, t)
-        err = abs(val - max(a, b))
-        print(f"  {t:>10.1f}  {val:>30.10f}  {err:>10.2e}")
-    print()
-    print("  → Converges to max(a, b) = 5.0 as t → ∞")
-    print()
-
-def demo_depth_hierarchy():
-    """Demonstrate the strict depth hierarchy."""
-    print("=" * 60)
-    print("Demo 4: Depth Hierarchy — exp(exp(x)) vs exp(wx+b)")
-    print("=" * 60)
-
-    x_vals = np.array([-1.0, 0.0, 1.0, 2.0])
-
-    depth2 = np.exp(np.exp(x_vals))
-    print(f"  Depth-2: exp(exp(x))")
-    for xi, yi in zip(x_vals, depth2):
-        print(f"    x = {xi:5.1f}: exp(exp(x)) = {yi:.4f}")
-
-    # Try to fit exp(wx+b) to match depth-2 at x=0 and x=1
-    # exp(b) = exp(1) → b = 1
-    # exp(w+b) = exp(e) → w = e - 1
-    w = np.e - 1
-    b = 1.0
-    depth1 = np.exp(w * x_vals + b)
-
-    print(f"\n  Best depth-1 fit: exp({w:.4f}*x + {b:.4f})")
-    for xi, d2, d1 in zip(x_vals, depth2, depth1):
-        print(f"    x = {xi:5.1f}: depth-2 = {d2:.4f}, depth-1 = {d1:.4f}, ratio = {d2/d1:.4f}")
-
-    print(f"\n  The functions diverge dramatically — depth-2 grows doubly exponentially")
-    print(f"  while depth-1 grows singly exponentially. No reparametrization can fix this.")
-    print()
-
-if __name__ == "__main__":
-    demo_separation()
-    demo_approximation()
-    demo_tropical_limit()
-    demo_depth_hierarchy()
-    print("All demos completed successfully.")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: EML Depth Hierarchy
-
-Shows that depth-2 EML functions (exp(exp(x))) are fundamentally
-different from depth-1 functions (exp(wx+b)), demonstrating the
-strict depth hierarchy proven in depth2_not_affine_exp.
-"""
-
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-
-def main():
-    x = np.linspace(-1, 2, 300)
-
-    # Depth-2: exp(exp(x))
-    depth2 = np.exp(np.exp(x))
-
-    # Best depth-1 fits matching at different point pairs
-    # Fit 1: match at x=0, x=1
-    # exp(b) = exp(1) = e → b = 1
-    # exp(w+1) = exp(e) → w = e-1
-    w1, b1 = np.e - 1, 1.0
-    fit1 = np.exp(w1 * x + b1)
-
-    # Fit 2: match at x=-1, x=0
-    # exp(-w+b) = exp(exp(-1)) → -w+b = exp(-1)
-    # exp(b) = exp(1) = e → b = 1
-    # → w = 1 - exp(-1)
-    w2, b2 = 1 - np.exp(-1), 1.0
-    fit2 = np.exp(w2 * x + b2)
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Linear scale
-    ax1.plot(x, depth2, 'b-', linewidth=2.5, label='Depth-2: exp(exp(x))')
-    ax1.plot(x, fit1, 'r--', linewidth=2, label=f'Depth-1: exp({w1:.3f}x + {b1:.1f})')
-    ax1.plot(x, fit2, 'g--', linewidth=2, label=f'Depth-1: exp({w2:.3f}x + {b2:.1f})')
-    ax1.set_xlabel('x', fontsize=12)
-    ax1.set_ylabel('f(x)', fontsize=12)
-    ax1.set_title('Linear Scale', fontsize=14)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-    ax1.set_ylim(0, 100)
-
-    # Log scale
-    ax2.semilogy(x, depth2, 'b-', linewidth=2.5, label='Depth-2: exp(exp(x))')
-    ax2.semilogy(x, fit1, 'r--', linewidth=2, label=f'Depth-1: exp({w1:.3f}x + {b1:.1f})')
-    ax2.semilogy(x, fit2, 'g--', linewidth=2, label=f'Depth-1: exp({w2:.3f}x + {b2:.1f})')
-    ax2.set_xlabel('x', fontsize=12)
-    ax2.set_ylabel('f(x) (log scale)', fontsize=12)
-    ax2.set_title('Logarithmic Scale', fontsize=14)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-
-    fig.suptitle('EML Depth Hierarchy: Depth-2 ≠ Depth-1', fontsize=16, y=1.02)
-    plt.tight_layout()
-    plt.savefig('depth_hierarchy_visualization.png', dpi=150, bbox_inches='tight')
-    print("Saved: depth_hierarchy_visualization.png")
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: EML Approximation of Continuous Functions
-
-Demonstrates the Stone-Weierstrass density result by showing how
-EML generators can approximate various target functions with
-increasing accuracy as more generators are added.
-"""
-
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-
-def eml_generator(x: np.ndarray, w: float, b: float) -> np.ndarray:
-    return np.exp(np.clip(w * x + b, -500, 500))
-
-def fit_eml(x: np.ndarray, target: np.ndarray,
-            params: list) -> tuple:
-    basis = np.column_stack(
-        [eml_generator(x, w, b) for w, b in params] + [np.ones_like(x)]
-    )
-    coeffs, _, _, _ = np.linalg.lstsq(basis, target, rcond=None)
-    approx = basis @ coeffs
-    return approx, float(np.max(np.abs(target - approx)))
-
-def main():
-    x = np.linspace(0, 1, 200)
+    """Demonstrate EML approximation of various functions."""
+    x = np.linspace(-1, 1, 1000)
+    
     targets = {
-        'x²': x**2,
-        'sin(2πx)': np.sin(2 * np.pi * x),
-        '|x - 0.5|': np.abs(x - 0.5),
+        "x^2": lambda t: t**2,
+        "sin(pi*x)": lambda t: np.sin(np.pi * t),
+        "|x|": lambda t: np.abs(t),
+        "x^3 - x": lambda t: t**3 - t,
     }
+    
+    print("=" * 70)
+    print("EML Network Approximation Demo (Stone-Weierstrass)")
+    print("=" * 70)
+    
+    for name, fn in targets.items():
+        print(f"\nTarget: f(x) = {name}")
+        print("-" * 40)
+        for n in [3, 5, 10, 20]:
+            approx, coeffs = eml_approx(x, fn, n_terms=n)
+            error = np.max(np.abs(fn(x) - approx))
+            print(f"  {n:3d} terms: max error = {error:.6e}")
+    
+    # Demonstrate the power depth-2 representation
+    print("\n" + "=" * 70)
+    print("Depth-2 Power Representation: x^n = exp(n * log(x))")
+    print("=" * 70)
+    x_pos = np.linspace(0.01, 2, 100)
+    for n in [2, 3, 5, 10]:
+        direct = x_pos ** n
+        eml_rep = np.exp(n * np.log(x_pos))
+        error = np.max(np.abs(direct - eml_rep))
+        print(f"  x^{n:2d}: max |x^n - exp(n*log(x))| = {error:.2e}")
+    
+    # Demonstrate separation property
+    print("\n" + "=" * 70)
+    print("Separation Property: exp(x) separates distinct points")
+    print("=" * 70)
+    pairs = [(0.0, 0.1), (1.0, 1.001), (-1.0, 1.0), (0.5, 0.500001)]
+    for x1, x2 in pairs:
+        sep = abs(np.exp(x1) - np.exp(x2))
+        print(f"  x={x1:.6f}, y={x2:.6f}: |exp(x)-exp(y)| = {sep:.2e}")
 
-    generator_sets = [
-        [(1, 0), (-1, 0)],
-        [(1, 0), (-1, 0), (2, -1), (-2, 1)],
-        [(1, 0), (-1, 0), (2, -1), (-2, 1), (3, -2), (-3, 2), (0.5, 0.5), (-0.5, -0.5)],
-        [(i*0.7, j*0.5) for i in range(-3, 4) for j in range(-2, 3)],
-    ]
-    n_gens = [len(g) for g in generator_sets]
-
-    fig, axes = plt.subplots(len(targets), len(generator_sets), figsize=(18, 10))
-
-    for row, (name, target) in enumerate(targets.items()):
-        for col, (params, ng) in enumerate(zip(generator_sets, n_gens)):
-            ax = axes[row, col]
-            approx, error = fit_eml(x, target, params)
-            ax.plot(x, target, 'b-', linewidth=2, alpha=0.7, label='Target')
-            ax.plot(x, approx, 'r--', linewidth=1.5, label=f'EML (n={ng})')
-            ax.fill_between(x, target, approx, alpha=0.15, color='red')
-            ax.set_title(f'{name}, {ng} gens\nerror = {error:.2e}', fontsize=10)
-            ax.grid(True, alpha=0.3)
-            if row == 0 and col == 0:
-                ax.legend(fontsize=8)
-
-    fig.suptitle('EML Approximation: Stone-Weierstrass in Action', fontsize=16, y=1.02)
-    plt.tight_layout()
-    plt.savefig('eml_approximation_visualization.png', dpi=150, bbox_inches='tight')
-    print("Saved: eml_approximation_visualization.png")
+    # Lipschitz approximation rate
+    print("\n" + "=" * 70)
+    print("Lipschitz Approximation Rate")
+    print("=" * 70)
+    print("For L-Lipschitz f on [a,b], width O(L(b-a)/eps) suffices")
+    L = 1.0  # Lipschitz constant for sin
+    a, b_val = 0, 1
+    for eps in [0.1, 0.01, 0.001]:
+        width = int(np.ceil(L * (b_val - a) / (2 * eps)))
+        x_test = np.linspace(a, b_val, 1000)
+        approx, _ = eml_approx(x_test, np.sin, n_terms=width, interval=(a, b_val))
+        actual_err = np.max(np.abs(np.sin(x_test) - approx))
+        print(f"  eps={eps:.3f}: predicted width={width}, "
+              f"actual max error={actual_err:.6e}")
 
 if __name__ == "__main__":
-    main()
+    demo_approximation()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Tropical Deformation Limit
+Visualization: EML Network Approximation Convergence
 
-Shows how log-sum-exp converges to max as the temperature parameter t → ∞.
-This is the Maslov dequantization that bridges EML networks to tropical geometry.
+Shows how increasing the number of EML basis functions
+improves approximation quality for various target functions.
 """
 
 import numpy as np
@@ -273,40 +108,162 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-def log_sum_exp_2d(x: np.ndarray, a: float, b: float, t: float) -> np.ndarray:
-    """(1/t) * log(exp(t*(a*x+c1)) + exp(t*(b*x+c2))) for tropical max of two lines."""
-    u = t * (a * x + 1.0)
-    v = t * (b * x - 0.5)
-    m = np.maximum(u, v)
-    return (1.0/t) * (m + np.log(np.exp(u - m) + np.exp(v - m)))
+def eml_approx(x, target_fn, n_terms, interval=(-1, 1)):
+    a, b = interval
+    n_samples = max(200, 5 * n_terms)
+    x_fit = np.linspace(a, b, n_samples)
+    y_fit = target_fn(x_fit)
+    A = np.column_stack([np.exp(k * x_fit) for k in range(n_terms)])
+    coeffs, _, _, _ = np.linalg.lstsq(A, y_fit, rcond=None)
+    A_eval = np.column_stack([np.exp(k * x) for k in range(n_terms)])
+    return A_eval @ coeffs
 
-def main():
-    x = np.linspace(-2, 2, 500)
+x = np.linspace(-1, 1, 500)
+targets = {
+    r"$x^2$": lambda t: t**2,
+    r"$\sin(\pi x)$": lambda t: np.sin(np.pi * t),
+    r"$|x|$": lambda t: np.abs(t),
+    r"$x^3 - x$": lambda t: t**3 - t,
+}
 
-    # Two linear functions whose max gives a tropical polynomial
-    line1 = 0.8 * x + 1.0
-    line2 = -0.5 * x - 0.5
-    tropical_max = np.maximum(line1, line2)
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+fig.suptitle("EML Network Approximation (Stone-Weierstrass)", fontsize=16, fontweight='bold')
 
-    fig, axes = plt.subplots(2, 3, figsize=(14, 8))
+for ax, (name, fn) in zip(axes.flat, targets.items()):
+    ax.plot(x, fn(x), 'k-', linewidth=2, label='Target')
+    colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3']
+    for n, color in zip([3, 5, 10, 20], colors):
+        approx = eml_approx(x, fn, n)
+        err = np.max(np.abs(fn(x) - approx))
+        ax.plot(x, approx, '--', color=color, linewidth=1.2,
+                label=f'N={n} (err={err:.1e})')
+    ax.set_title(f'f(x) = {name}', fontsize=13)
+    ax.legend(fontsize=8)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlabel('x')
+    ax.set_ylabel('f(x)')
 
-    t_values = [0.5, 1.0, 2.0, 5.0, 20.0, 100.0]
+plt.tight_layout()
+plt.savefig('viz_approximation.png', dpi=150, bbox_inches='tight')
+print("Saved viz_approximation.png")
 
-    for ax, t in zip(axes.flatten(), t_values):
-        smooth = log_sum_exp_2d(x, 0.8, -0.5, t)
-        ax.plot(x, line1, 'b--', alpha=0.4, label='f₁(x)')
-        ax.plot(x, line2, 'r--', alpha=0.4, label='f₂(x)')
-        ax.plot(x, tropical_max, 'k-', linewidth=2, alpha=0.3, label='max(f₁, f₂)')
-        ax.plot(x, smooth, 'g-', linewidth=2, label=f'LSE (t={t})')
-        ax.set_title(f't = {t}', fontsize=14)
-        ax.set_ylim(-2.5, 3.5)
-        ax.legend(fontsize=8)
-        ax.grid(True, alpha=0.3)
 
-    fig.suptitle('Maslov Dequantization: log-sum-exp → max as t → ∞', fontsize=16, y=1.02)
-    plt.tight_layout()
-    plt.savefig('tropical_limit_visualization.png', dpi=150, bbox_inches='tight')
-    print("Saved: tropical_limit_visualization.png")
+#!/usr/bin/env python3
+"""
+Visualization: EML Depth-Width Tradeoff
 
-if __name__ == "__main__":
-    main()
+Shows the relationship between EML chain depth and
+the functions that can be exactly represented.
+"""
+
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+x = np.linspace(0.1, 3, 500)
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+fig.suptitle("EML Depth Hierarchy: Exact Representations", fontsize=15, fontweight='bold')
+
+# Depth 0: identity
+ax = axes[0]
+ax.set_title("Depth 0: Affine", fontsize=12)
+for a, b in [(1, 0), (2, -1), (0.5, 1)]:
+    ax.plot(x, a * x + b, label=f'{a}x + {b}')
+ax.legend()
+ax.grid(True, alpha=0.3)
+ax.set_xlabel('x')
+
+# Depth 1: exp(ax + b)
+ax = axes[1]
+ax.set_title("Depth 1: exp(ax + b)", fontsize=12)
+for a, b in [(1, 0), (0.5, -1), (-1, 2)]:
+    ax.plot(x, np.exp(a * x + b), label=f'exp({a}x + {b})')
+ax.legend()
+ax.grid(True, alpha=0.3)
+ax.set_xlabel('x')
+
+# Depth 2: x^n = exp(n log x)
+ax = axes[2]
+ax.set_title("Depth 2: $x^n$ = exp(n·log x)", fontsize=12)
+for n in [2, 3, 5]:
+    direct = x ** n
+    eml = np.exp(n * np.log(x))
+    ax.plot(x, direct, '-', linewidth=2, label=f'$x^{n}$ (direct)')
+    ax.plot(x, eml, '--', linewidth=1, label=f'exp({n}·log x)')
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
+ax.set_xlabel('x')
+ax.set_ylim(0, 30)
+
+plt.tight_layout()
+plt.savefig('viz_depth_tradeoff.png', dpi=150, bbox_inches='tight')
+print("Saved viz_depth_tradeoff.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: EML Separation Property
+
+Shows how exp separates points and the multivariate separation structure.
+"""
+
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+fig.suptitle("EML Separation Properties", fontsize=15, fontweight='bold')
+
+# Plot 1: exp separates points
+ax = axes[0]
+x = np.linspace(-2, 2, 500)
+ax.plot(x, np.exp(x), 'b-', linewidth=2)
+pairs = [(-1, 0.5), (0, 1), (-0.5, 1.5)]
+for x1, x2 in pairs:
+    ax.plot([x1, x2], [np.exp(x1), np.exp(x2)], 'ro-', markersize=6)
+    ax.annotate(f'gap={abs(np.exp(x1)-np.exp(x2)):.2f}',
+                xy=((x1+x2)/2, (np.exp(x1)+np.exp(x2))/2),
+                fontsize=8, ha='center')
+ax.set_title("exp(x) Separates Points", fontsize=12)
+ax.set_xlabel('x')
+ax.set_ylabel('exp(x)')
+ax.grid(True, alpha=0.3)
+
+# Plot 2: Separation gap vs distance
+ax = axes[1]
+base_points = np.linspace(-2, 2, 20)
+for delta in [0.01, 0.1, 0.5]:
+    gaps = np.abs(np.exp(base_points + delta) - np.exp(base_points))
+    ax.plot(base_points, gaps, '-o', markersize=3, label=f'δ={delta}')
+ax.set_title("Separation Gap |exp(x+δ) - exp(x)|", fontsize=12)
+ax.set_xlabel('x')
+ax.set_ylabel('Gap')
+ax.legend()
+ax.grid(True, alpha=0.3)
+ax.set_yscale('log')
+
+# Plot 3: Multivariate separation (2D)
+ax = axes[2]
+np.random.seed(42)
+points = np.random.randn(10, 2) * 0.5
+for i in range(len(points)):
+    for j in range(i+1, len(points)):
+        x1, x2 = points[i], points[j]
+        # Find separating coordinate
+        diffs = np.abs(x1 - x2)
+        sep_coord = np.argmax(diffs)
+        color = 'red' if sep_coord == 0 else 'blue'
+        ax.plot([x1[0], x2[0]], [x1[1], x2[1]], '-', color=color, alpha=0.2)
+ax.scatter(points[:, 0], points[:, 1], c='black', s=50, zorder=5)
+ax.set_title("Multivariate: Separating Coordinates", fontsize=12)
+ax.set_xlabel('$x_1$')
+ax.set_ylabel('$x_2$')
+ax.legend(['coord 0 sep.', 'coord 1 sep.'], fontsize=8)
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('viz_separation.png', dpi=150, bbox_inches='tight')
+print("Saved viz_separation.png")
