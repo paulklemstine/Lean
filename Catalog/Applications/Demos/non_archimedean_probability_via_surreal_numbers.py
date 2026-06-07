@@ -1,277 +1,202 @@
 #!/usr/bin/env python3
 """
-Non-Archimedean Probability Demo
+Non-Archimedean Probability Space — Numerical Demonstrations
 
-Demonstrates infinitesimal probability spaces using symbolic computation.
-We use a simple model where elements of the non-Archimedean field are
-represented as formal Laurent series in ε (epsilon), i.e., elements of
-the form a₀ + a₁ε + a₂ε² + ... where aᵢ ∈ ℝ and ε is infinitesimal.
+Demonstrates the key concepts from our formalization:
+1. Uniform NA probability spaces
+2. Bayes' theorem with infinitesimal-like probabilities
+3. Conditioning on singleton events
+4. Comparison of real vs non-Archimedean probability
 """
 
 from fractions import Fraction
-from typing import Dict, List, Tuple
+from typing import Dict, List, Set, Tuple
 
 
-class InfinitesimalNumber:
-    """A number of the form a + b*ε where ε is infinitesimal.
-
-    We represent elements of a simple non-Archimedean extension of ℚ:
-    ℚ(ε) where ε is positive and smaller than any positive rational.
-    """
-
-    def __init__(self, standard: Fraction = Fraction(0),
-                 infinitesimal: Fraction = Fraction(0)):
-        self.standard = standard  # The "standard part"
-        self.infinitesimal = infinitesimal  # Coefficient of ε
-
-    def __repr__(self):
-        parts = []
-        if self.standard != 0:
-            parts.append(str(self.standard))
-        if self.infinitesimal != 0:
-            if self.infinitesimal == 1:
-                parts.append("ε")
-            elif self.infinitesimal == -1:
-                parts.append("-ε")
-            else:
-                parts.append(f"{self.infinitesimal}·ε")
-        return " + ".join(parts) if parts else "0"
-
-    def __add__(self, other):
-        return InfinitesimalNumber(
-            self.standard + other.standard,
-            self.infinitesimal + other.infinitesimal
-        )
-
-    def __sub__(self, other):
-        return InfinitesimalNumber(
-            self.standard - other.standard,
-            self.infinitesimal - other.infinitesimal
-        )
-
-    def __mul__(self, other):
-        # (a + bε)(c + dε) = ac + (ad+bc)ε + bdε² ≈ ac + (ad+bc)ε
-        return InfinitesimalNumber(
-            self.standard * other.standard,
-            self.standard * other.infinitesimal + self.infinitesimal * other.standard
-        )
-
-    def __truediv__(self, other):
-        if other.standard == 0:
-            raise ZeroDivisionError("Division by infinitesimal not supported in this model")
-        # (a + bε) / (c + dε) ≈ a/c + (bc - ad)/(c²) · ε
-        inv_std = Fraction(1, 1) / other.standard
-        return InfinitesimalNumber(
-            self.standard * inv_std,
-            (self.infinitesimal * other.standard - self.standard * other.infinitesimal)
-            * inv_std * inv_std
-        )
-
-    def is_infinitesimal(self) -> bool:
-        return self.standard == 0 and self.infinitesimal != 0
-
-    def is_positive(self) -> bool:
-        if self.standard > 0:
-            return True
-        if self.standard == 0:
-            return self.infinitesimal > 0
-        return False
-
-    def __eq__(self, other):
-        if isinstance(other, (int, float, Fraction)):
-            return self.standard == Fraction(other) and self.infinitesimal == 0
-        return self.standard == other.standard and self.infinitesimal == other.infinitesimal
-
-
-# Shortcuts
-def eps(coeff=1):
-    return InfinitesimalNumber(Fraction(0), Fraction(coeff))
-
-def real(val):
-    return InfinitesimalNumber(Fraction(val), Fraction(0))
-
-
-class InfProbSpace:
-    """An infinitesimal probability space on a finite set."""
-
-    def __init__(self, elements: list, weights: Dict):
-        self.elements = elements
-        self.weights = weights  # element -> InfinitesimalNumber
-
-        # Verify normalization
-        total = real(0)
-        for e in elements:
-            total = total + weights[e]
-        assert total == 1, f"Total mass is {total}, not 1"
-
-        # Verify regularity
-        for e in elements:
-            assert weights[e].is_positive(), f"Weight of {e} is not positive: {weights[e]}"
-
-    def prob(self, subset: set) -> InfinitesimalNumber:
-        result = real(0)
-        for e in subset:
-            result = result + self.weights[e]
-        return result
-
-    def cond_prob(self, A: set, B: set) -> InfinitesimalNumber:
-        return self.prob(A & B) / self.prob(B)
-
-
-def demo_basic():
-    """Demo 1: Basic infinitesimal probability space."""
+def demo_uniform_naprobspace():
+    """Demonstrate a uniform NAProbSpace on a finite set."""
     print("=" * 60)
-    print("DEMO 1: Uniform Probability on {0, 1, 2}")
+    print("Demo 1: Uniform NAProbSpace on {1, 2, ..., N}")
     print("=" * 60)
 
-    space = InfProbSpace(
-        [0, 1, 2],
-        {0: real(Fraction(1, 3)),
-         1: real(Fraction(1, 3)),
-         2: real(Fraction(1, 3))}
-    )
+    N = 1000000  # A "large" finite set
+    prob = Fraction(1, N)
 
-    print(f"P({{0}}) = {space.prob({0})}")
-    print(f"P({{0,1}}) = {space.prob({0, 1})}")
-    print(f"P({{0,1,2}}) = {space.prob({0, 1, 2})}")
-    print(f"P({{0}} | {{0,1}}) = {space.cond_prob({0}, {0, 1})}")
-    print()
+    print(f"\nSample space Ω = {{1, 2, ..., {N}}}")
+    print(f"Point probability: P({{ω}}) = 1/{N} = {float(prob):.2e}")
+    print(f"Regularity: P({{ω}}) > 0 ✓ (= {prob})")
+    print(f"Normalization: Σ P({{ω}}) = {N} × {prob} = {N * prob}")
 
+    # Event probability
+    A = set(range(1, 101))  # First 100 elements
+    pA = Fraction(len(A), N)
+    print(f"\nEvent A = {{1, ..., 100}}")
+    print(f"P(A) = {len(A)}/{N} = {float(pA):.6f}")
 
-def demo_infinitesimal_loading():
-    """Demo 2: Infinitesimally loaded die."""
-    print("=" * 60)
-    print("DEMO 2: Infinitesimally Loaded Die")
-    print("=" * 60)
+    B = set(range(51, 201))  # Elements 51 to 200
+    pB = Fraction(len(B), N)
+    print(f"Event B = {{51, ..., 200}}")
+    print(f"P(B) = {len(B)}/{N} = {float(pB):.6f}")
 
-    # A die where face 0 has an infinitesimal advantage
-    space = InfProbSpace(
-        [0, 1, 2],
-        {0: real(Fraction(1, 3)) + eps(1),
-         1: real(Fraction(1, 3)),
-         2: real(Fraction(1, 3)) + eps(-1)}
-    )
-
-    print(f"P({{0}}) = {space.prob({0})} (infinitesimally favored)")
-    print(f"P({{1}}) = {space.prob({1})} (neutral)")
-    print(f"P({{2}}) = {space.prob({2})} (infinitesimally disfavored)")
-    print(f"Total = {space.prob({0, 1, 2})}")
-    print()
-    print("Conditional probabilities:")
-    print(f"P({{0}} | {{0,1}}) = {space.cond_prob({0}, {0, 1})}")
-    print(f"P({{1}} | {{0,1}}) = {space.cond_prob({1}, {0, 1})}")
-    print()
-    print("Note: The loading is infinitesimal — undetectable by finite sampling")
-    print("but formally present in the mathematics.")
-    print()
+    # Inclusion-exclusion
+    pAB = Fraction(len(A & B), N)
+    pAuB = Fraction(len(A | B), N)
+    print(f"\nInclusion-Exclusion:")
+    print(f"P(A ∩ B) = {len(A & B)}/{N} = {float(pAB):.6f}")
+    print(f"P(A ∪ B) = {len(A | B)}/{N} = {float(pAuB):.6f}")
+    print(f"P(A) + P(B) - P(A ∩ B) = {float(pA + pB - pAB):.6f}")
+    print(f"Verified: {pAuB == pA + pB - pAB} ✓")
 
 
-def demo_bayes():
-    """Demo 3: Bayes' theorem with infinitesimal events."""
-    print("=" * 60)
-    print("DEMO 3: Bayes' Theorem with Infinitesimal Probabilities")
+def demo_bayes_theorem():
+    """Demonstrate Bayes' theorem in NAProbSpace."""
+    print("\n" + "=" * 60)
+    print("Demo 2: Bayes' Theorem (Always Well-Defined)")
     print("=" * 60)
 
-    space = InfProbSpace(
-        [0, 1, 2, 3],
-        {0: real(Fraction(1, 4)) + eps(1),
-         1: real(Fraction(1, 4)) + eps(-1),
-         2: real(Fraction(1, 4)) + eps(1),
-         3: real(Fraction(1, 4)) + eps(-1)}
-    )
+    # Medical test example with a rare disease
+    N = 1000000
+    disease = set(range(1, 11))  # 10 people have the disease
+    healthy = set(range(11, N + 1))
 
-    A = {0, 1}
-    B = {0, 2}
+    # Test: 95% true positive, 1% false positive
+    test_pos = set()
+    for i in disease:
+        if i <= 9:  # 9/10 = 90% sensitivity
+            test_pos.add(i)
+    for i in healthy:
+        if i % 100 == 0:  # 1% false positive
+            test_pos.add(i)
 
-    pAB = space.cond_prob(A, B) * space.prob(B)
-    pBA = space.cond_prob(B, A) * space.prob(A)
+    pD = Fraction(len(disease), N)
+    pT = Fraction(len(test_pos), N)
+    pTD = Fraction(len(test_pos & disease), N)
+    pDT = Fraction(len(disease & test_pos), N)
 
-    print(f"A = {A}, B = {B}")
-    print(f"P(A) = {space.prob(A)}")
-    print(f"P(B) = {space.prob(B)}")
-    print(f"P(A|B) · P(B) = {pAB}")
-    print(f"P(B|A) · P(A) = {pBA}")
-    print(f"Equal? {pAB == pBA}  (Bayes' theorem verified)")
-    print()
+    # P(D|T) = P(D ∩ T) / P(T)
+    pD_given_T = pDT / pT if pT > 0 else Fraction(0)
+    # P(T|D) = P(T ∩ D) / P(D)
+    pT_given_D = pTD / pD if pD > 0 else Fraction(0)
 
+    print(f"\nMedical Test Scenario (N = {N}):")
+    print(f"  Disease prevalence: P(D) = {pD} = {float(pD):.6f}")
+    print(f"  Test positive rate: P(T+) = {pT} ≈ {float(pT):.6f}")
+    print(f"  P(D|T+) = {float(pD_given_T):.6f}")
+    print(f"  P(T+|D) = {float(pT_given_D):.6f}")
 
-def demo_archimedean_impossibility():
-    """Demo 4: Archimedean impossibility."""
-    print("=" * 60)
-    print("DEMO 4: Archimedean Impossibility")
-    print("=" * 60)
-
-    c = Fraction(1, 1000)
-    print(f"Suppose we try to assign weight c = {c} to each natural number.")
-    print(f"We need N·c > 1, i.e., N > {1/c}")
-
-    N = int(1 / c) + 1
-    print(f"Taking N = {N}: N·c = {N * c} > 1 ✓")
-    print()
-    print("With just the first 1001 natural numbers, the total mass exceeds 1.")
-    print("This proves no Archimedean field can support uniform positive weights")
-    print("on an infinite set. Non-Archimedean fields are NECESSARY.")
-    print()
+    # Verify Bayes: P(D|T) * P(T) = P(T|D) * P(D)
+    lhs = pD_given_T * pT
+    rhs = pT_given_D * pD
+    print(f"\nBayes verification:")
+    print(f"  P(D|T) · P(T) = {float(lhs):.10f}")
+    print(f"  P(T|D) · P(D) = {float(rhs):.10f}")
+    print(f"  Equal: {lhs == rhs} ✓")
 
 
-def demo_product_space():
-    """Demo 5: Product probability space."""
-    print("=" * 60)
-    print("DEMO 5: Product Infinitesimal Probability Space")
+def demo_singleton_conditioning():
+    """Demonstrate that singleton conditioning is always well-defined."""
+    print("\n" + "=" * 60)
+    print("Demo 3: Singleton Conditioning (Borel Paradox Resolution)")
     print("=" * 60)
 
-    # Two independent spaces
-    space1 = InfProbSpace(
-        [0, 1],
-        {0: real(Fraction(1, 2)) + eps(1),
-         1: real(Fraction(1, 2)) + eps(-1)}
-    )
+    N = 100
+    # Non-uniform distribution
+    probs = {}
+    total = sum(range(1, N + 1))
+    for i in range(1, N + 1):
+        probs[i] = Fraction(i, total)
 
-    space2 = InfProbSpace(
-        ['H', 'T'],
-        {'H': real(Fraction(1, 2)),
-         'T': real(Fraction(1, 2))}
-    )
+    print(f"\nNon-uniform NAProbSpace on {{1, ..., {N}}}")
+    print(f"P({{k}}) = k / {total}")
+    print(f"Min probability: P({{1}}) = {probs[1]} = {float(probs[1]):.6f}")
+    print(f"Max probability: P({{{N}}}) = {probs[N]} = {float(probs[N]):.4f}")
 
-    # Build product space
-    product_elements = [(a, b) for a in [0, 1] for b in ['H', 'T']]
-    product_weights = {}
-    for a, b in product_elements:
-        product_weights[(a, b)] = space1.weights[a] * space2.weights[b]
+    # All singletons have positive probability
+    print(f"\nRegularity check: all P({{ω}}) > 0? {all(p > 0 for p in probs.values())} ✓")
+    print(f"Normalization: Σ P({{ω}}) = {sum(probs.values())}")
 
-    product_space = InfProbSpace(product_elements, product_weights)
+    # Condition on singleton {50}
+    omega = 50
+    A = set(range(1, 76))  # {1, ..., 75}
+    pA = sum(probs[i] for i in A)
+    p_omega = probs[omega]
+    p_A_inter_omega = probs[omega] if omega in A else Fraction(0)
+    p_A_given_omega = p_A_inter_omega / p_omega
 
-    print("Space 1: {0, 1} with P(0) = 1/2 + ε, P(1) = 1/2 - ε")
-    print("Space 2: {H, T} with P(H) = P(T) = 1/2")
+    print(f"\nConditioning on singleton {{ω}} = {{{omega}}}:")
+    print(f"  P({{{omega}}}) = {p_omega} = {float(p_omega):.6f} > 0 ✓")
+    print(f"  P(A | {{{omega}}}) = {p_A_given_omega}")
+    print(f"  (A = {{1,...,75}}, {omega} ∈ A, so P(A|{{{omega}}}) = 1)")
     print()
-    print("Product space probabilities:")
-    for e in product_elements:
-        print(f"  P({e}) = {product_space.weights[e]}")
-    print(f"\nTotal = {product_space.prob(set(product_elements))}")
-    print()
-    print("Independence check:")
-    A = {(0, 'H'), (0, 'T')}
-    B = {(0, 'H'), (1, 'H')}
-    pA = product_space.prob(A)
-    pB = product_space.prob(B)
-    pAB = product_space.prob(A & B)
-    print(f"P(first=0) = {pA}")
-    print(f"P(second=H) = {pB}")
-    print(f"P(first=0 ∩ second=H) = {pAB}")
-    print(f"P(first=0) · P(second=H) = {pA * pB}")
-    print(f"Independent? {pAB == pA * pB}")
-    print()
+    print("  In standard measure theory on [0,1], P({x}) = 0 for all x,")
+    print("  making P(A|{x}) = 0/0 — undefined!")
+    print("  In NAProbSpace, this is always well-defined. ✓")
+
+
+def demo_infinitesimal_scaling():
+    """Show how probabilities scale as N grows (approaching infinitesimal)."""
+    print("\n" + "=" * 60)
+    print("Demo 4: Infinitesimal Scaling — P({ω}) → 0 as N → ∞")
+    print("=" * 60)
+
+    print("\n  N          P({ω})           N·P({ω})    Infinitesimal?")
+    print("  " + "-" * 55)
+    for k in range(1, 13):
+        N = 10 ** k
+        p = Fraction(1, N)
+        np = N * p
+        is_inf = "approaching" if k >= 6 else "standard"
+        print(f"  10^{k:<6}   {float(p):<17.2e}  {float(np):<10}  {is_inf}")
+
+    print("\n  In a non-Archimedean field with infinitesimal ε:")
+    print("  Setting N ~ 1/ε gives P({ω}) = ε (truly infinitesimal)")
+    print("  Yet Σ P({ω}) = N · ε = 1 (normalization holds)")
+
+
+def demo_total_probability():
+    """Demonstrate the Law of Total Probability."""
+    print("\n" + "=" * 60)
+    print("Demo 5: Law of Total Probability")
+    print("=" * 60)
+
+    N = 20
+    probs = {i: Fraction(1, N) for i in range(1, N + 1)}
+
+    A = {1, 2, 3, 4, 5, 6, 7, 8}
+    B = {3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
+    Bc = set(range(1, N + 1)) - B
+
+    pA = sum(probs[i] for i in A)
+    pB = sum(probs[i] for i in B)
+    pBc = sum(probs[i] for i in Bc)
+    pAB = sum(probs[i] for i in A & B)
+    pABc = sum(probs[i] for i in A & Bc)
+
+    pA_given_B = pAB / pB
+    pA_given_Bc = pABc / pBc
+
+    total = pA_given_B * pB + pA_given_Bc * pBc
+
+    print(f"\nΩ = {{1, ..., {N}}}, uniform distribution")
+    print(f"A = {sorted(A)}")
+    print(f"B = {sorted(B)}")
+    print(f"\nP(A) = {pA} = {float(pA):.4f}")
+    print(f"P(B) = {pB} = {float(pB):.4f}")
+    print(f"P(A|B) = {pA_given_B} = {float(pA_given_B):.4f}")
+    print(f"P(A|Bᶜ) = {pA_given_Bc} = {float(pA_given_Bc):.4f}")
+    print(f"\nP(A|B)·P(B) + P(A|Bᶜ)·P(Bᶜ) = {total} = {float(total):.4f}")
+    print(f"P(A) = {pA} = {float(pA):.4f}")
+    print(f"Law of Total Probability verified: {total == pA} ✓")
 
 
 if __name__ == "__main__":
-    demo_basic()
-    demo_infinitesimal_loading()
-    demo_bayes()
-    demo_archimedean_impossibility()
-    demo_product_space()
-
-    print("=" * 60)
-    print("All demos completed successfully.")
+    demo_uniform_naprobspace()
+    demo_bayes_theorem()
+    demo_singleton_conditioning()
+    demo_infinitesimal_scaling()
+    demo_total_probability()
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully!")
     print("=" * 60)
 
 
@@ -279,173 +204,140 @@ if __name__ == "__main__":
 """
 Visualization: Non-Archimedean Probability Landscape
 
-Creates a visualization comparing classical vs infinitesimal probability
-assignments on a discrete space, showing the hierarchy of improbability.
+Shows how point probabilities scale as the sample space grows,
+illustrating the transition from standard to infinitesimal regime.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
+import matplotlib.ticker as ticker
 import numpy as np
 
 
-def plot_probability_landscape():
-    """Compare classical vs infinitesimal probability on a space of 6 elements."""
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+def plot_probability_scaling():
+    """Plot how uniform point probability scales with N."""
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-    elements = ['A', 'B', 'C', 'D', 'E', 'F']
-    n = len(elements)
+    # Panel 1: Log-log plot of P({ω}) vs N
+    ax1 = axes[0]
+    Ns = np.logspace(0, 12, 100)
+    probs = 1.0 / Ns
+    ax1.loglog(Ns, probs, 'b-', linewidth=2)
+    ax1.fill_between(Ns, probs, 1e-15, alpha=0.1, color='blue')
+    ax1.axhline(y=1e-6, color='red', linestyle='--', alpha=0.5, label='ε ~ 10⁻⁶')
+    ax1.axhline(y=1e-9, color='orange', linestyle='--', alpha=0.5, label='ε ~ 10⁻⁹')
+    ax1.set_xlabel('Sample Space Size N', fontsize=12)
+    ax1.set_ylabel('P({ω}) = 1/N', fontsize=12)
+    ax1.set_title('Point Probability Scaling', fontsize=13)
+    ax1.legend(fontsize=10)
+    ax1.grid(True, alpha=0.3)
 
-    # Panel 1: Classical uniform distribution
-    ax = axes[0]
-    classical_probs = [1/n] * n
-    colors = ['#2196F3'] * n
-    bars = ax.bar(elements, classical_probs, color=colors, edgecolor='black', linewidth=1.5)
-    ax.set_ylim(0, 0.35)
-    ax.set_title('Classical Probability\n(Archimedean: ℝ-valued)', fontsize=13, fontweight='bold')
-    ax.set_ylabel('P(x)', fontsize=12)
-    ax.axhline(y=1/n, color='red', linestyle='--', alpha=0.5, label=f'P = 1/{n}')
-    ax.legend(fontsize=10)
-    ax.set_xlabel('Events', fontsize=12)
+    # Panel 2: Inclusion-exclusion verification
+    ax2 = axes[1]
+    N = 1000
+    sizes_A = np.arange(10, 500, 10)
+    sizes_B = 300
+    pa_vals = sizes_A / N
+    pb = sizes_B / N
+    # A ∩ B size varies
+    pab_vals = np.maximum(0, sizes_A + sizes_B - N) / N
+    paub_vals = pa_vals + pb - pab_vals
+    paub_direct = np.minimum(sizes_A + sizes_B, N) / N
 
-    # Panel 2: Infinitesimal uniform distribution (conceptual)
-    ax = axes[1]
-    # Show that in non-Archimedean field, 1/ω is infinitesimal
-    # We represent ε as a very small bar with annotation
-    eps_height = 0.02  # Visual representation
-    bars = ax.bar(elements, [eps_height] * n, color='#FF9800', edgecolor='black', linewidth=1.5)
-    ax.set_ylim(0, 0.35)
-    ax.set_title('Infinitesimal Probability\n(Non-Archimedean: F-valued)', fontsize=13, fontweight='bold')
-    ax.set_ylabel('P(x)', fontsize=12)
+    ax2.plot(sizes_A, pa_vals, 'b-', linewidth=2, label='P(A)')
+    ax2.plot(sizes_A, paub_vals, 'r-', linewidth=2, label='P(A∪B) [I-E]')
+    ax2.plot(sizes_A, paub_direct, 'g--', linewidth=2, label='P(A∪B) [direct]', alpha=0.7)
+    ax2.axhline(y=1.0, color='gray', linestyle=':', alpha=0.5)
+    ax2.set_xlabel('|A|', fontsize=12)
+    ax2.set_ylabel('Probability', fontsize=12)
+    ax2.set_title(f'Inclusion-Exclusion (N={N}, |B|={sizes_B})', fontsize=13)
+    ax2.legend(fontsize=10)
+    ax2.grid(True, alpha=0.3)
 
-    # Add ε labels
-    for bar, elem in zip(bars, elements):
-        ax.text(bar.get_x() + bar.get_width()/2., bar.get_height() + 0.008,
-                'ε', ha='center', va='bottom', fontsize=14, fontweight='bold',
-                color='#E65100')
+    # Panel 3: Bayes' theorem visualization
+    ax3 = axes[2]
+    # Disease prevalence vs PPV (positive predictive value)
+    prevalences = np.linspace(0.0001, 0.1, 200)
+    sensitivity = 0.95
+    specificity = 0.99
 
-    # Add annotation
-    ax.annotate('Each P(x) = ε > 0\n(infinitesimal but positive!)',
-                xy=(2.5, 0.05), fontsize=11,
-                ha='center',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', alpha=0.8))
+    # P(D|T+) = sens * prev / (sens * prev + (1-spec) * (1-prev))
+    ppv = (sensitivity * prevalences) / (
+        sensitivity * prevalences + (1 - specificity) * (1 - prevalences)
+    )
 
-    # Add line showing 1/n for comparison
-    ax.axhline(y=1/n, color='blue', linestyle=':', alpha=0.3, label=f'Classical 1/{n}')
-    ax.legend(fontsize=10)
-    ax.set_xlabel('Events', fontsize=12)
-
-    # Panel 3: Loaded infinitesimal die
-    ax = axes[2]
-    # Probabilities: 1/6 + ε, 1/6, 1/6 - ε/2, 1/6, 1/6, 1/6 + ε/2 - ε
-    # Simplified: show different infinitesimal perturbations
-    base = 1/n
-    perturbations = [0.03, 0.01, -0.02, 0.015, -0.015, 0]
-    loaded_probs = [base + p for p in perturbations]
-    colors_loaded = ['#4CAF50' if p > 0 else '#F44336' if p < 0 else '#2196F3'
-                     for p in perturbations]
-    bars = ax.bar(elements, loaded_probs, color=colors_loaded, edgecolor='black', linewidth=1.5)
-    ax.set_ylim(0, 0.35)
-    ax.set_title('Infinitesimally Loaded Die\n(Perturbations ∈ O(ε))', fontsize=13, fontweight='bold')
-    ax.set_ylabel('P(x)', fontsize=12)
-
-    # Add perturbation labels
-    for bar, elem, p in zip(bars, elements, perturbations):
-        label = '+ε' if p > 0 else '-ε' if p < 0 else '0'
-        color = '#2E7D32' if p > 0 else '#C62828' if p < 0 else '#1565C0'
-        ax.text(bar.get_x() + bar.get_width()/2., bar.get_height() + 0.008,
-                f'1/{n} {label}', ha='center', va='bottom', fontsize=9,
-                color=color, fontweight='bold')
-
-    ax.axhline(y=base, color='red', linestyle='--', alpha=0.5, label=f'1/{n}')
-
-    green_patch = mpatches.Patch(color='#4CAF50', label='Favored (+ε)')
-    red_patch = mpatches.Patch(color='#F44336', label='Disfavored (-ε)')
-    blue_patch = mpatches.Patch(color='#2196F3', label='Neutral')
-    ax.legend(handles=[green_patch, red_patch, blue_patch], fontsize=9)
-    ax.set_xlabel('Events', fontsize=12)
-
-    plt.suptitle('Non-Archimedean Probability: From Classical to Infinitesimal',
-                 fontsize=15, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    plt.savefig('/workspace/request-project/Novelty/SurrealProbability/probability_landscape.png',
-                dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved probability_landscape.png")
-
-
-def plot_archimedean_impossibility():
-    """Visualize why Archimedean fields can't support uniform infinite weights."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-
-    c_values = [0.1, 0.05, 0.01, 0.005, 0.001]
-
-    for c in c_values:
-        N_values = range(1, int(2/c) + 1)
-        cumulative = [n * c for n in N_values]
-        ax.plot(list(N_values), cumulative, label=f'c = {c}', linewidth=2)
-
-    ax.axhline(y=1, color='red', linestyle='--', linewidth=2, label='Budget = 1')
-    ax.set_xlabel('Number of elements N', fontsize=13)
-    ax.set_ylabel('Cumulative mass N·c', fontsize=13)
-    ax.set_title('Archimedean Impossibility:\nAny positive weight eventually exceeds budget',
-                 fontsize=14, fontweight='bold')
-    ax.legend(fontsize=11)
-    ax.set_ylim(0, 2.5)
-    ax.grid(True, alpha=0.3)
-
-    # Annotate the key insight
-    ax.annotate('No matter how small c > 0,\nN·c eventually exceeds 1',
-                xy=(500, 1.5), fontsize=12,
-                ha='center',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', alpha=0.9))
+    ax3.plot(prevalences * 100, ppv * 100, 'b-', linewidth=2)
+    ax3.fill_between(prevalences * 100, ppv * 100, alpha=0.1, color='blue')
+    ax3.set_xlabel('Disease Prevalence (%)', fontsize=12)
+    ax3.set_ylabel('Positive Predictive Value (%)', fontsize=12)
+    ax3.set_title("Bayes' Theorem: PPV vs Prevalence", fontsize=13)
+    ax3.grid(True, alpha=0.3)
+    ax3.annotate('Even with 95% sensitivity\nand 99% specificity,\nrare diseases → low PPV',
+                 xy=(1, 50), fontsize=9, style='italic',
+                 bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
     plt.tight_layout()
-    plt.savefig('/workspace/request-project/Novelty/SurrealProbability/archimedean_impossibility.png',
-                dpi=150, bbox_inches='tight')
+    plt.savefig('probability_landscape.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved archimedean_impossibility.png")
+    print("Saved: probability_landscape.png")
 
 
-def plot_infinitesimal_hierarchy():
-    """Visualize the hierarchy of infinitesimal probabilities."""
-    fig, ax = plt.subplots(1, 1, figsize=(12, 7))
+def plot_regularity_comparison():
+    """Compare regular (NAProbSpace) vs standard probability."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-    categories = ['Certain\nP = 1', 'Likely\nP = 1/2', 'Unlikely\nP = 1/100',
-                   '1st-order\ninfinitesimal\nP = ε',
-                   '2nd-order\ninfinitesimal\nP = ε²',
-                   'Impossible\nP = 0']
+    # Panel 1: Standard probability on [0,1] - singletons have measure 0
+    ax1 = axes[0]
+    x = np.linspace(0, 1, 1000)
+    density = np.ones_like(x)  # Uniform density
+    ax1.fill_between(x, density, alpha=0.3, color='blue', label='Density = 1')
+    ax1.plot(x, density, 'b-', linewidth=2)
 
-    # Use log-like scale for visualization
-    heights = [1.0, 0.5, 0.1, 0.03, 0.01, 0]
-    colors = ['#4CAF50', '#8BC34A', '#FFC107', '#FF9800', '#FF5722', '#9E9E9E']
+    # Show that P({x}) = 0
+    points = [0.2, 0.5, 0.8]
+    for p in points:
+        ax1.plot(p, 0, 'ro', markersize=8, zorder=5)
+        ax1.annotate(f'P({{{p}}}) = 0', xy=(p, 0), xytext=(p, 0.3),
+                     fontsize=9, ha='center',
+                     arrowprops=dict(arrowstyle='->', color='red'))
 
-    bars = ax.barh(range(len(categories)), heights, color=colors,
-                   edgecolor='black', linewidth=1.5, height=0.6)
-    ax.set_yticks(range(len(categories)))
-    ax.set_yticklabels(categories, fontsize=11)
-    ax.set_xlabel('Probability (schematic scale)', fontsize=13)
-    ax.set_title('Infinitesimal Probability Hierarchy\nClassical theory collapses levels 3-5 to "impossible"',
-                 fontsize=14, fontweight='bold')
+    ax1.set_xlabel('x', fontsize=12)
+    ax1.set_ylabel('Probability', fontsize=12)
+    ax1.set_title('Standard: P({x}) = 0 (No Regularity)', fontsize=13)
+    ax1.set_ylim(-0.1, 1.5)
+    ax1.legend(fontsize=10)
+    ax1.grid(True, alpha=0.3)
 
-    # Add bracket showing classical collapse
-    ax.annotate('', xy=(0.04, 2.7), xytext=(0.04, 5.3),
-                arrowprops=dict(arrowstyle='<->', color='red', lw=2))
-    ax.text(0.06, 4, 'Classical probability\nsees all of these\nas P = 0',
-            fontsize=11, color='red', va='center',
-            bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+    # Panel 2: NAProbSpace - every point has positive probability
+    ax2 = axes[1]
+    N = 50
+    xs = np.arange(1, N + 1)
+    probs = np.ones(N) / N
 
-    ax.invert_yaxis()
+    ax2.bar(xs, probs, color='green', alpha=0.5, edgecolor='green', linewidth=0.5)
+    ax2.axhline(y=1/N, color='green', linestyle='--', alpha=0.7,
+                label=f'P({{ω}}) = 1/{N} = ε > 0')
+
+    # Highlight a singleton
+    ax2.bar([25], [1/N], color='red', alpha=0.7, edgecolor='red')
+    ax2.annotate(f'P({{25}}) = 1/{N} > 0\nConditioning defined!',
+                 xy=(25, 1/N), xytext=(35, 0.04),
+                 fontsize=9, ha='center',
+                 arrowprops=dict(arrowstyle='->', color='red'),
+                 bbox=dict(boxstyle='round', facecolor='lightyellow'))
+
+    ax2.set_xlabel('ω', fontsize=12)
+    ax2.set_ylabel('P({ω})', fontsize=12)
+    ax2.set_title(f'NAProbSpace: P({{ω}}) = ε > 0 (Regular)', fontsize=13)
+    ax2.legend(fontsize=10, loc='upper right')
+    ax2.grid(True, alpha=0.3)
+
     plt.tight_layout()
-    plt.savefig('/workspace/request-project/Novelty/SurrealProbability/infinitesimal_hierarchy.png',
-                dpi=150, bbox_inches='tight')
+    plt.savefig('regularity_comparison.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved infinitesimal_hierarchy.png")
+    print("Saved: regularity_comparison.png")
 
 
 if __name__ == "__main__":
-    plot_probability_landscape()
-    plot_archimedean_impossibility()
-    plot_infinitesimal_hierarchy()
-    print("\nAll visualizations generated.")
+    plot_probability_scaling()
+    plot_regularity_comparison()
+    print("\nAll visualizations generated successfully!")
