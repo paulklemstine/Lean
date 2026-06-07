@@ -1,300 +1,227 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Core algorithms for Semantic Isomorphism Theory
+Algorithms for Semantic Fiber Theory
 
-Type-hinted implementations of the key computational procedures.
+Type-hinted implementations of the core algorithms from the research.
 """
 
-from itertools import permutations
-from collections import Counter
-from typing import List, Tuple, Dict, Optional, Set, FrozenSet
-from functools import lru_cache
-import math
+from typing import TypeVar, Callable, Set, FrozenSet, List, Tuple, Dict
+from math import gcd
+from itertools import product
+from collections import defaultdict
+
+T = TypeVar('T')
 
 
-# ═══════════════════════════════════════════════════════════════
-# ALGORITHM 1: Histogram Invariant (O(n) — fast rejection)
-# ═══════════════════════════════════════════════════════════════
-
-def color_histogram(coloring: List[int]) -> Dict[int, int]:
+def compute_automorphisms_cyclic(n: int) -> List[Callable[[int], int]]:
     """
-    Compute the color histogram of a coloring.
+    Compute the automorphism group of ℤ/nℤ.
 
-    The histogram maps each color to its multiplicity.
-    This is the primary invariant for semantic equivalence:
-    if histograms differ, the colorings cannot be equivalent.
+    Automorphisms of ℤ/nℤ are multiplication by units mod n.
 
-    Time: O(n)
-    Space: O(k) where k = number of distinct colors
+    Args:
+        n: The group order
+
+    Returns:
+        List of automorphisms, each as a function int -> int
     """
-    return dict(Counter(coloring))
+    units = [k for k in range(1, n) if gcd(k, n) == 1]
+    return [lambda x, k=k: (k * x) % n for k in units]
 
 
-def histogram_signature(coloring: List[int]) -> Tuple[int, ...]:
+def compute_orbits_generic(
+    elements: List[T],
+    automorphisms: List[Callable[[T], T]]
+) -> List[FrozenSet[T]]:
     """
-    Compute a canonical signature from the histogram.
+    Compute orbits of a group action on a set.
 
-    Returns the sorted tuple of multiplicities, which is invariant
-    under both permutation of elements AND relabeling of colors.
+    The semantic fiber of a structure S with automorphism group Aut(S)
+    acting on a set X is the set of orbits Aut(S) \\ X.
 
-    Time: O(n + k log k)
+    Args:
+        elements: The set being acted on
+        automorphisms: List of automorphisms (as functions)
+
+    Returns:
+        List of orbits (each as a frozenset)
     """
-    counts = Counter(coloring)
-    return tuple(sorted(counts.values()))
+    visited: Set[T] = set()
+    orbits: List[FrozenSet[T]] = []
+
+    for x in elements:
+        if x not in visited:
+            orbit = frozenset(phi(x) for phi in automorphisms)
+            orbits.append(orbit)
+            visited |= set(orbit)
+
+    return orbits
 
 
-# ═══════════════════════════════════════════════════════════════
-# ALGORITHM 2: Semantic Equivalence Testing
-# ═══════════════════════════════════════════════════════════════
-
-def test_semantic_equivalence(
-    c1: List[int], c2: List[int]
-) -> Tuple[bool, Optional[List[int]]]:
+def semantic_fiber_size(n: int) -> int:
     """
-    Test whether two colorings are semantically equivalent.
+    Compute the semantic fiber size (number of orbits of Aut(ℤ/nℤ) on ℤ/nℤ).
 
-    Uses histogram pre-filtering for fast rejection, then
-    backtracking search over permutations.
+    This is the number of semantically distinct pointed groups over ℤ/nℤ.
 
-    Returns: (is_equivalent, witnessing_permutation_or_None)
+    Args:
+        n: The group order
 
-    Time: O(n!) worst case, but histogram check rejects most pairs in O(n)
+    Returns:
+        Number of semantic classes
     """
-    n = len(c1)
-    if len(c2) != n:
-        return False, None
-
-    # Fast rejection: histogram must match
-    if color_histogram(c1) != color_histogram(c2):
-        return False, None
-
-    # Backtracking search for witnessing permutation
-    perm: List[int] = [-1] * n
-    used: Set[int] = set()
-
-    def backtrack(pos: int) -> bool:
-        if pos == n:
-            return True
-        target_color = c1[pos]
-        for j in range(n):
-            if j not in used and c2[j] == target_color:
-                perm[pos] = j
-                used.add(j)
-                if backtrack(pos + 1):
-                    return True
-                used.remove(j)
-        return False
-
-    if backtrack(0):
-        return True, perm
-    return False, None
+    auts = compute_automorphisms_cyclic(n)
+    elements = list(range(n))
+    return len(compute_orbits_generic(elements, auts))
 
 
-# ═══════════════════════════════════════════════════════════════
-# ALGORITHM 3: Semantic Distance Computation
-# ═══════════════════════════════════════════════════════════════
-
-def compute_semantic_distance(c1: List[int], c2: List[int]) -> int:
+def burnside_count(
+    elements: List[T],
+    automorphisms: List[Callable[[T], T]]
+) -> float:
     """
-    Compute the semantic distance between two colorings.
+    Apply Burnside's lemma to count orbits.
 
-    d(c₁, c₂) = min_{σ ∈ Sym(n)} |{i : c₁(i) ≠ c₂(σ(i))}|
+    |orbits| = (1/|G|) Σ_{g ∈ G} |Fix(g)|
 
-    This is the minimum Hamming distance over all permutations.
+    Args:
+        elements: The set being acted on
+        automorphisms: The group acting on it
 
-    Time: O(n! · n) — exponential, but exact
+    Returns:
+        Number of orbits (as float, should be integer)
     """
-    n = len(c1)
-    assert len(c2) == n
-
-    best = n
-    for perm in permutations(range(n)):
-        d = sum(1 for i in range(n) if c1[i] != c2[perm[i]])
-        best = min(best, d)
-        if best == 0:
-            return 0
-    return best
+    total_fixed = sum(
+        sum(1 for x in elements if phi(x) == x)
+        for phi in automorphisms
+    )
+    return total_fixed / len(automorphisms)
 
 
-def compute_semantic_distance_hungarian(
-    c1: List[int], c2: List[int]
+def is_semantically_rigid(n: int) -> bool:
+    """
+    Check if ℤ/nℤ is semantically rigid (Aut = {id}).
+
+    A structure is rigid iff every element is in its own orbit,
+    equivalently iff the automorphism group is trivial.
+
+    Args:
+        n: The group order
+
+    Returns:
+        True iff the group is semantically rigid
+    """
+    # Aut(ℤ/nℤ) is trivial iff φ(n) = 1 iff n ∈ {1, 2}
+    euler_phi = sum(1 for k in range(1, n) if gcd(k, n) == 1)
+    return euler_phi == 1
+
+
+def ring_structures_on_Z2() -> List[Dict[str, Tuple[Tuple[int, int], ...]]]:
+    """
+    Enumerate ring structures on ℤ² = ℤ × ℤ by specifying
+    multiplication of basis elements.
+
+    A ring structure on ℤ² is determined by:
+    - e₁ · e₁ = (a₁₁, a₁₂)
+    - e₁ · e₂ = (a₂₁, a₂₂)
+    - e₂ · e₁ = (b₁₁, b₁₂)
+    - e₂ · e₂ = (b₂₁, b₂₂)
+
+    subject to associativity and distributivity (distributivity is free
+    since we extend bilinearly).
+
+    Returns representative ring structures including ℤ[i] and ℤ×ℤ.
+    """
+    structures = []
+
+    # ℤ × ℤ (componentwise): e₁² = e₁, e₂² = e₂, e₁e₂ = 0
+    structures.append({
+        "name": "ℤ × ℤ",
+        "e1e1": (1, 0), "e1e2": (0, 0),
+        "e2e1": (0, 0), "e2e2": (0, 1),
+        "is_domain": False,
+        "has_unity": True,
+    })
+
+    # ℤ[i]: e₁ = 1, e₂ = i, so e₁² = e₁, e₁e₂ = e₂, e₂² = -e₁
+    structures.append({
+        "name": "ℤ[i]",
+        "e1e1": (1, 0), "e1e2": (0, 1),
+        "e2e1": (0, 1), "e2e2": (-1, 0),
+        "is_domain": True,
+        "has_unity": True,
+    })
+
+    # ℤ[√2]: e₁ = 1, e₂ = √2, so e₂² = 2·e₁
+    structures.append({
+        "name": "ℤ[√2]",
+        "e1e1": (1, 0), "e1e2": (0, 1),
+        "e2e1": (0, 1), "e2e2": (2, 0),
+        "is_domain": True,
+        "has_unity": True,
+    })
+
+    # Zero multiplication: all products = 0
+    structures.append({
+        "name": "Zero ring",
+        "e1e1": (0, 0), "e1e2": (0, 0),
+        "e2e1": (0, 0), "e2e2": (0, 0),
+        "is_domain": False,
+        "has_unity": False,
+    })
+
+    return structures
+
+
+def torsor_decomposition(
+    n: int, reference_unit: int, target_unit: int
 ) -> int:
     """
-    Compute semantic distance using the Hungarian algorithm.
+    Decompose an isomorphism of ℤ/nℤ relative to a reference.
 
-    When colors partition elements into classes, the problem reduces
-    to a minimum-cost matching between color classes.
+    Given reference iso φ₀: x ↦ reference_unit·x and target iso φ: x ↦ target_unit·x,
+    find the unique α ∈ Aut(ℤ/nℤ) such that φ = φ₀ ∘ α.
 
-    Time: O(k³) where k = number of distinct colors (much faster than n!)
+    α must satisfy: target_unit·x = reference_unit·(α_unit·x) mod n
+    So α_unit = reference_unit⁻¹ · target_unit mod n.
+
+    Args:
+        n: Group order
+        reference_unit: The unit defining the reference isomorphism
+        target_unit: The unit defining the target isomorphism
+
+    Returns:
+        The unit defining the automorphism α
     """
-    hist1 = Counter(c1)
-    hist2 = Counter(c2)
+    # Find inverse of reference_unit mod n
+    ref_inv = pow(reference_unit, -1, n)
+    return (ref_inv * target_unit) % n
 
-    # Colors that appear in both
-    all_colors = set(hist1.keys()) | set(hist2.keys())
-    n = len(c1)
-
-    # Count how many elements of each color can be matched
-    matched = sum(min(hist1.get(c, 0), hist2.get(c, 0)) for c in all_colors)
-
-    # Semantic distance is at least n - max_matched
-    # This is a lower bound; for the exact answer we need permutation search
-    # But this gives a fast approximation
-    return n - matched
-
-
-# ═══════════════════════════════════════════════════════════════
-# ALGORITHM 4: Chromatic Stabilizer Computation
-# ═══════════════════════════════════════════════════════════════
-
-def compute_chromatic_stabilizer(
-    coloring: List[int],
-) -> List[Tuple[int, ...]]:
-    """
-    Compute the chromatic stabilizer of a coloring.
-
-    Stab(c) = {σ ∈ Sym(n) : c(σ(i)) = c(i) for all i}
-
-    Time: O(∏ (mⱼ!)) where mⱼ are the color multiplicities
-    """
-    n = len(coloring)
-
-    # Group elements by color
-    color_classes: Dict[int, List[int]] = {}
-    for i, c in enumerate(coloring):
-        color_classes.setdefault(c, []).append(i)
-
-    # The stabilizer is the direct product of symmetric groups
-    # on each color class
-    stabilizer: List[List[int]] = [list(range(n))]
-
-    for color, positions in color_classes.items():
-        new_stab = []
-        for base_perm in stabilizer:
-            for class_perm in permutations(positions):
-                perm = list(base_perm)
-                for orig, target in zip(positions, class_perm):
-                    perm[orig] = target
-                new_stab.append(perm)
-        stabilizer = new_stab
-
-    return [tuple(p) for p in stabilizer]
-
-
-def stabilizer_index(coloring: List[int]) -> int:
-    """
-    Compute the index [Sym(n) : Stab(c)].
-
-    This equals the size of the orbit of c under Sym(n),
-    i.e., the number of semantically distinct colorings
-    with the same histogram as c.
-
-    Time: O(n) using the formula n! / ∏(mⱼ!)
-    """
-    n = len(coloring)
-    hist = Counter(coloring)
-    numerator = math.factorial(n)
-    denominator = 1
-    for count in hist.values():
-        denominator *= math.factorial(count)
-    return numerator // denominator
-
-
-# ═══════════════════════════════════════════════════════════════
-# ALGORITHM 5: Semantic Equivalence Class Enumeration
-# ═══════════════════════════════════════════════════════════════
-
-def count_semantic_classes_burnside(n: int, k: int) -> int:
-    """
-    Count semantic equivalence classes of k-colorings of {0,...,n-1}
-    using Burnside's lemma.
-
-    |classes| = (1/|G|) Σ_{g∈G} |Fix(g)|
-
-    where Fix(g) = number of colorings fixed by permutation g,
-    and |G| = n! (the full symmetric group).
-
-    For a permutation with cycle structure (c₁, c₂, ..., cₘ),
-    Fix(g) = k^m (one free color choice per cycle).
-
-    Time: O(n! · n) — sum over all permutations
-    """
-    total_fixed = 0
-    for perm in permutations(range(n)):
-        # Count cycles
-        visited = [False] * n
-        num_cycles = 0
-        for i in range(n):
-            if not visited[i]:
-                num_cycles += 1
-                j = i
-                while not visited[j]:
-                    visited[j] = True
-                    j = perm[j]
-        total_fixed += k ** num_cycles
-
-    return total_fixed // math.factorial(n)
-
-
-# ═══════════════════════════════════════════════════════════════
-# ALGORITHM 6: Transfer Obstruction Detection
-# ═══════════════════════════════════════════════════════════════
-
-def is_transferable(
-    predicate: callable,
-    n: int,
-    k: int,
-) -> bool:
-    """
-    Test whether a predicate on k-colorings of {0,...,n-1} is transferable.
-
-    A predicate P is transferable if:
-      ∀ c₁ c₂, c₁ ~ c₂ → (P(c₁) ↔ P(c₂))
-
-    Time: O(n! · k^n · n)
-    """
-    from itertools import product as cart_product
-
-    all_colorings = [list(c) for c in cart_product(range(k), repeat=n)]
-
-    for c1 in all_colorings:
-        for c2 in all_colorings:
-            equiv, _ = test_semantic_equivalence(c1, c2)
-            if equiv:
-                if predicate(c1) != predicate(c2):
-                    return False
-    return True
-
-
-# ═══════════════════════════════════════════════════════════════
-# MAIN: Run examples
-# ═══════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    print("Semantic Isomorphism Theory — Algorithm Demonstrations\n")
+    print("=== Semantic Fiber Theory: Algorithm Demonstrations ===\n")
 
-    # Example: Burnside counting
-    print("Semantic equivalence classes (Burnside):")
-    for n in range(1, 6):
-        for k in [2, 3]:
-            count = count_semantic_classes_burnside(n, k)
-            print(f"  n={n}, k={k}: {count} classes out of {k**n} colorings")
+    # Semantic fiber sizes for cyclic groups
+    print("Semantic fiber sizes for ℤ/nℤ:")
+    for n in range(2, 20):
+        sf = semantic_fiber_size(n)
+        rigid = is_semantically_rigid(n)
+        print(f"  n={n:2d}: fiber size = {sf:2d}, rigid = {rigid}")
 
-    # Example: Stabilizer index
-    print("\nStabilizer indices:")
-    examples = [[0, 0, 0], [0, 0, 1], [0, 1, 2], [0, 0, 1, 1], [0, 1, 2, 3]]
-    for c in examples:
-        idx = stabilizer_index(c)
-        print(f"  {c} → index = {idx} (orbit size = {idx})")
+    print()
 
-    # Example: Transfer test
-    print("\nTransfer tests (n=3, k=2):")
-    tests = [
-        ("color[0] == 0", lambda c: c[0] == 0),
-        ("all same", lambda c: len(set(c)) == 1),
-        ("sum(c) == 1", lambda c: sum(c) == 1),
-        ("sum(c) > 0", lambda c: sum(c) > 0),
-    ]
-    for name, pred in tests:
-        result = is_transferable(pred, 3, 2)
-        print(f"  '{name}': transferable = {result}")
+    # Ring structures on ℤ²
+    print("Ring structures on ℤ²:")
+    for ring in ring_structures_on_Z2():
+        print(f"  {ring['name']}: domain={ring['is_domain']}, unity={ring['has_unity']}")
+
+    print()
+
+    # Torsor decomposition example
+    n = 7
+    ref = 1  # Reference: identity
+    print(f"Torsor decomposition for ℤ/{n}ℤ (reference = id):")
+    for k in range(1, n):
+        if gcd(k, n) == 1:
+            alpha = torsor_decomposition(n, ref, k)
+            print(f"  φ: x↦{k}x = φ₀ ∘ α where α: x↦{alpha}x")

@@ -1,475 +1,308 @@
 #!/usr/bin/env python3
 """
-Semantic Isomorphism Theory — Interactive Demonstrations
+Semantic Fiber Theory — Demonstrations
 
-Demonstrates the core concepts:
-1. Semantic equivalence detection via histogram invariants
-2. Semantic distance computation between colorings
-3. Chromatic stabilizer computation
+Numerical examples illustrating the key theorems:
+1. Pointed group semantic separation
+2. Ring enrichment divergence (ℤ[i] vs ℤ×ℤ)
+3. Automorphism orbit counting (semantic fiber sizes)
+4. Isomorphism torsor structure
 """
 
-from itertools import permutations
-from collections import Counter
-from typing import Callable, List, Tuple, Dict
+from itertools import product, permutations
+from math import gcd
+from collections import defaultdict
 
 
-def coloring_histogram(coloring: List[int]) -> Dict[int, int]:
-    """Compute the color histogram (multiset of color values)."""
-    return dict(Counter(coloring))
-
-
-def are_semantically_equivalent(c1: List[int], c2: List[int]) -> Tuple[bool, list]:
+def demo_pointed_separation():
     """
-    Check if two colorings are semantically equivalent.
-    Returns (is_equivalent, witnessing_permutation_or_empty).
+    Demonstrate that the identity is semantically fixed:
+    in any group, no automorphism moves the identity.
+    Example: ℤ/nℤ for various n.
     """
-    n = len(c1)
-    assert len(c2) == n, "Colorings must have same length"
+    print("=" * 60)
+    print("Demo 1: Pointed Group Semantic Separation")
+    print("=" * 60)
+    print()
 
-    # Quick check: histograms must match
-    if coloring_histogram(c1) != coloring_histogram(c2):
-        return False, []
+    for n in [2, 3, 4, 5, 6, 8, 12]:
+        # Automorphisms of ℤ/nℤ are multiplication by units mod n
+        units = [k for k in range(1, n) if gcd(k, n) == 1]
+        auts = [(lambda x, k=k, n=n: (k * x) % n) for k in units]
 
-    # Enumerate all permutations (brute force for small n)
-    for perm in permutations(range(n)):
-        if all(c1[i] == c2[perm[i]] for i in range(n)):
-            return True, list(perm)
+        # Check: every automorphism fixes 0 (identity)
+        all_fix_zero = all(aut(0) == 0 for aut in auts)
+        print(f"ℤ/{n}ℤ: |Aut| = {len(units)}, all fix identity: {all_fix_zero}")
 
-    return False, []
-
-
-def semantic_distance(c1: List[int], c2: List[int]) -> int:
-    """
-    Compute the semantic distance: minimum disagreements over all permutations.
-    """
-    n = len(c1)
-    assert len(c2) == n
-
-    min_disagreements = n  # upper bound
-    for perm in permutations(range(n)):
-        disagreements = sum(1 for i in range(n) if c1[i] != c2[perm[i]])
-        min_disagreements = min(min_disagreements, disagreements)
-        if min_disagreements == 0:
-            break
-
-    return min_disagreements
+        # Show orbits
+        orbits = compute_orbits(n, units)
+        print(f"  Orbits (semantic classes): {len(orbits)}")
+        for i, orb in enumerate(orbits):
+            print(f"    Class {i}: {sorted(orb)}")
+        print()
 
 
-def chromatic_stabilizer(coloring: List[int]) -> List[Tuple[int, ...]]:
-    """
-    Compute the chromatic stabilizer: all permutations preserving the coloring.
-    """
-    n = len(coloring)
-    stabilizer = []
-    for perm in permutations(range(n)):
-        if all(coloring[perm[i]] == coloring[i] for i in range(n)):
-            stabilizer.append(perm)
-    return stabilizer
-
-
-def semantic_equivalence_classes(n: int, num_colors: int) -> List[List[Tuple[int, ...]]]:
-    """
-    Partition all colorings of {0,...,n-1} with `num_colors` colors
-    into semantic equivalence classes.
-    """
-    from itertools import product as cart_product
-
-    all_colorings = list(cart_product(range(num_colors), repeat=n))
+def compute_orbits(n, units):
+    """Compute orbits of Aut(ℤ/nℤ) on ℤ/nℤ."""
     visited = set()
-    classes = []
-
-    for coloring in all_colorings:
-        if coloring in visited:
-            continue
-        # Find the orbit of this coloring under all permutations
-        orbit = set()
-        for perm in permutations(range(n)):
-            permuted = tuple(coloring[perm[i]] for i in range(n))
-            orbit.add(permuted)
-        classes.append(sorted(orbit))
-        visited.update(orbit)
-
-    return classes
+    orbits = []
+    for g in range(n):
+        if g not in visited:
+            orbit = set()
+            for k in units:
+                orbit.add((k * g) % n)
+            orbits.append(orbit)
+            visited |= orbit
+    return orbits
 
 
-# ═══════════════════════════════════════════════════════════════
-# DEMONSTRATION 1: The Semantic Gap
-# ═══════════════════════════════════════════════════════════════
+def demo_ring_divergence():
+    """
+    Demonstrate that ℤ[i] and ℤ×ℤ have the same additive structure
+    but different multiplicative structure.
+    """
+    print("=" * 60)
+    print("Demo 2: Ring Enrichment Divergence")
+    print("=" * 60)
+    print()
 
-print("=" * 70)
-print("DEMONSTRATION 1: The Semantic Gap Theorem")
-print("=" * 70)
+    # ℤ[i] multiplication: (a+bi)(c+di) = (ac-bd) + (ad+bc)i
+    def mul_zi(z1, z2):
+        a, b = z1
+        c, d = z2
+        return (a * c - b * d, a * d + b * c)
 
-c1 = [0, 0, 1]  # "mostly off" — two 0s, one 1
-c2 = [0, 1, 1]  # "mostly on"  — one 0, two 1s
+    # ℤ×ℤ multiplication: componentwise
+    def mul_prod(z1, z2):
+        return (z1[0] * z2[0], z1[1] * z2[1])
 
-print(f"\nColoring 1 (gapColor₁): {c1}")
-print(f"Coloring 2 (gapColor₂): {c2}")
-print(f"\nHistogram of c1: {coloring_histogram(c1)}")
-print(f"Histogram of c2: {coloring_histogram(c2)}")
+    print("Additive structure (identical):")
+    for (a, b), (c, d) in [((1, 2), (3, 4)), ((0, 1), (1, 0)), ((-1, 3), (2, -1))]:
+        sum_val = (a + c, b + d)
+        print(f"  ({a},{b}) + ({c},{d}) = {sum_val}  [same in both]")
 
-equiv, witness = are_semantically_equivalent(c1, c2)
-print(f"\nSemantically equivalent? {equiv}")
-print(f"Semantic distance: {semantic_distance(c1, c2)}")
-print("\n→ The histograms differ, so no permutation can transform one into the other.")
-print("  This is the Semantic Gap: isomorphic structures carry irreconcilable meanings.")
+    print()
+    print("Multiplicative structure (different!):")
+    test_pairs = [((1, 0), (0, 1)), ((1, 1), (1, -1)), ((2, 1), (1, 3))]
+    for z1, z2 in test_pairs:
+        prod_zi = mul_zi(z1, z2)
+        prod_pp = mul_prod(z1, z2)
+        print(f"  {z1} × {z2}:")
+        print(f"    ℤ[i]:  {prod_zi}")
+        print(f"    ℤ×ℤ:  {prod_pp}")
+        if prod_zi != prod_pp:
+            print(f"    → DIFFERENT!")
 
-# ═══════════════════════════════════════════════════════════════
-# DEMONSTRATION 2: Semantic Distance as a Pseudometric
-# ═══════════════════════════════════════════════════════════════
+    print()
+    print("Zero divisor test:")
+    zd1, zd2 = (1, 0), (0, 1)
+    print(f"  In ℤ×ℤ: {zd1} × {zd2} = {mul_prod(zd1, zd2)} (ZERO DIVISOR!)")
+    print(f"  In ℤ[i]: {zd1} × {zd2} = {mul_zi(zd1, zd2)} (nonzero — no zero divisors)")
+    print(f"  → ℤ[i] is an integral domain, ℤ×ℤ is not")
+    print(f"  → No ring isomorphism can exist")
+    print()
 
-print("\n" + "=" * 70)
-print("DEMONSTRATION 2: Semantic Distance Pseudometric")
-print("=" * 70)
 
-# Colorings of Fin 4
-colorings = [
-    [0, 0, 1, 1],  # A
-    [0, 1, 0, 1],  # B
-    [0, 1, 1, 0],  # C
-    [1, 1, 0, 0],  # D
-    [0, 0, 0, 1],  # E
-]
+def demo_torsor():
+    """
+    Demonstrate the torsor structure: all isomorphisms between
+    two copies of ℤ/nℤ differ by automorphisms.
+    """
+    print("=" * 60)
+    print("Demo 3: Isomorphism Torsor Structure")
+    print("=" * 60)
+    print()
 
-labels = "ABCDE"
-print("\nSemantic distance matrix:")
-print(f"     {'  '.join(labels)}")
-for i, ci in enumerate(colorings):
-    row = [semantic_distance(ci, cj) for cj in colorings]
-    print(f"  {labels[i]}  {'  '.join(str(d) for d in row)}")
+    n = 7  # prime, so Aut(ℤ/7ℤ) = (ℤ/7ℤ)* has 6 elements
+    units = [k for k in range(1, n) if gcd(k, n) == 1]
 
-print("\nKey observations:")
-print("  • d(X,X) = 0 for all X (reflexivity)")
-print("  • d(X,Y) = d(Y,X) for all X,Y (symmetry)")
-print("  • A,B,C,D all have histogram {0:2, 1:2} — some are equivalent!")
+    print(f"Group: ℤ/{n}ℤ")
+    print(f"Aut(ℤ/{n}ℤ) = {{x ↦ kx | k ∈ {units}}} (size {len(units)})")
+    print()
 
-for i in range(len(colorings)):
-    for j in range(i + 1, len(colorings)):
-        eq, w = are_semantically_equivalent(colorings[i], colorings[j])
-        if eq:
-            print(f"  • {labels[i]} ≡ {labels[j]} via permutation {w}")
+    # Fix reference isomorphism φ₀ = identity
+    print("Reference isomorphism φ₀ = id")
+    print("All isomorphisms = {φ₀ ∘ α | α ∈ Aut}:")
+    for k in units:
+        mapping = {x: (k * x) % n for x in range(n)}
+        print(f"  α: x ↦ {k}x mod {n}  →  φ = φ₀∘α: {mapping}")
 
-# ═══════════════════════════════════════════════════════════════
-# DEMONSTRATION 3: Chromatic Stabilizer and Symmetry Breaking
-# ═══════════════════════════════════════════════════════════════
+    print()
+    print(f"Total isomorphisms: {len(units)} = |Aut(ℤ/{n}ℤ)| ✓")
+    print()
 
-print("\n" + "=" * 70)
-print("DEMONSTRATION 3: Chromatic Stabilizer — Symmetry Breaking")
-print("=" * 70)
 
-test_colorings = [
-    ("Constant",        [0, 0, 0]),
-    ("Two colors",      [0, 0, 1]),
-    ("Injective",       [0, 1, 2]),
-    ("Alternating-4",   [0, 1, 0, 1]),
-    ("Block-4",         [0, 0, 1, 1]),
-]
+def demo_semantic_fiber_sizes():
+    """
+    Compute semantic fiber sizes (orbit counts) for small groups.
+    """
+    print("=" * 60)
+    print("Demo 4: Semantic Fiber Sizes")
+    print("=" * 60)
+    print()
+    print(f"{'Group':<15} {'|G|':>5} {'|Aut|':>6} {'Orbits':>7} {'Rigid?':>7}")
+    print("-" * 45)
 
-import math
+    for n in range(2, 25):
+        units = [k for k in range(1, n) if gcd(k, n) == 1]
+        orbits = compute_orbits(n, units)
+        is_rigid = len(orbits) == n
+        print(f"ℤ/{n}ℤ{'':<9} {n:>5} {len(units):>6} {len(orbits):>7} {'YES' if is_rigid else 'no':>7}")
 
-for name, coloring in test_colorings:
-    stab = chromatic_stabilizer(coloring)
-    n = len(coloring)
-    full_aut_size = math.factorial(n)
-    print(f"\n  {name}: {coloring}")
-    print(f"    |Stab| = {len(stab)}, |Aut| = {full_aut_size}, "
-          f"index = {full_aut_size // len(stab)}")
-    print(f"    Symmetry broken: {100 * (1 - len(stab) / full_aut_size):.0f}%")
+    print()
+    print("Note: A group is semantically rigid iff #orbits = |G|")
+    print("      (i.e., Aut(G) is trivial)")
+    print("      For ℤ/nℤ, Aut ≅ (ℤ/nℤ)*, so rigid iff φ(n) = 1 iff n ∈ {1, 2}")
+    print()
 
-print("\n→ Injective colorings break ALL symmetry (|Stab| = 1).")
-print("  Constant colorings preserve ALL symmetry (|Stab| = |Aut|).")
-print("  This is the Chromatic Rigidity Theorem in action.")
 
-# ═══════════════════════════════════════════════════════════════
-# DEMONSTRATION 4: Counting Semantic Equivalence Classes
-# ═══════════════════════════════════════════════════════════════
+def demo_burnside_counting():
+    """
+    Apply Burnside's lemma to count semantic fibers.
+    """
+    print("=" * 60)
+    print("Demo 5: Burnside Counting of Semantic Fibers")
+    print("=" * 60)
+    print()
 
-print("\n" + "=" * 70)
-print("DEMONSTRATION 4: Semantic Equivalence Classes (Burnside Counting)")
-print("=" * 70)
+    for n in [6, 8, 10, 12, 15, 20]:
+        units = [k for k in range(1, n) if gcd(k, n) == 1]
 
-for n in range(1, 5):
-    for k in range(1, min(n + 2, 4)):
-        classes = semantic_equivalence_classes(n, k)
-        total = k ** n
-        print(f"  |Fin {n}| with {k} colors: "
-              f"{total} colorings → {len(classes)} semantic classes")
+        # Burnside: orbits = (1/|Aut|) Σ_{φ ∈ Aut} |Fix(φ)|
+        total_fixed = 0
+        for k in units:
+            fixed = sum(1 for x in range(n) if (k * x) % n == x)
+            total_fixed += fixed
 
-print("\n→ The number of classes grows much slower than the number of colorings.")
-print("  This is because structural symmetries identify many colorings.")
+        burnside_count = total_fixed / len(units)
 
-# ═══════════════════════════════════════════════════════════════
-# DEMONSTRATION 5: Transfer Obstruction
-# ═══════════════════════════════════════════════════════════════
+        # Direct count
+        orbits = compute_orbits(n, units)
 
-print("\n" + "=" * 70)
-print("DEMONSTRATION 5: Transfer Obstruction")
-print("=" * 70)
+        print(f"ℤ/{n}ℤ: Burnside = {total_fixed}/{len(units)} = {burnside_count:.0f}, "
+              f"Direct = {len(orbits)} ✓" if burnside_count == len(orbits)
+              else f"ℤ/{n}ℤ: MISMATCH!")
 
-# Property: "element 0 has color true"
-c_true_at_0 = [1, 0]   # true at position 0
-c_false_at_0 = [0, 1]  # false at position 0
+    print()
 
-print(f"\n  c₁ = {c_true_at_0} — element 0 is colored 1 (true)")
-print(f"  c₂ = {c_false_at_0} — element 0 is colored 0 (false)")
 
-equiv, witness = are_semantically_equivalent(c_true_at_0, c_false_at_0)
-print(f"\n  Semantically equivalent? {equiv} (via swap {witness})")
-print(f"  But P(c₁) = True, P(c₂) = False for P = 'color of element 0 is 1'")
-print("\n→ Point-evaluation is NOT transferable across semantic equivalence.")
-print("  Structural isomorphisms destroy point-specific meaning.")
-
-# Property: "all elements same color" — this IS transferable
-c_const = [1, 1]
-c_mixed = [0, 1]
-print(f"\n  Constant coloring {c_const}: all same color? True")
-print(f"  Mixed coloring {c_mixed}: all same color? False")
-print(f"  These are NOT semantically equivalent (distance = {semantic_distance(c_const, c_mixed)})")
-print("→ 'All same color' IS transferable: it's preserved by all permutations.")
+if __name__ == "__main__":
+    demo_pointed_separation()
+    demo_ring_divergence()
+    demo_torsor()
+    demo_semantic_fiber_sizes()
+    demo_burnside_counting()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Burnside Class Counting
+Visualization: Semantic Fiber Sizes for Cyclic Groups
 
-Shows how the number of semantic equivalence classes grows
-compared to the total number of colorings, demonstrating
-the dramatic compression effect of structural symmetry.
+Plots the number of orbits of Aut(ℤ/nℤ) on ℤ/nℤ as a function of n,
+revealing the structure of semantic ambiguity.
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from itertools import permutations
-import math
+from math import gcd, log2
 
 
-def count_semantic_classes_burnside(n, k):
-    """Count classes using Burnside's lemma."""
-    total_fixed = 0
-    for perm in permutations(range(n)):
-        visited = [False] * n
-        num_cycles = 0
-        for i in range(n):
-            if not visited[i]:
-                num_cycles += 1
-                j = i
-                while not visited[j]:
-                    visited[j] = True
-                    j = perm[j]
-        total_fixed += k ** num_cycles
-    return total_fixed // math.factorial(n)
+def euler_phi(n: int) -> int:
+    """Euler's totient function."""
+    return sum(1 for k in range(1, n + 1) if gcd(k, n) == 1)
 
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# Left: Classes vs total colorings
-ax = axes[0]
-for k in [2, 3, 4]:
-    ns = range(1, 8)
-    totals = [k**n for n in ns]
-    classes = [count_semantic_classes_burnside(n, k) for n in ns]
-
-    ax.semilogy(list(ns), totals, '--', alpha=0.4, color=f'C{k-2}')
-    ax.semilogy(list(ns), classes, 'o-', linewidth=2, color=f'C{k-2}',
-                label=f'k={k}')
-
-ax.set_xlabel('n (number of elements)', fontsize=12)
-ax.set_ylabel('Count (log scale)', fontsize=12)
-ax.set_title('Semantic Classes vs Total Colorings\n(dashed = total, solid = classes)',
-             fontsize=14)
-ax.legend(fontsize=11)
-ax.grid(True, alpha=0.3)
-
-# Right: Compression ratio
-ax = axes[1]
-for k in [2, 3, 4]:
-    ns = range(1, 8)
-    ratios = []
-    for n in ns:
-        total = k ** n
-        classes = count_semantic_classes_burnside(n, k)
-        ratios.append(classes / total)
-
-    ax.plot(list(ns), ratios, 'o-', linewidth=2, label=f'k={k}')
-
-ax.set_xlabel('n (number of elements)', fontsize=12)
-ax.set_ylabel('Classes / Total colorings', fontsize=12)
-ax.set_title('Semantic Compression Ratio\n(lower = more symmetry reduction)', fontsize=14)
-ax.legend(fontsize=11)
-ax.grid(True, alpha=0.3)
-ax.set_ylim(0, 1.05)
-
-plt.tight_layout()
-plt.savefig('burnside_classes.png', dpi=150)
-print("Saved: burnside_classes.png")
+def semantic_fiber_size(n: int) -> int:
+    """Number of orbits of Aut(ℤ/nℤ) on ℤ/nℤ."""
+    if n <= 1:
+        return n
+    units = [k for k in range(1, n) if gcd(k, n) == 1]
+    visited = set()
+    orbits = 0
+    for g in range(n):
+        if g not in visited:
+            orbit = set()
+            for k in units:
+                orbit.add((k * g) % n)
+            visited |= orbit
+            orbits += 1
+    return orbits
 
 
-#!/usr/bin/env python3
-"""
-Visualization: Semantic Distance Heatmap
-
-Shows the semantic distance matrix between all 2-colorings of Fin 4,
-grouped by semantic equivalence class.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from itertools import permutations, product as cart_product
-
-
-def semantic_distance(c1, c2):
-    n = len(c1)
-    best = n
-    for perm in permutations(range(n)):
-        d = sum(1 for i in range(n) if c1[i] != c2[perm[i]])
-        best = min(best, d)
-        if best == 0:
-            return 0
-    return best
+def is_prime(n: int) -> bool:
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
 
-def histogram_sig(c):
-    from collections import Counter
-    return tuple(sorted(Counter(c).values()))
+# Compute data
+N_MAX = 100
+ns = list(range(2, N_MAX + 1))
+fibers = [semantic_fiber_size(n) for n in ns]
+phis = [euler_phi(n) for n in ns]
+primes = [n for n in ns if is_prime(n)]
+prime_fibers = [semantic_fiber_size(n) for n in primes]
 
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig.suptitle('Semantic Fiber Theory: Orbits of Aut(ℤ/nℤ) on ℤ/nℤ', fontsize=14, fontweight='bold')
 
-# Generate all 2-colorings of Fin 4
-n, k = 4, 2
-all_colorings = list(cart_product(range(k), repeat=n))
+# Plot 1: Fiber sizes
+ax1 = axes[0, 0]
+colors = ['red' if is_prime(n) else 'steelblue' for n in ns]
+ax1.scatter(ns, fibers, c=colors, s=15, alpha=0.7)
+ax1.plot(ns, fibers, 'k-', alpha=0.2, linewidth=0.5)
+ax1.set_xlabel('n')
+ax1.set_ylabel('Number of orbits')
+ax1.set_title('Semantic Fiber Size')
+ax1.legend(['All n', 'Prime n (red)'], loc='upper left')
 
-# Sort by histogram signature for visual grouping
-all_colorings.sort(key=lambda c: (histogram_sig(c), c))
+# Plot 2: Fiber size / n ratio (semantic rigidity spectrum)
+ax2 = axes[0, 1]
+ratios = [f / n for f, n in zip(fibers, ns)]
+ax2.scatter(ns, ratios, c=colors, s=15, alpha=0.7)
+ax2.axhline(y=1.0, color='green', linestyle='--', alpha=0.5, label='Rigid (ratio=1)')
+ax2.set_xlabel('n')
+ax2.set_ylabel('Orbits / n')
+ax2.set_title('Semantic Rigidity Spectrum')
+ax2.set_ylim(0, 1.05)
+ax2.legend()
 
-# Compute distance matrix
-N = len(all_colorings)
-dist_matrix = np.zeros((N, N), dtype=int)
-for i in range(N):
-    for j in range(i, N):
-        d = semantic_distance(list(all_colorings[i]), list(all_colorings[j]))
-        dist_matrix[i, j] = d
-        dist_matrix[j, i] = d
+# Plot 3: Fiber vs Aut size
+ax3 = axes[1, 0]
+ax3.scatter(phis, fibers, c=colors, s=15, alpha=0.7)
+ax3.set_xlabel('|Aut(ℤ/nℤ)| = φ(n)')
+ax3.set_ylabel('Number of orbits')
+ax3.set_title('Fibers vs Automorphism Group Size')
 
-# Plot
-fig, ax = plt.subplots(figsize=(10, 8))
-im = ax.imshow(dist_matrix, cmap='YlOrRd', interpolation='nearest')
-ax.set_title('Semantic Distance Between 2-Colorings of Fin 4\n'
-             '(Sorted by histogram signature)', fontsize=14)
-ax.set_xlabel('Coloring index')
-ax.set_ylabel('Coloring index')
-
-# Add colorbar
-cbar = plt.colorbar(im, ax=ax)
-cbar.set_label('Semantic Distance', fontsize=12)
-
-# Add coloring labels on axes
-labels = [''.join(str(x) for x in c) for c in all_colorings]
-ax.set_xticks(range(N))
-ax.set_xticklabels(labels, rotation=90, fontsize=7)
-ax.set_yticks(range(N))
-ax.set_yticklabels(labels, fontsize=7)
-
-# Draw block boundaries for histogram classes
-sigs = [histogram_sig(c) for c in all_colorings]
-boundaries = []
-for i in range(1, N):
-    if sigs[i] != sigs[i-1]:
-        boundaries.append(i - 0.5)
-for b in boundaries:
-    ax.axhline(y=b, color='blue', linewidth=1.5, linestyle='--', alpha=0.7)
-    ax.axvline(x=b, color='blue', linewidth=1.5, linestyle='--', alpha=0.7)
+# Plot 4: Fiber sizes for primes only
+ax4 = axes[1, 1]
+ax4.scatter(primes, prime_fibers, c='red', s=25, alpha=0.7)
+ax4.plot(primes, [2] * len(primes), 'g--', alpha=0.5, label='Lower bound (=2)')
+# For prime p, orbits = 1 + (number of orbits of (ℤ/pℤ)* on (ℤ/pℤ)*)
+# Since (ℤ/pℤ)* is cyclic of order p-1, it acts on itself by multiplication
+# and has exactly the divisors of p-1 as orbit sizes
+ax4.set_xlabel('Prime p')
+ax4.set_ylabel('Number of orbits')
+ax4.set_title('Semantic Fibers for Prime-Order Groups')
+ax4.legend()
 
 plt.tight_layout()
-plt.savefig('semantic_distance_heatmap.png', dpi=150)
-print("Saved: semantic_distance_heatmap.png")
+plt.savefig('semantic_fibers.png', dpi=150, bbox_inches='tight')
+plt.close()
 
-
-#!/usr/bin/env python3
-"""
-Visualization: Chromatic Stabilizer Spectrum
-
-Shows how the stabilizer size varies across different colorings,
-illustrating the symmetry-breaking effect of semantic content.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from itertools import permutations, product as cart_product
-from collections import Counter
-import math
-
-
-def stabilizer_size(coloring):
-    """Compute |Stab(c)| = product of (multiplicity)! for each color."""
-    hist = Counter(coloring)
-    result = 1
-    for count in hist.values():
-        result *= math.factorial(count)
-    return result
-
-
-def stabilizer_index(coloring):
-    """Compute [Sym(n) : Stab(c)] = n! / |Stab(c)|."""
-    n = len(coloring)
-    return math.factorial(n) // stabilizer_size(coloring)
-
-
-# Parameters
-max_n = 6
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# Left plot: Distribution of stabilizer sizes for n=5, k=3
-n, k = 5, 3
-all_colorings = list(cart_product(range(k), repeat=n))
-stab_sizes = [stabilizer_size(list(c)) for c in all_colorings]
-unique_sizes = sorted(set(stab_sizes))
-size_counts = Counter(stab_sizes)
-
-ax = axes[0]
-bars = ax.bar(range(len(unique_sizes)),
-              [size_counts[s] for s in unique_sizes],
-              color='steelblue', alpha=0.8)
-ax.set_xticks(range(len(unique_sizes)))
-ax.set_xticklabels([str(s) for s in unique_sizes])
-ax.set_xlabel('|Stab(c)|', fontsize=12)
-ax.set_ylabel('Number of colorings', fontsize=12)
-ax.set_title(f'Stabilizer Size Distribution\n(n={n}, k={k})', fontsize=14)
-ax.set_yscale('log')
-
-# Add percentage labels
-total = len(all_colorings)
-for bar, s in zip(bars, unique_sizes):
-    count = size_counts[s]
-    pct = 100 * count / total
-    if pct > 0.5:
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height(),
-                f'{pct:.0f}%', ha='center', va='bottom', fontsize=8)
-
-# Right plot: Symmetry breaking ratio vs number of colors
-ax = axes[1]
-for n in range(3, max_n + 1):
-    k_range = range(1, n + 2)
-    avg_indices = []
-    for k in k_range:
-        all_c = list(cart_product(range(k), repeat=n))
-        indices = [stabilizer_index(list(c)) for c in all_c]
-        avg_indices.append(np.mean(indices))
-
-    ax.plot(list(k_range), avg_indices, 'o-', label=f'n={n}', linewidth=2)
-
-ax.set_xlabel('Number of colors (k)', fontsize=12)
-ax.set_ylabel('Average orbit size [Sym(n):Stab(c)]', fontsize=12)
-ax.set_title('Average Symmetry Breaking\nvs Number of Colors', fontsize=14)
-ax.legend(fontsize=10)
-ax.set_yscale('log')
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('stabilizer_spectrum.png', dpi=150)
-print("Saved: stabilizer_spectrum.png")
+print("Saved: semantic_fibers.png")
+print(f"Computed semantic fiber sizes for n = 2..{N_MAX}")
+print(f"Range of fiber sizes: {min(fibers)} to {max(fibers)}")
+print(f"Groups with fiber size 2 (minimal for |G|≥2): "
+      f"{[n for n, f in zip(ns, fibers) if f == 2]}")
