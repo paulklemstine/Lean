@@ -1,197 +1,228 @@
-# Counterfactual Number Theory: Generator Systems, Product-Freeness, and the Fragility of Unique Factorization
+# The Factorization Diamond: Structural Hierarchy in Counterfactual Number Theory
 
 ## Abstract
 
-We introduce **Generator Systems**, a formal framework for studying counterfactual number theories in which the role of prime numbers is played by arbitrary subsets of ℕ. This framework, inspired by Cramér's 1936 random model of the primes, allows rigorous investigation of which classical theorems depend on *density* properties of the primes (and thus hold for any set with prime-like density) versus *multiplicative structural* properties (which are specific to the primes).
+We develop a framework for studying "generalized primes" — subsets of ℕ≥2 that serve as generators for multiplicative factorization — and discover a strict diamond-shaped hierarchy among three natural weakening conditions of unique factorization. Specifically, we introduce the notion of a **multiplicative basis** (MulBasis) and prove that **product-freeness** and **collision-freeness** are incomparable properties, each strictly weaker than unique factorization, and whose conjunction is itself strictly weaker than unique factorization. We further prove a **Coprime Basis Theorem** characterizing when pairwise coprime sets have unique factorization (if and only if they are product-free), and a **Prime-Power Collapse Theorem** showing that any set containing both a prime p and a power pᵏ (k ≥ 2) fails unique factorization. All results are formalized in Lean 4 with machine-verified proofs.
 
-Our main results are:
-1. **Product-freeness is necessary for unique factorization** (Theorem 1): If a generator system S contains elements a, b, and their product ab, then unique S-factorization fails.
-2. **The Cramér Dichotomy** (Theorem 6): Every non-product-free generator system admits multiple factorizations.
-3. **Fragility of UFD** (Theorem 2): Adding a single composite (6 = 2×3) to the primes destroys unique factorization.
-4. **The Multiplicative Schur Property** (Theorem from Density file): Any generator system containing a multiplicative triple (a, b, ab) simultaneously fails product-freeness and unique factorization.
-5. **Prime Stability under Deletion** (Theorem): Removing any single prime preserves product-freeness but destroys coverage.
-6. **Factorization Explosion** (Theorem): Dense interval systems admit exponentially many factorizations.
+**Keywords:** Unique factorization, multiplicative basis, Cramér model, product-free sets, factorization hierarchy.
 
-All results are formally verified in Lean 4 with Mathlib.
+---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The Fundamental Theorem of Arithmetic — that every natural number n ≥ 2 has a unique factorization into primes — is among the most fundamental results in mathematics. Yet the question of *why* unique factorization holds has deeper ramifications than might first appear.
 
-Harald Cramér's 1936 probabilistic model of the primes replaces each integer n ≥ 2 with an independent Bernoulli random variable with parameter 1/log(n). This model has been remarkably successful for predicting statistical properties of primes — gap distributions, counts in short intervals, and heuristics for various conjectures.
+Cramér's 1936 probabilistic model of primes proposed replacing the actual primes with a random subset S ⊂ ℕ where each n ≥ 2 is included independently with probability 1/ln(n). This model reproduces the prime density (the Prime Number Theorem) and the distribution in arithmetic progressions (Dirichlet's theorem), but loses unique factorization.
 
-However, the model fails to capture multiplicative structure. The Fundamental Theorem of Arithmetic (FTA) — that every integer > 1 has a unique prime factorization — is a deep structural property that random sets do not generically possess. Our work makes this failure precise.
+The present work asks: *precisely what structural conditions separate primes from their random counterparts?* We identify three natural conditions — unique factorization (UF), collision-freeness (CF), and product-freeness (PF) — and prove they form a strict diamond:
 
-### 1.2 Contributions
+```
+            UF
+           / \
+         CF   PF
+           \ /
+          (∅)
+```
 
-We formalize the notion of a **Generator System** — a set S ⊆ ℕ with all elements ≥ 2 — and define S-factorizations, unique factorization, and product-freeness relative to S. This provides a rigorous framework for asking: which properties of the primes are "generic" (shared by all sets of comparable density) and which are "exceptional" (specific to the primes)?
+where UF implies both CF and PF, neither CF nor PF implies the other, and CF ∧ PF does not imply UF.
 
-Our key insight is that **product-freeness is the bridge between density and structure**. We prove:
-- Product-freeness is necessary for unique factorization (but not sufficient on its own).
-- Random sets with prime-like density are almost surely not product-free.
-- The primes are product-free — a deep property that random models cannot reproduce.
+### 1.1 Contributions
+
+1. **The Factorization Diamond Theorem** (Theorem 4): A complete characterization of the relationships among UF, CF, and PF, with explicit separating examples.
+2. **The Coprime Basis Theorem** (Theorem 6): For pairwise coprime sets, UF ↔ PF.
+3. **The Prime-Power Collapse Theorem** (Theorem 5): If S contains both p and pᵏ, UF fails.
+4. **The MulBasis structure**: A novel algebraic framework for studying generalized factorization.
+5. Complete formalization in Lean 4 with all proofs machine-verified.
+
+---
 
 ## 2. Definitions
 
-### 2.1 Generator System
+**Definition 1** (S-Factorization). For S ⊆ ℕ, an *S-factorization* of n ∈ ℕ is a multiset f of elements from S, each ≥ 2, with ∏f = n.
 
-**Definition (GeneratorSystem).** A generator system is a pair S = (carrier, ge_two) where:
-- carrier ⊆ ℕ is a set of natural numbers
-- ge_two : ∀ n ∈ carrier, n ≥ 2
+**Definition 2** (Unique S-Factorization). A set S has *unique S-factorization* (UF) if for every n, any two S-factorizations of n are equal as multisets.
 
-The elements of carrier play the role of "primes" in the counterfactual theory.
+**Definition 3** (Product-Freeness). A set S is *product-free* (PF) if for all a, b ∈ S with a, b ≥ 2, we have a · b ∉ S.
 
-### 2.2 S-Factorization
+**Definition 4** (Product Collision). A *product collision* in S is a quadruple (a, b, c, d) with a, b, c, d ∈ S, all ≥ 2, such that a · b = c · d and {a, b} ≠ {c, d} as multisets.
 
-**Definition (SFactorization).** An S-factorization of n ∈ ℕ is a multiset m of natural numbers such that:
-- Every element of m belongs to S.carrier
-- The product of m equals n: m.prod = n
+**Definition 5** (Collision-Freeness). A set S is *collision-free* (CF) if it has no product collision.
 
-### 2.3 Unique Factorization
+**Definition 6** (Multiplicative Basis). A *multiplicative basis* is a pair (S, proof) where S ⊆ ℕ with all elements ≥ 2, and the proof witnesses that S has unique S-factorization.
 
-**Definition (HasUniqueFactorization).** A generator system S has unique factorization if for every n ∈ ℕ, any two S-factorizations of n have equal factor multisets.
+**Definition 7** (Factorization Width). The *factorization width* of n over S is the cardinality of the set of distinct S-factorizations of n:
+$$w_S(n) = |\{f \text{ multiset} : f \text{ is an S-factorization of } n\}|$$
 
-### 2.4 Product-Freeness
+**Definition 8** (Factorization Depth). The *factorization depth* of n over S is the number of distinct lengths achievable:
+$$d_S(n) = |\{k \in \mathbb{N} : \exists f, |f| = k \text{ and } f \text{ is an S-factorization of } n\}|$$
 
-**Definition (IsProductFreeGen).** A generator system S is product-free if for all a, b ∈ S.carrier, the product ab ∉ S.carrier.
-
-### 2.5 Distinguished Instances
-
-- **primeGeneratorSystem**: carrier = {n ∈ ℕ | n is prime}. The "standard model."
-- **perturbedPrimeSystem**: carrier = {n ∈ ℕ | n is prime} ∪ {6}. The minimal perturbation.
-- **intervalSystem n**: carrier = {x ∈ ℕ | 2 ≤ x ≤ n}. Dense interval systems.
+---
 
 ## 3. Main Results
 
-### 3.1 Product-Free Necessity (PEGB Analysis)
+### 3.1 The Forward Implications
 
-**Theorem (productFree_necessary).** Let S be a generator system containing elements a, b ∈ S.carrier with ab ∈ S.carrier. Then S does not have unique factorization.
+**Theorem 1** (UF ⟹ PF). If S has unique S-factorization, then S is product-free.
 
-**Proof sketch.** The element n = ab admits two S-factorizations:
-- f₁ = {ab} (singleton multiset)
-- f₂ = {a, b} (pair multiset)
+*Proof sketch.* If a, b ∈ S with a, b ≥ 2 and a · b ∈ S, then a · b has two S-factorizations: {a · b} (length 1) and {a, b} (length 2). These have different cardinalities, hence are different multisets, contradicting UF. □
 
-These are distinct as multisets since Multiset.card f₁ = 1 ≠ 2 = Multiset.card f₂. □
+**Theorem 2** (UF ⟹ CF). If S has unique S-factorization, then S is collision-free.
 
-**Example.** In the perturbed prime system, 6 = 2 × 3 has factorizations {6} and {2, 3}.
+*Proof sketch.* A product collision (a, b, c, d) immediately provides two distinct S-factorizations {a, b} and {c, d} of the number a · b = c · d. □
 
-**Generalization.** The theorem holds without any lower bound on a, b — the ge_two condition of the generator system suffices. Our original formulation included redundant hypotheses a ≥ 2, b ≥ 2, which the formal proof showed to be unnecessary, leading to a stronger statement.
+### 3.2 The Separating Examples
 
-**Boundary.** The converse fails: product-freeness is necessary but not sufficient for unique factorization. Consider S = {2, 5}. This is product-free, but the number 4 has no S-factorization at all (since 4 = 2² requires using 2 twice, which gives {2, 2} with product 4 — actually this IS a valid factorization). The real boundary is *completeness*: product-freeness gives at-most-one, not exactly-one.
+**Theorem 3** (CF ⟹̸ PF). The set {2, 3, 6} is collision-free but not product-free.
 
-### 3.2 Fragility of UFD
+*Proof.* Not product-free: 2 · 3 = 6 ∈ S. Collision-free: the six possible products of pairs (including self-pairs) are 4, 6, 9, 12, 18, 36 — all distinct, hence no collision exists. The Lean proof enumerates all 81 combinations of (a, b, c, d) ∈ {2, 3, 6}⁴ and verifies no collision occurs. □
 
-**Theorem (ufd_fragile).** The perturbed prime system (primes ∪ {6}) does not have unique factorization.
+**Theorem (PF ⟹̸ CF).** The set {6, 10, 21, 35} is product-free but has the collision 6 × 35 = 10 × 21 = 210. Product-freeness follows since all pairwise products (60, 126, 210, 350, 735, ...) are well above 35. □
 
-This follows immediately from productFree_necessary with a = 2, b = 3.
+**Theorem (CF ∧ PF ⟹̸ UF).** The set {2, 8} is both collision-free and product-free, but 8 has two distinct S-factorizations: {8} and {2, 2, 2}.
 
-**PEGB:**
-- **Proof**: Direct application of productFree_necessary.
-- **Example**: 6 has factorizations {6} and {2,3} in the perturbed system.
-- **Generalization**: For any two distinct primes p, q, adding pq to the prime system destroys UFD.
-- **Boundary**: Adding a prime (even a new one, if such existed) would preserve UFD if it remained product-free with the existing primes.
+*Proof.* Product-free: 2·2 = 4, 2·8 = 16, 8·8 = 64, none in {2, 8}. Collision-free: the products 4, 16, 64 are all distinct. But 8 = 2³ gives the factorization {2, 2, 2} alongside the singleton {8}, and these have different cardinalities (3 vs 1), hence are distinct. □
 
-### 3.3 The Cramér Dichotomy
+This last example reveals the crucial phenomenon of **depth collisions**: factorizations of different lengths can coincide in value, and this obstruction is invisible to both pairwise product-freeness and pairwise collision-freeness.
 
-**Theorem (cramer_dichotomy).** If S is not product-free, then there exists n ∈ ℕ with at least two distinct S-factorizations.
+### 3.3 The Factorization Diamond
 
-**Theorem (not_productFree_not_ufd).** Any non-product-free generator system fails to have unique factorization.
+**Theorem 4** (The Factorization Diamond). The following all hold simultaneously:
+1. UF ⟹ CF and UF ⟹ PF
+2. ∃ S: CF(S) ∧ ¬PF(S)  (witnessed by {2, 3, 6})
+3. ∃ S: PF(S) ∧ ¬CF(S)  (witnessed by {6, 10, 21, 35})
+4. ∃ S: CF(S) ∧ PF(S) ∧ ¬UF(S)  (witnessed by {2, 8})
 
-These theorems establish the dichotomy: every generator system either (a) is product-free and has a *chance* of supporting unique factorization, or (b) is not product-free and *certainly* fails unique factorization.
+*This is formalized as `factorization_diamond` in Lean 4.* □
 
-**PEGB:**
-- **Proof**: From ¬IsProductFreeGen, extract a, b, ab ∈ S.carrier and construct two factorizations of ab.
-- **Example**: In [2, 6], we have 2 × 3 = 6 ∈ [2,6], giving the collision.
-- **Generalization**: The theorem naturally generalizes to any algebraic structure where "factorization" is defined via a binary operation.
-- **Boundary**: The number of distinct factorizations can be exponentially large — see Section 3.5.
+### 3.4 Prime-Power Collapse
 
-### 3.4 Primes Are Product-Free
+**Theorem 5.** If S contains both a prime p and pᵏ for some k ≥ 2, then S does not have unique factorization.
 
-**Theorem (primes_are_productFreeGen).** The prime generator system is product-free.
+*Proof.* The number pᵏ has two S-factorizations: the singleton {pᵏ} and the k-fold repetition Multiset.replicate(k, p). These have cardinalities 1 and k ≥ 2, hence are distinct. □
 
-This connects directly to the catalog result `primes_are_product_free` in `Cryptography/CounterfactualPrimes.lean`. The proof uses Nat.prime_mul_iff: a product of two numbers is prime iff one of them is a unit — impossible when both factors are ≥ 2.
+This theorem implies that any multiplicative basis must be "power-free" in a strong sense.
 
-### 3.5 Factorization Explosion in Dense Systems
+### 3.5 The Coprime Basis Theorem
 
-**Theorem (interval12_three_factorizations).** In the interval system [2, 12], the number 12 has at least 3 distinct factorizations: {12}, {2, 6}, and {3, 4}.
+**Theorem 6.** Let S ⊆ ℕ≥2 be pairwise coprime (gcd(a, b) = 1 for all distinct a, b ∈ S). Then:
+$$\text{HasUniqueSFactorization}(S) \iff \text{IsProdFree}(S)$$
 
-In fact, 12 has 5 factorizations in this system: {12}, {2, 6}, {3, 4}, {2, 2, 3}. For larger intervals, the count grows rapidly.
+*Proof sketch.* The forward direction is Theorem 1. For the reverse: suppose S is product-free and pairwise coprime. Given two S-factorizations f₁, f₂ of n, we show f₁ = f₂ by induction on |f₁|.
 
-**Theorem (interval_not_productFree).** For any n ≥ 4, the interval system [2, n] is not product-free.
+Base case: f₁ = ∅ implies n = 1, which forces f₂ = ∅ (all elements ≥ 2).
 
-### 3.6 The Multiplicative Schur Property
+Inductive step: Let f₁ = a :: rest. Then a | n = ∏f₂. Since a is coprime to every element of f₂ that differs from a, and a ≥ 2, the divisibility forces a to appear in f₂ (otherwise a | gcd(a, ∏f₂) = 1, contradiction). Remove one copy of a from both factorizations and apply the inductive hypothesis. □
 
-**Theorem (multiplicative_schur).** If S contains a, b, ab, then S is simultaneously not product-free AND does not have unique factorization.
+**Corollary.** The Fundamental Theorem of Arithmetic follows from the Coprime Basis Theorem: primes are pairwise coprime (distinct primes share no factor) and product-free (a product of primes is composite), hence they have unique factorization.
 
-This is the multiplicative analog of Schur's theorem in additive combinatorics: dense enough subsets of ℕ inevitably contain "monochromatic" multiplicative triples.
+### 3.6 Additional Results
 
-### 3.7 Stability and Fragility
+**Theorem 7** (Product-Free Length-2 Exclusion). If S is product-free and n ∈ S with n ≥ 2, then n has no S-factorization of length exactly 2.
 
-**Theorem (remove_prime_still_productFree).** For any prime p, the system of all primes except p is still product-free.
+*Proof.* A length-2 factorization {a, b} with a · b = n ∈ S contradicts product-freeness.
 
-**Theorem (remove_prime_loses_coverage).** For any prime p, the number p has no factorization in the system of all primes except p.
+*Remark.* This does NOT extend to length ≥ 3: {2, 8} is product-free but 8 has the length-3 factorization {2, 2, 2}. □
 
-Together, these show the primes are *stable* under deletion for product-freeness but *fragile* for coverage. The prime set is the unique minimal product-free set that achieves complete coverage of all integers > 1.
+**Theorem 8** (Product Count Bound). For a finite set S, the number of distinct pairwise products from S is at most |S|².
 
-## 4. Algorithms
+**Theorem 9** (Primes Form a MulBasis). The set of primes has unique S-factorization.
 
-### 4.1 Product-Free Testing
+**Theorem 10** (Width Monotonicity). If S ⊆ T, then w_S(n) ≤ w_T(n) for all n. Adding generators can only increase factorization multiplicity.
 
-Given a finite set S with |S| = k and max(S) = M, testing product-freeness requires O(k² · log M) time using hash set lookup. For each pair (a, b) ∈ S², compute ab and check membership.
+---
 
-### 4.2 S-Factorization Enumeration
+## 4. The Cramér Model and Counterfactual Analysis
 
-We enumerate all S-factorizations of n using constrained backtracking: at each step, choose the next factor ≥ the previous one (to produce sorted multisets) that divides the remaining quotient.
+### 4.1 Which Theorems Survive?
 
-### 4.3 Cramér Model Sampling
+In Cramér's probabilistic model, each n ≥ 2 is included in S independently with probability 1/ln(n):
 
-Sampling from the Cramér model is straightforward: for each n ∈ [2, N], include n with probability 1/log(n) independently.
+| Classical Theorem | Survival | Reason |
+|---|---|---|
+| Prime Number Theorem | ✓ | By construction (density matches) |
+| Dirichlet's theorem | ✓ | Pigeonhole: dense sets hit all residue classes |
+| Unique Factorization | ✗ | Product closure occurs with probability 1 |
+| Euler product formula | ✗ | Requires multiplicative independence |
 
-## 5. Computational Experiments
+### 4.2 Quantitative Failure
 
-### 5.1 Collision Probability
+For a Cramér random set S up to N:
 
-We generated 1000 Cramér random sets for N = 200 and found that 100% contained multiplicative collisions. For density factors below 0.1, some sets were product-free, but above 0.3, collisions were universal.
+- **Product closure probability**: E[#{(a,b) : a·b ∈ S}] ~ N²/(ln N)³ → ∞
+- **Collision probability**: By birthday paradox on ~N²/(ln N)² products in [1, N²]
+- **Depth collision**: E[#{n : n, n^(1/k) ∈ S}] ~ N^(1-1/k)/(ln N)² > 0 for k ≥ 3
 
-### 5.2 Factorization Count
+All three mechanisms activate with probability tending to 1, confirming the structural necessity of each diamond condition.
 
-In the interval system [2, 30], the number 30 has 14 distinct factorizations. In [2, 60], the number 60 has over 30. The growth is approximately exponential in the logarithm of the interval width.
+---
 
-## 6. Discussion
+## 5. The Factorization Diamond Conjecture
 
-### 6.1 What the Primes Buy Us
+We state the following falsifiable conjecture:
 
-Our results formalize a philosophical point: the primes are not merely "the numbers with no factors." They are the unique set that simultaneously achieves:
-1. Sufficient density (n/log n) to generate all integers by multiplication
-2. Product-freeness, ensuring no multiplicative collisions
-3. Complete coverage of all integers > 1 via unique factorization
+**Conjecture.** A set S ⊆ ℕ≥2 has unique S-factorization if and only if:
+1. S is k-product-free for all k ≥ 2 (no k-fold product of elements lies in S), AND
+2. Any two multisets of elements from S with the same product are equal.
 
-No random set can achieve all three. This is the "prime miracle."
+**Computational test:** Enumerate all subsets S ⊆ {2, ..., 30} of size ≤ 4. For each, check UF by brute force and verify it equals the conjunction of conditions (1) and (2).
 
-### 6.2 Connection to the Riemann Hypothesis
+Note that condition (2) is stronger than collision-freeness: it applies to pairs of multisets of *arbitrary* (possibly different) lengths, not just pairs of length 2.
 
-The Riemann Hypothesis encodes precise information about the *deviation* of the prime counting function from its average n/log(n). In the Cramér model, deviations follow the central limit theorem with standard deviation ~√(n/log n). The actual prime deviations, governed by the zeros of the zeta function, have a completely different character. Our framework does not capture this — the RH is a statement about the *specific* placement of primes, not about generic dense sets. In counterfactual models, there is no natural analog of the RH because there is no zeta function.
+---
 
-### 6.3 Connection to Additive Combinatorics
+## 6. PEGB Analysis
 
-The product-free property of the primes is analogous to the sum-free property studied in additive combinatorics. Schur's theorem says that for any finite coloring of ℕ, some color class contains a, b, a+b. The multiplicative analog — that dense sets contain a, b, ab — is what our density-product tension results capture.
+### 6.1 The Factorization Diamond (Theorem 4)
 
-## 7. Conjectures
+- **P** (Proof): Complete Lean 4 proof, all cases verified.
+- **E** (Example): {2, 3, 5, 7} satisfies UF ⟹ CF ∧ PF. {2, 3, 6} satisfies CF ∧ ¬PF. {6, 10, 21, 35} satisfies PF ∧ ¬CF. {2, 8} satisfies CF ∧ PF ∧ ¬UF.
+- **G** (Generalization): The diamond extends to any monoid with a concept of "generating set" and "unique decomposition."
+- **B** (Boundary): The diamond has no further refinements at this level; all 2³ = 8 combinations of (UF, CF, PF) that are logically consistent are realized.
 
-**Conjecture (Optimal Product-Free Density).** Among all product-free subsets of [2, N], the maximum size is (1 + o(1)) · π(N), where π(N) is the prime counting function. That is, the primes are asymptotically the densest product-free subset of the integers.
+### 6.2 The Coprime Basis Theorem (Theorem 6)
 
-**Test.** For N = 10⁶, compute the maximum size of a product-free subset of [2, N] by greedy algorithms and compare to π(N) = 78,498.
+- **P** (Proof): Lean 4 proof by induction on factorization length, using coprime divisibility.
+- **E** (Example): {2, 3, 5, 7} is coprime and product-free ⟹ UF. {6, 35, 143} (= {2·3, 5·7, 11·13}) is coprime and product-free ⟹ UF.
+- **G** (Generalization): Extends to any UFD where "coprime" is defined via the GCD structure.
+- **B** (Boundary): Fails without coprimality: {4, 6, 9} is product-free but not UF (36 = 4·9 = 6·6, and gcd(4,6) = 2 ≠ 1).
 
-## 8. Future Work
+### 6.3 The Prime-Power Collapse (Theorem 5)
 
-1. **Quantitative bounds**: Determine the exact threshold density above which product-freeness fails with probability 1.
-2. **Higher-order factorization**: Study k-fold factorizations (multisets of size exactly k) and their distribution.
-3. **Algebraic generalization**: Extend generator systems to general commutative monoids.
-4. **Connection to tropical geometry**: The min-plus semiring version of factorization may connect to tropical algebraic geometry.
+- **P** (Proof): Lean 4 proof using replicate multisets.
+- **E** (Example): {2, 4}: 4 = 2² has factorizations {4} and {2, 2}. {3, 27}: 27 = 3³ has factorizations {27} and {3, 3, 3}.
+- **G** (Generalization): More generally, if a ∈ S and aⁿ · b ∈ S with b ∈ S, then the product aⁿ · b has multiple factorizations.
+- **B** (Boundary): Does not hold for a, b ∈ S with a ≠ b^k for any k — the obstruction is specifically about power relations.
+
+---
+
+## 7. Connections to Existing Results
+
+This work builds on the product collision framework established in `Catalog/Cryptography/ProductCollisions.lean`, which proved:
+- Primes are collision-free (reformulation of FTA)
+- The hierarchy UF ⟹ CF, with {6, 10, 21, 35} separating PF from CF
+
+Our contribution extends this by:
+- Proving CF and PF are incomparable (the {2, 3, 6} example)
+- Proving CF ∧ PF ⟹̸ UF (the {2, 8} example)
+- The Coprime Basis Theorem (a positive characterization)
+- The MulBasis structure (unifying framework)
+
+---
+
+## 8. Discussion and Future Work
+
+The Factorization Diamond reveals that unique factorization is a *deep* property — not reducible to any finite conjunction of pairwise conditions. The hierarchy of obstructions (product closure, pairwise collision, depth collision) suggests a connection to the **collision spectrum** of a set, defined as the set of levels k at which distinct k-length factorizations coincide.
+
+Key open questions:
+1. Is UF equivalent to having empty collision spectrum at all levels AND being k-product-free for all k?
+2. What is the asymptotic density of collision-free subsets of [2, N]?
+3. Does the Factorization Diamond extend to factorization in algebraic number fields, where unique factorization of ideals replaces unique factorization of elements?
+
+---
 
 ## References
 
-1. Cramér, H. (1936). On the order of magnitude of the difference between consecutive prime numbers. *Acta Arithmetica*, 2(1), 23-46.
-2. Granville, A. (1995). Harald Cramér and the distribution of prime numbers. *Scandinavian Actuarial Journal*, 1995(1), 12-28.
-3. Tao, T. (2015). *The Cramér random model for the primes*. Blog post, What's New.
-4. Erdős, P., & Sárközy, A. (1986). On products of integers. *Studia Scientiarum Mathematicarum Hungarica*, 21, 231-235.
+1. Cramér, H. (1936). "On the order of magnitude of the difference between consecutive prime numbers." *Acta Arithmetica*, 2, 23-46.
+2. Hardy, G.H. and Wright, E.M. (2008). *An Introduction to the Theory of Number Theory*, 6th edition. Oxford University Press.
+3. Granville, A. (1995). "Harald Cramér and the distribution of prime numbers." *Scandinavian Actuarial Journal*, 1, 12-28.
+4. Tao, T. and Vu, V.H. (2006). *Additive Combinatorics*. Cambridge University Press.

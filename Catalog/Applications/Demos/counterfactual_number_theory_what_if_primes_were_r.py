@@ -2,419 +2,344 @@
 """
 Counterfactual Number Theory: What If Primes Were Random?
 
-Demonstrates the key findings of the research:
-1. Random dense subsets of N almost always contain multiplicative collisions
-2. Unique factorization collapses for non-product-free sets
-3. The primes are exceptional: product-free despite high density
+Demonstrates the Factorization Diamond — the surprising result that
+product-freeness and collision-freeness are incomparable conditions,
+and even their conjunction is strictly weaker than unique factorization.
 """
 
-import random
-import math
-from collections import Counter
-
-def is_prime(n: int) -> bool:
-    """Check if n is prime."""
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
-
-def cramer_random_set(N: int, seed: int = 42) -> set:
-    """
-    Generate a Cramér random prime set: each integer n >= 2
-    is included independently with probability 1/log(n).
-    """
-    rng = random.Random(seed)
-    S = set()
-    for n in range(2, N + 1):
-        if rng.random() < 1.0 / math.log(n):
-            S.add(n)
-    return S
-
-def check_product_free(S: set) -> tuple:
-    """
-    Check if S is product-free. Returns (is_free, counterexample).
-    A counterexample is (a, b) such that a*b is also in S.
-    """
-    sorted_S = sorted(S)
-    for i, a in enumerate(sorted_S):
-        for b in sorted_S[i:]:
-            if a * b in S:
-                return False, (a, b, a * b)
-    return True, None
-
-def count_factorizations(S: set, n: int, max_depth: int = 10) -> list:
-    """
-    Find all S-factorizations of n (multisets of elements from S with product n).
-    """
-    sorted_S = sorted(s for s in S if s <= n)
-    results = []
-
-    def backtrack(remaining: int, min_factor: int, current: list):
-        if remaining == 1:
-            results.append(tuple(current))
-            return
-        if len(current) >= max_depth:
-            return
-        for s in sorted_S:
-            if s < min_factor:
-                continue
-            if s > remaining:
-                break
-            if remaining % s == 0:
-                backtrack(remaining // s, s, current + [s])
-
-    backtrack(n, 2, [])
-    return results
-
-def demo_product_free_collapse():
-    """Demonstrate that random dense sets fail product-freeness."""
-    print("=" * 70)
-    print("DEMO 1: Product-Free Collapse in Random Sets")
-    print("=" * 70)
-    print()
-
-    N = 1000
-    primes = {n for n in range(2, N + 1) if is_prime(n)}
-    print(f"Primes up to {N}: {len(primes)} elements")
-    is_free, _ = check_product_free(primes)
-    print(f"Primes are product-free: {is_free}")
-    print()
-
-    print("Cramér random sets (density ~ 1/log n):")
-    for seed in range(1, 6):
-        S = cramer_random_set(N, seed=seed)
-        is_free, counter = check_product_free(S)
-        print(f"  Seed {seed}: |S| = {len(S)}, product-free: {is_free}", end="")
-        if counter:
-            print(f"  (collision: {counter[0]} × {counter[1]} = {counter[2]})")
-        else:
-            print()
-    print()
-    print("→ Random sets with prime-like density are NEVER product-free!")
-    print()
-
-def demo_factorization_explosion():
-    """Demonstrate factorization multiplicity in perturbed systems."""
-    print("=" * 70)
-    print("DEMO 2: Factorization Explosion")
-    print("=" * 70)
-    print()
-
-    primes = {n for n in range(2, 50) if is_prime(n)}
-    print("Standard primes: each composite has unique prime factorization")
-    for n in [12, 30, 36]:
-        facts = count_factorizations(primes, n)
-        print(f"  {n}: {len(facts)} factorization(s) → {facts}")
-    print()
-
-    # Perturbed system: primes + {6}
-    perturbed = primes | {6}
-    print("Perturbed system (primes ∪ {6}):")
-    for n in [6, 12, 30, 36]:
-        facts = count_factorizations(perturbed, n)
-        print(f"  {n}: {len(facts)} factorization(s) → {facts}")
-    print()
-
-    # Dense interval system
-    interval = set(range(2, 13))
-    print("Interval system [2, 12]:")
-    for n in [6, 8, 12, 24]:
-        facts = count_factorizations(interval, n, max_depth=6)
-        print(f"  {n}: {len(facts)} factorization(s)")
-        for f in facts[:5]:
-            print(f"    {'×'.join(map(str, f))} = {n}")
-        if len(facts) > 5:
-            print(f"    ... and {len(facts) - 5} more")
-    print()
-
-def demo_density_threshold():
-    """Explore the density threshold for product-freeness."""
-    print("=" * 70)
-    print("DEMO 3: Density Threshold for Product-Freeness")
-    print("=" * 70)
-    print()
-
-    N = 500
-    trials = 100
-
-    print(f"For N = {N}, testing random subsets of [2,N] at various densities:")
-    print(f"{'Density':>10} {'|S| (avg)':>10} {'Product-free %':>15}")
-    print("-" * 40)
-
-    for density_factor in [0.05, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0]:
-        free_count = 0
-        total_size = 0
-        for trial in range(trials):
-            rng = random.Random(trial * 1000 + int(density_factor * 100))
-            S = set()
-            for n in range(2, N + 1):
-                target_density = density_factor / math.log(n)
-                if rng.random() < target_density:
-                    S.add(n)
-            total_size += len(S)
-            is_free, _ = check_product_free(S)
-            if is_free:
-                free_count += 1
-        avg_size = total_size / trials
-        pct_free = 100 * free_count / trials
-        print(f"{density_factor:>10.2f} {avg_size:>10.1f} {pct_free:>14.1f}%")
-
-    print()
-    print("→ As density increases, product-freeness probability drops to 0!")
-    print("  The primes achieve density factor ~1.0 while staying product-free.")
-    print("  This is the 'prime miracle': density AND structure simultaneously.")
-    print()
-
-def demo_collision_chains():
-    """Show how a single collision propagates."""
-    print("=" * 70)
-    print("DEMO 4: Collision Chain Propagation")
-    print("=" * 70)
-    print()
-
-    # Start with primes and add 6
-    primes = {n for n in range(2, 100) if is_prime(n)}
-    additions = [6, 15, 35, 77]  # 2*3, 3*5, 5*7, 7*11
-
-    S = set(primes)
-    for a in additions:
-        S.add(a)
-        _, counter = check_product_free(S)
-        facts_for_a = count_factorizations(S, a)
-        print(f"Add {a} to primes: {len(facts_for_a)} factorizations of {a}")
-        for f in facts_for_a:
-            print(f"  {'×'.join(map(str, f))} = {a}")
-
-    print()
-    print("→ Each added composite creates new factorizations,")
-    print("  demonstrating the 'fragility' of unique factorization.")
-
-if __name__ == "__main__":
-    demo_product_free_collapse()
-    demo_factorization_explosion()
-    demo_density_threshold()
-    demo_collision_chains()
+from itertools import combinations_with_replacement
+from collections import defaultdict
+from math import gcd, log
 
 
-#!/usr/bin/env python3
-"""
-Visualization: Collision Probability vs Density
-
-Shows how the probability of a multiplicative collision increases
-with the density of the generator set, demonstrating the tension
-between density and product-freeness.
-"""
-
-import math
-import random
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def is_product_free_fast(s_sorted, s_set, max_val):
-    """Fast product-free check."""
-    for i, a in enumerate(s_sorted):
-        for b in s_sorted[i:]:
-            p = a * b
-            if p > max_val:
-                break
-            if p in s_set:
+def is_product_free(S):
+    """Check if set S is product-free: no a*b in S for a,b in S with a,b >= 2."""
+    S2 = {x for x in S if x >= 2}
+    for a in S2:
+        for b in S2:
+            if a * b in S2:
                 return False
     return True
 
 
-def compute_collision_data(N=200, trials=200):
-    """Compute collision probability for various density factors."""
-    density_factors = np.linspace(0.05, 2.0, 30)
-    collision_probs = []
-    avg_sizes = []
-
-    for df in density_factors:
-        collisions = 0
-        total_size = 0
-        for trial in range(trials):
-            rng = random.Random(trial * 10000 + int(df * 1000))
-            s_set = set()
-            for k in range(2, N + 1):
-                if rng.random() < df / math.log(k):
-                    s_set.add(k)
-            total_size += len(s_set)
-            if s_set:
-                s_sorted = sorted(s_set)
-                if not is_product_free_fast(s_sorted, s_set, max(s_set)):
-                    collisions += 1
-        collision_probs.append(collisions / trials)
-        avg_sizes.append(total_size / trials)
-
-    return density_factors, collision_probs, avg_sizes
+def has_product_collision(S):
+    """Check if S has a product collision: a*b = c*d with {a,b} != {c,d}."""
+    S2 = sorted(x for x in S if x >= 2)
+    products = defaultdict(list)
+    for i, a in enumerate(S2):
+        for b in S2[i:]:
+            products[a * b].append(frozenset([a, b]) if a != b else (a, b))
+    for val, pairs in products.items():
+        if len(pairs) >= 2:
+            # Check if any two pairs are genuinely different
+            for i in range(len(pairs)):
+                for j in range(i + 1, len(pairs)):
+                    if pairs[i] != pairs[j]:
+                        return True, val, pairs[i], pairs[j]
+    return False, None, None, None
 
 
-def compute_prime_density(N=200):
-    """Compute the density factor of actual primes."""
-    def is_prime(n):
-        if n < 2: return False
-        if n < 4: return True
-        if n % 2 == 0 or n % 3 == 0: return False
-        i = 5
-        while i * i <= n:
-            if n % i == 0 or n % (i + 2) == 0: return False
-            i += 6
-        return True
+def find_factorizations(S, n, max_depth=10):
+    """Find all S-factorizations of n (multisets of elements from S whose product is n)."""
+    S2 = sorted(x for x in S if x >= 2)
+    results = []
 
-    prime_count = sum(1 for n in range(2, N + 1) if is_prime(n))
-    target = N / math.log(N)
-    return prime_count / target
+    def search(remaining, min_val, current):
+        if remaining == 1:
+            results.append(tuple(sorted(current)))
+            return
+        for s in S2:
+            if s < min_val:
+                continue
+            if s > remaining:
+                break
+            if remaining % s == 0 and len(current) < max_depth:
+                search(remaining // s, s, current + [s])
 
-
-def main():
-    N = 200
-    print("Computing collision probabilities...")
-    density_factors, collision_probs, avg_sizes = compute_collision_data(N)
-    prime_df = compute_prime_density(N)
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Plot 1: Collision probability vs density factor
-    ax1.plot(density_factors, collision_probs, 'b-o', markersize=4, linewidth=2)
-    ax1.axvline(x=prime_df, color='red', linestyle='--', linewidth=2,
-                label=f'Prime density factor ≈ {prime_df:.2f}')
-    ax1.axhline(y=0, color='green', linestyle=':', alpha=0.5,
-                label='Primes: 0% collision (product-free)')
-    ax1.set_xlabel('Density Factor (relative to 1/log n)', fontsize=12)
-    ax1.set_ylabel('P(collision)', fontsize=12)
-    ax1.set_title(f'Collision Probability vs Density (N={N})', fontsize=14)
-    ax1.legend(fontsize=10)
-    ax1.set_ylim(-0.05, 1.05)
-    ax1.grid(True, alpha=0.3)
-
-    # Annotate the prime miracle
-    ax1.annotate('THE PRIME MIRACLE\nDensity ~1.0 but\n0% collisions',
-                xy=(prime_df, 0), xytext=(prime_df + 0.3, 0.3),
-                arrowprops=dict(arrowstyle='->', color='red', lw=2),
-                fontsize=10, color='red', fontweight='bold',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
-
-    # Plot 2: Average set size vs density factor
-    ax2.plot(density_factors, avg_sizes, 'g-s', markersize=4, linewidth=2)
-    ax2.axvline(x=prime_df, color='red', linestyle='--', linewidth=2,
-                label=f'Prime count ≈ {sum(1 for n in range(2, N+1) if all(n%i for i in range(2, int(n**0.5)+1)) and n > 1)}')
-    ax2.set_xlabel('Density Factor', fontsize=12)
-    ax2.set_ylabel('Average Set Size', fontsize=12)
-    ax2.set_title('Set Size vs Density Factor', fontsize=14)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('collision_probability.png', dpi=150, bbox_inches='tight')
-    print("Saved: collision_probability.png")
+    if n in S2:
+        results.append((n,))
+    search(n, min(S2) if S2 else 2, [])
+    return list(set(results))
 
 
-if __name__ == "__main__":
-    main()
+def has_unique_factorization(S, test_range=500):
+    """Check if S has unique factorization for products up to test_range."""
+    for n in range(2, test_range + 1):
+        facts = find_factorizations(S, n)
+        if len(facts) > 1:
+            return False, n, facts
+    return True, None, None
+
+
+def analyze_set(S, name="S"):
+    """Full analysis of a generator set."""
+    print(f"\n{'='*60}")
+    print(f"Analysis of {name} = {sorted(S)}")
+    print(f"{'='*60}")
+
+    pf = is_product_free(S)
+    print(f"  Product-free: {pf}")
+
+    coll = has_product_collision(S)
+    print(f"  Collision-free: {not coll[0]}")
+    if coll[0]:
+        print(f"    Collision: {coll[2]} and {coll[3]} both give product {coll[1]}")
+
+    uf = has_unique_factorization(S)
+    print(f"  Unique factorization: {uf[0]}")
+    if not uf[0]:
+        print(f"    Counterexample: {uf[1]} has factorizations {uf[2]}")
+
+    return pf, not coll[0], uf[0]
+
+
+# ============================================================
+# DEMONSTRATION 1: The Four Separating Examples
+# ============================================================
+print("=" * 60)
+print("THE FACTORIZATION DIAMOND")
+print("=" * 60)
+print("""
+                    UF (Unique Factorization)
+                   / \\
+        Collision-    Product-
+          Free         Free
+                   \\ /
+                 (none)
+
+UF implies both. Neither implies the other.
+Even their conjunction doesn't imply UF.
+""")
+
+# Example 1: Primes — has all three properties
+analyze_set({2, 3, 5, 7, 11, 13}, "Primes up to 13")
+
+# Example 2: {2, 3, 6} — collision-free but NOT product-free
+analyze_set({2, 3, 6}, "{2,3,6} (collision-free, not product-free)")
+
+# Example 3: {6, 10, 21, 35} — product-free but NOT collision-free
+analyze_set({6, 10, 21, 35}, "{6,10,21,35} (product-free, not collision-free)")
+
+# Example 4: {2, 8} — BOTH collision-free AND product-free, but NOT UF
+analyze_set({2, 8}, "{2,8} (collision-free AND product-free, but NOT UF)")
+
+# ============================================================
+# DEMONSTRATION 2: Prime-Power Collapse
+# ============================================================
+print("\n" + "=" * 60)
+print("PRIME-POWER COLLAPSE THEOREM")
+print("=" * 60)
+print("If S contains both p and p^k (k≥2), UF fails.\n")
+
+for p in [2, 3, 5]:
+    for k in [2, 3, 4]:
+        S = {p, p**k}
+        pf, cf, uf = analyze_set(S, f"{{p={p}, p^{k}={p**k}}}")
+
+# ============================================================
+# DEMONSTRATION 3: Coprime Basis Theorem
+# ============================================================
+print("\n" + "=" * 60)
+print("COPRIME BASIS THEOREM")
+print("=" * 60)
+print("For pairwise coprime sets: UF ↔ product-free\n")
+
+coprime_examples = [
+    ({2, 3, 5, 7}, "Pairwise coprime primes"),
+    ({6, 35, 143}, "Pairwise coprime composites (6=2·3, 35=5·7, 143=11·13)"),
+    ({4, 9, 25}, "Pairwise coprime prime powers"),
+    ({2, 3, 5, 30}, "NOT product-free (2·3·5=30)"),
+]
+
+for S, desc in coprime_examples:
+    # Check pairwise coprimality
+    elems = sorted(S)
+    coprime = all(gcd(a, b) == 1 for i, a in enumerate(elems) for b in elems[i+1:])
+    pf, cf, uf = analyze_set(S, f"{desc}")
+    if coprime:
+        print(f"  Pairwise coprime: YES → UF ↔ product-free: {uf == pf} ✓")
+
+# ============================================================
+# DEMONSTRATION 4: Random Sets with Prime-Like Density
+# ============================================================
+print("\n" + "=" * 60)
+print("RANDOM SETS WITH PRIME-LIKE DENSITY")
+print("=" * 60)
+
+import random
+random.seed(42)
+
+N = 200
+for trial in range(5):
+    # Cramér model: include n with probability 1/ln(n)
+    S = set()
+    for n in range(2, N + 1):
+        if random.random() < 1.0 / log(n):
+            S.add(n)
+
+    actual_primes = {n for n in range(2, N + 1) if all(n % d != 0 for d in range(2, int(n**0.5) + 1))}
+
+    print(f"\nTrial {trial + 1}:")
+    print(f"  Random set size: {len(S)}, Actual primes up to {N}: {len(actual_primes)}")
+    pf = is_product_free(S)
+    coll = has_product_collision(S)
+    print(f"  Product-free: {pf}")
+    print(f"  Collision-free: {not coll[0]}")
+    if not pf:
+        # Count product closures
+        S2 = sorted(x for x in S if x >= 2)
+        closures = [(a, b) for a in S2 for b in S2 if a <= b and a * b in S]
+        print(f"  Product closures: {len(closures)} (e.g. {closures[:3]})")
+
+print("\n" + "=" * 60)
+print("KEY INSIGHT: Random sets ALWAYS lose product-freeness")
+print("(and hence unique factorization), while actual primes never do.")
+print("This is the fundamental structural miracle of the primes.")
+print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Factorization Count Explosion
+Visualization: The Factorization Diamond
 
-Shows how the number of distinct factorizations grows as a generator system
-becomes denser, compared to the constant 1 for prime factorization.
+Generates a visual representation of the factorization hierarchy,
+showing all four separating examples and their positions in the diamond.
 """
 
-import math
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
+from collections import defaultdict
+from math import gcd, log
 
 
-def is_prime(n):
-    if n < 2: return False
-    if n < 4: return True
-    if n % 2 == 0 or n % 3 == 0: return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0: return False
-        i += 6
+def is_product_free(S):
+    S2 = {x for x in S if x >= 2}
+    for a in S2:
+        for b in S2:
+            if a * b in S2:
+                return False
     return True
 
 
-def count_factorizations(s_set, n, max_depth=15):
-    """Count S-factorizations of n."""
-    candidates = sorted(x for x in s_set if 2 <= x <= n)
-    count = 0
+def has_product_collision(S):
+    S2 = sorted(x for x in S if x >= 2)
+    products = defaultdict(list)
+    for i, a in enumerate(S2):
+        for j in range(i, len(S2)):
+            b = S2[j]
+            products[a * b].append((a, b))
+    for n, pairs in products.items():
+        if len(pairs) >= 2:
+            for i in range(len(pairs)):
+                for j in range(i + 1, len(pairs)):
+                    if pairs[i] != pairs[j]:
+                        return True
+    return False
 
-    def backtrack(remaining, min_factor, depth):
-        nonlocal count
+
+def find_factorizations(S, n, max_depth=15):
+    S2 = sorted(x for x in S if x >= 2)
+    results = []
+    def search(remaining, min_val, current):
         if remaining == 1:
-            count += 1
+            results.append(tuple(sorted(current)))
             return
-        if depth >= max_depth:
-            return
-        for c in candidates:
-            if c < min_factor:
-                continue
-            if c > remaining:
-                break
-            if remaining % c == 0:
-                backtrack(remaining // c, c, depth + 1)
-
-    backtrack(n, 2, 0)
-    return count
+        for s in S2:
+            if s < min_val: continue
+            if s > remaining: break
+            if remaining % s == 0 and len(current) < max_depth:
+                search(remaining // s, s, current + [s])
+    search(n, min(S2) if S2 else 2, [])
+    return list(set(results))
 
 
-def main():
-    N = 60
-
-    # Systems to compare
-    primes = {n for n in range(2, N + 1) if is_prime(n)}
-    perturbed = primes | {6, 10, 15}  # Add some composites
-    interval_small = set(range(2, 8))  # [2, 7]
-    interval_large = set(range(2, 16))  # [2, 15]
-
-    systems = [
-        ("Primes (standard)", primes, 'blue'),
-        ("Primes ∪ {6,10,15}", perturbed, 'orange'),
-        ("[2, 7]", interval_small, 'green'),
-        ("[2, 15]", interval_large, 'red'),
-    ]
-
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-    numbers = list(range(2, N + 1))
-
-    for ax, (name, s_set, color) in zip(axes.flat, systems):
-        counts = [count_factorizations(s_set, n) for n in numbers]
-        ax.bar(numbers, counts, color=color, alpha=0.7, width=0.8)
-        ax.set_xlabel('n', fontsize=11)
-        ax.set_ylabel('# of S-factorizations', fontsize=11)
-        ax.set_title(f'{name} (|S|={len(s_set)})', fontsize=13)
-        ax.set_yscale('symlog', linthresh=1)
-        avg_count = np.mean([c for c in counts if c > 0])
-        max_count = max(counts) if counts else 0
-        ax.text(0.95, 0.95,
-                f'max: {max_count}\navg: {avg_count:.1f}',
-                transform=ax.transAxes, fontsize=10,
-                verticalalignment='top', horizontalalignment='right',
-                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-
-    plt.suptitle('Factorization Count: Primes vs Counterfactual Systems',
-                 fontsize=15, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('factorization_explosion.png', dpi=150, bbox_inches='tight')
-    print("Saved: factorization_explosion.png")
+def has_uf(S, limit=300):
+    for n in range(2, limit):
+        if len(find_factorizations(S, n)) > 1:
+            return False
+    return True
 
 
-if __name__ == "__main__":
-    main()
+# Figure 1: The Diamond Diagram
+fig, axes = plt.subplots(1, 2, figsize=(16, 8))
+
+ax = axes[0]
+ax.set_xlim(-3, 3)
+ax.set_ylim(-2, 4)
+ax.set_aspect('equal')
+ax.axis('off')
+ax.set_title('The Factorization Diamond', fontsize=16, fontweight='bold')
+
+# Draw diamond
+diamond_x = [0, -2, 0, 2, 0]
+diamond_y = [3, 1, -1, 1, 3]
+ax.plot(diamond_x, diamond_y, 'k-', linewidth=2)
+
+# Nodes
+node_props = dict(fontsize=11, ha='center', va='center',
+                  bbox=dict(boxstyle='round,pad=0.5', facecolor='lightblue', edgecolor='black'))
+
+ax.text(0, 3, 'UF\n(Unique Fact.)', **node_props)
+ax.text(-2, 1, 'Collision-\nFree', **node_props)
+ax.text(2, 1, 'Product-\nFree', **node_props)
+ax.text(0, -1, '(none)', fontsize=11, ha='center', va='center',
+        bbox=dict(boxstyle='round,pad=0.5', facecolor='lightyellow', edgecolor='black'))
+
+# Separating examples
+sep_props = dict(fontsize=8, ha='center', va='center',
+                 bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', edgecolor='red', linewidth=1.5))
+
+ax.annotate('{2,3,6}\n(CF ∧ ¬PF)', xy=(-1, 0), fontsize=8, ha='center', color='red', fontweight='bold')
+ax.annotate('{6,10,21,35}\n(PF ∧ ¬CF)', xy=(1, 0), fontsize=8, ha='center', color='red', fontweight='bold')
+ax.annotate('{2,8}\n(CF ∧ PF ∧ ¬UF)', xy=(0, 1.8), fontsize=8, ha='center', color='darkred', fontweight='bold')
+
+# Arrows with implications
+ax.annotate('', xy=(-1.5, 1.3), xytext=(-0.5, 2.7),
+            arrowprops=dict(arrowstyle='->', color='green', lw=2))
+ax.annotate('', xy=(1.5, 1.3), xytext=(0.5, 2.7),
+            arrowprops=dict(arrowstyle='->', color='green', lw=2))
+
+# Crossed arrows for non-implications
+ax.plot([-0.3, 0.3], [0.3, -0.3], 'r-', linewidth=2)
+ax.plot([-0.3, 0.3], [-0.3, 0.3], 'r-', linewidth=2)
+ax.text(0, 0.5, '✗', fontsize=14, ha='center', va='center', color='red')
+
+# Figure 2: Random vs Prime factorization statistics
+ax2 = axes[1]
+import random
+random.seed(42)
+
+Ns = range(20, 201, 10)
+pf_rates = []
+cf_rates = []
+
+for N in Ns:
+    pf_count = 0
+    cf_count = 0
+    n_trials = 50
+    for trial in range(n_trials):
+        random.seed(1000 * N + trial)
+        S = {n for n in range(2, N + 1) if random.random() < 1.0 / log(n)}
+        if is_product_free(S):
+            pf_count += 1
+        if not has_product_collision(S):
+            cf_count += 1
+    pf_rates.append(pf_count / n_trials)
+    cf_rates.append(cf_count / n_trials)
+
+ax2.plot(list(Ns), pf_rates, 'b-o', label='Product-free rate', markersize=4)
+ax2.plot(list(Ns), cf_rates, 'r-s', label='Collision-free rate', markersize=4)
+ax2.axhline(y=1.0, color='green', linestyle='--', alpha=0.7, label='Actual primes (always PF & CF)')
+ax2.set_xlabel('N (universe size)', fontsize=12)
+ax2.set_ylabel('Fraction of random sets satisfying property', fontsize=12)
+ax2.set_title('Random Sets Lose Structure Rapidly', fontsize=14, fontweight='bold')
+ax2.legend(fontsize=10)
+ax2.set_ylim(-0.05, 1.1)
+ax2.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('factorization_diamond.png', dpi=150, bbox_inches='tight')
+print("Saved factorization_diamond.png")

@@ -2,204 +2,293 @@
 """
 Algorithms for Counterfactual Number Theory
 
-Type-hinted implementations of core algorithms from the research.
+Type-hinted implementations of the core algorithms for analyzing
+generator sets and their factorization properties.
 """
 
-import math
-import random
-from typing import Optional
+from collections import defaultdict
+from math import gcd, log, sqrt
+from typing import FrozenSet, List, Optional, Set, Tuple, Dict
 
 
-def cramer_random_set(n: int, seed: int = 42) -> set[int]:
+# ============================================================
+# Core Data Structures
+# ============================================================
+
+Multiset = Tuple[int, ...]  # sorted tuple representing a multiset
+GeneratorSet = Set[int]
+
+
+def normalize_multiset(elements: List[int]) -> Multiset:
+    """Convert a list to a canonical multiset representation (sorted tuple)."""
+    return tuple(sorted(elements))
+
+
+# ============================================================
+# Algorithm 1: Product-Freeness Test
+# ============================================================
+
+def is_product_free(S: GeneratorSet) -> Tuple[bool, Optional[Tuple[int, int, int]]]:
     """
-    Generate a Cramér random prime model: each integer k in [2, n]
-    is included with probability 1/log(k).
+    Test whether S is product-free.
 
-    This is the standard probabilistic model for studying what properties
-    of the primes are "generic" (hold for any set of this density) versus
-    "special" (require the specific multiplicative structure of primes).
+    Returns (True, None) if product-free, or (False, (a, b, a*b))
+    witnessing the violation.
 
-    Args:
-        n: Upper bound for the set
-        seed: Random seed for reproducibility
-
-    Returns:
-        A random subset of [2, n] with approximately n/log(n) elements
+    Time complexity: O(|S|^2 * lookup)
     """
-    rng = random.Random(seed)
-    return {k for k in range(2, n + 1) if rng.random() < 1.0 / math.log(k)}
-
-
-def is_product_free(s: set[int]) -> tuple[bool, Optional[tuple[int, int, int]]]:
-    """
-    Check whether a set S ⊆ ℕ is product-free.
-
-    A set is product-free if for all a, b ∈ S, a·b ∉ S.
-    This is the key structural property that separates primes from
-    generic dense subsets of ℕ.
-
-    Complexity: O(|S|² log(max(S))) using hash set lookup.
-
-    Args:
-        s: A finite set of positive integers
-
-    Returns:
-        (True, None) if product-free, (False, (a, b, a*b)) otherwise
-    """
-    sorted_s = sorted(s)
-    max_val = max(s) if s else 0
-    for i, a in enumerate(sorted_s):
-        for b in sorted_s[i:]:
-            prod = a * b
-            if prod > max_val:
-                break
-            if prod in s:
-                return False, (a, b, prod)
+    S2 = {x for x in S if x >= 2}
+    for a in sorted(S2):
+        for b in sorted(S2):
+            if a * b in S2:
+                return False, (a, b, a * b)
     return True, None
 
 
-def s_factorizations(s: set[int], n: int, max_depth: int = 20) -> list[tuple[int, ...]]:
+# ============================================================
+# Algorithm 2: Product Collision Detection
+# ============================================================
+
+def find_product_collisions(
+    S: GeneratorSet,
+) -> List[Tuple[int, int, int, int, int]]:
     """
-    Enumerate all S-factorizations of n: multisets of elements from S
+    Find all product collisions in S.
+
+    A product collision is (a, b, c, d, n) where a*b = c*d = n
+    and {a,b} ≠ {c,d}.
+
+    Time complexity: O(|S|^2 * log|S|)
+    """
+    S2 = sorted(x for x in S if x >= 2)
+    products: Dict[int, List[Tuple[int, int]]] = defaultdict(list)
+
+    for i, a in enumerate(S2):
+        for j in range(i, len(S2)):
+            b = S2[j]
+            products[a * b].append((a, b))
+
+    collisions = []
+    for n, pairs in products.items():
+        for i in range(len(pairs)):
+            for j in range(i + 1, len(pairs)):
+                a, b = pairs[i]
+                c, d = pairs[j]
+                if normalize_multiset([a, b]) != normalize_multiset([c, d]):
+                    collisions.append((a, b, c, d, n))
+
+    return collisions
+
+
+# ============================================================
+# Algorithm 3: S-Factorization Enumeration
+# ============================================================
+
+def enumerate_factorizations(
+    S: GeneratorSet, n: int, max_depth: int = 20
+) -> List[Multiset]:
+    """
+    Enumerate all S-factorizations of n.
+
+    An S-factorization is a multiset of elements from S (all ≥ 2)
     whose product equals n.
 
-    This is the core operation for studying unique factorization in
-    counterfactual number theories. For primes, each n has exactly
-    one factorization. For generic dense sets, the count explodes.
+    Uses depth-limited backtracking with monotonicity pruning.
 
-    Args:
-        s: Generator set (elements ≥ 2)
-        n: Number to factorize
-        max_depth: Maximum number of factors to prevent infinite recursion
-
-    Returns:
-        List of factorizations, each as a sorted tuple
+    Time complexity: O(|S|^d) where d = max factorization depth
     """
-    candidates = sorted(x for x in s if 2 <= x <= n)
-    results: list[tuple[int, ...]] = []
+    S2 = sorted(x for x in S if x >= 2)
+    if not S2:
+        return []
 
-    def backtrack(remaining: int, min_factor: int, current: list[int]) -> None:
+    results: List[Multiset] = []
+
+    def backtrack(remaining: int, min_val: int, current: List[int], depth: int) -> None:
         if remaining == 1:
-            results.append(tuple(current))
+            if current:
+                results.append(normalize_multiset(current))
             return
-        if len(current) >= max_depth:
+        if depth >= max_depth:
             return
-        for c in candidates:
-            if c < min_factor:
+        for s in S2:
+            if s < min_val:
                 continue
-            if c > remaining:
+            if s > remaining:
                 break
-            if remaining % c == 0:
-                backtrack(remaining // c, c, current + [c])
+            if remaining % s == 0:
+                backtrack(remaining // s, s, current + [s], depth + 1)
 
-    backtrack(n, 2, [])
-    return results
+    backtrack(n, S2[0], [], 0)
+    return list(set(results))  # deduplicate
 
 
-def factorization_count_ratio(s: set[int], n_range: int) -> dict[int, int]:
+# ============================================================
+# Algorithm 4: Factorization Diamond Classifier
+# ============================================================
+
+def classify_generator_set(
+    S: GeneratorSet, test_range: int = 500
+) -> Dict[str, bool]:
     """
-    For each number up to n_range, count how many S-factorizations it has.
+    Classify a generator set according to the Factorization Diamond.
 
-    Returns a histogram: {count: how_many_numbers_have_that_count}
+    Returns a dictionary with keys:
+    - 'product_free': True iff S is product-free
+    - 'collision_free': True iff S has no product collisions
+    - 'unique_factorization': True iff S has UF up to test_range
+
+    The Factorization Diamond Theorem guarantees:
+    - UF ⟹ collision_free AND product_free
+    - collision_free ⟹̸ product_free
+    - product_free ⟹̸ collision_free
+    - collision_free AND product_free ⟹̸ UF
     """
-    histogram: dict[int, int] = {}
-    for n in range(2, n_range + 1):
-        count = len(s_factorizations(s, n))
-        histogram[count] = histogram.get(count, 0) + 1
-    return histogram
+    pf, _ = is_product_free(S)
+    collisions = find_product_collisions(S)
+    cf = len(collisions) == 0
+
+    uf = True
+    counterexample = None
+    for n in range(2, test_range + 1):
+        facts = enumerate_factorizations(S, n)
+        if len(facts) > 1:
+            uf = False
+            counterexample = (n, facts)
+            break
+
+    return {
+        'product_free': pf,
+        'collision_free': cf,
+        'unique_factorization': uf,
+        'counterexample': counterexample,
+    }
 
 
-def product_free_density_bound(n: int, trials: int = 100) -> float:
+# ============================================================
+# Algorithm 5: Coprime Basis Verifier
+# ============================================================
+
+def is_pairwise_coprime(S: GeneratorSet) -> bool:
+    """Check if all pairs of distinct elements in S are coprime."""
+    elems = sorted(S)
+    for i in range(len(elems)):
+        for j in range(i + 1, len(elems)):
+            if gcd(elems[i], elems[j]) != 1:
+                return False
+    return True
+
+
+def verify_coprime_basis_theorem(S: GeneratorSet, test_range: int = 500) -> bool:
     """
-    Estimate the maximum density (as fraction of n/log(n)) achievable
-    by a product-free subset of [2, n], using random search.
+    Verify the Coprime Basis Theorem: for pairwise coprime S,
+    UF ↔ product-free.
 
-    This explores the tension between density and product-freeness:
-    the primes achieve density factor ~1.0 while being product-free,
-    which our theorems show is exceptional.
-
-    Args:
-        n: Upper bound
-        trials: Number of random trials
-
-    Returns:
-        Best density factor found (relative to n/log(n))
+    Returns True if the theorem holds for the given set and range.
     """
-    target_density = n / math.log(n) if n > 1 else 1
-    best_ratio = 0.0
+    if not is_pairwise_coprime(S):
+        return True  # theorem vacuously holds
 
-    for trial in range(trials):
-        rng = random.Random(trial)
-        # Start with all elements, greedily remove collisions
-        elements = list(range(2, n + 1))
-        rng.shuffle(elements)
-        s: set[int] = set()
-        for x in elements:
-            # Add x if it doesn't create a collision
-            can_add = True
-            for a in s:
-                if a * x in s or x * a in s:
-                    can_add = False
-                    break
-                # Also check if x completes a collision: ∃ b ∈ S with b*x ∈ S
-                for b in s:
-                    if b * x == a or x * b == a:
-                        can_add = False
-                        break
-                if not can_add:
-                    break
-            if can_add:
-                s.add(x)
+    pf, _ = is_product_free(S)
+    result = classify_generator_set(S, test_range)
+    uf = result['unique_factorization']
 
-        ratio = len(s) / target_density if target_density > 0 else 0
-        best_ratio = max(best_ratio, ratio)
-
-    return best_ratio
+    return uf == pf
 
 
-def collision_probability(n: int, density_factor: float = 1.0,
-                          trials: int = 1000) -> float:
+# ============================================================
+# Algorithm 6: Cramér Random Model Generator
+# ============================================================
+
+def cramer_random_set(
+    N: int, seed: Optional[int] = None
+) -> GeneratorSet:
     """
-    Estimate the probability that a random subset of [2, n] with
-    density ~ density_factor / log(k) contains a multiplicative collision.
+    Generate a Cramér random model up to N.
 
-    Args:
-        n: Upper bound
-        density_factor: Multiplier for the base density 1/log(k)
-        trials: Number of Monte Carlo trials
-
-    Returns:
-        Estimated probability of containing at least one collision
+    Each integer n ∈ [2, N] is included independently with
+    probability 1/ln(n), matching the prime density from PNT.
     """
-    collisions = 0
-    for trial in range(trials):
-        rng = random.Random(trial)
-        s = {k for k in range(2, n + 1)
-             if rng.random() < density_factor / math.log(k)}
-        is_free, _ = is_product_free(s)
-        if not is_free:
-            collisions += 1
-    return collisions / trials
+    import random
+    if seed is not None:
+        random.seed(seed)
 
+    S: GeneratorSet = set()
+    for n in range(2, N + 1):
+        if random.random() < 1.0 / log(n):
+            S.add(n)
+    return S
+
+
+# ============================================================
+# Algorithm 7: Factorization Depth Computer
+# ============================================================
+
+def factorization_depth(S: GeneratorSet, n: int) -> int:
+    """
+    Compute the factorization depth: the maximum length of any
+    S-factorization of n.
+    """
+    facts = enumerate_factorizations(S, n)
+    if not facts:
+        return 0
+    return max(len(f) for f in facts)
+
+
+def factorization_width(S: GeneratorSet, n: int) -> int:
+    """
+    Compute the factorization width: the number of distinct
+    S-factorizations of n.
+    """
+    return len(enumerate_factorizations(S, n))
+
+
+# ============================================================
+# Main: Verification Suite
+# ============================================================
 
 if __name__ == "__main__":
-    # Quick demonstration
-    print("=== Cramér Random Set ===")
-    S = cramer_random_set(100)
-    print(f"Random set up to 100: {sorted(S)}")
-    print(f"Size: {len(S)}, expected ~100/log(100) ≈ {100/math.log(100):.1f}")
+    print("Factorization Diamond Verification Suite")
+    print("=" * 50)
 
-    free, counter = is_product_free(S)
-    print(f"Product-free: {free}")
-    if counter:
-        print(f"  Collision: {counter[0]} × {counter[1]} = {counter[2]}")
+    # Verify all four separating examples
+    examples = [
+        ({2, 3, 5, 7, 11, 13}, "Primes (UF)"),
+        ({2, 3, 6}, "CF ∧ ¬PF"),
+        ({6, 10, 21, 35}, "PF ∧ ¬CF"),
+        ({2, 8}, "CF ∧ PF ∧ ¬UF"),
+    ]
 
-    print()
-    print("=== Factorizations of 12 ===")
-    for label, gen_set in [("Primes", {2, 3, 5, 7, 11}),
-                            ("Primes ∪ {6}", {2, 3, 5, 6, 7, 11}),
-                            ("[2,12]", set(range(2, 13)))]:
-        facts = s_factorizations(gen_set, 12)
-        print(f"  {label}: {len(facts)} factorization(s)")
-        for f in facts:
-            print(f"    {'×'.join(map(str, f))}")
+    for S, label in examples:
+        result = classify_generator_set(S)
+        print(f"\n{label}: {sorted(S)}")
+        print(f"  PF={result['product_free']}, CF={result['collision_free']}, UF={result['unique_factorization']}")
+
+    # Verify coprime basis theorem
+    print("\n\nCoprime Basis Theorem Verification")
+    print("-" * 40)
+    coprime_sets = [
+        {2, 3, 5, 7},
+        {4, 9, 25, 49},
+        {6, 35, 143},
+        {2, 3, 5, 30},  # not product-free
+    ]
+    for S in coprime_sets:
+        ok = verify_coprime_basis_theorem(S)
+        print(f"  {sorted(S)}: theorem holds = {ok}")
+
+    # Test random models
+    print("\n\nCramér Random Model Statistics")
+    print("-" * 40)
+    for N in [50, 100, 200]:
+        n_pf = 0
+        n_cf = 0
+        n_trials = 20
+        for trial in range(n_trials):
+            S = cramer_random_set(N, seed=42 + trial)
+            pf, _ = is_product_free(S)
+            cf = len(find_product_collisions(S)) == 0
+            if pf:
+                n_pf += 1
+            if cf:
+                n_cf += 1
+        print(f"  N={N}: product-free {n_pf}/{n_trials}, collision-free {n_cf}/{n_trials}")
