@@ -1,2 +1,2 @@
-def tropical_polynomial_eval(slopes, intercepts, x):
-    return max(s * x + b for s, b in zip(slopes, intercepts))
+def tropical_polynomial_eval(coeffs, x):
+    return max(c + i * x for i, c in enumerate(coeffs))

@@ -1,10 +1,6 @@
-def count_regions(network, samples):
-    patterns = set()
-    for x in samples:
-        h = x
-        pattern = []
-        for layer in network.layers:
-            pattern.extend(np.dot(n.weights, h) + n.bias >= 0 for n in layer.neurons)
-            h = np.array([max(np.dot(n.weights, h) + n.bias, 0) for n in layer.neurons])
-        patterns.add(tuple(pattern))
-    return len(patterns)
+def count_linear_regions(f, a, b, n=100000):
+    import numpy as np
+    xs = np.linspace(a, b, n)
+    ys = np.array([f(x) for x in xs])
+    slopes = np.diff(ys) / np.diff(xs)
+    return int(np.sum(np.abs(np.diff(slopes)) > 1e-6) + 1)

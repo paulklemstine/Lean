@@ -1,3 +1,9 @@
-def compare(f, g, N=10000, t=0.9):
-    lt = sum(1 for i in range(N) if f(i) < g(i))
-    return 'f < g' if lt/N > t else 'indeterminate'
+def ultrapower_compare(f, g, indices):
+    less = sum(1 for i in indices if f(i) < g(i))
+    equal = sum(1 for i in indices if f(i) == g(i))
+    greater = sum(1 for i in indices if f(i) > g(i))
+    total = len(indices)
+    if equal == total: return 'equal'
+    elif less + equal == total: return 'less'
+    elif greater + equal == total: return 'greater'
+    else: return 'likely_less' if less > greater else 'likely_greater'
