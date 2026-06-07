@@ -1,364 +1,267 @@
 #!/usr/bin/env python3
 """
-Quantum EML Activation Functions — Interactive Demo
+Quantum EML Neurons: Numerical Demonstrations
 
-Demonstrates the key theorems proved in the Lean formalization:
-1. Phase unitarity: |exp(iθ)| = 1
-2. Group homomorphism: exp(i(θ₁+θ₂)) = exp(iθ₁)·exp(iθ₂)
-3. Polar surjectivity: every z ≠ 0 has a quantum EML representation
-4. Classical-quantum bridge: phase=0 recovers classical EML
-5. Chain composition rule: phases add, amplitudes multiply
+Demonstrates the key results from the quantum EML neuron theory:
+1. Phase invariance of amplitude
+2. Circle coverage for fixed coupling
+3. Surjectivity (any complex number as QEML output)
+4. Constructive/destructive interference
+5. Classical-quantum bridge
 """
 
 import numpy as np
 
+def qeml(theta: float, t: float) -> complex:
+    """Quantum EML neuron: exp(i*theta) * log(1 + i*t)"""
+    return np.exp(1j * theta) * np.log(1 + 1j * t)
 
-def quantum_phase(theta: float) -> complex:
-    """Quantum phase gate: exp(iθ)"""
-    return np.exp(1j * theta)
+def qeml_amplitude(t: float) -> float:
+    """Amplitude component: |log(1 + i*t)|"""
+    return abs(np.log(1 + 1j * t))
 
-
-def quantum_eml_polar(theta: float, r: float) -> complex:
-    """Quantum EML polar neuron: exp(iθ) · r"""
-    return quantum_phase(theta) * r
-
-
-def quantum_eml_neuron(theta1: float, theta2: float, theta3: float) -> complex:
-    """Quantum EML neuron: exp(iθ₁) · (exp(θ₂) - log(θ₃))"""
-    amplitude = np.exp(theta2) - np.log(theta3) if theta3 > 0 else np.exp(theta2)
-    return quantum_phase(theta1) * amplitude
+def qeml_intrinsic_phase(t: float) -> float:
+    """Intrinsic phase of log(1 + i*t)"""
+    return np.angle(np.log(1 + 1j * t))
 
 
-def classical_eml(x: float, y: float) -> float:
-    """Classical EML function: exp(x) - log(y)"""
-    return np.exp(x) - (np.log(y) if y > 0 else 0.0)
+# ============================================================
+# Demo 1: Phase Invariance
+# ============================================================
+print("=" * 60)
+print("DEMO 1: Phase Invariance of Amplitude")
+print("=" * 60)
+print("\nFor fixed t, |qeml(θ, t)| is independent of θ:")
+t_fixed = 2.0
+for theta in [0, np.pi/4, np.pi/2, np.pi, 3*np.pi/2]:
+    amp = abs(qeml(theta, t_fixed))
+    print(f"  θ = {theta:.4f}, |qeml(θ, {t_fixed})| = {amp:.8f}")
+print(f"  qemlAmplitude({t_fixed}) = {qeml_amplitude(t_fixed):.8f}")
 
+# ============================================================
+# Demo 2: Circle Coverage
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 2: Circle Coverage (Fixed Coupling)")
+print("=" * 60)
+print("\nFor t = 1.5, qeml traces a circle of radius r:")
+t_val = 1.5
+r = qeml_amplitude(t_val)
+print(f"  Radius = {r:.6f}")
+thetas = np.linspace(0, 2*np.pi, 8, endpoint=False)
+print("  Points on circle:")
+for th in thetas:
+    z = qeml(th, t_val)
+    print(f"    θ={th:.2f}: ({z.real:.4f}, {z.imag:.4f}), |z|={abs(z):.6f}")
 
-def demo_phase_unitarity():
-    """Theorem 1: ||quantumPhase(θ)|| = 1 for all θ"""
-    print("=" * 60)
-    print("THEOREM 1: Phase Unitarity")
-    print("=" * 60)
-    thetas = [0, np.pi/6, np.pi/4, np.pi/3, np.pi/2, np.pi, 2*np.pi, 7.3]
-    for theta in thetas:
-        z = quantum_phase(theta)
-        print(f"  θ = {theta:8.4f}  →  exp(iθ) = {z:.4f}  |exp(iθ)| = {abs(z):.10f}")
-    print(f"\n  ✓ All norms equal 1 (to machine precision)\n")
+# ============================================================
+# Demo 3: Surjectivity
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 3: Surjectivity — Matching Any Complex Number")
+print("=" * 60)
 
+def find_qeml_params(z: complex) -> tuple:
+    """Find (θ, t) such that qeml(θ, t) ≈ z"""
+    if abs(z) < 1e-15:
+        return (0.0, 0.0)
+    # Binary search for t such that qeml_amplitude(t) = |z|
+    target_amp = abs(z)
+    t_lo, t_hi = 0.0, 1.0
+    while qeml_amplitude(t_hi) < target_amp:
+        t_hi *= 2
+    for _ in range(100):
+        t_mid = (t_lo + t_hi) / 2
+        if qeml_amplitude(t_mid) < target_amp:
+            t_lo = t_mid
+        else:
+            t_hi = t_mid
+    t0 = (t_lo + t_hi) / 2
+    # Find θ
+    w = np.log(1 + 1j * t0)
+    theta = np.angle(z / w)
+    return (theta, t0)
 
-def demo_group_homomorphism():
-    """Theorem 2: quantumPhase(θ₁+θ₂) = quantumPhase(θ₁) · quantumPhase(θ₂)"""
-    print("=" * 60)
-    print("THEOREM 2: Phase Group Homomorphism")
-    print("=" * 60)
-    pairs = [(np.pi/4, np.pi/3), (1.0, 2.0), (np.pi, np.pi), (0.5, -0.5)]
-    for t1, t2 in pairs:
-        lhs = quantum_phase(t1 + t2)
-        rhs = quantum_phase(t1) * quantum_phase(t2)
-        err = abs(lhs - rhs)
-        print(f"  θ₁={t1:.3f}, θ₂={t2:.3f}:")
-        print(f"    exp(i(θ₁+θ₂))     = {lhs:.6f}")
-        print(f"    exp(iθ₁)·exp(iθ₂) = {rhs:.6f}")
-        print(f"    error = {err:.2e}")
-    print(f"\n  ✓ Homomorphism verified (all errors < 1e-15)\n")
+targets = [1+0j, 0+1j, -1+0j, 2+3j, 0.5-0.5j, 10+0j]
+for z_target in targets:
+    theta, t = find_qeml_params(z_target)
+    z_actual = qeml(theta, t)
+    err = abs(z_actual - z_target)
+    print(f"  Target: {str(z_target):>10s}  →  θ={theta:.4f}, t={t:.4f}  →  "
+          f"qeml = ({z_actual.real:.4f}, {z_actual.imag:.4f})  error={err:.2e}")
 
+# ============================================================
+# Demo 4: Interference
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 4: Constructive vs Destructive Interference")
+print("=" * 60)
 
-def demo_polar_surjectivity():
-    """Theorem 3: Every z ≠ 0 has quantum EML polar representation"""
-    print("=" * 60)
-    print("THEOREM 3: Polar Surjectivity")
-    print("=" * 60)
-    targets = [1+1j, -3.0+0j, 0.5j, -2-2j, 0.01+0.01j]
-    for z in targets:
-        theta = np.angle(z)
-        r = abs(z)
-        reconstruction = quantum_eml_polar(theta, r)
-        err = abs(reconstruction - z)
-        print(f"  z = {str(z):>12s} → θ = {theta:+.4f}, r = {r:.4f}")
-        print(f"    reconstructed = {reconstruction:.6f}, error = {err:.2e}")
-    print(f"\n  ✓ All nonzero targets reconstructed exactly\n")
+t1, t2 = 1.0, 1.0
+theta = 0.0
+# Constructive: same phase
+z_constr = qeml(theta, t1) + qeml(theta, t2)
+# Destructive: opposite phase
+z_destr = qeml(theta, t1) + qeml(theta + np.pi, t2)
+max_amp = qeml_amplitude(t1) + qeml_amplitude(t2)
+print(f"  t₁ = {t1}, t₂ = {t2}")
+print(f"  Max possible amplitude: {max_amp:.6f}")
+print(f"  Constructive (same θ): |sum| = {abs(z_constr):.6f}")
+print(f"  Destructive (θ+π):     |sum| = {abs(z_destr):.6f}")
 
+# ============================================================
+# Demo 5: Classical-Quantum Bridge
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 5: Classical-Quantum Bridge")
+print("=" * 60)
+print("\nRe(qeml(0,t)) = log(√(1+t²)) vs classical activations:")
+print(f"  {'t':>6s}  {'Re(qeml)':>10s}  {'Im(qeml)':>10s}  {'log(1+t²)/2':>12s}  {'arctan(t)':>10s}")
+for t in [0.1, 0.5, 1.0, 2.0, 5.0, 10.0]:
+    z = qeml(0, t)
+    log_val = 0.5 * np.log(1 + t**2)
+    atan_val = np.arctan(t)
+    print(f"  {t:6.1f}  {z.real:10.6f}  {z.imag:10.6f}  {log_val:12.6f}  {atan_val:10.6f}")
 
-def demo_classical_bridge():
-    """Theorem 4: quantumEMLNeuron(0, x, y) = classicalEML(x, y)"""
-    print("=" * 60)
-    print("THEOREM 4: Classical-Quantum Bridge")
-    print("=" * 60)
-    params = [(1.0, np.e), (0.0, 1.0), (2.0, 0.5), (-1.0, 3.0)]
-    for x, y in params:
-        quantum = quantum_eml_neuron(0, x, y)
-        classical = classical_eml(x, y)
-        err = abs(quantum - classical)
-        print(f"  x={x:+.2f}, y={y:.2f}:")
-        print(f"    quantum(θ=0)  = {quantum:.6f}")
-        print(f"    classical     = {classical:.6f}")
-        print(f"    error = {err:.2e}")
-    print()
+# ============================================================
+# Demo 6: QPA Monoid Structure
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 6: QPA Monoid — Polar Multiplication")
+print("=" * 60)
 
-    # Phase rotation preserves norm
-    print("  Phase rotation preserves norm:")
-    for theta in [0, np.pi/4, np.pi/2, np.pi]:
-        z = quantum_eml_neuron(theta, 1.0, np.e)
-        print(f"    θ = {theta:.4f}: ||neuron|| = {abs(z):.6f}, "
-              f"|classical| = {abs(classical_eml(1.0, np.e)):.6f}")
-    print(f"\n  ✓ Quantum phase doesn't change amplitude\n")
+class QPA:
+    def __init__(self, amplitude, phase):
+        self.amplitude = max(0, amplitude)
+        self.phase = phase
+    def mul(self, other):
+        return QPA(self.amplitude * other.amplitude, self.phase + other.phase)
+    def to_complex(self):
+        return self.amplitude * np.exp(1j * self.phase)
+    def __repr__(self):
+        return f"QPA(r={self.amplitude:.4f}, φ={self.phase:.4f})"
 
+q1 = QPA(2.0, np.pi/4)
+q2 = QPA(1.5, np.pi/3)
+q3 = q1.mul(q2)
+print(f"  q₁ = {q1}")
+print(f"  q₂ = {q2}")
+print(f"  q₁·q₂ = {q3}")
+print(f"  q₁.toComplex = {q1.to_complex():.4f}")
+print(f"  q₂.toComplex = {q2.to_complex():.4f}")
+print(f"  Product of complexes: {q1.to_complex() * q2.to_complex():.4f}")
+print(f"  (q₁·q₂).toComplex: {q3.to_complex():.4f}")
+print(f"  Homomorphism check: {abs(q1.to_complex() * q2.to_complex() - q3.to_complex()):.2e}")
 
-def demo_chain_composition():
-    """Theorem 5: Compose(gate₁, gate₂) = Gate(θ₁+θ₂, r₁·r₂)"""
-    print("=" * 60)
-    print("THEOREM 5: Chain Composition Rule")
-    print("=" * 60)
-    cases = [
-        (np.pi/4, 2.0, np.pi/3, 3.0),
-        (0.0, 1.0, np.pi, 1.0),
-        (1.5, 0.5, -0.5, 4.0),
-    ]
-    for t1, r1, t2, r2 in cases:
-        composed = quantum_eml_polar(t1, r1) * quantum_eml_polar(t2, r2)
-        direct = quantum_eml_polar(t1 + t2, r1 * r2)
-        err = abs(composed - direct)
-        print(f"  (θ₁={t1:.2f}, r₁={r1:.1f}) ∘ (θ₂={t2:.2f}, r₂={r2:.1f}):")
-        print(f"    composed = {composed:.6f}")
-        print(f"    Gate(θ₁+θ₂, r₁r₂) = {direct:.6f}")
-        print(f"    error = {err:.2e}")
-    print(f"\n  ✓ Multiplicative chain rule verified\n")
+# ============================================================
+# Demo 7: Amplitude Growth
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 7: Amplitude Growth (Logarithmic)")
+print("=" * 60)
+ts = [0.01, 0.1, 1, 10, 100, 1000, 10000]
+print(f"  {'t':>8s}  {'amplitude':>10s}  {'log(t+1)':>10s}  {'ratio':>8s}")
+for t in ts:
+    amp = qeml_amplitude(t)
+    log_bound = np.log(t + 1)
+    ratio = amp / log_bound if log_bound > 0 else float('inf')
+    print(f"  {t:8.1f}  {amp:10.6f}  {log_bound:10.6f}  {ratio:8.4f}")
 
-
-def demo_spectral_distance():
-    """Theorem 6: Distance bound with phase-amplitude decoupling"""
-    print("=" * 60)
-    print("THEOREM 6: Spectral Distance Bound")
-    print("=" * 60)
-    r = 3.0
-    pairs = [(0, np.pi/6), (np.pi/4, np.pi/2), (0, np.pi)]
-    for t1, t2 in pairs:
-        dist = abs(quantum_eml_polar(t1, r) - quantum_eml_polar(t2, r))
-        phase_dist = abs(quantum_phase(t1) - quantum_phase(t2))
-        bound = r * phase_dist
-        print(f"  θ₁={t1:.4f}, θ₂={t2:.4f}, r={r:.1f}:")
-        print(f"    ||gate₁ - gate₂|| = {dist:.6f}")
-        print(f"    r·||phase₁ - phase₂|| = {bound:.6f}")
-        print(f"    ratio = {dist/bound:.10f}")
-    print(f"\n  ✓ Distance = r × phase distance (exact equality)\n")
-
-
-if __name__ == "__main__":
-    print("\n" + "🔬 QUANTUM EML ACTIVATION FUNCTIONS — DEMONSTRATION 🔬".center(60))
-    print("=" * 60 + "\n")
-
-    demo_phase_unitarity()
-    demo_group_homomorphism()
-    demo_polar_surjectivity()
-    demo_classical_bridge()
-    demo_chain_composition()
-    demo_spectral_distance()
-
-    print("=" * 60)
-    print("All 6 theorems demonstrated numerically ✓")
-    print("=" * 60)
+print("\n" + "=" * 60)
+print("All demonstrations complete.")
+print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Quantum EML Phase Space
+Visualization: Quantum EML Circle Coverage
 
-Shows how the quantum phase gate traces the unit circle,
-and how the quantum EML polar neuron covers the complex plane.
+Shows how quantum EML neurons trace circles in the complex plane
+for different coupling values, demonstrating the surjectivity theorem.
 """
 
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 
+def qeml(theta, t):
+    """Quantum EML neuron"""
+    return np.exp(1j * theta) * np.log(1 + 1j * t)
 
-def quantum_phase(theta):
-    return np.exp(1j * theta)
+def qeml_amplitude(t):
+    """Amplitude function"""
+    return abs(np.log(1 + 1j * t))
 
+# Create figure with multiple panels
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-def quantum_eml_polar(theta, r):
-    return quantum_phase(theta) * r
+# Panel 1: Circle coverage
+ax1 = axes[0]
+thetas = np.linspace(0, 2 * np.pi, 200)
+couplings = [0.5, 1.0, 2.0, 5.0, 10.0]
+colors = plt.cm.viridis(np.linspace(0.2, 0.9, len(couplings)))
 
+for t, color in zip(couplings, colors):
+    zs = [qeml(th, t) for th in thetas]
+    xs = [z.real for z in zs]
+    ys = [z.imag for z in zs]
+    ax1.plot(xs, ys, color=color, linewidth=1.5,
+             label=f't = {t}')
+    # Mark t=0 phase point
+    z0 = qeml(0, t)
+    ax1.plot(z0.real, z0.imag, 'o', color=color, markersize=4)
 
-def plot_phase_unitarity():
-    """Plot the unit circle traced by quantum phase gates."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+ax1.set_xlabel('Re(z)', fontsize=11)
+ax1.set_ylabel('Im(z)', fontsize=11)
+ax1.set_title('QEML Circles for Varying Coupling', fontsize=12, fontweight='bold')
+ax1.legend(fontsize=9, loc='upper left')
+ax1.set_aspect('equal')
+ax1.grid(True, alpha=0.3)
+ax1.axhline(y=0, color='gray', linewidth=0.5)
+ax1.axvline(x=0, color='gray', linewidth=0.5)
 
-    # Panel 1: Unit circle with phase gate points
-    ax = axes[0]
-    thetas = np.linspace(0, 2 * np.pi, 100)
-    circle = [quantum_phase(t) for t in thetas]
-    ax.plot([z.real for z in circle], [z.imag for z in circle], 'b-', lw=2, alpha=0.3)
+# Panel 2: Amplitude function
+ax2 = axes[1]
+ts = np.linspace(0, 20, 500)
+amps = [qeml_amplitude(t) for t in ts]
+log_bound = [np.log(t + 1) for t in ts]
 
-    special_angles = [0, np.pi/6, np.pi/4, np.pi/3, np.pi/2, 2*np.pi/3, np.pi,
-                      4*np.pi/3, 3*np.pi/2, 5*np.pi/3]
-    labels = ['0', 'π/6', 'π/4', 'π/3', 'π/2', '2π/3', 'π', '4π/3', '3π/2', '5π/3']
-    for t, label in zip(special_angles, labels):
-        z = quantum_phase(t)
-        ax.plot(z.real, z.imag, 'ro', markersize=8)
-        ax.annotate(f'θ={label}', (z.real, z.imag), textcoords="offset points",
-                    xytext=(10, 5), fontsize=7)
+ax2.plot(ts, amps, 'b-', linewidth=2, label='qemlAmplitude(t)')
+ax2.plot(ts, log_bound, 'r--', linewidth=1.5, label='log(t+1)')
+ax2.plot(ts, ts, 'g:', linewidth=1, label='t (linear)')
 
-    ax.set_xlim(-1.5, 1.5)
-    ax.set_ylim(-1.5, 1.5)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-    ax.axhline(y=0, color='k', lw=0.5)
-    ax.axvline(x=0, color='k', lw=0.5)
-    ax.set_title('Theorem 1: Phase Unitarity\n|exp(iθ)| = 1', fontsize=12)
-    ax.set_xlabel('Re')
-    ax.set_ylabel('Im')
+ax2.set_xlabel('Coupling parameter t', fontsize=11)
+ax2.set_ylabel('Amplitude', fontsize=11)
+ax2.set_title('Amplitude Growth (Logarithmic)', fontsize=12, fontweight='bold')
+ax2.legend(fontsize=9)
+ax2.grid(True, alpha=0.3)
+ax2.set_ylim(0, 4)
 
-    # Panel 2: Group homomorphism
-    ax = axes[1]
-    t1_vals = np.linspace(0, 2*np.pi, 50)
-    t2 = np.pi / 3
-    for t1 in t1_vals:
-        z1 = quantum_phase(t1)
-        z2 = quantum_phase(t2)
-        z_sum = quantum_phase(t1 + t2)
-        z_prod = z1 * z2
-        ax.plot(z_sum.real, z_sum.imag, 'b.', markersize=3)
-        ax.plot(z_prod.real, z_prod.imag, 'r.', markersize=1)
+# Panel 3: Classical-quantum bridge
+ax3 = axes[2]
+ts_fine = np.linspace(0.01, 5, 200)
+re_vals = [np.log(np.sqrt(1 + t**2)) for t in ts_fine]
+im_vals = [np.arctan(t) for t in ts_fine]
+classical_relu = [max(0, t - 1) for t in ts_fine]
+classical_sigmoid = [1 / (1 + np.exp(-t)) for t in ts_fine]
 
-    ax.plot([], [], 'b.', label='exp(i(θ₁+θ₂))')
-    ax.plot([], [], 'r.', label='exp(iθ₁)·exp(iθ₂)')
-    ax.legend(fontsize=9)
-    ax.set_xlim(-1.5, 1.5)
-    ax.set_ylim(-1.5, 1.5)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-    ax.set_title(f'Theorem 2: Group Homomorphism\nθ₂ = π/3 fixed', fontsize=12)
+ax3.plot(ts_fine, re_vals, 'b-', linewidth=2,
+         label='Re(qeml(0,t)) = ½log(1+t²)')
+ax3.plot(ts_fine, im_vals, 'r-', linewidth=2,
+         label='Im(qeml(0,t)) = arctan(t)')
+ax3.plot(ts_fine, classical_relu, 'g--', linewidth=1.5,
+         label='ReLU(t-1)')
+ax3.plot(ts_fine, classical_sigmoid, 'm--', linewidth=1.5,
+         label='Sigmoid(t)')
 
-    # Panel 3: Polar surjectivity
-    ax = axes[2]
-    np.random.seed(42)
-    targets = [complex(np.random.uniform(-3, 3), np.random.uniform(-3, 3)) for _ in range(200)]
-    targets = [z for z in targets if abs(z) > 0.1]
-    for z in targets:
-        theta = np.angle(z)
-        r = abs(z)
-        recon = quantum_eml_polar(theta, r)
-        ax.plot(z.real, z.imag, 'b.', markersize=4, alpha=0.5)
-        ax.plot(recon.real, recon.imag, 'r+', markersize=3, alpha=0.3)
+ax3.set_xlabel('Input t', fontsize=11)
+ax3.set_ylabel('Activation', fontsize=11)
+ax3.set_title('Quantum vs Classical Activations', fontsize=12, fontweight='bold')
+ax3.legend(fontsize=8)
+ax3.grid(True, alpha=0.3)
 
-    ax.plot(0, 0, 'kx', markersize=15, mew=3, label='z=0 (excluded)')
-    ax.set_xlim(-3.5, 3.5)
-    ax.set_ylim(-3.5, 3.5)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-    ax.legend(fontsize=9)
-    ax.set_title('Theorem 3: Polar Surjectivity\nℂ\\{0} fully covered', fontsize=12)
-
-    plt.tight_layout()
-    plt.savefig('quantum_eml_phase_space.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: quantum_eml_phase_space.png")
-
-
-def plot_chain_composition():
-    """Visualize the chain composition rule."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-    # Panel 1: Phase addition
-    ax = axes[0]
-    thetas = np.linspace(0, 2*np.pi, 100)
-    circle = [quantum_phase(t) for t in thetas]
-    ax.plot([z.real for z in circle], [z.imag for z in circle], 'k-', lw=1, alpha=0.3)
-
-    t1, t2 = np.pi/4, np.pi/3
-    z1 = quantum_phase(t1)
-    z2 = quantum_phase(t2)
-    z_comp = quantum_phase(t1 + t2)
-
-    ax.annotate('', xy=(z1.real, z1.imag), xytext=(0, 0),
-                arrowprops=dict(arrowstyle='->', color='blue', lw=2))
-    ax.annotate('', xy=(z2.real, z2.imag), xytext=(0, 0),
-                arrowprops=dict(arrowstyle='->', color='red', lw=2))
-    ax.annotate('', xy=(z_comp.real, z_comp.imag), xytext=(0, 0),
-                arrowprops=dict(arrowstyle='->', color='green', lw=3))
-
-    ax.plot(z1.real, z1.imag, 'bo', markersize=10, label=f'θ₁=π/4')
-    ax.plot(z2.real, z2.imag, 'ro', markersize=10, label=f'θ₂=π/3')
-    ax.plot(z_comp.real, z_comp.imag, 'gs', markersize=12, label=f'θ₁+θ₂=7π/12')
-
-    ax.set_xlim(-1.5, 1.5)
-    ax.set_ylim(-1.5, 1.5)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-    ax.legend(fontsize=9)
-    ax.set_title('Theorem 5: Phases Add\nexp(iθ₁)·exp(iθ₂) = exp(i(θ₁+θ₂))', fontsize=11)
-
-    # Panel 2: Amplitude multiplication
-    ax = axes[1]
-    r_vals = np.linspace(0.1, 3, 20)
-    for r1 in [0.5, 1.0, 2.0]:
-        norms = [r1 * r2 for r2 in r_vals]
-        ax.plot(r_vals, norms, '-', lw=2, label=f'r₁ = {r1}')
-
-    ax.set_xlabel('r₂ (amplitude of gate 2)', fontsize=11)
-    ax.set_ylabel('||compose|| = r₁ · r₂', fontsize=11)
-    ax.grid(True, alpha=0.3)
-    ax.legend(fontsize=10)
-    ax.set_title('Theorem 5: Amplitudes Multiply\n||gate₁ ∘ gate₂|| = r₁ · r₂', fontsize=11)
-
-    plt.tight_layout()
-    plt.savefig('quantum_eml_composition.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: quantum_eml_composition.png")
-
-
-def plot_classical_bridge():
-    """Visualize the classical-quantum bridge."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-    # Panel 1: Quantum neuron for varying phase (fixed EML params)
-    ax = axes[0]
-    x, y = 1.0, np.e
-    classical_val = np.exp(x) - np.log(y)
-
-    thetas = np.linspace(0, 2*np.pi, 200)
-    neurons = [quantum_phase(t) * classical_val for t in thetas]
-
-    ax.plot([z.real for z in neurons], [z.imag for z in neurons], 'b-', lw=2)
-    ax.plot(classical_val, 0, 'r*', markersize=15, label='Classical (θ=0)')
-
-    for t in [np.pi/4, np.pi/2, np.pi]:
-        z = quantum_phase(t) * classical_val
-        ax.plot(z.real, z.imag, 'go', markersize=8)
-        ax.annotate(f'θ={t/np.pi:.1f}π', (z.real, z.imag),
-                    textcoords="offset points", xytext=(10, 5), fontsize=9)
-
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-    ax.legend(fontsize=10)
-    ax.set_title('Theorem 4: Classical → Quantum\nPhase rotates classical EML output', fontsize=11)
-    ax.set_xlabel('Re')
-    ax.set_ylabel('Im')
-
-    # Panel 2: Norm preservation
-    ax = axes[1]
-    thetas = np.linspace(0, 4*np.pi, 200)
-    for x, y, label in [(1.0, np.e, 'exp(1)-1'), (0.5, 2.0, 'exp(0.5)-ln2'), (2.0, 1.0, 'exp(2)')]:
-        classical_val = np.exp(x) - np.log(y)
-        norms = [abs(quantum_phase(t) * classical_val) for t in thetas]
-        ax.plot(thetas / np.pi, norms, '-', lw=2, label=f'{label} = {classical_val:.2f}')
-        ax.axhline(y=abs(classical_val), color='gray', ls='--', lw=0.5)
-
-    ax.set_xlabel('Phase θ / π', fontsize=11)
-    ax.set_ylabel('||quantumEMLNeuron||', fontsize=11)
-    ax.grid(True, alpha=0.3)
-    ax.legend(fontsize=9)
-    ax.set_title('Theorem 4: Norm Independence\n||neuron(θ)|| = |classical EML| ∀θ', fontsize=11)
-
-    plt.tight_layout()
-    plt.savefig('quantum_eml_bridge.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: quantum_eml_bridge.png")
-
-
-if __name__ == "__main__":
-    plot_phase_unitarity()
-    plot_chain_composition()
-    plot_classical_bridge()
-    print("\nAll visualizations generated ✓")
+plt.tight_layout()
+plt.savefig('Applications/qeml_visualization.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved: Applications/qeml_visualization.png")
