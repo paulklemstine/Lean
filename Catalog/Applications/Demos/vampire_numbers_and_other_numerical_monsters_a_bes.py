@@ -1,190 +1,242 @@
 #!/usr/bin/env python3
 """
-Demo: Vampire Numbers and Arithmetic Creatures
-
-Demonstrates the key results from the formal Lean 4 proofs:
-1. Enumerates vampire numbers up to 1,000,000
-2. Verifies the mod-9 fang constraint
-3. Computes creature spectra for various factorizations
-4. Finds ghost numbers
-5. Tests the fang residue enumeration
+Vampire Numbers and Arithmetic Creatures: Demonstration
+======================================================
+Enumerates and classifies vampire, werewolf, and ghost numbers,
+illustrating the key theorems from the Digit Factorization Algebra.
 """
 
-from algorithms import (
-    is_vampire, creature_spectrum, enumerate_vampires,
-    valid_fang_residues_mod9, is_ghost, find_ghost_factorizations,
-    digit_multiset, digit_set, num_digits
-)
+from collections import Counter
+from typing import List, Tuple, Optional
 
 
-def demo_vampire_examples():
-    """Show concrete vampire number examples."""
-    print("=" * 60)
-    print("VAMPIRE NUMBERS: Concrete Examples")
-    print("=" * 60)
-
-    examples = [
-        (1260, 21, 60),
-        (1395, 15, 93),
-        (1435, 35, 41),
-        (1530, 30, 51),
-        (1560, 60, 26),
-    ]
-
-    for v, x, y in examples:
-        cs = creature_spectrum(v, x, y)
-        dm_v = sorted(digit_multiset(v).elements())
-        dm_xy = sorted((digit_multiset(x) + digit_multiset(y)).elements())
-        print(f"\n  {v} = {x} × {y}")
-        print(f"    Digits of {v}: {dm_v}")
-        print(f"    Digits of {x},{y}: {dm_xy}")
-        print(f"    Creature Spectrum: {cs}")
-        print(f"    Mod-9 check: {x}*{y} mod 9 = {(x*y)%9}, "
-              f"{x}+{y} mod 9 = {(x+y)%9} → {'✓' if (x*y)%9 == (x+y)%9 else '✗'}")
+def digits(n: int) -> List[int]:
+    """Return the list of decimal digits of n."""
+    if n == 0:
+        return [0]
+    result = []
+    while n > 0:
+        result.append(n % 10)
+        n //= 10
+    return result
 
 
-def demo_mod9_constraint():
-    """Demonstrate the mod-9 fang residue constraint."""
-    print("\n" + "=" * 60)
-    print("MOD-9 FANG RESIDUE CONSTRAINT")
-    print("=" * 60)
+def digit_multiset(n: int) -> Counter:
+    """Return the multiset (Counter) of decimal digits of n."""
+    return Counter(digits(n))
 
-    pairs = valid_fang_residues_mod9()
-    print(f"\n  Valid (a,b) mod 9 pairs: {pairs}")
-    print(f"  Count: {len(pairs)} out of 81 possible pairs")
-    print(f"  Exclusion rate: {100*(1 - len(pairs)/81):.1f}%")
 
-    print("\n  Equivalently, (a-1)(b-1) ≡ 1 (mod 9):")
-    print("  Units of Z/9Z: {1, 2, 4, 5, 7, 8}")
+def digit_set(n: int) -> set:
+    """Return the set of distinct digits appearing in n."""
+    return set(digits(n))
+
+
+def num_digits(n: int) -> int:
+    """Number of decimal digits."""
+    if n == 0:
+        return 1
+    count = 0
+    while n > 0:
+        count += 1
+        n //= 10
+    return count
+
+
+def is_vampire(v: int) -> Optional[Tuple[int, int]]:
+    """Check if v is a vampire number. Returns (x, y) fangs if so, else None."""
+    nd = num_digits(v)
+    if nd < 4 or nd % 2 != 0:
+        return None
+    n = nd // 2
+    lo = 10 ** (n - 1)
+    hi = 10 ** n
+    for x in range(lo, hi):
+        if v % x != 0:
+            continue
+        y = v // x
+        if y < x or y >= hi:
+            continue
+        if num_digits(y) != n:
+            continue
+        # Check trailing zeros constraint
+        if x % 10 == 0 and y % 10 == 0:
+            continue
+        # Check digit multiset
+        if digit_multiset(v) == digit_multiset(x) + digit_multiset(y):
+            return (x, y)
+    return None
+
+
+def is_resonant(n: int) -> Optional[Tuple[int, int]]:
+    """Check if n has a resonant factorization (digits of product = combined digits of factors)."""
+    for x in range(2, int(n**0.5) + 1):
+        if n % x == 0:
+            y = n // x
+            if digit_multiset(n) == digit_multiset(x) + digit_multiset(y):
+                return (x, y)
+    return None
+
+
+def is_ghost(v: int) -> Optional[Tuple[int, int]]:
+    """Check if v is a ghost number (some factorization with disjoint digit sets)."""
+    ds_v = digit_set(v)
+    for x in range(2, int(v**0.5) + 1):
+        if v % x == 0:
+            y = v // x
+            if y <= 1:
+                continue
+            if ds_v.isdisjoint(digit_set(x)) and ds_v.isdisjoint(digit_set(y)):
+                return (x, y)
+    return None
+
+
+def is_werewolf(v: int) -> Optional[Tuple[int, int]]:
+    """Check if v is a werewolf number (exactly one shared digit type with factors)."""
+    ds_v = digit_set(v)
+    for x in range(2, int(v**0.5) + 1):
+        if v % x == 0:
+            y = v // x
+            if y <= 1:
+                continue
+            shared = ds_v & (digit_set(x) | digit_set(y))
+            if len(shared) == 1:
+                return (x, y)
+    return None
+
+
+def mod9_fang_pairs():
+    """Enumerate all valid fang pairs mod 9 satisfying (a-1)(b-1) ≡ 1 (mod 9)."""
+    pairs = []
+    for a in range(9):
+        for b in range(9):
+            if ((a - 1) * (b - 1)) % 9 == 1:
+                pairs.append((a, b))
+    return pairs
+
+
+def main():
+    print("=" * 70)
+    print("  VAMPIRE NUMBERS AND ARITHMETIC CREATURES")
+    print("  A Bestiary of Arithmetic Oddities")
+    print("=" * 70)
+
+    # 1. Enumerate vampire numbers up to 1,000,000
+    print("\n--- VAMPIRE NUMBERS (4-digit) ---")
+    vampires_4 = []
+    for v in range(1000, 10000):
+        result = is_vampire(v)
+        if result:
+            vampires_4.append((v, result))
+    print(f"Found {len(vampires_4)} vampire numbers with 4 digits:")
+    for v, (x, y) in vampires_4:
+        print(f"  {v} = {x} × {y}")
+
+    print("\n--- VAMPIRE NUMBERS (6-digit) ---")
+    vampires_6 = []
+    for v in range(100000, 1000000):
+        result = is_vampire(v)
+        if result:
+            vampires_6.append((v, result))
+    print(f"Found {len(vampires_6)} vampire numbers with 6 digits")
+    for v, (x, y) in vampires_6[:10]:
+        print(f"  {v} = {x} × {y}")
+    if len(vampires_6) > 10:
+        print(f"  ... and {len(vampires_6) - 10} more")
+
+    # 2. Mod-9 constraint verification
+    print("\n--- MOD-9 FANG CONSTRAINT ---")
+    pairs = mod9_fang_pairs()
+    print(f"Valid fang pairs (a, b) mod 9 with (a-1)(b-1) ≡ 1 (mod 9):")
     for a, b in pairs:
-        print(f"    ({a},{b}): ({a}-1)({b}-1) = {(a-1)*(b-1)} ≡ {((a-1)*(b-1))%9} (mod 9)")
+        print(f"  ({a}, {b})")
+    print(f"Total: {len(pairs)} pairs (= φ(9) = 6)")
 
+    # Verify against actual vampire numbers
+    print("\nVerification against actual vampire numbers:")
+    for v, (x, y) in vampires_4:
+        xm, ym = x % 9, y % 9
+        constraint = ((xm - 1) * (ym - 1)) % 9
+        status = "✓" if constraint == 1 else "✗"
+        print(f"  {v} = {x} × {y}: x≡{xm}, y≡{ym} mod 9, "
+              f"(x-1)(y-1)≡{constraint} mod 9 {status}")
 
-def demo_enumerate_vampires():
-    """Enumerate and analyze vampire numbers."""
-    print("\n" + "=" * 60)
-    print("VAMPIRE NUMBER ENUMERATION")
-    print("=" * 60)
-
-    # 4-digit vampires
-    vamps_4 = enumerate_vampires(10000)
-    print(f"\n  4-digit vampire numbers ({len(vamps_4)} found):")
-    for v, x, y in vamps_4:
-        print(f"    {v} = {x} × {y}")
-
-    # 6-digit vampires (count only)
-    vamps_6 = enumerate_vampires(1000000)
-    vamps_6_only = [(v, x, y) for v, x, y in vamps_6 if v >= 100000]
-    print(f"\n  6-digit vampire numbers: {len(vamps_6_only)} found")
-    print(f"  First 10: {[(v,x,y) for v,x,y in vamps_6_only[:10]]}")
-
-    # Density analysis
-    total_4 = 9000  # 4-digit numbers
-    total_6 = 900000  # 6-digit numbers
-    print(f"\n  Density of 4-digit vampires: {len(vamps_4)}/{total_4} = {len(vamps_4)/total_4:.6f}")
-    print(f"  Density of 6-digit vampires: {len(vamps_6_only)}/{total_6} = {len(vamps_6_only)/total_6:.6f}")
-
-
-def demo_creature_spectrum():
-    """Demonstrate the Creature Spectrum framework."""
-    print("\n" + "=" * 60)
-    print("THE CREATURE SPECTRUM")
-    print("=" * 60)
-
-    examples = [
-        ("Vampire", 1260, 21, 60),
-        ("Vampire", 1395, 15, 93),
-        ("Ghost", 5082, 66, 77),
-        ("Intermediate", 143, 11, 13),
-        ("Intermediate", 221, 13, 17),
-    ]
-
-    for label, v, x, y in examples:
-        cs = creature_spectrum(v, x, y)
-        nd_v = num_digits(v)
-        nd_xy = num_digits(x) + num_digits(y)
-        print(f"\n  [{label}] {v} = {x} × {y}")
-        print(f"    Spectrum: overlap={cs['overlap']}, deficit={cs['deficit']}, surplus={cs['surplus']}")
-        print(f"    Digit count: v has {nd_v} digits, x+y have {nd_xy} digits")
-        print(f"    Conservation: overlap + deficit = {cs['overlap'] + cs['deficit']} = numDigits(v) ✓")
-        if nd_v == nd_xy:
-            print(f"    Balanced: deficit = surplus = {cs['deficit']} ✓")
-
-
-def demo_ghost_numbers():
-    """Find and analyze ghost numbers."""
-    print("\n" + "=" * 60)
-    print("GHOST NUMBERS")
-    print("=" * 60)
-
-    print("\n  Ghost factorization: 5082 = 66 × 77")
-    print(f"    Digits of 5082: {digit_set(5082)}")
-    print(f"    Digits of 66: {digit_set(66)}")
-    print(f"    Digits of 77: {digit_set(77)}")
-    print(f"    Sets disjoint? {is_ghost(5082, 66, 77)}")
-
-    # Find more ghost numbers
-    print("\n  Searching for ghost numbers up to 10000...")
+    # 3. Ghost numbers
+    print("\n--- GHOST NUMBERS (up to 10000) ---")
     ghosts = []
-    for v in range(4, 10001):
-        facts = find_ghost_factorizations(v)
-        if facts:
-            ghosts.append((v, facts[0]))
-
-    print(f"  Found {len(ghosts)} numbers with ghost factorizations")
-    print(f"  First 20:")
+    for v in range(4, 10000):
+        result = is_ghost(v)
+        if result:
+            ghosts.append((v, result))
+    print(f"Found {len(ghosts)} ghost numbers up to 10000:")
     for v, (x, y) in ghosts[:20]:
-        print(f"    {v} = {x} × {y}  "
-              f"(digits v={digit_set(v)}, x={digit_set(x)}, y={digit_set(y)})")
+        ds_v = digit_set(v)
+        ds_x = digit_set(x)
+        ds_y = digit_set(y)
+        print(f"  {v} = {x} × {y}  (digits v={ds_v}, x={ds_x}, y={ds_y})")
+    if len(ghosts) > 20:
+        print(f"  ... and {len(ghosts) - 20} more")
 
+    # 4. Werewolf numbers
+    print("\n--- WEREWOLF NUMBERS (up to 10000) ---")
+    werewolves = []
+    for v in range(4, 10000):
+        result = is_werewolf(v)
+        if result:
+            werewolves.append((v, result))
+    print(f"Found {len(werewolves)} werewolf numbers up to 10000:")
+    for v, (x, y) in werewolves[:15]:
+        ds_v = digit_set(v)
+        shared = ds_v & (digit_set(x) | digit_set(y))
+        print(f"  {v} = {x} × {y}  (shared digit: {shared})")
+    if len(werewolves) > 15:
+        print(f"  ... and {len(werewolves) - 15} more")
 
-def demo_digit_conservation():
-    """Demonstrate the Digit Conservation Law."""
-    print("\n" + "=" * 60)
-    print("DIGIT CONSERVATION LAW")
-    print("=" * 60)
-    print("\n  Theorem: For balanced factorizations (numDigits(v) = numDigits(x) + numDigits(y)),")
-    print("  the creature spectrum satisfies deficit = surplus.")
-    print("\n  Examples:")
+    # 5. Resonant numbers
+    print("\n--- RESONANT NUMBERS (up to 10000) ---")
+    resonants = []
+    for n in range(4, 10000):
+        result = is_resonant(n)
+        if result:
+            resonants.append((n, result))
+    print(f"Found {len(resonants)} resonant numbers up to 10000")
+    for n, (x, y) in resonants[:15]:
+        print(f"  {n} = {x} × {y}")
 
-    balanced_examples = [
-        (1260, 21, 60),
-        (1395, 15, 93),
-        (5082, 66, 77),
-        (143, 11, 13),
-    ]
+    # 6. Density analysis
+    print("\n--- DENSITY ANALYSIS ---")
+    for k in range(2, 5):
+        lo = 10 ** (2 * k - 1)
+        hi = 10 ** (2 * k)
+        count = sum(1 for v in range(lo, min(hi, lo + 100000))
+                    if is_vampire(v) is not None)
+        sampled = min(hi - lo, 100000)
+        density = count / sampled if sampled > 0 else 0
+        print(f"  {2*k}-digit: {count} vampires in first {sampled} numbers "
+              f"(density ≈ {density:.6f})")
 
-    for v, x, y in balanced_examples:
-        cs = creature_spectrum(v, x, y)
-        nd_v = num_digits(v)
-        nd_xy = num_digits(x) + num_digits(y)
-        balanced = "✓" if nd_v == nd_xy else "✗"
-        conserved = "✓" if cs['deficit'] == cs['surplus'] else "✗"
-        print(f"    {v} = {x} × {y}: balanced={balanced}, "
-              f"deficit={cs['deficit']}, surplus={cs['surplus']}, conserved={conserved}")
+    # 7. Creature overlap analysis
+    print("\n--- CREATURE OVERLAP ANALYSIS ---")
+    v_set = set(v for v, _ in vampires_4)
+    g_set = set(v for v, _ in ghosts if 1000 <= v < 10000)
+    w_set = set(v for v, _ in werewolves if 1000 <= v < 10000)
+    print(f"  4-digit vampires: {len(v_set)}")
+    print(f"  4-digit ghosts: {len(g_set)}")
+    print(f"  4-digit werewolves: {len(w_set)}")
+    print(f"  Vampire ∩ Ghost: {v_set & g_set}")
+    print(f"  Vampire ∩ Werewolf: {v_set & w_set}")
+    print(f"  Ghost ∩ Werewolf: {len(g_set & w_set)} numbers")
 
 
 if __name__ == "__main__":
-    demo_vampire_examples()
-    demo_mod9_constraint()
-    demo_enumerate_vampires()
-    demo_creature_spectrum()
-    demo_ghost_numbers()
-    demo_digit_conservation()
-
-    print("\n" + "=" * 60)
-    print("All demonstrations complete.")
-    print("=" * 60)
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Creature Spectrum of Arithmetic Factorizations
-
-Generates plots showing:
-1. The creature spectrum landscape
-2. Vampire number distribution and density
-3. Fang residue constraint visualization
+Visualization: Density of Arithmetic Creatures by Digit Count
+=============================================================
+Plots the density of vampire, ghost, and werewolf numbers as a
+function of the number of digits, illustrating their asymptotic behavior.
 """
 
 import matplotlib
@@ -192,6 +244,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from collections import Counter
+from math import isqrt, comb, sqrt, pi
 
 
 def digits_of(n):
@@ -208,194 +261,143 @@ def digit_multiset(n):
     return Counter(digits_of(n))
 
 
+def digit_set(n):
+    return set(digits_of(n))
+
+
 def num_digits(n):
     if n == 0:
         return 1
-    c = 0
-    while n > 0:
-        c += 1
-        n //= 10
-    return c
+    return len(digits_of(n))
 
 
-def creature_spectrum(v, x, y):
-    dv = digit_multiset(v)
-    dxy = digit_multiset(x) + digit_multiset(y)
-    overlap = sum((dv & dxy).values())
-    deficit = sum((dv - dxy).values())
-    surplus = sum((dxy - dv).values())
-    return overlap, deficit, surplus
+def is_vampire(v):
+    d = num_digits(v)
+    if d < 4 or d % 2 != 0:
+        return False
+    n = d // 2
+    lo = 10 ** (n - 1)
+    hi = 10 ** n
+    target = digit_multiset(v)
+    for x in range(lo, hi):
+        if v % x != 0:
+            continue
+        y = v // x
+        if y < x or y >= hi or num_digits(y) != n:
+            continue
+        if x % 10 == 0 and y % 10 == 0:
+            continue
+        if digit_multiset(x) + digit_multiset(y) == target:
+            return True
+    return False
 
 
-def enumerate_vampires(limit):
-    vampires = []
-    nd = 4
-    while 10**(nd-1) < limit:
-        n = nd // 2
-        lo = 10**(n-1)
-        hi = 10**n
-        v_lo = max(10**(nd-1), lo * lo)
-        v_hi = min(limit, 10**nd)
-        for x in range(lo, hi):
-            y_lo = max(lo, (v_lo + x - 1) // x)
-            y_hi = min(hi - 1, (v_hi - 1) // x)
-            if y_lo > y_hi:
-                continue
-            for y in range(max(x, y_lo), y_hi + 1):
-                v = x * y
-                if v >= v_hi or v < v_lo:
-                    continue
-                if x % 10 == 0 and y % 10 == 0:
-                    continue
-                dv = digit_multiset(v)
-                dxy = digit_multiset(x) + digit_multiset(y)
-                if dv == dxy:
-                    vampires.append((v, x, y))
-        nd += 2
-    vampires.sort()
-    return vampires
+def is_ghost(v):
+    dv = digit_set(v)
+    for x in range(2, isqrt(v) + 1):
+        if v % x != 0:
+            continue
+        y = v // x
+        if y <= 1:
+            continue
+        if dv.isdisjoint(digit_set(x)) and dv.isdisjoint(digit_set(y)):
+            return True
+    return False
 
 
-def plot_fang_residues():
-    """Plot the valid fang residue pairs mod 9."""
-    fig, ax = plt.subplots(1, 1, figsize=(8, 7))
-
-    # Create the 9x9 grid
-    grid = np.zeros((9, 9))
-    valid = []
-    for a in range(9):
-        for b in range(9):
-            if (a * b) % 9 == (a + b) % 9:
-                grid[a][b] = 1
-                valid.append((a, b))
-
-    ax.imshow(grid, cmap='RdYlGn', interpolation='nearest', origin='lower',
-              vmin=0, vmax=1)
-
-    for a in range(9):
-        for b in range(9):
-            color = 'white' if grid[a][b] == 1 else 'gray'
-            weight = 'bold' if grid[a][b] == 1 else 'normal'
-            ax.text(b, a, f'({a},{b})', ha='center', va='center',
-                    fontsize=7, color=color, fontweight=weight)
-
-    ax.set_xlabel('b mod 9', fontsize=12)
-    ax.set_ylabel('a mod 9', fontsize=12)
-    ax.set_title('Valid Vampire Fang Residue Pairs (mod 9)\n'
-                 'Green = valid, Red = forbidden\n'
-                 'Only 6 of 81 pairs allowed (92.6% exclusion)',
-                 fontsize=13)
-    ax.set_xticks(range(9))
-    ax.set_yticks(range(9))
-
-    plt.tight_layout()
-    plt.savefig('fang_residues.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved fang_residues.png")
+def is_werewolf(v):
+    dv = digit_set(v)
+    for x in range(2, isqrt(v) + 1):
+        if v % x != 0:
+            continue
+        y = v // x
+        if y <= 1:
+            continue
+        shared = dv & (digit_set(x) | digit_set(y))
+        if len(shared) == 1:
+            return True
+    return False
 
 
-def plot_vampire_distribution():
-    """Plot vampire number distribution."""
-    vampires = enumerate_vampires(1000000)
-    fig, axes = plt.subplots(2, 1, figsize=(12, 10))
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
-    # Plot 1: 4-digit vampires
-    v4 = [v for v, _, _ in vampires if 1000 <= v < 10000]
-    axes[0].hist(v4, bins=50, color='darkred', alpha=0.8, edgecolor='black')
-    axes[0].set_xlabel('Value', fontsize=12)
-    axes[0].set_ylabel('Count', fontsize=12)
-    axes[0].set_title(f'Distribution of 4-digit Vampire Numbers ({len(v4)} total)',
-                      fontsize=13)
-
-    # Plot 2: 6-digit vampires
-    v6 = [v for v, _, _ in vampires if 100000 <= v < 1000000]
-    axes[1].hist(v6, bins=100, color='crimson', alpha=0.8, edgecolor='black')
-    axes[1].set_xlabel('Value', fontsize=12)
-    axes[1].set_ylabel('Count', fontsize=12)
-    axes[1].set_title(f'Distribution of 6-digit Vampire Numbers ({len(v6)} total)',
-                      fontsize=13)
-
-    plt.tight_layout()
-    plt.savefig('vampire_distribution.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved vampire_distribution.png")
-
-
-def plot_creature_spectrum_landscape():
-    """Plot creature spectra for random factorizations."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-
-    overlaps = []
-    deficits = []
-    colors = []
-    labels_added = set()
-
-    # Vampire factorizations
-    vampires = enumerate_vampires(10000)
-    for v, x, y in vampires:
-        o, d, s = creature_spectrum(v, x, y)
-        overlaps.append(o)
-        deficits.append(d)
-        colors.append('red')
-
-    # Ghost factorizations
-    for v in range(4, 5000):
-        for x in range(2, int(v**0.5) + 1):
-            if v % x != 0:
-                continue
-            y = v // x
-            if y <= 1:
-                continue
-            dv = set(digits_of(v))
-            dx = set(digits_of(x))
-            dy = set(digits_of(y))
-            if len(dv & dx) == 0 and len(dv & dy) == 0:
-                o, d, s = creature_spectrum(v, x, y)
-                overlaps.append(o)
-                deficits.append(d + np.random.uniform(-0.1, 0.1))
-                colors.append('blue')
-                break
-
-    # Random intermediate factorizations
-    np.random.seed(42)
-    for _ in range(200):
-        v = np.random.randint(100, 10000)
-        for x in range(2, int(v**0.5) + 1):
-            if v % x == 0:
-                y = v // x
-                o, d, s = creature_spectrum(v, x, y)
-                if d > 0 and o > 0:
-                    overlaps.append(o + np.random.uniform(-0.1, 0.1))
-                    deficits.append(d + np.random.uniform(-0.1, 0.1))
-                    colors.append('green')
-                break
-
-    ax.scatter(overlaps, deficits, c=colors, alpha=0.6, s=30, edgecolors='black',
-               linewidth=0.3)
-
-    # Legend
-    from matplotlib.patches import Patch
-    legend_elements = [
-        Patch(facecolor='red', label='Vampire (overlap=max, deficit=0)'),
-        Patch(facecolor='blue', label='Ghost (overlap=0)'),
-        Patch(facecolor='green', label='Intermediate'),
+    # Panel 1: Creature counts by digit range
+    ranges = [
+        (2, 10, 100),
+        (3, 100, 1000),
+        (4, 1000, 10000),
     ]
-    ax.legend(handles=legend_elements, loc='upper right', fontsize=11)
 
-    ax.set_xlabel('Overlap (shared digits)', fontsize=13)
-    ax.set_ylabel('Deficit (missing digits)', fontsize=13)
-    ax.set_title('The Creature Spectrum Landscape\n'
-                 'Every factorization v = x × y maps to a point (overlap, deficit)',
-                 fontsize=14)
+    digit_counts = []
+    vampire_counts = []
+    ghost_counts = []
+    werewolf_counts = []
+
+    for d, lo, hi in ranges:
+        vc = gc = wc = 0
+        for v in range(lo, hi):
+            if d % 2 == 0 and is_vampire(v):
+                vc += 1
+            if is_ghost(v):
+                gc += 1
+            if is_werewolf(v):
+                wc += 1
+        digit_counts.append(d)
+        vampire_counts.append(vc)
+        ghost_counts.append(gc)
+        werewolf_counts.append(wc)
+
+    x_pos = np.arange(len(digit_counts))
+    width = 0.25
+
+    axes[0].bar(x_pos - width, vampire_counts, width, label='Vampire', color='#8B0000')
+    axes[0].bar(x_pos, ghost_counts, width, label='Ghost', color='#4169E1')
+    axes[0].bar(x_pos + width, werewolf_counts, width, label='Werewolf', color='#556B2F')
+    axes[0].set_xlabel('Number of Digits')
+    axes[0].set_ylabel('Count')
+    axes[0].set_title('Arithmetic Creatures by Digit Count')
+    axes[0].set_xticks(x_pos)
+    axes[0].set_xticklabels(digit_counts)
+    axes[0].legend()
+    axes[0].set_yscale('log')
+
+    # Panel 2: Mod-9 constraint visualization
+    grid = np.zeros((9, 9))
+    for a in range(9):
+        for b in range(9):
+            if ((a - 1) * (b - 1)) % 9 == 1:
+                grid[a][b] = 1
+
+    axes[1].imshow(grid, cmap='RdYlGn', interpolation='nearest', origin='lower')
+    axes[1].set_xlabel('b mod 9')
+    axes[1].set_ylabel('a mod 9')
+    axes[1].set_title('Valid Fang Pairs (a,b) mod 9\n(a-1)(b-1) ≡ 1 (mod 9)')
+    axes[1].set_xticks(range(9))
+    axes[1].set_yticks(range(9))
+    for i in range(9):
+        for j in range(9):
+            color = 'white' if grid[i][j] > 0 else 'gray'
+            axes[1].text(j, i, f'({i},{j})', ha='center', va='center',
+                        fontsize=6, color=color)
+
+    # Panel 3: Theoretical density vs observed
+    ns = list(range(2, 7))
+    theoretical = [comb(2*n, n) / 10**n for n in ns]
+
+    axes[2].semilogy(ns, theoretical, 'o-', color='#8B0000', label='C(2n,n)/10^n')
+    axes[2].semilogy(ns, [1/sqrt(pi*n) for n in ns], 's--', color='#4169E1',
+                     label='1/√(πn) (Stirling)')
+    axes[2].set_xlabel('n (half-digit count)')
+    axes[2].set_ylabel('Expected fang density')
+    axes[2].set_title('Vampire Number Density Bound\n(Multinomial Counting)')
+    axes[2].legend()
+    axes[2].grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('creature_spectrum.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved creature_spectrum.png")
+    plt.savefig('creature_density.png', dpi=150, bbox_inches='tight')
+    print("Saved creature_density.png")
 
 
 if __name__ == "__main__":
-    plot_fang_residues()
-    plot_vampire_distribution()
-    plot_creature_spectrum_landscape()
-    print("\nAll visualizations saved.")
+    main()
