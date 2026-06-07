@@ -1,273 +1,314 @@
 #!/usr/bin/env python3
 """
-Demonstration of the Substitution Tiling Spectrum for the Hat Monotile.
+Inflation Algebra Demo: The Hat Monotile Spectrum
 
-This script computes numerical examples illustrating the key theorems:
-1. Tile count growth under substitution
-2. Area growth law verification
-3. Spectral invariance across the hat spectrum
-4. Eigenvalue computations
-5. Frequency convergence to the Perron eigenvector
+Demonstrates the algebraic properties of the hat substitution matrix
+and the inflation algebra framework for aperiodic tilings.
 """
 
 import numpy as np
-from typing import Tuple, List
+from typing import List, Tuple
 
-# Hat substitution matrix
-HAT_MATRIX = np.array([[4, 6], [2, 4]], dtype=float)
+# The hat substitution matrix
+M_HAT = np.array([
+    [2, 1, 1, 0],
+    [1, 2, 0, 1],
+    [1, 0, 2, 1],
+    [0, 1, 1, 2]
+], dtype=int)
 
-# Hat expansion factor
-HAT_EXPANSION = 1 + np.sqrt(3)
-
-# Hat area vector
-HAT_AREA = np.array([1.0, np.sqrt(3)])
-
-
-def tile_count(M: np.ndarray, k: int, j: int) -> np.ndarray:
-    """Compute tile count vector after k substitutions starting from tile j."""
-    Mk = np.linalg.matrix_power(M.astype(int), k)
-    return Mk[:, j]
-
-
-def total_area(M: np.ndarray, k: int, j: int, area: np.ndarray) -> float:
-    """Compute total area after k substitutions."""
-    counts = tile_count(M, k, j)
-    return float(np.dot(counts, area))
-
-
-def verify_area_growth_law():
-    """Verify Theorem 3.1: totalArea(k,j) = lambda^(2k) * area(j)."""
+def demonstrate_basic_properties():
+    """Show basic algebraic properties of the hat matrix."""
     print("=" * 60)
-    print("THEOREM 3.1: Area Growth Law")
-    print("=" * 60)
-    print(f"Expansion factor lambda = 1 + sqrt(3) = {HAT_EXPANSION:.6f}")
-    print(f"lambda^2 = {HAT_EXPANSION**2:.6f} = 4 + 2*sqrt(3)")
-    print()
-    
-    for j in range(2):
-        print(f"Starting tile type {j} (area = {HAT_AREA[j]:.6f}):")
-        print(f"  {'k':>3} | {'totalArea(k,j)':>16} | {'lambda^(2k)*a_j':>16} | {'match?':>6}")
-        print(f"  {'-'*3}-+-{'-'*16}-+-{'-'*16}-+-{'-'*6}")
-        for k in range(7):
-            actual = total_area(HAT_MATRIX, k, j, HAT_AREA)
-            predicted = HAT_EXPANSION**(2*k) * HAT_AREA[j]
-            match = abs(actual - predicted) < 1e-6
-            print(f"  {k:3d} | {actual:16.4f} | {predicted:16.4f} | {'  YES' if match else '   NO'}")
-        print()
-
-
-def verify_spectral_invariance():
-    """Verify Theorem 3.2: Expansion factor is constant across the spectrum."""
-    print("=" * 60)
-    print("THEOREM 3.2: Spectral Invariance")
-    print("=" * 60)
-    print("Hat spectrum: area(t) = (1+t) * [1, sqrt(3)]")
-    print()
-    
-    eigenvalues = np.linalg.eigvals(HAT_MATRIX)
-    print(f"Eigenvalues of M: {eigenvalues[0]:.6f}, {eigenvalues[1]:.6f}")
-    print(f"Predicted: {4 + 2*np.sqrt(3):.6f}, {4 - 2*np.sqrt(3):.6f}")
-    print()
-    
-    print(f"  {'t':>5} | {'scale c(t)':>10} | {'lambda(t)':>10} | {'constant?':>9}")
-    print(f"  {'-'*5}-+-{'-'*10}-+-{'-'*10}-+-{'-'*9}")
-    
-    for t in np.linspace(0, 1, 11):
-        c = 1 + t
-        area_t = c * HAT_AREA
-        # Verify eigenvector equation: M^T * area_t = lambda^2 * area_t
-        lhs = HAT_MATRIX.T @ area_t
-        lambda_sq = lhs[0] / area_t[0]
-        lambda_t = np.sqrt(lambda_sq)
-        match = abs(lambda_t - HAT_EXPANSION) < 1e-10
-        print(f"  {t:5.2f} | {c:10.4f} | {lambda_t:10.6f} | {'  YES' if match else '   NO'}")
-    print()
-
-
-def verify_eigenvalue_properties():
-    """Verify Theorems 4.2-4.4: Spectral data of the hat matrix."""
-    print("=" * 60)
-    print("THEOREMS 4.2-4.4: Hat Matrix Spectral Data")
+    print("INFLATION ALGEBRA: Hat Monotile Substitution Matrix")
     print("=" * 60)
     
-    trace = np.trace(HAT_MATRIX)
-    det = np.linalg.det(HAT_MATRIX)
-    eigenvalues = sorted(np.linalg.eigvals(HAT_MATRIX), reverse=True)
+    print(f"\nHat substitution matrix M:")
+    print(M_HAT)
     
-    print(f"Trace(M) = {trace:.0f} (expected: 8)")
-    print(f"Det(M) = {det:.0f} (expected: 4)")
-    print()
-    print(f"Dominant eigenvalue:    {eigenvalues[0]:.6f} (expected: {4 + 2*np.sqrt(3):.6f})")
-    print(f"Subdominant eigenvalue: {eigenvalues[1]:.6f} (expected: {4 - 2*np.sqrt(3):.6f})")
-    print()
-    print(f"Product of eigenvalues: {eigenvalues[0] * eigenvalues[1]:.6f} (= det = 4)")
-    print(f"Sum of eigenvalues:     {eigenvalues[0] + eigenvalues[1]:.6f} (= trace = 8)")
-    print()
-    print(f"Pisot-like property: 0 < {eigenvalues[1]:.6f} < 1? {0 < eigenvalues[1] < 1}")
-    print()
-
-
-def verify_frequency_convergence():
-    """Demonstrate frequency convergence to the Perron eigenvector."""
-    print("=" * 60)
-    print("FREQUENCY CONVERGENCE (Pisot-like property)")
-    print("=" * 60)
-    print("Tile type ratios converge to [1, sqrt(3)] direction")
-    print(f"Expected ratio H*/H = sqrt(3) = {np.sqrt(3):.6f}")
-    print()
+    print(f"\nTrace(M) = {np.trace(M_HAT)}")
+    print(f"Det(M) = {int(round(np.linalg.det(M_HAT)))}")
     
-    for j in range(2):
-        print(f"Starting from tile type {j}:")
-        print(f"  {'k':>3} | {'H count':>10} | {'H* count':>10} | {'ratio H*/H':>12} | {'error':>12}")
-        print(f"  {'-'*3}-+-{'-'*10}-+-{'-'*10}-+-{'-'*12}-+-{'-'*12}")
-        for k in range(1, 10):
-            counts = tile_count(HAT_MATRIX, k, j)
-            ratio = counts[1] / counts[0] if counts[0] > 0 else float('inf')
-            error = abs(ratio - 1/np.sqrt(3))
-            print(f"  {k:3d} | {counts[0]:10.0f} | {counts[1]:10.0f} | {ratio:12.8f} | {error:12.2e}")
-        print()
-
-
-def verify_irrational_obstruction():
-    """Demonstrate Theorem 3.3: Irrational expansion obstructs commensurability."""
-    print("=" * 60)
-    print("THEOREM 3.3: Irrational Expansion Obstruction")
-    print("=" * 60)
-    print()
-    print(f"lambda^2 = {HAT_EXPANSION**2:.10f} = 4 + 2*sqrt(3)")
-    print(f"sqrt(3) = {np.sqrt(3):.10f}")
-    print()
-    print("If the system were rationally commensurable:")
-    print("  area(1)/area(0) = sqrt(3) would need to be rational")
-    print("  But sqrt(3) is irrational (3 is prime)")
-    print()
-    print("Additionally, lambda^2 = 4 + 2*sqrt(3) is irrational")
-    print("So the eigenvector equation would give:")
-    print(f"  sum_i M(i,j0) * q_i = lambda^2 = {HAT_EXPANSION**2:.6f}")
-    print("  Left side is rational, right side is irrational: CONTRADICTION")
-    print()
-
-
-def growth_bound_demo():
-    """Demonstrate Theorem 3.4: Total count upper bound."""
-    print("=" * 60)
-    print("THEOREM 3.4: Total Count Upper Bound")
-    print("=" * 60)
-    print(f"a_min = min(1, sqrt(3)) = 1")
-    print(f"Bound: totalCount(k,j) <= lambda^(2k) * a_j / a_min")
-    print()
+    M_minus_I = M_HAT - np.eye(4, dtype=int)
+    print(f"\nDet(M - I) = {int(round(np.linalg.det(M_minus_I)))}")
+    print(f"  → Algebraic aperiodicity: det(M-I) ≠ 0 ✓")
     
-    a_min = min(HAT_AREA)
-    for j in range(2):
-        print(f"Starting from tile type {j}:")
-        print(f"  {'k':>3} | {'totalCount':>12} | {'upper bound':>12} | {'satisfied?':>10}")
-        print(f"  {'-'*3}-+-{'-'*12}-+-{'-'*12}-+-{'-'*10}")
-        for k in range(8):
-            counts = tile_count(HAT_MATRIX, k, j)
-            total = int(np.sum(counts))
-            bound = HAT_EXPANSION**(2*k) * HAT_AREA[j] / a_min
-            satisfied = total <= bound + 1e-6
-            print(f"  {k:3d} | {total:12d} | {bound:12.1f} | {'    YES' if satisfied else '     NO'}")
-        print()
+    row_sums = M_HAT.sum(axis=1)
+    print(f"\nRow sums: {row_sums}")
+    print(f"  → Every metatile decomposes into exactly {row_sums[0]} pieces")
+    
+    print(f"\nSymmetry: M = M^T? {np.array_equal(M_HAT, M_HAT.T)}")
 
+def demonstrate_eigenvalues():
+    """Compute and analyze eigenvalues."""
+    print("\n" + "=" * 60)
+    print("SPECTRAL ANALYSIS")
+    print("=" * 60)
+    
+    eigenvalues, eigenvectors = np.linalg.eig(M_HAT)
+    eigenvalues = np.sort(np.real(eigenvalues))[::-1]
+    
+    print(f"\nEigenvalues: {eigenvalues}")
+    print(f"Perron eigenvalue: λ₁ = {eigenvalues[0]}")
+    print(f"  → Growth rate: tiles grow as {eigenvalues[0]}^k per substitution level")
+    
+    # Check roots of unity
+    print(f"\nRoots-of-unity check:")
+    for i, ev in enumerate(eigenvalues):
+        is_rou = any(abs(ev**k - 1) < 1e-10 for k in range(1, 100))
+        print(f"  λ_{i+1} = {ev}: root of unity? {'YES ⚠' if is_rou else 'NO ✓'}")
+    
+    print(f"\n  → Strong aperiodicity: no eigenvalue is a root of unity ✓")
+
+def demonstrate_primitivity():
+    """Check primitivity by computing powers of M."""
+    print("\n" + "=" * 60)
+    print("PRIMITIVITY ANALYSIS")
+    print("=" * 60)
+    
+    for k in range(1, 5):
+        Mk = np.linalg.matrix_power(M_HAT, k)
+        all_positive = np.all(Mk > 0)
+        min_entry = Mk.min()
+        print(f"\nM^{k}:")
+        print(Mk)
+        print(f"  All entries positive? {all_positive} (min = {min_entry})")
+        if all_positive:
+            print(f"  → Primitive! Primitivity index = {k}")
+            break
+
+def demonstrate_complexity():
+    """Compute the complexity trace function."""
+    print("\n" + "=" * 60)
+    print("COMPLEXITY TRACE FUNCTION c(k) = Tr(M^k)")
+    print("=" * 60)
+    
+    print(f"\n{'k':>4} | {'c(k)':>12} | {'c(k)/4^k':>12}")
+    print("-" * 35)
+    for k in range(8):
+        Mk = np.linalg.matrix_power(M_HAT, k)
+        ck = np.trace(Mk)
+        ratio = ck / (4**k) if k > 0 else float('inf')
+        print(f"{k:>4} | {ck:>12} | {ratio:>12.6f}")
+    
+    print(f"\n  → c(k)/4^k → 1 as k → ∞ (Perron eigenvalue dominates)")
+
+def demonstrate_tile_frequencies():
+    """Compute tile type frequencies via power iteration."""
+    print("\n" + "=" * 60)
+    print("TILE TYPE FREQUENCIES (Power Iteration)")
+    print("=" * 60)
+    
+    metatile_names = ['H (Hat)', 'T (Thin)', 'P (Para)', 'F (Flipped)']
+    
+    v = np.array([1.0, 0, 0, 0])  # Start with one H tile
+    for k in range(10):
+        total = v.sum()
+        if total > 0:
+            freq = v / total
+        else:
+            freq = v
+        if k in [0, 1, 2, 5, 9]:
+            print(f"\nAfter {k} substitutions (total tiles = {int(total)}):")
+            for name, f in zip(metatile_names, freq):
+                bar = '█' * int(f * 40)
+                print(f"  {name:>15}: {f:.6f} {bar}")
+        v = M_HAT @ v
+    
+    print(f"\n  → All tile types converge to equal frequency (1/4)")
+    print(f"     This is because (1,1,1,1) is the Perron eigenvector")
+
+def demonstrate_aperiodicity_iterates():
+    """Check aperiodicity at multiple iterate levels."""
+    print("\n" + "=" * 60)
+    print("APERIODICITY AT ALL ITERATE LEVELS")
+    print("=" * 60)
+    
+    print(f"\n{'k':>4} | {'det(M^k - I)':>15} | {'Aperiodic?':>10}")
+    print("-" * 35)
+    for k in range(1, 11):
+        Mk = np.linalg.matrix_power(M_HAT, k)
+        det_val = int(round(np.linalg.det(Mk - np.eye(4))))
+        aperiodic = det_val != 0
+        print(f"{k:>4} | {det_val:>15} | {'YES ✓' if aperiodic else 'NO ✗':>10}")
+    
+    print(f"\n  → Aperiodic at ALL levels (no eigenvalue is a root of unity)")
+
+def demonstrate_counterexample():
+    """Show the counterexample to 'det(M-I)≠0 implies det(M^k-I)≠0'."""
+    print("\n" + "=" * 60)
+    print("COUNTEREXAMPLE: Naive Aperiodicity Criterion is WRONG")
+    print("=" * 60)
+    
+    M_counter = np.array([[-1]])
+    print(f"\nMatrix M = [{M_counter[0,0]}]")
+    print(f"det(M - I) = {int(M_counter[0,0] - 1)} ≠ 0  ← passes naive criterion")
+    print(f"det(M² - I) = {int(M_counter[0,0]**2 - 1)} = 0  ← FAILS at k=2!")
+    print(f"\n  → eigenvalue -1 is a 2nd root of unity: (-1)² = 1")
+    print(f"  → Correct criterion: no eigenvalue is ANY root of unity")
 
 if __name__ == "__main__":
-    print("SUBSTITUTION TILING SPECTRUM — NUMERICAL DEMONSTRATIONS")
+    demonstrate_basic_properties()
+    demonstrate_eigenvalues()
+    demonstrate_primitivity()
+    demonstrate_complexity()
+    demonstrate_tile_frequencies()
+    demonstrate_aperiodicity_iterates()
+    demonstrate_counterexample()
+    print("\n" + "=" * 60)
+    print("DEMO COMPLETE")
     print("=" * 60)
-    print()
-    
-    verify_area_growth_law()
-    verify_spectral_invariance()
-    verify_eigenvalue_properties()
-    verify_frequency_convergence()
-    verify_irrational_obstruction()
-    growth_bound_demo()
-    
-    print("All demonstrations complete.")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Hat Substitution Spectrum eigenvalue structure
-and tile count growth.
+Visualization: Inflation Algebra Spectral Analysis
+
+Produces plots of eigenvalue spectra, complexity growth, and tile
+frequency convergence for the hat substitution matrix.
 """
+
 import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
+import matplotlib.colors as mcolors
 
-matplotlib.rcParams['font.size'] = 12
+def make_hat_matrix():
+    return np.array([[2,1,1,0],[1,2,0,1],[1,0,2,1],[0,1,1,2]], dtype=float)
 
+def plot_complexity_growth():
+    M = make_hat_matrix()
+    ks = list(range(0, 12))
+    complexities = [int(np.trace(np.linalg.matrix_power(M, k))) for k in ks]
+    
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+    
+    # Linear scale
+    ax1.semilogy(ks, complexities, 'o-', color='#2196F3', markersize=8, linewidth=2)
+    ax1.set_xlabel('Substitution Level k', fontsize=12)
+    ax1.set_ylabel('Complexity c(k) = Tr(M^k)', fontsize=12)
+    ax1.set_title('Complexity Growth (Log Scale)', fontsize=14)
+    ax1.grid(True, alpha=0.3)
+    
+    # Normalized
+    normalized = [c / (4**k) if k > 0 else 4 for k, c in zip(ks, complexities)]
+    ax2.plot(ks[1:], normalized[1:], 'o-', color='#E91E63', markersize=8, linewidth=2)
+    ax2.axhline(y=1, color='gray', linestyle='--', alpha=0.5, label='Perron limit = 1')
+    ax2.set_xlabel('Substitution Level k', fontsize=12)
+    ax2.set_ylabel('c(k) / 4^k', fontsize=12)
+    ax2.set_title('Normalized Complexity → Perron Eigenvalue', fontsize=14)
+    ax2.legend(fontsize=11)
+    ax2.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('viz_complexity_growth.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_complexity_growth.png")
+
+def plot_tile_frequencies():
+    M = make_hat_matrix()
+    names = ['H (Hat)', 'T (Thin)', 'P (Para)', 'F (Flip)']
+    colors = ['#2196F3', '#4CAF50', '#FF9800', '#E91E63']
+    
+    max_k = 10
+    freqs = np.zeros((max_k + 1, 4))
+    v = np.array([1.0, 0, 0, 0])
+    
+    for k in range(max_k + 1):
+        total = v.sum()
+        if total > 0:
+            freqs[k] = v / total
+        v = M @ v
+    
+    fig, ax = plt.subplots(figsize=(10, 6))
+    for i in range(4):
+        ax.plot(range(max_k + 1), freqs[:, i], 'o-', color=colors[i], 
+                label=names[i], markersize=6, linewidth=2)
+    
+    ax.axhline(y=0.25, color='gray', linestyle='--', alpha=0.5, label='Limit = 1/4')
+    ax.set_xlabel('Substitution Level k', fontsize=12)
+    ax.set_ylabel('Tile Type Frequency', fontsize=12)
+    ax.set_title('Tile Frequency Convergence to Perron Eigenvector', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(-0.05, 1.05)
+    
+    plt.tight_layout()
+    plt.savefig('viz_tile_frequencies.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_tile_frequencies.png")
+
+def plot_aperiodicity_determinants():
+    M = make_hat_matrix()
+    ks = list(range(1, 16))
+    dets = []
+    for k in ks:
+        Mk = np.linalg.matrix_power(M, k)
+        det_val = np.linalg.det(Mk - np.eye(4))
+        dets.append(det_val)
+    
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    colors_bar = ['#4CAF50' if abs(d) > 0.5 else '#F44336' for d in dets]
+    ax.bar(ks, [np.log10(abs(d)) if abs(d) > 0.5 else 0 for d in dets], 
+           color=colors_bar, alpha=0.8, edgecolor='black', linewidth=0.5)
+    
+    ax.set_xlabel('Iterate k', fontsize=12)
+    ax.set_ylabel('log₁₀|det(M^k - I)|', fontsize=12)
+    ax.set_title('Aperiodicity Certificate: det(M^k - I) ≠ 0 for all k', fontsize=14)
+    ax.grid(True, alpha=0.3, axis='y')
+    
+    # Add text
+    ax.text(0.95, 0.95, 'Green = Aperiodic (det ≠ 0)', 
+            transform=ax.transAxes, fontsize=11, ha='right', va='top',
+            color='#4CAF50', fontweight='bold')
+    
+    plt.tight_layout()
+    plt.savefig('viz_aperiodicity.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_aperiodicity.png")
 
 def plot_eigenvalue_spectrum():
-    """Plot eigenvalues and Pisot-like property of the hat matrix."""
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-    # Panel 1: Eigenvalues on the real line
-    ax = axes[0]
-    lam1 = 4 + 2 * np.sqrt(3)
-    lam2 = 4 - 2 * np.sqrt(3)
-
-    ax.axhline(y=0, color='gray', linewidth=0.5)
-    ax.axvline(x=1, color='gray', linewidth=0.5, linestyle='--', label='|λ|=1')
-
-    ax.plot(lam1, 0, 'ro', markersize=12, label=f'λ₁ = 4+2√3 ≈ {lam1:.3f}')
-    ax.plot(lam2, 0, 'bs', markersize=12, label=f'λ₂ = 4-2√3 ≈ {lam2:.3f}')
-
-    ax.fill_betweenx([-0.3, 0.3], 0, 1, alpha=0.15, color='green', label='|λ|<1 (contracting)')
-    ax.fill_betweenx([-0.3, 0.3], 1, 8, alpha=0.1, color='red', label='|λ|>1 (expanding)')
-
-    ax.set_xlim(-0.5, 8.5)
-    ax.set_ylim(-0.5, 0.5)
-    ax.set_xlabel('Eigenvalue')
-    ax.set_title('Hat Matrix Eigenvalues\n(Pisot-like structure)')
-    ax.legend(fontsize=9, loc='upper left')
-
-    # Panel 2: Tile count growth
-    ax = axes[1]
-    M = np.array([[4, 6], [2, 4]])
-    ks = range(0, 8)
-    counts_0 = [np.sum(np.linalg.matrix_power(M, k)[:, 0]) for k in ks]
-    counts_1 = [np.sum(np.linalg.matrix_power(M, k)[:, 1]) for k in ks]
-    growth = [lam1**k for k in ks]
-
-    ax.semilogy(ks, counts_0, 'ro-', label='Start from H', markersize=6)
-    ax.semilogy(ks, counts_1, 'bs-', label='Start from H*', markersize=6)
-    ax.semilogy(ks, growth, 'k--', alpha=0.5, label=f'λ₁^k (growth rate)')
-
-    ax.set_xlabel('Substitution steps k')
-    ax.set_ylabel('Total tile count')
-    ax.set_title('Tile Count Growth\n(exponential at rate λ₁)')
-    ax.legend()
+    M = make_hat_matrix()
+    evs = np.linalg.eigvals(M)
+    
+    fig, ax = plt.subplots(figsize=(8, 8))
+    
+    # Unit circle
+    theta = np.linspace(0, 2*np.pi, 100)
+    ax.plot(np.cos(theta), np.sin(theta), 'k--', alpha=0.3, label='Unit circle')
+    
+    # Eigenvalues
+    for i, ev in enumerate(sorted(evs, key=lambda x: -abs(x))):
+        color = '#E91E63' if abs(ev) > 1 else ('#2196F3' if abs(ev) > 0.01 else '#9E9E9E')
+        size = 200 if abs(ev) > 1 else 150
+        ax.scatter(np.real(ev), np.imag(ev), s=size, c=color, zorder=5, edgecolors='black')
+        ax.annotate(f'λ={np.real(ev):.0f}', (np.real(ev), np.imag(ev)), 
+                   textcoords="offset points", xytext=(10, 10), fontsize=11)
+    
+    ax.set_xlabel('Re(λ)', fontsize=12)
+    ax.set_ylabel('Im(λ)', fontsize=12)
+    ax.set_title('Eigenvalue Spectrum of Hat Substitution Matrix', fontsize=14)
+    ax.set_aspect('equal')
     ax.grid(True, alpha=0.3)
-
-    # Panel 3: Frequency convergence
-    ax = axes[2]
-    target_ratio = 1 / np.sqrt(3)
-    ratios_0 = []
-    ratios_1 = []
-    for k in range(1, 12):
-        c0 = np.linalg.matrix_power(M, k)[:, 0]
-        c1 = np.linalg.matrix_power(M, k)[:, 1]
-        ratios_0.append(c0[1] / c0[0] if c0[0] > 0 else 0)
-        ratios_1.append(c1[1] / c1[0] if c1[0] > 0 else 0)
-
-    ks2 = range(1, 12)
-    ax.plot(ks2, ratios_0, 'ro-', label='Start from H', markersize=6)
-    ax.plot(ks2, ratios_1, 'bs-', label='Start from H*', markersize=6)
-    ax.axhline(y=target_ratio, color='green', linestyle='--',
-               label=f'Perron ratio 1/√3 ≈ {target_ratio:.4f}')
-
-    ax.set_xlabel('Substitution steps k')
-    ax.set_ylabel('Ratio H*/H')
-    ax.set_title('Frequency Convergence\n(to Perron eigenvector)')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
+    ax.axhline(y=0, color='k', linewidth=0.5)
+    ax.axvline(x=0, color='k', linewidth=0.5)
+    
+    # Annotations
+    ax.text(0.05, 0.95, 'No eigenvalue on unit circle\n→ Strong aperiodicity', 
+            transform=ax.transAxes, fontsize=11, va='top',
+            bbox=dict(boxstyle='round', facecolor='#E8F5E9', alpha=0.8))
+    
     plt.tight_layout()
-    plt.savefig('hat_spectrum_analysis.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print("Saved: hat_spectrum_analysis.png")
-
+    plt.savefig('viz_eigenvalue_spectrum.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_eigenvalue_spectrum.png")
 
 if __name__ == "__main__":
+    plot_complexity_growth()
+    plot_tile_frequencies()
+    plot_aperiodicity_determinants()
     plot_eigenvalue_spectrum()
+    print("\nAll visualizations generated successfully!")

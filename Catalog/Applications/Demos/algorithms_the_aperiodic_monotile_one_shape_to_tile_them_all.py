@@ -1,260 +1,189 @@
 #!/usr/bin/env python3
 """
-Algorithms for Substitution Tiling Systems.
+Algorithms for Inflation Algebra Analysis
 
-Type-hinted implementations of the core algorithms from the substitution
-spectrum theory of aperiodic monotiles.
+Type-hinted implementations of the key algorithms from the inflation
+algebra framework for aperiodic substitution tilings.
 """
 
-from typing import List, Tuple, Optional
 import numpy as np
-from numpy.typing import NDArray
+from typing import List, Tuple, Optional
+from dataclasses import dataclass
 
 
-def substitution_iterate(
-    matrix: NDArray[np.int64],
-    k: int,
-    j: int
-) -> NDArray[np.int64]:
-    """
-    Compute tile count vector after k substitution steps.
+@dataclass
+class InflationAlgebra:
+    """An inflation algebra over n prototile types.
     
-    Args:
-        matrix: n×n substitution matrix M
-        k: number of substitution steps
-        j: starting tile type index
+    Attributes:
+        M: Non-negative integer substitution matrix (n × n)
+        tile_names: Optional names for the prototile types
+    """
+    M: np.ndarray
+    tile_names: Optional[List[str]] = None
+    
+    def __post_init__(self) -> None:
+        assert self.M.ndim == 2, "M must be 2-dimensional"
+        assert self.M.shape[0] == self.M.shape[1], "M must be square"
+        assert np.all(self.M >= 0), "All entries must be non-negative"
+    
+    @property
+    def n(self) -> int:
+        """Number of prototile types."""
+        return self.M.shape[0]
+    
+    def compose(self, other: 'InflationAlgebra') -> 'InflationAlgebra':
+        """Compose two inflation algebras (matrix product)."""
+        assert self.n == other.n, "Dimension mismatch"
+        return InflationAlgebra(M=self.M @ other.M)
+    
+    def iterate(self, k: int) -> 'InflationAlgebra':
+        """k-fold iteration of the substitution."""
+        return InflationAlgebra(M=np.linalg.matrix_power(self.M, k).astype(int))
+    
+    def tile_count(self, k: int) -> np.ndarray:
+        """Tile count matrix after k substitutions: entry (i,j) = count of 
+        tile j after k substitutions of tile i."""
+        return np.linalg.matrix_power(self.M, k)
+    
+    def total_count(self, k: int) -> np.ndarray:
+        """Total tiles after k substitutions for each starting tile type."""
+        return self.tile_count(k).sum(axis=1)
+    
+    def complexity(self, k: int) -> int:
+        """Complexity trace function c(k) = Tr(M^k)."""
+        return int(np.trace(np.linalg.matrix_power(self.M, k)))
+
+
+def check_aperiodicity(alg: InflationAlgebra) -> Tuple[bool, int]:
+    """Check algebraic aperiodicity: det(M - I) ≠ 0.
     
     Returns:
-        Vector of tile counts c where c[i] = (M^k)[i, j]
+        (is_aperiodic, determinant_value)
     """
-    n = matrix.shape[0]
-    Mk = np.linalg.matrix_power(matrix, k)
-    return Mk[:, j]
+    M_minus_I = alg.M - np.eye(alg.n, dtype=int)
+    det_val = int(round(np.linalg.det(M_minus_I)))
+    return det_val != 0, det_val
 
 
-def total_area(
-    matrix: NDArray[np.int64],
-    area: NDArray[np.float64],
-    k: int,
-    j: int
-) -> float:
-    """
-    Compute total area after k substitution steps starting from tile j.
+def check_strong_aperiodicity(alg: InflationAlgebra, max_k: int = 100) -> Tuple[bool, Optional[int]]:
+    """Check strong aperiodicity: det(M^k - I) ≠ 0 for all k in [1, max_k].
     
-    By the Area Growth Law (Theorem 3.1), this equals
-    expansion^(2k) * area[j].
-    
-    Args:
-        matrix: n×n substitution matrix
-        area: positive area vector
-        k: substitution steps
-        j: starting tile type
+    This is equivalent to checking that no eigenvalue is a root of unity.
     
     Returns:
-        Total area of the patch
+        (is_strongly_aperiodic, first_failing_k or None)
     """
-    counts = substitution_iterate(matrix, k, j)
-    return float(np.dot(counts.astype(float), area))
+    for k in range(1, max_k + 1):
+        Mk = np.linalg.matrix_power(alg.M, k)
+        det_val = np.linalg.det(Mk - np.eye(alg.n))
+        if abs(det_val) < 0.5:  # integer matrix, so det is integer
+            return False, k
+    return True, None
 
 
-def verify_eigenvector(
-    matrix: NDArray[np.int64],
-    area: NDArray[np.float64],
-    expansion: float,
-    tol: float = 1e-10
-) -> Tuple[bool, float]:
-    """
-    Verify the area eigenvector condition: M^T * area = expansion^2 * area.
-    
-    Args:
-        matrix: n×n substitution matrix
-        area: candidate area vector
-        expansion: candidate expansion factor
-        tol: tolerance for floating point comparison
+def check_primitivity(alg: InflationAlgebra, max_k: int = 100) -> Tuple[bool, Optional[int]]:
+    """Check primitivity: some M^k has all strictly positive entries.
     
     Returns:
-        (is_valid, max_error) tuple
+        (is_primitive, primitivity_index or None)
     """
-    lhs = matrix.T.astype(float) @ area
-    rhs = expansion**2 * area
-    max_error = float(np.max(np.abs(lhs - rhs)))
-    return max_error < tol, max_error
+    for k in range(1, max_k + 1):
+        Mk = np.linalg.matrix_power(alg.M, k)
+        if np.all(Mk > 0):
+            return True, k
+    return False, None
 
 
-def compute_expansion_factor(
-    matrix: NDArray[np.int64]
-) -> Tuple[float, NDArray[np.float64]]:
-    """
-    Compute the expansion factor (sqrt of dominant eigenvalue) and
-    Perron eigenvector of a substitution matrix.
-    
-    Args:
-        matrix: n×n substitution matrix with non-negative entries
-    
-    Returns:
-        (expansion_factor, perron_eigenvector) tuple
-    """
-    eigenvalues, eigenvectors = np.linalg.eig(matrix.T.astype(float))
-    
-    # Find the dominant eigenvalue (largest real part)
-    idx = np.argmax(np.real(eigenvalues))
-    dominant_eigenvalue = float(np.real(eigenvalues[idx]))
-    perron_eigenvector = np.real(eigenvectors[:, idx])
-    
-    # Normalize eigenvector to have positive entries
-    if perron_eigenvector[0] < 0:
-        perron_eigenvector = -perron_eigenvector
-    
-    expansion = np.sqrt(dominant_eigenvalue)
-    return expansion, perron_eigenvector
+def compute_eigenvalues(alg: InflationAlgebra) -> np.ndarray:
+    """Compute eigenvalues of the substitution matrix."""
+    return np.linalg.eigvals(alg.M.astype(float))
 
 
-def is_rationally_commensurable(
-    area: NDArray[np.float64],
-    j0: int = 0,
-    tol: float = 1e-8,
-    max_denom: int = 1000
-) -> Tuple[bool, Optional[List[Tuple[int, int]]]]:
-    """
-    Check if area ratios are approximately rational.
-    
-    Uses continued fraction approximation to test if area[i]/area[j0]
-    is close to a rational number with small denominator.
-    
-    Args:
-        area: area vector
-        j0: reference tile index
-        tol: tolerance for rational approximation
-        max_denom: maximum denominator to consider
-    
-    Returns:
-        (is_commensurable, ratios) where ratios[i] = (p, q) with
-        area[i]/area[j0] ≈ p/q
-    """
-    from fractions import Fraction
-    
-    ratios: List[Tuple[int, int]] = []
-    for i in range(len(area)):
-        r = area[i] / area[j0]
-        frac = Fraction(r).limit_denominator(max_denom)
-        error = abs(r - float(frac))
-        ratios.append((frac.numerator, frac.denominator))
-        if error > tol:
-            return False, ratios
-    
-    return True, ratios
+def compute_perron_eigenvalue(alg: InflationAlgebra) -> float:
+    """Compute the Perron (largest real) eigenvalue."""
+    evs = compute_eigenvalues(alg)
+    return float(max(np.real(evs)))
 
 
-def spectral_data(
-    matrix: NDArray[np.int64]
-) -> dict:
+def compute_frequencies(alg: InflationAlgebra, iterations: int = 50) -> np.ndarray:
+    """Compute limiting tile type frequencies via power iteration.
+    
+    Returns normalized Perron eigenvector.
     """
-    Compute complete spectral data of a substitution matrix.
+    v = np.ones(alg.n, dtype=float)
+    for _ in range(iterations):
+        v = alg.M.astype(float) @ v
+        v = v / np.sum(v)
+    return v
+
+
+def compute_substitution_entropy(alg: InflationAlgebra) -> float:
+    """Compute substitution entropy h = log(Perron eigenvalue)."""
+    return float(np.log(compute_perron_eigenvalue(alg)))
+
+
+def find_cyclotomic_obstructions(alg: InflationAlgebra, max_order: int = 50) -> List[int]:
+    """Find roots of unity among eigenvalues.
     
-    Returns a dictionary with:
-    - trace: matrix trace
-    - determinant: matrix determinant
-    - eigenvalues: sorted eigenvalues (descending)
-    - expansion_factor: sqrt of dominant eigenvalue
-    - perron_eigenvector: normalized Perron eigenvector
-    - is_pisot_like: whether subdominant eigenvalues have |λ| < 1
+    Returns list of orders m such that some eigenvalue λ satisfies λ^m ≈ 1.
     """
-    eigenvalues = sorted(np.real(np.linalg.eigvals(matrix.astype(float))), reverse=True)
-    expansion, perron_ev = compute_expansion_factor(matrix)
+    evs = compute_eigenvalues(alg)
+    obstructions = []
+    for m in range(1, max_order + 1):
+        for ev in evs:
+            if abs(ev**m - 1) < 1e-8 and abs(ev) > 1e-10:
+                obstructions.append(m)
+                break
+    return obstructions
+
+
+def certify_aperiodicity(alg: InflationAlgebra) -> dict:
+    """Full aperiodicity certification.
     
-    # Normalize Perron eigenvector
-    perron_ev = perron_ev / perron_ev[0] if perron_ev[0] != 0 else perron_ev
-    
-    # Check Pisot-like property
-    is_pisot = all(0 < abs(ev) < 1 for ev in eigenvalues[1:]) and eigenvalues[0] > 1
+    Returns a dictionary with all algebraic invariants.
+    """
+    aperiodic, det_MI = check_aperiodicity(alg)
+    strong_aperiodic, failing_k = check_strong_aperiodicity(alg)
+    primitive, prim_index = check_primitivity(alg)
+    evs = compute_eigenvalues(alg)
+    perron = compute_perron_eigenvalue(alg)
+    entropy = compute_substitution_entropy(alg)
+    freqs = compute_frequencies(alg)
+    obstructions = find_cyclotomic_obstructions(alg)
     
     return {
-        "trace": float(np.trace(matrix)),
-        "determinant": float(np.linalg.det(matrix.astype(float))),
-        "eigenvalues": eigenvalues,
-        "expansion_factor": expansion,
-        "perron_eigenvector": perron_ev.tolist(),
-        "is_pisot_like": is_pisot,
+        'n': alg.n,
+        'trace': int(np.trace(alg.M)),
+        'det': int(round(np.linalg.det(alg.M))),
+        'det_M_minus_I': det_MI,
+        'algebraically_aperiodic': aperiodic,
+        'strongly_aperiodic': strong_aperiodic,
+        'failing_iterate': failing_k,
+        'primitive': primitive,
+        'primitivity_index': prim_index,
+        'eigenvalues': sorted(np.real(evs), reverse=True),
+        'perron_eigenvalue': perron,
+        'entropy': entropy,
+        'frequencies': freqs.tolist(),
+        'cyclotomic_obstructions': obstructions,
+        'symmetric': bool(np.array_equal(alg.M, alg.M.T)),
+        'row_sums': alg.M.sum(axis=1).tolist(),
     }
 
 
-def hat_spectrum_system(t: float) -> Tuple[NDArray[np.int64], NDArray[np.float64], float]:
-    """
-    Construct the hat spectrum substitution system at parameter t ∈ [0, 1].
-    
-    All systems share the same matrix M = [[4,6],[2,4]] and have
-    area vectors proportional to [1, √3], scaled by (1+t).
-    
-    Args:
-        t: parameter in [0, 1]
-    
-    Returns:
-        (matrix, area, expansion) triple
-    """
-    matrix = np.array([[4, 6], [2, 4]], dtype=np.int64)
-    area = (1 + t) * np.array([1.0, np.sqrt(3)])
-    expansion = 1 + np.sqrt(3)
-    return matrix, area, expansion
-
-
-def frequency_convergence_rate(
-    matrix: NDArray[np.int64],
-    j: int,
-    k_max: int = 20
-) -> List[float]:
-    """
-    Compute the rate of convergence of tile frequencies to the Perron
-    eigenvector direction.
-    
-    The convergence rate is governed by the ratio |λ₂/λ₁| where λ₁, λ₂
-    are the dominant and subdominant eigenvalues.
-    
-    Args:
-        matrix: substitution matrix
-        j: starting tile type
-        k_max: maximum number of steps
-    
-    Returns:
-        List of distances from Perron direction at each step
-    """
-    _, perron_ev = compute_expansion_factor(matrix)
-    perron_direction = perron_ev / np.linalg.norm(perron_ev)
-    
-    errors: List[float] = []
-    for k in range(1, k_max + 1):
-        counts = substitution_iterate(matrix, k, j).astype(float)
-        if np.linalg.norm(counts) > 0:
-            direction = counts / np.linalg.norm(counts)
-            # Angular distance
-            cos_angle = abs(np.dot(direction, perron_direction))
-            error = np.arccos(min(cos_angle, 1.0))
-            errors.append(float(error))
-        else:
-            errors.append(float('inf'))
-    
-    return errors
+# Predefined inflation algebras
+HAT_ALGEBRA = InflationAlgebra(
+    M=np.array([[2, 1, 1, 0],
+                [1, 2, 0, 1],
+                [1, 0, 2, 1],
+                [0, 1, 1, 2]]),
+    tile_names=['H (Hat)', 'T (Thin)', 'P (Para)', 'F (Flipped)']
+)
 
 
 if __name__ == "__main__":
-    # Example usage
-    M = np.array([[4, 6], [2, 4]], dtype=np.int64)
-    
-    print("=== Hat Matrix Spectral Data ===")
-    data = spectral_data(M)
-    for key, val in data.items():
-        print(f"  {key}: {val}")
-    
-    print("\n=== Eigenvector Verification ===")
-    area = np.array([1.0, np.sqrt(3)])
-    valid, error = verify_eigenvector(M, area, 1 + np.sqrt(3))
-    print(f"  Valid: {valid}, max error: {error:.2e}")
-    
-    print("\n=== Rational Commensurability Check ===")
-    is_comm, ratios = is_rationally_commensurable(area)
-    print(f"  Commensurable: {is_comm}")
-    print(f"  Approximate ratios: {ratios}")
-    
-    print("\n=== Frequency Convergence ===")
-    errors = frequency_convergence_rate(M, 0, k_max=10)
-    for k, err in enumerate(errors, 1):
-        print(f"  k={k}: angular error = {err:.6e}")
+    print("=== Hat Algebra Certification ===\n")
+    cert = certify_aperiodicity(HAT_ALGEBRA)
+    for key, value in cert.items():
+        print(f"  {key}: {value}")
