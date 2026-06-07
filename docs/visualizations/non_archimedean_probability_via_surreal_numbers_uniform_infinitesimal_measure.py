@@ -1,1 +1,2 @@
-def uniform_measure(epsilon, n): return n * epsilon
+def uniform_inf_measure(epsilon, S):
+    return len(S) * epsilon

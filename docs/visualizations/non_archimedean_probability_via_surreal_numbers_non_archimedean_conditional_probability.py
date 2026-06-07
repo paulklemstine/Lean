@@ -1,1 +1,2 @@
-algorithms.py::compute_conditional_probability
+def conditional_probability(measure, A, B):
+    return measure(A & B) / measure(B)
