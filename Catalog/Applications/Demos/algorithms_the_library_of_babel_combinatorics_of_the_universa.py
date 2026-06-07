@@ -1,142 +1,175 @@
 #!/usr/bin/env python3
 """
-Library of Babel: Algorithms
-
-Type-hinted implementations of the key algorithms from the formalization:
-- Hamming distance computation
-- Hamming ball enumeration
-- Catalog fiber analysis
-- Pattern search in volumes
-- Sphere-packing bound computation
-- De Bruijn sequence construction for mini-libraries
+Library of Babel: Algorithms for Universal Information Spaces
+Type-hinted implementations of key algorithms from the formalization.
 """
 
-from typing import List, Tuple, Dict, Set, Optional, Iterator
-from itertools import product
 import math
-from collections import Counter
+from typing import List, Tuple, Optional, Dict
+from functools import reduce
+
+
+def volume_to_index(volume: List[int], alphabet_size: int) -> int:
+    """Convert a volume (list of symbol indices) to its lexicographic index.
+    
+    This is the 'address' of a volume in the Library.
+    O(L) time, where L is the volume length.
+    
+    Args:
+        volume: List of integers in [0, alphabet_size)
+        alphabet_size: Size of the alphabet (A)
+    
+    Returns:
+        Integer index in [0, A^L)
+    """
+    index = 0
+    for symbol in volume:
+        index = index * alphabet_size + symbol
+    return index
+
+
+def index_to_volume(index: int, alphabet_size: int, length: int) -> List[int]:
+    """Convert a lexicographic index to its corresponding volume.
+    
+    Inverse of volume_to_index. O(L) time.
+    
+    Args:
+        index: Integer in [0, A^L)
+        alphabet_size: Size of the alphabet (A)
+        length: Length of the volume (L)
+    
+    Returns:
+        List of integers in [0, alphabet_size)
+    """
+    volume = []
+    for _ in range(length):
+        volume.append(index % alphabet_size)
+        index //= alphabet_size
+    return volume[::-1]
 
 
 def hamming_distance(v: List[int], w: List[int]) -> int:
-    """Compute Hamming distance between two volumes (same length)."""
-    assert len(v) == len(w), "Volumes must have the same length"
+    """Compute the Hamming distance between two volumes.
+    
+    Args:
+        v, w: Equal-length lists of integers
+    
+    Returns:
+        Number of positions where v and w differ
+    """
     return sum(1 for a, b in zip(v, w) if a != b)
 
 
-def hamming_ball(center: List[int], radius: int, alphabet_size: int) -> List[List[int]]:
-    """Enumerate all volumes within Hamming distance `radius` of `center`.
-    Warning: exponential in radius — use only for small parameters."""
-    L = len(center)
-    result = []
-    for vol in product(range(alphabet_size), repeat=L):
-        vol_list = list(vol)
-        if hamming_distance(center, vol_list) <= radius:
-            result.append(vol_list)
-    return result
-
-
-def hamming_ball_size(alphabet_size: int, length: int, radius: int) -> int:
-    """Compute exact Hamming ball volume: sum_{i=0}^{r} C(L,i)*(A-1)^i."""
-    return sum(
-        math.comb(length, i) * (alphabet_size - 1) ** i
-        for i in range(min(radius, length) + 1)
-    )
-
-
 def hamming_sphere_size(alphabet_size: int, length: int, radius: int) -> int:
-    """Compute exact Hamming sphere size: C(L,r)*(A-1)^r."""
-    if radius > length:
-        return 0
+    """Exact size of the Hamming sphere of given radius.
+    
+    |S(r)| = C(L, r) * (A-1)^r
+    
+    This follows from choosing r positions to change (C(L,r) ways)
+    and changing each to one of (A-1) other symbols.
+    """
     return math.comb(length, radius) * (alphabet_size - 1) ** radius
 
 
-def catalog_fiber_analysis(
-    catalog: Dict[Tuple[int, ...], int],
-    num_descriptions: int
-) -> Dict[int, List[Tuple[int, ...]]]:
-    """Analyze catalog fibers: group volumes by their description."""
-    fibers: Dict[int, List[Tuple[int, ...]]] = {d: [] for d in range(num_descriptions)}
-    for volume, desc in catalog.items():
-        fibers[desc].append(volume)
-    return fibers
-
-
-def catalog_max_fiber(
-    catalog: Dict[Tuple[int, ...], int],
-    num_descriptions: int
-) -> Tuple[int, int]:
-    """Find the largest catalog fiber. Returns (description, fiber_size)."""
-    fibers = catalog_fiber_analysis(catalog, num_descriptions)
-    best_d = max(fibers, key=lambda d: len(fibers[d]))
-    return best_d, len(fibers[best_d])
-
-
-def sphere_packing_bound(alphabet_size: int, length: int, min_dist: int) -> int:
-    """Hamming bound: max code size with given minimum distance.
-
-    For min distance d = 2r+1, the bound is A^L / V(L,r) where
-    V(L,r) = Hamming ball volume of radius r.
+def hamming_ball_size(alphabet_size: int, length: int, radius: int) -> int:
+    """Exact size of the Hamming ball of given radius.
+    
+    |B(r)| = sum_{k=0}^{r} C(L, k) * (A-1)^k
     """
-    if min_dist % 2 == 0:
-        # For even min distance, use r = (d-2)/2 (slightly weaker but valid)
-        r = (min_dist - 2) // 2
-    else:
-        r = (min_dist - 1) // 2
-    ball_vol = hamming_ball_size(alphabet_size, length, r)
-    return alphabet_size ** length // ball_vol
+    return sum(hamming_sphere_size(alphabet_size, length, k)
+               for k in range(min(radius, length) + 1))
 
 
-def singleton_bound(alphabet_size: int, length: int, min_dist: int) -> int:
-    """Singleton bound: max code size ≤ A^(L-d+1)."""
-    return alphabet_size ** max(0, length - min_dist + 1)
+def compression_deficiency(
+    alphabet_size: int, full_length: int, compressed_length: int
+) -> Tuple[int, float]:
+    """Compute the minimum information deficiency of compression.
+    
+    For any compression from A^L to A^M:
+    - At least A^L - A^M volumes are incompressible
+    - The incompressible fraction ≥ 1 - A^(M-L)
+    
+    Returns:
+        (minimum_incompressible_count, incompressible_fraction)
+    """
+    full = alphabet_size ** full_length
+    compressed = alphabet_size ** compressed_length
+    deficiency = full - compressed
+    fraction = deficiency / full
+    return deficiency, fraction
 
 
-def pattern_positions(
-    volume: List[int], pattern: List[int]
-) -> List[int]:
-    """Find all starting positions where pattern occurs in volume."""
-    positions = []
-    for i in range(len(volume) - len(pattern) + 1):
-        if volume[i:i+len(pattern)] == pattern:
-            positions.append(i)
-    return positions
+def periodic_volume_count(alphabet_size: int, length: int, period: int) -> int:
+    """Number of volumes periodic with period p (when p | L).
+    
+    A p-periodic volume satisfies v[i] = v[i+p] for all valid i.
+    Such volumes are determined by their first p characters: A^p total.
+    """
+    assert length % period == 0, f"Period {period} must divide length {length}"
+    return alphabet_size ** period
 
 
-def pattern_density(
-    alphabet_size: int, length: int, pattern_length: int
-) -> float:
-    """Probability that a random volume contains a given pattern at a random position."""
-    if pattern_length > length:
-        return 0.0
-    return 1.0 / alphabet_size ** pattern_length
-
-
-def total_pattern_occurrences(
-    alphabet_size: int, length: int, pattern_length: int
+def fiber_count(
+    alphabet_size: int, length: int, freq: int
 ) -> int:
-    """Total (volume, position) pairs containing a given pattern.
-    Equals (L - m + 1) * A^(L - m)."""
-    if pattern_length > length:
-        return 0
-    return (length - pattern_length + 1) * alphabet_size ** (length - pattern_length)
-
-
-def de_bruijn_sequence(alphabet_size: int, order: int) -> List[int]:
-    """Generate a de Bruijn sequence B(A, n) — a cyclic sequence in which every
-    possible n-length string over alphabet {0,...,A-1} occurs exactly once as a
-    contiguous substring.
-
-    Uses Martin's algorithm (recursive construction via Lyndon words).
-    The sequence has length A^n.
+    """Number of volumes where a fixed symbol appears exactly `freq` times.
+    
+    = C(L, freq) * (A-1)^(L-freq)
+    
+    Choose freq positions for the symbol, fill rest with A-1 other symbols.
     """
-    k = alphabet_size
-    n = order
+    return math.comb(length, freq) * (alphabet_size - 1) ** (length - freq)
+
+
+def catalog_impossibility_ratio(
+    alphabet_size: int, length: int, description_size: int
+) -> float:
+    """Fraction of catalog schemes representable by a single volume.
+    
+    At most A^L out of D^(A^L) schemes can be represented.
+    Returns log10 of the ratio for numerical stability.
+    """
+    lib_size = alphabet_size ** length  # A^L
+    # log10(A^L / D^(A^L)) = L*log10(A) - A^L * log10(D)
+    log_representable = length * math.log10(alphabet_size)
+    log_total = lib_size * math.log10(description_size)
+    return log_representable - log_total
+
+
+def find_nearest_volume(
+    target: List[int],
+    candidates: List[List[int]]
+) -> Tuple[int, List[int]]:
+    """Find the nearest volume by Hamming distance (brute force).
+    
+    Returns:
+        (distance, nearest_volume)
+    """
+    best_dist = len(target) + 1
+    best_vol = candidates[0]
+    for vol in candidates:
+        d = hamming_distance(target, vol)
+        if d < best_dist:
+            best_dist = d
+            best_vol = vol
+    return best_dist, best_vol
+
+
+def generate_de_bruijn(alphabet_size: int, length: int) -> List[int]:
+    """Generate a de Bruijn sequence B(A, L).
+    
+    A de Bruijn sequence contains every possible L-length substring
+    over an A-symbol alphabet exactly once. Length = A^L.
+    
+    Uses Martin's algorithm (greedy approach).
+    """
+    k, n = alphabet_size, length
     if n == 0:
         return [0]
-
-    a = [0] * (k * n)
+    
     sequence: List[int] = []
-
+    a = [0] * (k * n)
+    
     def db(t: int, p: int) -> None:
         if t > n:
             if n % p == 0:
@@ -147,76 +180,62 @@ def de_bruijn_sequence(alphabet_size: int, order: int) -> List[int]:
             for j in range(a[t - p] + 1, k):
                 a[t] = j
                 db(t + 1, t)
-
+    
     db(1, 1)
     return sequence
 
 
-def de_bruijn_catalog(
-    alphabet_size: int, book_length: int
-) -> List[int]:
-    """Construct a de Bruijn-based catalog for a mini-library.
-
-    The de Bruijn sequence B(A, L) visits every L-length string
-    as a contiguous substring. This provides a 'linear catalog'
-    that encodes all volumes in a single sequence of length A^L + L - 1.
+def mini_library_catalog(
+    alphabet_size: int = 4,
+    book_length: int = 4
+) -> Dict[str, any]:
+    """Construct a complete catalog for a mini-library.
+    
+    Demonstrates the de Bruijn sequence approach for locating volumes.
+    
+    Returns dict with library statistics and the de Bruijn sequence.
     """
-    return de_bruijn_sequence(alphabet_size, book_length)
+    lib_size = alphabet_size ** book_length
+    db_seq = generate_de_bruijn(alphabet_size, book_length)
+    
+    # Verify: every book_length-gram appears in the (cyclic) de Bruijn sequence
+    extended = db_seq + db_seq[:book_length - 1]
+    substrings = set()
+    for i in range(len(db_seq)):
+        substr = tuple(extended[i:i + book_length])
+        substrings.add(substr)
+    
+    return {
+        "alphabet_size": alphabet_size,
+        "book_length": book_length,
+        "library_size": lib_size,
+        "de_bruijn_length": len(db_seq),
+        "unique_substrings": len(substrings),
+        "all_found": len(substrings) == lib_size,
+        "de_bruijn_sequence": db_seq[:50],  # First 50 elements
+    }
 
 
-def verify_de_bruijn(sequence: List[int], alphabet_size: int, order: int) -> bool:
-    """Verify that a sequence is a valid de Bruijn sequence."""
-    expected_length = alphabet_size ** order
-    if len(sequence) != expected_length:
-        return False
-
-    seen: Set[Tuple[int, ...]] = set()
-    for i in range(expected_length):
-        # Treat sequence as cyclic
-        substring = tuple(sequence[(i + j) % expected_length] for j in range(order))
-        seen.add(substring)
-
-    return len(seen) == expected_length
-
-
-# ============================
-# Self-test
-# ============================
 if __name__ == "__main__":
-    # Test Hamming distance
-    v = [0, 1, 2, 3]
-    w = [0, 1, 0, 3]
-    assert hamming_distance(v, w) == 1
-
-    # Test Hamming ball size formula
-    for A in [2, 3, 4]:
-        for L in [4, 8]:
-            assert hamming_ball_size(A, L, 0) == 1
-            assert hamming_ball_size(A, L, 1) == 1 + L * (A - 1)
-            assert hamming_ball_size(A, L, L) == A ** L
-
-    # Test de Bruijn sequence
-    for A in [2, 3, 4]:
-        for n in [2, 3, 4]:
-            seq = de_bruijn_sequence(A, n)
-            assert verify_de_bruijn(seq, A, n), f"Failed for B({A},{n})"
-
-    # Test pattern density formula
-    assert total_pattern_occurrences(4, 16, 4) == 13 * 4 ** 12
-
-    # Test catalog pigeonhole
-    A, L, D = 2, 4, 3
-    lib_size = A ** L  # 16
-    # Any catalog from 16 volumes to 3 labels has max fiber ≥ ceil(16/3) = 6
-    min_fiber = (lib_size + D - 1) // D
-    assert min_fiber == 6
-
-    print("All self-tests passed!")
-    print()
-
-    # Demo: de Bruijn for mini-library
-    print("De Bruijn sequence B(4, 3):")
-    seq = de_bruijn_sequence(4, 3)
-    print(f"  Length: {len(seq)} (expected {4**3} = 64)")
-    print(f"  First 20 symbols: {seq[:20]}")
-    print(f"  Valid: {verify_de_bruijn(seq, 4, 3)}")
+    # Demonstrate algorithms
+    print("=== Algorithm Demonstrations ===\n")
+    
+    # Volume addressing
+    vol = [1, 2, 0, 3]
+    idx = volume_to_index(vol, 4)
+    recovered = index_to_volume(idx, 4, 4)
+    print(f"Volume {vol} → index {idx} → recovered {recovered}")
+    assert vol == recovered
+    
+    # Hamming geometry
+    print(f"\nHamming ball sizes (A=4, L=16):")
+    for r in range(6):
+        print(f"  B({r}) = {hamming_ball_size(4, 16, r):,}")
+    
+    # De Bruijn sequence
+    result = mini_library_catalog(4, 4)
+    print(f"\nMini-library catalog (A={result['alphabet_size']}, L={result['book_length']}):")
+    print(f"  Library size: {result['library_size']}")
+    print(f"  De Bruijn sequence length: {result['de_bruijn_length']}")
+    print(f"  All volumes found: {result['all_found']}")
+    print(f"  First 20 symbols: {result['de_bruijn_sequence'][:20]}")

@@ -1,269 +1,270 @@
 #!/usr/bin/env python3
 """
-Library of Babel: Numerical Demonstrations
-
-Computes key quantities from the formalized theorems:
-- Library cardinality for various parameters
-- Hamming ball sizes
-- Catalog impossibility gaps
-- Pattern density probabilities
+Library of Babel: Combinatorics of the Universal Library
+Numerical demonstrations of the formalized results.
 """
 
 import math
+from itertools import product
 
+# === Library Parameters ===
+ALPHABET_SIZE = 25  # Borges' 25 symbols
+BOOK_LENGTH = 1_312_000  # 410 pages × 3200 chars/page
 
 def library_size(A: int, L: int) -> int:
-    """Number of volumes: A^L."""
+    """Total number of volumes in the library: A^L."""
     return A ** L
 
+def catalog_scheme_count(A: int, L: int, D: int) -> int:
+    """Number of possible D-valued catalog schemes: D^(A^L)."""
+    return D ** (A ** L)
 
-def hamming_ball_size_r1(A: int, L: int) -> int:
-    """Exact size of Hamming ball of radius 1: 1 + L*(A-1)."""
-    return 1 + L * (A - 1)
+def sphere_size(A: int, L: int, k: int) -> int:
+    """Number of volumes at Hamming distance exactly k from a reference."""
+    return math.comb(L, k) * (A - 1) ** k
 
+def compression_deficiency(A: int, L: int, M: int) -> int:
+    """Minimum number of incompressible volumes: A^L - A^M."""
+    return A ** L - A ** M
 
-def hamming_sphere_size_r1(A: int, L: int) -> int:
-    """Exact size of Hamming sphere of radius 1: L*(A-1)."""
-    return L * (A - 1)
+def periodic_count(A: int, L: int, p: int) -> int:
+    """Number of p-periodic volumes (when p | L): A^p."""
+    assert L % p == 0, f"p={p} must divide L={L}"
+    return A ** p
 
+def fiber_count(A: int, L: int, a: int, k: int) -> int:
+    """Volumes where symbol a appears exactly k times: C(L,k) * (A-1)^(L-k)."""
+    return math.comb(L, k) * (A - 1) ** (L - k)
 
-def catalog_min_fiber_size(A: int, L: int, D: int) -> int:
-    """Minimum size of largest catalog fiber: ceil(A^L / D)."""
-    lib = A ** L
-    return (lib + D - 1) // D
-
-
-def pattern_density(A: int, L: int, m: int) -> float:
-    """Fraction of (volume, position) pairs containing a given m-pattern."""
-    total_pairs = L * A ** L  # All volume-position pairs
-    pattern_pairs = (L - m + 1) * A ** (L - m)  # Pairs containing pattern
-    return pattern_pairs / total_pairs
-
-
-def catalog_gap(A: int, L: int, D: int) -> float:
-    """log₂ ratio of catalog scheme count to library size."""
-    # D^(A^L) / A^L → log₂ = A^L * log₂(D) - L * log₂(A)
-    lib = A ** L
-    return lib * math.log2(D) - L * math.log2(A)
-
-
-def hamming_ball_volume(A: int, L: int, r: int) -> int:
-    """Exact Hamming ball volume: sum_{i=0}^{r} C(L,i) * (A-1)^i."""
-    total = 0
-    for i in range(min(r, L) + 1):
-        total += math.comb(L, i) * (A - 1) ** i
-    return total
-
-
-def sphere_packing_bound(A: int, L: int, r: int) -> int:
-    """Maximum code size with min distance 2r+1 (Hamming bound)."""
-    return A ** L // hamming_ball_volume(A, L, r)
-
-
-# ============================
-# DEMO 1: Borges' Library
-# ============================
+# === Mini-Library Demonstrations ===
 print("=" * 70)
-print("DEMO 1: Borges' Library of Babel")
+print("LIBRARY OF BABEL: COMBINATORICS OF THE UNIVERSAL LIBRARY")
 print("=" * 70)
 
-A_babel, L_babel = 25, 1_312_000
-print(f"Alphabet size A = {A_babel}")
-print(f"Volume length L = {L_babel:,}")
-print(f"Library size = {A_babel}^{L_babel:,}")
-print(f"  ≈ 10^{L_babel * math.log10(A_babel):,.0f}")
-print(f"  (that's a 1 followed by {int(L_babel * math.log10(A_babel)):,} zeros)")
-print()
-print(f"Hamming ball radius 1 size = 1 + {L_babel:,} × {A_babel - 1}")
-print(f"  = {hamming_ball_size_r1(A_babel, L_babel):,}")
-print(f"  (each book has {hamming_ball_size_r1(A_babel, L_babel):,} 'neighbors')")
-print()
-
-# ============================
-# DEMO 2: Mini-Library
-# ============================
-print("=" * 70)
-print("DEMO 2: Mini-Library (A=4, L=16)")
-print("=" * 70)
-
+# Demo 1: Mini-library
+print("\n--- Demo 1: Mini-Library (A=4, L=16) ---")
 A, L = 4, 16
+total = library_size(A, L)
+print(f"Alphabet size: {A}")
+print(f"Volume length: {L}")
+print(f"Total volumes: {A}^{L} = {total:,}")
+
+# Hamming sphere sizes
+print("\nHamming sphere sizes (volumes at exact distance k):")
+cumulative = 0
+for k in range(min(6, L + 1)):
+    s = sphere_size(A, L, k)
+    cumulative += s
+    print(f"  k={k}: C({L},{k}) × {A-1}^{k} = {s:,}")
+print(f"  Sum over all k: {sum(sphere_size(A, L, k) for k in range(L+1)):,} (should = {total:,})")
+
+# Verify binomial partition
+total_check = sum(sphere_size(A, L, k) for k in range(L + 1))
+assert total_check == total, f"Binomial partition failed: {total_check} != {total}"
+print("  ✓ Binomial partition verified!")
+
+# Demo 2: Catalog impossibility
+print("\n--- Demo 2: Catalog Impossibility ---")
+A, L, D = 3, 4, 2
 lib = library_size(A, L)
-print(f"Library size = {A}^{L} = {lib:,}")
-print()
+cat = catalog_scheme_count(A, L, D)
+print(f"Library (A={A}, L={L}): {lib} volumes")
+print(f"Catalog schemes (D={D}): {D}^{lib} = {cat} schemes")
+print(f"Ratio schemes/volumes: {cat / lib:.1f}")
+print(f"A single volume can represent at most {lib} of {cat} schemes")
+print(f"  → {lib / cat * 100:.6f}% of all possible catalogs are representable")
+print("  ✓ Catalog impossibility: most schemes are unrepresentable!")
 
-for r in range(5):
-    bv = hamming_ball_volume(A, L, r)
-    print(f"  Hamming ball radius {r}: {bv:,} volumes ({100*bv/lib:.4f}%)")
-print()
+# Demo 3: Compression deficiency
+print("\n--- Demo 3: Compression Deficiency ---")
+A, L, M = 4, 16, 12
+full = library_size(A, L)
+compressed = library_size(A, M)
+deficiency = compression_deficiency(A, L, M)
+print(f"Full library: {A}^{L} = {full:,} volumes")
+print(f"Compressed space: {A}^{M} = {compressed:,} states")
+print(f"Minimum incompressible: {deficiency:,} ({deficiency / full * 100:.4f}%)")
+print(f"  ✓ {deficiency / full * 100:.2f}% of volumes cannot survive compression!")
 
-# Sphere-packing bounds
-for d in [3, 5, 7]:
-    r = (d - 1) // 2
-    bound = sphere_packing_bound(A, L, r)
-    print(f"  Hamming bound (min dist {d}): ≤ {bound:,} codewords")
+# Demo 4: Periodic volumes
+print("\n--- Demo 4: Periodic Volumes ---")
+A, L = 4, 12
+for p in [1, 2, 3, 4, 6, 12]:
+    if L % p == 0:
+        count = periodic_count(A, L, p)
+        frac = count / library_size(A, L)
+        print(f"  Period {p:2d}: {count:>12,} volumes ({frac:.2e} of library)")
 
-# ============================
-# DEMO 3: Catalog Impossibility
-# ============================
-print()
+# Demo 5: Symbol frequency fibers
+print("\n--- Demo 5: Symbol Frequency Distribution ---")
+A, L = 4, 8
+print(f"Library (A={A}, L={L}): volumes by frequency of symbol 0")
+total_check = 0
+for k in range(L + 1):
+    count = fiber_count(A, L, 0, k)
+    total_check += count
+    print(f"  freq={k}: C({L},{k}) × {A-1}^{L-k} = {count:>8,}")
+print(f"  Total: {total_check:,} (should = {library_size(A, L):,})")
+assert total_check == library_size(A, L)
+print("  ✓ Fiber partition verified!")
+
+# Demo 6: Fixed volumes under permutations
+print("\n--- Demo 6: Fixed Volumes Under Permutations ---")
+A, L = 3, 6
+lib = library_size(A, L)
+print(f"Library (A={A}, L={L}): {lib} volumes")
+print(f"  Identity: {lib} fixed (A^L = {A}^{L})")
+print(f"  Transposition (swap positions 0,1): {A**(L-1)} fixed (A^(L-1) = {A}^{L-1})")
+print(f"  Full cycle (0→1→...→5→0): {A} fixed (A^1 = {A})")
+
+# Demo 7: Borges' actual library
+print("\n--- Demo 7: Borges' Library Scale ---")
+A, L = ALPHABET_SIZE, BOOK_LENGTH
+log_lib = L * math.log10(A)
+print(f"Alphabet: {A} symbols")
+print(f"Book length: {L:,} characters")
+print(f"Library size: {A}^{L:,}")
+print(f"  = 10^{log_lib:,.0f} volumes")
+print(f"  Comparison: observable universe has ~10^80 particles")
+print(f"  Library is 10^{log_lib - 80:,.0f} times larger than the universe (by particle count)")
+
+bits_per_book = L * math.log2(A)
+print(f"\nBits per book: L × log₂(A) = {L} × {math.log2(A):.4f} = {bits_per_book:,.0f}")
+print(f"Bytes per book: {bits_per_book / 8:,.0f}")
+
+# Compression deficiency for Borges
+M = L - 1  # Compress by just 1 character
+frac_incompressible = 1 - A ** (-1)
+print(f"\nCompressing by 1 character (M = L-1):")
+print(f"  At least {frac_incompressible * 100:.1f}% of books are incompressible")
+
+# Demo 8: Primal vs Dual library
+print("\n--- Demo 8: Primal-Dual Asymmetry ---")
+for A, L in [(2, 4), (4, 2), (3, 3), (2, 8), (5, 3)]:
+    primal = A ** L
+    dual = L ** A
+    print(f"  A={A}, L={L}: primal A^L = {primal:>8,}, dual L^A = {dual:>8,}, "
+          f"ratio = {primal / dual:.2f}")
+
+print("\n" + "=" * 70)
+print("All demonstrations completed successfully!")
 print("=" * 70)
-print("DEMO 3: Catalog Impossibility")
-print("=" * 70)
-
-for A, L in [(4, 16), (2, 20), (25, 100)]:
-    lib = library_size(A, L)
-    for D in [2, 10, 100]:
-        min_fiber = catalog_min_fiber_size(A, L, D)
-        gap_bits = catalog_gap(A, L, D)
-        print(f"  A={A}, L={L}, D={D}: library={lib:,}, "
-              f"max fiber ≥ {min_fiber:,}, "
-              f"catalog gap = 2^{gap_bits:.1f}")
-    print()
-
-# ============================
-# DEMO 4: Pattern Density
-# ============================
-print("=" * 70)
-print("DEMO 4: Pattern Density")
-print("=" * 70)
-
-A, L = 4, 16
-print(f"Mini-Library: A={A}, L={L}, |Library|={library_size(A, L):,}")
-print()
-for m in [1, 2, 4, 8, 12, 16]:
-    if m <= L:
-        vols = A ** (L - m)
-        total_occ = (L - m + 1) * vols
-        density = pattern_density(A, L, m)
-        prob = vols / library_size(A, L)
-        print(f"  Pattern length {m:2d}: "
-              f"{vols:>12,} volumes at each position, "
-              f"prob per position = {prob:.2e}, "
-              f"density = {density:.6f}")
-
-# ============================
-# DEMO 5: Information Content
-# ============================
-print()
-print("=" * 70)
-print("DEMO 5: Information Content per Volume")
-print("=" * 70)
-
-for A, L, name in [(25, 1_312_000, "Borges"), (4, 16, "Mini"), (2, 256, "Binary")]:
-    bits = L * math.log2(A)
-    print(f"  {name:8s} (A={A:2d}, L={L:>10,}): "
-          f"{bits:>15,.1f} bits = {bits/8:>14,.1f} bytes")
-
-print()
-print("All computations verified against formalized Lean 4 theorems.")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Hamming Ball Growth in the Library of Babel
-
-Shows how the Hamming ball volume grows with radius, illustrating
-the sphere-packing bound and the transition from local isolation
-to global coverage.
+Visualization: Hamming Sphere Structure of the Library of Babel
+Standalone matplotlib script showing the binomial partition.
 """
 
 import math
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
 
 
-def hamming_ball_volume(A: int, L: int, r: int) -> int:
-    """Exact Hamming ball volume."""
-    total = 0
-    for i in range(min(r, L) + 1):
-        total += math.comb(L, i) * (A - 1) ** i
-    return total
+def sphere_size(A: int, L: int, k: int) -> int:
+    """Size of Hamming sphere at distance k: C(L,k) * (A-1)^k."""
+    return math.comb(L, k) * (A - 1) ** k
 
 
-def sphere_packing_bound(A: int, L: int, r: int) -> float:
-    """Max code size with min distance 2r+1."""
-    bv = hamming_ball_volume(A, L, r)
-    if bv == 0:
-        return float('inf')
-    return A ** L / bv
+def plot_hamming_distribution(A: int, L: int, title_suffix: str = ""):
+    """Plot the distribution of Hamming sphere sizes."""
+    ks = list(range(L + 1))
+    sizes = [sphere_size(A, L, k) for k in ks]
+    total = sum(sizes)
+    fractions = [s / total for s in sizes]
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+    # Left: raw counts (log scale)
+    ax1.bar(ks, sizes, color='steelblue', alpha=0.8, edgecolor='navy', linewidth=0.5)
+    ax1.set_yscale('log')
+    ax1.set_xlabel('Hamming Distance k', fontsize=12)
+    ax1.set_ylabel('Number of Volumes (log scale)', fontsize=12)
+    ax1.set_title(f'Hamming Sphere Sizes: Library({A}, {L}){title_suffix}', fontsize=13)
+    ax1.grid(True, alpha=0.3)
+
+    # Right: probability distribution
+    ax2.plot(ks, fractions, 'o-', color='crimson', markersize=4, linewidth=1.5)
+    mean_k = L * (A - 1) / A
+    std_k = math.sqrt(L * (A - 1) / (A ** 2))
+    ax2.axvline(mean_k, color='green', linestyle='--', linewidth=1.5,
+                label=f'Mean = L(A-1)/A = {mean_k:.1f}')
+    ax2.axvline(mean_k - std_k, color='orange', linestyle=':', linewidth=1)
+    ax2.axvline(mean_k + std_k, color='orange', linestyle=':', linewidth=1,
+                label=f'±1 std = {std_k:.1f}')
+    ax2.set_xlabel('Hamming Distance k', fontsize=12)
+    ax2.set_ylabel('Fraction of Library', fontsize=12)
+    ax2.set_title(f'Hamming Distance Distribution{title_suffix}', fontsize=13)
+    ax2.legend(fontsize=10)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    return fig
 
 
-# Parameters
-configs = [
-    (4, 16, "Mini-Library (A=4, L=16)"),
-    (2, 20, "Binary Library (A=2, L=20)"),
-    (3, 12, "Ternary Library (A=3, L=12)"),
-]
+def plot_compression_deficiency():
+    """Plot compression deficiency as a function of compression ratio."""
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    for A in [2, 3, 4, 5, 10, 25]:
+        L = 20
+        Ms = list(range(L + 1))
+        deficiencies = [1 - A ** (M - L) for M in Ms]
+        ax.plot([M / L for M in Ms], deficiencies, 'o-', markersize=3,
+                label=f'A = {A}', linewidth=1.5)
 
-# Plot 1: Hamming ball volume vs radius (log scale)
-ax = axes[0, 0]
-for A, L, label in configs:
-    radii = list(range(L + 1))
-    volumes = [hamming_ball_volume(A, L, r) for r in radii]
-    lib_size = A ** L
-    fractions = [v / lib_size for v in volumes]
-    ax.semilogy(radii, fractions, 'o-', markersize=3, label=label)
-ax.set_xlabel("Radius r")
-ax.set_ylabel("Fraction of Library |B(v,r)| / A^L")
-ax.set_title("Hamming Ball Coverage")
-ax.legend()
-ax.grid(True, alpha=0.3)
+    ax.set_xlabel('Compression Ratio M/L', fontsize=12)
+    ax.set_ylabel('Fraction Incompressible', fontsize=12)
+    ax.set_title('Compression Deficiency vs. Compression Ratio (L=20)', fontsize=13)
+    ax.legend(fontsize=10, loc='lower left')
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1.05)
 
-# Plot 2: Sphere-packing bound vs min distance
-ax = axes[0, 1]
-for A, L, label in configs:
-    distances = list(range(1, L, 2))  # Odd min distances
-    bounds = []
-    for d in distances:
-        r = (d - 1) // 2
-        bv = hamming_ball_volume(A, L, r)
-        bounds.append(A ** L / bv)
-    ax.semilogy(distances, bounds, 'o-', markersize=3, label=label)
-ax.set_xlabel("Minimum Hamming Distance d")
-ax.set_ylabel("Max Code Size (Hamming Bound)")
-ax.set_title("Sphere-Packing Bound")
-ax.legend()
-ax.grid(True, alpha=0.3)
+    plt.tight_layout()
+    return fig
 
-# Plot 3: Hamming sphere size (annulus)
-ax = axes[1, 0]
-A, L = 4, 16
-lib_size = A ** L
-radii = list(range(L + 1))
-sphere_sizes = [math.comb(L, r) * (A - 1) ** r for r in radii]
-sphere_fracs = [s / lib_size for s in sphere_sizes]
-ax.bar(radii, sphere_fracs, color='steelblue', alpha=0.7)
-# Mark mean distance
-mean_dist = L * (A - 1) / A
-ax.axvline(x=mean_dist, color='red', linestyle='--', label=f'Mean dist = {mean_dist:.1f}')
-ax.set_xlabel("Hamming Distance r")
-ax.set_ylabel("Fraction of Library at Distance r")
-ax.set_title(f"Hamming Distance Distribution (A={A}, L={L})")
-ax.legend()
-ax.grid(True, alpha=0.3)
 
-# Plot 4: Catalog impossibility — fiber sizes
-ax = axes[1, 1]
-A, L = 4, 8
-lib_size = A ** L
-D_values = list(range(1, 200))
-min_fibers = [(lib_size + D - 1) // D for D in D_values]
-ax.plot(D_values, min_fibers, 'b-', linewidth=2, label='Min max-fiber size')
-ax.axhline(y=1, color='gray', linestyle=':', alpha=0.5, label='No collision threshold')
-ax.fill_between(D_values, min_fibers, alpha=0.2)
-ax.set_xlabel("Number of Catalog Labels D")
-ax.set_ylabel("Min Size of Largest Fiber")
-ax.set_title(f"Catalog Pigeonhole (A={A}, L={L}, |Library|={lib_size:,})")
-ax.legend()
-ax.grid(True, alpha=0.3)
+def plot_periodic_structure():
+    """Plot periodic volume counts for various periods."""
+    A, L = 4, 60
+    divisors = [d for d in range(1, L + 1) if L % d == 0]
 
-plt.suptitle("The Library of Babel: Hamming Geometry & Coding Theory",
-             fontsize=14, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig("viz_hamming_balls.png", dpi=150, bbox_inches='tight')
-print("Saved viz_hamming_balls.png")
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    log_counts = [p * math.log10(A) for p in divisors]
+    log_total = L * math.log10(A)
+
+    bars = ax.bar(range(len(divisors)), log_counts, color='teal', alpha=0.8,
+                  edgecolor='darkslategray', linewidth=0.5)
+    ax.axhline(log_total, color='red', linestyle='--', linewidth=1.5,
+               label=f'Total library: log₁₀({A}^{L}) = {log_total:.0f}')
+    ax.set_xticks(range(len(divisors)))
+    ax.set_xticklabels([str(d) for d in divisors], rotation=45, ha='right')
+    ax.set_xlabel('Period p (divisors of L=60)', fontsize=12)
+    ax.set_ylabel('log₁₀(Number of p-periodic volumes)', fontsize=12)
+    ax.set_title(f'Periodic Volume Counts in Library({A}, {L})', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3, axis='y')
+
+    plt.tight_layout()
+    return fig
+
+
+if __name__ == '__main__':
+    # Generate all plots
+    fig1 = plot_hamming_distribution(4, 16, " — Mini-Library")
+    fig1.savefig('hamming_distribution.png', dpi=150, bbox_inches='tight')
+    print("Saved hamming_distribution.png")
+
+    fig2 = plot_compression_deficiency()
+    fig2.savefig('compression_deficiency.png', dpi=150, bbox_inches='tight')
+    print("Saved compression_deficiency.png")
+
+    fig3 = plot_periodic_structure()
+    fig3.savefig('periodic_structure.png', dpi=150, bbox_inches='tight')
+    print("Saved periodic_structure.png")
+
+    plt.show()
