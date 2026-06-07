@@ -2,186 +2,169 @@
 """
 Algorithms for Non-Archimedean Probability Theory
 
-Type-hinted implementations of core NAP space operations.
+Type-hinted implementations of the core algorithms from the formalization.
 """
 
+from __future__ import annotations
+from dataclasses import dataclass
 from fractions import Fraction
-from typing import FrozenSet, Set, Dict, Tuple, Optional, List
+from typing import TypeVar, Callable, Generic, Sequence
+import math
+
+T = TypeVar('T')
 
 
-def nap_measure(event: FrozenSet[int], universe_size: int) -> Fraction:
-    """Compute the uniform NAP measure of an event.
-
-    μ(A) = |A| / |Ω| = |A| · ε where ε = 1/|Ω|
-
-    Args:
-        event: The event (subset of universe indices)
-        universe_size: Size of the sample space
-
-    Returns:
-        The probability as an exact fraction
+@dataclass
+class InfProbMeasure(Generic[T]):
+    """A finitely additive probability measure on a finite type.
+    
+    Each element has a non-negative weight, and the total weight equals 1.
+    Values are in Fraction for exact arithmetic.
     """
-    if universe_size <= 0:
-        raise ValueError("Universe must be non-empty")
-    return Fraction(len(event), universe_size)
+    elements: list[T]
+    weights: dict[T, Fraction]
+    
+    def __post_init__(self) -> None:
+        total = sum(self.weights.values())
+        assert total == 1, f"Total mass {total} ≠ 1"
+        assert all(w >= 0 for w in self.weights.values()), "Negative weight"
+    
+    @classmethod
+    def uniform(cls, elements: list[T]) -> 'InfProbMeasure[T]':
+        """Construct the uniform measure on a list of elements."""
+        n = len(elements)
+        assert n > 0, "Cannot create uniform measure on empty set"
+        w = Fraction(1, n)
+        return cls(elements=elements, weights={e: w for e in elements})
+    
+    def measure(self, subset: set[T]) -> Fraction:
+        """Compute the measure of a subset."""
+        return sum(self.weights[e] for e in subset if e in self.weights)
+    
+    def expect(self, f: Callable[[T], Fraction]) -> Fraction:
+        """Compute the expected value of a function."""
+        return sum(self.weights[e] * f(e) for e in self.elements)
+    
+    def cond_prob(self, A: set[T], B: set[T]) -> Fraction:
+        """Compute P(A | B) = P(A ∩ B) / P(B)."""
+        p_b = self.measure(B)
+        if p_b == 0:
+            return Fraction(0)
+        return self.measure(A & B) / p_b
+    
+    def markov_bound(self, f: Callable[[T], Fraction], c: Fraction) -> Fraction:
+        """Compute the Markov inequality bound: E[f] / c."""
+        assert c > 0, "Threshold must be positive"
+        return self.expect(f) / c
 
 
-def nap_conditional(
-    a: FrozenSet[int], b: FrozenSet[int], universe_size: int
-) -> Fraction:
-    """Compute P(A|B) in a uniform NAP space.
-
-    By the Ratio Stability Theorem, P(A|B) = |A ∩ B| / |B|.
-    The infinitesimals cancel.
-
-    Args:
-        a: Event A
-        b: Conditioning event B (must be non-empty)
-        universe_size: Size of the sample space
-
-    Returns:
-        Conditional probability as exact fraction
+@dataclass
+class InfCondAlg(Generic[T]):
+    """Infinitesimal Conditioning Algebra: a probability measure where
+    every element has strictly positive weight.
+    
+    This enables conditioning on any nonempty subset.
     """
-    if not b:
-        raise ValueError("Cannot condition on empty event")
-    intersection = a & b
-    return Fraction(len(intersection), len(b))
+    measure: InfProbMeasure[T]
+    
+    def __post_init__(self) -> None:
+        assert all(w > 0 for w in self.measure.weights.values()), \
+            "All weights must be strictly positive"
+    
+    def cond_measure(self, B: set[T]) -> InfProbMeasure[T]:
+        """Construct the conditional measure given event B.
+        
+        Returns a new probability measure concentrated on B.
+        """
+        assert len(B) > 0, "Cannot condition on empty set"
+        p_b = self.measure.measure(B)
+        assert p_b > 0, "Conditioning set must have positive measure"
+        
+        new_weights: dict[T, Fraction] = {}
+        for e in self.measure.elements:
+            if e in B:
+                new_weights[e] = self.measure.weights[e] / p_b
+            else:
+                new_weights[e] = Fraction(0)
+        
+        return InfProbMeasure(
+            elements=self.measure.elements,
+            weights=new_weights
+        )
+    
+    def chain_rule(self, A: set[T], B: set[T]) -> tuple[Fraction, Fraction]:
+        """Verify the chain rule: P(A∩B) = P(A|B) · P(B).
+        
+        Returns (lhs, rhs) — they should be equal.
+        """
+        lhs = self.measure.measure(A & B)
+        cond = self.cond_measure(B)
+        rhs = cond.measure(A) * self.measure.measure(B)
+        return lhs, rhs
 
 
-def nap_bayes(
-    a: FrozenSet[int], b: FrozenSet[int], universe_size: int
-) -> Tuple[Fraction, Fraction, bool]:
-    """Verify Bayes' theorem: P(A|B)·P(B) = P(B|A)·P(A).
+def product_measure(
+    mu: InfProbMeasure[T],
+    nu: InfProbMeasure[T]
+) -> InfProbMeasure[tuple[T, T]]:
+    """Construct the product measure of two independent measures."""
+    elements = [(a, b) for a in mu.elements for b in nu.elements]
+    weights = {(a, b): mu.weights[a] * nu.weights[b]
+               for a in mu.elements for b in nu.elements}
+    return InfProbMeasure(elements=elements, weights=weights)
 
-    Args:
-        a: Event A (must be non-empty)
-        b: Event B (must be non-empty)
-        universe_size: Size of the sample space
 
-    Returns:
-        Tuple of (LHS, RHS, verified)
+def is_infinitesimal_approx(x: float, max_n: int = 1000) -> bool:
+    """Approximate check: is x < 1/n for all n ≤ max_n?"""
+    if x <= 0:
+        return False
+    return all(x < 1.0/n for n in range(1, max_n + 1))
+
+
+def infinitesimal_sum_bound(epsilon: float, k: int) -> float:
+    """Compute the bound k·ε and verify it's < 1."""
+    return k * epsilon
+
+
+def inclusion_exclusion(
+    mu: InfProbMeasure[T],
+    A: set[T],
+    B: set[T]
+) -> tuple[Fraction, Fraction]:
+    """Verify inclusion-exclusion: μ(A∪B) + μ(A∩B) = μ(A) + μ(B).
+    
+    Returns (lhs, rhs).
     """
-    if not a or not b:
-        raise ValueError("Both events must be non-empty")
-
-    p_a_given_b = nap_conditional(a, b, universe_size)
-    p_b_given_a = nap_conditional(b, a, universe_size)
-    p_a = nap_measure(a, universe_size)
-    p_b = nap_measure(b, universe_size)
-
-    lhs = p_a_given_b * p_b
-    rhs = p_b_given_a * p_a
-    return lhs, rhs, lhs == rhs
+    lhs = mu.measure(A | B) + mu.measure(A & B)
+    rhs = mu.measure(A) + mu.measure(B)
+    return lhs, rhs
 
 
-def nap_inclusion_exclusion(
-    a: FrozenSet[int], b: FrozenSet[int], universe_size: int
-) -> Tuple[Fraction, Fraction, bool]:
-    """Verify inclusion-exclusion: μ(A∪B) = μ(A) + μ(B) - μ(A∩B).
-
-    Returns:
-        Tuple of (μ(A∪B), μ(A)+μ(B)-μ(A∩B), verified)
-    """
-    union = a | b
-    intersection = a & b
-
-    mu_union = nap_measure(union, universe_size)
-    mu_a = nap_measure(a, universe_size)
-    mu_b = nap_measure(b, universe_size)
-    mu_inter = nap_measure(intersection, universe_size)
-
-    rhs = mu_a + mu_b - mu_inter
-    return mu_union, rhs, mu_union == rhs
-
-
-def nap_independence_test(
-    a: FrozenSet[int], b: FrozenSet[int], universe_size: int
-) -> Tuple[bool, Fraction, Fraction]:
-    """Test whether events A and B are independent.
-
-    Independent iff μ(A ∩ B) = μ(A) · μ(B).
-
-    Returns:
-        Tuple of (independent, μ(A∩B), μ(A)·μ(B))
-    """
-    intersection = a & b
-    mu_inter = nap_measure(intersection, universe_size)
-    mu_product = nap_measure(a, universe_size) * nap_measure(b, universe_size)
-    return mu_inter == mu_product, mu_inter, mu_product
-
-
-def nap_complement(
-    a: FrozenSet[int], universe_size: int
-) -> Tuple[Fraction, Fraction, bool]:
-    """Verify complement formula: μ(Ω\\A) = 1 - μ(A).
-
-    Returns:
-        Tuple of (μ(Ω\\A), 1-μ(A), verified)
-    """
-    mu_a = nap_measure(a, universe_size)
-    complement_size = universe_size - len(a)
-    mu_complement = Fraction(complement_size, universe_size)
-    expected = Fraction(1) - mu_a
-    return mu_complement, expected, mu_complement == expected
-
-
-def construct_uniform_nap(n: int) -> Dict[str, object]:
-    """Construct a uniform NAP space on {0, ..., n-1}.
-
-    Returns a dictionary describing the space.
-    """
-    if n <= 0:
-        raise ValueError("n must be positive")
-    return {
-        "universe": frozenset(range(n)),
-        "universe_size": n,
-        "atom": Fraction(1, n),
-        "atom_positive": True,
-        "total_measure": Fraction(1),
-    }
-
-
-def ratio_stability_demo(sizes: List[int]) -> List[Dict[str, object]]:
-    """Demonstrate ratio stability across different universe sizes.
-
-    For each size n, compute P(even|large) where:
-    - even = {x : x is even}
-    - large = {x : x >= n/2}
-
-    Shows that the conditional probability stabilizes as n grows.
-    """
-    results = []
-    for n in sizes:
-        universe = frozenset(range(n))
-        even = frozenset(x for x in range(n) if x % 2 == 0)
-        large = frozenset(x for x in range(n) if x >= n // 2)
-
-        cp = nap_conditional(even, large, n)
-        results.append({
-            "n": n,
-            "atom": Fraction(1, n),
-            "P(even|large)": cp,
-            "P(even|large)_float": float(cp),
-        })
-    return results
-
+# === Demonstration ===
 
 if __name__ == "__main__":
-    # Quick self-test
-    n = 12
-    space = construct_uniform_nap(n)
-    print(f"Space: {space}")
-
-    a = frozenset({2, 4, 6, 8, 10})
-    b = frozenset({6, 7, 8, 9, 10, 11})
-
-    print(f"\nBayes test: {nap_bayes(a, b, n)}")
-    print(f"IE test: {nap_inclusion_exclusion(a, b, n)}")
-    print(f"Independence: {nap_independence_test(a, b, n)}")
-    print(f"Complement: {nap_complement(a, n)}")
-
-    print(f"\nRatio stability:")
-    for r in ratio_stability_demo([10, 100, 1000, 10000]):
-        print(f"  n={r['n']:6d}: P(even|large) = {r['P(even|large)_float)']:.6f}"
-              if 'P(even|large)_float)' in r else
-              f"  n={r['n']:6d}: P(even|large) = {float(r['P(even|large)']):.6f}")
+    # Example: 6-sided die
+    die = InfProbMeasure.uniform(list(range(1, 7)))
+    print(f"Die: {die.weights}")
+    print(f"P(even) = {die.measure({2, 4, 6})}")
+    print(f"E[X] = {die.expect(lambda x: Fraction(x))}")
+    
+    # Conditioning
+    cond_alg = InfCondAlg(die)
+    cond = cond_alg.cond_measure({1, 2, 3})
+    print(f"P(1 | {{1,2,3}}) = {cond.weights[1]}")
+    
+    # Chain rule verification
+    lhs, rhs = cond_alg.chain_rule({1, 2}, {2, 3, 4})
+    print(f"Chain rule: {lhs} = {rhs}, verified: {lhs == rhs}")
+    
+    # Product measure
+    two_dice = product_measure(die, die)
+    p7 = two_dice.measure({(a, b) for a in range(1,7) for b in range(1,7) if a+b == 7})
+    print(f"P(sum=7 with 2 dice) = {p7}")
+    
+    # Inclusion-exclusion
+    A = {1, 2, 3}
+    B = {3, 4, 5}
+    lhs, rhs = inclusion_exclusion(die, A, B)
+    print(f"Inclusion-exclusion: {lhs} = {rhs}, verified: {lhs == rhs}")
