@@ -1,267 +1,254 @@
 #!/usr/bin/env python3
 """
-Quantum EML Neurons: Numerical Demonstrations
+Quantum EML Activation Functions — Demonstration Script
 
-Demonstrates the key results from the quantum EML neuron theory:
-1. Phase invariance of amplitude
-2. Circle coverage for fixed coupling
-3. Surjectivity (any complex number as QEML output)
-4. Constructive/destructive interference
-5. Classical-quantum bridge
+Demonstrates the phase neuron, unitarity locus, strip theorem,
+spectral EML, and quantum-classical bridge.
 """
 
 import numpy as np
 
-def qeml(theta: float, t: float) -> complex:
-    """Quantum EML neuron: exp(i*theta) * log(1 + i*t)"""
-    return np.exp(1j * theta) * np.log(1 + 1j * t)
+def phase_neuron(theta: float, phi: float) -> complex:
+    """The phase neuron: exp(iθ) - iφ"""
+    return np.exp(1j * theta) - 1j * phi
 
-def qeml_amplitude(t: float) -> float:
-    """Amplitude component: |log(1 + i*t)|"""
-    return abs(np.log(1 + 1j * t))
+def phase_neuron_norm_sq(theta: float, phi: float) -> float:
+    """Norm-squared: 1 - 2φ sin(θ) + φ²"""
+    return 1 - 2 * phi * np.sin(theta) + phi**2
 
-def qeml_intrinsic_phase(t: float) -> float:
-    """Intrinsic phase of log(1 + i*t)"""
-    return np.angle(np.log(1 + 1j * t))
+def defect(theta: float, phi: float) -> float:
+    """Defect: φ² - 2φ sin(θ)"""
+    return phi**2 - 2 * phi * np.sin(theta)
 
+def spectral_eml(l1: float, l2: float) -> float:
+    """Spectral EML: exp(l₁) - log(l₂)"""
+    return np.exp(l1) - np.log(l2)
 
-# ============================================================
-# Demo 1: Phase Invariance
-# ============================================================
+def synthesize_gate(z: complex) -> tuple[float, float]:
+    """Given z with |Re(z)| ≤ 1, find (θ, φ) such that phaseNeuron(θ, φ) = z."""
+    theta = np.arccos(np.clip(z.real, -1, 1))
+    phi = np.sin(theta) - z.imag
+    return theta, phi
+
+# === Demo 1: Phase Neuron Basics ===
 print("=" * 60)
-print("DEMO 1: Phase Invariance of Amplitude")
+print("DEMO 1: Phase Neuron Basics")
 print("=" * 60)
-print("\nFor fixed t, |qeml(θ, t)| is independent of θ:")
-t_fixed = 2.0
-for theta in [0, np.pi/4, np.pi/2, np.pi, 3*np.pi/2]:
-    amp = abs(qeml(theta, t_fixed))
-    print(f"  θ = {theta:.4f}, |qeml(θ, {t_fixed})| = {amp:.8f}")
-print(f"  qemlAmplitude({t_fixed}) = {qeml_amplitude(t_fixed):.8f}")
 
-# ============================================================
-# Demo 2: Circle Coverage
-# ============================================================
+test_cases = [(0, 0), (np.pi/4, 0), (np.pi/2, 1), (np.pi, 0.5)]
+for theta, phi in test_cases:
+    z = phase_neuron(theta, phi)
+    ns = phase_neuron_norm_sq(theta, phi)
+    ns_check = abs(z)**2
+    print(f"  θ={theta:.4f}, φ={phi:.4f} → z={z:.4f}, |z|²={ns:.4f} (check: {ns_check:.4f})")
+
+# === Demo 2: Unitarity Locus ===
 print("\n" + "=" * 60)
-print("DEMO 2: Circle Coverage (Fixed Coupling)")
+print("DEMO 2: Unitarity Locus")
 print("=" * 60)
-print("\nFor t = 1.5, qeml traces a circle of radius r:")
-t_val = 1.5
-r = qeml_amplitude(t_val)
-print(f"  Radius = {r:.6f}")
-thetas = np.linspace(0, 2*np.pi, 8, endpoint=False)
-print("  Points on circle:")
-for th in thetas:
-    z = qeml(th, t_val)
-    print(f"    θ={th:.2f}: ({z.real:.4f}, {z.imag:.4f}), |z|={abs(z):.6f}")
 
-# ============================================================
-# Demo 3: Surjectivity
-# ============================================================
+print("  Trivial branch (φ=0):")
+for theta in [0, np.pi/6, np.pi/4, np.pi/3, np.pi/2]:
+    z = phase_neuron(theta, 0)
+    print(f"    θ={theta:.4f} → |z|² = {abs(z)**2:.10f} (should be 1.0)")
+
+print("  Sinusoidal branch (φ=2sin(θ)):")
+for theta in [0, np.pi/6, np.pi/4, np.pi/3, np.pi/2]:
+    phi = 2 * np.sin(theta)
+    z = phase_neuron(theta, phi)
+    z_expected = np.exp(-1j * theta)
+    print(f"    θ={theta:.4f} → z={z:.4f}, exp(-iθ)={z_expected:.4f}, |z|²={abs(z)**2:.10f}")
+
+# === Demo 3: Time Reversal ===
 print("\n" + "=" * 60)
-print("DEMO 3: Surjectivity — Matching Any Complex Number")
+print("DEMO 3: Sinusoidal Branch = Time Reversal")
 print("=" * 60)
 
-def find_qeml_params(z: complex) -> tuple:
-    """Find (θ, t) such that qeml(θ, t) ≈ z"""
-    if abs(z) < 1e-15:
-        return (0.0, 0.0)
-    # Binary search for t such that qeml_amplitude(t) = |z|
-    target_amp = abs(z)
-    t_lo, t_hi = 0.0, 1.0
-    while qeml_amplitude(t_hi) < target_amp:
-        t_hi *= 2
-    for _ in range(100):
-        t_mid = (t_lo + t_hi) / 2
-        if qeml_amplitude(t_mid) < target_amp:
-            t_lo = t_mid
-        else:
-            t_hi = t_mid
-    t0 = (t_lo + t_hi) / 2
-    # Find θ
-    w = np.log(1 + 1j * t0)
-    theta = np.angle(z / w)
-    return (theta, t0)
+for theta in np.linspace(0, 2*np.pi, 9):
+    phi = 2 * np.sin(theta)
+    z = phase_neuron(theta, phi)
+    z_rev = np.exp(-1j * theta)
+    err = abs(z - z_rev)
+    print(f"  θ={theta:.4f}: phaseNeuron = {z:.4f}, exp(-iθ) = {z_rev:.4f}, error = {err:.2e}")
 
-targets = [1+0j, 0+1j, -1+0j, 2+3j, 0.5-0.5j, 10+0j]
+# === Demo 4: Strip Theorem ===
+print("\n" + "=" * 60)
+print("DEMO 4: Image = Strip {z : |Re(z)| ≤ 1}")
+print("=" * 60)
+
+targets = [0.5 + 2j, -0.7 - 3j, 0 + 0j, 1 + 100j, -1 - 50j]
 for z_target in targets:
-    theta, t = find_qeml_params(z_target)
-    z_actual = qeml(theta, t)
+    theta, phi = synthesize_gate(z_target)
+    z_actual = phase_neuron(theta, phi)
     err = abs(z_actual - z_target)
-    print(f"  Target: {str(z_target):>10s}  →  θ={theta:.4f}, t={t:.4f}  →  "
-          f"qeml = ({z_actual.real:.4f}, {z_actual.imag:.4f})  error={err:.2e}")
+    print(f"  Target: {z_target}, Synthesized: {z_actual:.6f}, Error: {err:.2e}")
 
-# ============================================================
-# Demo 4: Interference
-# ============================================================
+print("\n  Targets outside strip (|Re| > 1) cannot be reached:")
+for z_target in [1.5 + 0j, -2 + 1j]:
+    print(f"    {z_target}: Re = {z_target.real}, |Re| = {abs(z_target.real):.1f} > 1 ✗")
+
+# === Demo 5: Reality Curve ===
 print("\n" + "=" * 60)
-print("DEMO 4: Constructive vs Destructive Interference")
+print("DEMO 5: Reality Curve (φ = sin θ → real output)")
 print("=" * 60)
 
-t1, t2 = 1.0, 1.0
-theta = 0.0
-# Constructive: same phase
-z_constr = qeml(theta, t1) + qeml(theta, t2)
-# Destructive: opposite phase
-z_destr = qeml(theta, t1) + qeml(theta + np.pi, t2)
-max_amp = qeml_amplitude(t1) + qeml_amplitude(t2)
-print(f"  t₁ = {t1}, t₂ = {t2}")
-print(f"  Max possible amplitude: {max_amp:.6f}")
-print(f"  Constructive (same θ): |sum| = {abs(z_constr):.6f}")
-print(f"  Destructive (θ+π):     |sum| = {abs(z_destr):.6f}")
+for theta in np.linspace(0, np.pi, 7):
+    phi = np.sin(theta)
+    z = phase_neuron(theta, phi)
+    print(f"  θ={theta:.4f}: output = {z:.6f}, Im = {z.imag:.2e} (should be ≈0)")
 
-# ============================================================
-# Demo 5: Classical-Quantum Bridge
-# ============================================================
+# === Demo 6: Spectral EML Gap Amplification ===
 print("\n" + "=" * 60)
-print("DEMO 5: Classical-Quantum Bridge")
-print("=" * 60)
-print("\nRe(qeml(0,t)) = log(√(1+t²)) vs classical activations:")
-print(f"  {'t':>6s}  {'Re(qeml)':>10s}  {'Im(qeml)':>10s}  {'log(1+t²)/2':>12s}  {'arctan(t)':>10s}")
-for t in [0.1, 0.5, 1.0, 2.0, 5.0, 10.0]:
-    z = qeml(0, t)
-    log_val = 0.5 * np.log(1 + t**2)
-    atan_val = np.arctan(t)
-    print(f"  {t:6.1f}  {z.real:10.6f}  {z.imag:10.6f}  {log_val:12.6f}  {atan_val:10.6f}")
-
-# ============================================================
-# Demo 6: QPA Monoid Structure
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 6: QPA Monoid — Polar Multiplication")
+print("DEMO 6: Spectral EML Gap Amplification")
 print("=" * 60)
 
-class QPA:
-    def __init__(self, amplitude, phase):
-        self.amplitude = max(0, amplitude)
-        self.phase = phase
-    def mul(self, other):
-        return QPA(self.amplitude * other.amplitude, self.phase + other.phase)
-    def to_complex(self):
-        return self.amplitude * np.exp(1j * self.phase)
-    def __repr__(self):
-        return f"QPA(r={self.amplitude:.4f}, φ={self.phase:.4f})"
+print("  For l ≥ 1, f(l) = exp(l) - log(l) is strictly increasing:")
+for l in [1.0, 1.5, 2.0, 3.0, 5.0, 10.0]:
+    print(f"    f({l:.1f}) = {spectral_eml(l, l):.4f}")
 
-q1 = QPA(2.0, np.pi/4)
-q2 = QPA(1.5, np.pi/3)
-q3 = q1.mul(q2)
-print(f"  q₁ = {q1}")
-print(f"  q₂ = {q2}")
-print(f"  q₁·q₂ = {q3}")
-print(f"  q₁.toComplex = {q1.to_complex():.4f}")
-print(f"  q₂.toComplex = {q2.to_complex():.4f}")
-print(f"  Product of complexes: {q1.to_complex() * q2.to_complex():.4f}")
-print(f"  (q₁·q₂).toComplex: {q3.to_complex():.4f}")
-print(f"  Homomorphism check: {abs(q1.to_complex() * q2.to_complex() - q3.to_complex()):.2e}")
+print("\n  Below l=1, NON-monotone (f has minimum near l≈0.567):")
+for l in [0.1, 0.3, 0.5, 0.567, 0.7, 1.0]:
+    print(f"    f({l:.3f}) = {spectral_eml(l, l):.4f}")
 
-# ============================================================
-# Demo 7: Amplitude Growth
-# ============================================================
+# === Demo 7: Defect Landscape ===
 print("\n" + "=" * 60)
-print("DEMO 7: Amplitude Growth (Logarithmic)")
+print("DEMO 7: Defect Landscape")
 print("=" * 60)
-ts = [0.01, 0.1, 1, 10, 100, 1000, 10000]
-print(f"  {'t':>8s}  {'amplitude':>10s}  {'log(t+1)':>10s}  {'ratio':>8s}")
-for t in ts:
-    amp = qeml_amplitude(t)
-    log_bound = np.log(t + 1)
-    ratio = amp / log_bound if log_bound > 0 else float('inf')
-    print(f"  {t:8.1f}  {amp:10.6f}  {log_bound:10.6f}  {ratio:8.4f}")
 
+print("  Defect δ = φ² - 2φ sin(θ):")
+for theta in [0, np.pi/6, np.pi/4, np.pi/2]:
+    for phi in [0, 0.5, 1.0, 2*np.sin(theta)]:
+        d = defect(theta, phi)
+        print(f"    θ={theta:.4f}, φ={phi:.4f}: δ={d:.4f}", end="")
+        if abs(d) < 1e-10:
+            print(" ← UNITARY", end="")
+        print()
+
+# === Demo 8: Quantum-Classical Bridge ===
 print("\n" + "=" * 60)
-print("All demonstrations complete.")
+print("DEMO 8: Quantum-Classical Bridge (φ=0 → phase gates)")
 print("=" * 60)
+
+for theta in np.linspace(0, 2*np.pi, 9):
+    z = phase_neuron(theta, 0)
+    z_gate = np.exp(1j * theta)
+    print(f"  θ={theta:.4f}: phaseNeuron = {z:.4f}, exp(iθ) = {z_gate:.4f}, match = {abs(z-z_gate) < 1e-14}")
+
+print("\n✅ All demos complete.")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Quantum EML Circle Coverage
+Visualization: Spectral EML Phase Transition
 
-Shows how quantum EML neurons trace circles in the complex plane
-for different coupling values, demonstrating the surjectivity theorem.
+Shows the diagonal spectral EML f(l) = exp(l) - log(l) and its derivative,
+highlighting the critical point l* ≈ 0.567 (Lambert W(1)) where the function
+transitions from decreasing to increasing.
 """
 
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-def qeml(theta, t):
-    """Quantum EML neuron"""
-    return np.exp(1j * theta) * np.log(1 + 1j * t)
+def main():
+    l = np.linspace(0.01, 3, 1000)
+    f = np.exp(l) - np.log(l)
+    f_prime = np.exp(l) - 1.0/l
 
-def qeml_amplitude(t):
-    """Amplitude function"""
-    return abs(np.log(1 + 1j * t))
+    # Critical point: exp(l*) = 1/l* => l* * exp(l*) = 1 => l* = W(1)
+    # Numerical approximation
+    from scipy.optimize import brentq
+    l_star = brentq(lambda x: np.exp(x) - 1.0/x, 0.01, 2.0)
+    f_star = np.exp(l_star) - np.log(l_star)
 
-# Create figure with multiple panels
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
 
-# Panel 1: Circle coverage
-ax1 = axes[0]
-thetas = np.linspace(0, 2 * np.pi, 200)
-couplings = [0.5, 1.0, 2.0, 5.0, 10.0]
-colors = plt.cm.viridis(np.linspace(0.2, 0.9, len(couplings)))
+    # Top: f(l) = exp(l) - log(l)
+    ax1.plot(l, f, 'b-', linewidth=2)
+    ax1.axvline(x=l_star, color='red', linestyle='--', alpha=0.7, label=f'Critical point l*≈{l_star:.4f}')
+    ax1.axvline(x=1.0, color='green', linestyle='--', alpha=0.7, label='l=1 (monotone threshold)')
+    ax1.plot(l_star, f_star, 'ro', markersize=10, zorder=5)
+    ax1.annotate(f'Minimum: ({l_star:.3f}, {f_star:.3f})',
+                 xy=(l_star, f_star), xytext=(l_star+0.5, f_star+1),
+                 arrowprops=dict(arrowstyle='->', color='red'),
+                 fontsize=12, color='red')
+    ax1.set_xlabel('l (eigenvalue)', fontsize=14)
+    ax1.set_ylabel('f(l) = exp(l) − log(l)', fontsize=14)
+    ax1.set_title('Diagonal Spectral EML Transform', fontsize=16)
+    ax1.legend(fontsize=11)
+    ax1.set_ylim(0, 15)
+    ax1.grid(True, alpha=0.3)
 
-for t, color in zip(couplings, colors):
-    zs = [qeml(th, t) for th in thetas]
-    xs = [z.real for z in zs]
-    ys = [z.imag for z in zs]
-    ax1.plot(xs, ys, color=color, linewidth=1.5,
-             label=f't = {t}')
-    # Mark t=0 phase point
-    z0 = qeml(0, t)
-    ax1.plot(z0.real, z0.imag, 'o', color=color, markersize=4)
+    # Region annotations
+    ax1.fill_betweenx([0, 15], 0, l_star, alpha=0.1, color='red', label='Decreasing')
+    ax1.fill_betweenx([0, 15], l_star, 3, alpha=0.1, color='blue', label='Increasing')
 
-ax1.set_xlabel('Re(z)', fontsize=11)
-ax1.set_ylabel('Im(z)', fontsize=11)
-ax1.set_title('QEML Circles for Varying Coupling', fontsize=12, fontweight='bold')
-ax1.legend(fontsize=9, loc='upper left')
-ax1.set_aspect('equal')
-ax1.grid(True, alpha=0.3)
-ax1.axhline(y=0, color='gray', linewidth=0.5)
-ax1.axvline(x=0, color='gray', linewidth=0.5)
+    # Bottom: f'(l) = exp(l) - 1/l
+    ax2.plot(l, f_prime, 'b-', linewidth=2)
+    ax2.axhline(y=0, color='black', linewidth=0.5)
+    ax2.axvline(x=l_star, color='red', linestyle='--', alpha=0.7)
+    ax2.plot(l_star, 0, 'ro', markersize=10, zorder=5)
+    ax2.fill_between(l, f_prime, 0, where=(f_prime < 0), alpha=0.2, color='red')
+    ax2.fill_between(l, f_prime, 0, where=(f_prime > 0), alpha=0.2, color='blue')
+    ax2.set_xlabel('l (eigenvalue)', fontsize=14)
+    ax2.set_ylabel("f'(l) = exp(l) − 1/l", fontsize=14)
+    ax2.set_title('Derivative of Spectral EML (sign determines monotonicity)', fontsize=16)
+    ax2.set_ylim(-10, 15)
+    ax2.grid(True, alpha=0.3)
 
-# Panel 2: Amplitude function
-ax2 = axes[1]
-ts = np.linspace(0, 20, 500)
-amps = [qeml_amplitude(t) for t in ts]
-log_bound = [np.log(t + 1) for t in ts]
+    plt.tight_layout()
+    plt.savefig('spectral_eml_phase_transition.png', dpi=150)
+    plt.show()
 
-ax2.plot(ts, amps, 'b-', linewidth=2, label='qemlAmplitude(t)')
-ax2.plot(ts, log_bound, 'r--', linewidth=1.5, label='log(t+1)')
-ax2.plot(ts, ts, 'g:', linewidth=1, label='t (linear)')
+if __name__ == "__main__":
+    main()
 
-ax2.set_xlabel('Coupling parameter t', fontsize=11)
-ax2.set_ylabel('Amplitude', fontsize=11)
-ax2.set_title('Amplitude Growth (Logarithmic)', fontsize=12, fontweight='bold')
-ax2.legend(fontsize=9)
-ax2.grid(True, alpha=0.3)
-ax2.set_ylim(0, 4)
 
-# Panel 3: Classical-quantum bridge
-ax3 = axes[2]
-ts_fine = np.linspace(0.01, 5, 200)
-re_vals = [np.log(np.sqrt(1 + t**2)) for t in ts_fine]
-im_vals = [np.arctan(t) for t in ts_fine]
-classical_relu = [max(0, t - 1) for t in ts_fine]
-classical_sigmoid = [1 / (1 + np.exp(-t)) for t in ts_fine]
+#!/usr/bin/env python3
+"""
+Visualization: Unitarity Locus of the Quantum EML Phase Neuron
 
-ax3.plot(ts_fine, re_vals, 'b-', linewidth=2,
-         label='Re(qeml(0,t)) = ½log(1+t²)')
-ax3.plot(ts_fine, im_vals, 'r-', linewidth=2,
-         label='Im(qeml(0,t)) = arctan(t)')
-ax3.plot(ts_fine, classical_relu, 'g--', linewidth=1.5,
-         label='ReLU(t-1)')
-ax3.plot(ts_fine, classical_sigmoid, 'm--', linewidth=1.5,
-         label='Sigmoid(t)')
+Shows the two branches of the unitarity locus in (θ, φ) parameter space:
+- Trivial branch: φ = 0 (pure quantum phase gates)
+- Sinusoidal branch: φ = 2 sin(θ) (time-reversed gates)
 
-ax3.set_xlabel('Input t', fontsize=11)
-ax3.set_ylabel('Activation', fontsize=11)
-ax3.set_title('Quantum vs Classical Activations', fontsize=12, fontweight='bold')
-ax3.legend(fontsize=8)
-ax3.grid(True, alpha=0.3)
+The background colormap shows the defect δ(θ, φ) = φ² − 2φ sin(θ).
+"""
 
-plt.tight_layout()
-plt.savefig('Applications/qeml_visualization.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved: Applications/qeml_visualization.png")
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import TwoSlopeNorm
+
+def main():
+    theta = np.linspace(0, 2 * np.pi, 500)
+    phi = np.linspace(-3, 3, 500)
+    Theta, Phi = np.meshgrid(theta, phi)
+    Defect = Phi**2 - 2 * Phi * np.sin(Theta)
+
+    fig, ax = plt.subplots(1, 1, figsize=(12, 7))
+
+    norm = TwoSlopeNorm(vmin=-1, vcenter=0, vmax=5)
+    im = ax.pcolormesh(Theta, Phi, Defect, cmap='RdBu_r', norm=norm, shading='auto')
+    plt.colorbar(im, ax=ax, label='Defect δ(θ, φ) = φ² − 2φ sin(θ)')
+
+    ax.plot(theta, np.zeros_like(theta), 'k-', linewidth=2.5, label='Trivial branch (φ=0)')
+    ax.plot(theta, 2 * np.sin(theta), 'lime', linewidth=2.5, label='Sinusoidal branch (φ=2sinθ)')
+    ax.plot(theta, np.sin(theta), 'yellow', linewidth=1.5, linestyle='--', label='Reality curve (φ=sinθ)')
+
+    ax.set_xlabel('θ (phase angle)', fontsize=14)
+    ax.set_ylabel('φ (imaginary displacement)', fontsize=14)
+    ax.set_title('Unitarity Locus of the Quantum EML Phase Neuron', fontsize=16)
+    ax.legend(loc='upper right', fontsize=11)
+    ax.set_xlim(0, 2*np.pi)
+    ax.set_ylim(-3, 3)
+
+    ax.annotate('Sub-unitary\n(dissipative)', xy=(np.pi/2, 0.5), fontsize=10,
+                ha='center', color='white', fontweight='bold')
+    ax.annotate('Super-unitary\n(amplifying)', xy=(np.pi/2, 2.5), fontsize=10,
+                ha='center', color='darkblue', fontweight='bold')
+
+    plt.tight_layout()
+    plt.savefig('unitarity_locus.png', dpi=150)
+    plt.show()
+
+if __name__ == "__main__":
+    main()

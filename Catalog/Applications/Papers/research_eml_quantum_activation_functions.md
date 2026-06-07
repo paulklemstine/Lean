@@ -1,329 +1,208 @@
-# Quantum EML Neurons: Phase-Amplitude Activation Algebra and Surjectivity
+# Quantum EML Activation Functions: Phase Neurons and the Unitarity Locus
 
 ## Abstract
 
-We introduce the **quantum EML neuron**, a complex-valued activation function defined by `qeml(θ, t) = exp(iθ) · log(1 + it)`, which lifts the classical EML (Exp-Minus-Log) activation to the complex plane via unitary phase rotations. We develop the **Quantum Phase-Amplitude (QPA) algebra**, a novel monoid structure that captures the compositional properties of quantum EML computation. Our main result is a **surjectivity theorem**: the quantum EML map `(θ, t) ↦ qeml(θ, t)` is surjective onto ℂ, meaning a single quantum EML neuron can produce any complex output. We prove phase invariance of the amplitude, strict monotonicity of the amplitude function on ℝ₊, exact circle coverage for fixed coupling, constructive and destructive interference formulas for multi-neuron compositions, and a classical-quantum bridge connecting quantum EML to standard activation functions. All results are formalized and verified in Lean 4 with Mathlib. We also present the quantum EML approximation rate conjecture, with numerical evidence suggesting O(1/ε · log(1/ε)) neuron width suffices for ε-accuracy on the unit disk.
-
-**Keywords**: quantum neural networks, activation functions, complex-valued networks, phase-amplitude algebra, EML, surjectivity, Lean 4
-
----
+We introduce the **phase neuron**, a complex-valued activation function `phaseNeuron(θ, φ) = exp(iθ) − iφ` that generalizes the real-valued EML (exp-minus-log) framework to the complex plane. We establish four main results: (1) a closed-form norm-squared identity `‖phaseNeuron(θ, φ)‖² = 1 − 2φ sin θ + φ²`; (2) a complete characterization of the unitarity locus as the union of φ = 0 and the sinusoidal curve φ = 2 sin θ, with the surprising consequence that the sinusoidal branch produces time-reversed rotations exp(−iθ); (3) an image characterization showing the phase neuron surjects exactly onto the vertical strip {z ∈ ℂ : |Re(z)| ≤ 1}; and (4) a spectral gap amplification theorem for the diagonal spectral EML in the regime l ≥ 1. All results are machine-verified in Lean 4 with Mathlib. We organize these into the `QuantumEMLGate` structure, equipped with a defect measure and continuity properties, establishing foundations for quantum-classical neural network architectures.
 
 ## 1. Introduction
 
-### 1.1 Background
+The EML (exp-minus-log) function `eml(x, y) = exp(x) − log(y)` has emerged as a fundamental building block in neural network architecture design, possessing clean analytical properties: strict monotonicity in both arguments, no critical points on the positive reals, and convexity properties that facilitate optimization.
 
-Neural network activation functions are the nonlinear building blocks of deep learning. The classical EML (Exp-Minus-Log) function `eml(x, y) = exp(x) - log(y)`, introduced in prior work [EML v17 Core], has been studied extensively for its algebraic properties: strict monotonicity, convexity, functional equations, and connections to Bregman divergences.
+A natural question arises: can the EML framework be extended to the complex plane to interface with quantum computing? Quantum gates are unitary operators, and the exponential map `exp(iH)` for Hermitian H is the standard bridge between Lie algebra elements and unitary group elements. The logarithm provides the inverse bridge. An "EML-style" quantum neuron would combine these operations.
 
-A natural question arises: what happens when we extend EML to the complex plane? In quantum computing, the fundamental operations are unitary transformations `U = exp(iH)` for Hermitian operators H, and the matrix logarithm provides a natural inverse. This suggests a "quantum" version of EML that combines exponential rotations with logarithmic activations.
+We propose the **phase neuron** as the simplest non-trivial quantum EML construction. Rather than working with matrix exponentials (which would require heavy functional analysis infrastructure), we work with the scalar complex exponential, capturing the essential phase-rotation structure of quantum gates in a tractable setting.
 
-### 1.2 Contributions
+### 1.1 Contributions
 
-We make the following contributions:
-
-1. **Definition of the quantum EML neuron** `qeml(θ, t) = exp(iθ) · log(1 + it)`, a complex-valued activation function parameterized by phase θ and coupling t.
-
-2. **The Quantum Phase-Amplitude (QPA) algebra**: a novel monoid structure on non-negative-amplitude, real-phase pairs under polar multiplication, with a verified homomorphism property to ℂ.
-
-3. **Surjectivity theorem**: The map `(θ, t) ↦ qeml(θ, t)` is surjective onto ℂ. This is the first single-neuron activation function known to cover the entire complex plane.
-
-4. **Phase invariance**: `‖qeml(θ, t)‖ = qemlAmplitude(t)`, independent of θ.
-
-5. **Circle coverage**: For fixed nonzero coupling t, the image `{qeml(θ, t) : θ ∈ ℝ}` equals the circle of radius `qemlAmplitude(t)` centered at 0.
-
-6. **Strict monotonicity**: The amplitude function is strictly increasing on (0, ∞).
-
-7. **Interference formulas**: Exact formulas for constructive interference (same phase) and destructive interference (anti-phase) of multiple quantum EML neurons.
-
-8. **Classical-quantum bridge**: The real part `Re(qeml(0, t)) = log(√(1+t²))` and imaginary part `Im(qeml(0, t)) = arg(1+it)` recover classical-style activations.
-
-9. **Layer norm bound**: For a quantum EML layer of width n, the output norm is bounded by the sum of weighted amplitudes.
-
-All proofs are machine-verified in Lean 4 using Mathlib.
-
----
+1. **Novel mathematical structure**: The `QuantumEMLGate` parameterized by (θ, φ) ∈ ℝ², with output phaseNeuron(θ, φ) = exp(iθ) − iφ
+2. **Norm-squared identity** (Theorem 3.1): Complete analytical formula
+3. **Unitarity characterization** (Theorem 3.2): The unitarity locus is φ = 0 ∨ φ = 2 sin θ
+4. **Sinusoidal branch identity** (Theorem 3.3): Time reversal on the non-trivial unitary branch
+5. **Image characterization** (Theorem 4.1): Surjection onto the strip |Re(z)| ≤ 1
+6. **Spectral gap amplification** (Theorem 5.1): Monotonicity of diagonal spectral EML for l ≥ 1
+7. **Quantum-classical bridge** (Theorem 6.1): Exact recovery of phase gates at φ = 0
 
 ## 2. Definitions
 
-### 2.1 Quantum EML Neuron
+### 2.1 Complex EML
 
-**Definition 1** (Quantum EML Neuron). For θ, t ∈ ℝ, the quantum EML neuron is:
-
+**Definition 2.1** (Complex EML). For z, w ∈ ℂ, define
 ```
-qeml(θ, t) := exp(iθ) · log(1 + it)
+ceml(z, w) = exp(z) − log(w)
 ```
+where exp and log are the complex exponential and principal logarithm.
 
-where exp is the complex exponential, log is the principal branch of the complex logarithm, and i = √(-1).
-
-**Definition 2** (Amplitude Function). The amplitude of a quantum EML neuron is:
-
+**Theorem 2.1** (Real restriction). For x, y ∈ ℝ:
 ```
-qemlAmplitude(t) := ‖log(1 + it)‖
+Re(ceml(x, y)) = exp(x) − log(y) = realEml(x, y)
 ```
+This holds without any positivity assumption on y, connecting the complex and real EML.
 
-This captures the modulus of the logarithmic activation, independent of the phase rotation.
+### 2.2 Phase Neuron
 
-**Definition 3** (Intrinsic Phase). The intrinsic phase of the logarithmic component is:
-
+**Definition 2.2** (Phase Neuron). For θ, φ ∈ ℝ, define
 ```
-qemlIntrinsicPhase(t) := arg(log(1 + it))
+phaseNeuron(θ, φ) = exp(iθ) − iφ = cos(θ) + i(sin(θ) − φ)
 ```
 
-### 2.2 Quantum Phase-Amplitude (QPA) Algebra
+The decomposition into real and imaginary parts follows immediately from Euler's formula.
 
-**Definition 4** (QPA). A QPA element is a pair (r, φ) where r ≥ 0 (amplitude) and φ ∈ ℝ (phase).
+### 2.3 QuantumEMLGate
 
-**Definition 5** (QPA Multiplication). For QPA elements q₁ = (r₁, φ₁) and q₂ = (r₂, φ₂):
+**Definition 2.3** (QuantumEMLGate). A quantum EML gate is a pair G = (θ, φ) ∈ ℝ². Its output is phaseNeuron(θ, φ). The identity gate is (0, 0), producing output 1.
 
+**Definition 2.4** (Defect). The defect of gate G is `δ(G) = ‖output(G)‖² − 1`, measuring deviation from unitarity.
+
+### 2.4 Spectral EML Transform
+
+**Definition 2.5** (Spectral EML). For eigenvalues l₁, l₂ ∈ ℝ:
 ```
-q₁ · q₂ := (r₁ · r₂, φ₁ + φ₂)
-```
-
-**Definition 6** (QPA Identity). The identity element is 1_QPA := (1, 0).
-
-**Definition 7** (QPA-to-ℂ Map). The embedding `toComplex : QPA → ℂ` is:
-
-```
-toComplex(r, φ) := r · exp(iφ)
+spectralEML(l₁, l₂) = exp(l₁) − log(l₂)
 ```
 
-**Definition 8** (Quantization Map). The map from quantum EML parameters to QPA:
+## 3. The Unitarity Locus
 
+### 3.1 Norm-Squared Identity
+
+**Theorem 3.1** (Norm-squared formula). For all θ, φ ∈ ℝ:
 ```
-qemlToQPA(θ, t) := (qemlAmplitude(t), θ + qemlIntrinsicPhase(t))
-```
-
-### 2.3 Quantum EML Layer
-
-**Definition 9** (Quantum EML Layer). A quantum EML layer of width n consists of:
-- Phase parameters: (θ₁, ..., θₙ)
-- Coupling parameters: (t₁, ..., tₙ)
-- Weights: (w₁, ..., wₙ) ∈ ℂⁿ
-
-The layer output is: `∑ᵢ wᵢ · qeml(θᵢ, tᵢ)`
-
----
-
-## 3. Main Results
-
-### 3.1 Phase Invariance (Theorem 1)
-
-**Theorem 1** (Phase Invariance). For all θ, t ∈ ℝ:
-```
-‖qeml(θ, t)‖ = qemlAmplitude(t)
+‖phaseNeuron(θ, φ)‖² = 1 − 2φ sin(θ) + φ²
 ```
 
-*Proof sketch.* Since `|exp(iθ)| = 1` for all θ ∈ ℝ, we have `‖qeml(θ, t)‖ = ‖exp(iθ)‖ · ‖log(1+it)‖ = qemlAmplitude(t)`. □
+*Proof sketch*. Expand using Re² + Im² = cos²θ + (sinθ − φ)². The Pythagorean identity cos²θ + sin²θ = 1 yields the result after algebraic simplification. □
 
-**PEGB Analysis:**
-- **P**roof: Complete Lean 4 proof using `norm_mul` and `norm_exp_ofReal_mul_I`.
-- **E**xample: For t = 2, qemlAmplitude(2) ≈ 1.1394. Verified: |qeml(0, 2)| = |qeml(π/4, 2)| = |qeml(π, 2)| ≈ 1.1394.
-- **G**eneralization: Extends to matrix-valued quantum EML neurons where exp(iH) is a unitary matrix: `‖U · X‖ = ‖X‖` for unitary U and any matrix norm.
-- **B**oundary: At t = 0, qemlAmplitude(0) = 0, so `qeml(θ, 0) = 0` for all θ. This is the degenerate case where phase invariance holds vacuously.
+### 3.2 Unitarity Characterization
 
-### 3.2 S¹ Equivariance (Theorem 2)
-
-**Theorem 2** (Phase Shift). For all θ, φ, t ∈ ℝ:
+**Theorem 3.2** (Unitarity iff). The phase neuron has unit norm if and only if:
 ```
-qeml(θ + φ, t) = exp(iφ) · qeml(θ, t)
+‖phaseNeuron(θ, φ)‖² = 1  ⟺  φ = 0 ∨ φ = 2 sin(θ)
 ```
 
-*Proof sketch.* By the exponential addition law: `exp(i(θ+φ)) = exp(iφ) · exp(iθ)`, so `qeml(θ+φ, t) = exp(iφ) · exp(iθ) · log(1+it) = exp(iφ) · qeml(θ, t)`. □
+*Proof sketch*. From Theorem 3.1, unitarity requires φ² − 2φ sin θ = 0, i.e., φ(φ − 2 sin θ) = 0. □
 
-### 3.3 Non-Degeneracy (Theorem 3)
+**Corollary 3.2.1** (Defect formula). The defect equals φ² − 2φ sin θ, a quadratic form in φ.
 
-**Theorem 3** (Non-Degeneracy). `qeml(θ, t) = 0 ⟺ t = 0`.
+### 3.3 The Sinusoidal Branch
 
-*Proof sketch.* (⟹) Since `exp(iθ) ≠ 0`, we need `log(1+it) = 0`. This means `exp(0) = 1+it`, i.e., `1+it = 1`, so `t = 0`. (⟸) `qeml(θ, 0) = exp(iθ) · log(1) = 0`. □
-
-### 3.4 Surjectivity (Theorem 4) — Main Result
-
-**Theorem 4** (Surjectivity of Quantum EML). The map `(θ, t) ↦ qeml(θ, t)` is surjective onto ℂ. That is, for every z ∈ ℂ, there exist θ, t ∈ ℝ such that `qeml(θ, t) = z`.
-
-*Proof sketch.* 
-- **Case z = 0**: Take t = 0; then `qeml(θ, 0) = 0` by Theorem 3.
-- **Case z ≠ 0**: 
-  1. The amplitude function `qemlAmplitude` is continuous (composition of continuous functions, using the fact that `re(1+it) = 1 > 0` places us in the slit plane where log is continuous).
-  2. `qemlAmplitude(0) = 0` and `qemlAmplitude(t) → ∞` as `t → ∞` (since `re(log(1+it)) = log(√(1+t²)) → ∞`).
-  3. By the intermediate value theorem, there exists t₀ with `qemlAmplitude(t₀) = ‖z‖`.
-  4. Since `t₀ ≠ 0`, the complex number `w := log(1+it₀) ≠ 0` and `‖w‖ = ‖z‖`.
-  5. The ratio `z/w` has norm 1, so by `Complex.norm_mul_exp_arg_mul_I`, there exists θ with `exp(iθ) = z/w`.
-  6. Then `qeml(θ, t₀) = exp(iθ) · w = (z/w) · w = z`. □
-
-**PEGB Analysis:**
-- **P**roof: Complete Lean 4 proof using IVT, continuity of Complex.log on the slit plane, and the polar decomposition of complex numbers.
-- **E**xample: To reach z = 2+3i, binary search gives t₀ ≈ 23.87, θ ≈ 0.525, and qeml(0.525, 23.87) ≈ 2.000 + 3.000i.
-- **G**eneralization: For matrix-valued quantum EML, the analogous conjecture is that {exp(iH₁) · log(I + iH₂) : H₁, H₂ ∈ Hermitian(n)} covers all of GL(n, ℂ) minus a measure-zero set. For n = 1 (our scalar case), we proved full coverage.
-- **B**oundary: Surjectivity fails for the "half-quantum" variant `θ ↦ exp(iθ) · c` with fixed c ≠ 0 (this only covers a single circle, not all of ℂ). Both parameters θ and t are essential.
-
-### 3.5 QPA Monoid Structure (Theorem 5)
-
-**Theorem 5** (QPA Monoid). (QPA, mul, one) forms a monoid, and `toComplex : QPA → ℂ` is a monoid homomorphism:
+**Theorem 3.3** (Time reversal). On the non-trivial unitary branch:
 ```
-toComplex(q₁ · q₂) = toComplex(q₁) · toComplex(q₂)
-toComplex(1_QPA) = 1
+phaseNeuron(θ, 2 sin θ) = exp(−iθ)
 ```
 
-*Proof sketch.* Associativity: (r₁r₂)r₃ = r₁(r₂r₃) and (φ₁+φ₂)+φ₃ = φ₁+(φ₂+φ₃). Identity: 1·r = r and 0+φ = φ. Homomorphism: `r₁r₂ · exp(i(φ₁+φ₂)) = r₁·exp(iφ₁) · r₂·exp(iφ₂)` by `exp_add`. □
+*Proof sketch*. The real part is cos θ = cos(−θ). The imaginary part is sin θ − 2 sin θ = −sin θ = sin(−θ). □
 
-### 3.6 Circle Coverage (Theorem 6)
+This is a striking result: the combination of a forward rotation exp(iθ) with a calibrated imaginary displacement 2i sin θ produces the *time-reversed* rotation exp(−iθ). The EML structure naturally generates CPT-like symmetry operations.
 
-**Theorem 6** (Circle Coverage). For t ≠ 0:
+## 4. Image Characterization
+
+**Theorem 4.1** (Strip theorem). The image of phaseNeuron : ℝ² → ℂ is exactly the closed vertical strip:
 ```
-{qeml(θ, t) : θ ∈ ℝ} = sphere(0, qemlAmplitude(t))
-```
-
-That is, the image is exactly the circle of radius `qemlAmplitude(t)`.
-
-*Proof sketch.* (⊆) By phase invariance (Theorem 1). (⊇) For z on the circle, `‖z‖ = qemlAmplitude(t) = ‖w‖` where `w = log(1+it)`. Then `z/w` has norm 1 and equals `exp(iθ)` for some θ. □
-
-**PEGB Analysis:**
-- **P**roof: Lean 4 proof using polar decomposition.
-- **E**xample: For t = 1, `qemlAmplitude(1) ≈ 0.8427`, and {qeml(θ, 1) : θ ∈ [0, 2π)} traces a circle of exactly this radius.
-- **G**eneralization: For fixed complex coupling z₀ ≠ 0, `{exp(iθ) · z₀ : θ ∈ ℝ}` is always a circle. The quantum EML version adds that the *radius* is parameterized continuously by t.
-- **B**oundary: At t = 0, the "circle" degenerates to the single point {0}.
-
-### 3.7 Strict Monotonicity (Theorem 7)
-
-**Theorem 7** (Strict Monotonicity). The amplitude function `qemlAmplitude` is strictly increasing on (0, ∞).
-
-*Proof sketch.* For 0 < t < t', both components of `qemlAmplitude(t)² = (log√(1+t²))² + (arg(1+it))²` are strictly increasing. The log component increases because √(1+t²) is strictly increasing and log is strictly increasing. The arg component equals arcsin(t/√(1+t²)), which is also strictly increasing for t > 0. □
-
-### 3.8 Interference Theorems (Theorems 8-9)
-
-**Theorem 8** (Constructive Interference). For two neurons with the same phase:
-```
-‖qeml(θ, t₁) + qeml(θ, t₂)‖ = ‖log(1+it₁) + log(1+it₂)‖
+im(phaseNeuron) = {z ∈ ℂ : −1 ≤ Re(z) ≤ 1}
 ```
 
-**Theorem 9** (Destructive Interference). For two neurons with anti-aligned phases:
+*Proof (forward)*. Since Re(phaseNeuron(θ, φ)) = cos θ ∈ [−1, 1], the image is contained in the strip. □
+
+*Proof (surjectivity)*. Given z with |Re(z)| ≤ 1, let θ = arccos(Re(z)) and φ = sin(arccos(Re(z))) − Im(z). Then:
+- Re(phaseNeuron(θ, φ)) = cos(arccos(Re(z))) = Re(z) ✓
+- Im(phaseNeuron(θ, φ)) = sin θ − φ = Im(z) ✓ □
+
+## 5. Spectral Theory
+
+### 5.1 Monotonicity Properties
+
+**Theorem 5.1** (First-argument monotonicity). spectralEML(·, l₂) is strictly increasing.
+
+**Theorem 5.2** (Second-argument anti-monotonicity). spectralEML(l₁, ·) is strictly decreasing on (0, ∞).
+
+### 5.2 Gap Amplification
+
+**Theorem 5.3** (Spectral gap amplification). For 1 ≤ l₂ < l₁:
 ```
-‖qeml(θ, t₁) + qeml(θ+π, t₂)‖ = ‖log(1+it₁) - log(1+it₂)‖
-```
-
-### 3.9 Classical-Quantum Bridge (Theorems 10-11)
-
-**Theorem 10**. `Re(qeml(0, t)) = log(√(1+t²))` — a smooth, monotone activation.
-
-**Theorem 11** (Quantum Activation Bound). For t > 0:
-```
-0 < Re(qeml(0, t)) < t
-```
-
-This shows the quantum real activation grows sub-linearly, providing natural regularization.
-
-**PEGB Analysis:**
-- **P**roof: Uses `exp(2t) ≥ 1+t²` for the upper bound, `1+t² > 1` for positivity.
-- **E**xample: At t = 1: Re(qeml(0,1)) = log(√2) ≈ 0.347 < 1.
-- **G**eneralization: For the matrix case, `Re(tr(log(I + iH)))` should give a matrix-valued activation bounded by `‖H‖_F`.
-- **B**oundary: As t → 0⁺, Re(qeml(0,t)) → 0 (no activation). As t → ∞, Re(qeml(0,t)) ∼ ½log(t²) → ∞ (unbounded but sub-linear).
-
-### 3.10 Layer Norm Bound (Theorem 12)
-
-**Theorem 12** (Layer Bound). For a quantum EML layer of width n:
-```
-‖∑ᵢ wᵢ · qeml(θᵢ, tᵢ)‖ ≤ ∑ᵢ ‖wᵢ‖ · qemlAmplitude(tᵢ)
+spectralEML(l₂, l₂) < spectralEML(l₁, l₁)
 ```
 
-### 3.11 Imaginary Part Bound (Theorem 13)
+*Proof sketch*. The function f(l) = exp(l) − log(l) has derivative f'(l) = exp(l) − 1/l. For l ≥ 1, exp(l) ≥ e > 1 ≥ 1/l, so f is strictly increasing. The proof uses the mean value theorem to obtain a point c ∈ (l₂, l₁) where f'(c) > 0, then concludes by the sign of the difference quotient. □
 
-**Theorem 13**. For all t ∈ ℝ: `|Im(qeml(0, t))| < π`.
+**Remark**. The restriction l₂ ≥ 1 is necessary: f has a minimum near l ≈ 0.567 where exp(l) = 1/l. Below this point, f is decreasing, so gap amplification fails. This non-monotonicity is a genuinely quantum phenomenon — the interplay between exponential growth and logarithmic contraction creates a phase transition in the spectral EML behavior.
 
-In fact, the bound is π/2 (since `arg(1+it) ∈ (-π/2, π/2)` by Theorem 14 below).
+## 6. Quantum-Classical Bridge
 
-**Theorem 14** (Argument Bound). `|arg(1+it)| < π/2`.
-
----
-
-## 4. Algorithms
-
-### 4.1 Inverse Quantum EML
-
-Given a target z ∈ ℂ, the surjectivity theorem is constructive: find (θ, t) with qeml(θ, t) = z.
-
-**Algorithm:**
-1. If z = 0: return (0, 0).
-2. Binary search for t₀ ∈ [0, ∞) such that `qemlAmplitude(t₀) = |z|`.
-3. Set `w = log(1 + it₀)`.
-4. Set `θ = arg(z/w)`.
-5. Return (θ, t₀).
-
-**Complexity:** O(log(1/ε) · log(|z|)) for ε-accuracy in t₀.
-
-### 4.2 Quantum EML Layer Training
-
-Training a width-n quantum EML layer to approximate a target function f : ℂ → ℂ:
-
-1. Initialize phases θᵢ uniformly in [0, 2π).
-2. Initialize couplings tᵢ log-uniformly in [0.1, 10].
-3. Initialize weights wᵢ = 1/n.
-4. Optimize via gradient descent on L₂ loss, using the analytic gradients:
-   - ∂(qeml)/∂θ = i · qeml(θ, t)
-   - ∂(qeml)/∂t = exp(iθ) · i/(1+it)
-
----
-
-## 5. Conjecture: Quantum EML Approximation Rate
-
-**Conjecture** (QEML Approximation Rate). For any continuous f : 𝔻 → ℂ on the closed unit disk and any ε > 0, there exists a quantum EML layer of width N = O(1/ε · log(1/ε)) such that:
-
+**Theorem 6.1** (Bridge theorem). At φ = 0:
 ```
-sup_{z ∈ 𝔻} |layer(z) - f(z)| < ε
+phaseNeuron(θ, 0) = exp(iθ)  and  ‖phaseNeuron(θ, 0)‖ = 1
 ```
 
-**Computational test:** For the target function f(x) = sin(x) + i·cos(x) on [-1, 1], numerical experiments show that a width-5 quantum EML layer achieves max error < 0.1, and width-20 achieves max error < 0.001.
+The quantum EML framework exactly contains quantum phase gates.
 
-**Comparison:** Classical real-valued networks require O(1/ε²) neurons for ε-approximation of Lipschitz functions on [0, 1] (Barron's theorem). The conjectured quantum rate of O(1/ε · log(1/ε)) represents a quadratic speedup in width, attributable to the additional phase degree of freedom.
+**Theorem 6.2** (Reality curve). At φ = sin θ:
+```
+Im(phaseNeuron(θ, sin θ)) = 0  and  Re(phaseNeuron(θ, sin θ)) = cos θ
+```
 
----
+The quantum EML framework contains classical real-valued activations as a codimension-1 slice.
 
-## 6. Cross-Connections
+### 6.1 Three Regimes
 
-### 6.1 Connection to EML Theory
+The parameter space ℝ² decomposes into three qualitatively distinct regimes:
 
-The quantum EML neuron extends the classical EML function `eml(x, y) = exp(x) - log(y)`. The classical-quantum bridge (Theorem 10) shows that the real part of qeml(0, t) recovers a smooth activation function related to the classical EML. The existing theorem `eml_log_exp` in the catalog shows `eml(log a, exp b) = a - b` for positive a; analogously, quantum EML preserves the exp-log duality in the complex domain.
+| Curve | Formula | Output | Character |
+|-------|---------|--------|-----------|
+| Trivial unitary | φ = 0 | exp(iθ) | Quantum phase gate |
+| Reality | φ = sin θ | cos θ | Classical activation |
+| Sinusoidal unitary | φ = 2 sin θ | exp(−iθ) | Time-reversed gate |
 
-### 6.2 Connection to Tropical Semirings
+Between φ = 0 and φ = sin θ: sub-unitary, complex-valued (dissipative quantum).
+Between φ = sin θ and φ = 2 sin θ: sub-unitary, complex-valued (approaching reversal).
+Beyond φ = 2 sin θ: super-unitary (amplifying).
 
-The `quantum_classical_bound` theorem in the catalog establishes bounds relating quantum and classical regimes. The qeml interference bound (Theorem 8-9) provides a quantum analogue: the "sum" of two quantum activations is bounded by the "sum" of their amplitudes, mirroring the triangle inequality in tropical geometry where `min(a, b) ≤ a, b`.
+## 7. Continuity and Topology
 
-### 6.3 Connection to Quantum Computing
+**Theorem 7.1** (Continuity). The map (θ, φ) ↦ phaseNeuron(θ, φ) is continuous ℝ² → ℂ.
 
-The phase rotation `exp(iθ)` is precisely a single-qubit Z-rotation gate. The quantum EML neuron can thus be interpreted as a Z-gate followed by a logarithmic "measurement-like" operation. This connects to the `unitary_parameter_count` result in the catalog, which establishes circuit depth lower bounds for unitary implementation.
+**Theorem 7.2** (Defect continuity). The defect function (θ, φ) ↦ δ(θ, φ) is continuous ℝ² → ℝ.
 
----
+These ensure that the unitarity locus {(θ, φ) : δ = 0} is a closed subset of ℝ², and that small perturbations of gate parameters produce small perturbations of the output — essential for any practical optimization procedure.
 
-## 7. Discussion
+## 8. Algorithms
 
-### 7.1 Significance
+### 8.1 Phase Neuron Synthesis
 
-The surjectivity theorem establishes that a single quantum EML neuron, with just two real parameters, can produce any complex output. This is a fundamental expressivity result for complex-valued neural networks.
+Given a target z ∈ ℂ with |Re(z)| ≤ 1:
+1. Compute θ = arccos(Re(z))
+2. Compute φ = sin(θ) − Im(z)
+3. Return QuantumEMLGate(θ, φ)
 
-The QPA algebra provides a clean algebraic framework for analyzing compositions of quantum EML neurons. Unlike the full matrix group GL(n, ℂ), QPA is commutative (it is isomorphic to ℝ≥0 × ℝ under multiplication-addition), which enables tractable analysis of deep networks.
+Complexity: O(1) per gate synthesis.
 
-### 7.2 Limitations
+### 8.2 Unitarity Projection
 
-Our results are for the scalar (1-dimensional) case. Extension to the full matrix case — showing that `exp(iH₁) · log(I + iH₂)` covers SU(n) — remains open. The principal branch of the matrix logarithm introduces additional complications related to eigenvalue distributions.
+Given a gate G = (θ, φ), project to the nearest unitary gate:
+- If |φ| ≤ |φ − 2 sin θ|, project to (θ, 0)
+- Otherwise, project to (θ, 2 sin θ)
 
-The approximation rate conjecture is supported only by numerical evidence. A rigorous proof would likely require developing a quantum analogue of Barron's theorem for complex-valued networks.
+This gives the nearest unitary gate in parameter space (not necessarily in operator norm).
 
-### 7.3 Future Work
+## 9. Discussion and Open Problems
 
-1. **Matrix quantum EML**: Extend to SU(2) and SU(n) coverage using matrix exponentials and logarithms.
-2. **Quantum circuit compilation**: Use quantum EML neurons as building blocks for parameterized quantum circuits.
-3. **Training dynamics**: Analyze gradient flow on quantum EML layers, leveraging the QPA algebra structure.
-4. **Topological properties**: Study the fiber structure of the qeml map (what is the preimage of a given complex number?).
+### 9.1 Falsifiable Conjecture
 
----
+**Conjecture** (Quantum EML Universal Approximation). For any continuous f : [−1, 1] → ℂ and ε > 0, there exists a finite composition of quantum EML gates G₁, …, Gₙ such that the pointwise product of outputs approximates f uniformly to within ε.
 
-## 8. Conclusion
+**Test**: For specific target functions (e.g., the Chebyshev polynomials restricted to [−1,1] with complex coefficients), compute the approximation error as a function of the number of gates.
 
-We have introduced the quantum EML neuron, proved its surjectivity onto ℂ, established the QPA monoid structure, and developed interference formulas for multi-neuron compositions. The classical-quantum bridge connects this new structure to the existing EML theory. All results are machine-verified, providing a rigorous foundation for future development of quantum-inspired neural networks.
+### 9.2 Connections to Existing Work
 
----
+The EML framework connects to tropical semirings via the large-parameter limits: as θ → ∞ or φ → ∞, the phase neuron's behavior transitions from oscillatory to dominated by the imaginary shift, analogous to the tropical limit of the max-plus algebra.
+
+The defect quadratic form φ² − 2φ sin θ connects to the theory of quantum error correction, where syndrome measurements are quadratic forms on error spaces.
+
+## 10. Conclusion
+
+The phase neuron and QuantumEMLGate framework provide a rigorous mathematical foundation for quantum-classical neural network architectures. The key insight is that the unitarity locus — the set of parameters yielding information-preserving gates — has a beautiful geometric structure (two intersecting curves in ℝ²) with physical meaning (time reversal on the sinusoidal branch). The image characterization and spectral gap amplification results complete the picture, showing both what the framework can compute and how it processes spectral information.
 
 ## References
 
-1. EML v17 Core — Classical EML function theory (Catalog: `EML/EMLv17Core.lean`)
-2. EML Tropical Semiring — Tropical algebra connections (Catalog: `Bridges/EMLTropicalSemiring.lean`)
-3. Quantum Classical Bound — Quantum-classical regime bounds (Catalog: `Bridges/EMLTropicalSemiring.lean`)
-4. Universal Approximation — Classical EML approximation (Catalog: `Bridges/UniversalApproximation.lean`)
+1. EML Framework: `Catalog/EML/EMLv17Core.lean` — Original real-valued EML definitions and properties
+2. Tropical connection: `Catalog/Bridges/EMLTropicalSemiring.lean` — Quantum-classical bound
+3. Universal approximation: `Catalog/Bridges/UniversalApproximation.lean` — Continuity of EML exp neurons
+4. Spectral theory context: `Catalog/Cryptography/BerggrenDiophantineLattice.lean` — Lorentz form and spectral methods
