@@ -1,216 +1,310 @@
-# The Category Theory of Jokes: Universal Properties of Humor
+# Surprise-Enriched Metric Spaces: A Categorical Framework for Humor Theory
 
 ## Abstract
 
-We develop a rigorous mathematical theory of humor based on metric spaces and categorical universal properties. A joke is modeled as a pair (expected, actual) in a pseudo-metric space, with humor measured by the distance between expectation and reality. We prove several structural results: (1) the **Fundamental Theorem of Comedy** — in compact spaces, maximally funny jokes exist; (2) the **Humor Convergence Theorem** — contractive subversion maps converge to unique self-referential fixed points; (3) the **Self-Referential Fixed Point Theorem** — providing existence and uniqueness of self-subverting jokes; (4) the **Humor Chain Inequality** — bounding end-to-end humor by total chain humor; (5) the **Humor Duality** — establishing simultaneous existence of funniest and most boring jokes. All results are formalized and verified in Lean 4 with the Mathlib library. We bridge to information theory through surprise entropy, and to category theory through preorder categories of jokes.
+We develop a rigorous mathematical theory of humor based on metric space geometry and
+categorical structure. The central framework models jokes as triples (setup, expected,
+punchline) in a pseudometric space, with humor defined as the distance between expected
+and actual outcomes. We prove several non-trivial theorems:
+
+1. **Jensen's Comedy Theorem**: For any weighted probability distribution over deviations,
+   the expected absolute deviation is bounded by the square root of the variance
+   (Theorem `comedy_sqrt_bound`).
+
+2. **Punchline Variance Bound**: For humor values in [0, D], the variance is at most D²/4,
+   achieved when the distribution concentrates at the endpoints (Theorem `punchline_variance_bound`).
+
+3. **Humor Spectrum Gap**: In finite metric spaces, non-zero humor is bounded below by a
+   positive spectral gap (Theorem `humor_spectrum_gap`).
+
+4. **Chebyshev Comedy Principle**: The number of jokes deviating from mean humor by ≥ t
+   is bounded by the total squared deviation divided by t² (Theorem `humor_chebyshev`).
+
+5. **Bi-Lipschitz Humor Sandwich**: K-bi-Lipschitz maps preserve humor up to factor K
+   in both directions (Theorem `biLipschitz_humor_sandwich`).
+
+All results are formally verified in Lean 4 with Mathlib, with no unproven assumptions.
+
+**Keywords**: humor theory, metric spaces, surprise metrics, Jensen's inequality,
+categorical enrichment, spectral gap, concentration inequalities
 
 ## 1. Introduction
 
-The incongruity theory of humor, originating with Kant and Schopenhauer and formalized by Morreall [1983], posits that humor arises from the violation of expectations. We make this precise by embedding humor in the framework of metric geometry.
+The mathematical study of humor has a long history in computational linguistics and
+cognitive science, but rigorous formalization has been lacking. We address this by
+developing a framework where jokes are geometric objects in pseudometric spaces, and
+the key properties of comedy follow from classical results in analysis and probability.
 
-Our key insight is that a joke is a morphism in a metric space — specifically, a pair of points representing the expected resolution and the actual punchline. The humor value is the metric distance between them. This simple formalization leads to surprisingly deep consequences through the interaction with compactness, completeness, and contraction mappings.
+Our approach is inspired by category theory's enriched categories, where morphisms
+carry additional structure beyond mere composition. In our setting, the "enrichment"
+is a real-valued surprise measure satisfying the triangle inequality. This connects
+humor theory to:
 
-### 1.1 Relationship to Prior Work
+- **Geometric analysis**: via bi-Lipschitz maps and isometric invariance
+- **Probability theory**: via Jensen's inequality and concentration phenomena
+- **Information theory**: via entropy-surprise connections
+- **Order theory**: via the "funnier-than" preorder and lattice structure
 
-This work extends the `CategoricalSurprise` framework (Catalog: `Tropical/CategoricalSurprise.lean`), which established the basic structure of surprise spaces and proved properties like surprise continuity and the surprise triangle bound. We significantly deepen this by:
+### 1.1 Relation to Prior Work
 
-1. Proving the Humor Convergence Theorem via Banach fixed-point theory
-2. Establishing the Self-Referential Fixed Point Theorem for contractive humor
-3. Developing the Humor Chain Inequality for joke sequences
-4. Bridging to information theory through surprise entropy
-5. Establishing universal properties via the joke preorder category
+This work extends the humor theory formalized in `MachineLearning/HumorTheory/Core.lean`
+(the `joke_chain_humor_bound` result and related constructions). Our contributions are:
 
-We also build on `analysis_bridge_unique_limit` (Catalog: `Bridges/CategoricalBridges.lean`), which proved unique limits in Hausdorff spaces — a key ingredient in our fixed-point uniqueness argument.
+- **Deepening**: The Fundamental Theorem of Comedy is extended from triangle inequalities
+  to deficiency theory, geodesic characterization, and duality.
+- **Bridging**: Jensen's Comedy Theorem bridges humor to probability; bi-Lipschitz
+  invariance bridges to geometric analysis; Chebyshev concentration bridges to statistics.
+- **Strengthening**: The punchline variance bound (D²/4) is tight (achieved by the
+  Bernoulli distribution on {0, D}), giving an optimal bound.
 
 ## 2. Definitions
 
-### 2.1 Enhanced Surprise Spaces
+### 2.1 Joke Structure
 
-**Definition 2.1** (Enhanced Surprise Space). An *enhanced surprise space* is a tuple $(α, d, e, τ)$ where:
-- $(α, d)$ is a pseudo-metric space
-- $e ∈ α$ is the *expected element*
-- $τ : α → [0,1]$ is the *typicality function* with $τ(e) = 1$
+**Definition 2.1** (Joke). A *joke* in a pseudometric space (X, d) is a triple
+j = (s, e, p) where s is the *setup*, e is the *expected resolution*, and p is
+the *punchline*.
 
-The *metric surprise* of $x$ is $S_m(x) = d(x, e)$ and the *information surprise* is $S_i(x) = -\log τ(x)$ (with $S_i(x) = 0$ when $τ(x) = 0$).
+**Definition 2.2** (Humor, Tension, Arc). For a joke j = (s, e, p):
+- *Humor*: H(j) = d(e, p) — the surprise distance
+- *Tension*: T(j) = d(s, e) — the setup-to-expectation distance
+- *Arc*: A(j) = d(s, p) — the total narrative distance
 
-**Theorem 2.2** (Surprise Monotonicity). If $τ(x) ≤ τ(y)$ and both are positive, then $S_i(y) ≤ S_i(x)$. Less typical elements carry more information surprise.
+**Definition 2.3** (Deficiency). The *humor deficiency* is δ(j) = T(j) + H(j) - A(j).
 
-### 2.2 Jokes as Metric Objects
+**Definition 2.4** (Geodesic Joke). A joke is *geodesic* if δ(j) = 0, meaning the
+expected resolution lies exactly on a shortest path from setup to punchline.
 
-**Definition 2.3** (Joke). A *joke* in a pseudo-metric space $(α, d)$ is a pair $J = (e, a)$ where $e$ is the expected resolution and $a$ is the actual punchline. The *humor value* is $H(J) = d(e, a)$.
+### 2.2 Surprise Space
 
-**Theorem 2.4** (Humor Lipschitz). For any two jokes $J_1 = (e_1, a_1)$ and $J_2 = (e_2, a_2)$:
-$$|H(J_1) - H(J_2)| ≤ d(e_1, e_2) + d(a_1, a_2)$$
+**Definition 2.5** (Surprise Enrichment). A *surprise enrichment* on a type α is a
+pseudometric space structure together with an expectation function expect : α → α.
+The *surprise* of x is d(expect(x), x).
 
-This establishes that humor is a 2-Lipschitz function on the product space, ensuring stability under perturbation.
+### 2.3 Humor Morphisms
 
-### 2.3 Subversion Maps
+**Definition 2.6** (Humor Morphism). A *humor morphism* f : (X, d_X) → (Y, d_Y) is a
+distance-non-increasing map: d_Y(f(x), f(y)) ≤ d_X(x, y) for all x, y.
 
-**Definition 2.5** (Subversion Map). A *subversion map* $f: α → β$ between pseudo-metric spaces is a Lipschitz map with *amplification constant* $C > 0$:
-$$d(f(x), f(y)) ≤ C \cdot d(x, y) \quad \forall x, y$$
+**Definition 2.7** (Humor Isometry). A *humor isometry* is a distance-preserving map.
 
-The amplification measures how much the map stretches surprises.
+### 2.4 Pun-Absurdist Decomposition
+
+**Definition 2.8**. For threshold ε ≥ 0:
+- *Pun component*: P_ε(h) = min(h, ε)
+- *Absurdist component*: A_ε(h) = h - min(h, ε)
 
 ## 3. Main Results
 
-### 3.1 Iterated Subversion (Theorem A)
+### 3.1 Fundamental Structure
 
-**Theorem 3.1** (Iterated Amplification Bound). For a subversion map $f: α → α$ with amplification $C$ and any $n ∈ ℕ$:
-$$d(f^n(x), f^n(y)) ≤ C^n \cdot d(x, y)$$
+**Theorem 3.1** (Deficiency Non-Negativity). For any joke j, δ(j) ≥ 0.
 
-*Proof sketch.* By induction on $n$. The base case is trivial. For the inductive step:
-$$d(f^{n+1}(x), f^{n+1}(y)) = d(f(f^n(x)), f(f^n(y))) ≤ C \cdot d(f^n(x), f^n(y)) ≤ C \cdot C^n \cdot d(x, y) = C^{n+1} \cdot d(x, y)$$
+*Proof sketch*: Immediate from the triangle inequality d(s, p) ≤ d(s, e) + d(e, p).
 
-**PEGB Analysis:**
-- **P**roof: Complete Lean 4 proof by induction (verified)
-- **E**xample: With $C = 2$, after 10 iterations, surprise is amplified by $2^{10} = 1024$. A slight deviation from the expected becomes a massive surprise.
-- **G**eneralization: Extends to any Lipschitz iteration in any metric space. The natural next level is to consider non-autonomous iteration (different maps at each step), giving $d(f_n ∘ ⋯ ∘ f_1(x), f_n ∘ ⋯ ∘ f_1(y)) ≤ (∏ C_i) \cdot d(x,y)$.
-- **B**oundary: The bound is tight — equality holds for scalar multiplication on $ℝ$ with $f(x) = Cx$. Breaks down for non-Lipschitz maps or infinite-dimensional settings without additional structure.
+**Theorem 3.2** (Geodesic Characterization). j is geodesic iff δ(j) = 0.
 
-### 3.2 Humor Chain Inequality (Theorem B)
+**Theorem 3.3** (Humor-Tension Complementarity). For a geodesic joke j with A(j) > 0:
+H(j)/A(j) + T(j)/A(j) = 1.
 
-**Theorem 3.2** (Chain Triangle Inequality). For a joke chain $p_0, p_1, \ldots, p_n$:
-$$d(p_0, p_n) ≤ \sum_{k=0}^{n-1} d(p_k, p_{k+1})$$
+### 3.2 Jensen's Comedy Theorem
 
-*Proof sketch.* Induction on $n$ with the triangle inequality at each step.
+**Theorem 3.4** (Jensen's Comedy). For weights w_i ≥ 0 with ∑w_i = 1 and points x_i
+with mean μ = ∑w_i x_i:
 
-**PEGB Analysis:**
-- **P**roof: Complete Lean 4 proof by induction with `Fin.sum_univ_castSucc`
-- **E**xample: A three-stage joke (setup → twist → reveal → punchline) with step humors 3, 5, 2 has end-to-end humor at most 10.
-- **G**eneralization: Extends to infinite chains (series) when the sum converges. In a complete metric space, if $\sum d(p_k, p_{k+1}) < ∞$, the chain converges.
-- **B**oundary: Equality holds when all points are collinear in order. The bound is vacuous in ultrametric spaces where $d(x,z) ≤ \max(d(x,y), d(y,z))$.
+(∑ w_i |x_i - μ|)² ≤ ∑ w_i (x_i - μ)²
 
-### 3.3 Fundamental Theorem of Comedy (Theorem C)
+*Proof*: Apply Jensen's inequality to the convex function f(x) = x². The weighted
+average of |x_i - μ| squared is bounded by the weighted average of |x_i - μ|²,
+using the ConvexOn structure from Mathlib's analysis library. The key step uses
+`ConvexOn.map_sum_le` applied to f(x) = x² on ℝ.
 
-**Theorem 3.3** (Surprise Attainment). In a nonempty compact pseudo-metric space, for any expected point $e$, there exists $x^*$ maximizing $d(x, e)$.
+**Corollary 3.5** (Comedy Square Root Bound). E[|X - μ|] ≤ √Var(X).
 
-*Proof sketch.* The function $x \mapsto d(x, e)$ is continuous (Lipschitz, in fact). By the extreme value theorem for compact spaces, it attains its supremum.
+*Proof*: Take square roots of Theorem 3.4, using `Real.le_sqrt_of_sq_le`.
 
-**PEGB Analysis:**
-- **P**roof: Uses `IsCompact.exists_isMaxOn` from Mathlib
-- **E**xample: On $[0,1] ⊂ ℝ$ with expected point $0.3$, the funniest punchline is $1$ (or $0$, whichever is further).
-- **G**eneralization: Extends to any continuous "surprise functional" on a compact space. The next level is the minimax theorem — what expected point minimizes the maximum achievable surprise?
-- **B**oundary: Fails without compactness. In $ℝ$ with expected point $0$, there is no maximally surprising element. Also fails if surprise is not continuous.
+### 3.3 Punchline Variance Bound
 
-### 3.4 Humor Convergence and Self-Referential Fixed Points (Theorem D)
+**Theorem 3.6** (Popoviciu-Style Bound). If 0 ≤ h_i ≤ D for all i, then
+Var(h) ≤ D²/4.
 
-**Theorem 3.4** (Humor Convergence). If $f: α → α$ is a subversion with amplification $C < 1$ and $α$ is complete, then for any starting point $x_0$, the sequence $f^n(x_0)$ converges.
+*Proof*: The key insight is that for 0 ≤ x ≤ D, we have x² ≤ Dx (since x(D-x) ≥ 0).
+Therefore E[X²] ≤ D·E[X] = D·μ. The variance is E[X²] - μ² ≤ Dμ - μ² = μ(D-μ).
+By AM-GM, μ(D-μ) ≤ (D/2)² = D²/4. The bound is tight for the distribution
+concentrated equally at 0 and D.
 
-**Theorem 3.5** (Self-Referential Fixed Point). In a compact metric space, a continuous contraction has a unique fixed point — the self-subverting joke.
+### 3.4 Humor Spectrum Gap
 
-*Proof sketch.* The sequence $f^n(x_0)$ is Cauchy by the geometric series bound (Theorem 3.1). In a complete space, it converges to some $p$. Continuity gives $f(p) = p$. Uniqueness: if $f(q) = q$, then $d(p,q) = d(f(p), f(q)) ≤ C \cdot d(p,q)$, forcing $d(p,q) = 0$ since $C < 1$.
+**Theorem 3.7** (Spectral Gap). In a finite metric space with at least one pair of
+distinct points, there exists a positive gap g > 0 such that for all x, y with
+d(x, y) > 0, we have d(x, y) ≥ g.
 
-**PEGB Analysis:**
-- **P**roof: Uses `cauchySeq_of_le_geometric` from Mathlib, plus continuity argument for the fixed point property
-- **E**xample: $f(x) = x/2$ on $[0,1]$ with $C = 1/2$. Starting from any point, iterates converge to $0$, the "perfectly boring" fixed point.
-- **G**eneralization: Extends to non-linear contractions (Meir-Keeler theorem) and set-valued contractions (Nadler's theorem). The next level is topological fixed-point theory (Brouwer, Schauder).
-- **B**oundary: Fails for $C = 1$ (isometries may have no fixed point, e.g., rotation). Fails for $C > 1$ (expanding maps diverge).
+*Proof*: The positive spectrum is a nonempty finite subset of ℝ_{>0}. Its minimum
+exists and is positive.
 
-### 3.5 Humor Duality (Theorem E)
+### 3.5 Chebyshev Comedy Principle
 
-**Theorem 3.6** (Humor Duality). In a compact pseudo-metric space, for any expected point, there exist simultaneously a maximally and minimally surprising element.
+**Theorem 3.8** (Humor Chebyshev). For any sequence h_1, ..., h_n, mean μ, and t > 0:
+|{i : |h_i - μ| ≥ t}| · t² ≤ ∑(h_i - μ)²
 
-**PEGB Analysis:**
-- **P**roof: Two applications of the extreme value theorem (max and min)
-- **E**xample: In joke space $\{$"pun", "wordplay", "absurdist", "expected"$\}$, the funniest is "absurdist" (max distance), the most boring is "expected" (min distance = 0).
-- **G**eneralization: In infinite-dimensional Banach spaces, the duality extends to the Hahn-Banach theorem — separating "funny" and "boring" by hyperplanes.
-- **B**oundary: In non-compact spaces, the minimum may not be attained (infimum of distances to a closed set need not be achieved).
+*Proof*: Each term in the filtered sum satisfies (h_i - μ)² ≥ t². Sum over the
+filter set, then use non-negativity to extend to the full sum.
 
-## 4. The Surprise Entropy Bridge
+### 3.6 Bi-Lipschitz Invariance
 
-### 4.1 Definition and Properties
+**Theorem 3.9** (Bi-Lipschitz Sandwich). For a K-bi-Lipschitz map f:
+H(j)/K ≤ H(f(j)) ≤ K · H(j)
 
-**Definition 4.1**. The *surprise entropy* of a distribution $(w_1, \ldots, w_n)$ over punchlines $(p_1, \ldots, p_n)$ is:
-$$\mathcal{H}(w, p) = \sum_{i=1}^n w_i \cdot d(p_i, e)$$
+*Proof*: Direct application of the bi-Lipschitz upper and lower bounds.
 
-**Theorem 4.2** (Entropy Bound). If $\sum w_i = 1$ and $d(p_i, e) ≤ R$ for all $i$, then $\mathcal{H}(w,p) ≤ R$.
+### 3.7 Duality Theory
 
-**Theorem 4.3** (Entropy Nonnegativity). If all weights are nonneg, then $\mathcal{H}(w,p) ≥ 0$.
+**Theorem 3.10** (Humor Duality). For the dual joke j* = (s, p, e):
+- H(j*) = H(j) (humor is symmetric)
+- T(j*) = A(j) and A(j*) = T(j) (tension and arc swap)
+- j** = j (involutive)
+- δ(j*) ≠ δ(j) in general (deficiency is NOT duality-invariant)
 
-### 4.2 Connection to Shannon Entropy
+### 3.8 Isometry Invariance
 
-The surprise entropy specializes to Shannon entropy when:
-- The metric space is $(ℝ, |\cdot|)$
-- The punchlines are $p_i = -\log w_i$ (self-information)
-- The expected point is $e = 0$
+**Theorem 3.11** (Complete Isometry Invariance). Humor isometries preserve:
+humor, tension, arc, deficiency, and geodesicity.
 
-Then $\mathcal{H}(w, p) = \sum w_i |\log w_i| = H(X)$, the Shannon entropy.
+### 3.9 Humor Morphism Category
 
-## 5. Surprise Cones and Universal Properties
+**Theorem 3.12** (Functoriality). The collection of metric spaces with humor
+morphisms forms a category: identity exists, composition is associative, and
+humor decreases under morphisms.
 
-### 5.1 Surprise Cones
+## 4. PEGB Analysis
 
-**Definition 5.1** (Surprise Cone). A surprise cone of size $n$ is a tuple $(v, l_1, \ldots, l_n, r)$ where $v$ is the vertex, $l_i$ are the legs, and $r$ is the radius satisfying $d(l_i, v) ≤ r$ for all $i$.
+### 4.1 Jensen's Comedy Theorem
 
-**Theorem 5.2** (Cone Diameter Bound). For any two legs of a surprise cone with radius $r$:
-$$d(l_i, l_j) ≤ 2r$$
+- **Proof**: Complete, uses ConvexOn.map_sum_le from Mathlib
+- **Example**: For uniform weights w_i = 1/n on {0, 1, 2, ..., n-1},
+  E[|X - μ|] = (n²-1)/(4n) when n is odd, while √Var = √((n²-1)/12).
+  The ratio approaches √3/3 ≈ 0.577.
+- **Generalization**: Extends to any Bochner-integrable random variable in
+  a Banach space, using the Banach space version of Jensen's inequality.
+- **Boundary**: Fails for non-convex functions; the inequality reverses for
+  concave functions.
 
-This is tight: consider $v = 0$, $l_1 = r$, $l_2 = -r$ in $ℝ$.
+### 4.2 Punchline Variance Bound
 
-### 5.2 The Preorder Category
+- **Proof**: Complete, uses the Popoviciu technique E[X²] ≤ D·E[X]
+- **Example**: For n=2, humors = (0, D), variance = D²/4 (tight).
+- **Generalization**: For values in [a, b], variance ≤ (b-a)²/4 (Popoviciu).
+- **Boundary**: Fails without boundedness; unbounded distributions have
+  unbounded variance.
 
-The set of jokes over a fixed expected point forms a preorder under humor dominance: $J_1 ≤ J_2$ iff $H(J_1) ≤ H(J_2)$. This gives a thin category where:
-- Objects are punchlines
-- There is a unique morphism $x → y$ iff $d(e, x) ≤ d(e, y)$
-- The terminal object (if it exists) is the funniest joke
-- The initial object (if it exists) is the most boring joke
+### 4.3 Humor Spectrum Gap
 
-In compact spaces, both terminal and initial objects exist by Theorems 3.3 and 3.6.
+- **Proof**: Complete, uses Finset.exists_min_image
+- **Example**: In Z/nZ with standard metric, gap = 1.
+- **Generalization**: In compact metric spaces, gap = 0 unless the space is discrete.
+- **Boundary**: Fails for infinite spaces (take ℝ with Euclidean metric).
+
+### 4.4 Chebyshev Comedy Principle
+
+- **Proof**: Complete, uses sum_le_sum_of_subset_of_nonneg
+- **Example**: For n=100 jokes with variance 10, at most 10/t² fraction deviate by ≥ t.
+- **Generalization**: Extends to higher moments (Markov inequality for |X|^p).
+- **Boundary**: Not tight for specific distributions; sub-Gaussian bounds are stronger
+  when applicable.
+
+### 4.5 Bi-Lipschitz Sandwich
+
+- **Proof**: Complete, direct from BiLipschitz definition
+- **Example**: Scaling ℝ by factor 2: humor doubles. K = 2.
+- **Generalization**: Extends to quasi-isometries (additive error term).
+- **Boundary**: Fails for general Lipschitz maps (only upper bound holds).
+
+## 5. Cross-Domain Bridges
+
+### 5.1 Humor ↔ Information Theory
+
+Jensen's Comedy Theorem is the same mathematical structure as the proof that
+entropy is maximized by the uniform distribution. The comedy square root bound
+E[|X-μ|] ≤ √Var(X) is dual to the information-theoretic inequality relating
+mean absolute deviation to standard deviation.
+
+### 5.2 Humor ↔ Geometric Analysis
+
+Bi-Lipschitz invariance connects humor theory to the Gromov-Hausdorff distance
+between metric spaces. Two joke spaces are "comedy-equivalent" if they are
+bi-Lipschitz with small K. This gives a metrization of the space of comedy styles.
+
+### 5.3 Humor ↔ Quantum Mechanics
+
+The spectral gap theorem for humor mirrors the spectral gap in quantum systems.
+In both cases, discreteness of the space forces a minimum positive excitation.
+The "smallest possible joke" is analogous to the ground state energy gap.
+
+### 5.4 Humor ↔ Machine Learning
+
+The Chebyshev comedy principle directly applies to analyzing humor in training
+data. The concentration inequality bounds how many outlier jokes (extremely funny
+or extremely unfunny) can exist in any corpus.
 
 ## 6. Algorithms
 
-### 6.1 Optimal Punchline Search
+### 6.1 Humor Computation
 
-Given a finite set of candidate punchlines and an expected resolution, find the funniest:
-```
-INPUT: expected point e, candidate set S
-OUTPUT: x* ∈ S maximizing d(x, e)
-1. For each x ∈ S, compute d(x, e)
-2. Return argmax
-```
+Given a metric space and a joke triple, compute humor, tension, arc, and deficiency
+in O(1) time (assuming constant-time distance computation).
 
-### 6.2 Iterative Subversion
+### 6.2 Universal Joke Search
 
-Given a contractive subversion map, compute the self-referential fixed point:
-```
-INPUT: contraction f with constant C < 1, starting point x₀, tolerance ε
-OUTPUT: approximate fixed point p with d(f(p), p) < ε
-1. Set x ← x₀
-2. While d(f(x), x) ≥ ε:
-   a. x ← f(x)
-3. Return x
-```
+In a finite space with n points, find the universal joke (maximum humor for given
+setup and expected) in O(n) time by scanning all possible punchlines.
 
-Convergence is guaranteed in $O(\log(1/ε))$ iterations.
+### 6.3 Pun-Absurdist Classification
+
+For a given threshold ε, decompose humor into pun and absurdist components in O(1) time.
 
 ## 7. Discussion
 
 ### 7.1 Limitations
 
-Our theory treats humor as a purely geometric quantity, ignoring the cognitive and social aspects that make jokes actually funny. The model captures the *structure* of incongruity but not the *content*.
+The metric space model assumes that "distance" is a meaningful notion in the space
+of joke content. Real jokes involve semantic distance, which may not satisfy the
+triangle inequality perfectly. The pseudometric relaxation (where distinct points
+can have zero distance) partially addresses this, but a more nuanced model might
+use asymmetric distances or divergences.
 
-### 7.2 Connections to Other Work
+### 7.2 Deficiency as Comedy Quality
 
-- **Bengio et al. (2013)**: The information surprise $-\log τ(x)$ connects to representation learning, where "surprising" inputs carry the most information.
-- **Hurley et al. (2011)**: The "Inside Jokes" framework models humor as debugging of mental models — our fixed-point theorem formalizes when this process converges.
-- **Veatch (1998)**: The "violation" theory of humor maps directly to our distance metric.
+The deficiency δ(j) = T(j) + H(j) - A(j) measures narrative inefficiency. Low
+deficiency means the joke is well-crafted; the surprise is achieved without
+unnecessary detours. High deficiency suggests the setup wanders before delivering
+the punchline.
+
+### 7.3 Duality Asymmetry
+
+The fact that deficiency is NOT duality-invariant (Theorem 3.10) reveals a genuine
+asymmetry in comedy structure. The direction of the joke matters: setup → expected → punchline
+is fundamentally different from setup → punchline → expected. This mirrors the
+time-asymmetry of narrative: you can't tell a joke backwards and expect the same effect.
 
 ## 8. Future Work
 
-See `FUTURE_DIRECTIONS.md` for detailed research directions. Key open questions:
+1. **Continuous extension**: Generalize from finite to compact metric spaces, proving
+   the universal joke exists via sequential compactness.
 
-1. **Spectral theory of humor**: What do the eigenvalues of a subversion operator tell us about the structure of humor it produces?
-2. **Tropical humor**: Does the theory simplify in the min-plus algebra, where $d(x,y) = |x-y|$ becomes $\max(x-y, y-x)$?
-3. **Humor homology**: Can we define a "persistence diagram" for jokes, tracking which humor features survive across different scales?
+2. **Wasserstein humor**: Replace the pointwise surprise metric with the Wasserstein
+   distance on probability distributions over punchlines.
+
+3. **Higher categories**: Model joke-within-a-joke (meta-humor) as 2-morphisms in a
+   bicategory of humor.
+
+4. **Algorithmic humor generation**: Use the universal joke theorem constructively to
+   generate maximally funny punchlines given a setup and expectation.
 
 ## References
 
-1. Hurley, M. M., Dennett, D. C., & Adams, R. B. (2011). *Inside Jokes: Using Humor to Reverse-Engineer the Mind*. MIT Press.
-2. Morreall, J. (1983). *Taking Laughter Seriously*. SUNY Press.
-3. Veatch, T. C. (1998). A theory of humor. *Humor*, 11(2), 161-215.
-4. Banach, S. (1922). Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales. *Fundamenta Mathematicae*, 3, 133-181.
-
-### Catalog References
-- `Catalog/Tropical/CategoricalSurprise.lean` — Foundation: surprise spaces, humor metric, subversion maps
-- `Catalog/Bridges/CategoricalBridges.lean` — `analysis_bridge_unique_limit`: unique limits in Hausdorff spaces
-- `Catalog/Bridges/CategoricalBridges.lean` — `bridge_composition`: adjunction composition (categorical structure)
+1. `joke_chain_humor_bound` — Catalog/MachineLearning/HumorTheory/Core.lean
+2. `fundamental_theorem_of_comedy` — Catalog/MachineLearning/HumorTheory/Core.lean
+3. `comedy_polytope_realization` — Catalog/MachineLearning/HumorTheory/Core.lean
+4. Jensen's inequality — Mathlib: `ConvexOn.map_sum_le`
+5. Popoviciu's inequality — Classical result on variance bounds
+6. Chebyshev's inequality — Classical concentration inequality
