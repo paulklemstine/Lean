@@ -1820,6 +1820,46 @@
       "theorem_count": 6,
       "timestamp": "2026-06-07T00:53:03",
       "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+    },
+    {
+      "cycle_id": "7206cbe2",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Non-Archimedean Probability Theory\n\n## Synthesis\n\nThis research cycle established the foundational theory of non-Archimedean probability — finitely additive probability measures v",
+      "quality_score": 0.36224,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-06-07T01:26:13",
+      "title": "Non-Archimedean Probability via Surreal Numbers"
+    },
+    {
+      "cycle_id": "3dddd691",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Non-Standard Arithmetic\n\n## Synthesis\n\nThis cycle established a comprehensive formalization of non-standard arithmetic via ultrapowers, proving 14 theorems including the overspill",
+      "quality_score": 0.6472,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T01:26:41",
+      "title": "Alien Mathematics: Non-Standard Arithmetic"
+    },
+    {
+      "cycle_id": "4ab2bbb1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tropical Neural Varieties\n\n## Synthesis\n\nThis cycle established the **Tropical Neural Complex** (TNC) as a novel mathematical structure encoding the algebraic-geometric complexity",
+      "quality_score": 0.39984000000000003,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T01:27:09",
+      "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+    },
+    {
+      "cycle_id": "5c80a04f",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle established the theory of **semantic bundles** — mathematical structures equipped with interpretation maps — and proved that algebraic isomorphis",
+      "quality_score": 0.4588,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-07T01:27:34",
+      "title": "Isomorphisms of Meaning: When Structures Collide"
     }
   ],
   "entries": [
@@ -1865,7 +1905,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-07T00:53:03",
+  "last_updated": "2026-06-07T01:27:34",
   "open_questions": [
     {
       "context": "sorry",
@@ -1885,18 +1925,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "13570995",
-        "quality": 0.48840000000000006,
-        "theorems": 4,
-        "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
-      },
-      {
-        "cycle_id": "81d5bdfe",
-        "quality": 0.45096,
-        "theorems": 5,
-        "title": "EML Single Operator Church-Turing Thesis"
-      },
       {
         "cycle_id": "8ba285ca",
         "quality": 0.36904000000000003,
@@ -1944,6 +1972,18 @@
         "quality": 0.4348,
         "theorems": 6,
         "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+      },
+      {
+        "cycle_id": "4ab2bbb1",
+        "quality": 0.39984000000000003,
+        "theorems": 5,
+        "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+      },
+      {
+        "cycle_id": "5c80a04f",
+        "quality": 0.4588,
+        "theorems": 7,
+        "title": "Isomorphisms of Meaning: When Structures Collide"
       }
     ],
     "Bridges": [
@@ -2082,18 +2122,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "b9a31a45",
-        "quality": 0.39360000000000006,
-        "theorems": 5,
-        "title": "The Topology of Argumentation: Why Debates Have Holes"
-      },
-      {
-        "cycle_id": "90c42a89",
-        "quality": 0.588765,
-        "theorems": 5,
-        "title": "Game of Life Universality"
-      },
-      {
         "cycle_id": "26c6d56c",
         "quality": 0.37184000000000006,
         "theorems": 7,
@@ -2140,6 +2168,18 @@
         "quality": 0.4728,
         "theorems": 5,
         "title": "The Topology of Argumentation: Why Debates Have Holes"
+      },
+      {
+        "cycle_id": "7206cbe2",
+        "quality": 0.36224,
+        "theorems": 3,
+        "title": "Non-Archimedean Probability via Surreal Numbers"
+      },
+      {
+        "cycle_id": "3dddd691",
+        "quality": 0.6472,
+        "theorems": 5,
+        "title": "Alien Mathematics: Non-Standard Arithmetic"
       }
     ],
     "Physics": [

@@ -1,22 +1,22 @@
 {
   "checkpoints": [
     {
-      "elapsed_seconds": 0.5,
+      "elapsed_seconds": 0.1,
       "percent_complete": 0.0,
       "status": "SUBMITTED",
-      "timestamp": "2026-06-06T08:53:28"
+      "timestamp": "2026-06-07T01:27:55"
     }
   ],
   "completed_at": "",
-  "domain": "Tropical",
+  "domain": "Applications",
   "error": "",
   "final_percent": 0.0,
   "final_status": "",
   "has_files": false,
-  "job_id": "c038e423",
-  "project_id": "0c4b7365-a913-4af7-ae18-e8dff95b0651",
-  "prompt_length": 24907,
+  "job_id": "88a6652d",
+  "project_id": "fe7548ab-06a7-4e6f-b444-0fc52a396667",
+  "prompt_length": 22505,
   "stages": [],
-  "submitted_at": "2026-06-06T08:53:28",
+  "submitted_at": "2026-06-07T01:27:55",
   "total_duration_seconds": 0.0
 }
