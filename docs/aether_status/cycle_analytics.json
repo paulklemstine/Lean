@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-07T03:41:27.722310+00:00",
+  "last_updated": "2026-06-07T04:15:22.017486+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -12825,6 +12825,28 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T03:41:27.673268+00:00",
       "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 286,
+      "domain": "Applications",
+      "duration_seconds": 4077.7745382785797,
+      "end_time": 1780805708.7225235,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "672be6d4",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780801630.9479852,
+      "strategy_count": 187,
+      "theorem_count": 0,
+      "timestamp": "2026-06-07T04:15:21.824215+00:00",
+      "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
     }
   ]
 }
