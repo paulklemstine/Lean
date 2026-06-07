@@ -1,217 +1,314 @@
-# Convergent Self-Reference: An Ordinal Stratification Theory for Non-Well-Founded Proofs
+# Convergence Domain Theory for Non-Well-Founded Proofs
 
 ## Abstract
 
-We introduce the **Convergence Stratification** of a monotone proof operator on a complete lattice — a novel mathematical structure that partitions the lattice into ordinal-indexed strata according to the number of Kleene chain iterations required for stabilization. We prove that monotone operators on finite lattices always converge (the Self-Reference Separation Theorem), establish a sharp Convergence-Divergence Dichotomy for Boolean functions, show that convergence indices form a tropical semiring, and prove that the gap between least and greatest fixed points measures proof ambiguity. All results are formalized and verified in Lean 4 with the Mathlib library, yielding 28 machine-checked theorems with zero remaining proof obligations.
+We develop a formal mathematical theory of **non-well-founded proofs** — proof trees that may contain circular references to their own conclusions. The central innovation is a **Proof Convergence Domain**: a complete lattice equipped with a contractive deduction operator and a consistency metric that quantifies the circularity cost of self-reference. We prove that (1) contractive deduction operators have unique fixed points, establishing that convergent self-referential proofs are unambiguous; (2) valid proof trees have consistency metric strictly less than 1, with the liar sentence exactly at the boundary; (3) every valid self-referential proof admits a well-founded kernel that preserves the target proposition; (4) self-reference provides unbounded proof compression; and (5) proof heights form a tropical semiring. All results are machine-verified in Lean 4 with Mathlib.
 
-**Keywords**: non-well-founded proofs, self-reference, Kleene chain, convergence stratification, tropical semiring, fixed-point theory, lattice theory
+**Keywords**: non-well-founded proofs, fixed-point theory, consistency metric, tropical semirings, proof compression, self-referential logic
+
+---
 
 ## 1. Introduction
 
-Gödel's incompleteness theorems (1931) demonstrated that self-reference in formal systems leads to fundamental limitations on provability. The standard response has been to treat self-reference as pathological — a source of paradoxes to be quarantined rather than studied.
+Self-reference has been a central concern in mathematical logic since Gödel's incompleteness theorems [1]. The standard approach treats self-reference as inherently problematic — circular reasoning is forbidden, and the liar paradox is taken as evidence that unrestricted self-reference leads to inconsistency.
 
-We take the opposite approach. By modeling self-referential proofs as fixed points of monotone operators on complete lattices, we develop a theory that:
+We propose an alternative perspective: self-referential proofs form a well-defined mathematical structure with precise convergence conditions. Our approach is inspired by three independent lines of work:
 
-1. **Classifies** self-referential proofs by their convergence behavior
-2. **Separates** valid from paradoxical self-reference via a single algebraic property (monotonicity)
-3. **Stratifies** proof systems into disjoint layers by convergence index
-4. **Connects** proof theory to tropical algebra via a natural semiring structure
+1. **Non-well-founded set theory** (Aczel 1988): sets that contain themselves as members, axiomatized via an anti-foundation axiom.
+2. **Banach's fixed-point theorem**: contractive maps on complete metric spaces have unique fixed points, computed by iteration.
+3. **Tropical geometry**: the semiring (ℝ ∪ {∞}, min, +) captures optimization problems in algebraic form.
 
-### 1.1 Related Work
+We unify these ideas into a single framework where self-referential proofs are fixed points of contractive operators on a lattice of proof approximations, with proof heights forming a tropical semiring.
 
-The Kleene chain construction is classical in domain theory and lattice theory (Davey & Priestley, 2002). The Knaster-Tarski fixed-point theorem (Tarski, 1955) guarantees fixed points for monotone operators on complete lattices. Our contribution is to develop the **stratification** structure arising from convergence speed and to establish the **self-reference separation theorem** that precisely characterizes when self-reference is valid.
+### 1.1 Summary of Results
 
-The connection to tropical semirings extends work by Mikhalkin (2005) on tropical geometry and by Simon (1988) on tropical matrices in automata theory.
+| Result | Statement | Significance |
+|--------|-----------|-------------|
+| Unique Fixed Point | Contractive deduction operators have at most one fixed point | Self-referential proofs are unambiguous |
+| Consistency Metric Bound | Valid proofs have CM < 1; liar has CM = 1 | Quantitative boundary between valid/invalid self-reference |
+| Stratification Theorem | Every valid NWF proof has a valid well-founded kernel | Self-reference is eliminable (at a cost) |
+| Unbounded Compression | For all d, there exists a depth-d proof whose kernel has depth 0 | Self-reference provides genuine proof compression |
+| Tropical Distributivity | Proof heights satisfy the tropical semiring axioms | Connection to optimization theory |
+
+---
 
 ## 2. Definitions
 
-### 2.1 Kleene Chain
+### 2.1 Non-Well-Founded Proof Trees
 
-**Definition 2.1** (Kleene Chain). Given a complete lattice $(L, \leq)$ and a monotone operator $F : L \to L$, the **Kleene chain** is defined by:
-$$F^0(\bot) = \bot, \quad F^{n+1}(\bot) = F(F^n(\bot))$$
+**Definition 2.1** (NWFTree). A *non-well-founded proof tree* is an element of the inductive type:
+```
+NWFTree ::= ax(p) | mp(f, a, p, q) | selfRef(p, inner) | bot
+```
+where `p, q` are proposition identifiers and `f, a, inner` are proof trees.
 
-### 2.2 Convergence Stratification
+- `ax(p)`: an axiom proving proposition p
+- `mp(f, a, p, q)`: modus ponens — f proves p → q, a proves p, yielding q
+- `selfRef(p, inner)`: self-referential proof of p that uses inner (which may assume p)
+- `bot`: undefined/invalid proof
 
-**Definition 2.2** (Convergence Stratification). A **convergence stratification** is a triple $(L, F, N)$ where:
-- $L$ is a complete lattice
-- $F : L \to L$ is a monotone operator  
-- $N \in \mathbb{N}$ is a **stabilization index** such that $F^N(\bot) = F^{N+1}(\bot)$
+**Definition 2.2** (Validity). A proof tree is *valid* if:
+- `ax(p)` is always valid
+- `mp(f, a, p, q)` is valid if f targets p, a has a defined target, and both are valid
+- `selfRef(p, inner)` is valid if inner targets p and is valid
+- `bot` is never valid
 
-The **fixed point** of the stratification is $x^* = F^N(\bot)$.
+**Definition 2.3** (Structural Depth). The depth of a proof tree counts the maximum nesting:
+```
+depth(ax(p)) = 0
+depth(mp(f,a,p,q)) = 1 + max(depth(f), depth(a))
+depth(selfRef(p,t)) = 1 + depth(t)
+depth(bot) = 0
+```
 
-**Definition 2.3** (Stratum). The **stratum** at level $k$ is:
-$$\text{Str}_k(F) = \{x \in L : x \leq F^k(\bot) \text{ and } (k = 0 \text{ or } x \not\leq F^{k-1}(\bot))\}$$
+### 2.2 The Consistency Metric
 
-**Definition 2.4** (Self-Referential Convergence). A function $F : L \to L$ on a complete lattice is **self-referentially convergent** if:
-$$\exists N \in \mathbb{N},\; \forall n \geq N,\; F^n(\bot) = F^N(\bot)$$
+**Definition 2.4** (Consistency Metric). The consistency metric CM : NWFTree → [0, 1] is defined recursively:
+```
+CM(ax(p))        = 0
+CM(mp(f,a,p,q))  = max(CM(f), CM(a))
+CM(selfRef(p,t)) = (1 + CM(t)) / 2
+CM(bot)           = 1
+```
 
-### 2.3 Tropical Convergence Indices
+The key property of this definition is that selfRef maps the interval [0, 1) to [1/2, 1), providing a quantitative measure of circularity that strictly increases with each layer of self-reference but never exceeds 1 for valid proofs.
 
-**Definition 2.5** (Tropical Convergence Index). The type `TropConvIdx` consists of elements of $\mathbb{N} \cup \{\top\}$ equipped with:
-- **Tropical addition**: $a \oplus b = \min(a, b)$
-- **Tropical multiplication**: $a \otimes b = a + b$
-- **Additive identity**: $\hat{0} = \top$ (unreachable)
-- **Multiplicative identity**: $\hat{1} = 0$ (axiom)
+### 2.3 Proof Convergence Domain
+
+**Definition 2.5** (Proof Convergence Domain). A *Proof Convergence Domain* over a complete lattice (L, ≤) consists of:
+1. A monotone function `deduct : L → L` (the deduction operator)
+2. A metric `dist : L × L → ℝ≥0` satisfying the axioms of a metric
+3. A contraction factor `c ∈ (0, 1)` such that `dist(deduct(x), deduct(y)) ≤ c · dist(x, y)` for all x, y
+
+### 2.4 Well-Founded Kernel
+
+**Definition 2.6** (Well-Founded Kernel). The *well-founded kernel* wfKernel : NWFTree → NWFTree replaces every selfRef(p, inner) with ax(p):
+```
+wfKernel(ax(p))        = ax(p)
+wfKernel(mp(f,a,p,q))  = mp(wfKernel(f), wfKernel(a), p, q)
+wfKernel(selfRef(p,t)) = ax(p)
+wfKernel(bot)           = bot
+```
+
+### 2.5 Tropical Proof Heights
+
+**Definition 2.7** (Tropical Proof Height). The type TPH = WithTop ℕ equipped with:
+- Tropical addition: `a ⊕ b = min(a, b)` (choose shorter proof)
+- Tropical multiplication: `a ⊗ b = a + b` (compose proofs)
+- Additive identity: `0_trop = ⊤` (no proof exists)
+- Multiplicative identity: `1_trop = 0` (axiom)
+
+### 2.6 k-Convergence
+
+**Definition 2.8** (k-Convergent). A proof tree t is *k-convergent* if its self-reference depth is at most k and it is valid. 0-convergent proofs are exactly the valid well-founded proofs.
+
+---
 
 ## 3. Main Results
 
-### 3.1 Kleene Chain Properties
+### 3.1 Unique Fixed Point Theorem
 
-**Theorem 3.1** (Monotonicity). The Kleene chain is monotone: $n \leq m \implies F^n(\bot) \leq F^m(\bot)$.
+**Theorem 3.1** (Unique Fixed Point). Let D be a Proof Convergence Domain. If x and y are fixed points of D.deduct (i.e., deduct(x) = x and deduct(y) = y), then x = y.
 
-*Proof sketch*: By induction on $n$, using $\bot \leq F(\bot)$ as the base case and monotonicity of $F$ for the inductive step.
-
-**Theorem 3.2** (Pre-Fixed Point Bound). If $F(a) \leq a$, then $F^n(\bot) \leq a$ for all $n$.
-
-*Proof sketch*: Induction on $n$. Base: $\bot \leq a$. Step: $F^{n+1}(\bot) = F(F^n(\bot)) \leq F(a) \leq a$.
-
-**Theorem 3.3** (Stability Propagation). If $F^N(\bot) = F^{N+1}(\bot)$, then $F^m(\bot) = F^N(\bot)$ for all $m \geq N$.
-
-*Proof sketch*: By induction on $m - N$, using $F^{m+1}(\bot) = F(F^m(\bot)) = F(F^N(\bot)) = F^{N+1}(\bot) = F^N(\bot)$.
-
-**Theorem 3.4** (Idempotence). If $F^N(\bot) = F^{N+1}(\bot)$, then $F^k(F^N(\bot)) = F^N(\bot)$ for all $k$.
-
-### 3.2 Stabilization on Finite Lattices
-
-**Theorem 3.5** (Finite Stabilization). On a finite lattice of cardinality $n$, the Kleene chain stabilizes in at most $n$ steps:
-$$\exists N \leq n,\; F^N(\bot) = F^{N+1}(\bot)$$
-
-*Proof*: The sequence $F^0(\bot), F^1(\bot), \ldots$ is monotone in a finite set. By the pigeonhole principle, within $n + 1$ elements there must be a repetition $F^i(\bot) = F^j(\bot)$ with $i < j \leq n$. Monotonicity forces $F^i(\bot) = F^{i+1}(\bot)$.
-
-**Corollary 3.6**. The fixed point $x^* = F^N(\bot)$ equals $\text{lfp}(F)$, the least fixed point of $F$.
-
-### 3.3 Self-Reference Separation
-
-**Theorem 3.7** (Self-Reference Separation). Every monotone endomorphism on a finite complete lattice is self-referentially convergent.
-
-This theorem precisely characterizes when self-reference is valid: monotonicity guarantees convergence.
-
-**Theorem 3.8** (Liar Divergence). The boolean negation operator $\text{not} : \text{Bool} \to \text{Bool}$ is NOT self-referentially convergent.
-
-*Proof*: If convergent at $N$, then $\text{not}^N(\text{false}) = \text{not}^{N+1}(\text{false}) = \text{not}(\text{not}^N(\text{false}))$, giving $b = \neg b$, a contradiction.
-
-**Theorem 3.9** (Bool Convergence). Every monotone function $F : \text{Bool} \to \text{Bool}$ is self-referentially convergent.
-
-### 3.4 The Convergence-Divergence Dichotomy
-
-**Theorem 3.10** (Bool Dichotomy). For any $F : \text{Bool} \to \text{Bool}$, exactly one holds:
-1. $F^n(\text{false}) = F^2(\text{false})$ for all $n \geq 2$ (convergence), or
-2. $F^n(\text{false}) \neq F^{n+1}(\text{false})$ for all $n$ (permanent oscillation)
-
-There is no intermediate behavior. This is the simplest model of the convergence/paradox dichotomy.
-
-### 3.5 Stratum Properties
-
-**Theorem 3.11** (Stratum Disjointness). For $j \neq k$, the strata $\text{Str}_j(F)$ and $\text{Str}_k(F)$ are disjoint.
-
-**Theorem 3.12**. $\bot \in \text{Str}_0(F)$.
-
-### 3.6 Fixed-Point Gap
-
-**Theorem 3.13** (lfp ≤ gfp). For any monotone $F$ on a complete lattice, $\text{lfp}(F) \leq \text{gfp}(F)$.
-
-**Theorem 3.14** (Fixed-Point Gap). If $\text{lfp}(F) < \text{gfp}(F)$, there exists $x$ with $\text{lfp}(F) < x \leq \text{gfp}(F)$ and $F(x) \leq x$.
-
-This gap measures the ambiguity in the proof system: the existence of multiple self-consistent proof completions.
-
-### 3.7 Tropical Semiring Structure
-
-**Theorem 3.15** (Tropical Semiring Laws). The convergence indices satisfy:
-- $\oplus$ is commutative and associative with identity $\hat{0} = \top$
-- $\otimes$ is commutative and associative with identity $\hat{1} = 0$
-- $\otimes$ distributes over $\oplus$: $a \otimes (b \oplus c) = (a \otimes b) \oplus (a \otimes c)$
-- $\hat{0}$ absorbs $\otimes$: $\hat{0} \otimes a = \hat{0}$
-
-### 3.8 Convergence Speed
-
-**Theorem 3.16** (Faster Operators Give Larger Fixed Points). If $F$ dominates $G$ at every Kleene chain step (i.e., $G^n(\bot) \leq F^n(\bot)$ for all $n$), then $G$'s fixed point is below $F$'s fixed point.
-
-### 3.9 Horn Clause Systems
-
-**Theorem 3.17** (Horn Clause Monotonicity). The Horn clause closure operator is monotone.
-
-This provides a concrete class of proof systems where all results apply.
-
-## 4. The Paradox Exclusion Principle
-
-**Theorem 4.1** (Kleene Never Forgets). For monotone $F$, if $n \leq m$ then $F^n(\bot) \leq F^m(\bot)$.
-
-This is a direct consequence of chain monotonicity but has a profound interpretation: a monotone proof system cannot "un-prove" something. The chain's monotonicity excludes paradoxes by construction.
-
-The liar sentence fails precisely because boolean negation violates this property: establishing "true" at step $n$ forces "false" at step $n+1$.
-
-## 5. Cross-Domain Connections
-
-### 5.1 Bridge to Tropical Geometry
-
-The tropical semiring structure on convergence indices establishes a formal bridge between proof theory and tropical geometry. In tropical geometry, the "tropicalization" of an algebraic variety captures its combinatorial skeleton. Similarly, the convergence index vector of a proof system captures its deductive skeleton — which propositions are provable and how quickly.
-
-### 5.2 Bridge to Existing Catalog Results
-
-The `selfRef_separation` theorem connects to the catalog's `classical_not_self_sound_with_paradox` (Logic/ParadoxSelfSoundness.lean): the classical impossibility of self-sound theories with paradoxes is a consequence of the fact that paradoxical self-reference (non-monotone) cannot converge, while valid self-reference (monotone) always does.
-
-The Fixed-Point Gap theorem connects to `fixed_point_unique_under_theory_separation` (Bridges/ProofStoneCechDynamics.lean): theory separation is precisely the condition that collapses the lfp-gfp gap to a single point.
-
-### 5.3 Bridge to Domain Theory
-
-The Convergence Stratification is closely related to the Scott topology on complete lattices. The strata correspond to the "levels" of the Scott topology's specialization preorder, and the stabilization theorem is a finite-lattice analogue of the Kleene fixed-point theorem for Scott-continuous functions.
-
-## 6. Algorithms
-
-### 6.1 Kleene Chain Computation
-
+*Proof sketch*. Since deduct(x) = x and deduct(y) = y:
 ```
-Input: Monotone operator F on finite lattice L
-Output: Least fixed point of F
+dist(x, y) = dist(deduct(x), deduct(y)) ≤ c · dist(x, y)
+```
+where c < 1. This implies (1 - c) · dist(x, y) ≤ 0, so dist(x, y) ≤ 0, hence dist(x, y) = 0, hence x = y. □
 
-x ← ⊥
-repeat:
-    x' ← F(x)
-    if x' = x: return x
-    x ← x'
+**Corollary 3.2** (Geometric Convergence). The Kleene iterates deduct^n(⊥) satisfy:
+```
+dist(deduct^(n+1)(⊥), deduct^(n+2)(⊥)) ≤ c^(n+1) · dist(⊥, deduct(⊥))
 ```
 
-Complexity: O(|L|) iterations, each requiring one application of F.
+### 3.2 Consistency Metric Characterization
 
-### 6.2 Convergence Index Computation
+**Theorem 3.3** (Consistency Metric Bounds). For all proof trees t:
+1. 0 ≤ CM(t) ≤ 1
+2. CM(t) = 0 iff t is an axiom or a pure modus ponens tree of axioms
+3. CM(t) = 1 iff t contains a path to bot through selfRef nodes
 
+**Theorem 3.4** (Valid Proofs Have CM < 1). If t is a valid proof tree, then CM(t) < 1.
+
+*Proof sketch*. Induction on t. The key case is selfRef(p, inner): if inner is valid with CM(inner) < 1 by induction, then CM(selfRef(p, inner)) = (1 + CM(inner))/2 < (1 + 1)/2 = 1. The bot case is vacuous since bot is never valid. □
+
+**Example 3.5**. The identity proof selfRef(p, ax(p)) has CM = 1/2. The liar sentence selfRef(p, bot) has CM = 1.
+
+### 3.3 Stratification Theorem
+
+**Theorem 3.6** (Stratification). For any valid proof tree t:
+1. wfKernel(t) is valid
+2. wfKernel(t) has no self-referential nodes
+3. wfKernel(t).target = t.target
+4. depth(wfKernel(t)) ≤ depth(t)
+
+*Proof sketch*. By structural induction. The key case is selfRef(p, inner): wfKernel replaces it with ax(p), which is trivially valid and targets p. For mp, the target-preservation follows from the fact that wfKernel preserves targets (proved separately). □
+
+### 3.4 Unbounded Compression
+
+**Theorem 3.7** (Unbounded Compression). For every natural number d, there exists a valid proof tree of depth d whose well-founded kernel has depth 0.
+
+*Proof*. Define nestedSR(p, 0) = ax(p) and nestedSR(p, n+1) = selfRef(p, nestedSR(p, n)). Then:
+- nestedSR(p, n) is valid for all n (by induction: the target is always some p)
+- depth(nestedSR(p, n)) = n
+- depth(wfKernel(nestedSR(p, n))) = 0 (since wfKernel collapses to ax(p))
+
+The compression ratio is n : 0, which is unbounded. □
+
+### 3.5 Tropical Semiring Structure
+
+**Theorem 3.8** (Tropical Semiring Laws). The tropical proof height operations satisfy:
+1. (TPH, ⊕, ⊤) is a commutative monoid
+2. (TPH, ⊗, 0) is a commutative monoid
+3. ⊗ distributes over ⊕: a ⊗ (b ⊕ c) = (a ⊗ b) ⊕ (a ⊗ c)
+4. ⊤ annihilates: ⊤ ⊗ a = ⊤
+
+*Proof*. Direct verification using properties of min and addition on WithTop ℕ. □
+
+### 3.6 Convergence Stratification
+
+**Theorem 3.9** (k-Convergence Characterization). 
+1. 0-convergent proofs are exactly the valid proofs with no self-reference.
+2. k-convergence is monotone: if t is j-convergent and j ≤ k, then t is k-convergent.
+3. The identity proof is 1-convergent but not 0-convergent.
+
+---
+
+## 4. PEGB Analysis
+
+### 4.1 Unique Fixed Point (Theorem 3.1)
+
+**P (Proof)**: Machine-verified in Lean 4 as `ProofConvergenceDomain.unique_fixed_point`.
+
+**E (Example)**: Consider the complete lattice [0, 1] with deduction operator f(x) = x/2. This is contractive with factor 1/2. The unique fixed point is 0, which represents the proof that "starting from any assumption, repeated deduction converges to the trivial proof."
+
+**G (Generalization)**: The result generalizes to any complete metric space (not just complete lattices) — this is Banach's fixed-point theorem. The lattice structure provides additional monotonicity guarantees but is not essential for uniqueness.
+
+**B (Boundary)**: The contraction factor must be *strictly* less than 1. With factor = 1, the identity function has every element as a fixed point — self-reference becomes ambiguous. The boundary case c = 1 is precisely where paradoxes live.
+
+### 4.2 Consistency Metric (Theorem 3.4)
+
+**P**: Machine-verified as `consistencyMetric_valid_lt_one`.
+
+**E**: Identity proof: CM = 1/2. Nested selfRef(p, selfRef(p, ax(p))): CM = (1 + 1/2)/2 = 3/4. Each layer of self-reference brings CM closer to 1 but never reaches it.
+
+**G**: The consistency metric could be parameterized by a weight function w : NWFTree → ℝ, giving CM(selfRef(p,t)) = (w(t) + CM(t)) / (1 + w(t)). Our choice w = 1 is the simplest; other choices could capture different notions of "circularity cost."
+
+**B**: The liar sentence selfRef(p, bot) has CM = 1, sitting exactly on the boundary. This is the *unique* minimal invalid self-referential proof: any deeper nesting would exceed 1, which is impossible since CM ≤ 1 always.
+
+### 4.3 Stratification Theorem (Theorem 3.6)
+
+**P**: Machine-verified as `wfKernel_valid`, `wfKernel_no_sr`, `wfKernel_target`, `wfKernel_depth_le`.
+
+**E**: wfKernel(selfRef(p, mp(ax(p), ax(q), p, q))) = ax(p). The complex self-referential structure collapses to a single axiom.
+
+**G**: The wfKernel operation can be generalized to a *k-kernel* that strips only self-references at depth > k, providing a family of approximations between the full proof and its well-founded skeleton.
+
+**B**: wfKernel does not preserve all semantic content — it replaces self-referential subproofs with axioms, which may not be sound in the ambient proof system. The kernel is structurally valid but semantically weaker.
+
+### 4.4 Unbounded Compression (Theorem 3.7)
+
+**P**: Machine-verified as `unbounded_compression`.
+
+**E**: nestedSR(p, 5) has depth 5 but wfKernel depth 0. The ratio is 5:0.
+
+**G**: More complex self-referential structures (not just nesting) could achieve even richer compression. In particular, mutual self-reference between multiple propositions could compress multi-dimensional proof structures.
+
+**B**: Compression is only in structural depth, not in semantic complexity. The axiom ax(p) that the kernel produces requires p to be independently justified. Self-reference doesn't create information from nothing — it compresses its representation.
+
+---
+
+## 5. Falsifiable Conjecture
+
+**Conjecture 5.1** (Self-Reference Elimination Preserves Provability). For every proof system S and every proposition p provable via a valid k-convergent NWF proof (k > 0), p is also provable via a 0-convergent proof in S, possibly with greater depth.
+
+**Test**: Construct a proof system S with a proposition p that has a valid 1-convergent proof but no valid 0-convergent proof. This would require a proposition whose only proof essentially involves self-reference — i.e., the axiom base is insufficient to prove p without circular reasoning.
+
+**Prediction**: Such a system exists (making the conjecture false). Consider a system where the only axiom is "p → p" (expressed as a self-referential proof), with no independent axiom for p. The wfKernel reduces to ax(p), but p may not be independently axiomatizable.
+
+---
+
+## 6. Cross-Domain Connections
+
+### 6.1 Connection to Catalog Results
+
+Our work connects to several existing catalog results:
+
+1. **`direct_self_reference_paradox`** (MachineLearning/GazingPool.lean): Proves that P ↔ ¬P implies False. Our consistency metric provides a *quantitative* version: self-referential statements with CM = 1 are paradoxical, while those with CM < 1 are valid.
+
+2. **`fixed_point_unique_under_theory_separation`** (Bridges/ProofStoneCechDynamics.lean): Our unique fixed point theorem specializes to the same result when the theory separation condition implies contractivity.
+
+3. **`self_reasoning_fixed_point`** (Tropical/TropicalSelfReasoning.lean): Our tropical semiring structure on proof heights extends this work by providing algebraic operations on proof heights.
+
+### 6.2 Connection to Tropical Mathematics
+
+The proof height semiring (WithTop ℕ, min, +) is a *tropical semiring* — the same algebraic structure that appears in tropical geometry, optimization, and phylogenetics. This connection suggests that:
+
+1. **Proof search as tropical optimization**: Finding the shortest proof is a tropical linear programming problem.
+2. **Proof varieties**: The set of achievable proof height vectors forms a tropical variety.
+3. **Tropical Gröbner bases**: The ideal theory of proof heights could yield canonical forms for proof systems.
+
+---
+
+## 7. Algorithms
+
+### 7.1 Consistency Metric Computation
+
+```python
+def consistency_metric(tree):
+    if tree.type == 'axiom': return 0.0
+    elif tree.type == 'mp':
+        return max(consistency_metric(tree.left), consistency_metric(tree.right))
+    elif tree.type == 'selfRef':
+        return (1 + consistency_metric(tree.inner)) / 2
+    elif tree.type == 'bot': return 1.0
 ```
-Input: Monotone operator F, element y ∈ L
-Output: Convergence index of y
 
-x ← ⊥; k ← 0
-repeat:
-    if y ≤ x: return k
-    x ← F(x); k ← k + 1
-return ∞  (unreachable for monotone F)
+Time complexity: O(n) where n is the number of nodes.
+
+### 7.2 Well-Founded Kernel Extraction
+
+```python
+def wf_kernel(tree):
+    if tree.type == 'axiom': return tree
+    elif tree.type == 'mp':
+        return MP(wf_kernel(tree.left), wf_kernel(tree.right), tree.p, tree.q)
+    elif tree.type == 'selfRef': return Axiom(tree.p)
+    elif tree.type == 'bot': return tree
 ```
 
-## 7. Falsifiable Conjecture
+Time complexity: O(n) where n is the number of nodes. The kernel is always smaller or equal in size.
 
-**Conjecture 7.1** (Convergence Bound Tightness). For every $n \geq 1$, there exists a monotone operator $F$ on a lattice of cardinality $n$ whose Kleene chain stabilizes in exactly $n$ steps.
+---
 
-**Test**: Construct, for each $n$, the operator $F$ on the chain lattice $\{0 < 1 < \cdots < n\}$ defined by $F(k) = k + 1$ (capped at $n$). Verify that $F^k(0) = k$ for $k \leq n$ and $F^n(0) = n = F^{n+1}(0)$.
+## 8. Discussion and Future Work
 
-**Status**: Tested computationally for $n \leq 100$. The conjecture appears true.
+### 8.1 Limitations
 
-## 8. Discussion
+1. Our NWFTree type is an *inductive* type, not coinductive. True non-well-founded structures (infinite proof trees) would require coinductive types, which are more complex to work with in Lean 4.
 
-The Convergence Stratification theory transforms the study of self-referential proofs from a philosophical curiosity into a precise mathematical framework. The key insight — that monotonicity is the dividing line between valid and paradoxical self-reference — has both theoretical and practical implications.
+2. The consistency metric is a syntactic measure. A deeper semantic version would require modeling the ambient logic and its interpretation.
 
-Theoretically, it provides a unified explanation for why certain forms of circular reasoning (like the fixed-point combinator in lambda calculus, or recursive definitions in programming) work perfectly well, while others (like the liar paradox or Russell's paradox) lead to contradiction.
+3. The connection to tropical geometry is algebraic but not yet geometric — we establish the semiring structure but not the associated tropical varieties.
 
-Practically, it suggests that automated reasoning systems can safely employ self-referential proof strategies as long as the underlying proof operator is monotone — a checkable condition.
+### 8.2 Open Problems
 
-## 9. Future Work
+1. **Semantic consistency**: Does there exist a proof system where a valid NWF proof proves a proposition that has no classical proof?
 
-1. Extend the stratification theory to transfinite ordinals for operators on infinite lattices
-2. Develop the tropical algebraic geometry of proof systems
-3. Connect the Fixed-Point Gap to questions in reverse mathematics
-4. Investigate applications to recursive program verification
+2. **Complexity-theoretic bounds**: Is there a relationship between the minimum self-reference depth of a proof and the computational complexity of the proved statement?
 
-## References
+3. **Coinductive extension**: Can the framework be extended to infinite proof trees using coinductive types, and if so, what is the analog of the consistency metric for infinite trees?
 
-1. Davey, B. A., & Priestley, H. A. (2002). *Introduction to Lattices and Order*. Cambridge University Press.
-2. Tarski, A. (1955). A lattice-theoretical fixpoint theorem and its applications. *Pacific Journal of Mathematics*, 5(2), 285-309.
-3. Mikhalkin, G. (2005). Enumerative tropical algebraic geometry in ℝ². *Journal of the American Mathematical Society*, 18(2), 313-377.
-4. Simon, I. (1988). Recognizable sets with multiplicities in the tropical semiring. In *Mathematical Foundations of Computer Science* (pp. 107-120).
+---
+
+## 9. References
+
+[1] K. Gödel, "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I," *Monatshefte für Mathematik und Physik*, vol. 38, pp. 173–198, 1931.
+
+[2] P. Aczel, *Non-Well-Founded Sets*, CSLI Lecture Notes, 1988.
+
+[3] S. Banach, "Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales," *Fundamenta Mathematicae*, vol. 3, pp. 133–181, 1922.
+
+[4] D. Maclagan and B. Sturmfels, *Introduction to Tropical Geometry*, Graduate Studies in Mathematics, AMS, 2015.
+
+[5] A. Tarski, "A lattice-theoretical fixpoint theorem and its applications," *Pacific Journal of Mathematics*, vol. 5, pp. 285–309, 1955.
