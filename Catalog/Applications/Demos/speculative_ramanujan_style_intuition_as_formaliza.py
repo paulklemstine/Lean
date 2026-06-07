@@ -1,325 +1,419 @@
 #!/usr/bin/env python3
 """
-Ramanujan Oracle Demo: Numerical Illustrations of Oracle Non-Computability
+Ramanujan Oracle Framework — Demonstration Script
 
-Demonstrates the key theorems from the Ramanujan Oracle framework:
-1. Oracle space cardinality gap (3^N vs 2^N)
-2. Cantor diagonal construction
-3. Abstention advantage
-4. Oracle jump hierarchy
+Demonstrates the key concepts from the Ramanujan Oracle theory:
+1. Oracle space counting (3^N for N statements)
+2. Simulated oracle accuracy evaluation
+3. Cofinite agreement detection
+4. Oracle hierarchy visualization
 """
 
 import random
 import math
-from typing import Callable, List, Tuple
+from typing import Callable, Dict, List, Optional, Tuple
 
-
-# === Oracle Types ===
-
+# ── Oracle Response Type ──────────────────────────────────────────────────
 class OracleResponse:
-    AFFIRM = "affirm"
-    DENY = "deny"
-    ABSTAIN = "abstain"
+    TRUE = "true"
+    FALSE = "false"
+    UNKNOWN = "unknown"
 
-
-Oracle = Callable[[int], str]
-TruthAssignment = Callable[[int], bool]
-
-
-def oracle_correct_on(response: str, truth: bool) -> bool:
-    """Check if an oracle response is correct for a given truth value."""
-    if response == OracleResponse.AFFIRM and truth:
-        return True
-    if response == OracleResponse.DENY and not truth:
-        return True
-    return False
-
-
-def accuracy_count(oracle: Oracle, truth: TruthAssignment, domain: range) -> int:
-    """Count correct predictions on a domain."""
-    return sum(1 for s in domain for _ in [None]
-               if oracle_correct_on(oracle(s), truth(s)))
-
-
-# === Demo 1: Oracle Space Cardinality Gap ===
-
-def demo_cardinality_gap():
-    """Show that 3^N >> 2^N for growing N."""
+# ── Demo 1: Oracle Space Counting ─────────────────────────────────────────
+def demo_counting_bound():
+    """Demonstrate that the oracle space grows as 3^N."""
     print("=" * 60)
-    print("DEMO 1: Oracle Space Cardinality Gap")
+    print("DEMO 1: Oracle Space Counting Bound")
     print("=" * 60)
-    print(f"{'N':>5} {'2^N (truths)':>15} {'3^N (oracles)':>15} {'ratio (3/2)^N':>15}")
-    print("-" * 55)
-    for N in [1, 2, 5, 10, 20, 50, 100]:
-        truths = 2**N
-        oracles = 3**N
-        ratio = (3/2)**N
-        print(f"{N:>5} {truths:>15} {oracles:>15} {ratio:>15.2f}")
     print()
-    print("Key insight: The ratio grows exponentially. For N=100,")
-    print(f"there are (3/2)^100 ≈ {(1.5)**100:.2e} times more oracles than truths.")
+    print("For N statements with 3-valued responses,")
+    print("the number of possible oracles is exactly 3^N:")
+    print()
+    for N in range(1, 16):
+        count = 3 ** N
+        log_count = N * math.log2(3)
+        print(f"  N = {N:2d}: 3^N = {count:>12,d}  (log2 = {log_count:.1f} bits)")
+    print()
+    print("Key insight: This grows faster than 2^N (binary functions),")
+    print("and vastly exceeds the countably many computable oracles.")
     print()
 
-
-# === Demo 2: Cantor Diagonal Construction ===
-
-def demo_cantor_diagonal():
-    """Demonstrate the diagonal argument defeating a family of oracles."""
-    print("=" * 60)
-    print("DEMO 2: Cantor-Ramanujan Diagonalization")
-    print("=" * 60)
-    
-    N = 10
-    
-    # Create a family of oracles
-    def make_oracle(seed: int) -> Oracle:
-        rng = random.Random(seed)
-        responses = [random.choice([OracleResponse.AFFIRM, OracleResponse.DENY,
-                                     OracleResponse.ABSTAIN]) for _ in range(N)]
-        return lambda s: responses[s % len(responses)]
-    
-    family = [make_oracle(i) for i in range(N)]
-    
-    # Construct diagonal-defeating truth assignment
-    def diagonal_defeater(n: int) -> bool:
-        response = family[n % len(family)](n)
-        if response == OracleResponse.AFFIRM:
-            return False  # Defeat affirm with false
-        else:
-            return True   # Defeat deny/abstain with true
-    
-    print(f"Family of {N} oracles on {N} statements:")
-    print()
-    print("Oracle responses on diagonal:")
+# ── Demo 2: Oracle Accuracy Evaluation ────────────────────────────────────
+def evaluate_oracle(
+    predict: Callable[[int], str],
+    truth: Callable[[int], bool],
+    N: int
+) -> Dict[str, float]:
+    """Evaluate a prediction oracle's accuracy on N statements."""
+    correct = wrong = abstain = 0
     for n in range(N):
-        resp = family[n](n)
-        g_val = diagonal_defeater(n)
-        correct = oracle_correct_on(resp, g_val)
-        print(f"  Oracle {n} on stmt {n}: {resp:>8} | truth: {str(g_val):>5} | correct: {correct}")
-    
-    print()
-    print(f"Result: The diagonal truth assignment defeats ALL {N} oracles.")
-    print("Each oracle is wrong on at least one statement (its diagonal).")
-    print()
-
-
-# === Demo 3: Abstention Advantage ===
-
-def demo_abstention():
-    """Show the exponential advantage of strategic abstention."""
-    print("=" * 60)
-    print("DEMO 3: Abstention Exponential Advantage")
-    print("=" * 60)
-    
-    N = 20
-    print(f"For {N} statements:")
-    print(f"{'k (abstentions)':>20} {'compatible truths (2^k)':>25} {'fraction of 2^{N}':>20}")
-    print("-" * 70)
-    for k in [0, 1, 2, 5, 10, 15, 20]:
-        compatible = 2**k
-        fraction = compatible / 2**N
-        print(f"{k:>20} {compatible:>25} {fraction:>20.8f}")
-    
-    print()
-    print("Key insight: Abstaining on half the statements (k=10) makes the oracle")
-    print("compatible with 1024 truth assignments instead of just 1.")
-    print("Ramanujan's strategy of 'not guessing when uncertain' is optimal.")
-    print()
-
-
-# === Demo 4: Oracle Jump Hierarchy ===
-
-def demo_jump_hierarchy():
-    """Show the oracle jump hierarchy never collapses."""
-    print("=" * 60)
-    print("DEMO 4: Oracle Jump Hierarchy")
-    print("=" * 60)
-    
-    # Start with a simple oracle
-    base_responses = [OracleResponse.AFFIRM, OracleResponse.DENY, 
-                      OracleResponse.ABSTAIN, OracleResponse.AFFIRM,
-                      OracleResponse.DENY]
-    
-    def oracle_jump(responses):
-        """Compute the jump of an oracle."""
-        jumped = []
-        for r in responses:
-            if r == OracleResponse.AFFIRM:
-                jumped.append(OracleResponse.DENY)
-            elif r == OracleResponse.DENY:
-                jumped.append(OracleResponse.AFFIRM)
-            else:  # ABSTAIN
-                jumped.append(OracleResponse.AFFIRM)
-        return jumped
-    
-    current = base_responses
-    print(f"{'Level':>6} | Responses")
-    print("-" * 50)
-    for level in range(6):
-        print(f"{level:>6} | {[r[:3] for r in current]}")
-        current = oracle_jump(current)
-    
-    print()
-    print("Key insight: Each jump level disagrees with the previous on")
-    print("every non-abstention input. The hierarchy never collapses.")
-    print("After the first jump, all levels are binary (no abstentions).")
-    print()
-
-
-# === Demo 5: Accuracy vs Programs ===
-
-def demo_accuracy_vs_programs():
-    """Show the ratio of computable oracles to all oracles."""
-    print("=" * 60)
-    print("DEMO 5: Computable Oracle Ratio (Proof-Oracle Bridge)")
-    print("=" * 60)
-    
-    b = 2  # binary alphabet
-    print(f"Alphabet size b = {b}")
-    print(f"{'n':>5} {'programs b^n':>15} {'oracles 3^(b^n)':>25} {'ratio':>15}")
-    print("-" * 65)
-    for n in range(1, 11):
-        programs = b**n
-        oracles = 3**(b**n)
-        ratio = programs / oracles if oracles > 0 else 0
-        if oracles < 10**20:
-            print(f"{n:>5} {programs:>15} {oracles:>25} {ratio:>15.2e}")
+        prediction = predict(n)
+        is_true = truth(n)
+        if prediction == OracleResponse.UNKNOWN:
+            abstain += 1
+        elif (prediction == OracleResponse.TRUE) == is_true:
+            correct += 1
         else:
-            print(f"{n:>5} {programs:>15} {'(huge)':>25} {'~0':>15}")
-    
+            wrong += 1
+    total_definite = correct + wrong
+    accuracy = correct / total_definite if total_definite > 0 else 1.0
+    coverage = total_definite / N if N > 0 else 0.0
+    return {
+        "accuracy": accuracy,
+        "coverage": coverage,
+        "correct": correct,
+        "wrong": wrong,
+        "abstain": abstain,
+        "is_sound": wrong == 0
+    }
+
+def demo_oracle_accuracy():
+    """Demonstrate oracle evaluation with different prediction strategies."""
+    print("=" * 60)
+    print("DEMO 2: Oracle Accuracy Evaluation")
+    print("=" * 60)
     print()
-    print("Key insight: The ratio b^n / 3^(b^n) collapses super-exponentially.")
-    print("For n=10, there are 1024 programs but 3^1024 ≈ 10^488 oracles.")
-    print("Computable oracles are vanishingly rare.")
+
+    # Truth set: primes up to N
+    def is_prime(n: int) -> bool:
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    N = 100
+
+    # Oracle 1: Always says unknown (trivially sound, zero coverage)
+    def oracle_abstain(n: int) -> str:
+        return OracleResponse.UNKNOWN
+
+    # Oracle 2: Always says true (not sound for composites)
+    def oracle_always_true(n: int) -> str:
+        return OracleResponse.TRUE
+
+    # Oracle 3: Correct on small primes, unknown on large (sound, partial coverage)
+    def oracle_small_primes(n: int) -> str:
+        if n < 20:
+            return OracleResponse.TRUE if is_prime(n) else OracleResponse.FALSE
+        return OracleResponse.UNKNOWN
+
+    # Oracle 4: Perfect oracle (sound and complete)
+    def oracle_perfect(n: int) -> str:
+        return OracleResponse.TRUE if is_prime(n) else OracleResponse.FALSE
+
+    # Oracle 5: "Ramanujan-like" — mostly correct, with rare unknown
+    def oracle_ramanujan(n: int) -> str:
+        if n > 90:  # abstain on "hard" cases
+            return OracleResponse.UNKNOWN
+        return OracleResponse.TRUE if is_prime(n) else OracleResponse.FALSE
+
+    oracles = [
+        ("Always Unknown", oracle_abstain),
+        ("Always True", oracle_always_true),
+        ("Small Primes Only", oracle_small_primes),
+        ("Perfect Oracle", oracle_perfect),
+        ("Ramanujan-like", oracle_ramanujan),
+    ]
+
+    print(f"Truth set: primes among {{0, ..., {N-1}}}")
+    print(f"Number of primes: {sum(1 for n in range(N) if is_prime(n))}")
     print()
 
+    for name, oracle in oracles:
+        result = evaluate_oracle(oracle, is_prime, N)
+        sound_str = "✓ SOUND" if result["is_sound"] else "✗ NOT SOUND"
+        print(f"  {name:20s}: accuracy={result['accuracy']:.2%}, "
+              f"coverage={result['coverage']:.2%}, "
+              f"correct={result['correct']:3d}, wrong={result['wrong']:3d}, "
+              f"abstain={result['abstain']:3d}  [{sound_str}]")
+    print()
 
-# === Main ===
+# ── Demo 3: Cofinite Agreement ────────────────────────────────────────────
+def cofinite_agree(f: Callable[[int], bool], g: Callable[[int], bool],
+                   N: int) -> Tuple[bool, int, List[int]]:
+    """Check if f and g agree on all but finitely many inputs up to N."""
+    disagreements = [n for n in range(N) if f(n) != g(n)]
+    return len(disagreements) < N // 10, len(disagreements), disagreements[:10]
 
+def demo_cofinite_agreement():
+    """Demonstrate the cofinite agreement concept."""
+    print("=" * 60)
+    print("DEMO 3: Cofinite Agreement — Finite Perturbation")
+    print("=" * 60)
+    print()
+
+    def is_prime(n: int) -> bool:
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    # Perturb the primality function at a few points
+    perturbation_points = {4, 9, 25, 49}  # squares, not prime
+
+    def perturbed_prime(n: int) -> bool:
+        if n in perturbation_points:
+            return True  # wrong on these points
+        return is_prime(n)
+
+    N = 1000
+    _, num_disagree, examples = cofinite_agree(is_prime, perturbed_prime, N)
+
+    print(f"Original function: is_prime")
+    print(f"Perturbed function: is_prime with {len(perturbation_points)} flipped values")
+    print(f"Disagreements in [0, {N}): {num_disagree}")
+    print(f"Disagreement points: {examples}")
+    print()
+    print("Theorem (Cofinite Stability):")
+    print("  If is_prime were non-computable, then perturbed_prime")
+    print("  would ALSO be non-computable — finitely many corrections")
+    print("  cannot bridge the computability gap.")
+    print()
+
+# ── Demo 4: Oracle Hierarchy ──────────────────────────────────────────────
+def demo_oracle_hierarchy():
+    """Demonstrate the strict oracle hierarchy."""
+    print("=" * 60)
+    print("DEMO 4: Strict Oracle Hierarchy")
+    print("=" * 60)
+    print()
+
+    # Simulate hierarchy levels with increasingly powerful decidability
+    # Level 0: Can decide divisibility properties
+    # Level 1: Can decide primality
+    # Level 2: Can decide Goldbach-type properties
+    # Level 3: Can decide partition-type properties
+
+    levels = {
+        0: "Divisibility (n mod k = 0)",
+        1: "Primality (is n prime?)",
+        2: "Goldbach-type (is n a sum of two primes?)",
+        3: "Partition-type (partition function properties)",
+    }
+
+    # Simulate decidable sets at each level (simplified)
+    def level_set(level: int, N: int) -> set:
+        """Statements decidable at this level."""
+        s = set()
+        if level >= 0:
+            # Level 0: even/odd classification
+            s.update(range(0, N, 2))
+        if level >= 1:
+            # Level 1: add primes
+            for n in range(2, N):
+                if all(n % i != 0 for i in range(2, int(n**0.5) + 1)):
+                    s.add(n)
+        if level >= 2:
+            # Level 2: add numbers that are sums of two primes
+            primes = {p for p in range(2, N) if all(p % i != 0 for i in range(2, max(2, int(p**0.5) + 1)))}
+            for p1 in primes:
+                for p2 in primes:
+                    if p1 + p2 < N:
+                        s.add(p1 + p2)
+        if level >= 3:
+            # Level 3: add all remaining
+            s.update(range(N))
+        return s
+
+    N = 100
+    print("Simulated oracle hierarchy on [0, 100):")
+    print()
+    prev_size = 0
+    for lvl in range(4):
+        s = level_set(lvl, N)
+        new_elements = len(s) - prev_size
+        print(f"  Level {lvl} ({levels[lvl]}): "
+              f"|L_{lvl}| = {len(s):3d}, new elements = {new_elements:3d}")
+        prev_size = len(s)
+
+    print()
+    print("Strict Hierarchy Theorem: L_0 ⊊ L_1 ⊊ L_2 ⊊ L_3 ⊊ ...")
+    print("Each level decides statements inaccessible to lower levels.")
+    print()
+
+# ── Demo 5: Proof-Prediction Duality ─────────────────────────────────────
+def demo_duality():
+    """Demonstrate the proof-prediction duality."""
+    print("=" * 60)
+    print("DEMO 5: Proof-Prediction Duality")
+    print("=" * 60)
+    print()
+
+    print("Comparison of proof-side and prediction-side counting bounds:")
+    print()
+    print(f"  {'N':>3s}  {'Proofs (2^N)':>14s}  {'Oracles (3^N)':>14s}  {'Ratio':>8s}")
+    print(f"  {'─'*3}  {'─'*14}  {'─'*14}  {'─'*8}")
+
+    for N in [1, 2, 5, 10, 15, 20, 25, 30]:
+        proofs = 2 ** N
+        oracles = 3 ** N
+        ratio = oracles / proofs
+        print(f"  {N:3d}  {proofs:14,d}  {oracles:14,d}  {ratio:8.2f}")
+
+    print()
+    print("The oracle space grows faster than the proof space (3 > 2),")
+    print("reflecting the additional 'unknown' response option.")
+    print("Both are governed by exponential counting in the alphabet size.")
+    print()
+
+# ── Main ──────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     print()
     print("╔══════════════════════════════════════════════════════════╗")
-    print("║    RAMANUJAN ORACLE: Non-Computability Demonstrations   ║")
+    print("║   RAMANUJAN ORACLE FRAMEWORK — DEMONSTRATION SUITE     ║")
     print("╚══════════════════════════════════════════════════════════╝")
     print()
-    
-    demo_cardinality_gap()
-    demo_cantor_diagonal()
-    demo_abstention()
-    demo_jump_hierarchy()
-    demo_accuracy_vs_programs()
-    
-    print("=" * 60)
-    print("SUMMARY")
-    print("=" * 60)
-    print("""
-These demonstrations illustrate five formally verified theorems:
 
-1. Oracle Surplus: The oracle space (3^N) exponentially exceeds
-   the truth space (2^N), so most oracles are "wrong" about most truths.
+    demo_counting_bound()
+    demo_oracle_accuracy()
+    demo_cofinite_agreement()
+    demo_oracle_hierarchy()
+    demo_duality()
 
-2. Cantor-Ramanujan Diagonalization: No countable family of oracles
-   covers all truth assignments. The diagonal always escapes.
-
-3. Abstention Advantage: Strategic "I don't know" responses provide
-   an exponential advantage in robustness — 2^k compatible truths.
-
-4. Jump Hierarchy: Each oracle jump level strictly extends the previous.
-   The hierarchy never collapses, mirroring the arithmetic hierarchy.
-
-5. Proof-Oracle Bridge: Computable oracles are super-exponentially
-   rare among all oracles: b^n / 3^(b^n) → 0.
-""")
+    print("All demonstrations complete.")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Oracle Space Cardinality Gap
+Visualization: Oracle Space Growth vs Computable Functions
 
-Shows the exponential gap between oracle space (3^N) and truth space (2^N),
-demonstrating why most oracles are non-computable.
+Shows the exponential growth of the oracle space (3^N) compared to
+linear/polynomial growth of computable function enumeration.
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 
+def plot_oracle_space_growth():
+    """Plot oracle space size vs number of statements."""
+    N = np.arange(1, 31)
+    oracle_3 = 3.0 ** N  # 3-valued oracles
+    oracle_2 = 2.0 ** N  # binary oracles
+    computable = N * np.log2(N + 1) * 100  # rough upper bound on enumerable programs
 
-def plot_cardinality_gap():
-    """Plot the cardinality gap between oracles and truth assignments."""
-    N_values = np.arange(1, 25)
-    truth_space = 2.0 ** N_values
-    oracle_space = 3.0 ** N_values
-    ratio = (1.5) ** N_values
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-    # Plot 1: Log-scale comparison
-    ax1 = axes[0]
-    ax1.semilogy(N_values, truth_space, 'b-o', label='Truth space (2^N)', markersize=4)
-    ax1.semilogy(N_values, oracle_space, 'r-s', label='Oracle space (3^N)', markersize=4)
-    ax1.fill_between(N_values, truth_space, oracle_space, alpha=0.2, color='red',
-                     label='Non-computable gap')
-    ax1.set_xlabel('N (number of statements)')
-    ax1.set_ylabel('Size (log scale)')
-    ax1.set_title('Oracle vs Truth Space Cardinality')
-    ax1.legend()
+    # Left: log scale
+    ax1.semilogy(N, oracle_3, 'r-o', label='3-valued oracles (3^N)', markersize=4, linewidth=2)
+    ax1.semilogy(N, oracle_2, 'b-s', label='Binary oracles (2^N)', markersize=4, linewidth=2)
+    ax1.semilogy(N, computable, 'g--', label='Computable bound (≈ N log N)', linewidth=2)
+    ax1.set_xlabel('Number of statements N', fontsize=12)
+    ax1.set_ylabel('Number of possible oracles (log scale)', fontsize=12)
+    ax1.set_title('Oracle Space Growth', fontsize=14, fontweight='bold')
+    ax1.legend(fontsize=10)
     ax1.grid(True, alpha=0.3)
+    ax1.set_xlim(1, 30)
 
-    # Plot 2: Ratio growth
-    ax2 = axes[1]
-    ax2.plot(N_values, ratio, 'g-^', markersize=4)
-    ax2.set_xlabel('N (number of statements)')
-    ax2.set_ylabel('Ratio (3/2)^N')
-    ax2.set_title('Oracle Surplus Ratio')
-    ax2.set_yscale('log')
+    # Right: ratio
+    ratio = oracle_3 / oracle_2
+    ax2.plot(N, ratio, 'purple', linewidth=2, marker='D', markersize=4)
+    ax2.set_xlabel('Number of statements N', fontsize=12)
+    ax2.set_ylabel('Ratio: 3-valued / binary oracles', fontsize=12)
+    ax2.set_title('Three-valued vs Binary Oracle Ratio (1.5^N)', fontsize=14, fontweight='bold')
     ax2.grid(True, alpha=0.3)
-    ax2.axhline(y=1, color='k', linestyle='--', alpha=0.3)
+    ax2.set_xlim(1, 30)
 
-    # Plot 3: Abstention advantage
-    ax3 = axes[2]
-    k_values = np.arange(0, 21)
-    coverage = 2.0 ** k_values
-    ax3.bar(k_values, coverage, color='teal', alpha=0.7)
-    ax3.set_xlabel('k (number of abstentions)')
-    ax3.set_ylabel('Compatible truth assignments (2^k)')
-    ax3.set_title('Abstention Exponential Advantage')
-    ax3.set_yscale('log')
-    ax3.grid(True, alpha=0.3, axis='y')
+    # Add annotation
+    ax1.annotate('Non-computable\nregion', xy=(20, 3**20), fontsize=11,
+                ha='center', color='red', fontweight='bold',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', alpha=0.8))
 
     plt.tight_layout()
-    plt.savefig('oracle_gap_visualization.png', dpi=150, bbox_inches='tight')
+    plt.savefig('oracle_space_growth.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: oracle_gap_visualization.png")
+    print("Saved: oracle_space_growth.png")
 
+def plot_hierarchy():
+    """Plot the oracle hierarchy levels."""
+    fig, ax = plt.subplots(figsize=(10, 7))
 
-def plot_computable_ratio():
-    """Plot the vanishing ratio of computable oracles."""
-    fig, ax = plt.subplots(figsize=(10, 6))
+    levels = 6
+    N = 100
 
-    n_values = list(range(1, 9))
-    b = 2
-    log_programs = [n * np.log10(b) for n in n_values]
-    log_oracles = [b**n * np.log10(3) for n in n_values]
+    # Simulated level set sizes (monotonically increasing, strictly)
+    level_sizes = [10, 25, 45, 65, 82, 95]
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, levels))
 
-    ax.bar(np.array(n_values) - 0.2, log_programs, 0.35, label='log₁₀(programs) = n·log₁₀(b)',
-           color='steelblue', alpha=0.8)
-    ax.bar(np.array(n_values) + 0.2, log_oracles, 0.35, label='log₁₀(oracles) = b^n·log₁₀(3)',
-           color='coral', alpha=0.8)
-    ax.set_xlabel('n (program length)')
-    ax.set_ylabel('log₁₀(count)')
-    ax.set_title('Programs vs Oracles: Super-Exponential Gap (b=2)')
-    ax.legend()
-    ax.grid(True, alpha=0.3, axis='y')
-    ax.set_xticks(n_values)
+    bars = ax.barh(range(levels), level_sizes, color=colors, edgecolor='black', linewidth=1.2)
+
+    # Add "new elements" annotations
+    for i in range(levels):
+        new = level_sizes[i] - (level_sizes[i-1] if i > 0 else 0)
+        ax.annotate(f'+{new} new', xy=(level_sizes[i] + 1, i),
+                   fontsize=10, va='center', color='darkred', fontweight='bold')
+
+    ax.set_yticks(range(levels))
+    ax.set_yticklabels([f'Level {i} (Σ⁰_{i})' for i in range(levels)], fontsize=11)
+    ax.set_xlabel('Number of decidable statements', fontsize=12)
+    ax.set_title('Strict Oracle Hierarchy\nEach level decides strictly more statements',
+                fontsize=14, fontweight='bold')
+    ax.set_xlim(0, 110)
+    ax.grid(True, axis='x', alpha=0.3)
+
+    # Add strictness arrows
+    for i in range(levels - 1):
+        ax.annotate('', xy=(level_sizes[i+1], i+0.6), xytext=(level_sizes[i], i+0.4),
+                   arrowprops=dict(arrowstyle='->', color='red', lw=1.5))
 
     plt.tight_layout()
-    plt.savefig('computable_ratio_visualization.png', dpi=150, bbox_inches='tight')
+    plt.savefig('oracle_hierarchy.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: computable_ratio_visualization.png")
+    print("Saved: oracle_hierarchy.png")
+
+def plot_cofinite_stability():
+    """Visualize the cofinite stability theorem."""
+    fig, ax = plt.subplots(figsize=(12, 5))
+
+    N = 200
+    np.random.seed(42)
+
+    # Simulate a "non-computable" function (random-looking)
+    truth = np.array([1 if i in {2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,
+                                   73,79,83,89,97,101,103,107,109,113,127,131,137,139,149,
+                                   151,157,163,167,173,179,181,191,193,197,199} else 0
+                      for i in range(N)])
+
+    # Finite perturbation (flip 5 values)
+    perturbed = truth.copy()
+    flip_points = [4, 9, 15, 50, 100]
+    for p in flip_points:
+        perturbed[p] = 1 - perturbed[p]
+
+    x = np.arange(N)
+
+    ax.step(x, truth * 1.05, 'b-', alpha=0.7, linewidth=1, label='Original function f')
+    ax.step(x, perturbed * 0.95, 'r--', alpha=0.7, linewidth=1, label='Perturbed function g')
+
+    # Mark disagreement points
+    for p in flip_points:
+        ax.axvline(x=p, color='orange', alpha=0.5, linewidth=2)
+        ax.plot(p, truth[p], 'bo', markersize=8)
+        ax.plot(p, perturbed[p], 'rs', markersize=8)
+
+    ax.set_xlabel('Input n', fontsize=12)
+    ax.set_ylabel('Function value', fontsize=12)
+    ax.set_title('Cofinite Stability: Finite perturbation preserves non-computability\n'
+                '(Orange lines mark the 5 disagreement points)',
+                fontsize=13, fontweight='bold')
+    ax.legend(fontsize=11, loc='upper right')
+    ax.set_ylim(-0.2, 1.4)
+    ax.set_xlim(0, N)
+
+    plt.tight_layout()
+    plt.savefig('cofinite_stability.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: cofinite_stability.png")
 
 
 if __name__ == "__main__":
-    plot_cardinality_gap()
-    plot_computable_ratio()
+    plot_oracle_space_growth()
+    plot_hierarchy()
+    plot_cofinite_stability()
+    print("All visualizations generated.")

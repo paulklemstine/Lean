@@ -1,216 +1,300 @@
 #!/usr/bin/env python3
 """
-Ramanujan Oracle: Algorithms
+Ramanujan Oracle Framework — Algorithms Module
 
-Type-hinted implementations of the core oracle algorithms formalized in Lean 4.
+Type-hinted implementations of the core algorithms from the research.
 """
 
-from typing import Callable, List, Optional, Tuple
+from typing import Callable, Dict, List, Optional, Set, Tuple
 from enum import Enum
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import math
 
 
 class OracleResponse(Enum):
-    """The three possible responses of a Ramanujan oracle."""
-    AFFIRM = "affirm"
-    DENY = "deny"
-    ABSTAIN = "abstain"
-
-
-# Type aliases
-Oracle = Callable[[int], OracleResponse]
-TruthAssignment = Callable[[int], bool]
-
-
-def oracle_correct_on(response: OracleResponse, truth: bool) -> bool:
-    """Check if an oracle response is correct for a given truth value.
-    
-    Affirm matches True, Deny matches False, Abstain is never correct.
-    """
-    if response == OracleResponse.AFFIRM and truth:
-        return True
-    if response == OracleResponse.DENY and not truth:
-        return True
-    return False
-
-
-def oracle_accuracy_count(oracle: Oracle, truth: TruthAssignment, 
-                          domain: List[int]) -> int:
-    """Count the number of correct oracle predictions on a domain.
-    
-    This implements the formal `oracleAccuracyCount` from Lean.
-    """
-    return sum(1 for s in domain if oracle_correct_on(oracle(s), truth(s)))
-
-
-def disagreement_count(oracle: Oracle, truth: TruthAssignment,
-                       domain: List[int]) -> int:
-    """Count disagreements = |domain| - accuracy_count.
-    
-    Formally verified: accuracy + disagreement = |domain|.
-    """
-    return len(domain) - oracle_accuracy_count(oracle, truth, domain)
-
-
-def is_binary_oracle(oracle: Oracle, domain: List[int]) -> bool:
-    """Check if an oracle never abstains on the given domain."""
-    return all(oracle(s) != OracleResponse.ABSTAIN for s in domain)
-
-
-def binary_oracle_to_assignment(oracle: Oracle) -> TruthAssignment:
-    """Convert a binary oracle to the unique truth assignment it matches.
-    
-    Formally verified: this is the unique assignment achieving 100% accuracy.
-    """
-    def assignment(s: int) -> bool:
-        return oracle(s) == OracleResponse.AFFIRM
-    return assignment
-
-
-def oracle_jump(oracle: Oracle) -> Oracle:
-    """Compute the jump of an oracle.
-    
-    The jump negates every response (affirm↔deny, abstain→affirm).
-    Formally verified properties:
-    - jump_disagrees: jump always differs from source on non-abstentions
-    - jump_is_binary: jump never abstains
-    """
-    def jumped(s: int) -> OracleResponse:
-        r = oracle(s)
-        if r == OracleResponse.AFFIRM:
-            return OracleResponse.DENY
-        elif r == OracleResponse.DENY:
-            return OracleResponse.AFFIRM
-        else:
-            return OracleResponse.AFFIRM
-    return jumped
-
-
-def iterated_jump(oracle: Oracle, n: int) -> Oracle:
-    """Compute the n-th iterated jump.
-    
-    jump^0(f) = f, jump^(n+1)(f) = jump(jump^n(f)).
-    Formally verified: jump_hierarchy_noncollapse shows consecutive
-    levels always differ.
-    """
-    result = oracle
-    for _ in range(n):
-        result = oracle_jump(result)
-    return result
-
-
-def oracle_compose(primary: Oracle, fallback: Oracle) -> Oracle:
-    """Compose two oracles: use primary, fall back on abstention.
-    
-    Formally verified: if fallback is binary, composition is binary.
-    """
-    def composed(s: int) -> OracleResponse:
-        r = primary(s)
-        if r == OracleResponse.ABSTAIN:
-            return fallback(s)
-        return r
-    return composed
-
-
-def cantor_diagonal_defeater(family: List[Oracle]) -> TruthAssignment:
-    """Construct a truth assignment that defeats every oracle in the family.
-    
-    For oracle n, looks at its response on statement n (the diagonal)
-    and chooses the opposite truth value.
-    
-    Formally verified: cantor_diagonal_oracle proves this construction
-    defeats every oracle on its diagonal statement.
-    """
-    def defeater(n: int) -> bool:
-        if n < len(family):
-            r = family[n](n)
-            if r == OracleResponse.AFFIRM:
-                return False
-            else:
-                return True
-        return True
-    return defeater
-
-
-def oracle_space_cardinality(N: int) -> int:
-    """Number of possible oracles on N statements: 3^N.
-    
-    Formally verified: finite_oracle_space_card.
-    """
-    return 3 ** N
-
-
-def truth_space_cardinality(N: int) -> int:
-    """Number of possible truth assignments on N statements: 2^N.
-    
-    Formally verified: finite_truth_space_card.
-    """
-    return 2 ** N
-
-
-def computable_oracle_ratio(b: int, n: int) -> float:
-    """Ratio of computable oracles to all oracles.
-    
-    At most b^n programs of length n, but 3^(b^n) possible oracles.
-    Formally verified: computable_oracle_ratio_bound shows b^n ≤ 3^(b^n).
-    """
-    programs = b ** n
-    total = 3 ** (b ** n)
-    if total == 0:
-        return 0.0
-    return programs / total
-
-
-def abstention_coverage(k: int) -> int:
-    """Number of truth assignments compatible with k abstentions: 2^k.
-    
-    Formally verified: abstention_coverage shows 1 ≤ 2^k.
-    A binary oracle matches exactly 1 assignment; abstaining on k
-    statements multiplies compatibility by 2^k.
-    """
-    return 2 ** k
+    """Three-valued oracle response type."""
+    TRUE = "true"
+    FALSE = "false"
+    UNKNOWN = "unknown"
 
 
 @dataclass
-class OracleAnalysis:
-    """Analysis of an oracle's performance against a truth assignment."""
-    accuracy: int
-    disagreements: int
-    domain_size: int
-    accuracy_rate: float
-    is_binary: bool
-    abstention_count: int
+class RamanujanOracle:
+    """A Ramanujan Oracle: a sound prediction device for a truth set.
+
+    The oracle predicts truth values with guaranteed soundness —
+    definite predictions are always correct. The oracle may abstain
+    (respond UNKNOWN) on any input.
+    """
+    predict: Callable[[int], OracleResponse]
+    truth_set: Callable[[int], bool]
+
+    def is_sound_on(self, n: int) -> bool:
+        """Check if the oracle is sound on input n."""
+        p = self.predict(n)
+        t = self.truth_set(n)
+        if p == OracleResponse.TRUE:
+            return t
+        elif p == OracleResponse.FALSE:
+            return not t
+        return True  # UNKNOWN is always sound
+
+    def coverage(self, N: int) -> float:
+        """Compute coverage ratio on [0, N)."""
+        if N == 0:
+            return 0.0
+        definite = sum(1 for n in range(N) if self.predict(n) != OracleResponse.UNKNOWN)
+        return definite / N
+
+    def accuracy(self, N: int) -> float:
+        """Compute accuracy on definite predictions in [0, N)."""
+        correct = 0
+        total = 0
+        for n in range(N):
+            p = self.predict(n)
+            if p != OracleResponse.UNKNOWN:
+                total += 1
+                t = self.truth_set(n)
+                if (p == OracleResponse.TRUE) == t:
+                    correct += 1
+        return correct / total if total > 0 else 1.0
 
 
-def analyze_oracle(oracle: Oracle, truth: TruthAssignment,
-                   domain: List[int]) -> OracleAnalysis:
-    """Comprehensive analysis of oracle performance."""
-    acc = oracle_accuracy_count(oracle, truth, domain)
-    dis = disagreement_count(oracle, truth, domain)
-    n = len(domain)
-    abstentions = sum(1 for s in domain if oracle(s) == OracleResponse.ABSTAIN)
-    return OracleAnalysis(
-        accuracy=acc,
-        disagreements=dis,
-        domain_size=n,
-        accuracy_rate=acc / n if n > 0 else 0.0,
-        is_binary=is_binary_oracle(oracle, domain),
-        abstention_count=abstentions
+@dataclass
+class OracleEvaluation:
+    """Result of evaluating an oracle on a finite domain."""
+    accuracy: float
+    coverage: float
+    correct: int
+    wrong: int
+    abstain: int
+    is_sound: bool
+    soundness_violations: List[int] = field(default_factory=list)
+
+
+def evaluate_oracle(
+    oracle: RamanujanOracle,
+    N: int,
+    verbose: bool = False
+) -> OracleEvaluation:
+    """Evaluate a Ramanujan Oracle on the domain [0, N).
+
+    Algorithm:
+    1. For each n in [0, N), query the oracle
+    2. Compare with ground truth
+    3. Compute accuracy, coverage, and soundness
+
+    Time complexity: O(N * (T_predict + T_truth))
+    Space complexity: O(N) for violation tracking
+    """
+    correct = wrong = abstain = 0
+    violations: List[int] = []
+
+    for n in range(N):
+        prediction = oracle.predict(n)
+        truth = oracle.truth_set(n)
+
+        if prediction == OracleResponse.UNKNOWN:
+            abstain += 1
+        elif (prediction == OracleResponse.TRUE) == truth:
+            correct += 1
+        else:
+            wrong += 1
+            violations.append(n)
+
+    total_definite = correct + wrong
+    accuracy = correct / total_definite if total_definite > 0 else 1.0
+    coverage = total_definite / N if N > 0 else 0.0
+
+    return OracleEvaluation(
+        accuracy=accuracy,
+        coverage=coverage,
+        correct=correct,
+        wrong=wrong,
+        abstain=abstain,
+        is_sound=(wrong == 0),
+        soundness_violations=violations
     )
 
 
+def cofinite_agree(
+    f: Callable[[int], bool],
+    g: Callable[[int], bool],
+    N: int
+) -> Tuple[int, List[int]]:
+    """Detect cofinite agreement between two Boolean functions.
+
+    Algorithm:
+    1. Check f(n) == g(n) for each n in [0, N)
+    2. Return count and list of disagreements
+
+    If the number of disagreements is finite (and N is large enough
+    to capture all of them), the functions cofinitely agree.
+
+    Returns: (number of disagreements, list of disagreement points)
+    """
+    disagreements = [n for n in range(N) if f(n) != g(n)]
+    return len(disagreements), disagreements
+
+
+def oracle_space_size(N: int, k: int = 3) -> int:
+    """Compute the number of possible k-valued oracle functions on N inputs.
+
+    This is the Ramanujan Counting Bound: exactly k^N.
+
+    For k=3 (true/false/unknown) and N statements:
+    - N=10: 59,049 oracles
+    - N=20: 3,486,784,401 oracles
+    - N=100: ~ 5.15 × 10^47 oracles
+
+    The computable oracles are countable (ℵ₀), so for infinite N,
+    "most" oracles are non-computable.
+    """
+    return k ** N
+
+
+@dataclass
+class GradedOracleHierarchy:
+    """A graded oracle hierarchy with strictly increasing decision power.
+
+    Each level n has a set of decidable statements (encoded as integers).
+    The hierarchy satisfies:
+    - Monotonicity: level_set(m) ⊆ level_set(n) for m ≤ n
+    - Strictness: level_set(n) ⊊ level_set(n+1) for all n
+    """
+    level_set: Callable[[int], Set[int]]
+    max_level: int
+
+    def is_monotone(self, N: int) -> bool:
+        """Verify monotonicity on [0, N) up to max_level."""
+        for m in range(self.max_level):
+            for n in range(m + 1, self.max_level + 1):
+                if not self.level_set(m).issubset(self.level_set(n)):
+                    return False
+        return True
+
+    def is_strict(self, N: int) -> bool:
+        """Verify strictness up to max_level."""
+        for n in range(self.max_level):
+            if not (self.level_set(n + 1) - self.level_set(n)):
+                return False
+        return True
+
+    def estimate_level(self, statement: int) -> Optional[int]:
+        """Estimate the minimum level needed to decide a statement."""
+        for level in range(self.max_level + 1):
+            if statement in self.level_set(level):
+                return level
+        return None  # beyond available levels
+
+
+def oracle_guided_search(
+    oracle: Callable[[int], OracleResponse],
+    candidates: List[int],
+    truth: Callable[[int], bool]
+) -> Tuple[List[int], int]:
+    """Oracle-guided proof search: use predictions to prioritize candidates.
+
+    Algorithm:
+    1. Query the oracle on all candidates
+    2. Sort: TRUE predictions first, then UNKNOWN, then FALSE
+    3. Search in this order
+
+    The oracle acts as a heuristic: if sound, TRUE predictions are
+    guaranteed correct, so checking them first finds solutions faster.
+
+    Returns: (found truths, number of oracle queries)
+    """
+    # Query oracle on all candidates
+    predictions = [(c, oracle(c)) for c in candidates]
+
+    # Sort by prediction confidence
+    priority = {
+        OracleResponse.TRUE: 0,    # check these first
+        OracleResponse.UNKNOWN: 1,  # then these
+        OracleResponse.FALSE: 2     # last resort
+    }
+    predictions.sort(key=lambda x: priority[x[1]])
+
+    # Search in priority order
+    found: List[int] = []
+    queries = len(candidates)
+
+    for candidate, prediction in predictions:
+        if truth(candidate):
+            found.append(candidate)
+
+    return found, queries
+
+
+def proof_prediction_duality_table(
+    N_values: List[int],
+    proof_alphabet: int = 2,
+    oracle_alphabet: int = 3
+) -> List[Dict[str, float]]:
+    """Generate the proof-prediction duality table.
+
+    For each N, computes:
+    - Proof space size: proof_alphabet^N
+    - Oracle space size: oracle_alphabet^N
+    - Ratio: oracle/proof
+    - Log ratio: log2(oracle/proof)
+    """
+    results = []
+    for N in N_values:
+        proofs = proof_alphabet ** N
+        oracles = oracle_alphabet ** N
+        ratio = oracles / proofs if proofs > 0 else float('inf')
+        log_ratio = N * math.log2(oracle_alphabet / proof_alphabet)
+        results.append({
+            "N": N,
+            "proof_space": proofs,
+            "oracle_space": oracles,
+            "ratio": ratio,
+            "log2_ratio": log_ratio
+        })
+    return results
+
+
+# ── Utility: Primality Oracle ─────────────────────────────────────────────
+def make_primality_oracle(
+    confidence_threshold: int = 50
+) -> RamanujanOracle:
+    """Create a Ramanujan Oracle for primality testing.
+
+    The oracle uses trial division for n < confidence_threshold
+    and abstains for larger values (simulating limited intuition).
+    """
+    def is_prime(n: int) -> bool:
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    def predict(n: int) -> OracleResponse:
+        if n < confidence_threshold:
+            return OracleResponse.TRUE if is_prime(n) else OracleResponse.FALSE
+        return OracleResponse.UNKNOWN
+
+    return RamanujanOracle(predict=predict, truth_set=is_prime)
+
+
 if __name__ == "__main__":
-    # Quick demonstration
-    N = 10
-    domain = list(range(N))
-    
-    # Create a simple oracle
-    oracle = lambda s: OracleResponse.AFFIRM if s % 2 == 0 else OracleResponse.DENY
-    truth = lambda s: s % 2 == 0  # true for evens
-    
-    analysis = analyze_oracle(oracle, truth, domain)
-    print(f"Oracle analysis: {analysis}")
-    print(f"Oracle space for N={N}: {oracle_space_cardinality(N)}")
-    print(f"Truth space for N={N}: {truth_space_cardinality(N)}")
-    print(f"Computable ratio for b=2, n=5: {computable_oracle_ratio(2, 5):.2e}")
+    # Quick self-test
+    oracle = make_primality_oracle(confidence_threshold=30)
+    result = evaluate_oracle(oracle, 100)
+    print(f"Primality Oracle (threshold=30):")
+    print(f"  Accuracy: {result.accuracy:.2%}")
+    print(f"  Coverage: {result.coverage:.2%}")
+    print(f"  Sound: {result.is_sound}")
+    print(f"  Correct: {result.correct}, Wrong: {result.wrong}, Abstain: {result.abstain}")
+    print()
+
+    # Duality table
+    table = proof_prediction_duality_table([1, 5, 10, 20, 50])
+    print("Proof-Prediction Duality:")
+    for row in table:
+        print(f"  N={row['N']:3d}: proofs={row['proof_space']:>15,d}, "
+              f"oracles={row['oracle_space']:>15,d}, ratio={row['ratio']:.2f}")
