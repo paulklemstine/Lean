@@ -1,249 +1,179 @@
 #!/usr/bin/env python3
 """
-Quantum EML Activation Functions — Algorithms
+Quantum EML Activation Algebra — Core Algorithms
 
-Type-hinted implementations of the core algorithms from the
-Quantum EML Spectral Pair theory.
+Type-hinted implementations of the Quantum Activation Algebra (QAA).
 """
 
-from dataclasses import dataclass
-from typing import List, Tuple, Callable
 import numpy as np
+from dataclasses import dataclass
+from typing import List, Tuple, Optional
 
 
 @dataclass
-class EMLSpectralPair:
-    """An EML Spectral Pair representing quantum-classical decomposition."""
+class QActivation:
+    """A quantum activation parameterized by phase θ and amplitude φ."""
     phase: float
-    logScale: float
-    
-    def quantum_gate(self) -> complex:
-        """Compute unitary component exp(i·phase)."""
-        return np.exp(1j * self.phase)
-    
-    def classical_info(self) -> float:
-        """Compute classical information content -logScale."""
-        return -self.logScale
-    
-    def quantum_amplitude(self) -> float:
-        """Compute quantum amplitude exp(phase)."""
-        return np.exp(self.phase)
-    
-    def eml_value(self) -> float:
-        """Compute full EML value: exp(phase) - logScale."""
-        return np.exp(self.phase) - self.logScale
-    
-    def spectral_norm(self) -> float:
-        """Compute spectral norm sqrt(phase² + logScale²)."""
-        return np.sqrt(self.phase**2 + self.logScale**2)
-    
-    def compose(self, other: 'EMLSpectralPair') -> 'EMLSpectralPair':
-        """Compose two spectral pairs: phases add, logScales add."""
-        return EMLSpectralPair(
-            phase=self.phase + other.phase,
-            logScale=self.logScale + other.logScale
-        )
+    amplitude: float
+
+    def eval(self) -> complex:
+        """Evaluate to a complex number: exp(iθ) · (1 + iφ)."""
+        return np.exp(1j * self.phase) * (1 + 1j * self.amplitude)
+
+    def norm(self) -> float:
+        """Output norm: √(1 + φ²)."""
+        return np.sqrt(1 + self.amplitude**2)
+
+    def spectral_gap(self) -> float:
+        """Departure from unitarity: √(1+φ²) - 1."""
+        return self.norm() - 1
+
+    def info_content(self) -> float:
+        """Information content in nats: log(1+φ²)."""
+        return np.log(1 + self.amplitude**2)
+
+    def unitarity_defect(self) -> float:
+        """Unitarity defect: φ²."""
+        return self.amplitude**2
+
+    def is_unitary(self, tol: float = 1e-10) -> bool:
+        """Check if activation is unitary (φ = 0)."""
+        return abs(self.amplitude) < tol
 
 
-def eml_spectral_distance(p: EMLSpectralPair, q: EMLSpectralPair) -> float:
-    """
-    Compute the EML spectral distance between two pairs.
-    
-    This is a genuine metric (proven: symmetry, triangle inequality, 
-    separation) on the space of EML spectral pairs.
-    
-    Algorithm: Euclidean distance on (phase, logScale) coordinates.
-    Complexity: O(1)
-    """
-    return np.sqrt((p.phase - q.phase)**2 + (p.logScale - q.logScale)**2)
+def compose(q1: QActivation, q2: QActivation) -> QActivation:
+    """Compose two quantum activations by multiplying their evaluations.
 
-
-@dataclass
-class QuantumEMLNeuron:
-    """
-    A quantum EML neuron with dual channels.
-    
-    Given input x, produces:
-    - Quantum output: exp(i·(w₁·x + b₁)) ∈ U(1)  (unit circle)
-    - Classical output: exp(w₁·x + b₁) - (w₂·x + b₂)  (real number)
-    """
-    w1: float  # Weight for exponential (phase) channel
-    b1: float  # Bias for exponential (phase) channel
-    w2: float  # Weight for logarithmic (information) channel
-    b2: float  # Bias for logarithmic (information) channel
-    
-    def eval(self, x: float) -> EMLSpectralPair:
-        """Evaluate the neuron at input x."""
-        return EMLSpectralPair(
-            phase=self.w1 * x + self.b1,
-            logScale=self.w2 * x + self.b2
-        )
-    
-    def quantum_output(self, x: float) -> complex:
-        """Compute quantum (unitary) output."""
-        return self.eval(x).quantum_gate()
-    
-    def classical_output(self, x: float) -> float:
-        """Compute classical (EML) output."""
-        return self.eval(x).eml_value()
-    
-    def forward(self, x: float) -> Tuple[complex, float]:
-        """Full forward pass returning both outputs."""
-        sp = self.eval(x)
-        return sp.quantum_gate(), sp.eml_value()
-
-
-class QuantumEMLLayer:
-    """
-    A layer of quantum EML neurons.
-    
-    Each neuron independently produces a spectral pair.
-    The layer output is the composed spectral pair (phases sum, logScales sum).
-    
     Algorithm:
-    1. Each neuron evaluates independently: O(n) total
-    2. Compose all spectral pairs: O(n) additions
-    3. Total: O(n) per forward pass
+        1. Compute product z = q1.eval() * q2.eval()
+        2. Extract amplitude from |z|: amplitude = √(|z|² - 1)
+        3. Extract phase from arg(z/(1+iφ))
+
+    The composed amplitude satisfies (1+amplitude)² = (1+a₁²)(1+a₂²).
     """
-    
-    def __init__(self, neurons: List[QuantumEMLNeuron]):
-        self.neurons = neurons
-    
-    def forward(self, x: float) -> EMLSpectralPair:
-        """Forward pass: compose all neuron outputs."""
-        result = EMLSpectralPair(0.0, 0.0)
-        for neuron in self.neurons:
-            result = result.compose(neuron.eval(x))
+    z = q1.eval() * q2.eval()
+    r = abs(z)
+    new_amplitude = np.sqrt(max(0, r**2 - 1))
+    w = z / (1 + 1j * new_amplitude)
+    new_phase = np.angle(w)
+    return QActivation(phase=new_phase, amplitude=new_amplitude)
+
+
+def layer_eval(activations: List[QActivation]) -> complex:
+    """Evaluate a multi-layer quantum activation (product).
+
+    Algorithm:
+        result ← 1
+        for each activation q in layer:
+            result ← result × q.eval()
         return result
-    
-    def quantum_output(self, x: float) -> complex:
-        """Combined quantum gate (product of individual gates)."""
-        return self.forward(x).quantum_gate()
 
-
-def eml_spectral_gap_verifier(x: float) -> Tuple[float, bool]:
+    Norm factorizes: |layer| = ∏ |q_i| = ∏ √(1+φ_i²)
     """
-    Verify the EML Spectral Gap theorem for a given x > 0.
-    
-    Theorem: exp(x) - log(x) > 2 for all x > 0.
-    
-    Returns: (eml_diag_value, is_above_gap)
-    """
-    if x <= 0:
-        raise ValueError(f"x must be positive, got {x}")
-    val = np.exp(x) - np.log(x)
-    return val, val > 2.0
+    result = 1.0 + 0j
+    for q in activations:
+        result *= q.eval()
+    return result
 
 
-def find_eml_diag_minimum(
-    x_min: float = 0.01, 
-    x_max: float = 5.0, 
-    n_points: int = 10000
-) -> Tuple[float, float]:
+def layer_norm(activations: List[QActivation]) -> float:
+    """Compute multi-layer norm without evaluating (avoids overflow).
+
+    Algorithm: |layer| = ∏ √(1+φ_i²) = exp(½ · Σ log(1+φ_i²))
     """
-    Find the approximate minimum of exp(x) - log(x) on (0, ∞).
-    
-    The true minimum is at x₀ = W(1) ≈ 0.5671 (Lambert W function)
-    with minimum value ≈ 2.3327.
-    
-    Algorithm: Grid search with refinement
-    Complexity: O(n_points)
-    """
-    xs = np.linspace(x_min, x_max, n_points)
-    vals = np.exp(xs) - np.log(xs)
-    min_idx = np.argmin(vals)
-    return float(xs[min_idx]), float(vals[min_idx])
+    log_norm = sum(0.5 * np.log(1 + q.amplitude**2) for q in activations)
+    return np.exp(log_norm)
 
 
-def quantum_eml_gradient(
-    neuron: QuantumEMLNeuron, 
-    x: float
-) -> Tuple[float, float, float, float]:
-    """
-    Compute gradients of classical output w.r.t. neuron parameters.
-    
-    The classical output is f(x) = exp(w₁x + b₁) - (w₂x + b₂).
-    
-    Returns: (∂f/∂w₁, ∂f/∂b₁, ∂f/∂w₂, ∂f/∂b₂)
-    
-    Algorithm: Analytic differentiation
-    Complexity: O(1)
-    """
-    phase = neuron.w1 * x + neuron.b1
-    amp = np.exp(phase)
-    
-    df_dw1 = x * amp       # ∂f/∂w₁ = x · exp(w₁x + b₁)
-    df_db1 = amp            # ∂f/∂b₁ = exp(w₁x + b₁)
-    df_dw2 = -x             # ∂f/∂w₂ = -x
-    df_db2 = -1.0           # ∂f/∂b₂ = -1
-    
-    return df_dw1, df_db1, df_dw2, df_db2
+def inverse_qact(z: complex) -> Optional[QActivation]:
+    """Find QActivation q such that q.eval() = z.
 
-
-def train_quantum_eml_neuron(
-    target_fn: Callable[[float], float],
-    x_train: np.ndarray,
-    learning_rate: float = 0.01,
-    n_epochs: int = 1000
-) -> QuantumEMLNeuron:
-    """
-    Train a quantum EML neuron to approximate a target function.
-    
-    Uses gradient descent on the classical channel.
-    
     Algorithm:
-    1. Initialize random parameters
-    2. For each epoch:
-       a. Compute predictions for all training points
-       b. Compute MSE loss
-       c. Update parameters via gradient descent
-    
-    Complexity: O(n_epochs × n_train)
+        1. Compute r = |z|
+        2. If r < 1, return None (not in image)
+        3. Set φ = √(r² - 1)
+        4. Set θ = arg(z/(1+iφ))
+
+    Returns None if |z| < 1 (not in image of qact).
     """
-    # Initialize
-    neuron = QuantumEMLNeuron(
-        w1=np.random.randn() * 0.1,
-        b1=np.random.randn() * 0.1,
-        w2=np.random.randn() * 0.1,
-        b2=np.random.randn() * 0.1
-    )
-    
-    for epoch in range(n_epochs):
-        total_grad = np.zeros(4)
-        total_loss = 0.0
-        
-        for x in x_train:
-            pred = neuron.classical_output(float(x))
-            target = target_fn(float(x))
-            error = pred - target
-            total_loss += error**2
-            
-            grads = quantum_eml_gradient(neuron, float(x))
-            total_grad += np.array(grads) * error
-        
-        # Update
-        total_grad /= len(x_train)
-        neuron.w1 -= learning_rate * total_grad[0]
-        neuron.b1 -= learning_rate * total_grad[1]
-        neuron.w2 -= learning_rate * total_grad[2]
-        neuron.b2 -= learning_rate * total_grad[3]
-        
-        if epoch % 200 == 0:
-            mse = total_loss / len(x_train)
-            print(f"  Epoch {epoch:4d}: MSE = {mse:.6f}")
-    
-    return neuron
+    r = abs(z)
+    if r < 1 - 1e-10:
+        return None
+    phi = np.sqrt(max(0, r**2 - 1))
+    w = z / (1 + 1j * phi)
+    theta = np.angle(w)
+    return QActivation(phase=theta, amplitude=phi)
+
+
+def spectral_gap_bounds(phi: float) -> Tuple[float, float]:
+    """Compute tight bounds on the spectral gap.
+
+    For |φ| ≤ 1: φ²/3 ≤ spectralGap(φ) ≤ φ²/2
+    For all φ:   0 ≤ spectralGap(φ) ≤ |φ|
+
+    Returns (lower_bound, upper_bound).
+    """
+    gap = np.sqrt(1 + phi**2) - 1
+    if abs(phi) <= 1:
+        return (phi**2 / 3, phi**2 / 2)
+    else:
+        return (0, abs(phi))
+
+
+def quantum_classical_bridge(x: float) -> dict:
+    """Bridge between classical EML and quantum activation.
+
+    Classical EML: eml(x, y) = exp(x) - log(y)
+    Quantum bridge: qact(0, exp(x)-1) has:
+      - Re = 1
+      - Im = exp(x) - 1
+      - |qact|² = 1 + (exp(x)-1)²
+
+    Returns dict with classical and quantum quantities.
+    """
+    q = QActivation(phase=0, amplitude=np.exp(x) - 1)
+    z = q.eval()
+    return {
+        'classical_exp': np.exp(x),
+        'quantum_re': z.real,
+        'quantum_im': z.imag,
+        'quantum_norm_sq': abs(z)**2,
+        'info_content': q.info_content(),
+        'spectral_gap': q.spectral_gap(),
+    }
+
+
+def depth_amplification_rate(phi: float, n: int) -> float:
+    """Compute the amplification rate for n layers with constant φ.
+
+    Rate = (√(1+φ²))^n
+
+    This grows exponentially when φ ≠ 0, analogous to
+    exploding gradients in classical neural networks.
+    """
+    return np.sqrt(1 + phi**2)**n
 
 
 if __name__ == "__main__":
-    print("=== EML Spectral Gap Minimum ===")
-    x_min, val_min = find_eml_diag_minimum()
-    print(f"Minimum at x ≈ {x_min:.4f}, value ≈ {val_min:.6f}")
-    print(f"Gap above 2: {val_min - 2:.6f}")
-    
-    print("\n=== Training Quantum EML Neuron ===")
-    print("Target: sin(x) on [-π, π]")
-    x_train = np.linspace(-np.pi, np.pi, 50)
-    neuron = train_quantum_eml_neuron(np.sin, x_train, learning_rate=0.001, n_epochs=1000)
-    print(f"Trained neuron: w₁={neuron.w1:.4f}, b₁={neuron.b1:.4f}, "
-          f"w₂={neuron.w2:.4f}, b₂={neuron.b2:.4f}")
+    # Quick test
+    q1 = QActivation(phase=np.pi/4, amplitude=1.0)
+    q2 = QActivation(phase=np.pi/3, amplitude=0.5)
+
+    print(f"q1 = exp(i·{q1.phase:.3f}) · (1 + i·{q1.amplitude:.1f})")
+    print(f"q1.eval() = {q1.eval():.4f}")
+    print(f"q1.norm() = {q1.norm():.4f}")
+    print(f"q1.spectral_gap() = {q1.spectral_gap():.4f}")
+    print(f"q1.info_content() = {q1.info_content():.4f}")
+    print(f"q1.is_unitary() = {q1.is_unitary()}")
+    print()
+
+    q3 = compose(q1, q2)
+    print(f"compose(q1, q2).norm() = {q3.norm():.4f}")
+    print(f"Expected: {q1.norm() * q2.norm():.4f}")
+    print()
+
+    z = 2 + 3j
+    q_inv = inverse_qact(z)
+    if q_inv:
+        print(f"inverse_qact({z}) = (θ={q_inv.phase:.4f}, φ={q_inv.amplitude:.4f})")
+        print(f"Verification: qact(θ,φ) = {q_inv.eval():.4f}")

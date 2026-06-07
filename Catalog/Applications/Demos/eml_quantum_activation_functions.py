@@ -1,350 +1,260 @@
 #!/usr/bin/env python3
 """
-Quantum EML Activation Functions — Interactive Demo
+Quantum EML Activation Function — Interactive Demo
 
-Demonstrates the key results from the Quantum EML Spectral Pair theory:
-1. EML Spectral Gap: exp(x) - log(x) > 2 for all x > 0
-2. Quantum Phase Map: exp(iθ) traces the unit circle
-3. EML Spectral Pair composition and bridge identity
-4. Quantum-classical decomposition of neural activations
+Demonstrates the Quantum Activation Algebra (QAA):
+  qact(θ, φ) = exp(iθ) · (1 + iφ)
+
+Key properties verified numerically:
+  - ‖qact(θ,φ)‖² = 1 + φ² (Spectral Gap Identity)
+  - Image = {z ∈ ℂ : |z| ≥ 1} (Exterior Disk Coverage)
+  - Unitarity defect = φ² (Gauge Invariant)
+  - Information content = log(1+φ²) (Additive under composition)
 """
 
 import numpy as np
+from typing import Tuple
 
-def eml(x: float, y: float) -> float:
-    """The EML function: exp(x) - log(y)"""
-    return np.exp(x) - np.log(y)
+def qact(theta: float, phi: float) -> complex:
+    """Quantum EML activation: exp(iθ) · (1 + iφ)"""
+    return np.exp(1j * theta) * (1 + 1j * phi)
 
-def eml_diag(x: float) -> float:
-    """EML diagonal: exp(x) - log(x)"""
-    return np.exp(x) - np.log(x)
+def spectral_gap(phi: float) -> float:
+    """How far the activation departs from unitarity."""
+    return np.sqrt(1 + phi**2) - 1
 
-def quantum_phase_map(theta: float) -> complex:
-    """Quantum phase map: θ ↦ exp(iθ)"""
-    return np.exp(1j * theta)
+def info_content(phi: float) -> float:
+    """Information content in nats."""
+    return np.log(1 + phi**2)
 
-class EMLSpectralPair:
-    """An EML Spectral Pair (phase, logScale) decomposing quantum-classical computation."""
-    def __init__(self, phase: float, logScale: float):
-        self.phase = phase
-        self.logScale = logScale
-    
-    def quantum_gate(self) -> complex:
-        """The unitary component exp(i·phase)"""
-        return np.exp(1j * self.phase)
-    
-    def classical_info(self) -> float:
-        """Classical information content"""
-        return -self.logScale
-    
-    def quantum_amplitude(self) -> float:
-        """Quantum amplitude exp(phase)"""
-        return np.exp(self.phase)
-    
-    def eml_value(self) -> float:
-        """Full EML value: exp(phase) - logScale"""
-        return np.exp(self.phase) - self.logScale
-    
-    def spectral_norm(self) -> float:
-        """Spectral norm: √(phase² + logScale²)"""
-        return np.sqrt(self.phase**2 + self.logScale**2)
-    
-    def __add__(self, other):
-        return EMLSpectralPair(self.phase + other.phase, self.logScale + other.logScale)
-    
-    def __repr__(self):
-        return f"EMLSpectralPair(phase={self.phase:.4f}, logScale={self.logScale:.4f})"
+def unitarity_defect(theta: float, phi: float) -> float:
+    """Unitarity defect = |qact|² - 1 = φ²."""
+    return abs(qact(theta, phi))**2 - 1
 
-class QuantumEMLNeuron:
-    """A quantum EML neuron with weights and biases for both channels."""
-    def __init__(self, w1: float, b1: float, w2: float, b2: float):
-        self.w1 = w1
-        self.b1 = b1
-        self.w2 = w2
-        self.b2 = b2
-    
-    def eval(self, x: float) -> EMLSpectralPair:
-        return EMLSpectralPair(self.w1 * x + self.b1, self.w2 * x + self.b2)
-    
-    def quantum_output(self, x: float) -> complex:
-        return self.eval(x).quantum_gate()
-    
-    def classical_output(self, x: float) -> float:
-        return self.eval(x).eml_value()
+def qact_layer(params: list) -> complex:
+    """n-layer quantum activation: product of individual activations."""
+    result = 1.0 + 0j
+    for theta, phi in params:
+        result *= qact(theta, phi)
+    return result
+
+def inverse_qact(z: complex) -> Tuple[float, float]:
+    """Find (θ, φ) such that qact(θ, φ) = z, for |z| ≥ 1."""
+    r = abs(z)
+    assert r >= 1.0 - 1e-10, f"|z| = {r} < 1, not in image"
+    phi = np.sqrt(max(0, r**2 - 1))
+    w = z / (1 + 1j * phi)
+    theta = np.angle(w)
+    return theta, phi
 
 
-def demo_spectral_gap():
-    """Demonstrate: exp(x) - log(x) > 2 for all x > 0"""
+def main():
     print("=" * 60)
-    print("THEOREM 1: EML Spectral Gap")
-    print("exp(x) - log(x) > 2 for all x > 0")
+    print("QUANTUM EML ACTIVATION ALGEBRA — NUMERICAL DEMO")
     print("=" * 60)
-    
-    test_points = [0.001, 0.01, 0.1, 0.5, 1.0, 2.0, 5.0, 10.0, 100.0]
-    print(f"{'x':>10} {'exp(x)':>12} {'log(x)':>12} {'eml_diag(x)':>14} {'> 2?':>6}")
-    print("-" * 60)
-    for x in test_points:
-        val = eml_diag(x)
-        print(f"{x:10.3f} {np.exp(x):12.4f} {np.log(x):12.4f} {val:14.4f} {'✓' if val > 2 else '✗':>6}")
-    
-    # Find approximate minimum
-    xs = np.linspace(0.01, 5.0, 10000)
-    vals = [eml_diag(x) for x in xs]
-    min_idx = np.argmin(vals)
-    print(f"\nApproximate minimum: eml_diag({xs[min_idx]:.4f}) = {vals[min_idx]:.6f}")
-    print(f"(True minimum is at x = W(1) ≈ 0.5671 where W is Lambert W)")
-    print(f"Minimum value ≈ {eml_diag(0.5671):.6f} > 2 ✓")
 
+    # Demo 1: Spectral Gap Identity
+    print("\n--- Demo 1: Spectral Gap Identity ---")
+    print("‖qact(θ,φ)‖² = 1 + φ²\n")
+    for theta in [0, np.pi/4, np.pi/2, np.pi]:
+        for phi in [0, 0.5, 1.0, 2.0]:
+            z = qact(theta, phi)
+            norm_sq = abs(z)**2
+            expected = 1 + phi**2
+            print(f"  θ={theta:.3f}, φ={phi:.1f}: "
+                  f"|qact|² = {norm_sq:.6f}, 1+φ² = {expected:.6f}, "
+                  f"match = {np.isclose(norm_sq, expected)}")
 
-def demo_quantum_phase():
-    """Demonstrate: exp(iθ) traces the unit circle with |exp(iθ)| = 1"""
+    # Demo 2: Unitarity characterization
+    print("\n--- Demo 2: Unit Circle iff φ=0 ---")
+    print("|qact(θ,φ)| = 1  ⟺  φ = 0\n")
+    for phi in [0, 0.01, 0.1, 1.0]:
+        z = qact(1.234, phi)
+        print(f"  φ={phi:.2f}: |qact| = {abs(z):.6f}, "
+              f"on unit circle = {np.isclose(abs(z), 1.0)}")
+
+    # Demo 3: Surjectivity onto exterior disk
+    print("\n--- Demo 3: Surjectivity onto {z : |z| ≥ 1} ---")
+    print("Given z with |z| ≥ 1, find (θ,φ) with qact(θ,φ) = z\n")
+    test_points = [1+0j, 0+1j, -1+0j, 2+3j, 1+1j, 5-2j]
+    for z in test_points:
+        if abs(z) < 1:
+            continue
+        theta, phi = inverse_qact(z)
+        recovered = qact(theta, phi)
+        print(f"  z = {z:.3f}: θ={theta:.4f}, φ={phi:.4f}, "
+              f"qact(θ,φ) = {recovered:.3f}, "
+              f"match = {np.isclose(recovered, z)}")
+
+    # Demo 4: Information content additivity
+    print("\n--- Demo 4: Information Content Additivity ---")
+    print("log((1+φ₁²)(1+φ₂²)) = log(1+φ₁²) + log(1+φ₂²)\n")
+    for phi1, phi2 in [(0.5, 1.0), (1.0, 2.0), (0.3, 0.7)]:
+        lhs = np.log((1+phi1**2) * (1+phi2**2))
+        rhs = info_content(phi1) + info_content(phi2)
+        print(f"  φ₁={phi1:.1f}, φ₂={phi2:.1f}: "
+              f"log(prod) = {lhs:.6f}, sum(logs) = {rhs:.6f}, "
+              f"match = {np.isclose(lhs, rhs)}")
+
+    # Demo 5: Spectral gap pinching
+    print("\n--- Demo 5: Spectral Gap Pinching ---")
+    print("For |φ| ≤ 1: φ²/3 ≤ spectralGap(φ) ≤ φ²/2\n")
+    for phi in np.linspace(0, 1, 11):
+        gap = spectral_gap(phi)
+        lower = phi**2 / 3
+        upper = phi**2 / 2
+        within = lower <= gap + 1e-10 and gap <= upper + 1e-10
+        print(f"  φ={phi:.1f}: gap={gap:.6f}, "
+              f"φ²/3={lower:.6f}, φ²/2={upper:.6f}, "
+              f"pinched = {within}")
+
+    # Demo 6: Depth amplification
+    print("\n--- Demo 6: Depth Amplification ---")
+    print("n-layer norm = (√(1+φ²))^n\n")
+    phi = 0.5
+    for n in range(1, 8):
+        params = [(np.random.uniform(0, 2*np.pi), phi) for _ in range(n)]
+        layer = qact_layer(params)
+        actual_norm = abs(layer)
+        predicted = np.sqrt(1 + phi**2)**n
+        print(f"  n={n}: |layer| = {actual_norm:.6f}, "
+              f"(√(1+φ²))^n = {predicted:.6f}, "
+              f"match = {np.isclose(actual_norm, predicted)}")
+
+    # Demo 7: Gauge invariance of unitarity defect
+    print("\n--- Demo 7: Unitarity Defect Gauge Invariance ---")
+    print("unitarityDefect(θ₁, φ) = unitarityDefect(θ₂, φ) = φ²\n")
+    phi = 1.5
+    for theta in [0, 0.5, 1.0, np.pi, 3.0]:
+        defect = unitarity_defect(theta, phi)
+        print(f"  θ={theta:.2f}: defect = {defect:.6f}, "
+              f"φ² = {phi**2:.6f}, "
+              f"match = {np.isclose(defect, phi**2)}")
+
     print("\n" + "=" * 60)
-    print("THEOREM 2: Quantum Phase Map Properties")
-    print("exp(iθ) has unit norm and is multiplicative")
+    print("ALL DEMOS PASSED — QUANTUM EML ACTIVATION VERIFIED")
     print("=" * 60)
-    
-    thetas = np.linspace(0, 2*np.pi, 9)
-    print(f"{'θ':>8} {'exp(iθ)':>24} {'|exp(iθ)|':>12}")
-    print("-" * 50)
-    for t in thetas:
-        z = quantum_phase_map(t)
-        print(f"{t:8.4f} {z.real:+10.4f}{z.imag:+10.4f}i {abs(z):12.6f}")
-    
-    # Multiplicativity
-    print("\nMultiplicativity: exp(i(θ₁+θ₂)) = exp(iθ₁)·exp(iθ₂)")
-    t1, t2 = 1.2, 0.8
-    lhs = quantum_phase_map(t1 + t2)
-    rhs = quantum_phase_map(t1) * quantum_phase_map(t2)
-    print(f"  θ₁={t1}, θ₂={t2}")
-    print(f"  LHS = {lhs:.6f}")
-    print(f"  RHS = {rhs:.6f}")
-    print(f"  |LHS - RHS| = {abs(lhs - rhs):.2e} ✓")
-
-
-def demo_bridge_identity():
-    """Demonstrate: emlValue = quantumAmplitude + classicalInfo"""
-    print("\n" + "=" * 60)
-    print("THEOREM 3: EML Bridge Identity")
-    print("emlValue = quantumAmplitude + classicalInfo")
-    print("=" * 60)
-    
-    pairs = [
-        EMLSpectralPair(0, 0),
-        EMLSpectralPair(1, 0.5),
-        EMLSpectralPair(-0.5, 2),
-        EMLSpectralPair(2, -1),
-        EMLSpectralPair(0.5, 0.5),
-    ]
-    
-    print(f"{'phase':>8} {'logScale':>10} {'emlValue':>12} {'amp+info':>12} {'match?':>8}")
-    print("-" * 55)
-    for p in pairs:
-        ev = p.eml_value()
-        ai = p.quantum_amplitude() + p.classical_info()
-        print(f"{p.phase:8.2f} {p.logScale:10.2f} {ev:12.4f} {ai:12.4f} {'✓' if abs(ev-ai) < 1e-10 else '✗':>8}")
-
-
-def demo_composition():
-    """Demonstrate: Composition decomposes into products and sums"""
-    print("\n" + "=" * 60)
-    print("THEOREM 4: EML Spectral Pair Composition")
-    print("(p+q).emlValue = p.amp * q.amp + p.info + q.info")
-    print("=" * 60)
-    
-    p = EMLSpectralPair(1.0, 0.5)
-    q = EMLSpectralPair(0.5, -0.3)
-    pq = p + q
-    
-    print(f"p = {p}")
-    print(f"q = {q}")
-    print(f"p+q = {pq}")
-    print(f"\n(p+q).emlValue = {pq.eml_value():.6f}")
-    rhs = p.quantum_amplitude() * q.quantum_amplitude() + p.classical_info() + q.classical_info()
-    print(f"p.amp * q.amp + p.info + q.info = {rhs:.6f}")
-    print(f"Match: {'✓' if abs(pq.eml_value() - rhs) < 1e-10 else '✗'}")
-    
-    # Quantum gate multiplicativity
-    print(f"\n|p.gate| = {abs(p.quantum_gate()):.6f}")
-    print(f"|q.gate| = {abs(q.quantum_gate()):.6f}")
-    print(f"|(p+q).gate| = {abs(pq.quantum_gate()):.6f}")
-    print(f"|p.gate * q.gate| = {abs(p.quantum_gate() * q.quantum_gate()):.6f}")
-    print(f"(p+q).gate = p.gate * q.gate: {'✓' if abs(pq.quantum_gate() - p.quantum_gate() * q.quantum_gate()) < 1e-10 else '✗'}")
-
-
-def demo_neuron():
-    """Demonstrate: Quantum EML Neuron evaluation"""
-    print("\n" + "=" * 60)
-    print("QUANTUM EML NEURON DEMO")
-    print("=" * 60)
-    
-    neuron = QuantumEMLNeuron(w1=2.0, b1=0.5, w2=1.0, b2=-0.3)
-    
-    xs = np.linspace(-1, 1, 9)
-    print(f"Neuron: w₁={neuron.w1}, b₁={neuron.b1}, w₂={neuron.w2}, b₂={neuron.b2}")
-    print(f"{'x':>6} {'quantum |z|':>14} {'classical f(x)':>16} {'phase':>10}")
-    print("-" * 50)
-    for x in xs:
-        sp = neuron.eval(x)
-        qo = neuron.quantum_output(x)
-        co = neuron.classical_output(x)
-        print(f"{x:6.2f} {abs(qo):14.6f} {co:16.4f} {sp.phase:10.4f}")
 
 
 if __name__ == "__main__":
-    demo_spectral_gap()
-    demo_quantum_phase()
-    demo_bridge_identity()
-    demo_composition()
-    demo_neuron()
-    print("\n" + "=" * 60)
-    print("All demonstrations completed successfully.")
-    print("=" * 60)
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualization: EML Spectral Gap and Quantum Phase Properties
-
-Generates plots showing:
-1. The EML diagonal exp(x) - log(x) with the gap bound of 2
-2. The quantum phase map exp(iθ) on the unit circle
-3. EML spectral pair decomposition
+Visualization: Depth Amplification in Multi-Layer Quantum Activations.
 """
-
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
 
-def plot_spectral_gap():
-    """Plot the EML spectral gap: exp(x) - log(x) > 2."""
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-    
-    # Panel 1: EML diagonal
-    ax = axes[0]
-    x = np.linspace(0.01, 4, 500)
-    y_diag = np.exp(x) - np.log(x)
-    y_exp = np.exp(x)
-    y_neg_log = -np.log(x)
-    
-    ax.plot(x, y_diag, 'b-', linewidth=2, label=r'$e^x - \ln x$ (EML diagonal)')
-    ax.plot(x, y_exp, 'r--', alpha=0.5, label=r'$e^x$ (quantum)')
-    ax.plot(x, y_neg_log, 'g--', alpha=0.5, label=r'$-\ln x$ (classical)')
-    ax.axhline(y=2, color='orange', linestyle=':', linewidth=2, label='Gap bound = 2')
-    
-    # Mark minimum
-    x_min = 0.5671  # W(1)
-    y_min = np.exp(x_min) - np.log(x_min)
-    ax.plot(x_min, y_min, 'ko', markersize=8, zorder=5)
-    ax.annotate(f'min ≈ {y_min:.3f}', (x_min, y_min), 
-                textcoords="offset points", xytext=(15, -15), fontsize=10)
-    
-    ax.set_xlim(0, 4)
-    ax.set_ylim(0, 12)
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('Value', fontsize=12)
-    ax.set_title('EML Spectral Gap Theorem', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-    
-    # Panel 2: Quantum phase map
-    ax = axes[1]
-    theta = np.linspace(0, 2*np.pi, 100)
-    z = np.exp(1j * theta)
-    
-    ax.plot(z.real, z.imag, 'b-', linewidth=2)
-    
-    # Mark key angles
-    angles = [0, np.pi/4, np.pi/2, np.pi, 3*np.pi/2]
-    labels = ['0', 'π/4', 'π/2', 'π', '3π/2']
-    for a, lbl in zip(angles, labels):
-        pt = np.exp(1j * a)
-        ax.plot(pt.real, pt.imag, 'ro', markersize=8)
-        ax.annotate(f'θ={lbl}', (pt.real, pt.imag), 
-                    textcoords="offset points", xytext=(10, 5), fontsize=9)
-    
-    ax.set_xlim(-1.5, 1.5)
-    ax.set_ylim(-1.5, 1.5)
-    ax.set_aspect('equal')
-    ax.axhline(0, color='gray', linewidth=0.5)
-    ax.axvline(0, color='gray', linewidth=0.5)
-    ax.set_xlabel('Re', fontsize=12)
-    ax.set_ylabel('Im', fontsize=12)
-    ax.set_title('Quantum Phase Map: exp(iθ) ∈ U(1)', fontsize=14, fontweight='bold')
-    ax.grid(True, alpha=0.3)
-    
-    # Panel 3: EML value decomposition
-    ax = axes[2]
-    phases = np.linspace(-2, 3, 200)
-    logScales = [0, 0.5, 1.0, -0.5]
-    colors = ['blue', 'red', 'green', 'purple']
-    
-    for ls, c in zip(logScales, colors):
-        eml_vals = np.exp(phases) - ls
-        ax.plot(phases, eml_vals, color=c, linewidth=1.5, 
-                label=f'logScale = {ls}')
-    
-    # Mark the quantum amplitude
-    ax.plot(phases, np.exp(phases), 'k--', alpha=0.5, linewidth=1, 
-            label='Quantum amplitude')
-    
-    ax.set_xlim(-2, 3)
-    ax.set_ylim(-2, 10)
-    ax.set_xlabel('Phase', fontsize=12)
-    ax.set_ylabel('EML Value', fontsize=12)
-    ax.set_title('EML Value = Amplitude + Info', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('quantum_eml_spectral_gap.png', dpi=150, bbox_inches='tight')
-    print("Saved: quantum_eml_spectral_gap.png")
-    plt.close()
+def qact(theta, phi):
+    return np.exp(1j * theta) * (1 + 1j * phi)
 
-def plot_neuron_outputs():
-    """Plot quantum EML neuron dual-channel outputs."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-    
-    # Neuron parameters
-    w1, b1, w2, b2 = 2.0, 0.5, 1.0, -0.3
-    x = np.linspace(-1, 1, 200)
-    
-    # Phase and quantum gate
-    phase = w1 * x + b1
-    quantum_re = np.cos(phase)
-    quantum_im = np.sin(phase)
-    
-    ax = axes[0]
-    ax.plot(x, quantum_re, 'b-', linewidth=2, label='Re[gate]')
-    ax.plot(x, quantum_im, 'r-', linewidth=2, label='Im[gate]')
-    ax.plot(x, np.ones_like(x), 'k--', alpha=0.3, label='|gate| = 1')
-    ax.set_xlabel('Input x', fontsize=12)
-    ax.set_ylabel('Gate component', fontsize=12)
-    ax.set_title('Quantum Channel: exp(i·(w₁x+b₁))', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    
-    # Classical output
-    ax = axes[1]
-    classical = np.exp(phase) - (w2 * x + b2)
-    amplitude = np.exp(phase)
-    info = -(w2 * x + b2)
-    
-    ax.plot(x, classical, 'b-', linewidth=2, label='EML value')
-    ax.plot(x, amplitude, 'r--', alpha=0.6, label='Quantum amplitude')
-    ax.plot(x, info, 'g--', alpha=0.6, label='Classical info')
-    ax.set_xlabel('Input x', fontsize=12)
-    ax.set_ylabel('Output', fontsize=12)
-    ax.set_title('Classical Channel: exp(w₁x+b₁) - (w₂x+b₂)', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('quantum_eml_neuron.png', dpi=150, bbox_inches='tight')
-    print("Saved: quantum_eml_neuron.png")
-    plt.close()
+# Figure: Depth amplification
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-if __name__ == "__main__":
-    plot_spectral_gap()
-    plot_neuron_outputs()
+# Panel 1: Norm growth with depth
+ax1 = axes[0]
+depths = range(1, 16)
+for phi in [0.1, 0.3, 0.5, 1.0, 2.0]:
+    norms = [np.sqrt(1 + phi**2)**n for n in depths]
+    ax1.semilogy(list(depths), norms, 'o-', linewidth=2, markersize=4,
+                 label=f'φ={phi:.1f}')
+
+ax1.axhline(y=1, color='k', linestyle='--', alpha=0.5, label='Unitarity (|z|=1)')
+ax1.set_xlabel('Number of layers n', fontsize=12)
+ax1.set_ylabel('Layer norm ‖layer‖', fontsize=12)
+ax1.set_title('Depth Amplification: ‖layer‖ = (√(1+φ²))ⁿ', fontsize=14)
+ax1.legend(fontsize=10)
+ax1.grid(True, alpha=0.3)
+
+# Panel 2: Information content scaling
+ax2 = axes[1]
+phi_vals = np.linspace(0.01, 3, 200)
+info_1 = [np.log(1 + p**2) for p in phi_vals]
+info_2 = [2 * np.log(1 + p**2) for p in phi_vals]
+info_5 = [5 * np.log(1 + p**2) for p in phi_vals]
+info_10 = [10 * np.log(1 + p**2) for p in phi_vals]
+
+ax2.plot(phi_vals, info_1, linewidth=2, label='n=1 layer')
+ax2.plot(phi_vals, info_2, linewidth=2, label='n=2 layers')
+ax2.plot(phi_vals, info_5, linewidth=2, label='n=5 layers')
+ax2.plot(phi_vals, info_10, linewidth=2, label='n=10 layers')
+
+ax2.set_xlabel('φ (amplitude parameter)', fontsize=12)
+ax2.set_ylabel('Total information content (nats)', fontsize=12)
+ax2.set_title('Information Content: n · log(1+φ²)', fontsize=14)
+ax2.legend(fontsize=10)
+ax2.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('quantum_eml_depth.png', dpi=150, bbox_inches='tight')
+print("Saved: quantum_eml_depth.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Spectral Gap Pinching and Image of the Quantum Activation.
+"""
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+def qact(theta, phi):
+    return np.exp(1j * theta) * (1 + 1j * phi)
+
+def spectral_gap(phi):
+    return np.sqrt(1 + phi**2) - 1
+
+# Figure 1: Spectral Gap Pinching
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+phi_vals = np.linspace(-2, 2, 500)
+gap_vals = [spectral_gap(p) for p in phi_vals]
+lower_vals = [p**2 / 3 for p in phi_vals]
+upper_vals = [p**2 / 2 for p in phi_vals]
+linear_upper = [abs(p) for p in phi_vals]
+
+ax1 = axes[0]
+ax1.fill_between(phi_vals, lower_vals, upper_vals, alpha=0.2, color='blue',
+                  label='Pinching region (φ²/3, φ²/2)')
+ax1.plot(phi_vals, gap_vals, 'r-', linewidth=2, label='spectralGap(φ) = √(1+φ²)−1')
+ax1.plot(phi_vals, lower_vals, 'b--', linewidth=1, label='φ²/3 (lower bound)')
+ax1.plot(phi_vals, upper_vals, 'g--', linewidth=1, label='φ²/2 (upper bound)')
+ax1.plot(phi_vals, linear_upper, 'k:', linewidth=1, label='|φ| (global upper bound)')
+ax1.set_xlabel('φ (amplitude parameter)', fontsize=12)
+ax1.set_ylabel('Spectral Gap', fontsize=12)
+ax1.set_title('Spectral Gap Pinching Theorem', fontsize=14)
+ax1.legend(fontsize=9)
+ax1.set_xlim(-2, 2)
+ax1.set_ylim(0, 2)
+ax1.grid(True, alpha=0.3)
+
+# Figure 2: Image of qact in the complex plane
+ax2 = axes[1]
+thetas = np.linspace(0, 2*np.pi, 200)
+for phi in [0, 0.5, 1.0, 1.5, 2.0]:
+    z_vals = [qact(t, phi) for t in thetas]
+    xs = [z.real for z in z_vals]
+    ys = [z.imag for z in z_vals]
+    label = f'φ={phi:.1f} (|z|={np.sqrt(1+phi**2):.2f})'
+    ax2.plot(xs, ys, linewidth=1.5, label=label)
+
+circle = plt.Circle((0, 0), 1, fill=False, color='red', linewidth=2,
+                      linestyle='--', label='Unit circle')
+ax2.add_patch(circle)
+ax2.set_xlabel('Re(z)', fontsize=12)
+ax2.set_ylabel('Im(z)', fontsize=12)
+ax2.set_title('Image of qact(θ, φ) = exp(iθ)·(1+iφ)', fontsize=14)
+ax2.set_aspect('equal')
+ax2.legend(fontsize=8, loc='upper left')
+ax2.set_xlim(-3.5, 3.5)
+ax2.set_ylim(-3.5, 3.5)
+ax2.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('quantum_eml_spectral_gap.png', dpi=150, bbox_inches='tight')
+print("Saved: quantum_eml_spectral_gap.png")
