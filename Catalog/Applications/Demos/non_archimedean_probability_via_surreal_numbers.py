@@ -1,180 +1,278 @@
 #!/usr/bin/env python3
 """
-Non-Archimedean Probability: Numerical Demonstrations
+Demo: Non-Archimedean Probability via Surreal Numbers
 
-This script demonstrates the key ideas of non-Archimedean probability theory
-using Python's `fractions` module for exact arithmetic and floating point
-for visualization.
+This script demonstrates the key ideas of infinitesimal probability theory
+using numerical simulations with symbolic computation (via fractions as a
+stand-in for non-Archimedean fields).
 """
 
 from fractions import Fraction
+from typing import Dict, List, Set, Tuple
 import math
 
-def demo_uniform_measure():
-    """Demonstrate uniform probability measures on finite sets."""
-    print("=" * 60)
-    print("DEMO 1: Uniform Probability on Finite Sets")
-    print("=" * 60)
-    
-    for n in [2, 5, 10, 100, 1000]:
-        weight = Fraction(1, n)
-        total = sum(weight for _ in range(n))
-        print(f"  n={n:5d}: weight = 1/{n} = {float(weight):.6f}, "
-              f"total = {total} ✓" if total == 1 else f"total = {total} ✗")
-    
-    print("\nKey insight: 1/n is NEVER infinitesimal for finite n.")
-    print("For n=1000, weight = 0.001 — small but not infinitesimal.\n")
 
-def demo_infinitesimal_impossibility():
-    """Demonstrate that finite sums of infinitesimals can't reach 1."""
-    print("=" * 60)
-    print("DEMO 2: Infinitesimal Finite Sum Impossibility")
-    print("=" * 60)
-    
-    # Simulate: if ε < 1/N for all N, then n*ε < 1 for all n
-    print("\nIf ε is infinitesimal (ε < 1/n for ALL n > 0):")
-    print("  Then for any finite sum of k copies of ε:")
-    print("  k·ε < k·(1/(k+1)) = k/(k+1) < 1")
-    print()
-    for k in [1, 10, 100, 1000, 10**6]:
-        bound = Fraction(k, k + 1)
-        print(f"  k={k:>10d}: k·ε ≤ k/(k+1) = {float(bound):.10f} < 1")
-    
-    print("\nNo matter how many copies you sum, you NEVER reach 1.")
-    print("This is the fundamental impossibility theorem.\n")
+def uniform_measure(n: int) -> Dict[int, Fraction]:
+    """Standard uniform measure on {0, ..., n-1}."""
+    w = Fraction(1, n)
+    return {i: w for i in range(n)}
 
-def demo_conditional_probability():
-    """Demonstrate conditional probability with small probabilities."""
-    print("=" * 60)
-    print("DEMO 3: Conditional Probability (Even with Tiny Weights)")
-    print("=" * 60)
-    
-    n = 1000
-    weights = [Fraction(1, n)] * n
-    
-    # Condition on event B = first 10 elements
-    B = list(range(10))
-    A = list(range(5))  # first 5 elements
-    
-    P_B = sum(weights[i] for i in B)
-    P_A_cap_B = sum(weights[i] for i in A if i in B)
-    P_A_given_B = P_A_cap_B / P_B
-    
-    print(f"\n  Space size: {n}")
-    print(f"  P(B) = {P_B} = {float(P_B):.4f}")
-    print(f"  P(A∩B) = {P_A_cap_B} = {float(P_A_cap_B):.4f}")
-    print(f"  P(A|B) = {P_A_given_B} = {float(P_A_given_B):.4f}")
-    
-    # Verify Bayes' theorem
-    P_A = sum(weights[i] for i in A)
-    P_B_given_A = P_A_cap_B / P_A
-    
-    lhs = P_A_given_B * P_B
-    rhs = P_B_given_A * P_A
-    print(f"\n  Bayes' check: P(A|B)·P(B) = {lhs}")
-    print(f"                P(B|A)·P(A) = {rhs}")
-    print(f"                Equal? {lhs == rhs} ✓\n")
 
-def demo_markov_inequality():
-    """Demonstrate Markov's inequality."""
-    print("=" * 60)
-    print("DEMO 4: Markov's Inequality")
-    print("=" * 60)
+def infinitesimal_premeasure(n: int, eps_num: int = 1, eps_den: int = 1000000) -> Dict[str, object]:
+    """
+    Construct an infinitesimal pre-measure on {0, ..., n-1}.
     
-    n = 100
-    weights = [Fraction(1, n)] * n
-    # f(i) = i for i in 0..99
-    values = list(range(n))
+    Each point gets weight ε = eps_num/eps_den.
+    The defect is 1 - n*ε > 0.
     
-    E_f = sum(Fraction(w) * v for w, v in zip(weights, values))
+    This models the behavior in a non-Archimedean field where ε would
+    be truly infinitesimal.
+    """
+    eps = Fraction(eps_num, eps_den)
+    total_mass = n * eps
+    defect = 1 - total_mass
     
-    for c in [10, 25, 50, 75]:
-        P_exceed = sum(weights[i] for i in range(n) if values[i] >= c)
-        bound = E_f / c
-        print(f"  c={c:3d}: P(f≥c) = {float(P_exceed):.4f}, "
-              f"E[f]/c = {float(bound):.4f}, "
-              f"P(f≥c) ≤ E[f]/c? {P_exceed <= bound} ✓")
-    print()
+    return {
+        'n': n,
+        'epsilon': eps,
+        'total_mass': total_mass,
+        'defect': defect,
+        'defect_positive': defect > 0,
+        'weights': {i: eps for i in range(n)},
+    }
 
-def demo_product_measure():
-    """Demonstrate product measure construction."""
-    print("=" * 60)
-    print("DEMO 5: Product Measure (Independence)")
-    print("=" * 60)
+
+def two_level_measure(n: int, eps: Fraction, distinguished: int = 0) -> Dict[int, Fraction]:
+    """
+    Construct a two-level probability measure.
     
-    # Two dice
-    n = 6
-    w1 = [Fraction(1, 6)] * 6
-    w2 = [Fraction(1, 6)] * 6
-    
-    print(f"\n  Two fair dice (n=6 each)")
-    print(f"  Product space size: {n*n}")
-    
-    total = Fraction(0)
+    Each non-distinguished point gets weight ε.
+    The distinguished point gets weight 1 - (n-1)*ε.
+    Total = 1.
+    """
+    bulk_weight = 1 - (n - 1) * eps
+    weights = {}
     for i in range(n):
-        for j in range(n):
-            total += w1[i] * w2[j]
-    print(f"  Total product mass: {total} ✓")
+        if i == distinguished:
+            weights[i] = bulk_weight
+        else:
+            weights[i] = eps
+    return weights
+
+
+def conditional_probability(weights: Dict[int, Fraction], 
+                           event_a: Set[int], 
+                           event_b: Set[int]) -> Fraction:
+    """P(B | A) = P(A ∩ B) / P(A)."""
+    intersection = event_a & event_b
+    p_a = sum(weights[i] for i in event_a if i in weights)
+    p_ab = sum(weights[i] for i in intersection if i in weights)
+    if p_a == 0:
+        return Fraction(0)
+    return p_ab / p_a
+
+
+def verify_bayes(weights: Dict[int, Fraction], 
+                 event_a: Set[int], 
+                 event_b: Set[int]) -> bool:
+    """Verify Bayes' theorem: P(B|A)·P(A) = P(A|B)·P(B)."""
+    p_a = sum(weights[i] for i in event_a if i in weights)
+    p_b = sum(weights[i] for i in event_b if i in weights)
     
-    # Marginal check
-    marginal_1 = [sum(w1[i] * w2[j] for j in range(n)) for i in range(n)]
-    print(f"  Marginal 1: {marginal_1[0]} (= 1/6) ✓")
+    if p_a == 0 or p_b == 0:
+        return True  # vacuously true
     
-    # P(sum = 7)
-    p_seven = sum(w1[i] * w2[j] for i in range(n) for j in range(n) if i+j+2 == 7)
-    print(f"  P(sum=7) = {p_seven} = {float(p_seven):.4f}")
+    p_b_given_a = conditional_probability(weights, event_a, event_b)
+    p_a_given_b = conditional_probability(weights, event_b, event_a)
+    
+    lhs = p_b_given_a * p_a
+    rhs = p_a_given_b * p_b
+    
+    return lhs == rhs
+
+
+def demonstrate_archimedean_impossibility():
+    """Show that in ℝ (Archimedean), infinitesimal probabilities don't exist."""
+    print("=" * 60)
+    print("ARCHIMEDEAN IMPOSSIBILITY")
+    print("=" * 60)
+    print()
+    print("In an Archimedean ordered field (like ℝ), there are no")
+    print("infinitesimals: for any ε > 0, there exists n with n·ε ≥ 1.")
+    print()
+    
+    for eps_str, eps in [("0.1", 0.1), ("0.01", 0.01), ("1e-10", 1e-10), ("1e-100", 1e-100)]:
+        n = math.ceil(1.0 / eps)
+        print(f"  ε = {eps_str}: n = {n} gives n·ε = {n * eps:.2f} ≥ 1 ✓")
+    
+    print()
+    print("No matter how small ε is, we can always find n to exceed 1.")
+    print("This is why standard probability cannot have infinitesimal point masses.")
     print()
 
-def demo_entropy_scaling():
-    """Show how entropy scales with partition size."""
+
+def demonstrate_infinitesimal_premeasure():
+    """Demonstrate infinitesimal pre-measures."""
     print("=" * 60)
-    print("DEMO 6: Entropy Scaling (Motivating Non-Archimedean Need)")
+    print("INFINITESIMAL PRE-MEASURES")
     print("=" * 60)
+    print()
     
-    print(f"\n  {'n':>10s}  {'H(uniform)':>12s}  {'1/n':>12s}")
-    print(f"  {'-'*10}  {'-'*12}  {'-'*12}")
-    for k in range(1, 8):
-        n = 10**k
-        H = math.log2(n)
-        w = 1.0/n
-        print(f"  {n:>10d}  {H:>12.4f}  {w:>12.2e}")
+    # Model: use very small rational ε as stand-in for infinitesimal
+    for n in [10, 100, 1000]:
+        eps = Fraction(1, 10**12)  # "infinitesimal" stand-in
+        result = infinitesimal_premeasure(n, 1, 10**12)
+        print(f"  n = {n}, ε = 10^(-12):")
+        print(f"    Total mass = {float(result['total_mass']):.12e}")
+        print(f"    Defect = {float(result['defect']):.12f}")
+        print(f"    Defect > 0: {result['defect_positive']}")
+        print()
     
-    print("\n  As n → ∞, entropy H → ∞ but each weight → 0.")
-    print("  In a non-Archimedean field, weights can be truly")
-    print("  infinitesimal while entropy becomes a non-Archimedean")
-    print("  infinite quantity. Both are well-defined!\n")
+    print("  Key insight: as n grows, total mass grows, but in a truly")
+    print("  non-Archimedean field, n·ε < 1 for ALL n simultaneously.")
+    print()
+
+
+def demonstrate_two_level_measure():
+    """Demonstrate the two-level probability construction."""
+    print("=" * 60)
+    print("TWO-LEVEL PROBABILITY MEASURE")
+    print("=" * 60)
+    print()
+    
+    n = 5
+    eps = Fraction(1, 100)
+    weights = two_level_measure(n, eps)
+    
+    print(f"  Space: {{0, 1, 2, 3, 4}}, ε = 1/100")
+    print(f"  Distinguished element: 0")
+    print()
+    for i, w in weights.items():
+        print(f"    P({i}) = {w} = {float(w):.4f}")
+    
+    total = sum(weights.values())
+    print(f"\n  Total: {total} = {float(total):.4f}")
+    print(f"  Sums to 1: {total == 1} ✓")
+    print()
+    
+    # Verify finite additivity
+    a = {1, 2}
+    b = {3, 4}
+    p_a = sum(weights[i] for i in a)
+    p_b = sum(weights[i] for i in b)
+    p_union = sum(weights[i] for i in a | b)
+    print(f"  Finite additivity check:")
+    print(f"    P({{1,2}}) = {p_a}")
+    print(f"    P({{3,4}}) = {p_b}")
+    print(f"    P({{1,2,3,4}}) = {p_union}")
+    print(f"    P({{1,2}}) + P({{3,4}}) = {p_a + p_b}")
+    print(f"    Additive: {p_union == p_a + p_b} ✓")
+    print()
+
+
+def demonstrate_bayes():
+    """Demonstrate Bayes' theorem works with infinitesimal-scale measures."""
+    print("=" * 60)
+    print("BAYES' THEOREM IN NON-ARCHIMEDEAN SETTING")
+    print("=" * 60)
+    print()
+    
+    n = 6
+    eps = Fraction(1, 1000)
+    weights = two_level_measure(n, eps, distinguished=0)
+    
+    event_a = {0, 1, 2}
+    event_b = {1, 2, 3}
+    
+    p_b_given_a = conditional_probability(weights, event_a, event_b)
+    p_a_given_b = conditional_probability(weights, event_b, event_a)
+    p_a = sum(weights[i] for i in event_a)
+    p_b = sum(weights[i] for i in event_b)
+    
+    print(f"  Space: {{0,...,5}}, ε = 1/1000, distinguished = 0")
+    print(f"  A = {{0,1,2}}, B = {{1,2,3}}")
+    print(f"  P(A) = {p_a} ≈ {float(p_a):.6f}")
+    print(f"  P(B) = {p_b} ≈ {float(p_b):.6f}")
+    print(f"  P(B|A) = {p_b_given_a} ≈ {float(p_b_given_a):.6f}")
+    print(f"  P(A|B) = {p_a_given_b} ≈ {float(p_a_given_b):.6f}")
+    print()
+    
+    lhs = p_b_given_a * p_a
+    rhs = p_a_given_b * p_b
+    print(f"  Bayes check: P(B|A)·P(A) = {lhs}")
+    print(f"               P(A|B)·P(B) = {rhs}")
+    print(f"  Equal: {lhs == rhs} ✓")
+    print()
+    
+    # Verify for multiple random event pairs
+    import itertools
+    violations = 0
+    total_tests = 0
+    for a_size in range(1, n):
+        for b_size in range(1, n):
+            for a_combo in itertools.combinations(range(n), a_size):
+                for b_combo in itertools.combinations(range(n), b_size):
+                    total_tests += 1
+                    if not verify_bayes(weights, set(a_combo), set(b_combo)):
+                        violations += 1
+    
+    print(f"  Exhaustive Bayes verification: {total_tests} event pairs tested")
+    print(f"  Violations: {violations}")
+    print()
+
+
+def demonstrate_hierarchy():
+    """Demonstrate the infinitesimal hierarchy ε > ε² > ε³ > ..."""
+    print("=" * 60)
+    print("INFINITESIMAL HIERARCHY")
+    print("=" * 60)
+    print()
+    
+    eps = Fraction(1, 1000)  # Stand-in for infinitesimal
+    print(f"  ε = {eps}")
+    print()
+    
+    for k in range(1, 6):
+        val = eps ** k
+        print(f"  ε^{k} = {val} = {float(val):.15e}")
+    
+    print()
+    print("  In a non-Archimedean field, each power ε^k is infinitesimal")
+    print("  relative to ε^(k-1), creating a natural hierarchy of scales.")
+    print("  This hierarchy is absent in Archimedean fields.")
+    print()
+
 
 if __name__ == "__main__":
-    demo_uniform_measure()
-    demo_infinitesimal_impossibility()
-    demo_conditional_probability()
-    demo_markov_inequality()
-    demo_product_measure()
-    demo_entropy_scaling()
+    demonstrate_archimedean_impossibility()
+    demonstrate_infinitesimal_premeasure()
+    demonstrate_two_level_measure()
+    demonstrate_bayes()
+    demonstrate_hierarchy()
     
     print("=" * 60)
-    print("SUMMARY: Non-Archimedean Probability Theory")
+    print("SUMMARY OF FORMALIZED RESULTS")
     print("=" * 60)
-    print("""
-  Key Results Demonstrated:
-  
-  1. Uniform weights 1/n are never infinitesimal (Theorem)
-  2. Finite sums of infinitesimals never reach 1 (Impossibility)
-  3. Conditional probability works even with tiny weights (Bayes)
-  4. Markov's inequality generalizes to non-Archimedean setting
-  5. Product measures factor correctly (Independence)
-  6. Entropy scaling motivates the need for infinitesimals
-  
-  All results are formally verified in Lean 4.
-""")
+    print()
+    print("All of the above demonstrations correspond to formally")
+    print("verified theorems in Lean 4:")
+    print()
+    print("  1. archimedean_no_infinitesimal: No infinitesimals in Archimedean fields")
+    print("  2. surreal_not_archimedean: Surreal numbers ARE non-Archimedean")
+    print("  3. measure_finite_additivity: Finite additivity of measures")
+    print("  4. bayes_formula: Bayes' theorem in ordered fields")
+    print("  5. two_level_measure_exists: Construction of two-level measures")
+    print("  6. infinitesimal_squared_smaller: ε² < ε hierarchy")
+    print("  7. measure_complement: Complement formula")
+    print("  8. measure_union_inter: Inclusion-exclusion")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Non-Archimedean Probability Weight Distribution
+Visualization: Non-Archimedean Probability Measures
 
-Shows how uniform probability weights scale with set size, and
-the impossibility of infinitesimal sums reaching 1.
+Generates plots comparing standard uniform measures with two-level
+infinitesimal-style measures.
 """
 
 import matplotlib
@@ -182,149 +280,164 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_weight_scaling():
-    """Plot how uniform weight 1/n decreases with n."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-    
-    # Left: weight vs n
-    n_values = np.arange(1, 101)
-    weights = 1.0 / n_values
-    
-    axes[0].plot(n_values, weights, 'b-', linewidth=2)
-    axes[0].axhline(y=0, color='r', linestyle='--', alpha=0.5, label='Infinitesimal boundary')
-    axes[0].set_xlabel('Number of elements (n)', fontsize=12)
-    axes[0].set_ylabel('Uniform weight (1/n)', fontsize=12)
-    axes[0].set_title('Weight Scaling: Never Reaches Zero', fontsize=14)
-    axes[0].legend(fontsize=10)
-    axes[0].set_ylim(-0.05, 1.05)
-    axes[0].grid(True, alpha=0.3)
-    
-    # Add annotation
-    axes[0].annotate(
-        'For any finite n,\n1/n > 0 (not infinitesimal)',
-        xy=(50, 0.02), xytext=(60, 0.4),
-        arrowprops=dict(arrowstyle='->', color='red'),
-        fontsize=11, color='red',
-        bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow')
-    )
-    
-    # Right: sum of k copies of epsilon vs k
-    k_values = np.arange(1, 201)
-    
-    for eps_inv in [10, 50, 200, 1000]:
-        eps = 1.0 / eps_inv
-        sums = k_values * eps
-        valid = sums < 1
-        axes[1].plot(k_values[valid], sums[valid], linewidth=2,
-                     label=f'ε = 1/{eps_inv}')
-    
-    axes[1].axhline(y=1, color='red', linestyle='--', linewidth=2, label='Target = 1')
-    axes[1].set_xlabel('Number of terms (k)', fontsize=12)
-    axes[1].set_ylabel('Partial sum (k·ε)', fontsize=12)
-    axes[1].set_title('Infinitesimal Sums: Cannot Reach 1', fontsize=14)
-    axes[1].legend(fontsize=9, loc='upper left')
-    axes[1].set_ylim(-0.05, 1.2)
-    axes[1].grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('weight_scaling.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: weight_scaling.png")
 
-def plot_conditional_probability():
-    """Visualize conditional probability as weight reallocation."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+def plot_uniform_vs_two_level():
+    """Compare uniform and two-level measures."""
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
     
     n = 10
-    uniform_weights = np.ones(n) / n
+    elements = list(range(n))
     
-    # Original measure
-    colors = ['steelblue'] * n
-    axes[0].bar(range(n), uniform_weights, color=colors, edgecolor='navy', linewidth=0.5)
-    axes[0].set_title('Original Measure μ', fontsize=13)
-    axes[0].set_ylabel('Weight', fontsize=11)
-    axes[0].set_ylim(0, 0.35)
-    axes[0].set_xlabel('Element', fontsize=11)
+    # Panel 1: Standard uniform
+    ax = axes[0]
+    weights = [1/n] * n
+    ax.bar(elements, weights, color='steelblue', alpha=0.8, edgecolor='navy')
+    ax.set_title('Standard Uniform Measure', fontsize=12, fontweight='bold')
+    ax.set_xlabel('Element')
+    ax.set_ylabel('Probability')
+    ax.set_ylim(0, 1.05)
+    ax.axhline(y=1/n, color='red', linestyle='--', alpha=0.5, label=f'w = 1/{n}')
+    ax.legend()
     
-    # Conditioning set B = {3, 4, 5, 6}
-    B = {3, 4, 5, 6}
-    cond_weights = np.zeros(n)
-    p_B = sum(uniform_weights[i] for i in B)
-    for i in range(n):
-        if i in B:
-            cond_weights[i] = uniform_weights[i] / p_B
+    # Panel 2: Two-level with small ε
+    ax = axes[1]
+    eps = 0.02
+    bulk = 1 - (n-1) * eps
+    weights_2 = [bulk] + [eps] * (n-1)
+    colors = ['gold'] + ['steelblue'] * (n-1)
+    ax.bar(elements, weights_2, color=colors, alpha=0.8, edgecolor='navy')
+    ax.set_title(f'Two-Level Measure (ε={eps})', fontsize=12, fontweight='bold')
+    ax.set_xlabel('Element')
+    ax.set_ylabel('Probability')
+    ax.set_ylim(0, 1.05)
+    ax.axhline(y=eps, color='red', linestyle='--', alpha=0.5, label=f'ε = {eps}')
+    ax.legend()
     
-    colors2 = ['lightgray' if i not in B else 'coral' for i in range(n)]
-    axes[1].bar(range(n), cond_weights, color=colors2, edgecolor='darkred', linewidth=0.5)
-    axes[1].set_title('Conditional μ(·|B), B={3,4,5,6}', fontsize=13)
-    axes[1].set_ylim(0, 0.35)
-    axes[1].set_xlabel('Element', fontsize=11)
+    # Panel 3: Two-level with very small ε
+    ax = axes[2]
+    eps = 0.001
+    bulk = 1 - (n-1) * eps
+    weights_3 = [bulk] + [eps] * (n-1)
+    colors = ['gold'] + ['steelblue'] * (n-1)
+    ax.bar(elements, weights_3, color=colors, alpha=0.8, edgecolor='navy')
+    ax.set_title(f'Two-Level Measure (ε={eps})', fontsize=12, fontweight='bold')
+    ax.set_xlabel('Element')
+    ax.set_ylabel('Probability')
+    ax.set_ylim(0, 1.05)
+    ax.axhline(y=eps, color='red', linestyle='--', alpha=0.5, label=f'ε = {eps}')
+    ax.legend()
     
-    # Verify total mass
-    for ax in axes[:2]:
-        ax.axhline(y=1/n, color='gray', linestyle=':', alpha=0.5)
-    
-    # Chain rule visualization
-    A = {2, 3, 4}
-    bar_data = {
-        'P(A∩B)': sum(uniform_weights[i] for i in A & B),
-        'P(A|B)·P(B)': sum(cond_weights[i] for i in A) * p_B,
-    }
-    
-    colors3 = ['coral', 'steelblue']
-    bars = axes[2].bar(range(len(bar_data)), list(bar_data.values()),
-                       color=colors3, edgecolor='black', linewidth=0.5)
-    axes[2].set_xticks(range(len(bar_data)))
-    axes[2].set_xticklabels(list(bar_data.keys()), fontsize=10)
-    axes[2].set_title('Chain Rule Verification', fontsize=13)
-    axes[2].set_ylabel('Value', fontsize=11)
-    
-    # Add value labels
-    for bar, val in zip(bars, bar_data.values()):
-        axes[2].text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.005,
-                     f'{val:.4f}', ha='center', fontsize=10, fontweight='bold')
-    
+    plt.suptitle('From Uniform to Infinitesimal: The Non-Archimedean Transition', 
+                 fontsize=14, fontweight='bold', y=1.02)
     plt.tight_layout()
-    plt.savefig('conditional_probability.png', dpi=150, bbox_inches='tight')
+    plt.savefig('measure_comparison.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: conditional_probability.png")
+    print("Saved: measure_comparison.png")
 
-def plot_markov_inequality():
-    """Visualize Markov's inequality."""
-    fig, ax = plt.subplots(figsize=(10, 5))
+
+def plot_defect_scaling():
+    """Plot how the defect scales with set size for fixed ε."""
+    fig, ax = plt.subplots(figsize=(10, 6))
     
-    n = 50
-    weights = np.ones(n) / n
-    values = np.arange(n, dtype=float)
+    epsilons = [0.1, 0.01, 0.001, 0.0001]
     
-    E_f = np.sum(weights * values)
+    for eps in epsilons:
+        ns = list(range(1, int(0.9/eps) + 1))
+        defects = [1 - n * eps for n in ns]
+        ax.plot(ns, defects, '-o', markersize=3, label=f'ε = {eps}')
     
-    c_values = np.linspace(1, 45, 100)
-    actual_probs = [np.sum(weights[values >= c]) for c in c_values]
-    markov_bounds = [E_f / c for c in c_values]
-    
-    ax.fill_between(c_values, actual_probs, alpha=0.3, color='steelblue', label='P(f ≥ c)')
-    ax.plot(c_values, actual_probs, 'b-', linewidth=2)
-    ax.plot(c_values, markov_bounds, 'r--', linewidth=2, label='E[f]/c (Markov bound)')
-    
-    ax.set_xlabel('Threshold c', fontsize=12)
-    ax.set_ylabel('Probability', fontsize=12)
-    ax.set_title("Markov's Inequality: P(f ≥ c) ≤ E[f]/c", fontsize=14)
-    ax.legend(fontsize=12)
+    ax.set_xlabel('Set Size n', fontsize=12)
+    ax.set_ylabel('Defect (1 - n·ε)', fontsize=12)
+    ax.set_title('Probability Defect vs Set Size\nIn non-Archimedean fields, defect stays positive for ALL n', 
+                 fontsize=13, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.axhline(y=0, color='black', linestyle='-', alpha=0.3)
     ax.grid(True, alpha=0.3)
-    ax.set_ylim(0, 1.1)
-    
-    # Annotate
-    ax.annotate(f'E[f] = {E_f:.1f}', xy=(E_f, 0.5), fontsize=11,
-                bbox=dict(boxstyle='round', facecolor='lightyellow'))
     
     plt.tight_layout()
-    plt.savefig('markov_inequality.png', dpi=150, bbox_inches='tight')
+    plt.savefig('defect_scaling.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: markov_inequality.png")
+    print("Saved: defect_scaling.png")
+
+
+def plot_infinitesimal_hierarchy():
+    """Visualize the hierarchy of infinitesimal scales."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    eps_base = 0.1
+    depths = range(1, 8)
+    values = [eps_base ** k for k in depths]
+    
+    ax.semilogy(list(depths), values, 'o-', color='darkred', markersize=10, linewidth=2)
+    
+    for k, v in zip(depths, values):
+        ax.annotate(f'ε^{k} = {v:.1e}', 
+                    xy=(k, v), xytext=(k + 0.3, v * 1.5),
+                    fontsize=10, ha='left')
+    
+    ax.set_xlabel('Power k', fontsize=12)
+    ax.set_ylabel('ε^k (log scale)', fontsize=12)
+    ax.set_title('Infinitesimal Hierarchy: ε > ε² > ε³ > ...\n'
+                 'Each level is infinitesimally small relative to the previous',
+                 fontsize=13, fontweight='bold')
+    ax.grid(True, alpha=0.3, which='both')
+    
+    plt.tight_layout()
+    plt.savefig('hierarchy.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: hierarchy.png")
+
+
+def plot_archimedean_vs_non():
+    """Contrast Archimedean and non-Archimedean behavior."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # Left: Archimedean (ℝ)
+    ax = axes[0]
+    eps_values = np.logspace(-6, -1, 50)
+    for eps in eps_values:
+        n_exceed = int(np.ceil(1.0 / eps))
+        ax.scatter(eps, n_exceed, c='steelblue', s=20, alpha=0.7)
+    
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.set_xlabel('ε', fontsize=12)
+    ax.set_ylabel('Smallest n with n·ε ≥ 1', fontsize=12)
+    ax.set_title('Archimedean World (ℝ)\nEvery ε is eventually exceeded', 
+                 fontsize=12, fontweight='bold')
+    ax.grid(True, alpha=0.3)
+    
+    # Right: Non-Archimedean (Surreal)
+    ax = axes[1]
+    # In surreals, for a true infinitesimal ε, n·ε < 1 for ALL n
+    ns = np.arange(1, 101)
+    eps_surreal = 0.001  # visual stand-in
+    
+    # Show multiple "infinitesimal" levels
+    for level, color in [(1, 'steelblue'), (2, 'darkorange'), (3, 'green')]:
+        masses = ns * (eps_surreal ** level)
+        ax.plot(ns, masses, '-', color=color, linewidth=2, 
+                label=f'n·ε^{level}', alpha=0.8)
+    
+    ax.axhline(y=1, color='red', linestyle='--', linewidth=2, label='Threshold = 1')
+    ax.set_xlabel('n (number of elements)', fontsize=12)
+    ax.set_ylabel('Total mass n·ε^k', fontsize=12)
+    ax.set_title('Non-Archimedean World (Surreal)\nInfinitesimal mass NEVER reaches 1', 
+                 fontsize=12, fontweight='bold')
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    
+    plt.suptitle('The Archimedean-NonArchimedean Dichotomy', 
+                 fontsize=14, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    plt.savefig('dichotomy.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: dichotomy.png")
+
 
 if __name__ == "__main__":
-    plot_weight_scaling()
-    plot_conditional_probability()
-    plot_markov_inequality()
-    print("\nAll visualizations generated successfully.")
+    plot_uniform_vs_two_level()
+    plot_defect_scaling()
+    plot_infinitesimal_hierarchy()
+    plot_archimedean_vs_non()
+    print("\nAll visualizations generated.")

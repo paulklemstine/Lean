@@ -2,169 +2,219 @@
 """
 Algorithms for Non-Archimedean Probability Theory
 
-Type-hinted implementations of the core algorithms from the formalization.
+Type-hinted implementations of the core algorithms for constructing and
+manipulating probability measures in non-Archimedean ordered fields.
 """
 
-from __future__ import annotations
-from dataclasses import dataclass
 from fractions import Fraction
-from typing import TypeVar, Callable, Generic, Sequence
-import math
+from typing import Dict, FrozenSet, Generic, List, Optional, Set, TypeVar
+from dataclasses import dataclass
 
-T = TypeVar('T')
+
+T = TypeVar('T')  # Element type
+F = TypeVar('F')  # Field type
 
 
 @dataclass
-class InfProbMeasure(Generic[T]):
-    """A finitely additive probability measure on a finite type.
+class FinAddProb(Generic[T]):
+    """Finitely additive probability measure on a finite set.
     
-    Each element has a non-negative weight, and the total weight equals 1.
-    Values are in Fraction for exact arithmetic.
+    Invariants:
+    - All weights are non-negative
+    - Weights sum to 1
     """
-    elements: list[T]
-    weights: dict[T, Fraction]
+    weights: Dict[T, Fraction]
     
     def __post_init__(self) -> None:
+        assert all(w >= 0 for w in self.weights.values()), "Weights must be non-negative"
         total = sum(self.weights.values())
-        assert total == 1, f"Total mass {total} ≠ 1"
-        assert all(w >= 0 for w in self.weights.values()), "Negative weight"
+        assert total == 1, f"Weights must sum to 1, got {total}"
     
-    @classmethod
-    def uniform(cls, elements: list[T]) -> 'InfProbMeasure[T]':
-        """Construct the uniform measure on a list of elements."""
-        n = len(elements)
-        assert n > 0, "Cannot create uniform measure on empty set"
-        w = Fraction(1, n)
-        return cls(elements=elements, weights={e: w for e in elements})
-    
-    def measure(self, subset: set[T]) -> Fraction:
+    def measure(self, s: Set[T]) -> Fraction:
         """Compute the measure of a subset."""
-        return sum(self.weights[e] for e in subset if e in self.weights)
+        return sum(self.weights.get(x, Fraction(0)) for x in s)
     
-    def expect(self, f: Callable[[T], Fraction]) -> Fraction:
-        """Compute the expected value of a function."""
-        return sum(self.weights[e] * f(e) for e in self.elements)
+    def cond_prob(self, event_a: Set[T], event_b: Set[T]) -> Optional[Fraction]:
+        """Compute P(B | A) = P(A ∩ B) / P(A).
+        
+        Returns None if P(A) = 0.
+        """
+        p_a = self.measure(event_a)
+        if p_a == 0:
+            return None
+        p_ab = self.measure(event_a & event_b)
+        return p_ab / p_a
     
-    def cond_prob(self, A: set[T], B: set[T]) -> Fraction:
-        """Compute P(A | B) = P(A ∩ B) / P(B)."""
-        p_b = self.measure(B)
-        if p_b == 0:
-            return Fraction(0)
-        return self.measure(A & B) / p_b
+    @property
+    def is_uniform(self) -> bool:
+        """Check if the measure is uniform (all weights equal)."""
+        vals = list(self.weights.values())
+        return len(set(vals)) <= 1
     
-    def markov_bound(self, f: Callable[[T], Fraction], c: Fraction) -> Fraction:
-        """Compute the Markov inequality bound: E[f] / c."""
-        assert c > 0, "Threshold must be positive"
-        return self.expect(f) / c
+    @property
+    def universe(self) -> Set[T]:
+        """The underlying sample space."""
+        return set(self.weights.keys())
 
 
-@dataclass
-class InfCondAlg(Generic[T]):
-    """Infinitesimal Conditioning Algebra: a probability measure where
-    every element has strictly positive weight.
+@dataclass 
+class InfinitesimalPreMeasure(Generic[T]):
+    """Infinitesimal pre-measure: assigns weight ε to every point.
     
-    This enables conditioning on any nonempty subset.
+    The total mass n·ε < 1, leaving a positive defect.
+    This models the behavior in a non-Archimedean field.
     """
-    measure: InfProbMeasure[T]
+    elements: List[T]
+    epsilon: Fraction
     
     def __post_init__(self) -> None:
-        assert all(w > 0 for w in self.measure.weights.values()), \
-            "All weights must be strictly positive"
+        assert self.epsilon > 0, "ε must be positive"
+        n = len(self.elements)
+        total = n * self.epsilon
+        assert total < 1, f"Total mass {total} must be < 1"
     
-    def cond_measure(self, B: set[T]) -> InfProbMeasure[T]:
-        """Construct the conditional measure given event B.
-        
-        Returns a new probability measure concentrated on B.
-        """
-        assert len(B) > 0, "Cannot condition on empty set"
-        p_b = self.measure.measure(B)
-        assert p_b > 0, "Conditioning set must have positive measure"
-        
-        new_weights: dict[T, Fraction] = {}
-        for e in self.measure.elements:
-            if e in B:
-                new_weights[e] = self.measure.weights[e] / p_b
-            else:
-                new_weights[e] = Fraction(0)
-        
-        return InfProbMeasure(
-            elements=self.measure.elements,
-            weights=new_weights
-        )
+    @property
+    def total_mass(self) -> Fraction:
+        """The total mass n·ε."""
+        return len(self.elements) * self.epsilon
     
-    def chain_rule(self, A: set[T], B: set[T]) -> tuple[Fraction, Fraction]:
-        """Verify the chain rule: P(A∩B) = P(A|B) · P(B).
-        
-        Returns (lhs, rhs) — they should be equal.
-        """
-        lhs = self.measure.measure(A & B)
-        cond = self.cond_measure(B)
-        rhs = cond.measure(A) * self.measure.measure(B)
-        return lhs, rhs
+    @property
+    def defect(self) -> Fraction:
+        """The probability defect: 1 - n·ε > 0."""
+        return 1 - self.total_mass
 
 
-def product_measure(
-    mu: InfProbMeasure[T],
-    nu: InfProbMeasure[T]
-) -> InfProbMeasure[tuple[T, T]]:
-    """Construct the product measure of two independent measures."""
-    elements = [(a, b) for a in mu.elements for b in nu.elements]
-    weights = {(a, b): mu.weights[a] * nu.weights[b]
-               for a in mu.elements for b in nu.elements}
-    return InfProbMeasure(elements=elements, weights=weights)
-
-
-def is_infinitesimal_approx(x: float, max_n: int = 1000) -> bool:
-    """Approximate check: is x < 1/n for all n ≤ max_n?"""
-    if x <= 0:
-        return False
-    return all(x < 1.0/n for n in range(1, max_n + 1))
-
-
-def infinitesimal_sum_bound(epsilon: float, k: int) -> float:
-    """Compute the bound k·ε and verify it's < 1."""
-    return k * epsilon
-
-
-def inclusion_exclusion(
-    mu: InfProbMeasure[T],
-    A: set[T],
-    B: set[T]
-) -> tuple[Fraction, Fraction]:
-    """Verify inclusion-exclusion: μ(A∪B) + μ(A∩B) = μ(A) + μ(B).
+def construct_uniform(elements: List[T]) -> FinAddProb[T]:
+    """Construct the unique uniform probability measure on a finite set.
     
-    Returns (lhs, rhs).
+    Algorithm:
+    1. Compute n = |elements|
+    2. Assign weight 1/n to each element
+    3. Return the FinAddProb
+    
+    Theorem (uniform_finaddprob_weight): This is the UNIQUE uniform measure.
     """
-    lhs = mu.measure(A | B) + mu.measure(A & B)
-    rhs = mu.measure(A) + mu.measure(B)
-    return lhs, rhs
+    n = len(elements)
+    assert n > 0, "Need at least one element"
+    w = Fraction(1, n)
+    return FinAddProb(weights={x: w for x in elements})
 
 
-# === Demonstration ===
+def construct_two_level(elements: List[T], 
+                        epsilon: Fraction, 
+                        distinguished: T) -> FinAddProb[T]:
+    """Construct a two-level probability measure.
+    
+    Algorithm:
+    1. Assign weight ε to every non-distinguished element
+    2. Assign weight 1 - (n-1)·ε to the distinguished element
+    3. Total = ε·(n-1) + (1-(n-1)·ε) = 1
+    
+    Precondition: n·ε < 1 (so distinguished weight > 0)
+    
+    Theorem (two_level_measure_exists): This construction is valid.
+    """
+    n = len(elements)
+    assert n > 0
+    assert n * epsilon < 1, f"Need n·ε < 1, got {n * epsilon}"
+    
+    bulk_weight = 1 - (n - 1) * epsilon
+    weights = {}
+    for x in elements:
+        if x == distinguished:
+            weights[x] = bulk_weight
+        else:
+            weights[x] = epsilon
+    
+    return FinAddProb(weights=weights)
+
+
+def verify_finite_additivity(mu: FinAddProb[T], 
+                             s: Set[T], 
+                             t: Set[T]) -> bool:
+    """Verify μ(S ∪ T) = μ(S) + μ(T) for disjoint S, T.
+    
+    Theorem (measure_finite_additivity): Always holds for FinAddProb.
+    """
+    if s & t:  # not disjoint
+        return False  # not applicable
+    
+    lhs = mu.measure(s | t)
+    rhs = mu.measure(s) + mu.measure(t)
+    return lhs == rhs
+
+
+def verify_inclusion_exclusion(mu: FinAddProb[T], 
+                                s: Set[T], 
+                                t: Set[T]) -> bool:
+    """Verify μ(S ∪ T) + μ(S ∩ T) = μ(S) + μ(T).
+    
+    Theorem (measure_union_inter): Always holds for FinAddProb.
+    """
+    lhs = mu.measure(s | t) + mu.measure(s & t)
+    rhs = mu.measure(s) + mu.measure(t)
+    return lhs == rhs
+
+
+def verify_bayes(mu: FinAddProb[T], 
+                 a: Set[T], 
+                 b: Set[T]) -> bool:
+    """Verify P(B|A)·P(A) = P(A|B)·P(B).
+    
+    Theorem (bayes_formula): Always holds when P(A), P(B) > 0.
+    """
+    p_a = mu.measure(a)
+    p_b = mu.measure(b)
+    
+    if p_a == 0 or p_b == 0:
+        return True
+    
+    p_b_given_a = mu.cond_prob(a, b)
+    p_a_given_b = mu.cond_prob(b, a)
+    
+    if p_b_given_a is None or p_a_given_b is None:
+        return True
+    
+    return p_b_given_a * p_a == p_a_given_b * p_b
+
+
+def infinitesimal_hierarchy(epsilon: Fraction, depth: int = 5) -> List[Fraction]:
+    """Generate the infinitesimal hierarchy ε, ε², ε³, ...
+    
+    Theorem (infinitesimal_squared_smaller): ε² < ε when 0 < ε < 1.
+    Each level is infinitesimally small compared to the previous.
+    """
+    return [epsilon ** k for k in range(1, depth + 1)]
+
 
 if __name__ == "__main__":
-    # Example: 6-sided die
-    die = InfProbMeasure.uniform(list(range(1, 7)))
-    print(f"Die: {die.weights}")
-    print(f"P(even) = {die.measure({2, 4, 6})}")
-    print(f"E[X] = {die.expect(lambda x: Fraction(x))}")
+    # Example usage
+    elements = list(range(10))
     
-    # Conditioning
-    cond_alg = InfCondAlg(die)
-    cond = cond_alg.cond_measure({1, 2, 3})
-    print(f"P(1 | {{1,2,3}}) = {cond.weights[1]}")
+    # Uniform measure
+    mu = construct_uniform(elements)
+    print(f"Uniform measure on {{0,...,9}}:")
+    print(f"  P({{0}}) = {mu.measure({0})}")
+    print(f"  P({{0,1,2}}) = {mu.measure({0,1,2})}")
+    print()
     
-    # Chain rule verification
-    lhs, rhs = cond_alg.chain_rule({1, 2}, {2, 3, 4})
-    print(f"Chain rule: {lhs} = {rhs}, verified: {lhs == rhs}")
+    # Two-level measure
+    eps = Fraction(1, 100)
+    mu2 = construct_two_level(elements, eps, distinguished=0)
+    print(f"Two-level measure (ε=1/100, distinguished=0):")
+    print(f"  P({{0}}) = {mu2.measure({0})} = {float(mu2.measure({0})):.4f}")
+    print(f"  P({{1}}) = {mu2.measure({1})} = {float(mu2.measure({1})):.4f}")
+    print(f"  P(total) = {mu2.measure(set(elements))}")
+    print()
     
-    # Product measure
-    two_dice = product_measure(die, die)
-    p7 = two_dice.measure({(a, b) for a in range(1,7) for b in range(1,7) if a+b == 7})
-    print(f"P(sum=7 with 2 dice) = {p7}")
+    # Bayes verification
+    a, b = {0, 1, 2}, {2, 3, 4}
+    print(f"Bayes' theorem verification:")
+    print(f"  A = {a}, B = {b}")
+    print(f"  Holds: {verify_bayes(mu2, a, b)}")
+    print()
     
-    # Inclusion-exclusion
-    A = {1, 2, 3}
-    B = {3, 4, 5}
-    lhs, rhs = inclusion_exclusion(die, A, B)
-    print(f"Inclusion-exclusion: {lhs} = {rhs}, verified: {lhs == rhs}")
+    # Hierarchy
+    print(f"Infinitesimal hierarchy (ε = 1/100):")
+    for k, val in enumerate(infinitesimal_hierarchy(eps), 1):
+        print(f"  ε^{k} = {val} = {float(val):.2e}")
