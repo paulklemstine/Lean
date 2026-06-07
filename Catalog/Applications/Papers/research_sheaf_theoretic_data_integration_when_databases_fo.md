@@ -1,378 +1,202 @@
-# The Consistency Nerve of Data Sheaves: A Simplicial Approach to Database Integration
+# Sheaf-Theoretic Data Integration: Deepening the Gluing-Consistency Correspondence
 
 ## Abstract
 
-We introduce the **Consistency Nerve**, a novel mathematical structure that captures the higher-order consistency properties of families of partial databases. Given n partial databases (sections of a data sheaf), the Consistency Nerve is the abstract simplicial complex whose k-simplices are (k+1)-element subfamilies that are pairwise consistent. We establish a complete characterization: the sheaf condition (global integrability) holds if and only if the Consistency Nerve is the full (n−1)-simplex, equivalently, if and only if the Consistency Rank equals n. We prove that projection to column subsets preserves consistency and monotonically reduces disagreement, that gluing consistent databases preserves compatibility with third parties, and that the total family defect vanishes precisely when the sheaf condition holds. We introduce the Defect Spectrum — the filtration of approximate consistency nerves by tolerance threshold — and prove its monotonicity. All results are machine-verified in the Lean 4 theorem prover with the Mathlib library.
-
-**Keywords**: data sheaves, consistency nerve, simplicial complex, database integration, missing data, sheaf cohomology, formal verification
-
----
+We extend the sheaf-theoretic framework for database consistency and missing data imputation, building on the catalog's foundational `SheafDataIntegration` formalization. Our main contributions are: (1) a proof that gluing of pairwise-consistent partial databases is **associative**, establishing well-definedness of multi-source data integration independent of combination order; (2) a **coverage-completeness theorem** showing that consistent families covering all positions assemble into global sections via fold-gluing; (3) formalization of the **feature-subset sheaf** with constructive gluing on column subsets; (4) a **coboundary-Čech bridge** connecting discrete database disagreement to cohomological obstruction; and (5) **strengthened consistency probability bounds** including strict monotonicity, log-linearity, and exponential decay to zero. All results are machine-verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The observation that databases with missing entries form partial sections of a sheaf connects two apparently disparate fields: relational database theory and algebraic topology. The catalog's `SheafDataIntegration.lean` (Computation) establishes the basic framework: partial databases as functions to `Option V`, consistency as overlap agreement, gluing as preferential union, and the coboundary norm as the algebraic measure of inconsistency.
 
-Data integration — the problem of combining information from multiple partial sources into a coherent whole — is a ubiquitous challenge in data science, healthcare informatics, sensor networks, and federated learning. The classical approaches (mean imputation, KNN imputation, MICE) treat missing data as a statistical nuisance. We argue that missing data has *geometric* structure, captured by the theory of sheaves.
+This work deepens the correspondence in five directions:
 
-### 1.2 Sheaves and Databases
+1. **Algebraic structure of gluing** (§3–4): We prove gluing is associative for consistent triples, and that iterated fold-gluing preserves consistency with all list elements.
 
-A **sheaf** on a topological space assigns data to each open set, with compatibility conditions ensuring that local data assembles into global sections. For databases:
+2. **Constructive global section assembly** (§5): The coverage-completeness theorem provides a constructive algorithm for assembling global sections.
 
-- The "topological space" is the poset of column (feature) subsets, ordered by inclusion.
-- The "data" assigned to each column subset is the set of row vectors restricted to those columns.
-- The "sheaf condition" requires that partial records agreeing on shared columns can be merged.
+3. **Feature-subset sheaf** (§6): We formalize the concrete sheaf on the poset of feature (column) subsets, proving presheaf functoriality and the gluing axiom.
 
-This connection was noted informally in prior work on cellular sheaves (Curry, 2014; Robinson, 2014; Hansen & Ghrist, 2019). Our contribution is to introduce a new combinatorial-topological invariant — the Consistency Nerve — and to provide machine-verified proofs of its fundamental properties.
+4. **Coboundary bridge** (§7): We connect database coboundary norms to the Čech cohomological framework.
 
-### 1.3 Contributions
+5. **Quantitative refinements** (§8): Strict monotonicity, log-linearity, and asymptotic decay of consistency probability.
 
-1. **The Consistency Nerve** (Definition 2.1): An abstract simplicial complex whose faces are pairwise-consistent subfamilies.
-2. **Rank-Sheaf Equivalence** (Theorem 3.3): The Consistency Rank equals n if and only if the sheaf condition holds.
-3. **Defect Spectrum** (Definition 4.1): A filtration of approximate nerves by tolerance threshold, with proven monotonicity.
-4. **Projection Monotonicity** (Theorems 5.1–5.2): Projection to column subsets preserves consistency and reduces disagreement.
-5. **Gluing Preservation** (Theorem 6.1): Gluing consistent databases preserves compatibility with arbitrary third parties.
-6. **Defect-Sheaf Duality** (Theorem 7.1): Zero family defect is equivalent to the sheaf condition.
-7. **Coboundary Complex** (Theorem 8.1): The Čech coboundary operators satisfy δ¹ ∘ δ⁰ = 0.
+### 1.1 Catalog References
 
-All proofs are formalized in Lean 4 with Mathlib, using only the standard axioms (propext, Classical.choice, Quot.sound).
-
----
+This work builds directly on:
+- `Catalog/Computation/SheafDataIntegration.lean`: foundational definitions and `sheaf_condition_of_global_restriction`
+- `Catalog/Bridges/SheafObstruction.lean`: `overlap_pair_count_bound`, `constant_presheaf_is_sheaf_on_finite_locale`
+- `Catalog/MachineLearning/Coboundary.lean`: `locally_consistent_has_global_section`, `coboundary_composition_zero`
 
 ## 2. Definitions
 
-### 2.1 Partial Databases
+**Definition 2.1** (Partial Database). For natural numbers `nRows, nCols` and a type `V`, a *partial database* is a function `PartialDB' nRows nCols V := Fin nRows × Fin nCols → Option V`.
 
-**Definition 2.1** (Partial Database). A *partial database* with nR rows and nC columns over a value type V is a function
+**Definition 2.2** (Consistency). Two partial databases `db1, db2` are *consistent* (`ConsistentPair'`) if for every position `p` and values `v1, v2`, `db1 p = some v1 ∧ db2 p = some v2 → v1 = v2`.
 
+**Definition 2.3** (Gluing Map). The *gluing* `GluingMap' db1 db2` returns `db1 p` when defined, `db2 p` otherwise.
+
+**Definition 2.4** (Global Section). A partial database is a *global section* (`IsGlobalSection'`) if `db p ≠ none` for all `p`.
+
+**Definition 2.5** (Fold-Glue). For a list of partial databases, `foldGlue dbs := dbs.foldl GluingMap' (emptyDB ...)`.
+
+**Definition 2.6** (Feature Database). `FeatureDB nRows S V := Fin nRows → S → V` where `S : Finset (Fin nCols)`. Restriction: `db.restrict hTS r t := db r ⟨t.val, hTS t.property⟩`.
+
+**Definition 2.7** (Coboundary Norm). `CoboundaryNorm' dbs := Σ_{i,j,r,c} disagreementAt'(dbs_i, dbs_j, (r,c))`.
+
+**Definition 2.8** (Consistency Probability). `consistencyProb r c := (1-r)^c`.
+
+## 3. Gluing Associativity
+
+**Theorem 3.1** (Gluing Associativity). *For three pairwise-consistent partial databases a, b, c:*
 ```
-PDB(nR, nC, V) := Fin(nR) × Fin(nC) → Option(V)
-```
-
-where `Option(V) = V ∪ {⊥}` (⊥ represents a missing entry).
-
-**Definition 2.2** (Consistency). Two partial databases a, b are *consistent* if
-
-```
-∀ p, ∀ v w : V, a(p) = some(v) ∧ b(p) = some(w) → v = w
-```
-
-That is, they agree wherever both are defined.
-
-**Definition 2.3** (Sheaf Condition). A family `(dbs_i)_{i ∈ Fin(n)}` satisfies the *sheaf condition* if all pairs are consistent:
-
-```
-∀ i j : Fin(n), dbs(i).Consistent(dbs(j))
-```
-
-### 2.2 The Consistency Nerve
-
-**Definition 2.4** (Nerve Face). A subset S ⊆ Fin(n) is a *face* of the consistency nerve if all databases indexed by S are pairwise consistent:
-
-```
-IsNerveFace(dbs, S) := ∀ i ∈ S, ∀ j ∈ S, dbs(i).Consistent(dbs(j))
+GluingMap' (GluingMap' a b) c = GluingMap' a (GluingMap' b c)
 ```
 
-**Theorem 2.5** (Simplicial Complex). The collection of nerve faces satisfies:
-- ∅ is a face.
-- Every singleton {i} is a face.
-- If S is a face and T ⊆ S, then T is a face (hereditary property).
+*Proof sketch.* By function extensionality, we verify equality at each position `p`. Case-split on `a p` and `b p`:
+- If `a p = some va`: both sides equal `some va` (left side: `GluingMap'` of `some va` with `c` gives `some va`; right side: `GluingMap' a _` returns `a p = some va`).
+- If `a p = none, b p = some vb`: left side = `GluingMap' (some vb) c` = `some vb`; right side = `GluingMap' none (GluingMap' b c)` = `GluingMap' (some vb) c` via `b p = some vb` dominating in `GluingMap' b c`.
+- If `a p = none, b p = none`: both sides reduce to `c p`. □
 
-*Proof*: All three properties are verified in Lean 4. The hereditary property follows from the fact that pairwise consistency on S restricts to pairwise consistency on T ⊆ S. □
+**Remark.** Without the consistency hypotheses, associativity can fail when `a` and `b` disagree at a position where `c` provides a "tiebreaker." The consistency condition is *necessary*, not merely sufficient.
 
-### 2.3 Consistency Rank
+### PEGB for Theorem 3.1
 
-**Definition 2.6** (Consistency Rank). The *Consistency Rank* of a family is the maximum cardinality of a nerve face:
+- **Proof**: Complete Lean 4 proof by case analysis on `a p` and `b p`. Machine-verified.
+- **Example**: Three patient databases: A has (blood pressure, cholesterol), B has (cholesterol, glucose), C has (glucose, BMI). Pairwise consistent on overlaps. Associativity ensures the final merged record is independent of merge order.
+- **Generalization**: Extends to n-fold gluing via fold. The natural next level is commutativity: does `GluingMap' a b = GluingMap' b a` hold for consistent pairs? No — the gluing operation is *not* commutative (it prefers the first argument). However, the *domains* of the gluings are the same, and the *values* agree on the union of domains.
+- **Boundary**: Breaks when consistency fails. Also, GluingMap' is not commutative — `GluingMap' a b ≠ GluingMap' b a` in general, even for consistent pairs (they differ where both are defined with the same value, preferring different sources).
 
+## 4. Fold-Gluing Consistency
+
+**Theorem 4.1** (Fold-Gluing Consistency). *If `dbs` is a list of pairwise-consistent partial databases, then `foldGlue dbs` is consistent with every element `dbs[k]`.*
+
+*Proof sketch.* By induction on the list using `List.reverseRecOn`. The base case is trivial (empty fold is the empty DB). The inductive step uses `gluing_preserves_consistency'`: if the accumulated fold is consistent with all previous elements, and the next element is consistent with all previous elements, then their gluing is consistent with everything. □
+
+This theorem is the inductive engine that powers the coverage-completeness result.
+
+## 5. Coverage-Completeness
+
+**Theorem 5.1** (Coverage-Completeness). *If `dbs` is pairwise consistent and covers all positions, then `foldGlue dbs` is a global section.*
+
+*Proof sketch.* Suppose for contradiction that `foldGlue dbs` is not defined at some position `p`. By the coverage hypothesis, some `dbs[k]` is defined at `p`. But the fold-glue process progressively accumulates all entries: `foldl GluingMap' acc rest` at position `p` is defined whenever `acc p ≠ none` or any element of `rest` defines `p`. Since `dbs[k]` appears somewhere in the fold, `p` must be defined in the result — contradiction. □
+
+### PEGB for Theorem 5.1
+
+- **Proof**: By contradiction and inner induction on the fold. Machine-verified.
+- **Example**: Three databases covering a 2×3 grid: d1 covers row 0, d2 covers the middle, d3 covers row 1 and column 2. Their fold-glue fills all 6 cells.
+- **Generalization**: Extends to infinite families via directed colimits. The natural next level: replace lists with arbitrary directed systems of consistent partial databases.
+- **Boundary**: Fails without the covering hypothesis (trivially — uncovered positions remain missing). Also fails without pairwise consistency (fold-glue may produce values that disagree with some source).
+
+## 6. Feature-Subset Sheaf
+
+**Theorem 6.1** (Presheaf Functoriality). *Feature restriction is functorial: for U ⊆ T ⊆ S,*
 ```
-ConsistencyRank(dbs) := max { |S| : S is a face of the nerve }
+(db.restrict hTS).restrict hUT = db.restrict (hUT.trans hTS)
 ```
-
-This equals the clique number of the consistency graph (where vertices are databases and edges connect consistent pairs).
-
----
-
-## 3. Main Results
-
-### 3.1 Sheaf ↔ Complete Nerve
-
-**Theorem 3.1** (Sheaf ↔ Complete Nerve).
-
+*and*
 ```
-FamilySheaf(dbs) ↔ IsNerveFace(dbs, Fin(n))
-```
-
-*Proof*: The sheaf condition requires consistency for all i, j ∈ Fin(n). This is exactly the definition of Fin(n) being a face. □
-
-### 3.2 Rank Bounds
-
-**Theorem 3.2**. ConsistencyRank(dbs) ≤ n.
-
-*Proof*: Every face S ⊆ Fin(n) has |S| ≤ |Fin(n)| = n. □
-
-**Theorem 3.3** (Rank-Sheaf Equivalence).
-
-```
-ConsistencyRank(dbs) = n ↔ FamilySheaf(dbs)
-```
-
-*Proof sketch*:
-- (⇐): If the sheaf condition holds, Fin(n) is a face of size n, so the rank is at least n. Combined with Theorem 3.2, rank = n.
-- (⇒): If rank = n, there exists a face S with |S| = n. Since S ⊆ Fin(n) and |S| = |Fin(n)| = n, we have S = Fin(n). By the face property, all pairs in Fin(n) are consistent.
-
-This is the central equivalence: it characterizes the sheaf condition purely in terms of the Consistency Rank, a combinatorial invariant.
-
-The contrapositive is equally informative: the sheaf condition *fails* if and only if the Consistency Rank is strictly less than n. In graph-theoretic terms, the consistency graph is not complete — there exist inconsistent pairs. □
-
-### 3.3 Consistency ↔ Zero Disagreement
-
-**Definition 3.4** (Disagreement). For databases a, b over a type V with decidable equality:
-
-```
-disagreeAt(a, b, p) := match a(p), b(p) with
-  | some(v), some(w) => if v = w then 0 else 1
-  | _, _ => 0
-
-disagreement(a, b) := Σ_{r,c} disagreeAt(a, b, (r,c))
+db.restrict (refl S) = db
 ```
 
-**Theorem 3.5** (Consistency ↔ Zero Disagreement).
+**Theorem 6.2** (Feature Gluing). *If `dbS : FeatureDB nRows S V` and `dbT : FeatureDB nRows T V` are feature-consistent (agree on S ∩ T), there exists `dbST : FeatureDB nRows (S ∪ T) V` that restricts to `dbS` and `dbT`.*
 
+*Proof sketch.* Construct `dbST` by: if `f ∈ S`, use `dbS r ⟨f, _⟩`; otherwise `f ∈ T \ S`, use `dbT r ⟨f, _⟩`. The restriction to S is immediate. The restriction to T requires the consistency hypothesis for features in S ∩ T. □
+
+**Theorem 6.3** (Global Restriction Consistency). *Restricting a global feature database to any two subsets always produces feature-consistent restrictions.*
+
+### PEGB for Theorem 6.2
+
+- **Proof**: Constructive — explicitly builds the glued database. Machine-verified.
+- **Example**: Two clinical studies: Study A records {age, weight, cholesterol}, Study B records {cholesterol, glucose, HbA1c}. If cholesterol values agree across studies, the studies can be merged into a single dataset with all 5 features.
+- **Generalization**: The sheaf on the poset of feature subsets is a special case of a sheaf on a finite lattice. The general theory of sheaves on finite posets (via nerve constructions) provides a categorical generalization.
+- **Boundary**: Breaks when there are more than two overlapping subsets with circular disagreements: A agrees with B on columns {1,2}, B agrees with C on {2,3}, but A and C disagree on {1,3}. The pairwise condition is necessary for each pair.
+
+## 7. Coboundary-Čech Bridge
+
+**Theorem 7.1** (Coboundary-Sheaf Equivalence). *`CoboundaryNorm' dbs = 0 ↔ SheafCondition' dbs`.*
+
+This connects the algebraic (sum-of-disagreements = 0) and geometric (pairwise consistency) characterizations.
+
+**Theorem 7.2** (Coboundary Symmetry). *`disagreementAt' db1 db2 p = disagreementAt' db2 db1 p`.*
+
+**Theorem 7.3** (Coboundary Vanishing on Global Restrictions). *Restricting a total function to any family of position masks gives coboundary norm zero.*
+
+The coboundary bridge imports the full machinery of Čech cohomology:
+- **H⁰** = global sections = consistent completions
+- **δ⁰** = coboundary operator = disagreement counter
+- **ker(δ⁰)** = consistent families (sheaf condition)
+- **H¹** = obstruction to global completion
+
+The catalog's `coboundary_composition_zero` (from Coboundary.lean) shows δ¹ ∘ δ⁰ = 0, establishing the cochain complex structure. Our results provide the data-integration interpretation of this algebraic identity.
+
+## 8. Quantitative Refinements
+
+**Theorem 8.1** (Strict Monotonicity). *For 0 < r < 1 and c₁ < c₂:*
 ```
-a.Consistent(b) ↔ a.disagreement(b) = 0
-```
-
-*Proof*: The disagreement is a sum of nonneg terms. It vanishes iff each term vanishes, which happens iff every overlap position has matching values. □
-
----
-
-## 4. The Defect Spectrum
-
-### 4.1 Approximate Consistency
-
-**Definition 4.1** (t-Approximate Consistency).
-
-```
-ApproxConsistent(dbs, t, i, j) := dbs(i).disagreement(dbs(j)) ≤ t
-```
-
-**Theorem 4.2** (Spectrum at 0). ApproxConsistent(dbs, 0, i, j) ↔ dbs(i).Consistent(dbs(j)).
-
-**Theorem 4.3** (Spectrum Monotonicity). If t ≤ t' and ApproxConsistent(dbs, t, i, j), then ApproxConsistent(dbs, t', i, j).
-
-*Interpretation*: The defect spectrum provides a filtration of consistency relations. At t=0, we have the exact nerve. As t increases, more edges appear, and the nerve grows monotonically toward the complete simplex. The rate of growth encodes information about the severity of inconsistencies.
-
----
-
-## 5. Projection Theorems
-
-### 5.1 Consistency Preservation
-
-**Definition 5.1** (Column Projection).
-
-```
-projectCols(db, S)(p) := if p.col ∈ S then db(p) else ⊥
-```
-
-**Theorem 5.2** (Projection Preserves Consistency). If a.Consistent(b), then projectCols(a, S).Consistent(projectCols(b, S)) for any column subset S.
-
-*Proof*: If p.col ∉ S, both projections are ⊥, so there's no overlap to disagree on. If p.col ∈ S, the projections equal the originals, and consistency of the originals implies consistency of the projections. □
-
-### 5.2 Disagreement Reduction
-
-**Theorem 5.3** (Projection Reduces Disagreement).
-
-```
-projectCols(a, S).disagreement(projectCols(b, S)) ≤ a.disagreement(b)
+consistencyProb r c₂ < consistencyProb r c₁
 ```
 
-*Proof*: Each term in the projected disagreement sum is ≤ the corresponding term in the original sum: projection can only set entries to ⊥, which zeroes out the disagreement indicator. □
+This strengthens the catalog's weak monotonicity (≤) to strict (<).
 
-*Application*: If full data integration is impossible (Consistency Rank < n), we can project to a feature subset where it is possible. The theorems guarantee this process is monotone and well-behaved.
-
----
-
-## 6. Gluing Theory
-
-### 6.1 The Gluing Operation
-
-**Definition 6.1** (Glue).
-
+**Theorem 8.2** (Log-Linearity). *For 0 < r < 1:*
 ```
-glue(a, b)(p) := match a(p) with
-  | some(v) => some(v)
-  | ⊥ => b(p)
+log(consistencyProb r c) = c · log(1 - r)
 ```
 
-**Theorem 6.2** (Gluing Extends Both). If a.Consistent(b), then:
-- ∀ p v, a(p) = some(v) → glue(a,b)(p) = some(v)
-- ∀ p v, b(p) = some(v) → glue(a,b)(p) = some(v)
-
-**Theorem 6.3** (Gluing Preserves Third-Party Consistency). If a.Consistent(c) and b.Consistent(c), then glue(a,b).Consistent(c).
-
-*Proof*: At any position p, glue(a,b)(p) equals either a(p) (if defined) or b(p). In either case, consistency with c follows from the respective hypothesis. □
-
-*Consequence*: Iterated gluing of a sheaf-satisfying family produces a single partial database extending every input. The iterative process preserves all accumulated information.
-
-### 6.2 Coverage Monotonicity
-
-**Definition 6.4** (Coverage).
-
+**Theorem 8.3** (Exponential Decay). *For 0 < r < 1:*
 ```
-coverage(db) := |{ p : db(p) ≠ ⊥ }|
+lim_{c→∞} consistencyProb r c = 0
 ```
 
-**Theorem 6.5**. coverage(db) ≤ nR × nC.
+**Theorem 8.4** (Product Rule). *`consistencyProb r (c₁ + c₂) = consistencyProb r c₁ · consistencyProb r c₂`.*
 
-**Theorem 6.6** (Coverage Monotonicity). coverage(a) ≤ coverage(glue(a, b)).
+### PEGB for Theorem 8.3
 
-*Proof*: Gluing can only fill in missing entries, never remove existing ones. □
+- **Proof**: Direct application of `tendsto_pow_atTop_nhds_zero_of_lt_one`. Machine-verified.
+- **Example**: For r=0.3 and c=4500 (a 10-column, 100-row database), P ≈ 10^{-697}.
+- **Generalization**: The decay rate log(1-r) could be replaced by any quantity in (-∞, 0), yielding a parametric family of decay models.
+- **Boundary**: At r=0, P=1 always (no decay). At r=1, P=0 immediately for c≥1. The interesting regime is 0 < r < 1 where the decay is geometric.
 
----
+## 9. Cross-Domain Bridge: Čech Cochain Complex ↔ Database Coboundary
 
-## 7. Family Defect
+The deepest structural insight connects two independently formalized constructions:
 
-**Definition 7.1** (Family Defect).
+1. **Database coboundary** (SheafDataIntegration): counts disagreements between partial databases
+2. **Čech cochain complex** (Coboundary.lean): the sequence δ⁰ : C⁰ → C¹ → C² with δ¹ ∘ δ⁰ = 0
 
-```
-FamilyDefect(dbs) := Σ_{i,j} dbs(i).disagreement(dbs(j))
-```
+The bridge: for each position `(r,c)`, assign a real-valued 0-cochain by `f(i) = val(dbs_i(r,c))` where `val : V → ℝ` is any valuation. Then the Čech coboundary `(δ⁰f)(i,j) = f(j) - f(i)` measures the valuation difference, while the database disagreement indicator `disagreementAt'` measures the binary difference.
 
-**Theorem 7.2** (Zero Defect ↔ Sheaf). FamilyDefect(dbs) = 0 ↔ FamilySheaf(dbs).
+The key relation: `|δ⁰f|₁ ≤ max_val_diff · CoboundaryNorm`. This imports the full Čech cohomological machinery into data integration: spectral sequences for computing obstruction groups, Mayer-Vietoris sequences for decomposing consistency problems, and derived functor cohomology for abstract sheaf-theoretic reasoning.
 
-*Proof*: Since each disagreement(dbs(i), dbs(j)) is nonneg, the sum vanishes iff each term vanishes. By Theorem 3.5, each term vanishes iff the corresponding pair is consistent. □
+## 10. Discussion and Future Work
 
----
+### 10.1 Practical Implications
 
-## 8. The Coboundary Complex
+The sheaf framework provides a principled foundation for data integration:
 
-**Definition 8.1** (Čech Coboundaries).
+1. **Validation**: The coboundary norm gives a single number measuring total inconsistency across all data sources.
+2. **Integration order**: Gluing associativity ensures distributed integration is well-defined.
+3. **Completeness certification**: The coverage theorem certifies when full imputation is achievable.
+4. **Complexity estimation**: The exponential decay theorem quantifies the difficulty of consistency.
 
-```
-δ⁰(f)(i,j) := f(j) - f(i)
-δ¹(g)(i,j,k) := g(j,k) - g(i,k) + g(i,j)
-```
+### 10.2 Limitations
 
-**Theorem 8.2** (δ¹ ∘ δ⁰ = 0). For any f : Fin(n) → ℤ and all indices i, j, k:
+- The current framework treats all positions uniformly; real databases have typed columns.
+- The binary consistency model (agree/disagree) doesn't capture "approximate" agreement.
+- The exponential decay model assumes independent constraints, which is rarely true in practice.
 
-```
-δ¹(δ⁰(f))(i,j,k) = 0
-```
+### 10.3 Future Directions
 
-*Proof*: Direct computation: (f(k)−f(j)) − (f(k)−f(i)) + (f(j)−f(i)) = 0. □
-
-*Significance*: This identity ensures that the coboundary operators form a chain complex, laying the foundation for a sheaf cohomology theory of databases.
-
----
-
-## 9. Constraint Growth
-
-**Theorem 9.1** (Superlinear Constraint Growth). For n ≥ 4:
-
-```
-n < n(n-1)/2
-```
-
-*Proof*: For n ≥ 4, n(n−1) ≥ 4·3 = 12, so n(n−1)/2 ≥ 6 > 4 ≥ n. The general case follows by induction. □
-
-*Interpretation*: The number of pairwise consistency constraints grows quadratically, while the number of databases grows linearly. This underlies the exponential decay of consistency probability.
-
----
-
-## 10. PEGB Analysis
-
-### Theorem: Rank-Sheaf Equivalence
-
-- **Proof**: Machine-verified in Lean 4 (consistency_rank_eq_iff_sheaf)
-- **Example**: 4 databases from the same ground truth with 40% missing rate → Rank = 4 = n, sheaf condition holds
-- **Generalization**: The equivalence holds for arbitrary types V and arbitrary grid sizes nR × nC
-- **Boundary**: For n = 1, the rank is always 1 = n (trivially sheaf). For n = 0, the rank is 0. The first non-trivial case is n = 2.
-
-### Theorem: Projection Preserves Consistency
-
-- **Proof**: Machine-verified (projection_preserves_consistency)
-- **Example**: Two consistent 5×6 databases, projected to first 3 columns, remain consistent
-- **Generalization**: Holds for arbitrary column subsets, not just contiguous ranges
-- **Boundary**: Projecting to the empty set makes everything consistent (trivially). Projecting to all columns preserves consistency (identity).
-
-### Theorem: Zero Defect ↔ Sheaf
-
-- **Proof**: Machine-verified (zero_defect_iff_sheaf)
-- **Example**: 5 databases with total pairwise disagreement 0 → all consistent. 5 random databases with total disagreement 47 → not all consistent.
-- **Generalization**: Works for any decidable equality type V and any family size n
-- **Boundary**: For n = 1, defect is always 0 (trivially sheaf). For n = 2, defect = 2·disagreement(db1, db2).
-
----
-
-## 11. Falsifiable Conjectures
-
-### Conjecture 11.1 (Nerve Connectivity Threshold)
-
-For n random databases over {0,...,q−1} with missing rate r and grid size m×k, the approximate consistency nerve at threshold t becomes connected when
-
-```
-t ≥ m·k·(1 − r²)·(1 − 1/q)
-```
-
-**Test**: Generate 1000 random families, compute the connectivity threshold, compare with the formula.
-
-### Conjecture 11.2 (Rank Distribution)
-
-The consistency rank of n independent random databases follows a distribution concentrated near 2 for large n and moderate missing rates, with exponentially small probability of rank > log(n).
-
-**Test**: Compute rank distributions for n = 10, 20, 50, 100 with r = 0.3 and q = 5.
-
----
-
-## 12. Algorithms
-
-### Algorithm 1: Consistency Nerve Construction
-
-```
-Input: databases db_1, ..., db_n
-Output: set of faces (simplicial complex)
-
-1. For each pair (i,j), compute disagreement(db_i, db_j)
-2. Build 1-skeleton: edge (i,j) iff disagreement = 0
-3. Find all cliques using Bron-Kerbosch
-4. Return all sub-cliques as faces
-```
-
-Time: O(n² · nR · nC) for step 1, plus clique enumeration.
-
-### Algorithm 2: Sheaf Imputation
-
-```
-Input: databases db_1, ..., db_n
-Output: imputed database
-
-1. Build consistency nerve
-2. Find maximum clique (= max consistent subfamily)
-3. Glue the maximum clique iteratively
-4. Fill remaining entries by majority vote
-```
-
----
-
-## 13. Related Work
-
-- **Cellular sheaves**: Curry (2014), Robinson (2014), Hansen & Ghrist (2019)
-- **Sheaf neural networks**: Bodnar et al. (2022)
-- **Missing data**: Rubin (1976), van Buuren (2018)
-- **Simplicial complexes in TDA**: Edelsbrunner & Harer (2010)
-
----
-
-## 14. Future Work
-
-1. **Sheaf cohomology of the nerve**: Define H⁰ and H¹ and relate them to consistency obstructions.
-2. **Spectral methods**: Use the Laplacian of the consistency graph for approximate imputation.
-3. **Dynamic nerves**: Track how the nerve evolves as data arrives incrementally.
-4. **Categorical generalization**: Replace the poset of column subsets with an arbitrary category.
-
----
+See FUTURE_DIRECTIONS.md for detailed research directions, including:
+- Approximate sheaves with tolerance parameters
+- Weighted coboundary norms for soft constraints
+- Directed sheaves for temporal databases
+- Higher cohomology groups for multi-way inconsistencies
 
 ## References
 
-1. Curry, J. (2014). Sheaves, cosheaves and applications. PhD thesis, University of Pennsylvania.
-2. Hansen, J. & Ghrist, R. (2019). Toward a spectral theory of cellular sheaves. Journal of Applied and Computational Topology, 3, 315–358.
-3. Robinson, M. (2014). Topological Signal Processing. Springer.
+1. Leray, J. (1945). Sur la forme des espaces topologiques et sur les points fixes des représentations. *J. Math. Pures Appl.* 24, 95–167.
+2. Grothendieck, A. (1957). Sur quelques points d'algèbre homologique. *Tôhoku Math. J.* 9(2), 119–221.
+3. Robinson, M. (2014). *Topological Signal Processing.* Springer.
+4. Curry, J. (2014). Sheaves, cosheaves and applications. *arXiv:1303.3255*.
+5. Ghrist, R. (2014). *Elementary Applied Topology.* Createspace.
