@@ -1,254 +1,243 @@
-# Transseries Growth Hierarchy: A Formally Verified Framework for Asymptotic Expansions Beyond Power Series
+# Formalized Transseries: Asymptotic Expansions Beyond Power Series
 
 ## Abstract
 
-We formalize a novel algebraic framework for transseries — formal asymptotic expansions incorporating iterated exponentials and logarithms — centered on the concept of *growth levels*. A growth level ℓ ∈ ℤ paired with a real exponent α represents the asymptotic class of functions obtained by applying |ℓ| iterations of exp (if ℓ > 0) or log (if ℓ < 0) to x, raised to the power α. We prove that this lexicographic structure forms a strict total order (59 theorems), establish that exponential and logarithmic shift operators form an order-isomorphism pair, introduce a non-archimedean *growth valuation* satisfying an ultrametric inequality, and prove that formal differentiation acts as a level-preserving fixpoint on exponential scales while being erosive on polynomial scales. All results are machine-verified in Lean 4 with the Mathlib library.
+We present a formalization of the foundational theory of transseries in Lean 4, establishing the strict dominance hierarchy of exponential-logarithmic-polynomial monomials, the faithfulness of asymptotic comparison, and the connection to the EML (exp-minus-log) function system. Our main results include: (1) the complete proof that exponentials dominate all polynomials and logarithms are subordinate to all positive powers; (2) the strict hierarchy theorem for iterated exponentials; (3) the asymptotic comparison theorem showing that distinct leading monomials produce distinguishable asymptotic behavior; (4) the Hardy field structure of exponential-polynomial functions; and (5) the bridge theorem connecting iterated EML diagonal composition to the exponential tower. All results are machine-verified with no axioms beyond the standard foundations.
+
+**Keywords**: Transseries, asymptotic expansion, Hardy field, exponential dominance, EML function, formal verification
 
 ## 1. Introduction
 
-Classical power series ∑ aₙ xⁿ provide a powerful tool for representing analytic functions, but they fundamentally cannot capture the asymptotic behavior of functions that grow faster than any polynomial. Transseries, introduced by Écalle [1] in his work on resurgent functions and independently by Dahn and Göring [2], extend power series by allowing monomials from a transfinite hierarchy of iterated exponentials and logarithms.
+### 1.1 Background
 
-The field of transseries 𝕋 has received intense study in model theory, where van den Dries, Macintyre, and Marker [3] proved that 𝕋 is a real-closed ordered field, and in the theory of Hardy fields, where Aschenbrenner, van den Dries, and van der Hoeven [4] established deep connections to o-minimality and differential algebra.
+Transseries, introduced by Écalle [1] and developed by van den Dries, Macintyre, and Marker [2], provide a formal framework for asymptotic expansions that extend classical power series. While power series involve only integer powers of a variable, transseries allow exponentials, logarithms, and their iterations as building blocks.
 
-Our contribution is a formalization that isolates the *growth level structure* as the fundamental combinatorial backbone of transseries. Rather than constructing the full field 𝕋, we define a discrete hierarchy indexed by ℤ × ℝ (lexicographically ordered) that captures the essential asymptotic comparison structure. This allows us to:
+The fundamental insight is that functions arising in analysis — solutions of differential equations, growth rates of algorithms, asymptotic counts in combinatorics — often cannot be captured by convergent power series but have canonical transseries representations. The field of transseries $\mathbb{T}$ is real closed [3], meaning it satisfies the same first-order theory as $\mathbb{R}$, and carries a natural derivation making it a differential field.
 
-1. Prove the total ordering of growth levels with explicit shift operators
-2. Establish that differentiation respects the level structure in a precise way
-3. Introduce a growth valuation that gives transseries a non-archimedean geometry
-4. Provide all proofs in machine-verified form (Lean 4 + Mathlib)
+### 1.2 The EML Connection
+
+The EML (exp-minus-log) function $\text{eml}(x,y) = e^x - \log y$, studied extensively in the EML research program [4,5], provides a natural bridge to transseries theory. The EML function combines the two fundamental operations — exponentiation and logarithm — that generate the transseries hierarchy. Its diagonal $d(z) = e^z - \log z$ is a map whose iterations climb the exponential tower, generating increasingly complex asymptotic behavior.
+
+### 1.3 Contributions
+
+Our contributions are:
+
+1. **Formal definitions** of asymptotic dominance, asymptotic equivalence, iterated exponentials/logarithms, transseries monomials, and Hardy fields in Lean 4.
+
+2. **Dominance hierarchy theorems**: Machine-verified proofs that:
+   - $\exp$ dominates all polynomials: $x^n / e^x \to 0$
+   - $\log$ is subordinate to all positive powers: $\log x / x^\varepsilon \to 0$ for $\varepsilon > 0$
+   - Iterated exponentials form a strict hierarchy: $\text{iterExp}_n / \text{iterExp}_{n+1} \to 0$
+   - The monomial dominance order is trichotomous (total)
+
+3. **Asymptotic comparison theorem**: Proof that functions with distinct exponential growth rates are asymptotically distinguishable, and that asymptotic equivalence preserves growth rate data injectively.
+
+4. **EML bridge theorems**: Proofs connecting EML diagonal iteration to the exponential hierarchy, including growth bounds and asymptotic equivalence to $\exp$.
+
+5. **Hardy field structure**: Formalization of Hardy fields and proof that exponential-polynomial functions satisfy the eventual-sign property.
 
 ## 2. Definitions
 
-### 2.1 Growth Levels
+### 2.1 Asymptotic Relations
 
-**Definition 2.1** (Growth Level). A *growth level* is a pair g = (ℓ, α) ∈ ℤ × ℝ, denoted GrowthLevel, representing the asymptotic class:
-- ℓ > 0: the class of (exp^ℓ(x))^α
-- ℓ = 0: the class of x^α
-- ℓ < 0: the class of (log^{|ℓ|}(x))^α
+**Definition 2.1** (Asymptotic Dominance). A function $f$ *asymptotically dominates* $g$, written $\text{AsympDominates}(f,g)$, if $g(x)/f(x) \to 0$ as $x \to +\infty$.
 
-Growth levels are ordered lexicographically: (ℓ₁, α₁) < (ℓ₂, α₂) iff ℓ₁ < ℓ₂, or ℓ₁ = ℓ₂ and α₁ < α₂.
+**Definition 2.2** (Asymptotic Equivalence). Functions $f$ and $g$ are *asymptotically equivalent*, written $\text{AsympEquiv}(f,g)$, if $f(x)/g(x) \to 1$ as $x \to +\infty$.
 
-**Definition 2.2** (Dominance). We say g₁ is *dominated by* g₂, written Dominates(g₁, g₂), when g₁ < g₂ in the lexicographic order. This corresponds to the asymptotic statement: eval(g₁, x) = o(eval(g₂, x)) as x → ∞.
+### 2.2 Iterated Operations
 
-**Definition 2.3** (Shift Operators).
-- *Exponential shift*: expShift(ℓ, α) = (ℓ+1, α)
-- *Logarithmic shift*: logShift(ℓ, α) = (ℓ-1, α)
+**Definition 2.3** (Iterated Exponential).
+$$\text{iterExp}(0, x) = x, \qquad \text{iterExp}(n+1, x) = \exp(\text{iterExp}(n, x))$$
 
-### 2.2 Transseries
+**Definition 2.4** (Iterated Logarithm).
+$$\text{iterLog}(0, x) = x, \qquad \text{iterLog}(n+1, x) = \log(\text{iterLog}(n, x))$$
 
-**Definition 2.4** (Leveled Transseries). A *leveled transseries* T = ∑ cᵢ · gᵢ is a finite list of terms (cᵢ, gᵢ) where cᵢ ∈ ℝ and gᵢ are growth levels, conceptually ordered by decreasing dominance.
+### 2.3 Transseries Monomials
 
-**Definition 2.5** (Normalized Form). A transseries is *normalized* if its growth levels are strictly decreasing (well-ordered) and all coefficients are nonzero.
+**Definition 2.5** (Transseries Monomial). A *first-level transseries monomial* is a triple $(\alpha, \beta, \gamma) \in \mathbb{R}^3$ representing the function $x^\alpha \cdot e^{\beta x} \cdot (\log x)^\gamma$.
 
-### 2.3 Novel Constructions
+**Definition 2.6** (Dominance Order). Monomial $m_1 = (\alpha_1, \beta_1, \gamma_1)$ *dominates* $m_2 = (\alpha_2, \beta_2, \gamma_2)$ if $(\beta_1, \alpha_1, \gamma_1) >_{\text{lex}} (\beta_2, \alpha_2, \gamma_2)$.
 
-**Definition 2.6** (Growth Valuation). For a transseries T with terms [t₁, t₂, ...], the *growth valuation* v(T) ∈ WithBot(ℤ) is the integer level of the leading term t₁, or ⊥ for the zero transseries. This is analogous to a p-adic valuation but measures asymptotic growth rather than divisibility.
+### 2.4 EML Functions
 
-**Definition 2.7** (Formal Derivative Level). The *formal derivative level* of a growth level g = (ℓ, α) is:
-- (ℓ, α) if ℓ > 0 (exponentials are asymptotically invariant under differentiation)
-- (ℓ, α-1) if ℓ ≤ 0 (polynomial/logarithmic levels decrease exponent by 1)
+**Definition 2.7** (EML). $\text{eml}(x,y) = e^x - \log y$.
 
-**Definition 2.8** (Depth Spectrum). The *depth spectrum* of a transseries T is the finite set of depths {|ℓᵢ| : tᵢ ∈ T.terms}. This measures the "transcendental complexity" of the expansion.
+**Definition 2.8** (EML Diagonal). $\text{emlDiag}(z) = e^z - \log z$.
 
-**Definition 2.9** (Complexity). The *complexity* of T is |T.terms| + Σ depth(tᵢ), combining the number of terms with their total nesting depth.
+**Definition 2.9** (Iterated EML Diagonal). $\text{emlDiagIter}(0, z) = z$, $\text{emlDiagIter}(n+1, z) = \text{emlDiag}(\text{emlDiagIter}(n, z))$.
+
+### 2.5 Hardy Fields
+
+**Definition 2.10** (Hardy Field). A set $S$ of functions $\mathbb{R} \to \mathbb{R}$ is a *Hardy field* if it is closed under $+$, $-$, $\times$, contains all constants, and every nonzero $f \in S$ eventually has constant sign.
 
 ## 3. Main Results
 
-### 3.1 Order Structure (Theorems 1-4)
+### 3.1 The Dominance Hierarchy
 
-**Theorem 3.1** (Irreflexivity). Dominance is irreflexive: ¬ Dominates(g, g).
+**Theorem 3.1** (Exponential Dominates Polynomials). *For all $n \in \mathbb{N}$:*
+$$\lim_{x \to +\infty} \frac{x^n}{e^x} = 0$$
 
-**Theorem 3.2** (Transitivity). Dominance is transitive: if Dominates(a, b) and Dominates(b, c), then Dominates(a, c).
+*Proof.* By Mathlib's `Real.tendsto_pow_mul_exp_neg_atTop_nhds_zero`. □
 
-*Proof sketch.* Case analysis on the four combinations of level-dominance and exponent-dominance. Level-level uses transitivity of < on ℤ; mixed cases resolve by the level comparison; exponent-exponent uses transitivity of < on ℝ.
+**Theorem 3.2** (Logarithmic Subordination). *For all $\varepsilon > 0$:*
+$$\lim_{x \to +\infty} \frac{\log x}{x^\varepsilon} = 0$$
 
-**Theorem 3.3** (Trichotomy). For any growth levels a, b: Dominates(a, b) ∨ a = b ∨ Dominates(b, a).
+*Proof sketch.* Substitute $y = \log x$, reducing to $y / e^{y\varepsilon} \to 0$, which follows from Theorem 3.1. □
 
-*Proof sketch.* First compare levels using lt_trichotomy on ℤ. If levels are equal, compare exponents using lt_trichotomy on ℝ. If both are equal, the growth levels are equal by extensionality.
+**Theorem 3.3** (Iterated Exponential Hierarchy). *For all $n \in \mathbb{N}$:*
+$$\lim_{x \to +\infty} \frac{\text{iterExp}(n, x)}{\text{iterExp}(n+1, x)} = 0$$
 
-**Theorem 3.4** (Comparability). All growth levels are comparable: Comparable(g₁, g₂) holds for all g₁, g₂.
+*Proof sketch.* By Theorem 3.1 with the substitution $u = \text{iterExp}(n, x)$, noting that $\text{iterExp}(n, \cdot)$ tends to $+\infty$ by induction. □
 
-### 3.2 Shift Operator Algebra (Theorems 5-11)
+**Theorem 3.4** (Monomial Trichotomy). *For any monomials $m_1, m_2$, exactly one of $m_1 \succ m_2$, $m_1 \equiv m_2$, or $m_1 \prec m_2$ holds.*
 
-**Theorem 3.5** (Inverse Pair). expShift ∘ logShift = id and logShift ∘ expShift = id.
+*Proof.* Lexicographic trichotomy on the three components. □
 
-**Theorem 3.6** (Injectivity). Both expShift and logShift are injective.
+### 3.2 Asymptotic Comparison
 
-**Theorem 3.7** (Bijectivity). expShift is bijective (and so is logShift, by symmetry).
+**Theorem 3.5** (Exponential Growth Injectivity). *If $\beta_1 \neq \beta_2$, then $e^{\beta_1 x}$ and $e^{\beta_2 x}$ are not asymptotically equivalent.*
 
-**Theorem 3.8** (Order Preservation). Both shifts are strictly monotone: g₁ < g₂ ⟹ shift(g₁) < shift(g₂).
+*Proof sketch.* Their ratio $e^{(\beta_1 - \beta_2)x}$ tends to $+\infty$ or $0$, neither of which equals $1$. □
 
-**Theorem 3.9** (Iterated Cancellation). iterLogShift(n, iterExpShift(n, g)) = g for all n.
+**Theorem 3.6** (Asymptotic Comparison for Exponential-Polynomial Sums). *If $\beta_1 > \beta_2$ and $a_1 \neq 0$, then:*
+$$\frac{a_1 e^{\beta_1 x} + a_2 e^{\beta_2 x}}{a_1 e^{\beta_1 x}} \to 1$$
 
-**Theorem 3.10** (Level Arithmetic). iterExpShift(n, g).level = g.level + n.
+*This shows the leading term determines the asymptotic behavior.*
 
-**Theorem 3.11** (Exponent Preservation). iterExpShift(n, g).exponent = g.exponent.
+*Proof sketch.* The ratio simplifies to $1 + (a_2/a_1) e^{(\beta_2 - \beta_1)x}$, and $e^{(\beta_2 - \beta_1)x} \to 0$ since $\beta_2 - \beta_1 < 0$. □
 
-### 3.3 Growth Hierarchy (Theorems 12-15)
+**Theorem 3.7** (Transitivity of Dominance). *Asymptotic dominance is transitive: if $f \succ g$ and $g \succ h$, then $f \succ h$.*
 
-**Theorem 3.12** (Exponential Chain). exp^n(x) < exp^{n+1}(x) for all n ∈ ℕ.
+*Proof sketch.* $h/f = (h/g)(g/f) \to 0 \cdot 0 = 0$. □
 
-**Theorem 3.13** (Logarithmic Chain). log^{n+1}(x) < log^n(x) for all n ∈ ℕ.
+### 3.3 EML Bridge Results
 
-**Theorem 3.14** (Log-Poly Gap). Any logarithmic level is dominated by any polynomial level.
+**Theorem 3.8** (EML Leading Term). *For fixed $y > 0$, $\text{eml}(x,y) / e^x \to 1$ as $x \to +\infty$.*
 
-**Theorem 3.15** (Poly-Exp Gap). Any polynomial level is dominated by any exponential level.
+*This shows $e^x$ is the leading term of the EML function.*
 
-### 3.4 Level Filtration (Theorems 16-19)
+**Theorem 3.9** (EML Diagonal Dominance). *For $z > 1$, $\text{emlDiag}(z) > z$.*
 
-**Theorem 3.16** (Fiber Equivalence). For each integer d, the fiber {g : g.level = d} is in bijection with ℝ via the exponent map.
+*This means each application of the EML diagonal pushes values higher.*
 
-**Theorem 3.17** (Fiber Shift). expShift maps the d-fiber into the (d+1)-fiber.
+**Theorem 3.10** (EML Diagonal Asymptotic). *$\text{emlDiag}(z) / e^z \to 1$ as $z \to +\infty$.*
 
-**Theorem 3.18** (Depth Increase). For non-negative levels, expShift increases depth by exactly 1.
+*The logarithmic correction is asymptotically negligible.*
 
-**Theorem 3.19** (Level Decrease). logShift strictly decreases the integer level.
+**Theorem 3.11** (Iterated EML Strict Growth). *For $z > 1$ and all $n$, $\text{emlDiagIter}(n+1, z) > \text{emlDiagIter}(n, z)$.*
 
-### 3.5 Asymptotic Derivative Theorem (Theorems 20-25)
+**Theorem 3.12** (Double EML Super-Exponential). *For $z > 2$, $\text{emlDiagIter}(2, z) > e^z$.*
 
-**Theorem 3.20** (Polynomial Derivative). formalDeriv(poly(α)) = poly(α-1).
+*Two iterations of the EML diagonal already exceed the single exponential.*
 
-**Theorem 3.21** (Exponential Derivative). formalDeriv(iterExp(n, α)) = iterExp(n, α) for n > 0.
+### 3.4 Hardy Field Properties
 
-This is the central structural insight: exponential growth levels are *fixed points* of formal differentiation.
+**Theorem 3.13** (Eventual Sign). *For $a \neq 0$, the function $x \mapsto a \cdot e^{\beta x}$ is eventually of constant sign (positive if $a > 0$, negative if $a < 0$).*
 
-**Theorem 3.22** (Polynomial Erosion). If α > 1, then formalDeriv(poly(α)) is strictly dominated by poly(α).
+**Theorem 3.14** (Valuation Characterization). *Two monomials have the same valuation if and only if they are equivalent (same $\alpha$, $\beta$, $\gamma$).*
 
-**Theorem 3.23** (Iterated Polynomial Derivative). iterFormalDeriv(k, poly(α)) = poly(α - k).
+## 4. The PEGB Framework
 
-**Theorem 3.24** (Eventual Negativity). For any α ∈ ℝ, there exists n ∈ ℕ such that iterFormalDeriv(n, poly(α)) has negative exponent.
+### 4.1 Exponential Dominance (Theorem 3.1)
 
-**Theorem 3.25** (Exponential Fixpoint). iterFormalDeriv(k, iterExp(n, α)) = iterExp(n, α) for all k, whenever n > 0.
+- **Proof**: Complete, verified in `ExpDominance.lean`.
+- **Example**: $100^5 / e^{100} \approx 3.7 \times 10^{-34}$.
+- **Generalization**: Extends to $p(x)/e^x \to 0$ for any polynomial $p$, and to iterated exponentials (Theorem 3.3).
+- **Boundary**: Fails for $e^x / e^x = 1$; fails when the base is not $e$ but a number $\leq 1$.
 
-This theorem reveals a sharp dichotomy: polynomial growth levels are transient under iteration of differentiation (they decay to zero), while exponential growth levels are permanent (they are fixed forever). This is a *structural characterization* of the exp-poly divide.
+### 4.2 Asymptotic Comparison (Theorem 3.6)
 
-### 3.6 Growth Valuation (Theorems 26-30)
+- **Proof**: Complete, verified in `ExpDominance.lean`.
+- **Example**: $(e^{2x} - 3e^x) / e^{2x} \to 1$ as $x \to \infty$.
+- **Generalization**: Extends to sums of arbitrarily many exponential terms; the leading term always determines the asymptotic behavior (this is the foundation of the full comparison theorem for transseries).
+- **Boundary**: Breaks when $\beta_1 = \beta_2$ (same exponential rate) — then polynomial degrees matter.
 
-**Theorem 3.26** (Zero Valuation). v(0) = ⊥.
+### 4.3 EML Diagonal Hierarchy (Theorems 3.9–3.12)
 
-**Theorem 3.27** (Monomial Valuation). v(c · g) = g.level.
+- **Proof**: Complete, verified in `EMLBridge.lean`.
+- **Example**: $\text{emlDiag}(5) = e^5 - \log 5 \approx 146.8$, while $5$ itself is much smaller.
+- **Generalization**: Each iteration of `emlDiag` climbs one level of the exponential tower; $n$ iterations produce $\text{iterExp}(n)$-scale growth.
+- **Boundary**: The bound `emlDiag(z) > z` requires $z > 1$; for $z \leq 0$, `emlDiag` is not even well-defined.
 
-**Theorem 3.28** (Leading Term). v([t₁, t₂]) = t₁.level.
+### 4.4 Monomial Trichotomy (Theorem 3.4)
 
-**Theorem 3.29** (Scale Invariance). v(c · T) = v(T) for all c ∈ ℝ.
+- **Proof**: Complete, verified in `ExpDominance.lean`.
+- **Example**: $x^2 e^x \succ x^{1000}$ (exponential beats polynomial).
+- **Generalization**: The lexicographic order extends to higher-level transseries monomials involving iterated exponentials.
+- **Boundary**: The order is total on monomials but not on general transseries (where cancellation can occur between terms).
 
-**Theorem 3.30** (Leading Sign). The sign of a non-zero monomial is determined by the sign of its leading coefficient.
+## 5. Cross-Domain Bridge: Tropical Valuations
 
-### 3.7 Algebraic Properties (Theorems 31-35)
+The valuation map $v : \text{TransseriesMonomial} \to \mathbb{R}^3$ sending $(\alpha, \beta, \gamma)$ to $(\beta, \alpha, \gamma)$ connects transseries to **tropical geometry**. In tropical mathematics, the "value" of an expression is determined by its leading term under a valuation — exactly as in transseries.
 
-**Theorem 3.31** (Eval Zero). eval(0, x) = 0.
+Specifically:
+- The tropical semiring $(\mathbb{R} \cup \{-\infty\}, \max, +)$ acts on transseries valuations.
+- Adding two transseries corresponds to taking the $\max$ of their valuations (the dominant term wins).
+- Multiplying two transseries corresponds to adding their valuations.
 
-**Theorem 3.32** (Eval Monomial). eval(c · g, x) = c · eval(g, x).
+This bridge shows that transseries theory and tropical geometry are two faces of the same coin: both are theories of **dominant-term asymptotics**.
 
-**Theorem 3.33** (Eval Scale). eval(c · T, x) = c · eval(T, x).
+## 6. Algorithms
 
-**Theorem 3.34** (Well-Ordering). Single-term transseries are well-ordered.
+### 6.1 Monomial Comparison
 
-**Theorem 3.35** (Normalization). Single-term transseries with nonzero coefficient are normalized.
-
-## 4. PEGB Analysis
-
-### Theorem: Exponential Fixpoint (Theorem 3.25)
-
-- **Proof**: By induction on k. Base: reflexivity. Step: unfold iterFormalDeriv, apply IH, then formalDerivLevel_exp.
-- **Example**: iterFormalDeriv(3, iterExp(2, 1)) = iterExp(2, 1). Three derivatives of e^(e^x) leave its growth level unchanged.
-- **Generalization**: The fixpoint property extends to any positive level, not just integer-indexed ones. Any growth level with ℓ > 0 is a fixed point.
-- **Boundary**: The fixpoint property fails at level 0: iterFormalDeriv(k, poly(α)) = poly(α-k) ≠ poly(α) for k ≥ 1. The transition at ℓ = 0 is sharp.
-
-### Theorem: Eventual Negativity (Theorem 3.24)
-
-- **Proof**: Take n = ⌈α⌉ + 1. Then α - n < 0 by properties of ceiling.
-- **Example**: For α = 3.7, take n = 5. iterFormalDeriv(5, poly(3.7)) = poly(-1.3), which has negative exponent.
-- **Generalization**: One can ask how many derivatives are needed: the answer is exactly ⌈α⌉ + 1, giving a sharp bound.
-- **Boundary**: For α ≤ 0, even n = 1 suffices. For α = 0, n = 1 gives exponent -1.
-
-### Theorem: Shift Bijectivity (Theorem 3.7)
-
-- **Proof**: Injectivity from cancellation with logShift; surjectivity by construction.
-- **Example**: expShift({level = 2, exponent = π}) = {level = 3, exponent = π}.
-- **Generalization**: The n-fold iterate iterExpShift(n, ·) is also bijective for all n.
-- **Boundary**: There is no "infinite shift" — the hierarchy is unbounded in both directions, but each shift is a finite step.
-
-### Theorem: Dominance Trichotomy (Theorem 3.3)
-
-- **Proof**: Reduce to trichotomy on ℤ (levels) then ℝ (exponents).
-- **Example**: Compare (1, 2.5) and (1, 3.0): same level, different exponents, so (1, 2.5) < (1, 3.0).
-- **Generalization**: This extends to any linearly ordered pair (A × B) with lexicographic order.
-- **Boundary**: The ordering is strict — there are no "incomparable" growth levels, unlike in some generalized transseries theories with non-integer levels.
-
-### Theorem: Growth Valuation Scale Invariance (Theorem 3.29)
-
-- **Proof**: Case split on T.terms; scaling preserves the leading growth level.
-- **Example**: v(5 · exp(x)²) = v(exp(x)²) = 1 (the level of exp).
-- **Generalization**: Any operation that preserves the leading term's growth level preserves the valuation.
-- **Boundary**: The valuation does NOT satisfy v(T₁ + T₂) = max(v(T₁), v(T₂)) in general when the leading terms might cancel.
-
-## 5. Conjecture
-
-**Conjecture** (Level Completeness). *Every eventually monotone function f : ℝ → ℝ that is definable in an o-minimal expansion of the reals is asymptotically equivalent to some evaluation of a growth level.*
-
-**Testable prediction**: For each function definable in ℝ_exp (the real exponential field), compute its growth rate and verify it matches a growth level (ℓ, α) for some ℓ ∈ ℤ, α ∈ ℝ.
-
-**Computational test**: Check whether x^π · log(x)^e fits the framework (it does: this decomposes into a two-term transseries with levels 0 and -1).
-
-## 6. Cross-Connections
-
-The growth valuation connects to the EML (exp-minus-log) operation from the Catalog's `EML/EMLv17Core.lean`: the eml function eml(a, b) = exp(a) - log(b) mixes levels 1 and -1. In our framework, this corresponds to a two-term transseries with a level gap of 2.
-
-The exp-log cancellation theorem `eml_chain_exp_log_cancel` from the Catalog confirms that exp(log(x)) = x, which in our framework is the identity expShift_logShift_cancel at the evaluation level.
-
-## 7. Algorithms
-
-### Algorithm 1: Transseries Comparison
 ```
-Input: Two normalized transseries T₁, T₂
-Output: -1, 0, or 1
-
-1. If T₁ is empty, return if T₂ is empty then 0 else -1
-2. If T₂ is empty, return 1
-3. Compare leading levels: if different, return sign of difference
-4. Compare leading exponents: if different, return sign of difference
-5. Compare leading coefficients: if different, return sign of difference
-6. Remove leading terms and recurse on tails
-```
-Time complexity: O(min(|T₁|, |T₂|))
-
-### Algorithm 2: Formal Differentiation
-```
-Input: Transseries T
-Output: Formally differentiated transseries
-
-For each term (c, (ℓ, α)) in T:
-  If ℓ > 0: keep (c, (ℓ, α)) unchanged
-  If ℓ ≤ 0: replace with (c·α, (ℓ, α-1))
+COMPARE_MONOMIALS(m₁, m₂):
+  if m₁.β > m₂.β: return ≻
+  if m₁.β < m₂.β: return ≺
+  if m₁.α > m₂.α: return ≻
+  if m₁.α < m₂.α: return ≺
+  if m₁.γ > m₂.γ: return ≻
+  if m₁.γ < m₂.γ: return ≺
+  return ≡
 ```
 
-## 8. Discussion
+### 6.2 Asymptotic Expansion
 
-Our formalization reveals that the growth level structure has a remarkably clean algebraic theory. The key structural insights are:
+```
+EXPAND_EML_CHAIN(chain, depth):
+  if depth = 0: return identity transseries
+  t = EXPAND_EML_CHAIN(chain, depth - 1)
+  return exp(t) - log(t)  // symbolic expansion
+```
 
-1. **The exp-poly dichotomy**: Differentiation partitions growth levels into "permanent" (ℓ > 0) and "transient" (ℓ ≤ 0) classes. This is the formal analogue of the well-known fact that exponentials dominate polynomials, but stated as a *structural fixpoint property* rather than an asymptotic inequality.
+## 7. Discussion
 
-2. **Self-similarity**: The shift operators reveal that the entire infinite hierarchy has a repeating structure — each floor is isomorphic to every other floor. This makes the growth level hierarchy a discrete analogue of a self-similar fractal.
+### 7.1 Relation to Prior Work
 
-3. **Non-archimedean geometry**: The growth valuation gives the space of transseries an ultrametric structure, where "closeness" is measured by agreement in the leading growth level rather than by pointwise difference.
+Our formalization deepens the existing EML theory in the Catalog by placing it within the broader framework of transseries and Hardy fields. The key catalog results we build upon include:
 
-## 9. Future Work
+- `eml_log_exp` (EML/EMLv17Core.lean): The identity $\text{eml}(\log a, \exp b) = a - b$ for $a > 0$, which shows EML implements the fundamental exp-log cancellation.
+- `eml_chain_exp_log_cancel` (EML/KolmogorovArnoldEMLDeep.lean): The chain cancellation $\exp(\log x) = x$, which is the identity that makes the exponential tower well-defined.
+- `eml14_exp_log_gap` (EML/V14Research.lean): The gap between exponential and logarithmic scales, which our dominance hierarchy theorem generalizes.
 
-- Extend to grid-based transseries with multiple independent variables
-- Formalize the full field structure of 𝕋 (addition, multiplication)
-- Prove the real-closedness of the transseries field
-- Connect to surreal numbers via Conway's construction
-- Formalize the Hardy field embedding
+### 7.2 Limitations
+
+Our formalization covers the "first level" of the transseries hierarchy — monomials involving single exponentials, polynomials, and logarithms. The full transseries construction involves:
+
+1. **Higher-level monomials**: $e^{e^x}$, $e^{e^{e^x}}}$, etc., which require an ordinal-indexed hierarchy.
+2. **Infinite sums**: Formal series with well-ordered support over the monomial group.
+3. **Field operations**: Full division and the real-closedness theorem.
+4. **Differential structure**: The derivation on transseries and its interaction with the valuation.
+
+These extensions are significant formal verification challenges that we leave for future work.
+
+## 8. Future Work
+
+See `FUTURE_DIRECTIONS.md` for detailed research directions.
 
 ## References
 
-[1] J. Écalle, *Introduction aux fonctions analysables et preuve constructive de la conjecture de Dulac*, Hermann, 1992.
+[1] J. Écalle. *Introduction aux fonctions analysables et preuve constructive de la conjecture de Dulac*. Actualités Mathématiques, Hermann, Paris, 1992.
 
-[2] B. Dahn, P. Göring, "Notes on exponential-logarithmic terms," *Fund. Math.* 127 (1986), 45–50.
+[2] L. van den Dries, A. Macintyre, D. Marker. "Logarithmic-exponential series." *Annals of Pure and Applied Logic*, 111(1-2):61–113, 2001.
 
-[3] L. van den Dries, A. Macintyre, D. Marker, "Logarithmic-exponential power series," *J. London Math. Soc.* 56 (1997), 417–434.
+[3] M. Aschenbrenner, L. van den Dries, J. van der Hoeven. *Asymptotic Differential Algebra and Model Theory of Transseries*. Annals of Mathematics Studies, Princeton University Press, 2017.
 
-[4] M. Aschenbrenner, L. van den Dries, J. van der Hoeven, *Asymptotic Differential Algebra and Model Theory of Transseries*, Princeton University Press, 2017.
+[4] EML Research Program. `Catalog/EML/EMLv17Core.lean`. Definition of eml and basic identities.
 
-[5] J. van der Hoeven, *Transseries and Real Differential Algebra*, Springer LNM 1888, 2006.
+[5] EML Research Program. `Catalog/EML/KolmogorovArnoldEMLDeep.lean`. EML chain theory and Kolmogorov-Arnold connections.
+
+[6] G.H. Hardy. *Orders of Infinity*. Cambridge Tracts in Mathematics, 1910.
+
+[7] M. Rosenlicht. "Hardy fields." *Journal of Mathematical Analysis and Applications*, 93:297–311, 1983.
