@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6c23eddb",
     "filename": "algebraic_geometry_of_neural_networks_varieties_of.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4348,
     "title": "Tropical Geometry of Neural Network Decision Boundaries"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 100,
       "id": "algebraic_geometry_of_neural_networks_varieties_of",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4348,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Tropical Geometry of Neural Network Decision Boundaries"
     }

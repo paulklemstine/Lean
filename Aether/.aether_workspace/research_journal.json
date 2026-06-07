@@ -1800,6 +1800,26 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T00:19:57",
       "title": "The Topology of Argumentation: Why Debates Have Holes"
+    },
+    {
+      "cycle_id": "d2366b55",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Surreal Topology Research\n\n## Synthesis\n\nThis cycle established a precise bridge between order-theoretic completeness and topological connectedness for ordered spaces. The **Dedek",
+      "quality_score": 0.35856,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-07T00:52:05",
+      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+    },
+    {
+      "cycle_id": "6c23eddb",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tropical Geometry of Neural Networks\n\n## Synthesis\n\nThis cycle established a formalized bridge between ReLU neural network decision boundaries and tropical algebraic geometry. The",
+      "quality_score": 0.4348,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-07T00:53:03",
+      "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
     }
   ],
   "entries": [
@@ -1845,7 +1865,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-07T00:19:57",
+  "last_updated": "2026-06-07T00:53:03",
   "open_questions": [
     {
       "context": "sorry",
@@ -1865,18 +1885,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "1ae396bb",
-        "quality": 0.30735999999999997,
-        "theorems": 3,
-        "title": "Cellular Automata at the Ordinals: Transfinite Computation"
-      },
-      {
-        "cycle_id": "a8e73778",
-        "quality": 0.37304000000000004,
-        "theorems": 5,
-        "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-      },
       {
         "cycle_id": "13570995",
         "quality": 0.48840000000000006,
@@ -1924,6 +1932,18 @@
         "quality": 0.38880000000000003,
         "theorems": 4,
         "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+      },
+      {
+        "cycle_id": "d2366b55",
+        "quality": 0.35856,
+        "theorems": 4,
+        "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+      },
+      {
+        "cycle_id": "6c23eddb",
+        "quality": 0.4348,
+        "theorems": 6,
+        "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
       }
     ],
     "Bridges": [
