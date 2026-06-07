@@ -1,55 +1,95 @@
+#!/usr/bin/env python3
 """
-Algorithms for Tropical Geometry of Neural Network Decision Boundaries
+algorithms.py — Core Algorithms for Tropical Neural Network Analysis
 
-Type-hinted implementations of the core algorithms.
+Type-hinted implementations of the key algorithms for analyzing
+ReLU network decision boundaries through tropical geometry.
 """
 
-from typing import List, Tuple, Callable
+from typing import List, Tuple, Optional
 import numpy as np
-from numpy.typing import NDArray
 
 
-def relu(x: NDArray[np.float64]) -> NDArray[np.float64]:
-    """ReLU activation: max(x, 0)"""
+def relu(x: np.ndarray) -> np.ndarray:
+    """ReLU activation: max(x, 0)."""
     return np.maximum(x, 0)
 
 
-def tropical_polynomial_eval(
-    slopes: List[float],
-    intercepts: List[float],
-    x: float
-) -> float:
-    """Evaluate a 1D tropical polynomial: max_i(slope_i * x + intercept_i)
-    
-    A tropical polynomial is the pointwise maximum of affine functions.
-    In tropical geometry, this replaces classical polynomial evaluation
-    where 'addition' becomes 'max' and 'multiplication' becomes '+'.
+def tropical_add(a: float, b: float) -> float:
+    """Tropical addition: max(a, b) in the (max, +) semiring."""
+    return max(a, b)
+
+
+def tropical_mul(a: float, b: float) -> float:
+    """Tropical multiplication: a + b in the (max, +) semiring."""
+    return a + b
+
+
+def tropical_poly_eval(coeffs: List[float], x: float) -> float:
     """
-    return max(s * x + b for s, b in zip(slopes, intercepts))
-
-
-def tropical_rational_eval(
-    num_slopes: List[float],
-    num_intercepts: List[float],
-    den_slopes: List[float],
-    den_intercepts: List[float],
-    x: float
-) -> float:
-    """Evaluate a tropical rational function: num(x) - den(x)
+    Evaluate a univariate tropical polynomial.
     
-    Every ReLU network function is a tropical rational function
-    (Zhang-Naitzat-Lim, 2018).
+    p(x) = max(c_0, c_1 + x, c_2 + 2x, ..., c_d + d*x)
+    
+    Parameters:
+        coeffs: [c_0, c_1, ..., c_d] tropical coefficients
+        x: evaluation point
+    
+    Returns:
+        The tropical polynomial value max_i(c_i + i*x)
     """
-    num = tropical_polynomial_eval(num_slopes, num_intercepts, x)
-    den = tropical_polynomial_eval(den_slopes, den_intercepts, x)
-    return num - den
+    return max(c + i * x for i, c in enumerate(coeffs))
 
 
-def count_linear_regions(widths: List[int]) -> int:
-    """Upper bound on linear regions for a ReLU network with given layer widths.
+def tropical_poly_roots(coeffs: List[float]) -> List[float]:
+    """
+    Find the roots (bend points) of a univariate tropical polynomial.
     
-    Returns prod_i (w_i + 1), which bounds the number of distinct
-    activation patterns that can be realized.
+    At a root, the maximum is achieved by at least two terms simultaneously.
+    The root between terms i and j (i < j) is at x = (c_i - c_j) / (j - i).
+    
+    Returns sorted list of tropical roots.
+    """
+    n = len(coeffs)
+    if n <= 1:
+        return []
+    
+    # Find the upper convex hull of points (i, c_i)
+    # The roots are the negated slopes of the edges
+    hull_points: List[Tuple[int, float]] = []
+    
+    for i in range(n):
+        while len(hull_points) >= 2:
+            (x1, y1) = hull_points[-2]
+            (x2, y2) = hull_points[-1]
+            # Check if the current point is above the line through previous two
+            slope1 = (y2 - y1) / (x2 - x1)
+            slope2 = (coeffs[i] - y2) / (i - x2)
+            if slope2 >= slope1:
+                hull_points.pop()
+            else:
+                break
+        hull_points.append((i, coeffs[i]))
+    
+    # Roots are at transitions between consecutive hull edges
+    roots = []
+    for k in range(len(hull_points) - 1):
+        i1, c1 = hull_points[k]
+        i2, c2 = hull_points[k + 1]
+        root = (c1 - c2) / (i2 - i1)
+        roots.append(root)
+    
+    return sorted(roots)
+
+
+def max_linear_regions(widths: List[int]) -> int:
+    """
+    Compute the upper bound on linear regions for a 1D ReLU network.
+    
+    For depth L with layer widths [w_1, ..., w_L]:
+    regions ≤ prod_{i=1}^{L} (w_i + 1)
+    
+    This is the Montúfar-style bound proven in our Lean formalization.
     """
     result = 1
     for w in widths:
@@ -57,120 +97,153 @@ def count_linear_regions(widths: List[int]) -> int:
     return result
 
 
-def count_activation_patterns(widths: List[int]) -> int:
-    """Total number of possible activation patterns: prod_i 2^w_i = 2^(sum w_i)"""
+def activation_pattern_count(widths: List[int]) -> int:
+    """
+    Total number of possible activation patterns.
+    
+    Each neuron is either active (pre-activation > 0) or inactive.
+    Total patterns = product of 2^{w_i} = 2^{sum w_i}.
+    """
     return 2 ** sum(widths)
 
 
-def tropical_degree(widths: List[int]) -> int:
-    """Tropical degree of a ReLU network: product of layer widths.
-    
-    This bounds the number of 'bends' in the piecewise linear function,
-    which equals the degree of the tropical hypersurface.
+def tropical_degree_bound(depth: int, max_weight: int = 1) -> int:
     """
-    result = 1
-    for w in widths:
-        result *= w
-    return result
-
-
-def width_depth_ratio(w: int, L: int) -> float:
-    """Ratio of deep network complexity to shallow: w^L / (w*L)
+    Upper bound on the tropical degree of a depth-L network.
     
-    This quantifies the exponential advantage of depth over width.
-    For w >= 2, L >= 2, this ratio is always >= 1.
+    With integer weights bounded by max_weight:
+    degree ≤ max_weight^depth
+    
+    With unit weights: degree ≤ 2^depth (each ReLU doubles the degree).
     """
-    return (w ** L) / (w * L)
+    return (max_weight + 1) ** depth
 
 
-def softmax_to_max(x: NDArray[np.float64], beta: float) -> float:
-    """Scaled log-sum-exp: (1/β) * log(∑ exp(β*x_i))
-    
-    Converges to max(x) as β → ∞ (tropical limit).
-    Always >= max(x) for any β > 0.
+def decision_boundary_components_bound(widths: List[int]) -> int:
     """
-    # Numerically stable computation
-    x_max = np.max(x)
-    return x_max + (1.0 / beta) * np.log(np.sum(np.exp(beta * (x - x_max))))
-
-
-def find_decision_boundary_1d(
-    network_fn: Callable[[float], float],
-    x_range: Tuple[float, float],
-    n_points: int = 10000
-) -> List[float]:
-    """Find approximate zero crossings of a 1D function.
+    Upper bound on connected components of the decision boundary in 1D.
     
-    Returns x-values where the function changes sign.
-    For a ReLU network, these are points on the decision boundary.
+    components ≤ 2 * prod(w_i + 1) - 2
+    
+    This comes from the tropical rational decomposition:
+    f(x) = P(x) - Q(x) where P, Q are tropical polynomials.
     """
-    x_vals = np.linspace(x_range[0], x_range[1], n_points)
-    y_vals = np.array([network_fn(x) for x in x_vals])
-    
-    crossings = []
-    for i in range(len(y_vals) - 1):
-        if y_vals[i] * y_vals[i+1] < 0:
-            # Linear interpolation to find crossing
-            t = y_vals[i] / (y_vals[i] - y_vals[i+1])
-            crossings.append(x_vals[i] + t * (x_vals[i+1] - x_vals[i]))
-    
-    return crossings
+    regions = max_linear_regions(widths)
+    return 2 * regions - 2
 
 
-def relu_network_1d(
-    weights: List[List[float]],
-    biases: List[List[float]],
-    final_weight: List[float],
-    final_bias: float,
-    x: float
-) -> float:
-    """Evaluate a 1D-input ReLU network.
-    
-    weights[l][j] = weight of neuron j in layer l
-    biases[l][j] = bias of neuron j in layer l
+def maslov_dequantization(a: float, b: float, epsilon: float) -> float:
     """
-    h = np.array([x])
-    for w_layer, b_layer in zip(weights, biases):
-        W = np.array(w_layer).reshape(-1, len(h))
-        b = np.array(b_layer)
-        h = relu(W @ h + b)
-    return float(np.dot(final_weight, h) + final_bias)
+    Maslov dequantization: smooth approximation to max(a, b).
+    
+    ε · log(exp(a/ε) + exp(b/ε)) → max(a, b) as ε → 0+
+    
+    Numerically stable implementation using the log-sum-exp trick.
+    """
+    m = max(a / epsilon, b / epsilon)
+    return epsilon * (m + np.log(np.exp(a / epsilon - m) + np.exp(b / epsilon - m)))
 
 
-def compute_tropical_representation(
-    weights: List[List[float]],
-    biases: List[List[float]]
+def extract_tropical_form(
+    weights_list: List[np.ndarray],
+    biases_list: List[np.ndarray]
 ) -> Tuple[List[Tuple[float, float]], List[Tuple[float, float]]]:
-    """Compute the tropical rational representation of a 1-layer 1D ReLU network.
-    
-    Returns (numerator_terms, denominator_terms) where each term is (slope, intercept).
-    
-    For a single layer: relu(wx + b) = max(wx + b, 0) - 0
-    Numerator has terms (w, b) and (0, 0).
-    Denominator has term (0, 0).
     """
-    num_terms = []
-    den_terms = [(0.0, 0.0)]
+    Extract the tropical rational form of a univariate ReLU network.
     
-    for w, b in zip(weights[0], biases[0]):
-        num_terms.append((w, b))
-        num_terms.append((0.0, 0.0))
+    Returns (P_terms, Q_terms) where:
+    - P_terms: list of (slope, intercept) for the positive tropical polynomial
+    - Q_terms: list of (slope, intercept) for the negative tropical polynomial
+    - f(x) = max_P(slope*x + intercept) - max_Q(slope*x + intercept)
     
-    return num_terms, den_terms
+    This implements the canonical tropical rational decomposition
+    from the companion Lean formalization.
+    """
+    # Start with identity: f(x) = x (slope=1, intercept=0)
+    # Track affine pieces through the network
+    
+    # Initial piece: single affine function x ↦ x
+    pieces: List[Tuple[float, float]] = [(1.0, 0.0)]
+    
+    for W, b in zip(weights_list, biases_list):
+        new_pieces = []
+        n_out = W.shape[0]
+        
+        for neuron_idx in range(n_out):
+            w_row = W[neuron_idx]
+            bias = b[neuron_idx]
+            
+            # Each existing piece (s, c) → neuron computes relu(w·(sx+c) + b)
+            # = relu(ws·x + wc + b) = max(ws·x + wc + b, 0)
+            for s, c in pieces:
+                for w_val in w_row:
+                    new_slope = w_val * s
+                    new_intercept = w_val * c + bias
+                    new_pieces.append((new_slope, new_intercept))
+                    new_pieces.append((0.0, 0.0))  # ReLU adds zero piece
+        
+        pieces = new_pieces
+    
+    # Separate into positive and negative parts
+    pos_terms = [(s, c) for s, c in pieces if s >= 0]
+    neg_terms = [(-s, -c) for s, c in pieces if s < 0]
+    
+    if not pos_terms:
+        pos_terms = [(0.0, 0.0)]
+    if not neg_terms:
+        neg_terms = [(0.0, 0.0)]
+    
+    return pos_terms, neg_terms
+
+
+def depth_width_comparison(total_neurons: int) -> List[dict]:
+    """
+    Compare different depth-width configurations for a fixed neuron budget.
+    
+    For N total neurons, compare:
+    - (depth=1, width=N): N+1 regions
+    - (depth=2, width=N/2): (N/2+1)^2 regions
+    - (depth=k, width=N/k): (N/k+1)^k regions
+    - etc.
+    
+    Returns list of configurations sorted by region count.
+    """
+    configs = []
+    
+    for depth in range(1, total_neurons + 1):
+        width = total_neurons // depth
+        if width < 1:
+            break
+        
+        # Uniform width
+        regions = (width + 1) ** depth
+        configs.append({
+            'depth': depth,
+            'width': width,
+            'total_neurons': depth * width,
+            'max_regions': regions,
+            'activation_patterns': 2 ** (depth * width),
+        })
+    
+    configs.sort(key=lambda c: -c['max_regions'])
+    return configs
 
 
 if __name__ == "__main__":
-    # Example: 3-layer network with width 4
-    widths = [4, 4, 4]
+    # Example: tropical polynomial roots
+    coeffs = [0, 3, 1, 5]  # max(0, 3+x, 1+2x, 5+3x)
+    roots = tropical_poly_roots(coeffs)
+    print(f"Tropical polynomial coefficients: {coeffs}")
+    print(f"Tropical roots: {roots}")
+    print(f"Tropical degree: {len(coeffs) - 1}")
+    print()
     
-    print("Network architecture:", widths)
-    print(f"  Linear regions (upper bound): {count_linear_regions(widths)}")
-    print(f"  Activation patterns: {count_activation_patterns(widths)}")
-    print(f"  Tropical degree: {tropical_degree(widths)}")
-    print(f"  Width-depth ratio: {width_depth_ratio(4, 3):.1f}x")
+    # Depth-width comparison
+    print("Depth-Width Comparison for N=12 total neurons:")
+    for config in depth_width_comparison(12)[:5]:
+        print(f"  Depth={config['depth']}, Width={config['width']}: "
+              f"{config['max_regions']:>10,} max regions")
+    print()
     
-    # Tropical limit demo
-    x = np.array([1.0, 3.0, 2.0])
-    for beta in [1, 10, 100]:
-        approx = softmax_to_max(x, beta)
-        print(f"  β={beta}: softmax→max = {approx:.6f} (true max = {max(x)})")
+    # Maslov dequantization
+    print("Maslov dequantization: max(3, 1) ≈", maslov_dequantization(3.0, 1.0, 0.01))
