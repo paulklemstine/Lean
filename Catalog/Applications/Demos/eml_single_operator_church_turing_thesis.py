@@ -1,365 +1,263 @@
-#!/usr/bin/env python3
 """
-EML Single Operator Church-Turing Thesis: Numerical Demonstrations
+EML Single Operator Church-Turing Thesis — Demonstration
 
-Demonstrates that eml(x,y) = exp(x) - log(y) is a universal primitive
-for elementary real computation.
+Shows that eml(x,y) = exp(x) - log(y) is computationally universal:
+every continuous function on compact positive domains can be approximated
+by EML compositions (polynomials in log).
+
+Examples:
+1. Approximating x^2 on [1, 3] using log-polynomials
+2. Approximating sin(x) on [0.1, 3] using EML compositions  
+3. The EML diagonal domination: exp(z) - log(z) > z for all z > 0
 """
 
+import numpy as np
 import math
 
+
 def eml(x: float, y: float) -> float:
-    """The EML operator: eml(x, y) = exp(x) - log(y)"""
-    assert y > 0, f"Second argument must be positive, got {y}"
+    """The EML primitive: eml(x, y) = exp(x) - log(y)"""
+    if y <= 0:
+        raise ValueError("y must be positive for log")
     return math.exp(x) - math.log(y)
 
 
-def demo_extraction():
-    """Demo 1: Extracting exp and log from EML"""
-    print("=" * 60)
-    print("Demo 1: EML Extraction Identities")
-    print("=" * 60)
-    
-    test_values = [0.0, 0.5, 1.0, 2.0, -1.0, 3.14]
-    
-    print("\n  exp(x) = eml(x, 1):")
-    for x in test_values:
-        exp_x = math.exp(x)
-        eml_x = eml(x, 1.0)
-        print(f"    x={x:6.2f}: exp(x)={exp_x:.10f}, eml(x,1)={eml_x:.10f}, diff={abs(exp_x-eml_x):.2e}")
-    
-    print("\n  log(y) = 1 - eml(0, y):")
-    for y in [0.5, 1.0, 2.0, math.e, 10.0]:
-        log_y = math.log(y)
-        eml_y = 1 - eml(0, y)
-        print(f"    y={y:6.2f}: log(y)={log_y:.10f}, 1-eml(0,y)={eml_y:.10f}, diff={abs(log_y-eml_y):.2e}")
+def eml_recover_exp(x: float) -> float:
+    """exp(x) = eml(x, 1)"""
+    return eml(x, 1.0)
 
 
-def demo_roundtrip():
-    """Demo 2: The EML round-trip identity eml(log(a), exp(b)) = a - b"""
-    print("\n" + "=" * 60)
-    print("Demo 2: EML Round-Trip Identity")
-    print("=" * 60)
-    
-    print("\n  eml(log(a), exp(b)) = a - b for a > 0:")
-    for a, b in [(1, 2), (3, 1), (math.e, math.pi), (0.5, 0.5), (10, 3)]:
-        result = eml(math.log(a), math.exp(b))
-        expected = a - b
-        print(f"    a={a:.4f}, b={b:.4f}: eml(log(a),exp(b))={result:.10f}, a-b={expected:.10f}, diff={abs(result-expected):.2e}")
+def eml_recover_log(y: float) -> float:
+    """log(y) = 1 - eml(0, y)"""
+    return 1.0 - eml(0.0, y)
 
 
-def demo_power_via_eml():
-    """Demo 3: Real powers via EML: x^alpha = exp(alpha * log(x))"""
-    print("\n" + "=" * 60)
-    print("Demo 3: Real Powers via EML")
-    print("=" * 60)
-    
-    print("\n  x^alpha = eml(alpha * (1 - eml(0, x)), 1):")
-    for x, alpha in [(2, 3), (3, 0.5), (10, -1), (math.e, math.pi), (4, 0.25)]:
-        log_x = 1 - eml(0, x)  # = log(x)
-        power = eml(alpha * log_x, 1)  # = exp(alpha * log(x)) = x^alpha
-        expected = x ** alpha
-        print(f"    x={x:.4f}, α={alpha:.4f}: EML={power:.10f}, x^α={expected:.10f}, diff={abs(power-expected):.2e}")
+def power_via_eml(x: float, alpha: float) -> float:
+    """x^alpha = exp(alpha * log(x)) for x > 0
+    Using EML: exp(alpha * log(x)) = eml(alpha * (1 - eml(0, x)), 1)
+    """
+    log_x = eml_recover_log(x)
+    return eml_recover_exp(alpha * log_x)
 
 
-def demo_compilation():
-    """Demo 4: Compiling elementary expressions to EML-only form"""
-    print("\n" + "=" * 60)
-    print("Demo 4: Expression Compilation")
-    print("=" * 60)
-    
-    x = 1.5
-    
-    # exp(x) -> eml(x, 1)
-    original = math.exp(x)
-    compiled = eml(x, 1)
-    print(f"\n  exp({x}) = {original:.10f}")
-    print(f"  eml({x}, 1) = {compiled:.10f}")
-    print(f"  Match: {abs(original - compiled) < 1e-12}")
-    
-    # log(x) -> 1 - eml(0, x)
-    original = math.log(x)
-    compiled = 1 - eml(0, x)
-    print(f"\n  log({x}) = {original:.10f}")
-    print(f"  1 - eml(0, {x}) = {compiled:.10f}")
-    print(f"  Match: {abs(original - compiled) < 1e-12}")
-    
-    # exp(log(x)) -> eml(1 - eml(0, x), 1)  (should equal x)
-    original = math.exp(math.log(x))
-    compiled = eml(1 - eml(0, x), 1)
-    print(f"\n  exp(log({x})) = {original:.10f}")
-    print(f"  eml(1-eml(0,{x}), 1) = {compiled:.10f}")
-    print(f"  Match: {abs(original - compiled) < 1e-12}")
-    
-    # sinh(x) = (exp(x) - exp(-x))/2
-    original = math.sinh(x)
-    exp_pos = eml(x, 1)
-    exp_neg = eml(-x, 1)
-    compiled = (exp_pos - exp_neg) / 2
-    print(f"\n  sinh({x}) = {original:.10f}")
-    print(f"  (eml({x},1) - eml({-x},1))/2 = {compiled:.10f}")
-    print(f"  Match: {abs(original - compiled) < 1e-12}")
+def mul_via_eml(x: float, y: float) -> float:
+    """x * y = exp(log(x) + log(y)) for x, y > 0"""
+    return eml_recover_exp(eml_recover_log(x) + eml_recover_log(y))
 
 
-def demo_exponential_hierarchy():
-    """Demo 5: The exponential hierarchy via iterated EML"""
-    print("\n" + "=" * 60)
-    print("Demo 5: Exponential Hierarchy")
-    print("=" * 60)
-    
-    x = 0.5
-    print(f"\n  Starting value: x = {x}")
-    
-    for n in range(5):
-        if n == 0:
-            val = x
-        else:
-            val = eml(val, 1)  # Apply eml(·, 1) = exp(·)
-        print(f"  Level {n}: iterateExp({n}, {x}) = {val:.10f}")
-        if val > 1e100:
-            print(f"  (Stopping: values exceed 10^100)")
-            break
+def div_via_eml(x: float, y: float) -> float:
+    """x / y = exp(log(x) - log(y)) for x, y > 0"""
+    return eml_recover_exp(eml_recover_log(x) - eml_recover_log(y))
 
 
-def demo_differential_closure():
-    """Demo 6: Numerical verification of differential closure"""
-    print("\n" + "=" * 60)
-    print("Demo 6: Differential Closure")
-    print("=" * 60)
-    
-    h = 1e-8  # Finite difference step
-    x = 1.0
-    
-    # a(t) = t^2, b(t) = t + 1
-    def a(t): return t**2
-    def b(t): return t + 1
-    def f(t): return math.exp(a(t)) - math.log(b(t))
-    
-    # Numerical derivative
-    numerical_deriv = (f(x + h) - f(x - h)) / (2 * h)
-    
-    # Analytical: exp(a(x)) * a'(x) - b'(x) / b(x)
-    # a'(x) = 2x, b'(x) = 1
-    analytical_deriv = math.exp(a(x)) * (2 * x) - 1 / b(x)
-    
-    print(f"\n  f(t) = exp(t²) - log(t+1)")
-    print(f"  f'(x) = exp(x²)·2x - 1/(x+1)")
-    print(f"  At x = {x}:")
-    print(f"    Numerical:   {numerical_deriv:.10f}")
-    print(f"    Analytical:  {analytical_deriv:.10f}")
-    print(f"    Difference:  {abs(numerical_deriv - analytical_deriv):.2e}")
+def log_polynomial(x: float, coeffs: list[float]) -> float:
+    """Evaluate a polynomial in log(x): sum(c_k * log(x)^k)"""
+    log_x = math.log(x)
+    return sum(c * log_x ** k for k, c in enumerate(coeffs))
 
 
-def demo_size_bound():
-    """Demo 7: Compilation size bound verification"""
-    print("\n" + "=" * 60)
-    print("Demo 7: Compilation Size Bounds")
-    print("=" * 60)
+def fit_log_polynomial(f, a: float, b: float, degree: int) -> list[float]:
+    """Fit a polynomial in log(x) to approximate f on [a, b].
     
-    examples = [
-        ("var", 1, 1, "var → var"),
-        ("const(π)", 1, 1, "const → const"),
-        ("exp(var)", 2, 3, "exp(x) → eml(var, const(1))"),
-        ("log(var)", 2, 5, "log(x) → sub(const(1), eml(const(0), var))"),
-        ("exp(log(var))", 3, 8, "exp(log(x)) → eml(sub(const(1), eml(const(0), var)), const(1))"),
-        ("add(exp(var), log(var))", 5, 9, "exp(x) + log(x) → add(eml(...), sub(...))"),
-    ]
+    This demonstrates the Stone-Weierstrass density theorem:
+    polynomials in log(x) are dense in C([a,b], R) for 0 < a.
+    """
+    # Sample points
+    n_points = max(degree + 1, 50)
+    xs = np.linspace(a, b, n_points)
+    log_xs = np.log(xs)
+    ys = np.array([f(x) for x in xs])
     
-    print(f"\n  {'Expression':<25} {'Source':>6} {'Compiled':>8} {'Ratio':>6} {'Bound':>6}")
-    print(f"  {'-'*25} {'-'*6} {'-'*8} {'-'*6} {'-'*6}")
-    for name, src_size, compiled_size, _ in examples:
-        ratio = compiled_size / src_size
-        bound = 5.0
-        print(f"  {name:<25} {src_size:>6} {compiled_size:>8} {ratio:>6.2f} {bound:>6.1f}")
+    # Fit polynomial in log(x)
+    coeffs = np.polyfit(log_xs, ys, degree)
+    return list(reversed(coeffs))
+
+
+def evaluate_approximation(f, coeffs: list[float], a: float, b: float, n: int = 100):
+    """Evaluate the quality of a log-polynomial approximation."""
+    xs = np.linspace(a, b, n)
+    max_error = 0.0
+    for x in xs:
+        true_val = f(x)
+        approx_val = log_polynomial(x, coeffs)
+        max_error = max(max_error, abs(true_val - approx_val))
+    return max_error
+
+
+def emlDiag(z: float) -> float:
+    """The EML diagonal: exp(z) - log(z) for z > 0"""
+    return math.exp(z) - math.log(z)
+
+
+def main():
+    print("=" * 70)
+    print("EML SINGLE OPERATOR CHURCH-TURING THESIS — DEMONSTRATION")
+    print("=" * 70)
+    
+    # Demo 1: EML recovers exp and log
+    print("\n--- Demo 1: EML Recovers exp and log ---")
+    test_vals = [0.5, 1.0, 2.0, 3.0]
+    for x in test_vals:
+        exp_eml = eml_recover_exp(x)
+        exp_true = math.exp(x)
+        log_eml = eml_recover_log(x) if x > 0 else float('nan')
+        log_true = math.log(x) if x > 0 else float('nan')
+        print(f"  x = {x:.1f}: exp_eml = {exp_eml:.6f}, exp_true = {exp_true:.6f}, "
+              f"log_eml = {log_eml:.6f}, log_true = {log_true:.6f}")
+    
+    # Demo 2: Power functions via EML
+    print("\n--- Demo 2: Power Functions via EML ---")
+    for x in [1.5, 2.0, 3.0]:
+        for alpha in [2.0, 0.5, -1.0]:
+            eml_val = power_via_eml(x, alpha)
+            true_val = x ** alpha
+            print(f"  {x}^{alpha} = {eml_val:.6f} (EML), {true_val:.6f} (true), "
+                  f"error = {abs(eml_val - true_val):.2e}")
+    
+    # Demo 3: Approximating f(x) = x^2 on [1, 3] via log-polynomials
+    print("\n--- Demo 3: Log-Polynomial Approximation of x^2 ---")
+    f_square = lambda x: x ** 2
+    for degree in [2, 4, 6, 8, 10]:
+        coeffs = fit_log_polynomial(f_square, 1.0, 3.0, degree)
+        error = evaluate_approximation(f_square, coeffs, 1.0, 3.0)
+        print(f"  Degree {degree:2d}: max error = {error:.2e}")
+    
+    # Demo 4: Approximating sin(x) on [0.1, 3] via log-polynomials
+    print("\n--- Demo 4: Log-Polynomial Approximation of sin(x) ---")
+    f_sin = math.sin
+    for degree in [3, 5, 8, 12, 16, 20]:
+        coeffs = fit_log_polynomial(f_sin, 0.1, 3.0, degree)
+        error = evaluate_approximation(f_sin, coeffs, 0.1, 3.0)
+        print(f"  Degree {degree:2d}: max error = {error:.2e}")
+    
+    # Demo 5: EML Diagonal Domination
+    print("\n--- Demo 5: EML Diagonal Domination (exp(z) - log(z) > z) ---")
+    for z in [0.01, 0.1, 0.5, 1.0, 2.0, 5.0, 10.0]:
+        diag = emlDiag(z)
+        gap = diag - z
+        print(f"  z = {z:5.2f}: emlDiag(z) = {diag:12.4f}, "
+              f"gap = {gap:12.4f} > 0 ✓" if gap > 0 else "  ERROR!")
+    
+    # Demo 6: Multiplication and division via EML
+    print("\n--- Demo 6: Arithmetic via EML ---")
+    pairs = [(2.0, 3.0), (1.5, 4.0), (7.0, 0.5)]
+    for x, y in pairs:
+        mul_eml = mul_via_eml(x, y)
+        div_eml = div_via_eml(x, y)
+        print(f"  {x} * {y} = {mul_eml:.6f} (EML), {x * y:.6f} (true)")
+        print(f"  {x} / {y} = {div_eml:.6f} (EML), {x / y:.6f} (true)")
+    
+    print("\n" + "=" * 70)
+    print("CONCLUSION: EML = exp(x) - log(y) is computationally universal")
+    print("for continuous functions on compact positive domains.")
+    print("=" * 70)
 
 
 if __name__ == "__main__":
-    demo_extraction()
-    demo_roundtrip()
-    demo_power_via_eml()
-    demo_compilation()
-    demo_exponential_hierarchy()
-    demo_differential_closure()
-    demo_size_bound()
-    
-    print("\n" + "=" * 60)
-    print("All demonstrations completed successfully!")
-    print("=" * 60)
+    main()
 
 
-#!/usr/bin/env python3
 """
-Visualization: EML Compilation Size and Rank Analysis
+Visualization: EML Universal Approximation
 
-Shows compilation statistics: size blowup, rank conservation,
-and depth bounds for various elementary expressions.
+Three panels:
+1. Log-polynomial approximation of various functions (Stone-Weierstrass in action)
+2. EML diagonal domination: exp(z) - log(z) vs z
+3. Approximation error vs polynomial degree (convergence rate)
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-
-def make_data():
-    # (name, source_size, compiled_size, transc_rank, eml_rank, eml_depth)
-    data = [
-        ("x", 1, 1, 0, 0, 0),
-        ("c", 1, 1, 0, 0, 0),
-        ("x+c", 3, 3, 0, 0, 0),
-        ("x*x", 3, 3, 0, 0, 0),
-        ("exp(x)", 2, 3, 1, 1, 1),
-        ("log(x)", 2, 5, 1, 1, 1),
-        ("exp(x)+log(x)", 5, 9, 2, 2, 1),
-        ("exp(log(x))", 3, 8, 2, 2, 1),
-        ("log(exp(x))", 3, 8, 2, 2, 1),
-        ("exp(exp(x))", 3, 5, 2, 2, 2),
-        ("x*exp(x)", 4, 6, 1, 1, 1),
-        ("sinh(x)", 8, 12, 2, 2, 1),
-        ("exp(x^2)*log(x+1)", 9, 15, 2, 2, 1),
-    ]
-    return data
-
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-data = make_data()
-names = [d[0] for d in data]
-src_sizes = [d[1] for d in data]
-cmp_sizes = [d[2] for d in data]
-transc_ranks = [d[3] for d in data]
-eml_ranks = [d[4] for d in data]
-eml_depths = [d[5] for d in data]
-
-# Plot 1: Size comparison
-ax = axes[0, 0]
-x_pos = np.arange(len(names))
-width = 0.35
-bars1 = ax.bar(x_pos - width/2, src_sizes, width, label='Source size', color='#4C72B0')
-bars2 = ax.bar(x_pos + width/2, cmp_sizes, width, label='Compiled size', color='#DD8452')
-ax.plot(x_pos, [5*s for s in src_sizes], 'r--', linewidth=1, alpha=0.5, label='5x bound')
-ax.set_xticks(x_pos)
-ax.set_xticklabels(names, rotation=45, ha='right', fontsize=7)
-ax.set_ylabel('Node count')
-ax.set_title('Compilation Size: Source vs Compiled')
-ax.legend(fontsize=8)
-ax.grid(axis='y', alpha=0.3)
-
-# Plot 2: Rank conservation
-ax = axes[0, 1]
-ax.bar(x_pos - width/2, transc_ranks, width, label='Transc. rank (source)', color='#4C72B0')
-ax.bar(x_pos + width/2, eml_ranks, width, label='EML rank (compiled)', color='#DD8452')
-ax.set_xticks(x_pos)
-ax.set_xticklabels(names, rotation=45, ha='right', fontsize=7)
-ax.set_ylabel('Rank')
-ax.set_title('Rank Conservation: τ(source) = ρ(compiled)')
-ax.legend(fontsize=8)
-ax.grid(axis='y', alpha=0.3)
-
-# Plot 3: Size ratio
-ax = axes[1, 0]
-ratios = [c/s if s > 0 else 0 for s, c in zip(src_sizes, cmp_sizes)]
-colors = ['#2ca02c' if r <= 3 else '#ff7f0e' if r <= 4 else '#d62728' for r in ratios]
-ax.bar(x_pos, ratios, color=colors)
-ax.axhline(y=5, color='red', linestyle='--', linewidth=1, label='Upper bound (5x)')
-ax.set_xticks(x_pos)
-ax.set_xticklabels(names, rotation=45, ha='right', fontsize=7)
-ax.set_ylabel('Size ratio (compiled/source)')
-ax.set_title('Compilation Size Ratio')
-ax.legend(fontsize=8)
-ax.grid(axis='y', alpha=0.3)
-
-# Plot 4: Depth hierarchy
-ax = axes[1, 1]
-ax.bar(x_pos - width/2, transc_ranks, width, label='Transc. rank (bound)', color='#4C72B0', alpha=0.5)
-ax.bar(x_pos + width/2, eml_depths, width, label='EML depth (actual)', color='#55A868')
-ax.set_xticks(x_pos)
-ax.set_xticklabels(names, rotation=45, ha='right', fontsize=7)
-ax.set_ylabel('Value')
-ax.set_title('Depth Bound: δ(compiled) ≤ τ(source)')
-ax.legend(fontsize=8)
-ax.grid(axis='y', alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('eml_compilation.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved: eml_compilation.png")
+import math
 
 
-#!/usr/bin/env python3
-"""
-Visualization: The EML Surface eml(x,y) = exp(x) - log(y)
+def fit_log_poly(f, a, b, degree, n_points=200):
+    xs = np.linspace(a, b, n_points)
+    log_xs = np.log(xs)
+    ys = np.array([f(x) for x in xs])
+    V = np.vander(log_xs, degree + 1, increasing=True)
+    coeffs, _, _, _ = np.linalg.lstsq(V, ys, rcond=None)
+    return coeffs
 
-Shows the 3D surface of the EML operator, highlighting:
-- Exponential growth in x (first argument)
-- Logarithmic decay in y (second argument)
-- The "extraction" lines: y=1 (giving exp(x)) and x=0 (giving 1-log(y))
-"""
 
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+def eval_log_poly(coeffs, x):
+    log_x = np.log(x)
+    return sum(c * log_x ** k for k, c in enumerate(coeffs))
 
-def eml(x, y):
-    return np.exp(x) - np.log(y)
 
-fig = plt.figure(figsize=(14, 10))
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-# Main 3D surface
-ax1 = fig.add_subplot(221, projection='3d')
-x = np.linspace(-2, 3, 100)
-y = np.linspace(0.1, 5, 100)
-X, Y = np.meshgrid(x, y)
-Z = eml(X, Y)
-Z_clipped = np.clip(Z, -5, 25)
+    # Panel 1: Approximation of sin(x) and x^2 by log-polynomials
+    ax1 = axes[0]
+    a, b = 0.2, 3.0
+    xs = np.linspace(a, b, 500)
 
-surf = ax1.plot_surface(X, Y, Z_clipped, cmap='viridis', alpha=0.7, edgecolor='none')
-ax1.set_xlabel('x (exp argument)')
-ax1.set_ylabel('y (log argument)')
-ax1.set_zlabel('eml(x, y)')
-ax1.set_title('EML Surface: eml(x,y) = exp(x) - log(y)')
-ax1.view_init(elev=25, azim=-60)
+    # sin(x) approximation
+    f_sin = np.sin
+    ax1.plot(xs, f_sin(xs), 'k-', linewidth=2, label='sin(x)')
+    for deg, color in [(3, 'C0'), (8, 'C1'), (16, 'C2')]:
+        coeffs = fit_log_poly(f_sin, a, b, deg)
+        ys_approx = [eval_log_poly(coeffs, x) for x in xs]
+        ax1.plot(xs, ys_approx, '--', color=color, alpha=0.7,
+                label=f'log-poly deg {deg}')
 
-# exp extraction: eml(x, 1) = exp(x)
-ax2 = fig.add_subplot(222)
-x = np.linspace(-2, 3, 200)
-ax2.plot(x, np.exp(x), 'b-', linewidth=2, label='exp(x)')
-ax2.plot(x, eml(x, 1), 'r--', linewidth=2, label='eml(x, 1)')
-ax2.set_xlabel('x')
-ax2.set_ylabel('value')
-ax2.set_title('Exp Extraction: eml(x, 1) = exp(x)')
-ax2.legend()
-ax2.grid(True, alpha=0.3)
+    ax1.set_xlabel('x', fontsize=12)
+    ax1.set_ylabel('f(x)', fontsize=12)
+    ax1.set_title('EML Approximation of sin(x)\n(Stone-Weierstrass)', fontsize=13)
+    ax1.legend(fontsize=9)
+    ax1.grid(True, alpha=0.3)
 
-# log extraction: 1 - eml(0, y) = log(y)
-ax3 = fig.add_subplot(223)
-y = np.linspace(0.1, 10, 200)
-ax3.plot(y, np.log(y), 'b-', linewidth=2, label='log(y)')
-ax3.plot(y, 1 - eml(0, y), 'r--', linewidth=2, label='1 - eml(0, y)')
-ax3.set_xlabel('y')
-ax3.set_ylabel('value')
-ax3.set_title('Log Extraction: 1 - eml(0, y) = log(y)')
-ax3.legend()
-ax3.grid(True, alpha=0.3)
+    # Panel 2: EML Diagonal Domination
+    ax2 = axes[1]
+    zs = np.linspace(0.01, 5, 500)
+    emlDiag = np.exp(zs) - np.log(zs)
+    identity = zs
 
-# Exponential hierarchy
-ax4 = fig.add_subplot(224)
-x = np.linspace(-1, 1.5, 200)
-colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
-labels = ['x (depth 0)', 'exp(x) (depth 1)', 'exp(exp(x)) (depth 2)', 'exp³(x) (depth 3)']
+    ax2.plot(zs, emlDiag, 'C3-', linewidth=2, label='exp(z) - log(z)')
+    ax2.plot(zs, identity, 'k--', linewidth=1.5, label='z')
+    ax2.fill_between(zs, identity, emlDiag, alpha=0.15, color='C3')
+    ax2.set_xlabel('z', fontsize=12)
+    ax2.set_ylabel('value', fontsize=12)
+    ax2.set_title('EML Diagonal Domination\nexp(z) - log(z) > z for z > 0', fontsize=13)
+    ax2.legend(fontsize=10)
+    ax2.set_ylim(0, 15)
+    ax2.grid(True, alpha=0.3)
+    ax2.annotate('Gap always > 0', xy=(2, 6), fontsize=10, color='C3',
+                fontweight='bold')
 
-ax4.plot(x, x, color=colors[0], linewidth=2, label=labels[0])
-ax4.plot(x, np.exp(x), color=colors[1], linewidth=2, label=labels[1])
-ax4.plot(x, np.exp(np.exp(x)), color=colors[2], linewidth=2, label=labels[2])
-mask = x < 0.8
-vals = np.exp(np.exp(np.exp(x)))
-vals_clipped = np.where(mask, vals, np.nan)
-ax4.plot(x, vals_clipped, color=colors[3], linewidth=2, label=labels[3])
+    # Panel 3: Convergence rate
+    ax3 = axes[2]
+    functions = {
+        'x²': lambda x: x**2,
+        'sin(x)': np.sin,
+        '1/(1+x)': lambda x: 1/(1+x),
+        'sqrt(x)': np.sqrt,
+    }
+    degrees = list(range(1, 25))
+    a_conv, b_conv = 0.5, 3.0
 
-ax4.set_ylim(-2, 20)
-ax4.set_xlabel('x')
-ax4.set_ylabel('value')
-ax4.set_title('Exponential Hierarchy via Iterated EML')
-ax4.legend(fontsize=8)
-ax4.grid(True, alpha=0.3)
+    for name, f in functions.items():
+        errors = []
+        for deg in degrees:
+            coeffs = fit_log_poly(f, a_conv, b_conv, deg)
+            xs_test = np.linspace(a_conv, b_conv, 500)
+            err = max(abs(f(x) - eval_log_poly(coeffs, x)) for x in xs_test)
+            errors.append(max(err, 1e-16))
+        ax3.semilogy(degrees, errors, 'o-', markersize=3, label=name)
 
-plt.tight_layout()
-plt.savefig('eml_surface.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved: eml_surface.png")
+    ax3.set_xlabel('Log-polynomial degree', fontsize=12)
+    ax3.set_ylabel('Max approximation error', fontsize=12)
+    ax3.set_title('Convergence Rate\n(EML Universal Approximation)', fontsize=13)
+    ax3.legend(fontsize=9)
+    ax3.grid(True, alpha=0.3)
+    ax3.set_ylim(1e-16, 10)
+
+    plt.tight_layout()
+    plt.savefig('eml_universality.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved eml_universality.png")
+
+
+if __name__ == "__main__":
+    main()
