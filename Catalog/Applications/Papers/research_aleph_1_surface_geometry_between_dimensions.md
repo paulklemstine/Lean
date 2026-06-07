@@ -1,234 +1,178 @@
-# Aleph-1 Surfaces: Embedding Obstruction and Triangulation in Transfinite-Dimensional Spaces
+# Ordinal-Indexed Filtration Spaces: Transfinite Geometry and Obstruction Theorems
 
 ## Abstract
 
-We develop a rigorous theory of transfinite-dimensional product spaces ℝ^I where #I = ℵ₁, proving fundamental obstruction theorems about their embedding, triangulation, and computational representation. Under the Continuum Hypothesis (CH: ℵ₁ = 𝔠), we establish that:
+We introduce **ordinal-indexed filtrations** — monotone families of subsets indexed by ordinals — as a framework for studying transfinite-dimensional geometry. For a type X, an ordinal filtration F assigns to each ordinal α a subset F(α) ⊆ X, starting from the empty set and exhausting X, with the key property that strata at different ordinal levels are disjoint. We define the birth ordinal of each point and prove fundamental structural theorems:
 
-1. **No injection** from ℝ^{ℵ₁} into any finite-dimensional Euclidean space ℝⁿ exists (Theorem 4.1).
-2. **The standard Hilbert cube** ℕ → [0,1] is too small to contain ℝ^{ℵ₁} (Theorem 5.2), while the **generalized Hilbert cube** [0,1]^{ℵ₁} admits an embedding (Theorem 5.1).
-3. **Any triangulation** of ℝ^{ℵ₁} requires strictly more than ℵ₁ vertices (Theorem 6.2).
-4. The **Cantor Dimension Gap** — no cardinal between ℵ₀ and ℵ₁ — creates a sharp phase transition between countable and uncountable dimension (Theorem 7.1).
-5. A **bridge to computability** shows that countable factorization of ℵ₁-sized types is impossible (Theorem 8.2).
+1. **Triangulation Obstruction**: A space with infinitely many nonempty strata admits no finite triangulation. The proof constructs an injection from ℕ into the space via stratum witnesses.
 
-All results are machine-verified in Lean 4 with Mathlib. The central engine driving all obstruction results is a single cardinal-arithmetic computation: under CH, 𝔠^ℵ₁ = 2^ℵ₁ > ℵ₁ = 𝔠.
+2. **Embedding Obstruction (CH)**: Under the Continuum Hypothesis, the product of uncountably many copies of [0,1] has cardinality strictly exceeding the continuum, and therefore cannot be injected into any finite-dimensional Euclidean space ℝⁿ.
 
-**Keywords**: Transfinite dimension, cardinal arithmetic, embedding obstruction, Continuum Hypothesis, Hilbert cube, simplicial complex, computability
+3. **Hilbert Cube Universality**: The Hilbert cube ℕ → [0,1] has cardinality exactly equal to the continuum, and every finite-dimensional unit cube embeds injectively into it.
+
+4. **Existence (CH)**: Under CH, there exists a transfinite manifold of dimension exactly ℵ₁.
+
+All results are formalized in Lean 4 with proofs verified by the Lean kernel.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The study of infinite-dimensional spaces has a long history in functional analysis and topology. Hilbert spaces, Banach spaces, and Fréchet spaces are well-understood infinite-dimensional objects. However, these spaces have *countable* dimension in important senses — they are separable, second-countable, or have countable algebraic dimension over their base field.
 
-The theory of infinite-dimensional spaces is well-established in functional analysis: Hilbert spaces, Banach spaces, and Fréchet spaces all have countably many independent dimensions (in the sense of having a countable orthonormal basis or, more generally, being separable). The standard Hilbert cube [0,1]^ℕ serves as a universal container for separable metrizable spaces.
+Far less is understood about spaces whose dimension is *uncountable*. The Continuum Hypothesis (CH) — the assertion that ℵ₁ equals the cardinality of the continuum — provides a natural setting for studying spaces of dimension ℵ₁. Under CH, such spaces sit precisely at the boundary between the countable and the uncountable.
 
-But what happens when we push dimension beyond the countable? The product space ℝ^I, where I has uncountable cardinality ℵ₁, represents a genuine qualitative leap. This paper establishes that this leap creates fundamental obstructions to embedding, triangulation, and finite representation.
+We introduce ordinal-indexed filtrations as a combinatorial tool for analyzing these spaces. The key idea is simple: decompose a space into "dimensional strata" indexed by ordinals, where each stratum represents points that first appear at a given ordinal stage. The number of nonempty strata becomes a measure of dimensional complexity.
 
-### 1.2 Relation to Prior Work
+## 2. Ordinal-Indexed Filtrations
 
-Our work builds on and deepens the catalog result `finite_triangulation_implies_finite_type` from `Catalog/Algebra/TransfiniteSurface.lean`, which establishes that finite triangulations can only cover finite types. We extend this in three directions:
+### Definition 2.1 (Ordinal Filtration)
+An **ordinal-indexed filtration** of a type X is a function F : Ordinal → Set X satisfying:
+- F(0) = ∅ (the filtration starts empty)
+- F is monotone: α ≤ β implies F(α) ⊆ F(β)
+- F exhausts X: ⋃_α F(α) = X
 
-1. **Generalization**: From finite triangulations to arbitrary triangulations, proving cardinality lower bounds on vertex sets.
-2. **Strengthening**: From the mere impossibility of finite triangulation to quantitative bounds (> ℵ₁ vertices required).
-3. **Bridging**: Connecting the triangulation obstruction to embedding obstructions in Euclidean space and to computational factorization impossibilities.
+### Definition 2.2 (Stratum)
+The **stratum** at ordinal α is:
+  stratum(α) = F(α) \ ⋃_{β < α} F(β)
 
-### 1.3 The Role of the Continuum Hypothesis
+This consists of points that first appear at stage α — they are in F(α) but not in any earlier F(β).
 
-Many of our results require the Continuum Hypothesis (CH: ℵ₁ = 𝔠). This is not a weakness but a feature: we demonstrate exactly which results depend on CH and which are provable in ZFC alone.
+### Definition 2.3 (Birth Ordinal)
+The **birth ordinal** of a point x ∈ X is:
+  birth(x) = inf { α : Ordinal | x ∈ F(α) }
 
-| Result | Requires CH? |
-|--------|-------------|
-| Cantor Dimension Gap | No (ZFC) |
-| No injection ℝ^{ℵ₁} → ℝⁿ | Yes |
-| Generalized Hilbert cube embedding | No (ZFC) |
-| Standard Hilbert cube too small | Yes |
-| Triangulation exceeds ℵ₁ | Yes |
-| Countable factorization obstruction | No (ZFC) |
+### Theorem 2.4 (Stratum Disjointness)
+For distinct ordinals α ≠ β, the strata stratum(α) and stratum(β) are disjoint.
 
-The independence of 2^ℵ₀ < 2^ℵ₁ from ZFC (Easton's theorem) means some of our cardinality arguments genuinely need CH. We note where alternative approaches might remove this dependency.
+*Proof.* Without loss of generality, suppose α < β. If x ∈ stratum(α), then x ∈ F(α). But stratum(β) = F(β) \ ⋃_{γ < β} F(γ), and since α < β, x ∈ F(α) ⊆ ⋃_{γ < β} F(γ), so x ∉ stratum(β). □
 
-## 2. Preliminaries
+### Theorem 2.5 (Birth Membership)
+Every point x belongs to stratum(birth(x)).
 
-### 2.1 Cardinal Arithmetic
+*Proof.* By definition, birth(x) = inf { α | x ∈ F(α) }. Since ordinals are well-ordered and the set is nonempty (by exhaustion), the infimum is attained: x ∈ F(birth(x)). Furthermore, x ∉ F(β) for any β < birth(x) by minimality, so x ∉ ⋃_{β < birth(x)} F(β). Therefore x ∈ F(birth(x)) \ ⋃_{β < birth(x)} F(β) = stratum(birth(x)). □
 
-We work with Mathlib's `Cardinal` type. Key facts used throughout:
+## 3. Triangulation Obstruction
 
-- **Cantor's theorem**: ∀ a, a < 2^a
-- **Power self-equality**: ℵ₀ ≤ c → c^c = 2^c
-- **Continuum**: 𝔠 = 2^ℵ₀
-- **ℝⁿ cardinality**: #(Fin n → ℝ) = 𝔠 for n ≥ 1
+### Definition 3.1 (Finite Triangulation)
+A **finite triangulation** of a type X consists of a finite type V and a surjection V → X.
 
-### 2.2 The Continuum Hypothesis
+### Theorem 3.2 (Finite Triangulation Implies Finite Cardinality)
+If X admits a finite triangulation, then |X| < ℵ₀.
 
-We define CH as the proposition ℵ₁ = 𝔠 (at universe level 0). Under CH:
+*Proof.* A surjection from a finite set V gives |X| ≤ |V| < ℵ₀. □
 
-- 𝔠^ℵ₁ = 𝔠^𝔠 = 2^𝔠 = 2^ℵ₁ (by power_self_eq and CH)
-- 2^ℵ₁ > ℵ₁ = 𝔠 (by Cantor)
+### Theorem 3.3 (Triangulation Obstruction via Strata)
+If an ordinal filtration of X has infinitely many nonempty strata (witnessed by an injection f : ℕ → Ordinal mapping to ordinals with nonempty strata), then X admits no finite triangulation.
 
-This two-step computation is the engine driving all our embedding obstruction results.
+*Proof.* For each n ∈ ℕ, choose a witness w(n) ∈ stratum(f(n)). Since f is injective and strata at different ordinals are disjoint (Theorem 2.4), the witness function w is injective: if w(i) = w(j), then w(i) lies in both stratum(f(i)) and stratum(f(j)), so by disjointness f(i) = f(j), hence i = j. This gives |X| ≥ |ℕ| = ℵ₀. By Theorem 3.2, X cannot be finitely triangulated. □
 
-## 3. The Key Cardinal Computation
+### PEGB for Theorem 3.3
 
-**Theorem 3.1** (continuum_power_aleph1_gt_continuum). *Under CH, 𝔠^ℵ₁ > 𝔠.*
+**Proof**: Complete Lean 4 proof using `Infinite.of_injective` and stratum disjointness.
 
-*Proof sketch.* Under CH, ℵ₁ = 𝔠. Since 𝔠 ≥ ℵ₀, we have 𝔠^𝔠 = 2^𝔠 by `power_self_eq`. Then 𝔠 < 2^𝔠 by Cantor's theorem.
+**Example**: Consider ℝ with the filtration F(n) = [-n, n] for finite ordinals n, and F(ω) = ℝ. This has infinitely many nonempty strata (one for each n), confirming that ℝ has no finite triangulation.
 
-**Corollary 3.2** (mk_aleph1_product_gt_continuum). *Under CH, if #I = ℵ₁, then #(I → ℝ) > 𝔠.*
+**Generalization**: The theorem generalizes from ℕ-indexed witnesses to any infinite indexing type. If there are κ-many nonempty strata for any infinite cardinal κ, then |X| ≥ κ.
 
-*Proof.* #(I → ℝ) = 𝔠^(#I) = 𝔠^ℵ₁ > 𝔠 by Theorem 3.1.
+**Boundary**: The result is tight: a space with exactly n nonempty strata has at most n points (each stratum contributes ≤ 1 point in the minimal case), and can be triangulated with n vertices. The obstruction activates precisely at ℵ₀ strata.
 
-**Theorem 3.3** (mk_aleph1_product_eq_two_pow). *Under CH, #(I → ℝ) = 2^ℵ₁ when #I = ℵ₁.*
+## 4. Embedding Obstruction Under CH
 
-*Proof.* By the same chain: 𝔠^ℵ₁ = 𝔠^𝔠 = 2^𝔠 = 2^ℵ₁.
+### Theorem 4.1 (Uncountable Products Exceed Continuum)
+Under CH, if |ι| ≥ ℵ₁, then |ι → [0,1]| > 𝔠.
 
-## 4. Embedding Obstruction
+*Proof.* The product |ι → [0,1]| ≥ |ι → {0,1}| = 2^|ι|. By Cantor's theorem, 2^|ι| > |ι|. Under CH, |ι| ≥ ℵ₁ = 𝔠. So |ι → [0,1]| ≥ 2^|ι| > |ι| ≥ 𝔠. □
 
-**Theorem 4.1** (no_injection_from_aleph1_product). *Under CH, for any n ≥ 1 and any I with #I = ℵ₁, no injection f : (I → ℝ) → (Fin n → ℝ) exists.*
+### Theorem 4.2 (No Euclidean Embedding)
+Under CH, if |ι| ≥ ℵ₁ and n ≥ 1, then there is no injection from ι → [0,1] into ℝⁿ.
 
-*Proof.* If f were injective, then #(I → ℝ) ≤ #(Fin n → ℝ) = 𝔠. But #(I → ℝ) > 𝔠 by Corollary 3.2. Contradiction.
+*Proof.* We have |ℝⁿ| = 𝔠 and |ι → [0,1]| > 𝔠 by Theorem 4.1. An injection would give |ι → [0,1]| ≤ |ℝⁿ| = 𝔠, contradiction. □
 
-**Corollary 4.2** (no_topological_embedding_in_euclidean). *Under CH, no continuous injection from ℝ^{ℵ₁} into ℝⁿ exists.*
+### PEGB for Theorem 4.2
 
-*Proof.* A continuous injection is in particular an injection.
+**Proof**: Complete Lean 4 proof using `product_overcontinuum_ch` and cardinal arithmetic.
 
-**Theorem 4.3** (no_finite_dimensional_embedding). *Under CH, the obstruction holds simultaneously for all finite n.*
+**Example**: Take ι = ℝ (under CH, |ℝ| = ℵ₁). Then ℝ → [0,1] has cardinality > 𝔠 and cannot be injected into any ℝⁿ.
 
-This result is stronger than the standard topological dimension argument: it rules out ALL injections, not just continuous or measurable ones.
+**Generalization**: Without CH, the same conclusion holds whenever |ι| ≥ 𝔠 (since 2^|ι| > |ι| ≥ 𝔠 still).
 
-### PEGB Analysis for Theorem 4.1
+**Boundary**: When |ι| = ℵ₀ (countable), the product ℕ → [0,1] = [0,1]^ℕ has cardinality exactly 𝔠, equal to |ℝⁿ|. In this case, injections *do* exist (e.g., space-filling curves in reverse).
 
-- **Proof**: Complete formal proof using cardinal arithmetic chain.
-- **Example**: ℝ^ℝ (≅ ℝ^{ℵ₁} under CH) cannot inject into ℝ³. Every attempt to assign 3D coordinates to points of ℝ^ℝ must create collisions.
-- **Generalization**: The argument extends to any base field F with #F ≥ 2: F^{ℵ₁} cannot inject into F^n for finite n, under CH.
-- **Boundary**: Without CH, if 𝔠 > ℵ₁, then 𝔠^ℵ₁ could equal 𝔠, and the cardinality argument fails. Topological dimension arguments would be needed instead.
+## 5. Hilbert Cube Universality
 
-## 5. The Hilbert Cube Dichotomy
+### Theorem 5.1 (Hilbert Cube Cardinality)
+|ℕ → [0,1]| = 𝔠.
 
-**Theorem 5.1** (aleph1_product_embeds_in_generalized_hilbert_cube). *For any type I, there exists an injection from (I → ℝ) to (I → [0,1]).*
+*Proof.* By the cardinal product formula, |ℕ → [0,1]| = |[0,1]|^|ℕ| = 𝔠^ℵ₀. Since 𝔠 = 2^ℵ₀, we get (2^ℵ₀)^ℵ₀ = 2^(ℵ₀·ℵ₀) = 2^ℵ₀ = 𝔠. □
 
-*Proof.* Apply arctan (scaled to [0,1]) coordinate-wise. The function x ↦ (arctan(x)/π + 1/2) maps ℝ into [0,1], and is injective because arctan is.
+### Theorem 5.2 (Finite-Dimensional Embedding)
+For each n, there is an injection [0,1]ⁿ → [0,1]^ℕ.
 
-**Theorem 5.2** (hilbert_cube_too_small). *Under CH, no injection from ℝ^{ℵ₁} into the standard Hilbert cube (ℕ → [0,1]) exists.*
+*Proof.* Map (x₁,...,xₙ) to the sequence (x₁,...,xₙ, 0, 0, ...). This is clearly injective. □
 
-*Proof.* #(ℕ → [0,1]) = 𝔠^ℵ₀ = 𝔠 (since 𝔠 ≥ ℵ₀). But #(ℝ^{ℵ₁}) > 𝔠 by Corollary 3.2.
+### PEGB for Theorem 5.1
 
-### PEGB Analysis for the Hilbert Cube Dichotomy
+**Proof**: Complete Lean 4 proof using `Cardinal.mk_pi`, `Cardinal.prod_const`, `Cardinal.mk_Icc_real`.
 
-- **Proof**: Embedding via arctan (Thm 5.1); cardinality obstruction (Thm 5.2).
-- **Example**: The function (g : ℝ → ℝ) ↦ (i ↦ ⟨arctan(g(i))/π + 1/2, ...⟩) embeds ℝ^ℝ into [0,1]^ℝ. But no such embedding into [0,1]^ℕ exists.
-- **Generalization**: For any κ < ℵ₁, [0,1]^κ is too small (under CH). The matching dimension [0,1]^{ℵ₁} is the minimal universal container.
-- **Boundary**: Without CH, if 𝔠 = ℵ₂, then ℝ^{ℵ₁} might have cardinality 𝔠 = ℵ₂, and [0,1]^ℕ also has cardinality ℵ₂, making set-theoretic injection possible (though not topological embedding).
+**Example**: The unit interval [0,1] embeds as constant sequences, giving 𝔠-many points in the Hilbert cube.
 
-## 6. Triangulation Theory
+**Generalization**: For any metrizable space Y with |Y| ≤ 𝔠, Y embeds into the Hilbert cube (Urysohn metrization theorem).
 
-**Theorem 6.1** (triangulation_vertex_bound). *For any surjection from V to X, #X ≤ #V.*
+**Boundary**: [0,1]^ω₁ (uncountable product) does NOT embed in the Hilbert cube — its cardinality exceeds 𝔠 under CH.
 
-This generalizes the catalog result `finite_triangulation_implies_finite_type`.
+## 6. Existence Under CH
 
-**Theorem 6.2** (aleph1_triangulation_exceeds_aleph1). *Under CH, any triangulation of ℝ^{ℵ₁} requires strictly more than ℵ₁ vertices.*
+### Theorem 6.1
+Under the Continuum Hypothesis, there exists a transfinite manifold of dimension ℵ₁.
 
-*Proof.* ℵ₁ = 𝔠 < #(ℝ^{ℵ₁}) ≤ #V by Theorem 6.1.
+*Proof.* Take ℝ with its standard topology and dimension ℵ₁. Under CH, |ℝ| = ℵ₁ = 𝔠, so the cardinality condition 𝔠 ≤ |ℝ| is satisfied. □
 
-### PEGB Analysis for Theorem 6.2
+## 7. Strictly Increasing Cardinal Chains
 
-- **Proof**: Combines cardinality computation with surjection bound.
-- **Example**: Any simplicial complex on ℝ^{ℵ₁} needs ≥ 2^ℵ₁ vertices. Under GCH, this is ℵ₂.
-- **Generalization**: For ℝ^{ℵ_α}, the vertex bound is 2^{ℵ_α} under CH-like hypotheses at each level.
-- **Boundary**: The result says nothing about the *structure* of such triangulations — only their size. Whether good triangulations (e.g., locally finite) exist at all in the transfinite case remains open.
+### Theorem 7.1 (Chain Persistence)
+If f : ℕ → Cardinal is strictly increasing with f(0) ≥ ℵ₀, then f(n) ≥ ℵ₀ for all n.
 
-## 7. The Cantor Dimension Gap
+### Theorem 7.2 (Chain Distinctness)
+A strictly increasing chain of length n produces exactly n distinct cardinal values.
 
-**Theorem 7.1** (cantor_dimension_gap). *There is no cardinal κ with ℵ₀ < κ < ℵ₁.*
+These results quantify the information content of dimensional hierarchies: each level of a strictly increasing chain captures genuinely new structure that cannot be reduced to lower levels.
 
-This is a theorem of ZFC: ℵ₁ is by definition the successor cardinal of ℵ₀.
+## 8. The Transfinite Independence Number
 
-**Theorem 7.2** (aleph_one_least_uncountable). *ℵ₁ is the least uncountable cardinal: any κ > ℵ₀ satisfies ℵ₁ ≤ κ.*
+**Definition.** The **transfinite independence number** of a filtration Φ is the cardinality of { α : Ordinal | stratum(α) ≠ ∅ }.
 
-### Interpretation
+This counts the number of ordinals at which the filtration adds genuinely new content. When the independence number exceeds ℵ₀, the space is provably infinite.
 
-The dimension gap means that the transition from countable dimension (ℝⁿ, Hilbert space) to uncountable dimension (ℝ^{ℵ₁}) is a *discrete jump*. There is no smooth interpolation — no space of "dimension ℵ₀.5" exists.
+## 9. Falsifiable Conjecture
 
-This has implications for mathematical physics: any transition from separable Hilbert space (quantum mechanics) to non-separable function spaces must cross a genuine discontinuity.
+**Conjecture (Transfinite Betti Dichotomy).** Under CH, for every transfinite manifold M of dimension ℵ₁, any cardinal β ≤ |M| satisfies β = 0 or β ≥ ℵ₀.
 
-## 8. Bridge to Computability
+**Motivation**: In finite-dimensional manifold theory, Betti numbers can be any natural number. For transfinite manifolds under CH, we conjecture a dichotomy: topological invariants are either trivial or infinite.
 
-**Theorem 8.1** (finite_decision_obstruction). *No injective encoding of an ℵ₁-sized type into a finite type exists.*
+**Computational Test**: Compute H₁ of the long line (expected: 0) and π₁ of the Hawaiian earring (expected: uncountable). A transfinite space with finite nonzero H₁ would disprove the conjecture.
 
-**Theorem 8.2** (countable_factorization_obstruction). *No injective encoding of an ℵ₁-sized type into a countable type exists.*
+## 10. Connection to Existing Results
 
-These results bridge dimension theory with information theory and computability:
+Our triangulation obstruction theorem extends the existing catalog result `finite_triangulation_implies_finite_type` (in `Algebra/TransfiniteSurface.lean`) by adding the stratum-based argument: instead of assuming the space itself is infinite, we derive infinity from the structure of the filtration.
 
-- **Finite representations** fail for uncountable types (Theorem 8.1)
-- **Countable representations** fail for types of cardinality ≥ ℵ₁ (Theorem 8.2)
-- **ℵ₁ representations** fail for ℝ^{ℵ₁} under CH, since #(ℝ^{ℵ₁}) > ℵ₁ (by the main cardinality computation)
+## 11. Discussion
 
-This creates a hierarchy of representation barriers that mirrors the cardinal hierarchy itself.
+### Strengths
+- The ordinal filtration framework is completely general: it works for any type X.
+- The proofs are constructive where possible (witness functions are explicit).
+- The CH-dependent results clearly separate what requires CH from what doesn't.
 
-## 9. The Transfinite Product Manifold
+### Limitations
+- Topological dimension (covering dimension, inductive dimension) is not formalized. Our "dimension" is a cardinal assigned axiomatically, not derived from topological properties.
+- The embedding obstruction uses cardinality, not topology. Topological embedding obstructions (e.g., via weight or cellularity) would be stronger.
 
-We package our results into a structure `TransfiniteProductManifold`:
-
-```
-structure TransfiniteProductManifold where
-  I : Type
-  index_card : #I = ℵ₁
-```
-
-The carrier space is `I → ℝ`. We prove:
-
-- **No Euclidean embedding** (under CH)
-- **Generalized Hilbert cube embedding** (unconditional)
-- **Triangulation bound** (under CH): any triangulation needs > ℵ₁ vertices
-
-## 10. Discussion
-
-### 10.1 The Unifying Theme
-
-All our obstruction results stem from a single cardinal-arithmetic fact: under CH, 𝔠^ℵ₁ = 2^ℵ₁ > ℵ₁ = 𝔠. This creates an unbridgeable cardinality gap between ℝ^{ℵ₁} and ℝⁿ (or even ℝ^ℕ). The gap manifests as:
-
-- **Embedding obstruction**: not enough points in the target
-- **Triangulation obstruction**: not enough vertices available
-- **Computational obstruction**: not enough codewords in any countable encoding
-
-### 10.2 Independence from ZFC
-
-Our dependence on CH is essential for the cardinality-based arguments. Without CH:
-
-- 𝔠 could be any cardinal ≥ ℵ₁
-- 𝔠^ℵ₁ could equal 𝔠 (if 𝔠 = 2^ℵ₁, which is consistent)
-- Topological or dimension-theoretic arguments would be needed instead
-
-This suggests a research program: develop CH-free obstruction theorems using topological weight or covering dimension rather than cardinality.
-
-### 10.3 Connection to Existing Catalog
-
-Our work directly extends `finite_triangulation_implies_finite_type` from the Catalog. The original result shows:
-- Finite triangulation → finite target type
-
-We strengthen this to:
-- Finite triangulation → #target < ℵ₀ (quantitative)
-- Triangulation of ℝ^{ℵ₁} → #vertices > ℵ₁ (transfinite bound)
-- Triangulation connects to embedding and computation (bridge)
-
-## 11. Algorithms and Computational Aspects
-
-While the spaces studied are inherently infinite, several aspects admit computational treatment:
-
-1. **Cardinal arithmetic verification**: The key computation 𝔠^ℵ₁ = 2^ℵ₁ > 𝔠 can be verified symbolically.
-2. **Finite approximation**: Finite-dimensional projections ℝ^{ℵ₁} → ℝⁿ can be studied computationally.
-3. **Dimension bounds**: For finite simplicial complexes on Fin n, face dimensions ≤ n is computable.
-
-## 12. Future Work
-
-1. Develop CH-free embedding obstructions using topological weight
-2. Study the topology of ℝ^{ℵ₁} with the product vs. box topology
-3. Investigate transfinite simplicial homology
-4. Connect to forcing models: what happens to these results in different set-theoretic universes?
-5. Explore the relationship between transfinite dimension and large cardinal axioms
+### Future Work
+- Formalize covering dimension for ordinal-indexed spaces.
+- Prove the Urysohn metrization theorem variant for the Hilbert cube.
+- Investigate the Transfinite Betti Conjecture computationally.
 
 ## References
 
-1. Cantor, G. (1878). Ein Beitrag zur Mannigfaltigkeitslehre. *Journal für die reine und angewandte Mathematik*.
-2. Cohen, P. (1963). The independence of the continuum hypothesis. *PNAS*.
-3. Gödel, K. (1940). *The Consistency of the Continuum Hypothesis*. Princeton University Press.
-4. Easton, W. B. (1970). Powers of regular cardinals. *Annals of Mathematical Logic*.
-5. Catalog result: `finite_triangulation_implies_finite_type` in `Catalog/Algebra/TransfiniteSurface.lean`.
-6. Catalog result: `finite_triangulation_implies_finite_type` in `FINAL/Algebra/TransfiniteSurface.lean`.
+1. Cantor, G. (1874). "Über eine Eigenschaft des Inbegriffes aller reellen algebraischen Zahlen." *Journal für die reine und angewandte Mathematik*.
+2. Cohen, P. (1963). "The independence of the continuum hypothesis." *PNAS*.
+3. Gödel, K. (1940). *The Consistency of the Axiom of Choice and of the Generalized Continuum-Hypothesis with the Axioms of Set Theory*.
+4. Urysohn, P. (1927). "Sur un espace métrique universel." *Bulletin des Sciences Mathématiques*.

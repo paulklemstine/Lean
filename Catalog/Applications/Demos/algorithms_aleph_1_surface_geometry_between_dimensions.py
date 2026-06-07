@@ -1,246 +1,187 @@
 #!/usr/bin/env python3
 """
-Algorithms for Transfinite-Dimensional Geometry
+Algorithms for Ordinal Filtration Spaces
 
-Type-hinted implementations of the key algorithms and computations
-from the Aleph-1 Surface theory.
+Type-hinted implementations of the key mathematical constructions.
 """
 
-from typing import List, Tuple, Optional, Callable
-import math
+from typing import List, Set, Dict, Tuple, Optional, Callable, TypeVar, Generic
+from dataclasses import dataclass
+from abc import ABC, abstractmethod
+
+T = TypeVar('T')
 
 
-def arctan_embedding(x: float) -> float:
+@dataclass
+class OrdinalFiltration(Generic[T]):
     """
-    The arctan embedding: ℝ → [0, 1].
+    An ordinal filtration of a finite set, using natural numbers as ordinals.
     
-    Maps x ↦ arctan(x)/π + 1/2.
-    
-    This is the coordinate-wise function used to embed ℝ^I into [0,1]^I
-    (the generalized Hilbert cube). It is:
-    - Injective (since arctan is strictly monotone)
-    - Continuous
-    - Maps ℝ onto (0, 1) ⊂ [0, 1]
-    
-    Complexity: O(1)
+    F[k] is the set of elements at filtration level k.
+    The filtration satisfies:
+      - F[0] = {} (empty)
+      - F[k] ⊆ F[k+1] (monotone)
+      - F[max_level] = full space (exhaustion)
     """
-    return math.atan(x) / math.pi + 0.5
-
-
-def arctan_embedding_inverse(y: float) -> float:
-    """
-    Inverse of the arctan embedding: (0, 1) → ℝ.
+    elements: List[T]
+    levels: Dict[T, int]  # birth ordinal for each element
     
-    Maps y ↦ tan(π(y - 1/2)).
+    @property
+    def max_level(self) -> int:
+        return max(self.levels.values()) if self.levels else 0
     
-    Only defined for y ∈ (0, 1).
+    def F(self, k: int) -> Set[T]:
+        """Filtration level k: all elements born at or before level k."""
+        return {x for x, birth in self.levels.items() if birth <= k}
     
-    Complexity: O(1)
-    """
-    if y <= 0 or y >= 1:
-        raise ValueError(f"y = {y} must be in (0, 1)")
-    return math.tan(math.pi * (y - 0.5))
-
-
-def coordinate_wise_embed(point: List[float]) -> List[float]:
-    """
-    Apply the arctan embedding coordinate-wise.
+    def stratum(self, k: int) -> Set[T]:
+        """Stratum at level k: elements born exactly at level k."""
+        return {x for x, birth in self.levels.items() if birth == k}
     
-    This is the finite-dimensional analog of the embedding
-    ℝ^I → [0,1]^I from Theorem 5.1.
+    def birth_ordinal(self, x: T) -> int:
+        """The birth ordinal of element x."""
+        return self.levels[x]
     
-    Args:
-        point: A point in ℝⁿ (list of n real coordinates)
+    def nonempty_strata(self) -> List[int]:
+        """List of levels with nonempty strata."""
+        return sorted({birth for birth in self.levels.values()})
     
-    Returns:
-        The embedded point in [0,1]ⁿ
+    def independence_number(self) -> int:
+        """The number of nonempty strata."""
+        return len(self.nonempty_strata())
     
-    Complexity: O(n) where n = len(point)
-    """
-    return [arctan_embedding(x) for x in point]
-
-
-def projection(point: List[float], target_dim: int) -> List[float]:
-    """
-    Project a high-dimensional point to its first target_dim coordinates.
-    
-    This is the finite analog of the projection ℝ^{ℵ₁} → ℝⁿ.
-    By Theorem 4.1, such projections cannot be injective when
-    the source dimension is ℵ₁ (under CH).
-    
-    Args:
-        point: A point in ℝⁿ
-        target_dim: Number of coordinates to keep
-    
-    Returns:
-        The projected point (first target_dim coordinates)
-    
-    Complexity: O(target_dim)
-    """
-    return point[:target_dim]
-
-
-def collision_count(
-    points: List[List[float]], 
-    target_dim: int
-) -> Tuple[int, int]:
-    """
-    Count how many points collide after projection.
-    
-    Returns (original_distinct, projected_distinct).
-    The difference measures information loss.
-    
-    Complexity: O(n * d) where n = #points, d = target_dim
-    """
-    original = set(tuple(p) for p in points)
-    projected = set(tuple(p[:target_dim]) for p in points)
-    return len(original), len(projected)
-
-
-def cardinal_hierarchy(n_levels: int = 7) -> List[dict]:
-    """
-    Generate the cardinal hierarchy for display.
-    
-    Returns a list of dictionaries describing each aleph number,
-    its relationship to the continuum hypothesis, and its role
-    in the dimension theory.
-    
-    Args:
-        n_levels: Number of aleph numbers to generate
-    
-    Returns:
-        List of cardinal level descriptions
-    """
-    levels = []
-    for i in range(n_levels):
-        level: dict = {
-            "symbol": f"ℵ_{i}",
-            "ordinal_index": i,
-            "description": "",
-            "ch_value": "",
-            "embeddable_in_Rn": None,
-        }
+    def verify_disjointness(self) -> bool:
+        """Verify that strata are pairwise disjoint."""
+        strata = {}
+        for k in self.nonempty_strata():
+            strata[k] = self.stratum(k)
         
-        if i == 0:
-            level["description"] = "Countably infinite"
-            level["ch_value"] = "ℵ₀"
-            level["embeddable_in_Rn"] = True
-        elif i == 1:
-            level["description"] = "First uncountable"
-            level["ch_value"] = "𝔠 = 2^ℵ₀ (under CH)"
-            level["embeddable_in_Rn"] = False
+        levels = list(strata.keys())
+        for i in range(len(levels)):
+            for j in range(i + 1, len(levels)):
+                if strata[levels[i]] & strata[levels[j]]:
+                    return False
+        return True
+    
+    def verify_exhaustion(self) -> bool:
+        """Verify that the union of all strata equals the full space."""
+        union = set()
+        for k in range(self.max_level + 1):
+            union |= self.stratum(k)
+        return union == set(self.elements)
+
+
+def construct_natural_filtration(elements: List[T]) -> OrdinalFiltration[T]:
+    """
+    Construct the canonical filtration: element i is born at level i+1.
+    This achieves the maximum independence number = len(elements).
+    """
+    levels = {x: i + 1 for i, x in enumerate(elements)}
+    return OrdinalFiltration(elements=elements, levels=levels)
+
+
+def hilbert_cube_embed(point: List[float], target_dim: int) -> List[float]:
+    """
+    Embed a finite-dimensional point [0,1]^n into [0,1]^target_dim.
+    Pads with zeros. Injective by construction.
+    
+    Algorithm:
+      1. Copy the n coordinates of the input point
+      2. Pad remaining coordinates with 0.0
+      3. Return the target_dim-dimensional point
+    """
+    n = len(point)
+    result = point[:min(n, target_dim)]
+    result += [0.0] * max(0, target_dim - n)
+    return result
+
+
+def cantor_diagonal(functions: List[List[int]]) -> List[int]:
+    """
+    Cantor's diagonal argument: given a list of functions ℕ → {0,1},
+    construct a function that differs from each one.
+    
+    This is the constructive core of Cantor's theorem: 2^κ > κ.
+    
+    Algorithm:
+      1. For each i, look at functions[i][i]
+      2. Flip the bit: new[i] = 1 - functions[i][i]
+      3. The result differs from functions[i] at position i
+    """
+    n = len(functions)
+    diagonal = []
+    for i in range(n):
+        if i < len(functions[i]):
+            diagonal.append(1 - functions[i][i])
         else:
-            level["description"] = f"ℵ_{i}"
-            level["ch_value"] = f"2^ℵ_{i-1} (under GCH)"
-            level["embeddable_in_Rn"] = False
-        
-        levels.append(level)
-    
-    return levels
+            diagonal.append(0)
+    return diagonal
 
 
-def dimension_gap_check(candidates: List[int]) -> List[bool]:
+def cardinal_chain(length: int, base: int = 2) -> List[int]:
     """
-    Check if candidate values fall in the "dimension gap."
+    Generate a strictly increasing chain of cardinals.
+    Uses powers of base as a finite model.
     
-    In the finite analog: check if values are strictly between
-    two consecutive Fibonacci-like growth levels.
+    In transfinite arithmetic:
+      ℵ₀ < ℵ₁ < ℵ₂ < ...
     
-    The mathematical theorem (Cantor Dimension Gap) says:
-    No cardinal κ exists with ℵ₀ < κ < ℵ₁.
-    
-    Args:
-        candidates: List of candidate cardinal sizes
-    
-    Returns:
-        List of booleans: True if the candidate is in a "gap"
+    Finite model:
+      base^0 < base^1 < base^2 < ...
     """
-    # In finite analog: gaps are between consecutive powers of 2
-    # (mimicking 2^ℵ₀, 2^ℵ₁, etc.)
-    powers = [2**i for i in range(20)]
-    gaps = []
-    for c in candidates:
-        in_gap = any(powers[i] < c < powers[i+1] and c not in powers 
-                     for i in range(len(powers)-1))
-        gaps.append(in_gap)
-    return gaps
+    return [base ** i for i in range(length)]
 
 
-def triangulation_vertex_lower_bound(
-    space_cardinality: int,
-    simplex_dim: int
-) -> int:
+def triangulation_obstruction_check(
+    filtration: OrdinalFiltration[T],
+    max_tri_vertices: int
+) -> Tuple[bool, str]:
     """
-    Compute the minimum number of vertices needed to triangulate
-    a space of given cardinality.
+    Check whether a filtration-based obstruction prevents triangulation
+    with at most max_tri_vertices vertices.
     
-    By the triangulation vertex bound theorem:
-    #vertices ≥ #space (since the cover must be surjective)
+    The obstruction activates when:
+      independence_number > max_tri_vertices
     
-    For finite spaces, this gives a concrete computable bound.
-    For transfinite spaces (ℵ₁-surface), the bound is:
-    #vertices > ℵ₁ (under CH)
-    
-    Args:
-        space_cardinality: Number of points in the space
-        simplex_dim: Maximum dimension of simplices used
-    
-    Returns:
-        Minimum number of vertices required
+    Returns (is_obstructed, explanation).
     """
-    # The surjectivity bound: at least as many vertices as points
-    return space_cardinality
-
-
-def verify_embedding_injectivity(
-    embed: Callable[[float], float],
-    test_points: List[float]
-) -> bool:
-    """
-    Numerically verify that an embedding function is injective
-    on a set of test points.
+    indep = filtration.independence_number()
     
-    Args:
-        embed: The embedding function ℝ → [0,1]
-        test_points: Points to test
-    
-    Returns:
-        True if all test points map to distinct values
-    """
-    images = [embed(x) for x in test_points]
-    return len(set(images)) == len(images)
+    if indep > max_tri_vertices:
+        return (True, 
+            f"Obstruction: {indep} nonempty strata > {max_tri_vertices} vertices. "
+            f"Each stratum contributes a distinct point, so the space has "
+            f"≥ {indep} elements, but a triangulation with {max_tri_vertices} "
+            f"vertices can cover at most {max_tri_vertices} elements.")
+    else:
+        return (False,
+            f"No obstruction: {indep} nonempty strata ≤ {max_tri_vertices} vertices. "
+            f"A triangulation may exist.")
 
-
-# ============================================================
-# Main demonstration
-# ============================================================
 
 if __name__ == "__main__":
-    print("ALGORITHMS FOR TRANSFINITE-DIMENSIONAL GEOMETRY")
-    print("=" * 50)
+    # Example usage
+    elements = list(range(20))
+    filt = construct_natural_filtration(elements)
     
-    # Test arctan embedding
-    print("\n1. Arctan Embedding")
-    test_vals = [-100, -10, -1, 0, 1, 10, 100]
-    for x in test_vals:
-        y = arctan_embedding(x)
-        x_back = arctan_embedding_inverse(y)
-        print(f"  x={x:>6}, embed={y:.6f}, inverse={x_back:.4f}")
+    print("Natural filtration on {0, ..., 19}:")
+    print(f"  Independence number: {filt.independence_number()}")
+    print(f"  Disjoint strata: {filt.verify_disjointness()}")
+    print(f"  Exhaustion: {filt.verify_exhaustion()}")
     
-    # Test injectivity
-    print(f"\n  Injectivity verified: {verify_embedding_injectivity(arctan_embedding, test_vals)}")
+    # Triangulation check
+    obstructed, msg = triangulation_obstruction_check(filt, 10)
+    print(f"  Triangulation with 10 vertices: {'OBSTRUCTED' if obstructed else 'possible'}")
+    print(f"    {msg}")
     
-    # Test projection collision
-    print("\n2. Projection Collision Rates")
-    import random
-    random.seed(42)
-    points = [[random.uniform(-10, 10) for _ in range(20)] for _ in range(500)]
-    for d in [1, 2, 5, 10, 15]:
-        orig, proj = collision_count(points, d)
-        print(f"  R^20 → R^{d}: {orig} distinct → {proj} distinct ({100*(1-proj/orig):.1f}% collision)")
+    # Hilbert cube embedding
+    point = [0.5, 0.3, 0.8]
+    embedded = hilbert_cube_embed(point, 10)
+    print(f"\n  Hilbert cube embedding: {point} → {embedded}")
     
-    # Cardinal hierarchy
-    print("\n3. Cardinal Hierarchy")
-    for level in cardinal_hierarchy(5):
-        embeddable = "✓" if level["embeddable_in_Rn"] else "✗"
-        print(f"  {level['symbol']}: {level['description']} [{embeddable} embeddable in Rⁿ]")
+    # Cantor diagonal
+    fns = [[0, 1, 0, 1], [1, 1, 1, 0], [0, 0, 1, 1], [1, 0, 0, 0]]
+    diag = cantor_diagonal(fns)
+    print(f"\n  Cantor diagonal of {fns}:")
+    print(f"    Result: {diag}")
+    print(f"    Differs from each function at its index ✓")

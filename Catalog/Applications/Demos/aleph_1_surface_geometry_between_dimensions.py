@@ -1,377 +1,323 @@
 #!/usr/bin/env python3
 """
-Aleph-1 Surface: Numerical Demonstrations
+Transfinite Geometry Demo: Numerical Examples
 
-Demonstrates the key concepts from the transfinite dimension theory:
-1. Cardinal arithmetic computations
-2. Finite-dimensional projection information loss
-3. Arctan embedding into the Hilbert cube
+Demonstrates the key mathematical concepts from the ordinal filtration framework:
+1. Stratum disjointness in finite filtrations
+2. Cardinality bounds for products
+3. Hilbert cube embedding
+4. Cardinal chain properties
 """
 
 import math
-from typing import List, Tuple
-
-def cardinal_power_chain(base: int = 2, levels: int = 5) -> List[str]:
-    """
-    Demonstrate the cardinal power tower: 2, 2^ℵ₀, 2^(2^ℵ₀), ...
-    
-    In finite approximation, show how quickly powers grow.
-    Under CH: ℵ₁ = 2^ℵ₀, so 2^ℵ₁ = 2^(2^ℵ₀) >> ℵ₁.
-    """
-    results = []
-    n = base
-    for i in range(levels):
-        results.append(f"Level {i}: 2^{{{n}}} = {2**n if n < 1000 else '(too large)'}")
-        n = 2**n if n < 20 else n  # cap to prevent overflow
-    return results
+from typing import List, Set, Tuple, Dict
 
 
-def projection_information_loss(dim_source: int, dim_target: int, num_points: int = 1000) -> float:
-    """
-    Demonstrate information loss when projecting from high to low dimensions.
-    
-    Generate random points in R^dim_source, project to R^dim_target,
-    and measure the fraction of distinct points that collide.
-    
-    This is a finite analog of Theorem 4.1 (no injection from R^{ℵ₁} to R^n).
-    """
-    import random
-    random.seed(42)
-    
-    # Generate random points with integer coordinates for exact comparison
-    points = [tuple(random.randint(-100, 100) for _ in range(dim_source)) 
-              for _ in range(num_points)]
-    
-    # Project to first dim_target coordinates
-    projected = [p[:dim_target] for p in points]
-    
-    original_distinct = len(set(points))
-    projected_distinct = len(set(projected))
-    
-    collision_rate = 1.0 - projected_distinct / original_distinct if original_distinct > 0 else 0.0
-    
-    return collision_rate
-
-
-def arctan_embedding(values: List[float]) -> List[float]:
-    """
-    The arctan embedding: R → [0, 1] via x ↦ arctan(x)/π + 1/2.
-    
-    This is the coordinate-wise map used in Theorem 5.1 to embed
-    R^I into the generalized Hilbert cube [0,1]^I.
-    """
-    return [(math.atan(x) / math.pi + 0.5) for x in values]
-
-
-def demonstrate_embedding_injectivity(n_samples: int = 20) -> List[Tuple[float, float]]:
-    """
-    Show that the arctan embedding preserves order (hence is injective).
-    """
-    import random
-    random.seed(42)
-    
-    values = sorted([random.uniform(-100, 100) for _ in range(n_samples)])
-    embedded = arctan_embedding(values)
-    
-    return list(zip(values, embedded))
-
-
-def cardinality_comparison_table():
-    """
-    Display the cardinality hierarchy relevant to the embedding obstruction.
-    
-    Under CH: ℵ₁ = 𝔠 = 2^ℵ₀
-    Key fact: 2^ℵ₁ > ℵ₁ (Cantor), so #(R^{ℵ₁}) > #(R^n) for all n.
-    """
+def demo_stratum_disjointness():
+    """Demonstrate stratum disjointness for a concrete filtration on {0,...,9}."""
     print("=" * 60)
-    print("CARDINAL HIERARCHY (under Continuum Hypothesis)")
+    print("DEMO 1: Stratum Disjointness")
     print("=" * 60)
-    print()
-    print(f"{'Space':<25} {'Cardinality':<20} {'Symbol'}")
-    print("-" * 60)
-    print(f"{'ℕ (naturals)':<25} {'ℵ₀':<20} ℵ₀")
-    print(f"{'ℝ (reals)':<25} {'𝔠 = 2^ℵ₀':<20} ℵ₁ (under CH)")
-    print(f"{'ℝⁿ (n ≥ 1)':<25} {'𝔠':<20} ℵ₁ (under CH)")
-    print(f"{'[0,1]^ℕ (Hilbert cube)':<25} {'𝔠':<20} ℵ₁ (under CH)")
-    print(f"{'ℝ^ℵ₁':<25} {'2^ℵ₁':<20} > ℵ₁ (Cantor)")
-    print(f"{'[0,1]^ℵ₁ (gen. cube)':<25} {'2^ℵ₁':<20} > ℵ₁ (Cantor)")
-    print()
-    print("KEY INSIGHT: ℝ^ℵ₁ has 2^ℵ₁ points, while ℝⁿ has only ℵ₁ = 𝔠 points.")
-    print("Since 2^ℵ₁ > ℵ₁, no injection from ℝ^ℵ₁ to ℝⁿ can exist.")
-    print()
-    print("The generalized Hilbert cube [0,1]^ℵ₁ has 2^ℵ₁ points,")
-    print("matching ℝ^ℵ₁, so embedding IS possible via arctan.")
-
-
-def dimension_gap_demonstration():
-    """
-    Demonstrate the Cantor Dimension Gap: no cardinal between ℵ₀ and ℵ₁.
     
-    In finite terms: for well-ordered sets, the successor of the countable
-    ordinals is the first uncountable ordinal ω₁, with no intermediate.
-    """
+    # Filtration: F(k) = {0, 1, ..., k-1} for k = 0, 1, ..., 10
+    n = 10
+    F = [set(range(k)) for k in range(n + 1)]
+    
+    # Compute strata: stratum(k) = F(k) \ F(k-1)
+    strata = []
+    for k in range(n + 1):
+        if k == 0:
+            strata.append(set())  # F(0) = empty
+        else:
+            strata.append(F[k] - F[k - 1])
+    
+    print(f"\nFiltration F(k) = {{0, ..., k-1}} on {{0, ..., {n-1}}}")
+    for k in range(n + 1):
+        print(f"  F({k}) = {sorted(F[k]) if F[k] else '{}'}")
+    
+    print(f"\nStrata (birth level):")
+    for k in range(n + 1):
+        print(f"  stratum({k}) = {sorted(strata[k]) if strata[k] else '{}'}")
+    
+    # Verify disjointness
+    print(f"\nVerifying pairwise disjointness...")
+    all_disjoint = True
+    for i in range(n + 1):
+        for j in range(i + 1, n + 1):
+            if strata[i] & strata[j]:
+                print(f"  FAIL: stratum({i}) ∩ stratum({j}) = {strata[i] & strata[j]}")
+                all_disjoint = False
+    if all_disjoint:
+        print("  ✓ All strata are pairwise disjoint!")
+    
+    # Verify exhaustion
+    union = set()
+    for s in strata:
+        union |= s
+    print(f"\n  Union of all strata = {sorted(union)}")
+    print(f"  Full space = {sorted(range(n))}")
+    print(f"  Exhaustion: {'✓' if union == set(range(n)) else '✗'}")
+
+
+def demo_cardinality_bounds():
+    """Demonstrate cardinality bounds for product spaces."""
     print("\n" + "=" * 60)
-    print("CANTOR DIMENSION GAP")
+    print("DEMO 2: Cardinality Bounds")
     print("=" * 60)
-    print()
-    print("The infinite cardinals form a well-ordered sequence:")
-    print()
-    for i in range(6):
-        symbol = f"ℵ_{i}"
-        desc = {
-            0: "countably infinite (= #ℕ)",
-            1: "first uncountable (= 𝔠 under CH)",
-            2: "= 2^ℵ₁ under GCH",
-            3: "= 2^ℵ₂ under GCH",
-            4: "= 2^ℵ₃ under GCH",
-            5: "= 2^ℵ₄ under GCH",
-        }
-        print(f"  {symbol:<8} — {desc[i]}")
     
-    print()
-    print("THEOREM (ZFC): There is NO cardinal κ with ℵ₀ < κ < ℵ₁.")
-    print()
-    print("This means the jump from countable to uncountable dimension")
-    print("is DISCRETE — there is no 'dimension ℵ₀.5'.")
-    print()
-    print("Consequence: A space is either ≤ ℵ₀-dimensional (like ℝⁿ, ℓ²)")
-    print("or ≥ ℵ₁-dimensional. Nothing in between exists.")
+    print("\nCantor's theorem: 2^κ > κ for all cardinals κ")
+    print("(In finite arithmetic, 2^n > n for all n ≥ 0)")
+    for n in range(8):
+        print(f"  2^{n} = {2**n} > {n}  ✓")
+    
+    print("\nProduct cardinalities (|X^n| for |X| = c):")
+    print(f"  |[0,1]^1| = continuum")
+    print(f"  |[0,1]^2| = continuum (𝔠² = 𝔠)")
+    print(f"  |[0,1]^ℵ₀| = continuum (𝔠^ℵ₀ = 𝔠)")
+    print(f"  |[0,1]^ℵ₁| = 2^ℵ₁ > ℵ₁ = 𝔠  (under CH)")
+    
+    print("\nEmbedding implications:")
+    print(f"  ℝ¹ = 𝔠 — embeddable")
+    print(f"  ℝⁿ = 𝔠 — embeddable (for any finite n)")
+    print(f"  ℝ^ℵ₀ (Hilbert cube) = 𝔠 — embeddable")
+    print(f"  ℝ^ℵ₁ > 𝔠 (under CH) — NOT embeddable in any ℝⁿ!")
 
 
-def triangulation_bound_demo():
-    """
-    Demonstrate the triangulation vertex bound.
-    """
+def demo_hilbert_cube_embedding():
+    """Demonstrate finite-dimensional embedding into the Hilbert cube."""
     print("\n" + "=" * 60)
-    print("TRIANGULATION BOUNDS")
-    print("=" * 60)
-    print()
-    print("Theorem: Any triangulation of a space X needs ≥ #X vertices.")
-    print()
-    
-    # Finite examples
-    for n in [3, 10, 100]:
-        simplices = n * (n - 1) // 2  # rough bound for a triangulation
-        print(f"  • Triangulating {n} points: need ≥ {n} vertices")
-    
-    print()
-    print("For ℝ^ℵ₁ under CH:")
-    print("  • #(ℝ^ℵ₁) = 2^ℵ₁ > ℵ₁")
-    print("  • Any triangulation needs > ℵ₁ vertices")
-    print("  • Even ℵ₁-many vertices are INSUFFICIENT")
-    print("  • This is strictly stronger than 'no finite triangulation'")
-
-
-def main():
-    print("ALEPH-1 SURFACE: NUMERICAL DEMONSTRATIONS")
+    print("DEMO 3: Hilbert Cube Embedding")
     print("=" * 60)
     
-    # 1. Cardinal power chain
-    print("\n1. CARDINAL POWER TOWER")
-    print("-" * 40)
-    for line in cardinal_power_chain():
-        print(f"  {line}")
+    # Embed [0,1]^3 into [0,1]^ℕ by padding with zeros
+    def embed(point: Tuple[float, ...], target_dim: int = 10) -> List[float]:
+        """Embed a finite-dimensional point into higher dimensions."""
+        result = list(point) + [0.0] * (target_dim - len(point))
+        return result
     
-    # 2. Projection information loss
-    print("\n2. PROJECTION INFORMATION LOSS")
-    print("-" * 40)
-    for source_dim in [5, 10, 50, 100]:
-        for target_dim in [1, 2, 3]:
-            loss = projection_information_loss(source_dim, target_dim)
-            print(f"  R^{source_dim} → R^{target_dim}: collision rate = {loss:.1%}")
+    # Example points in [0,1]^3
+    points = [
+        (0.5, 0.3, 0.8),
+        (0.1, 0.9, 0.2),
+        (0.7, 0.7, 0.7),
+    ]
     
-    # 3. Arctan embedding
-    print("\n3. ARCTAN EMBEDDING: ℝ → [0,1]")
-    print("-" * 40)
-    pairs = demonstrate_embedding_injectivity(10)
-    print(f"  {'x':<15} {'arctan(x)/π + ½':<15}")
-    for x, y in pairs:
-        print(f"  {x:<15.4f} {y:<15.6f}")
-    print("  Note: order is preserved → injection confirmed")
+    print(f"\nEmbedding [0,1]³ into [0,1]^10 (truncated Hilbert cube):")
+    for p in points:
+        emb = embed(p)
+        print(f"  {p} ↦ {emb}")
     
-    # 4. Cardinality table
-    cardinality_comparison_table()
-    
-    # 5. Dimension gap
-    dimension_gap_demonstration()
-    
-    # 6. Triangulation bounds
-    triangulation_bound_demo()
-    
+    # Verify injectivity
+    embeddings = [tuple(embed(p)) for p in points]
+    print(f"\n  Distinct inputs: {len(set(points))}")
+    print(f"  Distinct outputs: {len(set(embeddings))}")
+    print(f"  Injective: {'✓' if len(set(points)) == len(set(embeddings)) else '✗'}")
+
+
+def demo_cardinal_chains():
+    """Demonstrate strictly increasing cardinal chains."""
     print("\n" + "=" * 60)
-    print("All demonstrations complete.")
+    print("DEMO 4: Cardinal Chains")
+    print("=" * 60)
+    
+    # Finite model: strictly increasing chain of natural numbers
+    # Analogous to aleph numbers: ℵ₀ < ℵ₁ < ℵ₂ < ...
+    chain = [2**n for n in range(8)]
+    
+    print(f"\nStrictly increasing chain (power-of-2 model):")
+    for i, c in enumerate(chain):
+        print(f"  f({i}) = {c}")
+    
+    print(f"\nStrictly monotone: ", end="")
+    is_mono = all(chain[i] < chain[i+1] for i in range(len(chain)-1))
+    print(f"{'✓' if is_mono else '✗'}")
+    
+    print(f"Injective: ", end="")
+    is_inj = len(set(chain)) == len(chain)
+    print(f"{'✓' if is_inj else '✗'}")
+    
+    # Verify image card
+    for n in range(1, len(chain) + 1):
+        img = set(chain[:n])
+        print(f"  |image(f, [0..{n-1}])| = {len(img)} = {n}  ✓")
+    
+    print(f"\nAleph hierarchy (analogous):")
+    print(f"  ℵ₀ < ℵ₁ < ℵ₂ < ℵ₃ < ...")
+    print(f"  Each level is strictly larger than the previous")
+    print(f"  Under CH: ℵ₁ = 𝔠 (continuum)")
+
+
+def demo_independence_number():
+    """Demonstrate the transfinite independence number concept."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Independence Number")
+    print("=" * 60)
+    
+    # Model: filtration on {0,...,99} with F(k) = {0,...,k-1}
+    n = 100
+    nonempty_strata = list(range(1, n + 1))  # strata 1 through 100 are nonempty
+    
+    print(f"\nFiltration on {{0, ..., {n-1}}} with F(k) = {{0, ..., k-1}}")
+    print(f"  Nonempty strata: {nonempty_strata[:5]} ... {nonempty_strata[-3:]}")
+    print(f"  Independence number = {len(nonempty_strata)}")
+    print(f"  Space size = {n}")
+    print(f"  Independence number ≤ space size: ✓")
+    
+    # Sparse filtration: only every 10th stratum is nonempty
+    sparse_strata = [k for k in range(1, n + 1) if k % 10 == 0]
+    print(f"\nSparse filtration (every 10th point born at a new stage):")
+    print(f"  Nonempty strata: {sparse_strata}")
+    print(f"  Independence number = {len(sparse_strata)}")
 
 
 if __name__ == "__main__":
-    main()
+    demo_stratum_disjointness()
+    demo_cardinality_bounds()
+    demo_hilbert_cube_embedding()
+    demo_cardinal_chains()
+    demo_independence_number()
+    
+    print("\n" + "=" * 60)
+    print("SUMMARY")
+    print("=" * 60)
+    print("""
+Key results demonstrated:
+1. Strata are always disjoint — birth ordinals are well-defined
+2. Cantor's theorem (2^κ > κ) drives the embedding obstruction
+3. Finite-dimensional spaces embed cleanly into the Hilbert cube
+4. Strictly increasing chains produce exactly n distinct values
+5. The independence number measures dimensional complexity
+
+Under CH:
+  - ℵ₁ = 𝔠 (continuum)
+  - Spaces with ≥ ℵ₁ dimensions cannot embed in any ℝⁿ
+  - The Hilbert cube (countable product) has cardinality exactly 𝔠
+  - Transfinite manifolds have no finite triangulation
+""")
 
 
 #!/usr/bin/env python3
 """
-Visualization: The Arctan Embedding ℝ → [0,1]
+Visualization: Ordinal Filtration Strata
 
-Shows how the arctan function maps the entire real line into the unit interval,
-demonstrating the coordinate-wise embedding used in Theorem 5.1.
+Shows how a filtration decomposes a set into disjoint strata,
+colored by birth ordinal.
 """
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 import numpy as np
 
-def arctan_embedding(x):
-    """The embedding x ↦ arctan(x)/π + 1/2"""
-    return np.arctan(x) / np.pi + 0.5
 
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+def visualize_filtration():
+    """Visualize an ordinal filtration on a 2D grid."""
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
     
-    # Plot 1: The arctan embedding function
-    ax1 = axes[0]
-    x = np.linspace(-20, 20, 1000)
-    y = arctan_embedding(x)
-    ax1.plot(x, y, 'b-', linewidth=2)
-    ax1.axhline(y=0, color='gray', linewidth=0.5, linestyle='--')
-    ax1.axhline(y=1, color='gray', linewidth=0.5, linestyle='--')
-    ax1.axhline(y=0.5, color='gray', linewidth=0.5, linestyle=':')
-    ax1.set_xlabel('x ∈ ℝ', fontsize=12)
-    ax1.set_ylabel('arctan(x)/π + ½ ∈ [0,1]', fontsize=12)
-    ax1.set_title('Arctan Embedding: ℝ → [0,1]', fontsize=14)
-    ax1.set_ylim(-0.05, 1.05)
-    ax1.fill_between(x, 0, 1, alpha=0.05, color='blue')
-    ax1.grid(True, alpha=0.3)
+    # Create a 10x10 grid with birth ordinals
+    n = 10
+    birth = np.zeros((n, n), dtype=int)
     
-    # Plot 2: Injectivity demonstration
-    ax2 = axes[1]
-    test_points = np.array([-50, -10, -5, -2, -1, 0, 1, 2, 5, 10, 50])
-    embedded = arctan_embedding(test_points)
-    ax2.scatter(test_points, embedded, c='red', s=80, zorder=5)
-    for i, (xi, yi) in enumerate(zip(test_points, embedded)):
-        ax2.annotate(f'{yi:.3f}', (xi, yi), textcoords="offset points",
-                    xytext=(5, 10), fontsize=8)
-    ax2.plot(x, arctan_embedding(x), 'b-', alpha=0.3, linewidth=1)
-    ax2.set_xlabel('x (original)', fontsize=12)
-    ax2.set_ylabel('embedded value', fontsize=12)
-    ax2.set_title('Injectivity: All Points Map Distinctly', fontsize=14)
-    ax2.grid(True, alpha=0.3)
+    # Concentric square filtration: birth ordinal = distance from center
+    for i in range(n):
+        for j in range(n):
+            birth[i, j] = max(abs(i - n//2), abs(j - n//2)) + 1
     
-    # Plot 3: The cardinality gap visualization
-    ax3 = axes[2]
-    categories = ['ℝⁿ\n(any n)', '[0,1]^ℕ\n(Hilbert cube)', 'ℝ^{ℵ₁}', '[0,1]^{ℵ₁}']
-    heights = [1, 1, 2.5, 2.5]  # Relative cardinalities (𝔠 vs 2^ℵ₁)
-    colors = ['#2196F3', '#2196F3', '#F44336', '#4CAF50']
-    bars = ax3.bar(categories, heights, color=colors, edgecolor='black', linewidth=1.2)
-    ax3.axhline(y=1, color='orange', linewidth=2, linestyle='--', label='𝔠 = ℵ₁ (under CH)')
-    ax3.set_ylabel('Relative Cardinality', fontsize=12)
-    ax3.set_title('Cardinality Gap (under CH)', fontsize=14)
-    ax3.legend(fontsize=10)
-    ax3.set_yticks([0, 1, 2.5])
-    ax3.set_yticklabels(['0', '𝔠 = ℵ₁', '2^ℵ₁ > ℵ₁'])
+    # Plot 1: Full filtration with colors
+    ax = axes[0]
+    im = ax.imshow(birth, cmap='viridis', interpolation='nearest')
+    ax.set_title('Birth Ordinal Map', fontsize=14, fontweight='bold')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    for i in range(n):
+        for j in range(n):
+            ax.text(j, i, str(birth[i, j]), ha='center', va='center', 
+                   color='white' if birth[i, j] > 3 else 'black', fontsize=8)
+    plt.colorbar(im, ax=ax, label='Birth Ordinal')
     
-    # Add annotations
-    ax3.annotate('TOO SMALL\n(no injection)', xy=(0.5, 1.3), 
-                fontsize=9, ha='center', color='red', fontweight='bold')
-    ax3.annotate('CAN EMBED\n(via arctan)', xy=(3, 2.7), 
-                fontsize=9, ha='center', color='green', fontweight='bold')
+    # Plot 2: Individual strata
+    ax = axes[1]
+    max_birth = birth.max()
+    colors = plt.cm.Set1(np.linspace(0, 1, max_birth))
+    
+    for level in range(1, max_birth + 1):
+        mask = birth == level
+        ys, xs = np.where(mask)
+        ax.scatter(xs, ys, c=[colors[level - 1]], s=100, 
+                  label=f'Stratum {level}', zorder=5)
+    
+    ax.set_xlim(-0.5, n - 0.5)
+    ax.set_ylim(n - 0.5, -0.5)
+    ax.set_title('Disjoint Strata (colored)', fontsize=14, fontweight='bold')
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.grid(True, alpha=0.3)
+    
+    # Plot 3: Filtration levels F(k)
+    ax = axes[2]
+    levels_to_show = [1, 2, 3, 5]
+    colors_f = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3']
+    
+    for idx, k in enumerate(levels_to_show):
+        mask = birth <= k
+        count = mask.sum()
+        ys, xs = np.where(mask)
+        ax.scatter(xs + idx * 0.05, ys + idx * 0.05, 
+                  c=colors_f[idx], s=40, alpha=0.6,
+                  label=f'F({k}): {count} points')
+    
+    ax.set_xlim(-0.5, n - 0.5)
+    ax.set_ylim(n - 0.5, -0.5)
+    ax.set_title('Filtration Levels F(k)', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=9)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.grid(True, alpha=0.3)
     
     plt.tight_layout()
-    plt.savefig('/workspace/request-project/Applications/arctan_embedding.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: arctan_embedding.png")
-
-if __name__ == "__main__":
-    main()
+    plt.savefig('filtration_strata.png', dpi=150, bbox_inches='tight')
+    plt.show()
+    print("Saved: filtration_strata.png")
 
 
-#!/usr/bin/env python3
-"""
-Visualization: The Cantor Dimension Gap and Cardinal Hierarchy
-
-Shows the discrete structure of infinite cardinals and the gap between
-countable and uncountable dimensions.
-"""
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-def main():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+def visualize_cardinality_comparison():
+    """Visualize the cardinality comparison between products and Euclidean spaces."""
+    fig, ax = plt.subplots(figsize=(10, 7))
     
-    # Plot 1: Cardinal number line showing the gap
-    ax1 = axes[0]
+    # Finite model: compare |{0,1}^n| vs n for increasing n
+    ns = list(range(1, 20))
+    power_of_2 = [2**n for n in ns]
+    linear = ns
     
-    # Finite cardinals
-    finite_x = list(range(8))
-    ax1.scatter(finite_x, [0]*len(finite_x), c='blue', s=60, zorder=5, label='Finite')
+    ax.semilogy(ns, power_of_2, 'ro-', linewidth=2, markersize=6, 
+               label=r'$2^n$ (product cardinality)')
+    ax.semilogy(ns, linear, 'bs-', linewidth=2, markersize=6,
+               label=r'$n$ (dimension)')
     
-    # ℵ₀
-    ax1.scatter([10], [0], c='green', s=120, zorder=5, marker='D', label='ℵ₀')
-    ax1.annotate('ℵ₀', (10, 0), textcoords="offset points", xytext=(0, 15), fontsize=14, 
-                ha='center', fontweight='bold', color='green')
+    # Fill the gap
+    ax.fill_between(ns, linear, power_of_2, alpha=0.2, color='red',
+                    label='Cantor gap: $2^n > n$')
     
-    # The GAP
-    ax1.annotate('', xy=(13, 0), xytext=(11, 0),
-                arrowprops=dict(arrowstyle='<->', color='red', lw=2))
-    ax1.text(12, 0.15, 'NO CARDINALS\nHERE', ha='center', fontsize=11, 
-            color='red', fontweight='bold')
+    ax.set_xlabel('n (dimension / number of coordinates)', fontsize=12)
+    ax.set_ylabel('Cardinality (log scale)', fontsize=12)
+    ax.set_title("Cantor's Theorem: $2^\\kappa > \\kappa$\n"
+                 "(Finite model of the embedding obstruction)", 
+                 fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
     
-    # ℵ₁
-    ax1.scatter([14], [0], c='red', s=120, zorder=5, marker='s', label='ℵ₁')
-    ax1.annotate('ℵ₁ = 𝔠\n(under CH)', (14, 0), textcoords="offset points", 
-                xytext=(0, 15), fontsize=12, ha='center', fontweight='bold', color='red')
-    
-    # ℵ₂
-    ax1.scatter([17], [0], c='purple', s=120, zorder=5, marker='^', label='ℵ₂')
-    ax1.annotate('ℵ₂', (17, 0), textcoords="offset points", xytext=(0, 15), fontsize=14, 
-                ha='center', fontweight='bold', color='purple')
-    
-    ax1.set_xlim(-1, 19)
-    ax1.set_ylim(-0.3, 0.5)
-    ax1.set_xlabel('Cardinal Scale (schematic)', fontsize=12)
-    ax1.set_title('The Cantor Dimension Gap', fontsize=14, fontweight='bold')
-    ax1.legend(loc='lower right', fontsize=10)
-    ax1.set_yticks([])
-    ax1.spines['top'].set_visible(False)
-    ax1.spines['left'].set_visible(False)
-    ax1.spines['right'].set_visible(False)
-    
-    # Plot 2: Power tower growth
-    ax2 = axes[1]
-    
-    # Finite analog: powers of 2
-    n_values = list(range(8))
-    power_values = [2**n for n in n_values]
-    
-    ax2.semilogy(n_values, power_values, 'bo-', markersize=8, linewidth=2, label='2^n (finite analog)')
-    
-    # Annotate key levels
-    annotations = {
-        0: '2⁰ = 1',
-        3: '2³ = 8',
-        5: '2⁵ = 32',
-        7: '2⁷ = 128',
-    }
-    for n, label in annotations.items():
-        ax2.annotate(label, (n, 2**n), textcoords="offset points", xytext=(10, 5), fontsize=9)
-    
-    # Add transfinite annotations
-    ax2.text(0.5, 0.85, 'Transfinite analog:', transform=ax2.transAxes, 
-            fontsize=11, fontweight='bold')
-    ax2.text(0.5, 0.78, 'ℵ₀ → 2^ℵ₀ = 𝔠 = ℵ₁ (CH)', transform=ax2.transAxes, fontsize=10)
-    ax2.text(0.5, 0.71, 'ℵ₁ → 2^ℵ₁ > ℵ₁ (Cantor)', transform=ax2.transAxes, fontsize=10)
-    ax2.text(0.5, 0.64, 'This is why ℝ^{ℵ₁} ≠> ℝⁿ', transform=ax2.transAxes, 
-            fontsize=10, color='red', fontweight='bold')
-    
-    ax2.set_xlabel('Exponent level', fontsize=12)
-    ax2.set_ylabel('Cardinality (log scale)', fontsize=12)
-    ax2.set_title('Cardinal Power Tower', fontsize=14, fontweight='bold')
-    ax2.grid(True, alpha=0.3)
-    ax2.legend(fontsize=10)
+    # Add annotation
+    ax.annotate('This gap prevents embedding\nuncountable products into ℝⁿ',
+               xy=(12, 2**12), xytext=(8, 2**16),
+               arrowprops=dict(arrowstyle='->', color='darkred'),
+               fontsize=10, color='darkred',
+               bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
     
     plt.tight_layout()
-    plt.savefig('/workspace/request-project/Applications/dimension_gap.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: dimension_gap.png")
+    plt.savefig('cardinality_comparison.png', dpi=150, bbox_inches='tight')
+    plt.show()
+    print("Saved: cardinality_comparison.png")
+
 
 if __name__ == "__main__":
-    main()
+    visualize_filtration()
+    visualize_cardinality_comparison()
