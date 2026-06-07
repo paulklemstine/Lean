@@ -2374,6 +2374,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Research Directions\n\n## Synthesis\n\nThis cycle established **retrocausal nucleus theory** \u2014 a novel algebraic framework where closure operators decompose as R \u2218 T (backward \u2218 forward temporal propagation) via a Galois connection. The central discovery is that retrocausal logic is inherently intuitionistic: the law of excluded middle fails in the fixed-point quotient, but a temporal form of excluded middle holds in Boolean base algebras. This creates a two-level logical structure where classical reasoning at the base constrains intuitionistic reasoning at the temporal level.\n\nThe most promising cross-domain connection is between retrocausal nuclei and **quantum logic**. The Heyting algebra structure of retrocausal fixed points mirrors the non-distributive lattice of quantum propositions (closed subspaces of a Hilbert space). This connection is especially tantalizing because the CPT involution theorem \u2014 which we proved algebraically \u2014 is one of the most fundamental results in quantum field theory. If retrocausal nuclei can be shown to embed into the lattice of quantum propositions, this would provide a new algebraic foundation for quantum temporal reasoning.\n\nThe highest breakthrough potential lies in Direction 1 (Retrocausal Type Theory), which could yield a new programming paradigm for quantum computation, and Direction 2 (Quantum Galois Connections), which could connect our algebraic results to concrete physical theories. Direction 3 extends the nucleus property to infinite meets, and Direction 4 explores the topological semantics via sublocales.\n\n---\n\n### Direction 1: Retrocausal Dependent Type Theory\n\n**Conjecture**: There exists a dependent type theory whose propositions-as-types interpretation yields a retrocausal nucleus on the type universe. Specifically, define types `\u25c7A` (A holds at some future time) and `\u25a1A` (A is determined by the past), with \u25c7 \u22a3 \u25a1 as a Galois connection on the type lattice. Then the retrocausal closure `\u25a1\u25c7A` should be the \"temporally stable\" type, and the calculus of constructions restricted to `\u25a1\u25c7`-closed types should be exactly intuitionistic type theory.\n\n**Test**: Construct a syntactic model: define a term calculus with \u25c7 and \u25a1 type formers, give it operational semantics, and verify that the induced lattice of types forms a retrocausal nucleus. Check that the law of excluded middle is not derivable but temporal excluded middle is.\n\n**Impact**: If true, this would provide the first type-theoretic foundation for retrocausal reasoning, with applications to quantum programming languages (where computations can depend on future measurement outcomes). If false, the failure would reveal which axiom of dependent type theory is incompatible with temporal structure.\n\n**Catalog References**: `Bridges/RetrocausalNucleus.lean` (RetrocausalNucleus structure, temporal_em_generalized, lem_fails_on_chain3)\n\n**Proof Strategy**: \n1. Define a minimal type theory with \u25c7 and \u25a1 modalities (extend Martin-L\u00f6f type theory).\n2. Prove that \u25c7 preserves finite products (meets) \u2014 this is the nucleus condition.\n3. Construct the syntactic category and show it forms a retrocausal nucleus.\n4. Key lemma: the Yoneda embedding preserves the Galois connection structure.\n5. Verify LEM is not derivable by constructing a 3-element model (analogous to Chain3).\n\n**Domain Bridges**: Logic <-> Computation (type theory as programming language), Physics <-> Logic (quantum measurement as temporal modality)\n\n**Lineage**: Builds on RetrocausalNucleus from this cycle, extends the Chain3 counterexample to a syntactic setting.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Quantum Galois Connections \u2014 From Retrocausal Nuclei to Hilbert Space\n\n**Conjecture**: For any finite-dimensional Hilbert space H, the lattice of closed subspaces L(H) admits a retrocausal nucleus whose fixed points are exactly the eigenspaces of a given observable. Specifically, if A is a self-adjoint operator on H, define T(S) = \u22c1{eigenspace of A | eigenspace \u2229 S \u2260 {0}} and R(S) = \u22c2{eigenspace of A | eigenspace \u2287 S}. Then (T, R) should form a Galois connection with T preserving meets, and the fixed points should be the eigenspace lattice of A.\n\n**Test**: Verify computationally for 2\u00d72 and 3\u00d73 matrices. For a 2\u00d72 diagonal matrix with distinct eigenvalues, the eigenspaces are 1-dimensional subspaces; verify that the retrocausal closure of any subspace is either {0}, an eigenspace, or the whole space.\n\n**Impact**: If true, this would connect retrocausal nucleus theory directly to quantum mechanics, showing that quantum measurement (projection onto eigenspaces) is a retrocausal closure operation. The temporal EM theorem would then imply that quantum propositions about an observable satisfy \"temporal excluded middle\" \u2014 a known result in quantum logic, but derived from purely algebraic principles.\n\n**Catalog References**: `Bridges/RetrocausalNucleus.lean` (j_preserves_inf, temporal_em_generalized, mem_fixedPoints_iff_range)\n\n**Proof Strategy**:\n1. Formalize the lattice of closed subspaces L(H) for finite-dimensional H (this exists partially in Mathlib).\n2. Define T and R as described above.\n3. Prove the Galois connection property using properties of eigenspace decomposition.\n4. Verify the meet-preservation condition using the spectral theorem.\n5. Identify the fixed points as eigenspaces.\n\n**Domain Bridges**: Physics <-> Algebra (quantum mechanics as lattice theory), Bridges <-> Geometry (Hilbert space geometry)\n\n**Lineage**: Builds on RetrocausalNucleus, connects to the CPT duality results.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Complete Retrocausal Nuclei \u2014 Infinite Meet Preservation\n\n**Conjecture**: If T preserves arbitrary meets (not just finite ones), then the retrocausal nucleus j = R \u2218 T is a *frame homomorphism* on its fixed-point lattice \u2014 i.e., it preserves arbitrary meets AND the frame distributivity law. Moreover, the fixed-point frame should be spatial (arising from a topological space) if and only if T has a further right adjoint S (making T \u22a3 R \u22a3 S a triple adjunction).\n\n**Test**: Construct a Galois connection on the lattice of open sets of \u211d where T preserves arbitrary meets. Verify that the fixed-point frame is spatial by constructing its point space.\n\n**Impact**: This would connect retrocausal nuclei to the theory of locales and toposes, opening up sheaf-theoretic tools for temporal reasoning. The triple adjunction condition T \u22a3 R \u22a3 S would give a \"third temporal direction\" \u2014 a notion of \"sideways\" propagation orthogonal to both forward and backward.\n\n**Catalog References**: `Bridges/RetrocausalNucleus.lean` (j_preserves_inf, inf_fixedPoints, RTR_eq_R)\n\n**Proof Strategy**:\n1. Generalize the T_inf condition to T_sInf (preservation of arbitrary meets).\n2. Prove j preserves arbitrary meets using the same argument as j_preserves_inf.\n3. Construct the adjoint S (if it exists) using the Adjoint Functor Theorem for posets.\n4. Characterize spatiality via the existence of enough points in the fixed-point frame.\n\n**Domain Bridges**: Algebra <-> Geometry (frames as generalized topological spaces), Computation <-> Logic (frame homomorphisms as continuous maps)\n\n**Lineage**: Direct extension of the nucleus property theorem from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Retrocausal Nuclei on Topological Spaces \u2014 Sublocale Interpretation\n\n**Conjecture**: Every retrocausal nucleus on the frame of open sets O(X) of a topological space X corresponds to a unique sublocale of X, and the temporal coherence laws T\u2218R\u2218T = T, R\u2218T\u2218R = R correspond to the retraction/section structure of the sublocale embedding. Moreover, the retrocausal interpolation theorem should have a topological interpretation: every containment between sublocale-open sets factors through the \"temporal boundary\" of the sublocale.\n\n**Test**: For X = \u211d with the usual topology, construct a non-trivial retrocausal nucleus (e.g., the interior-closure operator on a dense open subset) and verify the sublocale correspondence. Identify the \"temporal boundary.\"\n\n**Impact**: This would give retrocausal nuclei a concrete geometric interpretation, making the theory accessible to topologists and geometric analysts. The temporal boundary concept could connect to the theory of boundaries in geometric group theory.\n\n**Catalog References**: `Bridges/RetrocausalNucleus.lean` (TRT_eq_T, RTR_eq_R, retrocausal_interpolation)\n\n**Proof Strategy**:\n1. Use Mathlib's locale theory to formalize the correspondence between nuclei and sublocales.\n2. Show that the temporal operators T, R correspond to the sublocale embedding and its left adjoint.\n3. Interpret temporal coherence as the retraction/section identities.\n4. Define the temporal boundary as the complement of the sublocale in the ambient space.\n\n**Domain Bridges**: Geometry <-> Bridges (topological spaces as logical systems), Algebra <-> Geometry (lattice theory as pointfree topology)\n\n**Lineage**: Extends the upward closure results and fixed-point characterization from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Computational Retrocausality \u2014 Bidirectional Type Inference as Galois Connection\n\n**Conjecture**: Bidirectional type checking (a standard technique in programming language theory) is secretly a retrocausal nucleus. Specifically, define T = \"type synthesis\" (forward: from term to type) and R = \"type checking\" (backward: from type to term constraints). Then (T, R) should form a Galois connection on a lattice of typing judgments, and the retrocausal closure j = R \u2218 T should be the \"principal type\" operator. The fixed points should be exactly the terms with principal types.\n\n**Test**: Implement bidirectional type checking for the simply-typed lambda calculus and verify that the induced operator satisfies the Galois connection axioms and meet-preservation.\n\n**Impact**: If true, this would provide a new theoretical foundation for type inference, explaining why bidirectional type checking works as a retrocausal phenomenon. The temporal EM theorem would imply that every well-typed term has a principal type or its \"temporal complement\" has one \u2014 a known result, but derived from novel principles.\n\n**Catalog References**: `Bridges/RetrocausalNucleus.lean` (RetrocausalNucleus, temporal_modus_ponens, maps_fixedPoints)\n\n**Proof Strategy**:\n1. Formalize the lattice of typing judgments for STLC.\n2. Define synthesis and checking as operators on this lattice.\n3. Prove the Galois connection property using the soundness and completeness of bidirectional checking.\n4. Verify meet-preservation by showing synthesis distributes over conjunction of typing constraints.\n\n**Domain Bridges**: Computation <-> Logic (type theory as logic), Bridges <-> MachineLearning (type inference as learning)\n\n**Lineage**: Builds on RetrocausalMorphism (maps_fixedPoints) and the general nucleus theory.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0912",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0d8660e9",
+    "status": "available",
+    "timestamp": "2026-06-07T06:10:58.546066+00:00",
+    "title": "**retrocausal nucleus theory** \u2014 a novel algebraic framew"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Library of Babel Combinatorics\n\n## Synthesis\n\nThis research cycle established the foundational combinatorial geometry of universal libraries \u2014 finite complete function spaces equipped with the Hamming metric. The central contribution is the **Redundancy Profile**, a structural invariant that captures the growth of Hamming balls and is provably independent of the center volume (translation invariance). This uniformity property connects to the homogeneity of the symmetric group acting on positions, and parallels the concept of volume growth in geometric group theory.\n\nThe cycle's results form a bridge between three domains: **coding theory** (via the Hamming bound on information capacity), **combinatorial set theory** (via the pigeonhole collision theorem and catalog impossibility), and **fixed-point theory** (via the Babel Fixed Point Theorem, a finite analog of Lawvere's categorical fixed-point theorem). The most promising cross-domain connection is between the Redundancy Profile and the spectral theory of Cayley graphs: the Hamming graph on Volume(A,L) is the Cayley graph of (\u2124/A\u2124)^L with respect to the generating set of single-coordinate changes, and the redundancy profile at each radius is the cumulative spectral density of this graph.\n\nThe highest breakthrough potential lies in Direction 1 (spectral analysis of the Hamming graph) because it would connect the Library's combinatorial structure to eigenvalue bounds, providing exponential improvements over the pigeonhole-based collision bounds. Direction 3 (asymptotic phase transition) has the broadest impact, connecting to concentration of measure and the entropy of random codes.\n\n---\n\n### Direction 1: Spectral Geometry of the Hamming Graph\n\n**Conjecture**: The eigenvalues of the adjacency matrix of the Hamming graph H(L, A) (vertices = Volume(A,L), edges between Hamming-distance-1 pairs) are exactly \u03bb_k = L(A-1) - kA for k = 0, 1, ..., L, with multiplicities C(L,k)(A-1)^k. Furthermore, the spectral gap \u03bb_0 - \u03bb_1 = A gives an exponential mixing bound: any random walk on the Library converges to uniform in O(L log A) steps.\n\n**Test**: Compute the eigenvalues of H(L, A) for small cases (A=2, L=4; A=3, L=3) by explicit matrix diagonalization. Verify the formula \u03bb_k = L(A-1) - kA and the multiplicities.\n\n**Impact**: If true, this provides sharp bounds on the mixing time of random exploration in the Library, answering the question: how many random single-character mutations suffice to reach a uniformly random volume? It would also give a spectral proof of the sublibrary collision theorem via the Expander Mixing Lemma.\n\n**Catalog References**: `Novelty/BabelRedundancy.lean` (redundancy_profile_uniform, sublibrary_collision)\n\n**Proof Strategy**: \n1. Identify H(L, A) as the Cayley graph of (\u2124/A\u2124)^L with generators {e_i,j : set coordinate i to value j \u2260 current}.\n2. Use the representation theory of abelian groups: characters of (\u2124/A\u2124)^L are eigenvectors.\n3. Compute eigenvalues by evaluating the character sum over generators.\n4. Apply the Expander Mixing Lemma to derive collision bounds from spectral gap.\n\n**Domain Bridges**: Coding Theory (Hamming graph) <-> Spectral Graph Theory <-> Representation Theory of Abelian Groups\n\n**Lineage**: Builds on redundancy_profile_uniform and hammingDist_triangle from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Proof Complexity in the Library\n\n**Conjecture**: Define the *tropical proof length* of a theorem T in the Library as the minimum number of volumes needed to encode a valid derivation of T (where each volume encodes one line of the proof). Then the tropical proof length of \"the Library cannot catalog itself\" (the catalog impossibility theorem) is exactly 3: one volume for the statement, one for the diagonal construction, one for the contradiction. Moreover, this is optimal \u2014 no shorter encoding exists.\n\n**Test**: Formalize the notion of proof encoding in the Library. For a mini-Library (A=4, L=16), enumerate all possible 1-volume and 2-volume proof encodings and verify none encode a valid proof of the catalog impossibility.\n\n**Impact**: If true, this establishes a precise connection between Kolmogorov complexity and proof complexity within the Library's own framework. If false, it reveals that self-referential proofs have a compressible structure, suggesting a deeper algebraic regularity.\n\n**Catalog References**: `Physics/TropicalProofComplexity.lean` (tropical_proof_length_conjecture_special_case), `Novelty/BabelRedundancy.lean` (collision_number_lower_bound)\n\n**Proof Strategy**:\n1. Define a formal proof encoding scheme mapping derivation sequences to volume tuples.\n2. Prove that the catalog impossibility theorem requires at least 3 encoding volumes using an information-theoretic argument: the diagonal construction requires specifying A^L bits of information, which exceeds 2L log A bits.\n3. Construct an explicit 3-volume encoding and verify its correctness.\n\n**Domain Bridges**: Proof Complexity <-> Kolmogorov Complexity <-> Library of Babel Combinatorics\n\n**Lineage**: Builds on babel_fixed_point and catalog impossibility from this cycle, and tropical_proof_length_conjecture_special_case from the Physics catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Phase Transition in Redundancy Profiles\n\n**Conjecture**: For fixed alphabet size A \u2265 2, the normalized redundancy profile R(A, L, \u230a\u03b1L\u230b)/A^L exhibits a sharp phase transition at \u03b1* = 1 - 1/A as L \u2192 \u221e: for any \u03b5 > 0,\n\n- R(A, L, \u230a(\u03b1* - \u03b5)L\u230b)/A^L \u2192 0 exponentially fast\n- R(A, L, \u230a(\u03b1* + \u03b5)L\u230b)/A^L \u2192 1 exponentially fast\n\nThe rate of convergence is governed by the binary entropy function: R(A, L, \u230a\u03b1L\u230b)/A^L \u2248 exp(-L \u00b7 D(\u03b1 || 1-1/A)) where D is the KL divergence.\n\n**Test**: Compute R(2, L, \u230a\u03b1L\u230b)/2^L for L = 50, 100, 200, 500 at \u03b1 = 0.45, 0.49, 0.50, 0.51, 0.55. Plot the convergence to the step function.\n\n**Impact**: This would establish the Library of Babel as an instance of *concentration of measure* \u2014 a phenomenon central to high-dimensional probability. It would connect the Library's combinatorial structure to the theory of large deviations and provide a new proof of the Gilbert-Varshamov bound in coding theory.\n\n**Catalog References**: `Novelty/BabelRedundancy.lean` (redundancyNumber_mono, redundancyNumber_full, redundancyNumber_zero)\n\n**Proof Strategy**:\n1. Express R(A, L, \u230a\u03b1L\u230b) using the Chernoff bound for binomial distributions.\n2. Interpret Hamming distance from a fixed center as a sum of independent Bernoulli random variables.\n3. Apply Sanov's theorem to obtain the large deviation rate function.\n4. Formalize the entropy function and KL divergence in Lean using Mathlib's probability theory.\n\n**Domain Bridges**: Combinatorics <-> Probability Theory (Concentration of Measure) <-> Information Theory (Shannon Entropy)\n\n**Lineage**: Builds on redundancyNumber_mono and redundancy_profile_uniform from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Error-Correcting Codes as Library Substructures\n\n**Conjecture**: The Gilbert-Varshamov bound holds for the Library: for all A \u2265 2, L \u2265 1, d \u2264 L,\n$$\\kappa(\\text{Volume}(A,L), d) \\geq \\frac{A^L}{R(A, L, d-1)}$$\n\nThat is, there exist codes meeting the GV bound, which is the \"dual\" of the Hamming bound proved in this cycle. Together, the Hamming and GV bounds sandwich the information capacity:\n$$\\frac{A^L}{R(A, L, d-1)} \\leq \\kappa \\leq \\frac{A^L}{R(A, L, \\lfloor(d-1)/2\\rfloor)}$$\n\n**Test**: For A=2, L=15, d=5: Compute both bounds and find an explicit code between them using the greedy algorithm.\n\n**Impact**: Formalizing the GV bound would complete the fundamental bounds on information capacity in the Library, providing a fully verified sandwich inequality. This is a cornerstone result in coding theory that has never been formally verified.\n\n**Catalog References**: `Novelty/BabelRedundancy.lean` (singleton_bound), `Novelty/BabelCore.lean` (pattern_multiplicity)\n\n**Proof Strategy**:\n1. Use the greedy algorithm: iteratively add volumes to the code, maintaining minimum distance d.\n2. At each step, the number of \"forbidden\" volumes (within distance d-1 of some codeword) is at most |C| \u00b7 R(A, L, d-1).\n3. The algorithm terminates when forbidden volumes cover the entire library: |C| \u00b7 R(A, L, d-1) \u2265 A^L, giving the bound.\n\n**Domain Bridges**: Coding Theory <-> Combinatorial Optimization <-> Library of Babel\n\n**Lineage**: Builds on singleton_bound and pattern_multiplicity from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Lawvere-Babel Functorial Bridge\n\n**Conjecture**: The catalog impossibility theorem (no injection from CatalogScheme(A,L,D) to Volume(A,L) for D \u2265 2) is a special case of Lawvere's fixed-point theorem applied to the category of finite sets. Specifically, there exists a functor F : FinSet \u2192 FinSet sending X to D^X, and the catalog impossibility is equivalent to the non-existence of a natural transformation from F to the identity functor satisfying a surjectivity condition.\n\n**Test**: Formalize the relevant category-theoretic constructions in Lean 4 using Mathlib's category theory library. Verify that Lawvere's theorem instantiated to FinSet and the exponential functor D^(\u2212) recovers the catalog impossibility.\n\n**Impact**: This would establish a precise functorial connection between the Library of Babel and Lawvere's fixed-point theorem, unifying the finite diagonal argument with its categorical generalization. It would also connect to the existing `Bridges/LawvereCodingTheorem.lean` in the catalog.\n\n**Catalog References**: `Bridges/LawvereCodingTheorem.lean` (lawvere_proof_coding_theorem), `Novelty/BabelCore.lean` (babel_fixed_point)\n\n**Proof Strategy**:\n1. Define the exponential functor F(X) = D^X in FinSet.\n2. State Lawvere's fixed-point theorem: if there exists a surjection A \u2192 (A \u2192 B), then every endomorphism of B has a fixed point.\n3. Instantiate with A = Volume(A,L), B = Fin(D), noting that surjectivity of the evaluation map is equivalent to surjectivity of the catalog encoding.\n4. Derive the catalog impossibility as a corollary.\n\n**Domain Bridges**: Category Theory (Lawvere's Theorem) <-> Combinatorics (Library of Babel) <-> Logic (Diagonal Arguments)\n\n**Lineage**: Builds on babel_fixed_point from this cycle and lawvere_proof_coding_theorem from the Bridges catalog.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0913",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "75e00ca4",
+    "status": "available",
+    "timestamp": "2026-06-07T06:11:28.466238+00:00",
+    "title": "Foundational combinatorial geometry of unive"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -2538,7 +2568,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Machine Learning Generalization Bounds"
   },
   {
-    "consumed_by_exp_id": "d62c07e9",
+    "consumed_by_exp_id": "",
     "description": "Formalize the conjecture that e^a * log(b) is a universal primitive for real computation. Conjecture: Every computable real function f: R^n -> R can be expressed as a finite composition of e^x, log(x), constants, and field operations. Test: prove this for the class of elementary functions (sin, cos, exp, log, polynomials) by showing each reduces to EML compositions. If true, this means a single EML neuron (exp+log) is computationally universal.",
     "domains": [
       "EML",
@@ -2548,7 +2578,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.470705+00:00",
     "title": "EML Single Operator Church-Turing Thesis"
   },
@@ -2718,7 +2748,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8ae75815",
     "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
     "domains": [
       "EML",
@@ -2728,7 +2758,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.6299999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.751445+00:00",
     "title": "EML Quantum Activation Functions"
   },
@@ -3528,7 +3558,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
-    "consumed_by_exp_id": "353f7a9e",
+    "consumed_by_exp_id": "",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domains": [
       "Algebra",
@@ -3538,12 +3568,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.181414+00:00",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1cbbfa18",
     "description": "Formalize musical counterpoint rules (Fux's species counterpoint) as a category where objects are consonant intervals and morphisms are permitted voice leadings. Conjecture: The category of first-species counterpoint over a diatonic scale is equivalent to the thin category generated by a specific poset of 12 elements. Test: enumerate all valid first-species counterpoint motions and prove they form exactly this category. Impact: bridges music theory, order theory, and categorical logic.",
     "domains": [
       "Algebra",
@@ -3553,7 +3583,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.503715+00:00",
     "title": "Sonic Mathematics: Counterpoint as Category Theory"
   },
@@ -3588,7 +3618,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hawking Radiation: Information Paradox Formalized"
   },
   {
-    "consumed_by_exp_id": "f18d283e",
+    "consumed_by_exp_id": "",
     "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
     "domains": [
       "Speculative",
@@ -3598,7 +3628,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
   },
@@ -4683,7 +4713,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f1624e30",
     "description": "Formalize retrocausal mathematical structures where implications can flow backward in time. Prove that in a retrocausal Heyting algebra, the law of excluded middle fails but a temporal excluded middle holds. Connect to the CPT theorem in QFT and prove that any retrocausal logic must be intuitionistic.",
     "domains": [
       "Novelty",
@@ -4693,7 +4723,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.994131+00:00",
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
   },
@@ -4938,7 +4968,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d7514a5",
     "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
     "domains": [
       "Novelty",
@@ -4948,7 +4978,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.713166+00:00",
     "title": "Speculative: Computational Complexity as Physical Law"
   },

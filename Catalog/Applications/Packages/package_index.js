@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "75e00ca4",
     "filename": "the_library_of_babel_combinatorics_of_the_universa.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.35216000000000003,
     "title": "The Combinatorial Geometry of Universal Libraries: Redundancy Profiles, Collision Bounds, and Self-Referential Impossibility"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "the_library_of_babel_combinatorics_of_the_universa",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.35216000000000003,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Combinatorial Geometry of Universal Libraries: Redundancy Profiles, Collision Bounds, and Self-Referential Impossibility"
     }

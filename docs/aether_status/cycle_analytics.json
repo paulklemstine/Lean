@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-07T05:23:18.654134+00:00",
+  "last_updated": "2026-06-07T06:11:32.712770+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -13092,6 +13092,76 @@
       "theorem_count": 4,
       "timestamp": "2026-06-07T05:23:18.607149+00:00",
       "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.451,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 292,
+      "domain": "Applications",
+      "duration_seconds": 8813.64169049263,
+      "end_time": 1780812623.2983835,
+      "files_integrated": 5,
+      "job_id": "0d8660e9",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.82,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.869,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.8937,
+        "novelty": 0.95,
+        "proof_depth": 0.8696,
+        "usefulness": 0.9098
+      },
+      "quality_score": 0.4496,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780803809.656693,
+      "strategy_count": 187,
+      "theorem_count": 6,
+      "timestamp": "2026-06-07T06:11:32.539358+00:00",
+      "title": "Retrocausal Mathematics: Where Effects Precede Causes"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4885,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 294,
+      "domain": "Novelty",
+      "duration_seconds": 4897.699915409088,
+      "end_time": 1780812623.7101502,
+      "files_integrated": 6,
+      "job_id": "75e00ca4",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.76,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.721,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.568,
+        "novelty": 0.95,
+        "proof_depth": 0.4042,
+        "usefulness": 0.6771
+      },
+      "quality_score": 0.35216000000000003,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780807726.0102348,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T06:11:32.665711+00:00",
+      "title": "The Library of Babel: Combinatorics of the Universal Library"
     }
   ]
 }
