@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "55703422",
     "filename": "eml_interpolation_theory_stone_weierstrass_for_exp.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.36175999999999997,
     "title": "EML Stone-Weierstrass: Density and Depth Complexity of Exp-Log Networks"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "eml_interpolation_theory_stone_weierstrass_for_exp",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.36175999999999997,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Stone-Weierstrass: Density and Depth Complexity of Exp-Log Networks"
     }

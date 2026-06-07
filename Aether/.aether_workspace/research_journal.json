@@ -2,36 +2,6 @@
   "breakthroughs": [],
   "cycle_log": [
     {
-      "cycle_id": "db1ae093",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Infinite Chess on the Hilbert Board\n\n## Synthesis\n\nThis research cycle established a formal theory of chess on the d-dimensional infinite board ℤ^d (the \"Hilbert Board\"), proving",
-      "quality_score": 0.4152,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-04T22:17:47",
-      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
-    },
-    {
-      "cycle_id": "56ca4434",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Non-Well-Founded Proof Systems\n\n## Synthesis\n\nThis research cycle established the **circularity gap** — the lattice-theoretic space between the least and greatest fixed points of",
-      "quality_score": 0.358,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-04T22:18:35",
-      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-    },
-    {
-      "cycle_id": "765cedcc",
-      "domain": "Shared",
-      "key_insight": "# Future Directions: Gap Spectrum and Surreal Topology\n\n## Synthesis\n\nThis research cycle established the **Gap Spectrum** as a complete topological invariant for ordered spaces, proving the fundament",
-      "quality_score": 0.3488,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-04T22:51:36",
-      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
-    },
-    {
       "cycle_id": "a0937cb7",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions: Tropical Rhythm Algebra\n\n## Synthesis\n\nThis research cycle established a complete Boolean lattice framework for periodic binary rhythms, proving 32+ theorems connecting rhythm ope",
@@ -2000,6 +1970,36 @@
       "theorem_count": 5,
       "timestamp": "2026-06-07T20:52:41",
       "title": "EML Universal Approximation"
+    },
+    {
+      "cycle_id": "366cff9a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Non-Archimedean Probability Theory\n\n## Synthesis\n\nThis research cycle established the foundations of non-Archimedean probability theory through two novel mathematical structures:",
+      "quality_score": 0.31464,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T21:29:38",
+      "title": "Non-Archimedean Probability via Surreal Numbers"
+    },
+    {
+      "cycle_id": "e406e7e8",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tangled Hierarchies and Self-Referential Proof Systems\n\n## Synthesis\n\nThis cycle established a rigorous Lean 4 formalization of provability logic (GL) via Kripke semantics, provin",
+      "quality_score": 0.31880000000000003,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T21:30:05",
+      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+    },
+    {
+      "cycle_id": "55703422",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis cycle established the EML (Exp-Multiply-Log) algebra as a formally verified mathematical framework for studying exp-log networks. The three main results — the E",
+      "quality_score": 0.36175999999999997,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-07T21:30:30",
+      "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
     }
   ],
   "entries": [
@@ -2045,7 +2045,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-07T20:52:41",
+  "last_updated": "2026-06-07T21:30:30",
   "open_questions": [
     {
       "context": "sorry",
@@ -2072,18 +2072,6 @@
       }
     ],
     "Applications": [
-      {
-        "cycle_id": "91bd5c98",
-        "quality": 0.4424,
-        "theorems": 4,
-        "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-      },
-      {
-        "cycle_id": "93c28aa5",
-        "quality": 0.31056,
-        "theorems": 44,
-        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-      },
       {
         "cycle_id": "8a2f48bd",
         "quality": 0.33224,
@@ -2131,6 +2119,18 @@
         "quality": 0.3516,
         "theorems": 5,
         "title": "EML Universal Approximation"
+      },
+      {
+        "cycle_id": "e406e7e8",
+        "quality": 0.31880000000000003,
+        "theorems": 5,
+        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+      },
+      {
+        "cycle_id": "55703422",
+        "quality": 0.36175999999999997,
+        "theorems": 5,
+        "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
       }
     ],
     "Bridges": [
@@ -2269,12 +2269,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "58986935",
-        "quality": 0.37744,
-        "theorems": 5,
-        "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
-      },
-      {
         "cycle_id": "b1119562",
         "quality": 0.3264,
         "theorems": 5,
@@ -2326,6 +2320,12 @@
         "cycle_id": "f82967b2",
         "quality": 0.41896000000000005,
         "theorems": 6,
+        "title": "Non-Archimedean Probability via Surreal Numbers"
+      },
+      {
+        "cycle_id": "366cff9a",
+        "quality": 0.31464,
+        "theorems": 5,
         "title": "Non-Archimedean Probability via Surreal Numbers"
       }
     ],
