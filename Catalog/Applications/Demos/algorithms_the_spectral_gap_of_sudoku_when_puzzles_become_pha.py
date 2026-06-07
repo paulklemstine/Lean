@@ -1,236 +1,247 @@
+#!/usr/bin/env python3
 """
-Spectral Gap Phase Transition Algorithms
+Algorithms for Spectral Gap Analysis of Constraint Satisfaction Systems
 
-Type-hinted implementations of the core algorithms for computing
-spectral gaps, conductance, and mixing times of Markov chains
-on constraint satisfaction solution spaces.
+Type-hinted implementations of the key algorithms from the Cheeger Chain framework.
 """
 
-from typing import List, Tuple, Optional, Callable
+from typing import List, Dict, Tuple, Optional, Set
 import numpy as np
-from numpy.typing import NDArray
+from dataclasses import dataclass
 
 
-def build_transition_matrix(
-    adjacency: NDArray[np.float64],
-) -> NDArray[np.float64]:
-    """Build a stochastic transition matrix from an adjacency matrix.
+@dataclass
+class ReversibleChain:
+    """A reversible Markov chain with transition matrix and stationary distribution."""
+    P: np.ndarray           # n x n transition matrix
+    mu: np.ndarray          # stationary distribution (length n)
+    n: int                  # number of states
 
-    For the swap Markov chain, each state is a valid solution.
-    Two states are adjacent if one can be obtained from the other
-    by swapping two compatible entries.
+    def __post_init__(self) -> None:
+        assert self.P.shape == (self.n, self.n), "P must be n x n"
+        assert self.mu.shape == (self.n,), "mu must have length n"
+        assert np.allclose(self.P.sum(axis=1), 1.0), "Rows must sum to 1"
+        assert np.allclose(self.mu.sum(), 1.0), "mu must sum to 1"
+        assert np.all(self.P >= -1e-10), "P must be non-negative"
+        assert np.all(self.mu >= -1e-10), "mu must be non-negative"
 
-    Args:
-        adjacency: Binary adjacency matrix (n x n) of the solution graph
-
-    Returns:
-        Row-stochastic transition matrix (lazy random walk)
-    """
-    n = adjacency.shape[0]
-    if n == 0:
-        return np.array([[]], dtype=np.float64)
-
-    P = np.zeros((n, n), dtype=np.float64)
-    for i in range(n):
-        degree = adjacency[i].sum()
-        if degree > 0:
-            for j in range(n):
-                if adjacency[i, j] > 0:
-                    P[i, j] = adjacency[i, j] / (2 * degree)
-            P[i, i] += 0.5  # lazy chain
-        else:
-            P[i, i] = 1.0  # absorbing state
-    return P
+    def is_reversible(self) -> bool:
+        """Check detailed balance: mu[i]*P[i,j] = mu[j]*P[j,i]."""
+        for i in range(self.n):
+            for j in range(self.n):
+                if not np.isclose(self.mu[i] * self.P[i, j],
+                                  self.mu[j] * self.P[j, i]):
+                    return False
+        return True
 
 
-def compute_spectral_gap(P: NDArray[np.float64]) -> float:
-    """Compute the spectral gap of a stochastic matrix.
+@dataclass
+class CheegerChainData:
+    """A Cheeger Chain: reversible chain + Cheeger constant + spectral gap."""
+    chain: ReversibleChain
+    cheeger_h: float        # Cheeger constant
+    spectral_gap: float     # spectral gap γ = 1 - λ₂
 
-    The spectral gap is 1 - λ₂ where λ₂ is the second largest
-    eigenvalue magnitude.
+    def verify_sandwich(self) -> Tuple[bool, str]:
+        """Verify the Cheeger sandwich: h²/2 ≤ γ ≤ 2h."""
+        lower_ok = self.cheeger_h ** 2 / 2 <= self.spectral_gap + 1e-10
+        upper_ok = self.spectral_gap <= 2 * self.cheeger_h + 1e-10
+        msg = f"h²/2 = {self.cheeger_h**2/2:.6f} ≤ γ = {self.spectral_gap:.6f} ≤ 2h = {2*self.cheeger_h:.6f}"
+        return (lower_ok and upper_ok, msg)
 
-    Args:
-        P: Row-stochastic transition matrix
 
-    Returns:
-        Spectral gap γ = 1 - |λ₂|
+def compute_spectral_gap(P: np.ndarray) -> float:
+    """Compute the spectral gap γ = 1 - |λ₂| of a stochastic matrix P.
+
+    Algorithm:
+    1. Compute all eigenvalues of P
+    2. Sort by absolute value (descending)
+    3. Return λ₁ - |λ₂|
+
+    Time complexity: O(n³) via eigenvalue decomposition
+    Space complexity: O(n²)
     """
     n = P.shape[0]
     if n <= 1:
         return 1.0
 
     eigenvalues = np.linalg.eigvals(P)
-    eigenvalues_sorted = sorted(np.abs(eigenvalues), reverse=True)
+    abs_eigs = np.sort(np.abs(eigenvalues))[::-1]
 
-    lambda1 = eigenvalues_sorted[0]
-    lambda2 = eigenvalues_sorted[1] if len(eigenvalues_sorted) > 1 else 0.0
-
-    return float(lambda1 - lambda2)
+    return float(abs_eigs[0] - abs_eigs[1])
 
 
-def compute_conductance(
-    P: NDArray[np.float64],
-    stationary: NDArray[np.float64],
-) -> float:
-    """Compute the Cheeger conductance of a reversible Markov chain.
+def compute_cheeger_constant(P: np.ndarray, mu: np.ndarray,
+                              max_subsets: int = 10000) -> float:
+    """Compute (or estimate) the Cheeger constant of a reversible chain.
 
-    h = min_{S: π(S) ≤ 1/2} Q(S, Sᶜ) / π(S)
+    Algorithm (exact for small n, sampling for large n):
+    1. For each non-empty proper subset S with mu(S) ≤ 1/2:
+       h(S) = Q(S, Sᶜ) / mu(S)
+    2. Return min over all such S
 
-    Args:
-        P: Transition matrix
-        stationary: Stationary distribution
-
-    Returns:
-        Cheeger conductance h
+    Time complexity: O(2^n · n²) exact, O(max_subsets · n²) approximate
     """
     n = P.shape[0]
     if n <= 1:
         return 1.0
 
-    min_conductance = float('inf')
+    best_h = float('inf')
 
-    # Iterate over all non-empty proper subsets (exponential but exact)
-    for mask in range(1, 2**n - 1):
-        S = [i for i in range(n) if mask & (1 << i)]
-        Sc = [i for i in range(n) if not (mask & (1 << i))]
+    if n <= 15:  # Exact enumeration for small n
+        for mask in range(1, 2**n - 1):
+            S = [i for i in range(n) if mask & (1 << i)]
+            mu_S = sum(mu[i] for i in S)
+            if mu_S <= 0 or mu_S > 0.5 + 1e-10:
+                continue
+            flow = sum(mu[i] * P[i, j]
+                       for i in S
+                       for j in range(n)
+                       if j not in S)
+            h = flow / mu_S
+            best_h = min(best_h, h)
+    else:  # Sampling for large n
+        for _ in range(max_subsets):
+            size = np.random.randint(1, n // 2 + 1)
+            S = list(np.random.choice(n, size, replace=False))
+            S_set = set(S)
+            mu_S = sum(mu[i] for i in S)
+            if mu_S <= 0 or mu_S > 0.5 + 1e-10:
+                continue
+            flow = sum(mu[i] * P[i, j]
+                       for i in S
+                       for j in range(n)
+                       if j not in S_set)
+            h = flow / mu_S
+            best_h = min(best_h, h)
 
-        pi_S = sum(stationary[i] for i in S)
-        if pi_S > 0.5 + 1e-12:
-            continue
-        if pi_S < 1e-15:
-            continue
-
-        flow = sum(
-            stationary[i] * P[i, j]
-            for i in S
-            for j in Sc
-        )
-
-        conductance = flow / pi_S
-        min_conductance = min(min_conductance, conductance)
-
-    return float(min_conductance)
+    return best_h if best_h < float('inf') else 0.0
 
 
-def mixing_time_bound(
-    gap: float,
-    pi_min: float,
-    epsilon: float,
-) -> float:
-    """Compute the mixing time bound from spectral gap.
+def mixing_time_bound(gap: float, eps: float, n: int) -> float:
+    """Compute the mixing time bound: t_mix(ε) ≤ (1/γ) · log(n/ε).
 
-    t_mix(ε) ≤ (1/γ) · ln(1/(ε · π_min))
-
-    Args:
-        gap: Spectral gap γ > 0
-        pi_min: Minimum stationary probability
-        epsilon: Target total variation distance
-
-    Returns:
-        Upper bound on mixing time
+    This is the classical bound from Markov chain theory.
     """
-    if gap <= 0 or pi_min <= 0 or epsilon <= 0:
+    if gap <= 0:
         return float('inf')
-
-    import math
-    return (1.0 / gap) * math.log(1.0 / (epsilon * pi_min))
+    return (1.0 / gap) * (np.log(n) + np.log(1.0 / eps))
 
 
-def cheeger_bounds(conductance: float) -> Tuple[float, float]:
-    """Compute Cheeger's inequality bounds on the spectral gap.
-
-    h²/2 ≤ γ ≤ 2h
-
-    Args:
-        conductance: Cheeger conductance h
-
-    Returns:
-        (lower_bound, upper_bound) for spectral gap
-    """
-    return (conductance**2 / 2.0, 2.0 * conductance)
+def relaxation_time(gap: float) -> float:
+    """Compute the relaxation time: τ_rel = 1/γ."""
+    if gap <= 0:
+        return float('inf')
+    return 1.0 / gap
 
 
-def classify_phase(density: float) -> str:
-    """Classify a constraint density into a phase regime.
-
-    Args:
-        density: Ratio of clues to total cells
-
-    Returns:
-        Phase name: 'underconstrained', 'critical', or 'overconstrained'
-    """
-    CRITICAL_DENSITY = 17.0 / 81.0
-    FROZEN_DENSITY = 30.0 / 81.0
-
-    if density < CRITICAL_DENSITY:
-        return 'underconstrained'
-    elif density < FROZEN_DENSITY:
-        return 'critical'
-    else:
-        return 'overconstrained'
+def contraction_factor(gap: float, t: int) -> float:
+    """Compute the L² contraction factor after t steps: (1-γ)^t."""
+    return max(0.0, (1.0 - gap)) ** t
 
 
-def product_chain_gap(gaps: List[float]) -> float:
-    """Compute the spectral gap of a product chain.
-
-    For independent product chains, the gap equals min of component gaps.
+def build_constraint_chain(
+    solutions: List[np.ndarray],
+    adjacency_fn: Optional[callable] = None
+) -> Optional[CheegerChainData]:
+    """Build a CheegerChain from a set of constraint satisfaction solutions.
 
     Args:
-        gaps: List of component spectral gaps
+        solutions: List of valid solutions (as numpy arrays)
+        adjacency_fn: Function(sol1, sol2) -> bool for connectivity
+                      Default: differ by exactly one swap
 
     Returns:
-        Product chain spectral gap
+        CheegerChainData or None if no solutions
     """
-    if not gaps:
-        return 0.0
-    return min(gaps)
+    n = len(solutions)
+    if n == 0:
+        return None
 
+    if adjacency_fn is None:
+        def adjacency_fn(s1: np.ndarray, s2: np.ndarray) -> bool:
+            return np.sum(s1 != s2) == 2
 
-def generate_random_stochastic_matrix(
-    n: int,
-    seed: Optional[int] = None,
-) -> NDArray[np.float64]:
-    """Generate a random doubly stochastic matrix (Birkhoff approximation).
-
-    Args:
-        n: Size of the matrix
-        seed: Random seed
-
-    Returns:
-        Approximately doubly stochastic matrix
-    """
-    rng = np.random.RandomState(seed)
-    M = rng.exponential(size=(n, n))
-    # Sinkhorn iteration for doubly stochastic approximation
-    for _ in range(100):
-        M = M / M.sum(axis=1, keepdims=True)
-        M = M / M.sum(axis=0, keepdims=True)
-    M = M / M.sum(axis=1, keepdims=True)
-    return M
-
-
-def spectral_gap_vs_density(
-    n_states_func: Callable[[float], int],
-    densities: NDArray[np.float64],
-    seed: int = 42,
-) -> List[Tuple[float, float]]:
-    """Compute spectral gap as a function of constraint density.
-
-    Args:
-        n_states_func: Function mapping density to number of states
-        densities: Array of density values
-        seed: Random seed
-
-    Returns:
-        List of (density, spectral_gap) pairs
-    """
-    results = []
-    for d in densities:
-        n = n_states_func(d)
-        if n <= 1:
-            results.append((float(d), 0.0))
+    # Build transition matrix
+    P = np.zeros((n, n))
+    for i in range(n):
+        neighbors = []
+        for j in range(n):
+            if i != j and adjacency_fn(solutions[i], solutions[j]):
+                neighbors.append(j)
+        if neighbors:
+            prob = 1.0 / len(neighbors)
+            for j in neighbors:
+                P[i, j] = prob
         else:
-            P = generate_random_stochastic_matrix(n, seed=seed + int(d * 1000))
-            gap = compute_spectral_gap(P)
-            results.append((float(d), gap))
-    return results
+            P[i, i] = 1.0
+
+    # Make lazy for aperiodicity
+    P = 0.5 * np.eye(n) + 0.5 * P
+
+    # Uniform stationary distribution (doubly stochastic for uniform)
+    mu = np.ones(n) / n
+
+    chain = ReversibleChain(P=P, mu=mu, n=n)
+    gap = compute_spectral_gap(P)
+    h = compute_cheeger_constant(P, mu)
+
+    return CheegerChainData(chain=chain, cheeger_h=h, spectral_gap=gap)
+
+
+def spectral_density_profile(
+    gap_values: Dict[float, float]
+) -> Dict[str, any]:
+    """Analyze the spectral density profile and identify phase transitions.
+
+    Args:
+        gap_values: Dictionary mapping density -> spectral gap
+
+    Returns:
+        Analysis results including critical density estimate
+    """
+    densities = sorted(gap_values.keys())
+    gaps = [gap_values[d] for d in densities]
+
+    # Find minimum gap (candidate critical point)
+    min_idx = np.argmin(gaps)
+    critical_density = densities[min_idx]
+    min_gap = gaps[min_idx]
+
+    # Classify phases
+    phases = []
+    for d, g in zip(densities, gaps):
+        if g > 0.5:
+            phases.append("underconstrained")
+        elif g > 0.01:
+            phases.append("critical")
+        else:
+            phases.append("overconstrained")
+
+    return {
+        "critical_density": critical_density,
+        "min_gap": min_gap,
+        "phases": dict(zip(densities, phases)),
+        "gap_profile": dict(zip(densities, gaps)),
+    }
+
+
+if __name__ == "__main__":
+    # Example: 3-state chain
+    P = np.array([
+        [0.5, 0.3, 0.2],
+        [0.3, 0.5, 0.2],
+        [0.2, 0.2, 0.6]
+    ])
+    mu = np.array([1/3, 1/3, 1/3])
+
+    chain = ReversibleChain(P=P, mu=mu, n=3)
+    print(f"Reversible: {chain.is_reversible()}")
+
+    gap = compute_spectral_gap(P)
+    h = compute_cheeger_constant(P, mu)
+    print(f"Spectral gap: {gap:.6f}")
+    print(f"Cheeger constant: {h:.6f}")
+    print(f"Sandwich: h²/2 = {h**2/2:.6f} ≤ γ = {gap:.6f} ≤ 2h = {2*h:.6f}")
+    print(f"Mixing time (ε=0.01): {mixing_time_bound(gap, 0.01, 3):.1f}")
+    print(f"Relaxation time: {relaxation_time(gap):.2f}")
