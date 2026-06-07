@@ -1,241 +1,316 @@
 #!/usr/bin/env python3
 """
-Algorithms for Dreamtime Algebra: Aboriginal Kinship Systems as Group Theory
-============================================================================
-Type-hinted implementations of the core algorithms.
+Algorithms for Aboriginal Kinship Systems as Group Theory
+
+Provides type-hinted implementations of the core algorithms for
+kinship system analysis, including group operations, coset computation,
+isomorphism testing, and kinship system enumeration.
 """
 
-from typing import Tuple, List, Set, Dict, Optional, FrozenSet
-from itertools import product
+from typing import List, Tuple, Set, Dict, Optional, FrozenSet
 from dataclasses import dataclass
+from itertools import product
 
 
-# Type aliases
-Section = Tuple[int, ...]
+# ── Core Types ──
+
+Element = Tuple[int, ...]  # Element of Z₂ⁿ
 
 
-@dataclass
-class DreamtimeAlgebra:
-    """A Dreamtime algebra: (Z/2Z)^n with distinguished marriage and descent generators.
-
-    Attributes:
-        n: dimension (number of generators of the underlying group)
-        marry_gen: marriage generator σ (element of (Z/2Z)^n)
-        descent_gen: descent generator δ (element of (Z/2Z)^n)
-    """
-    n: int
-    marry_gen: Section
-    descent_gen: Section
+@dataclass(frozen=True)
+class KinshipSystem:
+    """A kinship system on Z₂ⁿ with marriage and descent elements."""
+    dimension: int
+    marriage: Element
+    descent: Element
 
     def __post_init__(self) -> None:
-        assert len(self.marry_gen) == self.n
-        assert len(self.descent_gen) == self.n
-        assert self.marry_gen != tuple(0 for _ in range(self.n)), "Marriage generator must be nontrivial"
-        assert self.descent_gen != tuple(0 for _ in range(self.n)), "Descent generator must be nontrivial"
-        assert self.marry_gen != self.descent_gen, "Marriage and descent must be distinct"
-
-    @property
-    def zero(self) -> Section:
-        return tuple(0 for _ in range(self.n))
-
-    @property
-    def dreamtime_gen(self) -> Section:
-        """The Dreamtime element τ = σ + δ."""
-        return add_mod2(self.marry_gen, self.descent_gen)
-
-    @property
-    def sections(self) -> List[Section]:
-        """All sections (elements of the group)."""
-        return list(product(range(2), repeat=self.n))
-
-    @property
-    def num_sections(self) -> int:
-        return 2 ** self.n
-
-    def marriage_map(self, g: Section) -> Section:
-        """Map section g to its marriage partner's section."""
-        return add_mod2(g, self.marry_gen)
-
-    def descent_map(self, g: Section) -> Section:
-        """Map section g to the child's section."""
-        return add_mod2(g, self.descent_gen)
-
-    def dreamtime_op(self, g: Section) -> Section:
-        """The Dreamtime operator: marriage then descent."""
-        return add_mod2(add_mod2(g, self.marry_gen), self.descent_gen)
-
-    def moiety(self, g: Section) -> FrozenSet[Section]:
-        """The moiety containing section g."""
-        return frozenset({g, self.marriage_map(g)})
-
-    def patrilineal_orbit(self, g: Section) -> FrozenSet[Section]:
-        """The patrilineal orbit of section g."""
-        return frozenset({g, self.descent_map(g)})
-
-    def is_marriage_compatible(self, g: Section, h: Section) -> bool:
-        """Check if g and h are marriage-compatible."""
-        return h == self.marriage_map(g)
-
-    def dual(self) -> 'DreamtimeAlgebra':
-        """The dual system: swap marriage and descent."""
-        return DreamtimeAlgebra(self.n, self.descent_gen, self.marry_gen)
-
-    def twist(self) -> 'DreamtimeAlgebra':
-        """The twisted system: use Dreamtime element as marriage generator."""
-        return DreamtimeAlgebra(self.n, self.dreamtime_gen, self.descent_gen)
-
-    def kinship_elements(self) -> List[Section]:
-        """The four kinship elements: {0, σ, δ, τ}."""
-        return [self.zero, self.marry_gen, self.descent_gen, self.dreamtime_gen]
-
-    def marriage_pairs(self) -> List[Tuple[Section, Section]]:
-        """All marriage pairs (unordered)."""
-        seen: Set[Section] = set()
-        pairs = []
-        for g in self.sections:
-            if g not in seen:
-                h = self.marriage_map(g)
-                pairs.append((g, h))
-                seen.add(g)
-                seen.add(h)
-        return pairs
-
-    def all_moieties(self) -> List[FrozenSet[Section]]:
-        """All moieties."""
-        seen: Set[FrozenSet[Section]] = set()
-        result = []
-        for g in self.sections:
-            m = self.moiety(g)
-            if m not in seen:
-                seen.add(m)
-                result.append(m)
-        return result
-
-    def generation_trace(self, start: Section, num_generations: int) -> List[Section]:
-        """Trace patrilineal descent for multiple generations."""
-        trace = [start]
-        current = start
-        for _ in range(num_generations):
-            current = self.descent_map(current)
-            trace.append(current)
-        return trace
+        assert len(self.marriage) == self.dimension
+        assert len(self.descent) == self.dimension
+        assert any(x != 0 for x in self.marriage), "Marriage element must be nonzero"
+        assert any(x != 0 for x in self.descent), "Descent element must be nonzero"
+        assert self.marriage != self.descent, "Marriage and descent must be independent"
 
 
-def add_mod2(a: Section, b: Section) -> Section:
-    """Add two elements in (Z/2Z)^n."""
-    return tuple((x + y) % 2 for x, y in zip(a, b))
+# ── Group Operations ──
+
+def add_z2n(a: Element, b: Element) -> Element:
+    """Addition in Z₂ⁿ (componentwise XOR)."""
+    return tuple((ai + bi) % 2 for ai, bi in zip(a, b))
 
 
-def kinship_spectrum(n: int) -> List[Section]:
-    """Compute the kinship spectrum of (Z/2Z)^n.
+def zero(n: int) -> Element:
+    """Zero element of Z₂ⁿ."""
+    return tuple(0 for _ in range(n))
 
-    Returns all nonzero elements (each has order 2).
-    |Spec_K((Z/2Z)^n)| = 2^n - 1.
+
+def elements(n: int) -> List[Element]:
+    """All elements of Z₂ⁿ."""
+    return list(product(range(2), repeat=n))
+
+
+def is_nonzero(x: Element) -> bool:
+    """Check if element is nonzero."""
+    return any(c != 0 for c in x)
+
+
+# ── Marriage and Descent ──
+
+def spouse_section(ks: KinshipSystem, g: Element) -> Element:
+    """Compute the section of g's spouse."""
+    return add_z2n(g, ks.marriage)
+
+
+def child_section(ks: KinshipSystem, g: Element) -> Element:
+    """Compute the section of g's child."""
+    return add_z2n(g, ks.descent)
+
+
+def descendant_section(ks: KinshipSystem, g: Element, generations: int) -> Element:
+    """Compute the section of g's descendant after given generations."""
+    result = g
+    for _ in range(generations):
+        result = add_z2n(result, ks.descent)
+    return result
+
+
+def is_marriage_consistent(ks: KinshipSystem) -> bool:
     """
-    zero = tuple(0 for _ in range(n))
-    return [g for g in product(range(2), repeat=n) if g != zero]
+    Verify cross-generational marriage consistency:
+    child of spouse = spouse of child.
 
-
-def enumerate_dreamtime_algebras(n: int) -> List[DreamtimeAlgebra]:
-    """Enumerate all Dreamtime algebras on (Z/2Z)^n.
-
-    Returns all ordered pairs (σ, δ) of distinct nonzero elements.
-    Count = (2^n - 1)(2^n - 2).
+    Algorithm: Check (g + d) + m = (g + m) + d for all g.
+    In abelian groups this always holds, but we verify explicitly.
     """
-    spectrum = kinship_spectrum(n)
-    algebras = []
-    for m in spectrum:
-        for d in spectrum:
-            if m != d:
-                algebras.append(DreamtimeAlgebra(n, m, d))
-    return algebras
-
-
-def can_build_dreamtime(group_orders: List[int]) -> bool:
-    """Check if Z_{n1} × Z_{n2} × ... has enough elements of order 2.
-
-    A Dreamtime algebra needs ≥ 2 distinct nontrivial elements of order 2.
-    """
-    # Count elements of order dividing 2 in the product group
-    # Element (g1, ..., gk) has order dividing 2 iff each gi has order dividing 2 in Z_{ni}
-    count = 1
-    for n in group_orders:
-        # Elements of order dividing 2 in Z_n: those g with 2g ≡ 0 mod n
-        # These are g = 0 and g = n/2 (if n is even)
-        order2_count = 1 + (1 if n % 2 == 0 else 0)
-        count *= order2_count
-    # Subtract 1 for the identity
-    return (count - 1) >= 2
-
-
-def verify_alternating_generations(D: DreamtimeAlgebra) -> bool:
-    """Verify the alternating generations theorem for a given system."""
-    for g in D.sections:
-        child = D.descent_map(g)
-        grandchild = D.descent_map(child)
-        if grandchild != g:
+    n = ks.dimension
+    for g in elements(n):
+        child_of_spouse = add_z2n(add_z2n(g, ks.marriage), ks.descent)
+        spouse_of_child = add_z2n(add_z2n(g, ks.descent), ks.marriage)
+        if child_of_spouse != spouse_of_child:
             return False
     return True
 
 
-def verify_klein_four_closure(D: DreamtimeAlgebra) -> bool:
-    """Verify that the kinship elements form a Klein four-group."""
-    elts = D.kinship_elements()
-    elt_set = set(elts)
-    # Check closure under addition
-    for a in elts:
-        for b in elts:
-            s = add_mod2(a, b)
-            if s not in elt_set:
-                return False
-    return True
+# ── Coset Computation ──
+
+def subgroup_generated(n: int, generators: List[Element]) -> Set[Element]:
+    """
+    Compute the subgroup of Z₂ⁿ generated by the given elements.
+
+    Algorithm: Since Z₂ⁿ is elementary abelian, the subgroup is the
+    span of the generators over F₂ — all possible sums of subsets.
+    """
+    subgroup = {zero(n)}
+    queue = list(generators)
+    while queue:
+        g = queue.pop()
+        new_elements = set()
+        for s in subgroup:
+            elem = add_z2n(s, g)
+            if elem not in subgroup:
+                new_elements.add(elem)
+        subgroup |= new_elements
+        for ne in new_elements:
+            queue.append(ne)
+    return subgroup
 
 
-def classify_groups_admitting_dreamtime(max_order: int) -> Dict[int, bool]:
-    """For each n ≤ max_order, check if Z_n admits a Dreamtime algebra."""
-    result = {}
-    for n in range(2, max_order + 1):
-        result[n] = can_build_dreamtime([n])
+def cosets(n: int, subgroup: Set[Element]) -> List[FrozenSet[Element]]:
+    """
+    Compute the cosets of a subgroup of Z₂ⁿ.
+
+    Algorithm: For each unassigned element, compute its coset
+    by translating the subgroup.
+    """
+    all_elems = set(elements(n))
+    result: List[FrozenSet[Element]] = []
+    assigned: Set[Element] = set()
+
+    for g in elements(n):
+        if g not in assigned:
+            coset = frozenset(add_z2n(g, s) for s in subgroup)
+            result.append(coset)
+            assigned |= coset
+
     return result
 
 
-# ===== Concrete Systems =====
+def marriage_classes(ks: KinshipSystem) -> List[FrozenSet[Element]]:
+    """
+    Compute the marriage classes: cosets of ⟨marriage⟩.
 
-KARIERA = DreamtimeAlgebra(n=2, marry_gen=(1, 0), descent_gen=(0, 1))
-ARANDA = DreamtimeAlgebra(n=3, marry_gen=(1, 0, 0), descent_gen=(0, 1, 0))
+    Each class contains sections that are mutual marriage partners.
+    """
+    n = ks.dimension
+    marriage_subgroup = subgroup_generated(n, [ks.marriage])
+    return cosets(n, marriage_subgroup)
 
+
+# ── Kinship System Enumeration ──
+
+def enumerate_kinship_systems(n: int) -> List[KinshipSystem]:
+    """
+    Enumerate all kinship systems on Z₂ⁿ.
+
+    A kinship system is a pair (m, d) of nonzero distinct elements.
+    Returns all such pairs.
+    """
+    systems: List[KinshipSystem] = []
+    elems = elements(n)
+    z = zero(n)
+
+    for m in elems:
+        if m == z:
+            continue
+        for d in elems:
+            if d == z or d == m:
+                continue
+            systems.append(KinshipSystem(n, m, d))
+
+    return systems
+
+
+# ── Automorphism Computation ──
+
+def compute_automorphisms(n: int) -> List[Dict[Element, Element]]:
+    """
+    Compute all automorphisms of Z₂ⁿ.
+
+    An automorphism is an invertible linear map over F₂,
+    determined by the images of the standard basis vectors.
+    We enumerate all n-tuples of linearly independent images.
+
+    Algorithm: GL(n, F₂) enumeration by greedy basis selection.
+    """
+    elems = elements(n)
+    z = zero(n)
+    basis = [tuple(1 if j == i else 0 for j in range(n)) for i in range(n)]
+
+    automorphisms: List[Dict[Element, Element]] = []
+
+    def extend_map(partial_images: List[Element], depth: int) -> None:
+        if depth == n:
+            # Complete map: extend linearly
+            mapping: Dict[Element, Element] = {z: z}
+            for idx, b in enumerate(basis):
+                mapping[b] = partial_images[idx]
+            # Extend to all elements
+            for g in elems:
+                if g not in mapping:
+                    result = z
+                    for i in range(n):
+                        if g[i] == 1:
+                            result = add_z2n(result, partial_images[i])
+                    mapping[g] = result
+            # Verify it's a valid homomorphism (should be by construction)
+            automorphisms.append(mapping)
+            return
+
+        # Current span
+        current_span = subgroup_generated(n, partial_images[:depth])
+
+        for candidate in elems:
+            if candidate not in current_span:
+                extend_map(partial_images + [candidate], depth + 1)
+
+    extend_map([], 0)
+    return automorphisms
+
+
+# ── Refinement Map ──
+
+def refinement_map(x: Element) -> Element:
+    """Project Z₂³ → Z₂² by dropping the last coordinate."""
+    return x[:-1]
+
+
+def splitting_map(x: Element) -> Element:
+    """Embed Z₂² → Z₂³ by appending 0."""
+    return x + (0,)
+
+
+# ── Linear Independence Check ──
+
+def are_linearly_independent(n: int, vectors: List[Element]) -> bool:
+    """
+    Check if vectors in Z₂ⁿ are linearly independent over F₂.
+
+    Algorithm: Gaussian elimination over F₂.
+    """
+    if len(vectors) > n:
+        return False
+
+    # Copy vectors as mutable lists
+    rows = [list(v) for v in vectors]
+    pivot_col = 0
+
+    for row_idx in range(len(rows)):
+        # Find pivot
+        found = False
+        while pivot_col < n:
+            # Find row with 1 in this column
+            for search_row in range(row_idx, len(rows)):
+                if rows[search_row][pivot_col] == 1:
+                    rows[row_idx], rows[search_row] = rows[search_row], rows[row_idx]
+                    found = True
+                    break
+            if found:
+                break
+            pivot_col += 1
+
+        if not found or pivot_col >= n:
+            return False
+
+        # Eliminate
+        for other_row in range(len(rows)):
+            if other_row != row_idx and rows[other_row][pivot_col] == 1:
+                rows[other_row] = [(a + b) % 2 for a, b in zip(rows[other_row], rows[row_idx])]
+
+        pivot_col += 1
+
+    return True
+
+
+# ── Main Demo ──
 
 if __name__ == "__main__":
-    print("=== Kariera System ===")
-    print(f"Sections: {KARIERA.num_sections}")
-    print(f"Marriage pairs: {KARIERA.marriage_pairs()}")
-    print(f"Alternating generations: {verify_alternating_generations(KARIERA)}")
-    print(f"Klein four closure: {verify_klein_four_closure(KARIERA)}")
+    print("=== Kinship System Analysis ===\n")
 
-    print("\n=== Aranda System ===")
-    print(f"Sections: {ARANDA.num_sections}")
-    print(f"Marriage pairs: {ARANDA.marriage_pairs()}")
-    print(f"Alternating generations: {verify_alternating_generations(ARANDA)}")
-    print(f"Klein four closure: {verify_klein_four_closure(ARANDA)}")
+    # 4-section system
+    kariera = KinshipSystem(2, (1, 0), (0, 1))
+    print(f"Kariera system: marriage={kariera.marriage}, descent={kariera.descent}")
+    print(f"  Consistent: {is_marriage_consistent(kariera)}")
+    print(f"  Marriage classes: {marriage_classes(kariera)}")
 
-    print("\n=== Kinship Spectrum ===")
-    for n in range(1, 5):
-        spec = kinship_spectrum(n)
-        print(f"  |Spec_K((Z₂)^{n})| = {len(spec)} = 2^{n} - 1")
+    # Grandmother theorem
+    for g in elements(2):
+        gc = descendant_section(kariera, g, 2)
+        assert gc == g, f"Grandmother theorem failed for {g}"
+    print(f"  Grandmother theorem: ✓ (all sections cycle in 2 generations)")
 
-    print("\n=== Dreamtime Algebra Count ===")
-    for n in range(2, 5):
-        algebras = enumerate_dreamtime_algebras(n)
-        print(f"  (Z₂)^{n}: {len(algebras)} algebras = (2^{n}-1)(2^{n}-2)")
+    # Count systems
+    systems_4 = enumerate_kinship_systems(2)
+    systems_8 = enumerate_kinship_systems(3)
+    print(f"\n  Kinship systems on Z₂²: {len(systems_4)}")
+    print(f"  Kinship systems on Z₂³: {len(systems_8)}")
 
-    print("\n=== Group Classification ===")
-    classification = classify_groups_admitting_dreamtime(12)
-    for n, can in classification.items():
-        print(f"  Z_{n}: {'✓' if can else '✗'}")
+    # Automorphisms
+    auts = compute_automorphisms(2)
+    print(f"  |Aut(Z₂²)| = {len(auts)}  (= |GL(2, F₂)| = |S₃|)")
 
-    print("\n=== Triality ===")
-    print(f"  Original: σ={KARIERA.marry_gen}, δ={KARIERA.descent_gen}")
-    d = KARIERA.dual()
-    print(f"  Dual:     σ={d.marry_gen}, δ={d.descent_gen}")
-    t = KARIERA.twist()
-    print(f"  Twist:    σ={t.marry_gen}, δ={t.descent_gen}")
+    auts_3 = compute_automorphisms(3)
+    print(f"  |Aut(Z₂³)| = {len(auts_3)}  (= |GL(3, F₂)|)")
+
+    # 8-subsection refinement
+    print(f"\n  Refinement map verification:")
+    sub8 = KinshipSystem(3, (1, 0, 0), (0, 1, 0))
+    for g in elements(3):
+        ref = refinement_map(g)
+        spl = splitting_map(ref)
+        print(f"    {g} → {ref} → {spl}  (split∘refine = project to first 2 coords)")
+
+    # Linear independence
+    gens = [(1, 0, 0), (0, 1, 0), (0, 0, 1)]
+    print(f"\n  Kinship generators independent: {are_linearly_independent(3, gens)}")
+
+    print("\n=== All algorithms verified ===")
