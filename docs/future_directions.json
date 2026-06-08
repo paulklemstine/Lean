@@ -166,7 +166,7 @@
       "depth_estimate": 3,
       "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer — the mathematical formalization of 'reality depends on the observer'.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Novelty",
         "Geometry"
@@ -786,7 +786,7 @@
       "depth_estimate": 3,
       "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Novelty",
         "Geometry"
@@ -2175,9 +2175,9 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 3,
       "catalog_references": [],
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "2a933571",
       "depth_estimate": 3,
       "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
       "domain_bridges": [],
@@ -2187,7 +2187,7 @@
         "Algebra"
       ],
       "id": "fd_0070",
-      "last_attempt_time": "2026-06-07T18:19:53.591607+00:00",
+      "last_attempt_time": "2026-06-08T23:59:15.842081+00:00",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "priority_score": 0.68,
@@ -2198,7 +2198,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "timestamp": "2026-06-01T12:30:30.681497+00:00",
       "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
     },
@@ -2454,9 +2454,9 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 3,
       "catalog_references": [],
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "fbe0932d",
       "depth_estimate": 3,
       "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds — every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
       "domain_bridges": [],
@@ -2466,7 +2466,7 @@
         "Algebra"
       ],
       "id": "fd_0079",
-      "last_attempt_time": "2026-06-06T19:53:02.566026+00:00",
+      "last_attempt_time": "2026-06-08T23:58:59.184609+00:00",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "priority_score": 0.76,
@@ -2477,7 +2477,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "timestamp": "2026-06-01T12:30:30.728070+00:00",
       "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
     },
@@ -2894,7 +2894,7 @@
       "depth_estimate": 3,
       "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Novelty",
         "Algebra"
@@ -2983,11 +2983,11 @@
       "arc_position": 0,
       "attempt_count": 3,
       "catalog_references": [],
-      "consumed_by_exp_id": "5df2a894",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Novelty",
         "Geometry"
@@ -3004,7 +3004,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "timestamp": "2026-06-01T12:30:30.834465+00:00",
       "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
     },
@@ -3541,7 +3541,7 @@
       "arc_position": 0,
       "attempt_count": 2,
       "catalog_references": [],
-      "consumed_by_exp_id": "0e6b4914",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
       "domain_bridges": [],
@@ -3562,7 +3562,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "timestamp": "2026-06-01T12:30:30.944657+00:00",
       "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
     },
@@ -12534,7 +12534,7 @@
       "depth_estimate": 3,
       "description": "Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number ρ = g - (r+1)(g-d+r) ≥ 0. Formalize the connection to classical algebraic geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Tropical",
         "Geometry"
@@ -12813,7 +12813,7 @@
       "depth_estimate": 3,
       "description": "Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon model in Lean 4 and prove that braiding generates a dense subset of SU(2). Impact: connects topological quantum computation to algebraic knot theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.3,
+      "domain_quality_penalty": -0.44999999999999996,
       "domains": [
         "Computation",
         "Geometry"
@@ -12999,7 +12999,7 @@
       "depth_estimate": 3,
       "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -13030,7 +13030,7 @@
       "depth_estimate": 3,
       "description": "Replace softmax attention with stereographic attention: map query/key vectors to the Riemann sphere via stereographic projection, compute Cauchy kernel K(q,k) = 1/(1+|q-k|^2) on the sphere, and project back. Conjecture: Stereographic attention has O(sqrt(N)) sparsity (most Cauchy weights are near-zero) while maintaining the universal approximation properties of softmax attention. Test: prove the sparsity bound for random queries on the unit sphere. Impact: a new attention mechanism with built-in sparsity and geometric structure.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -13061,7 +13061,7 @@
       "depth_estimate": 3,
       "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.3,
+      "domain_quality_penalty": -0.44999999999999996,
       "domains": [
         "Geometry",
         "Physics"
@@ -13154,7 +13154,7 @@
       "depth_estimate": 3,
       "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -13185,7 +13185,7 @@
       "depth_estimate": 3,
       "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Geometry",
         "Algebra"
@@ -13216,7 +13216,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that persistent homology — the backbone of topological data analysis — provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Physics",
         "Geometry"
@@ -13340,7 +13340,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that Boltzmann entropy S = k log W is a topological invariant of the energy landscape. If the energy function E: X -> R on a state space X defines a filtration by sublevel sets X_t = {x : E(x) <= t}, then the persistent homology barcode of this filtration encodes the entropy as the sum of bar lengths: S(E) = k * sum_i (d_i - b_i) where b_i and d_i are birth and death times of persistent homology bars. Conjecture: The Boltzmann entropy of a physical system equals the total persistence (sum of bar lengths) of the energy landscape filtration, up to an additive constant. Why now: persistent homology has matured as a computational tool, and the stability theorem guarantees that small perturbations in the energy function produce small changes in the barcode — exactly the thermodynamic stability we expect. Test: compute the persistent homology barcode for the Ising model energy landscape on a 4x4 lattice and verify that sum of bar lengths equals k log(2^{16}) = 16k log 2. Impact: entropy becomes a computable topological quantity, bridging thermodynamics and algebraic topology. Phase transitions correspond to births of new bars in the barcode.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Physics",
         "Geometry"
@@ -13402,7 +13402,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Physics",
         "Geometry"
@@ -13588,7 +13588,7 @@
       "depth_estimate": 3,
       "description": "Prove a tropical analog of the Hodge decomposition. Formalize tropical (p,q)-forms, the tropical Laplacian, and harmonic theory on balanced weighted polyhedral complexes.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Tropical",
         "Geometry"
@@ -13677,7 +13677,7 @@
       "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
-      "consumed_by_exp_id": "f8b9d9f4",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
       "domain_bridges": [],
@@ -13698,7 +13698,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "timestamp": "2026-06-03T19:55:28.640557+00:00",
       "title": "Scaling Laws from Statistical Mechanics"
     },
@@ -13743,7 +13743,7 @@
       "depth_estimate": 3,
       "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Bridges",
         "Geometry"
@@ -13929,7 +13929,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Fisher information metric on a statistical manifold satisfies the axioms of a Riemannian metric. Construct explicit connections between the Fisher metric and the Kullback-Leibler divergence. Bridge statistical inference to differential geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Bridges",
         "Geometry"
@@ -14394,7 +14394,7 @@
       "depth_estimate": 3,
       "description": "Prove that the ground state degeneracy of a topologically ordered system on a genus-g surface is d^g for some integer d (the quantum dimension). Formalize the connection between ground state degeneracy, anyon braiding statistics, and topological quantum field theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Physics",
         "Geometry"
@@ -14456,7 +14456,7 @@
       "depth_estimate": 3,
       "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.3,
+      "domain_quality_penalty": -0.44999999999999996,
       "domains": [
         "Physics",
         "Geometry"
@@ -14549,7 +14549,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical amoeba of a Laurent polynomial is the negative logarithm of its zero set. Show that the Ronkin function is convex and piecewise-linear on the amoeba complement. Connect tropical amoebas to tropical geometry via the Maslov dequantization.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Tropical",
         "Geometry"
@@ -14580,7 +14580,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Tropical",
         "Geometry"
@@ -15664,7 +15664,7 @@
       "depth_estimate": 3,
       "description": "Formalize a 3D topological quantum field theory that captures key features of quantum gravity: prove that the partition function on a closed 3-manifold equals the Turaev-Viro invariant. Show that the Hilbert space on a surface is finite-dimensional and that the mapping class group acts unitarily.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Physics",
         "Geometry"
@@ -16377,7 +16377,7 @@
       "depth_estimate": 3,
       "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Bridges",
         "Geometry"
@@ -16439,7 +16439,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Fisher information metric defines a Riemannian metric on the statistical manifold of probability distributions. Show that the Kullback-Leibler divergence is the geodesic distance in this metric for exponential families. Bridge: the Chentsov theorem characterizes the Fisher metric uniquely by its invariance under sufficient statistics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.3,
+      "domain_quality_penalty": -0.44999999999999996,
       "domains": [
         "Bridges",
         "Physics"
@@ -16625,7 +16625,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Bridges",
         "Tropical"
@@ -16652,7 +16652,7 @@
       "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
-      "consumed_by_exp_id": "2ca83739",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Formalize the Ax-Kochen-Ershov theorem: two henselian valued fields with elementarily equivalent residue fields and value groups are elementarily equivalent. Bridge to number theory: this implies the Q_p's are elementarily equivalent for almost all p. Prove Morley's categoricity theorem: if a countable theory is categorical in one uncountable cardinal, it is categorical in all uncountable cardinals.",
       "domain_bridges": [],
@@ -16673,7 +16673,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "timestamp": "2026-06-03T22:10:06.719659+00:00",
       "title": "Bridge: Model Theory and Algebra — Ax-Kochen and Morley's Theorem"
     },
@@ -16712,9 +16712,9 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "cd0b5177",
       "depth_estimate": 3,
       "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
       "domain_bridges": [],
@@ -16724,7 +16724,7 @@
         "Logic"
       ],
       "id": "fd_0539",
-      "last_attempt_time": "2026-06-05T04:21:25.343222+00:00",
+      "last_attempt_time": "2026-06-08T23:58:36.317599+00:00",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "priority_score": 0.86,
@@ -16735,7 +16735,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "timestamp": "2026-06-03T22:10:06.880463+00:00",
       "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
     },
@@ -16935,7 +16935,7 @@
       "depth_estimate": 3,
       "description": "Prove tropical versions of classical convexity theorems: tropical Helly (if every n+1 sets in a tropical Helly family intersect, then all intersect), tropical Caratheodory (every point in the tropical convex hull of S is in the tropical convex hull of at most n+1 points from S), and tropical Radon (every set of n+2 points can be partitioned into two sets with intersecting tropical convex hulls).",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Tropical",
         "Geometry"
@@ -16997,7 +16997,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Tropical",
         "Geometry"
@@ -17059,7 +17059,7 @@
       "depth_estimate": 3,
       "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Tropical",
         "Algebra"
@@ -25206,7 +25206,7 @@
       "arc_position": 0,
       "attempt_count": 2,
       "catalog_references": [],
-      "consumed_by_exp_id": "53f842c3",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "# Future Directions: Non-Archimedean Probability Theory\n\n## Synthesis\n\nThis research cycle established rigorous algebraic foundations for probability theory in non-Archimedean ordered fields. The central discovery is the **exact characterization**: a linearly ordered field admits infinitesimal probabilities (positive ε with n·ε < 1 for all n ∈ ℕ) if and only if it is non-Archimedean (Theorem `non_archimedean_iff_infinitesimal_exists`). This transforms the question of infinitesimal probability from a philosophical curiosity into a precise algebraic condition.\n\nThe most promising cross-domain connection emerged between the **measure positivity bridge** (Theorem `probability_positivity_from_same_sign`) and the **Lorentzian anti-cancellation principle** from the catalog (`sum_ne_zero_of_same_sign_and_exists_ne_zero`). Both express the same deep fact — sums of same-sign terms cannot cancel — but in different mathematical contexts. The probability interpretation reveals that this algebraic principle is exactly what guarantees that positive-weight measures are faithful: nonempty sets always have positive measure.\n\nThe highest breakthrough potential lies in **Direction 1** (Hyperfinite Measure Completion), which would bridge finite additivity to a genuine probability measure integrating to 1 over a \"hyperfinite\" space. This requires developing surreal or hyperreal integration theory, connecting to Loeb's measure construction from nonstandard analysis. Success here would provide a complete foundation for infinitesimal probability that resolves the dart-throwing paradox and has implications for Bayesian epistemology and quantum foundations.\n\n---\n\n### Direction 1: Hyperfinite Measure Completion — From Sub-Probability to Full Probability\n\n**Conjecture**: In a non-Archimedean ordered field F, for any positive infinitesimal ε and any hyperfinite cardinal κ (a non-standard natural number greater than all standard naturals), the product κ · ε can equal exactly 1 if ε = κ⁻¹. Formally: for any non-Archimedean F containing an element ω > n for all n ∈ ℕ, the uniform measure assigning weight ω⁻¹ to each of ω elements sums to exactly 1. This would complete the sub-probability of our Theorem 6.1 to a full probability measure.\n\n**Test**: Formalize \"hyperfinite type\" as a type whose cardinality is a non-standard natural number in F. Prove that ω · (ω⁻¹) = 1 in F (this is trivially true algebraically but requires careful formalization of what \"ω elements\" means type-theoretically). The key challenge is defining a Finset-like object of cardinality ω in Lean.\n\n**Impact**: If true, this provides a complete, rigorous construction of a non-Archimedean probability measure where every point has equal positive (infinitesimal) probability and the total is exactly 1 — resolving the original conjecture. If the formalization obstacles prove insurmountable, the failure would reveal fundamental limitations of type-theoretic foundations for non-standard objects.\n\n**Catalog References**: `Novelty/SurrealProbability.lean` (theorems `infinitesimal_sub_probability`, `non_archimedean_iff_infinitesimal_exists`), `FINAL/Pythagorean/LorentzianAggregateAntiCancel.lean` (`sum_ne_zero_of_same_sign_and_exists_ne_zero`)\n\n**Proof Strategy**: (1) Define a \"hyperfinite Finset\" abstraction parameterized by a non-standard natural in F. (2) Prove the algebraic identity ω · ω⁻¹ = 1 in any field. (3) Bridge the type-theoretic gap by encoding the hyperfinite set as Fin n for an abstract n : ℕ satisfying the right properties, then use `uniform_finmeasure_total`. (4) The main challenge is that n is not a *specific* natural but an element of F cast from ℕ — handle via universally quantified statements.\n\n**Domain Bridges**: Non-Archimedean algebra ↔ Measure theory ↔ Nonstandard analysis (Loeb measures)\n\n**Lineage**: Direct extension of `infinitesimal_sub_probability` and `non_archimedean_exceeds_any_finite_cover` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Non-Archimedean Conditional Probability and Bayesian Inference\n\n**Conjecture**: In a non-Archimedean probability space where individual points have infinitesimal probability ε, conditional probability P(A|{x}) = P(A ∩ {x})/P({x}) is well-defined and equals the indicator function 1_A(x). This resolves the Borel-Kolmogorov paradox for point conditioning.\n\n**Test**: Define conditional probability as the ratio μ(A ∩ B)/μ(B) in a non-Archimedean field (where μ(B) = ε ≠ 0, so division is valid). Prove that P(A|{x}) = 1 if x ∈ A and P(A|{x}) = 0 if x ∉ A. This requires the field to have well-defined division by infinitesimals.\n\n**Impact**: If true, this provides the first rigorous framework for conditional probability on individual points — something impossible in standard measure theory (where P({x}) = 0 makes P(A|{x}) undefined). This has direct applications in Bayesian epistemology where one wants to condition on specific observations.\n\n**Catalog References**: `Novelty/SurrealProbability.lean` (theorems `finmeasure_disjoint_additive`, `FinProbMeasure`)\n\n**Proof Strategy**: (1) Define conditional measure μ(A|B) = μ(A ∩ B)/μ(B) for μ(B) ≠ 0 in a field F. (2) For uniform measure with weight ε, μ({x}) = ε ≠ 0. (3) μ(A ∩ {x}) = ε if x ∈ A, 0 otherwise. (4) Therefore P(A|{x}) = ε/ε = 1 or 0/ε = 0. (5) Prove this is itself a probability measure (normalized, additive).\n\n**Domain Bridges**: Non-Archimedean algebra ↔ Bayesian inference ↔ Philosophy of probability\n\n**Lineage**: Builds on `finmeasure_disjoint_additive` and `FinProbMeasure` structure from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Tropical Probability — The Min-Plus Limit of Non-Archimedean Measures\n\n**Conjecture**: As the infinitesimal parameter ε → 0 in a family of non-Archimedean probability measures, the logarithmic transformation -log(μ_ε) converges to a tropical (min-plus) probability structure where \"probability\" is replaced by \"cost\" and addition is replaced by minimum. Specifically: for uniform measures with weight ε^{v(x)} where v : α → ℕ is a \"valuation,\" the tropical limit assigns cost v(x) to point x and the \"total probability\" becomes min_{x ∈ α} v(x).\n\n**Test**: Define a family of measures μ_ε parameterized by ε ∈ (0,1) ⊂ ℝ, with μ_ε({x}) = ε^{v(x)} for a fixed valuation v. Compute the limit of -log(μ_ε(S))/log(ε) as ε → 0 for subsets S, and verify it equals min_{x ∈ S} v(x). This connects non-Archimedean probability to tropical geometry.\n\n**Impact**: If true, this establishes a formal bridge between non-Archimedean probability and tropical mathematics. The \"tropicalization\" of probability would give a new interpretation of tropical semirings as degenerate probability spaces, connecting to the existing tropical optimization work in the catalog.\n\n**Catalog References**: `FINAL/Tropical/TropicalAdditiveCombinatorics.lean` (`no_finite_bound_if_counterexample_exists`), `FINAL/Tropical/GL3FiniteTestFamily.lean` (`finite_test_family_zero_GL3`), `Novelty/SurrealProbability.lean`\n\n**Proof Strategy**: (1) Define the parametric family of measures. (2) Use the fact that for 0 < ε < 1, ε^n is decreasing in n. (3) Compute the sum Σ_x ε^{v(x)} and show that as ε → 0, the dominant term is the one with smallest v(x). (4) Take the logarithmic limit. (5) Verify the resulting structure satisfies tropical semiring axioms (min for addition, + for multiplication).\n\n**Domain Bridges**: Non-Archimedean probability ↔ Tropical geometry ↔ Optimization theory\n\n**Lineage**: Bridges this cycle's non-Archimedean probability with the catalog's tropical mathematics threads.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Strict Monotonicity as a Faithfulness Criterion for Abstract Measures\n\n**Conjecture**: The strict monotonicity property (Theorem `probability_strict_mono_of_positive_weights`: S ⊂ T implies μ(S) < μ(T) for positive weights) characterizes \"faithful\" measures among finitely additive measures on finite types. Specifically: a finitely additive measure μ on a finite type satisfies strict monotonicity for proper subsets if and only if μ({x}) > 0 for all x. The backward direction is our Theorem 5.3; the forward direction would show faithfulness is necessary.\n\n**Test**: Prove the converse: if μ satisfies strict monotonicity (S ⊂ T ⟹ μ(S) < μ(T)) for all pairs, then μ(x) > 0 for all x ∈ α. This should follow by considering S = T \\ {x} ⊂ T and deducing μ(T) - μ(T \\ {x}) = μ({x}) > 0.\n\n**Impact**: If true, this gives an elegant characterization of faithful measures purely in terms of a monotonicity property, without reference to individual weights. This connects measure theory to order theory and lattice theory, where monotonicity is a fundamental concept.\n\n**Catalog References**: `Novelty/SurrealProbability.lean` (theorems `probability_strict_mono_of_positive_weights`, `probability_positivity_from_same_sign`), `FINAL/Pythagorean/LorentzianAggregateAntiCancel.lean`\n\n**Proof Strategy**: (1) Assume strict monotonicity for all S ⊂ T. (2) For any x ∈ α, consider T = {x} and S = ∅. (3) By strict monotonicity, μ(∅) < μ({x}), so 0 < μ({x}). (4) Formalize this simple argument. (5) State the full iff characterization.\n\n**Domain Bridges**: Measure theory ↔ Order theory ↔ Lattice theory\n\n**Lineage**: Direct extension of `probability_strict_mono_of_positive_weights` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Non-Archimedean Expected Value and the St. Petersburg Paradox\n\n**Conjecture**: The St. Petersburg paradox (a game with infinite expected value in ℝ) has a well-defined, finite surreal expected value when computed with non-Archimedean probabilities. Specifically: if the game pays 2^n with probability 2^{-n} for each n, and we use a non-Archimedean probability space where these probabilities are genuine (not limits), the expected value E = Σ 2^n · 2^{-n} = Σ 1 diverges in ℝ but can be assigned a specific hyperfinite surreal value ω in a non-Archimedean field.\n\n**Test**: Define the truncated St. Petersburg game for n rounds with non-Archimedean probabilities. Show that the expected value at round N is N (a natural number), and in the hyperfinite limit (N = ω), the expected value is ω — a well-defined surreal number. Verify that this expected value, while infinite, is *specific* (not \"infinity\" but a particular surreal number), enabling meaningful comparisons between different gambles.\n\n**Impact**: If true, this resolves one of the oldest paradoxes in probability theory using non-Archimedean methods. The resolution is novel: the expected value is not finite, but it is *specific* — a definite surreal number ω, not just \"∞.\" This enables comparing the St. Petersburg game to other infinite-expectation gambles.\n\n**Catalog References**: `Novelty/SurrealProbability.lean` (theorems `uniform_finmeasure_total`, `non_archimedean_iff_infinitesimal_exists`), `Catalog/Novelty/CollatzSpectral/Theorems.lean`\n\n**Proof Strategy**: (1) Define the truncated St. Petersburg payoff function p(n) = 2^n for n ∈ Fin(N). (2) Define probabilities w(n) = 2^{-n} / (1 - 2^{-N}) (normalized). (3) Compute E_N = Σ p(n) · w(n). (4) Show that as N → ω (hyperfinite), E_N → ω. (5) This requires defining geometric sums in a non-Archimedean field.\n\n**Domain Bridges**: Non-Archimedean probability ↔ Decision theory ↔ Game theory\n\n**Lineage**: Builds on `uniform_finmeasure_total` and the non-Archimedean framework from this cycle.\n\n**Ambition**: extension\n",
       "domain_bridges": [],
@@ -25227,7 +25227,7 @@
       "research_mode": "team",
       "source_exp_id": "22827c52",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/22827c52",
-      "status": "in_progress",
+      "status": "available",
       "timestamp": "2026-06-06T07:09:04.039795+00:00",
       "title": "Rigorous algebraic foundations for probability t"
     },
@@ -31108,7 +31108,7 @@
       "id": "fd_1003",
       "last_attempt_time": "2026-06-08T23:18:50.069643+00:00",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.17292350364963505,
       "priority_score": 0.75,
       "proof_strategy": "",
       "prune_reason": "",
@@ -31117,7 +31117,7 @@
       "research_mode": "team",
       "source_exp_id": "9b89ab8a",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/9b89ab8a",
-      "status": "in_progress",
+      "status": "completed",
       "timestamp": "2026-06-08T02:08:09.411739+00:00",
       "title": "Rigorous foundation for probability theory ove"
     },
@@ -31751,7 +31751,7 @@
       "depth_estimate": 3,
       "description": "1. Oracle hierarchies for self-modification: Does the arithmetic hierarchy induced by levels of self-modification coincide with the standard one, or does the adversarial dynamic create new intermediate degrees?\n\n2. Probabilistic self-modification: Extend the framework to randomized self-modification, connecting to algorithmic randomness and Martin-Löf tests. Real malware and learning systems use stochastic code rewriting.\n\n3. Bounded self-modification and complexity theory: When self-modification is resource-bounded (e.g., modified code must fit in the same memory), what is the complexity of the halting problem? This connects to space-bounded computation.\n\n4. Game-theoretic alignment models: The monitor-agent interaction is naturally a game. Formalizing equilibrium concepts for self-modifying agents could yield positive results — conditions under which alignment IS achievable despite the general impossibility.\n\n5. Connections to reflective oracles: Christiano's reflective oracles provide a framework where agents can predict systems that include themselves. Understanding the relationship between our impossibility results and reflective oracle existence theorems could clarify the boundaries of self-prediction.\n\n6. Tropical and geometric perspectives: The simulation theorem encodes a self-modifying machine as a dynamical system on a product space. Tropical geometry provides tools for analyzing discrete dynamics — the connection merits further exploration.\n\n7. Quantitative refinements: For specific classes of self-modifying systems (e.g., linear self-modification, bounded-depth modification), tighter bounds on cycle length and fixed-point delay may be achievable.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Computation",
         "Geometry"
@@ -32030,7 +32030,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Time Travel Consistency\n\n## 1. Multi-Loop Causal Networks\n\nThe current formalization handles single closed timelike curves and their pairwise composition. A natural extension is to formalize *networks* of interacting causal loops — where the output of one CTC feeds into the input of another, possibly with feedback cycles. This corresponds to a directed graph where each edge carries a contraction mapping, and consistency requires a simultaneous fixed point of the entire network.\n\nThe key insight is that a network of n interacting causal loops with individual contraction constants K₁, ..., Kₙ can be modeled as a single contraction on the product space X₁ × ... × Xₙ, but the effective contraction constant depends on the spectral radius of the network's adjacency matrix weighted by the Kᵢ. When this spectral radius is < 1, the whole network has a unique consistent history.\n\nWhy now? The composition theorem (`causal_composition_contracting`) and stability result (`consistent_history_stability`) provide the building blocks. The next step is formalizing the graph structure and proving the spectral radius criterion.\n\n## 2. Non-Contractive Consistency via Topological Fixed-Point Theorems\n\nOur formalization of Edelstein's theorem (`novikov_edelstein`) handles strict contractions on compact spaces. The natural next frontier is proving Novikov-type consistency for merely *continuous* causal evolutions on compact convex subsets of Banach spaces, via the Schauder fixed-point theorem. This would formalize the physical expectation that causal consistency holds even when the evolution operator is not contracting — it merely needs to map a compact convex \"state space\" into itself.\n\nThe key insight is that Schauder's theorem (the infinite-dimensional Brouwer theorem) guarantees existence but not uniqueness, corresponding to the physical possibility of multiple self-consistent histories. Formalizing this would require building or connecting to Mathlib's theory of compact operators and the Schauder theorem.\n\nWhy now? Edelstein's theorem is proved in the current work, establishing the pattern. Mathlib's coverage of Schauder/Brouwer fixed-point theorems is growing, making this increasingly tractable.\n\n## 3. Quantitative Paradox Resolution: Information-Theoretic Bounds\n\nThe grandfather paradox resolution shows that passing from {0,1} to [0,1] creates a fixed point at 1/2. But *how much* information about the initial discrete state is preserved in the continuous resolution? We conjecture that for an affine causal map x ↦ a + bx with |b| < 1, the entropy of the fixed-point distribution (when the initial state has a prior distribution) decreases by exactly log(1-|b|) bits.\n\nThe key insight is that the contraction constant K directly controls the information loss: the unique fixed point a/(1-b) is independent of the initial state, so all initial information is lost (entropy → 0). But for *nearly* non-contracting maps (K close to 1), the convergence to the fixed point is slow, and intermediate iterates retain partial information. This connects Novikov's principle to channel capacity in information theory.\n\nWhy now? The affine contraction theorem (`affine_contracting`) and convergence rate (`novikov_convergence_rate`) provide the quantitative foundation. Formalizing the information-theoretic connection would bridge our work to coding theory.\n\n## 4. Causal Evolution Semigroups and Temporal Algebra\n\nDefine a *causal semigroup*: the set of all contracting self-maps on a fixed metric space, equipped with composition. Our `causal_composition_contracting` shows this is closed under composition. We conjecture that the map sending each causal evolution to its consistent history (fixed point) is a *continuous semigroup homomorphism* from the causal semigroup (with the sup-metric on maps) to the state space.\n\nThe key insight is that `consistent_history_stability` already shows Lipschitz dependence of the fixed point on the map. The homomorphism property would say: the consistent history of the composed evolution T₁ ∘ T₂ equals the result of first applying T₂'s resolution and then T₁'s — but this is false in general! The failure of this homomorphism property is precisely what makes time travel nontrivial: the consistent history of a composition is *not* the composition of consistent histories.\n\nWhy now? The stability theorem gives the continuity half. Characterizing exactly when the homomorphism property holds (and proving it fails in general) would yield structural theorems about when time travel \"commutes.\"\n\n## 5. Stochastic Causal Evolutions and Quantum Consistency\n\nExtend the framework from deterministic contractions to *random* causal maps — where the evolution is a random operator T_ω and consistency requires E[T_ω(x)] = x or T_ω(x) = x almost surely. This models quantum-mechanical time travel, where the evolution through a CTC involves measurement uncertainty.\n\nThe key insight is that the Banach fixed-point theorem extends to random contractions: if E[K_ω] < 1 (the expected contraction constant is less than 1), then there exists a unique consistent history *in expectation*, even if individual realizations T_ω have K_ω ≥ 1. This is a probabilistic Novikov principle: consistency holds on average even when individual histories may be paradoxical.\n\nWhy now? The deterministic theory is now complete with full PEGB. The probabilistic extension would connect to Mathlib's measure theory and probability, and to the physics literature on quantum mechanics in the presence of CTCs (Deutsch's model).\n",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Algebra",
         "Geometry"
@@ -32050,6 +32050,68 @@
       "status": "available",
       "timestamp": "2026-06-08T23:18:13.189064+00:00",
       "title": "The current formalization handles single closed timelike curves and their pairwi"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "# Future Directions: Reverse Mathematics of Ramsey's Theorem\n\n## 1. Formalize Seetapun's Cone Avoidance Theorem\n\nSeetapun's theorem (1995) states that for every non-computable set C, every computable 2-coloring of pairs admits an infinite homogeneous set H that does not compute C. This is the key result separating RT²₂ from ACA₀. A formalization would require defining Turing reducibility and computable colorings in Lean 4, then proving that the Erdős–Rado iterative construction can be performed while avoiding a given Turing cone.\n\nThe key insight is that at each stage of the construction, we have two infinite sets to choose from (one for each color), and a priority argument shows we can always pick the one that doesn't compute C. This is a forcing argument disguised as a finite extension construction.\n\nWhy now? The Defs.lean framework already provides the `SymPairColoring` and `IsHomogeneous` infrastructure. Mathlib's computability library (`Mathlib.Computability.*`) provides Turing machines and reducibility, though the oracle computation model may need extension.\n\n## 2. Formalize the Cholak–Jockusch–Slaman Decomposition Constructively\n\nOur `CJS_decomposition` theorem (SRT²₂ + COH → RT²₂) currently uses the direct proof of RT²₂. A more informative formalization would give the *constructive reduction*: given an infinite homogeneous set for the stable part and a cohesive set, explicitly construct a homogeneous set for the original coloring. This would involve defining the stable part of a coloring (using the cohesive set to stabilize it), applying SRT²₂ to the stable part, and then using cohesiveness to transfer back.\n\nThe key insight is that any coloring c, when restricted to a cohesive set C for the sequence of sets R_i = {j : c(i,j) = true}, becomes stable. The CJS decomposition is thus an equivalence between RT²₂ and the conjunction SRT²₂ ∧ COH.\n\nWhy now? The definitions of `IsStable`, `IsCohesive`, and `SRT2_2` are already in place. The missing piece is the explicit construction of the stable part, which is a moderate formalization effort building on existing infrastructure.\n\n## 3. Liu's Separation of RT²₂ from WKL₀\n\nLiu (2012) proved that RT²₂ does not imply WKL₀ over RCA₀, completing the classification of RT²₂ in the Big Five. Formalizing this would require defining WKL₀ (every infinite binary tree has an infinite path) as a combinatorial principle, then constructing an ω-model satisfying RT²₂ but not WKL₀. This is significantly harder than the Seetapun separation.\n\nThe key insight is that Liu constructs a model where every set is low₂ (its double jump is computable from 0''), and shows RT²₂ can be satisfied within this class while WKL₀ requires sets that are not low₂.\n\nWhy now? The framework supports stating WKL₀ as a combinatorial principle about infinite binary trees (definable using `ℕ → Bool` sequences). The model construction, however, requires substantial computability infrastructure beyond what Mathlib currently provides.\n\n## 4. Ramsey's Theorem for Higher Exponents: RT^n_k\n\nOur formalization covers RT²₂ (pairs with 2 colors). The natural generalization is RT^n_k: every k-coloring of n-element subsets of ℕ has an infinite homogeneous set. The finite version (with explicit Ramsey numbers) is partially in the existing catalog (`Catalog/Algebra/Ramsey/Defs.lean`). Bridging the finite and infinite versions, and proving the Erdős–Rado generalization to higher arities, would be a significant formalization milestone.\n\nThe key insight is that the induction for RT^n_k proceeds by reducing to RT^{n-1}_{R(k)} — a coloring of (n-1)-sets with a potentially much larger number of colors — making the bound tower-exponential in n. This iterated pigeonhole structure directly generalizes our proof of `rt2_2_proof`.\n\nWhy now? The `SymPairColoring` structure naturally generalizes to n-uniform hypergraph colorings. The existing `RamseyProp` in the catalog provides the finite base case. Connecting these two frameworks is the immediate next step.\n\n## 5. The Reverse Mathematics Zoo: Formalizing the Full Hierarchy\n\nBeyond RT²₂, the reverse mathematics landscape includes dozens of principles (CAC, ADS, SADS, EM, COH, DNR, WWKL₀, etc.) with a rich web of implications and separations — the \"reverse mathematics zoo\" catalogued by Damir Dzhafarov and others. Formalizing even a fragment of this zoo in Lean 4 would be a landmark in formal mathematics. Each principle can be stated as a Prop about ℕ, sets, and sequences, using the framework established here.\n\nThe key insight is that many of these principles (CAC = chain-antichain, ADS = ascending-descending sequence) are natural combinatorial statements that fit the `Set ℕ` / `ℕ → ℕ` framework already established. The separations between them often require elaborate priority constructions, but the implications are typically short combinatorial arguments amenable to automated proving.\n\nWhy now? The `Defs.lean` module provides a reusable vocabulary (`Set.Infinite`, symmetric colorings, cohesiveness) that most zoo principles can be stated in. Each new principle and implication is a self-contained formal contribution, making this highly parallelizable across research cycles.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "id": "fd_1034",
+      "last_attempt_time": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "0afbba2f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/0afbba2f",
+      "status": "available",
+      "timestamp": "2026-06-08T23:54:39.755973+00:00",
+      "title": "Seetapun's theorem (1995) states that for every non-computable set C, every comp"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "# Future Directions: Stratified Interchange Algebras and Synthetic Homotopy Theory\n\n## 1. Freudenthal Suspension Theorem for Suspended SIAs\n\nThe `SuspendedSIA` structure introduces suspension homomorphisms `susp : Carrier n → Carrier (n+1)` connecting adjacent levels. A natural conjecture is an algebraic analogue of the Freudenthal suspension theorem: under appropriate \"connectivity\" conditions on the SIA, the suspension map should become an isomorphism in a stable range.\n\n**Conjecture**: Define a *k-connected SIA* as one where `Carrier n` is trivial (isomorphic to `Unit`) for `n < k`. Then for a k-connected Suspended SIA, the suspension map `susp n` is a bijection for `n ≤ 2k - 2`. This would give an algebraic version of the classical Freudenthal theorem without reference to topological spaces.\n\n**Testable prediction**: For any concrete SIA built from the homotopy groups of a k-connected space (e.g., S³ is 2-connected, with π₃ = ℤ, π₄ = ℤ/2, ...), the suspension map should be surjective for n ≤ 2k - 1 and injective for n ≤ 2k - 2. This can be computationally verified for spheres using known homotopy group tables.\n\nThe key insight is that the algebraic axioms of the SIA — particularly the interchange law and the suspension homomorphism property — should be sufficient to derive stability results without topology, suggesting that Freudenthal is fundamentally an algebraic rather than topological theorem.\n\n**Why now?** The formalized SIA structure provides the first clean axiomatization where this conjecture can be precisely stated and tested. Previous work on stable homotopy theory in Lean has been blocked by the absence of a suitable algebraic framework.\n\n## 2. Classification of Finite SIAs and Connection to Group Cohomology\n\nEvery SIA with finite carriers determines a sequence of finite abelian groups (at each level) connected by homomorphisms. The classification of such sequences is closely related to derived functors and group cohomology.\n\n**Conjecture**: The isomorphism classes of finite SIAs with `|Carrier n| ≤ N` for all n and `Carrier n` trivial for `n > k` are in bijection with elements of `∏_{i=0}^{k} Ab_{≤N}` modulo a natural equivalence relation induced by the homomorphism compatibility. More precisely, the \"space\" of SIA structures on a fixed sequence of abelian groups is a torsor for a product of Ext groups.\n\n**Testable prediction**: Count the number of distinct SIA structures (up to isomorphism) on the graded abelian group `(ℤ/2, ℤ/2, ℤ/4, 0, 0, ...)`. The answer should equal the number of homomorphisms `ℤ/2 → ℤ/2` times the number of homomorphisms `ℤ/2 → ℤ/4`, i.e., 2 × 2 = 4. This can be verified computationally.\n\nThe key insight is that the SIA axioms (particularly the interchange law) impose no additional constraints beyond the group and homomorphism axioms — the interchange is automatically satisfied because all levels are abelian. This means SIA classification reduces entirely to classifying graded abelian groups with compatible homomorphisms.\n\n**Why now?** The formalized `CommGroup` instance at each SIA level (our `instCommGroupCarrier`) directly connects to Mathlib's extensive group theory library, making automated enumeration feasible.\n\n## 3. Higher Interchange Laws and n-Fold Monoidal Categories\n\nThe SIA's interchange law relates two binary operations. A natural generalization considers *n-fold interchange*, where n+1 binary operations mutually satisfy interchange. The Eckmann-Hilton argument shows that 2-fold interchange forces all operations to be equal and commutative. But what algebraic constraints does n-fold interchange impose beyond commutativity?\n\n**Conjecture**: For n ≥ 2, having n binary operations on a set, all pairwise satisfying the interchange law with a common identity, forces all operations to be identical and commutative. Moreover, the resulting commutative monoid must satisfy the \"higher commutativity\" condition that every element commutes with every element in every possible parenthesization — which is already automatic for associative operations, but becomes non-trivial if associativity is weakened.\n\n**Testable prediction**: Implement a brute-force search over all binary operations on `Fin n` for small n (say n ≤ 6). For each pair of operations with shared identity and interchange, verify they are equal. Then for triples of operations with pairwise interchange, verify no additional structure emerges beyond what pairwise EH gives. If additional structure appears, it would refute the conjecture.\n\nThe key insight is that the Eckmann-Hilton argument is \"idempotent\" — applying it twice should give nothing new — but this has never been formally verified in the n-fold setting.\n\n**Why now?** Our formalization of the basic EH argument provides the infrastructure for mechanically iterating it, and `Fin n` computations are well-supported in Lean 4.\n\n## 4. Delooping Theorems for SIAs\n\nIn homotopy theory, a connected space X is a \"delooping\" of its loop space ΩX, meaning X ≃ BΩX under appropriate conditions. Algebraically, this corresponds to the question: given an SIA truncated at level k, can we extend it to level k+1?\n\n**Conjecture**: A Suspended SIA can always be extended by one level. Specifically, given `(Carrier 0, ..., Carrier k)` with all SIA axioms and suspension maps, there exists an extension to `Carrier (k+1)` with a suspension map `susp k : Carrier k → Carrier (k+1)` such that all axioms are preserved. However, the extension is not unique — the space of extensions is a torsor for `Aut(Carrier k)`.\n\n**Testable prediction**: Take the SIA with `Carrier 0 = ℤ` and all higher levels trivial. There should be exactly one extension to level 1 (up to isomorphism): `Carrier 1 = {0}` with the trivial suspension. But if `Carrier 0 = ℤ` and `Carrier 1 = ℤ`, the number of valid suspension maps `susp 0 : ℤ → ℤ` should be countably infinite (one for each group homomorphism ℤ → ℤ, i.e., one for each integer).\n\nThe key insight is that the SIA axioms constrain extensions only through the homomorphism condition on suspension, so the \"delooping space\" is exactly `Hom(Carrier k, G)` for any abelian group G chosen as the new level.\n\n**Why now?** The formalized `SuspendedSIA` structure and its kernel characterization (`suspKernel`) provide the technical foundation for stating and proving delooping results.\n\n## 5. Derived Eckmann-Hilton for Non-Associative Operations\n\nOur EH theorem assumes the binary systems have two-sided identity elements but does not assume associativity. A natural question: what happens if we weaken the identity axiom as well?\n\n**Conjecture (Partial Eckmann-Hilton)**: If two binary operations on a set satisfy the interchange law and share a common *left* identity (but not necessarily right identity), then the operations agree on the image of the left identity operation. Specifically, for all `a`, `S.op e a = T.op e a`. But the operations need not be globally equal, and need not be commutative.\n\n**Testable prediction**: Construct a type with two binary operations having a common left identity and interchange, but different right identity behavior. On `ℤ × ℤ`, define `S.op (a,b) (c,d) = (a+c, d)` with left identity `(0, ?)` — check if interchange can hold with a second operation having the same left identity but different right behavior. If no such example exists for types of size ≤ 8, the conjecture is likely false and full EH holds under weaker assumptions.\n\nThe key insight is that our proof of `eckmann_hilton_ops_eq` uses both left and right identity of both operations. If only left identity is needed, the theorem is stronger; if not, identifying exactly which identity axioms are necessary would sharpen the classical result.\n\n**Why now?** The clean separation of axioms in our `BinarySystem` structure makes it easy to systematically weaken hypotheses and test which combinations suffice for the EH conclusion.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": -0.15,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_1035",
+      "last_attempt_time": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "efa69ffd",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/efa69ffd",
+      "status": "available",
+      "timestamp": "2026-06-08T23:56:54.048138+00:00",
+      "title": "The `SuspendedSIA` structure introduces suspension homomorphisms `susp : Carrier"
     },
     {
       "ambition_level": "extension",
@@ -32333,7 +32395,7 @@
       "depth_estimate": 3,
       "description": "Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erdős–Szekeres theorem and improve known bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Geometry",
         "Algebra"
@@ -32364,7 +32426,7 @@
       "depth_estimate": 3,
       "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Algebra",
         "Geometry"
@@ -32455,7 +32517,7 @@
       "depth_estimate": 3,
       "description": "Prove that every Hodge class on a non-singular projective algebraic variety is a rational linear combination of classes of algebraic cycles. Formalize the Hodge decomposition and explore the conjecture for specific varieties like abelian varieties and K3 surfaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Geometry",
         "Algebra"
@@ -32606,7 +32668,7 @@
       "depth_estimate": 3,
       "description": "Provide rigorous foundations for Schubert's enumerative geometry. Formalize intersection theory on Grassmannians and flag varieties, proving Schubert calculus results via modern algebraic geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Geometry",
         "Algebra"
@@ -32637,7 +32699,7 @@
       "depth_estimate": 3,
       "description": "Study the topology of real algebraic curves and surfaces. Formalize the Harnack bound, classify real algebraic curves by arrangement of ovals, and connect to the second part on limit cycles of planar polynomial ODEs.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Geometry"
       ],
@@ -32937,7 +32999,7 @@
       "depth_estimate": 3,
       "description": "Prove that if a polynomial map F: Cⁿ → Cⁿ has constant non-zero Jacobian determinant, then F is invertible. Formalize the reduction to degree 3 and connect to the Dixmier conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Algebra",
         "Geometry"
@@ -32968,7 +33030,7 @@
       "depth_estimate": 3,
       "description": "Prove the Kakeya conjecture: a Besicovitch set in Rⁿ has Hausdorff dimension n. Formalize the connection to restriction estimates and additive combinatorics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Geometry",
         "Algebra"
@@ -33055,11 +33117,11 @@
       "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
-      "consumed_by_exp_id": "efa69ffd",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Logic",
         "Geometry"
@@ -33076,7 +33138,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "timestamp": "2026-06-08T19:25:03.446924+00:00",
       "title": "Homotopy Type Theory Foundations"
     },
@@ -33098,7 +33160,7 @@
       "id": "seed_055",
       "last_attempt_time": "2026-06-08T23:19:30.333107+00:00",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.18504,
       "priority_score": 0.88,
       "proof_strategy": "",
       "prune_reason": "",
@@ -33107,7 +33169,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "timestamp": "2026-06-08T19:25:04.165427+00:00",
       "title": "Research Depth via Proof-Theoretic Ordinal Analysis"
     },
@@ -33152,7 +33214,7 @@
       "depth_estimate": 3,
       "description": "A proof is a sequence of steps. Map each step to a point on S^n via stereographic projection. The proof distance between theorems is the spherical distance between their proof endpoints. Conjecture: Two theorems whose proofs are close in spherical distance share a common subproof of length at least n minus spherical_distance. Test: compute proof distances for a set of 20 basic theorems in Lean 4 and verify the subproof bound. Impact: geometric proof mining and automated lemma discovery.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.3,
+      "domain_quality_penalty": -0.44999999999999996,
       "domains": [
         "Geometry",
         "Logic"
@@ -33183,7 +33245,7 @@
       "depth_estimate": 3,
       "description": "Construct a number system on the Mobius band where the integers wrap with a twist: n and -n are identified with opposite orientations. Define the Mobius integers Z_tilde as Z x {+1, -1} modulo the identification (n, +1) ~ (-n, -1). Develop arithmetic on Z_tilde where addition wraps through the identification. Conjecture: The ring Z_tilde of Mobius integers has class number 1, and its prime spectrum forms a double cover of the ordinary primes (each ordinary prime p splits into two oriented primes p_plus and p_minus). The Mobius zeta function zeta_tilde(s) has zeros off the critical line, which is expected since Z_tilde is a non-Ore ring. Test: factor 6 in Z_tilde as 2_plus times 3_plus and 2_minus times 3_minus and verify these are distinct factorizations. Prove unique factorization for Z_tilde up to orientation. Impact: a new algebraic number system with intrinsic orientation, connecting number theory to topology via the double cover Z to Z_tilde.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Geometry",
         "Algebra"
@@ -33214,7 +33276,7 @@
       "depth_estimate": 3,
       "description": "The Hausdorff dimension is normally a metric property, not a topological one. Investigate whether it can be made topological through the lens of fractal topology. Define the fractal topological dimension d_f(X) of a metric space X as the infimum of d such that X embeds in R^d with Hausdorff dimension preserved. Conjecture: For compact metric spaces, the Hausdorff dimension is a topological invariant modulo homeomorphisms that are bi-Lipschitz on a dense open set. More precisely, if X and Y are homeomorphic compact subsets of R^n, and the homeomorphism is bi-Lipschitz on a set of full Hausdorff dimension in X, then dim_H(X) = dim_H(Y). This would mean that fractal dimension is not just a metric accident but a topological invariant up to rough isometries. Test: compute d_f for the Sierpinski gasket (expected: 1 since connected, Hausdorff dimension log3/log2) and the Cantor set (expected: 0 since totally disconnected). Prove that the Koch curve and any bi-Lipschitz-equivalent curve have equal Hausdorff dimensions. Impact: elevates fractal dimension from a metric curiosity to a topological invariant, with applications to shape classification and topological data analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.3,
+      "domain_quality_penalty": -0.44999999999999996,
       "domains": [
         "Geometry"
       ],
@@ -33275,7 +33337,7 @@
       "depth_estimate": 3,
       "description": "Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define the stereographic persistence module for a point cloud X on S^n: for each filtration parameter epsilon, compute the Cech complex C_epsilon(X) on S^n using the spherical metric, then apply inverse stereographic projection to get a filtered complex on R^n with a conformal weight. Conjecture: The persistence diagram of a point cloud on S^n computed with the geodesic metric is equal to the persistence diagram of the projected point cloud on R^n computed with a conformally weighted distance d_w(x,y) = 2*d(x,y)/(1+d(x,y)^2/4). This equality holds because stereographic projection is a conformal isometry up to the conformal factor, and persistence diagrams are invariant under conformal transformations. This gives an O(N log N) algorithm for spherical persistence (vs O(N^2) for direct computation). Test: implement both methods and verify isometry of persistence diagrams for random spherical point clouds with N=50, 100, 200 points. Impact: fast, provably correct topological data analysis for spherical data, with applications to astrophysics (cosmic microwave background) and protein structure analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.3,
+      "domain_quality_penalty": -0.44999999999999996,
       "domains": [
         "Geometry",
         "Computation"
@@ -33306,7 +33368,7 @@
       "depth_estimate": 3,
       "description": "Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic packing number N(n,r) as the maximum number of non-overlapping spherical caps of geodesic radius r that fit on S^n. Conjecture: N(n,r) satisfies N(n,r) = (1+O(r^2)) * V_n/V_n(r) where V_n is the volume of S^n and V_n(r) is the volume of a cap, and the O(r^2) correction is explicitly computable from the conformal factor (1+|x|^2)^2/4 of the stereographic projection. More precisely, N(n,r) <= (2/cos(r))^n * V_n/V_n(r). The factor (2/cos(r))^n comes from the maximum conformal distortion of the stereographic projection: a cap of geodesic radius r is mapped to a Euclidean disk whose area differs from the cap area by at most this factor. Test: prove this bound for n=2 and verify it against the known optimal packings (icosahedral: N(2,pi/6) = 12, cuboctahedral: N(2,pi/4) = 6, tetrahedral: N(2,pi/3) = 4). Impact: explicit, computable sphere packing bounds on spheres via classical packing theory on R^n, with applications to spherical codes and molecular geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Geometry",
         "Computation"
@@ -33367,7 +33429,7 @@
       "depth_estimate": 3,
       "description": "The 3D Poincaré conjecture is proven, but the smooth 4D version remains open: does every smooth 4-manifold homotopy equivalent to S⁴ necessarily diffeomorphic to S⁴? Formalize Donaldson's invariants, Seiberg-Witten theory, and explore exotic smooth structures on 4-manifolds.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Geometry"
       ],
@@ -33638,7 +33700,7 @@
       "depth_estimate": 3,
       "description": "Prove that every loopless graph requiring k+1 colors for a proper coloring contains K_{k+1} as a minor. Formalize known cases (k ≤ 5), the Wagner equivalence, and the connection to the Four Color Theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Algebra",
         "Geometry"
@@ -33852,7 +33914,7 @@
       "depth_estimate": 3,
       "description": "Prove that every convex body K in Rⁿ of volume 1 has a hyperplane section of (n-1)-dimensional volume at least c for some universal c > 0.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Geometry",
         "Algebra"
@@ -33913,7 +33975,7 @@
       "depth_estimate": 3,
       "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, Künneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Geometry",
         "Algebra"
@@ -33944,7 +34006,7 @@
       "depth_estimate": 3,
       "description": "Prove Hironaka's resolution of singularities theorem for varieties in characteristic p > 0. Formalize known results for dimensions ≤ 3.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Geometry",
         "Algebra"
@@ -33975,7 +34037,7 @@
       "depth_estimate": 3,
       "description": "Prove that higher signatures are homotopy invariants for all finitely presented groups. Formalize the assembly map in topological K-theory and connections to Baum-Connes.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Geometry"
       ],
@@ -34005,7 +34067,7 @@
       "depth_estimate": 3,
       "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Algebra",
         "Geometry"
@@ -34279,7 +34341,7 @@
       "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
-      "consumed_by_exp_id": "0afbba2f",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Classify RT²₂ in the reverse mathematics hierarchy: prove it's strictly between ACA₀ and WKL₀ over RCA₀. Formalize Seetapun's theorem.",
       "domain_bridges": [],
@@ -34300,7 +34362,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "timestamp": "2026-06-08T19:25:18.020118+00:00",
       "title": "Reverse Mathematics: Ramsey's Theorem"
     },
@@ -34314,7 +34376,7 @@
       "depth_estimate": 3,
       "description": "Prove the Yamabe problem on non-compact Riemannian manifolds: find a conformal metric of constant scalar curvature. Formalize the compact case and explore non-compact obstructions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Geometry",
         "Algebra"
@@ -34345,7 +34407,7 @@
       "depth_estimate": 3,
       "description": "Prove sharp lower bounds for the Willmore energy of surfaces by genus. Extend the Marques-Neves proof for tori to higher-genus surfaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Geometry"
       ],
@@ -34375,7 +34437,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Yau-Tian-Donaldson conjecture: a Fano manifold admits a Kähler-Einstein metric iff it is K-stable. Prove stability criteria for specific Fano varieties.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Geometry",
         "Algebra"
@@ -34406,7 +34468,7 @@
       "depth_estimate": 3,
       "description": "Prove the stability theorem for persistent homology: the bottleneck distance between persistence diagrams is bounded by the Gromov-Hausdorff distance between the underlying spaces. Formalize the persistent homology pipeline and verify on concrete point cloud data.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.3,
+      "domain_quality_penalty": -0.44999999999999996,
       "domains": [
         "Computation",
         "Geometry"
@@ -34523,65 +34585,112 @@
   ],
   "pruned": [],
   "recent_domain_counts": {
-    "Algebra": 1,
-    "Geometry": 1
+    "Algebra": 2,
+    "Bridges": 1,
+    "Computation": 1,
+    "Geometry": 1,
+    "Logic": 1
   },
   "recent_theme_keywords": {
-    "analysis": 1,
-    "applications": 1,
-    "atlas": 1,
-    "better": 1,
-    "called": 1,
-    "category": 1,
-    "characterized": 1,
-    "cohomology": 1,
-    "commutes": 1,
-    "compatibility": 1,
-    "computation": 1,
-    "computational": 1,
-    "compute": 1,
-    "computed": 1,
-    "condition": 1,
-    "conformal": 1,
-    "conjecture": 1,
-    "constant": 1,
-    "constrained": 1,
-    "cover": 1,
-    "datum": 1,
-    "define": 1,
-    "differential": 1,
-    "equations": 1,
-    "equivalence": 1,
-    "exploits": 1,
-    "function": 1,
-    "global": 1,
-    "gluing": 1,
-    "h^1(s^2": 1,
-    "h^k(s^n": 1,
-    "impact": 1,
-    "locally": 1,
-    "mobius": 1,
-    "morphism": 1,
-    "n=2,3": 1,
-    "objects": 1,
-    "projection": 1,
-    "proper": 1,
-    "properties": 1,
-    "reducing": 1,
-    "respect": 1,
-    "restriction": 1,
-    "satisfies": 1,
-    "sheaf": 1,
-    "sheaves": 1,
-    "single": 1,
-    "spheres": 1,
-    "stereographic": 1,
-    "structure": 1,
-    "studies": 1,
-    "subcategory": 1,
-    "theory": 1,
-    "topological": 1,
-    "transition": 1,
-    "two-chart": 1
+    "1_{aᵢ}(ω": 1,
+    "`bridges/proofstonecechdynamics.lean`": 1,
+    "`exists_periodic_point_finite`": 1,
+    "algebra": 1,
+    "algebraic": 1,
+    "analysis": 3,
+    "applications": 2,
+    "approaches": 1,
+    "argument": 1,
+    "arguments": 1,
+    "asymptotic": 1,
+    "bayesian": 1,
+    "benefits": 1,
+    "breakthrough": 1,
+    "cannot": 1,
+    "completeness": 1,
+    "complexity": 1,
+    "computational": 2,
+    "compute": 2,
+    "computed": 2,
+    "computes": 1,
+    "condition": 2,
+    "construct": 2,
+    "continuous": 1,
+    "cross-domain": 1,
+    "decision": 1,
+    "define": 2,
+    "defining": 1,
+    "depth": 1,
+    "direction": 1,
+    "directions": 1,
+    "distinguish": 1,
+    "dutch": 1,
+    "element": 1,
+    "enabling": 1,
+    "ensemble": 1,
+    "ensemble_complexity_additive": 1,
+    "entropy": 1,
+    "example": 1,
+    "extends": 1,
+    "extension": 1,
+    "formal": 1,
+    "formalization": 1,
+    "formalize": 1,
+    "framework": 1,
+    "function": 2,
+    "furthermore": 1,
+    "games": 1,
+    "general": 1,
+    "geometric": 1,
+    "geometry": 1,
+    "gl3finitetestfamily": 1,
+    "h(x|y": 1,
+    "harder": 1,
+    "i(x;y": 1,
+    "implied": 1,
+    "infinitesimal": 1,
+    "levi-civita": 1,
+    "lexicographic": 1,
+    "log(1+x": 1,
+    "markov_ineq": 1,
+    "mathematical": 1,
+    "mathematically": 1,
+    "metric": 1,
+    "motivation": 1,
+    "multiplication": 1,
+    "nonstandard": 1,
+    "notion": 1,
+    "number": 1,
+    "optimization": 1,
+    "ordered": 1,
+    "ordinal": 1,
+    "original": 1,
+    "output": 1,
+    "physics": 1,
+    "proof-theoretic": 1,
+    "provides": 1,
+    "refinement": 1,
+    "research": 2,
+    "rigorous": 2,
+    "satisfies": 2,
+    "selten": 1,
+    "semiring": 1,
+    "semirings": 1,
+    "shannon": 1,
+    "single": 2,
+    "singletons": 1,
+    "smaller": 1,
+    "strategy": 1,
+    "structure": 2,
+    "theory": 2,
+    "tropicalization": 1,
+    "unchanged": 1,
+    "uniform_weight_determines_size": 1,
+    "unlock": 1,
+    "v(p(a": 1,
+    "valuation": 1,
+    "versions": 1,
+    "whether": 1,
+    "∑_{n∈ℕ}": 1
   }
 }

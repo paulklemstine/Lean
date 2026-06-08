@@ -1,1 +1,0 @@
-../../Catalog/Bridges/Speculative/AutoResearch/WeightedSupportShadow.lean
