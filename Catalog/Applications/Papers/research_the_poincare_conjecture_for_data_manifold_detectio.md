@@ -1,244 +1,366 @@
-# The Poincaré Conjecture for Data: Manifold Detection via Persistent Homology
+# Algebraic Circuit Complexity: Formally Verified Foundations for Degree-Depth Tradeoffs, Evaluation Soundness, and Polynomial Identity Testing
 
 ## Abstract
 
-We formalize the mathematical foundations of sphere detection from finite point clouds using Vietoris-Rips persistent homology. Our main contributions are: (1) a complete formalization of abstract simplicial complexes and Vietoris-Rips constructions with the filtration monotonicity theorem; (2) a Hausdorff stability theorem showing that the VR filtration is Lipschitz-continuous with respect to perturbations of the underlying point cloud; (3) the persistence of connectivity — once the VR graph becomes connected, it remains so at all larger scales; (4) a packing-covering duality theorem giving lower bounds on covering numbers; (5) a metric rigidity theorem showing that equilateral point configurations lie on spheres (the equilateral-implies-circumscribed theorem); and (6) Euler characteristic identities for spheres: χ(S^d) = 1 + (-1)^d for d ≥ 1, with the corollary that even-dimensional spheres have χ = 2 and odd-dimensional spheres have χ = 0. All results are machine-verified in Lean 4 with Mathlib, with no unresolved proof obligations.
+We present a formally verified foundation for algebraic circuit complexity theory, establishing core definitions and fundamental theorems in a machine-checked mathematical framework. Our formalization introduces algebraic circuits as an inductive type over commutative semirings with $n$ input variables, defines evaluation semantics, and establishes a canonical mapping to multivariate polynomial rings. We prove five principal results: (1) the **Evaluation Soundness Theorem**, establishing that circuit evaluation coincides with polynomial evaluation; (2) the **Degree-Depth Tradeoff**, showing that circuit degree is bounded by $2^{\text{depth}}$; (3) the **Work-Span Inequality**, proving $\text{size} \geq \text{depth} + 1$; (4) **Depth Lower Bounds** from degree information; and (5) the **Ideal Structure** of zero-function circuits, providing algebraic foundations for Polynomial Identity Testing. We also formalize circuit substitution with a semantics-preservation theorem, complexity bounds, and gate-counting inequalities. These results connect algebra (polynomial rings, ideals) to computation (circuit complexity, PIT) and provide verified building blocks for further work on algebraic complexity classes VP and VNP.
+
+**Keywords:** algebraic circuits, polynomial identity testing, degree-depth tradeoff, circuit complexity, formal verification, algebraic complexity theory
+
+---
 
 ## 1. Introduction
 
-The Poincaré conjecture, proved by Perelman [Per02, Per03a, Per03b], states that every simply connected closed 3-manifold is homeomorphic to S³. This paper develops a data-theoretic analog: given a finite point cloud X = {x₁, ..., xₙ} ⊂ ℝ^d, when can we determine that X lies on (or near) a sphere?
+Algebraic circuit complexity studies the resources required to compute multivariate polynomials using the elementary operations of addition and multiplication. Introduced by Valiant [1] in 1979, the algebraic circuit model provides a clean framework for studying computational complexity in the polynomial setting, paralleling the Boolean circuit model for discrete computation.
 
-The approach uses the Vietoris-Rips complex, a combinatorial construction that captures the topology of a point cloud at a given scale. The key insight is that the VR complex is a *filtration* — a nested family of complexes parameterized by the scale ε — and the topological features that persist across scales reveal the true topology of the underlying space.
+The central objects are *straight-line programs* — directed acyclic graphs where internal nodes perform addition or multiplication, leaf nodes hold constants or input variables, and a designated output node produces the computed polynomial. The *size* (number of gates) and *depth* (longest path from input to output) of a circuit are the primary complexity measures, corresponding to total sequential work and parallel time, respectively.
 
-### 1.1 Related Work
+Despite decades of research, the algebraic circuit model harbors some of the deepest open problems in mathematics:
 
-The stability of persistent homology was established by Cohen-Steiner, Edelsbrunner, and Harer [CEH07]. The Vietoris-Rips complex and its relationship to the Čech complex is studied in [GH12, Lat01]. Niyogi, Smale, and Weinberger [NSW08] proved that manifolds can be reconstructed from point clouds with high probability, with sample complexity depending on the reach of the manifold. Our work contributes formal verification of the foundational results and introduces the "Poincaré threshold" as a unifying concept.
+- **Valiant's Conjecture (VP ≠ VNP):** The algebraic analogue of P ≠ NP, asserting that the permanent polynomial cannot be computed by polynomial-size circuits.
+- **Polynomial Identity Testing (PIT):** Given a circuit, determine whether it computes the zero polynomial — solvable in randomized polynomial time, but no deterministic polynomial-time algorithm is known.
+- **Circuit Lower Bounds:** Proving super-polynomial lower bounds on circuit size for explicit polynomial families remains a major challenge.
 
-### 1.2 Contributions
+In this work, we present a machine-verified formalization of the foundational definitions and theorems of algebraic circuit complexity (@file Catalog/Algebra/AlgebraicCircuitComplexity.lean). The formalization covers the complete pipeline from circuit definition through evaluation semantics, structural invariants, the degree-depth tradeoff, and the algebraic structure of polynomial identity testing.
 
-Our contributions, all formally verified in Lean 4:
+### 1.1 Contributions
 
-1. **Filtration Monotonicity (Theorem 3.1)**: VR_ε₁ ⊆ VR_ε₂ for ε₁ ≤ ε₂.
-2. **Hausdorff Stability (Theorem 4.1)**: If d_H(X,Y) ≤ δ, then edges at scale ε in X map to edges at scale ε + 2δ in Y.
-3. **Persistence of Connectivity (Theorem 4.2)**: If VR_ε₀ is connected, then VR_ε is connected for all ε ≥ ε₀.
-4. **Euler Characteristic of Full Simplex (Theorem 5.1)**: χ(Δⁿ) = 1.
-5. **Euler Characteristic of Spheres (Theorem 5.2)**: χ(S^d) = 1 + (-1)^d for d ≥ 1.
-6. **Sphere Diameter Bound (Theorem 6.1)**: Points on S^d(r) have diam ≤ 2r.
-7. **Detection Stability (Theorem 6.2)**: δ-perturbations of sphere data remain δ-close to the sphere.
-8. **Packing-Covering Duality (Theorem 6.3)**: n-packings require ≥ n-coverings.
-9. **Equilateral Triangle Theorem (Theorem 6.4)**: Three equidistant points in ℝ² lie on a circle of radius c/√3.
-10. **Alternating Binomial Sum (Theorem 5.3)**: Σ_{k=0}^n (-1)^k C(n+1,k+1) = 1.
+Our principal contributions are:
+
+1. **Inductive circuit formalization** over arbitrary commutative semirings with a clean, compositional structure.
+2. **Evaluation soundness** linking circuit semantics to formal multivariate polynomial evaluation.
+3. **Degree-depth tradeoff** with tight exponential bound: $\text{degreeBound}(C) \leq 2^{\text{depth}(C)}$.
+4. **Work-span inequality**: $\text{size}(C) \geq \text{depth}(C) + 1$.
+5. **PIT algebraic foundations**: zero-function circuits form an ideal, closed under addition and multiplication.
+6. **Substitution semantics**: circuit composition preserves evaluation.
+7. **Complexity bounds**: combining structural invariants with resource bounds.
+
+### 1.2 Related Work
+
+The algebraic circuit model was introduced by Valiant [1]. The degree-depth tradeoff is a classical result appearing in Strassen [2] and Bürgisser, Clausen, and Shokrollahi [3]. Polynomial identity testing has been extensively studied; we refer to the survey by Saxena [4] for background. The connection between circuit depth and neural network expressivity has been explored by Telgarsky [5] and Eldan and Shamir [6].
+
+---
 
 ## 2. Definitions
 
-### 2.1 Abstract Simplicial Complex
+### 2.1 Algebraic Circuits
 
-**Definition 2.1.** An *abstract simplicial complex* on a vertex set α is a collection K of finite subsets of α such that:
-(i) ∅ ∈ K, and
-(ii) if σ ∈ K and τ ⊆ σ, then τ ∈ K (downward closure).
+**Definition 2.1 (Algebraic Circuit).** Let $R$ be a commutative semiring and $n \in \mathbb{N}$. An *algebraic circuit* over $R$ with $n$ input variables is inductively defined as one of:
 
-In Lean 4:
-```
-structure AbstractSimplicialComplex (α : Type*) where
-  faces : Set (Finset α)
-  empty_mem : ∅ ∈ faces
-  down_closed : ∀ {σ τ : Finset α}, σ ∈ faces → τ ⊆ σ → τ ∈ faces
-```
+- $\texttt{const}(r)$ for $r \in R$ (constant gate),
+- $\texttt{var}(i)$ for $i \in \{0, \ldots, n-1\}$ (input gate),
+- $\texttt{add}(C_1, C_2)$ (addition gate), or
+- $\texttt{mul}(C_1, C_2)$ (multiplication gate),
 
-### 2.2 Vietoris-Rips Complex
+where $C_1, C_2$ are algebraic circuits over $R$ with $n$ inputs.
 
-**Definition 2.2.** Given a finite point cloud X : Fin n → E (where E is a metric space) and a scale parameter ε ≥ 0, the *Vietoris-Rips complex* VR_ε(X) is the abstract simplicial complex with:
+This corresponds to the type `AlgCircuit R n` in @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
 
-faces(VR_ε(X)) = {σ ⊆ Fin n | ∀ i,j ∈ σ, dist(X(i), X(j)) ≤ ε}
+### 2.2 Evaluation Semantics
 
-### 2.3 Vietoris-Rips Graph
+**Definition 2.2 (Evaluation).** The *evaluation* of a circuit $C$ on an assignment $v : \{0, \ldots, n-1\} \to R$ is defined recursively:
 
-**Definition 2.3.** The *Vietoris-Rips graph* G_ε(X) is the 1-skeleton of VR_ε(X): a simple graph on Fin n where i ~ j iff i ≠ j and dist(X(i), X(j)) ≤ ε.
+$$
+\text{eval}(C, v) = \begin{cases}
+r & \text{if } C = \texttt{const}(r) \\
+v(i) & \text{if } C = \texttt{var}(i) \\
+\text{eval}(C_1, v) + \text{eval}(C_2, v) & \text{if } C = \texttt{add}(C_1, C_2) \\
+\text{eval}(C_1, v) \cdot \text{eval}(C_2, v) & \text{if } C = \texttt{mul}(C_1, C_2)
+\end{cases}
+$$
 
-### 2.4 Sphere Data
+### 2.3 Structural Invariants
 
-**Definition 2.4.** A point cloud X lies on a *sphere* S^d(c,r) if dist(X(i), c) = r for all i. It lies *approximately* on a sphere if |dist(X(i), c) - r| ≤ δ for all i.
+**Definition 2.3 (Depth).** The *depth* of a circuit is the length of the longest root-to-leaf path:
 
-### 2.5 Euler Characteristic
+$$
+\text{depth}(C) = \begin{cases}
+0 & \text{if } C \in \{\texttt{const}(r), \texttt{var}(i)\} \\
+1 + \max(\text{depth}(C_1), \text{depth}(C_2)) & \text{if } C \in \{\texttt{add}(C_1, C_2), \texttt{mul}(C_1, C_2)\}
+\end{cases}
+$$
 
-**Definition 2.5.** The *Euler characteristic* of a complex with face-count function f is:
-χ = Σ_{k=0}^{dim} (-1)^k · f_k
+**Definition 2.4 (Size).** The *size* of a circuit is the total number of gates:
 
-### 2.6 Poincaré Threshold
+$$
+\text{size}(C) = \begin{cases}
+1 & \text{if } C \in \{\texttt{const}(r), \texttt{var}(i)\} \\
+1 + \text{size}(C_1) + \text{size}(C_2) & \text{if } C \in \{\texttt{add}(C_1, C_2), \texttt{mul}(C_1, C_2)\}
+\end{cases}
+$$
 
-**Definition 2.6.** The *Poincaré threshold* ε*(X, d) is the infimum of scales ε > 0 at which VR_ε(X) has the homology of S^d.
+**Definition 2.5 (Degree Bound).** The *syntactic degree bound* of a circuit:
 
-## 3. Filtration Properties
+$$
+\text{degreeBound}(C) = \begin{cases}
+0 & \text{if } C = \texttt{const}(r) \\
+1 & \text{if } C = \texttt{var}(i) \\
+\max(\text{degreeBound}(C_1), \text{degreeBound}(C_2)) & \text{if } C = \texttt{add}(C_1, C_2) \\
+\text{degreeBound}(C_1) + \text{degreeBound}(C_2) & \text{if } C = \texttt{mul}(C_1, C_2)
+\end{cases}
+$$
 
-### Theorem 3.1 (Filtration Monotonicity)
-*For ε₁ ≤ ε₂, VR_{ε₁}(X) ≤ VR_{ε₂}(X).*
+**Definition 2.6 (Gate Counts).** The *multiplicative gate count* $\mu(C)$ and *additive gate count* $\alpha(C)$ count the number of multiplication and addition gates, respectively.
 
-**Proof sketch.** If σ ∈ VR_{ε₁}, then for all i,j ∈ σ, dist(X(i),X(j)) ≤ ε₁ ≤ ε₂, so σ ∈ VR_{ε₂}. The formal proof is a direct application of transitivity of ≤. □
+### 2.4 Polynomial Representation
 
-This is the foundation of persistent homology: the VR construction produces a filtration (nested family) of simplicial complexes.
+**Definition 2.7 (Polynomial Map).** The *polynomial representation* of a circuit $C$ is the element $\text{toMvPolynomial}(C) \in R[x_0, \ldots, x_{n-1}]$ defined recursively:
 
-### Theorem 3.2 (Full Simplex at Diameter)
-*If dist(X(i), X(j)) ≤ ε for all i,j, then VR_ε(X) is the full simplex.*
+$$
+\text{toMvPolynomial}(C) = \begin{cases}
+r & \text{if } C = \texttt{const}(r) \\
+x_i & \text{if } C = \texttt{var}(i) \\
+\text{toMvPolynomial}(C_1) + \text{toMvPolynomial}(C_2) & \text{if } C = \texttt{add}(C_1, C_2) \\
+\text{toMvPolynomial}(C_1) \cdot \text{toMvPolynomial}(C_2) & \text{if } C = \texttt{mul}(C_1, C_2)
+\end{cases}
+$$
 
-**Proof sketch.** Every subset satisfies the VR condition. □
+---
 
-### Theorem 3.3 (VR Graph Completeness)
-*Under the same condition, the VR graph is the complete graph ⊤.*
+## 3. Main Results
 
-## 4. Stability Results
+### 3.1 Evaluation Soundness
 
-### Theorem 4.1 (Hausdorff VR Interleaving)
-*Let X : Fin n → α and Y : Fin m → α be point clouds in a pseudometric space. If every point of X has a point of Y within distance δ, and dist(X(i₁), X(i₂)) ≤ ε, then there exist j₁, j₂ with dist(Y(j₁), Y(j₂)) ≤ ε + 2δ.*
+**Theorem 3.1 (Evaluation Soundness).** *For any algebraic circuit $C$ over a commutative semiring $R$ with $n$ inputs, and any assignment $v : \{0, \ldots, n-1\} \to R$:*
 
-**Proof sketch.** Let j₁, j₂ be nearest neighbors in Y of i₁, i₂ respectively. By the quadrilateral inequality:
-dist(Y(j₁), Y(j₂)) ≤ dist(Y(j₁), X(i₁)) + dist(X(i₁), X(i₂)) + dist(X(i₂), Y(j₂)) ≤ δ + ε + δ. □
+$$\text{eval}(C, v) = \text{eval}_{\text{poly}}(v, \text{toMvPolynomial}(C))$$
 
-This is the metric foundation of the celebrated Stability Theorem of persistent homology [CEH07].
+*where $\text{eval}_{\text{poly}}$ denotes polynomial evaluation in $R[x_0, \ldots, x_{n-1}]$.*
 
-### Theorem 4.2 (Persistence of Connectivity)
-*If VR_{ε₀}(X) is connected (as a graph), then VR_ε(X) is connected for all ε ≥ ε₀.*
+**Proof sketch.** By structural induction on $C$. The base cases ($\texttt{const}$ and $\texttt{var}$) follow from the definitions of polynomial evaluation on constants and indeterminates. The inductive cases ($\texttt{add}$ and $\texttt{mul}$) follow from the fact that polynomial evaluation is a ring homomorphism, preserving addition and multiplication. ∎
 
-**Proof sketch.** By Theorem 3.1, VR_{ε₀} ≤ VR_ε. Connectivity is a monotone graph property. □
+*Formalized as* `eval_eq_mvpolynomial_eval` *in* @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
 
-### Theorem 4.3 (Component Separation)
-*If vertices i,j are not adjacent in VR_ε(X), then dist(X(i), X(j)) > ε.*
+**Corollary 3.2 (Semantic Equivalence).** *If $C_1$ and $C_2$ are circuits with $\text{toMvPolynomial}(C_1) = \text{toMvPolynomial}(C_2)$, then $\text{eval}(C_1, v) = \text{eval}(C_2, v)$ for all assignments $v$.*
 
-This is the contrapositive of the adjacency condition and provides a quantitative separation guarantee for disconnected components.
+*Formalized as* `circuits_with_same_poly_agree`.
 
-## 5. Euler Characteristic Identities
+### 3.2 The Degree-Depth Tradeoff
 
-### Theorem 5.1 (Euler Characteristic of Full Simplex)
-*χ(Δⁿ) = 1 for all n ≥ 0.*
+**Theorem 3.3 (Degree-Depth Tradeoff).** *For any algebraic circuit $C$:*
 
-**Proof sketch.** χ(Δⁿ) = Σ_{k=0}^n (-1)^k C(n+1, k+1). This equals 1 by the binomial theorem applied to (1 + (-1))^{n+1} = 0. □
+$$\text{degreeBound}(C) \leq 2^{\text{depth}(C)}$$
 
-### Theorem 5.2 (Euler Characteristic of Spheres)
-*For d ≥ 1, if the Betti numbers are β₀ = 1, β_d = 1, β_k = 0 for 0 < k < d, then χ = 1 + (-1)^d.*
+**Proof sketch.** By structural induction on $C$.
 
-**Corollary 5.2a.** χ(S^{2d}) = 2 for d ≥ 1.
-**Corollary 5.2b.** χ(S^{2d+1}) = 0 for all d ≥ 0.
+- *Base cases:* Constants have degree bound 0 and variables have degree bound 1, both $\leq 2^0 = 1$.
+- *Addition:* $\text{degreeBound}(\texttt{add}(C_1, C_2)) = \max(\text{degreeBound}(C_1), \text{degreeBound}(C_2))$. By induction, each is $\leq 2^{\text{depth}(C_i)} \leq 2^{\max(\text{depth}(C_1), \text{depth}(C_2))} \leq 2^{1 + \max(\text{depth}(C_1), \text{depth}(C_2))}$.
+- *Multiplication:* $\text{degreeBound}(\texttt{mul}(C_1, C_2)) = \text{degreeBound}(C_1) + \text{degreeBound}(C_2) \leq 2^{\text{depth}(C_1)} + 2^{\text{depth}(C_2)} \leq 2 \cdot 2^{\max(\text{depth}(C_1), \text{depth}(C_2))} = 2^{1 + \max(\text{depth}(C_1), \text{depth}(C_2))}$. ∎
 
-**Proof.** For even d: (-1)^d = 1, so χ = 2. For odd d: (-1)^d = -1, so χ = 0. □
+*Formalized as* `degreeBound_le_two_pow_depth` *in* @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
 
-### Theorem 5.3 (Alternating Binomial Sum)
-*Σ_{k=0}^n (-1)^k C(n+1, k+1) = 1.*
+**Remark.** The bound is tight: iterated squaring of a single variable produces a circuit of depth $d$ computing $x^{2^d}$.
 
-This is the combinatorial identity underlying Theorem 5.1, proved independently.
+### 3.3 Depth Lower Bound
 
-### Theorem 5.4 (Signed Alternating Sum)
-*Σ_{k=0}^n (-1)^{k+1} C(n+1, k+1) = -1.*
+**Theorem 3.4 (Depth Lower Bound from Degree).** *If $C$ is a circuit with $\text{degreeBound}(C) > 2^d$, then $\text{depth}(C) > d$.*
 
-## 6. Sphere Detection
+**Proof sketch.** Contrapositive of Theorem 3.3: if $\text{depth}(C) \leq d$, then $\text{degreeBound}(C) \leq 2^{\text{depth}(C)} \leq 2^d$. ∎
 
-### Theorem 6.1 (Sphere Diameter Bound)
-*If X lies on S^d(c,r) with r ≥ 0, then dist(X(i), X(j)) ≤ 2r for all i,j.*
+*Formalized as* `depth_lower_bound_from_degree` *in* @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
 
-**Proof.** By triangle inequality: dist(X(i), X(j)) ≤ dist(X(i), c) + dist(c, X(j)) = r + r = 2r. □
+**Corollary 3.5.** *Any circuit computing a polynomial of degree $d$ must have depth at least $\lceil \log_2 d \rceil$.*
 
-**PEGB Analysis:**
-- **P**roof: Triangle inequality applied twice.
-- **E**xample: For 3 equidistant points on S¹(r), max distance = r√3 < 2r.
-- **G**eneralization: The bound 2r is tight (antipodal points achieve equality). Extends to any metric space with a "center" point.
-- **B**oundary: The bound is exact for Euclidean spaces. In non-Euclidean geometries (hyperbolic space), the diameter can exceed 2r.
+### 3.4 Work-Span Inequality
 
-### Theorem 6.2 (Detection Stability)
-*If X lies on S^d(c,r) and dist(X(i), Y(i)) ≤ δ for all i, then Y lies approximately on S^d(c,r) with tolerance δ.*
+**Theorem 3.6 (Work ≥ Span).** *For any algebraic circuit $C$:*
 
-**Proof.** |dist(Y(i), c) - r| = |dist(Y(i), c) - dist(X(i), c)| ≤ dist(X(i), Y(i)) ≤ δ by the reverse triangle inequality. □
+$$\text{size}(C) \geq \text{depth}(C) + 1$$
 
-**PEGB Analysis:**
-- **P**roof: Reverse triangle inequality.
-- **E**xample: 100 points on S² with Gaussian noise σ=0.01 remain within δ=0.03 of S² with high probability.
-- **G**eneralization: The δ-stability extends to Hausdorff perturbations, not just pointwise. The VR interleaving theorem (4.1) quantifies this.
-- **B**oundary: When δ approaches r, the approximate sphere degenerates (becomes a ball). The bound is tight.
+**Proof sketch.** By structural induction. Base cases: leaf nodes have size 1 and depth 0. For internal nodes:
 
-### Theorem 6.3 (Packing-Covering Duality)
-*If n points have pairwise distances > 2ε, then any ε-cover requires at least n points.*
+$$\text{size}(\texttt{op}(C_1, C_2)) = 1 + \text{size}(C_1) + \text{size}(C_2) \geq 1 + (\text{depth}(C_1) + 1) + (\text{depth}(C_2) + 1)$$
 
-**Proof.** Each covering ball can contain at most one packing point (by the packing condition). An injective map from packing points to covering balls gives the bound. □
+which exceeds $1 + \max(\text{depth}(C_1), \text{depth}(C_2)) + 1 = \text{depth}(\texttt{op}(C_1, C_2)) + 1$. ∎
 
-**PEGB Analysis:**
-- **P**roof: Pigeonhole principle via injection.
-- **E**xample: On S¹, n = ⌈π/ε⌉ equally-spaced points form a maximal ε-packing, and any ε-cover needs at least that many balls.
-- **G**eneralization: This extends to the volumetric covering number bound: N(S^d, ε) ≥ vol(S^d) / vol(B^d(ε)), which gives the n^{-1/d} scaling.
-- **B**oundary: The bound is not tight in general — the ratio between packing and covering numbers can be exponential in d.
+*Formalized as* `size_ge_depth_succ` *in* @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
 
-### Theorem 6.4 (Equilateral Triangle Theorem)
-*Three equidistant points in ℝ² with pairwise distance c > 0 lie on a circle of radius c/√3, centered at their centroid.*
+### 3.5 Gate Count Inequalities
 
-**Proof.** Let μ = (X(0) + X(1) + X(2))/3. By symmetry and the equidistance condition, ‖X(i) - μ‖² = c²/3 for each i. Therefore dist(X(i), μ) = c/√3. □
+**Theorem 3.7 (Gate Count Bounds).** *For any circuit $C$:*
 
-**PEGB Analysis:**
-- **P**roof: Direct computation using the centroid and equidistance.
-- **E**xample: An equilateral triangle with side 1 has circumradius 1/√3 ≈ 0.577.
-- **G**eneralization: For k+1 equidistant points in ℝ^k, they lie on S^{k-1} with radius c·√(k/(2(k+1))).
-- **B**oundary: For k+2 or more equidistant points in ℝ^k, no such configuration exists (by dimension counting). This is a manifestation of the "kissing number" problem.
+1. $\mu(C) \leq \text{size}(C)$ — multiplicative gates bounded by total size.
+2. $\alpha(C) \leq \text{size}(C)$ — additive gates bounded by total size.
+3. $\alpha(C) + \mu(C) \leq \text{size}(C)$ — internal gates bounded by total size.
 
-## 7. The Poincaré Threshold
+*Formalized as* `mulGates_le_size`, `addGates_le_size`, *and* `addGates_plus_mulGates_le_size`.
 
-### Theorem 7.1 (Non-negativity)
-*The Poincaré threshold is non-negative.*
+**Remark.** Inequality (3) implies that the number of leaf nodes (constants and variables) equals $\text{size}(C) - \alpha(C) - \mu(C) \geq 0$.
 
-**Proof.** The threshold is defined as sInf of a set of positive reals. □
+### 3.6 Algebraic Structure of Zero-Function Circuits (PIT Foundations)
 
-### Conjecture 7.2 (Scaling Law)
-*For n points sampled uniformly from S^d, the Poincaré threshold satisfies:*
-ε*(n, d) ~ C · √d · n^{-1/d}
-*for a universal constant C.*
+**Definition 3.8.** A circuit $C$ is a *zero-function circuit* if $\text{eval}(C, v) = 0$ for all $v$.
 
-Our numerical experiments confirm this scaling with C ≈ 2.3 for d = 1, 2, 3 and n ranging from 20 to 300.
+**Theorem 3.9 (Ideal Structure).** *The set of zero-function circuits is closed under:*
 
-## 8. Numerical Experiments
+1. *Addition:* If $C_1, C_2$ are zero-function circuits, then $\texttt{add}(C_1, C_2)$ is a zero-function circuit.
+2. *Left multiplication:* If $C_1$ is a zero-function circuit and $C_2$ is any circuit, then $\texttt{mul}(C_1, C_2)$ is a zero-function circuit.
+3. *Right multiplication:* If $C_2$ is a zero-function circuit and $C_1$ is any circuit, then $\texttt{mul}(C_1, C_2)$ is a zero-function circuit.
 
-We computed the connectivity threshold (the H₀ Poincaré threshold) for point clouds on S^d for d ∈ {1, 2, 3} and n ∈ {20, 50, 100, 200, 300}. The log-log regression of ε* versus n yields slopes close to the theoretical -1/d:
+**Proof sketch.** (1) follows from $0 + 0 = 0$. (2) follows from $0 \cdot r = 0$. (3) follows from $r \cdot 0 = 0$. ∎
 
-| d | Theoretical slope | Measured slope |
-|---|------------------|----------------|
-| 1 | -1.000           | -0.98 ± 0.03   |
-| 2 | -0.500           | -0.49 ± 0.02   |
-| 3 | -0.333           | -0.34 ± 0.04   |
+*Formalized as* `add_zero_functions_is_zero`, `mul_zero_function_left`, *and* `mul_zero_function_right` *in* @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
 
-The Euler characteristic transitions through several phases as ε increases:
-1. ε < ε*: χ = n (disconnected points)
-2. ε ≈ ε*: χ transitions rapidly, passing through χ = 1 + (-1)^d
-3. ε ≫ ε*: χ = 1 (contractible complex)
+**Theorem 3.10 (Polynomial Zero implies Function Zero).** *If $\text{toMvPolynomial}(C) = 0$, then $C$ is a zero-function circuit.*
 
-The stable plateau at χ = 1 + (-1)^d is the "sphere detection window."
+*Formalized as* `zero_poly_implies_zero_function`.
 
-## 9. Connections to Existing Work
+### 3.7 Substitution and Composition
 
-### Building on Catalog Results
-Our work builds on and extends several results from the existing theorem catalog:
+**Definition 3.11 (Substitution).** Given a circuit $C$ over $n$ variables and circuits $s_0, \ldots, s_{n-1}$ (one per variable), the *substitution* $C[s_0, \ldots, s_{n-1}]$ replaces each $\texttt{var}(i)$ node with $s_i$.
 
-- **`vietoris_rips_simplex_bound`** (Bridges/FiveFrontiers.lean): The exponential bound 2^n on VR simplex counts is the combinatorial ceiling for our constructions.
-- **`not_connected_has_nontrivial_clopen`** (MachineLearning/OrderGap.lean): The disconnectedness characterization via clopen sets relates to our component separation theorem.
-- **`steps_above_threshold_bounded`** (Bridges/Convergence.lean): The convergence framework for threshold-based analysis parallels our Poincaré threshold convergence.
+**Theorem 3.12 (Substitution Semantics).** *For any circuit $C$, substitution functions $s$, and assignment $v$:*
 
-### Cross-Domain Bridge
-Our Euler characteristic identities (Theorems 5.1-5.4) bridge combinatorics (binomial coefficient identities) with topology (Euler characteristic of simplicial complexes and spheres). The alternating binomial sum is a purely algebraic identity, but its topological interpretation — as the contractibility of the simplex — reveals a deep connection between enumerative combinatorics and algebraic topology.
+$$\text{eval}(C[s], v) = \text{eval}(C, \lambda i.\, \text{eval}(s(i), v))$$
 
-## 10. Discussion and Future Work
+**Proof sketch.** By structural induction on $C$. Constants are unchanged; variables are replaced by the corresponding substitution circuit; addition and multiplication distribute over substitution. ∎
 
-The Poincaré conjecture for data remains partially conjectural: while we have formalized the foundational machinery and verified the stability, Euler characteristic, and metric rigidity results, a full formal proof of the scaling law (Conjecture 7.2) would require probabilistic arguments about random point configurations on spheres — material that is not yet available in Mathlib.
+*Formalized as* `eval_substitute` *in* @file Catalog/Algebra/AlgebraicCircuitComplexity.lean.
 
-Key open directions:
-1. **Homology computation**: Formalizing persistent homology in Lean 4 would enable direct verification of the Betti number conditions.
-2. **Probabilistic bounds**: Connecting to the Niyogi-Smale-Weinberger framework for manifold reconstruction.
-3. **Beyond spheres**: Extending the Poincaré threshold to tori, projective spaces, and general manifolds.
-4. **Computational complexity**: Analyzing the algorithmic complexity of computing the Poincaré threshold.
+**Theorem 3.13 (Identity Substitution).** *Substituting $\texttt{var}(i)$ for each variable $i$ leaves the circuit unchanged: $C[\texttt{var}] = C$.*
+
+*Formalized as* `substitute_var_id`.
+
+### 3.8 Complexity Bounds
+
+**Definition 3.14 (Complexity Bound).** A *circuit complexity bound* is a triple $(S, D, \Delta)$ specifying upper bounds on size, degree, and depth.
+
+**Theorem 3.15 (Bounded Circuit Degree).** *If a circuit $C$ satisfies a complexity bound with depth bound $\Delta$, then $\text{degreeBound}(C) \leq 2^\Delta$.*
+
+*Formalized as* `bounded_circuit_degree_bound`.
+
+**Theorem 3.16 (Bounded Depth-Size Relationship).** *If a circuit $C$ satisfies a complexity bound with size bound $S$, then $\text{depth}(C) + 1 \leq S$.*
+
+*Formalized as* `bounded_circuit_depth_size`.
+
+---
+
+## 4. Applications and Connections
+
+### 4.1 Circuit Complexity and VP/VNP
+
+The formalization includes a `CircuitComplexityBound` structure that captures the notion of polynomial-size, polynomially-bounded circuits — the basis for Valiant's complexity class VP. A polynomial family $(f_n)$ belongs to VP if there exist circuits $(C_n)$ with $\text{size}(C_n) \leq n^{O(1)}$, $\text{degreeBound}(C_n) \leq n^{O(1)}$, and $C_n$ computes $f_n$. Our `satisfiesBound` predicate and the accompanying theorems provide the verified infrastructure for reasoning about membership in VP.
+
+### 4.2 Neural Network Depth
+
+The degree-depth tradeoff (Theorem 3.3) has direct implications for deep learning. Polynomial neural networks (networks with polynomial activation functions) are algebraic circuits. The theorem implies that a network of depth $d$ can represent polynomials of degree at most $2^d$, establishing a formal separation between shallow and deep networks when the target function has high polynomial degree.
+
+### 4.3 Polynomial Identity Testing
+
+The ideal structure of zero-function circuits (Theorem 3.9) provides the algebraic foundation for PIT. The Schwartz-Zippel lemma, when combined with Theorem 3.15 (degree bounds for bounded circuits), gives a randomized PIT algorithm with error probability at most $d/|S|$ over a finite evaluation domain $S$ of size $|S|$, where $d$ is the degree bound.
+
+### 4.4 Cryptographic Applications
+
+Circuit size bounds directly relate to cryptographic hardness assumptions. Many post-quantum cryptographic schemes assume that certain polynomial families (related to lattice problems) require super-polynomial circuit size. Our formalization of the size-depth-degree relationships provides verified bounds that could be used to reason about the security parameters of such schemes.
+
+---
+
+## 5. Algorithms
+
+### 5.1 Circuit Evaluation
+
+**Algorithm 5.1.** Given a circuit $C$ and assignment $v$, compute $\text{eval}(C, v)$ by recursive traversal.
+
+- **Time complexity:** $O(\text{size}(C))$
+- **Space complexity:** $O(\text{depth}(C))$ (stack depth)
+
+The correctness of this algorithm is guaranteed by the evaluation function definition and the soundness theorem (Theorem 3.1).
+
+### 5.2 Degree Bound Computation
+
+**Algorithm 5.2.** Given a circuit $C$, compute $\text{degreeBound}(C)$ by recursive traversal using max for addition and sum for multiplication.
+
+- **Time complexity:** $O(\text{size}(C))$
+
+The result is guaranteed to be an upper bound on the true degree by Theorem 3.3 and the definition of the degree bound.
+
+### 5.3 Randomized PIT via Schwartz-Zippel
+
+**Algorithm 5.3.** Given a circuit $C$ with degree bound $d$ over a field $\mathbb{F}$:
+
+1. Choose a subset $S \subseteq \mathbb{F}$ with $|S| \geq 2d$.
+2. Sample $v \in S^n$ uniformly at random.
+3. Evaluate $\text{eval}(C, v)$.
+4. If $\text{eval}(C, v) = 0$, output "likely zero"; otherwise "non-zero."
+
+- **Error probability:** At most $d/|S| \leq 1/2$ (by Schwartz-Zippel).
+- The degree bound $d$ can be computed using Algorithm 5.2, with Theorem 3.3 guaranteeing $d \leq 2^{\text{depth}(C)}$.
+
+---
+
+## 6. Discussion
+
+### 6.1 Tightness of Bounds
+
+The degree-depth bound $2^d$ is tight (iterated squaring achieves it), as is the work-span bound (a chain of $d$ operations has size $2d + 1$ and depth $d$, giving a ratio approaching 2). The gate count bounds are also tight in the worst case: a circuit consisting entirely of multiplication gates has $\mu(C) = \text{size}(C) - O(1)$.
+
+### 6.2 Limitations
+
+Our formalization captures the *tree* circuit model (each gate's output is used exactly once). The more general *DAG* circuit model, where gate outputs can be shared (fan-out > 1), computes the same class of polynomials but potentially with exponentially smaller circuits. Extending to DAG circuits would require tracking shared subexpressions.
+
+The syntactic degree bound may overestimate the true degree of the computed polynomial (e.g., $\texttt{add}(\texttt{var}(0) \cdot \texttt{var}(0), -\texttt{var}(0) \cdot \texttt{var}(0))$ has degree bound 2 but computes the zero polynomial of degree $-\infty$). This gap is inherent in any syntactic analysis.
+
+### 6.3 Connections to Topological Data Analysis
+
+An emerging direction connects algebraic circuit complexity to the computational aspects of topological data analysis (TDA). Computing persistent homology of a Vietoris-Rips filtration involves algebraic operations (boundary operators, Smith normal form) whose complexity can be analyzed in the circuit model. The "Poincaré threshold" — the scale at which a point cloud's Rips complex exhibits the homology of a sphere — involves detecting specific algebraic signatures. The circuit complexity of computing this threshold, and its scaling with dimension and sample size, connects algebraic complexity to manifold learning.
+
+---
+
+## 7. Future Work
+
+1. **DAG circuits:** Extend the formalization to directed acyclic graph circuits with fan-out, capturing the polynomial-size circuits that define VP.
+2. **Lower bounds:** Formalize known super-polynomial lower bounds for restricted circuit classes (e.g., depth-3 circuits, multilinear circuits).
+3. **PIT algorithms:** Formalize the Schwartz-Zippel lemma and connect it to the circuit degree bounds.
+4. **Valiant's classes:** Define VP and VNP as complexity classes and formalize the VP ≠ VNP conjecture.
+5. **Persistent homology circuits:** Analyze the algebraic circuit complexity of computing persistent Betti numbers, connecting to TDA applications.
+
+---
+
+## 8. Broader Impact
+
+The formalization of algebraic circuit complexity has implications beyond pure mathematics. In machine learning, the degree-depth tradeoff provides a theoretical foundation for understanding why deep architectures outperform shallow ones: a network of depth $d$ with polynomial activations can represent functions of degree up to $2^d$, creating an exponential expressivity gap between networks of different depths. This formalizes the intuition that "depth matters" and provides quantitative bounds on the minimum depth required to approximate a target function of given polynomial degree.
+
+In cryptography, circuit size lower bounds are intimately connected to computational hardness assumptions. Many lattice-based post-quantum cryptographic schemes rely on the assumption that certain polynomial families require super-polynomial circuits. Our formalization of the size-depth-degree relationships, combined with the complexity bound infrastructure, provides a verified framework for reasoning about the circuit complexity of cryptographic primitives.
+
+In program verification and compiler optimization, the substitution semantics theorem (Theorem 3.12) provides a formal guarantee that modular program composition preserves semantics. This is the algebraic analogue of the fundamental theorem of denotational semantics, and its machine verification adds confidence to compiler transformations that decompose and recompose computational graphs.
+
+The PIT foundations connect to derandomization, one of the central themes of modern complexity theory. A deterministic polynomial-time PIT algorithm would imply strong circuit lower bounds via the Kabanets-Impagliazzo framework. Our formalization of the ideal structure of zero-function circuits, combined with the degree bounds, provides the verified algebraic infrastructure needed to reason about PIT-based derandomization strategies.
+
+Finally, the connection to topological data analysis — where algebraic operations underpin persistent homology computations — opens a pathway toward analyzing the computational complexity of manifold detection and shape recognition algorithms. The circuit complexity of computing persistent Betti numbers, and the scaling of detection thresholds with dimension and sample size, are natural questions that bridge algebraic complexity with applied topology.
 
 ## References
 
-[CEH07] Cohen-Steiner, D., Edelsbrunner, H., Harer, J. "Stability of persistence diagrams." *Discrete & Computational Geometry* 37(1), 103-120, 2007.
+[1] L. G. Valiant, "Completeness classes in algebra," in *Proceedings of the 11th Annual ACM Symposium on Theory of Computing*, 1979, pp. 249–261.
 
-[GH12] Ghrist, R., Harer, J. "Elementary Applied Topology." CreateSpace, 2012.
+[2] V. Strassen, "Vermeidung von Divisionen," *Journal für die reine und angewandte Mathematik*, vol. 264, pp. 184–202, 1973.
 
-[Lat01] Latschev, J. "Vietoris-Rips complexes of metric spaces near a closed Riemannian manifold." *Archiv der Mathematik* 77(6), 522-528, 2001.
+[3] P. Bürgisser, M. Clausen, and M. A. Shokrollahi, *Algebraic Complexity Theory*, Springer, 1997.
 
-[NSW08] Niyogi, P., Smale, S., Weinberger, S. "Finding the homology of submanifolds with high confidence from random samples." *Discrete & Computational Geometry* 39(1-3), 419-441, 2008.
+[4] N. Saxena, "Progress on polynomial identity testing," *Bulletin of the EATCS*, vol. 99, pp. 49–79, 2009.
 
-[Per02] Perelman, G. "The entropy formula for the Ricci flow and its geometric applications." arXiv:math/0211159, 2002.
+[5] M. Telgarsky, "Benefits of depth in neural networks," in *COLT*, 2016.
 
-[Per03a] Perelman, G. "Ricci flow with surgery on three-manifolds." arXiv:math/0303109, 2003.
+[6] R. Eldan and O. Shamir, "The power of depth for feedforward neural networks," in *COLT*, 2016.
 
-[Per03b] Perelman, G. "Finite extinction time for the solutions to the Ricci flow on certain three-manifolds." arXiv:math/0307245, 2003.
+---
+
+## Appendix: Catalog of Formalized Results
+
+| # | Name | Statement | Reference |
+|---|------|-----------|-----------|
+| 1 | `eval_eq_mvpolynomial_eval` | $\text{eval}(C, v) = \text{eval}_{\text{poly}}(v, \text{toMvPoly}(C))$ | Theorem 3.1 |
+| 2 | `circuits_with_same_poly_agree` | Same polynomial $\Rightarrow$ same evaluation | Corollary 3.2 |
+| 3 | `degreeBound_le_two_pow_depth` | $\text{degreeBound}(C) \leq 2^{\text{depth}(C)}$ | Theorem 3.3 |
+| 4 | `depth_lower_bound_from_degree` | $\text{degreeBound}(C) > 2^d \Rightarrow \text{depth}(C) > d$ | Theorem 3.4 |
+| 5 | `size_ge_depth_succ` | $\text{size}(C) \geq \text{depth}(C) + 1$ | Theorem 3.6 |
+| 6 | `AlgCircuit.size_pos` | $\text{size}(C) > 0$ | — |
+| 7 | `mulGates_le_size` | $\mu(C) \leq \text{size}(C)$ | Theorem 3.7(1) |
+| 8 | `addGates_le_size` | $\alpha(C) \leq \text{size}(C)$ | Theorem 3.7(2) |
+| 9 | `addGates_plus_mulGates_le_size` | $\alpha(C) + \mu(C) \leq \text{size}(C)$ | Theorem 3.7(3) |
+| 10 | `add_zero_functions_is_zero` | Zero functions closed under addition | Theorem 3.9(1) |
+| 11 | `mul_zero_function_left` | Zero functions absorb on the left | Theorem 3.9(2) |
+| 12 | `mul_zero_function_right` | Zero functions absorb on the right | Theorem 3.9(3) |
+| 13 | `zero_poly_implies_zero_function` | Zero polynomial $\Rightarrow$ zero function | Theorem 3.10 |
+| 14 | `eval_substitute` | Substitution preserves evaluation semantics | Theorem 3.12 |
+| 15 | `substitute_var_id` | Identity substitution is identity | Theorem 3.13 |
+| 16 | `bounded_circuit_degree_bound` | Bounded circuits have bounded degree | Theorem 3.15 |
+| 17 | `bounded_circuit_depth_size` | Bounded circuits: depth + 1 ≤ size bound | Theorem 3.16 |
