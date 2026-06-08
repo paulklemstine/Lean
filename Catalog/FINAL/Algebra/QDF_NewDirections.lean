@@ -1,1 +1,0 @@
-../../Algebra/QDF_NewDirections.lean

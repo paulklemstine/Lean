@@ -1,1 +1,0 @@
-../../Novelty/AntiGravityDefs.lean

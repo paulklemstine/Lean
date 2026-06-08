@@ -1,1 +1,0 @@
-../../Logic/TropicalCurryHoward.lean

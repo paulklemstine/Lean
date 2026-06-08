@@ -1,1 +1,0 @@
-../../Physics/V12_VariationalPrinciples.lean

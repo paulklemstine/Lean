@@ -1,1 +1,0 @@
-../../Geometry/TropicalBrillNoether.lean

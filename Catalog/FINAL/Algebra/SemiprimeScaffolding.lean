@@ -1,1 +1,0 @@
-../../Algebra/SemiprimeScaffolding.lean

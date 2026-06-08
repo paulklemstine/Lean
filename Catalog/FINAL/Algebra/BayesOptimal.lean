@@ -1,1 +1,0 @@
-../../Algebra/BayesOptimal.lean

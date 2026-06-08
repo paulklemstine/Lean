@@ -1,1 +1,0 @@
-../../Bridges/GuardedFixedPointIndex.lean

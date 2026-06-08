@@ -1,1 +1,0 @@
-../../Physics/DiscreteNoetherShadow.lean

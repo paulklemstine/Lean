@@ -1,1 +1,0 @@
-../../Tropical/Tropical_Hecke_Trace_Formula_for_GL₂.lean

@@ -1,1 +1,0 @@
-../../Logic/SpectralCollapse.lean

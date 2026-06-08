@@ -1,1 +1,0 @@
-../../MachineLearning/SymmetricPowerEuler/Recurrence.lean

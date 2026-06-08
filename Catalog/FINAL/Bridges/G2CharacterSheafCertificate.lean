@@ -1,1 +1,0 @@
-../../Bridges/G2CharacterSheafCertificate.lean

@@ -1,1 +1,0 @@
-../../Tropical/EntropyTropicalDuality.lean

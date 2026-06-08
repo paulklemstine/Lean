@@ -1,1 +1,0 @@
-../../Bridges/AlgebraPythagoreanCryptography/BerggrenLatticeReductionDuality.lean

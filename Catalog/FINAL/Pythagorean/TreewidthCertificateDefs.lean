@@ -1,1 +1,0 @@
-../../Pythagorean/TreewidthCertificateDefs.lean

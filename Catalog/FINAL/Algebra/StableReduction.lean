@@ -1,1 +1,0 @@
-../../Algebra/StableReduction.lean

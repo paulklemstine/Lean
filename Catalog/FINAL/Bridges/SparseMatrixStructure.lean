@@ -1,1 +1,0 @@
-../../Bridges/SparseMatrixStructure.lean

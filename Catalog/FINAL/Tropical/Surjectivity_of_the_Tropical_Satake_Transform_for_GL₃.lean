@@ -1,1 +1,0 @@
-../../Tropical/Surjectivity_of_the_Tropical_Satake_Transform_for_GL₃.lean

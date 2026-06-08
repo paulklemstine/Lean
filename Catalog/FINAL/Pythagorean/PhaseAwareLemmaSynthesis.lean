@@ -1,1 +1,0 @@
-../../Pythagorean/PhaseAwareLemmaSynthesis.lean

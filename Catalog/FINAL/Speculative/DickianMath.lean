@@ -1,1 +1,0 @@
-../../Speculative/Other/DickianMath.lean

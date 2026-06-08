@@ -1,1 +1,0 @@
-../../Pythagorean/SpacetimeLattice.lean

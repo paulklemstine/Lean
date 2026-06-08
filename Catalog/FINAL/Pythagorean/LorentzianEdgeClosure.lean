@@ -1,1 +1,0 @@
-../../Pythagorean/LorentzianEdgeClosure.lean

@@ -1,1 +1,0 @@
-../../Pythagorean/TropicalCostMinimality.lean
