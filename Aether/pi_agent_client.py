@@ -1958,8 +1958,10 @@ class PiAgentClient:
             1. **{deliverable_files}**
             2. **{deliverable_theorems}**
             3. **Brief proof sketches** as `-- !-- comment -- !--` blocks (1-2 sentences each)
-            4. **A trailing comment block** titled `FUTURE DIRECTIONS` listing
-               3-5 testable, falsifiable conjectures
+            4. **A FUTURE_DIRECTIONS.md file** listing 3-5 testable, falsifiable
+               conjectures as a freeform narrative (NOT a form). Each direction MUST
+               include a "The key insight is..." sentence and a "Why now?" justification.
+               This file drives the next research cycle — make it count.
 
             ### DO NOT OUTPUT (Phase B handles these — if your work passes quality bar):
             - NO `ARTICLE.md`
@@ -1967,7 +1969,7 @@ class PiAgentClient:
             - NO `demo.py` / `algorithms.py`
             - NO HTML widgets
             - NO `PACKAGE.json`
-            - NO prose for human readers
+            - NO prose for human readers (except FUTURE_DIRECTIONS.md)
 
             ### WHY THIS NARROW:
             The Lean 4 file IS the deliverable. A self-contained Lean file with
@@ -1996,8 +1998,10 @@ class PiAgentClient:
 
 ## Output format reminder
 
-The ONLY files in your output should be 1-3 `.lean` files. The Lean code itself
-is the deliverable. Be precise, be deep, be world-class.
+Your output must include `.lean` files AND a `FUTURE_DIRECTIONS.md` file.
+The .lean files contain the proofs. The FUTURE_DIRECTIONS.md contains 3-5
+research conjectures that extend the work. Both are required.
+Be precise, be deep, be world-class.
 """
         return prompt
 
