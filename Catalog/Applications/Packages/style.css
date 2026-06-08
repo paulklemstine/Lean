@@ -119,9 +119,9 @@ body {
 /* ── Animated background ── */
 .app-container {
     display: flex;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
+    min-height: 100vh;
+    width: 100%;
+    overflow: visible;
     position: relative;
 }
 
@@ -147,6 +147,11 @@ body {
 /* Sidebar */
 .sidebar {
     width: 320px;
+    min-width: 320px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
     background-color: var(--bg-panel);
     border-right: 1px solid var(--border-color);
     display: flex;
@@ -464,10 +469,11 @@ body {
 
 /* Main Content */
 .main-content {
-    flex: 1;
-    overflow-y: auto;
+    margin-left: 320px;
+    width: calc(100% - 320px);
+    min-height: 100vh;
     position: relative;
-    scroll-behavior: smooth;
+    background-color: var(--bg-base);
     background-image:
         radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
         radial-gradient(circle at 0% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
@@ -1239,6 +1245,11 @@ body.light-theme .code-output.error {
 @media (max-width: 768px) {
     .app-container {
         position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
     }
 
     .sidebar {
@@ -2149,6 +2160,14 @@ body.light-theme .app-container::before {
         radial-gradient(ellipse at 10% 20%, rgba(124, 58, 237, 0.06) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 80%, rgba(2, 132, 199, 0.05) 0%, transparent 50%),
         radial-gradient(ellipse at 50% 50%, rgba(220, 38, 38, 0.03) 0%, transparent 60%);
+}
+
+body.light-theme .main-content {
+    background-color: var(--bg-base);
+    background-image:
+        radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 0% 100%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
+    animation: none;
 }
 
 body.light-theme .sidebar {
