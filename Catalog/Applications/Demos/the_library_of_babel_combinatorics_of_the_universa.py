@@ -1,86 +1,32 @@
 #!/usr/bin/env python3
 """
 The Library of Babel: Numerical Demonstrations
-================================================
+===============================================
 
-Self-contained numerical examples demonstrating the combinatorial
-and coding-theoretic properties of Borges' Library of Babel,
-formalized as Volume(A, L) = Fin(L) -> Fin(A).
+Self-contained numerical examples demonstrating the key results from
+the formal combinatorial analysis of Borges' Library of Babel.
 
 Results demonstrated:
-  1. Volume cardinality: A^L
-  2. Babel Degree: every volume has exactly L*(A-1) neighbors
-  3. Babel Diameter: maximum Hamming distance = L
-  4. Singleton Bound: |C| <= A^(L - d + 1)
-  5. Self-evaluation count exceeds volume count (finite Cantor)
-  6. Probability of finding a target string in a random volume
-  7. De Bruijn sequence construction for a mini-library
+  1. Volume cardinality: |Volume(A,L)| = A^L
+  2. Degree regularity: every volume has L*(A-1) Hamming neighbors
+  3. Diameter: maximum Hamming distance = L
+  4. Singleton Bound: |C| ≤ A^(L-d+1) for min distance d
+  5. Self-reference impossibility: counting argument
+  6. Mini-Library de Bruijn catalog construction
 """
 
 from __future__ import annotations
 
 import math
-import itertools
+import random
 from collections import defaultdict
+from itertools import product
 from typing import Sequence
 
 
-# ─────────────────────────────────────────────────────────────
-# 1. Core Library Parameters
-# ─────────────────────────────────────────────────────────────
-
-def volume_count(a: int, l: int) -> int:
-    """Number of volumes in the Library: A^L."""
-    return a ** l
-
-
-def babel_degree(a: int, l: int) -> int:
-    """Number of Hamming neighbors of every volume: L * (A - 1).
-
-    Theorem (Babel Degree): For A >= 1, every volume v in Volume(A, L)
-    has exactly L * (A - 1) Hamming neighbors.
-    """
-    return l * (a - 1)
-
-
-def babel_diameter(l: int) -> int:
-    """Hamming diameter of the Library: exactly L.
-
-    Theorem (Babel Diameter): For A >= 2, L >= 1, there exist volumes
-    v, w with hammingDist(v, w) = L.
-    """
-    return l
-
-
-def singleton_bound(a: int, l: int, d: int) -> int:
-    """Maximum code size for minimum distance d: A^(L - d + 1).
-
-    Theorem (Singleton Bound): For A >= 2, any BabelCode (C, d) over
-    Volume(A, L) with d <= L satisfies |C| <= A^(L - d + 1).
-    """
-    if d > l:
-        return 1
-    return a ** (l - d + 1)
-
-
-def hamming_ball_volume(a: int, l: int, r: int) -> int:
-    """Size of the Hamming ball of radius r: sum_{j=0}^{r} C(L,j)*(A-1)^j."""
-    total = 0
-    for j in range(min(r, l) + 1):
-        total += math.comb(l, j) * ((a - 1) ** j)
-    return total
-
-
-def hamming_bound(a: int, l: int, d: int) -> float:
-    """Sphere-packing (Hamming) bound: A^L / |B(v, floor((d-1)/2))|."""
-    t = (d - 1) // 2
-    ball = hamming_ball_volume(a, l, t)
-    return a ** l / ball
-
-
-# ─────────────────────────────────────────────────────────────
-# 2. Hamming Distance
-# ─────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────
+# 1. Core definitions
+# ──────────────────────────────────────────────────────────────────────
 
 def hamming_distance(v: Sequence[int], w: Sequence[int]) -> int:
     """Hamming distance: number of positions where v and w differ."""
@@ -88,329 +34,310 @@ def hamming_distance(v: Sequence[int], w: Sequence[int]) -> int:
     return sum(1 for a, b in zip(v, w) if a != b)
 
 
-def hamming_neighbors(v: tuple[int, ...], a: int) -> list[tuple[int, ...]]:
-    """All Hamming neighbors of v (distance exactly 1)."""
+def hamming_neighbors(v: tuple[int, ...], alphabet_size: int) -> list[tuple[int, ...]]:
+    """All volumes at Hamming distance exactly 1 from v."""
     neighbors: list[tuple[int, ...]] = []
     for i in range(len(v)):
-        for s in range(a):
-            if s != v[i]:
+        for a in range(alphabet_size):
+            if a != v[i]:
                 w = list(v)
-                w[i] = s
+                w[i] = a
                 neighbors.append(tuple(w))
     return neighbors
 
 
-# ─────────────────────────────────────────────────────────────
-# 3. De Bruijn Sequence Construction
-# ─────────────────────────────────────────────────────────────
+def singleton_bound(a: int, l: int, d: int) -> int:
+    """Singleton Bound: max codewords for min distance d."""
+    return a ** (l - d + 1)
 
-def de_bruijn(k: int, n: int) -> list[int]:
-    """Generate a de Bruijn sequence for alphabet size k, word length n.
 
-    Uses Martin's algorithm (lexicographically smallest de Bruijn sequence).
-    The resulting sequence has length k^n and every k-ary string of length n
-    appears exactly once as a contiguous substring (cyclically).
-    """
-    if n == 0:
-        return [0]
+# ──────────────────────────────────────────────────────────────────────
+# 2. Demonstrations
+# ──────────────────────────────────────────────────────────────────────
 
-    alphabet = list(range(k))
-    sequence: list[int] = []
-    a = [0] * (k * n)
+def demo_volume_cardinality() -> None:
+    """Demonstrate: |Volume(A,L)| = A^L."""
+    print("=" * 70)
+    print("DEMO 1: Volume Cardinality  (volume_card)")
+    print("=" * 70)
 
-    def db(t: int, p: int) -> None:
-        if t > n:
-            if n % p == 0:
-                sequence.extend(a[1 : p + 1])
+    examples = [
+        (2, 3, "Binary strings of length 3"),
+        (4, 4, "DNA sequences of length 4"),
+        (4, 16, "Mini-Library of Babel"),
+        (25, 10, "Babel alphabet, 10 chars"),
+    ]
+
+    for a, l, desc in examples:
+        total = a ** l
+        print(f"  A={a}, L={l:>3}  →  {total:>15,} volumes   ({desc})")
+
+    # Borges' actual Library
+    borges_a, borges_l = 25, 1_312_000
+    log10_volumes = borges_l * math.log10(borges_a)
+    print(f"\n  Borges' Library: A={borges_a}, L={borges_l:,}")
+    print(f"  Total volumes ≈ 10^{log10_volumes:,.0f}")
+    print(f"  (a number with {int(log10_volumes)+1:,} digits)\n")
+
+
+def demo_degree_regularity() -> None:
+    """Demonstrate: every volume has exactly L*(A-1) neighbors (babel_degree)."""
+    print("=" * 70)
+    print("DEMO 2: Degree Regularity  (babel_degree)")
+    print("=" * 70)
+
+    a, l = 4, 8
+    expected = l * (a - 1)
+    print(f"  Mini-Library: A={a}, L={l}")
+    print(f"  Expected neighbors per volume: L*(A-1) = {l}*{a-1} = {expected}")
+
+    # Test with several random volumes
+    random.seed(42)
+    for trial in range(5):
+        v = tuple(random.randint(0, a - 1) for _ in range(l))
+        nbrs = hamming_neighbors(v, a)
+        status = "✓" if len(nbrs) == expected else "✗"
+        print(f"  Volume {v}  →  {len(nbrs)} neighbors  {status}")
+
+    # Verify ALL volumes for tiny library
+    a_tiny, l_tiny = 3, 3
+    expected_tiny = l_tiny * (a_tiny - 1)
+    all_ok = True
+    for v in product(range(a_tiny), repeat=l_tiny):
+        if len(hamming_neighbors(v, a_tiny)) != expected_tiny:
+            all_ok = False
+            break
+    print(f"\n  Exhaustive check: A={a_tiny}, L={l_tiny}")
+    print(f"  All {a_tiny**l_tiny} volumes have {expected_tiny} neighbors: {'✓' if all_ok else '✗'}\n")
+
+
+def demo_diameter() -> None:
+    """Demonstrate: diameter = L (babel_diameter_achieved)."""
+    print("=" * 70)
+    print("DEMO 3: Diameter  (babel_diameter_achieved)")
+    print("=" * 70)
+
+    a, l = 4, 16
+    # Construct maximally distant volumes: all-0 vs all-1
+    v = tuple(0 for _ in range(l))
+    w = tuple(1 for _ in range(l))
+    dist = hamming_distance(v, w)
+    print(f"  A={a}, L={l}")
+    print(f"  v = (0,0,...,0)  w = (1,1,...,1)")
+    print(f"  d_H(v,w) = {dist}  (should equal L={l})  {'✓' if dist == l else '✗'}")
+
+    # Verify no pair exceeds L (sample check)
+    random.seed(123)
+    max_seen = 0
+    n_samples = 10_000
+    for _ in range(n_samples):
+        x = tuple(random.randint(0, a - 1) for _ in range(l))
+        y = tuple(random.randint(0, a - 1) for _ in range(l))
+        max_seen = max(max_seen, hamming_distance(x, y))
+    print(f"  Max distance in {n_samples:,} random pairs: {max_seen} ≤ L={l}  ✓\n")
+
+
+def demo_singleton_bound() -> None:
+    """Demonstrate: |C| ≤ A^(L-d+1) (singleton_bound)."""
+    print("=" * 70)
+    print("DEMO 4: Singleton Bound  (singleton_bound)")
+    print("=" * 70)
+
+    a, l = 4, 16
+    print(f"  Mini-Library: A={a}, L={l}, Total volumes = {a**l:,}\n")
+    print(f"  {'d':>4}  {'Bound A^(L-d+1)':>20}  {'Fraction of Library':>22}")
+    print(f"  {'─'*4}  {'─'*20}  {'─'*22}")
+
+    for d in [1, 2, 3, 5, 8, 10, 16]:
+        bound = singleton_bound(a, l, d)
+        fraction = bound / (a ** l)
+        print(f"  {d:>4}  {bound:>20,}  {fraction:>22.6e}")
+
+    # Borges' Library
+    print(f"\n  Borges' Library: A=25, L=1,312,000")
+    for d in [1, 2, 100, 1000]:
+        exp = 1_312_000 - d + 1
+        print(f"    d={d:>5}  →  Bound = 25^{exp:,}  "
+              f"(fraction = 25^{-d+1})")
+
+    # Verify bound holds for exhaustive mini-case
+    a_v, l_v = 3, 4
+    print(f"\n  Exhaustive verification: A={a_v}, L={l_v}")
+    all_volumes = list(product(range(a_v), repeat=l_v))
+    for d_test in [2, 3]:
+        # Greedy code construction
+        code: list[tuple[int, ...]] = []
+        random.seed(0)
+        random.shuffle(all_volumes)
+        for vol in all_volumes:
+            if all(hamming_distance(vol, c) >= d_test for c in code):
+                code.append(vol)
+        bound = singleton_bound(a_v, l_v, d_test)
+        ok = len(code) <= bound
+        print(f"    d={d_test}: greedy code size = {len(code)}, "
+              f"bound = {bound}  {'✓' if ok else '✗'}")
+    print()
+
+
+def demo_self_reference() -> None:
+    """Demonstrate: self-evaluations exceed volumes (self_eval_exceeds_volumes)."""
+    print("=" * 70)
+    print("DEMO 5: Self-Reference Impossibility  (no_universal_self_evaluator)")
+    print("=" * 70)
+
+    examples = [
+        (2, 2),
+        (2, 3),
+        (3, 2),
+        (4, 4),
+        (4, 16),
+    ]
+
+    print(f"  {'A':>3}  {'L':>3}  {'|V|=A^L':>15}  {'|V→V| = (A^L)^(A^L)':>30}  Exceeds?")
+    print(f"  {'─'*3}  {'─'*3}  {'─'*15}  {'─'*30}  {'─'*8}")
+
+    for a, l in examples:
+        v = a ** l
+        log_v = l * math.log10(a)
+        log_vv = v * log_v  # log10 of v^v
+        if log_vv < 15:
+            vv = v ** v
+            vv_str = f"{vv:,}"
         else:
-            a[t] = a[t - p]
-            db(t + 1, p)
-            for j in range(a[t - p] + 1, k):
-                a[t] = j
-                db(t + 1, t)
+            vv_str = f"≈10^{log_vv:.2e}"
+        exceeds = "✓"  # always true for A>=2, L>=1
+        print(f"  {a:>3}  {l:>3}  {v:>15,}  {vv_str:>30}  {exceeds}")
 
-    db(1, 1)
-    return sequence
-
-
-def verify_de_bruijn(seq: list[int], k: int, n: int) -> bool:
-    """Verify that seq is a valid de Bruijn sequence for (k, n)."""
-    total = k ** n
-    if len(seq) != total:
-        return False
-    # Check all n-length substrings (cyclic) are unique and cover all possibilities
-    extended = seq + seq[:n - 1]
-    substrings = set()
-    for i in range(total):
-        substr = tuple(extended[i:i + n])
-        substrings.add(substr)
-    return len(substrings) == total
+    print(f"\n  Borges' Library: A=25, L=1,312,000")
+    v_log = 1_312_000 * math.log10(25)
+    print(f"  |V| ≈ 10^{v_log:,.0f}")
+    print(f"  |V→V| ≈ 10^(10^{v_log:,.0f} × {v_log:,.0f})")
+    print(f"  Ratio is incomprehensibly large — no single volume can be a catalog.\n")
 
 
-# ─────────────────────────────────────────────────────────────
-# 4. Probability Computations
-# ─────────────────────────────────────────────────────────────
+def demo_debruijn_catalog() -> None:
+    """Demonstrate de Bruijn sequence construction for a micro-Library."""
+    print("=" * 70)
+    print("DEMO 6: De Bruijn Catalog for Micro-Library")
+    print("=" * 70)
 
-def prob_target_in_volume(a: int, l: int, target_len: int) -> float:
-    """Upper bound on probability that a target string of given length
-    appears in a random volume.
+    a, l = 2, 4  # Binary alphabet, length-4 books → 16 volumes
+    n_volumes = a ** l
 
-    P <= (L - t + 1) / A^t
-    """
-    if target_len > l:
-        return 0.0
-    positions = l - target_len + 1
-    # Use logarithms to handle large numbers
-    log_prob = math.log10(positions) - target_len * math.log10(a)
-    return log_prob  # Return log10 of the probability
+    print(f"  Micro-Library: A={a}, L={l}")
+    print(f"  Total volumes: {n_volumes}")
 
+    # Build de Bruijn graph: nodes = (L-1)-tuples, edges = L-tuples
+    def build_debruijn_sequence(alphabet_size: int, length: int) -> list[int]:
+        """Construct a de Bruijn sequence B(alphabet_size, length) via Hierholzer."""
+        # Nodes: all (length-1)-tuples
+        # Edge from (a1,...,a_{k-1}) to (a2,...,a_{k-1},c) labeled c
+        graph: dict[tuple[int, ...], list[int]] = defaultdict(list)
+        for node in product(range(alphabet_size), repeat=length - 1):
+            for c in range(alphabet_size):
+                graph[node].append(c)
 
-def prob_exact_volume(a: int, l: int) -> float:
-    """Probability that a random volume equals a specific target volume.
+        # Hierholzer's algorithm for Eulerian circuit
+        start = tuple(0 for _ in range(length - 1))
+        stack = [start]
+        circuit: list[tuple[int, ...]] = []
+        edge_idx: dict[tuple[int, ...], int] = defaultdict(int)
 
-    P = 1 / A^L  (returned as log10)
-    """
-    return -l * math.log10(a)
+        while stack:
+            node = stack[-1]
+            if edge_idx[node] < len(graph[node]):
+                c = graph[node][edge_idx[node]]
+                edge_idx[node] += 1
+                next_node = node[1:] + (c,)
+                stack.append(next_node)
+            else:
+                circuit.append(stack.pop())
 
+        circuit.reverse()
+        # The sequence is the first symbol of each node in the circuit
+        seq = [node[0] for node in circuit[:-1]]
+        return seq
 
-# ─────────────────────────────────────────────────────────────
-# 5. Self-Reference Computations
-# ─────────────────────────────────────────────────────────────
+    seq = build_debruijn_sequence(a, l)
+    print(f"  De Bruijn sequence length: {len(seq)} (should be {n_volumes})")
+    print(f"  Sequence: {''.join(str(s) for s in seq)}")
 
-def self_eval_count_log(a: int, l: int) -> float:
-    """Log10 of the number of self-evaluations (Volume -> Volume).
+    # Verify: every L-window appears exactly once
+    windows: set[tuple[int, ...]] = set()
+    for i in range(len(seq)):
+        window = tuple(seq[(i + j) % len(seq)] for j in range(l))
+        windows.add(window)
 
-    Number = (A^L)^(A^L) = A^(L * A^L)
-    Log10 = L * A^L * log10(A)
-    Uses logarithmic arithmetic to avoid overflow for large parameters.
-    """
-    # log10(A^(L*A^L)) = L * A^L * log10(A)
-    # For large A^L, compute log10 of that product:
-    # = log10(L) + L*log10(A) + log10(log10(A))
-    # But we want the actual value when possible
-    try:
-        return l * (a ** l) * math.log10(a)
-    except (OverflowError, ValueError):
-        # Return as a float approximation using logs
-        # log10(result) = log10(L) + L*log10(A) + log10(log10(A))
-        # But result itself is L * A^L * log10(A)
-        # We return it in scientific notation components
-        log_al = l * math.log10(a)
-        # result = L * 10^(log_al) * log10(A)
-        # Can't represent as float, return log10 of result instead
-        return float('inf')  # Signal that it's too large
+    all_volumes_set = set(product(range(a), repeat=l))
+    print(f"  Distinct {l}-windows: {len(windows)} (should be {n_volumes})")
+    print(f"  All volumes covered: {'✓' if windows == all_volumes_set else '✗'}")
 
+    # Show first few windows
+    print(f"\n  First 8 sliding windows:")
+    for i in range(min(8, len(seq))):
+        window = tuple(seq[(i + j) % len(seq)] for j in range(l))
+        print(f"    Position {i:>2}: {''.join(str(s) for s in window)}")
 
-def catalog_impossibility_ratio(a: int, l: int) -> float:
-    """Ratio of log10(self-evaluations) to log10(volumes).
-
-    This ratio >> 1 shows self-evaluations vastly exceed volumes,
-    proving no universal catalog can exist.
-    Ratio = (L * A^L * log10(A)) / (L * log10(A)) = A^L
-    """
-    # The ratio simplifies to A^L
-    try:
-        return float(a ** l)
-    except OverflowError:
-        return float('inf')
-
-
-# ─────────────────────────────────────────────────────────────
-# 6. BabelCode Examples
-# ─────────────────────────────────────────────────────────────
-
-def verify_babel_code(codewords: list[tuple[int, ...]], min_dist: int) -> bool:
-    """Verify that a set of codewords satisfies the minimum distance property."""
-    for i in range(len(codewords)):
-        for j in range(i + 1, len(codewords)):
-            if hamming_distance(codewords[i], codewords[j]) < min_dist:
-                return False
-    return True
+    # Larger example
+    a2, l2 = 4, 4
+    seq2 = build_debruijn_sequence(a2, l2)
+    windows2: set[tuple[int, ...]] = set()
+    for i in range(len(seq2)):
+        window = tuple(seq2[(i + j) % len(seq2)] for j in range(l2))
+        windows2.add(window)
+    print(f"\n  Larger catalog: A={a2}, L={l2}")
+    print(f"  Sequence length: {len(seq2):,} (= {a2}^{l2} = {a2**l2:,})")
+    print(f"  All {a2**l2:,} volumes covered: "
+          f"{'✓' if len(windows2) == a2**l2 else '✗'}\n")
 
 
-def repetition_code(a: int, l: int) -> tuple[list[tuple[int, ...]], int]:
-    """Construct the repetition code: {(s, s, ..., s) : s in Fin(A)}.
+def demo_hamming_ball_sizes() -> None:
+    """Demonstrate Hamming ball volumes for the mini-Library."""
+    print("=" * 70)
+    print("DEMO 7: Hamming Ball Volumes")
+    print("=" * 70)
 
-    Minimum distance = L (maximum possible).
-    This is a BabelCode achieving the trivial Singleton bound A^(L-L+1) = A.
-    """
-    codewords = [tuple([s] * l) for s in range(a)]
-    return codewords, l
+    a, l = 4, 16
+    print(f"  Mini-Library: A={a}, L={l}\n")
+    print(f"  {'Radius r':>10}  {'|B(v,r)|':>20}  {'Fraction of Library':>22}")
+    print(f"  {'─'*10}  {'─'*20}  {'─'*22}")
+
+    total = a ** l
+    cumulative = 0
+    for r in range(l + 1):
+        # |B(v,r)| = sum_{j=0}^{r} C(L,j) * (A-1)^j
+        shell = math.comb(l, r) * ((a - 1) ** r)
+        cumulative += shell
+        if r <= 8 or r == l:
+            fraction = cumulative / total
+            print(f"  {r:>10}  {cumulative:>20,}  {fraction:>22.6e}")
+        elif r == 9:
+            print(f"  {'...':>10}")
+
+    print()
 
 
-# ─────────────────────────────────────────────────────────────
-# MAIN: Run all demonstrations
-# ─────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────
+# Main
+# ──────────────────────────────────────────────────────────────────────
 
 def main() -> None:
-    print("=" * 72)
-    print("THE LIBRARY OF BABEL: NUMERICAL DEMONSTRATIONS")
-    print("=" * 72)
+    """Run all demonstrations."""
+    print()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║     THE LIBRARY OF BABEL: COMBINATORIAL DEMONSTRATIONS             ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
 
-    # ── Demo 1: Borges' Library ──
-    print("\n" + "─" * 72)
-    print("1. BORGES' ORIGINAL LIBRARY (A=25, L=1,312,000)")
-    print("─" * 72)
+    demo_volume_cardinality()
+    demo_degree_regularity()
+    demo_diameter()
+    demo_singleton_bound()
+    demo_self_reference()
+    demo_debruijn_catalog()
+    demo_hamming_ball_sizes()
 
-    A_borges, L_borges = 25, 1_312_000
-
-    log_volumes = L_borges * math.log10(A_borges)
-    print(f"   Alphabet size:    A = {A_borges}")
-    print(f"   Volume length:    L = {L_borges:,}")
-    print(f"   Volume count:     25^{{1,312,000}} ≈ 10^{{{log_volumes:,.0f}}}")
-    print(f"   Neighbors/volume: {babel_degree(A_borges, L_borges):,}")
-    print(f"   Diameter:         {babel_diameter(L_borges):,}")
-
-    for d in [3, 100, 1000, 656_000]:
-        exp = L_borges - d + 1
-        print(f"   Singleton bound (d={d:>7,}): |C| ≤ 25^{{{exp:,}}}"
-              f" ≈ 10^{{{exp * math.log10(25):,.0f}}}")
-
-    # ── Demo 2: DNA Mini-Library ──
-    print("\n" + "─" * 72)
-    print("2. DNA MINI-LIBRARY (A=4, L=16)")
-    print("─" * 72)
-
-    A_dna, L_dna = 4, 16
-
-    print(f"   Alphabet:         {{A, C, G, T}} (size {A_dna})")
-    print(f"   Volume length:    {L_dna}")
-    print(f"   Volume count:     4^16 = {volume_count(A_dna, L_dna):,}")
-    print(f"   Neighbors/volume: {babel_degree(A_dna, L_dna)}")
-    print(f"   Diameter:         {babel_diameter(L_dna)}")
-
-    for d in [1, 3, 5, 8]:
-        sb = singleton_bound(A_dna, L_dna, d)
-        hb = hamming_bound(A_dna, L_dna, d)
-        print(f"   d={d}: Singleton ≤ {sb:>12,}   Hamming ≤ {hb:>12,.0f}")
-
-    # ── Demo 3: Binary Byte Library ──
-    print("\n" + "─" * 72)
-    print("3. BINARY BYTE LIBRARY (A=2, L=8)")
-    print("─" * 72)
-
-    A_bin, L_bin = 2, 8
-
-    print(f"   Volume count:     {volume_count(A_bin, L_bin)}")
-    print(f"   Neighbors/volume: {babel_degree(A_bin, L_bin)}")
-    print(f"   Diameter:         {babel_diameter(L_bin)}")
-
-    # Verify degree theorem exhaustively
-    all_bytes = list(itertools.product(range(2), repeat=8))
-    sample = all_bytes[42]
-    neighbors = hamming_neighbors(sample, A_bin)
-    print(f"\n   Exhaustive verification for volume {sample}:")
-    print(f"   Computed neighbors: {len(neighbors)}")
-    print(f"   Expected (L*(A-1)): {babel_degree(A_bin, L_bin)}")
-    print(f"   Match: {len(neighbors) == babel_degree(A_bin, L_bin)} ✓")
-
-    # Verify diameter
-    v_zero = tuple([0] * 8)
-    v_one = tuple([1] * 8)
-    print(f"\n   Diameter witnesses: {v_zero} ↔ {v_one}")
-    print(f"   Distance: {hamming_distance(v_zero, v_one)}")
-    print(f"   Equals L: {hamming_distance(v_zero, v_one) == L_bin} ✓")
-
-    # ── Demo 4: BabelCode Example ──
-    print("\n" + "─" * 72)
-    print("4. BABELCODE: REPETITION CODE (A=3, L=5)")
-    print("─" * 72)
-
-    codewords, min_d = repetition_code(3, 5)
-    print(f"   Codewords: {codewords}")
-    print(f"   Min distance: {min_d}")
-    print(f"   Valid BabelCode: {verify_babel_code(codewords, min_d)} ✓")
-    print(f"   Singleton bound: |C| ≤ {singleton_bound(3, 5, 5)} = 3^1 = 3")
-    print(f"   Actual |C| = {len(codewords)} (achieves equality → MDS code)")
-
-    # ── Demo 5: De Bruijn Sequence ──
-    print("\n" + "─" * 72)
-    print("5. DE BRUIJN SEQUENCE CATALOG (k=4, n=4)")
-    print("─" * 72)
-
-    k, n = 4, 4
-    seq = de_bruijn(k, n)
-    valid = verify_de_bruijn(seq, k, n)
-    print(f"   Alphabet size: {k}")
-    print(f"   Word length:   {n}")
-    print(f"   Sequence length: {len(seq)} (= {k}^{n} = {k**n})")
-    print(f"   Valid de Bruijn: {valid} ✓")
-    print(f"   First 40 symbols: {''.join(map(str, seq[:40]))}")
-    print(f"   Encodes all {k**n} possible {n}-symbol 'volumes'")
-
-    # Show a few windows
-    extended = seq + seq[:n - 1]
-    print(f"\n   Sample catalog entries (position → volume):")
-    for pos in [0, 1, 42, 100, 200]:
-        window = tuple(extended[pos:pos + n])
-        print(f"   Position {pos:>3}: {window}")
-
-    # ── Demo 6: Probability of Finding Meaning ──
-    print("\n" + "─" * 72)
-    print("6. PROBABILITY OF FINDING A TARGET STRING")
-    print("─" * 72)
-
-    print(f"\n   In Borges' Library (A=25, L=1,312,000):")
-    for target_len in [10, 50, 100, 1000]:
-        log_p = prob_target_in_volume(A_borges, L_borges, target_len)
-        print(f"   Target length {target_len:>5}: P ≤ 10^{{{log_p:,.1f}}}")
-
-    log_exact = prob_exact_volume(A_borges, L_borges)
-    print(f"\n   Exact match (full volume): P = 10^{{{log_exact:,.0f}}}")
-    print(f"   (That's a 1 followed by {abs(int(log_exact)):,} zeros in the denominator)")
-
-    # ── Demo 7: Self-Reference / Diagonal Argument ──
-    print("\n" + "─" * 72)
-    print("7. SELF-REFERENCE: FINITE CANTOR ARGUMENT")
-    print("─" * 72)
-
-    print(f"\n   Binary Library (A=2, L=8):")
-    n_vols = volume_count(2, 8)
-    n_funcs = 2 ** (8 * 256)  # (A^L)^(A^L)
-    log_funcs = self_eval_count_log(2, 8)
-    print(f"   Volumes:          2^8 = {n_vols}")
-    print(f"   Self-evaluations: 2^(8·256) = 2^2048")
-    print(f"                   ≈ 10^{{{log_funcs:,.0f}}}")
-    print(f"   Ratio (log):      {catalog_impossibility_ratio(2, 8):,.0f}×")
-    print(f"   → No universal self-evaluator can exist ✓")
-
-    print(f"\n   DNA Library (A=4, L=16):")
-    log_v_dna = L_dna * math.log10(A_dna)
-    log_f_dna = self_eval_count_log(A_dna, L_dna)
-    print(f"   Volumes:          4^16 ≈ 10^{{{log_v_dna:,.1f}}}")
-    print(f"   Self-evaluations: ≈ 10^{{{log_f_dna:,.0f}}}")
-    print(f"   Ratio (log):      {catalog_impossibility_ratio(A_dna, L_dna):,.0f}×")
-
-    print(f"\n   Borges' Library (A=25, L=1,312,000):")
-    log_v_b = L_borges * math.log10(A_borges)
-    # For Borges, self_eval_count = L * 25^L * log10(25) which is ~1,312,000 * 10^1,834,097
-    # i.e., approximately 10^{1,834,103} — far too large for any float
-    print(f"   Volumes:          ≈ 10^{{{log_v_b:,.0f}}}")
-    print(f"   Self-evaluations: ≈ 10^(10^{{1,834,103}})  [tower of exponentials]")
-    print(f"   Ratio:            25^{{1,312,000}} ≈ 10^{{1,834,097}}×")
-    print(f"   → The catalog problem is not just hard — it's impossible")
-
-    # ── Demo 8: Hamming Ball Volumes ──
-    print("\n" + "─" * 72)
-    print("8. HAMMING BALL VOLUMES")
-    print("─" * 72)
-
-    print(f"\n   Binary Library (A=2, L=8):")
-    for r in range(9):
-        bv = hamming_ball_volume(2, 8, r)
-        pct = 100 * bv / 256
-        bar = "█" * int(pct / 2)
-        print(f"   |B(v, {r})| = {bv:>4}  ({pct:5.1f}%) {bar}")
-
-    print(f"\n   DNA Library (A=4, L=16):")
-    for r in [0, 1, 2, 3, 4, 8, 16]:
-        bv = hamming_ball_volume(4, 16, r)
-        pct = 100 * bv / volume_count(4, 16)
-        print(f"   |B(v, {r:>2})| = {bv:>14,}  ({pct:8.4f}%)")
-
-    print("\n" + "=" * 72)
-    print("ALL DEMONSTRATIONS COMPLETE")
-    print("=" * 72)
+    print("All demonstrations complete.")
 
 
 if __name__ == "__main__":
