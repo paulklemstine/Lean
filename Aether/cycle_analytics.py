@@ -39,6 +39,12 @@ class CycleRecord:
     files_integrated: int = 0
     failed: bool = False  # True if cycle produced no output (0 files, 0 theorems)
     prompt_version: str = "v1"  # "v1" (original) | "v2" (master-class) | "v3" (PEGB+structures)
+    # Two-phase fields
+    phase: str = "A"  # "A" | "B" | "complete" | "A_only"
+    phase_a_prompt_version: Optional[str] = None  # v3 or v4 used for the math prompt
+    phase_b_prompt_version: Optional[str] = None  # v1 packaging prompt (only one for now)
+    phase_b_skipped: bool = False  # True if Phase B was skipped (low quality or failure)
+    phase_b_skip_reason: Optional[str] = None  # "low_quality" | "threshold_not_met" | "phase_a_failed"
     adversarial_agreement: str = ""  # "agree", "tiebreak", "disagree", or "" (not run)
     adversarial_delta: float = 0.0   # delta between primary and adversarial scores
     barrier_count: int = 0
@@ -184,6 +190,15 @@ class CycleAnalytics:
         # Tag with current prompt version (or job's version if specified)
         job_version = getattr(job, "prompt_version", None)
         record.prompt_version = job_version if job_version else self.CURRENT_PROMPT_VERSION
+
+        # Two-phase metadata
+        record.phase = getattr(job, "phase", "A")
+        record.phase_a_prompt_version = getattr(job, "phase_a_prompt_version", None)
+        record.phase_b_prompt_version = getattr(job, "phase_b_prompt_version", None)
+        skip_reason = getattr(job, "phase_b_skipped_reason", None)
+        if skip_reason:
+            record.phase_b_skipped = True
+            record.phase_b_skip_reason = skip_reason
 
         # Adversarial judging metadata
         adv = getattr(job, "adversarial_result", None)

@@ -86,6 +86,14 @@ class ResearchJob:
     source_exp_ids: list = None  # exp_ids of parent experiments whose future directions inspired this one
     adversarial_result: Optional[Dict] = None  # Adversarial judging metadata
     prompt_version: str = "v1"  # Which prompt version was used: v1, v2, v3
+    # Two-phase fields (Phase A: math, Phase B: packaging)
+    phase: str = "A"  # "A" | "B" | "complete" | "A_only"
+    phase_a_result: Optional[Dict] = None  # {"lean_files": [...], "theorem_count": N, "sorry_count": M, "self_grade": "world_class|substantial|partial"}
+    phase_b_result: Optional[Dict] = None  # {"article_path": ..., "demo_path": ..., "widgets": [...]}
+    phase_a_prompt_version: Optional[str] = None  # "v3" | "v4"
+    phase_b_prompt_version: Optional[str] = None  # currently only "v1" packaging
+    phase_a_quality_score: Optional[float] = None  # saved before phase B so we can re-evaluate after B
+    phase_b_skipped_reason: Optional[str] = None  # "low_quality" | "threshold_not_met" | "phase_a_failed"
 
 
 class KnowledgeExtractor:

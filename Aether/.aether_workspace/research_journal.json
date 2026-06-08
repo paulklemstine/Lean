@@ -2,26 +2,6 @@
   "breakthroughs": [],
   "cycle_log": [
     {
-      "cycle_id": "9bb6f622",
-      "domain": "Logic",
-      "key_insight": "## Synthesis\n\nThis research cycle established a rigorous formal theory of self-referential specification dynamics in stratified type systems. The central discovery is the **GL Bridge**: the consistenc",
-      "quality_score": 0.42600000000000005,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-06-05T04:19:41",
-      "title": "Self-Referential Type Theory: Proofs That Modify Their Own Specifications"
-    },
-    {
-      "cycle_id": "c53a9916",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\n## Synthesis\n\nThis research cycle established a rigorous bridge between **Diophantine approximation theory** and **ReLU neural network expressiveness**. The key insight is that Re",
-      "quality_score": 0.3276,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-05T04:20:14",
-      "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
-    },
-    {
       "cycle_id": "ef36afed",
       "domain": "Logic",
       "key_insight": "# Future Directions\n\n## Synthesis\n\nThis cycle established a complete formalization of Arrow's impossibility theorem via the ultrafilter characterization, together with novel topological obstruction th",
@@ -2000,6 +1980,26 @@
       "theorem_count": 5,
       "timestamp": "2026-06-08T01:34:15",
       "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+    },
+    {
+      "cycle_id": "5f9b37fe",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Integrated Information Theory Formalization\n\n## Synthesis\n\nThis research cycle established a rigorous combinatorial foundation for Integrated Information Theory (IIT) by reducing",
+      "quality_score": 0.43000000000000005,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-06-08T02:09:08",
+      "title": "Consciousness as Integrated Information"
+    },
+    {
+      "cycle_id": "5559529e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Causal Loops and Cohomological Coherence\n\n## Synthesis\n\nThis research cycle established a formally verified bridge between group cohomology and categorical coherence theory. The c",
+      "quality_score": 0.5059499999999999,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-08T02:09:36",
+      "title": "Causal Loops in Category Theory: When Composition Loops Back"
     }
   ],
   "entries": [
@@ -2045,7 +2045,7 @@
     }
   ],
   "key_theorems": [],
-  "last_updated": "2026-06-08T01:34:15",
+  "last_updated": "2026-06-08T02:09:36",
   "open_questions": [
     {
       "context": "sorry",
@@ -2269,18 +2269,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "7ed8ff2f",
-        "quality": 0.4208,
-        "theorems": 6,
-        "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
-      },
-      {
-        "cycle_id": "f82967b2",
-        "quality": 0.41896000000000005,
-        "theorems": 6,
-        "title": "Non-Archimedean Probability via Surreal Numbers"
-      },
-      {
         "cycle_id": "366cff9a",
         "quality": 0.31464,
         "theorems": 5,
@@ -2327,6 +2315,18 @@
         "quality": 0.4424,
         "theorems": 5,
         "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+      },
+      {
+        "cycle_id": "5f9b37fe",
+        "quality": 0.43000000000000005,
+        "theorems": 3,
+        "title": "Consciousness as Integrated Information"
+      },
+      {
+        "cycle_id": "5559529e",
+        "quality": 0.5059499999999999,
+        "theorems": 4,
+        "title": "Causal Loops in Category Theory: When Composition Loops Back"
       }
     ],
     "Physics": [

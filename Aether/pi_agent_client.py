@@ -1732,13 +1732,343 @@ class PiAgentClient:
         insight_extractor=None,
         research_journal=None,
         prompt_version: Optional[str] = None,
+        phase: str = "A_lean_only",
+        phase_a_lean_content: Optional[str] = None,
     ) -> str:
-        """Write a streamlined Aristotle prompt (5-10K chars).
+        """Write a streamlined Aristotle prompt.
 
-        Philosophy: Give Aristotle the direction and context, not a script.
-        Let it decide what to prove, how deep to go, and what artifacts to produce.
-        All key deliverables are mandatory: Lean 4 proofs, FUTURE_DIRECTIONS.md (standalone research roadmap with 3-5 testable hypotheses, self-contained so future cycles can use it without this cycle's code), RESEARCH_PAPER.md (standalone scientific document — self-contained, readable without the Lean code), ARTICLE.md (Scientific American style), algorithm, demo.py, and 1–3 interactive HTML widgets in PACKAGE.json interactive_demos field (each with a name, standalone html string, and description).
+        Phase A ("A_lean_only", default): Lean 4 only, no packaging.
+        Phase B ("B_package_only"): Packaging only, reads Phase A's Lean as input.
+        Legacy ("A_full"): Both phases in one prompt (backward compat).
         """
+        if phase == "B_package_only":
+            return self._build_phase_b_package_prompt(
+                concept=concept,
+                phase_a_lean_content=phase_a_lean_content or "",
+                prompt_version=prompt_version or "v1",
+            )
+        if phase == "A_lean_only":
+            return self._build_phase_a_lean_prompt(
+                concept=concept,
+                catalog_references=catalog_references,
+                catalog_context=catalog_context,
+                recent_successes=recent_successes,
+                recent_failures=recent_failures,
+                theorem_context=theorem_context,
+                insight_extractor=insight_extractor,
+                research_journal=research_journal,
+                prompt_version=prompt_version,
+            )
+        # phase == "A_full" (legacy) — fall through to the original full prompt
+        return self._build_full_aristotle_prompt(
+            concept=concept,
+            catalog_references=catalog_references,
+            catalog_context=catalog_context,
+            recent_successes=recent_successes,
+            recent_failures=recent_failures,
+            theorem_context=theorem_context,
+            insight_extractor=insight_extractor,
+            research_journal=research_journal,
+            prompt_version=prompt_version,
+        )
+
+    def _build_phase_a_lean_prompt(
+        self,
+        concept: ResearchConcept,
+        catalog_references: Optional[List[str]] = None,
+        catalog_context: str = "",
+        recent_successes: Optional[List[Dict]] = None,
+        recent_failures: Optional[List[Dict]] = None,
+        theorem_context: str = "",
+        insight_extractor=None,
+        research_journal=None,
+        prompt_version: Optional[str] = None,
+    ) -> str:
+        """Phase A: Lean 4 only. The math is the deliverable.
+
+        This prompt is intentionally narrow. It says NO to packaging
+        (article, paper, widgets, demos). Aristotle's only job is to produce
+        new Lean 4 code that extends the frontier. If the math is genuinely
+        world-class, a separate Phase B prompt will be dispatched to package it.
+        """
+        # PIVOT: Focus on defining novel mathematical structures, not solving open problems.
+        # New math > solving existing puzzles. Each theorem requires PEGB scaffolding.
+        # v3: novel structures (Grothendieck path)
+        # v4: deepen existing catalog results (Cauchy path) — DEFAULT
+        if prompt_version is None:
+            prompt_version = "v4"
+        if prompt_version == "v1":
+            raise ValueError(
+                "v1 prompt is no longer supported — use v3 (novel structures) or v4 (deepen catalog). "
+                "v4 is the default and won the A/B test (avg_Q 0.354 vs 0.332)."
+            )
+        if prompt_version == "v4":
+            depth_requirements = self._build_v4_depth_requirements()
+        else:
+            depth_requirements = self._build_v3_depth_requirements()
+
+        # The assignment — same shape as v3/v4 but with explicit Phase A framing
+        assignment = self._build_assignment(concept)
+
+        # Lean-specific section
+        lean_section = ""
+        if concept.lean_guess:
+            lean_section = f"\n### Lean 4 Sketch\n{concept.lean_guess[:500]}\n"
+
+        # Catalog context (catalog refs the prompt should build on)
+        catalog_section = ""
+        if catalog_context:
+            catalog_section = f"\n### Catalog Context\n{catalog_context}\n"
+
+        # Recently proved theorems (helps Aristotle see what's already done)
+        theorem_section = ""
+        if theorem_context:
+            theorem_section = f"\n### Recent Discoveries in Catalog\n{theorem_context}\n"
+
+        # Domain context
+        domain_brief = f"Research domain: {concept.domain}\nResearch mode: {concept.research_mode}\n"
+
+        # Phase A header — explicit DO NOT list
+        phase_a_header = textwrap.dedent(f"""
+            ## PHASE A: LEAN 4 ONLY — DOING THE MATH
+
+            You are a world-class mathematician. Your ONLY job in this cycle is
+            to produce **new Lean 4 code that extends the frontier of mathematics**.
+
+            ### DELIVERABLES (strict — only this):
+            1. **1-3 .lean files** in `Catalog/{concept.domain}/<package_name>/`
+            2. **3-5 non-trivial theorems** with `sorry = 0` (PROVED, not admitted)
+            3. **Brief proof sketches** as `-- !-- comment -- !--` blocks (1-2 sentences each)
+            4. **A trailing comment block** titled `FUTURE DIRECTIONS` listing
+               3-5 testable, falsifiable conjectures
+
+            ### DO NOT OUTPUT (Phase B handles these — if your work passes quality bar):
+            - NO `ARTICLE.md`
+            - NO `RESEARCH_PAPER.md`
+            - NO `demo.py` / `algorithms.py`
+            - NO HTML widgets
+            - NO `PACKAGE.json`
+            - NO prose for human readers
+
+            ### WHY THIS NARROW:
+            The Lean 4 file IS the deliverable. A self-contained Lean file with
+            3-5 world-class theorems is worth more than 30K characters of prose
+            about trivial results. Focus 100% of your compute on the math.
+            If your work is genuinely world-class, the packaging step is dispatched
+            automatically and cheaply.
+            """)
+
+        prompt = f"""{phase_a_header}
+
+## Concept
+
+**Title**: {concept.title}
+**Domain**: {concept.domain}
+**Mathematical framing**: {concept.mathematical_framing}
+**Concept description**: {concept.concept_description}
+**Novelty estimate**: {concept.novelty_estimate}
+**Breakthrough potential**: {concept.breakthrough_potential}
+{domain_brief}
+{lean_section}
+{catalog_section}
+{theorem_section}
+
+{depth_requirements}
+
+{assignment}
+
+## Output format reminder
+
+The ONLY files in your output should be 1-3 `.lean` files. The Lean code itself
+is the deliverable. Be precise, be deep, be world-class.
+"""
+        return prompt
+
+    def _build_phase_b_package_prompt(
+        self,
+        concept: ResearchConcept,
+        phase_a_lean_content: str,
+        prompt_version: str = "v1",
+    ) -> str:
+        """Phase B: packaging only. Reads Phase A's Lean as input.
+
+        The math is already done. This prompt's job is to communicate it
+        to humans — article, paper, demo, widgets, PACKAGE.json. NO new
+        Lean code should be produced.
+        """
+        # Lean content is the input — extract theorem statements if present
+        lean_excerpt = phase_a_lean_content[:8000] if phase_a_lean_content else "(no Lean content provided)"
+
+        domain_brief = f"Research domain: {concept.domain}\nResearch mode: {concept.research_mode}\n"
+
+        phase_b_header = textwrap.dedent("""
+            ## PHASE B: PACKAGING ONLY — COMMUNICATING THE MATH
+
+            Phase A of this cycle has already done the math. Lean 4 files have
+            been produced with 3-5 world-class theorems. Your ONLY job in
+            Phase B is to **package this work for human readers**.
+
+            ### DELIVERABLES (strict — only this):
+            1. **ARTICLE.md** — Standalone popular-science article (1500-3000 words).
+               Write about IDEAS, not formal verification. No mentions of Lean or
+               proof assistants. Vivid prose, narrative arc, real-world connections.
+               Reference the specific theorems proved in Phase A.
+            2. **RESEARCH_PAPER.md** — In-depth research paper (3000-8000 words).
+               Abstract, definitions, main results (with proof sketches — NOT
+               full Lean), algorithms, applications, discussion, future work,
+               references to catalog results.
+            3. **demo.py** — Numerical examples demonstrating the key results.
+               Self-contained Python, type hints, all functions inlined.
+            4. **HTML widgets** in PACKAGE.json interactive_demos field
+               (1-3 self-contained HTML+CSS+JS snippets that visualize the results).
+            5. **PACKAGE.json** — Single JSON bundling all of the above.
+
+            ### DO NOT OUTPUT:
+            - NO new `.lean` files
+            - NO new theorem proofs
+            - NO changes to the existing Lean 4 source
+
+            The math is already proved. Treat the Lean files below as the
+            ground truth — your prose should explain and contextualize them.
+            """)
+
+        prompt = f"""{phase_b_header}
+
+## Concept
+
+**Title**: {concept.title}
+**Domain**: {concept.domain}
+**Mathematical framing**: {concept.mathematical_framing}
+{domain_brief}
+
+## Phase A Lean 4 Output (the math — read this carefully)
+
+```
+{lean_excerpt}
+```
+
+## Your task
+
+Produce the deliverables listed above. Reference the specific theorems and
+results in the Lean code by their statement. The Lean file is the source of
+truth — your prose must accurately explain it.
+
+ARTICLE.md: write a popular-science narrative that makes the key idea accessible.
+RESEARCH_PAPER.md: write the formal paper with abstract, definitions, results.
+demo.py: write numerical examples that demonstrate the results.
+HTML widgets: build 1-3 interactive visualizations that let users explore
+the mathematical objects defined in the Lean code.
+PACKAGE.json: bundle all of the above into a single JSON file.
+
+Be vivid, be precise, be world-class. The math has already been done — now
+make it beautiful to read.
+"""
+        return prompt
+
+    def _build_full_aristotle_prompt(
+        self,
+        concept: ResearchConcept,
+        catalog_references: Optional[List[str]] = None,
+        catalog_context: str = "",
+        recent_successes: Optional[List[Dict]] = None,
+        recent_failures: Optional[List[Dict]] = None,
+        theorem_context: str = "",
+        insight_extractor=None,
+        research_journal=None,
+        prompt_version: Optional[str] = None,
+    ) -> str:
+        """Legacy full prompt — both math and packaging in one call.
+
+        Kept for backward compatibility (phase="A_full"). The two-phase split
+        is now the default; this path is only used if explicitly requested.
+        """
+        # PIVOT: Focus on defining novel mathematical structures, not solving open problems.
+        # New math > solving existing puzzles. Each theorem requires PEGB scaffolding.
+        # v3: novel structures (Grothendieck path) — kept for A/B analysis
+        # v4: deepen existing catalog results (Cauchy path) — DEFAULT, winner of A/B test
+        if prompt_version is None:
+            prompt_version = "v4"
+        if prompt_version == "v1":
+            raise ValueError(
+                "v1 prompt is no longer supported — use v3 (novel structures) or v4 (deepen catalog). "
+                "v4 is the default and won the A/B test (avg_Q 0.354 vs 0.332)."
+            )
+        if prompt_version == "v4":
+            depth_requirements = self._build_v4_depth_requirements()
+        else:
+            depth_requirements = self._build_v3_depth_requirements()
+
+        # Build the streamlined prompt
+        lean_section = ""
+        if concept.lean_guess:
+            lean_section = f"\n### Lean 4 Sketch\n{concept.lean_guess[:500]}\n"
+
+        # Previously proved theorems (if any)
+        theorem_section = ""
+        if theorem_context:
+            theorem_section = f"\n### Recent Discoveries in Catalog\n{theorem_context}\n"
+
+        refs = catalog_references or concept.catalog_references or []
+        refs_section = ""
+        if refs:
+            refs_section = f"\n### Catalog References to Build On\n" + "\n".join(f"- {r}" for r in refs[:10]) + "\n"
+
+        catalog_context_section = ""
+        if catalog_context:
+            catalog_context_section = f"\n### Catalog Context\n{catalog_context}\n"
+
+        # Recent successes from cache (helps Aristotle avoid repeating work)
+        recent_section = ""
+        if recent_successes:
+            recent_section = "\n### Recent Aether Successes\n"
+            for r in recent_successes[:3]:
+                title = r.get('concept_title', '?')
+                dom = r.get('domain', '?')
+                q = r.get('quality', 0.0)
+                recent_section += f"- {title} [{dom}, Q={q:.2f}]\n"
+
+        # Build the assignment
+        assignment = self._build_assignment(concept)
+
+        # Domain context
+        mode_brief = {
+            "prove": "Prove new, non-trivial theorems. Build on catalog theorems. Minimize sorry.",
+            "formalize": "Formalize informal mathematics in Lean 4. Define precisely, prove what you can.",
+            "counterexample": "Find a counterexample to the conjecture, or prove it true if it holds.",
+            "sorry_fill": "Fill ALL sorry placeholders. Do NOT change theorem statements.",
+            "discover": "Survey the territory. Propose testable hypotheses — conjectures that can be confirmed or refuted. Prove what you can, disprove what you can't. FUTURE_DIRECTIONS.md must contain falsifiable hypotheses, not vague explorations.",
+            "team": "Lead a research team to maximize scientific output per cycle. ORGANIZE as: (1) Hypothesis Team — brainstorm 5-7 bold, falsifiable conjectures (at least 2 should be surprising or counterintuitive); (2) Experiment Team — prove or disprove each hypothesis in Lean 4, prioritizing the most surprising ones; (3) Analysis Team — examine what survived, what failed, and WHY failures failed — failures teach as much as successes; (4) Writing Team — produce all deliverables (article, paper, demos, HTML widgets) from the team's findings. SCIENCE IS A LOOP: explore → identify patterns → hypothesize → validate → upgrade knowledge → repeat. Each subagent contributes its expertise; the Writing Team synthesizes everything into polished output. More minds = more compute = deeper results. The goal is not to formalize known results — it's to discover new ones.",
+        }
+
+        mode_line = mode_brief.get(concept.research_mode, mode_brief["prove"])
+
+        prompt = f"""You are a world-class mathematician and Lean 4 expert.
+
+## Task
+
+**Title**: {concept.title}
+**Domain**: {concept.domain}
+**Mode**: {mode_line}
+**Mathematical framing**: {concept.mathematical_framing}
+**Concept description**: {concept.concept_description}
+**Novelty estimate**: {concept.novelty_estimate}
+**Breakthrough potential**: {concept.breakthrough_potential}
+{lean_section}
+{refs_section}
+{catalog_context_section}
+{theorem_section}
+{recent_section}
+
+{depth_requirements}
+
+{assignment}
+
+## Legacy phase: full prompt
+
+This is the legacy A_full phase. Both math and packaging are requested in one
+call. For new cycles, prefer the two-phase split (Phase A: math, Phase B: packaging).
+"""
+        return prompt
         refs = catalog_references or concept.catalog_references or []
 
         # Truncate large text fields to keep prompt within budget

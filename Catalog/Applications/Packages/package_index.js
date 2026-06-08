@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5559529e",
     "filename": "causal_loops_in_category_theory_when_composition_l.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5059499999999999,
     "title": "Causal Loops in Category Theory: The Cocycle-Pentagon Bridge"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "causal_loops_in_category_theory_when_composition_l",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5059499999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Causal Loops in Category Theory: The Cocycle-Pentagon Bridge"
     }
