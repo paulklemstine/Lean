@@ -7,10 +7,10 @@ Aether is an autonomous research system that discovers, formalizes, and accumula
 ### Run the Research Loop
 
 ```bash
-cd Aether && python3 aether_tick.py --loop --ollama-cloud --max-inflight 9 --novelty-slots 2 --interval 1800 --serve
+cd Aether && python3 aether_tick.py --loop --ollama-cloud --max-inflight 9 --novelty-slots 2 --interval 1800 --serve --log .aether_workspace/aether.log
 ```
 
-This is the standard startup command. It runs continuously: each tick polls for completed jobs, integrates them, dispatches new ones, rebuilds the website (`update_index.py`), syncs to `docs/`, commits, and pushes to git. The `--serve` flag starts a local docs HTTP server at `http://localhost:8000`.
+This is the standard startup command. It runs continuously: each tick polls for completed jobs, integrates them, dispatches new ones, rebuilds the website (`update_index.py`), syncs to `docs/`, commits, and pushes to git. The `--serve` flag starts a local docs HTTP server at `http://localhost:8000`. The `--log` flag tees all output to a log file while still printing to the console.
 
 | Flag | Default | Description |
 |------|---------|-------------|
@@ -21,6 +21,7 @@ This is the standard startup command. It runs continuously: each tick polls for 
 | `--loop` | off | Run continuously (single tick otherwise) |
 | `--serve` | off | Start local docs HTTP server alongside Aether |
 | `--serve-port PORT` | 8000 | Docs server port |
+| `--log PATH` | off | Tee all output (stdout + stderr) to a log file; relative paths resolve from the Aether directory |
 
 Single run (no loop):
 ```bash
@@ -170,6 +171,23 @@ Low-scoring results may be salvaged (best theorems extracted) rather than discar
 The website is served from the `docs/` directory on the `master` branch (branch-based deployment, no Actions minutes). After each tick, `docs/` is synced from `Catalog/Applications/Packages/`.
 
 GitHub Pages settings: **Source → Deploy from a branch → master → /docs**
+
+## Logging
+
+All Aether output can be logged to a file with the `--log` flag. The `Tee` class duplicates `stdout` and `stderr` to the log file in line-buffered append mode, so output streams in real time while also being persisted to disk.
+
+```bash
+# Log to aether.log (relative to the Aether directory)
+python3 aether_tick.py --loop --ollama-cloud --log .aether_workspace/aether.log
+
+# Log to an absolute path
+python3 aether_tick.py --loop --ollama-cloud --log /var/log/aether.log
+
+# Tail the log live
+tail -f .aether_workspace/aether.log
+```
+
+The log file includes every `[Tick]`, `[Poll]`, `[Dispatch]`, `[Evaluate]`, and `[Integrate]` message. To rotate or truncate the log, simply overwrite the file — the Tee writer opens in append mode and will keep writing.
 
 ## Testing
 

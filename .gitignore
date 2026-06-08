@@ -22,6 +22,9 @@ __pycache__/
 /Aether/.aether_workspace/insights.json
 /Aether/.aether_workspace/*.json
 /Aether/.aether_workspace/last_*
+/Aether/.aether_workspace/*.log
+/Aether/*.log
+*.log
 /Aether/artifacts
 /workspace
 /Catalog/Aether/manual_jobs
@@ -46,6 +49,9 @@ __pycache__/
 
 # Serena
 .serena/
+
+# Environment files
+/Aether/.env
 
 # OS/editor junk
 .DS_Store

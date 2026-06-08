@@ -325,8 +325,8 @@ class PiAgentClient:
         elif self.ollama_cloud_enabled and not self.ollama_cloud_api_key:
             print("[Pi-Agent] Ollama Cloud enabled but no API key set — skipping to local Ollama")
         elif not self.ollama_cloud_enabled:
-            # No fallback configured — return the Pollinations error as-is
-            return result
+            print("[Pi-Agent] Ollama Cloud not enabled — falling back to local Ollama")
+
 
         # Tier 3: Local Ollama
         print("[Pi-Agent] Falling back to local Ollama")
@@ -3143,4 +3143,56 @@ make it beautiful to read.
                 "confidence": 0.4,
                 "reason": f"Fallback: proof has {sorry_count} sorries, placed in Speculative.",
             }
+
+    def curate_similar_groups(
+        self,
+        groups_data: List[List[Dict[str, Any]]],
+        timeout: int = 120,
+    ) -> Optional[Dict[str, Any]]:
+        """LLM curates semantically similar groups of Lean files.
+
+        Returns a dict indicating which files to keep and which to remove.
+        """
+        system_prompt = (
+            "You are a mathematical research curator for the Aether Lean 4 catalog.\n"
+            "Your goal is to keep only the best of the best mathematics and shrink the catalog.\n"
+            "You are presented with several groups of Lean 4 files. Each group contains semantically "
+            "similar files (sharing theorem names, concepts, or name tokens).\n\n"
+            "For each group:\n"
+            "1. Compare the files. Identify duplicates, near-duplicates, or trivial variants.\n"
+            "2. Select the single best/canonical file to KEEP. Prefer files that are sorry-free, "
+            "have deeper proofs (using induction, rcases, linarith etc.), and are well-structured.\n"
+            "3. Mark all other redundant or duplicate files in the group to REMOVE.\n"
+            "4. If a file (even in a single-file group) is mathematically trivial, redundant, or "
+            "represents low research value (e.g. basic algebraic/arithmetic identity wrappers), "
+            "mark it to REMOVE.\n\n"
+            "Output ONLY valid JSON:\n"
+            "{\n"
+            "  \"keep\": [\"path/to/keep1.lean\", ...],\n"
+            "  \"remove\": [\"path/to/remove1.lean\", ...],\n"
+            "  \"notes\": \"brief explanation of curation choices\"\n"
+            "}"
+        )
+
+        user_parts = []
+        for idx, group in enumerate(groups_data):
+            user_parts.append(f"=== Group {idx + 1} (Size: {len(group)}) ===")
+            for f in group:
+                sorry_status = "has sorries" if f["sorries"] else "sorry-free"
+                proof_style = "deep proofs" if f["deep_proof"] else ("trivial only" if f["trivial_only"] else "mixed")
+                user_parts.append(
+                    f"Path: {f['path']}\n"
+                    f"Theorems: {f['theorems']} | Lines: {f['lines']} | {sorry_status} | Proofs: {proof_style}\n"
+                    f"Declarations: {', '.join(f['declarations'][:10])}\n"
+                    f"Preview:\n```lean\n{f['content_preview'][:400]}\n```\n"
+                )
+        user_prompt = "\n".join(user_parts)
+
+        try:
+            raw = self._call_ollama(system_prompt, user_prompt, timeout=timeout)
+            return self._parse_json_response(raw)
+        except Exception as e:
+            print(f"[Curate] Pi-Agent curation call failed: {e}")
+            return None
+
 
