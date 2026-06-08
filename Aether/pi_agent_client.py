@@ -1845,6 +1845,7 @@ class PiAgentClient:
         prompt_version: Optional[str] = None,
         phase: str = "A_lean_only",
         phase_a_lean_content: Optional[str] = None,
+        phase_a_lean_files: Optional[List[str]] = None,
     ) -> str:
         """Write an Aristotle prompt, routing by phase.
 
@@ -1859,6 +1860,7 @@ class PiAgentClient:
             return self._build_phase_b_package_prompt(
                 concept=concept,
                 phase_a_lean_content=phase_a_lean_content or "",
+                phase_a_lean_files=phase_a_lean_files,
             )
         if phase == "A_lean_only":
             return self._build_phase_a_lean_prompt(
@@ -2001,6 +2003,7 @@ is the deliverable. Be precise, be deep, be world-class.
         self,
         concept: ResearchConcept,
         phase_a_lean_content: str,
+        phase_a_lean_files: Optional[List[str]] = None,
     ) -> str:
         """Phase B: packaging only. Reads Phase A's Lean as input.
 
@@ -2008,8 +2011,24 @@ is the deliverable. Be precise, be deep, be world-class.
         to humans — article, paper, demo, widgets, PACKAGE.json. NO new
         Lean code should be produced.
         """
-        lean_excerpt = phase_a_lean_content[:8000] if phase_a_lean_content else "(no Lean content provided)"
+        # Strip FUTURE_DIRECTIONS blocks from Phase A Lean content —
+        # Phase B packages the math, not the conjectures
+        lean_content = self._strip_future_directions(phase_a_lean_content)
+        lean_excerpt = lean_content[:8000] if lean_content else "(no Lean content provided)"
         domain_brief = f"Research domain: {concept.domain}\nResearch mode: {concept.research_mode}\n"
+
+        # Build @references section from Phase A's integrated Lean file paths
+        references_section = ""
+        if phase_a_lean_files:
+            ref_lines = []
+            for fpath in phase_a_lean_files:
+                # Extract the Catalog-relative path (the part that matters for referencing)
+                # e.g. "Catalog/Bridges/MyTherem/file.lean"
+                rel = fpath
+                if "Catalog/" in fpath:
+                    rel = fpath[fpath.index("Catalog/"):]
+                ref_lines.append(f"- `@{rel}`")
+            references_section = f"\n## Phase A Lean 4 File References\n\nThese are the Lean 4 files produced in Phase A. Reference them by path when discussing specific theorems:\n\n" + "\n".join(ref_lines) + "\n"
 
         phase_b_header = textwrap.dedent("""
             ## PHASE B: PACKAGING ONLY — COMMUNICATING THE MATH
@@ -2022,11 +2041,11 @@ is the deliverable. Be precise, be deep, be world-class.
             1. **ARTICLE.md** — Standalone popular-science article (1500-3000 words).
                Write about IDEAS, not formal verification. No mentions of Lean or
                proof assistants. Vivid prose, narrative arc, real-world connections.
-               Reference the specific theorems proved in Phase A.
+               Reference the specific theorems proved in Phase A using @file references.
             2. **RESEARCH_PAPER.md** — In-depth research paper (3000-8000 words).
                Abstract, definitions, main results (with proof sketches — NOT
                full Lean), algorithms, applications, discussion, future work,
-               references to catalog results.
+               references to catalog results. Use @file references for theorems.
             3. **demo.py** — Numerical examples demonstrating the key results.
                Self-contained Python, type hints, all functions inlined.
             4. **HTML widgets** in PACKAGE.json interactive_demos field
@@ -2037,9 +2056,11 @@ is the deliverable. Be precise, be deep, be world-class.
             - NO new `.lean` files
             - NO new theorem proofs
             - NO changes to the existing Lean 4 source
+            - NO `FUTURE_DIRECTIONS.md` (Phase A already produced future directions)
 
             The math is already proved. Treat the Lean files below as the
             ground truth — your prose should explain and contextualize them.
+            Use the @file references above to point readers to specific theorems.
             """)
 
         prompt = f"""{phase_b_header}
@@ -2050,7 +2071,7 @@ is the deliverable. Be precise, be deep, be world-class.
 **Domain**: {concept.domain}
 **Mathematical framing**: {concept.mathematical_framing}
 {domain_brief}
-
+{references_section}
 ## Phase A Lean 4 Output (the math — read this carefully)
 
 ```
@@ -2060,8 +2081,8 @@ is the deliverable. Be precise, be deep, be world-class.
 ## Your task
 
 Produce the deliverables listed above. Reference the specific theorems and
-results in the Lean code by their statement. The Lean file is the source of
-truth — your prose must accurately explain it.
+results in the Lean code by their @file path and statement. The Lean file is
+the source of truth — your prose must accurately explain it.
 
 ARTICLE.md: write a popular-science narrative that makes the key idea accessible.
 RESEARCH_PAPER.md: write the formal paper with abstract, definitions, results.
@@ -2074,6 +2095,36 @@ Be vivid, be precise, be world-class. The math has already been done — now
 make it beautiful to read.
 """
         return prompt
+
+    @staticmethod
+    def _strip_future_directions(lean_content: str) -> str:
+        """Remove FUTURE DIRECTIONS comment blocks from Lean content.
+
+        Phase B packages the math, not the conjectures. Phase A already
+        produces future directions as a trailing comment block; Phase B
+        should not see or repeat them.
+        """
+        if not lean_content:
+            return lean_content
+        # Strip FUTURE DIRECTIONS trailing comment blocks:
+        # - "FUTURE DIRECTIONS" header in a comment block
+        # - Everything from that header to the end of the comment block or file
+        import re
+        # Match: -- !-- FUTURE DIRECTIONS ... -- !--  OR  /-! FUTURE DIRECTIONS ... -/  OR  -- FUTURE DIRECTIONS ...
+        # The most common pattern in Phase A output is a trailing block like:
+        #   -- FUTURE DIRECTIONS
+        #   -- 1. Conjecture ...
+        #   -- 2. Conjecture ...
+        stripped = re.sub(
+            r'(--[-!\s]*FUTURE\s+DIRECTIONS[^\n]*(?:\n--.*)*)',
+            '', lean_content, flags=re.IGNORECASE
+        )
+        # Also handle Lean block comments: /-! FUTURE DIRECTIONS ... -/  or /- FUTURE DIRECTIONS ... -/
+        stripped = re.sub(
+            r'(/-!?[\s]*FUTURE\s+DIRECTIONS.*?-/)',
+            '', stripped, flags=re.IGNORECASE | re.DOTALL
+        )
+        return stripped.strip()
 
     def _build_full_aristotle_prompt(
         self,

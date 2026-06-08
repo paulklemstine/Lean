@@ -338,10 +338,13 @@ class KnowledgeExtractor:
         job.phase_b_prompt_version = "v1"
 
         phase_a_lean = job.result_lean or ""
+        # Pass Phase A's Lean file paths so Phase B can @reference them
+        phase_a_lean_file_paths = job.phase_a_result.get("lean_files", []) if job.phase_a_result else []
         job.prompt = self.pi_agent.write_aristotle_prompt(
             concept=job.concept,
             phase="B_package_only",
             phase_a_lean_content=phase_a_lean,
+            phase_a_lean_files=phase_a_lean_file_paths,
         )
         # Phase B does NOT need a fresh project_dir — reuse Phase A's
         # (the Lean files are already there as inputs)
