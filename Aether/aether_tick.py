@@ -40,6 +40,49 @@ REPO_ROOT = Path(__file__).parent.parent
 PACKAGES_DIR = REPO_ROOT / "Catalog" / "Applications" / "Packages"
 
 
+def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
+    """Print v3 vs v4 prompt A/B test summary from cycle_analytics.json.
+
+    Shows avg quality, world_class rate, duration, and the winner per version.
+    Updated after the A/B test that showed v4 wins (+6.6% quality, +12% faster).
+    """
+    try:
+        import json as _json
+        analytics_path = extractor.workspace / "cycle_analytics.json"
+        if not analytics_path.exists():
+            return
+        data = _json.loads(analytics_path.read_text())
+        records = data.get("records", [])
+        if not records:
+            return
+        by_ver = {}
+        for r in records:
+            v = r.get("prompt_version", "unknown")
+            by_ver.setdefault(v, []).append(r)
+        lines = ["[A/B] Prompt version stats (v4 is the default, winner):"]
+        for v in ("v1", "v3", "v4"):
+            rs = by_ver.get(v, [])
+            if not rs:
+                continue
+            n = len(rs)
+            avg_q = sum(r.get("quality_score", 0) for r in rs) / n
+            wc = sum(1 for r in rs if r.get("quality_breakdown", {}).get("grade") == "world_class")
+            durs = [r.get("duration_seconds", 0) / 60 for r in rs if r.get("duration_seconds")]
+            avg_dur = sum(durs) / len(durs) if durs else 0
+            lines.append(f"  {v}: n={n:3d} avg_Q={avg_q:.3f} wc={wc}/{n} ({100*wc/n:.0f}%) avg_dur={avg_dur:.0f}min")
+        # Last 20 only, to keep it fresh
+        recent = [r for r in records[-20:] if r.get("prompt_version") in ("v3", "v4")]
+        if recent:
+            v4q = sum(r.get("quality_score", 0) for r in recent if r.get("prompt_version") == "v4") / max(1, sum(1 for r in recent if r.get("prompt_version") == "v4"))
+            v3q = sum(r.get("quality_score", 0) for r in recent if r.get("prompt_version") == "v3") / max(1, sum(1 for r in recent if r.get("prompt_version") == "v3"))
+            leader = "v4" if v4q > v3q else "v3"
+            lines.append(f"  Last 20: v4={v4q:.3f} v3={v3q:.3f} -> {leader} leading")
+        print("\n".join(lines))
+    except Exception as e:
+        # Non-critical — don't break the tick
+        print(f"[A/B] Stats error (non-fatal): {e}")
+
+
 def _signal_dashboard_update(job_id: str = "", action: str = "update") -> None:
     """Write a lightweight last_update.json so the live dashboard polls refresh."""
     try:
@@ -536,6 +579,7 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
     remaining = len([j for j in extractor.inflight.values()
                     if j.status not in ("completed", "failed", "integrated", "rejected")])
     print(f"[Tick] Done — {len(completed_jobs)} integrated, {remaining} still inflight")
+    _print_prompt_version_stats(extractor)
 
 
 def rebuild_commit_push() -> bool:

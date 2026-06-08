@@ -1834,9 +1834,15 @@ class PiAgentClient:
         # Depth Requirements: reject trivial mathematics
         # PIVOT: Focus on defining novel mathematical structures, not solving open problems.
         # New math > solving existing puzzles. Each theorem requires PEGB scaffolding.
-        # v3: novel structures (Grothendieck path)
-        # v4: deepen existing catalog results (Cauchy path)
-        prompt_version = prompt_version or "v3"
+        # v3: novel structures (Grothendieck path) — kept for A/B analysis
+        # v4: deepen existing catalog results (Cauchy path) — DEFAULT, winner of A/B test
+        if prompt_version is None:
+            prompt_version = "v4"
+        if prompt_version == "v1":
+            raise ValueError(
+                "v1 prompt is no longer supported — use v3 (novel structures) or v4 (deepen catalog). "
+                "v4 is the default and won the A/B test (avg_Q 0.354 vs 0.332)."
+            )
         if prompt_version == "v4":
             depth_requirements = self._build_v4_depth_requirements()
         else:
