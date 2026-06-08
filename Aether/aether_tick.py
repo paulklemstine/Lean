@@ -35,6 +35,47 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+# ── Override print to add terminal colors for errors and warnings ──
+import builtins
+import re as _re
+
+_orig_print = builtins.print
+
+def _colored_print(*args, **kwargs):
+    text = " ".join(str(arg) for arg in args)
+    text_lower = text.lower()
+    
+    is_error = (
+        "[error]" in text_lower or
+        "failed:" in text_lower or
+        "failed for" in text_lower or
+        "recording failed" in text_lower or
+        "error:" in text_lower or
+        "exception:" in text_lower or
+        "patch failed" in text_lower or
+        "dispatch failed" in text_lower or
+        "failed to" in text_lower or
+        "error occurred" in text_lower
+    )
+    is_warning = (
+        "[warning]" in text_lower or
+        "warning:" in text_lower or
+        "rejected:" in text_lower or
+        "rejected (" in text_lower or
+        "skipped (rejected" in text_lower
+    )
+    
+    if is_error:
+        # Bold Red (\033[1;31m)
+        _orig_print(f"\033[1;31m{text}\033[0m", **kwargs)
+    elif is_warning:
+        # Bold Yellow (\033[1;33m)
+        _orig_print(f"\033[1;33m{text}\033[0m", **kwargs)
+    else:
+        _orig_print(*args, **kwargs)
+
+builtins.print = _colored_print
+
 from knowledge_extractor import KnowledgeExtractor
 
 REPO_ROOT = Path(__file__).parent.parent
@@ -1039,7 +1080,10 @@ class Tee:
         sys.stderr = self
 
     def write(self, data):
-        self._file.write(data)
+        # Strip ANSI escape codes for the log file
+        import re as _re
+        clean_data = _re.sub(r'\033\[[0-9;]*m', '', data)
+        self._file.write(clean_data)
         self._file.flush()
         self._original_stdout.write(data)
         self._original_stdout.flush()
