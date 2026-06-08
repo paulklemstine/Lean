@@ -1,1 +1,1 @@
-../../Bridges/FractalProofSearch/Theorems.lean
+../../Bridges/ArithmeticMirrorSymmetry/Theorems.lean

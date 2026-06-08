@@ -201,4 +201,3 @@ theorem photon_connected_refl (v : Fin 4 → ℤ) :
     PhotonConnected v v := by
   unfold PhotonConnected IsPythQuad
   simp
-

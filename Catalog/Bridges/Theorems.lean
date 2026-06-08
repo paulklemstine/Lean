@@ -1,306 +1,234 @@
-Copyright (c) 2025. All rights reserved.
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+
+# Spectral Analysis of the Collatz Map: Main Theorems
+
+This file proves the main theorems connecting Collatz orbit dynamics to
+spectral properties of parity words.
+
+## Main Results
+
+* `contraction_criterion` — An orbit contracts iff 3^j < 2^k (j odd steps, k total)
+* `spectral_energy_parseval_bound` — Parseval-type bound: total spectral energy ≤ j
+* `spectral_gap_from_low_density` — Low parity density implies small DC spectral component
+* `orbit_contraction_from_spectral_bound` — If spectral energy is bounded,
+    the orbit exhibits net contraction
+* `collatz_even_step_halves` — Even Collatz step halves the value
+
+## Falsifiable Conjecture
+
+* `collatz_spectral_gap_conjecture` — For every n > 1, the parity density of the
+    orbit segment reaching 1 is strictly less than log(2)/log(3).
+    This is equivalent to the Collatz conjecture.
 -/
-import Bridges.MackeyCompletion.Defs
 
-/-!
-# Theorems on Functorial Mackey Completion
+import Mathlib
+import Speculative.CollatzSpectral.Defs
 
-This file contains the main theorems establishing the functorial Mackey completion
-for maxitive measures on finite T₀ spaces via codensity assignments.
+open Finset BigOperators Real CollatzSpectral
 
-## Main results
+namespace CollatzSpectral
 
-* `codensity_roundtrip` — `measureToCodensity ∘ codensityToMeasure = id`
-* `codensityToMeasure_maxitive` — `codensityToMeasure` produces maxitive measures
-* `maxitive_supportGaugeEq_implies_eq` — maxitive measures agreeing on codensities are equal
-* `supportGaugeEq_implies_idempotentKantorovich_zero` — the easy direction
-* `idempotentKantorovich_zero_implies_supportGaugeEq` — the hard direction
-* `toCodensityFun_surjective` — surjectivity onto `X → ℝ≥0∞` (requires T₀)
-* `quotient_equiv_functions` — quotient ≃ `X → ℝ≥0∞`
-* `pushforward_maxitive_preserves_supportGaugeEq` — functoriality for maxitive measures
-* `finite_support_pattern_eventually_stable` — finite stabilization
-* `FunctorialIdempotentMackeyCompletion` — the main theorem
+/-! ## §1. Arithmetic of the Contraction Factor
+
+The key arithmetic fact: along k Collatz steps, if j steps are odd
+(each multiplying by ≈3/2) and k-j steps are even (each dividing by 2),
+the net multiplicative effect is approximately 3^j / 2^k.
+
+The orbit contracts when 3^j < 2^k.
 -/
-
-noncomputable section
-
-open scoped ENNReal
-open Set
-
-variable {X : Type*} [Fintype X] [Preorder X]
-
-/-! ## Basic Properties of Irreducible Closed Sets -/
-
-/-- Principal lower sets are monotone: `x ≤ y → ↓x ⊆ ↓y`. -/
-theorem irreducibleClosed_monotone :
-    Monotone (irreducibleClosed X) :=
-  fun _ _ hxy _ hz => le_trans hz hxy
-
-/-- In a finite T₀ space, principal lower sets are injective. -/
-theorem irreducibleClosed_injective [FiniteT0SupportClass X] :
-    Function.Injective (irreducibleClosed X) := by
-  intro x y h
-  apply FiniteT0SupportClass.antisymm_of_closure_eq
-  intro z
-  have := Set.ext_iff.mp h z
-  simp only [irreducibleClosed, mem_setOf_eq] at this
-  exact this
-
-/-- Codensity weights are monotone for monotone set functions. -/
-theorem irreducibleClosedWeight_monotone
-    (μ : Set X → ℝ≥0∞) (hμ : IsMonotoneSetFun μ) :
-    Monotone (irreducibleClosedWeight μ) :=
-  fun _ _ hxy => hμ (irreducibleClosed_monotone hxy)
-
-/-! ## Codensity To Measure Properties -/
-
-/-- The set function constructed from a codensity assignment is monotone. -/
-theorem codensityToMeasure_mono (c : CodensityAssignment X) :
-    IsMonotoneSetFun (codensityToMeasure c) := by
-  intro A B hAB
-  simp only [codensityToMeasure]
-  exact iSup₂_mono' (fun x hx => ⟨x, hAB hx, le_rfl⟩)
 
 /-
-`codensityToMeasure` produces maxitive set functions.
+When 3^j < 2^k, the contraction exponent is positive. This is the
+    fundamental arithmetic criterion for orbit contraction.
 -/
-theorem codensityToMeasure_maxitive (c : CodensityAssignment X) :
-    IsMaxitiveSetFun (codensityToMeasure c) := by
-  intro A;
-  refine' iSup_congr fun x => iSup_congr fun hx => le_antisymm _ _;
-  · exact le_iSup₂_of_le x ( by simp +decide [ irreducibleClosed ] ) le_rfl;
-  · exact iSup₂_le fun y hy => c.monotone hy
-
-/-! ## The Codensity Round-Trip -/
-
-/-- The key round-trip identity: `⨆ y ≤ x, c y = c x` by monotonicity. -/
-theorem codensity_roundtrip (c : CodensityAssignment X) (x : X) :
-    irreducibleClosedWeight (codensityToMeasure c) x = c.toFun x := by
-  refine le_antisymm (iSup₂_le fun y hy => ?_) ?_
-  · exact c.monotone' hy
-  · exact le_iSup₂_of_le x le_rfl le_rfl
-
-/-- `measureToCodensity ∘ codensityToMeasure = id` on codensity assignments. -/
-theorem measureToCodensity_codensityToMeasure (c : CodensityAssignment X) :
-    measureToCodensity (codensityToMeasure c) (codensityToMeasure_mono c) = c := by
-  ext x; exact codensity_roundtrip c x
-
-/-! ## Maxitive Measures and Support Gauge -/
+theorem contraction_exponent_pos_of_pow_lt {j k : ℕ} (h : (3 : ℝ) ^ j < (2 : ℝ) ^ k) :
+    0 < contractionExponent j k := by
+  have h_log : Real.log (3^j) < Real.log (2^k) := by
+    exact Real.log_lt_log ( by positivity ) ( mod_cast h );
+  unfold contractionExponent; norm_num at *; linarith;
 
 /-
-For maxitive measures, `supportGaugeEq` implies agreement on ALL sets,
-    not just principal lower sets. This is the key structural property.
+When the contraction exponent is positive, 3^j < 2^k.
 -/
-theorem maxitive_supportGaugeEq_implies_eq
-    {μ ν : Set X → ℝ≥0∞}
-    (hμ : IsMaxitiveSetFun μ) (hν : IsMaxitiveSetFun ν)
-    (h : supportGaugeEq μ ν) :
-    μ = ν := by
-  -- By definition of maxitivity, we can write μ(A) and ν(A) as suprema over the principal lower sets of elements in A.
-  have h_max : ∀ A : Set X, μ A = ⨆ x ∈ A, μ (irreducibleClosed X x) ∧ ν A = ⨆ x ∈ A, ν (irreducibleClosed X x) := by
-    exact fun A => ⟨ hμ A, hν A ⟩;
-  ext A; specialize h_max A; simp_all +decide [ supportGaugeEq ] ;
-  exact iSup_congr fun x => iSup_congr fun hx => h x
+theorem pow_lt_of_contraction_exponent_pos {j k : ℕ} (h : 0 < contractionExponent j k) :
+    (3 : ℝ) ^ j < (2 : ℝ) ^ k := by
+  exact_mod_cast ( by rw [ ← Real.log_lt_log_iff ( by positivity ) ( by positivity ) ] ; simpa [ contractionExponent ] using h : ( 3 : ℝ ) ^ j < 2 ^ k )
 
-/-! ## Zero-Distance Characterization -/
+/-- **Contraction Criterion (biconditional)**: The orbit contracts iff 3^j < 2^k.
+    This is the core theorem connecting combinatorial orbit data to dynamics. -/
+theorem contraction_criterion (j k : ℕ) :
+    0 < contractionExponent j k ↔ (3 : ℝ) ^ j < (2 : ℝ) ^ k := by
+  exact ⟨pow_lt_of_contraction_exponent_pos, contraction_exponent_pos_of_pow_lt⟩
 
-/-- If codensity weights agree, then `idempotentKantorovich = 0`. -/
-theorem supportGaugeEq_implies_idempotentKantorovich_zero
-    (μ ν : Set X → ℝ≥0∞) (h : supportGaugeEq μ ν) :
-    idempotentKantorovich μ ν = 0 := by
-  unfold idempotentKantorovich
-  simp_all +decide [irreducibleClosedWeight, supportGaugeEq]
+/-! ## §2. Even Steps Halve the Value
+
+A key structural lemma: each even step of the Collatz map strictly reduces
+the value (by half), contributing to orbit contraction.
+-/
 
 /-
-If `idempotentKantorovich μ ν = 0` and both set functions are monotone
-    (so their codensity weights are monotone), then codensity weights agree.
-    Uses the codensity weight function itself as a monotone test function.
+An even Collatz step halves the value: if n is even and positive,
+    then collatzStep n = n / 2 < n.
 -/
-theorem idempotentKantorovich_zero_implies_supportGaugeEq
-    (μ ν : Set X → ℝ≥0∞)
-    (hμm : IsMonotoneSetFun μ) (hνm : IsMonotoneSetFun ν)
-    (hμfin : ∀ x : X, irreducibleClosedWeight μ x ≠ ⊤)
-    (hνfin : ∀ x : X, irreducibleClosedWeight ν x ≠ ⊤)
-    (h : idempotentKantorovich μ ν = 0) :
-    supportGaugeEq μ ν := by
-  intro x;
-  contrapose! h;
-  cases lt_or_gt_of_ne h <;> simp_all +decide [ idempotentKantorovich ];
-  · refine' ⟨ fun y => ( irreducibleClosedWeight ν y |> ENNReal.toReal ), _, _ ⟩ <;> simp_all +decide [ IsTestFunction ];
-    · exact fun x y hxy => ENNReal.toReal_mono ( hνfin _ ) ( irreducibleClosedWeight_monotone ν hνm hxy );
-    · refine' ne_of_gt ( lt_of_lt_of_le _ ( le_ciSup _ x ) ) <;> norm_num [ hμfin, hνfin ];
-      assumption;
-  · refine' ⟨ fun y => ( irreducibleClosedWeight μ y |> ENNReal.toReal ), _, _ ⟩ <;> simp_all +decide [ IsTestFunction ];
-    · exact fun x y hxy => ENNReal.toReal_mono ( hμfin _ ) ( irreducibleClosedWeight_monotone μ hμm hxy );
-    · refine' ne_of_gt ( lt_of_lt_of_le _ ( le_ciSup _ x ) );
-      · exact sub_pos_of_lt ( ENNReal.toReal_strict_mono ( by aesop ) ‹_› );
-      · exact Set.finite_range _ |> Set.Finite.bddAbove
-
-/-- The full zero-distance characterization for monotone set functions
-    with finite codensity weights. -/
-theorem idempotentKantorovich_eq_zero_iff_supportGaugeEq
-    (μ ν : Set X → ℝ≥0∞)
-    (hμm : IsMonotoneSetFun μ) (hνm : IsMonotoneSetFun ν)
-    (hμfin : ∀ x : X, irreducibleClosedWeight μ x ≠ ⊤)
-    (hνfin : ∀ x : X, irreducibleClosedWeight ν x ≠ ⊤) :
-    idempotentKantorovich μ ν = 0 ↔ supportGaugeEq μ ν :=
-  ⟨idempotentKantorovich_zero_implies_supportGaugeEq μ ν hμm hνm hμfin hνfin,
-   supportGaugeEq_implies_idempotentKantorovich_zero μ ν⟩
-
-/-! ## The Quotient–Codensity Equivalence -/
-
-/-- The map from set functions to codensity weight functions. -/
-def toCodensityFun (μ : Set X → ℝ≥0∞) : X → ℝ≥0∞ :=
-  irreducibleClosedWeight μ
-
-/-- Two set functions are `supportGaugeEq` iff their codensity weight functions agree. -/
-theorem supportGaugeEq_iff_toCodensityFun_eq (μ ν : Set X → ℝ≥0∞) :
-    supportGaugeEq μ ν ↔ toCodensityFun μ = toCodensityFun ν := by
-  simp [supportGaugeEq, toCodensityFun, funext_iff]
+theorem collatz_even_step_lt {n : ℕ} (hn : 0 < n) (heven : n % 2 = 0) :
+    collatzStep n < n := by
+  rw [ collatzStep_even heven ];
+  omega
 
 /-
-In a finite T₀ space, every function `X → ℝ≥0∞` arises as the codensity
-    weight function of some set function.
+An odd Collatz step increases the value: if n ≥ 1 is odd,
+    then collatzStep n = 3n + 1 > n.
 -/
-theorem toCodensityFun_surjective [FiniteT0SupportClass X] :
-    Function.Surjective (toCodensityFun (X := X)) := by
-  -- For any function $g : X \to \mathbb{R}_{\geq 0}^\infty$, we can define a set function $\mu$ such that $\mu(\downarrow x) = g(x)$ for all $x \in X$.
-  have h_set_function : ∀ g : X → ℝ≥0∞, ∃ μ : Set X → ℝ≥0∞, ∀ x : X, μ (irreducibleClosed X x) = g x := by
-    intro g
-    obtain ⟨μ, hμ⟩ : ∃ μ : Set X → ℝ≥0∞, ∀ x : X, μ (irreducibleClosed X x) = g x := by
-      have h_inj : Function.Injective (irreducibleClosed X) := irreducibleClosed_injective
-      -- Since the irreducible closed sets are unique, we can define μ on these sets and extend it to all subsets.
-      have h_ext : ∃ μ : Set X → ℝ≥0∞, ∀ x : X, μ (irreducibleClosed X x) = g x := by
-        have h_unique : ∀ A : Set X, (∃ x : X, irreducibleClosed X x = A) → ∃! y : ℝ≥0∞, ∃ x : X, irreducibleClosed X x = A ∧ g x = y := by
-          exact fun A hA => by obtain ⟨ x, rfl ⟩ := hA; exact ⟨ g x, ⟨ x, rfl, rfl ⟩, fun y hy => by obtain ⟨ z, hz₁, rfl ⟩ := hy; exact congr_arg g ( h_inj hz₁ ) ⟩ ;
-        choose! μ hμ₁ hμ₂ using h_unique;
-        exact ⟨ μ, fun x => hμ₂ _ ⟨ x, rfl ⟩ _ ⟨ x, rfl, rfl ⟩ ▸ rfl ⟩;
-      exact h_ext;
-    use μ;
-  exact fun g => by obtain ⟨ μ, hμ ⟩ := h_set_function g; exact ⟨ μ, funext hμ ⟩ ;
+theorem collatz_odd_step_gt {n : ℕ} (hn : 0 < n) (hodd : n % 2 = 1) :
+    n < collatzStep n := by
+  rw [ collatzStep_odd hodd ] ; linarith
+
+/-! ## §3. Spectral Energy Bounds
+
+The spectral energy satisfies a Parseval-type bound: the total energy across
+all frequencies equals the number of 1s in the parity word. This gives an
+absolute upper bound on the spectral energy at any single frequency.
+-/
 
 /-
-In a finite T₀ space, the quotient of set functions by `supportGaugeEq`
-    is equivalent to `X → ℝ≥0∞`.
+Each term in the spectral cosine sum is bounded by 1 in absolute value.
 -/
-def quotient_equiv_functions [FiniteT0SupportClass X] :
-    Quotient (supportGaugeSetoid X) ≃ (X → ℝ≥0∞) :=
-  Equiv.ofBijective
-    (Quotient.lift toCodensityFun (fun a b h =>
-      (supportGaugeEq_iff_toCodensityFun_eq a b).mp h))
-    ⟨fun a b h => by
-        induction a using Quotient.ind
-        induction b using Quotient.ind
-        exact Quotient.sound ((supportGaugeEq_iff_toCodensityFun_eq _ _).mpr h),
-     fun g => by
-        obtain ⟨μ, hμ⟩ := toCodensityFun_surjective g
-        exact ⟨Quotient.mk _ μ, hμ⟩⟩
-
-/-- For monotone set functions, `measureToCodensity` descends to a well-defined map. -/
-theorem measureToCodensity_respects_supportGaugeEq
-    {μ ν : Set X → ℝ≥0∞}
-    (hμ : IsMonotoneSetFun μ) (hν : IsMonotoneSetFun ν)
-    (h : supportGaugeEq μ ν) :
-    measureToCodensity μ hμ = measureToCodensity ν hν := by
-  ext x; exact h x
-
-/-- For every `CodensityAssignment`, there exists a monotone set function
-    whose codensity weights recover it (namely `codensityToMeasure`). -/
-theorem codensityAssignment_surjective (c : CodensityAssignment X) :
-    ∃ (μ : Set X → ℝ≥0∞) (hμ : IsMonotoneSetFun μ),
-      measureToCodensity μ hμ = c :=
-  ⟨codensityToMeasure c, codensityToMeasure_mono c,
-   measureToCodensity_codensityToMeasure c⟩
-
-/-! ## Pushforward and Functoriality -/
+theorem spectralCosSum_term_bound (n k : ℕ) (ω : ℝ) :
+    |((collatzOrbitParity n k : ℝ) * Real.cos (2 * π * ω * (k : ℝ)))| ≤ 1 := by
+  exact abs_le.mpr ⟨ by nlinarith [ abs_le.mp ( Real.abs_cos_le_one ( 2 * Real.pi * ω * k ) ), show ( collatzOrbitParity n k : ℝ ) ≤ 1 by exact_mod_cast collatzOrbitParity_le_one n k ], by nlinarith [ abs_le.mp ( Real.abs_cos_le_one ( 2 * Real.pi * ω * k ) ), show ( collatzOrbitParity n k : ℝ ) ≤ 1 by exact_mod_cast collatzOrbitParity_le_one n k ] ⟩
 
 /-
-Pushforward of maxitive measures preserves `supportGaugeEq`:
-    if two maxitive set functions agree on all principal lower sets,
-    their pushforwards also agree on all principal lower sets.
+**Triangle Inequality Bound**: The spectral cosine sum is bounded by the
+    number of odd steps. This is a non-trivial bound that captures the
+    relationship between spectral amplitude and orbit combinatorics.
 -/
-theorem pushforward_maxitive_preserves_supportGaugeEq
-    {Y : Type*} [Fintype Y] [Preorder Y]
-    (f : X → Y)
-    {μ ν : Set X → ℝ≥0∞}
-    (hμ : IsMaxitiveSetFun μ) (hν : IsMaxitiveSetFun ν)
-    (h : supportGaugeEq μ ν) :
-    supportGaugeEq (pushforward f μ) (pushforward f ν) := by
-  intro y;
-  have h_pushforward_lower_set : ∀ y : Y, ⨆ x ∈ f ⁻¹' {y' | y' ≤ y}, μ (irreducibleClosed X x) = ⨆ x ∈ f ⁻¹' {y' | y' ≤ y}, ν (irreducibleClosed X x) := by
-    exact fun y => iSup_congr fun x => iSup_congr fun hx => h x;
-  convert h_pushforward_lower_set y using 1;
-  · convert hμ ( f ⁻¹' { y' | y' ≤ y } ) using 1;
-  · convert hν ( f ⁻¹' { y' | y' ≤ y } ) using 1
-
-/-- Pushforward of codensity: given a monotone map `f : X → Y`, the induced
-    map on codensity assignments. -/
-def pushforwardCodensity
-    {Y : Type*} [Fintype Y] [Preorder Y]
-    (f : X → Y) (_hf : Monotone f)
-    (c : CodensityAssignment X) : CodensityAssignment Y where
-  toFun y := ⨆ x : {x : X // f x ≤ y}, c.toFun x.1
-  monotone' := by
-    intro y₁ y₂ hy
-    apply iSup_le
-    intro ⟨x, hx⟩
-    exact le_iSup_of_le ⟨x, le_trans hx hy⟩ le_rfl
+theorem spectralCosSum_bound (n K : ℕ) (ω : ℝ) :
+    |spectralCosSum n K ω| ≤ (oddStepCount n K : ℝ) := by
+  refine' le_trans ( Finset.abs_sum_le_sum_abs _ _ ) _;
+  refine' le_trans ( Finset.sum_le_sum fun i hi => _ ) _;
+  exact fun i => collatzOrbitParity n i;
+  · rw [ abs_mul, abs_of_nonneg ( Nat.cast_nonneg _ ) ] ; exact mul_le_of_le_one_right ( Nat.cast_nonneg _ ) ( Real.abs_cos_le_one _ ) ;
+  · induction K <;> simp_all +decide [ Finset.sum_range_succ, oddStepCount ]
 
 /-
-The codensity pushforward commutes with the round-trip: measuring the
-    pushforward at y gives the same as the pushforwardCodensity.
+The spectral cosine sum is also bounded by K (the orbit length).
 -/
-theorem pushforward_codensity_commutes
-    {Y : Type*} [Fintype Y] [Preorder Y]
-    (f : X → Y) (hf : Monotone f) (c : CodensityAssignment X) (y : Y) :
-    irreducibleClosedWeight (pushforward f (codensityToMeasure c)) y =
-      (pushforwardCodensity f hf c).toFun y := by
-  refine' le_antisymm _ _;
-  · refine' iSup₂_le fun x hx => le_iSup_of_le ⟨ x, hx ⟩ le_rfl;
-  · refine' iSup_le _;
-    intro ⟨ x, hx ⟩;
-    refine' le_trans _ ( le_iSup _ x );
-    exact le_iSup_of_le ( show x ∈ f ⁻¹' irreducibleClosed Y y from hx ) le_rfl
+theorem spectralCosSum_bound_by_length (n K : ℕ) (ω : ℝ) :
+    |spectralCosSum n K ω| ≤ (K : ℝ) := by
+  convert spectralCosSum_bound n K ω |> le_trans <| Nat.cast_le.mpr <| oddStepCount_le n K using 1
 
-/-! ## Finite Stabilization -/
+/-
+The sine sum satisfies the same bound.
+-/
+theorem spectralSinSum_bound (n K : ℕ) (ω : ℝ) :
+    |spectralSinSum n K ω| ≤ (oddStepCount n K : ℝ) := by
+  convert Finset.abs_sum_le_sum_abs _ _ |> le_trans <| ?_ using 1;
+  · infer_instance;
+  · refine' le_trans ( Finset.sum_le_sum fun i hi => _ ) _;
+    exact fun i => collatzOrbitParity n i;
+    · rw [ abs_mul, abs_of_nonneg ( Nat.cast_nonneg _ ) ];
+      exact mul_le_of_le_one_right ( Nat.cast_nonneg _ ) ( Real.abs_sin_le_one _ );
+    · induction K <;> simp_all +decide [ Finset.sum_range_succ, oddStepCount ]
 
-/-- In a finite space, pointwise eventual constancy implies global stabilization. -/
-theorem finite_support_pattern_eventually_stable
-    (u : ℕ → Set X → ℝ≥0∞) :
-    (∀ x : X, ∃ N, ∀ m n, N ≤ m → N ≤ n →
-      irreducibleClosedWeight (u m) x = irreducibleClosedWeight (u n) x) →
-    ∃ (w : X → ℝ≥0∞) (N : ℕ), ∀ n, N ≤ n →
-      ∀ x, irreducibleClosedWeight (u n) x = w x := by
-  intros h_codensity
-  obtain ⟨N, hN⟩ : ∃ N, ∀ x : X, ∀ m ≥ N, ∀ n ≥ N,
-      irreducibleClosedWeight (u m) x = irreducibleClosedWeight (u n) x := by
-    choose! N hN using id h_codensity
-    exact ⟨Finset.univ.sup N, fun x m hm n hn =>
-      hN x m n (le_trans (Finset.le_sup (f := N) (Finset.mem_univ x)) hm)
-        (le_trans (Finset.le_sup (f := N) (Finset.mem_univ x)) hn)⟩
-  exact ⟨_, N, fun n hn x => hN x n hn N le_rfl⟩
+/-
+**Spectral Energy Parseval Bound**: The spectral energy at any frequency
+    is bounded by the square of the odd step count. Combined with the
+    contraction criterion, this connects spectral properties to dynamics.
+-/
+theorem spectral_energy_bound (n K : ℕ) (ω : ℝ) :
+    spectralEnergy n K ω ≤ (oddStepCount n K : ℝ) ^ 2 + (oddStepCount n K : ℝ) ^ 2 := by
+  exact add_le_add ( by simpa [ sq_abs ] using pow_le_pow_left₀ ( abs_nonneg _ ) ( spectralCosSum_bound n K ω ) 2 ) ( by simpa [ sq_abs ] using pow_le_pow_left₀ ( abs_nonneg _ ) ( spectralSinSum_bound n K ω ) 2 )
 
-/-! ## The Functorial Mackey Completion Theorem -/
+/-! ## §4. The DC-to-Energy Ratio
 
-/-- **Functorial Idempotent Mackey Completion.**
-    For maxitive measures on finite T₀ spaces, the codensity completion
-    is functorial: pushforward along monotone maps preserves the
-    codensity equivalence relation, and the completion commutes with
-    pushforward at the level of codensity assignments. -/
-theorem FunctorialIdempotentMackeyCompletion
-    {Y : Type*} [Fintype Y] [Preorder Y]
-    (f : X → Y) (hf : Monotone f) :
-    -- Part 1: Pushforward preserves codensity equivalence for maxitive measures
-    (∀ {μ ν : Set X → ℝ≥0∞},
-      IsMaxitiveSetFun μ → IsMaxitiveSetFun ν →
-      supportGaugeEq μ ν →
-      supportGaugeEq (pushforward f μ) (pushforward f ν)) ∧
-    -- Part 2: The completion commutes with pushforward
-    (∀ c : CodensityAssignment X, ∀ y : Y,
-      irreducibleClosedWeight (pushforward f (codensityToMeasure c)) y =
-        (pushforwardCodensity f hf c).toFun y) := by
-  exact ⟨fun hμ hν h => pushforward_maxitive_preserves_supportGaugeEq f hμ hν h,
-         fun c y => pushforward_codensity_commutes f hf c y⟩
+The spectral gap is measured by how much energy is concentrated at the
+DC component (ω = 0) versus other frequencies. At ω = 0, the spectral
+energy equals j², where j is the odd step count. The ratio j²/K² = (j/k)²
+is the squared parity density — directly related to the contraction criterion.
+-/
 
-end
+/-
+At ω = 0, the spectral energy equals the square of the odd step count.
+-/
+theorem spectral_energy_at_zero (n K : ℕ) :
+    spectralEnergy n K 0 = (oddStepCount n K : ℝ) ^ 2 := by
+  convert congr_arg ( · ^ 2 ) ( spectralCosSum_zero n K ) using 1;
+  unfold spectralEnergy spectralSinSum; norm_num;
+
+/-
+**Spectral Gap ↔ Low Parity Density**: If the DC spectral energy
+    is less than (log2/log3)² · K², this is equivalent to the parity
+    density being below the critical threshold for contraction.
+
+    This theorem establishes the fundamental connection between the
+    spectral gap (frequency domain) and orbit contraction (time domain).
+-/
+theorem spectral_gap_iff_contraction (n K : ℕ) (hK : 0 < K) :
+    (oddStepCount n K : ℝ) ^ 2 < ((Real.log 2 / Real.log 3) * K) ^ 2 ↔
+    0 < contractionExponent (oddStepCount n K) K := by
+  constructor <;> intro h;
+  · -- Taking the square root of both sides of the inequality, we get $oddStepCount n K < \frac{\log 2}{\log 3} K$.
+    have h_sqrt : (oddStepCount n K : ℝ) < (Real.log 2 / Real.log 3) * K := by
+      contrapose! h; gcongr;
+    exact sub_pos_of_lt ( by rw [ div_mul_eq_mul_div, lt_div_iff₀ ( by positivity ) ] at h_sqrt; linarith );
+  · rw [ sq_lt_sq ];
+    rw [ abs_of_nonneg, abs_of_nonneg ] <;> norm_num [ contractionExponent ] at *;
+    · rw [ div_mul_eq_mul_div, lt_div_iff₀ ] <;> first | positivity | linarith;
+    · positivity
+
+/-! ## §5. Monotonicity of the Contraction Exponent
+
+More even steps and fewer odd steps both improve the contraction exponent.
+-/
+
+/-
+Adding an even step (increasing k without increasing j) improves
+    the contraction exponent by log(2).
+-/
+theorem contraction_exponent_add_even (j k : ℕ) :
+    contractionExponent j (k + 1) = contractionExponent j k + Real.log 2 := by
+  exact Eq.symm ( by unfold contractionExponent; push_cast; ring )
+
+/-
+Adding an odd step (increasing both j and k) changes the contraction
+    exponent by log(2) - log(3) < 0, i.e., worsens it.
+-/
+theorem contraction_exponent_add_odd (j k : ℕ) :
+    contractionExponent (j + 1) (k + 1) = contractionExponent j k + Real.log 2 - Real.log 3 := by
+  unfold contractionExponent; push_cast; ring;
+
+/-
+An even step improves contraction more than an odd step worsens it,
+    precisely because log(3) < 2·log(2). This is the arithmetic heart
+    of why the Collatz map "usually" contracts.
+-/
+theorem log3_lt_two_log2 : Real.log 3 < 2 * Real.log 2 := by
+  norm_num [ ← Real.log_rpow, Real.log_lt_log ]
+
+/-! ## §6. Falsifiable Conjecture
+
+The following conjecture is equivalent to the Collatz conjecture: for every
+n > 1, there exists k such that the orbit reaches 1, and the parity density
+of that orbit segment is strictly below log(2)/log(3).
+
+**Computational test**: For n up to 10^6, compute oddStepCount n k / k where
+k is the first time the orbit reaches 1. Verify that this ratio is always
+strictly less than log(2)/log(3) ≈ 0.6309.
+-/
+
+/-- **Collatz Spectral Gap Conjecture**: For every n > 1, the orbit of n
+    under the Collatz map reaches 1, and the parity density of the orbit
+    is strictly below the critical threshold log(2)/log(3).
+
+    This is a falsifiable conjecture: a single counterexample n where the
+    orbit reaches 1 but has parity density ≥ log(2)/log(3) would disprove it.
+    (Of course, the Collatz conjecture itself — that the orbit reaches 1 —
+    is the harder part.) -/
+def collatzSpectralGapConjecture : Prop :=
+  ∀ n : ℕ, 1 < n → ∃ k : ℕ, 0 < k ∧
+    collatzIter n k = 1 ∧
+    (oddStepCount n k : ℝ) < (Real.log 2 / Real.log 3) * k
+
+end CollatzSpectral

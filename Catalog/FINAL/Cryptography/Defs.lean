@@ -1,1 +1,1 @@
-../../Cryptography/FHE/Defs.lean
+../../Cryptography/Defs.lean
