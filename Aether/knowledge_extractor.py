@@ -1294,7 +1294,8 @@ Research mode: {concept.research_mode}
         # Use regex on top-level `theorem`/`lemma` declarations only.
         # Naive `.count("theorem ")` inflated counts by 5-10x because it caught
         # doc-comments, string literals, and nested lemmas inside def bodies.
-        import re
+        # (re is imported at module level — no local re-import here to avoid
+        # shadowing the module-level re used elsewhere in this function.)
         if job.result_lean:
             job.sorry_count = len(re.findall(r'\bsorry\b', job.result_lean))
             # Match `theorem name`, `lemma name`, `example :` at start of line
@@ -1943,7 +1944,7 @@ Research mode: {concept.research_mode}
             return None
 
         # Extract individual theorem blocks
-        import re
+        # (re is imported at module level — no local re-import to avoid shadowing.)
         # Match theorem/lemma blocks: from "theorem" or "lemma" to the next "end" or blank line
         # Use a greedy capture: theorem NAME ... := by ... (multi-line, ends with end or "by ... sorry")
         # Simple approach: find each theorem/lemma declaration and its proof
