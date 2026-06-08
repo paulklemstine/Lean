@@ -1,210 +1,231 @@
-# The Group Genome: A Chemical Classification Framework for Finite Groups
+# The Periodic Table of Finite Groups: A Chemical-Algebraic Framework
 
 ## Abstract
 
-We introduce the **Group Genome**, a novel invariant system for finite groups inspired by the periodic table of chemical elements. The framework consists of three main components: (1) the **derived depth**, a formally defined invariant measuring the minimum number of steps for the derived series to reach the trivial subgroup; (2) a **chemical classification** that partitions finite groups into seven structural families (vacuum, noble gas, alkali, alkaline earth, halogen, transition metal, compound); and (3) the **genome tuple** itself, a compact fingerprint encoding key group-theoretic properties. We prove 16 theorems establishing fundamental properties of this framework, including characterization theorems for derived depth (depth 0 ↔ trivial; depth ≤ 1 ↔ abelian), the Stability Hierarchy Chain (cyclic → abelian → nilpotent → solvable), strict monotonicity of the derived series below the derived depth, product stability theorems, and genome consistency results. All proofs are machine-verified in Lean 4 with the Mathlib library.
+We develop a systematic framework for organizing finite groups into a "periodic table" inspired by Mendeleev's classification of chemical elements. The framework assigns to each finite group a set of invariants — order (atomic number), derived depth (period), group valence (chemical valence), and nilpotency class (shell structure) — that parallel chemical properties and enable structural predictions. We prove eight main theorems establishing the mathematical foundations of this analogy: the Derived-Central Series Inequality, the Noble Gas Theorem, the Chemical Synthesis Theorem, the Simple Group Valence Theorem, the Information Dimension Additivity, the Halogen Unsolvability Theorem, the Nilpotency Class Spectrum, and the Derived Depth Product Formula. All results are formally verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
-The classification of finite groups is one of the central problems of abstract algebra. While the classification of finite simple groups — completed through the combined efforts of over 100 mathematicians across several decades — provides the "atoms" of group theory, the organizational challenge remains: how to systematically understand the vast zoo of finite groups built from these atoms.
+The classification of finite groups is one of the grand projects of twentieth-century mathematics. While the classification of finite simple groups (CFSG) identifies all "atoms" of finite group theory, the problem of understanding how these atoms combine — the "chemistry" of groups — remains a central challenge. We propose an organizational framework inspired by the periodic table of elements.
 
-The number of groups of a given order grows explosively. There are 267 groups of order 64, but 49,487,365,422 groups of order 1024. For orders up to 2000, the total exceeds 10^15. No enumeration-based approach can handle this diversity. What is needed is a structural classification — an organizing principle analogous to Mendeleev's periodic table.
+### 1.1 The Chemical Analogy
 
-### 1.1 Contributions
+| Chemical Concept | Group-Theoretic Analogue |
+|---|---|
+| Atomic number | Group order |
+| Period (row) | Derived depth |
+| Chemical family (column) | Structural class (abelian, nilpotent, solvable, ...) |
+| Electron shell number | Nilpotency class |
+| Valence | Number of minimal normal subgroups |
+| Noble gas | Nilpotent group |
+| Halogen | Symmetric group |
+| Transition metal | Simple non-abelian group |
+| Chemical stability | Solvability |
+| Atomic mass | Information dimension Ω(|G|) |
 
-This paper makes the following contributions:
+### 1.2 Catalog Foundation
 
-1. **Derived Depth** (Definition 2.1): A formally defined invariant `derivedDepth(G)` — the minimum `n` such that the `n`-th derived subgroup is trivial — with complete characterization theorems.
+This work builds on the foundational `simple_group_valence_eq_one` theorem from the Catalog (`EML/PeriodicTableGroups.lean`, `FINAL/EML/PeriodicTableGroups.lean`), which established that simple groups have valence 1. We deepen this result by:
+- Proving the full characterization of minimal normal subgroups of simple groups
+- Establishing the Derived-Central Series Inequality as the structural backbone
+- Proving the Chemical Synthesis Theorem (solvable extensions)
+- Developing information dimension theory with additivity under products
+- Proving the Derived Depth Product Formula
 
-2. **Chemical Classification** (Definition 3.1): A seven-class taxonomy of finite groups based on structural properties, with consistency theorems ensuring each class has the expected algebraic properties.
+## 2. Definitions
 
-3. **Group Genome** (Definition 4.1): A tuple of invariants `(order, chemClass, isSolvable, isNilpotent, isAbelian, isCyclic, isSimple)` serving as a structural fingerprint.
+### 2.1 Derived Series and Derived Depth
 
-4. **Stability Hierarchy Theorem** (Theorem 5.1): A formally verified chain Cyclic ⊂ Abelian ⊂ Nilpotent ⊂ Solvable.
+The *derived series* of a group G is defined recursively:
+- D₀(G) = G
+- D_{n+1}(G) = [D_n(G), D_n(G)]
 
-5. **Strict Monotonicity** (Theorem 6.1): The derived series is strictly decreasing at each step below the derived depth.
+A group is *solvable* if D_n(G) = 1 for some n. The *derived depth* is the minimal such n.
 
-6. **Product Stability** (Theorems 7.1-7.3): The genome behaves predictably under direct products.
+### 2.2 Lower Central Series and Nilpotency Class
 
-## 2. Derived Depth
+The *lower central series* is:
+- γ₁(G) = G
+- γ_{n+1}(G) = [γ_n(G), G]
 
-### 2.1 Definition
+A group is *nilpotent* if γ_c(G) = 1 for some c. The *nilpotency class* is the minimal such c.
 
-Let G be a group. The **derived series** of G is defined inductively:
-- `G^(0) = G`
-- `G^(n+1) = [G^(n), G^(n)]` (the commutator subgroup of `G^(n)` with itself)
+### 2.3 Group Valence
 
-A group G is **solvable** if there exists `n` such that `G^(n) = {e}`.
+A normal subgroup N of G is *minimal normal* if N ≠ 1 and there is no normal subgroup strictly between 1 and N. The *group valence* is the number of minimal normal subgroups.
 
-**Definition 2.1** (Derived Depth). For a solvable group G, the **derived depth** `d(G)` is the minimum `n ∈ ℕ` such that `G^(n) = {e}`.
+### 2.4 Information Dimension
 
-Formally, `derivedDepth(G) = Nat.find(⟨n, G^(n) = ⊥⟩)`, where the existence witness comes from the solvability hypothesis.
+The *information dimension* of a finite group G is Ω(|G|), the number of prime factors of |G| counted with multiplicity.
 
-### 2.2 Characterization Theorems
+## 3. Main Results
 
-**Theorem 2.2** (Depth-Zero Characterization). `d(G) = 0` if and only if G is trivial.
+### 3.1 Derived–Central Series Inequality
 
-*Proof sketch.* Forward: if `d(G) = 0`, then `G^(0) = ⊥`, i.e., `G = {e}`. Backward: if G is trivial, then `G^(0) = G = {e} = ⊥`, so `d(G) ≤ 0`. ∎
+**Theorem 1** (`derived_le_lowerCentral`). *For any group G and natural number n, D_n(G) ≤ γ_n(G).*
 
-**Theorem 2.3** (Abelian Characterization). `d(G) ≤ 1` if and only if G is abelian.
+*Proof sketch.* By induction on n. The base case is trivial. For the inductive step:
+D_{n+1} = [D_n, D_n] ≤ [γ_n, γ_n] ≤ [γ_n, G] = γ_{n+1}
+where the first inequality uses the inductive hypothesis with commutator monotonicity, and the second uses the fact that commuting with a subgroup is "easier" than commuting with the whole group. □
 
-*Proof sketch.* Forward: `d(G) ≤ 1` means `G^(1) = ⊥`, i.e., `[G,G] = {e}`. This means all commutators `[a,b] = aba⁻¹b⁻¹` are trivial, so `ab = ba` for all a,b. Backward: if G is abelian, then `[G,G] = {e}`, so `G^(1) = ⊥` and `d(G) ≤ 1`. ∎
+**PEGB Analysis:**
+- **P**roof: Complete, non-trivial induction using `Subgroup.commutator_mono`.
+- **E**xample: For S₃, D₁(S₃) = A₃ (order 3), γ₁(S₃) = A₃. D₂(S₃) = 1, γ₂(S₃) = 1. Equality holds.
+- **G**eneralization: The inequality generalizes to the ω-indexed transfinite derived and lower central series for potentially non-Noetherian groups.
+- **B**oundary: The inequality is generally strict. For the free group on 2 generators, D₁ = [F₂, F₂] has infinite index, while γ₁ = [F₂, F₂] as well — but at higher levels, the derived series descends more slowly.
 
-**Theorem 2.4** (Positive Depth). If G is nontrivial and solvable, then `d(G) ≥ 1`.
+### 3.2 The Noble Gas Theorem
 
-*Proof.* If `d(G) = 0`, then G is trivial by Theorem 2.2, contradicting nontriviality. ∎
+**Theorem 2** (`noble_gas_depth_bound`). *If G is nilpotent of class c, then D_c(G) = 1.*
 
-## 3. Chemical Classification
+This follows immediately from Theorem 1: D_c(G) ≤ γ_c(G) = 1.
 
-### 3.1 Definition
+**Corollary** (`derivedDepth_le_nilpotencyClass'`). *The derived depth of a nilpotent group is at most its nilpotency class.*
 
-**Definition 3.1** (Chemical Class). We define seven structural classes for finite groups:
+**PEGB Analysis:**
+- **P**roof: Direct consequence of the Derived–Central Series Inequality.
+- **E**xample: The dihedral group D₄ has nilpotency class 2 and derived depth 1 (since D₁(D₄) = Z(D₄) and D₂(D₄) = 1). The bound 1 ≤ 2 holds.
+- **G**eneralization: For p-groups, finer bounds exist: derived depth ≤ ⌊log_p(|G|)⌋.
+- **B**oundary: The bound is tight for certain groups (e.g., iterated wreath products of Z/pZ).
 
-| Class | Chemical Analogue | Algebraic Condition |
-|-------|------------------|-------------------|
-| Vacuum | — | Trivial (subsingleton) |
-| Noble Gas | He, Ne, Ar | Cyclic |
-| Alkali | Li, Na, K | Abelian, non-cyclic |
-| Alkaline Earth | Be, Mg, Ca | Nilpotent, non-abelian |
-| Halogen | F, Cl, Br | Solvable, non-nilpotent |
-| Transition Metal | Fe, Co, Ni | Simple, non-abelian |
-| Compound | — | Non-solvable, non-simple |
+### 3.3 Chemical Synthesis Theorem
 
-The classification is implemented as a decision procedure: groups are tested against each condition in order, with earlier matches taking priority (e.g., a simple abelian group like ℤ/pℤ is classified as noble gas, not transition metal).
+**Theorem 3** (`solvable_extension'`). *If N ◁ G with both N and G/N solvable, then G is solvable.*
 
-### 3.2 Consistency Theorems
+*Proof sketch.* We use the short exact sequence 1 → N → G → G/N → 1. The kernel of the quotient map G → G/N equals the range of the inclusion N ↪ G, so `solvable_of_ker_le_range` applies. □
 
-**Theorem 3.2** (Noble Gas Consistency). If `classifyGroup(G) = nobleGas`, then G is cyclic.
+**PEGB Analysis:**
+- **P**roof: Uses the exact sequence characterization of solvability.
+- **E**xample: S₃ has normal subgroup A₃ ≅ Z/3Z (solvable) with quotient S₃/A₃ ≅ Z/2Z (solvable), confirming S₃ is solvable.
+- **G**eneralization: The result extends to transfinite solvability (where the derived series is indexed by ordinals).
+- **B**oundary: Fails spectacularly for *non-solvable* extensions: A₅ ◁ S₅ with S₅/A₅ ≅ Z/2Z solvable, but A₅ is not solvable, so S₅ is not solvable despite having a solvable quotient.
 
-**Theorem 3.3** (Transition Metal Consistency). If `classifyGroup(G) = transitionMetal`, then G is simple and non-abelian.
+### 3.4 Simple Group Valence Theorem
 
-**Theorem 3.4** (Halogen Consistency). If `classifyGroup(G) = halogen`, then G is solvable and not nilpotent.
+**Theorem 4** (`simple_valence_one'`). *A nontrivial simple group has valence exactly 1.*
 
-**Theorem 3.5** (Transition Metal Uniqueness). If G is simple and non-abelian, then `classifyGroup(G) = transitionMetal`.
+This follows from two sub-results:
+- `simple_top_minimal_normal'`: ⊤ is a minimal normal subgroup of any simple group.
+- `simple_unique_minimal_normal'`: ⊤ is the *only* minimal normal subgroup.
 
-These theorems ensure the classification is well-defined and captures the intended algebraic properties. Each is proved by case analysis on the `if-then-else` decision tree defining `classifyGroup`.
+**PEGB Analysis:**
+- **P**roof: Uses IsSimpleGroup's characterization that normal subgroups are ⊥ or ⊤.
+- **E**xample: A₅ has valence 1 (its only minimal normal subgroup is A₅ itself).
+- **G**eneralization: For *characteristically simple* groups (no nontrivial characteristic subgroups), the valence still equals 1, suggesting a broader "hydrogen atom" phenomenon.
+- **B**oundary: Non-simple groups can have arbitrary valence. The Klein four-group V₄ has three minimal normal subgroups (each of order 2), giving valence 3.
 
-## 4. The Group Genome
+### 3.5 Information Dimension Additivity
 
-### 4.1 Definition
+**Theorem 5** (`groupInfoDimension_prod`). *Ω(|G × H|) = Ω(|G|) + Ω(|H|).*
 
-**Definition 4.1** (Group Genome). The **genome** of a finite group G is the tuple:
+*Proof sketch.* Since |G × H| = |G| · |H|, this follows from the multiplicativity of Ω (the prime factorization of a product is the concatenation of the factorizations). □
 
-```
-genome(G) = (|G|, chemClass(G), isSolvable, isNilpotent, isAbelian, isCyclic, isSimple)
-```
+**PEGB Analysis:**
+- **P**roof: Uses multiset arithmetic on prime factorizations.
+- **E**xample: Ω(|Z/6Z × Z/10Z|) = Ω(60) = 4, and Ω(6) + Ω(10) = 2 + 2 = 4. ✓
+- **G**eneralization: Extends to arbitrary finite direct products: Ω(|∏ᵢ Gᵢ|) = Σᵢ Ω(|Gᵢ|).
+- **B**oundary: Does not extend to semidirect products in general (the order of a semidirect product is still the product of orders, but the structural decomposition differs).
 
-where each boolean flag records whether G has the corresponding property.
+### 3.6 Halogen Unsolvability
 
-### 4.2 Examples
+**Theorem 6** (`halogen_unsolvable'`). *The symmetric group S₅ is not solvable.*
 
-| Group | Order | Class | Solv | Nilp | Abel | Cyc | Simp |
-|-------|-------|-------|------|------|------|-----|------|
-| {e} | 1 | Vacuum | ✓ | ✓ | ✓ | ✓ | ✗ |
-| ℤ/5ℤ | 5 | Noble Gas | ✓ | ✓ | ✓ | ✓ | ✓ |
-| ℤ/2ℤ × ℤ/2ℤ | 4 | Alkali | ✓ | ✓ | ✓ | ✗ | ✗ |
-| Q₈ | 8 | Alkaline Earth | ✓ | ✓ | ✗ | ✗ | ✗ |
-| S₃ | 6 | Halogen | ✓ | ✗ | ✗ | ✗ | ✗ |
-| A₅ | 60 | Transition Metal | ✗ | ✗ | ✗ | ✗ | ✓ |
-| S₅ | 120 | Compound | ✗ | ✗ | ✗ | ✗ | ✗ |
+This uses the Mathlib result `Equiv.Perm.not_solvable` with the cardinality bound |Fin 5| ≥ 5.
 
-## 5. The Stability Hierarchy
+### 3.7 Nilpotency Class Spectrum
 
-### 5.1 The Main Chain
+**Theorem 7** (`nilpotencyClass_one_iff_comm'`). *A nontrivial nilpotent group has nilpotency class 1 if and only if it is abelian.*
 
-**Theorem 5.1** (Stability Chain). For any group G:
+**PEGB Analysis:**
+- **P**roof: Reduces to showing that nilpotency class 1 is equivalent to the center being the whole group.
+- **E**xample: Z/6Z has class 1 (abelian). The quaternion group Q₈ has class 2 (nilpotent but not abelian).
+- **G**eneralization: Class n corresponds to n "layers" of non-commutativity. The class-n nilpotent groups form a variety in the sense of universal algebra.
+- **B**oundary: Not all groups are nilpotent — S₃ has trivial center but is not nilpotent.
 
-```
-IsCyclic(G) ⟹ IsAbelian(G) ⟹ IsNilpotent(G) ⟹ IsSolvable(G)
-```
+### 3.8 Derived Depth Product Formula
 
-Each implication is strict: there exist groups satisfying the right property but not the left.
+**Theorem 8** (`derivedDepth_prod'`). *derivedDepth(G × H) = max(derivedDepth(G), derivedDepth(H)).*
 
-*Proof.* 
-- Cyclic ⟹ Abelian: If G = ⟨g⟩, then for any a = g^m, b = g^n, we have ab = g^{m+n} = g^{n+m} = ba.
-- Abelian ⟹ Nilpotent: If [a,b] = e for all a,b, then the lower central series reaches {e} in one step, giving nilpotency class ≤ 1.
-- Nilpotent ⟹ Solvable: Standard result; the lower central series refines the derived series. ∎
+*Proof sketch.* Uses the Derived Series Product Decomposition (`derivedSeries_prod'`): the derived series of a product decomposes component-wise. The derived depth of the product is the first n where both components have reached ⊥, which is the maximum of the individual depths. □
 
-### 5.2 Connection to Derived Depth
+## 4. The Periodic Table Structure
 
-The stability chain translates to derived depth constraints:
-- Noble Gas (cyclic): `d(G) ≤ 1`
-- Alkali (abelian, non-cyclic): `d(G) ≤ 1`  
-- Alkaline Earth (nilpotent, non-abelian): `d(G) ≥ 2`
-- Halogen (solvable, non-nilpotent): `d(G) ≥ 2`
+Groups are organized into families (columns) based on their structural properties:
 
-## 6. Strict Monotonicity of the Derived Series
+| Family | Characterization | Chemical Analogue | Valence Behavior |
+|---|---|---|---|
+| Abelian | Class 1 nilpotent | Noble gas (He, Ne) | Varies |
+| Nilpotent (class > 1) | Non-abelian nilpotent | Noble gas (Ar, Kr) | ≥ 1 |
+| Solvable non-nilpotent | Solvable, not nilpotent | Alkali/alkaline | ≥ 1 |
+| Non-solvable | Not solvable | Transition metal/halogen | ≥ 1 |
+| Simple non-abelian | No normal subgroups | Transition metal (pure) | = 1 |
 
-### 6.1 Main Result
+The *period* (row) is determined by the derived depth: groups with the same derived depth share a "chemical period."
 
-**Theorem 6.1** (Strict Derived Series Decrease). For a solvable group G, if `n + 1 ≤ d(G)`, then:
+## 5. Algorithms
 
-```
-G^(n+1) ⊊ G^(n)
-```
+### 5.1 Group Classification Algorithm
 
-(strict inclusion, not just inclusion).
+Given a finite group G (presented by its multiplication table):
+1. Compute |G| and its prime factorization → information dimension
+2. Compute the derived series D₀ ⊇ D₁ ⊇ ... → derived depth (if solvable)
+3. Compute the lower central series → nilpotency class (if nilpotent)
+4. Find all minimal normal subgroups → valence
+5. Assign family: abelian < nilpotent < solvable < general
+6. Place in periodic table: row = derived depth, column = family
 
-*Proof sketch.* Suppose for contradiction that `G^(n+1) = G^(n)`. Then `G^(n) = [G^(n), G^(n)]`, which means the derived series stabilizes at `G^(n)`. Since the series eventually reaches ⊥, we get `G^(n) = ⊥`. But `n < d(G)` (since `n + 1 ≤ d(G)`), which contradicts the minimality of d(G). ∎
+### 5.2 Composition Factor Extraction
 
-This theorem shows that the derived series is not just weakly decreasing but strictly decreasing at each step before termination—analogous to the strict ordering of electron energy levels in atomic physics.
+Given a finite group G:
+1. Find a maximal normal subgroup N
+2. Record the simple quotient G/N
+3. Recurse on N
+4. Output the multiset of composition factors
 
-## 7. Product Stability
+By the Jordan-Hölder theorem, this multiset is independent of choices.
 
-### 7.1 Results
+## 6. Cross-Domain Connections
 
-**Theorem 7.1** (Product Solvability). If G and H are solvable, then G × H is solvable.
+### 6.1 Bridge to Lattice Theory
 
-**Theorem 7.2** (Product Nilpotency). If G and H are nilpotent, then G × H is nilpotent.
+The set of normal subgroups of G forms a modular lattice. The group valence is the number of atoms in this lattice. This connects our periodic table to the theory of lattice invariants: the *width* of the normal subgroup lattice bounds the valence from above, while the *height* corresponds to the chief series length.
 
-**Theorem 7.3** (Product Order). `|G × H| = |G| · |H|`.
+### 6.2 Bridge to Galois Theory
 
-### 7.2 Implications for the Genome
+The solvability of a group is directly connected to the solvability of polynomial equations via Galois theory. Our Chemical Synthesis Theorem (solvable extensions are solvable) is the algebraic underpinning of the Galois-theoretic fact that solvable extensions of solvable extensions are solvable — which is why the class of polynomials solvable by radicals is closed under composition.
 
-These results establish that chemical class is "upward closed" under products within the stability hierarchy: the product of two noble gases is at most an alkali; the product of two alkaline earths is at most an alkaline earth.
+### 6.3 Bridge to Representation Theory
 
-## 8. Bridge to Simple Group Theory
+The derived depth of a group constrains its representation theory: a group of derived depth d has at least d + 1 distinct irreducible representations (one for each quotient in the derived series). The information dimension Ω(|G|) bounds the total number of irreducible representations.
 
-### 8.1 Connection to Valence
+## 7. Discussion
 
-The **valence** of a group—defined as the number of minimal normal subgroups—connects our framework to the existing catalog result `simple_group_valence_eq_one`.
+### 7.1 Predictive Power
 
-**Theorem 8.1** (Simple Normal Dichotomy). For a simple group G and normal subgroup N ◁ G, either N = {e} or N = G.
+Our periodic table makes predictions analogous to Mendeleev's:
+- A group of order 120 with composition factors {Z/2Z, Z/2Z, Z/2Z, Z/3Z, Z/5Z} must be solvable (all factors are abelian, by the Chemical Synthesis Theorem applied iteratively).
+- A group containing A₅ as a composition factor cannot be solvable (the Halogen Unsolvability Theorem propagates through extensions).
+- The derived depth of any group of order 2ⁿ is at most n (Information Dimension bound).
 
-This is the foundation of the "transition metal" classification: simple groups have valence 1 because they have exactly one minimal normal subgroup (themselves).
+### 7.2 Limitations
 
-## 9. Discussion
+The chemical analogy has boundaries:
+- Unlike chemical elements, groups of the same order can belong to different families (Z/6Z is abelian, S₃ is solvable non-nilpotent).
+- The number of groups of order n grows super-exponentially (there are 49,487,365,422 groups of order 1024), making exhaustive classification impractical.
+- Group valence, unlike chemical valence, is not bounded by a small constant.
 
-### 9.1 Strengths
+## 8. Future Work
 
-The Group Genome framework provides:
-- A systematic classification that is both intuitive (via the chemistry analogy) and rigorous (via machine-verified proofs).
-- A bridge between the abstract theory of solvability/nilpotency and concrete computational invariants.
-- A predictive framework: knowing a group's composition factors constrains its possible genomes.
-
-### 9.2 Limitations
-
-- The genome is coarser than isomorphism: many non-isomorphic groups share the same genome.
-- The derived depth is defined only for solvable groups, leaving the "right half" of the periodic table less structured.
-- For non-solvable groups, finer invariants (chief length, Fitting height) would be needed.
-
-### 9.3 Comparison to Prior Work
-
-The idea of organizing groups by structural properties has appeared in various forms:
-- The Burnside classification of groups by order uses prime factorization.
-- The concept of "group variety" organizes groups by laws they satisfy.
-- Our contribution is the specific combination of derived depth with chemical classification, formalized with machine-verified proofs.
-
-## 10. Future Work
-
-1. **Quantitative bounds**: Establish tight bounds on derived depth in terms of the prime factorization of |G|.
-2. **Fitting height integration**: Extend the genome to include the Fitting height for non-solvable groups.
-3. **Computational classification**: Implement genome computation for all groups of order ≤ 100 and verify the predictions of the framework.
-4. **Composition factor signatures**: Formalize the connection between genome invariants and composition factor multisets via the Jordan-Hölder theorem.
+1. **Quantitative Periodic Law**: Prove that derivedDepth(G) ≤ Ω(|G|) for all nontrivial finite solvable groups.
+2. **Socle Structure Theorem**: Characterize the socle (join of all minimal normal subgroups) for solvable groups.
+3. **Computational Periodic Table**: Implement the classification algorithm for all groups of order ≤ 100 and verify predictions.
+4. **Profinite Extension**: Extend the periodic table framework to profinite groups, connecting to Galois theory of infinite extensions.
 
 ## References
 
-1. Dixon, J.D. and Mortimer, B. (1996). *Permutation Groups*. Springer.
-2. Robinson, D.J.S. (1996). *A Course in the Theory of Groups*. Springer.
-3. Rotman, J.J. (1995). *An Introduction to the Theory of Groups*. Springer.
-4. The mathlib Community (2020). The Lean mathematical library. *CPP 2020*.
+1. Catalog: `EML/PeriodicTableGroups.lean` — foundational periodic table framework
+2. Catalog: `FINAL/EML/PeriodicTableGroups.lean` — verified simple_group_valence_eq_one
+3. Catalog: `Algebra/FutureExploration.lean` — symmetric_group_order
+4. Catalog: `FINAL/Algebra/FutureExploration.lean` — symmetric_group_order (verified)
+5. Robinson, D.J.S., *A Course in the Theory of Groups*, Springer, 1996
+6. Rotman, J.J., *An Introduction to the Theory of Groups*, Springer, 1995

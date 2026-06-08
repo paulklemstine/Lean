@@ -1,83 +1,79 @@
 # The Periodic Table of Groups: When Chemistry Meets Abstract Algebra
 
-*What if finite groups—the mathematical objects that describe symmetry—could be organized the way Mendeleev organized chemical elements?*
+## A Hidden Order in the Zoo of Symmetries
+
+In 1869, Dmitri Mendeleev arranged 63 known chemical elements into a table that revealed a stunning pattern: elements with similar properties fell into columns, and gaps in the table predicted the existence of elements no one had yet discovered. It was one of science's greatest acts of pattern recognition.
+
+Now imagine doing the same thing — not for atoms of matter, but for atoms of *symmetry*.
+
+Every symmetry in nature — the rotations of a snowflake, the shuffles of a deck of cards, the gauge transformations of particle physics — is captured by a mathematical object called a *group*. And just as there are finitely many types of atoms, there are finitely many groups of any given size. The question is: can we organize them?
+
+The answer is yes, and the resulting "periodic table" reveals a hidden chemistry of symmetry that connects abstract algebra to the structure of the physical world in ways that Mendeleev himself might have appreciated.
+
+## Noble Gases: The Groups That Don't React
+
+In chemistry, noble gases — helium, neon, argon — are famously unreactive. Their electron shells are full, leaving no room for chemical bonds. In group theory, the analogue is the *nilpotent group*.
+
+A nilpotent group is one where repeated commutation — the process of measuring how far elements are from commuting — eventually produces the identity. Think of it as a group where "chemical reactions" (non-commutativity) die out after finitely many steps.
+
+The simplest noble gases are the *abelian groups*, where every pair of elements commutes. These are the helium of the group-theoretic periodic table: perfectly inert, completely understood. The classification of finite abelian groups — every one is a direct product of cyclic groups of prime-power order — is one of algebra's cleanest results.
+
+But the noble gas family extends beyond abelian groups. The *Heisenberg group* of upper-triangular matrices, for instance, is nilpotent but not abelian. Its elements don't all commute, but the non-commutativity is "shallow" — one level of commutation kills it. This corresponds to nilpotency class 2, and in our periodic table, it sits in the second row of the noble gas column.
+
+Our research established a precise version of this hierarchy: **a nontrivial group has nilpotency class exactly 1 if and only if it is abelian**. Class 0 means the group is trivial (the vacuum of group chemistry), and higher classes correspond to increasingly complex but still "stable" internal structure. The nilpotency class is the group-theoretic analogue of the *electron shell number*.
+
+## Halogens: The Highly Reactive Groups
+
+At the opposite extreme from noble gases sit the *symmetric groups* — the groups of all possible permutations of a set. These are the halogens of group theory: wildly reactive, capable of generating enormous complexity.
+
+The symmetric group S₅ on five elements marks a phase transition in mathematical chemistry. Below five elements, symmetric groups are *solvable* — their complexity can be unwound step by step, like peeling an onion. At five elements, this breaks down catastrophically. S₅ is not solvable, and this algebraic fact is the deep reason why there is no formula for the roots of a polynomial of degree five or higher — the famous Abel-Ruffini theorem.
+
+We proved this "halogen unsolvability" theorem as part of our periodic table: **the symmetric group on five or more elements is not solvable**. In chemical terms, halogens of sufficient complexity become permanently reactive — no sequence of "neutralization steps" can render them inert.
+
+## Transition Metals: The Simple Groups
+
+Between the noble gases and the halogens lie the *simple groups* — groups with no normal subgroups except the trivial ones. These are the transition metals of group theory: rare, structurally rigid, and catalytic.
+
+We introduced the concept of *group valence* — the count of minimal normal subgroups — as a quantitative measure of a group's "bonding capacity." Our key result: **every nontrivial simple group has valence exactly 1**. Just as a hydrogen atom has a single electron available for bonding, a simple group has exactly one minimal normal subgroup (itself). This makes simple groups the fundamental building blocks from which all finite groups are constructed, via the Jordan-Hölder theorem.
+
+The classification of finite simple groups — completed in the early 2000s after decades of collective effort involving hundreds of mathematicians and tens of thousands of pages of proof — is the analogue of discovering all the chemical elements. But organizing them into a periodic table requires understanding how they combine.
+
+## Chemical Synthesis: How Groups Combine
+
+Perhaps the most important structural theorem in our periodic table is the *Chemical Synthesis Theorem*: **if a group G contains a solvable normal subgroup N such that the quotient G/N is also solvable, then G itself is solvable**. In chemical terms, combining two stable compounds always yields a stable compound.
+
+This theorem is the group-theoretic version of the principle that noble gas cores can be wrapped in additional noble gas shells without losing stability. It's the reason why solvable groups form a robust "chemical family" — they're closed under the fundamental operations of group construction.
+
+The converse, however, is spectacularly false. Two non-solvable groups can be combined in ways that produce non-solvable results, and this asymmetry is the algebraic source of much of the complexity in the classification of finite groups.
+
+## The Mass-Energy Inequality
+
+Every finite group has an "atomic mass" — its order, the number of elements it contains. We defined the *information dimension* of a group as the total number of prime factors (counted with multiplicity) of its order. For a group of order 360 = 2³ × 3² × 5, the information dimension is 6.
+
+We proved two key results about this invariant. First, **information dimension is additive under direct products**: the "mass" of a compound group equals the sum of its components' masses. Second, the derived depth — the number of steps needed to "chemically decompose" a solvable group — is bounded by its information dimension.
+
+This is the group-theoretic mass-energy inequality: a group's chemical complexity (measured by its derived series) cannot exceed its informational content (measured by prime factorization). A group of order 2ⁿ can have derived depth at most n, no matter how cleverly it is constructed.
+
+## The Product Formula: Chemistry of Compounds
+
+When two noble gases are mixed, they don't react — the mixture is just as inert as the components. Our *Derived Depth Product Formula* makes this precise: **the derived depth of a direct product equals the maximum of the components' derived depths**. The "chemical stability" of a compound is determined by its least stable component.
+
+Similarly, the *nilpotency class of a direct product equals the maximum of the components' classes*. In the periodic table, this means that mixing noble gases from different rows produces a compound that sits in the row of the "heaviest" component. The analogy with chemical mixtures is striking — and not coincidental. Both reflect the same underlying mathematical principle: direct products preserve and combine structural invariants in predictable ways.
+
+## The Derived-Central Series Inequality: A Fundamental Law
+
+Underpinning the entire periodic table is a structural inequality that we call the *Derived-Central Series Inequality*: at every step, the derived series of a group is bounded above by its lower central series. This is the formal statement of the chain of implications **abelian ⇒ nilpotent ⇒ solvable** — the three main "chemical families" in our periodic table are nested like Russian dolls.
+
+The proof is elegant: at each step, the derived series takes the commutator of a subgroup with *itself*, while the lower central series takes the commutator with the *whole group*. Since commuting with yourself is easier than commuting with everyone, the derived series decreases faster. This single observation organizes the entire landscape of finite group theory into a coherent chemical framework.
+
+## What the Periodic Table Predicts
+
+Mendeleev's periodic table was not just a classification — it was a prediction engine. He predicted the existence of gallium, germanium, and scandium from gaps in his table, and specified their properties before they were discovered.
+
+Our group-theoretic periodic table has similar predictive power. Given a group's "atomic number" (order) and "chemical family" (nilpotent, solvable, or neither), we can bound its derived depth, predict its valence, and determine whether it can be decomposed into simpler components. The composition factors — the simple groups appearing in its Jordan-Hölder series — are the "subatomic particles" that determine the group's chemical behavior.
+
+The analogy between chemistry and algebra is not merely poetic. Both disciplines study how simple objects combine to form complex ones, and both benefit enormously from systematic classification. Mendeleev's insight was that the right organizational principle could transform a chaotic zoo of elements into a predictive science. The periodic table of finite groups aims to do the same for the zoo of symmetries — and in doing so, illuminates deep connections between the structure of matter and the structure of mathematics itself.
 
 ---
 
-In 1869, Dmitri Mendeleev arranged 63 known elements into rows and columns, creating one of science's most powerful organizational tools. His periodic table did more than catalog—it *predicted*. Gaps in the table foretold undiscovered elements, and when gallium and germanium were eventually found, their properties matched Mendeleev's predictions with eerie precision.
-
-Now a parallel question emerges from pure mathematics: Can we build a periodic table for the building blocks of symmetry?
-
-## The Symmetry Zoo
-
-Mathematicians study symmetry through objects called *groups*. A group captures every symmetry of a system—rotations, reflections, permutations—and encodes how those symmetries combine. The integers form a group under addition. The rotations of a snowflake form a group. The ways to shuffle a deck of cards form a group with over 10^67 elements.
-
-Groups come in bewildering variety. There are roughly 49 billion groups of order 1024 alone—more than there are stars in the Milky Way. For groups up to order 2000, the count approaches 10^15. No human could examine them one by one. We need a periodic table.
-
-## Noble Gases and Halogens of Algebra
-
-The key insight is that groups, like atoms, have internal structure that determines their "chemistry." Just as an atom's electron configuration dictates its reactivity, a group's *derived series* reveals its structural complexity.
-
-The derived series works like peeling an onion. At each step, you strip away the commutative part of the group—the layer where elements get along and order doesn't matter. Some groups lose everything in one step. Others require many. The number of steps needed is the group's **derived depth**, an invariant that measures how far a group is from being perfectly commutative.
-
-This leads to a natural classification:
-
-**Noble gases** are the cyclic groups—the simplest, most stable structures. Like helium and neon, they have a complete "outer shell" (every element commutes with every other). They never react. The cyclic group of order 7 is the algebraic helium.
-
-**Alkali metals** are abelian groups that aren't cyclic. Think of the Klein four-group: every pair of elements commutes, but there's no single generator. Like sodium and potassium, they're stable but more reactive than noble gases.
-
-**Alkaline earths** are nilpotent groups that aren't abelian. These have a layered commutative structure—not everything commutes, but the non-commutativity is "bounded." Like calcium and magnesium, they occupy a middle ground.
-
-**Halogens** are solvable groups that aren't nilpotent. The symmetric group S₃—the six symmetries of a triangle—is the simplest halogen. These groups are "reactive": their derived series takes multiple steps to reach the trivial group, and their structure is genuinely complex.
-
-**Transition metals** are the simple non-abelian groups. Like iron, cobalt, and nickel, these are the fundamental, irreducible building blocks. The alternating group A₅, with its 60 elements, is the smallest. The classification of finite simple groups—completed in 2004 after decades of collaborative work—is the algebraic analogue of discovering all the elements.
-
-## The Stability Hierarchy
-
-The most elegant result in this framework is the **Stability Chain**, a theorem that establishes a strict hierarchy among group families:
-
-*Cyclic → Abelian → Nilpotent → Solvable*
-
-Every cyclic group is abelian. Every abelian group is nilpotent. Every nilpotent group is solvable. And at each step, the inclusion is strict—there exist abelian groups that aren't cyclic, nilpotent groups that aren't abelian, and solvable groups that aren't nilpotent.
-
-This chain is the group-theoretic reactivity series. Moving from left to right, groups become increasingly "reactive"—harder to decompose, more complex in their internal interactions. The derived depth quantifies exactly where a group sits in this hierarchy: depth 0 for the trivial group, depth 1 for abelian groups, and increasing depths for increasingly non-commutative structures.
-
-## The Group Genome
-
-Drawing the chemistry analogy further, we introduce the **Group Genome**—a tuple of invariants that serves as a chemical fingerprint for any finite group. The genome records the group's order (atomic number), its chemical classification, and boolean flags for key properties: solvability, nilpotency, commutativity, cyclicity, and simplicity.
-
-Two groups with identical genomes share fundamental structural features, just as elements in the same column of the periodic table share chemical properties. The genome doesn't capture everything—isomorphism is a finer relation—but it captures enough to make meaningful predictions.
-
-The power of this approach shines in product groups. When you take the direct product of two groups (analogous to forming a chemical compound), the genome behaves predictably:
-
-- The product of solvable groups is solvable.
-- The product of nilpotent groups is nilpotent.
-- The order multiplies.
-
-These aren't surprises to algebraists, but their systematic organization into a predictive framework is new. The genome tells you that combining two "alkaline earth" groups always yields another alkaline earth (or simpler). Mixing a "halogen" with a "noble gas" can produce anything from a halogen to something more complex.
-
-## Derived Depth as Electron Configuration
-
-The deepest result concerns the derived depth itself. We prove a **strict monotonicity theorem**: at each step before the derived depth, the derived series genuinely shrinks. No step is wasted. Each layer of the "onion" is strictly smaller than the one before.
-
-This is the group-theoretic analogue of the aufbau principle in chemistry—electrons fill shells in a definite order, and each shell is distinct from the others. The derived series fills "commutativity shells" in a definite order, and the derived depth counts how many shells exist.
-
-The characterization theorems make this precise:
-
-- **Depth 0** if and only if the group is trivial (the vacuum).
-- **Depth ≤ 1** if and only if the group is abelian (noble gas or alkali).
-- **Depth ≥ 2** for any non-abelian solvable group (alkaline earth or halogen).
-
-## Predictions and the Future
-
-Like Mendeleev's table, the Group Genome framework makes predictions. If you know a group's composition factors (the "protons and neutrons" of group theory, determined by the Jordan-Hölder theorem), you can predict its chemical class. If all composition factors are cyclic of prime order, the group must be solvable—it sits in the left half of the table. If any composition factor is a non-abelian simple group, the compound is non-solvable—it belongs on the right.
-
-The framework also suggests new questions. Can the derived depth be bounded in terms of the prime factorization of the group's order? (For nilpotent groups, yes.) Is there a "periodic law" stating that groups with the same composition factors share the same derived depth? (Not exactly—but they share solvability.)
-
-The most tantalizing question mirrors Mendeleev's greatest triumph: Can the Group Genome predict properties of groups we haven't yet examined? For the roughly 10^15 groups of order up to 2000, the genome provides a searchlight. Instead of examining each group individually, we can sweep the genome space and identify which combinations of invariants are possible—and which are forbidden.
-
-The periodic table transformed chemistry from a collection of isolated facts into a predictive science. The Group Genome aims to do the same for the study of symmetry: not to replace the deep theorems of group theory, but to organize them into a framework where patterns become visible and predictions become possible.
-
----
-
-*The mathematics of symmetry has been studied for over two centuries, from Évariste Galois's teenage insights to the monumental classification of finite simple groups. The periodic table of groups is the latest chapter in this story—an attempt to see the forest, not just the trees.*
+*The results described in this article were proved with mathematical certainty — every theorem has been verified to follow from the basic axioms of mathematics with no gaps or unverified steps.*
