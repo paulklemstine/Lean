@@ -43,6 +43,14 @@ class ResearchJournal:
                     data["cycle_log"] = data.get("entries", [])
                 if "entries" in data and "cycle_log" not in data:
                     data["cycle_log"] = data.pop("entries")
+                if "key_theorems" not in data:
+                    data["key_theorems"] = []
+                if "open_questions" not in data:
+                    data["open_questions"] = []
+                if "research_threads" not in data:
+                    data["research_threads"] = {}
+                if "last_updated" not in data:
+                    data["last_updated"] = ""
                 return data
             except (json.JSONDecodeError, OSError):
                 pass

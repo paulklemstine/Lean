@@ -1674,18 +1674,45 @@ Research mode: {concept.research_mode}
                     f.write(p["content"])
                     patch_file = f.name
                 
+                patched = False
                 try:
                     # Apply diff
                     result = subprocess.run(["patch", str(abs_target), patch_file], capture_output=True, text=True)
                     if result.returncode == 0:
                         print(f"[Integrate] Merged diff into {target_path}")
                         files_written += 1
+                        patched = True
                     else:
                         print(f"[Integrate] Patch failed for {target_path}: {result.stderr}")
                 except Exception as e:
                     print(f"[Integrate] Patch failed for {target_path}: {e}")
                 finally:
                     os.unlink(patch_file)
+
+                # Fallback: if patch failed, try to copy the full file from project directory
+                if not patched:
+                    if hasattr(job, "project_dir") and job.project_dir:
+                        proj_dir = Path(job.project_dir)
+                        candidates = [
+                            proj_dir / "Catalog" / target_path,
+                            proj_dir / target_path,
+                        ]
+                        if target_path.startswith("Catalog/"):
+                            clean_target_path = target_path[len("Catalog/"):]
+                            candidates.append(proj_dir / "Catalog" / clean_target_path)
+                            candidates.append(proj_dir / clean_target_path)
+                        
+                        for cand in candidates:
+                            if cand.exists() and cand.is_file():
+                                try:
+                                    content = cand.read_text(encoding="utf-8", errors="ignore")
+                                    abs_target.write_text(content, encoding="utf-8")
+                                    print(f"[Integrate] Fallback success: copied full file from project dir to {target_path}")
+                                    files_written += 1
+                                    patched = True
+                                    break
+                                except Exception as fe:
+                                    print(f"[Integrate] Fallback read/write failed for {cand}: {fe}")
 
         print(f"[Integrate] Pi successfully integrated {files_written} files.")
         job.files_integrated = files_written
