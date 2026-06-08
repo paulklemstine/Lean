@@ -1,223 +1,253 @@
-# Formalized Hardness Reduction from Lattice Problems to Learning with Errors
+# Learning with Errors: Formalized Hardness Reductions
 
-## Abstract
+## Structural Theorems for LWE Parameter Relationships and Variant Reductions
 
-We present a formal mathematical framework for the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors (LWE) problem, formalized in the Lean 4 proof assistant with the Mathlib library. Our formalization captures the key parameter relationships, noise flooding mechanisms, hybrid argument structure, and security guarantees of Regev's celebrated reduction. We introduce two novel mathematical structures — `NoiseFloodingLemma` and `ReductionChain` — that decompose the reduction into composable, independently verifiable components. All 20 theorems are proved without axioms beyond the standard logical foundations, providing machine-verified guarantees for the core mathematical claims underlying post-quantum cryptography.
+---
 
-**Keywords**: Learning with Errors, lattice-based cryptography, worst-case hardness, formal verification, noise flooding, hybrid argument
+### Abstract
 
-## 1. Introduction
+We present a formalization of core structural theorems underlying the Learning with Errors (LWE) cryptographic framework, establishing rigorous foundations for the hardness reductions that connect LWE to worst-case lattice problems. Our results comprise three families of theorems: (1) sample reduction, showing that LWE hardness is monotone in the number of available samples; (2) modulus switching via ring homomorphisms, proving that LWE instances can be transported across divisible moduli with full algebraic coherence; and (3) error rate parameter bounds, establishing the Regev threshold condition α·q ≥ 2√n and its consequences for approximation factor tradeoffs. All results are machine-verified, providing a trustworthy foundation for the security analysis of post-quantum cryptographic schemes.
 
-The Learning with Errors (LWE) problem, introduced by Regev [1], has become the foundational hardness assumption for post-quantum cryptography. Two of the three algorithms standardized by NIST in 2024 — ML-KEM and ML-DSA — rely on variants of LWE for their security guarantees.
+**Keywords:** Learning with Errors, lattice cryptography, hardness reduction, modulus switching, post-quantum cryptography, formal verification
 
-The theoretical foundation of LWE security rests on a *worst-case to average-case reduction*: any efficient algorithm solving random LWE instances can be transformed into an algorithm solving worst-case instances of the Shortest Vector Problem (SVP) on lattices. This reduction, originally due to Regev [1] with a quantum step and later made classical by Peikert [2], involves intricate mathematical machinery including:
+---
 
-1. **Discrete Gaussian distributions** and smoothing parameters
-2. **Noise flooding** — statistical masking of bounded signals
-3. **Hybrid arguments** — telescoping reductions across coordinates
-4. **Parameter relationships** linking LWE error rates to lattice approximation factors
+### 1. Introduction
 
-In this work, we formalize the core mathematical structure of this reduction in Lean 4, producing 20 machine-verified theorems organized into a coherent framework.
+The Learning with Errors (LWE) problem, introduced by Regev [1], has become the cornerstone of lattice-based cryptography. Its significance derives from a remarkable worst-case to average-case reduction: solving random LWE instances is at least as hard as approximating the Shortest Vector Problem (GapSVP) and the Shortest Independent Vectors Problem (SIVP) on arbitrary lattices [1, 2].
 
-### 1.1 Contributions
+The reduction depends critically on three parameters: the dimension n, the modulus q, and the error rate α. The interplay between these parameters determines both the hardness guarantee (the approximation factor γ in the underlying lattice problem) and the efficiency of the resulting cryptosystem.
 
-- **NoiseFloodingLemma**: A novel structure parameterizing the noise flooding step, with a machine-verified proof that the signal-to-noise ratio bounds the statistical distance (Theorem 5).
-- **ReductionChain**: A composable framework for multi-step reductions, with verified bounds on total advantage loss (Theorems 11–12).
-- **Telescope lemma**: An inductive proof of the telescoping bound for absolute values (Theorem 6), used in the hybrid argument.
-- **Parameter verification**: Machine-verified proofs of Regev's modulus condition, approximation factor monotonicity, and polynomial factor simplification (Theorems 14–17).
-- **Gaussian tail bounds**: Verified subexponential decay of Gaussian tails (Theorems 8–9).
+This work formalizes the structural backbone of LWE hardness reductions. Rather than formalizing the full quantum reduction (which requires continuous Gaussian sampling and quantum Fourier transforms over lattices), we establish the algebraic and combinatorial lemmas that form the reduction's skeleton:
 
-## 2. Definitions
+- **Sample reduction** (§3): LWE with m samples reduces to LWE with m′ ≤ m samples.
+- **Modulus switching** (§4): LWE over ℤ_q reduces to LWE over ℤ_p when p | q.
+- **Parameter bounds** (§5): The Regev condition α·q ≥ 2√n and its implications.
 
-### 2.1 LWE Parameters
+All theorems are formalized and verified in the companion file `Computation/LWEBasic.lean`.
 
-**Definition 1** (LWE Parameters). An LWE instance is parameterized by a tuple (n, q, m, α) where:
-- n ∈ ℕ is the lattice dimension (security parameter)
-- q ∈ ℕ is the modulus with q > 1
-- m ∈ ℕ is the number of samples
-- α ∈ (0, 1) is the error rate
+---
 
-The *error width* is αq, representing the standard deviation of the discrete Gaussian error distribution D_{ℤ,αq}. The *approximation factor* is γ = n/(αq).
+### 2. Definitions
 
-### 2.2 Noise Flooding Lemma (Novel)
+We work with the following core structures.
 
-**Definition 2** (Noise Flooding Lemma). A noise flooding configuration consists of:
-- B > 0: upper bound on signal magnitude
-- s > 0: Gaussian noise width
-- ε ∈ (0, 1): statistical distance bound
-- The *flooding constraint*: s/B ≥ 1/ε
+#### 2.1 LWE Instances
 
-The *flooding ratio* is s/B. The key property is that the signal-to-noise ratio B/s is at most ε.
+An **LWE instance** with parameters (n, m, q) consists of a matrix A ∈ ℤ_q^{m×n} and a target vector b ∈ ℤ_q^m. In the "real" distribution, b = As + e (mod q) for a uniformly random secret s ∈ ℤ_q^n and a discrete Gaussian error vector e. In the "uniform" distribution, b is uniformly random.
 
-### 2.3 Reduction Chain (Novel)
+(@file Computation/LWEBasic.lean — `LWEInstance`)
 
-**Definition 3** (Reduction Chain). A k-step reduction chain consists of:
-- k ∈ ℕ with k > 0: number of reduction steps
-- (ℓᵢ)_{i=1}^k with ℓᵢ ≥ 0: advantage loss at step i
-- Total loss L = Σᵢ ℓᵢ
+```
+structure LWEInstance (n m q : ℕ) where
+  A : Fin m → Fin n → ZMod q
+  b : Fin m → ZMod q
+```
 
-If an attacker has advantage δ against the hard problem and the total loss is L, the attacker's advantage against LWE is at least δ − L.
+#### 2.2 Integer Lattices
 
-## 3. Main Results
+A **lattice basis** in ℤ^n is represented as a matrix B ∈ ℤ^{n×n}. The lattice L(B) is the set of all integer linear combinations of the basis vectors.
 
-### 3.1 Noise Flooding (Theorem 5)
+(@file Computation/LWEBasic.lean — `IntLatticeBasis`, `isLatticePoint`)
 
-**Theorem** (noise_flooding_masks_signal). *For any noise flooding configuration, B/s ≤ ε.*
+A vector v is a **lattice point** if there exist integer coefficients c₁, …, cₙ such that v = Σᵢ cᵢ · Bᵢ.
 
-*Proof sketch.* From the flooding constraint s/B ≥ 1/ε, we have:
-1. Multiply both sides by B·ε: s·ε ≥ B
-2. Divide both sides by s: ε ≥ B/s
+#### 2.3 Short Vectors and Hardness
 
-The formal proof uses `div_le_iff₀` and `inv_mul_le_iff₀` to handle the algebraic manipulations. □
+The **squared ℓ₂ norm** of an integer vector is defined as ‖v‖² = Σᵢ vᵢ². A lattice has a **short vector** of length at most d if there exists a nonzero lattice point v with ‖v‖² ≤ d².
 
-### 3.2 Gaussian Tail Bounds (Theorems 8–9)
+(@file Computation/LWEBasic.lean — `intVecNormSq`, `hasShortVector`, `isNonzero`)
 
-**Theorem** (gaussian_tail_monotone). *For t ≥ 1, exp(−πt²) ≤ exp(−πt).*
+#### 2.4 Regev Parameters
 
-*Proof.* Since t ≥ 1, we have t² ≥ t, so πt² ≥ πt, hence −πt² ≤ −πt, and exponential is monotone. □
+The **Regev parameter validity condition** requires:
 
-**Theorem** (gaussian_tail_subexponential). *For t ≥ 1, exp(−πt²) < exp(−t).*
+$$\alpha \cdot q \geq 2\sqrt{n}$$
 
-*Proof.* Using π > 3 and (t−1)² ≥ 0, we have πt² ≥ 3t² = 3t·t ≥ 3t ≥ t for t ≥ 1, so −πt² < −t. The formal proof uses `nlinarith` with the hint `sq_nonneg (t - 1)`. □
+The **approximation factor** associated with LWE parameters is:
 
-### 3.3 Telescope Lemma (Theorem 6)
+$$\gamma(n, \alpha) = \frac{n}{\alpha}$$
 
-**Theorem** (telescope_abs_bound). *For any function f : Fin(n+1) → ℝ,*
-*|f(0) − f(n)| ≤ Σᵢ |f(i) − f(i+1)|.*
+(@file Computation/LWEBasic.lean — `regev_parameter_valid`, `regev_approx_factor`)
 
-*Proof.* By induction on n. The base case n = 0 is trivial. For the inductive step, we split:
-|f(0) − f(n+1)| ≤ |f(0) − f(n)| + |f(n) − f(n+1)|
-by the triangle inequality, then apply the inductive hypothesis to the first term. The formal proof uses `Fin.sum_univ_castSucc` to decompose the sum. □
+---
 
-### 3.4 Hybrid Column Bound (Theorem 7)
+### 3. Sample Reduction
 
-**Theorem** (hybrid_column_bound). *If |f(i) − f(i+1)| ≤ ε for all i, then |f(0) − f(n)| ≤ n·ε.*
+The first family of results establishes that LWE hardness is monotone in the number of samples.
 
-*Proof.* Apply the telescope lemma, then bound each term by ε, giving Σᵢ ε = n·ε. □
+#### 3.1 Prefix Reduction
 
-### 3.5 Reduction Chain Composition (Theorems 11–12)
+**Theorem 3.1** (Sample Reduction). *For n, m, m′, q with m′ ≤ m, there exists an extraction map*
 
-**Theorem** (reduction_chain_uniform_loss). *If each step loses at most ε, then the total loss is at most k·ε.*
+$$\text{extract} : \text{LWE}(n, m, q) \to \text{LWE}(n, m', q)$$
 
-*Proof.* Direct sum bound: Σᵢ ℓᵢ ≤ Σᵢ ε = k·ε. □
+*such that for all instances, the extracted matrix preserves entries: extract(inst).A[i,j] = inst.A[i,j] for all i < m′, j < n.*
 
-### 3.6 Regev's Modulus Condition (Theorem 14)
+(@file Computation/LWEBasic.lean — `lwe_sample_reduction`)
 
-**Theorem** (regev_modulus_condition). *For n ≥ 4, n² ≥ 2√n.*
+*Proof sketch.* Define extract by restricting A and b to the first m′ rows. The index i : Fin m′ embeds into Fin m via the natural inclusion (since m′ ≤ m), and the property follows by definition. □
 
-*Proof.* Using (√n)² = n and the bound (√n − 1)² ≥ 0, `nlinarith` closes the goal with hints from `Real.sq_sqrt` and `Real.sqrt_nonneg`. □
+#### 3.2 Injection Reduction
 
-### 3.7 Approximation Factor Monotonicity (Theorem 16)
+**Theorem 3.2** (Injection Reduction). *For any embedding f : Fin m′ ↪ Fin m, there exists an extraction map such that extract(inst).A[i,j] = inst.A[f(i), j].*
 
-**Theorem** (approxFactor_anti_noise). *For α' > α, n/(α'q) < n/(αq).*
+(@file Computation/LWEBasic.lean — `lwe_sample_injection_reduction`)
 
-*Proof.* Direct application of `div_lt_div_of_pos_left` with the fact that α' > α implies α'q > αq. This captures the fundamental security tradeoff: more noise (larger α) makes LWE harder, corresponding to a smaller approximation factor γ for the lattice problem it reduces from. □
+This generalizes Theorem 3.1: the m′ samples need not be a prefix; any injectively chosen subset suffices. The proof composes A and b with the embedding f.
 
-### 3.8 Polynomial Approximation Factor (Theorem 17)
+#### 3.3 Boundary Case
 
-**Theorem** (poly_approx_factor). *c·n/(2√n) = c√n/2.*
+**Theorem 3.3** (Zero Samples). *With m = 0, all LWE instances have identical A matrices: for any inst₁, inst₂ : LWE(n, 0, q), we have inst₁.A = inst₂.A.*
 
-*Proof.* Write n = (√n)², cancel one √n factor. The formal proof uses `nlinarith` with `Real.sq_sqrt` to establish c·n = c·√n·√n, then applies `mul_div_mul_right`. □
+(@file Computation/LWEBasic.lean — `lwe_zero_samples_trivial`)
 
-## 4. Algorithms
+*Proof sketch.* Functions from Fin 0 are unique (there are no elements to differ on), so the matrices agree extensionally. □
 
-### 4.1 Parameter Selection
+**Remark.** This boundary case captures the information-theoretic content of LWE: with zero equations, the secret s is completely hidden. The A matrices are vacuously equal because they have no rows.
 
-Given a target security level λ (in bits), Regev's parameter selection:
-1. Set n = λ
-2. Set q = next_prime(n²)
-3. Set α = 1/(n√n), giving αq ≈ √n
-4. Set m = ⌈n log₂ q⌉
+---
 
-### 4.2 BKZ Attack Cost Estimation
+### 4. Modulus Switching via Ring Homomorphisms
 
-The best known attack uses BKZ lattice reduction:
-1. Compute optimal blocksize β ≈ n·log q / (log q − log(αq))
-2. Classical cost: 2^(0.292β)
-3. Quantum cost: 2^(0.265β) (using Grover)
+#### 4.1 Surjectivity of the Canonical Map
 
-### 4.3 Noise Flooding Construction
+**Theorem 4.1** (ZMod Quotient Surjectivity). *For p | q with p, q > 0, the canonical ring homomorphism*
 
-Given signal bound B and target statistical distance ε:
-1. Set s = B/ε (noise width)
-2. Verify s/B = 1/ε ≥ 1/ε ✓
+$$\text{castHom} : \mathbb{Z}/q\mathbb{Z} \to \mathbb{Z}/p\mathbb{Z}$$
 
-## 5. Parameter Analysis
+*is surjective.*
 
-| n | q = n² | α = 1/(n√n) | αq = √n | γ = √n | BKZ cost (log₂) |
-|-----|---------|-------------|---------|--------|-----------------|
-| 128 | 16384 | 6.9×10⁻⁵ | 11.3 | 11.3 | ~150 |
-| 256 | 65536 | 2.4×10⁻⁵ | 16.0 | 16.0 | ~300 |
-| 512 | 262144 | 8.7×10⁻⁶ | 22.6 | 22.6 | ~600 |
-| 1024| 1048576 | 3.1×10⁻⁶ | 32.0 | 32.0 | ~1200 |
+(@file Computation/LWEBasic.lean — `zmod_quotient_surjective`)
 
-The exponential growth of attack cost with dimension confirms the theoretical prediction. Security doubles when the dimension doubles, matching `security_doubling`: b^(2n) = (b^n)².
+*Proof sketch.* This follows from the universal property of ZMod: the map sends the generator 1 ∈ ℤ/qℤ to 1 ∈ ℤ/pℤ, and since 1 generates ℤ/pℤ, the map is surjective. □
 
-## 6. Conjecture
+#### 4.2 Instance-Level Modulus Switching
 
-**Conjecture** (LWE Noise Threshold). There exist constants C₁ < C₂ such that:
-- For α < C₁ · √(ln n) / q: LWE(n, q, α) is solvable in polynomial time
-- For α > C₂ · √(ln n) / q: LWE(n, q, α) requires exponential time
+**Theorem 4.2** (LWE Modulus Switch). *For p | q, there exists a reduction map*
 
-**Computational test**: For n ∈ {4, 8, 16, 32, 64, 128, 256} with q = n², run the Arora-Ge algebraic attack and measure the crossover α*. Check if α* · q / √(ln n) converges.
+$$\text{reduce} : \text{LWE}(n, m, q) \to \text{LWE}(n, m, p)$$
 
-We have verified formal consistency of this conjecture (Theorem 20): the interval [C₁, C₂] is non-degenerate.
+*such that reduce(inst).A[i,j] = castHom(inst.A[i,j]) for all i, j.*
 
-## 7. Discussion
+(@file Computation/LWEBasic.lean — `lwe_modulus_switch`)
 
-### 7.1 Quantum vs Classical Gap
+*Proof sketch.* Apply castHom entry-by-entry to both A and b. The resulting instance is well-defined because castHom is a ring homomorphism, preserving the linear structure As + e. □
 
-Regev's quantum reduction achieves γ = O(n/α), while Peikert's classical reduction achieves γ = O(n²/α). Our `quantum_classical_gap` theorem verifies: n²/α = n · (n/α), confirming the gap factor is exactly n. Closing this gap remains a major open problem.
+**Remark.** In the full security reduction, modulus switching introduces a controlled rounding error whose distribution must be analyzed carefully. Theorem 4.2 captures the algebraic (exact) component; the error analysis requires probabilistic arguments beyond the scope of this formalization.
 
-### 7.2 Composition and Modularity
+#### 4.3 Transitivity
 
-The `ReductionChain` framework enables modular reasoning about multi-step reductions. Each step's contribution to the total advantage loss is independently verifiable, and the composition theorems guarantee that the total loss is at most the sum of individual losses.
+**Theorem 4.3** (Modulus Switch Transitivity). *For p | q | r, the composition*
 
-### 7.3 Connections to Existing Work
+$$\text{castHom}_{q \to p} \circ \text{castHom}_{r \to q} = \text{castHom}_{r \to p}$$
 
-Our formalization builds on and extends existing catalog theorems:
-- `search_from_decision_as_special_case` (SearchDecision.lean): Our `hybrid_column_bound` generalizes this to arbitrary per-step bounds
-- `lattice_hardness_from_contraction` (SpectralCrypto.lean): Our `exponential_security` provides the same exponential lower bound in the LWE context
-- `tvd_contracts_under_pushforward` (RegevReduction/Theorems.lean): Our `ReductionChain` provides a higher-level composition framework
+(@file Computation/LWEBasic.lean — `modulus_switch_transitive`)
 
-## 8. Future Work
+*Proof sketch.* Both sides are ring homomorphisms ℤ/rℤ → ℤ/pℤ. By the universal property of ℤ/rℤ (it is the free cyclic group of order r), ring homomorphisms out of it are determined by the image of 1. Both sides send 1 to 1, so they agree. □
 
-1. Formalize the full quantum sampling step using discrete Gaussian distributions
-2. Verify the classical (Peikert) reduction and compare approximation factors
-3. Formalize the Ring-LWE and Module-LWE variants and their reductions
-4. Connect to the NIST standardized parameters for ML-KEM/ML-DSA
+**Corollary.** Modulus switching can be decomposed into a chain of divisibility steps without affecting the outcome. This is significant for implementation: one can switch modulus in stages (e.g., q → q/2 → q/4) and obtain the same result as a single switch.
 
-## References
+#### 4.4 Collapse to Trivial Modulus
 
-[1] O. Regev, "On Lattices, Learning with Errors, Random Linear Codes, and Cryptography," J. ACM, vol. 56, no. 6, 2009.
+**Theorem 4.4** (Modulus-1 Collapse). *For any q and any x, y ∈ ℤ/qℤ:*
 
-[2] C. Peikert, "Public-Key Cryptosystems from the Worst-Case Shortest Vector Problem," STOC 2009.
+$$\text{castHom}_{q \to 1}(x) = \text{castHom}_{q \to 1}(y)$$
 
-[3] A. Brakerski, A. Langlois, C. Peikert, O. Regev, D. Stehlé, "Classical Hardness of Learning with Errors," STOC 2013.
+(@file Computation/LWEBasic.lean — `modulus_switch_one_trivial`)
 
-[4] NIST, "Module-Lattice-Based Key-Encapsulation Mechanism Standard (ML-KEM)," FIPS 203, 2024.
+*Proof sketch.* ℤ/1ℤ is the trivial ring with a single element, so all values are equal. □
 
-## Appendix: Theorem Index
+---
 
-| # | Name | Deep tactic | Status |
-|---|------|-------------|--------|
-| 1 | errorWidth_pos | — | ✓ |
-| 2 | noise_ratio_bound | rcases | ✓ |
-| 3 | noise_flooding_masks_signal | rw chain | ✓ |
-| 4 | gaussian_tail_monotone | nlinarith | ✓ |
-| 5 | gaussian_tail_subexponential | nlinarith | ✓ |
-| 6 | telescope_abs_bound | induction | ✓ |
-| 7 | hybrid_column_bound | calc | ✓ |
-| 8 | totalLoss_nonneg | — | ✓ |
-| 9 | reduction_chain_advantage_bound | linarith | ✓ |
-| 10 | reduction_chain_uniform_loss | calc | ✓ |
-| 11 | exponential_security | — | ✓ |
-| 12 | security_doubling | ring_nf | ✓ |
-| 13 | regev_modulus_condition | nlinarith | ✓ |
-| 14 | approxFactor_pos | — | ✓ |
-| 15 | approxFactor_anti_noise | div_lt_div | ✓ |
-| 16 | poly_approx_factor | nlinarith | ✓ |
-| 17 | security_level_positive | — | ✓ |
-| 18 | smoothing_log_pos | linarith | ✓ |
-| 19 | flood_ratio_gt_one | — | ✓ |
-| 20 | noise_threshold_consistent | linarith | ✓ |
+### 5. Error Rate Parameter Bounds
+
+#### 5.1 The Regev Lower Bound
+
+**Theorem 5.1** (Error Rate Lower Bound). *If α·q ≥ 2√n and q > 0, then*
+
+$$\alpha \geq \frac{2\sqrt{n}}{q}$$
+
+(@file Computation/LWEBasic.lean — `regev_alpha_lower_bound`)
+
+*Proof sketch.* Divide both sides of α·q ≥ 2√n by q > 0. □
+
+**Interpretation.** This lower bound constrains cryptographic parameter selection. For dimension n = 1024 and modulus q = 2³² ≈ 4 × 10⁹, the minimum error rate is α ≥ 2√1024 / 2³² ≈ 1.5 × 10⁻⁸. The error parameter cannot be made arbitrarily small without losing the hardness guarantee.
+
+#### 5.2 Approximation Factor Monotonicity
+
+**Theorem 5.2** (Anti-monotonicity). *For n > 0 and 0 < α₁ ≤ α₂:*
+
+$$\gamma(n, \alpha_2) \leq \gamma(n, \alpha_1)$$
+
+(@file Computation/LWEBasic.lean — `approx_factor_anti_monotone`)
+
+*Proof sketch.* γ(n, α) = n/α is a decreasing function of α on (0, ∞). Since α₁ ≤ α₂ and n > 0, we have n/α₂ ≤ n/α₁. □
+
+**Interpretation.** Increasing the error rate makes the associated lattice problem *harder* (smaller approximation factor, closer to exact SVP). This creates a fundamental tension in parameter selection: more noise improves security but reduces the signal-to-noise ratio available for decryption.
+
+#### 5.3 Scaling Law
+
+**Theorem 5.3** (Error Rate Scaling). *For any c and α:*
+
+$$\gamma(n, c\alpha) = \frac{\gamma(n, \alpha)}{c}$$
+
+(@file Computation/LWEBasic.lean — `approx_factor_scaling`)
+
+*Proof sketch.* n/(cα) = (n/α)/c by field arithmetic. □
+
+**Corollary.** The approximation factor is inversely proportional to the error rate. Doubling α halves γ. This linear relationship enables precise security-efficiency tradeoffs: each bit of additional noise yields a constant-factor improvement in the lattice approximation hardness.
+
+---
+
+### 6. Discussion
+
+#### 6.1 Relationship to Full Regev Reduction
+
+The theorems formalized here constitute the algebraic and combinatorial skeleton of Regev's full reduction [1]. The complete reduction additionally requires:
+
+1. **Quantum component**: A quantum algorithm that, given an oracle for GapSVP, produces samples from a discrete Gaussian distribution over the dual lattice.
+2. **Gaussian sampling**: Classical post-processing that converts dual lattice Gaussian samples into LWE instances.
+3. **Iterative dimension reduction**: A bootstrapping argument that amplifies the lattice oracle's power.
+
+These components involve continuous probability distributions, quantum circuits, and analytic number theory that are substantially harder to formalize. Our contribution isolates the structural properties that the full proof depends on, providing a verified foundation.
+
+#### 6.2 Applications to Standardized Cryptography
+
+The NIST post-quantum standards ML-KEM (FIPS 203) and ML-DSA (FIPS 204) are built on Module-LWE, a structured variant of LWE where the matrix A has additional algebraic structure (entries from a polynomial ring). The structural theorems proved here — sample reduction, modulus switching, parameter bounds — apply directly to Module-LWE, since they depend only on the linear-algebraic and modular-arithmetic structure that Module-LWE inherits from LWE.
+
+#### 6.3 Parameter Selection in Practice
+
+Theorem 5.1 provides a hard floor on the error rate: α ≥ 2√n / q. In practice, parameters are chosen well above this floor to provide a security margin. For ML-KEM-768 (the recommended security level), n = 256 (per module component), q = 3329, and the effective error rate satisfies the Regev condition with substantial margin.
+
+The anti-monotonicity theorem (5.2) and scaling law (5.3) together show that the security-efficiency tradeoff is smooth and predictable. Increasing the error rate by a factor c improves security (reduces γ) by the same factor c, at the cost of requiring more aggressive error correction in the decryption procedure.
+
+---
+
+### 7. Future Work
+
+Natural extensions of this formalization include:
+
+1. **Decision-Search equivalence**: Proving that distinguishing LWE from uniform is as hard as recovering the secret s.
+2. **Ring-LWE and Module-LWE**: Extending definitions and reductions to structured variants over polynomial rings ℤ_q[x]/(xⁿ + 1).
+3. **Gaussian error analysis**: Formalizing the discrete Gaussian distribution and its smoothing parameter, connecting to the lattice smoothing lemma.
+4. **Dual lattice structure**: Defining the dual lattice and proving its relationship to the primal, which is essential for the quantum step of Regev's reduction.
+5. **Concrete security bounds**: Formalizing the known BKZ lattice reduction algorithms and their complexity, yielding concrete bit-security estimates from the approximation factor γ.
+
+---
+
+### References
+
+[1] O. Regev, "On Lattices, Learning with Errors, Random Linear Codes, and Cryptography," *Journal of the ACM*, vol. 56, no. 6, 2009. (Extended abstract in STOC 2005.)
+
+[2] C. Peikert, "Public-Key Cryptosystems from the Worst-Case Shortest Vector Problem," *STOC 2009*.
+
+[3] Z. Brakerski, A. Langlois, C. Peikert, O. Regev, D. Stehlé, "Classical Hardness of Learning with Errors," *STOC 2013*.
+
+[4] A. Lyubashevsky, C. Peikert, O. Regev, "On Ideal Lattices and Learning with Errors Over Rings," *Journal of the ACM*, vol. 60, no. 6, 2013.
+
+[5] National Institute of Standards and Technology, "Module-Lattice-Based Key-Encapsulation Mechanism Standard," FIPS 203, 2024.
+
+---
+
+*All formalized results are available in `Computation/LWEBasic.lean`.*
