@@ -1369,14 +1369,588 @@
       "percent_complete": 0,
       "status": "FINAL:IDLE",
       "timestamp": "2026-06-08T07:52:50"
+    },
+    {
+      "elapsed_seconds": 24262.2,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:25"
+    },
+    {
+      "elapsed_seconds": 24262.2,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:25"
+    },
+    {
+      "elapsed_seconds": 24262.5,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:25"
+    },
+    {
+      "elapsed_seconds": 24262.5,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:25"
+    },
+    {
+      "elapsed_seconds": 24262.8,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:25"
+    },
+    {
+      "elapsed_seconds": 24262.8,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:25"
+    },
+    {
+      "elapsed_seconds": 24263.1,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:26"
+    },
+    {
+      "elapsed_seconds": 24263.1,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:26"
+    },
+    {
+      "elapsed_seconds": 24263.4,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:26"
+    },
+    {
+      "elapsed_seconds": 24263.4,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:26"
+    },
+    {
+      "elapsed_seconds": 24263.8,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:26"
+    },
+    {
+      "elapsed_seconds": 24263.8,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:26"
+    },
+    {
+      "elapsed_seconds": 24264.1,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:27"
+    },
+    {
+      "elapsed_seconds": 24264.1,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:27"
+    },
+    {
+      "elapsed_seconds": 24264.4,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:27"
+    },
+    {
+      "elapsed_seconds": 24264.4,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:27"
+    },
+    {
+      "elapsed_seconds": 24264.7,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:27"
+    },
+    {
+      "elapsed_seconds": 24264.7,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:27"
+    },
+    {
+      "elapsed_seconds": 24265.2,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:28"
+    },
+    {
+      "elapsed_seconds": 24265.2,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:28"
+    },
+    {
+      "elapsed_seconds": 24265.4,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:28"
+    },
+    {
+      "elapsed_seconds": 24265.4,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:28"
+    },
+    {
+      "elapsed_seconds": 24265.7,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:28"
+    },
+    {
+      "elapsed_seconds": 24265.7,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:28"
+    },
+    {
+      "elapsed_seconds": 24265.9,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:28"
+    },
+    {
+      "elapsed_seconds": 24265.9,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:28"
+    },
+    {
+      "elapsed_seconds": 24266.1,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:29"
+    },
+    {
+      "elapsed_seconds": 24266.1,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:29"
+    },
+    {
+      "elapsed_seconds": 24266.4,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:29"
+    },
+    {
+      "elapsed_seconds": 24266.4,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:29"
+    },
+    {
+      "elapsed_seconds": 24266.9,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:29"
+    },
+    {
+      "elapsed_seconds": 24266.9,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:29"
+    },
+    {
+      "elapsed_seconds": 24267.1,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:30"
+    },
+    {
+      "elapsed_seconds": 24267.1,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:30"
+    },
+    {
+      "elapsed_seconds": 24267.4,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:30"
+    },
+    {
+      "elapsed_seconds": 24267.4,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:30"
+    },
+    {
+      "elapsed_seconds": 24267.6,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:30"
+    },
+    {
+      "elapsed_seconds": 24267.6,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:30"
+    },
+    {
+      "elapsed_seconds": 24267.8,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:30"
+    },
+    {
+      "elapsed_seconds": 24267.8,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:30"
+    },
+    {
+      "elapsed_seconds": 24268.1,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:31"
+    },
+    {
+      "elapsed_seconds": 24268.1,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:31"
+    },
+    {
+      "elapsed_seconds": 24268.4,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:31"
+    },
+    {
+      "elapsed_seconds": 24268.4,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:31"
+    },
+    {
+      "elapsed_seconds": 24268.6,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:31"
+    },
+    {
+      "elapsed_seconds": 24268.6,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:31"
+    },
+    {
+      "elapsed_seconds": 24268.9,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:31"
+    },
+    {
+      "elapsed_seconds": 24268.9,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:31"
+    },
+    {
+      "elapsed_seconds": 24269.1,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:32"
+    },
+    {
+      "elapsed_seconds": 24269.1,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:32"
+    },
+    {
+      "elapsed_seconds": 24269.3,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T09:30:32"
+    },
+    {
+      "elapsed_seconds": 24269.3,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T09:30:32"
+    },
+    {
+      "elapsed_seconds": 24269.5,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:32"
+    },
+    {
+      "elapsed_seconds": 24269.7,
+      "error": "Cancelled after 404min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:32"
+    },
+    {
+      "elapsed_seconds": 24269.9,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:32"
+    },
+    {
+      "elapsed_seconds": 24270.0,
+      "error": "Cancelled after 404min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:33"
+    },
+    {
+      "elapsed_seconds": 24270.3,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:33"
+    },
+    {
+      "elapsed_seconds": 24270.3,
+      "error": "Cancelled after 404min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:33"
+    },
+    {
+      "elapsed_seconds": 24270.6,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:33"
+    },
+    {
+      "elapsed_seconds": 24270.6,
+      "error": "Cancelled after 405min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:33"
+    },
+    {
+      "elapsed_seconds": 24270.8,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:33"
+    },
+    {
+      "elapsed_seconds": 24270.9,
+      "error": "Cancelled after 405min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:33"
+    },
+    {
+      "elapsed_seconds": 24271.2,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:34"
+    },
+    {
+      "elapsed_seconds": 24271.3,
+      "error": "Cancelled after 405min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:34"
+    },
+    {
+      "elapsed_seconds": 24271.5,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:34"
+    },
+    {
+      "elapsed_seconds": 24271.6,
+      "error": "Cancelled after 405min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:34"
+    },
+    {
+      "elapsed_seconds": 24271.8,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:34"
+    },
+    {
+      "elapsed_seconds": 24271.9,
+      "error": "Cancelled after 405min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:34"
+    },
+    {
+      "elapsed_seconds": 24272.1,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:35"
+    },
+    {
+      "elapsed_seconds": 24272.1,
+      "error": "Cancelled after 405min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:35"
+    },
+    {
+      "elapsed_seconds": 24272.4,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:35"
+    },
+    {
+      "elapsed_seconds": 24272.4,
+      "error": "Cancelled after 405min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:35"
+    },
+    {
+      "elapsed_seconds": 24272.7,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:35"
+    },
+    {
+      "elapsed_seconds": 24272.7,
+      "error": "Cancelled after 405min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:35"
+    },
+    {
+      "elapsed_seconds": 24273.0,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:35"
+    },
+    {
+      "elapsed_seconds": 24273.0,
+      "error": "Cancelled after 405min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:36"
+    },
+    {
+      "elapsed_seconds": 24273.3,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:36"
+    },
+    {
+      "elapsed_seconds": 24273.3,
+      "error": "Cancelled after 405min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:36"
+    },
+    {
+      "elapsed_seconds": 24273.5,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:36"
+    },
+    {
+      "elapsed_seconds": 24273.6,
+      "error": "Cancelled after 405min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:36"
+    },
+    {
+      "elapsed_seconds": 24273.9,
+      "percent_complete": 0,
+      "status": "RUNNING",
+      "timestamp": "2026-06-08T09:30:36"
+    },
+    {
+      "elapsed_seconds": 24273.9,
+      "error": "Cancelled after 405min (6h cap)",
+      "has_files": false,
+      "percent_complete": 0,
+      "status": "FINAL:TIMEOUT",
+      "timestamp": "2026-06-08T09:30:36"
     }
   ],
-  "completed_at": "2026-06-08T07:52:50",
+  "completed_at": "2026-06-08T09:30:36",
   "domain": "Novelty",
-  "error": "",
+  "error": "Cancelled after 405min (6h cap)",
   "final_percent": 0,
-  "final_status": "IDLE",
-  "has_files": true,
+  "final_status": "TIMEOUT",
+  "has_files": false,
   "job_id": "ae7a7c97",
   "project_id": "13e49252-c623-4b57-a5ef-36dc6e965e7f",
   "prompt_length": 22320,
@@ -2355,6 +2929,416 @@
       "at_elapsed_seconds": 18407.1,
       "from": "IDLE",
       "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24262.2,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24262.2,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24262.5,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24262.5,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24262.8,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24262.8,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24263.1,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24263.1,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24263.4,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24263.4,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24263.8,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24263.8,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24264.1,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24264.1,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24264.4,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24264.4,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24264.7,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24264.7,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24265.2,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24265.2,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24265.4,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24265.4,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24265.7,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24265.7,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24265.9,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24265.9,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24266.1,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24266.1,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24266.4,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24266.4,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24266.9,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24266.9,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24267.1,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24267.1,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24267.4,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24267.4,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24267.6,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24267.6,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24267.8,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24267.8,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24268.1,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24268.1,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24268.4,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24268.4,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24268.6,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24268.6,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24268.9,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24268.9,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24269.1,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24269.1,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24269.3,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24269.3,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 24269.5,
+      "from": "FINAL:IDLE",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24269.7,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24269.9,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24270.0,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24270.3,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24270.3,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24270.6,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24270.6,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24270.8,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24270.9,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24271.2,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24271.3,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24271.5,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24271.6,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24271.8,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24271.9,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24272.1,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24272.1,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24272.4,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24272.4,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24272.7,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24272.7,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24273.0,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24273.0,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24273.3,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24273.3,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24273.5,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24273.6,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
+    },
+    {
+      "at_elapsed_seconds": 24273.9,
+      "from": "FINAL:TIMEOUT",
+      "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 24273.9,
+      "from": "RUNNING",
+      "to": "FINAL:TIMEOUT"
     }
   ],
   "submitted_at": "2026-06-08T02:46:03",
