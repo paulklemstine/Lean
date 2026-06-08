@@ -7,7 +7,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2025-01-01",
-      "hue": 271
+      "hue": 292
     },
     {
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-08",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "rigorous_algebraic_foundations_for_probability_t",
@@ -25,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08T19:03:25Z",
-      "hue": 271
+      "hue": 275
     }
   ],
   "edges": [],

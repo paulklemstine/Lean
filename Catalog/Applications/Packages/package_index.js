@@ -39,8 +39,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4c2eabf0",
     "filename": "self_modifying_code_that_cannot_be_stopped.json",
     "pkg_num": 1,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6462399999999999,
     "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers"
   }
 ];
@@ -89,18 +89,18 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2025-01-01",
       "domain": "Bridges",
-      "hue": 271,
+      "hue": 292,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6462399999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers"
     },
     {
       "date": "2026-06-08",
       "domain": "Logic",
-      "hue": 92,
+      "hue": 95,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
       "priority_score": 0.3352,
@@ -111,7 +111,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 271,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
@@ -122,7 +122,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08T19:03:25Z",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 275,
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
       "primary_domain": "Bridges",
       "priority_score": 0.62584,
