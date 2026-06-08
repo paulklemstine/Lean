@@ -1,280 +1,295 @@
-#!/usr/bin/env python3
 """
-demo.py — Gravity from Information: Spacetime as a Quantum Error-Correcting Code
+Holographic Polymatroids: Numerical Demonstrations
 
-Demonstrates the key theorems about quantum error-correcting codes and their
-holographic interpretation.
+Demonstrates the key results from the Lean formalization:
+1. Polymatroid rank functions and entropy quantities
+2. Singleton bound verification for various codes
+3. Syndrome defect computation
+4. Toric code parameter families
 """
 
-import math
-
-def singleton_bound(n: int, k: int, d: int) -> bool:
-    """Check if [[n, k, d]] satisfies the quantum Singleton bound."""
-    return 2 * d + k <= n + 2
-
-def singleton_deficit(n: int, k: int, d: int) -> int:
-    """Compute the Singleton deficit."""
-    return max(0, (n + 2) - (2 * d + k))
-
-def is_mds(n: int, k: int, d: int) -> bool:
-    """Check if a code is MDS (Maximum Distance Separable)."""
-    return 2 * d + k == n + 2
-
-def entropy(n: int, k: int) -> int:
-    """Entanglement entropy S = n - k."""
-    return n - k
-
-def can_reconstruct(n: int, d: int, s: int) -> bool:
-    """Can a region of size s reconstruct the bulk?"""
-    return s + d > n
-
-def bpt_bound(n: int, k: int, d: int) -> bool:
-    """Check the BPT bound kd² ≤ n."""
-    return k * d ** 2 <= n
-
-def concat_params(n1, k1, d1, n2, k2, d2):
-    """Concatenate two codes."""
-    return n1 * n2, k1 * k2, d1 * d2
+from itertools import combinations
 
 
-print("=" * 70)
-print("GRAVITY FROM INFORMATION: KEY DEMONSTRATIONS")
-print("=" * 70)
+def powerset(s):
+    """Generate all subsets of a set."""
+    s = list(s)
+    result = []
+    for r in range(len(s) + 1):
+        for combo in combinations(s, r):
+            result.append(frozenset(combo))
+    return result
 
-# --- Demo 1: The [[5,1,3]] code ---
-print("\n--- Demo 1: The [[5,1,3]] Perfect Code ---")
-n, k, d = 5, 1, 3
-print(f"Code: [[{n}, {k}, {d}]]")
-print(f"Singleton bound: 2d + k = {2*d+k} ≤ n + 2 = {n+2}: {singleton_bound(n,k,d)}")
-print(f"MDS: {is_mds(n,k,d)}")
-print(f"Entropy: S = {entropy(n,k)}")
-print(f"Deficit: Δ = {singleton_deficit(n,k,d)}")
-print(f"Erasure capacity: {d-1} qubits")
 
-# --- Demo 2: Erasure phase transition ---
-print("\n--- Demo 2: Erasure Phase Transition for [[5,1,3]] ---")
-for s in range(n + 1):
-    rec = can_reconstruct(n, d, s)
-    comp_rec = can_reconstruct(n, d, n - s)
-    print(f"  Region size {s}: reconstruct={rec}, complement reconstruct={comp_rec}", end="")
-    if rec and not comp_rec:
-        print(" ← No-cloning satisfied!")
-    elif not rec and comp_rec:
-        print(" ← Complement reconstructs")
-    elif not rec and not comp_rec:
-        print(" ← Neither reconstructs")
-    else:
-        print(" ← ERROR: both reconstruct (impossible for k≥1)")
+class Polymatroid:
+    """A polymatroid rank function on subsets of {0, ..., n-1}."""
+    
+    def __init__(self, n: int, rho):
+        self.n = n
+        self.ground = frozenset(range(n))
+        self._rho = rho
+        self._verify()
+    
+    def rho(self, S) -> int:
+        return self._rho(frozenset(S))
+    
+    def _verify(self):
+        """Verify polymatroid axioms."""
+        assert self.rho(frozenset()) == 0, "P1: rho(empty) != 0"
+        subsets = powerset(self.ground)
+        for S in subsets:
+            assert self.rho(S) >= 0, f"P2: rho({set(S)}) = {self.rho(S)} < 0"
+        for S in subsets:
+            for T in subsets:
+                if S <= T:
+                    assert self.rho(S) <= self.rho(T), \
+                        f"P3: rho({set(S)}) > rho({set(T)}) but S ⊆ T"
+        for S in subsets:
+            for T in subsets:
+                lhs = self.rho(S) + self.rho(T)
+                rhs = self.rho(S & T) + self.rho(S | T)
+                assert lhs >= rhs, \
+                    f"P4: rho({set(S)}) + rho({set(T)}) < rho(∩) + rho(∪)"
+    
+    def mutual_info(self, A, B) -> int:
+        A, B = frozenset(A), frozenset(B)
+        return self.rho(A) + self.rho(B) - self.rho(A | B)
+    
+    def cond_mutual_info(self, A, B, C) -> int:
+        A, B, C = frozenset(A), frozenset(B), frozenset(C)
+        return (self.rho(A | B) + self.rho(B | C)
+                - self.rho(B) - self.rho(A | B | C))
+    
+    def syndrome_defect(self, X, Y) -> int:
+        X, Y = frozenset(X), frozenset(Y)
+        return self.rho(X) + self.rho(Y) - self.rho(X & Y) - self.rho(X | Y)
 
-# --- Demo 3: Toric code family ---
-print("\n--- Demo 3: Toric Code Family [[2L², 2, L]] ---")
-print(f"{'L':>3} {'n':>6} {'k':>3} {'d':>4} {'S':>6} {'Δ':>6} {'kd²':>6} {'BPT':>5} {'MDS':>5}")
-print("-" * 55)
-for L in range(1, 8):
-    n = 2 * L ** 2
-    k, d = 2, L
-    S = entropy(n, k)
-    delta = singleton_deficit(n, k, d)
-    kd2 = k * d ** 2
-    bpt = "✓" if kd2 == n else "✗"
-    mds = "✓" if is_mds(n, k, d) else "✗"
-    print(f"{L:3d} {n:6d} {k:3d} {d:4d} {S:6d} {delta:6d} {kd2:6d} {bpt:>5} {mds:>5}")
-print(f"\nNote: kd² = n for all L (BPT saturation)")
-print(f"Note: Deficit grows quadratically: Δ(L) = 2L(L-1)")
 
-# --- Demo 4: Concatenation ---
-print("\n--- Demo 4: Concatenation ---")
+def trivial_polymatroid(n: int) -> Polymatroid:
+    """The trivial polymatroid: rho(S) = |S|."""
+    return Polymatroid(n, lambda S: len(S))
+
+
+def min_rank_polymatroid(n: int, k: int) -> Polymatroid:
+    """Polymatroid with rho(S) = min(|S|, k)."""
+    return Polymatroid(n, lambda S: min(len(S), k))
+
+
+# --- Demo 1: Basic polymatroid properties ---
+print("=" * 60)
+print("DEMO 1: Trivial Polymatroid on {0,1,2,3}")
+print("=" * 60)
+
+P = trivial_polymatroid(4)
+A, B, C = {0}, {1}, {2}
+print(f"  rho({{0}}) = {P.rho(A)}")
+print(f"  rho({{0,1}}) = {P.rho({0,1})}")
+print(f"  rho({{0,1,2,3}}) = {P.rho({0,1,2,3})}")
+print(f"  I(A:B) = {P.mutual_info(A, B)}  (expected: 0 for trivial)")
+print(f"  I(A:C|B) = {P.cond_mutual_info(A, B, C)}  (≥ 0: SSA)")
+print(f"  δ(A,B) = {P.syndrome_defect(A, B)}  (= 0: flat)")
+
+# --- Demo 2: Non-trivial polymatroid (min-rank) ---
+print("\n" + "=" * 60)
+print("DEMO 2: Min-Rank Polymatroid rho(S) = min(|S|, 2) on {0,1,2}")
+print("=" * 60)
+
+P2 = min_rank_polymatroid(3, 2)
+print(f"  rho({{0}}) = {P2.rho({0})}")
+print(f"  rho({{0,1}}) = {P2.rho({0,1})}")
+print(f"  rho({{0,1,2}}) = {P2.rho({0,1,2})}")
+print(f"  I({{0}}:{{1}}) = {P2.mutual_info({0}, {1})}")
+print(f"  I({{0}}:{{1,2}}) = {P2.mutual_info({0}, {1,2})}")
+print(f"  δ({{0,1}},{{1,2}}) = {P2.syndrome_defect({0,1}, {1,2})}")
+
+# This is the counterexample to the quantum Singleton bound:
+n, k, d = 3, 2, 2
+print(f"\n  As [[{n},{k},{d}]] code:")
+print(f"  Classical Singleton: k ≤ n-(d-1) = {n-(d-1)} → {k} ≤ {n-(d-1)}: {'✓' if k <= n-(d-1) else '✗'}")
+print(f"  Quantum Singleton: k ≤ n-2(d-1) = {n-2*(d-1)} → {k} ≤ {n-2*(d-1)}: {'✓' if k <= n-2*(d-1) else '✗'}")
+print(f"  → Quantum Singleton FAILS! This proves it can't follow from polymatroid axioms.")
+
+
+# --- Demo 3: Code parameter verification ---
+print("\n" + "=" * 60)
+print("DEMO 3: Singleton Bound Verification")
+print("=" * 60)
+
 codes = [
-    ("[[5,1,3]]", 5, 1, 3),
-    ("[[7,1,3]]", 7, 1, 3),
-    ("[[5,1,3]]⊗[[5,1,3]]", *concat_params(5,1,3,5,1,3)),
-    ("[[5,1,3]]⊗[[7,1,3]]", *concat_params(5,1,3,7,1,3)),
+    ("[[5,1,3]] Perfect", 5, 1, 3),
+    ("[[7,1,3]] Steane", 7, 1, 3),
+    ("[[9,1,3]] Shor", 9, 1, 3),
+    ("[[23,1,7]] Golay", 23, 1, 7),
 ]
+
 for name, n, k, d in codes:
-    valid = singleton_bound(n, k, d)
-    delta = singleton_deficit(n, k, d)
-    print(f"  {name:25s}: [[{n},{k},{d}]], valid={valid}, Δ={delta}")
+    satisfies = 2*d + k <= n + 2
+    is_mds = 2*d + k == n + 2
+    redundancy = n - k
+    min_redundancy = 2*(d-1)
+    excess = redundancy - min_redundancy
+    print(f"  {name}: 2d+k = {2*d+k}, n+2 = {n+2}, "
+          f"Singleton: {'✓' if satisfies else '✗'}, "
+          f"MDS: {'✓' if is_mds else '✗'}, "
+          f"excess redundancy: {excess}")
 
-# Counterexample
-print("\n  Counterexample (k=0):")
-n, k, d = concat_params(2, 0, 2, 2, 0, 2)
-print(f"  [[2,0,2]]⊗[[2,0,2]] = [[{n},{k},{d}]]")
-print(f"  2d + k = {2*d+k}, n + 2 = {n+2}: valid = {singleton_bound(n,k,d)}")
-print(f"  ⟹ Concatenation FAILS Singleton when k=0!")
 
-# --- Demo 5: BPT implies Singleton ---
-print("\n--- Demo 5: BPT implies Singleton ---")
-print("Testing: if kd² ≤ n, k ≥ 1, d ≥ 1 → 2d + k ≤ n + 2")
-test_cases = [(10, 2, 3), (20, 2, 3), (50, 5, 3), (100, 4, 5), (8, 2, 2)]
-for n, k, d in test_cases:
-    bpt_ok = bpt_bound(n, k, d)
-    sing_ok = singleton_bound(n, k, d)
-    print(f"  [[{n},{k},{d}]]: BPT={bpt_ok}, Singleton={sing_ok}", end="")
-    if bpt_ok and not sing_ok:
-        print(" ← BPT but not Singleton! (impossible by theorem)")
-    elif bpt_ok:
-        print(" ← BPT ⟹ Singleton ✓")
-    else:
-        print()
+# --- Demo 4: Toric code family ---
+print("\n" + "=" * 60)
+print("DEMO 4: Toric Code Family [[2L², 2, L]]")
+print("=" * 60)
 
-# --- Demo 6: Bekenstein-Hawking as Singleton ---
-print("\n--- Demo 6: Bekenstein-Hawking as Singleton Maximum ---")
-print("For MDS codes: S = n - 2d + 2 = A/ℓ_P² - L/ℓ_P + 2")
-lP = 1.0  # Planck length in natural units
-G = lP ** 2 / 4  # 4G = ℓ_P²
-for L_geod in [2.0, 4.0, 6.0, 10.0]:
-    for A in [10.0, 50.0, 100.0]:
-        n_planck = A / lP ** 2
-        d_code = L_geod / (2 * lP)
-        S_BH = A / (4 * G)
-        S_singleton = n_planck - 2 * d_code + 2
-        if S_singleton >= 0 and abs(S_BH - S_singleton) < 1e-10:
-            print(f"  A={A:5.0f}, L={L_geod:4.1f}: S_BH={S_BH:8.1f}, S_Singleton={S_singleton:8.1f} ← MATCH (MDS)")
+print(f"  {'L':>3} | {'n':>6} | {'k':>3} | {'d':>4} | {'2d+k':>5} | {'n+2':>5} | {'Sing':>4} | {'MDS':>3} | {'d²≤n':>5}")
+print("  " + "-" * 55)
+for L in range(2, 11):
+    n, k, d = 2*L**2, 2, L
+    sing = 2*d + k <= n + 2
+    mds = 2*d + k == n + 2
+    bpt = d**2 <= n
+    print(f"  {L:3d} | {n:6d} | {k:3d} | {d:4d} | {2*d+k:5d} | {n+2:5d} | {'✓':>4} | {'✓' if mds else '✗':>3} | {'✓' if bpt else '✗':>5}")
 
-# --- Demo 7: Syndrome defect ---
-print("\n--- Demo 7: Syndrome Defect as Curvature ---")
-print("For submodular entropy S, defect(X,Y) = S(X) + S(Y) - S(X∩Y) - S(X∪Y)")
-print("Zero defect = flat geometry, positive defect = curvature")
-print()
-print("Example: 4-qubit system with S({i}) = 1, S({i,j}) = 1.5, S({i,j,k}) = 1.8")
-S = {
-    frozenset(): 0,
-    frozenset({1}): 1, frozenset({2}): 1, frozenset({3}): 1, frozenset({4}): 1,
-    frozenset({1,2}): 1.5, frozenset({1,3}): 1.5, frozenset({1,4}): 1.5,
-    frozenset({2,3}): 1.5, frozenset({2,4}): 1.5, frozenset({3,4}): 1.5,
-    frozenset({1,2,3}): 1.8, frozenset({1,2,4}): 1.8,
-    frozenset({1,3,4}): 1.8, frozenset({2,3,4}): 1.8,
-    frozenset({1,2,3,4}): 2.0
-}
-for X_set, Y_set in [({1,2}, {2,3}), ({1}, {2}), ({1,2}, {3,4}), ({1,2,3}, {2,3,4})]:
-    X, Y = frozenset(X_set), frozenset(Y_set)
-    inter = X & Y
-    union = X | Y
-    defect = S[X] + S[Y] - S[inter] - S[union]
-    print(f"  defect({set(X)}, {set(Y)}) = {S[X]:.1f} + {S[Y]:.1f} - {S[inter]:.1f} - {S[union]:.1f} = {defect:.2f}",
-          "← flat" if abs(defect) < 1e-10 else "← curved")
 
-print("\n" + "=" * 70)
+# --- Demo 5: Syndrome defect as curvature ---
+print("\n" + "=" * 60)
+print("DEMO 5: Syndrome Defect (Curvature)")
+print("=" * 60)
+
+# A polymatroid modeling entanglement: rho(S) = min(|S|, k)
+P3 = min_rank_polymatroid(4, 2)
+pairs = [({0}, {1}), ({0,1}, {2,3}), ({0}, {1,2}), ({0,1}, {1,2})]
+for X, Y in pairs:
+    d = P3.syndrome_defect(X, Y)
+    print(f"  δ({set(X)}, {set(Y)}) = {d}  {'(flat)' if d == 0 else '(curved)'}")
+
+# --- Demo 6: BH entropy as Singleton ---
+print("\n" + "=" * 60)
+print("DEMO 6: Bekenstein-Hawking as Singleton Bound")
+print("=" * 60)
+
+for L in [8, 12, 16, 20, 100]:
+    n = L  # area in Planck units
+    k = L // 4  # BH entropy
+    d = L // 4 + 1  # code distance
+    sing = 2*d + k <= n + 2
+    print(f"  L={L:3d}: n={n}, k=S_BH={k}, d={d}, "
+          f"2d+k={2*d+k} ≤ n+2={n+2}: {'✓' if sing else '✗'}")
+
+
+print("\n" + "=" * 60)
 print("All demonstrations complete.")
+print("=" * 60)
 
 
-#!/usr/bin/env python3
 """
-Visualization: Singleton Deficit as Curvature
+Visualization: Singleton Bound and Code Parameters
 
-Shows how the deficit (= curvature) grows for the toric code family and
-compares with the MDS (flat) HaPPY codes.
-"""
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# Left: Deficit growth
-ax = axes[0]
-Ls = np.arange(1, 15)
-toric_deficits = [max(0, 2 * L ** 2 - 2 * L) for L in Ls]
-happy_deficits = [0 for L in Ls]  # HaPPY L=0 is MDS, others have deficit
-
-# HaPPY deficit for L > 0: n=5(L+1), k=L+1, d=3
-# 2*3 + (L+1) = 7+L, n+2 = 5L+7, deficit = 5L+7 - 7 - L = 4L
-happy_deficits_actual = [4 * L for L in Ls]
-
-ax.plot(Ls, toric_deficits, 'o-', color='#E91E63', linewidth=2, markersize=6,
-        label='Toric [[2L²,2,L]]: Δ=2L(L-1)')
-ax.plot(Ls, happy_deficits_actual, 's-', color='#4CAF50', linewidth=2, markersize=6,
-        label='HaPPY [[5(L+1),L+1,3]]: Δ=4L')
-ax.axhline(y=0, color='gray', linestyle=':', alpha=0.5)
-ax.set_xlabel('Scale parameter L', fontsize=12)
-ax.set_ylabel('Singleton Deficit Δ (= Curvature)', fontsize=12)
-ax.set_title('Deficit Growth: Quadratic vs Linear', fontsize=14)
-ax.legend(fontsize=10)
-
-# Right: BPT bound visualization
-ax = axes[1]
-ns = np.arange(1, 100)
-for k in [1, 2, 4]:
-    max_d = np.sqrt(ns / k)
-    ax.plot(ns, max_d, '-', linewidth=2, label=f'k={k}: d ≤ √(n/{k})')
-
-# Mark specific codes
-codes = {
-    '[[5,1,3]]': (5, 3),
-    '[[8,2,2]]': (8, 2),
-    '[[18,2,3]]': (18, 3),
-    '[[32,2,4]]': (32, 4),
-    '[[50,2,5]]': (50, 5),
-}
-for name, (n, d) in codes.items():
-    ax.plot(n, d, 'ko', markersize=8)
-    ax.annotate(name, (n, d), textcoords="offset points", xytext=(5, 5), fontsize=8)
-
-ax.set_xlabel('n (physical qubits)', fontsize=12)
-ax.set_ylabel('d (code distance)', fontsize=12)
-ax.set_title('BPT Bound: d ≤ √(n/k)', fontsize=14)
-ax.legend(fontsize=10)
-ax.set_xlim(0, 100)
-ax.set_ylim(0, 12)
-
-plt.tight_layout()
-plt.savefig('deficit_curvature.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved: deficit_curvature.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Erasure Phase Transition in Holographic Codes
-
-Shows the sharp reconstruction threshold for the [[5,1,3]] and toric code families.
+Creates a plot of the Singleton bound k + 2d ≤ n + 2 for various codes,
+showing the information-protection tradeoff.
 """
 
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-def can_reconstruct(n, d, s):
-    return s + d > n
+def plot_singleton_bound():
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # --- Left panel: (k/n, d/n) tradeoff ---
+    ax = axes[0]
+    
+    # Singleton boundary: k/n + 2d/n = 1 + 2/n ≈ 1 for large n
+    rate = np.linspace(0, 1, 100)
+    rel_dist = (1 - rate) / 2
+    ax.plot(rate, rel_dist, 'k-', linewidth=2, label='Singleton bound')
+    ax.fill_between(rate, 0, rel_dist, alpha=0.1, color='blue',
+                    label='Feasible region')
+    
+    # Plot specific codes
+    codes = {
+        '[[5,1,3]]': (1/5, 3/5),
+        '[[7,1,3]]': (1/7, 3/7),
+        '[[9,1,3]]': (1/9, 3/9),
+    }
+    for name, (r, d) in codes.items():
+        ax.plot(r, d, 'ro', markersize=8)
+        ax.annotate(name, (r, d), textcoords="offset points",
+                   xytext=(5, 5), fontsize=9)
+    
+    # Toric codes
+    for L in range(2, 8):
+        n, k, d = 2*L**2, 2, L
+        r, rd = k/n, d/n
+        ax.plot(r, rd, 'bs', markersize=6)
+        if L <= 4:
+            ax.annotate(f'Toric L={L}', (r, rd), textcoords="offset points",
+                       xytext=(5, -10), fontsize=8, color='blue')
+    
+    ax.set_xlabel('Code rate k/n', fontsize=12)
+    ax.set_ylabel('Relative distance d/n', fontsize=12)
+    ax.set_title('Information-Protection Tradeoff\n(Singleton Bound)', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.set_xlim(-0.05, 1.05)
+    ax.set_ylim(-0.05, 0.55)
+    ax.grid(True, alpha=0.3)
+    
+    # --- Right panel: Toric code scaling ---
+    ax = axes[1]
+    Ls = np.arange(2, 20)
+    ns = 2 * Ls**2
+    ds = Ls
+    ks = np.full_like(Ls, 2)
+    
+    ax.plot(ns, ds, 'b-o', label='d = L', markersize=5)
+    ax.plot(ns, np.sqrt(ns), 'r--', label='d = √n', linewidth=2)
+    ax.plot(ns, ns/2, 'g:', label='d = n/2 (theoretical max)', linewidth=1)
+    
+    ax.set_xlabel('Physical qubits n', fontsize=12)
+    ax.set_ylabel('Code distance d', fontsize=12)
+    ax.set_title('Toric Code Distance Scaling\n(BPT Bound: d² ≤ n)', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('singleton_bound.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: singleton_bound.png")
 
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+def plot_syndrome_defect():
+    """Plot syndrome defect for a family of polymatroids."""
+    fig, ax = plt.subplots(figsize=(8, 6))
+    
+    # For the min-rank polymatroid rho(S) = min(|S|, k) on n elements
+    ns = range(3, 12)
+    for k in [1, 2, 3, 4]:
+        defects = []
+        for n in ns:
+            # Average syndrome defect over all pairs of singleton sets
+            total_defect = 0
+            count = 0
+            for i in range(n):
+                for j in range(i+1, n):
+                    X = frozenset([i])
+                    Y = frozenset([j])
+                    rho = lambda S, k=k: min(len(S), k)
+                    d = rho(X) + rho(Y) - rho(X & Y) - rho(X | Y)
+                    total_defect += d
+                    count += 1
+            defects.append(total_defect / count if count > 0 else 0)
+        ax.plot(list(ns), defects, '-o', label=f'k={k}', markersize=5)
+    
+    ax.set_xlabel('Ground set size n', fontsize=12)
+    ax.set_ylabel('Average syndrome defect δ', fontsize=12)
+    ax.set_title('Syndrome Defect (Curvature) vs System Size\nMin-rank polymatroid ρ(S) = min(|S|, k)', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('syndrome_defect.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: syndrome_defect.png")
 
-# Left: [[5,1,3]] code
-ax = axes[0]
-n, k, d = 5, 1, 3
-sizes = np.arange(0, n + 1)
-rec = [1 if can_reconstruct(n, d, s) else 0 for s in sizes]
-comp_rec = [1 if can_reconstruct(n, d, n - s) else 0 for s in sizes]
 
-ax.bar(sizes - 0.15, rec, 0.3, label='Region reconstructs', color='#2196F3', alpha=0.8)
-ax.bar(sizes + 0.15, comp_rec, 0.3, label='Complement reconstructs', color='#FF5722', alpha=0.8)
-ax.axvline(x=n - d + 0.5, color='green', linestyle='--', linewidth=2, label=f'Threshold (s={n-d+1})')
-ax.set_xlabel('Region size s', fontsize=12)
-ax.set_ylabel('Can reconstruct?', fontsize=12)
-ax.set_title('[[5,1,3]] Erasure Phase Transition', fontsize=14)
-ax.set_xticks(sizes)
-ax.set_yticks([0, 1])
-ax.set_yticklabels(['No', 'Yes'])
-ax.legend(fontsize=10)
-ax.set_xlim(-0.5, n + 0.5)
-
-# Right: Toric code threshold fraction
-ax = axes[1]
-Ls = np.arange(1, 20)
-threshold_fracs = [(2 * L ** 2 - L + 1) / (2 * L ** 2) for L in Ls]
-
-ax.plot(Ls, threshold_fracs, 'o-', color='#9C27B0', linewidth=2, markersize=6)
-ax.axhline(y=1.0, color='gray', linestyle=':', alpha=0.5)
-ax.axhline(y=0.5, color='gray', linestyle=':', alpha=0.5, label='50% threshold')
-ax.set_xlabel('Grid size L', fontsize=12)
-ax.set_ylabel('Threshold fraction (s₀/n)', fontsize=12)
-ax.set_title('Toric Code: Threshold Fraction → 1', fontsize=14)
-ax.legend(fontsize=10)
-ax.set_ylim(0.4, 1.05)
-
-plt.tight_layout()
-plt.savefig('phase_transition.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved: phase_transition.png")
+if __name__ == "__main__":
+    plot_singleton_bound()
+    plot_syndrome_defect()

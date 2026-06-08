@@ -1,231 +1,217 @@
-# Gravity from Information: Spacetime as a Quantum Error-Correcting Code
+# Holographic Polymatroids: A Unified Framework for Gravity, Information, and Error Correction
 
 ## Abstract
 
-We formalize the connection between quantum error-correcting codes and holographic gravity in Lean 4, proving a suite of novel theorems that deepen the quantum Singleton bound and its geometric interpretation. Our main contributions include: (1) a **weighted Singleton bound** for inhomogeneous Planck areas; (2) a proof that **concatenation preserves the Singleton bound** when both codes encode at least one logical qubit, with a verified counterexample showing the hypothesis is necessary; (3) a proof that the **BPT bound implies the Singleton bound**, establishing a strict hierarchy among coding constraints; (4) a **sharp erasure phase transition** characterizing the entanglement wedge transition; (5) a precise characterization of the **Singleton deficit as discrete curvature**, with a proof that zero deficit is equivalent to entropy–distance optimality (MDS = flat geometry); (6) the **area defect equals four times the syndrome defect**, providing an exact quantitative bridge between information theory and Riemannian geometry. All proofs are machine-verified in Lean 4 with no sorry axioms, building on and extending the Catalog's StabilizerBounds and HolographicGravity frameworks.
+We introduce **holographic polymatroids**, a novel mathematical structure that unifies quantum information theory, algebraic coding theory, and holographic gravity within a single combinatorial framework. A holographic polymatroid is an integer-valued submodular function on a finite set, equipped with a Ryu-Takayanagi (RT) scaling relation and a code-distance function. We prove that strong subadditivity of quantum entropy, the classical Singleton bound, and the non-negativity of holographic curvature all follow from the polymatroid axioms. We establish a sharp boundary: the quantum Singleton bound k ≤ n − 2(d−1) *cannot* be derived from polymatroid structure alone — it requires the quantum no-cloning theorem, providing a precise characterization of what makes quantum gravity genuinely quantum. We verify our framework on concrete codes including the [[5,1,3]] perfect code and the toric code family [[2L², 2, L]], proving that the latter satisfies the Singleton bound but is not MDS for L ≥ 3.
+
+**Keywords**: polymatroids, quantum error correction, holographic principle, Ryu-Takayanagi formula, Singleton bound, submodularity, toric code
 
 ## 1. Introduction
 
-The holographic principle, originating in the work of 't Hooft (1993) and Susskind (1995), asserts that the information content of a gravitational system is encoded on its boundary. The Ryu-Takayanagi (RT) formula S(A) = Area(γ_A)/(4G) makes this precise for static spacetimes in AdS/CFT, relating boundary entanglement entropy to bulk minimal surface area.
+The AdS/CFT correspondence [Maldacena 1997] establishes a duality between quantum gravity in Anti-de Sitter space and conformal field theory on its boundary. The Ryu-Takayanagi (RT) formula [Ryu-Takayanagi 2006] computes the entanglement entropy of a boundary region A as:
 
-Almheiri, Dong, and Harlow (2014) made the crucial observation that the RT formula has the mathematical structure of a quantum error-correcting code. Pastawski, Yoshida, Harlow, and Preskill (2015) constructed explicit tensor network models (the HaPPY codes) realizing this connection.
+S(A) = Area(γ_A) / (4G_N)
 
-In this work, we push the formalization significantly deeper, proving results about the *structure* of the code-geometry correspondence that go beyond what was previously available in the Catalog. Our key insight is that the **Singleton deficit** — the gap between a code's actual parameters and the MDS (Maximum Distance Separable) optimum — serves as a discrete measure of bulk curvature.
+where γ_A is the minimal area surface in the bulk homologous to A. Almheiri, Dong, and Harlow [2015] showed that this formula is equivalent to the statement that the bulk-boundary map is a quantum error-correcting code.
+
+This paper develops the combinatorial abstraction underlying this connection. We define *polymatroids* — normalized, monotone, submodular integer-valued set functions — as the mathematical skeleton of holographic entanglement, and prove that the key physical consequences follow from these axioms alone.
 
 ### 1.1 Summary of Results
 
-| Theorem | Statement | Significance |
-|---------|-----------|-------------|
-| `concat_singleton` | 2d₁d₂ + k₁k₂ ≤ n₁n₂ + 2 (when k₁,k₂ ≥ 1) | Holographic structure preserved under RG |
-| `sub_bpt_singleton` | kd² ≤ n ⟹ 2d + k ≤ n + 2 | BPT strictly stronger than Singleton |
-| `toric_bpt_saturation` | kd² = n for toric codes | Toric codes are BPT-optimal |
-| `complementary_exclusion` | Reconstruction ⟹ complement cannot | Code-theoretic no-cloning |
-| `curvature_from_deficit` | Δ = 0 ⟺ S = 2(d-1) | Zero deficit = flat geometry |
-| `toric_deficit_grows` | Δ(L₁) < Δ(L₂) for L₁ < L₂ | Curvature grows with scale |
-| `area_defect_eq_four_entropy_defect` | Area defect = 4 × entropy defect | Quantitative information-geometry bridge |
-| `bekenstein_singleton_mds` | S = A/(4G) = n - 2d + 2 for MDS | Bekenstein-Hawking is Singleton maximum |
+Our main contributions are:
 
-## 2. Code Parameters and Validity
+1. **Polymatroid foundations** (§2): We define polymatroids and prove that strong subadditivity (Theorem 2.1), the Araki-Lieb inequality (Theorem 2.5), and subadditivity (Theorem 2.4) all follow from submodularity and monotonicity.
 
-### 2.1 Definition
+2. **Erasure code polymatroids** (§3): We model [[n,k,d]] quantum codes as polymatroids with an erasure-correction axiom, and prove the classical Singleton bound k ≤ n − (d−1) (Theorem 3.1).
 
-A quantum stabilizer code is specified by parameters [[n, k, d]] where:
-- n = number of physical (boundary) qubits
-- k = number of logical (bulk) qubits  
-- d = code distance (minimum weight of undetectable errors)
+3. **No-go result** (§3): We show that the quantum Singleton bound k ≤ n − 2(d−1) cannot be derived from polymatroid axioms, identifying the quantum no-cloning theorem as the essential missing ingredient.
 
-**Definition (ValidQECC).** A code [[n, k, d]] is valid if k ≤ n, d ≥ 1, and the quantum Singleton bound holds: 2d + k ≤ n + 2.
+4. **Syndrome defect** (§4): We define the syndrome defect as a discrete analogue of curvature and prove its non-negativity, symmetry, and relationship to modular entropy.
 
-### 2.2 Singleton Deficit
+5. **Holographic bridge** (§5): We construct a complete bridge between polymatroids, error-correcting codes, and holographic gravity, proving redundancy bounds and defect estimates.
 
-**Definition.** The Singleton deficit is Δ(n,k,d) = (n + 2) - (2d + k).
+6. **Concrete verification** (§6): We verify all bounds on the [[5,1,3]] perfect code, [[7,1,3]] Steane code, and [[2L², 2, L]] toric code family.
 
-**Definition.** A code is MDS (Maximum Distance Separable) if Δ = 0, equivalently 2d + k = n + 2.
+All theorems are machine-verified in Lean 4 with Mathlib.
 
-**Theorem (curvature_from_deficit).** For a valid code, Δ = 0 if and only if S = 2(d-1), where S = n - k is the entanglement entropy.
+## 2. Polymatroid Foundations
 
-*Proof sketch.* Both conditions are equivalent to 2d + k = n + 2 by elementary arithmetic. ∎
+### Definition 2.1 (Polymatroid)
+A *polymatroid* on a finite type α is a function ρ : 2^α → ℤ satisfying:
+- (P1) ρ(∅) = 0 (normalization)
+- (P2) ρ(S) ≥ 0 for all S (non-negativity)
+- (P3) S ⊆ T ⟹ ρ(S) ≤ ρ(T) (monotonicity)
+- (P4) ρ(S) + ρ(T) ≥ ρ(S ∩ T) + ρ(S ∪ T) (submodularity)
 
-**Theorem (entropy_ge_distance).** For any valid code, S ≥ 2(d-1) (as integers). Equality characterizes MDS codes.
+### Definition 2.2 (Information-Theoretic Quantities)
+For a polymatroid P with rank function ρ:
+- *Conditional mutual information*: I(A:C|B) = ρ(A∪B) + ρ(B∪C) − ρ(B) − ρ(A∪B∪C)
+- *Mutual information*: I(A:B) = ρ(A) + ρ(B) − ρ(A∪B)
+- *Conditional entropy*: H(A|B) = ρ(A∪B) − ρ(B)
+- *Syndrome defect*: δ(X,Y) = ρ(X) + ρ(Y) − ρ(X∩Y) − ρ(X∪Y)
 
-### 2.3 Holographic Interpretation
+### Theorem 2.1 (Strong Subadditivity)
+For any polymatroid P and sets A, B, C: I(A:C|B) ≥ 0.
 
+*Proof sketch*: Apply (P4) to S = A∪B and T = B∪C. We get ρ(A∪B) + ρ(B∪C) ≥ ρ((A∪B)∩(B∪C)) + ρ(A∪B∪C). Since B ⊆ (A∪B)∩(B∪C), monotonicity (P3) gives ρ(B) ≤ ρ((A∪B)∩(B∪C)). Combining: ρ(A∪B) + ρ(B∪C) − ρ(B) − ρ(A∪B∪C) ≥ 0. □
+
+### Theorem 2.2 (Mutual Information Non-negativity)
+I(A:B) ≥ 0 for all A, B.
+
+### Theorem 2.3 (Conditional Entropy Non-negativity)
+H(A|B) ≥ 0 for all A, B.
+
+### Theorem 2.4 (Subadditivity)
+ρ(A∪B) ≤ ρ(A) + ρ(B) for all A, B.
+
+### Theorem 2.5 (Araki-Lieb Inequality)
+ρ(A) − ρ(B) ≤ ρ(A∪B) for all A, B.
+
+### Theorem 2.6 (Diminishing Returns)
+For S ⊆ T and x ∉ T: ρ(T∪{x}) − ρ(T) ≤ ρ(S∪{x}) − ρ(S).
+
+*Proof*: Apply submodularity to S∪{x} and T. Since x ∉ T and S ⊆ T, we have (S∪{x})∩T = S and (S∪{x})∪T = T∪{x}. The result follows. □
+
+### Example 2.1 (Trivial Polymatroid)
+The function ρ(S) = |S| defines a polymatroid (the *trivial* or *free* polymatroid). It has I(A:B) = 0 for disjoint A, B — no correlations.
+
+## 3. Erasure Code Polymatroids
+
+### Definition 3.1 (Erasure Code Polymatroid)
+An *erasure code polymatroid* is a polymatroid equipped with:
+- Parameters k, d ∈ ℕ with k, d > 0
+- Full rank: ρ(univ) = k
+- Rank bound: ρ(S) ≤ |S| for all S
+- Erasure correction: for all E with |E| ≤ d−1, ρ(univ \ E) = k
+
+### Theorem 3.1 (Classical Singleton Bound)
+For an erasure code polymatroid with n = |α|: k ≤ n − (d−1).
+
+*Proof*: Take E with |E| = d−1. By erasure correction, ρ(univ \ E) = k. By the rank bound, k = ρ(univ \ E) ≤ |univ \ E| = n − (d−1). □
+
+### Theorem 3.2 (Submodularity Erasure Bound)
+For disjoint A, B with |A| = |B| = d−1: k ≥ ρ(univ \ (A∪B)).
+
+*Proof*: Apply submodularity to (univ \ A) and (univ \ B). Since A, B are disjoint, (univ \ A) ∪ (univ \ B) = univ. So k + k ≥ ρ(univ \ (A∪B)) + k, giving k ≥ ρ(univ \ (A∪B)). □
+
+### No-Go Result: The Quantum Singleton Bound
+The quantum Singleton bound k ≤ n − 2(d−1) **cannot** be derived from the polymatroid axioms plus erasure correction. The counterexample is α = {0,1,2} with ρ(S) = min(|S|, 2), k = 2, d = 2. This satisfies all polymatroid axioms and erasure correction (erasing any 1 element leaves a set of size 2 with ρ = 2 = k), but k = 2 > n − 2(d−1) = 3 − 2 = 1.
+
+The missing ingredient is the **no-cloning theorem**: in quantum mechanics, if a subsystem S can reconstruct the encoded information, then the complementary subsystem univ \ S *cannot* independently contain a copy. This quantum constraint provides the factor-of-two improvement from the classical to the quantum Singleton bound.
+
+## 4. Syndrome Defect as Discrete Curvature
+
+### Definition 4.1 (Syndrome Defect)
+The *syndrome defect* of two regions X, Y in a polymatroid P is:
+δ(X, Y) = ρ(X) + ρ(Y) − ρ(X∩Y) − ρ(X∪Y)
+
+### Theorem 4.1 (Non-negativity)
+δ(X, Y) ≥ 0 for all X, Y. (Equivalent to submodularity.)
+
+### Theorem 4.2 (Symmetry)
+δ(X, Y) = δ(Y, X).
+
+### Theorem 4.3 (Flatness Criterion)
+δ(X, Y) = 0 if and only if ρ(X) + ρ(Y) = ρ(X∩Y) + ρ(X∪Y) (modularity on the pair).
+
+### Physical Interpretation
 In the holographic dictionary:
-- n corresponds to the number of Planck areas on the boundary: n = A/ℓ_P²
-- k corresponds to the Bekenstein-Hawking entropy: k = S = A/(4G)  
-- d corresponds to half the minimal geodesic length: d = L/(2ℓ_P)
-- Δ = 0 corresponds to flat bulk geometry (the RT formula is exactly tight)
-- Δ > 0 corresponds to bulk curvature (sub-optimal coding efficiency)
+- δ = 0 corresponds to **flat spacetime**: entropies add perfectly
+- δ > 0 corresponds to **curved spacetime**: entanglement between regions creates curvature
+- The total syndrome defect over all pairs is bounded below by 0 (cumulative non-negativity)
 
-## 3. Erasure Phase Transition
+This gives a precise mathematical meaning to "gravity is the syndrome of a quantum code": spacetime curvature arises exactly when the entropy function fails to be modular, which happens exactly when the error-correcting code has nontrivial syndromes.
 
-### 3.1 Sharp Threshold
+## 5. Holographic Code Parameters
 
-**Theorem (reconstruction_iff).** A boundary region of size s can reconstruct the bulk if and only if s + d > n.
+### Definition 5.1 (HoloCodeParams)
+A holographic code is specified by parameters (n, k, d) with:
+- n > 0 (physical qubits / Planck areas)
+- k > 0 (logical qubits / BH entropy)
+- d > 0 (code distance / geodesic length)
+- k ≤ n, d ≤ n
 
-This is the code-theoretic content of the entanglement wedge phase transition. The transition is sharp: there is no intermediate regime.
+### Theorem 5.1 (MDS Characterization)
+A code is MDS (saturates the Singleton bound) iff 2d + k = n + 2. For MDS codes:
+- k is uniquely determined: k = n − 2d + 2
+- Redundancy equals 2(d−1)
+- The redundancy is even
 
-### 3.2 Complementary Exclusion (No-Cloning)
+### Theorem 5.2 (Information-Protection Tradeoff)
+For any code satisfying Singleton: k + 2d ≤ n + 2 (as integers).
 
-**Theorem (complementary_exclusion).** If k ≥ 1 and a region of size s reconstructs the bulk, then the complementary region of size n - s cannot reconstruct.
+This is the coding-theoretic version of the Bekenstein bound: you cannot simultaneously have high entropy (large k) and strong error protection (large d) without proportionally many physical degrees of freedom (large n).
 
-*Proof sketch.* If s + d > n (A reconstructs) and (n-s) + d > n (complement reconstructs), then adding gives 2d > n, but from Singleton 2d ≤ n + 2 - k ≤ n + 1, so 2d ≤ n + 1. Combined: n < 2d ≤ n + 1, so s + (n-s) = n < 2d ≤ n + 1, contradiction with k ≥ 1 (which gives 2d ≤ n + 1). ∎
+### Theorem 5.3 (Composition Bound)
+When composing two codes C₁ = [[n₁, k₁, d₁]] and C₂ = [[n₂, k₂, d₂]] with n₂ = k₁ and d₁ ≤ d₂, and d₁ ≥ 1, the composed code satisfies: 2d₁ + k₂ ≤ n₁ + 2.
 
-**Theorem (no_cloning).** More generally, if a region of size s reconstructs and s + t ≤ n, then no region of size t can independently reconstruct. This extends complementary exclusion to arbitrary (not just complementary) disjoint regions.
+## 6. Concrete Code Verification
 
-## 4. Weighted Singleton Bound
+### The [[5,1,3]] Perfect Code
+- Satisfies Singleton: 2(3) + 1 = 7 = 5 + 2 ✓ (MDS)
+- Redundancy: 5 − 1 = 4 = 2(3−1) ✓
 
-### 4.1 Weighted Codes
+### The [[7,1,3]] Steane Code
+- Satisfies Singleton: 2(3) + 1 = 7 ≤ 7 + 2 = 9 ✓
+- Not MDS: 7 ≠ 9
+- Excess redundancy: (7−1) − 2(3−1) = 2
 
-**Definition.** A weighted code assigns a positive integer weight w_i ≥ 1 to each physical qubit i. The total weight is W = Σ w_i ≥ n.
+### The Toric Code Family [[2L², 2, L]]
+- Satisfies Singleton for all L ≥ 2: 2L + 2 ≤ 2L² + 2 ✓
+- Not MDS for L ≥ 3: 2L + 2 < 2L² + 2
+- Distance scaling: d² ≤ n (BPT bound)
+- Redundancy: 2L² − 2 (grows quadratically)
 
-**Theorem (weighted_singleton_bound).** For a valid weighted code, W - k ≥ 2(d-1).
+## 7. The Holographic Bridge
 
-This generalizes the standard Singleton bound (where all weights equal 1, so W = n) to inhomogeneous spacetimes where different Planck cells contribute different areas.
+### Definition 7.1 (Holographic Bridge)
+A *holographic bridge* consists of a polymatroid P, code parameters (n,k,d) satisfying Singleton, with:
+- rank_matches: P.ρ(univ) = k
+- n_matches: n = |α|
+- rank_local: P.ρ(S) ≤ |S| for all S
 
-### 4.2 Physical Interpretation
+### Theorem 7.1 (Bridge Redundancy)
+In a holographic bridge: n − k ≥ 2(d−1) (as integers).
 
-In a realistic spacetime, the Planck area varies with the local metric. Near a black hole, the effective Planck area is stretched. The weighted Singleton bound captures this: the total effective area W, not the qubit count n, determines the entropy bound.
+### Theorem 7.2 (Defect Bound)
+The syndrome defect is bounded: δ(X,Y) ≤ ρ(X) + ρ(Y).
 
-## 5. Concatenation
+## 8. The Bekenstein-Hawking Formula
 
-### 5.1 Concatenated Codes
+Under the holographic dictionary with area_planck = n = 4k (BH entropy relation):
+- The Singleton bound 2d + k ≤ 4k + 2 constrains the geodesic distance: d ≤ 3k/2 + 1
+- For AdS₃ with circular boundary of circumference L (where 4|L): the code parameters [[L, L/4, L/4+1]] satisfy Singleton for all L ≥ 8
 
-**Definition.** The concatenation of [[n₁, k₁, d₁]] and [[n₂, k₂, d₂]] is [[n₁n₂, k₁k₂, d₁d₂]].
+## 9. Discussion
 
-**Theorem (concat_singleton).** If both codes satisfy the Singleton bound and k₁, k₂ ≥ 1, then the concatenated code satisfies the Singleton bound.
+### What the polymatroid framework captures
+1. Strong subadditivity and its consequences
+2. The classical Singleton bound
+3. Non-negativity of curvature (syndrome defect)
+4. Entropy monotonicity and diminishing returns
+5. The information-protection tradeoff
 
-*Proof.* By nlinarith using the Singleton bounds of both codes and the key cross-product terms:
-- k₁·(n₂ - d₂) ≥ 0 (since k₂ ≤ n₂ and d₂ ≤ n₂)
-- k₂·(n₁ - d₁) ≥ 0
+### What it does not capture
+1. The quantum Singleton bound (needs no-cloning)
+2. The monogamy of mutual information (needs additional holographic axioms)
+3. Dynamics (Einstein's equations beyond the RT formula)
+4. Black hole information paradox resolution
 
-The proof exploits the non-negativity of products of positive quantities. ∎
+### Open Problems
+1. Can the quantum Singleton bound be derived from a *minimal* extension of the polymatroid axioms?
+2. What is the precise characterization of entropy vectors achievable by holographic codes?
+3. Can the syndrome defect framework be extended to capture the full Einstein equations?
 
-### 5.2 Counterexample for k = 0
+## 10. Conclusion
 
-The hypothesis k ≥ 1 is necessary: [[2, 0, 2]] ⊗ [[2, 0, 2]] = [[4, 0, 4]], and 2·4 + 0 = 8 > 6 = 4 + 2, violating Singleton. This was discovered during our formalization as a machine-verified counterexample.
-
-### 5.3 Holographic Interpretation
-
-Concatenation models the renormalization group (RG) flow: the outer code represents coarse-grained boundary data, the inner code represents fine-grained data. The theorem says that if each level of the RG hierarchy carries at least one logical qubit, the holographic structure (Singleton bound) is preserved.
-
-## 6. BPT Bound and Topological Codes
-
-### 6.1 The BPT Bound
-
-**Definition.** A code satisfies the BPT bound with constant c if kd² ≤ cn.
-
-**Theorem (toric_bpt_saturation).** The toric code [[2L², 2, L]] saturates the BPT bound: kd² = n.
-
-### 6.2 BPT Implies Singleton
-
-**Theorem (sub_bpt_singleton).** If kd² ≤ n, k ≥ 1, and d ≥ 1, then 2d + k ≤ n + 2.
-
-*Proof.* Key steps: (1) From (d-1)² ≥ 0, we get d² + 1 ≥ 2d. (2) From k ≥ 1, k(d²-1) ≥ d²-1. (3) Therefore d² + k ≤ kd² + 1. (4) So 2d ≤ d² + 1 ≤ kd² + 1 - k + 1 ≤ n - k + 2. ∎
-
-This establishes that the BPT bound is strictly stronger than the Singleton bound: any code satisfying BPT automatically satisfies Singleton, but not conversely.
-
-### 6.3 Toric Code Deficit
-
-**Theorem (toric_deficit).** The Singleton deficit of the toric code [[2L², 2, L]] is Δ = 2L² - 2L = 2L(L-1).
-
-**Theorem (toric_deficit_grows).** The toric deficit grows strictly with L: if L₁ < L₂ (both ≥ 2), then Δ(L₁) < Δ(L₂).
-
-Physical interpretation: larger toric codes are increasingly far from MDS optimality. In the holographic dictionary, this means larger spatial regions exhibit more integrated curvature — a discrete analog of the fact that curvature accumulates over space.
-
-## 7. Submodularity-Geometry Bridge
-
-### 7.1 Syndrome Defect
-
-**Definition.** For a submodular entropy function S on boundary regions, the syndrome defect is:
-defect(X, Y) = S(X) + S(Y) - S(X∩Y) - S(X∪Y)
-
-**Theorem (defect_nonneg).** The syndrome defect is nonnegative (from submodularity).
-
-**Theorem (defect_self).** Self-defect vanishes: defect(X, X) = 0.
-
-**Theorem (defect_symm).** Defect is symmetric: defect(X, Y) = defect(Y, X).
-
-### 7.2 The RT Bridge
-
-For a holographic profile (equipped with the Ryu-Takayanagi relation S(X) = area(X)/4):
-
-**Theorem (area_submod_of_rt).** Area submodularity follows from entropy submodularity under RT.
-
-**Theorem (area_defect_eq_four_entropy_defect).** The area defect equals exactly 4 times the entropy defect.
-
-**Theorem (flatness_iff_area_modular).** Zero entropy defect if and only if area is modular (additive over disjoint regions).
-
-### 7.3 Physical Interpretation
-
-The syndrome defect is the discrete curvature of the holographic code. Zero defect means flat geometry (exact additivity of entropy and area). Positive defect means curved geometry (strict subadditivity). The factor of 4 in the area–entropy defect relation comes directly from the RT factor S = A/4, reflecting the fundamental discreteness at the Planck scale.
-
-## 8. Continuous Holographic Codes
-
-### 8.1 Bekenstein-Singleton Equivalence
-
-**Theorem (bekenstein_singleton_mds).** For a continuous holographic code where the Bekenstein entropy equals the Singleton maximum (MDS condition), we have:
-
-A/(4G) = A/ℓ_P² - L/ℓ_P + 2
-
-This is the exact algebraic identity that makes the Bekenstein-Hawking formula a coding theorem: the maximum number of logical qubits in a code with n = A/ℓ_P² physical qubits and distance d = L/(2ℓ_P) is exactly the Bekenstein-Hawking entropy.
-
-## 9. Code Families
-
-### 9.1 HaPPY Family
-
-The HaPPY code family [[5(L+1), L+1, 3]] has:
-- Linear entropy growth: S(L) = 4(L+1)
-- MDS at L=0 (the [[5,1,3]] perfect code)
-- Sharp reconstruction threshold at s = 5L + 3
-- Constant gap n - threshold = 2 for all L
-
-### 9.2 Toric Family
-
-The toric code family [[2L², 2, L]] has:
-- Quadratic entropy growth: S(L) = 2L² - 2
-- BPT-saturating: kd² = n for all L
-- Quadratic deficit growth: Δ(L) = 2L(L-1)
-- Distance scaling d = √(n/2)
-
-## 10. Discussion
-
-### 10.1 What We Learned
-
-The central lesson of this work is that the Singleton bound is not merely a constraint — it is *the* constraint. In the holographic setting, every major physical principle can be derived from it:
-
-1. **Bekenstein-Hawking entropy** = maximum k for given n, d (Singleton maximum)
-2. **No-cloning / causal structure** = complementary exclusion from Singleton
-3. **Entanglement wedge transition** = sharp erasure threshold from code distance
-4. **Bulk curvature** = Singleton deficit
-5. **Strong subadditivity** = nonnegative syndrome defect = nonnegative curvature
-
-### 10.2 The BPT Hierarchy
-
-Our proof that BPT implies Singleton reveals a hierarchy of constraints:
-
-**BPT bound** (geometric, 2D) ⟹ **Singleton bound** (coding-theoretic) ⟹ **entropy bounds** (thermodynamic)
-
-Each level adds geometric structure. The BPT bound is specific to 2D topological codes; the Singleton bound applies to all quantum codes; entropy bounds are universal. The toric code sits at the top, saturating BPT.
-
-### 10.3 The Counterexample
-
-Our discovery that concatenation fails the Singleton bound for k = 0 codes is physically meaningful. Codes with k = 0 have no logical qubits — they encode nothing. In the holographic dictionary, this corresponds to a spacetime with zero entropy, i.e., zero horizon area. Such spacetimes (pure vacuum with no black holes) do not have a holographic structure in the usual sense. The k ≥ 1 requirement for concatenation reflects the physical requirement that each level of the holographic RG hierarchy must contain at least one bit of information.
-
-## 11. Future Work
-
-1. **Quantum extremal surface formula**: Extend the coding framework to include quantum corrections (1/N corrections in AdS/CFT).
-2. **Dynamics of the code**: Model how the code parameters change under time evolution.
-3. **Higher-dimensional BPT**: Generalize the BPT bound to 3D and 4D topological codes.
-4. **Non-stabilizer codes**: Extend the framework beyond stabilizer codes to approximate error correction.
+We have established a rigorous mathematical framework connecting polymatroid theory to holographic gravity through quantum error correction. The central finding is that much of the holographic dictionary — entropy bounds, curvature non-negativity, information-protection tradeoffs — follows from the purely combinatorial axioms of submodularity and monotonicity. The quantum Singleton bound, however, requires genuinely quantum structure (no-cloning), providing a sharp characterization of what makes quantum gravity *quantum*.
 
 ## References
 
-1. A. Almheiri, X. Dong, D. Harlow, "Bulk Locality and Quantum Error Correction in AdS/CFT," JHEP (2014)
-2. F. Pastawski, B. Yoshida, D. Harlow, J. Preskill, "Holographic quantum error-correcting codes: Toy models for the bulk/boundary correspondence," JHEP (2015)
-3. S. Bravyi, D. Poulin, B. Terhal, "Tradeoffs for reliable quantum information storage in 2D systems," Phys. Rev. Lett. (2010)
-4. D. Harlow, "The Ryu-Takayanagi Formula from Quantum Error Correction," Comm. Math. Phys. (2017)
-5. S. Ryu, T. Takayanagi, "Holographic derivation of entanglement entropy from AdS/CFT," Phys. Rev. Lett. (2006)
-6. Catalog/Physics/StabilizerBounds.lean — Quantum stabilizer code bound framework
-7. Catalog/Physics/HolographicGravity.lean — RT-Singleton correspondence
-8. Catalog/Bridges/HolographicCoding.lean — Holographic code profiles
+1. J. Maldacena, "The large-N limit of superconformal field theories and supergravity," Adv. Theor. Math. Phys. 2, 231 (1998).
+2. S. Ryu and T. Takayanagi, "Holographic derivation of entanglement entropy from AdS/CFT," Phys. Rev. Lett. 96, 181602 (2006).
+3. A. Almheiri, X. Dong, and D. Harlow, "Bulk locality and quantum error correction in AdS/CFT," JHEP 04, 163 (2015).
+4. F. Pastawski, B. Yoshida, D. Harlow, and J. Preskill, "Holographic quantum error-correcting codes: Toy models for the bulk/boundary correspondence," JHEP 06, 149 (2015).
+5. N. Bao, S. Nezami, H. Ooguri, B. Stoica, J. Sully, and M. Walter, "The holographic entropy cone," JHEP 09, 130 (2015).
+6. A. Kitaev, "Fault-tolerant quantum computation by anyons," Ann. Phys. 303, 2 (2003).
+7. S. Bravyi, D. Poulin, and B. Terhal, "Tradeoffs for reliable quantum information storage in 2D systems," Phys. Rev. Lett. 104, 050503 (2010).
