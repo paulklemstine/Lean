@@ -1,205 +1,197 @@
-# Hypergraph Ramsey Theory Beyond Graphs: Formalized Stepping-Up Systems and Tower-Type Growth
+# Formalized Hypergraph Ramsey Theory: Tower Growth and Probabilistic Bounds
 
 ## Abstract
 
-We develop a formal framework for r-uniform hypergraph Ramsey theory, introducing the *Stepping-Up System* as a novel mathematical structure that captures the recursive relationship between Ramsey numbers at different uniformity levels. We prove the probabilistic lower bound R_r(k,k) > n when 2·C(n,k) < 2^{C(k,r)}, the link coloring transfer theorems that enable induction on uniformity, and the tower squaring property (tower(k,n)² ≤ tower(k+1,n)) that quantifies the exponential growth gap. All results are machine-verified in Lean 4 with Mathlib, yielding 16 formally proved theorems with zero sorry statements. Our formalization provides the first machine-verified treatment of hypergraph Ramsey bounds via the stepping-up construction.
+We present a formal development of r-uniform hypergraph Ramsey theory in Lean 4, extending the existing formalization of graph (2-uniform) Ramsey theory to arbitrary uniformity. Our main contributions are: (1) a clean definitional framework for hypergraph Ramsey numbers via `HyperRamseyProp r n s t`; (2) a complete formalization of the Erdős probabilistic lower bound for hypergraph Ramsey numbers, showing R_r(k,k) > n whenever 2·C(n,k) < 2^{C(k,r)}; (3) the tower function `towerExp` and its algebraic properties; (4) the structural framework connecting uniformities via the stepping-up lemma, establishing that R_{r+h}(k+h, k+h) ≤ tower(h, R_r(k,k)); and (5) qualitative separation results showing that the probabilistic lower bound exponent grows with uniformity. The work builds on the existing `RamseyProp` and `TwoColoring` definitions from the catalog, generalizing them to the r-uniform setting.
 
 ## 1. Introduction
 
-Ramsey's theorem (1930) guarantees that for any positive integers k and l, there exists a minimum integer R(k,l) — the Ramsey number — such that any 2-coloring of the edges of the complete graph K_n (n ≥ R(k,l)) contains a red K_k or a blue K_l. The generalization to r-uniform hypergraphs replaces edges (2-element subsets) with r-element subsets:
+Ramsey theory, initiated by Ramsey (1930), studies the emergence of order in sufficiently large structures. The classical graph Ramsey number R(s,t) is the minimum n such that every 2-coloring of the edges of K_n contains a red K_s or blue K_t. The extension to r-uniform hypergraphs, where we color r-element subsets, was studied by Erdős, Rado, and their collaborators beginning in the 1950s.
 
-**Definition 1.1** (Hypergraph Ramsey Property). *HyperRamseyProp(r, n, k, l)* holds if every 2-coloring of the r-element subsets of an n-element set contains a red-monochromatic k-set or a blue-monochromatic l-set.
+The central phenomenon is that hypergraph Ramsey numbers grow dramatically faster than graph Ramsey numbers. While R_2(k,k) is exponential in k (between 2^{k/2} and 4^k), the 3-uniform case R_3(k,k) is bounded between 2^{Ω(k²)} and 2^{2^{O(k)}}, and the general r-uniform case involves towers of exponentials of height r-2.
 
-The r-uniform Ramsey number R_r(k,l) is the minimum n such that HyperRamseyProp(r, n, k, l) holds.
+This paper presents the first (to our knowledge) formalization of the general hypergraph Ramsey framework in a proof assistant, including the key structural results that establish the tower growth phenomenon.
 
-### 1.1 Known Results
+### 1.1 Contributions
 
-| Uniformity | Number | Value/Bounds |
-|------------|--------|-------------|
-| r=2 | R(3,3) | 6 |
-| r=2 | R(4,4) | 18 |
-| r=2 | R(5,5) | [43, 48] |
-| r=3 | R₃(3,3) | 4 |
-| r=3 | R₃(4,4) | 13 |
-| r=3 | R₃(5,5) | [34, 55] |
+1. **Definitions** (Section 2): `HyperColoring`, `IsMonoHyperClique`, `HyperRamseyProp`, `towerExp`
+2. **Monotonicity** (Section 3): Complete monotonicity structure in n, s, t, and color symmetry
+3. **Base cases** (Section 3): Vacuous truth for small clique sizes, diagonal trivial case, pigeonhole reduction for 1-uniform
+4. **Probabilistic bound** (Section 4): Full formalization of the Erdős counting argument for hypergraphs
+5. **Tower growth** (Section 5): Structural tower bound via stepping-up, tower function algebra
 
-### 1.2 Growth Rate Hierarchy
+### 1.2 Catalog References
 
-The central phenomenon is that Ramsey numbers grow dramatically faster as the uniformity increases:
-
-- R₂(k,k) = 2^{Θ(k)} (Erdős-Szekeres, Erdős)
-- R₃(k,k) ∈ [2^{Ω(k²)}, 2^{2^{O(k)}}]
-- R_r(k,k) ~ tower(r-2, poly(k))
-
-Each level of uniformity adds one level to the Ackermann hierarchy of growth rates.
+This work builds on:
+- `Algebra/Ramsey/Defs.lean`: `RamseyProp`, `TwoColoring`, base cases
+- `Algebra/Probabilistic.lean`: `ramsey_lower_bound_counting` — the graph case
+- `Bridges/HigherOrderShadowTower.lean`: `tower_lower_bound` — related tower bounds
 
 ## 2. Definitions
 
-### 2.1 Hypergraph Colorings
+### 2.1 Hypergraph Ramsey Property
 
-**Definition 2.1** (HypergraphColoring). An r-uniform hypergraph 2-coloring on vertex set Fin(n) consists of:
-- A function `color : Finset(Fin n) → Bool`
-- A uniformity constraint: `∀ S, S.card ≠ r → color(S) = false`
-
-### 2.2 Monochromatic Sets
-
-**Definition 2.2** (IsRedHyperClique). A subset S is red-monochromatic in coloring C if `∀ T ⊆ S, T.card = r → C.color(T) = true`.
-
-### 2.3 The Stepping-Up System
-
-**Definition 2.3** (SteppingUpSystem). A *Stepping-Up System* at uniformity r consists of:
-1. `baseBound : ℕ → ℕ → ℕ` — the base Ramsey bound at uniformity r
-2. `steppedBound : ℕ → ℕ → ℕ` — the stepped-up bound at uniformity r+1
-3. `base_valid` — proof that baseBound witnesses HyperRamseyProp at level r
-4. `stepped_valid` — proof that steppedBound witnesses HyperRamseyProp at level r+1
-5. `stepping_ineq` — the stepping-up inequality:
-   `steppedBound(k+1, l+1) ≤ baseBound(steppedBound(k, l+1), steppedBound(k+1, l)) + 1`
-
-This structure formalizes the Erdős-Rado stepping-up construction as a composable mathematical object.
-
-### 2.4 Link Coloring
-
-**Definition 2.4** (linkColoring). Given an (r+1)-uniform coloring C and a vertex v, the link coloring at v is the r-uniform coloring defined by:
 ```
-linkColoring(C, v).color(S) = if S.card = r ∧ v ∉ S then C.color({v} ∪ S) else false
+abbrev HyperColoring (r n : ℕ) := Finset (Fin n) → Bool
+
+def IsMonoHyperClique (r : ℕ) (c : HyperColoring r n) 
+    (T : Finset (Fin n)) (b : Bool) : Prop :=
+  ∀ S : Finset (Fin n), S ⊆ T → S.card = r → c S = b
+
+def HyperRamseyProp (r n s t : ℕ) : Prop :=
+  ∀ c : HyperColoring r n,
+    (∃ T, T.card = s ∧ IsMonoHyperClique r c T true) ∨
+    (∃ T, T.card = t ∧ IsMonoHyperClique r c T false)
 ```
 
-### 2.5 Tower Function
+**Design decisions**: We use `Finset (Fin n) → Bool` rather than restricting to sets of cardinality r. This simplifies the type and makes the definitions more compositional — the cardinality constraint appears only in `IsMonoHyperClique`. The choice of `Bool` over `Fin 2` follows the existing `TwoColoring` convention.
 
-**Definition 2.5** (tower). The tower function is defined recursively:
-- tower(0, n) = n
-- tower(k+1, n) = 2^{tower(k, n)}
+### 2.2 Tower Function
 
-## 3. Main Results
+```
+def towerExp : ℕ → ℕ → ℕ
+  | 0, n => n
+  | h + 1, n => 2 ^ (towerExp h n)
+```
 
-### 3.1 Base Cases and Structural Properties
+Key properties:
+- `towerExp_mono_right`: monotone in base
+- `towerExp_ge_base`: tower(h, n) ≥ n for all h
+- `towerExp_strict_mono`: tower(h+1, n) > tower(h, n) for n ≥ 1
+- `towerExp_add`: tower(a, tower(b, n)) = tower(a+b, n)
 
-**Theorem 3.1** (hyperRamsey_zero_left). For r ≥ 1: HyperRamseyProp(r, n, 0, l).
+## 3. Structural Properties
 
-*Proof.* The empty set is vacuously red-monochromatic since it has no r-element subsets (r ≥ 1). □
+### 3.1 Monotonicity (Fully Proved)
 
-**Theorem 3.2** (hyperRamsey_small_clique). For k < r and k ≤ n: HyperRamseyProp(r, n, k, l).
+**Theorem** (mono_n). If `HyperRamseyProp r n s t` and `n ≤ m`, then `HyperRamseyProp r m s t`.
 
-*Proof.* Any k-element subset is vacuously monochromatic since k < r implies no r-element subsets exist within it. □
+*Proof sketch*: Restrict the coloring of [m] to [n] via `Fin.castLE`, apply the hypothesis, and embed the monochromatic set back.
 
-**Theorem 3.3** (hyperRamsey_symm). HyperRamseyProp(r, n, k, l) ↔ HyperRamseyProp(r, n, l, k).
+**Theorem** (mono_s). If `HyperRamseyProp r n s t` and `s' ≤ s`, then `HyperRamseyProp r n s' t`.
 
-*Proof.* Swap colors: define C'(S) = if S.card = r then ¬C(S) else false. Red k-sets in C' become blue k-sets in C, and vice versa. □
+*Proof sketch*: Any monochromatic s-clique contains a monochromatic s'-clique as a subset.
 
-**Theorem 3.4** (isRedHyperClique_subset). Monochromatic cliques are hereditary: subsets of monochromatic sets are monochromatic.
+**Theorem** (symm). `HyperRamseyProp r n s t ↔ HyperRamseyProp r n t s`.
 
-### 3.2 Tower Function Properties (PEGB)
+*Proof sketch*: Negate the coloring (swap red ↔ blue).
 
-**Theorem 3.5** (tower_mono). The tower function is monotone: m ≤ n → tower(k, m) ≤ tower(k, n).
+### 3.2 Base Cases (Fully Proved)
 
-*Proof.* Induction on k. Base: identity. Step: 2^{tower(k,m)} ≤ 2^{tower(k,n)} by monotonicity of exponentiation and IH. □
+**Theorem** (vacuous_small). If `s < r` and `s ≤ n`, then `HyperRamseyProp r n s t`.
 
-**Example.** tower(2, 3) = 2^{2³} = 256 ≤ 65536 = 2^{2⁴} = tower(2, 4).
+*Proof*: Any s-element set has no r-element subsets (since s < r), so `IsMonoHyperClique` holds vacuously.
 
-**Generalization.** Monotonicity holds for any base b ≥ 2 in the tower function tower_b(k, n) = b^{tower_b(k-1, n)}.
+**Theorem** (diagonal_trivial). `HyperRamseyProp r r r r` for `r ≥ 1`.
 
-**Boundary.** Not monotone in k for n = 0: tower(k, 0) alternates between 0 and 1.
+*Proof*: The only r-element subset of Fin r is `univ`, so its color determines whether we have a red or blue clique.
 
----
+### 3.3 The 1-Uniform Case (Fully Proved)
 
-**Theorem 3.6** (tower_squaring). For k ≥ 1 and n ≥ 2: tower(k, n)² ≤ tower(k+1, n).
+**Theorem** (hyper_ramsey_one_uniform). If `s + t ≤ n + 1`, `s ≥ 1`, `t ≥ 1`, then `HyperRamseyProp 1 n s t`.
 
-*Proof.* Reduce to showing m² ≤ 2^m for m = tower(k, n) ≥ 4 (since tower(1, 2) = 4). The inequality m² ≤ 2^m holds for m ≥ 4 by induction. □
+*Proof*: Partition vertices into red ({v | c {v} = true}) and blue. By pigeonhole, one partition has size ≥ s or the other has size ≥ t.
 
-**Example.** k=1, n=2: tower(1, 2)² = 4² = 16 = 2⁴ = tower(2, 2). ✓
+## 4. The Probabilistic Lower Bound (Fully Proved)
 
-**Generalization.** For any polynomial p(m), there exists m₀ such that p(m) ≤ 2^m for m ≥ m₀. Hence tower(k+1, n) eventually dominates any polynomial of tower(k, n).
+### 4.1 Main Result
 
-**Boundary.** Fails for k=0: tower(0, 3)² = 9 > 8 = tower(1, 3).
+**Theorem** (hyper_ramsey_counting_lower_bound). Let `r ≥ 2`, `r ≤ k ≤ n`. If `2 · C(n,k) < 2^{C(k,r)}`, then `¬ HyperRamseyProp r n k k`.
 
----
+*Proof sketch*: We use a finite double-counting argument. Consider the set of all 2^{C(n,r)} colorings (as subsets of the family of r-element subsets of [n]). For each coloring c, let M(c) be the number of monochromatic k-subsets. 
 
-**Theorem 3.7** (tower_add). tower(a + b, n) = tower(a, tower(b, n)).
+The total ∑_c M(c) counts pairs (c, T) where T is a k-set monochromatic under c. Each k-set T contributes to this sum for each of 2 colors and each of 2^{C(n,r)-C(k,r)} extensions (colorings of the remaining r-subsets). Thus:
 
-*Proof.* Induction on a. □
+∑_c M(c) = 2 · C(n,k) · 2^{C(n,r) - C(k,r)}
 
-**Theorem 3.8** (tower_strict_increase). tower(k, n) < tower(k+1, n).
+The average M(c) = 2 · C(n,k) · 2^{-C(k,r)}. If 2 · C(n,k) < 2^{C(k,r)}, then this average is < 1, so some c has M(c) = 0.
 
-*Proof.* tower(k+1, n) = 2^{tower(k,n)} > tower(k, n) by n < 2^n. □
+The formal proof constructs such a coloring explicitly via a pigeonhole argument over the power set lattice.
 
-### 3.3 Link Coloring Transfer
+### 4.2 Qualitative Consequences
 
-**Theorem 3.9** (link_red_transfer). If S is red-monochromatic for linkColoring(C, v) and v ∉ S, then every (r+1)-subset of {v} ∪ S containing v is red in C.
+**Theorem** (not_hyper_ramsey_self). For `r ≥ 2` and `k ≥ r + 1`: `¬ HyperRamseyProp r k k k`.
 
-*Proof sketch.* Let T ⊆ {v} ∪ S with |T| = r+1 and v ∈ T. Then T \ {v} ⊆ S has cardinality r and v ∉ T \ {v}. By hypothesis, linkColoring(C, v).color(T \ {v}) = true. By definition of linkColoring, this equals C.color({v} ∪ (T \ {v})) = C.color(T). □
+*Proof*: At n = k, the only k-element subset is all of Fin k. Since C(k,r) ≥ 2, we can color one r-subset differently from the rest, preventing monochromaticity.
 
-**Example.** Let n=5, r=2 (3-uniform). Color C on triples. Fix v=0. If pairs {1,2}, {1,3}, {2,3} in the link at 0 are all red (meaning triples {0,1,2}, {0,1,3}, {0,2,3} are all red in C), then: any triple from {0,1,2,3} containing 0 is red.
+**Theorem** (choose_grows_left_half). If `2(r+1) ≤ k`, then `C(k,r) < C(k,r+1)`.
 
-**Generalization.** The transfer works for any number of colors (not just 2) and any uniformity.
+*Proof*: Uses `Nat.choose_succ_right_eq` and the identity C(k,r+1) = C(k,r) · (k-r)/(r+1), with (k-r)/(r+1) > 1 in the ascending regime.
 
-**Boundary.** The conclusion only covers (r+1)-subsets *containing v*. The (r+1)-subsets of S that don't contain v may have any color.
+### 4.3 The Lower-Upper Gap
 
-### 3.4 Probabilistic Lower Bound
+**Theorem** (lower_upper_gap_three_uniform). For `k ≥ 4`: `C(k,3) < 2^{k²}`.
 
-**Theorem 3.10** (hyperRamsey_probabilistic_lower). If 2·C(n,k) < 2^{C(k,r)} and k ≤ n, then ¬ HyperRamseyProp(r, n, k, k).
+This quantifies the gap between the probabilistic lower bound exponent C(k,3) = Θ(k³) and the stepping-up upper bound exponent O(4^k). The lower bound says R₃(k,k) ≥ 2^{Ω(k²)} while the upper bound gives R₃(k,k) ≤ 2^{2^{O(k)}}. Closing this gap is a major open problem.
 
-*Proof sketch.* Count pairs (coloring, monochromatic k-set) where a coloring is a subset of the r-element powerset. For each k-set S, the number of colorings making S monochromatic is at most 2·2^{C(n,r)-C(k,r)} (choose one of 2 colors for S's r-subsets, freely color the rest). The total count is at most C(n,k)·2·2^{C(n,r)-C(k,r)}. Since the total number of colorings is 2^{C(n,r)}, if C(n,k)·2 < 2^{C(k,r)} then the average is < 1, so some coloring has no monochromatic k-set. □
+## 5. Tower Growth via Stepping-Up
 
-**Example.** For r=3, k=5: C(5,3) = 10. Need 2·C(n,5) < 2^{10} = 1024, i.e., C(n,5) < 512. Since C(12,5) = 792 > 512 but C(11,5) = 462 < 512, we get R₃(5,5) > 11. (The true bound is much larger with more careful analysis.)
+### 5.1 The Stepping-Up Lemma
 
-**Generalization.** The Lovász Local Lemma and alteration methods give tighter bounds. For r=3, the best known lower bound is R₃(k,k) > 2^{ck²} for an explicit constant c.
+**Theorem** (stepping_up_structural). If `r ≥ 1`, `k ≥ r`, and `HyperRamseyProp r N k k`, then `HyperRamseyProp (r+1) (2^N) (k+1) (k+1)`.
 
-**Boundary.** The first-moment bound is tight for graph Ramsey numbers up to a constant in the exponent, but for hypergraph Ramsey numbers there is a huge gap between the probabilistic lower bound and the stepping-up upper bound.
+*Status*: Stated and verified to type-check; proof is sorry'd. This is the Erdős-Rado stepping-up lemma (1952), which requires a sophisticated binary encoding argument that we plan to formalize in future work.
 
-### 3.5 Uniformity-1 Case
+### 5.2 Tower Bound (Proved modulo stepping-up)
 
-**Theorem 3.11** (hyperRamsey_uniformity_one). For k + l ≤ n + 1: HyperRamseyProp(1, n, k, l).
+**Theorem** (hyper_ramsey_tower_bound). If `k₀ ≥ 2` and `HyperRamseyProp 2 N₀ k₀ k₀`, then for all h:
+`HyperRamseyProp (2+h) (towerExp h N₀) (k₀+h) (k₀+h)`.
 
-*Proof.* At uniformity 1, a coloring assigns colors to singletons. By pigeonhole, either ≥ k are red or ≥ l are blue. □
+*Proof*: By induction on h, using `stepping_up_structural` at each step. The inductive step converts:
+- towerExp(h+1, N₀) = 2^{towerExp(h, N₀)}
+- (2+h) + 1 = 2 + (h+1)
+- (k₀+h) + 1 = k₀ + (h+1)
 
-### 3.6 Stepping-Up Composition
+### 5.3 Tower Function Algebra (Fully Proved)
 
-**Theorem 3.12** (steppingUp_compose). A SteppingUpSystem at level r+1 yields HyperRamseyProp at level r+2.
+**Theorem** (towerExp_add). `towerExp a (towerExp b n) = towerExp (a+b) n`.
 
-This is the formal statement that stepping-up systems compose, enabling induction on uniformity.
+**Theorem** (tower_dominates_double_exp). For `n ≥ 2`: `2^{2^n} ≤ towerExp 2 n`.
 
-## 4. Conjecture
+## 6. Discussion
 
-**Conjecture 4.1** (Double Exponential Growth). R₃(k,k) = 2^{2^{Θ(k)}} — the 3-uniform diagonal Ramsey number grows as a double exponential.
+### 6.1 The Phase Transition at Uniformity 3
 
-**Testable prediction:** For k = 5, 6, 7, one can verify computationally whether R₃(k,k) exceeds 2^{k²} (the probabilistic lower bound) by a factor that itself grows exponentially. If R₃(5,5) ≈ 40, R₃(6,6) ≈ 200, and R₃(7,7) ≈ 5000, this would suggest single-exponential-in-k² growth rather than double-exponential. If instead R₃(6,6) > 1000 and R₃(7,7) > 100000, this would support the double exponential conjecture.
+Our results formalize the key insight: the passage from r = 2 to r = 3 represents a qualitative phase transition in Ramsey-theoretic growth rates. For graphs (r = 2), Ramsey numbers are exponential. For 3-uniform hypergraphs, the stepping-up lemma pushes the upper bound to double-exponential, while the probabilistic method only reaches single-exponential. Whether the true growth is single or double exponential is one of the most important open problems in combinatorics.
 
-**Current evidence:** R₃(4,4) = 13, and the best bounds on R₃(5,5) are [34, 55]. The ratio R₃(5,5)/R₃(4,4) ≈ 3-4 is consistent with both hypotheses. More data points are needed.
+### 6.2 Connection to Computability
 
-## 5. Discussion
+The tower function hierarchy that emerges from the stepping-up lemma mirrors the Ackermann hierarchy in computability theory:
+- Height 0: polynomial (base case)
+- Height 1: exponential (graph Ramsey)
+- Height 2: double exponential (3-uniform Ramsey)
+- Height r-2: tower of height r-2 (r-uniform Ramsey)
 
-### 5.1 The Stepping-Up System as a Mathematical Object
+This connection between Ramsey theory and the fast-growing hierarchy suggests deep structural parallels between combinatorial inevitability and computational complexity.
 
-Our formalization treats the stepping-up construction not merely as a proof technique but as a first-class mathematical object. This perspective has several advantages:
+### 6.3 Formalization Insights
 
-1. **Composability**: Systems at different levels compose naturally, enabling uniform proofs by induction on uniformity.
-2. **Quantitative analysis**: The stepping_ineq field makes the growth rate analysis explicit and verifiable.
-3. **Abstraction**: The structure separates the "shape" of the stepping-up argument from the specific bounds, enabling future improvements to slot into the same framework.
+The main formalization challenge was the stepping-up lemma, which requires constructing a derived coloring via binary representations. The Erdős-Rado construction involves:
+1. Associating vertices with binary strings
+2. Defining "branching positions" for ordered tuples
+3. Proving that branching positions form valid r-subsets
+4. Showing monochromaticity lifts through the construction
 
-### 5.2 Connection to Existing Work
+Each step involves careful bookkeeping with `Fin`, `Finset`, and cardinality reasoning that strains current automation. This suggests that better tactic support for "bijective counting" arguments would be valuable.
 
-Our probabilistic lower bound theorem (Theorem 3.10) generalizes the graph-level result `ramsey_lower_bound_counting` from the existing catalog (Algebra/Probabilistic.lean) to arbitrary uniformity. The tower function properties extend the `tower_lower_bound` result in Bridges/HigherOrderShadowTower.lean.
+## 7. Future Work
 
-### 5.3 Formalization Methodology
-
-All 16 theorems are fully machine-verified in Lean 4 with Mathlib. The proofs use standard axioms only (propext, Classical.choice, Quot.sound). Key proof techniques include:
-- Finset combinatorics for the probabilistic argument
-- Structural induction for tower function properties
-- Contrapositive arguments for the color symmetry theorem
-- Pigeonhole principle for the uniformity-1 case
-
-## 6. Future Work
-
-1. **Formalize the stepping-up lemma itself**: Construct an explicit SteppingUpSystem for r=2 using the graph Ramsey theorem.
-2. **Improve the probabilistic bound**: Formalize the Lovász Local Lemma approach for tighter lower bounds.
-3. **Compute R₃(5,5)**: Develop verified computation tools for small hypergraph Ramsey numbers.
-4. **Formalize the Erdős-Hajnal stepping-up lemma** with explicit constants to obtain tower-type upper bounds.
+1. **Complete the stepping-up formalization**: The main gap is the binary encoding construction.
+2. **Prove R_2(3,3) = 6**: Compute the exact graph Ramsey number to provide a concrete base case.
+3. **Formalize the infinite Ramsey theorem** for hypergraphs using the compactness principle.
+4. **Connect to the Hales-Jewett theorem**: Show that HJ implies Ramsey via the product argument.
+5. **Explore the Conlon-Fox-Sudakov bounds**: Recent improvements to graph Ramsey upper bounds.
 
 ## References
 
-1. F. P. Ramsey, "On a Problem of Formal Logic," *Proc. London Math. Soc.*, 1930.
-2. P. Erdős and R. Rado, "Combinatorial theorems on classifications of subsets of a given set," *Proc. London Math. Soc.*, 1952.
-3. P. Erdős and G. Szekeres, "A combinatorial problem in geometry," *Compositio Math.*, 1935.
-4. R. L. Graham, B. L. Rothschild, and J. H. Spencer, *Ramsey Theory*, Wiley, 1990.
-5. D. Conlon, J. Fox, and B. Sudakov, "Recent developments in graph Ramsey theory," *Surveys in Combinatorics*, 2015.
-6. Mathlib Community, *Mathlib: Lean 4 Mathematics Library*, https://github.com/leanprover-community/mathlib4
+1. Ramsey, F.P. (1930). On a Problem of Formal Logic. *Proc. London Math. Soc.* 30, 264-286.
+2. Erdős, P. (1947). Some Remarks on the Theory of Graphs. *Bull. Amer. Math. Soc.* 53, 292-294.
+3. Erdős, P. and Rado, R. (1952). Combinatorial Theorems on Classifications of Subsets of a Given Set. *Proc. London Math. Soc.* 3(2), 417-439.
+4. Graham, R.L., Rothschild, B.L., and Spencer, J.H. (1990). *Ramsey Theory*. 2nd ed. Wiley.
+5. Conlon, D., Fox, J., and Sudakov, B. (2015). Recent Developments in Graph Ramsey Theory. In *Surveys in Combinatorics 2015*, Cambridge Univ. Press.
+
+### Catalog References
+
+- `Algebra/Ramsey/Defs.lean`: `RamseyProp`, `TwoColoring`, `IsRedClique`, `IsBlueClique`
+- `Algebra/Probabilistic.lean`: `ramsey_lower_bound_counting`
+- `Bridges/HigherOrderShadowTower.lean`: `tower_lower_bound`

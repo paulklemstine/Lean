@@ -1,248 +1,254 @@
 #!/usr/bin/env python3
 """
-Hypergraph Ramsey Theory: Algorithms
+Hypergraph Ramsey Theory: Core Algorithms
 
-Type-hinted implementations of key algorithms for computing and bounding
-hypergraph Ramsey numbers.
+Type-hinted implementations of key algorithms and computations
+from hypergraph Ramsey theory.
 """
-from math import comb, log2
-from typing import List, Tuple, Optional, Set, FrozenSet, Callable
+
+from math import comb, log2, ceil
+from typing import List, Set, FrozenSet, Callable, Optional, Tuple
 from itertools import combinations
 import random
 
 
-def tower(k: int, n: int) -> int:
-    """Iterated exponential (tower function).
+# ============================================================
+# Type aliases
+# ============================================================
+Vertex = int
+RSubset = FrozenSet[int]
+Coloring = Callable[[FrozenSet[int]], bool]  # True = red, False = blue
 
-    tower(0, n) = n
-    tower(k+1, n) = 2^{tower(k, n)}
 
-    This captures the growth rate of r-uniform hypergraph Ramsey numbers:
-    R_r(k,k) ~ tower(r-2, poly(k)).
-
-    Args:
-        k: Height of the tower (number of exponentiations)
-        n: Base value
-
-    Returns:
-        The tower value tower(k, n)
+# ============================================================
+# Algorithm 1: Tower Function
+# ============================================================
+def tower_exp(height: int, base: int) -> int:
     """
-    if k == 0:
-        return n
-    return 2 ** tower(k - 1, n)
-
-
-def probabilistic_lower_bound(k: int, r: int) -> int:
-    """Compute the probabilistic (first-moment) lower bound for R_r(k,k).
-
-    Uses the Erdős counting argument: if 2 * C(n,k) < 2^{C(k,r)},
-    then some 2-coloring of the r-subsets of [n] has no monochromatic k-set.
-
-    This gives: R_r(k,k) > max{n : 2 * C(n,k) < 2^{C(k,r)}}.
-
-    For r=2: R(k,k) > 2^{k/2} (classical Erdős bound)
-    For r=3: R_3(k,k) > 2^{Ω(k^2)}
-
+    Compute the tower function: iterated exponentiation.
+    
+    tower_exp(0, n) = n
+    tower_exp(h+1, n) = 2^{tower_exp(h, n)}
+    
+    Pseudocode:
+        TOWER(h, n):
+            result ← n
+            FOR i = 1 TO h:
+                result ← 2^result
+            RETURN result
+    
     Args:
-        k: Clique size
-        r: Uniformity (r-uniform hypergraph)
-
+        height: Number of levels of exponentiation
+        base: Starting value
+    
     Returns:
-        Lower bound n such that R_r(k,k) > n
+        2↑↑height(base) — tower of 2s of given height starting from base
+    """
+    result = base
+    for _ in range(height):
+        if result > 1000:  # Prevent astronomical computation
+            return float('inf')
+        result = 2 ** result
+    return result
+
+
+# ============================================================
+# Algorithm 2: Probabilistic Lower Bound Computation
+# ============================================================
+def probabilistic_lower_bound(r: int, k: int) -> int:
+    """
+    Compute the probabilistic lower bound for R_r(k,k).
+    
+    Finds the largest n such that 2 * C(n,k) < 2^{C(k,r)}.
+    
+    Pseudocode:
+        PROB_LOWER_BOUND(r, k):
+            target ← 2^{C(k,r)}
+            n ← k
+            WHILE 2 * C(n, k) < target:
+                n ← n + 1
+            RETURN n - 1
+    
+    Args:
+        r: Uniformity (r-uniform hypergraph)
+        k: Clique size (diagonal case)
+    
+    Returns:
+        Largest n such that ¬ HyperRamseyProp r n k k (provably)
     """
     if k < r:
-        return k  # trivial case
-    ckr = comb(k, r)
-    threshold = 2 ** ckr
+        return k  # Trivial case
+    
+    choose_k_r = comb(k, r)
+    if choose_k_r > 1000:  # Too large to compute 2^{C(k,r)}
+        # Use logarithmic approximation
+        log_target = choose_k_r * log2(2)  # = C(k,r)
+        n = k
+        while True:
+            # log2(C(n,k)) ≈ k * log2(n/k) + k * log2(e) (Stirling)
+            log_choose = sum(log2(n - i) - log2(i + 1) for i in range(k))
+            if log_choose + 1 >= log_target:
+                return n - 1
+            n += 1
+            if n > 10**6:
+                return n
+    
+    target = 2 ** choose_k_r
+    n = k
+    while 2 * comb(n, k) < target:
+        n += 1
+    return n - 1
 
-    # Binary search for largest n with 2 * C(n,k) < 2^{C(k,r)}
-    lo, hi = k, min(threshold, 10**18)
-    while lo < hi:
-        mid = (lo + hi + 1) // 2
+
+# ============================================================
+# Algorithm 3: Exhaustive Hypergraph Ramsey Checker
+# ============================================================
+def check_hyper_ramsey_prop(r: int, n: int, s: int, t: int, 
+                             max_colorings: int = 100000) -> Tuple[bool, Optional[dict]]:
+    """
+    Check HyperRamseyProp r n s t by exhaustive or random search.
+    
+    For small n: exhaustively check all 2^{C(n,r)} colorings.
+    For large n: randomly sample colorings.
+    
+    Pseudocode:
+        CHECK_RAMSEY(r, n, s, t):
+            r_subsets ← all r-element subsets of [n]
+            FOR each coloring c of r_subsets:
+                has_red_s ← EXISTS T ⊆ [n], |T|=s: all r-subsets of T are red
+                has_blue_t ← EXISTS T ⊆ [n], |T|=t: all r-subsets of T are blue
+                IF NOT (has_red_s OR has_blue_t):
+                    RETURN (False, c)  // counterexample
+            RETURN (True, None)
+    
+    Args:
+        r: Uniformity
+        n: Number of vertices
+        s: Red clique size
+        t: Blue clique size
+        max_colorings: Maximum colorings to check
+    
+    Returns:
+        (holds, info) where holds is True if property holds,
+        info contains counterexample if found
+    """
+    vertices = list(range(n))
+    r_subsets = [frozenset(sub) for sub in combinations(vertices, r)]
+    num_r_subsets = len(r_subsets)
+    
+    total_colorings = 2 ** num_r_subsets
+    
+    def check_coloring(coloring_bits: int) -> bool:
+        """Check if a coloring satisfies the Ramsey property."""
+        def color(S: FrozenSet[int]) -> bool:
+            idx = r_subsets.index(S)
+            return bool((coloring_bits >> idx) & 1)
+        
+        # Check for red s-clique
+        for T in combinations(vertices, s):
+            T_set = frozenset(T)
+            T_r_subs = [frozenset(sub) for sub in combinations(T, r)]
+            if all(color(S) for S in T_r_subs):
+                return True  # Found red s-clique
+        
+        # Check for blue t-clique
+        for T in combinations(vertices, t):
+            T_set = frozenset(T)
+            T_r_subs = [frozenset(sub) for sub in combinations(T, r)]
+            if all(not color(S) for S in T_r_subs):
+                return True  # Found blue t-clique
+        
+        return False
+    
+    if total_colorings <= max_colorings:
+        # Exhaustive search
+        for bits in range(total_colorings):
+            if not check_coloring(bits):
+                return (False, {"counterexample_bits": bits, "method": "exhaustive"})
+        return (True, {"method": "exhaustive", "colorings_checked": total_colorings})
+    else:
+        # Random sampling
+        for _ in range(max_colorings):
+            bits = random.randint(0, total_colorings - 1)
+            if not check_coloring(bits):
+                return (False, {"counterexample_bits": bits, "method": "random"})
+        return (True, {"method": "random", "colorings_checked": max_colorings,
+                       "note": "Not exhaustive — property may still fail"})
+
+
+# ============================================================
+# Algorithm 4: Stepping-Up Bound Computation
+# ============================================================
+def stepping_up_upper_bound(r: int, k: int) -> str:
+    """
+    Compute the upper bound for R_r(k,k) via the stepping-up lemma.
+    
+    Pseudocode:
+        STEPPING_UP_BOUND(r, k):
+            IF r = 2:
+                RETURN C(2k-2, k-1)  // graph Ramsey upper bound
+            ELSE:
+                prev ← STEPPING_UP_BOUND(r-1, k-1)
+                RETURN 2^prev
+    
+    Args:
+        r: Uniformity
+        k: Diagonal clique size
+    
+    Returns:
+        String representation of the bound (may be too large for int)
+    """
+    if r < 2 or k < r:
+        return str(k)
+    
+    if r == 2:
+        bound = comb(2 * k - 2, k - 1)
+        return str(bound)
+    else:
+        prev = stepping_up_upper_bound(r - 1, k - 1)
         try:
-            if 2 * comb(mid, k) < threshold:
-                lo = mid
+            prev_int = int(prev)
+            if prev_int < 100:
+                return str(2 ** prev_int)
             else:
-                hi = mid - 1
-        except (OverflowError, ValueError):
-            hi = mid - 1
-    return lo
+                return f"2^{prev}"
+        except (ValueError, OverflowError):
+            return f"2^({prev})"
 
 
-def stepping_up_bound(
-    base_ramsey: Callable[[int, int], int],
-    k: int, l: int
-) -> int:
-    """Compute the stepping-up upper bound for R_{r+1}(k,l).
-
-    Given a function computing R_r(·,·), computes the stepping-up bound:
-        R_{r+1}(k+1, l+1) ≤ R_r(R_{r+1}(k, l+1), R_{r+1}(k+1, l)) + 1
-
-    Base cases: R_{r+1}(k, 0) = 0, R_{r+1}(0, l) = 0,
-                R_{r+1}(k, 1) = k (if k ≤ r+1), etc.
-
-    Args:
-        base_ramsey: Function computing R_r(s, t)
-        k: Red clique size
-        l: Blue clique size
-
-    Returns:
-        Upper bound for R_{r+1}(k, l)
-    """
-    memo: dict[Tuple[int, int], int] = {}
-
-    def compute(k: int, l: int) -> int:
-        if k <= 0 or l <= 0:
-            return 0
-        if (k, l) in memo:
-            return memo[(k, l)]
-
-        # For small cases, use direct bounds
-        if k == 1 or l == 1:
-            result = max(k, l)
-        else:
-            a = compute(k - 1, l)
-            b = compute(k, l - 1)
-            result = base_ramsey(a, b) + 1
-
-        memo[(k, l)] = result
-        return result
-
-    return compute(k, l)
-
-
-def check_ramsey_property(
-    n: int, k: int, r: int,
-    coloring: Callable[[FrozenSet[int]], bool]
-) -> Optional[FrozenSet[int]]:
-    """Check whether a coloring has a monochromatic k-set.
-
-    Given a 2-coloring of the r-subsets of [n], finds a monochromatic
-    k-subset if one exists.
-
-    Args:
-        n: Size of the ground set
-        k: Required clique size
-        r: Uniformity
-        coloring: Function mapping r-subsets to bool (True=red, False=blue)
-
-    Returns:
-        A monochromatic k-set if found, None otherwise
-    """
-    vertices = list(range(n))
-
-    for subset in combinations(vertices, k):
-        S = frozenset(subset)
-        # Check all r-subsets
-        r_subsets = list(combinations(subset, r))
-
-        # Check if all red
-        if all(coloring(frozenset(T)) for T in r_subsets):
-            return S  # red monochromatic
-
-        # Check if all blue
-        if all(not coloring(frozenset(T)) for T in r_subsets):
-            return S  # blue monochromatic
-
-    return None
-
-
-def random_coloring_search(
-    n: int, k: int, r: int,
-    num_trials: int = 1000
-) -> Tuple[bool, int]:
-    """Search for a coloring of r-subsets of [n] with no monochromatic k-set.
-
-    Uses random colorings to try to demonstrate R_r(k,k) > n.
-
-    Args:
-        n: Ground set size
-        k: Clique size
-        r: Uniformity
-        num_trials: Number of random colorings to try
-
-    Returns:
-        (found, trial_num): Whether a good coloring was found and which trial
-    """
-    vertices = list(range(n))
-    r_subsets = [frozenset(s) for s in combinations(vertices, r)]
-
-    for trial in range(num_trials):
-        # Random coloring
-        colors = {s: random.choice([True, False]) for s in r_subsets}
-
-        # Check all k-subsets
-        found_mono = False
-        for subset in combinations(vertices, k):
-            sub_r_sets = [frozenset(t) for t in combinations(subset, r)]
-            if all(colors[s] for s in sub_r_sets):
-                found_mono = True
-                break
-            if all(not colors[s] for s in sub_r_sets):
-                found_mono = True
-                break
-
-        if not found_mono:
-            return True, trial
-
-    return False, num_trials
-
-
-def link_coloring(
-    n: int, r: int,
-    coloring: Callable[[FrozenSet[int]], bool],
-    vertex: int
-) -> Callable[[FrozenSet[int]], bool]:
-    """Compute the link coloring at a vertex.
-
-    Given an (r+1)-uniform coloring and a vertex v, produces an r-uniform
-    coloring where an r-set T is colored by the color of {v} ∪ T.
-
-    This is the fundamental operation in the stepping-up construction.
-
-    Args:
-        n: Ground set size
-        r: Target uniformity (the link has uniformity r)
-        coloring: The original (r+1)-uniform coloring
-        vertex: The vertex to take the link at
-
-    Returns:
-        The link coloring function
-    """
-    def link(S: FrozenSet[int]) -> bool:
-        if len(S) != r or vertex in S:
-            return False
-        return coloring(S | frozenset([vertex]))
-    return link
-
-
-# === Example computations ===
+# ============================================================
+# Main demonstration
+# ============================================================
 if __name__ == "__main__":
-    print("=== Probabilistic Lower Bounds ===")
-    for r in [2, 3, 4]:
-        print(f"\nUniformity r = {r}:")
-        for k in range(max(r, 3), min(r + 8, 12)):
-            lb = probabilistic_lower_bound(k, r)
-            print(f"  R_{r}({k},{k}) > {lb}")
-
-    print("\n=== Stepping-Up Bounds ===")
-    # Use R_2(s,t) ≤ C(s+t-2, s-1) as the base
-    def graph_ramsey_bound(s: int, t: int) -> int:
-        if s <= 0 or t <= 0:
-            return 0
-        return comb(s + t - 2, s - 1)
-
-    print("\nR_3(k,l) upper bounds via stepping-up from graph Ramsey:")
-    for k in range(2, 7):
-        for l in range(k, k + 1):
-            bound = stepping_up_bound(graph_ramsey_bound, k, l)
-            print(f"  R_3({k},{l}) ≤ {bound}")
-
-    print("\n=== Random Search for R_3(3,3) ===")
-    # R_3(3,3) = 4: need n=4 vertices for guaranteed monochromatic triple
-    for n in [3, 4]:
-        found, trial = random_coloring_search(n, 3, 3, num_trials=100)
-        if found:
-            print(f"  n={n}: Found coloring with no mono triple (trial {trial})")
-        else:
-            print(f"  n={n}: All 100 random colorings had mono triple → R_3(3,3) ≤ {n}")
+    print("=== Algorithm Demonstrations ===\n")
+    
+    # Tower function
+    print("Tower Function:")
+    for h in range(5):
+        val = tower_exp(h, 3)
+        print(f"  tower({h}, 3) = {val}")
+    
+    # Probabilistic bounds
+    print("\nProbabilistic Lower Bounds:")
+    for r in range(2, 5):
+        for k in [4, 5, 6, 8]:
+            if k >= r:
+                bound = probabilistic_lower_bound(r, k)
+                print(f"  R_{r}({k},{k}) > {bound}")
+    
+    # Small Ramsey checks
+    print("\nExhaustive Ramsey Checks:")
+    test_cases = [
+        (2, 5, 3, 3),  # R_2(3,3) > 5 (known: R(3,3)=6)
+        (2, 6, 3, 3),  # R_2(3,3) ≤ 6 (known: R(3,3)=6)
+    ]
+    for r, n, s, t in test_cases:
+        holds, info = check_hyper_ramsey_prop(r, n, s, t)
+        print(f"  HyperRamseyProp({r}, {n}, {s}, {t}) = {holds}  [{info['method']}]")
+    
+    # Stepping-up bounds
+    print("\nStepping-Up Upper Bounds:")
+    for r in range(2, 6):
+        for k in [3, 4, 5]:
+            bound = stepping_up_upper_bound(r, k)
+            print(f"  R_{r}({k},{k}) ≤ {bound}")
