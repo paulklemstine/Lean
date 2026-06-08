@@ -2,338 +2,334 @@
 """
 Sonic Mathematics: Counterpoint as Category Theory — Numerical Demonstrations
 
-This script computes and verifies the key results from the formalization of
-first-species counterpoint rules as a directed multigraph (the Counterpoint Quiver).
+This script demonstrates the five main theorems about first-species counterpoint
+modeled as a directed graph (quiver) over consonant intervals in Z/12Z.
 
-All arithmetic is performed mod 12 (ZMod 12), representing the 12 semitones
-of the chromatic scale.
+All computations use modular arithmetic over the integers mod 12.
 """
 
 from __future__ import annotations
 from dataclasses import dataclass
+from typing import Optional
 from itertools import product
-from collections import defaultdict
 
 
-# =============================================================================
-# Section 1: Core Definitions
-# =============================================================================
+# ---------------------------------------------------------------------------
+# Core Definitions
+# ---------------------------------------------------------------------------
+
+N = 12  # pitch classes in 12-TET
+
+CONSONANT: set[int] = {0, 3, 4, 7, 8, 9}
+PERFECT: set[int] = {0, 7}
+IMPERFECT: set[int] = CONSONANT - PERFECT  # {3, 4, 8, 9}
 
 INTERVAL_NAMES: dict[int, str] = {
-    0: "Unison/Octave",
-    1: "Minor 2nd",
+    0: "Unison (P1/P8)",
+    1: "minor 2nd",
     2: "Major 2nd",
-    3: "Minor 3rd",
+    3: "minor 3rd",
     4: "Major 3rd",
     5: "Perfect 4th",
     6: "Tritone",
     7: "Perfect 5th",
-    8: "Minor 6th",
+    8: "minor 6th",
     9: "Major 6th",
-    10: "Minor 7th",
+    10: "minor 7th",
     11: "Major 7th",
 }
-
-# The six consonant intervals in first-species counterpoint (mod 12)
-CONSONANT: set[int] = {0, 3, 4, 7, 8, 9}
-
-# The two perfect consonances
-PERFECT: set[int] = {0, 7}
-
-# Imperfect consonances
-IMPERFECT: set[int] = CONSONANT - PERFECT
 
 
 @dataclass(frozen=True)
 class VoiceLeading:
-    """A voice leading: simultaneous motion of bass and soprano (mod 12)."""
+    """A voice leading: how much the bass and soprano each move (mod 12)."""
     bass: int
     soprano: int
 
     def __post_init__(self) -> None:
-        object.__setattr__(self, "bass", self.bass % 12)
-        object.__setattr__(self, "soprano", self.soprano % 12)
+        object.__setattr__(self, "bass", self.bass % N)
+        object.__setattr__(self, "soprano", self.soprano % N)
 
     @property
     def is_parallel(self) -> bool:
-        """Both voices move by the same nonzero amount."""
+        """Parallel motion: both voices move by the same nonzero amount."""
         return self.bass == self.soprano and self.bass != 0
 
-    def target(self, source: int) -> int:
-        """Compute target interval given source interval."""
-        return (source + self.soprano - self.bass) % 12
+    def __repr__(self) -> str:
+        return f"VL(bass={self.bass:+d}, sop={self.soprano:+d})"
+
+
+def target_interval(source: int, vl: VoiceLeading) -> int:
+    """Compute the target interval: source + soprano - bass (mod 12)."""
+    return (source + vl.soprano - vl.bass) % N
 
 
 def is_permitted(source: int, target: int, vl: VoiceLeading) -> bool:
-    """Check if a voice leading is permitted under standard counterpoint rules."""
+    """Check if a voice leading is permitted under first-species rules."""
     return (
         source in CONSONANT
         and target in CONSONANT
-        and vl.target(source) == target
+        and target_interval(source, vl) == target
         and not (target in PERFECT and vl.is_parallel)
     )
 
 
-def canonical_voice_leading(i: int, j: int) -> VoiceLeading:
-    """The canonical voice leading from interval i to j: bass stays, soprano moves."""
-    return VoiceLeading(bass=0, soprano=(j - i) % 12)
+def canonical_vl(source: int, target: int) -> VoiceLeading:
+    """The canonical voice leading: bass stays, soprano moves by target - source."""
+    return VoiceLeading(bass=0, soprano=(target - source) % N)
 
 
-# =============================================================================
-# Section 2: Theorem Verification
-# =============================================================================
+# ---------------------------------------------------------------------------
+# Enumerate all permitted voice leadings
+# ---------------------------------------------------------------------------
 
-def verify_strong_connectivity() -> None:
-    """
-    Theorem 1: Strong Connectivity
-    Between any two consonant intervals, at least one permitted VL exists.
-    """
+def all_voice_leadings() -> list[VoiceLeading]:
+    """Return all 144 possible voice leadings over Z/12Z."""
+    return [VoiceLeading(b, s) for b, s in product(range(N), repeat=2)]
+
+
+def permitted_voice_leadings(source: int, target: int) -> list[VoiceLeading]:
+    """Return all permitted voice leadings from source to target."""
+    return [vl for vl in all_voice_leadings() if is_permitted(source, target, vl)]
+
+
+# ---------------------------------------------------------------------------
+# Theorem 1: Strong Connectivity
+# ---------------------------------------------------------------------------
+
+def demo_strong_connectivity() -> None:
+    """Demonstrate that between any two consonant intervals, a permitted VL exists."""
     print("=" * 70)
-    print("THEOREM 1: Strong Connectivity")
+    print("THEOREM 1: Strong Connectivity of the Counterpoint Quiver")
     print("=" * 70)
+    print()
+    print("For every pair (i, j) of consonant intervals, we exhibit a permitted")
+    print("voice leading from i to j.")
     print()
 
     all_connected = True
     for i in sorted(CONSONANT):
         for j in sorted(CONSONANT):
-            # Find all permitted voice leadings from i to j
-            permitted: list[VoiceLeading] = []
-            for b, s in product(range(12), repeat=2):
-                vl = VoiceLeading(b, s)
-                if is_permitted(i, j, vl):
-                    permitted.append(vl)
-
-            if not permitted:
-                print(f"  FAIL: No permitted VL from {i} ({INTERVAL_NAMES[i]}) "
-                      f"to {j} ({INTERVAL_NAMES[j]})")
+            pvls = permitted_voice_leadings(i, j)
+            status = f"✓ {len(pvls):2d} VLs" if pvls else "✗ NONE"
+            if not pvls:
                 all_connected = False
-            else:
-                # Show canonical VL
-                cvl = canonical_voice_leading(i, j)
-                print(f"  {INTERVAL_NAMES[i]:>14s} → {INTERVAL_NAMES[j]:<14s}: "
-                      f"{len(permitted):3d} permitted VLs "
-                      f"(canonical: bass={cvl.bass}, sop={cvl.soprano})")
+            cvl = canonical_vl(i, j)
+            print(
+                f"  {INTERVAL_NAMES[i]:16s} → {INTERVAL_NAMES[j]:16s}: "
+                f"{status}  (canonical: {cvl})"
+            )
 
     print()
-    print(f"  Result: {'✓ VERIFIED' if all_connected else '✗ FAILED'} — "
-          f"Quiver is strongly connected")
+    print(f"  Strong connectivity verified: {all_connected}")
     print()
 
 
-def verify_non_composability() -> None:
-    """
-    Theorem 2: Non-Composability
-    Two permitted VLs can compose into a forbidden motion.
-    """
+# ---------------------------------------------------------------------------
+# Theorem 2: Non-Composability
+# ---------------------------------------------------------------------------
+
+def compose(vl1: VoiceLeading, vl2: VoiceLeading) -> VoiceLeading:
+    """Compose two voice leadings by adding motions."""
+    return VoiceLeading((vl1.bass + vl2.bass) % N, (vl1.soprano + vl2.soprano) % N)
+
+
+def demo_non_composability() -> None:
+    """Find explicit witness: two permitted VLs whose composite is not permitted."""
     print("=" * 70)
-    print("THEOREM 2: Non-Composability")
+    print("THEOREM 2: Non-Composability of Permitted Voice Leadings")
     print("=" * 70)
     print()
+    print("We search for i→j→k where vl₁ (i→j) and vl₂ (j→k) are permitted")
+    print("but their composite vl₁∘vl₂ is NOT permitted from i to k.")
+    print()
 
-    found = False
+    witnesses_found = 0
     for i in sorted(CONSONANT):
         for j in sorted(CONSONANT):
             for k in sorted(CONSONANT):
-                for b1, s1 in product(range(12), repeat=2):
-                    vl1 = VoiceLeading(b1, s1)
-                    if not is_permitted(i, j, vl1):
-                        continue
-                    for b2, s2 in product(range(12), repeat=2):
-                        vl2 = VoiceLeading(b2, s2)
-                        if not is_permitted(j, k, vl2):
-                            continue
-                        # Compose: (b1+b2, s1+s2) applied from i
-                        comp = VoiceLeading(b1 + b2, s1 + s2)
-                        comp_target = comp.target(i)
-                        # Check if composition lands on k but is forbidden
+                for vl1 in permitted_voice_leadings(i, j):
+                    for vl2 in permitted_voice_leadings(j, k):
+                        comp = compose(vl1, vl2)
+                        comp_target = target_interval(i, comp)
                         if comp_target == k and not is_permitted(i, k, comp):
-                            if not found:
-                                print(f"  Counterexample found!")
-                                print(f"    Path: {INTERVAL_NAMES[i]} →[vl1]→ "
-                                      f"{INTERVAL_NAMES[j]} →[vl2]→ {INTERVAL_NAMES[k]}")
-                                print(f"    vl1 = (bass={vl1.bass}, sop={vl1.soprano}) — permitted ✓")
-                                print(f"    vl2 = (bass={vl2.bass}, sop={vl2.soprano}) — permitted ✓")
-                                print(f"    Composite = (bass={comp.bass}, sop={comp.soprano})")
-                                print(f"    Composite target: {INTERVAL_NAMES[comp_target]}")
-                                print(f"    Composite parallel: {comp.is_parallel}")
-                                print(f"    Target is perfect: {k in PERFECT}")
-                                print(f"    Composite permitted: False ✗")
-                                found = True
+                            witnesses_found += 1
+                            if witnesses_found <= 5:
+                                print(f"  WITNESS #{witnesses_found}:")
+                                print(f"    {INTERVAL_NAMES[i]} →({vl1})→ "
+                                      f"{INTERVAL_NAMES[j]} →({vl2})→ "
+                                      f"{INTERVAL_NAMES[k]}")
+                                print(f"    Composite: {comp}")
+                                why = "parallel into perfect" if (
+                                    k in PERFECT and comp.is_parallel
+                                ) else "other rule"
+                                print(f"    Forbidden because: {why}")
+                                print()
 
+    print(f"  Total non-composable witnesses found: {witnesses_found}")
+    print(f"  Non-composability verified: {witnesses_found > 0}")
     print()
-    print(f"  Result: {'✓ VERIFIED' if found else '✗ FAILED'} — "
-          f"Composition is NOT closed")
-    print()
 
 
-def verify_self_loop_bottleneck() -> None:
-    """
-    Theorem 3: Perfect Consonance Bottleneck
-    Perfect consonances have exactly 1 self-loop; imperfect have 12.
-    """
+# ---------------------------------------------------------------------------
+# Theorem 3: Perfect Consonance Bottleneck (Self-Loops)
+# ---------------------------------------------------------------------------
+
+def demo_self_loop_bottleneck() -> None:
+    """Show that perfect consonances have 1 self-loop, imperfect have 12."""
     print("=" * 70)
-    print("THEOREM 3: Perfect Consonance Bottleneck (Self-Loops)")
+    print("THEOREM 3: Perfect-Consonance Bottleneck (Self-Loops)")
     print("=" * 70)
     print()
 
-    all_correct = True
+    for j in sorted(CONSONANT):
+        loops = permitted_voice_leadings(j, j)
+        kind = "PERFECT" if j in PERFECT else "imperfect"
+        print(f"  {INTERVAL_NAMES[j]:16s} ({kind:9s}): {len(loops):2d} self-loops")
+        if j in PERFECT:
+            print(f"    → Only the identity VL(bass=0, sop=0) is allowed")
+            for vl in loops:
+                print(f"       {vl}")
+
+    print()
+    print("  Perfect consonances: 1 self-loop (the identity)  — RIGID")
+    print("  Imperfect consonances: 12 self-loops              — FLEXIBLE")
+    print("  Ratio: 12:1 — maximum possible disparity")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# Theorem 4: Voice-Swap Asymmetry
+# ---------------------------------------------------------------------------
+
+def demo_voice_swap_asymmetry() -> None:
+    """Show that i ↦ -i does not preserve consonance."""
+    print("=" * 70)
+    print("THEOREM 4: Voice-Swap Breaks Consonance")
+    print("=" * 70)
+    print()
+    print("The involution ι(i) = -i mod 12 (swapping bass and soprano roles)")
+    print("does NOT preserve the consonant set.")
+    print()
+
     for i in sorted(CONSONANT):
-        self_loops: list[VoiceLeading] = []
-        for b, s in product(range(12), repeat=2):
-            vl = VoiceLeading(b, s)
-            if is_permitted(i, i, vl):
-                self_loops.append(vl)
-
-        interval_type = "PERFECT" if i in PERFECT else "imperfect"
-        expected = 1 if i in PERFECT else 12
-        status = "✓" if len(self_loops) == expected else "✗"
-        if len(self_loops) != expected:
-            all_correct = False
-
-        print(f"  {INTERVAL_NAMES[i]:>14s} ({interval_type:>9s}): "
-              f"{len(self_loops):2d} self-loops {status}")
-
-        if i in PERFECT:
-            print(f"    └─ The only self-loop: bass={self_loops[0].bass}, "
-                  f"sop={self_loops[0].soprano} (identity)")
+        neg_i = (-i) % N
+        preserved = neg_i in CONSONANT
+        marker = "  ✓" if preserved else "  ✗ BROKEN"
+        print(
+            f"  ι({i:2d}) = {neg_i:2d}  "
+            f"({INTERVAL_NAMES[i]:16s} → {INTERVAL_NAMES[neg_i]:16s})"
+            f"{marker}"
+        )
 
     print()
-    print(f"  Ratio (imperfect / perfect) = 12 / 1 = 12.0x")
-    print(f"  Result: {'✓ VERIFIED' if all_correct else '✗ FAILED'}")
+    print("  Key: ι(7) = 5.  Perfect fifth → Perfect fourth (DISSONANT)")
+    print("  The bass voice has a privileged, asymmetric role.")
     print()
 
 
-def verify_voice_swap_asymmetry() -> None:
-    """
-    Theorem 4: Voice-Swap Asymmetry
-    The negation map i ↦ -i (mod 12) does not preserve consonance.
-    """
+# ---------------------------------------------------------------------------
+# Theorem 5: Hom-Set Cardinalities
+# ---------------------------------------------------------------------------
+
+def demo_hom_set_cardinalities() -> None:
+    """Compute total incoming permitted VLs for perfect vs imperfect targets."""
     print("=" * 70)
-    print("THEOREM 4: Voice-Swap Asymmetry")
+    print("THEOREM 5: Hom-Set Cardinalities")
     print("=" * 70)
     print()
-
-    print(f"  Consonant intervals: {sorted(CONSONANT)}")
-    negated: set[int] = {(-i) % 12 for i in CONSONANT}
-    print(f"  Negated intervals:   {sorted(negated)}")
+    print("Total permitted voice leadings arriving at each consonant interval")
+    print("(from all 6 consonant sources):")
     print()
 
-    preserved = True
-    for i in sorted(CONSONANT):
-        neg_i = (-i) % 12
-        in_consonant = neg_i in CONSONANT
-        marker = "✓" if in_consonant else "✗ BREAKS"
-        if not in_consonant:
-            preserved = False
-        print(f"  {INTERVAL_NAMES[i]:>14s} ({i:2d}) → neg → "
-              f"{INTERVAL_NAMES[neg_i]:>14s} ({neg_i:2d})  {marker}")
+    for j in sorted(CONSONANT):
+        total = sum(len(permitted_voice_leadings(i, j)) for i in sorted(CONSONANT))
+        kind = "PERFECT" if j in PERFECT else "imperfect"
+        print(f"  → {INTERVAL_NAMES[j]:16s} ({kind:9s}): {total:3d} incoming VLs")
 
     print()
-    print(f"  Key example: Perfect 5th (7) ↦ Perfect 4th (5), which is DISSONANT")
-    print(f"  Result: {'✗ FAILED — set IS preserved' if preserved else '✓ VERIFIED — consonance is asymmetric'}")
+    # Aggregate
+    perfect_totals = []
+    imperfect_totals = []
+    for j in sorted(CONSONANT):
+        total = sum(len(permitted_voice_leadings(i, j)) for i in sorted(CONSONANT))
+        if j in PERFECT:
+            perfect_totals.append(total)
+        else:
+            imperfect_totals.append(total)
+
+    p_avg = sum(perfect_totals) / len(perfect_totals)
+    i_avg = sum(imperfect_totals) / len(imperfect_totals)
+    reduction = (1 - p_avg / i_avg) * 100
+
+    print(f"  Average incoming to PERFECT consonances:   {p_avg:.1f}")
+    print(f"  Average incoming to IMPERFECT consonances:  {i_avg:.1f}")
+    print(f"  Reduction: {reduction:.1f}% fewer paths lead to perfect consonances")
     print()
 
 
-def verify_hom_set_computation() -> None:
-    """
-    Theorem 5: Hom-Set Cardinality
-    Perfect consonances: 61 incoming VLs. Imperfect: 72.
-    """
+# ---------------------------------------------------------------------------
+# Bonus: Full Quiver Statistics
+# ---------------------------------------------------------------------------
+
+def demo_quiver_statistics() -> None:
+    """Print summary statistics of the full counterpoint quiver."""
     print("=" * 70)
-    print("THEOREM 5: Hom-Set Computation")
-    print("=" * 70)
-    print()
-
-    for target_interval in sorted(CONSONANT):
-        total = 0
-        breakdown: list[str] = []
-        for source in sorted(CONSONANT):
-            count = 0
-            for b, s in product(range(12), repeat=2):
-                vl = VoiceLeading(b, s)
-                if is_permitted(source, target_interval, vl):
-                    count += 1
-            total += count
-            breakdown.append(f"{INTERVAL_NAMES[source]}:{count}")
-
-        interval_type = "PERFECT" if target_interval in PERFECT else "imperfect"
-        expected = 61 if target_interval in PERFECT else 72
-        status = "✓" if total == expected else "✗"
-
-        print(f"  Target: {INTERVAL_NAMES[target_interval]:>14s} ({interval_type:>9s}): "
-              f"{total:3d} total incoming VLs {status}")
-        print(f"    └─ From: {', '.join(breakdown)}")
-
-    print()
-    print(f"  Deficit: 72 - 61 = 11 voice leadings (15.3% reduction)")
-    print(f"  Result: ✓ VERIFIED")
-    print()
-
-
-# =============================================================================
-# Section 3: Full Quiver Statistics
-# =============================================================================
-
-def print_quiver_adjacency_matrix() -> None:
-    """Print the full adjacency matrix of the Counterpoint Quiver."""
-    print("=" * 70)
-    print("QUIVER ADJACENCY MATRIX (edge counts)")
+    print("BONUS: Full Counterpoint Quiver Statistics")
     print("=" * 70)
     print()
-
-    intervals = sorted(CONSONANT)
-    header = "        " + "".join(f"{INTERVAL_NAMES[j][:6]:>8s}" for j in intervals)
-    print(header)
-    print("        " + "-" * (8 * len(intervals)))
 
     total_edges = 0
-    for i in intervals:
-        row = f"{INTERVAL_NAMES[i][:6]:>6s} |"
-        for j in intervals:
-            count = sum(
-                1 for b, s in product(range(12), repeat=2)
-                if is_permitted(i, j, VoiceLeading(b, s))
-            )
-            row += f"{count:8d}"
+    hom_matrix: dict[tuple[int, int], int] = {}
+    for i in sorted(CONSONANT):
+        for j in sorted(CONSONANT):
+            count = len(permitted_voice_leadings(i, j))
+            hom_matrix[(i, j)] = count
             total_edges += count
+
+    print(f"  Vertices: {len(CONSONANT)} consonant intervals")
+    print(f"  Total edges (permitted voice leadings): {total_edges}")
+    print(f"  Edge density: {total_edges / (len(CONSONANT)**2 * N**2) * 100:.1f}% "
+          f"of all possible VLs")
+    print()
+
+    # Hom-set matrix
+    header = "  Hom |" + "".join(f" {j:3d}" for j in sorted(CONSONANT))
+    print(header)
+    print("  " + "-" * (len(header) - 2))
+    for i in sorted(CONSONANT):
+        row = f"   {i:2d} |" + "".join(
+            f" {hom_matrix[(i, j)]:3d}" for j in sorted(CONSONANT)
+        )
         print(row)
 
     print()
-    print(f"  Total edges in quiver: {total_edges}")
-    print(f"  Average edges per vertex pair: {total_edges / (len(intervals) ** 2):.1f}")
+    print("  Row = source interval, Column = target interval")
+    print("  Each entry = number of permitted voice leadings")
     print()
 
 
-# =============================================================================
+# ---------------------------------------------------------------------------
 # Main
-# =============================================================================
+# ---------------------------------------------------------------------------
 
 def main() -> None:
     print()
     print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  SONIC MATHEMATICS: Counterpoint as Category Theory                ║")
-    print("║  Numerical Verification of Formally Proved Theorems                ║")
+    print("║     SONIC MATHEMATICS: Counterpoint as Category Theory             ║")
+    print("║     Numerical Demonstrations of the Five Main Theorems             ║")
     print("╚══════════════════════════════════════════════════════════════════════╝")
     print()
-    print(f"  System: Standard 12-TET First-Species Counterpoint")
-    print(f"  Consonant intervals: {sorted(CONSONANT)} "
-          f"({len(CONSONANT)} intervals)")
-    print(f"  Perfect consonances: {sorted(PERFECT)} "
-          f"({len(PERFECT)} intervals)")
-    print(f"  Imperfect consonances: {sorted(IMPERFECT)} "
-          f"({len(IMPERFECT)} intervals)")
-    print(f"  Voice leading space: ZMod(12) × ZMod(12) = "
-          f"{12 * 12} possible motions")
+
+    demo_strong_connectivity()
+    demo_non_composability()
+    demo_self_loop_bottleneck()
+    demo_voice_swap_asymmetry()
+    demo_hom_set_cardinalities()
+    demo_quiver_statistics()
+
+    print("All demonstrations complete.")
     print()
-
-    verify_strong_connectivity()
-    verify_non_composability()
-    verify_self_loop_bottleneck()
-    verify_voice_swap_asymmetry()
-    verify_hom_set_computation()
-    print_quiver_adjacency_matrix()
-
-    print("All theorems numerically verified. ✓")
 
 
 if __name__ == "__main__":
