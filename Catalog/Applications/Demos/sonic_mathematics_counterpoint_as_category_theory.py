@@ -1,449 +1,466 @@
 #!/usr/bin/env python3
 """
-Counterpoint as Category Theory: Interactive Demo
+Sonic Mathematics: Counterpoint as Category Theory — Numerical Demonstrations
 
-Demonstrates the algebraic structure of consonant intervals in ℤ/12ℤ
-and the voice-leading rules of first-species counterpoint.
+This script demonstrates the key mathematical results from the formalization
+of first-species counterpoint as a quiver (directed multigraph) over Z/12Z.
+
+All computations are self-contained and verify the formally proven theorems.
 """
 
-# Consonant intervals in semitones (mod 12)
-CONSONANT = {0, 3, 4, 7, 8, 9}
-DISSONANT = {1, 2, 5, 6, 10, 11}
-PERFECT = {0, 7}
-IMPERFECT = {3, 4, 8, 9}
+from __future__ import annotations
+from typing import NamedTuple
+from itertools import product
 
-INTERVAL_NAMES = {
-    0: "Unison (P1)",
-    1: "Minor 2nd (m2)",
-    2: "Major 2nd (M2)",
-    3: "Minor 3rd (m3)",
-    4: "Major 3rd (M3)",
-    5: "Perfect 4th (P4)",
-    6: "Tritone (A4/d5)",
-    7: "Perfect 5th (P5)",
-    8: "Minor 6th (m6)",
-    9: "Major 6th (M6)",
-    10: "Minor 7th (m7)",
-    11: "Major 7th (M7)",
+
+# ============================================================================
+# Section 1: Core Definitions
+# ============================================================================
+
+# Consonant intervals in first-species counterpoint (mod 12)
+CONSONANT: set[int] = {0, 3, 4, 7, 8, 9}
+# Perfect consonances (subject to parallel-motion restriction)
+PERFECT: set[int] = {0, 7}
+# Imperfect consonances
+IMPERFECT: set[int] = CONSONANT - PERFECT  # {3, 4, 8, 9}
+
+# Interval names for display
+INTERVAL_NAMES: dict[int, str] = {
+    0: "Unison/Octave (P)",
+    1: "Minor 2nd",
+    2: "Major 2nd",
+    3: "Minor 3rd (i)",
+    4: "Major 3rd (i)",
+    5: "Perfect 4th",
+    6: "Tritone",
+    7: "Perfect 5th (P)",
+    8: "Minor 6th (i)",
+    9: "Major 6th (i)",
+    10: "Minor 7th",
+    11: "Major 7th",
 }
 
 
-def invert(i: int) -> int:
-    """Octave complement (inversion) of an interval."""
-    return (12 - i) % 12
+class VoiceLeading(NamedTuple):
+    """A voice leading: (bass_motion, soprano_motion) in semitones mod 12."""
+    bass: int
+    soprano: int
 
 
-def demo_consonance_partition():
-    """Demonstrate the consonance/dissonance partition of ℤ/12ℤ."""
-    print("=" * 60)
-    print("CONSONANCE-DISSONANCE PARTITION OF ℤ/12ℤ")
-    print("=" * 60)
+def target_interval(source: int, vl: VoiceLeading) -> int:
+    """Compute the target interval given a source interval and voice leading."""
+    return (source + vl.soprano - vl.bass) % 12
+
+
+def is_parallel(vl: VoiceLeading) -> bool:
+    """A voice leading is parallel if both voices move by the same nonzero amount."""
+    return vl.bass == vl.soprano and vl.bass != 0
+
+
+def is_permitted(source: int, target: int, vl: VoiceLeading) -> bool:
+    """
+    Check if a voice leading from source to target is permitted.
+
+    Rules:
+    1. Both source and target must be consonant
+    2. The voice leading must actually map source to target
+    3. Parallel motion into perfect consonances is forbidden
+    """
+    if source not in CONSONANT:
+        return False
+    if target not in CONSONANT:
+        return False
+    if target_interval(source, vl) != target:
+        return False
+    if target in PERFECT and is_parallel(vl):
+        return False
+    return True
+
+
+def all_voice_leadings() -> list[VoiceLeading]:
+    """All 144 possible voice leadings in Z/12Z × Z/12Z."""
+    return [VoiceLeading(b, s) for b, s in product(range(12), repeat=2)]
+
+
+# ============================================================================
+# Section 2: Theorem Verification
+# ============================================================================
+
+def demo_strong_connectivity() -> None:
+    """
+    Theorem 4.1 (exists_permitted_voice_leading):
+    Between any two consonant intervals, at least one permitted voice leading exists.
+    """
+    print("=" * 70)
+    print("THEOREM: Strong Connectivity of the Counterpoint Quiver")
+    print("=" * 70)
     print()
-    for i in range(12):
-        status = "CONSONANT" if i in CONSONANT else "DISSONANT"
-        kind = ""
-        if i in PERFECT:
-            kind = " [Perfect]"
-        elif i in IMPERFECT:
-            kind = " [Imperfect]"
-        print(f"  {i:2d} semitones = {INTERVAL_NAMES[i]:20s} → {status}{kind}")
-    print(f"\n  |Consonant| = {len(CONSONANT)}, |Dissonant| = {len(DISSONANT)}")
-    print(f"  Union = {sorted(CONSONANT | DISSONANT)}")
-    print(f"  Intersection = {sorted(CONSONANT & DISSONANT)}")
 
+    all_vls = all_voice_leadings()
+    all_connected = True
 
-def demo_inversion_asymmetry():
-    """Demonstrate the fourth-fifth asymmetry."""
-    print("\n" + "=" * 60)
-    print("INVERSION SYMMETRY ANALYSIS")
-    print("=" * 60)
-    print()
-    print("Inversion map ι(i) = 12 - i (mod 12):")
-    print()
-
-    consonant_image = {invert(i) for i in CONSONANT}
-    print("  Consonant intervals and their inversions:")
     for i in sorted(CONSONANT):
-        inv = invert(i)
-        inv_status = "✓ consonant" if inv in CONSONANT else "✗ DISSONANT"
-        print(f"    {INTERVAL_NAMES[i]:20s} → {INTERVAL_NAMES[inv]:20s} {inv_status}")
+        for j in sorted(CONSONANT):
+            permitted = [vl for vl in all_vls if is_permitted(i, j, vl)]
+            status = "✓" if permitted else "✗"
+            if not permitted:
+                all_connected = False
 
-    print(f"\n  ι(C) = {sorted(consonant_image)}")
-    print(f"  C    = {sorted(CONSONANT)}")
-    print(f"  ι(C) = C? {'YES' if consonant_image == CONSONANT else 'NO — ASYMMETRY!'}")
+            # Show the canonical voice leading (bass=0, soprano=j-i)
+            canonical = VoiceLeading(0, (j - i) % 12)
+            canonical_ok = is_permitted(i, j, canonical)
 
-    # Find the unique broken element
-    print("\n  Dissonant intervals with consonant inversions:")
-    broken = []
-    for d in sorted(DISSONANT):
-        if invert(d) in CONSONANT:
-            broken.append(d)
-            print(f"    {INTERVAL_NAMES[d]:20s} → {INTERVAL_NAMES[invert(d)]}")
-    print(f"  Unique defect: {INTERVAL_NAMES[broken[0]]} (the only one!)")
+            name_i = INTERVAL_NAMES[i].split("(")[0].strip()
+            name_j = INTERVAL_NAMES[j].split("(")[0].strip()
+            print(f"  {status} {name_i:15s} → {name_j:15s}: "
+                  f"{len(permitted):3d} permitted VLs  "
+                  f"(canonical {'✓' if canonical_ok else '✗'})")
 
-
-def demo_generation():
-    """Demonstrate that {3, 4} generates ℤ/12ℤ."""
-    print("\n" + "=" * 60)
-    print("CHROMATIC GENERATION BY THIRDS")
-    print("=" * 60)
     print()
-    print("Question: Can minor 3rd (3) and major 3rd (4) generate all of ℤ/12ℤ?")
-    print(f"  gcd(3, 4) = 1, so YES — they generate everything!")
-    print()
-    print("Constructive decomposition of each pitch class:")
-    for target in range(12):
-        # Find a, b with 3a + 4b ≡ target (mod 12)
-        found = False
-        for a in range(-6, 7):
-            for b in range(-6, 7):
-                if (3 * a + 4 * b) % 12 == target:
-                    sign_a = "+" if a >= 0 else "-"
-                    sign_b = "+" if b >= 0 else "-"
-                    if a >= 0:
-                        expr = f"{a}×m3 + {b}×M3" if b >= 0 else f"{a}×m3 - {-b}×M3"
-                    else:
-                        expr = f"-{-a}×m3 + {b}×M3" if b >= 0 else f"-{-a}×m3 - {-b}×M3"
-                    print(f"  {target:2d} = {expr:20s}  (= {3*a} + {4*b} mod 12)")
-                    found = True
-                    break
-            if found:
-                break
-
-
-def demo_voice_leading():
-    """Demonstrate valid voice leadings between consonant intervals."""
-    print("\n" + "=" * 60)
-    print("VOICE LEADING TRANSITION TABLE")
-    print("=" * 60)
-    print()
-    print("For each pair (i → j) of consonant intervals,")
-    print("show a valid voice leading (stepUpper, stepLower):")
+    print(f"  Result: {'ALL PAIRS CONNECTED ✓' if all_connected else 'GAPS FOUND ✗'}")
     print()
 
-    cons = sorted(CONSONANT)
-    header = "From\\To  " + "  ".join(f"{INTERVAL_NAMES[j][:4]:>4s}" for j in cons)
-    print(f"  {header}")
-    print("  " + "-" * len(header))
 
-    for i in cons:
-        row = f"  {INTERVAL_NAMES[i][:4]:>4s}    "
-        for j in cons:
-            # Use oblique motion: (j-i, 0)
-            step = (j - i) % 12
-            row += f"({step:2d},0) "
-        print(row)
-
-    print("\n  All entries are valid (oblique motion with stationary bass).")
-    print("  This proves the transition graph is COMPLETE.")
-
-
-def demo_parallel_restriction():
-    """Demonstrate the parallel motion restriction."""
-    print("\n" + "=" * 60)
-    print("PARALLEL MOTION ANALYSIS")
-    print("=" * 60)
+def demo_non_composability() -> None:
+    """
+    Theorem 4.2 (non_composability):
+    Permitted voice leadings are NOT closed under composition.
+    """
+    print("=" * 70)
+    print("THEOREM: Non-Composability of Permitted Voice Leadings")
+    print("=" * 70)
     print()
-    print("Parallel motion (stepUpper = stepLower) at each consonant interval:")
-    print()
+
+    all_vls = all_voice_leadings()
+    counterexample_found = False
+
     for i in sorted(CONSONANT):
-        if i in PERFECT:
-            status = "❌ FORBIDDEN (except stationary)"
-            reason = "parallel perfect consonance"
+        for j in sorted(CONSONANT):
+            for k in sorted(CONSONANT):
+                # Find permitted VLs from i→j and j→k
+                vls_ij = [vl for vl in all_vls if is_permitted(i, j, vl)]
+                vls_jk = [vl for vl in all_vls if is_permitted(j, k, vl)]
+
+                for v1 in vls_ij:
+                    for v2 in vls_jk:
+                        # Compose: total bass = v1.bass + v2.bass, etc.
+                        composed = VoiceLeading(
+                            (v1.bass + v2.bass) % 12,
+                            (v1.soprano + v2.soprano) % 12
+                        )
+                        # Check if composition is permitted as a direct i→k step
+                        if not is_permitted(i, k, composed):
+                            if not counterexample_found:
+                                name_i = INTERVAL_NAMES[i].split("(")[0].strip()
+                                name_j = INTERVAL_NAMES[j].split("(")[0].strip()
+                                name_k = INTERVAL_NAMES[k].split("(")[0].strip()
+                                print(f"  COUNTEREXAMPLE FOUND:")
+                                print(f"    Path: {name_i} → {name_j} → {name_k}")
+                                print(f"    Step 1: bass +{v1.bass}, soprano +{v1.soprano}  "
+                                      f"(permitted: True)")
+                                print(f"    Step 2: bass +{v2.bass}, soprano +{v2.soprano}  "
+                                      f"(permitted: True)")
+                                print(f"    Composed: bass +{composed.bass}, soprano +{composed.soprano}")
+                                print(f"    Source={i}, Target={k}, "
+                                      f"Actual target={target_interval(i, composed)}")
+                                print(f"    Is parallel: {is_parallel(composed)}")
+                                print(f"    Target is perfect: {k in PERFECT}")
+                                print(f"    Composition permitted: False")
+                                counterexample_found = True
+
+    if counterexample_found:
+        # Count total violations
+        violations = 0
+        for i in sorted(CONSONANT):
+            for j in sorted(CONSONANT):
+                for k in sorted(CONSONANT):
+                    vls_ij = [vl for vl in all_vls if is_permitted(i, j, vl)]
+                    vls_jk = [vl for vl in all_vls if is_permitted(j, k, vl)]
+                    for v1 in vls_ij:
+                        for v2 in vls_jk:
+                            composed = VoiceLeading(
+                                (v1.bass + v2.bass) % 12,
+                                (v1.soprano + v2.soprano) % 12
+                            )
+                            if not is_permitted(i, k, composed):
+                                violations += 1
+        print(f"\n  Total composition violations: {violations}")
+    print()
+
+
+def demo_self_loop_bottleneck() -> None:
+    """
+    Theorems 4.3–4.4 (perfect_self_loop_unique, imperfect_self_loops_all):
+    Perfect consonances have 1 self-loop; imperfect have 12.
+    """
+    print("=" * 70)
+    print("THEOREM: Self-Loop Bottleneck at Perfect Consonances")
+    print("=" * 70)
+    print()
+
+    all_vls = all_voice_leadings()
+
+    print(f"  {'Interval':<20s} {'Type':<12s} {'Self-loops':>10s}  Details")
+    print(f"  {'─' * 20} {'─' * 12} {'─' * 10}  {'─' * 30}")
+
+    for i in sorted(CONSONANT):
+        self_loops = [vl for vl in all_vls if is_permitted(i, i, vl)]
+        interval_type = "PERFECT" if i in PERFECT else "imperfect"
+        name = INTERVAL_NAMES[i]
+
+        # Show which self-loops they are
+        loop_strs = [f"({vl.bass},{vl.soprano})" for vl in self_loops[:5]]
+        detail = ", ".join(loop_strs)
+        if len(self_loops) > 5:
+            detail += f", ... ({len(self_loops)} total)"
+
+        print(f"  {name:<20s} {interval_type:<12s} {len(self_loops):>10d}  {detail}")
+
+    print()
+    print("  Key insight: Perfect consonances admit 1/12th the self-loops")
+    print("  of imperfect consonances — they are 'bottlenecks' in the quiver.")
+    print()
+
+
+def demo_voice_swap_asymmetry() -> None:
+    """
+    Theorem 4.5 (voice_swap_breaks_consonance):
+    The involution i ↦ -i (mod 12) does NOT preserve the consonance set.
+    """
+    print("=" * 70)
+    print("THEOREM: Voice-Swap Asymmetry")
+    print("=" * 70)
+    print()
+
+    print(f"  {'Interval i':<20s} {'−i mod 12':>10s}  {'Name of −i':<20s}  {'Consonant?':>10s}")
+    print(f"  {'─' * 20} {'─' * 10}  {'─' * 20}  {'─' * 10}")
+
+    asymmetry_found = False
+    for i in sorted(CONSONANT):
+        neg_i = (12 - i) % 12
+        is_cons = neg_i in CONSONANT
+        name_i = INTERVAL_NAMES[i]
+        name_neg = INTERVAL_NAMES[neg_i]
+        marker = "" if is_cons else " ← BREAKS!"
+
+        if not is_cons:
+            asymmetry_found = True
+
+        print(f"  {name_i:<20s} {neg_i:>10d}  {name_neg:<20s}  "
+              f"{'Yes' if is_cons else 'NO':>10s}{marker}")
+
+    print()
+    if asymmetry_found:
+        print("  The consonance set is NOT symmetric under voice exchange.")
+        print("  Perfect 5th (7) maps to Perfect 4th (5), which is DISSONANT.")
+        print("  This formalizes the privileged role of the bass voice.")
+    print()
+
+
+def demo_hom_set_cardinalities() -> None:
+    """
+    Theorems 4.6–4.7 (total_permitted_to_perfect/imperfect):
+    Perfect consonances admit 61 incoming VLs; imperfect admit 72.
+    """
+    print("=" * 70)
+    print("THEOREM: Hom-Set Cardinalities (Incoming Voice Leadings)")
+    print("=" * 70)
+    print()
+
+    all_vls = all_voice_leadings()
+
+    print(f"  {'Target':<20s} {'Type':<10s} ", end="")
+    for i in sorted(CONSONANT):
+        print(f"  from {i}", end="")
+    print(f"  {'TOTAL':>8s}")
+
+    print(f"  {'─' * 20} {'─' * 10} ", end="")
+    for _ in CONSONANT:
+        print(f"  {'─' * 6}", end="")
+    print(f"  {'─' * 8}")
+
+    for j in sorted(CONSONANT):
+        name_j = INTERVAL_NAMES[j].split("(")[0].strip()
+        jtype = "PERFECT" if j in PERFECT else "imperfect"
+        print(f"  {name_j:<20s} {jtype:<10s} ", end="")
+
+        total = 0
+        for i in sorted(CONSONANT):
+            count = sum(1 for vl in all_vls if is_permitted(i, j, vl))
+            total += count
+            print(f"  {count:>5d}", end="")
+
+        print(f"  {total:>7d}")
+
+    print()
+    # Summary
+    for j in sorted(CONSONANT):
+        total = sum(1 for vl in all_vls for i in CONSONANT if is_permitted(i, j, vl))
+        jtype = "perfect" if j in PERFECT else "imperfect"
+
+    perf_totals = []
+    imperf_totals = []
+    for j in sorted(CONSONANT):
+        total = sum(1 for vl in all_vls for i in CONSONANT if is_permitted(i, j, vl))
+        if j in PERFECT:
+            perf_totals.append(total)
         else:
-            status = "✅ ALLOWED"
-            reason = "imperfect consonance"
-        print(f"  {INTERVAL_NAMES[i]:20s}: {status} — {reason}")
+            imperf_totals.append(total)
 
-
-def demo_tension_poset():
-    """Demonstrate the tension partial order."""
-    print("\n" + "=" * 60)
-    print("TENSION PARTIAL ORDER")
-    print("=" * 60)
+    print(f"  Perfect consonance incoming totals:   {perf_totals}")
+    print(f"  Imperfect consonance incoming totals: {imperf_totals}")
+    reduction = (1 - perf_totals[0] / imperf_totals[0]) * 100
+    print(f"  Reduction: {reduction:.1f}% fewer incoming VLs to perfect consonances")
     print()
-    tension = {0: 0, 7: 1, 3: 2, 4: 2, 8: 2, 9: 2}
-    level_names = {0: "Stable (ground)", 1: "Stable (dominant)", 2: "Mobile (driving)"}
 
-    for level in range(3):
-        members = [i for i in sorted(CONSONANT) if tension[i] == level]
-        names = ", ".join(INTERVAL_NAMES[i] for i in members)
-        print(f"  Level {level} — {level_names[level]}:")
-        print(f"    {names}")
-        print(f"    Count: {len(members)}")
+
+def demo_cost_function() -> None:
+    """
+    Theorems 5.1–5.3: Voice-leading cost as seminorm with lattice conservation.
+    """
+    print("=" * 70)
+    print("THEOREM: Voice-Leading Cost Function Properties")
+    print("=" * 70)
+    print()
+
+    # Example voice motions (2-voice counterpoint)
+    m1 = [2, -3]   # bass up 2, soprano down 3
+    m2 = [-1, 4]   # bass down 1, soprano up 4
+
+    def cost(m: list[int]) -> int:
+        return sum(abs(x) for x in m)
+
+    def vec_add(a: list[int], b: list[int]) -> list[int]:
+        return [x + y for x, y in zip(a, b)]
+
+    def vec_meet(a: list[int], b: list[int]) -> list[int]:
+        return [min(x, y) for x, y in zip(a, b)]
+
+    def vec_join(a: list[int], b: list[int]) -> list[int]:
+        return [max(x, y) for x, y in zip(a, b)]
+
+    composed = vec_add(m1, m2)
+    meet = vec_meet(m1, m2)
+    join = vec_join(m1, m2)
+
+    print(f"  m₁ = {m1}     cost = {cost(m1)}")
+    print(f"  m₂ = {m2}    cost = {cost(m2)}")
+    print()
+
+    # Triangle inequality
+    print(f"  Triangle inequality:")
+    print(f"    m₁ + m₂ = {composed}     cost = {cost(composed)}")
+    print(f"    cost(m₁+m₂) = {cost(composed)} ≤ "
+          f"{cost(m1)} + {cost(m2)} = {cost(m1) + cost(m2)}  ✓")
+    print()
+
+    # Lattice-cost conservation
+    print(f"  Lattice-cost conservation:")
+    print(f"    m₁ ⊓ m₂ = {meet}    cost = {cost(meet)}")
+    print(f"    m₁ ⊔ m₂ = {join}     cost = {cost(join)}")
+    print(f"    cost(⊓) + cost(⊔) = {cost(meet)} + {cost(join)} = {cost(meet) + cost(join)}")
+    print(f"    cost(m₁) + cost(m₂) = {cost(m1)} + {cost(m2)} = {cost(m1) + cost(m2)}")
+    print(f"    Equal? {cost(meet) + cost(join) == cost(m1) + cost(m2)}  ✓")
+    print()
+
+    # Verify for many random-ish examples
+    import random
+    random.seed(42)
+    violations = 0
+    n_tests = 10000
+    for _ in range(n_tests):
+        n_voices = random.randint(2, 6)
+        a = [random.randint(-10, 10) for _ in range(n_voices)]
+        b = [random.randint(-10, 10) for _ in range(n_voices)]
+        # Triangle inequality
+        if cost(vec_add(a, b)) > cost(a) + cost(b):
+            violations += 1
+        # Lattice conservation
+        if cost(vec_meet(a, b)) + cost(vec_join(a, b)) != cost(a) + cost(b):
+            violations += 1
+    print(f"  Stress test: {n_tests} random cases, {violations} violations  "
+          f"{'✓' if violations == 0 else '✗'}")
+    print()
+
+
+def demo_full_quiver_statistics() -> None:
+    """Complete statistics of the counterpoint quiver."""
+    print("=" * 70)
+    print("COMPLETE QUIVER STATISTICS")
+    print("=" * 70)
+    print()
+
+    all_vls = all_voice_leadings()
+
+    total_edges = 0
+    edge_matrix: dict[tuple[int, int], int] = {}
+
+    for i in sorted(CONSONANT):
+        for j in sorted(CONSONANT):
+            count = sum(1 for vl in all_vls if is_permitted(i, j, vl))
+            edge_matrix[(i, j)] = count
+            total_edges += count
+
+    print(f"  Vertices (consonant intervals): {len(CONSONANT)}")
+    print(f"  Total edges (permitted VLs):    {total_edges}")
+    print(f"  Edge density:                   {total_edges / (len(CONSONANT)**2 * 144):.3f}")
+    print()
+
+    # Adjacency matrix
+    print("  Adjacency matrix (number of permitted VLs):")
+    print(f"  {'':>8s}", end="")
+    for j in sorted(CONSONANT):
+        print(f"  {j:>5d}", end="")
+    print()
+
+    for i in sorted(CONSONANT):
+        print(f"  {i:>8d}", end="")
+        for j in sorted(CONSONANT):
+            print(f"  {edge_matrix[(i, j)]:>5d}", end="")
         print()
 
-    print("  Hasse diagram: Unison → Fifth → {m3, M3, m6, M6}")
-    print("  Poset type: ordinal sum 1 + 1 + 4")
-
-
-def demo_consonant_sum():
-    """Demonstrate the consonant sum property."""
-    print("\n" + "=" * 60)
-    print("ARITHMETIC CENTER OF CONSONANCE")
-    print("=" * 60)
     print()
-    total = sum(CONSONANT)
-    print(f"  Sum of consonant intervals: {' + '.join(str(i) for i in sorted(CONSONANT))} = {total}")
-    print(f"  Modulo 12: {total} mod 12 = {total % 12}")
-    print(f"  The center of consonance is the {INTERVAL_NAMES[total % 12]}!")
-    print(f"  (The interval that structures the circle of fifths)")
+    print(f"  Row sums (outgoing from each interval):")
+    for i in sorted(CONSONANT):
+        row_sum = sum(edge_matrix[(i, j)] for j in CONSONANT)
+        name = INTERVAL_NAMES[i]
+        print(f"    {name:<25s}: {row_sum}")
+
+    print()
+    print(f"  Column sums (incoming to each interval):")
+    for j in sorted(CONSONANT):
+        col_sum = sum(edge_matrix[(i, j)] for i in CONSONANT)
+        name = INTERVAL_NAMES[j]
+        itype = "(PERFECT)" if j in PERFECT else "(imperfect)"
+        print(f"    {name:<25s} {itype:<12s}: {col_sum}")
+    print()
 
 
-if __name__ == "__main__":
-    demo_consonance_partition()
-    demo_inversion_asymmetry()
-    demo_generation()
-    demo_voice_leading()
-    demo_parallel_restriction()
-    demo_tension_poset()
-    demo_consonant_sum()
-    print("\n" + "=" * 60)
+# ============================================================================
+# Section 3: Main
+# ============================================================================
+
+def main() -> None:
+    """Run all demonstrations."""
+    print()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║  SONIC MATHEMATICS: Counterpoint as Category Theory                ║")
+    print("║  Numerical Demonstrations of Formally Verified Results             ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
+
+    demo_strong_connectivity()
+    demo_self_loop_bottleneck()
+    demo_voice_swap_asymmetry()
+    demo_hom_set_cardinalities()
+    demo_non_composability()
+    demo_cost_function()
+    demo_full_quiver_statistics()
+
+    print("=" * 70)
     print("All demonstrations complete.")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Consonant Intervals on the Chromatic Circle
-
-Shows the 12 pitch classes arranged in a circle, with consonant intervals
-highlighted and inversion pairs connected by arcs.
-"""
-
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import numpy as np
-
-
-def draw_chromatic_circle():
-    """Draw the chromatic circle with consonance analysis."""
-    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
-
-    CONSONANT = {0, 3, 4, 7, 8, 9}
-    PERFECT = {0, 7}
-    IMPERFECT = {3, 4, 8, 9}
-
-    NAMES = ['C/P1', 'm2', 'M2', 'm3', 'M3', 'P4',
-             'TT', 'P5', 'm6', 'M6', 'm7', 'M7']
-
-    # Plot 1: Consonance on the chromatic circle
-    ax = axes[0]
-    ax.set_aspect('equal')
-    ax.set_xlim(-1.6, 1.6)
-    ax.set_ylim(-1.6, 1.6)
-    ax.set_title('Consonant Intervals in ℤ/12ℤ', fontsize=14, fontweight='bold')
-    ax.axis('off')
-
-    # Draw circle
-    theta = np.linspace(0, 2 * np.pi, 100)
-    ax.plot(np.cos(theta), np.sin(theta), 'k-', alpha=0.2, linewidth=1)
-
-    # Place intervals
-    for i in range(12):
-        angle = np.pi / 2 - 2 * np.pi * i / 12
-        x, y = 1.0 * np.cos(angle), 1.0 * np.sin(angle)
-        lx, ly = 1.35 * np.cos(angle), 1.35 * np.sin(angle)
-
-        if i in PERFECT:
-            color = '#2196F3'
-            size = 300
-        elif i in IMPERFECT:
-            color = '#4CAF50'
-            size = 250
-        else:
-            color = '#E0E0E0'
-            size = 150
-
-        ax.scatter(x, y, s=size, c=color, zorder=5, edgecolors='black', linewidth=1.5)
-        ax.text(lx, ly, NAMES[i], ha='center', va='center', fontsize=9, fontweight='bold')
-
-    # Draw inversion pairs
-    inv_pairs = [(3, 9), (4, 8)]
-    for a, b in inv_pairs:
-        angle_a = np.pi / 2 - 2 * np.pi * a / 12
-        angle_b = np.pi / 2 - 2 * np.pi * b / 12
-        xa, ya = 0.85 * np.cos(angle_a), 0.85 * np.sin(angle_a)
-        xb, yb = 0.85 * np.cos(angle_b), 0.85 * np.sin(angle_b)
-        ax.annotate('', xy=(xb, yb), xytext=(xa, ya),
-                     arrowprops=dict(arrowstyle='<->', color='#FF9800', lw=2))
-
-    # Draw the broken pair (5, 7)
-    for val, c in [(5, '#F44336'), (7, '#2196F3')]:
-        angle = np.pi / 2 - 2 * np.pi * val / 12
-        xa, ya = 0.85 * np.cos(angle), 0.85 * np.sin(angle)
-    angle_5 = np.pi / 2 - 2 * np.pi * 5 / 12
-    angle_7 = np.pi / 2 - 2 * np.pi * 7 / 12
-    x5, y5 = 0.85 * np.cos(angle_5), 0.85 * np.sin(angle_5)
-    x7, y7 = 0.85 * np.cos(angle_7), 0.85 * np.sin(angle_7)
-    ax.annotate('', xy=(x5, y5), xytext=(x7, y7),
-                 arrowprops=dict(arrowstyle='<->', color='#F44336', lw=2, linestyle='dashed'))
-
-    # Legend
-    ax.scatter([], [], c='#2196F3', s=100, label='Perfect consonance', edgecolors='black')
-    ax.scatter([], [], c='#4CAF50', s=100, label='Imperfect consonance', edgecolors='black')
-    ax.scatter([], [], c='#E0E0E0', s=100, label='Dissonant', edgecolors='black')
-    ax.plot([], [], '-', color='#FF9800', lw=2, label='Inversion pair (both consonant)')
-    ax.plot([], [], '--', color='#F44336', lw=2, label='Broken pair (P5↔P4)')
-    ax.legend(loc='lower center', fontsize=8, ncol=2)
-
-    # Plot 2: Tension Poset
-    ax2 = axes[1]
-    ax2.set_xlim(-2, 6)
-    ax2.set_ylim(-0.5, 3.5)
-    ax2.set_title('Tension Poset: 1 + 1 + 4', fontsize=14, fontweight='bold')
-    ax2.axis('off')
-
-    # Level 0: Unison
-    ax2.scatter([2], [0], s=400, c='#2196F3', zorder=5, edgecolors='black', linewidth=2)
-    ax2.text(2, -0.35, 'Unison (0)\nτ = 0', ha='center', fontsize=9)
-
-    # Level 1: Fifth
-    ax2.scatter([2], [1.2], s=400, c='#2196F3', zorder=5, edgecolors='black', linewidth=2)
-    ax2.text(2, 0.85, 'Fifth (7)\nτ = 1', ha='center', fontsize=9)
-
-    # Level 2: Imperfect consonances
-    imp_x = [0.5, 1.5, 2.5, 3.5]
-    imp_labels = ['m3 (3)', 'M3 (4)', 'm6 (8)', 'M6 (9)']
-    for x, label in zip(imp_x, imp_labels):
-        ax2.scatter([x], [2.5], s=350, c='#4CAF50', zorder=5, edgecolors='black', linewidth=2)
-        ax2.text(x, 2.9, label, ha='center', fontsize=8)
-    ax2.text(2, 2.15, 'τ = 2 (mobile)', ha='center', fontsize=9, fontstyle='italic')
-
-    # Hasse edges
-    ax2.plot([2, 2], [0.15, 1.05], 'k-', linewidth=2)
-    for x in imp_x:
-        ax2.plot([2, x], [1.35, 2.35], 'k-', linewidth=1.5, alpha=0.6)
-
-    # Annotations
-    ax2.text(2.2, 0.6, '≤', fontsize=14, fontweight='bold')
-    ax2.text(0.3, 1.8, '≤', fontsize=12, rotation=55)
-
-    plt.tight_layout()
-    plt.savefig('counterpoint_analysis.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print("Saved: counterpoint_analysis.png")
+    print("=" * 70)
 
 
 if __name__ == "__main__":
-    draw_chromatic_circle()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Counterpoint Transition Graph
-
-Shows the directed graph of permitted voice-leading transitions between
-consonant intervals, with edge weights indicating the number of valid
-voice leadings for each transition.
-"""
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def compute_morphism_counts():
-    """Compute the number of valid voice leadings between each pair."""
-    CONSONANT = [0, 3, 4, 7, 8, 9]
-    PERFECT = {0, 7}
-    n = 12
-
-    counts = {}
-    for i in CONSONANT:
-        for j in CONSONANT:
-            count = 0
-            target_change = (j - i) % n
-            for su in range(n):
-                sl = (su - target_change) % n
-                is_parallel = (su == sl)
-                is_stationary = (su == 0 and sl == 0)
-                if j in PERFECT and is_parallel and not is_stationary:
-                    continue
-                count += 1
-            counts[(i, j)] = count
-    return counts
-
-
-def draw_transition_graph():
-    """Draw the counterpoint transition graph."""
-    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
-
-    CONSONANT = [0, 3, 4, 7, 8, 9]
-    NAMES = {0: 'P1', 3: 'm3', 4: 'M3', 7: 'P5', 8: 'm6', 9: 'M6'}
-    PERFECT = {0, 7}
-    counts = compute_morphism_counts()
-
-    # Plot 1: Transition graph
-    ax = axes[0]
-    ax.set_aspect('equal')
-    ax.set_xlim(-2, 2)
-    ax.set_ylim(-2, 2)
-    ax.set_title('Counterpoint Transition Graph\n(edge labels = morphism count)',
-                  fontsize=12, fontweight='bold')
-    ax.axis('off')
-
-    # Position nodes in a hexagon
-    positions = {}
-    for idx, interval in enumerate(CONSONANT):
-        angle = np.pi / 2 - 2 * np.pi * idx / 6
-        positions[interval] = (1.2 * np.cos(angle), 1.2 * np.sin(angle))
-
-    # Draw edges (skip self-loops for clarity)
-    for i in CONSONANT:
-        for j in CONSONANT:
-            if i == j:
-                continue
-            xi, yi = positions[i]
-            xj, yj = positions[j]
-            # Offset slightly to show bidirectional
-            dx, dy = xj - xi, yj - yi
-            length = np.sqrt(dx**2 + dy**2)
-            nx, ny = -dy / length * 0.05, dx / length * 0.05
-
-            count = counts[(i, j)]
-            color = '#2196F3' if j in PERFECT else '#4CAF50'
-            alpha = 0.3
-
-            ax.annotate('', xy=(xj - dx * 0.15 + nx, yj - dy * 0.15 + ny),
-                         xytext=(xi + dx * 0.15 + nx, yi + dy * 0.15 + ny),
-                         arrowprops=dict(arrowstyle='->', color=color, alpha=alpha, lw=1))
-
-    # Draw nodes
-    for interval in CONSONANT:
-        x, y = positions[interval]
-        color = '#2196F3' if interval in PERFECT else '#4CAF50'
-        ax.scatter(x, y, s=600, c=color, zorder=10, edgecolors='black', linewidth=2)
-        ax.text(x, y, NAMES[interval], ha='center', va='center',
-                fontsize=11, fontweight='bold', zorder=11)
-
-        # Self-loop count
-        self_count = counts[(interval, interval)]
-        ax.text(x, y - 0.3, f'({self_count})', ha='center', fontsize=7, color='gray')
-
-    # Plot 2: Morphism count heatmap
-    ax2 = axes[1]
-    matrix = np.array([[counts[(i, j)] for j in CONSONANT] for i in CONSONANT])
-    im = ax2.imshow(matrix, cmap='YlGnBu', aspect='equal')
-    ax2.set_xticks(range(6))
-    ax2.set_yticks(range(6))
-    ax2.set_xticklabels([NAMES[c] for c in CONSONANT])
-    ax2.set_yticklabels([NAMES[c] for c in CONSONANT])
-    ax2.set_xlabel('Target interval', fontsize=11)
-    ax2.set_ylabel('Source interval', fontsize=11)
-    ax2.set_title('Morphism Count Matrix\n|Hom(i, j)|', fontsize=12, fontweight='bold')
-
-    for i in range(6):
-        for j in range(6):
-            color = 'white' if matrix[i, j] > 10 else 'black'
-            ax2.text(j, i, str(matrix[i, j]), ha='center', va='center',
-                     fontsize=10, fontweight='bold', color=color)
-
-    plt.colorbar(im, ax=ax2, shrink=0.8)
-
-    plt.tight_layout()
-    plt.savefig('transition_graph.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print("Saved: transition_graph.png")
-
-
-if __name__ == "__main__":
-    draw_transition_graph()
+    main()
