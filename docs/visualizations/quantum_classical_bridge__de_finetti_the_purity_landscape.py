@@ -1,1 +1,0 @@
-viz_purity_landscape.py

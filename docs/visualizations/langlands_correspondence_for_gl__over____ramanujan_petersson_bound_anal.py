@@ -1,1 +1,0 @@
-viz_ramanujan_bound.py

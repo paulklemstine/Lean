@@ -1,1 +1,0 @@
-viz_drake_heatmap.py

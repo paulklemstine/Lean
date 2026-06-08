@@ -1,1 +1,0 @@
-algorithms.py::natural_gradient_descent

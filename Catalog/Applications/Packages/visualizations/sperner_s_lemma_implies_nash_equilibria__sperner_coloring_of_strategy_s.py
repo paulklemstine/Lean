@@ -1,1 +1,0 @@
-visualize_sperner_nash.py

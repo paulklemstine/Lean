@@ -1,1 +1,0 @@
-viz_divisor_lattice.py

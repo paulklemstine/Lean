@@ -1,1 +1,0 @@
-viz_subgroup_diamond.py

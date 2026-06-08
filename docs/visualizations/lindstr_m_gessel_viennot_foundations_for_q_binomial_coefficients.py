@@ -1,1 +1,0 @@
-viz_q_binomial.py

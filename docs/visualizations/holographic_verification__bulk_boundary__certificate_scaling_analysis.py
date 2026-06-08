@@ -1,1 +1,0 @@
-viz_certificate_scaling.py

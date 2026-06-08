@@ -1,1 +1,0 @@
-visualize_taxicab.py

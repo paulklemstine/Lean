@@ -1,1 +1,0 @@
-algorithms.py::mirror_descent

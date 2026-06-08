@@ -1,1 +1,0 @@
-See Applications/algorithms.py classify_growth()

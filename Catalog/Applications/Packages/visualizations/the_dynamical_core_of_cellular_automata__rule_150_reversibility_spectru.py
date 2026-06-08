@@ -1,1 +1,0 @@
-viz_rule150_spectrum.py

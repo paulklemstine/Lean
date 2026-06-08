@@ -1,1 +1,0 @@
-algorithms.py::self_recognition_test

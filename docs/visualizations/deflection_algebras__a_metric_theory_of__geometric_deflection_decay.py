@@ -1,1 +1,0 @@
-# See Novelty/visualize_deflection.py - geometric_decay_plot()

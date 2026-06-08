@@ -1,1 +1,0 @@
-def predict_distance(bar): return math.ceil(bar.death / bar.birth)

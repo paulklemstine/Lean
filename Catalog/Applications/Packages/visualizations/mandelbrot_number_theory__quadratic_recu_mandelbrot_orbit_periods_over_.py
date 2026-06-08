@@ -1,1 +1,0 @@
-visualize_mandelbrot_periods.py

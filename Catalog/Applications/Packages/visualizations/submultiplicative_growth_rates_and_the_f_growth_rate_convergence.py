@@ -1,1 +1,0 @@
-viz_growth_rate.py

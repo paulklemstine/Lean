@@ -1,1 +1,0 @@
-viz_rate_convergence.py

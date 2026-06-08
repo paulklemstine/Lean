@@ -1,1 +1,0 @@
-viz_mod4_obstruction.py

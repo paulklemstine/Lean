@@ -1,1 +1,0 @@
-See algorithms.py: enumerate_provability_algebras(n)

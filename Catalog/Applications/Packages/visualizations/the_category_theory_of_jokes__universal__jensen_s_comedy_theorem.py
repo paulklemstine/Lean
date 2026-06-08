@@ -1,1 +1,0 @@
-Applications/CategoricalHumor/viz_jensen_comedy.py

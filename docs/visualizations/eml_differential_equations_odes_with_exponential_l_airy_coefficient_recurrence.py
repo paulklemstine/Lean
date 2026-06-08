@@ -1,1 +1,0 @@
-See algorithms.py: airy_coefficient_recurrence()

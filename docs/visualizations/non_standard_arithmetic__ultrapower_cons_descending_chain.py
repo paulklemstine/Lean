@@ -1,1 +1,0 @@
-viz_ultrapower.py (plot_descending_chain function)

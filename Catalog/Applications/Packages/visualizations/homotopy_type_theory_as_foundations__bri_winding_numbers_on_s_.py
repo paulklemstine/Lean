@@ -1,1 +1,0 @@
-viz_winding.py

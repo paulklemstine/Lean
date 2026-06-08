@@ -1,1 +1,0 @@
-# See visualize_survival.py - plot_ordinal_hierarchy()

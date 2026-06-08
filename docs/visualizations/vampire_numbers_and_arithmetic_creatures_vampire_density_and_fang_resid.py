@@ -1,1 +1,0 @@
-viz_vampire_density.py

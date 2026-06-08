@@ -1,1 +1,0 @@
-See algorithms.py: kovacic_case1_check()

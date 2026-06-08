@@ -1,1 +1,0 @@
-See viz_disc_uniformity.py: plot_splitting_types()

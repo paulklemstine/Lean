@@ -1,1 +1,0 @@
-visualize_board.py::plot_knight_escape

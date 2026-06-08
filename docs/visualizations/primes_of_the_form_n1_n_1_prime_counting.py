@@ -1,1 +1,0 @@
-algorithms.py::count_nsq_plus_one_primes

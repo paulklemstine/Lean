@@ -1,1 +1,0 @@
-visualize_barrier_chain.py

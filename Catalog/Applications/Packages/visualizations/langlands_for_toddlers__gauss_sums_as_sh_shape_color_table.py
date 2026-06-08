@@ -1,1 +1,0 @@
-visualize_color_table.py

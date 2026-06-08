@@ -1,1 +1,0 @@
-def ie_measure(eps, s_card, t_card, inter_card): return (s_card + t_card - inter_card) * eps

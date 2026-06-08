@@ -1,1 +1,0 @@
-algorithms.py::finite_cover_test

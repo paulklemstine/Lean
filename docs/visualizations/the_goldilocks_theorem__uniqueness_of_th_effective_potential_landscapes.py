@@ -1,1 +1,0 @@
-visualize_effective_potential.py

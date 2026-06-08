@@ -1,1 +1,0 @@
-See algorithms.py: splitting_type(coeffs, p)

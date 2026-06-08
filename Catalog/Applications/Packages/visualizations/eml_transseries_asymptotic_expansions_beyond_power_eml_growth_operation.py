@@ -1,1 +1,0 @@
-See algorithms.py: eml_growth_op function

@@ -1,1 +1,0 @@
-viz_circularity_gap.py

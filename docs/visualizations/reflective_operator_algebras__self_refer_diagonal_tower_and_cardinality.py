@@ -1,1 +1,0 @@
-viz_diagonal_tower.py

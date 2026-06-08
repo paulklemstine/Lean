@@ -1,1 +1,0 @@
-See algorithms.py: newton_polygon_breakpoints()

@@ -1,1 +1,0 @@
-algorithms.py::enumerate_almost_monoids_on_bool

@@ -1,1 +1,0 @@
-viz_gol_evolution.py

@@ -1,1 +1,0 @@
-See viz_disc_uniformity.py: plot_disc_uniformity()

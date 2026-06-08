@@ -1,1 +1,0 @@
-viz_pieces.py

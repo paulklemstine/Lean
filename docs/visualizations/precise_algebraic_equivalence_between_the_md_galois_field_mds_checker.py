@@ -1,1 +1,0 @@
-See algorithms.py: GaloisField.check_mds()

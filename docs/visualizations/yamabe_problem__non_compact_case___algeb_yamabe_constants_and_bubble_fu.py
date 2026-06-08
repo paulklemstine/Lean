@@ -1,1 +1,0 @@
-visualize_yamabe.py

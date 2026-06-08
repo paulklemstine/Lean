@@ -1,1 +1,0 @@
-See optimal_scale_selection in algorithms.py

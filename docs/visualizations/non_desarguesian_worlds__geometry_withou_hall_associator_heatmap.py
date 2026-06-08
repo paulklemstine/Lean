@@ -1,1 +1,0 @@
-visualize_hall.py

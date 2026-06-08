@@ -1,1 +1,0 @@
-See algorithms.py: depth_filtration function

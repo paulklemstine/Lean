@@ -1,1 +1,0 @@
-viz_newton_hodge.py

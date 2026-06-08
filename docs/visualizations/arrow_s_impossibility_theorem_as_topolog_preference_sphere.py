@@ -1,1 +1,0 @@
-See visualize_arrow.py: plot_preference_sphere()

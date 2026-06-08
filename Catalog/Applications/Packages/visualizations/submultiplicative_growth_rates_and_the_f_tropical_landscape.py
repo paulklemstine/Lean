@@ -1,1 +1,0 @@
-viz_tropical_landscape.py

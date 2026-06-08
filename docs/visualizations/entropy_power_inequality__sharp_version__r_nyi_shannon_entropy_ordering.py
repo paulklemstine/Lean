@@ -1,1 +1,0 @@
-viz_renyi_ordering.py

@@ -1,1 +1,0 @@
-See algorithms.py: verify_periodic_law()

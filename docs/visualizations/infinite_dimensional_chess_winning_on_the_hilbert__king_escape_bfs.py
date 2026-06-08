@@ -1,1 +1,0 @@
-algorithms.py::find_nearest_safe

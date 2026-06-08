@@ -1,1 +1,0 @@
-See algorithms.py: winding_number function

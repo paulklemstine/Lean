@@ -1,1 +1,0 @@
-Applications/CategoricalHumor/viz_comedy_triangle.py

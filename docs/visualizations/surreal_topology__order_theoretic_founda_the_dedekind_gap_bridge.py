@@ -1,1 +1,0 @@
-visualize_gap_bridge.py

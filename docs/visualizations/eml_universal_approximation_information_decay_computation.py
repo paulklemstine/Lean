@@ -1,1 +1,0 @@
-def retained_info(alpha, l, K): return alpha**l * K

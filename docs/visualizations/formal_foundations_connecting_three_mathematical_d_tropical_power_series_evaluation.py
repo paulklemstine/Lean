@@ -1,1 +1,0 @@
-algorithms.py::TropicalPowerSeries.trop_eval

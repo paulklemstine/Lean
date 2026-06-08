@@ -1,1 +1,0 @@
-viz_effective_potential.py

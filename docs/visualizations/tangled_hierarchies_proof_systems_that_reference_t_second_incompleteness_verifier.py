@@ -1,1 +1,0 @@
-See algorithms.py: verify_second_incompleteness()

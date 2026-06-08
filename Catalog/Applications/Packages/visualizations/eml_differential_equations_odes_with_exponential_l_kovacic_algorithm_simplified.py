@@ -1,1 +1,0 @@
-See algorithms.py: kovacic_classify() and kovacic_airy()

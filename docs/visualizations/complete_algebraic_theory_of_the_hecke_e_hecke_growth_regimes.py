@@ -1,1 +1,0 @@
-viz_hecke_growth.py

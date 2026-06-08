@@ -1,1 +1,0 @@
-viz_diagonal.py (plot_fixed_point_spectrum function)

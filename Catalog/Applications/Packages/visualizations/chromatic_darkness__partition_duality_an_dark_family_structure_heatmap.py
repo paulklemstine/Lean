@@ -1,1 +1,0 @@
-viz_darkness_heatmap.py

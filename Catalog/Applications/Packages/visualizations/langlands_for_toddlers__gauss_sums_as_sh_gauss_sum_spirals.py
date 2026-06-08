@@ -1,1 +1,0 @@
-visualize_gauss_sums.py

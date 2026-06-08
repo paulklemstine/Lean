@@ -1,1 +1,0 @@
-viz_creature_spectrum.py

@@ -1,1 +1,0 @@
-viz_curvature_contraction.py

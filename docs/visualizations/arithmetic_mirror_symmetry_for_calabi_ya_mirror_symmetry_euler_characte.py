@@ -1,1 +1,0 @@
-visualize_mirror_symmetry.py

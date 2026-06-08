@@ -1,1 +1,0 @@
-viz_kovacic.py

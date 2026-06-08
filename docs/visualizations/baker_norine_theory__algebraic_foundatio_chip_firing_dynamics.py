@@ -1,1 +1,0 @@
-viz_chip_firing.py

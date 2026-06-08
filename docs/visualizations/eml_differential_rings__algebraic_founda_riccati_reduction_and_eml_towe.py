@@ -1,1 +1,0 @@
-Applications/viz_riccati.py

@@ -1,1 +1,0 @@
-Applications/PoincareData/algorithms.py

@@ -1,1 +1,0 @@
-# See visualize_survival.py - plot_asymmetry_collapse()

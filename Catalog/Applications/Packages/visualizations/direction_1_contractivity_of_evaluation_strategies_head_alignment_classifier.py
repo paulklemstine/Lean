@@ -1,1 +1,0 @@
-# See algorithms.py classify_head_aligned function

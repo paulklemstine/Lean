@@ -1,1 +1,0 @@
-See algorithms.py: cholesky_rational(Q)

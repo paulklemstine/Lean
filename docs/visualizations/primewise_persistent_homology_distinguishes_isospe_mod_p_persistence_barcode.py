@@ -1,1 +1,0 @@
-See algorithms.py: mod_p_vietoris_rips()

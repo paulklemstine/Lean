@@ -1,1 +1,0 @@
-def solve_vectorization(action, x0, x1, x2): a = action.connector(x0,x1); b = action.connector(x0,x2); return action.act(action.multiply(a,b), x0)

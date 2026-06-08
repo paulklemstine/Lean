@@ -1,1 +1,0 @@
-See visualize_gol.py::plot_tropical_threshold_landscape()

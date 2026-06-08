@@ -1,1 +1,0 @@
-algorithms.py::construct_king_path

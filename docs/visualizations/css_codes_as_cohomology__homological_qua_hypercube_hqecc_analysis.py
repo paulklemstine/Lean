@@ -1,1 +1,0 @@
-viz_hypercube_betti.py

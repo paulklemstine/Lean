@@ -1,1 +1,0 @@
-algorithms.py:spectral_attack

@@ -1,1 +1,0 @@
-GameOfLife/viz_overhead.py

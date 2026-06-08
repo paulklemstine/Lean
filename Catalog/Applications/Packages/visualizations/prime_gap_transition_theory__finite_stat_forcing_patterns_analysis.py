@@ -1,1 +1,0 @@
-viz_forcing_patterns.py

@@ -1,1 +1,0 @@
-viz_newton_polygon.py::plot_newton_polygon

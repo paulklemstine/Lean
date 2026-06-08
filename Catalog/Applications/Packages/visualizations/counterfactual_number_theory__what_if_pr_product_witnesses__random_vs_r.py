@@ -1,1 +1,0 @@
-viz_product_witnesses.py

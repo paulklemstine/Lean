@@ -1,1 +1,0 @@
-visualize_integration_barrier.py

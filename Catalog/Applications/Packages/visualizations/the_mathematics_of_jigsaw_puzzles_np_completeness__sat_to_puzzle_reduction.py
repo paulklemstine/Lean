@@ -1,1 +1,0 @@
-See algorithms.py: sat_to_puzzle_reduction()

@@ -1,1 +1,0 @@
-viz_temporal_pigeonhole.py

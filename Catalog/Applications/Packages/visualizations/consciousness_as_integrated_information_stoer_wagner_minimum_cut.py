@@ -1,1 +1,0 @@
-algorithms.py::stoer_wagner_min_cut

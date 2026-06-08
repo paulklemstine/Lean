@@ -1,3 +1,4 @@
+# Lean build artifacts
 /.lake
 /lake-packages
 *.olean
@@ -6,17 +7,48 @@
 /Catalog/.lake
 /Catalog/Aether/output
 /Catalog/Aether/logs
+
+# Python cache
 /Aether/__pycache__
+__pycache__/
+*.pyc
+
+# Aether workspace — projects, archives, logs, caches
+/Aether/.aether_workspace/projects/
+/Aether/.aether_workspace/archive*/
+/Aether/.aether_workspace/reasoning_logs/
+/Aether/.aether_workspace/pollinations_api_key
+/Aether/.aether_workspace/inflight_jobs.json
+/Aether/.aether_workspace/insights.json
+/Aether/.aether_workspace/*.json
+/Aether/.aether_workspace/last_*
 /Aether/artifacts
 /workspace
 /Catalog/Aether/manual_jobs
 *.tar.gz
 *.output
-/Aether/.aether_workspace/projects/
-/Aether/.aether_workspace/pollinations_api_key
-/Aether/.aether_workspace/inflight_jobs.json
-!/Catalog/Applications/Packages/future_directions.json
+
+# Auto-generated visualizations (duplicated in Catalog + docs)
+/Catalog/Applications/Packages/visualizations/
+/docs/visualizations/
+
+# Auto-generated demos
+/Catalog/Applications/Demos/
+
+# Stale/old generated content
 /Catalog/Applications/Packages/old/
 /Catalog/Applications/Packages/packages_db.js
 /docs/old/
 /docs/packages_db.js
+
+# Keep future_directions.json even though we ignore its parent dirs
+!/Catalog/Applications/Packages/future_directions.json
+
+# Serena
+.serena/
+
+# OS/editor junk
+.DS_Store
+*.swp
+*.swo
+*~

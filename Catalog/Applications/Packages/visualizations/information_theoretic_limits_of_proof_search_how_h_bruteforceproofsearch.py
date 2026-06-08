@@ -1,1 +1,0 @@
-See algorithms.py: brute_force_search function

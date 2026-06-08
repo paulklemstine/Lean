@@ -1,1 +1,0 @@
-See visualize_gol.py::plot_gol_evolution()

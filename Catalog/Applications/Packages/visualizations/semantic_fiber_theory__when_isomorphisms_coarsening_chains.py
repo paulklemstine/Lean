@@ -1,1 +1,0 @@
-# See Applications/visualize_opacity.py - plot_coarsening_chains()

@@ -1,1 +1,0 @@
-algorithms.py::blowup_at_origin_affine_chart

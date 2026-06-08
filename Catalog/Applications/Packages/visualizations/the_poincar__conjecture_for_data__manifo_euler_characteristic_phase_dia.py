@@ -1,1 +1,0 @@
-Applications/PoincareData/visualize_euler.py

@@ -1,1 +1,0 @@
-visualize_gl_frame.py

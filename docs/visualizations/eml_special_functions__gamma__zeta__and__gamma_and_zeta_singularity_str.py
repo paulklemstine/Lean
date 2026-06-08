@@ -1,1 +1,0 @@
-Applications/visualize_gamma_zeta.py

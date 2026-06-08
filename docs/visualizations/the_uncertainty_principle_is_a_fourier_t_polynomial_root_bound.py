@@ -1,1 +1,0 @@
-viz_polynomial_roots.py

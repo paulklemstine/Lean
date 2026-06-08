@@ -1,1 +1,0 @@
-viz_exponential_gap.py

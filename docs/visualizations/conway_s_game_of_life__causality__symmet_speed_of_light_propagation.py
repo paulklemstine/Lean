@@ -1,1 +1,0 @@
-viz_speed_of_light.py

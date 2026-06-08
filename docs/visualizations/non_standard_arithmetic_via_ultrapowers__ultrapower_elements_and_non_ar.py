@@ -1,1 +1,0 @@
-Novelty/viz_ultrapower.py

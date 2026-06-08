@@ -1,1 +1,0 @@
-See algorithms.py: find_critical_submatrix()

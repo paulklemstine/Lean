@@ -1,1 +1,0 @@
-See visualize_convergence.py

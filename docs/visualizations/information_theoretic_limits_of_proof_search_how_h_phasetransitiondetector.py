@@ -1,1 +1,0 @@
-See algorithms.py: detect_phase_transition function

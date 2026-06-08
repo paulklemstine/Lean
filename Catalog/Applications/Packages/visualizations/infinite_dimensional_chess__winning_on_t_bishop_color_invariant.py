@@ -1,1 +1,0 @@
-visualize_board.py::plot_bishop_coloring

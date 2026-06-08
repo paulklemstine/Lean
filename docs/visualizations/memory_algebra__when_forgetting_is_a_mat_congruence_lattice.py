@@ -1,1 +1,0 @@
-viz_congruence_lattice.py

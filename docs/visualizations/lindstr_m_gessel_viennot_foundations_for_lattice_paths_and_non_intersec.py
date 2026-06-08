@@ -1,1 +1,0 @@
-viz_lattice_paths.py

@@ -1,1 +1,0 @@
-See algorithms.py switching_lemma_experiment function

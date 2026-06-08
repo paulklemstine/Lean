@@ -1,1 +1,0 @@
-viz_energy_barrier.py

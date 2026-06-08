@@ -1,1 +1,0 @@
-visualize_wallpaper.py

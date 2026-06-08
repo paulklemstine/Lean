@@ -1,1 +1,0 @@
-Applications/viz_wronskian.py

@@ -1,1 +1,0 @@
-viz_theory_spectrum.py

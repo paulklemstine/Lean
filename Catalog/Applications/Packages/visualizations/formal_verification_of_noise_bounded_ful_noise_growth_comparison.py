@@ -1,1 +1,0 @@
-viz_noise_growth.py

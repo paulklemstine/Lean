@@ -1,1 +1,0 @@
-algorithms.py::is_multiplicatively_independent

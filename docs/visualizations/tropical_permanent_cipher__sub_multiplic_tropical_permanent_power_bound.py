@@ -1,1 +1,0 @@
-viz_permanent_bound.py
