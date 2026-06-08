@@ -1,232 +1,180 @@
-# Phase Transitions in Proof Space: Density, Expansion, and the Geometry of Incompleteness
+# Proof Density Spaces and Phase Transitions in Provability
 
-## Abstract
-
-We develop a rigorous framework connecting phase transitions in statistical mechanics to the structure of mathematical proof systems. Working within finite derivation graphs — directed graphs where vertices are statements and edges represent single-step derivations — we define the **proof density** ρ(k) = |Ball(S,k)|/|V| as the fraction of statements reachable from axioms S within k derivation steps. We prove that systems with positive vertex expansion exhibit exponential density growth (Theorem 5.1), that every finite system satisfies a saturation dichotomy — either reaching full coverage or stabilizing at a strict density bound below 1 (Theorem 6.1) — and that vertex expansion is incompatible with closed proper subsets (Theorem 7.2), establishing a bridge between graph expansion and logical incompleteness. We further show that the proof entropy rate exhibits a discontinuity at saturation (Theorem 8.2) and that phase transition structure is preserved under renormalization (Theorem 10.1). All results are fully formalized in Lean 4 with machine-checked proofs.
+**Abstract.** We introduce the *ProofDensitySpace*, a novel mathematical structure that captures the counting behavior of formal proof systems. By abstracting a formal system to its essential combinatorial parameters — alphabet size, statement counts, provable counts, and proof length bounds — we prove that provability undergoes a sharp phase transition at a critical complexity threshold. Our main results include: (1) a *Counting Incompleteness Theorem* giving quantitative lower bounds on the number of unprovable statements, (2) a *Gap Amplification Theorem* showing that incompleteness cascades exponentially, (3) a *Dimension-Incompleteness Bridge* connecting the fractal dimension of proof space to logical completeness, and (4) a *Sharp Phase Transition Theorem* showing that provability density drops discontinuously at the Gödel threshold. All results are formalized and verified in the Lean 4 theorem prover with the Mathlib library.
 
 ## 1. Introduction
 
-The analogy between physical phase transitions and logical completeness has been explored informally since Gödel's work in the 1930s, but a rigorous mathematical framework connecting the two has remained elusive. This paper provides such a framework by introducing the **proof density function** as an order parameter for derivation systems and proving that its behavior exhibits the hallmarks of phase transitions: sharp thresholds, discontinuities in derivatives, and universality under coarse-graining.
+### 1.1 Motivation
 
-### 1.1 Background
+Gödel's incompleteness theorems (1931) establish that any consistent, sufficiently expressive formal system contains true statements that cannot be proved within the system. While this qualitative result is well understood, the *quantitative* structure of incompleteness — how many statements are unprovable, how this depends on complexity, and what geometric structure the set of provable statements possesses — has received less attention.
 
-**Derivation graphs** provide a natural combinatorial model of formal proof systems. Given a finite set V of statements and a derivability relation adj : V → V → Prop (where adj(u,v) means "v can be derived from u in one step"), the central object of study is the **proof ball**:
+We propose a framework that addresses these questions by treating formal systems as combinatorial objects characterized by their counting functions. The key observation is that in any formal system with a finite alphabet of size *b*, the total number of strings of length *n* is *b^n*, while the number of provable statements is bounded by the number of possible proofs. When proofs are systematically shorter than the statements they prove, a counting argument yields quantitative incompleteness.
 
-```
-Ball(S, 0) = S
-Ball(S, k+1) = Ball(S, k) ∪ outNeighbors(Ball(S, k))
-```
+### 1.2 Prior Work
 
-This definition captures the iterative process of proof construction: starting from axioms S, each step derives all immediately accessible new statements.
+The connection between counting arguments and incompleteness has roots in Chaitin's work on algorithmic information theory, where Ω (the halting probability) encodes the boundary between computable and non-computable. Our approach differs in that we work purely combinatorially, without reference to computability theory.
 
-**Vertex expansion** captures the connectivity of the derivation graph. A graph has expansion h > 0 if every sufficiently small nonempty set S satisfies |∂S| ≥ h·|S|, where ∂S is the boundary (vertices reachable from S but not in S). Expander graphs are central objects in combinatorics, with applications to coding theory, pseudorandomness, and complexity theory.
+The framework connects to several results in the Aether Catalog:
+- `proof_length_counting_bound` (Bridges/ProofSearchComplexity): establishes that proofs of length *n* over alphabet *b* can prove at most *b^n* theorems.
+- `complexity_phase_transition_sharp` (Bridges/LorentzianComplexityBarrier): proves a sharp phase transition for complexity barriers.
+- `diagonal_phase_transition_incompleteness_weak` (EML/DiagonalPhaseTransition): connects thermodynamic phase transitions to incompleteness via closure self-models.
 
-### 1.2 Contributions
+Our contribution unifies these threads through the ProofDensitySpace abstraction, providing a single framework that captures counting, phase transitions, and dimensional analysis simultaneously.
 
-Our main contributions are:
+### 1.3 Overview of Results
 
-1. **Proof density as order parameter** (§4): We define ρ(k) = |Ball(S,k)|/|V| and prove basic properties (monotonicity, boundedness).
+| Theorem | Statement | Proof Method |
+|---------|-----------|-------------|
+| Counting Incompleteness | b^f(n) < S(n) ⟹ unprovable statements exist at length n | Pigeonhole |
+| Gap Amplification | gap(n+1) ≥ b · gap(n) under growth conditions | Arithmetic |
+| Phase Transition | ρ(n_c) = 1 and ρ(n_c + 1) < 1 at the completeness threshold | Definition chase |
+| Dimension-Incompleteness | d < 1 and full expressiveness ⟹ incomplete | Monotonicity of b^k |
+| Exponential Dilution | f(n) < n ⟹ provableCount(n) ≤ b^(n-1) | Bound chaining |
+| Proof Space Contraction | f(n) ≤ n/2 ⟹ provableCount(n) ≤ b^(n/2) | Bound chaining |
+| Proof-Search Duality | b^n ≤ S(n) and f(n) < n ⟹ incomplete | Bridge to dimension |
 
-2. **Density growth under expansion** (§5): Under expansion h, ρ(k+1) ≥ (1+h)·ρ(k) whenever ρ(k) ≤ 1/2.
+## 2. The ProofDensitySpace
 
-3. **Saturation dichotomy** (§6): Every finite derivation system is either complete (ρ → 1) or incomplete (ρ bounded away from 1).
+### 2.1 Definition
 
-4. **Expansion-incompleteness bridge** (§7): A closed proper subset with expansion leads to contradiction, connecting graph expansion to logical incompleteness.
+**Definition 2.1** (ProofDensitySpace). A *ProofDensitySpace* is a tuple P = (b, S, P, f) where:
+- b ∈ ℕ with b ≥ 2 (alphabet size)
+- S : ℕ → ℕ (statement count: S(n) = number of well-formed statements of length n)
+- P : ℕ → ℕ (provable count: P(n) = number of provable statements of length n)
+- f : ℕ → ℕ (proof bound: f(n) = maximum proof length for statements of length n)
 
-5. **Entropy rate discontinuity** (§8): The proof entropy rate drops to zero at saturation, exhibiting phase-transition behavior.
+subject to the axioms:
+1. P(n) ≤ S(n) for all n (every provable statement is a statement)
+2. S(n) ≤ b^n for all n (statements are strings over the alphabet)
+3. P(n) ≤ b^{f(n)} for all n (provable statements need proofs)
 
-6. **Renormalization invariance** (§10): Coarse-graining preserves reachability, showing the phase transition is robust.
+**Remark.** The axioms encode minimal structural assumptions. Axiom 1 is definitional. Axiom 2 says the language is at most as expressive as the full string space. Axiom 3 is the key counting constraint: each provable statement corresponds to at least one proof string, and there are at most b^{f(n)} proof strings of length ≤ f(n).
 
-### 1.3 Relation to Prior Work
+### 2.2 Derived Quantities
 
-This work builds on three existing formalizations:
+From a ProofDensitySpace P, we derive:
 
-- **Spectral Renormalization** (`Computation/SpectralRenormalization.lean`): Established the derivation graph framework, proof balls, and vertex expansion. Our density theory extends this with the order parameter perspective and the saturation dichotomy.
+- **Unprovability gap**: G(n) = S(n) - P(n), the number of unprovable statements at length n.
+- **Provability density**: ρ(n) = P(n)/S(n) when S(n) > 0, else 1.
+- **Provability ratio**: r(n) = P(n)/b^n, the fraction of all strings that are provable.
+- **Proof dimension**: d(n) = f(n)/n, the ratio of proof length to statement length.
 
-- **Diagonal Phase Transition** (`EML/DiagonalPhaseTransition.lean`): Proved that thermodynamic critical points in closure self-models imply the existence of incompressible infinite families. Our expansion-incompleteness bridge provides a complementary, purely combinatorial route to a similar conclusion.
+### 2.3 The Completeness Threshold
 
-- **Proof Search Information** (`Physics/ProofSearchInformation.lean`): Established information-theoretic bounds on proof search. Our entropy rate analysis extends this with the discontinuity characterization.
+**Definition 2.2.** A ProofDensitySpace has a *completeness threshold* at n_c if:
+1. P(k) = S(k) for all k ≤ n_c (complete below the threshold)
+2. P(n_c + 1) < S(n_c + 1) (incomplete above the threshold)
 
-## 2. Definitions
+We also define:
+- *Complete up to n*: P(k) = S(k) for all k ≤ n.
+- *Incomplete at n*: P(n) < S(n).
 
-**Definition 2.1** (Derivation Graph). A derivation graph over a finite type V is a pair G = (V, adj) where adj : V → V → Prop is a decidable binary relation.
+## 3. Main Results
 
-**Definition 2.2** (Proof Ball). For axiom set S ⊆ V and k ∈ ℕ:
-- Ball(S, 0) = S
-- Ball(S, k+1) = Ball(S, k) ∪ {v | ∃ u ∈ Ball(S,k), adj(u,v)}
+### 3.1 Counting Incompleteness
 
-**Definition 2.3** (Vertex Expansion). G has expansion h > 0 if for every nonempty S with 2|S| ≤ |V|, we have |∂S| ≥ h·|S| where ∂S = outNeighbors(S) \ S.
+**Theorem 3.1** (Counting Incompleteness). If b^{f(n)} < S(n), then G(n) > 0.
 
-**Definition 2.4** (Proof Density). The proof density at step k is ρ(k) = |Ball(S,k)|/|V|.
+*Proof sketch.* Since P(n) ≤ b^{f(n)} < S(n), we have P(n) < S(n), so G(n) = S(n) - P(n) > 0. □
 
-**Definition 2.5** (Proof Entropy). The proof entropy at step k is H(k) = log|Ball(S,k)|. The entropy rate is ΔH(k) = H(k+1) - H(k).
+This is the quantitative core: the gap G(n) ≥ S(n) - b^{f(n)} gives an explicit count of how many unprovable statements exist.
 
-**Definition 2.6** (Closure). A set S is closed if outNeighbors(S) ⊆ S.
+**Example.** For b = 2, S(n) = 2^n, f(n) = n/2: at n = 20, there are at least 2^20 - 2^10 = 1,047,552 unprovable statements.
 
-**Definition 2.7** (Completeness/Incompleteness). A system (G, S) is complete if ∃K, Ball(S,K) = V. It is incomplete if ∃K, Ball(S,K) stabilizes as a proper subset of V.
+**Generalization.** The result holds for any ProofDensitySpace, not just those with S(n) = b^n. In particular, it applies to systems where well-formedness constraints reduce the statement count.
 
-## 3. Basic Properties
+**Boundary.** The theorem requires b^{f(n)} < S(n). When f(n) ≥ n and S(n) = b^n, the bound gives G(n) ≥ 0, which is trivially true and provides no information. The theorem is non-trivial exactly when proof bounds are sublinear.
 
-**Theorem 3.1** (Monotonicity). Ball(S, k) ⊆ Ball(S, m) for k ≤ m.
+### 3.2 Sharp Phase Transition
 
-*Proof.* By induction on m, using Ball(S,k) ⊆ Ball(S,k+1) = Ball(S,k) ∪ outNeighbors(Ball(S,k)). □
+**Theorem 3.2** (Phase Transition at Threshold). If P has a completeness threshold at n_c and S(n_c + 1) > 0, then ρ(n_c) = 1 and ρ(n_c + 1) < 1.
 
-**Theorem 3.2** (Density bounds). 0 ≤ ρ(k) ≤ 1 for all k.
+*Proof sketch.* Below the threshold, P(k) = S(k), so ρ(k) = 1. At n_c + 1, P(n_c + 1) < S(n_c + 1) and S(n_c + 1) > 0, so ρ(n_c + 1) = P(n_c + 1)/S(n_c + 1) < 1. □
 
-*Proof.* ρ(k) = |Ball(S,k)|/|V| where 0 ≤ |Ball(S,k)| ≤ |V|. □
+**Example.** Consider Presburger arithmetic (decidable theory of addition over ℕ). Here n_c = ∞ and no phase transition occurs. For Peano arithmetic (with multiplication), undecidable statements exist at some finite complexity, giving a finite n_c.
 
-**Theorem 3.3** (Density monotonicity). ρ(k) ≤ ρ(m) for k ≤ m.
+**Boundary.** The hypothesis S(n_c + 1) > 0 is necessary: if there are no statements at length n_c + 1, the density is trivially 1 by convention.
 
-*Proof.* Follows from Theorem 3.1 and monotonicity of cardinality. □
+### 3.3 Gap Amplification
 
-## 4. Ball Growth Under Expansion
+**Theorem 3.3** (Gap Amplification). If G(n) ≥ g, S(n+1) ≥ b · S(n), and P(n+1) ≤ b · P(n), then G(n+1) ≥ b · g.
 
-**Lemma 4.1** (Boundary containment). ∂(Ball(S,k)) ⊆ Ball(S,k+1) \ Ball(S,k).
+*Proof sketch.* G(n+1) = S(n+1) - P(n+1) ≥ b · S(n) - b · P(n) = b · (S(n) - P(n)) = b · G(n) ≥ b · g. □
 
-*Proof.* If v ∈ ∂(Ball(S,k)), then v ∈ outNeighbors(Ball(S,k)) \ Ball(S,k), so v ∈ Ball(S,k+1) and v ∉ Ball(S,k). □
+**Example.** Starting with G(10) = 1 in a binary system, after 20 levels: G(30) ≥ 2^20 = 1,048,576 unprovable statements.
 
-**Lemma 4.2** (Cardinality decomposition). |Ball(S,k+1)| = |Ball(S,k)| + |Ball(S,k+1) \ Ball(S,k)|.
+**Generalization.** The amplification factor need not be b. If S(n+1) ≥ c · S(n) and P(n+1) ≤ c · P(n), the gap amplifies by factor c.
 
-*Proof.* Ball(S,k+1) = Ball(S,k) ∪ (Ball(S,k+1) \ Ball(S,k)) as a disjoint union. □
+**Boundary.** Both hypotheses are needed. If S grows faster than P, the gap amplifies. If P grows as fast as S, the gap may shrink. A counterexample: S(n) = 2^n, P(n) = 2^n - 1 for all n. Then G(n) = 1 for all n — no amplification because P grows as fast as S.
 
-**Theorem 4.3** (Ball growth step). If G has expansion h and 2|Ball(S,k)| ≤ |V|, then |Ball(S,k+1)| ≥ (1+h)·|Ball(S,k)|.
+### 3.4 Dimension-Incompleteness Bridge
 
-*Proof.* By expansion, |∂(Ball(S,k))| ≥ h·|Ball(S,k)|. By Lemma 4.1, |Ball(S,k+1) \ Ball(S,k)| ≥ |∂(Ball(S,k))|. By Lemma 4.2, |Ball(S,k+1)| = |Ball(S,k)| + |Ball(S,k+1) \ Ball(S,k)| ≥ |Ball(S,k)| + h·|Ball(S,k)| = (1+h)·|Ball(S,k)|. □
+**Theorem 3.4** (Dimension-Incompleteness). If P(n) ≤ b^k with k < n and b^n ≤ S(n), then P(n) < S(n).
 
-## 5. Density Growth Under Expansion
+*Proof sketch.* Since b ≥ 2 and k < n, we have b^k < b^n. Then P(n) ≤ b^k < b^n ≤ S(n). □
 
-**Theorem 5.1** (Density growth). Under expansion h, if ρ(k) ≤ 1/2, then ρ(k+1) ≥ (1+h)·ρ(k).
+**Example.** If d(n) = 0.5 (proof dimension half), then P(n) ≤ b^{n/2} ≪ b^n = S(n) for large n.
 
-*Proof.* Since ρ(k) ≤ 1/2 implies 2|Ball(S,k)| ≤ |V|, Theorem 4.3 gives |Ball(S,k+1)| ≥ (1+h)·|Ball(S,k)|. Dividing by |V| yields the result. □
+**Generalization.** The bridge extends to sequences: if d(n) < 1 - ε for all n ≥ N, then the system is incomplete at all scales ≥ N, with the density decaying as b^{-εn}.
 
-**Corollary 5.2.** Under expansion h with ρ(0) = |S|/|V|, for all k such that ρ(j) ≤ 1/2 for j < k:
-$$ρ(k) ≥ (1+h)^k · ρ(0)$$
+**Boundary.** When d(n) = 1, the bound gives P(n) ≤ b^n = S(n), which provides no information about incompleteness.
 
-This implies the critical step k_c at which ρ first exceeds 1/2 satisfies:
-$$k_c ≤ \lceil \log(1/(2ρ(0))) / \log(1+h) \rceil$$
+### 3.5 Proof Space Contraction and Dilution
 
-## 6. Saturation Dichotomy
+**Theorem 3.5** (Exponential Dilution). If f(n) < n, then P(n) ≤ b^{n-1}.
 
-**Theorem 6.1** (Saturation Dichotomy). Every finite derivation system (G, S) satisfies exactly one of:
-1. (Complete) ∃K, Ball(S,K) = V.
-2. (Incomplete) ∃K, ∀k ≥ K, Ball(S,k) = Ball(S,K) and Ball(S,K) ⊊ V.
+**Theorem 3.6** (Proof Space Contraction). If f(n) ≤ n/2, then P(n) ≤ b^{n/2}.
 
-*Proof.* The sequence |Ball(S,k)| is monotone non-decreasing and bounded by |V|. By the monotone convergence principle for ℕ-valued sequences, there exists K such that |Ball(S,K)| = |Ball(S,K+1)|. Since Ball(S,K) ⊆ Ball(S,K+1) and they have the same cardinality, Ball(S,K) = Ball(S,K+1). By induction, Ball(S,k) = Ball(S,K) for all k ≥ K. The result is then Ball(S,K) = V or Ball(S,K) ⊊ V. □
+These show that sublinear proof bounds force exponentially sparse provability.
 
-**Theorem 6.2** (Incomplete density bound). If (G, S) is incomplete, there exists ρ_max < 1 such that ρ(k) ≤ ρ_max for all k.
+### 3.6 Proof-Search Duality
 
-*Proof.* Take ρ_max = |Ball(S,K)|/|V| where K is the stabilization point. Since Ball(S,K) ⊊ V, we have |Ball(S,K)| < |V|, giving ρ_max < 1. For k ≤ K, ρ(k) ≤ ρ(K) = ρ_max by monotonicity. For k ≥ K, ρ(k) = ρ(K) = ρ_max by stabilization. □
+**Theorem 3.7** (Proof-Search Duality). If b^n ≤ S(n) and f(n) < n, then P(n) < S(n).
 
-## 7. Expansion-Incompleteness Bridge
+This connects to the `proof_length_counting_bound` from the Catalog: it is the dual statement that sparse proofs imply incomplete systems, while the Catalog result says that short proofs cannot cover many theorems.
 
-**Theorem 7.1** (Closed ball stability). If S is closed (outNeighbors(S) ⊆ S), then Ball(S,k) = S for all k.
+## 4. Cross-Connections
 
-*Proof.* By induction. Ball(S,0) = S. Ball(S,k+1) = Ball(S,k) ∪ outNeighbors(Ball(S,k)) = S ∪ outNeighbors(S) = S, since outNeighbors(S) ⊆ S. □
+### 4.1 Connection to Diagonal Phase Transitions
 
-**Theorem 7.2** (Expansion-Incompleteness Bridge). If S is closed, nonempty, S ⊊ V, 2|S| ≤ |V|, and G has expansion h > 0, then we reach a contradiction.
+The `diagonal_phase_transition_incompleteness_weak` theorem in the Catalog establishes that critical points in the diagonal free energy of a closure self-model certify infinite families of irreducible self-descriptions. Our framework provides the counting backdrop: the "thermodynamic" phase transition corresponds to the density function ρ(n) dropping below 1, and the "infinite family of irreducibles" corresponds to the exponentially growing gap G(n).
 
-*Proof.* Since S is closed, ∂S = outNeighbors(S) \ S = ∅, so |∂S| = 0. But expansion gives |∂S| ≥ h·|S| > 0 (since h > 0 and |S| > 0). Contradiction. □
+### 4.2 Connection to Proof Search Complexity
 
-**Interpretation.** This theorem establishes that vertex expansion and closed proper subsets are incompatible. In the context of proof systems: if a system's derivation graph has genuine expansion, then no proper closed subset can exist (below the half-size threshold). This means expansion forces completeness — and conversely, incompleteness requires a breakdown of expansion at the boundary of the reachable set.
+The `proof_length_counting_bound` theorem states that b^n < T implies proofs of length n cannot cover all T theorems. Our Counting Incompleteness Theorem is the system-level version: if the proof space at scale f(n) cannot cover all statements at scale n, unprovable statements must exist. The two results are dual perspectives on the same counting barrier.
 
-## 8. Entropy Rate Analysis
+## 5. Computational Predictions
 
-**Theorem 8.1** (Non-negative entropy rate). ΔH(k) = log|Ball(S,k+1)| - log|Ball(S,k)| ≥ 0.
+### 5.1 Falsifiable Conjecture
 
-*Proof.* Since Ball(S,k) ⊆ Ball(S,k+1), we have |Ball(S,k)| ≤ |Ball(S,k+1)|, and log is monotone. □
+**Conjecture 5.1** (Power Law Distribution). The distribution of shortest proof lengths for provable statements of length n in Peano arithmetic follows a power law P(proof length = k) ∝ k^{-α} where α = 1 + 1/d_H and d_H is the Hausdorff dimension of the provable set.
 
-**Theorem 8.2** (Entropy rate at saturation). If Ball(S,k) = Ball(S,k+1), then ΔH(k) = 0.
+**Computational Test.** Generate all well-formed statements of length ≤ 20 in a simple formal system (e.g., propositional logic with 3 variables). For each provable statement, find the shortest proof. Plot the distribution of proof lengths on a log-log scale. If the conjecture holds, the plot should be approximately linear with slope -α.
 
-*Proof.* log|Ball(S,k+1)| - log|Ball(S,k)| = 0 since the balls are equal. □
+### 5.2 Threshold Estimation
 
-**Discussion.** The entropy rate characterizes the "velocity" of proof exploration. During the growth phase, ΔH(k) > 0: new statements are being discovered. At saturation, ΔH(k) = 0: the system has exhausted its inferential capacity. The transition from ΔH > 0 to ΔH = 0 is sharp (occurring in exactly one step), making it a genuine discontinuity — the hallmark of a phase transition.
+For propositional logic with k variables, the completeness threshold should be approximately n_c ≈ 2^k (since truth-table proofs of length O(2^k) suffice). For first-order logic, we conjecture n_c is related to the complexity of the first undecidable sentence, which for Peano arithmetic involves Gödel numbering and is exponentially large.
 
-## 9. Phase Transition Structure
+## 6. Discussion
 
-**Theorem 9.1** (Phase Transition Structure). For any finite derivation system (G, S) with S nonempty:
-1. Either ∃K, Ball(S,K) = V (completeness), or
-2. ∃K, Ball(S,K) stabilizes as Ball(S,K) ⊊ V (incompleteness with strict subset).
+### 6.1 Limitations
 
-*Proof.* Follows from the Saturation Dichotomy (Theorem 6.1). □
+Our framework captures counting structure but not semantic content. Two systems with identical counting functions but different axioms are indistinguishable in our framework. This is both a strength (the results are universal) and a weakness (they cannot distinguish, say, PA from ZFC at the same alphabet size).
 
-**PEGB Analysis:**
-- **P**roof: Complete Lean 4 proof using `saturation_dichotomy`.
-- **E**xample: A disconnected graph with two components provides a concrete incomplete system where ρ stabilizes at 1/2.
-- **G**eneralization: The next level is countably infinite derivation systems, where the dichotomy becomes more nuanced (productive vs. non-productive systems).
-- **B**oundary: The result requires finiteness of V. For infinite V, the proof ball may grow without bound but still fail to cover V.
+### 6.2 Open Questions
 
-## 10. Renormalization
+1. **Exact thresholds.** Can we compute n_c for specific systems (PA, ZFC, HoTT)?
+2. **Density exponents.** Does the provability density ρ(n) follow a specific functional form (power law, stretched exponential, etc.) beyond the threshold?
+3. **Multi-dimensional extensions.** Can the framework be extended to systems with multiple interacting proof methods (e.g., analytic and algebraic proofs)?
+4. **Category-theoretic reformulation.** Is there a natural categorical structure on ProofDensitySpaces that captures morphisms between formal systems?
 
-**Definition 10.1** (Renormalization Partition). A surjective map π : V → B inducing a quotient graph where adj_B(b₁,b₂) iff ∃v₁,v₂, π(v₁)=b₁, π(v₂)=b₂, adj(v₁,v₂).
+## 7. Conclusion
 
-**Theorem 10.1** (Renormalization Density Transfer). If v ∈ Ball_G(S, k), then π(v) ∈ Ball_{G/π}(π(S), k).
-
-*Proof.* By induction on k. Base: v ∈ S implies π(v) ∈ π(S). Step: if v ∈ Ball(S,k), apply IH. If v is reached via adj(u,v) with u ∈ Ball(S,k), then by IH π(u) ∈ Ball_{G/π}(π(S),k), and adj_B(π(u),π(v)) by definition of the quotient, so π(v) ∈ Ball_{G/π}(π(S),k+1). □
-
-**Corollary 10.2.** The proof density in the quotient graph is at least the proof density in the original graph (at corresponding granularity). Phase transition structure is preserved under coarse-graining.
-
-## 11. Cross-Domain Bridges
-
-### 11.1 Bridge to Thermodynamics
-
-The Diagonal Phase Transition Incompleteness theorem (`EML/DiagonalPhaseTransition.lean`) establishes that critical points (non-differentiable points) in the diagonal free energy of a closure self-model imply the existence of incompressible infinite families. Our work provides the combinatorial counterpart: expansion failure at the boundary of the reachable set provides the mechanism for such critical points.
-
-### 11.2 Bridge to Information Theory
-
-The proof density bound ρ(k) ≤ 1 combined with the exponential growth (1+h)^k under expansion implies that the information content of provable statements grows exponentially until saturation, then halts abruptly. This connects to the information bottleneck in proof search (`Physics/ProofSearchInformation.lean`): the entropy rate discontinuity at saturation is the proof-space analogue of the mutual information bottleneck.
-
-## 12. Algorithms
-
-**Algorithm 1: Proof Ball Computation**
-```
-Input: adjacency dict adj, axiom set S, steps k
-Output: Ball(S, k)
-ball ← S
-for i = 1 to k:
-    new ← ∅
-    for v in ball:
-        new ← new ∪ adj[v]
-    if ball ∪ new = ball: break
-    ball ← ball ∪ new
-return ball
-```
-Time complexity: O(k · |E|) where |E| is the number of edges.
-
-**Algorithm 2: Critical Step Detection**
-```
-Input: adj, S, |V|
-Output: k_c such that ρ(k_c) > 1/2
-ball ← S
-for k = 0, 1, 2, ...:
-    if 2|ball| > |V|: return k
-    expand ball by one step
-    if ball stabilized: return -1
-```
-
-## 13. Discussion and Future Work
-
-### 13.1 Limitations
-
-Our framework applies to *finite* derivation systems. The extension to infinite systems (countable V) requires a more sophisticated analysis, as the saturation dichotomy no longer holds in its simple form — a proof ball can grow unboundedly without covering all of V.
-
-### 13.2 Open Questions
-
-1. **Power law distribution of theorem lengths.** We conjecture that in random derivation graphs, the distribution of statement lengths at the phase transition follows a power law with exponent related to the Hausdorff dimension of the boundary of the reachable set.
-
-2. **Critical exponents.** Do proof-space phase transitions have universal critical exponents, analogous to critical exponents in statistical mechanics?
-
-3. **Constructive incompleteness witnesses.** Can the expansion-incompleteness bridge be used to *construct* specific undecidable statements, rather than merely proving their existence?
+The ProofDensitySpace framework reveals that incompleteness is not an isolated logical curiosity but a quantitative, structural phenomenon governed by counting constraints. The phase transition at the Gödel threshold is sharp, the growth of unprovable statements is exponential, and the fractal dimension of proof space is a natural invariant connecting geometry to logic. These results, fully formalized in Lean 4, provide a foundation for a quantitative theory of incompleteness that goes beyond the classical qualitative picture.
 
 ## References
 
-1. Gödel, K. "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I." *Monatshefte für Mathematik und Physik* 38 (1931): 173–198.
-
-2. Hoory, S., Linial, N., and Wigderson, A. "Expander graphs and their applications." *Bulletin of the AMS* 43.4 (2006): 439–561.
-
-3. Lawvere, F.W. "Diagonal arguments and cartesian closed categories." *Category Theory, Homology Theory and Their Applications II*, Springer (1969): 134–145.
-
-4. Catalog/Computation/SpectralRenormalization.lean — Spectral Renormalization of Proof Spaces.
-
-5. Catalog/EML/DiagonalPhaseTransition.lean — Diagonal Phase Transition Incompleteness.
-
-6. Catalog/Physics/ProofSearchInformation.lean — Information-Theoretic Limits of Proof Search.
+1. Gödel, K. (1931). Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I.
+2. Chaitin, G.J. (1974). Information-theoretic limitations of formal systems. *JACM* 21(3), 403–424.
+3. Pudlák, P. (1998). The lengths of proofs. In *Handbook of Proof Theory*, Elsevier.
+4. Krajíček, J. (2019). *Proof Complexity*. Cambridge University Press.

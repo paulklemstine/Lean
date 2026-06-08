@@ -1,353 +1,311 @@
-#!/usr/bin/env python3
 """
-Demo: Phase Transitions in Proof Space
+Proof Density Phase Transitions — Numerical Demonstrations
 
-Numerical examples demonstrating the key phenomena:
-1. Density growth under expansion
-2. Saturation dichotomy (complete vs incomplete systems)
-3. Entropy rate discontinuity at phase transition
-4. Critical step threshold
+This script demonstrates the key results from the ProofDensitySpace theory:
+1. Provability density phase transition
+2. Gap amplification cascade
+3. Proof dimension vs incompleteness
 """
 
-import math
-from algorithms import (
-    proof_ball, proof_density, vertex_expansion,
-    critical_step, density_trajectory, entropy_rate,
-    saturation_analysis, generate_expander_graph,
-    generate_incomplete_system
-)
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 
-def demo_expander_phase_transition():
-    """Demonstrate sharp phase transition in an expander graph."""
+def provability_density(b: int, proof_bound_fn, n: int) -> float:
+    """Compute provability density ρ(n) = b^proofBound(n) / b^n."""
+    pb = proof_bound_fn(n)
+    if n == 0:
+        return 1.0
+    return b ** pb / b ** n
+
+
+def unprovability_gap(b: int, proof_bound_fn, n: int) -> int:
+    """Compute the gap: b^n - b^proofBound(n)."""
+    pb = proof_bound_fn(n)
+    return max(0, b ** n - b ** pb)
+
+
+def demo_phase_transition():
+    """Demonstrate the phase transition in provability density."""
     print("=" * 60)
-    print("DEMO 1: Phase Transition in Expander Graph")
+    print("DEMO 1: Provability Density Phase Transition")
     print("=" * 60)
 
-    n = 100
-    adj = generate_expander_graph(n, degree=5)
-    axioms = {0}
+    b = 2  # binary alphabet
 
-    print(f"\nUniverse size: {n}")
-    print(f"Axiom set: {axioms}")
-    print(f"Initial expansion: {vertex_expansion(adj, axioms, n):.2f}")
+    # Scenario: proofBound(n) = n for n ≤ 5, then proofBound(n) = 5 + log(n-5)
+    # This models a system where short proofs cover short statements
+    # but can't keep up with longer ones.
+    nc = 5  # completeness threshold
 
-    densities = density_trajectory(adj, axioms, n, 20)
+    def proof_bound(n):
+        if n <= nc:
+            return n  # complete regime
+        return nc + int(np.log2(max(1, n - nc)))  # sublinear growth
 
-    print("\nDensity trajectory ρ(k):")
-    print("-" * 40)
-    for k, rho in enumerate(densities[:15]):
-        bar = "█" * int(rho * 40)
-        print(f"  k={k:2d}: ρ={rho:.4f} {bar}")
+    print(f"\nAlphabet size b = {b}, Completeness threshold n_c = {nc}")
+    print(f"\n{'n':>4} {'stmtCount':>12} {'provBound':>10} {'maxProvable':>12} {'density':>10} {'gap':>12}")
+    print("-" * 65)
 
-    kc = critical_step(adj, axioms, n)
-    print(f"\nCritical step k_c (density > 1/2): {kc}")
+    for n in range(1, 21):
+        stmt_count = b ** n
+        pb = proof_bound(n)
+        max_provable = b ** pb
+        density = provability_density(b, proof_bound, n)
+        gap = unprovability_gap(b, proof_bound, n)
+        marker = " <-- TRANSITION" if n == nc + 1 else ""
+        print(f"{n:>4} {stmt_count:>12} {pb:>10} {max_provable:>12} {density:>10.6f} {gap:>12}{marker}")
 
-    is_complete, sat_step, final_density = saturation_analysis(adj, axioms, n)
-    print(f"Complete: {is_complete}")
-    print(f"Saturation step: {sat_step}")
-    print(f"Final density: {final_density:.4f}")
 
-
-def demo_incomplete_system():
-    """Demonstrate an incomplete system (disconnected graph)."""
+def demo_gap_amplification():
+    """Demonstrate exponential gap amplification."""
     print("\n" + "=" * 60)
-    print("DEMO 2: Incomplete System (Disconnected Components)")
+    print("DEMO 2: Gap Amplification Cascade")
     print("=" * 60)
 
-    n = 40
-    adj = generate_incomplete_system(n)
-    axioms = {0}  # Only in first component
+    b = 2
+    n_start = 6  # first incomplete level
+    initial_gap = 1  # one unprovable statement
 
-    print(f"\nUniverse size: {n}")
-    print(f"Axiom set: {axioms}")
-    print(f"System has two disconnected components of size ~{n // 2}")
+    print(f"\nStarting with gap = {initial_gap} at n = {n_start}")
+    print(f"Under gap amplification (factor b = {b} per level):\n")
 
-    densities = density_trajectory(adj, axioms, n, n)
+    gap = initial_gap
+    for k in range(15):
+        n = n_start + k
+        print(f"  n = {n:>3}: gap ≥ {b}^{k} = {b**k:>10} unprovable statements")
+        gap *= b
 
-    print("\nDensity trajectory ρ(k):")
-    print("-" * 40)
-    for k, rho in enumerate(densities[:25]):
-        bar = "█" * int(rho * 40)
-        print(f"  k={k:2d}: ρ={rho:.4f} {bar}")
-
-    is_complete, sat_step, final_density = saturation_analysis(adj, axioms, n)
-    print(f"\nComplete: {is_complete}")
-    print(f"Saturation step: {sat_step}")
-    print(f"Final density: {final_density:.4f}")
-    print(f"→ Density bounded away from 1: incompleteness!")
+    print(f"\n  After {15} levels: at least {b**14:,} unprovable statements!")
+    print("  → Incompleteness cascades exponentially")
 
 
-def demo_entropy_rate():
-    """Demonstrate entropy rate discontinuity."""
+def demo_proof_dimension():
+    """Demonstrate proof dimension and its connection to incompleteness."""
     print("\n" + "=" * 60)
-    print("DEMO 3: Entropy Rate Discontinuity")
+    print("DEMO 3: Proof Dimension Theory")
     print("=" * 60)
 
-    n = 80
-    adj = generate_expander_graph(n, degree=4)
-    axioms = {0}
+    b = 2
 
-    rates = entropy_rate(adj, axioms, 20)
-    densities = density_trajectory(adj, axioms, n, 20)
+    scenarios = [
+        ("Complete system", lambda n: n, "d = 1.0"),
+        ("Linear proofs (slope 0.9)", lambda n: int(0.9 * n), "d = 0.9"),
+        ("Linear proofs (slope 0.5)", lambda n: n // 2, "d = 0.5"),
+        ("Logarithmic proofs", lambda n: max(1, int(3 * np.log2(max(1, n)))), "d → 0"),
+        ("Constant proofs", lambda n: 10, "d → 0"),
+    ]
 
-    print("\nEntropy rate and density:")
-    print("-" * 50)
-    print(f"  {'k':>3s}  {'ρ(k)':>8s}  {'rate(k)':>8s}  {'phase':>10s}")
-    print("-" * 50)
-    for k in range(min(len(rates), 15)):
-        phase = "growing" if rates[k] > 0.01 else "SATURATED"
-        print(f"  {k:3d}  {densities[k]:8.4f}  {rates[k]:8.4f}  {phase:>10s}")
-
-    # Find the discontinuity
-    for k in range(len(rates) - 1):
-        if rates[k] > 0.1 and rates[k + 1] < 0.01:
-            print(f"\n→ Phase transition between k={k} and k={k+1}!")
-            print(f"  Entropy rate drops from {rates[k]:.4f} to {rates[k+1]:.4f}")
-            break
+    for name, pbound, expected_dim in scenarios:
+        print(f"\n  {name} (proofBound(n) ≈ ..., expected {expected_dim}):")
+        dims = []
+        for n in [10, 50, 100, 500, 1000]:
+            pb = pbound(n)
+            dim = pb / n if n > 0 else 1.0
+            dims.append(dim)
+            incomplete = "INCOMPLETE" if pb < n else "complete"
+            print(f"    n={n:>4}: proofBound={pb:>4}, dim={dim:.4f} [{incomplete}]")
 
 
-def demo_expansion_vs_critical_step():
-    """Show how expansion ratio controls the critical step."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Expansion Controls Phase Transition Speed")
-    print("=" * 60)
+def demo_critical_density_plot():
+    """Generate a plot showing the phase transition."""
+    b = 2
+    nc = 8
 
-    n = 200
-    axioms = {0}
+    def proof_bound(n):
+        if n <= nc:
+            return n
+        return nc + int(np.sqrt(max(0, n - nc)))
 
-    print(f"\nUniverse size: {n}")
-    print(f"{'Degree':>8s}  {'Expansion':>10s}  {'k_c':>5s}  {'Theory':>8s}")
-    print("-" * 40)
+    ns = list(range(1, 31))
+    densities = [provability_density(b, proof_bound, n) for n in ns]
+    dimensions = [proof_bound(n) / n if n > 0 else 1.0 for n in ns]
 
-    for degree in [2, 3, 5, 8, 15]:
-        adj = generate_expander_graph(n, degree=degree)
-        h = vertex_expansion(adj, axioms, n)
-        kc = critical_step(adj, axioms, n)
-        # Theoretical bound: k_c ≈ log(n/2) / log(1+h)
-        if h > 0:
-            theory = math.log(n / 2) / math.log(1 + h)
-        else:
-            theory = float('inf')
-        print(f"  {degree:5d}  {h:10.2f}  {kc:5d}  {theory:8.1f}")
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    print("\n→ Higher expansion → faster phase transition (smaller k_c)")
-    print("  Matches the theoretical bound k_c ≈ log(N/2) / log(1+h)")
+    # Plot 1: Provability density
+    ax1.plot(ns, densities, 'b-o', markersize=4, linewidth=2)
+    ax1.axvline(x=nc, color='r', linestyle='--', alpha=0.7, label=f'n_c = {nc}')
+    ax1.set_xlabel('Statement Length n', fontsize=12)
+    ax1.set_ylabel('Provability Density ρ(n)', fontsize=12)
+    ax1.set_title('Phase Transition in Provability Density', fontsize=14)
+    ax1.set_yscale('log')
+    ax1.legend(fontsize=11)
+    ax1.grid(True, alpha=0.3)
+    ax1.set_ylim(bottom=1e-8)
 
+    # Plot 2: Proof dimension
+    ax2.plot(ns, dimensions, 'g-s', markersize=4, linewidth=2)
+    ax2.axhline(y=1, color='gray', linestyle=':', alpha=0.5, label='d = 1 (complete)')
+    ax2.axvline(x=nc, color='r', linestyle='--', alpha=0.7, label=f'n_c = {nc}')
+    ax2.set_xlabel('Statement Length n', fontsize=12)
+    ax2.set_ylabel('Proof Dimension d(n)', fontsize=12)
+    ax2.set_title('Proof Dimension vs Statement Length', fontsize=14)
+    ax2.legend(fontsize=11)
+    ax2.grid(True, alpha=0.3)
 
-def demo_renormalization():
-    """Demonstrate coarse-graining preserves phase transition."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Renormalization Preserves Phase Transition")
-    print("=" * 60)
-
-    n = 120
-    adj = generate_expander_graph(n, degree=4)
-    axioms = {0}
-
-    # Original density trajectory
-    orig_densities = density_trajectory(adj, axioms, n, 20)
-
-    # Coarse-grain: merge every 3 vertices into one block
-    block_size = 3
-    n_blocks = n // block_size
-
-    def assign(v):
-        return v // block_size
-
-    # Build quotient graph
-    quot_adj = {b: set() for b in range(n_blocks)}
-    for v in range(n):
-        for u in adj.get(v, set()):
-            bv, bu = assign(v), assign(u)
-            if bv != bu:
-                quot_adj[bv].add(bu)
-
-    quot_axioms = {assign(a) for a in axioms}
-    quot_densities = density_trajectory(quot_adj, quot_axioms, n_blocks, 20)
-
-    print(f"\nOriginal: {n} vertices")
-    print(f"Quotient: {n_blocks} blocks (block size {block_size})")
-    print(f"\n{'k':>3s}  {'ρ_orig':>8s}  {'ρ_quot':>8s}")
-    print("-" * 25)
-    for k in range(min(len(orig_densities), len(quot_densities), 15)):
-        print(f"  {k:2d}  {orig_densities[k]:8.4f}  {quot_densities[k]:8.4f}")
-
-    print("\n→ Quotient density ≥ original density (renorm_density_transfer)")
-    print("  Phase transition structure preserved under coarse-graining")
+    plt.tight_layout()
+    plt.savefig('phase_transition_plot.png', dpi=150, bbox_inches='tight')
+    print("\nPlot saved to phase_transition_plot.png")
 
 
 if __name__ == "__main__":
-    demo_expander_phase_transition()
-    demo_incomplete_system()
-    demo_entropy_rate()
-    demo_expansion_vs_critical_step()
-    demo_renormalization()
+    demo_phase_transition()
+    demo_gap_amplification()
+    demo_proof_dimension()
+    demo_critical_density_plot()
 
     print("\n" + "=" * 60)
-    print("All demos completed successfully.")
+    print("KEY INSIGHTS FROM FORMAL PROOFS")
     print("=" * 60)
+    print("""
+1. COUNTING INCOMPLETENESS: In any formal system with alphabet b,
+   if b^(proofBound(n)) < stmtCount(n), then unprovable statements
+   MUST exist at length n. This is a purely combinatorial fact.
+
+2. PHASE TRANSITION: At the completeness threshold n_c, the
+   provability density ρ(n) drops from 1 to strictly below 1.
+   This is a sharp, discontinuous transition — not gradual.
+
+3. GAP AMPLIFICATION: A single unprovable statement at length n
+   forces b^k unprovable statements at length n+k (under natural
+   growth conditions). Incompleteness is self-amplifying.
+
+4. PROOF DIMENSION: The "proof dimension" d = lim proofBound(n)/n
+   characterizes the system. d < 1 ⟹ incomplete at all large scales.
+""")
 
 
-#!/usr/bin/env python3
 """
-Visualization: Phase Transition in Proof Space
+Visualization: Phase Transition in Provability Density
 
-Shows the density trajectory ρ(k) for expander vs. incomplete systems,
-highlighting the phase transition structure.
+Generates a comprehensive plot showing the sharp phase transition
+in provability density at the Gödel threshold, along with the
+exponential gap amplification.
 """
 
-import math
-import random
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
 
 
-def proof_ball_trajectory(adj, axioms, universe_size, max_steps):
-    """Compute density and entropy rate trajectories."""
-    ball = set(axioms)
-    densities = []
-    sizes = []
-    for k in range(max_steps + 1):
-        densities.append(len(ball) / universe_size)
-        sizes.append(len(ball))
-        neighbors = set()
-        for v in ball:
-            neighbors |= adj.get(v, set())
-        new_ball = ball | neighbors
-        if new_ball == ball:
-            densities.extend([densities[-1]] * (max_steps - k))
-            sizes.extend([sizes[-1]] * (max_steps - k))
-            break
-        ball = new_ball
-    rates = []
-    for i in range(len(sizes) - 1):
-        if sizes[i] > 0 and sizes[i + 1] > 0:
-            rates.append(math.log2(sizes[i + 1]) - math.log2(sizes[i]))
-        else:
-            rates.append(0.0)
-    return densities[:max_steps + 1], rates[:max_steps]
+def compute_density(b, proof_bound_fn, n):
+    if n == 0:
+        return 1.0
+    pb = proof_bound_fn(n)
+    return min(1.0, b ** pb / b ** n)
 
 
-def generate_expander(n, degree):
-    adj = {i: set() for i in range(n)}
-    for i in range(n):
-        targets = set()
-        while len(targets) < degree:
-            t = random.randint(0, n - 1)
-            if t != i:
-                targets.add(t)
-        adj[i] = targets
-    return adj
+def compute_gap(b, proof_bound_fn, n):
+    pb = proof_bound_fn(n)
+    return max(0, b ** n - b ** pb)
 
 
-def generate_disconnected(n):
-    half = n // 2
-    adj = {i: set() for i in range(n)}
-    for i in range(half - 1):
-        adj[i].add(i + 1)
-        adj[i + 1].add(i)
-    for i in range(half, n - 1):
-        adj[i].add(i + 1)
-        adj[i + 1].add(i)
-    return adj
+def compute_dimension(proof_bound_fn, n):
+    if n == 0:
+        return 1.0
+    return proof_bound_fn(n) / n
 
 
 def main():
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-    except ImportError:
-        print("matplotlib not available, skipping visualization")
-        return
+    b = 2
+    nc = 8
 
-    random.seed(42)
+    def proof_bound_linear(n):
+        if n <= nc:
+            return n
+        return nc + (n - nc) // 3
 
-    n = 200
-    max_steps = 25
+    def proof_bound_sqrt(n):
+        if n <= nc:
+            return n
+        return nc + int(np.sqrt(max(0, n - nc)))
 
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    def proof_bound_log(n):
+        if n <= nc:
+            return n
+        return nc + int(2 * np.log2(max(1, n - nc)))
 
-    # --- Panel 1: Density trajectories ---
-    ax = axes[0, 0]
-    for degree, color, label in [(3, '#e74c3c', 'd=3'), (5, '#3498db', 'd=5'),
-                                   (10, '#2ecc71', 'd=10')]:
-        adj = generate_expander(n, degree)
-        densities, _ = proof_ball_trajectory(adj, {0}, n, max_steps)
-        ax.plot(range(len(densities)), densities, color=color, linewidth=2, label=label)
-    ax.axhline(y=0.5, color='gray', linestyle='--', alpha=0.5, label='ρ = 1/2')
-    ax.set_xlabel('Derivation steps k', fontsize=12)
-    ax.set_ylabel('Proof density ρ(k)', fontsize=12)
-    ax.set_title('Phase Transition: Density Growth', fontsize=13, fontweight='bold')
-    ax.legend()
-    ax.set_ylim(-0.05, 1.05)
-    ax.grid(True, alpha=0.3)
+    ns = np.arange(1, 35)
 
-    # --- Panel 2: Complete vs Incomplete ---
-    ax = axes[0, 1]
-    adj_exp = generate_expander(n, 5)
-    d_exp, _ = proof_ball_trajectory(adj_exp, {0}, n, max_steps)
-    adj_inc = generate_disconnected(n)
-    d_inc, _ = proof_ball_trajectory(adj_inc, {0}, n, max_steps)
-    ax.plot(range(len(d_exp)), d_exp, color='#3498db', linewidth=2, label='Complete (expander)')
-    ax.plot(range(len(d_inc)), d_inc, color='#e74c3c', linewidth=2, label='Incomplete (disconnected)')
-    ax.axhline(y=1.0, color='green', linestyle=':', alpha=0.5)
-    ax.fill_between(range(len(d_inc)), d_inc, 1.0, alpha=0.1, color='red', label='Unprovable gap')
-    ax.set_xlabel('Derivation steps k', fontsize=12)
-    ax.set_ylabel('Proof density ρ(k)', fontsize=12)
-    ax.set_title('Saturation Dichotomy', fontsize=13, fontweight='bold')
-    ax.legend()
-    ax.set_ylim(-0.05, 1.05)
-    ax.grid(True, alpha=0.3)
+    fig = plt.figure(figsize=(16, 12))
+    gs = GridSpec(2, 2, figure=fig, hspace=0.3, wspace=0.3)
 
-    # --- Panel 3: Entropy rate ---
-    ax = axes[1, 0]
-    adj = generate_expander(n, 5)
-    _, rates = proof_ball_trajectory(adj, {0}, n, max_steps)
-    ax.bar(range(len(rates)), rates, color='#9b59b6', alpha=0.7)
-    ax.set_xlabel('Derivation step k', fontsize=12)
-    ax.set_ylabel('Entropy rate Δlog₂|Ball|', fontsize=12)
-    ax.set_title('Entropy Rate Discontinuity', fontsize=13, fontweight='bold')
-    ax.grid(True, alpha=0.3, axis='y')
+    # Plot 1: Phase transition in density
+    ax1 = fig.add_subplot(gs[0, 0])
+    for pf, label, color in [(proof_bound_linear, 'Linear (slope 1/3)', 'blue'),
+                              (proof_bound_sqrt, 'Square root', 'green'),
+                              (proof_bound_log, 'Logarithmic', 'red')]:
+        densities = [compute_density(b, pf, int(n)) for n in ns]
+        ax1.semilogy(ns, densities, '-o', color=color, label=label, markersize=3, linewidth=1.5)
 
-    # --- Panel 4: Critical step vs expansion ---
-    ax = axes[1, 1]
-    degrees = list(range(2, 20))
-    critical_steps = []
-    theory_bounds = []
-    for d in degrees:
-        adj = generate_expander(n, d)
-        ball = {0}
-        kc = n
-        for k in range(n + 1):
-            if 2 * len(ball) > n:
-                kc = k
-                break
-            neighbors = set()
-            for v in ball:
-                neighbors |= adj.get(v, set())
-            new_ball = ball | neighbors
-            if new_ball == ball:
-                break
-            ball = new_ball
-        critical_steps.append(kc)
-        h = d  # approximate expansion
-        if h > 0:
-            theory_bounds.append(math.log(n / 2) / math.log(1 + h))
-        else:
-            theory_bounds.append(n)
+    ax1.axvline(x=nc, color='gray', linestyle='--', alpha=0.7, label=f'n_c = {nc}')
+    ax1.set_xlabel('Statement Length n', fontsize=11)
+    ax1.set_ylabel('Provability Density ρ(n)', fontsize=11)
+    ax1.set_title('Phase Transition in Provability Density', fontsize=13, fontweight='bold')
+    ax1.legend(fontsize=9)
+    ax1.grid(True, alpha=0.3)
+    ax1.set_ylim(bottom=1e-10)
 
-    ax.scatter(degrees, critical_steps, color='#e74c3c', s=40, zorder=5, label='Measured k_c')
-    ax.plot(degrees, theory_bounds, color='#3498db', linewidth=2, linestyle='--', label='Theory: log(N/2)/log(1+d)')
-    ax.set_xlabel('Vertex degree d', fontsize=12)
-    ax.set_ylabel('Critical step k_c', fontsize=12)
-    ax.set_title('Expansion Controls Phase Transition', fontsize=13, fontweight='bold')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+    # Plot 2: Gap amplification
+    ax2 = fig.add_subplot(gs[0, 1])
+    for pf, label, color in [(proof_bound_linear, 'Linear', 'blue'),
+                              (proof_bound_sqrt, 'Sqrt', 'green'),
+                              (proof_bound_log, 'Log', 'red')]:
+        gaps = [compute_gap(b, pf, int(n)) for n in ns]
+        gaps_positive = [max(g, 0.5) for g in gaps]
+        ax2.semilogy(ns, gaps_positive, '-s', color=color, label=label, markersize=3, linewidth=1.5)
 
-    plt.suptitle('Phase Transitions in Proof Space', fontsize=16, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    plt.savefig('phase_transition_proof_space.png', dpi=150, bbox_inches='tight')
-    print("Saved: phase_transition_proof_space.png")
+    ax2.axvline(x=nc, color='gray', linestyle='--', alpha=0.7)
+    ax2.set_xlabel('Statement Length n', fontsize=11)
+    ax2.set_ylabel('Unprovability Gap G(n)', fontsize=11)
+    ax2.set_title('Gap Amplification Cascade', fontsize=13, fontweight='bold')
+    ax2.legend(fontsize=9)
+    ax2.grid(True, alpha=0.3)
+
+    # Plot 3: Proof dimension
+    ax3 = fig.add_subplot(gs[1, 0])
+    for pf, label, color in [(proof_bound_linear, 'Linear', 'blue'),
+                              (proof_bound_sqrt, 'Sqrt', 'green'),
+                              (proof_bound_log, 'Log', 'red')]:
+        dims = [compute_dimension(pf, int(n)) for n in ns]
+        ax3.plot(ns, dims, '-^', color=color, label=label, markersize=3, linewidth=1.5)
+
+    ax3.axhline(y=1, color='gray', linestyle=':', alpha=0.5, label='d = 1 (complete)')
+    ax3.axvline(x=nc, color='gray', linestyle='--', alpha=0.7)
+    ax3.fill_between(ns, 0, 1, alpha=0.05, color='red', label='Incomplete region (d < 1)')
+    ax3.set_xlabel('Statement Length n', fontsize=11)
+    ax3.set_ylabel('Proof Dimension d(n)', fontsize=11)
+    ax3.set_title('Proof Dimension vs Length', fontsize=13, fontweight='bold')
+    ax3.legend(fontsize=9, loc='upper right')
+    ax3.grid(True, alpha=0.3)
+    ax3.set_ylim(-0.05, 1.15)
+
+    # Plot 4: Provability ratio comparison
+    ax4 = fig.add_subplot(gs[1, 1])
+    for pf, label, color in [(proof_bound_linear, 'Linear', 'blue'),
+                              (proof_bound_sqrt, 'Sqrt', 'green'),
+                              (proof_bound_log, 'Log', 'red')]:
+        ratios = [min(1.0, b ** pf(int(n)) / b ** int(n)) for n in ns]
+        ax4.semilogy(ns, ratios, '-d', color=color, label=label, markersize=3, linewidth=1.5)
+
+    ax4.axvline(x=nc, color='gray', linestyle='--', alpha=0.7)
+    ax4.set_xlabel('Statement Length n', fontsize=11)
+    ax4.set_ylabel('Provability Ratio r(n) = P(n)/b^n', fontsize=11)
+    ax4.set_title('Provability Ratio Decay', fontsize=13, fontweight='bold')
+    ax4.legend(fontsize=9)
+    ax4.grid(True, alpha=0.3)
+    ax4.set_ylim(bottom=1e-10)
+
+    fig.suptitle('Proof Density Space: Phase Transitions in Provability',
+                 fontsize=15, fontweight='bold', y=0.98)
+
+    plt.savefig('phase_transition_comprehensive.png', dpi=150, bbox_inches='tight')
+    print("Saved: phase_transition_comprehensive.png")
 
 
 if __name__ == "__main__":

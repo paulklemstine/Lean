@@ -1,258 +1,209 @@
 """
-Algorithms for Phase Transitions in Proof Space
+Algorithms for Proof Density Phase Transition Analysis
 
-Type-hinted implementations of the core algorithms from the formalization.
+Type-hinted implementations of the core algorithms from the
+ProofDensitySpace framework.
 """
 
-from typing import Dict, List, Set, Tuple, Optional
+from dataclasses import dataclass
+from typing import Callable, List, Tuple, Optional
 import math
 
 
-def proof_ball(
-    adj: Dict[int, Set[int]],
-    axioms: Set[int],
-    k: int
-) -> Set[int]:
+@dataclass
+class ProofDensitySpace:
+    """A proof density space capturing the counting structure of a formal system.
+
+    Attributes:
+        b: Alphabet size (≥ 2)
+        stmt_count: Function mapping length n to number of statements
+        provable_count: Function mapping length n to number of provable statements
+        proof_bound: Function mapping length n to maximum proof length
     """
-    Compute the proof ball of radius k around axiom set.
+    b: int
+    stmt_count: Callable[[int], int]
+    provable_count: Callable[[int], int]
+    proof_bound: Callable[[int], int]
 
-    Args:
-        adj: Adjacency dict mapping vertex -> set of out-neighbors
-        axioms: Initial set of axiom vertices
-        k: Number of derivation steps
+    def __post_init__(self) -> None:
+        assert self.b >= 2, f"Alphabet size must be ≥ 2, got {self.b}"
 
-    Returns:
-        Set of all vertices reachable within k steps.
+
+def unprovability_gap(pds: ProofDensitySpace, n: int) -> int:
+    """Compute the unprovability gap: stmtCount(n) - provableCount(n)."""
+    return max(0, pds.stmt_count(n) - pds.provable_count(n))
+
+
+def provability_density(pds: ProofDensitySpace, n: int) -> float:
+    """Compute the provability density ρ(n) = provableCount(n) / stmtCount(n)."""
+    sc = pds.stmt_count(n)
+    if sc == 0:
+        return 1.0
+    return pds.provable_count(n) / sc
+
+
+def provability_ratio(pds: ProofDensitySpace, n: int) -> float:
+    """Compute the provability ratio: provableCount(n) / b^n."""
+    denom = pds.b ** n
+    if denom == 0:
+        return 1.0
+    return pds.provable_count(n) / denom
+
+
+def proof_dimension(pds: ProofDensitySpace, n: int) -> float:
+    """Compute the proof dimension at scale n: proofBound(n) / n."""
+    if n == 0:
+        return 1.0
+    return pds.proof_bound(n) / n
+
+
+def find_completeness_threshold(
+    pds: ProofDensitySpace,
+    max_n: int = 1000
+) -> Optional[int]:
+    """Find the completeness threshold n_c.
+
+    Returns the largest n such that provableCount(k) = stmtCount(k)
+    for all k ≤ n, or None if no threshold found within max_n.
+
+    Algorithm:
+        1. Scan from n=0 upward
+        2. At each n, check if provableCount(n) < stmtCount(n)
+        3. If so, n-1 is the threshold (if n > 0)
     """
-    ball = set(axioms)
-    for _ in range(k):
-        neighbors = set()
-        for v in ball:
-            neighbors |= adj.get(v, set())
-        new_ball = ball | neighbors
-        if new_ball == ball:
-            break  # Saturation
-        ball = new_ball
-    return ball
+    for n in range(max_n + 1):
+        if pds.provable_count(n) < pds.stmt_count(n):
+            return max(0, n - 1)
+    return None
 
 
-def proof_density(
-    adj: Dict[int, Set[int]],
-    axioms: Set[int],
-    universe_size: int,
-    k: int
+def compute_gap_cascade(
+    pds: ProofDensitySpace,
+    start_n: int,
+    num_levels: int
+) -> List[Tuple[int, int]]:
+    """Compute the gap amplification cascade.
+
+    Returns list of (n, lower_bound_on_gap) pairs showing
+    how the unprovability gap grows level by level.
+
+    Algorithm:
+        For each level k from 0 to num_levels:
+            gap_lower_bound(n + k) ≥ b^k * gap(n)
+    """
+    initial_gap = unprovability_gap(pds, start_n)
+    result: List[Tuple[int, int]] = []
+    for k in range(num_levels + 1):
+        n = start_n + k
+        theoretical_lower = pds.b ** k * initial_gap
+        actual_gap = unprovability_gap(pds, n)
+        result.append((n, max(theoretical_lower, actual_gap)))
+    return result
+
+
+def detect_phase_transition(
+    pds: ProofDensitySpace,
+    max_n: int = 100,
+    threshold: float = 0.01
+) -> List[int]:
+    """Detect phase transitions as points where density drops sharply.
+
+    Returns list of n values where |ρ(n) - ρ(n-1)| > threshold.
+
+    Algorithm:
+        Scan through lengths, compute density changes,
+        flag those exceeding the threshold.
+    """
+    transitions: List[int] = []
+    prev_density = provability_density(pds, 0)
+    for n in range(1, max_n + 1):
+        curr_density = provability_density(pds, n)
+        if abs(curr_density - prev_density) > threshold:
+            transitions.append(n)
+        prev_density = curr_density
+    return transitions
+
+
+def estimate_hausdorff_dimension(
+    pds: ProofDensitySpace,
+    scales: List[int]
 ) -> float:
+    """Estimate the Hausdorff dimension of the set of provable statements.
+
+    Uses the box-counting method:
+        d_H ≈ lim_{n→∞} log(provableCount(n)) / (n * log(b))
+
+    The proof dimension proofBound(n)/n gives an upper bound on d_H.
     """
-    Compute the proof density ρ(k) = |Ball(S,k)| / |V|.
-
-    Args:
-        adj: Adjacency dict
-        axioms: Initial axiom set
-        universe_size: Total number of vertices |V|
-        k: Number of steps
-
-    Returns:
-        Fraction of reachable statements at step k.
-    """
-    ball = proof_ball(adj, axioms, k)
-    return len(ball) / universe_size
-
-
-def vertex_expansion(
-    adj: Dict[int, Set[int]],
-    subset: Set[int],
-    universe_size: int
-) -> float:
-    """
-    Compute the vertex expansion ratio h for a subset S.
-
-    h = |∂S| / |S| where ∂S = outNeighbors(S) \ S.
-
-    Args:
-        adj: Adjacency dict
-        subset: The set S
-        universe_size: Total |V|
-
-    Returns:
-        Expansion ratio, or 0 if S is empty.
-    """
-    if not subset:
+    if not scales:
         return 0.0
-    boundary = set()
-    for v in subset:
-        for u in adj.get(v, set()):
-            if u not in subset:
-                boundary.add(u)
-    return len(boundary) / len(subset)
+    log_b = math.log(pds.b)
+    dimensions = []
+    for n in scales:
+        pc = pds.provable_count(n)
+        if pc > 0 and n > 0:
+            d = math.log(pc) / (n * log_b)
+            dimensions.append(d)
+    return sum(dimensions) / len(dimensions) if dimensions else 0.0
 
 
-def critical_step(
-    adj: Dict[int, Set[int]],
-    axioms: Set[int],
-    universe_size: int
-) -> int:
+def verify_counting_incompleteness(
+    pds: ProofDensitySpace,
+    n: int
+) -> Tuple[bool, str]:
+    """Verify the counting incompleteness theorem at scale n.
+
+    Checks whether b^proofBound(n) < stmtCount(n), which implies
+    the existence of unprovable statements.
+
+    Returns (is_incomplete, explanation).
     """
-    Find the critical step k_c where density first exceeds 1/2.
+    proof_space = pds.b ** pds.proof_bound(n)
+    stmt_space = pds.stmt_count(n)
 
-    This is the phase transition point.
-
-    Args:
-        adj: Adjacency dict
-        axioms: Initial axiom set
-        universe_size: Total |V|
-
-    Returns:
-        The critical step k_c, or -1 if density never exceeds 1/2.
-    """
-    ball = set(axioms)
-    for k in range(universe_size + 1):
-        if 2 * len(ball) > universe_size:
-            return k
-        neighbors = set()
-        for v in ball:
-            neighbors |= adj.get(v, set())
-        new_ball = ball | neighbors
-        if new_ball == ball:
-            return -1  # Stabilized below 1/2
-        ball = new_ball
-    return -1
+    if proof_space < stmt_space:
+        gap = stmt_space - proof_space
+        return True, (
+            f"INCOMPLETE at n={n}: "
+            f"proof space ({proof_space:,}) < statement space ({stmt_space:,}), "
+            f"gap = {gap:,} unprovable statements"
+        )
+    else:
+        return False, (
+            f"Cannot certify incompleteness at n={n}: "
+            f"proof space ({proof_space:,}) ≥ statement space ({stmt_space:,})"
+        )
 
 
-def density_trajectory(
-    adj: Dict[int, Set[int]],
-    axioms: Set[int],
-    universe_size: int,
-    max_steps: int
-) -> List[float]:
-    """
-    Compute the full density trajectory ρ(0), ρ(1), ..., ρ(max_steps).
+if __name__ == "__main__":
+    # Example: A formal system where proofs grow sublinearly
+    pds = ProofDensitySpace(
+        b=2,
+        stmt_count=lambda n: 2 ** n,
+        provable_count=lambda n: min(2 ** n, 2 ** (n // 2 + 3)),
+        proof_bound=lambda n: n // 2 + 3
+    )
 
-    Args:
-        adj: Adjacency dict
-        axioms: Initial axiom set
-        universe_size: Total |V|
-        max_steps: Maximum number of steps
+    print("=== Proof Density Space Analysis ===\n")
 
-    Returns:
-        List of density values at each step.
-    """
-    densities = []
-    ball = set(axioms)
-    for k in range(max_steps + 1):
-        densities.append(len(ball) / universe_size)
-        neighbors = set()
-        for v in ball:
-            neighbors |= adj.get(v, set())
-        new_ball = ball | neighbors
-        if new_ball == ball:
-            # Stabilized: fill rest with same value
-            densities.extend([densities[-1]] * (max_steps - k))
-            break
-        ball = new_ball
-    return densities
+    nc = find_completeness_threshold(pds)
+    print(f"Completeness threshold: n_c = {nc}")
 
+    print("\nPhase transition detection:")
+    transitions = detect_phase_transition(pds, max_n=30)
+    print(f"  Transitions at: {transitions}")
 
-def entropy_rate(
-    adj: Dict[int, Set[int]],
-    axioms: Set[int],
-    max_steps: int
-) -> List[float]:
-    """
-    Compute the entropy rate at each step.
+    print("\nCounting incompleteness verification:")
+    for n in [5, 10, 15, 20]:
+        incomplete, explanation = verify_counting_incompleteness(pds, n)
+        print(f"  {explanation}")
 
-    entropy_rate(k) = log(|Ball(k+1)|) - log(|Ball(k)|)
+    print("\nHausdorff dimension estimate:")
+    scales = list(range(10, 101, 10))
+    d_H = estimate_hausdorff_dimension(pds, scales)
+    print(f"  d_H ≈ {d_H:.4f}")
 
-    Args:
-        adj: Adjacency dict
-        axioms: Initial axiom set
-        max_steps: Maximum number of steps
-
-    Returns:
-        List of entropy rates.
-    """
-    ball = set(axioms)
-    sizes = [len(ball)]
-    for k in range(max_steps):
-        neighbors = set()
-        for v in ball:
-            neighbors |= adj.get(v, set())
-        ball = ball | neighbors
-        sizes.append(len(ball))
-
-    rates = []
-    for i in range(len(sizes) - 1):
-        if sizes[i] > 0 and sizes[i + 1] > 0:
-            rates.append(math.log(sizes[i + 1]) - math.log(sizes[i]))
-        else:
-            rates.append(0.0)
-    return rates
-
-
-def saturation_analysis(
-    adj: Dict[int, Set[int]],
-    axioms: Set[int],
-    universe_size: int
-) -> Tuple[bool, int, float]:
-    """
-    Determine if the system is complete or incomplete.
-
-    Returns:
-        (is_complete, saturation_step, final_density)
-    """
-    ball = set(axioms)
-    for k in range(universe_size + 1):
-        neighbors = set()
-        for v in ball:
-            neighbors |= adj.get(v, set())
-        new_ball = ball | neighbors
-        if len(new_ball) == universe_size:
-            return (True, k + 1, 1.0)
-        if new_ball == ball:
-            return (False, k, len(ball) / universe_size)
-        ball = new_ball
-    return (False, universe_size, len(ball) / universe_size)
-
-
-def generate_expander_graph(n: int, degree: int = 3) -> Dict[int, Set[int]]:
-    """
-    Generate a random regular graph (approximate expander).
-
-    Args:
-        n: Number of vertices
-        degree: Out-degree of each vertex
-
-    Returns:
-        Adjacency dict.
-    """
-    import random
-    adj: Dict[int, Set[int]] = {i: set() for i in range(n)}
-    for i in range(n):
-        targets = set()
-        while len(targets) < degree:
-            t = random.randint(0, n - 1)
-            if t != i:
-                targets.add(t)
-        adj[i] = targets
-    return adj
-
-
-def generate_incomplete_system(n: int) -> Dict[int, Set[int]]:
-    """
-    Generate a derivation system that is provably incomplete:
-    two disconnected components.
-
-    Args:
-        n: Total number of vertices (must be ≥ 4)
-
-    Returns:
-        Adjacency dict where vertices 0..n//2-1 form one component.
-    """
-    half = n // 2
-    adj: Dict[int, Set[int]] = {i: set() for i in range(n)}
-    # First component: chain
-    for i in range(half - 1):
-        adj[i].add(i + 1)
-    # Second component: chain
-    for i in range(half, n - 1):
-        adj[i].add(i + 1)
-    return adj
+    print("\nGap cascade from n=10:")
+    cascade = compute_gap_cascade(pds, 10, 10)
+    for n, gap in cascade:
+        print(f"  n={n:>3}: gap ≥ {gap:>12,}")
