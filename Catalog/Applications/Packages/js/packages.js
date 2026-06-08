@@ -188,14 +188,18 @@ document.addEventListener('DOMContentLoaded', () => {
         renderInteractiveHTMLDemos('content-interactive-demos', data.interactive_demos);
 
         // Visualizations (generated images from Python scripts)
-        renderVisualizations('content-visualizations', data.visualizations);
+        // Guard against string values (e.g. "MISSING" placeholders)
+        const visualizations = Array.isArray(data.visualizations) ? data.visualizations : [];
+        renderVisualizations('content-visualizations', visualizations);
 
         // Algorithms: use 'code' field (some older packages have 'pseudocode' too)
-        const algoField = data.algorithms && data.algorithms.some(a => a.pseudocode && a.pseudocode.trim())
+        const algorithms = Array.isArray(data.algorithms) ? data.algorithms : [];
+        const algoField = algorithms.some(a => a.pseudocode && a.pseudocode.trim())
             ? 'pseudocode' : 'code';
-        renderCodeBlocks('content-algorithms', data.algorithms, algoField);
+        renderCodeBlocks('content-algorithms', algorithms, algoField);
         if (window.renderInteractiveDemos) {
-            window.renderInteractiveDemos('content-demos', data.demos);
+            const demos = Array.isArray(data.demos) ? data.demos : [];
+            window.renderInteractiveDemos('content-demos', demos);
         }
 
         // Future Directions tab
