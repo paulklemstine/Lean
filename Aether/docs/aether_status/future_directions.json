@@ -935,7 +935,7 @@
       "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "626fe6b3",
       "depth_estimate": 3,
       "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' — bulbs at angles 1/q where q is prime — have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization — every bulb encodes number-theoretic information about its period.",
       "domain_bridges": [],
@@ -954,7 +954,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "timestamp": "2026-06-01T12:30:30.530929+00:00",
       "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
     },
