@@ -2025,7 +2025,16 @@ Research mode: {concept.research_mode}
             if not selected:
                 return None
 
-            return '\n\n'.join(selected) + '\n'
+            # Wrap salvaged theorems in a -- NEW_FILE: header so integrate_async
+            # can route them to the correct Catalog directory. Without the header,
+            # integrate splits by NEW_FILE/DIFF markers and finds 0 parts.
+            domain = getattr(job.concept, 'domain', 'Speculative') if job.concept else 'Speculative'
+            from output_organizer import normalize_domain
+            domain = normalize_domain(domain)
+            # Derive a safe package name from the concept title
+            pkg_name = re.sub(r'[^a-zA-Z0-9]', '', (job.concept.title or 'salvaged').replace(' ', ''))[:40] or 'SalvagedBest'
+            header = f"-- NEW_FILE: Catalog/{domain}/{pkg_name}/SalvagedBest.lean"
+            return f"{header}\n" + '\n\n'.join(selected) + '\n'
 
         except Exception as e:
             print(f"[Salvage] LLM salvage failed: {e}")
